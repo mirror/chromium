@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="icudt"
+	ProjectGUID="{A0D94973-D355-47A5-A1E2-3456F321F010}"
+	RootNamespace="icudt"
+	Keyword="Win32Proj"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+		<ToolFile
+			RelativePath="..\..\..\build\output_dll_copy.rules"
+		/>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			ConfigurationType="10"
+			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;$(SolutionDir)..\build\common.vsprops;.\icu.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="Output DLL copy"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			ConfigurationType="10"
+			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;$(SolutionDir)..\build\common.vsprops;.\icu.vsprops"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="Output DLL copy"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<File
+			RelativePath="..\icudt38.dll"
+			>
+			<FileConfiguration
+				Name="DebugV8|Win32"
+				>
+				<Tool
+					Name="Output DLL copy"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="ReleaseV8|Win32"
+				>
+				<Tool
+					Name="Output DLL copy"
+				/>
+			</FileConfiguration>
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

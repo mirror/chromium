@@ -1,0 +1,115 @@
+#
+#   Copyright (C) 2002-2006, International Business Machines Corporation and others.
+#       All Rights Reserved.
+#
+#   file:  char.txt 
+#
+#   ICU Character Break Rules, also known as Grapheme Cluster Boundaries
+#      See Unicode Standard Annex #29.
+#      These rules are based on TR29 Version 5.0.0
+#        Includes post-5.0 change to treat Japanese half width voicing marks
+#        as Grapheme Extend.
+# BEGIN Chrome ADD
+#        Also includes support for extended grapheme clsuters for Indic scripts
+#        (taken from TR 29 revision 12)
+# END Chrome ADD
+#
+
+#
+#  Character Class Definitions.
+#
+$CR      = [\p{Grapheme_Cluster_Break = CR}];
+$LF      = [\p{Grapheme_Cluster_Break = LF}];
+$Control = [\p{Grapheme_Cluster_Break = Control}];
+
+# add Japanese Half Width voicing marks to $Extend
+$VoiceMarks = [\uff9e\uff9f]; 
+$Extend  = [\p{Grapheme_Cluster_Break = Extend} $VoiceMarks];
+
+# BEGIN Chrome ADD
+# $Prepend and $SpacingMark come from ICU 4.0. They're
+# defined as following in ICU 4.0 (and TR29 rev12):
+# $Prepend     = [\p{Grapheme_Cluster_Break = Prepend}];
+# $SpacingMark = [\p{Grapheme_Cluster_Break = SpacingMark}];
+# Because they use two Unicode properties new in Unicode 5.1,
+# they're defined in terms of properties available in Unicode 5.0.
+# Both definitions are equivalent to each other.
+$Prepend = [\p{Logical_Order_Exception = true}];
+$SpacingMark = [[\p{General_Category = Spacing Mark}] - $Extend];
+# END Chrome ADD
+
+#
+# Korean Syllable Definitions
+#
+$L       = [\p{Grapheme_Cluster_Break = L}];
+$V       = [\p{Grapheme_Cluster_Break = V}];
+$T       = [\p{Grapheme_Cluster_Break = T}];
+
+$LV      = [\p{Grapheme_Cluster_Break = LV}];
+$LVT     = [\p{Grapheme_Cluster_Break = LVT}];
+
+# BEGIN Chrome DELETE
+# $HangulSyllable = $L+ | ($L* ($LV? $V+ | $LV | $LVT) $T*) | $T+;
+# END Chrome DELETE
+
+## -------------------------------------------------
+# BEGIN Chrome ADD
+!!chain;
+# END Chrome ADD
+
+!!forward;
+
+$CR $LF;
+# BEGIN Chrome DELETE
+#([^$Control $CR $LF] | $HangulSyllable) $Extend*;
+# END Chrome DELETE
+ 
+# BEGIN Chrome ADD
+$L ($L | $V | $LV | $LVT);
+($LV | $V) ($V | $T);
+($LVT | $T) $T;
+
+[^$Control $CR $LF] $Extend;
+
+[^$Control $CR $LF] $SpacingMark;
+$Prepend [^$Control $CR $LF];
+# END Chrome ADD
+
+## -------------------------------------------------
+
+!!reverse;
+
+# BEGIN Chrome ADD
+$LF $CR;
+($L | $V | $LV | $LVT) $L;
+($V | $T) ($LV | $V);
+$T ($LVT | $T);
+
+$Extend      [^$Control $CR $LF];
+$SpacingMark [^$Control $CR $LF];
+[^$Control $CR $LF] $Prepend;
+# END Chrome ADD
+
+# BEGIN Chrome DELETE
+#$BackHangulSyllable = $L+ | ($T* ($V+$LV? | $LV | $LVT) $L*) | $T+;
+#$BackOneCluster = ($LF $CR) | ($Extend* ([^$Control $CR $LF] | $BackHangulSyllable));
+#$BackOneCluster;
+# END Chrome DELETE
+
+## -------------------------------------------------
+
+!!safe_reverse;
+
+# BEGIN Chrome DELETE
+# # rule 6, 7, 8
+# $V+ $L;
+# END Chrome DELETE
+
+## -------------------------------------------------
+
+!!safe_forward;
+
+# BEGIN Chrome DELETE
+# # rule 6, 7, 8
+# $V+ $T;
+# END Chrome DELETE
