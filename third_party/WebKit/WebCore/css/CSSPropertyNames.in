@@ -2,7 +2,7 @@
 # CSS property names
 #
 # Some properties are used internally, but are not part of CSS. They are used to get
-# HTML4 compatibilty in the rendering engine.
+# HTML4 compatibility in the rendering engine.
 #
 # Microsoft extensions are documented here:
 # http://msdn.microsoft.com/workshop/author/css/reference/attributes.asp
@@ -141,6 +141,7 @@ word-break
 word-spacing
 word-wrap
 z-index
+zoom
 -webkit-transition
 -webkit-transition-duration
 -webkit-transition-property
@@ -169,6 +170,7 @@ z-index
 -webkit-box-ordinal-group
 -webkit-box-orient
 -webkit-box-pack
+-webkit-box-reflect
 -webkit-box-shadow
 -webkit-box-sizing
 -webkit-column-break-after
@@ -182,7 +184,6 @@ z-index
 -webkit-column-rule-width
 -webkit-column-width
 -webkit-columns
--webkit-dashboard-region
 -webkit-font-size-delta
 -webkit-highlight
 -webkit-line-break
@@ -197,6 +198,18 @@ z-index
 -webkit-marquee-repetition
 -webkit-marquee-speed
 -webkit-marquee-style
+-webkit-mask
+-webkit-mask-attachment
+-webkit-mask-box-image
+-webkit-mask-clip
+-webkit-mask-composite
+-webkit-mask-image
+-webkit-mask-origin
+-webkit-mask-position
+-webkit-mask-position-x
+-webkit-mask-position-y
+-webkit-mask-repeat
+-webkit-mask-size
 -webkit-match-nearest-mail-blockquote-color
 -webkit-nbsp-mode
 -webkit-padding-start
@@ -215,3 +228,4 @@ z-index
 -webkit-user-drag
 -webkit-user-modify
 -webkit-user-select
+-webkit-variable-declaration-block

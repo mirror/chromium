@@ -25,20 +25,30 @@
 
 #include "config.h"
 
-#ifdef USE_SAFARI_THEME 
+#if USE(SAFARI_THEME)
 
 #include "PlatformScrollBar.h"
 
+#include "ChromeClient.h"
 #include "EventHandler.h"
+#include "Frame.h"
 #include "FrameView.h"
 #include "Frame.h"
 #include "GraphicsContext.h"
 #include "IntRect.h"
+#include "Page.h"
 #include "PlatformMouseEvent.h"
+#include "Settings.h"
 #include "SoftLinking.h"
 
 #include <CoreGraphics/CoreGraphics.h>
+
+// If you have an empty placeholder SafariThemeConstants.h, then include SafariTheme.h
+// This is a workaround until a version of WebKitSupportLibrary is released with an updated SafariThemeConstants.h 
+#include <SafariTheme/SafariThemeConstants.h>
+#ifndef SafariThemeConstants_h
 #include <SafariTheme/SafariTheme.h>
+#endif
 
 // FIXME: There are repainting problems due to Aqua scroll bar buttons' visual overflow.
 
@@ -68,10 +78,36 @@ SOFT_LINK_DEBUG_LIBRARY(SafariTheme)
 SOFT_LINK_LIBRARY(SafariTheme)
 #endif
 
-SOFT_LINK(SafariTheme, paintThemePart, void, __stdcall, (ThemePart part, CGContextRef context, const CGRect& rect, NSControlSize size, ThemeControlState state), (part, context, rect, size, state))
+SOFT_LINK(SafariTheme, paintThemePart, void, __stdcall, 
+            (ThemePart part, CGContextRef context, const CGRect& rect, NSControlSize size, ThemeControlState state),
+            (part, context, rect, size, state))
 
 const double cInitialTimerDelay = 0.25;
 const double cNormalTimerDelay = 0.05;
+
+static ScrollbarControlState ScrollbarControlStateFromThemeState(ThemeControlState state)
+{
+    ScrollbarControlState s = 0;
+    if (state & ActiveState)
+        s |= ActiveScrollbarState;
+    if (state & EnabledState)
+        s |= EnabledScrollbarState;
+    if (state & PressedState)
+        s |= PressedScrollbarState;
+    return s;
+}
+
+static Page* pageForScrollView(ScrollView* view)
+{
+    if (!view)
+        return 0;
+    if (!view->isFrameView())
+        return 0;
+    FrameView* frameView = static_cast<FrameView*>(view);
+    if (!frameView->frame())
+        return 0;
+    return frameView->frame()->page();
+}
 
 PlatformScrollbar::PlatformScrollbar(ScrollbarClient* client, ScrollbarOrientation orientation, ScrollbarControlSize size)
     : Scrollbar(client, orientation, size), m_hoveredPart(NoPart), m_pressedPart(NoPart), m_pressedPos(0),
@@ -240,19 +276,77 @@ void PlatformScrollbar::paint(GraphicsContext* graphicsContext, const IntRect& d
     if (!frameGeometry().intersects(damageRect))
         return;
 
-    IntRect track = trackRect();
-    paintTrack(graphicsContext, track, true, damageRect);
-
+    // Create the ScrollbarControlPartMask based on the damageRect
+    ScrollbarControlPartMask scrollMask = NoPart;
+ 
+    IntRect backButtonPaintRect;
+    IntRect forwardButtonPaintRect;
     if (hasButtons()) {
-        paintButton(graphicsContext, backButtonRect(), true, damageRect);
-        paintButton(graphicsContext, forwardButtonRect(), false, damageRect);
+        backButtonPaintRect = buttonRepaintRect(backButtonRect(), m_orientation, controlSize(), true);
+        if (damageRect.intersects(backButtonPaintRect))
+            scrollMask |= BackButtonPart;
+        forwardButtonPaintRect = buttonRepaintRect(forwardButtonRect(), m_orientation, controlSize(), false);
+        if (damageRect.intersects(forwardButtonPaintRect))
+            scrollMask |= ForwardButtonPart;
     }
 
-    if (hasThumb() && damageRect.intersects(track)) {
-        IntRect startTrackRect, thumbRect, endTrackRect;
+    IntRect track = trackRect();
+    IntRect trackPaintRect = hasButtons() ? trackRepaintRect(track, m_orientation, controlSize()) : track;
+    IntRect startTrackRect, thumbRect, endTrackRect;
+    if (hasThumb()) {
         splitTrack(track, startTrackRect, thumbRect, endTrackRect);
-        paintThumb(graphicsContext, thumbRect, damageRect);
+        if (damageRect.intersects(thumbRect))
+            scrollMask |= ThumbPart;
+        if (damageRect.intersects(startTrackRect))
+            scrollMask |= BackTrackPart;
+        if (damageRect.intersects(endTrackRect))
+            scrollMask |= ForwardTrackPart;
+    } else if (damageRect.intersects(trackPaintRect)) {
+        scrollMask |= BackTrackPart;
+        scrollMask |= ForwardTrackPart;
     }
+
+    NSControlSize size = controlSize() == SmallScrollbar ? NSSmallControlSize : NSRegularControlSize;
+    ThemeControlState state = 0;
+    if (m_client->isActive())
+        state |= ActiveState;
+    if (hasButtons())
+        state |= EnabledState;
+
+    float proportion = static_cast<float>(m_visibleSize) / m_totalSize;
+    float value = static_cast<float>(m_currentPos) / static_cast<float>(m_totalSize - m_visibleSize);
+
+    if (Page* page = pageForScrollView(parent())) {
+        if (page->settings()->shouldPaintCustomScrollbars()) {
+            if (page->chrome()->client()->paintCustomScrollbar(graphicsContext, frameGeometry(), 
+                    controlSize(), ScrollbarControlStateFromThemeState(state), m_pressedPart, 
+                    m_orientation == VerticalScrollbar, value, proportion, scrollMask))
+                        return;
+        }
+    }
+
+    if (!SafariThemeLibrary())
+        return;
+
+    // SafariTheme needs to repaint the track when painting the thumb so that the top and bottom of the thumb look right
+    if (scrollMask & ThumbPart) {
+        scrollMask |= BackTrackPart;
+        scrollMask |= ForwardTrackPart;
+    }
+
+    // FIXME: We should switch to use STPaintScrollBar instead of paintThemePart.  Currently, STPaintScrollBar doesn't work correctly with the pressed buttons
+    // when drawing from the part mask.
+    if ((scrollMask & ForwardTrackPart) || (scrollMask & BackTrackPart))
+        paintThemePart(m_orientation == VerticalScrollbar ? VScrollTrackPart : HScrollTrackPart, graphicsContext->platformContext(), trackPaintRect, size, state); 
+    if (scrollMask & BackButtonPart)
+        paintThemePart(m_orientation == VerticalScrollbar ? ScrollUpArrowPart : ScrollLeftArrowPart, graphicsContext->platformContext(),
+                        backButtonPaintRect, size, m_pressedPart == BackButtonPart ? state | PressedState : state);
+    if (scrollMask & ForwardButtonPart)
+        paintThemePart(m_orientation == VerticalScrollbar ? ScrollDownArrowPart : ScrollRightArrowPart, graphicsContext->platformContext(),
+                        forwardButtonPaintRect, size, m_pressedPart == ForwardButtonPart ? state | PressedState : state);
+    if (scrollMask & ThumbPart)
+        paintThemePart(m_orientation == VerticalScrollbar ? VScrollThumbPart : HScrollThumbPart, graphicsContext->platformContext(), 
+                        thumbRect, size, m_pressedPart == ThumbPart ? state | PressedState : state);
 }
 
 bool PlatformScrollbar::hasButtons() const
@@ -351,72 +445,6 @@ int PlatformScrollbar::thumbLength() const
 int PlatformScrollbar::trackLength() const
 {
     return (m_orientation == HorizontalScrollbar) ? trackRect().width() : trackRect().height();
-}
-
-void PlatformScrollbar::paintButton(GraphicsContext* context, const IntRect& rect, bool start, const IntRect& damageRect) const
-{
-    if (!SafariThemeLibrary())
-        return;
-
-    IntRect paintRect = buttonRepaintRect(rect, m_orientation, controlSize(), start);
-    
-    if (!damageRect.intersects(paintRect))
-        return;
-
-    ThemePart part;
-    ThemeControlState state = 0;
-    if (m_client->isActive())
-        state |= ActiveState;
-    if (m_orientation == HorizontalScrollbar)
-        part = start ? ScrollLeftArrowPart : ScrollRightArrowPart;
-    else
-        part = start ? ScrollUpArrowPart : ScrollDownArrowPart;
-
-    if (isEnabled())
-        state |= EnabledState;
-    if ((m_pressedPart == BackButtonPart && start)
-        || (m_pressedPart == ForwardButtonPart && !start))
-        state |= PressedState;
-
-    paintThemePart(part, context->platformContext(), paintRect, controlSize() == SmallScrollbar ? NSSmallControlSize : NSRegularControlSize, state);
-}
-
-void PlatformScrollbar::paintTrack(GraphicsContext* context, const IntRect& rect, bool start, const IntRect& damageRect) const
-{
-    if (!SafariThemeLibrary())
-        return;
-
-    IntRect paintRect = hasButtons() ? trackRepaintRect(rect, m_orientation, controlSize()) : rect;
-    
-    if (!damageRect.intersects(paintRect))
-        return;
-
-    ThemePart part = m_orientation == HorizontalScrollbar ? HScrollTrackPart : VScrollTrackPart;
-    ThemeControlState state = 0;
-    if (m_client->isActive())
-        state |= ActiveState;
-    if (hasButtons())
-        state |= EnabledState;
-
-    paintThemePart(part, context->platformContext(), paintRect, controlSize() == SmallScrollbar ? NSSmallControlSize : NSRegularControlSize, state);
-}
-
-void PlatformScrollbar::paintThumb(GraphicsContext* context, const IntRect& rect, const IntRect& damageRect) const
-{
-    if (!SafariThemeLibrary())
-        return;
-
-    if (!damageRect.intersects(rect))
-        return;
-
-    ThemePart part = m_orientation == HorizontalScrollbar ? HScrollThumbPart : VScrollThumbPart;
-    ThemeControlState state = 0;
-    if (m_client->isActive())
-        state |= ActiveState;
-    if (isEnabled())
-        state |= EnabledState;
-
-    paintThemePart(part, context->platformContext(), rect, controlSize() == SmallScrollbar ? NSSmallControlSize : NSRegularControlSize, state);
 }
 
 ScrollbarPart PlatformScrollbar::hitTest(const PlatformMouseEvent& evt)
@@ -657,4 +685,4 @@ void PlatformScrollbar::themeChanged()
 
 }
 
-#endif // defined(USE_SAFARI_THEME)
+#endif // USE(SAFARI_THEME)

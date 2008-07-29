@@ -59,6 +59,8 @@ public:
     void setDir(const String&);
     String className() const;
     void setClassName(const String&);
+    short tabIndex() const;
+    void setTabIndex(int);
 
     String innerHTML() const;
     String outerHTML() const;
@@ -67,7 +69,11 @@ public:
     void setOuterHTML(const String&, ExceptionCode&);
     void setInnerText(const String&, ExceptionCode&);
     void setOuterText(const String&, ExceptionCode&);
-    
+
+    Element* insertAdjacentElement(const String& where, Element* newChild, ExceptionCode&);
+    void insertAdjacentHTML(const String& where, const String& html, ExceptionCode&);
+    void insertAdjacentText(const String& where, const String& text, ExceptionCode&);
+
     virtual bool isFocusable() const;
     virtual bool isContentEditable() const;
     virtual bool isContentRichlyEditable() const;
@@ -80,8 +86,6 @@ public:
     virtual void accessKeyAction(bool sendToAnyElement);
 
     virtual bool isGenericFormElement() const { return false; }
-
-    virtual String toString() const;
 
     virtual HTMLTagStatus endTagRequirement() const;
     virtual int tagPriority() const;
@@ -107,8 +111,9 @@ protected:
 
 private:
     virtual HTMLFormElement* virtualForm() const;
+    Node* insertAdjacent(const String& where, Node* newChild, ExceptionCode&);
 };
 
-} //namespace
+} // namespace WebCore
 
-#endif
+#endif // HTMLElement_h

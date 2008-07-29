@@ -66,12 +66,12 @@ void FocusController::setFocusedFrame(PassRefPtr<Frame> frame)
         return;
 
     if (m_focusedFrame)
-        m_focusedFrame->selectionController()->setFocused(false);
+        m_focusedFrame->selection()->setFocused(false);
 
     m_focusedFrame = frame;
 
     if (m_focusedFrame)
-        m_focusedFrame->selectionController()->setFocused(true);
+        m_focusedFrame->selection()->setFocused(true);
 }
 
 Frame* FocusController::focusedOrMainFrame()
@@ -228,7 +228,7 @@ static void clearSelectionIfNeeded(Frame* oldFocusedFrame, Frame* newFocusedFram
     if (oldFocusedFrame->document() != newFocusedFrame->document())
         return;
     
-    SelectionController* s = oldFocusedFrame->selectionController();
+    SelectionController* s = oldFocusedFrame->selection();
     if (s->isNone())
         return;
     
@@ -299,12 +299,14 @@ void FocusController::setActive(bool active)
     // FIXME: It would be nice to make Mac use this implementation someday.
     // Right now Mac calls updateControlTints from within WebKit, and moving
     // the call to here is not simple.
-#if !PLATFORM(MAC)
-    if (FrameView* view = m_page->mainFrame()->view())
+#if !PLATFORM(MAC) && !PLATFORM(WX)
+    if (FrameView* view = m_page->mainFrame()->view()) {
+        view->layoutIfNeededRecursive();
         view->updateControlTints();
+    }
 #endif
 
-    focusedOrMainFrame()->selectionController()->pageActivationChanged();
+    focusedOrMainFrame()->selection()->pageActivationChanged();
 }
 
 } // namespace WebCore

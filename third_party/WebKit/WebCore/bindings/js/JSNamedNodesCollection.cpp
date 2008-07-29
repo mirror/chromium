@@ -27,32 +27,32 @@
 #include "JSNamedNodesCollection.h"
 
 #include "AtomicString.h"
+#include "JSNode.h"
 #include "NamedAttrMap.h"
 #include "Node.h"
-#include "kjs_dom.h"
 
 namespace WebCore {
 
 using namespace KJS;
 
-const ClassInfo JSNamedNodesCollection::info = { "Collection", 0, 0 };
+const ClassInfo JSNamedNodesCollection::s_info = { "Collection", 0, 0, 0 };
 
 // Such a collection is usually very short-lived, it only exists
 // for constructs like document.forms.<name>[1],
 // so it shouldn't be a problem that it's storing all the nodes (with the same name). (David)
 JSNamedNodesCollection::JSNamedNodesCollection(KJS::JSObject* prototype, const Vector<RefPtr<Node> >& nodes)
-    : KJS::DOMObject(prototype)
+    : DOMObject(prototype)
     , m_nodes(nodes)
 {
 }
 
-JSValue* JSNamedNodesCollection::lengthGetter(ExecState* exec, JSObject* originalObject, const Identifier& propertyName, const PropertySlot& slot)
+JSValue* JSNamedNodesCollection::lengthGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
     JSNamedNodesCollection* thisObj = static_cast<JSNamedNodesCollection*>(slot.slotBase());
-    return jsNumber(thisObj->m_nodes.size());
+    return jsNumber(exec, thisObj->m_nodes.size());
 }
 
-JSValue* JSNamedNodesCollection::indexGetter(ExecState* exec, JSObject* originalObject, const Identifier& propertyName, const PropertySlot& slot)
+JSValue* JSNamedNodesCollection::indexGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
     JSNamedNodesCollection *thisObj = static_cast<JSNamedNodesCollection*>(slot.slotBase());
     return toJS(exec, thisObj->m_nodes[slot.index()].get());

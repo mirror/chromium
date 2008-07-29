@@ -26,12 +26,6 @@
 
 namespace WebCore {
 
-void CSSSelector::print()
-{
-    if (m_tagHistory)
-        m_tagHistory->print();
-}
-
 unsigned int CSSSelector::specificity()
 {
     // FIXME: Pseudo-elements and pseudo-classes do not have the same specificity. This function
@@ -76,6 +70,8 @@ void CSSSelector::extractPseudoType() const
     static AtomicString checked("checked");
     static AtomicString fileUploadButton("-webkit-file-upload-button");
     static AtomicString disabled("disabled");
+    static AtomicString readOnly("read-only");
+    static AtomicString readWrite("read-write");
     static AtomicString drag("-webkit-drag");
     static AtomicString dragAlias("-khtml-drag"); // was documented with this name in Apple documentation, so keep an alias
     static AtomicString empty("empty");
@@ -141,6 +137,10 @@ void CSSSelector::extractPseudoType() const
         element = true;
     } else if (m_value == disabled)
         m_pseudoType = PseudoDisabled;
+    else if (m_value == readOnly)
+        m_pseudoType = PseudoReadOnly;
+    else if (m_value == readWrite)
+        m_pseudoType = PseudoReadWrite;
     else if (m_value == drag || m_value == dragAlias)
         m_pseudoType = PseudoDrag;
     else if (m_value == enabled)

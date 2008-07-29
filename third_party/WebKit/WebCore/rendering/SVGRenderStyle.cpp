@@ -38,26 +38,23 @@
 
 namespace WebCore {
 
-SVGRenderStyle *SVGRenderStyle::s_defaultStyle = 0;
-
 SVGRenderStyle::SVGRenderStyle()
 {
-    if (!s_defaultStyle)    
-        s_defaultStyle = new SVGRenderStyle(true);
+    static SVGRenderStyle* defaultStyle = new SVGRenderStyle(CreateDefault);
 
-    fill = s_defaultStyle->fill;
-    stroke = s_defaultStyle->stroke;
-    text = s_defaultStyle->text;
-    stops = s_defaultStyle->stops;
-    clip = s_defaultStyle->clip;
-    mask = s_defaultStyle->mask;
-    misc = s_defaultStyle->misc;
-    markers = s_defaultStyle->markers;
+    fill = defaultStyle->fill;
+    stroke = defaultStyle->stroke;
+    text = defaultStyle->text;
+    stops = defaultStyle->stops;
+    clip = defaultStyle->clip;
+    mask = defaultStyle->mask;
+    misc = defaultStyle->misc;
+    markers = defaultStyle->markers;
 
     setBitDefaults();
 }
 
-SVGRenderStyle::SVGRenderStyle(bool)
+SVGRenderStyle::SVGRenderStyle(CreateDefaultType)
 {
     setBitDefaults();
 
@@ -71,7 +68,8 @@ SVGRenderStyle::SVGRenderStyle(bool)
     markers.init();
 }
 
-SVGRenderStyle::SVGRenderStyle(const SVGRenderStyle &other) : RefCounted<SVGRenderStyle>()
+SVGRenderStyle::SVGRenderStyle(const SVGRenderStyle& other)
+    : RefCounted<SVGRenderStyle>()
 {
     fill = other.fill;
     stroke = other.stroke;

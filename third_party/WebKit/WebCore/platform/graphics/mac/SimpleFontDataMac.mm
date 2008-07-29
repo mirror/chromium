@@ -56,13 +56,13 @@ static inline float scaleEmToUnits(float x, unsigned unitsPerEm) { return x * (c
 
 bool initFontData(SimpleFontData* fontData)
 {
-    if (!fontData->m_font.m_cgFont)
+    if (!fontData->m_font.cgFont())
         return false;
 
     ATSUStyle fontStyle;
     if (ATSUCreateStyle(&fontStyle) != noErr)
         return false;
-    
+
     ATSUFontID fontId = fontData->m_font.m_atsuFontID;
     if (!fontId) {
         ATSUDisposeStyle(fontStyle);
@@ -96,6 +96,49 @@ static NSString *webFallbackFontFamily(void)
     return webFallbackFontFamily.get();
 }
 
+#if !ERROR_DISABLED
+#ifdef __LP64__
+static NSString* pathFromFont(NSFont*)
+{
+    // FMGetATSFontRefFromFont is not available in 64-bit. As pathFromFont is only used for debugging
+    // purposes, returning nil is acceptable.
+    return nil;
+}
+#else
+static NSString* pathFromFont(NSFont *font)
+{
+#ifndef BUILDING_ON_TIGER
+    ATSFontRef atsFont = FMGetATSFontRefFromFont(CTFontGetPlatformFont(toCTFontRef(font), 0));
+#else
+    ATSFontRef atsFont = FMGetATSFontRefFromFont(wkGetNSFontATSUFontId(font));
+#endif
+    FSRef fileRef;
+
+#ifndef BUILDING_ON_TIGER
+    OSStatus status = ATSFontGetFileReference(atsFont, &fileRef);
+    if (status != noErr)
+        return nil;
+#else
+    FSSpec oFile;
+    OSStatus status = ATSFontGetFileSpecification(atsFont, &oFile);
+    if (status != noErr)
+        return nil;
+
+    status = FSpMakeFSRef(&oFile, &fileRef);
+    if (status != noErr)
+        return nil;
+#endif
+
+    UInt8 filePathBuffer[PATH_MAX];
+    status = FSRefMakePath(&fileRef, filePathBuffer, PATH_MAX);
+    if (status == noErr)
+        return [NSString stringWithUTF8String:(const char*)filePathBuffer];
+
+    return nil;
+}
+#endif // __LP64__
+#endif // !ERROR_DISABLED
+
 void SimpleFontData::platformInit()
 {
     m_styleGroup = 0;
@@ -105,7 +148,7 @@ void SimpleFontData::platformInit()
     m_shapesArabic = false;
 
     m_syntheticBoldOffset = m_font.m_syntheticBold ? 1.0f : 0.f;
-    
+
     bool failedSetup = false;
     if (!initFontData(this)) {
         // Ack! Something very bad happened, like a corrupt font.
@@ -126,9 +169,12 @@ void SimpleFontData::platformInit()
 #if !ERROR_DISABLED
         RetainPtr<NSFont> initialFont = m_font.font();
 #endif
-        m_font.setFont([[NSFontManager sharedFontManager] convertFont:m_font.font() toFamily:fallbackFontFamily]);
+        if (m_font.font())
+            m_font.setFont([[NSFontManager sharedFontManager] convertFont:m_font.font() toFamily:fallbackFontFamily]);
+        else
+            m_font.setFont([NSFont fontWithName:fallbackFontFamily size:m_font.size()]);
 #if !ERROR_DISABLED
-        NSString *filePath = wkPathFromFont(initialFont.get());
+        NSString *filePath = pathFromFont(initialFont.get());
         if (!filePath)
             filePath = @"not known";
 #endif
@@ -165,7 +211,15 @@ void SimpleFontData::platformInit()
     int iAscent;
     int iDescent;
     int iLineGap;
-    wkGetFontMetrics(m_font.m_cgFont, &iAscent, &iDescent, &iLineGap, &m_unitsPerEm); 
+#ifdef BUILDING_ON_TIGER
+    wkGetFontMetrics(m_font.cgFont(), &iAscent, &iDescent, &iLineGap, &m_unitsPerEm);
+#else
+    iAscent = CGFontGetAscent(m_font.cgFont());
+    iDescent = CGFontGetDescent(m_font.cgFont());
+    iLineGap = CGFontGetLeading(m_font.cgFont());
+    m_unitsPerEm = CGFontGetUnitsPerEm(m_font.cgFont());
+#endif
+
     float pointSize = m_font.m_size;
     float fAscent = scaleEmToUnits(iAscent, m_unitsPerEm) * pointSize;
     float fDescent = -scaleEmToUnits(iDescent, m_unitsPerEm) * pointSize;
@@ -290,7 +344,7 @@ float SimpleFontData::platformWidthForGlyph(Glyph glyph) const
     float pointSize = m_font.m_size;
     CGAffineTransform m = CGAffineTransformMakeScale(pointSize, pointSize);
     CGSize advance;
-    if (!wkGetGlyphTransformedAdvances(m_font.m_cgFont, font, &m, &glyph, &advance)) {
+    if (!wkGetGlyphTransformedAdvances(m_font.cgFont(), font, &m, &glyph, &advance)) {
         LOG_ERROR("Unable to cache glyph widths for %@ %f", [font displayName], pointSize);
         advance.width = 0;
     }

@@ -3,7 +3,7 @@
 # Copyright (C) 2006 Anders Carlsson <andersca@mac.com> 
 # Copyright (C) 2006, 2007 Samuel Weinig <sam@webkit.org>
 # Copyright (C) 2006 Alexey Proskuryakov <ap@webkit.org>
-# Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
+# Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -54,7 +54,8 @@ my %implIncludes = ();
 my %protocolTypeHash = ("XPathNSResolver" => 1, "EventListener" => 1, "EventTarget" => 1, "NodeFilter" => 1,
                         "SVGLocatable" => 1, "SVGTransformable" => 1, "SVGStylable" => 1, "SVGFilterPrimitiveStandardAttributes" => 1, 
                         "SVGTests" => 1, "SVGLangSpace" => 1, "SVGExternalResourcesRequired" => 1, "SVGURIReference" => 1,
-                        "SVGZoomAndPan" => 1, "SVGFitToViewBox" => 1, "SVGAnimatedPathData" => 1, "SVGAnimatedPoints" => 1);
+                        "SVGZoomAndPan" => 1, "SVGFitToViewBox" => 1, "SVGAnimatedPathData" => 1, "SVGAnimatedPoints" => 1,
+                        "ElementTimeControl" => 1);
 my %nativeObjCTypeHash = ("URL" => 1, "Color" => 1);
 
 # FIXME: this should be replaced with a function that recurses up the tree
@@ -400,7 +401,7 @@ sub GetBaseClass
 
     return $parent if $parent eq "Object" or IsBaseType($parent);
     return "Event" if $parent eq "UIEvent";
-    return "CSSValue" if $parent eq "SVGColor";
+    return "CSSValue" if $parent eq "SVGColor" or $parent eq "CSSValueList";
     return "Node";
 }
 
@@ -477,7 +478,7 @@ sub GetObjCTypeGetterName
     my $type = $codeGenerator->StripModule(shift);
 
     my $typeGetter = "";
-    if ($type =~ /^(HTML|CSS|SVG)/ or $type eq "DOMImplementation" or $type eq "CDATASection") {
+    if ($type =~ /^(HTML|CSS|SVG)/ or $type eq "DOMImplementation" or $type eq "CDATASection" or $type eq "RGBColor") {
         $typeGetter = $type;
     } elsif ($type =~ /^XPath(.+)/) {
         $typeGetter = "xpath" . $1;
@@ -505,6 +506,58 @@ sub GetObjCTypeGetter
 
     return "nativeResolver" if $type eq "XPathNSResolver";
     return "[$argName $typeGetterMethodName]";
+}
+
+sub GetInternalTypeGetterSignature
+{
+    my ($interfaceName, $podType) = @_;
+
+    my $implClassNameWithNamespace = "WebCore::" . GetImplClassName($interfaceName);
+    my $podTypeWithNamespace;
+    if ($podType) {
+        $podTypeWithNamespace = ($podType eq "float") ? "$podType" : "WebCore::$podType";
+    }
+
+    # - Type-Getter
+    # - (WebCore::FooBar *)_fooBar for implementation class FooBar
+    my $typeGetterName = GetObjCTypeGetterName($interfaceName);
+    return "- " . ($podType ? "($podTypeWithNamespace)" : "($implClassNameWithNamespace *)") . $typeGetterName;
+}
+
+sub GetInternalTypeMakerSignature
+{
+    my ($interfaceName, $podType) = @_;
+
+    my $className = GetClassName($interfaceName);
+    my $implClassNameWithNamespace = "WebCore::" . GetImplClassName($interfaceName);
+    my $podTypeWithNamespace;
+    if ($podType) {
+        $podTypeWithNamespace = ($podType eq "float") ? "$podType" : "WebCore::$podType";
+    }
+ 
+    my @ivarsToRetain = ();
+    my $ivarsToInit = "";
+    my $typeMakerSigAddition = "";
+    if (@ivars > 0) {
+        my @ivarsInitSig = ();
+        my @ivarsInitCall = ();
+        foreach $attribute (@ivars) {
+            my $name = $attribute->signature->name;
+            my $memberName = "m_" . $name;
+            my $varName = "in" . $name;
+            my $type = GetObjCType($attribute->signature->type);
+            push(@ivarsInitSig, "$name:($type)$varName");
+            push(@ivarsInitCall, "$name:$varName");
+            push(@ivarsToRetain, "    $memberName = [$varName retain];\n");
+        }
+        $ivarsToInit = " " . join(" ", @ivarsInitCall);
+        $typeMakerSigAddition = " " . join(" ", @ivarsInitSig);
+    }
+
+    my $typeMakerName = GetObjCTypeMaker($interfaceName);
+    return ("+ ($className *)$typeMakerName:(" . ($podType ? "$podTypeWithNamespace" : "$implClassNameWithNamespace *") . ")impl" . $typeMakerSigAddition,
+            $typeMakerSigAddition,
+            $ivarsToInit);
 }
 
 sub AddForwardDeclarationsForType
@@ -536,7 +589,7 @@ sub AddIncludesForType
     return if $codeGenerator->IsNonPointerType($type) or IsNativeObjCType($type);
 
     if ($codeGenerator->IsStringType($type)) {
-        $implIncludes{"PlatformString.h"} = 1;
+        $implIncludes{"KURL.h"} = 1;
         return;
     }
 
@@ -895,6 +948,42 @@ sub GenerateHeader
         push(@privateHeaderContent, @privateHeaderFunctions) if @privateHeaderFunctions > 0;
         push(@privateHeaderContent, "\@end\n");
     }
+
+    unless ($isProtocol) {
+        # Generate internal interfaces
+        my $podType = $dataNode->extendedAttributes->{"PODType"};
+        my $typeGetterSig = GetInternalTypeGetterSignature($interfaceName, $podType);
+        my ($typeMakerSig, $typeMakerSigAddition, $ivarsToInit) = GetInternalTypeMakerSignature($interfaceName, $podType);
+
+        # Generate interface definitions. 
+        @internalHeaderContent = split("\r", $implementationLicenceTemplate);
+        push(@internalHeaderContent, "\n#import <WebCore/$className.h>\n");
+        if ($interfaceName eq "Node") {
+            push(@internalHeaderContent, "\n\@protocol DOMEventTarget;\n");
+        }
+        if ($codeGenerator->IsSVGAnimatedType($interfaceName)) {
+            push(@internalHeaderContent, "#import <WebCore/SVGAnimatedTemplate.h>\n\n");
+        } elsif ($interfaceName eq "RGBColor") {
+            push(@internalHeaderContent, "#import <WebCore/Color.h>\n\n");
+        } else {
+            if ($podType and $podType ne "float") {
+                push(@internalHeaderContent, "\nnamespace WebCore { class $podType; }\n\n");
+            } elsif ($interfaceName eq "Node") {
+                push(@internalHeaderContent, "\nnamespace WebCore { class Node; class EventTarget; }\n\n");
+            } else {
+                my $implClassName = GetImplClassName($interfaceName);
+                push(@internalHeaderContent, "\nnamespace WebCore { class $implClassName; }\n\n");
+            }
+        }
+
+        push(@internalHeaderContent, "\@interface $className (WebCoreInternal)\n");
+        push(@internalHeaderContent, $typeGetterSig . ";\n");
+        push(@internalHeaderContent, $typeMakerSig . ";\n");
+        if ($interfaceName eq "Node") {
+            push(@internalHeaderContent, "+ (id <DOMEventTarget>)_wrapEventTarget:(WebCore::EventTarget *)eventTarget;\n");
+        }
+        push(@internalHeaderContent, "\@end\n");
+    }
 }
 
 sub GenerateImplementation
@@ -1062,6 +1151,11 @@ sub GenerateImplementation
             if ($podType and $podType eq "float") {
                 $getterContentHead = "*IMPL";
                 $getterContentTail = "";
+            }
+
+            # TODO: Handle special case for DOMSVGLength
+            if ($podType and $podType eq "SVGLength" and $attributeName eq "value") {
+                $getterContentHead = "IMPL->value(0 /* FIXME */";
             }
 
             my $attributeTypeSansPtr = $attributeType;
@@ -1256,7 +1350,7 @@ sub GenerateImplementation
                 push(@functionContent, "        if ([$paramName isMemberOfClass:[DOMNativeXPathNSResolver class]])\n");
                 push(@functionContent, "            nativeResolver = [(DOMNativeXPathNSResolver *)$paramName _xpathNSResolver];\n");
                 push(@functionContent, "        else {\n");
-                push(@functionContent, "            customResolver = new WebCore::DOMCustomXPathNSResolver($paramName);\n");
+                push(@functionContent, "            customResolver = WebCore::DOMCustomXPathNSResolver::create($paramName);\n");
                 push(@functionContent, "            nativeResolver = customResolver.get();\n");
                 push(@functionContent, "        }\n");
                 push(@functionContent, "    }\n");
@@ -1280,9 +1374,10 @@ sub GenerateImplementation
                 $caller = "dv";
             }
 
-            # FIXME! We need [Custom] support for ObjC, to move these hacks into DOMSVGMatrixCustom.mm
+            # FIXME! We need [Custom] support for ObjC, to move these hacks into DOMSVGLength/MatrixCustom.mm
             my $svgMatrixRotateFromVector = ($podType and $podType eq "AffineTransform" and $functionName eq "rotateFromVector");
             my $svgMatrixInverse = ($podType and $podType eq "AffineTransform" and $functionName eq "inverse");
+            my $svgLengthConvertToSpecifiedUnits = ($podType and $podType eq "SVGLength" and $functionName eq "convertToSpecifiedUnits");
 
             push(@parameterNames, "ec") if $raisesExceptions and !($svgMatrixRotateFromVector || $svgMatrixInverse);
             my $content = $caller . "->" . $codeGenerator->WK_lcfirst($functionName) . "(" . join(", ", @parameterNames) . ")"; 
@@ -1301,6 +1396,8 @@ sub GenerateImplementation
                 push(@functionContent, "        ec = WebCore::SVGException::SVG_MATRIX_NOT_INVERTABLE;\n");
                 push(@functionContent, "    $exceptionRaiseOnError\n");
                 push(@functionContent, "    return [DOMSVGMatrix _wrapSVGMatrix:$content];\n");
+            } elsif ($svgLengthConvertToSpecifiedUnits) {
+                push(@functionContent, "    IMPL->convertToSpecifiedUnits(inUnitType, 0 /* FIXME */);\n");
             } elsif ($returnType eq "void") {
                 # Special case 'void' return type.
                 if ($raisesExceptions) {
@@ -1400,66 +1497,11 @@ sub GenerateImplementation
 
 
     # Generate internal interfaces
-
-    # - Type-Getter
-    # - (WebCore::FooBar *)_fooBar for implementation class FooBar
-    my $typeGetterName = GetObjCTypeGetterName($interfaceName);
-    my $typeGetterSig = "- " . ($podType ? "($podTypeWithNamespace)" : "($implClassNameWithNamespace *)") . $typeGetterName;
-
-    my @ivarsToRetain = ();
-    my $ivarsToInit = "";
-    my $typeMakerSigAddition = "";
-    if (@ivars > 0) {
-        my @ivarsInitSig = ();
-        my @ivarsInitCall = ();
-        foreach $attribute (@ivars) {
-            my $name = $attribute->signature->name;
-            my $memberName = "m_" . $name;
-            my $varName = "in" . $name;
-            my $type = GetObjCType($attribute->signature->type);
-            push(@ivarsInitSig, "$name:($type)$varName");
-            push(@ivarsInitCall, "$name:$varName");
-            push(@ivarsToRetain, "    $memberName = [$varName retain];\n");
-        }
-        $ivarsToInit = " " . join(" ", @ivarsInitCall);
-        $typeMakerSigAddition = " " . join(" ", @ivarsInitSig);
-    }
-
-    # - Type-Maker
-    my $typeMakerName = GetObjCTypeMaker($interfaceName);
-    my $typeMakerSig = "+ ($className *)$typeMakerName:($implClassNameWithNamespace *)impl" . $typeMakerSigAddition;
-    $typeMakerSig = "+ ($className *)$typeMakerName:($podTypeWithNamespace)impl" . $typeMakerSigAddition if $podType;
-
-    # Generate interface definitions. 
-    @internalHeaderContent = split("\r", $implementationLicenceTemplate);
-    push(@internalHeaderContent, "\n#import <WebCore/$className.h>\n");
-    if ($interfaceName eq "Node") {
-        push(@internalHeaderContent, "\n\@protocol DOMEventTarget;\n");
-    }
-    if ($codeGenerator->IsSVGAnimatedType($interfaceName)) {
-        push(@internalHeaderContent, "#import <WebCore/SVGAnimatedTemplate.h>\n\n");
-    } else {
-        if ($podType and $podType ne "float") {
-            push(@internalHeaderContent, "\nnamespace WebCore { class $podType; }\n\n");
-        } elsif ($interfaceName eq "Node") {
-            push(@internalHeaderContent, "\nnamespace WebCore { class Node; class EventTarget; }\n\n");
-        } else { 
-            push(@internalHeaderContent, "\nnamespace WebCore { class $implClassName; }\n\n");
-        }
-    }
-
-    push(@internalHeaderContent, "\@interface $className (WebCoreInternal)\n");
-    push(@internalHeaderContent, $typeGetterSig . ";\n");
-    push(@internalHeaderContent, $typeMakerSig . ";\n");
-    if ($interfaceName eq "Node") {
-        push(@internalHeaderContent, "+ (id <DOMEventTarget>)_wrapEventTarget:(WebCore::EventTarget *)eventTarget;\n");
-    }
-    push(@internalHeaderContent, "\@end\n");
-
     unless ($dataNode->extendedAttributes->{ObjCCustomInternalImpl}) {
         # - BEGIN WebCoreInternal category @implementation
         push(@implContent, "\n\@implementation $className (WebCoreInternal)\n\n");
 
+        my $typeGetterSig = GetInternalTypeGetterSignature($interfaceName, $podType);
         push(@implContent, "$typeGetterSig\n");
         push(@implContent, "{\n");
 
@@ -1470,6 +1512,8 @@ sub GenerateImplementation
         }
 
         push(@implContent, "}\n\n");
+
+        my ($typeMakerSig, $typeMakerSigAddition, $ivarsToInit) = GetInternalTypeMakerSignature($interfaceName, $podType);
 
         if ($podType) {
             # - (id)_initWithFooBar:(WebCore::FooBar)impl for implementation class FooBar

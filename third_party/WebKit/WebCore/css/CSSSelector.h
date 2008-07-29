@@ -75,11 +75,6 @@ namespace WebCore {
         CSSSelector* next() { return m_nextSelector; }
 
         /**
-         * Print debug output for this selector
-         */
-        void print();
-
-        /**
          * Re-create selector text from selector's data
          */
         String selectorText() const;
@@ -142,6 +137,8 @@ namespace WebCore {
             PseudoChecked,
             PseudoEnabled,
             PseudoDisabled,
+            PseudoReadOnly,
+            PseudoReadWrite,
             PseudoIndeterminate,
             PseudoTarget,
             PseudoBefore,

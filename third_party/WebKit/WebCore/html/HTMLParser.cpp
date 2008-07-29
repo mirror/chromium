@@ -28,7 +28,10 @@
 #include "CSSPropertyNames.h"
 #include "CSSValueKeywords.h"
 #include "Comment.h"
+#include "Console.h"
+#include "DOMWindow.h"
 #include "DocumentFragment.h"
+#include "DocumentType.h"
 #include "Frame.h"
 #include "HTMLBodyElement.h"
 #include "HTMLDocument.h"
@@ -47,7 +50,6 @@
 #include "HTMLTableSectionElement.h"
 #include "HTMLTokenizer.h"
 #include "LocalizedStrings.h"
-#include "Page.h"
 #include "Settings.h"
 #include "Text.h"
 
@@ -114,6 +116,7 @@ HTMLParser::HTMLParser(HTMLDocument* doc, bool reportErrors)
     , current(doc)
     , didRefCurrent(false)
     , blockStack(0)
+    , m_hasPElementInScope(NotInScope)
     , head(0)
     , inBody(false)
     , haveContent(false)
@@ -130,6 +133,7 @@ HTMLParser::HTMLParser(DocumentFragment* frag)
     , current(frag)
     , didRefCurrent(true)
     , blockStack(0)
+    , m_hasPElementInScope(NotInScope)
     , head(0)
     , inBody(true)
     , haveContent(false)
@@ -271,6 +275,16 @@ PassRefPtr<Node> HTMLParser::parseToken(Token* t)
     return n;
 }
 
+void HTMLParser::parseDoctypeToken(DoctypeToken* t)
+{
+    // Ignore any doctype after the first.  Ignore doctypes in fragments.
+    if (document->doctype() || m_isParsingFragment || current != document)
+        return;
+        
+    // Make a new doctype node and set it as our doctype.
+    document->addChild(DocumentType::create(document, String::adopt(t->m_name), String::adopt(t->m_publicID), String::adopt(t->m_systemID)));
+}
+
 static bool isTableSection(Node* n)
 {
     return n->hasTagName(tbodyTag) || n->hasTagName(tfootTag) || n->hasTagName(theadTag);
@@ -285,6 +299,11 @@ static bool isTablePart(Node* n)
 static bool isTableRelated(Node* n)
 {
     return n->hasTagName(tableTag) || isTablePart(n);
+}
+
+static bool isScopingTag(const AtomicString& tagName)
+{
+    return tagName == appletTag || tagName == captionTag || tagName == tdTag || tagName == thTag || tagName == buttonTag || tagName == marqueeTag || tagName == objectTag || tagName == tableTag || tagName == htmlTag;
 }
 
 bool HTMLParser::insertNode(Node* n, bool flat)
@@ -318,6 +337,7 @@ bool HTMLParser::insertNode(Node* n, bool flat)
             // optimized version of setCurrent that takes advantage of that fact and also
             // assumes that newNode is neither 0 nor a pointer to the document.
             pushBlock(localName, tagPriority);
+            newNode->beginParsingChildren();
             ASSERT(!didRefCurrent);
             newNode->ref(); 
             current = newNode;
@@ -374,7 +394,7 @@ bool HTMLParser::handleError(Node* n, bool flat, const AtomicString& localName, 
             }
         } else if (h->hasLocalName(htmlTag)) {
             if (!current->isDocumentNode() ) {
-                if (document->documentElement()->hasTagName(htmlTag)) {
+                if (document->documentElement() && document->documentElement()->hasTagName(htmlTag)) {
                     reportError(RedundantHTMLBodyError, &localName);
                     // we have another <HTML> element.... apply attributes to existing one
                     // make sure we don't overwrite already existing attributes
@@ -406,6 +426,7 @@ bool HTMLParser::handleError(Node* n, bool flat, const AtomicString& localName, 
                     reportError(MisplacedHeadContentError, &localName, &current->localName());
                 
                 pushBlock(localName, tagPriority);
+                newNode->beginParsingChildren();
                 setCurrent(newNode);
                 if (!n->attached() && !m_isParsingFragment)
                     n->attach();
@@ -549,6 +570,7 @@ bool HTMLParser::handleError(Node* n, bool flat, const AtomicString& localName, 
                             !flat && static_cast<HTMLElement*>(n)->endTagRequirement() != TagStatusForbidden)
                         {
                             pushBlock(localName, tagPriority);
+                            n->beginParsingChildren();
                             setCurrent(n);
                             inStrayTableContent++;
                             blockStack->strayTableContent = true;
@@ -590,6 +612,12 @@ bool HTMLParser::handleError(Node* n, bool flat, const AtomicString& localName, 
             } else if (localName == selectTag) {
                 // IE treats a nested select as </select>. Let's do the same
                 popBlock(localName);
+            }
+        } else if (h->hasLocalName(selectTag)) {
+            if (localName == inputTag || localName == textareaTag) {
+                reportError(MisplacedContentRetryError, &localName, &currentTagName);
+                popBlock(currentTagName);
+                handled = true;
             }
         } else if (h->hasLocalName(colgroupTag)) {
             popBlock(currentTagName);
@@ -677,13 +705,6 @@ bool HTMLParser::framesetCreateErrorCheck(Token* t, RefPtr<Node>& result)
     return true;
 }
 
-bool HTMLParser::iframeCreateErrorCheck(Token* t, RefPtr<Node>& result)
-{
-    // a bit of a special case, since the frame is inlined
-    setSkipMode(iframeTag);
-    return true;
-}
-
 bool HTMLParser::formCreateErrorCheck(Token* t, RefPtr<Node>& result)
 {
     // Only create a new form if we're not already inside one.
@@ -691,6 +712,7 @@ bool HTMLParser::formCreateErrorCheck(Token* t, RefPtr<Node>& result)
     if (!m_currentFormElement) {
         m_currentFormElement = new HTMLFormElement(document);
         result = m_currentFormElement;
+        pCloserCreateErrorCheck(t, result);
     }
     return false;
 }
@@ -714,6 +736,7 @@ bool HTMLParser::selectCreateErrorCheck(Token* t, RefPtr<Node>& result)
 
 bool HTMLParser::ddCreateErrorCheck(Token* t, RefPtr<Node>& result)
 {
+    pCloserCreateErrorCheck(t, result);
     popBlock(dtTag);
     popBlock(ddTag);
     return true;
@@ -721,6 +744,7 @@ bool HTMLParser::ddCreateErrorCheck(Token* t, RefPtr<Node>& result)
 
 bool HTMLParser::dtCreateErrorCheck(Token* t, RefPtr<Node>& result)
 {
+    pCloserCreateErrorCheck(t, result);
     popBlock(ddTag);
     popBlock(dtTag);
     return true;
@@ -728,6 +752,13 @@ bool HTMLParser::dtCreateErrorCheck(Token* t, RefPtr<Node>& result)
 
 bool HTMLParser::nestedCreateErrorCheck(Token* t, RefPtr<Node>& result)
 {
+    popBlock(t->tagName);
+    return true;
+}
+
+bool HTMLParser::nestedPCloserCreateErrorCheck(Token* t, RefPtr<Node>& result)
+{
+    pCloserCreateErrorCheck(t, result);
     popBlock(t->tagName);
     return true;
 }
@@ -774,6 +805,22 @@ bool HTMLParser::noscriptCreateErrorCheck(Token* t, RefPtr<Node>& result)
     return true;
 }
 
+bool HTMLParser::pCloserCreateErrorCheck(Token* t, RefPtr<Node>& result)
+{
+    if (hasPElementInScope())
+        popBlock(pTag);
+    return true;
+}
+
+bool HTMLParser::pCloserStrictCreateErrorCheck(Token* t, RefPtr<Node>& result)
+{
+    if (document->inCompatMode())
+        return true;
+    if (hasPElementInScope())
+        popBlock(pTag);
+    return true;
+}
+
 bool HTMLParser::mapCreateErrorCheck(Token* t, RefPtr<Node>& result)
 {
     m_currentMapElement = new HTMLMapElement(document);
@@ -787,29 +834,49 @@ PassRefPtr<Node> HTMLParser::getNode(Token* t)
     static FunctionMap gFunctionMap;
     if (gFunctionMap.isEmpty()) {
         gFunctionMap.set(aTag.localName().impl(), &HTMLParser::nestedCreateErrorCheck);
+        gFunctionMap.set(addressTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(bTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
         gFunctionMap.set(bigTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
+        gFunctionMap.set(blockquoteTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(bodyTag.localName().impl(), &HTMLParser::bodyCreateErrorCheck);
         gFunctionMap.set(buttonTag.localName().impl(), &HTMLParser::nestedCreateErrorCheck);
+        gFunctionMap.set(centerTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(commentAtom.impl(), &HTMLParser::commentCreateErrorCheck);
         gFunctionMap.set(ddTag.localName().impl(), &HTMLParser::ddCreateErrorCheck);
+        gFunctionMap.set(dirTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(divTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(dlTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(dtTag.localName().impl(), &HTMLParser::dtCreateErrorCheck);
         gFunctionMap.set(formTag.localName().impl(), &HTMLParser::formCreateErrorCheck);
+        gFunctionMap.set(fieldsetTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(framesetTag.localName().impl(), &HTMLParser::framesetCreateErrorCheck);
+        gFunctionMap.set(h1Tag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(h2Tag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(h3Tag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(h4Tag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(h5Tag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(h6Tag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(headTag.localName().impl(), &HTMLParser::headCreateErrorCheck);
+        gFunctionMap.set(hrTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(iTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
-        gFunctionMap.set(iframeTag.localName().impl(), &HTMLParser::iframeCreateErrorCheck);
         gFunctionMap.set(isindexTag.localName().impl(), &HTMLParser::isindexCreateErrorCheck);
-        gFunctionMap.set(liTag.localName().impl(), &HTMLParser::nestedCreateErrorCheck);
+        gFunctionMap.set(liTag.localName().impl(), &HTMLParser::nestedPCloserCreateErrorCheck);
+        gFunctionMap.set(listingTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(mapTag.localName().impl(), &HTMLParser::mapCreateErrorCheck);
+        gFunctionMap.set(menuTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(nobrTag.localName().impl(), &HTMLParser::nestedCreateErrorCheck);
         gFunctionMap.set(noembedTag.localName().impl(), &HTMLParser::noembedCreateErrorCheck);
         gFunctionMap.set(noframesTag.localName().impl(), &HTMLParser::noframesCreateErrorCheck);
         gFunctionMap.set(noscriptTag.localName().impl(), &HTMLParser::noscriptCreateErrorCheck);
+        gFunctionMap.set(olTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(pTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(plaintextTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
+        gFunctionMap.set(preTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
         gFunctionMap.set(sTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
         gFunctionMap.set(selectTag.localName().impl(), &HTMLParser::selectCreateErrorCheck);
         gFunctionMap.set(smallTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
         gFunctionMap.set(strikeTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
+        gFunctionMap.set(tableTag.localName().impl(), &HTMLParser::pCloserStrictCreateErrorCheck);
         gFunctionMap.set(tbodyTag.localName().impl(), &HTMLParser::tableSectionCreateErrorCheck);
         gFunctionMap.set(tdTag.localName().impl(), &HTMLParser::tableCellCreateErrorCheck);
         gFunctionMap.set(textAtom.impl(), &HTMLParser::textCreateErrorCheck);
@@ -819,6 +886,7 @@ PassRefPtr<Node> HTMLParser::getNode(Token* t)
         gFunctionMap.set(trTag.localName().impl(), &HTMLParser::nestedCreateErrorCheck);
         gFunctionMap.set(ttTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
         gFunctionMap.set(uTag.localName().impl(), &HTMLParser::nestedStyleCreateErrorCheck);
+        gFunctionMap.set(ulTag.localName().impl(), &HTMLParser::pCloserCreateErrorCheck);
     }
 
     bool proceed = true;
@@ -1011,6 +1079,8 @@ void HTMLParser::handleResidualStyleCloseTagAcrossBlocks(HTMLStackElem* elem)
         if (!parentElem->childAllowed(blockElem))
             return;
 
+        m_hasPElementInScope = Unknown;
+
         if (maxElem->node->parentNode() != elem->node) {
             // Walk the stack and remove any elements that aren't residual style tags.  These
             // are basically just being closed up.  Example:
@@ -1200,6 +1270,7 @@ void HTMLParser::reopenResidualStyleTags(HTMLStackElem* elem, Node* malformedTab
 
         // Now push a new stack element for this node we just created.
         pushBlock(elem->tagName, elem->level);
+        newNode->beginParsingChildren();
 
         // Set our strayTableContent boolean if needed, so that the reopened tag also knows
         // that it is inside a malformed table.
@@ -1223,9 +1294,12 @@ void HTMLParser::reopenResidualStyleTags(HTMLStackElem* elem, Node* malformedTab
 
 void HTMLParser::pushBlock(const AtomicString& tagName, int level)
 {
-    current->beginParsingChildren();
     blockStack = new HTMLStackElem(tagName, level, current, didRefCurrent, blockStack);
     didRefCurrent = false;
+    if (tagName == pTag)
+        m_hasPElementInScope = InScope;
+    else if (isScopingTag(tagName))
+        m_hasPElementInScope = NotInScope;
 }
 
 void HTMLParser::popBlock(const AtomicString& tagName, bool reportErrors)
@@ -1321,6 +1395,11 @@ inline HTMLStackElem* HTMLParser::popOneBlockCommon()
     if (elem->strayTableContent)
         inStrayTableContent--;
 
+    if (elem->tagName == pTag)
+        m_hasPElementInScope = NotInScope;
+    else if (isScopingTag(elem->tagName))
+        m_hasPElementInScope = Unknown;
+
     return elem;
 }
 
@@ -1356,6 +1435,21 @@ void HTMLParser::moveOneBlockToStack(HTMLStackElem*& head)
     elem->didRefNode = didRefLastCurrent;
     elem->next = head;
     head = elem;
+}
+
+void HTMLParser::checkIfHasPElementInScope()
+{
+    m_hasPElementInScope = NotInScope;
+    HTMLStackElem* elem = blockStack;
+    while (elem) {
+        const AtomicString& tagName = elem->tagName;
+        if (tagName == pTag) {
+            m_hasPElementInScope = InScope;
+            return;
+        } else if (isScopingTag(tagName))
+            return;
+        elem = elem->next;
+    }
 }
 
 void HTMLParser::popInlineBlocks()
@@ -1402,7 +1496,7 @@ PassRefPtr<Node> HTMLParser::handleIsindex(Token* t)
     String text = searchableIndexIntroduction();
     if (attrs) {
         if (Attribute* a = attrs->getAttributeItem(promptAttr))
-            text = a->value().domString() + " ";
+            text = a->value().string() + " ";
         t->attrs = 0;
     }
 
@@ -1448,10 +1542,6 @@ void HTMLParser::reportErrorToConsole(HTMLParserErrorCode errorCode, const Atomi
     if (!frame)
         return;
     
-    Page* page = frame->page();
-    if (!page)
-        return;
-
     HTMLTokenizer* htmlTokenizer = static_cast<HTMLTokenizer*>(document->tokenizer());
     int lineNumber = htmlTokenizer->lineNumber() + 1;
 
@@ -1485,7 +1575,9 @@ void HTMLParser::reportErrorToConsole(HTMLParserErrorCode errorCode, const Atomi
     message.replace("%tag1", tag1);
     message.replace("%tag2", tag2);
 
-    page->chrome()->addMessageToConsole(HTMLMessageSource, isWarning(errorCode) ? WarningMessageLevel: ErrorMessageLevel, message, lineNumber, document->url());
+    frame->domWindow()->console()->addMessage(HTMLMessageSource,
+        isWarning(errorCode) ? WarningMessageLevel : ErrorMessageLevel,
+        message, lineNumber, document->url().string());
 }
 
 }

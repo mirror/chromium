@@ -46,20 +46,15 @@ using std::max;
 
 namespace WebCore {
 
-CachedImage::CachedImage(DocLoader* docLoader, const String& url, bool forCache)
-    : CachedResource(url, ImageResource, forCache)
+CachedImage::CachedImage(const String& url)
+    : CachedResource(url, ImageResource)
 {
     m_image = 0;
     m_status = Unknown;
-    if (!docLoader || docLoader->autoLoadImages())  {
-        m_loading = true;
-        cache()->loader()->load(docLoader, this, true);
-    } else
-        m_loading = false;
 }
 
 CachedImage::CachedImage(Image* image)
-    : CachedResource(String(), ImageResource, false /* not for cache */)
+    : CachedResource(String(), ImageResource)
 {
     m_image = image;
     m_status = Cached;
@@ -70,12 +65,20 @@ CachedImage::~CachedImage()
 {
     delete m_image;
 }
-
-void CachedImage::ref(CachedResourceClient* c)
+    
+void CachedImage::load(DocLoader* docLoader)
 {
-    CachedResource::ref(c);
+    if (!docLoader || docLoader->autoLoadImages())
+        CachedResource::load(docLoader, true, false, true);
+    else
+        m_loading = false;
+}
 
-    if (!imageRect().isEmpty())
+void CachedImage::addClient(CachedResourceClient* c)
+{
+    CachedResource::addClient(c);
+
+    if (m_image && !m_image->rect().isEmpty())
         c->imageChanged(this);
 
     if (!m_loading)
@@ -143,14 +146,42 @@ bool CachedImage::imageHasRelativeHeight() const
     return false;
 }
 
-IntSize CachedImage::imageSize() const
+IntSize CachedImage::imageSize(float multiplier) const
 {
-    return (m_image ? m_image->size() : IntSize());
+    if (!m_image)
+        return IntSize();
+    if (multiplier == 1.0f)
+        return m_image->size();
+        
+    // Don't let images that have a width/height >= 1 shrink below 1 when zoomed.
+    bool hasWidth = m_image->size().width() > 0;
+    bool hasHeight = m_image->size().height() > 0;
+    int width = m_image->size().width() * (m_image->hasRelativeWidth() ? 1.0f : multiplier);
+    int height = m_image->size().height() * (m_image->hasRelativeHeight() ? 1.0f : multiplier);
+    if (hasWidth)
+        width = max(1, width);
+    if (hasHeight)
+        height = max(1, height);
+    return IntSize(width, height);
 }
 
-IntRect CachedImage::imageRect() const
+IntRect CachedImage::imageRect(float multiplier) const
 {
-    return (m_image ? m_image->rect() : IntRect());
+    if (!m_image)
+        return IntRect();
+    if (multiplier == 1.0f)
+        return m_image->rect();
+        
+    // Don't let images that have a width/height >= 1 shrink below 1 when zoomed.
+    bool hasWidth = m_image->rect().width() > 0;
+    bool hasHeight = m_image->rect().height() > 0;
+    int width = m_image->rect().width() * (m_image->hasRelativeWidth() ? 1.0f : multiplier);
+    int height = m_image->rect().height() * (m_image->hasRelativeHeight() ? 1.0f : multiplier);
+    if (hasWidth)
+        width = max(1, width);
+    if (hasHeight)
+        height = max(1, height);
+    return IntRect(m_image->rect().x() * (m_image->hasRelativeWidth() ? 1.0f : multiplier), m_image->rect().y() * (m_image->hasRelativeHeight() ? 1.0f : multiplier), width, height);
 }
 
 void CachedImage::notifyObservers()

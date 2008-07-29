@@ -41,7 +41,7 @@ UserStyleSheetLoader::UserStyleSheetLoader(PassRefPtr<Document> document, const 
 {
     if (m_cachedSheet) {
         m_document->addPendingSheet();
-        m_cachedSheet->ref(this);
+        m_cachedSheet->addClient(this);
     }
 }
 
@@ -50,13 +50,13 @@ UserStyleSheetLoader::~UserStyleSheetLoader()
     if (m_cachedSheet) {
         if (!m_cachedSheet->isLoaded())
             m_document->removePendingSheet();
-        m_cachedSheet->deref(this);
+        m_cachedSheet->removeClient(this);
     }
 }
 
-void UserStyleSheetLoader::setCSSStyleSheet(const String& /*URL*/, const String& /*charset*/, const String& sheet)
+void UserStyleSheetLoader::setCSSStyleSheet(const String& /*URL*/, const String& /*charset*/, const CachedCSSStyleSheet* sheet)
 {
     m_document->removePendingSheet();
     if (Frame* frame = m_document->frame())
-        frame->setUserStyleSheet(sheet);
+        frame->setUserStyleSheet(sheet->sheetText());
 }

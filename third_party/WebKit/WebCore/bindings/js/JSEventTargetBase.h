@@ -31,8 +31,6 @@
 #include "Event.h"
 #include "EventNames.h"
 #include "JSEvent.h"
-#include "kjs_events.h"
-#include "kjs_window.h"
 
 namespace KJS {
 
@@ -61,16 +59,8 @@ namespace WebCore {
         };
     };
 
-    // Helper function for the partial specializated template functions below 
-    bool retrieveEventTargetAndCorrespondingNode(KJS::ExecState*, KJS::JSObject* thisObj, Node*&, EventTarget*&);
-
-    // Functions
-    KJS::JSValue* jsEventTargetAddEventListener(KJS::ExecState*, KJS::JSObject*, const KJS::List&);
-    KJS::JSValue* jsEventTargetRemoveEventListener(KJS::ExecState*, KJS::JSObject*, const KJS::List&);
-    KJS::JSValue* jsEventTargetDispatchEvent(KJS::ExecState*, KJS::JSObject*, const KJS::List&);
-
     // Helper function for getValueProperty/putValueProperty
-    AtomicString eventNameForPropertyToken(int token);
+    const AtomicString& eventNameForPropertyToken(int token);
 
     template<class JSEventTarget>
     class JSEventTargetBase {
@@ -79,16 +69,16 @@ namespace WebCore {
 
         KJS::JSValue* getValueProperty(const JSEventTarget* owner, KJS::ExecState* exec, int token) const
         {
-            AtomicString eventName = eventNameForPropertyToken(token);
+            const AtomicString& eventName = eventNameForPropertyToken(token);
             if (!eventName.isEmpty())
                 return owner->getListener(eventName);
 
             return KJS::jsUndefined();
         }
 
-        void putValueProperty(const JSEventTarget* owner, KJS::ExecState* exec, int token, KJS::JSValue* value, int attr)
+        void putValueProperty(const JSEventTarget* owner, KJS::ExecState* exec, int token, KJS::JSValue* value)
         {
-            AtomicString eventName = eventNameForPropertyToken(token);
+            const AtomicString& eventName = eventNameForPropertyToken(token);
             if (!eventName.isEmpty())
                 owner->setListener(exec, eventName, value);
         }
@@ -104,9 +94,9 @@ namespace WebCore {
         }
 
         template<class JSParent>
-        void put(JSEventTarget* owner, KJS::ExecState* exec, const KJS::Identifier& propertyName, KJS::JSValue* value, int attr)
+        void put(JSEventTarget* owner, KJS::ExecState* exec, const KJS::Identifier& propertyName, KJS::JSValue* value)
         {
-            KJS::lookupPut<JSEventTarget, JSParent>(exec, propertyName, value, attr, &KJS::JSEventTargetPropertiesTable, owner);
+            KJS::lookupPut<JSEventTarget, JSParent>(exec, propertyName, value, &KJS::JSEventTargetPropertiesTable, owner);
         }
     };
 
@@ -125,7 +115,7 @@ namespace WebCore {
 
         static KJS::JSObject* self(KJS::ExecState* exec)
         {
-            static KJS::Identifier* prototypeName = new KJS::Identifier(JSEventTargetPrototypeInformation::prototypeClassName());
+            static KJS::Identifier* prototypeName = new KJS::Identifier(exec, JSEventTargetPrototypeInformation::prototypeClassName());
 
             KJS::JSGlobalObject* globalObject = exec->lexicalGlobalObject();
             if (KJS::JSValue* objectValue = globalObject->getDirect(*prototypeName)) {
@@ -133,8 +123,8 @@ namespace WebCore {
                 return static_cast<KJS::JSObject*>(objectValue);
             }
 
-            KJS::JSObject* newObject = new JSEventTargetPrototype<JSEventTargetPrototypeParent, JSEventTargetPrototypeInformation>(exec);
-            globalObject->putDirect(*prototypeName, newObject, KJS::Internal | KJS::DontEnum);
+            KJS::JSObject* newObject = new (exec) JSEventTargetPrototype<JSEventTargetPrototypeParent, JSEventTargetPrototypeInformation>(exec);
+            globalObject->putDirect(*prototypeName, newObject, KJS::DontEnum);
             return newObject;
         }
 
@@ -145,10 +135,12 @@ namespace WebCore {
 
         virtual const KJS::ClassInfo* classInfo() const
         {
-            static const KJS::ClassInfo s_classInfo = { JSEventTargetPrototypeInformation::prototypeClassName(), 0, &KJS::JSEventTargetPrototypeTable };
+            static const KJS::ClassInfo s_classInfo = { JSEventTargetPrototypeInformation::prototypeClassName(), 0, &KJS::JSEventTargetPrototypeTable, 0 };
             return &s_classInfo;
         }
     };
+
+    KJS::JSValue* toJS(KJS::ExecState*, EventTarget*);
 
 } // namespace WebCore
 

@@ -88,7 +88,7 @@ static void utf16_to_utf8(const UChar* aText, gint aLength, char* &text, gint &l
   }
 
   glong items_written;
-  text = g_utf16_to_utf8(aText, aLength, NULL, &items_written, NULL);
+  text = g_utf16_to_utf8(reinterpret_cast<const gunichar2*>(aText), aLength, NULL, &items_written, NULL);
   length = items_written;
 
   if (need_copy)
@@ -157,34 +157,6 @@ static void setPangoAttributes(const Font* font, const TextRun& run, PangoLayout
     PangoContext* pangoContext = pango_layout_get_context(layout);
     PangoDirection direction = run.rtl() ? PANGO_DIRECTION_RTL : PANGO_DIRECTION_LTR;
     pango_context_set_base_dir(pangoContext, direction);
-}
-
-void Font::drawGlyphs(GraphicsContext* graphicsContext, const SimpleFontData* font, const GlyphBuffer& glyphBuffer,
-                      int from, int numGlyphs, const FloatPoint& point) const
-{
-    cairo_t* cr = graphicsContext->platformContext();
-    cairo_save(cr);
-
-    // Set the text color to use for drawing.
-    float red, green, blue, alpha;
-    Color penColor = graphicsContext->fillColor();
-    penColor.getRGBA(red, green, blue, alpha);
-    cairo_set_source_rgba(cr, red, green, blue, alpha);
-
-    font->setFont(cr);
-
-    GlyphBufferGlyph* glyphs = (GlyphBufferGlyph*)glyphBuffer.glyphs(from);
-
-    float offset = point.x();
-
-    for (int i = 0; i < numGlyphs; i++) {
-        glyphs[i].x = offset;
-        glyphs[i].y = point.y();
-        offset += glyphBuffer.advanceAt(from + i);
-    }
-    cairo_show_glyphs(cr, glyphs, numGlyphs);
-
-    cairo_restore(cr);
 }
 
 void Font::drawComplexText(GraphicsContext* context, const TextRun& run, const FloatPoint& point, int from, int to) const

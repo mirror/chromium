@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -59,7 +59,9 @@ Settings::Settings(Page* page)
     , m_javaScriptCanOpenWindowsAutomatically(false)
     , m_shouldPrintBackgrounds(false)
     , m_textAreasAreResizable(false)
+#if ENABLE(DASHBOARD_SUPPORT)
     , m_usesDashboardBackwardCompatibilityMode(false)
+#endif
     , m_needsAdobeFrameReloadingQuirk(false)
     , m_needsKeyboardEventDisambiguationQuirks(false)
     , m_isDOMPasteAllowed(false)
@@ -71,6 +73,11 @@ Settings::Settings(Page* page)
     , m_authorAndUserStylesEnabled(true)
     , m_needsSiteSpecificQuirks(false)
     , m_fontRenderingMode(0)
+    , m_webArchiveDebugModeEnabled(false)
+    , m_inApplicationChromeMode(false)
+    , m_offlineWebApplicationCacheEnabled(false)
+    , m_rangeMutationDisabledForOldAppleMail(false)
+    , m_shouldPaintCustomScrollbars(false)
 {
     // A Frame may not have been created yet, so we initialize the AtomicString 
     // hash before trying to use it.
@@ -232,10 +239,12 @@ void Settings::setEditableLinkBehavior(EditableLinkBehavior editableLinkBehavior
     m_editableLinkBehavior = editableLinkBehavior;
 }
 
+#if ENABLE(DASHBOARD_SUPPORT)
 void Settings::setUsesDashboardBackwardCompatibilityMode(bool usesDashboardBackwardCompatibilityMode)
 {
     m_usesDashboardBackwardCompatibilityMode = usesDashboardBackwardCompatibilityMode;
 }
+#endif
 
 // FIXME: This quirk is needed because of Radar 4674537 and 5211271. We need to phase it out once Adobe
 // can fix the bug from their end.
@@ -321,6 +330,41 @@ FontRenderingMode Settings::fontRenderingMode() const
 void Settings::setNeedsSiteSpecificQuirks(bool needsQuirks)
 {
     m_needsSiteSpecificQuirks = needsQuirks;
+}
+
+void Settings::setWebArchiveDebugModeEnabled(bool enabled)
+{
+    m_webArchiveDebugModeEnabled = enabled;
+}
+
+void Settings::setLocalStorageDatabasePath(const String& path)
+{
+    m_localStorageDatabasePath = path;
+}
+
+void Settings::disableRangeMutationForOldAppleMail(bool disable)
+{
+    m_rangeMutationDisabledForOldAppleMail = disable;
+}
+
+void Settings::setApplicationChromeMode(bool mode)
+{
+    m_inApplicationChromeMode = mode;
+}
+
+void Settings::setOfflineWebApplicationCacheEnabled(bool enabled)
+{
+    m_offlineWebApplicationCacheEnabled = enabled;
+}
+
+void Settings::setUpdatesWhenOffscreen(bool updates)
+{
+    m_updatesWhenOffscreen = updates;
+}
+
+void Settings::setShouldPaintCustomScrollbars(bool shouldPaintCustomScrollbars)
+{
+    m_shouldPaintCustomScrollbars = shouldPaintCustomScrollbars;
 }
 
 } // namespace WebCore

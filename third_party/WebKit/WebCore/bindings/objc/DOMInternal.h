@@ -27,9 +27,7 @@
 
 #import "DOM.h"
 
-#import "Color.h"
 #import "DOMObject.h"
-#import "DOMRGBColor.h"
 #import "HitTestResult.h"
 
 #if ENABLE(XPATH)
@@ -56,6 +54,8 @@
 #import "DOMCSSUnknownRuleInternal.h"
 #import "DOMCSSValueInternal.h"
 #import "DOMCSSValueListInternal.h"
+#import "DOMCSSVariablesRuleInternal.h"
+#import "DOMCSSVariablesDeclarationInternal.h"
 #import "DOMCharacterDataInternal.h"
 #import "DOMCommentInternal.h"
 #import "DOMCounterInternal.h"
@@ -67,6 +67,8 @@
 #import "DOMEntityInternal.h"
 #import "DOMEntityReferenceInternal.h"
 #import "DOMEventInternal.h"
+#import "DOMFileInternal.h"
+#import "DOMFileListInternal.h"
 #import "DOMHTMLAnchorElementInternal.h"
 #import "DOMHTMLAppletElementInternal.h"
 #import "DOMHTMLAreaElementInternal.h"
@@ -136,18 +138,21 @@
 #import "DOMNotationInternal.h"
 #import "DOMOverflowEventInternal.h"
 #import "DOMProcessingInstructionInternal.h"
+#import "DOMRGBColorInternal.h"
 #import "DOMRangeInternal.h"
 #import "DOMRectInternal.h"
 #import "DOMStyleSheetInternal.h"
 #import "DOMStyleSheetListInternal.h"
-#import "DOMTextInternal.h"
 #import "DOMTextEventInternal.h"
+#import "DOMTextInternal.h"
 #import "DOMTreeWalkerInternal.h"
 #import "DOMUIEventInternal.h"
+#import "DOMWebKitCSSTransformValueInternal.h"
 #import "DOMWheelEventInternal.h"
 
 #if ENABLE(SVG)
 #import "DOMSVGAElementInternal.h"
+#import "DOMSVGAltGlyphElementInternal.h"
 #import "DOMSVGAngleInternal.h"
 #import "DOMSVGAnimateColorElementInternal.h"
 #import "DOMSVGAnimateElementInternal.h"
@@ -305,13 +310,6 @@ namespace WebCore {
 
 @interface DOMObject (WebCoreInternal)
 - (id)_init;
-@end
-
-// CSS Internal Interfaces
-
-@interface DOMRGBColor (WebCoreInternal)
-+ (DOMRGBColor *)_wrapRGBColor:(WebCore::RGBA32)value;
-- (WebCore::RGBA32)_RGBColor;
 @end
 
 // Traversal Internal Interfaces

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,27 +33,42 @@
 #include "CSSStyleSelector.h"
 #include "Document.h"
 #include "Element.h"
-#include "Node.h"
+#include "HTMLNames.h"
 
 namespace WebCore {
 
-SelectorNodeList::SelectorNodeList(PassRefPtr<Node> rootNode, CSSSelector* querySelector)
+using namespace HTMLNames;
+
+PassRefPtr<StaticNodeList> createSelectorNodeList(Node* rootNode, CSSSelector* querySelector)
 {
+    Vector<RefPtr<Node> > nodes;
     Document* document = rootNode->document();
-    CSSStyleSelector* styleSelector = document->styleSelector();
-    for (Node* n = rootNode->firstChild(); n; n = n->traverseNextNode(rootNode.get())) {
-        if (n->isElementNode()) {
-            Element* element = static_cast<Element*>(n);
-            styleSelector->initElementAndPseudoState(element);
-            styleSelector->initForStyleResolve(element, 0);
-            for (CSSSelector* selector = querySelector; selector; selector = selector->next()) {
-                if (styleSelector->checkSelector(selector)) {
-                    m_nodes.append(n);
-                    break;
+    AtomicString selectorValue = querySelector->m_value;
+    bool strictParsing = !document->inCompatMode();
+
+    if (strictParsing && rootNode->inDocument() && !querySelector->next() && querySelector->m_match == CSSSelector::Id
+            && !querySelector->hasTag() && !querySelector->m_tagHistory && !querySelector->m_simpleSelector
+            && !document->containsMultipleElementsWithId(selectorValue)) {
+        ASSERT(querySelector->m_attr == idAttr);
+        Element* element = document->getElementById(selectorValue);
+        if (element && (rootNode->isDocumentNode() || element->isDescendantOf(rootNode)))
+            nodes.append(element);
+    } else {
+        CSSStyleSelector::SelectorChecker selectorChecker(document, strictParsing);
+        for (Node* n = rootNode->firstChild(); n; n = n->traverseNextNode(rootNode)) {
+            if (n->isElementNode()) {
+                Element* element = static_cast<Element*>(n);
+                for (CSSSelector* selector = querySelector; selector; selector = selector->next()) {
+                    if (selectorChecker.checkSelector(selector, element)) {
+                        nodes.append(n);
+                        break;
+                    }
                 }
             }
         }
     }
+    
+    return StaticNodeList::adopt(nodes);
 }
 
 } // namespace WebCore

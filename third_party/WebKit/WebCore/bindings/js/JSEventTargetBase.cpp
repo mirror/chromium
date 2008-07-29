@@ -27,16 +27,31 @@
 #include "config.h"
 #include "JSEventTargetBase.h"
 
+#include "JSDOMWindow.h"
+#include "JSEventListener.h"
 #include "JSEventTargetNode.h"
+#include <kjs/Error.h>
 
-#include "JSEventTargetBase.lut.h"
+#if ENABLE(SVG)
+#include "JSSVGElementInstance.h"
+#endif
 
 using namespace KJS;
 
 namespace WebCore {
 
+static JSValue* jsEventTargetAddEventListener(ExecState*, JSObject*, JSValue*, const ArgList&);
+static JSValue* jsEventTargetRemoveEventListener(ExecState*, JSObject*, JSValue*, const ArgList&);
+static JSValue* jsEventTargetDispatchEvent(ExecState*, JSObject*, JSValue*, const ArgList&);
+
+}
+
+#include "JSEventTargetBase.lut.h"
+
+namespace WebCore {
+
 /* Source for JSEventTargetPropertiesTable
-@begin JSEventTargetPropertiesTable 50
+@begin JSEventTargetPropertiesTable
 onabort       WebCore::JSEventTargetProperties::OnAbort                DontDelete
 onblur        WebCore::JSEventTargetProperties::OnBlur                 DontDelete
 onchange      WebCore::JSEventTargetProperties::OnChange               DontDelete
@@ -81,68 +96,19 @@ onunload      WebCore::JSEventTargetProperties::OnUnload               DontDelet
 */
 
 /*
-@begin JSEventTargetPrototypeTable 5
+@begin JSEventTargetPrototypeTable
 addEventListener        WebCore::jsEventTargetAddEventListener    DontDelete|Function 3
 removeEventListener     WebCore::jsEventTargetRemoveEventListener DontDelete|Function 3
 dispatchEvent           WebCore::jsEventTargetDispatchEvent       DontDelete|Function 1
 @end
 */
 
-JSValue* jsEventTargetAddEventListener(ExecState* exec, JSObject* thisObj, const List& args)
+static bool retrieveEventTargetAndCorrespondingNode(ExecState*, JSValue* thisValue, Node*& eventNode, EventTarget*& eventTarget)
 {
-    DOMExceptionTranslator exception(exec);
-
-    Node* eventNode = 0;
-    EventTarget* eventTarget = 0;
-    if (!retrieveEventTargetAndCorrespondingNode(exec, thisObj, eventNode, eventTarget))
-        return throwError(exec, TypeError);
-
-    Frame* frame = eventNode->document()->frame();
-    if (!frame)
-        return jsUndefined();
-
-    if (JSEventListener* listener = Window::retrieveWindow(frame)->findOrCreateJSEventListener(args[1]))
-        eventTarget->addEventListener(args[0]->toString(exec), listener, args[2]->toBoolean(exec));
-
-    return jsUndefined();
-}
-
-JSValue* jsEventTargetRemoveEventListener(ExecState* exec, JSObject* thisObj, const List& args)
-{
-    DOMExceptionTranslator exception(exec);
-
-    Node* eventNode = 0;
-    EventTarget* eventTarget = 0;
-    if (!retrieveEventTargetAndCorrespondingNode(exec, thisObj, eventNode, eventTarget))
-        return throwError(exec, TypeError);
-
-    Frame* frame = eventNode->document()->frame();
-    if (!frame)
-        return jsUndefined();
-
-    if (JSEventListener* listener = Window::retrieveWindow(frame)->findJSEventListener(args[1]))
-        eventTarget->removeEventListener(args[0]->toString(exec), listener, args[2]->toBoolean(exec));
-
-    return jsUndefined();
-}
-
-JSValue* jsEventTargetDispatchEvent(ExecState* exec, JSObject* thisObj, const List& args)
-{
-    Node* eventNode = 0;
-    EventTarget* eventTarget = 0;
-    if (!retrieveEventTargetAndCorrespondingNode(exec, thisObj, eventNode, eventTarget))
-        return throwError(exec, TypeError);
-
-    DOMExceptionTranslator exception(exec);
-    return jsBoolean(eventTarget->dispatchEvent(toEvent(args[0]), exception));
-}
-
-bool retrieveEventTargetAndCorrespondingNode(KJS::ExecState*, KJS::JSObject* thisObj, Node*& eventNode, EventTarget*& eventTarget)
-{
-    if (!thisObj->inherits(&JSNode::info))
+    if (!thisValue->isObject(&JSNode::s_info))
         return false;
 
-    JSEventTargetNode* jsNode = static_cast<JSEventTargetNode*>(thisObj);
+    JSEventTargetNode* jsNode = static_cast<JSEventTargetNode*>(thisValue);
     ASSERT(jsNode);
 
     EventTargetNode* node = static_cast<EventTargetNode*>(jsNode->impl());
@@ -153,7 +119,52 @@ bool retrieveEventTargetAndCorrespondingNode(KJS::ExecState*, KJS::JSObject* thi
     return true;
 }
 
-AtomicString eventNameForPropertyToken(int token)
+JSValue* jsEventTargetAddEventListener(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList& args)
+{
+    Node* eventNode = 0;
+    EventTarget* eventTarget = 0;
+    if (!retrieveEventTargetAndCorrespondingNode(exec, thisValue, eventNode, eventTarget))
+        return throwError(exec, TypeError);
+
+    Frame* frame = eventNode->document()->frame();
+    if (!frame)
+        return jsUndefined();
+
+    if (RefPtr<JSEventListener> listener = toJSDOMWindow(frame)->findOrCreateJSEventListener(exec, args.at(exec, 1)))
+        eventTarget->addEventListener(args.at(exec, 0)->toString(exec), listener.release(), args.at(exec, 2)->toBoolean(exec));
+
+    return jsUndefined();
+}
+
+JSValue* jsEventTargetRemoveEventListener(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList& args)
+{
+    Node* eventNode = 0;
+    EventTarget* eventTarget = 0;
+    if (!retrieveEventTargetAndCorrespondingNode(exec, thisValue, eventNode, eventTarget))
+        return throwError(exec, TypeError);
+
+    Frame* frame = eventNode->document()->frame();
+    if (!frame)
+        return jsUndefined();
+
+    if (JSEventListener* listener = toJSDOMWindow(frame)->findJSEventListener(args.at(exec, 1)))
+        eventTarget->removeEventListener(args.at(exec, 0)->toString(exec), listener, args.at(exec, 2)->toBoolean(exec));
+
+    return jsUndefined();
+}
+
+JSValue* jsEventTargetDispatchEvent(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList& args)
+{
+    Node* eventNode = 0;
+    EventTarget* eventTarget = 0;
+    if (!retrieveEventTargetAndCorrespondingNode(exec, thisValue, eventNode, eventTarget))
+        return throwError(exec, TypeError);
+
+    DOMExceptionTranslator exception(exec);
+    return jsBoolean(eventTarget->dispatchEvent(toEvent(args.at(exec, 0)), exception));
+}
+
+const AtomicString& eventNameForPropertyToken(int token)
 {    
     switch (token) {
     case JSEventTargetProperties::OnAbort:
@@ -238,7 +249,39 @@ AtomicString eventNameForPropertyToken(int token)
         return unloadEvent;
     }
 
-    return AtomicString();
+    return nullAtom;
+}
+
+JSValue* toJS(ExecState* exec, EventTarget* target)
+{
+    if (!target)
+        return jsNull();
+    
+#if ENABLE(SVG)
+    // SVGElementInstance supports both toSVGElementInstance and toNode since so much mouse handling code depends on toNode returning a valid node.
+    SVGElementInstance* instance = target->toSVGElementInstance();
+    if (instance)
+        return toJS(exec, instance);
+#endif
+    
+    Node* node = target->toNode();
+    if (node)
+        return toJS(exec, node);
+
+    if (XMLHttpRequest* xhr = target->toXMLHttpRequest())
+        // XMLHttpRequest is always created via JS, so we don't need to use cacheDOMObject() here.
+        return ScriptInterpreter::getDOMObject(xhr);
+
+#if ENABLE(OFFLINE_WEB_APPLICATIONS)
+    if (DOMApplicationCache* cache = target->toDOMApplicationCache())
+        // DOMApplicationCache is always created via JS, so we don't need to use cacheDOMObject() here.
+        return ScriptInterpreter::getDOMObject(cache);
+#endif
+    
+    // There are two kinds of EventTargets: EventTargetNode and XMLHttpRequest.
+    // If SVG support is enabled, there is also SVGElementInstance.
+    ASSERT_NOT_REACHED();
+    return jsNull();
 }
 
 } // namespace WebCore

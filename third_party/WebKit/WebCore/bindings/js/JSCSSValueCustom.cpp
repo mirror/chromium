@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,11 +27,9 @@
 #include "JSCSSValue.h"
 
 #include "CSSPrimitiveValue.h"
-#include "CSSValue.h"
 #include "CSSValueList.h"
 #include "JSCSSPrimitiveValue.h"
 #include "JSCSSValueList.h"
-#include "kjs_binding.h"
 
 #if ENABLE(SVG)
 #include "JSSVGColor.h"
@@ -40,32 +38,34 @@
 #include "SVGPaint.h"
 #endif
 
+using namespace KJS;
+
 namespace WebCore {
 
-KJS::JSValue* toJS(KJS::ExecState* exec, CSSValue* value)
+JSValue* toJS(ExecState* exec, CSSValue* value)
 {
     if (!value)
-        return KJS::jsNull();
+        return jsNull();
 
-    KJS::DOMObject* ret = KJS::ScriptInterpreter::getDOMObject(value);
+    DOMObject* ret = ScriptInterpreter::getDOMObject(value);
 
     if (ret)
         return ret;
 
     if (value->isValueList())
-        ret = new JSCSSValueList(JSCSSValueListPrototype::self(exec), static_cast<CSSValueList*>(value));
+        ret = new (exec) JSCSSValueList(JSCSSValueListPrototype::self(exec), static_cast<CSSValueList*>(value));
 #if ENABLE(SVG)
     else if (value->isSVGPaint())
-        ret = new JSSVGPaint(JSSVGPaintPrototype::self(exec), static_cast<SVGPaint*>(value));
+        ret = new (exec) JSSVGPaint(JSSVGPaintPrototype::self(exec), static_cast<SVGPaint*>(value));
     else if (value->isSVGColor())
-        ret = new JSSVGColor(JSSVGColorPrototype::self(exec), static_cast<SVGColor*>(value));
+        ret = new (exec) JSSVGColor(JSSVGColorPrototype::self(exec), static_cast<SVGColor*>(value));
 #endif
     else if (value->isPrimitiveValue())
-        ret = new JSCSSPrimitiveValue(JSCSSPrimitiveValuePrototype::self(exec), static_cast<CSSPrimitiveValue*>(value));
+        ret = new (exec) JSCSSPrimitiveValue(JSCSSPrimitiveValuePrototype::self(exec), static_cast<CSSPrimitiveValue*>(value));
     else
-        ret = new JSCSSValue(JSCSSValuePrototype::self(exec), value);
+        ret = new (exec) JSCSSValue(JSCSSValuePrototype::self(exec), value);
 
-    KJS::ScriptInterpreter::putDOMObject(value, ret);
+    ScriptInterpreter::putDOMObject(value, ret);
     return ret;
 }
 

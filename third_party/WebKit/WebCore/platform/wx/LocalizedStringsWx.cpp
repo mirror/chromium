@@ -25,6 +25,8 @@
  */
 
 #include "config.h"
+#include "LocalizedStrings.h"
+
 #include "PlatformString.h"
 
 namespace WebCore {
@@ -262,6 +264,42 @@ String contextMenuItemTagInspectElement()
 String unknownFileSizeText() 
 {
     return String("Unknown");
+}
+
+String imageTitle(const String& filename, const IntSize& size)
+{
+    return String();
+}
+
+// accessibility related strings
+String AXButtonActionVerb()
+{
+    return String();
+}
+
+String AXRadioButtonActionVerb()
+{
+    return String();
+}
+
+String AXTextFieldActionVerb()
+{
+    return String();
+}
+
+String AXCheckedCheckBoxActionVerb()
+{
+    return String();
+}
+
+String AXUncheckedCheckBoxActionVerb()
+{
+    return String();
+}
+
+String AXLinkActionVerb()
+{
+    return String();
 }
 
 } // namespace WebCore

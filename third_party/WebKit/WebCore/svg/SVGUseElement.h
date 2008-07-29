@@ -54,7 +54,7 @@ namespace WebCore {
         virtual void buildPendingResource();
 
         virtual void parseMappedAttribute(MappedAttribute*);
-        virtual void childrenChanged(bool changedByParser = false);
+        virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
 
         virtual void svgAttributeChanged(const QualifiedName&);
         virtual void recalcStyle(StyleChange = NoChange);
@@ -65,31 +65,28 @@ namespace WebCore {
 
         virtual Path toClipPath() const;
 
+        static void removeDisallowedElementsFromSubtree(Node* element);
+
     protected:
         virtual const SVGElement* contextElement() const { return this; }
 
     private:
-        ANIMATED_PROPERTY_FORWARD_DECLARATIONS(SVGExternalResourcesRequired, bool, ExternalResourcesRequired, externalResourcesRequired)
-        ANIMATED_PROPERTY_FORWARD_DECLARATIONS(SVGURIReference, String, Href, href)
-
-        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGLength, SVGLength, X, x)
-        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGLength, SVGLength, Y, y)
-        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGLength, SVGLength, Width, width)
-        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGLength, SVGLength, Height, height)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGNames::useTagString, SVGNames::xAttrString, SVGLength, X, x)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGNames::useTagString, SVGNames::yAttrString, SVGLength, Y, y)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGNames::useTagString, SVGNames::widthAttrString, SVGLength, Width, width)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGUseElement, SVGNames::useTagString, SVGNames::heightAttrString, SVGLength, Height, height)
 
     private:
         friend class SVGElement;
         SVGElementInstance* instanceForShadowTreeElement(Node* element) const;
 
-    private:
         // Instance tree handling
         void buildInstanceTree(SVGElement* target, SVGElementInstance* targetInstance, bool& foundCycle);
-        void handleDeepUseReferencing(SVGElement* use, SVGElementInstance* targetInstance, bool& foundCycle);
+        void handleDeepUseReferencing(SVGUseElement* use, SVGElementInstance* targetInstance, bool& foundCycle);
 
         // Shadow tree handling
         PassRefPtr<SVGSVGElement> buildShadowTreeForSymbolTag(SVGElement* target, SVGElementInstance* targetInstance);
         void alterShadowTreeForSVGTag(SVGElement* target);
-        void removeDisallowedElementsFromSubtree(Node* element);
 
         void buildShadowTree(SVGElement* target, SVGElementInstance* targetInstance);
 

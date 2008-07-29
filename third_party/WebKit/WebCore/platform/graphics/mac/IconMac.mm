@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,10 +28,6 @@
 
 namespace WebCore {
 
-Icon::Icon()
-{
-}
-
 Icon::Icon(NSImage *image)
     : m_nsImage(image)
 {
@@ -54,7 +50,7 @@ PassRefPtr<Icon> Icon::newIconForFile(const String& filename)
     if (!image)
         return 0;
 
-    return new Icon(image);
+    return adoptRef(new Icon(image));
 }
 
 void Icon::paint(GraphicsContext* context, const IntRect& rect)

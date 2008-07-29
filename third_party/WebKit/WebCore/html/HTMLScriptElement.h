@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -44,7 +44,7 @@ public:
     virtual void removedFromDocument();
     virtual void notifyFinished(CachedResource*);
 
-    virtual void childrenChanged(bool changedByParser = false);
+    virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
 
     virtual bool isURLAttribute(Attribute*) const;
 
@@ -69,11 +69,16 @@ public:
     bool defer() const;
     void setDefer(bool);
 
-    String src() const;
+    KURL src() const;
     void setSrc(const String&);
 
     String type() const;
     void setType(const String&);
+
+    // A charset for loading the script (may be overridden by HTTP headers or a BOM).
+    String scriptCharset() const;
+    
+    virtual void getSubresourceAttributeStrings(Vector<String>&) const;
 
 private:
     CachedScript* m_cachedScript;

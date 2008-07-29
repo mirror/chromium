@@ -30,10 +30,14 @@
 #include "AffineTransform.h"
 #include "FloatConversion.h"
 #include "GraphicsContextPlatformPrivateCG.h"
+#include "ImageBuffer.h"
 #include "KURL.h"
 #include "Path.h"
+#include <CoreGraphics/CGBitmapContext.h>
 #include <CoreGraphics/CGPDFContext.h>
 #include <wtf/MathExtras.h>
+#include <wtf/OwnArrayPtr.h>
+#include <wtf/RetainPtr.h>
 
 using namespace std;
 
@@ -431,7 +435,7 @@ void GraphicsContext::fillRoundedRect(const IntRect& rect, const IntSize& topLef
 }
 
 
-void GraphicsContext::clip(const IntRect& rect)
+void GraphicsContext::clip(const FloatRect& rect)
 {
     if (paintingDisabled())
         return;
@@ -478,6 +482,18 @@ void GraphicsContext::addInnerRoundedRectClip(const IntRect& rect, int thickness
     CGContextEOClip(context);
 }
 
+void GraphicsContext::clipToImageBuffer(const FloatRect& rect, const ImageBuffer* imageBuffer)
+{
+    if (paintingDisabled())
+        return;
+    
+    CGContextTranslateCTM(platformContext(), rect.x(), rect.y() + rect.height());
+    CGContextScaleCTM(platformContext(), 1, -1);
+    CGContextClipToMask(platformContext(), FloatRect(FloatPoint(), rect.size()), imageBuffer->cgImage());
+    CGContextScaleCTM(platformContext(), 1, -1);
+    CGContextTranslateCTM(platformContext(), -rect.x(), -rect.y() - rect.height());
+}
+
 void GraphicsContext::beginTransparencyLayer(float opacity)
 {
     if (paintingDisabled())
@@ -501,17 +517,27 @@ void GraphicsContext::endTransparencyLayer()
     m_data->m_userToDeviceTransformKnownToBeIdentity = false;
 }
 
-void GraphicsContext::setShadow(const IntSize& size, int blur, const Color& color)
+void GraphicsContext::setPlatformShadow(const IntSize& size, int blur, const Color& color)
 {
-    // Extreme "blur" values can make text drawing crash or take crazy long times, so clamp
-    blur = min(blur, 1000);
-
     if (paintingDisabled())
         return;
     CGContextRef context = platformContext();
+    CGAffineTransform transform = CGContextGetCTM(context);
 
-    CGFloat width = size.width();
-    CGFloat height = size.height();
+    CGFloat A = transform.a * transform.a + transform.b * transform.b;
+    CGFloat B = transform.a * transform.c + transform.b * transform.d;
+    CGFloat C = B;
+    CGFloat D = transform.c * transform.c + transform.d * transform.d;
+
+    CGFloat smallEigenvalue = narrowPrecisionToCGFloat(sqrt(0.5 * ((A + D) - sqrt(4 * B * C + (A - D) * (A - D)))));
+
+    // Extreme "blur" values can make text drawing crash or take crazy long times, so clamp
+    CGFloat blurRadius = min(blur * smallEigenvalue, narrowPrecisionToCGFloat(1000.0));
+
+    CGSize sizeInDeviceSpace = CGSizeApplyAffineTransform(size, transform);
+
+    CGFloat width = sizeInDeviceSpace.width;
+    CGFloat height = sizeInDeviceSpace.height;
 
     // Work around <rdar://problem/5539388> by ensuring that the offsets will get truncated
     // to the desired integer.
@@ -529,18 +555,18 @@ void GraphicsContext::setShadow(const IntSize& size, int blur, const Color& colo
     // Check for an invalid color, as this means that the color was not set for the shadow
     // and we should therefore just use the default shadow color.
     if (!color.isValid())
-        CGContextSetShadow(context, CGSizeMake(width, -height), blur); // y is flipped.
+        CGContextSetShadow(context, CGSizeMake(width, height), blurRadius);
     else {
         CGColorRef colorCG = cgColor(color);
         CGContextSetShadowWithColor(context,
-                                    CGSizeMake(width, -height), // y is flipped.
-                                    blur, 
+                                    CGSizeMake(width, height),
+                                    blurRadius, 
                                     colorCG);
         CGColorRelease(colorCG);
     }
 }
 
-void GraphicsContext::clearShadow()
+void GraphicsContext::clearPlatformShadow()
 {
     if (paintingDisabled())
         return;
@@ -787,20 +813,46 @@ void GraphicsContext::setURLForRect(const KURL& link, const IntRect& destRect)
     }
 }
 
-void GraphicsContext::setUseLowQualityImageInterpolation(bool lowQualityMode)
+void GraphicsContext::setImageInterpolationQuality(InterpolationQuality mode)
 {
     if (paintingDisabled())
         return;
-        
-    CGContextSetInterpolationQuality(platformContext(), lowQualityMode ? kCGInterpolationNone : kCGInterpolationDefault);
+    
+    CGInterpolationQuality quality = kCGInterpolationDefault;
+    switch (mode) {
+        case InterpolationDefault:
+            quality = kCGInterpolationDefault;
+            break;
+        case InterpolationNone:
+            quality = kCGInterpolationNone;
+            break;
+        case InterpolationLow:
+            quality = kCGInterpolationLow;
+            break;
+        case InterpolationHigh:
+            quality = kCGInterpolationHigh;
+            break;
+    }
+    CGContextSetInterpolationQuality(platformContext(), quality);
 }
 
-bool GraphicsContext::useLowQualityImageInterpolation() const
+InterpolationQuality GraphicsContext::imageInterpolationQuality() const
 {
     if (paintingDisabled())
-        return false;
-    
-    return CGContextGetInterpolationQuality(platformContext());
+        return InterpolationDefault;
+
+    CGInterpolationQuality quality = CGContextGetInterpolationQuality(platformContext());
+    switch (quality) {
+        case kCGInterpolationDefault:
+            return InterpolationDefault;
+        case kCGInterpolationNone:
+            return InterpolationNone;
+        case kCGInterpolationLow:
+            return InterpolationLow;
+        case kCGInterpolationHigh:
+            return InterpolationHigh;
+    }
+    return InterpolationDefault;
 }
 
 void GraphicsContext::setPlatformTextDrawingMode(int mode)
@@ -922,6 +974,6 @@ void GraphicsContext::setCompositeOperation(CompositeOperator mode)
     CGContextSetBlendMode(platformContext(), target);
 }
 #endif
-    
+
 }
 

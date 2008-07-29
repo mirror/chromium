@@ -6,6 +6,7 @@
  * Copyright (C) 2006 Rob Buis <buis@kde.org>
  * Copyright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
  * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Collabora Ltd.  All rights reserved.
  *
  * All rights reserved.
  *
@@ -34,6 +35,8 @@
 #include "config.h"
 #include "Frame.h"
 
+#include "PluginView.h"
+
 #include "Element.h"
 #include "RenderObject.h"
 #include "RenderWidget.h"
@@ -48,7 +51,6 @@
 #include "ResourceHandleInternal.h"
 #include "Document.h"
 #include "Settings.h"
-#include "Plugin.h"
 #include "FrameView.h"
 #include "FramePrivate.h"
 #include "GraphicsContext.h"
@@ -60,12 +62,13 @@
 #include "PlatformWheelEvent.h"
 #include "MouseEventWithHitTestResults.h"
 #include "SelectionController.h"
-#include "kjs_proxy.h"
+#include "ScriptController.h"
 #include "TypingCommand.h"
 #include "JSLock.h"
-#include "kjs_window.h"
+#include "qt_instance.h"
 #include "runtime_root.h"
 #include "runtime.h"
+#include "JSDOMWindow.h"
 #include <QScrollArea>
 #include "NotImplemented.h"
 
@@ -97,18 +100,27 @@ static void doScroll(const RenderObject* r, bool isHorizontal, int multiplier)
 }
 #endif
 
-KJS::Bindings::Instance* Frame::createScriptInstanceForWidget(WebCore::Widget* widget)
+PassRefPtr<KJS::Bindings::Instance> Frame::createScriptInstanceForWidget(WebCore::Widget* widget)
 {
+    if (widget->isFrameView())
+        return 0;
+    if (widget->isNPAPIPlugin())
+        return static_cast<PluginView*>(widget)->bindingInstance();
+
     QWidget* nativeWidget = widget->nativeWidget();
     if (!nativeWidget)
         return 0;
-    return KJS::Bindings::Instance::createBindingForLanguageInstance(KJS::Bindings::Instance::QtLanguage,
-                                                                     nativeWidget,
-                                                                     bindingRootObject());
+    return KJS::Bindings::QtInstance::create(nativeWidget, bindingRootObject());
 }
 
 void Frame::clearPlatformScriptObjects()
 {
+    notImplemented();
+}
+
+void Frame::disconnectPlatformScriptObjects()
+{
+    notImplemented();
 }
 
 DragImageRef Frame::dragImageForSelection() 
@@ -116,9 +128,5 @@ DragImageRef Frame::dragImageForSelection()
     return 0;
 }
     
-void Frame::dashboardRegionsChanged()
-{
-}
-
 }
 // vim: ts=4 sw=4 et

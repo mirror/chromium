@@ -21,8 +21,7 @@
 #define JSHTMLInputElementBase_h
 
 #include "JSHTMLElement.h"
-#include "kjs_binding.h"
-#include "kjs_html.h"
+#include "JSDOMBinding.h"
 
 namespace WebCore {
 
@@ -36,16 +35,12 @@ namespace WebCore {
 
         virtual bool getOwnPropertySlot(KJS::ExecState*, const KJS::Identifier&, KJS::PropertySlot&);
         KJS::JSValue* getValueProperty(KJS::ExecState*, int token) const;
-        virtual void put(KJS::ExecState*, const KJS::Identifier& propertyName, JSValue*, int attr);
-        void putValueProperty(KJS::ExecState*, int token, KJS::JSValue*, int attr);
-        virtual const KJS::ClassInfo* classInfo() const { return &info; }
-        static const KJS::ClassInfo info;
+        virtual void put(KJS::ExecState*, const KJS::Identifier& propertyName, JSValue*);
+        void putValueProperty(KJS::ExecState*, int token, KJS::JSValue*);
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+        static const KJS::ClassInfo s_info;
         enum { SelectionStart, SelectionEnd };
     };
-
-    // SetSelectionRange is implemented on the class instead of on the prototype
-    // to make it easier to enable/disable lookup of the function based on input type.
-    KJS::JSValue* jsHTMLInputElementBaseFunctionSetSelectionRange(KJS::ExecState*, KJS::JSObject*, const KJS::List&);
 
 } // namespace WebCore
 

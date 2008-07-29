@@ -25,6 +25,7 @@
 #include "config.h"
 #include "HTMLSelectElement.h"
 
+#include "AXObjectCache.h"
 #include "CSSPropertyNames.h"
 #include "CSSStyleSelector.h"
 #include "CharacterNames.h"
@@ -301,17 +302,17 @@ void HTMLSelectElement::restoreState(const String& state)
     setChanged();
 }
 
-bool HTMLSelectElement::insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode& ec)
+bool HTMLSelectElement::insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode& ec, bool shouldLazyAttach)
 {
-    bool result = HTMLFormControlElementWithState::insertBefore(newChild, refChild, ec);
+    bool result = HTMLFormControlElementWithState::insertBefore(newChild, refChild, ec, shouldLazyAttach);
     if (result)
         setRecalcListItems();
     return result;
 }
 
-bool HTMLSelectElement::replaceChild(PassRefPtr<Node> newChild, Node *oldChild, ExceptionCode& ec)
+bool HTMLSelectElement::replaceChild(PassRefPtr<Node> newChild, Node *oldChild, ExceptionCode& ec, bool shouldLazyAttach)
 {
-    bool result = HTMLFormControlElementWithState::replaceChild(newChild, oldChild, ec);
+    bool result = HTMLFormControlElementWithState::replaceChild(newChild, oldChild, ec, shouldLazyAttach);
     if (result)
         setRecalcListItems();
     return result;
@@ -325,9 +326,9 @@ bool HTMLSelectElement::removeChild(Node* oldChild, ExceptionCode& ec)
     return result;
 }
 
-bool HTMLSelectElement::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec)
+bool HTMLSelectElement::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec, bool shouldLazyAttach)
 {
-    bool result = HTMLFormControlElementWithState::appendChild(newChild, ec);
+    bool result = HTMLFormControlElementWithState::appendChild(newChild, ec, shouldLazyAttach);
     if (result)
         setRecalcListItems();
     return result;
@@ -491,7 +492,7 @@ int HTMLSelectElement::listToOptionIndex(int listIndex) const
 
 PassRefPtr<HTMLOptionsCollection> HTMLSelectElement::options()
 {
-    return new HTMLOptionsCollection(this);
+    return HTMLOptionsCollection::create(this);
 }
 
 void HTMLSelectElement::recalcListItems(bool updateSelectedStates) const
@@ -529,10 +530,13 @@ void HTMLSelectElement::recalcListItems(bool updateSelectedStates) const
     m_recalcListItems = false;
 }
 
-void HTMLSelectElement::childrenChanged(bool changedByParser)
+void HTMLSelectElement::childrenChanged(bool changedByParser, Node* beforeChange, Node* afterChange, int childCountDelta)
 {
     setRecalcListItems();
-    HTMLFormControlElementWithState::childrenChanged(changedByParser);
+    HTMLFormControlElementWithState::childrenChanged(changedByParser, beforeChange, afterChange, childCountDelta);
+    
+    if (AXObjectCache::accessibilityEnabled() && renderer())
+        renderer()->document()->axObjectCache()->childrenChanged(renderer());
 }
 
 void HTMLSelectElement::setRecalcListItems()
@@ -641,7 +645,7 @@ void HTMLSelectElement::menuListDefaultEventHandler(Event* evt)
             int size = listItems().size();
             for (listIndex += 1;
                  listIndex >= 0 && listIndex < size && (listItems()[listIndex]->disabled() || !listItems()[listIndex]->hasTagName(optionTag));
-                 ++listIndex);
+                 ++listIndex) { }
             
             if (listIndex >= 0 && listIndex < size)
                 setSelectedIndex(listToOptionIndex(listIndex));
@@ -650,7 +654,7 @@ void HTMLSelectElement::menuListDefaultEventHandler(Event* evt)
             int size = listItems().size();
             for (listIndex -= 1;
                  listIndex >= 0 && listIndex < size && (listItems()[listIndex]->disabled() || !listItems()[listIndex]->hasTagName(optionTag));
-                 --listIndex);
+                 --listIndex) { }
             
             if (listIndex >= 0 && listIndex < size)
                 setSelectedIndex(listToOptionIndex(listIndex));
@@ -974,13 +978,17 @@ void HTMLSelectElement::typeAheadFind(KeyboardEvent* event)
     if (itemCount < 1)
         return;
 
-    int index = (optionToListIndex(selectedIndex()) + searchStartOffset) % itemCount;
+    int selected = selectedIndex();
+    int index = (optionToListIndex(selected >= 0 ? selected : 0) + searchStartOffset) % itemCount;
+    ASSERT(index >= 0);
     for (int i = 0; i < itemCount; i++, index = (index + 1) % itemCount) {
         if (!items[index]->hasTagName(optionTag) || items[index]->disabled())
             continue;
 
         if (stripLeadingWhiteSpace(static_cast<HTMLOptionElement*>(items[index])->optionText()).startsWith(prefix, false)) {
             setSelectedIndex(listToOptionIndex(index));
+            if(!usesMenuList())
+                listBoxOnChange();
             setChanged();
             return;
         }
@@ -1017,6 +1025,26 @@ void HTMLSelectElement::accessKeyAction(bool sendToAnyElement)
     dispatchSimulatedClick(0, sendToAnyElement);
 }
 
+void HTMLSelectElement::accessKeySetSelectedIndex(int index)
+{    
+    // first bring into focus the list box
+    if (!focused())
+        accessKeyAction(false);
+    
+    // if this index is already selected, unselect. otherwise update the selected index
+    Node* listNode = item(index);
+    if (listNode && listNode->hasTagName(optionTag)) {
+        HTMLOptionElement* listElement = static_cast<HTMLOptionElement*>(listNode);
+        if (listElement->selected())
+            listElement->setSelectedState(false);
+        else
+            setSelectedIndex(index, false, true);
+    }
+    
+    listBoxOnChange();
+    scrollToSelection();
+}
+    
 void HTMLSelectElement::setMultiple(bool multiple)
 {
     setAttribute(multipleAttr, multiple ? "" : 0);

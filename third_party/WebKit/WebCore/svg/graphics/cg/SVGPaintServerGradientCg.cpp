@@ -138,7 +138,7 @@ static CGShadingRef CGShadingRefForRadialGradient(const SVGPaintServerRadialGrad
 
 void SVGPaintServerGradient::updateQuartzGradientStopsCache(const Vector<SVGGradientStop>& stops)
 {
-    m_stopsCache = new SharedStopCache;
+    m_stopsCache = SharedStopCache::create();
     Vector<QuartzGradientStop>& stopsCache = m_stopsCache->m_stops;
     stopsCache.resize(stops.size());
     CGFloat previousOffset = 0.0f;
@@ -208,7 +208,7 @@ void SVGPaintServerGradient::teardown(GraphicsContext*& context, const RenderObj
 
             // Clip current context to mask image (gradient)
             m_savedContext->concatCTM(transform.inverse());
-            CGContextClipToMask(m_savedContext->platformContext(), CGRect(textBoundary), m_imageBuffer->cgImage());
+            m_savedContext->clipToImageBuffer(textBoundary, m_imageBuffer);
             m_savedContext->concatCTM(transform);
 
             handleBoundingBoxModeAndGradientTransformation(m_savedContext, maskBBox);

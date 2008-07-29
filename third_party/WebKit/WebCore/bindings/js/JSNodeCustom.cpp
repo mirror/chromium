@@ -66,43 +66,43 @@ namespace WebCore {
 
 typedef int ExpectionCode;
 
-JSValue* JSNode::insertBefore(ExecState* exec, const List& args)
+JSValue* JSNode::insertBefore(ExecState* exec, const ArgList& args)
 {
     ExceptionCode ec = 0;
-    bool ok = impl()->insertBefore(toNode(args[0]), toNode(args[1]), ec);
+    bool ok = impl()->insertBefore(toNode(args.at(exec, 0)), toNode(args.at(exec, 1)), ec, true);
     setDOMException(exec, ec);
     if (ok)
-        return args[0];
+        return args.at(exec, 0);
     return jsNull();
 }
 
-JSValue* JSNode::replaceChild(ExecState* exec, const List& args)
+JSValue* JSNode::replaceChild(ExecState* exec, const ArgList& args)
 {
     ExceptionCode ec = 0;
-    bool ok = impl()->replaceChild(toNode(args[0]), toNode(args[1]), ec);
+    bool ok = impl()->replaceChild(toNode(args.at(exec, 0)), toNode(args.at(exec, 1)), ec, true);
     setDOMException(exec, ec);
     if (ok)
-        return args[1];
+        return args.at(exec, 1);
     return jsNull();
 }
 
-JSValue* JSNode::removeChild(ExecState* exec, const List& args)
+JSValue* JSNode::removeChild(ExecState* exec, const ArgList& args)
 {
     ExceptionCode ec = 0;
-    bool ok = impl()->removeChild(toNode(args[0]), ec);
+    bool ok = impl()->removeChild(toNode(args.at(exec, 0)), ec);
     setDOMException(exec, ec);
     if (ok)
-        return args[0];
+        return args.at(exec, 0);
     return jsNull();
 }
 
-JSValue* JSNode::appendChild(ExecState* exec, const List& args)
+JSValue* JSNode::appendChild(ExecState* exec, const ArgList& args)
 {
     ExceptionCode ec = 0;
-    bool ok = impl()->appendChild(toNode(args[0]), ec);
+    bool ok = impl()->appendChild(toNode(args.at(exec, 0)), ec, true);
     setDOMException(exec, ec);
     if (ok)
-        return args[0];
+        return args.at(exec, 0);
     return jsNull();
 }
 
@@ -115,6 +115,12 @@ void JSNode::mark()
     // Nodes in the document are kept alive by ScriptInterpreter::mark,
     // so we have no special responsibilities and can just call the base class here.
     if (node->inDocument()) {
+        // But if the document isn't marked we have to mark it to ensure that
+        // nodes reachable from this one are also marked
+        if (Document* doc = node->ownerDocument())
+            if (DOMObject* docWrapper = ScriptInterpreter::getDOMObject(doc))
+                if (!docWrapper->marked())
+                    docWrapper->mark();
         DOMObject::mark();
         return;
     }
@@ -127,13 +133,13 @@ void JSNode::mark()
 
     // If we're already marking this tree, then we can simply mark this wrapper
     // by calling the base class; our caller is iterating the tree.
-    if (root->m_inSubtreeMark) {
+    if (root->inSubtreeMark()) {
         DOMObject::mark();
         return;
     }
 
     // Mark the whole tree; use the global set of roots to avoid reentering.
-    root->m_inSubtreeMark = true;
+    root->setInSubtreeMark(true);
     for (Node* nodeToMark = root; nodeToMark; nodeToMark = nodeToMark->traverseNextNode()) {
         JSNode* wrapper = ScriptInterpreter::getDOMNodeForDocument(m_impl->document(), nodeToMark);
         if (wrapper) {
@@ -149,15 +155,83 @@ void JSNode::mark()
                 mark();
         }
     }
-    root->m_inSubtreeMark = false;
+    root->setInSubtreeMark(false);
 
     // Double check that we actually ended up marked. This assert caught problems in the past.
     ASSERT(marked());
 }
 
-JSValue* toJS(ExecState* exec, PassRefPtr<Node> n)
+static ALWAYS_INLINE JSValue* createWrapper(ExecState* exec, Node* node)
 {
-    Node* node = n.get(); 
+    ASSERT(node);
+    ASSERT(!ScriptInterpreter::getDOMNodeForDocument(node->document(), node));
+    
+    Document* doc = node->document();
+    JSNode* ret = 0;
+    
+    switch (node->nodeType()) {
+        case Node::ELEMENT_NODE:
+            if (node->isHTMLElement())
+                ret = createJSHTMLWrapper(exec, static_cast<HTMLElement*>(node));
+#if ENABLE(SVG)
+            else if (node->isSVGElement())
+                ret = createJSSVGWrapper(exec, static_cast<SVGElement*>(node));
+#endif
+            else
+                ret = new (exec) JSElement(JSElementPrototype::self(exec), static_cast<Element*>(node));
+            break;
+        case Node::ATTRIBUTE_NODE:
+            ret = new (exec) JSAttr(JSAttrPrototype::self(exec), static_cast<Attr*>(node));
+            break;
+        case Node::TEXT_NODE:
+            ret = new (exec) JSText(JSTextPrototype::self(exec), static_cast<Text*>(node));
+            break;
+        case Node::CDATA_SECTION_NODE:
+            ret = new (exec) JSCDATASection(JSCDATASectionPrototype::self(exec), static_cast<CDATASection*>(node));
+            break;
+        case Node::ENTITY_NODE:
+            ret = new (exec) JSEntity(JSEntityPrototype::self(exec), static_cast<Entity*>(node));
+            break;
+        case Node::PROCESSING_INSTRUCTION_NODE:
+            ret = new (exec) JSProcessingInstruction(JSProcessingInstructionPrototype::self(exec), static_cast<ProcessingInstruction*>(node));
+            break;
+        case Node::COMMENT_NODE:
+            ret = new (exec) JSComment(JSCommentPrototype::self(exec), static_cast<Comment*>(node));
+            break;
+        case Node::DOCUMENT_NODE:
+            // we don't want to cache the document itself in the per-document dictionary
+            return toJS(exec, static_cast<Document*>(node));
+        case Node::DOCUMENT_TYPE_NODE:
+            ret = new (exec) JSDocumentType(JSDocumentTypePrototype::self(exec), static_cast<DocumentType*>(node));
+            break;
+        case Node::NOTATION_NODE:
+            ret = new (exec) JSNotation(JSNotationPrototype::self(exec), static_cast<Notation*>(node));
+            break;
+        case Node::DOCUMENT_FRAGMENT_NODE:
+            ret = new (exec) JSDocumentFragment(JSDocumentFragmentPrototype::self(exec), static_cast<DocumentFragment*>(node));
+            break;
+        case Node::ENTITY_REFERENCE_NODE:
+            ret = new (exec) JSEntityReference(JSEntityReferencePrototype::self(exec), static_cast<EntityReference*>(node));
+            break;
+        default:
+            ret = new (exec) JSNode(JSNodePrototype::self(exec), node);
+    }
+
+    ScriptInterpreter::putDOMNodeForDocument(doc, node, ret);
+
+    return ret;    
+}
+    
+JSValue* toJSNewlyCreated(ExecState* exec, Node* node)
+{
+    if (!node)
+        return jsNull();
+    
+    return createWrapper(exec, node);
+}
+    
+JSValue* toJS(ExecState* exec, Node* node)
+{
     if (!node)
         return jsNull();
 
@@ -166,57 +240,7 @@ JSValue* toJS(ExecState* exec, PassRefPtr<Node> n)
     if (ret)
         return ret;
 
-    switch (node->nodeType()) {
-        case Node::ELEMENT_NODE:
-            if (node->isHTMLElement())
-                ret = createJSHTMLWrapper(exec, static_pointer_cast<HTMLElement>(n));
-#if ENABLE(SVG)
-            else if (node->isSVGElement())
-                ret = createJSSVGWrapper(exec, static_pointer_cast<SVGElement>(n));
-#endif
-            else
-                ret = new JSElement(JSElementPrototype::self(exec), static_cast<Element*>(node));
-            break;
-        case Node::ATTRIBUTE_NODE:
-            ret = new JSAttr(JSAttrPrototype::self(exec), static_cast<Attr*>(node));
-            break;
-        case Node::TEXT_NODE:
-            ret = new JSText(JSTextPrototype::self(exec), static_cast<Text*>(node));
-            break;
-        case Node::CDATA_SECTION_NODE:
-            ret = new JSCDATASection(JSCDATASectionPrototype::self(exec), static_cast<CDATASection*>(node));
-            break;
-        case Node::ENTITY_NODE:
-            ret = new JSEntity(JSEntityPrototype::self(exec), static_cast<Entity*>(node));
-            break;
-        case Node::PROCESSING_INSTRUCTION_NODE:
-            ret = new JSProcessingInstruction(JSProcessingInstructionPrototype::self(exec), static_cast<ProcessingInstruction*>(node));
-            break;
-        case Node::COMMENT_NODE:
-            ret = new JSComment(JSCommentPrototype::self(exec), static_cast<Comment*>(node));
-            break;
-        case Node::DOCUMENT_NODE:
-            // we don't want to cache the document itself in the per-document dictionary
-            return toJS(exec, static_cast<Document*>(node));
-        case Node::DOCUMENT_TYPE_NODE:
-            ret = new JSDocumentType(JSDocumentTypePrototype::self(exec), static_cast<DocumentType*>(node));
-            break;
-        case Node::NOTATION_NODE:
-            ret = new JSNotation(JSNotationPrototype::self(exec), static_cast<Notation*>(node));
-            break;
-        case Node::DOCUMENT_FRAGMENT_NODE:
-            ret = new JSDocumentFragment(JSDocumentFragmentPrototype::self(exec), static_cast<DocumentFragment*>(node));
-            break;
-        case Node::ENTITY_REFERENCE_NODE:
-            ret = new JSEntityReference(JSEntityReferencePrototype::self(exec), static_cast<EntityReference*>(node));
-            break;
-        default:
-            ret = new JSNode(JSNodePrototype::self(exec), node);
-    }
-
-    ScriptInterpreter::putDOMNodeForDocument(doc, node, ret);
-
-    return ret;
+    return createWrapper(exec, node);
 }
 
 } // namespace WebCore

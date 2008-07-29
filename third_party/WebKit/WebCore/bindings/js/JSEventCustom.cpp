@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,6 +31,7 @@
 
 #include "Clipboard.h"
 #include "Event.h"
+#include "JSClipboard.h"
 #include "JSKeyboardEvent.h"
 #include "JSMessageEvent.h"
 #include "JSMouseEvent.h"
@@ -40,6 +41,7 @@
 #include "JSTextEvent.h"
 #include "JSUIEvent.h"
 #include "JSWheelEvent.h"
+#include "JSXMLHttpRequestProgressEvent.h"
 #include "KeyboardEvent.h"
 #include "MessageEvent.h"
 #include "MouseEvent.h"
@@ -49,7 +51,18 @@
 #include "TextEvent.h"
 #include "UIEvent.h"
 #include "WheelEvent.h"
-#include "kjs_events.h"
+#include "XMLHttpRequestProgressEvent.h"
+#include <kjs/JSLock.h>
+
+#if ENABLE(DOM_STORAGE)
+#include "JSStorageEvent.h"
+#include "StorageEvent.h"
+#endif
+
+#if ENABLE(SVG)
+#include "JSSVGZoomEvent.h"
+#include "SVGZoomEvent.h"
+#endif
 
 using namespace KJS;
 
@@ -62,38 +75,48 @@ JSValue* JSEvent::clipboardData(ExecState* exec) const
 
 JSValue* toJS(ExecState* exec, Event* event)
 {
-    JSLock lock;
+    JSLock lock(false);
 
     if (!event)
         return jsNull();
-
 
     DOMObject* ret = ScriptInterpreter::getDOMObject(event);
     if (ret)
         return ret;
 
-    if (event->isKeyboardEvent())
-        ret = new JSKeyboardEvent(JSKeyboardEventPrototype::self(exec), static_cast<KeyboardEvent*>(event));
-    else if (event->isTextEvent())
-        ret = new JSTextEvent(JSTextEventPrototype::self(exec), static_cast<TextEvent*>(event));
-    else if (event->isMouseEvent())
-        ret = new JSMouseEvent(JSMouseEventPrototype::self(exec), static_cast<MouseEvent*>(event));
-    else if (event->isWheelEvent())
-        ret = new JSWheelEvent(JSWheelEventPrototype::self(exec), static_cast<WheelEvent*>(event));
-    else if (event->isUIEvent())
-        ret = new JSUIEvent(JSUIEventPrototype::self(exec), static_cast<UIEvent*>(event));
-    else if (event->isMutationEvent())
-        ret = new JSMutationEvent(JSMutationEventPrototype::self(exec), static_cast<MutationEvent*>(event));
-    else if (event->isOverflowEvent())
-        ret = new JSOverflowEvent(JSOverflowEventPrototype::self(exec), static_cast<OverflowEvent*>(event));
-#if ENABLE(CROSS_DOCUMENT_MESSAGING)
-    else if (event->isMessageEvent())
-        ret = new JSMessageEvent(JSMessageEventPrototype::self(exec), static_cast<MessageEvent*>(event));
+    if (event->isUIEvent()) {
+        if (event->isKeyboardEvent())
+            ret = new (exec) JSKeyboardEvent(JSKeyboardEventPrototype::self(exec), static_cast<KeyboardEvent*>(event));
+        else if (event->isTextEvent())
+            ret = new (exec) JSTextEvent(JSTextEventPrototype::self(exec), static_cast<TextEvent*>(event));
+        else if (event->isMouseEvent())
+            ret = new (exec) JSMouseEvent(JSMouseEventPrototype::self(exec), static_cast<MouseEvent*>(event));
+        else if (event->isWheelEvent())
+            ret = new (exec) JSWheelEvent(JSWheelEventPrototype::self(exec), static_cast<WheelEvent*>(event));
+#if ENABLE(SVG)
+        else if (event->isSVGZoomEvent())
+            ret = new (exec) JSSVGZoomEvent(JSSVGZoomEventPrototype::self(exec), static_cast<SVGZoomEvent*>(event), 0);
 #endif
-    else if (event->isProgressEvent())
-        ret = new JSProgressEvent(JSProgressEventPrototype::self(exec), static_cast<ProgressEvent*>(event));
+        else
+            ret = new (exec) JSUIEvent(JSUIEventPrototype::self(exec), static_cast<UIEvent*>(event));
+    } else if (event->isMutationEvent())
+        ret = new (exec) JSMutationEvent(JSMutationEventPrototype::self(exec), static_cast<MutationEvent*>(event));
+    else if (event->isOverflowEvent())
+        ret = new (exec) JSOverflowEvent(JSOverflowEventPrototype::self(exec), static_cast<OverflowEvent*>(event));
+    else if (event->isMessageEvent())
+        ret = new (exec) JSMessageEvent(JSMessageEventPrototype::self(exec), static_cast<MessageEvent*>(event));
+    else if (event->isProgressEvent()) {
+        if (event->isXMLHttpRequestProgressEvent())
+            ret = new (exec) JSXMLHttpRequestProgressEvent(JSXMLHttpRequestProgressEventPrototype::self(exec), static_cast<XMLHttpRequestProgressEvent*>(event));
+        else
+            ret = new (exec) JSProgressEvent(JSProgressEventPrototype::self(exec), static_cast<ProgressEvent*>(event));
+    }
+#if ENABLE(DOM_STORAGE)
+    else if (event->isStorageEvent())
+        ret = new (exec) JSStorageEvent(JSStorageEventPrototype::self(exec), static_cast<StorageEvent*>(event));
+#endif
     else
-        ret = new JSEvent(JSEventPrototype::self(exec), event);
+        ret = new (exec) JSEvent(JSEventPrototype::self(exec), event);
 
     ScriptInterpreter::putDOMObject(event, ret);
     return ret;

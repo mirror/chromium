@@ -27,6 +27,9 @@
 #include "config.h"
 #include "JSEventTargetNode.h"
 
+#include "JSDOMWindow.h"
+#include "JSEventListener.h"
+
 namespace WebCore {
 
 using namespace KJS;
@@ -36,31 +39,11 @@ JSEventTargetNode::JSEventTargetNode(JSObject* prototype, Node* node)
 {
 }
 
-bool JSEventTargetNode::getOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
-{
-    return m_base.getOwnPropertySlot<JSNode>(this, exec, propertyName, slot);
-}
-
-JSValue* JSEventTargetNode::getValueProperty(ExecState* exec, int token) const
-{
-    return m_base.getValueProperty(this, exec, token);
-}
-
-void JSEventTargetNode::put(ExecState* exec, const Identifier& propertyName, JSValue* value, int attr)
-{
-    m_base.put<JSNode>(this, exec, propertyName, value, attr);
-}
-
-void JSEventTargetNode::putValueProperty(ExecState* exec, int token, JSValue* value, int attr)
-{
-    m_base.putValueProperty(this, exec, token, value, attr);
-}
-
 void JSEventTargetNode::setListener(ExecState* exec, const AtomicString& eventType, JSValue* func) const
 {
     Frame* frame = impl()->document()->frame();
     if (frame)
-        EventTargetNodeCast(impl())->setHTMLEventListener(eventType, KJS::Window::retrieveWindow(frame)->findOrCreateJSEventListener(func, true));
+        EventTargetNodeCast(impl())->setHTMLEventListener(eventType, toJSDOMWindow(frame)->findOrCreateJSEventListener(exec, func, true));
 }
 
 JSValue* JSEventTargetNode::getListener(const AtomicString& eventType) const
@@ -79,7 +62,7 @@ void JSEventTargetNode::pushEventHandlerScope(ExecState*, ScopeChain&) const
 
 EventTargetNode* toEventTargetNode(JSValue* val)
 {
-    if (!val || !val->isObject(&JSEventTargetNode::info))
+    if (!val || !val->isObject(&JSEventTargetNode::s_info))
         return 0;
 
     return static_cast<EventTargetNode*>(static_cast<JSEventTargetNode*>(val)->impl());

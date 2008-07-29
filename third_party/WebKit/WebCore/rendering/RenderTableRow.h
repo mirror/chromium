@@ -46,7 +46,7 @@ public:
 
     virtual void setStyle(RenderStyle*);
     virtual void addChild(RenderObject* child, RenderObject* beforeChild = 0);
-    virtual short lineHeight(bool firstLine, bool isRootLineBox = false) const { return 0; }
+    virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const { return 0; }
     virtual void position(InlineBox*) { }
     virtual void layout();
     virtual IntRect absoluteClippedOverflowRect();
@@ -56,7 +56,7 @@ public:
     virtual bool requiresLayer() { return isTransparent() || hasOverflowClip(); }
 
     virtual void paint(PaintInfo&, int tx, int ty);
-    virtual void imageChanged(CachedImage*);
+    virtual void imageChanged(WrappedImagePtr);
 };
 
 } // namespace WebCore

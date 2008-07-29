@@ -2,7 +2,7 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Stefan Schimanski (1Stein@gmx.de)
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Trolltech ASA
  *
  * This library is free software; you can redistribute it and/or
@@ -42,6 +42,10 @@
 #include "RenderWidget.h"
 #include "Text.h"
 
+#if USE(JAVASCRIPTCORE_BINDINGS)
+#include "runtime.h"
+#endif
+
 namespace WebCore {
 
 using namespace EventNames;
@@ -49,9 +53,9 @@ using namespace HTMLNames;
 
 HTMLObjectElement::HTMLObjectElement(Document* doc, bool createdByParser) 
     : HTMLPlugInElement(objectTag, doc)
+    , m_docNamedItem(true)
     , m_needWidgetUpdate(!createdByParser)
     , m_useFallbackContent(false)
-    , m_docNamedItem(true)
 {
 }
 
@@ -113,24 +117,22 @@ void HTMLObjectElement::parseMappedAttribute(MappedAttribute *attr)
           m_needWidgetUpdate = true;
     } else if (attr->name() == onloadAttr) {
         setHTMLEventListener(loadEvent, attr);
-    } else if (attr->name() == onunloadAttr) {
-        setHTMLEventListener(unloadEvent, attr);
     } else if (attr->name() == nameAttr) {
-            String newNameAttr = attr->value();
-            if (isDocNamedItem() && inDocument() && document()->isHTMLDocument()) {
-                HTMLDocument *doc = static_cast<HTMLDocument *>(document());
-                doc->removeNamedItem(oldNameAttr);
-                doc->addNamedItem(newNameAttr);
-            }
-            oldNameAttr = newNameAttr;
-    } else if (attr->name() == idAttr) {
-        String newIdAttr = attr->value();
+        const AtomicString& newName = attr->value();
         if (isDocNamedItem() && inDocument() && document()->isHTMLDocument()) {
-            HTMLDocument* doc = static_cast<HTMLDocument*>(document());
-            doc->removeDocExtraNamedItem(oldIdAttr);
-            doc->addDocExtraNamedItem(newIdAttr);
+            HTMLDocument* document = static_cast<HTMLDocument*>(this->document());
+            document->removeNamedItem(m_name);
+            document->addNamedItem(newName);
         }
-        oldIdAttr = newIdAttr;
+        m_name = newName;
+    } else if (attr->name() == idAttr) {
+        const AtomicString& newId = attr->value();
+        if (isDocNamedItem() && inDocument() && document()->isHTMLDocument()) {
+            HTMLDocument* document = static_cast<HTMLDocument*>(this->document());
+            document->removeExtraNamedItem(m_id);
+            document->addExtraNamedItem(newId);
+        }
+        m_id = newId;
         // also call superclass
         HTMLPlugInElement::parseMappedAttribute(attr);
     } else
@@ -171,6 +173,10 @@ void HTMLObjectElement::attach()
         if (!m_imageLoader)
             m_imageLoader.set(new HTMLImageLoader(this));
         m_imageLoader->updateFromElement();
+        // updateForElement() may have changed us to use fallback content and called detach() and attach().
+        if (m_useFallbackContent)
+            return;
+
         if (renderer()) {
             RenderImage* imageObj = static_cast<RenderImage*>(renderer());
             imageObj->setCachedImage(m_imageLoader->image());
@@ -180,6 +186,7 @@ void HTMLObjectElement::attach()
 
 void HTMLObjectElement::updateWidget()
 {
+    document()->updateRendering();
     if (m_needWidgetUpdate && renderer() && !m_useFallbackContent && !isImageType())
         static_cast<RenderPartObject*>(renderer())->updateWidget(true);
 }
@@ -210,9 +217,9 @@ void HTMLObjectElement::detach()
 void HTMLObjectElement::insertedIntoDocument()
 {
     if (isDocNamedItem() && document()->isHTMLDocument()) {
-        HTMLDocument *doc = static_cast<HTMLDocument *>(document());
-        doc->addNamedItem(oldNameAttr);
-        doc->addDocExtraNamedItem(oldIdAttr);
+        HTMLDocument* document = static_cast<HTMLDocument*>(this->document());
+        document->addNamedItem(m_name);
+        document->addExtraNamedItem(m_id);
     }
 
     HTMLPlugInElement::insertedIntoDocument();
@@ -221,9 +228,9 @@ void HTMLObjectElement::insertedIntoDocument()
 void HTMLObjectElement::removedFromDocument()
 {
     if (isDocNamedItem() && document()->isHTMLDocument()) {
-        HTMLDocument *doc = static_cast<HTMLDocument *>(document());
-        doc->removeNamedItem(oldNameAttr);
-        doc->removeDocExtraNamedItem(oldIdAttr);
+        HTMLDocument* document = static_cast<HTMLDocument*>(this->document());
+        document->removeNamedItem(m_name);
+        document->removeExtraNamedItem(m_id);
     }
 
     HTMLPlugInElement::removedFromDocument();
@@ -238,19 +245,19 @@ void HTMLObjectElement::recalcStyle(StyleChange ch)
     HTMLPlugInElement::recalcStyle(ch);
 }
 
-void HTMLObjectElement::childrenChanged(bool changedByParser)
+void HTMLObjectElement::childrenChanged(bool changedByParser, Node* beforeChange, Node* afterChange, int childCountDelta)
 {
     updateDocNamedItem();
     if (inDocument() && !m_useFallbackContent) {
         m_needWidgetUpdate = true;
         setChanged();
     }
-    HTMLPlugInElement::childrenChanged(changedByParser);
+    HTMLPlugInElement::childrenChanged(changedByParser, beforeChange, afterChange, childCountDelta);
 }
 
 bool HTMLObjectElement::isURLAttribute(Attribute *attr) const
 {
-    return (attr->name() == dataAttr || (attr->name() == usemapAttr && attr->value().domString()[0] != '#'));
+    return (attr->name() == dataAttr || (attr->name() == usemapAttr && attr->value().string()[0] != '#'));
 }
 
 const QualifiedName& HTMLObjectElement::imageSourceAttributeName() const
@@ -260,19 +267,9 @@ const QualifiedName& HTMLObjectElement::imageSourceAttributeName() const
 
 bool HTMLObjectElement::isImageType()
 {
-    if (m_serviceType.isEmpty() && m_url.startsWith("data:")) {
-        // Extract the MIME type from the data URL.
-        int index = m_url.find(';');
-        if (index == -1)
-            index = m_url.find(',');
-        if (index != -1) {
-            int len = index - 5;
-            if (len > 0)
-                m_serviceType = m_url.substring(5, len);
-            else
-                m_serviceType = "text/plain"; // Data URLs with no MIME type are considered text/plain.
-        }
-    }
+    if (m_serviceType.isEmpty() && protocolIs(m_url, "data"))
+        m_serviceType = mimeTypeFromDataURL(m_url);
+
     if (Frame* frame = document()->frame()) {
         KURL completedURL(frame->loader()->completeURL(m_url));
         return frame->loader()->client()->objectContentType(completedURL, m_serviceType) == ObjectContentImage;
@@ -285,6 +282,16 @@ void HTMLObjectElement::renderFallbackContent()
 {
     if (m_useFallbackContent)
         return;
+
+    // Before we give up and use fallback content, check to see if this is a MIME type issue.
+    if (m_imageLoader && m_imageLoader->image()) {
+        m_serviceType = m_imageLoader->image()->response().mimeType();
+        if (!isImageType()) {
+            detach();
+            attach();
+            return;
+        }
+    }
 
     // Mark ourselves as using the fallback content.
     m_useFallbackContent = true;
@@ -316,13 +323,13 @@ void HTMLObjectElement::updateDocNamedItem()
         child = child->nextSibling();
     }
     if (isNamedItem != wasNamedItem && document()->isHTMLDocument()) {
-        HTMLDocument* doc = static_cast<HTMLDocument*>(document());
+        HTMLDocument* document = static_cast<HTMLDocument*>(this->document());
         if (isNamedItem) {
-            doc->addNamedItem(oldNameAttr);
-            doc->addDocExtraNamedItem(oldIdAttr);
+            document->addNamedItem(m_name);
+            document->addExtraNamedItem(m_id);
         } else {
-            doc->removeNamedItem(oldNameAttr);
-            doc->removeDocExtraNamedItem(oldIdAttr);
+            document->removeNamedItem(m_name);
+            document->removeExtraNamedItem(m_id);
         }
     }
     m_docNamedItem = isNamedItem;
@@ -378,7 +385,7 @@ void HTMLObjectElement::setCodeType(const String& value)
     setAttribute(codetypeAttr, value);
 }
 
-String HTMLObjectElement::data() const
+KURL HTMLObjectElement::data() const
 {
     return document()->completeURL(getAttribute(dataAttr));
 }
@@ -416,11 +423,6 @@ String HTMLObjectElement::standby() const
 void HTMLObjectElement::setStandby(const String& value)
 {
     setAttribute(standbyAttr, value);
-}
-
-void HTMLObjectElement::setTabIndex(int tabIndex)
-{
-    setAttribute(tabindexAttr, String::number(tabIndex));
 }
 
 String HTMLObjectElement::type() const
@@ -462,9 +464,7 @@ bool HTMLObjectElement::containsJavaApplet() const
     while (child) {
         if (child->isElementNode()) {
             Element* e = static_cast<Element*>(child);
-            if (e->hasTagName(paramTag) &&
-                e->getAttribute(nameAttr).domString().lower() == "type" &&
-                MIMETypeRegistry::isJavaAppletMIMEType(e->getAttribute(valueAttr).domString()))
+            if (e->hasTagName(paramTag) && equalIgnoringCase(e->getAttribute(nameAttr), "type") && MIMETypeRegistry::isJavaAppletMIMEType(e->getAttribute(valueAttr).string()))
                 return true;
             else if (e->hasTagName(objectTag) && static_cast<HTMLObjectElement*>(e)->containsJavaApplet())
                 return true;
@@ -475,6 +475,13 @@ bool HTMLObjectElement::containsJavaApplet() const
     }
     
     return false;
+}
+
+void HTMLObjectElement::getSubresourceAttributeStrings(Vector<String>& urls) const
+{
+    urls.append(data().string());
+    if (useMap().startsWith("#"))
+        urls.append(useMap());
 }
 
 }

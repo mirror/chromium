@@ -21,7 +21,7 @@
 #include "config.h"
 #include "RenderThemeSafari.h"
 
-#ifdef USE_SAFARI_THEME
+#if USE(SAFARI_THEME)
 
 #include "CSSValueKeywords.h"
 #include "Document.h"
@@ -94,6 +94,8 @@ ThemeControlState RenderThemeSafari::determineState(RenderObject* o) const
         result |= SafariTheme::IndeterminateCheckedState;
     if (isFocused(o))
         result |= SafariTheme::FocusedState;
+    if (isDefault(o))
+        result |= SafariTheme::DefaultState;
     return result;
 }
 
@@ -151,32 +153,32 @@ void RenderThemeSafari::systemFont(int propId, FontDescription& fontDescription)
     FontDescription* cachedDesc;
     float fontSize = 0;
     switch (propId) {
-        case CSS_VAL_SMALL_CAPTION:
+        case CSSValueSmallCaption:
             cachedDesc = &smallSystemFont;
             if (!smallSystemFont.isAbsoluteSize())
                 fontSize = systemFontSizeForControlSize(NSSmallControlSize);
             break;
-        case CSS_VAL_MENU:
+        case CSSValueMenu:
             cachedDesc = &menuFont;
             if (!menuFont.isAbsoluteSize())
                 fontSize = systemFontSizeForControlSize(NSRegularControlSize);
             break;
-        case CSS_VAL_STATUS_BAR:
+        case CSSValueStatusBar:
             cachedDesc = &labelFont;
             if (!labelFont.isAbsoluteSize())
                 fontSize = 10.0f;
             break;
-        case CSS_VAL__WEBKIT_MINI_CONTROL:
+        case CSSValueWebkitMiniControl:
             cachedDesc = &miniControlFont;
             if (!miniControlFont.isAbsoluteSize())
                 fontSize = systemFontSizeForControlSize(NSMiniControlSize);
             break;
-        case CSS_VAL__WEBKIT_SMALL_CONTROL:
+        case CSSValueWebkitSmallControl:
             cachedDesc = &smallControlFont;
             if (!smallControlFont.isAbsoluteSize())
                 fontSize = systemFontSizeForControlSize(NSSmallControlSize);
             break;
-        case CSS_VAL__WEBKIT_CONTROL:
+        case CSSValueWebkitControl:
             cachedDesc = &controlFont;
             if (!controlFont.isAbsoluteSize())
                 fontSize = systemFontSizeForControlSize(NSRegularControlSize);
@@ -192,14 +194,14 @@ void RenderThemeSafari::systemFont(int propId, FontDescription& fontDescription)
         cachedDesc->setGenericFamily(FontDescription::NoFamily);
         cachedDesc->firstFamily().setFamily("Lucida Grande");
         cachedDesc->setSpecifiedSize(fontSize);
-        cachedDesc->setBold(false);
+        cachedDesc->setWeight(FontWeightNormal);
         cachedDesc->setItalic(false);
     }
     fontDescription = *cachedDesc;
 }
 
 bool RenderThemeSafari::isControlStyled(const RenderStyle* style, const BorderData& border,
-                                     const BackgroundLayer& background, const Color& backgroundColor) const
+                                     const FillLayer& background, const Color& backgroundColor) const
 {
     // If we didn't find SafariTheme.dll we won't be able to paint any themed controls.
     if (!SafariThemeLibrary())
@@ -228,6 +230,7 @@ void RenderThemeSafari::adjustRepaintRect(const RenderObject* o, IntRect& r)
             break;
         }
         case PushButtonAppearance:
+        case DefaultButtonAppearance:
         case ButtonAppearance: {
             // We inflate the rect as needed to account for padding included in the cell to accommodate the checkbox
             // shadow" and the check.  We don't consider this part of the bounds of the control in WebKit.
@@ -262,7 +265,7 @@ IntRect RenderThemeSafari::inflateRect(const IntRect& r, const IntSize& size, co
     return result;
 }
 
-short RenderThemeSafari::baselinePosition(const RenderObject* o) const
+int RenderThemeSafari::baselinePosition(const RenderObject* o) const
 {
     if (o->style()->appearance() == CheckboxAppearance || o->style()->appearance() == RadioAppearance)
         return o->marginTop() + o->height() - 2; // The baseline is 2px up from the bottom of the checkbox/radio in AppKit.
@@ -1224,4 +1227,4 @@ bool RenderThemeSafari::paintMediaSliderThumb(RenderObject* o, const RenderObjec
 
 } // namespace WebCore
 
-#endif // defined(USE_SAFARI_THEME)
+#endif // #if USE(SAFARI_THEME)

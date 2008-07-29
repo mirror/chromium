@@ -30,6 +30,9 @@
 #include "HTTPHeaderMap.h"
 #include <wtf/OwnPtr.h>
 
+#if PLATFORM(CF)
+typedef const struct __CFData * CFDataRef;
+#endif
 
 #if PLATFORM(WIN)
 typedef unsigned long DWORD;
@@ -78,6 +81,7 @@ class ResourceHandleClient;
 class ResourceHandleInternal;
 class ResourceRequest;
 class ResourceResponse;
+class SchedulePair;
 class SharedBuffer;
 class SubresourceLoader;
 class SubresourceLoaderClient;
@@ -102,31 +106,39 @@ public:
     
     ~ResourceHandle();
 
-#if PLATFORM(MAC) || USE(CFNETWORK)
+#if PLATFORM(MAC) || USE(CFNETWORK) || USE(CURL)
     void didReceiveAuthenticationChallenge(const AuthenticationChallenge&);
     void receivedCredential(const AuthenticationChallenge&, const Credential&);
     void receivedRequestToContinueWithoutCredential(const AuthenticationChallenge&);
     void receivedCancellation(const AuthenticationChallenge&);
 #endif
+
 #if PLATFORM(MAC)
     void didCancelAuthenticationChallenge(const AuthenticationChallenge&);
     NSURLConnection *connection() const;
     WebCoreResourceHandleAsDelegate *delegate();
     void releaseDelegate();
+    id releaseProxy();
+
+    void schedule(SchedulePair*);
+    void unschedule(SchedulePair*);
 #elif USE(CFNETWORK)
     static CFRunLoopRef loaderRunLoop();
     CFURLConnectionRef connection() const;
     CFURLConnectionRef releaseConnectionForDownload();
-
     static void setHostAllowsAnyHTTPSCertificate(const String&);
     static void setClientCertificate(const String& host, CFDataRef);
 #endif
+
+#if PLATFORM(WIN) && USE(CURL)
+    static void setHostAllowsAnyHTTPSCertificate(const String&);
+#endif
+#if PLATFORM(WIN) && USE(CURL) && PLATFORM(CF)
+    static void setClientCertificate(const String& host, CFDataRef);
+#endif
+
     PassRefPtr<SharedBuffer> bufferedData();
     static bool supportsBufferedData();
-    
-#if PLATFORM(MAC)
-    id releaseProxy();
-#endif
 
 #if USE(WININET)
     void setHasReceivedResponse(bool = true);
@@ -139,7 +151,7 @@ public:
     friend LRESULT __stdcall ResourceHandleWndProc(HWND, unsigned message, WPARAM, LPARAM);
 #endif
 
-#if PLATFORM(GTK) || PLATFORM(QT) || PLATFORM(WX)
+#if PLATFORM(QT) || USE(CURL) || USE(SOUP)
     ResourceHandleInternal* getInternal() { return d.get(); }
 #endif
 
@@ -160,7 +172,13 @@ public:
     void fireFailure(Timer<ResourceHandle>*);
 
 private:
-    void scheduleFailure(FailureType);
+#if USE(SOUP)
+    bool startData(String urlString);
+    bool startHttp(String urlString);
+    bool startGio(String urlString);
+#endif
+
+void scheduleFailure(FailureType);
 
     bool start(Frame*);
 

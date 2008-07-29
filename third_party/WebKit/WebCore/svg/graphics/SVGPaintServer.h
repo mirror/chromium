@@ -35,7 +35,10 @@
 #endif
 
 #if PLATFORM(QT)
+#include <qglobal.h>
+QT_BEGIN_NAMESPACE
 class QPen;
+QT_END_NAMESPACE
 #endif
 
 #if PLATFORM(CG)
@@ -67,7 +70,6 @@ namespace WebCore {
 
     class SVGPaintServer : public SVGResource {
     public:
-        SVGPaintServer();
         virtual ~SVGPaintServer();
 
         virtual SVGResourceType resourceType() const { return PaintServerResourceType; }
@@ -97,6 +99,8 @@ namespace WebCore {
 #if PLATFORM(QT)
         void setPenProperties(const RenderObject*, const RenderStyle*, QPen&) const;
 #endif
+    protected:
+        SVGPaintServer();        
     };
 
     TextStream& operator<<(TextStream&, const SVGPaintServer&);

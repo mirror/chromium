@@ -25,6 +25,7 @@
 
 #include "Document.h"
 #include "Element.h"
+#include "Frame.h"
 #include "FrameView.h"
 #include "GraphicsContext.h"
 #include "RenderLayer.h"
@@ -72,13 +73,13 @@ RenderView::~RenderView()
 void RenderView::calcHeight()
 {
     if (!printing() && m_frameView)
-        m_height = m_frameView->visibleHeight();
+        m_height = viewHeight();
 }
 
 void RenderView::calcWidth()
 {
     if (!printing() && m_frameView)
-        m_width = m_frameView->visibleWidth();
+        m_width = viewWidth();
     m_marginLeft = 0;
     m_marginRight = 0;
 }
@@ -97,10 +98,16 @@ void RenderView::layout()
     if (printing())
         m_minPrefWidth = m_maxPrefWidth = m_width;
 
-    bool relayoutChildren = !printing() && (!m_frameView || m_width != m_frameView->visibleWidth() || m_height != m_frameView->visibleHeight());
-    if (relayoutChildren)
+    // Use calcWidth/Height to get the new width/height, since this will take the full page zoom factor into account.
+    bool relayoutChildren = !printing() && (!m_frameView || m_width != viewWidth() || m_height != viewHeight());
+    if (relayoutChildren) {
         setChildNeedsLayout(true, false);
-    
+        for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
+            if (child->style()->height().isPercent() || child->style()->minHeight().isPercent() || child->style()->maxHeight().isPercent())
+                child->setChildNeedsLayout(true, false);
+        }
+    }
+
     ASSERT(!m_layoutState);
     LayoutState state;
     // FIXME: May be better to push a clip and avoid issuing offscreen repaints.
@@ -150,11 +157,13 @@ void RenderView::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
 {
     // Check to see if we are enclosed by a transparent layer.  If so, we cannot blit
     // when scrolling, and we need to use slow repaints.
-    Element* elt = document()->ownerElement();
-    if (view() && elt && elt->renderer()) {
+    Element* elt;
+    for (elt = document()->ownerElement(); view() && elt && elt->renderer(); elt = elt->document()->ownerElement()) {
         RenderLayer* layer = elt->renderer()->enclosingLayer();
-        if (layer->isTransparent() || layer->transparentAncestor())
+        if (layer->isTransparent() || layer->transparentAncestor()) {
             frameView()->setUseSlowRepaints();
+            break;
+        }
     }
 
     if (elt || (firstChild() && firstChild()->style()->visibility() == VISIBLE) || !view())
@@ -212,6 +221,10 @@ void RenderView::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
 
     if (fixed && m_frameView)
         rect.move(m_frameView->contentsX(), m_frameView->contentsY());
+        
+    // Apply our transform if we have one (because of full page zooming).
+    if (m_layer && m_layer->transform())
+        rect = m_layer->transform()->mapRect(rect);
 }
 
 void RenderView::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool)
@@ -468,12 +481,7 @@ IntRect RenderView::viewRect() const
 
 int RenderView::docHeight() const
 {
-    int h;
-    if (printing() || !m_frameView)
-        h = m_height;
-    else
-        h = m_frameView->visibleHeight();
-
+    int h = m_height;
     int lowestPos = lowestPosition();
     if (lowestPos > h)
         h = lowestPos;
@@ -493,12 +501,7 @@ int RenderView::docHeight() const
 
 int RenderView::docWidth() const
 {
-    int w;
-    if (printing() || !m_frameView)
-        w = m_width;
-    else
-        w = m_frameView->visibleWidth();
-
+    int w = m_width;
     int rightmostPos = rightmostPosition();
     if (rightmostPos > w)
         w = rightmostPos;
@@ -510,6 +513,22 @@ int RenderView::docWidth() const
     }
 
     return w;
+}
+
+int RenderView::viewHeight() const
+{
+    int height = 0;
+    if (!printing() && m_frameView)
+        height = m_frameView->visibleHeight();
+    return height;
+}
+
+int RenderView::viewWidth() const
+{
+    int width = 0;
+    if (!printing() && m_frameView)
+        width = m_frameView->visibleWidth();
+    return width;
 }
 
 // The idea here is to take into account what object is moving the pagination point, and

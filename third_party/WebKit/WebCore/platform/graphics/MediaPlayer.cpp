@@ -30,6 +30,9 @@
 
 #include "IntRect.h"
 #include "MIMETypeRegistry.h"
+#include "FrameView.h"
+#include "Frame.h"
+#include "Document.h"
 
 #if PLATFORM(MAC)
 #include "MediaPlayerPrivateQTKit.h"
@@ -37,6 +40,8 @@
 #include "MediaPlayerPrivateQuickTimeWin.h"
 #elif PLATFORM(GTK)
 #include "MediaPlayerPrivateGStreamer.h"
+#elif PLATFORM(QT)
+#include "MediaPlayerPrivatePhonon.h"
 #endif
 
 namespace WebCore {
@@ -44,10 +49,10 @@ namespace WebCore {
     MediaPlayer::MediaPlayer(MediaPlayerClient* client)
     : m_mediaPlayerClient(client)
     , m_private(new MediaPlayerPrivate(this))
-    , m_parentWidget(0)
+    , m_frameView(0)
     , m_visible(false)
     , m_rate(1.0f)
-    , m_volume(0.5f)
+    , m_volume(1.0f)
 {
 }
 
@@ -56,7 +61,7 @@ MediaPlayer::~MediaPlayer()
     delete m_private;
 }
 
-void MediaPlayer::load(String url)
+void MediaPlayer::load(const String& url)
 {
     m_private->load(url);
 }    
@@ -109,6 +114,14 @@ IntSize MediaPlayer::naturalSize()
 bool MediaPlayer::hasVideo()
 {
     return m_private->hasVideo();
+}
+
+bool MediaPlayer::inMediaDocument()
+{
+    Frame* frame = m_frameView ? m_frameView->frame() : 0;
+    Document* document = frame ? frame->document() : 0;
+    
+    return document && document->isMediaDocument();
 }
 
 MediaPlayer::NetworkState MediaPlayer::networkState()
@@ -206,6 +219,13 @@ void MediaPlayer::setVisible(bool b)
 void MediaPlayer::paint(GraphicsContext* p, const IntRect& r)
 {
     m_private->paint(p, r);
+}
+
+bool MediaPlayer::supportsType(const String& type)
+{
+    HashSet<String> types;
+    getSupportedTypes(types);
+    return MIMETypeRegistry::isSupportedMediaMIMEType(type) && types.contains(type);
 }
 
 void MediaPlayer::getSupportedTypes(HashSet<String>& types)

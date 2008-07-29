@@ -129,7 +129,7 @@ RenderSlider::~RenderSlider()
         m_thumb->detach();
 }
 
-short RenderSlider::baselinePosition(bool b, bool isRootLineBox) const
+int RenderSlider::baselinePosition(bool b, bool isRootLineBox) const
 {
     return height() + marginTop();
 }
@@ -291,8 +291,10 @@ void RenderSlider::setValueForPosition(int position)
 
     static_cast<HTMLInputElement*>(node())->setValueFromRenderer(String::number(val));
     
-    if (position != currentPosition())
+    if (position != currentPosition()) {
         setCurrentPosition(position);
+        static_cast<HTMLInputElement*>(node())->onChange();
+    }
 }
 
 double RenderSlider::setPositionFromValue(bool inLayout)
@@ -349,6 +351,7 @@ int RenderSlider::positionForOffset(const IntPoint& p)
 void RenderSlider::valueChanged()
 {
     setValueForPosition(currentPosition());
+    static_cast<HTMLInputElement*>(node())->onChange();
 }
 
 int RenderSlider::currentPosition()

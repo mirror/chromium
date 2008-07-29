@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2001 Peter Kelly (pmk@post.com)
- *  Copyright (C) 2007 Apple Inc. All rights reserved.
+ *  Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,11 @@
 #define JSNodeFilterCondition_h
 
 #include "NodeFilterCondition.h"
-#include "kjs_dom.h"
+#include <wtf/PassRefPtr.h>
+
+namespace KJS {
+    class JSValue;
+}
 
 namespace WebCore {
 
@@ -29,12 +33,18 @@ namespace WebCore {
 
     class JSNodeFilterCondition : public NodeFilterCondition {
     public:
-        JSNodeFilterCondition(KJS::JSObject* filter);
-        virtual short acceptNode(Node*) const;
+        static PassRefPtr<JSNodeFilterCondition> create(KJS::JSValue* filter)
+        {
+            return adoptRef(new JSNodeFilterCondition(filter));
+        }
+
+    private:
+        JSNodeFilterCondition(KJS::JSValue* filter);
+
+        virtual short acceptNode(KJS::ExecState*, Node*) const;
         virtual void mark();
 
-    protected:
-        KJS::JSObject* m_filter;
+        KJS::JSValue* m_filter;
     };
 
 } // namespace WebCore

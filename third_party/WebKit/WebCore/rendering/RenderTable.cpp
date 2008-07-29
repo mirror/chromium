@@ -37,7 +37,6 @@
 #include "RenderTableCol.h"
 #include "RenderTableSection.h"
 #include "RenderView.h"
-#include "TextStream.h"
 
 using namespace std;
 
@@ -190,14 +189,14 @@ void RenderTable::addChild(RenderObject* child, RenderObject* beforeChild)
     }
 
     RenderObject* lastBox = beforeChild;
-    while (lastBox && lastBox->parent()->isAnonymous() && !lastBox->isTableSection() && lastBox->style()->display() != TABLE_CAPTION)
+    while (lastBox && lastBox->parent()->isAnonymous() && !lastBox->isTableSection() && lastBox->style()->display() != TABLE_CAPTION && lastBox->style()->display() != TABLE_COLUMN_GROUP)
         lastBox = lastBox->parent();
     if (lastBox && lastBox->isAnonymous() && !isAfterContent(lastBox)) {
         lastBox->addChild(child, beforeChild);
         return;
     }
 
-    if (beforeChild && !beforeChild->isTableSection() && beforeChild->style()->display() != TABLE_CAPTION)
+    if (beforeChild && !beforeChild->isTableSection() && beforeChild->style()->display() != TABLE_CAPTION && beforeChild->style()->display() != TABLE_COLUMN_GROUP)
         beforeChild = 0;
     RenderTableSection* section = new (renderArena()) RenderTableSection(document() /* anonymous */);
     RenderStyle* newStyle = new (renderArena()) RenderStyle();
@@ -291,20 +290,22 @@ void RenderTable::layout()
     int calculatedHeight = 0;
     int oldTableTop = m_caption ? m_caption->height() + m_caption->marginTop() + m_caption->marginBottom() : 0;
 
-    RenderObject* child = firstChild();
-    while (child) {
+    bool collapsing = collapseBorders();
+
+    for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
         // FIXME: What about a form that has a display value that makes it a table section?
         if (child->needsLayout() && !(child->element() && child->element()->hasTagName(formTag)))
             child->layout();
         if (child->isTableSection()) {
-            static_cast<RenderTableSection*>(child)->calcRowHeight();
-            calculatedHeight += static_cast<RenderTableSection*>(child)->layoutRows(0);
+            RenderTableSection* section = static_cast<RenderTableSection*>(child);
+            calculatedHeight += section->calcRowHeight();
+            if (collapsing)
+                section->recalcOuterBorder();
         }
-        child = child->nextSibling();
     }
 
-    m_overflowWidth = m_width + (collapseBorders() ? outerBorderRight() - borderRight() : 0);
-    m_overflowLeft = collapseBorders() ? borderLeft() - outerBorderLeft() : 0;
+    m_overflowWidth = m_width + (collapsing ? outerBorderRight() - borderRight() : 0);
+    m_overflowLeft = collapsing ? borderLeft() - outerBorderLeft() : 0;
 
     // If any table section moved vertically, we will just repaint everything from that
     // section down (it is quite unlikely that any of the following sections
@@ -332,15 +333,13 @@ void RenderTable::layout()
         }
     }
 
-    int bpTop = borderTop() + (collapseBorders() ? 0 : paddingTop());
-    int bpBottom = borderBottom() + (collapseBorders() ? 0 : paddingBottom());
+    int bpTop = borderTop() + (collapsing ? 0 : paddingTop());
+    int bpBottom = borderBottom() + (collapsing ? 0 : paddingBottom());
     
     m_height += bpTop;
 
-    int oldHeight = m_height;
     if (!isPositioned())
         calcHeight();
-    m_height = oldHeight;
 
     Length h = style()->height();
     int th = 0;
@@ -351,23 +350,21 @@ void RenderTable::layout()
         th = calcPercentageHeight(h);
     th = max(0, th);
 
-    // layout rows
-    if (th > calculatedHeight) {
-        // we have to redistribute that height to get the constraint correctly
-        // just force the first body to the height needed
-        // FIXME: This should take height constraints on all table sections into account and distribute
-        // accordingly. For now this should be good enough.
-        if (m_firstBody) {
-            m_firstBody->calcRowHeight();
-            m_firstBody->layoutRows(th - calculatedHeight);
-        } else if (!style()->htmlHacks())
-            // Completely empty tables (with no sections or anything) should at least honor specified height
-            // in strict mode.
-            m_height += th;
+    for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
+        if (!child->isTableSection())
+            continue;
+        // FIXME: Distribute extra height between all table body sections instead of giving it all to the first one.
+        static_cast<RenderTableSection*>(child)->layoutRows(child == m_firstBody ? max(0, th - calculatedHeight) : 0);
+    }
+
+    if (!m_firstBody && th > calculatedHeight && !style()->htmlHacks()) {
+        // Completely empty tables (with no sections or anything) should at least honor specified height
+        // in strict mode.
+        m_height += th;
     }
     
     int bl = borderLeft();
-    if (!collapseBorders())
+    if (!collapsing)
         bl += paddingLeft();
 
     // position the table sections
@@ -411,11 +408,19 @@ void RenderTable::layout()
     layoutPositionedObjects(true);
 
     if (!hasOverflowClip()) {
-        if (ShadowData* boxShadow = style()->boxShadow()) {
+        for (ShadowData* boxShadow = style()->boxShadow(); boxShadow; boxShadow = boxShadow->next) {
             m_overflowLeft = min(m_overflowLeft, boxShadow->x - boxShadow->blur);
             m_overflowWidth = max(m_overflowWidth, m_width + boxShadow->x + boxShadow->blur);
             m_overflowTop = min(m_overflowTop, boxShadow->y - boxShadow->blur);
             m_overflowHeight = max(m_overflowHeight, m_height + boxShadow->y + boxShadow->blur);
+        }
+        
+        if (hasReflection()) {
+            IntRect reflection(reflectionBox());
+            m_overflowTop = min(m_overflowTop, reflection.y());
+            m_overflowHeight = max(m_overflowHeight, reflection.bottom());
+            m_overflowLeft = min(m_overflowLeft, reflection.x());
+            m_overflowHeight = max(m_overflowWidth, reflection.right());
         }
     }
 
@@ -425,11 +430,8 @@ void RenderTable::layout()
     // Repaint with our new bounds if they are different from our old bounds.
     if (checkForRepaint)
         didFullRepaint = repaintAfterLayoutIfNeeded(oldBounds, oldOutlineBox);
-    if (!didFullRepaint && sectionMoved) {
-        IntRect repaintRect(m_overflowLeft, movedSectionTop, m_overflowWidth - m_overflowLeft, m_overflowHeight - movedSectionTop);
-        if (FrameView* frameView = view()->frameView())
-            frameView->addRepaintInfo(this, repaintRect);
-    }
+    if (!didFullRepaint && sectionMoved)
+        repaintRectangle(IntRect(m_overflowLeft, movedSectionTop, m_overflowWidth - m_overflowLeft, m_overflowHeight - movedSectionTop));
     
     setNeedsLayout(false);
 }
@@ -457,6 +459,11 @@ void RenderTable::paint(PaintInfo& paintInfo, int tx, int ty)
 
     if ((paintPhase == PaintPhaseBlockBackground || paintPhase == PaintPhaseChildBlockBackground) && hasBoxDecorations() && style()->visibility() == VISIBLE)
         paintBoxDecorations(paintInfo, tx, ty);
+
+    if (paintPhase == PaintPhaseMask) {
+        paintMask(paintInfo, tx, ty);
+        return;
+    }
 
     // We're done.  We don't bother painting any children.
     if (paintPhase == PaintPhaseBlockBackground)
@@ -518,10 +525,36 @@ void RenderTable::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
 
     paintBoxShadow(paintInfo.context, tx, ty, w, h, style());
     
-    paintBackground(paintInfo.context, style()->backgroundColor(), style()->backgroundLayers(), my, mh, tx, ty, w, h);
+    paintFillLayers(paintInfo, style()->backgroundColor(), style()->backgroundLayers(), my, mh, tx, ty, w, h);
 
     if (style()->hasBorder() && !collapseBorders())
         paintBorder(paintInfo.context, tx, ty, w, h, style());
+}
+
+void RenderTable::paintMask(PaintInfo& paintInfo, int tx, int ty)
+{
+    if (style()->visibility() != VISIBLE || paintInfo.phase != PaintPhaseMask)
+        return;
+
+    int w = width();
+    int h = height();
+
+    // Account for the caption.
+    if (m_caption) {
+        int captionHeight = (m_caption->height() + m_caption->marginBottom() +  m_caption->marginTop());
+        h -= captionHeight;
+        if (m_caption->style()->captionSide() != CAPBOTTOM)
+            ty += captionHeight;
+    }
+
+    int my = max(ty, paintInfo.rect.y());
+    int mh;
+    if (ty < paintInfo.rect.y())
+        mh = max(0, h - (paintInfo.rect.y() - ty));
+    else
+        mh = min(paintInfo.rect.height(), h);
+    
+    paintMaskImages(paintInfo, my, mh, tx, ty, w, h);
 }
 
 void RenderTable::calcPrefWidths()
@@ -1102,24 +1135,5 @@ IntRect RenderTable::getOverflowClipRect(int tx, int ty)
 
     return rect;
 }
-
-#ifndef NDEBUG
-void RenderTable::dump(TextStream* stream, DeprecatedString ind) const
-{
-    if (m_caption)
-        *stream << " tCaption";
-    if (m_head)
-        *stream << " head";
-    if (m_foot)
-        *stream << " foot";
-
-    *stream << endl << ind << "cspans:";
-    for (unsigned i = 0; i < m_columns.size(); i++)
-        *stream << " " << m_columns[i].span;
-    *stream << endl << ind;
-
-    RenderBlock::dump(stream, ind);
-}
-#endif
 
 }

@@ -2,7 +2,7 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *           (C) 2007 Nikolas Zimmermann <zimmermann@kde.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -26,7 +26,6 @@
 #include "EventTargetNode.h"
 
 #include "Document.h"
-#include "Event.h"
 #include "EventException.h"
 #include "EventHandler.h"
 #include "EventListener.h"
@@ -42,15 +41,21 @@
 #include "ProgressEvent.h"
 #include "RegisteredEventListener.h"
 #include "TextEvent.h"
-#include "TextStream.h"
 #include "WheelEvent.h"
+#include <wtf/HashSet.h>
+
+#if ENABLE(DOM_STORAGE)
+#include "StorageEvent.h"
+#endif
 
 namespace WebCore {
 
 using namespace EventNames;
+    
+static HashSet<EventTargetNode*>* gNodesDispatchingSimulatedClicks = 0; 
 
-EventTargetNode::EventTargetNode(Document *doc)
-    : Node(doc)
+EventTargetNode::EventTargetNode(Document* doc, bool isElement)
+    : Node(doc, isElement)
     , m_regdListeners(0)
 {
 }
@@ -74,6 +79,18 @@ void EventTargetNode::removedFromDocument()
 {
     EventTarget::removedFromDocument(this);
     Node::removedFromDocument();
+}
+
+void EventTargetNode::willMoveToNewOwnerDocument()
+{
+    EventTarget::willMoveToNewOwnerDocument(this);
+    Node::willMoveToNewOwnerDocument();
+}
+
+void EventTargetNode::didMoveToNewOwnerDocument()
+{
+    EventTarget::didMoveToNewOwnerDocument(this);
+    Node::didMoveToNewOwnerDocument();
 }
 
 void EventTargetNode::addEventListener(const AtomicString& eventType, PassRefPtr<EventListener> listener, bool useCapture)
@@ -115,34 +132,35 @@ bool EventTargetNode::dispatchEvent(PassRefPtr<Event> e, ExceptionCode& ec, bool
     return dispatchGenericEvent(eventTarget, evt.release(), ec, tempEvent);
 }
 
-bool EventTargetNode::dispatchSubtreeModifiedEvent(bool sendChildrenChanged)
+bool EventTargetNode::dispatchSubtreeModifiedEvent()
 {
     ASSERT(!eventDispatchForbidden());
     
     document()->incDOMTreeVersion();
 
-    // FIXME: Pull this whole if clause out of this function.
-    if (sendChildrenChanged)
-        childrenChanged();
-    else
-        notifyNodeListsAttributeChanged(); // FIXME: Can do better some day. Really only care about the name attribute changing.
+    notifyNodeListsAttributeChanged(); // FIXME: Can do better some day. Really only care about the name attribute changing.
     
     if (!document()->hasListenerType(Document::DOMSUBTREEMODIFIED_LISTENER))
         return false;
     ExceptionCode ec = 0;
-    return dispatchEvent(new MutationEvent(DOMSubtreeModifiedEvent,
-                                               true,false,0,String(),String(),String(),0),ec,true);
+    return dispatchEvent(MutationEvent::create(DOMSubtreeModifiedEvent, true, false, 0, String(), String(), String(), 0), ec, true);
 }
 
-void EventTargetNode::dispatchWindowEvent(const AtomicString &eventType, bool canBubbleArg, bool cancelableArg)
+void EventTargetNode::dispatchWindowEvent(PassRefPtr<Event> e)
 {
     ASSERT(!eventDispatchForbidden());
-    ExceptionCode ec = 0;
-    RefPtr<Event> evt = new Event(eventType, canBubbleArg, cancelableArg);
+    RefPtr<Event> evt(e);
     RefPtr<Document> doc = document();
     evt->setTarget(doc);
     doc->handleWindowEvent(evt.get(), true);
     doc->handleWindowEvent(evt.get(), false);
+}
+
+void EventTargetNode::dispatchWindowEvent(const AtomicString& eventType, bool canBubbleArg, bool cancelableArg)
+{
+    ASSERT(!eventDispatchForbidden());
+    RefPtr<Document> doc = document();
+    dispatchWindowEvent(Event::create(eventType, canBubbleArg, cancelableArg));
     
     if (eventType == loadEvent) {
         // For onload events, send a separate load event to the enclosing frame only.
@@ -150,8 +168,9 @@ void EventTargetNode::dispatchWindowEvent(const AtomicString &eventType, bool ca
         // the DOM.
         Element* ownerElement = doc->ownerElement();
         if (ownerElement) {
-            RefPtr<Event> ownerEvent = new Event(eventType, false, cancelableArg);
+            RefPtr<Event> ownerEvent = Event::create(eventType, false, cancelableArg);
             ownerEvent->setTarget(ownerElement);
+            ExceptionCode ec = 0;
             ownerElement->dispatchGenericEvent(ownerElement, ownerEvent.release(), ec, true);
         }
     }
@@ -165,7 +184,7 @@ bool EventTargetNode::dispatchUIEvent(const AtomicString& eventType, int detail,
     bool cancelable = eventType == DOMActivateEvent;
     
     ExceptionCode ec = 0;
-    RefPtr<UIEvent> evt = new UIEvent(eventType, true, cancelable, document()->defaultView(), detail);
+    RefPtr<UIEvent> evt = UIEvent::create(eventType, true, cancelable, document()->defaultView(), detail);
     evt->setUnderlyingEvent(underlyingEvent);
     return dispatchEvent(evt.release(), ec, true);
 }
@@ -174,7 +193,7 @@ bool EventTargetNode::dispatchKeyEvent(const PlatformKeyboardEvent& key)
 {
     ASSERT(!eventDispatchForbidden());
     ExceptionCode ec = 0;
-    RefPtr<KeyboardEvent> keyboardEvent = new KeyboardEvent(key, document()->defaultView());
+    RefPtr<KeyboardEvent> keyboardEvent = KeyboardEvent::create(key, document()->defaultView());
     bool r = dispatchEvent(keyboardEvent,ec,true);
     
     // we want to return false if default is prevented (already taken care of)
@@ -209,9 +228,6 @@ void EventTargetNode::dispatchSimulatedMouseEvent(const AtomicString& eventType,
     PassRefPtr<Event> underlyingEvent)
 {
     ASSERT(!eventDispatchForbidden());
-    
-    if (m_dispatchingSimulatedEvent)
-        return;
 
     bool ctrlKey = false;
     bool altKey = false;
@@ -223,21 +239,21 @@ void EventTargetNode::dispatchSimulatedMouseEvent(const AtomicString& eventType,
         shiftKey = keyStateEvent->shiftKey();
         metaKey = keyStateEvent->metaKey();
     }
-    
-    m_dispatchingSimulatedEvent = true;
 
     // Like Gecko, we just pass 0 for everything when we make a fake mouse event.
     // Internet Explorer instead gives the current mouse position and state.
     dispatchMouseEvent(eventType, 0, 0, 0, 0, 0, 0,
         ctrlKey, altKey, shiftKey, metaKey, true, 0, underlyingEvent);
-    
-    m_dispatchingSimulatedEvent = false;
 }
 
 void EventTargetNode::dispatchSimulatedClick(PassRefPtr<Event> event, bool sendMouseEvents, bool showPressedLook)
 {
-    if (m_dispatchingSimulatedEvent)
+    if (!gNodesDispatchingSimulatedClicks)
+        gNodesDispatchingSimulatedClicks = new HashSet<EventTargetNode*>;
+    else if (gNodesDispatchingSimulatedClicks->contains(this))
         return;
+    
+    gNodesDispatchingSimulatedClicks->add(this);
     
     // send mousedown and mouseup before the click, if requested
     if (sendMouseEvents)
@@ -249,6 +265,8 @@ void EventTargetNode::dispatchSimulatedClick(PassRefPtr<Event> event, bool sendM
 
     // always send click
     dispatchSimulatedMouseEvent(clickEvent, event);
+    
+    gNodesDispatchingSimulatedClicks->remove(this);
 }
 
 bool EventTargetNode::dispatchMouseEvent(const AtomicString& eventType, int button, int detail,
@@ -278,11 +296,11 @@ bool EventTargetNode::dispatchMouseEvent(const AtomicString& eventType, int butt
     RefPtr<EventTargetNode> relatedTarget = (relatedTargetArg && relatedTargetArg->isEventTargetNode())
         ? static_cast<EventTargetNode*>(relatedTargetArg) : 0;
 
-    RefPtr<Event> mouseEvent = new MouseEvent(eventType,
+    RefPtr<Event> mouseEvent = MouseEvent::create(eventType,
         true, cancelable, document()->defaultView(),
         detail, screenX, screenY, pageX, pageY,
         ctrlKey, altKey, shiftKey, metaKey, button,
-        relatedTarget.get(), 0, isSimulated);
+        relatedTarget, 0, isSimulated);
     mouseEvent->setUnderlyingEvent(underlyingEvent.get());
     
     dispatchEvent(mouseEvent, ec, true);
@@ -295,11 +313,11 @@ bool EventTargetNode::dispatchMouseEvent(const AtomicString& eventType, int butt
     // of the DOM specs, but is used for compatibility with the ondblclick="" attribute.  This is treated
     // as a separate event in other DOM-compliant browsers like Firefox, and so we do the same.
     if (eventType == clickEvent && detail == 2) {
-        RefPtr<Event> doubleClickEvent = new MouseEvent(dblclickEvent,
+        RefPtr<Event> doubleClickEvent = MouseEvent::create(dblclickEvent,
             true, cancelable, document()->defaultView(),
             detail, screenX, screenY, pageX, pageY,
             ctrlKey, altKey, shiftKey, metaKey, button,
-            relatedTarget.get(), 0, isSimulated);
+            relatedTarget, 0, isSimulated);
         doubleClickEvent->setUnderlyingEvent(underlyingEvent.get());
         if (defaultHandled)
             doubleClickEvent->setDefaultHandled();
@@ -323,11 +341,11 @@ void EventTargetNode::dispatchWheelEvent(PlatformWheelEvent& e)
     
     IntPoint pos = view->windowToContents(e.pos());
     
-    RefPtr<WheelEvent> we = new WheelEvent(e.deltaX(), e.deltaY(),
-                                           document()->defaultView(), e.globalX(), e.globalY(), pos.x(), pos.y(),
-                                           e.ctrlKey(), e.altKey(), e.shiftKey(), e.metaKey());
+    RefPtr<WheelEvent> we = WheelEvent::create(e.deltaX(), e.deltaY(),
+        document()->defaultView(), e.globalX(), e.globalY(), pos.x(), pos.y(),
+        e.ctrlKey(), e.altKey(), e.shiftKey(), e.metaKey());
     ExceptionCode ec = 0;
-    if (!dispatchEvent(we, ec, true))
+    if (!dispatchEvent(we.release(), ec, true))
         e.accept();
 }
 
@@ -346,14 +364,23 @@ bool EventTargetNode::dispatchHTMLEvent(const AtomicString &eventType, bool canB
 {
     ASSERT(!eventDispatchForbidden());
     ExceptionCode ec = 0;
-    return dispatchEvent(new Event(eventType, canBubbleArg, cancelableArg), ec, true);
+    return dispatchEvent(Event::create(eventType, canBubbleArg, cancelableArg), ec, true);
 }
 
 bool EventTargetNode::dispatchProgressEvent(const AtomicString &eventType, bool lengthComputableArg, unsigned loadedArg, unsigned totalArg)
 {
     ASSERT(!eventDispatchForbidden());
     ExceptionCode ec = 0;
-    return dispatchEvent(new ProgressEvent(eventType, lengthComputableArg, loadedArg, totalArg), ec, true);
+    return dispatchEvent(ProgressEvent::create(eventType, lengthComputableArg, loadedArg, totalArg), ec, true);
+}
+
+void EventTargetNode::dispatchStorageEvent(const AtomicString &eventType, const String& key, const String& oldValue, const String& newValue, Frame* source)
+{
+#if ENABLE(DOM_STORAGE)
+    ASSERT(!eventDispatchForbidden());
+    ExceptionCode ec = 0;
+    dispatchEvent(StorageEvent::create(eventType, key, oldValue, newValue, source->document()->documentURI(), source->domWindow()), ec, true); 
+#endif
 }
 
 void EventTargetNode::removeHTMLEventListener(const AtomicString &eventType)
@@ -377,7 +404,7 @@ void EventTargetNode::setHTMLEventListener(const AtomicString &eventType, PassRe
     // In case we are the only one holding a reference to it, we don't want removeHTMLEventListener to destroy it.
     removeHTMLEventListener(eventType);
     if (listener)
-        addEventListener(eventType, listener.get(), false);
+        addEventListener(eventType, listener, false);
 }
 
 EventListener *EventTargetNode::getHTMLEventListener(const AtomicString &eventType)
@@ -419,17 +446,5 @@ void EventTargetNode::defaultEventHandler(Event* event)
                 frame->eventHandler()->defaultTextInputEventHandler(static_cast<TextEvent*>(event));
     }
 }
-
-#ifndef NDEBUG
-
-void EventTargetNode::dump(TextStream* stream, DeprecatedString ind) const
-{
-    if (m_regdListeners)
-        *stream << " #regdListeners=" << m_regdListeners->count(); // ### more detail
-    
-    Node::dump(stream,ind);
-}
-
-#endif
 
 } // namespace WebCore

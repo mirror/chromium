@@ -33,7 +33,6 @@
 #include "RenderTableCol.h"
 #include "RenderTableRow.h"
 #include "RenderView.h"
-#include "TextStream.h"
 #include <limits>
 #include <wtf/Vector.h>
 
@@ -308,7 +307,7 @@ void RenderTableSection::setCellWidths()
         view()->popLayoutState();
 }
 
-void RenderTableSection::calcRowHeight()
+int RenderTableSection::calcRowHeight()
 {
     RenderTableCell* cell;
 
@@ -387,6 +386,8 @@ void RenderTableSection::calcRowHeight()
 
     if (pushedLayoutState)
         view()->popLayoutState();
+
+    return m_rowPos[m_gridRows];
 }
 
 int RenderTableSection::layoutRows(int toAdd)
@@ -403,9 +404,6 @@ int RenderTableSection::layoutRows(int toAdd)
     m_overflowHeight = 0;
     m_hasOverflowingCell = false;
 
-    if (table()->collapseBorders())
-        recalcOuterBorder();
-    
     if (toAdd && totalRows && (m_rowPos[totalRows] || !nextSibling())) {
         int totalHeight = m_rowPos[totalRows] + toAdd;
 
@@ -969,11 +967,8 @@ void RenderTableSection::paint(PaintInfo& paintInfo, int tx, int ty)
     }
 }
 
-void RenderTableSection::imageChanged(CachedImage* image)
+void RenderTableSection::imageChanged(WrappedImagePtr image)
 {
-    if (!image || !image->canRender() || !parent())
-        return;
-    
     // FIXME: Examine cells and repaint only the rect the image paints in.
     repaint();
 }
@@ -1075,23 +1070,5 @@ bool RenderTableSection::nodeAtPoint(const HitTestRequest& request, HitTestResul
     
     return false;
 }
-
-#ifndef NDEBUG
-void RenderTableSection::dump(TextStream* stream, DeprecatedString ind) const
-{
-    *stream << endl << ind << "grid=(" << m_gridRows << "," << table()->numEffCols() << ")" << endl << ind;
-    for (int r = 0; r < m_gridRows; r++) {
-        for (int c = 0; c < table()->numEffCols(); c++) {
-            if (cellAt(r, c).cell && !cellAt(r, c).inColSpan)
-                *stream << "(" << cellAt(r, c).cell->row() << "," << cellAt(r, c).cell->col() << ","
-                        << cellAt(r, c).cell->rowSpan() << "," << cellAt(r, c).cell->colSpan() << ") ";
-            else
-                *stream << cellAt(r, c).cell << "null cell ";
-        }
-        *stream << endl << ind;
-    }
-    RenderContainer::dump(stream,ind);
-}
-#endif
 
 } // namespace WebCore

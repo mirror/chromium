@@ -22,6 +22,7 @@
 #include "config.h"
 #include "RenderTheme.h"
 
+#include "CSSValueKeywords.h"
 #include "Document.h"
 #include "FocusController.h"
 #include "Frame.h"
@@ -31,6 +32,7 @@
 #include "Page.h"
 #include "RenderStyle.h"
 #include "SelectionController.h"
+#include "Settings.h"
 
 // The methods in this file are shared by all themes on every platform.
 
@@ -39,7 +41,7 @@ namespace WebCore {
 using namespace HTMLNames;
 
 void RenderTheme::adjustStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e,
-                              bool UAHasAppearance, const BorderData& border, const BackgroundLayer& background, const Color& backgroundColor)
+                              bool UAHasAppearance, const BorderData& border, const FillLayer& background, const Color& backgroundColor)
 {
     // Force inline and table display styles to be inline-block (except for table- which is block)
     if (style->display() == INLINE || style->display() == INLINE_TABLE || style->display() == TABLE_ROW_GROUP ||
@@ -65,6 +67,7 @@ void RenderTheme::adjustStyle(CSSStyleSelector* selector, RenderStyle* style, El
             return adjustRadioStyle(selector, style, e);
         case PushButtonAppearance:
         case SquareButtonAppearance:
+        case DefaultButtonAppearance:
         case ButtonAppearance:
             return adjustButtonStyle(selector, style, e);
         case TextFieldAppearance:
@@ -97,6 +100,12 @@ void RenderTheme::adjustStyle(CSSStyleSelector* selector, RenderStyle* style, El
     }
 }
 
+#if !PLATFORM(QT)
+void RenderTheme::adjustDefaultStyleSheet(CSSStyleSheet*)
+{
+}
+#endif
+
 bool RenderTheme::paint(RenderObject* o, const RenderObject::PaintInfo& paintInfo, const IntRect& r)
 {
     // If painting is disabled, but we aren't updating control tints, then just bail.
@@ -118,6 +127,7 @@ bool RenderTheme::paint(RenderObject* o, const RenderObject::PaintInfo& paintInf
             return paintRadio(o, paintInfo, r);
         case PushButtonAppearance:
         case SquareButtonAppearance:
+        case DefaultButtonAppearance:
         case ButtonAppearance:
             return paintButton(o, paintInfo, r);
         case MenulistAppearance:
@@ -187,6 +197,7 @@ bool RenderTheme::paintBorderOnly(RenderObject* o, const RenderObject::PaintInfo
         case RadioAppearance:
         case PushButtonAppearance:
         case SquareButtonAppearance:
+        case DefaultButtonAppearance:
         case ButtonAppearance:
         case MenulistAppearance:
         case SliderHorizontalAppearance:
@@ -221,6 +232,7 @@ bool RenderTheme::paintDecorations(RenderObject* o, const RenderObject::PaintInf
         case RadioAppearance:
         case PushButtonAppearance:
         case SquareButtonAppearance:
+        case DefaultButtonAppearance:
         case ButtonAppearance:
         case MenulistAppearance:
         case SliderHorizontalAppearance:
@@ -297,7 +309,7 @@ Color RenderTheme::inactiveListBoxSelectionForegroundColor() const
     return Color(0, 0, 0);
 }
 
-short RenderTheme::baselinePosition(const RenderObject* o) const
+int RenderTheme::baselinePosition(const RenderObject* o) const
 {
     return o->height() + o->marginTop();
 }
@@ -309,12 +321,13 @@ bool RenderTheme::isControlContainer(EAppearance appearance) const
     return appearance != CheckboxAppearance && appearance != RadioAppearance;
 }
 
-bool RenderTheme::isControlStyled(const RenderStyle* style, const BorderData& border, const BackgroundLayer& background,
+bool RenderTheme::isControlStyled(const RenderStyle* style, const BorderData& border, const FillLayer& background,
                                   const Color& backgroundColor) const
 {
     switch (style->appearance()) {
         case PushButtonAppearance:
         case SquareButtonAppearance:
+        case DefaultButtonAppearance:
         case ButtonAppearance:
         case ListboxAppearance:
         case MenulistAppearance:
@@ -398,7 +411,7 @@ bool RenderTheme::isFocused(const RenderObject* o) const
         return false;
     Document* document = node->document();
     Frame* frame = document->frame();
-    return node == document->focusedNode() && frame && frame->selectionController()->isFocusedAndActive();
+    return node == document->focusedNode() && frame && frame->selection()->isFocusedAndActive();
 }
 
 bool RenderTheme::isPressed(const RenderObject* o) const
@@ -420,6 +433,21 @@ bool RenderTheme::isHovered(const RenderObject* o) const
     if (!o->element())
         return false;
     return o->element()->hovered();
+}
+
+bool RenderTheme::isDefault(const RenderObject* o) const
+{
+    if (!o->document())
+        return false;
+
+    Settings* settings = o->document()->settings();
+    if (!settings || !settings->inApplicationChromeMode())
+        return false;
+    
+    if (!o->style())
+        return false;
+    
+    return o->style()->appearance() == DefaultButtonAppearance;
 }
 
 void RenderTheme::adjustCheckboxStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const
@@ -515,6 +543,71 @@ void RenderTheme::platformColorsDidChange()
 {
     m_activeSelectionColor = Color();
     m_inactiveSelectionColor = Color();
+}
+
+Color RenderTheme::systemColor(int cssValueId) const
+{
+    switch (cssValueId) {
+        case CSSValueActiveborder:
+            return 0xFFFFFFFF;
+        case CSSValueActivecaption:
+            return 0xFFCCCCCC;
+        case CSSValueAppworkspace:
+            return 0xFFFFFFFF;
+        case CSSValueBackground:
+            return 0xFF6363CE;
+        case CSSValueButtonface:
+            return 0xFFC0C0C0;
+        case CSSValueButtonhighlight:
+            return 0xFFDDDDDD;
+        case CSSValueButtonshadow:
+            return 0xFF888888;
+        case CSSValueButtontext:
+            return 0xFF000000;
+        case CSSValueCaptiontext:
+            return 0xFF000000;
+        case CSSValueGraytext:
+            return 0xFF808080;
+        case CSSValueHighlight:
+            return 0xFFB5D5FF;
+        case CSSValueHighlighttext:
+            return 0xFF000000;
+        case CSSValueInactiveborder:
+            return 0xFFFFFFFF;
+        case CSSValueInactivecaption:
+            return 0xFFFFFFFF;
+        case CSSValueInactivecaptiontext:
+            return 0xFF7F7F7F;
+        case CSSValueInfobackground:
+            return 0xFFFBFCC5;
+        case CSSValueInfotext:
+            return 0xFF000000;
+        case CSSValueMenu:
+            return 0xFFC0C0C0;
+        case CSSValueMenutext:
+            return 0xFF000000;
+        case CSSValueScrollbar:
+            return 0xFFFFFFFF;
+        case CSSValueText:
+            return 0xFF000000;
+        case CSSValueThreeddarkshadow:
+            return 0xFF666666;
+        case CSSValueThreedface:
+            return 0xFFC0C0C0;
+        case CSSValueThreedhighlight:
+            return 0xFFDDDDDD;
+        case CSSValueThreedlightshadow:
+            return 0xFFC0C0C0;
+        case CSSValueThreedshadow:
+            return 0xFF888888;
+        case CSSValueWindow:
+            return 0xFFFFFFFF;
+        case CSSValueWindowframe:
+            return 0xFFCCCCCC;
+        case CSSValueWindowtext:
+            return 0xFF000000;
+    }
+    return Color();
 }
 
 Color RenderTheme::platformTextSearchHighlightColor() const

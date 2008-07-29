@@ -24,6 +24,7 @@
 #define Length_h
 
 #include <wtf/Assertions.h>
+#include <wtf/MathExtras.h>
 
 namespace WebCore {
 
@@ -103,12 +104,14 @@ namespace WebCore {
         }
 
         // note: works only for certain types, returns undefinedLength otherwise
-        int calcValue(int maxValue) const
+        int calcValue(int maxValue, bool roundPercentages = false) const
         {
             switch (type()) {
                 case Fixed:
                     return value();
                 case Percent:
+                    if (roundPercentages)
+                        return static_cast<int>(round(maxValue * percent() / 100.0));
                     return maxValue * rawValue() / (100 * percentScaleFactor);
                 case Auto:
                     return maxValue;
@@ -117,16 +120,32 @@ namespace WebCore {
             }
         }
 
-        int calcMinValue(int maxValue) const
+        int calcMinValue(int maxValue, bool roundPercentages = false) const
         {
             switch (type()) {
                 case Fixed:
                     return value();
                 case Percent:
+                    if (roundPercentages)
+                        return static_cast<int>(round(maxValue * percent() / 100.0));
                     return maxValue * rawValue() / (100 * percentScaleFactor);
                 case Auto:
                 default:
                     return 0;
+            }
+        }
+
+        float calcFloatValue(int maxValue) const
+        {
+            switch (type()) {
+                case Fixed:
+                    return value();
+                case Percent:
+                    return static_cast<float>(maxValue * percent() / 100.0);
+                case Auto:
+                    return maxValue;
+                default:
+                    return undefinedLength;
             }
         }
 

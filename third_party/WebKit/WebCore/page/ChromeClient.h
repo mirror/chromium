@@ -21,20 +21,37 @@
 #ifndef ChromeClient_h
 #define ChromeClient_h
 
+#include "GraphicsContext.h"
 #include "FocusDirection.h"
+#include "ScrollTypes.h"
+#include <wtf/Forward.h>
+#include <wtf/Vector.h>
+
+#if PLATFORM(MAC)
+#include "WebCoreKeyboardUIMode.h"
+#endif
+
+#ifndef __OBJC__
+class NSMenu;
+class NSResponder;
+#endif
 
 namespace WebCore {
 
+    class AtomicString;
+    class FileChooser;
     class FloatRect;
     class Frame;
     class HitTestResult;
     class IntRect;
+    class Node;
     class Page;
     class String;
+    class Widget;
     
     struct FrameLoadRequest;
     struct WindowFeatures;
-    
+
     class ChromeClient {
     public:
         virtual void chromeDestroyed() = 0;
@@ -103,6 +120,38 @@ namespace WebCore {
         virtual void print(Frame*) = 0;
 
         virtual void exceededDatabaseQuota(Frame*, const String& databaseName) = 0;
+
+#if ENABLE(DASHBOARD_SUPPORT)
+        virtual void dashboardRegionsChanged();
+#endif
+
+        virtual void populateVisitedLinks();
+
+        virtual FloatRect customHighlightRect(Node*, const AtomicString& type, const FloatRect& lineRect);
+        virtual void paintCustomHighlight(Node*, const AtomicString& type, const FloatRect& boxRect, const FloatRect& lineRect,
+            bool behindText, bool entireLine);
+            
+        virtual bool shouldReplaceWithGeneratedFileForUpload(const String& path, String& generatedFilename);
+        virtual String generateReplacementFile(const String& path);
+        
+        virtual void enableSuddenTermination();
+        virtual void disableSuddenTermination();
+
+        virtual bool paintCustomScrollbar(GraphicsContext*, const FloatRect&, ScrollbarControlSize, 
+                                          ScrollbarControlState, ScrollbarPart pressedPart, bool vertical,
+                                          float value, float proportion, ScrollbarControlPartMask);
+        virtual bool paintCustomScrollCorner(GraphicsContext*, const FloatRect&);
+
+#if PLATFORM(MAC)
+        virtual void runOpenPanel(PassRefPtr<FileChooser>);
+
+        virtual KeyboardUIMode keyboardUIMode() { return KeyboardAccessDefault; }
+
+        virtual NSResponder *firstResponder() { return 0; }
+        virtual void makeFirstResponder(NSResponder *) { }
+
+        virtual void willPopUpMenu(NSMenu *) { }
+#endif
 
     protected:
         virtual ~ChromeClient() { }

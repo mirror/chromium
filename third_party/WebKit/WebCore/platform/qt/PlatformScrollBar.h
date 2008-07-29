@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Staikos Computing Services Inc. <info@staikos.net>
  * Copyright (C) 2007 Trolltech ASA
  *
@@ -28,17 +28,20 @@
 #ifndef PlatformScrollbar_h
 #define PlatformScrollbar_h
 
-#include "Widget.h"
 #include "ScrollBar.h"
 #include "Timer.h"
-
+#include "Widget.h"
 #include <QStyleOptionSlider>
+#include <wtf/PassRefPtr.h>
 
 namespace WebCore {
 
 class PlatformScrollbar : public Widget, public Scrollbar {
 public:
-    PlatformScrollbar(ScrollbarClient*, ScrollbarOrientation, ScrollbarControlSize);
+    static PassRefPtr<PlatformScrollbar> create(ScrollbarClient* client, ScrollbarOrientation orientation, ScrollbarControlSize size)
+    {
+        return adoptRef(new PlatformScrollbar(client, orientation, size));
+    }
     virtual ~PlatformScrollbar();
 
     virtual bool isWidget() const { return true; }
@@ -56,6 +59,7 @@ public:
     virtual bool handleMouseOutEvent(const PlatformMouseEvent&);
     virtual bool handleMousePressEvent(const PlatformMouseEvent&);
     virtual bool handleMouseReleaseEvent(const PlatformMouseEvent&);
+    virtual bool handleContextMenuEvent(const PlatformMouseEvent&);
 
     bool isEnabled() const;
 
@@ -65,11 +69,15 @@ public:
     void autoscrollTimerFired(Timer<PlatformScrollbar>*);
     void invalidate();
 
+    int maximum() const { return m_totalSize - m_visibleSize; }
+
 protected:    
     virtual void updateThumbPosition();
     virtual void updateThumbProportion();
 
 private:
+    PlatformScrollbar(ScrollbarClient*, ScrollbarOrientation, ScrollbarControlSize);
+
     int thumbPosition() const;
     int thumbLength() const;
     int trackLength() const;
@@ -81,6 +89,8 @@ private:
     ScrollGranularity pressedPartScrollGranularity();
 
     bool thumbUnderMouse();
+
+    int pixelPosToRangeValue(int pos) const;
 
     int m_pressedPos;
     QStyle::SubControl m_pressedPart;

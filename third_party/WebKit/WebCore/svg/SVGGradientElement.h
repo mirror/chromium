@@ -27,12 +27,12 @@
 #include "SVGPaintServerGradient.h"
 #include "SVGExternalResourcesRequired.h"
 #include "SVGStyledElement.h"
+#include "SVGTransformList.h"
 #include "SVGURIReference.h"
 
 namespace WebCore {
 
-    class SVGGradientElement;
-    class SVGTransformList;
+    extern char SVGGradientElementIdentifier[];
 
     class SVGGradientElement : public SVGStyledElement,
                                public SVGURIReference,
@@ -51,7 +51,7 @@ namespace WebCore {
         virtual void parseMappedAttribute(MappedAttribute*);
         virtual void svgAttributeChanged(const QualifiedName&);
 
-        virtual void childrenChanged(bool changedByParser = false);
+        virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
         virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
 
         virtual SVGResource* canvasResource();
@@ -67,13 +67,12 @@ namespace WebCore {
         Vector<SVGGradientStop> buildStops() const;
         mutable RefPtr<SVGPaintServerGradient> m_resource;
  
+        virtual const SVGElement* contextElement() const { return this; }
+
     protected:
-        ANIMATED_PROPERTY_FORWARD_DECLARATIONS(SVGURIReference, String, Href, href)
-        ANIMATED_PROPERTY_FORWARD_DECLARATIONS(SVGExternalResourcesRequired, bool, ExternalResourcesRequired, externalResourcesRequired)
- 
-        ANIMATED_PROPERTY_DECLARATIONS(SVGGradientElement, int, int, SpreadMethod, spreadMethod)
-        ANIMATED_PROPERTY_DECLARATIONS(SVGGradientElement, int, int, GradientUnits, gradientUnits)
-        ANIMATED_PROPERTY_DECLARATIONS(SVGGradientElement, SVGTransformList*, RefPtr<SVGTransformList>, GradientTransform, gradientTransform)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGGradientElement, SVGGradientElementIdentifier, SVGNames::spreadMethodAttrString, int, SpreadMethod, spreadMethod)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGGradientElement, SVGGradientElementIdentifier, SVGNames::gradientUnitsAttrString, int, GradientUnits, gradientUnits)
+        ANIMATED_PROPERTY_DECLARATIONS(SVGGradientElement, SVGGradientElementIdentifier, SVGNames::gradientTransformAttrString, SVGTransformList, GradientTransform, gradientTransform)
     };
 
 } // namespace WebCore

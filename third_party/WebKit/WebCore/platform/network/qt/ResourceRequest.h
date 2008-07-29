@@ -30,14 +30,16 @@
 
 #include "ResourceRequestBase.h"
 
+QT_BEGIN_NAMESPACE
 class QNetworkRequest;
+QT_END_NAMESPACE
 
 namespace WebCore {
 
     struct ResourceRequest : ResourceRequestBase {
 
         ResourceRequest(const String& url) 
-            : ResourceRequestBase(KURL(url.deprecatedString()), UseProtocolCachePolicy)
+            : ResourceRequestBase(KURL(url), UseProtocolCachePolicy)
         {
         }
 

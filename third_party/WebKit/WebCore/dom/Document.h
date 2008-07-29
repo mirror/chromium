@@ -3,7 +3,7 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
  *           (C) 2006 Alexey Proskuryakov (ap@webkit.org)
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,10 +28,10 @@
 #include "Attr.h"
 #include "Color.h"
 #include "DeprecatedPtrList.h"
-#include "DeprecatedValueList.h"
 #include "DocumentMarker.h"
 #include "HTMLCollection.h"
 #include "HTMLFormElement.h"
+#include "KURL.h"
 #include "StringHash.h"
 #include "Timer.h"
 #include <wtf/HashCountedSet.h>
@@ -52,12 +52,16 @@ namespace WebCore {
     class Attr;
     class Attribute;
     class CDATASection;
+    class CachedCSSStyleSheet;
+    class CanvasRenderingContext2D;
+    class CharacterData;
     class CSSStyleDeclaration;
     class CSSStyleSelector;
     class CSSStyleSheet;
     class Comment;
     class Database;
     class DOMImplementation;
+    class DOMSelection;
     class DOMWindow;
     class DatabaseThread;
     class DocLoader;
@@ -70,6 +74,7 @@ namespace WebCore {
     class EventListener;
     class Frame;
     class FrameView;
+    class HTMLCanvasElement;
     class HTMLDocument;
     class HTMLElement;
     class HTMLFormControlElementWithState;
@@ -79,6 +84,7 @@ namespace WebCore {
     class HTMLInputElement;
     class HTMLMapElement;
     class IntPoint;
+    class JSNode;
     class MouseEventWithHitTestResults;
     class NodeFilter;
     class NodeIterator;
@@ -96,22 +102,26 @@ namespace WebCore {
     class TextResourceDecoder;
     class Tokenizer;
     class TreeWalker;
+
+#if ENABLE(SVG)
+    class SVGDocumentExtensions;
+#endif
+    
 #if ENABLE(XBL)
     class XBLBindingManager;
 #endif
+
 #if ENABLE(XPATH)
     class XPathEvaluator;
     class XPathExpression;
     class XPathNSResolver;
     class XPathResult;
 #endif
-    
-    struct DashboardRegionValue;
-    struct HitTestRequest;
 
-#if ENABLE(SVG)
-    class SVGDocumentExtensions;
+#if ENABLE(DASHBOARD_SUPPORT)
+    struct DashboardRegionValue;
 #endif
+    struct HitTestRequest;
 
     typedef int ExceptionCode;
 
@@ -121,17 +131,28 @@ public:
     ~FormElementKey();
     FormElementKey(const FormElementKey&);
     FormElementKey& operator=(const FormElementKey&);
+
     AtomicStringImpl* name() const { return m_name; }
     AtomicStringImpl* type() const { return m_type; }
+
+    // Hash table deleted values, which are only constructed and never copied or destroyed.
+    FormElementKey(WTF::HashTableDeletedValueType) : m_name(hashTableDeletedValue()) { }
+    bool isHashTableDeletedValue() const { return m_name == hashTableDeletedValue(); }
+
 private:
     void ref() const;
     void deref() const;
+
+    static AtomicStringImpl* hashTableDeletedValue() { return reinterpret_cast<AtomicStringImpl*>(-1); }
+
     AtomicStringImpl* m_name;
     AtomicStringImpl* m_type;
 };
 
 inline bool operator==(const FormElementKey& a, const FormElementKey& b)
-    { return a.name() == b.name() && a.type() == b.type(); }
+{
+    return a.name() == b.name() && a.type() == b.type();
+}
 
 struct FormElementKeyHash {
     static unsigned hash(const FormElementKey&);
@@ -140,12 +161,20 @@ struct FormElementKeyHash {
 };
 
 struct FormElementKeyHashTraits : WTF::GenericHashTraits<FormElementKey> {
-    static FormElementKey deletedValue();
+    static void constructDeletedValue(FormElementKey& slot) { new (&slot) FormElementKey(WTF::HashTableDeletedValue); }
+    static bool isDeletedValue(const FormElementKey& value) { return value.isHashTableDeletedValue(); }
 };
 
 class Document : public ContainerNode {
 public:
-    Document(DOMImplementation*, Frame*, bool isXHTML = false);
+    static PassRefPtr<Document> create(Frame* frame)
+    {
+        return new Document(frame, false);
+    }
+    static PassRefPtr<Document> createXHTML(Frame* frame)
+    {
+        return new Document(frame, true);
+    }
     virtual ~Document();
 
     virtual void removedLastRef();
@@ -175,25 +204,26 @@ public:
 
     // DOM methods & attributes for Document
 
-    virtual DocumentType* doctype() const; // May return 0 for HTML documents
-    DocumentType* realDocType() const { return m_docType.get(); }
+    DocumentType* doctype() const { return m_docType.get(); }
 
     DOMImplementation* implementation() const;
-    virtual void childrenChanged(bool changedByParser = false);
+    virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
     Element* documentElement() const;
-    virtual PassRefPtr<Element> createElement(const String& tagName, ExceptionCode&);
+    virtual PassRefPtr<Element> createElement(const AtomicString& tagName, ExceptionCode&);
     PassRefPtr<DocumentFragment> createDocumentFragment ();
     PassRefPtr<Text> createTextNode(const String& data);
     PassRefPtr<Comment> createComment(const String& data);
     PassRefPtr<CDATASection> createCDATASection(const String& data, ExceptionCode&);
     PassRefPtr<ProcessingInstruction> createProcessingInstruction(const String& target, const String& data, ExceptionCode&);
-    PassRefPtr<Attr> createAttribute(const String& name, ExceptionCode& ec) { return createAttributeNS(String(), name, ec); }
-    PassRefPtr<Attr> createAttributeNS(const String& namespaceURI, const String& qualifiedName, ExceptionCode&);
+    PassRefPtr<Attr> createAttribute(const String& name, ExceptionCode& ec) { return createAttributeNS(String(), name, ec, true); }
+    PassRefPtr<Attr> createAttributeNS(const String& namespaceURI, const String& qualifiedName, ExceptionCode&, bool shouldIgnoreNamespaceChecks = false);
     PassRefPtr<EntityReference> createEntityReference(const String& name, ExceptionCode&);
     PassRefPtr<Node> importNode(Node* importedNode, bool deep, ExceptionCode&);
     virtual PassRefPtr<Element> createElementNS(const String& namespaceURI, const String& qualifiedName, ExceptionCode&);
     PassRefPtr<Element> createElement(const QualifiedName&, bool createdByParser, ExceptionCode& ec);
     Element* getElementById(const AtomicString&) const;
+    bool hasElementWithId(AtomicStringImpl* id) const;
+    bool containsMultipleElementsWithId(const AtomicString& elementId) { return m_duplicateIds.contains(elementId.impl()); }
 
     Element* elementFromPoint(int x, int y) const;
     String readyState() const;
@@ -216,10 +246,10 @@ public:
     void setXMLVersion(const String&, ExceptionCode&);
     void setXMLStandalone(bool, ExceptionCode&);
 
-    String documentURI() const;
+    String documentURI() const { return m_documentURI; }
     void setDocumentURI(const String&);
 
-    virtual String baseURI() const;
+    virtual KURL baseURI() const;
 
     PassRefPtr<Node> adoptNode(PassRefPtr<Node> source, ExceptionCode&);
 
@@ -259,6 +289,7 @@ public:
     virtual bool isSVGDocument() const { return false; }
 #endif
     virtual bool isPluginDocument() const { return false; }
+    virtual bool isMediaDocument() const { return false; }
     
     CSSStyleSelector* styleSelector() const { return m_styleSelector; }
 
@@ -287,6 +318,9 @@ public:
      * invoke this to add themselves to the loading list.
      */
     void addPendingSheet() { m_pendingStylesheets++; }
+
+    void addStyleSheetCandidateNode(Node*, bool createdByParser);
+    void removeStyleSheetCandidateNode(Node*);
 
     bool gotoAnchorNeededAfterStylesheetsLoad() { return m_gotoAnchorNeededAfterStylesheetsLoad; }
     void setGotoAnchorNeededAfterStylesheetsLoad(bool b) { m_gotoAnchorNeededAfterStylesheetsLoad = b; }
@@ -329,17 +363,16 @@ public:
     PassRefPtr<Range> createRange();
 
     PassRefPtr<NodeIterator> createNodeIterator(Node* root, unsigned whatToShow,
-        NodeFilter*, bool expandEntityReferences, ExceptionCode&);
+        PassRefPtr<NodeFilter>, bool expandEntityReferences, ExceptionCode&);
 
     PassRefPtr<TreeWalker> createTreeWalker(Node* root, unsigned whatToShow, 
-        NodeFilter*, bool expandEntityReferences, ExceptionCode&);
+        PassRefPtr<NodeFilter>, bool expandEntityReferences, ExceptionCode&);
 
     // Special support for editing
     PassRefPtr<CSSStyleDeclaration> createCSSStyleDeclaration();
     PassRefPtr<EditingText> createEditingTextNode(const String&);
 
     virtual void recalcStyle( StyleChange = NoChange );
-    static DeprecatedPtrList<Document>* changedDocuments;
     virtual void updateRendering();
     void updateLayout();
     void updateLayoutIgnorePendingStylesheets();
@@ -349,6 +382,8 @@ public:
     virtual void attach();
     virtual void detach();
 
+    void clearFramePointer();
+
     RenderArena* renderArena() { return m_renderArena; }
 
     void clearAXObjectCache();
@@ -357,33 +392,36 @@ public:
     // to get visually ordered hebrew and arabic pages right
     void setVisuallyOrdered();
 
-    void open();
+    void open(Document* ownerDocument = 0);
     void implicitOpen();
     void close();
     void implicitClose();
     void cancelParsing();
 
-    void write(const String& text);
-    void writeln(const String& text);
+    void write(const String& text, Document* ownerDocument = 0);
+    void writeln(const String& text, Document* ownerDocument = 0);
     void finishParsing();
     void clear();
 
     bool wellFormed() const { return m_wellFormed; }
 
-    DeprecatedString url() const { return m_url.isEmpty() ? "about:blank" : m_url; }
-    void setURL(const DeprecatedString& url);
+    const KURL& url() const { return m_url; }
+    void setURL(const KURL&);
 
-    DeprecatedString baseURL() const { return m_baseURL.isEmpty() ? url() : m_baseURL; }
-    void setBaseURL(const DeprecatedString& baseURL);
+    const KURL& baseURL() const { return m_baseURL; }
+    // Setting the BaseElementURL will change the baseURL.
+    void setBaseElementURL(const KURL&);
 
-    String baseTarget() const { return m_baseTarget; }
-    void setBaseTarget(const String& baseTarget) { m_baseTarget = baseTarget; }
+    const String& baseTarget() const { return m_baseTarget; }
+    // Setting the BaseElementTarget will change the baseTarget.
+    void setBaseElementTarget(const String& baseTarget) { m_baseTarget = baseTarget; }
 
-    DeprecatedString completeURL(const DeprecatedString &);
-    String completeURL(const String&);
+    KURL completeURL(const String&) const;
+
+    unsigned visitedLinkHash(const AtomicString& attributeURL) const;
 
     // from cachedObjectClient
-    virtual void setCSSStyleSheet(const String& url, const String& charset, const String& sheetStr);
+    virtual void setCSSStyleSheet(const String& url, const String& charset, const CachedCSSStyleSheet*);
 
 #if FRAME_LOADS_USER_STYLESHEET
     void setUserStyleSheet(const String& sheet);
@@ -400,20 +438,18 @@ public:
     void setPrinting(bool p) { m_printing = p; }
 
     enum ParseMode { Compat, AlmostStrict, Strict };
+
+private:
+    virtual void determineParseMode() {}
     
-    virtual void determineParseMode(const String&);
-    void setParseMode(ParseMode m) { pMode = m; }
-    ParseMode parseMode() const { return pMode; }
+public:
+    void setParseMode(ParseMode m) { m_parseMode = m; }
+    ParseMode parseMode() const { return m_parseMode; }
 
-    bool inCompatMode() const { return pMode == Compat; }
-    bool inAlmostStrictMode() const { return pMode == AlmostStrict; }
-    bool inStrictMode() const { return pMode == Strict; }
+    bool inCompatMode() const { return m_parseMode == Compat; }
+    bool inAlmostStrictMode() const { return m_parseMode == AlmostStrict; }
+    bool inStrictMode() const { return m_parseMode == Strict; }
     
-    enum HTMLMode { Html3, Html4, XHtml };
-
-    void setHTMLMode(HTMLMode m) { hMode = m; }
-    HTMLMode htmlMode() const { return hMode; }
-
     void setParsing(bool);
     bool parsing() const { return m_bParsing; }
     int minimumLayoutDelay();
@@ -453,6 +489,11 @@ public:
     bool setFocusedNode(PassRefPtr<Node>);
     Node* focusedNode() const { return m_focusedNode.get(); }
 
+    // The m_ignoreAutofocus flag specifies whether or not the document has been changed by the user enough 
+    // for WebCore to ignore the autofocus attribute on any form controls
+    bool ignoreAutofocus() const { return m_ignoreAutofocus; };
+    void setIgnoreAutofocus(bool shouldIgnore = true) { m_ignoreAutofocus = shouldIgnore; };
+
     void setHoverNode(PassRefPtr<Node>);
     Node* hoverNode() const { return m_hoverNode.get(); }
 
@@ -472,8 +513,21 @@ public:
 
     void attachNodeIterator(NodeIterator*);
     void detachNodeIterator(NodeIterator*);
-    void notifyBeforeNodeRemoval(Node*);
-    DOMWindow* defaultView() const;
+
+    void attachRange(Range*);
+    void detachRange(Range*);
+
+    void nodeChildrenChanged(ContainerNode*);
+    void nodeWillBeRemoved(Node*);
+
+    void textInserted(Node*, unsigned offset, unsigned length);
+    void textRemoved(Node*, unsigned offset, unsigned length);
+    void textNodesMerged(Text* oldNode, unsigned offset);
+    void textNodeSplit(Text* oldNode);
+
+    DOMWindow* defaultView() const { return domWindow(); } 
+    DOMWindow* domWindow() const;
+
     PassRefPtr<Event> createEvent(const String& eventType, ExceptionCode&);
 
     // keep track of what types of event listeners are registered, so we don't
@@ -504,6 +558,11 @@ public:
     void addWindowEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
     void removeWindowEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
     bool hasWindowEventListener(const AtomicString& eventType);
+    
+    void addPendingFrameUnloadEventCount();
+    void removePendingFrameUnloadEventCount();
+    void addPendingFrameBeforeUnloadEventCount();
+    void removePendingFrameBeforeUnloadEventCount();
 
     PassRefPtr<EventListener> createHTMLEventListener(const String& functionName, const String& code, Node*);
     
@@ -569,8 +628,10 @@ public:
 
     String lastModified() const;
 
-    String policyBaseURL() const { return m_policyBaseURL; }
-    void setPolicyBaseURL(const String& s) { m_policyBaseURL = s; }
+    const KURL& cookieURL() const { return m_cookieURL; }
+
+    const KURL& policyBaseURL() const { return m_policyBaseURL; }
+    void setPolicyBaseURL(const KURL& url) { m_policyBaseURL = url; }
     
     // The following implements the rule from HTML 4 for what valid names are.
     // To get this right for all the XML cases, we probably have to improve this or move it
@@ -578,9 +639,12 @@ public:
     static bool isValidName(const String&);
 
     // The following breaks a qualified name into a prefix and a local name.
-    // It also does a validity check, and returns false if the qualified name is invalid
-    // (empty string or invalid characters).
-    static bool parseQualifiedName(const String& qualifiedName, String& prefix, String& localName);
+    // It also does a validity check, and returns false if the qualified name
+    // is invalid.  It also sets ExceptionCode when name is invalid.
+    static bool parseQualifiedName(const String& qualifiedName, String& prefix, String& localName, ExceptionCode&);
+    
+    // Checks to make sure prefix and namespace do not conflict (per DOM Core 3)
+    static bool hasPrefixNamespaceMismatch(const QualifiedName&);
     
     void addElementById(const AtomicString& elementId, Element *element);
     void removeElementById(const AtomicString& elementId, Element *element);
@@ -594,8 +658,6 @@ public:
 
     HTMLHeadElement* head();
 
-    String toString() const;
-    
     bool execCommand(const String& command, bool userInterface = false, const String& value = String());
     bool queryCommandEnabled(const String& command);
     bool queryCommandIndeterm(const String& command);
@@ -670,10 +732,8 @@ public:
     
     void setHasNodesWithPlaceholderStyle() { m_hasNodesWithPlaceholderStyle = true; }
 
-    String iconURL();
+    const String& iconURL() const { return m_iconURL; }
     void setIconURL(const String& iconURL, const String& type);
-
-    bool isAllowedToLoadLocalResources() const { return m_isAllowedToLoadLocalResources; }
 
     void setUseSecureKeyboardEntryWhenActive(bool);
     bool useSecureKeyboardEntryWhenActive() const;
@@ -691,6 +751,16 @@ public:
     void updateFocusAppearanceSoon();
     void cancelFocusAppearanceUpdate();
     
+    // FF method for accessing the selection added for compatability.
+    DOMSelection* getSelection() const;
+    
+    // Extension for manipulating canvas drawing contexts for use in CSS
+    CanvasRenderingContext2D* getCSSCanvasContext(const String& type, const String& name, int width, int height);
+    HTMLCanvasElement* getCSSCanvasElement(const String& name);
+    
+protected:
+    Document(Frame*, bool isXHTML);
+
 private:
     CSSStyleSelector* m_styleSelector;
     bool m_didCalculateStyleSelector;
@@ -699,12 +769,25 @@ private:
     DocLoader* m_docLoader;
     Tokenizer* m_tokenizer;
     bool m_wellFormed;
-    DeprecatedString m_url;
-    DeprecatedString m_baseURL;
+
+    // Document URLs.
+    KURL m_url;  // Document.URL: The URL from which this document was retrieved.
+    KURL m_baseURL;  // Node.baseURI: The URL to use when resolving relative URLs.
+    KURL m_baseElementURL;  // The URL set by the <base> element.
+    KURL m_cookieURL;  // The URL to use for cookie access.
+    KURL m_policyBaseURL;  // The policy URL for third-party cookie blocking.
+
+    // Document.documentURI:
+    // Although URL-like, Document.documentURI can actually be set to any
+    // string by content.  Document.documentURI affects m_baseURL unless the
+    // document contains a <base> element, in which case the <base> element
+    // takes precedence.
+    String m_documentURI;
+
     String m_baseTarget;
 
     RefPtr<DocumentType> m_docType;
-    RefPtr<DOMImplementation> m_implementation;
+    mutable RefPtr<DOMImplementation> m_implementation;
 
     RefPtr<StyleSheet> m_sheet;
 #if FRAME_LOADS_USER_STYLESHEET
@@ -732,9 +815,10 @@ private:
     RefPtr<CSSStyleSheet> m_mappedElementSheet;
 
     bool m_printing;
+    
+    bool m_ignoreAutofocus;
 
-    ParseMode pMode;
-    HTMLMode hMode;
+    ParseMode m_parseMode;
 
     Color m_textColor;
 
@@ -746,11 +830,13 @@ private:
     unsigned m_domtree_version;
     
     HashSet<NodeIterator*> m_nodeIterators;
+    HashSet<Range*> m_ranges;
 
     unsigned short m_listenerTypes;
-    RefPtr<StyleSheetList> m_styleSheets;
-    
-    typedef DeprecatedValueList<RefPtr<RegisteredEventListener> > RegisteredEventListenerList;
+
+    RefPtr<StyleSheetList> m_styleSheets; // All of the stylesheets that are currently in effect for our media type and stylesheet set.
+    ListHashSet<Node*> m_styleSheetCandidateNodes; // All of the nodes that could potentially provide stylesheets to the document (<link>, <style>, <?xml-stylesheet>)
+
     RegisteredEventListenerList m_windowEventListeners;
 
     typedef HashMap<FormElementKey, Vector<String>, FormElementKeyHash, FormElementKeyHashTraits> FormElementStateMap;
@@ -812,8 +898,6 @@ private:
     typedef HashMap<AtomicStringImpl*, HTMLMapElement*> ImageMapsByName;
     ImageMapsByName m_imageMapsByName;
 
-    String m_policyBaseURL;
-
     HashSet<Node*> m_disconnectedNodesWithEventListeners;
 
     int m_docID; // A unique document identifier used for things like document-specific mapped attributes.
@@ -838,17 +922,19 @@ public:
     void setShouldCreateRenderers(bool);
     bool shouldCreateRenderers();
     
-    void setDecoder(TextResourceDecoder*);
+    void setDecoder(PassRefPtr<TextResourceDecoder>);
     TextResourceDecoder* decoder() const { return m_decoder.get(); }
 
     UChar backslashAsCurrencySymbol() const;
 
+#if ENABLE(DASHBOARD_SUPPORT)
     void setDashboardRegionsDirty(bool f) { m_dashboardRegionsDirty = f; }
     bool dashboardRegionsDirty() const { return m_dashboardRegionsDirty; }
     bool hasDashboardRegions () const { return m_hasDashboardRegions; }
     void setHasDashboardRegions (bool f) { m_hasDashboardRegions = f; }
     const Vector<DashboardRegionValue>& dashboardRegions() const;
     void setDashboardRegions(const Vector<DashboardRegionValue>&);
+#endif
 
     void removeAllEventListenersFromAllNodes();
 
@@ -862,7 +948,7 @@ public:
     SVGDocumentExtensions* accessSVGExtensions();
 #endif
 
-    void initSecurityOrigin();
+    void initSecurityContext();
     SecurityOrigin* securityOrigin() const { return m_securityOrigin.get(); }
 
     // Explicitly override the security origin for this document.
@@ -884,12 +970,11 @@ protected:
     void clearXMLVersion() { m_xmlVersion = String(); }
 
 private:
-    bool shouldBeAllowedToLoadLocalResources() const;
-
     void updateTitle();
     void removeAllDisconnectedNodeEventListeners();
     void imageLoadEventTimerFired(Timer<Document>*);
     void updateFocusAppearanceTimerFired(Timer<Document>*);
+    void updateBaseURL();
 
     RefPtr<SecurityOrigin> m_securityOrigin;
 
@@ -924,9 +1009,13 @@ private:
     SVGDocumentExtensions* m_svgExtensions;
 #endif
     
+#if ENABLE(DASHBOARD_SUPPORT)
     Vector<DashboardRegionValue> m_dashboardRegions;
     bool m_hasDashboardRegions;
     bool m_dashboardRegionsDirty;
+#endif
+
+    HashMap<String, RefPtr<HTMLCanvasElement> > m_cssCanvasElements;
 
     mutable bool m_accessKeyMapValid;
     bool m_createRenderers;
@@ -935,13 +1024,17 @@ private:
     
     HashSet<Element*> m_pageCacheCallbackElements;
 
-    bool m_isAllowedToLoadLocalResources;
-
     bool m_useSecureKeyboardEntryWhenActive;
 
     bool m_isXHTML;
 
     unsigned m_numNodeListCaches;
+
+public:
+    typedef HashMap<WebCore::Node*, JSNode*> JSWrapperCache;
+    JSWrapperCache& wrapperCache() { return m_wrapperCache; }
+private:
+    JSWrapperCache m_wrapperCache;
 
 #if ENABLE(DATABASE)
     RefPtr<DatabaseThread> m_databaseThread;
@@ -949,10 +1042,17 @@ private:
     typedef HashSet<Database*> DatabaseSet;
     OwnPtr<DatabaseSet> m_openDatabaseSet;
 #endif
+
 #if USE(LOW_BANDWIDTH_DISPLAY)
     bool m_inLowBandwidthDisplay;
 #endif
 };
+
+inline bool Document::hasElementWithId(AtomicStringImpl* id) const
+{
+    ASSERT(id);
+    return m_elementsById.contains(id) || m_duplicateIds.contains(id);
+}
 
 } // namespace WebCore
 

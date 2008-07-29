@@ -61,9 +61,8 @@ SVGPaintServer* getPaintServerById(Document* document, const AtomicString& id)
 
 SVGPaintServerSolid* SVGPaintServer::sharedSolidPaintServer()
 {
-    static SVGPaintServerSolid* _sharedSolidPaintServer = 0;
-    if (!_sharedSolidPaintServer)
-        _sharedSolidPaintServer = new SVGPaintServerSolid();
+    static SVGPaintServerSolid* _sharedSolidPaintServer = SVGPaintServerSolid::create().releaseRef();
+    
     return _sharedSolidPaintServer;
 }
 
@@ -154,7 +153,7 @@ DashArray dashArrayFromRenderingStyle(const RenderStyle* style)
         CSSPrimitiveValue* dash = 0;
         unsigned long len = dashes->length();
         for (unsigned long i = 0; i < len; i++) {
-            dash = static_cast<CSSPrimitiveValue*>(dashes->item(i));
+            dash = static_cast<CSSPrimitiveValue*>(dashes->itemWithoutBoundsCheck(i));
             if (!dash)
                 continue;
 

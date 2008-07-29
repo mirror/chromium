@@ -28,8 +28,10 @@
 
 #include "FormData.h"
 
+QT_BEGIN_NAMESPACE
 class QFile;
 class QNetworkReply;
+QT_END_NAMESPACE
 
 namespace WebCore {
 
@@ -45,7 +47,7 @@ public:
 
     void abort();
 
-    QNetworkReply *release();
+    QNetworkReply* release();
 
 private slots:
     void finish();
@@ -61,6 +63,7 @@ private:
     bool m_responseSent;
     QNetworkAccessManager::Operation m_method;
     QNetworkRequest m_request;
+    uint   m_startTime;
 };
 
 // Self destructing QIODevice for FormData

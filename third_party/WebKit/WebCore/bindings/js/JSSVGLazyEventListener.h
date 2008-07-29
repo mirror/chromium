@@ -1,7 +1,5 @@
 /*
-    Copyright (C) 2006 Apple Computer, Inc.
-                  
-    This file is part of the WebKit project
+    Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -21,22 +19,28 @@
 
 #ifndef JSSVGLazyEventListener_h
 #define JSSVGLazyEventListener_h
-#if ENABLE(SVG)
 
-#include "kjs_events.h"
+#include "JSEventListener.h"
+
+#if ENABLE(SVG)
 
 namespace WebCore {
 
     class JSSVGLazyEventListener : public JSLazyEventListener {
     public:
-        JSSVGLazyEventListener(const String& functionName, const String& code, KJS::Window*, Node*, int lineno = 0);
+        static PassRefPtr<JSSVGLazyEventListener> create(const String& functionName, const String& code, JSDOMWindow* window, Node* node, int lineNumber)
+        {
+            return adoptRef(new JSSVGLazyEventListener(functionName, code, window, node, lineNumber));
+        }
+
     private:
+        JSSVGLazyEventListener(const String& functionName, const String& code, JSDOMWindow*, Node*, int lineNumber);
+
         virtual KJS::JSValue* eventParameterName() const;
     };
 
-}
+} // namespace WebCore
 
 #endif // ENABLE(SVG)
-#endif
 
-// vim:ts=4:noet
+#endif // JSSVGLazyEventListener_h

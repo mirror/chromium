@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004, 2005, 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2008 Collabora, Ltd.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -49,7 +50,9 @@ typedef struct _GdkEventKey GdkEventKey;
 #endif
 
 #if PLATFORM(QT)
+QT_BEGIN_NAMESPACE
 class QKeyEvent;
+QT_END_NAMESPACE
 #endif
 
 #if PLATFORM(WX)
@@ -72,6 +75,13 @@ namespace WebCore {
             // only has information about a character it was translated into.
             RawKeyDown,
             Char
+        };
+
+        enum ModifierKey {
+            AltKey = 1 << 0,
+            CtrlKey = 1 << 1,
+            MetaKey = 1 << 2,
+            ShiftKey = 1 << 3,
         };
 
         Type type() const { return m_type; }
@@ -103,6 +113,12 @@ namespace WebCore {
         bool ctrlKey() const { return m_ctrlKey; }
         bool altKey() const { return m_altKey; }
         bool metaKey() const { return m_metaKey; }
+        unsigned modifiers() const {
+            return (altKey() ? AltKey : 0)
+                | (ctrlKey() ? CtrlKey : 0)
+                | (metaKey() ? MetaKey : 0)
+                | (shiftKey() ? ShiftKey : 0);
+        }
 
         static bool currentCapsLockState();
 
@@ -118,10 +134,12 @@ namespace WebCore {
 
 #if PLATFORM(GTK)
         PlatformKeyboardEvent(GdkEventKey*);
+        GdkEventKey* gdkEventKey() const;
 #endif
 
 #if PLATFORM(QT)
         PlatformKeyboardEvent(QKeyEvent*);
+        QKeyEvent* qtEvent() const { return m_qtEvent; }
 #endif
 
 #if PLATFORM(WX)
@@ -146,6 +164,12 @@ namespace WebCore {
 #endif
 #if PLATFORM(WIN)
         bool m_isSystemKey;
+#endif
+#if PLATFORM(GTK)
+        GdkEventKey* m_gdkEventKey;
+#endif
+#if PLATFORM(QT)
+        QKeyEvent* m_qtEvent;
 #endif
     };
 

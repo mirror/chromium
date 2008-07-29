@@ -36,6 +36,7 @@
 #include "GraphicsContext.h"
 #include "AffineTransform.h"
 #include "NotImplemented.h"
+#include "StillImageQt.h"
 #include "qwebsettings.h"
 
 #include <QPixmap>
@@ -53,17 +54,15 @@
 // This function loads resources into WebKit
 static QPixmap loadResourcePixmap(const char *name)
 {
-    const QString resource = name;
-
     QPixmap pixmap;
-    if (resource == "missingImage")
+    if (qstrcmp(name, "missingImage") == 0)
         pixmap = QWebSettings::webGraphic(QWebSettings::MissingImageGraphic);
-    else if (resource == "nullPlugin")
+    else if (qstrcmp(name, "nullPlugin") == 0)
         pixmap = QWebSettings::webGraphic(QWebSettings::MissingPluginGraphic);
-    else if (resource == "urlIcon")
-        pixmap = QWebSettings::webGraphic(QWebSettings::DefaultFaviconGraphic);
-    else if (resource == "textAreaResizeCorner")
-        pixmap = QWebSettings::webGraphic(QWebSettings::TextAreaResizeCornerGraphic);
+    else if (qstrcmp(name, "urlIcon") == 0)
+        pixmap = QWebSettings::webGraphic(QWebSettings::DefaultFrameIconGraphic);
+    else if (qstrcmp(name, "textAreaResizeCorner") == 0)
+        pixmap = QWebSettings::webGraphic(QWebSettings::TextAreaSizeGripCornerGraphic);
 
     return pixmap;
 }
@@ -87,8 +86,7 @@ void FrameData::clear()
 
 Image* Image::loadPlatformResource(const char* name)
 {
-    BitmapImage* img = new BitmapImage(loadResourcePixmap(name));
-    return img;
+    return new StillImage(loadResourcePixmap(name));
 }
 
     
@@ -98,33 +96,12 @@ void Image::drawPattern(GraphicsContext* ctxt, const FloatRect& tileRect, const 
     notImplemented();
 }
 
-BitmapImage::BitmapImage(const QPixmap &pixmap, ImageObserver *observer)
-    : Image(observer)
-    , m_currentFrame(0)
-    , m_frames(0)
-    , m_frameTimer(0)
-    , m_repetitionCount(0)
-    , m_repetitionsComplete(0)
-    , m_isSolidColor(false)
-    , m_animatingImageType(true)
-    , m_animationFinished(false)
-    , m_allDataReceived(false)
-    , m_haveSize(false)
-    , m_sizeAvailable(false)
-    , m_decodedSize(0)
-{
-    m_pixmap = new QPixmap(pixmap);
-}
-
 void BitmapImage::initPlatformData()
 {
-    m_pixmap = 0;
 }
 
 void BitmapImage::invalidatePlatformData()
 {
-    delete m_pixmap;
-    m_pixmap = 0;
 }
     
 // Drawing Routines
@@ -171,23 +148,14 @@ void BitmapImage::drawPattern(GraphicsContext* ctxt, const FloatRect& tileRect, 
         pixmap = pixmap.copy(tr);
     }
 
-    if (patternTransform.isIdentity()) {
-        ctxt->save();
-        ctxt->setCompositeOperation(op);
-        QPainter* p = ctxt->platformContext();
-        p->setBrushOrigin(phase);
-        p->drawTiledPixmap(destRect, pixmap);
-        ctxt->restore();
-    } else {
-        QBrush b(pixmap);
-        b.setMatrix(patternTransform);
-        ctxt->save();
-        ctxt->setCompositeOperation(op);
-        QPainter* p = ctxt->platformContext();
-        p->setBrushOrigin(phase);
-        p->fillRect(destRect, b);
-        ctxt->restore();
-    }
+    QBrush b(pixmap);
+    b.setMatrix(patternTransform);
+    ctxt->save();
+    ctxt->setCompositeOperation(op);
+    QPainter* p = ctxt->platformContext();
+    p->setBrushOrigin(phase);
+    p->fillRect(destRect, b);
+    ctxt->restore();
 }
 
 void BitmapImage::checkForSolidColor()
@@ -198,10 +166,7 @@ void BitmapImage::checkForSolidColor()
 
 QPixmap* BitmapImage::getPixmap() const
 {
-    if (!m_pixmap)
-      return const_cast<BitmapImage*>(this)->frameAtIndex(0);
-    else
-      return m_pixmap;
+    return const_cast<BitmapImage*>(this)->frameAtIndex(0);
 }
 
 }

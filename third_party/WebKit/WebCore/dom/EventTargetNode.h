@@ -30,10 +30,12 @@
 
 namespace WebCore {
 
+class Frame;
+
 class EventTargetNode : public Node,
                         public EventTarget {
 public:
-    EventTargetNode(Document*);
+    EventTargetNode(Document*, bool isElement = false);
     virtual ~EventTargetNode();
 
     virtual bool isEventTargetNode() const { return true; }
@@ -49,7 +51,8 @@ public:
     bool dispatchHTMLEvent(const AtomicString& eventType, bool canBubble, bool cancelable);
     EventListener* getHTMLEventListener(const AtomicString& eventType);
 
-    bool dispatchSubtreeModifiedEvent(bool childrenChanged = true);
+    bool dispatchSubtreeModifiedEvent();
+    void dispatchWindowEvent(PassRefPtr<Event>);
     void dispatchWindowEvent(const AtomicString& eventType, bool canBubble, bool cancelable);
     bool dispatchUIEvent(const AtomicString& eventType, int detail = 0, PassRefPtr<Event> underlyingEvent = 0);
     bool dispatchKeyEvent(const PlatformKeyboardEvent&);
@@ -63,6 +66,7 @@ public:
     void dispatchSimulatedMouseEvent(const AtomicString& eventType, PassRefPtr<Event> underlyingEvent = 0);
     void dispatchSimulatedClick(PassRefPtr<Event> underlyingEvent, bool sendMouseEvents = false, bool showPressedLook = true);
     bool dispatchProgressEvent(const AtomicString &eventType, bool lengthComputableArg, unsigned loadedArg, unsigned totalArg);
+    void dispatchStorageEvent(const AtomicString &eventType, const String& key, const String& oldValue, const String& newValue, Frame* source);
 
     virtual void handleLocalEvents(Event*, bool useCapture);
 
@@ -71,6 +75,8 @@ public:
 
     virtual void insertedIntoDocument();
     virtual void removedFromDocument();
+    virtual void willMoveToNewOwnerDocument();
+    virtual void didMoveToNewOwnerDocument();
 
     /**
      * Perform the default action for an event e.g. submitting a form
@@ -82,10 +88,6 @@ public:
      * to event listeners, and prevents DOMActivate events from being sent at all.
      */
     virtual bool disabled() const;
-    
-#ifndef NDEBUG
-    virtual void dump(TextStream*, DeprecatedString indent = "") const;
-#endif
 
     RegisteredEventListenerList* localEventListeners() const { return m_regdListeners; }
 

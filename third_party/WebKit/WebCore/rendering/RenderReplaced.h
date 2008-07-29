@@ -34,13 +34,15 @@ public:
 
     virtual const char* renderName() const { return "RenderReplaced"; }
 
-    virtual short lineHeight(bool firstLine, bool isRootLineBox = false) const;
-    virtual short baselinePosition(bool firstLine, bool isRootLineBox = false) const;
+    virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
+    virtual int baselinePosition(bool firstLine, bool isRootLineBox = false) const;
 
     virtual void calcPrefWidths();
     
     virtual void layout();
     virtual int minimumReplacedHeight() const { return 0; }
+
+    virtual void setStyle(RenderStyle*);
 
     virtual void paint(PaintInfo&, int tx, int ty);
     virtual void paintReplaced(PaintInfo&, int tx, int ty) { }
@@ -53,8 +55,6 @@ public:
     virtual int overflowTop(bool includeInterior = true) const;
     virtual IntRect overflowRect(bool includeInterior = true) const;
 
-    virtual int caretMinOffset() const;
-    virtual int caretMaxOffset() const;
     virtual unsigned caretMaxRenderedOffset() const;
     virtual VisiblePosition positionForCoordinates(int x, int y);
     
@@ -67,6 +67,7 @@ public:
 
 protected:
     void setIntrinsicSize(const IntSize&);
+    virtual void intrinsicSizeChanged();
 
     bool shouldPaint(PaintInfo&, int& tx, int& ty);
     void adjustOverflowForBoxShadow();

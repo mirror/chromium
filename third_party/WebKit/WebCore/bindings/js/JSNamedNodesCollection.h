@@ -26,7 +26,7 @@
 #ifndef JSNamedNodesCollection_h
 #define JSNamedNodesCollection_h
 
-#include "kjs_binding.h"
+#include "JSDOMBinding.h"
 #include <wtf/Vector.h>
 
 namespace WebCore {
@@ -35,18 +35,18 @@ namespace WebCore {
 
     // Internal class, used for the collection return by e.g. document.forms.myinput
     // when multiple nodes have the same name.
-    class JSNamedNodesCollection : public KJS::DOMObject {
+    class JSNamedNodesCollection : public DOMObject {
     public:
         JSNamedNodesCollection(KJS::JSObject* prototype, const Vector<RefPtr<Node> >&);
 
         virtual bool getOwnPropertySlot(KJS::ExecState*, const KJS::Identifier&, KJS::PropertySlot&);
 
-        virtual const KJS::ClassInfo* classInfo() const { return &info; }
-        static const KJS::ClassInfo info;
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+        static const KJS::ClassInfo s_info;
 
     private:
-        static KJS::JSValue* lengthGetter(KJS::ExecState*, KJS::JSObject*, const KJS::Identifier&, const KJS::PropertySlot&);
-        static KJS::JSValue* indexGetter(KJS::ExecState*, KJS::JSObject*, const KJS::Identifier&, const KJS::PropertySlot&);
+        static KJS::JSValue* lengthGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
+        static KJS::JSValue* indexGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
 
         Vector<RefPtr<Node> > m_nodes;
     };

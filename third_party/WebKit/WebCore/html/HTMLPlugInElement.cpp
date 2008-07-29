@@ -30,17 +30,22 @@
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "HTMLNames.h"
+#include "JSNode.h"
 #include "Page.h"
 #include "RenderWidget.h"
 #include "Settings.h"
 #include "Widget.h"
-#include "kjs_dom.h"
-#include "kjs_proxy.h"
+#include "ScriptController.h"
+#include <kjs/JSLock.h>
 
-#if USE(NPOBJECT)
-#include <bindings/NP_jsobject.h>
-#include <bindings/npruntime_impl.h>
-#include <bindings/runtime_root.h>
+#if USE(JAVASCRIPTCORE_BINDINGS)
+#include "runtime.h"
+#endif
+
+#if ENABLE(NETSCAPE_PLUGIN_API)
+#include "NP_jsobject.h"
+#include "npruntime_impl.h"
+#include "runtime_root.h"
 #endif
 
 using KJS::ExecState;
@@ -54,7 +59,7 @@ using namespace HTMLNames;
 
 HTMLPlugInElement::HTMLPlugInElement(const QualifiedName& tagName, Document* doc)
     : HTMLFrameOwnerElement(tagName, doc)
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
     , m_NPObject(0)
 #endif
 {
@@ -62,7 +67,7 @@ HTMLPlugInElement::HTMLPlugInElement(const QualifiedName& tagName, Document* doc
 
 HTMLPlugInElement::~HTMLPlugInElement()
 {
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
     if (m_NPObject) {
         _NPN_ReleaseObject(m_NPObject);
         m_NPObject = 0;
@@ -131,15 +136,15 @@ bool HTMLPlugInElement::mapToEntry(const QualifiedName& attrName, MappedAttribut
 void HTMLPlugInElement::parseMappedAttribute(MappedAttribute* attr)
 {
     if (attr->name() == widthAttr)
-        addCSSLength(attr, CSS_PROP_WIDTH, attr->value());
+        addCSSLength(attr, CSSPropertyWidth, attr->value());
     else if (attr->name() == heightAttr)
-        addCSSLength(attr, CSS_PROP_HEIGHT, attr->value());
+        addCSSLength(attr, CSSPropertyHeight, attr->value());
     else if (attr->name() == vspaceAttr) {
-        addCSSLength(attr, CSS_PROP_MARGIN_TOP, attr->value());
-        addCSSLength(attr, CSS_PROP_MARGIN_BOTTOM, attr->value());
+        addCSSLength(attr, CSSPropertyMarginTop, attr->value());
+        addCSSLength(attr, CSSPropertyMarginBottom, attr->value());
     } else if (attr->name() == hspaceAttr) {
-        addCSSLength(attr, CSS_PROP_MARGIN_LEFT, attr->value());
-        addCSSLength(attr, CSS_PROP_MARGIN_RIGHT, attr->value());
+        addCSSLength(attr, CSSPropertyMarginLeft, attr->value());
+        addCSSLength(attr, CSSPropertyMarginRight, attr->value());
     } else if (attr->name() == alignAttr)
         addHTMLAlignment(attr);
     else
@@ -161,7 +166,7 @@ void HTMLPlugInElement::defaultEventHandler(Event* event)
         widget->handleEvent(event);
 }
 
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
 
 NPObject* HTMLPlugInElement::createNPObject()
 {
@@ -180,12 +185,12 @@ NPObject* HTMLPlugInElement::createNPObject()
     }
 
     // Can't create NPObjects when JavaScript is disabled
-    if (!frame->scriptProxy()->isEnabled())
+    if (!frame->script()->isEnabled())
         return _NPN_CreateNoScriptObject();
     
     // Create a JSObject bound to this element
-    JSLock lock;
-    ExecState *exec = frame->scriptProxy()->globalObject()->globalExec();
+    JSLock lock(false);
+    ExecState *exec = frame->script()->globalObject()->globalExec();
     JSValue* jsElementValue = toJS(exec, this);
     if (!jsElementValue || !jsElementValue->isObject())
         return _NPN_CreateNoScriptObject();
@@ -202,7 +207,7 @@ NPObject* HTMLPlugInElement::getNPObject()
     return m_NPObject;
 }
 
-#endif /* USE(NPOBJECT) */
+#endif /* ENABLE(NETSCAPE_PLUGIN_API) */
 
 void HTMLPlugInElement::updateWidgetCallback(Node* n)
 {

@@ -77,12 +77,17 @@ RenderMedia::RenderMedia(HTMLMediaElement* video, const IntSize& intrinsicSize)
 
 RenderMedia::~RenderMedia()
 {
+}
+
+void RenderMedia::destroy()
+{
     if (m_controlsShadowRoot && m_controlsShadowRoot->renderer()) {
-        static_cast<RenderMediaControlShadowRoot*>(m_controlsShadowRoot->renderer())->setParent(0);
+        removeChild(m_controlsShadowRoot->renderer());
         m_controlsShadowRoot->detach();
     }
+    RenderReplaced::destroy();
 }
- 
+
 HTMLMediaElement* RenderMedia::mediaElement() const
 { 
     return static_cast<HTMLMediaElement*>(node()); 
@@ -128,6 +133,7 @@ void RenderMedia::removeChild(RenderObject* child)
     ASSERT(m_controlsShadowRoot);
     ASSERT(child == m_controlsShadowRoot->renderer());
     child->removeLayers(enclosingLayer());
+    static_cast<RenderMediaControlShadowRoot*>(child)->setParent(0);
 }
     
 void RenderMedia::createControlsShadowRoot()
@@ -301,11 +307,11 @@ void RenderMedia::updateControlVisibility()
 {
     if (!m_panel || !m_panel->renderer())
         return;
-    // do fading manually, css animations don't work well with shadow trees
-    HTMLMediaElement* media = mediaElement();
     // Don't fade for audio controls.
-    if (!media->isVideo())
+    HTMLMediaElement* media = mediaElement();
+    if (player() && !player()->hasVideo() || !media->isVideo())
         return;
+    // do fading manually, css animations don't work well with shadow trees
     bool visible = m_mouseOver || media->paused() || media->ended() || media->networkState() < HTMLMediaElement::LOADED_METADATA;
     if (visible == (m_opacityAnimationTo > 0))
         return;

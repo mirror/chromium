@@ -30,6 +30,8 @@
 #include <glib/gstdio.h>
 #include <glib/gutils.h>
 
+#include <unistd.h>
+
 namespace WebCore {
 
 bool fileExists(const String& path)
@@ -87,10 +89,21 @@ bool getFileSize(const String& path, long long& resultSize)
     return true;
 }
 
-bool getFileModificationTime(const String&, time_t&)
+bool getFileModificationTime(const String& path, time_t& modifiedTime)
 {
-    notImplemented();
-    return false;
+    gchar* filename = g_filename_from_utf8(path.utf8().data(), -1, 0, 0, 0);
+    if (!filename)
+        return false;
+
+    struct stat statResult;
+    gint result = g_stat(filename, &statResult);
+    g_free(filename);
+    if (result != 0)
+        return false;
+
+    modifiedTime = statResult.st_mtime;
+    return true;
+
 }
 
 String pathByAppendingComponent(const String& path, const String& component)
@@ -111,6 +124,48 @@ bool makeAllDirectories(const String& path)
     g_free(filename);
 
     return result == 0;
+}
+
+String homeDirectoryPath()
+{
+    return String::fromUTF8(g_get_home_dir());
+}
+
+String pathGetFileName(const String& pathName)
+{
+    char* baseName = g_path_get_basename(pathName.utf8().data());
+    String fileName = String::fromUTF8(baseName);
+    g_free(baseName);
+
+    return fileName;
+}
+
+String directoryName(const String& path)
+{
+    notImplemented();
+    return String();
+}
+
+Vector<String> listDirectory(const String& path, const String& filter)
+{
+    Vector<String> entries;
+
+    GDir* dir = g_dir_open((path.utf8()).data(), 0, 0);
+    if (!dir)
+        return entries;
+
+    GPatternSpec *pspec = g_pattern_spec_new((filter.utf8()).data());
+    while (const char* name = g_dir_read_name(dir)) {
+        if (!g_pattern_match_string(pspec, name))
+            continue;
+
+        gchar* entry = g_build_filename((path.utf8()).data(), name, NULL);
+        entries.append(entry);
+        g_free(entry);
+    }
+    g_dir_close(dir);
+
+    return entries;
 }
 
 CString openTemporaryFile(const char* prefix, PlatformFileHandle& handle)
@@ -151,5 +206,10 @@ int writeToFile(PlatformFileHandle handle, const char* data, int length)
     }
 
     return totalBytesWritten;
+}
+
+bool unloadModule(PlatformModule module)
+{
+    return g_module_close(module);
 }
 }

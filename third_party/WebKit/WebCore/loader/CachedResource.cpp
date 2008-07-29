@@ -35,11 +35,15 @@
 
 namespace WebCore {
 
-CachedResource::CachedResource(const String& url, Type type, bool forCache, bool sendResourceLoadCallbacks)
+CachedResource::CachedResource(const String& url, Type type)
     : m_url(url)
     , m_lastDecodedAccessTime(0)
-    , m_sendResourceLoadCallbacks(sendResourceLoadCallbacks)
-    , m_inCache(forCache)
+    , m_sendResourceLoadCallbacks(true)
+    , m_preloadCount(0)
+    , m_preloadResult(PreloadNotReferenced)
+    , m_requestedFromNetworkingLayer(false)
+    , m_inCache(false)
+    , m_loading(false)
     , m_docLoader(0)
 {
     m_type = type;
@@ -62,19 +66,26 @@ CachedResource::CachedResource(const String& url, Type type, bool forCache, bool
     m_lruIndex = 0;
 #endif
     m_errorOccurred = false;
-    m_shouldTreatAsLocal = FrameLoader::shouldTreatURLAsLocal(m_url);
 }
 
 CachedResource::~CachedResource()
 {
     ASSERT(!inCache());
     ASSERT(!m_deleted);
+    ASSERT(url().isNull() || cache()->resourceForURL(url()) != this);
 #ifndef NDEBUG
     m_deleted = true;
 #endif
     
     if (m_docLoader)
         m_docLoader->removeCachedResource(this);
+}
+    
+void CachedResource::load(DocLoader* docLoader, bool incremental, bool skipCanLoadCheck, bool sendResourceLoadCallbacks)
+{
+    m_sendResourceLoadCallbacks = sendResourceLoadCallbacks;
+    cache()->loader()->load(docLoader, this, incremental, skipCanLoadCheck, sendResourceLoadCallbacks);
+    m_loading = true;
 }
 
 void CachedResource::finish()
@@ -99,14 +110,22 @@ void CachedResource::setRequest(Request* request)
         delete this;
 }
 
-void CachedResource::ref(CachedResourceClient *c)
+void CachedResource::addClient(CachedResourceClient *c)
 {
+    if (m_preloadResult == PreloadNotReferenced) {
+        if (isLoaded())
+            m_preloadResult = PreloadReferencedWhileComplete;
+        else if (m_requestedFromNetworkingLayer)
+            m_preloadResult = PreloadReferencedWhileLoading;
+        else
+            m_preloadResult = PreloadReferenced;
+    }
     if (!referenced() && inCache())
         cache()->addToLiveResourcesSize(this);
     m_clients.add(c);
 }
 
-void CachedResource::deref(CachedResourceClient *c)
+void CachedResource::removeClient(CachedResourceClient *c)
 {
     ASSERT(m_clients.contains(c));
     m_clients.remove(c);

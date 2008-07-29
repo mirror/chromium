@@ -15,9 +15,6 @@
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
-
-    This class provides all functionality needed for loading images, style sheets and html
-    pages from the web. It has a memory cache for these objects.
 */
 
 #include "config.h"
@@ -46,6 +43,12 @@ PlatformWheelEvent::PlatformWheelEvent(QWheelEvent* e)
         m_deltaX = 0;
         m_deltaY = (e->delta() / 120);
     }
+
+    // FIXME: retrieve the user setting for the number of lines to scroll on each wheel event
+    m_charsToScrollPerDelta = 1;
+    m_linesToScrollPerDelta = 1;
+    m_pageXScrollMode = false;
+    m_pageYScrollMode = false;
 }
 
 } // namespace WebCore

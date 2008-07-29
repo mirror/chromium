@@ -67,7 +67,7 @@ public:
     virtual bool paintTextField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
     virtual bool isControlStyled(const RenderStyle*, const BorderData&,
-                                 const BackgroundLayer&, const Color&) const;
+                                 const FillLayer&, const Color&) const;
 
     virtual bool controlSupportsTints(const RenderObject*) const;
 
@@ -93,7 +93,7 @@ RenderTheme* theme()
 }
 
 bool RenderThemeWx::isControlStyled(const RenderStyle* style, const BorderData& border,
-                                     const BackgroundLayer& background, const Color& backgroundColor) const
+                                     const FillLayer& background, const Color& backgroundColor) const
 {
     if (style->appearance() == TextFieldAppearance || style->appearance() == TextAreaAppearance)
         return style->border() != border;
@@ -224,9 +224,12 @@ void RenderThemeWx::adjustTextFieldStyle(CSSStyleSelector*, RenderStyle* style, 
 
 bool RenderThemeWx::paintTextField(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
+    i.context->save();
+    i.context->setStrokeStyle(SolidStroke);
     i.context->setStrokeThickness(1);
     i.context->setStrokeColor(Color(0, 0, 0));
     i.context->drawRect(r);
+    i.context->restore();
     return false;
 }
 

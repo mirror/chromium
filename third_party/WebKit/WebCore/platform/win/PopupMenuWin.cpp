@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007 Apple Inc.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -117,7 +117,7 @@ void PopupMenu::show(const IntRect& r, FrameView* v, int index)
     if (!m_scrollBar)
         if (visibleItems() < client()->listSize()) {
             // We need a scroll bar
-            m_scrollBar = new PlatformScrollbar(this, VerticalScrollbar, SmallScrollbar);
+            m_scrollBar = PlatformScrollbar::create(this, VerticalScrollbar, SmallScrollbar);
             m_scrollBar->setContainingWindow(m_popup);
         }
 
@@ -187,7 +187,15 @@ void PopupMenu::calculatePositionAndSize(const IntRect& r, FrameView* v)
         if (text.isEmpty())
             continue;
 
-        popupWidth = max(popupWidth, client()->clientStyle()->font().width(TextRun(text.characters(), text.length())));
+        Font itemFont = client()->clientStyle()->font();
+        if (client()->itemIsLabel(i)) {
+            FontDescription d = itemFont.fontDescription();
+            d.setWeight(d.bolderWeight());
+            itemFont = Font(d, itemFont.letterSpacing(), itemFont.wordSpacing());
+            itemFont.update(m_popupClient->fontSelector());
+        }
+
+        popupWidth = max(popupWidth, itemFont.width(TextRun(text.characters(), text.length())));
     }
 
     if (naturalHeight > maxPopupHeight)
@@ -516,7 +524,7 @@ void PopupMenu::paint(const IntRect& damageRect, HDC hdc)
         Font itemFont = client()->clientStyle()->font();
         if (client()->itemIsLabel(index)) {
             FontDescription d = itemFont.fontDescription();
-            d.setBold(true);
+            d.setWeight(d.bolderWeight());
             itemFont = Font(d, itemFont.letterSpacing(), itemFont.wordSpacing());
             itemFont.update(m_popupClient->fontSelector());
         }

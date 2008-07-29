@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2008 Collabora, Ltd.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -45,6 +46,7 @@
 #include "EventHandler.h"
 #include "FileChooser.h"
 #include "Font.h"
+#include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameView.h"
 #include "Icon.h"
@@ -63,7 +65,6 @@
 #include "PlatformMenuDescription.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformScrollBar.h"
-#include "PluginInfoStore.h"
 #include "PopupMenu.h"
 #include "RenderTheme.h"
 #include "ResourceHandle.h"
@@ -95,7 +96,8 @@ int WebCore::findNextWordFromIndex(UChar const*,int,int,bool) { notImplemented()
 
 void Frame::clearPlatformScriptObjects() { notImplemented(); }
 
-void Frame::dashboardRegionsChanged() { notImplemented(); }
+void Frame::disconnectPlatformScriptObjects() { notImplemented(); }
+
 DragImageRef Frame::dragImageForSelection() { notImplemented(); return 0; }
 
 void GraphicsContext::addInnerRoundedRectClip(const IntRect& rect, int thickness) { notImplemented(); }
@@ -111,22 +113,12 @@ bool WebCore::cookiesEnabled(const Document* document) { notImplemented(); retur
 static WebCore::Cursor localCursor;
 const WebCore::Cursor& WebCore::moveCursor() { return localCursor; }
 
-namespace WebCore {
-    bool historyContains(const UChar*, unsigned) { return false; }
-}
-
 void WebCore::findWordBoundary(UChar const* str,int len,int position,int* start, int* end) { notImplemented(); *start=position; *end=position; }
-
-PluginInfo*PluginInfoStore::createPluginInfoForPluginAtIndex(unsigned) { notImplemented(); return 0;}
-unsigned PluginInfoStore::pluginCount() const { notImplemented(); return 0; }
-bool WebCore::PluginInfoStore::supportsMIMEType(const WebCore::String&) { notImplemented(); return false; }
-String PluginInfoStore::pluginNameForMIMEType(const String& mimeType) { notImplemented(); return String(); }
-void WebCore::refreshPlugins(bool) { notImplemented(); }
 
 void Widget::setIsSelected(bool) { notImplemented(); }
 
-void GraphicsContext::setShadow(IntSize const&,int,Color const&) { notImplemented(); }
-void GraphicsContext::clearShadow() { notImplemented(); }
+void GraphicsContext::setPlatformShadow(IntSize const&,int,Color const&) { notImplemented(); }
+void GraphicsContext::clearPlatformShadow() { notImplemented(); }
 void GraphicsContext::beginTransparencyLayer(float) { notImplemented(); }
 void GraphicsContext::endTransparencyLayer() { notImplemented(); }
 void GraphicsContext::clearRect(const FloatRect&) { notImplemented(); }
@@ -151,23 +143,11 @@ void PlatformScrollbar::updateThumbPosition() { notImplemented(); }
 void PlatformScrollbar::updateThumbProportion() { notImplemented(); }
 void PlatformScrollbar::setRect(const IntRect&) { notImplemented(); }
 
-FileChooser::FileChooser(FileChooserClient*, const String& initialFilename) { notImplemented(); }
-//PassRefPtr<FileChooser> FileChooser::create(FileChooserClient*, const String& initialFilename) { notImplemented(); return PassRefPtr<FileChooser>(); }
-FileChooser::~FileChooser() { notImplemented(); }
 void FileChooser::openFileChooser(Document*) { notImplemented(); }
 String FileChooser::basenameForWidth(const Font&, int width) const { notImplemented(); return String(); }
 
-PopupMenu::PopupMenu(PopupMenuClient*) { notImplemented(); }
-
-PopupMenu::~PopupMenu() { notImplemented(); }
-void PopupMenu::show(const IntRect&, FrameView*, int index) { notImplemented(); }
-void PopupMenu::hide() { notImplemented(); }
-void PopupMenu::updateFromElement() { notImplemented(); }
-bool PopupMenu::itemWritingDirectionIsNatural() { notImplemented(); return false; }
-
-Icon::Icon() { notImplemented(); }
-Icon::~Icon() { notImplemented(); }
-PassRefPtr<Icon> Icon::newIconForFile(const String& filename) { notImplemented(); return PassRefPtr<Icon>(new Icon()); }
+Icon::~Icon() { }
+PassRefPtr<Icon> Icon::newIconForFile(const String& filename) { notImplemented(); return 0; }
 void Icon::paint(GraphicsContext*, const IntRect&) { notImplemented(); }
 
 ContextMenu::ContextMenu(const HitTestResult& result) : m_hitTestResult(result) { notImplemented(); }

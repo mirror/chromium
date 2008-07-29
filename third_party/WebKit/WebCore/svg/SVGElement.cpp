@@ -1,8 +1,7 @@
 /*
-    Copyright (C) 2004, 2005, 2006, 2007 Nikolas Zimmermann <zimmermann@kde.org>
-                  2004, 2005, 2006 Rob Buis <buis@kde.org>
-
-    This file is part of the KDE project
+    Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann <zimmermann@kde.org>
+                  2004, 2005, 2006, 2008 Rob Buis <buis@kde.org>
+    Copyright (C) 2008 Apple Inc. All rights reserved.
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -37,10 +36,12 @@
 #include "SVGDocumentExtensions.h"
 #include "SVGElementInstance.h"
 #include "SVGNames.h"
+#include "SVGResource.h"
 #include "SVGSVGElement.h"
 #include "SVGURIReference.h"
 #include "SVGUseElement.h"
 #include "XMLNames.h"
+#include "RegisteredEventListener.h"
 
 namespace WebCore {
 
@@ -59,10 +60,7 @@ SVGElement::~SVGElement()
 
 bool SVGElement::isSupported(StringImpl* feature, StringImpl* version) const
 {
-    if (DOMImplementation::instance()->hasFeature(feature, version))
-        return true;
-
-    return DOMImplementation::instance()->hasFeature(feature, version);
+    return DOMImplementation::hasFeature(feature, version);
 }
 
 String SVGElement::id() const
@@ -87,12 +85,12 @@ void SVGElement::setXmlbase(const String& value, ExceptionCode&)
 
 SVGSVGElement* SVGElement::ownerSVGElement() const
 {
-    Node* n = parentNode();
+    Node* n = isShadowNode() ? const_cast<SVGElement*>(this)->shadowParentNode() : parentNode();
     while (n) {
         if (n->hasTagName(SVGNames::svgTag))
             return static_cast<SVGSVGElement*>(n);
 
-        n = n->parentNode();
+        n = n->isShadowNode() ? n->shadowParentNode() : n->parentNode();
     }
 
     return 0;
@@ -116,7 +114,7 @@ SVGElement* SVGElement::viewportElement() const
 void SVGElement::addSVGEventListener(const AtomicString& eventType, const Attribute* attr)
 {
     Element::setHTMLEventListener(eventType, document()->accessSVGExtensions()->
-        createSVGEventListener(attr->localName().domString(), attr->value(), this));
+        createSVGEventListener(attr->localName().string(), attr->value(), this));
 }
 
 void SVGElement::parseMappedAttribute(MappedAttribute* attr)
@@ -157,6 +155,24 @@ bool SVGElement::haveLoadedRequiredResources()
     return true;
 }
 
+static bool hasLoadListener(SVGElement* node)
+{
+    Node* currentNode = node;
+    while (currentNode && currentNode->isElementNode()) {
+        RegisteredEventListenerList *list = static_cast<Element*>(currentNode)->localEventListeners();
+        if (list) {
+            RegisteredEventListenerList::Iterator end = list->end();
+            for (RegisteredEventListenerList::Iterator it = list->begin(); it != end; ++it)
+                if ((*it)->eventType() == loadEvent &&
+                    (*it)->useCapture() == true || currentNode == node)
+                    return true;
+        }
+        currentNode = currentNode->parentNode();
+    }
+
+    return false;
+}
+
 void SVGElement::sendSVGLoadEventIfPossible(bool sendParentLoadEvents)
 {
     RefPtr<SVGElement> currentTarget = this;
@@ -164,12 +180,12 @@ void SVGElement::sendSVGLoadEventIfPossible(bool sendParentLoadEvents)
         RefPtr<Node> parent;
         if (sendParentLoadEvents)
             parent = currentTarget->parentNode(); // save the next parent to dispatch too incase dispatching the event changes the tree
-        
-        // FIXME: This malloc could be avoided by walking the tree first to check if any listeners are present: http://bugs.webkit.org/show_bug.cgi?id=10264
-        RefPtr<Event> event = new Event(loadEvent, false, false);
-        event->setTarget(currentTarget);
-        ExceptionCode ignored = 0;
-        dispatchGenericEvent(this, event.release(), ignored, false);
+        if (hasLoadListener(currentTarget.get())) {
+            RefPtr<Event> event = Event::create(loadEvent, false, false);
+            event->setTarget(currentTarget);
+            ExceptionCode ignored = 0;
+            dispatchGenericEvent(currentTarget.get(), event.release(), ignored, false);
+        }
         currentTarget = (parent && parent->isSVGElement()) ? static_pointer_cast<SVGElement>(parent) : 0;
     }
 }
@@ -252,6 +268,29 @@ void SVGElement::attributeChanged(Attribute* attr, bool preserveDecls)
 
     StyledElement::attributeChanged(attr, preserveDecls);
     svgAttributeChanged(attr->name());
+}
+
+void SVGElement::updateAnimatedSVGAttribute(const String& name) const
+{
+    ASSERT(!m_areSVGAttributesValid);
+
+    if (m_synchronizingSVGAttributes)
+        return;
+
+    m_synchronizingSVGAttributes = true;
+
+    if (name.isEmpty()) {
+        invokeAllSVGPropertySynchronizers();
+        setSynchronizedSVGAttributes(true);
+    } else
+        invokeSVGPropertySynchronizer(name);
+
+    m_synchronizingSVGAttributes = false;
+}
+
+void SVGElement::setSynchronizedSVGAttributes(bool value) const
+{
+    m_areSVGAttributesValid = value;
 }
 
 }

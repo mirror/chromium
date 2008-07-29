@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -35,16 +35,13 @@
 #include "FrameView.h"
 #include "HTMLImageElement.h"
 #include "HTMLNames.h"
+#include "LocalizedStrings.h"
 #include "MouseEvent.h"
 #include "Page.h"
 #include "SegmentedString.h"
 #include "Settings.h"
 #include "Text.h"
 #include "XMLTokenizer.h"
-
-#if PLATFORM(MAC)
-#include "ImageDocumentMac.h"
-#endif 
 
 using std::min;
 
@@ -55,10 +52,11 @@ using namespace HTMLNames;
 
 class ImageEventListener : public EventListener {
 public:
-    ImageEventListener(ImageDocument* doc) : m_doc(doc) { }
+    static PassRefPtr<ImageEventListener> create(ImageDocument* document) { return adoptRef(new ImageEventListener(document)); }
     virtual void handleEvent(Event*, bool isWindowEvent);
 
 private:
+    ImageEventListener(ImageDocument* document) : m_doc(document) { }
     ImageDocument* m_doc;
 };
     
@@ -114,17 +112,17 @@ void ImageTokenizer::finish()
         // If this is a multipart image, make a copy of the current part, since the resource data
         // will be overwritten by the next part.
         if (m_doc->frame()->loader()->documentLoader()->isLoadingMultipartContent())
-            data = new SharedBuffer(data->data(), data->size());
+            data = data->copy();
 
         cachedImage->data(data.release(), true);
         cachedImage->finish();
 
         cachedImage->setResponse(m_doc->frame()->loader()->documentLoader()->response());
-        
-        // FIXME: Need code to set the title for platforms other than Mac OS X.
-#if PLATFORM(MAC)
-        finishImageLoad(m_doc, cachedImage);
-#endif
+
+        IntSize size = cachedImage->imageSize(m_doc->frame()->pageZoomFactor());
+        if (size.width())
+            m_doc->setTitle(imageTitle(cachedImage->response().suggestedFilename(), size));
+
         m_doc->imageChanged();
     }
 
@@ -139,8 +137,8 @@ bool ImageTokenizer::isWaitingForScripts() const
     
 // --------
 
-ImageDocument::ImageDocument(DOMImplementation* implementation, Frame* frame)
-    : HTMLDocument(implementation, frame)
+ImageDocument::ImageDocument(Frame* frame)
+    : HTMLDocument(frame)
     , m_imageElement(0)
     , m_imageSizeIsKnown(false)
     , m_didShrinkImage(false)
@@ -170,13 +168,13 @@ void ImageDocument::createDocumentStructure()
     
     imageElement->setAttribute(styleAttr, "-webkit-user-select: none");        
     imageElement->setLoadManually(true);
-    imageElement->setSrc(url());
+    imageElement->setSrc(url().string());
     
     body->appendChild(imageElement, ec);
     
     if (shouldShrinkToFit()) {
         // Add event listeners
-        RefPtr<EventListener> listener = new ImageEventListener(this);
+        RefPtr<EventListener> listener = ImageEventListener::create(this);
         addWindowEventListener("resize", listener, false);
         imageElement->addEventListener("click", listener.release(), false);
     }
@@ -189,7 +187,7 @@ float ImageDocument::scale() const
     if (!m_imageElement)
         return 1.0f;
 
-    IntSize imageSize = m_imageElement->cachedImage()->imageSize();
+    IntSize imageSize = m_imageElement->cachedImage()->imageSize(frame()->pageZoomFactor());
     IntSize windowSize = IntSize(frame()->view()->width(), frame()->view()->height());
     
     float widthScale = (float)windowSize.width() / imageSize.width();
@@ -203,7 +201,7 @@ void ImageDocument::resizeImageToFit()
     if (!m_imageElement)
         return;
 
-    IntSize imageSize = m_imageElement->cachedImage()->imageSize();
+    IntSize imageSize = m_imageElement->cachedImage()->imageSize(frame()->pageZoomFactor());
 
     float scale = this->scale();
     m_imageElement->setWidth(static_cast<int>(imageSize.width() * scale));
@@ -243,7 +241,7 @@ void ImageDocument::imageChanged()
     if (m_imageSizeIsKnown)
         return;
 
-    if (m_imageElement->cachedImage()->imageSize().isEmpty())
+    if (m_imageElement->cachedImage()->imageSize(frame()->pageZoomFactor()).isEmpty())
         return;
     
     m_imageSizeIsKnown = true;
@@ -259,8 +257,8 @@ void ImageDocument::restoreImageSize()
     if (!m_imageElement || !m_imageSizeIsKnown)
         return;
     
-    m_imageElement->setWidth(m_imageElement->cachedImage()->imageSize().width());
-    m_imageElement->setHeight(m_imageElement->cachedImage()->imageSize().height());
+    m_imageElement->setWidth(m_imageElement->cachedImage()->imageSize(frame()->pageZoomFactor()).width());
+    m_imageElement->setHeight(m_imageElement->cachedImage()->imageSize(frame()->pageZoomFactor()).height());
     
     ExceptionCode ec;
     if (imageFitsInWindow())
@@ -276,7 +274,7 @@ bool ImageDocument::imageFitsInWindow() const
     if (!m_imageElement)
         return true;
 
-    IntSize imageSize = m_imageElement->cachedImage()->imageSize();
+    IntSize imageSize = m_imageElement->cachedImage()->imageSize(frame()->pageZoomFactor());
     IntSize windowSize = IntSize(frame()->view()->width(), frame()->view()->height());
     
     return imageSize.width() <= windowSize.width() && imageSize.height() <= windowSize.height();    

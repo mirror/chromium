@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,21 +28,29 @@
 
 #if ENABLE(VIDEO)
 
-#include "kjs_binding.h"
+#include "JSDOMBinding.h"
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
 
-    class JSAudioConstructor : public KJS::DOMObject {
+    class JSAudioConstructor : public DOMObject {
     public:
         JSAudioConstructor(KJS::ExecState*, Document*);
-        virtual bool implementsConstruct() const;
-        virtual KJS::JSObject *construct(KJS::ExecState*, const KJS::List& args);
+
+        Document* document() const { return m_document.get(); }
+
+        static const KJS::ClassInfo s_info;
+
     private:
-        RefPtr<Document> m_doc;
+        virtual KJS::ConstructType getConstructData(KJS::ConstructData&);
+
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+
+        RefPtr<Document> m_document;
     };
 
-}
+} // namespace WebCore
 
-#endif
-#endif
+#endif // ENABLE(VIDEO)
+
+#endif // JSAudioConstructor_h

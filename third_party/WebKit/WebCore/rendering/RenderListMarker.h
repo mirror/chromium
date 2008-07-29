@@ -49,12 +49,12 @@ public:
     virtual void layout();
     virtual void calcPrefWidths();
 
-    virtual void imageChanged(CachedImage*);
+    virtual void imageChanged(WrappedImagePtr);
 
     virtual InlineBox* createInlineBox(bool, bool, bool);
 
-    virtual short lineHeight(bool firstLine, bool isRootLineBox = false) const;
-    virtual short baselinePosition(bool firstLine, bool isRootLineBox = false) const;
+    virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
+    virtual int baselinePosition(bool firstLine, bool isRootLineBox = false) const;
 
     bool isImage() const;
     bool isText() const { return !isImage(); }
@@ -73,7 +73,7 @@ private:
     IntRect getRelativeMarkerRect();
 
     String m_text;
-    CachedImage* m_image;
+    RefPtr<StyleImage> m_image;
     RenderListItem* m_listItem;
     SelectionState m_selectionState;
 };

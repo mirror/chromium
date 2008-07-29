@@ -1,8 +1,6 @@
 /*
- * This file is part of the DOM implementation for KDE.
- *
  * Copyright (C) 2000 Peter Kelly (pmk@post.com)
- * Copyright (C) 2005, 2006 Apple Computer, Inc.
+ * Copyright (C) 2005, 2006, 2007 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Samuel Weinig (sam@webkit.org)
  * Copyright (C) 2007 Trolltech ASA
  *
@@ -83,6 +81,9 @@ namespace WebCore {
         virtual void notifyFinished(CachedResource* finishedObj);
 
 #ifndef USE_QXMLSTREAM
+
+        friend bool parseXMLDocumentFragment(const String& chunk, DocumentFragment* fragment, Element* parent);
+
         // callbacks from parser SAX
         void error(ErrorType, const char* message, va_list args) WTF_ATTRIBUTE_PRINTF(3, 0); 
         void startElementNs(const xmlChar* xmlLocalName, const xmlChar* xmlPrefix, const xmlChar* xmlURI, int nb_namespaces,
@@ -117,7 +118,7 @@ namespace WebCore {
         int columnNumber() const;
 
     private:
-        void initializeParserContext();
+        void initializeParserContext(const char* chunk = 0);
         void setCurrentNode(Node*);
 
         void insertErrorMessageBlock();
@@ -170,7 +171,7 @@ namespace WebCore {
     };
 
 #if ENABLE(XSLT)
-void* xmlDocPtrForString(DocLoader*, const String& source, const DeprecatedString& url);
+void* xmlDocPtrForString(DocLoader*, const String& source, const String& url);
 void setLoaderForLibXMLCallbacks(DocLoader*);
 #endif
 

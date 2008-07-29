@@ -30,6 +30,7 @@
 #include "StringHash.h"
 #include <wtf/HashMap.h>
 #include <wtf/HashSet.h>
+#include <wtf/ListHashSet.h>
 
 namespace WebCore {
 
@@ -50,11 +51,11 @@ friend class Cache;
 friend class HTMLImageLoader;
 
 public:
-    DocLoader(Frame*, Document*);
+    DocLoader(Document*);
     ~DocLoader();
 
     CachedImage* requestImage(const String& url);
-    CachedCSSStyleSheet* requestCSSStyleSheet(const String& url, const String& charset, bool isUserStyleSheet = false);
+    CachedCSSStyleSheet* requestCSSStyleSheet(const String& url, const String& charset);
     CachedCSSStyleSheet* requestUserCSSStyleSheet(const String& url, const String& charset);
     CachedScript* requestScript(const String& url, const String& charset);
     CachedFont* requestFont(const String& url);
@@ -66,6 +67,9 @@ public:
     CachedXBLDocument* requestXBLDocument(const String &url);
 #endif
 
+    // Logs an access denied message to the console for the specified URL.
+    void printAccessDeniedMessage(const KURL& url) const;
+
     CachedResource* cachedResource(const String& url) const { return m_docResources.get(url); }
     const HashMap<String, CachedResource*>& allCachedResources() const { return m_docResources; }
 
@@ -75,7 +79,7 @@ public:
     CachePolicy cachePolicy() const { return m_cachePolicy; }
     void setCachePolicy(CachePolicy);
     
-    Frame* frame() const { return m_frame; }
+    Frame* frame() const; // Can be NULL
     Document* doc() const { return m_doc; }
 
     void removeCachedResource(CachedResource*) const;
@@ -92,8 +96,13 @@ public:
     void incrementRequestCount();
     void decrementRequestCount();
     int requestCount();
+    
+    void clearPreloads();
+    void preload(CachedResource::Type type, const String& url, const String& charset);
+    void printPreloadStats();
+    
 private:
-    CachedResource* requestResource(CachedResource::Type, const String& url, const String* charset = 0, bool skipCanLoadCheck = false, bool sendResourceLoadCallbacks = true);
+    CachedResource* requestResource(CachedResource::Type, const String& url, const String& charset, bool isPreload = false);
 
     void checkForReload(const KURL&);
     void checkCacheObjectStatus(CachedResource*);
@@ -102,10 +111,11 @@ private:
     HashSet<String> m_reloadedURLs;
     mutable HashMap<String, CachedResource*> m_docResources;
     CachePolicy m_cachePolicy;
-    Frame* m_frame;
-    Document *m_doc;
+    Document* m_doc;
     
     int m_requestCount;
+    
+    ListHashSet<CachedResource*> m_preloads;
     
     //29 bits left
     bool m_autoLoadImages : 1;

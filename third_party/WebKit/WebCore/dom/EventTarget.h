@@ -39,6 +39,7 @@
 namespace WebCore {
 
     class AtomicString;
+    class DOMApplicationCache;
     class Event;
     class EventListener;
     class EventTargetNode;
@@ -55,7 +56,9 @@ namespace WebCore {
     public:
         virtual EventTargetNode* toNode();
         virtual XMLHttpRequest* toXMLHttpRequest();
-
+#if ENABLE(OFFLINE_WEB_APPLICATIONS)
+        virtual DOMApplicationCache* toDOMApplicationCache();
+#endif
 #if ENABLE(SVG)
         virtual SVGElementInstance* toSVGElementInstance();
 #endif
@@ -83,6 +86,8 @@ namespace WebCore {
 
         void insertedIntoDocument(EventTargetNode* referenceNode);
         void removedFromDocument(EventTargetNode* referenceNode);
+        void willMoveToNewOwnerDocument(EventTargetNode* referenceNode);
+        void didMoveToNewOwnerDocument(EventTargetNode* referenceNode);
 
         void handleLocalEvents(EventTargetNode* referenceNode, Event*, bool useCapture);
 

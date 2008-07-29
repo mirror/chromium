@@ -29,11 +29,21 @@
 #ifndef InspectorController_h
 #define InspectorController_h
 
-#include "Chrome.h"
+#include "JavaScriptDebugListener.h"
+
+#include "Console.h"
+#include "PlatformString.h"
+#include "StringHash.h"
 #include <JavaScriptCore/JSContextRef.h>
+#include <profiler/Profiler.h>
 #include <wtf/HashMap.h>
 #include <wtf/HashSet.h>
 #include <wtf/Vector.h>
+
+namespace KJS {
+    class Profile;
+    class UString;
+}
 
 namespace WebCore {
 
@@ -41,30 +51,38 @@ class Database;
 class DocumentLoader;
 class GraphicsContext;
 class InspectorClient;
+class JavaScriptCallFrame;
 class Node;
+class Page;
 class ResourceResponse;
 class ResourceError;
+class SharedBuffer;
 
 struct ConsoleMessage;
 struct InspectorDatabaseResource;
 struct InspectorResource;
 class ResourceRequest;
 
-class InspectorController {
+class InspectorController : JavaScriptDebugListener, public KJS::ProfilerClient {
 public:
     typedef HashMap<long long, RefPtr<InspectorResource> > ResourcesMap;
     typedef HashMap<RefPtr<Frame>, ResourcesMap*> FrameResourcesMap;
     typedef HashSet<RefPtr<InspectorDatabaseResource> > DatabaseResourcesSet;
 
     typedef enum {
-        FocusedNodeDocumentPanel,
+        CurrentPanel,
         ConsolePanel,
-        TimelinePanel
+        DatabasesPanel,
+        ElementsPanel,
+        ProfilesPanel,
+        ResourcesPanel,
+        ScriptsPanel
     } SpecialPanels;
 
     InspectorController(Page*, InspectorClient*);
     ~InspectorController();
 
+    void inspectedPageDestroyed();
     void pageDestroyed() { m_page = 0; }
 
     bool enabled() const;
@@ -78,14 +96,23 @@ public:
     void hideHighlight();
 
     void show();
-    void showConsole();
-    void showTimeline();
+    void showPanel(SpecialPanels);
     void close();
+
+    bool isRecordingUserInitiatedProfile() const { return m_recordingUserInitiatedProfile; }
+    void startUserInitiatedProfiling();
+    void stopUserInitiatedProfiling();
+    void finishedProfiling(PassRefPtr<KJS::Profile>);
 
     bool windowVisible();
     void setWindowVisible(bool visible = true);
 
+    void addMessageToConsole(MessageSource, MessageLevel, KJS::ExecState*, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceID);
     void addMessageToConsole(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceID);
+
+    void addProfile(PassRefPtr<KJS::Profile>);
+    void addScriptProfile(KJS::Profile* profile);
+    const Vector<RefPtr<KJS::Profile> >& profiles() const { return m_profiles; }
 
     void attachWindow();
     void detachWindow();
@@ -93,12 +120,13 @@ public:
     JSContextRef scriptContext() const { return m_scriptContext; };
     void setScriptContext(JSContextRef context) { m_scriptContext = context; };
 
+    void inspectedWindowScriptObjectCleared(Frame*);
     void windowScriptObjectAvailable();
 
     void scriptObjectReady();
 
-    void populateScriptResources();
-    void clearScriptResources();
+    void populateScriptObjects();
+    void resetScriptObjects();
 
     void didCommitLoad(DocumentLoader*);
     void frameDetachedFromParent(Frame*);
@@ -111,6 +139,7 @@ public:
     void didReceiveContentLength(DocumentLoader*, unsigned long identifier, int lengthReceived);
     void didFinishLoading(DocumentLoader*, unsigned long identifier);
     void didFailLoading(DocumentLoader*, unsigned long identifier, const ResourceError&);
+    void resourceRetrievedByXMLHttpRequest(unsigned long identifier, KJS::UString& sourceString);
 
 #if ENABLE(DATABASE)
     void didOpenDatabase(Database*, const String& domain, const String& name, const String& version);
@@ -120,16 +149,38 @@ public:
 
     void moveWindowBy(float x, float y) const;
 
+    void startDebuggingAndReloadInspectedPage();
+    void stopDebugging();
+    bool debuggerAttached() const { return m_debuggerAttached; }
+
+    JavaScriptCallFrame* currentCallFrame() const;
+
+    void addBreakpoint(int sourceID, unsigned lineNumber);
+    void removeBreakpoint(int sourceID, unsigned lineNumber);
+
+    bool pauseOnExceptions();
+    void setPauseOnExceptions(bool pause);
+
+    void pauseInDebugger();
+    void resumeDebugger();
+
+    void stepOverStatementInDebugger();
+    void stepIntoStatementInDebugger();
+    void stepOutOfFunctionInDebugger();
+
     void drawNodeHighlight(GraphicsContext&) const;
+    
+    void startTiming(const KJS::UString& title);
+    bool stopTiming(const KJS::UString& title, double& elapsed);
+
+    void startGroup();
+    void endGroup();
 
 private:
     void focusNode();
 
+    void addConsoleMessage(ConsoleMessage*);
     void addScriptConsoleMessage(const ConsoleMessage*);
-    void clearScriptConsoleMessages();
-
-    void clearNetworkTimeline();
-    void clearDatabaseScriptResources();
 
     void addResource(InspectorResource*);
     void removeResource(InspectorResource*);
@@ -140,6 +191,7 @@ private:
     JSObjectRef addAndUpdateScriptResource(InspectorResource*);
     void updateScriptResourceRequest(InspectorResource*);
     void updateScriptResourceResponse(InspectorResource*);
+    void updateScriptResourceType(InspectorResource*);
     void updateScriptResource(InspectorResource*, int length);
     void updateScriptResource(InspectorResource*, bool finished, bool failed = false);
     void updateScriptResource(InspectorResource*, double startTime, double responseReceivedTime, double endTime);
@@ -152,14 +204,29 @@ private:
     void removeDatabaseScriptResource(InspectorDatabaseResource*);
 #endif
 
+    JSValueRef callSimpleFunction(JSContextRef, JSObjectRef thisObject, const char* functionName) const;
+    JSValueRef callFunction(JSContextRef, JSObjectRef thisObject, const char* functionName, size_t argumentCount, const JSValueRef arguments[], JSValueRef& exception) const;
+
+    bool handleException(JSContextRef, JSValueRef exception, unsigned lineNumber) const;
+
+    void showWindow();
+    void closeWindow();
+
+    virtual void didParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int sourceID);
+    virtual void failedToParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int errorLine, const KJS::UString& errorMessage);
+    virtual void didPause();
+
     Page* m_inspectedPage;
     InspectorClient* m_client;
     Page* m_page;
     RefPtr<Node> m_nodeToFocus;
     RefPtr<InspectorResource> m_mainResource;
     ResourcesMap m_resources;
+    HashSet<String> m_knownResources;
     FrameResourcesMap m_frameResources;
     Vector<ConsoleMessage*> m_consoleMessages;
+    Vector<RefPtr<KJS::Profile> > m_profiles;
+    HashMap<String, double> m_times;
 #if ENABLE(DATABASE)
     DatabaseResourcesSet m_databaseResources;
 #endif
@@ -167,9 +234,13 @@ private:
     JSObjectRef m_controllerScriptObject;
     JSContextRef m_scriptContext;
     bool m_windowVisible;
+    bool m_debuggerAttached;
+    bool m_attachDebuggerWhenShown;
+    bool m_recordingUserInitiatedProfile;
     SpecialPanels m_showAfterVisible;
     long long m_nextIdentifier;
     RefPtr<Node> m_highlightedNode;
+    unsigned m_groupLevel;
 };
 
 } // namespace WebCore

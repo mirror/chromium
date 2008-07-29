@@ -39,7 +39,9 @@ typedef struct CGContext PlatformGraphicsContext;
 #elif PLATFORM(CAIRO)
 typedef struct _cairo PlatformGraphicsContext;
 #elif PLATFORM(QT)
+QT_BEGIN_NAMESPACE
 class QPainter;
+QT_END_NAMESPACE
 typedef QPainter PlatformGraphicsContext;
 #elif PLATFORM(WX)
 class wxGCDC;
@@ -73,6 +75,10 @@ typedef struct _GdkEventExpose GdkEventExpose;
 typedef struct HDC__* HDC;
 #endif
 
+#if PLATFORM(QT) && defined(Q_WS_WIN)
+#include <windows.h>
+#endif
+
 namespace WebCore {
 
     const int cMisspellingLineThickness = 3;
@@ -81,8 +87,10 @@ namespace WebCore {
 
     class AffineTransform;
     class Font;
+    class Generator;
     class GraphicsContextPrivate;
     class GraphicsContextPlatformPrivate;
+    class ImageBuffer;
     class KURL;
     class Path;
     class TextRun;
@@ -98,6 +106,13 @@ namespace WebCore {
         SolidStroke,
         DottedStroke,
         DashedStroke
+    };
+
+    enum InterpolationQuality {
+        InterpolationDefault,
+        InterpolationNone,
+        InterpolationLow,
+        InterpolationHigh
     };
 
     class GraphicsContext : Noncopyable {
@@ -134,6 +149,7 @@ namespace WebCore {
         
         void fillRect(const IntRect&, const Color&);
         void fillRect(const FloatRect&, const Color&);
+        void fillRect(const FloatRect&, Generator&);
         void fillRoundedRect(const IntRect&, const IntSize& topLeft, const IntSize& topRight, const IntSize& bottomLeft, const IntSize& bottomRight, const Color&);
         void clearRect(const FloatRect&);
         void strokeRect(const FloatRect&, float lineWidth);
@@ -149,20 +165,22 @@ namespace WebCore {
         void drawTiledImage(Image*, const IntRect& destRect, const IntRect& srcRect, 
                             Image::TileRule hRule = Image::StretchTile, Image::TileRule vRule = Image::StretchTile,
                             CompositeOperator = CompositeSourceOver);
+
 #if PLATFORM(CG)
-        void setUseLowQualityImageInterpolation(bool = true);
-        bool useLowQualityImageInterpolation() const;
+        void setImageInterpolationQuality(InterpolationQuality);
+        InterpolationQuality imageInterpolationQuality() const;
 #else
-        void setUseLowQualityImageInterpolation(bool = true) {}
-        bool useLowQualityImageInterpolation() const { return false; }
+        void setImageInterpolationQuality(InterpolationQuality) {}
+        InterpolationQuality imageInterpolationQuality() const { return InterpolationDefault; }
 #endif
 
-        void clip(const IntRect&);
+        void clip(const FloatRect&);
         void addRoundedRectClip(const IntRect&, const IntSize& topLeft, const IntSize& topRight, const IntSize& bottomLeft, const IntSize& bottomRight);
         void addInnerRoundedRectClip(const IntRect&, int thickness);
         void clipOut(const IntRect&);
         void clipOutEllipseInRect(const IntRect&);
         void clipOutRoundedRect(const IntRect&, const IntSize& topLeft, const IntSize& topRight, const IntSize& bottomLeft, const IntSize& bottomRight);
+        void clipToImageBuffer(const FloatRect&, const ImageBuffer*);
 
         int textDrawingMode();
         void setTextDrawingMode(int);
@@ -186,6 +204,7 @@ namespace WebCore {
         void endTransparencyLayer();
 
         void setShadow(const IntSize&, int blur, const Color&);
+        bool getShadow(IntSize&, int&, Color&) const;
         void clearShadow();
 
         void initFocusRing(int width, int offset);
@@ -223,11 +242,41 @@ namespace WebCore {
 #if PLATFORM(WIN)
         GraphicsContext(HDC); // FIXME: To be removed.
         bool inTransparencyLayer() const;
-        HDC getWindowsContext(const IntRect&, bool supportAlphaBlend = true); // The passed in rect is used to create a bitmap for compositing inside transparency layers.
-        void releaseWindowsContext(HDC, const IntRect&, bool supportAlphaBlend = true);    // The passed in HDC should be the one handed back by getWindowsContext.
+        HDC getWindowsContext(const IntRect&, bool supportAlphaBlend = true, bool mayCreateBitmap = true); // The passed in rect is used to create a bitmap for compositing inside transparency layers.
+        void releaseWindowsContext(HDC, const IntRect&, bool supportAlphaBlend = true, bool mayCreateBitmap = true);    // The passed in HDC should be the one handed back by getWindowsContext.
+
+        class WindowsBitmap : public Noncopyable {
+        public:
+            WindowsBitmap(HDC, IntSize);
+            ~WindowsBitmap();
+
+            HDC hdc() const { return m_hdc; }
+            UInt8* buffer() const { return m_bitmapBuffer; }
+            unsigned bufferLength() const { return m_bitmapBufferLength; }
+            IntSize size() const { return m_size; }
+            unsigned bytesPerRow() const { return m_bytesPerRow; }
+
+        private:
+            HDC m_hdc;
+            HBITMAP m_bitmap;
+            UInt8* m_bitmapBuffer;
+            unsigned m_bitmapBufferLength;
+            IntSize m_size;
+            unsigned m_bytesPerRow;
+        };
+
+        WindowsBitmap* createWindowsBitmap(IntSize);
+        // The bitmap should be non-premultiplied.
+        void drawWindowsBitmap(WindowsBitmap*, const IntPoint&);
+#endif
+
+#if PLATFORM(QT) && defined(Q_WS_WIN)
+        HDC getWindowsContext(const IntRect&, bool supportAlphaBlend = true, bool mayCreateBitmap = true);
+        void releaseWindowsContext(HDC, const IntRect&, bool supportAlphaBlend = true, bool mayCreateBitmap = true);
 #endif
 
 #if PLATFORM(QT)
+        bool inTransparencyLayer() const;
         void setFillRule(WindRule);
         PlatformPath* currentPath();
 #endif
@@ -248,6 +297,8 @@ namespace WebCore {
         void setPlatformStrokeThickness(float);
         void setPlatformFillColor(const Color&);
         void setPlatformFont(const Font& font);
+        void setPlatformShadow(const IntSize&, int blur, const Color&);
+        void clearPlatformShadow();
 
         int focusRingWidth() const;
         int focusRingOffset() const;
@@ -257,7 +308,7 @@ namespace WebCore {
         static void destroyGraphicsContextPrivate(GraphicsContextPrivate*);
 
         GraphicsContextPrivate* m_common;
-        GraphicsContextPlatformPrivate* m_data;
+        GraphicsContextPlatformPrivate* m_data; // Deprecated; m_commmon can just be downcasted. To be removed.
     };
 
 } // namespace WebCore

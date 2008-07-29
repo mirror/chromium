@@ -55,6 +55,8 @@ BitmapImage::BitmapImage(ImageObserver* observer)
     , m_haveSize(false)
     , m_sizeAvailable(false)
     , m_decodedSize(0)
+    , m_haveFrameCount(false)
+    , m_frameCount(0)
 {
     initPlatformData();
 }
@@ -104,7 +106,10 @@ void BitmapImage::cacheFrame(size_t index)
     ASSERT(m_decodedSize == 0 || numFrames > 1);
     
     if (!m_frames.size() && shouldAnimate()) {            
-        // Snag the repetition count.
+        // Snag the repetition count.  Note that the repetition count may not be
+        // accurate yet for GIFs; if we haven't gotten the count from the source
+        // image yet, it will default to cAnimationLoopOnce, and we'll try and
+        // read it again once the whole image is decoded.
         m_repetitionCount = m_source.repetitionCount();
         if (m_repetitionCount == cAnimationNone)
             m_animatingImageType = false;
@@ -146,6 +151,9 @@ bool BitmapImage::dataChanged(bool allDataReceived)
     m_allDataReceived = allDataReceived;
     m_source.setData(m_data.get(), allDataReceived);
     
+    // Clear the frame count.
+    m_haveFrameCount = false;
+
     // Image properties will not be available until the first frame of the file
     // reaches kCGImageStatusIncomplete.
     return isSizeAvailable();
@@ -153,7 +161,11 @@ bool BitmapImage::dataChanged(bool allDataReceived)
 
 size_t BitmapImage::frameCount()
 {
-    return m_source.frameCount();
+    if (!m_haveFrameCount) {
+        m_haveFrameCount = true;
+        m_frameCount = m_source.frameCount();
+    }
+    return m_frameCount;
 }
 
 bool BitmapImage::isSizeAvailable()
@@ -191,7 +203,7 @@ float BitmapImage::frameDurationAtIndex(size_t index)
 bool BitmapImage::frameHasAlphaAtIndex(size_t index)
 {
     if (index >= frameCount())
-        return 0;
+        return true;
 
     if (index >= m_frames.size() || !m_frames[index].m_frame)
         cacheFrame(index);
@@ -211,6 +223,13 @@ void BitmapImage::startAnimation()
 
     // Don't advance the animation until the current frame has completely loaded.
     if (!m_source.frameIsCompleteAtIndex(m_currentFrame))
+        return;
+
+    // Don't advance past the last frame if we haven't decoded the whole image
+    // yet and our repetition count is potentially unset.  The repetition count
+    // in a GIF can potentially come after all the rest of the image data, so
+    // wait on it.
+    if (!m_allDataReceived && m_repetitionCount == cAnimationLoopOnce && m_currentFrame >= (frameCount() - 1))
         return;
 
     m_frameTimer = new Timer<BitmapImage>(this, &BitmapImage::advanceAnimation);
@@ -251,6 +270,10 @@ void BitmapImage::advanceAnimation(Timer<BitmapImage>* timer)
     m_currentFrame++;
     if (m_currentFrame >= frameCount()) {
         m_repetitionsComplete += 1;
+        // Get the repetition count again.  If we weren't able to get a
+        // repetition count before, we should have decoded the whole image by
+        // now, so it should now be available.
+        m_repetitionCount = m_source.repetitionCount();
         if (m_repetitionCount && m_repetitionsComplete >= m_repetitionCount) {
             m_animationFinished = true;
             m_currentFrame--;

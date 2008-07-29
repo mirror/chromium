@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2004, 2005, 2007 Nikolas Zimmermann <zimmermann@kde.org>
-                  2004, 2005, 2007 Rob Buis <buis@kde.org>
+                  2004, 2005, 2007, 2008 Rob Buis <buis@kde.org>
 
     This file is part of the KDE project
 
@@ -41,40 +41,33 @@ SVGFEFloodElement::SVGFEFloodElement(const QualifiedName& tagName, Document* doc
 
 SVGFEFloodElement::~SVGFEFloodElement()
 {
-    delete m_filterEffect;
 }
-
-ANIMATED_PROPERTY_DEFINITIONS(SVGFEFloodElement, String, String, string, In1, in1, SVGNames::inAttr, m_in1)
 
 void SVGFEFloodElement::parseMappedAttribute(MappedAttribute* attr)
 {
-    const String& value = attr->value();
-    if (attr->name() == SVGNames::inAttr)
-        setIn1BaseValue(value);
-    else
-        SVGFilterPrimitiveStandardAttributes::parseMappedAttribute(attr);
+    SVGFilterPrimitiveStandardAttributes::parseMappedAttribute(attr);
 }
 
-SVGFEFlood* SVGFEFloodElement::filterEffect(SVGResourceFilter* filter) const
+SVGFilterEffect* SVGFEFloodElement::filterEffect(SVGResourceFilter* filter) const
 {
-    if (!m_filterEffect)
-        m_filterEffect = new SVGFEFlood(filter);
-    
-    m_filterEffect->setIn(in1());
-    setStandardAttributes(m_filterEffect);
+    ASSERT_NOT_REACHED();
+    return 0;
+}
 
-    SVGFEFloodElement* nonConstThis = const_cast<SVGFEFloodElement*>(this);
+bool SVGFEFloodElement::build(FilterBuilder* builder)
+{
+    RenderStyle* parentStyle = this->styleForRenderer(parent()->renderer());
+    RenderStyle* filterStyle = this->resolveStyle(parentStyle);
 
-    RenderStyle* parentStyle = nonConstThis->styleForRenderer(parent()->renderer());
-    RenderStyle* filterStyle = nonConstThis->resolveStyle(parentStyle);
-    
-    m_filterEffect->setFloodColor(filterStyle->svgStyle()->floodColor());
-    m_filterEffect->setFloodOpacity(filterStyle->svgStyle()->floodOpacity());
-    
+    Color color = filterStyle->svgStyle()->floodColor();
+    float opacity = filterStyle->svgStyle()->floodOpacity();
+
     parentStyle->deref(document()->renderArena());
     filterStyle->deref(document()->renderArena());
+
+    builder->add(result(), FEFlood::create(color, opacity));
     
-    return m_filterEffect;
+    return true;
 }
 
 }

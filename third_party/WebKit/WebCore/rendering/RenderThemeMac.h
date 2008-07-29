@@ -24,6 +24,7 @@
 #define RenderThemeMac_h
 
 #import "RenderTheme.h"
+#import <wtf/HashMap.h>
 #import <wtf/RetainPtr.h>
 
 #ifdef __OBJC__
@@ -44,7 +45,7 @@ public:
     // A method to obtain the baseline position for a "leaf" control.  This will only be used if a baseline
     // position cannot be determined by examining child content. Checkboxes and radio buttons are examples of
     // controls that need to do this.
-    virtual short baselinePosition(const RenderObject*) const;
+    virtual int baselinePosition(const RenderObject*) const;
 
     // A method asking if the control changes its tint when the window has focus or not.
     virtual bool controlSupportsTints(const RenderObject*) const;
@@ -55,13 +56,13 @@ public:
     virtual void adjustRepaintRect(const RenderObject*, IntRect&);
 
     virtual bool isControlStyled(const RenderStyle*, const BorderData&,
-                                 const BackgroundLayer&, const Color& backgroundColor) const;
-
-    virtual void paintResizeControl(GraphicsContext*, const IntRect&);
+                                 const FillLayer&, const Color& backgroundColor) const;
 
     virtual Color platformActiveSelectionBackgroundColor() const;
     virtual Color platformInactiveSelectionBackgroundColor() const;
     virtual Color activeListBoxSelectionBackgroundColor() const;
+    
+    virtual void platformColorsDidChange();
 
     // System fonts.
     virtual void systemFont(int cssValueId, FontDescription&) const;
@@ -76,6 +77,8 @@ public:
     virtual int popupInternalPaddingBottom(RenderStyle*) const;
     
     virtual bool paintCapsLockIndicator(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+
+    virtual Color systemColor(int cssValueId) const;
 
 protected:
     // Methods for each appearance value.
@@ -182,7 +185,6 @@ private:
     NSMenu* searchMenuTemplate() const;
     NSSliderCell* sliderThumbHorizontal() const;
     NSSliderCell* sliderThumbVertical() const;
-    Image* resizeCornerImage() const;
 
 private:
     mutable RetainPtr<NSButtonCell> m_checkbox;
@@ -193,10 +195,11 @@ private:
     mutable RetainPtr<NSMenu> m_searchMenuTemplate;
     mutable RetainPtr<NSSliderCell> m_sliderThumbHorizontal;
     mutable RetainPtr<NSSliderCell> m_sliderThumbVertical;
-    mutable Image* m_resizeCornerImage;
 
     bool m_isSliderThumbHorizontalPressed;
     bool m_isSliderThumbVerticalPressed;
+
+    mutable HashMap<int, RGBA32> m_systemColorCache;
 
     RetainPtr<WebCoreRenderThemeNotificationObserver> m_notificationObserver;
 };

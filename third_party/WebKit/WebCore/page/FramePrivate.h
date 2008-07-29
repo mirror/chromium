@@ -4,7 +4,7 @@
  *                     2000-2001 Simon Hausmann <hausmann@kde.org>
  *                     2000-2001 Dirk Mueller <mueller@kde.org>
  *                     2000 Stefan Schimanski <1Stein@gmx.de>
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Trolltech ASA
  *
  * This library is free software; you can redistribute it and/or
@@ -29,10 +29,12 @@
 #include "AnimationController.h"
 #include "Editor.h"
 #include "EventHandler.h"
+#include "FrameLoader.h"
 #include "FrameTree.h"
 #include "Range.h"
 #include "SelectionController.h"
 #include "StringHash.h"
+#include "ScriptController.h"
 
 namespace KJS {
     class Interpreter;
@@ -45,10 +47,8 @@ namespace KJS {
 
 #if PLATFORM(MAC)
 #ifdef __OBJC__
-@class WebCoreFrameBridge;
 @class WebScriptObject;
 #else
-class WebCoreFrameBridge;
 class WebScriptObject;
 #endif
 #endif
@@ -72,18 +72,21 @@ namespace WebCore {
 
         Page* m_page;
         FrameTree m_treeNode;
+        FrameLoader m_loader;
         RefPtr<DOMWindow> m_domWindow;
+        HashSet<DOMWindow*> m_liveFormerWindows;
 
         HTMLFrameOwnerElement* m_ownerElement;
         RefPtr<FrameView> m_view;
         RefPtr<Document> m_doc;
 
-        KJSProxy* m_jscript;
+        ScriptController m_script;
 
         String m_kjsStatusBarText;
         String m_kjsDefaultStatusBarText;
 
-        int m_zoomFactor;
+        float m_zoomFactor;
+        bool m_zoomFactorIsTextOnly;
 
         TextGranularity m_selectionGranularity;
 
@@ -102,8 +105,6 @@ namespace WebCore {
 
         Timer<Frame> m_lifeSupportTimer;
 
-        FrameLoader* m_loader;
-        
         RefPtr<Node> m_elementToDraw;
         PaintRestriction m_paintRestriction;
         
@@ -120,13 +121,14 @@ namespace WebCore {
         // The root object used for objects bound outside the context of a plugin.
         RefPtr<KJS::Bindings::RootObject> m_bindingRootObject; 
         RootObjectMap m_rootObjects;
+#if ENABLE(NETSCAPE_PLUGIN_API)
         NPObject* m_windowScriptNPObject;
+#endif
 #if FRAME_LOADS_USER_STYLESHEET
         UserStyleSheetLoader* m_userStyleSheetLoader;
 #endif
 #if PLATFORM(MAC)
         RetainPtr<WebScriptObject> m_windowScriptObject;
-        WebCoreFrameBridge* m_bridge;
 #endif
     };
 }

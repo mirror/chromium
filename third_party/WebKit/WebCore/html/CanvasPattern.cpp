@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -65,38 +65,39 @@ void CanvasPattern::parseRepetitionType(const String& type, bool& repeatX, bool&
 
 #if PLATFORM(CG)
 
-CanvasPattern::CanvasPattern(CGImageRef image, bool repeatX, bool repeatY)
+CanvasPattern::CanvasPattern(CGImageRef image, bool repeatX, bool repeatY, bool originClean)
     : m_platformImage(image)
     , m_cachedImage(0)
     , m_repeatX(repeatX)
     , m_repeatY(repeatY)
+    , m_originClean(originClean)
 {
 }
 
 #elif PLATFORM(CAIRO)
 
-CanvasPattern::CanvasPattern(cairo_surface_t* surface, bool repeatX, bool repeatY)
+CanvasPattern::CanvasPattern(cairo_surface_t* surface, bool repeatX, bool repeatY, bool originClean)
     : m_platformImage(cairo_surface_reference(surface))
     , m_cachedImage(0)
     , m_repeatX(repeatX)
     , m_repeatY(repeatY)
+    , m_originClean(originClean)
 {
 }
 
 #endif
 
-CanvasPattern::CanvasPattern(CachedImage* cachedImage, bool repeatX, bool repeatY)
-    :
-#if PLATFORM(CG) || PLATFORM(CAIRO)
-      m_platformImage(0)
-    ,
+CanvasPattern::CanvasPattern(CachedImage* cachedImage, bool repeatX, bool repeatY, bool originClean)
+    : m_cachedImage(cachedImage)
+#if PLATFORM(CAIRO)
+    , m_platformImage(0)
 #endif
-      m_cachedImage(cachedImage)
     , m_repeatX(repeatX)
     , m_repeatY(repeatY)
+    , m_originClean(originClean)
 {
     if (cachedImage)
-        cachedImage->ref(this);
+        cachedImage->addClient(this);
 }
 
 CanvasPattern::~CanvasPattern()
@@ -106,7 +107,7 @@ CanvasPattern::~CanvasPattern()
         cairo_surface_destroy(m_platformImage);
 #endif
     if (m_cachedImage)
-        m_cachedImage->deref(this);
+        m_cachedImage->removeClient(this);
 }
 
 #if PLATFORM(CG)
@@ -167,13 +168,13 @@ CGPatternRef CanvasPattern::createPattern(const CGAffineTransform& transform)
 
     CGAffineTransform patternTransform =
         CGAffineTransformTranslate(CGAffineTransformScale(transform, 1, -1), 0, -rect.size.height);
-
-    float xStep = m_repeatX ? rect.size.width : FLT_MAX;
-    // If FLT_MAX should also be used for yStep, nothing is rendered. Using fractions of FLT_MAX also
-    // result in nothing being rendered. This is not a problem with xStep.
+    
+    // If FLT_MAX should also be used for xStep or yStep, nothing is rendered. Using fractions of FLT_MAX also
+    // result in nothing being rendered.
     // INT_MAX is almost correct, but there seems to be some number wrapping occuring making the fill
     // pattern is not filled correctly. 
     // So, just pick a really large number that works. 
+    float xStep = m_repeatX ? rect.size.width : (100000000.0f);
     float yStep = m_repeatY ? rect.size.height : (100000000.0f);
 
     const CGPatternCallbacks patternCallbacks = { 0, patternCallback, patternReleaseCallback };

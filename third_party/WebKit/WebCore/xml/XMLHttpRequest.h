@@ -1,7 +1,5 @@
-// -*- c-basic-offset: 2 -*-
 /*
- *  This file is part of the KDE libraries
- *  Copyright (C) 2003, 2006 Apple Computer, Inc.
+ *  Copyright (C) 2003, 2006, 2008 Apple Inc. All rights reserved.
  *  Copyright (C) 2005, 2006 Alexey Proskuryakov <ap@nypop.com>
  *
  *  This library is free software; you can redistribute it and/or
@@ -22,66 +20,74 @@
 #ifndef XMLHttpRequest_h
 #define XMLHttpRequest_h
 
+#include "AccessControlList.h"
+#include "EventListener.h"
 #include "EventTarget.h"
-#include "HTTPHeaderMap.h"
-#include "KURL.h"
-#include "PlatformString.h"
+#include "FormData.h"
 #include "ResourceResponse.h"
-#include "StringHash.h"
 #include "SubresourceLoaderClient.h"
-#include <kjs/ustring.h>
-
-#include <wtf/HashMap.h>
-#include <wtf/Vector.h>
+#include <wtf/OwnPtr.h>
 
 namespace WebCore {
 
-class TextResourceDecoder;
 class Document;
-class Event;
-class EventListener;
-class String;
-
-typedef int ExceptionCode;
-
-// these exact numeric values are important because JS expects them
-enum XMLHttpRequestState {
-    Uninitialized = 0,  // The initial value.
-    Open = 1,           // The open() method has been successfully called.
-    Sent = 2,           // The user agent successfully completed the request, but no data has yet been received.
-    Receiving = 3,      // Immediately before receiving the message body (if any). All HTTP headers have been received.
-    Loaded = 4          // The data transfer has been completed.
-};
+class File;
+class TextResourceDecoder;
 
 class XMLHttpRequest : public RefCounted<XMLHttpRequest>, public EventTarget, private SubresourceLoaderClient {
 public:
-    XMLHttpRequest(Document*);
+    static PassRefPtr<XMLHttpRequest> create(Document* document) { return adoptRef(new XMLHttpRequest(document)); }
     ~XMLHttpRequest();
+
+    // These exact numeric values are important because JS expects them.
+    enum State {
+        UNSENT = 0,
+        OPENED = 1,
+        HEADERS_RECEIVED = 2,
+        LOADING = 3,
+        DONE = 4
+    };
 
     virtual XMLHttpRequest* toXMLHttpRequest() { return this; }
 
     static void detachRequests(Document*);
     static void cancelRequests(Document*);
 
-    String getStatusText(ExceptionCode&) const;
-    int getStatus(ExceptionCode&) const;
-    XMLHttpRequestState getReadyState() const;
+    String statusText(ExceptionCode&) const;
+    int status(ExceptionCode&) const;
+    State readyState() const;
     void open(const String& method, const KURL&, bool async, ExceptionCode&);
     void open(const String& method, const KURL&, bool async, const String& user, ExceptionCode&);
     void open(const String& method, const KURL&, bool async, const String& user, const String& password, ExceptionCode&);
-    void send(const String& body, ExceptionCode&);
+    void send(ExceptionCode&);
+    void send(Document*, ExceptionCode&);
+    void send(const String&, ExceptionCode&);
+    void send(File*, ExceptionCode&);
     void abort();
     void setRequestHeader(const String& name, const String& value, ExceptionCode&);
-    void overrideMIMEType(const String& override);
+    void overrideMimeType(const String& override);
     String getAllResponseHeaders(ExceptionCode&) const;
     String getResponseHeader(const String& name, ExceptionCode&) const;
-    const KJS::UString& getResponseText(ExceptionCode&) const;
-    Document* getResponseXML(ExceptionCode&) const;
+    const KJS::UString& responseText() const;
+    Document* responseXML() const;
 
-    void setOnReadyStateChangeListener(EventListener*);
-    EventListener* onReadyStateChangeListener() const;
-    void setOnLoadListener(EventListener*);
-    EventListener* onLoadListener() const;
+    void setOnReadyStateChangeListener(PassRefPtr<EventListener> eventListener) { m_onReadyStateChangeListener = eventListener; }
+    EventListener* onReadyStateChangeListener() const { return m_onReadyStateChangeListener.get(); }
+
+    void setOnAbortListener(PassRefPtr<EventListener> eventListener) { m_onAbortListener = eventListener; }
+    EventListener* onAbortListener() const { return m_onAbortListener.get(); }
+
+    void setOnErrorListener(PassRefPtr<EventListener> eventListener) { m_onErrorListener = eventListener; }
+    EventListener* onErrorListener() const { return m_onErrorListener.get(); }
+
+    void setOnLoadListener(PassRefPtr<EventListener> eventListener) { m_onLoadListener = eventListener; }
+    EventListener* onLoadListener() const { return m_onLoadListener.get(); }
+
+    void setOnLoadStartListener(PassRefPtr<EventListener> eventListener) { m_onLoadStartListener = eventListener; }
+    EventListener* onLoadStartListener() const { return m_onLoadStartListener.get(); }
+
+    void setOnProgressListener(PassRefPtr<EventListener> eventListener) { m_onProgressListener = eventListener; }
+    EventListener* onProgressListener() const { return m_onProgressListener.get(); }
 
     typedef Vector<RefPtr<EventListener> > ListenerVector;
     typedef HashMap<AtomicStringImpl*, ListenerVector> EventListenersMap;
@@ -98,10 +104,10 @@ public:
     using RefCounted<XMLHttpRequest>::deref;
 
 private:
+    XMLHttpRequest(Document*);
+    
     virtual void refEventTarget() { ref(); }
     virtual void derefEventTarget() { deref(); }
-
-    bool urlMatchesDocumentDomain(const KURL&) const;
 
     virtual void willSendRequest(SubresourceLoader*, ResourceRequest& request, const ResourceResponse& redirectResponse);
     virtual void didReceiveResponse(SubresourceLoader*, const ResourceResponse&);
@@ -110,36 +116,80 @@ private:
     virtual void didFinishLoading(SubresourceLoader*);
     virtual void receivedCancellation(SubresourceLoader*, const AuthenticationChallenge&);
 
-    void processSyncLoadResults(const Vector<char>& data, const ResourceResponse&);
+    // Special versions for the preflight
+    void didReceiveResponsePreflight(SubresourceLoader*, const ResourceResponse&);
+    void didFinishLoadingPreflight(SubresourceLoader*);
+
+    void processSyncLoadResults(const Vector<char>& data, const ResourceResponse&, ExceptionCode&);
+    void updateAndDispatchOnProgress(unsigned int len);
 
     String responseMIMEType() const;
     bool responseIsXML() const;
 
-    String getRequestHeader(const String& name) const;
+    bool initSend(ExceptionCode&);
 
-    void changeState(XMLHttpRequestState newState);
+    String getRequestHeader(const String& name) const;
+    void setRequestHeaderInternal(const String& name, const String& value);
+
+    void changeState(State newState);
     void callReadyStateChangeListener();
     void dropProtection();
+    void internalAbort();
+    void clearResponse();
+    void clearRequest();
+
+    void createRequest(ExceptionCode&);
+
+    void makeSameOriginRequest(ExceptionCode&);
+    void makeCrossSiteAccessRequest(ExceptionCode&);
+
+    void makeSimpleCrossSiteAccessRequest(ExceptionCode&);
+    void makeCrossSiteAccessRequestWithPreflight(ExceptionCode&);
+    void handleAsynchronousPreflightResult();
+
+    void loadRequestSynchronously(ResourceRequest&, ExceptionCode&);
+    void loadRequestAsynchronously(ResourceRequest&);
+
+    bool isSimpleCrossSiteAccessRequest() const;
+    String accessControlOrigin() const;
+
+    void genericError();
+    void networkError();
+    void abortError();
+
+    void dispatchReadyStateChangeEvent();
+    void dispatchXMLHttpRequestProgressEvent(EventListener* listener, const AtomicString& type, bool lengthComputable, unsigned loaded, unsigned total);
+    void dispatchAbortEvent();
+    void dispatchErrorEvent();
+    void dispatchLoadEvent();
+    void dispatchLoadStartEvent();
+    void dispatchProgressEvent(long long expectedLength);
 
     Document* m_doc;
 
     RefPtr<EventListener> m_onReadyStateChangeListener;
+    RefPtr<EventListener> m_onAbortListener;
+    RefPtr<EventListener> m_onErrorListener;
     RefPtr<EventListener> m_onLoadListener;
+    RefPtr<EventListener> m_onLoadStartListener;
+    RefPtr<EventListener> m_onProgressListener;
     EventListenersMap m_eventListeners;
 
     KURL m_url;
-    DeprecatedString m_method;
+    String m_method;
     HTTPHeaderMap m_requestHeaders;
+    RefPtr<FormData> m_requestEntityBody;
     String m_mimeTypeOverride;
     bool m_async;
 
     RefPtr<SubresourceLoader> m_loader;
-    XMLHttpRequestState m_state;
+    State m_state;
 
     ResourceResponse m_response;
-    String m_encoding;
+    String m_responseEncoding;
 
     RefPtr<TextResourceDecoder> m_decoder;
+    unsigned long m_identifier;
 
     // Unlike most strings in the DOM, we keep this as a KJS::UString, not a WebCore::String.
     // That's because these strings can easily get huge (they are filled from the network with
@@ -151,7 +201,18 @@ private:
     mutable bool m_createdDocument;
     mutable RefPtr<Document> m_responseXML;
 
-    bool m_aborted;
+    bool m_error;
+
+    bool m_sameOriginRequest;
+    bool m_allowAccess;
+    bool m_inPreflight;
+    HTTPHeaderMap m_crossSiteRequestHeaders;
+
+    // FIXME: Add support for AccessControlList in a PI in an XML document in addition to the http header.
+    OwnPtr<AccessControlList> m_httpAccessControlList;
+
+    // Used for onprogress tracking
+    long long m_receivedLength;
 };
 
 } // namespace WebCore

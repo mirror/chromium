@@ -31,10 +31,9 @@
 #include "Editor.h"
 #include "FrameView.h"
 #include "FTPDirectoryDocument.h"
-#include "GlobalHistory.h"
 #include "KURL.h"
 #include "NotImplemented.h"
-#include "PluginInfoStore.h"
+#include "PluginView.h"
 #include "SharedBuffer.h"
 
 using namespace WebCore;
@@ -57,14 +56,7 @@ Vector<char> loadResourceIntoArray(const char* resourceName)
 /* Completely empty stubs (mostly to allow DRT to run): */
 /********************************************************/
 
-bool WebCore::historyContains(const UChar*, unsigned) { return false; }
-
-PluginInfo* PluginInfoStore::createPluginInfoForPluginAtIndex(unsigned) { notImplemented(); return 0;}
-unsigned PluginInfoStore::pluginCount() const { notImplemented(); return 0; }
-String PluginInfoStore::pluginNameForMIMEType(const String& mimeType) { notImplemented(); return String(); }
-bool WebCore::PluginInfoStore::supportsMIMEType(const WebCore::String&) { notImplemented(); return false; }
-void WebCore::refreshPlugins(bool) { notImplemented(); }
-
+void PluginView::invalidateRegion(NPRegion) { notImplemented(); }
 
 Color WebCore::focusRingColor() { return 0xFF0000FF; }
 void WebCore::setFocusRingColorChangeFunction(void (*)()) { }
@@ -77,5 +69,6 @@ float userIdleTime() { notImplemented(); return 0.0; }
 String KURL::fileSystemPath() const { notImplemented(); return String(); }
 
 PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) { notImplemented(); return 0; }
+
 }
 

@@ -33,7 +33,10 @@ typedef struct CGColor* CGColorRef;
 #endif
 
 #if PLATFORM(QT)
+#include <qglobal.h>
+QT_BEGIN_NAMESPACE
 class QColor;
+QT_END_NAMESPACE
 #endif
 
 #if PLATFORM(GTK)
@@ -120,7 +123,7 @@ public:
 
 private:
     RGBA32 m_color;
-    bool m_valid : 1;
+    bool m_valid;
 };
 
 inline bool operator==(const Color& a, const Color& b)

@@ -50,7 +50,7 @@ public:
     virtual void setStyle(RenderStyle*);
     virtual void updateFromElement();
     virtual bool canHaveChildren() const { return false; }
-    virtual short baselinePosition(bool firstLine, bool isRootLineBox) const;
+    virtual int baselinePosition(bool firstLine, bool isRootLineBox) const;
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
     virtual void layout();
     virtual bool avoidsFloats() const { return true; }
@@ -62,7 +62,7 @@ public:
     virtual bool isTextArea() const { return m_multiLine; }
     
     bool isUserEdited() const { return m_userEdited; }
-    void setUserEdited(bool isUserEdited) { m_userEdited = isUserEdited; }
+    void setUserEdited(bool isUserEdited);
 
     int selectionStart();
     int selectionEnd();
@@ -78,7 +78,7 @@ public:
     void forwardEvent(Event*);
     void selectionChanged(bool userTriggered);
 
-    virtual bool shouldAutoscroll() const { return true; }
+    virtual bool canBeProgramaticallyScrolled() const { return true; }
     virtual void autoscroll();
 
     // Subclassed to forward to our inner div.
@@ -141,6 +141,9 @@ private:
     void startSearchEventTimer();
     void searchEventTimerFired(Timer<RenderTextControl>*);
     String finishText(Vector<UChar>&) const;
+
+    friend class TextIterator;
+    HTMLElement* innerTextElement() const;
 
     RefPtr<HTMLTextFieldInnerElement> m_innerBlock;
     RefPtr<HTMLTextFieldInnerTextElement> m_innerText;

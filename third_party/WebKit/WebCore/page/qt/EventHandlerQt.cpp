@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006 Zack Rusin <zack@kde.org>
- * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,9 +50,17 @@
 #include "RenderWidget.h"
 #include "NotImplemented.h"
 
+QT_BEGIN_NAMESPACE
+extern Q_GUI_EXPORT bool qt_tab_all_widgets; // from qapplication.cpp
+QT_END_NAMESPACE
+
 namespace WebCore {
 
 using namespace EventNames;
+
+unsigned EventHandler::s_accessKeyModifiers = PlatformKeyboardEvent::CtrlKey;
+
+const double EventHandler::TextDragDelay = 0.0;
 
 static bool isKeyboardOptionTab(KeyboardEvent* event)
 {
@@ -69,9 +77,7 @@ bool EventHandler::invertSenseOfTabsToLinks(KeyboardEvent* event) const
 
 bool EventHandler::tabsToAllControls(KeyboardEvent* event) const
 {
-    bool handlingOptionTab = isKeyboardOptionTab(event);
-    
-    return handlingOptionTab;
+    return (isKeyboardOptionTab(event) ? !qt_tab_all_widgets : qt_tab_all_widgets);
 }
 
 void EventHandler::focusDocumentView()
@@ -105,9 +111,9 @@ bool EventHandler::passWheelEventToWidget(PlatformWheelEvent& event, Widget* wid
     return static_cast<FrameView*>(widget)->frame()->eventHandler()->handleWheelEvent(event);
 }
 
-Clipboard* EventHandler::createDraggingClipboard() const
+PassRefPtr<Clipboard> EventHandler::createDraggingClipboard() const
 {
-    return new ClipboardQt(ClipboardWritable, true);
+    return ClipboardQt::create(ClipboardWritable, true);
 }
 
 bool EventHandler::passMousePressEventToSubframe(MouseEventWithHitTestResults& mev, Frame* subframe)

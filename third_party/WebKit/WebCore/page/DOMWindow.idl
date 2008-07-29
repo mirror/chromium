@@ -26,14 +26,21 @@
 module window {
 
     interface [
-        LegacyParent=KJS::Window,
-        DoNotCache,
         CheckDomainSecurity,
-        GenerateNativeConverter,
-        CustomGetOwnPropertySlot,
-        CustomPutFunction,
+        CustomDefineGetter,
+        CustomDefineSetter,
         CustomDeleteProperty,
-        CustomGetPropertyNames
+        CustomGetOwnPropertySlot,
+        CustomGetPropertyAttributes,
+        CustomGetPropertyNames,
+        CustomLookupGetter,
+        CustomLookupSetter,
+        CustomMarkFunction,
+        CustomNativeConverter,
+        CustomPutFunction,
+        DoNotCache,
+        GenerateNativeConverter,
+        LegacyParent=JSDOMWindowBase
     ] DOMWindow {
         // DOM Level 0
         readonly attribute Screen screen;
@@ -44,6 +51,9 @@ module window {
         attribute [Replaceable] BarInfo scrollbars;
         attribute [Replaceable] BarInfo statusbar;
         attribute [Replaceable] BarInfo toolbar;
+        attribute [Replaceable] Navigator navigator;
+        attribute [Replaceable] Navigator clientInformation;
+        attribute [DoNotCheckDomainSecurity, CustomSetter] Location location;
 
         DOMSelection getSelection();
 
@@ -127,17 +137,23 @@ module window {
                                        in [Optional] boolean authorOnly);
         attribute [Replaceable] double devicePixelRatio;
 
+#if defined(ENABLE_OFFLINE_WEB_APPLICATIONS)
+        readonly attribute DOMApplicationCache applicationCache;
+#endif    
 #if defined(ENABLE_DATABASE)
         Database openDatabase(in DOMString name, in DOMString version, in DOMString displayName, in unsigned long estimatedSize)
             raises(DOMException);
 #endif
+#if defined(ENABLE_DOM_STORAGE)
+        readonly attribute Storage sessionStorage;
+        readonly attribute Storage localStorage;
+#endif
 
                  attribute [Replaceable] Console console;
 
-#if defined(ENABLE_CROSS_DOCUMENT_MESSAGING)
         // cross-document messaging
-        [DoNotCheckDomainSecurity, Custom] void postMessage(in DOMString message);
-#endif
+        [DoNotCheckDomainSecurity, Custom] void postMessage(in DOMString message, in DOMString targetOrigin)
+            raises(DOMException);
 
 #if defined(LANGUAGE_JAVASCRIPT)
         // Global constructors
@@ -155,6 +171,9 @@ module window {
         attribute CSSMediaRuleConstructor CSSMediaRule;
         attribute CSSPageRuleConstructor CSSPageRule;
         attribute CSSStyleRuleConstructor CSSStyleRule;
+        
+        attribute CSSVariablesRuleConstructor CSSVariablesRule;
+        attribute CSSVariablesDeclarationConstructor CSSVariablesDeclaration;
 
         attribute CSSStyleDeclarationConstructor CSSStyleDeclaration;
         attribute MediaListConstructor MediaList;
@@ -253,6 +272,10 @@ module window {
         attribute HTMLTitleElementConstructor HTMLTitleElement;
         attribute HTMLUListElementConstructor HTMLUListElement;
 
+        attribute HTMLCollectionConstructor HTMLCollection;
+
+        attribute CanvasRenderingContext2DConstructor CanvasRenderingContext2D;
+
         attribute EventConstructor Event;
         attribute KeyboardEventConstructor KeyboardEvent;
         attribute MouseEventConstructor MouseEvent;
@@ -262,7 +285,13 @@ module window {
         attribute TextEventConstructor TextEvent;
         attribute UIEventConstructor UIEvent;
         attribute WheelEventConstructor WheelEvent;
+        attribute MessageEventConstructor MessageEvent;
         attribute EventExceptionConstructor EventException;
+
+        attribute ClipboardConstructor Clipboard;
+
+        attribute FileConstructor File;
+        attribute FileListConstructor FileList;
 
         attribute NodeFilterConstructor NodeFilter;
         attribute RangeConstructor Range;
@@ -277,8 +306,9 @@ module window {
 
         attribute XMLHttpRequestExceptionConstructor XMLHttpRequestException;
 
-#if defined(ENABLE_CROSS_DOCUMENT_MESSAGING)
-        attribute MessageEventConstructor MessageEvent;
+#if defined(ENABLE_DOM_STORAGE)
+        attribute StorageConstructor Storage;
+        attribute StorageEventConstructor StorageEvent;
 #endif
 
 #if defined(ENABLE_VIDEO)

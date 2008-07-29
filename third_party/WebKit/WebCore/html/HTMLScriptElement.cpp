@@ -1,10 +1,8 @@
-/**
- * This file is part of the DOM implementation for KDE.
- *
+/*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007 Apple Inc.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,6 +19,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
+
 #include "config.h"
 #include "HTMLScriptElement.h"
 
@@ -31,7 +30,7 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "HTMLNames.h"
-#include "kjs_proxy.h"
+#include "ScriptController.h"
 #include "MIMETypeRegistry.h"
 #include "Text.h"
 
@@ -40,7 +39,7 @@ namespace WebCore {
 using namespace HTMLNames;
 using namespace EventNames;
 
-HTMLScriptElement::HTMLScriptElement(Document *doc)
+HTMLScriptElement::HTMLScriptElement(Document* doc)
     : HTMLElement(scriptTag, doc)
     , m_cachedScript(0)
     , m_createdByParser(false)
@@ -51,25 +50,25 @@ HTMLScriptElement::HTMLScriptElement(Document *doc)
 HTMLScriptElement::~HTMLScriptElement()
 {
     if (m_cachedScript)
-        m_cachedScript->deref(this);
+        m_cachedScript->removeClient(this);
 }
 
-bool HTMLScriptElement::isURLAttribute(Attribute *attr) const
+bool HTMLScriptElement::isURLAttribute(Attribute* attr) const
 {
     return attr->name() == srcAttr;
 }
 
-void HTMLScriptElement::childrenChanged(bool changedByParser)
+void HTMLScriptElement::childrenChanged(bool changedByParser, Node* beforeChange, Node* afterChange, int childCountDelta)
 {
     // If a node is inserted as a child of the script element
     // and the script element has been inserted in the document
     // we evaluate the script.
     if (!m_createdByParser && inDocument() && firstChild())
-        evaluateScript(document()->url(), text());
-    HTMLElement::childrenChanged(changedByParser);
+        evaluateScript(document()->url().string(), text());
+    HTMLElement::childrenChanged(changedByParser, beforeChange, afterChange, childCountDelta);
 }
 
-void HTMLScriptElement::parseMappedAttribute(MappedAttribute *attr)
+void HTMLScriptElement::parseMappedAttribute(MappedAttribute* attr)
 {
     const QualifiedName& attrName = attr->name();
     if (attrName == srcAttr) {
@@ -83,9 +82,9 @@ void HTMLScriptElement::parseMappedAttribute(MappedAttribute *attr)
     
         const AtomicString& url = attr->value();
         if (!url.isEmpty()) {
-            m_cachedScript = document()->docLoader()->requestScript(url, getAttribute(charsetAttr));
+            m_cachedScript = document()->docLoader()->requestScript(url, scriptCharset());
             if (m_cachedScript)
-                m_cachedScript->ref(this);
+                m_cachedScript->addClient(this);
             else
                 dispatchHTMLEvent(errorEvent, true, false);
         }
@@ -121,14 +120,9 @@ void HTMLScriptElement::insertedIntoDocument()
     
     const AtomicString& url = getAttribute(srcAttr);
     if (!url.isEmpty()) {
-        String scriptSrcCharset = getAttribute(charsetAttr).domString().stripWhiteSpace();
-        if (scriptSrcCharset.isEmpty()) {
-            if (Frame* frame = document()->frame())
-                scriptSrcCharset = frame->loader()->encoding();
-        }
-        m_cachedScript = document()->docLoader()->requestScript(url, scriptSrcCharset);
+        m_cachedScript = document()->docLoader()->requestScript(url, scriptCharset());
         if (m_cachedScript)
-            m_cachedScript->ref(this);
+            m_cachedScript->addClient(this);
         else
             dispatchHTMLEvent(errorEvent, true, false);
         return;
@@ -139,7 +133,7 @@ void HTMLScriptElement::insertedIntoDocument()
     // it should be evaluated, and evaluateScript only evaluates a script once.
     String scriptString = text();    
     if (!scriptString.isEmpty())
-        evaluateScript(document()->url(), scriptString);
+        evaluateScript(document()->url().string(), scriptString);
 }
 
 void HTMLScriptElement::removedFromDocument()
@@ -147,14 +141,14 @@ void HTMLScriptElement::removedFromDocument()
     HTMLElement::removedFromDocument();
 
     if (m_cachedScript) {
-        m_cachedScript->deref(this);
+        m_cachedScript->removeClient(this);
         m_cachedScript = 0;
     }
 }
 
 void HTMLScriptElement::notifyFinished(CachedResource* o)
 {
-    CachedScript *cs = static_cast<CachedScript *>(o);
+    CachedScript* cs = static_cast<CachedScript*>(o);
 
     ASSERT(cs == m_cachedScript);
 
@@ -171,7 +165,7 @@ void HTMLScriptElement::notifyFinished(CachedResource* o)
 
     // script evaluation may have dereffed it already
     if (m_cachedScript) {
-        m_cachedScript->deref(this);
+        m_cachedScript->removeClient(this);
         m_cachedScript = 0;
     }
 }
@@ -203,7 +197,7 @@ bool HTMLScriptElement::shouldExecuteAsJavaScript()
 
     const AtomicString& type = getAttribute(typeAttr);
     if (!type.isEmpty()) {
-        String lowerType = type.domString().stripWhiteSpace().lower();
+        String lowerType = type.string().stripWhiteSpace().lower();
         if (MIMETypeRegistry::isSupportedJavaScriptMIMEType(lowerType))
             return true;
 
@@ -212,7 +206,7 @@ bool HTMLScriptElement::shouldExecuteAsJavaScript()
 
     const AtomicString& language = getAttribute(languageAttr);
     if (!language.isEmpty()) {
-        String lowerLanguage = language.domString().lower();
+        String lowerLanguage = language.string().lower();
         for (unsigned i = 0; i < validLanguagesCount; ++i)
             if (lowerLanguage == validLanguages[i])
                 return true;
@@ -234,9 +228,11 @@ void HTMLScriptElement::evaluateScript(const String& url, const String& script)
     
     Frame* frame = document()->frame();
     if (frame) {
-        if (frame->scriptProxy()->isEnabled()) {
+        if (frame->script()->isEnabled()) {
             m_evaluated = true;
-            frame->scriptProxy()->evaluate(url, 0, script);
+            // FIXME: This starting line number will be incorrect for evaluation triggered
+            // from insertedIntoDocument or childrenChanged.
+            frame->script()->evaluate(url, 1, script);
             Document::updateDocumentsRendering();
         }
     }
@@ -244,14 +240,28 @@ void HTMLScriptElement::evaluateScript(const String& url, const String& script)
 
 String HTMLScriptElement::text() const
 {
-    String val = "";
+    Vector<UChar> val;
+    Text* firstTextNode = 0;
+    bool foundMultipleTextNodes = false;
     
-    for (Node *n = firstChild(); n; n = n->nextSibling()) {
-        if (n->isTextNode())
-            val += static_cast<Text *>(n)->data();
+    for (Node* n = firstChild(); n; n = n->nextSibling()) {
+        if (n->isTextNode()) {
+            if (foundMultipleTextNodes)
+                append(val, static_cast<Text*>(n)->data());
+            else if (firstTextNode) {
+                append(val, firstTextNode->data());
+                append(val, static_cast<Text*>(n)->data());
+                foundMultipleTextNodes = true;
+            } else {
+                firstTextNode = static_cast<Text*>(n);
+            }
+        }
     }
+        
+    if (firstTextNode && !foundMultipleTextNodes)
+        return firstTextNode->data();
     
-    return val;
+    return String::adopt(val);
 }
 
 void HTMLScriptElement::setText(const String &value)
@@ -264,9 +274,8 @@ void HTMLScriptElement::setText(const String &value)
         return;
     }
     
-    if (numChildren > 0) {
+    if (numChildren > 0)
         removeChildren();
-    }
     
     appendChild(document()->createTextNode(value.impl()), ec);
 }
@@ -277,7 +286,7 @@ String HTMLScriptElement::htmlFor() const
     return String();
 }
 
-void HTMLScriptElement::setHtmlFor(const String &/*value*/)
+void HTMLScriptElement::setHtmlFor(const String& /*value*/)
 {
     // DOM Level 1 says: reserved for future use.
 }
@@ -288,7 +297,7 @@ String HTMLScriptElement::event() const
     return String();
 }
 
-void HTMLScriptElement::setEvent(const String &/*value*/)
+void HTMLScriptElement::setEvent(const String& /*value*/)
 {
     // DOM Level 1 says: reserved for future use.
 }
@@ -313,7 +322,7 @@ void HTMLScriptElement::setDefer(bool defer)
     setAttribute(deferAttr, defer ? "" : 0);
 }
 
-String HTMLScriptElement::src() const
+KURL HTMLScriptElement::src() const
 {
     return document()->completeURL(getAttribute(srcAttr));
 }
@@ -331,6 +340,24 @@ String HTMLScriptElement::type() const
 void HTMLScriptElement::setType(const String &value)
 {
     setAttribute(typeAttr, value);
+}
+
+String HTMLScriptElement::scriptCharset() const
+{
+    // First we try to get encoding from charset attribute.
+    String charset = getAttribute(charsetAttr).string().stripWhiteSpace();
+    // If charset has not been declared in script tag, fall back
+    // to frame encoding.
+    if (charset.isEmpty()) {
+        if (Frame* frame = document()->frame())
+            charset = frame->loader()->encoding();
+    }
+    return charset;
+}
+
+void HTMLScriptElement::getSubresourceAttributeStrings(Vector<String>& urls) const
+{
+    urls.append(src().string());
 }
 
 }

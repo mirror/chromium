@@ -32,19 +32,19 @@ typedef void (*NodeCallback)(Node*);
 
 class ContainerNode : public EventTargetNode {
 public:
-    ContainerNode(Document*);
+    ContainerNode(Document*, bool isElement = false);
     virtual ~ContainerNode();
 
     Node* firstChild() const { return m_firstChild; }
     Node* lastChild() const { return m_lastChild; }
 
-    virtual bool insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode&);
-    virtual bool replaceChild(PassRefPtr<Node> newChild, Node* oldChild, ExceptionCode&);
+    virtual bool insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode&, bool shouldLazyAttach = false);
+    virtual bool replaceChild(PassRefPtr<Node> newChild, Node* oldChild, ExceptionCode&, bool shouldLazyAttach = false);
     virtual bool removeChild(Node* child, ExceptionCode&);
-    virtual bool appendChild(PassRefPtr<Node> newChild, ExceptionCode&);
+    virtual bool appendChild(PassRefPtr<Node> newChild, ExceptionCode&, bool shouldLazyAttach = false);
 
     virtual ContainerNode* addChild(PassRefPtr<Node>);
-    virtual bool hasChildNodes() const;
+    bool hasChildNodes() const { return m_firstChild; }
     virtual void attach();
     virtual void detach();
     virtual void willRemove();
@@ -59,8 +59,7 @@ public:
     virtual void removedFromDocument();
     virtual void insertedIntoTree(bool deep);
     virtual void removedFromTree(bool deep);
-
-    virtual void childrenChanged(bool changedByParser = false);
+    virtual void childrenChanged(bool createdByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
 
     virtual bool removeChildren();
 

@@ -37,10 +37,10 @@ using namespace KJS;
 
 namespace WebCore {
 
-JSValue* JSSQLResultSetRowList::item(ExecState* exec, const List& args)
+JSValue* JSSQLResultSetRowList::item(ExecState* exec, const ArgList& args)
 {
     bool indexOk;
-    int index = args[0]->toInt32(exec, indexOk);
+    int index = args.at(exec, 0)->toInt32(exec, indexOk);
     if (!indexOk) {
         setDOMException(exec, TYPE_MISMATCH_ERR);
         return jsUndefined();
@@ -50,7 +50,7 @@ JSValue* JSSQLResultSetRowList::item(ExecState* exec, const List& args)
         return jsUndefined();
     }
 
-    JSObject* object = new JSObject(exec->lexicalGlobalObject()->objectPrototype());
+    JSObject* object = new (exec) JSObject(exec->lexicalGlobalObject()->objectPrototype());
 
     unsigned numColumns = m_impl->columnNames().size();
     unsigned valuesIndex = index * numColumns;
@@ -60,19 +60,19 @@ JSValue* JSSQLResultSetRowList::item(ExecState* exec, const List& args)
 
         switch (value.type()) {
             case SQLValue::StringValue:
-              jsValue = jsString(value.string());
+              jsValue = jsString(exec, value.string());
               break;
           case SQLValue::NullValue:
               jsValue = jsNull();
               break;
           case SQLValue::NumberValue:
-              jsValue = jsNumber(value.number());
+              jsValue = jsNumber(exec, value.number());
               break;
           default:
               ASSERT_NOT_REACHED();
         }
 
-        object->putDirect(m_impl->columnNames()[i], jsValue, DontDelete | ReadOnly);
+        object->putDirect(Identifier(exec, m_impl->columnNames()[i]), jsValue, DontDelete | ReadOnly);
     }
 
     return object;

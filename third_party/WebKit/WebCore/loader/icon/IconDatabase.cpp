@@ -41,6 +41,8 @@
 #include "SQLiteStatement.h"
 #include "SQLiteTransaction.h"
 #include "SystemTime.h"
+#include <kjs/InitializeThreading.h>
+#include <wtf/MainThread.h>
 
 #if PLATFORM(WIN_OS)
 #include <windows.h>
@@ -101,7 +103,7 @@ static IconDatabaseClient* defaultClient()
 IconDatabase* iconDatabase()
 {
     if (!sharedIconDatabase) {
-        initializeThreading();
+        KJS::initializeThreading();
         sharedIconDatabase = new IconDatabase;
     }
     return sharedIconDatabase;
@@ -144,7 +146,7 @@ bool IconDatabase::open(const String& databasePath)
     // Lock here as well as first thing in the thread so the thread doesn't actually commence until the createThread() call 
     // completes and m_syncThreadRunning is properly set
     m_syncLock.lock();
-    m_syncThread = createThread(IconDatabase::iconDatabaseSyncThreadStart, this);
+    m_syncThread = createThread(IconDatabase::iconDatabaseSyncThreadStart, this, "WebCore::IconDatabase");
     m_syncLock.unlock();
     if (!m_syncThread)
         return false;
@@ -215,16 +217,14 @@ void IconDatabase::removeAllIcons()
     wakeSyncThread();
 }
 
-Image* IconDatabase::iconForPageURL(const String& pageURLOriginal, const IntSize& size, bool cache)
+Image* IconDatabase::iconForPageURL(const String& pageURLOriginal, const IntSize& size)
 {   
     ASSERT_NOT_SYNC_THREAD();
-    
-    ASSERT(!pageURLOriginal.isNull());
 
-    // pageURLOriginal can not be stored without being deep copied first.  
+    // pageURLOriginal cannot be stored without being deep copied first.  
     // We should go our of our way to only copy it if we have to store it
     
-    if (!isOpen())
+    if (!isOpen() || pageURLOriginal.isEmpty())
         return defaultIcon(size);
 
     MutexLocker locker(m_urlAndIconLock);
@@ -372,10 +372,10 @@ Image* IconDatabase::defaultIcon(const IntSize& size)
         0x00, 0x00, 0x01, 0x52, 0x00, 0x03, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x08, 0x00, 0x08, 0x00, 0x08, 0x00, 0x0A, 
         0xFC, 0x80, 0x00, 0x00, 0x27, 0x10, 0x00, 0x0A, 0xFC, 0x80, 0x00, 0x00, 0x27, 0x10 };
         
-    static RefPtr<SharedBuffer> defaultIconBuffer(new SharedBuffer(defaultIconData, sizeof(defaultIconData)));
+    static RefPtr<SharedBuffer> defaultIconBuffer(SharedBuffer::create(defaultIconData, sizeof(defaultIconData)));
     
     if (!m_defaultIconRecord) {
-        m_defaultIconRecord = new IconRecord("urlIcon");
+        m_defaultIconRecord = IconRecord::create("urlIcon");
         m_defaultIconRecord->setImageData(defaultIconBuffer);
     }
     
@@ -513,10 +513,10 @@ void IconDatabase::setIconDataForIconURL(PassRefPtr<SharedBuffer> dataOriginal, 
         MutexLocker locker(m_urlAndIconLock);
     
         // If this icon was pending a read, remove it from that set because this new data should override what is on disk
-        IconRecord* icon = m_iconURLToRecordMap.get(iconURL);
+        RefPtr<IconRecord> icon = m_iconURLToRecordMap.get(iconURL);
         if (icon) {
             MutexLocker locker(m_pendingReadingLock);
-            m_iconsPendingReading.remove(icon);
+            m_iconsPendingReading.remove(icon.get());
         } else
             icon = getOrCreateIconRecord(iconURL);
     
@@ -531,6 +531,12 @@ void IconDatabase::setIconDataForIconURL(PassRefPtr<SharedBuffer> dataOriginal, 
         if (!m_privateBrowsingEnabled) {
             MutexLocker locker(m_pendingSyncLock);
             m_iconsPendingSync.set(iconURL, icon->snapshot());
+        }
+
+        if (icon->hasOneRef()) {
+            ASSERT(icon->retainingPageURLs().isEmpty());
+            LOG(IconDatabase, "Icon for icon url %s is about to be destroyed - removing mapping for it", urlForLogging(icon->iconURL()).ascii().data());
+            m_iconURLToRecordMap.remove(icon->iconURL());
         }
     }
 
@@ -588,8 +594,7 @@ void IconDatabase::setIconURLForPageURL(const String& iconURLOriginal, const Str
         RefPtr<IconRecord> iconRecord = pageRecord->iconRecord();
 
         // Otherwise, set the new icon record for this page
-        IconRecord* newIconRecord = getOrCreateIconRecord(iconURL);
-        pageRecord->setIconRecord(newIconRecord);
+        pageRecord->setIconRecord(getOrCreateIconRecord(iconURL));
 
         // If the current icon has only a single ref left, it is about to get wiped out. 
         // Remove it from the in-memory records and don't bother reading it in from disk anymore
@@ -606,7 +611,7 @@ void IconDatabase::setIconURLForPageURL(const String& iconURLOriginal, const Str
             MutexLocker locker(m_pendingSyncLock);
             m_pageURLsPendingSync.set(pageURL, pageRecord->snapshot());
             
-            // If the icon is on it's last ref, mark it for deletion
+            // If the icon is on its last ref, mark it for deletion
             if (iconRecord && iconRecord->hasOneRef())
                 m_iconsPendingSync.set(iconRecord->iconURL(), iconRecord->snapshot(true));
         }
@@ -834,18 +839,18 @@ String IconDatabase::defaultDatabaseFilename()
 }
 
 // Unlike getOrCreatePageURLRecord(), getOrCreateIconRecord() does not mark the icon as "interested in import"
-IconRecord* IconDatabase::getOrCreateIconRecord(const String& iconURL)
+PassRefPtr<IconRecord> IconDatabase::getOrCreateIconRecord(const String& iconURL)
 {
     // Clients of getOrCreateIconRecord() are required to acquire the m_urlAndIconLock before calling this method
     ASSERT(!m_urlAndIconLock.tryLock());
 
     if (IconRecord* icon = m_iconURLToRecordMap.get(iconURL))
         return icon;
-        
-    IconRecord* newIcon = new IconRecord(iconURL);
-    m_iconURLToRecordMap.set(iconURL, newIcon);
-        
-    return newIcon;    
+
+    RefPtr<IconRecord> newIcon = IconRecord::create(iconURL);
+    m_iconURLToRecordMap.set(iconURL, newIcon.get());
+
+    return newIcon.release();
 }
 
 // This method retrieves the existing PageURLRecord, or creates a new one and marks it as "interested in the import" for later notification
@@ -1200,8 +1205,8 @@ void IconDatabase::performURLImport()
                 IconRecord* currentIcon = pageRecord->iconRecord();
 
                 if (!currentIcon || currentIcon->iconURL() != iconURL) {
-                    currentIcon = getOrCreateIconRecord(iconURL);
-                    pageRecord->setIconRecord(currentIcon);
+                    pageRecord->setIconRecord(getOrCreateIconRecord(iconURL));
+                    currentIcon = pageRecord->iconRecord();
                 }
             
                 // Regardless, the time stamp from disk still takes precedence.  Until we read this icon from disk, we didn't think we'd seen it before
@@ -1531,15 +1536,12 @@ bool IconDatabase::writeToDatabase()
     }
     
     for (unsigned i = 0; i < pageSnapshots.size(); ++i) {
-        String iconURL = pageSnapshots[i].iconURL;
-
         // If the icon URL is empty, this page is meant to be deleted
         // ASSERTs are sanity checks to make sure the mappings exist if they should and don't if they shouldn't
         if (pageSnapshots[i].iconURL.isEmpty())
             removePageURLFromSQLDatabase(pageSnapshots[i].pageURL);
-        else {
+        else
             setIconURLForPageURLInSQLDatabase(pageSnapshots[i].iconURL, pageSnapshots[i].pageURL);
-        }
         LOG(IconDatabase, "Committed IconURL for PageURL %s to database", urlForLogging(pageSnapshots[i].pageURL).ascii().data());
     }
 
@@ -1900,8 +1902,7 @@ PassRefPtr<SharedBuffer> IconDatabase::getImageDataForIconURLFromSQLDatabase(con
     if (result == SQLResultRow) {
         Vector<char> data;
         m_getImageDataForIconURLStatement->getColumnBlobAsVector(0, data);
-        imageData = new SharedBuffer;
-        imageData->append(data.data(), data.size());
+        imageData = SharedBuffer::create(data.data(), data.size());
     } else if (result != SQLResultDone)
         LOG_ERROR("getImageDataForIconURLFromSQLDatabase failed for url %s", urlForLogging(iconURL).ascii().data());
 

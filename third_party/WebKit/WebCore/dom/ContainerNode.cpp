@@ -2,7 +2,7 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,6 +28,7 @@
 #include "Editor.h"
 #include "EventNames.h"
 #include "ExceptionCode.h"
+#include "Frame.h"
 #include "FrameView.h"
 #include "InlineTextBox.h"
 #include "MutationEvent.h"
@@ -48,8 +49,10 @@ static NodeCallbackQueue* s_postAttachCallbackQueue = 0;
 
 static size_t s_attachDepth = 0;
 
-ContainerNode::ContainerNode(Document* doc)
-    : EventTargetNode(doc), m_firstChild(0), m_lastChild(0)
+ContainerNode::ContainerNode(Document* doc, bool isElement)
+    : EventTargetNode(doc, isElement)
+    , m_firstChild(0)
+    , m_lastChild(0)
 {
 }
 
@@ -127,7 +130,7 @@ Node* ContainerNode::virtualLastChild() const
     return m_lastChild;
 }
 
-bool ContainerNode::insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode& ec)
+bool ContainerNode::insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode& ec, bool shouldLazyAttach)
 {
     // Check that this node is not "floating".
     // If it is, it can be deleted as a side effect of sending mutation events.
@@ -137,7 +140,7 @@ bool ContainerNode::insertBefore(PassRefPtr<Node> newChild, Node* refChild, Exce
 
     // insertBefore(node, 0) is equivalent to appendChild(node)
     if (!refChild)
-        return appendChild(newChild, ec);
+        return appendChild(newChild, ec, shouldLazyAttach);
 
     // Make sure adding the new child is OK.
     checkAddChild(newChild.get(), ec);
@@ -162,7 +165,9 @@ bool ContainerNode::insertBefore(PassRefPtr<Node> newChild, Node* refChild, Exce
         return true;
 
     RefPtr<Node> next = refChild;
+    RefPtr<Node> prev = refChild->previousSibling();
 
+    int childCountDelta = 0;
     RefPtr<Node> child = isFragment ? newChild->firstChild() : newChild;
     while (child) {
         RefPtr<Node> nextChild = isFragment ? child->nextSibling() : 0;
@@ -190,6 +195,8 @@ bool ContainerNode::insertBefore(PassRefPtr<Node> newChild, Node* refChild, Exce
         ASSERT(!child->nextSibling());
         ASSERT(!child->previousSibling());
 
+        childCountDelta++;
+
         // Add child before "next".
         forbidEventDispatch();
         Node* prev = next->previousSibling();
@@ -212,18 +219,24 @@ bool ContainerNode::insertBefore(PassRefPtr<Node> newChild, Node* refChild, Exce
         dispatchChildInsertionEvents(child.get(), ec);
                 
         // Add child to the rendering tree.
-        if (attached() && !child->attached() && child->parent() == this)
-            child->attach();
+        if (attached() && !child->attached() && child->parent() == this) {
+            if (shouldLazyAttach)
+                child->lazyAttach();
+            else
+                child->attach();
+        }
 
         child = nextChild.release();
     }
 
     document()->setDocumentChanged(true);
+    if (childCountDelta)
+        childrenChanged(false, prev.get(), next.get(), childCountDelta);
     dispatchSubtreeModifiedEvent();
     return true;
 }
 
-bool ContainerNode::replaceChild(PassRefPtr<Node> newChild, Node* oldChild, ExceptionCode& ec)
+bool ContainerNode::replaceChild(PassRefPtr<Node> newChild, Node* oldChild, ExceptionCode& ec, bool shouldLazyAttach)
 {
     // Check that this node is not "floating".
     // If it is, it can be deleted as a side effect of sending mutation events.
@@ -246,6 +259,7 @@ bool ContainerNode::replaceChild(PassRefPtr<Node> newChild, Node* oldChild, Exce
     }
 
     RefPtr<Node> prev = oldChild->previousSibling();
+    RefPtr<Node> next = oldChild->nextSibling();
 
     // Remove the node we're replacing
     RefPtr<Node> removedChild = oldChild;
@@ -261,6 +275,7 @@ bool ContainerNode::replaceChild(PassRefPtr<Node> newChild, Node* oldChild, Exce
     bool isFragment = newChild->nodeType() == DOCUMENT_FRAGMENT_NODE;
 
     // Add the new child(ren)
+    int childCountDelta = 0;
     RefPtr<Node> child = isFragment ? newChild->firstChild() : newChild;
     while (child) {
         // If the new child is already in the right place, we're done.
@@ -284,6 +299,8 @@ bool ContainerNode::replaceChild(PassRefPtr<Node> newChild, Node* oldChild, Exce
             break;
         if (child->parentNode())
             break;
+
+        childCountDelta++;
 
         ASSERT(!child->nextSibling());
         ASSERT(!child->previousSibling());
@@ -316,14 +333,20 @@ bool ContainerNode::replaceChild(PassRefPtr<Node> newChild, Node* oldChild, Exce
         dispatchChildInsertionEvents(child.get(), ec);
                 
         // Add child to the rendering tree
-        if (attached() && !child->attached() && child->parent() == this)
-            child->attach();
+        if (attached() && !child->attached() && child->parent() == this) {
+            if (shouldLazyAttach)
+                child->lazyAttach();
+            else
+                child->attach();
+        }
 
         prev = child;
         child = nextChild.release();
     }
 
     document()->setDocumentChanged(true);
+    if (childCountDelta)
+        childrenChanged(false, prev.get(), next.get(), childCountDelta);
     dispatchSubtreeModifiedEvent();
     return true;
 }
@@ -371,14 +394,6 @@ bool ContainerNode::removeChild(Node* oldChild, ExceptionCode& ec)
     }
 
     RefPtr<Node> child = oldChild;
-    
-    // dispatch pre-removal mutation events
-    if (document()->hasListenerType(Document::DOMNODEREMOVED_LISTENER)) {
-        EventTargetNodeCast(child.get())->dispatchEvent(new MutationEvent(DOMNodeRemovedEvent, true, false,
-            this, String(), String(), String(), 0), ec, true);
-        if (ec)
-            return false;
-    }
 
     ec = willRemoveChild(child.get());
     if (ec)
@@ -426,6 +441,7 @@ bool ContainerNode::removeChild(Node* oldChild, ExceptionCode& ec)
     document()->setDocumentChanged(true);
 
     // Dispatch post-removal mutation events
+    childrenChanged(false, prev, next, -1);
     dispatchSubtreeModifiedEvent();
 
     if (child->inDocument())
@@ -454,7 +470,10 @@ bool ContainerNode::removeChildren()
     document()->removeFocusedNodeOfSubtree(this, true);
 
     forbidEventDispatch();
+    int childCountDelta = 0;
     while ((n = m_firstChild) != 0) {
+        childCountDelta--;
+
         Node *next = n->nextSibling();
         
         n->ref();
@@ -479,12 +498,13 @@ bool ContainerNode::removeChildren()
     allowEventDispatch();
 
     // Dispatch a single post-removal mutation event denoting a modified subtree.
+    childrenChanged(false, 0, 0, childCountDelta);
     dispatchSubtreeModifiedEvent();
 
     return true;
 }
 
-bool ContainerNode::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec)
+bool ContainerNode::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec, bool shouldLazyAttach)
 {
     // Check that this node is not "floating".
     // If it is, it can be deleted as a side effect of sending mutation events.
@@ -508,6 +528,8 @@ bool ContainerNode::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec)
         return true;
 
     // Now actually add the child(ren)
+    int childCountDelta = 0;
+    RefPtr<Node> prev = lastChild();
     RefPtr<Node> child = isFragment ? newChild->firstChild() : newChild;
     while (child) {
         // For a fragment we have more children to do.
@@ -527,6 +549,7 @@ bool ContainerNode::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec)
         }
 
         // Append child to the end of the list
+        childCountDelta++;
         forbidEventDispatch();
         child->setParent(this);
         if (m_lastChild) {
@@ -541,20 +564,20 @@ bool ContainerNode::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec)
         dispatchChildInsertionEvents(child.get(), ec);
 
         // Add child to the rendering tree
-        if (attached() && !child->attached() && child->parent() == this)
-            child->attach();
+        if (attached() && !child->attached() && child->parent() == this) {
+            if (shouldLazyAttach)
+                child->lazyAttach();
+            else
+                child->attach();
+        }
         
         child = nextChild.release();
     }
 
     document()->setDocumentChanged(true);
+    childrenChanged(false, prev.get(), 0, childCountDelta);
     dispatchSubtreeModifiedEvent();
     return true;
-}
-
-bool ContainerNode::hasChildNodes() const
-{
-    return m_firstChild;
 }
 
 ContainerNode* ContainerNode::addChild(PassRefPtr<Node> newChild)
@@ -568,6 +591,7 @@ ContainerNode* ContainerNode::addChild(PassRefPtr<Node> newChild)
 
     forbidEventDispatch();
     newChild->setParent(this);
+    Node* last = m_lastChild;
     if (m_lastChild) {
         newChild->setPreviousSibling(m_lastChild);
         m_lastChild->setNextSibling(newChild.get());
@@ -579,7 +603,7 @@ ContainerNode* ContainerNode::addChild(PassRefPtr<Node> newChild)
     document()->incDOMTreeVersion();
     if (inDocument())
         newChild->insertedIntoDocument();
-    childrenChanged(true);
+    childrenChanged(true, last, 0, 1);
     
     if (newChild->isElementNode())
         return static_cast<ContainerNode*>(newChild.get());
@@ -637,6 +661,7 @@ void ContainerNode::detach()
 {
     for (Node* child = m_firstChild; child; child = child->nextSibling())
         child->detach();
+    setHasChangedChild(false);
     EventTargetNode::detach();
 }
 
@@ -672,9 +697,11 @@ void ContainerNode::removedFromTree(bool deep)
     }
 }
 
-void ContainerNode::childrenChanged(bool changedByParser)
+void ContainerNode::childrenChanged(bool changedByParser, Node* beforeChange, Node* afterChange, int childCountDelta)
 {
-    Node::childrenChanged(changedByParser);
+    Node::childrenChanged(changedByParser, beforeChange, afterChange, childCountDelta);
+    if (!changedByParser && childCountDelta)
+        document()->nodeChildrenChanged(this);
     if (document()->hasNodeListCaches())
         notifyNodeListsChildrenChanged();
 }
@@ -823,7 +850,8 @@ IntRect ContainerNode::getRect() const
 
 void ContainerNode::setFocus(bool received)
 {
-    if (m_focused == received) return;
+    if (focused() == received)
+        return;
 
     EventTargetNode::setFocus(received);
 
@@ -924,7 +952,7 @@ static void dispatchChildInsertionEvents(Node* child, ExceptionCode& ec)
         doc->hasListenerType(Document::DOMNODEINSERTED_LISTENER) &&
         c->isEventTargetNode()) {
         ec = 0;
-        EventTargetNodeCast(c.get())->dispatchEvent(new MutationEvent(DOMNodeInsertedEvent, true, false,
+        EventTargetNodeCast(c.get())->dispatchEvent(MutationEvent::create(DOMNodeInsertedEvent, true, false,
             c->parentNode(), String(), String(), String(), 0), ec, true);
         if (ec)
             return;
@@ -937,7 +965,7 @@ static void dispatchChildInsertionEvents(Node* child, ExceptionCode& ec)
                 continue;
           
             ec = 0;
-            EventTargetNodeCast(c.get())->dispatchEvent(new MutationEvent(DOMNodeInsertedIntoDocumentEvent, false, false,
+            EventTargetNodeCast(c.get())->dispatchEvent(MutationEvent::create(DOMNodeInsertedIntoDocumentEvent, false, false,
                 0, String(), String(), String(), 0), ec, true);
             if (ec)
                 return;
@@ -950,14 +978,14 @@ static void dispatchChildRemovalEvents(Node* child, ExceptionCode& ec)
     DocPtr<Document> doc = child->document();
 
     // update auxiliary doc info (e.g. iterators) to note that node is being removed
-    doc->notifyBeforeNodeRemoval(child); // ### use events instead
+    doc->nodeWillBeRemoved(child);
 
     // dispatch pre-removal mutation events
     if (c->parentNode() && 
         doc->hasListenerType(Document::DOMNODEREMOVED_LISTENER) &&
         c->isEventTargetNode()) {
         ec = 0;
-        EventTargetNodeCast(c.get())->dispatchEvent(new MutationEvent(DOMNodeRemovedEvent, true, false,
+        EventTargetNodeCast(c.get())->dispatchEvent(MutationEvent::create(DOMNodeRemovedEvent, true, false,
             c->parentNode(), String(), String(), String(), 0), ec, true);
         if (ec)
             return;
@@ -969,7 +997,7 @@ static void dispatchChildRemovalEvents(Node* child, ExceptionCode& ec)
             if (!c->isEventTargetNode())
                 continue;
             ec = 0;
-            EventTargetNodeCast(c.get())->dispatchEvent(new MutationEvent(DOMNodeRemovedFromDocumentEvent, false, false,
+            EventTargetNodeCast(c.get())->dispatchEvent(MutationEvent::create(DOMNodeRemovedFromDocumentEvent, false, false,
                 0, String(), String(), String(), 0), ec, true);
             if (ec)
                 return;

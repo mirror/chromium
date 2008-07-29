@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2004, 2005 Nikolas Zimmermann <wildfox@kde.org>
+    Copyright (C) 2004, 2005, 2008 Nikolas Zimmermann <zimmermann@kde.org>
                   2004, 2005, 2007 Rob Buis <buis@kde.org>
 
     This file is part of the KDE project
@@ -21,9 +21,9 @@
 */
 
 #include "config.h"
+
 #if ENABLE(SVG)
 #include "SVGScriptElement.h"
-
 #include "SVGNames.h"
 
 namespace WebCore {
@@ -63,8 +63,11 @@ void SVGScriptElement::parseMappedAttribute(MappedAttribute* attr)
     }
 }
 
+void SVGScriptElement::getSubresourceAttributeStrings(Vector<String>& urls) const
+{
+    urls.append(href());
 }
 
-// vim:ts=4:noet
-#endif // ENABLE(SVG)
+}
 
+#endif // ENABLE(SVG)

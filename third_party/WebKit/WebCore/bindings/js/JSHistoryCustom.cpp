@@ -27,11 +27,10 @@
  */
 
 #include "config.h"
-#include "JSHistory.h"
+#include "JSHistoryCustom.h"
 
 #include "Frame.h"
 #include "History.h"
-#include "kjs_window.h"
 
 using namespace KJS;
 
@@ -49,13 +48,13 @@ bool JSHistory::customGetOwnPropertySlot(ExecState* exec, const Identifier& prop
         return false;
 
     // Check for the few functions that we allow, even when called cross-domain.
-    const HashEntry* entry = Lookup::findEntry(JSHistoryPrototype::info.propHashTable, propertyName);
+    const HashEntry* entry = JSHistoryPrototype::s_info.propHashTable(exec)->entry(exec, propertyName);
     if (entry) {
         // Allow access to back(), forward() and go() from any frame.
-        if ((entry->attr & Function)
-                && (entry->value.functionValue == jsHistoryPrototypeFunctionBack
-                    || entry->value.functionValue == jsHistoryPrototypeFunctionForward
-                    || entry->value.functionValue == jsHistoryPrototypeFunctionGo)) {
+        if ((entry->attributes & Function)
+                && (entry->functionValue == jsHistoryPrototypeFunctionBack
+                    || entry->functionValue == jsHistoryPrototypeFunctionForward
+                    || entry->functionValue == jsHistoryPrototypeFunctionGo)) {
             slot.setStaticEntry(this, entry, nonCachingStaticFunctionGetter);
             return true;
         }
@@ -68,11 +67,11 @@ bool JSHistory::customGetOwnPropertySlot(ExecState* exec, const Identifier& prop
     }
 
     printErrorMessageForFrame(impl()->frame(), message);
-    slot.setUndefined(this);
+    slot.setUndefined();
     return true;
 }
 
-bool JSHistory::customPut(ExecState* exec, const Identifier& propertyName, JSValue* value, int attr)
+bool JSHistory::customPut(ExecState* exec, const Identifier& propertyName, JSValue* value)
 {
     // Only allow putting by frames in the same origin.
     if (!allowsAccessFromFrame(exec, impl()->frame()))

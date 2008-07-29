@@ -75,6 +75,8 @@ public:
     virtual void setHScrollbarMode(ScrollbarMode);
     virtual void setScrollbarsMode(ScrollbarMode);
 
+    virtual bool shouldUpdateWhenOffscreen() const;
+
     void layout(bool allowSubtree = true);
     bool didFirstLayout() const;
     void layoutTimerFired(Timer<FrameView>*);
@@ -92,7 +94,6 @@ public:
 
     bool needsFullRepaint() const;
     void repaintRectangle(const IntRect&, bool immediate);
-    void addRepaintInfo(RenderObject*, const IntRect&);
 
     void resetScrollbars();
 
@@ -122,7 +123,12 @@ public:
     void addSlowRepaintObject();
     void removeSlowRepaintObject();
 
+    void beginDeferredRepaints();
+    void endDeferredRepaints();
+
+#if ENABLE(DASHBOARD_SUPPORT)
     void updateDashboardRegions();
+#endif
     void updateControlTints();
 
     void restoreScrollbar();
@@ -138,8 +144,8 @@ public:
     void addWidgetToUpdate(RenderPartObject*);
     void removeWidgetToUpdate(RenderPartObject*);
 
-    // FIXME: This method should be used by all platforms, but currently depends on ScrollView::children,
-    // which not all methods have. Once FrameView and ScrollView are merged, this #if should be removed.
+    // FIXME: This function should be used by all platforms, but currently depends on ScrollView::children,
+    // which not all platforms have. Once FrameView and ScrollView are merged, this #if should be removed.
 #if PLATFORM(WIN) || PLATFORM(GTK) || PLATFORM(QT)
     void layoutIfNeededRecursive();
 #endif

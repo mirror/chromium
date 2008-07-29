@@ -77,7 +77,7 @@ SVGElementInstance* SVGElementInstance::parentNode() const
 
 PassRefPtr<SVGElementInstanceList> SVGElementInstance::childNodes()
 {
-    return new SVGElementInstanceList(this);
+    return SVGElementInstanceList::create(this);
 }
 
 SVGElementInstance* SVGElementInstance::previousSibling() const
@@ -162,6 +162,7 @@ void SVGElementInstance::updateInstance(SVGElement* element)
 
     // For all other nodes this logic is sufficient.
     RefPtr<Node> clone = m_element->cloneNode(true);
+    SVGUseElement::removeDisallowedElementsFromSubtree(clone.get());
     SVGElement* svgClone = 0;
     if (clone && clone->isSVGElement())
         svgClone = static_cast<SVGElement*>(clone.get());

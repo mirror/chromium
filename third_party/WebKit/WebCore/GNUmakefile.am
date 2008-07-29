@@ -3,21 +3,27 @@ WebCore := $(srcdir)/WebCore
 
 FEATURE_DEFINES_JAVASCRIPT := LANGUAGE_JAVASCRIPT=1
 SVG_FEATURES :=
+HTML_FEATURES :=
+
+WEBCORE_CSS_PROPERTY_NAMES := $(WebCore)/css/CSSPropertyNames.in
+WEBCORE_CSS_VALUE_KEYWORDS := $(WebCore)/css/CSSValueKeywords.in
 
 webcore_cppflags += \
-	-I$(srcdir)/JavaScriptCore/bindings \
 	-I$(srcdir)/WebCore \
-	-I$(srcdir)/WebCore/ForwardingHeaders \
 	-I$(srcdir)/WebCore/platform \
 	-I$(srcdir)/WebCore/platform/network \
 	-I$(srcdir)/WebCore/platform/graphics \
+	-I$(srcdir)/WebCore/platform/graphics/filters \
 	-I$(srcdir)/WebCore/platform/text \
 	-I$(srcdir)/WebCore/loader \
+	-I$(srcdir)/WebCore/loader/appcache \
+	-I$(srcdir)/WebCore/loader/archive \
 	-I$(srcdir)/WebCore/loader/icon \
 	-I$(srcdir)/WebCore/css \
 	-I$(srcdir)/WebCore/dom \
 	-I$(srcdir)/WebCore/page \
 	-I$(srcdir)/WebCore/bridge \
+	-I$(srcdir)/WebCore/bridge/c \
 	-I$(srcdir)/WebCore/editing \
 	-I$(srcdir)/WebCore/history \
 	-I$(srcdir)/WebCore/xml \
@@ -32,30 +38,23 @@ webcore_cppflags += \
 	-I$(srcdir)/WebCore/platform/image-decoders/xbm \
 	-I$(srcdir)/WebCore/plugins \
 	-I$(srcdir)/WebCore/rendering \
+	-I$(srcdir)/WebCore/rendering/style \
 	-I$(top_builddir)/WebCore/bindings/js
 
-webkitgtk_cppflags += \
+webcoregtk_cppflags += \
 	-I$(srcdir)/WebCore/platform/gtk \
 	-I$(srcdir)/WebCore/platform/graphics/gtk \
 	-I$(srcdir)/WebCore/platform/graphics/cairo \
 	-I$(srcdir)/WebCore/loader/gtk \
-	-I$(srcdir)/WebCore/page/gtk \
-	-I$(srcdir)/WebKit/gtk \
-	-I$(srcdir)/WebKit/gtk/WebCoreSupport \
-	-I$(srcdir)/WebKit/gtk/webkit
+	-I$(srcdir)/WebCore/page/gtk
 
 webcore_built_nosources += \
 	DerivedSources/DocTypeStrings.cpp \
 	DerivedSources/tokenizer.cpp \
 	DerivedSources/ColorData.c \
+	WebCore/bindings/js/JSDOMWindowBase.lut.h \
 	WebCore/bindings/js/JSEventTargetBase.lut.h \
-	WebCore/bindings/js/JSLocation.lut.h \
-	WebCore/bindings/js/JSXMLHttpRequest.lut.h \
-	WebCore/bindings/js/JSXSLTProcessor.lut.h \
-	WebCore/bindings/js/kjs_css.lut.h \
-	WebCore/bindings/js/kjs_events.lut.h \
-	WebCore/bindings/js/kjs_navigator.lut.h \
-	WebCore/bindings/js/kjs_window.lut.h \
+	WebCore/bindings/js/JSRGBColor.lut.h \
 	WebCore/bindings/js/JSHTMLInputElementBaseTable.cpp
 
 webcore_built_sources += \
@@ -86,10 +85,14 @@ webcore_built_sources += \
 	DerivedSources/JSCSSStyleSheet.h \
 	DerivedSources/JSCSSValue.h \
 	DerivedSources/JSCSSValueList.h \
+	DerivedSources/JSCSSVariablesDeclaration.h \
+	DerivedSources/JSCSSVariablesRule.h \
 	DerivedSources/JSCanvasGradient.h \
 	DerivedSources/JSCanvasPattern.h \
+	DerivedSources/JSCanvasPixelArray.h \
 	DerivedSources/JSCanvasRenderingContext2D.h \
 	DerivedSources/JSCharacterData.h \
+	DerivedSources/JSClipboard.h \
 	DerivedSources/JSComment.h \
 	DerivedSources/JSConsole.h \
 	DerivedSources/JSCounter.h \
@@ -106,6 +109,8 @@ webcore_built_sources += \
 	DerivedSources/JSEntityReference.h \
 	DerivedSources/JSEvent.h \
 	DerivedSources/JSEventException.h \
+	DerivedSources/JSFile.h \
+	DerivedSources/JSFileList.h \
 	DerivedSources/JSHTMLAnchorElement.h \
 	DerivedSources/JSHTMLAppletElement.h \
 	DerivedSources/JSHTMLAreaElement.h \
@@ -167,18 +172,27 @@ webcore_built_sources += \
 	DerivedSources/JSHTMLTitleElement.h \
 	DerivedSources/JSHTMLUListElement.h \
 	DerivedSources/JSHistory.h \
+	DerivedSources/JSImageData.h \
+	DerivedSources/JSJavaScriptCallFrame.h \
 	DerivedSources/JSKeyboardEvent.h \
+	DerivedSources/JSLocation.h \
 	DerivedSources/JSMediaList.h \
 	DerivedSources/JSMessageEvent.h \
+	DerivedSources/JSMessageEvent.cpp \
+	DerivedSources/JSMimeType.h \
+	DerivedSources/JSMimeTypeArray.h \
 	DerivedSources/JSMouseEvent.h \
 	DerivedSources/JSMutationEvent.h \
 	DerivedSources/JSNamedNodeMap.h \
+	DerivedSources/JSNavigator.h \
 	DerivedSources/JSNode.h \
 	DerivedSources/JSNodeFilter.h \
 	DerivedSources/JSNodeIterator.h \
 	DerivedSources/JSNodeList.h \
 	DerivedSources/JSNotation.h \
 	DerivedSources/JSOverflowEvent.h \
+	DerivedSources/JSPlugin.h \
+	DerivedSources/JSPluginArray.h \
 	DerivedSources/JSProcessingInstruction.h \
 	DerivedSources/JSProgressEvent.h \
 	DerivedSources/JSRange.h \
@@ -191,9 +205,12 @@ webcore_built_sources += \
 	DerivedSources/JSTextEvent.h \
 	DerivedSources/JSTreeWalker.h \
 	DerivedSources/JSUIEvent.h \
+	DerivedSources/JSWebKitCSSTransformValue.h \
 	DerivedSources/JSWheelEvent.h \
+	DerivedSources/JSXMLHttpRequest.h \
 	DerivedSources/JSXMLHttpRequestException.h \
 	DerivedSources/JSXMLSerializer.h \
+	DerivedSources/JSXSLTProcessor.h \
 	DerivedSources/JSAttr.cpp \
 	DerivedSources/JSBarInfo.cpp \
 	DerivedSources/JSCDATASection.cpp \
@@ -210,10 +227,14 @@ webcore_built_sources += \
 	DerivedSources/JSCSSStyleSheet.cpp \
 	DerivedSources/JSCSSValue.cpp \
 	DerivedSources/JSCSSValueList.cpp \
+	DerivedSources/JSCSSVariablesDeclaration.cpp \
+	DerivedSources/JSCSSVariablesRule.cpp \
 	DerivedSources/JSCanvasGradient.cpp \
 	DerivedSources/JSCanvasPattern.cpp \
+	DerivedSources/JSCanvasPixelArray.cpp \
 	DerivedSources/JSCanvasRenderingContext2D.cpp \
 	DerivedSources/JSCharacterData.cpp \
+	DerivedSources/JSClipboard.cpp \
 	DerivedSources/JSComment.cpp \
 	DerivedSources/JSConsole.cpp \
 	DerivedSources/JSCounter.cpp \
@@ -230,6 +251,8 @@ webcore_built_sources += \
 	DerivedSources/JSEntityReference.cpp \
 	DerivedSources/JSEvent.cpp \
 	DerivedSources/JSEventException.cpp \
+	DerivedSources/JSFile.cpp \
+	DerivedSources/JSFileList.cpp \
 	DerivedSources/JSHTMLAnchorElement.cpp \
 	DerivedSources/JSHTMLAppletElement.cpp \
 	DerivedSources/JSHTMLAreaElement.cpp \
@@ -246,6 +269,7 @@ webcore_built_sources += \
 	DerivedSources/JSHTMLDivElement.cpp \
 	DerivedSources/JSHTMLDocument.cpp \
 	DerivedSources/JSHTMLElement.cpp \
+	DerivedSources/JSHTMLElementWrapperFactory.cpp \
 	DerivedSources/JSHTMLEmbedElement.cpp \
 	DerivedSources/JSHTMLFieldSetElement.cpp \
 	DerivedSources/JSHTMLFontElement.cpp \
@@ -291,18 +315,25 @@ webcore_built_sources += \
 	DerivedSources/JSHTMLTitleElement.cpp \
 	DerivedSources/JSHTMLUListElement.cpp \
 	DerivedSources/JSHistory.cpp \
+	DerivedSources/JSImageData.cpp \
+	DerivedSources/JSJavaScriptCallFrame.cpp \
 	DerivedSources/JSKeyboardEvent.cpp \
+	DerivedSources/JSLocation.cpp \
 	DerivedSources/JSMediaList.cpp \
-	DerivedSources/JSMessageEvent.cpp \
+	DerivedSources/JSMimeType.cpp \
+	DerivedSources/JSMimeTypeArray.cpp \
 	DerivedSources/JSMouseEvent.cpp \
 	DerivedSources/JSMutationEvent.cpp \
 	DerivedSources/JSNamedNodeMap.cpp \
+	DerivedSources/JSNavigator.cpp \
 	DerivedSources/JSNode.cpp \
 	DerivedSources/JSNodeFilter.cpp \
 	DerivedSources/JSNodeIterator.cpp \
 	DerivedSources/JSNodeList.cpp \
 	DerivedSources/JSNotation.cpp \
 	DerivedSources/JSOverflowEvent.cpp \
+	DerivedSources/JSPlugin.cpp \
+	DerivedSources/JSPluginArray.cpp \
 	DerivedSources/JSProcessingInstruction.cpp \
 	DerivedSources/JSProgressEvent.cpp \
 	DerivedSources/JSRange.cpp \
@@ -315,9 +346,13 @@ webcore_built_sources += \
 	DerivedSources/JSTextEvent.cpp \
 	DerivedSources/JSTreeWalker.cpp \
 	DerivedSources/JSUIEvent.cpp \
+	DerivedSources/JSWebKitCSSTransformValue.cpp \
 	DerivedSources/JSWheelEvent.cpp \
+	DerivedSources/JSXMLHttpRequest.cpp \
 	DerivedSources/JSXMLHttpRequestException.cpp \
-	DerivedSources/JSXMLSerializer.cpp
+	DerivedSources/JSXMLHttpRequestProgressEvent.cpp \
+	DerivedSources/JSXMLSerializer.cpp \
+	DerivedSources/JSXSLTProcessor.cpp
 
 IDL_BINDINGS +=  \
 	WebCore/css/Counter.idl \
@@ -334,12 +369,16 @@ IDL_BINDINGS +=  \
 	WebCore/css/CSSStyleSheet.idl \
 	WebCore/css/CSSValue.idl \
 	WebCore/css/CSSValueList.idl \
+	WebCore/css/CSSVariablesDeclaration.idl \
+	WebCore/css/CSSVariablesRule.idl \
 	WebCore/css/MediaList.idl \
 	WebCore/css/Rect.idl \
 	WebCore/css/StyleSheet.idl \
 	WebCore/css/StyleSheetList.idl \
+	WebCore/css/WebKitCSSTransformValue.idl \
 	WebCore/dom/Attr.idl \
 	WebCore/dom/CharacterData.idl \
+	WebCore/dom/Clipboard.idl \
 	WebCore/dom/CDATASection.idl \
 	WebCore/dom/Comment.idl \
 	WebCore/dom/DocumentFragment.idl \
@@ -440,10 +479,20 @@ IDL_BINDINGS +=  \
 	WebCore/page/DOMSelection.idl \
 	WebCore/page/DOMWindow.idl \
 	WebCore/page/History.idl \
+	WebCore/page/JavaScriptCallFrame.idl \
+	WebCore/page/Location.idl \
+	WebCore/page/Navigator.idl \
 	WebCore/page/Screen.idl \
+	WebCore/plugins/MimeType.idl \
+	WebCore/plugins/MimeTypeArray.idl \
+	WebCore/plugins/Plugin.idl \
+	WebCore/plugins/PluginArray.idl \
 	WebCore/xml/DOMParser.idl \
+	WebCore/xml/XMLHttpRequest.idl \
+	WebCore/xml/XMLHttpRequestProgressEvent.idl \
 	WebCore/xml/XMLHttpRequestException.idl \
-	WebCore/xml/XMLSerializer.idl
+	WebCore/xml/XMLSerializer.idl \
+	WebCore/xml/XSLTProcessor.idl
 
 webcore_headers += \
 	WebCore/loader/icon/IconDatabase.h
@@ -451,25 +500,34 @@ webcore_headers += \
 webcore_sources += \
 	WebCore/bindings/js/GCController.cpp \
 	WebCore/bindings/js/JSAttrCustom.cpp \
+	WebCore/bindings/js/JSCanvasPixelArrayCustom.cpp \
 	WebCore/bindings/js/JSCanvasRenderingContext2DCustom.cpp \
+	WebCore/bindings/js/JSClipboardCustom.cpp \
+	WebCore/bindings/js/JSConsoleCustom.cpp \
 	WebCore/bindings/js/JSCSSRuleCustom.cpp \
 	WebCore/bindings/js/JSCSSStyleDeclarationCustom.cpp \
 	WebCore/bindings/js/JSCSSValueCustom.cpp \
 	WebCore/bindings/js/JSCustomVoidCallback.cpp \
 	WebCore/bindings/js/JSCustomXPathNSResolver.cpp \
 	WebCore/bindings/js/JSDocumentCustom.cpp \
+	WebCore/bindings/js/JSDocumentFragmentCustom.cpp \
+	WebCore/bindings/js/JSDOMWindowBase.cpp \
 	WebCore/bindings/js/JSDOMWindowCustom.cpp \
+	WebCore/bindings/js/JSDOMWindowShell.cpp \
 	WebCore/bindings/js/JSElementCustom.cpp \
 	WebCore/bindings/js/JSEventCustom.cpp \
 	WebCore/bindings/js/JSEventTargetBase.cpp \
 	WebCore/bindings/js/JSHistoryCustom.cpp \
-	WebCore/bindings/js/JSLocation.cpp \
+	WebCore/bindings/js/JSImageConstructor.cpp \
+	WebCore/bindings/js/JSInspectedObjectWrapper.cpp \
+	WebCore/bindings/js/JSInspectorCallbackWrapper.cpp \
+	WebCore/bindings/js/JSJavaScriptCallFrameCustom.cpp \
+	WebCore/bindings/js/JSLocationCustom.cpp \
 	WebCore/bindings/js/JSEventTargetNode.cpp \
 	WebCore/bindings/js/JSHTMLAppletElementCustom.cpp \
 	WebCore/bindings/js/JSHTMLCollectionCustom.cpp \
 	WebCore/bindings/js/JSHTMLDocumentCustom.cpp \
 	WebCore/bindings/js/JSHTMLElementCustom.cpp \
-	WebCore/bindings/js/JSHTMLElementWrapperFactory.cpp \
 	WebCore/bindings/js/JSHTMLEmbedElementCustom.cpp \
 	WebCore/bindings/js/JSHTMLFormElementCustom.cpp \
 	WebCore/bindings/js/JSHTMLFrameElementCustom.cpp \
@@ -480,29 +538,47 @@ webcore_sources += \
 	WebCore/bindings/js/JSHTMLOptionElementConstructor.cpp \
 	WebCore/bindings/js/JSHTMLOptionsCollectionCustom.cpp \
 	WebCore/bindings/js/JSHTMLSelectElementCustom.cpp \
+	WebCore/bindings/js/JSMimeTypeArrayCustom.cpp \
 	WebCore/bindings/js/JSNamedNodeMapCustom.cpp \
 	WebCore/bindings/js/JSNamedNodesCollection.cpp  \
+	WebCore/bindings/js/JSNavigatorCustom.cpp  \
 	WebCore/bindings/js/JSNodeCustom.cpp \
 	WebCore/bindings/js/JSNodeFilterCondition.cpp \
 	WebCore/bindings/js/JSNodeFilterCustom.cpp \
 	WebCore/bindings/js/JSNodeIteratorCustom.cpp \
 	WebCore/bindings/js/JSNodeListCustom.cpp \
+	WebCore/bindings/js/JSNSResolver.cpp \
+	WebCore/bindings/js/JSQuarantinedObjectWrapper.cpp \
+	WebCore/bindings/js/JSRGBColor.cpp \
+	WebCore/bindings/js/JSPluginArrayCustom.cpp \
+	WebCore/bindings/js/JSPluginCustom.cpp \
 	WebCore/bindings/js/JSStyleSheetCustom.cpp \
 	WebCore/bindings/js/JSStyleSheetListCustom.cpp \
+	WebCore/bindings/js/JSTextCustom.cpp \
 	WebCore/bindings/js/JSTreeWalkerCustom.cpp \
-	WebCore/bindings/js/JSXMLHttpRequest.cpp \
-	WebCore/bindings/js/JSXSLTProcessor.cpp \
-	WebCore/bindings/js/kjs_binding.cpp \
-	WebCore/bindings/js/kjs_css.cpp \
-	WebCore/bindings/js/kjs_dom.cpp \
-	WebCore/bindings/js/kjs_events.cpp \
-	WebCore/bindings/js/kjs_html.cpp \
-	WebCore/bindings/js/kjs_navigator.cpp \
-	WebCore/bindings/js/kjs_proxy.cpp \
-	WebCore/bindings/js/kjs_window.cpp \
+	WebCore/bindings/js/JSXMLHttpRequestCustom.cpp \
+	WebCore/bindings/js/JSXMLHttpRequestConstructor.cpp \
+	WebCore/bindings/js/JSXSLTProcessorCustom.cpp \
+	WebCore/bindings/js/JSXSLTProcessorConstructor.cpp \
+	WebCore/bindings/js/JSDOMBinding.cpp \
+	WebCore/bindings/js/JSEventListener.cpp \
+	WebCore/bindings/js/JSPluginElementFunctions.cpp \
+	WebCore/bindings/js/ScriptController.cpp \
 	WebCore/bindings/js/PausedTimeouts.cpp \
 	WebCore/bindings/js/ScheduledAction.cpp \
+	WebCore/bridge/NP_jsobject.cpp \
+	WebCore/bridge/c/c_class.cpp \
+	WebCore/bridge/c/c_instance.cpp \
+	WebCore/bridge/c/c_runtime.cpp \
+	WebCore/bridge/c/c_utility.cpp \
+	WebCore/bridge/npruntime.cpp \
+	WebCore/bridge/runtime.cpp \
+	WebCore/bridge/runtime_array.cpp \
+	WebCore/bridge/runtime_method.cpp \
+	WebCore/bridge/runtime_object.cpp \
+	WebCore/bridge/runtime_root.cpp \
 	WebCore/css/CSSBorderImageValue.cpp \
+	WebCore/css/CSSCanvasValue.cpp \
 	WebCore/css/CSSCharsetRule.cpp \
 	WebCore/css/CSSComputedStyleDeclaration.cpp \
 	WebCore/css/CSSCursorImageValue.cpp \
@@ -511,7 +587,10 @@ webcore_sources += \
 	WebCore/css/CSSFontFaceSrcValue.cpp \
 	WebCore/css/CSSFontSelector.cpp \
 	WebCore/css/CSSFontFaceSource.cpp \
+	WebCore/css/CSSFunctionValue.cpp \
+	WebCore/css/CSSGradientValue.cpp \
 	WebCore/css/CSSHelper.cpp \
+	WebCore/css/CSSImageGeneratorValue.cpp \
 	WebCore/css/CSSImageValue.cpp \
 	WebCore/css/CSSImportRule.cpp \
 	WebCore/css/CSSInheritedValue.cpp \
@@ -520,8 +599,10 @@ webcore_sources += \
 	WebCore/css/CSSMutableStyleDeclaration.cpp \
 	WebCore/css/CSSPageRule.cpp \
 	WebCore/css/CSSParser.cpp \
+	WebCore/css/CSSParserValues.cpp \
 	WebCore/css/CSSPrimitiveValue.cpp \
 	WebCore/css/CSSProperty.cpp \
+	WebCore/css/CSSReflectValue.cpp \
 	WebCore/css/CSSRule.cpp \
 	WebCore/css/CSSRuleList.cpp \
 	WebCore/css/CSSSelector.cpp \
@@ -531,9 +612,11 @@ webcore_sources += \
 	WebCore/css/CSSStyleSelector.cpp \
 	WebCore/css/CSSStyleSheet.cpp \
 	WebCore/css/CSSTimingFunctionValue.cpp \
-	WebCore/css/CSSTransformValue.cpp \
 	WebCore/css/CSSUnicodeRangeValue.cpp \
 	WebCore/css/CSSValueList.cpp \
+	WebCore/css/CSSVariableDependentValue.cpp \
+	WebCore/css/CSSVariablesDeclaration.cpp \
+	WebCore/css/CSSVariablesRule.cpp \
 	WebCore/css/FontFamilyValue.cpp \
 	WebCore/css/FontValue.cpp \
 	WebCore/css/MediaFeatureNames.cpp \
@@ -546,6 +629,7 @@ webcore_sources += \
 	WebCore/css/StyleList.cpp \
 	WebCore/css/StyleSheet.cpp \
 	WebCore/css/StyleSheetList.cpp \
+	WebCore/css/WebKitCSSTransformValue.cpp \
 	WebCore/dom/Attr.cpp \
 	WebCore/dom/Attribute.cpp \
 	WebCore/dom/BeforeTextInsertedEvent.cpp \
@@ -663,8 +747,11 @@ webcore_sources += \
 	WebCore/history/PageCache.cpp \
 	WebCore/html/CanvasGradient.cpp \
 	WebCore/html/CanvasPattern.cpp \
+	WebCore/html/CanvasPixelArray.cpp \
 	WebCore/html/CanvasRenderingContext2D.cpp \
 	WebCore/html/CanvasStyle.cpp \
+	WebCore/html/File.cpp \
+	WebCore/html/FileList.cpp \
 	WebCore/html/FormDataList.cpp \
 	WebCore/html/HTMLAnchorElement.cpp \
 	WebCore/html/HTMLAppletElement.cpp \
@@ -692,7 +779,7 @@ webcore_sources += \
 	WebCore/html/HTMLFrameElement.cpp \
 	WebCore/html/HTMLFrameOwnerElement.cpp \
 	WebCore/html/HTMLFrameSetElement.cpp \
-	WebCore/html/HTMLGenericFormElement.cpp \
+	WebCore/html/HTMLFormControlElement.cpp \
 	WebCore/html/HTMLHeadElement.cpp \
 	WebCore/html/HTMLHeadingElement.cpp \
 	WebCore/html/HTMLHRElement.cpp \
@@ -742,6 +829,11 @@ webcore_sources += \
 	WebCore/html/HTMLTokenizer.cpp \
 	WebCore/html/HTMLUListElement.cpp \
 	WebCore/html/HTMLViewSourceDocument.cpp \
+	WebCore/html/ImageData.cpp \
+	WebCore/html/PreloadScanner.cpp \
+	WebCore/loader/archive/ArchiveFactory.cpp \
+	WebCore/loader/archive/ArchiveResource.cpp \
+	WebCore/loader/archive/ArchiveResourceCollection.cpp \
 	WebCore/loader/Cache.cpp \
 	WebCore/loader/CachedCSSStyleSheet.cpp \
 	WebCore/loader/CachedFont.cpp \
@@ -760,6 +852,7 @@ webcore_sources += \
 	WebCore/loader/ImageDocument.cpp \
 	WebCore/loader/loader.cpp \
 	WebCore/loader/MainResourceLoader.cpp \
+	WebCore/loader/MediaDocument.cpp \
 	WebCore/loader/NavigationAction.cpp \
 	WebCore/loader/NetscapePlugInStreamLoader.cpp \
 	WebCore/loader/PluginDocument.cpp \
@@ -769,7 +862,13 @@ webcore_sources += \
 	WebCore/loader/SubresourceLoader.cpp \
 	WebCore/loader/TextDocument.cpp \
 	WebCore/loader/TextResourceDecoder.cpp \
+	WebCore/page/AccessibilityImageMapLink.cpp \
+	WebCore/page/AccessibilityListBox.cpp \
+	WebCore/page/AccessibilityListBoxOption.cpp \
+	WebCore/page/AccessibilityObject.cpp \
+	WebCore/page/AccessibilityRenderObject.cpp \
 	WebCore/page/AnimationController.cpp \
+	WebCore/page/AXObjectCache.cpp \
 	WebCore/page/BarInfo.cpp \
 	WebCore/page/Chrome.cpp \
 	WebCore/page/Console.cpp \
@@ -784,27 +883,33 @@ webcore_sources += \
 	WebCore/page/FrameView.cpp \
 	WebCore/page/History.cpp \
 	WebCore/page/InspectorController.cpp \
+	WebCore/page/JavaScriptCallFrame.cpp \
+	WebCore/page/JavaScriptDebugServer.cpp \
+	WebCore/page/JavaScriptProfile.cpp \
+	WebCore/page/JavaScriptProfileNode.cpp \
+	WebCore/page/Location.cpp \
 	WebCore/page/MouseEventWithHitTestResults.cpp \
+	WebCore/page/Navigator.cpp \
 	WebCore/page/Page.cpp \
+	WebCore/page/PageGroup.cpp \
+	WebCore/page/PrintContext.cpp \
 	WebCore/page/Screen.cpp \
 	WebCore/page/Settings.cpp \
 	WebCore/page/WindowFeatures.cpp \
 	WebCore/platform/Arena.cpp \
-	WebCore/platform/ArrayImpl.cpp \
 	WebCore/platform/text/AtomicString.cpp \
 	WebCore/platform/text/Base64.cpp \
 	WebCore/platform/text/BidiContext.cpp \
-	WebCore/platform/ContextMenu.cpp \
 	WebCore/platform/text/CString.cpp \
-	WebCore/platform/DeprecatedCString.cpp \
+	WebCore/platform/text/TextCodecICU.cpp \
+	WebCore/platform/text/TextBoundariesICU.cpp \
+	WebCore/platform/text/TextBreakIteratorICU.cpp \
+	WebCore/platform/ContextMenu.cpp \
 	WebCore/platform/DeprecatedPtrListImpl.cpp \
-	WebCore/platform/DeprecatedString.cpp \
-	WebCore/platform/DeprecatedStringList.cpp \
 	WebCore/platform/DeprecatedValueListImpl.cpp \
 	WebCore/platform/DragData.cpp \
 	WebCore/platform/DragImage.cpp \
 	WebCore/platform/FileChooser.cpp \
-	WebCore/platform/graphics/FontFamily.cpp \
 	WebCore/platform/graphics/AffineTransform.cpp \
 	WebCore/platform/graphics/BitmapImage.cpp \
 	WebCore/platform/graphics/Color.cpp \
@@ -812,6 +917,16 @@ webcore_sources += \
 	WebCore/platform/graphics/FloatPoint.cpp \
 	WebCore/platform/graphics/FloatRect.cpp \
 	WebCore/platform/graphics/FloatSize.cpp \
+	WebCore/platform/graphics/FontCache.cpp \
+	WebCore/platform/graphics/Font.cpp \
+	WebCore/platform/graphics/FontData.cpp \
+	WebCore/platform/graphics/FontDescription.cpp \
+	WebCore/platform/graphics/FontFallbackList.cpp \
+	WebCore/platform/graphics/FontFamily.cpp \
+	WebCore/platform/graphics/GeneratedImage.cpp \
+	WebCore/platform/graphics/GlyphPageTreeNode.cpp \
+	WebCore/platform/graphics/GlyphWidthMap.cpp \
+	WebCore/platform/graphics/Gradient.cpp \
 	WebCore/platform/graphics/GraphicsContext.cpp \
 	WebCore/platform/graphics/GraphicsTypes.cpp \
 	WebCore/platform/graphics/Image.cpp \
@@ -819,14 +934,19 @@ webcore_sources += \
 	WebCore/platform/graphics/Path.cpp \
 	WebCore/platform/graphics/PathTraversalState.cpp \
 	WebCore/platform/graphics/Pen.cpp \
+	WebCore/platform/graphics/SegmentedFontData.cpp \
+	WebCore/platform/graphics/SimpleFontData.cpp \
+	WebCore/platform/graphics/StringTruncator.cpp \
 	WebCore/platform/KURL.cpp \
 	WebCore/platform/Logging.cpp \
 	WebCore/platform/MIMETypeRegistry.cpp \
-	WebCore/platform/network/AuthenticationChallenge.cpp \
+	WebCore/platform/network/AuthenticationChallengeBase.cpp \
 	WebCore/platform/network/Credential.cpp \
 	WebCore/platform/network/FormData.cpp \
 	WebCore/platform/network/HTTPParsers.cpp \
+	WebCore/platform/network/NetworkStateNotifier.cpp \
 	WebCore/platform/network/ProtectionSpace.cpp \
+	WebCore/platform/network/ResourceErrorBase.cpp \
 	WebCore/platform/network/ResourceHandle.cpp \
 	WebCore/platform/network/ResourceRequestBase.cpp \
 	WebCore/platform/network/ResourceResponseBase.cpp \
@@ -836,6 +956,7 @@ webcore_sources += \
 	WebCore/platform/text/SegmentedString.cpp \
 	WebCore/platform/SharedBuffer.cpp \
 	WebCore/platform/text/String.cpp \
+	WebCore/platform/text/StringBuilder.cpp \
 	WebCore/platform/text/StringImpl.cpp \
 	WebCore/platform/text/TextCodec.cpp \
 	WebCore/platform/text/TextCodecLatin1.cpp \
@@ -848,7 +969,18 @@ webcore_sources += \
 	WebCore/platform/Timer.cpp \
 	WebCore/platform/text/UnicodeRange.cpp \
 	WebCore/platform/Widget.cpp \
+	WebCore/plugins/MimeType.cpp \
+	WebCore/plugins/MimeTypeArray.cpp \
+	WebCore/plugins/Plugin.cpp \
+	WebCore/plugins/PluginArray.cpp \
+	WebCore/plugins/PluginData.cpp \
+	WebCore/plugins/PluginDatabase.cpp \
+	WebCore/plugins/PluginInfoStore.cpp \
+	WebCore/plugins/PluginMainThreadScheduler.cpp \
+	WebCore/plugins/PluginPackage.cpp \
 	WebCore/plugins/PluginStream.cpp \
+	WebCore/plugins/PluginView.cpp \
+	WebCore/plugins/npapi.cpp \
 	WebCore/rendering/AutoTableLayout.cpp \
 	WebCore/rendering/bidi.cpp \
 	WebCore/rendering/break_lines.cpp \
@@ -877,6 +1009,7 @@ webcore_sources += \
 	WebCore/rendering/RenderFrameSet.cpp \
 	WebCore/rendering/RenderHTMLCanvas.cpp \
 	WebCore/rendering/RenderImage.cpp \
+	WebCore/rendering/RenderImageGeneratedContent.cpp \
 	WebCore/rendering/RenderInline.cpp \
 	WebCore/rendering/RenderLayer.cpp \
 	WebCore/rendering/RenderLegend.cpp \
@@ -888,8 +1021,8 @@ webcore_sources += \
 	WebCore/rendering/RenderPart.cpp \
 	WebCore/rendering/RenderPartObject.cpp \
 	WebCore/rendering/RenderReplaced.cpp \
+	WebCore/rendering/RenderReplica.cpp \
 	WebCore/rendering/RenderSlider.cpp \
-	WebCore/rendering/RenderStyle.cpp \
 	WebCore/rendering/RenderTableCell.cpp \
 	WebCore/rendering/RenderTableCol.cpp \
 	WebCore/rendering/RenderTable.cpp \
@@ -904,45 +1037,45 @@ webcore_sources += \
 	WebCore/rendering/RenderWidget.cpp \
 	WebCore/rendering/RenderWordBreak.cpp \
 	WebCore/rendering/RootInlineBox.cpp \
+	WebCore/rendering/style/RenderStyle.cpp \
+	WebCore/xml/AccessControlList.cpp \
+	WebCore/xml/AccessItem.cpp \
+	WebCore/xml/AccessItemRule.cpp \
 	WebCore/xml/DOMParser.cpp \
 	WebCore/xml/XMLHttpRequest.cpp \
 	WebCore/xml/XMLSerializer.cpp
 
-webkitgtk_headers += \
+webcoregtk_sources += \
+	WebCore/plugins/gtk/PluginDataGtk.cpp \
+	WebCore/plugins/gtk/PluginPackageGtk.cpp \
+	WebCore/plugins/gtk/PluginViewGtk.cpp
+
+if TARGET_X11
+webcoregtk_sources += \
+	WebCore/plugins/gtk/gtk2xtbin.c
+endif
+
+webcoregtk_headers += \
 	WebCore/platform/gtk/ClipboardGtk.h \
 	WebCore/platform/gtk/PasteboardHelper.h
 
-webkitgtk_sources += \
-	WebCore/platform/graphics/GlyphPageTreeNode.cpp \
-	WebCore/platform/graphics/GlyphWidthMap.cpp \
-	WebCore/platform/graphics/FontCache.cpp \
-	WebCore/platform/graphics/Font.cpp \
-	WebCore/platform/graphics/FontData.cpp \
-	WebCore/platform/graphics/FontFallbackList.cpp \
-	WebCore/platform/graphics/SegmentedFontData.cpp \
-	WebCore/platform/graphics/SimpleFontData.cpp \
-	WebCore/platform/graphics/StringTruncator.cpp \
-	WebCore/platform/text/TextCodecICU.cpp \
-	WebCore/platform/text/TextBoundariesICU.cpp \
-	WebCore/platform/text/TextBreakIteratorICU.cpp \
+webcoregtk_sources += \
+	WebCore/page/gtk/AXObjectCacheAtk.cpp \
+	WebCore/page/gtk/AccessibilityObjectWrapperAtk.cpp \
 	WebCore/page/gtk/EventHandlerGtk.cpp \
 	WebCore/page/gtk/FrameGtk.cpp \
 	WebCore/page/gtk/DragControllerGtk.cpp \
 	WebCore/platform/gtk/ClipboardGtk.cpp \
-	WebCore/platform/gtk/CookieJarGtk.cpp \
 	WebCore/platform/gtk/CursorGtk.cpp \
 	WebCore/platform/gtk/ContextMenuGtk.cpp \
 	WebCore/platform/gtk/ContextMenuItemGtk.cpp \
 	WebCore/platform/gtk/DragDataGtk.cpp \
 	WebCore/platform/gtk/DragImageGtk.cpp \
+	WebCore/platform/gtk/EventLoopGtk.cpp \
 	WebCore/platform/gtk/FileChooserGtk.cpp \
 	WebCore/platform/gtk/FileSystemGtk.cpp \
 	WebCore/platform/graphics/gtk/FontCacheGtk.cpp \
-	WebCore/platform/graphics/gtk/FontCustomPlatformData.cpp \
 	WebCore/platform/graphics/gtk/FontGtk.cpp \
-	WebCore/platform/graphics/gtk/FontPlatformDataGtk.cpp \
-	WebCore/platform/graphics/gtk/GlyphPageTreeNodeGtk.cpp \
-	WebCore/platform/graphics/gtk/SimpleFontDataGtk.cpp \
 	WebCore/platform/gtk/KeyEventGtk.cpp \
 	WebCore/platform/gtk/Language.cpp \
 	WebCore/platform/gtk/LocalizedStringsGtk.cpp \
@@ -961,7 +1094,6 @@ webkitgtk_sources += \
 	WebCore/platform/gtk/SystemTimeGtk.cpp \
 	WebCore/platform/gtk/TemporaryLinkStubs.cpp \
 	WebCore/platform/text/gtk/TextBreakIteratorInternalICUGtk.cpp \
-	WebCore/platform/gtk/ThreadingGtk.cpp \
 	WebCore/platform/gtk/WheelEventGtk.cpp \
 	WebCore/platform/gtk/WidgetGtk.cpp \
 	WebCore/platform/gtk/gtk2drawing.c \
@@ -971,6 +1103,8 @@ webkitgtk_sources += \
 	WebCore/platform/graphics/gtk/IntPointGtk.cpp \
 	WebCore/platform/graphics/gtk/IntRectGtk.cpp \
 	WebCore/platform/graphics/cairo/AffineTransformCairo.cpp \
+	WebCore/platform/graphics/cairo/FontCairo.cpp \
+	WebCore/platform/graphics/cairo/GradientCairo.cpp \
 	WebCore/platform/graphics/cairo/GraphicsContextCairo.cpp \
 	WebCore/platform/graphics/cairo/ImageBufferCairo.cpp \
 	WebCore/platform/graphics/cairo/ImageCairo.cpp \
@@ -994,29 +1128,85 @@ webcore_cppflags += \
 	-I$(srcdir)/WebCore/platform/network/curl
 
 webcore_sources += \
+	WebCore/platform/network/curl/CookieJarCurl.cpp \
+	WebCore/platform/network/curl/FormDataStreamCurl.cpp \
 	WebCore/platform/network/curl/ResourceHandleCurl.cpp \
 	WebCore/platform/network/curl/ResourceHandleManager.cpp
 
 endif # END USE_CURL
 
+if USE_SOUP
+webcore_cppflags += \
+	-DWTF_USE_SOUP=1 \
+	-I$(srcdir)/WebCore/platform/network/soup
+
+webcore_sources += \
+	WebCore/platform/network/soup/CookieJarSoup.cpp \
+	WebCore/platform/network/soup/ResourceHandleSoup.cpp
+endif
+
+# ---
+# Freetype font backend
+# ---
+if USE_FREETYPE
+webcoregtk_cppflags += \
+	-DUSE_FREETYPE=1
+
+webcoregtk_sources += \
+	WebCore/platform/graphics/gtk/FontCustomPlatformData.cpp \
+	WebCore/platform/graphics/gtk/FontPlatformDataGtk.cpp \
+	WebCore/platform/graphics/gtk/GlyphPageTreeNodeGtk.cpp \
+	WebCore/platform/graphics/gtk/SimpleFontDataGtk.cpp
+endif # END USE_FREETYPE
+
+# ---
+# Pango font backend
+# ---
+if USE_PANGO
+webcoregtk_cppflags += \
+	-DUSE_PANGO=1
+
+webcoregtk_sources += \
+	WebCore/platform/graphics/gtk/FontCustomPlatformDataPango.cpp \
+	WebCore/platform/graphics/gtk/FontPlatformDataPango.cpp \
+	WebCore/platform/graphics/gtk/GlyphPageTreeNodePango.cpp \
+	WebCore/platform/graphics/gtk/SimpleFontDataPango.cpp
+endif # END USE_PANGO
+
 # ----
-# Cross-document messaging support
+# Offline Web Applications
 # ----
-
-if ENABLE_CROSS_DOCUMENT_MESSAGING
-FEATURE_DEFINES_JAVASCRIPT += ENABLE_CROSS_DOCUMENT_MESSAGING=1
-
-webcore_built_sources += \
-	DerivedSources/JSMessageEvent.h
-	DerivedSources/JSMessageEvent.cpp
-
-IDL_BINDINGS += \
-	WebCore/dom/MessageEvent.idl
+if ENABLE_OFFLINE_WEB_APPLICATIONS
+FEATURE_DEFINES_JAVASCRIPT += ENABLE_OFFLINE_WEB_APPLICATIONS=1
 
 webcore_cppflags += \
-	-DENABLE_CROSS_DOCUMENT_MESSAGING=1
+	-DENABLE_OFFLINE_WEB_APPLICATIONS=1
 
-endif # END ENABLE_CROSS_DOCUMENT_MESSAGING
+webcore_sources += \
+	WebCore/bindings/js/JSDOMApplicationCacheCustom.cpp \
+	WebCore/loader/appcache/ApplicationCache.cpp \
+	WebCore/loader/appcache/ApplicationCacheGroup.cpp \
+	WebCore/loader/appcache/ApplicationCacheResource.cpp \
+	WebCore/loader/appcache/ApplicationCacheStorage.cpp \
+	WebCore/loader/appcache/DOMApplicationCache.cpp \
+	WebCore/loader/appcache/ManifestParser.cpp
+
+webcore_built_sources += \
+	DerivedSources/JSDOMApplicationCache.cpp
+
+endif # END ENABLE_OFFLINE_WEB_APPLICATIONS
+
+# ----
+# Dashboard Support
+# ----
+if ENABLE_DASHBOARD_SUPPORT
+
+webcore_cppflags += \
+	-DENABLE_DASHBOARD_SUPPORT=1
+
+WEBCORE_CSS_PROPERTY_NAMES += $(WebCore)/css/DashboardSupportCSSPropertyNames.in
+
+endif # END ENABLE_DASHBOARD_SUPPORT
 
 # ----
 # Database Support
@@ -1077,6 +1267,41 @@ webcore_sources += \
 endif # END ENABLE_DATABASE
 
 # ----
+# HTML5 client-side session and persistent storage
+# ----
+if ENABLE_DOM_STORAGE
+FEATURE_DEFINES_JAVASCRIPT += ENABLE_DOM_STORAGE=1
+
+webcore_built_sources += \
+	DerivedSources/JSStorage.h \
+	DerivedSources/JSStorageEvent.h \
+	DerivedSources/JSStorage.cpp \
+	DerivedSources/JSStorageEvent.cpp
+
+IDL_BINDINGS += \
+	WebCore/storage/Storage.idl \
+	WebCore/storage/StorageEvent.idl
+
+webcore_cppflags += \
+	-DENABLE_DOM_STORAGE=1 \
+	-I$(top_srcdir)/WebCore/storage
+
+webcore_sources += \
+	WebCore/storage/LocalStorage.cpp \
+	WebCore/storage/LocalStorageArea.cpp \
+	WebCore/storage/LocalStorageTask.cpp \
+	WebCore/storage/LocalStorageThread.cpp \
+	WebCore/storage/Storage.cpp \
+	WebCore/storage/StorageArea.cpp \
+	WebCore/storage/StorageEvent.cpp \
+	WebCore/storage/StorageMap.cpp \
+	WebCore/storage/SessionStorage.cpp \
+	WebCore/storage/SessionStorageArea.cpp \
+	WebCore/bindings/js/JSStorageCustom.cpp
+
+endif # END ENABLE_DOM_STORAGE
+
+# ----
 # Icon Database Support
 # ----
 if ENABLE_ICONDATABASE
@@ -1099,6 +1324,7 @@ endif # END ENABLE_ICONDATABASE
 if ENABLE_VIDEO
 FEATURE_DEFINES_JAVASCRIPT += ENABLE_VIDEO=1
 
+HTML_FEATURES += ENABLE_VIDEO=1
 webcore_cppflags += -DENABLE_VIDEO=1
 
 if ENABLE_DEBUG
@@ -1142,7 +1368,7 @@ webcore_sources += \
 	WebCore/rendering/RenderMedia.cpp \
 	WebCore/bindings/js/JSAudioConstructor.cpp
 
-webkitgtk_sources += \
+webcoregtk_sources += \
 	WebCore/platform/graphics/gtk/MediaPlayerPrivateGStreamer.cpp \
 	WebCore/platform/graphics/gtk/VideoSinkGStreamer.cpp
 
@@ -1236,7 +1462,10 @@ endif # END ENABLE_XSLT
 if ENABLE_SVG
 FEATURE_DEFINES_JAVASCRIPT += ENABLE_SVG=1
 
-webkitgtk_cppflags += \
+WEBCORE_CSS_PROPERTY_NAMES += $(WebCore)/css/SVGCSSPropertyNames.in 
+WEBCORE_CSS_VALUE_KEYWORDS += $(WebCore)/css/SVGCSSValueKeywords.in
+
+webcoregtk_cppflags += \
 	-I$(srcdir)/WebCore/svg/graphics/cairo
 
 webcore_built_sources += \
@@ -1244,6 +1473,7 @@ webcore_built_sources += \
 	DerivedSources/SVGElementFactory.cpp \
 	DerivedSources/SVGNames.cpp \
 	DerivedSources/JSSVGAElement.h \
+	DerivedSources/JSSVGAltGlyphElement.h \
 	DerivedSources/JSSVGAngle.h \
 	DerivedSources/JSSVGAnimatedAngle.h \
 	DerivedSources/JSSVGAnimateColorElement.h \
@@ -1375,6 +1605,7 @@ webcore_built_sources += \
 	DerivedSources/JSSVGMissingGlyphElement.h \
 	DerivedSources/JSSVGZoomEvent.h \
 	DerivedSources/JSSVGAElement.cpp \
+	DerivedSources/JSSVGAltGlyphElement.cpp \
 	DerivedSources/JSSVGAngle.cpp \
 	DerivedSources/JSSVGAnimatedAngle.cpp \
 	DerivedSources/JSSVGAnimateColorElement.cpp \
@@ -1463,6 +1694,7 @@ webcore_built_sources += \
 	DerivedSources/JSSVGElementInstance.cpp \
 	DerivedSources/JSSVGElementInstanceList.cpp \
 	DerivedSources/JSSVGSVGElement.cpp \
+	DerivedSources/JSSVGElementWrapperFactory.cpp \
 	DerivedSources/JSSVGEllipseElement.cpp \
 	DerivedSources/JSSVGFEBlendElement.cpp \
 	DerivedSources/JSSVGFEColorMatrixElement.cpp \
@@ -1509,6 +1741,7 @@ webcore_built_sources += \
 IDL_BINDINGS += \
 	WebCore/svg/SVGZoomEvent.idl \
 	WebCore/svg/SVGAElement.idl \
+	WebCore/svg/SVGAltGlyphElement.idl \
 	WebCore/svg/SVGAngle.idl \
 	WebCore/svg/SVGAnimateColorElement.idl \
 	WebCore/svg/SVGAnimatedAngle.idl \
@@ -1643,11 +1876,12 @@ IDL_BINDINGS += \
 webcore_cppflags += \
 	-DENABLE_SVG=1 \
 	-I\$(top_srcdir)/WebCore/svg \
+	-I\$(top_srcdir)/WebCore/svg/animation \
 	-I\$(top_srcdir)/WebCore/svg/graphics \
 	-I\$(top_srcdir)/WebCore/svg/graphics/filters
 
 webcore_sources += \
-	WebCore/bindings/js/JSSVGElementWrapperFactory.cpp \
+	WebCore/bindings/js/JSSVGLengthCustom.cpp \
 	WebCore/bindings/js/JSSVGMatrixCustom.cpp \
 	WebCore/bindings/js/JSSVGPathSegCustom.cpp \
 	WebCore/bindings/js/JSSVGPathSegListCustom.cpp \
@@ -1657,6 +1891,10 @@ webcore_sources += \
 	WebCore/css/SVGCSSComputedStyleDeclaration.cpp \
 	WebCore/css/SVGCSSParser.cpp \
 	WebCore/css/SVGCSSStyleSelector.cpp \
+	WebCore/platform/graphics/filters/FEBlend.cpp \
+	WebCore/platform/graphics/filters/FEColorMatrix.cpp \
+	WebCore/platform/graphics/filters/FEComponentTransfer.cpp \
+	WebCore/platform/graphics/filters/FEComposite.cpp \
 	WebCore/rendering/SVGRenderStyle.cpp \
 	WebCore/rendering/SVGRenderStyleDefs.cpp \
 	WebCore/rendering/SVGRenderTreeAsText.cpp \
@@ -1664,10 +1902,11 @@ webcore_sources += \
 	WebCore/svg/SVGZoomEvent.cpp \
 	WebCore/svg/SVGDocumentExtensions.cpp \
 	WebCore/svg/SVGImageLoader.cpp \
-	WebCore/svg/SVGTimer.cpp \
-	WebCore/svg/TimeScheduler.cpp \
 	WebCore/svg/ColorDistance.cpp \
+	WebCore/svg/Filter.cpp \
+	WebCore/svg/FilterEffect.cpp \
 	WebCore/svg/SVGAElement.cpp \
+	WebCore/svg/SVGAltGlyphElement.cpp \
 	WebCore/svg/SVGAngle.cpp \
 	WebCore/svg/SVGAnimateColorElement.cpp \
 	WebCore/svg/SVGAnimatedPathData.cpp \
@@ -1728,6 +1967,7 @@ webcore_sources += \
 	WebCore/svg/SVGGElement.cpp \
 	WebCore/svg/SVGGlyphElement.cpp \
 	WebCore/svg/SVGGradientElement.cpp \
+	WebCore/svg/SVGHKernElement.cpp \
 	WebCore/svg/SVGImageElement.cpp \
 	WebCore/svg/SVGLangSpace.cpp \
 	WebCore/svg/SVGLength.cpp \
@@ -1792,10 +2032,9 @@ webcore_sources += \
 	WebCore/svg/SVGViewElement.cpp \
 	WebCore/svg/SVGViewSpec.cpp \
 	WebCore/svg/SVGZoomAndPan.cpp \
-	WebCore/svg/graphics/filters/SVGFEBlend.cpp \
-	WebCore/svg/graphics/filters/SVGFEColorMatrix.cpp \
-	WebCore/svg/graphics/filters/SVGFEComponentTransfer.cpp \
-	WebCore/svg/graphics/filters/SVGFEComposite.cpp \
+	WebCore/svg/animation/SMILTime.cpp \
+	WebCore/svg/animation/SMILTimeContainer.cpp \
+	WebCore/svg/animation/SVGSMILElement.cpp \
 	WebCore/svg/graphics/filters/SVGFEConvolveMatrix.cpp \
 	WebCore/svg/graphics/filters/SVGFEDiffuseLighting.cpp \
 	WebCore/svg/graphics/filters/SVGFEDisplacementMap.cpp \
@@ -1806,6 +2045,7 @@ webcore_sources += \
 	WebCore/svg/graphics/filters/SVGFEMorphology.cpp \
 	WebCore/svg/graphics/filters/SVGFEOffset.cpp \
 	WebCore/svg/graphics/filters/SVGFESpecularLighting.cpp \
+	WebCore/svg/graphics/filters/SVGFETile.cpp \
 	WebCore/svg/graphics/filters/SVGFETurbulence.cpp \
 	WebCore/svg/graphics/filters/SVGFilterEffect.cpp \
 	WebCore/svg/graphics/filters/SVGLightSource.cpp \
@@ -1842,7 +2082,7 @@ webcore_sources += \
 	WebCore/rendering/SVGRenderSupport.cpp \
 	WebCore/rendering/SVGRootInlineBox.cpp
 
-webkitgtk_sources += \
+webcoregtk_sources += \
 	WebCore/svg/graphics/cairo/RenderPathCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerGradientCairo.cpp \
@@ -1852,20 +2092,6 @@ webkitgtk_sources += \
 	WebCore/svg/graphics/cairo/SVGResourceFilterCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceMaskerCairo.cpp
 
-
-DerivedSources/CSSPropertyNames.h: $(WebCore)/css/CSSPropertyNames.in $(WebCore)/css/SVGCSSPropertyNames.in $(WebCore)/css/makeprop.pl
-	if sort $< $(WebCore)/css/SVGCSSPropertyNames.in | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
-	cat $< $(WebCore)/css/SVGCSSPropertyNames.in > CSSPropertyNames.in
-	$(PERL) "$(WebCore)/css/makeprop.pl"
-	mv CSSPropertyNames.* $(GENSOURCES)
-
-# Lower case all the values, as CSS values are case-insensitive
-DerivedSources/CSSValueKeywords.h : $(WebCore)/css/CSSValueKeywords.in $(WebCore)/css/SVGCSSValueKeywords.in
-	$(PERL) -ne 'print lc' $(WebCore)/css/SVGCSSValueKeywords.in > SVGCSSValueKeywords.in
-	if sort $< SVGCSSValueKeywords.in | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
-	cat $< SVGCSSValueKeywords.in > CSSValueKeywords.in
-	$(PERL) "$(WebCore)/css/makevalues.pl"
-	mv SVGCSSValueKeywords.in $(GENSOURCES) && mv CSSValueKeywords.* $(GENSOURCES)
 
 # SVG Features
 if ENABLE_SVG_USE
@@ -1909,11 +2135,10 @@ DerivedSources/SVGNames.cpp: DerivedSources/SVGElementFactory.cpp;
 
 if SVG_FLAGS
 DerivedSources/SVGElementFactory.cpp: $(WebCore)/dom/make_names.pl $(WebCore)/svg/svgtags.in $(WebCore)/svg/svgattrs.in
-	$(PERL) $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --extraDefines "$(SVG_FEATURES)" \
-	--namespace SVG --cppNamespace WebCore --namespaceURI "http://www.w3.org/2000/svg" --factory --attrsNullNamespace --output $(GENSOURCES)
+	$(PERL) -I$(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --extraDefines "$(SVG_FEATURES)" --outputDir "$(GENSOURCES)"
 else
 DerivedSources/SVGElementFactory.cpp: $(WebCore)/dom/make_names.pl $(WebCore)/svg/svgtags.in $(WebCore)/svg/svgattrs.in
-	$(PERL) $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --namespace SVG --cppNamespace WebCore --namespaceURI "http://www.w3.org/2000/svg" --factory --attrsNullNamespace --output $(GENSOURCES)
+	$(PERL) -I$(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --outputDir "$(GENSOURCES)"
 
 endif # SVG_FLAGS
 
@@ -1922,46 +2147,46 @@ endif # SVG_FLAGS
 DerivedSources/XLinkNames.h: DerivedSources/XLinkNames.cpp;
 
 DerivedSources/XLinkNames.cpp : $(WebCore)/dom/make_names.pl $(WebCore)/svg/xlinkattrs.in
-	$(PERL) $< --attrs $(WebCore)/svg/xlinkattrs.in --namespace XLink --cppNamespace WebCore --namespaceURI "http://www.w3.org/1999/xlink" --output $(GENSOURCES)
+	$(PERL) -I$(WebCore)/bindings/scripts $< --attrs $(WebCore)/svg/xlinkattrs.in --outputDir "$(GENSOURCES)"
 
-else !ENABLE_SVG
+endif # END ENABLE_SVG
 
-DerivedSources/CSSPropertyNames.h: $(WebCore)/css/CSSPropertyNames.in $(WebCore)/css/makeprop.pl
-	cp $< CSSPropertyNames.in
+DerivedSources/CSSPropertyNames.h: $(WEBCORE_CSS_PROPERTY_NAMES) $(WebCore)/css/makeprop.pl
+	if sort $(WEBCORE_CSS_PROPERTY_NAMES) | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
+	cat $(WEBCORE_CSS_PROPERTY_NAMES) > CSSPropertyNames.in
 	$(PERL) "$(WebCore)/css/makeprop.pl"
 	mv CSSPropertyNames.* $(GENSOURCES)
 
-DerivedSources/CSSValueKeywords.h: $(WebCore)/css/CSSValueKeywords.in $(WebCore)/css/makevalues.pl
-	cp $< CSSValueKeywords.in
+# Lower case all the values, as CSS values are case-insensitive
+DerivedSources/CSSValueKeywords.h : $(WEBCORE_CSS_VALUE_KEYWORDS) $(WebCore)/css/makevalues.pl
+	$(PERL) -ne 'print lc' $(WEBCORE_CSS_VALUE_KEYWORDS) > CSSValueKeywords.in
+	if sort CSSValueKeywords.in | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
 	$(PERL) "$(WebCore)/css/makevalues.pl"
 	mv CSSValueKeywords.* $(GENSOURCES)
 
-endif !ENABLE_SVG # END ENABLE_SVG
-
 # DOCTYPE strings
-$(GENSOURCES)/DocTypeStrings.cpp : $(WebCore)/html/DocTypeStrings.gperf
-	$(GPERF) -CEot -L ANSI-C -k "*" -N findDoctypeEntry -F ,PubIDInfo::eAlmostStandards,PubIDInfo::eAlmostStandards \
-	$(WebCore)/html/DocTypeStrings.gperf > $@
+DerivedSources/DocTypeStrings.cpp : $(WebCore)/html/DocTypeStrings.gperf
+	$(GPERF) -CEot -L ANSI-C -k "*" -N findDoctypeEntry -F ,PubIDInfo::eAlmostStandards,PubIDInfo::eAlmostStandards $(WebCore)/html/DocTypeStrings.gperf > $@
 
 # HTML entity names
-$(GENSOURCES)/HTMLEntityNames.c : $(WebCore)/html/HTMLEntityNames.gperf
+DerivedSources/HTMLEntityNames.c : $(WebCore)/html/HTMLEntityNames.gperf
 	$(GPERF) -a -L ANSI-C -C -G -c -o -t -k '*' -N findEntity -D -s 2 \
 	$(WebCore)/html/HTMLEntityNames.gperf > $@
 
 # color names
-$(GENSOURCES)/ColorData.c: $(WebCore)/platform/ColorData.gperf
+DerivedSources/ColorData.c: $(WebCore)/platform/ColorData.gperf
 	$(GPERF) -CDEot -L ANSI-C -k '*' -N findColor -D -s 2 $< > $@
 
 # CSS tokenizer
-$(GENSOURCES)/tokenizer.cpp : $(WebCore)/css/tokenizer.flex $(WebCore)/css/maketokenizer
+DerivedSources/tokenizer.cpp : $(WebCore)/css/tokenizer.flex $(WebCore)/css/maketokenizer
 	$(FLEX) -t $< | $(PERL) $(WebCore)/css/maketokenizer > $@
 
 # CSS grammar
 
-$(GENSOURCES)/CSSGrammar.h: $(GENSOURCES)/CSSGrammar.cpp;
+DerivedSources/CSSGrammar.h: $(GENSOURCES)/CSSGrammar.cpp;
 
 # NOTE: older versions of bison do not inject an inclusion guard, so we do it
-$(GENSOURCES)/CSSGrammar.cpp: $(WebCore)/css/CSSGrammar.y
+DerivedSources/CSSGrammar.cpp: $(WebCore)/css/CSSGrammar.y
 	rm -f $(GENSOURCES)/CSSGrammar.cpp.h $(GENSOURCES)/CSSGrammar.hpp
 	$(BISON) -d -p cssyy $< -o $(GENSOURCES)/CSSGrammar.cpp
 	touch $(GENSOURCES)/CSSGrammar.cpp.h $(GENSOURCES)/CSSGrammar.hpp
@@ -1972,21 +2197,23 @@ $(GENSOURCES)/CSSGrammar.cpp: $(WebCore)/css/CSSGrammar.y
 	rm -f $(GENSOURCES)/CSSGrammar.cpp.h $(GENSOURCES)/CSSGrammar.hpp
 
 # user agent style sheets
-USER_AGENT_STYLE_SHEETS = $(WebCore)/css/html4.css $(WebCore)/css/quirks.css $(WebCore)/css/view-source.css $(WebCore)/css/svg.css
+USER_AGENT_STYLE_SHEETS = \
+	$(WebCore)/css/html4.css \
+	$(WebCore)/css/quirks.css \
+	$(WebCore)/css/view-source.css \
+	$(WebCore)/css/svg.css
+
+# new-style JavaScript bindings
+SCRIPTS_BINDINGS = \
+	$(WebCore)/bindings/scripts/CodeGenerator.pm \
+	$(WebCore)/bindings/scripts/IDLParser.pm \
+	$(WebCore)/bindings/scripts/IDLStructure.pm \
+	$(WebCore)/bindings/scripts/generate-bindings.pl
 
 DerivedSources/UserAgentStyleSheetsData.cpp: DerivedSources/UserAgentStyleSheets.h;
 
 DerivedSources/UserAgentStyleSheets.h: $(WebCore)/css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS)
 	$(PERL) $< $@ DerivedSources/UserAgentStyleSheetsData.cpp $(USER_AGENT_STYLE_SHEETS)
-
-# character set name table
-CHARSET_TABLE_DEPS := \
-	$(WebCore)/platform/text/mac/make-charset-table.pl \
-	$(WebCore)/platform/text/mac/character-sets.txt \
-	$(WebCore)/platform/text/mac/mac-encodings.txt
-
-DerivedSources/CharsetData.cpp : $(CHARSET_TABLE_DEPS)
-	$(PERL) $^ kTextEncoding > $@
 
 # lookup tables for old-style JavaScript bindings
 %.lut.h: %.cpp $(CREATE_HASH_TABLE)
@@ -1998,26 +2225,18 @@ WebCore/bindings/js/%Table.cpp: $(srcdir)/WebCore/bindings/js/JSHTMLInputElement
 # HTML tag and attribute names
 DerivedSources/HTMLNames.h: DerivedSources/HTMLNames.cpp;
 
+if HTML_FLAGS
 DerivedSources/HTMLNames.cpp: $(WebCore)/dom/make_names.pl $(WebCore)/html/HTMLTagNames.in $(WebCore)/html/HTMLAttributeNames.in
-	$(PERL) $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in \
-	    --namespace HTML --namespacePrefix xhtml --cppNamespace WebCore \
-	    --namespaceURI "http://www.w3.org/1999/xhtml" --attrsNullNamespace \
-	    --output $(GENSOURCES)
+	$(PERL) -I$(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --extraDefines "$(HTML_FEATURES)" --outputDir "$(GENSOURCES)"
+else
+DerivedSources/HTMLNames.cpp: $(WebCore)/dom/make_names.pl $(WebCore)/html/HTMLTagNames.in $(WebCore)/html/HTMLAttributeNames.in
+	$(PERL) -I$(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --outputDir "$(GENSOURCES)"
+endif # HTML_FLAGS
 
 DerivedSources/XMLNames.h: DerivedSources/XMLNames.cpp;
 
 DerivedSources/XMLNames.cpp: $(WebCore)/dom/make_names.pl $(WebCore)/xml/xmlattrs.in
-	$(PERL) $< --attrs $(WebCore)/xml/xmlattrs.in \
-            --namespace XML --cppNamespace WebCore --namespaceURI "http://www.w3.org/XML/1998/namespace" \
-	    --output $(GENSOURCES)
-
-# new-style JavaScript bindings
-SCRIPTS_JS_BINDINGS = \
-	$(WebCore)/bindings/scripts/CodeGenerator.pm \
-	$(WebCore)/bindings/scripts/CodeGeneratorJS.pm \
-	$(WebCore)/bindings/scripts/IDLParser.pm \
-	$(WebCore)/bindings/scripts/IDLStructure.pm \
-	$(WebCore)/bindings/scripts/generate-bindings.pl
+	$(PERL) -I$(WebCore)/bindings/scripts $< --attrs $(WebCore)/xml/xmlattrs.in --outputDir "$(GENSOURCES)"
 
 vpath %.idl = \
     $(WebCore) \
@@ -2026,30 +2245,23 @@ vpath %.idl = \
     $(WebCore)/css \
     $(WebCore)/dom \
     $(WebCore)/html \
+    $(WebCore)/loader/appcache \
     $(WebCore)/page \
     $(WebCore)/storage \
     $(WebCore)/svg \
-    $(WebCore)/xml
+    $(WebCore)/xml \
+    $(WebCore)/plugins
 
 DerivedSources/JS%.h: DerivedSources/JS%.cpp;
 
-DerivedSources/JS%.cpp: %.idl $(SCRIPTS_JS_BINDINGS)
-	$(PERL) -I$(WebCore)/bindings/scripts \
-	$(WebCore)/bindings/scripts/generate-bindings.pl --defines \
-	"$(FEATURE_DEFINES_JAVASCRIPT)" --generator JS --include $(WebCore)/dom \
-	--include $(WebCore)/html --include $(WebCore)/css --include $(WebCore)/page \
-	--include $(WebCore)/xml --include $(WebCore)/svg --outputdir $(GENSOURCES) $<
+DerivedSources/JS%.cpp: %.idl $(SCRIPTS_BINDINGS) $(WebCore)/bindings/scripts/CodeGeneratorJS.pm
+	$(PERL) -I$(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --include $(WebCore)/dom --include $(WebCore)/html --include $(WebCore)/css --include $(WebCore)/page --include $(WebCore)/xml --include $(WebCore)/svg --outputDir "$(GENSOURCES)" --defines "$(FEATURE_DEFINES_JAVASCRIPT)" --generator JS $<
 
 # Clean rules for WebCore
 
 CLEANFILES += \
 	WebCore/bindings/js/JSEventTargetBase.lut.h \
 	WebCore/bindings/js/JSHTMLInputElementBaseTable.cpp \
-	WebCore/bindings/js/JSLocation.lut.h \
-	JSXMLHttpRequest.lut.h \
-	JSXSLTProcessor.lut.h \
-	kjs_css.lut.h \
-	kjs_events.lut.h \
-	kjs_navigator.lut.h \
-	kjs_window.lut.h
+	WebCore/bindings/js/JSDOMWindowBase.lut.h \
+	WebCore/bindings/js/JSRGBColor.lut.h
 

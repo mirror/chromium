@@ -70,6 +70,7 @@ class String;
 class ImageObserver;
 
 class Image : Noncopyable {
+    friend class GeneratedImage;
     friend class GraphicsContext;
 public:
     Image(ImageObserver* = 0);
@@ -78,6 +79,8 @@ public:
     static Image* loadPlatformResource(const char* name);
     static bool supportsType(const String&); 
 
+    virtual bool isBitmapImage() const { return false; }
+    
     bool isNull() const;
 
     // These are only used for SVGImage right now
@@ -136,7 +139,7 @@ public:
 protected:
     static void fillWithSolidColor(GraphicsContext* ctxt, const FloatRect& dstRect, const Color& color, CompositeOperator op);
 
-private:
+protected:
 #if PLATFORM(WIN)
     virtual void drawFrameMatchingSourceSize(GraphicsContext*, const FloatRect& dstRect, const IntSize& srcSize, CompositeOperator) { }
 #endif

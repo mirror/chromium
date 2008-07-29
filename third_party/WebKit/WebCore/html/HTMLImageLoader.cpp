@@ -29,6 +29,7 @@
 #include "Element.h"
 #include "EventNames.h"
 #include "HTMLNames.h"
+#include "HTMLObjectElement.h"
 #include "RenderImage.h"
 
 using namespace std;
@@ -50,7 +51,7 @@ HTMLImageLoader::HTMLImageLoader(Element* elt)
 HTMLImageLoader::~HTMLImageLoader()
 {
     if (m_image)
-        m_image->deref(this);
+        m_image->removeClient(this);
     m_element->document()->removeImage(this);
 }
 
@@ -62,9 +63,9 @@ void HTMLImageLoader::setImage(CachedImage *newImage)
         m_firedLoad = true;
         m_imageComplete = true;
         if (newImage)
-            newImage->ref(this);
+            newImage->addClient(this);
         if (oldImage)
-            oldImage->deref(this);
+            oldImage->removeClient(this);
     }
 
     if (RenderObject* renderer = element()->renderer())
@@ -90,12 +91,15 @@ void HTMLImageLoader::updateFromElement()
 
     AtomicString attr = elem->getAttribute(elem->imageSourceAttributeName());
     
-    // Treat a lack of src or empty string for src as no image at all.
+    // Do not load any image if the 'src' attribute is missing or if it is
+    // an empty string referring to a local file. The latter condition is
+    // a quirk that preserves old behavior that Dashboard widgets
+    // need (<rdar://problem/5994621>).
     CachedImage *newImage = 0;
-    if (!attr.isEmpty()) {
+    if (!(attr.isNull() || attr.isEmpty() && doc->baseURI().isLocalFile())) {
         if (m_loadManually) {
             doc->docLoader()->setAutoLoadImages(false);
-            newImage = new CachedImage(doc->docLoader(), parseURL(attr), false /* not for cache */);
+            newImage = new CachedImage(parseURL(attr));
             newImage->setLoading(true);
             newImage->setDocLoader(doc->docLoader());
             doc->docLoader()->m_docResources.set(newImage->url(), newImage);
@@ -111,9 +115,9 @@ void HTMLImageLoader::updateFromElement()
 #endif
         setLoadingImage(newImage);
         if (newImage)
-            newImage->ref(this);
+            newImage->addClient(this);
         if (oldImage)
-            oldImage->deref(this);
+            oldImage->removeClient(this);
     }
 
     if (RenderObject* renderer = elem->renderer())
@@ -142,6 +146,9 @@ void HTMLImageLoader::notifyFinished(CachedResource *image)
     if (RenderObject* renderer = elem->renderer())
         if (renderer->isImage())
             static_cast<RenderImage*>(renderer)->setCachedImage(m_image);
+            
+    if (image->errorOccurred() && elem->hasTagName(objectTag))
+        static_cast<HTMLObjectElement*>(elem)->renderFallbackContent();
 }
 
 }

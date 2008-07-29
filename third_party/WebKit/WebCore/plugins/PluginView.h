@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Collabora, Ltd. All rights reserved.
+ * Copyright (C) 2008 Collabora Ltd. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,24 +27,29 @@
 #ifndef PluginView_H
 #define PluginView_H
 
-#include <winsock2.h>
-#include <windows.h>
-
 #include "CString.h"
+#include "FrameLoadRequest.h"
 #include "IntRect.h"
 #include "KURL.h"
 #include "PlatformString.h"
 #include "PluginStream.h"
-#include "PluginQuirkSet.h"
 #include "ResourceRequest.h"
 #include "Timer.h"
 #include "Widget.h"
-#include "npapi.h"
+#include "npruntime_internal.h"
 #include <wtf/HashMap.h>
 #include <wtf/HashSet.h>
 #include <wtf/OwnPtr.h>
+#include <wtf/PassRefPtr.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
+
+#if PLATFORM(WIN_OS) && PLATFORM(QT)
+typedef struct HWND__* HWND;
+typedef HWND PlatformPluginWidget;
+#else
+typedef PlatformWidget PlatformPluginWidget;
+#endif
 
 namespace KJS {
     namespace Bindings {
@@ -55,11 +60,12 @@ namespace KJS {
 namespace WebCore {
     class Element;
     class Frame;
-    struct FrameLoadRequest;
     class KeyboardEvent;
     class MouseEvent;
     class KURL;
+#if PLATFORM(WIN_OS) && !PLATFORM(WX)
     class PluginMessageThrottlerWin;
+#endif
     class PluginPackage;
     class PluginRequest;
     class PluginStream;
@@ -72,11 +78,28 @@ namespace WebCore {
         PluginStatusLoadedSuccessfully
     };
 
-    class PluginView : public Widget, private PluginStreamClient {
-    friend static LRESULT CALLBACK PluginViewWndProc(HWND, UINT, WPARAM, LPARAM);
-
+    class PluginRequest {
     public:
-        PluginView(Frame* parentFrame, const IntSize&, PluginPackage* plugin, Element*, const KURL&, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually);
+        PluginRequest(const FrameLoadRequest& frameLoadRequest, bool sendNotification, void* notifyData, bool shouldAllowPopups)
+            : m_frameLoadRequest(frameLoadRequest)
+            , m_notifyData(notifyData)
+            , m_sendNotification(sendNotification)
+            , m_shouldAllowPopups(shouldAllowPopups) { }
+    public:
+        const FrameLoadRequest& frameLoadRequest() const { return m_frameLoadRequest; }
+        void* notifyData() const { return m_notifyData; }
+        bool sendNotification() const { return m_sendNotification; }
+        bool shouldAllowPopups() const { return m_shouldAllowPopups; }
+    private:
+        FrameLoadRequest m_frameLoadRequest;
+        void* m_notifyData;
+        bool m_sendNotification;
+        bool m_shouldAllowPopups;
+    };
+
+    class PluginView : public Widget, private PluginStreamClient {
+    public:
+        static PluginView* create(Frame* parentFrame, const IntSize&, Element*, const KURL&, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually);
         virtual ~PluginView();
 
         PluginPackage* plugin() const { return m_plugin.get(); }
@@ -85,7 +108,7 @@ namespace WebCore {
         void setNPWindowRect(const IntRect&);
         static PluginView* currentPluginView();
 
-        KJS::Bindings::Instance* bindingInstance();
+        PassRefPtr<KJS::Bindings::Instance> bindingInstance();
 
         PluginStatus status() const { return m_status; }
 
@@ -98,8 +121,14 @@ namespace WebCore {
         int32 write(NPStream* stream, int32 len, void* buffer);
         NPError destroyStream(NPStream* stream, NPReason reason);
         const char* userAgent();
+#if ENABLE(NETSCAPE_PLUGIN_API)
+        static const char* userAgentStatic();
+#endif
         void status(const char* message);
         NPError getValue(NPNVariable variable, void* value);
+#if ENABLE(NETSCAPE_PLUGIN_API)
+        static NPError getValueStatic(NPNVariable variable, void* value);
+#endif
         NPError setValue(NPPVariable variable, void* value);
         void invalidateRect(NPRect*);
         void invalidateRegion(NPRegion);
@@ -108,6 +137,8 @@ namespace WebCore {
         void popPopupsEnabledState();
 
         bool arePopupsAllowed() const;
+
+        void setJavaScriptPaused(bool);
 
         void disconnectStream(PluginStream*);
         void streamDidFinishLoading(PluginStream* stream) { disconnectStream(stream); }
@@ -126,8 +157,13 @@ namespace WebCore {
         virtual void attachToWindow();
         virtual void detachFromWindow();
 
+        virtual bool isPluginView() const { return true; }
+
+#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+        static LRESULT CALLBACK PluginViewWndProc(HWND, UINT, WPARAM, LPARAM);
         LRESULT wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
         WNDPROC pluginWndProc() const { return m_pluginWndProc; }
+#endif
 
         // Used for manual loading
         void didReceiveResponse(const ResourceResponse&);
@@ -138,6 +174,8 @@ namespace WebCore {
         static bool isCallingPlugin();
 
     private:
+        PluginView(Frame* parentFrame, const IntSize&, PluginPackage*, Element*, const KURL&, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually);
+
         void setParameters(const Vector<String>& paramNames, const Vector<String>& paramValues);
         void init();
         bool start();
@@ -145,10 +183,13 @@ namespace WebCore {
         static void setCurrentPluginView(PluginView*);
         NPError load(const FrameLoadRequest&, bool sendNotification, void* notifyData);
         NPError handlePost(const char* url, const char* target, uint32 len, const char* buf, bool file, void* notifyData, bool sendNotification, bool allowHeaders);
+        NPError handlePostReadFile(Vector<char>& buffer, uint32 len, const char* buf);
+        static void freeStringArray(char** stringArray, int length);
         void setCallingPlugin(bool) const;
+
+        Frame* m_parentFrame;
         RefPtr<PluginPackage> m_plugin;
         Element* m_element;
-        Frame* m_parentFrame;
         bool m_isStarted;
         KURL m_url;
         KURL m_baseURL;
@@ -165,11 +206,10 @@ namespace WebCore {
         void popPopupsStateTimerFired(Timer<PluginView>*);
         Timer<PluginView> m_popPopupsStateTimer;
 
+#ifndef NP_NO_CARBON
         bool dispatchNPEvent(NPEvent&);
-        OwnPtr<PluginMessageThrottlerWin> m_messageThrottler;
-
+#endif
         void updateWindow() const;
-        void determineQuirks(const String& mimeType);
         void paintMissingPluginIcon(GraphicsContext*, const IntRect&);
 
         void handleKeyboardEvent(KeyboardEvent*);
@@ -192,23 +232,31 @@ namespace WebCore {
         HashSet<RefPtr<PluginStream> > m_streams;
         Vector<PluginRequest*> m_requests;
 
-        PluginQuirkSet m_quirks;
         bool m_isWindowed;
         bool m_isTransparent;
         bool m_isVisible;
         bool m_attachedToWindow;
         bool m_haveInitialized;
 
+#if PLATFORM(GTK) || defined(Q_WS_X11)
+        bool m_needsXEmbed;
+#endif
+
+#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+        OwnPtr<PluginMessageThrottlerWin> m_messageThrottler;
         WNDPROC m_pluginWndProc;
-        HWND m_window; // for windowed plug-ins
+        unsigned m_lastMessage;
+        bool m_isCallingPluginWndProc;
+#endif
+
+        PlatformPluginWidget m_window; // for windowed plug-ins
         mutable IntRect m_clipRect; // The clip rect to apply to a windowed plug-in
         mutable IntRect m_windowRect; // Our window rect.
 
-        unsigned m_lastMessage;
-        bool m_isCallingPluginWndProc;
-
         bool m_loadManually;
         RefPtr<PluginStream> m_manualStream;
+
+        bool m_isJavaScriptPaused;
 
         static PluginView* s_currentPluginView;
     };

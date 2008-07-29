@@ -27,9 +27,12 @@
 #include "config.h"
 #include "ImageBuffer.h"
 
+#include "BitmapImage.h"
 #include "GraphicsContext.h"
-#include <cairo.h>
+#include "ImageData.h"
 #include "NotImplemented.h"
+
+#include <cairo.h>
 
 using namespace std;
 
@@ -72,5 +75,33 @@ cairo_surface_t* ImageBuffer::surface() const
     return m_surface;
 }
 
-
+Image* ImageBuffer::image() const
+{
+    if (!m_image) {
+        // It's assumed that if image() is called, the actual rendering to the
+        // GraphicsContext must be done.
+        ASSERT(context());
+        // BitmapImage will release the passed in surface on destruction
+        m_image.set(new BitmapImage(cairo_surface_reference(m_surface)));
+    }
+    return m_image.get();
 }
+
+PassRefPtr<ImageData> ImageBuffer::getImageData(const IntRect&) const
+{
+    notImplemented();
+    return 0;
+}
+
+void ImageBuffer::putImageData(ImageData*, const IntRect&, const IntPoint&)
+{
+    notImplemented();
+}
+
+String ImageBuffer::toDataURL(const String&) const
+{
+    notImplemented();
+    return String();
+}
+
+} // namespace WebCore

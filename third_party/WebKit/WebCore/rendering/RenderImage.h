@@ -40,19 +40,17 @@ public:
     virtual const char* renderName() const { return "RenderImage"; }
 
     virtual bool isImage() const { return true; }
+    virtual bool isRenderImage() const { return true; }
     
     virtual void paintReplaced(PaintInfo& paintInfo, int tx, int ty);
 
     virtual int minimumReplacedHeight() const;
 
-    virtual void imageChanged(CachedImage*);
+    virtual void imageChanged(WrappedImagePtr);
     
     bool setImageSizeForAltText(CachedImage* newImage = 0);
 
     void updateAltText();
-
-    void setIsAnonymousImage(bool anon) { m_isAnonymousImage = anon; }
-    bool isAnonymousImage() { return m_isAnonymousImage; }
 
     void setCachedImage(CachedImage*);
     CachedImage* cachedImage() const { return m_cachedImage; }
@@ -68,10 +66,21 @@ public:
 
     void resetAnimation();
 
+    virtual bool hasImage() const { return m_cachedImage; }
+
+    void highQualityRepaintTimerFired(Timer<RenderImage>*);
+
 protected:
-    Image* image() { return m_cachedImage ? m_cachedImage->image() : nullImage(); }
-    
-    bool errorOccurred() const { return m_cachedImage && m_cachedImage->errorOccurred(); }
+    virtual Image* image(int w = 0, int h = 0) { return m_cachedImage ? m_cachedImage->image() : nullImage(); }
+    virtual bool errorOccurred() const { return m_cachedImage && m_cachedImage->errorOccurred(); }
+    virtual bool usesImageContainerSize() const { return m_cachedImage ? m_cachedImage->usesImageContainerSize() : false; }
+    virtual void setImageContainerSize(const IntSize& size) const { if (m_cachedImage) m_cachedImage->setImageContainerSize(size); }
+    virtual bool imageHasRelativeWidth() const { return m_cachedImage ? m_cachedImage->imageHasRelativeWidth() : false; }
+    virtual bool imageHasRelativeHeight() const { return m_cachedImage ? m_cachedImage->imageHasRelativeHeight() : false; }
+    virtual IntSize imageSize(float multiplier) const { return m_cachedImage ? m_cachedImage->imageSize(multiplier) : IntSize(); }
+    virtual WrappedImagePtr imagePtr() const { return m_cachedImage; }
+
+    virtual void intrinsicSizeChanged() { imageChanged(imagePtr()); }
 
 private:
     int calcAspectRatioWidth() const;
@@ -80,16 +89,16 @@ private:
     bool isWidthSpecified() const;
     bool isHeightSpecified() const;
 
+protected:
     // The image we are rendering.
     CachedImage* m_cachedImage;
-
-    // True if the image is set through the content: property
-    bool m_isAnonymousImage;
 
     // Text to display as long as the image isn't available.
     String m_altText;
 
     static Image* nullImage();
+    
+    friend class RenderImageScaleObserver;
 };
 
 } // namespace WebCore

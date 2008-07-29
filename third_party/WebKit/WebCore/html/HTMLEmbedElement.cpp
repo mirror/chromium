@@ -1,10 +1,8 @@
-/**
- * This file is part of the DOM implementation for KDE.
- *
+/*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Stefan Schimanski (1Stein@gmx.de)
- * Copyright (C) 2004, 2005, 2006 Apple Computer, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Trolltech ASA
  *
  * This library is free software; you can redistribute it and/or
@@ -22,6 +20,7 @@
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
  */
+
 #include "config.h"
 #include "HTMLEmbedElement.h"
 
@@ -33,6 +32,10 @@
 #include "HTMLObjectElement.h"
 #include "HTMLNames.h"
 #include "RenderPartObject.h"
+
+#if USE(JAVASCRIPTCORE_BINDINGS)
+#include "runtime.h"
+#endif
 
 namespace WebCore {
 
@@ -64,7 +67,7 @@ static inline RenderWidget* findWidgetRenderer(const Node* n)
         ? static_cast<RenderWidget*>(n->renderer()) : 0;
 }
     
-KJS::Bindings::Instance *HTMLEmbedElement::getInstance() const
+KJS::Bindings::Instance* HTMLEmbedElement::getInstance() const
 {
     Frame* frame = document()->frame();
     if (!frame)
@@ -98,42 +101,42 @@ bool HTMLEmbedElement::mapToEntry(const QualifiedName& attrName, MappedAttribute
 
 void HTMLEmbedElement::parseMappedAttribute(MappedAttribute* attr)
 {
-    String val = attr->value();
+    const AtomicString& value = attr->value();
   
     if (attr->name() == typeAttr) {
-        m_serviceType = val.lower();
+        m_serviceType = value.string().lower();
         int pos = m_serviceType.find(";");
         if (pos != -1)
             m_serviceType = m_serviceType.left(pos);
     } else if (attr->name() == codeAttr || attr->name() == srcAttr)
-         url = parseURL(val).deprecatedString();
+        m_url = parseURL(value.string());
     else if (attr->name() == pluginpageAttr || attr->name() == pluginspageAttr)
-        m_pluginPage = val;
+        m_pluginPage = value;
     else if (attr->name() == hiddenAttr) {
-        if (val.lower() == "yes" || val.lower() == "true") {
-            // FIXME: Not dynamic, but it's not really important that such a rarely-used
-            // feature work dynamically.
-            addCSSLength(attr, CSS_PROP_WIDTH, "0");
-            addCSSLength(attr, CSS_PROP_HEIGHT, "0");
+        if (equalIgnoringCase(value.string(), "yes") || equalIgnoringCase(value.string(), "true")) {
+            // FIXME: Not dynamic, since we add this but don't remove it, but it may be OK for now
+            // that this rarely-used attribute won't work properly if you remove it.
+            addCSSLength(attr, CSSPropertyWidth, "0");
+            addCSSLength(attr, CSSPropertyHeight, "0");
         }
     } else if (attr->name() == nameAttr) {
         if (inDocument() && document()->isHTMLDocument()) {
-            HTMLDocument* doc = static_cast<HTMLDocument*>(document());
-            doc->removeNamedItem(oldNameAttr);
-            doc->addNamedItem(val);
+            HTMLDocument* document = static_cast<HTMLDocument*>(this->document());
+            document->removeNamedItem(m_name);
+            document->addNamedItem(value);
         }
-        oldNameAttr = val;
+        m_name = value;
     } else
         HTMLPlugInElement::parseMappedAttribute(attr);
 }
 
-bool HTMLEmbedElement::rendererIsNeeded(RenderStyle *style)
+bool HTMLEmbedElement::rendererIsNeeded(RenderStyle* style)
 {
-    Frame *frame = document()->frame();
+    Frame* frame = document()->frame();
     if (!frame)
         return false;
 
-    Node *p = parentNode();
+    Node* p = parentNode();
     if (p && p->hasTagName(objectTag)) {
         ASSERT(p->renderer());
         return false;
@@ -142,7 +145,7 @@ bool HTMLEmbedElement::rendererIsNeeded(RenderStyle *style)
     return true;
 }
 
-RenderObject *HTMLEmbedElement::createRenderer(RenderArena *arena, RenderStyle *style)
+RenderObject* HTMLEmbedElement::createRenderer(RenderArena* arena, RenderStyle* style)
 {
     return new (arena) RenderPartObject(this);
 }
@@ -164,16 +167,15 @@ void HTMLEmbedElement::detach()
 
 void HTMLEmbedElement::updateWidget()
 {
+    document()->updateRendering();
     if (m_needWidgetUpdate && renderer())
         static_cast<RenderPartObject*>(renderer())->updateWidget(true);
 }
 
 void HTMLEmbedElement::insertedIntoDocument()
 {
-    if (document()->isHTMLDocument()) {
-        HTMLDocument *doc = static_cast<HTMLDocument *>(document());
-        doc->addNamedItem(oldNameAttr);
-    }
+    if (document()->isHTMLDocument())
+        static_cast<HTMLDocument*>(document())->addNamedItem(m_name);
 
     String width = getAttribute(widthAttr);
     String height = getAttribute(heightAttr);
@@ -194,10 +196,8 @@ void HTMLEmbedElement::insertedIntoDocument()
 
 void HTMLEmbedElement::removedFromDocument()
 {
-    if (document()->isHTMLDocument()) {
-        HTMLDocument *doc = static_cast<HTMLDocument *>(document());
-        doc->removeNamedItem(oldNameAttr);
-    }
+    if (document()->isHTMLDocument())
+        static_cast<HTMLDocument*>(document())->removeNamedItem(m_name);
 
     HTMLPlugInElement::removedFromDocument();
 }
@@ -215,7 +215,7 @@ void HTMLEmbedElement::attributeChanged(Attribute* attr, bool preserveDecls)
     }
 }
 
-bool HTMLEmbedElement::isURLAttribute(Attribute *attr) const
+bool HTMLEmbedElement::isURLAttribute(Attribute* attr) const
 {
     return attr->name() == srcAttr;
 }
@@ -238,6 +238,11 @@ String HTMLEmbedElement::type() const
 void HTMLEmbedElement::setType(const String& value)
 {
     setAttribute(typeAttr, value);
+}
+
+void HTMLEmbedElement::getSubresourceAttributeStrings(Vector<String>& urls) const
+{
+    urls.append(src());
 }
 
 }

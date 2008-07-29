@@ -38,23 +38,21 @@
 
 namespace WebCore {
 
+char SVGGradientElementIdentifier[] = "SVGGradientElement";
+
 SVGGradientElement::SVGGradientElement(const QualifiedName& tagName, Document* doc)
     : SVGStyledElement(tagName, doc)
     , SVGURIReference()
     , SVGExternalResourcesRequired()
-    , m_spreadMethod(0)
-    , m_gradientUnits(SVGUnitTypes::SVG_UNIT_TYPE_OBJECTBOUNDINGBOX)
-    , m_gradientTransform(new SVGTransformList(SVGNames::gradientTransformAttr))
+    , m_spreadMethod(this, SVGNames::spreadMethodAttr)
+    , m_gradientUnits(this, SVGNames::gradientUnitsAttr, SVGUnitTypes::SVG_UNIT_TYPE_OBJECTBOUNDINGBOX)
+    , m_gradientTransform(this, SVGNames::gradientTransformAttr, SVGTransformList::create(SVGNames::gradientTransformAttr))
 {
 }
 
 SVGGradientElement::~SVGGradientElement()
 {
 }
-
-ANIMATED_PROPERTY_DEFINITIONS(SVGGradientElement, int, Enumeration, enumeration, GradientUnits, gradientUnits, SVGNames::gradientUnitsAttr, m_gradientUnits)
-ANIMATED_PROPERTY_DEFINITIONS(SVGGradientElement, SVGTransformList*, TransformList, transformList, GradientTransform, gradientTransform, SVGNames::gradientTransformAttr, m_gradientTransform.get())
-ANIMATED_PROPERTY_DEFINITIONS(SVGGradientElement, int, Enumeration, enumeration, SpreadMethod, spreadMethod, SVGNames::spreadMethodAttr, m_spreadMethod)
 
 void SVGGradientElement::parseMappedAttribute(MappedAttribute* attr)
 {
@@ -102,9 +100,9 @@ void SVGGradientElement::svgAttributeChanged(const QualifiedName& attrName)
         m_resource->invalidate();
 }
 
-void SVGGradientElement::childrenChanged(bool changedByParser)
+void SVGGradientElement::childrenChanged(bool changedByParser, Node* beforeChange, Node* afterChange, int childCountDelta)
 {
-    SVGStyledElement::childrenChanged(changedByParser);
+    SVGStyledElement::childrenChanged(changedByParser, beforeChange, afterChange, childCountDelta);
 
     if (m_resource)
         m_resource->invalidate();
@@ -119,9 +117,9 @@ SVGResource* SVGGradientElement::canvasResource()
 {
     if (!m_resource) {
         if (gradientType() == LinearGradientPaintServer)
-            m_resource = new SVGPaintServerLinearGradient(this);
+            m_resource = SVGPaintServerLinearGradient::create(this);
         else
-            m_resource = new SVGPaintServerRadialGradient(this);
+            m_resource = SVGPaintServerRadialGradient::create(this);
     }
 
     return m_resource.get();

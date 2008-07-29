@@ -1,7 +1,8 @@
 /*
- * Copyright (C) 2006, 2007 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Computer, Inc. All rights reserved.
  * Copyright (C) 2006 Michael Emmel mike.emmel@gmail.com
  * Copyright (C) 2007 Holger Hans Peter Freyther
+ * Copyright (C) 2008 Collabora Ltd.
  *
  * All rights reserved.
  *
@@ -51,10 +52,15 @@ namespace WebCore {
 
 class ScrollViewScrollbar : public PlatformScrollbar {
 public:
+    static PassRefPtr<ScrollViewScrollbar> create(ScrollbarClient* client, ScrollbarOrientation orientation, ScrollbarControlSize size)
+    {
+        return adoptRef(new ScrollViewScrollbar(client, orientation, size));
+    }
+
+private:
     ScrollViewScrollbar(ScrollbarClient*, ScrollbarOrientation, ScrollbarControlSize);
 
-protected:
-    void geometryChanged();
+    virtual void geometryChanged() const;
 };
 
 class ScrollView::ScrollViewPrivate : public ScrollbarClient
@@ -119,7 +125,7 @@ ScrollViewScrollbar::ScrollViewScrollbar(ScrollbarClient* client, ScrollbarOrien
 {
 }
 
-void ScrollViewScrollbar::geometryChanged()
+void ScrollViewScrollbar::geometryChanged() const
 {
     if (!parent())
         return;
@@ -141,7 +147,7 @@ void ScrollView::ScrollViewPrivate::setHasHorizontalScrollbar(bool hasBar)
 {
     if (Scrollbar::hasPlatformScrollbars()) {
         if (hasBar && !hBar && !horizontalAdjustment) {
-            hBar = new ScrollViewScrollbar(this, HorizontalScrollbar, RegularScrollbar);
+            hBar = ScrollViewScrollbar::create(this, HorizontalScrollbar, RegularScrollbar);
             view->addChild(hBar.get());
         } else if (!hasBar && hBar) {
             view->removeChild(hBar.get());
@@ -154,7 +160,7 @@ void ScrollView::ScrollViewPrivate::setHasVerticalScrollbar(bool hasBar)
 {
     if (Scrollbar::hasPlatformScrollbars()) {
         if (hasBar && !vBar && !verticalAdjustment) {
-            vBar = new ScrollViewScrollbar(this, VerticalScrollbar, RegularScrollbar);
+            vBar = ScrollViewScrollbar::create(this, VerticalScrollbar, RegularScrollbar);
             view->addChild(vBar.get());
         } else if (!hasBar && vBar) {
             view->removeChild(vBar.get());
@@ -286,15 +292,8 @@ void ScrollView::setGtkAdjustments(GtkAdjustment* hadj, GtkAdjustment* vadj)
         m_data->setHasVerticalScrollbar(false);
         m_data->setHasHorizontalScrollbar(false);
 
-#if GLIB_CHECK_VERSION(2,10,0)
-        g_object_ref_sink(m_data->horizontalAdjustment);
-        g_object_ref_sink(m_data->verticalAdjustment);
-#else
         g_object_ref(m_data->horizontalAdjustment);
-        gtk_object_sink(GTK_OBJECT(m_data->horizontalAdjustment));
         g_object_ref(m_data->verticalAdjustment);
-        gtk_object_sink(GTK_OBJECT(m_data->verticalAdjustment));
-#endif
     }
 
     updateScrollbars(m_data->scrollOffset);
@@ -423,6 +422,11 @@ ScrollbarMode ScrollView::vScrollbarMode() const
     return m_data->vScrollbarMode;
 }
 
+bool ScrollView::isScrollable() 
+{ 
+    return true; // FIXME : return whether or not the view is scrollable
+}
+
 void ScrollView::suppressScrollbars(bool suppressed, bool repaintOnSuppress)
 {
     m_data->scrollbarsSuppressed = suppressed;
@@ -475,11 +479,11 @@ void ScrollView::setFrameGeometry(const IntRect& newGeometry)
 
 void ScrollView::addChild(Widget* child)
 {
-    child->setParent(this);
     child->setContainingWindow(containingWindow());
+    child->setParent(this);
     m_data->children.add(child);
 
-    if (child->gtkWidget())
+    if (child->gtkWidget() && !GTK_IS_SOCKET(child->gtkWidget()))
         gtk_container_add(GTK_CONTAINER(containingWindow()), child->gtkWidget());
 }
 
@@ -824,7 +828,7 @@ void ScrollView::updateBackingStore()
     page->chrome()->updateBackingStore();
 }
 
-HashSet<Widget*>* ScrollView::children() const
+HashSet<Widget*>* ScrollView::children()
 {
     return &m_data->children;
 }

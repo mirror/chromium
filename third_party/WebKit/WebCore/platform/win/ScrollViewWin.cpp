@@ -39,7 +39,8 @@
 #include "PlatformScrollBar.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
-#include "RenderTheme.h" 
+#include "RenderTheme.h"
+#include "Settings.h"
 #include "ScrollBar.h"
 #include <algorithm>
 #include <winsock2.h>
@@ -50,6 +51,14 @@
 using namespace std;
 
 namespace WebCore {
+
+#define LINE_STEP_WIN 15 // To keep the behavior we had before adding the scroll wheel sensitivity : <rdar://problem/5770893>
+
+static inline void adjustDeltaForPageScrollMode(float& delta, bool pageScrollEnabled, int visibleWidthOrHeight)
+{
+    if (pageScrollEnabled)
+        delta = (delta > 0 ? visibleWidthOrHeight : -visibleWidthOrHeight) / LINE_STEP_WIN;
+}
 
 class ScrollView::ScrollViewPrivate : public ScrollbarClient {
 public:
@@ -63,6 +72,8 @@ public:
         , m_hScrollbarMode(ScrollbarAuto)
         , m_visible(false)
         , m_attachedToWindow(false)
+        , m_panScrollIconPoint(0,0)
+        , m_drawPanScrollIcon(false)
     {
     }
 
@@ -99,13 +110,17 @@ public:
     HashSet<Widget*> m_children;
     bool m_visible;
     bool m_attachedToWindow;
+    IntPoint m_panScrollIconPoint;
+    bool m_drawPanScrollIcon;
 };
+
+const int panIconSizeLength = 20;
 
 void ScrollView::ScrollViewPrivate::setHasHorizontalScrollbar(bool hasBar)
 {
     if (Scrollbar::hasPlatformScrollbars()) {
         if (hasBar && !m_hBar) {
-            m_hBar = new PlatformScrollbar(this, HorizontalScrollbar, RegularScrollbar);
+            m_hBar = PlatformScrollbar::create(this, HorizontalScrollbar, RegularScrollbar);
             m_view->addChild(m_hBar.get());
         } else if (!hasBar && m_hBar) {
             m_view->removeChild(m_hBar.get());
@@ -118,7 +133,7 @@ void ScrollView::ScrollViewPrivate::setHasVerticalScrollbar(bool hasBar)
 {
     if (Scrollbar::hasPlatformScrollbars()) {
         if (hasBar && !m_vBar) {
-            m_vBar = new PlatformScrollbar(this, VerticalScrollbar, RegularScrollbar);
+            m_vBar = PlatformScrollbar::create(this, VerticalScrollbar, RegularScrollbar);
             m_view->addChild(m_vBar.get());
         } else if (!hasBar && m_vBar) {
             m_view->removeChild(m_vBar.get());
@@ -160,6 +175,14 @@ void ScrollView::ScrollViewPrivate::scrollBackingStore(const IntSize& scrollDelt
     updateRect.intersect(scrollViewRect);
     RECT r = updateRect;
     ::InvalidateRect(containingWindowHandle, &r, false);
+
+    if (m_drawPanScrollIcon) {
+        int panIconDirtySquareSizeLength = 2 * (panIconSizeLength + max(abs(scrollDelta.width()), abs(scrollDelta.height()))); // We only want to repaint what's necessary
+        IntPoint panIconDirtySquareLocation = IntPoint(m_panScrollIconPoint.x() - (panIconDirtySquareSizeLength / 2), m_panScrollIconPoint.y() - (panIconDirtySquareSizeLength / 2));
+        IntRect panScrollIconDirtyRect = IntRect(panIconDirtySquareLocation , IntSize(panIconDirtySquareSizeLength, panIconDirtySquareSizeLength));
+        
+        m_view->updateWindowRect(panScrollIconDirtyRect);
+    }
 
     if (!m_hasStaticBackground) // The main frame can just blit the WebView window
        // FIXME: Find a way to blit subframes without blitting overlapping content
@@ -230,13 +253,18 @@ void ScrollView::updateContents(const IntRect& rect, bool now)
     IntRect containingWindowRect = rect;
     containingWindowRect.setLocation(windowPoint);
 
-    RECT containingWindowRectWin = containingWindowRect;
+    updateWindowRect(containingWindowRect, now);
+}
+
+void ScrollView::updateWindowRect(const IntRect& rect, bool now)
+{
+    RECT containingWindowRectWin = rect;
     HWND containingWindowHandle = containingWindow();
 
     ::InvalidateRect(containingWindowHandle, &containingWindowRectWin, false);
-
+      
     // Cache the dirty spot.
-    addToDirtyRegion(containingWindowRect);
+    addToDirtyRegion(rect);
 
     if (now)
         ::UpdateWindow(containingWindowHandle);
@@ -393,6 +421,11 @@ WebCore::ScrollbarMode ScrollView::vScrollbarMode() const
     return m_data->m_vScrollbarMode;
 }
 
+bool ScrollView::isScrollable() 
+{ 
+    return m_data->m_vBar != 0 || m_data->m_hBar != 0;
+}
+
 void ScrollView::suppressScrollbars(bool suppressed, bool repaintOnSuppress)
 {
     m_data->m_scrollbarsSuppressed = suppressed;
@@ -531,7 +564,7 @@ void ScrollView::updateScrollbars(const IntSize& desiredOffset)
 
         if (m_data->m_scrollbarsSuppressed)
             m_data->m_hBar->setSuppressInvalidation(true);
-        m_data->m_hBar->setSteps(LINE_STEP, pageStep);
+        m_data->m_hBar->setSteps(LINE_STEP_WIN, pageStep);
         m_data->m_hBar->setProportion(clientWidth, contentsWidth());
         m_data->m_hBar->setValue(scroll.width());
         if (m_data->m_scrollbarsSuppressed)
@@ -554,7 +587,7 @@ void ScrollView::updateScrollbars(const IntSize& desiredOffset)
 
         if (m_data->m_scrollbarsSuppressed)
             m_data->m_vBar->setSuppressInvalidation(true);
-        m_data->m_vBar->setSteps(LINE_STEP, pageStep);
+        m_data->m_vBar->setSteps(LINE_STEP_WIN, pageStep);
         m_data->m_vBar->setProportion(clientHeight, contentsHeight());
         m_data->m_vBar->setValue(scroll.height());
         if (m_data->m_scrollbarsSuppressed)
@@ -600,6 +633,21 @@ void ScrollView::removeChild(Widget* child)
     m_data->m_children.remove(child);
 }
 
+void ScrollView::printPanScrollIcon(const IntPoint& iconPosition)
+{
+    m_data->m_drawPanScrollIcon = true;    
+    m_data->m_panScrollIconPoint = IntPoint(iconPosition.x() - panIconSizeLength / 2 , iconPosition.y() - panIconSizeLength / 2) ;
+
+    updateWindowRect(IntRect(m_data->m_panScrollIconPoint, IntSize(panIconSizeLength,panIconSizeLength)), true);    
+}
+
+void ScrollView::removePanScrollIcon()
+{
+    m_data->m_drawPanScrollIcon = false; 
+
+    updateWindowRect(IntRect(m_data->m_panScrollIconPoint, IntSize(panIconSizeLength, panIconSizeLength)), true);
+}
+
 void ScrollView::paint(GraphicsContext* context, const IntRect& rect)
 {
     // FIXME: This code is here so we don't have to fork FrameView.h/.cpp.
@@ -622,7 +670,8 @@ void ScrollView::paint(GraphicsContext* context, const IntRect& rect)
 
     context->clip(enclosingIntRect(visibleContentRect()));
 
-    static_cast<const FrameView*>(this)->frame()->paint(context, documentDirtyRect);
+    const FrameView* frameView = static_cast<const FrameView*>(this);
+    frameView->frame()->paint(context, documentDirtyRect);
 
     context->restore();
 
@@ -645,8 +694,13 @@ void ScrollView::paint(GraphicsContext* context, const IntRect& rect)
                               height() - m_data->m_hBar->height(),
                               width() - m_data->m_hBar->width(),
                               m_data->m_hBar->height());
-            if (hCorner.intersects(scrollViewDirtyRect))
-                context->fillRect(hCorner, Color::white);
+            if (hCorner.intersects(scrollViewDirtyRect)) {
+                Page* page = frameView->frame() ? frameView->frame()->page() : 0;
+                if (page && page->settings()->shouldPaintCustomScrollbars()) {
+                    if (!page->chrome()->client()->paintCustomScrollCorner(context, hCorner))
+                        context->fillRect(hCorner, Color::white);
+                }
+            }
         }
 
         if (m_data->m_vBar && height() - m_data->m_vBar->height() > 0) {
@@ -654,11 +708,24 @@ void ScrollView::paint(GraphicsContext* context, const IntRect& rect)
                             m_data->m_vBar->height(),
                             m_data->m_vBar->width(),
                             height() - m_data->m_vBar->height());
-            if (vCorner != hCorner && vCorner.intersects(scrollViewDirtyRect))
-                context->fillRect(vCorner, Color::white);
+            if (vCorner != hCorner && vCorner.intersects(scrollViewDirtyRect)) {
+                Page* page = frameView->frame() ? frameView->frame()->page() : 0;
+                if (page && page->settings()->shouldPaintCustomScrollbars()) {
+                    if (!page->chrome()->client()->paintCustomScrollCorner(context, vCorner))
+                        context->fillRect(vCorner, Color::white);
+                }
+            }
         }
 
         context->restore();
+    }
+
+    //Paint the panScroll Icon
+    static Image* panScrollIcon;
+    if (m_data->m_drawPanScrollIcon) {
+        if (!panScrollIcon)
+            panScrollIcon = Image::loadPlatformResource("panIcon");
+        context->drawImage(panScrollIcon, m_data->m_panScrollIconPoint);
     }
 }
 
@@ -681,7 +748,11 @@ void ScrollView::wheelEvent(PlatformWheelEvent& e)
         (e.deltaY() < 0 && maxScrollDelta.height() > 0) ||
         (e.deltaY() > 0 && scrollOffset().height() > 0)) {
         e.accept();
-        scrollBy(-e.deltaX() * LINE_STEP, -e.deltaY() * LINE_STEP);
+        float deltaX = e.deltaX(), deltaY = e.deltaY();
+        adjustDeltaForPageScrollMode(deltaX, e.isPageXScrollModeEnabled(), visibleWidth());
+        adjustDeltaForPageScrollMode(deltaY, e.isPageYScrollModeEnabled(), visibleHeight());
+
+        scrollBy(-deltaX * LINE_STEP_WIN, -deltaY * LINE_STEP_WIN);
     }
 }
 
@@ -853,6 +924,28 @@ bool ScrollView::inWindow() const
     // Needed for back/forward cache. 
     notImplemented();
     return true;
+}
+
+IntRect ScrollView::contentsToScreen(const IntRect& rect) const
+{
+    IntRect result(contentsToWindow(rect));
+    POINT topLeft = {0, 0};
+
+    // Find the top left corner of the Widget's containing window in screen coords,
+    // and adjust the result rect's position by this amount.
+    ::ClientToScreen(containingWindow(), &topLeft);
+    result.move(topLeft.x, topLeft.y);
+
+    return result;
+}
+
+IntPoint ScrollView::screenToContents(const IntPoint& point) const
+{
+    POINT result = point;
+
+    ::ScreenToClient(containingWindow(), &result);
+
+    return windowToContents(result);
 }
 
 } // namespace WebCore

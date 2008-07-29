@@ -31,7 +31,6 @@
 #include "CachedImage.h"
 #include "HTMLNames.h"
 #include "HTMLTableColElement.h"
-#include "TextStream.h"
 
 namespace WebCore {
 
@@ -84,21 +83,10 @@ IntRect RenderTableCol::absoluteClippedOverflowRect()
     return IntRect();
 }
 
-void RenderTableCol::imageChanged(CachedImage* image)
+void RenderTableCol::imageChanged(WrappedImagePtr image)
 {
-    if (!image || !image->canRender() || !parent())
-        return;
-
     // FIXME: Repaint only the rect the image paints in.
     repaint();
 }
-
-#ifndef NDEBUG
-void RenderTableCol::dump(TextStream* stream, DeprecatedString ind) const
-{
-    *stream << " span=" << m_span;
-    RenderContainer::dump(stream, ind);
-}
-#endif
 
 }

@@ -72,7 +72,7 @@ void RenderWidget::destroy()
     // So the code below includes copied and pasted contents of
     // both RenderBox::destroy() and RenderObject::destroy().
     // Fix originally made for <rdar://problem/4228818>.
-    animationController()->cancelImplicitAnimations(this);
+    animation()->cancelImplicitAnimations(this);
 
     if (RenderView* v = view())
         v->removeWidget(this);
@@ -178,8 +178,13 @@ void RenderWidget::paint(PaintInfo& paintInfo, int tx, int ty)
     tx += m_x;
     ty += m_y;
 
-    if (hasBoxDecorations() && paintInfo.phase != PaintPhaseOutline && paintInfo.phase != PaintPhaseSelfOutline)
+    if (hasBoxDecorations() && (paintInfo.phase == PaintPhaseForeground || paintInfo.phase == PaintPhaseSelection))
         paintBoxDecorations(paintInfo, tx, ty);
+
+    if (paintInfo.phase == PaintPhaseMask) {
+        paintMask(paintInfo, tx, ty);
+        return;
+    }
 
     if (!m_view || paintInfo.phase != PaintPhaseForeground || style()->visibility() != VISIBLE)
         return;

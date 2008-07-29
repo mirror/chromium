@@ -62,7 +62,7 @@ public:
     virtual bool isScrollable() const;
 
     virtual void calcPrefWidths();
-    virtual short baselinePosition(bool firstLine, bool isRootLineBox) const;
+    virtual int baselinePosition(bool firstLine, bool isRootLineBox) const;
     virtual void calcHeight();
 
     virtual void layout();
@@ -72,12 +72,19 @@ public:
     void setOptionsChanged(bool changed) { m_optionsChanged = changed; }
 
     int listIndexAtOffset(int x, int y);
+    IntRect itemBoundingBoxRect(int tx, int ty, int index);
 
     bool scrollToRevealElementAtListIndex(int index);
+    bool listIndexIsVisible(int index);
 
-    virtual bool shouldAutoscroll() const { return true; }
+    virtual bool canBeProgramaticallyScrolled() const { return true; }
     virtual void autoscroll();
     virtual void stopAutoscroll();
+
+    virtual bool shouldPanScroll() const { return true; }
+    virtual void panScroll(const IntPoint&);
+
+    int scrollToward(const IntPoint&); // Returns the new index or -1 if no scroll occured
 
     virtual int verticalScrollbarWidth() const;
     virtual int scrollLeft() const;
@@ -99,11 +106,9 @@ private:
     int numVisibleItems() const;
     int numItems() const;
     int listHeight() const;
-    IntRect itemBoundingBoxRect(int tx, int ty, int index);
     void paintScrollbar(PaintInfo&);
     void paintItemForeground(PaintInfo&, int tx, int ty, int listIndex);
     void paintItemBackground(PaintInfo&, int tx, int ty, int listIndex);
-    bool listIndexIsVisible(int index);
     void scrollToRevealSelection();
 
     bool m_optionsChanged;

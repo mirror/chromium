@@ -31,7 +31,6 @@
 #include "FormDataList.h"
 #include "HTMLNames.h"
 #include "HTMLOptionElement.h"
-#include "KURL.h"
 #include "SSLKeyGenerator.h"
 #include "Text.h"
 
@@ -68,7 +67,7 @@ void HTMLKeygenElement::parseMappedAttribute(MappedAttribute* attr)
         m_keyType = attr->value();
     else
         // skip HTMLSelectElement parsing!
-        HTMLGenericFormElement::parseMappedAttribute(attr);
+        HTMLFormControlElement::parseMappedAttribute(attr);
 }
 
 bool HTMLKeygenElement::appendFormData(FormDataList& encoded_values, bool)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,11 +21,10 @@
 #ifndef PopupMenu_h
 #define PopupMenu_h
 
-#include <wtf/RefCounted.h>
-
 #include "IntRect.h"
 #include "PopupMenuClient.h"
 #include <wtf/PassRefPtr.h>
+#include <wtf/RefCounted.h>
 
 #if PLATFORM(MAC)
 #include <wtf/RetainPtr.h>
@@ -50,6 +49,13 @@ typedef struct _GtkMenuItem GtkMenuItem;
 typedef struct _GtkWidget GtkWidget;
 #include <wtf/HashMap.h>
 #include <glib.h>
+#elif PLATFORM(WX)
+#ifdef __WXMSW__
+#include <wx/msw/winundef.h>
+#endif
+class wxMenu;
+#include <wx/defs.h>
+#include <wx/event.h>
 #endif
 
 namespace WebCore {
@@ -61,9 +67,12 @@ class PopupMenu : public RefCounted<PopupMenu>
 #if PLATFORM(WIN)
                 , private ScrollbarClient
 #endif
+#if PLATFORM(WX)
+                , public wxEvtHandler
+#endif
 {
 public:
-    static PassRefPtr<PopupMenu> create(PopupMenuClient* client) { return new PopupMenu(client); }
+    static PassRefPtr<PopupMenu> create(PopupMenuClient* client) { return adoptRef(new PopupMenu(client)); }
     ~PopupMenu();
     
     void disconnectClient() { m_popupClient = 0; }
@@ -96,7 +105,7 @@ public:
     void focusFirst();
     void focusLast();
 
-    void paint(const IntRect& damageRect, HDC hdc = 0);
+    void paint(const IntRect& damageRect, HDC = 0);
 
     HWND popupHandle() const { return m_popup; }
 
@@ -117,14 +126,7 @@ public:
 #endif
 
 protected:
-    PopupMenu(PopupMenuClient* client);
-
-#if PLATFORM(WIN)
-    // ScrollBarClient
-    virtual void valueChanged(Scrollbar*);
-    virtual IntRect windowClipRect() const;
-    virtual bool isActive() const { return true; }
-#endif
+    PopupMenu(PopupMenuClient*);
     
 private:
     PopupMenuClient* m_popupClient;
@@ -139,6 +141,11 @@ private:
     void populate(const IntRect&);
     QWebPopup* m_popup;
 #elif PLATFORM(WIN)
+    // ScrollBarClient
+    virtual void valueChanged(Scrollbar*);
+    virtual IntRect windowClipRect() const;
+    virtual bool isActive() const { return true; }
+
     void calculatePositionAndSize(const IntRect&, FrameView*);
     void invalidateItem(int index);
 
@@ -161,6 +168,9 @@ private:
     static void menuUnmapped(GtkWidget*, PopupMenu*);
     static void menuPositionFunction(GtkMenu*, gint*, gint*, gboolean*, PopupMenu*);
     static void menuRemoveItem(GtkWidget*, PopupMenu*);
+#elif PLATFORM(WX)
+    wxMenu* m_menu;
+    void OnMenuItemSelected(wxCommandEvent&);
 #endif
 
 };

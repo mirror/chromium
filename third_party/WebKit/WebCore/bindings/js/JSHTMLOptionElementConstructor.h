@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,20 +20,25 @@
 #ifndef JSHTMLOptionElementConstructor_h
 #define JSHTMLOptionElementConstructor_h
 
-#include "kjs_binding.h"
+#include "JSDOMBinding.h"
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
 
-    class JSHTMLOptionElementConstructor : public KJS::DOMObject {
+    class JSHTMLOptionElementConstructor : public DOMObject {
     public:
         JSHTMLOptionElementConstructor(KJS::ExecState*, Document*);
-        virtual bool implementsConstruct() const;
-        virtual KJS::JSObject *construct(KJS::ExecState*, const KJS::List& args);
+        Document* document() const { return m_document.get(); }
+
+        static const KJS::ClassInfo s_info;
+
     private:
-        RefPtr<Document> m_doc;
+        virtual KJS::ConstructType getConstructData(KJS::ConstructData&);
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+
+        RefPtr<Document> m_document;
     };
 
-}
+} // namespace WebCore
 
-#endif
+#endif // JSHTMLOptionElementConstructor_h

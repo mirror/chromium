@@ -24,19 +24,24 @@
  */
 
 #include "config.h"
+#include "EventHandler.h"
 
 #include "ClipboardWx.h"
-#include "EventHandler.h"
 #include "FocusController.h"
 #include "Frame.h"
 #include "FrameView.h"
 #include "KeyboardEvent.h"
 #include "MouseEventWithHitTestResults.h"
 #include "Page.h"
+#include "PlatformKeyboardEvent.h"
 #include "PlatformScrollBar.h"
 #include "RenderWidget.h"
 
 namespace WebCore {
+
+unsigned EventHandler::s_accessKeyModifiers = PlatformKeyboardEvent::AltKey;
+
+const double EventHandler::TextDragDelay = 0.0;
 
 bool EventHandler::passMousePressEventToSubframe(MouseEventWithHitTestResults& mev, Frame* subframe)
 {
@@ -86,9 +91,9 @@ bool EventHandler::eventActivatedView(const PlatformMouseEvent&) const
     return false;
 }
 
-Clipboard* EventHandler::createDraggingClipboard() const 
+PassRefPtr<Clipboard> EventHandler::createDraggingClipboard() const 
 {
-    return new ClipboardWx(ClipboardWritable, true);
+    return ClipboardWx::create(ClipboardWritable, true);
 }
 
 }

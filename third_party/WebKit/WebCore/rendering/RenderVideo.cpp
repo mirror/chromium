@@ -50,7 +50,7 @@ RenderVideo::~RenderVideo()
 {
     if (MediaPlayer* p = player()) {
         p->setVisible(false);
-        p->setParentWidget(0);
+        p->setFrameView(0);
     }
 }
     
@@ -59,7 +59,7 @@ void RenderVideo::videoSizeChanged()
     if (!player())
         return;
     IntSize size = player()->naturalSize();
-    if (size != intrinsicSize()) {
+    if (!size.isEmpty() && size != intrinsicSize()) {
         setIntrinsicSize(size);
         setPrefWidthsDirty(true);
         setNeedsLayout(true);
@@ -128,7 +128,7 @@ void RenderVideo::updatePlayer()
     absolutePosition(x, y);
     IntRect videoBounds = videoBox(); 
     videoBounds.move(x, y);
-    mediaPlayer->setParentWidget(doc->view());
+    mediaPlayer->setFrameView(doc->view());
     mediaPlayer->setRect(videoBounds);
     mediaPlayer->setVisible(true);
 }

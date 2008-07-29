@@ -34,7 +34,6 @@ namespace WebCore {
 class Attr;
 class Attribute;
 class CSSStyleDeclaration;
-class ClassNames;
 class ElementRareData;
 class IntSize;
 
@@ -43,12 +42,10 @@ public:
     Element(const QualifiedName&, Document*);
     ~Element();
 
-    // Used to quickly determine whether or not an element has a given CSS class.
-    virtual const ClassNames* getClassNames() const;
     const AtomicString& getIDAttribute() const;
     bool hasAttribute(const QualifiedName&) const;
     const AtomicString& getAttribute(const QualifiedName&) const;
-    void setAttribute(const QualifiedName&, StringImpl* value, ExceptionCode&);
+    void setAttribute(const QualifiedName&, const AtomicString& value, ExceptionCode&);
     void removeAttribute(const QualifiedName&, ExceptionCode&);
 
     bool hasAttributes() const;
@@ -59,8 +56,8 @@ public:
     const AtomicString& getAttribute(const String& name) const;
     const AtomicString& getAttributeNS(const String& namespaceURI, const String& localName) const;
 
-    void setAttribute(const String& name, const String& value, ExceptionCode&);
-    void setAttributeNS(const String& namespaceURI, const String& qualifiedName, const String& value, ExceptionCode&);
+    void setAttribute(const AtomicString& name, const AtomicString& value, ExceptionCode&);
+    void setAttributeNS(const AtomicString& namespaceURI, const AtomicString& qualifiedName, const AtomicString& value, ExceptionCode&);
 
     void scrollIntoView (bool alignToTop = true);
     void scrollIntoViewIfNeeded(bool centerIfNeeded = true);
@@ -109,33 +106,35 @@ public:
     virtual void setPrefix(const AtomicString &_prefix, ExceptionCode&);
     virtual const AtomicString& namespaceURI() const { return m_tagName.namespaceURI(); }
 
-    virtual String baseURI() const;
+    virtual KURL baseURI() const;
 
-    // DOM methods overridden from  parent classes
+    // DOM methods overridden from parent classes
     virtual NodeType nodeType() const;
     virtual PassRefPtr<Node> cloneNode(bool deep);
     virtual String nodeName() const;
-    virtual bool isElementNode() const { return true; }
     virtual void insertedIntoDocument();
     virtual void removedFromDocument();
-    virtual void childrenChanged(bool changedByParser = false);
+    virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
+
+    void normalizeAttributes();
 
     virtual bool isInputTypeHidden() const { return false; }
+    virtual bool isPasswordField() const { return false; }
 
     String nodeNamePreservingCase() const;
 
     // convenience methods which ignore exceptions
-    void setAttribute(const QualifiedName&, const String& value);
+    void setAttribute(const QualifiedName&, const AtomicString& value);
     void setBooleanAttribute(const QualifiedName& name, bool);
 
     virtual NamedAttrMap* attributes() const;
     NamedAttrMap* attributes(bool readonly) const;
 
     // This method is called whenever an attribute is added, changed or removed.
-    virtual void attributeChanged(Attribute*, bool preserveDecls = false) {}
+    virtual void attributeChanged(Attribute*, bool preserveDecls = false);
 
     // not part of the DOM
-    void setAttributeMap(NamedAttrMap*);
+    void setAttributeMap(PassRefPtr<NamedAttrMap>);
 
     virtual void copyNonAttributeProperties(const Element* source) {}
 
@@ -149,29 +148,25 @@ public:
 
     virtual bool childTypeAllowed(NodeType);
 
-    virtual Attribute* createAttribute(const QualifiedName& name, StringImpl* value);
+    virtual PassRefPtr<Attribute> createAttribute(const QualifiedName&, const AtomicString& value);
     
     void dispatchAttrRemovalEvent(Attribute*);
     void dispatchAttrAdditionEvent(Attribute*);
 
     virtual void accessKeyAction(bool sendToAnyEvent) { }
 
-    virtual String toString() const;
-
     virtual bool isURLAttribute(Attribute*) const;
     virtual const QualifiedName& imageSourceAttributeName() const;
     virtual String target() const { return String(); }
-        
+
     virtual void focus(bool restorePreviousSelection = true);
     virtual void updateFocusAppearance(bool restorePreviousSelection);
     void blur();
 
 #ifndef NDEBUG
-    virtual void dump(TextStream* , DeprecatedString ind = "") const;
     virtual void formatForDebugger(char* buffer, unsigned length) const;
 #endif
 
-    Node* insertAdjacentElement(const String& where, Node* newChild, ExceptionCode&);
     bool contains(const Node*) const;
 
     String innerText() const;
@@ -194,15 +189,29 @@ public:
     virtual void finishParsingChildren();
     virtual void beginParsingChildren() { m_parsingChildrenFinished = false; }
 
+    // ElementTraversal API
+    Element* firstElementChild() const;
+    Element* lastElementChild() const;
+    Element* previousElementSibling() const;
+    Element* nextElementSibling() const;
+    unsigned childElementCount() const;
+
 private:
+    bool hasRareData() const { return m_hasRareData; }
+    void setHasRareData(bool b = true) { m_hasRareData = b; }
+
     ElementRareData* rareData();
     const ElementRareData* rareData() const;
     ElementRareData* createRareData();
 
     virtual void createAttributeMap() const;
 
-    virtual void updateStyleAttributeIfNeeded() const {}
-    
+    virtual void updateStyleAttribute() const {}
+
+#if ENABLE(SVG)
+    virtual void updateAnimatedSVGAttribute(const String&) const {}
+#endif
+
     void updateFocusAppearanceSoonAfterAttach();
     void cancelFocusAppearanceUpdate();
 
@@ -218,9 +227,16 @@ protected:
     // Element bits.
     mutable bool m_isStyleAttributeValid : 1;
     mutable bool m_synchronizingStyleAttribute : 1;
-    
+
+#if ENABLE(SVG)
+    // These bit is are used by SVGElement subclasses, and it lives here for the same reason as above.
+    mutable bool m_areSVGAttributesValid : 1;
+    mutable bool m_synchronizingSVGAttributes : 1;
+#endif
+
 private:
     bool m_parsingChildrenFinished : 1;
+    bool m_hasRareData : 1;
 };
 
 } //namespace

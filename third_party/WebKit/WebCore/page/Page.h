@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-offset: 4 -*-
 /*
- * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,22 +26,19 @@
 #include "ContextMenuController.h"
 #include "FrameLoaderTypes.h"
 #include "PlatformString.h"
+#if PLATFORM(MAC)
+#include "SchedulePair.h"
+#endif
 #include <wtf/HashSet.h>
 #include <wtf/OwnPtr.h>
 
-#if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS)) 
+#if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS)) || (PLATFORM(QT) && defined(Q_WS_WIN))
 typedef struct HINSTANCE__* HINSTANCE;
 #endif
 
-typedef enum TextCaseSensitivity {
-    TextCaseSensitive,
-    TextCaseInsensitive
-};
-
-typedef enum FindDirection {
-    FindDirectionForward,
-    FindDirectionBackward
-};
+namespace KJS {
+    class Debugger;
+}
 
 namespace WebCore {
 
@@ -49,6 +46,7 @@ namespace WebCore {
     class ChromeClient;
     class ContextMenuClient;
     class ContextMenuController;
+    class Document;
     class DragClient;
     class DragController;
     class EditorClient;
@@ -57,19 +55,30 @@ namespace WebCore {
     class InspectorClient;
     class InspectorController;
     class Node;
+    class PageGroup;
+    class PluginData;
     class ProgressTracker;
     class Selection;
     class SelectionController;
+#if ENABLE(DOM_STORAGE)
+    class SessionStorage;
+#endif
     class Settings;
+    class KURL;
+
+    enum TextCaseSensitivity { TextCaseSensitive, TextCaseInsensitive };
+    enum FindDirection { FindDirectionForward, FindDirectionBackward };
 
     class Page : Noncopyable {
     public:
         static void setNeedsReapplyStyles();
-        static const HashSet<Page*>* frameNamespace(const String&);
 
         Page(ChromeClient*, ContextMenuClient*, EditorClient*, DragClient*, InspectorClient*);
         ~Page();
         
+        static void refreshPlugins(bool reload);
+        PluginData* pluginData() const;
+
         EditorClient* editorClient() const { return m_editorClient; }
 
         void setMainFrame(PassRefPtr<Frame>);
@@ -86,9 +95,10 @@ namespace WebCore {
         void goToItem(HistoryItem*, FrameLoadType);
         
         void setGroupName(const String&);
-        String groupName() const { return m_groupName; }
+        const String& groupName() const;
 
-        const HashSet<Page*>* frameNamespace() const;
+        PageGroup& group() { if (!m_group) initGroup(); return *m_group; }
+        PageGroup* groupPtr() { return m_group; } // can return 0
 
         void incrementFrameCount() { ++m_frameCount; }
         void decrementFrameCount() { --m_frameCount; }
@@ -113,6 +123,14 @@ namespace WebCore {
         unsigned int markAllMatchesForText(const String&, TextCaseSensitivity, bool shouldHighlight, unsigned);
         void unmarkAllTextMatches();
 
+#if PLATFORM(MAC)
+        void addSchedulePair(PassRefPtr<SchedulePair>);
+        void removeSchedulePair(PassRefPtr<SchedulePair>);
+        SchedulePairHashSet* scheduledRunLoopPairs() { return m_scheduledRunLoopPairs.get(); }
+
+        OwnPtr<SchedulePairHashSet> m_scheduledRunLoopPairs;
+#endif
+
         const Selection& selection() const;
 
         void setDefersLoading(bool);
@@ -125,14 +143,35 @@ namespace WebCore {
 
         void userStyleSheetLocationChanged();
         const String& userStyleSheet() const;
+        
+        void changePendingUnloadEventCount(int delta);
+        unsigned pendingUnloadEventCount();
+        void changePendingBeforeUnloadEventCount(int delta);
+        unsigned pendingBeforeUnloadEventCount();
 
-#if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS))
+        static void setDebuggerForAllPages(KJS::Debugger*);
+        void setDebugger(KJS::Debugger*);
+        KJS::Debugger* debugger() const { return m_debugger; }
+
+#if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS)) || (PLATFORM(QT) && defined(Q_WS_WIN))
         // The global DLL or application instance used for all windows.
         static void setInstanceHandle(HINSTANCE instanceHandle) { s_instanceHandle = instanceHandle; }
         static HINSTANCE instanceHandle() { return s_instanceHandle; }
 #endif
 
+        static void removeAllVisitedLinks();
+
+        static void allVisitedStateChanged(PageGroup*);
+        static void visitedStateChanged(PageGroup*, unsigned visitedHash);
+
+#if ENABLE(DOM_STORAGE)
+        SessionStorage* sessionStorage(bool optionalCreate = true);
+        void setSessionStorage(PassRefPtr<SessionStorage>);
+#endif
+
     private:
+        void initGroup();
+
         OwnPtr<Chrome> m_chrome;
         OwnPtr<SelectionController> m_dragCaretController;
         OwnPtr<DragController> m_dragController;
@@ -144,7 +183,8 @@ namespace WebCore {
         
         RefPtr<BackForwardList> m_backForwardList;
         RefPtr<Frame> m_mainFrame;
-        RefPtr<Node> m_focusedNode;
+
+        mutable RefPtr<PluginData> m_pluginData;
 
         EditorClient* m_editorClient;
 
@@ -163,7 +203,18 @@ namespace WebCore {
         mutable bool m_didLoadUserStyleSheet;
         mutable time_t m_userStyleSheetModificationTime;
 
-#if PLATFORM(WIN) || (PLATFORM(WX) && defined(__WXMSW__))
+        OwnPtr<PageGroup> m_singlePageGroup;
+        PageGroup* m_group;
+
+        KJS::Debugger* m_debugger;
+        
+        unsigned m_pendingUnloadEventCount;
+        unsigned m_pendingBeforeUnloadEventCount;
+
+#if ENABLE(DOM_STORAGE)
+        RefPtr<SessionStorage> m_sessionStorage;
+#endif
+#if PLATFORM(WIN) || (PLATFORM(WX) && defined(__WXMSW__)) || (PLATFORM(QT) && defined(Q_WS_WIN))
         static HINSTANCE s_instanceHandle;
 #endif
     };

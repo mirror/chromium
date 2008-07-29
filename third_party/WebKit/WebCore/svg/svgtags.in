@@ -1,6 +1,16 @@
+namespace="SVG"
+cppNamespace="WebCore"
+namespaceURI="http://www.w3.org/2000/svg"
+generateFactory="1"
+generateWrapperFactory="1"
+guardFactoryWith="ENABLE(SVG)"
+exportStrings="1"
+
 a
-#if 0 
+#if ENABLE_SVG_FONTS
 altGlyph
+#endif
+#if 0
 altGlyphDef
 altGlyphItem
 #endif
@@ -9,6 +19,7 @@ animate
 animateColor
 animateMotion
 animateTransform
+set
 #endif
 circle
 clipPath
@@ -70,7 +81,9 @@ glyph
 #endif
 #if 0
 glyphRef
-hkern
+#endif
+#ifdef ENABLE_SVG_FONTS
+hkern upperCase="HKern"
 #endif
 image
 line
@@ -81,7 +94,7 @@ metadata
 #ifdef ENABLE_SVG_FONTS
 missing_glyph
 #endif
-mpath
+mpath upperCase="MPath"
 path
 pattern
 polygon
@@ -89,19 +102,18 @@ polyline
 radialGradient
 rect
 script
-set
 stop
 style
-svg
+svg upperCase="SVG"
 switch
 symbol
 text
 textPath
 title
-tref
-tspan
+tref upperCase="TRef"
+tspan upperCase="TSpan"
 use
 view
 #if 0
-vkern
+vkern upperCase="VKern"
 #endif

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,22 +27,13 @@
 #include "EventHandler.h"
 
 #include "BlockExceptions.h"
+#include "ChromeClient.h"
 #include "ClipboardMac.h"
-#include "Cursor.h"
-#include "Document.h"
-#include "DragController.h"
 #include "EventNames.h"
-#include "FloatPoint.h"
 #include "FocusController.h"
-#include "FoundationExtras.h"
 #include "FrameLoader.h"
 #include "Frame.h"
-#include "FrameTree.h"
 #include "FrameView.h"
-#include "HTMLFrameOwnerElement.h"
-#include "HTMLFrameSetElement.h"
-#include "HitTestRequest.h"
-#include "HitTestResult.h"
 #include "KeyboardEvent.h"
 #include "MouseEventWithHitTestResults.h"
 #include "Page.h"
@@ -51,11 +42,14 @@
 #include "PlatformWheelEvent.h"
 #include "RenderWidget.h"
 #include "Settings.h"
-#include "WebCoreFrameBridge.h"
 
 namespace WebCore {
 
 using namespace EventNames;
+
+unsigned EventHandler::s_accessKeyModifiers = PlatformKeyboardEvent::CtrlKey | PlatformKeyboardEvent::AltKey;
+
+const double EventHandler::TextDragDelay = 0.15;
 
 static RetainPtr<NSEvent>& currentEvent()
 {
@@ -91,10 +85,10 @@ PassRefPtr<KeyboardEvent> EventHandler::currentKeyboardEvent() const
         case NSKeyDown: {
             PlatformKeyboardEvent platformEvent(event);
             platformEvent.disambiguateKeyDownEvent(PlatformKeyboardEvent::RawKeyDown);
-            return new KeyboardEvent(platformEvent, m_frame->document() ? m_frame->document()->defaultView() : 0);
+            return KeyboardEvent::create(platformEvent, m_frame->document() ? m_frame->document()->defaultView() : 0);
         }
         case NSKeyUp:
-            return new KeyboardEvent(event, m_frame->document() ? m_frame->document()->defaultView() : 0);
+            return KeyboardEvent::create(event, m_frame->document() ? m_frame->document()->defaultView() : 0);
         default:
             return 0;
     }
@@ -103,9 +97,9 @@ PassRefPtr<KeyboardEvent> EventHandler::currentKeyboardEvent() const
 static inline bool isKeyboardOptionTab(KeyboardEvent* event)
 {
     return event
-    && (event->type() == keydownEvent || event->type() == keypressEvent)
-    && event->altKey()
-    && event->keyIdentifier() == "U+0009";    
+        && (event->type() == keydownEvent || event->type() == keypressEvent)
+        && event->altKey()
+        && event->keyIdentifier() == "U+0009";    
 }
 
 bool EventHandler::invertSenseOfTabsToLinks(KeyboardEvent* event) const
@@ -115,7 +109,11 @@ bool EventHandler::invertSenseOfTabsToLinks(KeyboardEvent* event) const
 
 bool EventHandler::tabsToAllControls(KeyboardEvent* event) const
 {
-    KeyboardUIMode keyboardUIMode = [m_frame->bridge() keyboardUIMode];
+    Page* page = m_frame->page();
+    if (!page)
+        return false;
+
+    KeyboardUIMode keyboardUIMode = page->chrome()->client()->keyboardUIMode();
     bool handlingOptionTab = isKeyboardOptionTab(event);
 
     // If tab-to-links is off, option-tab always highlights all controls
@@ -148,12 +146,21 @@ bool EventHandler::needsKeyboardEventDisambiguationQuirks() const
         return false;
 
     // RSS view needs arrow key keypress events.
-    if (isSafari && document->url().startsWith("feed:", false) || document->url().startsWith("feeds:", false))
+    if (isSafari && document->url().protocolIs("feed") || document->url().protocolIs("feeds"))
         return true;
     Settings* settings = m_frame->settings();
     if (!settings)
         return false;
-    return settings->usesDashboardBackwardCompatibilityMode() || settings->needsKeyboardEventDisambiguationQuirks();
+
+#if ENABLE(DASHBOARD_SUPPORT)
+    if (settings->usesDashboardBackwardCompatibilityMode())
+        return true;
+#endif
+        
+    if (settings->needsKeyboardEventDisambiguationQuirks())
+        return true;
+
+    return false;
 }
 
 bool EventHandler::keyEvent(NSEvent *event)
@@ -184,10 +191,11 @@ void EventHandler::focusDocumentView()
     if (!page)
         return;
 
-    if (FrameView* frameView = m_frame->view())
-        if (NSView *documentView = frameView->getDocumentView())
+    if (FrameView* frameView = m_frame->view()) {
+        if (NSView *documentView = frameView->documentView())
             page->chrome()->focusNSView(documentView);
-    
+    }
+
     page->focusController()->setFocusedFrame(m_frame);
 }
 
@@ -248,11 +256,15 @@ bool EventHandler::passMouseDownEventToWidget(Widget* widget)
         return true;
     }
     
-    if ([m_frame->bridge() firstResponder] != view) {
+    Page* page = m_frame->page();
+    if (!page)
+        return true;
+
+    if (page->chrome()->client()->firstResponder() != view) {
         // Normally [NSWindow sendEvent:] handles setting the first responder.
         // But in our case, the event was sent to the view representing the entire web page.
         if ([currentEvent().get() clickCount] <= 1 && [view acceptsFirstResponder] && [view needsPanelToBecomeKey])
-            [m_frame->bridge() makeFirstResponder:view];
+            page->chrome()->client()->makeFirstResponder(view);
     }
 
     // We need to "defer loading" while tracking the mouse, because tearing down the
@@ -262,9 +274,9 @@ bool EventHandler::passMouseDownEventToWidget(Widget* widget)
     // mouse. We should confirm that, and then remove the deferrsLoading
     // hack entirely.
     
-    bool wasDeferringLoading = m_frame->page()->defersLoading();
+    bool wasDeferringLoading = page->defersLoading();
     if (!wasDeferringLoading)
-        m_frame->page()->setDefersLoading(true);
+        page->setDefersLoading(true);
 
     ASSERT(!m_sendingEventToSubview);
     m_sendingEventToSubview = true;
@@ -272,7 +284,7 @@ bool EventHandler::passMouseDownEventToWidget(Widget* widget)
     m_sendingEventToSubview = false;
     
     if (!wasDeferringLoading)
-        m_frame->page()->setDefersLoading(false);
+        page->setDefersLoading(false);
 
     // Remember which view we sent the event to, so we can direct the release event properly.
     m_mouseDownView = view;
@@ -350,13 +362,13 @@ bool EventHandler::eventLoopHandleMouseDragged(const MouseEventWithHitTestResult
     return true;
 }
     
-Clipboard* EventHandler::createDraggingClipboard() const 
+PassRefPtr<Clipboard> EventHandler::createDraggingClipboard() const 
 {
     NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     // Must be done before ondragstart adds types and data to the pboard,
     // also done for security, as it erases data from the last drag
     [pasteboard declareTypes:[NSArray array] owner:nil];
-    return new ClipboardMac(true, pasteboard, ClipboardWritable, m_frame);
+    return ClipboardMac::create(true, pasteboard, ClipboardWritable, m_frame);
 }
     
 bool EventHandler::eventLoopHandleMouseUp(const MouseEventWithHitTestResults&)
@@ -545,6 +557,10 @@ void EventHandler::mouseUp(NSEvent *event)
  */
 void EventHandler::sendFakeEventsAfterWidgetTracking(NSEvent *initiatingEvent)
 {
+    FrameView* view = m_frame->view();
+    if (!view)
+        return;
+
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
 
     m_sendingEventToSubview = false;
@@ -553,34 +569,34 @@ void EventHandler::sendFakeEventsAfterWidgetTracking(NSEvent *initiatingEvent)
         NSEvent *fakeEvent = nil;
         if (eventType == NSLeftMouseDown) {
             fakeEvent = [NSEvent mouseEventWithType:NSLeftMouseUp
-                                    location:[initiatingEvent locationInWindow]
-                                modifierFlags:[initiatingEvent modifierFlags]
-                                    timestamp:[initiatingEvent timestamp]
-                                windowNumber:[initiatingEvent windowNumber]
-                                        context:[initiatingEvent context]
-                                    eventNumber:[initiatingEvent eventNumber]
-                                    clickCount:[initiatingEvent clickCount]
-                                    pressure:[initiatingEvent pressure]];
+                                           location:[initiatingEvent locationInWindow]
+                                      modifierFlags:[initiatingEvent modifierFlags]
+                                          timestamp:[initiatingEvent timestamp]
+                                       windowNumber:[initiatingEvent windowNumber]
+                                            context:[initiatingEvent context]
+                                        eventNumber:[initiatingEvent eventNumber]
+                                         clickCount:[initiatingEvent clickCount]
+                                           pressure:[initiatingEvent pressure]];
         
             [NSApp postEvent:fakeEvent atStart:YES];
         } else { // eventType == NSKeyDown
             fakeEvent = [NSEvent keyEventWithType:NSKeyUp
-                                    location:[initiatingEvent locationInWindow]
-                               modifierFlags:[initiatingEvent modifierFlags]
-                                   timestamp:[initiatingEvent timestamp]
-                                windowNumber:[initiatingEvent windowNumber]
-                                     context:[initiatingEvent context]
-                                  characters:[initiatingEvent characters] 
-                 charactersIgnoringModifiers:[initiatingEvent charactersIgnoringModifiers] 
-                                   isARepeat:[initiatingEvent isARepeat] 
-                                     keyCode:[initiatingEvent keyCode]];
+                                         location:[initiatingEvent locationInWindow]
+                                    modifierFlags:[initiatingEvent modifierFlags]
+                                        timestamp:[initiatingEvent timestamp]
+                                     windowNumber:[initiatingEvent windowNumber]
+                                          context:[initiatingEvent context]
+                                       characters:[initiatingEvent characters] 
+                      charactersIgnoringModifiers:[initiatingEvent charactersIgnoringModifiers] 
+                                        isARepeat:[initiatingEvent isARepeat] 
+                                          keyCode:[initiatingEvent keyCode]];
             [NSApp postEvent:fakeEvent atStart:YES];
         }
-        // FIXME:  We should really get the current modifierFlags here, but there's no way to poll
+        // FIXME: We should really get the current modifierFlags here, but there's no way to poll
         // them in Cocoa, and because the event stream was stolen by the Carbon menu code we have
         // no up-to-date cache of them anywhere.
         fakeEvent = [NSEvent mouseEventWithType:NSMouseMoved
-                                       location:[[m_frame->bridge() window] convertScreenToBase:[NSEvent mouseLocation]]
+                                       location:[[view->getView() window] convertScreenToBase:[NSEvent mouseLocation]]
                                   modifierFlags:[initiatingEvent modifierFlags]
                                       timestamp:[initiatingEvent timestamp]
                                    windowNumber:[initiatingEvent windowNumber]

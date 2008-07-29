@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2004, 2005, 2006 Apple Inc.
- *
+ * 
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -36,7 +36,7 @@
 #define WINVER 0x0500
 #endif
 
-// If we don't define these, they get defined in windef.h. 
+// If we don't define these, they get defined in windef.h.
 // We want to use std::min and std::max.
 #ifndef max
 #define max max
@@ -53,6 +53,12 @@
 #endif
 
 #endif /* PLATFORM(WIN_OS) */
+
+// On MSW, wx headers need to be included before windows.h is.
+// The only way we can always ensure this is if we include wx here.
+#if PLATFORM(WX)
+#include <wx/defs.h>
+#endif
 
 #if !PLATFORM(SYMBIAN)
 #define IMPORT_C
@@ -71,13 +77,12 @@
 
 // this breaks compilation of <QFontDatabase>, at least, so turn it off for now
 // Also generates errors on wx on Windows, presumably because these functions
-// are used from wx headers. 
+// are used from wx headers.
 #if !PLATFORM(QT) && !PLATFORM(WX)
 #include <wtf/DisallowCType.h>
 #endif
 
 #if PLATFORM(GTK)
-#define WTF_USE_NPOBJECT 1
 #define WTF_USE_JAVASCRIPTCORE_BINDINGS 1
 #endif
 
@@ -87,7 +92,6 @@
 
 #if PLATFORM(WIN)
 #define WTF_USE_JAVASCRIPTCORE_BINDINGS 1
-#define WTF_USE_NPOBJECT 1
 #define WTF_PLATFORM_CG 1
 #undef WTF_PLATFORM_CAIRO
 #define WTF_USE_CFNETWORK 1
@@ -98,16 +102,10 @@
 
 #if PLATFORM(MAC)
 #define WTF_USE_JAVASCRIPTCORE_BINDINGS 1
-#ifdef __LP64__
-#define WTF_USE_NPOBJECT 0
-#else
-#define WTF_USE_NPOBJECT 1
-#endif
 #endif
 
 #if PLATFORM(SYMBIAN)
 #define WTF_USE_JAVASCRIPTCORE_BINDINGS 1
-#define WTF_USE_NPOBJECT 1
 #undef WIN32
 #undef _WIN32
 #undef AVOID_STATIC_CONSTRUCTORS
@@ -138,4 +136,8 @@ typedef float CGFloat;
 #ifdef BUILDING_ON_TIGER
 #undef ENABLE_FTPDIR
 #define ENABLE_FTPDIR 0
+#endif
+
+#if PLATFORM(WIN) && PLATFORM(CG)
+#define WTF_USE_SAFARI_THEME 1
 #endif

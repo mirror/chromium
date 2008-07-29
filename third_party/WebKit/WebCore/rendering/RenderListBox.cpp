@@ -1,7 +1,7 @@
 /*
  * This file is part of the select element renderer in WebCore.
  *
- * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,6 +31,7 @@
 #include "config.h"
 #include "RenderListBox.h"
 
+#include "AXObjectCache.h"
 #include "CSSStyleSelector.h"
 #include "Document.h"
 #include "EventHandler.h"
@@ -112,7 +113,7 @@ void RenderListBox::updateFromElement()
             else if (element->hasTagName(optgroupTag)) {
                 text = static_cast<HTMLOptGroupElement*>(element)->groupLabelText();
                 FontDescription d = itemFont.fontDescription();
-                d.setBold(true);
+                d.setWeight(d.bolderWeight());
                 itemFont = Font(d, itemFont.letterSpacing(), itemFont.wordSpacing());
                 itemFont.update(document()->styleSelector()->fontSelector());
             }
@@ -127,7 +128,7 @@ void RenderListBox::updateFromElement()
         
         if (!m_vBar && Scrollbar::hasPlatformScrollbars())
             if (FrameView* view = node()->document()->view()) {
-                RefPtr<PlatformScrollbar> widget = new PlatformScrollbar(this, VerticalScrollbar, SmallScrollbar);
+                RefPtr<PlatformScrollbar> widget = PlatformScrollbar::create(this, VerticalScrollbar, SmallScrollbar);
                 view->addChild(widget.get());
                 m_vBar = widget.release();
             }
@@ -145,6 +146,9 @@ void RenderListBox::selectionChanged()
         else
             scrollToRevealSelection();
     }
+    
+    if (AXObjectCache::accessibilityEnabled())
+        document()->axObjectCache()->selectedChildrenChanged(this);
 }
 
 void RenderListBox::layout()
@@ -243,7 +247,7 @@ void RenderListBox::calcHeight()
     }
 }
 
-short RenderListBox::baselinePosition(bool b, bool isRootLineBox) const
+int RenderListBox::baselinePosition(bool b, bool isRootLineBox) const
 {
     return height() + marginTop() + marginBottom() - baselineAdjustment;
 }
@@ -319,7 +323,7 @@ void RenderListBox::paintItemForeground(PaintInfo& paintInfo, int tx, int ty, in
     
     Color textColor = element->renderStyle() ? element->renderStyle()->color() : style()->color();
     if (element->hasTagName(optionTag) && static_cast<HTMLOptionElement*>(element)->selected()) {
-        if (document()->frame()->selectionController()->isFocusedAndActive() && document()->focusedNode() == node())
+        if (document()->frame()->selection()->isFocusedAndActive() && document()->focusedNode() == node())
             textColor = theme()->activeListBoxSelectionForegroundColor();
         // Honor the foreground color for disabled items
         else if (!element->disabled())
@@ -331,7 +335,7 @@ void RenderListBox::paintItemForeground(PaintInfo& paintInfo, int tx, int ty, in
     Font itemFont = style()->font();
     if (element->hasTagName(optgroupTag)) {
         FontDescription d = itemFont.fontDescription();
-        d.setBold(true);
+        d.setWeight(d.bolderWeight());
         itemFont = Font(d, itemFont.letterSpacing(), itemFont.wordSpacing());
         itemFont.update(document()->styleSelector()->fontSelector());
     }
@@ -354,7 +358,7 @@ void RenderListBox::paintItemBackground(PaintInfo& paintInfo, int tx, int ty, in
 
     Color backColor;
     if (element->hasTagName(optionTag) && static_cast<HTMLOptionElement*>(element)->selected()) {
-        if (document()->frame()->selectionController()->isFocusedAndActive() && document()->focusedNode() == node())
+        if (document()->frame()->selection()->isFocusedAndActive() && document()->focusedNode() == node())
             backColor = theme()->activeListBoxSelectionBackgroundColor();
         else
             backColor = theme()->inactiveListBoxSelectionBackgroundColor();
@@ -402,31 +406,84 @@ int RenderListBox::listIndexAtOffset(int offsetX, int offsetY)
     return newOffset < numItems() ? newOffset : -1;
 }
 
+void RenderListBox::panScroll(const IntPoint& panStartMousePosition)
+{
+    const int maxSpeed = 20;
+    const int iconRadius = 7;
+    const int speedReducer = 4;
+
+    int offsetX = 0, offsetY = windowClipRect().y();
+    absolutePosition(offsetX, offsetY);
+
+    IntPoint currentMousePosition = document()->frame()->eventHandler()->currentMousePosition();
+    // We need to check if the current mouse position is out of the window. When the mouse is out of the window, the position is incoherent
+    static IntPoint previousMousePosition;
+    if (currentMousePosition.y() < 0)
+        currentMousePosition = previousMousePosition;
+    else
+        previousMousePosition = currentMousePosition;
+
+    int yDelta = currentMousePosition.y() - panStartMousePosition.y();
+
+   // If the point is too far from the center we limit the speed
+    yDelta = max(min(yDelta, maxSpeed), -maxSpeed);
+    
+    if(abs(yDelta) < iconRadius) // at the center we let the space for the icon
+        return;
+
+    if (yDelta > 0)
+        //offsetY = view()->viewHeight();
+        offsetY += listHeight();
+   else if (yDelta < 0)
+       yDelta--;
+
+    // Let's attenuate the speed
+    yDelta /= speedReducer;
+
+    IntPoint scrollPoint(0,0);
+    scrollPoint.setY(offsetY + yDelta);
+    int newOffset = scrollToward(scrollPoint);
+    if (newOffset < 0) 
+        return;
+
+    m_inAutoscroll = true;
+    HTMLSelectElement* select = static_cast<HTMLSelectElement*>(node());
+    select->updateListBoxSelection(!select->multiple());
+    m_inAutoscroll = false;
+}
+
+int RenderListBox::scrollToward(const IntPoint& destination)
+{
+    int rx = 0;
+    int ry = 0;
+    absolutePosition(rx, ry);
+    int offsetX = destination.x() - rx;
+    int offsetY = destination.y() - ry;
+
+    int rows = numVisibleItems();
+    int offset = m_indexOffset;
+    
+    if (offsetY < borderTop() + paddingTop() && scrollToRevealElementAtListIndex(offset - 1))
+        return offset - 1;
+    
+    if (offsetY > height() - paddingBottom() - borderBottom() && scrollToRevealElementAtListIndex(offset + rows))
+        return offset + rows - 1;
+    
+    return listIndexAtOffset(offsetX, offsetY);
+}
+
 void RenderListBox::autoscroll()
 {
     IntPoint pos = document()->frame()->view()->windowToContents(document()->frame()->eventHandler()->currentMousePosition());
 
-    int rx = 0;
-    int ry = 0;
-    absolutePosition(rx, ry);
-    int offsetX = pos.x() - rx;
-    int offsetY = pos.y() - ry;
-    
-    int endIndex = -1;
-    int rows = numVisibleItems();
-    int offset = m_indexOffset;
-    if (offsetY < borderTop() + paddingTop() && scrollToRevealElementAtListIndex(offset - 1))
-        endIndex = offset - 1;
-    else if (offsetY > height() - paddingBottom() - borderBottom() && scrollToRevealElementAtListIndex(offset + rows))
-        endIndex = offset + rows - 1;
-    else
-        endIndex = listIndexAtOffset(offsetX, offsetY);
-
+    int endIndex = scrollToward(pos);
     if (endIndex >= 0) {
         HTMLSelectElement* select = static_cast<HTMLSelectElement*>(node());
         m_inAutoscroll = true;
+
         if (!select->multiple())
             select->setActiveSelectionAnchorIndex(endIndex);
+
         select->setActiveSelectionEndIndex(endIndex);
         select->updateListBoxSelection(!select->multiple());
         m_inAutoscroll = false;
@@ -480,7 +537,7 @@ void RenderListBox::valueChanged(Scrollbar*)
         m_indexOffset = newOffset;
         repaint();
         // Fire the scroll DOM event.
-        EventTargetNodeCast(node())->dispatchHTMLEvent(scrollEvent, true, false);
+        EventTargetNodeCast(node())->dispatchHTMLEvent(scrollEvent, false, false);
     }
 }
 

@@ -31,7 +31,6 @@
 #include "Frame.h"
 #include "DocLoader.h"
 #include "ResourceHandle.h"
-#include "DeprecatedString.h"
 #include "ResourceHandleClient.h"
 #include "ResourceHandleInternal.h"
 #include "qwebpage_p.h"
@@ -144,7 +143,8 @@ void ResourceHandle::cancel()
 #if QT_VERSION < 0x040400
     QWebNetworkManager::self()->cancel(this);
 #else
-    d->m_job->abort();
+    if (d->m_job)
+        d->m_job->abort();
 #endif
 }
 
@@ -190,7 +190,6 @@ void ResourceHandle::loadResourceSynchronously(const ResourceRequest& request, R
     syncLoader.waitForCompletion();
     error = syncLoader.resourceError();
     data = syncLoader.data();
-    qDebug() << data.size();
     response = syncLoader.resourceResponse();
 }
 

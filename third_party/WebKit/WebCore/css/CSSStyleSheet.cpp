@@ -107,9 +107,9 @@ int CSSStyleSheet::addRule(const String& selector, const String& style, Exceptio
 }
 
 
-CSSRuleList* CSSStyleSheet::cssRules(bool omitCharsetRules)
+PassRefPtr<CSSRuleList> CSSStyleSheet::cssRules(bool omitCharsetRules)
 {
-    return new CSSRuleList(this, omitCharsetRules);
+    return CSSRuleList::create(this, omitCharsetRules);
 }
 
 void CSSStyleSheet::deleteRule(unsigned index, ExceptionCode& ec)
@@ -134,7 +134,7 @@ void CSSStyleSheet::addNamespace(CSSParser* p, const AtomicString& prefix, const
     if (prefix.isEmpty())
         // Set the default namespace on the parser so that selectors that omit namespace info will
         // be able to pick it up easily.
-        p->defaultNamespace = uri;
+        p->m_defaultNamespace = uri;
 }
 
 const AtomicString& CSSStyleSheet::determineNamespace(const AtomicString& prefix)
@@ -176,7 +176,7 @@ void CSSStyleSheet::checkLoaded()
         return;
     if (parent())
         parent()->checkLoaded();
-    m_loadCompleted = m_parentNode ? m_parentNode->sheetLoaded() : true;
+    m_loadCompleted = ownerNode() ? ownerNode()->sheetLoaded() : true;
 }
 
 DocLoader *CSSStyleSheet::docLoader()
@@ -201,6 +201,27 @@ void CSSStyleSheet::styleSheetChanged()
      */
     if (documentToUpdate)
         documentToUpdate->updateStyleSelector();
+}
+
+void CSSStyleSheet::addSubresourceURLStrings(HashSet<String>& urls, const String& base) const
+{        
+    RefPtr<CSSRuleList> ruleList = const_cast<CSSStyleSheet*>(this)->cssRules();
+    
+    // Add the URLs for each child import rule, and recurse for the stylesheet belonging to each of those rules.
+    for (unsigned i = 0; i < ruleList->length(); ++i) {
+        CSSRule* rule = ruleList->item(i);
+        if (rule->type() != CSSRule::IMPORT_RULE)
+            continue;
+
+        CSSImportRule* importRule = static_cast<CSSImportRule*>(rule);
+        CSSStyleSheet* ruleSheet = importRule->styleSheet();
+        if (!ruleSheet)
+            continue;
+
+        KURL fullURL(KURL(base), importRule->href());
+        urls.add(fullURL.string());
+        ruleSheet->addSubresourceURLStrings(urls, fullURL.string());
+    }
 }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,34 +22,42 @@
 
 #include "HTMLInputElement.h"
 
-#include "JSHTMLInputElementBaseTable.cpp"
-
 using namespace KJS;
 
 namespace WebCore {
 
+static JSValue* jsHTMLInputElementBaseFunctionSetSelectionRange(ExecState*, JSObject*, JSValue*, const ArgList&);
+
+}
+
+#include "JSHTMLInputElementBaseTable.cpp"
+
+namespace WebCore {
+
 /*
-@begin JSHTMLInputElementBaseTable 3
+@begin JSHTMLInputElementBaseTable
   selectionStart        WebCore::JSHTMLInputElementBase::SelectionStart            DontDelete
   selectionEnd          WebCore::JSHTMLInputElementBase::SelectionEnd              DontDelete
 @end
-@begin JSHTMLInputElementBasePrototypeTable 0
+@begin JSHTMLInputElementBasePrototypeTable
 @end
-@begin JSHTMLInputElementBaseFunctionTable 1
+@begin JSHTMLInputElementBaseFunctionTable
   setSelectionRange     WebCore::jsHTMLInputElementBaseFunctionSetSelectionRange         DontDelete|Function 2
 @end
 */
 
-KJS_IMPLEMENT_PROTOTYPE("JSHTMLInputElementBase", JSHTMLInputElementBasePrototype)
+KJS_IMPLEMENT_PROTOTYPE("HTMLInputElementBase", JSHTMLInputElementBasePrototype)
 
-JSValue* jsHTMLInputElementBaseFunctionSetSelectionRange(ExecState* exec, JSObject* thisObj, const List& args)
+// SetSelectionRange is implemented on the class instead of on the prototype
+// to make it easier to enable/disable lookup of the function based on input type.
+JSValue* jsHTMLInputElementBaseFunctionSetSelectionRange(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList& args)
 {
-    HTMLInputElement& input = *static_cast<HTMLInputElement*>(static_cast<JSHTMLInputElementBase*>(thisObj)->impl());
-    input.setSelectionRange(args[0]->toInt32(exec), args[1]->toInt32(exec));
+    HTMLInputElement& input = *static_cast<HTMLInputElement*>(static_cast<JSHTMLInputElementBase*>(thisValue)->impl());
+    input.setSelectionRange(args.at(exec, 0)->toInt32(exec), args.at(exec, 1)->toInt32(exec));
     return jsUndefined();
 }
 
-const ClassInfo JSHTMLInputElementBase::info = { "JSHTMLInputElementBase", &JSHTMLElement::info, &JSHTMLInputElementBaseTable };
+const ClassInfo JSHTMLInputElementBase::s_info = { "HTMLInputElementBase", &JSHTMLElement::s_info, &JSHTMLInputElementBaseTable, 0 };
 
 JSHTMLInputElementBase::JSHTMLInputElementBase(KJS::JSObject* prototype, PassRefPtr<HTMLInputElement> e)
     : JSHTMLElement(prototype, e.get())
@@ -65,8 +73,8 @@ bool JSHTMLInputElementBase::getOwnPropertySlot(ExecState* exec, const Identifie
         return JSHTMLElement::getOwnPropertySlot(exec, propertyName, slot);
     
     // otherwise, do our own function lookup on our function table
-    const HashEntry* entry = Lookup::findEntry(&JSHTMLInputElementBaseFunctionTable, propertyName);
-    if (entry && (entry->attr & KJS::Function) && entry->value.functionValue == jsHTMLInputElementBaseFunctionSetSelectionRange) {
+    const HashEntry* entry = JSHTMLInputElementBaseFunctionTable.entry(exec, propertyName);
+    if (entry && (entry->attributes & KJS::Function) && entry->functionValue == jsHTMLInputElementBaseFunctionSetSelectionRange) {
         slot.setStaticEntry(this, entry, staticFunctionGetter);
         return true;
     }
@@ -82,20 +90,20 @@ JSValue* JSHTMLInputElementBase::getValueProperty(ExecState* exec, int token) co
     ASSERT(input.canHaveSelection());
     switch (token) {
     case SelectionStart:
-        return jsNumber(input.selectionStart());
+        return jsNumber(exec, input.selectionStart());
     case SelectionEnd:
-        return jsNumber(input.selectionEnd());
+        return jsNumber(exec, input.selectionEnd());
     }
     ASSERT_NOT_REACHED();
     return jsUndefined();
 }
 
-void JSHTMLInputElementBase::put(ExecState* exec, const Identifier& propertyName, JSValue* value, int attr)
+void JSHTMLInputElementBase::put(ExecState* exec, const Identifier& propertyName, JSValue* value)
 {
-    lookupPut<JSHTMLInputElementBase, JSHTMLElement>(exec, propertyName, value, attr, &JSHTMLInputElementBaseTable, this);
+    lookupPut<JSHTMLInputElementBase, JSHTMLElement>(exec, propertyName, value, &JSHTMLInputElementBaseTable, this);
 }
 
-void JSHTMLInputElementBase::putValueProperty(ExecState* exec, int token, JSValue* value, int /*attr*/)
+void JSHTMLInputElementBase::putValueProperty(ExecState* exec, int token, JSValue* value)
 {
     HTMLInputElement& input = *static_cast<HTMLInputElement*>(impl());
     ASSERT(input.canHaveSelection());

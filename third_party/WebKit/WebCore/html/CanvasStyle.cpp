@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Trolltech ASA
  * Copyright (C) 2007 Alp Toker <alp@atoker.com>
  *
@@ -47,12 +47,15 @@
 namespace WebCore {
 
 CanvasStyle::CanvasStyle(const String& color)
-    : m_type(ColorString), m_color(color)
+    : m_type(ColorString)
+    , m_color(color)
 {
 }
 
 CanvasStyle::CanvasStyle(float grayLevel)
-    : m_type(GrayLevel), m_alpha(1), m_grayLevel(grayLevel)
+    : m_type(GrayLevel)
+    , m_alpha(1)
+    , m_grayLevel(grayLevel)
 {
 }
 

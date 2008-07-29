@@ -122,7 +122,7 @@ void HTMLFrameSetElement::parseMappedAttribute(MappedAttribute *attr)
     } else if (attr->name() == bordercolorAttr) {
         m_borderColorSet = attr->decl();
         if (!attr->decl() && !attr->isEmpty()) {
-            addCSSColor(attr, CSS_PROP_BORDER_COLOR, attr->value());
+            addCSSColor(attr, CSSPropertyBorderColor, attr->value());
             m_borderColorSet = true;
         }
     } else if (attr->name() == onloadAttr) {
@@ -187,11 +187,11 @@ void HTMLFrameSetElement::defaultEventHandler(Event* evt)
 
 void HTMLFrameSetElement::recalcStyle(StyleChange ch)
 {
+    HTMLElement::recalcStyle(ch);
     if (changed() && renderer()) {
         renderer()->setNeedsLayout(true);
         setChanged(NoStyleChange);
     }
-    HTMLElement::recalcStyle(ch);
 }
 
 String HTMLFrameSetElement::cols() const

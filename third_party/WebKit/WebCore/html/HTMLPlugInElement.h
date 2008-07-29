@@ -1,9 +1,7 @@
 /*
- * This file is part of the DOM implementation for KDE.
- *
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
- * Copyright (C) 2004, 2006 Apple Computer, Inc.
+ * Copyright (C) 2004, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,11 +26,15 @@
 #include "HTMLFrameOwnerElement.h"
 
 #if USE(JAVASCRIPTCORE_BINDINGS)
-#include <bindings/runtime.h>
+namespace KJS {
+    namespace Bindings {
+        class Instance;
+    }
+}
 #endif
 
-#if USE(NPOBJECT)
-#include <bindings/npruntime_internal.h>
+#if ENABLE(NETSCAPE_PLUGIN_API)
+struct NPObject;
 #endif
 
 namespace WebCore {
@@ -62,27 +64,28 @@ public:
     String width() const;
     void setWidth(const String&);
 
+    virtual void defaultEventHandler(Event*);
+
 #if USE(JAVASCRIPTCORE_BINDINGS)
     virtual KJS::Bindings::Instance* getInstance() const = 0;
 #endif
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
     virtual NPObject* getNPObject();
 #endif
 
-    virtual void defaultEventHandler(Event*);
 private:
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
     NPObject* createNPObject();
 #endif
 
 protected:
     static void updateWidgetCallback(Node*);
 
-    String oldNameAttr;
+    AtomicString m_name;
 #if USE(JAVASCRIPTCORE_BINDINGS)
     mutable RefPtr<KJS::Bindings::Instance> m_instance;
 #endif
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
     NPObject* m_NPObject;
 #endif
 };

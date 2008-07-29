@@ -37,97 +37,13 @@
 #include "RenderStyle.h"
 #include "SystemTime.h"
 #include "Timer.h"
+#include "UnitBezier.h"
 
 namespace WebCore {
 
 static const double cAnimationTimerDelay = 0.025;
 
-struct CurveData {
-    CurveData(double p1x, double p1y, double p2x, double p2y)
-    {
-        // Calculate the polynomial coefficients, implicit first and last control points are (0,0) and (1,1).
-        cx = 3.0 * p1x;
-        bx = 3.0 * (p2x - p1x) - cx;
-        ax = 1.0 - cx -bx;
-         
-        cy = 3.0 * p1y;
-        by = 3.0 * (p2y - p1y) - cy;
-        ay = 1.0 - cy - by;
-    }
-    
-    double sampleCurveX(double t)
-    {
-        // `ax t^3 + bx t^2 + cx t' expanded using Horner's rule.
-        return ((ax * t + bx) * t + cx) * t;
-    }
-    
-    double sampleCurveY(double t)
-    {
-        return ((ay * t + by) * t + cy) * t;
-    }
-    
-    double sampleCurveDerivativeX(double t)
-    {
-        return (3.0 * ax * t + 2.0 * bx) * t + cx;
-    }
-    
-    // Given an x value, find a parametric value it came from.
-    double solveCurveX(double x, double epsilon)
-    {
-        double t0;
-        double t1;
-        double t2;
-        double x2;
-        double d2;
-        int i;
-
-        // First try a few iterations of Newton's method -- normally very fast.
-        for (t2 = x, i = 0; i < 8; i++) {
-            x2 = sampleCurveX(t2) - x;
-            if (fabs (x2) < epsilon)
-                return t2;
-            d2 = sampleCurveDerivativeX(t2);
-            if (fabs(d2) < 1e-6)
-                break;
-            t2 = t2 - x2 / d2;
-        }
-
-        // Fall back to the bisection method for reliability.
-        t0 = 0.0;
-        t1 = 1.0;
-        t2 = x;
-
-        if (t2 < t0)
-            return t0;
-        if (t2 > t1)
-            return t1;
-
-        while (t0 < t1) {
-            x2 = sampleCurveX(t2);
-            if (fabs(x2 - x) < epsilon)
-                return t2;
-            if (x > x2)
-                t0 = t2;
-            else
-                t1 = t2;
-            t2 = (t1 - t0) * .5 + t0;
-        }
-
-        // Failure.
-        return t2;
-    }
-    
-private:
-    double ax;
-    double bx;
-    double cx;
-    
-    double ay;
-    double by;
-    double cy;
-};
-
-// The epsilon value we pass to solveCurveX given that the animation is going to run over |dur| seconds. The longer the
+// The epsilon value we pass to UnitBezier::solve given that the animation is going to run over |dur| seconds. The longer the
 // animation, the more precision we need in the timing function result to avoid ugly discontinuities.
 static inline double solveEpsilon(double duration) { return 1. / (200. * duration); }
 
@@ -135,10 +51,8 @@ static inline double solveCubicBezierFunction(double p1x, double p1y, double p2x
 {
     // Convert from input time to parametric value in curve, then from
     // that to output time.
-    CurveData c(p1x, p1y, p2x, p2y);
-    t = c.solveCurveX(t, solveEpsilon(duration));
-    t = c.sampleCurveY(t);
-    return t;
+    UnitBezier bezier(p1x, p1y, p2x, p2y);
+    return bezier.solve(t, solveEpsilon(duration));
 }
 
 class CompositeImplicitAnimation;
@@ -154,7 +68,13 @@ public:
     
     double progress() const;
 
+    int property() const { return m_property; }
+    
     bool finished() const { return m_finished; }
+    void setFinished(bool f) { m_finished = f; }
+    
+    bool stale() const { return m_stale; }
+    void setStale() { m_stale = true; }
 
 private:
     // The two styles that we are blending.
@@ -172,6 +92,8 @@ private:
     double m_startTime;
     bool m_paused;
     double m_pauseTime;
+    
+    bool m_stale;
 };
 
 class CompositeImplicitAnimation : public Noncopyable {
@@ -182,8 +104,6 @@ public:
 
     bool animating() const;
 
-    bool hasAnimationForProperty(int prop) const { return m_animations.contains(prop); }
-
     void reset(RenderObject*);
 
 private:
@@ -193,15 +113,16 @@ private:
 ImplicitAnimation::ImplicitAnimation(const Transition* transition)
 : m_fromStyle(0)
 , m_toStyle(0)
-, m_property(transition->transitionProperty())
-, m_function(transition->transitionTimingFunction())
-, m_duration(transition->transitionDuration() / 1000.0)
-, m_repeatCount(transition->transitionRepeatCount())
+, m_property(transition->property())
+, m_function(transition->timingFunction())
+, m_duration(transition->duration() / 1000.0)
+, m_repeatCount(transition->repeatCount())
 , m_iteration(0)
 , m_finished(false)
 , m_startTime(currentTime())
 , m_paused(false)
 , m_pauseTime(m_startTime)
+, m_stale(false)
 {
 }
 
@@ -212,6 +133,8 @@ ImplicitAnimation::~ImplicitAnimation()
 
 void ImplicitAnimation::reset(RenderObject* renderer, RenderStyle* from, RenderStyle* to)
 {
+    setFinished(false);
+
     if (m_fromStyle)
         m_fromStyle->deref(renderer->renderArena());
     if (m_toStyle)
@@ -222,9 +145,29 @@ void ImplicitAnimation::reset(RenderObject* renderer, RenderStyle* from, RenderS
     m_toStyle = to;
     if (m_toStyle)
         m_toStyle->ref();
-    m_finished = false;
     if (from || to)
         m_startTime = currentTime();
+        
+    // If we are stale, attempt to update to a new transition using the new |to| style.  If we are able to find a new transition,
+    // then we will unmark ourselves for death.
+    if (stale() && from && to) {
+         for (const Transition* transition = to->transitions(); transition; transition = transition->next()) {
+            if (m_property != transition->property())
+                continue;
+            int duration = transition->duration();
+            int repeatCount = transition->repeatCount();
+            if (duration && repeatCount) {
+                m_duration = duration / 1000.0;
+                m_repeatCount = repeatCount;
+                m_stale = false;
+                break;
+            }
+        }
+    }
+    
+    // If we did not find a new transition, then mark ourselves as being finished so that we can be removed.
+    if (stale())
+        setFinished(true);
 }
 
 double ImplicitAnimation::progress() const
@@ -312,12 +255,14 @@ static inline EVisibility blendFunc(EVisibility from, EVisibility to, double pro
 }
 
 #define BLEND(prop, getter, setter) \
-    if (m_property == prop && m_toStyle->getter() != targetStyle->getter()) \
+    if (m_property == prop && m_toStyle->getter() != targetStyle->getter()) {\
         reset(renderer, currentStyle, targetStyle); \
-    \
-    if ((m_property == cAnimateAll && !animation->hasAnimationForProperty(prop)) || m_property == prop) { \
+        if (stale()) \
+            return; \
+    } \
+    if (m_property == cAnimateAll || m_property == prop) { \
         if (m_fromStyle->getter() != m_toStyle->getter()) {\
-            m_finished = false; \
+            setFinished(false); \
             if (!animatedStyle) \
                 animatedStyle = new (renderer->renderArena()) RenderStyle(*targetStyle); \
             animatedStyle->setter(blendFunc(m_fromStyle->getter(), m_toStyle->getter(), progress()));\
@@ -327,33 +272,39 @@ static inline EVisibility blendFunc(EVisibility from, EVisibility to, double pro
     }\
 
 #define BLEND_MAYBE_INVALID_COLOR(prop, getter, setter) \
-    if (m_property == prop && m_toStyle->getter() != targetStyle->getter()) \
+    if (m_property == prop && m_toStyle->getter() != targetStyle->getter()) { \
         reset(renderer, currentStyle, targetStyle); \
-    \
-    if ((m_property == cAnimateAll && !animation->hasAnimationForProperty(prop)) || m_property == prop) { \
+        if (stale()) \
+            return; \
+    } \
+    if (m_property == cAnimateAll || m_property == prop) { \
         Color fromColor = m_fromStyle->getter(); \
         Color toColor = m_toStyle->getter(); \
-        if (!fromColor.isValid()) \
-            fromColor = m_fromStyle->color(); \
-        if (!toColor.isValid()) \
-            toColor = m_toStyle->color(); \
-        if (fromColor != toColor) {\
-            m_finished = false; \
-            if (!animatedStyle) \
-                animatedStyle = new (renderer->renderArena()) RenderStyle(*targetStyle); \
-            animatedStyle->setter(blendFunc(fromColor, toColor, progress()));\
-            if (m_property == prop) \
-                return; \
+        if (fromColor.isValid() || toColor.isValid()) { \
+            if (!fromColor.isValid()) \
+                fromColor = m_fromStyle->color(); \
+            if (!toColor.isValid()) \
+                toColor = m_toStyle->color(); \
+            if (fromColor != toColor) {\
+                setFinished(false); \
+                if (!animatedStyle) \
+                    animatedStyle = new (renderer->renderArena()) RenderStyle(*targetStyle); \
+                animatedStyle->setter(blendFunc(fromColor, toColor, progress()));\
+                if (m_property == prop) \
+                    return; \
+            }\
         }\
     }\
 
 #define BLEND_SHADOW(prop, getter, setter) \
-    if (m_property == prop && (!m_toStyle->getter() || !targetStyle->getter() || *m_toStyle->getter() != *targetStyle->getter())) \
+    if (m_property == prop && (!m_toStyle->getter() || !targetStyle->getter() || *m_toStyle->getter() != *targetStyle->getter())) { \
         reset(renderer, currentStyle, targetStyle); \
-    \
-    if ((m_property == cAnimateAll && !animation->hasAnimationForProperty(prop)) || m_property == prop) { \
+        if (stale()) \
+            return; \
+    } \
+    if (m_property == cAnimateAll || m_property == prop) { \
         if (m_fromStyle->getter() && m_toStyle->getter() && *m_fromStyle->getter() != *m_toStyle->getter()) {\
-            m_finished = false; \
+            setFinished(false); \
             if (!animatedStyle) \
                 animatedStyle = new (renderer->renderArena()) RenderStyle(*targetStyle); \
             animatedStyle->setter(blendFunc(m_fromStyle->getter(), m_toStyle->getter(), progress()));\
@@ -367,74 +318,89 @@ void ImplicitAnimation::animate(CompositeImplicitAnimation* animation, RenderObj
     // FIXME: If we have no transition-property, then the only way to tell if our goal state changed is to check
     // every single animatable property.  For now we'll just diff the styles to ask that question,
     // but we should really exclude non-animatable properties.
-    if (!m_toStyle || (m_property == cAnimateAll && targetStyle->diff(m_toStyle)))
+    if (!m_toStyle || (m_property == cAnimateAll && targetStyle->diff(m_toStyle))) {
         reset(renderer, currentStyle, targetStyle);
+        if (stale())
+            return;
+    }
 
     // FIXME: Blow up shorthands so that they can be honored.
-    m_finished = true;
-    BLEND(CSS_PROP_LEFT, left, setLeft);
-    BLEND(CSS_PROP_RIGHT, right, setRight);
-    BLEND(CSS_PROP_TOP, top, setTop);
-    BLEND(CSS_PROP_BOTTOM, bottom, setBottom);
-    BLEND(CSS_PROP_WIDTH, width, setWidth);
-    BLEND(CSS_PROP_HEIGHT, height, setHeight);
-    BLEND(CSS_PROP_BORDER_LEFT_WIDTH, borderLeftWidth, setBorderLeftWidth);
-    BLEND(CSS_PROP_BORDER_RIGHT_WIDTH, borderRightWidth, setBorderRightWidth);
-    BLEND(CSS_PROP_BORDER_TOP_WIDTH, borderTopWidth, setBorderTopWidth);
-    BLEND(CSS_PROP_BORDER_BOTTOM_WIDTH, borderBottomWidth, setBorderBottomWidth);
-    BLEND(CSS_PROP_MARGIN_LEFT, marginLeft, setMarginLeft);
-    BLEND(CSS_PROP_MARGIN_RIGHT, marginRight, setMarginRight);
-    BLEND(CSS_PROP_MARGIN_TOP, marginTop, setMarginTop);
-    BLEND(CSS_PROP_MARGIN_BOTTOM, marginBottom, setMarginBottom);
-    BLEND(CSS_PROP_PADDING_LEFT, paddingLeft, setPaddingLeft);
-    BLEND(CSS_PROP_PADDING_RIGHT, paddingRight, setPaddingRight);
-    BLEND(CSS_PROP_PADDING_TOP, paddingTop, setPaddingTop);
-    BLEND(CSS_PROP_PADDING_BOTTOM, paddingBottom, setPaddingBottom);
-    BLEND(CSS_PROP_OPACITY, opacity, setOpacity);
-    BLEND(CSS_PROP_COLOR, color, setColor);
-    BLEND(CSS_PROP_BACKGROUND_COLOR, backgroundColor, setBackgroundColor);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP__WEBKIT_COLUMN_RULE_COLOR, columnRuleColor, setColumnRuleColor);
-    BLEND(CSS_PROP__WEBKIT_COLUMN_RULE_WIDTH, columnRuleWidth, setColumnRuleWidth);
-    BLEND(CSS_PROP__WEBKIT_COLUMN_GAP, columnGap, setColumnGap);
-    BLEND(CSS_PROP__WEBKIT_COLUMN_COUNT, columnCount, setColumnCount);
-    BLEND(CSS_PROP__WEBKIT_COLUMN_WIDTH, columnWidth, setColumnWidth);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP__WEBKIT_TEXT_STROKE_COLOR, textStrokeColor, setTextStrokeColor);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP__WEBKIT_TEXT_FILL_COLOR, textFillColor, setTextFillColor);
-    BLEND(CSS_PROP__WEBKIT_BORDER_HORIZONTAL_SPACING, horizontalBorderSpacing, setHorizontalBorderSpacing);
-    BLEND(CSS_PROP__WEBKIT_BORDER_VERTICAL_SPACING, verticalBorderSpacing, setVerticalBorderSpacing);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP_BORDER_LEFT_COLOR, borderLeftColor, setBorderLeftColor);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP_BORDER_RIGHT_COLOR, borderRightColor, setBorderRightColor);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP_BORDER_TOP_COLOR, borderTopColor, setBorderTopColor);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP_BORDER_BOTTOM_COLOR, borderBottomColor, setBorderBottomColor);
-    BLEND(CSS_PROP_Z_INDEX, zIndex, setZIndex);
-    BLEND(CSS_PROP_LINE_HEIGHT, lineHeight, setLineHeight);
-    BLEND_MAYBE_INVALID_COLOR(CSS_PROP_OUTLINE_COLOR, outlineColor, setOutlineColor);
-    BLEND(CSS_PROP_OUTLINE_OFFSET, outlineOffset, setOutlineOffset);
-    BLEND(CSS_PROP_OUTLINE_WIDTH, outlineWidth, setOutlineWidth);
-    BLEND(CSS_PROP_LETTER_SPACING, letterSpacing, setLetterSpacing);
-    BLEND(CSS_PROP_WORD_SPACING, wordSpacing, setWordSpacing);
-    BLEND_SHADOW(CSS_PROP__WEBKIT_BOX_SHADOW, boxShadow, setBoxShadow);
-    BLEND_SHADOW(CSS_PROP_TEXT_SHADOW, textShadow, setTextShadow);
-    BLEND(CSS_PROP__WEBKIT_TRANSFORM, transform, setTransform);
-    BLEND(CSS_PROP__WEBKIT_TRANSFORM_ORIGIN_X, transformOriginX, setTransformOriginX);
-    BLEND(CSS_PROP__WEBKIT_TRANSFORM_ORIGIN_Y, transformOriginY, setTransformOriginY);
-    BLEND(CSS_PROP__WEBKIT_BORDER_TOP_LEFT_RADIUS, borderTopLeftRadius, setBorderTopLeftRadius);
-    BLEND(CSS_PROP__WEBKIT_BORDER_TOP_RIGHT_RADIUS, borderTopRightRadius, setBorderTopRightRadius);
-    BLEND(CSS_PROP__WEBKIT_BORDER_BOTTOM_LEFT_RADIUS, borderBottomLeftRadius, setBorderBottomLeftRadius);
-    BLEND(CSS_PROP__WEBKIT_BORDER_BOTTOM_RIGHT_RADIUS, borderBottomRightRadius, setBorderBottomRightRadius);
-    BLEND(CSS_PROP_VISIBILITY, visibility, setVisibility);
+    setFinished(true);
+    BLEND(CSSPropertyLeft, left, setLeft);
+    BLEND(CSSPropertyRight, right, setRight);
+    BLEND(CSSPropertyTop, top, setTop);
+    BLEND(CSSPropertyBottom, bottom, setBottom);
+    BLEND(CSSPropertyWidth, width, setWidth);
+    BLEND(CSSPropertyHeight, height, setHeight);
+    BLEND(CSSPropertyBorderLeftWidth, borderLeftWidth, setBorderLeftWidth);
+    BLEND(CSSPropertyBorderRightWidth, borderRightWidth, setBorderRightWidth);
+    BLEND(CSSPropertyBorderTopWidth, borderTopWidth, setBorderTopWidth);
+    BLEND(CSSPropertyBorderBottomWidth, borderBottomWidth, setBorderBottomWidth);
+    BLEND(CSSPropertyMarginLeft, marginLeft, setMarginLeft);
+    BLEND(CSSPropertyMarginRight, marginRight, setMarginRight);
+    BLEND(CSSPropertyMarginTop, marginTop, setMarginTop);
+    BLEND(CSSPropertyMarginBottom, marginBottom, setMarginBottom);
+    BLEND(CSSPropertyPaddingLeft, paddingLeft, setPaddingLeft);
+    BLEND(CSSPropertyPaddingRight, paddingRight, setPaddingRight);
+    BLEND(CSSPropertyPaddingTop, paddingTop, setPaddingTop);
+    BLEND(CSSPropertyPaddingBottom, paddingBottom, setPaddingBottom);
+    BLEND(CSSPropertyOpacity, opacity, setOpacity);
+    BLEND(CSSPropertyColor, color, setColor);
+    BLEND(CSSPropertyBackgroundColor, backgroundColor, setBackgroundColor);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyWebkitColumnRuleColor, columnRuleColor, setColumnRuleColor);
+    BLEND(CSSPropertyWebkitColumnRuleWidth, columnRuleWidth, setColumnRuleWidth);
+    BLEND(CSSPropertyWebkitColumnGap, columnGap, setColumnGap);
+    BLEND(CSSPropertyWebkitColumnCount, columnCount, setColumnCount);
+    BLEND(CSSPropertyWebkitColumnWidth, columnWidth, setColumnWidth);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyWebkitTextStrokeColor, textStrokeColor, setTextStrokeColor);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyWebkitTextFillColor, textFillColor, setTextFillColor);
+    BLEND(CSSPropertyWebkitBorderHorizontalSpacing, horizontalBorderSpacing, setHorizontalBorderSpacing);
+    BLEND(CSSPropertyWebkitBorderVerticalSpacing, verticalBorderSpacing, setVerticalBorderSpacing);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyBorderLeftColor, borderLeftColor, setBorderLeftColor);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyBorderRightColor, borderRightColor, setBorderRightColor);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyBorderTopColor, borderTopColor, setBorderTopColor);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyBorderBottomColor, borderBottomColor, setBorderBottomColor);
+    BLEND(CSSPropertyZIndex, zIndex, setZIndex);
+    BLEND(CSSPropertyLineHeight, lineHeight, setLineHeight);
+    BLEND_MAYBE_INVALID_COLOR(CSSPropertyOutlineColor, outlineColor, setOutlineColor);
+    BLEND(CSSPropertyOutlineOffset, outlineOffset, setOutlineOffset);
+    BLEND(CSSPropertyOutlineWidth, outlineWidth, setOutlineWidth);
+    BLEND(CSSPropertyLetterSpacing, letterSpacing, setLetterSpacing);
+    BLEND(CSSPropertyWordSpacing, wordSpacing, setWordSpacing);
+    BLEND_SHADOW(CSSPropertyWebkitBoxShadow, boxShadow, setBoxShadow);
+    BLEND_SHADOW(CSSPropertyTextShadow, textShadow, setTextShadow);
+    BLEND(CSSPropertyWebkitTransform, transform, setTransform);
+    BLEND(CSSPropertyWebkitTransformOriginX, transformOriginX, setTransformOriginX);
+    BLEND(CSSPropertyWebkitTransformOriginY, transformOriginY, setTransformOriginY);
+    BLEND(CSSPropertyWebkitBorderTopLeftRadius, borderTopLeftRadius, setBorderTopLeftRadius);
+    BLEND(CSSPropertyWebkitBorderTopRightRadius, borderTopRightRadius, setBorderTopRightRadius);
+    BLEND(CSSPropertyWebkitBorderBottomLeftRadius, borderBottomLeftRadius, setBorderBottomLeftRadius);
+    BLEND(CSSPropertyWebkitBorderBottomRightRadius, borderBottomRightRadius, setBorderBottomRightRadius);
+    BLEND(CSSPropertyVisibility, visibility, setVisibility);
+    BLEND(CSSPropertyZoom, zoom, setZoom);
 }
 
 RenderStyle* CompositeImplicitAnimation::animate(RenderObject* renderer, RenderStyle* currentStyle, RenderStyle* targetStyle)
 {
-    // Get the animation layers from the target style.
-    // For each one, we need to create a new animation unless one exists already (later occurrences of duplicate
-    // triggers in the layer list get ignored).
-    if (m_animations.isEmpty()) {
-        for (const Transition* transition = targetStyle->transitions(); transition; transition = transition->next()) {
-            int property = transition->transitionProperty();
-            int duration = transition->transitionDuration();
-            int repeatCount = transition->transitionRepeatCount();
+    const Transition* currentTransitions = currentStyle->transitions();
+    const Transition* targetTransitions = targetStyle->transitions();
+    bool transitionsChanged = m_animations.isEmpty() || (currentTransitions != targetTransitions && !(currentTransitions && targetTransitions && *currentTransitions == *targetTransitions));
+
+    if (transitionsChanged) {
+        HashMap<int, ImplicitAnimation*>::iterator end = m_animations.end();
+         
+        for (HashMap<int, ImplicitAnimation*>::iterator it = m_animations.begin(); it != end; ++it)
+            // Mark any running animations as stale if the set of transitions changed.  Stale animations continue
+            // to blend on a timer, and then remove themselves when finished.
+            it->second->setStale();
+
+        // If our transitions changed we need to add new animations for any transitions that
+        // don't exist yet.  If a new transition conflicts with a currently running stale transition, then we will not add it.
+        // The stale transition is responsible for updating itself to the new transition if it ever gets reset or finishes.
+        for (const Transition* transition = targetTransitions; transition; transition = transition->next()) {
+            int property = transition->property();
+            int duration = transition->duration();
+            int repeatCount = transition->repeatCount();
             if (property && duration && repeatCount && !m_animations.contains(property)) {
                 ImplicitAnimation* animation = new ImplicitAnimation(transition);
                 m_animations.set(property, animation);
@@ -446,9 +412,41 @@ RenderStyle* CompositeImplicitAnimation::animate(RenderObject* renderer, RenderS
     // to fill in a RenderStyle*& only if needed.
     RenderStyle* result = 0;
     HashMap<int, ImplicitAnimation*>::iterator end = m_animations.end();
-    for (HashMap<int, ImplicitAnimation*>::iterator it = m_animations.begin(); it != end; ++it)
-        it->second->animate(this, renderer, currentStyle, targetStyle, result);
+    Vector<int> obsoleteTransitions;
     
+    // Look at the "all" animation first.
+    ImplicitAnimation* allAnimation = m_animations.get(cAnimateAll);
+    if (allAnimation) {
+        allAnimation->animate(this, renderer, currentStyle, targetStyle, result);
+
+        // If the animation is done and we are marked as stale, then we can be removed after the
+        // iteration of the hashmap is finished.
+        if (allAnimation->finished() && allAnimation->stale())
+            obsoleteTransitions.append(cAnimateAll);
+    }
+    
+    // Now look at the specialized animations.
+    for (HashMap<int, ImplicitAnimation*>::iterator it = m_animations.begin(); it != end; ++it) {
+        // Skip over the "all" animation, since we animated it already.
+        if (it->second->property() == cAnimateAll)
+            continue;
+        
+        it->second->animate(this, renderer, currentStyle, targetStyle, result);
+
+        // If the animation is done and we are marked as stale, then we can be removed after the
+        // iteration of the hashmap is finished.
+        if (it->second->finished() && it->second->stale())
+            obsoleteTransitions.append(it->second->property());
+
+    }
+    
+    // Now cull out any stale animations that are finished.
+    for (unsigned i = 0; i < obsoleteTransitions.size(); ++i) {
+        ImplicitAnimation* animation = m_animations.take(obsoleteTransitions[i]);
+        animation->reset(renderer, 0, 0);
+        delete animation;
+    }
+
     if (result)
         return result;
 
@@ -476,7 +474,7 @@ public:
     AnimationControllerPrivate(Frame*);
     ~AnimationControllerPrivate();
 
-    CompositeImplicitAnimation* get(RenderObject*);
+    CompositeImplicitAnimation* get(RenderObject*, RenderStyle*);
     bool clear(RenderObject*);
     
     void timerFired(Timer<AnimationControllerPrivate>*);
@@ -501,10 +499,10 @@ AnimationControllerPrivate::~AnimationControllerPrivate()
     deleteAllValues(m_animations);
 }
 
-CompositeImplicitAnimation* AnimationControllerPrivate::get(RenderObject* renderer)
+CompositeImplicitAnimation* AnimationControllerPrivate::get(RenderObject* renderer, RenderStyle* targetStyle)
 {
     CompositeImplicitAnimation* animation = m_animations.get(renderer);
-    if (!animation) {
+    if (!animation && targetStyle->transitions()) {
         animation = new CompositeImplicitAnimation();
         m_animations.set(renderer, animation);
     }
@@ -584,11 +582,22 @@ RenderStyle* AnimationController::updateImplicitAnimations(RenderObject* rendere
     // have changed, we reset the animation.  We then do a blend to get new values and we return
     // a new style.
     ASSERT(renderer->element()); // FIXME: We do not animate generated content yet.
-    
-    CompositeImplicitAnimation* animation = m_data->get(renderer);
-    RenderStyle* result = animation->animate(renderer, renderer->style(), newStyle);
+
+    CompositeImplicitAnimation* animation = m_data->get(renderer, newStyle);
+    if (!animation && !newStyle->transitions())
+        return newStyle;
+
+    RenderStyle* blendedStyle = animation->animate(renderer, renderer->style(), newStyle);
     m_data->updateTimer();
-    return result;
+
+    if (blendedStyle != newStyle) {
+        // Do some of the work that CSSStyleSelector::adjustRenderStyle() does, to impose rules
+        // like opacity creating stacking context.
+        if (blendedStyle->hasAutoZIndex() && (blendedStyle->opacity() < 1.0f || blendedStyle->hasTransform()))
+            blendedStyle->setZIndex(0);
+    }
+
+    return blendedStyle;
 }
 
 void AnimationController::suspendAnimations()

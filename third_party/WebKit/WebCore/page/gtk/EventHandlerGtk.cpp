@@ -36,6 +36,7 @@
 #include "MouseEventWithHitTestResults.h"
 #include "NotImplemented.h"
 #include "Page.h"
+#include "PlatformKeyboardEvent.h"
 #include "PlatformScrollBar.h"
 #include "PlatformWheelEvent.h"
 #include "RenderWidget.h"
@@ -43,6 +44,10 @@
 namespace WebCore {
 
 using namespace EventNames;
+
+unsigned EventHandler::s_accessKeyModifiers = PlatformKeyboardEvent::AltKey;
+
+const double EventHandler::TextDragDelay = 0.0;
 
 bool EventHandler::tabsToAllControls(KeyboardEvent* event) const
 {
@@ -95,9 +100,9 @@ bool EventHandler::passWheelEventToWidget(PlatformWheelEvent& event, Widget* wid
     return static_cast<FrameView*>(widget)->frame()->eventHandler()->handleWheelEvent(event);
 }
 
-Clipboard* EventHandler::createDraggingClipboard() const
+PassRefPtr<Clipboard> EventHandler::createDraggingClipboard() const
 {
-    return new ClipboardGtk(ClipboardWritable, true);
+    return ClipboardGtk::create(ClipboardWritable, true);
 }
 
 bool EventHandler::passMousePressEventToSubframe(MouseEventWithHitTestResults& mev, Frame* subframe)

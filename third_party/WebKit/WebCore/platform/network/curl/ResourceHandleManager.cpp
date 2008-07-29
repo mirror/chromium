@@ -31,9 +31,9 @@
 #include "ResourceHandleManager.h"
 
 #include "CString.h"
-#include "FileSystem.h"
 #include "MIMETypeRegistry.h"
 #include "NotImplemented.h"
+#include "ResourceError.h"
 #include "ResourceHandle.h"
 #include "ResourceHandleInternal.h"
 #include "HTTPParsers.h"
@@ -42,11 +42,19 @@
 #include <errno.h>
 #include <wtf/Vector.h>
 
+#if PLATFORM(GTK)
+    #if GLIB_CHECK_VERSION(2,12,0)
+        #define USE_GLIB_BASE64
+    #endif
+#endif
+
 namespace WebCore {
 
 const int selectTimeoutMS = 5;
 const double pollTimeSeconds = 0.05;
 const int maxRunningJobs = 5;
+
+static const bool ignoreSSLErrors = getenv("WEBKIT_IGNORE_SSL_ERRORS");
 
 ResourceHandleManager::ResourceHandleManager()
     : m_downloadTimer(this, &ResourceHandleManager::downloadTimerCallback)
@@ -66,6 +74,7 @@ ResourceHandleManager::~ResourceHandleManager()
     curl_share_cleanup(m_curlShareHandle);
     if (m_cookieJarFileName)
         free(m_cookieJarFileName);
+    curl_global_cleanup();
 }
 
 void ResourceHandleManager::setCookieJarFileName(const char* cookieJarFileName)
@@ -141,8 +150,11 @@ static size_t headerCallback(char* ptr, size_t size, size_t nmemb, void* data)
     /*
      * a) We can finish and send the ResourceResponse
      * b) We will add the current header to the HTTPHeaderMap of the ResourceResponse
+     *
+     * The HTTP standard requires to use \r\n but for compatibility it recommends to
+     * accept also \n.
      */
-    if (header == String("\r\n")) {
+    if (header == String("\r\n") || header == String("\n")) {
         CURL* h = d->m_handle;
         CURLcode err;
 
@@ -166,7 +178,7 @@ static size_t headerCallback(char* ptr, size_t size, size_t nmemb, void* data)
         if (httpCode >= 300 && httpCode < 400) {
             String location = d->m_response.httpHeaderField("location");
             if (!location.isEmpty()) {
-                KURL newURL = KURL(job->request().url(), location.deprecatedString());
+                KURL newURL = KURL(job->request().url(), location);
 
                 ResourceRequest redirectedRequest = job->request();
                 redirectedRequest.setURL(newURL);
@@ -203,55 +215,14 @@ size_t readCallback(void* ptr, size_t size, size_t nmemb, void* data)
     if (d->m_cancelled)
         return 0;
 
-    size_t sent = 0;
-    size_t toSend = size * nmemb;
-    if (!toSend)
+    if (!size || !nmemb)
         return 0;
 
-    Vector<FormDataElement> elements = job->request().httpBody()->elements();
-    if (d->m_formDataElementIndex >= elements.size())
-        return 0;
+    size_t sent = d->m_formDataStream.read(ptr, size, nmemb);
 
-    FormDataElement element = elements[d->m_formDataElementIndex];
-
-    if (element.m_type == FormDataElement::encodedFile) {
-        if (!d->m_file)
-            d->m_file = fopen(element.m_filename.utf8().data(), "rb");
-
-        if (!d->m_file) {
-            // FIXME: show a user error?
-#ifndef NDEBUG
-            printf("Failed while trying to open %s for upload\n", element.m_filename.utf8().data());
-#endif
-            job->cancel();
-            return 0;
-        }
-
-        sent = fread(ptr, size, nmemb, d->m_file);
-        if (!size && ferror(d->m_file)) {
-            // FIXME: show a user error?
-#ifndef NDEBUG
-            printf("Failed while trying to read %s for upload\n", element.m_filename.utf8().data());
-#endif
-            job->cancel();
-            return 0;
-        }
-        if (feof(d->m_file)) {
-            fclose(d->m_file);
-            d->m_file = 0;
-            d->m_formDataElementIndex++;
-        }
-    } else {
-        size_t elementSize = element.m_data.size() - d->m_formDataElementDataOffset;
-        sent = elementSize > toSend ? toSend : elementSize;
-        memcpy(ptr, element.m_data.data() + d->m_formDataElementDataOffset, sent);
-        if (elementSize > sent)
-            d->m_formDataElementDataOffset += sent;
-        else {
-            d->m_formDataElementDataOffset = 0;
-            d->m_formDataElementIndex++;
-        }
-    }
+    // Something went wrong so cancel the job.
+    if (!sent)
+        job->cancel();
 
     return sent;
 }
@@ -271,13 +242,17 @@ void ResourceHandleManager::downloadTimerCallback(Timer<ResourceHandleManager>* 
 
     // Temporarily disable timers since signals may interrupt select(), raising EINTR errors on some platforms
     setDeferringTimers(true);
-    int rc;
+    int rc = 0;
     do {
         FD_ZERO(&fdread);
         FD_ZERO(&fdwrite);
         FD_ZERO(&fdexcep);
         curl_multi_fdset(m_curlMultiHandle, &fdread, &fdwrite, &fdexcep, &maxfd);
-        rc = ::select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
+        // When the 3 file descriptors are empty, winsock will return -1
+        // and bail out, stopping the file download. So make sure we
+        // have valid file descriptors before calling select.
+        if (maxfd >= 0)
+            rc = ::select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
     } while (rc == -1 && errno == EINTR);
     setDeferringTimers(false);
 
@@ -364,7 +339,10 @@ void ResourceHandleManager::setupPUT(ResourceHandle*, struct curl_slist**)
 void ResourceHandleManager::setupPOST(ResourceHandle* job, struct curl_slist** headers)
 {
     ResourceHandleInternal* d = job->getInternal();
-    Vector<FormDataElement> elements = job->request().httpBody()->elements();
+    Vector<FormDataElement> elements;
+    // Fix crash when httpBody is null (see bug #16906).
+    if (job->request().httpBody())
+        elements = job->request().httpBody()->elements();
     size_t numElements = elements.size();
 
     if (!numElements)
@@ -382,6 +360,11 @@ void ResourceHandleManager::setupPOST(ResourceHandle* job, struct curl_slist** h
     }
 
     // Obtain the total size of the POST
+#if COMPILER(MSVC)
+    // work around compiler error in Visual Studio 2005.  It can't properly
+    // handle math with 64-bit constant declarations.
+#pragma warning(disable: 4307)
+#endif
     static const long long maxCurlOffT = (1LL << (sizeof(curl_off_t) * 8 - 1)) - 1;
     curl_off_t size = 0;
     bool chunkedTransfer = false;
@@ -451,35 +434,44 @@ bool ResourceHandleManager::startScheduledJobs()
     return started;
 }
 
+// FIXME: This function does not deal properly with text encodings.
 static void parseDataUrl(ResourceHandle* handle)
 {
-    DeprecatedString data = handle->request().url().deprecatedString();
+    String data = handle->request().url().string();
 
     ASSERT(data.startsWith("data:", false));
 
-    DeprecatedString header;
+    String header;
     bool base64 = false;
 
     int index = data.find(',');
     if (index != -1) {
-        header = data.mid(5, index - 5).lower();
-        data = data.mid(index + 1);
+        header = data.substring(5, index - 5).lower();
+        data = data.substring(index + 1);
 
         if (header.endsWith(";base64")) {
             base64 = true;
             header = header.left(header.length() - 7);
         }
     } else
-        data = DeprecatedString();
+        data = String();
 
-    data = KURL::decode_string(data);
+    data = decodeURLEscapeSequences(data);
 
-    if (base64) {
+    size_t outLength = 0;
+    char* outData = 0;
+    if (base64 && !data.isEmpty()) {
+        // Use the GLib Base64 if available, since WebCore's decoder isn't
+        // general-purpose and fails on Acid3 test 97 (whitespace).
+#ifdef USE_GLIB_BASE64
+        outData = reinterpret_cast<char*>(g_base64_decode(data.utf8().data(), &outLength));
+#else
         Vector<char> out;
-        if (base64Decode(data.ascii(), data.length(), out))
-            data = DeprecatedString(out.data(), out.size());
+        if (base64Decode(data.latin1().data(), data.length(), out))
+            data = String(out.data(), out.size());
         else
-            data = DeprecatedString();
+            data = String();
+#endif
     }
 
     if (header.isEmpty())
@@ -491,40 +483,91 @@ static void parseDataUrl(ResourceHandle* handle)
 
     response.setMimeType(extractMIMETypeFromMediaType(header));
     response.setTextEncodingName(extractCharsetFromMediaType(header));
-    response.setExpectedContentLength(data.length());
+    if (outData)
+        response.setExpectedContentLength(outLength);
+    else
+        response.setExpectedContentLength(data.length());
     response.setHTTPStatusCode(200);
 
     client->didReceiveResponse(handle, response);
 
-    if (!data.isEmpty())
-        client->didReceiveData(handle, data.ascii(), data.length(), 0);
+    if (outData)
+        client->didReceiveData(handle, outData, outLength, 0);
+    else
+        client->didReceiveData(handle, data.latin1().data(), data.length(), 0);
+
+#ifdef USE_GLIB_BASE64
+    g_free(outData);
+#endif
 
     client->didFinishLoading(handle);
+}
+
+void ResourceHandleManager::dispatchSynchronousJob(ResourceHandle* job)
+{
+    KURL kurl = job->request().url();
+
+    if (kurl.protocolIs("data")) {
+        parseDataUrl(job);
+        return;
+    }
+
+    initializeHandle(job);
+
+    ResourceHandleInternal* handle = job->getInternal();
+
+    // curl_easy_perform blocks until the transfert is finished.
+    CURLcode ret =  curl_easy_perform(handle->m_handle);
+
+    if (ret != 0) {
+        ResourceError error(String(handle->m_url), ret, String(handle->m_url), String(curl_easy_strerror(ret)));
+        handle->client()->didFail(job, error);
+    }
+
+    curl_easy_cleanup(handle->m_handle);
 }
 
 void ResourceHandleManager::startJob(ResourceHandle* job)
 {
     KURL kurl = job->request().url();
-    String protocol = kurl.protocol();
 
-    if (equalIgnoringCase(protocol, "data")) {
+    if (kurl.protocolIs("data")) {
         parseDataUrl(job);
         return;
     }
 
+    initializeHandle(job);
+
+    m_runningJobs++;
+    CURLMcode ret = curl_multi_add_handle(m_curlMultiHandle, job->getInternal()->m_handle);
+    // don't call perform, because events must be async
+    // timeout will occur and do curl_multi_perform
+    if (ret && ret != CURLM_CALL_MULTI_PERFORM) {
+#ifndef NDEBUG
+        printf("Error %d starting job %s\n", ret, encodeWithURLEscapeSequences(job->request().url().string()).latin1().data());
+#endif
+        job->cancel();
+        return;
+    }
+}
+
+void ResourceHandleManager::initializeHandle(ResourceHandle* job)
+{
+    KURL kurl = job->request().url();
+
     // Remove any fragment part, otherwise curl will send it as part of the request.
-    kurl.setRef("");
+    kurl.removeRef();
 
     ResourceHandleInternal* d = job->getInternal();
-    DeprecatedString url = kurl.deprecatedString();
+    String url = kurl.string();
 
     if (kurl.isLocalFile()) {
-        DeprecatedString query = kurl.query();
+        String query = kurl.query();
         // Remove any query part sent to a local file.
         if (!query.isEmpty())
             url = url.left(url.find(query));
         // Determine the MIME type based on the path.
-        d->m_response.setMimeType(MIMETypeRegistry::getMIMETypeForPath(String(url)));
+        d->m_response.setMimeType(MIMETypeRegistry::getMIMETypeForPath(url));
     }
 
     d->m_handle = curl_easy_init();
@@ -544,12 +587,18 @@ void ResourceHandleManager::startJob(ResourceHandle* job)
     curl_easy_setopt(d->m_handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
     curl_easy_setopt(d->m_handle, CURLOPT_SHARE, m_curlShareHandle);
     curl_easy_setopt(d->m_handle, CURLOPT_DNS_CACHE_TIMEOUT, 60 * 5); // 5 minutes
+    // FIXME: Enable SSL verification when we have a way of shipping certs
+    // and/or reporting SSL errors to the user.
+    if (ignoreSSLErrors)
+        curl_easy_setopt(d->m_handle, CURLOPT_SSL_VERIFYPEER, false);
     // enable gzip and deflate through Accept-Encoding:
     curl_easy_setopt(d->m_handle, CURLOPT_ENCODING, "");
 
     // url must remain valid through the request
     ASSERT(!d->m_url);
-    d->m_url = strdup(url.ascii());
+
+    // url is in ASCII so latin1() will only convert it to char* without character translation.
+    d->m_url = strdup(url.latin1().data());
     curl_easy_setopt(d->m_handle, CURLOPT_URL, d->m_url);
 
     if (m_cookieJarFileName) {
@@ -584,18 +633,6 @@ void ResourceHandleManager::startJob(ResourceHandle* job)
     if (headers) {
         curl_easy_setopt(d->m_handle, CURLOPT_HTTPHEADER, headers);
         d->m_customHeaders = headers;
-    }
-
-    m_runningJobs++;
-    CURLMcode ret = curl_multi_add_handle(m_curlMultiHandle, d->m_handle);
-    // don't call perform, because events must be async
-    // timeout will occur and do curl_multi_perform
-    if (ret && ret != CURLM_CALL_MULTI_PERFORM) {
-#ifndef NDEBUG
-        printf("Error %d starting job %s\n", ret, job->request().url().deprecatedString().ascii());
-#endif
-        job->cancel();
-        return;
     }
 }
 

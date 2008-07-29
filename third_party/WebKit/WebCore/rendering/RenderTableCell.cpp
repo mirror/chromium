@@ -30,7 +30,6 @@
 #include "HTMLTableCellElement.h"
 #include "RenderTableCol.h"
 #include "RenderView.h"
-#include "TextStream.h"
 
 using namespace std;
 
@@ -144,55 +143,55 @@ IntRect RenderTableCell::absoluteClippedOverflowRect()
     // so we ignore outside borders. This should not be a problem because it means that
     // the table is going to recalculate the grid, relayout and repaint its current rect, which
     // includes any outside borders of this cell.
-    if (table()->collapseBorders() && !table()->needsSectionRecalc()) {
-        bool rtl = table()->style()->direction() == RTL;
-        int outlineSize = style()->outlineSize();
-        int left = max(borderHalfLeft(true), outlineSize);
-        int right = max(borderHalfRight(true), outlineSize);
-        int top = max(borderHalfTop(true), outlineSize);
-        int bottom = max(borderHalfBottom(true), outlineSize);
-        if (left && !rtl || right && rtl) {
-            if (RenderTableCell* before = table()->cellBefore(this)) {
-                top = max(top, before->borderHalfTop(true));
-                bottom = max(bottom, before->borderHalfBottom(true));
-            }
-        }
-        if (left && rtl || right && !rtl) {
-            if (RenderTableCell* after = table()->cellAfter(this)) {
-                top = max(top, after->borderHalfTop(true));
-                bottom = max(bottom, after->borderHalfBottom(true));
-            }
-        }
-        if (top) {
-            if (RenderTableCell* above = table()->cellAbove(this)) {
-                left = max(left, above->borderHalfLeft(true));
-                right = max(right, above->borderHalfRight(true));
-            }
-        }
-        if (bottom) {
-            if (RenderTableCell* below = table()->cellBelow(this)) {
-                left = max(left, below->borderHalfLeft(true));
-                right = max(right, below->borderHalfRight(true));
-            }
-        }
-        left = max(left, -overflowLeft(false));
-        top = max(top, -overflowTop(false) - borderTopExtra());
-        IntRect r(-left, -borderTopExtra() - top, left + max(width() + right, overflowWidth(false)), borderTopExtra() + top + max(height() + bottom + borderBottomExtra(), overflowHeight(false)));
+    if (!table()->collapseBorders() || table()->needsSectionRecalc())
+        return RenderBlock::absoluteClippedOverflowRect();
 
-        if (RenderView* v = view())
-            r.move(v->layoutDelta());
-
-        computeAbsoluteRepaintRect(r);
-        return r;
+    bool rtl = table()->style()->direction() == RTL;
+    int outlineSize = style()->outlineSize();
+    int left = max(borderHalfLeft(true), outlineSize);
+    int right = max(borderHalfRight(true), outlineSize);
+    int top = max(borderHalfTop(true), outlineSize);
+    int bottom = max(borderHalfBottom(true), outlineSize);
+    if (left && !rtl || right && rtl) {
+        if (RenderTableCell* before = table()->cellBefore(this)) {
+            top = max(top, before->borderHalfTop(true));
+            bottom = max(bottom, before->borderHalfBottom(true));
+        }
     }
-    return RenderBlock::absoluteClippedOverflowRect();
+    if (left && rtl || right && !rtl) {
+        if (RenderTableCell* after = table()->cellAfter(this)) {
+            top = max(top, after->borderHalfTop(true));
+            bottom = max(bottom, after->borderHalfBottom(true));
+        }
+    }
+    if (top) {
+        if (RenderTableCell* above = table()->cellAbove(this)) {
+            left = max(left, above->borderHalfLeft(true));
+            right = max(right, above->borderHalfRight(true));
+        }
+    }
+    if (bottom) {
+        if (RenderTableCell* below = table()->cellBelow(this)) {
+            left = max(left, below->borderHalfLeft(true));
+            right = max(right, below->borderHalfRight(true));
+        }
+    }
+    left = max(left, -overflowLeft(false));
+    top = max(top, -overflowTop(false) - borderTopExtra());
+    IntRect r(-left, -borderTopExtra() - top, left + max(width() + right, overflowWidth(false)), borderTopExtra() + top + max(height() + bottom + borderBottomExtra(), overflowHeight(false)));
+
+    if (RenderView* v = view())
+        r.move(v->layoutDelta());
+
+    computeAbsoluteRepaintRect(r);
+    return r;
 }
 
 void RenderTableCell::computeAbsoluteRepaintRect(IntRect& r, bool fixed)
 {
     r.setY(r.y() + m_topExtra);
     RenderView* v = view();
-    if (!v || !v->layoutState())
+    if ((!v || !v->layoutState()) && parent())
         r.move(-parent()->xPos(), -parent()->yPos()); // Rows are in the same coordinate space, so don't add their offset in.
     RenderBlock::computeAbsoluteRepaintRect(r, fixed);
 }
@@ -201,14 +200,14 @@ bool RenderTableCell::absolutePosition(int& xPos, int& yPos, bool fixed) const
 {
     bool result = RenderBlock::absolutePosition(xPos, yPos, fixed);
     RenderView* v = view();
-    if (!v || !v->layoutState()) {
+    if ((!v || !v->layoutState()) && parent()) {
         xPos -= parent()->xPos(); // Rows are in the same coordinate space, so don't add their offset in.
         yPos -= parent()->yPos();
     }
     return result;
 }
 
-short RenderTableCell::baselinePosition(bool /*firstLine*/, bool /*isRootLineBox*/) const
+int RenderTableCell::baselinePosition(bool /*firstLine*/, bool /*isRootLineBox*/) const
 {
     RenderObject* o = firstChild();
     int offset = paddingTop() + borderTop();
@@ -251,7 +250,7 @@ void RenderTableCell::setStyle(RenderStyle* newStyle)
 
 bool RenderTableCell::requiresLayer()
 {
-    return isPositioned() || isTransparent() || hasOverflowClip() || hasTransform();
+    return isPositioned() || isTransparent() || hasOverflowClip() || hasTransform() || hasMask() || hasReflection();
 }
 
 // The following rules apply for resolving conflicts and figuring out which border
@@ -315,7 +314,7 @@ CollapsedBorderValue RenderTableCell::collapsedLeftBorder(bool rtl) const
     // (2) The right border of the cell to the left.
     RenderTableCell* prevCell = rtl ? tableElt->cellAfter(this) : tableElt->cellBefore(this);
     if (prevCell) {
-        result = compareBorders(result, CollapsedBorderValue(&prevCell->style()->borderRight(), BCELL));
+        result = rtl ? compareBorders(result, CollapsedBorderValue(&prevCell->style()->borderRight(), BCELL)) : compareBorders(CollapsedBorderValue(&prevCell->style()->borderRight(), BCELL), result);
         if (!result.exists())
             return result;
     } else if (leftmostColumn) {
@@ -349,7 +348,7 @@ CollapsedBorderValue RenderTableCell::collapsedLeftBorder(bool rtl) const
     if (!leftmostColumn) {
         colElt = tableElt->colElement(col() + (rtl ? colSpan() : -1), &startColEdge, &endColEdge);
         if (colElt && (!rtl ? endColEdge : startColEdge)) {
-            result = compareBorders(result, CollapsedBorderValue(&colElt->style()->borderRight(), BCOL));
+            result = rtl ? compareBorders(result, CollapsedBorderValue(&colElt->style()->borderRight(), BCOL)) : compareBorders(CollapsedBorderValue(&colElt->style()->borderRight(), BCOL), result);
             if (!result.exists())
                 return result;
         }
@@ -382,7 +381,7 @@ CollapsedBorderValue RenderTableCell::collapsedRightBorder(bool rtl) const
     if (!rightmostColumn) {
         RenderTableCell* nextCell = rtl ? tableElt->cellBefore(this) : tableElt->cellAfter(this);
         if (nextCell && nextCell->style()) {
-            result = compareBorders(result, CollapsedBorderValue(&nextCell->style()->borderLeft(), BCELL));
+            result = rtl ? compareBorders(CollapsedBorderValue(&nextCell->style()->borderLeft(), BCELL), result) : compareBorders(result, CollapsedBorderValue(&nextCell->style()->borderLeft(), BCELL));
             if (!result.exists())
                 return result;
         }
@@ -417,7 +416,7 @@ CollapsedBorderValue RenderTableCell::collapsedRightBorder(bool rtl) const
     if (!rightmostColumn) {
         colElt = tableElt->colElement(col() + (rtl ? -1 : colSpan()), &startColEdge, &endColEdge);
         if (colElt && (!rtl ? startColEdge : endColEdge)) {
-            result = compareBorders(result, CollapsedBorderValue(&colElt->style()->borderLeft(), BCOL));
+            result = rtl ? compareBorders(CollapsedBorderValue(&colElt->style()->borderLeft(), BCOL), result) : compareBorders(result, CollapsedBorderValue(&colElt->style()->borderLeft(), BCOL));
             if (!result.exists())
                 return result;
         }
@@ -440,7 +439,7 @@ CollapsedBorderValue RenderTableCell::collapsedTopBorder() const
     RenderTableCell* prevCell = table()->cellAbove(this);
     if (prevCell) {
         // (2) A previous cell's bottom border.
-        result = compareBorders(result, CollapsedBorderValue(&prevCell->style()->borderBottom(), BCELL));
+        result = compareBorders(CollapsedBorderValue(&prevCell->style()->borderBottom(), BCELL), result);
         if (!result.exists()) 
             return result;
     }
@@ -459,7 +458,7 @@ CollapsedBorderValue RenderTableCell::collapsedTopBorder() const
             prevRow = prevCell->section()->lastChild();
     
         if (prevRow) {
-            result = compareBorders(result, CollapsedBorderValue(&prevRow->style()->borderBottom(), BROW));
+            result = compareBorders(CollapsedBorderValue(&prevRow->style()->borderBottom(), BROW), result);
             if (!result.exists())
                 return result;
         }
@@ -476,7 +475,7 @@ CollapsedBorderValue RenderTableCell::collapsedTopBorder() const
         // (6) Previous row group's bottom border.
         currSection = table()->sectionAbove(currSection);
         if (currSection) {
-            result = compareBorders(result, CollapsedBorderValue(&currSection->style()->borderBottom(), BROWGROUP));
+            result = compareBorders(CollapsedBorderValue(&currSection->style()->borderBottom(), BROWGROUP), result);
             if (!result.exists())
                 return result;
         }
@@ -814,7 +813,7 @@ void RenderTableCell::paintBackgroundsBehindCell(PaintInfo& paintInfo, int tx, i
     int mh = end - my;
 
     Color c = backgroundObject->style()->backgroundColor();
-    const BackgroundLayer* bgLayer = backgroundObject->style()->backgroundLayers();
+    const FillLayer* bgLayer = backgroundObject->style()->backgroundLayers();
 
     if (bgLayer->hasImage() || c.isValid()) {
         // We have to clip here because the background would paint
@@ -826,7 +825,7 @@ void RenderTableCell::paintBackgroundsBehindCell(PaintInfo& paintInfo, int tx, i
             paintInfo.context->save();
             paintInfo.context->clip(clipRect);
         }
-        paintBackgrounds(paintInfo.context, c, bgLayer, my, mh, tx, ty, w, h);
+        paintFillLayers(paintInfo, c, bgLayer, my, mh, tx, ty, w, h);
         if (shouldClip)
             paintInfo.context->restore();
     }
@@ -854,16 +853,23 @@ void RenderTableCell::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
     paintBorder(paintInfo.context, tx, ty, w, h, style());
 }
 
-#ifndef NDEBUG
-void RenderTableCell::dump(TextStream* stream, DeprecatedString ind) const
+void RenderTableCell::paintMask(PaintInfo& paintInfo, int tx, int ty)
 {
-    *stream << " row=" << row();
-    *stream << " col=" << col();
-    *stream << " rSpan=" << rowSpan();
-    *stream << " cSpan=" << colSpan();
+    if (style()->visibility() != VISIBLE || paintInfo.phase != PaintPhaseMask)
+        return;
 
-    RenderBlock::dump(stream,ind);
+    RenderTable* tableElt = table();
+    if (!tableElt->collapseBorders() && style()->emptyCells() == HIDE && !firstChild())
+        return;
+
+    int w = width();
+    int h = height() + borderTopExtra() + borderBottomExtra();
+   
+    int my = max(ty, paintInfo.rect.y());
+    int end = min(paintInfo.rect.bottom(), ty + h);
+    int mh = end - my;
+
+    paintMaskImages(paintInfo, my, mh, tx, ty, w, h);
 }
-#endif
 
 } // namespace WebCore

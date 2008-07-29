@@ -42,7 +42,7 @@
 #include "EventNames.h"
 #include "Frame.h"
 #include "FrameView.h"
-#include "kjs_proxy.h"
+#include "ScriptController.h"
 #include "RegisteredEventListener.h"
 
 namespace WebCore {
@@ -66,6 +66,13 @@ XMLHttpRequest* EventTarget::toXMLHttpRequest()
 {
     return 0;
 }
+
+#if ENABLE(OFFLINE_WEB_APPLICATIONS)
+DOMApplicationCache* EventTarget::toDOMApplicationCache()
+{
+    return 0;
+}
+#endif
 
 #if ENABLE(SVG)
 SVGElementInstance* EventTarget::toSVGElementInstance()
@@ -118,7 +125,7 @@ void EventTarget::addEventListener(EventTargetNode* referenceNode, const AtomicS
     if (referenceNode->m_regdListeners->isEmpty() && !referenceNode->inDocument())
         referenceNode->document()->registerDisconnectedNodeWithEventListeners(referenceNode);
 
-    referenceNode->m_regdListeners->append(new RegisteredEventListener(eventType, listener.get(), useCapture));
+    referenceNode->m_regdListeners->append(RegisteredEventListener::create(eventType, listener, useCapture));
 }
 
 void EventTarget::removeEventListener(EventTargetNode* referenceNode, const AtomicString& eventType, EventListener* listener, bool useCapture)
@@ -127,11 +134,10 @@ void EventTarget::removeEventListener(EventTargetNode* referenceNode, const Atom
     if (!referenceNode->m_regdListeners)
         return;
 
-    RegisteredEventListener rl(eventType, listener, useCapture);
-
     RegisteredEventListenerList::Iterator end = referenceNode->m_regdListeners->end();
     for (RegisteredEventListenerList::Iterator it = referenceNode->m_regdListeners->begin(); it != end; ++it) {
-         if (*(*it).get() == rl) {
+        RegisteredEventListener& r = **it;
+        if (r.eventType() == eventType && r.listener() == listener && r.useCapture() == useCapture) {
             (*it)->setRemoved(true);
             it = referenceNode->m_regdListeners->remove(it);
 
@@ -269,8 +275,8 @@ bool EventTarget::dispatchGenericEvent(EventTargetNode* referenceNode, PassRefPt
     // have a reference to it in a variable.  So there is no need for
     // the interpreter to keep the event in it's cache
     Frame* frame = referenceNode->document()->frame();
-    if (tempEvent && frame && frame->scriptProxy()->isEnabled())
-        frame->scriptProxy()->finishedWithEvent(evt.get());
+    if (tempEvent && frame && frame->script()->isEnabled())
+        frame->script()->finishedWithEvent(evt.get());
 
     return !evt->defaultPrevented(); // ### what if defaultPrevented was called before dispatchEvent?
 }
@@ -288,6 +294,18 @@ void EventTarget::insertedIntoDocument(EventTargetNode* referenceNode)
 }
 
 void EventTarget::removedFromDocument(EventTargetNode* referenceNode)
+{
+    if (referenceNode && referenceNode->m_regdListeners && !referenceNode->m_regdListeners->isEmpty())
+        referenceNode->document()->registerDisconnectedNodeWithEventListeners(referenceNode);
+}
+
+void EventTarget::willMoveToNewOwnerDocument(EventTargetNode* referenceNode)
+{
+    if (referenceNode && referenceNode->m_regdListeners && !referenceNode->m_regdListeners->isEmpty())
+        referenceNode->document()->unregisterDisconnectedNodeWithEventListeners(referenceNode);
+}
+
+void EventTarget::didMoveToNewOwnerDocument(EventTargetNode* referenceNode)
 {
     if (referenceNode && referenceNode->m_regdListeners && !referenceNode->m_regdListeners->isEmpty())
         referenceNode->document()->registerDisconnectedNodeWithEventListeners(referenceNode);

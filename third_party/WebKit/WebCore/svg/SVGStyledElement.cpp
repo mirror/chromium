@@ -1,8 +1,6 @@
 /*
     Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann <zimmermann@kde.org>
-                  2004, 2005, 2007 Rob Buis <buis@kde.org>
-
-    This file is part of the KDE project
+                  2004, 2005, 2007, 2008 Rob Buis <buis@kde.org>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -21,11 +19,11 @@
 */
 
 #include "config.h"
-
 #if ENABLE(SVG)
 #include "SVGStyledElement.h"
 
 #include "Attr.h"
+#include "CSSParser.h"
 #include "CSSStyleSelector.h"
 #include "CString.h"
 #include "Document.h"
@@ -44,8 +42,12 @@ namespace WebCore {
 
 using namespace SVGNames;
 
+char SVGStyledElementIdentifier[] = "SVGStyledElement";
+static HashSet<const SVGStyledElement*>* gElementsWithInstanceUpdatesBlocked = 0;
+
 SVGStyledElement::SVGStyledElement(const QualifiedName& tagName, Document* doc)
     : SVGElement(tagName, doc)
+    , m_className(this, HTMLNames::classAttr)
 {
 }
 
@@ -53,8 +55,6 @@ SVGStyledElement::~SVGStyledElement()
 {
     SVGResource::removeClient(this);
 }
-
-ANIMATED_PROPERTY_DEFINITIONS(SVGStyledElement, String, String, string, ClassName, className, HTMLNames::classAttr, m_className)
 
 bool SVGStyledElement::rendererIsNeeded(RenderStyle* style)
 {
@@ -69,15 +69,9 @@ bool SVGStyledElement::rendererIsNeeded(RenderStyle* style)
     return false;
 }
 
-static inline void mapAttributeToCSSProperty(HashMap<AtomicStringImpl*, int>* propertyNameToIdMap, const QualifiedName& attrName, const char* cssPropertyName = 0)
+static void mapAttributeToCSSProperty(HashMap<AtomicStringImpl*, int>* propertyNameToIdMap, const QualifiedName& attrName)
 {
-    int propertyId = 0;
-    if (cssPropertyName)
-        propertyId = getPropertyID(cssPropertyName, strlen(cssPropertyName));
-    else {
-        CString propertyName = attrName.localName().domString().utf8();
-        propertyId = getPropertyID(propertyName.data(), propertyName.length());
-    }
+    int propertyId = cssPropertyID(attrName.localName());
     ASSERT(propertyId > 0);
     propertyNameToIdMap->set(attrName.localName().impl(), propertyId);
 }
@@ -224,9 +218,9 @@ void SVGStyledElement::invalidateResourcesInAncestorChain() const
     }
 }
 
-void SVGStyledElement::childrenChanged(bool changedByParser)
+void SVGStyledElement::childrenChanged(bool changedByParser, Node* beforeChange, Node* afterChange, int childCountDelta)
 {
-    SVGElement::childrenChanged(changedByParser);
+    SVGElement::childrenChanged(changedByParser, beforeChange, afterChange, childCountDelta);
     if (document()->parsing())
         return;
 
@@ -244,6 +238,9 @@ void SVGStyledElement::childrenChanged(bool changedByParser)
 
 void SVGStyledElement::updateElementInstance(SVGDocumentExtensions* extensions) const
 {
+    if (gElementsWithInstanceUpdatesBlocked && gElementsWithInstanceUpdatesBlocked->contains(this))
+        return;
+
     SVGStyledElement* nonConstThis = const_cast<SVGStyledElement*>(this);
     HashSet<SVGElementInstance*>* set = extensions->instancesForElement(nonConstThis);
     if (!set || set->isEmpty())
@@ -284,6 +281,15 @@ PassRefPtr<CSSValue> SVGStyledElement::getPresentationAttribute(const String& na
     MappedAttribute* cssSVGAttr = mappedAttributes()->getAttributeItem(name);
     if (!cssSVGAttr || !cssSVGAttr->style())
         return 0;
+
+    // FIXME: Is it possible that the style will not be shared at the time this
+    // is called, but a later addition to the DOM will make it shared?
+    if (!cssSVGAttr->style()->hasOneRef()) {
+        cssSVGAttr->setDecl(0);
+        int propId = SVGStyledElement::cssPropertyIdForSVGAttributeName(cssSVGAttr->name());
+        addCSSProperty(cssSVGAttr, propId, cssSVGAttr->value());
+    }
+
     return cssSVGAttr->style()->getPropertyCSSValue(name);
 }
 
@@ -293,6 +299,19 @@ void SVGStyledElement::detach()
     SVGElement::detach();
 }
 
+void SVGStyledElement::setInstanceUpdatesBlocked(bool blockUpdates)
+{
+    if (blockUpdates) {
+        if (!gElementsWithInstanceUpdatesBlocked)
+            gElementsWithInstanceUpdatesBlocked = new HashSet<const SVGStyledElement*>;
+        gElementsWithInstanceUpdatesBlocked->add(this);
+    } else {
+        ASSERT(gElementsWithInstanceUpdatesBlocked);
+        ASSERT(gElementsWithInstanceUpdatesBlocked->contains(this));
+        gElementsWithInstanceUpdatesBlocked->remove(this);
+    }
+}
+    
 }
 
 #endif // ENABLE(SVG)

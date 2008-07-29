@@ -29,24 +29,67 @@
 #ifndef Console_h
 #define Console_h
 
-#include <wtf/RefCounted.h>
 #include "PlatformString.h"
+#include <profiler/Profiler.h>
+#include <wtf/RefCounted.h>
+#include <wtf/PassRefPtr.h>
+
+namespace KJS {
+    class ExecState;
+    class ArgList;
+    class Profile;
+    class JSValue;
+}
 
 namespace WebCore {
 
     class Frame;
+    class String;
 
-    class Console : public RefCounted<Console> {
+    enum MessageSource {
+        HTMLMessageSource,
+        XMLMessageSource,
+        JSMessageSource,
+        CSSMessageSource,
+        OtherMessageSource
+    };
+
+    enum MessageLevel {
+        TipMessageLevel,
+        LogMessageLevel,
+        WarningMessageLevel,
+        ErrorMessageLevel,
+        GroupTitleMessageLevel
+    };
+
+    class Console : public RefCounted<Console>, public KJS::ProfilerClient {
     public:
-        Console(Frame*);
+        static PassRefPtr<Console> create(Frame* frame) { return adoptRef(new Console(frame)); }
+
         void disconnectFrame();
 
-        void error(const String& message);
-        void info(const String& message);
-        void log(const String& message);
-        void warn(const String& message);
+        void addMessage(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceURL);
 
+        void debug(KJS::ExecState*, const KJS::ArgList& arguments);
+        void error(KJS::ExecState*, const KJS::ArgList& arguments);
+        void info(KJS::ExecState*, const KJS::ArgList& arguments);
+        void log(KJS::ExecState*, const KJS::ArgList& arguments);
+        void warn(KJS::ExecState*, const KJS::ArgList& arguments);
+        void assertCondition(bool condition, KJS::ExecState*, const KJS::ArgList& arguments);
+        void profile(KJS::ExecState*, const KJS::ArgList& arguments);
+        void profileEnd(KJS::ExecState*, const KJS::ArgList& arguments);
+        void time(const KJS::UString& title);
+        void timeEnd(const KJS::UString& title);
+        void group(KJS::ExecState*, const KJS::ArgList& arguments);
+        void groupEnd();
+
+        void finishedProfiling(PassRefPtr<KJS::Profile>);
+
+        void reportException(KJS::ExecState*, KJS::JSValue*);
+        void reportCurrentException(KJS::ExecState*);
     private:
+        Console(Frame*);
+        
         Frame* m_frame;
     };
 

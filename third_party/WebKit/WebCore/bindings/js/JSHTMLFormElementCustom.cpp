@@ -29,7 +29,6 @@
 #include "HTMLCollection.h"
 #include "HTMLFormElement.h"
 #include "JSNamedNodesCollection.h"
-#include "kjs_dom.h"
 
 using namespace KJS;
 
@@ -42,7 +41,7 @@ bool JSHTMLFormElement::canGetItemsForName(ExecState* exec, HTMLFormElement* for
     return namedItems.size();
 }
 
-JSValue* JSHTMLFormElement::nameGetter(ExecState* exec, JSObject*, const Identifier& propertyName, const PropertySlot& slot)
+JSValue* JSHTMLFormElement::nameGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
     HTMLFormElement* form = static_cast<HTMLFormElement*>(static_cast<JSHTMLElement*>(slot.slotBase())->impl());
     
@@ -52,7 +51,7 @@ JSValue* JSHTMLFormElement::nameGetter(ExecState* exec, JSObject*, const Identif
     if (namedItems.size() == 1)
         return toJS(exec, namedItems[0].get());
     if (namedItems.size() > 1) 
-        return new JSNamedNodesCollection(exec->lexicalGlobalObject()->objectPrototype(), namedItems);
+        return new (exec) JSNamedNodesCollection(exec->lexicalGlobalObject()->objectPrototype(), namedItems);
     return jsUndefined();
 }
 

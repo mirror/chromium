@@ -25,7 +25,7 @@
 #ifndef HTMLOptionElement_h
 #define HTMLOptionElement_h
 
-#include "HTMLGenericFormElement.h"
+#include "HTMLFormControlElement.h"
 
 namespace WebCore {
 
@@ -33,8 +33,7 @@ class HTMLSelectElement;
 class HTMLFormElement;
 class MappedAttribute;
 
-class HTMLOptionElement : public HTMLGenericFormElement
-{
+class HTMLOptionElement : public HTMLFormControlElement {
     friend class HTMLSelectElement;
     friend class RenderMenuList;
 
@@ -66,9 +65,9 @@ public:
     void setSelected(bool);
     void setSelectedState(bool);
 
-    HTMLSelectElement* getSelect() const;
+    HTMLSelectElement* ownerSelectElement() const;
 
-    virtual void childrenChanged(bool changedByParser = false);
+    virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0);
 
     bool defaultSelected() const;
     void setDefaultSelected(bool);
@@ -81,7 +80,8 @@ public:
     virtual bool disabled() const;
     
     virtual void insertedIntoDocument();
-
+    virtual void accessKeyAction(bool);
+    
 private:
     String m_value;
     bool m_selected;

@@ -267,7 +267,7 @@ void GraphicsContext::fillRect(const FloatRect& rect, const Color& color)
     if (paintingDisabled())
         return;
 
-    m_data->context->SetPen(wxPen(color));
+    m_data->context->SetPen(*wxTRANSPARENT_PEN);
     m_data->context->SetBrush(wxBrush(color));
     m_data->context->DrawRectangle(rect.x(), rect.y(), rect.width(), rect.height());
 }
@@ -288,7 +288,7 @@ void GraphicsContext::drawFocusRing(const Color& color)
     notImplemented();
 }
 
-void GraphicsContext::clip(const IntRect& r)
+void GraphicsContext::clip(const FloatRect& r)
 {
     wxWindowDC* windc = dynamic_cast<wxWindowDC*>(m_data->context);
     wxPoint pos(0, 0);
@@ -334,7 +334,7 @@ void GraphicsContext::drawLineForText(const IntPoint& origin, int width, bool pr
         return;
 
     IntPoint endPoint = origin + IntSize(width, 0);
-    m_data->context->SetPen(wxPen(strokeColor(), strokeThickness(), strokeStyleToWxPenStyle(strokeStyle())));
+    m_data->context->SetPen(wxPen(strokeColor(), strokeThickness(), wxSOLID));
     m_data->context->DrawLine(origin.x(), origin.y(), endPoint.x(), endPoint.y());
 }
 
@@ -420,6 +420,16 @@ void GraphicsContext::setCompositeOperation(CompositeOperator op)
 {
     if (m_data->context)
         m_data->context->SetLogicalFunction(getWxCompositingOperation(op, false));
+}
+
+void GraphicsContext::beginPath()
+{
+    notImplemented();
+}
+
+void GraphicsContext::addPath(const Path& path)
+{
+    notImplemented();
 }
 
 void GraphicsContext::setPlatformStrokeColor(const Color& color)

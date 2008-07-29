@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2006 James G. Speth (speth@end.com)
  * Copyright (C) 2006 Samuel Weinig (sam.weinig@gmail.com)
  *
@@ -38,7 +38,6 @@
 #import "Document.h"
 #import "DocumentFragment.h"
 #import "DocumentType.h"
-#import "EntityReference.h"
 #import "Event.h"
 #import "EventListener.h"
 #import "EventTarget.h"
@@ -73,6 +72,9 @@
 #import "SVGNames.h"
 #import "DOMSVG.h"
 #endif
+
+using namespace KJS;
+using namespace WebCore;
 
 namespace WebCore {
 
@@ -188,10 +190,12 @@ static void createElementClassMap()
 
 #if ENABLE(SVG)
     addElementClass(SVGNames::aTag, [DOMSVGAElement class]);
+    addElementClass(SVGNames::altGlyphTag, [DOMSVGAltGlyphElement class]);
 #if ENABLE(SVG_ANIMATION)
     addElementClass(SVGNames::animateTag, [DOMSVGAnimateElement class]);
     addElementClass(SVGNames::animateColorTag, [DOMSVGAnimateColorElement class]);
     addElementClass(SVGNames::animateTransformTag, [DOMSVGAnimateTransformElement class]);
+    addElementClass(SVGNames::setTag, [DOMSVGSetElement class]);
 #endif
     addElementClass(SVGNames::circleTag, [DOMSVGCircleElement class]);
     addElementClass(SVGNames::clipPathTag, [DOMSVGClipPathElement class]);
@@ -253,7 +257,6 @@ static void createElementClassMap()
     addElementClass(SVGNames::radialGradientTag, [DOMSVGRadialGradientElement class]);
     addElementClass(SVGNames::rectTag, [DOMSVGRectElement class]);
     addElementClass(SVGNames::scriptTag, [DOMSVGScriptElement class]);
-    addElementClass(SVGNames::setTag, [DOMSVGSetElement class]);
     addElementClass(SVGNames::stopTag, [DOMSVGStopElement class]);
     addElementClass(SVGNames::styleTag, [DOMSVGStyleElement class]);
     addElementClass(SVGNames::svgTag, [DOMSVGSVGElement class]);
@@ -576,13 +579,13 @@ static NSArray *kit(const Vector<IntRect>& rects)
     ASSERT(name);
     WebCore::Element* element = [self _element];
     ASSERT(element);
-    return WebCore::KURL(element->document()->completeURL(parseURL(element->getAttribute(name)).deprecatedString())).getNSURL();
+    return element->document()->completeURL(parseURL(element->getAttribute(name)));
 }
 
 // FIXME: this should be implemented in the implementation
 - (void *)_NPObject
 {
-#if USE(NPOBJECT)
+#if ENABLE(NETSCAPE_PLUGIN_API)
     WebCore::Element* element = [self _element];
     if (element->hasTagName(WebCore::HTMLNames::appletTag) || element->hasTagName(WebCore::HTMLNames::embedTag) || element->hasTagName(WebCore::HTMLNames::objectTag))
         return static_cast<WebCore::HTMLPlugInElement*>(element)->getNPObject();
@@ -682,42 +685,37 @@ static NSArray *kit(const Vector<IntRect>& rects)
 
 @end
 
-
 //------------------------------------------------------------------------------------------
 // ObjCNodeFilterCondition
 
-class ObjCNodeFilterCondition : public WebCore::NodeFilterCondition {
+namespace WebCore {
+
+class ObjCNodeFilterCondition : public NodeFilterCondition {
 public:
-    ObjCNodeFilterCondition(id <DOMNodeFilter>);
-    virtual ~ObjCNodeFilterCondition();
-    virtual short acceptNode(WebCore::Node*) const;
+    static PassRefPtr<ObjCNodeFilterCondition> create(id <DOMNodeFilter> filter)
+    {
+        return adoptRef(new ObjCNodeFilterCondition(filter));
+    }
+
+    virtual short acceptNode(ExecState*, Node*) const;
 
 private:
-    ObjCNodeFilterCondition(const ObjCNodeFilterCondition&);
-    ObjCNodeFilterCondition &operator=(const ObjCNodeFilterCondition&);
+    ObjCNodeFilterCondition(id <DOMNodeFilter> filter)
+        : m_filter(filter)
+    {
+    }
 
-    id <DOMNodeFilter> m_filter;
+    RetainPtr<id <DOMNodeFilter> > m_filter;
 };
 
-ObjCNodeFilterCondition::ObjCNodeFilterCondition(id <DOMNodeFilter> filter)
-    : m_filter(filter)
-{
-    ASSERT(m_filter);
-    HardRetain(m_filter);
-}
-
-ObjCNodeFilterCondition::~ObjCNodeFilterCondition()
-{
-    HardRelease(m_filter);
-}
-
-short ObjCNodeFilterCondition::acceptNode(WebCore::Node* node) const
+short ObjCNodeFilterCondition::acceptNode(ExecState*, Node* node) const
 {
     if (!node)
-        return WebCore::NodeFilter::FILTER_REJECT;
-    return [m_filter acceptNode:[DOMNode _wrapNode:node]];
+        return NodeFilter::FILTER_REJECT;
+    return [m_filter.get() acceptNode:[DOMNode _wrapNode:node]];
 }
 
+} // namespace WebCore
 
 //------------------------------------------------------------------------------------------
 // DOMDocument (DOMDocumentTraversal)
@@ -727,23 +725,23 @@ short ObjCNodeFilterCondition::acceptNode(WebCore::Node* node) const
 
 - (DOMNodeIterator *)createNodeIterator:(DOMNode *)root whatToShow:(unsigned)whatToShow filter:(id <DOMNodeFilter>)filter expandEntityReferences:(BOOL)expandEntityReferences
 {
-    WebCore::NodeFilter* cppFilter = 0;
+    RefPtr<NodeFilter> cppFilter;
     if (filter)
-        cppFilter = new WebCore::NodeFilter(new ObjCNodeFilterCondition(filter));
-    WebCore::ExceptionCode ec = 0;
-    RefPtr<WebCore::NodeIterator> impl = [self _document]->createNodeIterator([root _node], whatToShow, cppFilter, expandEntityReferences, ec);
-    WebCore::raiseOnDOMError(ec);
+        cppFilter = NodeFilter::create(ObjCNodeFilterCondition::create(filter));
+    ExceptionCode ec = 0;
+    RefPtr<NodeIterator> impl = [self _document]->createNodeIterator([root _node], whatToShow, cppFilter.release(), expandEntityReferences, ec);
+    raiseOnDOMError(ec);
     return [DOMNodeIterator _wrapNodeIterator:impl.get() filter:filter];
 }
 
 - (DOMTreeWalker *)createTreeWalker:(DOMNode *)root whatToShow:(unsigned)whatToShow filter:(id <DOMNodeFilter>)filter expandEntityReferences:(BOOL)expandEntityReferences
 {
-    WebCore::NodeFilter* cppFilter = 0;
+    RefPtr<NodeFilter> cppFilter;
     if (filter)
-        cppFilter = new WebCore::NodeFilter(new ObjCNodeFilterCondition(filter));
-    WebCore::ExceptionCode ec = 0;
-    RefPtr<WebCore::TreeWalker> impl = [self _document]->createTreeWalker([root _node], whatToShow, cppFilter, expandEntityReferences, ec);
-    WebCore::raiseOnDOMError(ec);
+        cppFilter = NodeFilter::create(ObjCNodeFilterCondition::create(filter));
+    ExceptionCode ec = 0;
+    RefPtr<TreeWalker> impl = [self _document]->createTreeWalker([root _node], whatToShow, cppFilter.release(), expandEntityReferences, ec);
+    raiseOnDOMError(ec);
     return [DOMTreeWalker _wrapTreeWalker:impl.get() filter:filter];
 }
 
@@ -776,12 +774,13 @@ ObjCEventListener* ObjCEventListener::find(id <DOMEventListener> listener)
     return 0;
 }
 
-ObjCEventListener *ObjCEventListener::create(id <DOMEventListener> listener)
+ObjCEventListener* ObjCEventListener::create(id <DOMEventListener> listener)
 {
     ObjCEventListener* wrapper = find(listener);
-    if (!wrapper)
+    if (wrapper)
+        wrapper->ref();
+    else
         wrapper = new ObjCEventListener(listener);
-    wrapper->ref();
     return wrapper;
 }
 

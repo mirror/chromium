@@ -39,7 +39,7 @@ public:
 
     virtual const char* renderName() const { return "RenderTableCol"; }
     virtual bool isTableCol() const { return true; }
-    virtual short lineHeight(bool) const { return 0; }
+    virtual int lineHeight(bool) const { return 0; }
     virtual void updateFromElement();
 
     virtual bool isChildAllowed(RenderObject*, RenderStyle*) const;
@@ -47,11 +47,7 @@ public:
     virtual bool requiresLayer() { return false; }
 
     virtual IntRect absoluteClippedOverflowRect();
-    virtual void imageChanged(CachedImage*);
-
-#ifndef NDEBUG
-    virtual void dump(TextStream*, DeprecatedString) const;
-#endif
+    virtual void imageChanged(WrappedImagePtr);
 
     int span() const { return m_span; }
     void setSpan(int s) { m_span = s; }

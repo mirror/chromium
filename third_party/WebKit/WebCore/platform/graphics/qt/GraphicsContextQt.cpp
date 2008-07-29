@@ -5,6 +5,8 @@
  * Copyright (C) 2006 Simon Hausmann <hausmann@kde.org>
  * Copyright (C) 2006 Allan Sandfeld Jensen <sandfeld@kde.org>
  * Copyright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008 Trolltech ASA.
  *
  * All rights reserved.
  *
@@ -32,10 +34,15 @@
 
 #include "config.h"
 
+#ifdef Q_WS_WIN
+#include <windows.h>
+#endif
+
 #include "AffineTransform.h"
 #include "Path.h"
 #include "Color.h"
 #include "GraphicsContext.h"
+#include "ImageBuffer.h"
 #include "Font.h"
 #include "Pen.h"
 #include "NotImplemented.h"
@@ -45,6 +52,8 @@
 #include <QPolygonF>
 #include <QPainterPath>
 #include <QPaintDevice>
+#include <QPixmap>
+#include <QPaintEngine>
 #include <QDebug>
 
 #ifndef M_PI
@@ -145,13 +154,15 @@ struct TransparencyLayer
         offset = rect.topLeft();
         pixmap.fill(Qt::transparent);
         painter.begin(&pixmap);
+        painter.setRenderHint(QPainter::Antialiasing, p->testRenderHint(QPainter::Antialiasing));
         painter.translate(-offset);
         painter.setPen(p->pen());
         painter.setBrush(p->brush());
         painter.setTransform(p->transform(), true);
         painter.setOpacity(p->opacity());
         painter.setFont(p->font());
-        painter.setCompositionMode(p->compositionMode());
+        if (painter.paintEngine()->hasFeature(QPaintEngine::PorterDuff))
+            painter.setCompositionMode(p->compositionMode());
         painter.setClipPath(p->clipPath());
     }
 
@@ -166,24 +177,6 @@ struct TransparencyLayer
 private:
     TransparencyLayer(const TransparencyLayer &) {}
     TransparencyLayer & operator=(const TransparencyLayer &) { return *this; }
-};
-
-struct TextShadow
-{
-    TextShadow()
-        : x(0)
-        , y(0)
-        , blur(0)
-    {
-    }
-
-    bool isNull() { return !x && !y && !blur; }
-
-    int x;
-    int y;
-    int blur;
-
-    Color color;
 };
 
 class GraphicsContextPlatformPrivate
@@ -203,12 +196,10 @@ public:
             return &layers.top()->painter;
     }
 
-    QPaintDevice* device;
+    bool antiAliasingForRectsAndLines;
 
     QStack<TransparencyLayer *> layers;
     QPainter* redirect;
-
-    TextShadow shadow;
 
     // Only used by SVG for now.
     QPainterPath currentPath;
@@ -221,12 +212,16 @@ private:
 GraphicsContextPlatformPrivate::GraphicsContextPlatformPrivate(QPainter* p)
 {
     painter = p;
-    device = painter ? painter->device() : 0;
     redirect = 0;
 
-    // FIXME: Maybe only enable in SVG mode?
-    if (painter)
-        painter->setRenderHint(QPainter::Antialiasing);
+    if (painter) {
+        // use the default the QPainter was constructed with
+        antiAliasingForRectsAndLines = painter->testRenderHint(QPainter::Antialiasing);
+        // FIXME: Maybe only enable in SVG mode?
+        painter->setRenderHint(QPainter::Antialiasing, true);
+    } else {
+        antiAliasingForRectsAndLines = false;
+    }
 }
 
 GraphicsContextPlatformPrivate::~GraphicsContextPlatformPrivate()
@@ -386,7 +381,13 @@ void GraphicsContext::drawRect(const IntRect& rect)
     if (paintingDisabled())
         return;
 
-    m_data->p()->drawRect(rect);
+    QPainter *p = m_data->p();
+    const bool antiAlias = p->testRenderHint(QPainter::Antialiasing);
+    p->setRenderHint(QPainter::Antialiasing, m_data->antiAliasingForRectsAndLines);
+
+    p->drawRect(rect);
+
+    p->setRenderHint(QPainter::Antialiasing, antiAlias);
 }
 
 // FIXME: Now that this is refactored, it should be shared by all contexts.
@@ -429,8 +430,25 @@ void GraphicsContext::drawLine(const IntPoint& point1, const IntPoint& point2)
     FloatPoint p1 = point1;
     FloatPoint p2 = point2;
 
+    QPainter *p = m_data->p();
+    const bool antiAlias = p->testRenderHint(QPainter::Antialiasing);
+    p->setRenderHint(QPainter::Antialiasing, m_data->antiAliasingForRectsAndLines);
     adjustLineToPixelBoundaries(p1, p2, strokeThickness(), strokeStyle());
-    m_data->p()->drawLine(p1, p2);
+
+    IntSize shadowSize;
+    int shadowBlur;
+    Color shadowColor;
+    if (textDrawingMode() == cTextFill && getShadow(shadowSize, shadowBlur, shadowColor)) {
+        p->save();
+        p->translate(shadowSize.width(), shadowSize.height());
+        p->setPen(QColor(shadowColor));
+        p->drawLine(p1, p2);
+        p->restore();
+    }
+
+    p->drawLine(p1, p2);
+
+    p->setRenderHint(QPainter::Antialiasing, antiAlias);
 }
 
 // This method is only used to draw the little circles used in lists.
@@ -447,7 +465,13 @@ void GraphicsContext::strokeArc(const IntRect& rect, int startAngle, int angleSp
     if (paintingDisabled() || strokeStyle() == NoStroke || strokeThickness() <= 0.0f || !strokeColor().alpha())
         return;
 
-    m_data->p()->drawArc(rect, startAngle * 16, angleSpan * 16);
+    QPainter *p = m_data->p();
+    const bool antiAlias = p->testRenderHint(QPainter::Antialiasing);
+    p->setRenderHint(QPainter::Antialiasing, m_data->antiAliasingForRectsAndLines);
+
+    p->drawArc(rect, startAngle * 16, angleSpan * 16);
+
+    p->setRenderHint(QPainter::Antialiasing, antiAlias);
 }
 
 void GraphicsContext::drawConvexPolygon(size_t npoints, const FloatPoint* points, bool shouldAntialias)
@@ -505,6 +529,11 @@ void GraphicsContext::addPath(const Path& path)
     m_data->currentPath = *(path.platformPath());
 }
 
+bool GraphicsContext::inTransparencyLayer() const
+{
+    return !m_data->layers.isEmpty();
+}
+
 void GraphicsContext::setFillRule(WindRule rule)
 {
     m_data->currentPath.setFillRule(rule == RULE_EVENODD ? Qt::OddEvenFill : Qt::WindingFill);
@@ -515,7 +544,7 @@ PlatformPath* GraphicsContext::currentPath()
     return &m_data->currentPath;
 }
 
-void GraphicsContext::clip(const IntRect& rect)
+void GraphicsContext::clip(const FloatRect& rect)
 {
     if (paintingDisabled())
         return;
@@ -545,6 +574,8 @@ void GraphicsContext::drawFocusRing(const Color& color)
         return;
 
     QPainter *p = m_data->p();
+    const bool antiAlias = p->testRenderHint(QPainter::Antialiasing);
+    p->setRenderHint(QPainter::Antialiasing, m_data->antiAliasingForRectsAndLines);
 
     const QPen oldPen = p->pen();
     const QBrush oldBrush = p->brush();
@@ -568,6 +599,8 @@ void GraphicsContext::drawFocusRing(const Color& color)
 #endif
     p->setPen(oldPen);
     p->setBrush(oldBrush);
+
+    p->setRenderHint(QPainter::Antialiasing, antiAlias);
 }
 
 void GraphicsContext::drawLineForText(const IntPoint& origin, int width, bool printing)
@@ -597,23 +630,16 @@ FloatRect GraphicsContext::roundToDevicePixels(const FloatRect& frect)
     return FloatRect(QRectF(result));
 }
 
-void GraphicsContext::setShadow(const IntSize& pos, int blur, const Color &color)
+void GraphicsContext::setPlatformShadow(const IntSize& pos, int blur, const Color &color)
 {
-    if (paintingDisabled())
-        return;
-
-    m_data->shadow.x = pos.width();
-    m_data->shadow.y = pos.height();
-    m_data->shadow.blur = blur;
-    m_data->shadow.color = color;
+    // Qt doesn't support shadows natively, they are drawn manually in the draw*
+    // functions
 }
 
-void GraphicsContext::clearShadow()
+void GraphicsContext::clearPlatformShadow()
 {
-    if (paintingDisabled())
-        return;
-
-    m_data->shadow = TextShadow();
+    // Qt doesn't support shadows natively, they are drawn manually in the draw*
+    // functions
 }
 
 void GraphicsContext::beginTransparencyLayer(float opacity)
@@ -623,20 +649,18 @@ void GraphicsContext::beginTransparencyLayer(float opacity)
 
     int x, y, w, h;
     x = y = 0;
-    w = m_data->device->width();
-    h = m_data->device->height();
-
     QPainter *p = m_data->p();
+    const QPaintDevice *device = p->device();
+    w = device->width();
+    h = device->height();
+
     QRectF clip = p->clipPath().boundingRect();
-    bool ok;
-    QTransform transform = p->transform().inverted(&ok);
-    if (ok) {
-        QRectF deviceClip = transform.mapRect(clip);
-        x = int(qBound(qreal(0), deviceClip.x(), (qreal)w));
-        y = int(qBound(qreal(0), deviceClip.y(), (qreal)h));
-        w = int(qBound(qreal(0), deviceClip.width(), (qreal)w) + 2);
-        h = int(qBound(qreal(0), deviceClip.height(), (qreal)h) + 2);
-    }
+    QRectF deviceClip = p->transform().mapRect(clip);
+    x = int(qBound(qreal(0), deviceClip.x(), (qreal)w));
+    y = int(qBound(qreal(0), deviceClip.y(), (qreal)h));
+    w = int(qBound(qreal(0), deviceClip.width(), (qreal)w) + 2);
+    h = int(qBound(qreal(0), deviceClip.height(), (qreal)h) + 2);
+
     TransparencyLayer * layer = new TransparencyLayer(m_data->p(), QRect(x, y, w, h));
 
     layer->opacity = opacity;
@@ -668,9 +692,11 @@ void GraphicsContext::clearRect(const FloatRect& rect)
 
     QPainter *p = m_data->p();
     QPainter::CompositionMode currentCompositionMode = p->compositionMode();
-    p->setCompositionMode(QPainter::CompositionMode_Source);
+    if (p->paintEngine()->hasFeature(QPaintEngine::PorterDuff))
+        p->setCompositionMode(QPainter::CompositionMode_Source);
     p->eraseRect(rect);
-    p->setCompositionMode(currentCompositionMode);
+    if (p->paintEngine()->hasFeature(QPaintEngine::PorterDuff))
+        p->setCompositionMode(currentCompositionMode);
 }
 
 void GraphicsContext::strokeRect(const FloatRect& rect, float width)
@@ -732,7 +758,8 @@ void GraphicsContext::setCompositeOperation(CompositeOperator op)
     if (paintingDisabled())
         return;
 
-    m_data->p()->setCompositionMode(toQtCompositionMode(op));
+    if (m_data->p()->paintEngine()->hasFeature(QPaintEngine::PorterDuff))
+        m_data->p()->setCompositionMode(toQtCompositionMode(op));
 }
 
 void GraphicsContext::clip(const Path& path)
@@ -795,7 +822,7 @@ void GraphicsContext::clipOut(const IntRect& rect)
 {
     if (paintingDisabled())
         return;
-        
+
     QPainter *p = m_data->p();
     QRectF clipBounds = p->clipPath().boundingRect();
     QPainterPath newClip;
@@ -810,7 +837,7 @@ void GraphicsContext::clipOutEllipseInRect(const IntRect& rect)
 {
     if (paintingDisabled())
         return;
-    
+
     QPainter *p = m_data->p();
     QRectF clipBounds = p->clipPath().boundingRect();
     QPainterPath newClip;
@@ -872,7 +899,7 @@ void GraphicsContext::setPlatformStrokeColor(const Color& color)
 }
 
 void GraphicsContext::setPlatformStrokeStyle(const StrokeStyle& strokeStyle)
-{   
+{
     if (paintingDisabled())
         return;
     QPainter *p = m_data->p();
@@ -904,6 +931,92 @@ void GraphicsContext::setUseAntialiasing(bool enable)
         return;
     m_data->p()->setRenderHint(QPainter::Antialiasing, enable);
 }
+
+#ifdef Q_WS_WIN
+#include <windows.h>
+
+HDC GraphicsContext::getWindowsContext(const IntRect& dstRect, bool supportAlphaBlend, bool mayCreateBitmap)
+{
+    // painting through native HDC is only supported for plugin, where mayCreateBitmap is always TRUE
+    Q_ASSERT(mayCreateBitmap == TRUE);
+
+    if (dstRect.isEmpty())
+        return 0;
+
+    // Create a bitmap DC in which to draw.
+    BITMAPINFO bitmapInfo;
+    bitmapInfo.bmiHeader.biSize          = sizeof(BITMAPINFOHEADER);
+    bitmapInfo.bmiHeader.biWidth         = dstRect.width();
+    bitmapInfo.bmiHeader.biHeight        = dstRect.height();
+    bitmapInfo.bmiHeader.biPlanes        = 1;
+    bitmapInfo.bmiHeader.biBitCount      = 32;
+    bitmapInfo.bmiHeader.biCompression   = BI_RGB;
+    bitmapInfo.bmiHeader.biSizeImage     = 0;
+    bitmapInfo.bmiHeader.biXPelsPerMeter = 0;
+    bitmapInfo.bmiHeader.biYPelsPerMeter = 0;
+    bitmapInfo.bmiHeader.biClrUsed       = 0;
+    bitmapInfo.bmiHeader.biClrImportant  = 0;
+
+    void* pixels = 0;
+    HBITMAP bitmap = ::CreateDIBSection(NULL, &bitmapInfo, DIB_RGB_COLORS, &pixels, 0, 0);
+    if (!bitmap)
+        return 0;
+
+    HDC displayDC = ::GetDC(0);
+    HDC bitmapDC = ::CreateCompatibleDC(displayDC);
+    ::ReleaseDC(0, displayDC);
+
+    ::SelectObject(bitmapDC, bitmap);
+
+    // Fill our buffer with clear if we're going to alpha blend.
+    if (supportAlphaBlend) {
+        BITMAP bmpInfo;
+        GetObject(bitmap, sizeof(bmpInfo), &bmpInfo);
+        int bufferSize = bmpInfo.bmWidthBytes * bmpInfo.bmHeight;
+        memset(bmpInfo.bmBits, 0, bufferSize);
+    }
+
+    // Make sure we can do world transforms.
+    SetGraphicsMode(bitmapDC, GM_ADVANCED);
+
+    // Apply a translation to our context so that the drawing done will be at (0,0) of the bitmap.
+    XFORM xform;
+    xform.eM11 = 1.0f;
+    xform.eM12 = 0.0f;
+    xform.eM21 = 0.0f;
+    xform.eM22 = 1.0f;
+    xform.eDx = -dstRect.x();
+    xform.eDy = -dstRect.y();
+    ::SetWorldTransform(bitmapDC, &xform);
+
+
+    return bitmapDC;
+}
+
+void GraphicsContext::releaseWindowsContext(HDC hdc, const IntRect& dstRect, bool supportAlphaBlend, bool mayCreateBitmap)
+{
+    // painting through native HDC is only supported for plugin, where mayCreateBitmap is always TRUE
+    Q_ASSERT(mayCreateBitmap == TRUE);
+
+    if (hdc) {
+
+        if (!dstRect.isEmpty()) {
+
+            HBITMAP bitmap = static_cast<HBITMAP>(GetCurrentObject(hdc, OBJ_BITMAP));
+            BITMAP info;
+            GetObject(bitmap, sizeof(info), &info);
+            ASSERT(info.bmBitsPixel == 32);
+
+            QPixmap pixmap = QPixmap::fromWinHBITMAP(bitmap, supportAlphaBlend ? QPixmap::PremultipliedAlpha : QPixmap::NoAlpha);
+            m_data->p()->drawPixmap(dstRect, pixmap);
+
+            ::DeleteObject(bitmap);
+        }
+
+        ::DeleteDC(hdc);
+    }
+}
+#endif
 
 }
 

@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2005, 2005 Alexander Kellett <lypanov@kde.org>
+                  2008 Rob Buis <buis@kde.org>
 
     This file is part of the WebKit project
 
@@ -51,21 +52,21 @@ void SVGImageLoader::updateFromElement()
     
     CachedImage *newImage = 0;
     if (!imageElement->href().isEmpty()) {
-        DeprecatedString uri = imageElement->baseURI().deprecatedString();
+        KURL uri = imageElement->baseURI();
         if (!uri.isEmpty())
-            uri = KURL(uri, imageElement->href().deprecatedString()).deprecatedString();
+            uri = KURL(uri, imageElement->href());
         else
-            uri = imageElement->href().deprecatedString();
-        newImage = doc->docLoader()->requestImage(uri);
+            uri = KURL(imageElement->href());
+        newImage = doc->docLoader()->requestImage(uri.string());
     }
 
-    CachedImage *oldImage = image();
+    CachedImage* oldImage = image();
     if (newImage != oldImage) {
         setLoadingImage(newImage);
         if (newImage)
-            newImage->ref(this);
+            newImage->addClient(this);
         if (oldImage)
-            oldImage->deref(this);
+            oldImage->removeClient(this);
     }
 
     if (RenderImage* renderer = static_cast<RenderImage*>(imageElement->renderer()))
@@ -78,7 +79,7 @@ void SVGImageLoader::dispatchLoadEvent()
         setHaveFiredLoadEvent(true);
         if (image()->errorOccurred()) {
             // FIXME: We're supposed to put the document in an "error state" per the spec.
-        } else
+        } else if (static_cast<SVGImageElement*>(element())->externalResourcesRequiredBaseValue())
             static_cast<SVGElement*>(element())->sendSVGLoadEventIfPossible(true);
     }
 }

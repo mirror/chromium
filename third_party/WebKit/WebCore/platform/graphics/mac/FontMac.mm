@@ -1,6 +1,4 @@
-/**
- * This file is part of the html renderer for KDE.
- *
+/*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Dirk Mueller (mueller@kde.org)
@@ -20,11 +18,12 @@
  * along with this library; see the file COPYING.LIB.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
- *
  */
 
 #import "config.h"
 #import "Font.h"
+
+#import <wtf/OwnArrayPtr.h>
 
 #import "BlockExceptions.h"
 #import "CharacterNames.h"
@@ -50,21 +49,20 @@ using namespace std;
 
 namespace WebCore {
 
-// =================================================================
-// Font Class (Platform-Specific Portion)
-// =================================================================
-
-struct ATSULayoutParameters
+struct ATSULayoutParameters : Noncopyable
 {
     ATSULayoutParameters(const TextRun& run)
         : m_run(run)
         , m_font(0)
-        , m_fonts(0)
-        , m_charBuffer(0)
         , m_hasSyntheticBold(false)
         , m_syntheticBoldPass(false)
         , m_padPerSpace(0)
     {}
+
+    ~ATSULayoutParameters()
+    {
+        ATSUDisposeTextLayout(m_layout);
+    }
 
     void initialize(const Font*, const GraphicsContext* = 0);
 
@@ -73,85 +71,98 @@ struct ATSULayoutParameters
     const Font* m_font;
     
     ATSUTextLayout m_layout;
-    const SimpleFontData **m_fonts;
+    OwnArrayPtr<const SimpleFontData*> m_fonts;
     
-    UChar *m_charBuffer;
+    OwnArrayPtr<UChar> m_charBuffer;
     bool m_hasSyntheticBold;
     bool m_syntheticBoldPass;
     float m_padPerSpace;
 };
 
-// Be sure to free the array allocated by this function.
-static TextRun addDirectionalOverride(const TextRun& run, bool rtl)
+static TextRun copyRunForDirectionalOverrideIfNecessary(const TextRun& run, OwnArrayPtr<UChar>& charactersWithOverride)
 {
-    UChar* charactersWithOverride = new UChar[run.length() + 2];
-    charactersWithOverride[0] = rtl ? rightToLeftOverride : leftToRightOverride;
+    if (!run.directionalOverride())
+        return run;
+
+    charactersWithOverride.set(new UChar[run.length() + 2]);
+    charactersWithOverride[0] = run.rtl() ? rightToLeftOverride : leftToRightOverride;
     memcpy(&charactersWithOverride[1], run.data(0), sizeof(UChar) * run.length());
     charactersWithOverride[run.length() + 1] = popDirectionalFormatting;
 
     TextRun result = run;
-    result.setText(charactersWithOverride, run.length() + 2);
+    result.setText(charactersWithOverride.get(), run.length() + 2);
     return result;
+}
+
+static bool fontHasMirroringInfo(ATSUFontID fontID)
+{
+    ByteCount propTableSize;
+    OSStatus status = ATSFontGetTable(fontID, 'prop', 0, 0, 0, &propTableSize);
+    if (status == noErr)    // naively assume that if a 'prop' table exists then it contains mirroring info
+        return true;
+    else if (status != kATSInvalidFontTableAccess) // anything other than a missing table is logged as an error
+        LOG_ERROR("ATSFontGetTable failed (%d)", status);
+
+    return false;
+}
+
+static void disableLigatures(const SimpleFontData* fontData)
+{
+    // Don't be too aggressive: if the font doesn't contain 'a', then assume that any ligatures it contains are
+    // in characters that always go through ATSUI, and therefore allow them. Geeza Pro is an example.
+    // See bugzilla 5166.
+    if (![[fontData->m_font.font() coveredCharacterSet] characterIsMember:'a'])
+        return;
+
+    ATSUFontFeatureType featureTypes[] = { kLigaturesType };
+    ATSUFontFeatureSelector featureSelectors[] = { kCommonLigaturesOffSelector };
+    OSStatus status = ATSUSetFontFeatures(fontData->m_ATSUStyle, 1, featureTypes, featureSelectors);
+    if (status != noErr)
+        LOG_ERROR("ATSUSetFontFeatures failed (%d) -- ligatures remain enabled", status);
 }
 
 static void initializeATSUStyle(const SimpleFontData* fontData)
 {
-    // The two NSFont calls in this method (pointSize and _atsFontID) do not raise exceptions.
+    if (fontData->m_ATSUStyleInitialized)
+        return;
 
-    if (!fontData->m_ATSUStyleInitialized) {
-        OSStatus status;
-        ByteCount propTableSize;
-        
-        status = ATSUCreateStyle(&fontData->m_ATSUStyle);
-        if (status != noErr)
-            LOG_ERROR("ATSUCreateStyle failed (%d)", status);
-    
-        ATSUFontID fontID = fontData->platformData().m_atsuFontID;
-        if (fontID == 0) {
-            ATSUDisposeStyle(fontData->m_ATSUStyle);
-            LOG_ERROR("unable to get ATSUFontID for %@", fontData->m_font.font());
-            return;
-        }
-        
-        CGAffineTransform transform = CGAffineTransformMakeScale(1, -1);
-        if (fontData->m_font.m_syntheticOblique)
-            transform = CGAffineTransformConcat(transform, CGAffineTransformMake(1, 0, -tanf(SYNTHETIC_OBLIQUE_ANGLE * acosf(0) / 90), 1, 0, 0)); 
-        Fixed fontSize = FloatToFixed(fontData->platformData().m_size);
-
-        // Turn off automatic kerning until it is supported in the CG code path (6136 in bugzilla)
-        Fract kerningInhibitFactor = FloatToFract(1.0);
-        ATSUAttributeTag styleTags[4] = { kATSUSizeTag, kATSUFontTag, kATSUFontMatrixTag, kATSUKerningInhibitFactorTag };
-        ByteCount styleSizes[4] = { sizeof(Fixed), sizeof(ATSUFontID), sizeof(CGAffineTransform), sizeof(Fract) };
-        ATSUAttributeValuePtr styleValues[4] = { &fontSize, &fontID, &transform, &kerningInhibitFactor };
-        status = ATSUSetAttributes(fontData->m_ATSUStyle, 4, styleTags, styleSizes, styleValues);
-        if (status != noErr)
-            LOG_ERROR("ATSUSetAttributes failed (%d)", status);
-        status = ATSFontGetTable(fontID, 'prop', 0, 0, 0, &propTableSize);
-        if (status == noErr)    // naively assume that if a 'prop' table exists then it contains mirroring info
-            fontData->m_ATSUMirrors = true;
-        else if (status == kATSInvalidFontTableAccess)
-            fontData->m_ATSUMirrors = false;
-        else
-            LOG_ERROR("ATSFontGetTable failed (%d)", status);
-
-        // Turn off ligatures such as 'fi' to match the CG code path's behavior, until bugzilla 6135 is fixed.
-        // Don't be too aggressive: if the font doesn't contain 'a', then assume that any ligatures it contains are
-        // in characters that always go through ATSUI, and therefore allow them. Geeza Pro is an example.
-        // See bugzilla 5166.
-        if ([[fontData->m_font.font() coveredCharacterSet] characterIsMember:'a']) {
-            ATSUFontFeatureType featureTypes[] = { kLigaturesType };
-            ATSUFontFeatureSelector featureSelectors[] = { kCommonLigaturesOffSelector };
-            status = ATSUSetFontFeatures(fontData->m_ATSUStyle, 1, featureTypes, featureSelectors);
-        }
-
-        fontData->m_ATSUStyleInitialized = true;
+    ATSUFontID fontID = fontData->platformData().m_atsuFontID;
+    if (!fontID) {
+        LOG_ERROR("unable to get ATSUFontID for %@", fontData->m_font.font());
+        return;
     }
+
+    OSStatus status = ATSUCreateStyle(&fontData->m_ATSUStyle);
+    if (status != noErr)
+        // Who knows how many ATSU functions will crash when passed a NULL style...
+        LOG_ERROR("ATSUCreateStyle failed (%d)", status);
+
+    CGAffineTransform transform = CGAffineTransformMakeScale(1, -1);
+    if (fontData->m_font.m_syntheticOblique)
+        transform = CGAffineTransformConcat(transform, CGAffineTransformMake(1, 0, -tanf(SYNTHETIC_OBLIQUE_ANGLE * acosf(0) / 90), 1, 0, 0));
+    Fixed fontSize = FloatToFixed(fontData->platformData().m_size);
+    ByteCount styleSizes[4] = { sizeof(Fixed), sizeof(ATSUFontID), sizeof(CGAffineTransform), sizeof(Fract) };
+    // Turn off automatic kerning until it is supported in the CG code path (bug 6136)
+    Fract kerningInhibitFactor = FloatToFract(1.0);
+    
+    ATSUAttributeTag styleTags[4] = { kATSUSizeTag, kATSUFontTag, kATSUFontMatrixTag, kATSUKerningInhibitFactorTag };
+    ATSUAttributeValuePtr styleValues[4] = { &fontSize, &fontID, &transform, &kerningInhibitFactor };
+    status = ATSUSetAttributes(fontData->m_ATSUStyle, 4, styleTags, styleSizes, styleValues);
+    if (status != noErr)
+        LOG_ERROR("ATSUSetAttributes failed (%d)", status);
+
+    fontData->m_ATSUMirrors = fontHasMirroringInfo(fontID);
+
+    // Turn off ligatures such as 'fi' to match the CG code path's behavior, until bug 6135 is fixed.
+    disableLigatures(fontData);
+
+    fontData->m_ATSUStyleInitialized = true;
 }
 
 static OSStatus overrideLayoutOperation(ATSULayoutOperationSelector iCurrentOperation, ATSULineRef iLineRef, URefCon iRefCon,
                                         void *iOperationCallbackParameterPtr, ATSULayoutOperationCallbackStatus *oCallbackStatus)
 {
-    ATSULayoutParameters *params = (ATSULayoutParameters *)iRefCon;
+    ATSULayoutParameters* params = reinterpret_cast<ATSULayoutParameters*>(iRefCon);
     OSStatus status;
     ItemCount count;
     ATSLayoutRecord *layoutRecords;
@@ -165,13 +176,12 @@ static OSStatus overrideLayoutOperation(ATSULayoutOperationSelector iCurrentOper
         
         Fixed lastNativePos = 0;
         float lastAdjustedPos = 0;
-        const UChar* characters = params->m_charBuffer ? params->m_charBuffer : params->m_run.characters();
-        const SimpleFontData **renderers = params->m_fonts;
-        const SimpleFontData *renderer;
-        const SimpleFontData *lastRenderer = 0;
-        UChar ch, nextCh;
+        const UChar* characters = params->m_charBuffer ? params->m_charBuffer.get() : params->m_run.characters();
+        const SimpleFontData** renderers = params->m_fonts.get();
+        const SimpleFontData* renderer;
+        const SimpleFontData* lastRenderer = 0;
         ByteCount offset = layoutRecords[0].originalOffset;
-        nextCh = *(UChar *)(((char *)characters)+offset);
+        UChar nextCh = *(UChar *)(((char *)characters)+offset);
         bool shouldRound = false;
         bool syntheticBoldPass = params->m_syntheticBoldPass;
         Fixed syntheticBoldOffset = 0;
@@ -227,7 +237,7 @@ static OSStatus overrideLayoutOperation(ATSULayoutOperationSelector iCurrentOper
                 }
             }
 
-            ch = nextCh;
+            UChar ch = nextCh;
             offset = layoutRecords[i].originalOffset;
             // Use space for nextCh at the end of the loop so that we get inside the rounding hack code.
             // We won't actually round unless the other conditions are satisfied.
@@ -313,8 +323,9 @@ void ATSULayoutParameters::initialize(const Font* font, const GraphicsContext* g
     m_font = font;
     
     const SimpleFontData* fontData = font->primaryFont();
-    m_fonts = new const SimpleFontData*[m_run.length()];
-    m_charBuffer = font->isSmallCaps() ? new UChar[m_run.length()] : 0;
+    m_fonts.set(new const SimpleFontData*[m_run.length()]);
+    if (font->isSmallCaps())
+        m_charBuffer.set(new UChar[m_run.length()]);
     
     ATSUTextLayout layout;
     OSStatus status;
@@ -326,12 +337,12 @@ void ATSULayoutParameters::initialize(const Font* font, const GraphicsContext* g
     // - \n, \t, and nonbreaking space render as a space.
 
     UniCharCount runLength = m_run.length();
-     
+
     if (m_charBuffer)
-        memcpy(m_charBuffer, m_run.characters(), runLength * sizeof(UChar));
+        memcpy(m_charBuffer.get(), m_run.characters(), runLength * sizeof(UChar));
     
     status = ATSUCreateTextLayoutWithTextPtr(
-            (m_charBuffer ? m_charBuffer : m_run.characters()),
+            (m_charBuffer ? m_charBuffer.get() : m_run.characters()),
             0,        // offset
             runLength,      // length
             runLength,    // total length
@@ -414,19 +425,19 @@ void ATSULayoutParameters::initialize(const Font* font, const GraphicsContext* g
             if (!shapedArabic && WTF::Unicode::isArabicChar(m_run[i]) && !r->shapesArabic()) {
                 shapedArabic = true;
                 if (!m_charBuffer) {
-                    m_charBuffer = new UChar[runLength];
-                    memcpy(m_charBuffer, m_run.characters(), i * sizeof(UChar));
-                    ATSUTextMoved(layout, m_charBuffer);
+                    m_charBuffer.set(new UChar[runLength]);
+                    memcpy(m_charBuffer.get(), m_run.characters(), i * sizeof(UChar));
+                    ATSUTextMoved(layout, m_charBuffer.get());
                 }
-                shapeArabic(m_run.characters(), m_charBuffer, runLength, i);
+                shapeArabic(m_run.characters(), m_charBuffer.get(), runLength, i);
             }
             if (m_run.rtl() && !r->m_ATSUMirrors) {
                 UChar mirroredChar = u_charMirror(m_run[i]);
                 if (mirroredChar != m_run[i]) {
                     if (!m_charBuffer) {
-                        m_charBuffer = new UChar[runLength];
-                        memcpy(m_charBuffer, m_run.characters(), runLength * sizeof(UChar));
-                        ATSUTextMoved(layout, m_charBuffer);
+                        m_charBuffer.set(new UChar[runLength]);
+                        memcpy(m_charBuffer.get(), m_run.characters(), runLength * sizeof(UChar));
+                        ATSUTextMoved(layout, m_charBuffer.get());
                     }
                     m_charBuffer[i] = mirroredChar;
                 }
@@ -474,16 +485,10 @@ void ATSULayoutParameters::initialize(const Font* font, const GraphicsContext* g
         m_padPerSpace = 0;
 }
 
-static void disposeATSULayoutParameters(ATSULayoutParameters *params)
-{
-    ATSUDisposeTextLayout(params->m_layout);
-    delete []params->m_charBuffer;
-    delete []params->m_fonts;
-}
-
 FloatRect Font::selectionRectForComplexText(const TextRun& run, const IntPoint& point, int h, int from, int to) const
-{        
-    TextRun adjustedRun = run.directionalOverride() ? addDirectionalOverride(run, run.rtl()) : run;
+{
+    OwnArrayPtr<UChar> charactersWithOverride;
+    TextRun adjustedRun = copyRunForDirectionalOverrideIfNecessary(run, charactersWithOverride);
     if (run.directionalOverride()) {
         from++;
         to++;
@@ -500,15 +505,11 @@ FloatRect Font::selectionRectForComplexText(const TextRun& run, const IntPoint& 
         static ATSTrapezoid zeroTrapezoid = { {0, 0}, {0, 0}, {0, 0}, {0, 0} };
         firstGlyphBounds = zeroTrapezoid;
     }
-    disposeATSULayoutParameters(&params);
     
     float beforeWidth = MIN(FixedToFloat(firstGlyphBounds.lowerLeft.x), FixedToFloat(firstGlyphBounds.upperLeft.x));
     float afterWidth = MAX(FixedToFloat(firstGlyphBounds.lowerRight.x), FixedToFloat(firstGlyphBounds.upperRight.x));
     
     FloatRect rect(point.x() + floorf(beforeWidth), point.y(), roundf(afterWidth) - floorf(beforeWidth), h);
-
-    if (run.directionalOverride())
-        delete []adjustedRun.characters();
 
     return rect;
 }
@@ -518,7 +519,8 @@ void Font::drawComplexText(GraphicsContext* graphicsContext, const TextRun& run,
     OSStatus status;
     
     int drawPortionLength = to - from;
-    TextRun adjustedRun = run.directionalOverride() ? addDirectionalOverride(run, run.rtl()) : run;
+    OwnArrayPtr<UChar> charactersWithOverride;
+    TextRun adjustedRun = copyRunForDirectionalOverrideIfNecessary(run, charactersWithOverride);
     if (run.directionalOverride())
         from++;
 
@@ -527,8 +529,35 @@ void Font::drawComplexText(GraphicsContext* graphicsContext, const TextRun& run,
     
     // ATSUI can't draw beyond -32768 to +32767 so we translate the CTM and tell ATSUI to draw at (0, 0).
     CGContextRef context = graphicsContext->platformContext();
-
     CGContextTranslateCTM(context, point.x(), point.y());
+
+    IntSize shadowSize;
+    int shadowBlur;
+    Color shadowColor;
+    graphicsContext->getShadow(shadowSize, shadowBlur, shadowColor);
+
+    bool hasSimpleShadow = graphicsContext->textDrawingMode() == cTextFill && shadowColor.isValid() && !shadowBlur;
+    if (hasSimpleShadow) {
+        // Paint simple shadows ourselves instead of relying on CG shadows, to avoid losing subpixel antialiasing.
+        graphicsContext->clearShadow();
+        Color fillColor = graphicsContext->fillColor();
+        Color shadowFillColor(shadowColor.red(), shadowColor.green(), shadowColor.blue(), shadowColor.alpha() * fillColor.alpha() / 255);
+        graphicsContext->setFillColor(shadowFillColor);
+        CGContextTranslateCTM(context, shadowSize.width(), shadowSize.height());
+        status = ATSUDrawText(params.m_layout, from, drawPortionLength, 0, 0);
+        if (status == noErr && params.m_hasSyntheticBold) {
+            // Force relayout for the bold pass
+            ATSUClearLayoutCache(params.m_layout, 0);
+            params.m_syntheticBoldPass = true;
+            status = ATSUDrawText(params.m_layout, from, drawPortionLength, 0, 0);
+            // Force relayout for the next pass
+            ATSUClearLayoutCache(params.m_layout, 0);
+            params.m_syntheticBoldPass = false;
+        }
+        CGContextTranslateCTM(context, -shadowSize.width(), -shadowSize.height());
+        graphicsContext->setFillColor(fillColor);
+    }
+
     status = ATSUDrawText(params.m_layout, from, drawPortionLength, 0, 0);
     if (status == noErr && params.m_hasSyntheticBold) {
         // Force relayout for the bold pass
@@ -542,10 +571,8 @@ void Font::drawComplexText(GraphicsContext* graphicsContext, const TextRun& run,
         // Nothing to do but report the error (dev build only).
         LOG_ERROR("ATSUDrawText() failed(%d)", status);
 
-    disposeATSULayoutParameters(&params);
-    
-    if (run.directionalOverride())
-        delete []adjustedRun.characters();
+    if (hasSimpleShadow)
+        graphicsContext->setShadow(shadowSize, shadowBlur, shadowColor);
 }
 
 float Font::floatWidthForComplexText(const TextRun& run) const
@@ -566,16 +593,15 @@ float Font::floatWidthForComplexText(const TextRun& run) const
     if (actualNumBounds != 1)
         LOG_ERROR("unexpected result from ATSUGetGlyphBounds(): actualNumBounds(%d) != 1", actualNumBounds);
 
-    disposeATSULayoutParameters(&params);
-
     return MAX(FixedToFloat(firstGlyphBounds.upperRight.x), FixedToFloat(firstGlyphBounds.lowerRight.x)) -
            MIN(FixedToFloat(firstGlyphBounds.upperLeft.x), FixedToFloat(firstGlyphBounds.lowerLeft.x));
 }
 
 int Font::offsetForPositionForComplexText(const TextRun& run, int x, bool includePartialGlyphs) const
 {
-    TextRun adjustedRun = run.directionalOverride() ? addDirectionalOverride(run, run.rtl()) : run;
-    
+    OwnArrayPtr<UChar> charactersWithOverride;
+    TextRun adjustedRun = copyRunForDirectionalOverrideIfNecessary(run, charactersWithOverride);
+
     ATSULayoutParameters params(adjustedRun);
     params.initialize(this);
 
@@ -594,11 +620,6 @@ int Font::offsetForPositionForComplexText(const TextRun& run, int x, bool includ
     } else
         // Failed to find offset!  Return 0 offset.
         offset = 0;
-
-    disposeATSULayoutParameters(&params);
-    
-    if (run.directionalOverride())
-        delete []adjustedRun.characters();
 
     return offset;
 }
@@ -628,7 +649,7 @@ void Font::drawGlyphs(GraphicsContext* context, const SimpleFontData* font, cons
                 [[[platformData.font() fontDescriptor] fontAttributes] objectForKey:NSFontNameAttribute]);
     }
     
-    CGContextSetFont(cgContext, platformData.m_cgFont);
+    CGContextSetFont(cgContext, platformData.cgFont());
 
     CGAffineTransform matrix = CGAffineTransformIdentity;
     if (drawFont)
@@ -644,13 +665,37 @@ void Font::drawGlyphs(GraphicsContext* context, const SimpleFontData* font, cons
         CGContextSetFontSize(cgContext, 1.0f);
     } else
         CGContextSetFontSize(cgContext, platformData.m_size);
-    
+
+    IntSize shadowSize;
+    int shadowBlur;
+    Color shadowColor;
+    context->getShadow(shadowSize, shadowBlur, shadowColor);
+
+    bool hasSimpleShadow = context->textDrawingMode() == cTextFill && shadowColor.isValid() && !shadowBlur;
+    if (hasSimpleShadow) {
+        // Paint simple shadows ourselves instead of relying on CG shadows, to avoid losing subpixel antialiasing.
+        context->clearShadow();
+        Color fillColor = context->fillColor();
+        Color shadowFillColor(shadowColor.red(), shadowColor.green(), shadowColor.blue(), shadowColor.alpha() * fillColor.alpha() / 255);
+        context->setFillColor(shadowFillColor);
+        CGContextSetTextPosition(cgContext, point.x() + shadowSize.width(), point.y() + shadowSize.height());
+        CGContextShowGlyphsWithAdvances(cgContext, glyphBuffer.glyphs(from), glyphBuffer.advances(from), numGlyphs);
+        if (font->m_syntheticBoldOffset) {
+            CGContextSetTextPosition(cgContext, point.x() + shadowSize.width() + font->m_syntheticBoldOffset, point.y() + shadowSize.height());
+            CGContextShowGlyphsWithAdvances(cgContext, glyphBuffer.glyphs(from), glyphBuffer.advances(from), numGlyphs);
+        }
+        context->setFillColor(fillColor);
+    }
+
     CGContextSetTextPosition(cgContext, point.x(), point.y());
     CGContextShowGlyphsWithAdvances(cgContext, glyphBuffer.glyphs(from), glyphBuffer.advances(from), numGlyphs);
     if (font->m_syntheticBoldOffset) {
         CGContextSetTextPosition(cgContext, point.x() + font->m_syntheticBoldOffset, point.y());
         CGContextShowGlyphsWithAdvances(cgContext, glyphBuffer.glyphs(from), glyphBuffer.advances(from), numGlyphs);
     }
+
+    if (hasSimpleShadow)
+        context->setShadow(shadowSize, shadowBlur, shadowColor);
 
     if (originalShouldUseFontSmoothing != newShouldUseFontSmoothing)
         CGContextSetShouldSmoothFonts(cgContext, originalShouldUseFontSmoothing);

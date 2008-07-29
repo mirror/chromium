@@ -38,7 +38,6 @@
 #include "MouseEvent.h"
 #include "RenderFrame.h"
 #include "RenderView.h"
-#include "TextStream.h"
 
 namespace WebCore {
 
@@ -329,7 +328,7 @@ void RenderFrameSet::layOutAxis(GridAxis& axis, const Length* grid, int availabl
     }
     
     // If we still have some left over space we probably ended up with a remainder of
-    // a division. We can not spread it evenly anymore. If we have any percentage 
+    // a division. We cannot spread it evenly anymore. If we have any percentage 
     // columns/rows simply spread the remainder equally over all available percentage columns, 
     // regardless of their size.
     if (remainingLen && countPercent) {
@@ -460,9 +459,8 @@ void RenderFrameSet::layout()
         oldBounds = absoluteClippedOverflowRect();
 
     if (!parent()->isFrameSet()) {
-        FrameView* v = view()->frameView();
-        m_width = v->visibleWidth();
-        m_height = v->visibleHeight();
+        m_width = view()->viewWidth();
+        m_height = view()->viewHeight();
     }
 
     size_t cols = frameSet()->totalCols();
@@ -669,21 +667,5 @@ bool RenderFrameSet::isChildAllowed(RenderObject* child, RenderStyle* style) con
 {
     return child->isFrame() || child->isFrameSet();
 }
-
-#ifndef NDEBUG
-void RenderFrameSet::dump(TextStream* stream, DeprecatedString ind) const
-{
-    *stream << " totalrows=" << frameSet()->totalRows();
-    *stream << " totalcols=" << frameSet()->totalCols();
-
-    for (int i = 1; i <= frameSet()->totalRows(); i++)
-        *stream << " hSplitvar(" << i << ")=" << m_rows.m_preventResize[i];
-
-    for (int i = 1; i < frameSet()->totalCols(); i++)
-        *stream << " vSplitvar(" << i << ")=" << m_cols.m_preventResize[i];
-
-    RenderContainer::dump(stream,ind);
-}
-#endif
 
 } // namespace WebCore

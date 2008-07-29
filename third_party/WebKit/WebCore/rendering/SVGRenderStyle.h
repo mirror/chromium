@@ -40,9 +40,8 @@ namespace WebCore {
 
     class SVGRenderStyle : public RefCounted<SVGRenderStyle> {    
     public:
-        SVGRenderStyle();
-        SVGRenderStyle(bool); // Used to create the default style.
-        SVGRenderStyle(const SVGRenderStyle&);
+        static PassRefPtr<SVGRenderStyle> create() { return adoptRef(new SVGRenderStyle); }
+        PassRefPtr<SVGRenderStyle> copy() const { return adoptRef(new SVGRenderStyle(*this));}
         ~SVGRenderStyle();
 
         bool inheritedNotEqual(const SVGRenderStyle*) const;
@@ -180,11 +179,12 @@ namespace WebCore {
         DataRef<StyleMaskData> mask;
         DataRef<StyleMiscData> misc;
 
-        // static default style
-        static SVGRenderStyle *s_defaultStyle;
-
     private:
-        SVGRenderStyle(const SVGRenderStyle*) { }
+        enum CreateDefaultType { CreateDefault };
+            
+        SVGRenderStyle();
+        SVGRenderStyle(const SVGRenderStyle&);
+        SVGRenderStyle(CreateDefaultType); // Used to create the default style.
 
         void setBitDefaults()
         {

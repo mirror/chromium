@@ -32,11 +32,14 @@ WebInspector.StylesSidebarPane = function()
 }
 
 WebInspector.StylesSidebarPane.prototype = {
-    update: function(node, editedSection)
+    update: function(node, editedSection, forceUpdate)
     {
         var refresh = false;
 
-        if (!node || node === this.node)
+        if (forceUpdate)
+            delete this.node;
+
+        if (!forceUpdate && (!node || node === this.node))
             refresh = true;
 
         if (node && node.nodeType === Node.TEXT_NODE && node.parentNode)
@@ -96,8 +99,10 @@ WebInspector.StylesSidebarPane.prototype = {
             var matchedStyleRules = node.ownerDocument.defaultView.getMatchedCSSRules(node, "", !Preferences.showUserAgentStyles);
             if (matchedStyleRules) {
                 // Add rules in reverse order to match the cascade order.
-                for (var i = (matchedStyleRules.length - 1); i >= 0; --i)
-                    styleRules.push(matchedStyleRules[i]);
+                for (var i = (matchedStyleRules.length - 1); i >= 0; --i) {
+                    var rule = matchedStyleRules[i];
+                    styleRules.push({ style: rule.style, selectorText: rule.selectorText, parentStyleSheet: rule.parentStyleSheet });
+                }
             }
         }
 
@@ -153,7 +158,7 @@ WebInspector.StylesSidebarPane.prototype = {
                     continue;
 
                 var style = styleRules[i].style;
-                var uniqueProperties = style.getUniqueProperties();
+                var uniqueProperties = getUniqueStyleProperties(style);
                 for (var j = 0; j < uniqueProperties.length; ++j) {
                     var name = uniqueProperties[j];
                     if (style.getPropertyPriority(name).length) {
@@ -217,8 +222,10 @@ WebInspector.StylePropertiesSection = function(styleRule, subtitle, computedStyl
     this.computedStyle = computedStyle;
     this.editable = (editable && !computedStyle);
 
-    // Prevent editing the user agent rules.
-    if (this.styleRule.parentStyleSheet && !this.styleRule.parentStyleSheet.ownerNode)
+    // Prevent editing the user agent and user rules.
+    var isUserAgent = this.styleRule.parentStyleSheet && !this.styleRule.parentStyleSheet.ownerNode && !this.styleRule.parentStyleSheet.href;
+    var isUser = this.styleRule.parentStyleSheet && this.styleRule.parentStyleSheet.ownerNode && this.styleRule.parentStyleSheet.ownerNode.nodeName == '#document';
+    if (isUserAgent || isUser)
         this.editable = false;
 
     this._usedProperties = usedProperties;
@@ -245,16 +252,18 @@ WebInspector.StylePropertiesSection = function(styleRule, subtitle, computedStyl
         showInheritedLabel.addEventListener("click", showInheritedToggleFunction, false);
 
         showInheritedLabel.appendChild(showInheritedInput);
-        showInheritedLabel.appendChild(document.createTextNode(WebInspector.UIString("Show inherited properties")));
+        showInheritedLabel.appendChild(document.createTextNode(WebInspector.UIString("Show inherited")));
         this.subtitleElement.appendChild(showInheritedLabel);
     } else {
         if (!subtitle) {
             if (this.styleRule.parentStyleSheet && this.styleRule.parentStyleSheet.href) {
                 var url = this.styleRule.parentStyleSheet.href;
-                subtitle = WebInspector.linkifyURL(url, url.trimURL(WebInspector.mainResource.domain).escapeHTML());
+                subtitle = WebInspector.linkifyURL(url, WebInspector.displayNameForURL(url).escapeHTML());
                 this.subtitleElement.addStyleClass("file");
-            } else if (this.styleRule.parentStyleSheet && !this.styleRule.parentStyleSheet.ownerNode)
+            } else if (isUserAgent)
                 subtitle = WebInspector.UIString("user agent stylesheet");
+            else if (isUser)
+                subtitle = WebInspector.UIString("user stylesheet");
             else
                 subtitle = WebInspector.UIString("inline stylesheet");
         }
@@ -295,7 +304,7 @@ WebInspector.StylePropertiesSection.prototype = {
 
         // Find out if any of the individual longhand properties of the shorthand
         // are used, if none are then the shorthand is overloaded too.
-        var longhandProperties = this.styleRule.style.getLonghandProperties(property);
+        var longhandProperties = getLonghandProperties(this.styleRule.style, property);
         for (var j = 0; j < longhandProperties.length; ++j) {
             var individualProperty = longhandProperties[j];
             if (individualProperty in this.usedProperties)
@@ -326,7 +335,7 @@ WebInspector.StylePropertiesSection.prototype = {
             return;
 
         var foundShorthands = {};
-        var uniqueProperties = style.getUniqueProperties();
+        var uniqueProperties = getUniqueStyleProperties(style);
         uniqueProperties.sort();
 
         for (var i = 0; i < uniqueProperties.length; ++i) {
@@ -418,8 +427,8 @@ WebInspector.StylePropertyTreeElement.prototype = {
             "rgb(0, 255, 255)": "cyan"
         };
 
-        var priority = (this.shorthand ? this.style.getShorthandPriority(this.name) : this.style.getPropertyPriority(this.name));
-        var value = (this.shorthand ? this.style.getShorthandValue(this.name) : this.style.getPropertyValue(this.name));
+        var priority = (this.shorthand ? getShorthandPriority(this.style, this.name) : this.style.getPropertyPriority(this.name));
+        var value = (this.shorthand ? getShorthandValue(this.style, this.name) : this.style.getPropertyValue(this.name));
         var htmlValue = value;
 
         if (priority && !priority.length)
@@ -493,7 +502,7 @@ WebInspector.StylePropertyTreeElement.prototype = {
         if (!this.listItemElement)
             return;
 
-        var value = (this.shorthand ? this.style.getShorthandValue(this.name) : this.style.getPropertyValue(this.name));
+        var value = (this.shorthand ? getShorthandValue(this.style, this.name) : this.style.getPropertyValue(this.name));
         if (this.style.isPropertyImplicit(this.name) || value === "initial")
             this.listItemElement.addStyleClass("implicit");
         else
@@ -516,7 +525,7 @@ WebInspector.StylePropertyTreeElement.prototype = {
         if (this.children.length || !this.shorthand)
             return;
 
-        var longhandProperties = this.style.getLonghandProperties(this.name);
+        var longhandProperties = getLonghandProperties(this.style, this.name);
         for (var i = 0; i < longhandProperties.length; ++i) {
             var name = longhandProperties[i];
 
@@ -541,15 +550,10 @@ WebInspector.StylePropertyTreeElement.prototype = {
         if (this.parent.shorthand)
             return;
 
-        if (this.editing || (this.treeOutline.section && !this.treeOutline.section.editable))
+        if (WebInspector.isBeingEdited(this.listItemElement) || (this.treeOutline.section && !this.treeOutline.section.editable))
             return;
 
-        this.editing = true;
-        this.previousTextContent = this.listItemElement.textContent;
-
-        this.listItemElement.addStyleClass("focusable");
-        this.listItemElement.addStyleClass("editing");
-        this.wasExpanded = this.expanded;
+        var wasExpanded = this.expanded;
         this.collapse();
         // Lie about out children to prevent toggling on click.
         this.hasChildren = false;
@@ -559,56 +563,26 @@ WebInspector.StylePropertyTreeElement.prototype = {
 
         window.getSelection().setBaseAndExtent(selectElement, 0, selectElement, 1);
 
-        var treeElement = this;
-        this.listItemElement.blurred = function() { treeElement.commitEditing() };
-        this.listItemElement.handleKeyEvent = function(event) {
-            if (event.keyIdentifier === "Enter") {
-                treeElement.commitEditing();
-                event.preventDefault();
-            } else if (event.keyCode === 27) { // Escape key
-                treeElement.cancelEditing();
-                event.preventDefault();
-            }
-        };
-
-        this.previousFocusElement = WebInspector.currentFocusElement;
-        WebInspector.currentFocusElement = this.listItemElement;
+        WebInspector.startEditing(this.listItemElement, this.editingCommitted.bind(this), this.editingCancelled.bind(this), wasExpanded);
     },
 
-    endEditing: function()
+    editingEnded: function(wasExpanded)
     {
-        // Revert the changes done in startEditing().
-        delete this.listItemElement.blurred;
-        delete this.listItemElement.handleKeyEvent;
-
-        WebInspector.currentFocusElement = this.previousFocusElement;
-        delete this.previousFocusElement;
-
-        delete this.previousTextContent;
-        delete this.editing;
-
-        this.listItemElement.removeStyleClass("focusable");
-        this.listItemElement.removeStyleClass("editing");
         this.hasChildren = (this.children.length ? true : false);
-        if (this.wasExpanded) {
-            delete this.wasExpanded;
+        if (wasExpanded)
             this.expand();
-        }
     },
 
-    cancelEditing: function()
+    editingCancelled: function(e, wasExpanded)
     {
-        this.endEditing();
+        this.editingEnded(wasExpanded);
         this.updateTitle();
     },
 
-    commitEditing: function()
+    editingCommitted: function(e, userInput, previousContent, wasExpanded)
     {
-        var previousContent = this.previousTextContent;
+        this.editingEnded();
 
-        this.endEditing();
-
-        var userInput = this.listItemElement.textContent;
         if (userInput === previousContent)
             return; // nothing changed, so do nothing else
 
@@ -624,7 +598,7 @@ WebInspector.StylePropertyTreeElement.prototype = {
             // original property from the real style declaration. If this represents
             // a shorthand remove all the longhand properties.
             if (this.shorthand) {
-                var longhandProperties = this.style.getLonghandProperties(this.name);
+                var longhandProperties = getLonghandProperties(this.style, this.name);
                 for (var i = 0; i < longhandProperties.length; ++i)
                     this.style.removeProperty(longhandProperties[i]);
             } else
@@ -649,7 +623,7 @@ WebInspector.StylePropertyTreeElement.prototype = {
         // Iterate of the properties on the test element's style declaration and
         // add them to the real style declaration. We take care to move shorthands.
         var foundShorthands = {};
-        var uniqueProperties = userInputStyle.getUniqueProperties();
+        var uniqueProperties = getUniqueStyleProperties(userInputStyle);
         for (var i = 0; i < uniqueProperties.length; ++i) {
             var name = uniqueProperties[i];
             var shorthand = userInputStyle.getPropertyShorthand(name);
@@ -658,8 +632,8 @@ WebInspector.StylePropertyTreeElement.prototype = {
                 continue;
 
             if (shorthand) {
-                var value = userInputStyle.getShorthandValue(shorthand);
-                var priority = userInputStyle.getShorthandPriority(shorthand);
+                var value = getShorthandValue(userInputStyle, shorthand);
+                var priority = getShorthandPriority(userInputStyle, shorthand);
                 foundShorthands[shorthand] = true;
             } else {
                 var value = userInputStyle.getPropertyValue(name);

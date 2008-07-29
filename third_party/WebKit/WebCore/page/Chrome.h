@@ -46,21 +46,6 @@ namespace WebCore {
     struct FrameLoadRequest;
     struct WindowFeatures;
     
-    enum MessageSource {
-        HTMLMessageSource,
-        XMLMessageSource,
-        JSMessageSource,
-        CSSMessageSource,
-        OtherMessageSource
-    };
-
-    enum MessageLevel {
-        TipMessageLevel,
-        LogMessageLevel,
-        WarningMessageLevel,
-        ErrorMessageLevel
-    };
-
     class Chrome : Noncopyable {
     public:
         Chrome(Page*, ChromeClient*);
@@ -102,8 +87,6 @@ namespace WebCore {
         
         void setResizable(bool) const;
 
-        void addMessageToConsole(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceID);
-
         bool canRunBeforeUnloadConfirmPanel();
         bool runBeforeUnloadConfirmPanel(const String& message, Frame* frame);
 
@@ -125,7 +108,10 @@ namespace WebCore {
         void setToolTip(const HitTestResult&);
 
         void print(Frame*);
-        
+
+        void enableSuddenTermination();
+        void disableSuddenTermination();
+
 #if PLATFORM(MAC)
         void focusNSView(NSView*);
 #endif

@@ -21,24 +21,27 @@
 #include "JSDocument.h"
 
 #include "DOMWindow.h"
-#include "Document.h"
+#include "ExceptionCode.h"
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "HTMLDocument.h"
-#include "JSDOMWindow.h"
+#include "JSDOMWindowCustom.h"
 #include "JSHTMLDocument.h"
 #include "JSLocation.h"
-#include "kjs_binding.h"
-#include "kjs_proxy.h"
+#include "JSNodeList.h"
+#include "Location.h"
+#include "NodeList.h"
+#include "ScriptController.h"
+#include "JSNSResolver.h"
 
 #if ENABLE(SVG)
 #include "JSSVGDocument.h"
 #include "SVGDocument.h"
 #endif
 
-namespace WebCore {
-
 using namespace KJS;
+
+namespace WebCore {
 
 void JSDocument::mark()
 {
@@ -52,9 +55,7 @@ JSValue* JSDocument::location(ExecState* exec) const
     if (!frame)
         return jsNull();
 
-    KJS::Window* win = KJS::Window::retrieveWindow(frame);
-    ASSERT(win);
-    return win->location();
+    return toJS(exec, frame->domWindow()->location());
 }
 
 void JSDocument::setLocation(ExecState* exec, JSValue* value)
@@ -67,12 +68,42 @@ void JSDocument::setLocation(ExecState* exec, JSValue* value)
 
     // IE and Mozilla both resolve the URL relative to the source frame,
     // not the target frame.
-    Frame* activeFrame = static_cast<JSDOMWindow*>(exec->dynamicGlobalObject())->impl()->frame();
+    Frame* activeFrame = asJSDOMWindow(exec->dynamicGlobalObject())->impl()->frame();
     if (activeFrame)
-        str = activeFrame->document()->completeURL(str);
+        str = activeFrame->document()->completeURL(str).string();
 
-    bool userGesture = activeFrame->scriptProxy()->processingUserGesture();
+    bool userGesture = activeFrame->script()->processingUserGesture();
     frame->loader()->scheduleLocationChange(str, activeFrame->loader()->outgoingReferrer(), false, userGesture);
+}
+
+JSValue* JSDocument::querySelector(ExecState* exec, const ArgList& args)
+{
+    Document* imp = impl();
+    ExceptionCode ec = 0;
+    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
+    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
+
+    RefPtr<Element> element = imp->querySelector(selectors, resolver.get(), ec, exec);
+    if (exec->hadException())
+        return jsUndefined();
+    JSValue* result = toJS(exec, element.get());
+    setDOMException(exec, ec);
+    return result;
+}
+
+JSValue* JSDocument::querySelectorAll(ExecState* exec, const ArgList& args)
+{
+    Document* imp = impl();
+    ExceptionCode ec = 0;
+    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
+    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
+
+    RefPtr<NodeList> nodeList = imp->querySelectorAll(selectors, resolver.get(), ec, exec);
+    if (exec->hadException())
+        return jsUndefined();
+    JSValue* result = toJS(exec, nodeList.get());
+    setDOMException(exec, ec);
+    return result;
 }
 
 JSValue* toJS(ExecState* exec, Document* doc)
@@ -85,24 +116,22 @@ JSValue* toJS(ExecState* exec, Document* doc)
         return ret;
 
     if (doc->isHTMLDocument())
-        ret = new JSHTMLDocument(JSHTMLDocumentPrototype::self(exec), static_cast<HTMLDocument*>(doc));
+        ret = new (exec) JSHTMLDocument(JSHTMLDocumentPrototype::self(exec), static_cast<HTMLDocument*>(doc));
 #if ENABLE(SVG)
     else if (doc->isSVGDocument())
-        ret = new JSSVGDocument(JSSVGDocumentPrototype::self(exec), static_cast<SVGDocument*>(doc));
+        ret = new (exec) JSSVGDocument(JSSVGDocumentPrototype::self(exec), static_cast<SVGDocument*>(doc));
 #endif
     else
-        ret = new JSDocument(JSDocumentPrototype::self(exec), doc);
+        ret = new (exec) JSDocument(JSDocumentPrototype::self(exec), doc);
 
     // Make sure the document is kept around by the window object, and works right with the
     // back/forward cache.
-    if (doc->frame())
-        KJS::Window::retrieveWindow(doc->frame())->putDirect("document", ret, DontDelete|ReadOnly);
-    else {
+    if (!doc->frame()) {
         size_t nodeCount = 0;
         for (Node* n = doc; n; n = n->traverseNextNode())
             nodeCount++;
         
-        Collector::reportExtraMemoryCost(nodeCount * sizeof(Node));
+        exec->heap()->reportExtraMemoryCost(nodeCount * sizeof(Node));
     }
 
     ScriptInterpreter::putDOMObject(doc, ret);

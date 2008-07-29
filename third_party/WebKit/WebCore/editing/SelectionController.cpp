@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2004, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,6 +26,7 @@
 #include "config.h"
 #include "SelectionController.h"
 
+#include "CString.h"
 #include "DeleteSelectionCommand.h"
 #include "Document.h"
 #include "Editor.h"
@@ -50,6 +51,7 @@
 #include "TypingCommand.h"
 #include "htmlediting.h"
 #include "visible_units.h"
+#include <stdio.h>
 
 #define EDIT_DEBUG 0
 
@@ -96,7 +98,7 @@ void SelectionController::moveTo(const Position &base, const Position &extent, E
     setSelection(Selection(base, extent, affinity), true, true, userTriggered);
 }
 
-void SelectionController::setSelection(const Selection& s, bool closeTyping, bool clearTypingStyle, bool userTriggered)
+void SelectionController::setSelection(const Selection& s, bool closeTyping, bool clearTypingStyleAndRemovedAnchor, bool userTriggered)
 {
     if (m_isDragCaretController) {
         invalidateCaretRect();
@@ -111,14 +113,14 @@ void SelectionController::setSelection(const Selection& s, bool closeTyping, boo
     }
     
     if (s.base().node() && s.base().node()->document() != m_frame->document()) {
-        s.base().node()->document()->frame()->selectionController()->setSelection(s, closeTyping, clearTypingStyle, userTriggered);
+        s.base().node()->document()->frame()->selection()->setSelection(s, closeTyping, clearTypingStyleAndRemovedAnchor, userTriggered);
         return;
     }
     
     if (closeTyping)
         TypingCommand::closeTyping(m_frame->editor()->lastEditCommand());
 
-    if (clearTypingStyle) {
+    if (clearTypingStyleAndRemovedAnchor) {
         m_frame->clearTypingStyle();
         m_frame->editor()->setRemovedAnchor(0);
     }
@@ -186,13 +188,14 @@ void SelectionController::nodeWillBeRemoved(Node *node)
         clearRenderTreeSelection = true;
         clearDOMTreeSelection = true;
     } else if (baseRemoved || extentRemoved) {
-        if (m_sel.isBaseFirst()) {
-            m_sel.setBase(m_sel.start());
-            m_sel.setExtent(m_sel.end());
-        } else {
-            m_sel.setBase(m_sel.start());
-            m_sel.setExtent(m_sel.end());
-        }
+        // The base and/or extent are about to be removed, but the start and end aren't.
+        // Change the base and extent to the start and end, but don't re-validate the
+        // selection, since doing so could move the start and end into the node
+        // that is about to be removed.
+        if (m_sel.isBaseFirst())
+            m_sel.setWithoutValidation(m_sel.start(), m_sel.end());
+        else
+            m_sel.setWithoutValidation(m_sel.end(), m_sel.start());
     // FIXME: This could be more efficient if we had an isNodeInRange function on Ranges.
     } else if (Range::compareBoundaryPoints(m_sel.start(), Position(node, 0)) == -1 &&
                Range::compareBoundaryPoints(m_sel.end(), Position(node, 0)) == 1) {
@@ -283,7 +286,32 @@ VisiblePosition SelectionController::modifyExtendingRightForward(TextGranularity
     return pos;
 }
 
-VisiblePosition SelectionController::modifyMovingRightForward(TextGranularity granularity)
+VisiblePosition SelectionController::modifyMovingRight(TextGranularity granularity)
+{
+    VisiblePosition pos;
+    switch (granularity) {
+        case CharacterGranularity:
+            if (isRange()) 
+                pos = VisiblePosition(m_sel.end(), m_sel.affinity());
+            else
+                pos = VisiblePosition(m_sel.extent(), m_sel.affinity()).right(true);
+            break;
+        case WordGranularity:
+        case SentenceGranularity:
+        case LineGranularity:
+        case ParagraphGranularity:
+        case SentenceBoundary:
+        case LineBoundary:
+        case ParagraphBoundary:
+        case DocumentBoundary:
+            // FIXME: Implement all of the above.
+            pos = modifyMovingForward(granularity);
+            break;
+    }
+    return pos;
+}
+
+VisiblePosition SelectionController::modifyMovingForward(TextGranularity granularity)
 {
     VisiblePosition pos;
     // FIXME: Stay in editable content for the less common granularities.
@@ -376,7 +404,32 @@ VisiblePosition SelectionController::modifyExtendingLeftBackward(TextGranularity
     return pos;
 }
 
-VisiblePosition SelectionController::modifyMovingLeftBackward(TextGranularity granularity)
+VisiblePosition SelectionController::modifyMovingLeft(TextGranularity granularity)
+{
+    VisiblePosition pos;
+    switch (granularity) {
+        case CharacterGranularity:
+            if (isRange()) 
+                pos = VisiblePosition(m_sel.start(), m_sel.affinity());
+            else
+                pos = VisiblePosition(m_sel.extent(), m_sel.affinity()).left(true);
+            break;
+        case WordGranularity:
+        case SentenceGranularity:
+        case LineGranularity:
+        case ParagraphGranularity:
+        case SentenceBoundary:
+        case LineBoundary:
+        case ParagraphBoundary:
+        case DocumentBoundary:
+            // FIXME: Implement all of the above.
+            pos = modifyMovingBackward(granularity);
+            break;
+    }
+    return pos;
+}
+
+VisiblePosition SelectionController::modifyMovingBackward(TextGranularity granularity)
 {
     VisiblePosition pos;
     switch (granularity) {
@@ -438,20 +491,29 @@ bool SelectionController::modify(EAlteration alter, EDirection dir, TextGranular
 
     VisiblePosition pos;
     switch (dir) {
-        // EDIT FIXME: These need to handle bidi
         case RIGHT:
+            if (alter == MOVE)
+                pos = modifyMovingRight(granularity);
+            else
+                pos = modifyExtendingRightForward(granularity);
+            break;
         case FORWARD:
             if (alter == EXTEND)
                 pos = modifyExtendingRightForward(granularity);
             else
-                pos = modifyMovingRightForward(granularity);
+                pos = modifyMovingForward(granularity);
             break;
         case LEFT:
+            if (alter == MOVE)
+                pos = modifyMovingLeft(granularity);
+            else
+                pos = modifyExtendingLeftBackward(granularity);
+            break;
         case BACKWARD:
             if (alter == EXTEND)
                 pos = modifyExtendingLeftBackward(granularity);
             else
-                pos = modifyMovingLeftBackward(granularity);
+                pos = modifyMovingBackward(granularity);
             break;
     }
 
@@ -493,14 +555,7 @@ bool SelectionController::modify(EAlteration alter, EDirection dir, TextGranular
 // FIXME: Maybe baseline would be better?
 static bool caretY(const VisiblePosition &c, int &y)
 {
-    Position p = c.deepEquivalent();
-    Node *n = p.node();
-    if (!n)
-        return false;
-    RenderObject *r = p.node()->renderer();
-    if (!r)
-        return false;
-    IntRect rect = r->caretRect(p.offset());
+    IntRect rect = c.caretRect();
     if (rect.isEmpty())
         return false;
     y = rect.y() + rect.height() / 2;
@@ -625,10 +680,10 @@ int SelectionController::xPosForVerticalArrowNavigation(EPositionType type)
         return x;
         
     if (m_xPosForVerticalArrowNavigation == NoXPosForVerticalArrowNavigation) {
-        pos = VisiblePosition(pos, m_sel.affinity()).deepEquivalent();
+        VisiblePosition visiblePosition(pos, m_sel.affinity());
         // VisiblePosition creation can fail here if a node containing the selection becomes visibility:hidden
         // after the selection is created and before this function is called.
-        x = pos.isNotNull() ? pos.node()->renderer()->caretRect(pos.offset(), m_sel.affinity()).x() : 0;
+        x = visiblePosition.isNotNull() ? visiblePosition.caretRect().x() : 0;
         m_xPosForVerticalArrowNavigation = x;
     }
     else
@@ -681,14 +736,13 @@ void SelectionController::layout()
     m_caretPositionOnLayout = IntPoint();
         
     if (isCaret()) {
-        Position pos = m_sel.start();
-        pos = VisiblePosition(m_sel.start(), m_sel.affinity()).deepEquivalent();
+        VisiblePosition pos(m_sel.start(), m_sel.affinity());
         if (pos.isNotNull()) {
-            ASSERT(pos.node()->renderer());
-            m_caretRect = pos.node()->renderer()->caretRect(pos.offset(), m_sel.affinity());
-            
+            ASSERT(pos.deepEquivalent().node()->renderer());
+            m_caretRect = pos.caretRect();
+
             int x, y;
-            pos.node()->renderer()->absolutePositionForContent(x, y);
+            pos.deepEquivalent().node()->renderer()->absolutePositionForContent(x, y);
             m_caretPositionOnLayout = IntPoint(x, y);
         }
     }
@@ -712,9 +766,19 @@ IntRect SelectionController::caretRect() const
     return caret;
 }
 
+static IntRect repaintRectForCaret(IntRect caret)
+{
+    if (caret.isEmpty())
+        return IntRect();
+    // Ensure that the dirty rect intersects the block that paints the caret even in the case where
+    // the caret itself is just outside the block. See <https://bugs.webkit.org/show_bug.cgi?id=19086>.
+    caret.inflateX(1);
+    return caret;
+}
+
 IntRect SelectionController::caretRepaintRect() const
 {
-    return caretRect();
+    return repaintRectForCaret(caretRect());
 }
 
 bool SelectionController::recomputeCaretRect()
@@ -735,8 +799,8 @@ bool SelectionController::recomputeCaretRect()
     if (oldRect == newRect)
         return false;
 
-    v->updateContents(oldRect, false);
-    v->updateContents(newRect, false);
+    v->updateContents(repaintRectForCaret(oldRect), false);
+    v->updateContents(repaintRectForCaret(newRect), false);
     return true;
 }
 
@@ -791,7 +855,7 @@ void SelectionController::debugRenderer(RenderObject *r, bool selected) const
 {
     if (r->node()->isElementNode()) {
         Element *element = static_cast<Element *>(r->node());
-        fprintf(stderr, "%s%s\n", selected ? "==> " : "    ", element->localName().deprecatedString().latin1());
+        fprintf(stderr, "%s%s\n", selected ? "==> " : "    ", element->localName().string().utf8().data());
     }
     else if (r->isText()) {
         RenderText* textRenderer = static_cast<RenderText*>(r);
@@ -801,7 +865,7 @@ void SelectionController::debugRenderer(RenderObject *r, bool selected) const
         }
         
         static const int max = 36;
-        DeprecatedString text = String(textRenderer->text()).deprecatedString();
+        String text = textRenderer->text();
         int textLength = text.length();
         if (selected) {
             int offset = 0;
@@ -812,9 +876,9 @@ void SelectionController::debugRenderer(RenderObject *r, bool selected) const
                 
             int pos;
             InlineTextBox *box = textRenderer->findNextInlineTextBox(offset, pos);
-            text = text.mid(box->m_start, box->m_len);
+            text = text.substring(box->m_start, box->m_len);
             
-            DeprecatedString show;
+            String show;
             int mid = max / 2;
             int caret = 0;
             
@@ -832,7 +896,7 @@ void SelectionController::debugRenderer(RenderObject *r, bool selected) const
             
             // enough characters on each side
             else if (pos - mid >= 0 && pos + mid <= textLength) {
-                show = "..." + text.mid(pos - mid + 3, max - 6) + "...";
+                show = "..." + text.substring(pos - mid + 3, max - 6) + "...";
                 caret = mid;
             }
             
@@ -844,7 +908,7 @@ void SelectionController::debugRenderer(RenderObject *r, bool selected) const
             
             show.replace('\n', ' ');
             show.replace('\r', ' ');
-            fprintf(stderr, "==> #text : \"%s\" at offset %d\n", show.latin1(), pos);
+            fprintf(stderr, "==> #text : \"%s\" at offset %d\n", show.utf8().data(), pos);
             fprintf(stderr, "           ");
             for (int i = 0; i < caret; i++)
                 fprintf(stderr, " ");
@@ -855,7 +919,7 @@ void SelectionController::debugRenderer(RenderObject *r, bool selected) const
                 text = text.left(max - 3) + "...";
             else
                 text = text.left(max);
-            fprintf(stderr, "    #text : \"%s\"\n", text.latin1());
+            fprintf(stderr, "    #text : \"%s\"\n", text.utf8().data());
         }
     }
 }
@@ -938,7 +1002,7 @@ void SelectionController::selectFrameElementInParentIfFullySelected()
     Selection newSelection(beforeOwnerElement, afterOwnerElement);
     if (parent->shouldChangeSelection(newSelection)) {
         page->focusController()->setFocusedFrame(parent);
-        parent->selectionController()->setSelection(newSelection);
+        parent->selection()->setSelection(newSelection);
     }
 }
 
@@ -953,7 +1017,14 @@ void SelectionController::selectAll()
         return;
     }
     
-    Node* root = isContentEditable() ? highestEditableRoot(m_sel.start()) : document->documentElement();
+    Node* root = 0;
+    if (isContentEditable())
+        root = highestEditableRoot(m_sel.start());
+    else {
+        root = shadowTreeRootNode();
+        if (!root)
+            root = document->documentElement();
+    }
     if (!root)
         return;
     Selection newSelection(Selection::selectionFromContentsOfNode(root));

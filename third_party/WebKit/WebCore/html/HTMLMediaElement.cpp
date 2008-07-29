@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007, 2008 Apple Inc.  All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -68,7 +68,7 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName, Document* doc)
     , m_loadedFirstFrame(false)
     , m_autoplaying(true)
     , m_currentLoop(0)
-    , m_volume(0.5f)
+    , m_volume(1.0f)
     , m_muted(false)
     , m_paused(true)
     , m_seeking(false)
@@ -197,12 +197,16 @@ String serializeTimeOffset(float time)
     return timeString;
 }
 
-float parseTimeOffset(String timeString, bool* ok = 0)
+float parseTimeOffset(const String& timeString, bool* ok = 0)
 {
-    if (timeString.endsWith("s"))
-        timeString = timeString.left(timeString.length() - 1);
+    const UChar* characters = timeString.characters();
+    unsigned length = timeString.length();
+    
+    if (length && characters[length - 1] == 's')
+        length--;
+    
     // FIXME parse time offset values (format not specified yet)
-    float val = (float)timeString.toDouble(ok);
+    float val = charactersToFloat(characters, length, ok);
     return val;
 }
 
@@ -226,7 +230,7 @@ PassRefPtr<MediaError> HTMLMediaElement::error() const
     return m_error;
 }
 
-String HTMLMediaElement::src() const
+KURL HTMLMediaElement::src() const
 {
     return document()->completeURL(getAttribute(srcAttr));
 }
@@ -273,7 +277,7 @@ void HTMLMediaElement::load(ExceptionCode& ec)
     // 2
     if (m_begun) {
         m_begun = false;
-        m_error = new MediaError(MediaError::MEDIA_ERR_ABORTED);
+        m_error = MediaError::create(MediaError::MEDIA_ERR_ABORTED);
         initAndDispatchProgressEvent(abortEvent);
         if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
             goto end;
@@ -359,7 +363,7 @@ void HTMLMediaElement::mediaPlayerNetworkStateChanged(MediaPlayer*)
         //delete m_player;
         //m_player = 0;
         // FIXME better error handling
-        m_error = new MediaError(MediaError::MEDIA_ERR_NETWORK);
+        m_error = MediaError::create(MediaError::MEDIA_ERR_NETWORK);
         m_begun = false;
         m_progressEventTimer.stop();
         m_bufferingRate = 0;
@@ -809,8 +813,8 @@ String HTMLMediaElement::pickMedia()
                 if (!source->hasAttribute(srcAttr))
                     continue; 
                 if (source->hasAttribute(mediaAttr)) {
-                    MediaQueryEvaluator screenEval("screen", document()->page(), renderer() ? renderer()->style() : 0);
-                    RefPtr<MediaList> media = new MediaList((CSSStyleSheet*)0, source->media(), true);
+                    MediaQueryEvaluator screenEval("screen", document()->frame(), renderer() ? renderer()->style() : 0);
+                    RefPtr<MediaList> media = MediaList::createAllowingDescriptionSyntax(source->media());
                     if (!screenEval.eval(media.get()))
                         continue;
                 }
@@ -819,13 +823,13 @@ String HTMLMediaElement::pickMedia()
                     if (!MIMETypeRegistry::isSupportedMediaMIMEType(type))
                         continue;
                 }
-                mediaSrc = source->src();
+                mediaSrc = source->src().string();
                 break;
             }
         }
     }
     if (!mediaSrc.isEmpty())
-        mediaSrc = document()->completeURL(mediaSrc);
+        mediaSrc = document()->completeURL(mediaSrc).string();
     return mediaSrc;
 }
 
@@ -893,22 +897,22 @@ PassRefPtr<TimeRanges> HTMLMediaElement::buffered() const
 {
     // FIXME real ranges support
     if (!m_player || !m_player->maxTimeBuffered())
-        return new TimeRanges;
-    return new TimeRanges(0, m_player->maxTimeBuffered());
+        return TimeRanges::create();
+    return TimeRanges::create(0, m_player->maxTimeBuffered());
 }
 
 PassRefPtr<TimeRanges> HTMLMediaElement::played() const
 {
     // FIXME track played
-    return new TimeRanges;
+    return TimeRanges::create();
 }
 
 PassRefPtr<TimeRanges> HTMLMediaElement::seekable() const
 {
     // FIXME real ranges support
     if (!m_player || !m_player->maxTimeSeekable())
-        return new TimeRanges;
-    return new TimeRanges(0, m_player->maxTimeSeekable());
+        return TimeRanges::create();
+    return TimeRanges::create(0, m_player->maxTimeSeekable());
 }
 
 float HTMLMediaElement::effectiveStart() const
@@ -998,11 +1002,12 @@ void HTMLMediaElement::willSaveToCache()
         m_player.clear();
         m_progressEventTimer.stop();
 
-        m_error = new MediaError(MediaError::MEDIA_ERR_ABORTED);
+        m_error = MediaError::create(MediaError::MEDIA_ERR_ABORTED);
         m_begun = false;
         initAndDispatchProgressEvent(abortEvent);
         if (m_networkState >= LOADING) {
             m_networkState = EMPTY;
+            m_readyState = DATA_UNAVAILABLE;
             dispatchHTMLEvent(emptiedEvent, false, true);
         }
     }

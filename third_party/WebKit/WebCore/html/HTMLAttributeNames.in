@@ -1,3 +1,11 @@
+namespace="HTML"
+namespacePrefix="xhtml"
+cppNamespace="WebCore"
+namespaceURI="http://www.w3.org/1999/xhtml"
+generateFactory="1"
+generateWrapperFactory="1"
+attrsNullNamespace="1"
+
 abbr
 accept_charset
 accept
@@ -7,7 +15,18 @@ align
 alink
 alt
 archive
+aria-activedescendant
+aria-checked
+aria-describedby
+aria-labeledby
+aria-labelledby
+aria-level
+aria-pressed
+aria-valuemax
+aria-valuemin
+aria-valuenow
 autocomplete
+autofocus
 autoplay
 autosave
 axis
@@ -26,7 +45,7 @@ charset
 checked
 cellborder
 cite
-class
+class exportString="1"
 classid
 clear
 code
@@ -77,6 +96,7 @@ playcount
 loopend
 loopstart
 lowsrc
+manifest
 marginheight
 marginwidth
 max
@@ -131,6 +151,7 @@ onscroll
 onsearch
 onselect
 onselectstart
+onstorage
 onsubmit
 onunload
 pagex
@@ -148,6 +169,7 @@ readonly
 rel
 results
 rev
+role
 rows
 rowspan
 rules

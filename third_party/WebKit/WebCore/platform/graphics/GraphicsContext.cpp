@@ -27,7 +27,10 @@
 #include "GraphicsContext.h"
 
 #include "BidiResolver.h"
+#include "Generator.h"
+#include "GraphicsContextPrivate.h"
 #include "Font.h"
+#include "NotImplemented.h"
 
 using namespace std;
 
@@ -54,7 +57,7 @@ public:
     }
 
     unsigned offset() const { return m_offset; }
-    void increment(BidiResolver<TextRunIterator, BidiCharacterRun>&) { m_offset++; }
+    void increment() { m_offset++; }
     bool atEnd() const { return !m_textRun || m_offset >= m_textRun->length(); }
     UChar current() const { return (*m_textRun)[m_offset]; }
     WTF::Unicode::Direction direction() const { return atEnd() ? WTF::Unicode::OtherNeutral : WTF::Unicode::direction(current()); }
@@ -70,44 +73,6 @@ private:
     const TextRun* m_textRun;
     int m_offset;
 };
-
-struct GraphicsContextState {
-    GraphicsContextState() 
-    : strokeStyle(SolidStroke)
-    , strokeThickness(0)
-    , strokeColor(Color::black)
-    , fillColor(Color::black)
-    , textDrawingMode(cTextFill)
-    , paintingDisabled(false)
-    {}
-    
-    Font font;
-    StrokeStyle strokeStyle;
-    float strokeThickness;
-    Color strokeColor;
-    Color fillColor;
-    int textDrawingMode;
-    bool paintingDisabled;
-};
-        
-class GraphicsContextPrivate {
-public:
-    GraphicsContextPrivate();
-    
-    GraphicsContextState state;
-    Vector<GraphicsContextState> stack;
-    Vector<IntRect> m_focusRingRects;
-    int m_focusRingWidth;
-    int m_focusRingOffset;
-    bool m_updatingControlTints;
-};
-
-GraphicsContextPrivate::GraphicsContextPrivate()
-    : m_focusRingWidth(0)
-    , m_focusRingOffset(0)
-    , m_updatingControlTints(false)
-{
-}
 
 GraphicsContextPrivate* GraphicsContext::createGraphicsContextPrivate()
 {
@@ -171,6 +136,31 @@ void GraphicsContext::setStrokeColor(const Color& color)
 {
     m_common->state.strokeColor = color;
     setPlatformStrokeColor(color);
+}
+
+void GraphicsContext::setShadow(const IntSize& size, int blur, const Color& color)
+{
+    m_common->state.shadowSize = size;
+    m_common->state.shadowBlur = blur;
+    m_common->state.shadowColor = color;
+    setPlatformShadow(size, blur, color);
+}
+
+void GraphicsContext::clearShadow()
+{
+    m_common->state.shadowSize = IntSize();
+    m_common->state.shadowBlur = 0;
+    m_common->state.shadowColor = Color();
+    clearPlatformShadow();
+}
+
+bool GraphicsContext::getShadow(IntSize& size, int& blur, Color& color) const
+{
+    size = m_common->state.shadowSize;
+    blur = m_common->state.shadowBlur;
+    color = m_common->state.shadowColor;
+
+    return color.isValid() && color.alpha() && (blur || size.width() || size.height());
 }
 
 float GraphicsContext::strokeThickness() const
@@ -258,7 +248,8 @@ void GraphicsContext::drawBidiText(const TextRun& run, const IntPoint& point)
 
     bidiResolver.setStatus(BidiStatus(paragraphDirection, paragraphDirection, paragraphDirection, new BidiContext(run.ltr() ? 0 : 1, paragraphDirection, run.directionalOverride())));
 
-    bidiResolver.createBidiRunsForLine(TextRunIterator(&run, 0), TextRunIterator(&run, run.length()));
+    bidiResolver.setPosition(TextRunIterator(&run, 0));
+    bidiResolver.createBidiRunsForLine(TextRunIterator(&run, run.length()));
 
     if (!bidiResolver.runCount())
         return;
@@ -340,11 +331,9 @@ const Vector<IntRect>& GraphicsContext::focusRingRects() const
     return m_common->m_focusRingRects;
 }
 
-static const int cInterpolationCutoff = 800 * 800;
-
 void GraphicsContext::drawImage(Image* image, const FloatRect& dest, const FloatRect& src, CompositeOperator op, bool useLowQualityScale)
 {
-    if (paintingDisabled())
+    if (paintingDisabled() || !image)
         return;
 
     float tsw = src.width();
@@ -362,19 +351,18 @@ void GraphicsContext::drawImage(Image* image, const FloatRect& dest, const Float
     if (th == -1)
         th = image->height();
 
-    bool shouldUseLowQualityInterpolation = useLowQualityScale && (tsw != tw || tsh != th) && tsw * tsh > cInterpolationCutoff;
-    if (shouldUseLowQualityInterpolation) {
+    if (useLowQualityScale) {
         save();
-        setUseLowQualityImageInterpolation(true);
+        setImageInterpolationQuality(InterpolationNone);
     }
     image->draw(this, FloatRect(dest.location(), FloatSize(tw, th)), FloatRect(src.location(), FloatSize(tsw, tsh)), op);
-    if (shouldUseLowQualityInterpolation)
+    if (useLowQualityScale)
         restore();
 }
 
 void GraphicsContext::drawTiledImage(Image* image, const IntRect& rect, const IntPoint& srcPoint, const IntSize& tileSize, CompositeOperator op)
 {
-    if (paintingDisabled())
+    if (paintingDisabled() || !image)
         return;
 
     image->drawTiled(this, rect, srcPoint, tileSize, op);
@@ -382,12 +370,12 @@ void GraphicsContext::drawTiledImage(Image* image, const IntRect& rect, const In
 
 void GraphicsContext::drawTiledImage(Image* image, const IntRect& dest, const IntRect& srcRect, Image::TileRule hRule, Image::TileRule vRule, CompositeOperator op)
 {
-    if (paintingDisabled())
+    if (paintingDisabled() || !image)
         return;
 
     if (hRule == Image::StretchTile && vRule == Image::StretchTile)
         // Just do a scale.
-        return drawImage(image, dest, srcRect);
+        return drawImage(image, dest, srcRect, op);
 
     image->drawTiled(this, dest, srcRect, hRule, vRule, op);
 }
@@ -423,11 +411,26 @@ void GraphicsContext::setTextDrawingMode(int mode)
     setPlatformTextDrawingMode(mode);
 }
 
+void GraphicsContext::fillRect(const FloatRect& rect, Generator& generator)
+{
+    if (paintingDisabled())
+        return;
+    generator.fill(this, rect);
+}
+
 #if !PLATFORM(CG)
 // Implement this if you want to go ahead and push the drawing mode into your native context
 // immediately.
 void GraphicsContext::setPlatformTextDrawingMode(int mode)
 {
+}
+#endif
+
+#if !PLATFORM(CG) && !PLATFORM(CAIRO)
+// Other platforms need to implement this.
+void GraphicsContext::clipToImageBuffer(const FloatRect&, const ImageBuffer*)
+{
+    notImplemented();
 }
 #endif
 
