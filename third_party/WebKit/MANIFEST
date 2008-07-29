@@ -1,5 +1,3 @@
-JavaScriptCore\kjs\collector.cpp 
-JavaScriptCore\kjs\collector.h
 JavaScriptCore\wtf\FastMalloc.cpp
 JavaScriptCore\wtf\FastMalloc.h
 JavaScriptCore\wtf\Platform.h
