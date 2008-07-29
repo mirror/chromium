@@ -25,23 +25,14 @@ namespace KJS {
 
 const char* const nullCString = 0;
 
-#define INITIALIZE_PROPERTY_NAME(name) , name ( #name )
+#define INITIALIZE_PROPERTY_NAME(name) , name(globalData, #name)
 
-CommonIdentifiers::CommonIdentifiers()
-    : nullIdentifier(nullCString)
-    , underscoreProto("__proto__")
+CommonIdentifiers::CommonIdentifiers(JSGlobalData* globalData)
+    : nullIdentifier(globalData, nullCString)
+    , underscoreProto(globalData, "__proto__")
+    , thisIdentifier(globalData, "this")
     KJS_COMMON_IDENTIFIERS_EACH_PROPERTY_NAME(INITIALIZE_PROPERTY_NAME)
 {
-}
-
-CommonIdentifiers* CommonIdentifiers::shared()
-{
-    static CommonIdentifiers* sharedInstance;
-    if (!sharedInstance) {
-        JSLock lock;
-        sharedInstance = new CommonIdentifiers;
-    }
-    return sharedInstance;
 }
 
 } // namespace KJS

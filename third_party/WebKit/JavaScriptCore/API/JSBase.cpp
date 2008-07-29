@@ -28,23 +28,29 @@
 #include "JSBase.h"
 
 #include "APICast.h"
+#include "completion.h"
 #include <kjs/ExecState.h>
+#include <kjs/InitializeThreading.h>
+#include <kjs/interpreter.h>
 #include <kjs/JSGlobalObject.h>
 #include <kjs/JSLock.h>
-#include <kjs/interpreter.h>
-#include <kjs/object.h>
+#include <kjs/JSObject.h>
 
 using namespace KJS;
 
 JSValueRef JSEvaluateScript(JSContextRef ctx, JSStringRef script, JSObjectRef thisObject, JSStringRef sourceURL, int startingLineNumber, JSValueRef* exception)
 {
-    JSLock lock;
     ExecState* exec = toJS(ctx);
+    exec->globalData().heap->registerThread();
+    JSLock lock(exec);
+
     JSObject* jsThisObject = toJS(thisObject);
     UString::Rep* scriptRep = toJS(script);
     UString::Rep* sourceURLRep = sourceURL ? toJS(sourceURL) : &UString::Rep::null;
+
     // Interpreter::evaluate sets "this" to the global object if it is NULL
-    Completion completion = Interpreter::evaluate(exec->dynamicGlobalObject()->globalExec(), UString(sourceURLRep), startingLineNumber, UString(scriptRep), jsThisObject);
+    JSGlobalObject* globalObject = exec->dynamicGlobalObject();
+    Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), UString(sourceURLRep), startingLineNumber, UString(scriptRep), jsThisObject);
 
     if (completion.complType() == Throw) {
         if (exception)
@@ -61,9 +67,10 @@ JSValueRef JSEvaluateScript(JSContextRef ctx, JSStringRef script, JSObjectRef th
 
 bool JSCheckScriptSyntax(JSContextRef ctx, JSStringRef script, JSStringRef sourceURL, int startingLineNumber, JSValueRef* exception)
 {
-    JSLock lock;
-
     ExecState* exec = toJS(ctx);
+    exec->globalData().heap->registerThread();
+    JSLock lock(exec);
+
     UString::Rep* scriptRep = toJS(script);
     UString::Rep* sourceURLRep = sourceURL ? toJS(sourceURL) : &UString::Rep::null;
     Completion completion = Interpreter::checkSyntax(exec->dynamicGlobalObject()->globalExec(), UString(sourceURLRep), startingLineNumber, UString(scriptRep));
@@ -76,11 +83,34 @@ bool JSCheckScriptSyntax(JSContextRef ctx, JSStringRef script, JSStringRef sourc
     return true;
 }
 
-void JSGarbageCollect(JSContextRef)
+void JSGarbageCollect(JSContextRef ctx)
 {
-    JSLock lock;
-    if (!Collector::isBusy())
-        Collector::collect();
+    // Unlikely, but it is legal to call JSGarbageCollect(0) before actually doing anything that would implicitly call initializeThreading().
+    if (!ctx)
+        initializeThreading();
+
+    // When using a shared heap, clients need to call JSGarbageCollect(0) after releasing the last reference to the context to avoid
+    // leaking protected objects. Because the function arguments were originally ignored, some clients may pass their released context here,
+    // in which case there is a risk of crashing if another thread performs GC on the same heap in between.
+    if (ctx) {
+        ExecState* exec = toJS(ctx);
+        JSGlobalData& globalData = exec->globalData();
+        Heap* heap = globalData.heap;
+
+        JSLock lock(globalData.isSharedInstance);
+
+        if (!heap->isBusy())
+            heap->collect();
+    } else {
+        JSLock lock(true);
+
+        if (JSGlobalData::sharedInstanceExists()) {
+            Heap* heap = JSGlobalData::sharedInstance().heap;
+            if (!heap->isBusy())
+                heap->collect();
+        }
+    }
+
     // FIXME: Perhaps we should trigger a second mark and sweep
     // once the garbage collector is done if this is called when
     // the collector is busy.

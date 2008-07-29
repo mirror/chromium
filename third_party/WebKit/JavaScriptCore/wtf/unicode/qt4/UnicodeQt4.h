@@ -31,6 +31,7 @@
 #include <stdint.h>
 
 #if QT_VERSION >= 0x040300
+QT_BEGIN_NAMESPACE
 namespace QUnicodeTables {
     struct Properties {
         ushort category : 8;
@@ -53,6 +54,7 @@ namespace QUnicodeTables {
     Q_CORE_EXPORT const Properties * QT_FASTCALL properties(uint ucs4);
     Q_CORE_EXPORT const Properties * QT_FASTCALL properties(ushort ucs2);
 }
+QT_END_NAMESPACE
 #endif
 
 // ugly hack to make UChar compatible with JSChar in API/JSStringRef.h
@@ -186,14 +188,17 @@ namespace WTF {
         const UChar *e = src + srcLength;
         const UChar *s = src;
         UChar *r = result;
-        UChar *re = result + resultLength;
+        uint rindex = 0;
 
         // this avoids one out of bounds check in the loop
-        if (QChar(*s).isLowSurrogate())
-            *r++ = *s++;
+        if (s < e && QChar(*s).isLowSurrogate()) {
+            if (r)
+                r[rindex] = *s++;
+            ++rindex;
+        }
 
         int needed = 0;
-        while (s < e && r < re) {
+        while (s < e && (rindex < uint(resultLength) || !r)) {
             uint c = *s;
             if (QChar(c).isLowSurrogate() && QChar(*(s - 1)).isHighSurrogate())
                 c = QChar::surrogateToUcs4(*(s - 1), c);
@@ -208,25 +213,27 @@ namespace WTF {
                 }
                 qstring = qstring.toLower();
                 for (int i = 0; i < qstring.length(); ++i) {
-                    if (r == re) {
+                    if (rindex >= uint(resultLength)) {
                         needed += qstring.length() - i;
                         break;
                     }
-                    *r = qstring.at(i).unicode();
-                    ++r;
+                    if (r)
+                        r[rindex] = qstring.at(i).unicode();
+                    ++rindex;
                 }
             } else {
-                *r = *s + prop->lowerCaseDiff;
-                ++r;
+                if (r)
+                    r[rindex] = *s + prop->lowerCaseDiff;
+                ++rindex;
             }
             ++s;
         }
         if (s < e)
             needed += e - s;
         *error = (needed != 0);
-        if (r < re)
-            *r = 0;
-        return (r - result) + needed;
+        if (rindex < uint(resultLength))
+            r[rindex] = 0;
+        return rindex + needed;
     }
 
     inline UChar32 toUpper(UChar32 ch)
@@ -239,14 +246,17 @@ namespace WTF {
         const UChar *e = src + srcLength;
         const UChar *s = src;
         UChar *r = result;
-        UChar *re = result + resultLength;
+        int rindex = 0;
 
         // this avoids one out of bounds check in the loop
-        if (QChar(*s).isLowSurrogate())
-            *r++ = *s++;
+        if (s < e && QChar(*s).isLowSurrogate()) {
+            if (r)
+                r[rindex] = *s++;
+            ++rindex;
+        }
 
         int needed = 0;
-        while (s < e && r < re) {
+        while (s < e && (rindex < resultLength || !r)) {
             uint c = *s;
             if (QChar(c).isLowSurrogate() && QChar(*(s - 1)).isHighSurrogate())
                 c = QChar::surrogateToUcs4(*(s - 1), c);
@@ -261,25 +271,27 @@ namespace WTF {
                 }
                 qstring = qstring.toUpper();
                 for (int i = 0; i < qstring.length(); ++i) {
-                    if (r == re) {
+                    if (rindex >= resultLength) {
                         needed += qstring.length() - i;
                         break;
                     }
-                    *r = qstring.at(i).unicode();
-                    ++r;
+                    if (r)
+                        r[rindex] = qstring.at(i).unicode();
+                    ++rindex;
                 }
             } else {
-                *r = *s + prop->upperCaseDiff;
-                ++r;
+                if (r)
+                    r[rindex] = *s + prop->upperCaseDiff;
+                ++rindex;
             }
             ++s;
         }
         if (s < e)
             needed += e - s;
         *error = (needed != 0);
-        if (r < re)
-            *r = 0;
-        return (r - result) + needed;
+        if (rindex < resultLength)
+            r[rindex] = 0;
+        return rindex + needed;
     }
 
     inline int toTitleCase(UChar32 c)
@@ -301,7 +313,7 @@ namespace WTF {
         return srcLength;
       }
       for (int i = 0; i < srcLength; ++i)
-        result[i] = QChar::toCaseFolded(src[i]);
+        result[i] = QChar::toCaseFolded(ushort(src[i]));
       return srcLength;
     }
 
@@ -373,8 +385,8 @@ namespace WTF {
     {
       // handle surrogates correctly
       for (int i = 0; i < len; ++i) {
-          uint c1 = QChar::toCaseFolded(a[i]);
-          uint c2 = QChar::toCaseFolded(b[i]);
+          uint c1 = QChar::toCaseFolded(ushort(a[i]));
+          uint c2 = QChar::toCaseFolded(ushort(b[i]));
           if (c1 != c2)
               return c1 - c2;
       }

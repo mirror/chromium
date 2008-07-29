@@ -173,7 +173,7 @@ sub execute_tests {
 # (only check for their existance if the suite or test_dir has changed
 # since the last time we looked.)
         if ($last_suite ne $suite || $last_test_dir ne $test_dir) {
-            $shell_command = &xp_path($engine_command);
+            $shell_command = &xp_path($engine_command) . " -s ";
             
             $path = &xp_path($opt_suite_path . $suite . "/shell.js");
             if (-f $path) {
@@ -480,7 +480,7 @@ sub usage {
      "(-c|--classpath)          Classpath (Rhino only.)\n" .
      "(-e|--engine) <type> ...  Specify the type of engine(s) to test.\n" .
      "                          <type> is one or more of\n" .
-     "                          (kjs|smopt|smdebug|lcopt|lcdebug|xpcshell|" .
+     "                          (squirrelfish|smopt|smdebug|lcopt|lcdebug|xpcshell|" .
      "rhino|rhinoi|rhinoms|rhinomsi|rhino9|rhinoms9).\n" .
      "(-f|--file) <file>        Redirect output to file named <file>.\n" .
      "                          (default is " .
@@ -553,9 +553,9 @@ sub get_engine_command {
     }  elsif ($opt_engine_type =~ /^ep(opt|debug)$/) {
         &dd ("getting epimetheus engine command.");
         $retval = &get_ep_engine_command;
-    } elsif ($opt_engine_type eq "kjs") {
-        &dd ("getting kjs engine command.");
-        $retval = &get_kjs_engine_command;
+    } elsif ($opt_engine_type eq "squirrelfish") {
+        &dd ("getting squirrelfish engine command.");
+        $retval = &get_squirrelfish_engine_command;
         
     } else {
         die ("Unknown engine type selected, '$opt_engine_type'.\n");
@@ -633,15 +633,18 @@ sub get_xpc_engine_command {
 }
 
 #
-# get the shell command used to run kjs
+# get the shell command used to run squirrelfish
 #
-sub get_kjs_engine_command {
+sub get_squirrelfish_engine_command {
     my $retval;
     
     if ($opt_shell_path) {
-        $retval = $opt_shell_path;
+        # FIXME: Quoting the path this way won't work with paths with quotes in
+        # them. A better fix would be to use the multi-parameter version of
+        # open(), but that doesn't work on ActiveState Perl.
+        $retval = "\"" . $opt_shell_path . "\"";
     } else {
-        die "Please specify a full path to the kjs testing engine";
+        die "Please specify a full path to the squirrelfish testing engine";
     }
     
     return $retval;

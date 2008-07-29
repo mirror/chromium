@@ -1,8 +1,7 @@
-// -*- c-basic-offset: 2 -*-
 /*
- *  This file is part of the KDE libraries
  *  Copyright (C) 1999-2001 Harri Porten (porten@kde.org)
  *  Copyright (C) 2001 Peter Kelly (pmk@post.com)
+ *  Copyright (C) 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -20,206 +19,46 @@
  *
  */
 
-#ifndef _KJSDEBUGGER_H_
-#define _KJSDEBUGGER_H_
+#ifndef Debugger_h
+#define Debugger_h
 
-#include <wtf/HashMap.h>
 #include "protect.h"
+#include <wtf/HashSet.h>
 
 namespace KJS {
 
-  class DebuggerImp;
-  class ExecState;
-  class JSGlobalObject;
-  class JSObject;
-  class JSValue;
-  class UString;
-  class List;
+    class ArgList;
+    class DebuggerCallFrame;
+    class ExecState;
+    class JSGlobalObject;
+    class JSObject;
+    class JSValue;
+    class SourceProvider;
+    class UString;
 
-  /**
-   * @internal
-   *
-   * Provides an interface which receives notification about various
-   * script-execution related events such as statement execution and function
-   * calls.
-   *
-   * WARNING: This interface is still a work in progress and is not yet
-   * offically publicly available. It is likely to change in binary incompatible
-   * (and possibly source incompatible) ways in future versions. It is
-   * anticipated that at some stage the interface will be frozen and made
-   * available for general use.
-   */
-  class Debugger {
-  public:
+    class Debugger {
+    public:
+        Debugger();
+        virtual ~Debugger();
 
-    /**
-     * Creates a new debugger
-     */
-    Debugger();
+        void attach(JSGlobalObject*);
+        void detach(JSGlobalObject*);
 
-    /**
-     * Destroys the debugger. If the debugger is attached to any global objects,
-     * it is automatically detached.
-     */
-    virtual ~Debugger();
+        virtual void sourceParsed(ExecState*, int sourceId, const UString& sourceURL,
+                                  const SourceProvider& source, int startingLineNumber, int errorLine, const UString& errorMsg) = 0;
+        virtual void exception(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void atStatement(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void callEvent(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void returnEvent(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
 
-    DebuggerImp *imp() const { return rep; }
+        virtual void willExecuteProgram(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void didExecuteProgram(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void didReachBreakpoint(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
 
-    /**
-     * Attaches the debugger to specified global object. This will cause this
-     * object to receive notification of events during execution.
-     *
-     * If the global object is deleted, it will detach the debugger.
-     *
-     * Note: only one debugger can be attached to a global object at a time.
-     * Attaching another debugger to the same global object will cause the
-     * original debugger to be detached.
-     *
-     * @param The global object to attach to.
-     *
-     * @see detach()
-     */
-    void attach(JSGlobalObject*);
+    private:
+        HashSet<JSGlobalObject*> m_globalObjects;
+    };
 
-    /**
-     * Detach the debugger from a global object.
-     *
-     * @param The global object to detach from. If 0, the debugger will be
-     * detached from all global objects to which it is attached.
-     *
-     * @see attach()
-     */
-    void detach(JSGlobalObject*);
+} // namespace KJS
 
-    /**
-     * Called to notify the debugger that some javascript source code has
-     * been parsed. For calls to Interpreter::evaluate(), this will be called
-     * with the supplied source code before any other code is parsed.
-     * Other situations in which this may be called include creation of a
-     * function using the Function() constructor, or the eval() function.
-     *
-     * The default implementation does nothing. Override this method if
-     * you want to process this event.
-     *
-     * @param exec The current execution state
-     * @param sourceId The ID of the source code (corresponds to the
-     * sourceId supplied in other functions such as atStatement()
-     * @param sourceURL Where the source code that was parsed came from
-     * @param source The source code that was parsed
-     * @param startingLineNumber The line number at which parsing started
-     * @param errorLine The line number at which parsing encountered an
-     * error, or -1 if the source code was valid and parsed successfully
-     * @param errorMsg The error description, or null if the source code
-       was valid and parsed successfully
-     * @return true if execution should be continue, false if it should
-     * be aborted
-     */
-    virtual bool sourceParsed(ExecState *exec, int sourceId, const UString &sourceURL,
-                              const UString &source, int startingLineNumber, int errorLine, const UString &errorMsg);
-
-    /**
-     * Called when all functions/programs associated with a particular
-     * sourceId have been deleted. After this function has been called for
-     * a particular sourceId, that sourceId will not be used again.
-     *
-     * The default implementation does nothing. Override this method if
-     * you want to process this event.
-     *
-     * @param exec The current execution state
-     * @param sourceId The ID of the source code (corresponds to the
-     * sourceId supplied in other functions such as atLine()
-     * @return true if execution should be continue, false if it should
-     * be aborted
-     */
-    virtual bool sourceUnused(ExecState *exec, int sourceId);
-
-    /**
-     * Called when an exception is thrown during script execution.
-     *
-     * The default implementation does nothing. Override this method if
-     * you want to process this event.
-     *
-     * @param exec The current execution state
-     * @param sourceId The ID of the source code being executed
-     * @param lineno The line at which the error occurred
-     * @param exceptionObj The exception object
-     * @return true if execution should be continue, false if it should
-     * be aborted
-     */
-    virtual bool exception(ExecState *exec, int sourceId, int lineno,
-                           JSValue *exception);
-
-    bool hasHandledException(ExecState *, JSValue *);
-
-    /**
-     * Called when a line of the script is reached (before it is executed)
-     *
-     * The default implementation does nothing. Override this method if
-     * you want to process this event.
-     *
-     * @param exec The current execution state
-     * @param sourceId The ID of the source code being executed
-     * @param firstLine The starting line of the statement  that is about to be
-     * executed
-     * @param lastLine The ending line of the statement  that is about to be
-     * executed (usually the same as firstLine)
-     * @return true if execution should be continue, false if it should
-     * be aborted
-     */
-    virtual bool atStatement(ExecState *exec, int sourceId, int firstLine,
-                             int lastLine);
-    /**
-     * Called on each function call. Use together with @ref #returnEvent
-     * if you want to keep track of the call stack.
-     *
-     * Note: This only gets called for functions that are declared in ECMAScript
-     * source code or passed to eval(), not for internal KJS or
-     * application-supplied functions.
-     *
-     * The default implementation does nothing. Override this method if
-     * you want to process this event.
-     *
-     * @param exec The current execution state
-     * @param sourceId The ID of the source code being executed
-     * @param lineno The line that is about to be executed
-     * @param function The function being called
-     * @param args The arguments that were passed to the function
-     * line is being executed
-     * @return true if execution should be continue, false if it should
-     * be aborted
-     */
-    virtual bool callEvent(ExecState *exec, int sourceId, int lineno,
-                           JSObject *function, const List &args);
-
-    /**
-     * Called on each function exit. The function being returned from is that
-     * which was supplied in the last callEvent().
-     *
-     * Note: This only gets called for functions that are declared in ECMAScript
-     * source code or passed to eval(), not for internal KJS or
-     * application-supplied functions.
-     *
-     * The default implementation does nothing. Override this method if
-     * you want to process this event.
-     *
-     * @param exec The current execution state
-     * @param sourceId The ID of the source code being executed
-     * @param lineno The line that is about to be executed
-     * @param function The function being called
-     * @return true if execution should be continue, false if it should
-     * be aborted
-     */
-    virtual bool returnEvent(ExecState *exec, int sourceId, int lineno,
-                             JSObject *function);
-
-  private:
-    DebuggerImp *rep;
-    HashMap<JSGlobalObject*, ProtectedPtr<JSValue> > latestExceptions;
-
-  public:
-    static int debuggersPresent;
-  };
-
-}
-
-#endif
+#endif // Debugger_h

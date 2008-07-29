@@ -1,7 +1,5 @@
-// -*- c-basic-offset: 2 -*-
 /*
- *  This file is part of the KDE libraries
- *  Copyright (C) 2004 Apple Computer, Inc.
+ *  Copyright (C) 2004, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -21,32 +19,35 @@
  */
 
 
-#ifndef _KJS_PROTECT_H_
-#define _KJS_PROTECT_H_
+#ifndef protect_h
+#define protect_h
 
-#include "value.h"
+#include "JSValue.h"
 #include "collector.h"
-#include "JSLock.h"
 
 namespace KJS {
 
-    inline void gcProtect(JSValue *val) 
-    { 
-        Collector::protect(val);
+    inline void gcProtect(JSValue* val) 
+    {
+        Heap* heap = Heap::heap(val);
+        if (heap)
+            heap->protect(val);
     }
 
-    inline void gcUnprotect(JSValue *val)
-    { 
-        Collector::unprotect(val);
+    inline void gcUnprotect(JSValue* val)
+    {
+        Heap* heap = Heap::heap(val);
+        if (heap)
+            heap->unprotect(val);
     }
 
-    inline void gcProtectNullTolerant(JSValue *val) 
+    inline void gcProtectNullTolerant(JSValue* val) 
     {
         if (val) 
             gcProtect(val);
     }
 
-    inline void gcUnprotectNullTolerant(JSValue *val) 
+    inline void gcUnprotectNullTolerant(JSValue* val) 
     {
         if (val) 
             gcUnprotect(val);
@@ -56,88 +57,78 @@ namespace KJS {
     // and the implicit conversion to raw pointer
     template <class T> class ProtectedPtr {
     public:
-        ProtectedPtr() : m_ptr(NULL) { }
-        ProtectedPtr(T *ptr);
-        ProtectedPtr(const ProtectedPtr &);
+        ProtectedPtr() : m_ptr(0) { }
+        ProtectedPtr(T* ptr);
+        ProtectedPtr(const ProtectedPtr&);
         ~ProtectedPtr();
 
-        template <class U> ProtectedPtr(const ProtectedPtr<U> &);
+        template <class U> ProtectedPtr(const ProtectedPtr<U>&);
         
-        T *get() const { return m_ptr; }
-        operator T *() const { return m_ptr; }
-        T *operator->() const { return m_ptr; }
+        T* get() const { return m_ptr; }
+        operator T*() const { return m_ptr; }
+        T* operator->() const { return m_ptr; }
         
         bool operator!() const { return m_ptr == NULL; }
 
-        ProtectedPtr &operator=(const ProtectedPtr &);
-        ProtectedPtr &operator=(T *);
+        ProtectedPtr& operator=(const ProtectedPtr&);
+        ProtectedPtr& operator=(T*);
         
     private:
-        T *m_ptr;
+        T* m_ptr;
     };
 
-    template <class T> ProtectedPtr<T>::ProtectedPtr(T *ptr)
+    template <class T> ProtectedPtr<T>::ProtectedPtr(T* ptr)
         : m_ptr(ptr)
     {
-        if (ptr) {
-            JSLock lock;
+        if (ptr)
             gcProtect(ptr);
-        }
     }
 
-    template <class T> ProtectedPtr<T>::ProtectedPtr(const ProtectedPtr &o)
+    template <class T> ProtectedPtr<T>::ProtectedPtr(const ProtectedPtr& o)
         : m_ptr(o.get())
     {
-        if (T *ptr = m_ptr) {
-            JSLock lock;
+        if (T* ptr = m_ptr)
             gcProtect(ptr);
-        }
     }
 
     template <class T> ProtectedPtr<T>::~ProtectedPtr()
     {
-        if (T *ptr = m_ptr) {
-            JSLock lock;
+        if (T* ptr = m_ptr)
             gcUnprotect(ptr);
-        }
     }
 
-    template <class T> template <class U> ProtectedPtr<T>::ProtectedPtr(const ProtectedPtr<U> &o)
+    template <class T> template <class U> ProtectedPtr<T>::ProtectedPtr(const ProtectedPtr<U>& o)
         : m_ptr(o.get())
     {
-        if (T *ptr = m_ptr) {
-            JSLock lock;
+        if (T* ptr = m_ptr)
             gcProtect(ptr);
-        }
     }
 
-    template <class T> ProtectedPtr<T> &ProtectedPtr<T>::operator=(const ProtectedPtr<T> &o) 
+    template <class T> ProtectedPtr<T>& ProtectedPtr<T>::operator=(const ProtectedPtr<T>& o) 
     {
-        JSLock lock;
-        T *optr = o.m_ptr;
+        T* optr = o.m_ptr;
         gcProtectNullTolerant(optr);
         gcUnprotectNullTolerant(m_ptr);
         m_ptr = optr;
-         return *this;
-     }
+            return *this;
+    }
 
-    template <class T> inline ProtectedPtr<T> &ProtectedPtr<T>::operator=(T *optr)
+    template <class T> inline ProtectedPtr<T>& ProtectedPtr<T>::operator=(T* optr)
     {
-        JSLock lock;
         gcProtectNullTolerant(optr);
         gcUnprotectNullTolerant(m_ptr);
         m_ptr = optr;
         return *this;
     }
 
-    template <class T> inline bool operator==(const ProtectedPtr<T> &a, const ProtectedPtr<T> &b) { return a.get() == b.get(); }
-    template <class T> inline bool operator==(const ProtectedPtr<T> &a, const T *b) { return a.get() == b; }
-    template <class T> inline bool operator==(const T *a, const ProtectedPtr<T> &b) { return a == b.get(); }
+    template <class T> inline bool operator==(const ProtectedPtr<T>& a, const ProtectedPtr<T>& b) { return a.get() == b.get(); }
+    template <class T> inline bool operator==(const ProtectedPtr<T>& a, const T* b) { return a.get() == b; }
+    template <class T> inline bool operator==(const T* a, const ProtectedPtr<T>& b) { return a == b.get(); }
 
-    template <class T> inline bool operator!=(const ProtectedPtr<T> &a, const ProtectedPtr<T> &b) { return a.get() != b.get(); }
-    template <class T> inline bool operator!=(const ProtectedPtr<T> &a, const T *b) { return a.get() != b; }
-    template <class T> inline bool operator!=(const T *a, const ProtectedPtr<T> &b) { return a != b.get(); }
+    template <class T> inline bool operator!=(const ProtectedPtr<T>& a, const ProtectedPtr<T>& b) { return a.get() != b.get(); }
+    template <class T> inline bool operator!=(const ProtectedPtr<T>& a, const T* b) { return a.get() != b; }
+    template <class T> inline bool operator!=(const T* a, const ProtectedPtr<T>& b) { return a != b.get(); }
  
-} // namespace
+} // namespace KJS
 
-#endif
+#endif // protect_h

@@ -1,7 +1,5 @@
-// -*- mode: c++; c-basic-offset: 4 -*-
 /*
- * This file is part of the KDE libraries
- * Copyright (C) 2005 Apple Computer, Inc.
+ * Copyright (C) 2005, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -46,33 +44,56 @@ namespace KJS {
     // DropAllLocks object takes care to release the JSLock only if your
     // thread acquired it to begin with.
 
+    // For contexts other than the single shared one, implicit locking is not done,
+    // but we still need to perform all the counting in order to keep debug
+    // assertions working, so that clients that use the shared context don't break.
+
+    class ExecState;
+
     class JSLock : Noncopyable {
     public:
-        JSLock()
+        JSLock(ExecState*);
+
+        JSLock(bool lockingForReal)
+            : m_lockingForReal(lockingForReal)
         {
-            lock();
-            registerThread();
+#ifdef NDEBUG
+            // Locking "not for real" is a debug-only feature.
+            if (!lockingForReal)
+                return;
+#endif
+            lock(lockingForReal);
         }
 
-        ~JSLock() 
+        ~JSLock()
         { 
-            unlock(); 
+#ifdef NDEBUG
+            // Locking "not for real" is a debug-only feature.
+            if (!m_lockingForReal)
+                return;
+#endif
+            unlock(m_lockingForReal); 
         }
         
-        static void lock();
-        static void unlock();
-        static int lockCount();
+        static void lock(bool);
+        static void unlock(bool);
+        static void lock(ExecState*);
+        static void unlock(ExecState*);
+
+        static intptr_t lockCount();
         static bool currentThreadIsHoldingLock();
 
-        static void registerThread();
+        bool m_lockingForReal;
 
         class DropAllLocks : Noncopyable {
         public:
-            DropAllLocks();
+            DropAllLocks(ExecState* exec);
+            DropAllLocks(bool);
             ~DropAllLocks();
             
         private:
-            int m_lockCount;
+            intptr_t m_lockCount;
+            bool m_lockingForReal;
         };
     };
 

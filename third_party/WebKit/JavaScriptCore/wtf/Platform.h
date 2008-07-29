@@ -57,6 +57,13 @@
 #define WTF_PLATFORM_FREEBSD 1
 #endif
 
+/* PLATFORM(OPENBSD) */
+/* Operating system level dependencies for OpenBSD systems that */
+/* should be used regardless of operating environment */
+#ifdef __OpenBSD__
+#define WTF_PLATFORM_OPENBSD 1
+#endif
+
 /* PLATFORM(SOLARIS) */
 /* Operating system level dependencies for Solaris that should be used */
 /* regardless of operating environment */
@@ -112,7 +119,6 @@
 #define WTF_PLATFORM_CAIRO 1
 #endif
 
-
 #ifdef __S60__
 // we are cross-compiling, it is not really windows
 #undef WTF_PLATFORM_WIN_OS
@@ -143,12 +149,13 @@
 #define WTF_PLATFORM_BIG_ENDIAN 1
 #endif
 
+/* PLATFORM(ARM) */
 #if   defined(arm) \
    || defined(__arm__)
 #define WTF_PLATFORM_ARM 1
 #if defined(__ARMEB__)
 #define WTF_PLATFORM_BIG_ENDIAN 1
-#elif !defined(__ARM_EABI__) && !defined(__ARMEB__)
+#elif !defined(__ARM_EABI__) && !defined(__ARMEB__) && !defined(__VFP_FP__)
 #define WTF_PLATFORM_MIDDLE_ENDIAN 1
 #endif
 #if !defined(__ARM_EABI__)
@@ -172,6 +179,12 @@
 #define WTF_PLATFORM_X86_64 1
 #endif
 
+/* PLATFORM(SPARC64) */
+#if defined(__sparc64__)
+#define WTF_PLATFORM_SPARC64 1
+#define WTF_PLATFORM_BIG_ENDIAN 1
+#endif
+
 /* Compiler */
 
 /* COMPILER(MSVC) */
@@ -185,6 +198,11 @@
 /* COMPILER(GCC) */
 #if defined(__GNUC__)
 #define WTF_COMPILER_GCC 1
+#endif
+
+/* COMPILER(MINGW) */
+#if defined(MINGW) || defined(__MINGW32__)
+#define WTF_COMPILER_MINGW 1
 #endif
 
 /* COMPILER(BORLAND) */
@@ -204,11 +222,13 @@
 #define WTF_USE_MULTIPLE_THREADS 1
 #endif
 
-/* for Unicode, KDE uses Qt, everything else uses ICU */
+/* for Unicode, KDE uses Qt */
 #if PLATFORM(KDE) || PLATFORM(QT)
 #define WTF_USE_QT4_UNICODE 1
 #elif PLATFORM(SYMBIAN)
 #define WTF_USE_SYMBIAN_UNICODE 1
+#elif PLATFORM(GTK)
+/* The GTK+ Unicode backend is configurable */
 #else
 #define WTF_USE_ICU_UNICODE 1
 #endif
@@ -216,6 +236,15 @@
 #if PLATFORM(MAC)
 #define WTF_PLATFORM_CF 1
 #define WTF_USE_PTHREADS 1
+#define ENABLE_MAC_JAVA_BRIDGE 1
+#define HAVE_READLINE 1
+#if !defined(BUILDING_ON_TIGER) && !defined(BUILDING_ON_LEOPARD)
+#define HAVE_DTRACE 1
+#endif
+#endif
+
+#if PLATFORM(MAC) || PLATFORM(GTK) || PLATFORM(SYMBIAN) || PLATFORM(WIN) || PLATFORM(WX)
+#define ENABLE_NETSCAPE_PLUGIN_API 1
 #endif
 
 #if PLATFORM(WIN)
@@ -227,9 +256,49 @@
 #define WTF_USE_PTHREADS 1
 #endif
 
-#if PLATFORM(QT)
-#define USE_SYSTEM_MALLOC 1
+#if PLATFORM(MAC) || PLATFORM(WIN)
+#define ENABLE_DASHBOARD_SUPPORT 1
 #endif
+
+#if PLATFORM(MAC) || PLATFORM(WIN) || PLATFORM(GTK)
+#define HAVE_ACCESSIBILITY 1
+#endif
+
+#if COMPILER(GCC)
+#define HAVE_COMPUTED_GOTO 1
+#endif
+
+#if PLATFORM(DARWIN)
+
+#define HAVE_ERRNO_H 1
+#define HAVE_MMAP 1
+#define HAVE_MERGESORT 1
+#define HAVE_SBRK 1
+#define HAVE_STRINGS_H 1
+#define HAVE_SYS_PARAM_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYS_TIMEB_H 1
+
+#elif PLATFORM(WIN_OS)
+
+#define HAVE_FLOAT_H 1
+#define HAVE_SYS_TIMEB_H 1
+#define HAVE_VIRTUALALLOC 1
+
+#else
+
+/* FIXME: is this actually used or do other platforms generate their own config.h? */
+
+#define HAVE_ERRNO_H 1
+#define HAVE_MMAP 1
+#define HAVE_SBRK 1
+#define HAVE_STRINGS_H 1
+#define HAVE_SYS_PARAM_H 1
+#define HAVE_SYS_TIME_H 1
+
+#endif
+
+/* ENABLE macro defaults */
 
 #if !defined(ENABLE_ICONDATABASE)
 #define ENABLE_ICONDATABASE 1
@@ -241,6 +310,18 @@
 
 #if !defined(ENABLE_FTPDIR)
 #define ENABLE_FTPDIR 1
+#endif
+
+#if !defined(ENABLE_MAC_JAVA_BRIDGE)
+#define ENABLE_MAC_JAVA_BRIDGE 0
+#endif
+
+#if !defined(ENABLE_NETSCAPE_PLUGIN_API)
+#define ENABLE_NETSCAPE_PLUGIN_API 0
+#endif
+
+#if !defined(ENABLE_DASHBOARD_SUPPORT)
+#define ENABLE_DASHBOARD_SUPPORT 0
 #endif
 
 #endif /* WTF_Platform_h */

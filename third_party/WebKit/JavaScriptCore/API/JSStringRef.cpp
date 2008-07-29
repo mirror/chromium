@@ -32,10 +32,10 @@
 #include "APICast.h"
 #include <kjs/JSLock.h>
 #include <kjs/JSType.h>
-#include <kjs/internal.h>
+#include <kjs/JSString.h>
 #include <kjs/operations.h>
 #include <kjs/ustring.h>
-#include <kjs/value.h>
+#include <kjs/JSValue.h>
 #include <wtf/unicode/UTF8.h>
 
 using namespace KJS;
@@ -43,35 +43,35 @@ using namespace WTF::Unicode;
 
 JSStringRef JSStringCreateWithCharacters(const JSChar* chars, size_t numChars)
 {
-    JSLock lock;
-    return toRef(UString(reinterpret_cast<const KJS::UChar*>(chars), static_cast<int>(numChars)).rep()->ref());
+    return toRef(UString(chars, static_cast<int>(numChars)).rep()->ref());
 }
 
 JSStringRef JSStringCreateWithUTF8CString(const char* string)
 {
-    JSLock lock;
-
-    size_t length = strlen(string);
-    Vector< ::UChar, 1024> buffer(length);
-    ::UChar* p = buffer.data();
-    if (conversionOK != convertUTF8ToUTF16(&string, string + length, &p, p + length))
+    RefPtr<UString::Rep> result = UString::Rep::createFromUTF8(string);
+    if (result.get() == &UString::Rep::null)
         return 0;
 
-    return toRef(UString(reinterpret_cast<KJS::UChar*>(buffer.data()), p - buffer.data()).rep()->ref());
+    return toRef(result.release().releaseRef());
 }
 
 JSStringRef JSStringRetain(JSStringRef string)
 {
-    JSLock lock;
     UString::Rep* rep = toJS(string);
     return toRef(rep->ref());
 }
 
 void JSStringRelease(JSStringRef string)
 {
-    JSLock lock;
     UString::Rep* rep = toJS(string);
-    rep->deref();
+    bool needsLocking = rep->identifierTable();
+    if (needsLocking) {
+        // It is wasteful to take the lock for non-shared contexts, but we don't have a good way
+        // to determine what the context is.
+        JSLock lock(true);
+        rep->deref();
+    } else
+        rep->deref();
 }
 
 size_t JSStringGetLength(JSStringRef string)
@@ -96,7 +96,6 @@ size_t JSStringGetMaximumUTF8CStringSize(JSStringRef string)
 
 size_t JSStringGetUTF8CString(JSStringRef string, char* buffer, size_t bufferSize)
 {
-    JSLock lock;
     UString::Rep* rep = toJS(string);
     CString cString = UString(rep).UTF8String();
 
@@ -107,8 +106,6 @@ size_t JSStringGetUTF8CString(JSStringRef string, char* buffer, size_t bufferSiz
 
 bool JSStringIsEqual(JSStringRef a, JSStringRef b)
 {
-    JSLock lock;
-
     UString::Rep* aRep = toJS(a);
     UString::Rep* bRep = toJS(b);
     

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,39 +29,101 @@
 #ifndef SymbolTable_h
 #define SymbolTable_h
 
+#include "JSObject.h"
 #include "ustring.h"
 #include <wtf/AlwaysInline.h>
 
 namespace KJS {
 
-    struct IdentifierRepHash {
+    struct IdentifierRepHash : PtrHash<RefPtr<UString::Rep> > {
         static unsigned hash(const RefPtr<UString::Rep>& key) { return key->computedHash(); }
-        static bool equal(const RefPtr<UString::Rep>& a, const RefPtr<UString::Rep>& b) { return a == b; }
-        static const bool safeToCompareToEmptyOrDeleted = true;
+        static unsigned hash(UString::Rep* key) { return key->computedHash(); }
     };
 
-    struct IdentifierRepHashTraits : HashTraits<RefPtr<UString::Rep> > {
-        static const RefPtr<UString::Rep>& deletedValue()
+    static ALWAYS_INLINE int missingSymbolMarker() { return std::numeric_limits<int>::max(); }
+
+    // The bit twiddling in this class assumes that every register index is a
+    // reasonably small negative number, and therefore has its high two bits set.
+
+    struct SymbolTableEntry {
+        SymbolTableEntry()
+            : rawValue(0)
         {
-            return *reinterpret_cast<RefPtr<UString::Rep>*>(&nullRepPtr);
+        }
+        
+        SymbolTableEntry(int index)
+        {
+            ASSERT(index & 0x80000000);
+            ASSERT(index & 0x40000000);
+
+            rawValue = index & ~0x80000000 & ~0x40000000;
+        }
+        
+        SymbolTableEntry(int index, unsigned attributes)
+        {
+            ASSERT(index & 0x80000000);
+            ASSERT(index & 0x40000000);
+
+            rawValue = index;
+            
+            if (!(attributes & ReadOnly))
+                rawValue &= ~0x80000000;
+            
+            if (!(attributes & DontEnum))
+                rawValue &= ~0x40000000;
         }
 
-    private:
-        static UString::Rep* nullRepPtr;
-    };
+        bool isNull() const
+        {
+            return !rawValue;
+        }
 
-    static ALWAYS_INLINE size_t missingSymbolMarker() { return std::numeric_limits<size_t>::max(); }
+        int getIndex() const
+        {
+            ASSERT(!isNull());
+            return rawValue | 0x80000000 | 0x40000000;
+        }
+
+        unsigned getAttributes() const
+        {
+            unsigned attributes = 0;
+            
+            if (rawValue & 0x80000000)
+                attributes |= ReadOnly;
+            
+            if (rawValue & 0x40000000)
+                attributes |= DontEnum;
+            
+            return attributes;
+        }
+
+        void setAttributes(unsigned attributes)
+        {
+            rawValue = getIndex();
+            
+            if (!(attributes & ReadOnly))
+                rawValue &= ~0x80000000;
+            
+            if (!(attributes & DontEnum))
+                rawValue &= ~0x40000000;
+        }
+
+        bool isReadOnly() const
+        {
+            return rawValue & 0x80000000;
+        }
+
+        int rawValue;
+    };
 
     struct SymbolTableIndexHashTraits {
-        typedef size_t TraitType;
-        typedef SymbolTableIndexHashTraits StorageTraits;
-        static size_t emptyValue() { return missingSymbolMarker(); }
+        typedef SymbolTableEntry TraitType;
+        static SymbolTableEntry emptyValue() { return SymbolTableEntry(); }
         static const bool emptyValueIsZero = false;
         static const bool needsDestruction = false;
-        static const bool needsRef = false;
     };
 
-    typedef HashMap<RefPtr<UString::Rep>, size_t, IdentifierRepHash, IdentifierRepHashTraits, SymbolTableIndexHashTraits> SymbolTable;
+    typedef HashMap<RefPtr<UString::Rep>, SymbolTableEntry, IdentifierRepHash, HashTraits<RefPtr<UString::Rep> >, SymbolTableIndexHashTraits> SymbolTable;
 
 } // namespace KJS
 

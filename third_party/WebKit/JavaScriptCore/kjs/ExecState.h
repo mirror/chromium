@@ -24,210 +24,96 @@
 #ifndef ExecState_h
 #define ExecState_h
 
-#include "LabelStack.h"
-#include "LocalStorage.h"
-#include "completion.h"
-#include "list.h"
-#include "scope_chain.h"
+#include "JSGlobalData.h"
+#include "ScopeChain.h"
 
 namespace KJS  {
 
-    class ActivationImp;
-    class CommonIdentifiers;
     class EvalNode;
     class FunctionBodyNode;
-    class FunctionImp;
+    class JSFunction;
+    class JSValue;
     class GlobalFuncImp;
     class Interpreter;
     class JSGlobalObject;
     class JSVariableObject;
+    class Machine;
     class ProgramNode;
+    class Register;
+    class RegisterFile;
     class ScopeNode;
-    
-    enum CodeType { GlobalCode, EvalCode, FunctionCode };
-    
-    typedef Vector<ExecState*, 16> ExecStateStack;
 
+    struct Instruction;
+    
     // Represents the current state of script execution.
     // Passed as the first argument to most functions.
     class ExecState : Noncopyable {
+        friend class Machine;
+        friend class DebuggerCallFrame;
+
     public:
-        // Global object that was in scope when the current script started executing.
+        ExecState(JSGlobalObject*, JSObject* globalThisValue, ScopeChainNode* globalScopeChain);
+
+        // Global object in which execution began.
         JSGlobalObject* dynamicGlobalObject() const { return m_globalObject; }
         
-        // Global object that was in scope when the current body of code was defined.
-        JSGlobalObject* lexicalGlobalObject() const;
+        // Global object in which the current script was defined. (Can differ
+        // from dynamicGlobalObject() during function calls across frames.)
+        JSGlobalObject* lexicalGlobalObject() const
+        {
+            return m_scopeChain->globalObject();
+        }
+        
+        JSObject* globalThisValue() const { return m_scopeChain->globalThisObject(); }
                 
-        void setException(JSValue* e) { m_exception = e; }
+        // Exception propogation.
+        void setException(JSValue* exception) { m_exception = exception; }
         void clearException() { m_exception = 0; }
         JSValue* exception() const { return m_exception; }
         JSValue** exceptionSlot() { return &m_exception; }
         bool hadException() const { return !!m_exception; }
-        
-        const ScopeChain& scopeChain() const { return m_scopeChain; }
-        void pushScope(JSObject* s) { m_scopeChain.push(s); }
-        void popScope() { m_scopeChain.pop(); }
-        void replaceScopeChainTop(JSObject* o) { m_scopeChain.replaceTop(o); }
-        
-        JSVariableObject* variableObject() const { return m_variableObject; }
-        void setVariableObject(JSVariableObject* v) { m_variableObject = v; }
-        
-        JSObject* thisValue() const { return m_thisValue; }
-        
-        ExecState* callingExecState() { return m_callingExec; }
-        
-        ActivationImp* activationObject() { return m_activation; }
-        void setActivationObject(ActivationImp* a) { m_activation = a; }
-        CodeType codeType() { return m_codeType; }
-        ScopeNode* scopeNode() { return m_scopeNode; }
-        FunctionImp* function() const { return m_function; }
-        const List* arguments() const { return m_arguments; }
-        
-        LabelStack& seenLabels() { return m_labelStack; }
-        
-        void pushIteration() { m_iterationDepth++; }
-        void popIteration() { m_iterationDepth--; }
-        bool inIteration() const { return (m_iterationDepth > 0); }
-        
-        void pushSwitch() { m_switchDepth++; }
-        void popSwitch() { m_switchDepth--; }
-        bool inSwitch() const { return (m_switchDepth > 0); }
 
-        // These pointers are used to avoid accessing global variables for these,
-        // to avoid taking PIC branches in Mach-O binaries.
-        const CommonIdentifiers& propertyNames() const { return *m_propertyNames; }
-        const List& emptyList() const { return *m_emptyList; }
+        JSGlobalData& globalData() { return *m_globalData; }
 
-        LocalStorage& localStorage() { return *m_localStorage; }
-        void setLocalStorage(LocalStorage* s) { m_localStorage = s; }
+        IdentifierTable* identifierTable() { return m_globalData->identifierTable; }
+        const CommonIdentifiers& propertyNames() const { return *m_globalData->propertyNames; }
+        const ArgList& emptyList() const { return *m_globalData->emptyList; }
+        Lexer* lexer() { return m_globalData->lexer; }
+        Parser* parser() { return m_globalData->parser; }
+        Machine* machine() const { return m_globalData->machine; }
+        static const HashTable* arrayTable(ExecState* exec) { return exec->m_globalData->arrayTable; }
+        static const HashTable* dateTable(ExecState* exec) { return exec->m_globalData->dateTable; }
+        static const HashTable* mathTable(ExecState* exec) { return exec->m_globalData->mathTable; }
+        static const HashTable* numberTable(ExecState* exec) { return exec->m_globalData->numberTable; }
+        static const HashTable* regExpTable(ExecState* exec) { return exec->m_globalData->regExpTable; }
+        static const HashTable* regExpConstructorTable(ExecState* exec) { return exec->m_globalData->regExpConstructorTable; }
+        static const HashTable* stringTable(ExecState* exec) { return exec->m_globalData->stringTable; }
 
-        // These are only valid right after calling execute().
-        ComplType completionType() const { return m_completionType; }
-        const Identifier& breakOrContinueTarget() const
-        {
-            ASSERT(m_completionType == Break || m_completionType == Continue);
-            return *m_breakOrContinueTarget;
-        }
+        Heap* heap() const { return m_globalData->heap; }
 
-        // Only for use in the implementation of execute().
-        void setCompletionType(ComplType type)
-        {
-            ASSERT(type != Break);
-            ASSERT(type != Continue);
-            m_completionType = type;
-        }
-        JSValue* setNormalCompletion()
-        {
-            ASSERT(!hadException());
-            m_completionType = Normal;
-            return 0;
-        }
-        JSValue* setNormalCompletion(JSValue* value)
-        {
-            ASSERT(!hadException());
-            m_completionType = Normal;
-            return value;
-        }
-        JSValue* setBreakCompletion(const Identifier* target)
-        {
-            ASSERT(!hadException());
-            m_completionType = Break;
-            m_breakOrContinueTarget = target;
-            return 0;
-        }
-        JSValue* setContinueCompletion(const Identifier* target)
-        {
-            ASSERT(!hadException());
-            m_completionType = Continue;
-            m_breakOrContinueTarget = target;
-            return 0;
-        }
-        JSValue* setReturnValueCompletion(JSValue* returnValue)
-        {
-            ASSERT(!hadException());
-            ASSERT(returnValue);
-            m_completionType = ReturnValue;
-            return returnValue;
-        }
-        JSValue* setThrowCompletion(JSValue* exception)
-        {
-            ASSERT(!hadException());
-            ASSERT(exception);
-            m_completionType = Throw;
-            return exception;
-        }
-        JSValue* setInterruptedCompletion()
-        {
-            ASSERT(!hadException());
-            m_completionType = Interrupted;
-            return 0;
-        }
+    private:
+        // Default constructor required for gcc 3.
+        ExecState() { }
 
-        static void markActiveExecStates();
-        static ExecStateStack& activeExecStates();
+        ExecState(ExecState*, RegisterFile*, ScopeChainNode*, Register* callFrame);
 
-    protected:
-        ExecState(JSGlobalObject*);
-        ExecState(JSGlobalObject*, JSObject* thisObject, ProgramNode*);
-        ExecState(JSGlobalObject*, EvalNode*, ExecState* callingExecState);
-        ExecState(JSGlobalObject*, JSObject* thisObject, FunctionBodyNode*,
-            ExecState* callingExecState, FunctionImp*, const List& args);
-        ~ExecState();
-
-        // ExecStates are always stack-allocated, and the garbage collector
-        // marks the stack, so we don't need to protect the objects below from GC.
+        bool isGlobalObject(JSObject*) const;
 
         JSGlobalObject* m_globalObject;
+        JSObject* m_globalThisValue;
+
         JSValue* m_exception;
-        CommonIdentifiers* m_propertyNames;
-        const List* m_emptyList;
 
-        ExecState* m_callingExec;
+        JSGlobalData* m_globalData;
 
-        ScopeNode* m_scopeNode;
-        
-        FunctionImp* m_function;
-        const List* m_arguments;
-        ActivationImp* m_activation;
-        LocalStorage* m_localStorage;
-
-        ScopeChain m_scopeChain;
-        JSVariableObject* m_variableObject;
-        JSObject* m_thisValue;
-        
-        LabelStack m_labelStack;
-        int m_iterationDepth;
-        int m_switchDepth;
-        CodeType m_codeType;
-
-        ComplType m_completionType;
-        const Identifier* m_breakOrContinueTarget;
+        // These values are controlled by the machine.
+        ExecState* m_prev;
+        RegisterFile* m_registerFile;
+        ScopeChainNode* m_scopeChain;
+        Register* m_callFrame; // The most recent call frame.
     };
 
-    class GlobalExecState : public ExecState {
-    public:
-        GlobalExecState(JSGlobalObject*);
-        ~GlobalExecState();
-    };
-
-    class InterpreterExecState : public ExecState {
-    public:
-        InterpreterExecState(JSGlobalObject*, JSObject* thisObject, ProgramNode*);
-        ~InterpreterExecState();
-    };
-
-    class EvalExecState : public ExecState {
-    public:
-        EvalExecState(JSGlobalObject*, EvalNode*, ExecState* callingExecState);
-        ~EvalExecState();
-    };
-
-    class FunctionExecState : public ExecState {
-    public:
-        FunctionExecState(JSGlobalObject*, JSObject* thisObject, FunctionBodyNode*,
-            ExecState* callingExecState, FunctionImp*, const List& args);
-        ~FunctionExecState();
-    };
+    enum CodeType { GlobalCode, EvalCode, FunctionCode };
 
 } // namespace KJS
 

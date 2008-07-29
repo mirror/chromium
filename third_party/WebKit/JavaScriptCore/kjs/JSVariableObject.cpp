@@ -30,49 +30,9 @@
 #include "JSVariableObject.h"
 
 #include "PropertyNameArray.h"
-#include "property_map.h"
+#include "PropertyMap.h"
 
 namespace KJS {
-
-UString::Rep* IdentifierRepHashTraits::nullRepPtr = &UString::Rep::null; // Didn't want to make a whole source file for just this.
-
-void JSVariableObject::saveLocalStorage(SavedProperties& p) const
-{
-    ASSERT(d->symbolTable);
-    ASSERT(static_cast<size_t>(d->symbolTable->size()) == d->localStorage.size());
-
-    unsigned count = d->symbolTable->size();
-
-    p.properties.clear();
-    p.count = count;
-
-    if (!count)
-        return;
-
-    p.properties.set(new SavedProperty[count]);
-
-    SymbolTable::const_iterator end = d->symbolTable->end();
-    for (SymbolTable::const_iterator it = d->symbolTable->begin(); it != end; ++it) {
-        size_t i = it->second;
-        const LocalStorageEntry& entry = d->localStorage[i];
-        p.properties[i].init(it->first.get(), entry.value, entry.attributes);
-    }
-}
-
-void JSVariableObject::restoreLocalStorage(const SavedProperties& p)
-{
-    unsigned count = p.count;
-    d->symbolTable->clear();
-    d->localStorage.resize(count);
-    SavedProperty* property = p.properties.get();
-    for (size_t i = 0; i < count; ++i, ++property) {
-        ASSERT(!d->symbolTable->contains(property->name()));
-        LocalStorageEntry& entry = d->localStorage[i];
-        d->symbolTable->set(property->name(), i);
-        entry.value = property->value();
-        entry.attributes = property->attributes();
-    }
-}
 
 bool JSVariableObject::deleteProperty(ExecState* exec, const Identifier& propertyName)
 {
@@ -84,23 +44,59 @@ bool JSVariableObject::deleteProperty(ExecState* exec, const Identifier& propert
 
 void JSVariableObject::getPropertyNames(ExecState* exec, PropertyNameArray& propertyNames)
 {
-    SymbolTable::const_iterator::Keys end = symbolTable().end().keys();
-    for (SymbolTable::const_iterator::Keys it = symbolTable().begin().keys(); it != end; ++it)
-        propertyNames.add(Identifier(it->get()));
-
+    SymbolTable::const_iterator end = symbolTable().end();
+    for (SymbolTable::const_iterator it = symbolTable().begin(); it != end; ++it) {
+        if (!(it->second.getAttributes() & DontEnum))
+            propertyNames.add(Identifier(exec, it->first.get()));
+    }
+    
     JSObject::getPropertyNames(exec, propertyNames);
+}
+
+bool JSVariableObject::getPropertyAttributes(ExecState* exec, const Identifier& propertyName, unsigned& attributes) const
+{
+    SymbolTableEntry entry = symbolTable().get(propertyName.ustring().rep());
+    if (!entry.isNull()) {
+        attributes = entry.getAttributes() | DontDelete;
+        return true;
+    }
+    return JSObject::getPropertyAttributes(exec, propertyName, attributes);
 }
 
 void JSVariableObject::mark()
 {
     JSObject::mark();
 
-    size_t size = d->localStorage.size();
-    for (size_t i = 0; i < size; ++i) {
-        JSValue* value = d->localStorage[i].value;
-        if (!value->marked())
-            value->mark();
-    }
+    if (!d->registerArray)
+        return;
+    
+    Register* end = d->registerArray.get() + d->registerArraySize;
+    for (Register* it = d->registerArray.get(); it != end; ++it)
+        if (!(*it).marked())
+            (*it).mark();
+}
+
+bool JSVariableObject::isVariableObject() const
+{
+    return true;
+}
+
+void JSVariableObject::copyRegisterArray(Register* src, size_t count)
+{
+    ASSERT(!d->registerArray);
+
+    Register* registerArray = new Register[count];
+    memcpy(registerArray, src, count * sizeof(Register));
+
+    setRegisterArray(registerArray, count);
+}
+
+void JSVariableObject::setRegisterArray(Register* registerArray, size_t count)
+{
+    if (registerArray != d->registerArray.get())
+        d->registerArray.set(registerArray);
+    d->registerArraySize = count;
+    d->registers = registerArray + count;
 }
 
 } // namespace KJS

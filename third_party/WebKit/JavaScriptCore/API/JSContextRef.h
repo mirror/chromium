@@ -1,4 +1,3 @@
-// -*- mode: c++; c-basic-offset: 4 -*-
 /*
  * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
  *
@@ -30,7 +29,9 @@
 #include <JavaScriptCore/JSObjectRef.h>
 #include <JavaScriptCore/JSValueRef.h>
 
+#ifndef __cplusplus
 #include <stdbool.h>
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -74,4 +75,4 @@ JS_EXPORT JSObjectRef JSContextGetGlobalObject(JSContextRef ctx);
 }
 #endif
 
-#endif // JSContextRef_h
+#endif /* JSContextRef_h */

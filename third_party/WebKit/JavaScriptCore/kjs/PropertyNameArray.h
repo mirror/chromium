@@ -1,6 +1,5 @@
-// -*- mode: c++; c-basic-offset: 4 -*-
 /*
- *  Copyright (C) 2006 Apple Computer, Inc
+ *  Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -19,11 +18,11 @@
  *
  */
 
-#ifndef KJS_PROPERTY_NAME_ARRAY_H
-#define KJS_PROPERTY_NAME_ARRAY_H
+#ifndef PropertyNameArray_h
+#define PropertyNameArray_h
 
+#include "ExecState.h"
 #include "identifier.h"
-
 #include <wtf/HashSet.h>
 #include <wtf/Vector.h>
 
@@ -34,23 +33,40 @@ namespace KJS {
         typedef Identifier ValueType;
         typedef Vector<Identifier>::const_iterator const_iterator;
 
-        void add(const Identifier&);
+        PropertyNameArray(JSGlobalData* globalData)
+            : m_globalData(globalData)
+        {
+        }
+
+        PropertyNameArray(ExecState* exec)
+            : m_globalData(&exec->globalData())
+        {
+        }
+
+        JSGlobalData* globalData() { return m_globalData; }
+
+        void add(const Identifier& identifier) { add(identifier.ustring().rep()); }
+        void add(UString::Rep*);
+        void addKnownUnique(UString::Rep* identifier) { m_vector.append(Identifier(m_globalData, identifier)); }
+
         const_iterator begin() const { return m_vector.begin(); }
         const_iterator end() const { return m_vector.end(); }
+
         size_t size() const { return m_vector.size(); }
 
         Identifier& operator[](unsigned i) { return m_vector[i]; }
         const Identifier& operator[](unsigned i) const { return m_vector[i]; }
 
-        void swap(PropertyNameArray&);
+        Identifier* releaseIdentifiers() { return size() ? m_vector.releaseBuffer() : 0; }
+
     private:
         typedef HashSet<UString::Rep*, PtrHash<UString::Rep*> > IdentifierSet;
-        IdentifierSet m_set;
-        Vector<Identifier> m_vector;
-    };
 
+        Vector<Identifier, 20> m_vector;
+        IdentifierSet m_set;
+        JSGlobalData* m_globalData;
+    };
 
 } // namespace KJS
 
-
-#endif // KJS_PROPERTY_NAME_ARRAY_H
+#endif // PropertyNameArray_h

@@ -29,15 +29,13 @@
 
 #include "APICast.h"
 #include "JSStringRef.h"
-#include <kjs/JSLock.h>
 #include <kjs/ustring.h>
-#include <kjs/value.h>
+#include <kjs/JSValue.h>
 
 using namespace KJS;
 
 JSStringRef JSStringCreateWithCFString(CFStringRef string)
 {
-    JSLock lock;
     CFIndex length = CFStringGetLength(string);
     UString::Rep* rep;
     if (!length)
@@ -45,6 +43,7 @@ JSStringRef JSStringCreateWithCFString(CFStringRef string)
     else {
         UniChar* buffer = static_cast<UniChar*>(fastMalloc(sizeof(UniChar) * length));
         CFStringGetCharacters(string, CFRangeMake(0, length), buffer);
+        COMPILE_ASSERT(sizeof(UniChar) == sizeof(UChar), unichar_and_uchar_must_be_same_size);
         rep = UString(reinterpret_cast<UChar*>(buffer), length, false).rep()->ref();
     }
     return toRef(rep);

@@ -47,13 +47,25 @@
 
 namespace KJS {
 
+class UString;
 struct GregorianDateTime;
 
+void initDateMath();
 void msToGregorianDateTime(double, bool outputIsUTC, GregorianDateTime&);
 double gregorianDateTimeToMS(const GregorianDateTime&, double, bool inputIsUTC);
 double getUTCOffset();
 int equivalentYearForDST(int year);
 double getCurrentUTCTime();
+double getCurrentUTCTimeWithMicroseconds();
+void getLocalTime(const time_t*, tm*);
+
+// Not really math related, but this is currently the only shared place to put these.  
+double parseDate(const UString&);
+double timeClip(double);
+UString formatDate(const GregorianDateTime&);
+UString formatDateUTCVariant(const GregorianDateTime&);
+UString formatTime(const GregorianDateTime&, bool inputIsUTC);
+
 
 const char * const weekdayName[7] = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
 const char * const monthName[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
@@ -89,7 +101,7 @@ struct GregorianDateTime : Noncopyable {
     {
         delete [] timeZone;
     }
-    
+
     GregorianDateTime(const tm& inTm)
         : second(inTm.tm_sec)
         , minute(inTm.tm_min)
@@ -136,6 +148,26 @@ struct GregorianDateTime : Noncopyable {
         return ret;
     }
 
+    void copyFrom(const GregorianDateTime& rhs)
+    {
+        second = rhs.second;
+        minute = rhs.minute;
+        hour = rhs.hour;
+        weekDay = rhs.weekDay;
+        monthDay = rhs.monthDay;
+        yearDay = rhs.yearDay;
+        month = rhs.month;
+        year = rhs.year;
+        isDST = rhs.isDST;
+        utcOffset = rhs.utcOffset;
+        if (rhs.timeZone) {
+            int inZoneSize = strlen(rhs.timeZone) + 1;
+            timeZone = new char[inZoneSize];
+            strncpy(timeZone, rhs.timeZone, inZoneSize);
+        } else
+            timeZone = 0;
+    }
+
     int second;
     int minute;
     int hour;
@@ -149,6 +181,11 @@ struct GregorianDateTime : Noncopyable {
     char* timeZone;
 };
 
-}   //namespace KJS
+static inline int gmtoffset(const GregorianDateTime& t)
+{
+    return t.utcOffset;
+}
+
+} // namespace KJS
 
 #endif // DateMath_h

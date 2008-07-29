@@ -28,49 +28,60 @@
 #include "JSContextRef.h"
 
 #include "APICast.h"
+#include "InitializeThreading.h"
 #include "JSCallbackObject.h"
 #include "JSClassRef.h"
 #include "JSGlobalObject.h"
-#include "object.h"
+#include "JSObject.h"
 #include <wtf/Platform.h>
 
 using namespace KJS;
 
 JSGlobalContextRef JSGlobalContextCreate(JSClassRef globalObjectClass)
 {
-    JSLock lock;
+    initializeThreading();
+
+    JSLock lock(true);
+
+    JSGlobalData* sharedGlobalData = &JSGlobalData::sharedInstance();
 
     if (!globalObjectClass) {
-        JSGlobalObject* globalObject = new JSGlobalObject;
+        JSGlobalObject* globalObject = new (sharedGlobalData) JSGlobalObject;
         return JSGlobalContextRetain(toGlobalRef(globalObject->globalExec()));
     }
 
-    JSGlobalObject* globalObject = new JSCallbackObject<JSGlobalObject>(globalObjectClass);
-    JSGlobalContextRef ctx = toGlobalRef(globalObject->globalExec());
-    JSValue* prototype = globalObjectClass->prototype(ctx);
+    JSGlobalObject* globalObject = new (sharedGlobalData) JSCallbackObject<JSGlobalObject>(globalObjectClass);
+    ExecState* exec = globalObject->globalExec();
+    JSValue* prototype = globalObjectClass->prototype(exec);
     if (!prototype)
         prototype = jsNull();
     globalObject->reset(prototype);
-    return JSGlobalContextRetain(ctx);
+    return JSGlobalContextRetain(toGlobalRef(exec));
 }
 
 JSGlobalContextRef JSGlobalContextRetain(JSGlobalContextRef ctx)
 {
-    JSLock lock;
     ExecState* exec = toJS(ctx);
+    exec->globalData().heap->registerThread();
+    JSLock lock(exec);
+
     gcProtect(exec->dynamicGlobalObject());
     return ctx;
 }
 
 void JSGlobalContextRelease(JSGlobalContextRef ctx)
 {
-    JSLock lock;
     ExecState* exec = toJS(ctx);
+    JSLock lock(exec);
+
     gcUnprotect(exec->dynamicGlobalObject());
 }
 
 JSObjectRef JSContextGetGlobalObject(JSContextRef ctx)
 {
     ExecState* exec = toJS(ctx);
-    return toRef(exec->dynamicGlobalObject());
+    exec->globalData().heap->registerThread();
+
+    // It is necessary to call toThisObject to get the wrapper object when used with WebCore.
+    return toRef(exec->dynamicGlobalObject()->toThisObject(exec));
 }

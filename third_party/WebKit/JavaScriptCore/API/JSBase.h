@@ -1,4 +1,3 @@
-// -*- mode: c++; c-basic-offset: 4 -*-
 /*
  * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
  *
@@ -27,7 +26,9 @@
 #ifndef JSBase_h
 #define JSBase_h
 
+#ifndef __cplusplus
 #include <stdbool.h>
+#endif
 
 /* JavaScript engine interface */
 
@@ -64,8 +65,10 @@ typedef struct OpaqueJSValue* JSObjectRef;
 #if defined(__GNUC__)
     #define JS_EXPORT __attribute__((visibility("default")))
 #elif defined(WIN32) || defined(_WIN32)
-    // TODO: Export symbols with JS_EXPORT when using MSVC.
-    // See http://bugs.webkit.org/show_bug.cgi?id=16227
+    /*
+     * TODO: Export symbols with JS_EXPORT when using MSVC.
+     * See http://bugs.webkit.org/show_bug.cgi?id=16227
+     */
     #define JS_EXPORT
 #else
     #define JS_EXPORT
@@ -122,4 +125,4 @@ JS_EXPORT void JSGarbageCollect(JSContextRef ctx);
 }
 #endif
 
-#endif // JSBase_h
+#endif /* JSBase_h */

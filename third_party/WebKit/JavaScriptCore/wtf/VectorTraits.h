@@ -25,6 +25,7 @@
 
 #include "RefPtr.h"
 #include <utility>
+#include <memory>
 
 using std::pair;
 
@@ -94,6 +95,9 @@ namespace WTF {
     template<typename P>
     struct VectorTraits<RefPtr<P> > : SimpleClassVectorTraits { };
     
+    template<typename P>
+    struct VectorTraits<std::auto_ptr<P> > : SimpleClassVectorTraits { };
+
     template<typename First, typename Second>
     struct VectorTraits<pair<First, Second> >
     {

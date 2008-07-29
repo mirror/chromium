@@ -1,6 +1,5 @@
 /*
- *  This file is part of the KDE libraries
- *  Copyright (C) 2003-2006 Apple Computer, Inc
+ *  Copyright (C) 2003-2006, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -22,61 +21,56 @@
 #include "config.h"
 #include "JSImmediate.h"
 
+#include "BooleanConstructor.h"
+#include "BooleanPrototype.h"
+#include "Error.h"
+#include "ExceptionHelpers.h"
 #include "JSGlobalObject.h"
-#include "bool_object.h"
-#include "number_object.h"
-#include "object.h"
+#include "JSNotAnObject.h"
+#include "NumberConstructor.h"
+#include "NumberPrototype.h"
 
 namespace KJS {
 
-JSObject *JSImmediate::toObject(const JSValue *v, ExecState *exec)
+JSObject* JSImmediate::toObject(const JSValue* v, ExecState* exec)
 {
     ASSERT(isImmediate(v));
-    if (v == jsNull())
-        return throwError(exec, TypeError, "Null value");
-    else if (v == jsUndefined())
-        return throwError(exec, TypeError, "Undefined value");
-    else if (isBoolean(v)) {
-        List args;
-        args.append(const_cast<JSValue *>(v));
-        return exec->lexicalGlobalObject()->booleanConstructor()->construct(exec, args);
-    } else {
-        ASSERT(isNumber(v));
-        List args;
-        args.append(const_cast<JSValue *>(v));
-        return exec->lexicalGlobalObject()->numberConstructor()->construct(exec, args);
-    }
+    if (isNumber(v))
+        return constructNumberFromImmediateNumber(exec, const_cast<JSValue*>(v));
+    if (isBoolean(v))
+        return constructBooleanFromImmediateBoolean(exec, const_cast<JSValue*>(v));
+    
+    JSNotAnObjectErrorStub* exception = createNotAnObjectErrorStub(exec, v == jsNull());
+    exec->setException(exception);
+    return new (exec) JSNotAnObject(exception);
 }
 
-UString JSImmediate::toString(const JSValue *v)
+JSObject* JSImmediate::prototype(const JSValue* v, ExecState* exec)
 {
     ASSERT(isImmediate(v));
-    
+    if (isNumber(v))
+        return exec->lexicalGlobalObject()->numberPrototype();
+    if (isBoolean(v))
+        return exec->lexicalGlobalObject()->booleanPrototype();
+
+    JSNotAnObjectErrorStub* exception = createNotAnObjectErrorStub(exec, v == jsNull());
+    exec->setException(exception);
+    return new (exec) JSNotAnObject(exception);
+}
+
+UString JSImmediate::toString(const JSValue* v)
+{
+    ASSERT(isImmediate(v));
+    if (isNumber(v))
+        return UString::from(getTruncatedInt32(v));
+    if (v == jsBoolean(false))
+        return "false";
+    if (v == jsBoolean(true))
+        return "true";
     if (v == jsNull())
         return "null";
-    else if (v == jsUndefined())
-        return "undefined";
-    else if (v == jsBoolean(true))
-        return "true";
-    else if (v == jsBoolean(false))
-        return "false";
-    else {
-        ASSERT(isNumber(v));
-        double d = toDouble(v);
-        if (d == 0.0) // +0.0 or -0.0
-            return "0";
-        return UString::from(d);
-    }
-}
-
-JSType JSImmediate::type(const JSValue *v)
-{
-    ASSERT(isImmediate(v));
-    
-    uintptr_t tag = getTag(v);
-    if (tag == UndefinedType)
-        return v == jsUndefined() ? UndefinedType : NullType;
-    return static_cast<JSType>(tag);
+    ASSERT(v == jsUndefined());
+    return "undefined";
 }
 
 } // namespace KJS

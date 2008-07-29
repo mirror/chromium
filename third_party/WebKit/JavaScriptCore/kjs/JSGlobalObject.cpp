@@ -30,31 +30,36 @@
 #include "config.h"
 #include "JSGlobalObject.h"
 
-#include "Activation.h"
-#include "array_object.h"
-#include "bool_object.h"
-#include "date_object.h"
+#include "ArrayConstructor.h"
+#include "ArrayPrototype.h"
+#include "BooleanConstructor.h"
+#include "BooleanPrototype.h"
+#include "CodeBlock.h"
+#include "DateConstructor.h"
+#include "DatePrototype.h"
+#include "ErrorConstructor.h"
+#include "ErrorPrototype.h"
+#include "FunctionConstructor.h"
+#include "FunctionPrototype.h"
+#include "GlobalEvalFunction.h"
+#include "JSGlobalObjectFunctions.h"
+#include "JSLock.h"
+#include "Machine.h"
+#include "MathObject.h"
+#include "NativeErrorConstructor.h"
+#include "NativeErrorPrototype.h"
+#include "NumberConstructor.h"
+#include "NumberPrototype.h"
+#include "ObjectConstructor.h"
+#include "ObjectPrototype.h"
+#include "Profiler.h"
+#include "PrototypeFunction.h"
+#include "RegExpConstructor.h"
+#include "RegExpPrototype.h"
+#include "ScopeChainMark.h"
+#include "StringConstructor.h"
+#include "StringPrototype.h"
 #include "debugger.h"
-#include "error_object.h"
-#include "function_object.h"
-#include "math_object.h"
-#include "number_object.h"
-#include "object_object.h"
-#include "regexp_object.h"
-#include "SavedBuiltins.h"
-#include "string_object.h"
-
-#if HAVE(SYS_TIME_H)
-#include <sys/time.h>
-#endif
-
-#if PLATFORM(WIN_OS)
-#include <windows.h>
-#endif
-
-#if PLATFORM(QT)
-#include <QDateTime>
-#endif
 
 namespace KJS {
 
@@ -69,36 +74,6 @@ static inline void markIfNeeded(JSValue* v)
     if (v && !v->marked())
         v->mark();
 }
-    
-// Returns the current time in milliseconds
-// It doesn't matter what "current time" is here, just as long as
-// it's possible to measure the time difference correctly.
-static inline unsigned getCurrentTime()
-{
-#if HAVE(SYS_TIME_H)
-    struct timeval tv;
-    gettimeofday(&tv, 0);
-    return tv.tv_sec * 1000 + tv.tv_usec / 1000;
-#elif PLATFORM(QT)
-    QDateTime t = QDateTime::currentDateTime();
-    return t.toTime_t() * 1000 + t.time().msec();
-#elif PLATFORM(WIN_OS)
-    return timeGetTime();
-#else
-#error Platform does not have getCurrentTime function
-#endif
-}
-
-JSGlobalObject* JSGlobalObject::s_head = 0;
-
-void JSGlobalObject::deleteActivationStack()
-{
-    ActivationStackNode* prevNode = 0;
-    for (ActivationStackNode* currentNode = d()->activations; currentNode; currentNode = prevNode) {
-        prevNode = currentNode->prev;
-        delete currentNode;
-    }
-}
 
 JSGlobalObject::~JSGlobalObject()
 {
@@ -107,58 +82,91 @@ JSGlobalObject::~JSGlobalObject()
     if (d()->debugger)
         d()->debugger->detach(this);
 
+    Profiler** profiler = Profiler::enabledProfilerReference();
+    if (UNLIKELY(*profiler != 0)) {
+        (*profiler)->stopProfiling(globalExec(), UString());
+        (*profiler)->didFinishAllExecution(globalExec());
+    }
+
     d()->next->d()->prev = d()->prev;
     d()->prev->d()->next = d()->next;
-    s_head = d()->next;
-    if (s_head == this)
-        s_head = 0;
-    
-    deleteActivationStack();
-    
+    JSGlobalObject*& headObject = head();
+    if (headObject == this)
+        headObject = d()->next;
+    if (headObject == this)
+        headObject = 0;
+
+    HashSet<ProgramCodeBlock*>::const_iterator end = codeBlocks().end();
+    for (HashSet<ProgramCodeBlock*>::const_iterator it = codeBlocks().begin(); it != end; ++it)
+        (*it)->globalObject = 0;
+        
+    RegisterFile& registerFile = globalData()->machine->registerFile();
+    if (registerFile.globalObject() == this) {
+        registerFile.setGlobalObject(0);
+        registerFile.setNumGlobals(0);
+    }
     delete d();
 }
 
-void JSGlobalObject::init()
+void JSGlobalObject::init(JSObject* thisValue)
 {
     ASSERT(JSLock::currentThreadIsHoldingLock());
 
-    if (s_head) {
-        d()->prev = s_head;
-        d()->next = s_head->d()->next;
-        s_head->d()->next->d()->prev = this;
-        s_head->d()->next = this;
+    d()->globalData = Heap::heap(this)->globalData();
+
+    if (JSGlobalObject*& headObject = head()) {
+        d()->prev = headObject;
+        d()->next = headObject->d()->next;
+        headObject->d()->next->d()->prev = this;
+        headObject->d()->next = this;
     } else
-        s_head = d()->next = d()->prev = this;
-
-    d()->compatMode = NativeMode;
-
-    resetTimeoutCheck();
-    d()->timeoutTime = 0;
-    d()->timeoutCheckCount = 0;
+        headObject = d()->next = d()->prev = this;
 
     d()->recursion = 0;
     d()->debugger = 0;
-    
-    ActivationStackNode* newStackNode = new ActivationStackNode;
-    newStackNode->prev = 0;    
-    d()->activations = newStackNode;
-    d()->activationCount = 0;
+    globalData()->machine->initTimeout();
+
+    d()->globalExec.set(new ExecState(this, thisValue, d()->globalScopeChain.node()));
+
+    d()->profileGroup = 0;
 
     reset(prototype());
 }
 
-bool JSGlobalObject::getOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
+void JSGlobalObject::put(ExecState* exec, const Identifier& propertyName, JSValue* value)
 {
-    if (symbolTableGet(propertyName, slot))
-        return true;
-    return JSVariableObject::getOwnPropertySlot(exec, propertyName, slot);
+    ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+
+    if (symbolTablePut(propertyName, value))
+        return;
+    return JSVariableObject::put(exec, propertyName, value);
 }
 
-void JSGlobalObject::put(ExecState* exec, const Identifier& propertyName, JSValue* value, int attr)
+void JSGlobalObject::putWithAttributes(ExecState* exec, const Identifier& propertyName, JSValue* value, unsigned attributes)
 {
-    if (symbolTablePut(propertyName, value, !(attr & ~DontDelete)))
+    if (symbolTablePutWithAttributes(propertyName, value, attributes))
         return;
-    return JSVariableObject::put(exec, propertyName, value, attr);
+
+    JSValue* valueBefore = getDirect(propertyName);
+    JSVariableObject::put(exec, propertyName, value);
+    if (!valueBefore) {
+        if (JSValue* valueAfter = getDirect(propertyName))
+            putDirect(propertyName, valueAfter, attributes);
+    }
+}
+
+void JSGlobalObject::defineGetter(ExecState* exec, const Identifier& propertyName, JSObject* getterFunc)
+{
+    PropertySlot slot;
+    if (!symbolTableGet(propertyName, slot))
+        JSVariableObject::defineGetter(exec, propertyName, getterFunc);
+}
+
+void JSGlobalObject::defineSetter(ExecState* exec, const Identifier& propertyName, JSObject* setterFunc)
+{
+    PropertySlot slot;
+    if (!symbolTableGet(propertyName, slot))
+        JSVariableObject::defineSetter(exec, propertyName, setterFunc);
 }
 
 static inline JSObject* lastInPrototypeChain(JSObject* object)
@@ -175,9 +183,9 @@ void JSGlobalObject::reset(JSValue* prototype)
     // which would be wasteful -- or uninitialized pointers -- which would be
     // dangerous. (The allocations below may cause a GC.)
 
-    _prop.clear();
-    localStorage().clear();
+    m_propertyMap.clear();
     symbolTable().clear();
+    setRegisterArray(0, 0);
 
     // Prototypes
     d()->functionPrototype = 0;
@@ -199,13 +207,6 @@ void JSGlobalObject::reset(JSValue* prototype)
     d()->URIErrorPrototype = 0;
 
     // Constructors
-    d()->objectConstructor = 0;
-    d()->functionConstructor = 0;
-    d()->arrayConstructor = 0;
-    d()->stringConstructor = 0;
-    d()->booleanConstructor = 0;
-    d()->numberConstructor = 0;
-    d()->dateConstructor = 0;
     d()->regExpConstructor = 0;
     d()->errorConstructor = 0;
     
@@ -216,111 +217,116 @@ void JSGlobalObject::reset(JSValue* prototype)
     d()->typeErrorConstructor = 0;
     d()->URIErrorConstructor = 0;
 
-    ExecState* exec = &d()->globalExec;
+    d()->evalFunction = 0;
+
+    ExecState* exec = d()->globalExec.get();
 
     // Prototypes
-    d()->functionPrototype = new FunctionPrototype(exec);
-    d()->objectPrototype = new ObjectPrototype(exec, d()->functionPrototype);
+
+    d()->functionPrototype = new (exec) FunctionPrototype(exec);
+    d()->objectPrototype = new (exec) ObjectPrototype(exec, d()->functionPrototype);
     d()->functionPrototype->setPrototype(d()->objectPrototype);
 
-    d()->arrayPrototype = new ArrayPrototype(exec, d()->objectPrototype);
-    d()->stringPrototype = new StringPrototype(exec, d()->objectPrototype);
-    d()->booleanPrototype = new BooleanPrototype(exec, d()->objectPrototype, d()->functionPrototype);
-    d()->numberPrototype = new NumberPrototype(exec, d()->objectPrototype, d()->functionPrototype);
-    d()->datePrototype = new DatePrototype(exec, d()->objectPrototype);
-    d()->regExpPrototype = new RegExpPrototype(exec, d()->objectPrototype, d()->functionPrototype);
-    d()->errorPrototype = new ErrorPrototype(exec, d()->objectPrototype, d()->functionPrototype);
+    d()->arrayPrototype = new (exec) ArrayPrototype(exec, d()->objectPrototype);
+    d()->stringPrototype = new (exec) StringPrototype(exec, d()->objectPrototype);
+    d()->booleanPrototype = new (exec) BooleanPrototype(exec, d()->objectPrototype, d()->functionPrototype);
+    d()->numberPrototype = new (exec) NumberPrototype(exec, d()->objectPrototype, d()->functionPrototype);
+    d()->datePrototype = new (exec) DatePrototype(exec, d()->objectPrototype);
+    d()->regExpPrototype = new (exec) RegExpPrototype(exec, d()->objectPrototype, d()->functionPrototype);
+    d()->errorPrototype = new (exec) ErrorPrototype(exec, d()->objectPrototype, d()->functionPrototype);
     
-    d()->evalErrorPrototype = new NativeErrorPrototype(exec, d()->errorPrototype, "EvalError", "EvalError");
-    d()->rangeErrorPrototype = new NativeErrorPrototype(exec, d()->errorPrototype, "RangeError", "RangeError");
-    d()->referenceErrorPrototype = new NativeErrorPrototype(exec, d()->errorPrototype, "ReferenceError", "ReferenceError");
-    d()->syntaxErrorPrototype = new NativeErrorPrototype(exec, d()->errorPrototype, "SyntaxError", "SyntaxError");
-    d()->typeErrorPrototype = new NativeErrorPrototype(exec, d()->errorPrototype, "TypeError", "TypeError");
-    d()->URIErrorPrototype = new NativeErrorPrototype(exec, d()->errorPrototype, "URIError", "URIError");
+    d()->evalErrorPrototype = new (exec) NativeErrorPrototype(exec, d()->errorPrototype, "EvalError", "EvalError");
+    d()->rangeErrorPrototype = new (exec) NativeErrorPrototype(exec, d()->errorPrototype, "RangeError", "RangeError");
+    d()->referenceErrorPrototype = new (exec) NativeErrorPrototype(exec, d()->errorPrototype, "ReferenceError", "ReferenceError");
+    d()->syntaxErrorPrototype = new (exec) NativeErrorPrototype(exec, d()->errorPrototype, "SyntaxError", "SyntaxError");
+    d()->typeErrorPrototype = new (exec) NativeErrorPrototype(exec, d()->errorPrototype, "TypeError", "TypeError");
+    d()->URIErrorPrototype = new (exec) NativeErrorPrototype(exec, d()->errorPrototype, "URIError", "URIError");
 
     // Constructors
-    d()->objectConstructor = new ObjectObjectImp(exec, d()->objectPrototype, d()->functionPrototype);
-    d()->functionConstructor = new FunctionObjectImp(exec, d()->functionPrototype);
-    d()->arrayConstructor = new ArrayObjectImp(exec, d()->functionPrototype, d()->arrayPrototype);
-    d()->stringConstructor = new StringObjectImp(exec, d()->functionPrototype, d()->stringPrototype);
-    d()->booleanConstructor = new BooleanObjectImp(exec, d()->functionPrototype, d()->booleanPrototype);
-    d()->numberConstructor = new NumberObjectImp(exec, d()->functionPrototype, d()->numberPrototype);
-    d()->dateConstructor = new DateObjectImp(exec, d()->functionPrototype, d()->datePrototype);
-    d()->regExpConstructor = new RegExpObjectImp(exec, d()->functionPrototype, d()->regExpPrototype);
-    d()->errorConstructor = new ErrorObjectImp(exec, d()->functionPrototype, d()->errorPrototype);
-    
-    d()->evalErrorConstructor = new NativeErrorImp(exec, d()->functionPrototype, d()->evalErrorPrototype);
-    d()->rangeErrorConstructor = new NativeErrorImp(exec, d()->functionPrototype, d()->rangeErrorPrototype);
-    d()->referenceErrorConstructor = new NativeErrorImp(exec, d()->functionPrototype, d()->referenceErrorPrototype);
-    d()->syntaxErrorConstructor = new NativeErrorImp(exec, d()->functionPrototype, d()->syntaxErrorPrototype);
-    d()->typeErrorConstructor = new NativeErrorImp(exec, d()->functionPrototype, d()->typeErrorPrototype);
-    d()->URIErrorConstructor = new NativeErrorImp(exec, d()->functionPrototype, d()->URIErrorPrototype);
-    
-    d()->functionPrototype->putDirect(exec->propertyNames().constructor, d()->functionConstructor, DontEnum);
 
-    d()->objectPrototype->putDirect(exec->propertyNames().constructor, d()->objectConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->functionPrototype->putDirect(exec->propertyNames().constructor, d()->functionConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->arrayPrototype->putDirect(exec->propertyNames().constructor, d()->arrayConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->booleanPrototype->putDirect(exec->propertyNames().constructor, d()->booleanConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->stringPrototype->putDirect(exec->propertyNames().constructor, d()->stringConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->numberPrototype->putDirect(exec->propertyNames().constructor, d()->numberConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->datePrototype->putDirect(exec->propertyNames().constructor, d()->dateConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->regExpPrototype->putDirect(exec->propertyNames().constructor, d()->regExpConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->errorPrototype->putDirect(exec->propertyNames().constructor, d()->errorConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->evalErrorPrototype->putDirect(exec->propertyNames().constructor, d()->evalErrorConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->rangeErrorPrototype->putDirect(exec->propertyNames().constructor, d()->rangeErrorConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->referenceErrorPrototype->putDirect(exec->propertyNames().constructor, d()->referenceErrorConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->syntaxErrorPrototype->putDirect(exec->propertyNames().constructor, d()->syntaxErrorConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->typeErrorPrototype->putDirect(exec->propertyNames().constructor, d()->typeErrorConstructor, DontEnum | DontDelete | ReadOnly);
-    d()->URIErrorPrototype->putDirect(exec->propertyNames().constructor, d()->URIErrorConstructor, DontEnum | DontDelete | ReadOnly);
+    JSValue* objectConstructor = new (exec) ObjectConstructor(exec, d()->objectPrototype, d()->functionPrototype);
+    JSValue* functionConstructor = new (exec) FunctionConstructor(exec, d()->functionPrototype);
+    JSValue* arrayConstructor = new (exec) ArrayConstructor(exec, d()->functionPrototype, d()->arrayPrototype);
+    JSValue* stringConstructor = new (exec) StringConstructor(exec, d()->functionPrototype, d()->stringPrototype);
+    JSValue* booleanConstructor = new (exec) BooleanConstructor(exec, d()->functionPrototype, d()->booleanPrototype);
+    JSValue* numberConstructor = new (exec) NumberConstructor(exec, d()->functionPrototype, d()->numberPrototype);
+    JSValue* dateConstructor = new (exec) DateConstructor(exec, d()->functionPrototype, d()->datePrototype);
+
+    d()->regExpConstructor = new (exec) RegExpConstructor(exec, d()->functionPrototype, d()->regExpPrototype);
+
+    d()->errorConstructor = new (exec) ErrorConstructor(exec, d()->functionPrototype, d()->errorPrototype);
+    
+    d()->evalErrorConstructor = new (exec) NativeErrorConstructor(exec, d()->functionPrototype, d()->evalErrorPrototype);
+    d()->rangeErrorConstructor = new (exec) NativeErrorConstructor(exec, d()->functionPrototype, d()->rangeErrorPrototype);
+    d()->referenceErrorConstructor = new (exec) NativeErrorConstructor(exec, d()->functionPrototype, d()->referenceErrorPrototype);
+    d()->syntaxErrorConstructor = new (exec) NativeErrorConstructor(exec, d()->functionPrototype, d()->syntaxErrorPrototype);
+    d()->typeErrorConstructor = new (exec) NativeErrorConstructor(exec, d()->functionPrototype, d()->typeErrorPrototype);
+    d()->URIErrorConstructor = new (exec) NativeErrorConstructor(exec, d()->functionPrototype, d()->URIErrorPrototype);
+    
+    d()->functionPrototype->putDirect(exec->propertyNames().constructor, functionConstructor, DontEnum);
+
+    d()->objectPrototype->putDirect(exec->propertyNames().constructor, objectConstructor, DontEnum);
+    d()->functionPrototype->putDirect(exec->propertyNames().constructor, functionConstructor, DontEnum);
+    d()->arrayPrototype->putDirect(exec->propertyNames().constructor, arrayConstructor, DontEnum);
+    d()->booleanPrototype->putDirect(exec->propertyNames().constructor, booleanConstructor, DontEnum);
+    d()->stringPrototype->putDirect(exec->propertyNames().constructor, stringConstructor, DontEnum);
+    d()->numberPrototype->putDirect(exec->propertyNames().constructor, numberConstructor, DontEnum);
+    d()->datePrototype->putDirect(exec->propertyNames().constructor, dateConstructor, DontEnum);
+    d()->regExpPrototype->putDirect(exec->propertyNames().constructor, d()->regExpConstructor, DontEnum);
+    d()->errorPrototype->putDirect(exec->propertyNames().constructor, d()->errorConstructor, DontEnum);
+    d()->evalErrorPrototype->putDirect(exec->propertyNames().constructor, d()->evalErrorConstructor, DontEnum);
+    d()->rangeErrorPrototype->putDirect(exec->propertyNames().constructor, d()->rangeErrorConstructor, DontEnum);
+    d()->referenceErrorPrototype->putDirect(exec->propertyNames().constructor, d()->referenceErrorConstructor, DontEnum);
+    d()->syntaxErrorPrototype->putDirect(exec->propertyNames().constructor, d()->syntaxErrorConstructor, DontEnum);
+    d()->typeErrorPrototype->putDirect(exec->propertyNames().constructor, d()->typeErrorConstructor, DontEnum);
+    d()->URIErrorPrototype->putDirect(exec->propertyNames().constructor, d()->URIErrorConstructor, DontEnum);
 
     // Set global constructors
 
-    // FIXME: kjs_window.cpp checks Internal/DontEnum as a performance hack, to
-    // see that these values can be put directly without a check for override
-    // properties.
+    // FIXME: These properties could be handled by a static hash table.
 
-    // FIXME: These properties should be handled by a static hash table.
-
-    putDirect("Object", d()->objectConstructor, DontEnum);
-    putDirect("Function", d()->functionConstructor, DontEnum);
-    putDirect("Array", d()->arrayConstructor, DontEnum);
-    putDirect("Boolean", d()->booleanConstructor, DontEnum);
-    putDirect("String", d()->stringConstructor, DontEnum);
-    putDirect("Number", d()->numberConstructor, DontEnum);
-    putDirect("Date", d()->dateConstructor, DontEnum);
-    putDirect("RegExp", d()->regExpConstructor, DontEnum);
-    putDirect("Error", d()->errorConstructor, DontEnum);
-    putDirect("EvalError", d()->evalErrorConstructor, Internal);
-    putDirect("RangeError", d()->rangeErrorConstructor, Internal);
-    putDirect("ReferenceError", d()->referenceErrorConstructor, Internal);
-    putDirect("SyntaxError", d()->syntaxErrorConstructor, Internal);
-    putDirect("TypeError", d()->typeErrorConstructor, Internal);
-    putDirect("URIError", d()->URIErrorConstructor, Internal);
+    putDirect(Identifier(exec, "Object"), objectConstructor, DontEnum);
+    putDirect(Identifier(exec, "Function"), functionConstructor, DontEnum);
+    putDirect(Identifier(exec, "Array"), arrayConstructor, DontEnum);
+    putDirect(Identifier(exec, "Boolean"), booleanConstructor, DontEnum);
+    putDirect(Identifier(exec, "String"), stringConstructor, DontEnum);
+    putDirect(Identifier(exec, "Number"), numberConstructor, DontEnum);
+    putDirect(Identifier(exec, "Date"), dateConstructor, DontEnum);
+    putDirect(Identifier(exec, "RegExp"), d()->regExpConstructor, DontEnum);
+    putDirect(Identifier(exec, "Error"), d()->errorConstructor, DontEnum);
+    putDirect(Identifier(exec, "EvalError"), d()->evalErrorConstructor);
+    putDirect(Identifier(exec, "RangeError"), d()->rangeErrorConstructor);
+    putDirect(Identifier(exec, "ReferenceError"), d()->referenceErrorConstructor);
+    putDirect(Identifier(exec, "SyntaxError"), d()->syntaxErrorConstructor);
+    putDirect(Identifier(exec, "TypeError"), d()->typeErrorConstructor);
+    putDirect(Identifier(exec, "URIError"), d()->URIErrorConstructor);
 
     // Set global values.
+    GlobalPropertyInfo staticGlobals[] = {
+        GlobalPropertyInfo(Identifier(exec, "Math"), new (exec) MathObject(exec, d()->objectPrototype), DontEnum | DontDelete),
+        GlobalPropertyInfo(Identifier(exec, "NaN"), jsNaN(exec), DontEnum | DontDelete),
+        GlobalPropertyInfo(Identifier(exec, "Infinity"), jsNumber(exec, Inf), DontEnum | DontDelete),
+        GlobalPropertyInfo(Identifier(exec, "undefined"), jsUndefined(), DontEnum | DontDelete)
+    };
 
-    putDirect("Math", new MathObjectImp(exec, d()->objectPrototype), DontEnum);
-
-    putDirect("NaN", jsNaN(), DontEnum | DontDelete);
-    putDirect("Infinity", jsNumber(Inf), DontEnum | DontDelete);
-    putDirect("undefined", jsUndefined(), DontEnum | DontDelete);
+    addStaticGlobals(staticGlobals, sizeof(staticGlobals) / sizeof(GlobalPropertyInfo));
 
     // Set global functions.
 
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "eval", globalFuncEval), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 2, "parseInt", globalFuncParseInt), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "parseFloat", globalFuncParseFloat), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "isNaN", globalFuncIsNaN), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "isFinite", globalFuncIsFinite), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "escape", globalFuncEscape), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "unescape", globalFuncUnescape), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "decodeURI", globalFuncDecodeURI), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "decodeURIComponent", globalFuncDecodeURIComponent), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "encodeURI", globalFuncEncodeURI), DontEnum);
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "encodeURIComponent", globalFuncEncodeURIComponent), DontEnum);
+    d()->evalFunction = new (exec) GlobalEvalFunction(exec, d()->functionPrototype, 1, exec->propertyNames().eval, globalFuncEval, this);
+    putDirectFunction(d()->evalFunction, DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 2, Identifier(exec, "parseInt"), globalFuncParseInt), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "parseFloat"), globalFuncParseFloat), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "isNaN"), globalFuncIsNaN), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "isFinite"), globalFuncIsFinite), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "escape"), globalFuncEscape), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "unescape"), globalFuncUnescape), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "decodeURI"), globalFuncDecodeURI), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "decodeURIComponent"), globalFuncDecodeURIComponent), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "encodeURI"), globalFuncEncodeURI), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "encodeURIComponent"), globalFuncEncodeURIComponent), DontEnum);
 #ifndef NDEBUG
-    putDirectFunction(new PrototypeFunction(exec, d()->functionPrototype, 1, "kjsprint", globalFuncKJSPrint), DontEnum);
+    putDirectFunction(new (exec) PrototypeFunction(exec, d()->functionPrototype, 1, Identifier(exec, "kjsprint"), globalFuncKJSPrint), DontEnum);
 #endif
 
     // Set prototype, and also insert the object prototype at the end of the chain.
@@ -329,155 +335,35 @@ void JSGlobalObject::reset(JSValue* prototype)
     lastInPrototypeChain(this)->setPrototype(d()->objectPrototype);
 }
 
+void JSGlobalObject::setTimeoutTime(unsigned timeoutTime)
+{
+    globalData()->machine->setTimeoutTime(timeoutTime);
+}
+
 void JSGlobalObject::startTimeoutCheck()
 {
-    if (!d()->timeoutCheckCount)
-        resetTimeoutCheck();
-    
-    ++d()->timeoutCheckCount;
+    globalData()->machine->startTimeoutCheck();
 }
 
 void JSGlobalObject::stopTimeoutCheck()
 {
-    --d()->timeoutCheckCount;
-}
-
-void JSGlobalObject::resetTimeoutCheck()
-{
-    d()->tickCount = 0;
-    d()->ticksUntilNextTimeoutCheck = initialTickCountThreshold;
-    d()->timeAtLastCheckTimeout = 0;
-    d()->timeExecuting = 0;
-}
-
-bool JSGlobalObject::checkTimeout()
-{    
-    d()->tickCount = 0;
-    
-    unsigned currentTime = getCurrentTime();
-
-    if (!d()->timeAtLastCheckTimeout) {
-        // Suspicious amount of looping in a script -- start timing it
-        d()->timeAtLastCheckTimeout = currentTime;
-        return false;
-    }
-
-    unsigned timeDiff = currentTime - d()->timeAtLastCheckTimeout;
-
-    if (timeDiff == 0)
-        timeDiff = 1;
-    
-    d()->timeExecuting += timeDiff;
-    d()->timeAtLastCheckTimeout = currentTime;
-    
-    // Adjust the tick threshold so we get the next checkTimeout call in the interval specified in 
-    // preferredScriptCheckTimeInterval
-    d()->ticksUntilNextTimeoutCheck = (unsigned)((float)preferredScriptCheckTimeInterval / timeDiff) * d()->ticksUntilNextTimeoutCheck;
-
-    // If the new threshold is 0 reset it to the default threshold. This can happen if the timeDiff is higher than the
-    // preferred script check time interval.
-    if (d()->ticksUntilNextTimeoutCheck == 0)
-        d()->ticksUntilNextTimeoutCheck = initialTickCountThreshold;
-
-    if (d()->timeoutTime && d()->timeExecuting > d()->timeoutTime) {
-        if (shouldInterruptScript())
-            return true;
-        
-        resetTimeoutCheck();
-    }
-    
-    return false;
-}
-
-void JSGlobalObject::saveBuiltins(SavedBuiltins& builtins) const
-{
-    if (!builtins._internal)
-        builtins._internal = new SavedBuiltinsInternal;
-
-    builtins._internal->objectConstructor = d()->objectConstructor;
-    builtins._internal->functionConstructor = d()->functionConstructor;
-    builtins._internal->arrayConstructor = d()->arrayConstructor;
-    builtins._internal->booleanConstructor = d()->booleanConstructor;
-    builtins._internal->stringConstructor = d()->stringConstructor;
-    builtins._internal->numberConstructor = d()->numberConstructor;
-    builtins._internal->dateConstructor = d()->dateConstructor;
-    builtins._internal->regExpConstructor = d()->regExpConstructor;
-    builtins._internal->errorConstructor = d()->errorConstructor;
-    builtins._internal->evalErrorConstructor = d()->evalErrorConstructor;
-    builtins._internal->rangeErrorConstructor = d()->rangeErrorConstructor;
-    builtins._internal->referenceErrorConstructor = d()->referenceErrorConstructor;
-    builtins._internal->syntaxErrorConstructor = d()->syntaxErrorConstructor;
-    builtins._internal->typeErrorConstructor = d()->typeErrorConstructor;
-    builtins._internal->URIErrorConstructor = d()->URIErrorConstructor;
-    
-    builtins._internal->objectPrototype = d()->objectPrototype;
-    builtins._internal->functionPrototype = d()->functionPrototype;
-    builtins._internal->arrayPrototype = d()->arrayPrototype;
-    builtins._internal->booleanPrototype = d()->booleanPrototype;
-    builtins._internal->stringPrototype = d()->stringPrototype;
-    builtins._internal->numberPrototype = d()->numberPrototype;
-    builtins._internal->datePrototype = d()->datePrototype;
-    builtins._internal->regExpPrototype = d()->regExpPrototype;
-    builtins._internal->errorPrototype = d()->errorPrototype;
-    builtins._internal->evalErrorPrototype = d()->evalErrorPrototype;
-    builtins._internal->rangeErrorPrototype = d()->rangeErrorPrototype;
-    builtins._internal->referenceErrorPrototype = d()->referenceErrorPrototype;
-    builtins._internal->syntaxErrorPrototype = d()->syntaxErrorPrototype;
-    builtins._internal->typeErrorPrototype = d()->typeErrorPrototype;
-    builtins._internal->URIErrorPrototype = d()->URIErrorPrototype;
-}
-
-void JSGlobalObject::restoreBuiltins(const SavedBuiltins& builtins)
-{
-    if (!builtins._internal)
-        return;
-
-    d()->objectConstructor = builtins._internal->objectConstructor;
-    d()->functionConstructor = builtins._internal->functionConstructor;
-    d()->arrayConstructor = builtins._internal->arrayConstructor;
-    d()->booleanConstructor = builtins._internal->booleanConstructor;
-    d()->stringConstructor = builtins._internal->stringConstructor;
-    d()->numberConstructor = builtins._internal->numberConstructor;
-    d()->dateConstructor = builtins._internal->dateConstructor;
-    d()->regExpConstructor = builtins._internal->regExpConstructor;
-    d()->errorConstructor = builtins._internal->errorConstructor;
-    d()->evalErrorConstructor = builtins._internal->evalErrorConstructor;
-    d()->rangeErrorConstructor = builtins._internal->rangeErrorConstructor;
-    d()->referenceErrorConstructor = builtins._internal->referenceErrorConstructor;
-    d()->syntaxErrorConstructor = builtins._internal->syntaxErrorConstructor;
-    d()->typeErrorConstructor = builtins._internal->typeErrorConstructor;
-    d()->URIErrorConstructor = builtins._internal->URIErrorConstructor;
-
-    d()->objectPrototype = builtins._internal->objectPrototype;
-    d()->functionPrototype = builtins._internal->functionPrototype;
-    d()->arrayPrototype = builtins._internal->arrayPrototype;
-    d()->booleanPrototype = builtins._internal->booleanPrototype;
-    d()->stringPrototype = builtins._internal->stringPrototype;
-    d()->numberPrototype = builtins._internal->numberPrototype;
-    d()->datePrototype = builtins._internal->datePrototype;
-    d()->regExpPrototype = builtins._internal->regExpPrototype;
-    d()->errorPrototype = builtins._internal->errorPrototype;
-    d()->evalErrorPrototype = builtins._internal->evalErrorPrototype;
-    d()->rangeErrorPrototype = builtins._internal->rangeErrorPrototype;
-    d()->referenceErrorPrototype = builtins._internal->referenceErrorPrototype;
-    d()->syntaxErrorPrototype = builtins._internal->syntaxErrorPrototype;
-    d()->typeErrorPrototype = builtins._internal->typeErrorPrototype;
-    d()->URIErrorPrototype = builtins._internal->URIErrorPrototype;
+    globalData()->machine->stopTimeoutCheck();
 }
 
 void JSGlobalObject::mark()
 {
     JSVariableObject::mark();
+    
+    HashSet<ProgramCodeBlock*>::const_iterator end = codeBlocks().end();
+    for (HashSet<ProgramCodeBlock*>::const_iterator it = codeBlocks().begin(); it != end; ++it)
+        (*it)->mark();
 
-    markIfNeeded(d()->globalExec.exception());
+    RegisterFile& registerFile = globalData()->machine->registerFile();
+    if (registerFile.globalObject() == this)
+        registerFile.markGlobals(globalData()->heap);
 
-    markIfNeeded(d()->objectConstructor);
-    markIfNeeded(d()->functionConstructor);
-    markIfNeeded(d()->arrayConstructor);
-    markIfNeeded(d()->booleanConstructor);
-    markIfNeeded(d()->stringConstructor);
-    markIfNeeded(d()->numberConstructor);
-    markIfNeeded(d()->dateConstructor);
+    markIfNeeded(d()->globalExec->exception());
+
     markIfNeeded(d()->regExpConstructor);
     markIfNeeded(d()->errorConstructor);
     markIfNeeded(d()->evalErrorConstructor);
@@ -486,6 +372,8 @@ void JSGlobalObject::mark()
     markIfNeeded(d()->syntaxErrorConstructor);
     markIfNeeded(d()->typeErrorConstructor);
     markIfNeeded(d()->URIErrorConstructor);
+    
+    markIfNeeded(d()->evalFunction);
     
     markIfNeeded(d()->objectPrototype);
     markIfNeeded(d()->functionPrototype);
@@ -504,62 +392,58 @@ void JSGlobalObject::mark()
     markIfNeeded(d()->URIErrorPrototype);
 }
 
+JSGlobalObject* JSGlobalObject::toGlobalObject(ExecState*) const
+{
+    return const_cast<JSGlobalObject*>(this);
+}
+
 ExecState* JSGlobalObject::globalExec()
 {
-    return &d()->globalExec;
+    return d()->globalExec.get();
 }
 
-ActivationImp* JSGlobalObject::pushActivation(ExecState* exec)
+bool JSGlobalObject::isDynamicScope() const
 {
-    if (d()->activationCount == activationStackNodeSize) {
-        ActivationStackNode* newNode = new ActivationStackNode;
-        newNode->prev = d()->activations;
-        d()->activations = newNode;
-        d()->activationCount = 0;
-    }
-    
-    StackActivation* stackEntry = &d()->activations->data[d()->activationCount++];
-    stackEntry->activationStorage.init(exec);
-    return &stackEntry->activationStorage;
+    return true;
 }
 
-inline void JSGlobalObject::checkActivationCount()
+void JSGlobalObject::copyGlobalsFrom(RegisterFile& registerFile)
 {
-    if (!d()->activationCount) {
-        ActivationStackNode* prev = d()->activations->prev;
-        ASSERT(prev);
-        delete d()->activations;
-        d()->activations = prev;
-        d()->activationCount = activationStackNodeSize;
-    }
-}
+    ASSERT(!d()->registerArray);
+    ASSERT(!d()->registerArraySize);
 
-void JSGlobalObject::popActivation()
-{
-    checkActivationCount();
-    d()->activations->data[--d()->activationCount].activationDataStorage.localStorage.shrink(0);    
-}
-
-void JSGlobalObject::tearOffActivation(ExecState* exec, bool leaveRelic)
-{
-    ActivationImp* oldActivation = exec->activationObject();
-    if (!oldActivation || !oldActivation->isOnStack())
+    int numGlobals = registerFile.numGlobals();
+    if (!numGlobals) {
+        d()->registers = 0;
         return;
-
-    ASSERT(exec->codeType() == FunctionCode);
-    ActivationImp* newActivation = new ActivationImp(*oldActivation->d(), leaveRelic);
-    
-    if (!leaveRelic) {
-        checkActivationCount();
-        d()->activationCount--;
     }
-    
-    oldActivation->d()->localStorage.shrink(0);
-    
-    exec->setActivationObject(newActivation);
-    exec->setVariableObject(newActivation);
-    exec->setLocalStorage(&newActivation->localStorage());
-    exec->replaceScopeChainTop(newActivation);
+    copyRegisterArray(registerFile.lastGlobal(), numGlobals);
+}
+
+void JSGlobalObject::copyGlobalsTo(RegisterFile& registerFile)
+{
+    JSGlobalObject* lastGlobalObject = registerFile.globalObject();
+    if (lastGlobalObject && lastGlobalObject != this)
+        lastGlobalObject->copyGlobalsFrom(registerFile);
+
+    registerFile.setGlobalObject(this);
+    registerFile.setNumGlobals(symbolTable().size());
+
+    if (d()->registerArray) {
+        memcpy(registerFile.base() - d()->registerArraySize, d()->registerArray.get(), d()->registerArraySize * sizeof(Register));
+        setRegisterArray(0, 0);
+    }
+
+    d()->registers = registerFile.base();
+}
+
+void* JSGlobalObject::operator new(size_t size, JSGlobalData* globalData)
+{
+#ifdef JAVASCRIPTCORE_BUILDING_ALL_IN_ONE_FILE
+    return globalData->heap->inlineAllocate(size);
+#else
+    return globalData->heap->allocate(size);
+#endif
 }
 
 } // namespace KJS

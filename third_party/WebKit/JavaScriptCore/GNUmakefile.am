@@ -1,11 +1,9 @@
-# tell automake to create gensources/ for us
-nodist_EXTRA_libJavaScriptCore_la_SOURCES = \
-	DerivedSources/dummy.cxx
-
 javascriptcore_cppflags += \
+	-I$(srcdir)/JavaScriptCore/API \
 	-I$(srcdir)/JavaScriptCore/ForwardingHeaders \
-	-I$(srcdir)/JavaScriptCore/bindings \
-	-I$(srcdir)/JavaScriptCore/bindings/c \
+	-I$(srcdir)/JavaScriptCore/VM \
+	-I$(srcdir)/JavaScriptCore/profiler \
+	-I$(srcdir)/JavaScriptCore/wtf/unicode \
 	-I$(top_builddir)/JavaScriptCore/pcre \
 	-I$(top_builddir)/JavaScriptCore/kjs
 
@@ -21,12 +19,13 @@ javascriptcore_h_api += \
 	JavaScriptCore/API/JSValueRef.h
 
 javascriptcore_built_nosources += \
-	JavaScriptCore/kjs/array_object.lut.h \
-	JavaScriptCore/kjs/date_object.lut.h \
-	JavaScriptCore/kjs/math_object.lut.h \
-	JavaScriptCore/kjs/number_object.lut.h \
-	JavaScriptCore/kjs/regexp_object.lut.h \
-	JavaScriptCore/kjs/string_object.lut.h \
+	JavaScriptCore/kjs/ArrayPrototype.lut.h \
+	JavaScriptCore/kjs/DatePrototype.lut.h \
+	JavaScriptCore/kjs/MathObject.lut.h \
+	JavaScriptCore/kjs/NumberConstructor.lut.h \
+	JavaScriptCore/kjs/RegExpConstructor.lut.h \
+	JavaScriptCore/kjs/RegExpObject.lut.h \
+	JavaScriptCore/kjs/StringPrototype.lut.h \
 	JavaScriptCore/pcre/chartables.c \
 	DerivedSources/lexer.lut.h
 
@@ -40,26 +39,36 @@ javascriptcore_sources += \
 	JavaScriptCore/API/JSObjectRef.cpp \
 	JavaScriptCore/API/JSStringRef.cpp \
 	JavaScriptCore/API/JSValueRef.cpp \
-	JavaScriptCore/bindings/NP_jsobject.cpp \
-	JavaScriptCore/bindings/c/c_class.cpp \
-	JavaScriptCore/bindings/c/c_instance.cpp \
-	JavaScriptCore/bindings/c/c_runtime.cpp \
-	JavaScriptCore/bindings/c/c_utility.cpp \
-	JavaScriptCore/bindings/npruntime.cpp \
-	JavaScriptCore/bindings/runtime.cpp \
-	JavaScriptCore/bindings/runtime_array.cpp \
-	JavaScriptCore/bindings/runtime_method.cpp \
-	JavaScriptCore/bindings/runtime_object.cpp \
-	JavaScriptCore/bindings/runtime_root.cpp \
-	JavaScriptCore/kjs/JSGlobalObject.cpp \
-	JavaScriptCore/kjs/JSVariableObject.cpp \
+	JavaScriptCore/kjs/DebuggerCallFrame.cpp \
+	JavaScriptCore/kjs/ExecState.cpp \
+	JavaScriptCore/kjs/InitializeThreading.cpp \
+	JavaScriptCore/kjs/JSGlobalData.cpp \
+	JavaScriptCore/kjs/JSActivation.cpp \
+	JavaScriptCore/kjs/JSNotAnObject.cpp \
+	JavaScriptCore/VM/CodeBlock.cpp \
+	JavaScriptCore/VM/ExceptionHelpers.cpp \
+	JavaScriptCore/VM/JSPropertyNameIterator.cpp \
+	JavaScriptCore/VM/Machine.cpp \
+	JavaScriptCore/VM/Opcode.cpp \
 	JavaScriptCore/pcre/pcre_compile.cpp \
 	JavaScriptCore/pcre/pcre_exec.cpp \
 	JavaScriptCore/pcre/pcre_tables.cpp \
 	JavaScriptCore/pcre/pcre_ucp_searchfuncs.cpp \
 	JavaScriptCore/pcre/pcre_xclass.cpp \
+	JavaScriptCore/profiler/HeavyProfile.cpp \
+	JavaScriptCore/profiler/ProfileGenerator.cpp \
+	JavaScriptCore/profiler/ProfileNode.cpp \
+	JavaScriptCore/profiler/Profile.cpp \
+	JavaScriptCore/profiler/Profiler.cpp \
+	JavaScriptCore/profiler/TreeProfile.cpp \
 	JavaScriptCore/wtf/Assertions.cpp \
 	JavaScriptCore/wtf/HashTable.cpp \
+	JavaScriptCore/wtf/MainThread.cpp \
+	JavaScriptCore/wtf/RefCountedLeakCounter.cpp \
+	JavaScriptCore/wtf/ThreadingGtk.cpp \
+	JavaScriptCore/wtf/gtk/MainThreadGtk.cpp \
+	JavaScriptCore/wtf/unicode/CollatorDefault.cpp \
+	JavaScriptCore/wtf/unicode/icu/CollatorICU.cpp \
 	JavaScriptCore/wtf/unicode/UTF8.cpp
 
 # Debug build
@@ -69,47 +78,81 @@ javascriptcore_built_sources += \
 	DerivedSources/grammar.cpp
 
 javascriptcore_sources += \
-	JavaScriptCore/kjs/CommonIdentifiers.cpp \
-	JavaScriptCore/kjs/DateMath.cpp \
-	JavaScriptCore/kjs/ExecState.cpp \
-	JavaScriptCore/kjs/JSImmediate.cpp \
-	JavaScriptCore/kjs/JSLock.cpp \
-	JavaScriptCore/kjs/JSWrapperObject.cpp \
-	JavaScriptCore/kjs/Parser.cpp \
-	JavaScriptCore/kjs/PropertyNameArray.cpp \
-	JavaScriptCore/kjs/array_instance.cpp \
-	JavaScriptCore/kjs/array_object.cpp \
-	JavaScriptCore/kjs/bool_object.cpp \
+	JavaScriptCore/kjs/ArgList.cpp \
+	JavaScriptCore/kjs/Arguments.cpp \
+	JavaScriptCore/kjs/ArrayConstructor.cpp \
+	JavaScriptCore/kjs/ArrayPrototype.cpp \
+	JavaScriptCore/kjs/BooleanConstructor.cpp \
+	JavaScriptCore/kjs/BooleanObject.cpp \
+	JavaScriptCore/kjs/BooleanPrototype.cpp \
+	JavaScriptCore/kjs/CallData.cpp \
 	JavaScriptCore/kjs/collector.cpp \
-	JavaScriptCore/kjs/date_object.cpp \
+	JavaScriptCore/kjs/CommonIdentifiers.cpp \
+	JavaScriptCore/kjs/ConstructData.cpp \
+	JavaScriptCore/kjs/DateConstructor.cpp \
+	JavaScriptCore/kjs/DateInstance.cpp \
+	JavaScriptCore/kjs/DateMath.cpp \
+	JavaScriptCore/kjs/DatePrototype.cpp \
 	JavaScriptCore/kjs/debugger.cpp \
 	JavaScriptCore/kjs/dtoa.cpp \
-	JavaScriptCore/kjs/error_object.cpp \
-	JavaScriptCore/kjs/function.cpp \
-	JavaScriptCore/kjs/function_object.cpp \
+	JavaScriptCore/kjs/Error.cpp \
+	JavaScriptCore/kjs/ErrorConstructor.cpp \
+	JavaScriptCore/kjs/ErrorInstance.cpp \
+	JavaScriptCore/kjs/ErrorPrototype.cpp \
+	JavaScriptCore/kjs/FunctionConstructor.cpp \
+	JavaScriptCore/kjs/FunctionPrototype.cpp \
+	JavaScriptCore/kjs/GetterSetter.cpp \
+	JavaScriptCore/kjs/GlobalEvalFunction.cpp \
 	JavaScriptCore/kjs/identifier.cpp \
-	JavaScriptCore/kjs/internal.cpp \
+	JavaScriptCore/kjs/IndexToNameMap.cpp \
+	JavaScriptCore/kjs/InternalFunction.cpp \
 	JavaScriptCore/kjs/interpreter.cpp \
+	JavaScriptCore/kjs/JSArray.cpp \
+	JavaScriptCore/kjs/JSCell.cpp \
+	JavaScriptCore/kjs/JSFunction.cpp \
+	JavaScriptCore/kjs/JSGlobalObject.cpp \
+	JavaScriptCore/kjs/JSGlobalObjectFunctions.cpp \
+	JavaScriptCore/kjs/JSImmediate.cpp \
+	JavaScriptCore/kjs/JSLock.cpp \
+	JavaScriptCore/kjs/JSNumberCell.cpp \
+	JavaScriptCore/kjs/JSObject.cpp \
+	JavaScriptCore/kjs/JSStaticScopeObject.cpp \
+	JavaScriptCore/kjs/JSString.cpp \
+	JavaScriptCore/kjs/JSValue.cpp \
+	JavaScriptCore/kjs/JSVariableObject.cpp \
+	JavaScriptCore/kjs/JSWrapperObject.cpp \
+	JavaScriptCore/kjs/LabelStack.cpp \
 	JavaScriptCore/kjs/lexer.cpp \
-	JavaScriptCore/kjs/list.cpp \
 	JavaScriptCore/kjs/lookup.cpp \
-	JavaScriptCore/kjs/math_object.cpp \
+	JavaScriptCore/kjs/MathObject.cpp \
+	JavaScriptCore/kjs/NativeErrorConstructor.cpp \
+	JavaScriptCore/kjs/NativeErrorPrototype.cpp \
 	JavaScriptCore/kjs/nodes.cpp \
 	JavaScriptCore/kjs/nodes2string.cpp \
-	JavaScriptCore/kjs/number_object.cpp \
-	JavaScriptCore/kjs/object.cpp \
-	JavaScriptCore/kjs/object_object.cpp \
+	JavaScriptCore/kjs/NumberConstructor.cpp \
+	JavaScriptCore/kjs/NumberObject.cpp \
+	JavaScriptCore/kjs/NumberPrototype.cpp \
+	JavaScriptCore/kjs/ObjectConstructor.cpp \
+	JavaScriptCore/kjs/ObjectPrototype.cpp \
 	JavaScriptCore/kjs/operations.cpp \
-	JavaScriptCore/kjs/property_map.cpp \
-	JavaScriptCore/kjs/property_slot.cpp \
+	JavaScriptCore/kjs/Parser.cpp \
+	JavaScriptCore/kjs/PropertyMap.cpp \
+	JavaScriptCore/kjs/PropertyNameArray.cpp \
+	JavaScriptCore/kjs/PropertySlot.cpp \
+	JavaScriptCore/kjs/PrototypeFunction.cpp \
 	JavaScriptCore/kjs/regexp.cpp \
-	JavaScriptCore/kjs/regexp_object.cpp \
-	JavaScriptCore/kjs/scope_chain.cpp \
-	JavaScriptCore/kjs/string_object.cpp \
+	JavaScriptCore/kjs/RegExpConstructor.cpp \
+	JavaScriptCore/kjs/RegExpObject.cpp \
+	JavaScriptCore/kjs/RegExpPrototype.cpp \
+	JavaScriptCore/kjs/ScopeChain.cpp \
+	JavaScriptCore/kjs/StringConstructor.cpp \
+	JavaScriptCore/kjs/StringObject.cpp \
+	JavaScriptCore/kjs/StringPrototype.cpp \
 	JavaScriptCore/kjs/ustring.cpp \
-	JavaScriptCore/kjs/value.cpp \
 	JavaScriptCore/wtf/FastMalloc.cpp \
-	JavaScriptCore/wtf/TCSystemAlloc.cpp
+	JavaScriptCore/wtf/TCSystemAlloc.cpp \
+	JavaScriptCore/VM/CodeGenerator.cpp \
+	JavaScriptCore/VM/RegisterFile.cpp
 
 else
 javascriptcore_built_nosources += \
@@ -131,41 +174,74 @@ DerivedSources/grammar.cpp: $(srcdir)/JavaScriptCore/kjs/grammar.y
 DerivedSources/lexer.lut.h: $(CREATE_HASH_TABLE) $(srcdir)/JavaScriptCore/kjs/keywords.table
 	$(PERL) $^ > $@
 
-%_object.lut.h: $(CREATE_HASH_TABLE) %_object.cpp
+%.lut.h: $(CREATE_HASH_TABLE) %.cpp
 	$^ -i > $@
 
 JavaScriptCore/pcre/chartables.c: $(srcdir)/JavaScriptCore/pcre/dftables
 	$^ $@
 
+bin_PROGRAMS += \
+	Programs/jsc
+
 noinst_PROGRAMS += \
-	Programs/minidom \
-	Programs/testkjs
+	Programs/minidom
 
 # minidom
 Programs_minidom_SOURCES = \
-	JavaScriptCore/API/JSNode.c \
-	JavaScriptCore/API/JSNodeList.c \
-	JavaScriptCore/API/Node.c \
-	JavaScriptCore/API/NodeList.c \
-	JavaScriptCore/API/minidom.c
-Programs_minidom_CPPFLAGS = $(global_cppflags)
-Programs_minidom_CXXFLAGS = $(global_cxxflags) $(global_cflags)
-Programs_minidom_LDADD = libJavaScriptCore.la
-Programs_minidom_LDFLAGS = -rpath $(CURDIR)/.libs
+	JavaScriptCore/API/tests/JSNode.c \
+	JavaScriptCore/API/tests/JSNodeList.c \
+	JavaScriptCore/API/tests/Node.c \
+	JavaScriptCore/API/tests/NodeList.c \
+	JavaScriptCore/API/tests/minidom.c
 
-# testkjs
-Programs_testkjs_SOURCES = JavaScriptCore/kjs/testkjs.cpp
-Programs_testkjs_CPPFLAGS = $(global_cppflags)
-Programs_testkjs_CXXFLAGS = $(global_cxxflags) $(global_cflags)
-Programs_testkjs_LDADD = libJavaScriptCore.la
-Programs_testkjs_LDFLAGS = -rpath $(CURDIR)/.libs
+Programs_minidom_CPPFLAGS = \
+	$(global_cppflags) \
+	$(javascriptcore_cppflags)
+
+Programs_minidom_CFLAGS = \
+	-fno-strict-aliasing \
+	-O2 \
+	$(global_cflags) \
+	$(GLOBALDEPS_CFLAGS)
+
+Programs_minidom_CXXFLAGS = \
+	-fno-strict-aliasing \
+	-O2 \
+	$(global_cxxflags) \
+	$(global_cflags) \
+	$(GLOBALDEPS_CFLAGS)
+
+Programs_minidom_LDADD = \
+	 libJavaScriptCore.la \
+	 -lstdc++
+
+# jsc
+Programs_jsc_SOURCES = JavaScriptCore/kjs/Shell.cpp
+
+Programs_jsc_CPPFLAGS = \
+	$(global_cppflags) \
+	$(javascriptcore_cppflags)
+
+Programs_jsc_CXXFLAGS = \
+	-fno-strict-aliasing \
+	-O2 \
+	$(global_cxxflags) \
+	$(global_cflags) \
+	$(GLOBALDEPS_CFLAGS) \
+	$(UNICODE_CFLAGS)
+
+Programs_jsc_LDADD = \
+	libJavaScriptCore.la
 
 # Clean rules for JavaScriptCore
 CLEANFILES += \
-	JavaScriptCore/kjs/array_object.lut.h \
-	JavaScriptCore/kjs/date_object.lut.h \
-	JavaScriptCore/kjs/math_object.lut.h \
-	JavaScriptCore/kjs/number_object.lut.h \
-	JavaScriptCore/kjs/regexp_object.lut.h \
-	JavaScriptCore/kjs/string_object.lut.h \
-	JavaScriptCore/pcre/chartables.c
+	JavaScriptCore/kjs/ArrayPrototype.lut.h \
+	JavaScriptCore/kjs/DatePrototype.lut.h \
+	JavaScriptCore/kjs/MathObject.lut.h \
+	JavaScriptCore/kjs/NumberConstructor.lut.h \
+	JavaScriptCore/kjs/RegExpConstructor.lut.h \
+	JavaScriptCore/kjs/RegExpObject.lut.h \
+	JavaScriptCore/kjs/StringPrototype.lut.h \
+	JavaScriptCore/pcre/chartables.c \
+	Programs/jsc \
+	Programs/minidom

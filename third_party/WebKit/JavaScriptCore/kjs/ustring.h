@@ -1,7 +1,6 @@
-// -*- c-basic-offset: 2 -*-
 /*
  *  Copyright (C) 1999-2000 Harri Porten (porten@kde.org)
- *  Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ *  Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -23,448 +22,342 @@
 #ifndef _KJS_USTRING_H_
 #define _KJS_USTRING_H_
 
-#include "JSLock.h"
 #include "collector.h"
 #include <stdint.h>
+#include <string.h>
 #include <wtf/Assertions.h>
 #include <wtf/FastMalloc.h>
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
-
-/* On some ARM platforms GCC won't pack structures by default so sizeof(UChar)
-   will end up being != 2 which causes crashes since the code depends on that. */
-#if COMPILER(GCC) && PLATFORM(FORCE_PACK)
-#define PACK_STRUCT __attribute__((packed))
-#else
-#define PACK_STRUCT
-#endif
-
-/**
- * @internal
- */
-namespace DOM {
-  class DOMString;
-  class AtomicString;
-}
-class KJScript;
+#include <wtf/unicode/Unicode.h>
 
 namespace KJS {
 
-  using WTF::PlacementNewAdoptType;
-  using WTF::PlacementNewAdopt;
+    using WTF::PlacementNewAdoptType;
+    using WTF::PlacementNewAdopt;
 
-  class UString;
+    class IdentifierTable;
+  
+    class CString {
+    public:
+        CString()
+            : m_length(0)
+            , m_data(0)
+        {
+        }
 
-  /**
-   * @short Unicode character.
-   *
-   * UChar represents a 16 bit Unicode character. It's internal data
-   * representation is compatible to XChar2b and QChar. It's therefore
-   * possible to exchange data with X and Qt with shallow copies.
-   */
-  struct UChar {
-    /**
-     * Construct a character with uninitialized value.    
-     */
-    UChar();
-    /**
-     * Construct a character with the value denoted by the arguments.
-     * @param h higher byte
-     * @param l lower byte
-     */
-    UChar(unsigned char h , unsigned char l);
-    /**
-     * Construct a character with the given value.
-     * @param u 16 bit Unicode value
-     */
-    UChar(char u);
-    UChar(unsigned char u);
-    UChar(unsigned short u);
-    /**
-     * @return The higher byte of the character.
-     */
-    unsigned char high() const { return static_cast<unsigned char>(uc >> 8); }
-    /**
-     * @return The lower byte of the character.
-     */
-    unsigned char low() const { return static_cast<unsigned char>(uc); }
-    /**
-     * @return the 16 bit Unicode value of the character
-     */
-    unsigned short unicode() const { return uc; }
+        CString(const char*);
+        CString(const char*, size_t);
+        CString(const CString&);
 
-    unsigned short uc;
-  } PACK_STRUCT;
+        ~CString();
 
-  inline UChar::UChar() { }
-  inline UChar::UChar(unsigned char h , unsigned char l) : uc(h << 8 | l) { }
-  inline UChar::UChar(char u) : uc((unsigned char)u) { }
-  inline UChar::UChar(unsigned char u) : uc(u) { }
-  inline UChar::UChar(unsigned short u) : uc(u) { }
+        static CString adopt(char*, size_t); // buffer should be allocated with new[].
 
-  /**
-   * @short 8 bit char based string class
-   */
-  class CString {
-  public:
-    CString() : data(0), length(0) { }
-    CString(const char *c);
-    CString(const char *c, size_t len);
-    CString(const CString &);
+        CString& append(const CString&);
+        CString& operator=(const char* c);
+        CString& operator=(const CString&);
+        CString& operator+=(const CString& c) { return append(c); }
 
-    ~CString();
+        size_t size() const { return m_length; }
+        const char* c_str() const { return m_data; }
 
-    CString &append(const CString &);
-    CString &operator=(const char *c);
-    CString &operator=(const CString &);
-    CString &operator+=(const CString &c) { return append(c); }
+    private:
+        size_t m_length;
+        char* m_data;
+    };
 
-    size_t size() const { return length; }
-    const char *c_str() const { return data; }
-  private:
-    char *data;
-    size_t length;
-  };
+    typedef Vector<char, 32> CStringBuffer;
 
-  /**
-   * @short Unicode string class
-   */
-  class UString {
+    class UString {
     friend bool operator==(const UString&, const UString&);
 
-  public:
-    /**
-     * @internal
-     */
-    struct Rep {
-
-      static PassRefPtr<Rep> create(UChar *d, int l);
-      static PassRefPtr<Rep> createCopying(const UChar *d, int l);
-      static PassRefPtr<Rep> create(PassRefPtr<Rep> base, int offset, int length);
-
-      void destroy();
-      
-      bool baseIsSelf() const { return baseString == this; }
-      UChar* data() const { return baseString->buf + baseString->preCapacity + offset; }
-      int size() const { return len; }
-      
-      unsigned hash() const { if (_hash == 0) _hash = computeHash(data(), len); return _hash; }
-      unsigned computedHash() const { ASSERT(_hash); return _hash; } // fast path for Identifiers
-
-      static unsigned computeHash(const UChar *, int length);
-      static unsigned computeHash(const char *);
-
-      Rep* ref() { ASSERT(JSLock::lockCount() > 0); ++rc; return this; }
-      ALWAYS_INLINE void deref() { ASSERT(JSLock::lockCount() > 0); if (--rc == 0) destroy(); }
-
-      // unshared data
-      int offset;
-      int len;
-      int rc;
-      mutable unsigned _hash;
-      bool isIdentifier;
-      UString::Rep* baseString;
-      size_t reportedCost;
-
-      // potentially shared data
-      UChar *buf;
-      int usedCapacity;
-      int capacity;
-      int usedPreCapacity;
-      int preCapacity;
-      
-      static Rep null;
-      static Rep empty;
-    };
-
-  public:
-
-    /**
-     * Constructs a null string.
-     */
-    UString();
-    /**
-     * Constructs a string from a classical zero-terminated char string.
-     */
-    UString(const char *c);
-    /**
-     * Constructs a string from an array of Unicode characters of the specified
-     * length.
-     */
-    UString(const UChar *c, int length);
-    /**
-     * If copy is false the string data will be adopted.
-     * That means that the data will NOT be copied and the pointer will
-     * be deleted when the UString object is modified or destroyed.
-     * Behaviour defaults to a deep copy if copy is true.
-     */
-    UString(UChar *c, int length, bool copy);
-    /**
-     * Copy constructor. Makes a shallow copy only.
-     */
-    UString(const UString &s) : m_rep(s.m_rep) {}
-
-    UString(const Vector<UChar>& buffer);
-
-    /**
-     * Convenience declaration only ! You'll be on your own to write the
-     * implementation for a construction from DOM::DOMString.
-     *
-     * Note: feel free to contact me if you want to see a dummy header for
-     * your favorite FooString class here !
-     */
-    UString(const DOM::DOMString&);
-    /**
-     * Convenience declaration only ! See UString(const DOM::DOMString&).
-     */
-    UString(const DOM::AtomicString&);
-
-    /**
-     * Concatenation constructor. Makes operator+ more efficient.
-     */
-    UString(const UString &, const UString &);
-    /**
-     * Destructor.
-     */
-    ~UString() {}
-
-    // Special constructor for cases where we overwrite an object in place.
-    UString(PlacementNewAdoptType) : m_rep(PlacementNewAdopt) { }
-
-    /**
-     * Constructs a string from an int.
-     */
-    static UString from(int i);
-    /**
-     * Constructs a string from an unsigned int.
-     */
-    static UString from(unsigned int u);
-    /**
-     * Constructs a string from a long int.
-     */
-    static UString from(long u);
-    /**
-     * Constructs a string from a double.
-     */
-    static UString from(double d);
-
-    struct Range {
     public:
-      Range(int pos, int len) : position(pos), length(len) {}
-      Range() {}
-      int position;
-      int length;
+        struct Rep {
+            static PassRefPtr<Rep> create(UChar*, int);
+            static PassRefPtr<Rep> createCopying(const UChar*, int);
+            static PassRefPtr<Rep> create(PassRefPtr<Rep> base, int offset, int length);
+
+            // Constructs a string from a UTF-8 string, using strict conversion (see comments in UTF8.h).
+            // Returns UString::Rep::null for null input or conversion failure.
+            static PassRefPtr<Rep> createFromUTF8(const char*);
+
+            void destroy();
+
+            bool baseIsSelf() const { return baseString == this; }
+            UChar* data() const { return baseString->buf + baseString->preCapacity + offset; }
+            int size() const { return len; }
+
+            unsigned hash() const { if (_hash == 0) _hash = computeHash(data(), len); return _hash; }
+            unsigned computedHash() const { ASSERT(_hash); return _hash; } // fast path for Identifiers
+
+            static unsigned computeHash(const UChar*, int length);
+            static unsigned computeHash(const char*, int length);
+            static unsigned computeHash(const char* s) { return computeHash(s, strlen(s)); }
+
+            IdentifierTable* identifierTable() const { return reinterpret_cast<IdentifierTable*>(m_identifierTable & ~static_cast<uintptr_t>(1)); }
+            void setIdentifierTable(IdentifierTable* table) { ASSERT(!isStatic()); m_identifierTable = reinterpret_cast<intptr_t>(table); }
+
+            bool isStatic() const { return m_identifierTable & 1; }
+            void setStatic(bool v) { ASSERT(!identifierTable()); m_identifierTable = v; }
+
+            Rep* ref() { ++rc; return this; }
+            ALWAYS_INLINE void deref() { if (--rc == 0) destroy(); }
+
+            // unshared data
+            int offset;
+            int len;
+            int rc; // For null and empty static strings, this field does not reflect a correct count, because ref/deref are not thread-safe. A special case in destroy() guarantees that these do not get deleted.
+            mutable unsigned _hash;
+            intptr_t m_identifierTable; // A pointer to identifier table. The lowest bit is used to indicate whether the string is static (null or empty).
+            UString::Rep* baseString;
+            size_t reportedCost;
+
+            // potentially shared data
+            UChar* buf;
+            int usedCapacity;
+            int capacity;
+            int usedPreCapacity;
+            int preCapacity;
+
+            static Rep null;
+            static Rep empty;
+        };
+
+    public:
+        UString();
+        UString(const char*);
+        UString(const UChar*, int length);
+        UString(UChar*, int length, bool copy);
+
+        UString(const UString& s)
+            : m_rep(s.m_rep)
+        {
+        }
+
+        UString(const Vector<UChar>& buffer);
+
+        // Concatenation constructor. Makes operator+ more efficient.
+        UString(const UString&, const UString&);
+
+        ~UString()
+        {
+        }
+
+        // Special constructor for cases where we overwrite an object in place.
+        UString(PlacementNewAdoptType)
+            : m_rep(PlacementNewAdopt)
+        {
+        }
+
+        static UString from(int);
+        static UString from(unsigned int);
+        static UString from(long);
+        static UString from(double);
+
+        struct Range {
+        public:
+            Range(int pos, int len)
+                : position(pos)
+                , length(len)
+            {
+            }
+
+            Range()
+            {
+            }
+
+            int position;
+            int length;
+        };
+
+        UString spliceSubstringsWithSeparators(const Range* substringRanges, int rangeCount, const UString* separators, int separatorCount) const;
+
+        UString& append(const UString&);
+        UString& append(const char*);
+        UString& append(UChar);
+        UString& append(char c) { return append(static_cast<UChar>(static_cast<unsigned char>(c))); }
+        UString& append(const UChar*, int size);
+
+        bool getCString(CStringBuffer&) const;
+
+        // NOTE: This method should only be used for *debugging* purposes as it
+        // is neither Unicode safe nor free from side effects nor thread-safe.
+        char* ascii() const;
+
+        /**
+         * Convert the string to UTF-8, assuming it is UTF-16 encoded.
+         * In non-strict mode, this function is tolerant of badly formed UTF-16, it
+         * can create UTF-8 strings that are invalid because they have characters in
+         * the range U+D800-U+DDFF, U+FFFE, or U+FFFF, but the UTF-8 string is
+         * guaranteed to be otherwise valid.
+         * In strict mode, error is returned as null CString.
+         */
+        CString UTF8String(bool strict = false) const;
+
+        UString& operator=(const char*c);
+
+        UString& operator+=(const UString& s) { return append(s); }
+        UString& operator+=(const char* s) { return append(s); }
+
+        const UChar* data() const { return m_rep->data(); }
+
+        bool isNull() const { return (m_rep == &Rep::null); }
+        bool isEmpty() const { return (!m_rep->len); }
+
+        bool is8Bit() const;
+
+        int size() const { return m_rep->size(); }
+
+        UChar operator[](int pos) const;
+
+        double toDouble(bool tolerateTrailingJunk, bool tolerateEmptyString) const;
+        double toDouble(bool tolerateTrailingJunk) const;
+        double toDouble() const;
+
+        uint32_t toUInt32(bool* ok = 0) const;
+        uint32_t toUInt32(bool* ok, bool tolerateEmptyString) const;
+        uint32_t toStrictUInt32(bool* ok = 0) const;
+
+        unsigned toArrayIndex(bool* ok = 0) const;
+
+        int find(const UString& f, int pos = 0) const;
+        int find(UChar, int pos = 0) const;
+        int rfind(const UString& f, int pos) const;
+        int rfind(UChar, int pos) const;
+
+        UString substr(int pos = 0, int len = -1) const;
+
+        static const UString& null();
+
+        Rep* rep() const { return m_rep.get(); }
+
+        UString(PassRefPtr<Rep> r)
+            : m_rep(r)
+        {
+            ASSERT(m_rep);
+        }
+
+        size_t cost() const;
+
+    private:
+        size_t expandedSize(size_t size, size_t otherSize) const;
+        int usedCapacity() const;
+        int usedPreCapacity() const;
+        void expandCapacity(int requiredLength);
+        void expandPreCapacity(int requiredPreCap);
+
+        RefPtr<Rep> m_rep;
     };
 
-    UString spliceSubstringsWithSeparators(const Range *substringRanges, int rangeCount, const UString *separators, int separatorCount) const;
+    bool operator==(const UString& s1, const UString& s2);
 
-    /**
-     * Append another string.
-     */
-    UString &append(const UString &);
-    UString &append(const char *);
-    UString &append(unsigned short);
-    UString &append(char c) { return append(static_cast<unsigned short>(static_cast<unsigned char>(c))); }
-    UString &append(UChar c) { return append(c.uc); }
+    inline bool operator!=(const UString& s1, const UString& s2)
+    {
+        return !KJS::operator==(s1, s2);
+    }
 
-    /**
-     * @return The string converted to the 8-bit string type CString().
-     * This method is not Unicode safe and shouldn't be used unless the string
-     * is known to be ASCII.
-     */
-    CString cstring() const;
-    /**
-     * Convert the Unicode string to plain ASCII chars chopping of any higher
-     * bytes. This method should only be used for *debugging* purposes as it
-     * is neither Unicode safe nor free from side effects. In order not to
-     * waste any memory the char buffer is static and *shared* by all UString
-     * instances.
-     */
-    char *ascii() const;
+    bool operator<(const UString& s1, const UString& s2);
+    bool operator>(const UString& s1, const UString& s2);
 
-    /**
-     * Convert the string to UTF-8, assuming it is UTF-16 encoded.
-     * In non-strict mode, this function is tolerant of badly formed UTF-16, it
-     * can create UTF-8 strings that are invalid because they have characters in
-     * the range U+D800-U+DDFF, U+FFFE, or U+FFFF, but the UTF-8 string is
-     * guaranteed to be otherwise valid.
-     * In strict mode, error is returned as null CString.
-     */
-    CString UTF8String(bool strict = false) const;
+    bool operator==(const UString& s1, const char* s2);
 
-    /**
-     * @see UString(const DOM::DOMString&).
-     */
-    DOM::DOMString domString() const;
+    inline bool operator!=(const UString& s1, const char* s2)
+    {
+        return !KJS::operator==(s1, s2);
+    }
 
-    /**
-     * Assignment operator.
-     */
-    UString &operator=(const char *c);
-    /**
-     * Appends the specified string.
-     */
-    UString &operator+=(const UString &s) { return append(s); }
-    UString &operator+=(const char *s) { return append(s); }
+    inline bool operator==(const char *s1, const UString& s2)
+    {
+        return operator==(s2, s1);
+    }
 
-    /**
-     * @return A pointer to the internal Unicode data.
-     */
-    const UChar* data() const { return m_rep->data(); }
-    /**
-     * @return True if null.
-     */
-    bool isNull() const { return (m_rep == &Rep::null); }
-    /**
-     * @return True if null or zero length.
-     */
-    bool isEmpty() const { return (!m_rep->len); }
-    /**
-     * Use this if you want to make sure that this string is a plain ASCII
-     * string. For example, if you don't want to lose any information when
-     * using cstring() or ascii().
-     *
-     * @return True if the string doesn't contain any non-ASCII characters.
-     */
-    bool is8Bit() const;
-    /**
-     * @return The length of the string.
-     */
-    int size() const { return m_rep->size(); }
-    /**
-     * Const character at specified position.
-     */
-    const UChar operator[](int pos) const;
+    inline bool operator!=(const char *s1, const UString& s2)
+    {
+        return !KJS::operator==(s1, s2);
+    }
 
-    /**
-     * Attempts an conversion to a number. Apart from floating point numbers,
-     * the algorithm will recognize hexadecimal representations (as
-     * indicated by a 0x or 0X prefix) and +/- Infinity.
-     * Returns NaN if the conversion failed.
-     * @param tolerateTrailingJunk if true, toDouble can tolerate garbage after the number.
-     * @param tolerateEmptyString if false, toDouble will turn an empty string into NaN rather than 0.
-     */
-    double toDouble(bool tolerateTrailingJunk, bool tolerateEmptyString) const;
-    double toDouble(bool tolerateTrailingJunk) const;
-    double toDouble() const;
+    bool operator==(const CString& s1, const CString& s2);
 
-    /**
-     * Attempts an conversion to a 32-bit integer. ok will be set
-     * according to the success.
-     * @param tolerateEmptyString if false, toUInt32 will return false for *ok for an empty string.
-     */
-    uint32_t toUInt32(bool *ok = 0) const;
-    uint32_t toUInt32(bool *ok, bool tolerateEmptyString) const;
-    uint32_t toStrictUInt32(bool *ok = 0) const;
+    inline UString operator+(const UString& s1, const UString& s2)
+    {
+        return UString(s1, s2);
+    }
 
-    /**
-     * Attempts an conversion to an array index. The "ok" boolean will be set
-     * to true if it is a valid array index according to the rule from
-     * ECMA 15.2 about what an array index is. It must exactly match the string
-     * form of an unsigned integer, and be less than 2^32 - 1.
-     */
-    unsigned toArrayIndex(bool *ok = 0) const;
+    int compare(const UString&, const UString&);
 
-    /**
-     * @return Position of first occurrence of f starting at position pos.
-     * -1 if the search was not successful.
-     */
-    int find(const UString &f, int pos = 0) const;
-    int find(UChar, int pos = 0) const;
-    /**
-     * @return Position of first occurrence of f searching backwards from
-     * position pos.
-     * -1 if the search was not successful.
-     */
-    int rfind(const UString &f, int pos) const;
-    int rfind(UChar, int pos) const;
-    /**
-     * @return The sub string starting at position pos and length len.
-     */
-    UString substr(int pos = 0, int len = -1) const;
-    /**
-     * Static instance of a null string.
-     */
-    static const UString &null();
+    bool equal(const UString::Rep*, const UString::Rep*);
 
-    Rep* rep() const { return m_rep.get(); }
-    UString(PassRefPtr<Rep> r) : m_rep(r) { ASSERT(m_rep); }
+    inline UString::UString()
+        : m_rep(&Rep::null)
+    {
+    }
 
-    size_t cost() const;
+    // Rule from ECMA 15.2 about what an array index is.
+    // Must exactly match string form of an unsigned integer, and be less than 2^32 - 1.
+    inline unsigned UString::toArrayIndex(bool* ok) const
+    {
+        unsigned i = toStrictUInt32(ok);
+        if (ok && i >= 0xFFFFFFFFU)
+            *ok = false;
+        return i;
+    }
 
-  private:
-    size_t expandedSize(size_t size, size_t otherSize) const;
-    int usedCapacity() const;
-    int usedPreCapacity() const;
-    void expandCapacity(int requiredLength);
-    void expandPreCapacity(int requiredPreCap);
+    // We'd rather not do shared substring append for small strings, since
+    // this runs too much risk of a tiny initial string holding down a
+    // huge buffer.
+    // FIXME: this should be size_t but that would cause warnings until we
+    // fix UString sizes to be size_t instead of int
+    static const int minShareSize = Heap::minExtraCostSize / sizeof(UChar);
 
-    RefPtr<Rep> m_rep;
-  };
+    inline size_t UString::cost() const
+    {
+        size_t capacity = (m_rep->baseString->capacity + m_rep->baseString->preCapacity) * sizeof(UChar);
+        size_t reportedCost = m_rep->baseString->reportedCost;
+        ASSERT(capacity >= reportedCost);
 
-  inline bool operator==(const UChar &c1, const UChar &c2) {
-    return (c1.uc == c2.uc);
-  }
-  bool operator==(const UString& s1, const UString& s2);
-  inline bool operator!=(const UString& s1, const UString& s2) {
-    return !KJS::operator==(s1, s2);
-  }
-  bool operator<(const UString& s1, const UString& s2);
-  bool operator==(const UString& s1, const char *s2);
-  inline bool operator!=(const UString& s1, const char *s2) {
-    return !KJS::operator==(s1, s2);
-  }
-  inline bool operator==(const char *s1, const UString& s2) {
-    return operator==(s2, s1);
-  }
-  inline bool operator!=(const char *s1, const UString& s2) {
-    return !KJS::operator==(s1, s2);
-  }
-  bool operator==(const CString& s1, const CString& s2);
-  inline UString operator+(const UString& s1, const UString& s2) {
-    return UString(s1, s2);
-  }
-  
-  int compare(const UString &, const UString &);
+        size_t capacityDelta = capacity - reportedCost;
 
-inline UString::UString()
-  : m_rep(&Rep::null)
-{
-}
+        if (capacityDelta < static_cast<size_t>(minShareSize))
+            return 0;
 
-// Rule from ECMA 15.2 about what an array index is.
-// Must exactly match string form of an unsigned integer, and be less than 2^32 - 1.
-inline unsigned UString::toArrayIndex(bool *ok) const
-{
-    unsigned i = toStrictUInt32(ok);
-    if (ok && i >= 0xFFFFFFFFU)
-        *ok = false;
-    return i;
-}
+        m_rep->baseString->reportedCost = capacity;
 
-// We'd rather not do shared substring append for small strings, since
-// this runs too much risk of a tiny initial string holding down a
-// huge buffer.
-// FIXME: this should be size_t but that would cause warnings until we
-// fix UString sizes to be size_t instead of int
-static const int minShareSize = Collector::minExtraCostSize / sizeof(UChar);
+        return capacityDelta;
+    }
 
-inline size_t UString::cost() const
-{
-   size_t capacity = (m_rep->baseString->capacity + m_rep->baseString->preCapacity) * sizeof(UChar);
-   size_t reportedCost = m_rep->baseString->reportedCost;
-   ASSERT(capacity >= reportedCost);
+} // namespace KJS
 
-   size_t capacityDelta = capacity - reportedCost;
+namespace WTF {
 
-   if (capacityDelta < static_cast<size_t>(minShareSize))
-       return 0;
+    template<typename T> struct DefaultHash;
+    template<typename T> struct StrHash;
 
-   m_rep->baseString->reportedCost = capacity;
-   return capacityDelta;
-}
+    template<> struct StrHash<KJS::UString::Rep*> {
+        static unsigned hash(const KJS::UString::Rep* key) { return key->hash(); }
+        static bool equal(const KJS::UString::Rep* a, const KJS::UString::Rep* b) { return KJS::equal(a, b); }
+        static const bool safeToCompareToEmptyOrDeleted = false;
+    };
 
-} // namespace
+    template<> struct StrHash<RefPtr<KJS::UString::Rep> > : public StrHash<KJS::UString::Rep*> {
+        using StrHash<KJS::UString::Rep*>::hash;
+        static unsigned hash(const RefPtr<KJS::UString::Rep>& key) { return key->hash(); }
+        using StrHash<KJS::UString::Rep*>::equal;
+        static bool equal(const RefPtr<KJS::UString::Rep>& a, const RefPtr<KJS::UString::Rep>& b) { return KJS::equal(a.get(), b.get()); }
+        static bool equal(const KJS::UString::Rep* a, const RefPtr<KJS::UString::Rep>& b) { return KJS::equal(a, b.get()); }
+        static bool equal(const RefPtr<KJS::UString::Rep>& a, const KJS::UString::Rep* b) { return KJS::equal(a.get(), b); }
+
+        static const bool safeToCompareToEmptyOrDeleted = false;
+    };
+
+    template<> struct DefaultHash<KJS::UString::Rep*> {
+        typedef StrHash<KJS::UString::Rep*> Hash;
+    };
+
+    template<> struct DefaultHash<RefPtr<KJS::UString::Rep> > {
+        typedef StrHash<RefPtr<KJS::UString::Rep> > Hash;
+    };
+} // namespace WTF
 
 #endif

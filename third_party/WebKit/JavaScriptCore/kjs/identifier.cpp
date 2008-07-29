@@ -1,6 +1,5 @@
 /*
- *  This file is part of the KDE libraries
- *  Copyright (C) 2003 Apple Computer, Inc
+ *  Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -23,6 +22,7 @@
 
 #include "identifier.h"
 
+#include "ExecState.h"
 #include "JSLock.h"
 #include <new> // for placement new
 #include <string.h> // for strlen
@@ -30,44 +30,59 @@
 #include <wtf/FastMalloc.h>
 #include <wtf/HashSet.h>
 
-namespace WTF {
-
-    template<typename T> struct DefaultHash;
-    template<typename T> struct StrHash;
-
-    template<> struct StrHash<KJS::UString::Rep *> {
-        static unsigned hash(const KJS::UString::Rep *key) { return key->hash(); }
-        static bool equal(const KJS::UString::Rep *a, const KJS::UString::Rep *b) { return KJS::Identifier::equal(a, b); }
-        static const bool safeToCompareToEmptyOrDeleted = false;
-    };
-
-    template<> struct DefaultHash<KJS::UString::Rep *> {
-        typedef StrHash<KJS::UString::Rep *> Hash;
-    };
-
-}
-
 namespace KJS {
 
-typedef HashSet<UString::Rep *> IdentifierTable;
-static IdentifierTable *table;
+typedef HashMap<const char*, RefPtr<UString::Rep>, PtrHash<const char*> > LiteralIdentifierTable;
 
-static inline IdentifierTable& identifierTable()
+class IdentifierTable {
+public:
+    ~IdentifierTable()
+    {
+        HashSet<UString::Rep*>::iterator end = m_table.end();
+        for (HashSet<UString::Rep*>::iterator iter = m_table.begin(); iter != end; ++iter)
+            (*iter)->setIdentifierTable(0);
+    }
+    
+    std::pair<HashSet<UString::Rep*>::iterator, bool> add(UString::Rep* value)
+    {
+        std::pair<HashSet<UString::Rep*>::iterator, bool> result = m_table.add(value);
+        (*result.first)->setIdentifierTable(this);
+        return result;
+    }
+
+    template<typename U, typename V>
+    std::pair<HashSet<UString::Rep*>::iterator, bool> add(U value)
+    {
+        std::pair<HashSet<UString::Rep*>::iterator, bool> result = m_table.add<U, V>(value);
+        (*result.first)->setIdentifierTable(this);
+        return result;
+    }
+
+    void remove(UString::Rep* r) { m_table.remove(r); }
+
+    LiteralIdentifierTable& literalTable() { return m_literalTable; }
+
+private:
+    HashSet<UString::Rep*> m_table;
+    LiteralIdentifierTable m_literalTable;
+};
+
+IdentifierTable* createIdentifierTable()
 {
-    ASSERT(JSLock::lockCount() > 0);
-
-    if (!table)
-        table = new IdentifierTable;
-    return *table;
+    return new IdentifierTable;
 }
 
+void deleteIdentifierTable(IdentifierTable* table)
+{
+    delete table;
+}
 
 bool Identifier::equal(const UString::Rep *r, const char *s)
 {
     int length = r->len;
     const UChar *d = r->data();
     for (int i = 0; i != length; ++i)
-        if (d[i].uc != (unsigned char)s[i])
+        if (d[i] != (unsigned char)s[i])
             return false;
     return s[length] == 0;
 }
@@ -78,20 +93,7 @@ bool Identifier::equal(const UString::Rep *r, const UChar *s, int length)
         return false;
     const UChar *d = r->data();
     for (int i = 0; i != length; ++i)
-        if (d[i].uc != s[i].uc)
-            return false;
-    return true;
-}
-
-bool Identifier::equal(const UString::Rep *r, const UString::Rep *b)
-{
-    int length = r->len;
-    if (length != b->len)
-        return false;
-    const UChar *d = r->data();
-    const UChar *s = b->data();
-    for (int i = 0; i != length; ++i)
-        if (d[i].uc != s[i].uc)
+        if (d[i] != s[i])
             return false;
     return true;
 }
@@ -113,10 +115,9 @@ struct CStringTranslator
         size_t length = strlen(c);
         UChar *d = static_cast<UChar *>(fastMalloc(sizeof(UChar) * length));
         for (size_t i = 0; i != length; i++)
-            d[i] = c[i];
+            d[i] = static_cast<unsigned char>(c[i]); // use unsigned char to zero-extend instead of sign-extend
         
         UString::Rep *r = UString::Rep::create(d, static_cast<int>(length)).releaseRef();
-        r->isIdentifier = 1;
         r->rc = 0;
         r->_hash = hash;
 
@@ -124,7 +125,7 @@ struct CStringTranslator
     }
 };
 
-PassRefPtr<UString::Rep> Identifier::add(const char *c)
+PassRefPtr<UString::Rep> Identifier::add(JSGlobalData* globalData, const char* c)
 {
     if (!c) {
         UString::Rep::null.hash();
@@ -135,8 +136,23 @@ PassRefPtr<UString::Rep> Identifier::add(const char *c)
         UString::Rep::empty.hash();
         return &UString::Rep::empty;
     }
-    
-    return *identifierTable().add<const char *, CStringTranslator>(c).first;
+
+    IdentifierTable& identifierTable = *globalData->identifierTable;
+    LiteralIdentifierTable& literalIdentifierTable = identifierTable.literalTable();
+
+    const LiteralIdentifierTable::iterator& iter = literalIdentifierTable.find(c);
+    if (iter != literalIdentifierTable.end())
+        return iter->second;
+
+    UString::Rep* addedString = *identifierTable.add<const char*, CStringTranslator>(c).first;
+    literalIdentifierTable.add(c, addedString);
+
+    return addedString;
+}
+
+PassRefPtr<UString::Rep> Identifier::add(ExecState* exec, const char* c)
+{
+    return add(&exec->globalData(), c);
 }
 
 struct UCharBuffer {
@@ -163,7 +179,6 @@ struct UCharBufferTranslator
             d[i] = buf.s[i];
         
         UString::Rep *r = UString::Rep::create(d, buf.length).releaseRef();
-        r->isIdentifier = 1;
         r->rc = 0;
         r->_hash = hash;
         
@@ -171,7 +186,7 @@ struct UCharBufferTranslator
     }
 };
 
-PassRefPtr<UString::Rep> Identifier::add(const UChar *s, int length)
+PassRefPtr<UString::Rep> Identifier::add(JSGlobalData* globalData, const UChar* s, int length)
 {
     if (!length) {
         UString::Rep::empty.hash();
@@ -179,27 +194,34 @@ PassRefPtr<UString::Rep> Identifier::add(const UChar *s, int length)
     }
     
     UCharBuffer buf = {s, length}; 
-    return *identifierTable().add<UCharBuffer, UCharBufferTranslator>(buf).first;
+    return *globalData->identifierTable->add<UCharBuffer, UCharBufferTranslator>(buf).first;
 }
 
-PassRefPtr<UString::Rep> Identifier::addSlowCase(UString::Rep *r)
+PassRefPtr<UString::Rep> Identifier::add(ExecState* exec, const UChar* s, int length)
 {
-    ASSERT(!r->isIdentifier);
+    return add(&exec->globalData(), s, length);
+}
+
+PassRefPtr<UString::Rep> Identifier::addSlowCase(JSGlobalData* globalData, UString::Rep* r)
+{
+    ASSERT(!r->identifierTable());
 
     if (r->len == 0) {
         UString::Rep::empty.hash();
         return &UString::Rep::empty;
     }
 
-    UString::Rep *result = *identifierTable().add(r).first;
-    if (result == r)
-        r->isIdentifier = true;
-    return result;
+    return *globalData->identifierTable->add(r).first;
+}
+
+PassRefPtr<UString::Rep> Identifier::addSlowCase(ExecState* exec, UString::Rep* r)
+{
+    return addSlowCase(&exec->globalData(), r);
 }
 
 void Identifier::remove(UString::Rep *r)
 {
-    identifierTable().remove(r);
+    r->identifierTable()->remove(r);
 }
 
 } // namespace KJS
