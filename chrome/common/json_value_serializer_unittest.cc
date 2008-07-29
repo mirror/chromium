@@ -187,11 +187,28 @@ TEST(JSONValueSerializerTest, HexStrings) {
   delete deserial_root;
 }
 
+TEST(JSONValueSerializerTest, AllowTrailingComma) {
+  Value* root = NULL;
+  Value* root_expected = NULL;
+  std::string test_with_commas("{\"key\": [true,],}");
+  std::string test_no_commas("{\"key\": [true]}");
+
+  JSONStringValueSerializer serializer(test_with_commas);
+  serializer.set_allow_trailing_comma(true);
+  JSONStringValueSerializer serializer_expected(test_no_commas);
+  ASSERT_TRUE(serializer.Deserialize(&root));
+  ASSERT_TRUE(serializer_expected.Deserialize(&root_expected));
+  ASSERT_TRUE(root->Equals(root_expected));
+
+  delete root;
+  delete root_expected;
+}
+
 namespace {
 
 void ValidateJsonList(const std::string& json) {
   Value* root = NULL;
-  ASSERT_TRUE(JSONReader::Read(json, &root));
+  ASSERT_TRUE(JSONReader::Read(json, &root, false));
   ASSERT_TRUE(root && root->IsType(Value::TYPE_LIST));
   ListValue* list = static_cast<ListValue*>(root);
   ASSERT_EQ(1, list->GetSize());
@@ -215,7 +232,7 @@ TEST(JSONValueSerializerTest, JSONReaderComments) {
 
   Value* root = NULL;
   // It's ok to have a comment in a string.
-  ASSERT_TRUE(JSONReader::Read("[\"// ok\\n /* foo */ \"]", &root));
+  ASSERT_TRUE(JSONReader::Read("[\"// ok\\n /* foo */ \"]", &root, false));
   ASSERT_TRUE(root && root->IsType(Value::TYPE_LIST));
   ListValue* list = static_cast<ListValue*>(root);
   ASSERT_EQ(1, list->GetSize());
@@ -228,10 +245,10 @@ TEST(JSONValueSerializerTest, JSONReaderComments) {
 
   root = NULL;
   // You can't nest comments.
-  ASSERT_FALSE(JSONReader::Read("/* /* inner */ outer */ [ 1 ]", &root));
+  ASSERT_FALSE(JSONReader::Read("/* /* inner */ outer */ [ 1 ]", &root, false));
 
   // Not a open comment token.
-  ASSERT_FALSE(JSONReader::Read("/ * * / [1]", &root));
+  ASSERT_FALSE(JSONReader::Read("/ * * / [1]", &root, false));
 }
 
 namespace {
