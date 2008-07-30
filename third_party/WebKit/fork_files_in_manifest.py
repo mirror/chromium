@@ -55,7 +55,7 @@ def StripObsoletedExtension(filename):
   return filename[:-len(OBSOLETED_EXTENSION)]
 
 def MoveFile(old_filename, new_filename):
-  # Revert both files in case we had previously done gvn mv in the other 
+  # Revert both files in case we had previously done svn mv in the other 
   # direction.
   RevertFile(old_filename)
   RevertFile(new_filename)
@@ -65,13 +65,13 @@ def MoveFile(old_filename, new_filename):
   # If reverting open changes to the file leaves us with the file moved
   # then there's nothing to do.
   if not FileIsInVersionControl(new_filename):
-    print 'gvn mv %s %s' % (old_filename, new_filename)
-    ExecuteShellCommand('gvn mv %s %s' % (old_filename, new_filename))
+    print 'svn mv "%s" "%s"' % (old_filename, new_filename)
+    ExecuteShellCommand('svn mv "%s" "%s"' % (old_filename, new_filename))
 
 def RevertFile(file):
   if FileIsInVersionControl(file):
-    print 'gvn revert %s' % file
-    ExecuteShellCommand('gvn revert %s' % file)
+    print 'svn revert "%s"' % file
+    ExecuteShellCommand('svn revert "%s"' % file)
   
   # If the file is no longer in svn, remove it from the file system.
   if not FileIsInVersionControl(file) and os.path.exists(file):
@@ -87,8 +87,8 @@ def AssertOnlyOneFileExists(file, obsoleted_file):
           file)
 
 def FileIsInVersionControl(file):
-  # gvn info returns 0 if the file is in svn.
-  return ExecuteShellCommand('gvn info %s' % file, True) == 0
+  # svn info returns 0 if the file is in svn.
+  return ExecuteShellCommand('svn info "%s"' % file, True) == 0
 
 def ExecuteShellCommand(command, is_suppress_output=False):
   if is_suppress_output:
