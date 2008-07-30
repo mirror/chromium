@@ -267,8 +267,11 @@ bool TabStripModel::TabsAreLoading() const {
 }
 
 bool TabStripModel::TabHasUnloadListener(int index) {
+  // TODO(beng): this should call through to the delegate, so we can mock it
+  //             in testing and then provide better test coverage for features
+  //             like "close other tabs".
   WebContents* web_contents = GetContentsAt(index)->AsWebContents();
-  if (web_contents) {
+  if (web_contents)
     // If the WebContents is not connected yet, then there's no unload
     // handler we can fire even if the WebContents has an unload listener.
     // One case where we hit this is in a tab that has an infinite loop 
@@ -276,7 +279,6 @@ bool TabStripModel::TabHasUnloadListener(int index) {
     return web_contents->notify_disconnection() && 
         !web_contents->IsShowingInterstitialPage() &&
         web_contents->render_view_host()->HasUnloadListener();
-  }
   return false;
 }
 
@@ -466,12 +468,11 @@ void TabStripModel::ExecuteContextMenuCommand(
       break;
     case CommandCloseOtherTabs: {
       UserMetrics::RecordAction(L"TabContextMenu_CloseOtherTabs", profile_);
-      // Remove tabs before the tab to keep.
-      for (int i = 0; i < context_index; i++)
-        CloseTabContentsAt(0);
-      // Remove all tabs after the tab to keep.
-      for (int i = 1, c = count(); i < c; i++)
-        CloseTabContentsAt(1);
+      TabContents* contents = GetTabContentsAt(context_index);
+      for (int i = count() - 1; i >= 0; --i) {
+        if (GetTabContentsAt(i) != contents)
+          CloseTabContentsAt(i);
+      }
       break;
     }
     case CommandCloseTabsToRight: {
@@ -519,7 +520,7 @@ void TabStripModel::Observe(NotificationType type,
 ///////////////////////////////////////////////////////////////////////////////
 // TabStripModel, private:
 
-void TabStripModel::InternalCloseTabContentsAt(int index,
+bool TabStripModel::InternalCloseTabContentsAt(int index,
                                                bool create_historical_tab) {
   TabContents* detached_contents = GetContentsAt(index);
 
@@ -532,7 +533,7 @@ void TabStripModel::InternalCloseTabContentsAt(int index,
     // If we hit this code path, the tab had better be a WebContents tab.
     DCHECK(web_contents);
     web_contents->render_view_host()->AttemptToClosePage(false);
-    return;
+    return false;
   }
 
   // TODO: Now that we know the tab has no unload/beforeunload listeners,
@@ -554,6 +555,7 @@ void TabStripModel::InternalCloseTabContentsAt(int index,
     // Closing the TabContents will later call back to us via
     // NotificationObserver and detach it.
   }
+  return true;
 }
 
 TabContents* TabStripModel::GetContentsAt(int index) const {
