@@ -573,14 +573,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\kjs\JSStaticScopeObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\kjs\JSStaticScopeObject.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\kjs\JSGlobalObjectFunctions.cpp"
 				>
 			</File>
@@ -626,6 +618,14 @@
 			</File>
 			<File
 				RelativePath="..\..\kjs\JSObject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\kjs\JSStaticScopeObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\kjs\JSStaticScopeObject.h"
 				>
 			</File>
 			<File
@@ -1109,6 +1109,10 @@
 				RelativePath="..\..\API\JSValueRef.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\API\WebKitAvailability.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Profiler"
@@ -1267,6 +1271,14 @@
 			</File>
 			<File
 				RelativePath="..\..\VM\Opcode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\VM\SamplingTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\VM\SamplingTool.h"
 				>
 			</File>
 			<File

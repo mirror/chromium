@@ -977,6 +977,8 @@ bool RenderBox::absolutePosition(int& xPos, int& yPos, bool fixed) const
         if (LayoutState* layoutState = v->layoutState()) {
             xPos = layoutState->m_offset.width() + m_x;
             yPos = layoutState->m_offset.height() + m_y;
+            if (style()->position() == RelativePosition && m_layer)
+                m_layer->relativePositionOffset(xPos, yPos);
             return true;
         }
     }
@@ -1102,6 +1104,12 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
 {
     if (RenderView* v = view()) {
         if (LayoutState* layoutState = v->layoutState()) {
+            if (style()->position() == RelativePosition && m_layer) {
+                int relX = 0;
+                int relY = 0;
+                m_layer->relativePositionOffset(relX, relY);
+                rect.move(relX, relY);
+            }
             rect.move(m_x, m_y);
             rect.move(layoutState->m_offset);
             if (layoutState->m_clipped)
@@ -2648,7 +2656,7 @@ int RenderBox::lowestPosition(bool includeOverflowInterior, bool includeSelf) co
     if (!includeSelf || !m_width)
         return 0;
     int bottom = m_height;
-    if (includeSelf && isRelPositioned())
+    if (isRelPositioned())
         bottom += relativePositionOffsetY();
     return bottom;
 }
@@ -2658,7 +2666,7 @@ int RenderBox::rightmostPosition(bool includeOverflowInterior, bool includeSelf)
     if (!includeSelf || !m_height)
         return 0;
     int right = m_width;
-    if (includeSelf && isRelPositioned())
+    if (isRelPositioned())
         right += relativePositionOffsetX();
     return right;
 }
@@ -2668,7 +2676,7 @@ int RenderBox::leftmostPosition(bool includeOverflowInterior, bool includeSelf) 
     if (!includeSelf || !m_height)
         return m_width;
     int left = 0;
-    if (includeSelf && isRelPositioned())
+    if (isRelPositioned())
         left += relativePositionOffsetX();
     return left;
 }

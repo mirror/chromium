@@ -29,7 +29,7 @@
 #include <wtf/OwnPtr.h>
 #include <wtf/Threading.h>
 #if USE(MULTIPLE_THREADS)
-#include <wtf/ThreadSpecific.h>
+#include <pthread.h>
 #endif
 
 namespace KJS {
@@ -74,6 +74,8 @@ namespace KJS {
         bool collect();
         bool isBusy(); // true if an allocation or collection is in progress
 
+        ~Heap();
+
         static const size_t minExtraCostSize = 256;
 
         void reportExtraMemoryCost(size_t cost);
@@ -111,7 +113,6 @@ namespace KJS {
 
         friend class JSGlobalData;
         Heap(JSGlobalData*);
-        ~Heap();
 
         void recordExtraCost(size_t);
         void markProtectedObjects();
@@ -131,20 +132,12 @@ namespace KJS {
         HashSet<ArgList*>* m_markListSet;
 
 #if USE(MULTIPLE_THREADS)
+        static void unregisterThread(void*);
         void unregisterThread();
-
-        class ThreadRegistrar : Noncopyable {
-        public:
-            ThreadRegistrar(Heap* heap) : m_heap(heap) {}
-            ~ThreadRegistrar() { m_heap->unregisterThread(); }
-
-        private:
-            Heap* m_heap;
-        };
 
         Mutex m_registeredThreadsMutex;
         Thread* m_registeredThreads;
-        WTF::ThreadSpecific<OwnPtr<ThreadRegistrar> > m_currentThreadRegistrar;
+        pthread_key_t m_currentThreadRegistrar;
 #endif
 
         JSGlobalData* m_globalData;

@@ -50,6 +50,7 @@
 #include "collector.h"
 #include "debugger.h"
 #include "operations.h"
+#include "SamplingTool.h"
 #include <stdio.h>
 
 #if HAVE(SYS_TIME_H)
@@ -85,8 +86,10 @@ static int depth(ScopeChain& sc)
     int scopeDepth = 0;
     ScopeChainIterator iter = sc.begin();
     ScopeChainIterator end = sc.end();
-    while (!(*iter)->isVariableObject()) {
+    while (!(*iter)->isActivationObject()) {
         ++iter;
+        if (iter == end)
+            break;
         ++scopeDepth;
     }
     return scopeDepth;
@@ -473,12 +476,8 @@ NEVER_INLINE JSValue* Machine::callEval(ExecState* exec, JSObject* thisObj, Scop
 }
 
 Machine::Machine()
-    :
-#if SAMPLING_TOOL_ENABLED
-      m_sampler(0),
-#else
-      m_reentryDepth(0)
-#endif
+    : m_sampler(0)
+    , m_reentryDepth(0)
     , m_timeoutTime(0)
     , m_timeAtLastCheckTimeout(0)
     , m_timeExecuting(0)
@@ -2372,7 +2371,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
             JSValue* thisValue = thisVal == missingThisObjectMarker() ? exec->globalThisValue() : r[thisVal].jsValue(exec);
             ArgList args(r + firstArg + 1, argCount - 1);
 
-            MACHINE_SAMPLING_callingNativeFunction();
+            MACHINE_SAMPLING_callingHostFunction();
 
             JSValue* returnValue = callData.native.function(exec, static_cast<JSObject*>(v), thisValue, args);
             VM_CHECK_EXCEPTION();
@@ -2499,6 +2498,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
                 (*enabledProfilerReference)->willExecute(exec, constructor);
 
             ArgList args(r + firstArg + 1, argCount - 1);
+
+            MACHINE_SAMPLING_callingHostFunction();
+
             JSValue* returnValue = constructData.native.function(exec, constructor, args);
 
             VM_CHECK_EXCEPTION();

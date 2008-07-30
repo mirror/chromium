@@ -1,3 +1,340 @@
+2008-07-25  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Justin.
+
+        Crash Safari when dragging images into Google presentations
+        https://bugs.webkit.org/show_bug.cgi?id=20161
+
+        Test: manual-tests/remove-on-drop-crash.html
+
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplaceSelectionCommand::doApply):
+        * manual-tests/remove-on-drop-crash.html: Added.
+
+2008-07-30  Christian Dywan  <christian@twotoasts.de>
+
+        Reviewed by Mark.
+
+        Build fix for Cairo < 1.6
+
+        * platform/graphics/cairo/PathCairo.cpp:
+        (WebCore::Path::boundingRect): use cairo_stroke_extends for < 1.6
+
+2008-07-29  Kevin McCullough  <kmccullough@apple.com>
+
+        Reviewed by Geoff.
+
+        <rdar://problem/6110314> Crash in profiler dereferencing null frame or
+        page (20214)
+        - Null check.
+
+        * page/Console.cpp:
+        (WebCore::Console::finishedProfiling):
+
+2008-07-30  David Hyatt  <hyatt@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=18070
+        
+        Full page zoom needs to work properly with JS mouse events.  Make sure to adjust the coordinates of the
+        JS mouse event to account for zoom.
+
+        Reviewed by olliej
+
+        * dom/EventTargetNode.cpp:
+        (WebCore::EventTargetNode::dispatchMouseEvent):
+
+2008-07-29  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Update Cross-site XMLHttpRequests using Access control to
+        the latest spec. (Editor's Draft 8 July 2008)
+
+        - This leaves us at about the same place as we previously were
+          still needing preflight caching and better redirect support.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * xml/AccessControlList.cpp: Removed.
+        * xml/AccessControlList.h: Removed.
+        * xml/AccessItem.cpp: Removed.
+        * xml/AccessItem.h: Removed.
+        * xml/AccessItemRule.cpp: Removed.
+        * xml/AccessItemRule.h: Removed.
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::isOnAccessControlSimpleRequestHeaderWhitelist):
+        (WebCore::XMLHttpRequest::XMLHttpRequest):
+        (WebCore::XMLHttpRequest::isSimpleCrossSiteAccessRequest):
+        (WebCore::XMLHttpRequest::makeCrossSiteAccessRequest):
+        (WebCore::XMLHttpRequest::makeSimpleCrossSiteAccessRequest):
+        (WebCore::XMLHttpRequest::makeCrossSiteAccessRequestWithPreflight):
+        (WebCore::XMLHttpRequest::handleAsynchronousPreflightResult):
+        (WebCore::XMLHttpRequest::abort):
+        (WebCore::XMLHttpRequest::clearRequest):
+        (WebCore::XMLHttpRequest::didFinishLoading):
+        (WebCore::XMLHttpRequest::didFinishLoadingPreflight):
+        (WebCore::XMLHttpRequest::accessControlCheck):
+        (WebCore::XMLHttpRequest::didReceiveResponse):
+        (WebCore::parseAccessControlAllowList):
+        (WebCore::XMLHttpRequest::didReceiveResponsePreflight):
+        * xml/XMLHttpRequest.h:
+
+2008-07-29  Kevin Calhoun  <kcalhoun@apple.com>
+
+        Reviewed by Adele.
+
+        Fix for <rdar://problem/6060647> Adopt QTMovieOpenForPlaybackAttribute flag
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm: (WebCore::MediaPlayerPrivate::createQTMovie):
+
+2008-07-29  Kevin Calhoun  <kcalhoun@apple.com>
+
+        Reviewed by Adele.
+
+        Fix for <rdar://problem/6031021> Make standalone video render more like the quicktime plugin to improve performance
+
+        For standalone video, use QTMovieView to draw.
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::MediaPlayerPrivate::createQTMovieView): Moved nil checks to setUpVideoRendering.
+         Associate the QTMovieView with the WebCoreMovieObserver.
+         If we're in a media document, allow QTMovieView to render in its default mode; otherwise tell it to draw synchronously. 
+        (WebCore::MediaPlayerPrivate::detachQTMovieView): Set the WebCoreMovieObserver's view to nil.
+        (WebCore::MediaPlayerPrivate::createQTVideoRenderer): Nil check is now in setUpVideoRendering, which is the only caller of this.
+        (WebCore::MediaPlayerPrivate::setUpVideoRendering): Added nil checks.  Call createQTMovieView for media documents.
+        (WebCore::MediaPlayerPrivate::tearDownVideoRendering): Call detachQTMovieView if a QTMovieView exists.
+        (WebCore::MediaPlayerPrivate::setRect): Call setFrame on the QTMovieView if necessary.
+        (-[WebCoreMovieObserver menuForEventDelegate:]): Added. Returns the frame view's menu.
+        (-[WebCoreMovieObserver setView:]): Added.
+
+2008-07-29  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fix for <rdar://problem/6073372> Move built-in controls below <video> element for standalone media documents
+
+        * css/CSSSelector.cpp: (WebCore::CSSSelector::extractPseudoType): Added -webkit-full-page-media pseudo class.
+        * css/CSSSelector.h: (WebCore::CSSSelector::): Added PseudoFullPageMedia.
+        * css/CSSStyleSelector.cpp: (WebCore::CSSStyleSelector::SelectorChecker::checkOneSelector): Added case to
+        apply PseudoFullPageMedia for elements in a full page media document.
+
+        * css/html4.css: Added rule to shift control panel down for video in standalone media documents.
+
+        * rendering/RenderMedia.cpp:
+        (WebCore::RenderMedia::lowestPosition): Added implementation that takes the controls into account.
+        This makes sure that scrollbars on the page will account for controls not directly contained in the RenderMedia.
+        (WebCore::RenderMedia::rightmostPosition): ditto.
+        (WebCore::RenderMedia::leftmostPosition): ditto.
+        * rendering/RenderMedia.h:
+
+2008-07-29  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        <rdar://problem/6084585> Investigate upload progress events.
+
+        - Add progress notifications for data being sent via a ResourceHandle.
+        - Add XMLHttpRequestUpload support.
+
+        Upload notifications only work on the Mac right now as the CFNetwork API
+        on windows does not expose enough information.
+
+        Tests: http/tests/xmlhttprequest/upload-onload-event.html
+               http/tests/xmlhttprequest/upload-onloadstart-event.html
+               http/tests/xmlhttprequest/upload-onprogress-event.html
+               http/tests/xmlhttprequest/upload-progress-events.html
+
+        * DerivedSources.make:
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * bindings/js/JSEventTargetBase.cpp:
+        (WebCore::toJS):
+        * bindings/js/JSXMLHttpRequestCustom.cpp:
+        (WebCore::JSXMLHttpRequest::mark):
+        * bindings/js/JSXMLHttpRequestUploadCustom.cpp: Added.
+        (WebCore::JSXMLHttpRequestUpload::mark):
+        (WebCore::JSXMLHttpRequestUpload::onabort):
+        (WebCore::JSXMLHttpRequestUpload::setOnabort):
+        (WebCore::JSXMLHttpRequestUpload::onerror):
+        (WebCore::JSXMLHttpRequestUpload::setOnerror):
+        (WebCore::JSXMLHttpRequestUpload::onload):
+        (WebCore::JSXMLHttpRequestUpload::setOnload):
+        (WebCore::JSXMLHttpRequestUpload::onloadstart):
+        (WebCore::JSXMLHttpRequestUpload::setOnloadstart):
+        (WebCore::JSXMLHttpRequestUpload::onprogress):
+        (WebCore::JSXMLHttpRequestUpload::setOnprogress):
+        (WebCore::JSXMLHttpRequestUpload::addEventListener):
+        (WebCore::JSXMLHttpRequestUpload::removeEventListener):
+        (WebCore::JSXMLHttpRequestUpload::dispatchEvent):
+        * dom/EventTarget.cpp:
+        (WebCore::EventTarget::toXMLHttpRequestUpload):
+        * dom/EventTarget.h:
+        * loader/ResourceLoader.cpp:
+        (WebCore::ResourceLoader::didSendData):
+        * loader/ResourceLoader.h:
+        * loader/SubresourceLoader.cpp:
+        (WebCore::SubresourceLoader::didSendData):
+        * loader/SubresourceLoader.h:
+        * loader/SubresourceLoaderClient.h:
+        (WebCore::SubresourceLoaderClient::didSendData):
+        * page/DOMWindow.idl:
+        * platform/network/FormData.cpp:
+        (WebCore::FormData::FormData):
+        * platform/network/FormData.h:
+        (WebCore::FormData::alwaysStream):
+        (WebCore::FormData::setAlwaysStream):
+        * platform/network/ResourceHandleClient.h:
+        (WebCore::ResourceHandleClient::didSendData):
+        * platform/network/mac/FormDataStreamMac.h:
+        * platform/network/mac/FormDataStreamMac.mm:
+        (WebCore::getStreamFormDataMap):
+        (WebCore::getStreamResourceHandleMap):
+        (WebCore::associateStreamWithResourceHandle):
+        (WebCore::disassociateStreamWithResourceHandle):
+        (WebCore::DidSendDataCallbackData::DidSendDataCallbackData):
+        (WebCore::performDidSendDataCallback):
+        (WebCore::formCreate):
+        (WebCore::formFinalize):
+        (WebCore::formRead):
+        (WebCore::setHTTPBody):
+        (WebCore::httpBodyFromStream):
+        * platform/network/mac/ResourceHandleMac.mm:
+        (WebCore::ResourceHandle::start):
+        (WebCore::ResourceHandle::cancel):
+        (-[WebCoreResourceHandleAsDelegate connection:willSendRequest:redirectResponse:]):
+        (-[WebCoreResourceHandleAsDelegate connectionDidFinishLoading:]):
+        (-[WebCoreResourceHandleAsDelegate connection:didFailWithError:]):
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::XMLHttpRequest):
+        (WebCore::XMLHttpRequest::~XMLHttpRequest):
+        (WebCore::XMLHttpRequest::upload):
+        (WebCore::XMLHttpRequest::open):
+        (WebCore::XMLHttpRequest::send):
+        (WebCore::XMLHttpRequest::createRequest):
+        (WebCore::XMLHttpRequest::abort):
+        (WebCore::XMLHttpRequest::networkError):
+        (WebCore::XMLHttpRequest::abortError):
+        (WebCore::XMLHttpRequest::didSendData):
+        * xml/XMLHttpRequest.h:
+        (WebCore::XMLHttpRequest::optionalUpload):
+        * xml/XMLHttpRequest.idl:
+        * xml/XMLHttpRequestUpload.cpp: Added.
+        (WebCore::XMLHttpRequestUpload::XMLHttpRequestUpload):
+        (WebCore::XMLHttpRequestUpload::addEventListener):
+        (WebCore::XMLHttpRequestUpload::removeEventListener):
+        (WebCore::XMLHttpRequestUpload::dispatchEvent):
+        (WebCore::XMLHttpRequestUpload::dispatchXMLHttpRequestProgressEvent):
+        (WebCore::XMLHttpRequestUpload::dispatchAbortEvent):
+        (WebCore::XMLHttpRequestUpload::dispatchErrorEvent):
+        (WebCore::XMLHttpRequestUpload::dispatchLoadEvent):
+        (WebCore::XMLHttpRequestUpload::dispatchLoadStartEvent):
+        (WebCore::XMLHttpRequestUpload::dispatchProgressEvent):
+        * xml/XMLHttpRequestUpload.h: Added.
+        (WebCore::XMLHttpRequestUpload::create):
+        (WebCore::XMLHttpRequestUpload::toXMLHttpRequestUpload):
+        (WebCore::XMLHttpRequestUpload::associatedXMLHttpRequest):
+        (WebCore::XMLHttpRequestUpload::disconnectXMLHttpRequest):
+        (WebCore::XMLHttpRequestUpload::setOnAbortListener):
+        (WebCore::XMLHttpRequestUpload::onAbortListener):
+        (WebCore::XMLHttpRequestUpload::setOnErrorListener):
+        (WebCore::XMLHttpRequestUpload::onErrorListener):
+        (WebCore::XMLHttpRequestUpload::setOnLoadListener):
+        (WebCore::XMLHttpRequestUpload::onLoadListener):
+        (WebCore::XMLHttpRequestUpload::setOnLoadStartListener):
+        (WebCore::XMLHttpRequestUpload::onLoadStartListener):
+        (WebCore::XMLHttpRequestUpload::setOnProgressListener):
+        (WebCore::XMLHttpRequestUpload::onProgressListener):
+        (WebCore::XMLHttpRequestUpload::eventListeners):
+        (WebCore::XMLHttpRequestUpload::refEventTarget):
+        (WebCore::XMLHttpRequestUpload::derefEventTarget):
+        * xml/XMLHttpRequestUpload.idl: Added.
+
+2008-07-29  Maxime Britto  <britto@apple.com>
+
+        Reviewed by Darin.
+
+        <rdar://problem/6095023> "When pan-scrolling, mouse click on hyperlink stop the pan-Scroll but follow the link after that."
+        With this patch we now stop the pan scroll and swallow the event to prevent any following action.
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::handleMousePressEvent): If we were in pan scrolling mode we no longer just stop the pan scroll and continue with the function, we now stop and return true to attest that we swallowed the event.
+
+2008-07-29  Maxime Britto  <britto@apple.com>
+
+        Reviewed by adele.
+
+        Test: fast/events/autoscroll-in-textfield.html
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::canBeProgramaticallyScrolled): reverted a bad change introduced in r35244
+        nb:the test case introduced in r35244 is still working.
+
+2008-07-29  Maxime Britto  <britto@apple.com>
+
+        Reviewed by adele.
+        This test verifies that the autoscroll works within textfields.
+
+        * fast/events/autoscroll-in-textfield-expected.txt: Added.
+        * fast/events/autoscroll-in-textfield.html: Added.
+
+2008-07-29  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Sammy Weinig.
+
+        Fix for <rdar://problem/6103024>
+        When a QT movie is loaded directly in the browser, I can't pause it by single-clicking on the video
+
+        Test: media/video-click-dlbclick-standalone.html
+
+        * loader/MediaDocument.cpp: (WebCore::MediaDocument::defaultEventHandler): For standalone media documents,
+        match the default Quicktime plugin behavior to allow clicking and double-clicking to pause and play the media.
+        * loader/MediaDocument.h: Added defaultEventHandler.
+
+        * html/HTMLMediaElement.cpp: (WebCore::HTMLMediaElement::defaultEventHandler): Return early if the event has been handled.
+        * rendering/MediaControlElements.cpp:
+        (WebCore::MediaControlMuteButtonElement::defaultEventHandler): Correct what was probably a typo.  Instead of "event->defaultHandled()",
+         it is supposed to be "event->setDefaultHandled()".
+        (WebCore::MediaControlPlayButtonElement::defaultEventHandler): ditto.
+        (WebCore::MediaControlSeekButtonElement::defaultEventHandler): ditto.
+        (WebCore::MediaControlFullscreenButtonElement::defaultEventHandler): ditto.
+
+2008-07-29  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        - fix <rdar://problem/6059648> Some content not visible when the window is short at courtneyalbright.com
+
+        Test: fast/overflow/float-in-relpositioned.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::lowestPosition): Add this block's relative offset
+        to floats' and positioned objects' lowest position.
+        (WebCore::RenderBlock::rightmostPosition): Ditto.
+        (WebCore::RenderBlock::leftmostPosition): Ditto.
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::lowestPosition): Removed redundant test.
+        (WebCore::RenderBox::rightmostPosition): Ditto.
+        (WebCore::RenderBox::leftmostPosition): Ditto.
+
+2008-07-29  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        - fix <rdar://problem/6048566> Repaint original element's position, not its offset position
+
+        Test: fast/repaint/layout-state-relative.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::absolutePosition): Changed the LayoutState-enabled
+        code path to account for the object's relative offset.
+        (WebCore::RenderBox::computeAbsoluteRepaintRect): Ditto.
+
 2008-07-29  Keishi Hattori  <casey.hattori@gmail.com>
 
         Fixed Bug 19158: Inspector should support console.group/console.groupEnd

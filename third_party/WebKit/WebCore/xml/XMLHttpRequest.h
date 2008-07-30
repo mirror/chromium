@@ -20,7 +20,6 @@
 #ifndef XMLHttpRequest_h
 #define XMLHttpRequest_h
 
-#include "AccessControlList.h"
 #include "EventListener.h"
 #include "EventTarget.h"
 #include "FormData.h"
@@ -71,6 +70,9 @@ public:
     const KJS::UString& responseText() const;
     Document* responseXML() const;
 
+    XMLHttpRequestUpload* upload();
+    XMLHttpRequestUpload* optionalUpload() const { return m_upload.get(); }
+
     void setOnReadyStateChangeListener(PassRefPtr<EventListener> eventListener) { m_onReadyStateChangeListener = eventListener; }
     EventListener* onReadyStateChangeListener() const { return m_onReadyStateChangeListener.get(); }
 
@@ -110,6 +112,7 @@ private:
     virtual void derefEventTarget() { deref(); }
 
     virtual void willSendRequest(SubresourceLoader*, ResourceRequest& request, const ResourceResponse& redirectResponse);
+    virtual void didSendData(SubresourceLoader*, unsigned long long bytesSent, unsigned long long totalBytesToBeSent);
     virtual void didReceiveResponse(SubresourceLoader*, const ResourceResponse&);
     virtual void didReceiveData(SubresourceLoader*, const char* data, int size);
     virtual void didFail(SubresourceLoader*, const ResourceError&);
@@ -152,6 +155,7 @@ private:
 
     bool isSimpleCrossSiteAccessRequest() const;
     String accessControlOrigin() const;
+    bool accessControlCheck(const ResourceResponse&);
 
     void genericError();
     void networkError();
@@ -175,12 +179,15 @@ private:
     RefPtr<EventListener> m_onProgressListener;
     EventListenersMap m_eventListeners;
 
+    RefPtr<XMLHttpRequestUpload> m_upload;
+
     KURL m_url;
     String m_method;
     HTTPHeaderMap m_requestHeaders;
     RefPtr<FormData> m_requestEntityBody;
     String m_mimeTypeOverride;
     bool m_async;
+    bool m_includeCredentials;
 
     RefPtr<SubresourceLoader> m_loader;
     State m_state;
@@ -203,13 +210,11 @@ private:
 
     bool m_error;
 
+    bool m_uploadComplete;
+
     bool m_sameOriginRequest;
     bool m_allowAccess;
     bool m_inPreflight;
-    HTTPHeaderMap m_crossSiteRequestHeaders;
-
-    // FIXME: Add support for AccessControlList in a PI in an XML document in addition to the http header.
-    OwnPtr<AccessControlList> m_httpAccessControlList;
 
     // Used for onprogress tracking
     long long m_receivedLength;

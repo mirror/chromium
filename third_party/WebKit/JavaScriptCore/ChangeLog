@@ -1,3 +1,221 @@
+2008-07-30  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Oliver.
+        
+        MSVC warns when structs are called classes or vice versa.
+        Make all the source refer to JSGlobalData as a class.
+
+        * kjs/CommonIdentifiers.h:
+        * kjs/JSGlobalData.h:
+        * kjs/Parser.h:
+        * kjs/lexer.h:
+
+2008-07-30  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        Add consistency checks to UString to document and enforce its design.
+
+        * kjs/ustring.cpp:
+        (KJS::UString::Rep::create):
+        (KJS::UString::Rep::destroy):
+        (KJS::UString::Rep::checkConsistency):
+        (KJS::UString::expandCapacity):
+        (KJS::UString::expandPreCapacity):
+        (KJS::UString::UString):
+        (KJS::UString::spliceSubstringsWithSeparators):
+        (KJS::UString::append):
+        * kjs/ustring.h:
+        (KJS::UString::Rep::checkConsistency):
+
+2008-07-30  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Fixes for Windows and non-AllInOne file build with SamplingTool, plus review fixes.
+
+        * GNUmakefile.am:              Adding SamplingTool.cpp to build.
+        * JavaScriptCore.exp:          Export hooks to init & control SamplingTool.
+        * JavaScriptCore.pri:          Adding SamplingTool.cpp to build.
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj: Adding SamplingTool.cpp to build.
+        * JavaScriptCore.xcodeproj/project.pbxproj: Adding SamplingTool.cpp to build.
+        * JavaScriptCoreSources.bkl:   Adding SamplingTool.cpp to build.
+        * VM/Machine.cpp:              MACHINE_SAMPLING_callingNativeFunction renamed MACHINE_SAMPLING_callingHostFunction
+        * VM/Machine.h:
+        * VM/Opcode.cpp:               SamplingTool moved to SamplingTool.cpp/.h, opcodeNames generated from FOR_EACH_OPCODE_ID.
+        * VM/Opcode.h:
+        * VM/SamplingTool.cpp:         Added .cpp/.h for SamplingTool.
+        * VM/SamplingTool.h:
+        * kjs/Shell.cpp:               Switched SAMPLING_TOOL_ENABLED to ENABLE_SAMPLING_TOOL.
+        * wtf/Platform.h:              Added ENABLE_SAMPLING_TOOL config option.
+        * kjs/nodes.cpp:               Header include to fix non-AllInOne builds.
+
+2008-07-30  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Fix compilation without multi-threading support.
+
+        * kjs/collector.cpp:
+        (KJS::Heap::Heap):
+
+2008-07-30  Anders Carlsson  <andersca@apple.com>
+        
+        Add WebKitAvailability.h forwarding header.
+        
+        * ForwardingHeaders/JavaScriptCore/WebKitAvailability.h: Added.
+
+2008-07-30  Anders Carlsson  <andersca@apple.com>
+
+        Fix the else.
+        
+        * API/WebKitAvailability.h:
+
+2008-07-30  Anders Carlsson  <andersca@apple.com>
+
+        * API/WebKitAvailability.h:
+        Fix Windows (and other non-Mac builds).
+        
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        Add WebKitAvailability.h to the project.
+
+2008-07-30  Anders Carlsson  <andersca@apple.com>
+
+        One step closer towards fixing the Windows build.
+        
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCoreGenerated.make:
+        Make sure to copy WebKitAvailability.h
+
+2008-07-29  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Bug 20209: Atomize constant strings
+        <https://bugs.webkit.org/show_bug.cgi?id=20209>
+
+        Prevents significant performance degradation seen when a script contains multiple
+        identical strings that are used as keys to identify properties on objects.
+
+        No performance change on SunSpider.
+
+        * kjs/nodes.cpp: Atomize constant strings.
+
+2008-07-30  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        <rdar://problem/6111648> JavaScript exceptions fail if the scope chain includes the global object
+
+        In an attempt to remove the branch I just added to KJS::depth I
+        used the existence of a Variable Object at a point in the scope
+        chain as an indicator of function or global scope activation.
+        However this assumption results in incorrect behaviour if the
+        global object is injected into the scope chain with 'with'.
+
+        * VM/Machine.cpp:
+        (KJS::depth):
+
+2008-07-30  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        Don't call JSGarbageCollect() on a released context.
+
+        * API/testapi.c: (main):
+
+2008-07-29  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        Implement JSContextGroup APIs to make concurrent execution possible for
+        JavaScriptCore clients.
+
+        This changes the behavior of JSGlobalContextCreate(), so that it now uses a private context
+        group for each context, making JSlock implicit locking unnecessary.
+
+        * API/JSContextRef.h:
+        * API/JSContextRef.cpp:
+        (JSContextGroupCreate):
+        (JSContextGroupRetain):
+        (JSContextGroupRelease):
+        (JSGlobalContextCreate):
+        (JSGlobalContextCreateInGroup):
+        (JSGlobalContextRelease):
+        (JSContextGetGroup):
+        Added new methods. JSGlobalContextCreate() calls JSGlobalContextCreateInGroup() now.
+
+        * API/APICast.h: (toJS): (toRef): Added converters for JSContextGroupRef.
+        * API/JSBase.cpp: (JSGarbageCollect): JSGarbageCollect(0) is now a no-op, and the passed in
+        context is actually used.
+
+        * API/JSBase.h: Aded a typedef for JSContextGroupRef. Updated documentation for
+        JSGarbageCollect().
+
+        * JavaScriptCore.exp: Removed JSGlobalData::sharedInstance().
+
+        * kjs/JSGlobalData.cpp:
+        * kjs/JSGlobalData.h:
+        Removed support for JSGlobalData shared instance. JSGlobalData::isSharedInstance member
+        variable still remains, to be deleted in a followup patch.
+
+        * kjs/JSLock.cpp: (KJS::JSLock::JSLock): Disabled JSLock, to be deleted in a follow-up patch.
+        
+        * kjs/collector.cpp:
+        (KJS::Heap::markOtherThreadConservatively): Removed an assertion that referenced
+        JSGlobalData::sharedInstance.
+
+        * kjs/collector.h: Made Heap destructor public, so that JSContextRelease can use it.
+
+2008-07-29  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        Fix a leak of ThreadRegistrar objects.
+
+        As the heap is usually deleted when registered threads still exist, ThreadSpecific doesn't
+        have a chance to clean up per-thread object. Switched to native pthread calls, storing a
+        plain pointer that doesn't require cleanup.
+
+        * kjs/collector.cpp:
+        (KJS::PlatformThread::PlatformThread):
+        (KJS::Heap::Thread::Thread):
+        (KJS::Heap::Heap):
+        (KJS::Heap::~Heap):
+        (KJS::Heap::registerThread):
+        (KJS::Heap::unregisterThread):
+        * kjs/collector.h:
+
+2008-07-29  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20169
+        Memory allocated with fastMalloc is freed with delete
+
+        * VM/JSPropertyNameIterator.cpp:
+        (KJS::JSPropertyNameIterator::invalidate): Free the array properly.
+        (KJS::JSPropertyNameIterator::~JSPropertyNameIterator): Delete the array by calling
+        invalidate().
+
+2008-07-29  Mark Rowe  <mrowe@apple.com>
+
+        Attempt to fix the Qt build.
+
+        * wtf/ThreadingQt.cpp: Add the extra argument to createThread.
+
+2008-07-29  Adam Roben  <aroben@apple.com>
+
+        Change Vector::find to return an index instead of an iterator
+
+        Indices are more natural than iterators when working with Vector.
+
+        Reviewed by John Sullivan.
+
+        * wtf/Vector.h:
+        (WTF::Vector::find): Changed to iterate the Vector manually and return
+        the index of the found item, rather than an iterator. When the item
+        could not be found, we return WTF::notFound.
+
 2008-07-29  Adam Roben  <aroben@apple.com>
 
         Windows build fix

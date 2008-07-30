@@ -41,6 +41,7 @@
 #include "TextResourceDecoder.h"
 #include "XMLHttpRequestException.h"
 #include "XMLHttpRequestProgressEvent.h"
+#include "XMLHttpRequestUpload.h"
 #include "markup.h"
 #include <kjs/JSLock.h>
 #include <kjs/protect.h>
@@ -115,41 +116,9 @@ static bool isSafeRequestHeader(const String& name)
            !name.startsWith(secString, false);
 }
 
-static bool isOnAccessControllRequestHeaderBlackList(const String& name)
-{
-    static HashSet<String, CaseFoldingHash> forbiddenHeaders;
-    static String proxyString("proxy-");
-    static String secString("sec-");
-    
-    if (forbiddenHeaders.isEmpty()) {
-        forbiddenHeaders.add("accept-charset");
-        forbiddenHeaders.add("accept-encoding");
-        forbiddenHeaders.add("origin");
-        forbiddenHeaders.add("authorization");
-        forbiddenHeaders.add("connection");
-        forbiddenHeaders.add("content-length");
-        forbiddenHeaders.add("content-transfer-encoding");
-        forbiddenHeaders.add("cookie");
-        forbiddenHeaders.add("cookie2");
-        forbiddenHeaders.add("date");
-        forbiddenHeaders.add("expect");
-        forbiddenHeaders.add("host");
-        forbiddenHeaders.add("keep-alive");
-        forbiddenHeaders.add("referer");
-        forbiddenHeaders.add("te");
-        forbiddenHeaders.add("trailer");
-        forbiddenHeaders.add("transfer-encoding");
-        forbiddenHeaders.add("upgrade");
-        forbiddenHeaders.add("via");
-    }
-
-    return forbiddenHeaders.contains(name) || name.startsWith(proxyString, false) ||
-           name.startsWith(secString, false);
-}
-
 static bool isOnAccessControlSimpleRequestHeaderWhitelist(const String& name)
 {
-    return equalIgnoringCase(name, "accept") || equalIgnoringCase(name, "accept-language");
+    return equalIgnoringCase(name, "accept") || equalIgnoringCase(name, "accept-language") || equalIgnoringCase(name, "content-type");
 }
 
 static bool isOnAccessControlResponseHeaderWhitelist(const String& name)
@@ -199,13 +168,14 @@ static bool isValidHeaderValue(const String& name)
 XMLHttpRequest::XMLHttpRequest(Document* doc)
     : m_doc(doc)
     , m_async(true)
+    , m_includeCredentials(false)
     , m_state(UNSENT)
     , m_identifier(std::numeric_limits<unsigned long>::max())
     , m_responseText("")
     , m_createdDocument(false)
     , m_error(false)
+    , m_uploadComplete(false)
     , m_sameOriginRequest(true)
-    , m_allowAccess(false)
     , m_inPreflight(false)
     , m_receivedLength(0)
 {
@@ -217,6 +187,9 @@ XMLHttpRequest::~XMLHttpRequest()
 {
     if (m_doc)
         removeFromRequestsByDocument(m_doc, this);
+
+    if (m_upload)
+        m_upload->disconnectXMLHttpRequest();
 }
 
 XMLHttpRequest::State XMLHttpRequest::readyState() const
@@ -254,6 +227,13 @@ Document* XMLHttpRequest::responseXML() const
     }
 
     return m_responseXML.get();
+}
+
+XMLHttpRequestUpload* XMLHttpRequest::upload()
+{
+    if (!m_upload)
+        m_upload = XMLHttpRequestUpload::create(this);
+    return m_upload.get();
 }
 
 void XMLHttpRequest::addEventListener(const AtomicString& eventType, PassRefPtr<EventListener> eventListener, bool)
@@ -331,6 +311,8 @@ void XMLHttpRequest::open(const String& method, const KURL& url, bool async, Exc
     State previousState = m_state;
     m_state = UNSENT;
     m_error = false;
+
+    m_uploadComplete = false;
 
     // clear stuff from possible previous load
     clearResponse();
@@ -436,6 +418,8 @@ void XMLHttpRequest::send(Document* document, ExceptionCode& ec)
         // FIXME: this should use value of document.inputEncoding to determine the encoding to use.
         TextEncoding encoding = UTF8Encoding();
         m_requestEntityBody = FormData::create(encoding.encode(body.characters(), body.length(), EntitiesForUnencodables));
+        if (m_upload)
+            m_requestEntityBody->setAlwaysStream(true);
     }
 
     createRequest(ec);
@@ -459,6 +443,8 @@ void XMLHttpRequest::send(const String& body, ExceptionCode& ec)
         }
 
         m_requestEntityBody = FormData::create(UTF8Encoding().encode(body.characters(), body.length(), EntitiesForUnencodables));
+        if (m_upload)
+            m_requestEntityBody->setAlwaysStream(true);
     }
 
     createRequest(ec);
@@ -481,8 +467,11 @@ void XMLHttpRequest::send(File* body, ExceptionCode& ec)
 
 void XMLHttpRequest::createRequest(ExceptionCode& ec)
 {
-    if (m_async)
+    if (m_async) {
         dispatchLoadStartEvent();
+        if (m_requestEntityBody && m_upload)
+            m_upload->dispatchLoadStartEvent();
+    }
 
     m_sameOriginRequest = m_doc->securityOrigin()->canRequest(m_url);
 
@@ -517,11 +506,11 @@ void XMLHttpRequest::makeSameOriginRequest(ExceptionCode& ec)
 
 bool XMLHttpRequest::isSimpleCrossSiteAccessRequest() const
 {
-    if (m_method != "GET")
+    if (m_method != "GET" && m_method != "POST")
         return false;
 
-    HTTPHeaderMap::const_iterator end = m_crossSiteRequestHeaders.end();
-    for (HTTPHeaderMap::const_iterator it = m_crossSiteRequestHeaders.begin(); it != end; ++it) {
+    HTTPHeaderMap::const_iterator end = m_requestHeaders.end();
+    for (HTTPHeaderMap::const_iterator it = m_requestHeaders.begin(); it != end; ++it) {
         if (!isOnAccessControlSimpleRequestHeaderWhitelist(it->first))
             return false;
     }
@@ -532,20 +521,6 @@ bool XMLHttpRequest::isSimpleCrossSiteAccessRequest() const
 void XMLHttpRequest::makeCrossSiteAccessRequest(ExceptionCode& ec)
 {
     ASSERT(!m_sameOriginRequest);
-
-    bool privilegedScript = m_doc->securityOrigin()->canLoadLocalResources();
-
-    HTTPHeaderMap::const_iterator end = m_requestHeaders.end();
-    for (HTTPHeaderMap::const_iterator it = m_requestHeaders.begin(); it != end; ++it) {
-        // A privileged script (e.g. a Dashboard widget) can send any headers.
-        if (!privilegedScript && isOnAccessControllRequestHeaderBlackList(it->first)) {
-            if (m_doc && m_doc->frame())
-                m_doc->frame()->domWindow()->console()->addMessage(JSMessageSource, ErrorMessageLevel, "Refused to send header \"" + it->first + "\" cross-domain.", 1, String());
-            continue;
-        }
-
-        m_crossSiteRequestHeaders.add(it->first, it->second); 
-    }
 
     if (isSimpleCrossSiteAccessRequest())
         makeSimpleCrossSiteAccessRequest(ec);
@@ -571,10 +546,11 @@ void XMLHttpRequest::makeSimpleCrossSiteAccessRequest(ExceptionCode& ec)
  
     ResourceRequest request(url);
     request.setHTTPMethod(m_method);
+    request.setAllowHTTPCookies(m_includeCredentials);
     request.setHTTPHeaderField("Origin", accessControlOrigin());
 
-    if (m_crossSiteRequestHeaders.size() > 0)
-        request.addHTTPHeaderFields(m_crossSiteRequestHeaders);
+    if (m_requestHeaders.size() > 0)
+        request.addHTTPHeaderFields(m_requestHeaders);
 
     if (m_async)
         loadRequestAsynchronously(request);
@@ -593,6 +569,24 @@ void XMLHttpRequest::makeCrossSiteAccessRequestWithPreflight(ExceptionCode& ec)
     ResourceRequest preflightRequest(url);
     preflightRequest.setHTTPMethod("OPTIONS");
     preflightRequest.setHTTPHeaderField("Origin", origin);
+    preflightRequest.setHTTPHeaderField("Access-Control-Request-Method", m_method);
+
+    if (m_requestHeaders.size() > 0) {
+        Vector<UChar> headerBuffer;
+        HTTPHeaderMap::const_iterator it = m_requestHeaders.begin();
+        append(headerBuffer, it->first);
+        ++it;
+
+        HTTPHeaderMap::const_iterator end = m_requestHeaders.end();
+        for (; it != end; ++it) {
+            headerBuffer.append(',');
+            headerBuffer.append(' ');
+            append(headerBuffer, it->first);
+        }
+
+        preflightRequest.setHTTPHeaderField("Access-Control-Request-Headers", String::adopt(headerBuffer));
+        preflightRequest.addHTTPHeaderFields(m_requestHeaders);
+    }
 
     if (m_async) {
         loadRequestAsynchronously(preflightRequest);
@@ -602,13 +596,17 @@ void XMLHttpRequest::makeCrossSiteAccessRequestWithPreflight(ExceptionCode& ec)
     loadRequestSynchronously(preflightRequest, ec);
     m_inPreflight = false;
 
+    if (ec)
+        return;
+
     // Send the actual request.
     ResourceRequest request(url);
     request.setHTTPMethod(m_method);
+    request.setAllowHTTPCookies(m_includeCredentials);
     request.setHTTPHeaderField("Origin", origin);
 
-    if (m_crossSiteRequestHeaders.size() > 0)
-        request.addHTTPHeaderFields(m_crossSiteRequestHeaders);
+    if (m_requestHeaders.size() > 0)
+        request.addHTTPHeaderFields(m_requestHeaders);
 
     if (m_requestEntityBody) {
         ASSERT(m_method != "GET");
@@ -631,10 +629,11 @@ void XMLHttpRequest::handleAsynchronousPreflightResult()
 
     ResourceRequest request(url);
     request.setHTTPMethod(m_method);
+    request.setAllowHTTPCookies(m_includeCredentials);
     request.setHTTPHeaderField("Origin", accessControlOrigin());
 
-    if (m_crossSiteRequestHeaders.size() > 0)
-        request.addHTTPHeaderFields(m_crossSiteRequestHeaders);
+    if (m_requestHeaders.size() > 0)
+        request.addHTTPHeaderFields(m_requestHeaders);
 
     if (m_requestEntityBody) {
         ASSERT(m_method != "GET");
@@ -704,7 +703,6 @@ void XMLHttpRequest::abort()
 
     // Clear headers as required by the spec
     m_requestHeaders.clear();
-    m_crossSiteRequestHeaders.clear();
     
     if ((m_state <= OPENED && !sendFlag) || m_state == DONE)
         m_state = UNSENT;
@@ -715,6 +713,11 @@ void XMLHttpRequest::abort()
     }
 
     dispatchAbortEvent();
+    if (!m_uploadComplete) {
+        m_uploadComplete = true;
+        if (m_upload)
+            m_upload->dispatchAbortEvent();
+    }
 }
 
 void XMLHttpRequest::internalAbort()
@@ -751,7 +754,6 @@ void XMLHttpRequest::clearResponse()
 void XMLHttpRequest::clearRequest()
 {
     m_requestHeaders.clear();
-    m_crossSiteRequestHeaders.clear();
     m_requestEntityBody = 0;
 }
 
@@ -769,12 +771,22 @@ void XMLHttpRequest::networkError()
 {
     genericError();
     dispatchErrorEvent();
+    if (!m_uploadComplete) {
+        m_uploadComplete = true;
+        if (m_upload)
+            m_upload->dispatchErrorEvent();
+    }
 }
 
 void XMLHttpRequest::abortError()
 {
     genericError();
     dispatchAbortEvent();
+    if (!m_uploadComplete) {
+        m_uploadComplete = true;
+        if (m_upload)
+            m_upload->dispatchAbortEvent();
+    }
 }
 
 void XMLHttpRequest::dropProtection()        
@@ -967,27 +979,12 @@ void XMLHttpRequest::didFail(SubresourceLoader* loader, const ResourceError& err
 
 void XMLHttpRequest::didFinishLoading(SubresourceLoader* loader)
 {
-    if (m_inPreflight) {
-        didFinishLoadingPreflight(loader);
-        return;
-    }
-
     if (m_error)
         return;
 
-    if (!m_sameOriginRequest) {
-        if (m_method == "GET") {
-            // FIXME: Do list check for PIAccessControlList for responses with XML MIME type.
-            if (!m_allowAccess) {
-                networkError();
-                return;
-            }
-        } else {
-            if (!m_allowAccess) {
-                networkError();
-                return;
-            }
-        }
+    if (m_inPreflight) {
+        didFinishLoadingPreflight(loader);
+        return;
     }
 
     ASSERT(loader == m_loader);
@@ -1021,10 +1018,7 @@ void XMLHttpRequest::didFinishLoadingPreflight(SubresourceLoader* loader)
     ASSERT(m_inPreflight);
     ASSERT(!m_sameOriginRequest);
 
-    if (!m_allowAccess) {
-        networkError();
-        return;
-    }
+    // FIXME: this can probably be moved to didReceiveResponsePreflight.
     if (m_async)
         handleAsynchronousPreflightResult();
 }
@@ -1038,6 +1032,42 @@ void XMLHttpRequest::willSendRequest(SubresourceLoader*, ResourceRequest& reques
     }
 }
 
+void XMLHttpRequest::didSendData(SubresourceLoader*, unsigned long long bytesSent, unsigned long long totalBytesToBeSent)
+{
+    if (!m_upload)
+        return;
+
+    m_upload->dispatchProgressEvent(bytesSent, totalBytesToBeSent);
+
+    if (bytesSent == totalBytesToBeSent && !m_uploadComplete) {
+        m_uploadComplete = true;
+        m_upload->dispatchLoadEvent();
+    }
+}
+
+bool XMLHttpRequest::accessControlCheck(const ResourceResponse& response)
+{
+    const String& accessControlOriginString = response.httpHeaderField("Access-Control-Origin");
+    if (accessControlOriginString == "*" && !m_includeCredentials)
+        return true;
+
+    KURL accessControlOriginURL(accessControlOriginString);
+    if (!accessControlOriginURL.isValid())
+        return false;
+
+    RefPtr<SecurityOrigin> accessControlOrigin = SecurityOrigin::create(accessControlOriginURL);
+    if (!accessControlOrigin->isSameSchemeHostPort(m_doc->securityOrigin()))
+        return false;
+
+    if (m_includeCredentials) {
+        const String& accessControlCredentialsString = response.httpHeaderField("Access-Control-Credentials");
+        if (accessControlCredentialsString != "true")
+            return false;
+    }
+
+    return true;
+}
+
 void XMLHttpRequest::didReceiveResponse(SubresourceLoader* loader, const ResourceResponse& response)
 {
     if (m_inPreflight) {
@@ -1045,10 +1075,11 @@ void XMLHttpRequest::didReceiveResponse(SubresourceLoader* loader, const Resourc
         return;
     }
 
-    if (!m_sameOriginRequest && m_method == "GET") {
-        m_httpAccessControlList.set(new AccessControlList(response.httpHeaderField("Access-Control")));
-        if (m_httpAccessControlList->checkOrigin(m_doc->securityOrigin()))
-            m_allowAccess = true;
+    if (!m_sameOriginRequest) {
+        if (!accessControlCheck(response)) {
+            networkError();
+            return;
+        }
     }
 
     m_response = response;
@@ -1057,14 +1088,59 @@ void XMLHttpRequest::didReceiveResponse(SubresourceLoader* loader, const Resourc
         m_responseEncoding = response.textEncodingName();
 }
 
+template<class HashType>
+static bool parseAccessControlAllowList(const String& string, HashSet<String, HashType> & set)
+{
+    int start = 0;
+    int end;
+    while ((end = string.find(',', start)) != -1) {
+        if (start == end)
+            return false;
+
+        // FIXME: this could be made more efficient by not not allocating twice.
+        set.add(string.substring(start, end - start).stripWhiteSpace());
+        start = end + 1;
+    }
+    if (start != static_cast<int>(string.length()))
+        set.add(string.substring(start).stripWhiteSpace());
+
+    return true;
+}
+
 void XMLHttpRequest::didReceiveResponsePreflight(SubresourceLoader*, const ResourceResponse& response)
 {
     ASSERT(m_inPreflight);
     ASSERT(!m_sameOriginRequest);
 
-    m_httpAccessControlList.set(new AccessControlList(response.httpHeaderField("Access-Control")));
-    if (m_httpAccessControlList->checkOrigin(m_doc->securityOrigin()))
-        m_allowAccess = true;
+    if (!accessControlCheck(response)) {
+        networkError();
+        return;
+    }
+
+    HashSet<String> methods;
+    if (!parseAccessControlAllowList(response.httpHeaderField("Access-Control-Allow-Methods"), methods)) {
+        networkError();
+        return;
+    }
+
+    if (!methods.contains(m_method) && m_method != "GET" && m_method != "POST") {
+        networkError();
+        return;
+    }
+
+    HashSet<String, CaseFoldingHash> headers;
+    if (!parseAccessControlAllowList(response.httpHeaderField("Access-Control-Allow-Headers"), headers)) {
+        networkError();
+        return;
+    }
+
+    HTTPHeaderMap::const_iterator end = m_requestHeaders.end();
+    for (HTTPHeaderMap::const_iterator it = m_requestHeaders.begin(); it != end; ++it) {
+        if (!headers.contains(it->first) && !isOnAccessControlSimpleRequestHeaderWhitelist(it->first)) {
+            networkError();
+            return;
+        }
+    }
 }
 
 void XMLHttpRequest::receivedCancellation(SubresourceLoader*, const AuthenticationChallenge& challenge)

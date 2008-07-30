@@ -52,10 +52,8 @@ namespace KJS {
     class UString;
     struct HashTable;
 
-    struct JSGlobalData : public RefCounted<JSGlobalData> {
-        static bool sharedInstanceExists();
-        static JSGlobalData& sharedInstance();
-
+    class JSGlobalData : public RefCounted<JSGlobalData> {
+    public:
         static PassRefPtr<JSGlobalData> create();
         ~JSGlobalData();
 
@@ -87,9 +85,7 @@ namespace KJS {
         bool isSharedInstance;
 
     private:
-        JSGlobalData(bool isShared = false);
-
-        static JSGlobalData*& sharedInstanceInternal();
+        JSGlobalData();
 
         struct DataInstance {
             DataInstance() : m_data(0) { }
