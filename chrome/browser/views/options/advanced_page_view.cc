@@ -134,6 +134,7 @@ void AdvancedPageView::ResetToDefaults() {
     prefs::kDownloadDefaultDirectory,
     prefs::kDownloadExtensionsToOpen,
     prefs::kHomePage,
+    prefs::kHomePageIsNewTabPage,
     prefs::kMixedContentFiltering,
     prefs::kPromptForDownload,
     prefs::kPasswordManagerEnabled,
