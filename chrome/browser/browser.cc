@@ -42,7 +42,6 @@
 #include "chrome/browser/browser_url_handler.h"
 #include "chrome/browser/cert_store.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
-#include "chrome/browser/frame_util.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/plugin_process_host.h"
