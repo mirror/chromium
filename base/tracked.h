@@ -105,12 +105,6 @@ class Location {
 
 
 //------------------------------------------------------------------------------
-// Define a macro to record the current source location.
-
-#define FROM_HERE tracked_objects::Location(__FUNCTION__, __FILE__, __LINE__)
-
-
-//------------------------------------------------------------------------------
 
 
 class Births;

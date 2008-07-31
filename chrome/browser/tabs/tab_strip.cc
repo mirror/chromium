@@ -166,14 +166,6 @@ class TabStrip::TabAnimation : public AnimationDelegate {
   void GenerateStartAndEndWidths(int start_tab_count, int end_tab_count) {
     tabstrip_->GetDesiredTabWidths(start_tab_count, &start_unselected_width_,
                                    &start_selected_width_);
-    double standard_tab_width =
-        static_cast<double>(TabRenderer::GetStandardSize().width());
-    if (start_tab_count < end_tab_count &&
-        start_unselected_width_ < standard_tab_width) {
-      double minimum_tab_width =
-          static_cast<double>(TabRenderer::GetMinimumSize().width());
-      start_unselected_width_ -= minimum_tab_width / start_tab_count;
-    }
     tabstrip_->GenerateIdealBounds();
     tabstrip_->GetDesiredTabWidths(end_tab_count,
                                    &end_unselected_width_,
@@ -828,9 +820,8 @@ void TabStrip::SelectTab(Tab* tab) {
 void TabStrip::CloseTab(Tab* tab) {
   int tab_index = GetIndexOfTab(tab);
   if (tab_index != -1) {
-    TabContents* contents = model_->GetTabContentsAt(tab_index);
-    if (contents)
-      UserMetrics::RecordAction(L"CloseTab_Mouse", contents->profile());
+    UserMetrics::RecordAction(L"CloseTab_Mouse",
+                              model_->GetTabContentsAt(tab_index)->profile());
     Tab* last_tab = GetTabAt(GetTabCount() - 1);
     // Limit the width available to the TabStrip for laying out Tabs, so that
     // Tabs are not resized until a later time (when the mouse pointer leaves
@@ -1264,8 +1255,8 @@ TabStrip::DropInfo::DropInfo(int drop_index, bool drop_before, bool point_down)
   arrow_window->Init(
       NULL,
       gfx::Rect(0, 0, drop_indicator_width, drop_indicator_height),
+      arrow_view,
       true);
-  arrow_window->SetContentsView(arrow_view);
 }
 
 TabStrip::DropInfo::~DropInfo() {

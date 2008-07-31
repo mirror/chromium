@@ -27,8 +27,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_BROWSER_BROWSER_H_
-#define CHROME_BROWSER_BROWSER_H_
+#ifndef CHROME_BROWSER_BROWSER_H__
+#define CHROME_BROWSER_BROWSER_H__
 
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/browser_type.h"
@@ -48,7 +48,7 @@
 #include "chrome/common/pref_member.h"
 
 class BookmarkBarView;
-class BrowserWindow;
+class ChromeFrame;
 class GoButton;
 class LocationBarView;
 class PrefService;
@@ -146,7 +146,7 @@ class Browser : public TabStripModelDelegate,
 
   Profile* profile() const { return profile_; }
 
-  BrowserWindow* window() const { return window_; }
+  ChromeFrame* frame() const { return frame_; }
 
   ToolbarModel* toolbar_model() { return &toolbar_model_; }
 
@@ -325,7 +325,7 @@ class Browser : public TabStripModelDelegate,
   virtual void ContentsZoomChange(bool zoom_in);
   virtual bool IsApplication() const;
   virtual void ConvertContentsToApplication(TabContents* source);
-  virtual void ContentsStateChanged(TabContents* source);
+  virtual void CrashedStateChanged(TabContents* source);
   virtual bool ShouldDisplayURLField();
 
   // Return this browser type.
@@ -403,10 +403,6 @@ class Browser : public TabStripModelDelegate,
 
   // Returns the root view for this browser.
   ChromeViews::RootView* GetRootView() const;
-
-  // Returns what the user's home page is, or the new tab page if the home page
-  // has not been set.
-  GURL GetHomePage();
 
   // Called when this window gains or loses window-manager-level activation.
   // is_active is whether or not the Window is now active.
@@ -521,18 +517,14 @@ class Browser : public TabStripModelDelegate,
 
   // Processes the next tab that needs it's beforeunload event fired before
   // we can proceed with closing the browser.
-  void ProcessPendingBeforeUnloadTabs();
+  void Browser::ProcessPendingBeforeUnloadTabs();
 
   // Processes the next tab that needs it's unload event fired before we can
   // proceed with closing the browser.
-  void ProcessPendingUnloadTabs();
-
-  // Cleans up state appropriately when we are trying to close the browser
-  // and a tab crashes in it's beforeunload/unload handler.
-  void ClearUnloadStateOnCrash(TabContents* tab);
+  void Browser::ProcessPendingUnloadTabs();
 
   // The frame
-  BrowserWindow* window_;
+  ChromeFrame* frame_;
 
   // Controls how the window will appear when Show() is called. This is one
   // of the SW_* constants passed to ShowWindow, and will be initialized in the
@@ -588,7 +580,7 @@ class Browser : public TabStripModelDelegate,
   ScopedRunnableMethodFactory<Browser> chrome_updater_factory_;
 
   // The following factory is used to close the frame at a later time.
-  ScopedRunnableMethodFactory<Browser> method_factory_;
+  ScopedRunnableMethodFactory<Browser> frame_method_factory_;
 
   // This object is used to perform periodic actions in a worker
   // thread. It is currently used to monitor hung plugin windows.
@@ -638,4 +630,4 @@ class Browser : public TabStripModelDelegate,
   DISALLOW_EVIL_CONSTRUCTORS(Browser);
 };
 
-#endif  // CHROME_BROWSER_BROWSER_H_
+#endif  // CHROME_BROWSER_BROWSER_H__

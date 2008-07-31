@@ -275,7 +275,7 @@ WebContents::~WebContents() {
 void WebContents::CreateView(HWND parent_hwnd,
                              const gfx::Rect& initial_bounds) {
   set_delete_on_destroy(false);
-  HWNDViewContainer::Init(parent_hwnd, initial_bounds, false);
+  HWNDViewContainer::Init(parent_hwnd, initial_bounds, NULL, false);
 
   // Remove the root view drop target so we can register our own.
   RevokeDragDrop(GetHWND());
@@ -1023,12 +1023,9 @@ void WebContents::OnCrossSiteResponse(int new_render_process_host_id,
   if (IsShowingInterstitialPage()) {
     DCHECK(original_render_view_host_);
     original_render_view_host_->ClosePage(new_render_process_host_id,
-                                          new_request_id,
-                                          false); // is_closing_browser
+                                          new_request_id);
   } else {
-    render_view_host_->ClosePage(new_render_process_host_id,
-                                 new_request_id,
-                                 false); // is_closing_browser
+    render_view_host_->ClosePage(new_render_process_host_id, new_request_id);
   }
 
   // ResourceDispatcherHost has told us to run the onunload handler, which
@@ -2975,8 +2972,8 @@ HWND WebContents::GetContentHWND() {
 bool WebContents::CanDisplayFile(const std::wstring& full_path) {
   bool allow_wildcard = false;
   std::string mime_type;
-  net::GetMimeTypeFromFile(full_path, &mime_type);
-  if (net::IsSupportedMimeType(mime_type) ||
+  mime_util::GetMimeTypeFromFile(full_path, &mime_type);
+  if (mime_util::IsSupportedMimeType(mime_type) ||
       (PluginService::GetInstance() &&
        PluginService::GetInstance()->HavePluginFor(mime_type, allow_wildcard)))
     return true;

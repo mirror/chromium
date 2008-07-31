@@ -162,10 +162,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\bzip2_error_handler.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\third_party\nss\blapi.h"
 			>
 		</File>

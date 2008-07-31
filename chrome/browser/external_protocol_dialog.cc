@@ -105,10 +105,6 @@ bool ExternalProtocolDialog::Accept() {
   return true;
 }
 
-ChromeViews::View* ExternalProtocolDialog::GetContentsView() {
-  return message_box_view_;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // ExternalProtocolDialog, private:
 
@@ -139,7 +135,11 @@ ExternalProtocolDialog::ExternalProtocolDialog(TabContents* tab_contents,
     root_hwnd = NULL;
   }
 
-  ChromeViews::Window::CreateChromeWindow(root_hwnd, gfx::Rect(), this)->Show();
+  ChromeViews::Window* dialog =
+      ChromeViews::Window::CreateChromeWindow(root_hwnd, gfx::Rect(),
+                                              message_box_view_, this);
+
+  dialog->Show();
 }
 
 std::wstring ExternalProtocolDialog::GetApplicationForProtocol() {

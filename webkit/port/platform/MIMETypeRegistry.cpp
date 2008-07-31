@@ -71,13 +71,13 @@ String MIMETypeRegistry::getMIMETypeForPath(const String& path)
 bool MIMETypeRegistry::isSupportedImageMIMEType(const String& mimeType)
 { 
     return !mimeType.isEmpty()
-        && net::IsSupportedImageMimeType(mimeType.latin1().data()); 
+        && mime_util::IsSupportedImageMimeType(mimeType.latin1().data()); 
 }
 
 bool MIMETypeRegistry::isSupportedJavaScriptMIMEType(const String& mimeType)
 {
     return !mimeType.isEmpty()
-        && net::IsSupportedJavascriptMimeType(mimeType.latin1().data()); 
+        && mime_util::IsSupportedJavascriptMimeType(mimeType.latin1().data()); 
 }
 
 bool MIMETypeRegistry::isSupportedImageResourceMIMEType(const String& mimeType)
@@ -88,7 +88,7 @@ bool MIMETypeRegistry::isSupportedImageResourceMIMEType(const String& mimeType)
 bool MIMETypeRegistry::isSupportedNonImageMIMEType(const String& mimeType)
 {
    return !mimeType.isEmpty()
-       && net::IsSupportedNonImageMimeType(mimeType.latin1().data()); 
+       && mime_util::IsSupportedNonImageMimeType(mimeType.latin1().data()); 
 }
 
 bool MIMETypeRegistry::isJavaAppletMIMEType(const String& mimeType)

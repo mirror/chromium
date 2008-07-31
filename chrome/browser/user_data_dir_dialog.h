@@ -67,7 +67,6 @@ class UserDataDirDialog : public ChromeViews::DialogDelegate,
   // ChromeViews::WindowDelegate Methods:
   virtual bool IsAlwaysOnTop() const { return false; }
   virtual bool IsModal() const { return false; }
-  virtual ChromeViews::View* GetContentsView();
 
   // MessageLoop::Dispatcher Method:
   virtual bool Dispatch(const MSG& msg);
@@ -83,6 +82,7 @@ class UserDataDirDialog : public ChromeViews::DialogDelegate,
   std::wstring user_data_dir_;
 
   MessageBoxView* message_box_view_;
+  ChromeViews::Window* message_box_window_;
   scoped_refptr<SelectFileDialog> select_file_dialog_;
 
   // Used to keep track of whether or not to block the message loop (still

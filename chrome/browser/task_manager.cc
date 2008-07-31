@@ -823,7 +823,7 @@ void TaskManager::RegisterPrefs(PrefService* prefs) {
   prefs->RegisterDictionaryPref(prefs::kTaskManagerWindowPlacement);
 }
 
-TaskManager::TaskManager() {
+TaskManager::TaskManager() : window_(NULL) {
   table_model_ = new TaskManagerTableModel(this);
   contents_.reset(new TaskManagerContents(this, table_model_));
 }
@@ -834,16 +834,19 @@ TaskManager::~TaskManager() {
 // static
 void TaskManager::Open() {
   TaskManager* task_manager = GetInstance();
-  if (task_manager->window()) {
-    task_manager->window()->MoveToFront(true);
+  if (task_manager->window_) {
+    task_manager->window_->MoveToFront(true);
   } else {
-    ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), task_manager);
+    task_manager->window_ =
+        ChromeViews::Window::CreateChromeWindow(
+            NULL, gfx::Rect(), task_manager->contents_.get(), task_manager);
     task_manager->table_model_->StartUpdating();
-    task_manager->window()->Show();
+    task_manager->window_->Show();
   }
 }
 
 void TaskManager::Close() {
+  window_ = NULL;
   table_model_->StopUpdating();
   table_model_->Clear();
 }
@@ -920,15 +923,15 @@ std::wstring TaskManager::GetWindowTitle() const {
 void TaskManager::SaveWindowPosition(const CRect& bounds,
                                      bool maximized,
                                      bool always_on_top) {
-  window()->SaveWindowPositionToPrefService(g_browser_process->local_state(),
-                                            prefs::kTaskManagerWindowPlacement,
-                                            bounds, maximized, always_on_top);
+  window_->SaveWindowPositionToPrefService(g_browser_process->local_state(),
+                                           prefs::kTaskManagerWindowPlacement,
+                                           bounds, maximized, always_on_top);
 }
 
 bool TaskManager::RestoreWindowPosition(CRect* bounds,
                                         bool* maximized,
                                         bool* always_on_top) {
-  return window()->RestoreWindowPositionFromPrefService(
+  return window_->RestoreWindowPositionFromPrefService(
       g_browser_process->local_state(),
       prefs::kTaskManagerWindowPlacement,
       bounds, maximized, always_on_top);
@@ -944,10 +947,6 @@ void TaskManager::WindowClosing() {
   // non-client view.
   contents_->GetParent()->RemoveChildView(contents_.get());
   Close();
-}
-
-ChromeViews::View* TaskManager::GetContentsView() {
-  return contents_.get();
 }
 
 // static

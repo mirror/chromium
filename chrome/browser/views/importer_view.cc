@@ -44,7 +44,8 @@ using ChromeViews::ColumnSet;
 using ChromeViews::GridLayout;
 
 ImporterView::ImporterView(Profile* profile)
-    : import_from_label_(NULL),
+    : dialog_(NULL),
+      import_from_label_(NULL),
       profile_combobox_(NULL),
       import_items_label_(NULL),
       history_checkbox_(NULL),
@@ -168,10 +169,6 @@ bool ImporterView::Accept() {
   return false;
 }
 
-ChromeViews::View* ImporterView::GetContentsView() {
-  return this;
-}
-
 int ImporterView::GetItemCount(ChromeViews::ComboBox* source) {
   DCHECK(source == profile_combobox_);
   DCHECK(importer_host_.get());
@@ -191,7 +188,7 @@ void ImporterView::ImportCanceled() {
 
 void ImporterView::ImportComplete() {
   // Now close this window since the import completed or was canceled.
-  window()->Close();
+  dialog_->Close();
 }
 
 ChromeViews::CheckBox* ImporterView::InitCheckbox(

@@ -52,8 +52,7 @@ void DiskCacheTestBase::InitCache() {
     InitDiskCache();
 
   ASSERT_TRUE(NULL != cache_);
-  if (first_cleanup_)
-    ASSERT_EQ(0, cache_->GetEntryCount());
+  ASSERT_EQ(0, cache_->GetEntryCount());
 }
 
 void DiskCacheTestBase::InitMemoryCache() {
@@ -74,8 +73,7 @@ void DiskCacheTestBase::InitMemoryCache() {
 
 void DiskCacheTestBase::InitDiskCache() {
   std::wstring path = GetCachePath();
-  if (first_cleanup_)
-    ASSERT_TRUE(DeleteCache(path.c_str()));
+  ASSERT_TRUE(DeleteCache(path.c_str()));
 
   if (!implementation_) {
     cache_ = disk_cache::CreateCacheBackend(path, force_creation_, size_);
@@ -125,9 +123,4 @@ void DiskCacheTestBase::SimulateCrash() {
   if (size_)
     cache_impl_->SetMaxSize(size_);
   ASSERT_TRUE(cache_impl_->Init());
-}
-
-void DiskCacheTestBase::SetTestMode() {
-  ASSERT_TRUE(implementation_ && !memory_only_);
-  cache_impl_->SetUnitTestMode();
 }

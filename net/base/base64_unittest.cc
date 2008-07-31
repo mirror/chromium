@@ -44,11 +44,11 @@ TEST(Base64Test, Basic) {
   std::string encoded, decoded;
   bool ok;
 
-  ok = net::Base64Encode(kText, &encoded);
+  ok = Base64Encode(kText, &encoded);
   EXPECT_TRUE(ok);
   EXPECT_EQ(kBase64Text, encoded);
 
-  ok = net::Base64Decode(encoded, &decoded);
+  ok = Base64Decode(encoded, &decoded);
   EXPECT_TRUE(ok);
   EXPECT_EQ(kText, decoded);
 }

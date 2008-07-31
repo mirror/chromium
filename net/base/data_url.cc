@@ -38,9 +38,7 @@
 #include "net/base/base64.h"
 #include "net/base/escape.h"
 
-namespace net {
-
-// static
+/*static*/
 bool DataURL::Parse(const GURL& url, std::string* mime_type,
                     std::string* charset, std::string* data) {
   std::string::const_iterator begin = url.spec().begin();
@@ -121,5 +119,3 @@ bool DataURL::Parse(const GURL& url, std::string* mime_type,
   temp_data.swap(*data);
   return true;
 }
-
-}  // namespace net

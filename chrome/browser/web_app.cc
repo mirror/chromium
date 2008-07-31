@@ -58,7 +58,7 @@ static std::set<GURL> ExtractImageURLs(const GearsShortcutData& data) {
 static SkBitmap DecodePNGEncodedURL(const GURL& url) {
   std::string mime_type, charset, data;
   if (!url.SchemeIs("data") ||
-      !net::DataURL::Parse(url, &mime_type, &charset, &data) ||
+      !DataURL::Parse(url, &mime_type, &charset, &data) ||
       mime_type != kPNGImageMimeType) {
     return SkBitmap();
   }

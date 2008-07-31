@@ -61,22 +61,30 @@ class Window : public HWNDViewContainer {
   //             ChromeViews. Users in browser/ should always construct with
   //             CreateChromeWindow which will give the right version,
   //             depending on platform & configuration.
-  // Create a Window using the specified delegate. The delegate must not be
-  // NULL.
-  explicit Window(WindowDelegate* window_delegate);
+  Window();
   virtual ~Window();
 
   // Creates the appropriate Window class for a Chrome dialog or window. This
   // means a ChromeWindow or a standard Windows frame.
   static Window* CreateChromeWindow(HWND parent,
                                     const gfx::Rect& bounds,
+                                    View* contents_view,
                                     WindowDelegate* window_delegate);
 
   // Create the Window.
   // If parent is NULL, this Window is top level on the desktop.
+  // |contents_view| is a ChromeView that will be displayed in the client area
+  // of the Window, as the sole child view of the RootView.
+  // |window_delegate| is an object implementing WindowDelegate that can perform
+  // controller-like tasks for this window, such as obtaining its preferred
+  // placement and state from preferences (which override the default position
+  // and size specified in |bounds|) and executing commands. Can be NULL.
   // If |bounds| is empty, the view is queried for its preferred size and
   // centered on screen.
-  virtual void Init(HWND parent, const gfx::Rect& bounds);
+  void Init(HWND parent,
+            const gfx::Rect& bounds,
+            View* contents_view,
+            WindowDelegate* window_delegate);
 
   // Return the size of window (including non-client area) required to contain
   // a window of the specified client size.
@@ -173,6 +181,11 @@ class Window : public HWNDViewContainer {
  protected:
   virtual void SizeWindowToDefault();
 
+  // Sets-up the focus manager with the view that should have focus when the
+  // window is shown the first time.  If NULL is returned, the focus goes to the
+  // button if there is one, otherwise the to the Cancel button.
+  void SetInitialFocus();
+
   // Overridden from HWNDViewContainer:
   virtual void OnActivate(UINT action, BOOL minimized, HWND window);
   virtual void OnCommand(UINT notification_code, int command_id, HWND window);
@@ -193,15 +206,6 @@ class Window : public HWNDViewContainer {
  private:
   // Set the window as modal (by disabling all the other windows).
   void BecomeModal();
-
-  // Sets-up the focus manager with the view that should have focus when the
-  // window is shown the first time.  If NULL is returned, the focus goes to the
-  // button if there is one, otherwise the to the Cancel button.
-  void SetInitialFocus();
-
-  // Place and size the window when it is created. |create_bounds| are the
-  // bounds used when the window was created.
-  void SetInitialBounds(const gfx::Rect& create_bounds);
 
   // Add an item for "Always on Top" to the System Menu.
   void AddAlwaysOnTopSystemMenuItem();

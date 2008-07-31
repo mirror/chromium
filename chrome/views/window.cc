@@ -55,11 +55,11 @@ static const int kMonitorEdgePadding = 10;
 ////////////////////////////////////////////////////////////////////////////////
 // Window, public:
 
-Window::Window(WindowDelegate* window_delegate)
+Window::Window()
     : HWNDViewContainer(),
       focus_on_creation_(true),
-      window_delegate_(window_delegate),
       client_view_(NULL),
+      window_delegate_(NULL),
       owning_hwnd_(NULL),
       minimum_size_(100, 100),
       is_modal_(false),
@@ -69,8 +69,6 @@ Window::Window(WindowDelegate* window_delegate)
       accepted_(false),
       window_closed_(false) {
   InitClass();
-  DCHECK(window_delegate_);
-  window_delegate_->window_.reset(this);
   // Initialize these values to 0 so that subclasses can override the default
   // behavior before calling Init.
   set_window_style(0);
@@ -85,27 +83,34 @@ Window::~Window() {
 // static
 Window* Window::CreateChromeWindow(HWND parent,
                                    const gfx::Rect& bounds,
+                                   View* contents_view,
                                    WindowDelegate* window_delegate) {
-  Window* window = NULL;
   if (win_util::ShouldUseVistaFrame()) {
-    window = new Window(window_delegate);
-  } else {
-    window = new CustomFrameWindow(window_delegate);
+    Window* window = new Window;
+    window->Init(parent, bounds, contents_view, window_delegate);
+    return window;
   }
-  window->Init(parent, bounds);
+  CustomFrameWindow* window = new CustomFrameWindow;
+  window->Init(parent, bounds, contents_view, window_delegate);
   return window;
 }
 
-void Window::Init(HWND parent, const gfx::Rect& bounds) {
+void Window::Init(HWND parent,
+                  const gfx::Rect& bounds,
+                  View* contents_view,
+                  WindowDelegate* window_delegate) {
+  window_delegate_ = window_delegate;
   // We need to save the parent window, since later calls to GetParent() will
   // return NULL.
   owning_hwnd_ = parent;
   // We call this after initializing our members since our implementations of
   // assorted HWNDViewContainer functions may be called during initialization.
-  is_modal_ = window_delegate_->IsModal();
-  if (is_modal_)
-    BecomeModal();
-  is_always_on_top_ = window_delegate_->IsAlwaysOnTop();
+  if (window_delegate_) {
+    is_modal_ = window_delegate_->IsModal();
+    if (is_modal_)
+      BecomeModal();
+    is_always_on_top_ = window_delegate_->IsAlwaysOnTop();
+  }
 
   if (window_style() == 0)
     set_window_style(CalculateWindowStyle());
@@ -115,27 +120,61 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   // A child window never owns its own focus manager, it uses the one
   // associated with the root of the window tree...
   if (use_client_view_) {
-    View* contents_view = window_delegate_->GetContentsView();
-    DCHECK(contents_view);
     client_view_ = new ClientView(this, contents_view);
     // A Window almost always owns its own focus manager, even if it's a child
     // window. File a bug if you find a circumstance where this isn't the case
     // and we can adjust this API.  Note that if this is not the case, you'll
     // also have to change SetInitialFocus() as it relies on the window's focus
     // manager.
-    HWNDViewContainer::Init(parent, bounds, true);
-    SetContentsView(client_view_);
+    HWNDViewContainer::Init(parent, bounds, client_view_, true);
   } else {
-    HWNDViewContainer::Init(parent, bounds, true);
-    SetContentsView(window_delegate_->GetContentsView());
+    HWNDViewContainer::Init(parent, bounds, contents_view, true);
   }
-  win_util::SetWindowUserData(GetHWND(), this);
-  
-  std::wstring window_title = window_delegate_->GetWindowTitle();
-  SetWindowText(GetHWND(), window_title.c_str());
-  SetInitialBounds(bounds);
 
-  if (window_delegate_->HasAlwaysOnTopMenu())
+  if (window_delegate_) {
+    std::wstring window_title = window_delegate_->GetWindowTitle();
+    SetWindowText(GetHWND(), window_title.c_str());
+  }
+
+  win_util::SetWindowUserData(GetHWND(), this);
+
+  // Restore the window's placement from the controller.
+  CRect saved_bounds(0, 0, 0, 0);
+  bool maximized = false;
+  if (window_delegate_ &&
+      window_delegate_->RestoreWindowPosition(&saved_bounds,
+                                              &maximized,
+                                              &is_always_on_top_)) {
+    // Make sure the bounds are at least the minimum size.
+    if (saved_bounds.Width() < minimum_size_.cx) {
+      saved_bounds.SetRect(saved_bounds.left, saved_bounds.top,
+                           saved_bounds.right + minimum_size_.cx -
+                              saved_bounds.Width(),
+                           saved_bounds.bottom);
+    }
+
+    if (saved_bounds.Height() < minimum_size_.cy) {
+      saved_bounds.SetRect(saved_bounds.left, saved_bounds.top,
+                           saved_bounds.right,
+                           saved_bounds.bottom + minimum_size_.cy -
+                              saved_bounds.Height());
+    }
+
+    WINDOWPLACEMENT placement = {0};
+    placement.length = sizeof(WINDOWPLACEMENT);
+    placement.rcNormalPosition = saved_bounds;
+    if (maximized)
+      placement.showCmd = SW_SHOWMAXIMIZED;
+    ::SetWindowPlacement(GetHWND(), &placement);
+
+    if (is_always_on_top_ != window_delegate_->IsAlwaysOnTop())
+      AlwaysOnTopChanged();
+  } else if (bounds.IsEmpty()) {
+    // Size the window to the content and center over the parent.
+    SizeWindowToDefault();
+  }
+
+  if (window_delegate_ && window_delegate->HasAlwaysOnTopMenu())
     AddAlwaysOnTopSystemMenuItem();
 }
 
@@ -204,7 +243,7 @@ void Window::Close() {
   // process of being closed. Furthermore, if we have only an OK button, but no
   // Cancel button, and we're closing without being accepted, call Accept to
   // see if we should close.
-  if (!accepted_) {
+  if (!accepted_ && window_delegate_) {
     DialogDelegate* dd = window_delegate_->AsDialogDelegate();
     if (dd) {
       int buttons = dd->GetDialogButtons();
@@ -263,9 +302,11 @@ void Window::UpdateDialogButtons() {
 
 void Window::AcceptWindow() {
   accepted_ = true;
-  DialogDelegate* dd = window_delegate_->AsDialogDelegate();
-  if (dd)
-    accepted_ = dd->Accept(false);
+  if (window_delegate_) {
+    DialogDelegate* dd = window_delegate_->AsDialogDelegate();
+    if (dd)
+      accepted_ = dd->Accept(false);
+  }
   if (accepted_)
     Close();
 }
@@ -278,8 +319,10 @@ void Window::CancelWindow() {
 }
 
 void Window::UpdateWindowTitle() {
-  std::wstring window_title = window_delegate_->GetWindowTitle();
-  SetWindowText(GetHWND(), window_title.c_str());
+  if (window_delegate_) {
+    std::wstring window_title = window_delegate_->GetWindowTitle();
+    SetWindowText(GetHWND(), window_title.c_str());
+  }
 }
 
 // static
@@ -363,6 +406,40 @@ void Window::SizeWindowToDefault() {
   }
 }
 
+void Window::SetInitialFocus() {
+  if (!focus_on_creation_)
+    return;
+
+  bool focus_set = false;
+  if (window_delegate_) {
+    ChromeViews::View* v = window_delegate_->GetInitiallyFocusedView();
+    // For dialogs, try to focus either the OK or Cancel buttons if any.
+    if (!v && window_delegate_->AsDialogDelegate() && client_view_) {
+      if (client_view_->ok_button())
+        v = client_view_->ok_button();
+      else if (client_view_->cancel_button())
+        v = client_view_->cancel_button();
+    }
+    if (v) {
+      focus_set = true;
+      // In order to make that view the initially focused one, we make it the
+      // focused view on the focus manager and we store the focused view.
+      // When the window is activated, the focus manager will restore the
+      // stored focused view.
+      FocusManager* focus_manager = FocusManager::GetFocusManager(GetHWND());
+      DCHECK(focus_manager);
+      focus_manager->SetFocusedView(v);
+      focus_manager->StoreFocusedView();
+    }
+  }
+
+  if (!focus_set && focus_on_creation_) {
+    // The window does not get keyboard messages unless we focus it, not sure
+    // why.
+    SetFocus(GetHWND());
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Window, HWNDViewContainer overrides:
 
@@ -372,7 +449,8 @@ void Window::OnActivate(UINT action, BOOL minimized, HWND window) {
 }
 
 void Window::OnCommand(UINT notification_code, int command_id, HWND window) {
-  window_delegate_->ExecuteWindowsCommand(command_id);
+  if (window_delegate_)
+    window_delegate_->ExecuteWindowsCommand(command_id);
 }
 
 void Window::OnDestroy() {
@@ -466,75 +544,6 @@ void Window::BecomeModal() {
   }
 }
 
-void Window::SetInitialFocus() {
-  if (!focus_on_creation_)
-    return;
-
-  bool focus_set = false;
-  ChromeViews::View* v = window_delegate_->GetInitiallyFocusedView();
-  // For dialogs, try to focus either the OK or Cancel buttons if any.
-  if (!v && window_delegate_->AsDialogDelegate() && client_view_) {
-    if (client_view_->ok_button())
-      v = client_view_->ok_button();
-    else if (client_view_->cancel_button())
-      v = client_view_->cancel_button();
-  }
-  if (v) {
-    focus_set = true;
-    // In order to make that view the initially focused one, we make it the
-    // focused view on the focus manager and we store the focused view.
-    // When the window is activated, the focus manager will restore the
-    // stored focused view.
-    FocusManager* focus_manager = FocusManager::GetFocusManager(GetHWND());
-    DCHECK(focus_manager);
-    focus_manager->SetFocusedView(v);
-    focus_manager->StoreFocusedView();
-  }
-
-  if (!focus_set && focus_on_creation_) {
-    // The window does not get keyboard messages unless we focus it, not sure
-    // why.
-    SetFocus(GetHWND());
-  }
-}
-
-void Window::SetInitialBounds(const gfx::Rect& create_bounds) {
-  // Restore the window's placement from the controller.
-  CRect saved_bounds(0, 0, 0, 0);
-  bool maximized = false;
-  if (window_delegate_->RestoreWindowPosition(&saved_bounds,
-                                              &maximized,
-                                              &is_always_on_top_)) {
-    // Make sure the bounds are at least the minimum size.
-    if (saved_bounds.Width() < minimum_size_.cx) {
-      saved_bounds.SetRect(saved_bounds.left, saved_bounds.top,
-                           saved_bounds.right + minimum_size_.cx -
-                              saved_bounds.Width(),
-                           saved_bounds.bottom);
-    }
-
-    if (saved_bounds.Height() < minimum_size_.cy) {
-      saved_bounds.SetRect(saved_bounds.left, saved_bounds.top,
-                           saved_bounds.right,
-                           saved_bounds.bottom + minimum_size_.cy -
-                              saved_bounds.Height());
-    }
-
-    WINDOWPLACEMENT placement = {0};
-    placement.length = sizeof(WINDOWPLACEMENT);
-    placement.rcNormalPosition = saved_bounds;
-    if (maximized)
-      placement.showCmd = SW_SHOWMAXIMIZED;
-    ::SetWindowPlacement(GetHWND(), &placement);
-
-    if (is_always_on_top_ != window_delegate_->IsAlwaysOnTop())
-      AlwaysOnTopChanged();
-  } else if (create_bounds.IsEmpty()) {
-    // Size the window to the content and center over the parent.
-    SizeWindowToDefault();
-  }
-}
-
 void Window::AddAlwaysOnTopSystemMenuItem() {
   // The Win32 API requires that we own the text.
   always_on_top_menu_text_ = l10n_util::GetString(IDS_ALWAYS_ON_TOP);
@@ -587,49 +596,57 @@ void Window::AlwaysOnTopChanged() {
 }
 
 DWORD Window::CalculateWindowStyle() {
-  DWORD window_styles = WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_SYSMENU;
-  bool can_resize = window_delegate_->CanResize();
-  bool can_maximize = window_delegate_->CanMaximize();
-  if ((can_resize && can_maximize) || can_maximize) {
-    window_styles |= WS_OVERLAPPEDWINDOW;
-  } else if (can_resize) {
-    window_styles |= WS_OVERLAPPED | WS_THICKFRAME;
+  if (window_delegate_) {
+    DWORD window_styles = WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_SYSMENU;
+    bool can_resize = window_delegate_->CanResize();
+    bool can_maximize = window_delegate_->CanMaximize();
+    if ((can_resize && can_maximize) || can_maximize) {
+      window_styles |= WS_OVERLAPPEDWINDOW;
+    } else if (can_resize) {
+      window_styles |= WS_OVERLAPPED | WS_THICKFRAME;
+    }
+    if (window_delegate_->AsDialogDelegate()) {
+      window_styles |= DS_MODALFRAME;
+      // NOTE: Turning this off means we lose the close button, which is bad.
+      // Turning it on though means the user can maximize or size the window
+      // from the system menu, which is worse. We may need to provide our own
+      // menu to get the close button to appear properly.
+      // window_styles &= ~WS_SYSMENU;
+    }
+    return window_styles;
   }
-  if (window_delegate_->AsDialogDelegate()) {
-    window_styles |= DS_MODALFRAME;
-    // NOTE: Turning this off means we lose the close button, which is bad.
-    // Turning it on though means the user can maximize or size the window
-    // from the system menu, which is worse. We may need to provide our own
-    // menu to get the close button to appear properly.
-    // window_styles &= ~WS_SYSMENU;
-  }
-  return window_styles;
+  return window_style();
 }
 
 DWORD Window::CalculateWindowExStyle() {
-  DWORD window_ex_styles = 0;
-  if (window_delegate_->AsDialogDelegate()) {
-    window_ex_styles |= WS_EX_DLGMODALFRAME;
-  } else if (!(window_style() & WS_CHILD)) {
-    window_ex_styles |= WS_EX_APPWINDOW;
+  if (window_delegate_) {
+    DWORD window_ex_styles = 0;
+    if (window_delegate_->AsDialogDelegate()) {
+      window_ex_styles |= WS_EX_DLGMODALFRAME;
+    } else if (!(window_style() & WS_CHILD)) {
+      window_ex_styles |= WS_EX_APPWINDOW;
+    }
+    if (window_delegate_->IsAlwaysOnTop())
+      window_ex_styles |= WS_EX_TOPMOST;
+    return window_ex_styles;
   }
-  if (window_delegate_->IsAlwaysOnTop())
-    window_ex_styles |= WS_EX_TOPMOST;
-  return window_ex_styles;
+  return window_ex_style();
 }
 
 void Window::SaveWindowPosition() {
-  WINDOWPLACEMENT win_placement = { 0 };
-  win_placement.length = sizeof(WINDOWPLACEMENT);
+  if (window_delegate_) {
+    WINDOWPLACEMENT win_placement = { 0 };
+    win_placement.length = sizeof(WINDOWPLACEMENT);
 
-  BOOL r = GetWindowPlacement(GetHWND(), &win_placement);
-  DCHECK(r);
+    BOOL r = GetWindowPlacement(GetHWND(), &win_placement);
+    DCHECK(r);
 
-  bool maximized = (win_placement.showCmd == SW_SHOWMAXIMIZED);
-  CRect window_bounds(win_placement.rcNormalPosition);
-  window_delegate_->SaveWindowPosition(window_bounds,
-                                       maximized,
-                                       is_always_on_top_);
+    bool maximized = (win_placement.showCmd == SW_SHOWMAXIMIZED);
+    CRect window_bounds(win_placement.rcNormalPosition);
+    window_delegate_->SaveWindowPosition(window_bounds,
+                                         maximized,
+                                         is_always_on_top_);
+  }
 }
 
 void Window::InitClass() {

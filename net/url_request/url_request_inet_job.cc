@@ -141,16 +141,17 @@ void URLRequestInetJob::Kill() {
 
 void URLRequestInetJob::SetAuth(const wstring& username,
                                 const wstring& password) {
-  DCHECK((proxy_auth_ && proxy_auth_->state == net::AUTH_STATE_NEED_AUTH) ||
-         (server_auth_ && server_auth_->state == net::AUTH_STATE_NEED_AUTH));
+  DCHECK((proxy_auth_ != NULL && proxy_auth_->state == AUTH_STATE_NEED_AUTH) ||
+         (server_auth_ != NULL &&
+         (server_auth_->state == AUTH_STATE_NEED_AUTH)));
 
   // Proxy gets set first, then WWW.
-  net::AuthData* auth =
-    (proxy_auth_ && proxy_auth_->state == net::AUTH_STATE_NEED_AUTH ?
+  AuthData* auth =
+    (proxy_auth_ != NULL && proxy_auth_->state == AUTH_STATE_NEED_AUTH ?
      proxy_auth_.get() : server_auth_.get());
 
   if (auth) {
-    auth->state = net::AUTH_STATE_HAVE_AUTH;
+    auth->state = AUTH_STATE_HAVE_AUTH;
     auth->username = username;
     auth->password = password;
   }
@@ -164,16 +165,17 @@ void URLRequestInetJob::SetAuth(const wstring& username,
 }
 
 void URLRequestInetJob::CancelAuth() {
-  DCHECK((proxy_auth_ && proxy_auth_->state == net::AUTH_STATE_NEED_AUTH) ||
-         (server_auth_ && server_auth_->state == net::AUTH_STATE_NEED_AUTH));
+  DCHECK((proxy_auth_ != NULL && proxy_auth_->state == AUTH_STATE_NEED_AUTH) ||
+        (server_auth_ != NULL &&
+        (server_auth_->state == AUTH_STATE_NEED_AUTH)));
 
   // Proxy gets set first, then WWW.
-  net::AuthData* auth =
-    (proxy_auth_ && proxy_auth_->state == net::AUTH_STATE_NEED_AUTH ?
+  AuthData* auth =
+    (proxy_auth_ != NULL && proxy_auth_->state == AUTH_STATE_NEED_AUTH ?
      proxy_auth_.get() : server_auth_.get());
 
   if (auth) {
-    auth->state = net::AUTH_STATE_CANCELED;
+    auth->state = AUTH_STATE_CANCELED;
   }
 
   // Once the auth is cancelled, we proceed with the request as though

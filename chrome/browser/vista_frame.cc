@@ -42,7 +42,6 @@
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
-#include "chrome/browser/frame_util.h"
 #include "chrome/browser/suspend_controller.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tab_contents_container_view.h"
@@ -387,12 +386,12 @@ void VistaFrame::Layout() {
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// BrowserWindow implementation
+// ChromeFrame implementation
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 void VistaFrame::Init() {
-  FrameUtil::RegisterBrowserWindow(this);
+  ChromeFrame::RegisterChromeFrame(this);
 
   // Link the HWND with its root view so we can retrieve the RootView from the
   // HWND for automation purposes.
@@ -457,7 +456,7 @@ void VistaFrame::Init() {
   // Register accelerators.
   HACCEL accelerators_table = AtlLoadAccelerators(IDR_MAINFRAME);
   DCHECK(accelerators_table);
-  FrameUtil::LoadAccelerators(this, accelerators_table, this);
+  ChromeFrame::LoadAccelerators(this, accelerators_table, this);
 
   ShelfVisibilityChanged();
   root_view_.OnViewContainerCreated();
@@ -483,7 +482,7 @@ void VistaFrame::BrowserDidPaint(HRGN region) {
 // not pump the final messages.
 void VistaFrame::OnEndSession(BOOL ending, UINT logoff) {
   tabstrip_->AbortActiveDragSession();
-  FrameUtil::EndSession();
+  EndSession();
 }
 
 // Note: called directly by the handler macros to handle WM_CLOSE messages.
@@ -657,7 +656,7 @@ BOOL VistaFrame::OnPowerBroadcast(DWORD power_event, DWORD data) {
 void VistaFrame::OnThemeChanged() {
   // Notify NativeTheme.
   gfx::NativeTheme::instance()->CloseHandles();
-  FrameUtil::NotifyTabsOfThemeChange(browser_);
+  ChromeFrame::NotifyTabsOfThemeChange(browser_);
 }
 
 void VistaFrame::OnMouseButtonDown(UINT flags, const CPoint& pt) {
@@ -1001,7 +1000,7 @@ LRESULT VistaFrame::OnNCHitTest(const CPoint& pt) {
 }
 
 void VistaFrame::OnActivate(UINT n_state, BOOL is_minimized, HWND other) {
-  if (FrameUtil::ActivateAppModalDialog(browser_))
+  if (ActivateAppModalDialog(browser_))
     return;
 
   // Enable our custom window if we haven't already (this works in combination
@@ -1030,8 +1029,7 @@ void VistaFrame::OnActivate(UINT n_state, BOOL is_minimized, HWND other) {
 
 int VistaFrame::OnMouseActivate(CWindow wndTopLevel, UINT nHitTest,
                                 UINT message) {
-  return FrameUtil::ActivateAppModalDialog(browser_) ? MA_NOACTIVATEANDEAT
-                                                     : MA_ACTIVATE;
+  return ActivateAppModalDialog(browser_) ? MA_NOACTIVATEANDEAT : MA_ACTIVATE;
 }
 
 void VistaFrame::OnPaint(HDC dc) {

@@ -66,7 +66,6 @@ class FirstRunView : public FirstRunViewBase,
 
   // Overridden from ChromeViews::WindowDelegate:
   virtual std::wstring GetWindowTitle() const;
-  virtual ChromeViews::View* GetContentsView();
 
   // Overridden from ChromeViews::LinkActivated:
   virtual void LinkActivated(ChromeViews::Link* source, int event_flags);

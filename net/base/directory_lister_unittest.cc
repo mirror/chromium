@@ -33,13 +33,11 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
-
-class DirectoryListerTest : public testing::Test {
-};
-
+  class DirectoryListerTest : public testing::Test {
+  };
 }
 
-class DirectoryListerDelegate : public net::DirectoryLister::Delegate {
+class DirectoryListerDelegate : public DirectoryLister::Delegate {
  public:
   DirectoryListerDelegate() : error_(-1) {
   }
@@ -59,8 +57,8 @@ TEST(DirectoryListerTest, BigDirTest) {
   ASSERT_TRUE(PathService::Get(base::DIR_WINDOWS, &windows_path));
 
   DirectoryListerDelegate delegate;
-  scoped_refptr<net::DirectoryLister> lister =
-      new net::DirectoryLister(windows_path, &delegate);
+  scoped_refptr<DirectoryLister> lister =
+      new DirectoryLister(windows_path, &delegate);
 
   lister->Start();
 
@@ -74,8 +72,8 @@ TEST(DirectoryListerTest, CancelTest) {
   ASSERT_TRUE(PathService::Get(base::DIR_WINDOWS, &windows_path));
 
   DirectoryListerDelegate delegate;
-  scoped_refptr<net::DirectoryLister> lister =
-      new net::DirectoryLister(windows_path, &delegate);
+  scoped_refptr<DirectoryLister> lister =
+      new DirectoryLister(windows_path, &delegate);
 
   lister->Start();
   lister->Cancel();

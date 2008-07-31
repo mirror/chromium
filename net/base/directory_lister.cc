@@ -33,8 +33,6 @@
 
 #include "base/message_loop.h"
 
-namespace net {
-
 static const int kFilesPerEvent = 8;
 
 class DirectoryDataEvent : public Task {
@@ -163,5 +161,3 @@ void DirectoryLister::OnDone(int error) {
   if (delegate_)
     delegate_->OnListDone(error);
 }
-
-}  // namespace net

@@ -561,7 +561,7 @@ void CookiesView::ShowCookiesWindow(Profile* profile) {
   if (!instance_) {
     CookiesView* cookies_view = new CookiesView(profile);
     instance_ = ChromeViews::Window::CreateChromeWindow(
-        NULL, gfx::Rect(), cookies_view);
+        NULL, gfx::Rect(), cookies_view, cookies_view);
   }
   if (!instance_->IsVisible()) {
     instance_->Show();
@@ -647,10 +647,6 @@ std::wstring CookiesView::GetWindowTitle() const {
 
 void CookiesView::WindowClosing() {
   instance_ = NULL;
-}
-
-ChromeViews::View* CookiesView::GetContentsView() {
-  return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

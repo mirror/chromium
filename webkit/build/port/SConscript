@@ -58,7 +58,6 @@ env = env.Clone(
     WEBKIT_PORT_DIR = '$WEBKIT_DIR/port',
 
     FEATURE_DEFINES = [
-        'ENABLE_CROSS_DOCUMENT_MESSAGING',
         'ENABLE_XSLT',
         'ENABLE_XPATH',
         'ENABLE_SVG',
@@ -97,11 +96,7 @@ bindings_perl_modules = env.Glob('$BINDINGS_SCRIPTS_DIR/*.pm')
 
 
 def BindingsEmitter(target, source, env):
-  source.append('$BINDINGS_SCRIPT')
-  try:
-    idl_contents = open(source[0].rfile().abspath, 'r').read()
-  except EnvironmentError:
-    return target, source
+  idl_contents = open(source[0].rfile().abspath, 'r').read()
   idl_contents = re.sub('//[^\\n]*\\n', '', idl_contents)
   interfaces = re.findall('interface\\s*(?:\\[[^]]+\\])?\\s*'
                           '(\\w+)[^{]*[{]', idl_contents)
@@ -112,6 +107,7 @@ def BindingsEmitter(target, source, env):
     new_target.extend([new_cpp, new_h])
     env.Depends(new_cpp, bindings_perl_modules)
     env.Depends(new_h, bindings_perl_modules)
+  source.append('$BINDINGS_SCRIPT')
   return new_target, source
 
 

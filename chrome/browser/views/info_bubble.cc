@@ -31,8 +31,7 @@
 
 #include "base/win_util.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/browser_window.h"
-#include "chrome/browser/frame_util.h"
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
@@ -96,7 +95,7 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
   window->Init(parent_hwnd, position_relative_to, content);
-  BrowserWindow* frame = window->GetHostingWindow();
+  ChromeFrame* frame = window->GetHostingFrame();
   if (frame)
     frame->InfoBubbleShowing();
   window->ShowWindow(SW_SHOW);
@@ -132,8 +131,7 @@ void InfoBubble::Init(HWND parent_hwnd,
       (win_util::GetWinVersion() < win_util::WINVERSION_XP) ?
       0 : CS_DROPSHADOW);
 
-  HWNDViewContainer::Init(parent_hwnd, bounds, true);
-  SetContentsView(content_view_);
+  HWNDViewContainer::Init(parent_hwnd, bounds, content_view_, true);
   // The preferred size may differ when parented. Ask for the bounds again
   // and if they differ reset the bounds.
   gfx::Rect parented_bounds = content_view_->
@@ -166,7 +164,7 @@ void InfoBubble::Init(HWND parent_hwnd,
 
 void InfoBubble::Close() {
   // We don't fade out because it looks terrible.
-  BrowserWindow* frame = GetHostingWindow();
+  ChromeFrame* frame = GetHostingFrame();
   if (delegate_)
     delegate_->InfoBubbleClosing(this);
   if (frame)
@@ -214,9 +212,9 @@ InfoBubble::ContentView* InfoBubble::CreateContentView(View* content) {
   return new ContentView(content, this);
 }
 
-BrowserWindow* InfoBubble::GetHostingWindow() {
+ChromeFrame* InfoBubble::GetHostingFrame() {
   HWND owning_frame_hwnd = GetAncestor(GetHWND(), GA_ROOTOWNER);
-  BrowserWindow* frame = FrameUtil::GetBrowserWindowForHWND(owning_frame_hwnd);
+  ChromeFrame* frame = ChromeFrame::GetChromeFrameForWindow(owning_frame_hwnd);
   if (!frame) {
     // We should always have a frame, but there was a bug else where that
     // made it possible for the frame to be NULL, so we have the check. If

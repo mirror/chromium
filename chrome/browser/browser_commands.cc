@@ -47,8 +47,8 @@
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
-#include "chrome/browser/browser_window.h"
 #include "chrome/browser/character_encoding.h"
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/download_tab_view.h"
 #include "chrome/browser/history_tab_ui.h"
@@ -144,7 +144,7 @@ void Browser::InitCommandState() {
   controller_.UpdateCommandEnabled(IDC_PRINT, true);
   controller_.UpdateCommandEnabled(IDC_COPY_URL, true);
   controller_.UpdateCommandEnabled(IDC_DUPLICATE, true);
-  controller_.UpdateCommandEnabled(IDC_GOOFFTHERECORD, true);
+  controller_.UpdateCommandEnabled(IDC_GOOFFTHERECORD, false);
   controller_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, true);
   controller_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS, true);
   controller_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA, true);
@@ -357,13 +357,12 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_NEWWINDOW:
       UserMetrics::RecordAction(L"NewWindow", profile_);
-      Browser::OpenNewBrowserWindow(profile_->GetOriginalProfile(),
-                                    SW_SHOWNORMAL);
+      Browser::OpenNewBrowserWindow(profile_, SW_SHOWNORMAL);
       break;
 
     case IDC_CLOSEWINDOW:
       UserMetrics::RecordAction(L"CloseWindow", profile_);
-      window_->Close();
+      frame_->Close();
       break;
 
     case IDC_FOCUS_LOCATION:
@@ -524,8 +523,7 @@ void Browser::ExecuteCommand(int id) {
     }
 
     case IDC_GOOFFTHERECORD: {
-      Browser::OpenNewBrowserWindow(profile_->GetOffTheRecordProfile(),
-                                    SW_SHOWNORMAL);
+      Browser::OpenURLOffTheRecord(profile_, NewTabUIURL());
       break;
     }
 
@@ -548,10 +546,14 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_ABOUT: {
       UserMetrics::RecordAction(L"AboutChrome", profile_);
-      ChromeViews::Window::CreateChromeWindow(
-          GetTopLevelHWND(),
-          gfx::Rect(),
-          new AboutChromeView(profile_))->Show();
+      AboutChromeView* about_view = new AboutChromeView(profile_);
+      ChromeViews::Window* about_dialog =
+          ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(),
+                                                  gfx::Rect(),
+                                                  about_view,
+                                                  about_view);
+      about_dialog->Show();
+      about_view->SetDialog(about_dialog);
       break;
     }
 
@@ -849,7 +851,12 @@ void Browser::Reload() {
 }
 
 void Browser::Home() {
-  GURL homepage_url = GetHomePage();
+  GURL homepage_url(URLFixerUpper::FixupURL(
+      profile_->GetPrefs()->GetString(prefs::kHomePage),
+      std::wstring()));
+  if (!homepage_url.is_valid())
+    homepage_url = NewTabUIURL();
+
   GetSelectedTabContents()->controller()->LoadURL(
       homepage_url, PageTransition::AUTO_BOOKMARK);
 }
@@ -937,8 +944,12 @@ void Browser::OpenKeywordEditor() {
 }
 
 void Browser::OpenImportSettingsDialog() {
-  ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
-                                          new ImporterView(profile_))->Show();
+  ImporterView* importer_view = new ImporterView(profile_);
+  ChromeViews::Window* importer_dialog =
+      ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
+                                              importer_view, importer_view);
+  importer_dialog->Show();
+  importer_view->set_dialog(importer_dialog);
 }
 
 void Browser::OpenBugReportDialog() {
@@ -977,15 +988,22 @@ void Browser::OpenBugReportDialog() {
   bug_report_view->set_png_data(screenshot_png);
 
   // Create and show the dialog
-  ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
-                                          bug_report_view)->Show();
+  ChromeViews::Window* bug_report_dialog =
+      ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
+                                              bug_report_view, bug_report_view);
+  bug_report_dialog->Show();
+  bug_report_view->set_dialog(bug_report_dialog);
 }
 
 void Browser::OpenClearBrowsingDataDialog() {
-    ChromeViews::Window::CreateChromeWindow(
-        GetTopLevelHWND(),
-        gfx::Rect(),
-        new ClearBrowsingDataView(profile_))->Show();
+  ClearBrowsingDataView* clear_browsing_data_view =
+      new ClearBrowsingDataView(profile_);
+  ChromeViews::Window* clear_browsing_data_dialog =
+      ChromeViews::Window::CreateChromeWindow(
+          GetTopLevelHWND(), gfx::Rect(),
+          clear_browsing_data_view, clear_browsing_data_view);
+  clear_browsing_data_dialog->Show();
+  clear_browsing_data_view->SetDialog(clear_browsing_data_dialog);
 }
 
 void Browser::RunSimpleFrameMenu(const CPoint& pt, HWND hwnd) {

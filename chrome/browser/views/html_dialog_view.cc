@@ -39,6 +39,7 @@ HtmlDialogView::HtmlDialogView(Browser* parent_browser,
                                Profile* profile,
                                HtmlDialogContentsDelegate* delegate)
     : DOMView(delegate->GetDialogContentURL()),
+      dialog_(NULL),
       parent_browser_(parent_browser),
       profile_(profile),
       delegate_(delegate) {
@@ -79,10 +80,6 @@ void HtmlDialogView::WindowClosing() {
     OnDialogClosed("");
 }
 
-ChromeViews::View* HtmlDialogView::GetContentsView() {
-  return this;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // HtmlDialogContentsDelegate implementation:
 
@@ -101,7 +98,7 @@ std::string HtmlDialogView::GetDialogArgs() const {
 void HtmlDialogView::OnDialogClosed(const std::string& json_retval) {
   delegate_->OnDialogClosed(json_retval);
   delegate_ = NULL;  // We will not communicate further with the delegate.
-  window()->Close();
+  dialog_->Close();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -158,14 +155,14 @@ void HtmlDialogView::MoveContents(TabContents* source, const gfx::Rect& pos) {
 
   // Determine the size the window containing the dialog at its requested size.
   gfx::Size window_size =
-      window()->CalculateWindowSizeForClientSize(pos.size());
+      dialog_->CalculateWindowSizeForClientSize(pos.size());
 
   // Actually size the window.
   CRect vc_bounds;
   GetViewContainer()->GetBounds(&vc_bounds, true);
   gfx::Rect bounds(vc_bounds.left, vc_bounds.top, window_size.width(),
                    window_size.height());
-  window()->SetBounds(bounds);
+  dialog_->SetBounds(bounds);
 }
 
 bool HtmlDialogView::IsPopup(TabContents* source) {
@@ -190,7 +187,9 @@ void HtmlDialogView::UpdateTargetURL(TabContents* source, const GURL& url) {
 ////////////////////////////////////////////////////////////////////////////////
 // HtmlDialogView:
 
-void HtmlDialogView::InitDialog() {
+void HtmlDialogView::InitDialog(ChromeViews::Window* dialog) {
+  dialog_ = dialog;
+
   // Now Init the DOMView. This view runs in its own process to render the html.
   DOMView::Init(profile_, NULL);
 

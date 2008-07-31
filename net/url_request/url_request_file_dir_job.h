@@ -34,7 +34,7 @@
 #include "net/url_request/url_request_job.h"
 
 class URLRequestFileDirJob : public URLRequestJob,
-                             public net::DirectoryLister::Delegate {
+                             public DirectoryLister::Delegate {
  public:
   URLRequestFileDirJob(URLRequest* request, const std::wstring& dir_path);
   virtual ~URLRequestFileDirJob();
@@ -61,7 +61,7 @@ class URLRequestFileDirJob : public URLRequestJob,
   // Fills a buffer with the output.
   bool FillReadBuffer(char *buf, int buf_size, int *bytes_read);
 
-  scoped_refptr<net::DirectoryLister> lister_;
+  scoped_refptr<DirectoryLister> lister_;
   std::wstring dir_path_;
   std::string data_;
   bool canceled_;

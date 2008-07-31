@@ -34,15 +34,15 @@
 
 #include "chrome/views/view.h"
 
-class BrowserWindow;
+class ChromeFrame;
 class OSExchangeData;
 
-// FrameView is the View that contains all the views of the BrowserWindow
+// FrameView is the View that contains all the views of the ChromeFrame
 // (XPFrame or VistaFrame). FrameView forwards all drag and drop messages to
 // the TabStrip.
 class FrameView : public ChromeViews::View {
  public:
-  explicit FrameView(BrowserWindow* frame);
+  explicit FrameView(ChromeFrame* frame);
   virtual ~FrameView() {}
 
   // Adds view to the set of views that drops are allowed to occur on. You only
@@ -74,8 +74,8 @@ class FrameView : public ChromeViews::View {
   ChromeViews::DropTargetEvent* MapEventToTabStrip(
       const ChromeViews::DropTargetEvent& event);
 
-  // The BrowserWindow we're the child of.
-  BrowserWindow* window_;
+  // The ChromeFrame we're the child of.
+  ChromeFrame* frame_;
 
   // Initially set in CanDrop by invoking the same method on the TabStrip.
   bool can_drop_;

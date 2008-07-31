@@ -34,7 +34,7 @@
 
 class GURL;
 
-namespace net {
+namespace mime_util {
 
 // Examine the URL and the mime_type and decide whether we should sniff a
 // replacement mime type from the content.
@@ -57,6 +57,6 @@ bool SniffMimeType(const char* content, size_t content_size,
                    const GURL& url, const std::string& type_hint,
                    std::string* result);
 
-}  // namespace net
+}  // namespace mime_util
 
 #endif  // NET_BASE_MIME_SNIFFER_H__

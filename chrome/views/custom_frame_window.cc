@@ -41,7 +41,6 @@
 #include "chrome/views/button.h"
 #include "chrome/views/client_view.h"
 #include "chrome/views/native_button.h"
-#include "chrome/views/non_client_view.h"
 #include "chrome/views/window_delegate.h"
 #include "generated_resources.h"
 
@@ -230,7 +229,7 @@ ChromeFont InactiveWindowResources::title_font_;
 //  rendering the non-standard window caption, border, and controls.
 //
 ////////////////////////////////////////////////////////////////////////////////
-class DefaultNonClientView : public NonClientView,
+class DefaultNonClientView : public CustomFrameWindow::NonClientView,
                              public BaseButton::ButtonListener {
  public:
   explicit DefaultNonClientView(CustomFrameWindow* container);
@@ -242,7 +241,7 @@ class DefaultNonClientView : public NonClientView,
   virtual gfx::Size CalculateWindowSizeForClientSize(int width,
                                                      int height) const;
   virtual CPoint GetSystemMenuPoint() const;
-  virtual int NonClientHitTest(const gfx::Point& point);
+  virtual int HitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
 
@@ -434,7 +433,7 @@ CPoint DefaultNonClientView::GetSystemMenuPoint() const {
 // that bound are mirrored if the View uses right-to-left UI layout. This is
 // why this function passes APPLY_MIRRORING_TRANSFORMATION as the |settings|
 // whenever it calls GetBounds().
-int DefaultNonClientView::NonClientHitTest(const gfx::Point& point) {
+int DefaultNonClientView::HitTest(const gfx::Point& point) {
   CRect bounds;
   CPoint test_point = point.ToPOINT();
 
@@ -467,20 +466,60 @@ int DefaultNonClientView::NonClientHitTest(const gfx::Point& point) {
   if (bounds.PtInRect(test_point))
     return HTSYSMENU;
 
-  int component = GetHTComponentForFrame(
-      point,
-      kResizeAreaSize,
-      kResizeAreaCornerSize,
-      kResizeAreaNorthSize,
-      container_->window_delegate()->CanResize());
-  if (component == HTNOWHERE) {
-    // Finally fall back to the caption.
-    GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
-      component = HTCAPTION;
-    // Otherwise, the point is outside the window's bounds.
+  // Then see if the point is within the resize boundaries.
+  int width = GetWidth();
+  int height = GetHeight();
+  int component = HTNOWHERE;
+  if (point.x() < kResizeAreaSize) {
+    if (point.y() < kResizeAreaCornerSize) {
+      component = HTTOPLEFT;
+    } else if (point.y() >= (height - kResizeAreaCornerSize)) {
+      component = HTBOTTOMLEFT;
+    } else {
+      component = HTLEFT;
+    }
+  } else if (point.x() < kResizeAreaCornerSize) {
+    if (point.y() < kResizeAreaNorthSize) {
+      component = HTTOPLEFT;
+    } else if (point.y() >= (height - kResizeAreaSize)) {
+      component = HTBOTTOMLEFT;
+    }
+  } else if (point.x() >= (width - kResizeAreaSize)) {
+    if (point.y() < kResizeAreaCornerSize) {
+      component = HTTOPRIGHT;
+    } else if (point.y() >= (height - kResizeAreaCornerSize)) {
+      component = HTBOTTOMRIGHT;
+    } else if (point.x() >= (width - kResizeAreaSize)) {
+      component = HTRIGHT;
+    }
+  } else if (point.x() >= (width - kResizeAreaCornerSize)) {
+    if (point.y() < kResizeAreaNorthSize) {
+      component = HTTOPRIGHT;
+    } else if (point.y() >= (height - kResizeAreaSize)) {
+      component = HTBOTTOMRIGHT;
+    }
+  } else if (point.y() < kResizeAreaNorthSize) {
+    component = HTTOP;
+  } else if (point.y() >= (height - kResizeAreaSize)) {
+    component = HTBOTTOM;
   }
-  return component;
+
+  // If the window can't be resized, there are no resize boundaries, just
+  // window borders.
+  if (component != HTNOWHERE) {
+    if (container_->window_delegate() &&
+        !container_->window_delegate()->CanResize()) {
+      return HTBORDER;
+    }
+    return component;
+  }
+
+  // Finally fall back to the caption.
+  GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
+  if (bounds.PtInRect(test_point))
+    return HTCAPTION;
+  // The point is outside the window's bounds.
+  return HTNOWHERE;
 }
 
 void DefaultNonClientView::GetWindowMask(const gfx::Size& size,
@@ -532,7 +571,6 @@ void DefaultNonClientView::Layout() {
   LayoutWindowControls();
   LayoutTitleBar();
   LayoutClientView();
-  SchedulePaint();
 }
 
 void DefaultNonClientView::GetPreferredSize(CSize* out) {
@@ -842,16 +880,15 @@ void DefaultNonClientView::InitClass() {
 ////////////////////////////////////////////////////////////////////////////////
 // CustomFrameWindow, public:
 
-CustomFrameWindow::CustomFrameWindow(WindowDelegate* window_delegate)
-    : Window(window_delegate),
+CustomFrameWindow::CustomFrameWindow()
+    : Window(),
       non_client_view_(new DefaultNonClientView(this)),
       is_active_(false) {
   InitClass();
 }
 
-CustomFrameWindow::CustomFrameWindow(WindowDelegate* window_delegate,
-                                     NonClientView* non_client_view)
-    : Window(window_delegate),
+CustomFrameWindow::CustomFrameWindow(NonClientView* non_client_view)
+    : Window(),
       non_client_view_(non_client_view) {
   InitClass();
 }
@@ -859,8 +896,10 @@ CustomFrameWindow::CustomFrameWindow(WindowDelegate* window_delegate,
 CustomFrameWindow::~CustomFrameWindow() {
 }
 
-void CustomFrameWindow::Init(HWND owner, const gfx::Rect& bounds) {
-  Window::Init(owner, bounds);
+void CustomFrameWindow::Init(HWND owner, const gfx::Rect& bounds,
+                             View* contents_view,
+                             WindowDelegate* window_delegate) {
+  Window::Init(owner, bounds, contents_view, window_delegate);
   // We need to re-parent the client view to the non-client view.
   GetRootView()->RemoveChildView(client_view_);
   GetRootView()->AddChildView(non_client_view_);
@@ -978,7 +1017,7 @@ LRESULT CustomFrameWindow::OnNCHitTest(const CPoint& point) {
   // NC points are in screen coordinates.
   CPoint temp = point;
   MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
-  return non_client_view_->NonClientHitTest(gfx::Point(temp.x, temp.y));
+  return non_client_view_->HitTest(gfx::Point(temp.x, temp.y));
 }
 
 LRESULT CustomFrameWindow::OnNCMouseMove(UINT flags, const CPoint& point) {

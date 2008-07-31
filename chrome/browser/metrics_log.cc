@@ -136,11 +136,12 @@ std::string MetricsLog::CreateHash(const std::string& value) {
 
 std::string MetricsLog::CreateBase64Hash(const std::string& string) {
   std::string encoded_digest;
-  if (net::Base64Encode(CreateHash(string), &encoded_digest)) {
+  if (Base64Encode(CreateHash(string), &encoded_digest)) {
     DLOG(INFO) << "Metrics: Hash [" << encoded_digest << "]=[" << string << "]";
     return encoded_digest;
+  } else {
+    return std::string();
   }
-  return std::string();
 }
 
 void MetricsLog::RecordUserAction(const wchar_t* key) {
@@ -349,10 +350,6 @@ void MetricsLog::WriteStabilityElement() {
   WriteIntAttribute("crashcount",
                     pref->GetInteger(prefs::kStabilityCrashCount));
   pref->SetInteger(prefs::kStabilityCrashCount, 0);
-  WriteIntAttribute("incompleteshutdowncount",
-                    pref->GetInteger(
-                        prefs::kStabilityIncompleteSessionEndCount));
-  pref->SetInteger(prefs::kStabilityIncompleteSessionEndCount, 0);
   WriteIntAttribute("pageloadcount",
                     pref->GetInteger(prefs::kStabilityPageLoadCount));
   pref->SetInteger(prefs::kStabilityPageLoadCount, 0);

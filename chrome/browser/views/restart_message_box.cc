@@ -65,23 +65,19 @@ bool RestartMessageBox::IsModal() const {
   return true;
 }
 
-ChromeViews::View* RestartMessageBox::GetContentsView() {
-  return message_box_view_;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // RestartMessageBox, private:
 
 RestartMessageBox::RestartMessageBox(HWND parent_hwnd) {
   const int kDialogWidth = 400;
   // Also deleted when the window closes.
-  message_box_view_ = new MessageBoxView(
+  MessageBoxView* message_box_view = new MessageBoxView(
       MessageBoxView::kFlagHasMessage | MessageBoxView::kFlagHasOKButton,
       l10n_util::GetString(IDS_OPTIONS_RESTART_REQUIRED).c_str(),
       std::wstring(),
       kDialogWidth);
   ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(),
-                                          this)->Show();
+      message_box_view, this)->Show();
 }
 
 RestartMessageBox::~RestartMessageBox() {

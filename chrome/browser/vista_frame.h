@@ -38,7 +38,7 @@
 
 #include "base/message_loop.h"
 #include "chrome/app/chrome_dll_resource.h"
-#include "chrome/browser/browser_window.h"
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/browser/frame_view.h"
 #include "chrome/browser/views/status_bubble.h"
 #include "chrome/views/view_container.h"
@@ -62,7 +62,7 @@ class TabStrip;
 // A CWindowImpl subclass that implements our main frame on Windows Vista
 //
 ////////////////////////////////////////////////////////////////////////////////
-class VistaFrame : public BrowserWindow,
+class VistaFrame : public ChromeFrame,
                    public CWindowImpl<VistaFrame,
                                       CWindow,
                                       CWinTraits<WS_OVERLAPPEDWINDOW |
@@ -179,7 +179,7 @@ class VistaFrame : public BrowserWindow,
   void OnThemeChanged();
 
   ////////////////////////////////////////////////////////////////////////////////
-  // BrowserWindow implementation
+  // ChromeFrame implementation
   ////////////////////////////////////////////////////////////////////////////////
 
   virtual void Init();

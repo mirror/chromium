@@ -109,7 +109,7 @@ bool PluginInfoStore::supportsMIMEType(const WebCore::String &mime_type)
 
     for (size_t i = 0; i < g_plugins.size(); ++i) {
         for (size_t j = 0; j < g_plugins[i].mime_types.size(); ++j) {
-            if (net::MatchesMimeType(
+            if (mime_util::MatchesMimeType(
                     g_plugins[i].mime_types[j].mime_type,
                     WideToNativeMB(converted_mime_type))) {
                 // Don't allow wildcard matches here as this will result in

@@ -81,7 +81,6 @@ class CookiesView : public ChromeViews::View,
   virtual bool CanResize() const { return true; }
   virtual std::wstring GetWindowTitle() const;
   virtual void WindowClosing();
-  virtual ChromeViews::View* GetContentsView();
 
   // ChromeViews::View overrides:
   virtual void Layout();

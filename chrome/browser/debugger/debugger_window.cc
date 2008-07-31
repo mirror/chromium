@@ -62,7 +62,8 @@ void DebuggerWindow::Show(TabContents* tab) {
     return;
   }
   view_ = new DebuggerView(this);
-  window_ = ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), this);
+  window_ = ChromeViews::Window::CreateChromeWindow(
+    NULL, gfx::Rect(), view_, this);
   view_->OnInit();
   window_->Show();
   view_->OnShow();
@@ -173,10 +174,6 @@ void DebuggerWindow::WindowClosing() {
 
 bool DebuggerWindow::CanResize() const {
   return true;
-}
-
-ChromeViews::View* DebuggerWindow::GetContentsView() {
-  return view_;
 }
 
 ///////////////////////////////////////////////////////////////////

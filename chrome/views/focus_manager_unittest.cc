@@ -141,8 +141,7 @@ class BorderView : public ChromeViews::NativeControl {
                                         parent_container, NULL, NULL, NULL);
     // Create the view container which is a child of the TabControl.
     view_container_ = new ChromeViews::HWNDViewContainer();
-    view_container_->Init(tab_control, gfx::Rect(), false);
-    view_container_->SetContentsView(child_);
+    view_container_->Init(tab_control, gfx::Rect(), child_, false);
     view_container_->SetFocusTraversableParentView(this);
     ResizeContents(tab_control);
     return tab_control;
@@ -193,15 +192,14 @@ private:
   DISALLOW_EVIL_CONSTRUCTORS(BorderView);
 };
 
-class TestViewWindow : public ChromeViews::HWNDViewContainer {
+class TestViewWindow : public ChromeViews::Window,
+                       public ChromeViews::WindowDelegate {
  public:
   explicit TestViewWindow(FocusManagerTest* test);
   ~TestViewWindow() { }
 
   void Init();
-
-  ChromeViews::View* contents() const { return contents_; }
-  
+  virtual std::wstring GetWindowTitle() const;
 
   // Return the ID of the component that currently has the focus.
   int GetFocusedComponentID();
@@ -264,8 +262,7 @@ void TestViewWindow::Init() {
   contents_->SetBackground(
       ChromeViews::Background::CreateSolidBackground(255, 255, 255));
 
-  HWNDViewContainer::Init(NULL, bounds, true);
-  SetContentsView(contents_);
+  Window::Init(NULL, bounds, contents_, this);
 
   ChromeViews::CheckBox* cb =
       new ChromeViews::CheckBox(L"This is a checkbox");
@@ -524,6 +521,11 @@ void TestViewWindow::Init() {
   contents->SetBounds(200, y, 200, 50);
 }
 
+// WindowDelegate Implementation.
+std::wstring TestViewWindow::GetWindowTitle() const {
+  return L"Focus Manager Test Window";
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // FocusManagerTest
 ////////////////////////////////////////////////////////////////////////////////
@@ -541,7 +543,7 @@ TestViewWindow* FocusManagerTest::GetWindow() {
 void FocusManagerTest::SetUp() {
   test_window_ = new TestViewWindow(this);
   test_window_->Init();
-  ShowWindow(test_window_->GetHWND(), SW_SHOW);
+  test_window_->Show();
 }
 
 void FocusManagerTest::TearDown() {

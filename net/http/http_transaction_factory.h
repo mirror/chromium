@@ -30,9 +30,10 @@
 #ifndef NET_HTTP_HTTP_TRANSACTION_FACTORY_H__
 #define NET_HTTP_HTTP_TRANSACTION_FACTORY_H__
 
+class AuthCache;
+
 namespace net {
 
-class AuthCache;
 class HttpCache;
 class HttpTransaction;
 

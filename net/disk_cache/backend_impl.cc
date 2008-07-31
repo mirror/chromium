@@ -176,7 +176,7 @@ bool DelayedCacheCleanup(const std::wstring& full_path) {
     return false;
   }
 
-  WorkerPool::PostTask(FROM_HERE, new CleanupTask(path, name), true);
+  WorkerPool::Run(new CleanupTask(path, name), true);
   return true;
 }
 
@@ -1037,12 +1037,7 @@ void BackendImpl::RestartCache() {
   init_ = false;
   restarted_ = true;
   int64 errors = stats_.GetCounter(Stats::FATAL_ERROR);
-
-  // Don't call Init() if directed by the unit test: we are simulating a failure
-  // trying to re-enable the cache.
-  if (unit_test_)
-    init_ = true;  // Let the destructor do proper cleanup.
-  else if (Init())
+  if (Init())
     stats_.SetCounter(Stats::FATAL_ERROR, errors + 1);
 }
 

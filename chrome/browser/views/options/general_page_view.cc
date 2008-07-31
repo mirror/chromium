@@ -578,12 +578,15 @@ void GeneralPageView::ButtonPressed(ChromeViews::NativeButton* sender) {
   } else if (sender == homepage_use_newtab_radio_) {
     UserMetricsRecordAction(L"Options_Homepage_UseNewTab",
                             profile()->GetPrefs());
-    SetHomepage(GetNewTabUIURLString());
+    homepage_.SetValue(GetNewTabUIURLString());
     EnableHomepageURLField(false);
   } else if (sender == homepage_use_url_radio_) {
     UserMetricsRecordAction(L"Options_Homepage_UseURL",
                             profile()->GetPrefs());
-    SetHomepage(homepage_use_url_textfield_->GetText());
+    std::wstring home_page_url = homepage_use_url_textfield_->GetText();
+    if (home_page_url.empty())
+      home_page_url = GetNewTabUIURLString();
+    homepage_.SetValue(home_page_url);
     EnableHomepageURLField(true);
   } else if (sender == homepage_show_home_button_checkbox_) {
     bool show_button = homepage_show_home_button_checkbox_->IsSelected();
@@ -627,7 +630,7 @@ void GeneralPageView::ContentsChanged(ChromeViews::TextField* sender,
     std::wstring url_string = URLFixerUpper::FixupURL(
         homepage_use_url_textfield_->GetText(), std::wstring());
     if (GURL(url_string).is_valid())
-      SetHomepage(url_string);
+      homepage_.SetValue(url_string);
   }
 }
 
@@ -676,8 +679,6 @@ void GeneralPageView::InitControlLayout() {
   profile()->GetPrefs()->AddPrefObserver(prefs::kRestoreOnStartup, this);
   profile()->GetPrefs()->AddPrefObserver(prefs::kURLsToRestoreOnStartup, this);
 
-  new_tab_page_is_home_page_.Init(prefs::kHomePageIsNewTabPage,
-      profile()->GetPrefs(), this);
   homepage_.Init(prefs::kHomePage, profile()->GetPrefs(), this);
   show_home_button_.Init(prefs::kShowHomeButton, profile()->GetPrefs(), this);
 }
@@ -718,18 +719,15 @@ void GeneralPageView::NotifyPrefChanged(const std::wstring* pref_name) {
     startup_custom_pages_table_model_->SetURLs(startup_pref.urls);
   }
 
-  if (!pref_name || *pref_name == prefs::kHomePageIsNewTabPage) {    
-    if (new_tab_page_is_home_page_.GetValue())
-      homepage_use_newtab_radio_->SetIsSelected(true);
-    else
-      homepage_use_url_radio_->SetIsSelected(true);
-  }
-
   if (!pref_name || *pref_name == prefs::kHomePage) {
     bool enabled = homepage_.GetValue() != GetNewTabUIURLString();
-    if (enabled)
+    if (enabled) {
+      homepage_use_url_radio_->SetIsSelected(true);
       homepage_use_url_textfield_->SetText(homepage_.GetValue());
-    EnableHomepageURLField(!new_tab_page_is_home_page_.GetValue());
+    } else {
+      homepage_use_newtab_radio_->SetIsSelected(true);
+    }
+    EnableHomepageURLField(enabled);
   }
 
   if (!pref_name || *pref_name == prefs::kShowHomeButton) {
@@ -1072,15 +1070,6 @@ void GeneralPageView::AddBookmark(ShelfItemDialog* dialog,
   startup_custom_pages_table_model_->Add(index, url);
 
   SaveStartupPref();
-}
-
-void GeneralPageView::SetHomepage(const std::wstring& homepage) {
-  if (homepage.empty() || homepage == GetNewTabUIURLString()) {
-    new_tab_page_is_home_page_.SetValue(true);
-  } else {
-    new_tab_page_is_home_page_.SetValue(false);
-    homepage_.SetValue(homepage);
-  }
 }
 
 void GeneralPageView::OnSelectionChanged() {

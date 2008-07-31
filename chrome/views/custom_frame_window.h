@@ -36,8 +36,6 @@
 
 namespace ChromeViews {
 
-class NonClientView;
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // CustomFrameWindow
@@ -50,9 +48,9 @@ class NonClientView;
 ////////////////////////////////////////////////////////////////////////////////
 class CustomFrameWindow : public Window {
  public:
-  explicit CustomFrameWindow(WindowDelegate* window_delegate);
-  CustomFrameWindow(WindowDelegate* window_delegate,
-                    NonClientView* non_client_view);
+  CustomFrameWindow();
+  class NonClientView;
+  explicit CustomFrameWindow(NonClientView* non_client_view);
   virtual ~CustomFrameWindow();
 
   // Create the CustomFrameWindow.
@@ -60,13 +58,52 @@ class CustomFrameWindow : public Window {
   // window that this window is dependent on, if this window is opened as a
   // modal dialog or dependent window. This is NULL if the window is not
   // dependent on any other window.
-  virtual void Init(HWND owner, const gfx::Rect& bounds);
+  // |contents_view| is the view to be displayed in the client area of the
+  // window.
+  // |window_delegate| is an object implementing the WindowDelegate interface
+  // that supplies information to the window such as its title, icon, etc.
+  virtual void Init(HWND owner,
+                    const gfx::Rect& bounds,
+                    View* contents_view,
+                    WindowDelegate* window_delegate);
 
   // Executes the specified SC_command.
   void ExecuteSystemMenuCommand(int command);
 
   // Returns whether or not the frame is active.
   bool is_active() const { return is_active_; }
+
+  class NonClientView : public View {
+   public:
+    virtual void Init(ClientView* client_view) = 0;
+
+    // Calculates the bounds of the client area of the window assuming the
+    // window is sized to |width| and |height|.
+    virtual gfx::Rect CalculateClientAreaBounds(int width,
+                                                int height) const = 0;
+
+    // Calculates the size of window required to display a client area of the
+    // specified width and height.
+    virtual gfx::Size CalculateWindowSizeForClientSize(int width,
+                                                       int height) const = 0;
+
+    // Returns the point, in screen coordinates, where the system menu should
+    // be shown so it shows up anchored to the system menu icon.
+    virtual CPoint GetSystemMenuPoint() const = 0;
+
+    // Determines the windows HT* code when the mouse cursor is at the
+    // specified point, in window coordinates.
+    virtual int HitTest(const gfx::Point& point) = 0;
+
+    // Returns a mask to be used to clip the top level window for the given
+    // size. This is used to create the non-rectangular window shape.
+    virtual void GetWindowMask(const gfx::Size& size,
+                               gfx::Path* window_mask) = 0;
+
+    // Toggles the enable state for the Close button (and the Close menu item in
+    // the system menu).
+    virtual void EnableClose(bool enable) = 0;
+  };
 
   // Overridden from Window:
   virtual gfx::Size CalculateWindowSizeForClientSize(
@@ -92,12 +129,11 @@ class CustomFrameWindow : public Window {
   virtual void OnSize(UINT param, const CSize& size);
 
   // The View that provides the non-client area of the window (title bar,
-  // window controls, sizing borders etc). To use an implementation other than
-  // the default, this class must be subclassed and this value set to the
-  // desired implementation before calling |Init|.
+  // window controls, sizing borders etc).
   NonClientView* non_client_view_;
 
  private:
+
   // Shows the system menu at the specified screen point.
   void RunSystemMenu(const CPoint& point);
 

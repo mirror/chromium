@@ -95,7 +95,6 @@ void ProfileWriter::AddHomepage(const GURL& home_page) {
   DCHECK(profile_);
 
   PrefService* prefs = profile_->GetPrefs();
-  // NOTE: We set the kHomePage value, but keep the NewTab page as the homepage.
   prefs->SetString(prefs::kHomePage, ASCIIToWide(home_page.spec()));
   prefs->ScheduleSavePersistentPrefs(g_browser_process->file_thread());
 }
@@ -341,8 +340,12 @@ void ImporterHost::Observe(NotificationType type,
 }
 
 void ImporterHost::ShowWarningDialog() {
-  ChromeViews::Window::CreateChromeWindow(GetActiveWindow(), gfx::Rect(),
-                                          new ImporterLockView(this))->Show();
+  ImporterLockView* view = new ImporterLockView(this);
+  ChromeViews::Window* dialog =
+      ChromeViews::Window::CreateChromeWindow(
+          GetActiveWindow(), gfx::Rect(), view, view);
+  dialog->Show();
+  view->set_dialog(dialog);
 }
 
 void ImporterHost::OnLockViewEnd(bool is_continue) {

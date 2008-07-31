@@ -29,30 +29,27 @@
 
 #include "base/worker_pool.h"
 
-#include "base/task.h"
+#include "base/logging.h"
 
 namespace {
 
 DWORD CALLBACK WorkItemCallback(void* param) {
   Task* task = static_cast<Task*>(param);
   task->Run();
-  delete task;
+  WorkerPool::RecycleTask(task);
   return 0;
 }
 
 }  // namespace
 
-bool WorkerPool::PostTask(const tracked_objects::Location& from_here,
-                          Task* task, bool task_is_slow) {
-  task->SetBirthPlace(from_here);
-
+bool WorkerPool::Run(Task* task, bool slow) {
   ULONG flags = 0;
-  if (task_is_slow)
+  if (slow)
     flags |= WT_EXECUTELONGFUNCTION;
 
   if (!QueueUserWorkItem(WorkItemCallback, task, flags)) {
     DLOG(ERROR) << "QueueUserWorkItem failed: " << GetLastError();
-    delete task;
+    RecycleTask(task);
     return false;
   }
 

@@ -27,8 +27,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef NET_URL_REQUEST_URL_REQUEST_HTTP_JOB_H__
-#define NET_URL_REQUEST_URL_REQUEST_HTTP_JOB_H__
+#ifndef NET_URL_REQUEST_URL_REQUEST_HTTP_CACHE_JOB_H__
+#define NET_URL_REQUEST_URL_REQUEST_HTTP_CACHE_JOB_H__
 
 #include "net/base/completion_callback.h"
 #include "net/http/http_request_info.h"
@@ -40,16 +40,16 @@ class HttpTransaction;
 }
 class URLRequestContext;
 
-// A URLRequestJob subclass that is built on top of HttpTransaction.  It
-// provides an implementation for both HTTP and HTTPS.
-class URLRequestHttpJob : public URLRequestJob {
+// A URLRequestJob subclass that is built on top of the HttpCache.  It provides
+// an implementation for both HTTP and HTTPS.
+class URLRequestHttpCacheJob : public URLRequestJob {
  public:
   static URLRequestJob* Factory(URLRequest* request, const std::string& scheme);
 
-  virtual ~URLRequestHttpJob();
+  virtual ~URLRequestHttpCacheJob();
 
  protected:
-  URLRequestHttpJob(URLRequest* request);
+  URLRequestHttpCacheJob(URLRequest* request);
 
   // URLRequestJob methods:
   virtual void SetUpload(net::UploadData* upload);
@@ -67,9 +67,9 @@ class URLRequestHttpJob : public URLRequestJob {
   virtual bool IsRedirectResponse(GURL* location, int* http_status_code);
   virtual bool IsSafeRedirect(const GURL& location);
   virtual bool NeedsAuth();
-  virtual void GetAuthChallengeInfo(scoped_refptr<net::AuthChallengeInfo>*);
-  virtual void GetCachedAuthData(const net::AuthChallengeInfo& auth_info,
-                                 scoped_refptr<net::AuthData>* auth_data);
+  virtual void GetAuthChallengeInfo(scoped_refptr<AuthChallengeInfo>*);
+  virtual void GetCachedAuthData(const AuthChallengeInfo& auth_info,
+                                 scoped_refptr<AuthData>* auth_data);
   virtual void SetAuth(const std::wstring& username,
                        const std::wstring& password);
   virtual void CancelAuth();
@@ -94,11 +94,11 @@ class URLRequestHttpJob : public URLRequestJob {
   std::vector<std::string> response_cookies_;
 
   // Auth states for proxy and origin server.
-  net::AuthState proxy_auth_state_;
-  net::AuthState server_auth_state_;
+  AuthState proxy_auth_state_;
+  AuthState server_auth_state_;
 
-  net::CompletionCallbackImpl<URLRequestHttpJob> start_callback_;
-  net::CompletionCallbackImpl<URLRequestHttpJob> read_callback_;
+  net::CompletionCallbackImpl<URLRequestHttpCacheJob> start_callback_;
+  net::CompletionCallbackImpl<URLRequestHttpCacheJob> read_callback_;
 
   bool read_in_progress_;
 
@@ -106,7 +106,7 @@ class URLRequestHttpJob : public URLRequestJob {
   // deleted before us.
   scoped_refptr<URLRequestContext> context_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(URLRequestHttpJob);
+  DISALLOW_EVIL_CONSTRUCTORS(URLRequestHttpCacheJob);
 };
 
-#endif  // NET_URL_REQUEST_URL_REQUEST_HTTP_JOB_H__
+#endif  // NET_URL_REQUEST_URL_REQUEST_HTTP_CACHE_JOB_H__

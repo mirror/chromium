@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="sbox_validation_tests"
+	Name="validation_tests"
 	ProjectGUID="{B9CC7B0D-145A-49C2-B887-84E43CFA0F27}"
-	RootNamespace="unit_tests"
+	RootNamespace="validation_tests"
 	Keyword="Win32Proj"
 	>
 	<Platforms>

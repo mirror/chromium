@@ -1006,7 +1006,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\browser_window.h"
+				RelativePath=".\chrome_frame.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\chrome_frame.h"
 				>
 			</File>
 			<File
@@ -1035,14 +1039,6 @@
 			</File>
 			<File
 				RelativePath=".\find_notification_details.h"
-				>
-			</File>
-			<File
-				RelativePath=".\frame_util.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\frame_util.h"
 				>
 			</File>
 			<File
