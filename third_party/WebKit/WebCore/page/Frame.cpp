@@ -75,7 +75,6 @@
 #include "npruntime_impl.h"
 #include "runtime_root.h"
 #include "visible_units.h"
-#include <kjs/JSLock.h>
 #include <wtf/RefCountedLeakCounter.h>
 
 #if FRAME_LOADS_USER_STYLESHEET
@@ -90,8 +89,6 @@
 #endif
 
 using namespace std;
-
-using KJS::JSLock;
 
 namespace WebCore {
 
@@ -1066,10 +1063,8 @@ KJS::Bindings::RootObject* Frame::bindingRootObject()
     if (!script()->isEnabled())
         return 0;
 
-    if (!d->m_bindingRootObject) {
-        JSLock lock(false);
+    if (!d->m_bindingRootObject)
         d->m_bindingRootObject = KJS::Bindings::RootObject::create(0, script()->globalObject());
-    }
     return d->m_bindingRootObject.get();
 }
 
@@ -1092,7 +1087,6 @@ NPObject* Frame::windowScriptNPObject()
         if (script()->isEnabled()) {
             // JavaScript is enabled, so there is a JavaScript window object.  Return an NPObject bound to the window
             // object.
-            KJS::JSLock lock(false);
             KJS::JSObject* win = toJSDOMWindow(this);
             ASSERT(win);
             KJS::Bindings::RootObject* root = bindingRootObject();
@@ -1135,8 +1129,6 @@ void Frame::cleanupScriptObjectsForPlugin(void* nativeHandle)
     
 void Frame::clearScriptObjects()
 {
-    JSLock lock(false);
-
     RootObjectMap::const_iterator end = d->m_rootObjects.end();
     for (RootObjectMap::const_iterator it = d->m_rootObjects.begin(); it != end; ++it)
         it->second->invalidate();
@@ -1193,6 +1185,16 @@ RenderPart* Frame::ownerRenderer() const
     if (!object->isRenderPart())
         return 0;
     return static_cast<RenderPart*>(object);
+}
+
+bool Frame::isDisconnected() const
+{
+    return d->m_isDisconnected;
+}
+
+void Frame::setIsDisconnected(bool isDisconnected)
+{
+    d->m_isDisconnected = isDisconnected;
 }
 
 // returns FloatRect because going through IntRect would truncate any floats
@@ -1960,6 +1962,7 @@ FramePrivate::FramePrivate(Page* page, Frame* parent, Frame* thisFrame, HTMLFram
     , frameCount(0)
     , m_prohibitsScrolling(false)
     , m_needsReapplyStyles(false)
+    , m_isDisconnected(false)
 #if ENABLE(NETSCAPE_PLUGIN_API)
     , m_windowScriptNPObject(0)
 #endif

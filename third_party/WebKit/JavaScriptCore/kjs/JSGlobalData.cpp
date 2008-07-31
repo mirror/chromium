@@ -32,7 +32,6 @@
 #include "ArgList.h"
 #include "CommonIdentifiers.h"
 #include "JSClassRef.h"
-#include "JSLock.h"
 #include "Machine.h"
 #include "Parser.h"
 #include "collector.h"
@@ -40,7 +39,7 @@
 #include "lookup.h"
 #include "nodes.h"
 
-#if USE(MULTIPLE_THREADS)
+#if ENABLE(JSC_MULTIPLE_THREADS)
 #include <wtf/Threading.h>
 #endif
 
@@ -59,7 +58,7 @@ extern const HashTable stringTable;
 JSGlobalData::JSGlobalData()
     : machine(new Machine)
     , heap(new Heap(this))
-#if USE(MULTIPLE_THREADS)
+#if ENABLE(JSC_MULTIPLE_THREADS)
     , arrayTable(new HashTable(KJS::arrayTable))
     , dateTable(new HashTable(KJS::dateTable))
     , mathTable(new HashTable(KJS::mathTable))
@@ -85,7 +84,6 @@ JSGlobalData::JSGlobalData()
     , lexer(new Lexer(this))
     , parser(new Parser)
     , head(0)
-    , isSharedInstance(false)
 {
 }
 
@@ -96,7 +94,7 @@ JSGlobalData::~JSGlobalData()
     delete machine;
     machine = 0;
 
-#if USE(MULTIPLE_THREADS)
+#if ENABLE(JSC_MULTIPLE_THREADS)
     arrayTable->deleteTable();
     dateTable->deleteTable();
     mathTable->deleteTable();

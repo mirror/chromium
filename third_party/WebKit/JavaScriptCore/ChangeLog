@@ -1,3 +1,177 @@
+2008-07-31  Kevin Ollivier <kevino@theolliviers.com>
+
+        Second attempt at Windows/wx build fix. Instead of avoiding inclusion of windows.h,
+        use defines, etc. to avoid conflicts in each affected file. Also, change PLATFORM(WIN)
+        to PLATFORM(WIN_OS) so that other ports using Windows headers get the right impls.
+
+        * VM/SamplingTool.cpp:
+        * wtf/Threading.h:
+
+2008-07-31  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Adam.
+
+        Fix Windows build.
+        
+        * kjs/collector.h:
+        * wtf/FastMalloc.cpp:
+
+2008-07-31  Csaba Osztrogonac  <oszi@inf.u-szeged.hu>
+
+        Reviewed by Simon.
+
+        Bug 20170: [Qt] missing namespace defines in JavaScriptCore.pro
+        <https://bugs.webkit.org/show_bug.cgi?id=20170>
+
+        * JavaScriptCore.pro: Added missing define.
+
+2008-07-31  Alexey Proskuryakov  <ap@webkit.org>
+
+        Rubber-stamped by Maciej.
+
+        Eliminate JSLock (it was already disabled, removing the stub implementaion and all
+        call sites now).
+
+        * API/JSBase.cpp:
+        (JSEvaluateScript):
+        (JSCheckScriptSyntax):
+        (JSGarbageCollect):
+        * API/JSCallbackConstructor.cpp:
+        (KJS::constructJSCallback):
+        * API/JSCallbackFunction.cpp:
+        (KJS::JSCallbackFunction::call):
+        * API/JSCallbackObjectFunctions.h:
+        (KJS::::init):
+        (KJS::::getOwnPropertySlot):
+        (KJS::::put):
+        (KJS::::deleteProperty):
+        (KJS::::construct):
+        (KJS::::hasInstance):
+        (KJS::::call):
+        (KJS::::getPropertyNames):
+        (KJS::::toNumber):
+        (KJS::::toString):
+        (KJS::::staticValueGetter):
+        (KJS::::callbackGetter):
+        * API/JSContextRef.cpp:
+        (JSGlobalContextCreateInGroup):
+        (JSGlobalContextRetain):
+        (JSGlobalContextRelease):
+        * API/JSObjectRef.cpp:
+        (JSObjectMake):
+        (JSObjectMakeFunctionWithCallback):
+        (JSObjectMakeConstructor):
+        (JSObjectMakeFunction):
+        (JSObjectHasProperty):
+        (JSObjectGetProperty):
+        (JSObjectSetProperty):
+        (JSObjectGetPropertyAtIndex):
+        (JSObjectSetPropertyAtIndex):
+        (JSObjectDeleteProperty):
+        (JSObjectCallAsFunction):
+        (JSObjectCallAsConstructor):
+        (JSObjectCopyPropertyNames):
+        (JSPropertyNameArrayRelease):
+        (JSPropertyNameAccumulatorAddName):
+        * API/JSStringRef.cpp:
+        (JSStringRelease):
+        * API/JSValueRef.cpp:
+        (JSValueIsEqual):
+        (JSValueIsInstanceOfConstructor):
+        (JSValueMakeNumber):
+        (JSValueMakeString):
+        (JSValueToNumber):
+        (JSValueToStringCopy):
+        (JSValueToObject):
+        (JSValueProtect):
+        (JSValueUnprotect):
+        * ForwardingHeaders/JavaScriptCore/JSLock.h: Removed.
+        * GNUmakefile.am:
+        * JavaScriptCore.exp:
+        * JavaScriptCore.order:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * kjs/AllInOneFile.cpp:
+        * kjs/JSGlobalData.cpp:
+        (KJS::JSGlobalData::JSGlobalData):
+        * kjs/JSGlobalData.h:
+        * kjs/JSGlobalObject.cpp:
+        (KJS::JSGlobalObject::~JSGlobalObject):
+        (KJS::JSGlobalObject::init):
+        * kjs/JSLock.cpp: Removed.
+        * kjs/JSLock.h: Removed.
+        * kjs/Shell.cpp:
+        (functionGC):
+        (jscmain):
+        * kjs/collector.cpp:
+        (KJS::Heap::~Heap):
+        (KJS::Heap::heapAllocate):
+        (KJS::Heap::setGCProtectNeedsLocking):
+        (KJS::Heap::protect):
+        (KJS::Heap::unprotect):
+        (KJS::Heap::collect):
+        * kjs/identifier.cpp:
+        * kjs/interpreter.cpp:
+        (KJS::Interpreter::checkSyntax):
+        (KJS::Interpreter::evaluate):
+
+2008-07-31  Alexey Proskuryakov  <ap@webkit.org>
+
+        Rubber-stamped by Oliver Hunt.
+
+        Fix the Mac project to not display "test/" as part of file name for tests.
+
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+
+2008-07-31  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Alexey Proskuryakov.
+        
+        Rename USE(MULTIPLE_THREADS) to ENABLE(JSC_MULTIPLE_THREADS)
+        to better match the use/enable pattern (and better describe
+        the usage of the feature in question.)
+        
+        I also fixed a couple other ENABLE_ macros to be pre-processor
+        definition override-able to match the rest of the ENABLE_ macros
+        since it seems to be our convention that build systems can set
+        ENABLE_ macros in Makefiles.
+
+        * kjs/InitializeThreading.cpp:
+        (KJS::initializeThreadingOnce):
+        * kjs/JSGlobalData.cpp:
+        (KJS::JSGlobalData::JSGlobalData):
+        (KJS::JSGlobalData::~JSGlobalData):
+        * kjs/MathObject.cpp:
+        * kjs/collector.cpp:
+        (KJS::Heap::Heap):
+        (KJS::Heap::~Heap):
+        (KJS::allocateBlock):
+        (KJS::Heap::markStackObjectsConservatively):
+        * kjs/collector.h:
+        * kjs/dtoa.cpp:
+        (KJS::pow5mult):
+        (KJS::rv_alloc):
+        (KJS::freedtoa):
+        (KJS::dtoa):
+        * wtf/FastMalloc.cpp:
+        * wtf/Platform.h:
+        * wtf/RefCountedLeakCounter.cpp:
+
+2008-07-30  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Mark Rowe.
+        
+        Try to clean up our usage of USE(MULTIPLE_THREADS) vs. USE(PTHREADS) a little.
+        It looks like JSC assumes that if MULTIPLE_THREADS is defined, then pthreads will always be available
+        I'm not sure that's always the case for gtk, certainly not for Windows.  We should eventually go back
+        and fix wtf/Threading.h to cover all these cases some day.
+
+        * kjs/JSLock.cpp:
+        * kjs/collector.h:
+        * wtf/Platform.h:
+
 2008-07-30  Eric Seidel  <eric@webkit.org>
 
         Reviewed by Oliver.
