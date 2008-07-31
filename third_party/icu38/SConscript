@@ -48,12 +48,10 @@ env.Append(
     ],
     CCFLAGS = [
         '/WX',
-
-        '/wd4503',
-        '/wd4819',
     ],
 )
 
+env['CPPDEFINES'].remove('WIN32_LEAN_AND_MEAN')
 
 input_files = [
     'source/common/bmpset.cpp',
