@@ -28,7 +28,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Import('env')
-Import('PLATFORM')
 
 env = env.Clone()
 
@@ -48,7 +47,7 @@ env.Append(
         "U_STATIC_IMPLEMENTATION",
     ],
 )
-if PLATFORM == 'WINDOWS':
+if env['PLATFORM'] == 'win32':
   env.Append(
       CCFLAGS = [
           '/WX',
@@ -313,18 +312,18 @@ c_input_files = [f for f in input_files if f.endswith('.c')]
 cpp_input_files = [f for f in input_files if f.endswith('.cpp')]
 
 env_cpp = env.Clone()
-if PLATFORM == 'WINDOWS':
+if env['PLATFORM'] == 'win32':
   env_cpp.Append(CCFLAGS = ["/TP"])
 cpp_object_files = [env_cpp.Object(i) for i in cpp_input_files]
 
 env_c = env.Clone()
-if PLATFORM == 'WINDOWS':
+if env['PLATFORM'] == 'win32':
   env_c.Append(CCFLAGS = ["/TC"])
 c_object_files = [env_c.Object(i) for i in c_input_files]
 
 
 env_stray = env.Clone()
-if PLATFORM == 'WINDOWS':
+if env['PLATFORM'] == 'win32':
   env_stray.Append(CCFLAGS = ["/TC"])
 env_stray.Append(CPPDEFINES = ["U_COMMON_IMPLEMENTATION"])
 stray_object_files = [env_stray.Object(i) for i in common_implementation_files]
