@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B0E5AE10DB3DAE2007D4907 /* msgfmt_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B0E5ADD0DB3DAE2007D4907 /* msgfmt_impl.h */; };
+		7B0E5AE20DB3DAE2007D4907 /* plurfmt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E5ADE0DB3DAE2007D4907 /* plurfmt.cpp */; };
+		7B0E5AE30DB3DAE2007D4907 /* plurrule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B0E5ADF0DB3DAE2007D4907 /* plurrule.cpp */; };
+		7B0E5AE40DB3DAE2007D4907 /* plurrule_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B0E5AE00DB3DAE2007D4907 /* plurrule_impl.h */; };
 		7BD53D2C0D6F66B2003CD41E /* bmpset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BD53C570D6F66B1003CD41E /* bmpset.cpp */; };
 		7BD53D2D0D6F66B2003CD41E /* bmpset.h in Headers */ = {isa = PBXBuildFile; fileRef = 7BD53C580D6F66B1003CD41E /* bmpset.h */; };
 		7BD53D2E0D6F66B2003CD41E /* brkeng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BD53C590D6F66B1003CD41E /* brkeng.cpp */; };
@@ -432,6 +436,7 @@
 		7BD541240D6F8530003CD41E /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD53EA60D6F6FC7003CD41E /* libicui18n.a */; };
 		7BD541250D6F8530003CD41E /* libicuuc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD53AAB0D6F6671003CD41E /* libicuuc.a */; };
 		7BD541260D6F8530003CD41E /* libicudata_stub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BD5408B0D6F743F003CD41E /* libicudata_stub.a */; };
+		82C262D30DCF9460005CFE91 /* icudt38l_dat.s in Sources */ = {isa = PBXBuildFile; fileRef = 7BD541020D6F83E6003CD41E /* icudt38l_dat.s */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -505,9 +510,27 @@
 			remoteGlobalIDString = 7BD540250D6F727B003CD41E;
 			remoteInfo = icutu;
 		};
+		82C262CA0DCF9423005CFE91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7BD53A8A0D6F6543003CD41E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7BD540D50D6F7EFE003CD41E;
+			remoteInfo = genccode;
+		};
+		82C262CC0DCF9427005CFE91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7BD53A8A0D6F6543003CD41E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7BD5410D0D6F8457003CD41E;
+			remoteInfo = icupkg;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7B0E5ADD0DB3DAE2007D4907 /* msgfmt_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = msgfmt_impl.h; sourceTree = "<group>"; };
+		7B0E5ADE0DB3DAE2007D4907 /* plurfmt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plurfmt.cpp; sourceTree = "<group>"; };
+		7B0E5ADF0DB3DAE2007D4907 /* plurrule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plurrule.cpp; sourceTree = "<group>"; };
+		7B0E5AE00DB3DAE2007D4907 /* plurrule_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plurrule_impl.h; sourceTree = "<group>"; };
 		7BD53A9C0D6F6561003CD41E /* stubdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stubdata.c; path = ../source/stubdata/stubdata.c; sourceTree = SOURCE_ROOT; };
 		7BD53AAB0D6F6671003CD41E /* libicuuc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libicuuc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD53C570D6F66B1003CD41E /* bmpset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bmpset.cpp; sourceTree = "<group>"; };
@@ -1055,6 +1078,7 @@
 		7BD541020D6F83E6003CD41E /* icudt38l_dat.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = icudt38l_dat.s; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD5410E0D6F8457003CD41E /* icupkg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = icupkg; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD541170D6F846F003CD41E /* icupkg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = icupkg.cpp; sourceTree = "<group>"; };
+		82C262C40DCF9411005CFE91 /* libicudatastatic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libicudatastatic.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1115,6 +1139,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82C262C20DCF9411005CFE91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1138,6 +1169,7 @@
 				7BD540D60D6F7EFE003CD41E /* genccode */,
 				7BD5410E0D6F8457003CD41E /* icupkg */,
 				7BD540FB0D6F8397003CD41E /* libicudata.dylib */,
+				82C262C40DCF9411005CFE91 /* libicudatastatic.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1607,6 +1639,7 @@
 				7BD53EF20D6F6FF4003CD41E /* measfmt.cpp */,
 				7BD53EF30D6F6FF4003CD41E /* measure.cpp */,
 				7BD53EF40D6F6FF4003CD41E /* msgfmt.cpp */,
+				7B0E5ADD0DB3DAE2007D4907 /* msgfmt_impl.h */,
 				7BD53EF50D6F6FF4003CD41E /* name2uni.cpp */,
 				7BD53EF60D6F6FF4003CD41E /* name2uni.h */,
 				7BD53EF70D6F6FF4003CD41E /* nfrlist.h */,
@@ -1625,6 +1658,9 @@
 				7BD53F040D6F6FF4003CD41E /* olsontz.h */,
 				7BD53F050D6F6FF4003CD41E /* persncal.cpp */,
 				7BD53F060D6F6FF4003CD41E /* persncal.h */,
+				7B0E5ADE0DB3DAE2007D4907 /* plurfmt.cpp */,
+				7B0E5ADF0DB3DAE2007D4907 /* plurrule.cpp */,
+				7B0E5AE00DB3DAE2007D4907 /* plurrule_impl.h */,
 				7BD53F070D6F6FF4003CD41E /* quant.cpp */,
 				7BD53F080D6F6FF4003CD41E /* quant.h */,
 				7BD53F090D6F6FF4003CD41E /* rbnf.cpp */,
@@ -1817,8 +1853,10 @@
 				7BD53D400D6F66B2003CD41E /* locbased.h in Headers */,
 				7BD53D430D6F66B2003CD41E /* locmap.h in Headers */,
 				7BD53D450D6F66B2003CD41E /* locutil.h in Headers */,
+				7B0E5AE10DB3DAE2007D4907 /* msgfmt_impl.h in Headers */,
 				7BD53D460D6F66B2003CD41E /* msvcres.h in Headers */,
 				7BD53D470D6F66B2003CD41E /* mutex.h in Headers */,
+				7B0E5AE40DB3DAE2007D4907 /* plurrule_impl.h in Headers */,
 				7BD53D4B0D6F66B2003CD41E /* propname.h in Headers */,
 				7BD53D4D0D6F66B2003CD41E /* punycode.h in Headers */,
 				7BD53D4F0D6F66B2003CD41E /* putilimp.h in Headers */,
@@ -1990,6 +2028,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82C262C00DCF9411005CFE91 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -2121,6 +2166,26 @@
 			productReference = 7BD5410E0D6F8457003CD41E /* icupkg */;
 			productType = "com.apple.product-type.tool";
 		};
+		82C262C30DCF9411005CFE91 /* icudatastatic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82C262E80DCF946A005CFE91 /* Build configuration list for PBXNativeTarget "icudatastatic" */;
+			buildPhases = (
+				82C262D20DCF9438005CFE91 /* Generate Data */,
+				82C262C00DCF9411005CFE91 /* Headers */,
+				82C262C10DCF9411005CFE91 /* Sources */,
+				82C262C20DCF9411005CFE91 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				82C262CB0DCF9423005CFE91 /* PBXTargetDependency */,
+				82C262CD0DCF9427005CFE91 /* PBXTargetDependency */,
+			);
+			name = icudatastatic;
+			productName = icudatastatic;
+			productReference = 82C262C40DCF9411005CFE91 /* libicudatastatic.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2141,12 +2206,27 @@
 				7BD540D50D6F7EFE003CD41E /* genccode */,
 				7BD5410D0D6F8457003CD41E /* icupkg */,
 				7BD540FA0D6F8397003CD41E /* icudata */,
+				82C262C30DCF9411005CFE91 /* icudatastatic */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		7BD541060D6F8415003CD41E /* Generate Data */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Data";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -ex\nmkdir -p \"${BUILT_PRODUCTS_DIR}/icudt38l\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -d \"${BUILT_PRODUCTS_DIR}/icudt38l\" --list -x \"*\" ../source/data/in/icudt38l.dat > \"${BUILT_PRODUCTS_DIR}/icudata.lst\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -tl -c -s \"${BUILT_PRODUCTS_DIR}/icudt38l\" -a \"${BUILT_PRODUCTS_DIR}/icudata.lst\" new \"${BUILT_PRODUCTS_DIR}/icudt38l.dat\"\n\"${BUILT_PRODUCTS_DIR}/genccode\" -a gcc-darwin -n icudt38l -e icudt38 -d \"${BUILT_PRODUCTS_DIR}\" \"${BUILT_PRODUCTS_DIR}/icudt38l.dat\"\n";
+		};
+		82C262D20DCF9438005CFE91 /* Generate Data */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2182,6 +2262,8 @@
 				7BD53D440D6F66B2003CD41E /* locutil.cpp in Sources */,
 				7BD53D480D6F66B2003CD41E /* normlzr.cpp in Sources */,
 				7BD53D490D6F66B2003CD41E /* parsepos.cpp in Sources */,
+				7B0E5AE20DB3DAE2007D4907 /* plurfmt.cpp in Sources */,
+				7B0E5AE30DB3DAE2007D4907 /* plurrule.cpp in Sources */,
 				7BD53D4A0D6F66B2003CD41E /* propname.cpp in Sources */,
 				7BD53D4C0D6F66B2003CD41E /* punycode.c in Sources */,
 				7BD53D4E0D6F66B2003CD41E /* putil.c in Sources */,
@@ -2474,6 +2556,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		82C262C10DCF9411005CFE91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				82C262D30DCF9460005CFE91 /* icudt38l_dat.s in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2527,6 +2617,16 @@
 			target = 7BD540250D6F727B003CD41E /* icutu */;
 			targetProxy = 7BD5412D0D6F8538003CD41E /* PBXContainerItemProxy */;
 		};
+		82C262CB0DCF9423005CFE91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7BD540D50D6F7EFE003CD41E /* genccode */;
+			targetProxy = 82C262CA0DCF9423005CFE91 /* PBXContainerItemProxy */;
+		};
+		82C262CD0DCF9427005CFE91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7BD5410D0D6F8457003CD41E /* icupkg */;
+			targetProxy = 82C262CC0DCF9427005CFE91 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2534,6 +2634,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../public/common,
 					../public/i18n,
@@ -2546,11 +2648,9 @@
 		7BD53A8C0D6F6543003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				COPY_PHASE_STRIP = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					../public/common,
 					../public/i18n,
@@ -2565,14 +2665,12 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icuuc;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2581,13 +2679,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icuuc;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2596,14 +2692,12 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = U_I18N_IMPLEMENTATION;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icui18n;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2612,13 +2706,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = U_I18N_IMPLEMENTATION;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icui18n;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2627,14 +2719,12 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = U_TOOLUTIL_IMPLEMENTATION;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icutu;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2643,13 +2733,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = U_TOOLUTIL_IMPLEMENTATION;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icutu;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2658,13 +2746,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icudata_stub;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2673,12 +2759,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icudata_stub;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2687,13 +2771,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
 				PRODUCT_NAME = genccode;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2702,12 +2784,10 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
 				PRODUCT_NAME = genccode;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2717,13 +2797,13 @@
 				COPY_PHASE_STRIP = NO;
 				EXECUTABLE_PREFIX = lib;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icudata;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2734,11 +2814,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXECUTABLE_PREFIX = lib;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_MODEL_TUNING = G5;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INSTALL_PATH = /usr/local/lib;
 				PREBINDING = NO;
 				PRODUCT_NAME = icudata;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -2747,13 +2828,11 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
 				PRODUCT_NAME = icupkg;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
@@ -2762,12 +2841,35 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
 				PRODUCT_NAME = icupkg;
-				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		82C262C50DCF9411005CFE91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = icudatastatic;
+			};
+			name = Debug;
+		};
+		82C262C60DCF9411005CFE91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/lib;
+				PREBINDING = NO;
+				PRODUCT_NAME = icudatastatic;
 			};
 			name = Release;
 		};
@@ -2842,6 +2944,15 @@
 			buildConfigurations = (
 				7BD541100D6F8457003CD41E /* Debug */,
 				7BD541110D6F8457003CD41E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		82C262E80DCF946A005CFE91 /* Build configuration list for PBXNativeTarget "icudatastatic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				82C262C50DCF9411005CFE91 /* Debug */,
+				82C262C60DCF9411005CFE91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
