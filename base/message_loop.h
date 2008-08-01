@@ -132,10 +132,6 @@
 // loop.
 
 //------------------------------------------------------------------------------
-// Define a macro to record where (in the sourec code) each Task is posted from.
-#define FROM_HERE tracked_objects::Location(__FUNCTION__, __FILE__, __LINE__)
-
-//------------------------------------------------------------------------------
 class MessageLoop {
  public:
 
@@ -253,8 +249,12 @@ class MessageLoop {
     PostTask(from_here, new ReleaseTask<T>(object));
   }
 
-  // Run the message loop
+  // Run the message loop.
   void Run();
+
+  // Process all pending tasks, windows messages, etc., but don't wait/sleep.
+  // Return as soon as all items that can be run are taken care of.
+  void RunAllPending();
 
   // See description of Dispatcher for how Run uses Dispatcher.
   void Run(Dispatcher* dispatcher);
@@ -351,11 +351,14 @@ class MessageLoop {
         : loop_(loop),
           dispatcher_(loop->dispatcher_),
           quit_now_(loop->quit_now_),
-          quit_received_(loop->quit_received_) {
+          quit_received_(loop->quit_received_),
+          run_depth_(loop->run_depth_) {
       loop->quit_now_ = loop->quit_received_ = false;
+      ++loop->run_depth_;
     }
 
     ~ScopedStateSave() {
+      loop_->run_depth_ = run_depth_;
       loop_->quit_received_ = quit_received_;
       loop_->quit_now_ = quit_now_;
       loop_->dispatcher_ = dispatcher_;
@@ -366,6 +369,7 @@ class MessageLoop {
     Dispatcher* dispatcher_;
     bool quit_now_;
     bool quit_received_;
+    int run_depth_;
   };  // struct ScopedStateSave
 
   // A prioritized queue with interface that mostly matches std::queue<>.
@@ -411,7 +415,6 @@ class MessageLoop {
     void Push(Task* task);
     Task* Pop();  // Extract the next Task from the queue, and return it.
     bool Empty() const { return !first_; }
-    friend void std::swap<TaskQueue>(TaskQueue&, TaskQueue&);
    private:
     Task* first_;
     Task* last_;
@@ -436,15 +439,23 @@ class MessageLoop {
 
   void InitMessageWnd();
 
-  // The actual message loop implementation. Called by all flavors of Run().
+
+  // A function to encapsulate all the exception handling capability in the
+  // stacks around the running of a main message loop.
   // It will run the message loop in a SEH try block or not depending on the
   // set_SEH_restoration() flag.
-  void RunInternal(Dispatcher* dispatcher);
+  void RunHandler(Dispatcher* dispatcher, bool non_blocking);
 
-  //----------------------------------------------------------------------------
-  // A list of alternate message loop priority systems.  The strategy_selector_
-  // determines which one to actually use.
-  void RunTraditional();
+  // A surrounding stack frame around the running of the message loop that
+  // supports all saving and restoring of state, as is needed for any/all (ugly)
+  // recursive calls.
+  void RunInternal(Dispatcher* dispatcher, bool non_blocking);
+
+  // An extended message loop (message pump) that loops mostly forever, and
+  // processes task, signals, timers, etc.
+  // If non-blocking is set, it will return rather than wait for new things to
+  // arrive for processing.
+  void RunTraditional(bool non_blocking);
 
   //----------------------------------------------------------------------------
   // A list of method wrappers with identical calling signatures (no arguments)
