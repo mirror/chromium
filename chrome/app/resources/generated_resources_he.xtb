@@ -490,7 +490,7 @@ Del</translation>
 <translation id="5875565123733157100">סוג תקלה:</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> שעות</translation>
 <translation id="5706242308519462060">קידוד ברירת מחדל:</translation>
-<translation id="7893393459573308604"><ph name="ENGINE_NAME"/> (ברירת מחדל)</translation>
+<translation id="7893393459573308604">(ברירת מחדל) <ph name="ENGINE_NAME"/></translation>
 <translation id="5360606537916580043">מהיום האחרון</translation>
 <translation id="1181037720776840403">הסר</translation>
 <translation id="501080040224996242">עזור להפוך את Chrome לטוב יותר על ידי שליחה אוטומטית של סטטיסטיקת שימוש ודוחות קריסה ל-Google.</translation>
