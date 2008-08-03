@@ -329,7 +329,7 @@ env_stray.Append(CPPDEFINES = ["U_COMMON_IMPLEMENTATION"])
 stray_object_files = [env_stray.Object(i) for i in common_implementation_files]
 
 
-env.StaticLibrary('icuuc', cpp_object_files +
+env.ChromeStaticLibrary('icuuc', cpp_object_files +
                            c_object_files +
                            stray_object_files)
 
