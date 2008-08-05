@@ -7,18 +7,25 @@ A. This directory contains the source code of ICU 3.8 for C/C++ with CJK
 
        $ svn export --native-eol LF -r 22777 http://source.icu-project.org/repos/icu/icu/trunk icu38
 
-    2. Apply the following 3 patches :
+    2. Apply the following 6 patches :
         
        * segmentation.patch.txt  (CJ segmentation patch : code change + data)
        * data.patch.txt (ICU data customization patch)
        * windows.patch (Windows-specific patch)
+       * uconv.patch (thread-safety patch for uconv. Ported from the ICU trunk)
+       * wpo.patch (see section E).
+       * plural.patch (for plural formatting. Ported back from ICU 4.0. See
+         section G for details).  
 
   - Once CJK segmentation is included in an ICU release, we can use that
     release, instead of applying the first patch above.
 
-  - Copyright files for CJ word list are missing. We have to make sure
-    to include them when we go public. 
-
+  - The first patch contains the word frequency list derived from 3
+    sources. For details, see the license terms and copyright notice
+    at the beginning of the following two files: 
+      source/data/brkitr/cjdict.txt 
+      source/data/brkitr/cc_cedict.txt 
+     
 
 B. We build ICU 3.8 with VC++ 8 statically linked to VC8 runtime library
   via the project files in the build directory.  The files under
@@ -76,8 +83,8 @@ D. The following procedure was taken to build a customized icudt38l.dat on Linux
 
    8. As mentioned above, consumers just use icudt38.dll by including build/icudt.vcproj file.
   
-E. In addition to files listed in section D, the following files are modified
-  in our copy of ICU 3.8 to build on Windows:
+E. In addition to files included in patches listed in A2, the following files
+   are modified in our copy of ICU 3.8 to build on Windows:
 
      source\stubdata\stubdatabuilt.txt  (just an empty file added)
      source\common\udata.c              (fix WPO issue, see wpo.patch)

@@ -259,9 +259,6 @@ haveAliasData(UErrorCode *pErrorCode) {
 
         umtx_lock(NULL);
         if(gAliasData==NULL) {
-            gAliasData = data;
-            data=NULL;
-
             gMainTable.converterListSize      = sectionSizes[1];
             gMainTable.tagListSize            = sectionSizes[2];
             gMainTable.aliasListSize          = sectionSizes[3];
@@ -315,6 +312,9 @@ haveAliasData(UErrorCode *pErrorCode) {
                 ? gMainTable.stringTable : (table + currOffset));
 
             ucln_common_registerCleanup(UCLN_COMMON_UCNV_IO, ucnv_io_cleanup);
+
+            gAliasData = data;
+            data=NULL;
         }
         umtx_unlock(NULL);
 

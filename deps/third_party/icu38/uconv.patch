@@ -1,0 +1,24 @@
+Index: source/common/ucnv_io.c
+===================================================================
+--- source/common/ucnv_io.c	(revision 24435)
++++ source/common/ucnv_io.c	(revision 24436)
+@@ -259,9 +259,6 @@
+ 
+         umtx_lock(NULL);
+         if(gAliasData==NULL) {
+-            gAliasData = data;
+-            data=NULL;
+-
+             gMainTable.converterListSize      = sectionSizes[1];
+             gMainTable.tagListSize            = sectionSizes[2];
+             gMainTable.aliasListSize          = sectionSizes[3];
+@@ -315,6 +312,9 @@
+                 ? gMainTable.stringTable : (table + currOffset));
+ 
+             ucln_common_registerCleanup(UCLN_COMMON_UCNV_IO, ucnv_io_cleanup);
++
++            gAliasData = data;
++            data=NULL;
+         }
+         umtx_unlock(NULL);
+ 
