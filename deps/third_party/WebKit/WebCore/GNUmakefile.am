@@ -633,6 +633,8 @@ webcore_sources += \
 	WebCore/css/StyleList.cpp \
 	WebCore/css/StyleSheet.cpp \
 	WebCore/css/StyleSheetList.cpp \
+	WebCore/css/WebKitCSSKeyframeRule.cpp \
+	WebCore/css/WebKitCSSKeyframesRule.cpp \
 	WebCore/css/WebKitCSSTransformValue.cpp \
 	WebCore/dom/Attr.cpp \
 	WebCore/dom/Attribute.cpp \
@@ -814,6 +816,7 @@ webcore_sources += \
 	WebCore/html/HTMLParser.cpp \
 	WebCore/html/HTMLParserErrorCodes.cpp \
 	WebCore/html/HTMLPlugInElement.cpp \
+	WebCore/html/HTMLPlugInImageElement.cpp \
 	WebCore/html/HTMLPreElement.cpp \
 	WebCore/html/HTMLQuoteElement.cpp \
 	WebCore/html/HTMLScriptElement.cpp \
@@ -1048,6 +1051,7 @@ webcore_sources += \
 	WebCore/xml/XMLSerializer.cpp
 
 webcoregtk_sources += \
+	WebCore/bindings/js/ScriptControllerGtk.cpp \
 	WebCore/plugins/gtk/PluginDataGtk.cpp \
 	WebCore/plugins/gtk/PluginPackageGtk.cpp \
 	WebCore/plugins/gtk/PluginViewGtk.cpp

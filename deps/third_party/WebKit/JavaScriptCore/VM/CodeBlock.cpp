@@ -171,13 +171,22 @@ void CodeBlock::dump(ExecState* exec) const
         } while (i != identifiers.size());
     }
 
-    if (registers.size()) {
+    if (constantRegisters.size()) {
         printf("\nConstants:\n");
         size_t i = 0;
         do {
-            printf("  k%u = %s\n", static_cast<unsigned>(i), valueToSourceString(exec, registers[i].jsValue(exec)).ascii());
+            printf("  tr%u = %s\n", static_cast<unsigned>(i), valueToSourceString(exec, constantRegisters[i].jsValue(exec)).ascii());
             ++i;
-        } while (i < registers.size());
+        } while (i < constantRegisters.size());
+    }
+
+    if (unexpectedConstants.size()) {
+        printf("\nUnexpected Constants:\n");
+        size_t i = 0;
+        do {
+            printf("  k%u = %s\n", static_cast<unsigned>(i), valueToSourceString(exec, unexpectedConstants[i]).ascii());
+            ++i;
+        } while (i < unexpectedConstants.size());
     }
     
     if (regexps.size()) {
@@ -250,12 +259,6 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
 {
     int location = it - begin;
     switch (exec->machine()->getOpcodeID(it->u.opcode)) {
-        case op_load: {
-            int r0 = (++it)->u.operand;
-            int k0 = (++it)->u.operand;
-            printf("[%4d] load\t\t %s, %s\t\t\n", location, registerName(r0).c_str(), constantName(exec, k0, registers[k0].jsValue(exec)).c_str());
-            break;
-        }
         case op_new_object: {
             int r0 = (++it)->u.operand;
             printf("[%4d] new_object\t %s\n", location, registerName(r0).c_str());
@@ -633,6 +636,13 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
             printf("[%4d] pop_scope\n", location);
             break;
         }
+        case op_push_new_scope: {
+            int r0 = (++it)->u.operand;
+            int id0 = (++it)->u.operand;
+            int r1 = (++it)->u.operand;
+            printf("[%4d] push_new_scope \t%s, %s, %s\n", location, registerName(r0).c_str(), idName(id0, identifiers[id0]).c_str(), registerName(r1).c_str());
+            break;
+        }
         case op_jmp_scopes: {
             int scopeDelta = (++it)->u.operand;
             int offset = (++it)->u.operand;
@@ -653,7 +663,7 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
             int r0 = (++it)->u.operand;
             int errorType = (++it)->u.operand;
             int k0 = (++it)->u.operand;
-            printf("[%4d] new_error\t %s, %d, %s\n", location, registerName(r0).c_str(), errorType, constantName(exec, k0, registers[k0].jsValue(exec)).c_str());
+            printf("[%4d] new_error\t %s, %d, %s\n", location, registerName(r0).c_str(), errorType, constantName(exec, k0, unexpectedConstants[k0]).c_str());
             break;
         }
         case op_jsr: {
@@ -688,9 +698,13 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
 
 void CodeBlock::mark()
 {
-    for (size_t i = 0; i < registers.size(); ++i)
-        if (!registers[i].marked())
-            registers[i].mark();
+    for (size_t i = 0; i < constantRegisters.size(); ++i)
+        if (!constantRegisters[i].marked())
+            constantRegisters[i].mark();
+
+    for (size_t i = 0; i < unexpectedConstants.size(); ++i)
+        if (!unexpectedConstants[i]->marked())
+            unexpectedConstants[i]->mark();
 
     for (size_t i = 0; i < functions.size(); ++i)
         functions[i]->body()->mark();

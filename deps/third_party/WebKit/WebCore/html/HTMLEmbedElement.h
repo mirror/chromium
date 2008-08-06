@@ -23,19 +23,11 @@
 #ifndef HTMLEmbedElement_h
 #define HTMLEmbedElement_h
 
-#include "HTMLPlugInElement.h"
-
-#if USE(JAVASCRIPTCORE_BINDINGS)
-namespace KJS {
-    namespace Bindings {
-        class Instance;
-    }
-}
-#endif
+#include "HTMLPlugInImageElement.h"
 
 namespace WebCore {
 
-class HTMLEmbedElement : public HTMLPlugInElement {
+class HTMLEmbedElement : public HTMLPlugInImageElement {
 public:
     HTMLEmbedElement(Document*);
     ~HTMLEmbedElement();
@@ -48,7 +40,6 @@ public:
 
     virtual void attach();
     virtual bool canLazyAttach() { return false; }
-    virtual void detach();
     virtual bool rendererIsNeeded(RenderStyle*);
     virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
     virtual void insertedIntoDocument();
@@ -56,12 +47,13 @@ public:
     virtual void attributeChanged(Attribute*, bool preserveDecls = false);
     
     virtual bool isURLAttribute(Attribute*) const;
+    virtual const QualifiedName& imageSourceAttributeName() const;
 
     virtual void updateWidget();
     void setNeedWidgetUpdate(bool needWidgetUpdate) { m_needWidgetUpdate = needWidgetUpdate; }
 
 #if USE(JAVASCRIPTCORE_BINDINGS)
-    virtual KJS::Bindings::Instance* getInstance() const;
+    virtual RenderWidget* renderWidgetForJSBindings() const;
 #endif
 
     String src() const;
@@ -70,15 +62,10 @@ public:
     String type() const;
     void setType(const String&);
 
-    const String& url() const { return m_url; }
-    const String& serviceType() const { return m_serviceType; }
-
     virtual void getSubresourceAttributeStrings(Vector<String>&) const;
 
 private:
-    String m_url;
     String m_pluginPage;
-    String m_serviceType;
     bool m_needWidgetUpdate;
 };
 

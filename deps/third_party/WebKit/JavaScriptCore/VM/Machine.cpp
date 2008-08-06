@@ -40,6 +40,7 @@
 #include "JSFunction.h"
 #include "JSNotAnObject.h"
 #include "JSPropertyNameIterator.h"
+#include "JSStaticScopeObject.h"
 #include "JSString.h"
 #include "ObjectPrototype.h"
 #include "Parser.h"
@@ -378,7 +379,7 @@ ALWAYS_INLINE void Machine::initializeCallFrame(Register* callFrame, CodeBlock* 
 ALWAYS_INLINE Register* slideRegisterWindowForCall(ExecState* exec, CodeBlock* newCodeBlock, RegisterFile* registerFile, Register* registerBase, Register* r, int argv, int argc, JSValue*& exceptionValue)
 {
     size_t registerOffset = argv + newCodeBlock->numLocals;
-    size_t size = r - registerBase + registerOffset + newCodeBlock->numTemporaries;
+    size_t size = r - registerBase + registerOffset + newCodeBlock->numConstants + newCodeBlock->numTemporaries;
 
     if (argc == newCodeBlock->numParameters) { // correct number of arguments
         if (!registerFile->grow(size)) {
@@ -417,6 +418,10 @@ ALWAYS_INLINE Register* slideRegisterWindowForCall(ExecState* exec, CodeBlock* n
     // initialize local variable slots
     for (Register* it = r - newCodeBlock->numVars; it != r; ++it)
         (*it) = jsUndefined();
+
+
+    for (size_t i = 0; i < newCodeBlock->constantRegisters.size(); ++i)
+        r[i] = newCodeBlock->constantRegisters[i];
 
     return r;
 }
@@ -582,7 +587,7 @@ bool Machine::isOpcode(Opcode opcode)
 #endif
 }
 
-NEVER_INLINE bool Machine::unwindCallFrame(ExecState* exec, JSValue* exceptionValue, const Instruction*& vPC, CodeBlock*& codeBlock, Register*& k, ScopeChainNode*& scopeChain, Register*& r)
+NEVER_INLINE bool Machine::unwindCallFrame(ExecState* exec, JSValue* exceptionValue, const Instruction*& vPC, CodeBlock*& codeBlock, ScopeChainNode*& scopeChain, Register*& r)
 {
     CodeBlock* oldCodeBlock = codeBlock;
     Register* callFrame = r - oldCodeBlock->numLocals - RegisterFile::CallFrameHeaderSize;
@@ -615,7 +620,6 @@ NEVER_INLINE bool Machine::unwindCallFrame(ExecState* exec, JSValue* exceptionVa
     if (!codeBlock)
         return false;
 
-    k = codeBlock->registers.data();
     scopeChain = callFrame[RegisterFile::CallerScopeChain].scopeChain();
     r = callFrame[RegisterFile::CallerRegisters].r();
     exec->m_callFrame = r - oldCodeBlock->numLocals - RegisterFile::CallFrameHeaderSize;
@@ -624,7 +628,7 @@ NEVER_INLINE bool Machine::unwindCallFrame(ExecState* exec, JSValue* exceptionVa
     return true;
 }
 
-NEVER_INLINE Instruction* Machine::throwException(ExecState* exec, JSValue*& exceptionValue, const Instruction* vPC, CodeBlock*& codeBlock, Register*& k, ScopeChainNode*& scopeChain, Register*& r, bool explicitThrow)
+NEVER_INLINE Instruction* Machine::throwException(ExecState* exec, JSValue*& exceptionValue, const Instruction* vPC, CodeBlock*& codeBlock, ScopeChainNode*& scopeChain, Register*& r, bool explicitThrow)
 {
     // Set up the exception object
 
@@ -658,7 +662,7 @@ NEVER_INLINE Instruction* Machine::throwException(ExecState* exec, JSValue*& exc
             }
             
             if (exception->isWatchdogException()) {
-                while (unwindCallFrame(exec, exceptionValue, vPC, codeBlock, k, scopeChain, r)) {
+                while (unwindCallFrame(exec, exceptionValue, vPC, codeBlock, scopeChain, r)) {
                     // Don't need handler checks or anything, we just want to unroll all the JS callframes possible.
                 }
                 return 0;
@@ -677,7 +681,7 @@ NEVER_INLINE Instruction* Machine::throwException(ExecState* exec, JSValue*& exc
     Instruction* handlerVPC;
 
     while (!codeBlock->getHandlerForVPC(vPC, handlerVPC, scopeDepth)) {
-        if (!unwindCallFrame(exec, exceptionValue, vPC, codeBlock, k, scopeChain, r))
+        if (!unwindCallFrame(exec, exceptionValue, vPC, codeBlock, scopeChain, r))
             return 0;
     }
 
@@ -703,7 +707,7 @@ JSValue* Machine::execute(ProgramNode* programNode, ExecState* exec, ScopeChainN
     CodeBlock* codeBlock = &programNode->byteCode(scopeChain);
 
     size_t oldSize = m_registerFile.size();
-    size_t newSize = oldSize + RegisterFile::CallFrameHeaderSize + codeBlock->numVars + codeBlock->numTemporaries;
+    size_t newSize = oldSize + RegisterFile::CallFrameHeaderSize + codeBlock->numVars + codeBlock->numConstants + codeBlock->numTemporaries;
     if (!m_registerFile.grow(newSize)) {
         *exception = createStackOverflowError(exec);
         return 0;
@@ -720,6 +724,9 @@ JSValue* Machine::execute(ProgramNode* programNode, ExecState* exec, ScopeChainN
 
     Register* r = callFrame + RegisterFile::CallFrameHeaderSize + codeBlock->numVars;
     r[codeBlock->thisRegister] = thisObj;
+
+    for (size_t i = 0; i < codeBlock->constantRegisters.size(); ++i)
+        r[i] = codeBlock->constantRegisters[i];
 
     if (codeBlock->needsFullScopeChain)
         scopeChain = scopeChain->copy();
@@ -838,7 +845,7 @@ JSValue* Machine::execute(EvalNode* evalNode, ExecState* exec, JSObject* thisObj
         variableObject->put(exec, (*it)->m_ident, (*it)->makeFunction(exec, scopeChain));
 
     size_t oldSize = m_registerFile.size();
-    size_t newSize = registerOffset + codeBlock->numVars + codeBlock->numTemporaries + RegisterFile::CallFrameHeaderSize;
+    size_t newSize = registerOffset + codeBlock->numVars + codeBlock->numConstants + codeBlock->numTemporaries + RegisterFile::CallFrameHeaderSize;
     if (!m_registerFile.grow(newSize)) {
         *exception = createStackOverflowError(exec);
         return 0;
@@ -851,6 +858,9 @@ JSValue* Machine::execute(EvalNode* evalNode, ExecState* exec, JSObject* thisObj
 
     Register* r = callFrame + RegisterFile::CallFrameHeaderSize + codeBlock->numVars;
     r[codeBlock->thisRegister] = thisObj;
+
+    for (size_t i = 0; i < codeBlock->constantRegisters.size(); ++i)
+        r[i] = codeBlock->constantRegisters[i];
 
     if (codeBlock->needsFullScopeChain)
         scopeChain = scopeChain->copy();
@@ -998,6 +1008,16 @@ static int32_t offsetForStringSwitch(StringJumpTable& jumpTable, JSValue* scruti
     return loc->second;
 }
 
+static NEVER_INLINE ScopeChainNode* createExceptionScope(ExecState* exec, CodeBlock* codeBlock, const Instruction* vPC, Register* r, ScopeChainNode* scopeChain)
+{
+    int dst = (++vPC)->u.operand;
+    Identifier& property = codeBlock->identifiers[(++vPC)->u.operand];
+    JSValue* value = r[(++vPC)->u.operand].jsValue(exec);
+    JSObject* scope = new (exec) JSStaticScopeObject(property, value, DontDelete);
+    r[dst] = scope;
+    return scopeChain->push(scope);
+}
+
 JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFile* registerFile, Register* r, ScopeChainNode* scopeChain, CodeBlock* codeBlock, JSValue** exception)
 {
     // One-time initialization of our address tables. We have to put this code
@@ -1010,7 +1030,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
 
             #define ADD_OPCODE_ID(id) m_opcodeIDTable.add(&&id, id);
                 FOR_EACH_OPCODE_ID(ADD_OPCODE_ID);
-            #undef ADD_OPCODE
+            #undef ADD_OPCODE_ID
             ASSERT(m_opcodeIDTable.size() == numOpcodeIDs);
             op_throw_end_indirect = &&op_throw_end;
             op_call_indirect = &&op_call;
@@ -1023,7 +1043,6 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
 
     Register* registerBase = registerFile->base();
     Instruction* vPC = codeBlock->instructions.begin();
-    Register* k = codeBlock->registers.data();
     Profiler** enabledProfilerReference = Profiler::enabledProfilerReference();
     unsigned tickCount = m_ticksUntilNextTimeoutCheck + 1;
 
@@ -1065,18 +1084,6 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
     switch (vPC->u.opcode)
 #endif
     {
-    BEGIN_OPCODE(op_load) {
-        /* load dst(r) src(k)
-
-           Copies constant src to register dst.
-        */
-        int dst = (++vPC)->u.operand;
-        int src = (++vPC)->u.operand;
-        r[dst] = k[src];
-
-        ++vPC;
-        NEXT_OPCODE;
-    }
     BEGIN_OPCODE(op_new_object) {
         /* new_object dst(r)
 
@@ -1421,8 +1428,18 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         int dividend = (++vPC)->u.operand;
         int divisor = (++vPC)->u.operand;
-        double d = r[dividend].jsValue(exec)->toNumber(exec);
-        JSValue* result = jsNumber(exec, fmod(d, r[divisor].jsValue(exec)->toNumber(exec)));
+
+        JSValue* dividendValue = r[dividend].jsValue(exec);
+        JSValue* divisorValue = r[divisor].jsValue(exec);
+
+        if (JSImmediate::areBothImmediateNumbers(dividendValue, divisorValue) && divisorValue != JSImmediate::from(0)) {
+            r[dst] = JSImmediate::from(JSImmediate::getTruncatedInt32(dividendValue) % JSImmediate::getTruncatedInt32(divisorValue));
+            ++vPC;
+            NEXT_OPCODE;
+        }
+
+        double d = dividendValue->toNumber(exec);
+        JSValue* result = jsNumber(exec, fmod(d, divisorValue->toNumber(exec)));
         VM_CHECK_EXCEPTION();
         r[dst] = result;
         ++vPC;
@@ -1590,9 +1607,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         NEXT_OPCODE;
     }
     BEGIN_OPCODE(op_not) {
-        /* not dst(r) src1(r) src2(r)
+        /* not dst(r) src(r)
 
-           Computes logical NOT of register src1 (converted to
+           Computes logical NOT of register src (converted to
            boolean), and puts the result in register dst.
         */
         int dst = (++vPC)->u.operand;
@@ -2354,7 +2371,6 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
 
             codeBlock = newCodeBlock;
             setScopeChain(exec, scopeChain, scopeChainForCall(exec, functionBodyNode, codeBlock, callDataScopeChain, r));
-            k = codeBlock->registers.data();
             vPC = codeBlock->instructions.begin();
 
 #if DUMP_OPCODE_STATS
@@ -2425,7 +2441,6 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         if (!codeBlock)
             return returnValue;
 
-        k = codeBlock->registers.data();
         vPC = callFrame[RegisterFile::ReturnVPC].vPC();
         setScopeChain(exec, scopeChain, callFrame[RegisterFile::CallerScopeChain].scopeChain());
         r = callFrame[RegisterFile::CallerRegisters].r();
@@ -2487,7 +2502,6 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
 
             codeBlock = newCodeBlock;
             setScopeChain(exec, scopeChain, scopeChainForCall(exec, functionBodyNode, codeBlock, callDataScopeChain, r));
-            k = codeBlock->registers.data();
             vPC = codeBlock->instructions.begin();
 
             NEXT_OPCODE;
@@ -2602,6 +2616,24 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         vPC += target;
         NEXT_OPCODE;
     }
+#if HAVE(COMPUTED_GOTO)
+    // Appease GCC
+    goto *(&&skip_new_scope);
+#endif
+    BEGIN_OPCODE(op_push_new_scope) {
+        /* new_scope dst(r) property(id) value(r)
+         
+           Constructs a new StaticScopeObject with property set to value.  That scope
+           object is then pushed onto the ScopeChain.  The scope object is then stored
+           in dst for GC.
+         */
+        setScopeChain(exec, scopeChain, createExceptionScope(exec, codeBlock, vPC, r, scopeChain));
+        vPC += 4;
+        NEXT_OPCODE;
+    }
+#if HAVE(COMPUTED_GOTO)
+    skip_new_scope:
+#endif
     BEGIN_OPCODE(op_catch) {
         /* catch ex(r)
 
@@ -2632,7 +2664,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int ex = (++vPC)->u.operand;
         exceptionValue = r[ex].jsValue(exec);
 
-        handlerVPC = throwException(exec, exceptionValue, vPC, codeBlock, k, scopeChain, r, true);
+        handlerVPC = throwException(exec, exceptionValue, vPC, codeBlock, scopeChain, r, true);
         if (!handlerVPC) {
             *exception = exceptionValue;
             return jsNull();
@@ -2650,6 +2682,18 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         vPC = handlerVPC;
         NEXT_OPCODE;
     }
+    BEGIN_OPCODE(op_unexpected_load) {
+        /* unexpected_load load dst(r) src(k)
+
+           Copies constant src to register dst.
+        */
+        int dst = (++vPC)->u.operand;
+        int src = (++vPC)->u.operand;
+        r[dst] = codeBlock->unexpectedConstants[src];
+
+        ++vPC;
+        NEXT_OPCODE;
+    }
     BEGIN_OPCODE(op_new_error) {
         /* new_error dst(r) type(n) message(k)
 
@@ -2662,7 +2706,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int type = (++vPC)->u.operand;
         int message = (++vPC)->u.operand;
 
-        r[dst] = Error::create(exec, (ErrorType)type, k[message].jsValue(exec)->toString(exec), codeBlock->lineNumberForVPC(vPC), codeBlock->ownerNode->sourceId(), codeBlock->ownerNode->sourceURL());
+        r[dst] = Error::create(exec, (ErrorType)type, codeBlock->unexpectedConstants[message]->toString(exec), codeBlock->lineNumberForVPC(vPC), codeBlock->ownerNode->sourceId(), codeBlock->ownerNode->sourceURL());
 
         ++vPC;
         NEXT_OPCODE;
@@ -2772,7 +2816,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
             // cannot fathom if we don't assign to the exceptionValue before branching)
             exceptionValue = createInterruptedExecutionException(exec);
         }
-        handlerVPC = throwException(exec, exceptionValue, vPC, codeBlock, k, scopeChain, r, false);
+        handlerVPC = throwException(exec, exceptionValue, vPC, codeBlock, scopeChain, r, false);
         if (!handlerVPC) {
             *exception = exceptionValue;
             return jsNull();

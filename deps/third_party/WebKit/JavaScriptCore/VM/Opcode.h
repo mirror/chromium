@@ -40,7 +40,7 @@ namespace KJS {
 #define DUMP_OPCODE_STATS 0
 
     #define FOR_EACH_OPCODE_ID(macro) \
-        macro(op_load) \
+        macro(op_unexpected_load) \
         macro(op_new_object) \
         macro(op_new_array) \
         macro(op_new_regexp) \
@@ -121,6 +121,7 @@ namespace KJS {
         \
         macro(op_push_scope) \
         macro(op_pop_scope) \
+        macro(op_push_new_scope) \
         \
         macro(op_catch) \
         macro(op_throw) \

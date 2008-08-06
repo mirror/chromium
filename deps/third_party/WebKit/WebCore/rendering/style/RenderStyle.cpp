@@ -664,111 +664,182 @@ TransformOperation* MatrixTransformOperation::blend(const TransformOperation* fr
                                         fromF + (m_f - fromF) * progress);
 }
 
-Transition::Transition()
-    : m_duration(RenderStyle::initialTransitionDuration())
-    , m_repeatCount(RenderStyle::initialTransitionRepeatCount())
-    , m_timingFunction(RenderStyle::initialTransitionTimingFunction())
-    , m_property(RenderStyle::initialTransitionProperty())
-    , m_durationSet(false)
-    , m_repeatCountSet(false)
-    , m_timingFunctionSet(false)
-    , m_propertySet(false)
-    , m_next(0)
+bool KeyframeList::operator==(const KeyframeList& o) const
 {
-}
+    if (m_keyframes.size() != o.m_keyframes.size())
+        return false;
 
-Transition::Transition(const Transition& o)
-    : m_duration(o.m_duration)
-    , m_repeatCount(o.m_repeatCount)
-    , m_timingFunction(o.m_timingFunction)
-    , m_property(o.m_property)
-    , m_durationSet(o.m_durationSet)
-    , m_repeatCountSet(o.m_repeatCountSet)
-    , m_timingFunctionSet(o.m_timingFunctionSet)
-    , m_propertySet(o.m_propertySet)
-    , m_next(o.m_next ? new Transition(*o.m_next) : 0)
-{
-}
-
-Transition::~Transition()
-{
-    delete m_next;
-}
-
-Transition& Transition::operator=(const Transition& o)
-{
-    if (m_next != o.m_next) {
-        delete m_next;
-        m_next = o.m_next ? new Transition(*o.m_next) : 0;
+    Vector<KeyframeValue>::const_iterator it2 = o.m_keyframes.begin();
+    for (Vector<KeyframeValue>::const_iterator it1 = m_keyframes.begin(); it1 != m_keyframes.end(); ++it1) {
+        if (it1->key != it2->key)
+            return false;
+        const RenderStyle& style1 = it1->style;
+        const RenderStyle& style2 = it2->style;
+        if (!(style1 == style2))
+            return false;
+        ++it2;
     }
 
-    m_duration = o.m_duration;
-    m_repeatCount = o.m_repeatCount;
-    m_timingFunction = o.m_timingFunction;
-    m_property = o.m_property;
+    return true;
+}
 
+void
+KeyframeList::insert(float inKey, const RenderStyle& inStyle)
+{
+    if (inKey < 0 || inKey > 1)
+        return;
+
+    for (size_t i = 0; i < m_keyframes.size(); ++i) {
+        if (m_keyframes[i].key == inKey) {
+            m_keyframes[i].style = inStyle;
+            return;
+        }
+        if (m_keyframes[i].key > inKey) {
+            // insert before
+            m_keyframes.insert(i, KeyframeValue());
+            m_keyframes[i].key = inKey;
+            m_keyframes[i].style = inStyle;
+            return;
+        }
+    }
+    
+    // append
+    m_keyframes.append(KeyframeValue());
+    m_keyframes[m_keyframes.size()-1].key = inKey;
+    m_keyframes[m_keyframes.size()-1].style = inStyle;
+}
+
+Animation::Animation()
+    : m_delay(RenderStyle::initialAnimationDelay())
+    , m_direction(RenderStyle::initialAnimationDirection())
+    , m_duration(RenderStyle::initialAnimationDuration())
+    , m_iterationCount(RenderStyle::initialAnimationIterationCount())
+    , m_name(RenderStyle::initialAnimationName())
+    , m_property(RenderStyle::initialAnimationProperty())
+    , m_timingFunction(RenderStyle::initialAnimationTimingFunction())
+    , m_playState(RenderStyle::initialAnimationPlayState())
+    , m_delaySet(false)
+    , m_directionSet(false)
+    , m_durationSet(false)
+    , m_iterationCountSet(false)
+    , m_nameSet(false)
+    , m_playStateSet(false)
+    , m_propertySet(false)
+    , m_timingFunctionSet(false)
+    , m_isNone(false)
+{
+}
+
+Animation::Animation(const Animation& o)
+    : RefCounted<Animation>()
+    , m_delay(o.m_delay)
+    , m_direction(o.m_direction)
+    , m_duration(o.m_duration)
+    , m_iterationCount(o.m_iterationCount)
+    , m_name(o.m_name)
+    , m_property(o.m_property)
+    , m_timingFunction(o.m_timingFunction)
+    , m_playState(o.m_playState)
+    , m_delaySet(o.m_delaySet)
+    , m_directionSet(o.m_directionSet)
+    , m_durationSet(o.m_durationSet)
+    , m_iterationCountSet(o.m_iterationCountSet)
+    , m_nameSet(o.m_nameSet)
+    , m_playStateSet(o.m_playStateSet)
+    , m_propertySet(o.m_propertySet)
+    , m_timingFunctionSet(o.m_timingFunctionSet)
+    , m_isNone(o.m_isNone)
+{
+}
+
+Animation& Animation::operator=(const Animation& o)
+{
+    m_delay = o.m_delay;
+    m_direction = o.m_direction;
+    m_duration = o.m_duration;
+    m_iterationCount = o.m_iterationCount;
+    m_name = o.m_name;
+    m_playState = o.m_playState;
+    m_property = o.m_property;
+    m_timingFunction = o.m_timingFunction;
+
+    m_delaySet = o.m_delaySet;
+    m_directionSet = o.m_directionSet;
     m_durationSet = o.m_durationSet;
-    m_repeatCountSet = o.m_repeatCountSet;
-    m_timingFunctionSet = o.m_timingFunctionSet;
+    m_iterationCountSet = o.m_iterationCountSet;
+    m_nameSet = o.m_nameSet;
+    m_playStateSet = o.m_playStateSet;
     m_propertySet = o.m_propertySet;
+    m_timingFunctionSet = o.m_timingFunctionSet;
+
+    m_isNone = o.m_isNone;
 
     return *this;
 }
 
-bool Transition::operator==(const Transition& o) const
+bool Animation::animationsMatch(const Animation* o, bool matchPlayStates /* = true */) const
 {
-    return m_duration == o.m_duration && m_repeatCount == o.m_repeatCount && m_timingFunction == o.m_timingFunction &&
-           m_property == o.m_property && m_durationSet == o.m_durationSet && m_repeatCountSet == o.m_repeatCountSet &&
-           m_timingFunctionSet == o.m_timingFunctionSet && m_propertySet == o.m_propertySet &&
-           ((m_next && o.m_next) ? *m_next == *o.m_next : m_next == o.m_next);
+    if (!o)
+        return false;
+    
+    bool result = m_delay == o->m_delay &&
+                  m_direction == o->m_direction &&
+                  m_duration == o->m_duration &&
+                  m_iterationCount == o->m_iterationCount &&
+                  m_name == o->m_name &&
+                  m_property == o->m_property && 
+                  m_timingFunction == o->m_timingFunction &&
+                  m_delaySet == o->m_delaySet &&
+                  m_directionSet == o->m_directionSet &&
+                  m_durationSet == o->m_durationSet &&
+                  m_iterationCountSet == o->m_iterationCountSet &&
+                  m_nameSet == o->m_nameSet &&
+                  m_propertySet == o->m_propertySet &&
+                  m_timingFunctionSet == o->m_timingFunctionSet &&
+                  m_isNone == o->m_isNone;
+
+    if (!result)
+        return false;
+
+    if (matchPlayStates && (m_playState != o->m_playState || m_playStateSet != o->m_playStateSet))
+        return false;
+
+    // now check keyframes
+    if ((m_keyframeList.get() && !o->m_keyframeList.get()) || (!m_keyframeList.get() && o->m_keyframeList.get()))
+        return false;
+    if (!(m_keyframeList.get()))
+        return true;
+    return *m_keyframeList == *o->m_keyframeList;
 }
 
-void Transition::fillUnsetProperties()
-{
-    Transition* curr;
-    for (curr = this; curr && curr->isDurationSet(); curr = curr->next()) { }
-    if (curr && curr != this) {
-        // We need to fill in the remaining values with the pattern specified.
-        for (Transition* pattern = this; curr; curr = curr->next()) {
-            curr->m_duration = pattern->m_duration;
-            pattern = pattern->next();
-            if (pattern == curr || !pattern)
-                pattern = this;
-        }
-    }
-    
-    for (curr = this; curr && curr->isRepeatCountSet(); curr = curr->next()) { }
-    if (curr && curr != this) {
-        // We need to fill in the remaining values with the pattern specified.
-        for (Transition* pattern = this; curr; curr = curr->next()) {
-            curr->m_repeatCount = pattern->m_repeatCount;
-            pattern = pattern->next();
-            if (pattern == curr || !pattern)
-                pattern = this;
-        }
-    }
-    
-    for (curr = this; curr && curr->isTimingFunctionSet(); curr = curr->next()) { }
-    if (curr && curr != this) {
-        // We need to fill in the remaining values with the pattern specified.
-        for (Transition* pattern = this; curr; curr = curr->next()) {
-            curr->m_timingFunction = pattern->m_timingFunction;
-            pattern = pattern->next();
-            if (pattern == curr || !pattern)
-                pattern = this;
-        }
-    }
+#define FILL_UNSET_PROPERTY(test, propGet, propSet) \
+for (i = 0; i < size() && (*this)[i]->test(); ++i) { } \
+if (i < size() && i != 0) { \
+    for (size_t j = 0; i < size(); ++i, ++j) \
+        (*this)[i]->propSet((*this)[j]->propGet()); \
+}
 
-    for (curr = this; curr && curr->isPropertySet(); curr = curr->next()) { }
-    if (curr && curr != this) {
-        // We need to fill in the remaining values with the pattern specified.
-        for (Transition* pattern = this; curr; curr = curr->next()) {
-            curr->m_property = pattern->m_property;
-            pattern = pattern->next();
-            if (pattern == curr || !pattern)
-                pattern = this;
-        }
-    }
+void AnimationList::fillUnsetProperties()
+{
+    size_t i;
+    FILL_UNSET_PROPERTY(isDelaySet, delay, setDelay);
+    FILL_UNSET_PROPERTY(isDirectionSet, direction, setDirection);
+    FILL_UNSET_PROPERTY(isDurationSet, duration, setDuration);
+    FILL_UNSET_PROPERTY(isIterationCountSet, iterationCount, setIterationCount);
+    FILL_UNSET_PROPERTY(isPlayStateSet, playState, setPlayState);
+    FILL_UNSET_PROPERTY(isNameSet, name, setName);
+    FILL_UNSET_PROPERTY(isTimingFunctionSet, timingFunction, setTimingFunction);
+    FILL_UNSET_PROPERTY(isPropertySet, property, setProperty);
+}
+
+bool AnimationList::operator==(const AnimationList& o) const
+{
+    if (size() != o.size())
+        return false;
+    for (size_t i = 0; i < size(); ++i)
+        if (*at(i) != *o.at(i))
+            return false;
+    return true;
 }
 
 StyleRareNonInheritedData::StyleRareNonInheritedData()
@@ -784,7 +855,8 @@ StyleRareNonInheritedData::StyleRareNonInheritedData()
     , m_appearance(RenderStyle::initialAppearance())
     , m_borderFit(RenderStyle::initialBorderFit())
     , m_boxShadow(0)
-    , m_transition(0)
+    , m_animations(0)
+    , m_transitions(0)
     , m_mask(FillLayer(MaskFillLayer))
 #if ENABLE(XBL)
     , bindingURI(0)
@@ -811,7 +883,8 @@ StyleRareNonInheritedData::StyleRareNonInheritedData(const StyleRareNonInherited
     , m_borderFit(o.m_borderFit)
     , m_boxShadow(o.m_boxShadow ? new ShadowData(*o.m_boxShadow) : 0)
     , m_boxReflect(o.m_boxReflect)
-    , m_transition(o.m_transition ? new Transition(*o.m_transition) : 0)
+    , m_animations(o.m_animations ? new AnimationList(*o.m_animations) : 0)
+    , m_transitions(o.m_transitions ? new AnimationList(*o.m_transitions) : 0)
     , m_mask(o.m_mask)
     , m_maskBoxImage(o.m_maskBoxImage)
 #if ENABLE(XBL)
@@ -825,7 +898,6 @@ StyleRareNonInheritedData::~StyleRareNonInheritedData()
     delete m_content;
     delete m_counterDirectives;
     delete m_boxShadow;
-    delete m_transition;
 #if ENABLE(XBL)
     delete bindingURI;
 #endif
@@ -865,6 +937,7 @@ bool StyleRareNonInheritedData::operator==(const StyleRareNonInheritedData& o) c
         && m_borderFit == o.m_borderFit
         && shadowDataEquivalent(o)
         && reflectionDataEquivalent(o)
+        && animationDataEquivalent(o)
         && transitionDataEquivalent(o)
         && m_mask == o.m_mask
         && m_maskBoxImage == o.m_maskBoxImage
@@ -894,11 +967,33 @@ bool StyleRareNonInheritedData::reflectionDataEquivalent(const StyleRareNonInher
 
 }
 
+void StyleRareNonInheritedData::updateKeyframes(const CSSStyleSelector* styleSelector)
+{
+    if (m_animations) {
+        for (size_t i = 0; i < m_animations->size(); ++i) {
+            if ((*m_animations)[i]->isValidAnimation()) {
+                // When keyframes have been parsed, execute this code.
+                // RefPtr<KeyframeList> keyframe = styleSelector->findKeyframeRule((*m_animations)[i]->name());
+                // (*m_animations)[i]->setAnimationKeyframe(keyframe);
+            }
+        }
+    }
+}
+
+bool StyleRareNonInheritedData::animationDataEquivalent(const StyleRareNonInheritedData& o) const
+{
+    if (!m_animations && o.m_animations || m_animations && !o.m_animations)
+        return false;
+    if (m_animations && o.m_animations && (*m_animations != *o.m_animations))
+        return false;
+    return true;
+}
+
 bool StyleRareNonInheritedData::transitionDataEquivalent(const StyleRareNonInheritedData& o) const
 {
-    if (!m_transition && o.m_transition || m_transition && !o.m_transition)
+    if (!m_transitions && o.m_transitions || m_transitions && !o.m_transitions)
         return false;
-    if (m_transition && o.m_transition && (*m_transition != *o.m_transition))
+    if (m_transitions && o.m_transitions && (*m_transitions != *o.m_transitions))
         return false;
     return true;
 }
@@ -1494,7 +1589,7 @@ RenderStyle::Diff RenderStyle::diff(const RenderStyle* other) const
     // Cursors are not checked, since they will be set appropriately in response to mouse events,
     // so they don't need to cause any repaint or layout.
 
-    // Transitions don't need to be checked either.  We always set the new style on the RenderObject, so we will get a chance to fire off
+    // Animations don't need to be checked either.  We always set the new style on the RenderObject, so we will get a chance to fire off
     // the resulting transition properly.
     return Equal;
 }
@@ -1868,35 +1963,101 @@ const Vector<StyleDashboardRegion>& RenderStyle::noneDashboardRegions()
 }
 #endif
 
+void RenderStyle::adjustAnimations()
+{
+    AnimationList* animationList = rareNonInheritedData->m_animations;
+    if (!animationList)
+        return;
+
+    if (animationList->size() == 0) {
+        clearAnimations();
+        return;
+    }
+
+    // get rid of empty transitions and anything beyond them
+    for (size_t i = 0; i < animationList->size(); ++i) {
+        if ((*animationList)[i]->isEmpty()) {
+            animationList->resize(i);
+            break;
+        }
+    }
+    
+    if (animationList->size() == 0) {
+        clearAnimations();
+        return;
+    }
+    
+    // Repeat patterns into layers that don't have some properties set.
+    animationList->fillUnsetProperties();
+}
+
 void RenderStyle::adjustTransitions()
 {
-    if (transitions()) {
-        if (transitions()->isEmpty()) {
-            clearTransitions();
-            return;
-        }
+    AnimationList* transitionList = rareNonInheritedData->m_transitions;
+    if (!transitionList)
+        return;
+    
+    if (transitionList->size() == 0) {
+        clearTransitions();
+        return;
+    }
 
-        Transition* next;
-        for (Transition* p = accessTransitions(); p; p = next) {
-            next = p->m_next;
-            if (next && next->isEmpty()) {
-                delete next;
-                p->m_next = 0;
-                break;
+    // get rid of empty transitions and anything beyond them
+    for (size_t i = 0; i < transitionList->size(); ++i) {
+        if ((*transitionList)[i]->isEmpty()) {
+            transitionList->resize(i);
+            break;
+        }
+    }
+
+    if (transitionList->size() == 0) {
+        clearTransitions();
+        return;
+    }
+
+    // Repeat patterns into layers that don't have some properties set.
+    transitionList->fillUnsetProperties();
+        
+    // Make sure there are no duplicate properties. This is an O(n^2) algorithm
+    // but the lists tend to be very short, so it is probably ok
+    for (size_t i = 0; i < transitionList->size(); ++i) {
+        for (size_t j = i+1; j < transitionList->size(); ++j) {
+            if ((*transitionList)[i]->property() == (*transitionList)[j]->property()) {
+                // toss i
+                transitionList->remove(i);
+                j = i;
             }
         }
-    
-        // Repeat patterns into layers that don't have some properties set.
-        accessTransitions()->fillUnsetProperties();
     }
 }
 
-Transition* RenderStyle::accessTransitions()
+AnimationList* RenderStyle::accessAnimations()
 {
-    Transition* layer = rareNonInheritedData.access()->m_transition;
-    if (!layer)
-        rareNonInheritedData.access()->m_transition = new Transition();
-    return rareNonInheritedData->m_transition;
+    AnimationList* list = rareNonInheritedData.access()->m_animations;
+    if (!list)
+        rareNonInheritedData.access()->m_animations = new AnimationList();
+    return rareNonInheritedData->m_animations;
+}
+
+AnimationList* RenderStyle::accessTransitions()
+{
+    AnimationList* list = rareNonInheritedData.access()->m_transitions;
+    if (!list)
+        rareNonInheritedData.access()->m_transitions = new AnimationList();
+    return rareNonInheritedData->m_transitions;
+}
+
+const Animation* RenderStyle::transitionForProperty(int property)
+{
+    if (transitions()) {
+        for (size_t i = 0; i < transitions()->size(); ++i) {
+            const Animation* p = (*transitions())[i].get();
+            if (p->property() == cAnimateAll || p->property() == property) {
+                return p;
+            }
+        }
+    }
+    return 0;
 }
 
 }

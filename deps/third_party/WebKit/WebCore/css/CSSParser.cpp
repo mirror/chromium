@@ -65,6 +65,8 @@
 #include "Pair.h"
 #include "Rect.h"
 #include "ShadowValue.h"
+#include "WebKitCSSKeyframeRule.h"
+#include "WebKitCSSKeyframesRule.h"
 #include "WebKitCSSTransformValue.h"
 #include <kjs/dtoa.h>
 
@@ -229,6 +231,14 @@ PassRefPtr<CSSRule> CSSParser::parseRule(CSSStyleSheet* sheet, const String& str
     setupParser("@-webkit-rule{", string, "} ");
     cssyyparse(this);
     return m_rule.release();
+}
+
+PassRefPtr<CSSRule> CSSParser::parseKeyframeRule(CSSStyleSheet *sheet, const String &string)
+{
+    m_styleSheet = sheet;
+    setupParser("@-webkit-keyframe-rule{ ", string, "} ");
+    cssyyparse(this);
+    return m_keyframe.release();
 }
 
 bool CSSParser::parseValue(CSSMutableStyleDeclaration* declaration, int id, const String& string, bool important)
@@ -1294,12 +1304,19 @@ bool CSSParser::parseValue(int propId, bool important)
         }
         return false;
     }
+    case CSSPropertyWebkitAnimationDelay:
+    case CSSPropertyWebkitAnimationDirection:
+    case CSSPropertyWebkitAnimationDuration:
+    case CSSPropertyWebkitAnimationName:
+    case CSSPropertyWebkitAnimationPlayState:
+    case CSSPropertyWebkitAnimationIterationCount:
+    case CSSPropertyWebkitAnimationTimingFunction:
+    case CSSPropertyWebkitTransitionDelay:
     case CSSPropertyWebkitTransitionDuration:
-    case CSSPropertyWebkitTransitionRepeatCount:
     case CSSPropertyWebkitTransitionTimingFunction:
     case CSSPropertyWebkitTransitionProperty: {
         RefPtr<CSSValue> val;
-        if (parseTransitionProperty(propId, val)) {
+        if (parseAnimationProperty(propId, val)) {
             addProperty(propId, val.release(), important);
             return true;
         }
@@ -1553,6 +1570,8 @@ bool CSSParser::parseValue(int propId, bool important)
         const int properties[2] = { CSSPropertyWebkitTextStrokeWidth, CSSPropertyWebkitTextStrokeColor };
         return parseShorthand(propId, properties, 2, important);
     }
+    case CSSPropertyWebkitAnimation:
+        return parseAnimationShorthand(important);
     case CSSPropertyWebkitTransition:
         return parseTransitionShorthand(important);
     case CSSPropertyInvalid:
@@ -1690,7 +1709,7 @@ bool CSSParser::parseFillShorthand(int propId, const int* properties, int numPro
     return true;
 }
 
-void CSSParser::addTransitionValue(RefPtr<CSSValue>& lval, PassRefPtr<CSSValue> rval)
+void CSSParser::addAnimationValue(RefPtr<CSSValue>& lval, PassRefPtr<CSSValue> rval)
 {
     if (lval) {
         if (lval->isValueList())
@@ -1707,10 +1726,71 @@ void CSSParser::addTransitionValue(RefPtr<CSSValue>& lval, PassRefPtr<CSSValue> 
         lval = rval;
 }
 
+bool CSSParser::parseAnimationShorthand(bool important)
+{
+    const int properties[] = {  CSSPropertyWebkitAnimationName,
+                                CSSPropertyWebkitAnimationDuration,
+                                CSSPropertyWebkitAnimationTimingFunction,
+                                CSSPropertyWebkitAnimationDelay,
+                                CSSPropertyWebkitAnimationIterationCount,
+                                CSSPropertyWebkitAnimationDirection };
+    const int numProperties = sizeof(properties) / sizeof(properties[0]);
+    
+    ShorthandScope scope(this, CSSPropertyWebkitAnimation);
+
+    bool parsedProperty[numProperties] = { false }; // compiler will repeat false as necessary
+    RefPtr<CSSValue> values[numProperties];
+    
+    int i;
+    while (m_valueList->current()) {
+        CSSParserValue* val = m_valueList->current();
+        if (val->unit == CSSParserValue::Operator && val->iValue == ',') {
+            // We hit the end.  Fill in all remaining values with the initial value.
+            m_valueList->next();
+            for (i = 0; i < numProperties; ++i) {
+                if (!parsedProperty[i])
+                    addAnimationValue(values[i], CSSInitialValue::createImplicit());
+                parsedProperty[i] = false;
+            }
+            if (!m_valueList->current())
+                break;
+        }
+        
+        bool found = false;
+        for (i = 0; !found && i < numProperties; ++i) {
+            if (!parsedProperty[i]) {
+                RefPtr<CSSValue> val;
+                if (parseAnimationProperty(properties[i], val)) {
+                    parsedProperty[i] = found = true;
+                    addAnimationValue(values[i], val.release());
+                }
+            }
+        }
+
+        // if we didn't find at least one match, this is an
+        // invalid shorthand and we have to ignore it
+        if (!found)
+            return false;
+    }
+    
+    // Fill in any remaining properties with the initial value.
+    for (i = 0; i < numProperties; ++i) {
+        if (!parsedProperty[i])
+            addAnimationValue(values[i], CSSInitialValue::createImplicit());
+    }
+    
+    // Now add all of the properties we found.
+    for (i = 0; i < numProperties; i++)
+        addProperty(properties[i], values[i].release(), important);
+    
+    return true;
+}
+
 bool CSSParser::parseTransitionShorthand(bool important)
 {
-    const int properties[] = { CSSPropertyWebkitTransitionProperty, CSSPropertyWebkitTransitionDuration, 
-                               CSSPropertyWebkitTransitionTimingFunction, CSSPropertyWebkitTransitionRepeatCount };
+    const int properties[] = { CSSPropertyWebkitTransitionProperty,
+                               CSSPropertyWebkitTransitionDuration,
+                               CSSPropertyWebkitTransitionTimingFunction };
     const int numProperties = sizeof(properties) / sizeof(properties[0]);
     
     ShorthandScope scope(this, CSSPropertyWebkitTransition);
@@ -1726,7 +1806,7 @@ bool CSSParser::parseTransitionShorthand(bool important)
             m_valueList->next();
             for (i = 0; i < numProperties; ++i) {
                 if (!parsedProperty[i])
-                    addTransitionValue(values[i], CSSInitialValue::createImplicit());
+                    addAnimationValue(values[i], CSSInitialValue::createImplicit());
                 parsedProperty[i] = false;
             }
             if (!m_valueList->current())
@@ -1737,9 +1817,9 @@ bool CSSParser::parseTransitionShorthand(bool important)
         for (i = 0; !found && i < numProperties; ++i) {
             if (!parsedProperty[i]) {
                 RefPtr<CSSValue> val;
-                if (parseTransitionProperty(properties[i], val)) {
+                if (parseAnimationProperty(properties[i], val)) {
                     parsedProperty[i] = found = true;
-                    addTransitionValue(values[i], val.release());
+                    addAnimationValue(values[i], val.release());
                 }
             }
         }
@@ -1753,7 +1833,7 @@ bool CSSParser::parseTransitionShorthand(bool important)
     // Fill in any remaining properties with the initial value.
     for (i = 0; i < numProperties; ++i) {
         if (!parsedProperty[i])
-            addTransitionValue(values[i], CSSInitialValue::createImplicit());
+            addAnimationValue(values[i], CSSInitialValue::createImplicit());
     }
     
     // Now add all of the properties we found.
@@ -2206,21 +2286,75 @@ bool CSSParser::parseFillProperty(int propId, int& propId1, int& propId2,
     return false;
 }
 
-PassRefPtr<CSSValue> CSSParser::parseTransitionDuration()
+PassRefPtr<CSSValue> CSSParser::parseAnimationDelay()
 {
     CSSParserValue* value = m_valueList->current();
+    if (value->id == CSSValueNow)
+        return CSSPrimitiveValue::createIdentifier(value->id);
     if (validUnit(value, FTime, m_strict))
         return CSSPrimitiveValue::create(value->fValue, (CSSPrimitiveValue::UnitTypes)value->unit);
     return 0;
 }
 
-PassRefPtr<CSSValue> CSSParser::parseTransitionRepeatCount()
+PassRefPtr<CSSValue> CSSParser::parseAnimationDirection()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (value->id == CSSValueNormal || value->id == CSSValueAlternate)
+        return CSSPrimitiveValue::createIdentifier(value->id);
+    return 0;
+}
+
+PassRefPtr<CSSValue> CSSParser::parseAnimationDuration()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (validUnit(value, FTime|FNonNeg, m_strict))
+        return CSSPrimitiveValue::create(value->fValue, (CSSPrimitiveValue::UnitTypes)value->unit);
+    return 0;
+}
+
+PassRefPtr<CSSValue> CSSParser::parseAnimationIterationCount()
 {
     CSSParserValue* value = m_valueList->current();
     if (value->id == CSSValueInfinite)
         return CSSPrimitiveValue::createIdentifier(value->id);
     if (validUnit(value, FInteger|FNonNeg, m_strict))
         return CSSPrimitiveValue::create(value->fValue, (CSSPrimitiveValue::UnitTypes)value->unit);
+    return 0;
+}
+
+PassRefPtr<CSSValue> CSSParser::parseAnimationName()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (value->unit == CSSPrimitiveValue::CSS_STRING || value->unit == CSSPrimitiveValue::CSS_IDENT) {
+        if (value->id == CSSValueNone || (value->unit == CSSPrimitiveValue::CSS_STRING && equalIgnoringCase(value->string, "none"))) {
+            return CSSPrimitiveValue::createIdentifier(CSSValueNone);
+        } else {
+            return CSSPrimitiveValue::create(value->string, CSSPrimitiveValue::CSS_STRING);
+        }
+    }
+    return 0;
+}
+
+PassRefPtr<CSSValue> CSSParser::parseAnimationPlayState()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (value->id == CSSValueRunning || value->id == CSSValuePaused)
+        return CSSPrimitiveValue::createIdentifier(value->id);
+    return 0;
+}
+
+PassRefPtr<CSSValue> CSSParser::parseAnimationProperty()
+{
+    CSSParserValue* value = m_valueList->current();
+    if (value->unit != CSSPrimitiveValue::CSS_IDENT)
+        return 0;
+    int result = cssPropertyID(value->string);
+    if (result)
+        return CSSPrimitiveValue::createIdentifier(result);
+    if (equalIgnoringCase(value->string, "all"))
+        return CSSPrimitiveValue::createIdentifier(cAnimateAll); // FIXME: Why not use CSSValueAll instead?
+    if (equalIgnoringCase(value->string, "none"))
+        return CSSPrimitiveValue::createIdentifier(cAnimateNone); // FIXME: Why not use CSSValueNone instead?
     return 0;
 }
 
@@ -2242,7 +2376,7 @@ bool CSSParser::parseTimingFunctionValue(CSSParserValueList*& args, double& resu
     return true;
 }
 
-PassRefPtr<CSSValue> CSSParser::parseTransitionTimingFunction()
+PassRefPtr<CSSValue> CSSParser::parseAnimationTimingFunction()
 {
     CSSParserValue* value = m_valueList->current();
     if (value->id == CSSValueEase || value->id == CSSValueLinear || value->id == CSSValueEaseIn || value->id == CSSValueEaseOut || value->id == CSSValueEaseInOut)
@@ -2272,22 +2406,7 @@ PassRefPtr<CSSValue> CSSParser::parseTransitionTimingFunction()
     return CSSTimingFunctionValue::create(x1, y1, x2, y2);
 }
 
-PassRefPtr<CSSValue> CSSParser::parseTransitionProperty()
-{
-    CSSParserValue* value = m_valueList->current();
-    if (value->unit != CSSPrimitiveValue::CSS_IDENT)
-        return 0;
-    int result = cssPropertyID(value->string);
-    if (result)
-        return CSSPrimitiveValue::createIdentifier(result);
-    if (equalIgnoringCase(value->string, "all"))
-        return CSSPrimitiveValue::createIdentifier(cAnimateAll); // FIXME: Why not use CSSValueAll instead?
-    if (equalIgnoringCase(value->string, "none"))
-        return CSSPrimitiveValue::createIdentifier(cAnimateNone); // FIXME: Why not use CSSValueNone instead?
-    return 0;
-}
-
-bool CSSParser::parseTransitionProperty(int propId, RefPtr<CSSValue>& result)
+bool CSSParser::parseAnimationProperty(int propId, RefPtr<CSSValue>& result)
 {
     RefPtr<CSSValueList> values;
     CSSParserValue* val;
@@ -2306,23 +2425,46 @@ bool CSSParser::parseTransitionProperty(int propId, RefPtr<CSSValue>& result)
         }
         else {
             switch (propId) {
+                case CSSPropertyWebkitAnimationDelay:
+                case CSSPropertyWebkitTransitionDelay:
+                    currValue = parseAnimationDelay();
+                    if (currValue)
+                        m_valueList->next();
+                    break;
+                case CSSPropertyWebkitAnimationDirection:
+                    currValue = parseAnimationDirection();
+                    if (currValue)
+                        m_valueList->next();
+                    break;
+                case CSSPropertyWebkitAnimationDuration:
                 case CSSPropertyWebkitTransitionDuration:
-                    currValue = parseTransitionDuration();
+                    currValue = parseAnimationDuration();
                     if (currValue)
                         m_valueList->next();
                     break;
-                case CSSPropertyWebkitTransitionRepeatCount:
-                    currValue = parseTransitionRepeatCount();
+                case CSSPropertyWebkitAnimationIterationCount:
+                    currValue = parseAnimationIterationCount();
                     if (currValue)
                         m_valueList->next();
                     break;
-                case CSSPropertyWebkitTransitionTimingFunction:
-                    currValue = parseTransitionTimingFunction();
+                case CSSPropertyWebkitAnimationName:
+                    currValue = parseAnimationName();
+                    if (currValue)
+                        m_valueList->next();
+                    break;
+                case CSSPropertyWebkitAnimationPlayState:
+                    currValue = parseAnimationPlayState();
                     if (currValue)
                         m_valueList->next();
                     break;
                 case CSSPropertyWebkitTransitionProperty:
-                    currValue = parseTransitionProperty();
+                    currValue = parseAnimationProperty();
+                    if (currValue)
+                        m_valueList->next();
+                    break;
+                case CSSPropertyWebkitAnimationTimingFunction:
+                case CSSPropertyWebkitTransitionTimingFunction:
+                    currValue = parseAnimationTimingFunction();
                     if (currValue)
                         m_valueList->next();
                     break;
@@ -2360,6 +2502,8 @@ bool CSSParser::parseTransitionProperty(int propId, RefPtr<CSSValue>& result)
     }
     return false;
 }
+
+
 
 #if ENABLE(DASHBOARD_SUPPORT)
 
@@ -3907,7 +4051,7 @@ PassRefPtr<CSSValueList> CSSParser::parseTransform()
 
     // The transform is a list of functional primitives that specify transform operations.
     // We collect a list of WebKitCSSTransformValues, where each value specifies a single operation.
-    RefPtr<CSSValueList> list = CSSValueList::createCommaSeparated();
+    RefPtr<CSSValueList> list = CSSValueList::createSpaceSeparated();
     for (CSSParserValue* value = m_valueList->current(); value; value = m_valueList->next()) {
         if (value->unit != CSSParserValue::Function || !value->function)
             return 0;
@@ -4041,6 +4185,7 @@ int CSSParser::lex(void* yylvalWithoutType)
     case FONT_FACE_SYM:
     case CHARSET_SYM:
     case NAMESPACE_SYM:
+    case WEBKIT_KEYFRAMES_SYM:
 
     case IMPORTANT_SYM:
         break;
@@ -4382,6 +4527,14 @@ CSSRuleList* CSSParser::createRuleList()
     return listPtr;
 }
 
+WebKitCSSKeyframesRule* CSSParser::createKeyframesRule()
+{
+    RefPtr<WebKitCSSKeyframesRule> rule = WebKitCSSKeyframesRule::create(m_styleSheet);
+    WebKitCSSKeyframesRule* rulePtr = rule.get();
+    m_parsedStyleObjects.append(rule.release());
+    return rulePtr;
+}
+
 CSSRule* CSSParser::createStyleRule(CSSSelector* selector)
 {
     CSSStyleRule* result = 0;
@@ -4529,6 +4682,19 @@ void CSSParser::deleteFontFaceOnlyValues()
     }
 
     m_numParsedProperties -= deletedProperties;
+}
+
+WebKitCSSKeyframeRule* CSSParser::createKeyframeRule(float key)
+{
+    RefPtr<WebKitCSSKeyframeRule> keyframe = WebKitCSSKeyframeRule::create(m_styleSheet);
+
+    keyframe->setKey(key);
+    keyframe->setDeclaration(CSSMutableStyleDeclaration::create(0, m_parsedProperties, m_numParsedProperties));
+    clearProperties();
+
+    WebKitCSSKeyframeRule* keyframePtr = keyframe.get();
+    m_parsedStyleObjects.append(keyframe.release());
+    return keyframePtr;
 }
 
 static int cssPropertyID(const UChar* propertyName, unsigned length)

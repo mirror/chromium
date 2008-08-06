@@ -28,18 +28,15 @@
 #include "EventNames.h"
 #include "ExceptionCode.h"
 #include "Frame.h"
-#include "FrameLoader.h"
-#include "FrameLoaderClient.h"
-#include "FrameView.h"
 #include "HTMLDocument.h"
 #include "HTMLFormElement.h"
 #include "HTMLImageLoader.h"
 #include "HTMLNames.h"
-#include "Image.h"
 #include "MIMETypeRegistry.h"
 #include "RenderImage.h"
 #include "RenderPartObject.h"
 #include "RenderWidget.h"
+#include "ScriptController.h"
 #include "Text.h"
 
 #if USE(JAVASCRIPTCORE_BINDINGS)
@@ -52,7 +49,7 @@ using namespace EventNames;
 using namespace HTMLNames;
 
 HTMLObjectElement::HTMLObjectElement(Document* doc, bool createdByParser) 
-    : HTMLPlugInElement(objectTag, doc)
+    : HTMLPlugInImageElement(objectTag, doc)
     , m_docNamedItem(true)
     , m_needWidgetUpdate(!createdByParser)
     , m_useFallbackContent(false)
@@ -61,31 +58,17 @@ HTMLObjectElement::HTMLObjectElement(Document* doc, bool createdByParser)
 
 HTMLObjectElement::~HTMLObjectElement()
 {
-#if USE(JAVASCRIPTCORE_BINDINGS)
-    // m_instance should have been cleaned up in detach().
-    ASSERT(!m_instance);
-#endif
 }
 
 #if USE(JAVASCRIPTCORE_BINDINGS)
-KJS::Bindings::Instance *HTMLObjectElement::getInstance() const
+RenderWidget* HTMLObjectElement::renderWidgetForJSBindings() const
 {
-    Frame* frame = document()->frame();
-    if (!frame)
-        return 0;
-
-    if (m_instance)
-        return m_instance.get();
-
     RenderWidget* renderWidget = (renderer() && renderer()->isWidget()) ? static_cast<RenderWidget*>(renderer()) : 0;
     if (renderWidget && !renderWidget->widget()) {
         document()->updateLayoutIgnorePendingStylesheets();
         renderWidget = (renderer() && renderer()->isWidget()) ? static_cast<RenderWidget*>(renderer()) : 0;
-    }          
-    if (renderWidget && renderWidget->widget()) 
-        m_instance = frame->createScriptInstanceForWidget(renderWidget->widget());
-
-    return m_instance.get();
+    }
+    return renderWidget;
 }
 #endif
 
@@ -177,10 +160,8 @@ void HTMLObjectElement::attach()
         if (m_useFallbackContent)
             return;
 
-        if (renderer()) {
-            RenderImage* imageObj = static_cast<RenderImage*>(renderer());
-            imageObj->setCachedImage(m_imageLoader->image());
-        }
+        if (renderer())
+            static_cast<RenderImage*>(renderer())->setCachedImage(m_imageLoader->image());
     }
 }
 
@@ -203,14 +184,9 @@ void HTMLObjectElement::finishParsingChildren()
 
 void HTMLObjectElement::detach()
 {
-    if (attached() && renderer() && !m_useFallbackContent) {
+    if (attached() && renderer() && !m_useFallbackContent)
         // Update the widget the next time we attach (detaching destroys the plugin).
         m_needWidgetUpdate = true;
-    }
-
-#if USE(JAVASCRIPTCORE_BINDINGS)
-    m_instance = 0;
-#endif
     HTMLPlugInElement::detach();
 }
 
@@ -263,19 +239,6 @@ bool HTMLObjectElement::isURLAttribute(Attribute *attr) const
 const QualifiedName& HTMLObjectElement::imageSourceAttributeName() const
 {
     return dataAttr;
-}
-
-bool HTMLObjectElement::isImageType()
-{
-    if (m_serviceType.isEmpty() && protocolIs(m_url, "data"))
-        m_serviceType = mimeTypeFromDataURL(m_url);
-
-    if (Frame* frame = document()->frame()) {
-        KURL completedURL(frame->loader()->completeURL(m_url));
-        return frame->loader()->client()->objectContentType(completedURL, m_serviceType) == ObjectContentImage;
-    }
-
-    return Image::supportsType(m_serviceType);
 }
 
 void HTMLObjectElement::renderFallbackContent()

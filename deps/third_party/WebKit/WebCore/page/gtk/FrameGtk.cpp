@@ -1,10 +1,4 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
- * Copyright (C) 2006 Michael Emmel mike.emmel@gmail.com
- * Copyright (C) 2007 Holger Hans Peter Freyther
- * Copyright (C) 2008 Collabora Ltd.  All rights reserved.
- * All rights reserved.
- *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -31,32 +25,8 @@
 #include "Frame.h"
 
 #include "NotImplemented.h"
-#include "PluginView.h"
-#include "ScriptController.h"
-#include "runtime_root.h"
-#include "runtime.h"
-
 
 namespace WebCore {
-
-PassRefPtr<KJS::Bindings::Instance> Frame::createScriptInstanceForWidget(Widget* widget)
-{
-    // FIXME: Ideally we'd have an isPluginView() here but we can't add that to the open source tree right now.
-    if (widget->isFrameView())
-        return 0;
-
-    return static_cast<PluginView*>(widget)->bindingInstance();
-}
-
-void Frame::clearPlatformScriptObjects()
-{
-    notImplemented();
-}
-
-void Frame::disconnectPlatformScriptObjects()
-{
-    notImplemented();
-}
 
 DragImageRef Frame::dragImageForSelection()
 {

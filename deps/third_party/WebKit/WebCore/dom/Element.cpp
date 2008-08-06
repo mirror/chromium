@@ -319,7 +319,7 @@ static int adjustForLocalZoom(int value, RenderObject* renderer)
     float zoomFactor = localZoomForRenderer(renderer);
     if (zoomFactor == 1.0f)
         return value;
-    return value / zoomFactor;
+    return static_cast<int>(value / zoomFactor);
 }
 
 static int adjustForAbsoluteZoom(int value, RenderObject* renderer)
@@ -327,7 +327,7 @@ static int adjustForAbsoluteZoom(int value, RenderObject* renderer)
     float zoomFactor = renderer->style()->effectiveZoom();
     if (zoomFactor == 1.0f)
         return value;
-    return value / zoomFactor;
+    return static_cast<int>(value / zoomFactor);
 }
 
 int Element::offsetLeft()
@@ -446,15 +446,15 @@ int Element::scrollTop()
 void Element::setScrollLeft(int newLeft)
 {
     document()->updateLayoutIgnorePendingStylesheets();
-    if (RenderObject *rend = renderer())
-        rend->setScrollLeft(newLeft * rend->style()->effectiveZoom());
+    if (RenderObject* rend = renderer())
+        rend->setScrollLeft(static_cast<int>(newLeft * rend->style()->effectiveZoom()));
 }
 
 void Element::setScrollTop(int newTop)
 {
     document()->updateLayoutIgnorePendingStylesheets();
-    if (RenderObject *rend = renderer())
-        rend->setScrollTop(newTop * rend->style()->effectiveZoom());
+    if (RenderObject* rend = renderer())
+        rend->setScrollTop(static_cast<int>(newTop * rend->style()->effectiveZoom()));
 }
 
 int Element::scrollWidth()
@@ -785,9 +785,9 @@ void Element::recalcStyle(StyleChange change)
                 newStyle->setChildrenAffectedByDirectAdjacentRules();
         }
 
-        if (ch != NoChange)
+        if (ch != NoChange) {
             setRenderStyle(newStyle);
-        else if (changed() && (document()->usesSiblingRules() || document()->usesDescendantRules())) {
+        } else if (changed() && (styleChangeType() != AnimationStyleChange) && (document()->usesSiblingRules() || document()->usesDescendantRules())) {
             // Although no change occurred, we use the new style so that the cousin style sharing code won't get
             // fooled into believing this style is the same.  This is only necessary if the document actually uses
             // sibling/descendant rules, since otherwise it isn't possible for ancestor styles to affect sharing of
@@ -796,12 +796,13 @@ void Element::recalcStyle(StyleChange change)
                 renderer()->setStyleInternal(newStyle);
             else
                 setRenderStyle(newStyle);
-        }
+        } else if (styleChangeType() == AnimationStyleChange)
+             setRenderStyle(newStyle);
 
         newStyle->deref(document()->renderArena());
 
         if (change != Force) {
-            if ((document()->usesDescendantRules() || hasPositionalRules) && styleChangeType() == FullStyleChange)
+            if ((document()->usesDescendantRules() || hasPositionalRules) && styleChangeType() >= FullStyleChange)
                 change = Force;
             else
                 change = ch;

@@ -481,6 +481,8 @@ SOURCES += \
     css/StyleList.cpp \
     css/StyleSheet.cpp \
     css/StyleSheetList.cpp \
+    css/WebKitCSSKeyframeRule.cpp \
+    css/WebKitCSSKeyframesRule.cpp \
     css/WebKitCSSTransformValue.cpp \
     dom/Attr.cpp \
     dom/Attribute.cpp \
@@ -661,6 +663,7 @@ SOURCES += \
     html/HTMLParser.cpp \
     html/HTMLParserErrorCodes.cpp \
     html/HTMLPlugInElement.cpp \
+    html/HTMLPlugInImageElement.cpp \
     html/HTMLPreElement.cpp \
     html/HTMLQuoteElement.cpp \
     html/HTMLScriptElement.cpp \
@@ -920,6 +923,7 @@ HEADERS += \
     $$PWD/platform/network/qt/QNetworkReplyHandler.h
 
 SOURCES += \
+    bindings/js/ScriptControllerQt.cpp \
     bridge/qt/qt_class.cpp \
     bridge/qt/qt_instance.cpp \
     bridge/qt/qt_runtime.cpp \

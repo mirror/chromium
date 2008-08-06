@@ -1,3 +1,199 @@
+2008-08-06  Adam Roben  <aroben@apple.com>
+
+        Try to fix the Windows build bots
+
+        * API/JSBase.cpp: Touch this to force JSC to rebuild and re-copy the
+        WTF headers.
+
+2008-08-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Revert change 35595.
+
+        * wtf/RetainPtr.h:
+
+2008-08-06  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Fix non-Mac build.
+
+        * wtf/RetainPtr.h: CoreFoundation only for PLATFORM(MAC)
+
+2008-08-06  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Fix non-Mac build.
+
+        * wtf/RetainPtr.h: CoreFoundation only for PLATFORM(MAC)
+
+2008-08-06  Csaba Osztrogonac  <oszi@inf.u-szeged.hu>
+
+        Reviewed by Darin. Landed by Cameron.
+
+        Bug 20272: typo in JavaScriptCore
+        <https://bugs.webkit.org/show_bug.cgi?id=20272>
+
+        Correct the documentation for op_not. (typo)
+        Fix #undef. (typo)
+
+        * VM/Machine.cpp:
+        (KJS::Machine::privateExecute):
+
+2008-08-06  Cameron Zwarich  <cwzwarich@webkit.org>
+
+        Reviewed by Maciej.
+
+        Bug 20286: Load constants all at once instead of using op_load
+        <https://bugs.webkit.org/show_bug.cgi?id=20286>
+
+        Load constants all at once into temporary registers instead of using
+        individual instances of op_load.
+
+        This is a 2.6% speedup on SunSpider.
+
+        * JavaScriptCore.exp:
+        * VM/CodeBlock.cpp:
+        (KJS::CodeBlock::dump):
+        (KJS::CodeBlock::mark):
+        * VM/CodeBlock.h:
+        * VM/CodeGenerator.cpp:
+        (KJS::CodeGenerator::CodeGenerator):
+        (KJS::CodeGenerator::newTemporary):
+        (KJS::CodeGenerator::addConstant):
+        (KJS::CodeGenerator::addUnexpectedConstant):
+        (KJS::CodeGenerator::emitLoad):
+        (KJS::CodeGenerator::emitUnexpectedLoad):
+        (KJS::CodeGenerator::emitNewError):
+        * VM/CodeGenerator.h:
+        * VM/Machine.cpp:
+        (KJS::slideRegisterWindowForCall):
+        (KJS::Machine::unwindCallFrame):
+        (KJS::Machine::throwException):
+        (KJS::Machine::execute):
+        (KJS::Machine::privateExecute):
+        * VM/Machine.h:
+        * VM/Opcode.h:
+        * VM/RegisterID.h:
+        (KJS::RegisterID::RegisterID):
+        (KJS::RegisterID::makeConstant):
+        (KJS::RegisterID::isTemporary):
+        * kjs/NodeInfo.h:
+        * kjs/Parser.cpp:
+        (KJS::Parser::didFinishParsing):
+        * kjs/Parser.h:
+        (KJS::Parser::parse):
+        * kjs/grammar.y:
+        * kjs/nodes.cpp:
+        (KJS::NullNode::emitCode):
+        (KJS::BooleanNode::emitCode):
+        (KJS::NumberNode::emitCode):
+        (KJS::StringNode::emitCode):
+        (KJS::ArrayNode::emitCode):
+        (KJS::DeleteResolveNode::emitCode):
+        (KJS::DeleteValueNode::emitCode):
+        (KJS::VoidNode::emitCode):
+        (KJS::ConstDeclNode::emitCodeSingle):
+        (KJS::ReturnNode::emitCode):
+        (KJS::ScopeNode::ScopeNode):
+        (KJS::ProgramNode::ProgramNode):
+        (KJS::ProgramNode::create):
+        (KJS::EvalNode::EvalNode):
+        (KJS::EvalNode::create):
+        (KJS::FunctionBodyNode::FunctionBodyNode):
+        (KJS::FunctionBodyNode::create):
+        (KJS::FunctionBodyNode::emitCode):
+        * kjs/nodes.h:
+        (KJS::ScopeNode::neededConstants):
+
+2008-08-05  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Cameron.
+
+        - add fast path for immediates to % operator, as we have for many other math ops
+        
+        This fixes handling for a 0 divisor relative to the last patch. Only an 0.2% speedup on SunSpider but
+        still a 1.4x win on Oliver's prime test.
+        
+        * VM/Machine.cpp:
+        (KJS::Machine::privateExecute):
+
+2008-08-05  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Darin.
+
+        Bug 20293: Crash in JavaScript codegen for eval("const a;")
+        <https://bugs.webkit.org/show_bug.cgi?id=20293>
+
+        Correctly handle constant declarations in eval code with no initializer.
+
+        * kjs/nodes.cpp:
+        (KJS::ConstDeclNode::emitCodeSingle):
+
+2008-08-05  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver.
+
+        Roll out r35555 because of correctness issues.
+
+        * VM/Machine.cpp:
+        (KJS::Machine::privateExecute):
+
+2008-08-05  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Geoff.
+        
+        - add fast path for immediates to % operator, as we have for many other math ops
+        
+        0.6% speedup on SunSpider. 1.4x speedup on a prime testing torture test that Oliver whipped up.
+
+        * VM/Machine.cpp:
+        (KJS::Machine::privateExecute):
+
+2008-07-31  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Bug 19359: JavaScriptCore behaves differently from FF2/3 and IE when handling context in catch statement
+        <https://bugs.webkit.org/show_bug.cgi?id=19359>
+
+        Make our catch behave like Firefox and IE, we do this by using a StaticScopeObject
+        instead of a generic JSObject for the scope node.  We still don't make use of the
+        fact that we have a static scope inside the catch block, so the internal performance
+        of the catch block is not improved, even though technically it would be possible to
+        do so.
+
+        * VM/CodeBlock.cpp:
+        (KJS::CodeBlock::dump):
+        * VM/CodeGenerator.cpp:
+        (KJS::CodeGenerator::emitPushNewScope):
+        * VM/CodeGenerator.h:
+        * VM/Machine.cpp:
+        (KJS::createExceptionScope):
+        (KJS::Machine::privateExecute):
+        * VM/Machine.h:
+        * VM/Opcode.h:
+        * kjs/JSStaticScopeObject.cpp:
+        (KJS::JSStaticScopeObject::toThisObject):
+        (KJS::JSStaticScopeObject::put):
+        * kjs/JSStaticScopeObject.h:
+        * kjs/nodes.cpp:
+        (KJS::TryNode::emitCode):
+
+2008-08-02  Rob Gowin  <robg@gowin.net>
+
+        Reviewed by Eric Seidel.
+
+        Added JavaScriptCore/API/WebKitAvailability to list of files in
+        javascriptcore_h_api.
+
+        * GNUmakefile.am:
+
+2008-08-01  Alexey Proskuryakov  <ap@webkit.org>
+
+        Rubber-stamped by Maciej.
+
+        Remove JSGlobalData::DataInstance. It was only needed when we had per-thread JSGlobalData
+        instances.
+
+        * kjs/JSGlobalData.h:
+
 2008-07-31  Kevin Ollivier <kevino@theolliviers.com>
 
         Second attempt at Windows/wx build fix. Instead of avoiding inclusion of windows.h,

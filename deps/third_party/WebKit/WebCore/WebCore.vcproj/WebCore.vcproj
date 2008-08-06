@@ -4344,6 +4344,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\KURLHash.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\Language.h"
 				>
 			</File>
@@ -8942,6 +8946,38 @@
 				>
 			</File>
 			<File
+				RelativePath="..\css\WebKitCSSKeyframeRule.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\css\WebKitCSSKeyframeRule.h"
+				>
+			</File>
+			<File
+				RelativePath="..\css\WebKitCSSKeyframesRule.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\css\WebKitCSSKeyframesRule.h"
+				>
+			</File>
+			<File
 				RelativePath="..\css\WebKitCSSTransformValue.cpp"
 				>
 				<FileConfiguration
@@ -13264,6 +13300,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\html\HTMLPlugInImageElement.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\html\HTMLPlugInImageElement.h"
+				>
+			</File>
+			<File
 				RelativePath="..\html\HTMLPreElement.cpp"
 				>
 				<FileConfiguration
@@ -14144,6 +14196,10 @@
 				</File>
 				<File
 					RelativePath="..\bindings\js\ScriptController.h"
+					>
+				</File>
+				<File
+					RelativePath="..\bindings\js\ScriptControllerWin.cpp"
 					>
 				</File>
 				<File

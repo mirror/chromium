@@ -230,6 +230,7 @@ namespace KJS {
         RegisterID* emitLoad(RegisterID* dst, bool);
         RegisterID* emitLoad(RegisterID* dst, double);
         RegisterID* emitLoad(RegisterID* dst, JSValue*);
+        RegisterID* emitUnexpectedLoad(RegisterID* dst, bool);
 
         RegisterID* emitNullaryOp(OpcodeID, RegisterID* dst);
         RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src);
@@ -296,6 +297,7 @@ namespace KJS {
         RegisterID* emitCatch(RegisterID*, LabelID* start, LabelID* end);
         void emitThrow(RegisterID* exc) { emitUnaryNoDstOp(op_throw, exc); }
         RegisterID* emitNewError(RegisterID* dst, ErrorType type, JSValue* message);
+        void emitPushNewScope(RegisterID* dst, Identifier& property, RegisterID* value);
 
         RegisterID* emitPushScope(RegisterID* scope);
         void emitPopScope();
@@ -374,7 +376,8 @@ namespace KJS {
         unsigned addConstant(FuncDeclNode*);
         unsigned addConstant(FuncExprNode*);
         unsigned addConstant(const Identifier&);
-        unsigned addConstant(JSValue*);
+        RegisterID* addConstant(JSValue*);
+        unsigned addUnexpectedConstant(JSValue*);
         unsigned addRegExp(RegExp* r);
 
         Vector<Instruction>& instructions() { return m_codeBlock->instructions; }
@@ -395,6 +398,7 @@ namespace KJS {
         HashSet<RefPtr<UString::Rep>, IdentifierRepHash> m_functions;
         RegisterID m_thisRegister;
         SegmentedVector<RegisterID, 512> m_locals;
+        SegmentedVector<RegisterID, 512> m_constants;
         SegmentedVector<RegisterID, 512> m_temporaries;
         SegmentedVector<LabelID, 512> m_labels;
         int m_finallyDepth;
