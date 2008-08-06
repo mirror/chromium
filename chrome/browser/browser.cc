@@ -666,6 +666,24 @@ void Browser::ReplaceContents(TabContents* source, TabContents* new_contents) {
 
   int index = tabstrip_model_.GetIndexOfTabContents(source);
   tabstrip_model_.ReplaceTabContentsAt(index, new_contents);
+
+  if (is_attempting_to_close_browser_) {
+    // Need to do this asynchronously as it will close the tab, which is
+    // currently on the call stack above us.
+    MessageLoop::current()->PostTask(FROM_HERE,
+        method_factory_.NewRunnableMethod(&Browser::ClearUnloadStateOnCrash,
+        Source<TabContents>(source).ptr()));
+  }
+  // Need to remove ourselves as an observer for disconnection on the replaced
+  // TabContents, since we only care to fire onbeforeunload handlers on active
+  // Tabs. Make sure an observer is added for the replacement TabContents.
+  NotificationService::current()->
+      RemoveObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED, 
+                     Source<TabContents>(source));
+  NotificationService::current()->
+      AddObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
+                  Source<TabContents>(new_contents));
+  
 }
 
 void Browser::AddNewContents(TabContents* source,
@@ -814,11 +832,13 @@ void Browser::Observe(NotificationType type,
       }
     }
   } else if (type == NOTIFY_WEB_CONTENTS_DISCONNECTED) {
-    // Need to do this asynchronously as it will close the tab, which is
-    // currently on the call stack above us.
-    MessageLoop::current()->PostTask(FROM_HERE,
-        method_factory_.NewRunnableMethod(&Browser::ClearUnloadStateOnCrash,
-                                          Source<TabContents>(source).ptr()));
+    if (is_attempting_to_close_browser_) {
+      // Need to do this asynchronously as it will close the tab, which is
+      // currently on the call stack above us.
+      MessageLoop::current()->PostTask(FROM_HERE,
+          method_factory_.NewRunnableMethod(&Browser::ClearUnloadStateOnCrash,
+              Source<TabContents>(source).ptr()));
+    }
   } else {
     NOTREACHED() << "Got a notification we didn't register for.";
   }
@@ -1040,13 +1060,6 @@ bool Browser::ShouldCloseWindow() {
   for (int i = 0; i < tab_count(); ++i) {
     if (tabstrip_model_.TabHasUnloadListener(i)) {
       TabContents* tab = GetTabContentsAt(i);
-
-      // If the tab crashes in the beforeunload or unload handler, it won't be
-      // able to ack. But we know we can close it.
-      NotificationService::current()->
-          AddObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
-                      Source<TabContents>(tab));
-
       tabs_needing_before_unload_fired_.push_back(tab);
     }
   }
@@ -1103,21 +1116,8 @@ void Browser::CancelWindowClose() {
   // So there had better be a tab that we think needs beforeunload fired.
   DCHECK(!tabs_needing_before_unload_fired_.empty());
 
-  while (!tabs_needing_before_unload_fired_.empty()) {
-    TabContents* tab = tabs_needing_before_unload_fired_.back();
-    NotificationService::current()->
-        RemoveObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED, 
-                       Source<TabContents>(tab));
-    tabs_needing_before_unload_fired_.pop_back();
-  }
-
-  while (!tabs_needing_unload_fired_.empty()) {
-    TabContents* tab = tabs_needing_unload_fired_.back();
-    NotificationService::current()->
-        RemoveObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED, 
-                       Source<TabContents>(tab));
-    tabs_needing_unload_fired_.pop_back();
-  }
+  tabs_needing_before_unload_fired_.clear();
+  tabs_needing_unload_fired_.clear();
 
   is_attempting_to_close_browser_ = false;
 }
@@ -1382,6 +1382,12 @@ void Browser::TabInsertedAt(TabContents* contents,
   // parent of the Find window (if the parent is already correctly set this
   // does nothing).
   AdoptFindWindow(contents);
+
+  // If the tab crashes in the beforeunload or unload handler, it won't be
+  // able to ack. But we know we can close it.
+  NotificationService::current()->
+      AddObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
+                  Source<TabContents>(contents));
 }
 
 void Browser::TabClosingAt(TabContents* contents, int index) {
@@ -1415,6 +1421,10 @@ void Browser::TabDetachedAt(TabContents* contents, int index) {
     SyncHistoryWithTabs(0);
 
   RemoveScheduledUpdatesFor(contents);
+
+  NotificationService::current()->
+      RemoveObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED, 
+                     Source<TabContents>(contents));
 }
 
 void Browser::TabSelectedAt(TabContents* old_contents,
