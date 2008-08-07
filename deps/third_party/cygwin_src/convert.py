@@ -29,7 +29,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-olddll = open("cygwin1.dll.original", "rb")
+olddll = open("cygwin1.dll", "rb")
 str = olddll.read()
 olddll.close()
 
