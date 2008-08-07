@@ -135,7 +135,7 @@ void Window::Init(HWND parent,
     std::wstring window_title = window_delegate_->GetWindowTitle();
     std::wstring localized_text;
     if (l10n_util::AdjustStringForLocaleDirection(window_title, 
-      &localized_text))
+                                                   &localized_text))
       window_title.assign(localized_text);
            
     SetWindowText(GetHWND(), window_title.c_str());
@@ -328,7 +328,7 @@ void Window::UpdateWindowTitle() {
     std::wstring window_title = window_delegate_->GetWindowTitle();
     std::wstring localized_text;
     if (l10n_util::AdjustStringForLocaleDirection(window_title,
-      &localized_text))
+                                                   &localized_text))
       window_title.assign(localized_text);
            
     SetWindowText(GetHWND(), window_title.c_str());
