@@ -1,0 +1,17 @@
+Marked check boxes [x] indicate items that have been done.
+
+objects.h:
+[ ] do we really need ToSourceString (and thus StringToSourceString, HeapObjectToSourceString, etc.)?
+    it seems like it would be better to pass a flag instead of duplicating all this code.
+    (gri 2/14/07)
+
+
+jsenv.*:
+[ ] do we really need both JSEnv::CreateFunctionWithPrototype and JSEnv::CreateFunction?
+    lots of code duplication here!
+
+objects.*, heap.*:
+[ ] use new iterator interface that takes a range of addresses; (fqian 2/20/07)
+
+markr_compact.*:
+[ ] consider traversing large fixed arrays recursively; (fqian 2/20/07)

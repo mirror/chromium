@@ -1,0 +1,3 @@
+multi-default-switch.js:3: Uncaught SyntaxError: More than one default clause in switch statement
+  default: break;
+  ^^^^^^^

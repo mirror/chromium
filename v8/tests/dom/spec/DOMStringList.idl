@@ -1,0 +1,6 @@
+// Introduced in DOM Level 3:
+interface DOMStringList {
+  DOMString          item(in unsigned long index);
+  readonly attribute unsigned long   length;
+  boolean            contains(in DOMString str);
+};

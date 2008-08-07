@@ -1,0 +1,11 @@
+interface Text : CharacterData {
+  Text               splitText(in unsigned long offset)
+                                        raises(DOMException);
+  // Introduced in DOM Level 3:
+  readonly attribute boolean         isElementContentWhitespace;
+  // Introduced in DOM Level 3:
+  readonly attribute DOMString       wholeText;
+  // Introduced in DOM Level 3:
+  Text               replaceWholeText(in DOMString content)
+                                        raises(DOMException);
+};

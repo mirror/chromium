@@ -1,0 +1,3 @@
+lookup-error.js:1: Uncaught TypeError: Object #<an Object> has no method 'foo'
+({}).foo()
+     ^

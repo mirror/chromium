@@ -1,0 +1,26 @@
+x
+y
+x
+y
+x0 = x0
+y0 = y0
+x1 = x1
+y1 = y1
+x2 = x2
+y2 = y2
+
+x0 = x0
+y0 = y0
+x1 = new x1
+y1 = y1
+x2 = x2
+y2 = y2
+
+x0 = x0
+y0 = y0
+x1 = new x1
+y1 = y1
+x2 = new x2
+y2 = y2
+
+function

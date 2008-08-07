@@ -1,0 +1,6 @@
+2
+function () { return 43; }
+2
+function () { return 43; }
+function f() { return 42; }
+undefined

@@ -1,0 +1,5 @@
+// Introduced in DOM Level 3:
+interface DOMImplementationList {
+  DOMImplementation  item(in unsigned long index);
+  readonly attribute unsigned long   length;
+};

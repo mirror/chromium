@@ -1,0 +1,15 @@
+// Introduced in DOM Level 3:
+interface TypeInfo {
+  readonly attribute DOMString       typeName;
+  readonly attribute DOMString       typeNamespace;
+
+  // DerivationMethods
+  const unsigned long       DERIVATION_RESTRICTION         = 0x00000001;
+  const unsigned long       DERIVATION_EXTENSION           = 0x00000002;
+  const unsigned long       DERIVATION_UNION               = 0x00000004;
+  const unsigned long       DERIVATION_LIST                = 0x00000008;
+
+  boolean            isDerivedFrom(in DOMString typeNamespaceArg, 
+                                   in DOMString typeNameArg, 
+                                   in unsigned long derivationMethod);
+};
