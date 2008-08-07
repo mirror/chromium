@@ -577,9 +577,9 @@ void PageInfoWindow::Init(Profile* profile,
     // When running with Gears, we have no os certificate, so there is no cert
     // to show. Don't bother showing the cert info button in that case.
     if (cert.get() && cert->os_cert_handle()) {
-      contents_->GetParent()->AddChildView(cert_info_button_);
-      contents_->set_cert_viewer_button(cert_info_button_);
-      contents_->Layout();
+      contents->GetParent()->AddChildView(cert_info_button_);
+      contents->set_cert_viewer_button(cert_info_button_);
+      contents>Layout();
     }
   }
 }
