@@ -14,9 +14,6 @@ deps = {
   "src/third_party/icu38":
     "svn://chrome-svn/chrome/trunk/third_party/icu38@19",
 
-  "src/v8":
-    "https://svn/r/googleclient/v8/branches/beta@128918",
-
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/branches/Safari-3-1-branch/LayoutTests@31256",
 }
