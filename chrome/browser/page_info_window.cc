@@ -572,9 +572,15 @@ void PageInfoWindow::Init(Profile* profile,
   window_ = ChromeViews::Window::CreateChromeWindow(parent, gfx::Rect(),
                                                     contents, this);
   if (cert_id_) {
-    contents->GetParent()->AddChildView(cert_info_button_);
-    contents->set_cert_viewer_button(cert_info_button_);
-    contents->Layout();
+    scoped_refptr<X509Certificate> cert;
+    CertStore::GetSharedInstance()->RetrieveCert(cert_id_, &cert);
+    // When running with Gears, we have no os certificate, so there is no cert
+    // to show. Don't bother showing the cert info button in that case.
+    if (cert.get() && cert->os_cert_handle()) {
+      contents_->GetParent()->AddChildView(cert_info_button_);
+      contents_->set_cert_viewer_button(cert_info_button_);
+      contents_->Layout();
+    }
   }
 }
 
