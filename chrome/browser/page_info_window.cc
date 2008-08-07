@@ -579,7 +579,7 @@ void PageInfoWindow::Init(Profile* profile,
     if (cert.get() && cert->os_cert_handle()) {
       contents->GetParent()->AddChildView(cert_info_button_);
       contents->set_cert_viewer_button(cert_info_button_);
-      contents>Layout();
+      contents->Layout();
     }
   }
 }
