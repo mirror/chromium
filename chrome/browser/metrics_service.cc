@@ -1035,6 +1035,13 @@ void MetricsService::OnURLFetchComplete(const URLFetcher* source,
 
     DLOG(INFO) << "METRICS RESPONSE DATA: " << data;
     DiscardPendingLog();
+    // Since we sent a log, make sure our in-memory state is recorded to disk.
+    PrefService* local_state = g_browser_process->local_state();
+    DCHECK(local_state);
+    if (local_state)
+      local_state->ScheduleSavePersistentPrefs(
+          g_browser_process->file_thread());
+
     if (unsent_logs()) {
       DCHECK(state_ < SENDING_CURRENT_LOGS);
       interlog_duration_ = TimeDelta::FromSeconds(kUnsentLogDelay);
