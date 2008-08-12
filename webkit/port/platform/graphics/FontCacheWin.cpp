@@ -393,7 +393,7 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
     // critical enough for non-Latin scripts (especially Han) to
     // warrant an additional (real coverage) check with fontCotainsCharacter.
     int i;
-    for (i = 0; (!data || !fontContainsCharacter(data, family, c)))
+    for (i = 0; (!data || !fontContainsCharacter(data, family, c))
          && i < numFonts; ++i) {
         family = panUniFonts[i]; 
         data = getCachedFontPlatformData(font.fontDescription(),
