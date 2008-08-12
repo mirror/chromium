@@ -364,13 +364,11 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
         L"gulim",
         L"pmingliu",
         L"code2000",
-        L"bitstream cyberbit", 
-        L"titus cyberbit basic",
     };
 
     const static wchar_t* const commonFonts[] = {
-        L"arial unicode ms",
         L"tahoma", 
+        L"arial unicode ms",
         L"microsoft sans serif",
         L"lucida sans unicode",
         L"palatino linotype",
@@ -394,13 +392,8 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
     // because it's based on script to font mapping. This problem is
     // critical enough for non-Latin scripts (especially Han) to
     // warrant an additional (real coverage) check with fontCotainsCharacter.
-    // In case of Latin, just trust that it covers a character and
-    // skip the coverage check as long as the font is available 
-    // (i.e. |data| is not NULL).
     int i;
-    for (i = 0; 
-         (!data ||
-          (script != USCRIPT_LATIN && !fontContainsCharacter(data, family, c)))
+    for (i = 0; (!data || !fontContainsCharacter(data, family, c)))
          && i < numFonts; ++i) {
         family = panUniFonts[i]; 
         data = getCachedFontPlatformData(font.fontDescription(),
