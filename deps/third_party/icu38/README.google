@@ -102,6 +102,8 @@ F. Mac and Linux platform headers (common/p{mac,linux}.h):
      other prebuilt platform files in the ICU distribution, such as pwin32.h;
    - The file was moved from source/common/unicode to public/common/unicode
      (see B above);
+   - The U_WCHAR_IS_UTF32 macro was added to pmac.h, because we're only
+     concerned with wchar_t strings containing UTF-32 data on the Mac;
    - public/common/unicode/umachine.h was updated to include pmac.h instead of
      platform.h on the Mac;
    - build/icu.xcodeproj was added to enable ICU to build using Xcode on the

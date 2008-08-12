@@ -311,3 +311,15 @@ typedef unsigned int uint32_t;
 /*===========================================================================*/
 
 #define U_MAKE  "/usr/bin/gnumake"
+
+/*===========================================================================*/
+/* Local defines                                                             */
+/*===========================================================================*/
+
+/* On the Mac, we define U_WCHAR_IS_UTF32 to treat wchar_t as though it
+   contains UTF-32 at all times.  Strictly speaking, that's not entirely
+   correct given the Mac's libc, but provided that we ignore libc's locale
+   support (by not calling setlocale) and its multibyte string support, this
+   should be fine.  Our codebase makes enough other assumptions about a UTF-8
+   locale and UTF-32 wchar_t strings for this to make sense. */
+#define U_WCHAR_IS_UTF32
