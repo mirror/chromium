@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "base/string_util.h"
+#include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cross_site_request_manager.h"
 #include "chrome/browser/navigation_entry.h"
@@ -247,7 +248,6 @@ void RenderViewHost::FirePageBeforeUnload() {
   if (IsRenderViewLive()) {
     // Start the hang monitor in case the renderer hangs in the beforeunload
     // handler.
-    DCHECK(!is_waiting_for_unload_ack_);
     is_waiting_for_unload_ack_ = true;
     StartHangMonitorTimeout(kUnloadTimeoutMS);
     Send(new ViewMsg_ShouldClose(routing_id_));
@@ -260,7 +260,6 @@ void RenderViewHost::FirePageBeforeUnload() {
 
 void RenderViewHost::FirePageUnload() {
   // Start the hang monitor in case the renderer hangs in the unload handler.
-  DCHECK(!is_waiting_for_unload_ack_);
   is_waiting_for_unload_ack_ = true;
   StartHangMonitorTimeout(kUnloadTimeoutMS);
   ClosePage(site_instance()->process_host_id(), 
@@ -774,7 +773,7 @@ void RenderViewHost::OnMsgRendererGone() {
   current_size_ = gfx::Size();
   is_hidden_ = false;
 
-  backing_store_.reset();
+  RendererExited();
 
   if (view_) {
     view_->RendererGone();
@@ -1163,9 +1162,11 @@ void RenderViewHost::OnUnloadListenerChanged(bool has_listener) {
 void RenderViewHost::NotifyRendererUnresponsive() {
   if (is_waiting_for_unload_ack_) {
     // If the tab hangs in the beforeunload/unload handler there's really
-    // nothing we can do to recover. We can safely kill the process and the
-    // Browser will deal with the crash appropriately.
-    TerminateProcess(process()->process(), 0);
+    // nothing we can do to recover. Pretend the unload listeners have
+    // all fired and close the tab. If the hang is in the beforeunload handler
+    // then the user will not have the option of cancelling the close.
+    UnloadListenerHasFired();
+    delegate_->Close(this);
     return;
   }
 
