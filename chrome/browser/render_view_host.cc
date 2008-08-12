@@ -773,7 +773,7 @@ void RenderViewHost::OnMsgRendererGone() {
   current_size_ = gfx::Size();
   is_hidden_ = false;
 
-  RendererExited();
+  backing_store_.reset();
 
   if (view_) {
     view_->RendererGone();
