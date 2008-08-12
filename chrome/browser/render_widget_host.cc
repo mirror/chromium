@@ -50,8 +50,8 @@
 // This timeout impacts the "choppiness" of our window resize perf.
 static const int kPaintMsgTimeoutMS = 40;
 
-// Give the renderer at most 30 seconds to respond before we treat it as hung.
-static const int kHungRendererDelayMs = 30000;
+// How long to wait before we consider a renderer hung.
+static const int kHungRendererDelayMs = 20000;
 
 ///////////////////////////////////////////////////////////////////////////////
 // RenderWidget::BackingStore
