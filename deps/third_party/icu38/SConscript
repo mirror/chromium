@@ -333,4 +333,8 @@ env.ChromeStaticLibrary('icuuc', cpp_object_files +
                            c_object_files +
                            stray_object_files)
 
-env.Install('$OBJ_ROOT', 'icudt38.dll')
+# On Windows the ICU data is built into a DLL.  On Linux, install the .dat file.
+if env['PLATFORM'] == 'win32':
+  env.Install('$OBJ_ROOT', 'icudt38.dll')
+else:
+  env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
