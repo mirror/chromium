@@ -945,6 +945,8 @@
 		7BD541020D6F83E6003CD41E /* icudt38l_dat.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = icudt38l_dat.s; sourceTree = "<group>"; };
 		7BD5410E0D6F8457003CD41E /* icupkg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = icupkg; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD541170D6F846F003CD41E /* icupkg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = icupkg.cpp; sourceTree = "<group>"; };
+		7BED30CD0E59F65F00A747DB /* executable.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = executable.xcconfig; sourceTree = "<group>"; };
+		7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = staticlib.xcconfig; sourceTree = "<group>"; };
 		82C262C40DCF9411005CFE91 /* libicudata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libicudata.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1014,7 +1016,9 @@
 			children = (
 				7B836C960E55C96100F6AD31 /* common.xcconfig */,
 				7B836C970E55C96100F6AD31 /* debug.xcconfig */,
+				7BED30CD0E59F65F00A747DB /* executable.xcconfig */,
 				7B836C980E55C96100F6AD31 /* release.xcconfig */,
+				7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */,
 			);
 			name = Configuration;
 			path = ../../../build;
@@ -2305,6 +2309,7 @@
 		};
 		7BD53AAC0D6F6671003CD41E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
 				PRODUCT_NAME = icuuc;
@@ -2313,6 +2318,7 @@
 		};
 		7BD53AAD0D6F6671003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
 				PRODUCT_NAME = icuuc;
@@ -2321,6 +2327,7 @@
 		};
 		7BD53EA70D6F6FC7003CD41E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_I18N_IMPLEMENTATION;
 				PRODUCT_NAME = icui18n;
@@ -2329,6 +2336,7 @@
 		};
 		7BD53EA80D6F6FC7003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_I18N_IMPLEMENTATION;
 				PRODUCT_NAME = icui18n;
@@ -2337,6 +2345,7 @@
 		};
 		7BD540270D6F727B003CD41E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_TOOLUTIL_IMPLEMENTATION;
 				PRODUCT_NAME = icutu;
@@ -2345,6 +2354,7 @@
 		};
 		7BD540280D6F727B003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_TOOLUTIL_IMPLEMENTATION;
 				PRODUCT_NAME = icutu;
@@ -2353,6 +2363,7 @@
 		};
 		7BD5408C0D6F743F003CD41E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = icudata_stub;
 			};
@@ -2360,6 +2371,7 @@
 		};
 		7BD5408D0D6F743F003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = icudata_stub;
 			};
@@ -2367,6 +2379,7 @@
 		};
 		7BD540D80D6F7EFE003CD41E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CD0E59F65F00A747DB /* executable.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
@@ -2378,6 +2391,7 @@
 		};
 		7BD540D90D6F7EFE003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CD0E59F65F00A747DB /* executable.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
@@ -2389,6 +2403,7 @@
 		};
 		7BD541100D6F8457003CD41E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CD0E59F65F00A747DB /* executable.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
@@ -2400,6 +2415,7 @@
 		};
 		7BD541110D6F8457003CD41E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CD0E59F65F00A747DB /* executable.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
@@ -2411,6 +2427,7 @@
 		};
 		82C262C50DCF9411005CFE91 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = icudata;
 			};
@@ -2418,6 +2435,7 @@
 		};
 		82C262C60DCF9411005CFE91 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = icudata;
 			};
