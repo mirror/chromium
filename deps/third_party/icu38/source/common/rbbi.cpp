@@ -1533,7 +1533,7 @@ int32_t RuleBasedBreakIterator::checkDictionary(int32_t startPos,
                             int32_t endPos,
                             UBool reverse) {
     // Reset the old break cache first.
-    uint32_t dictionaryCount = fDictionaryCharCount;
+//    uint32_t dictionaryCount = fDictionaryCharCount;
     reset();
 
     // note: code segment below assumes that dictionary chars are in the 

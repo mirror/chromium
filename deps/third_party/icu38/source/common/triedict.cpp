@@ -821,7 +821,7 @@ CompactTrieEnumeration::snext(UErrorCode &status) {
     while (!fNodeStack.empty() && U_SUCCESS(status)) {
         int nodeCount;
 
-        bool isRoot = fNodeStack.peeki() == fInfo->root;
+        bool isRoot = fNodeStack.peeki() == static_cast<int32_t>(fInfo->root);
         if(isRoot){
             nodeCount = node->flagscount & kRootCountMask;
         } else {
@@ -940,7 +940,6 @@ public:
     }
 
     virtual uint32_t size() {
-        uint32_t actualSize = sizeof(uint16_t);
         if(fValue > 0)
             return sizeof(uint16_t) * 2;
         else
@@ -1040,7 +1039,6 @@ public:
 
     virtual void write(uint8_t *bytes, uint32_t &offset, const UVector32 &translate) {
         int32_t count = fChars.length();
-        uint32_t initOffset = offset;
 
         //if largest nodeID > 2^16, set flag
         //large node IDs are more likely to be at the back of the array
