@@ -405,6 +405,7 @@ public:
     void setNeedsPositionedMovementLayout();
     void setPrefWidthsDirty(bool, bool markParents = true);
     void invalidateContainerPrefWidths();
+    virtual void invalidateCounters() { }
     
     void setNeedsLayoutAndPrefWidthsRecalc()
     {
@@ -650,7 +651,7 @@ public:
     virtual void setScrollTop(int);
 
     virtual bool scroll(ScrollDirection, ScrollGranularity, float multiplier = 1.0f);
-    virtual bool canBeProgramaticallyScrolled() const;
+    virtual bool canBeProgramaticallyScrolled(bool) const;
     bool hasScrollableView() const;
     virtual void autoscroll();
     virtual void stopAutoscroll() { }

@@ -253,6 +253,10 @@ public:
     void setKillRingToYankedState();
 
     PassRefPtr<Range> selectedRange();
+    
+    // We should make these functions private when their callers in Frame are moved over here to Editor
+    bool insideVisibleArea(Range*) const;
+    PassRefPtr<Range> nextVisibleRange(Range*, const String&, bool forward, bool caseFlag);
 
 private:
     Frame* m_frame;
@@ -282,6 +286,9 @@ private:
     void setIgnoreCompositionSelectionChange(bool ignore);
 
     void addToKillRing(Range*, bool prepend);
+
+    PassRefPtr<Range> firstVisibleRange(const String&, bool caseFlag);
+    PassRefPtr<Range> lastVisibleRange(const String&, bool caseFlag);
 };
 
 inline void Editor::setStartNewKillRingSequence(bool flag)

@@ -37,6 +37,8 @@
 
 namespace KJS {
 
+#if !defined(NDEBUG) || ENABLE_SAMPLING_TOOL
+
 static UString escapeQuotes(const UString& str)
 {
     UString result = str;
@@ -259,6 +261,12 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
 {
     int location = it - begin;
     switch (exec->machine()->getOpcodeID(it->u.opcode)) {
+        case op_unexpected_load: {
+            int r0 = (++it)->u.operand;
+            int k0 = (++it)->u.operand;
+            printf("[%4d] unexpected_load\t %s, %s\n", location, registerName(r0).c_str(), constantName(exec, k0, unexpectedConstants[k0]).c_str());
+            break;
+        }
         case op_new_object: {
             int r0 = (++it)->u.operand;
             printf("[%4d] new_object\t %s\n", location, registerName(r0).c_str());
@@ -529,13 +537,6 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
             printConditionalJump(begin, it, location, "jfalse");
             break;
         }
-        case op_jless: {
-            int r0 = (++it)->u.operand;
-            int r1 = (++it)->u.operand;
-            int offset = (++it)->u.operand;
-            printf("[%4d] jless\t\t %s, %s, %d(->%d)\n", location, registerName(r0).c_str(), registerName(r1).c_str(), offset, jumpTarget(begin, it, offset));
-            break;
-        }
         case op_jnless: {
             int r0 = (++it)->u.operand;
             int r1 = (++it)->u.operand;
@@ -695,6 +696,8 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
         }
     }
 }
+
+#endif // !defined(NDEBUG) || ENABLE_SAMPLING_TOOL
 
 void CodeBlock::mark()
 {

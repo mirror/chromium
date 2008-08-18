@@ -727,6 +727,8 @@ sub GenerateImplementation
     push(@implContent, "\nusing namespace KJS;\n\n");
     push(@implContent, "namespace WebCore {\n\n");
 
+    push(@implContent, "ASSERT_CLASS_FITS_IN_CELL($className)\n\n");
+
     # - Add all attributes in a hashtable definition
     my $numAttributes = @{$dataNode->attributes};
     $numAttributes++ if $dataNode->extendedAttributes->{"GenerateConstructor"};
@@ -1547,6 +1549,18 @@ sub NativeToJSValue
         $getter =~ s/\(\)//;
 
         my $setter = "set" . $codeGenerator->WK_ucfirst($getter);
+
+        # Function calls will never return 'modifyable' POD types (ie. SVGRect getBBox()) - no need to keep track changes to the returned SVGRect
+        if ($inFunctionCall eq 0
+            and not $codeGenerator->IsSVGAnimatedType($implClassName)
+            and $codeGenerator->IsPodTypeWithWriteableProperties($type)
+            and not defined $signature->extendedAttributes->{"Immutable"}) {
+            if ($codeGenerator->IsPodType($implClassName)) {
+                return "toJS(exec, JSSVGStaticPODTypeWrapperWithPODTypeParent<$nativeType, $implClassName>::create($value, impl()).get(), context())";
+            } else {
+                return "toJS(exec, JSSVGStaticPODTypeWrapperWithParent<$nativeType, $implClassName>::create(imp, &${implClassName}::$getter, &${implClassName}::$setter).get(), imp)";
+            }
+        }
 
         if ($implClassNameForValueConversion eq "") {
             if (IsSVGTypeNeedingContextParameter($implClassName)) {

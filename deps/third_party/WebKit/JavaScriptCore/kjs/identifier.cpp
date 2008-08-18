@@ -223,4 +223,24 @@ void Identifier::remove(UString::Rep *r)
     r->identifierTable()->remove(r);
 }
 
+#ifndef NDEBUG
+void Identifier::checkSameIdentifierTable(ExecState* exec, UString::Rep* rep)
+{
+    ASSERT(rep->identifierTable() == exec->identifierTable());
+}
+
+void Identifier::checkSameIdentifierTable(JSGlobalData* globalData, UString::Rep* rep)
+{
+    ASSERT(rep->identifierTable() == globalData->identifierTable);
+}
+#else
+void Identifier::checkSameIdentifierTable(ExecState*, UString::Rep*)
+{
+}
+
+void Identifier::checkSameIdentifierTable(JSGlobalData*, UString::Rep*)
+{
+}
+#endif
+
 } // namespace KJS

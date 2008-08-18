@@ -25,6 +25,8 @@
 
 namespace KJS {
 
+ASSERT_CLASS_FITS_IN_CELL(StringObject);
+
 const ClassInfo StringObject::info = { "String", 0, 0, 0 };
 
 StringObject::StringObject(ExecState* exec, JSObject* prototype)
@@ -54,7 +56,7 @@ bool StringObject::getOwnPropertySlot(ExecState* exec, const Identifier& propert
     
 bool StringObject::getOwnPropertySlot(ExecState* exec, unsigned propertyName, PropertySlot& slot)
 {
-    if (internalValue()->getStringPropertySlot(propertyName, slot))
+    if (internalValue()->getStringPropertySlot(exec, propertyName, slot))
         return true;    
     return JSObject::getOwnPropertySlot(exec, Identifier::from(exec, propertyName), slot);
 }

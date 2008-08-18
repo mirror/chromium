@@ -29,28 +29,25 @@
 
 #include "APICast.h"
 #include "JSStringRef.h"
+#include "OpaqueJSString.h"
 #include <kjs/ustring.h>
 #include <kjs/JSValue.h>
-
-using namespace KJS;
+#include <wtf/OwnArrayPtr.h>
 
 JSStringRef JSStringCreateWithCFString(CFStringRef string)
 {
     CFIndex length = CFStringGetLength(string);
-    UString::Rep* rep;
-    if (!length)
-        rep = UString("").rep()->ref();
-    else {
-        UniChar* buffer = static_cast<UniChar*>(fastMalloc(sizeof(UniChar) * length));
-        CFStringGetCharacters(string, CFRangeMake(0, length), buffer);
+    if (length) {
+        OwnArrayPtr<UniChar> buffer(new UniChar[length]);
+        CFStringGetCharacters(string, CFRangeMake(0, length), buffer.get());
         COMPILE_ASSERT(sizeof(UniChar) == sizeof(UChar), unichar_and_uchar_must_be_same_size);
-        rep = UString(reinterpret_cast<UChar*>(buffer), length, false).rep()->ref();
+        return OpaqueJSString::create(reinterpret_cast<UChar*>(buffer.get()), length).releaseRef();
+    } else {
+        return OpaqueJSString::create(0, 0).releaseRef();
     }
-    return toRef(rep);
-}
+    }
 
 CFStringRef JSStringCopyCFString(CFAllocatorRef alloc, JSStringRef string)
 {
-    UString::Rep* rep = toJS(string);
-    return CFStringCreateWithCharacters(alloc, reinterpret_cast<const UniChar*>(rep->data()), rep->size());
+    return CFStringCreateWithCharacters(alloc, reinterpret_cast<const UniChar*>(string->characters()), string->length());
 }

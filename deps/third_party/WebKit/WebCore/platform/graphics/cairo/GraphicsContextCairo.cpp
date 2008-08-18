@@ -37,7 +37,9 @@
 #include "IntRect.h"
 #include "NotImplemented.h"
 #include "Path.h"
+#include "Pattern.h"
 #include "SimpleFontData.h"
+
 #include <cairo.h>
 #include <math.h>
 #include <stdio.h>
@@ -495,6 +497,23 @@ IntPoint GraphicsContext::origin()
     return IntPoint(static_cast<int>(matrix.x0), static_cast<int>(matrix.y0));
 }
 
+void GraphicsContext::applyStrokePattern(const Pattern& pattern)
+{
+    cairo_pattern_t* platformPattern = pattern.createPlatformPattern(getCTM());
+    if (!platformPattern)
+        return;
+
+    cairo_set_source(platformContext(), platformPattern);
+    cairo_pattern_destroy(platformPattern);
+}
+
+void GraphicsContext::applyFillPattern(const Pattern& pattern)
+{
+    // The Cairo codepath doesn't seem to support separate stroke/fill?
+    // The code I refactored to create these methods was identical for Cairo
+    applyStrokePattern(pattern);
+}
+
 void GraphicsContext::setPlatformFillColor(const Color& col)
 {
     // FIXME: this is probably a no-op but I'm not sure
@@ -878,17 +897,6 @@ GdkDrawable* GraphicsContext::gdkDrawable() const
         return 0;
 
     return GDK_DRAWABLE(m_data->expose->window);
-}
-
-IntPoint GraphicsContext::translatePoint(const IntPoint& point) const
-{
-    cairo_matrix_t tm;
-    cairo_get_matrix(m_data->cr, &tm);
-    double x = point.x();
-    double y = point.y();
-
-    cairo_matrix_transform_point(&tm, &x, &y);
-    return IntPoint(x, y);
 }
 #endif
 

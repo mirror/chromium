@@ -105,17 +105,23 @@ public:
     void finishedProfiling(PassRefPtr<KJS::Profile>);
 
     bool windowVisible();
-    void setWindowVisible(bool visible = true);
+    void setWindowVisible(bool visible = true, bool attached = false);
 
     void addMessageToConsole(MessageSource, MessageLevel, KJS::ExecState*, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceID);
     void addMessageToConsole(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceID);
+    void clearConsoleMessages();
+    void toggleRecordButton(bool);
 
     void addProfile(PassRefPtr<KJS::Profile>);
+    void addProfileMessageToConsole(PassRefPtr<KJS::Profile> prpProfile);
     void addScriptProfile(KJS::Profile* profile);
     const Vector<RefPtr<KJS::Profile> >& profiles() const { return m_profiles; }
 
     void attachWindow();
     void detachWindow();
+
+    void setAttachedWindow(bool);
+    void setAttachedWindowHeight(unsigned height);
 
     JSContextRef scriptContext() const { return m_scriptContext; };
     void setScriptContext(JSContextRef context) { m_scriptContext = context; };
@@ -148,6 +154,7 @@ public:
     const ResourcesMap& resources() const { return m_resources; }
 
     void moveWindowBy(float x, float y) const;
+    void closeWindow();
 
     void startDebuggingAndReloadInspectedPage();
     void stopDebugging();
@@ -173,8 +180,8 @@ public:
     void startTiming(const KJS::UString& title);
     bool stopTiming(const KJS::UString& title, double& elapsed);
 
-    void startGroup();
-    void endGroup();
+    void startGroup(MessageSource source, KJS::ExecState* exec, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceURL);
+    void endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL);
 
 private:
     void focusNode();
@@ -210,7 +217,6 @@ private:
     bool handleException(JSContextRef, JSValueRef exception, unsigned lineNumber) const;
 
     void showWindow();
-    void closeWindow();
 
     virtual void didParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int sourceID);
     virtual void failedToParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int errorLine, const KJS::UString& errorMessage);

@@ -636,9 +636,9 @@ bool RenderObject::scroll(ScrollDirection direction, ScrollGranularity granulari
     return false;
 }
     
-bool RenderObject::canBeProgramaticallyScrolled() const
+bool RenderObject::canBeProgramaticallyScrolled(bool scrollToAnchor) const
 {
-    return (hasOverflowClip() && (scrollsOverflow() || (node() && node()->isContentEditable()))) || ((node() && node()->isDocumentNode()) && hasScrollableView());
+    return (hasOverflowClip() && (scrollsOverflow() || (node() && node()->isContentEditable()))) || ((node() && node()->isDocumentNode()) && (hasScrollableView() || scrollToAnchor));
 }
     
 bool RenderObject::hasScrollableView() const
@@ -2155,7 +2155,7 @@ void RenderObject::handleDynamicFloatPositionChange()
 
 void RenderObject::setAnimatableStyle(RenderStyle* style)
 {
-    if (!isText() && m_style && style)
+    if (!isText() && style)
         style = animation()->updateAnimations(this, style);
 
     setStyle(style);

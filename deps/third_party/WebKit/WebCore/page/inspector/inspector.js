@@ -273,6 +273,8 @@ WebInspector.loaded = function()
     };
 
     var toolbarElement = document.getElementById("toolbar");
+    var previousToolbarItem = toolbarElement.children[0];
+
     for (var panelName in this.panels) {
         var panel = this.panels[panelName];
         var panelToolbarItem = panel.toolbarItem;
@@ -281,7 +283,7 @@ WebInspector.loaded = function()
             toolbarElement.insertBefore(panelToolbarItem, previousToolbarItem.nextSibling);
         else
             toolbarElement.insertBefore(panelToolbarItem, toolbarElement.firstChild);
-        var previousToolbarItem = panelToolbarItem;
+        previousToolbarItem = panelToolbarItem;
     }
 
     this.currentPanel = this.panels.elements;
@@ -340,9 +342,11 @@ WebInspector.loaded = function()
     this._updateErrorAndWarningCounts();
 
     document.getElementById("search-toolbar-label").textContent = WebInspector.UIString("Search");
+    var searchField = document.getElementById("search");
+    searchField.addEventListener("keyup", this.performSearch.bind(this), false);
 
-    if (platform === "mac-leopard")
-        document.getElementById("toolbar").addEventListener("mousedown", this.toolbarDragStart, true);
+    document.getElementById("toolbar").addEventListener("mousedown", this.toolbarDragStart, true);
+    document.getElementById("close-button").addEventListener("click", this.close, true);
 
     InspectorController.loaded();
 }
@@ -393,6 +397,16 @@ WebInspector.focusChanged = function(event)
     this.currentFocusElement = event.target;
 }
 
+WebInspector.setAttachedWindow = function(attached)
+{
+    this.attached = attached;
+}
+
+WebInspector.close = function(event)
+{
+    InspectorController.closeWindow();
+}
+
 WebInspector.documentClick = function(event)
 {
     var anchor = event.target.enclosingNodeOrSelfWithNodeName("a");
@@ -412,6 +426,11 @@ WebInspector.documentClick = function(event)
             }
 
             WebInspector.showResourceForURL(anchor.href, anchor.lineNumber, anchor.preferredPanel);
+        } else {
+            var profileStringRegEx = new RegExp("webkit-profile://.+/([0-9]+)");
+            var profileString = profileStringRegEx.exec(anchor.href);
+            if (profileString)
+                WebInspector.showProfileById(profileString[1])
         }
     }
 
@@ -443,6 +462,20 @@ WebInspector.documentKeyDown = function(event)
             case "U+001B": // Escape key
                 this.console.visible = !this.console.visible;
                 event.preventDefault();
+                break;
+            case "U+0046": // F key
+                var isMac = InspectorController.platform().indexOf("mac-") === 0;
+                var isFindKey;
+                // We want cmd-F for Mac, or ctrl-F for non-Mac
+                if (isMac)
+                    isFindKey = event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey;
+                else
+                    isFindKey = event.ctrlKey && !event.metaKey && !event.altKey && !event.shiftKey;
+
+                if (isFindKey) {
+                    document.getElementById("search").focus();
+                    event.preventDefault();
+                }
                 break;
         }
     }
@@ -581,7 +614,7 @@ WebInspector.toggleAttach = function()
 
 WebInspector.toolbarDragStart = function(event)
 {
-    if (WebInspector.attached)
+    if (!WebInspector.attached && InspectorController.platform() !== "mac-leopard")
         return;
 
     var target = event.target;
@@ -595,39 +628,38 @@ WebInspector.toolbarDragStart = function(event)
     toolbar.lastScreenX = event.screenX;
     toolbar.lastScreenY = event.screenY;
 
-    document.addEventListener("mousemove", WebInspector.toolbarDrag, true);
-    document.addEventListener("mouseup", WebInspector.toolbarDragEnd, true);
-    document.body.style.cursor = "default";
-
-    event.preventDefault();
+    WebInspector.elementDragStart(toolbar, WebInspector.toolbarDrag, WebInspector.toolbarDragEnd, event, (WebInspector.attached ? "row-resize" : "default"));
 }
 
 WebInspector.toolbarDragEnd = function(event)
 {
     var toolbar = document.getElementById("toolbar");
+
+    WebInspector.elementDragEnd(event);
+
     delete toolbar.lastScreenX;
     delete toolbar.lastScreenY;
-
-    document.removeEventListener("mousemove", WebInspector.toolbarDrag, true);
-    document.removeEventListener("mouseup", WebInspector.toolbarDragEnd, true);
-    document.body.style.removeProperty("cursor");
-
-    event.preventDefault();
 }
 
 WebInspector.toolbarDrag = function(event)
 {
     var toolbar = document.getElementById("toolbar");
 
-    var x = event.screenX - toolbar.lastScreenX;
-    var y = event.screenY - toolbar.lastScreenY;
+    if (WebInspector.attached) {
+        var height = window.innerHeight - (event.screenY - toolbar.lastScreenY);
+
+        InspectorController.setAttachedWindowHeight(height);
+    } else {
+        var x = event.screenX - toolbar.lastScreenX;
+        var y = event.screenY - toolbar.lastScreenY;
+
+        // We cannot call window.moveBy here because it restricts the movement
+        // of the window at the edges.
+        InspectorController.moveByUnrestricted(x, y);
+    }
 
     toolbar.lastScreenX = event.screenX;
     toolbar.lastScreenY = event.screenY;
-
-    // We cannot call window.moveBy here because it restricts the movement of the window
-    // at the edges.
-    InspectorController.moveByUnrestricted(x, y);
 
     event.preventDefault();
 }
@@ -818,19 +850,14 @@ WebInspector.addMessageToConsole = function(msg)
     this.console.addMessage(msg);
 }
 
-WebInspector.startGroupInConsole = function()
-{
-    this.console.startGroup();
-}
-
-WebInspector.endGroupInConsole = function()
-{
-    this.console.endGroup();
-}
-
 WebInspector.addProfile = function(profile)
 {
     this.panels.profiles.addProfile(profile);
+}
+
+WebInspector.setRecordingProfile = function(isProfiling)
+{
+    this.panels.profiles.setRecordingProfile(isProfiling);
 }
 
 WebInspector.drawLoadingPieChart = function(canvas, percent) {
@@ -915,17 +942,61 @@ WebInspector.showResourceForURL = function(url, line, preferredPanel)
     return true;
 }
 
-WebInspector.linkifyString = function(string)
+WebInspector.linkifyStringAsFragment = function(string)
 {
-    function linkify(url)
-    {
-        url = url.unescapeHTML();
-        var realURL = (url.indexOf("www.") === 0 ? "http://" + url : url);
-        return WebInspector.linkifyURL(realURL, url, null, (realURL in WebInspector.resourceURLMap));
+    var container = document.createDocumentFragment();
+    var linkStringRegEx = new RegExp("(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}://|www\\.)[\\w$\\-_+*'=\\|/\\\\(){}[\\]%@&#~,:;.!?]{4,}[\\w$\\-_+*=\\|/\\\\({%@&#~]");
+
+    while (string) {
+        var linkString = linkStringRegEx.exec(string);
+        if (!linkString)
+            break;
+
+        linkString = linkString[0];
+        var title = linkString;
+        var linkIndex = string.indexOf(linkString);
+        var nonLink = string.substring(0, linkIndex);
+        container.appendChild(document.createTextNode(nonLink));
+
+        var profileStringRegEx = new RegExp("webkit-profile://(.+)/[0-9]+");
+        var profileStringMatches = profileStringRegEx.exec(title);
+        var profileTitle;
+        if (profileStringMatches)
+            profileTitle = profileStringMatches[1];
+        if (profileTitle)
+            title = WebInspector.panels.profiles.displayTitleForProfileLink(profileTitle);
+
+        var realURL = (linkString.indexOf("www.") === 0 ? "http://" + linkString : linkString);
+        container.appendChild(WebInspector.linkifyURLAsNode(realURL, title, null, (realURL in WebInspector.resourceURLMap)));
+        string = string.substring(linkIndex + linkString.length, string.length);
     }
 
-    string = string.escapeHTML();
-    return string.replace(new RegExp("(?:[a-zA-Z][a-zA-Z0-9+.-]{2,}://|www\\.)[\\w$\\-_+*'=\\|/\\\\(){}[\\]%@&#~,:;.!?]{4,}[\\w$\\-_+*=\\|/\\\\({%@&#~]"), linkify);
+    if (string)
+        container.appendChild(document.createTextNode(string));
+
+    return container;
+}
+
+WebInspector.showProfileById = function(uid) {
+    WebInspector.showProfilesPanel();
+    WebInspector.panels.profiles.showProfileById(uid);
+}
+
+WebInspector.linkifyURLAsNode = function(url, linkText, classes, isExternal)
+{
+    if (!linkText)
+        linkText = url;
+    classes = (classes ? classes + " " : "");
+    classes += isExternal ? "webkit-html-external-link" : "webkit-html-resource-link";
+
+    var a = document.createElement("a");
+    a.href = url;
+    a.className = classes;
+    a.title = url;
+    a.target = "_blank";
+    a.textContent = linkText;
+    
+    return a;
 }
 
 WebInspector.linkifyURL = function(url, linkText, classes, isExternal)
@@ -945,12 +1016,22 @@ WebInspector.addMainEventListeners = function(doc)
     doc.addEventListener("click", this.documentClick.bind(this), true);
 }
 
-WebInspector.performSearch = function(query)
+WebInspector.performSearch = function(event)
 {
+    var query = event.target.value;
+
     if (!query || !query.length) {
         this.showingSearchResults = false;
         return;
     }
+
+    var forceSearch = event.keyIdentifier === "Enter";
+    if(!forceSearch && query.length < 3)
+        return;
+
+    if (!forceSearch && this.lastQuery && this.lastQuery === query)
+        return;
+    this.lastQuery = query;
 
     var resultsContainer = document.getElementById("searchResults");
     resultsContainer.removeChildren();

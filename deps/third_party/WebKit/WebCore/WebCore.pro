@@ -259,6 +259,8 @@ IDL_BINDINGS += \
     dom/TextEvent.idl \
     dom/TreeWalker.idl \
     dom/UIEvent.idl \
+    dom/WebKitAnimationEvent.idl \
+    dom/WebKitTransitionEvent.idl \
     dom/WheelEvent.idl \
     html/CanvasGradient.idl \
     html/CanvasPattern.idl \
@@ -534,6 +536,7 @@ SOURCES += \
     dom/QualifiedName.cpp \
     dom/Range.cpp \
     dom/RegisteredEventListener.cpp \
+    dom/ScriptElement.cpp \
     dom/SelectorNodeList.cpp \
     dom/StaticNodeList.cpp \
     dom/StyledElement.cpp \
@@ -545,6 +548,8 @@ SOURCES += \
     dom/TreeWalker.cpp \
     dom/UIEvent.cpp \
     dom/UIEventWithKeyState.cpp \
+    dom/WebKitAnimationEvent.cpp \
+    dom/WebKitTransitionEvent.cpp \
     dom/WheelEvent.cpp \
     dom/XMLTokenizer.cpp \
     editing/AppendNodeCommand.cpp \
@@ -785,6 +790,7 @@ SOURCES += \
     platform/graphics/IntRect.cpp \
     platform/graphics/Path.cpp \
     platform/graphics/PathTraversalState.cpp \
+    platform/graphics/Pattern.cpp \
     platform/graphics/Pen.cpp \
     platform/graphics/SegmentedFontData.cpp \
     platform/KURL.cpp \
@@ -860,6 +866,7 @@ SOURCES += \
     rendering/RenderListBox.cpp \
     rendering/RenderListItem.cpp \
     rendering/RenderListMarker.cpp \
+    rendering/RenderMarquee.cpp \
     rendering/RenderMenuList.cpp \
     rendering/RenderObject.cpp \
     rendering/RenderPart.cpp \
@@ -945,6 +952,7 @@ SOURCES += \
     platform/graphics/qt/IntRectQt.cpp \
     platform/graphics/qt/IntSizeQt.cpp \
     platform/graphics/qt/PathQt.cpp \
+    platform/graphics/qt/PatternQt.cpp \
     platform/graphics/qt/StillImageQt.cpp \
     platform/network/qt/ResourceHandleQt.cpp \
     platform/network/qt/ResourceRequestQt.cpp \
@@ -1815,5 +1823,3 @@ addExtraCompilerWithHeader(xpathbison)
     }
 }
 
-
-linux-icc*:QMAKE_CXXFLAGS_RELEASE ~= s/-O2/-O0/

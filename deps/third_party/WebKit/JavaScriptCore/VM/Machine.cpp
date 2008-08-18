@@ -82,8 +82,10 @@ static void* op_call_indirect;
 #endif
 
 // Returns the depth of the scope chain within a given call frame.
-static int depth(ScopeChain& sc)
+static int depth(CodeBlock* codeBlock, ScopeChain& sc)
 {
+    if (!codeBlock->needsFullScopeChain)
+        return 0;
     int scopeDepth = 0;
     ScopeChainIterator iter = sc.begin();
     ScopeChainIterator end = sc.end();
@@ -96,6 +98,40 @@ static int depth(ScopeChain& sc)
     return scopeDepth;
 }
 
+static bool fastIsNumber(JSValue* value, double& arg) {
+    if (JSImmediate::isNumber(value))
+        arg = JSImmediate::getTruncatedInt32(value);
+    else if (Heap::fastIsNumber(static_cast<JSCell*>(value)))
+        arg = static_cast<JSNumberCell*>(value)->value();
+    else
+        return false;
+    return true;
+}
+
+static bool fastToInt32(JSValue* value, int32_t& arg) {
+    if (JSImmediate::isNumber(value))
+        arg = JSImmediate::getTruncatedInt32(value);
+    else if (Heap::fastIsNumber(static_cast<JSCell*>(value)))
+        arg = static_cast<JSNumberCell*>(value)->fastToInt32();
+    else
+        return false;
+    return true;
+}
+
+static ALWAYS_INLINE bool fastToUInt32(JSValue* value, uint32_t& arg) {
+    if (JSImmediate::isNumber(value)) {
+        if (JSImmediate::getTruncatedUInt32(value, arg))
+            return true;
+        bool scratch;
+        arg = JSValue::toUInt32SlowCase(JSImmediate::getTruncatedInt32(value), scratch);
+        return true;
+    } else if (Heap::fastIsNumber(static_cast<JSCell*>(value)))
+        arg = static_cast<JSNumberCell*>(value)->fastToUInt32();
+    else
+        return false;
+    return true;
+}
+
 static inline bool jsLess(ExecState* exec, JSValue* v1, JSValue* v2)
 {
     if (JSImmediate::areBothImmediateNumbers(v1, v2))
@@ -103,6 +139,9 @@ static inline bool jsLess(ExecState* exec, JSValue* v1, JSValue* v2)
 
     double n1;
     double n2;
+    if (fastIsNumber(v1, n1) && fastIsNumber(v2, n2))
+        return n1 < n2;
+
     JSValue* p1;
     JSValue* p2;
     bool wasNotString1 = v1->getPrimitiveNumber(exec, n1, p1);
@@ -121,6 +160,9 @@ static inline bool jsLessEq(ExecState* exec, JSValue* v1, JSValue* v2)
 
     double n1;
     double n2;
+    if (fastIsNumber(v1, n1) && fastIsNumber(v2, n2))
+        return n1 <= n2;
+
     JSValue* p1;
     JSValue* p2;
     bool wasNotString1 = v1->getPrimitiveNumber(exec, n1, p1);
@@ -159,12 +201,16 @@ static JSValue* jsAddSlowCase(ExecState* exec, JSValue* v1, JSValue* v2)
 
 static inline JSValue* jsAdd(ExecState* exec, JSValue* v1, JSValue* v2)
 {
+    double left;
+    double right;
+    
+    if (fastIsNumber(v1, left) && fastIsNumber(v2, right))
+        return jsNumber(exec, left + right);
+    
     JSType t1 = v1->type();
     JSType t2 = v2->type();
     const unsigned bothTypes = (t1 << 3) | t2;
-
-    if (bothTypes == ((NumberType << 3) | NumberType))
-        return jsNumber(exec, v1->uncheckedGetNumber() + v2->uncheckedGetNumber());
+    ASSERT(bothTypes != ((NumberType << 3) | NumberType));
     if (bothTypes == ((StringType << 3) | StringType)) {
         UString value = static_cast<JSString*>(v1)->value() + static_cast<JSString*>(v2)->value();
         if (value.isNull())
@@ -505,6 +551,8 @@ Machine::Machine()
     fastFree(storage);
 }
 
+#ifndef NDEBUG
+
 void Machine::dumpCallFrame(const CodeBlock* codeBlock, ScopeChainNode* scopeChain, RegisterFile* registerFile, const Register* r)
 {
     ScopeChain sc(scopeChain);
@@ -576,6 +624,10 @@ void Machine::dumpRegisters(const CodeBlock* codeBlock, RegisterFile* registerFi
     }
 }
 
+#endif
+
+#if !defined(NDEBUG) || HAVE(SAMPLING_TOOL)
+
 bool Machine::isOpcode(Opcode opcode)
 {
 #if HAVE(COMPUTED_GOTO)
@@ -587,13 +639,15 @@ bool Machine::isOpcode(Opcode opcode)
 #endif
 }
 
+#endif
+
 NEVER_INLINE bool Machine::unwindCallFrame(ExecState* exec, JSValue* exceptionValue, const Instruction*& vPC, CodeBlock*& codeBlock, ScopeChainNode*& scopeChain, Register*& r)
 {
     CodeBlock* oldCodeBlock = codeBlock;
     Register* callFrame = r - oldCodeBlock->numLocals - RegisterFile::CallFrameHeaderSize;
 
     if (Debugger* debugger = exec->dynamicGlobalObject()->debugger()) {
-        DebuggerCallFrame debuggerCallFrame(exec->dynamicGlobalObject(), codeBlock, scopeChain, r, exceptionValue);
+        DebuggerCallFrame debuggerCallFrame(exec, exec->dynamicGlobalObject(), codeBlock, scopeChain, r, exceptionValue);
         if (callFrame[RegisterFile::Callee].jsValue(exec))
             debugger->returnEvent(debuggerCallFrame, codeBlock->ownerNode->sourceId(), codeBlock->ownerNode->lastLine());
         else
@@ -671,7 +725,7 @@ NEVER_INLINE Instruction* Machine::throwException(ExecState* exec, JSValue*& exc
     }
 
     if (Debugger* debugger = exec->dynamicGlobalObject()->debugger()) {
-        DebuggerCallFrame debuggerCallFrame(exec->dynamicGlobalObject(), codeBlock, scopeChain, r, exceptionValue);
+        DebuggerCallFrame debuggerCallFrame(exec, exec->dynamicGlobalObject(), codeBlock, scopeChain, r, exceptionValue);
         debugger->exception(debuggerCallFrame, codeBlock->ownerNode->sourceId(), codeBlock->lineNumberForVPC(vPC));
     }
 
@@ -688,7 +742,7 @@ NEVER_INLINE Instruction* Machine::throwException(ExecState* exec, JSValue*& exc
     // Now unwind the scope chain within the exception handler's call frame.
 
     ScopeChain sc(scopeChain);
-    int scopeDelta = depth(sc) - scopeDepth;
+    int scopeDelta = depth(codeBlock, sc) - scopeDepth;
     ASSERT(scopeDelta >= 0);
     while (scopeDelta--)
         sc.pop();
@@ -903,7 +957,7 @@ NEVER_INLINE void Machine::debug(ExecState* exec, const Instruction* vPC, const 
     if (!debugger)
         return;
 
-    DebuggerCallFrame debuggerCallFrame(exec->dynamicGlobalObject(), codeBlock, scopeChain, r, 0);
+    DebuggerCallFrame debuggerCallFrame(exec, exec->dynamicGlobalObject(), codeBlock, scopeChain, r, 0);
 
     switch((DebugHookID)debugHookID) {
     case DidEnterCallFrame: {
@@ -1358,10 +1412,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
            result in register dst.
         */
         int dst = (++vPC)->u.operand;
-        int src = (++vPC)->u.operand;
-        JSValue* result = jsNumber(exec, -r[src].jsValue(exec)->toNumber(exec));
-        VM_CHECK_EXCEPTION();
-        r[dst] = result;
+        JSValue* src = r[(++vPC)->u.operand].jsValue(exec);
+        double v;
+        if (fastIsNumber(src, v))
+            r[dst] = jsNumber(exec, -v);
+        else {
+            JSValue* result = jsNumber(exec, -src->toNumber(exec));
+            VM_CHECK_EXCEPTION();
+            r[dst] = result;
+        }
 
         ++vPC;
         NEXT_OPCODE;
@@ -1395,9 +1454,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
-        JSValue* result = jsNumber(exec, src1->toNumber(exec) * src2->toNumber(exec));
-        VM_CHECK_EXCEPTION();
-        r[dst] = result;
+        double left;
+        double right;
+        if (fastIsNumber(src1, left) && fastIsNumber(src2, right))
+            r[dst] = jsNumber(exec, left * right);
+        else {
+            JSValue* result = jsNumber(exec, src1->toNumber(exec) * src2->toNumber(exec));
+            VM_CHECK_EXCEPTION();
+            r[dst] = result;
+        }
 
         ++vPC;
         NEXT_OPCODE;
@@ -1410,11 +1475,17 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
            quotient in register dst.
         */
         int dst = (++vPC)->u.operand;
-        int dividend = (++vPC)->u.operand;
-        int divisor = (++vPC)->u.operand;
-        JSValue* result = jsNumber(exec, r[dividend].jsValue(exec)->toNumber(exec) / r[divisor].jsValue(exec)->toNumber(exec));
-        VM_CHECK_EXCEPTION();
-        r[dst] = result;
+        JSValue* dividend = r[(++vPC)->u.operand].jsValue(exec);
+        JSValue* divisor = r[(++vPC)->u.operand].jsValue(exec);
+        double left;
+        double right;
+        if (fastIsNumber(dividend, left) && fastIsNumber(divisor, right))
+            r[dst] = jsNumber(exec, left / right);
+        else {
+            JSValue* result = jsNumber(exec, dividend->toNumber(exec) / divisor->toNumber(exec));
+            VM_CHECK_EXCEPTION();
+            r[dst] = result;
+        }
         ++vPC;
         NEXT_OPCODE;
     }
@@ -1455,8 +1526,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
+        double left;
+        double right;
         if (JSImmediate::canDoFastAdditiveOperations(src1) && JSImmediate::canDoFastAdditiveOperations(src2))
             r[dst] = JSImmediate::subImmediateNumbers(src1, src2);
+        else if (fastIsNumber(src1, left) && fastIsNumber(src2, right))
+            r[dst] = jsNumber(exec, left - right);
         else {
             JSValue* result = jsNumber(exec, src1->toNumber(exec) - src2->toNumber(exec));
             VM_CHECK_EXCEPTION();
@@ -1475,8 +1550,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* val = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* shift = r[(++vPC)->u.operand].jsValue(exec);
+        int32_t left;
+        uint32_t right;
         if (JSImmediate::areBothImmediateNumbers(val, shift))
             r[dst] = jsNumber(exec, JSImmediate::getTruncatedInt32(val) << (JSImmediate::toTruncatedUInt32(shift) & 0x1f));
+        else if (fastToInt32(val, left) && fastToUInt32(shift, right))
+            r[dst] = jsNumber(exec, left << (right & 0x1f));
         else {
             JSValue* result = jsNumber(exec, (val->toInt32(exec)) << (shift->toUInt32(exec) & 0x1f));
             VM_CHECK_EXCEPTION();
@@ -1496,8 +1575,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* val = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* shift = r[(++vPC)->u.operand].jsValue(exec);
+        int32_t left;
+        uint32_t right;
         if (JSImmediate::areBothImmediateNumbers(val, shift))
             r[dst] = JSImmediate::rightShiftImmediateNumbers(val, shift);
+        else if (fastToInt32(val, left) && fastToUInt32(shift, right))
+            r[dst] = jsNumber(exec, left >> (right & 0x1f));
         else {
             JSValue* result = jsNumber(exec, (val->toInt32(exec)) >> (shift->toUInt32(exec) & 0x1f));
             VM_CHECK_EXCEPTION();
@@ -1538,8 +1621,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
+        int32_t left;
+        int32_t right;
         if (JSImmediate::areBothImmediateNumbers(src1, src2))
             r[dst] = JSImmediate::andImmediateNumbers(src1, src2);
+        else if (fastToInt32(src1, left) && fastToInt32(src2, right))
+            r[dst] = jsNumber(exec, left & right);
         else {
             JSValue* result = jsNumber(exec, src1->toInt32(exec) & src2->toInt32(exec));
             VM_CHECK_EXCEPTION();
@@ -1559,8 +1646,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
+        int32_t left;
+        int32_t right;
         if (JSImmediate::areBothImmediateNumbers(src1, src2))
             r[dst] = JSImmediate::xorImmediateNumbers(src1, src2);
+        else if (fastToInt32(src1, left) && fastToInt32(src2, right))
+            r[dst] = jsNumber(exec, left ^ right);
         else {
             JSValue* result = jsNumber(exec, src1->toInt32(exec) ^ src2->toInt32(exec));
             VM_CHECK_EXCEPTION();
@@ -1580,8 +1671,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         int dst = (++vPC)->u.operand;
         JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
+        int32_t left;
+        int32_t right;
         if (JSImmediate::areBothImmediateNumbers(src1, src2))
             r[dst] = JSImmediate::orImmediateNumbers(src1, src2);
+        else if (fastToInt32(src1, left) && fastToInt32(src2, right))
+            r[dst] = jsNumber(exec, left | right);
         else {
             JSValue* result = jsNumber(exec, src1->toInt32(exec) | src2->toInt32(exec));
             VM_CHECK_EXCEPTION();
@@ -1598,11 +1693,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
            and puts the result in register dst.
         */
         int dst = (++vPC)->u.operand;
-        int src = (++vPC)->u.operand;
-        JSValue* result = jsNumber(exec, ~r[src].jsValue(exec)->toInt32(exec));
-        VM_CHECK_EXCEPTION();
-        r[dst] = result;
-
+        JSValue* src = r[(++vPC)->u.operand].jsValue(exec);
+        int32_t value;
+        if (fastToInt32(src, value))
+            r[dst] = jsNumber(exec, ~value);
+        else {
+            JSValue* result = jsNumber(exec, ~src->toInt32(exec));
+            VM_CHECK_EXCEPTION();
+            r[dst] = result;
+        }
         ++vPC;
         NEXT_OPCODE;
     }
@@ -2114,29 +2213,6 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
             NEXT_OPCODE;
         }
         
-        ++vPC;
-        NEXT_OPCODE;
-    }
-    BEGIN_OPCODE(op_jless) {
-        /* jless src1(r) src2(r) target(offset)
-
-           Checks whether register src1 is less than register src2, as
-           with the ECMAScript '<' operator, and then jumps to offset
-           target from the current instruction, if and only if the 
-           result of the comparison is true.
-        */
-        JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
-        JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
-        int target = (++vPC)->u.operand;
-
-        bool result = jsLess(exec, src1, src2);
-        VM_CHECK_EXCEPTION();
-        
-        if (result) {
-            vPC += target;
-            NEXT_OPCODE;
-        }
-
         ++vPC;
         NEXT_OPCODE;
     }

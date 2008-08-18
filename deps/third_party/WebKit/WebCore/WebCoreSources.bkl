@@ -333,7 +333,9 @@ This file contains the list of files needed to build WebCore.
         DerivedSources/WebCore/JSTextEvent.cpp
         DerivedSources/WebCore/JSTreeWalker.cpp
         DerivedSources/WebCore/JSUIEvent.cpp
+        DerivedSources/WebCore/JSWebKitAnimationEvent.cpp
         DerivedSources/WebCore/JSWebKitCSSTransformValue.cpp
+        DerivedSources/WebCore/JSWebKitTransitionEvent.cpp
         DerivedSources/WebCore/JSWheelEvent.cpp
         DerivedSources/WebCore/JSXMLHttpRequest.cpp
         DerivedSources/WebCore/JSXMLHttpRequestException.cpp
@@ -404,6 +406,7 @@ This file contains the list of files needed to build WebCore.
         dom/QualifiedName.cpp
         dom/Range.cpp
         dom/RegisteredEventListener.cpp
+        dom/ScriptElement.cpp
         dom/SelectorNodeList.cpp
         dom/StaticNodeList.cpp
         dom/StyleElement.cpp
@@ -415,6 +418,8 @@ This file contains the list of files needed to build WebCore.
         dom/TreeWalker.cpp
         dom/UIEvent.cpp
         dom/UIEventWithKeyState.cpp
+        dom/WebKitAnimationEvent.cpp
+        dom/WebKitTransitionEvent.cpp
         dom/WheelEvent.cpp
         dom/XMLTokenizer.cpp
     </set>
@@ -705,6 +710,7 @@ This file contains the list of files needed to build WebCore.
         platform/graphics/IntRect.cpp
         platform/graphics/Path.cpp
         platform/graphics/PathTraversalState.cpp
+        platform/graphics/Pattern.cpp
         platform/graphics/Pen.cpp
         platform/network/AuthenticationChallengeBase.cpp
         platform/network/Credential.cpp
@@ -812,6 +818,7 @@ This file contains the list of files needed to build WebCore.
         rendering/RenderListBox.cpp
         rendering/RenderListItem.cpp
         rendering/RenderListMarker.cpp
+        rendering/RenderMarquee.cpp
         rendering/RenderMenuList.cpp
         rendering/RenderObject.cpp
         rendering/RenderPart.cpp

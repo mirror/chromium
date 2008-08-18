@@ -231,6 +231,7 @@ namespace KJS {
         RegisterID* emitLoad(RegisterID* dst, double);
         RegisterID* emitLoad(RegisterID* dst, JSValue*);
         RegisterID* emitUnexpectedLoad(RegisterID* dst, bool);
+        RegisterID* emitUnexpectedLoad(RegisterID* dst, double);
 
         RegisterID* emitNullaryOp(OpcodeID, RegisterID* dst);
         RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src);
@@ -325,7 +326,9 @@ namespace KJS {
     private:
         void emitOpcode(OpcodeID);
         void retrieveLastBinaryOp(int& dstIndex, int& src1Index, int& src2Index);
+        void retrieveLastUnaryOp(int& dstIndex, int& srcIndex);
         void rewindBinaryOp();
+        void rewindUnaryOp();
 
         PassRefPtr<LabelID> emitComplexJumpScopes(LabelID* target, ControlFlowContext* topScope, ControlFlowContext* bottomScope);
         struct JSValueHashTraits : HashTraits<JSValue*> {

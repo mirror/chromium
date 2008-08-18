@@ -64,22 +64,13 @@ GraphicsContext* ImageBuffer::context() const
     return m_context.get();
 }
 
-QPixmap* ImageBuffer::pixmap() const
-{
-    if (!m_painter)
-        return &m_pixmap;
-    if (m_painter->isActive())
-        m_painter->end();
-    return &m_pixmap;
-}
-
 Image* ImageBuffer::image() const
 {
     if (!m_image) {
         // It's assumed that if image() is called, the actual rendering to the
         // GraphicsContext must be done.
         ASSERT(context());
-        m_image.set(new StillImage(m_pixmap));
+        m_image = StillImage::create(m_pixmap);
     }
 
     return m_image.get();

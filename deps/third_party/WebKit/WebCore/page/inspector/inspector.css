@@ -89,6 +89,8 @@ body.detached.platform-mac-leopard #toolbar {
 body.attached #toolbar {
     height: 34px;
     border-top: 1px solid rgb(100, 100, 100);
+    cursor: row-resize;
+    padding-left: 0;
 }
 
 body.attached.inactive #toolbar {
@@ -168,6 +170,28 @@ body.attached #search-toolbar-label {
 
 .toolbar-item.profiles .toolbar-icon {
     content: url(Images/profilesIcon.png);
+}
+
+#close-button {
+    width: 14px;
+    height: 14px;
+    background-image: url(Images/closeButtons.png);
+    background-position: 0 0;
+    background-color: transparent;
+    border: 0 none transparent;
+    margin: 5px 0;
+}
+
+#close-button:hover {
+    background-position: 14px 0;
+}
+
+#close-button:active {
+    background-position: 28px 0;
+}
+
+body.detached .toolbar-item.close {
+    display: none;
 }
 
 #searchResults {
@@ -553,6 +577,34 @@ body.console-visible #console {
 
 .console-message-url:hover::after {
     opacity: 1;
+}
+
+.console-group-messages .section {
+    margin: 0;
+}
+
+.console-group-messages .section .header {
+    padding: 0 8px 0 0;
+    background-image: none;
+    border: none;
+    min-height: 16px;
+}
+
+.console-group-messages .section .header::before {
+    position: absolute;
+    top: 1px;
+    left: 12px;
+    width: 8px;
+    height: 8px;
+    content: url(Images/treeRightTriangleBlack.png);
+}
+
+.console-group-messages .section.expanded .header::before {
+    content: url(Images/treeDownTriangleBlack.png);
+}
+
+.console-group-messages .section .header .title {
+    color: black;
 }
 
 .auto-complete-text {

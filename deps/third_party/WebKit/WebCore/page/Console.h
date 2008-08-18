@@ -59,7 +59,9 @@ namespace WebCore {
         LogMessageLevel,
         WarningMessageLevel,
         ErrorMessageLevel,
-        GroupTitleMessageLevel
+        ObjectMessageLevel,
+        StartGroupMessageLevel,
+        EndGroupMessageLevel
     };
 
     class Console : public RefCounted<Console>, public KJS::ProfilerClient {
@@ -75,6 +77,7 @@ namespace WebCore {
         void info(KJS::ExecState*, const KJS::ArgList& arguments);
         void log(KJS::ExecState*, const KJS::ArgList& arguments);
         void warn(KJS::ExecState*, const KJS::ArgList& arguments);
+        void dir(KJS::ExecState*, const KJS::ArgList& arguments);
         void assertCondition(bool condition, KJS::ExecState*, const KJS::ArgList& arguments);
         void profile(KJS::ExecState*, const KJS::ArgList& arguments);
         void profileEnd(KJS::ExecState*, const KJS::ArgList& arguments);

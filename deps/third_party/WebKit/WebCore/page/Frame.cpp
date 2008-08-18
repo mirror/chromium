@@ -128,6 +128,8 @@ Frame::Frame(Page* page, HTMLFrameOwnerElement* ownerElement, FrameLoaderClient*
         page->setMainFrame(this);
     else {
         page->incrementFrameCount();
+        // Make sure we will not end up with two frames referencing the same owner element.
+        ASSERT((!(ownerElement->m_contentFrame)) || (ownerElement->m_contentFrame->ownerElement() != ownerElement));        
         ownerElement->m_contentFrame = this;
     }
 
@@ -691,7 +693,7 @@ void Frame::setZoomFactor(float percent, bool isTextOnly)
     for (Frame* child = tree()->firstChild(); child; child = child->tree()->nextSibling())
         child->setZoomFactor(d->m_zoomFactor, isTextOnly);
 
-    if (d->m_doc && d->m_doc->renderer() && d->m_doc->renderer()->needsLayout())
+    if (d->m_doc && d->m_doc->renderer() && d->m_doc->renderer()->needsLayout() && view()->didFirstLayout())
         view()->layout();
 }
 
@@ -1208,7 +1210,7 @@ void Frame::revealSelection(const RenderLayer::ScrollAlignment& alignment) const
         // the selection rect could intersect more than just that. 
         // See <rdar://problem/4799899>.
         if (RenderLayer *layer = start.node()->renderer()->enclosingLayer())
-            layer->scrollRectToVisible(rect, alignment, alignment);
+            layer->scrollRectToVisible(rect, false, alignment, alignment);
     }
 }
 
@@ -1222,7 +1224,7 @@ void Frame::revealCaret(const RenderLayer::ScrollAlignment& alignment) const
         IntRect extentRect = VisiblePosition(extent).caretRect();
         RenderLayer* layer = extent.node()->renderer()->enclosingLayer();
         if (layer)
-            layer->scrollRectToVisible(extentRect, alignment, alignment);
+            layer->scrollRectToVisible(extentRect, false, alignment, alignment);
     }
 }
 
@@ -1538,6 +1540,12 @@ bool Frame::findString(const String& target, bool forward, bool caseFlag, bool w
 
         resultRange = findPlainText(searchRange.get(), target, forward, caseFlag);
     }
+    
+    if (!editor()->insideVisibleArea(resultRange.get())) {
+        resultRange = editor()->nextVisibleRange(resultRange.get(), target, forward, caseFlag);
+        if (!resultRange)
+            return false;
+    }
 
     // If we didn't find anything and we're wrapping, search again in the entire document (this will
     // redundantly re-search the area already searched in some cases).
@@ -1583,9 +1591,11 @@ unsigned Frame::markAllMatchesForText(const String& target, bool caseFlag, unsig
         if (newStart == startVisiblePosition(searchRange.get(), DOWNSTREAM))
             break;
 
-        ++matchCount;
-        
-        document()->addMarker(resultRange.get(), DocumentMarker::TextMatch);        
+        // Only treat the result as a match if it is visible
+        if (editor()->insideVisibleArea(resultRange.get())) {
+            ++matchCount;
+            document()->addMarker(resultRange.get(), DocumentMarker::TextMatch);
+        }
         
         // Stop looking if we hit the specified limit. A limit of 0 means no limit.
         if (limit > 0 && matchCount >= limit)

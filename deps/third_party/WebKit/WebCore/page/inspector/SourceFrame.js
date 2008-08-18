@@ -135,6 +135,9 @@ WebInspector.SourceFrame.prototype = {
 
     addMessage: function(msg)
     {
+        // Don't add the message if there is no message or valid line or if the msg isn't an error or warning.
+        if (!msg.message || msg.line <= 0 || !msg.isErrorOrWarning())
+            return;
         this.messages.push(msg);
         this._addMessageToSource(msg);
     },
@@ -164,25 +167,31 @@ WebInspector.SourceFrame.prototype = {
         }
     },
 
+    _highlightLineEnds: function(event)
+    {
+        event.target.parentNode.removeStyleClass("webkit-highlighted-line");
+    },
+
     highlightLine: function(lineNumber)
     {
         var sourceRow = this.sourceRow(lineNumber);
         if (!sourceRow)
             return;
-        sourceRow.addStyleClass("webkit-highlighted-line");
-        setTimeout(function() {
-            var line = sourceRow.getElementsByClassName('webkit-line-content')[0];
-            line.addStyleClass("webkit-fade-out-effect");
-            // FIXME Replace this timeout when ontransitionend is implemented
-            sourceRow.removeStyleClass("webkit-highlighted-line");
-            setTimeout(function () { line.removeStyleClass("webkit-fade-out-effect"); }, 1000);
-        }, 300);
+        var line = sourceRow.getElementsByClassName('webkit-line-content')[0];
+        // Trick to reset the animation if the user clicks on the same link
+        // Using a timeout to avoid coalesced style updates
+        line.style.setProperty("-webkit-animation-name", "none");
+        setTimeout(function () {
+            line.style.removeProperty("-webkit-animation-name");
+            sourceRow.addStyleClass("webkit-highlighted-line");
+        }, 0);
     },
 
     _loaded: function()
     {
         WebInspector.addMainEventListeners(this.element.contentDocument);
         this.element.contentDocument.addEventListener("mousedown", this._documentMouseDown.bind(this), true);
+        this.element.contentDocument.addEventListener("webkitAnimationEnd", this._highlightLineEnds.bind(this), false);
 
         var headElement = this.element.contentDocument.getElementsByTagName("head")[0];
         if (!headElement) {
@@ -204,8 +213,8 @@ WebInspector.SourceFrame.prototype = {
         styleText += ".webkit-execution-line .webkit-line-content { background-color: rgb(171, 191, 254); outline: 1px solid rgb(64, 115, 244); }\n";
         styleText += ".webkit-height-sized-to-fit { overflow-y: hidden }\n";
         styleText += ".webkit-line-content { background-color: white; }\n";
-        styleText += ".webkit-highlighted-line .webkit-line-content { background-color: rgb(255, 255, 120); }\n";
-        styleText += ".webkit-fade-out-effect { -webkit-transition-property: background-color; -webkit-transition-duration: 1s; }"
+        styleText += "@-webkit-keyframes fadeout {from {background-color: rgb(255, 255, 120);} to { background-color: white;}}\n";
+        styleText += ".webkit-highlighted-line .webkit-line-content { background-color: rgb(255, 255, 120); -webkit-animation: 'fadeout' 2s 500ms}\n";
         styleText += ".webkit-javascript-comment { color: rgb(0, 116, 0); }\n";
         styleText += ".webkit-javascript-keyword { color: rgb(170, 13, 145); }\n";
         styleText += ".webkit-javascript-number { color: rgb(28, 0, 207); }\n";
@@ -333,7 +342,7 @@ WebInspector.SourceFrame.prototype = {
             return;
 
         var errorDiv = cell.lastChild;
-        if (!errorDiv || errorDiv.nodeName.toLowerCase() !== "div" || !errorDiv.hasStyleClass("webkit-html-message-bubble")) {
+        if (!errorDiv || errorDiv.nodeType !== Node.ELEMENT_NODE || !errorDiv.hasStyleClass("webkit-html-message-bubble")) {
             errorDiv = this.element.contentDocument.createElement("div");
             errorDiv.className = "webkit-html-message-bubble";
             cell.appendChild(errorDiv);
@@ -469,12 +478,21 @@ WebInspector.SourceFrame.prototype = {
         delete this._needsBreakpointImages;
     },
 
-    _syntaxHighlightJavascriptLine: function(line, prevLine)
+    syntaxHighlightJavascript: function()
     {
-        var previousMatchLength = 0;
-        var code = line.textContent;
-        while (line.hasChildNodes())
-            line.removeChild(line.firstChild);
+        var table = this.element.contentDocument.getElementsByTagName("table")[0];
+        if (!table)
+            return;
+
+        function deleteContinueFlags(cell)
+        {
+            if (!cell)
+                return;
+            delete cell._commentContinues;
+            delete cell._singleQuoteStringContinues;
+            delete cell._doubleQuoteStringContinues;
+            delete cell._regexpContinues;
+        }
 
         function createSpan(content, className)
         {
@@ -497,7 +515,7 @@ WebInspector.SourceFrame.prototype = {
 
         var findNumber = generateFinder(/^(-?(\d+\.?\d*([eE][+-]\d+)?|0[xX]\h+|Infinity)|NaN)(?:\W|$)/, 1, "webkit-javascript-number");
         var findKeyword = generateFinder(/^(null|true|false|break|case|catch|const|default|finally|for|instanceof|new|var|continue|function|return|void|delete|if|this|do|while|else|in|switch|throw|try|typeof|with|debugger|class|enum|export|extends|import|super|get|set)(?:\W|$)/, 1, "webkit-javascript-keyword");
-        var findSingleLineString = generateFinder(/^"(?:[^"\\]|\\.)*"|^'([^'\\]|\\.)*'/, 0, "webkit-javascript-string");
+        var findSingleLineString = generateFinder(/^"(?:[^"\\]|\\.)*"|^'([^'\\]|\\.)*'/, 0, "webkit-javascript-string"); // " this quote keeps Xcode happy
         var findMultilineCommentStart = generateFinder(/^\/\*.*$/, 0, "webkit-javascript-comment");
         var findMultilineCommentEnd = generateFinder(/^.*?\*\//, 0, "webkit-javascript-comment");
         var findMultilineSingleQuoteStringStart = generateFinder(/^'(?:[^'\\]|\\.)*\\$/, 0, "webkit-javascript-string");
@@ -527,95 +545,96 @@ WebInspector.SourceFrame.prototype = {
             return node;
         }
 
-        var token;
-        var tmp = 0;
-        var i = 0;
+        function syntaxHighlightJavascriptLine(line, prevLine)
+        {
+            var messageBubble = line.lastChild;
+            if (messageBubble && messageBubble.nodeType === Node.ELEMENT_NODE && messageBubble.hasStyleClass("webkit-html-message-bubble"))
+                line.removeChild(messageBubble);
+            else
+                messageBubble = null;
 
-        if (prevLine) {
-            if (prevLine._commentContinues) {
-                if (!(token = findMultilineCommentEnd(code))) {
-                    token = createSpan(code, "webkit-javascript-comment");
-                    line._commentContinues = true;
-                }
-            } else if (prevLine._singleQuoteStringContinues) {
-                if (!(token = findMultilineSingleQuoteStringEnd(code))) {
-                    token = createSpan(code, "webkit-javascript-string");
-                    line._singleQuoteStringContinues = true;
-                }
-            } else if (prevLine._doubleQuoteStringContinues) {
-                if (!(token = findMultilineDoubleQuoteStringEnd(code))) {
-                    token = createSpan(code, "webkit-javascript-string");
-                    line._doubleQuoteStringContinues = true;
-                }
-            } else if (prevLine._regexpContinues) {
-                if (!(token = findMultilineRegExpEnd(code))) {
-                    token = createSpan(code, "webkit-javascript-regexp");
-                    line._regexpContinues = true;
-                }
-            }
-            if (token) {
-                i += previousMatchLength ? previousMatchLength : code.length;
-                tmp = i;
-                line.appendChild(token);
-            }
-        }
+            var code = line.textContent;
 
-        for ( ; i < code.length; ++i) {
-            var codeFragment = code.substr(i);
-            var prevChar = code[i - 1];
-            token = findSingleLineComment(codeFragment);
-            if (!token) {
-                if ((token = findMultilineCommentStart(codeFragment)))
-                    line._commentContinues = true;
-                else if (!prevChar || /^\W/.test(prevChar)) {
-                    token = findNumber(codeFragment, code[i - 1]) ||
-                            findKeyword(codeFragment, code[i - 1]) ||
-                            findSingleLineString(codeFragment) ||
-                            findSingleLineRegExp(codeFragment);
-                    if (!token) {
-                        if (token = findMultilineSingleQuoteStringStart(codeFragment))
-                            line._singleQuoteStringContinues = true;
-                        else if (token = findMultilineDoubleQuoteStringStart(codeFragment))
-                            line._doubleQuoteStringContinues = true;
-                        else if (token = findMultilineRegExpStart(codeFragment))
-                            line._regexpContinues = true;
+            while (line.firstChild)
+                line.removeChild(line.firstChild);
+
+            var token;
+            var tmp = 0;
+            var i = 0;
+
+            if (prevLine) {
+                if (prevLine._commentContinues) {
+                    if (!(token = findMultilineCommentEnd(code))) {
+                        token = createSpan(code, "webkit-javascript-comment");
+                        line._commentContinues = true;
+                    }
+                } else if (prevLine._singleQuoteStringContinues) {
+                    if (!(token = findMultilineSingleQuoteStringEnd(code))) {
+                        token = createSpan(code, "webkit-javascript-string");
+                        line._singleQuoteStringContinues = true;
+                    }
+                } else if (prevLine._doubleQuoteStringContinues) {
+                    if (!(token = findMultilineDoubleQuoteStringEnd(code))) {
+                        token = createSpan(code, "webkit-javascript-string");
+                        line._doubleQuoteStringContinues = true;
+                    }
+                } else if (prevLine._regexpContinues) {
+                    if (!(token = findMultilineRegExpEnd(code))) {
+                        token = createSpan(code, "webkit-javascript-regexp");
+                        line._regexpContinues = true;
                     }
                 }
+                if (token) {
+                    i += previousMatchLength ? previousMatchLength : code.length;
+                    tmp = i;
+                    line.appendChild(token);
+                }
             }
-            if (token) {
-                if (tmp !== i)
-                    line.appendChild(document.createTextNode(code.substring(tmp, i)));
-                line.appendChild(token);
-                i += previousMatchLength - 1;
-                tmp = i + 1;
+
+            for ( ; i < code.length; ++i) {
+                var codeFragment = code.substr(i);
+                var prevChar = code[i - 1];
+                token = findSingleLineComment(codeFragment);
+                if (!token) {
+                    if ((token = findMultilineCommentStart(codeFragment)))
+                        line._commentContinues = true;
+                    else if (!prevChar || /^\W/.test(prevChar)) {
+                        token = findNumber(codeFragment, code[i - 1]) ||
+                                findKeyword(codeFragment, code[i - 1]) ||
+                                findSingleLineString(codeFragment) ||
+                                findSingleLineRegExp(codeFragment);
+                        if (!token) {
+                            if (token = findMultilineSingleQuoteStringStart(codeFragment))
+                                line._singleQuoteStringContinues = true;
+                            else if (token = findMultilineDoubleQuoteStringStart(codeFragment))
+                                line._doubleQuoteStringContinues = true;
+                            else if (token = findMultilineRegExpStart(codeFragment))
+                                line._regexpContinues = true;
+                        }
+                    }
+                }
+
+                if (token) {
+                    if (tmp !== i)
+                        line.appendChild(document.createTextNode(code.substring(tmp, i)));
+                    line.appendChild(token);
+                    i += previousMatchLength - 1;
+                    tmp = i + 1;
+                }
             }
+
+            if (tmp < code.length)
+                line.appendChild(document.createTextNode(code.substring(tmp, i)));
+
+            if (messageBubble)
+                line.appendChild(messageBubble);
         }
-
-        if (tmp < code.length)
-            line.appendChild(document.createTextNode(code.substring(tmp, i)));
-    },
-
-    syntaxHighlightJavascript: function()
-    {
-        var table = this.element.contentDocument.getElementsByTagName("table")[0];
-        if (!table)
-            return;
 
         var i = 0;
         var rows = table.rows;
         var rowsLength = rows.length;
         var previousCell = null;
-        var processChunkInterval;
-
-        function deleteContinueFlags(cell)
-        {
-            if (!cell)
-                return;
-            delete cell._commentContinues;
-            delete cell._singleQuoteStringContinues;
-            delete cell._doubleQuoteStringContinues;
-            delete cell._regexpContinues;
-        }
+        var previousMatchLength = 0;
 
         // Split up the work into chunks so we don't block the
         // UI thread while processing.
@@ -629,7 +648,7 @@ WebInspector.SourceFrame.prototype = {
                 var cell = row.cells[1];
                 if (!cell)
                     continue;
-                this._syntaxHighlightJavascriptLine(cell, previousCell);
+                syntaxHighlightJavascriptLine(cell, previousCell);
                 if (i < (end - 1))
                     deleteContinueFlags(previousCell);
                 previousCell = cell;
@@ -641,7 +660,8 @@ WebInspector.SourceFrame.prototype = {
             }
         }
 
-        processChunk.call(this);
-        processChunkInterval = setInterval(processChunk.bind(this), 25);
+        processChunk();
+
+        var processChunkInterval = setInterval(processChunk, 25);
     }
 }

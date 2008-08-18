@@ -230,6 +230,21 @@ void Console::log(ExecState* exec, const ArgList& args)
     printToStandardOut(LogMessageLevel, exec, args, url);
 }
 
+void Console::dir(ExecState* exec, const ArgList& args)
+{
+    if (args.isEmpty())
+        return;
+
+    if (!m_frame)
+        return;
+
+    Page* page = m_frame->page();
+    if (!page)
+        return;
+
+    page->inspectorController()->addMessageToConsole(JSMessageSource, ObjectMessageLevel, exec, args, 0, String());
+}
+
 void Console::assertCondition(bool condition, ExecState* exec, const ArgList& args)
 {
     if (condition)
@@ -312,12 +327,7 @@ void Console::group(ExecState* exec, const ArgList& arguments)
     if (!page)
         return;
 
-    page->inspectorController()->startGroup();
-
-    if (arguments.isEmpty())
-        page->inspectorController()->addMessageToConsole(JSMessageSource, GroupTitleMessageLevel, String(), 0, String());
-    else
-        page->inspectorController()->addMessageToConsole(JSMessageSource, GroupTitleMessageLevel, exec, arguments, 0, String());
+    page->inspectorController()->startGroup(JSMessageSource, exec, arguments, 0, String());
 }
 
 void Console::groupEnd()
@@ -329,7 +339,7 @@ void Console::groupEnd()
     if (!page)
         return;
 
-    page->inspectorController()->endGroup();
+    page->inspectorController()->endGroup(JSMessageSource, 0, String());
 }
 
 void Console::finishedProfiling(PassRefPtr<Profile> prpProfile)

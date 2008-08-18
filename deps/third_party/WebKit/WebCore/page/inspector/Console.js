@@ -148,17 +148,32 @@ WebInspector.Console.prototype = {
 
         this.messages.push(msg);
 
-        while (msg.groupLevel > this.groupLevel)
-            this.startGroup();
-        while (msg.groupLevel < this.groupLevel)
-            this.endGroup();
+        if (msg.level === WebInspector.ConsoleMessage.MessageLevel.EndGroup) {
+            if (this.groupLevel < 1)
+                return;
 
-        this.currentGroup.addMessage(msg);
+            this.groupLevel--;
+
+            this.currentGroup = this.currentGroup.parentGroup;
+        } else {
+            if (msg.level === WebInspector.ConsoleMessage.MessageLevel.StartGroup) {
+                this.groupLevel++;
+
+                var group = new WebInspector.ConsoleGroup(this.currentGroup, this.groupLevel);
+                this.currentGroup.messagesElement.appendChild(group.element);
+                this.currentGroup = group;
+            }
+
+            this.currentGroup.addMessage(msg);
+        }
+
         this.promptElement.scrollIntoView(false);
     },
 
-    clearMessages: function()
+    clearMessages: function(clearInspectorController)
     {
+        if (clearInspectorController)
+            InspectorController.clearMessages();
         WebInspector.panels.resources.clearMessages();
 
         this.messages = [];
@@ -186,13 +201,20 @@ WebInspector.Console.prototype = {
         if (!expressionString && !prefix)
             return;
 
-        var result = InspectorController.inspectedWindow();
+        var result;
         if (expressionString) {
             try {
                 result = this._evalInInspectedWindow(expressionString);
             } catch(e) {
                 // Do nothing, the prefix will be considered a window property.
             }
+        } else {
+            // There is no expressionString, so the completion should happen against global properties.
+            // Or if the debugger is paused, against properties in scope of the selected call frame.
+            if (WebInspector.panels.scripts.paused)
+                result = WebInspector.panels.scripts.variablesInScopeForSelectedCallFrame();
+            else
+                result = InspectorController.inspectedWindow();
         }
 
         if (bracketNotation) {
@@ -220,23 +242,6 @@ WebInspector.Console.prototype = {
         return results;
     },
 
-    startGroup: function() {
-        this.groupLevel++;
-        
-        var group = new WebInspector.ConsoleGroup(this.currentGroup, this.groupLevel);
-        this.currentGroup.messagesElement.appendChild(group.element);
-        this.currentGroup = group;
-    },
-
-    endGroup: function() {
-        if (this.groupLevel < 1)
-            return;
-
-        this.groupLevel--;
-
-        this.currentGroup = this.currentGroup.parentGroup;
-    },
-
     _toggleButtonClicked: function()
     {
         this.visible = !this.visible;
@@ -244,7 +249,7 @@ WebInspector.Console.prototype = {
 
     _clearButtonClicked: function()
     {
-        this.clearMessages();
+        this.clearMessages(true);
     },
 
     _messagesSelectStart: function(event)
@@ -326,7 +331,34 @@ WebInspector.Console.prototype = {
     {
         if (WebInspector.panels.scripts.paused)
             return WebInspector.panels.scripts.evaluateInSelectedCallFrame(expression);
-        return InspectorController.inspectedWindow().eval(expression);
+
+        var inspectedWindow = InspectorController.inspectedWindow();
+        if (!inspectedWindow._inspectorCommandLineAPI) {
+            inspectedWindow.eval("window._inspectorCommandLineAPI = { \
+                $: function() { return document.getElementById.apply(document, arguments) }, \
+                $$: function() { return document.querySelectorAll.apply(document, arguments) }, \
+                $x: function(xpath, context) { \
+                    var nodes = []; \
+                    try { \
+                        var doc = context || document; \
+                        var results = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null); \
+                        var node; \
+                        while (node = results.iterateNext()) nodes.push(node); \
+                    } catch (e) {} \
+                    return nodes; \
+                }, \
+                dir: function() { return console.dir.apply(console, arguments) }, \
+                keys: function(o) { var a = []; for (k in o) a.push(k); return a; }, \
+                values: function(o) { var a = []; for (k in o) a.push(o[k]); return a; }, \
+                profile: function() { return console.profile.apply(console, arguments) }, \
+                profileEnd: function() { return console.profileEnd.apply(console, arguments) } \
+            };");
+
+            inspectedWindow._inspectorCommandLineAPI.clear = InspectorController.wrapCallback(this.clearMessages.bind(this));
+        }
+
+        expression = "with (window._inspectorCommandLineAPI) { with (window) { " + expression + " } }";
+        return inspectedWindow.eval(expression);
     },
 
     _enterKeyPressed: function(event)
@@ -406,8 +438,11 @@ WebInspector.Console.prototype = {
     {
         if (plainText)
             elem.appendChild(document.createTextNode("\"" + str + "\""));
-        else
-            elem.insertAdjacentHTML("beforeEnd", "\"" + WebInspector.linkifyString(str) + "\"");
+        else {
+            elem.appendChild(document.createTextNode("\""));
+            elem.appendChild(WebInspector.linkifyStringAsFragment(str));
+            elem.appendChild(document.createTextNode("\""));
+        }
     },
 
     _formatregexp: function(re, elem, plainText)
@@ -481,17 +516,32 @@ WebInspector.ConsoleMessage = function(source, level, line, url, groupLevel)
     this.url = url;
     this.groupLevel = groupLevel;
 
-    // This _format call passes in true for the plainText argument. The result's textContent is
-    // used for inline message bubbles in SourceFrames, or other plain-text representations.
-    this.message = this._format(Array.prototype.slice.call(arguments, 5), true).textContent;
+    if (this.level === WebInspector.ConsoleMessage.MessageLevel.Object) {
+        var propertiesSection = new WebInspector.ObjectPropertiesSection(arguments[5], null, null, null, true);
+        propertiesSection.element.addStyleClass("console-message");
+        this.propertiesSection = propertiesSection;
+    }
+
+    if (url && line > 0 && this.isErrorOrWarning()) {
+        // This _format call passes in true for the plainText argument. The result's textContent is
+        // used for inline message bubbles in SourceFrames, or other plain-text representations.
+        // Right now we only need to generate this string if the URL and line are valid and the level
+        // is error or warning, since SourceFrame only shows these messages.
+        this.message = this._format(Array.prototype.slice.call(arguments, 5), true).textContent;
+    }
 
     // The formatedMessage property is used for the rich and interactive console.
     this.formattedMessage = this._format(Array.prototype.slice.call(arguments, 5));
 }
 
 WebInspector.ConsoleMessage.prototype = {
+    isErrorOrWarning: function()
+    {
+        return (this.level === WebInspector.ConsoleMessage.MessageLevel.Warning || this.level === WebInspector.ConsoleMessage.MessageLevel.Error);
+    },
+
     _format: function(parameters, plainText)
-    {    
+    {
         var formattedResult = document.createElement("span");
 
         if (!parameters.length)
@@ -515,7 +565,7 @@ WebInspector.ConsoleMessage.prototype = {
             function append(a, b)
             {
                 if (!(b instanceof Node))
-                    a.insertAdjacentHTML("beforeEnd", WebInspector.linkifyString(b.toString()));
+                    a.appendChild(WebInspector.linkifyStringAsFragment(b.toString()));
                 else
                     a.appendChild(b);
                 return a;
@@ -530,7 +580,7 @@ WebInspector.ConsoleMessage.prototype = {
 
         for (var i = 0; i < parameters.length; ++i) {
             if (typeof parameters[i] === "string")
-                formattedResult.insertAdjacentHTML("beforeEnd", WebInspector.linkifyString(parameters[i]));
+                formattedResult.appendChild(WebInspector.linkifyStringAsFragment(parameters[i]));
             else
                 formattedResult.appendChild(formatForConsole(parameters[i]));
             if (i < parameters.length - 1)
@@ -542,6 +592,9 @@ WebInspector.ConsoleMessage.prototype = {
 
     toMessageElement: function()
     {
+        if (this.level === WebInspector.ConsoleMessage.MessageLevel.Object)
+            return this.propertiesSection.element;
+
         var element = document.createElement("div");
         element.message = this;
         element.className = "console-message";
@@ -577,7 +630,7 @@ WebInspector.ConsoleMessage.prototype = {
             case WebInspector.ConsoleMessage.MessageLevel.Error:
                 element.addStyleClass("console-error-level");
                 break;
-            case WebInspector.ConsoleMessage.MessageLevel.GroupTitle:
+            case WebInspector.ConsoleMessage.MessageLevel.StartGroup:
                 element.addStyleClass("console-group-title-level");
         }
 
@@ -643,6 +696,9 @@ WebInspector.ConsoleMessage.prototype = {
             case WebInspector.ConsoleMessage.MessageLevel.Error:
                 levelString = "Error";
                 break;
+            case WebInspector.ConsoleMessage.MessageLevel.Object:
+                levelString = "Object";
+                break;
             case WebInspector.ConsoleMessage.MessageLevel.GroupTitle:
                 levelString = "GroupTitle";
                 break;
@@ -666,7 +722,9 @@ WebInspector.ConsoleMessage.MessageLevel = {
     Log: 1,
     Warning: 2,
     Error: 3,
-    GroupTitle: 4
+    Object: 4,
+    StartGroup: 5,
+    EndGroup: 6
 }
 
 WebInspector.ConsoleCommand = function(command, result, formattedResultElement, level)
@@ -733,7 +791,7 @@ WebInspector.ConsoleGroup.prototype = {
     {
         var element = msg.toMessageElement();
         
-        if (msg.level === WebInspector.ConsoleMessage.MessageLevel.GroupTitle) {
+        if (msg.level === WebInspector.ConsoleMessage.MessageLevel.StartGroup) {
             this.messagesElement.parentNode.insertBefore(element, this.messagesElement);
             element.addEventListener("click", this._titleClicked.bind(this), true);
         } else

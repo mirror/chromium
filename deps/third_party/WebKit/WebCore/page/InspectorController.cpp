@@ -68,6 +68,7 @@
 #include <JavaScriptCore/APICast.h>
 #include <JavaScriptCore/JSRetainPtr.h>
 #include <JavaScriptCore/JSStringRef.h>
+#include <JavaScriptCore/OpaqueJSString.h>
 #include <kjs/ustring.h>
 #include <profiler/Profile.h>
 #include <profiler/Profiler.h>
@@ -102,7 +103,7 @@ static JSRetainPtr<JSStringRef> jsStringRef(const String& str)
 
 static JSRetainPtr<JSStringRef> jsStringRef(const UString& str)
 {
-    return JSRetainPtr<JSStringRef>(toRef(str.rep()));
+    return JSRetainPtr<JSStringRef>(Adopt, OpaqueJSString::create(str).releaseRef());
 }
 
 static String toString(JSContextRef context, JSValueRef value, JSValueRef* exception)
@@ -779,6 +780,24 @@ static JSValueRef moveByUnrestricted(JSContextRef ctx, JSObjectRef /*function*/,
     return JSValueMakeUndefined(ctx);
 }
 
+static JSValueRef setAttachedWindowHeight(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    if (argumentCount < 1)
+        return JSValueMakeUndefined(ctx);
+
+    unsigned height = static_cast<unsigned>(JSValueToNumber(ctx, arguments[0], exception));
+    if (exception && *exception)
+        return JSValueMakeUndefined(ctx);
+
+    controller->setAttachedWindowHeight(height);
+
+    return JSValueMakeUndefined(ctx);
+}
+
 static JSValueRef wrapCallback(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
     InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
@@ -965,6 +984,17 @@ static JSValueRef isWindowVisible(JSContextRef ctx, JSObjectRef /*function*/, JS
     return JSValueMakeBoolean(ctx, controller->windowVisible());
 }
 
+static JSValueRef closeWindow(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    controller->closeWindow();
+
+    return JSValueMakeUndefined(ctx);
+}
+
 // Profiles
 
 static JSValueRef profiles(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments*/, JSValueRef* exception)
@@ -1005,6 +1035,34 @@ static JSValueRef profiles(JSContextRef ctx, JSObjectRef /*function*/, JSObjectR
     }
 
     return result;
+}
+
+static JSValueRef clearMessages(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments*/, JSValueRef* /*exception*/)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (controller)
+        controller->clearConsoleMessages();
+
+    return JSValueMakeUndefined(ctx);
+}
+
+
+static JSValueRef startProfiling(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments*/, JSValueRef* /*exception*/)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (controller)
+        controller->startUserInitiatedProfiling();
+
+   return JSValueMakeUndefined(ctx);
+}
+
+static JSValueRef stopProfiling(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments*/, JSValueRef* /*exception*/)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (controller)
+        controller->stopUserInitiatedProfiling();
+
+    return JSValueMakeUndefined(ctx);
 }
 
 // InspectorController Class
@@ -1153,7 +1211,7 @@ bool InspectorController::windowVisible()
     return m_windowVisible;
 }
 
-void InspectorController::setWindowVisible(bool visible)
+void InspectorController::setWindowVisible(bool visible, bool attached)
 {
     if (visible == m_windowVisible)
         return;
@@ -1164,6 +1222,7 @@ void InspectorController::setWindowVisible(bool visible)
         return;
 
     if (m_windowVisible) {
+        setAttachedWindow(attached);
         populateScriptObjects();
         if (m_nodeToFocus)
             focusNode();
@@ -1171,8 +1230,10 @@ void InspectorController::setWindowVisible(bool visible)
             startDebuggingAndReloadInspectedPage();
         if (m_showAfterVisible != CurrentPanel)
             showPanel(m_showAfterVisible);
-    } else
+    } else {
+        stopDebugging();
         resetScriptObjects();
+    }
 
     m_showAfterVisible = CurrentPanel;
 }
@@ -1204,27 +1265,37 @@ void InspectorController::addConsoleMessage(ConsoleMessage* consoleMessage)
         addScriptConsoleMessage(consoleMessage);
 }
 
-void InspectorController::startGroup()
-{    
-    JSValueRef exception = 0;
-
-    ++m_groupLevel;
-
-    if (windowVisible())
-        callFunction(m_scriptContext, m_scriptObject, "startGroupInConsole", 0, NULL, exception);
+void InspectorController::clearConsoleMessages()
+{
+    deleteAllValues(m_consoleMessages);
+    m_consoleMessages.clear();
 }
 
-void InspectorController::endGroup()
+void InspectorController::toggleRecordButton(bool isProfiling)
 {
-    JSValueRef exception = 0;
+    if (!m_scriptContext)
+        return;
 
+    JSValueRef exception = 0;
+    JSValueRef isProvingValue = JSValueMakeBoolean(m_scriptContext, isProfiling);
+    callFunction(m_scriptContext, m_scriptObject, "setRecordingProfile", 1, &isProvingValue, exception);
+}
+
+void InspectorController::startGroup(MessageSource source, ExecState* exec, const ArgList& arguments, unsigned lineNumber, const String& sourceURL)
+{    
+    ++m_groupLevel;
+
+    addConsoleMessage(new ConsoleMessage(source, StartGroupMessageLevel, exec, arguments, lineNumber, sourceURL, m_groupLevel));
+}
+
+void InspectorController::endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL)
+{
     if (m_groupLevel == 0)
         return;
 
     --m_groupLevel;
 
-    if (windowVisible())
-        callFunction(m_scriptContext, m_scriptObject, "endGroupInConsole", 0, NULL, exception);
+    addConsoleMessage(new ConsoleMessage(source, EndGroupMessageLevel, String(), lineNumber, sourceURL, m_groupLevel));
 }
 
 void InspectorController::addProfile(PassRefPtr<Profile> prpProfile)
@@ -1237,7 +1308,22 @@ void InspectorController::addProfile(PassRefPtr<Profile> prpProfile)
 
     if (windowVisible())
         addScriptProfile(profile.get());
+
+    addProfileMessageToConsole(profile);
 }
+
+void InspectorController::addProfileMessageToConsole(PassRefPtr<Profile> prpProfile)
+{
+    RefPtr<Profile> profile = prpProfile;
+
+    UString message = "Profile \"webkit-profile://";
+    message += encodeWithURLEscapeSequences(profile->title());
+    message += "/";
+    message += UString::from(profile->uid());
+    message += "\" finished.";
+    addMessageToConsole(JSMessageSource, LogMessageLevel, message, 0, "");
+}
+
 
 void InspectorController::attachWindow()
 {
@@ -1251,6 +1337,24 @@ void InspectorController::detachWindow()
     if (!enabled())
         return;
     m_client->detachWindow();
+}
+
+void InspectorController::setAttachedWindow(bool attached)
+{
+    if (!enabled() || !m_scriptContext || !m_scriptObject)
+        return;
+
+    JSValueRef attachedValue = JSValueMakeBoolean(m_scriptContext, attached);
+
+    JSValueRef exception = 0;
+    callFunction(m_scriptContext, m_scriptObject, "setAttachedWindow", 1, &attachedValue, exception);
+}
+
+void InspectorController::setAttachedWindowHeight(unsigned height)
+{
+    if (!enabled())
+        return;
+    m_client->setAttachedWindowHeight(height);
 }
 
 void InspectorController::inspectedWindowScriptObjectCleared(Frame* frame)
@@ -1295,6 +1399,7 @@ void InspectorController::windowScriptObjectAvailable()
         { "localizedStringsURL", localizedStrings, kJSPropertyAttributeNone },
         { "platform", platform, kJSPropertyAttributeNone },
         { "moveByUnrestricted", moveByUnrestricted, kJSPropertyAttributeNone },
+        { "setAttachedWindowHeight", WebCore::setAttachedWindowHeight, kJSPropertyAttributeNone },
         { "wrapCallback", wrapCallback, kJSPropertyAttributeNone },
         { "startDebuggingAndReloadInspectedPage", WebCore::startDebuggingAndReloadInspectedPage, kJSPropertyAttributeNone },
         { "stopDebugging", WebCore::stopDebugging, kJSPropertyAttributeNone },
@@ -1311,6 +1416,10 @@ void InspectorController::windowScriptObjectAvailable()
         { "addBreakpoint", WebCore::addBreakpoint, kJSPropertyAttributeNone },
         { "removeBreakpoint", WebCore::removeBreakpoint, kJSPropertyAttributeNone },
         { "isWindowVisible", WebCore::isWindowVisible, kJSPropertyAttributeNone },
+        { "closeWindow", WebCore::closeWindow, kJSPropertyAttributeNone },
+        { "startProfiling", WebCore::startProfiling, kJSPropertyAttributeNone },
+        { "stopProfiling", WebCore::stopProfiling, kJSPropertyAttributeNone },
+        { "clearMessages", clearMessages, kJSPropertyAttributeNone },
         { 0, 0, 0 }
     };
 
@@ -1457,6 +1566,7 @@ void InspectorController::startUserInitiatedProfiling()
 
     ExecState* exec = toJSDOMWindow(m_inspectedPage->mainFrame())->globalExec();
     Profiler::profiler()->startProfiling(exec, UserInitiatedProfileName, this);
+    toggleRecordButton(true);
 }
 
 void InspectorController::stopUserInitiatedProfiling()
@@ -1468,6 +1578,8 @@ void InspectorController::stopUserInitiatedProfiling()
 
     ExecState* exec = toJSDOMWindow(m_inspectedPage->mainFrame())->globalExec();
     Profiler::profiler()->stopProfiling(exec, UserInitiatedProfileName);
+    Profiler::profiler()->didFinishAllExecution(exec);
+    toggleRecordButton(false);
 }
 
 void InspectorController::finishedProfiling(PassRefPtr<Profile> prpProfile)
@@ -2495,7 +2607,7 @@ bool InspectorController::handleException(JSContextRef context, JSValueRef excep
 
 // JavaScriptDebugListener functions
 
-void InspectorController::didParseSource(ExecState*, const SourceProvider& source, int startingLineNumber, const UString& sourceURL, int sourceID)
+void InspectorController::didParseSource(ExecState* exec, const SourceProvider& source, int startingLineNumber, const UString& sourceURL, int sourceID)
 {
     JSValueRef sourceIDValue = JSValueMakeNumber(m_scriptContext, sourceID);
     JSValueRef sourceURLValue = JSValueMakeString(m_scriptContext, jsStringRef(sourceURL).get());
@@ -2507,7 +2619,7 @@ void InspectorController::didParseSource(ExecState*, const SourceProvider& sourc
     callFunction(m_scriptContext, m_scriptObject, "parsedScriptSource", 4, arguments, exception);
 }
 
-void InspectorController::failedToParseSource(ExecState*, const SourceProvider& source, int startingLineNumber, const UString& sourceURL, int errorLine, const UString& errorMessage)
+void InspectorController::failedToParseSource(ExecState* exec, const SourceProvider& source, int startingLineNumber, const UString& sourceURL, int errorLine, const UString& errorMessage)
 {
     JSValueRef sourceURLValue = JSValueMakeString(m_scriptContext, jsStringRef(sourceURL).get());
     JSValueRef sourceValue = JSValueMakeString(m_scriptContext, jsStringRef(source.data()).get());

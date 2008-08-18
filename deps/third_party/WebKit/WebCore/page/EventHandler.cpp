@@ -99,13 +99,13 @@ static inline void scrollAndAcceptEvent(float delta, ScrollDirection positiveDir
     if (!delta)
         return;
 
-    int pixelsToScroll = abs(static_cast<int>(delta));
+    float pixelsToScroll = delta > 0 ? delta : -delta;
     if (!e.isContinuous() && !pageScrollEnabled) {
         if (node->renderer()->scroll(delta < 0 ? negativeDirection : positiveDirection, ScrollByLine, pixelsToScroll))
             e.accept();
     } else {
         if (pageScrollEnabled)
-            pixelsToScroll = static_cast<int>(windowHeightOrWidth); 
+            pixelsToScroll = windowHeightOrWidth; 
         if (node->renderer()->scroll(delta < 0 ? negativeDirection : positiveDirection, ScrollByPixel, pixelsToScroll))
             e.accept();
     }
@@ -368,7 +368,7 @@ bool EventHandler::handleMousePressEvent(const MouseEventWithHitTestResults& eve
     }
     
    m_mouseDownMayStartAutoscroll = m_mouseDownMayStartSelect || 
-        (m_mousePressNode && m_mousePressNode->renderer() && m_mousePressNode->renderer()->canBeProgramaticallyScrolled());
+        (m_mousePressNode && m_mousePressNode->renderer() && m_mousePressNode->renderer()->canBeProgramaticallyScrolled(true));
 
    return swallowEvent;
 }
@@ -395,7 +395,7 @@ bool EventHandler::handleMouseDraggedEvent(const MouseEventWithHitTestResults& e
         // If the selection is contained in a layer that can scroll, that layer should handle the autoscroll
         // Otherwise, let the bridge handle it so the view can scroll itself.
         RenderObject* renderer = targetNode->renderer();
-        while (renderer && !renderer->canBeProgramaticallyScrolled())
+        while (renderer && !renderer->canBeProgramaticallyScrolled(true))
             renderer = renderer->parent();
         if (renderer) {
             m_autoscrollInProgress = true;
@@ -981,7 +981,7 @@ bool EventHandler::handleMousePressEvent(const PlatformMouseEvent& mouseEvent)
     if (mouseEvent.button() == MiddleButton && !mev.isOverLink()) {
         RenderObject* renderer = mev.targetNode()->renderer();
 
-        while (renderer && !renderer->canBeProgramaticallyScrolled())
+        while (renderer && !renderer->canBeProgramaticallyScrolled(true))
             renderer = renderer->parent();
 
         if (renderer) {
@@ -1627,6 +1627,13 @@ bool EventHandler::needsKeyboardEventDisambiguationQuirks() const
 
 bool EventHandler::keyEvent(const PlatformKeyboardEvent& initialKeyEvent)
 {
+#if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS))
+    String escKeyId = "U+001B";
+    // If a key is pressed while the autoscroll/panScroll is in progress then we want to stop
+    if (initialKeyEvent.keyIdentifier() == escKeyId && m_frame->page()->mainFrame()->eventHandler()->panScrollInProgress() || m_autoscrollInProgress) 
+        stopAutoscrollTimer();
+#endif
+
     // Check for cases where we are too early for events -- possible unmatched key up
     // from pressing return in the location bar.
     RefPtr<EventTargetNode> node = eventTargetNodeForDocument(m_frame->document());

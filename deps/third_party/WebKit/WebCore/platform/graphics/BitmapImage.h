@@ -91,17 +91,20 @@ class BitmapImage : public Image {
     friend class GeneratedImage;
     friend class GraphicsContext;
 public:
-#if PLATFORM(CG)
-    BitmapImage(CGImageRef, ImageObserver* = 0);
-#elif PLATFORM(CAIRO)
-    BitmapImage(cairo_surface_t*, ImageObserver* = 0);
-#endif
-    BitmapImage(ImageObserver* = 0);
+    static PassRefPtr<BitmapImage> create(NativeImagePtr nativeImage, ImageObserver* observer = 0)
+    {
+        return adoptRef(new BitmapImage(nativeImage, observer));
+    }
+    static PassRefPtr<BitmapImage> create(ImageObserver* observer = 0)
+    {
+        return adoptRef(new BitmapImage(observer));
+    }
     ~BitmapImage();
     
     virtual bool isBitmapImage() const { return true; }
     
     virtual IntSize size() const;
+    IntSize currentFrameSize() const;
 
     virtual bool dataChanged(bool allDataReceived);
 
@@ -135,6 +138,9 @@ public:
     virtual NativeImagePtr nativeImageForCurrentFrame() { return frameAtIndex(currentFrame()); }
 
 protected:
+    BitmapImage(NativeImagePtr, ImageObserver* = 0);
+    BitmapImage(ImageObserver* = 0);
+
 #if PLATFORM(WIN)
     virtual void drawFrameMatchingSourceSize(GraphicsContext*, const FloatRect& dstRect, const IntSize& srcSize, CompositeOperator);
 #endif
@@ -199,6 +205,8 @@ protected:
 
     mutable bool m_haveSize; // Whether or not our |m_size| member variable has the final overall image size yet.
     bool m_sizeAvailable; // Whether or not we can obtain the size of the first image frame yet from ImageIO.
+    mutable bool m_hasUniformFrameSize;
+
     unsigned m_decodedSize; // The current size of all decoded frames.
 
     mutable bool m_haveFrameCount;
