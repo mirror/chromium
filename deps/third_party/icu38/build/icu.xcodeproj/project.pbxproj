@@ -942,7 +942,7 @@
 		7BD5408B0D6F743F003CD41E /* libicudata_stub.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libicudata_stub.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD540D60D6F7EFE003CD41E /* genccode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = genccode; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD540DD0D6F7F44003CD41E /* genccode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = genccode.c; sourceTree = "<group>"; };
-		7BD541020D6F83E6003CD41E /* icudt38l_dat.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = icudt38l_dat.s; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BD541020D6F83E6003CD41E /* icudt38l_dat.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = icudt38l_dat.s; sourceTree = "<group>"; };
 		7BD5410E0D6F8457003CD41E /* icupkg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = icupkg; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD541170D6F846F003CD41E /* icupkg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = icupkg.cpp; sourceTree = "<group>"; };
 		82C262C40DCF9411005CFE91 /* libicudata.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libicudata.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1036,8 +1036,8 @@
 			children = (
 				7BD540D60D6F7EFE003CD41E /* genccode */,
 				7BD5410E0D6F8457003CD41E /* icupkg */,
-				7BD5408B0D6F743F003CD41E /* libicudata_stub.a */,
 				82C262C40DCF9411005CFE91 /* libicudata.a */,
+				7BD5408B0D6F743F003CD41E /* libicudata_stub.a */,
 				7BD53EA60D6F6FC7003CD41E /* libicui18n.a */,
 				7BD540260D6F727B003CD41E /* libicutu.a */,
 				7BD53AAB0D6F6671003CD41E /* libicuuc.a */,
@@ -1692,8 +1692,8 @@
 			children = (
 				7BD541020D6F83E6003CD41E /* icudt38l_dat.s */,
 			);
-			name = generated;
-			sourceTree = "<group>";
+			path = generated;
+			sourceTree = CONFIGURATION_TEMP_DIR;
 		};
 		7BD541150D6F846F003CD41E /* icupkg */ = {
 			isa = PBXGroup;
@@ -1845,8 +1845,8 @@
 			targets = (
 				7B836CB10E55CB8500F6AD31 /* All */,
 				7BD540D50D6F7EFE003CD41E /* genccode */,
-				7BD5408A0D6F743F003CD41E /* icudata_stub */,
 				82C262C30DCF9411005CFE91 /* icudata */,
+				7BD5408A0D6F743F003CD41E /* icudata_stub */,
 				7BD53EA50D6F6FC7003CD41E /* icui18n */,
 				7BD540250D6F727B003CD41E /* icutu */,
 				7BD53AAA0D6F6671003CD41E /* icuuc */,
@@ -1868,11 +1868,11 @@
 			);
 			name = "Generate Data";
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/icudt38l_dat.s",
+				"$(CONFIGURATION_TEMP_DIR)/generated/icudt38l_dat.s",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -ex\nmkdir -p \"${BUILT_PRODUCTS_DIR}/icudt38l\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -d \"${BUILT_PRODUCTS_DIR}/icudt38l\" --list -x \"*\" ../source/data/in/icudt38l.dat > \"${BUILT_PRODUCTS_DIR}/icudata.lst\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -tl -c -s \"${BUILT_PRODUCTS_DIR}/icudt38l\" -a \"${BUILT_PRODUCTS_DIR}/icudata.lst\" new \"${BUILT_PRODUCTS_DIR}/icudt38l.dat\"\n\"${BUILT_PRODUCTS_DIR}/genccode\" -a gcc-darwin -n icudt38l -e icudt38 -d \"${BUILT_PRODUCTS_DIR}\" \"${BUILT_PRODUCTS_DIR}/icudt38l.dat\"\n";
+			shellScript = "set -ex\nGENERATED_DIR=\"${CONFIGURATION_TEMP_DIR}/generated\"\nmkdir -p \"${GENERATED_DIR}/icudt38l\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -d \"${GENERATED_DIR}/icudt38l\" --list -x \"*\" ../source/data/in/icudt38l.dat > \"${GENERATED_DIR}/icudata.lst\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -tl -c -s \"${GENERATED_DIR}/icudt38l\" -a \"${GENERATED_DIR}/icudata.lst\" new \"${GENERATED_DIR}/icudt38l.dat\"\n\"${BUILT_PRODUCTS_DIR}/genccode\" -a gcc-darwin -n icudt38l -e icudt38 -d \"${GENERATED_DIR}\" \"${GENERATED_DIR}/icudt38l.dat\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2285,6 +2285,7 @@
 					../source/common,
 					../source/i18n,
 				);
+				XCODEPROJ_DEPTH = ../../..;
 			};
 			name = Debug;
 		};
@@ -2298,6 +2299,7 @@
 					../source/common,
 					../source/i18n,
 				);
+				XCODEPROJ_DEPTH = ../../..;
 			};
 			name = Release;
 		};
