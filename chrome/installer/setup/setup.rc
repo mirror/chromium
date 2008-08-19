@@ -65,7 +65,7 @@ IDI_SETUP               ICON                    "setup.ico"
 
 STRINGTABLE 
 BEGIN
-    IDS_UNINSTALL_SURVEY_URL                   "http://www.google.com/support/chrome/bin/request.py?hl=$1&contact_type=uninstall"
+    IDS_UNINSTALL_SURVEY_URL                   "http://go/chromeuninstall?hl=$1&contact_type=uninstall"
 END
 
 

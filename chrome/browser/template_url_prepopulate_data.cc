@@ -495,9 +495,12 @@ const PrepopulatedEngine google = {
   L"Google",
   NULL,
   L"http://www.google.com/favicon.ico",
+  // TODO(pkasting): http://b/1176073 We should change to this URL.
+//  L"{google:baseURL}search?{google:RLZ}{google:acceptedSuggestion}"
+//      L"{google:originalQueryForSuggestion}sourceid=chrome&ie={inputEncoding}&"
+//      L"q={searchTerms}",
   L"{google:baseURL}search?{google:RLZ}{google:acceptedSuggestion}"
-      L"{google:originalQueryForSuggestion}sourceid=chrome&ie={inputEncoding}&"
-      L"q={searchTerms}",
+      L"{google:originalQueryForSuggestion}ie={inputEncoding}&q={searchTerms}",
   "UTF-8",
   L"{google:baseSuggestURL}search?client=chrome&output=chrome&hl={language}&"
       L"q={searchTerms}",
@@ -2196,7 +2199,7 @@ const PrepopulatedEngine yandex_ru = {
   L"yandex.ru",
   L"http://yandex.ru/favicon.ico",
   L"http://yandex.ru/yandsearch?text={searchTerms}",
-  "UTF-8",
+  "windows-1251",
   L"http://suggest.yandex.net/suggest-ff.cgi?part={searchTerms}",
   15,
 };
@@ -2206,7 +2209,7 @@ const PrepopulatedEngine yandex_ua = {
   L"yandex.ua",
   L"http://yandex.ua/favicon.ico",
   L"http://yandex.ua/yandsearch?text={searchTerms}",
-  "UTF-8",
+  "windows-1251",
   L"http://suggest.yandex.net/suggest-ff.cgi?part={searchTerms}",
   15,
 };
@@ -2996,8 +2999,8 @@ void RegisterUserPrefs(PrefService* prefs) {
 }
 
 int GetDataVersion() {
-  return 11;  // Increment this if you change the above data in ways that mean
-              // users with existing data should get a new version.
+  return 10;  // Increment this if you change the above data in ways that mean
+             // users with existing data should get a new version.
 }
 
 void GetPrepopulatedEngines(PrefService* prefs,
