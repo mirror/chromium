@@ -1,4 +1,3 @@
-JavaScriptCore\wtf\FastMalloc.h
 JavaScriptCore\wtf\RefCounted.h
 WebCore\DerivedSources.make
 WebCore\config.h
@@ -6,14 +5,9 @@ WebCore\css\CSSStyleSelector.cpp
 WebCore\dom\Document.cpp
 WebCore\editing\Editor.h
 WebCore\editing\Selection.cpp
-WebCore\html\CanvasGradient.cpp
-WebCore\html\CanvasGradient.h
-WebCore\html\CanvasPattern.cpp
-WebCore\html\CanvasPattern.h 
 WebCore\html\CanvasRenderingContext2D.cpp
 WebCore\html\CanvasStyle.cpp
 WebCore\html\CanvasStyle.h
-WebCore\html\HTMLCanvasElement.cpp
 WebCore\html\HTMLInputElement.cpp
 WebCore\html\HTMLInputElement.h
 WebCore\html\HTMLLinkElement.cpp
@@ -32,14 +26,12 @@ WebCore\page\DragController.cpp
 WebCore\page\EventHandler.cpp
 WebCore\page\Frame.cpp
 WebCore\page\Frame.h
-WebCore\page\FramePrivate.h
 WebCore\page\InspectorController.cpp
 WebCore\page\InspectorController.h
 WebCore\page\Page.h
 WebCore\page\Settings.cpp
 WebCore\page\Settings.h
 WebCore\page\mac\WebCoreFrameBridge.mm
-WebCore\platform\Arena.h
 WebCore\platform\KURL.cpp
 WebCore\platform\KURL.h
 WebCore\platform\SecurityOrigin.cpp
@@ -50,9 +42,6 @@ WebCore\platform\graphics\FontCache.cpp
 WebCore\platform\graphics\FontCache.h
 WebCore\platform\graphics\FontDescription.h
 WebCore\platform\graphics\GraphicsContext.h
-WebCore\platform\graphics\Image.h
-WebCore\platform\graphics\ImageBuffer.h
-WebCore\platform\graphics\Path.h
 WebCore\platform\graphics\SimpleFontData.cpp
 WebCore\platform\graphics\SimpleFontData.h
 WebCore\platform\image-decoders\ImageDecoder.h
