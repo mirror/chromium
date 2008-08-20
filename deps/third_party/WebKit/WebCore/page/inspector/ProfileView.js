@@ -32,8 +32,8 @@ WebInspector.ProfileView = function(profile)
     this.showSelfTimeAsPercent = true;
     this.showTotalTimeAsPercent = true;
 
-    var columns = { "self": { title: WebInspector.UIString("Self"), width: "72px", sortable: true },
-                    "total": { title: WebInspector.UIString("Total"), width: "72px", sort: "descending", sortable: true },
+    var columns = { "self": { title: WebInspector.UIString("Self"), width: "72px", sort: "descending", sortable: true },
+                    "total": { title: WebInspector.UIString("Total"), width: "72px", sortable: true },
                     "calls": { title: WebInspector.UIString("Calls"), width: "54px", sortable: true },
                     "function": { title: WebInspector.UIString("Function"), disclosure: true, sortable: true } };
 
@@ -75,13 +75,16 @@ WebInspector.ProfileView = function(profile)
     this.resetButton.className = "reset-profile-status-bar-item status-bar-item hidden";
     this.resetButton.addEventListener("click", this._resetClicked.bind(this), false);
 
+    // Default to the heavy profile.
+    profile = profile.heavyProfile;
+
     // By default the profile isn't sorted, so sort based on our default sort
-    // column and direction padded to the DataGrid above.
-    profile.sortTotalTimeDescending();
+    // column and direction added to the DataGrid columns above.
+    profile.sortSelfTimeDescending();
 
     this._updatePercentButton();
 
-    this.profile = profile.heavyProfile;
+    this.profile = profile;
 }
 
 WebInspector.ProfileView.prototype = {
@@ -123,9 +126,11 @@ WebInspector.ProfileView.prototype = {
             return;
 
         if (event.target.selectedIndex == 1 && this.view == "Heavy") {
+            this._sortProfile(this.profile.treeProfile);
             this.profile = this.profile.treeProfile;
             this.view = "Tree"
         } else if (event.target.selectedIndex == 0 && this.view == "Tree") {
+            this._sortProfile(this.profile.heavyProfile);
             this.profile = this.profile.heavyProfile;
             this.view = "Heavy"
         }
@@ -201,6 +206,14 @@ WebInspector.ProfileView.prototype = {
 
     _sortData: function(event)
     {
+        this._sortProfile(this.profile);
+    },
+
+    _sortProfile: function(profile)
+    {
+        if (!profile)
+            return;
+
         var sortOrder = this.dataGrid.sortOrder;
         var sortColumnIdentifier = this.dataGrid.sortColumnIdentifier;
 
@@ -223,9 +236,10 @@ WebInspector.ProfileView.prototype = {
         if (!(sortingFunctionName in this.profile))
             return;
 
-        this.profile[sortingFunctionName]();
+        profile[sortingFunctionName]();
 
-        this.refresh();
+        if (profile === this.profile)
+            this.refresh();
     },
 
     _mouseDownInDataGrid: function(event)

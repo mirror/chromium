@@ -1,3 +1,749 @@
+2008-08-20  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Darin.
+
+        Fix for <rdar://problem/6145626> 
+        This patch fixes a number of remaining problems getting 
+        disconnected frames to work correctly with markAllMatchesForText() 
+        and findString(). Details inline. 
+
+        This was a static helper function in Frame, but this patch requires 
+        the same functionality in Editor, so I just added it as a function 
+        on Node.
+        * dom/Node.cpp:
+        (WebCore::Node::isInShadowTree):
+        * dom/Node.h:
+
+        * editing/Editor.cpp:
+        (WebCore::Editor::insideVisibleArea): Returns false if 
+        excludeFromTextSearch() is true.
+
+        In a normal (non-disconnected) frame, findString returns a range of 
+        the document node if the text is not found in the frame. I changed 
+        firstVisibleRange and lastVisibleRange to match that behavior when 
+        the text is not found
+        (WebCore::Editor::firstVisibleRange):
+        (WebCore::Editor::lastVisibleRange):
+
+        Here are the bulk of the changes in the patch. A lot of text was 
+        not being found in disconnected frames because I failed to account 
+        for all of the possible problems associated with shadow trees. That 
+        is fixed here.
+        (WebCore::Editor::nextVisibleRange):
+        * editing/Editor.h:
+
+        excludeFromTextSearch() is new. It allows a WebKit client to mark a 
+        frame as not-text-searchable through SPI. 
+        * WebCore.base.exp:
+        * page/Frame.cpp:
+        (WebCore::Frame::excludeFromTextSearch):
+        (WebCore::Frame::setExcludeFromTextSearch):
+        (WebCore::FramePrivate::FramePrivate):
+        * page/Frame.h:
+        * page/FramePrivate.h:
+
+        (WebCore::Frame::findString):
+        (WebCore::Frame::markAllMatchesForText):  I kept running into an 
+        assertion failure in paining code because of the forced paint on 
+        empty visible rects.
+
+2008-08-20  Timothy Hatcher  <timothy@apple.com>
+
+        Adds a positon box to the Inspector's Metrics sidebar
+        pane. When an element is not statically positioned, there
+        is now a position box that show top, right, bottom and
+        left computed values.
+
+        Reviewed by Kevin McCullough.
+
+        * English.lproj/localizedStrings.js: Updated the strings.
+        * page/inspector/MetricsSidebarPane.js:
+        (WebInspector.MetricsSidebarPane.prototype.update):
+        Renamed the boxPartValue function to createBoxPartElement
+        and made it create the entire element. Made it understand
+        how to get position style properties. Don't use the figure dash
+        when 0px is used for positions, since the 0 is meaningful there.
+        Instead use the figure dash when a position is auto.
+        * page/inspector/inspector.css: Added a new rule for position.
+
+2008-08-20  chris fleizach  <cfleizach@apple.com>
+
+        Reviewed by Beth Dakin
+
+        Qt build fix
+
+        * WebCore.pro:
+
+2008-08-20  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        - avoid using a deprecated NSScroller method on Leopard
+
+        * platform/mac/PlatformScrollBarMac.mm:
+        (WebCore::PlatformScrollbar::updateThumbPosition):
+        (WebCore::PlatformScrollbar::updateThumbProportion):
+
+2008-08-20  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Gtk build fix
+
+        * GNUmakefile.am:
+        * page/AccessibilityTable.cpp: Change nil to 0
+        (WebCore::AccessibilityTable::cellForColumnAndRow):
+
+2008-08-19  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        Bring back shared JSGlobalData and implicit locking, because too many clients rely on it.
+
+        * ForwardingHeaders/kjs/JSLock.h: Added.
+        * WebCore.vcproj/WebCore.vcproj:
+        * bindings/js/GCController.cpp:
+        (WebCore::collect):
+        (WebCore::GCController::gcTimerFired):
+        (WebCore::GCController::garbageCollectNow):
+        * bindings/js/JSCustomSQLStatementCallback.cpp:
+        (WebCore::JSCustomSQLStatementCallback::handleEvent):
+        * bindings/js/JSCustomSQLStatementErrorCallback.cpp:
+        (WebCore::JSCustomSQLStatementErrorCallback::handleEvent):
+        * bindings/js/JSCustomSQLTransactionCallback.cpp:
+        (WebCore::JSCustomSQLTransactionCallback::handleEvent):
+        * bindings/js/JSCustomSQLTransactionErrorCallback.cpp:
+        (WebCore::JSCustomSQLTransactionErrorCallback::handleEvent):
+        * bindings/js/JSCustomVoidCallback.cpp:
+        (WebCore::JSCustomVoidCallback::handleEvent):
+        * bindings/js/JSCustomXPathNSResolver.cpp:
+        (WebCore::JSCustomXPathNSResolver::lookupNamespaceURI):
+        * bindings/js/JSDOMWindowBase.cpp:
+        (WebCore::DOMWindowTimer::~DOMWindowTimer):
+        (WebCore::JSDOMWindowBase::clear):
+        (WebCore::JSDOMWindowBase::timerFired):
+        * bindings/js/JSEventCustom.cpp:
+        (WebCore::toJS):
+        * bindings/js/JSEventListener.cpp:
+        (WebCore::JSAbstractEventListener::handleEvent):
+        * bindings/js/JSNSResolver.cpp:
+        (WebCore::JSNSResolver::lookupNamespaceURI):
+        * bindings/js/JSNodeFilterCondition.cpp:
+        (WebCore::JSNodeFilterCondition::acceptNode):
+        * bindings/js/ScheduledAction.cpp:
+        (WebCore::ScheduledAction::execute):
+        * bindings/js/ScriptController.cpp:
+        (WebCore::ScriptController::evaluate):
+        (WebCore::ScriptController::clearWindowShell):
+        (WebCore::ScriptController::createHTMLEventHandler):
+        (WebCore::ScriptController::createSVGEventHandler):
+        (WebCore::ScriptController::initScript):
+        (WebCore::ScriptController::updateDocument):
+        (WebCore::ScriptController::bindingRootObject):
+        (WebCore::ScriptController::windowScriptNPObject):
+        (WebCore::ScriptController::createScriptObjectForPluginElement):
+        (WebCore::ScriptController::clearScriptObjects):
+        * bindings/js/ScriptControllerMac.mm:
+        (WebCore::ScriptController::windowScriptObject):
+        * bindings/objc/WebScriptObject.mm:
+        (_didExecute):
+        (-[WebScriptObject callWebScriptMethod:withArguments:]):
+        (-[WebScriptObject evaluateWebScript:]):
+        (-[WebScriptObject setValue:forKey:]):
+        (-[WebScriptObject valueForKey:]):
+        (-[WebScriptObject removeWebScriptKey:]):
+        (-[WebScriptObject stringRepresentation]):
+        (-[WebScriptObject webScriptValueAtIndex:]):
+        (-[WebScriptObject setWebScriptValueAtIndex:value:]):
+        (+[WebScriptObject _convertValueToObjcValue:originRootObject:rootObject:]):
+        * bridge/NP_jsobject.cpp:
+        (_NPN_InvokeDefault):
+        (_NPN_Invoke):
+        (_NPN_Evaluate):
+        (_NPN_GetProperty):
+        (_NPN_SetProperty):
+        (_NPN_RemoveProperty):
+        (_NPN_HasProperty):
+        (_NPN_HasMethod):
+        (_NPN_Enumerate):
+        * bridge/c/c_class.cpp:
+        (KJS::Bindings::CClass::~CClass):
+        (KJS::Bindings::CClass::methodsNamed):
+        (KJS::Bindings::CClass::fieldNamed):
+        * bridge/c/c_instance.cpp:
+        (KJS::Bindings::CInstance::invokeMethod):
+        (KJS::Bindings::CInstance::invokeDefaultMethod):
+        (KJS::Bindings::CInstance::getPropertyNames):
+        * bridge/c/c_runtime.cpp:
+        (KJS::Bindings::CField::valueFromInstance):
+        (KJS::Bindings::CField::setValueToInstance):
+        * bridge/c/c_utility.cpp:
+        (KJS::Bindings::convertValueToNPVariant):
+        (KJS::Bindings::convertNPVariantToValue):
+        * bridge/jni/jni_class.cpp:
+        (JavaClass::JavaClass):
+        (JavaClass::~JavaClass):
+        * bridge/jni/jni_instance.cpp:
+        (JavaInstance::stringValue):
+        * bridge/jni/jni_jsobject.mm:
+        (JavaJSObject::call):
+        (JavaJSObject::eval):
+        (JavaJSObject::getMember):
+        (JavaJSObject::setMember):
+        (JavaJSObject::removeMember):
+        (JavaJSObject::getSlot):
+        (JavaJSObject::setSlot):
+        (JavaJSObject::toString):
+        (JavaJSObject::convertValueToJObject):
+        (JavaJSObject::convertJObjectToValue):
+        * bridge/jni/jni_objc.mm:
+        (KJS::Bindings::dispatchJNICall):
+        * bridge/jni/jni_runtime.cpp:
+        (appendClassName):
+        (JavaMethod::signature):
+        * bridge/jni/jni_runtime.h:
+        (KJS::Bindings::JavaString::JavaString):
+        (KJS::Bindings::JavaString::_commonInit):
+        (KJS::Bindings::JavaString::~JavaString):
+        (KJS::Bindings::JavaString::UTF8String):
+        * bridge/jni/jni_utility.cpp:
+        (KJS::Bindings::convertValueToJValue):
+        * bridge/npruntime.cpp:
+        (_NPN_GetStringIdentifier):
+        * bridge/objc/objc_instance.mm:
+        (ObjcInstance::moveGlobalExceptionToExecState):
+        (ObjcInstance::invokeMethod):
+        (ObjcInstance::invokeDefaultMethod):
+        (ObjcInstance::setValueOfUndefinedField):
+        (ObjcInstance::getValueOfUndefinedField):
+        * bridge/objc/objc_runtime.mm:
+        (ObjcField::valueFromInstance):
+        (ObjcField::setValueToInstance):
+        * bridge/objc/objc_utility.mm:
+        (KJS::Bindings::convertValueToObjcValue):
+        (KJS::Bindings::convertNSStringToString):
+        (KJS::Bindings::convertObjcValueToValue):
+        * bridge/qt/qt_instance.cpp:
+        (KJS::Bindings::QtRuntimeObjectImp::removeFromCache):
+        (KJS::Bindings::QtInstance::~QtInstance):
+        (KJS::Bindings::QtInstance::getQtInstance):
+        (KJS::Bindings::QtInstance::getRuntimeObject):
+        * bridge/qt/qt_runtime.cpp:
+        (KJS::Bindings::convertValueToQVariant):
+        (KJS::Bindings::convertQVariantToValue):
+        (KJS::Bindings::QtRuntimeMetaMethod::call):
+        (KJS::Bindings::QtRuntimeConnectionMethod::call):
+        (KJS::Bindings::QtConnectionObject::QtConnectionObject):
+        (KJS::Bindings::QtConnectionObject::execute):
+        * bridge/runtime.cpp:
+        (KJS::Bindings::Instance::createRuntimeObject):
+        * bridge/testbindings.cpp:
+        (main):
+        * bridge/testbindings.mm:
+        (main):
+        * bridge/testqtbindings.cpp:
+        (main):
+        * dom/Document.cpp:
+        (WebCore::Document::~Document):
+        * dom/Node.cpp:
+        (WebCore::Node::setDocument):
+        * history/CachedPage.cpp:
+        (WebCore::CachedPage::CachedPage):
+        (WebCore::CachedPage::restore):
+        (WebCore::CachedPage::clear):
+        * loader/FrameLoader.cpp:
+        (WebCore::getString):
+        * page/InspectorController.cpp:
+        (WebCore::ConsoleMessage::ConsoleMessage):
+        (WebCore::XMLHttpRequestResource::XMLHttpRequestResource):
+        (WebCore::XMLHttpRequestResource::~XMLHttpRequestResource):
+        (WebCore::getResourceDocumentNode):
+        (WebCore::search):
+        (WebCore::inspectedWindow):
+        (WebCore::wrapCallback):
+        (WebCore::currentCallFrame):
+        (WebCore::profiles):
+        (WebCore::InspectorController::focusNode):
+        (WebCore::InspectorController::inspectedWindowScriptObjectCleared):
+        (WebCore::InspectorController::addDatabaseScriptResource):
+        (WebCore::InspectorController::addScriptProfile):
+        * page/JavaScriptCallFrame.cpp:
+        (WebCore::JavaScriptCallFrame::evaluate):
+        * page/JavaScriptProfileNode.cpp:
+        (WebCore::getTotalTime):
+        (WebCore::getSelfTime):
+        (WebCore::getTotalPercent):
+        (WebCore::getSelfPercent):
+        (WebCore::getNumberOfCalls):
+        (WebCore::getChildren):
+        (WebCore::getVisible):
+        * page/Page.cpp:
+        * page/mac/FrameMac.mm:
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::start):
+        (WebCore::getString):
+        (WebCore::PluginView::performRequest):
+        (WebCore::PluginView::bindingInstance):
+        * plugins/gtk/PluginViewGtk.cpp:
+        (WebCore::PluginView::paint):
+        (WebCore::PluginView::handleKeyboardEvent):
+        (WebCore::PluginView::handleMouseEvent):
+        (WebCore::PluginView::setNPWindowRect):
+        (WebCore::PluginView::stop):
+        (WebCore::PluginView::init):
+        * plugins/qt/PluginViewQt.cpp:
+        (WebCore::PluginView::setNPWindowRect):
+        (WebCore::PluginView::stop):
+        (WebCore::PluginView::init):
+        * plugins/win/PluginViewWin.cpp:
+        (WebCore::PluginView::dispatchNPEvent):
+        (WebCore::PluginView::handleKeyboardEvent):
+        (WebCore::PluginView::handleMouseEvent):
+        (WebCore::PluginView::setNPWindowRect):
+        (WebCore::PluginView::stop):
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::clearResponse):
+        (WebCore::XMLHttpRequest::didFinishLoading):
+        (WebCore::XMLHttpRequest::didReceiveData):
+
+2008-08-19  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        Add the beginnings of Skia graphics support to WebCore
+        as I try to begin the long process of un-forking the changes
+        needed to WebCore to make Andriod's WebCore build.
+
+        I'll follow this up with actual *Skia.cpp files in a separate patch.
+
+        * platform/graphics/AffineTransform.h:
+        * platform/graphics/FloatPoint.h:
+        * platform/graphics/FloatRect.h:
+        * platform/graphics/Gradient.h:
+        * platform/graphics/GraphicsContext.h:
+        * platform/graphics/Image.h:
+        * platform/graphics/ImageBuffer.h:
+        * platform/graphics/ImageSource.h:
+        * platform/graphics/IntPoint.h:
+        * platform/graphics/IntRect.h:
+        * platform/graphics/Path.h:
+        * platform/graphics/Pattern.h:
+        * svg/graphics/SVGPaintServerPattern.h:
+        * svg/graphics/SVGPaintServerSolid.h:
+
+2008-08-19  Steve Falkenburg  <sfalken@apple.com>
+
+        Fix Windows build more.
+
+        * WebCore.vcproj/WebCore.vcproj:
+
+2008-08-19  Steve Falkenburg  <sfalken@apple.com>
+
+        Fix Windows build.
+
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::canSetFocusAttribute):
+
+2008-08-19  chris fleizach  <cfleizach@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        <rdar://problem/4003764> Expose tables as AXTables
+ 
+        Tests: accessibility/table-attributes.html
+               accessibility/table-cell-spans.html
+               accessibility/table-cells.html
+               accessibility/table-detection.html
+               accessibility/table-sections.html
+               accessibility/table-with-rules.html
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * page/AXObjectCache.cpp:
+        (WebCore::AXObjectCache::get):
+        * page/AccessibilityObject.h:
+        (WebCore::):
+        (WebCore::AccessibilityObject::isDataTable):
+        (WebCore::AccessibilityObject::isTableRow):
+        (WebCore::AccessibilityObject::isTableColumn):
+        (WebCore::AccessibilityObject::isTableCell):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::canSetFocusAttribute):
+        * page/AccessibilityTable.cpp: Added.
+        (WebCore::AccessibilityTable::AccessibilityTable):
+        (WebCore::AccessibilityTable::~AccessibilityTable):
+        (WebCore::AccessibilityTable::create):
+        (WebCore::AccessibilityTable::isTableExposableThroughAccessibility):
+        (WebCore::AccessibilityTable::clearChildren):
+        (WebCore::AccessibilityTable::addChildren):
+        (WebCore::AccessibilityTable::headerContainer):
+        (WebCore::AccessibilityTable::columns):
+        (WebCore::AccessibilityTable::rows):
+        (WebCore::AccessibilityTable::rowHeaders):
+        (WebCore::AccessibilityTable::columnHeaders):
+        (WebCore::AccessibilityTable::cells):
+        (WebCore::AccessibilityTable::columnCount):
+        (WebCore::AccessibilityTable::rowCount):
+        (WebCore::AccessibilityTable::cellForColumnAndRow):
+        (WebCore::AccessibilityTable::roleValue):
+        (WebCore::AccessibilityTable::accessibilityIsIgnored):
+        (WebCore::AccessibilityTable::title):
+        (WebCore::AccessibilityTable::isDataTable):
+        * page/AccessibilityTable.h: Added.
+        * page/AccessibilityTableCell.cpp: Added.
+        (WebCore::AccessibilityTableCell::AccessibilityTableCell):
+        (WebCore::AccessibilityTableCell::~AccessibilityTableCell):
+        (WebCore::AccessibilityTableCell::create):
+        (WebCore::AccessibilityTableCell::accessibilityIsIgnored):
+        (WebCore::AccessibilityTableCell::rowIndexRange):
+        (WebCore::AccessibilityTableCell::columnIndexRange):
+        * page/AccessibilityTableCell.h: Added.
+        (WebCore::AccessibilityTableCell::isTableCell):
+        (WebCore::AccessibilityTableCell::roleValue):
+        * page/AccessibilityTableColumn.cpp: Added.
+        (WebCore::AccessibilityTableColumn::AccessibilityTableColumn):
+        (WebCore::AccessibilityTableColumn::~AccessibilityTableColumn):
+        (WebCore::AccessibilityTableColumn::create):
+        (WebCore::AccessibilityTableColumn::setParentTable):
+        (WebCore::AccessibilityTableColumn::elementRect):
+        (WebCore::AccessibilityTableColumn::size):
+        (WebCore::AccessibilityTableColumn::children):
+        (WebCore::AccessibilityTableColumn::headerObject):
+        (WebCore::AccessibilityTableColumn::headerObjectForSection):
+        (WebCore::AccessibilityTableColumn::addChildren):
+        * page/AccessibilityTableColumn.h: Added.
+        (WebCore::AccessibilityTableColumn::parentObject):
+        (WebCore::AccessibilityTableColumn::roleValue):
+        (WebCore::AccessibilityTableColumn::accessibilityIsIgnored):
+        (WebCore::AccessibilityTableColumn::isTableColumn):
+        (WebCore::AccessibilityTableColumn::setColumnIndex):
+        (WebCore::AccessibilityTableColumn::columnIndex):
+        * page/AccessibilityTableHeaderContainer.cpp: Added.
+        (WebCore::AccessibilityTableHeaderContainer::AccessibilityTableHeaderContainer):
+        (WebCore::AccessibilityTableHeaderContainer::~AccessibilityTableHeaderContainer):
+        (WebCore::AccessibilityTableHeaderContainer::create):
+        (WebCore::AccessibilityTableHeaderContainer::children):
+        (WebCore::AccessibilityTableHeaderContainer::elementRect):
+        (WebCore::AccessibilityTableHeaderContainer::size):
+        (WebCore::AccessibilityTableHeaderContainer::addChildren):
+        * page/AccessibilityTableHeaderContainer.h: Added.
+        (WebCore::AccessibilityTableHeaderContainer::roleValue):
+        (WebCore::AccessibilityTableHeaderContainer::setParentTable):
+        (WebCore::AccessibilityTableHeaderContainer::parentObject):
+        (WebCore::AccessibilityTableHeaderContainer::accessibilityIsIgnored):
+        * page/AccessibilityTableRow.cpp: Added.
+        (WebCore::AccessibilityTableRow::AccessibilityTableRow):
+        (WebCore::AccessibilityTableRow::~AccessibilityTableRow):
+        (WebCore::AccessibilityTableRow::create):
+        (WebCore::AccessibilityTableRow::accessibilityIsIgnored):
+        (WebCore::AccessibilityTableRow::headerObject):
+        * page/AccessibilityTableRow.h: Added.
+        (WebCore::AccessibilityTableRow::isTableRow):
+        (WebCore::AccessibilityTableRow::roleValue):
+        (WebCore::AccessibilityTableRow::setRowIndex):
+        (WebCore::AccessibilityTableRow::rowIndex):
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (-[AccessibilityObjectWrapper accessibilityAttributeNames]):
+        (RoleEntry::):
+        (-[AccessibilityObjectWrapper roleDescription]):
+        (-[AccessibilityObjectWrapper accessibilityAttributeValue:]):
+        (-[AccessibilityObjectWrapper accessibilityParameterizedAttributeNames]):
+        (-[AccessibilityObjectWrapper accessibilityAttributeValue:forParameter:]):
+
+2008-08-19  Steve Falkenburg  <sfalken@apple.com>
+
+        Build fix.
+        Add buildfailed support to stop builds early (preventing inaccurate error messages).
+        Add missing post-build rule to Release.
+
+        * WebCore.vcproj/QTMovieWin.vcproj:
+
+2008-08-19  Keishi Hattori  <casey.hattori@gmail.com>
+
+        Added support for console.count in the inspector.
+
+        Reviewed by Geoff Garen.
+
+        * page/Console.cpp:
+        (WebCore::Console::count):
+        * page/Console.h:
+        * page/Console.idl: Added console.count.
+        * page/InspectorController.cpp:
+        (WebCore::InspectorController::didCommitLoad): Clears m_counts.
+        (WebCore::InspectorController::count): Updates the count number
+        sing "title@source:line" as the identifier, and adds a
+        message to the console.
+        * page/InspectorController.h: Added m_counts.
+
+2008-08-19  Keishi Hattori  <casey.hattori@gmail.com>
+
+        Clear console.time timers when changing page.
+
+        Reviewed by Geoff Garen.
+
+        * page/InspectorController.cpp:
+        (WebCore::InspectorController::didCommitLoad):
+
+2008-08-19  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Adele.
+
+        Fix for <rdar://problem/6154695> Full-page movies flicker while playing
+        https://bugs.webkit.org/show_bug.cgi?id=20404
+
+        Ignore setVisible() when visibility doesn't change.
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.h:
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::MediaPlayerPrivate::MediaPlayerPrivate):
+        (WebCore::MediaPlayerPrivate::setVisible):
+
+2008-08-19  Timothy Hatcher  <timothy@apple.com>
+
+        Fixes a bug in the Profile view where switching sort order, then
+        switching from heavy to tree mode would show the tree in the
+        previous sort order.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20441
+
+        Reviewed by Kevin McCullough.
+
+        * page/inspector/ProfileView.js:
+        (WebInspector.ProfileView.prototype._changeView): Call _sortProfile
+        on the next profile before assigning it to this.profile.
+        (WebInspector.ProfileView.prototype._sortData): Call _sortProfile.
+        (WebInspector.ProfileView.prototype._sortProfile): Moves from
+        _sortData and takes a profile argument. If the profile passed in
+        matches the this.profile, then call refresh.
+
+2008-08-18  Timothy Hatcher  <timothy@apple.com>
+
+        Changed the default sort order now that heavy view is the default.
+        Also fixes a bug where the heavy profile was not sorted at first.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20440
+
+        Reviewed by Kevin McCullough.
+
+        * page/inspector/ProfileView.js:
+        (WebInspector.ProfileView): Changed the default sort column. Also assign
+        heavyProfile to profile, so the sortSelfTimeDescending call happens
+        on the heavy profile before assigning to this.profile.
+
+2008-08-18  Timothy Hatcher  <timothy@apple.com>
+
+        Add support for editing DOM properties and scope variables by double
+        clicking a property to enter edit mode.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20415
+
+        Reviewed by Kevin McCullough.
+
+        * page/inspector/ObjectPropertiesSection.js:
+        (WebInspector.ObjectPropertiesSection): Set editable to true by default.
+        (WebInspector.ObjectPropertiesSection.prototype.onpopulate):
+        Factored out code into update, and calls update.
+        (WebInspector.ObjectPropertiesSection.prototype.update): Moved from onpopulate.
+        Call removeChildren since this method can be called multiple times now.
+        (WebInspector.ObjectPropertyTreeElement): Pass an empty title, the title
+        gets made later in onattach.
+        (WebInspector.ObjectPropertyTreeElement.prototype.onpopulate): Don't return early
+        if shouldRefreshChildren is true. Call removeChildren since this method can be
+        called multiple times now.
+        (WebInspector.ObjectPropertyTreeElement.prototype.ondblclick): Call startEditing.
+        (WebInspector.ObjectPropertyTreeElement.prototype.onattach): Call update.
+        (WebInspector.ObjectPropertyTreeElement.prototype.update): Update the title for
+        this element (code moved from the constructor.)
+        (WebInspector.ObjectPropertyTreeElement.prototype.updateSiblings): Recreate all
+        sibling property elements.
+        (WebInspector.ObjectPropertyTreeElement.prototype.startEditing): Call
+        WebInspector.startEditing after rememebring some context.
+        (WebInspector.ObjectPropertyTreeElement.prototype.editingEnded): Reset the scrollLeft
+        for the list element, since it might have scrolled during editing.
+        (WebInspector.ObjectPropertyTreeElement.prototype.editingCancelled): Call editingEnded
+        then restore the state from the context. Then call update to restore the title.
+        (WebInspector.ObjectPropertyTreeElement.prototype.editingCommitted): Call editingCancelled
+        if the user input and the previous input are the same. Call editingEnded, then call applyExpression
+        to commit the user input.
+        (WebInspector.ObjectPropertyTreeElement.prototype.applyExpression): Evaluates the input expression
+        and stores the result on the object for the property name of this element. If the expression is
+        empty, delete the property and remove the tree element.
+        * page/inspector/ScopeChainSidebarPane.js:
+        (WebInspector.ScopeChainSidebarPane.prototype.update): Set the editInSelectedCallFrameWhenPaused
+        property on each ObjectPropertiesSection.
+        (WebInspector.ScopeVariableTreeElement.prototype.onattach): Call ObjectPropertyTreeElement's onattach
+        since it is now implemented.
+        * page/inspector/ScriptsPanel.js:
+        (WebInspector.ScriptsPanel.prototype.evaluateInSelectedCallFrame): Added an updateInterface argument
+        that defaults to true if omitted. It specifies whether to call update on the scope chain.
+        * page/inspector/inspector.css: New styles.
+        * page/inspector/treeoutline.js:
+        (TreeElement.prototype._attach): Fixed an exception that fired when handling the shouldRefreshChildren
+        change. The nextSibling would exist but have a _listItemNode that didn't match the new parent.
+
+2008-08-18  Timothy Hatcher  <timothy@apple.com>
+
+        Surround the expression to be evaluated in parenthesis so the
+        result of the eval is the result of the whole expression not
+        the last potential sub-expression. So evaluating {x: 123}
+        will show the Object not 123.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20428
+
+        Reviewed by Kevin McCullough.
+
+        * page/inspector/Console.js:
+        (Console.prototype._evalInInspectedWindow): Add parenthesis
+        around the expression. And add couple comments.
+
+2008-08-19 Kevin McCullough <kmccullough@apple.com>
+
+        Reviewed by Geoff.
+
+        -Implement a page() function to extract a common code pattern.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * page/Console.cpp:
+        (WebCore::Console::addMessage):
+        (WebCore::Console::error):
+        (WebCore::Console::info):
+        (WebCore::Console::log):
+        (WebCore::Console::dir):
+        (WebCore::Console::assertCondition):
+        (WebCore::Console::time):
+        (WebCore::Console::timeEnd):
+        (WebCore::Console::group):
+        (WebCore::Console::groupEnd):
+        (WebCore::Console::finishedProfiling):
+        (WebCore::Console::warn):
+        (WebCore::Console::framePage):
+        * page/Console.h:
+
+2008-08-12  Darin Adler  <darin@apple.com>
+
+        Reviewed by Geoff.
+
+        - eliminate JSValue::type()
+
+        * bridge/c/c_instance.cpp:
+        (KJS::Bindings::CInstance::defaultValue): Take PreferredPrimitiveType
+        argument instead of JSType argument. Removed unneeded code to handle
+        boolean, since that's never passed.
+        * bridge/c/c_instance.h: Ditto.
+
+        * bridge/c/c_utility.cpp:
+        (KJS::Bindings::convertValueToNPVariant): Use JSValue::is functions
+        instead of JSValue::type(). Removed unneeded code to handle
+        "unspecified".
+
+        * bridge/jni/jni_instance.cpp:
+        (JavaInstance::defaultValue): Take PreferredPrimitiveType argument
+        instead of JSType argument. Removed unneeded code to handle boolean.
+        * bridge/jni/jni_instance.h: Ditto.
+
+        * bridge/jni/jni_jsobject.mm:
+        (JavaJSObject::convertValueToJObject): Use JSValue::is functions
+        instead of JSValue::type().
+
+        * bridge/objc/objc_instance.h: Take PreferredPrimitiveType argument
+        instead of JSType argument. Removed unused argument.
+        * bridge/objc/objc_instance.mm:
+        (ObjcInstance::getValueOfUndefinedField): Removed unused argument.
+        (ObjcInstance::defaultValue): Take PreferredPrimitiveType argument
+        instead of JSType argument. Removed unneeded code to handle boolean
+        and another dead code path for unknown types.
+
+        * bridge/objc/objc_runtime.h: Take PreferredPrimitiveType argument
+        instead of JSType argument. Removed override of type() that caused
+        the fallback object to return "UndefinedType" when there is no
+        invokeUndefinedMethodFromWebScript:withArguments: method defined.
+        That didn't accomplish much, since most checks for undefined don't
+        ever call type().
+        * bridge/objc/objc_runtime.mm:
+        (ObjcFallbackObjectImp::defaultValue): Ditto.
+
+        * bridge/qt/qt_instance.cpp:
+        (KJS::Bindings::QtInstance::defaultValue): Take PreferredPrimitiveType
+        argument instead of JSType argument. Removed unneeded code to handle
+        boolean.
+        * bridge/qt/qt_instance.h: Ditto.
+
+        * bridge/runtime.h:
+        (KJS::Bindings::Instance::getValueOfUndefinedField): Removed
+        unsed argument.
+        * bridge/runtime_object.cpp:
+        (RuntimeObjectImp::defaultValue): Take PreferredPrimitiveType
+        argument instead of JSType argument.
+        * bridge/runtime_object.h: Ditto.
+
+2008-08-18  Maxime Britto  <britto@apple.com>
+
+        Reviewed by Adele.
+
+        <rdar://6157207> Mouse pointer does not change when new window is opened after pan-scrolling original window
+        Related to the discussion from rdar://6102511 , we should disable every key event (except for the esc key which stops the panning).
+        We shouldn't be able to create another window while we are in pan scrolling.
+        Other browsers behaviors :
+          FF3 : Most of the keys are disabled, there is no way to create another window while in panscroll mode
+          IE7 : Keys are not disabled but stops immediately the panning.
+        This patch matches FF3 behavior by disabling every key but the esc key.
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::stopAutoscrollTimer): Change the cursor back to the regular arrow cursor when the pannning is stopped.
+        (WebCore::EventHandler::keyEvent): When a key event is received while in panning or autoscroll we swallow the event early.
+
+2008-08-18  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        - fix <rdar://problem/5862634> REGRESSION (3.1.1): In iChat, inline image not resizable past current size after another IM is received
+
+        Test: fast/replaced/max-width-percent.html
+
+        Added an includeMaxWidth boolean to RenderBox::calcReplaedWidth().
+        When false, max-width is not factored into the
+        calculation.
+        Changed RenderReplaced and subclasses' calcPrefWidths() to call
+        calcReplacedWidth(false) and then apply max-width only if it has a
+        fixed, positive value.
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::calcReplacedWidth):
+        * rendering/RenderBox.h:
+        * rendering/RenderImage.cpp:
+        (WebCore::RenderImage::calcReplacedWidth):
+        (WebCore::RenderImage::calcPrefWidths): 
+        * rendering/RenderImage.h:
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::calcPrefWidths):
+        * rendering/RenderSVGRoot.cpp:
+        (WebCore::RenderSVGRoot::calcPrefWidths):
+        * rendering/RenderVideo.cpp:
+        (WebCore::RenderVideo::calcReplacedWidth):
+        (WebCore::RenderVideo::calcPrefWidths):
+        * rendering/RenderVideo.h:
+
+2008-08-18  Daniel Macks  <dmacks@netspace.org>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20410
+        More portable/self-documenting replacement for SIZE_MAX.
+
+        * platform/network/curl/FormDataStreamCurl.cpp:
+        (WebCore::FormDataStream::read):
+
+2008-08-18  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        Need to make sure we have an Animation in the AnimationList
+        before setting the initial value.
+        https://bugs.webkit.org/show_bug.cgi?id=20408
+
+        Test: fast/css/transition_shorthand_parsing.html
+
+        * css/CSSStyleSelector.cpp:
+
 2008-08-18  Kevin McCullough  <kmccullough@apple.com>
 
         Reviewed by Tim.

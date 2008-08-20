@@ -34,6 +34,7 @@
 #include "NP_jsobject.h"
 #include "c_instance.h"
 #include <kjs/JSGlobalObject.h>
+#include <kjs/JSLock.h>
 #include "PlatformString.h"
 #include "npruntime_impl.h"
 #include "npruntime_priv.h"
@@ -67,24 +68,22 @@ static String convertUTF8ToUTF16WithLatin1Fallback(const NPUTF8* UTF8Chars, int 
 // Variant value must be released with NPReleaseVariantValue()
 void convertValueToNPVariant(ExecState* exec, JSValue* value, NPVariant* result)
 {
-    JSType type = value->type();
-    
+    JSLock lock(false);
+
     VOID_TO_NPVARIANT(*result);
 
-    if (type == StringType) {
+    if (value->isString()) {
         UString ustring = value->toString(exec);
         CString cstring = ustring.UTF8String();
         NPString string = { (const NPUTF8*)cstring.c_str(), static_cast<uint32_t>(cstring.size()) };
         NPN_InitializeVariantWithStringCopy(result, &string);
-    } else if (type == NumberType) {
+    } else if (value->isNumber()) {
         DOUBLE_TO_NPVARIANT(value->toNumber(exec), *result);
-    } else if (type == BooleanType) {
+    } else if (value->isBoolean()) {
         BOOLEAN_TO_NPVARIANT(value->toBoolean(exec), *result);
-    } else if (type == UnspecifiedType) {
-        VOID_TO_NPVARIANT(*result);
-    } else if (type == NullType) {
+    } else if (value->isNull()) {
         NULL_TO_NPVARIANT(*result);
-    } else if (type == ObjectType) {
+    } else if (value->isObject()) {
         JSObject* object = static_cast<JSObject*>(value);
         if (object->classInfo() == &RuntimeObjectImp::s_info) {
             RuntimeObjectImp* imp = static_cast<RuntimeObjectImp*>(value);
@@ -108,6 +107,8 @@ void convertValueToNPVariant(ExecState* exec, JSValue* value, NPVariant* result)
 
 JSValue* convertNPVariantToValue(ExecState* exec, const NPVariant* variant, RootObject* rootObject)
 {
+    JSLock lock(false);
+    
     NPVariantType type = variant->type;
 
     if (type == NPVariantType_Bool)

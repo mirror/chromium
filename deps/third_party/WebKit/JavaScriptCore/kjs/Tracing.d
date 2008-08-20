@@ -28,6 +28,9 @@ provider JavaScriptCore
     probe gc__begin();
     probe gc__marked();
     probe gc__end(int, int);
+    
+    probe profile__will_execute(int, char*, char*, int);
+    probe profile__did_execute(int, char*, char*, int);
 };
 
 #pragma D attributes Unstable/Unstable/Common provider JavaScriptCore provider

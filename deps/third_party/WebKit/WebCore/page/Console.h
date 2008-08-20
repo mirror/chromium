@@ -44,6 +44,7 @@ namespace KJS {
 namespace WebCore {
 
     class Frame;
+    class Page;
     class String;
 
     enum MessageSource {
@@ -79,6 +80,7 @@ namespace WebCore {
         void warn(KJS::ExecState*, const KJS::ArgList& arguments);
         void dir(KJS::ExecState*, const KJS::ArgList& arguments);
         void assertCondition(bool condition, KJS::ExecState*, const KJS::ArgList& arguments);
+        void count(const KJS::UString& title);
         void profile(KJS::ExecState*, const KJS::ArgList& arguments);
         void profileEnd(KJS::ExecState*, const KJS::ArgList& arguments);
         void time(const KJS::UString& title);
@@ -91,6 +93,8 @@ namespace WebCore {
         void reportException(KJS::ExecState*, KJS::JSValue*);
         void reportCurrentException(KJS::ExecState*);
     private:
+        inline Page* page() const;
+    
         Console(Frame*);
         
         Frame* m_frame;
