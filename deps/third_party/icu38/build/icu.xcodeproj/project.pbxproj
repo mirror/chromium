@@ -2312,6 +2312,7 @@
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PRODUCT_NAME = icuuc;
 			};
 			name = Debug;
@@ -2321,6 +2322,7 @@
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PRODUCT_NAME = icuuc;
 			};
 			name = Release;
