@@ -1,0 +1,12 @@
+#!/bin/sh
+
+url="https://chrome-svn.corp.google.com/chrome/trunk/depot_tools/release/win"
+opt=-q
+
+# we silently update the depot_tools when it already exists
+if [ ! -e $1 ]
+then
+  echo checking out latest depot_tools...
+fi
+
+exec svn co $opt $url $1

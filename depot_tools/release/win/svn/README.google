@@ -1,0 +1,5 @@
+This directory contains a copy of the Windows Subversion client, built with SSL and other dependencies suitable for use with Google's Subversion repository at svn.corp.google.com.
+
+The source of this distribution is Pam Greene's web directory:
+http://www.corp.google.com/~pamg/gvn-windows.zip
+

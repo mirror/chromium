@@ -1,0 +1,12 @@
+#!/bin/sh
+
+url="https://svn.corp.google.com/chrome/branches/depot_tools_release_branch"
+opt=-q
+
+# we silently update the depot_tools when it already exists
+if [ ! -e $1 ]
+then
+  echo checking out latest depot_tools...
+fi
+
+exec gvn co $opt $url $1
