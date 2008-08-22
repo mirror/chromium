@@ -171,6 +171,29 @@ static bool LookupAltName(const String& name, String& altName)
         // 標楷體, DFKai-SB
         {L"\x6A19\x6977\x9AD4", {L"DFKai-SB", 950}},
         {L"dfkai-sb", {L"\x6A19\x6977\x9AD4", 950}},
+        // WenQuanYi Zen Hei
+        {L"\x6587\x6cc9\x9a5b\x6b63\x9ed1", {L"WenQuanYi Zen Hei", 950}},
+        {L"wenquanyi zen hei", {L"\x6587\x6cc9\x9a5b\x6b63\x9ed1", 950}},
+        // WenQuanYi Zen Hei
+        {L"\x6587\x6cc9\x9a7f\x6b63\x9ed1", {L"WenQuanYi Zen Hei", 936}},
+        {L"wenquanyi zen hei", {L"\x6587\x6cc9\x9a7f\x6b63\x9ed1", 936}},
+        // AR PL ShanHeiSun Uni,
+        {L"\x6587\x9f0e\x0050\x004c\x7d30\x4e0a\x6d77\x5b8b\x0055\x006e\x0069",
+         {L"AR PL ShanHeiSun Uni", 950}},
+        {L"ar pl shanheisun uni",
+         {L"\x6587\x9f0e\x0050\x004c\x7d30\x4e0a\x6d77\x5b8b\x0055\x006e\x0069", 950}},
+        // AR PL ShanHeiSun Uni,
+        {L"\x6587\x9f0e\x0050\x004c\x7ec6\x4e0a\x6d77\x5b8b\x0055\x006e\x0069",
+         {L"AR PL ShanHeiSun Uni", 936}},
+        {L"ar pl shanheisun uni",
+         {L"\x6587\x9f0e\x0050\x004c\x7ec6\x4e0a\x6d77\x5b8b\x0055\x006e\x0069", 936}},
+        // AR PL ZenKai Uni
+        // Traditional Chinese (950) and Simplified Chinese (936) names are
+        // identical.
+        {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", {L"AR PL ZenKai Uni", 950}},
+        {L"ar pl zenkai uni", {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", 950}},
+        {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", {L"AR PL ZenKai Uni", 936}},
+        {L"ar pl zenkai uni", {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", 936}},
     };
 
     typedef stdext::hash_map<std::wstring, const fontCodepage*> nameMap;
@@ -363,7 +386,16 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
         L"simsun",
         L"gulim",
         L"pmingliu",
-        L"code2000",
+        L"wenquanyi zen hei", // partial CJK Ext. A coverage but more
+                              // widely known to Chinese users.
+        L"ar pl shanheisun uni",
+        L"ar pl zenkai uni",
+        L"han nom a",  // Complete CJK Ext. A coverage
+        L"code2000",   // Complete CJK Ext. A coverage
+        // CJK Ext. B fonts are not listed here because it's of no use
+        // with our current non-BMP character handling because we use
+        // Uniscribe for it and that code path does not go through here.
+        // This will be fixed when we move a bulk of this to base/gfx.
     };
 
     const static wchar_t* const commonFonts[] = {
@@ -372,6 +404,12 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
         L"microsoft sans serif",
         L"lucida sans unicode",
         L"palatino linotype",
+        // Four fonts below (code2000 at the end) are not from MS, but
+        // once installed, cover a very wide range of characters.
+        L"freeserif",
+        L"freesans",
+        L"gentium",
+        L"gentiumalt",
         L"ms pgothic",
         L"simsun",
         L"gulim",
