@@ -1,0 +1,59 @@
+# depot_tools for Chromium development
+
+depot_tools provides a set of cross-platform tools for managing the
+Chromium software development cycle.
+
+This directory pulls together wrappers around, and (for some platforms)
+pre-built binaries of, various necessary tools.
+
+The intent is to try to make things "just work" for individuals
+participating in Chromium development, while also supporting uprades
+of these tool and wrappers without any action on the developers's parts.
+
+Trying to make things drop-dead-simple for the developers causes the
+process of making changes to *these* tools and wrappers themselves to
+be a little more complicated.  This is a good tradeoff, but it means
+you need to follow directions.  In particular, DO NOT EDIT FILES IN
+THE PUBLICLY-VISIBLE DIRECTORIES IN-PLACE.
+
+Directory Layout
+================
+
+  linux/
+  mac/
+  win/
+
+    These are the publicly-visible "bootstrap" directories that we
+    expect people who already have Subversion installed to sync directly
+    to get started.  These are just thin wrappers that call into the
+    utilities in the release/ directory, after possibly updating
+    their contents from the publicly-visible URL.
+ 
+    DO NOT EDIT FILES IN THESE DIRECTORIES DIRECTLY.  Make changes to
+    the underlying files underneath the src/ directory and follow the
+    procedures to update these directories and check in the results.
+
+  release/
+
+    This contains the publicly-visible directories that get updated
+    by the wrappers, to keep the toolchain up-to-date without any
+    explicit action on the developer's part.
+
+    DO NOT EDIT THINGS IN THIS DIRECTORY DIRECTLY.  Make changes to
+    the underlying files underneath the src/ directory and follow the
+    procedures to update this directory and check in the results.
+
+  bin/
+
+    Utility scripts for working on these depot_tools:  managing our
+    process of building the publicly-visible directories from
+    the underlying src/, and making the contents visible by checking
+    in the updates.
+
+  doc/
+
+    Various design documents describing what's going on here.
+
+  src/
+
+    THIS IS THE DIRECTORY IN WHICH YOU SHOULD MAKE CHANGES.
