@@ -1,7 +1,7 @@
 @echo off
 
 setlocal
-set url="https://svn/chrome/branches/depot_tools_release_branch"
+set url="svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools/release/win"
 set opt=-q
 
 :: we silently update the depot_tools when it already exists

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-url="https://svn.corp.google.com/chrome/branches/depot_tools_release_branch"
+url="svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools/release/win"
 opt=-q
 
 # we silently update the depot_tools when it already exists
@@ -9,4 +9,4 @@ then
   echo checking out latest depot_tools...
 fi
 
-exec gvn co $opt $url $1
+exec svn co $opt $url $1

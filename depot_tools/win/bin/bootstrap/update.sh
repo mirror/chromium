@@ -1,6 +1,6 @@
 #!/bin/sh
 
-url="https://chrome-svn.corp.google.com/chrome/trunk/depot_tools/release/win"
+url="svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools/release/win"
 opt=-q
 
 # we silently update the depot_tools when it already exists
