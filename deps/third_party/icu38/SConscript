@@ -53,6 +53,12 @@ if env['PLATFORM'] == 'win32':
           '/WX',
       ]
   )
+else:
+  env.Append(
+      CCFLAGS = [
+          '-Wno-parentheses',
+      ]
+  )
 
 if 'WIN32_LEAN_AND_MEAN' in env['CPPDEFINES']:
   env['CPPDEFINES'].remove('WIN32_LEAN_AND_MEAN')
