@@ -218,6 +218,10 @@ static const char kMetricsType[] = "application/vnd.mozilla.metrics.bz2";
 // The delay, in seconds, after startup before sending the first log message.
 static const int kInitialLogDelay = 60;  // one minute
 
+// The default maximum number of events in a log uploaded to the UMA server.
+// TODO(petersont): Honor the limit when the log is actually sent.
+static const int kInitialEventLimit = 600;
+
 // If an upload fails, and the transmission was over this byte count, then we
 // will discard the log, and not try to retransmit it.  We also don't persist
 // the log to the prefs for transmission during the next chrome session if this
