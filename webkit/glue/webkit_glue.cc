@@ -360,7 +360,7 @@ const std::string& GetDefaultUserAgent() {
     FileVersionInfo* version_info =
         FileVersionInfo::CreateFileVersionInfoForCurrentModule();
     if (version_info)
-      product = "VVersion/" + WideToASCII(version_info->product_version());
+      product = "Chrome/" + WideToASCII(version_info->product_version());
 
     if (product.empty())
       product = "Version/3.1";
