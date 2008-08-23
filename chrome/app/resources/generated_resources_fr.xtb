@@ -203,7 +203,7 @@
 <translation id="8418445294933751433">Afficher dan&amp;s un onglet</translation>
 <translation id="1723824996674794290">&amp;Nouvelle fenêtre</translation>
 <translation id="1901303067676059328">&amp;Tout sélectionner</translation>
-<translation id="3786934874263773074">&amp;Trouver sur la page</translation>
+<translation id="3786934874263773074">&amp;Rechercher sur la page</translation>
 <translation id="3712897371525859903">Enregistrer la p&amp;age sous...</translation>
 <translation id="8755376271068075440">P&amp;lus grand</translation>
 <translation id="6163363155248589649">&amp;Normal</translation>
@@ -304,7 +304,7 @@
 <translation id="4381091992796011497">Nom d'utilisateur :</translation>
 <translation id="4304224509867189079">Se connecter</translation>
 <translation id="5455790498993699893"><ph name="ACTIVE_MATCH"/> sur <ph name="TOTAL_MATCHCOUNT"/></translation>
-<translation id="1829244130665387512">Trouver sur la page</translation>
+<translation id="1829244130665387512">Rechercher sur la page</translation>
 <translation id="2955913368246107853">Fermer la barre de recherche</translation>
 <translation id="7564847347806291057">Arrêter le processus</translation>
 <translation id="5981759340456370804">Statistiques avancées</translation>
@@ -316,7 +316,7 @@
 <translation id="3870154837782082782">Google Inc.</translation>
 <translation id="6622748519798088408">Copyright © 2006-2008 Google Inc. Tous droits réservés.</translation>
 <translation id="6479177161510354016">Alerte <ph name="SITE"/></translation>
-<translation id="333371639341676808">Empêcher cette page de générer des zones de message supplémentaires</translation>
+<translation id="333371639341676808">Empêcher cette page de générer des boîtes de dialogue supplémentaires</translation>
 <translation id="5295309862264981122">Confirmer la navigation</translation>
 <translation id="111844081046043029">Voulez-vous vraiment quitter cette page ?</translation>
 <translation id="6512448926095770873">Quitter cette page</translation>
