@@ -2991,7 +2991,7 @@ void RegisterUserPrefs(PrefService* prefs) {
 
 int GetDataVersion() {
   return 12;  // Increment this if you change the above data in ways that mean
-             // users with existing data should get a new version.
+              // users with existing data should get a new version.
 }
 
 void GetPrepopulatedEngines(PrefService* prefs,
