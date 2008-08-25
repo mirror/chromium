@@ -2,4 +2,4 @@
 
 base_dir=$(dirname "$0")
 
-exec python $base_dir/../release/gcl.py $*
+exec python $base_dir/release/gcl.py $*

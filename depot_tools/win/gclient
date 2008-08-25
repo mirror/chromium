@@ -7,7 +7,7 @@ then
   # gclient.bat will run the update and then gclient.py
   exec "$base_dir/gclient.bat" "$@"
 else
-  # Update the "release" subdirectory every time this script is run to stay
+  # Update the "release" subdirectoryevery time this script is run to stay
   # up-to-date with the latest depot_tools release.
   $base_dir/bootstrap/update.sh $base_dir/release
   exec /usr/bin/python2.4 $base_dir/release/gclient.py "$@"

@@ -1,6 +1,6 @@
 @echo off
 
 setlocal
-set PATH=%~dp0..\release\svn;%PATH%
+set PATH=%~dp0release\svn;%PATH%
 
-%~dp0..\release\python_24\python.exe %~dp0..\release\gcl.py %*
+%~dp0release\python_24\python.exe %~dp0release\gcl.py %*
