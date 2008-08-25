@@ -4,7 +4,7 @@
 :: found in the parent directory.
 
 setlocal
-set PATH=%~dp0..\svn;%WINDIR%\system32
+set PATH=%~dp0svn;%WINDIR%\system32
 set opt=-q
 
 svn %opt% %~dp0..
