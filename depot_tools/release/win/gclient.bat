@@ -5,7 +5,8 @@
 
 setlocal
 set PATH=%~dp0..\svn;%WINDIR%\system32
+set opt=-q
 
-xcopy %~dp0wrappers\*.* %~dp0.. /e /c /d /y /q > nul
+svn %opt% %~dp0..
 
 %~dp0..\python_24\python.exe %~dp0\gclient.py %*
