@@ -1,8 +1,11 @@
 #!/bin/sh
 
 base_dir=$(dirname "$0")
+opt=-q
 
-cp -r $base_dir/wrappers/* $base_dir/.. > /dev/null
-cp -r $base_dir/wrappers/bootstrap/* $base_dir/../bootstrap > /dev/null
+if [ $base_dir/../.svn ]
+then
+  svn $opt up $base_dir/..
+fi
 
 exec python $base_dir/gclient.py $*
