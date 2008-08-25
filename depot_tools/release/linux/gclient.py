@@ -56,6 +56,7 @@ a wrapper for managing a set of client modules in svn.
 subcommands:
    config
    diff
+   revert
    status
    sync
    update
@@ -138,6 +139,11 @@ Examples:
   gclient diff -- -r HEAD -x -b
       diff versus the latest version of each module
 """,
+    "revert":
+    """Revert every file in every managed directory in the client view.
+
+usage: revert
+""",
     "status":
     """Show the status of client and dependent modules, using 'svn diff'
 for each module.  Additional options and args may be passed to 'svn diff'.
@@ -219,7 +225,13 @@ def RunSVN(args, in_directory,
       "\n________ running \'%s\' in \'%s\'" % (" ".join(c),
                                                realpath(in_directory)))
   output_stream.flush()  # flush our stdout so it shows up first.
-  rv = call(c, cwd=in_directory, shell=True)
+
+  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for
+  # the svn.exe executable, but shell=True makes subprocess on Linux fail
+  # when it's called with a list because it only tries to execute the
+  # first string ("svn").
+  rv = call(c, cwd=in_directory, shell=(sys.platform == 'win32'))
+
   if rv:
     raise Error("failed to run command: %s" % " ".join(c))
   return rv
@@ -242,7 +254,12 @@ def CaptureSVN(args, in_directory, verbose):
     print ("\n________ running \'%s\' in \'%s\'"
            % (" ".join(c), os.path.realpath(in_directory)))
     sys.stdout.flush()  # flush our stdout so it shows up first.
-  return subprocess.Popen(c, cwd=in_directory, shell=True,
+
+  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for
+  # the svn.exe executable, but shell=True makes subprocess on Linux fail
+  # when it's called with a list because it only tries to execute the
+  # first string ("svn").
+  return subprocess.Popen(c, cwd=in_directory, shell=(sys.platform == 'win32'),
                           stdout=subprocess.PIPE).communicate()[0]
 
 
@@ -355,7 +372,7 @@ def UpdateToURL(relpath, svnurl, root_dir, options, args,
         # can update to a revision or have to switch to a different
         # branch work as expected.
         run_svn(["switch", "--relocate",
-                 from_repository_root, to_repository_root], root_dir)
+                 from_repository_root, to_repository_root, relpath], root_dir)
         from_url = from_url.replace(from_repository_root, to_repository_root)
 
     # by default, we assume that we cannot just use 'svn update'
@@ -586,7 +603,12 @@ def GetAllDeps(client, solution_urls,
             raise Error(
                 "relative DEPS entry \"%s\" must begin with a slash" % d)
           info = capture_svn_info(solution["url"], client["root_dir"], False)
-          url = info["Repository Root"] + url
+          try:
+            url = info["Repository Root"] + url
+          except KeyError:
+            print "capture_svn_info(%s, %s, False) returned:" % (repr(solution["url"]), repr(client["root_dir"]))
+            print "info =", info
+            raise
       if d in deps and deps[d] != url:
         raise Error(
             "solutions have conflicting versions of dependency \"%s\"" % d)
@@ -823,7 +845,7 @@ def DoDiff(options, args,
            get_client=GetClient,
            run_svn_command_for_client_modules=RunSVNCommandForClientModules,
            output_stream=sys.stdout):
-  """Handle the diff subcommands."""
+  """Handle the diff subcommand."""
   client = get_client()
   if not client:
     raise Error("client not configured; see 'gclient config'")
@@ -834,6 +856,18 @@ def DoDiff(options, args,
   return run_svn_command_for_client_modules("diff", client,
                                             options.verbose, args)
 
+def DoRevert(options, args,
+             get_client=GetClient,
+             run_svn_command_for_client_modules=RunSVNCommandForClientModules):
+  """Handle the revert subcommand."""
+  client = get_client()
+  if not client:
+    raise Error("client not configured; see 'gclient config'")
+  args.append("--recursive")
+  args.append("*.*")
+  return run_svn_command_for_client_modules("revert", client,
+                                            options.verbose, args)
+
 
 gclient_command_map = {
     "config": DoConfig,
@@ -842,6 +876,7 @@ gclient_command_map = {
     "status": DoStatus,
     "sync": DoUpdate,
     "update": DoUpdate,
+    "revert": DoRevert,
     }
 
 
