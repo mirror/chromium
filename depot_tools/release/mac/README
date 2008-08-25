@@ -1,0 +1,4 @@
+This directory contains the latest stable release of the depot tools.
+
+Please use https://svn/chrome/branches/depot_tools instead so that you are
+always using the most up-to-date version of the depot tools!
