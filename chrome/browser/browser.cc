@@ -90,7 +90,7 @@ static const int kWindowTilePixels = 10;
 static const int kDefaultHungPluginDetectFrequency = 2000;
 
 // How long do we wait before we consider a window hung (in ms).
-static const int kDefaultPluginMessageResponseTimeout = 10000;
+static const int kDefaultPluginMessageResponseTimeout = 30000;
 
 ////////////////////////////////////////////////////////////////////////////////
 
