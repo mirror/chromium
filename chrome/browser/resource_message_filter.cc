@@ -438,10 +438,9 @@ void ResourceMessageFilter::OnClipboardReadHTML(std::wstring* markup,
   *src_url = GURL(src_url_str);
 }
 
-void ResourceMessageFilter::OnGetWindowRect(HWND hwnd_view_container,
-                                            gfx::Rect *rect) {
+void ResourceMessageFilter::OnGetWindowRect(HWND window, gfx::Rect *rect) {
   RECT window_rect = {0};
-  HWND window = ::GetAncestor(hwnd_view_container, GA_ROOT);
+  // GetWindowRect can fail if window is invalid.
   GetWindowRect(window, &window_rect);
   *rect = window_rect;
 }

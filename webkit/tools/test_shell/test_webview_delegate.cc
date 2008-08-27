@@ -746,12 +746,12 @@ void TestWebViewDelegate::SetCursor(WebWidget* webwidget,
   }
 }
 
-void TestWebViewDelegate::GetWindowRect(WebWidget* webwidget,
-                                        gfx::Rect* out_rect) {
+void TestWebViewDelegate::GetWindowLocation(WebWidget* webwidget,
+                                            gfx::Point* origin) {
   if (WebWidgetHost* host = GetHostForWidget(webwidget)) {
     RECT rect;
-    ::GetWindowRect(host->window_handle(), &rect);
-    *out_rect = gfx::Rect(rect);
+    GetWindowRect(host->window_handle(), &rect);
+    origin->SetPoint(rect.left, rect.top);
   }
 }
 
