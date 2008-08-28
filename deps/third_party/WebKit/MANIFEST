@@ -5,9 +5,6 @@ WebCore\css\CSSStyleSelector.cpp
 WebCore\dom\Document.cpp
 WebCore\editing\Editor.h
 WebCore\editing\Selection.cpp
-WebCore\html\CanvasRenderingContext2D.cpp
-WebCore\html\CanvasStyle.cpp
-WebCore\html\CanvasStyle.h
 WebCore\html\HTMLInputElement.cpp
 WebCore\html\HTMLInputElement.h
 WebCore\html\HTMLLinkElement.cpp
@@ -25,7 +22,6 @@ WebCore\page\DOMWindow.h
 WebCore\page\DragController.cpp
 WebCore\page\EventHandler.cpp
 WebCore\page\Frame.cpp
-WebCore\page\Frame.h
 WebCore\page\InspectorController.cpp
 WebCore\page\InspectorController.h
 WebCore\page\Page.h
@@ -37,7 +33,6 @@ WebCore\platform\KURL.h
 WebCore\platform\SecurityOrigin.cpp
 WebCore\platform\StaticConstructors.h
 WebCore\platform\TreeShared.h
-WebCore\platform\graphics\BitmapImage.h
 WebCore\platform\graphics\FontCache.cpp
 WebCore\platform\graphics\FontCache.h
 WebCore\platform\graphics\FontDescription.h
@@ -49,7 +44,6 @@ WebCore\platform\image-decoders\gif\GIFImageDecoder.cpp
 WebCore\platform\image-decoders\jpeg\JPEGImageDecoder.cpp
 WebCore\platform\image-decoders\png\PNGImageDecoder.cpp
 WebCore\platform\text\AtomicString.cpp
-WebCore\platform\text\String.cpp
 WebCore\platform\text\StringImpl.cpp
 WebCore\platform\text\TextCodecICU.cpp
 WebCore\platform\win\FileSystemWin.cpp
