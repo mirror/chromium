@@ -1,4 +1,3 @@
-// -*- mode: c++; c-basic-offset: 4 -*-
 /*
  * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Trolltech ASA
@@ -30,11 +29,11 @@
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
 #include "HitTestResult.h"
-#include "JSDOMWindow.h"
 #include "Page.h"
 #include "PageGroup.h"
 #include "PausedTimeouts.h"
 #include "ResourceHandle.h"
+#include "ScriptController.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
 #include "WindowFeatures.h"
@@ -57,6 +56,7 @@ public:
     ~PageGroupLoadDeferrer();
 private:
     Vector<RefPtr<Frame>, 16> m_deferredFrames;
+    bool m_wasDeferringTimers;
 #if !PLATFORM(MAC)
     Vector<pair<RefPtr<Frame>, PausedTimeouts*>, 16> m_pausedTimeouts;
 #endif
@@ -412,7 +412,11 @@ bool ChromeClient::paintCustomScrollCorner(GraphicsContext*, const FloatRect&)
 // --------
 
 PageGroupLoadDeferrer::PageGroupLoadDeferrer(Page* page, bool deferSelf)
+    : m_wasDeferringTimers(isDeferringTimers())
 {
+    if (!m_wasDeferringTimers)
+        setDeferringTimers(true);
+    
     const HashSet<Page*>& pages = page->group().pages();
 
     HashSet<Page*>::const_iterator end = pages.end();
@@ -424,11 +428,10 @@ PageGroupLoadDeferrer::PageGroupLoadDeferrer(Page* page, bool deferSelf)
 
 #if !PLATFORM(MAC)
             for (Frame* frame = otherPage->mainFrame(); frame; frame = frame->tree()->traverseNext()) {
-                if (JSDOMWindow* window = toJSDOMWindow(frame)) {
-                    PausedTimeouts* timeouts = window->pauseTimeouts();
-
-                    m_pausedTimeouts.append(make_pair(RefPtr<Frame>(frame), timeouts));
-                }
+                OwnPtr<PausedTimeouts> timeouts;
+                frame->script()->pauseTimeouts(timeouts);
+                if (timeouts)
+                    m_pausedTimeouts.append(make_pair(RefPtr<Frame>(frame), timeouts.release()));
             }
 #endif
         }
@@ -442,19 +445,18 @@ PageGroupLoadDeferrer::PageGroupLoadDeferrer(Page* page, bool deferSelf)
 
 PageGroupLoadDeferrer::~PageGroupLoadDeferrer()
 {
-    size_t count = m_deferredFrames.size();
-    for (size_t i = 0; i < count; ++i)
+    if (!m_wasDeferringTimers)
+        setDeferringTimers(false);
+
+    for (size_t i = 0; i < m_deferredFrames.size(); ++i)
         if (Page* page = m_deferredFrames[i]->page())
             page->setDefersLoading(false);
 
 #if !PLATFORM(MAC)
-    count = m_pausedTimeouts.size();
-
-    for (size_t i = 0; i < count; i++) {
-        JSDOMWindow* window = toJSDOMWindow(m_pausedTimeouts[i].first.get());
-        if (window)
-            window->resumeTimeouts(m_pausedTimeouts[i].second);
-        delete m_pausedTimeouts[i].second;
+    for (size_t i = 0; i < m_pausedTimeouts.size(); i++) {
+        Frame* frame = m_pausedTimeouts[i].first.get();
+        OwnPtr<PausedTimeouts> timeouts(m_pausedTimeouts[i].second);
+        frame->script()->resumeTimeouts(timeouts);
     }
 #endif
 }

@@ -47,6 +47,7 @@
 #include "GraphicsTypes.h"
 #include "IntRect.h"
 #include "Length.h"
+#include "NinePieceImage.h"
 #include "Pair.h"
 #include "TextDirection.h"
 #include <wtf/HashMap.h>
@@ -77,6 +78,7 @@ class Pair;
 class RenderArena;
 class ShadowValue;
 class StringImpl;
+class StyleImage;
 
 struct CursorData;
 
@@ -87,145 +89,12 @@ enum PseudoState { PseudoUnknown, PseudoNone, PseudoAnyLink, PseudoLink, PseudoV
 //------------------------------------------------
 // Box model attributes. Not inherited.
 
-struct LengthBox {
-    LengthBox() { }
-    LengthBox(LengthType t)
-        : left(t), right(t), top(t), bottom(t) { }
-
-    Length left;
-    Length right;
-    Length top;
-    Length bottom;
-
-    LengthBox& operator=(const Length& len)
-    {
-        left = len;
-        right = len;
-        top = len;
-        bottom = len;
-        return *this;
-    }
-
-    bool operator==(const LengthBox& o) const
-    {
-        return left == o.left && right == o.right && top == o.top && bottom == o.bottom;
-    }
-
-    bool operator!=(const LengthBox& o) const
-    {
-        return !(*this == o);
-    }
-
-    bool nonZero() const { return !(left.isZero() && right.isZero() && top.isZero() && bottom.isZero()); }
-};
-
 enum EPosition {
     StaticPosition, RelativePosition, AbsolutePosition, FixedPosition
 };
 
 enum EFloat {
     FNONE = 0, FLEFT, FRIGHT
-};
-
-typedef void* WrappedImagePtr;
-
-class StyleImage : public RefCounted<StyleImage>
-{
-public:
-    virtual ~StyleImage() { }
-
-    bool operator==(const StyleImage& other)
-    {
-        return data() == other.data();
-    }
-    
-    virtual PassRefPtr<CSSValue> cssValue() = 0;
-
-    virtual bool canRender(float multiplier) const { return true; }
-    virtual bool isLoaded() const { return true; }
-    virtual bool errorOccurred() const { return false; }
-    virtual IntSize imageSize(const RenderObject*, float multiplier) const = 0;
-    virtual bool imageHasRelativeWidth() const = 0;
-    virtual bool imageHasRelativeHeight() const = 0;
-    virtual bool usesImageContainerSize() const = 0;
-    virtual void setImageContainerSize(const IntSize&) = 0;
-    virtual void addClient(RenderObject*) = 0;
-    virtual void removeClient(RenderObject*) = 0;
-    virtual Image* image(RenderObject*, const IntSize&) const = 0;
-    virtual WrappedImagePtr data() const = 0;
-    virtual bool isCachedImage() const { return false; }
-    virtual bool isGeneratedImage() const { return false; }
-    
-protected:
-    StyleImage() { }
-};
-
-class StyleCachedImage : public StyleImage
-{
-public:
-    static PassRefPtr<StyleCachedImage> create(CachedImage* image) { return adoptRef(new StyleCachedImage(image)); }
-    virtual WrappedImagePtr data() const { return m_image; }
-
-    virtual bool isCachedImage() const { return true; }
-    
-    virtual PassRefPtr<CSSValue> cssValue();
-    
-    CachedImage* cachedImage() const { return m_image; }
-
-    virtual bool canRender(float multiplier) const;
-    virtual bool isLoaded() const;
-    virtual bool errorOccurred() const;
-    virtual IntSize imageSize(const RenderObject*, float multiplier) const;
-    virtual bool imageHasRelativeWidth() const;
-    virtual bool imageHasRelativeHeight() const;
-    virtual bool usesImageContainerSize() const;
-    virtual void setImageContainerSize(const IntSize&);
-    virtual void addClient(RenderObject*);
-    virtual void removeClient(RenderObject*);
-    virtual Image* image(RenderObject*, const IntSize&) const;
-    
-private:
-    StyleCachedImage(CachedImage* image)
-        : m_image(image)
-    {
-    }
-    
-    CachedImage* m_image;
-};
-
-class StyleGeneratedImage : public StyleImage
-{
-public:
-    static PassRefPtr<StyleGeneratedImage> create(CSSImageGeneratorValue* val, bool fixedSize)
-    {
-        return adoptRef(new StyleGeneratedImage(val, fixedSize));
-    }
-
-    virtual WrappedImagePtr data() const { return m_generator; }
-
-    virtual bool isGeneratedImage() const { return true; }
-    
-    virtual PassRefPtr<CSSValue> cssValue();
-
-    virtual IntSize imageSize(const RenderObject*, float multiplier) const;
-    virtual bool imageHasRelativeWidth() const { return !m_fixedSize; }
-    virtual bool imageHasRelativeHeight() const { return !m_fixedSize; }
-    virtual bool usesImageContainerSize() const { return !m_fixedSize; }
-    virtual void setImageContainerSize(const IntSize&);
-    virtual void addClient(RenderObject*);
-    virtual void removeClient(RenderObject*);
-    virtual Image* image(RenderObject*, const IntSize&) const;
-    
-private:
-    StyleGeneratedImage(CSSImageGeneratorValue* val, bool fixedSize)
-        : m_generator(val)
-        , m_fixedSize(fixedSize)
-    {
-    }
-    
-    CSSImageGeneratorValue* m_generator; // The generator holds a reference to us.
-    IntSize m_containerSize;
-    bool m_fixedSize;
 };
 
 //------------------------------------------------
@@ -316,31 +185,6 @@ struct CollapsedBorderValue {
     
     const BorderValue* border;
     EBorderPrecedence precedence;    
-};
-
-enum ENinePieceImageRule {
-    StretchImageRule, RoundImageRule, RepeatImageRule
-};
-
-class NinePieceImage {
-public:
-    NinePieceImage() :m_image(0), m_horizontalRule(StretchImageRule), m_verticalRule(StretchImageRule) {}
-    NinePieceImage(StyleImage* image, LengthBox slices, ENinePieceImageRule h, ENinePieceImageRule v) 
-      :m_image(image), m_slices(slices), m_horizontalRule(h), m_verticalRule(v) {}
-
-    bool operator==(const NinePieceImage& o) const;
-    bool operator!=(const NinePieceImage& o) const { return !(*this == o); }
-
-    bool hasImage() const { return m_image != 0; }
-    StyleImage* image() const { return m_image.get(); }
-    
-    ENinePieceImageRule horizontalRule() const { return static_cast<ENinePieceImageRule>(m_horizontalRule); }
-    ENinePieceImageRule verticalRule() const { return static_cast<ENinePieceImageRule>(m_verticalRule); }
-    
-    RefPtr<StyleImage> m_image;
-    LengthBox m_slices;
-    unsigned m_horizontalRule : 2; // ENinePieceImageRule
-    unsigned m_verticalRule : 2; // ENinePieceImageRule
 };
 
 class BorderData {
@@ -558,19 +402,6 @@ enum EFillRepeat {
     RepeatFill, RepeatXFill, RepeatYFill, NoRepeatFill
 };
 
-struct LengthSize {
-    Length width;
-    Length height;
-    
-    LengthSize()
-    {}
-    
-    LengthSize(const Length& w, const Length& h)
-    : width(w)
-    , height(h)
-    {}
-};
-
 enum EFillLayerType {
     BackgroundFillLayer, MaskFillLayer
 };
@@ -633,16 +464,8 @@ public:
         return !(*this == o);
     }
 
-    bool containsImage(StyleImage* s) const {
-        if (!s)
-            return false;
-        if (m_image && *s == *m_image)
-            return true;
-        if (m_next)
-            return m_next->containsImage(s);
-        return false;
-    }
-    
+    bool containsImage(StyleImage*) const;
+
     bool hasImage() const {
         if (m_image)
             return true;
@@ -796,7 +619,7 @@ public:
 
     virtual void apply(AffineTransform&, const IntSize& borderBoxSize) = 0;
     
-    virtual TransformOperation* blend(const TransformOperation* from, double progress, bool blendToIdentity = false) = 0;
+    virtual PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false) = 0;
     
     virtual bool isScaleOperation() const { return false; }
     virtual bool isRotateOperation() const { return false; }
@@ -828,7 +651,7 @@ public:
         transform.scale(m_x, m_y);
     }
 
-    virtual TransformOperation* blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
+    virtual PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
 
 private:
     ScaleTransformOperation(double sx, double sy)
@@ -863,7 +686,7 @@ public:
         transform.rotate(m_angle);
     }
 
-    virtual TransformOperation* blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
+    virtual PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
     
 private:
     RotateTransformOperation(double angle)
@@ -896,7 +719,7 @@ public:
         transform.skew(m_angleX, m_angleY);
     }
 
-    virtual TransformOperation* blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
+    virtual PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
     
 private:
     SkewTransformOperation(double angleX, double angleY)
@@ -930,7 +753,7 @@ public:
         transform.translate(m_x.calcFloatValue(borderBoxSize.width()), m_y.calcFloatValue(borderBoxSize.height()));
     }
 
-    virtual TransformOperation* blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
+    virtual PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
 
 private:
     TranslateTransformOperation(const Length& tx, const Length& ty)
@@ -966,7 +789,7 @@ public:
         transform = matrix * transform;
     }
 
-    virtual TransformOperation* blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
+    virtual PassRefPtr<TransformOperation> blend(const TransformOperation* from, double progress, bool blendToIdentity = false);
     
 private:
     MatrixTransformOperation(double a, double b, double c, double d, double e, double f)
@@ -1225,13 +1048,13 @@ struct TimingFunction
 {
     TimingFunction()
     : m_type(CubicBezierTimingFunction)
-    , m_x1(.25)
-    , m_y1(.1)
-    , m_x2(.25)
+    , m_x1(0.25)
+    , m_y1(0.1)
+    , m_x2(0.25)
     , m_y2(1.0)
     {}
 
-    TimingFunction(ETimingFunctionType timingFunction, double x1 = .0, double y1 = .0, double x2 = .0, double y2 = .0)
+    TimingFunction(ETimingFunctionType timingFunction, double x1 = 0.0, double y1 = 0.0, double x2 = 1.0, double y2 = 1.0)
     : m_type(timingFunction)
     , m_x1(x1)
     , m_y1(y1)
@@ -2146,7 +1969,7 @@ public:
     Length transformOriginX() const { return rareNonInheritedData->m_transform->m_x; }
     Length transformOriginY() const { return rareNonInheritedData->m_transform->m_y; }
     bool hasTransform() const { return !rareNonInheritedData->m_transform->m_operations.isEmpty(); }
-    void applyTransform(AffineTransform&, const IntSize& borderBoxSize) const;
+    void applyTransform(AffineTransform&, const IntSize& borderBoxSize, bool includeTransformOrigin = true) const;
     bool hasMask() const { return rareNonInheritedData->m_mask.hasImage() || rareNonInheritedData->m_maskBoxImage.hasImage(); }
     // End CSS3 Getters
 
@@ -2275,7 +2098,10 @@ public:
         }
         return false;
     }
-
+    
+    // Only used for blending font sizes when animating.
+    void setBlendedFontSize(int);
+    
     void setColor(const Color & v) { SET_VAR(inherited,color,v) }
     void setTextIndent(Length v) { SET_VAR(inherited,indent,v) }
     void setTextAlign(ETextAlign v) { inherited_flags._text_align = v; }

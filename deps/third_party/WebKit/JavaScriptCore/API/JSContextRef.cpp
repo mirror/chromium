@@ -1,4 +1,3 @@
-// -*- mode: c++; c-basic-offset: 4 -*-
 /*
  * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
  *
@@ -112,7 +111,8 @@ void JSGlobalContextRelease(JSGlobalContextRef ctx)
 
         delete heap;
         globalData.heap = 0;
-    }
+    } else
+        globalData.heap->collect();
 
     globalData.deref();
 }

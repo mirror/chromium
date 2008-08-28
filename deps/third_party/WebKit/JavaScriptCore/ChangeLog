@@ -1,3 +1,189 @@
+2008-08-28  Alexey Proskuryakov  <ap@webkit.org>
+
+        Not reviewed, build fix (at least for OpenBSD, posssibly more).
+
+        https://bugs.webkit.org/show_bug.cgi?id=20545
+        missing #include <unistd.h> in JavaScriptCore/VM/SamplingTool.cpp
+
+        * VM/SamplingTool.cpp: add the missing include.
+
+2008-08-26  Kevin McCullough  <kmccullough@apple.com>
+
+        Reviewed by Geoff and Cameron.
+
+        <rdar://problem/6174603> Hitting assertion in Register::codeBlock when
+        loading facebook (20516).
+
+        - This was a result of my line numbers change.  After a host function is
+        called the stack does not get reset correctly.
+        - Oddly this also appears to be a slight speedup on SunSpider.
+
+        * VM/Machine.cpp:
+        (KJS::Machine::privateExecute):
+
+2008-08-26  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff and Tim.
+
+        Export new API methods.
+
+        * JavaScriptCore.exp:
+
+2008-08-25  Kevin McCullough  <kmccullough@apple.com>
+
+        Reviewed by Geoff, Tim and Mark.
+
+        <rdar://problem/6150623> JSProfiler: It would be nice if the profiles
+        in the console said what file and line number they came from
+        - Lay the foundation for getting line numbers and other data from the
+        JavaScript engine.  With the cleanup in kjs/ExecState this is actually
+        a slight performance improvement.
+
+        * JavaScriptCore.exp: Export retrieveLastCaller() for WebCore.
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * VM/Machine.cpp: Now Host and JS functions set a call frame on the
+        exec state, so this and the profiler code were pulled out of the
+        branches.
+        (KJS::Machine::privateExecute):
+        (KJS::Machine::retrieveLastCaller): This get's the lineNumber, sourceID
+        and sourceURL for the previously called function.
+        * VM/Machine.h:
+        * kjs/ExecState.cpp: Remove references to JSFunction since it's not used
+        anywhere.
+        * kjs/ExecState.h:
+
+2008-08-25  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin.
+
+        Ensure that JSGlobalContextRelease() performs garbage collection, even if there are other
+        contexts in the current context's group.
+
+        This is only really necessary when the last reference is released, but there is no way to
+        determine that, and no harm in collecting slightly more often.
+
+        * API/JSContextRef.cpp: (JSGlobalContextRelease): Explicitly collect the heap if it is not
+        being destroyed.
+
+2008-08-24  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 20093: JSC shell does not clear exceptions after it executes toString on an expression
+        <https://bugs.webkit.org/show_bug.cgi?id=20093>
+
+        Clear exceptions after evaluating any code in the JSC shell. We do not
+        report exceptions that are caused by calling toString on the final
+        valued, but at least we avoid incorrect behaviour.
+
+        Also, print any exceptions that occurred while evaluating code at the
+        interactive prompt, not just while evaluating code from a file.
+
+        * kjs/Shell.cpp:
+        (runWithScripts):
+        (runInteractive):
+
+2008-08-24  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Use the correct version number for when JSGlobalContextCreate was introduced.
+
+        * API/JSContextRef.h:
+
+2008-08-23  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Rubber-stamped by Mark Rowe.
+
+        Remove modelines.
+
+        * API/APICast.h:
+        * API/JSBase.cpp:
+        * API/JSCallbackConstructor.cpp:
+        * API/JSCallbackConstructor.h:
+        * API/JSCallbackFunction.cpp:
+        * API/JSCallbackFunction.h:
+        * API/JSCallbackObject.cpp:
+        * API/JSCallbackObject.h:
+        * API/JSCallbackObjectFunctions.h:
+        * API/JSClassRef.cpp:
+        * API/JSContextRef.cpp:
+        * API/JSObjectRef.cpp:
+        * API/JSProfilerPrivate.cpp:
+        * API/JSStringRef.cpp:
+        * API/JSStringRefBSTR.cpp:
+        * API/JSStringRefCF.cpp:
+        * API/JSValueRef.cpp:
+        * API/tests/JSNode.c:
+        * API/tests/JSNode.h:
+        * API/tests/JSNodeList.c:
+        * API/tests/JSNodeList.h:
+        * API/tests/Node.c:
+        * API/tests/Node.h:
+        * API/tests/NodeList.c:
+        * API/tests/NodeList.h:
+        * API/tests/minidom.c:
+        * API/tests/minidom.js:
+        * API/tests/testapi.c:
+        * API/tests/testapi.js:
+        * JavaScriptCore.pro:
+        * kjs/FunctionConstructor.h:
+        * kjs/FunctionPrototype.h:
+        * kjs/JSArray.h:
+        * kjs/JSString.h:
+        * kjs/JSWrapperObject.cpp:
+        * kjs/NumberConstructor.h:
+        * kjs/NumberObject.h:
+        * kjs/NumberPrototype.h:
+        * kjs/lexer.h:
+        * kjs/lookup.h:
+        * wtf/Assertions.cpp:
+        * wtf/Assertions.h:
+        * wtf/HashCountedSet.h:
+        * wtf/HashFunctions.h:
+        * wtf/HashIterators.h:
+        * wtf/HashMap.h:
+        * wtf/HashSet.h:
+        * wtf/HashTable.h:
+        * wtf/HashTraits.h:
+        * wtf/ListHashSet.h:
+        * wtf/ListRefPtr.h:
+        * wtf/Noncopyable.h:
+        * wtf/OwnArrayPtr.h:
+        * wtf/OwnPtr.h:
+        * wtf/PassRefPtr.h:
+        * wtf/Platform.h:
+        * wtf/RefPtr.h:
+        * wtf/RefPtrHashMap.h:
+        * wtf/RetainPtr.h:
+        * wtf/UnusedParam.h:
+        * wtf/Vector.h:
+        * wtf/VectorTraits.h:
+        * wtf/unicode/Unicode.h:
+        * wtf/unicode/icu/UnicodeIcu.h:
+
+2008-08-22  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver.
+
+        Some cleanup to match our coding style.
+
+        * VM/CodeGenerator.h:
+        * VM/Machine.cpp:
+        (KJS::Machine::privateExecute):
+        * kjs/ExecState.cpp:
+        * kjs/ExecState.h:
+        * kjs/completion.h:
+        * kjs/identifier.cpp:
+        (KJS::Identifier::equal):
+        (KJS::CStringTranslator::hash):
+        (KJS::CStringTranslator::equal):
+        (KJS::CStringTranslator::translate):
+        (KJS::UCharBufferTranslator::equal):
+        (KJS::UCharBufferTranslator::translate):
+        (KJS::Identifier::remove):
+        * kjs/operations.h:
+
 2008-08-20  Alexey Proskuryakov  <ap@webkit.org>
 
         Windows build fix.

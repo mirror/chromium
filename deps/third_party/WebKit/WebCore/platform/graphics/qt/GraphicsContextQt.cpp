@@ -43,6 +43,7 @@
 #include "Pattern.h"
 #include "Color.h"
 #include "GraphicsContext.h"
+#include "GraphicsContextPrivate.h"
 #include "ImageBuffer.h"
 #include "Font.h"
 #include "Pen.h"
@@ -495,12 +496,71 @@ void GraphicsContext::drawConvexPolygon(size_t npoints, const FloatPoint* points
     p->restore();
 }
 
-void GraphicsContext::fillRect(const IntRect& rect, const Color& c)
+void GraphicsContext::fillPath()
 {
     if (paintingDisabled())
         return;
 
-    m_data->p()->fillRect(rect, QColor(c));
+    QPainter *p = m_data->p();
+    QPainterPath path = m_data->currentPath;
+
+    switch (m_common->state.fillColorSpace) {
+    case SolidColorSpace:
+        if (fillColor().alpha())
+            p->fillPath(path, p->brush());
+        break;
+    case PatternColorSpace:
+        p->fillPath(path, QBrush(*(m_common->state.fillPattern.get()->createPlatformPattern(getCTM()))));
+        break;
+    case GradientColorSpace:
+        p->fillPath(path, QBrush(*(m_common->state.fillGradient.get()->platformGradient())));
+        break;
+    }
+}
+
+void GraphicsContext::strokePath()
+{
+    if (paintingDisabled())
+        return;
+
+    QPainter *p = m_data->p();
+    QPainterPath path = m_data->currentPath;
+
+    switch (m_common->state.strokeColorSpace) {
+    case SolidColorSpace:
+        if (strokeColor().alpha())
+            p->strokePath(path, p->pen());
+        break;
+    case PatternColorSpace:
+        p->setBrush(*(m_common->state.strokePattern.get()->createPlatformPattern(getCTM())));
+        p->strokePath(path, p->pen());
+        break;
+    case GradientColorSpace:
+        p->setBrush(*(m_common->state.strokeGradient.get()->platformGradient()));
+        p->strokePath(path, p->pen());
+        break;
+    }
+}
+
+void GraphicsContext::fillRect(const FloatRect& rect)
+{
+    if (paintingDisabled())
+        return;
+
+    QPainter *p = m_data->p();
+
+    switch (m_common->state.fillColorSpace) {
+    case SolidColorSpace:
+        if (fillColor().alpha())
+            p->fillRect(rect, p->brush());
+        break;
+    case PatternColorSpace:
+        p->fillRect(rect, QBrush(*(m_common->state.fillPattern.get()->createPlatformPattern(getCTM()))));
+        break;
+    case GradientColorSpace:
+        p->fillRect(rect, QBrush(*(m_common->state.fillGradient.get()->platformGradient())));
+        break;
+    }
 }
 
 void GraphicsContext::fillRect(const FloatRect& rect, const Color& c)
@@ -533,11 +593,6 @@ void GraphicsContext::addPath(const Path& path)
 bool GraphicsContext::inTransparencyLayer() const
 {
     return !m_data->layers.isEmpty();
-}
-
-void GraphicsContext::setFillRule(WindRule rule)
-{
-    m_data->currentPath.setFillRule(rule == RULE_EVENODD ? Qt::OddEvenFill : Qt::WindingFill);
 }
 
 PlatformPath* GraphicsContext::currentPath()
@@ -705,12 +760,12 @@ void GraphicsContext::strokeRect(const FloatRect& rect, float width)
     if (paintingDisabled())
         return;
 
-    QPainter *p = m_data->p();
     QPainterPath path;
     path.addRect(rect);
-    QPen nPen = p->pen();
+    QPen nPen = m_data->p()->pen();
     nPen.setWidthF(width);
-    p->strokePath(path, nPen);
+
+    strokePath();
 }
 
 void GraphicsContext::setLineCap(LineCap lc)
@@ -808,7 +863,7 @@ void GraphicsContext::rotate(float radians)
     if (paintingDisabled())
         return;
 
-    m_data->p()->rotate(radians);
+    m_data->p()->rotate(180/M_PI*radians);
 }
 
 void GraphicsContext::scale(const FloatSize& s)
@@ -847,6 +902,11 @@ void GraphicsContext::clipOutEllipseInRect(const IntRect& rect)
     newClip.addEllipse(QRect(rect));
 
     p->setClipPath(newClip, Qt::IntersectClip);
+}
+
+void GraphicsContext::clipToImageBuffer(const FloatRect&, const ImageBuffer*)
+{
+    notImplemented();
 }
 
 void GraphicsContext::addInnerRoundedRectClip(const IntRect& rect,
@@ -909,6 +969,22 @@ void GraphicsContext::setPlatformStrokeStyle(const StrokeStyle& strokeStyle)
     p->setPen(newPen);
 }
 
+void GraphicsContext::setPlatformFillPattern(Pattern* pattern)
+{
+}
+
+void GraphicsContext::setPlatformStrokePattern(Pattern* pattern)
+{
+}
+
+void GraphicsContext::setPlatformFillGradient(Gradient* gradient)
+{
+}
+
+void GraphicsContext::setPlatformStrokeGradient(Gradient* gradient)
+{
+}
+
 void GraphicsContext::setPlatformStrokeThickness(float thickness)
 {
     if (paintingDisabled())
@@ -924,20 +1000,6 @@ void GraphicsContext::setPlatformFillColor(const Color& color)
     if (paintingDisabled())
         return;
     m_data->p()->setBrush(QBrush(color));
-}
-
-void GraphicsContext::applyStrokePattern(const Pattern& pattern)
-{
-    if (paintingDisabled())
-        return;
-    notImplemented();
-}
-
-void GraphicsContext::applyFillPattern(const Pattern& pattern)
-{
-    if (paintingDisabled())
-        return;
-    notImplemented();
 }
 
 void GraphicsContext::setUseAntialiasing(bool enable)
@@ -1032,6 +1094,15 @@ void GraphicsContext::releaseWindowsContext(HDC hdc, const IntRect& dstRect, boo
     }
 }
 #endif
+
+void GraphicsContext::setImageInterpolationQuality(InterpolationQuality)
+{
+}
+
+InterpolationQuality GraphicsContext::imageInterpolationQuality() const
+{
+    return InterpolationDefault;
+}
 
 }
 

@@ -67,6 +67,8 @@
 #include "SelectionController.h"
 #include "Settings.h"
 #include "ShadowValue.h"
+#include "StyleCachedImage.h"
+#include "StyleGeneratedImage.h"
 #include "StyleSheetList.h"
 #include "Text.h"
 #include "UserAgentStyleSheets.h"
@@ -188,8 +190,8 @@ HANDLE_FILL_LAYER_VALUE(mask, Mask, prop, Prop, value)
 if (isInherit) { \
     AnimationList* list = m_style->accessAnimations(); \
     const AnimationList* parentList = m_parentStyle->animations(); \
-    size_t i = 0; \
-    for ( ; i < parentList->size() && (*parentList)[i]->is##Prop##Set(); ++i) { \
+    size_t i = 0, parentSize = parentList ? parentList->size() : 0; \
+    for ( ; i < parentSize && (*parentList)[i]->is##Prop##Set(); ++i) { \
         if (list->size() <= i) \
             list->append(Animation::create()); \
         (*list)[i]->set##Prop((*parentList)[i]->prop()); \
@@ -238,8 +240,8 @@ for ( ; childIndex < list->size(); ++childIndex) { \
 if (isInherit) { \
     AnimationList* list = m_style->accessTransitions(); \
     const AnimationList* parentList = m_parentStyle->transitions(); \
-    size_t i = 0; \
-    for ( ; i < parentList->size() && (*parentList)[i]->is##Prop##Set(); ++i) { \
+    size_t i = 0, parentSize = parentList ? parentList->size() : 0; \
+    for ( ; i < parentSize && (*parentList)[i]->is##Prop##Set(); ++i) { \
         if (list->size() <= i) \
             list->append(Animation::create()); \
         (*list)[i]->set##Prop((*parentList)[i]->prop()); \
@@ -1270,7 +1272,7 @@ RenderStyle* CSSStyleSelector::pseudoStyleForElement(RenderStyle::PseudoId pseud
 static void addIntrinsicMargins(RenderStyle* style)
 {
     // Intrinsic margin value.
-    const int intrinsicMargin = 2;
+    const int intrinsicMargin = 2 * style->effectiveZoom();
     
     // FIXME: Using width/height alone and not also dealing with min-width/max-width is flawed.
     // FIXME: Using "quirk" to decide the margin wasn't set is kind of lame.
@@ -5239,19 +5241,19 @@ void CSSStyleSelector::mapAnimationTimingFunction(Animation* animation, CSSValue
         CSSPrimitiveValue* primitiveValue = static_cast<CSSPrimitiveValue*>(value);
         switch (primitiveValue->getIdent()) {
             case CSSValueLinear:
-                animation->setTimingFunction(TimingFunction(LinearTimingFunction));
+                animation->setTimingFunction(TimingFunction(LinearTimingFunction, 0.0, 0.0, 1.0, 1.0));
                 break;
             case CSSValueEase:
                 animation->setTimingFunction(TimingFunction());
                 break;
             case CSSValueEaseIn:
-                animation->setTimingFunction(TimingFunction(CubicBezierTimingFunction, .42, .0, 1.0, 1.0));
+                animation->setTimingFunction(TimingFunction(CubicBezierTimingFunction, 0.42, 0.0, 1.0, 1.0));
                 break;
             case CSSValueEaseOut:
-                animation->setTimingFunction(TimingFunction(CubicBezierTimingFunction, .0, .0, .58, 1.0));
+                animation->setTimingFunction(TimingFunction(CubicBezierTimingFunction, 0.0, 0.0, 0.58, 1.0));
                 break;
             case CSSValueEaseInOut:
-                animation->setTimingFunction(TimingFunction(CubicBezierTimingFunction, .42, .0, .58, 1.0));
+                animation->setTimingFunction(TimingFunction(CubicBezierTimingFunction, 0.42, 0.0, 0.58, 1.0));
                 break;
         }
         return;

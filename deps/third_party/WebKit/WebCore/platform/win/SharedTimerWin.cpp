@@ -62,23 +62,28 @@
 namespace WebCore {
 
 static UINT timerID;
+static UINT lastChanceTimerID;
 static void (*sharedTimerFiredFunction)();
 
 static HWND timerWindowHandle = 0;
 static UINT timerFiredMessage = 0;
 static HANDLE timerQueue;
 static HANDLE timer;
+static Mutex timerMutex;
 static bool highResTimerActive;
 static bool processingCustomTimerMessage = false;
+static LONG pendingTimers;
 
 const LPCWSTR kTimerWindowClassName = L"TimerWindowClass";
 const int timerResolution = 1;
 const int highResolutionThresholdMsec = 16;
 const int stopHighResTimerInMsec = 20;
+const int lastChanceTimerIntervalInMS = 5000;
 
 enum {
     sharedTimerID = 1000,
-    endHighResTimerID = 1001
+    endHighResTimerID = 1001,
+    lastChanceSharedTimerID = 1002,
 };
 
 static bool isRunningOnVistaOrLater()
@@ -112,11 +117,12 @@ LRESULT CALLBACK TimerWindowWndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 #endif
 
     if (message == timerFiredMessage) {
+        InterlockedExchange(&pendingTimers, 0);
         processingCustomTimerMessage = true;
         sharedTimerFiredFunction();
         processingCustomTimerMessage = false;
     } else if (message == WM_TIMER) {
-        if (wParam == sharedTimerID) {
+        if (wParam == sharedTimerID || wParam == lastChanceSharedTimerID) {
             KillTimer(timerWindowHandle, sharedTimerID);
             sharedTimerFiredFunction();
         } else if (wParam == endHighResTimerID) {
@@ -155,15 +161,16 @@ void setSharedTimerFiredFunction(void (*f)())
 
 static void clearTimer()
 {
-    void* previousTimer;
-    if (previousTimer = InterlockedExchangePointer(&timer, 0))
-        DeleteTimerQueueTimer(timerQueue, previousTimer, 0);
+    MutexLocker locker(timerMutex);
+    DeleteTimerQueueTimer(timerQueue, timer, 0);
+    timer = 0;
 }
 
 static void NTAPI queueTimerProc(PVOID, BOOLEAN)
 {
     clearTimer();
-    PostMessage(timerWindowHandle, timerFiredMessage, 0, 0);
+    if (InterlockedIncrement(&pendingTimers) == 1)
+        PostMessage(timerWindowHandle, timerFiredMessage, 0, 0);
 }
 
 void setSharedTimerFireTime(double fireTime)
@@ -203,12 +210,14 @@ void setSharedTimerFireTime(double fireTime)
             && !(queueStatus & QS_PAINT)) {
             // Call PostMessage immediately if the timer is already expired, unless a paint is pending.
             // (we prioritize paints over timers)
-            PostMessage(timerWindowHandle, timerFiredMessage, 0, 0);
+            if (InterlockedIncrement(&pendingTimers) == 1)
+                PostMessage(timerWindowHandle, timerFiredMessage, 0, 0);
             timerSet = true;
         } else if (isRunningVista) {
             // Otherwise, delay the PostMessage via a CreateTimerQueueTimer
             if (!timerQueue)
                 timerQueue = CreateTimerQueue();
+            MutexLocker locker(timerMutex);
             if (timer)
                 timerSet = ChangeTimerQueueTimer(timerQueue, timer, intervalInMS, 0);
             else
@@ -221,8 +230,19 @@ void setSharedTimerFireTime(double fireTime)
             KillTimer(timerWindowHandle, timerID);
             timerID = 0;
         }
-    } else
+    } else {
         timerID = SetTimer(timerWindowHandle, sharedTimerID, intervalInMS, 0);
+        if (!lastChanceTimerID) {
+            // The last chance timer fires every 5 seconds to run any lost WM_TIMER based timers.
+            // Failure to fire a timer is fatal to the cross-platform Timer code, since it won't re-schedule
+            // timers if a timer with an earlier expiration is already pending. This results in no timers
+            // firing from that point on.
+            // We lose WM_TIMER messages occasionally (in the neighborhood of 1 per hour) probably due to a
+            // buggy window message hook. This timer will start when the first WM_TIMER is scheduled, and will
+            // fire every 5 seconds thereafter.
+            lastChanceTimerID = SetTimer(timerWindowHandle, lastChanceSharedTimerID, lastChanceTimerIntervalInMS, 0);
+        }
+    }
 }
 
 void stopSharedTimer()

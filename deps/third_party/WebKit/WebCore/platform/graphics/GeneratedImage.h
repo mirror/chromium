@@ -30,18 +30,20 @@
 
 #include "Generator.h"
 #include "IntSize.h"
-#include <wtf/OwnPtr.h>
+#include <wtf/RefPtr.h>
 
 namespace WebCore {
 
 class GeneratedImage : public Image {
 public:
-    GeneratedImage(Generator* generator, const IntSize& size)
-    : m_size(size)
+    GeneratedImage(PassRefPtr<Generator> generator, const IntSize& size)
+        : m_generator(generator)
+        , m_size(size)
     {
-        m_generator.set(generator);
     }
     virtual ~GeneratedImage() {}
+
+    virtual bool hasSingleSecurityOrigin() const { return true; }
 
     // These are only used for SVGGeneratedImage right now
     virtual void setContainerSize(const IntSize& size) { m_size = size; }
@@ -61,7 +63,7 @@ protected:
                              const FloatPoint& phase, CompositeOperator, const FloatRect& destRect);
     
 protected:
-    OwnPtr<Generator> m_generator;
+    RefPtr<Generator> m_generator;
     IntSize m_size;
 };
 

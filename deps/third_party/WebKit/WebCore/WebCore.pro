@@ -1,4 +1,3 @@
-# -*- Mode:makefile -*-
 # WebCore - qmake build info
 CONFIG += building-libs
 CONFIG += depend_includepath
@@ -895,6 +894,9 @@ SOURCES += \
     rendering/RootInlineBox.cpp \
     rendering/SVGRenderTreeAsText.cpp \
     rendering/style/RenderStyle.cpp \
+    rendering/style/StyleCachedImage.cpp \
+    rendering/style/StyleGeneratedImage.cpp \
+    rendering/style/NinePieceImage.cpp \
     xml/DOMParser.cpp \
     xml/NativeXPathNSResolver.cpp \
     xml/XMLHttpRequest.cpp \
@@ -939,6 +941,7 @@ SOURCES += \
     bridge/qt/qt_class.cpp \
     bridge/qt/qt_instance.cpp \
     bridge/qt/qt_runtime.cpp \
+    page/qt/AccessibilityObjectQt.cpp \
     page/qt/DragControllerQt.cpp \
     page/qt/EventHandlerQt.cpp \
     page/qt/FrameQt.cpp \

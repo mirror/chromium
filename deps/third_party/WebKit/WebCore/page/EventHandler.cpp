@@ -395,8 +395,13 @@ bool EventHandler::handleMouseDraggedEvent(const MouseEventWithHitTestResults& e
         // If the selection is contained in a layer that can scroll, that layer should handle the autoscroll
         // Otherwise, let the bridge handle it so the view can scroll itself.
         RenderObject* renderer = targetNode->renderer();
-        while (renderer && !renderer->canBeProgramaticallyScrolled(true))
-            renderer = renderer->parent();
+        while (renderer && !renderer->canBeProgramaticallyScrolled(false)) {
+            if (!renderer->parent() && renderer->node() == renderer->document() && renderer->document()->ownerElement())
+                renderer = renderer->document()->ownerElement()->renderer();
+            else
+                renderer = renderer->parent();
+        }
+        
         if (renderer) {
             m_autoscrollInProgress = true;
             handleAutoscroll(renderer);
@@ -639,6 +644,20 @@ void EventHandler::setPanScrollCursor()
 RenderObject* EventHandler::autoscrollRenderer() const
 {
     return m_autoscrollRenderer;
+}
+
+void EventHandler::updateAutoscrollRenderer()
+{
+    if (!m_autoscrollRenderer)
+        return;
+
+    HitTestResult hitTest = hitTestResultAtPoint(m_panScrollStartPos, true);
+
+    if (Node* nodeAtPoint = hitTest.innerNode())
+        m_autoscrollRenderer = nodeAtPoint->renderer();
+
+    while (m_autoscrollRenderer && !m_autoscrollRenderer->canBeProgramaticallyScrolled(false))
+        m_autoscrollRenderer = m_autoscrollRenderer->parent();
 }
 
 void EventHandler::setAutoscrollRenderer(RenderObject* renderer)
@@ -982,8 +1001,12 @@ bool EventHandler::handleMousePressEvent(const PlatformMouseEvent& mouseEvent)
     if (mouseEvent.button() == MiddleButton && !mev.isOverLink()) {
         RenderObject* renderer = mev.targetNode()->renderer();
 
-        while (renderer && !renderer->canBeProgramaticallyScrolled(true))
-            renderer = renderer->parent();
+        while (renderer && !renderer->canBeProgramaticallyScrolled(false)) {
+            if (!renderer->parent() && renderer->node() == renderer->document() && renderer->document()->ownerElement())
+                renderer = renderer->document()->ownerElement()->renderer();
+            else
+                renderer = renderer->parent();
+        }
 
         if (renderer) {
             m_panScrollInProgress = true;

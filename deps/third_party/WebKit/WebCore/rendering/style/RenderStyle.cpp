@@ -24,28 +24,14 @@
 
 #include "CachedImage.h"
 #include "CSSStyleSelector.h"
+#include "FontSelector.h"
 #include "RenderArena.h"
 #include "RenderObject.h"
+#include "StyleImage.h"
 
 namespace WebCore {
 
 static RenderStyle* defaultStyle;
-
-static bool imagesEquivalent(StyleImage* image1, StyleImage* image2)
-{
-    if (image1 != image2) {
-        if (!image1 || !image2)
-            return false;
-        return *image1 == *image2;
-    }
-    return true;
-}
-
-bool NinePieceImage::operator==(const NinePieceImage& o) const
-{
-    return imagesEquivalent(m_image.get(), o.m_image.get()) && m_slices == o.m_slices && m_horizontalRule == o.m_horizontalRule &&
-           m_verticalRule == o.m_verticalRule;
-}
 
 StyleSurroundData::StyleSurroundData()
     : margin(Fixed)
@@ -126,99 +112,6 @@ StyleVisualData::StyleVisualData(const StyleVisualData& o)
     , counterReset(o.counterReset)
     , m_zoom(RenderStyle::initialZoom())
 {
-}
-
-PassRefPtr<CSSValue> StyleCachedImage::cssValue()
-{
-    return CSSPrimitiveValue::create(m_image->url(), CSSPrimitiveValue::CSS_URI);
-}
-
-bool StyleCachedImage::canRender(float multiplier) const
-{
-    return m_image->canRender(multiplier);
-}
-
-bool StyleCachedImage::isLoaded() const
-{
-    return m_image->isLoaded();
-}
-
-bool StyleCachedImage::errorOccurred() const
-{
-    return m_image->errorOccurred();
-}
-
-IntSize StyleCachedImage::imageSize(const RenderObject* /*renderer*/, float multiplier) const
-{
-    return m_image->imageSize(multiplier);
-}
-
-bool StyleCachedImage::imageHasRelativeWidth() const
-{
-    return m_image->imageHasRelativeWidth();
-}
-
-bool StyleCachedImage::imageHasRelativeHeight() const
-{
-    return m_image->imageHasRelativeHeight();
-}
-
-bool StyleCachedImage::usesImageContainerSize() const
-{
-    return m_image->usesImageContainerSize();
-}
-
-void StyleCachedImage::setImageContainerSize(const IntSize& size)
-{
-    return m_image->setImageContainerSize(size);
-}
-
-void StyleCachedImage::addClient(RenderObject* renderer)
-{
-    return m_image->addClient(renderer);
-}
-
-void StyleCachedImage::removeClient(RenderObject* renderer)
-{
-    return m_image->removeClient(renderer);
-}
-
-Image* StyleCachedImage::image(RenderObject* renderer, const IntSize&) const
-{
-    return m_image->image();
-}
-
-PassRefPtr<CSSValue> StyleGeneratedImage::cssValue()
-{
-    return m_generator;
-}
-
-IntSize StyleGeneratedImage::imageSize(const RenderObject* renderer, float /* multiplier */) const
-{
-    // We can ignore the multiplier, since we always store a raw zoomed size.
-    if (m_fixedSize)
-        return m_generator->fixedSize(renderer);
-    return m_containerSize;
-}
-
-void StyleGeneratedImage::setImageContainerSize(const IntSize& size)
-{
-    m_containerSize = size;
-}
-
-void StyleGeneratedImage::addClient(RenderObject* renderer)
-{
-    m_generator->addClient(renderer, IntSize());
-}
-
-void StyleGeneratedImage::removeClient(RenderObject* renderer)
-{
-    m_generator->removeClient(renderer);
-}
-
-Image* StyleGeneratedImage::image(RenderObject* renderer, const IntSize& size) const
-{
-    return m_generator->image(renderer, size);
 }
 
 FillLayer::FillLayer(EFillLayerType type)
@@ -310,7 +203,7 @@ bool FillLayer::operator==(const FillLayer& o) const
 {
     // We do not check the "isSet" booleans for each property, since those are only used during initial construction
     // to propagate patterns into layers.  All layer comparisons happen after values have all been filled in anyway.
-    return imagesEquivalent(m_image.get(), o.m_image.get()) && m_xPosition == o.m_xPosition && m_yPosition == o.m_yPosition &&
+    return StyleImage::imagesEquivalent(m_image.get(), o.m_image.get()) && m_xPosition == o.m_xPosition && m_yPosition == o.m_yPosition &&
            m_attachment == o.m_attachment && m_clip == o.m_clip && 
            m_composite == o.m_composite && m_origin == o.m_origin && m_repeat == o.m_repeat &&
            m_size.width == o.m_size.width && m_size.height == o.m_size.height && m_type == o.m_type &&
@@ -435,6 +328,17 @@ void FillLayer::cullEmptyLayers()
             break;
         }
     }
+}
+
+bool FillLayer::containsImage(StyleImage* s) const
+{
+    if (!s)
+        return false;
+    if (m_image && *s == *m_image)
+        return true;
+    if (m_next)
+        return m_next->containsImage(s);
+    return false;
 }
 
 StyleBackgroundData::StyleBackgroundData()
@@ -580,68 +484,68 @@ bool TransformOperations::operator==(const TransformOperations& o) const
     return true;
 }
 
-TransformOperation* ScaleTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
+PassRefPtr<TransformOperation> ScaleTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
 {
     if (from && !from->isScaleOperation())
         return this;
     
     if (blendToIdentity)
-        return new ScaleTransformOperation(m_x + (1. - m_x) * progress, m_y + (1. - m_y) * progress);
+        return ScaleTransformOperation::create(m_x + (1. - m_x) * progress, m_y + (1. - m_y) * progress);
     
     const ScaleTransformOperation* fromOp = static_cast<const ScaleTransformOperation*>(from);
     double fromX = fromOp ? fromOp->m_x : 1.;
     double fromY = fromOp ? fromOp->m_y : 1.;
-    return new ScaleTransformOperation(fromX + (m_x - fromX) * progress, fromY + (m_y - fromY) * progress);
+    return ScaleTransformOperation::create(fromX + (m_x - fromX) * progress, fromY + (m_y - fromY) * progress);
 }
 
-TransformOperation* RotateTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
+PassRefPtr<TransformOperation> RotateTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
 {
     if (from && !from->isRotateOperation())
         return this;
     
     if (blendToIdentity)
-        return new RotateTransformOperation(m_angle - m_angle * progress);
+        return RotateTransformOperation::create(m_angle - m_angle * progress);
     
     const RotateTransformOperation* fromOp = static_cast<const RotateTransformOperation*>(from);
     double fromAngle = fromOp ? fromOp->m_angle : 0;
-    return new RotateTransformOperation(fromAngle + (m_angle - fromAngle) * progress);
+    return RotateTransformOperation::create(fromAngle + (m_angle - fromAngle) * progress);
 }
 
-TransformOperation* SkewTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
+PassRefPtr<TransformOperation> SkewTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
 {
     if (from && !from->isSkewOperation())
         return this;
     
     if (blendToIdentity)
-        return new SkewTransformOperation(m_angleX - m_angleX * progress, m_angleY - m_angleY * progress);
+        return SkewTransformOperation::create(m_angleX - m_angleX * progress, m_angleY - m_angleY * progress);
     
     const SkewTransformOperation* fromOp = static_cast<const SkewTransformOperation*>(from);
     double fromAngleX = fromOp ? fromOp->m_angleX : 0;
     double fromAngleY = fromOp ? fromOp->m_angleY : 0;
-    return new SkewTransformOperation(fromAngleX + (m_angleX - fromAngleX) * progress, fromAngleY + (m_angleY - fromAngleY) * progress);
+    return SkewTransformOperation::create(fromAngleX + (m_angleX - fromAngleX) * progress, fromAngleY + (m_angleY - fromAngleY) * progress);
 }
 
-TransformOperation* TranslateTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
+PassRefPtr<TransformOperation> TranslateTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
 {
     if (from && !from->isTranslateOperation())
         return this;
     
     if (blendToIdentity)
-        return new TranslateTransformOperation(Length(m_x.type()).blend(m_x, progress), Length(m_y.type()).blend(m_y, progress));
+        return TranslateTransformOperation::create(Length(m_x.type()).blend(m_x, progress), Length(m_y.type()).blend(m_y, progress));
 
     const TranslateTransformOperation* fromOp = static_cast<const TranslateTransformOperation*>(from);
     Length fromX = fromOp ? fromOp->m_x : Length(m_x.type());
     Length fromY = fromOp ? fromOp->m_y : Length(m_y.type());
-    return new TranslateTransformOperation(m_x.blend(fromX, progress), m_y.blend(fromY, progress));
+    return TranslateTransformOperation::create(m_x.blend(fromX, progress), m_y.blend(fromY, progress));
 }
 
-TransformOperation* MatrixTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
+PassRefPtr<TransformOperation> MatrixTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
 {
     if (from && !from->isMatrixOperation())
         return this;
     
     if (blendToIdentity)
-        return new MatrixTransformOperation(m_a * (1. - progress) + progress,
+        return MatrixTransformOperation::create(m_a * (1. - progress) + progress,
                                             m_b * (1. - progress),
                                             m_c * (1. - progress),
                                             m_d * (1. - progress) + progress,
@@ -656,7 +560,7 @@ TransformOperation* MatrixTransformOperation::blend(const TransformOperation* fr
     double fromE = fromOp ? fromOp->m_e : 0;
     double fromF = fromOp ? fromOp->m_f : 0;
     
-    return new MatrixTransformOperation(fromA + (m_a - fromA) * progress,
+    return MatrixTransformOperation::create(fromA + (m_a - fromA) * progress,
                                         fromB + (m_b - fromB) * progress,
                                         fromC + (m_c - fromC) * progress,
                                         fromD + (m_d - fromD) * progress,
@@ -1106,7 +1010,7 @@ bool StyleInheritedData::operator==(const StyleInheritedData& o) const
     return
         indent == o.indent &&
         line_height == o.line_height &&
-        imagesEquivalent(list_style_image.get(), o.list_style_image.get()) &&
+        StyleImage::imagesEquivalent(list_style_image.get(), o.list_style_image.get()) &&
         cursorDataEquivalent(cursorData.get(), o.cursorData.get()) &&
         font == o.font &&
         color == o.color &&
@@ -1634,7 +1538,7 @@ bool RenderStyle::contentDataEquivalent(const RenderStyle* otherStyle) const
                     return false;
                 break;
             case CONTENT_OBJECT:
-                if (!imagesEquivalent(c1->m_content.m_image, c2->m_content.m_image))
+                if (!StyleImage::imagesEquivalent(c1->m_content.m_image, c2->m_content.m_image))
                     return false;
                 break;
             case CONTENT_COUNTER:
@@ -1787,7 +1691,7 @@ void ContentData::clear()
     }
 }
 
-void RenderStyle::applyTransform(AffineTransform& transform, const IntSize& borderBoxSize) const
+void RenderStyle::applyTransform(AffineTransform& transform, const IntSize& borderBoxSize, bool includeTransformOrigin) const
 {
     // transform-origin brackets the transform with translate operations.
     // Optimize for the case where the only transform is a translation, since the transform-origin is irrelevant
@@ -1795,10 +1699,12 @@ void RenderStyle::applyTransform(AffineTransform& transform, const IntSize& bord
     bool applyTransformOrigin = false;
     unsigned s = rareNonInheritedData->m_transform->m_operations.size();
     unsigned i;
-    for (i = 0; i < s; i++) {
-        if (!rareNonInheritedData->m_transform->m_operations[i]->isTranslateOperation()) {
-            applyTransformOrigin = true;
-            break;
+    if (includeTransformOrigin) {
+        for (i = 0; i < s; i++) {
+            if (!rareNonInheritedData->m_transform->m_operations[i]->isTranslateOperation()) {
+                applyTransformOrigin = true;
+                break;
+            }
         }
     }
     
@@ -2043,6 +1949,15 @@ const Animation* RenderStyle::transitionForProperty(int property)
         }
     }
     return 0;
+}
+
+void RenderStyle::setBlendedFontSize(int size)
+{
+    FontDescription desc(fontDescription());
+    desc.setSpecifiedSize(size);
+    desc.setComputedSize(size);
+    setFontDescription(desc);
+    font().update(font().fontSelector());
 }
 
 }

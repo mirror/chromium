@@ -61,6 +61,10 @@ WebInspector.ElementsPanel = function()
 
     this.sidebarPanes.styles.expanded = true;
 
+    this.sidebarPanes.styles.addEventListener("style edited", this._stylesPaneEdited, this);
+    this.sidebarPanes.styles.addEventListener("style property toggled", this._stylesPaneEdited, this);
+    this.sidebarPanes.metrics.addEventListener("metrics edited", this._metricsPaneEdited, this);
+
     this.sidebarElement = document.createElement("div");
     this.sidebarElement.id = "elements-sidebar";
 
@@ -409,6 +413,18 @@ WebInspector.ElementsPanel.prototype = {
             InspectorController.highlightDOMNode(this._hoveredDOMNode);
         else
             InspectorController.hideDOMNodeHighlight();
+    },
+
+    _stylesPaneEdited: function()
+    {
+        this.sidebarPanes.metrics.needsUpdate = true;
+        this.updateMetrics();
+    },
+
+    _metricsPaneEdited: function()
+    {
+        this.sidebarPanes.styles.needsUpdate = true;
+        this.updateStyles(true);
     },
 
     _focusedNodeChanged: function(forceUpdate)
@@ -1368,8 +1384,8 @@ WebInspector.DOMNodeTreeElement.prototype = {
         var parseContainerElement = document.createElement("span");
         parseContainerElement.innerHTML = "<span " + newText + "></span>";
         var parseElement = parseContainerElement.firstChild;
-        if (!parseElement || !parseElement.hasAttributes()) {
-            editingCancelled(element, context);
+        if (!parseElement) {
+            this._editingCancelled(element, attributeName);
             return;
         }
 
