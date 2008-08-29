@@ -1,3 +1,220 @@
+2008-08-29  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Adam Roben. 
+
+        Rename HTMLTextFieldInnerElement.h/.cpp to TextControlInnerElements.h/.cpp
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * html/HTMLTextFieldInnerElement.cpp: Removed.
+        * html/HTMLTextFieldInnerElement.h: Removed.
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::createSubtreeIfNeeded):
+        * rendering/RenderTextControl.h:
+        * rendering/TextControlInnerElements.cpp: Copied from html/HTMLTextFieldInnerElement.cpp.
+        (WebCore::TextControlInnerElement::TextControlInnerElement):
+        (WebCore::TextControlInnerTextElement::TextControlInnerTextElement):
+        (WebCore::TextControlInnerTextElement::defaultEventHandler):
+        (WebCore::SearchFieldResultsButtonElement::SearchFieldResultsButtonElement):
+        (WebCore::SearchFieldResultsButtonElement::defaultEventHandler):
+        (WebCore::SearchFieldCancelButtonElement::SearchFieldCancelButtonElement):
+        (WebCore::SearchFieldCancelButtonElement::defaultEventHandler):
+        * rendering/TextControlInnerElements.h: Copied from html/HTMLTextFieldInnerElement.h.
+
+2008-08-29  Eric Seidel  <eric@webkit.org>
+
+        Rubber-stamped by aroben.
+
+        Add GraphicsContext.h include to GraphcisContextPrivate.h
+
+        GraphicsContextPrivate uses StrokeStyle which is defined
+        in GraphicsContext.h but it doesn't include that header.
+        CoreGraphics build doesn't fail here due to the order
+        it happens to include files.
+
+        * platform/graphics/GraphicsContextPrivate.h:
+
+2008-08-29  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by hyatt.
+
+        Fix GeneratedImage to respect Image's refcounting
+        Fixing potential crashers (future if not current)
+        https://bugs.webkit.org/show_bug.cgi?id=20567
+        
+        I don't know if it's possible to make the current code
+        crash, thus I've not made a test.
+
+        * css/CSSGradientValue.cpp:
+        (WebCore::CSSGradientValue::image):
+        * css/CSSImageGeneratorValue.cpp:
+        (WebCore::CSSImageGeneratorValue::removeClient):
+        (WebCore::CSSImageGeneratorValue::getImage):
+        * css/CSSImageGeneratorValue.h:
+        * platform/graphics/GeneratedImage.h:
+        (WebCore::GeneratedImage::GeneratedImage):
+        * rendering/style/RenderStyle.cpp:
+        (WebCore::RenderStyle::setContent):
+        * rendering/style/RenderStyle.h:
+
+2008-08-29  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Adele.
+
+        Fix for <rdar://problem/6093767>
+        https://bugs.webkit.org/show_bug.cgi?id=20526
+
+        Don't allow video to render until unsupported track types have been disabled.
+
+        * platform/graphics/win/QTMovieWin.cpp:
+        (QTMovieWinPrivate::task):
+        (QTMovieWinPrivate::drawingComplete):
+        (QTMovieWinPrivate::clearGWorld):
+
+2008-08-29  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Adele.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=20525
+        <rdar://problem/6169301>
+        
+        Return the size of the movie data instead of 1000.
+        
+        Test: media/progress-event-total.html
+
+        * platform/graphics/win/QTMovieWin.cpp:
+        (QTMovieWin::dataSize):
+
+2008-08-29  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Eric Seidel.
+
+        [janitor/qt] Start replacing port specific getters with the generic native getter
+        To get the native presentation of an image we currently have platform
+        specific #ifdef's and a generic getter using NativeImagePtr. This patch
+        extends this to the ImageBuffer and updates the Qt platform to get rid
+        of the special #ifdefs.
+
+        https://bugs.webkit.org/attachment.cgi?id=22861
+
+        * platform/graphics/BitmapImage.h:
+        * platform/graphics/Image.h:
+        * platform/graphics/qt/ImageQt.cpp:
+        * platform/graphics/qt/StillImageQt.cpp:
+        * platform/graphics/qt/StillImageQt.h:
+        * platform/qt/ClipboardQt.cpp:
+        (WebCore::ClipboardQt::createDragImage):
+        (WebCore::ClipboardQt::declareAndWriteDragImage):
+        * platform/qt/CursorQt.cpp:
+        * platform/qt/PasteboardQt.cpp:
+        (WebCore::Pasteboard::writeImage):
+
+2008-08-29  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Simon.
+
+        [svg/qt] Stop crashing... when no RenderPath/RenderObject is given...
+
+        * svg/graphics/qt/SVGPaintServerQt.cpp:
+        (WebCore::SVGPaintServer::renderPath):
+        * svg/graphics/qt/SVGPaintServerSolidQt.cpp:
+        (WebCore::SVGPaintServerSolid::setup):
+
+2008-08-29  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Simon.
+
+        [network/qt] Implement defering of loading ResourceHandle's
+        This is needed otherwise we end in an ASSERT in the MainResourceLoader. The
+        implementation is simply not forwarding anything to the
+        ResourceHandleClient until we are allowed to. This might lead to a deadlock
+        in Qt as we do not empty the QNetworkReply input buffer and wait until we
+        are allowed to read. If that happens we are forced to buffer the data
+        within QNetworkReplyHandler, for now this is not done.
+
+        Manual test:
+        - Open http://acid3.acidtests.org
+        - Wait for the test to complete
+        - Click on the Reference Rendering link
+        - Be fast and see the results of acid3
+        => assert
+
+        * platform/network/qt/QNetworkReplyHandler.cpp:
+        (WebCore::QNetworkReplyHandler::QNetworkReplyHandler):
+        (WebCore::QNetworkReplyHandler::setLoadMode):
+        (WebCore::QNetworkReplyHandler::finish):
+        (WebCore::QNetworkReplyHandler::sendResponseIfNeeded):
+        (WebCore::QNetworkReplyHandler::forwardData):
+        (WebCore::QNetworkReplyHandler::start):
+        (WebCore::QNetworkReplyHandler::resetState):
+        (WebCore::QNetworkReplyHandler::sendQueuedItems):
+        * platform/network/qt/QNetworkReplyHandler.h:
+        (WebCore::QNetworkReplyHandler::):
+        * platform/network/qt/ResourceHandleQt.cpp:
+        (WebCore::ResourceHandle::start):
+        (WebCore::ResourceHandle::loadResourceSynchronously):
+        (WebCore::ResourceHandle::setDefersLoading):
+
+2008-08-29  Simon Hausmann  <hausmann@webkit.org>
+
+        Reviewed by Holger.
+
+        Don't crash when drawing patterns with the HTML canvas. Patterns
+        remain unimplemented but at least they don't crash anymore. This is
+        done by changing the PlatformPatternPtr to be a brush for the Qt
+        platform.
+
+        * platform/graphics/Pattern.h:
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::fillPath):
+        (WebCore::GraphicsContext::strokePath):
+        (WebCore::GraphicsContext::fillRect):
+        * platform/graphics/qt/PatternQt.cpp:
+        (WebCore::Pattern::createPlatformPattern):
+
+2008-08-29  Simon Hausmann  <hausmann@webkit.org>
+
+        Fix the Qt build, fontSelector() is not used by the Qt port yet
+        and we just return 0 in Font::fontSelector().
+
+        * platform/graphics/Font.h:
+
+2008-08-28  Alp Toker  <alp@nuanti.com>
+
+        GTK+ dist/build fix. List newly added header files.
+
+        * GNUmakefile.am:
+
+2008-08-28  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        Various WebKitCSSTransformValue-related fixes
+        https://bugs.webkit.org/show_bug.cgi?id=20562
+
+        Test: css3/transform-value-types.html
+
+        * bindings/js/JSCSSValueCustom.cpp:
+        (WebCore::toJS):
+        * css/CSSValue.h:
+        * css/WebKitCSSTransformValue.cpp:
+        (WebCore::WebKitCSSTransformValue::cssText):
+        * css/WebKitCSSTransformValue.h:
+        (WebCore::WebKitCSSTransformValue::):
+        * css/WebKitCSSTransformValue.idl:
+
+2008-08-28  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Steve Falkenburg.
+
+        - do not let the "last chance" WM_TIMER trigger WebCore timers when they should be deferred
+
+        * platform/win/SharedTimerWin.cpp:
+        (WebCore::TimerWindowWndProc):
+
 2008-08-28  David Hyatt  <hyatt@apple.com>
 
         RenderStyle cleanup.
