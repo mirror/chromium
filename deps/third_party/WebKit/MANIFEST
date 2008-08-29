@@ -16,7 +16,6 @@ WebCore\loader\FrameLoader.h
 WebCore\loader\FrameLoaderClient.h
 WebCore\loader\TextResourceDecoder.cpp
 WebCore\loader\TextResourceDecoder.h
-WebCore\page\Chrome.cpp
 WebCore\page\DOMWindow.cpp
 WebCore\page\DOMWindow.h
 WebCore\page\DragController.cpp
