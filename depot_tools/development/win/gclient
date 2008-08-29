@@ -1,0 +1,6 @@
+#!/bin/sh
+
+base_dir=$(dirname "$0")
+
+# gclient.bat will run the update and then gclient.py
+exec "$base_dir/gclient.bat" "$@"
