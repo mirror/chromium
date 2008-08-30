@@ -603,12 +603,7 @@ def GetAllDeps(client, solution_urls,
             raise Error(
                 "relative DEPS entry \"%s\" must begin with a slash" % d)
           info = capture_svn_info(solution["url"], client["root_dir"], False)
-          try:
-            url = info["Repository Root"] + url
-          except KeyError:
-            print "capture_svn_info(%s, %s, False) returned:" % (repr(solution["url"]), repr(client["root_dir"]))
-            print "info =", info
-            raise
+          url = info["Repository Root"] + url
       if d in deps and deps[d] != url:
         raise Error(
             "solutions have conflicting versions of dependency \"%s\"" % d)
