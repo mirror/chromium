@@ -3,7 +3,7 @@ This package contains tools for working with Chromium development.
 The "gclient" wrapper knows how to keep this repository updated to
 the latest versions of these tools as found at:
 
-    svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools
+    http://chromium-source.googlecode.com/svn/trunk/depot_tools
 
 TODO(sgk):  describe how to disable automatic updates
 
@@ -29,5 +29,5 @@ This package contains:
     The revision control system for Chromium development.  More info at:
     http://subversion.tigris.com/
 
-To update this distribution manually, run bootstrap\update.bat on Windows,
-or bootstrap/update.sh on Linux or Mac.
+To manually update this distribution, run bootstrap\update.bat, but if you run
+gclient.bat to checkout your working copy then you should be set.

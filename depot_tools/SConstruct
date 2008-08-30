@@ -1,0 +1,98 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import os
+import string
+
+
+default_url = 'svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools'
+
+if ARGUMENTS.get('RELEASE') == '1':
+  depot_tools_dir = ''
+else:
+  depot_tools_dir = ARGUMENTS.get('DEPOT_TOOLS_DIR', 'development')
+
+download_url = ARGUMENTS.get('DOWNLOAD_URL')
+if download_url is None:
+  download_url = default_url
+  if depot_tools_dir:
+    download_url += '/' + depot_tools_dir
+
+release_arches = [
+    'linux',
+    'mac',
+    'win',
+]
+
+env = Environment(tools = [],
+                  WRAPPER_DIR = '#$DEPOT_TOOLS_DIR/$RELEASE_ARCH',
+                  RELEASE_DIR = '#$DEPOT_TOOLS_DIR/release/$RELEASE_ARCH',
+                  DEPOT_TOOLS_DIR = depot_tools_dir,
+                  DOWNLOAD_URL = download_url)
+
+
+Help("""
+usage: scons [OPTION [TARGET] ...
+
+SCons configuration for packaging depot_tools.
+
+  DOWNLOAD_URL=         Specify the URL that will get inserted in the
+	                appropriate update scripts for depot_tools to
+                        sync from.
+  DEPOT_TOOLS_DIR=      Specify the directory into which to build/release
+                        the scripts.  Default is 'development'.
+  RELEASE=1             Specifies that you want to release a copy of
+                        what's in src/ publicly.  Causes the linux/,
+                        mac/, release/ and win/ directories to be
+                        upated.  You can then "svn diff" to make sure
+                        things look okay before committing.
+""")
+
+
+def Substitute(target, source, env):
+  tfp = open(str(target[0]), 'w')
+  sfp = open(str(source[0]), 'r')
+  c = string.Template(sfp.read())
+  tfp.write(c.safe_substitute(env.Dictionary()))
+
+SubstituteAction = Action(Substitute,
+                          'Substitute file: "$SOURCE" as "$TARGET"',
+                          varlist=['DOWNLOAD_URL'])
+
+env['BUILDERS']['Substitute'] = Builder(action=SubstituteAction,
+                                        source_factory=File,
+                                        target_factory=File)
+
+def InstallSubstitutions(env, target, source):
+  result = []
+  dir = str(target)
+  for s in source:
+    t = env.Substitute(dir + '/' + os.path.split(s)[1], s)
+    result.extend(t)
+  return result
+
+env.AddMethod(InstallSubstitutions)
+
+
+def CopySubversionTree(env, target, source):
+  target = str(env.Dir(target))
+  source = str(env.Dir(source))
+  for root, dirs, files in os.walk(source):
+    subdir = root.replace(source, '')
+    if subdir.startswith('/'):
+      subdir = subdir[1:]
+    if '.svn' in dirs:
+      dirs.remove('.svn')
+    for f in files:
+      env.InstallAs(os.path.join(target, subdir, f),
+                    os.path.join(source, subdir, f))
+
+env.AddMethod(CopySubversionTree)
+
+
+for release_arch in release_arches:
+  env = env.Clone(RELEASE_ARCH = release_arch)
+  Export('env')
+  SConscript('src/wrappers/SConscript')
+  SConscript('src/release/SConscript')

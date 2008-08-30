@@ -3,7 +3,7 @@ This package contains tools for working with Chromium development.
 The "gclient" wrapper knows how to keep this repository updated to
 the latest versions of these tools as found at:
 
-    svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools
+    $DOWNLOAD_URL
 
 TODO(sgk):  describe how to disable automatic updates
 
