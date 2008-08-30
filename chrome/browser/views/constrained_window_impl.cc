@@ -1048,7 +1048,7 @@ std::wstring ConstrainedWindowImpl::GetWindowTitle() const {
     // post beta.
     std::wstring locale = g_browser_process->GetApplicationLocale();
     if (locale == L"en-US" || locale == L"en-GB") {
-      display_title = L"Blocked Popup";
+      display_title = L"Blocked Pop-up";
       title_set = true;
     }
   }
