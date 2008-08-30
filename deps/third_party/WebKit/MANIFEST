@@ -3,6 +3,7 @@ WebCore\DerivedSources.make
 WebCore\config.h
 WebCore\css\CSSStyleSelector.cpp
 WebCore\dom\Document.cpp
+WebCore\dom\Document.h
 WebCore\editing\Editor.h
 WebCore\editing\Selection.cpp
 WebCore\html\HTMLInputElement.cpp
@@ -52,7 +53,7 @@ WebCore\rendering\RenderPartObject.cpp
 WebCore\rendering\RenderText.cpp
 WebCore\rendering\RenderTextControl.cpp
 WebCore\rendering\RenderTheme.h
-WebCore\svg\graphics\SVGImageEmptyClients.h
+WebCore\loader\EmptyClients.h
 WebCore\xml\XMLHttpRequest.cpp
 WebCore\xml\XMLHttpRequest.h
 WebCore\xml\XSLImportRule.cpp
