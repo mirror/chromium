@@ -32,7 +32,7 @@ gcl_info_dir = ""
 
 def GetSVNFileInfo(file, field):
   """Returns a field from the svn info output for the given file."""
-  output = RunShell(["svn", "info", file])
+  output = RunShell(["svn", "info", "--depth", "empty", file])
   for line in output.splitlines():
     search = field + ": "
     if line.startswith(search):
@@ -71,10 +71,11 @@ def ErrorExit(msg):
   sys.exit(1)
 
 
-def RunShell(command, print_output=False):
+def RunShell(command, print_output=False, universal_newlines=False):
   """Executes a command and returns the output."""
   p = subprocess.Popen(command, stdout = subprocess.PIPE,
-                       stderr = subprocess.STDOUT, shell = use_shell)
+                       stderr = subprocess.STDOUT, shell = use_shell,
+                       universal_newlines=universal_newlines)
   if print_output:
     output_array = []
     while True:
@@ -164,6 +165,8 @@ SEPARATOR = "\n-----\n"
 
 def GetChangelistInfoFile(changename):
   """Returns the file that stores information about a changelist."""
+  if not changename or re.search(r'\W', changename):
+    ErrorExit("Invalid changelist name: " + changename)
   return os.path.join(GetInfoDir(), changename)
 
 
@@ -200,7 +203,7 @@ def LoadChangelistInfo(changename, fail_on_not_found=True,
   if update_status:
     for file in files:
       filename = os.path.join(GetRepositoryRoot(), file[1])
-      status = RunShell(["svn", "status", filename])[:7]
+      status = RunShell(["svn", "status", "--depth", "empty", filename])[:7]
       if not status:  # File has been reverted.
         save = True
         files.remove(file)
@@ -318,10 +321,10 @@ def UnknownFiles(extra_args):
       break
     if line[0] != '?':
       continue  # Not an unknown file to svn.
-      # The lines look like this:
-      # "?      foo.txt"
-      # and we want just "foo.txt"
-      line = line[7:]
+    # The lines look like this:
+    # "?      foo.txt"
+    # and we want just "foo.txt"
+    print line[7:].strip()
   p.wait()
   p.stdout.close()
 
@@ -370,6 +373,9 @@ def Help():
   print "   gcl opened"
   print ("      Lists modified files in the current directory and "
          "subdirectories.\n")
+  print "   gcl try change_name"
+  print ("      Sends the change to the tryserver so a trybot can do a test"
+         " run on your code.\n")
 
 
 def GetEditor():
@@ -390,15 +396,29 @@ def GenerateDiff(files):
   """Returns a string containing the diff for the given file list."""
   diff = []
   for file in files:
-    # Use svn info output instead of os.path.isdir because the latter fails
-    # when the file is deleted.
-    if GetSVNFileInfo(file, "Node Kind") == "directory":
-      continue
-    diff.append(RunShell(["svn", "diff", "--diff-cmd=diff", file]))
+    # If the user specified a custom diff command in their svn config file,
+    # then it'll be used when we do svn diff, which we don't want to happen
+    # since we want the unified diff.  Using --diff-cmd=diff doesn't always
+    # work, since they can have another diff executable in their path that
+    # gives different line endings.  So we use a bogus temp directory as the
+    # config directory, which gets around these problems.
+    if sys.platform.startswith("win"):
+      parent_dir = tempfile.gettempdir()
+    else:
+      parent_dir = sys.path[0]  # tempdir is not secure.
+    bogus_dir = os.path.join(parent_dir, "temp_svn_config")
+    if not os.path.exists(bogus_dir):
+      os.mkdir(bogus_dir)
+    diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir,
+                          "--depth", "empty", file], universal_newlines=True))
   return "".join(diff)
 
 
 def UploadCL(change_info, args):
+  if not change_info.FileList():
+    print "Nothing to upload, changelist is empty."
+    return
+
   upload_arg = ["upload.py", "-y", "-l"]
   upload_arg.append("--server=" + SERVER)
   upload_arg.extend(args)
@@ -440,7 +460,31 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
 
+def TryChange(change_info):
+  """Create a diff file of change_info and send it to the try server."""
+  try:
+    import trychange
+  except:
+    ErrorExit("You need to install trychange.py to use the try server.")
+
+  # Change the current working directory before generating the diff so that it
+  # shows the correct base.
+  os.chdir(trychange.GetCheckoutRoot())
+  subpath = trychange.PathDifference(trychange.GetCheckoutRoot(),
+                                     GetRepositoryRoot())
+  # Generate the diff and write it to the submit queue path. Fix the file list
+  # according to the new path.
+  diff = GenerateDiff([os.path.join(subpath, x)
+                       for x in change_info.FileList()])
+  patch_name = trychange.TryChange(change_info.name, diff)
+  print 'Patch \'%s\' sent to try server.' % patch_name
+
+
 def Commit(change_info):
+  if not change_info.FileList():
+    print "Nothing to commit, changelist is empty."
+    return
+
   commit_cmd = ["svn", "commit"]
   filename = ''
   if change_info.issue:
@@ -604,12 +648,15 @@ def main(argv=None):
     Commit(change_info)
   elif command == "delete":
     change_info.Delete()
+  elif command == "try":
+    TryChange(change_info)
   else:
     # Everything else that is passed into gcl we redirect to svn, after adding
     # the files. This allows commands such as 'gcl diff xxx' to work.
     args =["svn", command]
     root = GetRepositoryRoot()
     args.extend([os.path.join(root, x) for x in change_info.FileList()])
+    args.extend(["--depth", "empty"])
     RunShell(args, True)
   return 0
 
