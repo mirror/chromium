@@ -4,7 +4,7 @@
 :: found in the parent directory.
 
 setlocal
-set PATH="%~dp0svn;%WINDIR%\system32"
+set PATH=%~dp0svn;%WINDIR%\system32
 set opt=-q
 
 IF NOT EXIST %dp0..\.svn GOTO gclient
