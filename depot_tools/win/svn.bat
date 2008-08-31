@@ -1,1 +1,1 @@
-@%~dp0release\svn\svn.exe %*
+@"%~dp0release\svn\svn.exe" %*

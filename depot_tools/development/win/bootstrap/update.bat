@@ -15,4 +15,4 @@ exit /b 0
 echo checking out latest depot_tools...
 
 :svn
-%~dp0svn\svn.exe co %opt% %url% %1
+"%~dp0svn\svn.exe" co %opt% %url% %1
