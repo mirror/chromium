@@ -586,8 +586,8 @@ def GetAllDeps(client, solution_urls,
         # skip the From reference.  when we pull deps for the solution, we will
         # take care of this dependency.
         #
-        # if multiple solutions all have the same From reference, then we should
-        # only add one to our list of dependencies.
+        # If multiple solutions all have the same From reference, then we
+        # should only add one to our list of dependencies.
         #
         if type(url) != str:
           if url.module_name in solution_urls:
@@ -595,15 +595,16 @@ def GetAllDeps(client, solution_urls,
           if d in deps and type(deps[d]) != str:
             if url.module_name == deps[d].module_name:
               continue
-        parsed_url = urlparse.urlparse(url)
-        scheme = parsed_url[0]
-        if not scheme:
-          path = parsed_url[2]
-          if path[0] != "/":
-            raise Error(
-                "relative DEPS entry \"%s\" must begin with a slash" % d)
-          info = capture_svn_info(solution["url"], client["root_dir"], False)
-          url = info["Repository Root"] + url
+        else:
+          parsed_url = urlparse.urlparse(url)
+          scheme = parsed_url[0]
+          if not scheme:
+            path = parsed_url[2]
+            if path[0] != "/":
+              raise Error(
+                  "relative DEPS entry \"%s\" must begin with a slash" % d)
+            info = capture_svn_info(solution["url"], client["root_dir"], False)
+            url = info["Repository Root"] + url
       if d in deps and deps[d] != url:
         raise Error(
             "solutions have conflicting versions of dependency \"%s\"" % d)
