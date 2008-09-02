@@ -155,7 +155,7 @@ def TarWrappers(target, source, env):
 
 # TODO(sgk):  just use tar itself, which makes us not cross-platform,
 # but works as we want.
-TarWrappers = "tar zcf $TARGET --owner 0 --group 0 $SOURCE"
+TarWrappers = "tar --owner 0 --group 0 -zcf $TARGET $SOURCE"
 
 TarWrappersAction = Action(TarWrappers,
                           'TarWrappers file: "$SOURCE" as "$TARGET"')
