@@ -14,9 +14,9 @@ import tempfile
 import upload
 import urllib2
 
-SERVER = 'chrome-reviews.prom.corp.google.com'  # Rietveld server to use
-SVN_REV = 'http://chrome-svn/viewvc/chrome?view=rev&revision='
-CC_LIST = 'chrome-reviews@google.com'  # CC'd on all emails.
+SERVER = 'codereview.chromium.org'  # Rietveld server to use
+SVN_REV = 'http://src.chromium.org/viewvc/chrome?view=rev&revision='
+CC_LIST = 'chromium-reviews@googlegroups.com'  # CC'd on all emails.
 
 
 # Use a shell for subcommands on Windows to get a PATH search, and because svn
