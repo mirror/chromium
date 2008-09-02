@@ -11,7 +11,7 @@ exit /b 0
 :message
 echo checking out latest depot_tools...
 
-set url="svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools/development/release/win"
+set url="http://src.chromium.org/svn/trunk/depot_tools/development/release/win"
 set opt=-q
 
 :svn

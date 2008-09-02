@@ -10,7 +10,7 @@ import tarfile
 import zipfile
 
 
-default_url = 'svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools'
+default_url = 'http://src.chromium.org/svn/trunk/depot_tools'
 
 if ARGUMENTS.get('RELEASE') == '1':
   depot_tools_dir = ''
