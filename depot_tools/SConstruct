@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import os
+import stat
 import string
 import subprocess
 import sys
@@ -38,19 +39,42 @@ base_env = Environment(tools = [],
                        DOWNLOAD_URL = download_url)
 
 
-def Substitute(target, source, env):
-  tfp = open(str(target[0]), 'w')
-  sfp = open(str(source[0]), 'r')
+def DoSubstitute(target, source, env):
+  target = str(target[0])
+  source = str(source[0])
+  try:
+    mode = os.stat(target)[stat.ST_MODE]
+  except EnvironmentError:
+    mode = None
+  try:
+    os.unlink(target)
+  except EnvironmentError:
+    pass
+  tfp = open(target, 'w')
+  sfp = open(source, 'r')
   c = string.Template(sfp.read())
   tfp.write(c.safe_substitute(env.Dictionary()))
+  if mode:
+    os.chmod(target, mode)
 
-SubstituteAction = Action(Substitute,
-                          'Substitute file: "$SOURCE" as "$TARGET"',
-                          varlist=['DOWNLOAD_URL'])
+DoSubstituteAction = Action(DoSubstitute,
+                            'Substitute file: "$SOURCE" as "$TARGET"',
+                            varlist=['DOWNLOAD_URL'])
 
-base_env['BUILDERS']['Substitute'] = Builder(action=SubstituteAction,
-                                        source_factory=File,
-                                        target_factory=File)
+base_env['BUILDERS']['DoSubstitute'] = Builder(action=DoSubstituteAction,
+                                               source_factory=File,
+                                               target_factory=File)
+
+
+
+def Substitute(env, target, source):
+  # Arrange for SCons to *not* remove the target file(s), so the
+  # build step can examine and preserve permissions.
+  env.Precious(target)
+  return env.DoSubstitute(target, source)
+
+base_env.AddMethod(Substitute)
+
 
 def InstallSubstitutions(env, target, source):
   result = []
