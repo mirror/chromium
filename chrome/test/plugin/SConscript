@@ -1,31 +1,6 @@
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 Import('env_test')
 
@@ -38,8 +13,6 @@ env_test.Prepend(
         'UNIT_TEST',
         'LIBXSLT_STATIC',
         'LIBXML_STATIC',
-        'CERT_CHAIN_PARA_HAS_EXTRA_FIELDS',
-        'WIN32_LEAN_AND_MEAN',
     ],
     CPPPATH = [
         '$GTEST_DIR/include',
@@ -51,6 +24,26 @@ env_test.Prepend(
         '$LIBXSLT_DIR',
         '$LIBXML_DIR/includ',
     ],
+    LIBS = [
+        'googleurl',
+        'security_tests',
+        'skia',
+        'libpng',
+        'gtest',
+        'base_gfx',
+        'icuuc',
+        'common',
+        'zlib',
+        'modp_b64',
+        'browser',
+        'browser_views',
+        'net',
+        'base',
+        'automation',
+    ],
+)
+
+env_test.Prepend(
     LINKFLAGS = [
         '/INCREMENTAL',
         '/DEBUG',
@@ -68,31 +61,10 @@ env_test.Prepend(
         '/nxcompat',
     ],
     LIBS = [
-         'winmm.lib',
-         'rpcrt4.lib',
-         'oleacc.lib',
          'comsupp.lib',
-
-         'wininet.lib',
-         'version.lib',
-         'msimg32.lib',
-         'ws2_32.lib',
-         'usp10.lib',
-         'psapi.lib',
-         'kernel32.lib',
-         'user32.lib',
-         'gdi32.lib',
-         'winspool.lib',
-         'comdlg32.lib',
-         'advapi32.lib',
-         'shell32.lib',
-         'ole32.lib',
-         'oleaut32.lib',
-         'uuid.lib',
-         'odbc32.lib',
-         'odbccp32.lib',
-
-         'DelayImp.lib',
+         'oleacc.lib',
+         'rpcrt4.lib',
+         'winmm.lib',
     ],
 )
 
@@ -104,27 +76,9 @@ input_files = [
     'plugin_test.cpp',
 ]
 
-libs = [
-    '$GOOGLEURL_DIR/googleurl.lib',
-    '$CHROME_DIR/test/security_tests/security_tests.lib',
-    '$SKIA_DIR/skia.lib',
-    '$LIBPNG_DIR/libpng.lib',
-    '$TESTING_DIR/gtest.lib',
-    '$BASE_DIR/gfx/base_gfx.lib',
-    '$ICU38_DIR/icuuc.lib',
-    '$CHROME_DIR/common/common.lib',
-    '$ZLIB_DIR/zlib.lib',
-    '$MODP_B64_DIR/modp_b64.lib',
-    '$CHROME_DIR/browser/browser.lib',
-    '$NET_DIR/net.lib',
-    '$BASE_DIR/base.lib',
-    '$CHROME_DIR/test/automation/automation.lib',
-]
 
-
-exe = env_test.Program(['plugin_tests',
-                        'plugin_tests.pdb'],
-                       input_files + libs)
+exe = env_test.ChromeTestProgram('plugin_tests', input_files)
 i = env_test.Install('$TARGET_ROOT', exe)
 
 env_test.Alias('chrome', i)
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // The history system runs on a background thread so that potentially slow
 // database operations don't delay the browser. This backend processing is
@@ -68,6 +43,8 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/sqlite_utils.h"
 #include "chrome/common/thumbnail_score.h"
+
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 using history::HistoryBackend;
@@ -103,6 +80,11 @@ class HistoryService::BackendDelegate : public HistoryBackend::Delegate {
         &HistoryService::BroadcastNotifications, type, details));
   }
 
+  virtual void DBLoaded() {
+    message_loop_->PostTask(FROM_HERE, NewRunnableMethod(history_service_.get(),
+        &HistoryService::OnDBLoaded));
+  }
+
  private:
   scoped_refptr<HistoryService> history_service_;
   MessageLoop* message_loop_;
@@ -113,7 +95,8 @@ const history::StarID HistoryService::kBookmarkBarID = 1;
 
 HistoryService::HistoryService()
     : thread_(new ChromeThread(ChromeThread::HISTORY)),
-      profile_(NULL) {
+      profile_(NULL),
+      backend_loaded_(false) {
   if (NotificationService::current()) {  // Is NULL when running generate_profile.
     NotificationService::current()->AddObserver(
         this, NOTIFY_HISTORY_URLS_DELETED, Source<Profile>(profile_));
@@ -122,7 +105,8 @@ HistoryService::HistoryService()
 
 HistoryService::HistoryService(Profile* profile)
     : thread_(new ChromeThread(ChromeThread::HISTORY)),
-      profile_(profile) {
+      profile_(profile),
+      backend_loaded_(false) {
   NotificationService::current()->AddObserver(
       this, NOTIFY_HISTORY_URLS_DELETED, Source<Profile>(profile_));
 }
@@ -138,13 +122,15 @@ HistoryService::~HistoryService() {
   }
 }
 
-bool HistoryService::Init(const std::wstring& history_dir) {
+bool HistoryService::Init(const std::wstring& history_dir,
+                          BookmarkService* bookmark_service) {
   if (!thread_->Start())
     return false;
 
   // Create the history backend.
   scoped_refptr<HistoryBackend> backend(
-      new HistoryBackend(history_dir, new BackendDelegate(this)));
+      new HistoryBackend(history_dir, new BackendDelegate(this),
+                         bookmark_service));
   history_backend_.swap(backend);
 
   ScheduleAndForget(PRIORITY_UI, &HistoryBackend::Init);
@@ -229,6 +215,11 @@ HistoryService::Handle HistoryService::GetMostRecentKeywordSearchTerms(
                   consumer,
                   new history::GetMostRecentKeywordSearchTermsRequest(callback),
                   keyword_id, prefix, max_count);
+}
+
+void HistoryService::URLsNoLongerBookmarked(const std::set<GURL>& urls) {
+  ScheduleAndForget(PRIORITY_NORMAL, &HistoryBackend::URLsNoLongerBookmarked,
+                    urls);
 }
 
 HistoryService::Handle HistoryService::ScheduleDBTask(
@@ -433,55 +424,6 @@ void HistoryService::SetImportedFavicons(
     const std::vector<history::ImportedFavIconUsage>& favicon_usage) {
   ScheduleAndForget(PRIORITY_NORMAL,
                     &HistoryBackend::SetImportedFavicons, favicon_usage);
-}
-
-HistoryService::Handle HistoryService::GetAllStarredEntries(
-    CancelableRequestConsumerBase* consumer,
-    GetStarredEntriesCallback* callback) {
-  return Schedule(PRIORITY_UI, &HistoryBackend::GetAllStarredEntries,
-                  consumer,
-                  new history::GetStarredEntriesRequest(callback));
-}
-
-void HistoryService::UpdateStarredEntry(const history::StarredEntry& entry) {
-  ScheduleAndForget(PRIORITY_UI, &HistoryBackend::UpdateStarredEntry, entry);
-}
-
-HistoryService::Handle HistoryService::CreateStarredEntry(
-    const history::StarredEntry& entry,
-    CancelableRequestConsumerBase* consumer,
-    CreateStarredEntryCallback* callback) {
-  DCHECK(entry.type != history::StarredEntry::BOOKMARK_BAR &&
-         entry.type != history::StarredEntry::OTHER);
-  if (!consumer) {
-    ScheduleTask(PRIORITY_UI,
-        NewRunnableMethod(history_backend_.get(),
-                          &HistoryBackend::CreateStarredEntry,
-                          scoped_refptr<history::CreateStarredEntryRequest>(),
-                          entry));
-    return 0;
-  }
-  return Schedule(PRIORITY_UI, &HistoryBackend::CreateStarredEntry, consumer,
-                  new history::CreateStarredEntryRequest(callback), entry);
-}
-
-void HistoryService::DeleteStarredGroup(history::UIStarID group_id) {
-  ScheduleAndForget(PRIORITY_NORMAL, &HistoryBackend::DeleteStarredGroup,
-                    group_id);
-}
-
-void HistoryService::DeleteStarredURL(const GURL& url) {
-  ScheduleAndForget(PRIORITY_NORMAL, &HistoryBackend::DeleteStarredURL, url);
-}
-
-HistoryService::Handle HistoryService::GetMostRecentStarredEntries(
-    int max_count,
-    CancelableRequestConsumerBase* consumer,
-    GetMostRecentStarredEntriesCallback* callback) {
-  return Schedule(PRIORITY_UI, &HistoryBackend::GetMostRecentStarredEntries,
-                  consumer,
-                  new history::GetMostRecentStarredEntriesRequest(callback),
-                  max_count);
 }
 
 void HistoryService::IterateURLs(URLEnumerator* enumerator) {
@@ -694,4 +636,11 @@ void HistoryService::BroadcastNotifications(
   Details<history::HistoryDetails> det(details_deleted);
 
   NotificationService::current()->Notify(type, source, det);
+}
+
+void HistoryService::OnDBLoaded() {
+  backend_loaded_ = true;
+  NotificationService::current()->Notify(NOTIFY_HISTORY_LOADED,
+                                         Source<Profile>(profile_),
+                                         Details<HistoryService>(this));
 }

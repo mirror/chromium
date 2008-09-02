@@ -1,41 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/tracked_objects.h"
+
+#include <math.h>
 
 #include "base/string_util.h"
 
 namespace tracked_objects {
 
-// a TLS index to the TrackRegistry for the current thread.
+// A TLS slot to the TrackRegistry for the current thread.
 // static
-TLSSlot ThreadData::tls_index_ = -1;
+TLSSlot ThreadData::tls_index_(base::LINKER_INITIALIZED);
 
 //------------------------------------------------------------------------------
 // Death data tallies durations when a death takes place.
@@ -102,15 +79,14 @@ Lock ThreadData::list_lock_;
 // static
 ThreadData::Status ThreadData::status_ = ThreadData::UNINITIALIZED;
 
-ThreadData::ThreadData() :  message_loop_(MessageLoop::current()) {}
+ThreadData::ThreadData() : message_loop_(MessageLoop::current()) {}
 
 // static
 ThreadData* ThreadData::current() {
-  if (-1 == tls_index_)
-    return NULL;  // not yet initialized.
+  if (!tls_index_.initialized())
+    return NULL;
 
-  ThreadData* registry =
-      static_cast<ThreadData*>(ThreadLocalStorage::Get(tls_index_));
+  ThreadData* registry = static_cast<ThreadData*>(tls_index_.Get());
   if (!registry) {
     // We have to create a new registry for ThreadData.
     bool too_late_to_create = false;
@@ -130,7 +106,7 @@ ThreadData* ThreadData::current() {
       delete registry;
       registry = NULL;
     } else {
-      ThreadLocalStorage::Set(tls_index_, registry);
+      tls_index_.Set(registry);
     }
   }
   return registry;
@@ -182,7 +158,7 @@ void ThreadData::WriteHTML(const std::string& query, std::string* output) {
 
   // Create filtering and sort comparison object.
   Comparator comparator;
-  bool display_details = comparator.ParseQuery(escaped_query);
+  comparator.ParseQuery(escaped_query);
 
   // Filter out acceptable (matching) instances.
   DataCollector::Collection match_array;
@@ -301,6 +277,7 @@ void ThreadData::SnapshotDeathMap(DeathMap *output) const {
     (*output)[it->first] = it->second;
 }
 
+#ifdef OS_WIN
 void ThreadData::RunOnAllThreads(void (*function)()) {
   ThreadData* list = first();  // Get existing list.
 
@@ -327,6 +304,7 @@ void ThreadData::RunOnAllThreads(void (*function)()) {
   int ret_val = CloseHandle(completion_handle);
   DCHECK(ret_val);
 }
+#endif
 
 // static
 bool ThreadData::StartTracking(bool status) {
@@ -340,11 +318,9 @@ bool ThreadData::StartTracking(bool status) {
     status_ = SHUTDOWN;
     return true;
   }
-  TLSSlot tls_index = ThreadLocalStorage::Alloc();
   AutoLock lock(list_lock_);
   DCHECK(status_ == UNINITIALIZED);
-  tls_index_ = tls_index;
-  CHECK(-1 != tls_index_);
+  CHECK(tls_index_.Initialize(NULL));
   status_ = ACTIVE;
   return true;
 }
@@ -354,6 +330,7 @@ bool ThreadData::IsActive() {
   return status_ == ACTIVE;
 }
 
+#ifdef OS_WIN
 // static
 void ThreadData::ShutdownMultiThreadTracking() {
   // Using lock, guarantee that no new ThreadData instances will be created.
@@ -370,6 +347,7 @@ void ThreadData::ShutdownMultiThreadTracking() {
   // MessageLoops, but we won't bother doing cleanup (destruction of data) yet.
   return;
 }
+#endif
 
 // static
 void ThreadData::ShutdownSingleThreadedCleanup() {
@@ -395,9 +373,9 @@ void ThreadData::ShutdownSingleThreadedCleanup() {
     delete next_thread_data;  // Includes all Death Records.
   }
 
-  CHECK(-1 != tls_index_);
-  ThreadLocalStorage::Free(tls_index_);
-  tls_index_ = -1;
+  CHECK(tls_index_.initialized());
+  tls_index_.Free();
+  DCHECK(!tls_index_.initialized());
   status_ = UNINITIALIZED;
 }
 
@@ -427,7 +405,7 @@ bool ThreadData::ThreadSafeDownCounter::LastCaller() {
 }
 
 //------------------------------------------------------------------------------
-
+#ifdef OS_WIN
 ThreadData::RunTheStatic::RunTheStatic(FunctionPointer function,
                                        HANDLE completion_handle,
                                        ThreadSafeDownCounter* counter)
@@ -437,11 +415,11 @@ ThreadData::RunTheStatic::RunTheStatic(FunctionPointer function,
 }
 
 void ThreadData::RunTheStatic::Run() {
-      function_();
-      if (counter_->LastCaller())
-        SetEvent(completion_handle_);
-    }
-
+  function_();
+  if (counter_->LastCaller())
+    SetEvent(completion_handle_);
+}
+#endif
 
 //------------------------------------------------------------------------------
 // Individual 3-tuple of birth (place and thread) along with death thread, and
@@ -690,6 +668,9 @@ bool Comparator::operator()(const Snapshot& left,
       if (left.AverageMsDuration() != right.AverageMsDuration())
         return left.AverageMsDuration() > right.AverageMsDuration();
       break;
+
+    default:
+      break;
   }
   if (tiebreaker_)
     return tiebreaker_->operator()(left, right);
@@ -697,7 +678,7 @@ bool Comparator::operator()(const Snapshot& left,
 }
 
 bool Comparator::Equivalent(const Snapshot& left,
-                                const Snapshot& right) const {
+                            const Snapshot& right) const {
   switch (selector_) {
     case BIRTH_THREAD:
       if (left.birth_thread() != right.birth_thread() &&
@@ -708,8 +689,7 @@ bool Comparator::Equivalent(const Snapshot& left,
 
     case DEATH_THREAD:
       if (left.death_thread() != right.death_thread() &&
-          left.DeathThreadName() !=
-              right.DeathThreadName())
+          left.DeathThreadName() != right.DeathThreadName())
         return false;
       break;
 
@@ -740,6 +720,9 @@ bool Comparator::Equivalent(const Snapshot& left,
       if (left.life_duration() != right.life_duration())
         return false;
       break;
+
+    default:
+      break;
   }
   if (tiebreaker_ && !use_tiebreaker_for_sort_only_)
     return tiebreaker_->Equivalent(left, right);
@@ -750,24 +733,27 @@ bool Comparator::Acceptable(const Snapshot& sample) const {
   if (required_.size()) {
     switch (selector_) {
       case BIRTH_THREAD:
-        if (sample.birth_thread()->ThreadName().find(required_)
-            == std::string.npos)
+        if (sample.birth_thread()->ThreadName().find(required_) ==
+            std::string::npos)
           return false;
         break;
 
       case DEATH_THREAD:
-        if (sample.DeathThreadName().find(required_) == std::string.npos)
+        if (sample.DeathThreadName().find(required_) == std::string::npos)
           return false;
         break;
 
-     case BIRTH_FILE:
+      case BIRTH_FILE:
         if (!strstr(sample.location().file_name(), required_.c_str()))
-            return false;
+          return false;
         break;
 
-     case BIRTH_FUNCTION:
+      case BIRTH_FUNCTION:
         if (!strstr(sample.location().function_name(), required_.c_str()))
-            return false;
+          return false;
+        break;
+
+      default:
         break;
     }
   }
@@ -865,9 +851,6 @@ bool Comparator::WriteSortGrouping(const Snapshot& sample,
                                        std::string* output) const {
   bool wrote_data = false;
   switch (selector_) {
-    case NIL:
-      break;
-
     case BIRTH_THREAD:
       StringAppendF(output, "All new on %s ",
                     sample.birth_thread()->ThreadName().c_str());
@@ -893,6 +876,9 @@ bool Comparator::WriteSortGrouping(const Snapshot& sample,
       sample.location().WriteFunctionName(output);
       output->push_back(' ');
       break;
+
+    default:
+      break;
   }
   if (tiebreaker_ && !use_tiebreaker_for_sort_only_) {
     wrote_data |= tiebreaker_->WriteSortGrouping(sample, output);
@@ -916,3 +902,4 @@ void Comparator::WriteSnapshot(const Snapshot& sample,
 }
 
 }  // namespace tracked_objects
+

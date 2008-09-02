@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_RENDER_VIEW_HOST_DELEGATE_H__
 #define CHROME_BROWSER_RENDER_VIEW_HOST_DELEGATE_H__
@@ -72,6 +47,19 @@ enum LoadState;
 //
 class RenderViewHostDelegate {
  public:
+  class FindInPage {
+   public:
+    // A find operation in the current page completed.
+    virtual void FindReply(int request_id,
+                           int number_of_matches,
+                           const gfx::Rect& selection_rect,
+                           int active_match_ordinal,
+                           bool final_update) = 0;
+  };
+
+  // Returns the current find in page delegate, if any.
+  virtual FindInPage* GetFindInPageDelegate() { return NULL; }
+
   // Retrieves the profile to be used.
   virtual Profile* GetProfile() const = 0;
 
@@ -119,7 +107,7 @@ class RenderViewHostDelegate {
 
   // The page's encoding was changed and should be updated.
   virtual void UpdateEncoding(RenderViewHost* render_view_host,
-                              const std::wstring& encoding_name) { }
+                              const std::string& encoding_name) { }
 
   // The destination URL has changed should be updated
   virtual void UpdateTargetURL(int32 page_id, const GURL& url) { }
@@ -167,20 +155,9 @@ class RenderViewHostDelegate {
       const GURL& url,
       bool showing_repost_interstitial) { }
 
-  // A find operation in the current page completed.
-  virtual void FindReply(int request_id,
-                         int number_of_matches,
-                         const gfx::Rect& selection_rect,
-                         int active_match_ordinal,
-                         bool final_update) { }
-
   // The URL for the FavIcon of a page has changed.
   virtual void UpdateFavIconURL(RenderViewHost* render_view_host,
                                 int32 page_id, const GURL& icon_url) { }
-
-  // The FavIcon for a page needs to be downloaded.
-  virtual void DownloadFavIcon(RenderViewHost* render_view_host,
-                               int32 page_id) { }
 
   // An image that was requested to be downloaded by DownloadImage has
   // completed.
@@ -217,6 +194,12 @@ class RenderViewHostDelegate {
   // By default we ignore such messages.
   virtual void ProcessDOMUIMessage(const std::string& message,
                                    const std::string& content) { }
+
+  // A message for external host. By default we ignore such messages.
+  // |receiver| can be a receiving script and |message| is any
+  // arbitrary string that makes sense to the receiver.
+  virtual void ProcessExternalHostMessage(const std::string& receiver,
+                                          const std::string& message) { }
 
   // Navigate to the history entry for the given offset from the current
   // position within the NavigationController.  Makes no change if offset is
@@ -362,3 +345,4 @@ class RenderViewHostDelegate {
 };
 
 #endif  // CHROME_BROWSER_RENDER_VIEW_HOST_DELEGATE_H__
+

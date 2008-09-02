@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/basictypes.h"
 #include "base/logging.h"
@@ -35,37 +10,88 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
-  class NetUtilTest : public testing::Test {
-  };
-}
+
+class NetUtilTest : public testing::Test {
+};
+
+struct FileCase {
+  const wchar_t* file;
+  const wchar_t* url;
+};
+
+struct HeaderCase {
+  const wchar_t* header_name;
+  const wchar_t* expected;
+};
+
+struct HeaderParamCase {
+  const wchar_t* header_name;
+  const wchar_t* param_name;
+  const wchar_t* expected;
+};
+
+struct FileNameCDCase {
+  const char* header_field;
+  const wchar_t* expected;
+};
+
+const wchar_t* kLanguages[] = {
+  L"",      L"en",    L"zh-CN",       L"ja",    L"ko",
+  L"he",    L"ar",    L"ru",          L"el",    L"fr",
+  L"de",    L"pt",    L"se",          L"th",    L"hi",
+  L"de,en", L"el,en", L"zh,zh-TW,en", L"ko,ja", L"he,ru,en",
+  L"zh,ru,en"
+};
+
+struct IDNTestCase {
+  const char* input;
+  const wchar_t* unicode_output;
+  const bool unicode_allowed[arraysize(kLanguages)];
+};
+
+struct SuggestedFilenameCase {
+  const char* url;
+  const wchar_t* content_disp_header;
+  const wchar_t* default_filename;
+  const wchar_t* expected_filename;
+};
+
+}  // anonymous namespace
 
 TEST(NetUtilTest, FileURLConversion) {
   // a list of test file names and the corresponding URLs
-  const struct FileCase {
-    const wchar_t* file;
-    const wchar_t* url;
-  } round_trip_cases[] = {
+  const FileCase round_trip_cases[] = {
+#if defined(OS_WIN)
     {L"C:\\foo\\bar.txt", L"file:///C:/foo/bar.txt"},
     {L"\\\\some computer\\foo\\bar.txt", L"file://some%20computer/foo/bar.txt"}, // UNC
     {L"D:\\Name;with%some symbols*#", L"file:///D:/Name%3Bwith%25some%20symbols*%23"},
     {L"D:\\Chinese\\\x6240\x6709\x4e2d\x6587\x7f51\x9875.doc", L"file:///D:/Chinese/%E6%89%80%E6%9C%89%E4%B8%AD%E6%96%87%E7%BD%91%E9%A1%B5.doc"},
+#elif defined(OS_POSIX)
+    {L"/foo/bar.txt", L"file:///foo/bar.txt"},
+    {L"/foo/BAR.txt", L"file:///foo/BAR.txt"},
+    {L"/C:/foo/bar.txt", L"file:///C:/foo/bar.txt"},
+    {L"/some computer/foo/bar.txt", L"file:///some%20computer/foo/bar.txt"},
+    {L"/Name;with%some symbols*#", L"file:///Name%3Bwith%25some%20symbols*%23"},
+    {L"/Chinese/\x6240\x6709\x4e2d\x6587\x7f51\x9875.doc", L"file:///Chinese/%E6%89%80%E6%9C%89%E4%B8%AD%E6%96%87%E7%BD%91%E9%A1%B5.doc"},
+#endif
   };
 
   // First, we'll test that we can round-trip all of the above cases of URLs
   std::wstring output;
-  for (int i = 0; i < arraysize(round_trip_cases); i++) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(round_trip_cases); i++) {
     // convert to the file URL
-    GURL file_url(net_util::FilePathToFileURL(round_trip_cases[i].file));
+    GURL file_url(net::FilePathToFileURL(round_trip_cases[i].file));
     EXPECT_EQ(std::wstring(round_trip_cases[i].url),
               UTF8ToWide(file_url.spec()));
 
     // Back to the filename.
-    EXPECT_TRUE(net_util::FileURLToFilePath(file_url, &output));
+    EXPECT_TRUE(net::FileURLToFilePath(file_url, &output));
     EXPECT_EQ(std::wstring(round_trip_cases[i].file), output);
   }
 
   // Test that various file: URLs get decoded into the correct file type
   FileCase url_cases[] = {
+#if defined(OS_WIN)
     {L"C:\\foo\\bar.txt", L"file:c|/foo\\bar.txt"},
     {L"C:\\foo\\bar.txt", L"file:/c:/foo/bar.txt"},
     {L"\\\\foo\\bar.txt", L"file://foo\\bar.txt"},
@@ -74,17 +100,44 @@ TEST(NetUtilTest, FileURLConversion) {
     {L"\\\\foo\\bar.txt", L"file:/foo/bar.txt"},
     {L"\\\\foo\\bar.txt", L"file://foo\\bar.txt"},
     {L"C:\\foo\\bar.txt", L"file:\\\\\\c:/foo/bar.txt"},
+#elif defined(OS_POSIX)
+    {L"/c:/foo/bar.txt", L"file:/c:/foo/bar.txt"},
+    {L"/c:/foo/bar.txt", L"file:///c:/foo/bar.txt"},
+    {L"/foo/bar.txt", L"file:/foo/bar.txt"},
+    {L"/c:/foo/bar.txt", L"file:\\\\\\c:/foo/bar.txt"},
+    {L"/foo/bar.txt", L"file:foo/bar.txt"},
+    {L"/foo/bar.txt", L"file://foo/bar.txt"},
+    {L"/foo/bar.txt", L"file:///foo/bar.txt"},
+    {L"/foo/bar.txt", L"file:////foo/bar.txt"},
+    {L"/foo/bar.txt", L"file:////foo//bar.txt"},
+    {L"/foo/bar.txt", L"file:////foo///bar.txt"},
+    {L"/foo/bar.txt", L"file:////foo////bar.txt"},
+    {L"/c:/foo/bar.txt", L"file:\\\\\\c:/foo/bar.txt"},
+    {L"/c:/foo/bar.txt", L"file:c:/foo/bar.txt"},
+    // We get these wrong because GURL turns back slashes into forward
+    // slashes.
+    //{L"/foo%5Cbar.txt", L"file://foo\\bar.txt"},
+    //{L"/c|/foo%5Cbar.txt", L"file:c|/foo\\bar.txt"},
+    //{L"/foo%5Cbar.txt", L"file://foo\\bar.txt"},
+    //{L"/foo%5Cbar.txt", L"file:////foo\\bar.txt"},
+    //{L"/foo%5Cbar.txt", L"file://foo\\bar.txt"},
+#endif
   };
-  for (int i = 0; i < arraysize(url_cases); i++) {
-    net_util::FileURLToFilePath(GURL(url_cases[i].url), &output);
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(url_cases); i++) {
+    net::FileURLToFilePath(GURL(WideToUTF8(url_cases[i].url)), &output);
     EXPECT_EQ(std::wstring(url_cases[i].file), output);
   }
 
   // Here, we test that UTF-8 encoded strings get decoded properly, even when
-  // they might be stored with wide characters
+  // they might be stored with wide characters.  On posix systems, just treat
+  // this as a stream of bytes.
   const wchar_t utf8[] = L"file:///d:/Chinese/\xe6\x89\x80\xe6\x9c\x89\xe4\xb8\xad\xe6\x96\x87\xe7\xbd\x91\xe9\xa1\xb5.doc";
+#if defined(OS_WIN)
   const wchar_t wide[] = L"D:\\Chinese\\\x6240\x6709\x4e2d\x6587\x7f51\x9875.doc";
-  EXPECT_TRUE(net_util::FileURLToFilePath(GURL(utf8), &output));
+#elif defined(OS_POSIX)
+  const wchar_t wide[] = L"/d:/Chinese/\xe6\x89\x80\xe6\x9c\x89\xe4\xb8\xad\xe6\x96\x87\xe7\xbd\x91\xe9\xa1\xb5.doc";
+#endif
+  EXPECT_TRUE(net::FileURLToFilePath(GURL(WideToUTF8(utf8)), &output));
   EXPECT_EQ(std::wstring(wide), output);
 
   // Unfortunately, UTF8ToWide discards invalid UTF8 input.
@@ -93,13 +146,13 @@ TEST(NetUtilTest, FileURLConversion) {
   // the input is preserved in UTF-8
   const char invalid_utf8[] = "file:///d:/Blah/\xff.doc";
   const wchar_t invalid_wide[] = L"D:\\Blah\\\xff.doc";
-  EXPECT_TRUE(net_util::FileURLToFilePath(
+  EXPECT_TRUE(net::FileURLToFilePath(
       GURL(std::string(invalid_utf8)), &output));
   EXPECT_EQ(std::wstring(invalid_wide), output);
 #endif
 
   // Test that if a file URL is malformed, we get a failure
-  EXPECT_FALSE(net_util::FileURLToFilePath(GURL("filefoobar"), &output));
+  EXPECT_FALSE(net::FileURLToFilePath(GURL("filefoobar"), &output));
 }
 
 // Just a bunch of fake headers.
@@ -125,10 +178,7 @@ const wchar_t* google_headers =
     L"X-Test: bla; arg1=val1; arg2=val2";
 
 TEST(NetUtilTest, GetSpecificHeader) {
-  const struct {
-    const wchar_t* header_name;
-    const wchar_t* expected;
-  } tests[] = {
+  const HeaderCase tests[] = {
     {L"content-type", L"text/html; charset=utf-8"},
     {L"CONTENT-LENGTH", L"378557"},
     {L"Date", L"Mon, 13 Nov 2006 21:38:09 GMT"},
@@ -137,25 +187,21 @@ TEST(NetUtilTest, GetSpecificHeader) {
   };
 
   // Test first with google_headers.
-  for (size_t i = 0; i < arraysize(tests); ++i) {
-    std::wstring result = net_util::GetSpecificHeader(google_headers,
-                                                      tests[i].header_name);
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
+    std::wstring result = net::GetSpecificHeader(google_headers,
+                                                 tests[i].header_name);
     EXPECT_EQ(result, tests[i].expected);
   }
 
   // Test again with empty headers.
-  for (size_t i = 0; i < arraysize(tests); ++i) {
-    std::wstring result = net_util::GetSpecificHeader(L"", tests[i].header_name);
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
+    std::wstring result = net::GetSpecificHeader(L"", tests[i].header_name);
     EXPECT_EQ(result, std::wstring());
   }
 }
 
 TEST(NetUtilTest, GetHeaderParamValue) {
-  const struct {
-    const wchar_t* header_name;
-    const wchar_t* param_name;
-    const wchar_t* expected;
-  } tests[] = {
+  const HeaderParamCase tests[] = {
     {L"Content-type", L"charset", L"utf-8"},
     {L"content-disposition", L"filename", L"download.pdf"},
     {L"Content-Type", L"badparam", L""},
@@ -170,28 +216,25 @@ TEST(NetUtilTest, GetHeaderParamValue) {
   };
   // TODO(mpcomplete): add tests for other formats of headers.
 
-  for (size_t i = 0; i < arraysize(tests); ++i) {
-    std::wstring header_value = net_util::GetSpecificHeader(google_headers,
-                                                            tests[i].header_name);
-    std::wstring result = net_util::GetHeaderParamValue(header_value,
-                                                        tests[i].param_name);
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
+    std::wstring header_value =
+        net::GetSpecificHeader(google_headers, tests[i].header_name);
+    std::wstring result =
+        net::GetHeaderParamValue(header_value, tests[i].param_name);
     EXPECT_EQ(result, tests[i].expected);
   }
 
-  for (size_t i = 0; i < arraysize(tests); ++i) {
-    std::wstring header_value = net_util::GetSpecificHeader(L"",
-                                                            tests[i].header_name);
-    std::wstring result = net_util::GetHeaderParamValue(header_value,
-                                                        tests[i].param_name);
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
+    std::wstring header_value =
+        net::GetSpecificHeader(L"", tests[i].header_name);
+    std::wstring result =
+        net::GetHeaderParamValue(header_value, tests[i].param_name);
     EXPECT_EQ(result, std::wstring());
   }
 }
 
 TEST(NetUtilTest, GetFileNameFromCD) {
-  const struct {
-    const char* header_field;
-    const wchar_t* expected;
-  } tests[] = {
+  const FileNameCDCase tests[] = {
     // Test various forms of C-D header fields emitted by web servers.
     {"content-disposition: inline; filename=\"abcde.pdf\"", L"abcde.pdf"},
     {"content-disposition: inline; name=\"abcde.pdf\"", L"abcde.pdf"},
@@ -258,9 +301,9 @@ TEST(NetUtilTest, GetFileNameFromCD) {
     {"Content-Disposition: attachment; filename==?windows-1252?Q?caf=E3?="
      "=?iso-8859-7?b?4eIucG5nCg==?=", L""},
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     EXPECT_EQ(tests[i].expected,
-              net_util::GetFileNameFromCD(tests[i].header_field));
+              net::GetFileNameFromCD(tests[i].header_field));
   }
 }
 
@@ -268,17 +311,7 @@ TEST(NetUtilTest, IDNToUnicode) {
   // TODO(jungshik) This is just a random sample of languages and is far
   // from exhaustive.  We may have to generate all the combinations
   // of languages (powerset of a set of all the languages).
-  const wchar_t* languages[] = {
-    L"",      L"en",    L"zh-CN",       L"ja",    L"ko",
-    L"he",    L"ar",    L"ru",          L"el",    L"fr",
-    L"de",    L"pt",    L"se",          L"th",    L"hi",
-    L"de,en", L"el,en", L"zh,zh-TW,en", L"ko,ja", L"he,ru,en",
-    L"zh,ru,en"};
-  struct IDNTest {
-    const char* input;
-    const wchar_t* unicode_output;
-    const bool unicode_allowed[arraysize(languages)];
-  } idn_cases[] = {
+  const IDNTestCase idn_cases[] = {
     // No IDN
     {"www.google.com", L"www.google.com",
      {true,  true,  true,  true,  true,
@@ -545,13 +578,13 @@ TEST(NetUtilTest, IDNToUnicode) {
 #endif
   };
 
-  for (int i = 0; i < arraysize(idn_cases); i++) {
-    for (int j = 0; j < arraysize(languages); j++) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(idn_cases); i++) {
+    for (size_t j = 0; j < arraysize(kLanguages); j++) {
       std::wstring output;
-      net_util::IDNToUnicode(idn_cases[i].input,
-                             static_cast<int>(strlen(idn_cases[i].input)),
-                             languages[j],
-                             &output);
+      net::IDNToUnicode(idn_cases[i].input,
+                        static_cast<int>(strlen(idn_cases[i].input)),
+                        kLanguages[j],
+                        &output);
       std::wstring expected(idn_cases[i].unicode_allowed[j] ?
                             idn_cases[i].unicode_output :
                             ASCIIToWide(idn_cases[i].input));
@@ -561,19 +594,14 @@ TEST(NetUtilTest, IDNToUnicode) {
 }
 
 TEST(NetUtilTest, StripWWW) {
-  EXPECT_EQ(L"", net_util::StripWWW(L""));
-  EXPECT_EQ(L"", net_util::StripWWW(L"www."));
-  EXPECT_EQ(L"blah", net_util::StripWWW(L"www.blah"));
-  EXPECT_EQ(L"blah", net_util::StripWWW(L"blah"));
+  EXPECT_EQ(L"", net::StripWWW(L""));
+  EXPECT_EQ(L"", net::StripWWW(L"www."));
+  EXPECT_EQ(L"blah", net::StripWWW(L"www.blah"));
+  EXPECT_EQ(L"blah", net::StripWWW(L"blah"));
 }
 
 TEST(NetUtilTest, GetSuggestedFilename) {
-  struct FilenameTest {
-    const char* url;
-    const wchar_t* content_disp_header;
-    const wchar_t* default_filename;
-    const wchar_t* expected_filename;
-  } test_cases[] = {
+  const SuggestedFilenameCase test_cases[] = {
     {"http://www.google.com/",
      L"Content-disposition: attachment; filename=test.html",
      L"",
@@ -662,10 +690,11 @@ TEST(NetUtilTest, GetSuggestedFilename) {
      L"",
      L"test.html"},
   };
-  for (int i = 0; i < arraysize(test_cases); ++i) {
-    std::wstring filename = net_util::GetSuggestedFilename(
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(test_cases); ++i) {
+    std::wstring filename = net::GetSuggestedFilename(
         GURL(test_cases[i].url), test_cases[i].content_disp_header,
         test_cases[i].default_filename);
     EXPECT_EQ(std::wstring(test_cases[i].expected_filename), filename);
   }
 }
+

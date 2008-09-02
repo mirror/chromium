@@ -1,46 +1,22 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <limits>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/common/gfx/chrome_canvas.h"
 
-#include "base/gfx/platform_canvas.h"
+#include <limits>
+
 #include "base/gfx/rect.h"
 #include "base/logging.h"
 #include "skia/include/SkShader.h"
+#include "chrome/common/gfx/chrome_font.h"
+#include "chrome/common/l10n_util.h"
 
 ChromeCanvas::ChromeCanvas(int width, int height, bool is_opaque)
-    : gfx::PlatformCanvas(width, height, is_opaque) {
+    : gfx::PlatformCanvasWin(width, height, is_opaque) {
 }
 
-ChromeCanvas::ChromeCanvas() : gfx::PlatformCanvas() {
+ChromeCanvas::ChromeCanvas() : gfx::PlatformCanvasWin() {
 }
 
 ChromeCanvas::~ChromeCanvas() {
@@ -226,7 +202,8 @@ void ChromeCanvas::DrawBitmapInt(const SkBitmap& bitmap, int src_x, int src_y,
   shader_scale.setScale(
       SkFloatToScalar(static_cast<float>(dest_w) / src_w),
       SkFloatToScalar(static_cast<float>(dest_h) / src_h));
-  shader_scale.postTranslate(SkIntToScalar(dest_x - src_x), SkIntToScalar(dest_y - src_y));
+  shader_scale.postTranslate(SkIntToScalar(dest_x - src_x),
+                             SkIntToScalar(dest_y - src_y));
   shader->setLocalMatrix(shader_scale);
 
   // Set up our paint to use the shader & release our reference (now just owned
@@ -338,6 +315,15 @@ void ChromeCanvas::DrawStringInt(const std::wstring& text, HFONT font,
   getTopPlatformDevice().postProcessGDI(x, y, w, h);
 }
 
+void ChromeCanvas::DrawStringInt(const std::wstring& text,
+                                 const ChromeFont& font,
+                                 const SkColor& color,
+                                 int x, int y,
+                                 int w, int h) {
+  DrawStringInt(text, font, color, x, y, w, h,
+                l10n_util::DefaultCanvasTextAlignment());
+}
+
 // We make sure that LTR text we draw in an RTL context is modified
 // appropriately to make sure it maintains it LTR orientation.
 void ChromeCanvas::DoDrawText(HDC hdc, const std::wstring& text,
@@ -402,3 +388,4 @@ SkBitmap ChromeCanvas::ExtractBitmap() {
   device_bitmap.copyTo(&result, SkBitmap::kARGB_8888_Config);
   return result;
 }
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // This file contains a class that can be used to extract the salient
 // elements of a command line in a relatively lightweight manner.
@@ -50,11 +25,21 @@ class CommandLine {
   // the current process.
   CommandLine();
 
+#if defined(OS_WIN)
   // Creates a parsed version of the given command-line string.
-  // The program name is assumed to be the first item in the string.
+  // The program name is assumed to be the first item in the string.  
   CommandLine(const std::wstring& command_line);
+#elif defined(OS_POSIX)
+  CommandLine(int argc, const char* const* argv);
+#endif
 
   ~CommandLine();
+
+  // On non-Windows platforms, main() must call SetArgcArgv() before accessing
+  // any members of this class.
+  // On Windows, this call is a no-op (we instead parse GetCommandLineW()
+  // directly) because we don't trust the CRT's parsing of the command line.
+  static void SetArgcArgv(int argc, const char* const* argv);
 
   // Returns true if this command line contains the given switch.
   // (Switch names are case-insensitive.)
@@ -112,8 +97,9 @@ class CommandLine {
 
   // A pointer to the parsed version of the command line.
   Data* data_;
-
+  
   DISALLOW_EVIL_CONSTRUCTORS(CommandLine);
 };
 
 #endif  // BASE_COMMAND_LINE_H__
+

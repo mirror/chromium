@@ -1,34 +1,32 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_IDLE_TIMER_H__
-#define BASE_IDLE_TIMER_H__
+// IdleTimer is a recurring Timer which runs only when the system is idle.
+// System Idle time is defined as not having any user keyboard or mouse
+// activity for some period of time.  Because the timer is user dependant, it
+// is possible for the timer to never fire.
+//
+// Usage should be for low-priority work, and may look like this:
+//
+//   class MyIdleTimer : public IdleTimer {
+//    public:
+//     // This timer will run repeatedly after 5 seconds of idle time
+//     MyIdleTimer() : IdleTimer(TimeDelta::FromSeconds(5), true) {};
+//     virtual void OnIdle() { do something };
+//   }
+//
+//   MyIdleTimer *timer = new MyIdleTimer();
+//   timer->Start();
+//
+//   // As with all Timers, the caller must dispose the object.
+//   delete timer;  // Will Stop the timer and cleanup.
+//
+// NOTE: An IdleTimer can only be used on a thread that processes UI events.
+// Such a thread should be running a MessageLoopForUI.
+
+#ifndef BASE_IDLE_TIMER_H_
+#define BASE_IDLE_TIMER_H_
 
 #include <windows.h>
 
@@ -36,48 +34,26 @@
 #include "base/task.h"
 #include "base/timer.h"
 
-// IdleTimer is a recurring Timer task which runs only when the system is idle.
-// System Idle time is defined as not having any user keyboard or mouse
-// activity for some period of time.  Because the timer is user dependant, it
-// is possible for the timer to never fire.
-
-//
-// Usage should be for low-priority tasks, and may look like this:
-//
-//   class MyIdleTimerTask : public IdleTimerTask {
-//    public:
-//     // This task will run after 5 seconds of idle time
-//     // and not more often than once per minute.
-//     MyIdleTimerTask() : IdleTimerTask(5, 60) {};
-//     virtual void OnIdle() { do something };
-//   }
-//
-//   MyIdleTimerTask *task = new MyIdleTimerTask();
-//   task->Start();
-//
-//   // As with all TimerTasks, the caller must dispose the object.
-//   delete task;  // Will Stop the timer and cleanup the task.
-
-class TimerManager;
+namespace base {
 
 // Function prototype for GetLastInputInfo.
 typedef BOOL (__stdcall *GetLastInputInfoFunction)(PLASTINPUTINFO plii);
 
-class IdleTimerTask : public Task {
+class IdleTimer {
  public:
-  // Create an IdleTimerTask.
-  // idle_time: idle time required before this task can run.
+  // Create an IdleTimer.
+  // idle_time: idle time required before this timer can run.
   // repeat: true if the timer should fire multiple times per idle,
   //         false to fire once per idle.
-  IdleTimerTask(TimeDelta idle_time, bool repeat);
+  IdleTimer(TimeDelta idle_time, bool repeat);
 
-  // On destruction, the IdleTimerTask will Stop itself and delete the Task.
-  virtual ~IdleTimerTask();
+  // On destruction, the IdleTimer will Stop itself.
+  virtual ~IdleTimer();
 
-  // Start the IdleTimerTask.
+  // Start the IdleTimer.
   void Start();
 
-  // Stop the IdleTimertask.
+  // Stop the IdleTimer.
   void Stop();
 
   // The method to run when the timer elapses.
@@ -86,12 +62,12 @@ class IdleTimerTask : public Task {
  protected:
   // Override the GetLastInputInfo function.
   void set_last_input_info_fn(GetLastInputInfoFunction function) {
-   get_last_input_info_fn_ = function;
+    get_last_input_info_fn_ = function;
   }
 
  private:
-  // This task's run method.
-  virtual void Run();
+  // Called when timer_ expires.
+  void Run();
 
   // Start the timer.
   void StartTimer();
@@ -106,9 +82,13 @@ class IdleTimerTask : public Task {
   bool repeat_;
   Time last_time_fired_;  // The last time the idle timer fired.
                           // will be 0 until the timer fires the first time.
-  scoped_ptr<OneShotTimer> timer_;
+  OneShotTimer<IdleTimer> timer_;
 
   GetLastInputInfoFunction get_last_input_info_fn_;
+
+  DISALLOW_COPY_AND_ASSIGN(IdleTimer);
 };
 
-#endif  // BASE_IDLE_TIMER_H__
+}  // namespace base
+
+#endif  // BASE_IDLE_TIMER_H_

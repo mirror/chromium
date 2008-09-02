@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "sandbox/src/broker_services.h"
 
@@ -90,7 +65,7 @@ ResultCode BrokerServicesBase::Init() {
   no_targets_ = ::CreateEventW(NULL, TRUE, FALSE, NULL);
 
   job_thread_ = ::CreateThread(NULL, 0,  // Default security and stack.
-                                 TargetEventsThread, this, NULL, NULL);
+                               TargetEventsThread, this, NULL, NULL);
   if (NULL == job_thread_)
     return SBOX_ERROR_GENERIC;
 
@@ -103,6 +78,9 @@ ResultCode BrokerServicesBase::Init() {
 // DLL_PROCESS_DETACH in other words, holding the loader lock, so we cannot
 // wait for threads here.
 BrokerServicesBase::~BrokerServicesBase() {
+  // If there is no port Init() was never called successfully.
+  if (!job_port_)
+    return;
   // Closing the port causes, that no more Job notifications are delivered to
   // the worker thread and also causes the thread to exit. This is what we
   // want to do since we are going to close all outstanding Jobs and notifying
@@ -320,3 +298,4 @@ ResultCode BrokerServicesBase::WaitForAllTargets() {
 }
 
 }  // namespace sandbox
+

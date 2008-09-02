@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/chrome_menu.h"
 
@@ -47,6 +22,7 @@
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/views/border.h"
 #include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/root_view.h"
 #include "generated_resources.h"
 
 // Margins between the top of the item and the label.
@@ -550,7 +526,7 @@ class MenuHostRootView : public RootView {
  public:
   explicit MenuHostRootView(ViewContainer* container,
                             SubmenuView* submenu)
-      : RootView(container, true),
+      : RootView(container),
         submenu_(submenu),
         forward_drag_to_menu_controller_(true),
         suspend_events_(false) {
@@ -678,7 +654,8 @@ class MenuHost : public HWNDViewContainer {
             const gfx::Rect& bounds,
             View* contents_view,
             bool do_capture) {
-    HWNDViewContainer::Init(parent, bounds, contents_view, true);
+    HWNDViewContainer::Init(parent, bounds, true);
+    SetContentsView(contents_view);
     // We don't want to take focus away from the hosting window.
     ShowWindow(SW_SHOWNA);
     owns_capture_ = do_capture;
@@ -1070,6 +1047,9 @@ const int MenuItemView::kMenuItemViewID = 1001;
 
 //  static
 const int MenuItemView::kDropBetweenPixels = 5;
+
+// static
+bool MenuItemView::allow_task_nesting_during_run_ = false;
 
 MenuItemView::MenuItemView(MenuDelegate* delegate) {
   DCHECK(delegate_);
@@ -1570,7 +1550,15 @@ MenuItemView* MenuController::Run(HWND parent,
   DLOG(INFO) << " entering nested loop, depth=" << nested_depth;
 #endif
 
-  MessageLoop::current()->Run(this);
+  MessageLoopForUI* loop = MessageLoopForUI::current();
+  if (MenuItemView::allow_task_nesting_during_run_) {
+    bool did_allow_task_nesting = loop->NestableTasksAllowed();
+    loop->SetNestableTasksAllowed(true);
+    loop->Run(this);
+    loop->SetNestableTasksAllowed(did_allow_task_nesting);
+  } else {
+    loop->Run(this);
+  }
 
 #ifdef DEBUG_MENU
   nested_depth--;
@@ -1631,6 +1619,9 @@ void MenuController::SetSelection(MenuItemView* menu_item,
   // Notify the new path it is selected.
   for (size_t i = paths_differ_at; i < new_size; ++i)
     new_path[i]->SetSelected(true);
+
+  if (menu_item && menu_item->GetDelegate())
+    menu_item->GetDelegate()->SelectionChanged(menu_item);
 
   pending_state_.item = menu_item;
   pending_state_.submenu_open = open_submenu;
@@ -2741,3 +2732,4 @@ void MenuController::StopScrolling() {
 }
 
 }  // namespace ChromeViews
+

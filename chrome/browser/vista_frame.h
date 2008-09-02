@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_VISTA_FRAME_H__
 #define CHROME_BROWSER_VISTA_FRAME_H__
@@ -38,7 +13,7 @@
 
 #include "base/message_loop.h"
 #include "chrome/app/chrome_dll_resource.h"
-#include "chrome/browser/chrome_frame.h"
+#include "chrome/browser/browser_window.h"
 #include "chrome/browser/frame_view.h"
 #include "chrome/browser/views/status_bubble.h"
 #include "chrome/views/view_container.h"
@@ -49,7 +24,9 @@
 
 #define VISTA_FRAME_CLASSNAME L"Chrome_VistaFrame"
 
+class BookmarkBarView;
 class Browser;
+class BrowserView;
 class TabContentsContainerView;
 class ChromeViews::FocusManager;
 class SkBitmap;
@@ -62,7 +39,7 @@ class TabStrip;
 // A CWindowImpl subclass that implements our main frame on Windows Vista
 //
 ////////////////////////////////////////////////////////////////////////////////
-class VistaFrame : public ChromeFrame,
+class VistaFrame : public BrowserWindow,
                    public CWindowImpl<VistaFrame,
                                       CWindow,
                                       CWinTraits<WS_OVERLAPPEDWINDOW |
@@ -179,12 +156,11 @@ class VistaFrame : public ChromeFrame,
   void OnThemeChanged();
 
   ////////////////////////////////////////////////////////////////////////////////
-  // ChromeFrame implementation
+  // BrowserWindow implementation
   ////////////////////////////////////////////////////////////////////////////////
 
   virtual void Init();
   virtual void Show(int command, bool adjust_to_fit);
-  virtual void BrowserDidPaint(HRGN region);
   virtual void Close();
   virtual void* GetPlatformID();
   virtual void ShowTabContents(TabContents* contents);
@@ -199,9 +175,15 @@ class VistaFrame : public ChromeFrame,
   virtual gfx::Rect GetNormalBounds();
   virtual bool IsMaximized();
   virtual gfx::Rect GetBoundsForContentBounds(const gfx::Rect content_rect);
-  virtual void SetBounds(const gfx::Rect& bounds);
-  virtual void DetachFromBrowser();
   virtual void InfoBubbleShowing();
+  virtual ToolbarStarToggle* GetStarButton() const;
+  virtual LocationBarView* GetLocationBarView() const;
+  virtual GoButton* GetGoButton() const;
+  virtual BookmarkBarView* GetBookmarkBarView();
+  virtual BrowserView* GetBrowserView() const;
+  virtual void UpdateToolbar(TabContents* contents, bool should_restore_state);
+  virtual void ProfileChanged(Profile* profile);
+  virtual void FocusToolbar();
 
   ////////////////////////////////////////////////////////////////////////////////
   // ChromeViews::ViewContainer
@@ -364,8 +346,11 @@ class VistaFrame : public ChromeFrame,
   // The view that contains the tabs and any associated controls.
   TabStrip* tabstrip_;
 
-  // Toolbar provided by our browser
-  ChromeViews::View* toolbar_;
+  // The bookmark bar. This is lazily created.
+  scoped_ptr<BookmarkBarView> bookmark_bar_view_;
+
+  // The visible bookmark bar. NULL if none is visible.
+  ChromeViews::View* active_bookmark_bar_;
 
   // Browser contents
   TabContentsContainerView* tab_contents_container_;
@@ -382,14 +367,8 @@ class VistaFrame : public ChromeFrame,
   // whether we are currently processing a view level drag session
   bool in_drag_session_;
 
-  // whether we are waiting for a browser async paint
-  bool browser_paint_pending_;
-
   // A view positioned at the bottom of the frame.
   ChromeViews::View* shelf_view_;
-
-  // View positioned beneath the tab strip.
-  ChromeViews::View* bookmark_bar_view_;
 
   // A view positioned beneath the bookmark bar view.
   // Implementation mirrors shelf_view_
@@ -408,8 +387,6 @@ class VistaFrame : public ChromeFrame,
   static bool g_initialized;
   static SkBitmap** g_bitmaps;
 
-  scoped_ptr<StatusBubble> status_bubble_;
-
   // Instance of accessibility information and handling for MSAA root
   CComPtr<IAccessible> accessibility_root_;
 
@@ -427,6 +404,10 @@ class VistaFrame : public ChromeFrame,
   // like unconstrained popups. Defaults to true.
   bool should_save_window_placement_;
 
+  // A view that holds the client-area contents of the browser window.
+  BrowserView* browser_view_;
+
   DISALLOW_EVIL_CONSTRUCTORS(VistaFrame);
 };
 #endif  // CHROME_BROWSER_VISTA_FRAME_H__
+

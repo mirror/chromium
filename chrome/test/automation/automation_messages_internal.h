@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Defines the IPC messages used by the automation interface.
 
@@ -36,9 +11,12 @@
 #include <string>
 #include <vector>
 
+#include "base/gfx/rect.h"
 #include "chrome/common/ipc_message_macros.h"
 #include "chrome/common/navigation_types.h"
 #include "chrome/test/automation/autocomplete_edit_proxy.h"
+#include "googleurl/src/gurl.h"
+#include "webkit/glue/find_in_page_request.h"
 
 // NOTE: All IPC messages have either a routing_id of 0 (for asynchronous
 //       messages), or one that's been assigned by the proxy (for calls
@@ -160,7 +138,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED1(AutomationMsg_TabTitleRequest, int)
   IPC_MESSAGE_ROUTED2(AutomationMsg_TabTitleResponse, int, std::wstring)
 
-  // This message requests the the url of the tab with the given handle.
+  // This message requests the url of the tab with the given handle.
   // The response contains a success flag and the URL string. The URL will
   // be empty on failure, and it still may be empty on success.
   IPC_MESSAGE_ROUTED1(AutomationMsg_TabURLRequest,
@@ -315,8 +293,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   //       defined in chrome/views/event.h
   // Response:
   //   bool - true if the drag could be performed
-  IPC_MESSAGE_ROUTED3(AutomationMsg_WindowDragRequest,
-                      int, std::vector<POINT>, int)
+  IPC_MESSAGE_ROUTED4(AutomationMsg_WindowDragRequest,
+                      int, std::vector<POINT>, int, bool)
   IPC_MESSAGE_ROUTED1(AutomationMsg_WindowDragResponse, bool)
 
   // Similar to AutomationMsg_InitialLoadsComplete, this indicates that the
@@ -332,6 +310,10 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // direction (1=forward, 0=back), 'match_case' specifies case sensitivity
   // (1=case sensitive, 0=case insensitive). If an error occurs, matches_found
   // will be -1.
+  //
+  // NOTE: This message has been deprecated, please use the new message
+  // AutomationMsg_FindRequest below.
+  //
   IPC_MESSAGE_ROUTED4(AutomationMsg_FindInPageRequest,
                       int, /* tab_handle */
                       std::wstring, /* find_request */
@@ -720,4 +702,55 @@ IPC_BEGIN_MESSAGES(Automation, 0)
                       bool /* the requested autocomplete edit exists */,
                       std::vector<AutocompleteMatchData> /* matches */)
 
+  // This message requests the execution of a browser command in the browser
+  // for which the handle is specified.
+  // The response contains a boolean, whether the command execution was
+  // successful.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_WindowExecuteCommandRequest,
+                      int /* automation handle */,
+                      int /* browser command */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_WindowExecuteCommandResponse,
+                      bool /* success flag */)
+
+  // This message opens the Find window within a tab corresponding to the
+  // supplied tab handle.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_OpenFindInPageRequest,
+                      int /* tab_handle */)
+
+  // Posts a message from external host to chrome renderer.
+  IPC_MESSAGE_ROUTED3(AutomationMsg_HandleMessageFromExternalHost,
+                      int /* automation handle */,
+                      std::string /* target */,
+                      std::string /* message */ )
+
+  // A message for an external host.
+  // |receiver| can be a receiving script and |message| is any
+  // arbitrary string that makes sense to the receiver.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_ForwardMessageToExternalHost,
+                      std::string /* receiver*/,
+                      std::string /* message*/)
+
+  // This message starts a find within a tab corresponding to the supplied
+  // tab handle. The parameter |request| specifies what to search for.
+  // If an error occurs, |matches_found| will be -1 (see response message
+  // AutomationMsg_FindInPageResponse).
+  //
+  IPC_MESSAGE_ROUTED2(AutomationMsg_FindRequest,
+                      int, /* tab_handle */
+                      FindInPageRequest /* request */)
+
+  // Is the Find window fully visible (and not animating) for the specified
+  // tab?
+  IPC_MESSAGE_ROUTED1(AutomationMsg_FindWindowVisibilityRequest,
+                      int /* tab_handle */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_FindWindowVisibilityResponse,
+                      bool /* is_visible */)
+
+  // Where is the Find window located. |x| and |y| will be -1, -1 on failure.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_FindWindowLocationRequest,
+                      int /* tab_handle */)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_FindWindowLocationResponse,
+                      int, /* x */
+                      int  /* y */)
 IPC_END_MESSAGES(Automation)
+

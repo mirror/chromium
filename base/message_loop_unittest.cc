@@ -1,52 +1,27 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/logging.h"
 #include "base/message_loop.h"
-#include "base/scoped_handle.h"
-#include "base/thread.h"
+#include "base/platform_thread.h"
 #include "base/ref_counted.h"
+#include "base/thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_WIN)
+#include "base/message_pump_win.h"
+#include "base/scoped_handle.h"
+#endif
+
+using base::Thread;
+
+// TODO(darin): Platform-specific MessageLoop tests should be grouped together
+// to avoid chopping this file up with so many #ifdefs.
 
 namespace {
 
-class MessageLoopTest : public testing::Test {
- public:
-  virtual void SetUp() {
-    enable_recursive_task_ = MessageLoop::current()->NestableTasksAllowed();
-  }
-  virtual void TearDown() {
-    MessageLoop::current()->SetNestableTasksAllowed(enable_recursive_task_);
-  }
- private:
-  bool enable_recursive_task_;
-};
+class MessageLoopTest : public testing::Test {};
 
 class Foo : public base::RefCounted<Foo> {
  public:
@@ -98,9 +73,9 @@ class QuitMsgLoop : public base::RefCounted<QuitMsgLoop> {
   }
 };
 
-}  // namespace
+void RunTest_PostTask(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
 
-TEST(MessageLoopTest, PostTask) {
   // Add tests to message loop
   scoped_refptr<Foo> foo = new Foo();
   std::string a("a"), b("b"), c("c"), d("d");
@@ -129,7 +104,9 @@ TEST(MessageLoopTest, PostTask) {
   EXPECT_EQ(foo->result(), "abacad");
 }
 
-TEST(MessageLoopTest, InvokeLater_SEH) {
+void RunTest_PostTask_SEH(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   // Add tests to message loop
   scoped_refptr<Foo> foo = new Foo();
   std::string a("a"), b("b"), c("c"), d("d");
@@ -160,8 +137,6 @@ TEST(MessageLoopTest, InvokeLater_SEH) {
   EXPECT_EQ(foo->result(), "abacad");
 }
 
-namespace {
-
 class NestingTest : public Task {
  public:
   explicit NestingTest(int* depth) : depth_(depth) {
@@ -180,6 +155,8 @@ class NestingTest : public Task {
   int* depth_;
 };
 
+#if defined(OS_WIN)
+
 LONG WINAPI BadExceptionHandler(EXCEPTION_POINTERS *ex_info) {
   ADD_FAILURE() << "bad exception handler";
   ::ExitProcess(ex_info->ExceptionRecord->ExceptionCode);
@@ -196,15 +173,27 @@ class CrasherTask : public Task {
       : trash_SEH_handler_(trash_SEH_handler) {
   }
   void Run() {
-    Sleep(1);
+    PlatformThread::Sleep(1);
     if (trash_SEH_handler_)
       ::SetUnhandledExceptionFilter(&BadExceptionHandler);
     // Generate a SEH fault. We do it in asm to make sure we know how to undo
     // the damage.
+
+#if defined(_M_IX86)
+
     __asm {
       mov eax, dword ptr [CrasherTask::bad_array_]
       mov byte ptr [eax], 66
     }
+
+#elif defined(_M_X64)
+
+    bad_array_[0] = 66;
+
+#else
+#error "needs architecture support"
+#endif
+
     MessageLoop::current()->Quit();
   }
   // Points the bad array to a valid memory location.
@@ -229,14 +218,23 @@ LONG WINAPI HandleCrasherTaskException(EXCEPTION_POINTERS *ex_info) {
     return EXCEPTION_EXECUTE_HANDLER;
 
   CrasherTask::FixError();
+
+#if defined(_M_IX86)
+
   ex_info->ContextRecord->Eip -= 5;
+
+#elif defined(_M_X64)
+
+  ex_info->ContextRecord->Rip -= 5;
+
+#endif
+
   return EXCEPTION_CONTINUE_EXECUTION;
 }
 
-}  // namespace
+void RunTest_Crasher(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
 
-
-TEST(MessageLoopTest, Crasher) {
   if (::IsDebuggerPresent())
     return;
 
@@ -251,8 +249,9 @@ TEST(MessageLoopTest, Crasher) {
   ::SetUnhandledExceptionFilter(old_SEH_filter);
 }
 
-
-TEST(MessageLoopTest, CrasherNasty) {
+void RunTest_CrasherNasty(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+  
   if (::IsDebuggerPresent())
     return;
 
@@ -267,14 +266,16 @@ TEST(MessageLoopTest, CrasherNasty) {
   ::SetUnhandledExceptionFilter(old_SEH_filter);
 }
 
-TEST(MessageLoopTest, Nesting) {
+#endif  // defined(OS_WIN)
+
+void RunTest_Nesting(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   int depth = 100;
   MessageLoop::current()->PostTask(FROM_HERE, new NestingTest(&depth));
   MessageLoop::current()->Run();
   EXPECT_EQ(depth, 0);
 }
-
-namespace {
 
 const wchar_t* const kMessageBoxTitle = L"MessageLoop Unit Test";
 
@@ -376,6 +377,8 @@ class OrderedTasks : public Task {
   int cookie_;
 };
 
+#if defined(OS_WIN)
+
 // MessageLoop implicitly start a "modal message loop". Modal dialog boxes,
 // common controls (like OpenFile) and StartDoc printing function can cause
 // implicit message loops.
@@ -417,6 +420,8 @@ class EndDialogTask : public OrderedTasks {
   }
 };
 
+#endif  // defined(OS_WIN)
+
 class RecursiveTask : public OrderedTasks {
  public:
   RecursiveTask(int depth, TaskList* order, int cookie, bool is_reentrant)
@@ -453,6 +458,8 @@ class QuitTask : public OrderedTasks {
     RunEnd();
   }
 };
+
+#if defined(OS_WIN)
 
 class Recursive2Tasks : public Task {
  public:
@@ -515,9 +522,11 @@ class Recursive2Tasks : public Task {
   bool is_reentrant_;
 };
 
-}  // namespace
+#endif  // defined(OS_WIN)
 
-TEST(MessageLoop, RecursiveDenial1) {
+void RunTest_RecursiveDenial1(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   EXPECT_TRUE(MessageLoop::current()->NestableTasksAllowed());
   TaskList order;
   MessageLoop::current()->PostTask(FROM_HERE,
@@ -529,7 +538,7 @@ TEST(MessageLoop, RecursiveDenial1) {
   MessageLoop::current()->Run();
 
   // FIFO order.
-  ASSERT_EQ(order.size(), 14);
+  ASSERT_EQ(14U, order.size());
   EXPECT_EQ(order[ 0], TaskItem(RECURSIVE, 1, true));
   EXPECT_EQ(order[ 1], TaskItem(RECURSIVE, 1, false));
   EXPECT_EQ(order[ 2], TaskItem(RECURSIVE, 2, true));
@@ -546,8 +555,9 @@ TEST(MessageLoop, RecursiveDenial1) {
   EXPECT_EQ(order[13], TaskItem(RECURSIVE, 2, false));
 }
 
-
-TEST(MessageLoop, RecursiveSupport1) {
+void RunTest_RecursiveSupport1(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+  
   TaskList order;
   MessageLoop::current()->PostTask(FROM_HERE,
                                    new RecursiveTask(2, &order, 1, true));
@@ -559,7 +569,7 @@ TEST(MessageLoop, RecursiveSupport1) {
   MessageLoop::current()->Run();
 
   // FIFO order.
-  ASSERT_EQ(order.size(), 14);
+  ASSERT_EQ(14U, order.size());
   EXPECT_EQ(order[ 0], TaskItem(RECURSIVE, 1, true));
   EXPECT_EQ(order[ 1], TaskItem(RECURSIVE, 1, false));
   EXPECT_EQ(order[ 2], TaskItem(RECURSIVE, 2, true));
@@ -576,10 +586,18 @@ TEST(MessageLoop, RecursiveSupport1) {
   EXPECT_EQ(order[13], TaskItem(RECURSIVE, 2, false));
 }
 
+#if defined(OS_WIN)
+// TODO(darin): These tests need to be ported since they test critical
+// message loop functionality.
+
 // A side effect of this test is the generation a beep. Sorry.
-TEST(MessageLoop, RecursiveDenial2) {
+void RunTest_RecursiveDenial2(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   Thread worker("RecursiveDenial2_worker");
-  ASSERT_EQ(true, worker.Start());
+  Thread::Options options;
+  options.message_loop_type = message_loop_type;
+  ASSERT_EQ(true, worker.StartWithOptions(options));
   TaskList order;
   ScopedHandle event(CreateEvent(NULL, FALSE, FALSE, NULL));
   worker.message_loop()->PostTask(FROM_HERE,
@@ -614,10 +632,15 @@ TEST(MessageLoop, RecursiveDenial2) {
   EXPECT_EQ(order[16], TaskItem(RECURSIVE, 3, false));
 }
 
-// A side effect of this test is the generation a beep. Sorry.
-TEST(MessageLoop, RecursiveSupport2) {
+// A side effect of this test is the generation a beep. Sorry.  This test also
+// needs to process windows messages on the current thread.
+void RunTest_RecursiveSupport2(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   Thread worker("RecursiveSupport2_worker");
-  ASSERT_EQ(true, worker.Start());
+  Thread::Options options;
+  options.message_loop_type = message_loop_type;
+  ASSERT_EQ(true, worker.StartWithOptions(options));
   TaskList order;
   ScopedHandle event(CreateEvent(NULL, FALSE, FALSE, NULL));
   worker.message_loop()->PostTask(FROM_HERE,
@@ -657,6 +680,8 @@ TEST(MessageLoop, RecursiveSupport2) {
   EXPECT_EQ(order[17], TaskItem(RECURSIVE, 3, false));
 }
 
+#endif  // defined(OS_WIN)
+
 class TaskThatPumps : public OrderedTasks {
  public:
   TaskThatPumps(TaskList* order, int cookie)
@@ -666,19 +691,17 @@ class TaskThatPumps : public OrderedTasks {
   virtual void Run() {
     RunStart();
     bool old_state = MessageLoop::current()->NestableTasksAllowed();
-    MessageLoop::current()->Quit();
     MessageLoop::current()->SetNestableTasksAllowed(true);
-    MessageLoop::current()->Run();
+    MessageLoop::current()->RunAllPending();
     MessageLoop::current()->SetNestableTasksAllowed(old_state);
     RunEnd();
   }
-
- private:
 };
 
-
 // Tests that non nestable tasks run in FIFO if there are no nested loops.
-TEST(MessageLoop, NonNestableWithNoNesting) {
+void RunTest_NonNestableWithNoNesting(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   TaskList order;
 
   Task* task = new OrderedTasks(&order, 1);
@@ -689,7 +712,7 @@ TEST(MessageLoop, NonNestableWithNoNesting) {
   MessageLoop::current()->Run();
 
   // FIFO order.
-  ASSERT_EQ(order.size(), 6);
+  ASSERT_EQ(6U, order.size());
   EXPECT_EQ(order[ 0], TaskItem(ORDERERD, 1, true));
   EXPECT_EQ(order[ 1], TaskItem(ORDERERD, 1, false));
   EXPECT_EQ(order[ 2], TaskItem(ORDERERD, 2, true));
@@ -699,7 +722,9 @@ TEST(MessageLoop, NonNestableWithNoNesting) {
 }
 
 // Tests that non nestable tasks don't run when there's code in the call stack.
-TEST(MessageLoop, NonNestableInNestedLoop) {
+void RunTest_NonNestableInNestedLoop(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
+
   TaskList order;
 
   MessageLoop::current()->PostTask(FROM_HERE,
@@ -708,21 +733,20 @@ TEST(MessageLoop, NonNestableInNestedLoop) {
   task->set_nestable(false);
   MessageLoop::current()->PostTask(FROM_HERE, task);
   MessageLoop::current()->PostTask(FROM_HERE, new OrderedTasks(&order, 3));
-  MessageLoop::current()->PostTask(FROM_HERE, new QuitTask(&order, 4));
+  MessageLoop::current()->PostTask(FROM_HERE, new OrderedTasks(&order, 4));
   Task* non_nestable_quit = new QuitTask(&order, 5);
   non_nestable_quit->set_nestable(false);
   MessageLoop::current()->PostTask(FROM_HERE, non_nestable_quit);
 
-
   MessageLoop::current()->Run();
 
   // FIFO order.
-  ASSERT_EQ(order.size(), 10);
+  ASSERT_EQ(10U, order.size());
   EXPECT_EQ(order[ 0], TaskItem(PUMPS, 1, true));
   EXPECT_EQ(order[ 1], TaskItem(ORDERERD, 3, true));
   EXPECT_EQ(order[ 2], TaskItem(ORDERERD, 3, false));
-  EXPECT_EQ(order[ 3], TaskItem(QUITMESSAGELOOP, 4, true));
-  EXPECT_EQ(order[ 4], TaskItem(QUITMESSAGELOOP, 4, false));
+  EXPECT_EQ(order[ 3], TaskItem(ORDERERD, 4, true));
+  EXPECT_EQ(order[ 4], TaskItem(ORDERERD, 4, false));
   EXPECT_EQ(order[ 5], TaskItem(PUMPS, 1, false));
   EXPECT_EQ(order[ 6], TaskItem(ORDERERD, 2, true));
   EXPECT_EQ(order[ 7], TaskItem(ORDERERD, 2, false));
@@ -730,40 +754,38 @@ TEST(MessageLoop, NonNestableInNestedLoop) {
   EXPECT_EQ(order[ 9], TaskItem(QUITMESSAGELOOP, 5, false));
 }
 
+#if defined(OS_WIN)
 
-namespace {
-
-class AutoresetWatcher : public MessageLoop::Watcher {
+class AutoresetWatcher : public MessageLoopForIO::Watcher {
  public:
-  AutoresetWatcher(HANDLE signal, MessageLoop* message_loop)
-      : signal_(signal), message_loop_(message_loop) {}
+  AutoresetWatcher(HANDLE signal) : signal_(signal) {
+  }
   virtual void OnObjectSignaled(HANDLE object);
  private:
   HANDLE signal_;
-  MessageLoop* message_loop_;
 };
 
 void AutoresetWatcher::OnObjectSignaled(HANDLE object) {
-  message_loop_->WatchObject(object, NULL);
+  MessageLoopForIO::current()->WatchObject(object, NULL);
   ASSERT_TRUE(SetEvent(signal_));
 }
 
 class AutoresetTask : public Task {
  public:
-  AutoresetTask(HANDLE object, MessageLoop::Watcher* watcher)
+  AutoresetTask(HANDLE object, MessageLoopForIO::Watcher* watcher)
     : object_(object), watcher_(watcher) {}
   virtual void Run() {
-    MessageLoop::current()->WatchObject(object_, watcher_);
+    MessageLoopForIO::current()->WatchObject(object_, watcher_);
   }
 
  private:
   HANDLE object_;
-  MessageLoop::Watcher* watcher_;
+  MessageLoopForIO::Watcher* watcher_;
 };
 
-}  // namespace
+void RunTest_AutoresetEvents(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
 
-TEST(MessageLoop, AutoresetEvents) {
   SECURITY_ATTRIBUTES attributes;
   attributes.nLength = sizeof(attributes);
   attributes.bInheritHandle = false;
@@ -776,14 +798,16 @@ TEST(MessageLoop, AutoresetEvents) {
   ASSERT_TRUE(NULL != callback_called);
 
   Thread thread("Autoreset test");
-  ASSERT_TRUE(thread.Start());
+  Thread::Options options;
+  options.message_loop_type = message_loop_type;
+  ASSERT_TRUE(thread.StartWithOptions(options));
 
-  MessageLoop* message_loop = thread.message_loop();
-  ASSERT_TRUE(NULL != message_loop);
+  MessageLoop* thread_loop = thread.message_loop();
+  ASSERT_TRUE(NULL != thread_loop);
 
-  AutoresetWatcher watcher(callback_called, message_loop);
+  AutoresetWatcher watcher(callback_called);
   AutoresetTask* task = new AutoresetTask(autoreset, &watcher);
-  message_loop->PostTask(FROM_HERE, task);
+  thread_loop->PostTask(FROM_HERE, task);
   Sleep(100);  // Make sure the thread runs and sleeps for lack of work.
 
   ASSERT_TRUE(SetEvent(autoreset));
@@ -794,9 +818,7 @@ TEST(MessageLoop, AutoresetEvents) {
   thread.Stop();
 }
 
-namespace {
-
-class DispatcherImpl : public MessageLoop::Dispatcher {
+class DispatcherImpl : public MessageLoopForUI::Dispatcher {
  public:
   DispatcherImpl() : dispatch_count_(0) {}
 
@@ -809,9 +831,9 @@ class DispatcherImpl : public MessageLoop::Dispatcher {
   int dispatch_count_;
 };
 
-}  // namespace
+void RunTest_Dispatcher(MessageLoop::Type message_loop_type) {
+  MessageLoop loop(message_loop_type);
 
-TEST(MessageLoop, Dispatcher) {
   class MyTask : public Task {
   public:
     virtual void Run() {
@@ -822,6 +844,96 @@ TEST(MessageLoop, Dispatcher) {
   Task* task = new MyTask();
   MessageLoop::current()->PostDelayedTask(FROM_HERE, task, 100);
   DispatcherImpl dispatcher;
-  MessageLoop::current()->Run(&dispatcher);
+  MessageLoopForUI::current()->Run(&dispatcher);
   ASSERT_EQ(2, dispatcher.dispatch_count_);
 }
+
+#endif  // defined(OS_WIN)
+
+}  // namespace
+
+//-----------------------------------------------------------------------------
+// Each test is run against each type of MessageLoop.  That way we are sure
+// that message loops work properly in all configurations.  Of course, in some
+// cases, a unit test may only be for a particular type of loop.
+
+TEST(MessageLoopTest, PostTask) {
+  RunTest_PostTask(MessageLoop::TYPE_DEFAULT);
+  RunTest_PostTask(MessageLoop::TYPE_UI);
+  RunTest_PostTask(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, PostTask_SEH) {
+  RunTest_PostTask_SEH(MessageLoop::TYPE_DEFAULT);
+  RunTest_PostTask_SEH(MessageLoop::TYPE_UI);
+  RunTest_PostTask_SEH(MessageLoop::TYPE_IO);
+}
+
+#if defined(OS_WIN)
+TEST(MessageLoopTest, Crasher) {
+  RunTest_Crasher(MessageLoop::TYPE_DEFAULT);
+  RunTest_Crasher(MessageLoop::TYPE_UI);
+  RunTest_Crasher(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, CrasherNasty) {
+  RunTest_CrasherNasty(MessageLoop::TYPE_DEFAULT);
+  RunTest_CrasherNasty(MessageLoop::TYPE_UI);
+  RunTest_CrasherNasty(MessageLoop::TYPE_IO);
+}
+#endif  // defined(OS_WIN)
+
+TEST(MessageLoopTest, Nesting) {
+  RunTest_Nesting(MessageLoop::TYPE_DEFAULT);
+  RunTest_Nesting(MessageLoop::TYPE_UI);
+  RunTest_Nesting(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, RecursiveDenial1) {
+  RunTest_RecursiveDenial1(MessageLoop::TYPE_DEFAULT);
+  RunTest_RecursiveDenial1(MessageLoop::TYPE_UI);
+  RunTest_RecursiveDenial1(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, RecursiveSupport1) {
+  RunTest_RecursiveSupport1(MessageLoop::TYPE_DEFAULT);
+  RunTest_RecursiveSupport1(MessageLoop::TYPE_UI);
+  RunTest_RecursiveSupport1(MessageLoop::TYPE_IO);
+}
+
+#if defined(OS_WIN)
+TEST(MessageLoopTest, RecursiveDenial2) {
+  RunTest_RecursiveDenial2(MessageLoop::TYPE_DEFAULT);
+  RunTest_RecursiveDenial2(MessageLoop::TYPE_UI);
+  RunTest_RecursiveDenial2(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, RecursiveSupport2) {
+  // This test requires a UI loop
+  RunTest_RecursiveSupport2(MessageLoop::TYPE_UI);
+}
+#endif  // defined(OS_WIN)
+
+TEST(MessageLoopTest, NonNestableWithNoNesting) {
+  RunTest_NonNestableWithNoNesting(MessageLoop::TYPE_DEFAULT);
+  RunTest_NonNestableWithNoNesting(MessageLoop::TYPE_UI);
+  RunTest_NonNestableWithNoNesting(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, NonNestableInNestedLoop) {
+  RunTest_NonNestableInNestedLoop(MessageLoop::TYPE_DEFAULT);
+  RunTest_NonNestableInNestedLoop(MessageLoop::TYPE_UI);
+  RunTest_NonNestableInNestedLoop(MessageLoop::TYPE_IO);
+}
+
+#if defined(OS_WIN)
+TEST(MessageLoopTest, AutoresetEvents) {
+  // This test requires an IO loop
+  RunTest_AutoresetEvents(MessageLoop::TYPE_IO);
+}
+
+TEST(MessageLoopTest, Dispatcher) {
+  // This test requires a UI loop
+  RunTest_Dispatcher(MessageLoop::TYPE_UI);
+}
+#endif  // defined(OS_WIN)

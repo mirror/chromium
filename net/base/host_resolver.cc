@@ -1,38 +1,15 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "net/base/host_resolver.h"
 
 #include <ws2tcpip.h>
 #include <wspiapi.h>  // Needed for Win2k compat.
 
+#include "base/message_loop.h"
 #include "base/string_util.h"
+#include "base/worker_pool.h"
 #include "net/base/address_list.h"
 #include "net/base/net_errors.h"
 #include "net/base/winsock_init.h"
@@ -56,58 +33,94 @@ static int ResolveAddrInfo(const std::string& host, const std::string& port,
 
 //-----------------------------------------------------------------------------
 
-struct HostResolver::Request :
+class HostResolver::Request :
     public base::RefCountedThreadSafe<HostResolver::Request> {
-  Request() : error(OK), results(NULL) {
-    DuplicateHandle(GetCurrentProcess(), GetCurrentThread(),
-                    GetCurrentProcess(), &origin_thread,
-                    0, FALSE, DUPLICATE_SAME_ACCESS);
+ public:
+  Request(HostResolver* resolver,
+          const std::string& host,
+          const std::string& port,
+          AddressList* addresses,
+          CompletionCallback* callback)
+      : host_(host),
+        port_(port),
+        resolver_(resolver),
+        addresses_(addresses),
+        callback_(callback),
+        origin_loop_(MessageLoop::current()),
+        error_(OK),
+        results_(NULL) {
   }
+  
   ~Request() {
-    CloseHandle(origin_thread);
+    if (results_)
+      freeaddrinfo(results_);
   }
+
+  void DoLookup() {
+    // Running on the worker thread
+    error_ = ResolveAddrInfo(host_, port_, &results_);
+
+    Task* reply = NewRunnableMethod(this, &Request::DoCallback);
+
+    // The origin loop could go away while we are trying to post to it, so we
+    // need to call its PostTask method inside a lock.  See ~HostResolver.
+    {
+      AutoLock locked(origin_loop_lock_);
+      if (origin_loop_) {
+        origin_loop_->PostTask(FROM_HERE, reply);
+        reply = NULL;
+      }
+    }
+    
+    // Does nothing if it got posted.
+    delete reply;
+  }
+
+  void DoCallback() {
+    // Running on the origin thread.
+    DCHECK(error_ || results_);
+
+    // We may have been cancelled!
+    if (!resolver_)
+      return;
+
+    if (!error_) {
+      addresses_->Adopt(results_);
+      results_ = NULL;
+    }
+
+    // Drop the resolver's reference to us.  Do this before running the
+    // callback since the callback might result in the resolver being
+    // destroyed.
+    resolver_->request_ = NULL;
+
+    callback_->Run(error_);
+  }
+
+  void Cancel() {
+    resolver_ = NULL;
+
+    AutoLock locked(origin_loop_lock_);
+    origin_loop_ = NULL;
+  }
+  
+ private:
+  // Set on the origin thread, read on the worker thread.
+  std::string host_;
+  std::string port_;
 
   // Only used on the origin thread (where Resolve was called).
-  AddressList* addresses;
-  CompletionCallback* callback;
+  HostResolver* resolver_;
+  AddressList* addresses_;
+  CompletionCallback* callback_;
 
-  // Set on the origin thread, read on the worker thread.
-  std::string host;
-  std::string port;
-  HANDLE origin_thread;
+  // Used to post ourselves onto the origin thread.
+  Lock origin_loop_lock_;
+  MessageLoop* origin_loop_;
 
-  // Assigned on the worker thread.
-  int error;
-  struct addrinfo* results;
-
-  static void CALLBACK ReturnResults(ULONG_PTR param) {
-    Request* r = reinterpret_cast<Request*>(param);
-    // The HostResolver may have gone away.
-    if (r->addresses) {
-      DCHECK(r->addresses);
-      r->addresses->Adopt(r->results);
-      if (r->callback)
-        r->callback->Run(r->error);
-    } else if (r->results) {
-      freeaddrinfo(r->results);
-    }
-    r->Release();
-  }
-
-  static DWORD CALLBACK DoLookup(void* param) {
-    Request* r = static_cast<Request*>(param);
-
-    r->error = ResolveAddrInfo(r->host, r->port, &r->results);
-
-    if (!QueueUserAPC(ReturnResults, r->origin_thread,
-                      reinterpret_cast<ULONG_PTR>(param))) {
-      // The origin thread must have gone away.
-      if (r->results)
-        freeaddrinfo(r->results);
-      r->Release();
-    }
-    return 0;
-  }
+  // Assigned on the worker thread, read on the origin thread.
+  int error_;
+  struct addrinfo* results_;
 };
 
 //-----------------------------------------------------------------------------
@@ -117,20 +130,18 @@ HostResolver::HostResolver() {
 }
 
 HostResolver::~HostResolver() {
-  if (request_) {
-    request_->addresses = NULL;
-    request_->callback = NULL;
-  }
+  if (request_)
+    request_->Cancel();
 }
 
 int HostResolver::Resolve(const std::string& hostname, int port,
                           AddressList* addresses,
                           CompletionCallback* callback) {
-  DCHECK(!request_);
+  DCHECK(!request_) << "resolver already in use";
 
   const std::string& port_str = IntToString(port);
 
-  // Do a synchronous resolution?
+  // Do a synchronous resolution.
   if (!callback) {
     struct addrinfo* results;
     int rv = ResolveAddrInfo(hostname, port_str, &results);
@@ -139,18 +150,12 @@ int HostResolver::Resolve(const std::string& hostname, int port,
     return rv;
   }
 
-  // Dispatch to worker thread...
-  request_ = new Request();
-  request_->host = hostname;
-  request_->port = port_str;
-  request_->addresses = addresses;
-  request_->callback = callback;
+  request_ = new Request(this, hostname, port_str, addresses, callback);
 
-  // Balanced in Request::ReturnResults (or DoLookup if there is an error).
-  request_->AddRef();
-  if (!QueueUserWorkItem(Request::DoLookup, request_, WT_EXECUTELONGFUNCTION)) {
-    DLOG(ERROR) << "QueueUserWorkItem failed: " << GetLastError();
-    request_->Release();
+  // Dispatch to worker thread...
+  if (!WorkerPool::PostTask(FROM_HERE,
+          NewRunnableMethod(request_.get(), &Request::DoLookup), true)) {
+    NOTREACHED();
     request_ = NULL;
     return ERR_FAILED;
   }
@@ -159,3 +164,4 @@ int HostResolver::Resolve(const std::string& hostname, int port,
 }
 
 }  // namespace net
+

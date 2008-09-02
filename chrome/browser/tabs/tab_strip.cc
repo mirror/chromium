@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/tabs/tab_strip.h"
 
@@ -40,6 +15,7 @@
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/vista_frame.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
@@ -89,16 +65,27 @@ class TabStrip::TabAnimation : public AnimationDelegate {
  public:
   friend class TabStrip;
 
-  TabAnimation(TabStrip* tabstrip)
+  // Possible types of animation.
+  enum Type {
+    INSERT,
+    REMOVE,
+    MOVE,
+    RESIZE
+  };
+
+  TabAnimation(TabStrip* tabstrip, Type type)
       : tabstrip_(tabstrip),
         animation_(this),
         start_selected_width_(0),
         start_unselected_width_(0),
         end_selected_width_(0),
         end_unselected_width_(0),
-        layout_on_completion_(false) {
+        layout_on_completion_(false),
+        type_(type) {
   }
   virtual ~TabAnimation() {}
+
+  Type type() const { return type_; }
 
   void Start() {
     animation_.SetSlideDuration(GetDuration());
@@ -166,6 +153,14 @@ class TabStrip::TabAnimation : public AnimationDelegate {
   void GenerateStartAndEndWidths(int start_tab_count, int end_tab_count) {
     tabstrip_->GetDesiredTabWidths(start_tab_count, &start_unselected_width_,
                                    &start_selected_width_);
+    double standard_tab_width =
+        static_cast<double>(TabRenderer::GetStandardSize().width());
+    if (start_tab_count < end_tab_count &&
+        start_unselected_width_ < standard_tab_width) {
+      double minimum_tab_width =
+          static_cast<double>(TabRenderer::GetMinimumSize().width());
+      start_unselected_width_ -= minimum_tab_width / start_tab_count;
+    }
     tabstrip_->GenerateIdealBounds();
     tabstrip_->GetDesiredTabWidths(end_tab_count,
                                    &end_unselected_width_,
@@ -187,6 +182,8 @@ class TabStrip::TabAnimation : public AnimationDelegate {
   // inconsistent state.
   bool layout_on_completion_;
 
+  const Type type_;
+
   DISALLOW_EVIL_CONSTRUCTORS(TabAnimation);
 };
 
@@ -196,7 +193,7 @@ class TabStrip::TabAnimation : public AnimationDelegate {
 class InsertTabAnimation : public TabStrip::TabAnimation {
  public:
   explicit InsertTabAnimation(TabStrip* tabstrip, int index)
-      : TabAnimation(tabstrip),
+      : TabAnimation(tabstrip, INSERT),
         index_(index) {
     int tab_count = tabstrip->GetTabCount();
     GenerateStartAndEndWidths(tab_count - 1, tab_count);
@@ -237,11 +234,14 @@ class InsertTabAnimation : public TabStrip::TabAnimation {
 class RemoveTabAnimation : public TabStrip::TabAnimation {
  public:
   RemoveTabAnimation(TabStrip* tabstrip, int index, TabContents* contents)
-      : TabAnimation(tabstrip),
+      : TabAnimation(tabstrip, REMOVE),
         index_(index) {
     int tab_count = tabstrip->GetTabCount();
     GenerateStartAndEndWidths(tab_count, tab_count - 1);
   }
+
+  // Returns the index of the tab being removed.
+  int index() const { return index_; }
 
   virtual ~RemoveTabAnimation() {
   }
@@ -338,7 +338,7 @@ class RemoveTabAnimation : public TabStrip::TabAnimation {
 class MoveTabAnimation : public TabStrip::TabAnimation {
  public:
   MoveTabAnimation(TabStrip* tabstrip, int tab_a_index, int tab_b_index)
-      : TabAnimation(tabstrip),
+      : TabAnimation(tabstrip, MOVE),
         start_tab_a_bounds_(tabstrip_->GetIdealBounds(tab_b_index)),
         start_tab_b_bounds_(tabstrip_->GetIdealBounds(tab_a_index)) {
     tab_a_ = tabstrip_->GetTabAt(tab_a_index);
@@ -392,8 +392,8 @@ class MoveTabAnimation : public TabStrip::TabAnimation {
 // to another.
 class ResizeLayoutAnimation : public TabStrip::TabAnimation {
  public:
-  ResizeLayoutAnimation(TabStrip* tabstrip)
-      : TabAnimation(tabstrip) {
+  explicit ResizeLayoutAnimation(TabStrip* tabstrip)
+      : TabAnimation(tabstrip, RESIZE) {
     int tab_count = tabstrip->GetTabCount();
     GenerateStartAndEndWidths(tab_count, tab_count);
     InitStartState();
@@ -456,6 +456,12 @@ TabStrip::TabStrip(TabStripModel* model)
 }
 
 TabStrip::~TabStrip() {
+  // TODO(beng): (1031854) Restore this line once XPFrame/VistaFrame are dead.
+  //model_->RemoveObserver(this);
+
+  // TODO(beng): remove this if it doesn't work to fix the TabSelectedAt bug.
+  drag_controller_.reset(NULL);
+
   // Stop any existing Loading Animation timer.
   MessageLoop::current()->timer_manager()->StopTimer(
       loading_animation_timer_.get());
@@ -484,6 +490,25 @@ void TabStrip::ShowApplicationMenu(const gfx::Point& p) {
 
 bool TabStrip::CanProcessInputEvents() const {
   return IsAnimating() == NULL;
+}
+
+bool TabStrip::PointIsWithinWindowCaption(const CPoint& point) {
+  ChromeViews::View* v = GetViewForPoint(point);
+
+  // If there is no control at this location, claim the hit was in the title
+  // bar to get a move action.
+  if (v == this)
+    return true;
+
+  // If the point is within the bounds of a Tab, the point can be considered
+  // part of the caption if there are no available drag operations for the Tab.
+  if (v->GetClassName() == Tab::kTabClassName && !HasAvailableDragActions())
+    return true;
+
+  // All other regions, including the new Tab button, should be considered part
+  // of the containing Window's client area so that regular events can be
+  // processed for them.
+  return false;
 }
 
 bool TabStrip::IsCompatibleWith(TabStrip* other) {
@@ -680,6 +705,36 @@ void TabStrip::SetAccessibleName(const std::wstring& name) {
   accessible_name_.assign(name);
 }
 
+ChromeViews::View* TabStrip::GetViewForPoint(const CPoint& point) {
+  return GetViewForPoint(point, false);
+}
+
+ChromeViews::View* TabStrip::GetViewForPoint(const CPoint& point,
+                                             bool can_create_floating) {
+  // Return any view that isn't a Tab or this TabStrip immediately. We don't
+  // want to interfere.
+  ChromeViews::View* v = View::GetViewForPoint(point, can_create_floating);
+  if (v && v != this && v->GetClassName() != Tab::kTabClassName)
+    return v;
+
+  // The display order doesn't necessarily match the child list order, so we
+  // walk the display list hit-testing Tabs. Since the selected tab always
+  // renders on top of adjacent tabs, it needs to be hit-tested before any
+  // left-adjacent Tab, so we look ahead for it as we walk.
+  int tab_count = GetTabCount();
+  for (int i = 0; i < tab_count; ++i) {
+    Tab* next_tab = i < (tab_count - 1) ? GetTabAt(i + 1) : NULL;
+    if (next_tab && next_tab->IsSelected() && IsPointInTab(next_tab, point))
+      return next_tab;
+    Tab* tab = GetTabAt(i);
+    if (IsPointInTab(tab, point))
+      return tab;
+  }
+
+  // No need to do any floating view stuff, we don't use them in the TabStrip.
+  return this;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // TabStrip, TabStripModelObserver implementation:
 
@@ -786,7 +841,9 @@ void TabStrip::TabMoved(TabContents* contents, int from_index, int to_index) {
 }
 
 void TabStrip::TabChangedAt(TabContents* contents, int index) {
-  Tab* tab = GetTabAt(index);
+  // Index is in terms of the model. Need to make sure we adjust that index in
+  // case we have an animation going.
+  Tab* tab = GetTabAtAdjustForAnimation(index);
   tab->UpdateData(contents);
   tab->UpdateFromModel();
 }
@@ -862,6 +919,52 @@ void TabStrip::ExecuteCommandForTab(
   int index = GetIndexOfTab(tab);
   if (index != -1)
     model_->ExecuteContextMenuCommand(index, command_id);
+}
+
+void TabStrip::StartHighlightTabsForCommand(
+    TabStripModel::ContextMenuCommand command_id, Tab* tab) {
+  if (command_id == TabStripModel::CommandCloseTabsOpenedBy) {
+    int index = GetIndexOfTab(tab);
+    if (index != -1) {
+      std::vector<int> indices = model_->GetIndexesOpenedBy(index);
+      std::vector<int>::const_iterator iter = indices.begin();
+      for (; iter != indices.end(); ++iter) {
+        int current_index = *iter;
+        DCHECK(current_index >= 0 && current_index < GetTabCount());
+        Tab* current_tab = GetTabAt(current_index);
+        current_tab->StartPulse();
+      }
+    }
+  } else if (command_id == TabStripModel::CommandCloseTabsToRight) {
+    int index = GetIndexOfTab(tab);
+    if (index != -1) {
+      for (int i = index + 1; i < GetTabCount(); ++i) {
+        Tab* current_tab = GetTabAt(i);
+        current_tab->StartPulse();
+      }
+    }
+  } else if (command_id == TabStripModel::CommandCloseOtherTabs) {
+    for (int i = 0; i < GetTabCount(); ++i) {
+      Tab* current_tab = GetTabAt(i);
+      if (current_tab != tab)
+        current_tab->StartPulse();
+    }
+  }
+}
+
+void TabStrip::StopHighlightTabsForCommand(
+    TabStripModel::ContextMenuCommand command_id, Tab* tab) {
+  if (command_id == TabStripModel::CommandCloseTabsOpenedBy ||
+      command_id == TabStripModel::CommandCloseTabsToRight ||
+      command_id == TabStripModel::CommandCloseOtherTabs) {
+    // Just tell all Tabs to stop pulsing - it's safe.
+    StopAllHighlighting();
+  }
+}
+
+void TabStrip::StopAllHighlighting() {
+  for (int i = 0; i < GetTabCount(); ++i)
+    GetTabAt(i)->StopPulse();
 }
 
 void TabStrip::MaybeStartDrag(Tab* tab, const ChromeViews::MouseEvent& event) {
@@ -1000,6 +1103,16 @@ Tab* TabStrip::GetTabAt(int index) const {
   return tab_data_.at(index).tab;
 }
 
+Tab* TabStrip::GetTabAtAdjustForAnimation(int index) const {
+  if (active_animation_.get() &&
+      active_animation_->type() == TabAnimation::REMOVE &&
+      index >=
+      static_cast<RemoveTabAnimation*>(active_animation_.get())->index()) {
+    index++;
+  }
+  return GetTabAt(index);
+}
+
 int TabStrip::GetTabCount() const {
   return static_cast<int>(tab_data_.size());
 }
@@ -1110,14 +1223,14 @@ bool TabStrip::IsCursorInTabStripZone() {
 
 void TabStrip::AddMessageLoopObserver() {
   if (!added_as_message_loop_observer_) {
-    MessageLoop::current()->AddObserver(this);
+    MessageLoopForUI::current()->AddObserver(this);
     added_as_message_loop_observer_ = true;
   }
 }
 
 void TabStrip::RemoveMessageLoopObserver() {
   if (added_as_message_loop_observer_) {
-    MessageLoop::current()->RemoveObserver(this);
+    MessageLoopForUI::current()->RemoveObserver(this);
     added_as_message_loop_observer_ = false;
   }
 }
@@ -1271,8 +1384,8 @@ TabStrip::DropInfo::DropInfo(int drop_index, bool drop_before, bool point_down)
   arrow_window->Init(
       NULL,
       gfx::Rect(0, 0, drop_indicator_width, drop_indicator_height),
-      arrow_view,
       true);
+  arrow_window->SetContentsView(arrow_view);
 }
 
 TabStrip::DropInfo::~DropInfo() {
@@ -1420,3 +1533,10 @@ int TabStrip::GetIndexOfTab(const Tab* tab) const {
 int TabStrip::GetAvailableWidthForTabs(Tab* last_tab) const {
   return last_tab->GetX() + last_tab->GetWidth();
 }
+
+bool TabStrip::IsPointInTab(Tab* tab, const CPoint& point_in_tabstrip_coords) {
+  CPoint point_in_tab_coords(point_in_tabstrip_coords);
+  View::ConvertPointToView(this, tab, &point_in_tab_coords);
+  return tab->HitTest(point_in_tab_coords);
+}
+

@@ -1,41 +1,24 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // This file contains utility functions for dealing with the local
 // filesystem.
 
-#ifndef BASE_FILE_UTIL_H__
-#define BASE_FILE_UTIL_H__
+#ifndef BASE_FILE_UTIL_H_
+#define BASE_FILE_UTIL_H_
 
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
 #include <windows.h>
+#elif defined(OS_POSIX)
+#include <fts.h>
+#endif
+
 #include <stack>
 #include <string>
+#include <vector>
 
 #include "base/basictypes.h"
 
@@ -50,9 +33,15 @@ extern const wchar_t kPathSeparator;
 //-----------------------------------------------------------------------------
 // Functions that operate purely on a path string w/o touching the filesystem:
 
+// Returns a vector of all of the components of the provided path.
+void PathComponents(const std::wstring& path,
+                    std::vector<std::wstring>* components);
+  
 // Returns true if the given path ends with a path separator character.
+// TODO(erikkay): remove this pointer version
 bool EndsWithSeparator(std::wstring* path);
-
+bool EndsWithSeparator(const std::wstring& path);
+  
 // Modifies a string by trimming all trailing separators from the end.
 void TrimTrailingSeparator(std::wstring* dir);
 
@@ -90,6 +79,10 @@ std::wstring GetDirectoryFromPath(const std::wstring& path);
 // Appends new_ending to path, adding a separator between the two if necessary.
 void AppendToPath(std::wstring* path, const std::wstring& new_ending);
 
+// Convert provided relative path into an absolute path.  Returns false on
+// error.
+bool AbsolutePath(std::wstring* path);
+
 // Inserts |suffix| after the file name portion of |path| but before the
 // extension.
 // Examples:
@@ -116,11 +109,13 @@ void ReplaceExtension(std::wstring* file_name, const std::wstring& extension);
 //-----------------------------------------------------------------------------
 // Functions that involve filesystem access or modification:
 
+#if defined(OS_WIN)
 // Returns the number of files matching the current path that were
 // created on or after the given FILETIME.  Doesn't count ".." or ".".
 // Filetime is UTC filetime, not LocalFiletime.
 int CountFilesCreatedAfter(const std::wstring& path,
                            const FILETIME& file_time);
+#endif  // defined(OS_WIN)
 
 // Deletes the given path, whether it's a file or a directory.
 // If it's a directory, it's perfectly happy to delete all of the
@@ -156,6 +151,7 @@ bool PathExists(const std::wstring& path);
 // Returns true if the given path is writable by the user, false otherwise.
 bool PathIsWritable(const std::wstring& path);
 
+#if defined(OS_WIN)
 // Gets the creation time of the given file (expressed in the local timezone),
 // and returns it via the creation_time parameter.  Returns true if successful,
 // false otherwise.
@@ -165,6 +161,7 @@ bool GetFileCreationLocalTime(const std::wstring& filename,
 // Same as above, but takes a previously-opened file handle instead of a name.
 bool GetFileCreationLocalTimeFromHandle(HANDLE file_handle,
                                         LPSYSTEMTIME creation_time);
+#endif  // defined(OS_WIN)
 
 // Returns true if the contents of the two files given are equal, false
 // otherwise.  If either file can't be read, returns false.
@@ -175,6 +172,7 @@ bool ContentsEqual(const std::wstring& filename1,
 // Useful for unit tests.
 bool ReadFileToString(const std::wstring& path, std::string* contents);
 
+#if defined(OS_WIN)
 // Resolve Windows shortcut (.LNK file)
 // Argument path specifies a valid LNK file. On success, return true and put
 // the URL into path. If path is a invalid .LNK file, return false.
@@ -185,7 +183,7 @@ bool ResolveShortcut(std::wstring* path);
 // you have initialized COM before calling into this function. 'source'
 // and 'destination' parameters are required, everything else can be NULL.
 // 'source' is the existing file, 'destination' is the new link file to be
-// created; for best resoults pass the filename with the .lnk extension.
+// created; for best results pass the filename with the .lnk extension.
 // The 'icon' can specify a dll or exe in which case the icon index is the
 // resource id.
 // Note that if the shortcut exists it will overwrite it.
@@ -197,7 +195,7 @@ bool CreateShortcutLink(const wchar_t *source, const wchar_t *destination,
 // Update a Windows shortcut (.LNK file). This method assumes the shortcut
 // link already exists (otherwise false is returned). Ensure you have
 // initialized COM before calling into this function. Only 'destination'
-// parameter is required, everything else can be NULL (but if everthing else
+// parameter is required, everything else can be NULL (but if everything else
 // is NULL no changes are made to the shortcut). 'destination' is the link
 // file to be updated. For best results pass the filename with the .lnk
 // extension.
@@ -205,13 +203,16 @@ bool UpdateShortcutLink(const wchar_t *source, const wchar_t *destination,
                         const wchar_t *working_dir, const wchar_t *arguments,
                         const wchar_t *description, const wchar_t *icon,
                         int icon_index);
+#endif
 
+  
 // Get the temporary directory provided by the system.
 bool GetTempDir(std::wstring* path);
 
-// Creates a temporary file name, but does it not create the file. It accesses
-// the disk to do this, however. The full path is placed in 'temp_file', and the
-// function returns true if was successful in creating the file name.
+// Creates a temporary file. The full path is placed in 'temp_file', and the
+// function returns true if was successful in creating the file. The file will
+// be empty and all handles closed after this function returns.
+// TODO(erikkay): rename this function and track down all of the callers.
 bool CreateTemporaryFileName(std::wstring* temp_file);
 
 // Create a new directory under TempPath. If prefix is provided, the new
@@ -235,6 +236,12 @@ int ReadFile(const std::wstring& filename, char* data, int size);
 // previously there.  Returns the number of bytes written, or -1 on error.
 int WriteFile(const std::wstring& filename, const char* data, int size);
 
+// Gets the current working directory for the process.
+bool GetCurrentDirectory(std::wstring* path);
+
+// Sets the current working directory for the process.
+bool SetCurrentDirectory(const std::wstring& current_directory);
+
 // A class for enumerating the files in a provided path. The order of the
 // results is not guaranteed.
 //
@@ -256,9 +263,18 @@ class FileEnumerator {
   // files in one directory will be returned before any files in a
   // subdirectory.
   //
-  // The last parameter is an optional pattern for which files to match. This
-  // works like a Windows file pattern. For example, "*.txt" or "Foo???.doc".
+  // |file_type| specifies whether the enumerator should match files,
+  // directories, or both.
+  //
+  // |pattern| is an optional pattern for which files to match. This
+  // works like shell globbing. For example, "*.txt" or "Foo???.doc".
+  // However, be careful in specifying patterns that aren't cross platform
+  // since the underlying code uses OS-specific matching routines.  In general,
+  // Windows matching is less featureful than others, so test there first.
   // If unspecified, this will match all files.
+  // NOTE: the pattern only matches the contents of root_path, not files in
+  // recursive subdirectories.
+  // TODO(erikkay): Fix the pattern matching to work at all levels.
   FileEnumerator(const std::wstring& root_path,
                  bool recursive,
                  FileEnumerator::FILE_TYPE file_type);
@@ -285,8 +301,12 @@ class FileEnumerator {
   // enumerate in the breadth-first search.
   std::stack<std::wstring> pending_paths_;
 
+#if defined(OS_WIN)
   WIN32_FIND_DATA find_data_;
   HANDLE find_handle_;
+#elif defined(OS_POSIX)
+  FTS* fts_;
+#endif
 
   DISALLOW_EVIL_CONSTRUCTORS(FileEnumerator);
 };
@@ -299,4 +319,5 @@ bool RenameFileAndResetSecurityDescriptor(
 
 }  // namespace file_util
 
-#endif  // BASE_FILE_UTIL_H__
+#endif  // BASE_FILE_UTIL_H_
+

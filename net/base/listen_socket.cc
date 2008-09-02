@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // winsock2.h must be included first in order to ensure it is included before
 // windows.h.
@@ -33,27 +8,23 @@
 
 #include "net/base/listen_socket.h"
 
-#include "base/thread.h"
-
 #define READ_BUF_SIZE 200
 
-ListenSocket::ListenSocket(SOCKET s, ListenSocketDelegate *del,
-                           MessageLoop *loop)
-                           : socket_(s), socket_delegate_(del), loop_(loop) {
+ListenSocket::ListenSocket(SOCKET s, ListenSocketDelegate *del)
+    : socket_(s),
+      socket_delegate_(del) {
   socket_event_ = WSACreateEvent();
   WSAEventSelect(socket_, socket_event_, FD_ACCEPT | FD_CLOSE | FD_READ);
-  loop_->WatchObject(socket_event_, this);
+  watcher_.StartWatching(socket_event_, this);
 }
 
 ListenSocket::~ListenSocket() {
-  DCHECK(MessageLoop::current() == loop_);
   if (socket_event_) {
-    loop_->WatchObject(socket_event_, NULL);
+    watcher_.StopWatching();
     WSACloseEvent(socket_event_);
   }
-  if (socket_) {
+  if (socket_)
     closesocket(socket_);
-  }
 }
 
 SOCKET ListenSocket::Listen(std::string ip, int port) {
@@ -72,12 +43,12 @@ SOCKET ListenSocket::Listen(std::string ip, int port) {
 }
 
 ListenSocket* ListenSocket::Listen(std::string ip, int port,
-                                   ListenSocketDelegate* del, MessageLoop* l) {
+                                   ListenSocketDelegate* del) {
   SOCKET s = Listen(ip, port);
   if (s == INVALID_SOCKET) {
     // TODO(erikkay): error handling
   } else {
-    ListenSocket* sock = new ListenSocket(s, del, l);
+    ListenSocket* sock = new ListenSocket(s, del);
     sock->Listen();
     return sock;
   }
@@ -85,7 +56,6 @@ ListenSocket* ListenSocket::Listen(std::string ip, int port,
 }
 
 void ListenSocket::Listen() {
-  DCHECK(MessageLoop::current() == loop_);
   int backlog = 10; // TODO(erikkay): maybe don't allow any backlog?
   listen(socket_, backlog);
   // TODO(erikkay): handle error
@@ -109,7 +79,7 @@ void ListenSocket::Accept() {
     // TODO
   } else {
     scoped_refptr<ListenSocket> sock =
-      new ListenSocket(conn, socket_delegate_, loop_);
+        new ListenSocket(conn, socket_delegate_);
     // it's up to the delegate to AddRef if it wants to keep it around
     socket_delegate_->DidAccept(this, sock);
   }
@@ -150,6 +120,10 @@ void ListenSocket::OnObjectSignaled(HANDLE object) {
     // TODO
     return;
   }
+  
+  // The object was reset by WSAEnumNetworkEvents.  Watch for the next signal.
+  watcher_.StartWatching(object, this);
+  
   if (ev.lNetworkEvents == 0) {
     // Occasionally the event is set even though there is no new data.
     // The net seems to think that this is ignorable.
@@ -167,7 +141,6 @@ void ListenSocket::OnObjectSignaled(HANDLE object) {
 }
 
 void ListenSocket::SendInternal(const char* bytes, int len) {
-  DCHECK(MessageLoop::current() == loop_);
   int sent = send(socket_, bytes, len, 0);
   if (sent == SOCKET_ERROR) {
     // TODO
@@ -186,3 +159,4 @@ void ListenSocket::Send(const char* bytes, int len, bool append_linefeed) {
 void ListenSocket::Send(const std::string& str, bool append_linefeed) {
   Send(str.data(), static_cast<int>(str.length()), append_linefeed);
 }
+

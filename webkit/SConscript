@@ -1,31 +1,6 @@
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 import os
 
@@ -40,11 +15,18 @@ port_dir = env.Dir('#/$BUILD_TYPE/webkit/port')
 port_dir.addRepository(env.Dir('#/../webkit/port'))
 port_dir.addRepository(env.Dir('#/../third_party/WebKit/WebCore'))
 
+if env['PLATFORM'] == 'posix':
+  env.Append(
+      CCFLAGS = [
+          '-Wno-parentheses',
+      ]
+  )
 
 env.Prepend(
     CPPPATH = [
         '$WEBKIT_DIR/build/localized_strings',
         '$WEBKIT_DIR/build/JSConfig/obj/WebCore',
+        '$WEBKIT_DIR/build/WebCore',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
         '$SKIA_DIR/include',
@@ -76,8 +58,7 @@ env.Prepend(
         '$WEBKIT_DIR/port/platform/text',
         '$WEBKIT_DIR/port/plugins',
         '$WEBKIT_DIR/port/rendering',
-        '#/',
-        '.',
+        '$WEBKIT_DIR',
 
         '$WEBKIT_DIR/port/platform/image-decoders',
         '$WEBKIT_DIR/port/platform/image-decoders/bmp',
@@ -98,11 +79,9 @@ env.Prepend(
         '$WEBKIT_DIR/port/storage',
         '$WEBKIT_DIR/port/xml',
         '$WEBKIT_DIR/port',
-        '$WEBKIT_DIR/port/os-win32',
         '$WEBKIT_DIR/port/wtf',
         '$THIRD_PARTY_WEBKIT_DIR/JavaScriptCore',
         '$THIRD_PARTY_WEBKIT_DIR/JavaScriptCore/wtf',
-        '$THIRD_PARTY_WEBKIT_DIR/JavaScriptCore/os-win32',
         '$WEBKIT_DIR/port/svg',
         '$WEBKIT_DIR/port/svg/graphics/filters',
         '$WEBKIT_DIR/port/plugins',
@@ -134,12 +113,8 @@ env.Append(
 
     CPPDEFINES = [
       'U_STATIC_IMPLEMENTATION'
-      '_CRT_SECURE_NO_DEPRECATE',
-      '_CRT_NONSTDC_NO_WARNINGS',
-      '_CRT_NONSTDC_NO_DEPRECATE',
       '_SCL_SECURE_NO_DEPRECATE',
       '_SCL_SECURE_NO_WARNINGS',
-      ['CRASH', '__debugbreak'],
       ['ENABLE_CROSS_DOCUMENT_MESSAGING', '1'],
       ['ENABLE_XSLT', '1'],
       ['ENABLE_XPATH', '1'],
@@ -151,12 +126,6 @@ env.Append(
       ['ANDROID_CANVAS_IMPL', '1'],
       ['WEBCORE_NAVIGATOR_PLATFORM', '"\\"Win32\\""'],
       'USE_GOOGLE_URL_LIBRARY',
-
-      '_WIN32_WINNT=0x0600',
-      'WINVER=0x0600',
-
-      'CERT_CHAIN_PARA_HAS_EXTRA_FIELDS',
-      'WIN32_LEAN_AND_MEAN',
 
       'LIBXSLT_STATIC',
       'LIBXML_STATIC',
@@ -170,17 +139,22 @@ env.Append(
     ],
 )
 
-
+# This list is the SConscripts that work on Windows and Linux.
 sconscript_dirs = [
-    'SConscript.port',
-    'SConscript.javascriptcore_pcre',
+  'SConscript.port',
+  'SConscript.javascriptcore_pcre',
+  'build/JSConfig/SConscript',
+  'build/JavaScriptCore/SConscript',
+  'build/port/SConscript',
+  'build/V8Bindings/SConscript',
+]
+if env['PLATFORM'] == 'win32':
+  # These extra dirs aren't win32-specific, they're just the dirs that
+  # haven't yet been made portable.
+  sconscript_dirs.extend([
     'activex_shim/SConscript',
     'activex_shim_dll/SConscript',
-    'build/JSConfig/SConscript',
-    'build/JavaScriptCore/SConscript',
     'build/localized_strings/SConscript',
-    'build/port/SConscript',
-    'build/V8Bindings/SConscript',
     'build/WebCore/SConscript',
     'default_plugin/SConscript',
     'glue/SConscript',
@@ -188,8 +162,25 @@ sconscript_dirs = [
     'tools/npapi_layout_test_plugin/SConscript',
     'tools/test_shell/SConscript',
     'tools/test_shell/resources/fonts/SConscript',
-]
+  ])
 
+  env.Append(
+    CPPDEFINES = [
+      '_CRT_SECURE_NO_DEPRECATE',
+      '_CRT_NONSTDC_NO_WARNINGS',
+      '_CRT_NONSTDC_NO_DEPRECATE',
+      ['CRASH', '__debugbreak'],
+      '_WIN32_WINNT=0x0600',
+      'WINVER=0x0600',
+    ])
+
+  env.Prepend(
+    CPPPATH = [
+      '$WEBKIT_DIR/port/os-win32',
+      '$THIRD_PARTY_WEBKIT_DIR/JavaScriptCore/os-win32',
+    ])
+else:
+  env.Prepend(CPPPATH = ['$WEBKIT_DIR/build/JSConfig/WebCore/v8'])
 env.SConscript(sconscript_dirs, exports=['env', 'env_res'])
 
 # Setup alias for all webkit related targets.
@@ -200,3 +191,11 @@ env.SConscript(sconscript_dirs, exports=['env', 'env_res'])
 # add their own individual targets to the 'webkit' Alias.
 #env.Alias('webkit', ['.', '../icudt38.dll'])
 env.Alias('webkit', ['../icudt38.dll'])
+
+
+version = env.Command('$WEBKIT_DIR/build/WebCore/webkit_version.h',
+                      ['$WEBCORE_DIR/Configurations/Version.xcconfig',
+                       '#/../webkit/build/webkit_version.py'],
+                      "$PYTHON ${SOURCES[1]} ${SOURCES[0]} ${TARGET.dir}")
+env.AlwaysBuild(version)
+

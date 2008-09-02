@@ -1,35 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "net/url_request/url_request.h"
 
 #include "base/basictypes.h"
+#include "base/message_loop.h"
 #include "base/process_util.h"
 #include "base/singleton.h"
 #include "base/stats_counters.h"
@@ -51,9 +27,6 @@ using std::wstring;
 // Max number of http redirects to follow.  Same number as gecko.
 const static int kMaxRedirects = 20;
 
-// The id of the current process.  Lazily initialized.
-static int32 current_proc_id = -1;
-
 static URLRequestJobManager* GetJobManager() {
   return Singleton<URLRequestJobManager>::get();
 }
@@ -74,9 +47,13 @@ URLRequest::URLRequest(const GURL& url, Delegate* delegate)
       final_upload_progress_(0) {
   URLREQUEST_COUNT_CTOR();
   SIMPLE_STATS_COUNTER(L"URLRequestCount");
-  if (current_proc_id == -1)
-    base::AtomicSwap(&current_proc_id, process_util::GetCurrentProcId());
-  origin_pid_ = current_proc_id;
+  origin_pid_ = process_util::GetCurrentProcId();
+
+  // Sanity check out environment.
+  DCHECK(MessageLoop::current()) <<
+      "The current MessageLoop must exist";
+  DCHECK_EQ(MessageLoop::TYPE_IO, MessageLoop::current()->type()) <<
+      "The current MessageLoop must be TYPE_IO";
 }
 
 URLRequest::~URLRequest() {
@@ -358,3 +335,4 @@ int64 URLRequest::GetExpectedContentSize() const {
 
   return expected_content_size;
 }
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/clear_browsing_data.h"
 
@@ -54,8 +29,7 @@ static const int kExtraMarginForTimePeriodLabel = 3;
 // ClearBrowsingDataView, public:
 
 ClearBrowsingDataView::ClearBrowsingDataView(Profile* profile)
-    : dialog_(NULL),
-      del_history_checkbox_(NULL),
+    : del_history_checkbox_(NULL),
       del_downloads_checkbox_(NULL),
       del_cache_checkbox_(NULL),
       del_cookies_checkbox_(NULL),
@@ -63,12 +37,19 @@ ClearBrowsingDataView::ClearBrowsingDataView(Profile* profile)
       time_period_label_(NULL),
       time_period_combobox_(NULL),
       delete_in_progress_(false),
-      profile_(profile) {
+      profile_(profile),
+      remover_(NULL) {
   DCHECK(profile);
   Init();
 }
 
 ClearBrowsingDataView::~ClearBrowsingDataView(void) {
+  if (remover_) {
+    // We were destroyed while clearing history was in progress. This can only
+    // occur during automated tests (normally the user can't close the dialog
+    // while clearing is in progress as the dialog is modal and not closeable).
+    remover_->RemoveObserver(this);
+  }
 }
 
 void ClearBrowsingDataView::Init() {
@@ -289,7 +270,11 @@ bool ClearBrowsingDataView::Accept() {
   }
 
   OnDelete();
-  return false;  // We close the dialog in OnDeletionDone().
+  return false;  // We close the dialog in OnBrowsingDataRemoverDone().
+}
+
+ChromeViews::View* ClearBrowsingDataView::GetContentsView() {
+  return this;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -319,7 +304,7 @@ std::wstring ClearBrowsingDataView::GetItemAt(ChromeViews::ComboBox* source,
 void ClearBrowsingDataView::ButtonPressed(ChromeViews::NativeButton* sender) {
   // When no checkbox is checked we should not have the action button enabled.
   // This forces the button to evaluate what state they should be in.
-  dialog_->UpdateDialogButtons();
+  GetDialogClientView()->UpdateDialogButtons();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -335,7 +320,7 @@ ChromeViews::CheckBox* ClearBrowsingDataView::AddCheckbox(
 }
 
 void ClearBrowsingDataView::UpdateControlEnabledState() {
-  dialog_->EnableClose(!delete_in_progress_);
+  window()->EnableClose(!delete_in_progress_);
 
   del_history_checkbox_->SetEnabled(!delete_in_progress_);
   del_downloads_checkbox_->SetEnabled(!delete_in_progress_);
@@ -352,7 +337,7 @@ void ClearBrowsingDataView::UpdateControlEnabledState() {
     throbber_->Stop();
 
   // Make sure to update the state for OK and Cancel buttons.
-  dialog_->UpdateDialogButtons();
+  GetDialogClientView()->UpdateDialogButtons();
 }
 
 // Convenience method that returns true if the supplied checkbox is selected
@@ -392,12 +377,16 @@ void ClearBrowsingDataView::OnDelete() {
   UpdateControlEnabledState();
 
   // BrowsingDataRemover deletes itself when done.
-  BrowsingDataRemover* remover =
+  remover_ =
       new BrowsingDataRemover(profile_, delete_begin, Time());
-  remover->AddObserver(this);
-  remover->Remove(remove_mask);
+  remover_->AddObserver(this);
+  remover_->Remove(remove_mask);
 }
 
 void ClearBrowsingDataView::OnBrowsingDataRemoverDone() {
-  dialog_->Close();
+  // No need to remove ourselves as an observer as BrowsingDataRemover deletes
+  // itself after we return.
+  remover_ = NULL;
+  window()->Close();
 }
+

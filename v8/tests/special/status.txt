@@ -1,5 +1,0 @@
-special/leakcheck.js = LEAKCHECK
-special/fuzz-natives.js = NATIVES
-special/regress-1134697.js = LEAKCHECK
-special/number-tostring.js = LEAKCHECK
-core/fib.js = GREEDY

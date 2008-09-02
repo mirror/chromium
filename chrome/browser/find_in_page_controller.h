@@ -1,41 +1,17 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_FIND_IN_PAGE_CONTROLLER_H__
-#define CHROME_BROWSER_FIND_IN_PAGE_CONTROLLER_H__
+#ifndef CHROME_BROWSER_FIND_IN_PAGE_CONTROLLER_H_
+#define CHROME_BROWSER_FIND_IN_PAGE_CONTROLLER_H_
 
-#include "base/gfx/size.h"
-#include "chrome/common/slide_animation.h"
-#include "chrome/common/notification_service.h"
+#include "base/gfx/rect.h"
+#include "chrome/browser/render_view_host_delegate.h"
+#include "chrome/common/animation.h"
 #include "chrome/views/hwnd_view_container.h"
 
 class FindInPageView;
+class SlideAnimation;
 class TabContents;
 
 namespace ChromeViews {
@@ -56,8 +32,7 @@ namespace ChromeViews {
 // We create one controller per tab and remember each search query per tab.
 //
 ////////////////////////////////////////////////////////////////////////////////
-class FindInPageController : public NotificationObserver,
-                             public ChromeViews::AcceleratorTarget,
+class FindInPageController : public RenderViewHostDelegate::FindInPage,
                              public ChromeViews::FocusChangeListener,
                              public ChromeViews::HWNDViewContainer,
                              public AnimationDelegate {
@@ -111,6 +86,9 @@ class FindInPageController : public NotificationObserver,
   // Moves the window according to the new window size.
   void RespondToResize(const gfx::Size& new_size);
 
+  // Whether we are animating the position of the Find window.
+  bool IsAnimating();
+
   // Changes the parent window for the FindInPage controller. If |new_parent| is
   // already the parent of this window then no action is taken. |new_parent| can
   // not be NULL.
@@ -142,7 +120,15 @@ class FindInPageController : public NotificationObserver,
   // AnimationDelegate implementation:
   virtual void AnimationProgressed(const Animation* animation);
   virtual void AnimationEnded(const Animation* animation);
+
  private:
+  // RenderViewHostDelegate::FindInPage implementation.
+  virtual void FindReply(int request_id,
+                         int number_of_matches,
+                         const gfx::Rect& selection_rect,
+                         int active_match_ordinal,
+                         bool final_update);
+
   // Retrieves the boundaries that the FindInPage dialog has to work with within
   // the Chrome frame window. The resulting rectangle will be a rectangle that
   // overlaps the bottom of the Chrome toolbar by one pixel (so we can create
@@ -193,12 +179,6 @@ class FindInPageController : public NotificationObserver,
   // When we loose focus, we unregister the handler for Escape. See
   // also: SetFocusChangeListener().
   void UnregisterEscAccelerator();
-
-  // Listens for notifications to know when search results are available, or
-  // when user selected a new tab (at which point we need to show/hide the
-  // FindInPage window depending on what the user selected).
-  virtual void Observe(NotificationType type, const NotificationSource& source,
-                       const NotificationDetails& details);
 
   // The tab we are associated with.
   TabContents* parent_tab_;
@@ -252,7 +232,8 @@ class FindInPageController : public NotificationObserver,
   // closed.
   scoped_ptr<ChromeViews::ExternalFocusTracker> focus_tracker_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(FindInPageController);
+  DISALLOW_COPY_AND_ASSIGN(FindInPageController);
 };
 
-#endif  // CHROME_BROWSER_FIND_IN_PAGE_CONTROLLER_H__
+#endif  // CHROME_BROWSER_FIND_IN_PAGE_CONTROLLER_H_
+

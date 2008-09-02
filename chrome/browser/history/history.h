@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_HISTORY_HISTORY_H__
 #define CHROME_BROWSER_HISTORY_HISTORY_H__
@@ -50,7 +25,7 @@
 #include "chrome/common/page_transition_types.h"
 #include "chrome/common/ref_counted_util.h"
 
-class BookmarkBarModel;
+class BookmarkService;
 struct DownloadCreateInfo;
 class GURL;
 class HistoryURLProvider;
@@ -123,8 +98,12 @@ class HistoryService : public CancelableRequestProvider,
 
   // Initializes the history service, returning true on success. On false, do
   // not call any other functions. The given directory will be used for storing
-  // the history files.
-  bool Init(const std::wstring& history_dir);
+  // the history files. The BookmarkService is used when deleting URLs to
+  // test if a URL is bookmarked; it may be NULL during testing.
+  bool Init(const std::wstring& history_dir, BookmarkService* bookmark_service);
+
+  // Did the backend finish loading the databases?
+  bool backend_loaded() const { return backend_loaded_; }
 
   // Called on shutdown, this will tell the history backend to complete and
   // will release pointers to it. No other functions should be called once
@@ -393,29 +372,6 @@ class HistoryService : public CancelableRequestProvider,
   void SetImportedFavicons(
       const std::vector<history::ImportedFavIconUsage>& favicon_usage);
 
-  // Starring ------------------------------------------------------------------
-
-  // Starring mutation methods are private, go through the BookmarkBarModel
-  // instead.
-  //
-  // The typedefs are public to allow template magic to work.
-
-  typedef Callback2<Handle, std::vector<history::StarredEntry>* >::Type
-      GetStarredEntriesCallback;
-
-  typedef Callback2<Handle, history::StarID>::Type CreateStarredEntryCallback;
-
-  typedef Callback2<Handle, std::vector<history::StarredEntry>* >::Type
-      GetMostRecentStarredEntriesCallback;
-
-  // Fetches up to max_count starred entries of type URL.
-  // The results are ordered by date added in descending order (most recent
-  // first).
-  Handle GetMostRecentStarredEntries(
-      int max_count,
-      CancelableRequestConsumerBase* consumer,
-      GetMostRecentStarredEntriesCallback* callback);
-
   // Database management operations --------------------------------------------
 
   // Delete all the information related to a single url.
@@ -535,6 +491,11 @@ class HistoryService : public CancelableRequestProvider,
       CancelableRequestConsumerBase* consumer,
       GetMostRecentKeywordSearchTermsCallback* callback);
 
+  // Bookmarks -----------------------------------------------------------------
+
+  // Notification that a URL is no longer bookmarked.
+  void URLsNoLongerBookmarked(const std::set<GURL>& urls);
+
   // Generic Stuff -------------------------------------------------------------
 
   typedef Callback0::Type HistoryDBTaskCallback;
@@ -577,6 +538,16 @@ class HistoryService : public CancelableRequestProvider,
  private:
   class BackendDelegate;
   friend class BackendDelegate;
+  friend class history::HistoryBackend;
+  friend class history::HistoryQueryTest;
+  friend class HistoryOperation;
+  friend class HistoryURLProvider;
+  friend class HistoryURLProviderTest;
+  template<typename Info, typename Callback> friend class DownloadRequest;
+  friend class PageUsageRequest;
+  friend class RedirectRequest;
+  friend class FavIconRequest;
+  friend class TestingProfile;
 
   // These are not currently used, hopefully we can do something in the future
   // to ensure that the most important things happen first.
@@ -585,62 +556,6 @@ class HistoryService : public CancelableRequestProvider,
     PRIORITY_NORMAL,  // Normal stuff like adding a page.
     PRIORITY_LOW,     // Low priority things like indexing or expiration.
   };
-
-  friend class BookmarkBarModel;
-  friend class HistoryURLProvider;
-  friend class history::HistoryBackend;
-  template<typename Info, typename Callback> friend class DownloadRequest;
-  friend class PageUsageRequest;
-  friend class RedirectRequest;
-  friend class FavIconRequest;
-  friend class history::HistoryQueryTest;
-  friend class HistoryOperation;
-  friend class HistoryURLProviderTest;
-
-  // Starring ------------------------------------------------------------------
-
-  // These are private as they should only be invoked from the bookmark bar
-  // model.
-
-  // Fetches all the starred entries (both groups and entries).
-  Handle GetAllStarredEntries(
-      CancelableRequestConsumerBase* consumer,
-      GetStarredEntriesCallback* callback);
-
-  // Updates the title, parent and visual order of the specified entry. The key
-  // used to identify the entry is NOT entry.id, rather it is the url (if the
-  // type is URL), or the group_id (if the type is other than URL).
-  //
-  // This can NOT be used to change the type of an entry.
-  //
-  // After updating the entry, NOTIFY_STAR_ENTRY_CHANGED is sent.
-  void UpdateStarredEntry(const history::StarredEntry& entry);
-
-  // Creates a starred entry at the specified position. This can be used
-  // for creating groups and nodes.
-  //
-  // If the entry is a URL and the URL is already starred, this behaves the
-  // same as invoking UpdateStarredEntry. If the entry is a URL and the URL is
-  // not starred, the URL is starred appropriately.
-  //
-  // This honors the title, parent_group_id, visual_order and url (for URL
-  // nodes) of the specified entry. All other attributes are ignored.
-  //
-  // NOTE: consumer and callback may be null, in which case the request
-  // isn't cancelable and 0 is returned.
-  Handle CreateStarredEntry(const history::StarredEntry& entry,
-                            CancelableRequestConsumerBase* consumer,
-                            CreateStarredEntryCallback* callback);
-
-  // Deletes the specified starred group. All children groups are deleted and
-  // starred descendants unstarred. If successful, this sends out the
-  // notification NOTIFY_URLS_STARRED. To delete a starred URL, do
-  // DeletedStarredEntry(id).
-  void DeleteStarredGroup(history::UIStarID group_id);
-
-  // Deletes the specified starred URL. If successful, this sends out the
-  // notification NOTIFY_URLS_STARRED.
-  void DeleteStarredURL(const GURL& url);
 
   // Implementation of NotificationObserver.
   virtual void Observe(NotificationType type,
@@ -662,6 +577,10 @@ class HistoryService : public CancelableRequestProvider,
   // be allocated on the heap).
   void BroadcastNotifications(NotificationType type,
                               history::HistoryDetails* details_deleted);
+
+  // Notification from the backend that it has finished loading. Sends
+  // notification (NOTIFY_HISTORY_LOADED) and sets backend_loaded_ to true.
+  void OnDBLoaded();
 
   // Returns true if this looks like the type of URL we want to add to the
   // history. We filter out some URLs such as JavaScript.
@@ -832,6 +751,10 @@ class HistoryService : public CancelableRequestProvider,
 
   // The profile, may be null when testing.
   Profile* profile_;
+
+  // Has the backend finished loading? The backend is loaded once Init has
+  // completed.
+  bool backend_loaded_;
 
   DISALLOW_EVIL_CONSTRUCTORS(HistoryService);
 };

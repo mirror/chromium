@@ -1,32 +1,7 @@
 #!/usr/bin/python
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 """Flattens a HTML file by inlining its external resources.
 
@@ -38,11 +13,15 @@ This does not inline CSS styles, nor does it inline anything referenced
 from an inlined file.
 """
 
+import os
 import re
 import sys
 import base64
 import mimetypes
-from os import path
+
+DIST_DEFAULT = 'CHROMIUM'
+DIST_ENV_VAR = 'CHROMIUM_BUILD'
+DIST_SUBSTR = '%DISTRIBUTION%'
 
 def ReadFile(input_filename):
   """Helper function that returns input_filename as a string.
@@ -58,16 +37,18 @@ def ReadFile(input_filename):
   f.close()
   return file_contents
 
-def SrcInline(src_match, base_path):
+def SrcInline(src_match, base_path, distribution):
   """regex replace function.
 
   Takes a regex match for src="filename", attempts to read the file 
   at 'filename' and returns the src attribute with the file inlined
-  as a data URI
+  as a data URI. If it finds DIST_SUBSTR string in file name, replaces
+  it with distribution.
 
   Args:
     src_match: regex match object with 'filename' named capturing group
     base_path: path that to look for files in
+    distribution: string that should replace DIST_SUBSTR
 
   Returns:
     string
@@ -78,7 +59,8 @@ def SrcInline(src_match, base_path):
     # filename is probably a URL, which we don't want to bother inlining
     return src_match.group(0)
 
-  filepath = path.join(base_path, filename)    
+  filename = filename.replace('%DISTRIBUTION%', distribution)
+  filepath = os.path.join(base_path, filename)    
   mimetype = mimetypes.guess_type(filename)[0] or 'text/plain'
   inline_data = base64.standard_b64encode(ReadFile(filepath))
 
@@ -97,11 +79,17 @@ def InlineFile(input_filename, output_filename):
     output_filename: name of file to be written to
   """
   print "inlining %s to %s" % (input_filename, output_filename)
-  input_filepath = path.dirname(input_filename)  
+  input_filepath = os.path.dirname(input_filename)  
  
+  distribution = DIST_DEFAULT
+  if DIST_ENV_VAR in os.environ.keys():
+    distribution = os.environ[DIST_ENV_VAR]
+    if len(distribution) > 1 and distribution[0] == '_':
+      distribution = distribution[1:].lower()
+      
   def SrcReplace(src_match):
     """Helper function to provide SrcInline with the base file path"""
-    return SrcInline(src_match, input_filepath)
+    return SrcInline(src_match, input_filepath, distribution)
  
   # TODO(glen): Make this regex not match src="" text that is not inside a tag
   flat_text = re.sub('src="(?P<filename>[^"\']*)"',
@@ -126,3 +114,4 @@ def main():
 
 if __name__ == '__main__':
   main()
+

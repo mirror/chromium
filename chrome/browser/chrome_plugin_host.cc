@@ -1,36 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/chrome_plugin_host.h"
 
 #include <set>
 
+#include "base/command_line.h"
 #include "base/file_util.h"
 #include "base/histogram.h"
 #include "base/message_loop.h"
@@ -52,6 +28,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_plugin_util.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/net/url_request_intercept_job.h"
 #include "chrome/common/plugin_messages.h"
@@ -96,9 +73,8 @@ class PluginRequestInterceptor
   }
 
   void RegisterProtocol(const std::string& scheme) {
-#ifndef NDEBUG
-    DCHECK(MessageLoop::current() == message_loop_);
-#endif
+    DCHECK(CalledOnValidThread());
+
     std::string lower_scheme = StringToLowerASCII(scheme);
     handled_protocols_.insert(lower_scheme);
 
@@ -113,9 +89,12 @@ class PluginRequestInterceptor
 
   // URLRequest::Interceptor
   virtual URLRequestJob* MaybeIntercept(URLRequest* request) {
-#ifndef NDEBUG
-    DCHECK(MessageLoop::current() == message_loop_);
-#endif
+    // TODO(darin): This DCHECK fails in the unit tests because our interceptor
+    // is being persisted across unit tests.  As a result, each time we get
+    // poked on a different thread, but never from more than one thread at a
+    // time.  We need a way to have the URLRequestJobManager get reset between
+    // unit tests.
+    //DCHECK(CalledOnValidThread());
 
     if (!IsHandledProtocol(request->url().scheme()))
       return NULL;
@@ -658,6 +637,12 @@ CPProcessType STDCALL CPB_GetProcessType(CPID id) {
 }
 
 CPError STDCALL CPB_SendMessage(CPID id, const void *data, uint32 data_len) {
+  CommandLine cmd;
+  if (cmd.HasSwitch(switches::kGearsInRenderer)) {
+    // TODO(mpcomplete): figure out what to do here.
+    return CPERR_FAILURE;
+  }
+
   CHECK(ChromePluginLib::IsPluginThread());
   ChromePluginLib* plugin = ChromePluginLib::FromCPID(id);
   CHECK(plugin);
@@ -740,3 +725,4 @@ void CPHandleCommand(int command, CPCommandInterface* data,
       NewRunnableFunction(PluginCommandHandler::HandleCommand,
                           command, data, context_as_int32));
 }
+

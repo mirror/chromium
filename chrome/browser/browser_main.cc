@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <shellapi.h>
@@ -40,7 +15,7 @@
 #include "base/registry.h"
 #include "base/string_util.h"
 #include "base/tracked_objects.h"
-#include "chrome/app/google_update_settings.h"
+#include "base/win_util.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
@@ -73,6 +48,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/win_util.h"
+#include "chrome/installer/util/google_update_settings.h"
 #include "chrome/views/accelerator_handler.h"
 #include "net/base/net_module.h"
 #include "net/base/net_resources.h"
@@ -80,6 +56,7 @@
 #include "net/base/winsock_init.h"
 #include "net/http/http_network_layer.h"
 
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 namespace {
@@ -234,6 +211,20 @@ bool DoUpgradeTasks(const CommandLine& command_line) {
   return true;
 }
 
+bool CreateUniqueChromeEvent() {
+  std::wstring exe;
+  PathService::Get(base::FILE_EXE, &exe);
+  std::replace(exe.begin(), exe.end(), '\\', '!');
+  std::transform(exe.begin(), exe.end(), exe.begin(), tolower);
+  HANDLE handle = CreateEvent(NULL, TRUE, TRUE, exe.c_str());
+  bool already_running = false;
+  if (GetLastError() == ERROR_ALREADY_EXISTS) {
+    already_running = true;
+    CloseHandle(handle);
+  }
+  return already_running;
+}
+
 // We record in UMA the conditions that can prevent breakpad from generating
 // and sending crash reports. Namely that the crash reporting registration
 // failed and that the process is being debugged.
@@ -255,25 +246,18 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   // TODO(beng, brettw): someday, break this out into sub functions with well
   //                     defined roles (e.g. pre/post-profile startup, etc).
 
-  const char* main_thread_name = "Chrome_BrowserMain";
-  Thread::SetThreadName(main_thread_name, GetCurrentThreadId());
-  MessageLoop::current()->SetThreadName(main_thread_name);
+  MessageLoop main_message_loop(MessageLoop::TYPE_UI);
+
+  std::wstring app_name = chrome::kBrowserAppName;
+  const char* thread_name = WideToASCII(app_name + L"_BrowserMain").c_str();
+  PlatformThread::SetName(thread_name);
+  main_message_loop.set_thread_name(thread_name);
+  bool already_running = CreateUniqueChromeEvent();
 
   // Make the selection of network stacks early on before any consumers try to
   // issue HTTP requests.
   if (parsed_command_line.HasSwitch(switches::kUseNewHttp))
     net::HttpNetworkLayer::UseWinHttp(false);
-
-  std::wstring exe;
-  PathService::Get(base::FILE_EXE, &exe);
-  std::replace(exe.begin(), exe.end(), '\\', '!');
-  std::transform(exe.begin(), exe.end(), exe.begin(), tolower);
-  HANDLE handle = CreateEvent(NULL, TRUE, TRUE, exe.c_str());
-  bool already_running = false;
-  if (GetLastError() == ERROR_ALREADY_EXISTS) {
-    already_running = true;
-    CloseHandle(handle);
-  }
 
   std::wstring user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
@@ -405,7 +389,10 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   if (message_window.NotifyOtherProcess(show_command))
     return ResultCodes::NORMAL_EXIT;
 
+  // Sometimes we end up killing browser process (http://b/1308130) so make
+  // sure we recreate unique event to indicate running browser process.
   message_window.HuntForZombieChromeProcesses();
+  CreateUniqueChromeEvent();
 
   // Do the tasks if chrome has been upgraded while it was last running.
   if (DoUpgradeTasks(parsed_command_line)) {
@@ -433,7 +420,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   PrepareRestartOnCrashEnviroment(parsed_command_line);
 
   // Initialize Winsock.
-  WinsockInit init;
+  net::WinsockInit init;
 
   // Initialize the DNS prefetch system
   chrome_browser_net::DnsPrefetcherInit dns_prefetch_init(user_prefs);
@@ -453,7 +440,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   RLZTracker::InitRlzDelayed(base::DIR_MODULE, is_first_run);
 
   // Config the network module so it has access to resources.
-  NetModule::SetResourceProvider(NetResourceProvider);
+  net::NetModule::SetResourceProvider(NetResourceProvider);
 
   // Register our global network handler for chrome-resource:// URLs.
   RegisterURLRequestChromeJob();
@@ -497,7 +484,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   if (BrowserInit::ProcessCommandLine(parsed_command_line, L"", local_state,
                                       show_command, true, profile,
                                       &result_code)) {
-    MessageLoop::current()->Run(browser_process->accelerator_handler());
+    MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
   }
 
   if (metrics)
@@ -523,3 +510,4 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   return result_code;
 }
+

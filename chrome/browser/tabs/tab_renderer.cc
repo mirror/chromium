@@ -1,36 +1,14 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include <limits>
 
 #include "chrome/browser/tabs/tab_renderer.h"
 
 #include "base/gfx/image_operations.h"
 #include "chrome/app/theme/theme_resources.h"
+#include "chrome/browser/browser.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -54,6 +32,9 @@ static const int kUnselectedTitleColor = SkColorSetRGB(64, 64, 64);
 
 // How long the hover state takes.
 static const int kHoverDurationMs = 90;
+
+// How long the pulse throb takes.
+static const int kPulseDurationMs = 200;
 
 // How opaque to make the hover state (out of 1).
 static const double kHoverOpacity = 0.33;
@@ -272,6 +253,9 @@ TabRenderer::TabRenderer()
 
   hover_animation_.reset(new SlideAnimation(this));
   hover_animation_->SetSlideDuration(kHoverDurationMs);
+
+  pulse_animation_.reset(new ThrobAnimation(this));
+  pulse_animation_->SetSlideDuration(kPulseDurationMs);
 }
 
 TabRenderer::~TabRenderer() {
@@ -334,10 +318,14 @@ void TabRenderer::ValidateLoadingAnimation(AnimationState animation_state) {
   SchedulePaint();
 }
 
-void TabRenderer::AnimationProgressed(const Animation* animation) {
-  if (animation == hover_animation_.get()) {
-    SchedulePaint();
-  }
+void TabRenderer::StartPulse() {
+  pulse_animation_->Reset();
+  pulse_animation_->StartThrobbing(std::numeric_limits<int>::max());
+}
+
+void TabRenderer::StopPulse() {
+  if (pulse_animation_->IsAnimating())
+    pulse_animation_->Stop();
 }
 
 // static
@@ -367,17 +355,6 @@ gfx::Size TabRenderer::GetStandardSize() {
   return standard_size;
 }
 
-// static
-void TabRenderer::FormatTitleForDisplay(std::wstring* title) {
-  size_t current_index = 0;
-  size_t match_index;
-  while ((match_index = title->find(L'\n', current_index)) !=
-    std::wstring::npos) {
-      title->replace(match_index, 1, L"");
-      current_index = match_index;
-  }
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // TabRenderer, protected:
 
@@ -403,21 +380,7 @@ void TabRenderer::Paint(ChromeCanvas* canvas) {
       show_close_button != showing_close_button_)
     Layout();
 
-  if (IsSelected()) {
-    // Sometimes detaching a tab quickly can result in the model reporting it
-    // as not being selected, so is_drag_clone_ ensures that we always paint
-    // the active representation for the dragged tab.
-    PaintActiveTabBackground(canvas);
-  } else {
-    // Draw our hover state.
-    if (hover_animation_->GetCurrentValue() > 0) {
-      PaintHoverTabBackground(canvas, hover_animation_->GetCurrentValue() *
-          (win_util::ShouldUseVistaFrame() ?
-          kHoverOpacityVista : kHoverOpacity));
-    } else {
-      PaintInactiveTabBackground(canvas);
-    }
-  }
+  PaintTabBackground(canvas);
 
   // Paint the loading animation if the page is currently loading, otherwise
   // show the page's favicon.
@@ -464,7 +427,7 @@ void TabRenderer::Paint(ChromeCanvas* canvas) {
       title = l10n_util::GetString(IDS_TAB_UNTITLED_TITLE);
     }
   } else {
-    FormatTitleForDisplay(&title);
+    Browser::FormatTitleForDisplay(&title);
   }
 
   SkColor title_color = IsSelected() ? kSelectedTitleColor
@@ -573,8 +536,44 @@ void TabRenderer::OnMouseExited(const ChromeViews::MouseEvent& e) {
   hover_animation_->Hide();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// TabRenderer, AnimationDelegate implementation:
+
+void TabRenderer::AnimationProgressed(const Animation* animation) {
+  SchedulePaint();
+}
+
+void TabRenderer::AnimationCanceled(const Animation* animation) {
+  AnimationEnded(animation);
+}
+
+void TabRenderer::AnimationEnded(const Animation* animation) {
+  SchedulePaint();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // TabRenderer, private
+
+void TabRenderer::PaintTabBackground(ChromeCanvas* canvas) {
+  if (IsSelected()) {
+    // Sometimes detaching a tab quickly can result in the model reporting it
+    // as not being selected, so is_drag_clone_ ensures that we always paint
+    // the active representation for the dragged tab.
+    PaintActiveTabBackground(canvas);
+  } else {
+    // Draw our hover state.
+    Animation* animation = hover_animation_.get();
+    if (pulse_animation_->IsAnimating())
+      animation = pulse_animation_.get();
+    if (animation->GetCurrentValue() > 0) {
+      PaintHoverTabBackground(canvas, animation->GetCurrentValue() *
+          (win_util::ShouldUseVistaFrame() ?
+          kHoverOpacityVista : kHoverOpacity));
+    } else {
+      PaintInactiveTabBackground(canvas);
+    }
+  }
+}
 
 void TabRenderer::PaintInactiveTabBackground(ChromeCanvas* canvas) {
   bool is_otr = data_.off_the_record;
@@ -609,7 +608,7 @@ void TabRenderer::PaintHoverTabBackground(ChromeCanvas* canvas,
 
   canvas->DrawBitmapInt(left, 0, 0);
   canvas->TileImageInt(center, tab_active_l_width, 0,
-    GetWidth() - tab_active_l_width - tab_active_r_width, GetHeight());
+      GetWidth() - tab_active_l_width - tab_active_r_width, GetHeight());
   canvas->DrawBitmapInt(right, GetWidth() - tab_active_r_width, 0);
 }
 
@@ -689,3 +688,4 @@ void TabRenderer::DisplayCrashedFavIcon() {
 void TabRenderer::ResetCrashedFavIcon() {
   should_display_crashed_favicon_ = false;
 }
+

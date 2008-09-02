@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/registry.h"
 #include "base/string_util.h"
@@ -33,33 +8,58 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 class WinUtilTest: public testing::Test {
+ protected:
+  // Retrieve the OS primary language
+  static unsigned GetSystemLanguage() {
+    std::wstring language;
+
+    typedef BOOL (WINAPI *fnGetThreadPreferredUILanguages)(
+        DWORD dwFlags,
+        PULONG pulNumLanguages,
+        PWSTR pwszLanguagesBuffer,
+        PULONG pcchLanguagesBuffer);
+    fnGetThreadPreferredUILanguages pGetThreadPreferredUILanguages = NULL;
+    pGetThreadPreferredUILanguages =
+        reinterpret_cast<fnGetThreadPreferredUILanguages>(
+            GetProcAddress(GetModuleHandle(L"kernel32.dll"),
+                           "GetThreadPreferredUILanguages"));
+    if (pGetThreadPreferredUILanguages) {
+      // Vista, MUI-aware.
+      ULONG number = 0;
+      wchar_t buffer[256] = {0};
+      ULONG buffer_size = sizeof(buffer);
+      EXPECT_TRUE(pGetThreadPreferredUILanguages(MUI_LANGUAGE_ID, &number,
+                                                 buffer, &buffer_size));
+      language = buffer;
+    } else {
+      // XP
+      RegKey language_key(HKEY_LOCAL_MACHINE,
+                          L"SYSTEM\\CurrentControlSet\\Control\\Nls\\Language");
+      language_key.ReadValue(L"InstallLanguage", &language);
+    }
+    wchar_t * unused_endptr;
+    return PRIMARYLANGID(wcstol(language.c_str(), &unused_endptr, 16));
+  }
 };
 
-// Retrieve the OS primary language
-unsigned GetSystemLanguage() {
-  RegKey language_key(HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Control\\Nls\\Language");
-  std::wstring language;
-  language_key.ReadValue(L"InstallLanguage", &language);
-  wchar_t * unused_endptr;
-  return PRIMARYLANGID(wcstol(language.c_str(), &unused_endptr, 16));
-}
 
-TEST(WinUtilTest, FormatMessage) {
+TEST_F(WinUtilTest, FormatMessage) {
+  unsigned language = GetSystemLanguage();
+  ASSERT_TRUE(language);
+
   const int kAccessDeniedErrorCode = 5;
   SetLastError(kAccessDeniedErrorCode);
   ASSERT_EQ(GetLastError(), kAccessDeniedErrorCode);
   std::wstring value;
 
-  unsigned language = GetSystemLanguage();
-  ASSERT_TRUE(language);
   if (language == LANG_ENGLISH) {
     // This test would fail on non-English system.
     TrimWhitespace(win_util::FormatLastWin32Error(), TRIM_ALL, &value);
-    EXPECT_EQ(value, std::wstring(L"Access is denied."));
+    EXPECT_EQ(std::wstring(L"Access is denied."), value);
   } else if (language == LANG_FRENCH) {
     // This test would fail on non-French system.
     TrimWhitespace(win_util::FormatLastWin32Error(), TRIM_ALL, &value);
-    EXPECT_EQ(value, std::wstring(L"Acc\00e8s refus\00e9."));
+    EXPECT_EQ(std::wstring(L"Acc\u00e8s refus\u00e9."), value);
   } else {
     EXPECT_TRUE(0) << "Please implement the test for your OS language.";
   }
@@ -86,7 +86,7 @@ TEST(WinUtilTest, FormatMessage) {
   LocalFree(string_buffer);
 }
 
-TEST(WinUtilTest, EnsureRectIsVisibleInRect) {
+TEST_F(WinUtilTest, EnsureRectIsVisibleInRect) {
   gfx::Rect parent_rect(0, 0, 500, 400);
 
   {
@@ -131,4 +131,5 @@ TEST(WinUtilTest, EnsureRectIsVisibleInRect) {
     EXPECT_EQ(gfx::Rect(20, 20, 100, 380), child_rect);
   }
 }
+
 

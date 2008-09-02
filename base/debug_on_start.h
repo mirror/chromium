@@ -1,41 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Define the necessary code and global data to look for kDebugOnStart command
 // line argument. When the command line argument is detected, it invokes the
 // debugger, if no system-wide debugger is registered, a debug break is done.
 
-#ifndef BASE_DEBUG_ON_START_H__
-#define BASE_DEBUG_ON_START_H__
+#ifndef BASE_DEBUG_ON_START_H_
+#define BASE_DEBUG_ON_START_H_
+
+#include "base/basictypes.h"
 
 // This only works on Windows.
-#ifdef _WIN32
+#if defined(OS_WIN)
 
 #ifndef DECLSPEC_SELECTANY
 #define DECLSPEC_SELECTANY  __declspec(selectany)
@@ -62,14 +39,30 @@ class DebugOnStart {
 // theory it should be called before any user created global variable
 // initialization code and CRT initialization code.
 // Note: See VC\crt\src\defsects.inc and VC\crt\src\crt0.c for reference.
+#ifdef _WIN64
 
-// "Fix" the data section.
+// "Fix" the segment. On x64, the .CRT segment is merged into the .rdata segment
+// so it contains const data only.
+#pragma const_seg(push, ".CRT$XIB")
+// Declare the pointer so the CRT will find it.
+extern const DebugOnStart::PIFV debug_on_start;
+DECLSPEC_SELECTANY const DebugOnStart::PIFV debug_on_start =
+    &DebugOnStart::Init;
+// Fix back the segment.
+#pragma const_seg(pop)
+
+#else  // _WIN64
+
+// "Fix" the segment. On x86, the .CRT segment is merged into the .data segment
+// so it contains non-const data only.
 #pragma data_seg(push, ".CRT$XIB")
 // Declare the pointer so the CRT will find it.
 DECLSPEC_SELECTANY DebugOnStart::PIFV debug_on_start = &DebugOnStart::Init;
-// Fix back the data segment.
+// Fix back the segment.
 #pragma data_seg(pop)
 
-#endif  // _WIN32
+#endif  // _WIN64
+#endif  // defined(OS_WIN)
 
-#endif  // BASE_DEBUG_ON_START_H__
+#endif  // BASE_DEBUG_ON_START_H_
+

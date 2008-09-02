@@ -93,7 +93,6 @@
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "FrameWin.h"
-#include "graphics/SkiaUtils.h"
 #include "GraphicsContext.h"
 #include "HTMLHeadElement.h"
 #include "HTMLLinkElement.h"
@@ -110,17 +109,18 @@
 #include "ResourceRequest.h"
 #include "SelectionController.h"
 #include "Settings.h"
+#include "SkiaUtils.h"
 #include "SubstituteData.h"
 #include "TextIterator.h"
 #include "TextAffinity.h"
-#include "xml/XPathResult.h"
+#include "XPathResult.h"
 
 #pragma warning(pop)
 
 #undef LOG
-#include "base/gfx/bitmap_platform_device.h"
+#include "base/gfx/bitmap_platform_device_win.h"
 #include "base/gfx/rect.h"
-#include "base/gfx/platform_canvas.h"
+#include "base/gfx/platform_canvas_win.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/stats_counters.h"
@@ -1381,19 +1381,19 @@ void WebFrameImpl::Paint(gfx::PlatformCanvas* canvas, const gfx::Rect& rect) {
   }
 }
 
-gfx::BitmapPlatformDevice WebFrameImpl::CaptureImage(bool scroll_to_zero) {
+gfx::BitmapPlatformDeviceWin WebFrameImpl::CaptureImage(bool scroll_to_zero) {
   // Must layout before painting.
   Layout();
 
-  gfx::PlatformCanvas canvas(frameview()->width(), frameview()->height(), true);
+  gfx::PlatformCanvasWin canvas(frameview()->width(), frameview()->height(), true);
   PlatformContextSkia context(&canvas);
 
   GraphicsContext gc(reinterpret_cast<PlatformGraphicsContext*>(&context));
   frameview()->paint(&gc, IntRect(0, 0, frameview()->width(),
                                   frameview()->height()));
 
-  gfx::BitmapPlatformDevice& device =
-      static_cast<gfx::BitmapPlatformDevice&>(canvas.getTopPlatformDevice());
+  gfx::BitmapPlatformDeviceWin& device =
+      static_cast<gfx::BitmapPlatformDeviceWin&>(canvas.getTopPlatformDevice());
   device.fixupAlphaBeforeCompositing();
   return device;
 }
@@ -1737,6 +1737,15 @@ bool WebFrameImpl::HasUnloadListener() {
   if (frame() && frame()->document()) {
     Document* doc = frame()->document();
     return doc->hasUnloadEventListener();
+  }
+  return false;
+}
+
+bool WebFrameImpl::IsReloadAllowingStaleData() const {
+  FrameLoader* loader = frame() ? frame()->loader() : NULL;
+  if (loader) {
+    return WebCore::FrameLoadTypeReloadAllowingStaleData ==
+           loader->policyLoadType();
   }
   return false;
 }

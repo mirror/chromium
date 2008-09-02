@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef BASE_SINGLETON_H__
 #define BASE_SINGLETON_H__
@@ -34,17 +9,12 @@
 
 #include <utility>
 
-#include "base/lock.h"
-#include "base/singleton_internal.h"
-
-#ifdef WIN32
-#include "base/fix_wp64.h"
-#else  // WIN32
-#include <pthread.h>
-#endif  // WIN32
+#include "base/at_exit.h"
+#include "base/atomicops.h"
+#include "base/platform_thread.h"
 
 // Default traits for Singleton<Type>. Calls operator new and operator delete on
-// the object. Registers automatic deletion at library unload or process exit.
+// the object. Registers automatic deletion at process exit.
 // Overload if you need arguments or another memory allocation function.
 template<typename Type>
 struct DefaultSingletonTraits {
@@ -60,23 +30,15 @@ struct DefaultSingletonTraits {
     delete x;
   }
 
-  // Set to true to automatically register deletion of the object on library
-  // unload or process exit.
+  // Set to true to automatically register deletion of the object on process
+  // exit. See below for the required call that makes this happen.
   static const bool kRegisterAtExit = true;
-
-  // Note: Only apply on Windows. Has *no effect* on other platform.
-  // When set to true, it signals that Trait::New() *must* not be called
-  // multiple times at construction. Anything that must be done to not enter
-  // this situation should be done at all cost. This simply involves creating a
-  // temporary lock.
-  static const bool kMustCallNewExactlyOnce = false;
 };
-
 
 // The Singleton<Type, Traits, DifferentiatingType> class manages a single
 // instance of Type which will be created on first use and will be destroyed at
-// library unload (or on normal process exit). The Trait::Delete function will
-// not be called on abnormal process exit.
+// normal process exit). The Trait::Delete function will not be called on
+// abnormal process exit.
 //
 // DifferentiatingType is used as a key to differentiate two different
 // singletons having the same memory allocation functions but serving a
@@ -97,32 +59,18 @@ struct DefaultSingletonTraits {
 // depending on the user's requirements.
 //
 // Glossary:
-//   MCNEO = kMustCallNewExactlyOnce
 //   RAE = kRegisterAtExit
 //
 // On every platform, if Traits::RAE is true, the singleton will be destroyed at
-// library unload or process exit. if Traits::RAE is false, the singleton will
-// not be freed at library unload or process exit, thus the singleton will be
-// leaked if it is ever accessed. Traits::RAE shouldn't be false unless
-// absolutely necessary. Remember that the heap where the object is allocated
-// may be destroyed by the CRT anyway.
+// process exit. More precisely it uses base::AtExitManager which requires an
+// object of this type to be instanciated. AtExitManager mimics the semantics
+// of atexit() such as LIFO order but under Windows is safer to call. For more
+// information see at_exit.h.
 //
-// On Windows, now the fun begins. Traits::New() may be called more than once
-// concurrently, but no user will gain access to the object until the winning
-// Traits::New() call is completed.
-//
-// On Windows, if Traits::MCNEO and Traits::RAE are both false,
-// Traits::Delete() can still be called. The reason is that a race condition can
-// occur during the object creation which will cause Traits::Delete() to be
-// called even if Traits::RAE is false, so Traits::Delete() should still be
-// implemented or objects may be leaked when there is a race condition in
-// creating the singleton. Even though this case is very rare, it may happen in
-// practice. To work around this situation, before creating a multithreaded
-// environment, be sure to call Singleton<>::get() to force the creation of the
-// instance.
-//
-// On Windows, If Traits::MCNEO is true, a temporary lock per singleton will be
-// created to ensure that Trait::New() is only called once.
+// If Traits::RAE is false, the singleton will not be freed at process exit,
+// thus the singleton will be leaked if it is ever accessed. Traits::RAE
+// shouldn't be false unless absolutely necessary. Remember that the heap where
+// the object is allocated may be destroyed by the CRT anyway.
 //
 // If you want to ensure that your class can only exist as a singleton, make
 // its constructors private, and make DefaultSingletonTraits<> a friend:
@@ -133,7 +81,7 @@ struct DefaultSingletonTraits {
 //     void Bar() { ... }
 //    private:
 //     FooClass() { ... }
-//     friend DefaultSingletonTraits<FooClass>;
+//     friend struct DefaultSingletonTraits<FooClass>;
 //
 //     DISALLOW_EVIL_CONSTRUCTORS(FooClass);
 //   };
@@ -147,43 +95,56 @@ struct DefaultSingletonTraits {
 // (b) Your factory function must never throw an exception. This class is not
 //     exception-safe.
 //
-// (c) On Windows at least, if Traits::kMustCallNewExactlyOnce is false,
-//     Traits::New() may be called two times in two different threads at the
-//     same time so it must not have side effects. Set
-//     Traits::kMustCallNewExactlyOnce to true to alleviate this issue, at
-//     the cost of a slight increase of memory use and creation time.
-//
 template <typename Type,
           typename Traits = DefaultSingletonTraits<Type>,
           typename DifferentiatingType = Type>
-class Singleton
-    : public SingletonStorage<
-          Type,
-          std::pair<Traits, DifferentiatingType>,
-          UseVolatileSingleton<Traits::kMustCallNewExactlyOnce>::value> {
+class Singleton {
  public:
   // This class is safe to be constructed and copy-constructed since it has no
   // member.
 
   // Return a pointer to the one true instance of the class.
   static Type* get() {
-    Type* value = instance_;
-    // Acute readers may think: why not just discard "value" and use
-    // "instance_" directly? Astute readers will remark that instance_ can be a
-    // volatile pointer on Windows and hence the compiler would be forced to
-    // generate two memory reads instead of just one. Since this is the hotspot,
-    // this is inefficient.
-    if (value)
-      return value;
+    // Our AtomicWord doubles as a spinlock, where a value of
+    // kBeingCreatedMarker means the spinlock is being held for creation.
+    static const base::subtle::AtomicWord kBeingCreatedMarker = 1;
 
-#ifdef WIN32
-    // Statically determine which function to call.
-    LockedConstruct<Traits::kMustCallNewExactlyOnce>();
-#else  // WIN32
-    // Posix platforms already have the functionality embedded.
-    pthread_once(&control_, SafeConstruct);
-#endif  // WIN32
-    return instance_;
+    base::subtle::AtomicWord value = base::subtle::NoBarrier_Load(&instance_);
+    if (value != 0 && value != kBeingCreatedMarker)
+      return reinterpret_cast<Type*>(value);
+
+    // Object isn't created yet, maybe we will get to create it, let's try...
+    if (base::subtle::Acquire_CompareAndSwap(&instance_,
+                                             0,
+                                             kBeingCreatedMarker) == 0) {
+      // instance_ was NULL and is now kBeingCreatedMarker.  Only one thread
+      // will ever get here.  Threads might be spinning on us, and they will
+      // stop right after we do this store.
+      Type* newval = Traits::New();
+      base::subtle::Release_Store(
+          &instance_, reinterpret_cast<base::subtle::AtomicWord>(newval));
+
+      if (Traits::kRegisterAtExit)
+        base::AtExitManager::RegisterCallback(OnExit);
+
+      return newval;
+    }
+
+    // We hit a race.  Another thread beat us and either:
+    // - Has the object in BeingCreated state
+    // - Already has the object created...
+    // We know value != NULL.  It could be kBeingCreatedMarker, or a valid ptr.
+    // Unless your constructor can be very time consuming, it is very unlikely
+    // to hit this race.  When it does, we just spin and yield the thread until
+    // the object has been created.
+    while (true) {
+      value = base::subtle::NoBarrier_Load(&instance_);
+      if (value != kBeingCreatedMarker)
+        break;
+      PlatformThread::YieldCurrentThread();
+    }
+
+    return reinterpret_cast<Type*>(value);
   }
 
   // Shortcuts.
@@ -196,98 +157,21 @@ class Singleton
   }
 
  private:
-#ifdef WIN32
-  // Use bool template differentiation to make sure to not build the other part
-  // of the code. We don't want to instantiate Singleton<Lock, ...> uselessly.
-  template<bool kUseLock>
-  static void LockedConstruct() {
-    // Define a differentiating type for the Lock.
-    typedef std::pair<Type, std::pair<Traits, DifferentiatingType> >
-        LockDifferentiatingType;
-
-    // Object-type lock. Note that the lock singleton is different per singleton
-    // type.
-    AutoLock lock(*Singleton<Lock,
-                             DefaultSingletonTraits<Lock>,
-                             LockDifferentiatingType>());
-    // Now that we have the lock, look if the instance is created, if not yet,
-    // create it.
-    if (!instance_)
-      SafeConstruct();
-  }
-
-  template<>
-  static void LockedConstruct<false>() {
-    // Implemented using atomic compare-and-swap. The new object is
-    // constructed and used as the new value in the operation; if the
-    // compare fails, the new object will be deleted. Future implementations
-    // for Windows might use InitOnceExecuteOnce (Vista-only), similar in
-    // spirit to pthread_once.
-
-    // On Windows, multiple concurrent Traits::New() calls are tolerated.
-    Type* value = Traits::New();
-    if (InterlockedCompareExchangePointer(
-            reinterpret_cast<void* volatile*>(&instance_), value, NULL)) {
-      // Race condition, discard the temporary value.
-      Traits::Delete(value);
-    } else {
-      // Got it, register destruction at unload. atexit() is called on library
-      // unload. It is assumed that atexit() is itself thread safe. It is also
-      // assumed that registered functions by atexit are called in a thread
-      // safe manner. At least on Windows, they are called with the loader
-      // lock held. On Windows, the CRT use a structure similar to
-      // std::map<dll_handle,std::vector<registered_functions>> so the right
-      // functions are called on library unload, independent of having a DLL
-      // CRT or a static CRT or even both.
-      if (Traits::kRegisterAtExit)
-        atexit(&OnExit);
-    }
-  }
-#endif  // WIN32
-
-  // SafeConstruct is guaranteed to be executed only once.
-  static void SafeConstruct() {
-    instance_ = Traits::New();
-
-    // Porting note: this code depends on some properties of atexit which are
-    // not guaranteed by the standard:
-    //  - atexit must be thread-safe: its internal manipulation of the list of
-    //    registered functions must be tolerant of multiple threads attempting
-    //    to register exit routines simultaneously.
-    //  - exit routines must run when the executable module that contains them
-    //    is unloaded.  For routines in by dynamically-loaded modules, this
-    //    may be sooner than process termination.
-    //  - atexit should support an arbitrary number of registered exit
-    //    routines, or at least should support more routines than will
-    //    actually be registered (the standard only requires 32).
-    // The atexit implementations in contemporary versions of Mac OS X, glibc,
-    // and the Windows C runtime provide these capabilities.  To port to other
-    // systems with less-advanced (even though still standard-conforming)
-    // atexit implmentations, consider alternatives such as __cxa_atexit or
-    // custom termination sections.
-    if (Traits::kRegisterAtExit)
-      atexit(OnExit);
-  }
-
-  // Adapter function for use with atexit().
+  // Adapter function for use with AtExit().  This should be called single
+  // threaded, but we might as well take the precautions anyway.
   static void OnExit() {
-    if (!instance_)
-      return;
-    Traits::Delete(instance_);
-    instance_ = NULL;
+    // AtExit should only ever be register after the singleton instance was
+    // created.  We should only ever get here with a valid instance_ pointer.
+    Traits::Delete(reinterpret_cast<Type*>(
+        base::subtle::NoBarrier_AtomicExchange(&instance_, 0)));
   }
-
-#ifndef WIN32
-  static pthread_once_t control_;
-#endif  // !WIN32
+  static base::subtle::AtomicWord instance_;
 };
 
-#ifndef WIN32
-
 template <typename Type, typename Traits, typename DifferentiatingType>
-pthread_once_t Singleton<Type, Traits, DifferentiatingType>::control_ =
-    PTHREAD_ONCE_INIT;
+base::subtle::AtomicWord Singleton<Type, Traits, DifferentiatingType>::
+    instance_ = 0;
 
-#endif  // !WIN32
 
 #endif  // BASE_SINGLETON_H__
+

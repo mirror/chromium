@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/common/chrome_switches.h"
 
@@ -183,14 +158,18 @@ const wchar_t kLogFilterPrefix[]               = L"log-filter-prefix";
 // builds.
 const wchar_t kEnableLogging[]                 = L"enable-logging";
 
+// Force logging to be disabled.  Logging is enabled by default in debug
+// builds.
+const wchar_t kDisableLogging[]                = L"disable-logging";
+
+// Sets the minimum log level. Valid values are from 0 to 3:
+// INFO = 0, WARNING = 1, LOG_ERROR = 2, LOG_FATAL = 3.
+const wchar_t kLoggingLevel[]                  = L"log-level";
+
 // Dump any accumualted histograms to the log when browser terminates (requires
 // logging to be enabled to really do anything).  Used by developers and test
 // scripts.
 const wchar_t kDumpHistogramsOnExit[]          = L"dump-histograms-on-exit";
-
-// Force logging to be disabled.  Logging is enabled by default in debug
-// builds.
-const wchar_t kDisableLogging[]                = L"disable-logging";
 
 // enable remote debug / automation shell on the specified port
 const wchar_t kRemoteShellPort[]               = L"remote-shell-port";
@@ -259,7 +238,7 @@ const wchar_t kAlwaysEnableDevTools[] = L"always-enable-dev-tools";
 const wchar_t kTabCountToLoadOnSessionRestore[] =
     L"tab-count-to-load-on-session-restore";
 
-// Enable synamic loading of the Memory Profiler DLL, which will trace
+// Enable dynamic loading of the Memory Profiler DLL, which will trace
 // all memory allocations during the run.
 const wchar_t kMemoryProfiling[] = L"memory-profile";
 
@@ -288,10 +267,6 @@ const wchar_t kEnableWatchdog[] = L"enable-watchdog";
 // Display the First Run experience when the browser is started, regardless of
 // whether or not it's actually the first run.
 const wchar_t kFirstRun[] = L"first-run";
-
-// Select an alternate message loop task dispatch strategy.
-// Usage -message-loop-strategy=n
-const wchar_t kMessageLoopStrategy[] = L"message-loop-strategy";
 
 // Enable histograming of tasks served by MessageLoop. See about:histograms/Loop
 // for results, which show frequency of messages on each thread, including APC
@@ -334,7 +309,16 @@ const wchar_t kUseLowFragHeapCrt[] = L"use-lf-heap";
 const wchar_t kGearsPluginPathOverride[] = L"gears-plugin-path";
 #endif
 
+// Switch to load Gears in the renderer process.
+const wchar_t kGearsInRenderer[] = L"gears-in-renderer";
+
 // Enable new HTTP stack.
 const wchar_t kUseNewHttp[] = L"new-http";
 
+// Allow loading of the javascript debugger UI from the filesystem.
+const wchar_t kJavaScriptDebuggerPath[] = L"javascript-debugger-path";
+
+const wchar_t kEnableP13n[] = L"enable-p13n";
+
 }  // namespace switches
+

@@ -1,34 +1,8 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <io.h>
-#include <vector>
 
 #include "chrome/browser/spellchecker.h"
 
@@ -36,7 +10,6 @@
 #include "base/file_util.h"
 #include "base/histogram.h"
 #include "base/logging.h"
-#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "base/win_util.h"
@@ -94,7 +67,7 @@ class SpellChecker::DictionaryDownloadController
       MessageLoop* ui_loop)
       : url_request_context_(url_request_context),
         download_server_url_(
-            L"http://cache.googlevideo.com/chrome/dict/"),
+            L"http://dl.google.com/chrome/dict/"),
         ui_loop_(ui_loop),
         spellchecker_flag_set_task_(spellchecker_flag_set_task) {
     // Determine dictionary file path and name.
@@ -191,12 +164,12 @@ class UIProxyForIOTask : public Task {
  private:
   void Run() {
     // This has been invoked in the UI thread.
-    Thread* io_thread = g_browser_process->io_thread();
+    base::Thread* io_thread = g_browser_process->io_thread();
     if (io_thread) {  // io_thread has not been torn down yet.
       MessageLoop* io_loop = io_thread->message_loop();
       if (io_loop) {
-        scoped_ptr<Task> this_task(spellchecker_flag_set_task_);
-        io_loop->PostTask(FROM_HERE, this_task.release());
+        io_loop->PostTask(FROM_HERE, spellchecker_flag_set_task_);
+        spellchecker_flag_set_task_ = NULL;
       }
     }
   }
@@ -240,11 +213,8 @@ SpellChecker::SpellChecker(const std::wstring& dict_dir,
   // Remember UI loop to later use this as a proxy to get IO loop.
   ui_loop_ = MessageLoop::current();
 
-  // Reset dictionary flag setting task to NULL.
-  dic_task_.reset(NULL);
-
   // Get File Loop - hunspell gets initialized here.
-  Thread* file_thread = g_browser_process->file_thread();
+  base::Thread* file_thread = g_browser_process->file_thread();
   if (file_thread)
     file_loop_ = file_thread->message_loop();
 
@@ -295,9 +265,9 @@ bool SpellChecker::Initialize() {
   bool dic_exists = file_util::PathExists(bdict_file_name_);
   if (!dic_exists) {
     if (file_loop_ && !tried_to_download_ && url_request_context_) {
-      dic_task_.reset(dic_download_state_changer_factory_.NewRunnableMethod(
-          &SpellChecker::set_file_is_downloading, false));
-      ddc_dic_ = new DictionaryDownloadController(dic_task_.release(),
+      Task* dic_task = dic_download_state_changer_factory_.NewRunnableMethod(
+          &SpellChecker::set_file_is_downloading, false);
+      ddc_dic_ = new DictionaryDownloadController(dic_task,
                                                   bdict_file_name_,
                                                   url_request_context_,
                                                   ui_loop_);
@@ -451,3 +421,4 @@ bool SpellChecker::SpellCheckWord(
   }
   return true;
 }
+

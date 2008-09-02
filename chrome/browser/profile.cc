@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/profile.h"
 
@@ -61,7 +36,7 @@
 #include "net/base/cookie_monster.h"
 #include "net/base/cookie_policy.h"
 #include "net/http/http_cache.h"
-#include "net/http/http_proxy_service.h"
+#include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/webkit_glue.h"
 
@@ -91,14 +66,14 @@ URLRequestContext* Profile::GetDefaultRequestContext() {
 
 // Sets up proxy info if it was specified, otherwise returns NULL. The
 // returned pointer MUST be deleted by the caller if non-NULL.
-static net::HttpProxyInfo* CreateProxyInfo(const CommandLine& command_line) {
-  net::HttpProxyInfo* proxy_info = NULL;
+static net::ProxyInfo* CreateProxyInfo(const CommandLine& command_line) {
+  net::ProxyInfo* proxy_info = NULL;
 
   if (command_line.HasSwitch(switches::kProxyServer)) {
-    proxy_info = new net::HttpProxyInfo();
+    proxy_info = new net::ProxyInfo();
     const std::wstring& proxy_server =
         command_line.GetSwitchValue(switches::kProxyServer);
-    proxy_info->UseNamedProxy(proxy_server);
+    proxy_info->UseNamedProxy(WideToASCII(proxy_server));
   }
 
   return proxy_info;
@@ -136,7 +111,7 @@ class ProfileImpl::RequestContext : public URLRequestContext,
 
     CommandLine command_line;
 
-    scoped_ptr<net::HttpProxyInfo> proxy_info(CreateProxyInfo(command_line));
+    scoped_ptr<net::ProxyInfo> proxy_info(CreateProxyInfo(command_line));
     net::HttpCache* cache =
         new net::HttpCache(proxy_info.get(), disk_cache_path, 0);
 
@@ -146,7 +121,7 @@ class ProfileImpl::RequestContext : public URLRequestContext,
 
     if (record_mode || playback_mode) {
       // Don't use existing cookies and use an in-memory store.
-      cookie_store_ = new CookieMonster();
+      cookie_store_ = new net::CookieMonster();
       cache->set_mode(
           record_mode ? net::HttpCache::RECORD : net::HttpCache::PLAYBACK);
     }
@@ -157,11 +132,11 @@ class ProfileImpl::RequestContext : public URLRequestContext,
       DCHECK(!cookie_store_path.empty());
       cookie_db_.reset(new SQLitePersistentCookieStore(
           cookie_store_path, g_browser_process->db_thread()->message_loop()));
-      cookie_store_ = new CookieMonster(cookie_db_.get());
+      cookie_store_ = new net::CookieMonster(cookie_db_.get());
     }
 
-    cookie_policy_.SetType(
-        CookiePolicy::FromInt(prefs_->GetInteger(prefs::kCookieBehavior)));
+    cookie_policy_.SetType(net::CookiePolicy::FromInt(
+        prefs_->GetInteger(prefs::kCookieBehavior)));
 
     // The first request context to be created is the one for the default
     // profile - at least until we support multiple profiles.
@@ -189,8 +164,8 @@ class ProfileImpl::RequestContext : public URLRequestContext,
                               &RequestContext::OnAcceptLanguageChange,
                               accept_language));
       } else if (*pref_name_in == prefs::kCookieBehavior) {
-        CookiePolicy::Type type =
-            CookiePolicy::FromInt(prefs_->GetInteger(prefs::kCookieBehavior));
+        net::CookiePolicy::Type type = net::CookiePolicy::FromInt(
+            prefs_->GetInteger(prefs::kCookieBehavior));
         g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
             NewRunnableMethod(this,
                               &RequestContext::OnCookiePolicyChange,
@@ -216,7 +191,7 @@ class ProfileImpl::RequestContext : public URLRequestContext,
     accept_language_ = accept_language;
   }
 
-  void OnCookiePolicyChange(CookiePolicy::Type type) {
+  void OnCookiePolicyChange(net::CookiePolicy::Type type) {
     DCHECK(MessageLoop::current() ==
            ChromeThread::GetMessageLoop(ChromeThread::IO));
     cookie_policy_.SetType(type);
@@ -262,12 +237,12 @@ class OffTheRecordRequestContext : public URLRequestContext,
     original_context_ = profile->GetRequestContext();
 
     CommandLine command_line;
-    scoped_ptr<net::HttpProxyInfo> proxy_info(CreateProxyInfo(command_line));
+    scoped_ptr<net::ProxyInfo> proxy_info(CreateProxyInfo(command_line));
 
     http_transaction_factory_ = new net::HttpCache(NULL, 0);
-    cookie_store_ = new CookieMonster;
-    cookie_policy_.SetType(
-        CookiePolicy::FromInt(prefs_->GetInteger(prefs::kCookieBehavior)));
+    cookie_store_ = new net::CookieMonster;
+    cookie_policy_.SetType(net::CookiePolicy::FromInt(
+        prefs_->GetInteger(prefs::kCookieBehavior)));
     user_agent_ = original_context_->user_agent();
     accept_language_ = original_context_->accept_language();
     accept_charset_ = original_context_->accept_charset();
@@ -307,8 +282,8 @@ class OffTheRecordRequestContext : public URLRequestContext,
                 &OffTheRecordRequestContext::OnAcceptLanguageChange,
                 accept_language));
       } else if (*pref_name_in == prefs::kCookieBehavior) {
-        CookiePolicy::Type type =
-            CookiePolicy::FromInt(prefs_->GetInteger(prefs::kCookieBehavior));
+        net::CookiePolicy::Type type = net::CookiePolicy::FromInt(
+            prefs_->GetInteger(prefs::kCookieBehavior));
         g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
             NewRunnableMethod(this,
                               &OffTheRecordRequestContext::OnCookiePolicyChange,
@@ -323,7 +298,7 @@ class OffTheRecordRequestContext : public URLRequestContext,
     accept_language_ = accept_language;
   }
 
-  void OnCookiePolicyChange(CookiePolicy::Type type) {
+  void OnCookiePolicyChange(net::CookiePolicy::Type type) {
     DCHECK(MessageLoop::current() ==
            ChromeThread::GetMessageLoop(ChromeThread::IO));
     cookie_policy_.SetType(type);
@@ -502,6 +477,12 @@ class OffTheRecordProfileImpl : public Profile,
     return profile_->GetBookmarkBarModel();
   }
 
+#ifdef CHROME_PERSONALIZATION
+  virtual ProfilePersonalization GetProfilePersonalization() {
+    return profile_->GetProfilePersonalization();
+  }
+#endif
+
   virtual bool IsSameProfile(Profile* profile) {
     if (profile == static_cast<Profile*>(this))
       return true;
@@ -575,6 +556,9 @@ ProfileImpl::ProfileImpl(const std::wstring& path)
       create_session_service_task_(this),
       start_time_(Time::Now()),
       spellchecker_(NULL),
+#ifdef CHROME_PERSONALIZATION
+      personalization_(NULL),
+#endif
       shutdown_session_service_(false) {
   DCHECK(!path.empty()) << "Using an empty path will attempt to write " <<
                             "profile files to the root directory!";
@@ -596,6 +580,11 @@ ProfileImpl::~ProfileImpl() {
   // before the history is shutdown so it can properly cancel all requests.
   download_manager_ = NULL;
 
+#ifdef CHROME_PERSONALIZATION
+  Personalization::CleanupProfilePersonalization(personalization_);
+  personalization_ = NULL;
+#endif
+
   // Both HistoryService and WebDataService maintain threads for background
   // processing. Its possible each thread still has tasks on it that have
   // increased the ref count of the service. In such a situation, when we
@@ -609,7 +598,7 @@ ProfileImpl::~ProfileImpl() {
     history_service_->Cleanup();
 
   // The I/O thread may be NULL during testing.
-  Thread* io_thread = g_browser_process->io_thread();
+  base::Thread* io_thread = g_browser_process->io_thread();
 
   if (spellchecker_) {
     // The spellchecker must be deleted on the I/O thread. During testing, we
@@ -627,6 +616,14 @@ ProfileImpl::~ProfileImpl() {
         NewRunnableFunction(&ReleaseURLRequestContext, request_context_));
     request_context_ = NULL;
   }
+
+  // HistoryService may call into the BookmarkBarModel, as such we need to
+  // delete HistoryService before the BookmarkBarModel. The destructor for
+  // HistoryService will join with HistoryService's backend thread so that
+  // by the time the destructor has finished we're sure it will no longer call
+  // into the BookmarkBarModel.
+  history_service_ = NULL;
+  bookmark_bar_model_.reset();
 
   MarkAsCleanShutdown();
 }
@@ -732,11 +729,11 @@ URLRequestContext* ProfileImpl::GetRequestContext() {
 
 HistoryService* ProfileImpl::GetHistoryService(ServiceAccessType sat) {
   if (!history_service_created_) {
+    history_service_created_ = true;
     scoped_refptr<HistoryService> history(new HistoryService(this));
-    if (!history->Init(GetPath()))
+    if (!history->Init(GetPath(), GetBookmarkBarModel()))
       return NULL;
     history_service_.swap(history);
-    history_service_created_ = true;
 
     // Send out the notification that the history service was created.
     NotificationService::current()->
@@ -855,8 +852,10 @@ bool ProfileImpl::HasBookmarkBarModel() {
 }
 
 BookmarkBarModel* ProfileImpl::GetBookmarkBarModel() {
-  if (!bookmark_bar_model_.get())
+  if (!bookmark_bar_model_.get()) {
     bookmark_bar_model_.reset(new BookmarkBarModel(this));
+    bookmark_bar_model_->Load();
+  }
   return bookmark_bar_model_.get();
 }
 
@@ -921,3 +920,11 @@ void ProfileImpl::StopCreateSessionServiceTimer() {
     create_session_service_timer_ = NULL;
   }
 }
+
+#ifdef CHROME_PERSONALIZATION
+ProfilePersonalization ProfileImpl::GetProfilePersonalization() {
+  if (!personalization_)
+    personalization_ = Personalization::CreateProfilePersonalization(this);
+  return personalization_;
+}
+#endif

@@ -1,3 +1,0 @@
-unclosed-regexp-diveq.js:1: Uncaught SyntaxError: Invalid regular expression: missing /
-var x = /=...
-        ^

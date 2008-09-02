@@ -29,6 +29,7 @@
 #include <string>
 
 #include "base/basictypes.h"
+#include "base/gfx/platform_canvas.h"
 #include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "webkit/glue/webdatasource_impl.h"
@@ -63,8 +64,7 @@ struct WindowFeatures;
 }
 
 namespace gfx {
-class PlatformCanvas;
-class BitmapPlatformDevice;
+class BitmapPlatformDeviceWin;
 }
 
 // Implementation of WebFrame, note that this is a reference counted object.
@@ -108,7 +108,7 @@ class WebFrameImpl : public WebFrame {
   virtual WebFrame* GetParent() const;
   virtual WebFrame* GetChildFrame(const std::wstring& xpath) const;
   virtual WebView* GetView() const;
-  virtual gfx::BitmapPlatformDevice CaptureImage(bool scroll_to_zero);
+  virtual gfx::BitmapPlatformDeviceWin CaptureImage(bool scroll_to_zero);
 
   // This method calls createRuntimeObject (in KJS::Bindings::Instance), which
   // increments the refcount of the NPObject passed in.
@@ -198,7 +198,7 @@ class WebFrameImpl : public WebFrame {
     plugin_delegate_ = plugin_delegate;
   }
 
-  WebCore::Frame* frame() {
+  WebCore::Frame* frame() const {
     return frame_.get();
   }
 
@@ -259,6 +259,7 @@ class WebFrameImpl : public WebFrame {
   bool printing() const { return printing_; }
 
   virtual bool HasUnloadListener();
+  virtual bool IsReloadAllowingStaleData() const;
 
  protected:
   friend class WebFrameLoaderClient;

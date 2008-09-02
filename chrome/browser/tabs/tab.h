@@ -1,42 +1,16 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_TABS_TAB_H__
-#define CHROME_BROWSER_TABS_TAB_H__
+#ifndef CHROME_BROWSER_TABS_TAB_H_
+#define CHROME_BROWSER_TABS_TAB_H_
 
-#include "base/gfx/point.h"
 #include "chrome/browser/tabs/tab_renderer.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
-#include "chrome/views/button.h"
-#include "chrome/views/menu.h"
+#include "chrome/views/base_button.h"
 
 namespace gfx {
+class Path;
 class Point;
 }
 class TabContents;
@@ -50,7 +24,7 @@ class Profile;
 //
 ///////////////////////////////////////////////////////////////////////////////
 class Tab : public TabRenderer,
-            public Menu::Delegate,
+            public ChromeViews::ContextMenuController,
             public ChromeViews::BaseButton::ButtonListener {
  public:
   static const std::string kTabClassName;
@@ -77,6 +51,14 @@ class Tab : public TabRenderer,
     virtual void ExecuteCommandForTab(
         TabStripModel::ContextMenuCommand command_id, Tab* tab) = 0;
 
+    // Starts/Stops highlighting the tabs that will be affected by the
+    // specified command for the specified Tab.
+    virtual void StartHighlightTabsForCommand(
+        TabStripModel::ContextMenuCommand command_id, Tab* tab) = 0;
+    virtual void StopHighlightTabsForCommand(
+        TabStripModel::ContextMenuCommand command_id, Tab* tab) = 0;
+    virtual void StopAllHighlighting() = 0;
+
     // Potentially starts a drag for the specified Tab.
     virtual void MaybeStartDrag(Tab* tab,
                                 const ChromeViews::MouseEvent& event) = 0;
@@ -92,6 +74,9 @@ class Tab : public TabRenderer,
   explicit Tab(TabDelegate* delegate);
   virtual ~Tab();
 
+  // Access the delegate.
+  TabDelegate* delegate() const { return delegate_; }
+
   // Used to set/check whether this Tab is being animated closed.
   void set_closing(bool closing) { closing_ = closing; }
   bool closing() const { return closing_; }
@@ -99,6 +84,8 @@ class Tab : public TabRenderer,
   // TabRenderer overrides:
   virtual bool IsSelected() const;
 
+  // ChromeViews::View overrides:
+  virtual bool HitTest(const CPoint &l) const;
  private:
   // ChromeViews::View overrides:
   virtual bool OnMousePressed(const ChromeViews::MouseEvent& event);
@@ -111,15 +98,18 @@ class Tab : public TabRenderer,
   virtual bool GetAccessibleRole(VARIANT* role);
   virtual bool GetAccessibleName(std::wstring* name);
 
-  // ChromeViews::Menu::Delegate overrides:
-  virtual bool IsCommandEnabled(int id) const;
-  virtual void ExecuteCommand(int id);
+  // ChromeViews::ContextMenuController overrides:
+  virtual void ShowContextMenu(ChromeViews::View* source,
+                               int x,
+                               int y,
+                               bool is_mouse_gesture);
 
   // ChromeViews::BaseButton::ButtonListener overrides:
   virtual void ButtonPressed(ChromeViews::BaseButton* sender);
 
-  // Run a context menu for this Tab at the specified screen point.
-  void RunContextMenuAt(const gfx::Point& screen_point);
+  // Creates a path that contains the clickable region of the tab's visual
+  // representation. Used by GetViewForPoint for hit-testing.
+  void MakePathForTab(gfx::Path* path) const;
 
   // An instance of a delegate object that can perform various actions based on
   // user gestures.
@@ -128,7 +118,8 @@ class Tab : public TabRenderer,
   // True if the tab is being animated closed.
   bool closing_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(Tab);
+  DISALLOW_COPY_AND_ASSIGN(Tab);
 };
 
-#endif CHROME_BROWSER_TABS_TAB_H__
+#endif  // CHROME_BROWSER_TABS_TAB_H_
+

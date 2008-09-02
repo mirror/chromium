@@ -1,36 +1,10 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <limits>
-#include <Windows.h>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/session_service.h"
+
+#include <limits>
 
 #include "base/file_util.h"
 #include "base/message_loop.h"
@@ -38,11 +12,12 @@
 #include "base/thread.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/chrome_frame.h"
+#include "chrome/browser/browser_window.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/session_backend.h"
+#include "chrome/browser/tab_contents.h"
 #include "chrome/common/notification_details.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_types.h"
@@ -149,6 +124,18 @@ SessionService::~SessionService() {
   // deleted. Otherwise the backend is deleted after all pending requests on
   // the file thread complete, which is done before the process exits.
   backend_ = NULL;
+
+  // Unregister our notifications.
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_TAB_PARENTED, NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_TAB_CLOSED, NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_NAV_LIST_PRUNED, NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_NAV_ENTRY_CHANGED, NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_NAV_ENTRY_COMMITTED, NotificationService::AllSources());
 }
 
 void SessionService::ResetFromCurrentBrowsers() {
@@ -303,7 +290,8 @@ void SessionService::UpdateTabNavigation(const SessionID& window_id,
                                          const SessionID& tab_id,
                                          int index,
                                          const NavigationEntry& entry) {
-  if (!ShouldTrackChangesToWindow(window_id))
+  if (!entry.display_url().is_valid() ||
+      !ShouldTrackChangesToWindow(window_id))
     return;
 
   if (tab_to_available_range_.find(tab_id.id()) !=
@@ -394,6 +382,18 @@ void SessionService::CopyLastSessionToSavedSession() {
 }
 
 void SessionService::Init(const std::wstring& path) {
+  // Register for the notifications we're interested in.
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_TAB_PARENTED, NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_TAB_CLOSED, NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_NAV_LIST_PRUNED, NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_NAV_ENTRY_CHANGED, NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_NAV_ENTRY_COMMITTED, NotificationService::AllSources());
+
   DCHECK(!path.empty());
   commands_since_reset_ = 0;
   backend_ = new SessionBackend(path);
@@ -401,6 +401,38 @@ void SessionService::Init(const std::wstring& path) {
   if (!backend_thread_)
     backend_->Init();
   // If backend_thread, backend will init itself as appropriate.
+}
+
+void SessionService::Observe(NotificationType type,
+                             const NotificationSource& source,
+                             const NotificationDetails& details) {
+  // All of our messages have the NavigationController as the source.
+  NavigationController* controller = Source<NavigationController>(source).ptr();
+  switch (type) {
+    case NOTIFY_TAB_PARENTED:
+      SetTabWindow(controller->window_id(), controller->session_id());
+      break;
+    case NOTIFY_TAB_CLOSED:
+      TabClosed(controller->window_id(), controller->session_id());
+      break;
+    case NOTIFY_NAV_LIST_PRUNED:
+      TabNavigationPathPruned(controller->window_id(), controller->session_id(),
+                              controller->GetEntryCount());
+      break;
+    case NOTIFY_NAV_ENTRY_CHANGED: {
+      Details<NavigationController::EntryChangedDetails> changed(details);
+      UpdateTabNavigation(controller->window_id(), controller->session_id(),
+                          changed->index, *changed->changed_entry);
+      break;
+    }
+    case NOTIFY_NAV_ENTRY_COMMITTED:
+      SetSelectedNavigationIndex(controller->window_id(),
+                                 controller->session_id(),
+                                 controller->GetCurrentEntryIndex());
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
 SessionService::Handle SessionService::GetSessionImpl(
@@ -505,17 +537,16 @@ SessionCommand* SessionService::CreateUpdateTabNavigationCommand(
   Pickle pickle;
   pickle.WriteInt(tab_id.id());
   pickle.WriteInt(index);
-  const GURL& url = entry.GetDisplayURL();
-  const std::wstring& title = entry.GetTitle();
-  const std::string& state = entry.GetContentState();
   static const SessionCommand::size_type max_state_size =
       std::numeric_limits<SessionCommand::size_type>::max() - 1024;
-  if (url.spec().size() + title.size() + state.size() >= max_state_size) {
+  if (entry.display_url().spec().size() +
+      entry.title().size() +
+      entry.content_state().size() >= max_state_size) {
     // We only allow navigations up to 63k (which should be completely
     // reasonable). On the off chance we get one that is too big, try to
     // keep the url.
-    if (url.spec().size() < max_state_size) {
-      pickle.WriteString(url.spec());
+    if (entry.display_url().spec().size() < max_state_size) {
+      pickle.WriteString(entry.display_url().spec());
       pickle.WriteWString(std::wstring());
       pickle.WriteString(std::string());
     } else {
@@ -524,12 +555,12 @@ SessionCommand* SessionService::CreateUpdateTabNavigationCommand(
       pickle.WriteString(std::string());
     }
   } else {
-    pickle.WriteString(url.spec());
-    pickle.WriteWString(title);
-    pickle.WriteString(state);
+    pickle.WriteString(entry.display_url().spec());
+    pickle.WriteWString(entry.title());
+    pickle.WriteString(entry.content_state());
   }
-  pickle.WriteInt(entry.GetTransitionType());
-  int type_mask = entry.HasPostData() ? TabNavigation::HAS_POST_DATA : 0;
+  pickle.WriteInt(entry.transition_type());
+  int type_mask = entry.has_post_data() ? TabNavigation::HAS_POST_DATA : 0;
   pickle.WriteInt(type_mask);
   // Adding more data? Be sure and update TabRestoreService too.
   return new SessionCommand(kCommandUpdateTabNavigation, pickle);
@@ -896,8 +927,8 @@ void SessionService::BuildCommandsForBrowser(
 
   commands->push_back(
       CreateSetWindowBoundsCommand(browser->session_id(),
-                                   browser->frame()->GetNormalBounds(),
-                                   browser->frame()->IsMaximized()));
+                                   browser->window()->GetNormalBounds(),
+                                   browser->window()->IsMaximized()));
 
   commands->push_back(CreateSetWindowTypeCommand(
       browser->session_id(), browser->GetType()));
@@ -1111,3 +1142,4 @@ bool SessionService::ShouldTrackChangesToWindow(const SessionID& window_id) {
 SessionService::InternalSavedSessionRequest::~InternalSavedSessionRequest() {
   STLDeleteElements(&commands);
 }
+

@@ -1,8 +1,0 @@
-stack-trace.js:8: Uncaught TypeError: Cannot read property 'bar' of undefined
-  String.foo.bar.baz;
-            ^
-    at #<a Test>.m2(stack-trace.js:8:12)
-    at #<a Test>.m1(stack-trace.js:12:14)
-    at foo(stack-trace.js:16:13)
-    at bar(stack-trace.js:20:2)
-    at stack-trace.js:23:0

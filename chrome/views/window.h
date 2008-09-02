@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_VIEWS_WINDOW_H__
 #define CHROME_VIEWS_WINDOW_H__
@@ -44,6 +19,7 @@ namespace ChromeViews {
 
 class ClientView;
 class Client;
+class NonClientView;
 class WindowDelegate;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,35 +32,13 @@ class WindowDelegate;
 ////////////////////////////////////////////////////////////////////////////////
 class Window : public HWNDViewContainer {
  public:
-  // TODO(beng): (Cleanup) move these into private section, effectively making
-  //             this class "final" to all but designated friends within
-  //             ChromeViews. Users in browser/ should always construct with
-  //             CreateChromeWindow which will give the right version,
-  //             depending on platform & configuration.
-  Window();
   virtual ~Window();
 
   // Creates the appropriate Window class for a Chrome dialog or window. This
   // means a ChromeWindow or a standard Windows frame.
   static Window* CreateChromeWindow(HWND parent,
                                     const gfx::Rect& bounds,
-                                    View* contents_view,
                                     WindowDelegate* window_delegate);
-
-  // Create the Window.
-  // If parent is NULL, this Window is top level on the desktop.
-  // |contents_view| is a ChromeView that will be displayed in the client area
-  // of the Window, as the sole child view of the RootView.
-  // |window_delegate| is an object implementing WindowDelegate that can perform
-  // controller-like tasks for this window, such as obtaining its preferred
-  // placement and state from preferences (which override the default position
-  // and size specified in |bounds|) and executing commands. Can be NULL.
-  // If |bounds| is empty, the view is queried for its preferred size and
-  // centered on screen.
-  void Init(HWND parent,
-            const gfx::Rect& bounds,
-            View* contents_view,
-            WindowDelegate* window_delegate);
 
   // Return the size of window (including non-client area) required to contain
   // a window of the specified client size.
@@ -121,36 +75,33 @@ class Window : public HWNDViewContainer {
   // the system menu).
   virtual void EnableClose(bool enable);
 
-  WindowDelegate* window_delegate() const { return window_delegate_; }
-  void set_window_delegate(WindowDelegate* delegate) {
-    window_delegate_ = delegate;
-  }
+  // Prevents the window from being rendered as deactivated when |disable| is
+  // true, until called with |disable| false. Used when a sub-window is to be
+  // shown that shouldn't visually de-activate the window.
+  // Subclasses can override this to perform additional actions when this value
+  // changes.
+  virtual void DisableInactiveRendering(bool disable);
 
-  // Set whether or not we should insert a client view. See comment below.
-  void set_use_client_view(bool use_client_view) {
-    use_client_view_ = use_client_view;
-  }
+  WindowDelegate* window_delegate() const { return window_delegate_; }
+
+  // Returns the ClientView object used by this Window.
+  ClientView* client_view() const { return client_view_; }
 
   void set_focus_on_creation(bool focus_on_creation) {
     focus_on_creation_ = focus_on_creation;
   }
 
-  // Updates the enabled state and label of the dialog buttons visible in this
-  // window.
-  void UpdateDialogButtons();
-
-  // Called when the window should be canceled or accepted, if it is a dialog
-  // box.
-  void AcceptWindow();
-  void CancelWindow();
-
   // Tell the window to update its title from the delegate.
   virtual void UpdateWindowTitle();
 
+  // Tell the window to update its icon from the delegate.
+  virtual void UpdateWindowIcon();
+
+  // Executes the specified SC_command.
+  void ExecuteSystemMenuCommand(int command);
+
   // The parent of this window.
-  HWND owning_window() const {
-    return owning_hwnd_;
-  }
+  HWND owning_window() const { return owning_hwnd_; }
 
   // Convenience methods for storing/retrieving window location information
   // to/from a PrefService using the specified |entry| name.
@@ -179,33 +130,68 @@ class Window : public HWNDViewContainer {
                                             int row_resource_id);
 
  protected:
+  // Constructs the Window. |window_delegate| cannot be NULL.
+  explicit Window(WindowDelegate* window_delegate);
+
+  // Create the Window.
+  // If parent is NULL, this Window is top level on the desktop.
+  // If |bounds| is empty, the view is queried for its preferred size and
+  // centered on screen.
+  virtual void Init(HWND parent, const gfx::Rect& bounds);
+
+  // Sets the specified view as the ClientView of this Window. The ClientView
+  // is responsible for laying out the Window's contents view, as well as
+  // performing basic hit-testing, and perhaps other responsibilities depending
+  // on the implementation. The Window's view hierarchy takes ownership of the
+  // ClientView unless the ClientView specifies otherwise. This must be called
+  // only once, and after the native window has been created.
+  // This is called by Init. |client_view| cannot be NULL.
+  virtual void SetClientView(ClientView* client_view);
+
+  // Sizes the window to the default size specified by its ClientView.
   virtual void SizeWindowToDefault();
 
-  // Sets-up the focus manager with the view that should have focus when the
-  // window is shown the first time.  If NULL is returned, the focus goes to the
-  // button if there is one, otherwise the to the Cancel button.
-  void SetInitialFocus();
+  void set_client_view(ClientView* client_view) { client_view_ = client_view; }
+
+  // Shows the system menu at the specified screen point.
+  void RunSystemMenu(const CPoint& point);
 
   // Overridden from HWNDViewContainer:
   virtual void OnActivate(UINT action, BOOL minimized, HWND window);
   virtual void OnCommand(UINT notification_code, int command_id, HWND window);
   virtual void OnDestroy();
   virtual LRESULT OnEraseBkgnd(HDC dc);
+  virtual LRESULT OnNCActivate(BOOL active);
   virtual LRESULT OnNCHitTest(const CPoint& point);
+  virtual void OnNCLButtonDown(UINT ht_component, const CPoint& point);
+  virtual void OnNCRButtonDown(UINT ht_component, const CPoint& point);
   virtual LRESULT OnSetCursor(HWND window, UINT hittest_code, UINT message);
   virtual void OnSize(UINT size_param, const CSize& new_size);
   virtual void OnSysCommand(UINT notification_code, CPoint click);
 
-  // The client view object that contains the client area of the window,
-  // including optional dialog buttons.
-  ClientView* client_view_;
+  // The View that provides the non-client area of the window (title bar,
+  // window controls, sizing borders etc). To use an implementation other than
+  // the default, this class must be subclassed and this value set to the
+  // desired implementation before calling |Init|.
+  NonClientView* non_client_view_;
 
-  // Our window delegate (see Init method for documentation).
-  WindowDelegate* window_delegate_;
+  // Accessor for disable_inactive_rendering_.
+  bool disable_inactive_rendering() const {
+    return disable_inactive_rendering_;
+  }
 
  private:
   // Set the window as modal (by disabling all the other windows).
   void BecomeModal();
+
+  // Sets-up the focus manager with the view that should have focus when the
+  // window is shown the first time.  If NULL is returned, the focus goes to the
+  // button if there is one, otherwise the to the Cancel button.
+  void SetInitialFocus();
+
+  // Place and size the window when it is created. |create_bounds| are the
+  // bounds used when the window was created.
+  void SetInitialBounds(const gfx::Rect& create_bounds);
 
   // Add an item for "Always on Top" to the System Menu.
   void AddAlwaysOnTopSystemMenuItem();
@@ -226,6 +212,14 @@ class Window : public HWNDViewContainer {
   // Static resource initialization.
   static void InitClass();
   static HCURSOR nwse_cursor_;
+
+  // A ClientView object or subclass, responsible for sizing the contents view
+  // of the window, hit testing and perhaps other tasks depending on the
+  // implementation.
+  ClientView* client_view_;
+
+  // Our window delegate (see Init method for documentation).
+  WindowDelegate* window_delegate_;
 
   // Whether we should SetFocus() on a newly created window after
   // Init(). Defaults to true.
@@ -253,19 +247,12 @@ class Window : public HWNDViewContainer {
   // We need to own the text of the menu, the Windows API does not copy it.
   std::wstring always_on_top_menu_text_;
 
-  // Whether or not the client view should be inserted into the Window's view
-  // hierarchy.
-  // TODO(beng): (Cleanup) This is probably a short term measure until I figure
-  //             out a way to make other Window subclasses (e.g.
-  //             ConstrainedWindowImpl) and their users jive with the new
-  //             dialog framework.
-  bool use_client_view_;
-
-  // True if the window was Accepted by the user using the OK button.
-  bool accepted_;
-
   // Set to true if the window is in the process of closing .
   bool window_closed_;
+
+  // True when the window should be rendered as active, regardless of whether
+  // or not it actually is.
+  bool disable_inactive_rendering_;
 
   DISALLOW_EVIL_CONSTRUCTORS(Window);
 };
@@ -273,3 +260,4 @@ class Window : public HWNDViewContainer {
 }
 
 #endif  // CHROME_VIEWS_WINDOW_H__
+

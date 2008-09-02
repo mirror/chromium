@@ -1,3 +1,0 @@
-property-load-init.js:1: Uncaught TypeError: Cannot read property 'x' of null
-null.x
-    ^

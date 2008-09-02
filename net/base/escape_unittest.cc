@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <string>
 
@@ -36,22 +11,48 @@
 #include "base/string_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-struct unescape_case {
+namespace {
+
+struct EscapeCase {
+  const wchar_t* input;
+  const wchar_t* output;
+};
+
+struct UnescapeURLCase {
   const char* input;
+  UnescapeRule::Type rules;
   const char* output;
 };
 
+struct UnescapeAndDecodeURLCase {
+  const char* encoding;
+  const char* input;
+
+  // The expected output when run through UnescapeURL.
+  const char* url_unescaped;
+
+  // The expected output when run through UnescapeQuery.
+  const char* query_unescaped;
+
+  // The expected output when run through UnescapeAndDecodeURLComponent.
+  const wchar_t* decoded;
+};
+
+struct EscapeForHTMLCase {
+  const char* input;
+  const char* expected_output;
+};
+
+}
+
 TEST(Escape, EscapeTextForFormSubmission) {
-  struct escape_case {
-    const wchar_t* input;
-    const wchar_t* output;
-  } escape_cases[] = {
+  const EscapeCase escape_cases[] = {
     {L"foo", L"foo"},
     {L"foo bar", L"foo+bar"},
     {L"foo++", L"foo%2B%2B"}
   };
-  for (int i = 0; i < arraysize(escape_cases); ++i) {
-    escape_case value = escape_cases[i];
+  for (size_t i = 0; i < arraysize(escape_cases); ++i) {
+    EscapeCase value = escape_cases[i];
     EXPECT_EQ(value.output, EscapeQueryParamValueUTF8(value.input));
   }
 
@@ -72,9 +73,8 @@ TEST(Escape, EscapeTextForFormSubmission) {
       EXPECT_EQ(out, std::string("+"));
     } else if (no_escape.find(in) == std::string::npos) {
       // Check %hex escaping
-      char buf[4];
-      sprintf_s(buf, 4, "%%%02X", i);
-      EXPECT_EQ(std::string(buf), out);
+      std::string expected = StringPrintf("%%%02X", i);
+      EXPECT_EQ(expected, out);
     } else {
       // No change for things in the no_escape list.
       EXPECT_EQ(out, in);
@@ -109,11 +109,7 @@ TEST(Escape, EscapePath) {
 }
 
 TEST(Escape, UnescapeURLComponent) {
-  struct UnescapeCase {
-    const char* input;
-    UnescapeRule::Type rules;
-    const char* output;
-  } unescape_cases[] = {
+  const UnescapeURLCase unescape_cases[] = {
     {"", UnescapeRule::NORMAL, ""},
     {"%2", UnescapeRule::NORMAL, "%2"},
     {"%%%%%%", UnescapeRule::NORMAL, "%%%%%%"},
@@ -135,7 +131,7 @@ TEST(Escape, UnescapeURLComponent) {
     {"Hello%20%13%10%02", UnescapeRule::CONTROL_CHARS, "Hello%20\x13\x10\x02"},
   };
 
-  for (int i = 0; i < arraysize(unescape_cases); i++) {
+  for (size_t i = 0; i < arraysize(unescape_cases); i++) {
     std::string str(unescape_cases[i].input);
     EXPECT_EQ(std::string(unescape_cases[i].output),
               UnescapeURLComponent(str, unescape_cases[i].rules));
@@ -162,19 +158,7 @@ TEST(Escape, UnescapeURLComponent) {
 }
 
 TEST(Escape, UnescapeAndDecodeURLComponent) {
-  struct UnescapeCase {
-    const char* encoding;
-    const char* input;
-
-    // The expected output when run through UnescapeURL.
-    const char* url_unescaped;
-
-    // The expected output when run through UnescapeQuery.
-    const char* query_unescaped;
-
-    // The expected output when run through UnescapeAndDecodeURLComponent.
-    const wchar_t* decoded;
-  } unescape_cases[] = {
+  const UnescapeAndDecodeURLCase unescape_cases[] = {
     {"UTF8", "+", "+", " ", L"+"},
     {"UTF8", "%2+", "%2+", "%2 ", L"%2+"},
     {"UTF8", "+%%%+%%%", "+%%%+%%%", " %%% %%%", L"+%%%+%%%"},
@@ -208,7 +192,7 @@ TEST(Escape, UnescapeAndDecodeURLComponent) {
              L"%ED%ED"},  // Invalid UTF-8 -> kept unescaped.
   };
 
-  for (int i = 0; i < arraysize(unescape_cases); i++) {
+  for (size_t i = 0; i < arraysize(unescape_cases); i++) {
     std::string unescaped = UnescapeURLComponent(unescape_cases[i].input,
                                                  UnescapeRule::NORMAL);
     EXPECT_EQ(std::string(unescape_cases[i].url_unescaped), unescaped);
@@ -226,10 +210,7 @@ TEST(Escape, UnescapeAndDecodeURLComponent) {
 }
 
 TEST(Escape, EscapeForHTML) {
-  static const struct {
-    const char* input;
-    const char* expected_output;
-  } tests[] = {
+  const EscapeForHTMLCase tests[] = {
     { "hello", "hello" },
     { "<hello>", "&lt;hello&gt;" },
     { "don\'t mess with me", "don&#39;t mess with me" },
@@ -239,4 +220,5 @@ TEST(Escape, EscapeForHTML) {
     EXPECT_EQ(std::string(tests[i].expected_output), result);
   }
 }
+
 

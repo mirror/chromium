@@ -1,47 +1,24 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Brought to you by the letter D and the number 2.
 
-#ifndef NET_BASE_COOKIE_MONSTER_H__
-#define NET_BASE_COOKIE_MONSTER_H__
+#ifndef NET_BASE_COOKIE_MONSTER_H_
+#define NET_BASE_COOKIE_MONSTER_H_
 
-#include <string>
-#include <vector>
-#include <utility>
 #include <map>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "base/basictypes.h"
 #include "base/lock.h"
 #include "base/time.h"
 
 class GURL;
+
+namespace net {
 
 // The cookie monster is the system for storing and retrieving cookies. It has
 // an in-memory list of all cookies, and synchronizes non-session cookies to an
@@ -197,7 +174,7 @@ class CookieMonster {
   // Lock for thread-safety
   Lock lock_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(CookieMonster);
+  DISALLOW_COPY_AND_ASSIGN(CookieMonster);
 };
 
 class CookieMonster::ParsedCookie {
@@ -206,7 +183,7 @@ class CookieMonster::ParsedCookie {
   typedef std::vector<TokenValuePair> PairList;
 
   // The maximum length of a cookie string we will try to parse
-  static const int kMaxCookieSize = 4096;
+  static const size_t kMaxCookieSize = 4096;
   // The maximum number of Token/Value pairs.  Shouldn't have more than 8.
   static const int kMaxPairs = 16;
 
@@ -252,7 +229,7 @@ class CookieMonster::ParsedCookie {
   size_t secure_index_;
   size_t httponly_index_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(CookieMonster::ParsedCookie);
+  DISALLOW_COPY_AND_ASSIGN(ParsedCookie);
 };
 
 
@@ -265,11 +242,11 @@ class CookieMonster::CanonicalCookie {
       : name_(name),
         value_(value),
         path_(path),
-        secure_(secure),
-        httponly_(httponly),
         creation_date_(creation),
+        expiry_date_(expires),
         has_expires_(has_expires),
-        expiry_date_(expires) {
+        secure_(secure),
+        httponly_(httponly) {
   }
 
   // Supports the default copy constructor.
@@ -304,8 +281,8 @@ class CookieMonster::CanonicalCookie {
   std::string value_;
   std::string path_;
   Time creation_date_;
-  bool has_expires_;
   Time expiry_date_;
+  bool has_expires_;
   bool secure_;
   bool httponly_;
 };
@@ -325,7 +302,10 @@ class CookieMonster::PersistentCookieStore {
   PersistentCookieStore() { }
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(CookieMonster::PersistentCookieStore);
+  DISALLOW_COPY_AND_ASSIGN(PersistentCookieStore);
 };
 
-#endif  // NET_BASE_COOKIE_MONSTER_H__
+}  // namespace net
+
+#endif  // NET_BASE_COOKIE_MONSTER_H_
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/browser_process_impl.h"
 
@@ -119,7 +94,9 @@ BrowserProcessImpl::BrowserProcessImpl(CommandLine& command_line)
       created_debugger_wrapper_(false),
       broker_services_(NULL),
       module_ref_count_(0),
-      memory_model_(MEDIUM_MEMORY_MODEL) {
+      memory_model_(MEDIUM_MEMORY_MODEL),
+      checked_for_new_frames_(false),
+      using_new_frames_(false) {
   g_browser_process = this;
   clipboard_service_.reset(new ClipboardService);
   main_notification_service_.reset(new NotificationService);
@@ -141,6 +118,8 @@ BrowserProcessImpl::BrowserProcessImpl(CommandLine& command_line)
   }
 
   suspend_controller_ = new SuspendController();
+
+  shutdown_event_ = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 }
 
 BrowserProcessImpl::~BrowserProcessImpl() {
@@ -212,16 +191,15 @@ BrowserProcessImpl::~BrowserProcessImpl() {
   g_browser_process = NULL;
 }
 
-// Need to define this so InvokeLater on the MessageLoop works. It's ok
-// not to addref/release the MessageLoop here as we *know* the main thread
-// isn't going to go away on us.
-template <>
-struct RunnableMethodTraits<MessageLoop> {
-  static void RetainCallee(MessageLoop* obj) { }
-  static void ReleaseCallee(MessageLoop* obj) { }
-};
+// Send a QuitTask to the given MessageLoop.
+static void PostQuit(MessageLoop* message_loop) {
+  message_loop->PostTask(FROM_HERE, new MessageLoop::QuitTask());
+}
 
 void BrowserProcessImpl::EndSession() {
+  // Notify we are going away.
+  ::SetEvent(shutdown_event_);
+
   // Mark all the profiles as clean.
   ProfileManager* pm = profile_manager();
   for (ProfileManager::const_iterator i = pm->begin(); i != pm->end(); ++i)
@@ -242,7 +220,7 @@ void BrowserProcessImpl::EndSession() {
   // otherwise on startup we'll think we crashed. So we block until done and
   // then proceed with normal shutdown.
   g_browser_process->file_thread()->message_loop()->PostTask(FROM_HERE,
-      NewRunnableMethod(MessageLoop::current(), &MessageLoop::Quit));
+      NewRunnableFunction(PostQuit, MessageLoop::current()));
   MessageLoop::current()->Run();
 }
 
@@ -291,8 +269,11 @@ void BrowserProcessImpl::CreateIOThread() {
   // invoke the io_thread() accessor.
   PluginService::GetInstance();
 
-  scoped_ptr<Thread> thread(new BrowserProcessSubThread(ChromeThread::IO));
-  if (!thread->Start())
+  scoped_ptr<base::Thread> thread(
+      new BrowserProcessSubThread(ChromeThread::IO));
+  base::Thread::Options options;
+  options.message_loop_type = MessageLoop::TYPE_IO;
+  if (!thread->StartWithOptions(options))
     return;
   io_thread_.swap(thread);
 }
@@ -301,7 +282,8 @@ void BrowserProcessImpl::CreateFileThread() {
   DCHECK(!created_file_thread_ && file_thread_.get() == NULL);
   created_file_thread_ = true;
 
-  scoped_ptr<Thread> thread(new BrowserProcessSubThread(ChromeThread::FILE));
+  scoped_ptr<base::Thread> thread(
+      new BrowserProcessSubThread(ChromeThread::FILE));
   if (!thread->Start())
     return;
   file_thread_.swap(thread);
@@ -311,7 +293,8 @@ void BrowserProcessImpl::CreateDBThread() {
   DCHECK(!created_db_thread_ && db_thread_.get() == NULL);
   created_db_thread_ = true;
 
-  scoped_ptr<Thread> thread(new BrowserProcessSubThread(ChromeThread::DB));
+  scoped_ptr<base::Thread> thread(
+      new BrowserProcessSubThread(ChromeThread::DB));
   if (!thread->Start())
     return;
   db_thread_.swap(thread);
@@ -366,3 +349,4 @@ void BrowserProcessImpl::CreateGoogleURLTracker() {
   scoped_ptr<GoogleURLTracker> google_url_tracker(new GoogleURLTracker);
   google_url_tracker_.swap(google_url_tracker);
 }
+

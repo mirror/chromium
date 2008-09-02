@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_RENDERER_RENDER_WIDGET_H__
 #define CHROME_RENDERER_RENDER_WIDGET_H__
@@ -90,8 +65,9 @@ class RenderWidget : public IPC::Channel::Listener,
   virtual void CloseWidgetSoon(WebWidget* webwidget);
   virtual void Focus(WebWidget* webwidget);
   virtual void Blur(WebWidget* webwidget);
-  virtual void GetWindowLocation(WebWidget* webwidget, gfx::Point* origin);
+  virtual void GetWindowRect(WebWidget* webwidget, gfx::Rect* rect);
   virtual void SetWindowRect(WebWidget* webwidget, const gfx::Rect& rect);
+  virtual void GetRootWindowRect(WebWidget* webwidget, gfx::Rect* rect);
   virtual void DidMove(WebWidget* webwidget, const WebPluginGeometry& move);
   virtual void RunModal(WebWidget* webwidget) {}
 
@@ -142,6 +118,7 @@ class RenderWidget : public IPC::Channel::Listener,
   void OnImeSetComposition(int string_type, int cursor_position,
                            int target_start, int target_end,
                            const std::wstring& ime_string);
+  void OnMsgRepaint(const gfx::Size& size_to_paint);
 
   // True if a PaintRect_ACK message is pending.
   bool paint_reply_pending() const {
@@ -167,6 +144,10 @@ class RenderWidget : public IPC::Channel::Listener,
 
   void set_next_paint_is_restore_ack() {
     next_paint_flags_ |= ViewHostMsg_PaintRect_Flags::IS_RESTORE_ACK;
+  }
+
+  void set_next_paint_is_repaint_ack() {
+    next_paint_flags_ |= ViewHostMsg_PaintRect_Flags::IS_REPAINT_ACK;
   }
 
   // Called when a renderer process moves an input focus or updates the

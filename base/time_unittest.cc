@@ -1,36 +1,17 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#include <process.h>
+#include "build/build_config.h"
+
 #include <time.h>
 
+#if defined(OS_WIN)
+#include <process.h>
+#endif
+
 #include "base/time.h"
+#include "base/platform_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // Test conversions to/from time_t and exploding/unexploding.
@@ -38,7 +19,11 @@ TEST(Time, TimeT) {
   // C library time and exploded time.
   time_t now_t_1 = time(NULL);
   struct tm tms;
+#if defined(OS_WIN)
   localtime_s(&tms, &now_t_1);
+#elif defined(OS_POSIX)
+  localtime_r(&now_t_1, &tms);
+#endif
 
   // Convert to ours.
   Time our_time_1 = Time::FromTimeT(now_t_1);
@@ -60,14 +45,19 @@ TEST(Time, TimeT) {
   time_t now_t_2 = our_time_2.ToTimeT();
   EXPECT_EQ(now_t_1, now_t_2);
 
+  EXPECT_EQ(10, Time().FromTimeT(10).ToTimeT());
+  EXPECT_EQ(10.0, Time().FromTimeT(10).ToDoubleT());
+
   // Conversions of 0 should stay 0.
   EXPECT_EQ(0, Time().ToTimeT());
   EXPECT_EQ(0, Time::FromTimeT(0).ToInternalValue());
 }
 
 TEST(Time, ZeroIsSymmetric) {
-  Time zeroTime(Time::FromTimeT(0));
-  EXPECT_EQ(0, zeroTime.ToTimeT());
+  Time zero_time(Time::FromTimeT(0));
+  EXPECT_EQ(0, zero_time.ToTimeT());
+
+  EXPECT_EQ(0.0, zero_time.ToDoubleT());
 }
 
 TEST(Time, LocalExplode) {
@@ -91,15 +81,45 @@ TEST(Time, UTCExplode) {
   EXPECT_TRUE((a - b) < TimeDelta::FromMilliseconds(1));
 }
 
+TEST(Time, LocalMidnight) {
+  Time::Exploded exploded;
+  Time::Now().LocalMidnight().LocalExplode(&exploded);
+  EXPECT_EQ(0, exploded.hour);
+  EXPECT_EQ(0, exploded.minute);
+  EXPECT_EQ(0, exploded.second);
+  EXPECT_EQ(0, exploded.millisecond);
+}
+
 TEST(TimeTicks, Deltas) {
   TimeTicks ticks_start = TimeTicks::Now();
-  Sleep(10);
+  PlatformThread::Sleep(10);
   TimeTicks ticks_stop = TimeTicks::Now();
   TimeDelta delta = ticks_stop - ticks_start;
   EXPECT_GE(delta.InMilliseconds(), 10);
   EXPECT_GE(delta.InMicroseconds(), 10000);
   EXPECT_EQ(delta.InSeconds(), 0);
 }
+
+TEST(TimeDelta, FromAndIn) {
+  EXPECT_TRUE(TimeDelta::FromDays(2) == TimeDelta::FromHours(48));
+  EXPECT_TRUE(TimeDelta::FromHours(3) == TimeDelta::FromMinutes(180));
+  EXPECT_TRUE(TimeDelta::FromMinutes(2) == TimeDelta::FromSeconds(120));
+  EXPECT_TRUE(TimeDelta::FromSeconds(2) == TimeDelta::FromMilliseconds(2000));
+  EXPECT_TRUE(TimeDelta::FromMilliseconds(2) ==
+              TimeDelta::FromMicroseconds(2000));
+  EXPECT_EQ(13, TimeDelta::FromDays(13).InDays());
+  EXPECT_EQ(13, TimeDelta::FromHours(13).InHours());
+  EXPECT_EQ(13, TimeDelta::FromMinutes(13).InMinutes());
+  EXPECT_EQ(13, TimeDelta::FromSeconds(13).InSeconds());
+  EXPECT_EQ(13.0, TimeDelta::FromSeconds(13).InSecondsF());
+  EXPECT_EQ(13, TimeDelta::FromMilliseconds(13).InMilliseconds());
+  EXPECT_EQ(13.0, TimeDelta::FromMilliseconds(13).InMillisecondsF());
+  EXPECT_EQ(13, TimeDelta::FromMicroseconds(13).InMicroseconds());
+}
+
+#if defined(OS_WIN)
+
+// TODO(pinkerton): Need to find a way to mock this for non-windows.
 
 namespace {
 
@@ -193,3 +213,6 @@ TEST(TimeTicks, Rollover) {
     MockTimeTicks::UninstallTicker();
   }
 }
+
+#endif
+

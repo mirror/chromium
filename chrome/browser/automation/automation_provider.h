@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // This implements a browser-side endpoint for UI automation activity.
 // The client-side endpoint is implemented by AutomationProxy.
@@ -33,8 +8,8 @@
 // the BrowserProcess, and in particular the NotificationService that's
 // hung off of it.
 
-#ifndef CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H__
-#define CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H__
+#ifndef CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H_
+#define CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H_
 
 #include <map>
 #include <string>
@@ -47,7 +22,7 @@
 #include "chrome/browser/automation/automation_autocomplete_edit_tracker.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/history/history.h"
-#include "chrome/common/ipc_channel.h"
+#include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/ipc_message.h"
 #include "chrome/common/notification_service.h"
 
@@ -58,7 +33,7 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
                            public IPC::Channel::Listener,
                            public IPC::Message::Sender {
  public:
-  AutomationProvider(Profile* profile);
+  explicit AutomationProvider(Profile* profile);
   virtual ~AutomationProvider();
 
   // Establishes a connection to an automation client, if present.
@@ -134,6 +109,9 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
   void GetLastActiveBrowserWindow(const IPC::Message& message);
   void GetActiveWindow(const IPC::Message& message);
   void GetWindowHWND(const IPC::Message& message, int handle);
+  void ExecuteBrowserCommand(const IPC::Message& message,
+                             int handle,
+                             int command);
   void WindowGetViewBounds(const IPC::Message& message,
                            int handle,
                            int view_id,
@@ -141,7 +119,8 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
   void WindowSimulateDrag(const IPC::Message& message,
                           int handle,
                           std::vector<POINT> drag_path,
-                          int flags);
+                          int flags,
+                          bool press_escape_en_route);
   void WindowSimulateClick(const IPC::Message& message,
                           int handle,
                           POINT click,
@@ -206,13 +185,28 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
   void GetConstrainedWindowBounds(const IPC::Message& message,
                                   int handle);
 
-  // Responds to the FindInPage request, retrieves the search query parameters,
-  // launches an observer to listen for results and issues a StartFind request.
+  // This function has been deprecated, please use HandleFindRequest.
   void HandleFindInPageRequest(const IPC::Message& message,
                                int handle,
                                const std::wstring& find_request,
                                int forward,
                                int match_case);
+
+  // Responds to the FindInPage request, retrieves the search query parameters,
+  // launches an observer to listen for results and issues a StartFind request.
+  void HandleFindRequest(const IPC::Message& message,
+                         int handle,
+                         const FindInPageRequest& request);
+
+  // Responds to requests to open the FindInPage window.
+  void HandleOpenFindInPageRequest(const IPC::Message& message,
+                                   int handle);
+
+  // Get the visibility state of the Find window.
+  void GetFindWindowVisibility(const IPC::Message& message, int handle);
+
+  // Responds to requests to find the location of the Find window.
+  void HandleFindWindowLocationRequest(const IPC::Message& message, int handle);
 
   // Responds to InspectElement request
   void HandleInspectElementRequest(const IPC::Message& message,
@@ -303,6 +297,15 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
   void AutocompleteEditGetMatches(const IPC::Message& message,
                                   int autocomplete_edit_handle);
 
+  // Handler for a message sent by the automation client.
+  void OnMessageFromExternalHost(int handle, const std::string& target,
+                                 const std::string& message);
+
+  // Convert a tab handle into a WebContents. If |tab| is non-NULL a pointer
+  // to the tab is also returned. Returns NULL in case of failure or if the tab
+  // is not of the WebContents type.
+  WebContents* GetWebContentsForHandle(int handle, NavigationController** tab);
+
   // Callback for history redirect queries.
   virtual void OnRedirectQueryComplete(
       HistoryService::Handle request_handle,
@@ -313,8 +316,7 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
   typedef ObserverList<NotificationObserver> NotificationObserverList;
   typedef std::map<NavigationController*, LoginHandler*> LoginHandlerMap;
 
-  bool connected_;
-  scoped_ptr<IPC::Channel> channel_;
+  scoped_ptr<IPC::ChannelProxy> channel_;
   scoped_ptr<NotificationObserver> initial_load_observer_;
   scoped_ptr<NotificationObserver> new_tab_ui_load_observer_;
   scoped_ptr<NotificationObserver> find_in_page_observer_;
@@ -346,14 +348,14 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
 
   Profile* profile_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(AutomationProvider);
+  DISALLOW_COPY_AND_ASSIGN(AutomationProvider);
 };
 
 // When life started, the AutomationProvider class was a singleton and was meant
-// only for UI tests. It had specific behavior (like for example, when the channel
-// was shut down. it closed all open Browsers). The new AutomationProvider serves
-// other purposes than just UI testing. This class is meant to provide the OLD
-// functionality for backward compatibility
+// only for UI tests. It had specific behavior (like for example, when the
+// channel was shut down. it closed all open Browsers). The new
+// AutomationProvider serves other purposes than just UI testing. This class is
+// meant to provide the OLD functionality for backward compatibility
 class TestingAutomationProvider : public AutomationProvider,
                                   public BrowserList::Observer,
                                   public NotificationObserver {
@@ -375,5 +377,8 @@ class TestingAutomationProvider : public AutomationProvider,
   virtual void Observe(NotificationType type,
                        const NotificationSource& source,
                        const NotificationDetails& details);
+
+  void OnRemoveProvider();  // Called via PostTask
 };
-#endif  // CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H__
+#endif  // CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H_
+

@@ -1,35 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "base/json_reader.h"
 #include "base/values.h"
+#include "build/build_config.h"
 
 TEST(JSONReaderTest, Reading) {
   // some whitespace checking
@@ -83,20 +59,46 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_EQ(0, int_val);
   delete root;
 
-  // Numbers that overflow ints should fail
+  // Numbers that overflow ints should succeed, being internally promoted to
+  // storage as doubles
   root = NULL;
-  ASSERT_FALSE(JSONReader::JsonToValue("2147483648", &root, false, false));
-  ASSERT_FALSE(root);
+  ASSERT_TRUE(JSONReader::JsonToValue("2147483648", &root, false, false));
+  ASSERT_TRUE(root);
+  double real_val;
+#ifdef ARCH_CPU_32_BITS
+  ASSERT_TRUE(root->IsType(Value::TYPE_REAL));
+  real_val = 0.0;
+  ASSERT_TRUE(root->GetAsReal(&real_val));
+  ASSERT_DOUBLE_EQ(2147483648.0, real_val);
+#else
+  ASSERT_TRUE(root->IsType(Value::TYPE_INTEGER));
+  int_val = 0;
+  ASSERT_TRUE(root->GetAsInteger(&int_val));
+  ASSERT_EQ(2147483648, int_val);
+#endif
+  delete root;
   root = NULL;
-  ASSERT_FALSE(JSONReader::JsonToValue("-2147483649", &root, false, false));
-  ASSERT_FALSE(root);
+  ASSERT_TRUE(JSONReader::JsonToValue("-2147483649", &root, false, false));
+  ASSERT_TRUE(root);
+#ifdef ARCH_CPU_32_BITS
+  ASSERT_TRUE(root->IsType(Value::TYPE_REAL));
+  real_val = 0.0;
+  ASSERT_TRUE(root->GetAsReal(&real_val));
+  ASSERT_DOUBLE_EQ(-2147483649.0, real_val);
+#else
+  ASSERT_TRUE(root->IsType(Value::TYPE_INTEGER));
+  int_val = 0;
+  ASSERT_TRUE(root->GetAsInteger(&int_val));
+  ASSERT_EQ(-2147483649, int_val);
+#endif
+  delete root;
 
   // Parse a double
   root = NULL;
   ASSERT_TRUE(JSONReader::JsonToValue("43.1", &root, false, false));
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_REAL));
-  double real_val = 0.0;
+  real_val = 0.0;
   ASSERT_TRUE(root->GetAsReal(&real_val));
   ASSERT_DOUBLE_EQ(43.1, real_val);
   delete root;
@@ -264,7 +266,7 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_LIST));
   ListValue* list = static_cast<ListValue*>(root);
-  ASSERT_EQ(3, list->GetSize());
+  ASSERT_EQ(3U, list->GetSize());
 
   // Test with trailing comma.  Should be parsed the same as above.
   Value* root2 = NULL;
@@ -279,7 +281,7 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_LIST));
   list = static_cast<ListValue*>(root);
-  ASSERT_EQ(0, list->GetSize());
+  ASSERT_EQ(0U, list->GetSize());
   delete root;
 
   // Nested arrays
@@ -289,7 +291,7 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_LIST));
   list = static_cast<ListValue*>(root);
-  ASSERT_EQ(4, list->GetSize());
+  ASSERT_EQ(4U, list->GetSize());
 
   // Lots of trailing commas.
   root2 = NULL;
@@ -327,7 +329,7 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_LIST));
   list = static_cast<ListValue*>(root);
-  EXPECT_EQ(1, list->GetSize());
+  EXPECT_EQ(1U, list->GetSize());
   Value* tmp_value = NULL;
   ASSERT_TRUE(list->Get(0, &tmp_value));
   EXPECT_TRUE(tmp_value->IsType(Value::TYPE_BOOLEAN));
@@ -391,7 +393,7 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_TRUE(dict_val->GetDictionary(L"inner", &inner_dict));
   ListValue* inner_array = NULL;
   ASSERT_TRUE(inner_dict->GetList(L"array", &inner_array));
-  ASSERT_EQ(1, inner_array->GetSize());
+  ASSERT_EQ(1U, inner_array->GetSize());
   bool_value = true;
   ASSERT_TRUE(dict_val->GetBoolean(L"false", &bool_value));
   ASSERT_FALSE(bool_value);
@@ -465,7 +467,7 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_LIST));
   list = static_cast<ListValue*>(root);
-  ASSERT_EQ(5001, list->GetSize());
+  ASSERT_EQ(5001U, list->GetSize());
   delete root;
 
   // Test utf8 encoded input
@@ -486,3 +488,4 @@ TEST(JSONReaderTest, Reading) {
   ASSERT_FALSE(JSONReader::Read("10", &root, false));
   ASSERT_FALSE(JSONReader::Read("\"root\"", &root, false));
 }
+

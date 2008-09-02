@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <psapi.h>
@@ -41,7 +16,6 @@ bool GetMemoryInfo(uint32 process_id,
                    size_t *current_virtual_size,
                    size_t *peak_working_set_size,
                    size_t *current_working_set_size) {
-
   if (!peak_virtual_size || !current_virtual_size)
     return false;
 
@@ -67,14 +41,51 @@ bool GetMemoryInfo(uint32 process_id,
   return result;
 }
 
+// GetPerformanceInfo is not available on WIN2K.  So we'll
+// load it on-the-fly.
+const wchar_t kPsapiDllName[] = L"psapi.dll";
+typedef BOOL (WINAPI *GetPerformanceInfoFunction) (
+    PPERFORMANCE_INFORMATION pPerformanceInformation,
+    DWORD cb);
+
+static BOOL InternalGetPerformanceInfo(
+    PPERFORMANCE_INFORMATION pPerformanceInformation, DWORD cb) {
+  static GetPerformanceInfoFunction GetPerformanceInfo_func = NULL;
+  if (!GetPerformanceInfo_func) {
+    HMODULE psapi_dll = ::GetModuleHandle(kPsapiDllName);
+    if (psapi_dll)
+      GetPerformanceInfo_func = reinterpret_cast<GetPerformanceInfoFunction>(
+          GetProcAddress(psapi_dll, "GetPerformanceInfo"));
+
+    if (!GetPerformanceInfo_func) {
+      // The function could be loaded!
+      memset(pPerformanceInformation, 0, cb);
+      return FALSE;
+    }
+  }
+  return GetPerformanceInfo_func(pPerformanceInformation, cb);
+}
+
+
+size_t GetSystemCommitCharge() {
+  // Get the System Page Size.
+  SYSTEM_INFO system_info;
+  GetSystemInfo(&system_info);
+
+  PERFORMANCE_INFORMATION info;
+  if (InternalGetPerformanceInfo(&info, sizeof(info)))
+    return info.CommitTotal * system_info.dwPageSize;
+  return -1;
+}
+
 void PrintChromeMemoryUsageInfo() {
   printf("\n");
-  BrowserProcessFilter chrome_filter;
+  BrowserProcessFilter chrome_filter(L"");
   process_util::NamedProcessIterator
       chrome_process_itr(chrome::kBrowserProcessExecutableName, &chrome_filter);
 
   const PROCESSENTRY32* chrome_entry;
-  while(chrome_entry = chrome_process_itr.NextProcessEntry()) {
+  while (chrome_entry = chrome_process_itr.NextProcessEntry()) {
     uint32 pid = chrome_entry->th32ProcessID;
     size_t peak_virtual_size;
     size_t current_virtual_size;
@@ -96,3 +107,4 @@ void PrintChromeMemoryUsageInfo() {
     }
   };
 }
+

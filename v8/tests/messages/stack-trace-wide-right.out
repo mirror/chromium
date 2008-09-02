@@ -1,3 +1,0 @@
-stack-trace-wide-right.js:2: Uncaught ReferenceError: xxx is not defined
-his line which raises an exception to be more that 78 characters long"; xxx();
-                                                                        ^

@@ -180,6 +180,14 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="TestFindInPage"
+			>
+			<File
+				RelativePath="..\..\browser\find_in_page_controller_interactive_uitest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="TestFocus"
 			>
 			<File
@@ -188,6 +196,14 @@
 			</File>
 			<File
 				RelativePath="..\..\browser\views\constrained_window_impl_interactive_uitest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestTabDragging"
+			>
+			<File
+				RelativePath="..\..\browser\tabs\tab_dragging_test.cc"
 				>
 			</File>
 		</Filter>

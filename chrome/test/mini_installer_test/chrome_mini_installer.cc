@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/test/mini_installer_test/chrome_mini_installer.h"
 
@@ -34,6 +9,7 @@
 #include "base/registry.h"
 #include "base/string_util.h"
 #include "chrome/installer/setup/setup_constants.h"
+#include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/util_constants.h"
@@ -48,7 +24,8 @@ void ChromeMiniInstaller::InstallMiniInstaller(bool over_install) {
   }
   LaunchExe(mini_installer_constants::kChromeMiniInstallerExecutable,
             mini_installer_constants::kChromeMiniInstallerExecutable);
-  ASSERT_TRUE(CheckRegistryKey(InstallUtil::GetChromeGoogleUpdateKey()));
+  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
+  ASSERT_TRUE(CheckRegistryKey(dist->GetVersionKey()));
   FindChromeShortcut();
   WaitUntilProcessStartsRunning(installer_util::kChromeExe);
   if (!over_install) {
@@ -77,7 +54,8 @@ void ChromeMiniInstaller::InstallChromeSetupDev() {
   chrome_google_update_state_key.append(L"\\");
   chrome_google_update_state_key.append(google_update::kChromeGuid);
   ASSERT_TRUE(CheckRegistryKey(chrome_google_update_state_key));
-  ASSERT_TRUE(CheckRegistryKey(InstallUtil::GetChromeGoogleUpdateKey()));
+  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
+  ASSERT_TRUE(CheckRegistryKey(dist->GetVersionKey()));
   FindChromeShortcut();
   WaitUntilProcessStartsRunning(installer_util::kChromeExe);
   ASSERT_TRUE(CloseWindow(mini_installer_constants::kFirstChromeUI, WM_CLOSE));
@@ -110,7 +88,8 @@ void ChromeMiniInstaller::OverInstall() {
 // Deletes App dir.
 void ChromeMiniInstaller::UnInstall() {
   printf("Verifying if Chrome is installed...\n");
-  if (!CheckRegistryKey(InstallUtil::GetChromeGoogleUpdateKey())) {
+  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
+  if (!CheckRegistryKey(dist->GetVersionKey())) {
     printf("Chrome is not installed.\n");
     return;
   }
@@ -129,7 +108,7 @@ void ChromeMiniInstaller::UnInstall() {
       mini_installer_constants::kConfirmDialog, WM_COMMAND));
   WaitUntilProcessStopsRunning(
       mini_installer_constants::kChromeSetupExecutable);
-  ASSERT_FALSE(CheckRegistryKey(InstallUtil::GetChromeGoogleUpdateKey()));
+  ASSERT_FALSE(CheckRegistryKey(dist->GetVersionKey()));
   DeleteAppFolder();
   FindChromeShortcut();
   if (false == CloseWindow(mini_installer_constants::kChromeUninstallIETitle,
@@ -235,7 +214,8 @@ std::wstring ChromeMiniInstaller::GetUninstallPath() {
 // Reads Chrome registry key.
 std::wstring ChromeMiniInstaller::GetRegistryKey() {
   std::wstring build_key_value;
-  RegKey key(HKEY_CURRENT_USER, InstallUtil::GetChromeGoogleUpdateKey().c_str());
+  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
+  RegKey key(HKEY_CURRENT_USER, dist->GetVersionKey().c_str());
   if (!key.ReadValue(L"pv", &build_key_value))
     return false;
   return build_key_value;
@@ -308,3 +288,4 @@ void ChromeMiniInstaller::WaitUntilProcessStopsRunning(
   }
   ASSERT_EQ(0, process_util::GetProcessCount(process_name, NULL));
 }
+

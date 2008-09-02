@@ -1,42 +1,16 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_WEB_CONTENTS_H__
-#define CHROME_BROWSER_WEB_CONTENTS_H__
+#ifndef CHROME_BROWSER_WEB_CONTENTS_H_
+#define CHROME_BROWSER_WEB_CONTENTS_H_
 
 #include <hash_map>
 
-#include "base/scoped_handle.h"
-#include "chrome/common/win_util.h"
 #include "chrome/browser/fav_icon_helper.h"
 #include "chrome/browser/printing/print_view_manager.h"
 #include "chrome/browser/render_view_host_delegate.h"
+#include "chrome/browser/render_view_host_manager.h"
 #include "chrome/browser/save_package.h"
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents.h"
@@ -45,7 +19,6 @@
 
 class FindInPageController;
 class InterstitialPageDelegate;
-class NavigationProfiler;
 class PasswordManager;
 class PluginInstaller;
 class RenderViewHost;
@@ -58,6 +31,7 @@ class WebDropTarget;
 
 class WebContents : public TabContents,
                     public RenderViewHostDelegate,
+                    public RenderViewHostManager::Delegate,
                     public ChromeViews::HWNDViewContainer,
                     public SelectFileDialog::Listener,
                     public WebApp::Observer {
@@ -82,6 +56,17 @@ class WebContents : public TabContents,
   virtual void HideContents();
   virtual void SizeContents(const gfx::Size& size);
 
+  // Causes the renderer to invoke the onbeforeunload event handler.  The
+  // result will be returned via ViewMsg_ShouldClose.
+  virtual void FirePageBeforeUnload();
+
+  // Close the page after the page has responded that it can be closed via
+  // ViewMsg_ShouldClose. This is where the page itself is closed. The
+  // unload handler is triggered here, which can block with a dialog, but cannot
+  // cancel the close of the page.
+  virtual void FirePageUnload();
+
+
   // TabContents
   virtual WebContents* AsWebContents() { return this; }
   virtual bool Navigate(const NavigationEntry& entry, bool reload);
@@ -93,7 +78,6 @@ class WebContents : public TabContents,
   virtual std::wstring GetStatusText() const;
 
   // Find functions
-  virtual bool CanFind() const { return true; }
   virtual void StartFinding(int request_id,
                             const std::wstring& search_string,
                             bool forward,
@@ -103,12 +87,14 @@ class WebContents : public TabContents,
   virtual void OpenFindInPageWindow(const Browser& browser);
   virtual void ReparentFindWindow(HWND new_parent);
   virtual bool AdvanceFindSelection(bool forward_direction);
+  virtual bool IsFindWindowFullyVisible();
+  virtual bool GetFindInPageWindowLocation(int* x, int* y);
 
   // Text zoom
   virtual void AlterTextSize(text_zoom::TextSize size);
 
   // Change encoding of page.
-  virtual void SetPageEncoding(const std::wstring& encoding_name);
+  virtual void SetPageEncoding(const std::string& encoding_name);
 
   bool is_starred() const { return is_starred_; }
 
@@ -116,23 +102,20 @@ class WebContents : public TabContents,
   // Default is not to block any message boxes.
   void SetSuppressJavascriptMessageBoxes(bool suppress_javascript_messages);
 
-  // Return true if the WebContents is doing performance profiling
-  bool is_profiling() const { return is_profiling_; }
-
-  // Check with the global navigation profiler on whether to enable
-  // profiling. Return true if profiling needs to be enabled, return
-  // false otherwise.
-  bool EnableProfiling();
-
-  // Return the global navigation profiler.
-  NavigationProfiler* GetNavigationProfiler();
+  // Various other systems need to know about our interstitials.
+  bool showing_interstitial_page() const {
+    return render_manager_.showing_interstitial_page();
+  }
+  bool showing_repost_interstitial() const {
+    return render_manager_.showing_repost_interstitial();
+  }
 
   // Overridden from TabContents to remember at what time the download bar was
   // shown.
   void SetDownloadShelfVisible(bool visible);
 
   // Returns the SavePackage which manages the page saving job.
-  inline SavePackage* get_save_package() const { return save_package_.get(); }
+  SavePackage* get_save_package() const { return save_package_.get(); }
 
   // Whether or not the info bar is visible. This delegates to
   // the ChromeFrame method InfoBarVisibilityChanged.
@@ -254,9 +237,18 @@ class WebContents : public TabContents,
   // should be aware that the SiteInstance could be deleted if its ref count
   // drops to zero (i.e., if all RenderViewHosts and NavigationEntries that
   // use it are deleted).
-  RenderProcessHost* process() const;
-  RenderViewHost* render_view_host() const;
-  SiteInstance* site_instance() const;
+  RenderProcessHost* process() const {
+    return render_manager_.current_host()->process();
+  }
+  RenderViewHost* render_view_host() const {
+    return render_manager_.current_host();
+  }
+  SiteInstance* site_instance() const {
+    return render_manager_.current_host()->site_instance();
+  }
+  RenderWidgetHostView* view() const {
+    return render_manager_.current_view();
+  }
 
   // Overridden from TabContents to return the window of the
   // RenderWidgetHostView.
@@ -284,15 +276,23 @@ class WebContents : public TabContents,
   virtual void Copy();
   virtual void Paste();
 
-  // Returns whether we are currently showing an interstitial page.
-  bool IsShowingInterstitialPage() const;
+  // The rest of the system wants to interact with the delegate our render view
+  // host manager has. See those setters for more.
+  InterstitialPageDelegate* interstitial_page_delegate() const {
+    return render_manager_.interstitial_delegate();
+  }
+  void set_interstitial_delegate(InterstitialPageDelegate* delegate) {
+    render_manager_.set_interstitial_delegate(delegate);
+  }
 
   // Displays the specified html in the current page. This method can be used to
   // show temporary pages (such as security error pages).  It can be hidden by
   // calling HideInterstitialPage, in which case the original page is restored.
   // An optional delegate may be passed, it is not owned by the WebContents.
   void ShowInterstitialPage(const std::string& html_text,
-                            InterstitialPageDelegate* delegate);
+                            InterstitialPageDelegate* delegate) {
+    render_manager_.ShowInterstitialPage(html_text, delegate);
+  }
 
   // Reverts from the interstitial page to the original page.
   // If |wait_for_navigation| is true, the interstitial page is removed when
@@ -301,55 +301,21 @@ class WebContents : public TabContents,
   // Hiding the interstitial page right away would show the previous displayed
   // page.  If |proceed| is true, the WebContents will expect the navigation
   // to complete.  If not, it will revert to the last shown page.
-  void HideInterstitialPage(bool wait_for_navigation, bool proceed);
+  void HideInterstitialPage(bool wait_for_navigation, bool proceed) {
+    render_manager_.HideInterstitialPage(wait_for_navigation, proceed);
+  }
 
   // Allows the WebContents to react when a cross-site response is ready to be
   // delivered to a pending RenderViewHost.  We must first run the onunload
   // handler of the old RenderViewHost before we can allow it to proceed.
   void OnCrossSiteResponse(int new_render_process_host_id,
-                           int new_request_id);
+                           int new_request_id) {
+    render_manager_.OnCrossSiteResponse(new_render_process_host_id,
+                                        new_request_id);
+  }
 
   // Returns true if the active NavigationEntry's page_id equals page_id.
   bool IsActiveEntry(int32 page_id);
-
-  // RenderViewHost states.  These states represent whether a cross-site
-  // request is pending (in the new process model) and whether an interstitial
-  // page is being shown.  These are public to give easy access to unit tests.
-  enum RendererState {
-    // NORMAL: just showing a page normally.
-    // render_view_host_ is showing a page.
-    // pending_render_view_host_ is NULL.
-    // original_render_view_host_ is NULL.
-    // interstitial_render_view_host_ is NULL.
-    NORMAL = 0,
-    // PENDING: creating a new RenderViewHost for a cross-site navigation.
-    // Never used when --process-per-tab is specified.
-    // render_view_host_ is showing a page.
-    // pending_render_view_host_ is loading a page in the background.
-    // original_render_view_host_ is NULL.
-    // interstitial_render_view_host_ is NULL.
-    PENDING,
-    // ENTERING_INTERSTITIAL: an interstitial RenderViewHost has been created.
-    // and will be shown as soon as it calls DidNavigate.
-    // render_view_host_ is showing a page.
-    // pending_render_view_host_ is either NULL or suspended in the background.
-    // original_render_view_host_ is NULL.
-    // interstitial_render_view_host_ is loading in the background.
-    ENTERING_INTERSTITIAL,
-    // INTERSTITIAL: Showing an interstitial page.
-    // render_view_host_ is showing the interstitial.
-    // pending_render_view_host_ is either NULL or suspended in the background.
-    // original_render_view_host_ is the hidden original page.
-    // interstitial_render_view_host_ is NULL.
-    INTERSTITIAL,
-    // LEAVING_INTERSTITIAL: interstitial is still showing, but we are
-    // navigating to a new page that will replace it.
-    // render_view_host_ is showing the interstitial.
-    // pending_render_view_host_ is either NULL or loading a page.
-    // original_render_view_host_ is hidden and possibly loading a page.
-    // interstitial_render_view_host_ is NULL.
-    LEAVING_INTERSTITIAL
-  };
 
   const std::string& contents_mime_type() const {
     return contents_mime_type_;
@@ -358,18 +324,8 @@ class WebContents : public TabContents,
   // Returns true if this WebContents will notify about disconnection.
   bool notify_disconnection() const { return notify_disconnection_; }
 
-  // Are we showing the POST interstitial page?
-  //
-  // NOTE: the POST interstitial does NOT result in a separate RenderViewHost.
-  bool showing_repost_interstitial() { return showing_repost_interstitial_; }
-
-  // Accessors to the the interstitial delegate, that is optionaly set when
-  // an interstitial page is shown.
-  InterstitialPageDelegate* interstitial_page_delegate() const {
-    return interstitial_delegate_;
-  }
-  void set_interstitial_delegate(InterstitialPageDelegate* delegate) {
-    interstitial_delegate_ = delegate;
+  void set_override_encoding(const std::string& override_encoding) {
+    override_encoding_ = override_encoding;
   }
 
  protected:
@@ -379,6 +335,7 @@ class WebContents : public TabContents,
   virtual ~WebContents();
 
   // RenderViewHostDelegate
+  virtual RenderViewHostDelegate::FindInPage* GetFindInPageDelegate();
   virtual Profile* GetProfile() const;
 
   virtual void CreateView(int route_id, HANDLE modal_dialog_event);
@@ -402,7 +359,7 @@ class WebContents : public TabContents,
                            int32 page_id,
                            const std::wstring& title);
   virtual void UpdateEncoding(RenderViewHost* render_view_host,
-                              const std::wstring& encoding_name);
+                              const std::string& encoding_name);
   virtual void UpdateTargetURL(int32 page_id, const GURL& url);
   virtual void UpdateThumbnail(const GURL& url,
                                const SkBitmap& bitmap,
@@ -425,11 +382,6 @@ class WebContents : public TabContents,
       int error_code,
       const GURL& url,
       bool showing_repost_interstitial);
-  virtual void FindReply(int request_id,
-                         int number_of_matches,
-                         const gfx::Rect& selection_rect,
-                         int active_match_ordinal,
-                         bool final_update);
   virtual void UpdateFavIconURL(RenderViewHost* render_view_host,
                                 int32 page_id, const GURL& icon_url);
   virtual void DidDownloadImage(RenderViewHost* render_view_host,
@@ -444,6 +396,8 @@ class WebContents : public TabContents,
                               WindowOpenDisposition disposition);
   virtual void DomOperationResponse(const std::string& json_string,
                                     int automation_id);
+  virtual void ProcessExternalHostMessage(const std::string& receiver,
+                                          const std::string& message);
   virtual void GoToEntryAtOffset(int offset);
   virtual void GetHistoryListCount(int* back_list_count,
                                    int* forward_list_count);
@@ -473,7 +427,9 @@ class WebContents : public TabContents,
   virtual void OnReceivedSerializedHtmlData(const GURL& frame_url,
                                             const std::string& data,
                                             int32 status);
-  virtual void ShouldClosePage(bool proceed);
+  virtual void ShouldClosePage(bool proceed) {
+    render_manager_.ShouldClosePage(proceed);
+  }
   virtual bool CanBlur() const;
   virtual void RendererUnresponsive(RenderViewHost* render_view_host);
   virtual void RendererResponsive(RenderViewHost* render_view_host);
@@ -507,15 +463,22 @@ class WebContents : public TabContents,
   virtual void FileSelected(const std::wstring& path, void* params);
   virtual void FileSelectionCanceled(void* params);
 
-  // This method initializes the given renderer if necessary and creates the
-  // view ID corresponding to this view host. If this method is not called and
-  // the process is not shared, then the WebContents will act as though the
-  // renderer is not running (i.e., it will render "sad tab").
-  // This method is automatically called from LoadURL.
+  // Another part of RenderViewHostManager::Delegate.
+  //
+  // Initializes the given renderer if necessary and creates the view ID
+  // corresponding to this view host. If this method is not called and the
+  // process is not shared, then the WebContents will act as though the renderer
+  // is not running (i.e., it will render "sad tab"). This method is
+  // automatically called from LoadURL.
   //
   // If you are attaching to an already-existing RenderView, you should call
   // InitWithExistingID.
-  virtual bool CreateRenderView(RenderViewHost* render_view_host);
+  //
+  // TODO(brettw) clean this up! This logic seems out of place. This is called
+  // by the RenderViewHostManager, but also overridden by the DOMUIHost. Any
+  // logic that has to be here should have a more clear name.
+  virtual bool CreateRenderViewForRenderManager(
+      RenderViewHost* render_view_host);
 
  private:
   friend class TestWebContents;
@@ -536,51 +499,8 @@ class WebContents : public TabContents,
     GearsCreateShortcutCallbackFunctor* callback_functor;
   };
 
-
   bool ScrollZoom(int scroll_type);
   void WheelZoom(int distance);
-
-  // Creates a RenderViewHost using render_view_factory_ (or directly, if the
-  // factory is NULL).
-  RenderViewHost* CreateRenderViewHost(SiteInstance* instance,
-                                       RenderViewHostDelegate* delegate,
-                                       int routing_id,
-                                       HANDLE modal_dialog_event);
-
-  // Returns whether this tab should transition to a new renderer for
-  // cross-site URLs.  Enabled unless we see the --process-per-tab command line
-  // switch.  Can be overridden in unit tests.
-  virtual bool ShouldTransitionCrossSite();
-
-  // Returns an appropriate SiteInstance object for the given NavigationEntry,
-  // possibly reusing the current SiteInstance.
-  // Never called if --process-per-tab is used.
-  SiteInstance* GetSiteInstanceForEntry(const NavigationEntry& entry,
-                                        SiteInstance* curr_instance);
-
-  // Prevent the interstitial page from proceeding after we start navigating
-  // away from it.  If |stop_request| is true, abort the pending requests
-  // immediately, because we are navigating away.
-  void DisableInterstitialProceed(bool stop_request);
-
-  // Helper method to create a pending RenderViewHost for a cross-site
-  // navigation.  Used in the new process model.
-  bool CreatePendingRenderView(SiteInstance* instance);
-
-  // Replaces the currently shown render_view_host_ with the RenderViewHost in
-  // the field pointed to by |new_render_view_host|, and then NULLs the field.
-  // Callers should only pass pointers to the pending_render_view_host_,
-  // interstitial_render_view_host_, or original_render_view_host_ fields of
-  // this object.  If |destroy_after|, this method will call
-  // ScheduleDeferredDestroy on the previous render_view_host_.
-  void SwapToRenderView(RenderViewHost** new_render_view_host,
-                        bool destroy_after);
-
-  // Destroys the RenderViewHost in the field pointed to by |render_view_host|,
-  // and then NULLs the field.  Callers should only pass pointers to the
-  // pending_render_view_host_, interstitial_render_view_host_, or
-  // original_render_view_host_ fields of this object.
-  void CancelRenderView(RenderViewHost** render_view_host);
 
   // Backend for LoadURL that optionally creates a history entry. The
   // transition type will be ignored if a history entry is not created.
@@ -626,14 +546,6 @@ class WebContents : public TabContents,
   // it and contains page plugins.
   RenderWidgetHostHWND* CreatePageView(RenderViewHost* render_view_host);
 
-  // Cleans up after an interstitial page is hidden, including removing the
-  // interstitial's NavigationEntry.
-  void InterstitialPageGone();
-
-  // Convenience method that returns true if the specified RenderViewHost is
-  // this WebContents' interstitial page RenderViewHost.
-  bool IsInterstitialRenderViewHost(RenderViewHost* render_view_host) const;
-
   // Navigation helpers --------------------------------------------------------
   //
   // These functions are helpers for Navigate() and DidNavigate().
@@ -643,39 +555,17 @@ class WebContents : public TabContents,
   NavigationEntry* CreateNavigationEntryForCommit(
       const ViewHostMsg_FrameNavigate_Params& params);
 
-  // Handles post-navigation tasks specific to some set of frames. DidNavigate()
-  // calls these with newly created navigation entry for this navigation BEFORE
-  // that entry has been committed to the navigation controller. The functions
-  // can update the entry as needed.
-  //
-  // First the frame-specific version (main or sub) will be called to update the
-  // entry as needed after it was created by CreateNavigationEntryForCommit.
-  //
-  // Then DidNavigateAnyFramePreCommit will be called with the now-complete
-  // entry for further processing that is not specific to the type of frame.
-  void DidNavigateMainFramePreCommit(
-      const ViewHostMsg_FrameNavigate_Params& params,
-      NavigationEntry* entry);
-  void DidNavigateSubFramePreCommit(
-      const ViewHostMsg_FrameNavigate_Params& params,
-      NavigationEntry* entry);
-  void DidNavigateAnyFramePreCommit(
-      const ViewHostMsg_FrameNavigate_Params& params,
-      NavigationEntry* entry);
-
   // Handles post-navigation tasks in DidNavigate AFTER the entry has been
-  // committed to the navigation controller. See WillNavigate* above. Note that
-  // the navigation entry is not provided since it may be invalid/changed after
-  // being committed.
+  // committed to the navigation controller. Note that the navigation entry is
+  // not provided since it may be invalid/changed after being committed. The
+  // current navigation entry is in the NavigationController at this point.
   void DidNavigateMainFramePostCommit(
+      const NavigationController::LoadCommittedDetails& details,
       const ViewHostMsg_FrameNavigate_Params& params);
   void DidNavigateAnyFramePostCommit(
       RenderViewHost* render_view_host,
+      const NavigationController::LoadCommittedDetails& details,
       const ViewHostMsg_FrameNavigate_Params& params);
-
-  // Helper method to update the RendererState on a call to [Did]Navigate.
-  RenderViewHost* UpdateRendererStateNavigate(const NavigationEntry& entry);
-  void UpdateRendererStateDidNavigate(RenderViewHost* render_view_host);
 
   // Called when navigating the main frame to close all child windows if the
   // domain is changing.
@@ -725,19 +615,29 @@ class WebContents : public TabContents,
   void UpdateMaxPageIDIfNecessary(SiteInstance* site_instance,
                                   RenderViewHost* rvh);
 
-  // Profiling -----------------------------------------------------------------
+  // RenderViewHostManager::Delegate pass-throughs -----------------------------
 
-  // Logs the commit of the load for profiling purposes. Used by DidNavigate.
-  void HandleProfilingForDidNavigate(
-      const ViewHostMsg_FrameNavigate_Params& params);
+  virtual void BeforeUnloadFiredFromRenderManager(
+      bool proceed,
+      bool* proceed_to_fire_unload);
+  virtual void DidStartLoadingFromRenderManager(
+      RenderViewHost* render_view_host, int32 page_id) {
+    DidStartLoading(render_view_host, page_id);
+  }
+  virtual void RendererGoneFromRenderManager(RenderViewHost* render_view_host) {
+    RendererGone(render_view_host);
+  }
+  virtual void UpdateRenderViewSizeForRenderManager() {
+    UpdateRenderViewSize();
+  }
+  virtual void NotifySwappedFromRenderManager() {
+    NotifySwapped();
+  }
+  virtual NavigationController* GetControllerForRenderManager() {
+    return controller();
+  }
 
-  // If performance profiling is enabled, save current PageLoadTracker entry
-  // to visited page list.
-  void SaveCurrentProfilingEntry();
-
-  // If performance profiling is enabled, create a new PageLoadTracker entry
-  // when navigating to a new page.
-  void CreateNewProfilingEntry(const GURL& url);
+  // ---------------------------------------------------------------------------
 
   // Enumerate and 'un-parent' any plugin windows that are children
   // of this web contents.
@@ -746,35 +646,11 @@ class WebContents : public TabContents,
 
   // Data ----------------------------------------------------------------------
 
-  // Factory for creating RenderViewHosts.  This is useful for unit tests.  If
-  // this is NULL, just create a RenderViewHost directly.
+  // Manages creation and swapping of render views.
+  RenderViewHostManager render_manager_;
+
+  // For testing, passed to new RenderViewHost managers.
   RenderViewHostFactory* render_view_factory_;
-
-  // Our RenderView host. This object is responsible for all communication with
-  // a child RenderView instance.  Note that this can be the page render view
-  // host or the interstitial RenderViewHost if the RendererState is
-  // INTERSTITIAL or LEAVING_INTERSTITIAL.
-  RenderViewHost* render_view_host_;
-
-  // This var holds the original RenderViewHost when the interstitial page is
-  // showing (the RendererState is INTERSTITIAL or LEAVING_INTERSTITIAL).  It
-  // is NULL otherwise.
-  RenderViewHost* original_render_view_host_;
-
-  // The RenderViewHost of the interstitial page.  This is non NULL when the
-  // the RendererState is ENTERING_INTERSTITIAL.
-  RenderViewHost* interstitial_render_view_host_;
-
-  // A RenderViewHost used to load a cross-site page.  This remains hidden
-  // during the PENDING RendererState until it calls DidNavigate.  It can also
-  // exist if an interstitial page is shown.
-  RenderViewHost* pending_render_view_host_;
-
-  // Indicates if we are in the process of swapping our RenderViewHost.  This
-  // allows us to switch to interstitial pages in different RenderViewHosts.
-  // In the new process model, this also allows us to render pages from
-  // different SiteInstances in different processes, all within the same tab.
-  RendererState renderer_state_;
 
   // Handles print preview and print job for this contents.
   printing::PrintViewManager printing_;
@@ -792,9 +668,6 @@ class WebContents : public TabContents,
   // Maps from handle to page_id.
   typedef std::map<HistoryService::Handle, int32> HistoryRequestMap;
   HistoryRequestMap history_requests_;
-
-  // Whether the WebContents is doing performance profiling
-  bool is_profiling_;
 
   // System time at which the current load was started.
   TimeTicks current_load_start_;
@@ -885,14 +758,11 @@ class WebContents : public TabContents,
   // Non-null if we're displaying content for a web app.
   scoped_refptr<WebApp> web_app_;
 
-  // See comment above showing_repost_interstitial().
-  bool showing_repost_interstitial_;
+  // Specified encoding which is used to override current tab's encoding.
+  std::string override_encoding_;
 
-  // An optional delegate used when an interstitial page is shown that gets
-  // notified when the state of the interstitial changes.
-  InterstitialPageDelegate* interstitial_delegate_;
-
-  DISALLOW_EVIL_CONSTRUCTORS(WebContents);
+  DISALLOW_COPY_AND_ASSIGN(WebContents);
 };
 
-#endif  // CHROME_BROWSER_WEB_CONTENTS_H__
+#endif  // CHROME_BROWSER_WEB_CONTENTS_H_
+

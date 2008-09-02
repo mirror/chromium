@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // WebCore provides hooks for several kinds of functionality, allowing separate
 // classes termed "delegates" to receive notifications (in the form of direct
@@ -58,13 +33,13 @@
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/context_node_types.h"
 #include "webkit/glue/webwidget_delegate.h"
+#include "webkit/glue/window_open_disposition.h"
 
 namespace gfx {
   class Point;
   class Rect;
 }
 
-enum WindowOpenDisposition;
 struct PasswordForm;
 struct WebDropData;
 struct WebPreferences;
@@ -404,6 +379,8 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
 
   // Notifies the delegate that the load about to be committed for the specified
   // webview and frame was due to a client redirect originating from source URL.
+  // The information/notification obtained from this method is relevant until
+  // the next provisional load is started, at which point it becomes obsolete.
   virtual void DidCompleteClientRedirect(WebView* webview,
                                          WebFrame* frame,
                                          const GURL& source) {
@@ -471,6 +448,14 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   }
 
   // UIDelegate --------------------------------------------------------------
+
+  // Asks the browser to show a modal HTML dialog.  The dialog is passed the
+  // given arguments as a JSON string, and returns its result as a JSON string
+  // through json_retval.
+  virtual void ShowModalHTMLDialog(const GURL& url, int width, int height,
+                                   const std::string& json_arguments,
+                                   std::string* json_retval) {
+  }
 
   // Displays a JavaScript alert panel associated with the given view. Clients
   // should visually indicate that this panel comes from JavaScript. The panel
@@ -544,6 +529,8 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // @param misspelled_word The editable (possibily) misspelled word
   // in the Editor on which dictionary lookup for suggestions will be done.
   // @param edit_flags Which edit operations the renderer believes are available
+  // @param frame_encoding Which indicates the encoding of current focused
+  // sub frame.
   virtual void ShowContextMenu(WebView* webview,
                                ContextNode::Type type,
                                int x,
@@ -554,7 +541,8 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
                                const GURL& frame_url,
                                const std::wstring& selection_text,
                                const std::wstring& misspelled_word,
-                               int edit_flags) {
+                               int edit_flags,
+                               const std::string& frame_encoding) {
   }
 
   // Starts a drag session with the supplied contextual information.
@@ -721,6 +709,10 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
 
   virtual void WebInspectorOpened(int num_resources) { }
 
+  // Called when the FrameLoader goes into a state in which a new page load
+  // will occur.
+  virtual void TransitionToCommittedForNewPage() { }
+
   WebViewDelegate() { }
   virtual ~WebViewDelegate() { }
 
@@ -729,3 +721,4 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
 };
 
 #endif  // WEBKIT_GLUE_WEBVIEW_DELEGATE_H__
+

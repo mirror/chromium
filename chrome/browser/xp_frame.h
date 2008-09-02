@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_XP_FRAME_H__
 #define CHROME_BROWSER_XP_FRAME_H__
@@ -38,7 +13,7 @@
 
 #include "base/message_loop.h"
 #include "chrome/app/chrome_dll_resource.h"
-#include "chrome/browser/chrome_frame.h"
+#include "chrome/browser/browser_window.h"
 #include "chrome/browser/frame_view.h"
 #include "chrome/browser/views/status_bubble.h"
 #include "chrome/views/view_container.h"
@@ -46,10 +21,14 @@
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/image_view.h"
+#ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
+#endif
 
 #define XP_FRAME_CLASSNAME L"Chrome_XPFrame"
 
-class ChromeViews::RootView;
+class BrowserView;
+class BookmarkBarView;
 class Browser;
 class TabContentsContainerView;
 class TabStrip;
@@ -65,7 +44,7 @@ class TemporaryPlaceholder;
 // a ChromeView hierarchy for the tabs and toolbar
 //
 ////////////////////////////////////////////////////////////////////////////////
-class XPFrame : public ChromeFrame,
+class XPFrame : public BrowserWindow,
                 public CWindowImpl<XPFrame,
                                    CWindow,
                                    CWinTraits<WS_SYSMENU |
@@ -91,12 +70,11 @@ class XPFrame : public ChromeFrame,
                               bool is_off_the_record);
 
   ////////////////////////////////////////////////////////////////////////////////
-  // ChromeFrame implementation
+  // BrowserWindow implementation
   ////////////////////////////////////////////////////////////////////////////////
   virtual ~XPFrame();
   virtual void Init();
   virtual void Show(int command, bool adjust_to_fit);
-  virtual void BrowserDidPaint(HRGN rgn);
   virtual void Close();
   virtual void* GetPlatformID();
   virtual void SetAcceleratorTable(
@@ -105,10 +83,16 @@ class XPFrame : public ChromeFrame,
   virtual gfx::Rect GetNormalBounds();
   virtual bool IsMaximized();
   virtual gfx::Rect GetBoundsForContentBounds(const gfx::Rect content_rect);
-  virtual void SetBounds(const gfx::Rect& bounds);
-  virtual void DetachFromBrowser();
   virtual void InfoBubbleShowing();
   virtual void InfoBubbleClosing();
+  virtual ToolbarStarToggle* GetStarButton() const;
+  virtual LocationBarView* GetLocationBarView() const;
+  virtual GoButton* GetGoButton() const;
+  virtual BookmarkBarView* GetBookmarkBarView();
+  virtual BrowserView* GetBrowserView() const;
+  virtual void UpdateToolbar(TabContents* contents, bool should_restore_state);
+  virtual void ProfileChanged(Profile* profile);
+  virtual void FocusToolbar();
 
   //
   // CWindowImpl event management magic. See atlcrack.h
@@ -218,6 +202,16 @@ class XPFrame : public ChromeFrame,
   // Override and return false if no toolbar should  be visible. Default method
   // returns true.
   virtual bool IsToolBarVisible() const { return true; }
+
+#ifdef CHROME_PERSONALIZATION
+  virtual bool PersonalizationEnabled() const {
+    return personalization_enabled_;
+  }
+
+  void EnablePersonalization(bool enable_personalization) {
+   personalization_enabled_ = enable_personalization;
+  }
+#endif
 
   // Return the frame view.
   ChromeViews::View* GetFrameView() { return frame_view_; }
@@ -423,9 +417,6 @@ class XPFrame : public ChromeFrame,
   // Top level view used to render the frame itself including the title bar
   XPFrameView* frame_view_;
 
-  // Toolbar provided by our browser
-  ChromeViews::View* toolbar_;
-
   // Browser contents
   TabContentsContainerView* tab_contents_container_;
 
@@ -464,9 +455,6 @@ class XPFrame : public ChromeFrame,
   // Initialize static members the first time this is invoked
   static void InitializeIfNeeded();
 
-  // true if some painting is already pending
-  bool browser_paint_pending_;
-
   // cursor storage
   HCURSOR previous_cursor_;
 
@@ -481,15 +469,18 @@ class XPFrame : public ChromeFrame,
   // A view positioned at the bottom of the frame.
   ChromeViews::View* shelf_view_;
 
-  // View positioned beneath the tab strip.
-  ChromeViews::View* bookmark_bar_view_;
-
   // A view positioned beneath the bookmark bar.
   // Implementation mirrors shelf_view_
   ChromeViews::View* info_bar_view_;
 
   // The view that contains the tabs and any associated controls.
   TabStrip* tabstrip_;
+
+  // The bookmark bar. This is lazily created.
+  scoped_ptr<BookmarkBarView> bookmark_bar_view_;
+
+  // The visible bookmark bar. NULL if none is visible.
+  ChromeViews::View* active_bookmark_bar_;
 
   // The optional container for the off the record icon.
   ChromeViews::ImageView* off_the_record_image_;
@@ -506,6 +497,11 @@ class XPFrame : public ChromeFrame,
   // Whether this frame represents an off the record session.
   bool is_off_the_record_;
 
+#ifdef CHROME_PERSONALIZATION
+  FramePersonalization personalization_;
+  bool personalization_enabled_;
+#endif
+
   // Set during layout. Total height of the title bar.
   int title_bar_height_;
 
@@ -514,8 +510,6 @@ class XPFrame : public ChromeFrame,
   static SkBitmap** g_bitmaps;
   static SkBitmap** g_otr_bitmaps;
 
-  scoped_ptr<StatusBubble> status_bubble_;
-
   // Instance of accessibility information and handling for MSAA root
   CComPtr<IAccessible> accessibility_root_;
 
@@ -523,7 +517,11 @@ class XPFrame : public ChromeFrame,
   bool ignore_ncactivate_;
   bool paint_as_active_;
 
+  // A view that holds the client-area contents of the browser window.
+  BrowserView* browser_view_;
+
   DISALLOW_EVIL_CONSTRUCTORS(XPFrame);
 };
 
 #endif  // CHROME_BROWSER_XP_FRAME_H__
+

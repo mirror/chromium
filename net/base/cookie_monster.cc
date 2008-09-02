@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Portions of this code based on Mozilla:
 //   (netwerk/cookie/src/nsCookieService.cpp)
@@ -88,7 +63,10 @@
 #define COOKIE_DLOG(severity) DLOG_IF(INFO, 0)
 #endif
 
-/*static*/ bool CookieMonster::enable_file_scheme_ = false;
+namespace net {
+
+// static
+bool CookieMonster::enable_file_scheme_ = false;
 
 // static
 void CookieMonster::EnableFileScheme() {
@@ -189,8 +167,13 @@ Time CookieMonster::ParseCookieTime(const std::string& time_string) {
     // Numeric field w/ a colon
     } else if (token.find(':') != std::string::npos) {
       if (!found_time &&
-          sscanf_s(token.c_str(), "%2hu:%2hu:%2hu", &exploded.hour,
-                   &exploded.minute, &exploded.second) == 3) {
+#ifdef COMPILER_MSVC
+          sscanf_s(
+#else
+          sscanf(
+#endif
+                 token.c_str(), "%2u:%2u:%2u", &exploded.hour,
+                 &exploded.minute, &exploded.second) == 3) {
         found_time = true;
       } else {
         // We should only ever encounter one time-like thing.  If we're here,
@@ -266,7 +249,7 @@ static bool GetCookieDomainKey(const GURL& url,
   // domain=.my.domain.com -- for compatibility we do the same here.  Firefox
   // also treats domain=.....my.domain.com like domain=.my.domain.com, but
   // neither IE nor Safari do this, and we don't either.
-  std::string cookie_domain(net_util::CanonicalizeHost(pc.Domain(), NULL));
+  std::string cookie_domain(net::CanonicalizeHost(pc.Domain(), NULL));
   if (cookie_domain.empty())
     return false;
   if (cookie_domain[0] != '.')
@@ -331,7 +314,12 @@ static Time CanonExpiration(const CookieMonster::ParsedCookie& pc,
   // First, try the Max-Age attribute.
   uint64 max_age = 0;
   if (pc.HasMaxAge() &&
+#if defined(COMPILER_MSVC)
       sscanf_s(pc.MaxAge().c_str(), " %I64u", &max_age) == 1) {
+
+#else
+      sscanf(pc.MaxAge().c_str(), " %llu", &max_age) == 1) {
+#endif
     return current + TimeDelta::FromSeconds(max_age);
   }
 
@@ -417,6 +405,7 @@ bool CookieMonster::SetCookieWithCreationTime(const GURL& url,
 
   // We should have only purged at most one matching cookie.
   int num_deleted = DeleteEquivalentCookies(cookie_domain, *cc);
+  DCHECK(num_deleted <= 1);
 
   COOKIE_DLOG(INFO) << "SetCookie() cc: " << cc->DebugString();
 
@@ -1041,3 +1030,6 @@ std::string CookieMonster::CanonicalCookie::DebugString() const {
                       name_.c_str(), value_.c_str(), path_.c_str(),
                       creation_date_.ToTimeT());
 }
+
+}  // namespace
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <sstream>
@@ -74,8 +49,9 @@ Channel::Channel(const wstring& channel_id, Mode mode, Listener* listener)
 
 void Channel::Close() {
   // make sure we are no longer watching the pipe events
-  MessageLoop::current()->WatchObject(input_state_.overlapped.hEvent, NULL);
-  MessageLoop::current()->WatchObject(output_state_.overlapped.hEvent, NULL);
+  MessageLoopForIO* loop = MessageLoopForIO::current();
+  loop->WatchObject(input_state_.overlapped.hEvent, NULL);
+  loop->WatchObject(output_state_.overlapped.hEvent, NULL);
 
   if (pipe_ != INVALID_HANDLE_VALUE) {
     CloseHandle(pipe_);
@@ -193,7 +169,8 @@ bool Channel::Connect() {
     // to OnObjectSignaled that this is the special initialization signal.
 
     SetEvent(input_state_.overlapped.hEvent);
-    MessageLoop::current()->WatchObject(input_state_.overlapped.hEvent, this);
+    MessageLoopForIO::current()->WatchObject(
+        input_state_.overlapped.hEvent, this);
   }
 
   if (!waiting_connect_)
@@ -203,7 +180,8 @@ bool Channel::Connect() {
 
 bool Channel::ProcessConnection() {
   input_state_.is_pending = false;
-  MessageLoop::current()->WatchObject(input_state_.overlapped.hEvent, NULL);
+  MessageLoopForIO::current()->WatchObject(
+      input_state_.overlapped.hEvent, NULL);
 
   // Do we have a client connected to our pipe?
   DCHECK(pipe_ != INVALID_HANDLE_VALUE);
@@ -220,7 +198,8 @@ bool Channel::ProcessConnection() {
   switch (err) {
   case ERROR_IO_PENDING:
     input_state_.is_pending = true;
-    MessageLoop::current()->WatchObject(input_state_.overlapped.hEvent, this);
+    MessageLoopForIO::current()->WatchObject(
+        input_state_.overlapped.hEvent, this);
     break;
   case ERROR_PIPE_CONNECTED:
     waiting_connect_ = false;
@@ -236,7 +215,8 @@ bool Channel::ProcessConnection() {
 bool Channel::ProcessIncomingMessages() {
   DWORD bytes_read = 0;
 
-  MessageLoop::current()->WatchObject(input_state_.overlapped.hEvent, NULL);
+  MessageLoopForIO::current()->WatchObject(
+      input_state_.overlapped.hEvent, NULL);
 
   if (input_state_.is_pending) {
     input_state_.is_pending = false;
@@ -268,8 +248,8 @@ bool Channel::ProcessIncomingMessages() {
       if (!ok) {
         DWORD err = GetLastError();
         if (err == ERROR_IO_PENDING) {
-          MessageLoop::current()->WatchObject(input_state_.overlapped.hEvent,
-                                              this);
+          MessageLoopForIO::current()->WatchObject(
+              input_state_.overlapped.hEvent, this);
           input_state_.is_pending = true;
           return true;
         }
@@ -332,7 +312,8 @@ bool Channel::ProcessOutgoingMessages() {
   DWORD bytes_written;
 
   if (output_state_.is_pending) {
-    MessageLoop::current()->WatchObject(output_state_.overlapped.hEvent, NULL);
+    MessageLoopForIO::current()->WatchObject(
+        output_state_.overlapped.hEvent, NULL);
     output_state_.is_pending = false;
     BOOL ok = GetOverlappedResult(pipe_,
                                   &output_state_.overlapped,
@@ -361,8 +342,8 @@ bool Channel::ProcessOutgoingMessages() {
     if (!ok) {
       DWORD err = GetLastError();
       if (err == ERROR_IO_PENDING) {
-        MessageLoop::current()->WatchObject(output_state_.overlapped.hEvent,
-                                            this);
+        MessageLoopForIO::current()->WatchObject(
+            output_state_.overlapped.hEvent, this);
         output_state_.is_pending = true;
 
 #ifdef IPC_MESSAGE_DEBUG_EXTRA
@@ -455,3 +436,4 @@ void Channel::OnObjectSignaled(HANDLE object) {
 //------------------------------------------------------------------------------
 
 }
+

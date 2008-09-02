@@ -1,1 +1,0 @@
-var s = '<h3 align="center"><a href="http://finance.mop.com/TV/1.html" target="_blank">大盘高位振荡 散户该走该留</a></h3><p>　　每日天量成交，谁在买谁在卖？为什么QFII要减仓？一切疑问各地专家帮您解答！……[<a href="http://finance.mop.com/TV/1.html" target="_blank">全文</a>]</p>';

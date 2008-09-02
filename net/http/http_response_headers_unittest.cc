@@ -1,38 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <algorithm>
 
 #include "base/basictypes.h"
 #include "base/pickle.h"
 #include "base/time.h"
-#include "net/base/net_util.h"
 #include "net/http/http_response_headers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -363,7 +337,7 @@ TEST(HttpResponseHeadersTest, Persist) {
     },
   };
 
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     std::string headers = tests[i].raw_headers;
     HeadersToRaw(&headers);
     scoped_refptr<HttpResponseHeaders> parsed1 =
@@ -677,7 +651,7 @@ TEST(HttpResponseHeadersTest, RequiresValidation) {
   Time::FromString(L"Wed, 28 Nov 2007 00:40:12 GMT", &response_time);
   Time::FromString(L"Wed, 28 Nov 2007 00:45:20 GMT", &current_time);
 
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string headers(tests[i].headers);
     HeadersToRaw(&headers);
     scoped_refptr<HttpResponseHeaders> parsed = new HttpResponseHeaders(headers);
@@ -729,7 +703,7 @@ TEST(HttpResponseHeadersTest, Update) {
     },
   };
 
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string orig_headers(tests[i].orig_headers);
     HeadersToRaw(&orig_headers);
     scoped_refptr<HttpResponseHeaders> parsed =
@@ -775,7 +749,7 @@ TEST(HttpResponseHeadersTest, EnumerateHeaderLines) {
       "Foo: 1, 2, 3\n"
     },
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string headers(tests[i].headers);
     HeadersToRaw(&headers);
     scoped_refptr<HttpResponseHeaders> parsed =
@@ -859,7 +833,7 @@ TEST(HttpResponseHeadersTest, IsRedirect) {
       true
     },
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string headers(tests[i].headers);
     HeadersToRaw(&headers);
     scoped_refptr<HttpResponseHeaders> parsed =
@@ -896,6 +870,10 @@ TEST(HttpResponseHeadersTest, GetContentLength) {
       -1
     },
     { "HTTP/1.1 200 OK\n"
+      "Content-Length:  +10\n",
+      -1
+    },
+    { "HTTP/1.1 200 OK\n"
       "Content-Length: 23xb5\n",
       -1
     },
@@ -903,8 +881,45 @@ TEST(HttpResponseHeadersTest, GetContentLength) {
       "Content-Length: 0xA\n",
       -1
     },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: 010\n",
+      10
+    },
+    // Content-Length too big, will overflow an int64
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: 40000000000000000000\n",
+      -1
+    },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length:       10\n",
+      10
+    },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: 10  \n",
+      10
+    },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: \t10\n",
+      10
+    },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: \v10\n",
+      -1
+    },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: \f10\n",
+      -1
+    },
+    { "HTTP/1.1 200 OK\n"
+      "cOnTeNt-LENgth: 33\n",
+      33
+    },
+    { "HTTP/1.1 200 OK\n"
+      "Content-Length: 34\r\n",
+      -1
+    },
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string headers(tests[i].headers);
     HeadersToRaw(&headers);
     scoped_refptr<HttpResponseHeaders> parsed =
@@ -954,7 +969,7 @@ TEST(HttpResponseHeadersTest, IsKeepAlive) {
       false
     },
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string headers(tests[i].headers);
     HeadersToRaw(&headers);
     scoped_refptr<HttpResponseHeaders> parsed =
@@ -963,3 +978,4 @@ TEST(HttpResponseHeadersTest, IsKeepAlive) {
     EXPECT_EQ(tests[i].expected_keep_alive, parsed->IsKeepAlive());
   }
 }
+

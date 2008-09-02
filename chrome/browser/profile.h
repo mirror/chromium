@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // This class gathers state related to a single user profile.
 
@@ -40,6 +15,9 @@
 #include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "base/time.h"
+#ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
+#endif
 
 class BookmarkBarModel;
 class DownloadManager;
@@ -51,10 +29,13 @@ class SpellChecker;
 class TabRestoreService;
 class TemplateURLFetcher;
 class TemplateURLModel;
-class Timer;
 class URLRequestContext;
 class VisitedLinkMaster;
 class WebDataService;
+
+namespace base {
+class Timer;
+}
 
 class Profile {
  public:
@@ -219,6 +200,10 @@ class Profile {
   // Returns the BookmarkBarModel, creating if not yet created.
   virtual BookmarkBarModel* GetBookmarkBarModel() = 0;
 
+#ifdef CHROME_PERSONALIZATION
+  virtual ProfilePersonalization GetProfilePersonalization() = 0;
+#endif
+
   // Return whether 2 profiles are the same. 2 profiles are the same if they
   // represent the same profile. This can happen if there is pointer equality
   // or if one profile is the off the record version of another profile (or vice
@@ -299,6 +284,9 @@ class ProfileImpl : public Profile {
   virtual void ResetTabRestoreService();
   virtual SpellChecker* GetSpellChecker();
   virtual void MarkAsCleanShutdown();
+#ifdef CHROME_PERSONALIZATION
+  virtual ProfilePersonalization GetProfilePersonalization();
+#endif
 
  private:
   class RequestContext;
@@ -337,6 +325,10 @@ class ProfileImpl : public Profile {
   scoped_ptr<TemplateURLModel> template_url_model_;
   scoped_ptr<BookmarkBarModel> bookmark_bar_model_;
 
+#ifdef CHROME_PERSONALIZATION
+  ProfilePersonalization personalization_;
+#endif
+
   RequestContext* request_context_;
 
   scoped_refptr<DownloadManager> download_manager_;
@@ -351,7 +343,7 @@ class ProfileImpl : public Profile {
 
   ProfileControllerSet controllers_;
 
-  Timer* create_session_service_timer_;
+  base::Timer* create_session_service_timer_;
   CreateSessionServiceTask create_session_service_task_;
 
   scoped_ptr<OffTheRecordProfileImpl> off_the_record_profile_;
@@ -373,3 +365,4 @@ class ProfileImpl : public Profile {
 };
 
 #endif  // CHROME_BROWSER_PROFILE_H__
+

@@ -37,6 +37,7 @@
 #include "v8_events.h"
 #include "v8_binding.h"
 #include "v8_custom.h"
+#include "v8_collection.h"
 #include "v8_nodefilter.h"
 #include "V8Bridge.h"
 
@@ -71,7 +72,7 @@
 #include "EventTarget.h"
 #include "Event.h"
 #include "HTMLInputElement.h"
-#include "xmlhttprequest.h"
+#include "XMLHttpRequest.h"
 #include "StyleSheet.h"
 #include "StyleSheetList.h"
 #include "CSSRule.h"
@@ -97,6 +98,7 @@
 
 #include "base/stats_table.h"
 #include "webkit/glue/glue_util.h"
+#include "webkit/glue/webkit_glue.h"
 
 namespace WebCore {
 
@@ -181,7 +183,40 @@ void V8Proxy::UnregisterGlobalHandle(void* host,
   ASSERT(info->host_ == host);
   delete info;
 }
-#endif
+#endif  // ifndef NDEBUG
+
+void BatchConfigureAttributes(v8::Handle<v8::ObjectTemplate> inst,
+                              v8::Handle<v8::ObjectTemplate> proto,
+                              const BatchedAttribute* attrs,
+                              size_t num_attrs) {
+  for (size_t i = 0; i < num_attrs; ++i) {
+    const BatchedAttribute* a = &attrs[i];
+    (a->on_proto ? proto : inst)->SetAccessor(
+        v8::String::New(a->name),
+        a->getter,
+        a->setter,
+        a->data == V8ClassIndex::INVALID_CLASS_INDEX
+            ? v8::Handle<v8::Value>()
+            : v8::Integer::New(V8ClassIndex::ToInt(a->data)),
+        a->settings,
+        a->attribute);
+  }
+}
+
+void BatchConfigureConstants(v8::Handle<v8::FunctionTemplate> desc,
+                             v8::Handle<v8::ObjectTemplate> proto,
+                             const BatchedConstant* consts,
+                             size_t num_consts) {
+  for (size_t i = 0; i < num_consts; ++i) {
+    const BatchedConstant* c = &consts[i];
+    desc->Set(v8::String::New(c->name),
+              v8::Integer::New(c->value),
+              v8::ReadOnly);
+    proto->Set(v8::String::New(c->name),
+               v8::Integer::New(c->value),
+               v8::ReadOnly);
+  }
+}
 
 
 typedef HashMap<Node*, v8::Object*> NodeMap;
@@ -192,12 +227,12 @@ template<class T>
 class DOMPeerableWrapperMap : public DOMWrapperMap<T> {
  public:
   explicit DOMPeerableWrapperMap(v8::WeakReferenceCallback callback) :
-       DOMWrapperMap(callback) { }
+       DOMWrapperMap<T>(callback) { }
 
   // Get the JS wrapper object of an object.
   v8::Persistent<v8::Object> get(T* obj) {
     v8::Object* peer = static_cast<v8::Object*>(obj->peer());
-    ASSERT(peer == map_.get(obj));
+    ASSERT(peer == this->map_.get(obj));
     return peer ? v8::Persistent<v8::Object>(peer)
       : v8::Persistent<v8::Object>();
   }
@@ -210,7 +245,7 @@ class DOMPeerableWrapperMap : public DOMWrapperMap<T> {
 
   void forget(T* obj) {
     v8::Object* peer = static_cast<v8::Object*>(obj->peer());
-    ASSERT(peer == map_.get(obj));
+    ASSERT(peer == this->map_.get(obj));
     if (peer)
       obj->setPeer(0);
     DOMWrapperMap<T>::forget(obj);

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "config.h"
 #include <string>
@@ -671,6 +646,7 @@ void WebFrameLoaderClient::dispatchDidStartProvisionalLoad() {
   // If this load is what we expected from a client redirect, treat it as a
   // redirect from that original page. The expected redirect urls will be
   // cleared by DidCancelClientRedirect.
+  bool completing_client_redirect = false;
   if (expected_client_redirect_src_.is_valid()) {
     // expected_client_redirect_dest_ could be something like 
     // "javascript:history.go(-1)" thus we need to exclude url starts with
@@ -678,15 +654,22 @@ void WebFrameLoaderClient::dispatchDidStartProvisionalLoad() {
     DCHECK(expected_client_redirect_dest_.SchemeIs("javascript") || 
            expected_client_redirect_dest_ == url);
     ds->AppendRedirect(expected_client_redirect_src_);
-    if (d)
-      d->DidCompleteClientRedirect(webview, webframe_, 
-                                   expected_client_redirect_src_);
+    completing_client_redirect = true;
   }
   ds->AppendRedirect(url);
 
-  if (d)
+  if (d) {
+    // As the comment for DidCompleteClientRedirect in webview_delegate.h
+    // points out, whatever information its invocation contains should only
+    // be considered relevant until the next provisional load has started.
+    // So we first tell the delegate that the load started, and then tell it
+    // about the client redirect the load is responsible for completing.
     d->DidStartProvisionalLoadForFrame(webview, webframe_,
                                        NavigationGestureForLastLoad());
+    if (completing_client_redirect)
+      d->DidCompleteClientRedirect(webview, webframe_, 
+                                   expected_client_redirect_src_);
+  }
 
   // Cancel any pending loads.
   if (alt_404_page_fetcher_.get())
@@ -1169,8 +1152,8 @@ bool WebFrameLoaderClient::canShowMIMEType(const String& mime_type) const {
   // "internally" (i.e. inside the browser) regardless of whether or not the
   // browser or a plugin is doing the rendering.
 
-  if (mime_util::IsSupportedMimeType(
-      WideToASCII(webkit_glue::StringToStdWString(mime_type))))
+  if (net::IsSupportedMimeType(
+          WideToASCII(webkit_glue::StringToStdWString(mime_type))))
     return true;
 
   // See if the type is handled by an installed plugin, if so, we can show it.
@@ -1270,7 +1253,15 @@ void WebFrameLoaderClient::transitionToCommittedFromCachedPage(WebCore::CachedPa
   ASSERT_NOT_REACHED();
 }
 
+// Called when the FrameLoader goes into a state in which a new page load
+// will occur.  
 void WebFrameLoaderClient::transitionToCommittedForNewPage() {
+  WebViewImpl* webview = webframe_->webview_impl();
+  WebViewDelegate* d = webview->delegate();
+  // Notify the RenderView.
+  if (d) {
+    d->TransitionToCommittedForNewPage();
+  }
   makeDocumentView();
 }
 
@@ -1500,3 +1491,4 @@ bool WebFrameLoaderClient::ActionSpecifiesDisposition(
     *disposition = shift ? NEW_WINDOW : SAVE_TO_DISK;
   return true;
 }
+

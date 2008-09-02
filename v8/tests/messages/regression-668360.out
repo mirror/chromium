@@ -1,3 +1,0 @@
-regression-668360.js:6: Uncaught TypeError: Object a xx has no method 'doesNotExist'
-string.doesNotExist()
-       ^
