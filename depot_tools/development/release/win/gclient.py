@@ -534,7 +534,7 @@ def GetDefaultSolutionDeps(client, solution_name, platform=None,
     print >> logger, (
         "\nWARNING: DEPS file not found for solution: %s\n" % solution_name)
     return {}
-  deps = scope["deps"]
+  deps = scope.get("deps", {})
   # load os specific dependencies if defined.  these dependencies may override
   # or extend the values defined by the 'deps' member.
   if platform is None:
