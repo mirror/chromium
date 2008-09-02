@@ -124,8 +124,38 @@ def TarWrappers(target, source, env):
   if FailForModifiedSubversionWorkingDirectory(source):
     return 1
   tfp = tarfile.open(str(target[0]), 'w:gz')
-  tfp.add(source, 'depot_tools')
+
+  # TODO(sgk):  this was the original call to create the .tar.gz,
+  # but it preserves on-disk owner and group.
+  # tfp.add(source, 'depot_tools')
+
+  # TODO(sgk):  Attempt to use the tarfile module to mimic
+  # tar --owner --group
+  # Only adds the first file in each directory.
+  for root, dirs, files in os.walk(source):
+    subdir = root.replace(source, '')
+    if subdir.startswith('/'):
+      subdir = subdir[1:]
+    for p in dirs + files:
+      rname = os.path.join(root, p)
+      dtname = os.path.join('depot_tools', subdir, p)
+      print "tfp.gettarinfo(%s, %s)" % (rname, dtname)
+      try:
+        fileobj = open(rname, 'rb')
+      except:
+        ti = tfp.gettarinfo(rname, dtname)
+      else:
+        ti = tfp.gettarinfo(rname, dtname, fileobj)
+      ti.uid = 0
+      ti.uname = 'root'
+      ti.gid = 0
+      ti.gname = 'root'
+      tfp.addfile(ti)
   return None
+
+# TODO(sgk):  just use tar itself, which makes us not cross-platform,
+# but works as we want.
+TarWrappers = "tar zcf $TARGET --owner 0 --group 0 $SOURCE"
 
 TarWrappersAction = Action(TarWrappers,
                           'TarWrappers file: "$SOURCE" as "$TARGET"')
