@@ -9,4 +9,7 @@ then
   echo checking out latest depot_tools...
 fi
 
-exec svn co $opt "$url" "$1"
+if [ -e $1/.svn -o ! -e $1 ]
+then
+  exec svn co $opt $url $1
+fi

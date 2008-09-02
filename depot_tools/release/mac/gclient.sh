@@ -3,7 +3,7 @@
 base_dir=$(dirname "$0")
 opt=-q
 
-if [ -e "$base_dir/../.svn" ]
+if [ "X$DEPOT_TOOLS_UPDATE" != "X0" -a -e "$base_dir/../.svn" ]
 then
   svn $opt up "$base_dir/.."
 fi
