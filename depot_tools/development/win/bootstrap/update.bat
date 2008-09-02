@@ -11,8 +11,8 @@ exit /b 0
 :message
 echo checking out latest depot_tools...
 
+:svn
 set url="http://src.chromium.org/svn/trunk/depot_tools/development/release/win"
 set opt=-q
 
-:svn
 "%~dp0svn\svn.exe" co %opt% %url% %1
