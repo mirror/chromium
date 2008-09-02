@@ -11,8 +11,8 @@ exit /b 0
 :message
 echo checking out latest depot_tools...
 
+:svn
 set url="$DOWNLOAD_URL/release/$RELEASE_ARCH"
 set opt=-q
 
-:svn
 "%~dp0svn\svn.exe" co %opt% %url% %1
