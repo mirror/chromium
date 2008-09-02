@@ -94,6 +94,7 @@ def FailForModifiedSubversionWorkingDirectory(source):
     sys.stdout.write(msg % (repr(source), stdout))
   return False
 
+# TODO(sgk):  uses working directory .svn dirs, make it hermetic
 def TarWrappers(target, source, env):
   source = str(source[0])
   if FailForModifiedSubversionWorkingDirectory(source):
@@ -109,6 +110,7 @@ base_env['BUILDERS']['TarWrappers'] = Builder(action=TarWrappersAction,
                                               source_factory=Dir,
                                               target_factory=File)
 
+# TODO(sgk):  uses working directory .svn dirs, make it hermetic
 def ZipWrappers(target, source, env):
   source = str(source[0])
   if FailForModifiedSubversionWorkingDirectory(source):
