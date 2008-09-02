@@ -1,6 +1,6 @@
 #!/bin/sh
 
-url="svn://chrome-svn.corp.google.com/chrome/trunk/depot_tools/release/mac"
+url="http://src.chromium.org/svn/trunk/depot_tools/release/mac"
 opt=-q
 
 # we silently update the depot_tools when it already exists
