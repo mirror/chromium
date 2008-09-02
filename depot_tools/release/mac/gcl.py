@@ -32,7 +32,7 @@ gcl_info_dir = ""
 
 def GetSVNFileInfo(file, field):
   """Returns a field from the svn info output for the given file."""
-  output = RunShell(["svn", "info", "--depth", "empty", file])
+  output = RunShell(["svn", "info", file])
   for line in output.splitlines():
     search = field + ": "
     if line.startswith(search):
@@ -203,7 +203,7 @@ def LoadChangelistInfo(changename, fail_on_not_found=True,
   if update_status:
     for file in files:
       filename = os.path.join(GetRepositoryRoot(), file[1])
-      status = RunShell(["svn", "status", "--depth", "empty", filename])[:7]
+      status = RunShell(["svn", "status", filename])[:7]
       if not status:  # File has been reverted.
         save = True
         files.remove(file)
@@ -396,6 +396,10 @@ def GenerateDiff(files):
   """Returns a string containing the diff for the given file list."""
   diff = []
   for file in files:
+    # Use svn info output instead of os.path.isdir because the latter fails
+    # when the file is deleted.
+    if GetSVNFileInfo(file, "Node Kind") == "directory":
+      continue
     # If the user specified a custom diff command in their svn config file,
     # then it'll be used when we do svn diff, which we don't want to happen
     # since we want the unified diff.  Using --diff-cmd=diff doesn't always
@@ -409,8 +413,8 @@ def GenerateDiff(files):
     bogus_dir = os.path.join(parent_dir, "temp_svn_config")
     if not os.path.exists(bogus_dir):
       os.mkdir(bogus_dir)
-    diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir,
-                          "--depth", "empty", file], universal_newlines=True))
+    diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir, file],
+                         universal_newlines=True))
   return "".join(diff)
 
 
@@ -656,7 +660,6 @@ def main(argv=None):
     args =["svn", command]
     root = GetRepositoryRoot()
     args.extend([os.path.join(root, x) for x in change_info.FileList()])
-    args.extend(["--depth", "empty"])
     RunShell(args, True)
   return 0
 
