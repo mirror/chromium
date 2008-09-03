@@ -464,24 +464,14 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
 
-def TryChange(change_info):
+def TryChange(change_info, args):
   """Create a diff file of change_info and send it to the try server."""
   try:
     import trychange
-  except:
+  except ImportError:
     ErrorExit("You need to install trychange.py to use the try server.")
 
-  # Change the current working directory before generating the diff so that it
-  # shows the correct base.
-  os.chdir(trychange.GetCheckoutRoot())
-  subpath = trychange.PathDifference(trychange.GetCheckoutRoot(),
-                                     GetRepositoryRoot())
-  # Generate the diff and write it to the submit queue path. Fix the file list
-  # according to the new path.
-  diff = GenerateDiff([os.path.join(subpath, x)
-                       for x in change_info.FileList()])
-  patch_name = trychange.TryChange(change_info.name, diff)
-  print 'Patch \'%s\' sent to try server.' % patch_name
+  trychange.TryChange(args, change_info.name, change_info.FileList())
 
 
 def Commit(change_info):
@@ -653,7 +643,7 @@ def main(argv=None):
   elif command == "delete":
     change_info.Delete()
   elif command == "try":
-    TryChange(change_info)
+    TryChange(change_info, argv[3:])
   else:
     # Everything else that is passed into gcl we redirect to svn, after adding
     # the files. This allows commands such as 'gcl diff xxx' to work.
