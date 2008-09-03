@@ -496,7 +496,9 @@ def Commit(change_info):
     change_info.description = GetIssueDescription(change_info.issue)
 
   commit_message = change_info.description.replace('\r\n', '\n')
-  commit_message += '\nReview URL: ' + url
+  # Removed because we don't want to leak the url in the description.
+  # Fix this when the url is external.
+  # commit_message += '\nReview URL: ' + url
 
   handle, commit_filename = tempfile.mkstemp(text=True)
   os.write(handle, commit_message)
