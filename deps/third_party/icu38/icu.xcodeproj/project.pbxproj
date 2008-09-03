@@ -399,7 +399,7 @@
 		7B836C960E55C96100F6AD31 /* common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
 		7B836C970E55C96100F6AD31 /* debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = debug.xcconfig; sourceTree = "<group>"; };
 		7B836C980E55C96100F6AD31 /* release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = release.xcconfig; sourceTree = "<group>"; };
-		7BD53A9C0D6F6561003CD41E /* stubdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stubdata.c; path = ../source/stubdata/stubdata.c; sourceTree = SOURCE_ROOT; };
+		7BD53A9C0D6F6561003CD41E /* stubdata.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stubdata.c; sourceTree = "<group>"; };
 		7BD53AAB0D6F6671003CD41E /* libicuuc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libicuuc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BD53C570D6F66B1003CD41E /* bmpset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bmpset.cpp; sourceTree = "<group>"; };
 		7BD53C580D6F66B1003CD41E /* bmpset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bmpset.h; sourceTree = "<group>"; };
@@ -1021,7 +1021,7 @@
 				7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */,
 			);
 			name = Configuration;
-			path = ../../../build;
+			path = ../../build;
 			sourceTree = "<group>";
 		};
 		7BD53A880D6F6543003CD41E = {
@@ -1057,7 +1057,7 @@
 				7BD53A9F0D6F6569003CD41E /* stubdata */,
 				7BD5402A0D6F7299003CD41E /* tools */,
 			);
-			name = source;
+			path = source;
 			sourceTree = "<group>";
 		};
 		7BD53A9F0D6F6569003CD41E /* stubdata */ = {
@@ -1065,7 +1065,7 @@
 			children = (
 				7BD53A9C0D6F6561003CD41E /* stubdata.c */,
 			);
-			name = stubdata;
+			path = stubdata;
 			sourceTree = "<group>";
 		};
 		7BD53C560D6F66B1003CD41E /* common */ = {
@@ -1275,9 +1275,8 @@
 				7BD53D2A0D6F66B2003CD41E /* wintz.c */,
 				7BD53D2B0D6F66B2003CD41E /* wintz.h */,
 			);
-			name = common;
-			path = ../source/common;
-			sourceTree = SOURCE_ROOT;
+			path = common;
+			sourceTree = "<group>";
 		};
 		7BD53DFC0D6F679D003CD41E /* public */ = {
 			isa = PBXGroup;
@@ -1285,9 +1284,8 @@
 				7BD53DFD0D6F679D003CD41E /* common */,
 				7BD53E430D6F679D003CD41E /* i18n */,
 			);
-			name = public;
-			path = ../public;
-			sourceTree = SOURCE_ROOT;
+			path = public;
+			sourceTree = "<group>";
 		};
 		7BD53DFD0D6F679D003CD41E /* common */ = {
 			isa = PBXGroup;
@@ -1633,9 +1631,8 @@
 				7BD53F650D6F6FF4003CD41E /* winnmfmt.cpp */,
 				7BD53F660D6F6FF4003CD41E /* winnmfmt.h */,
 			);
-			name = i18n;
-			path = ../source/i18n;
-			sourceTree = SOURCE_ROOT;
+			path = i18n;
+			sourceTree = "<group>";
 		};
 		7BD5402A0D6F7299003CD41E /* tools */ = {
 			isa = PBXGroup;
@@ -1644,7 +1641,7 @@
 				7BD541150D6F846F003CD41E /* icupkg */,
 				7BD5402B0D6F72B0003CD41E /* toolutil */,
 			);
-			name = tools;
+			path = tools;
 			sourceTree = "<group>";
 		};
 		7BD5402B0D6F72B0003CD41E /* toolutil */ = {
@@ -1678,18 +1675,16 @@
 				7BD540470D6F72B0003CD41E /* xmlparser.cpp */,
 				7BD540480D6F72B0003CD41E /* xmlparser.h */,
 			);
-			name = toolutil;
-			path = ../source/tools/toolutil;
-			sourceTree = SOURCE_ROOT;
+			path = toolutil;
+			sourceTree = "<group>";
 		};
 		7BD540DB0D6F7F44003CD41E /* genccode */ = {
 			isa = PBXGroup;
 			children = (
 				7BD540DD0D6F7F44003CD41E /* genccode.c */,
 			);
-			name = genccode;
-			path = ../source/tools/genccode;
-			sourceTree = SOURCE_ROOT;
+			path = genccode;
+			sourceTree = "<group>";
 		};
 		7BD541010D6F83D3003CD41E /* generated */ = {
 			isa = PBXGroup;
@@ -1704,9 +1699,8 @@
 			children = (
 				7BD541170D6F846F003CD41E /* icupkg.cpp */,
 			);
-			name = icupkg;
-			path = ../source/tools/icupkg;
-			sourceTree = SOURCE_ROOT;
+			path = icupkg;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -1866,7 +1860,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/../source/data/in/icudt38l.dat",
+				"$(SRCROOT)/source/data/in/icudt38l.dat",
 				"$(BUILT_PRODUCTS_DIR)/icupkg",
 				"$(BUILT_PRODUCTS_DIR)/genccode",
 			);
@@ -1876,7 +1870,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -ex\nGENERATED_DIR=\"${CONFIGURATION_TEMP_DIR}/generated\"\nmkdir -p \"${GENERATED_DIR}/icudt38l\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -d \"${GENERATED_DIR}/icudt38l\" --list -x \"*\" ../source/data/in/icudt38l.dat > \"${GENERATED_DIR}/icudata.lst\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -tl -c -s \"${GENERATED_DIR}/icudt38l\" -a \"${GENERATED_DIR}/icudata.lst\" new \"${GENERATED_DIR}/icudt38l.dat\"\n\"${BUILT_PRODUCTS_DIR}/genccode\" -a gcc-darwin -n icudt38l -e icudt38 -d \"${GENERATED_DIR}\" \"${GENERATED_DIR}/icudt38l.dat\"\n";
+			shellScript = "set -ex\nGENERATED_DIR=\"${CONFIGURATION_TEMP_DIR}/generated\"\nmkdir -p \"${GENERATED_DIR}/icudt38l\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -d \"${GENERATED_DIR}/icudt38l\" --list -x \"*\" source/data/in/icudt38l.dat > \"${GENERATED_DIR}/icudata.lst\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -tl -c -s \"${GENERATED_DIR}/icudt38l\" -a \"${GENERATED_DIR}/icudata.lst\" new \"${GENERATED_DIR}/icudt38l.dat\"\n\"${BUILT_PRODUCTS_DIR}/genccode\" -a gcc-darwin -n icudt38l -e icudt38 -d \"${GENERATED_DIR}\" \"${GENERATED_DIR}/icudt38l.dat\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2289,7 +2283,7 @@
 					../source/common,
 					../source/i18n,
 				);
-				XCODEPROJ_DEPTH = ../../..;
+				XCODEPROJ_DEPTH = ../..;
 			};
 			name = Debug;
 		};
@@ -2303,7 +2297,7 @@
 					../source/common,
 					../source/i18n,
 				);
-				XCODEPROJ_DEPTH = ../../..;
+				XCODEPROJ_DEPTH = ../..;
 			};
 			name = Release;
 		};
