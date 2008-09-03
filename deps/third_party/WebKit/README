@@ -1,10 +1,18 @@
-This directory is our (mostly) unmodified copy of webkit.
+This directory is our unmodified copy of webkit.
 
 BASE_REVISION: Specifies the webkit branch and revision we are synced to.
 MANIFEST: Specifies the list of files that we have forked
 fork_files_in_manifest.py: Does the forking magic given the MANIFEST file
 
-To fork/unfork a file:
+
+*NOTE* We are no longer forking files *NOTE*
+
+** If you feel you need to fork a file email eseidel@google.com and we can **
+** find an alternate solution.  All changes should be made @ webkit.org **
+** instead of forking our local copy.  **
+
+
+Old instructions on how to fork/unfork a file:
 Changebranch #1
 1. Add/remove the file from the MANIFEST
 2. Run "../python_24/python.exe fork_files_in_manifest.py MANIFEST"

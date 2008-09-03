@@ -28,6 +28,7 @@ WebCore\page\Page.h
 WebCore\page\Settings.cpp
 WebCore\page\Settings.h
 WebCore\page\mac\WebCoreFrameBridge.mm
+WebCore\platform\Cursor.h
 WebCore\platform\KURL.cpp
 WebCore\platform\KURL.h
 WebCore\platform\SecurityOrigin.cpp
@@ -59,3 +60,4 @@ WebCore\xml\XMLHttpRequest.h
 WebCore\xml\XSLImportRule.cpp
 WebCore\xml\XSLStyleSheet.cpp
 WebCore\xml\XSLStyleSheet.h
+
