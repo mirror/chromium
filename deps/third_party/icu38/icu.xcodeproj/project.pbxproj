@@ -2278,10 +2278,10 @@
 			baseConfigurationReference = 7B836C970E55C96100F6AD31 /* debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-					../public/common,
-					../public/i18n,
-					../source/common,
-					../source/i18n,
+					public/common,
+					public/i18n,
+					source/common,
+					source/i18n,
 				);
 				XCODEPROJ_DEPTH = ../..;
 			};
@@ -2292,10 +2292,10 @@
 			baseConfigurationReference = 7B836C980E55C96100F6AD31 /* release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-					../public/common,
-					../public/i18n,
-					../source/common,
-					../source/i18n,
+					public/common,
+					public/i18n,
+					source/common,
+					source/i18n,
 				);
 				XCODEPROJ_DEPTH = ../..;
 			};
@@ -2379,7 +2379,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					../source/tools/toolutil,
+					source/tools/toolutil,
 				);
 				PRODUCT_NAME = genccode;
 			};
@@ -2391,7 +2391,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					../source/tools/toolutil,
+					source/tools/toolutil,
 				);
 				PRODUCT_NAME = genccode;
 			};
@@ -2403,7 +2403,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					../source/tools/toolutil,
+					source/tools/toolutil,
 				);
 				PRODUCT_NAME = icupkg;
 			};
@@ -2415,7 +2415,7 @@
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(HEADER_SEARCH_PATHS)",
-					../source/tools/toolutil,
+					source/tools/toolutil,
 				);
 				PRODUCT_NAME = icupkg;
 			};
