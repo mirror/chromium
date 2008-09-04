@@ -43,6 +43,7 @@ namespace KJS {
     class ExecState;
     class FunctionBodyNode;
     class Instruction;
+    class InternalFunction;
     class JSFunction;
     class JSGlobalObject;
     class ProgramNode;
@@ -96,8 +97,8 @@ namespace KJS {
         }
 
         JSValue* retrieveArguments(ExecState*, JSFunction*) const;
-        JSValue* retrieveCaller(ExecState*, JSFunction*) const;
-        void retrieveLastCaller(ExecState* exec, int& lineNumber, int& sourceId, UString& sourceURL) const;
+        JSValue* retrieveCaller(ExecState*, InternalFunction*) const;
+        void retrieveLastCaller(ExecState* exec, int& lineNumber, int& sourceId, UString& sourceURL, JSValue*& function) const;
 
         void getArgumentsData(Register* callFrame, JSFunction*&, Register*& argv, int& argc);
         void setTimeoutTime(unsigned timeoutTime) { m_timeoutTime = timeoutTime; }
@@ -138,7 +139,7 @@ namespace KJS {
         NEVER_INLINE bool unwindCallFrame(ExecState*, JSValue*, const Instruction*&, CodeBlock*&, ScopeChainNode*&, Register*&);
         NEVER_INLINE Instruction* throwException(ExecState*, JSValue*&, const Instruction*, CodeBlock*&, ScopeChainNode*&, Register*&, bool);
 
-        Register* callFrame(ExecState*, JSFunction*) const;
+        Register* callFrame(ExecState*, InternalFunction*) const;
 
         JSValue* privateExecute(ExecutionFlag, ExecState* = 0, RegisterFile* = 0, Register* = 0, ScopeChainNode* = 0, CodeBlock* = 0, JSValue** exception = 0);
 
@@ -150,6 +151,11 @@ namespace KJS {
 
         bool isJSArray(JSValue* v) { return !JSImmediate::isImmediate(v) && v->asCell()->vptr() == m_jsArrayVptr; }
         bool isJSString(JSValue* v) { return !JSImmediate::isImmediate(v) && v->asCell()->vptr() == m_jsStringVptr; }
+        
+        void tryCacheGetByID(ExecState*, CodeBlock*, Instruction* vPC, JSValue* baseValue, const Identifier& propertyName, const PropertySlot&);
+        void uncacheGetByID(CodeBlock*, Instruction* vPC);
+        void tryCachePutByID(CodeBlock*, Instruction* vPC, JSValue* baseValue, const PutPropertySlot&);
+        void uncachePutByID(CodeBlock*, Instruction* vPC);
         
         int m_reentryDepth;
         unsigned m_timeoutTime;

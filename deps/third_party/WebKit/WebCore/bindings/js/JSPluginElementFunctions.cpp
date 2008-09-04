@@ -20,8 +20,6 @@
 #include "config.h"
 #include "JSPluginElementFunctions.h"
 
-#if USE(JAVASCRIPTCORE_BINDINGS)
-
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "HTMLDocument.h"
@@ -32,40 +30,9 @@
 #include "runtime.h"
 #include "runtime_object.h"
 
-#endif
-
 using namespace KJS;
 
 namespace WebCore {
-
-#if !USE(JAVASCRIPTCORE_BINDINGS)
-
-JSValue* runtimeObjectGetter(ExecState*, const Identifier&, const PropertySlot&)
-{
-    return jsUndefined();
-}
-
-JSValue* runtimeObjectPropertyGetter(ExecState*, const Identifier&, const PropertySlot&)
-{
-    return jsUndefined();
-}
-
-bool runtimeObjectCustomGetOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&, JSHTMLElement*)
-{
-    return false;
-}
-
-bool runtimeObjectCustomPut(ExecState*, const Identifier&, JSValue*, HTMLElement*)
-{
-    return false;
-}
-
-CallType runtimeObjectGetCallData(HTMLElement*, CallData&)
-{
-    return CallTypeNone;
-}
-
-#else
 
 using namespace Bindings;
 using namespace HTMLNames;
@@ -122,14 +89,14 @@ bool runtimeObjectCustomGetOwnPropertySlot(ExecState* exec, const Identifier& pr
     return true;
 }
 
-bool runtimeObjectCustomPut(ExecState* exec, const Identifier& propertyName, JSValue* value, HTMLElement* element)
+bool runtimeObjectCustomPut(ExecState* exec, const Identifier& propertyName, JSValue* value, HTMLElement* element, PutPropertySlot& slot)
 {
     RuntimeObjectImp* runtimeObject = getRuntimeObject(exec, element);
     if (!runtimeObject)
         return 0;
     if (!runtimeObject->hasProperty(exec, propertyName))
         return false;
-    runtimeObject->put(exec, propertyName, value);
+    runtimeObject->put(exec, propertyName, value, slot);
     return true;
 }
 
@@ -150,7 +117,5 @@ CallType runtimeObjectGetCallData(HTMLElement* element, CallData& callData)
     callData.native.function = callPlugin;
     return CallTypeHost;
 }
-
-#endif
 
 } // namespace WebCore

@@ -36,6 +36,8 @@
 #include "CanvasPattern.h"
 #include "CanvasPixelArray.h"
 #include "CanvasStyle.h"
+#include "CSSPropertyNames.h"
+#include "CSSStyleSelector.h"
 #include "Document.h"
 #include "ExceptionCode.h"
 #include "FloatConversion.h"
@@ -52,22 +54,18 @@
 #include "RenderHTMLCanvas.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
+#include "TextMetrics.h"
 #include <kjs/interpreter.h>
 #include <stdio.h>
 #include <wtf/MathExtras.h>
 
-#if PLATFORM(QT)
-#include <QPainter>
-#include <QPixmap>
-#include <QPainterPath>
-#elif PLATFORM(CAIRO)
-#include "CairoPath.h"
-#include <cairo.h>
-#endif
+using namespace std;
 
 namespace WebCore {
 
 using namespace HTMLNames;
+
+const char* defaultFont = "10px sans-serif";
 
 CanvasRenderingContext2D::CanvasRenderingContext2D(HTMLCanvasElement* canvas)
     : m_canvas(canvas)
@@ -102,6 +100,10 @@ CanvasRenderingContext2D::State::State()
     , m_shadowColor("black")
     , m_globalAlpha(1)
     , m_globalComposite(CompositeSourceOver)
+    , m_textAlign(StartTextAlign)
+    , m_textBaseline(AlphabeticTextBaseline)
+    , m_unparsedFont(defaultFont)
+    , m_realizedFont(false)
 {
 }
 
@@ -836,6 +838,14 @@ static IntSize size(HTMLImageElement* image)
     return IntSize();
 }
 
+static inline FloatRect normalizeRect(const FloatRect& rect)
+{
+    return FloatRect(min(rect.x(), rect.right()),
+        min(rect.y(), rect.bottom()),
+        max(rect.width(), -rect.width()),
+        max(rect.height(), -rect.height()));
+}
+
 void CanvasRenderingContext2D::drawImage(HTMLImageElement* image, float x, float y)
 {
     ASSERT(image);
@@ -867,13 +877,12 @@ void CanvasRenderingContext2D::drawImage(HTMLImageElement* image, const FloatRec
     ec = 0;
 
     FloatRect imageRect = FloatRect(FloatPoint(), size(image));
-    if (!(imageRect.contains(srcRect) && srcRect.width() >= 0 && srcRect.height() >= 0 
-            && dstRect.width() >= 0 && dstRect.height() >= 0)) {
+    if (!imageRect.contains(normalizeRect(srcRect)) || srcRect.width() == 0 || srcRect.height() == 0) {
         ec = INDEX_SIZE_ERR;
         return;
     }
 
-    if (srcRect.isEmpty() || dstRect.isEmpty())
+    if (!dstRect.width() || !dstRect.height())
         return;
 
     GraphicsContext* c = drawingContext();
@@ -918,13 +927,12 @@ void CanvasRenderingContext2D::drawImage(HTMLCanvasElement* canvas, const FloatR
     ec = 0;
 
     FloatRect srcCanvasRect = FloatRect(FloatPoint(), canvas->size());
-    if (!(srcCanvasRect.contains(srcRect) && srcRect.width() >= 0 && srcRect.height() >= 0 
-            && dstRect.width() >= 0 && dstRect.height() >= 0)) {
+    if (!srcCanvasRect.contains(normalizeRect(srcRect)) || srcRect.width() == 0 || srcRect.height() == 0) {
         ec = INDEX_SIZE_ERR;
         return;
     }
 
-    if (srcRect.isEmpty() || dstRect.isEmpty())
+    if (!dstRect.width() || !dstRect.height())
         return;
 
     GraphicsContext* c = drawingContext();
@@ -1135,6 +1143,207 @@ void CanvasRenderingContext2D::putImageData(ImageData* data, float dx, float dy,
     IntPoint destPoint(destOffset.width(), destOffset.height());
     
     buffer->putImageData(data, sourceRect, destPoint);
+}
+
+String CanvasRenderingContext2D::font() const
+{
+    return state().m_unparsedFont;
+}
+
+void CanvasRenderingContext2D::setFont(const String& newFont)
+{
+    RefPtr<CSSMutableStyleDeclaration> tempDecl = CSSMutableStyleDeclaration::create();
+    CSSParser parser(!m_canvas->document()->inCompatMode()); // Use the parse mode of the canvas' document when parsing CSS.
+        
+    String declarationText("font: ");
+    declarationText += newFont;
+    parser.parseDeclaration(tempDecl.get(), declarationText);
+    if (!tempDecl->length())
+        return;
+            
+    // The parse succeeded.
+    state().m_unparsedFont = newFont;
+    
+    // Map the <canvas> font into the text style. If the font uses keywords like larger/smaller, these will work
+    // relative to the canvas.
+    RenderArena* arena = m_canvas->document()->renderArena();
+    RenderStyle* newStyle = new (arena) RenderStyle();
+    newStyle->ref();
+    if (m_canvas->computedStyle())
+        newStyle->setFontDescription(m_canvas->computedStyle()->fontDescription());
+
+    // Now map the font property into the style.
+    CSSStyleSelector* styleSelector = m_canvas->document()->styleSelector();
+    styleSelector->applyPropertyToStyle(CSSPropertyFont, tempDecl->getPropertyCSSValue(CSSPropertyFont).get(), newStyle);
+    
+    state().m_font = newStyle->font();
+    state().m_font.update(styleSelector->fontSelector());
+    state().m_realizedFont = true;
+
+    newStyle->deref(arena);
+    
+    // Set the font in the graphics context.
+    GraphicsContext* c = drawingContext();
+    if (!c)
+        return;
+    c->setFont(state().m_font);
+}
+        
+String CanvasRenderingContext2D::textAlign() const
+{
+    return textAlignName(state().m_textAlign);
+}
+
+void CanvasRenderingContext2D::setTextAlign(const String& s)
+{
+    TextAlign align;
+    if (!parseTextAlign(s, align))
+        return;
+    state().m_textAlign = align;
+}
+        
+String CanvasRenderingContext2D::textBaseline() const
+{
+    return textBaselineName(state().m_textBaseline);
+}
+
+void CanvasRenderingContext2D::setTextBaseline(const String& s)
+{
+    TextBaseline baseline;
+    if (!parseTextBaseline(s, baseline))
+        return;
+    state().m_textBaseline = baseline;
+}
+
+void CanvasRenderingContext2D::fillText(const String& text, float x, float y)
+{
+    drawTextInternal(text, x, y, true);
+}
+
+void CanvasRenderingContext2D::fillText(const String& text, float x, float y, float maxWidth)
+{
+    drawTextInternal(text, x, y, true, maxWidth, true);
+}
+
+void CanvasRenderingContext2D::strokeText(const String& text, float x, float y)
+{
+    drawTextInternal(text, x, y, false);
+}
+
+void CanvasRenderingContext2D::strokeText(const String& text, float x, float y, float maxWidth)
+{
+    drawTextInternal(text, x, y, false, maxWidth, true);
+}
+
+PassRefPtr<TextMetrics> CanvasRenderingContext2D::measureText(const String& text)
+{
+    RefPtr<TextMetrics> metrics = TextMetrics::create();
+    metrics->setWidth(accessFont().width(TextRun(text.characters(), text.length())));
+    return metrics;
+}
+
+void CanvasRenderingContext2D::drawTextInternal(const String& text, float x, float y, bool fill, float maxWidth, bool useMaxWidth)
+{
+    GraphicsContext* c = drawingContext();
+    if (!c)
+        return;
+    
+    const Font& font = accessFont();
+
+    // FIXME: Handle maxWidth.
+    // FIXME: Need to turn off font smoothing.
+
+    bool rtl = m_canvas->computedStyle() ? m_canvas->computedStyle()->direction() == RTL : false;
+    bool override = m_canvas->computedStyle() ? m_canvas->computedStyle()->unicodeBidi() == Override : false;
+
+    unsigned length = text.length();
+    const UChar* string = text.characters();
+    TextRun textRun(string, length, 0, 0, 0, rtl, override, false, false);
+
+    // Draw the item text at the correct point.
+    FloatPoint location(x, y);
+    switch (state().m_textBaseline) {
+        case TopTextBaseline:
+        case HangingTextBaseline:
+            location.setY(y + font.ascent());
+            break;
+        case BottomTextBaseline:
+        case IdeographicTextBaseline:
+            location.setY(y - font.descent());
+            break;
+        case MiddleTextBaseline:
+            location.setY(y - font.descent() + font.height() / 2);
+            break;
+        case AlphabeticTextBaseline:
+        default:
+             // Do nothing.
+            break;
+    }
+    
+    float width = font.width(TextRun(text, false, 0, 0, rtl, override));
+
+    TextAlign align = state().m_textAlign;
+    if (align == StartTextAlign)
+         align = rtl ? RightTextAlign : LeftTextAlign;
+    else if (align == EndTextAlign)
+        align = rtl ? LeftTextAlign : RightTextAlign;
+    
+    switch (align) {
+        case CenterTextAlign:
+            location.setX(location.x() - width / 2);
+            break;
+        case RightTextAlign:
+            location.setX(location.x() - width);
+            break;
+        default:
+            break;
+    }
+    
+    // The slop built in to this mask rect matches the heuristic used in FontCGWin.cpp for GDI text.
+    FloatRect textRect = FloatRect(location.x() - font.height() / 2, location.y() - font.ascent() - font.lineGap(),
+                                   width + font.height(), font.lineSpacing());
+    if (!fill)
+        textRect.inflate(c->strokeThickness() / 2);
+        
+    CanvasStyle* drawStyle = fill ? state().m_fillStyle.get() : state().m_strokeStyle.get();
+    if (drawStyle->canvasGradient() || drawStyle->canvasPattern()) {
+        IntRect maskRect = enclosingIntRect(textRect);
+
+        auto_ptr<ImageBuffer> maskImage = ImageBuffer::create(maskRect.size(), false);
+        
+        GraphicsContext* maskImageContext = maskImage->context();
+
+        if (fill)
+            maskImageContext->setFillColor(Color::black);
+        else {
+            maskImageContext->setStrokeColor(Color::black);
+            maskImageContext->setStrokeThickness(c->strokeThickness());
+        }
+
+        maskImageContext->setTextDrawingMode(fill ? cTextFill : cTextStroke);
+        maskImageContext->translate(-maskRect.x(), -maskRect.y());
+        
+        maskImageContext->setFont(font);
+        maskImageContext->drawBidiText(textRun, location);
+        
+        c->save();
+        c->clipToImageBuffer(maskRect, maskImage.get());
+        drawStyle->applyFillColor(c);
+        c->fillRect(maskRect);
+        c->restore();
+
+        return;
+    }
+
+    c->setTextDrawingMode(fill ? cTextFill : cTextStroke);
+    c->drawBidiText(textRun, location);
+}
+
+const Font& CanvasRenderingContext2D::accessFont()
+{
+    if (!state().m_realizedFont)
+        setFont(state().m_unparsedFont);
+    return state().m_font;
 }
 
 } // namespace WebCore

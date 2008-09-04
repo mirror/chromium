@@ -203,7 +203,7 @@ namespace WebCore {
         void setTextDrawingMode(int);
 
         void drawText(const TextRun&, const IntPoint&, int from = 0, int to = -1);
-        void drawBidiText(const TextRun&, const IntPoint&);
+        void drawBidiText(const TextRun&, const FloatPoint&);
         void drawHighlightForText(const TextRun&, const IntPoint&, int h, const Color& backgroundColor, int from = 0, int to = -1);
 
         FloatRect roundToDevicePixels(const FloatRect&);
@@ -235,6 +235,9 @@ namespace WebCore {
         void setMiterLimit(float);
 
         void setAlpha(float);
+#if PLATFORM(CAIRO)
+        float getAlpha();
+#endif
 
         void setCompositeOperation(CompositeOperator);
 

@@ -34,7 +34,7 @@ using namespace KJS;
 
 void JSStartProfiling(JSContextRef ctx, JSStringRef title)
 {
-    Profiler::profiler()->startProfiling(toJS(ctx), title->ustring(), 0);
+    Profiler::profiler()->startProfiling(toJS(ctx), title->ustring());
 }
 
 void JSEndProfiling(JSContextRef ctx, JSStringRef title)
@@ -42,6 +42,5 @@ void JSEndProfiling(JSContextRef ctx, JSStringRef title)
     ExecState* exec = toJS(ctx);
     Profiler* profiler = Profiler::profiler();
     profiler->stopProfiling(exec, title->ustring());
-    profiler->didFinishAllExecution(exec);
 }
 

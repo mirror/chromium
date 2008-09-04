@@ -54,6 +54,7 @@ namespace KJS {
     class FuncDeclNode;
     class Node;
     class EvalCodeBlock;
+    class JSFunction;
     class ProgramCodeBlock;
     class PropertyListNode;
     class SourceStream;
@@ -208,6 +209,7 @@ namespace KJS {
 
         virtual bool isNumber() const KJS_FAST_CALL { return false; }
         virtual bool isString() const KJS_FAST_CALL { return false; }
+        virtual bool isNull() const KJS_FAST_CALL { return false; }
         virtual bool isPure(CodeGenerator&) const KJS_FAST_CALL { return false; }        
         virtual bool isLocation() const KJS_FAST_CALL { return false; }
         virtual bool isResolveNode() const KJS_FAST_CALL { return false; }
@@ -244,6 +246,8 @@ namespace KJS {
             : ExpressionNode(globalData, NullType)
         {
         }
+
+        virtual bool isNull() const KJS_FAST_CALL { return true; }
 
         virtual RegisterID* emitCode(CodeGenerator&, RegisterID* = 0) KJS_FAST_CALL;
 

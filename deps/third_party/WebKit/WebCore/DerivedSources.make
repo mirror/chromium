@@ -337,11 +337,14 @@ DOM_CLASSES = \
     StyleSheetList \
     Text \
     TextEvent \
+    TextMetrics \
     TimeRanges \
     TreeWalker \
     UIEvent \
     VoidCallback \
     WebKitAnimationEvent \
+    WebKitCSSKeyframeRule \
+    WebKitCSSKeyframesRule \
     WebKitCSSTransformValue \
     WebKitTransitionEvent \
     WheelEvent \
@@ -402,7 +405,7 @@ endif
 
 else
 
-ENABLE_DASHBOARD_SUPPORT = 1
+ENABLE_DASHBOARD_SUPPORT = 0
 
 endif
 

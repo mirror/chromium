@@ -131,9 +131,11 @@ SOURCES += \
     kjs/RegExpObject.cpp \
     kjs/RegExpPrototype.cpp \
     kjs/ScopeChain.cpp \
+    kjs/SmallStrings.cpp \
     kjs/StringConstructor.cpp \
     kjs/StringObject.cpp \
     kjs/StringPrototype.cpp \
+    kjs/StructureID.cpp \
     kjs/ustring.cpp \
     profiler/HeavyProfile.cpp \
     profiler/Profile.cpp \

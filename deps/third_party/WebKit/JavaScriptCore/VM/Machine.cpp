@@ -30,6 +30,7 @@
 #include "config.h"
 #include "Machine.h"
 
+#include "BatchedTransitionOptimizer.h"
 #include "CodeBlock.h"
 #include "DebuggerCallFrame.h"
 #include "ExceptionHelpers.h"
@@ -53,6 +54,10 @@
 #include "operations.h"
 #include "SamplingTool.h"
 #include <stdio.h>
+
+#if PLATFORM(DARWIN)
+#include <mach/mach.h>
+#endif
 
 #if HAVE(SYS_TIME_H)
 #include <sys/time.h>
@@ -187,10 +192,10 @@ static JSValue* jsAddSlowCase(ExecState* exec, JSValue* v1, JSValue* v2)
     JSValue* p2 = v2->toPrimitive(exec);
 
     if (p1->isString() || p2->isString()) {
-        UString value = p1->toString(exec) + p2->toString(exec);
-        if (value.isNull())
+        RefPtr<UString::Rep> value = concatenate(p1->toString(exec).rep(), p2->toString(exec).rep());
+        if (!value)
             return throwOutOfMemoryError(exec);
-        return jsString(exec, value);
+        return jsString(exec, value.release());
     }
 
     return jsNumber(exec, p1->toNumber(exec) + p2->toNumber(exec));
@@ -213,10 +218,10 @@ static inline JSValue* jsAdd(ExecState* exec, JSValue* v1, JSValue* v2)
         return jsNumber(exec, left + right);
     
     if (v1->isString() && v2->isString()) {
-        UString value = static_cast<JSString*>(v1)->value() + static_cast<JSString*>(v2)->value();
-        if (value.isNull())
+        RefPtr<UString::Rep> value = concatenate(static_cast<JSString*>(v1)->value().rep(), static_cast<JSString*>(v2)->value().rep());
+        if (!value)
             return throwOutOfMemoryError(exec);
-        return jsString(exec, value);
+        return jsString(exec, value.release());
     }
 
     // All other cases are pretty uncommon
@@ -226,23 +231,23 @@ static inline JSValue* jsAdd(ExecState* exec, JSValue* v1, JSValue* v2)
 static JSValue* jsTypeStringForValue(ExecState* exec, JSValue* v)
 {
     if (v->isUndefined())
-        return jsString(exec, "undefined");
+        return jsNontrivialString(exec, "undefined");
     if (v->isBoolean())
-        return jsString(exec, "boolean");
+        return jsNontrivialString(exec, "boolean");
     if (v->isNumber())
-        return jsString(exec, "number");
+        return jsNontrivialString(exec, "number");
     if (v->isString())
-        return jsString(exec, "string");
+        return jsNontrivialString(exec, "string");
     if (v->isObject()) {
         // Return "undefined" for objects that should be treated
         // as null when doing comparisons.
         if (static_cast<JSObject*>(v)->masqueradeAsUndefined())
-            return jsString(exec, "undefined");
+            return jsNontrivialString(exec, "undefined");
         CallData callData;
         if (static_cast<JSObject*>(v)->getCallData(callData) != CallTypeNone)
-            return jsString(exec, "function");
+            return jsNontrivialString(exec, "function");
     }
-    return jsString(exec, "object");
+    return jsNontrivialString(exec, "object");
 }
 
 static bool NEVER_INLINE resolve(ExecState* exec, Instruction* vPC, Register* r, ScopeChainNode* scopeChain, CodeBlock* codeBlock, JSValue*& exceptionValue)
@@ -470,7 +475,7 @@ ALWAYS_INLINE Register* slideRegisterWindowForCall(ExecState* exec, CodeBlock* n
 ALWAYS_INLINE ScopeChainNode* scopeChainForCall(ExecState* exec, FunctionBodyNode* functionBodyNode, CodeBlock* newCodeBlock, ScopeChainNode* callDataScopeChain, Register* r)
 {
     if (newCodeBlock->needsFullScopeChain) {
-        JSActivation* activation = new (exec) JSActivation(functionBodyNode, r);
+        JSActivation* activation = new (exec) JSActivation(exec, functionBodyNode, r);
         r[RegisterFile::OptionalCalleeActivation - RegisterFile::CallFrameHeaderSize - newCodeBlock->numLocals] = activation;
 
         return callDataScopeChain->copy()->push(activation);
@@ -535,7 +540,7 @@ Machine::Machine()
     // Bizarrely, calling fastMalloc here is faster than allocating space on the stack.
     void* storage = fastMalloc(sizeof(CollectorBlock));
 
-    JSArray* jsArray = new (storage) JSArray(jsNull(), 0);
+    JSArray* jsArray = new (storage) JSArray(StructureID::create(jsNull()));
     m_jsArrayVptr = jsArray->vptr();
     static_cast<JSCell*>(jsArray)->~JSCell();
 
@@ -621,7 +626,7 @@ void Machine::dumpRegisters(const CodeBlock* codeBlock, RegisterFile* registerFi
 
 #endif
 
-#if !defined(NDEBUG) || HAVE(SAMPLING_TOOL)
+#if !defined(NDEBUG) || ENABLE(SAMPLING_TOOL)
 
 bool Machine::isOpcode(Opcode opcode)
 {
@@ -792,11 +797,8 @@ JSValue* Machine::execute(ProgramNode* programNode, ExecState* exec, ScopeChainN
 
     MACHINE_SAMPLING_privateExecuteReturned();
 
-    if (*profiler) {
+    if (*profiler)
         (*profiler)->didExecute(exec, programNode->sourceURL(), programNode->lineNo());
-        if (!m_reentryDepth)
-            (*profiler)->didFinishAllExecution(exec);
-    }
 
     if (m_reentryDepth && lastGlobalObject && globalObject != lastGlobalObject)
         lastGlobalObject->copyGlobalsTo(m_registerFile);
@@ -855,9 +857,6 @@ JSValue* Machine::execute(FunctionBodyNode* functionBodyNode, ExecState* exec, J
 
     MACHINE_SAMPLING_privateExecuteReturned();
 
-    if (*profiler && !m_reentryDepth)
-        (*profiler)->didFinishAllExecution(exec);
-
     m_registerFile.shrink(oldSize);
     return result;
 }
@@ -880,18 +879,28 @@ JSValue* Machine::execute(EvalNode* evalNode, ExecState* exec, JSObject* thisObj
         }
     }
 
-    const Node::VarStack& varStack = codeBlock->ownerNode->varStack();
-    Node::VarStack::const_iterator varStackEnd = varStack.end();
-    for (Node::VarStack::const_iterator it = varStack.begin(); it != varStackEnd; ++it) {
-        const Identifier& ident = (*it).first;
-        if (!variableObject->hasProperty(exec, ident))
-            variableObject->put(exec, ident, jsUndefined());
-    }
+    { // Scope for BatchedTransitionOptimizer
 
-    const Node::FunctionStack& functionStack = codeBlock->ownerNode->functionStack();
-    Node::FunctionStack::const_iterator functionStackEnd = functionStack.end();
-    for (Node::FunctionStack::const_iterator it = functionStack.begin(); it != functionStackEnd; ++it)
-        variableObject->put(exec, (*it)->m_ident, (*it)->makeFunction(exec, scopeChain));
+        BatchedTransitionOptimizer optimizer(variableObject);
+
+        const Node::VarStack& varStack = codeBlock->ownerNode->varStack();
+        Node::VarStack::const_iterator varStackEnd = varStack.end();
+        for (Node::VarStack::const_iterator it = varStack.begin(); it != varStackEnd; ++it) {
+            const Identifier& ident = (*it).first;
+            if (!variableObject->hasProperty(exec, ident)) {
+                PutPropertySlot slot;
+                variableObject->put(exec, ident, jsUndefined(), slot);
+            }
+        }
+
+        const Node::FunctionStack& functionStack = codeBlock->ownerNode->functionStack();
+        Node::FunctionStack::const_iterator functionStackEnd = functionStack.end();
+        for (Node::FunctionStack::const_iterator it = functionStack.begin(); it != functionStackEnd; ++it) {
+            PutPropertySlot slot;
+            variableObject->put(exec, (*it)->m_ident, (*it)->makeFunction(exec, scopeChain), slot);
+        }
+
+    }
 
     size_t oldSize = m_registerFile.size();
     size_t newSize = registerOffset + codeBlock->numVars + codeBlock->numConstants + codeBlock->numTemporaries + RegisterFile::CallFrameHeaderSize;
@@ -926,11 +935,8 @@ JSValue* Machine::execute(EvalNode* evalNode, ExecState* exec, JSObject* thisObj
 
     MACHINE_SAMPLING_privateExecuteReturned();
 
-    if (*profiler) {
+    if (*profiler)
         (*profiler)->didExecute(exec, evalNode->sourceURL(), evalNode->lineNo());
-        if (!m_reentryDepth)
-            (*profiler)->didFinishAllExecution(exec);
-    }
 
     m_registerFile.shrink(oldSize);
     return result;
@@ -989,14 +995,22 @@ void Machine::resetTimeoutCheck()
     m_timeExecuting = 0;
 }
 
-// Returns the current time in milliseconds
-// It doesn't matter what "current time" is here, just as long as
-// it's possible to measure the time difference correctly.
-// In an ideal world this would just be getCurrentUTCTimeWithMicroseconds
-// from DateMath.h, but unfortunately there's a slowdown if we use tha.
-static inline unsigned getCurrentTime()
+// Returns the time the current thread has spent executing, in milliseconds.
+static inline unsigned getCPUTime()
 {
-#if HAVE(SYS_TIME_H)
+#if PLATFORM(DARWIN)
+    mach_msg_type_number_t infoCount = THREAD_BASIC_INFO_COUNT;
+    thread_basic_info_data_t info;
+
+    // Get thread information
+    thread_info(mach_thread_self(), THREAD_BASIC_INFO, reinterpret_cast<thread_info_t>(&info), &infoCount);
+    
+    unsigned time = info.user_time.seconds * 1000 + info.user_time.microseconds / 1000;
+    time += info.system_time.seconds * 1000 + info.system_time.microseconds / 1000;
+    
+    return time;
+#elif HAVE(SYS_TIME_H)
+    // FIXME: This should probably use getrusage with the RUSAGE_THREAD flag.
     struct timeval tv;
     gettimeofday(&tv, 0);
     return tv.tv_sec * 1000 + tv.tv_usec / 1000;
@@ -1004,7 +1018,18 @@ static inline unsigned getCurrentTime()
     QDateTime t = QDateTime::currentDateTime();
     return t.toTime_t() * 1000 + t.time().msec();
 #elif PLATFORM(WIN_OS)
-    return timeGetTime();
+    union {
+        FILETIME fileTime;
+        unsigned long long fileTimeAsLong;
+    } userTime, kernelTime;
+    
+    // GetThreadTimes won't accept NULL arguments so we pass these even though
+    // they're not used.
+    FILETIME creationTime, exitTime;
+    
+    GetThreadTimes(GetCurrentThread(), &creationTime, &exitTime, &kernelTime.fileTime, &userTime.fileTime);
+    
+    return userTime.fileTimeAsLong / 10000 + kernelTime.fileTimeAsLong / 10000;
 #else
 #error Platform does not have getCurrentTime function
 #endif
@@ -1014,7 +1039,7 @@ static inline unsigned getCurrentTime()
 // we attempt to return a bool
 ALWAYS_INLINE JSValue* Machine::checkTimeout(JSGlobalObject* globalObject)
 {
-    unsigned currentTime = getCurrentTime();
+    unsigned currentTime = getCPUTime();
     
     if (!m_timeAtLastCheckTimeout) {
         // Suspicious amount of looping in a script -- start timing it
@@ -1062,9 +1087,214 @@ static NEVER_INLINE ScopeChainNode* createExceptionScope(ExecState* exec, CodeBl
     int dst = (++vPC)->u.operand;
     Identifier& property = codeBlock->identifiers[(++vPC)->u.operand];
     JSValue* value = r[(++vPC)->u.operand].jsValue(exec);
-    JSObject* scope = new (exec) JSStaticScopeObject(property, value, DontDelete);
+    JSObject* scope = new (exec) JSStaticScopeObject(exec, property, value, DontDelete);
     r[dst] = scope;
     return scopeChain->push(scope);
+}
+
+StructureIDChain* cachePrototypeChain(StructureID* structureID)
+{
+    RefPtr<StructureIDChain> chain = StructureIDChain::create(static_cast<JSObject*>(structureID->prototype())->structureID());
+    structureID->setCachedPrototypeChain(chain.release());
+    return structureID->cachedPrototypeChain();
+}
+
+NEVER_INLINE void Machine::tryCachePutByID(CodeBlock* codeBlock, Instruction* vPC, JSValue* baseValue, const PutPropertySlot& slot)
+{
+    // Recursive invocation may already have specialized this instruction.
+    if (vPC[0].u.opcode != getOpcode(op_put_by_id))
+        return;
+
+    if (JSImmediate::isImmediate(baseValue))
+        return;
+
+    // Uncacheable: give up.
+    if (!slot.isCacheable()) {
+        vPC[0] = getOpcode(op_put_by_id_generic);
+        return;
+    }
+
+    // FIXME: Cache new property transitions, too.
+    if (slot.type() == PutPropertySlot::NewProperty) {
+        vPC[0] = getOpcode(op_put_by_id_generic);
+        return;
+    }
+    
+    JSCell* baseCell = static_cast<JSCell*>(baseValue);
+    StructureID* structureID = baseCell->structureID();
+
+    // FIXME: Remove this !structureID check once all objects have StructureIDs.
+    if (!structureID) {
+        vPC[0] = getOpcode(op_put_by_id_generic);
+        return;
+    }
+
+    if (structureID->isDictionary()) {
+        vPC[0] = getOpcode(op_put_by_id_generic);
+        return;
+    }
+
+    // Cache miss: record StructureID to compare against next time.
+    StructureID* lastStructureID = vPC[4].u.structureID;
+    if (structureID != lastStructureID) {
+        // First miss: record StructureID to compare against next time.
+        if (!lastStructureID) {
+            vPC[4] = structureID;
+            return;
+        }
+
+        // Second miss: give up.
+        vPC[0] = getOpcode(op_put_by_id_generic);
+        return;
+    }
+
+    // Cache hit: Specialize instruction and ref StructureIDs.
+
+    // If baseCell != slot.base(), then baseCell must be a proxy for another object.
+    if (baseCell != slot.base()) {
+        vPC[0] = getOpcode(op_put_by_id_generic);
+        return;
+    }
+    vPC[0] = getOpcode(op_put_by_id_replace);
+    vPC[5] = slot.cachedOffset();
+    codeBlock->refStructureIDs(vPC);
+}
+
+NEVER_INLINE void Machine::uncachePutByID(CodeBlock* codeBlock, Instruction* vPC)
+{
+    codeBlock->derefStructureIDs(vPC);
+    vPC[0] = getOpcode(op_put_by_id);
+    vPC[4] = 0;
+}
+
+NEVER_INLINE void Machine::tryCacheGetByID(ExecState* exec, CodeBlock* codeBlock, Instruction* vPC, JSValue* baseValue, const Identifier& propertyName, const PropertySlot& slot)
+{
+    // Recursive invocation may already have specialized this instruction.
+    if (vPC[0].u.opcode != getOpcode(op_get_by_id))
+        return;
+        
+    if (isJSArray(baseValue) && propertyName == exec->propertyNames().length) {
+        vPC[0] = getOpcode(op_get_array_length);
+        return;
+    }
+
+    if (isJSString(baseValue) && propertyName == exec->propertyNames().length) {
+        vPC[0] = getOpcode(op_get_string_length);
+        return;
+    }
+
+    // Uncacheable: give up.
+    if (!slot.isCacheable()) {
+        vPC[0] = getOpcode(op_get_by_id_generic);
+        return;
+    }
+
+    // FIXME: Cache property access for immediates.
+    if (JSImmediate::isImmediate(baseValue)) {
+        vPC[0] = getOpcode(op_get_by_id_generic);
+        return;
+    }
+
+    StructureID* structureID = static_cast<JSCell*>(baseValue)->structureID();
+
+    // FIXME: Remove this !structureID check once all JSCells have StructureIDs.
+    if (!structureID) {
+        vPC[0] = getOpcode(op_get_by_id_generic);
+        return;
+    }
+
+    if (structureID->isDictionary()) {
+        vPC[0] = getOpcode(op_get_by_id_generic);
+        return;
+    }
+
+    // Cache miss
+    StructureID* lastStructureID = vPC[4].u.structureID;
+    if (structureID != lastStructureID) {
+        // First miss: record StructureID to compare against next time.
+        if (!lastStructureID) {
+            vPC[4] = structureID;
+            return;
+        }
+
+        // Second miss: give up.
+        vPC[0] = getOpcode(op_get_by_id_generic);
+        return;
+    }
+
+    // Cache hit: Specialize instruction and ref StructureIDs.
+
+    if (slot.slotBase() == baseValue) {
+        vPC[0] = getOpcode(op_get_by_id_self);
+        vPC[5] = slot.cachedOffset();
+
+        codeBlock->refStructureIDs(vPC);
+        return;
+    }
+
+    if (slot.slotBase() == structureID->prototype()) {
+        ASSERT(slot.slotBase()->isObject());
+
+        JSObject* slotBaseObject = static_cast<JSObject*>(slot.slotBase());
+
+        // Heavy access to a prototype is a good indication that it's not being
+        // used as a dictionary.
+        if (slotBaseObject->structureID()->isDictionary()) {
+            RefPtr<StructureID> transition = StructureID::fromDictionaryTransition(slotBaseObject->structureID());
+            slotBaseObject->setStructureID(transition.release());
+            static_cast<JSObject*>(baseValue)->structureID()->setCachedPrototypeChain(0);
+        }
+
+        vPC[0] = getOpcode(op_get_by_id_proto);
+        vPC[5] = slotBaseObject->structureID();
+        vPC[6] = slot.cachedOffset();
+
+        codeBlock->refStructureIDs(vPC);
+        return;
+    }
+
+    size_t count = 0;
+    JSObject* o = static_cast<JSObject*>(baseValue);
+    while (slot.slotBase() != o) {
+        JSValue* v = o->structureID()->prototype();
+
+        // If we didn't find slotBase in baseValue's prototype chain, then baseValue
+        // must be a proxy for another object.
+        if (v->isNull()) {
+            vPC[0] = getOpcode(op_get_by_id_generic);
+            return;
+        }
+
+        o = static_cast<JSObject*>(v);
+
+        // Heavy access to a prototype is a good indication that it's not being
+        // used as a dictionary.
+        if (o->structureID()->isDictionary()) {
+            RefPtr<StructureID> transition = StructureID::fromDictionaryTransition(o->structureID());
+            o->setStructureID(transition.release());
+            static_cast<JSObject*>(baseValue)->structureID()->setCachedPrototypeChain(0);
+        }
+
+        ++count;
+    }
+
+    StructureIDChain* chain = structureID->cachedPrototypeChain();
+    if (!chain)
+        chain = cachePrototypeChain(structureID);
+
+    vPC[0] = getOpcode(op_get_by_id_chain);
+    vPC[4] = structureID;
+    vPC[5] = chain;
+    vPC[6] = count;
+    vPC[7] = slot.cachedOffset();
+    codeBlock->refStructureIDs(vPC);
+}
+
+NEVER_INLINE void Machine::uncacheGetByID(CodeBlock* codeBlock, Instruction* vPC)
+{
+    codeBlock->derefStructureIDs(vPC);
+    vPC[0] = getOpcode(op_get_by_id);
+    vPC[4] = 0;
 }
 
 JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFile* registerFile, Register* r, ScopeChainNode* scopeChain, CodeBlock* codeBlock, JSValue** exception)
@@ -1209,6 +1439,25 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         ++vPC;
         NEXT_OPCODE;
     }
+    BEGIN_OPCODE(op_eq_null) {
+        /* neq dst(r) src(r)
+
+           Checks whether register src is null, as with the ECMAScript '!='
+           operator, and puts the result as a boolean in register dst.
+        */
+        int dst = (++vPC)->u.operand;
+        JSValue* src = r[(++vPC)->u.operand].jsValue(exec);
+
+        if (src->isUndefinedOrNull()) {
+            r[dst] = jsBoolean(true);
+            ++vPC;
+            NEXT_OPCODE;
+        }
+        
+        r[dst] = jsBoolean(!JSImmediate::isImmediate(src) && static_cast<JSCell*>(src)->masqueradeAsUndefined());
+        ++vPC;
+        NEXT_OPCODE;
+    }
     BEGIN_OPCODE(op_neq) {
         /* neq dst(r) src1(r) src2(r)
 
@@ -1220,13 +1469,32 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         JSValue* src1 = r[(++vPC)->u.operand].jsValue(exec);
         JSValue* src2 = r[(++vPC)->u.operand].jsValue(exec);
         if (JSImmediate::areBothImmediateNumbers(src1, src2))
-            r[dst] = jsBoolean(reinterpret_cast<intptr_t>(src1) != reinterpret_cast<intptr_t>(src2));
+            r[dst] = jsBoolean(src1 != src2);
         else {
             JSValue* result = jsBoolean(!equal(exec, src1, src2));
             VM_CHECK_EXCEPTION();
             r[dst] = result;
         }
 
+        ++vPC;
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_neq_null) {
+        /* neq dst(r) src(r)
+
+           Checks whether register src is not null, as with the ECMAScript '!='
+           operator, and puts the result as a boolean in register dst.
+        */
+        int dst = (++vPC)->u.operand;
+        JSValue* src = r[(++vPC)->u.operand].jsValue(exec);
+
+        if (src->isUndefinedOrNull()) {
+            r[dst] = jsBoolean(false);
+            ++vPC;
+            NEXT_OPCODE;
+        }
+        
+        r[dst] = jsBoolean(JSImmediate::isImmediate(src) || !static_cast<JSCell*>(src)->masqueradeAsUndefined());
         ++vPC;
         NEXT_OPCODE;
     }
@@ -1911,41 +2179,277 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
         NEXT_OPCODE;
     }
     BEGIN_OPCODE(op_get_by_id) {
-        /* get_by_id dst(r) base(r) property(id)
+        /* get_by_id dst(r) base(r) property(id) structureID(sID) nop(n) nop(n) nop(n)
 
-           Converts register base to Object, gets the property
-           named by identifier property from the object, and puts the
-           result in register dst.
+           Generic property access: Gets the property named by identifier
+           property from the value base, and puts the result in register dst.
         */
-        int dst = (++vPC)->u.operand;
-        int base = (++vPC)->u.operand;
-        int property = (++vPC)->u.operand;
+        int dst = vPC[1].u.operand;
+        int base = vPC[2].u.operand;
+        int property = vPC[3].u.operand;
 
         Identifier& ident = codeBlock->identifiers[property];
-        JSValue* result = r[base].jsValue(exec)->get(exec, ident);
+        JSValue* baseValue = r[base].jsValue(exec);
+        PropertySlot slot(baseValue);
+        JSValue* result = baseValue->get(exec, ident, slot);
         VM_CHECK_EXCEPTION();
+
+        tryCacheGetByID(exec, codeBlock, vPC, baseValue, ident, slot);
+
         r[dst] = result;
-        ++vPC;
+        vPC += 8;
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_get_by_id_self) {
+        /* op_get_by_id_self dst(r) base(r) property(id) structureID(sID) offset(n) nop(n) nop(n)
+
+           Cached property access: Attempts to get a cached property from the
+           value base. If the cache misses, op_get_by_id_self reverts to
+           op_get_by_id.
+        */
+        int base = vPC[2].u.operand;
+        JSValue* baseValue = r[base].jsValue(exec);
+
+        if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
+            JSCell* baseCell = static_cast<JSCell*>(baseValue);
+            StructureID* structureID = vPC[4].u.structureID;
+
+            if (LIKELY(baseCell->structureID() == structureID)) {
+                ASSERT(baseCell->isObject());
+                JSObject* baseObject = static_cast<JSObject*>(baseCell);
+                int dst = vPC[1].u.operand;
+                int offset = vPC[5].u.operand;
+
+                ASSERT(baseObject->get(exec, codeBlock->identifiers[vPC[3].u.operand]) == baseObject->getDirectOffset(offset));
+                r[dst] = baseObject->getDirectOffset(offset);
+
+                vPC += 8;
+                NEXT_OPCODE;
+            }
+        }
+
+        uncacheGetByID(codeBlock, vPC);
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_get_by_id_proto) {
+        /* op_get_by_id_proto dst(r) base(r) property(id) structureID(sID) protoStructureID(sID) offset(n) nop(n)
+
+           Cached property access: Attempts to get a cached property from the
+           value base's prototype. If the cache misses, op_get_by_id_proto
+           reverts to op_get_by_id.
+        */
+        int base = vPC[2].u.operand;
+        JSValue* baseValue = r[base].jsValue(exec);
+
+        if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
+            JSCell* baseCell = static_cast<JSCell*>(baseValue);
+            StructureID* structureID = vPC[4].u.structureID;
+
+            if (LIKELY(baseCell->structureID() == structureID)) {
+                ASSERT(structureID->prototype()->isObject());
+                JSObject* protoObject = static_cast<JSObject*>(structureID->prototype());
+                StructureID* protoStructureID = vPC[5].u.structureID;
+
+                if (LIKELY(protoObject->structureID() == protoStructureID)) {
+                    int dst = vPC[1].u.operand;
+                    int offset = vPC[6].u.operand;
+
+                    ASSERT(protoObject->get(exec, codeBlock->identifiers[vPC[3].u.operand]) == protoObject->getDirectOffset(offset));
+                    r[dst] = protoObject->getDirectOffset(offset);
+
+                    vPC += 8;
+                    NEXT_OPCODE;
+                }
+            }
+        }
+
+        uncacheGetByID(codeBlock, vPC);
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_get_by_id_chain) {
+        /* op_get_by_id_chain dst(r) base(r) property(id) structureID(sID) structureIDChain(sIDc) count(n) offset(n)
+
+           Cached property access: Attempts to get a cached property from the
+           value base's prototype chain. If the cache misses, op_get_by_id_chain
+           reverts to op_get_by_id.
+        */
+        int base = vPC[2].u.operand;
+        JSValue* baseValue = r[base].jsValue(exec);
+
+        if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
+            JSCell* baseCell = static_cast<JSCell*>(baseValue);
+            StructureID* structureID = vPC[4].u.structureID;
+
+            if (LIKELY(baseCell->structureID() == structureID)) {
+                RefPtr<StructureID>* it = vPC[5].u.structureIDChain->head();
+                size_t count = vPC[6].u.operand;
+                RefPtr<StructureID>* end = it + count;
+
+                while (1) {
+                    ASSERT(baseCell->isObject());
+                    JSObject* baseObject = static_cast<JSObject*>(baseCell->structureID()->prototype());
+                    if (UNLIKELY(baseObject->structureID() != (*it).get()))
+                        break;
+
+                    if (++it == end) {
+                        int dst = vPC[1].u.operand;
+                        int offset = vPC[7].u.operand;
+
+                        ASSERT(baseObject->get(exec, codeBlock->identifiers[vPC[3].u.operand]) == baseObject->getDirectOffset(offset));
+                        r[dst] = baseObject->getDirectOffset(offset);
+
+                        vPC += 8;
+                        NEXT_OPCODE;
+                    }
+                }
+            }
+        }
+
+        uncacheGetByID(codeBlock, vPC);
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_get_by_id_generic) {
+        /* op_get_by_id_generic dst(r) base(r) property(id) nop(sID) nop(n) nop(n) nop(n)
+
+           Generic property access: Gets the property named by identifier
+           property from the value base, and puts the result in register dst.
+        */
+        int dst = vPC[1].u.operand;
+        int base = vPC[2].u.operand;
+        int property = vPC[3].u.operand;
+
+        Identifier& ident = codeBlock->identifiers[property];
+        JSValue* baseValue = r[base].jsValue(exec);
+        PropertySlot slot(baseValue);
+        JSValue* result = baseValue->get(exec, ident, slot);
+        VM_CHECK_EXCEPTION();
+
+        r[dst] = result;
+        vPC += 8;
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_get_array_length) {
+        /* op_get_array_length dst(r) base(r) property(id) nop(sID) nop(n) nop(n) nop(n)
+
+           Cached property access: Gets the length of the array in register base,
+           and puts the result in register dst. If register base does not hold
+           an array, op_get_array_length reverts to op_get_by_id.
+        */
+
+        int base = vPC[2].u.operand;
+        JSValue* baseValue = r[base].jsValue(exec);
+        if (LIKELY(isJSArray(baseValue))) {
+            int dst = vPC[1].u.operand;
+            r[dst] = jsNumber(exec, static_cast<JSArray*>(baseValue)->length());
+            vPC += 8;
+            NEXT_OPCODE;
+        }
+
+        uncacheGetByID(codeBlock, vPC);
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_get_string_length) {
+        /* op_get_string_length dst(r) base(r) property(id) nop(sID) nop(n) nop(n) nop(n)
+
+           Cached property access: Gets the length of the string in register base,
+           and puts the result in register dst. If register base does not hold
+           a string, op_get_string_length reverts to op_get_by_id.
+        */
+
+        int base = vPC[2].u.operand;
+        JSValue* baseValue = r[base].jsValue(exec);
+        if (LIKELY(isJSString(baseValue))) {
+            int dst = vPC[1].u.operand;
+            r[dst] = jsNumber(exec, static_cast<JSString*>(baseValue)->value().size());
+            vPC += 8;
+            NEXT_OPCODE;
+        }
+
+        uncacheGetByID(codeBlock, vPC);
         NEXT_OPCODE;
     }
     BEGIN_OPCODE(op_put_by_id) {
-        /* put_by_id base(r) property(id) value(r)
+        /* put_by_id base(r) property(id) value(r) nop(n) nop(n)
 
-           Sets register value on register base as the property named
-           by identifier property. Base is converted to object first.
+           Generic property access: Sets the property named by identifier
+           property, belonging to register base, to register value.
 
            Unlike many opcodes, this one does not write any output to
            the register file.
         */
-        int base = (++vPC)->u.operand;
-        int property = (++vPC)->u.operand;
-        int value = (++vPC)->u.operand;
 
+        int base = vPC[1].u.operand;
+        int property = vPC[2].u.operand;
+        int value = vPC[3].u.operand;
+
+        JSValue* baseValue = r[base].jsValue(exec);
+
+        PutPropertySlot slot;
         Identifier& ident = codeBlock->identifiers[property];
-        r[base].jsValue(exec)->put(exec, ident, r[value].jsValue(exec));
-
+        baseValue->put(exec, ident, r[value].jsValue(exec), slot);
         VM_CHECK_EXCEPTION();
-        ++vPC;
+
+        tryCachePutByID(codeBlock, vPC, baseValue, slot);
+
+        vPC += 6;
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_put_by_id_replace) {
+        /* op_put_by_id_replace base(r) property(id) value(r) structureID(sID) offset(n)
+
+           Cached property access: Attempts to set a pre-existing, cached
+           property named by identifier property, belonging to register base,
+           to register value. If the cache misses, op_put_by_id_replace
+           reverts to op_put_by_id.
+
+           Unlike many opcodes, this one does not write any output to
+           the register file.
+        */
+        int base = vPC[1].u.operand;
+        JSValue* baseValue = r[base].jsValue(exec);
+
+        if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
+            JSCell* baseCell = static_cast<JSCell*>(baseValue);
+            StructureID* structureID = vPC[4].u.structureID;
+
+            if (LIKELY(baseCell->structureID() == structureID)) {
+                ASSERT(baseCell->isObject());
+                JSObject* baseObject = static_cast<JSObject*>(baseCell);
+                int value = vPC[3].u.operand;
+                unsigned offset = vPC[5].u.operand;
+                
+                ASSERT(baseObject->offsetForLocation(baseObject->getDirectLocation(codeBlock->identifiers[vPC[2].u.operand])) == offset);
+                baseObject->putDirectOffset(offset, r[value].jsValue(exec));
+
+                vPC += 6;
+                NEXT_OPCODE;
+            }
+        }
+
+        uncachePutByID(codeBlock, vPC);
+        NEXT_OPCODE;
+    }
+    BEGIN_OPCODE(op_put_by_id_generic) {
+        /* op_put_by_id_generic base(r) property(id) value(r) nop(n) nop(n)
+
+           Generic property access: Sets the property named by identifier
+           property, belonging to register base, to register value.
+
+           Unlike many opcodes, this one does not write any output to
+           the register file.
+        */
+        int base = vPC[1].u.operand;
+        int property = vPC[2].u.operand;
+        int value = vPC[3].u.operand;
+
+        JSValue* baseValue = r[base].jsValue(exec);
+
+        PutPropertySlot slot;
+        Identifier& ident = codeBlock->identifiers[property];
+        baseValue->put(exec, ident, r[value].jsValue(exec), slot);
+        VM_CHECK_EXCEPTION();
+
+        vPC += 6;
         NEXT_OPCODE;
     }
     BEGIN_OPCODE(op_del_by_id) {
@@ -2041,8 +2545,10 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, ExecState* exec, RegisterFi
                 baseValue->put(exec, i, r[value].jsValue(exec));
         } else {
             Identifier property(exec, subscript->toString(exec));
-            if (!exec->hadException()) // Don't put to an object if toString threw an exception.
-                baseValue->put(exec, property, r[value].jsValue(exec));
+            if (!exec->hadException()) { // Don't put to an object if toString threw an exception.
+                PutPropertySlot slot;
+                baseValue->put(exec, property, r[value].jsValue(exec), slot);
+            }
         }
 
         VM_CHECK_EXCEPTION();
@@ -2910,14 +3416,14 @@ JSValue* Machine::retrieveArguments(ExecState* exec, JSFunction* function) const
     JSActivation* activation = static_cast<JSActivation*>(callFrame[RegisterFile::OptionalCalleeActivation].jsValue(exec));
     if (!activation) {
         CodeBlock* codeBlock = &function->m_body->generatedByteCode();
-        activation = new (exec) JSActivation(function->m_body, callFrame + RegisterFile::CallFrameHeaderSize + codeBlock->numLocals);
+        activation = new (exec) JSActivation(exec, function->m_body, callFrame + RegisterFile::CallFrameHeaderSize + codeBlock->numLocals);
         callFrame[RegisterFile::OptionalCalleeActivation] = activation;
     }
 
     return activation->get(exec, exec->propertyNames().arguments);
 }
 
-JSValue* Machine::retrieveCaller(ExecState* exec, JSFunction* function) const
+JSValue* Machine::retrieveCaller(ExecState* exec, InternalFunction* function) const
 {
     Register* callFrame = this->callFrame(exec, function);
     if (!callFrame)
@@ -2934,8 +3440,9 @@ JSValue* Machine::retrieveCaller(ExecState* exec, JSFunction* function) const
     return jsNull();
 }
 
-void Machine::retrieveLastCaller(ExecState* exec, int& lineNumber, int& sourceId, UString& sourceURL) const
+void Machine::retrieveLastCaller(ExecState* exec, int& lineNumber, int& sourceId, UString& sourceURL, JSValue*& function) const
 {
+    function = 0;
     lineNumber = -1;
     sourceURL = UString();
 
@@ -2951,9 +3458,13 @@ void Machine::retrieveLastCaller(ExecState* exec, int& lineNumber, int& sourceId
     lineNumber = callerCodeBlock->lineNumberForVPC(vPC - 1);
     sourceId = callerCodeBlock->ownerNode->sourceId();
     sourceURL = callerCodeBlock->ownerNode->sourceURL();
+
+    JSValue* callee = callFrame[RegisterFile::Callee].getJSValue();
+    if (callee->toThisObject(exec)->inherits(&InternalFunction::info))
+        function = retrieveCaller(exec, static_cast<InternalFunction*>(callee));
 }
 
-Register* Machine::callFrame(ExecState* exec, JSFunction* function) const
+Register* Machine::callFrame(ExecState* exec, InternalFunction* function) const
 {
     Register* callFrame = exec->m_callFrame;
 

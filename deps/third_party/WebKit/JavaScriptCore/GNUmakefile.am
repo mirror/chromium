@@ -174,12 +174,16 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/RegExpPrototype.h \
 	JavaScriptCore/kjs/ScopeChain.h \
 	JavaScriptCore/kjs/ScopeChainMark.h \
+	JavaScriptCore/kjs/SmallStrings.cpp \
+	JavaScriptCore/kjs/SmallStrings.h \
 	JavaScriptCore/kjs/SourceProvider.h \
 	JavaScriptCore/kjs/SourceRange.h \
 	JavaScriptCore/kjs/StringConstructor.h \
 	JavaScriptCore/kjs/StringObject.h \
 	JavaScriptCore/kjs/StringObjectThatMasqueradesAsUndefined.h \
 	JavaScriptCore/kjs/StringPrototype.h \
+	JavaScriptCore/kjs/StructureID.cpp \
+	JavaScriptCore/kjs/StructureID.h \
 	JavaScriptCore/kjs/SymbolTable.h \
 	JavaScriptCore/kjs/Tracing.h \
 	JavaScriptCore/kjs/collector.h \

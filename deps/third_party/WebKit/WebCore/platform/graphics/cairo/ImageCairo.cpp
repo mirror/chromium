@@ -82,12 +82,14 @@ BitmapImage::BitmapImage(cairo_surface_t* surface, ImageObserver* observer)
 
 void BitmapImage::draw(GraphicsContext* context, const FloatRect& dst, const FloatRect& src, CompositeOperator op)
 {
-    FloatRect srcRect(src);
-    FloatRect dstRect(dst);
+    startAnimation();
 
     cairo_surface_t* image = frameAtIndex(m_currentFrame);
     if (!image) // If it's too early we won't have an image yet.
         return;
+
+    FloatRect srcRect(src);
+    FloatRect dstRect(dst);
 
     if (mayFillWithSolidColor()) {
         fillWithSolidColor(context, dstRect, solidColor(), op);
@@ -126,11 +128,10 @@ void BitmapImage::draw(GraphicsContext* context, const FloatRect& dst, const Flo
     cairo_set_source(cr, pattern);
     cairo_pattern_destroy(pattern);
     cairo_rectangle(cr, 0, 0, dstRect.width(), dstRect.height());
-    cairo_fill(cr);
+    cairo_clip(cr);
+    cairo_paint_with_alpha(cr, context->getAlpha());
 
     cairo_restore(cr);
-
-    startAnimation();
 
     if (imageObserver())
         imageObserver()->didDraw(this);

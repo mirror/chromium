@@ -1344,8 +1344,9 @@ bool RenderBlock::layoutOnlyPositionedObjects()
         view()->disableLayoutState();
 
     if (needsPositionedMovementLayout()) {
-        calcWidth();
-        calcHeight();
+        tryLayoutDoingPositionedMovementOnly();
+        if (needsLayout())
+            return false;
     }
 
     // All we have to is lay out our positioned objects.
@@ -1381,11 +1382,11 @@ void RenderBlock::layoutPositionedObjects(bool relayoutChildren)
             if (relayoutChildren && (r->style()->paddingLeft().isPercent() || r->style()->paddingRight().isPercent()))
                 r->setPrefWidthsDirty(true, false);
             
-            // We don't have to do a full layout.  We just have to update our position.
+            // We don't have to do a full layout.  We just have to update our position. Try that first. If we have shrink-to-fit width
+            // and we hit the available width constraint, the layoutIfNeeded() will catch it and do a full layout.
             if (r->needsPositionedMovementLayoutOnly())
-                r->layoutDoingPositionedMovementOnly();
-            else
-                r->layoutIfNeeded();
+                r->tryLayoutDoingPositionedMovementOnly();
+            r->layoutIfNeeded();
         }
     }
 }
@@ -2322,7 +2323,6 @@ bool RenderBlock::positionNewFloats()
                 y += min(heightRemainingLeft, heightRemainingRight);
                 fx = rightRelOffset(y, ro, false, &heightRemainingRight);
             }
-            fx = max(f->m_width, fx);
             f->m_left = fx - f->m_width;
             o->setPos(fx - o->marginRight() - o->width(), y + o->marginTop());
         }

@@ -48,7 +48,9 @@ namespace KJS {
         \
         macro(op_not) \
         macro(op_eq) \
+        macro(op_eq_null) \
         macro(op_neq) \
+        macro(op_neq_null) \
         macro(op_stricteq) \
         macro(op_nstricteq) \
         macro(op_less) \
@@ -86,7 +88,15 @@ namespace KJS {
         macro(op_resolve_with_base) \
         macro(op_resolve_func) \
         macro(op_get_by_id) \
+        macro(op_get_by_id_self) \
+        macro(op_get_by_id_proto) \
+        macro(op_get_by_id_chain) \
+        macro(op_get_by_id_generic) \
+        macro(op_get_array_length) \
+        macro(op_get_string_length) \
         macro(op_put_by_id) \
+        macro(op_put_by_id_replace) \
+        macro(op_put_by_id_generic) \
         macro(op_del_by_id) \
         macro(op_get_by_val) \
         macro(op_put_by_val) \

@@ -23,6 +23,7 @@
 #ifndef JSCell_h
 #define JSCell_h
 
+#include "StructureID.h"
 #include "JSValue.h"
 #include "collector.h"
 
@@ -39,6 +40,7 @@ namespace KJS {
         friend class Machine;
     private:
         JSCell();
+        JSCell(StructureID*);
         virtual ~JSCell();
 
     public:
@@ -48,6 +50,8 @@ namespace KJS {
         virtual bool isGetterSetter() const;
         virtual bool isObject() const;
         virtual bool isObject(const ClassInfo*) const;
+
+        StructureID* structureID() const;
 
         // Extracting the value.
         bool getNumber(double&) const;
@@ -73,6 +77,9 @@ namespace KJS {
         virtual UString toString(ExecState*) const = 0;
         virtual JSObject* toObject(ExecState*) const = 0;
 
+        // WebCore uses this to make document.all and style.filter undetectable
+        virtual bool masqueradeAsUndefined() const { return false; }
+
         // Garbage collection.
         void* operator new(size_t, ExecState*);
         void* operator new(size_t, void* placementNewDestination) { return placementNewDestination; }
@@ -81,7 +88,7 @@ namespace KJS {
 
         // Object operations, with the toObject operation included.
         virtual const ClassInfo* classInfo() const;
-        virtual void put(ExecState*, const Identifier& propertyName, JSValue*);
+        virtual void put(ExecState*, const Identifier& propertyName, JSValue*, PutPropertySlot&);
         virtual void put(ExecState*, unsigned propertyName, JSValue*);
         virtual bool deleteProperty(ExecState*, const Identifier& propertyName);
         virtual bool deleteProperty(ExecState*, unsigned propertyName);
@@ -97,10 +104,16 @@ namespace KJS {
         virtual bool getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
         virtual bool getOwnPropertySlot(ExecState*, unsigned propertyName, PropertySlot&);
         
-        intptr_t reserved; // Reserved for work in progress.
+        StructureID* m_structureID;
     };
 
     inline JSCell::JSCell()
+        : m_structureID(0)
+    {
+    }
+
+    inline JSCell::JSCell(StructureID* structureID)
+        : m_structureID(structureID)
     {
     }
 
@@ -111,6 +124,11 @@ namespace KJS {
     inline bool JSCell::isNumber() const
     {
         return Heap::isNumber(const_cast<JSCell*>(this));
+    }
+
+    inline StructureID* JSCell::structureID() const
+    {
+        return m_structureID;
     }
 
     inline bool JSCell::marked() const

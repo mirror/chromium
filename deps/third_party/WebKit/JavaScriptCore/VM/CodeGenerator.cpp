@@ -30,6 +30,7 @@
 #include "config.h"
 #include "CodeGenerator.h"
 
+#include "BatchedTransitionOptimizer.h"
 #include "JSFunction.h"
 #include "Machine.h"
 #include "ustring.h"
@@ -200,6 +201,8 @@ CodeGenerator::CodeGenerator(ProgramNode* programNode, const Debugger* debugger,
     , m_globalData(&scopeChain.globalObject()->globalExec()->globalData())
     , m_lastOpcodeID(op_end)
 {
+    codeBlock->globalData = m_globalData;
+
     // FIXME: Move code that modifies the global object to Machine::execute.
     
     m_codeBlock->numConstants = programNode->neededConstants();
@@ -217,6 +220,8 @@ CodeGenerator::CodeGenerator(ProgramNode* programNode, const Debugger* debugger,
     SymbolTable::iterator end = symbolTable->end();
     for (SymbolTable::iterator it = symbolTable->begin(); it != end; ++it)
         m_locals[localsIndex(it->second.getIndex())].setIndex(it->second.getIndex() + m_globalVarStorageOffset);
+        
+    BatchedTransitionOptimizer optimizer(globalObject);
 
     bool canOptimizeNewGlobals = symbolTable->size() + functionStack.size() + varStack.size() < registerFile->maxGlobals();
     if (canOptimizeNewGlobals) {
@@ -263,6 +268,8 @@ CodeGenerator::CodeGenerator(FunctionBodyNode* functionBody, const Debugger* deb
     , m_globalData(&scopeChain.globalObject()->globalExec()->globalData())
     , m_lastOpcodeID(op_end)
 {
+    codeBlock->globalData = m_globalData;
+
     m_codeBlock->numConstants = functionBody->neededConstants();
 
     const Node::FunctionStack& functionStack = functionBody->functionStack();
@@ -309,6 +316,8 @@ CodeGenerator::CodeGenerator(EvalNode* evalNode, const Debugger* debugger, const
     , m_globalData(&scopeChain.globalObject()->globalExec()->globalData())
     , m_lastOpcodeID(op_end)
 {
+    codeBlock->globalData = m_globalData;
+
     m_codeBlock->numConstants = evalNode->neededConstants();
     m_codeBlock->numVars = 1; // Allocate space for "this"
 }
@@ -668,13 +677,6 @@ RegisterID* CodeGenerator::emitUnexpectedLoad(RegisterID* dst, double d)
     return dst;
 }
 
-RegisterID* CodeGenerator::emitNullaryOp(OpcodeID opcode, RegisterID* dst)
-{
-    emitOpcode(opcode);
-    instructions().append(dst->index());
-    return dst;
-}
-
 bool CodeGenerator::findScopedProperty(const Identifier& property, int& index, size_t& stackDepth, bool forWriting)
 {
     // Cases where we cannot optimise the lookup
@@ -788,19 +790,29 @@ RegisterID* CodeGenerator::emitResolveFunction(RegisterID* baseDst, RegisterID* 
 
 RegisterID* CodeGenerator::emitGetById(RegisterID* dst, RegisterID* base, const Identifier& property)
 {
+    m_codeBlock->structureIDInstructions.append(instructions().size());
+
     emitOpcode(op_get_by_id);
     instructions().append(dst->index());
     instructions().append(base->index());
     instructions().append(addConstant(property));
+    instructions().append(0);
+    instructions().append(0);
+    instructions().append(0);
+    instructions().append(0);
     return dst;
 }
 
 RegisterID* CodeGenerator::emitPutById(RegisterID* base, const Identifier& property, RegisterID* value)
 {
+    m_codeBlock->structureIDInstructions.append(instructions().size());
+
     emitOpcode(op_put_by_id);
     instructions().append(base->index());
     instructions().append(addConstant(property));
     instructions().append(value->index());
+    instructions().append(0);
+    instructions().append(0);
     return value;
 }
 
@@ -865,6 +877,13 @@ RegisterID* CodeGenerator::emitPutByIndex(RegisterID* base, unsigned index, Regi
     instructions().append(index);
     instructions().append(value->index());
     return value;
+}
+
+RegisterID* CodeGenerator::emitNewObject(RegisterID* dst)
+{
+    emitOpcode(op_new_object);
+    instructions().append(dst->index());
+    return dst;
 }
 
 RegisterID* CodeGenerator::emitNewArray(RegisterID* dst, ElementNode* elements)

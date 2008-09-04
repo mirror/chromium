@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;$(WebKitOutputDir)\obj\JavaScriptCore\DerivedSources\&quot;;../../;../../API/;../../pcre/;../../kjs/;../../VM/;../../wtf/;../../profiler;&quot;$(WebKitLibrariesDir)\include&quot;;&quot;$(WebKitLibrariesDir)\include\icu&quot;;../../../icu/include;&quot;$(WebKitOutputDir)\include\JavaScriptCore&quot;;&quot;$(WebKitLibrariesDir)\include\pthreads&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders\GNUCompatibility&quot;"
-				PreprocessorDefinitions="HAVE_CONFIG_H;__STD_C"
+				PreprocessorDefinitions="__STD_C"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -105,7 +105,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;$(WebKitOutputDir)\obj\JavaScriptCore\DerivedSources\&quot;;../../;../../API/;../../pcre/;../../kjs/;../../VM/;../../wtf/;../../profiler;&quot;$(WebKitLibrariesDir)\include&quot;;&quot;$(WebKitLibrariesDir)\include\icu&quot;;../../../icu/include;&quot;$(WebKitOutputDir)\include\JavaScriptCore&quot;;&quot;$(WebKitLibrariesDir)\include\pthreads&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders\GNUCompatibility&quot;"
-				PreprocessorDefinitions="HAVE_CONFIG_H;__STD_C"
+				PreprocessorDefinitions="__STD_C"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -166,7 +166,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;$(WebKitOutputDir)\obj\JavaScriptCore\DerivedSources\&quot;;../../;../../API/;../../pcre/;../../kjs/;../../VM/;../../wtf/;../../profiler;&quot;$(WebKitLibrariesDir)\include&quot;;&quot;$(WebKitLibrariesDir)\include\icu&quot;;../../../icu/include;&quot;$(WebKitOutputDir)\include\JavaScriptCore&quot;;&quot;$(WebKitLibrariesDir)\include\pthreads&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders\GNUCompatibility&quot;"
-				PreprocessorDefinitions="HAVE_CONFIG_H;__STD_C"
+				PreprocessorDefinitions="__STD_C"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -228,7 +228,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;$(WebKitOutputDir)\obj\JavaScriptCore\DerivedSources\&quot;;../../;../../API/;../../pcre/;../../kjs/;../../VM/;../../wtf/;../../profiler;&quot;$(WebKitLibrariesDir)\include&quot;;&quot;$(WebKitLibrariesDir)\include\icu&quot;;../../../icu/include;&quot;$(WebKitOutputDir)\include\JavaScriptCore&quot;;&quot;$(WebKitLibrariesDir)\include\pthreads&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders&quot;;&quot;$(WebKitLibrariesDir)\Include\CoreFoundation\OSXCompatibilityHeaders\GNUCompatibility&quot;"
-				PreprocessorDefinitions="HAVE_CONFIG_H;__STD_C"
+				PreprocessorDefinitions="__STD_C"
 				ForcedIncludeFiles=""
 			/>
 			<Tool
@@ -837,7 +837,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\kjs\simple_number.h"
+				RelativePath="..\..\kjs\SmallStrings.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\kjs\SmallStrings.h"
 				>
 			</File>
 			<File
@@ -874,6 +878,14 @@
 			</File>
 			<File
 				RelativePath="..\..\kjs\StringPrototype.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\kjs\StructureID.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\kjs\StructureID.h"
 				>
 			</File>
 			<File
@@ -1282,14 +1294,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\VM\SamplingTool.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\VM\SamplingTool.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\VM\Register.h"
 				>
 			</File>
@@ -1299,6 +1303,14 @@
 			</File>
 			<File
 				RelativePath="..\..\VM\RegisterFile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\VM\SamplingTool.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\VM\SamplingTool.h"
 				>
 			</File>
 		</Filter>

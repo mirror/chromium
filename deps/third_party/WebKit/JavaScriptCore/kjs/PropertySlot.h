@@ -25,6 +25,7 @@
 #include "JSValue.h"
 #include "identifier.h"
 #include <wtf/Assertions.h>
+#include <wtf/NotFound.h>
 
 namespace KJS {
 
@@ -38,6 +39,7 @@ namespace KJS {
     class PropertySlot {
     public:
         PropertySlot()
+            : m_offset(WTF::notFound)
         {
             clearBase();
             clearValue();
@@ -45,6 +47,7 @@ namespace KJS {
 
         explicit PropertySlot(JSValue* base)
             : m_slotBase(base)
+            , m_offset(WTF::notFound)
         {
             clearValue();
         }
@@ -69,6 +72,13 @@ namespace KJS {
             return m_getValue(exec, Identifier::from(exec, propertyName), *this);
         }
 
+        bool isCacheable() const { return m_offset != WTF::notFound; }
+        size_t cachedOffset() const
+        {
+            ASSERT(isCacheable());
+            return m_offset;
+        }
+
         void putValue(JSValue* value)
         { 
             if (m_getValue == KJS_VALUE_SLOT_MARKER) {
@@ -85,6 +95,23 @@ namespace KJS {
             m_getValue = KJS_VALUE_SLOT_MARKER;
             clearBase();
             m_data.valueSlot = valueSlot;
+        }
+        
+        void setValueSlot(JSValue* slotBase, JSValue** valueSlot)
+        {
+            ASSERT(valueSlot);
+            m_getValue = KJS_VALUE_SLOT_MARKER;
+            m_slotBase = slotBase;
+            m_data.valueSlot = valueSlot;
+        }
+        
+        void setValueSlot(JSValue* slotBase, JSValue** valueSlot, size_t offset)
+        {
+            ASSERT(valueSlot);
+            m_getValue = KJS_VALUE_SLOT_MARKER;
+            m_slotBase = slotBase;
+            m_data.valueSlot = valueSlot;
+            m_offset = offset;
         }
         
         void setValue(JSValue* value)
@@ -179,8 +206,6 @@ namespace KJS {
 
         GetValueFunc m_getValue;
         
-        JSValue* m_value;
-
         JSValue* m_slotBase;
         union {
             JSObject* getterFunc;
@@ -189,6 +214,10 @@ namespace KJS {
             const HashEntry* staticEntry;
             unsigned index;
         } m_data;
+
+        JSValue* m_value;
+
+        size_t m_offset;
     };
 
 } // namespace KJS

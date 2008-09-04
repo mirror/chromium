@@ -29,25 +29,18 @@
 #ifndef Profiler_h
 #define Profiler_h
 
+#include "Profile.h"
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 
 namespace KJS {
 
+    class CallIdentifier;
     class ExecState;
     class JSObject;
-    class Profile;
     class ProfileGenerator;
     class UString;
-
-    class ProfilerClient {
-    public:
-        virtual void finishedProfiling(PassRefPtr<Profile>) = 0;
-
-    protected:
-        virtual ~ProfilerClient() {}
-    };
 
     class Profiler {
     public:
@@ -57,10 +50,10 @@ namespace KJS {
         }
 
         static Profiler* profiler(); 
+        static CallIdentifier createCallIdentifier(ExecState*, JSObject*, const UString& sourceURL, int lineNumber);
 
-        void startProfiling(ExecState*, const UString& title, ProfilerClient*);
-        void stopProfiling(ExecState*, const UString& title);
-        void didFinishAllExecution(ExecState*);
+        void startProfiling(ExecState*, const UString& title);
+        PassRefPtr<Profile> stopProfiling(ExecState*, const UString& title);
 
         void willExecute(ExecState*, JSObject* calledFunction);
         void willExecute(ExecState*, const UString& sourceURL, int startingLineNumber);

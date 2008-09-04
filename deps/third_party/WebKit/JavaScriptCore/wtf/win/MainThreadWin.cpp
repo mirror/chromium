@@ -30,6 +30,7 @@
 #include "MainThread.h"
 
 #include "Assertions.h"
+#include "Threading.h"
 #include <windows.h>
 
 namespace WTF {
@@ -51,6 +52,8 @@ void initializeMainThread()
 {
     if (threadingWindowHandle)
         return;
+
+    mainThreadFunctionQueueMutex();
 
     WNDCLASSEX wcex;
     memset(&wcex, 0, sizeof(WNDCLASSEX));

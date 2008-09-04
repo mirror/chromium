@@ -43,9 +43,6 @@ using WTF::doubleHash;
 
 #define USE_SINGLE_ENTRY 1
 
-// 2/28/2006 ggaren: command-line JS iBench says that USE_SINGLE_ENTRY is a
-// 3.2% performance boost.
-
 namespace KJS {
 
 // Choose a number for the following so that most property maps are smaller,
@@ -80,53 +77,6 @@ PropertyMapStatisticsExitLogger::~PropertyMapStatisticsExitLogger()
 
 #endif
 
-struct PropertyMapEntry {
-    UString::Rep* key;
-    JSValue* value;
-    unsigned attributes;
-    unsigned index;
-
-    PropertyMapEntry(UString::Rep* k, JSValue* v, int a)
-        : key(k)
-        , value(v)
-        , attributes(a)
-        , index(0)
-    {
-    }
-};
-
-// lastIndexUsed is an ever-increasing index used to identify the order items
-// were inserted into the property map. It's required that getEnumerablePropertyNames
-// return the properties in the order they were added for compatibility with other
-// browsers' JavaScript implementations.
-struct PropertyMapHashTable {
-    unsigned sizeMask;
-    unsigned size;
-    unsigned keyCount;
-    unsigned deletedSentinelCount;
-    unsigned lastIndexUsed;
-    unsigned entryIndicies[1];
-
-    PropertyMapEntry* entries()
-    {
-        // The entries vector comes after the indices vector.
-        // The 0th item in the entries vector is not really used; it has to
-        // have a 0 in its key to allow the hash table lookup to handle deleted
-        // sentinels without any special-case code, but the other fields are unused.
-        return reinterpret_cast<PropertyMapEntry*>(&entryIndicies[size]);
-    }
-
-    static size_t allocationSize(unsigned size)
-    {
-        // We never let a hash table get more than half full,
-        // So the number of indices we need is the size of the hash table.
-        // But the number of entries is half that (plus one for the deleted sentinel).
-        return sizeof(PropertyMapHashTable)
-            + (size - 1) * sizeof(unsigned)
-            + (1 + size / 2) * sizeof(PropertyMapEntry);
-    }
-};
-
 static const unsigned emptyEntryIndex = 0;
 static const unsigned deletedSentinelIndex = 1;
 
@@ -156,29 +106,6 @@ PropertyMap::~PropertyMap()
     fastFree(m_u.table);
 }
 
-void PropertyMap::clear()
-{
-    if (!m_usingTable) {
-#if USE_SINGLE_ENTRY
-        if (m_singleEntryKey) {
-            m_singleEntryKey->deref();
-            m_singleEntryKey = 0;
-        }
-#endif
-        return;
-    }
-
-    unsigned entryCount = m_u.table->keyCount + m_u.table->deletedSentinelCount;
-    for (unsigned i = 1; i <= entryCount; i++) {
-        if (UString::Rep* key = m_u.table->entries()[i].key)
-            key->deref();
-    }
-    for (unsigned i = 0; i < m_u.table->size; i++)
-        m_u.table->entryIndicies[i] = emptyEntryIndex;
-    m_u.table->keyCount = 0;
-    m_u.table->deletedSentinelCount = 0;
-}
-
 JSValue* PropertyMap::get(const Identifier& propertyName, unsigned& attributes) const
 {
     ASSERT(!propertyName.isNull());
@@ -201,7 +128,7 @@ JSValue* PropertyMap::get(const Identifier& propertyName, unsigned& attributes) 
     ++numProbes;
 #endif
 
-    unsigned entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+    unsigned entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
     if (entryIndex == emptyEntryIndex)
         return 0;
 
@@ -223,7 +150,7 @@ JSValue* PropertyMap::get(const Identifier& propertyName, unsigned& attributes) 
         ++numRehashes;
 #endif
 
-        entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             return 0;
 
@@ -254,7 +181,7 @@ JSValue* PropertyMap::get(const Identifier& propertyName) const
     ++numProbes;
 #endif
 
-    unsigned entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+    unsigned entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
     if (entryIndex == emptyEntryIndex)
         return 0;
 
@@ -274,7 +201,7 @@ JSValue* PropertyMap::get(const Identifier& propertyName) const
         ++numRehashes;
 #endif
 
-        entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             return 0;
 
@@ -303,7 +230,7 @@ JSValue** PropertyMap::getLocation(const Identifier& propertyName)
     ++numProbes;
 #endif
 
-    unsigned entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+    unsigned entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
     if (entryIndex == emptyEntryIndex)
         return 0;
 
@@ -323,7 +250,7 @@ JSValue** PropertyMap::getLocation(const Identifier& propertyName)
         ++numRehashes;
 #endif
 
-        entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             return 0;
 
@@ -354,7 +281,7 @@ JSValue** PropertyMap::getLocation(const Identifier& propertyName, bool& isWrite
     ++numProbes;
 #endif
 
-    unsigned entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+    unsigned entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
     if (entryIndex == emptyEntryIndex)
         return 0;
 
@@ -376,7 +303,7 @@ JSValue** PropertyMap::getLocation(const Identifier& propertyName, bool& isWrite
         ++numRehashes;
 #endif
 
-        entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             return 0;
 
@@ -387,7 +314,7 @@ JSValue** PropertyMap::getLocation(const Identifier& propertyName, bool& isWrite
     }
 }
 
-void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned attributes, bool checkReadOnly)
+void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned attributes, bool checkReadOnly, JSObject* slotBase, PutPropertySlot& slot)
 {
     ASSERT(!propertyName.isNull());
     ASSERT(value);
@@ -404,6 +331,7 @@ void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned a
             m_u.singleEntryValue = value;
             m_singleEntryAttributes = static_cast<short>(attributes);
             checkConsistency();
+            slot.setNewProperty(slotBase, WTF::notFound);
             return;
         }
         if (rep == m_singleEntryKey && !(checkReadOnly && (m_singleEntryAttributes & ReadOnly))) {
@@ -413,7 +341,7 @@ void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned a
     }
 #endif
 
-    if (!m_usingTable || (m_u.table->keyCount + m_u.table->deletedSentinelCount) * 2 >= m_u.table->size)
+    if (!m_usingTable)
         expand();
 
     // FIXME: Consider a fast case for tables with no deleted sentinels.
@@ -428,7 +356,7 @@ void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned a
 #endif
 
     while (1) {
-        unsigned entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        unsigned entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             break;
 
@@ -438,6 +366,7 @@ void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned a
             // Put a new value in an existing hash table entry.
             m_u.table->entries()[entryIndex - 1].value = value;
             // Attributes are intentionally not updated.
+            slot.setExistingProperty(slotBase, offsetForTableLocation(&m_u.table->entries()[entryIndex - 1].value));
             return;
         } else if (entryIndex == deletedSentinelIndex) {
             // If we find a deleted-element sentinel, remember it for use later.
@@ -475,7 +404,7 @@ void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned a
     }
 
     // Create a new hash table entry.
-    m_u.table->entryIndicies[i & m_u.table->sizeMask] = entryIndex;
+    m_u.table->entryIndices[i & m_u.table->sizeMask] = entryIndex;
 
     // Create a new hash table entry.
     rep->ref();
@@ -485,7 +414,11 @@ void PropertyMap::put(const Identifier& propertyName, JSValue* value, unsigned a
     m_u.table->entries()[entryIndex - 1].index = ++m_u.table->lastIndexUsed;
     ++m_u.table->keyCount;
 
+    if ((m_u.table->keyCount + m_u.table->deletedSentinelCount) * 2 >= m_u.table->size)
+        expand();
+
     checkConsistency();
+    slot.setNewProperty(slotBase, offsetForTableLocation(&m_u.table->entries()[entryIndex - 1].value));
 }
 
 void PropertyMap::insert(const Entry& entry)
@@ -500,7 +433,7 @@ void PropertyMap::insert(const Entry& entry)
 #endif
 
     while (1) {
-        unsigned entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        unsigned entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             break;
 
@@ -519,7 +452,7 @@ void PropertyMap::insert(const Entry& entry)
     }
 
     unsigned entryIndex = m_u.table->keyCount + 2;
-    m_u.table->entryIndicies[i & m_u.table->sizeMask] = entryIndex;
+    m_u.table->entryIndices[i & m_u.table->sizeMask] = entryIndex;
     m_u.table->entries()[entryIndex - 1] = entry;
     ++m_u.table->keyCount;
 }
@@ -626,7 +559,7 @@ void PropertyMap::remove(const Identifier& propertyName)
     unsigned entryIndex;
     UString::Rep* key = 0;
     while (1) {
-        entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+        entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
         if (entryIndex == emptyEntryIndex)
             return;
 
@@ -650,7 +583,7 @@ void PropertyMap::remove(const Identifier& propertyName)
 
     // Replace this one element with the deleted sentinel. Also clear out
     // the entry so we can iterate all the entries as needed.
-    m_u.table->entryIndicies[i & m_u.table->sizeMask] = deletedSentinelIndex;
+    m_u.table->entryIndices[i & m_u.table->sizeMask] = deletedSentinelIndex;
     key->deref();
     m_u.table->entries()[entryIndex - 1].key = 0;
     m_u.table->entries()[entryIndex - 1].value = jsUndefined();
@@ -695,25 +628,6 @@ static int comparePropertyMapEntryIndices(const void* a, const void* b)
     if (ia > ib)
         return +1;
     return 0;
-}
-
-bool PropertyMap::containsGettersOrSetters() const
-{
-    if (!m_usingTable) {
-#if USE_SINGLE_ENTRY
-        return !!(m_singleEntryAttributes & IsGetterSetter);
-#else
-        return false;
-#endif
-    }
-
-    unsigned entryCount = m_u.table->keyCount + m_u.table->deletedSentinelCount;
-    for (unsigned i = 1; i <= entryCount; i++) {
-        if (m_u.table->entries()[i].attributes & IsGetterSetter)
-            return true;
-    }
-
-    return false;
 }
 
 void PropertyMap::getEnumerablePropertyNames(PropertyNameArray& propertyNames) const
@@ -790,7 +704,7 @@ void PropertyMap::checkConsistency()
     unsigned indexCount = 0;
     unsigned deletedIndexCount = 0;
     for (unsigned a = 0; a != m_u.table->size; ++a) {
-        unsigned entryIndex = m_u.table->entryIndicies[a];
+        unsigned entryIndex = m_u.table->entryIndices[a];
         if (entryIndex == emptyEntryIndex)
             continue;
         if (entryIndex == deletedSentinelIndex) {
@@ -802,7 +716,7 @@ void PropertyMap::checkConsistency()
         ++indexCount;
 
         for (unsigned b = a + 1; b != m_u.table->size; ++b)
-            ASSERT(m_u.table->entryIndicies[b] != entryIndex);
+            ASSERT(m_u.table->entryIndices[b] != entryIndex);
     }
     ASSERT(indexCount == m_u.table->keyCount);
     ASSERT(deletedIndexCount == m_u.table->deletedSentinelCount);
@@ -821,7 +735,7 @@ void PropertyMap::checkConsistency()
         unsigned k = 0;
         unsigned entryIndex;
         while (1) {
-            entryIndex = m_u.table->entryIndicies[i & m_u.table->sizeMask];
+            entryIndex = m_u.table->entryIndices[i & m_u.table->sizeMask];
             ASSERT(entryIndex != emptyEntryIndex);
             if (rep == m_u.table->entries()[entryIndex - 1].key)
                 break;

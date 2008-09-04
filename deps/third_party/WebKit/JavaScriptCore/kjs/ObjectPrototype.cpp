@@ -41,7 +41,7 @@ static JSValue* objectProtoFuncPropertyIsEnumerable(ExecState*, JSObject*, JSVal
 static JSValue* objectProtoFuncToLocaleString(ExecState*, JSObject*, JSValue*, const ArgList&);
 
 ObjectPrototype::ObjectPrototype(ExecState* exec, FunctionPrototype* functionPrototype)
-    : JSObject() // [[Prototype]] is null
+    : JSObject(exec->globalData().nullProtoStructureID)
 {
     putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().toString, objectProtoFuncToString), DontEnum);
     putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().toLocaleString, objectProtoFuncToLocaleString), DontEnum);
@@ -125,12 +125,12 @@ JSValue* objectProtoFuncPropertyIsEnumerable(ExecState* exec, JSObject*, JSValue
 
 JSValue* objectProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList&)
 {
-    return jsString(exec, thisValue->toThisObject(exec)->toString(exec));
+    return thisValue->toThisJSString(exec);
 }
 
 JSValue* objectProtoFuncToString(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList&)
 {
-    return jsString(exec, "[object " + thisValue->toThisObject(exec)->className() + "]");
+    return jsNontrivialString(exec, "[object " + thisValue->toThisObject(exec)->className() + "]");
 }
 
 } // namespace KJS

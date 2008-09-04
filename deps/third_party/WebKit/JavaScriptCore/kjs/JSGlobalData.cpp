@@ -76,6 +76,7 @@ JSGlobalData::JSGlobalData(bool isShared)
     , regExpConstructorTable(&KJS::regExpConstructorTable)
     , stringTable(&KJS::stringTable)
 #endif
+    , nullProtoStructureID(StructureID::create(jsNull()))
     , identifierTable(createIdentifierTable())
     , propertyNames(new CommonIdentifiers(this))
     , emptyList(new ArgList)

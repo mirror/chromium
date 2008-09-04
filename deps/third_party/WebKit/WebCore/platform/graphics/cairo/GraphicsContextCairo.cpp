@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
  * Copyright (C) 2007 Alp Toker <alp@atoker.com>
+ * Copyright (C) 2008 Dirk Schulze <vbs85@gmx.de>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -293,32 +294,88 @@ void GraphicsContext::drawEllipse(const IntRect& rect)
     cairo_new_path(cr);
 }
 
-// FIXME: This function needs to be adjusted to match the functionality on the Mac side.
 void GraphicsContext::strokeArc(const IntRect& rect, int startAngle, int angleSpan)
 {
-    if (paintingDisabled())
-        return;
-
-    if (strokeStyle() == NoStroke)
+    if (paintingDisabled() || strokeStyle() == NoStroke)
         return;
 
     int x = rect.x();
     int y = rect.y();
     float w = rect.width();
-#if 0 // FIXME: unused so far
     float h = rect.height();
     float scaleFactor = h / w;
     float reverseScaleFactor = w / h;
-#endif
-    float r = w / 2;
+
+    float hRadius = w / 2;
+    float vRadius = h / 2;
     float fa = startAngle;
     float falen =  fa + angleSpan;
 
     cairo_t* cr = m_data->cr;
     cairo_save(cr);
-    cairo_arc_negative(cr, x + r, y + r, r, -fa * M_PI/180, -falen * M_PI/180);
+
+    if (w != h)
+        cairo_scale(cr, 1., scaleFactor);
+    
+    cairo_arc_negative(cr, x + hRadius, (y + vRadius) * reverseScaleFactor, hRadius, -fa * M_PI/180, -falen * M_PI/180);
+
+    if (w != h)
+        cairo_scale(cr, 1., reverseScaleFactor);
+
+    float width = strokeThickness();
+    int patWidth = 0;
+    
+    switch (strokeStyle()) {
+        case DottedStroke:
+            patWidth = static_cast<int>(width / 2);
+            break;
+        case DashedStroke:
+            patWidth = 3 * static_cast<int>(width / 2);
+            break;
+        default:
+            break;
+    }
+
     setColor(cr, strokeColor());
-    cairo_set_line_width(cr, strokeThickness());
+
+    if (patWidth) {
+        // Example: 80 pixels with a width of 30 pixels.
+        // Remainder is 20.  The maximum pixels of line we could paint
+        // will be 50 pixels.
+        int distance;
+        if (hRadius == vRadius)
+            distance = static_cast<int>((M_PI * hRadius) / 2.0);
+        else // We are elliptical and will have to estimate the distance
+            distance = static_cast<int>((M_PI * sqrtf((hRadius * hRadius + vRadius * vRadius) / 2.0)) / 2.0);
+        
+        int remainder = distance % patWidth;
+        int coverage = distance - remainder;
+        int numSegments = coverage / patWidth;
+
+        float patternOffset = 0.0;
+        // Special case 1px dotted borders for speed.
+        if (patWidth == 1)
+            patternOffset = 1.0;
+        else {
+            bool evenNumberOfSegments = numSegments % 2 == 0;
+            if (remainder)
+                evenNumberOfSegments = !evenNumberOfSegments;
+            if (evenNumberOfSegments) {
+                if (remainder) {
+                    patternOffset += patWidth - remainder;
+                    patternOffset += remainder / 2.0;
+                } else
+                    patternOffset = patWidth / 2.0;
+            } else {
+                if (remainder)
+                    patternOffset = (patWidth - remainder) / 2.0;
+            }
+        }
+
+        double dash = patWidth;
+        cairo_set_dash(cr, &dash, 1, patternOffset);
+    }
+
     cairo_stroke(cr);
     cairo_restore(cr);
 }
@@ -362,23 +419,29 @@ void GraphicsContext::fillPath()
         return;
 
     cairo_t* cr = m_data->cr;
+    cairo_save(cr);
 
+    cairo_set_fill_rule(cr, fillRule() == RULE_EVENODD ? CAIRO_FILL_RULE_EVEN_ODD : CAIRO_FILL_RULE_WINDING);
     switch (m_common->state.fillColorSpace) {
     case SolidColorSpace:
         if (fillColor().alpha()) {
             setColor(cr, fillColor());
-            cairo_fill(cr);
+            cairo_clip(cr);
+            cairo_paint_with_alpha(cr, m_data->globalAlpha);
         }
         break;
     case PatternColorSpace:
         cairo_set_source(cr, m_common->state.fillPattern.get()->createPlatformPattern(getCTM()));
-        cairo_fill(cr);
+        cairo_clip(cr);
+        cairo_paint_with_alpha(cr, m_data->globalAlpha);
         break;
     case GradientColorSpace:
         cairo_set_source(cr, m_common->state.fillGradient.get()->platformGradient());
-        cairo_fill(cr);
+        cairo_clip(cr);
+        cairo_paint_with_alpha(cr, m_data->globalAlpha);
         break;
     }
+    cairo_restore(cr);
 }
 
 void GraphicsContext::strokePath()
@@ -387,23 +450,39 @@ void GraphicsContext::strokePath()
         return;
 
     cairo_t* cr = m_data->cr;
-
+    cairo_save(cr);
     switch (m_common->state.strokeColorSpace) {
     case SolidColorSpace:
         if (strokeColor().alpha()) {
             setColor(cr, strokeColor());
+            if (m_data->globalAlpha < 1.0f) {
+                cairo_push_group(cr);
+                cairo_paint_with_alpha(cr, m_data->globalAlpha);
+                cairo_pop_group_to_source(cr);
+            }
             cairo_stroke(cr);
         }
         break;
     case PatternColorSpace:
         cairo_set_source(cr, m_common->state.strokePattern.get()->createPlatformPattern(getCTM()));
+        if (m_data->globalAlpha < 1.0f) {
+            cairo_push_group(cr);
+            cairo_paint_with_alpha(cr, m_data->globalAlpha);
+            cairo_pop_group_to_source(cr);
+        }
         cairo_stroke(cr);
         break;
     case GradientColorSpace:
         cairo_set_source(cr, m_common->state.strokeGradient.get()->platformGradient());
+        if (m_data->globalAlpha < 1.0f) {
+            cairo_push_group(cr);
+            cairo_paint_with_alpha(cr, m_data->globalAlpha);
+            cairo_pop_group_to_source(cr);
+        }
         cairo_stroke(cr);
         break;
     }
+    cairo_restore(cr);
 }
 
 void GraphicsContext::drawPath()
@@ -756,9 +835,14 @@ void GraphicsContext::setMiterLimit(float miter)
     cairo_set_miter_limit(m_data->cr, miter);
 }
 
-void GraphicsContext::setAlpha(float)
+void GraphicsContext::setAlpha(float alpha)
 {
-    notImplemented();
+    m_data->globalAlpha = alpha;
+}
+
+float GraphicsContext::getAlpha()
+{
+    return m_data->globalAlpha;
 }
 
 static inline cairo_operator_t toCairoOperator(CompositeOperator op)

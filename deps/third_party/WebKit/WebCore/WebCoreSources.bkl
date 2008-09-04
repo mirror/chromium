@@ -334,6 +334,8 @@ This file contains the list of files needed to build WebCore.
         DerivedSources/WebCore/JSTreeWalker.cpp
         DerivedSources/WebCore/JSUIEvent.cpp
         DerivedSources/WebCore/JSWebKitAnimationEvent.cpp
+        DerivedSources/WebCore/JSWebKitCSSKeyframeRule.cpp
+        DerivedSources/WebCore/JSWebKitCSSKeyframesRule.cpp
         DerivedSources/WebCore/JSWebKitCSSTransformValue.cpp
         DerivedSources/WebCore/JSWebKitTransitionEvent.cpp
         DerivedSources/WebCore/JSWheelEvent.cpp
@@ -626,7 +628,11 @@ This file contains the list of files needed to build WebCore.
         page/AccessibilityTableColumn.cpp
         page/AccessibilityTableHeaderContainer.cpp
         page/AccessibilityTableRow.cpp
-        page/AnimationController.cpp
+        page/animation/AnimationBase.cpp
+        page/animation/AnimationController.cpp
+        page/animation/CompositeAnimation.cpp
+        page/animation/ImplicitAnimation.cpp
+        page/animation/KeyframeAnimation.cpp
         page/AXObjectCache.cpp
         page/BarInfo.cpp
         page/Chrome.cpp

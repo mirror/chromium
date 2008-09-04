@@ -1,3 +1,45 @@
+2008-09-04  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Eric Seidel.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=20639.
+        Bug 20639: ENABLE_DASHBOARD_SUPPORT does not need to be a FEATURE_DEFINE
+
+        * Configurations/WebKit.xcconfig: Remove ENABLE_DASHBOARD_SUPPORT from FEATURE_DEFINES.
+
+2008-09-03  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Sam.
+
+        Clean up Platform.h and add PLATFORM(CHROMIUM), PLATFORM(SKIA) and USE(V8_BINDINGS)
+
+        * Configurations/WebKit.xcconfig:
+        * WebKitPrefix.h: add rules for V8_BINDINGS
+
+2008-09-01  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19760
+
+        Add a linked-on-or-after check to prevent substitute data from loading
+        local resources on newer users of WebKit.
+
+        * Misc/WebKitVersionChecks.h:
+        * WebView/WebView.mm:
+        (-[WebView _commonInitializationWithFrameName:groupName:]):
+
+2008-08-29  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Anders
+
+        Fix regression I introducted in 35946
+        Already covered by media/video-click-dlbclick-standalone.html
+
+        * WebView/WebHTMLRepresentation.mm:
+        (-[WebHTMLRepresentation receivedData:withDataSource:]): Cancel the load here after
+          calling [WebFrame _receivedData:] which more closely follows the path taken by PluginDocuments
+
 2008-08-28  Kevin McCullough  <kmccullough@apple.com>
 
         Reviewed by Geoff.

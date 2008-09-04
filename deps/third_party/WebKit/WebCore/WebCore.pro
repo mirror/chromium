@@ -115,7 +115,7 @@ INCLUDEPATH += \
     $$PWD/platform/graphics/filters \
     $$PWD/platform/graphics/qt \
     $$PWD/svg/graphics/qt \
-    $$PWD/loader/qt \
+    $$PWD/loader \
     $$PWD/page/qt \
     $$PWD/../WebKit/qt/WebCoreSupport \
     $$PWD/../WebKit/qt/Api \
@@ -144,6 +144,7 @@ INCLUDEPATH +=  $$PWD \
                 $$PWD/css \
                 $$PWD/dom \
                 $$PWD/page \
+                $$PWD/page/animation \
                 $$PWD/bridge \
                 $$PWD/editing \
                 $$PWD/rendering \
@@ -222,6 +223,8 @@ IDL_BINDINGS += \
     css/Rect.idl \
     css/StyleSheet.idl \
     css/StyleSheetList.idl \
+    css/WebKitCSSKeyframeRule.idl \
+    css/WebKitCSSKeyframesRule.idl \
     css/WebKitCSSTransformValue.idl \
     dom/Attr.idl \
     dom/CharacterData.idl \
@@ -328,6 +331,7 @@ IDL_BINDINGS += \
     html/HTMLTitleElement.idl \
     html/HTMLUListElement.idl \
     html/ImageData.idl \
+    html/TextMetrics.idl \
     page/BarInfo.idl \
     page/Console.idl \
     page/DOMSelection.idl \
@@ -691,6 +695,7 @@ SOURCES += \
     loader/archive/ArchiveFactory.cpp \
     loader/archive/ArchiveResource.cpp \
     loader/archive/ArchiveResourceCollection.cpp \
+    loader/UserStyleSheetLoader.cpp \
     loader/Cache.cpp \
     loader/CachedCSSStyleSheet.cpp \
     loader/CachedFont.cpp \
@@ -729,7 +734,11 @@ SOURCES += \
     page/AccessibilityTableColumn.cpp \    
     page/AccessibilityTableHeaderContainer.cpp \    
     page/AccessibilityTableRow.cpp \    
-    page/AnimationController.cpp \    
+    page/animation/AnimationBase.cpp \
+    page/animation/AnimationController.cpp \
+    page/animation/CompositeAnimation.cpp \
+    page/animation/ImplicitAnimation.cpp \
+    page/animation/KeyframeAnimation.cpp \
     page/AXObjectCache.cpp \
     page/BarInfo.cpp \
     page/Chrome.cpp \
@@ -892,7 +901,7 @@ SOURCES += \
     rendering/RenderWordBreak.cpp \
     rendering/RootInlineBox.cpp \
     rendering/SVGRenderTreeAsText.cpp \
-    rendering/TextControlInnerElements.h \
+    rendering/TextControlInnerElements.cpp \
     rendering/style/RenderStyle.cpp \
     rendering/style/StyleCachedImage.cpp \
     rendering/style/StyleGeneratedImage.cpp \

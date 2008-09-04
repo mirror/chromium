@@ -19,6 +19,10 @@
  *
  */
 
+#if defined(HAVE_CONFIG_H) && HAVE_CONFIG_H
+#include "autotoolsconfig.h"
+#endif
+
 #include <wtf/Platform.h>
 
 #if PLATFORM(WIN_OS)

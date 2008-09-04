@@ -36,20 +36,17 @@ namespace KJS {
     class ExecState;
     class Profile;
     class ProfileNode;
-    class ProfilerClient;
     class UString;
 
     class ProfileGenerator : public RefCounted<ProfileGenerator>  {
     public:
-        static PassRefPtr<ProfileGenerator> create(const UString& title, ExecState* originatingGlobalExec, unsigned profileGroup, ProfilerClient*, unsigned uid);
+        static PassRefPtr<ProfileGenerator> create(const UString& title, ExecState* originatingExec, unsigned uid);
 
         // Members
         const UString& title() const;
         PassRefPtr<Profile> profile() const { return m_profile; }
         ExecState* originatingGlobalExec() const { return m_originatingGlobalExec; }
         unsigned profileGroup() const { return m_profileGroup; }
-        ProfilerClient* client() { return m_client; }
-        bool stoppedProfiling() { return m_stoppedProfiling; }
 
         // Collecting
         void willExecute(const CallIdentifier&);
@@ -57,12 +54,12 @@ namespace KJS {
 
         // Stopping Profiling
         void stopProfiling();
-        bool didFinishAllExecution();
 
         typedef void (ProfileGenerator::*ProfileFunction)(const CallIdentifier& callIdentifier);
 
     private:
-        ProfileGenerator(const UString& title, ExecState* originatingGlobalExec, unsigned profileGroup, ProfilerClient*, unsigned uid);
+        ProfileGenerator(const UString& title, ExecState* originatingExec, unsigned uid);
+        void addParentForConsoleStart(ExecState*);
 
         void removeProfileStart();
         void removeProfileEnd();
@@ -70,13 +67,8 @@ namespace KJS {
         RefPtr<Profile> m_profile;
         ExecState* m_originatingGlobalExec;
         unsigned m_profileGroup;
-        ProfilerClient* m_client;
         RefPtr<ProfileNode> m_head;
         RefPtr<ProfileNode> m_currentNode;
-
-        // Stopping Profiling
-        bool m_stoppedProfiling;
-        unsigned m_stoppedCallDepth;
     };
 
 } // namespace KJS
