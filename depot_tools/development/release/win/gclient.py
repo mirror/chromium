@@ -259,8 +259,9 @@ def CaptureSVN(args, in_directory, verbose):
   # the svn.exe executable, but shell=True makes subprocess on Linux fail
   # when it's called with a list because it only tries to execute the
   # first string ("svn").
+  env = {'LANG': 'C'}
   return subprocess.Popen(c, cwd=in_directory, shell=(sys.platform == 'win32'),
-                          stdout=subprocess.PIPE).communicate()[0]
+                          stdout=subprocess.PIPE, env=env).communicate()[0]
 
 
 def CaptureSVNInfo(relpath, in_directory, verbose):
@@ -324,6 +325,13 @@ def UpdateToURL(relpath, svnurl, root_dir, options, args,
   Raises:
     Error: if can't get URL for relative path.
   """
+  # only update if git is not controlling the directory
+  git_path = os.path.join(root_dir, relpath, '.git')
+  if path_exists(git_path):
+    print >> output_stream, (
+        "________ found .git directory; skipping %s" % relpath)
+    return
+
   comps = svnurl.split("@")
   # by default, we run the svn command at the root directory level
   run_dir = root_dir
@@ -488,7 +496,7 @@ def GetClient():
     path = next[0]
     client_file = os.path.join(path, CLIENT_FILE)
   client = {}
-  client_fo = open(client_file)
+  client_fo = open(client_file, 'U')
   try:
     client_source = client_fo.read()
     exec(client_source, client)
