@@ -75,12 +75,13 @@ TimerTask::TimerTask(int delay, bool repeating)
       timer_(NULL) {
   Reset();  // This will just set up the variables to indicate we have a
             // running timer.
-  timer_ = message_loop()->timer_manager()->StartTimer(delay, this, repeating);
+  timer_ = message_loop()->timer_manager_deprecated()->StartTimer(
+      delay, this, repeating);
 }
 
 TimerTask::~TimerTask() {
   if (timer_) {
-    message_loop()->timer_manager()->StopTimer(timer_);
+    message_loop()->timer_manager_deprecated()->StopTimer(timer_);
     delete timer_;
   }
   if (timer_running_) {
@@ -97,7 +98,7 @@ void TimerTask::Reset() {
   }
   if (timer_) {
     start_ticks_ = TimeTicks::Now();
-    message_loop()->timer_manager()->ResetTimer(timer_);
+    message_loop()->timer_manager_deprecated()->ResetTimer(timer_);
   }
 }
 
@@ -116,7 +117,7 @@ void TimerTask::Run() {
   // If we're done running, shut down the message loop.
   if (timer_->repeating() && (iterations_ < 10))
     return;  // Iterate 10 times before terminating.
-  message_loop()->timer_manager()->StopTimer(timer_);
+  message_loop()->timer_manager_deprecated()->StopTimer(timer_);
   timer_running_ = false;
   if (--timer_count_ <= 0)
     QuitMessageLoop();
@@ -224,7 +225,7 @@ void RunTest_BrokenTimer(MessageLoop::Type message_loop_type) {
   // Simulate faulty early-firing timers. The tasks in RunTimerTest should
   // nevertheless be invoked after their specified delays, regardless of when
   // WM_TIMER fires.
-  TimerManager* manager = MessageLoop::current()->timer_manager();
+  TimerManager* manager = MessageLoop::current()->timer_manager_deprecated();
   manager->set_use_broken_delay(true);
   RunTimerTest();
   manager->set_use_broken_delay(false);
@@ -440,39 +441,63 @@ void RunTest_RepeatingTimer_Cancel(MessageLoop::Type message_loop_type) {
 // that timers work properly in all configurations.
 
 TEST(TimerTest, TimerComparison) {
+  Time s = Time::Now();
   RunTest_TimerComparison(MessageLoop::TYPE_DEFAULT);
   RunTest_TimerComparison(MessageLoop::TYPE_UI);
   RunTest_TimerComparison(MessageLoop::TYPE_IO);
+  Time e = Time::Now();
+  TimeDelta el = e - s;
+  printf("comparison elapsed time %lld\n", el.ToInternalValue());
 }
 
 TEST(TimerTest, BasicTimer) {
+  Time s = Time::Now();
   RunTest_BasicTimer(MessageLoop::TYPE_DEFAULT);
   RunTest_BasicTimer(MessageLoop::TYPE_UI);
   RunTest_BasicTimer(MessageLoop::TYPE_IO);
+  Time e = Time::Now();
+  TimeDelta el = e - s;
+  printf("basic elapsed time %lld\n", el.ToInternalValue());
 }
 
 TEST(TimerTest, BrokenTimer) {
+  Time s = Time::Now();
   RunTest_BrokenTimer(MessageLoop::TYPE_DEFAULT);
   RunTest_BrokenTimer(MessageLoop::TYPE_UI);
   RunTest_BrokenTimer(MessageLoop::TYPE_IO);
+  Time e = Time::Now();
+  TimeDelta el = e - s;
+  printf("broken elapsed time %lld\n", el.ToInternalValue());
 }
 
 TEST(TimerTest, DeleteFromRun) {
+  Time s = Time::Now();
   RunTest_DeleteFromRun(MessageLoop::TYPE_DEFAULT);
   RunTest_DeleteFromRun(MessageLoop::TYPE_UI);
   RunTest_DeleteFromRun(MessageLoop::TYPE_IO);
+  Time e = Time::Now();
+  TimeDelta el = e - s;
+  printf("delete elapsed time %lld\n", el.ToInternalValue());
 }
 
 TEST(TimerTest, Reset) {
+  Time s = Time::Now();
   RunTest_Reset(MessageLoop::TYPE_DEFAULT);
   RunTest_Reset(MessageLoop::TYPE_UI);
   RunTest_Reset(MessageLoop::TYPE_IO);
+  Time e = Time::Now();
+  TimeDelta el = e - s;
+  printf("reset elapsed time %lld\n", el.ToInternalValue());
 }
 
 TEST(TimerTest, FifoOrder) {
+  Time s = Time::Now();
   RunTest_FifoOrder(MessageLoop::TYPE_DEFAULT);
   RunTest_FifoOrder(MessageLoop::TYPE_UI);
   RunTest_FifoOrder(MessageLoop::TYPE_IO);
+  Time e = Time::Now();
+  TimeDelta el = e - s;
+  printf("fifo elapsed time %lld\n", el.ToInternalValue());
 }
 
 TEST(TimerTest, OneShotTimer) {

@@ -12,10 +12,10 @@ deps = {
     "/trunk/third_party/WebKit@19",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@1227",
+    "/trunk/deps/third_party/icu38@1679",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@78",
+    "http://v8.googlecode.com/svn/trunk@101",
 
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/branches/Safari-3-1-branch/LayoutTests@31256",

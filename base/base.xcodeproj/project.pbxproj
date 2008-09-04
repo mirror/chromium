@@ -76,6 +76,11 @@
 		7B8505D90E5B445100730B43 /* libbase_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 825403B10D92D2E50006B936 /* libbase_gfx.a */; };
 		7B85062A0E5B556900730B43 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B165D5E0E55081400185273 /* libpng.a */; };
 		7B85062F0E5B559A00730B43 /* libzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B165D6E0E55081400185273 /* libzlib.a */; };
+		7BAE30E50E6D939F00C3F750 /* atomicops_unittest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BAE30E10E6D939800C3F750 /* atomicops_unittest.cc */; };
+		7BAE30E60E6D939F00C3F750 /* simple_thread_unittest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BAE30E40E6D939800C3F750 /* simple_thread_unittest.cc */; };
+		7BAE30E70E6D93A300C3F750 /* simple_thread.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BAE30E20E6D939800C3F750 /* simple_thread.cc */; };
+		7BAE38AC0E6EFDBA00C3F750 /* thread_local_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BAE38A90E6EFD9900C3F750 /* thread_local_posix.cc */; };
+		7BAE38AF0E6EFDC300C3F750 /* thread_local_unittest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BAE38AB0E6EFD9900C3F750 /* thread_local_unittest.cc */; };
 		7BAF501C0E50B84200CA8A07 /* base_paths.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF501B0E50B84200CA8A07 /* base_paths.cc */; };
 		7BAF50760E50B8F100CA8A07 /* file_version_info_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF50740E50B8F100CA8A07 /* file_version_info_mac.mm */; };
 		7BD8F4A10E65AA4600034DE9 /* process_util_posix.cc in Sources */ = {isa = PBXBuildFile; fileRef = 7BD8F49F0E65AA2400034DE9 /* process_util_posix.cc */; };
@@ -338,6 +343,14 @@
 		7B8505A50E5B3FBE00730B43 /* skia_utils.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = skia_utils.cc; sourceTree = "<group>"; };
 		7B8505A60E5B3FBE00730B43 /* skia_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skia_utils.h; sourceTree = "<group>"; };
 		7B8505A80E5B3FBE00730B43 /* vector_canvas_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vector_canvas_unittest.cc; sourceTree = "<group>"; };
+		7BAE30E10E6D939800C3F750 /* atomicops_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = atomicops_unittest.cc; sourceTree = "<group>"; };
+		7BAE30E20E6D939800C3F750 /* simple_thread.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_thread.cc; sourceTree = "<group>"; };
+		7BAE30E30E6D939800C3F750 /* simple_thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simple_thread.h; sourceTree = "<group>"; };
+		7BAE30E40E6D939800C3F750 /* simple_thread_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simple_thread_unittest.cc; sourceTree = "<group>"; };
+		7BAE38A80E6EFD9900C3F750 /* thread_local.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thread_local.h; sourceTree = "<group>"; };
+		7BAE38A90E6EFD9900C3F750 /* thread_local_posix.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_posix.cc; sourceTree = "<group>"; };
+		7BAE38AA0E6EFD9900C3F750 /* thread_local_storage_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_storage_unittest.cc; sourceTree = "<group>"; };
+		7BAE38AB0E6EFD9900C3F750 /* thread_local_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_local_unittest.cc; sourceTree = "<group>"; };
 		7BAF4F7B0E50A3BD00CA8A07 /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		7BAF501B0E50B84200CA8A07 /* base_paths.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = base_paths.cc; sourceTree = "<group>"; };
 		7BAF50740E50B8F100CA8A07 /* file_version_info_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = file_version_info_mac.mm; sourceTree = "<group>"; };
@@ -542,7 +555,7 @@
 		E4562A2A0E27CA2F005E4685 /* libpng.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpng.xcodeproj; path = third_party/libpng/libpng.xcodeproj; sourceTree = "<group>"; };
 		E4562A3B0E27CAB6005E4685 /* zlib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = zlib.xcodeproj; path = third_party/zlib/zlib.xcodeproj; sourceTree = "<group>"; };
 		E4562AD60E27E27E005E4685 /* path_service_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = path_service_unittest.cc; sourceTree = "<group>"; };
-		E4562AF30E27E428005E4685 /* icu.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = icu.xcodeproj; path = third_party/icu38/build/icu.xcodeproj; sourceTree = "<group>"; };
+		E4562AF30E27E428005E4685 /* icu.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = icu.xcodeproj; path = third_party/icu38/icu.xcodeproj; sourceTree = "<group>"; };
 		E4562C3B0E28017F005E4685 /* json_reader_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader_unittest.cc; sourceTree = "<group>"; };
 		E4562C4E0E28022A005E4685 /* json_writer_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer_unittest.cc; sourceTree = "<group>"; };
 		E4562C580E2802AC005E4685 /* observer_list_unittest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = observer_list_unittest.cc; sourceTree = "<group>"; };
@@ -707,6 +720,7 @@
 				7BD8F4CA0E65B33300034DE9 /* atomic_sequence_num.h */,
 				7BD8F4CB0E65B33300034DE9 /* atomicops.h */,
 				7BD8F4CE0E65B33300034DE9 /* atomicops_internals_x86_macosx.h */,
+				7BAE30E10E6D939800C3F750 /* atomicops_unittest.cc */,
 				825402C50D92D1390006B936 /* base_drag_source.cc */,
 				825402C60D92D1390006B936 /* base_drag_source.h */,
 				825402C70D92D1390006B936 /* base_drop_target.cc */,
@@ -836,6 +850,9 @@
 				825403740D92D2CF0006B936 /* shared_event.h */,
 				825403760D92D2CF0006B936 /* shared_memory.h */,
 				824653730DC12D0E007C2BAA /* shared_memory_posix.cc */,
+				7BAE30E20E6D939800C3F750 /* simple_thread.cc */,
+				7BAE30E30E6D939800C3F750 /* simple_thread.h */,
+				7BAE30E40E6D939800C3F750 /* simple_thread_unittest.cc */,
 				7BD9E84E0DA447F800FC7A01 /* singleton.h */,
 				7BF165810E663AA800AA999E /* singleton_objc.h */,
 				E4AFA4BE0E50DE7400201347 /* singleton_unittest.cc */,
@@ -865,8 +882,12 @@
 				8254037E0D92D2CF0006B936 /* task.h */,
 				93E703230E5D64F00046259B /* thread.cc */,
 				825403800D92D2CF0006B936 /* thread.h */,
+				7BAE38A80E6EFD9900C3F750 /* thread_local.h */,
+				7BAE38A90E6EFD9900C3F750 /* thread_local_posix.cc */,
 				825403820D92D2CF0006B936 /* thread_local_storage.h */,
 				829E36720DC0FBAD00819EBF /* thread_local_storage_posix.cc */,
+				7BAE38AA0E6EFD9900C3F750 /* thread_local_storage_unittest.cc */,
+				7BAE38AB0E6EFD9900C3F750 /* thread_local_unittest.cc */,
 				93E7031A0E5D64390046259B /* thread_unittest.cc */,
 				824654900DC25A8C007C2BAA /* time.cc */,
 				825403840D92D2CF0006B936 /* time.h */,
@@ -1210,6 +1231,7 @@
 				ABF4B9BC0DC2BD1000A6E319 /* sha2.cc in Sources */,
 				ABF4B9BE0DC2BD1500A6E319 /* sha512.cc in Sources */,
 				824653740DC12D0E007C2BAA /* shared_memory_posix.cc in Sources */,
+				7BAE30E70E6D93A300C3F750 /* simple_thread.cc in Sources */,
 				829E365F0DC0FB1C00819EBF /* stats_table.cc in Sources */,
 				7BD8F7740E65E89800034DE9 /* string16.cc in Sources */,
 				E4A133440E37A3C400110AA2 /* string_escape.cc in Sources */,
@@ -1218,6 +1240,7 @@
 				820EB4FA0E3A6178009668FC /* string_util_icu.cc in Sources */,
 				7B4C5F4A0E4B6BF900679E8F /* sys_string_conversions_mac.cc in Sources */,
 				93E703240E5D64F00046259B /* thread.cc in Sources */,
+				7BAE38AC0E6EFDBA00C3F750 /* thread_local_posix.cc in Sources */,
 				829E36730DC0FBAD00819EBF /* thread_local_storage_posix.cc in Sources */,
 				824654910DC25A8C007C2BAA /* time.cc in Sources */,
 				82D094550E5B892600FEC05C /* time_format.cc in Sources */,
@@ -1254,6 +1277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B78D38E0E54FE0100609465 /* at_exit_unittest.cc in Sources */,
+				7BAE30E50E6D939F00C3F750 /* atomicops_unittest.cc in Sources */,
 				7B78D38F0E54FE0100609465 /* command_line_unittest.cc in Sources */,
 				BA73AA330E5F614B00A20026 /* condition_variable_unittest.cc in Sources */,
 				7B8505D40E5B43FE00730B43 /* convolver_unittest.cc in Sources */,
@@ -1276,12 +1300,14 @@
 				7B78D39A0E54FE0100609465 /* run_all_unittests.cc in Sources */,
 				7BD8F4D50E65B55000034DE9 /* scoped_ptr_unittest.cc in Sources */,
 				7B78D39B0E54FE0100609465 /* sha2_unittest.cc in Sources */,
+				7BAE30E60E6D939F00C3F750 /* simple_thread_unittest.cc in Sources */,
 				7B78D39C0E54FE0100609465 /* singleton_unittest.cc in Sources */,
 				7B78D39D0E54FE0100609465 /* stack_container_unittest.cc in Sources */,
 				7B78D39E0E54FE0100609465 /* string_escape_unittest.cc in Sources */,
 				7B78D39F0E54FE0100609465 /* string_piece_unittest.cc in Sources */,
 				7B78D3A00E54FE0100609465 /* string_tokenizer_unittest.cc in Sources */,
 				7B78D3A10E54FE0100609465 /* string_util_unittest.cc in Sources */,
+				7BAE38AF0E6EFDC300C3F750 /* thread_local_unittest.cc in Sources */,
 				93E7031B0E5D64390046259B /* thread_unittest.cc in Sources */,
 				7B78D3A20E54FE0100609465 /* time_unittest.cc in Sources */,
 				BA739A030E5E3242009842A7 /* timer_unittest.cc in Sources */,
