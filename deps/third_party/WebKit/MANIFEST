@@ -6,8 +6,6 @@ WebCore\dom\Document.cpp
 WebCore\dom\Document.h
 WebCore\editing\Editor.h
 WebCore\editing\Selection.cpp
-WebCore\html\HTMLInputElement.cpp
-WebCore\html\HTMLInputElement.h
 WebCore\html\HTMLLinkElement.cpp
 WebCore\html\HTMLLinkElement.h
 WebCore\html\HTMLPlugInElement.cpp
@@ -27,7 +25,6 @@ WebCore\page\InspectorController.h
 WebCore\page\Page.h
 WebCore\page\Settings.cpp
 WebCore\page\Settings.h
-WebCore\page\mac\WebCoreFrameBridge.mm
 WebCore\platform\Cursor.h
 WebCore\platform\KURL.cpp
 WebCore\platform\KURL.h
