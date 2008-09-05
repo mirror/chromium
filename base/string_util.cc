@@ -1019,3 +1019,127 @@ bool MatchPattern(const std::wstring& eval, const std::wstring& pattern) {
 bool MatchPattern(const std::string& eval, const std::string& pattern) {
   return MatchPatternT(eval.c_str(), pattern.c_str());
 }
+
+// For the various *ToInt conversions, there are no *ToIntTraits classes to use
+// because there's no such thing as strtoi.  Use *ToLongTraits through a cast
+// instead, requiring that long and int are compatible and equal-width.  They
+// are on our target platforms.
+
+bool StringToInt(const std::string& input, int* output) {
+  DCHECK(sizeof(int) == sizeof(long));
+  return StringToNumber<StringToLongTraits>(input,
+                                            reinterpret_cast<long*>(output));
+}
+
+bool StringToInt(const std::wstring& input, int* output) {
+  DCHECK(sizeof(int) == sizeof(long));
+  return StringToNumber<WStringToLongTraits>(input,
+                                             reinterpret_cast<long*>(output));
+}
+
+bool StringToInt64(const std::string& input, int64* output) {
+  return StringToNumber<StringToInt64Traits>(input, output);
+}
+
+bool StringToInt64(const std::wstring& input, int64* output) {
+  return StringToNumber<WStringToInt64Traits>(input, output);
+}
+
+bool HexStringToInt(const std::string& input, int* output) {
+  DCHECK(sizeof(int) == sizeof(long));
+  return StringToNumber<HexStringToLongTraits>(input,
+                                               reinterpret_cast<long*>(output));
+}
+
+bool HexStringToInt(const std::wstring& input, int* output) {
+  DCHECK(sizeof(int) == sizeof(long));
+  return StringToNumber<HexWStringToLongTraits>(
+      input, reinterpret_cast<long*>(output));
+}
+
+bool StringToDouble(const std::string& input, double* output) {
+  return StringToNumber<StringToDoubleTraits>(input, output);
+}
+
+bool StringToDouble(const std::wstring& input, double* output) {
+  return StringToNumber<WStringToDoubleTraits>(input, output);
+}
+
+int StringToInt(const std::string& value) {
+  int result;
+  StringToInt(value, &result);
+  return result;
+}
+
+int StringToInt(const std::wstring& value) {
+  int result;
+  StringToInt(value, &result);
+  return result;
+}
+
+int64 StringToInt64(const std::string& value) {
+  int64 result;
+  StringToInt64(value, &result);
+  return result;
+}
+
+int64 StringToInt64(const std::wstring& value) {
+  int64 result;
+  StringToInt64(value, &result);
+  return result;
+}
+
+int HexStringToInt(const std::string& value) {
+  int result;
+  HexStringToInt(value, &result);
+  return result;
+}
+
+int HexStringToInt(const std::wstring& value) {
+  int result;
+  HexStringToInt(value, &result);
+  return result;
+}
+
+double StringToDouble(const std::string& value) {
+  double result;
+  StringToDouble(value, &result);
+  return result;
+}
+
+double StringToDouble(const std::wstring& value) {
+  double result;
+  StringToDouble(value, &result);
+  return result;
+}
+
+// The following code is compatible with the OpenBSD lcpy interface.  See:
+//   http://www.gratisoft.us/todd/papers/strlcpy.html
+//   ftp://ftp.openbsd.org/pub/OpenBSD/src/lib/libc/string/{wcs,str}lcpy.c
+
+namespace {
+
+template <typename CHAR>
+size_t lcpyT(CHAR* dst, const CHAR* src, size_t dst_size) {
+  for (size_t i = 0; i < dst_size; ++i) {
+    if ((dst[i] = src[i]) == 0)  // We hit and copied the terminating NULL.
+      return i;
+  }
+
+  // We were left off at dst_size.  We over copied 1 byte.  Null terminate.
+  if (dst_size != 0)
+    dst[dst_size - 1] = 0;
+
+  // Count the rest of the |src|, and return it's length in characters.
+  while (src[dst_size]) ++dst_size;
+  return dst_size;
+}
+
+}  // namespace
+
+size_t base::strlcpy(char* dst, const char* src, size_t dst_size) {
+  return lcpyT<char>(dst, src, dst_size);
+}
+size_t base::wcslcpy(wchar_t* dst, const wchar_t* src, size_t dst_size) {
+  return lcpyT<wchar_t>(dst, src, dst_size);
+}
