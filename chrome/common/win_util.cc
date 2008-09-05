@@ -416,16 +416,22 @@ bool SaveFileAsWithFilter(HWND owner,
                           const std::wstring& def_ext,
                           unsigned* index,
                           std::wstring* final_name) {
+  // The size of the in/out buffer in number of characters we pass to win32
+  // GetSaveFileName.  From MSDN "The buffer must be large enough to store the
+  // path and file name string or strings, including the terminating NULL
+  // character.  ... The buffer should be at least 256 characters long.".
+  static const size_t kMaxFilenameSize = MAX_PATH + 1;
+
   DCHECK(final_name);
+
+  std::wstring file_part = file_util::GetFilenameFromPath(suggested_name);
 
   // Initially populated by the file component of 'suggested_name', this buffer
   // will be written into by Windows when the user is done with the dialog box.
-  wchar_t file_name[MAX_PATH+1];
-  std::wstring file_part = file_util::GetFilenameFromPath(suggested_name);
-  memcpy(file_name,
-         file_part.c_str(),
-         (file_part.length()+1) * sizeof(wchar_t));
-
+  wchar_t file_name[kMaxFilenameSize];
+  
+  base::wclscpy(file_name, file_part.c_str(), kMaxFilenameSize);
+  
   OPENFILENAME save_as;
   // We must do this otherwise the ofn's FlagsEx may be initialized to random
   // junk in release builds which can cause the Places Bar not to show up!
