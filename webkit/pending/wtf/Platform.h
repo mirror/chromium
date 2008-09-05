@@ -79,11 +79,6 @@
 
 /* Operating environments */
 
-/* define a platform for chrome, requires |BUILDING_CHROME__| to be defined */
-#if defined(BUILDING_CHROME__)
-#define WTF_PLATFORM_CHROME 1
-#endif
-
 /* PLATFORM(QT) */
 /* PLATFORM(GTK) */
 /* PLATFORM(MAC) */
@@ -113,9 +108,6 @@
 #if PLATFORM(MAC)
 #define WTF_PLATFORM_CG 1
 #define WTF_PLATFORM_CI 1
-#if PLATFORM(CHROME)
-#define WTF_PLATFORM_SKIA 1
-#endif
 #elif !PLATFORM(QT) && !PLATFORM(WX)
 #define WTF_PLATFORM_CAIRO 1
 #endif

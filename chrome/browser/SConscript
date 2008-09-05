@@ -1,53 +1,99 @@
-# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+# Copyright 2008, Google Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#
+#    * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above
+# copyright notice, this list of conditions and the following disclaimer
+# in the documentation and/or other materials provided with the
+# distribution.
+#    * Neither the name of Google Inc. nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Import('env')
 
 env = env.Clone()
 
 
+
+#/Yu"precompiled_wtl.h"
+#/Fp"C:\src\trunk\chrome\Debug\obj\browser\precompiled_wtl.pch"
+#/Fo"C:\src\trunk\chrome\Debug\obj\browser\\"
+#/Fd"C:\src\trunk\chrome\Debug\obj\browser\vc80.pdb"
+#/W3
+#/WX
+#/FI "precompiled_wtl.h"
+
 env.Prepend(
     CPPPATH = [
-        '$CHROME_DIR/app/resources',
-        #'$OBJ_ROOT/google_update',
-        '#/tools/build/win',
-        '#/..',
+        env.Dir('../app/resources'),
+        env.Dir('$OBJ_ROOT/google_update'),
+        env.Dir('#/tools/build/win'),
+        env.Dir('#/..'),
     ],
     CPPDEFINES = [
         'U_STATIC_IMPLEMENTATION',
+        'CERT_CHAIN_PARA_HAS_EXTRA_FIELDS',
+        'WIN32_LEAN_AND_MEAN',
+
         'USE_HUNSPELL',
         'HUNSPELL_CHROME_CLIENT',
         'LIBXML_STATIC',
         'PNG_USER_CONFIG',
         'CHROME_PNG_WRITE_SUPPORT',
-        'GOOGLE_CHROME_BUILD',
     ],
     CCFLAGS = [
         '/TP',
+
+        '/Wp64',
+
+        '/wd4503',
+        '/wd4819',
     ],
 )
 
 env.Append(
     CPPPATH = [
         '$GTEST_DIR/include',
+        #/I "../chrome/Debug/webkit"
+        #/I "../third_party/webkit/out"
 
-        '$GOOGLE_UPDATE_DIR',
-        '$CHROME_DIR/third_party/hunspell/src/hunspell',
-        '$CHROME_DIR/third_party/wtl/include',
-        '$NPAPI_DIR',
+        env.Dir("#../google_update"),
+        env.Dir("#../chrome/third_party/hunspell/src/hunspell"),
+        env.Dir("#../chrome/third_party/wtl/include"),
+        env.Dir("#../third_party/npapi"),
         '$LIBXML_DIR/scons/include',
         '$LIBXML_DIR/include',
-        '$ICU38_DIR/public/common',
-        '$ICU38_DIR/public/i18n',
-        '$CHROME_DIR/app',
-        '$WEBKIT_DIR/build/localized_strings',
-        '$ZLIB_DIR',
-        '$SKIA_DIR/include',
-        '$SKIA_DIR/include/corecg',
-        '$SKIA_DIR/platform',
-        '$LIBPNG_DIR',
-        '$BREAKPAD_DIR/src',
+        env.Dir("#../third_party/icu38/public/common"),
+        env.Dir("#../third_party/icu38/public/i18n"),
+
+        env.Dir("#../chrome/app"),
+
+        env.Dir("#../webkit/build/localized_strings"),
+
+        env.Dir("#../third_party/zlib"),
+        env.Dir("#../skia/include"),
+        env.Dir("#../skia/include/corecg"),
+        env.Dir("#../skia/platform"),
+        env.Dir("#../third_party/libpng"),
+        env.Dir("#../breakpad/src"),
     ],
 )
 
@@ -73,10 +119,7 @@ input_files = [
     'automation/url_request_slow_download_job.cc',
     'back_forward_menu_model.cc',
     'base_history_model.cc',
-    'bookmark_bar_context_menu_controller.cc',
     'bookmark_bar_model.cc',
-    'bookmark_codec.cc',
-    'bookmark_storage.cc',
     'bookmark_drag_data.cc',
     'browser.cc',
     'browser_about_handler.cc',
@@ -89,13 +132,13 @@ input_files = [
     'browser_process_impl.cc',
     'browser_shutdown.cc',
     'browser_url_handler.cc',
-    'browser_window.cc',
     'browsing_data_remover.cc',
     'browsing_instance.cc',
     'cache_manager_host.cc',
     'cancelable_request.cc',
     'cert_store.cc',
     'character_encoding.cc',
+    'chrome_frame.cc',
     'chrome_plugin_browsing_context.cc',
     'chrome_plugin_host.cc',
     'chrome_thread.cc',
@@ -125,7 +168,6 @@ input_files = [
     'firefox_importer_utils.cc',
     'firefox_profile_lock.cc',
     'first_run.cc',
-    'frame_util.cc',
     'frame_view.cc',
     'gears_integration.cc',
     'google_url_tracker.cc',
@@ -175,7 +217,10 @@ input_files = [
     'mork_reader.cc',
     'native_ui_contents.cc',
     'navigation_controller.cc',
+    'navigation_controller_base.cc',
     'navigation_entry.cc',
+    'navigation_performance_viewer.cc',
+    'navigation_profiler.cc',
     'net/dns_global.cc',
     'net/dns_host_info.cc',
     'net/dns_master.cc',
@@ -183,6 +228,7 @@ input_files = [
     'network_status_view.cc',
     'google_update.cc',
     'page_info_window.cc',
+    'page_load_tracker.cc',
     'page_state.cc',
     'password_form_manager.cc',
     'password_manager.cc',
@@ -211,7 +257,6 @@ input_files = [
     'render_view_context_menu.cc',
     'render_view_context_menu_controller.cc',
     'render_view_host.cc',
-    'render_view_host_manager.cc',
     'render_widget_helper.cc',
     'render_widget_host.cc',
     'render_widget_host_hwnd.cc',
@@ -279,6 +324,63 @@ input_files = [
     'user_data_dir_dialog.cc',
     'user_metrics.cc',
     'view_source_contents.cc',
+    'views/about_chrome_view.cc',
+    'views/bookmark_bar_view.cc',
+    'views/bookmark_bubble_view.cc',
+    'views/bookmark_editor_view.cc',
+    'views/bug_report_view.cc',
+    'views/clear_browsing_data.cc',
+    'views/constrained_window_animation.cc',
+    'views/constrained_window_impl.cc',
+    'views/delay_view.cc',
+    'views/download_item_view.cc',
+    'views/download_shelf_view.cc',
+    'views/download_started_animation.cc',
+    'views/edit_keyword_controller.cc',
+    'views/event_utils.cc',
+    'views/first_run_bubble.cc',
+    'views/first_run_customize_view.cc',
+    'views/first_run_view.cc',
+    'views/first_run_view_base.cc',
+    'views/go_button.cc',
+    'views/html_dialog_view.cc',
+    'views/hung_renderer_view.cc',
+    'views/importer_lock_view.cc',
+    'views/importer_view.cc',
+    'views/importing_progress_view.cc',
+    'views/info_bar_alternate_nav_url_view.cc',
+    'views/info_bar_confirm_view.cc',
+    'views/info_bar_item_view.cc',
+    'views/info_bar_message_view.cc',
+    'views/info_bar_view.cc',
+    'views/info_bubble.cc',
+    'views/input_window.cc',
+    'views/keyword_editor_view.cc',
+    'views/location_bar_view.cc',
+    'views/login_view.cc',
+    'views/options/advanced_contents_view.cc',
+    'views/options/advanced_page_view.cc',
+    'views/options/content_page_view.cc',
+    'views/options/cookies_view.cc',
+    'views/options/fonts_languages_window_view.cc',
+    'views/options/fonts_page_view.cc',
+    'views/options/general_page_view.cc',
+    'views/options/language_combobox_model.cc',
+    'views/options/languages_page_view.cc',
+    'views/options/options_group_view.cc',
+    'views/options/options_page_view.cc',
+    'views/options/options_window_view.cc',
+    'views/password_manager_view.cc',
+    'views/restart_message_box.cc',
+    'views/sad_tab_view.cc',
+    'views/shelf_item_dialog.cc',
+    'views/shell_dialogs.cc',
+    'views/star_toggle.cc',
+    'views/status_bubble.cc',
+    'views/tab_icon_view.cc',
+    'views/theme_helpers.cc',
+    'views/toolbar_star_toggle.cc',
+    'views/toolbar_view.cc',
     'visitedlink_master.cc',
     'vista_frame.cc',
     'web_app.cc',
@@ -295,8 +397,8 @@ input_files = [
     'xp_frame.cc',
 ]
 
-env.ChromeStaticLibrary('browser', input_files)
+env.StaticLibrary('browser', input_files)
+
 
 
 SConscript('debugger/SConscript', exports=['env'])
-

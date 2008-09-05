@@ -182,14 +182,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\test_notification_tracker.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\test_notification_tracker.h"
-				>
-			</File>
-			<File
 				RelativePath="..\testing_browser_process.h"
 				>
 			</File>
@@ -207,22 +199,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\net\url_request\url_request_test_job.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="TestBookmarkBarContextMenuController"
-			>
-			<File
-				RelativePath="..\..\browser\bookmark_bar_context_menu_controller_test.cc"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="TestBookmarkEditorView"
-			>
-			<File
-				RelativePath="..\..\browser\views\bookmark_editor_view_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -419,14 +395,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="TestKeywordEditorView"
-			>
-			<File
-				RelativePath="..\..\browser\views\keyword_editor_view_unittest.cc"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="TestJPEGCodec"
 			>
 			<File
@@ -495,6 +463,18 @@
 			>
 			<File
 				RelativePath="..\..\common\mru_cache_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestPerformanceProfiler"
+			>
+			<File
+				RelativePath="..\..\browser\navigation_profiler_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\browser\page_load_tracker_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -718,27 +698,11 @@
 			Name="TestPrinting"
 			>
 			<File
-				RelativePath="..\..\browser\printing\page_number_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\browser\printing\page_overlays_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\browser\printing\page_range_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\..\browser\printing\page_setup_unittest.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\..\browser\printing\printing_test.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\browser\printing\units_unittest.cc"
 				>
 			</File>
 			<File

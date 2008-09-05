@@ -44,8 +44,6 @@ class FontPlatformData;
 class SharedBuffer;
 class SVGFontData;
 class WidthMap;
-class ZeroWidthFontData;
-class CJKWidthFontData;
 
 enum Pitch { UnknownPitch, FixedPitch, VariablePitch };
 
@@ -53,10 +51,6 @@ class SimpleFontData : public FontData {
 public:
     SimpleFontData(const FontPlatformData&, bool customFont = false, bool loading = false, SVGFontData* data = 0);
     virtual ~SimpleFontData();
-
-protected:
-    // sub-class constructor
-    SimpleFontData();
 
 public:
     const FontPlatformData& platformData() const { return m_font; }
@@ -73,7 +67,7 @@ public:
     float xHeight() const { return m_xHeight; }
     unsigned unitsPerEm() const { return m_unitsPerEm; }
 
-    virtual float widthForGlyph(Glyph) const;
+    float widthForGlyph(UChar32, Glyph) const;
     float platformWidthForGlyph(Glyph) const;
 
     virtual const SimpleFontData* fontDataForCharacter(UChar32) const;
@@ -81,8 +75,6 @@ public:
 
     void determinePitch();
     Pitch pitch() const { return m_treatAsFixedPitch ? FixedPitch : VariablePitch; }
-
-    static bool isCJKCodePoint(UChar32 c);
 
 #if ENABLE(SVG_FONTS)
     SVGFontData* svgFontData() const { return m_svgFontData.get(); }
@@ -125,14 +117,12 @@ public:
     wxFont getWxFont() const { return m_font.font(); }
 #endif
 
-    const SimpleFontData* zeroWidthFontData() const;
-    const SimpleFontData* cjkWidthFontData() const;
-
 private:
     void platformInit();
     void platformDestroy();
     
     void commonInit();
+    bool IsCJKCodePoint(UChar32) const;
 
 public:
     int m_ascent;
@@ -165,6 +155,9 @@ public:
 
     mutable SimpleFontData* m_smallCapsFontData;
 
+    // Optimization for CJK glyphs
+    mutable float m_cjkGlyphWidth;
+
 #if PLATFORM(CG)
     float m_syntheticBoldOffset;
 #endif
@@ -183,34 +176,6 @@ public:
     mutable SCRIPT_CACHE m_scriptCache;
     mutable SCRIPT_FONTPROPERTIES* m_scriptFontProperties;
 #endif
-
-private:
-    OwnPtr<ZeroWidthFontData> m_zeroWidthFontData;
-    OwnPtr<CJKWidthFontData> m_cjkWidthFontData;
-};
-
-// SimpleFontData sub-classes:
-
-// Has a single zero-width glyph, used for ZWS and 
-// UCHAR_DEFAULT_IGNORABLE_CODE_POINT characters
-class ZeroWidthFontData : public SimpleFontData {
-public:
-    void init(SimpleFontData*);
-    virtual float widthForGlyph(Glyph) const { return 0.0f; }
-};
-
-// Monospaced, single glyph and width, used for CJK characters
-// The assumption made here can break for some high-quality CJK fonts with
-// proportional CJK glyphs.
-class CJKWidthFontData : public ZeroWidthFontData {
-public:
-    CJKWidthFontData();
-
-    virtual float widthForGlyph(Glyph) const;
-
-private:
-    // Optimization for CJK glyphs
-    mutable float m_cjkGlyphWidth;
 };
 
 } // namespace WebCore

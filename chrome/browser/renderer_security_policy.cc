@@ -1,15 +1,36 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/renderer_security_policy.h"
 
 #include "base/logging.h"
 #include "base/string_util.h"
-#ifdef CHROME_PERSONALIZATION
-#include "chrome/personalization/personalization.h"
-#endif
-#include "googleurl/src/gurl.h"
 #include "net/url_request/url_request.h"
 
 // The SecurityState class is used to maintain per-renderer security state
@@ -144,6 +165,7 @@ bool RendererSecurityPolicy::IsPseudoScheme(const std::string& scheme) {
 }
 
 void RendererSecurityPolicy::GrantRequestURL(int renderer_id, const GURL& url) {
+  AutoLock lock(lock_);
 
   if (!url.is_valid())
     return;  // Can't grant the capability to request invalid URLs.
@@ -165,16 +187,13 @@ void RendererSecurityPolicy::GrantRequestURL(int renderer_id, const GURL& url) {
     return;  // Can't grant the capability to request pseudo schemes.
   }
 
-  {
-    AutoLock lock(lock_);
-    SecurityStateMap::iterator state = security_state_.find(renderer_id);
-    if (state == security_state_.end())
-      return;
+  SecurityStateMap::iterator state = security_state_.find(renderer_id);
+  if (state == security_state_.end())
+    return;
 
-    // If the renderer has been commanded to request a scheme, then we grant
-    // it the capability to request URLs of that scheme.
-    state->second->GrantScheme(url.scheme());
-  }
+  // If the renderer has been commanded to request a scheme, then we grant
+  // it the capability to request URLs of that scheme.
+  state->second->GrantScheme(url.scheme());
 }
 
 void RendererSecurityPolicy::GrantUploadFile(int renderer_id,
@@ -217,6 +236,8 @@ void RendererSecurityPolicy::GrantDOMUIBindings(int renderer_id) {
 }
 
 bool RendererSecurityPolicy::CanRequestURL(int renderer_id, const GURL& url) {
+  AutoLock lock(lock_);
+
   if (!url.is_valid())
     return false;  // Can't request invalid URLs.
 
@@ -227,8 +248,8 @@ bool RendererSecurityPolicy::CanRequestURL(int renderer_id, const GURL& url) {
     // There are a number of special cases for pseudo schemes.
 
     if (url.SchemeIs("view-source")) {
-      // A view-source URL is allowed if the renderer is permitted to request
-      // the embedded URL.
+      // A view-source URL is allowed if the renderer is permited to request the
+      // embedded URL.
       return CanRequestURL(renderer_id, GURL(url.path()));
     }
 
@@ -241,25 +262,16 @@ bool RendererSecurityPolicy::CanRequestURL(int renderer_id, const GURL& url) {
     return false;
   }
 
-#ifdef CHROME_PERSONALIZATION
-  if (url.SchemeIs(kPersonalizationScheme))
-    return true;
-#endif
-
   if (!URLRequest::IsHandledURL(url))
     return true;  // This URL request is destined for ShellExecute.
 
-  {
-    AutoLock lock(lock_);
+  SecurityStateMap::iterator state = security_state_.find(renderer_id);
+  if (state == security_state_.end())
+    return false;
 
-    SecurityStateMap::iterator state = security_state_.find(renderer_id);
-    if (state == security_state_.end())
-      return false;
-
-    // Otherwise, we consult the renderer's security state to see if it is
-    // allowed to request the URL.
-    return state->second->CanRequestURL(url);
-  }
+  // Otherwise, we consult the renderer's security state to see if it is
+  // allowed to request the URL.
+  return state->second->CanRequestURL(url);
 }
 
 bool RendererSecurityPolicy::CanUploadFile(int renderer_id,
@@ -282,4 +294,3 @@ bool RendererSecurityPolicy::HasDOMUIBindings(int renderer_id) {
 
   return state->second->has_dom_ui_bindings();
 }
-

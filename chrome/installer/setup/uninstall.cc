@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // This file defines the methods useful for uninstalling Chrome.
 
@@ -17,22 +42,21 @@
 #include "base/string_util.h"
 #include "base/win_util.h"
 #include "base/wmi_util.h"
+#include "chrome/app/google_update_settings.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/common/chrome_constants.h"
-#include "chrome/installer/setup/setup.h"
 #include "chrome/installer/setup/setup_constants.h"
-#include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/helper.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/logging_installer.h"
 #include "chrome/installer/util/google_update_constants.h"
-#include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/shell_util.h"
 #include "chrome/installer/util/util_constants.h"
 #include "chrome/installer/util/version.h"
 
-#include "installer_util_strings.h"
+#include "setup_resource.h"
+#include "setup_strings.h"
 
 namespace {
 
@@ -47,10 +71,10 @@ void DeleteChromeShortcut(bool system_uninstall) {
     PathService::Get(base::DIR_START_MENU, &shortcut_path);
   }
   if (shortcut_path.empty()) {
-    LOG(ERROR) << "Failed to get location for shortcut.";
+    LOG(ERROR) << "failed to get location for shortcut";
   } else {
-    BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-    file_util::AppendToPath(&shortcut_path, dist->GetApplicationName());
+    file_util::AppendToPath(&shortcut_path,
+        installer_util::GetLocalizedString(IDS_PRODUCT_NAME_BASE));
     LOG(INFO) << "Deleting shortcut " << shortcut_path;
     if (!file_util::Delete(shortcut_path, true))
       LOG(ERROR) << "Failed to delete folder: " << shortcut_path;
@@ -63,7 +87,8 @@ void DeleteChromeShortcut(bool system_uninstall) {
 bool DeleteRegistryKey(RegKey& key, const std::wstring& key_path) {
   LOG(INFO) << "Deleting registry key " << key_path;
   if (!key.DeleteKey(key_path.c_str())) {
-    LOG(ERROR) << "Failed to delete registry key: " << key_path;
+    LOG(ERROR) << "Failed to delete registry key: " << key_path
+               << " and the error is " << InstallUtil::FormatLastWin32Error();
     return false;
   }
   return true;
@@ -77,7 +102,8 @@ bool DeleteRegistryValue(HKEY reg_root, const std::wstring& key_path,
   RegKey key(reg_root, key_path.c_str(), KEY_ALL_ACCESS);
   LOG(INFO) << "Deleting registry value " << value_name;
   if (!key.DeleteValue(value_name.c_str())) {
-    LOG(ERROR) << "Failed to delete registry value: " << value_name;
+    LOG(ERROR) << "Failed to delete registry value: " << value_name
+               << " and the error is " << InstallUtil::FormatLastWin32Error();
     return false;
   }
   return true;
@@ -122,6 +148,79 @@ installer_util::InstallStatus IsChromeActiveOrUserCancelled(
 
   return installer_util::UNINSTALL_FAILED;
 }
+
+// Read the URL from the resource file and substitute the locale parameter
+// with whatever Google Update tells us is the locale. In case we fail to find
+// the locale, we use US English.
+std::wstring GetUninstallSurveyUrl() {
+  const ATLSTRINGRESOURCEIMAGE* image = AtlGetStringResourceImage(
+      _AtlBaseModule.GetModuleInstance(), IDS_UNINSTALL_SURVEY_URL);
+  DCHECK(image);
+  std::wstring url = std::wstring(image->achString, image->nLength);
+  DCHECK(!url.empty());
+
+  std::wstring language;
+  if (!GoogleUpdateSettings::GetLanguage(&language))
+    language = L"en-US";  // Default to US English.
+
+  return ReplaceStringPlaceholders(url.c_str(), language.c_str(), NULL);
+}
+
+// This method launches an uninstall survey and is called at the end of
+// uninstall process. We are not doing any error checking here as it is
+// not critical to have this survey. If we fail to launch it, we just
+// ignore it silently.
+void LaunchUninstallSurvey(const installer::Version& installed_version) {
+  // Send the Chrome version and OS version as params to the form.
+  // It would be nice to send the locale, too, but I don't see an
+  // easy way to get that in the existing code. It's something we
+  // can add later, if needed.
+  // We depend on installed_version.GetString() not having spaces or other
+  // characters that need escaping: 0.2.13.4. Should that change, we will
+  // need to escape the string before using it in a URL.
+  const std::wstring kVersionParam = L"crversion";
+  const std::wstring kVersion = installed_version.GetString();
+  const std::wstring kOSParam = L"os";
+  std::wstring os_version = L"na";
+  OSVERSIONINFO version_info;
+  version_info.dwOSVersionInfoSize = sizeof version_info;
+  if (GetVersionEx(&version_info)) {
+    os_version = StringPrintf(L"%d.%d.%d",
+        version_info.dwMajorVersion,
+        version_info.dwMinorVersion,
+        version_info.dwBuildNumber);
+  }
+
+  std::wstring iexplore;
+  if (!PathService::Get(base::DIR_PROGRAM_FILES, &iexplore))
+    return;
+
+  file_util::AppendToPath(&iexplore, L"Internet Explorer");
+  file_util::AppendToPath(&iexplore, L"iexplore.exe");
+
+  std::wstring command = iexplore + L" " + GetUninstallSurveyUrl() + L"&" +
+      kVersionParam + L"=" + kVersion + L"&" + kOSParam + L"=" + os_version;
+  int pid = 0;
+  WMIProcessUtil::Launch(command, &pid);
+}
+
+// Uninstall Chrome specific Gears. First we find Gears MSI ProductId (that
+// changes with every new version of Gears) using Gears MSI UpgradeCode (that
+// does not change) and then uninstall Gears using API.
+void UninstallGears() {
+  wchar_t product[39];  // GUID + '\0'
+  MsiSetInternalUI(INSTALLUILEVEL_NONE, NULL);  // Don't show any UI to user.
+  for (int i = 0; MsiEnumRelatedProducts(google_update::kGearsUpgradeCode, 0, i,
+                                         product) != ERROR_NO_MORE_ITEMS; ++i) {
+    LOG(INFO) << "Uninstalling Gears - " << product;
+    unsigned int ret = MsiConfigureProduct(product, INSTALLLEVEL_MAXIMUM,
+                                           INSTALLSTATE_ABSENT);
+    if (ret != ERROR_SUCCESS)
+      LOG(ERROR) << "Failed to uninstall Gears " << product
+                 << " because of error " << ret;
+  }
+}
+
 }  // namespace
 
 
@@ -133,21 +232,8 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
   if (status != installer_util::UNINSTALL_CONFIRMED)
     return status;
 
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  dist->DoPreUninstallOperations();
-#if defined(GOOGLE_CHROME_BUILD)
-  // TODO(rahulk): This should be done by DoPreUninstallOperations call above
-  wchar_t product[39];  // GUID + '\0'
-  MsiSetInternalUI(INSTALLUILEVEL_NONE, NULL);  // Don't show any UI to user.
-  for (int i = 0; MsiEnumRelatedProducts(google_update::kGearsUpgradeCode, 0, i,
-                                         product) != ERROR_NO_MORE_ITEMS; ++i) {
-    LOG(INFO) << "Uninstalling Gears - " << product;
-    unsigned int ret = MsiConfigureProduct(product, INSTALLLEVEL_MAXIMUM,
-                                           INSTALLSTATE_ABSENT);
-    if (ret != ERROR_SUCCESS)
-      LOG(ERROR) << "Failed to uninstall Gears " << product << ": " << ret;
-  }
-#endif
+  // Uninstall Gears first.
+  UninstallGears();
 
   // Chrome is not in use so lets uninstall Chrome by deleting various files
   // and registry entries. Here we will just make best effort and keep going
@@ -155,11 +241,11 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
   // First delete shortcut from Start->Programs.
   DeleteChromeShortcut(system_uninstall);
 
-  // Delete the registry keys (Uninstall key and Version key).
+  // Delete the registry keys (Uninstall key and Google Update update key).
   HKEY reg_root = system_uninstall ? HKEY_LOCAL_MACHINE : HKEY_CURRENT_USER;
   RegKey key(reg_root, L"", KEY_ALL_ACCESS);
-  DeleteRegistryKey(key, dist->GetUninstallRegPath());
-  DeleteRegistryKey(key, dist->GetVersionKey());
+  DeleteRegistryKey(key, installer_util::kUninstallRegPath);
+  DeleteRegistryKey(key, InstallUtil::GetChromeGoogleUpdateKey());
 
   // Delete Software\Classes\ChromeHTML,
   // Software\Clients\StartMenuInternet\chrome.exe and
@@ -173,7 +259,7 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
   DeleteRegistryKey(key, set_access_key);
 
   DeleteRegistryValue(reg_root, ShellUtil::kRegRegisteredApplications,
-                      dist->GetApplicationName());
+                      installer_util::kApplicationName);
   key.Close();
 
   // Delete shared registry keys as well (these require admin rights) if
@@ -184,7 +270,7 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
     DeleteRegistryKey(hklm_key, html_prog_id);
     DeleteRegistryValue(HKEY_LOCAL_MACHINE,
                         ShellUtil::kRegRegisteredApplications,
-                        dist->GetApplicationName());
+                        installer_util::kApplicationName);
 
     // Delete media player registry key that exists only in HKLM.
     std::wstring reg_path(installer::kMediaPlayerRegPath);
@@ -197,15 +283,16 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
   // to a temp location.
   std::wstring install_path(installer::GetChromeInstallPath(system_uninstall));
   if (install_path.empty()) {
-    LOG(ERROR) << "Could not get installation destination path.";
+    LOG(ERROR) << "Couldn't get installation destination path";
     // Nothing else we could do for uninstall, so we return.
     return installer_util::UNINSTALL_FAILED;
   } else {
     LOG(INFO) << "install destination path: " << install_path;
   }
 
-  std::wstring setup_exe(installer::GetInstallerPathUnderChrome(
-      install_path, installed_version.GetString()));
+  std::wstring setup_exe(install_path);
+  file_util::AppendToPath(&setup_exe, installed_version.GetString());
+  file_util::AppendToPath(&setup_exe, installer::kInstallerDir);
   file_util::AppendToPath(&setup_exe, file_util::GetFilenameFromPath(exe_path));
 
   std::wstring temp_file;
@@ -217,7 +304,6 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
     LOG(ERROR) << "Failed to delete folder: " << install_path;
 
   LOG(INFO) << "Uninstallation complete. Launching Uninstall survey.";
-  dist->DoPostUninstallOperations(installed_version);
+  LaunchUninstallSurvey(installed_version);
   return installer_util::UNINSTALL_SUCCESSFUL;
 }
-

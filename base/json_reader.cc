@@ -1,10 +1,36 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/json_reader.h"
 
-#include "base/float_util.h"
+#include <float.h>
+
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "base/values.h"
@@ -317,20 +343,39 @@ JSONReader::Token JSONReader::ParseNumberToken() {
 }
 
 bool JSONReader::DecodeNumber(const Token& token, Value** node) {
-  const std::wstring num_string(token.begin, token.length);
-
-  int num_int;
-  if (StringToInt(num_string, &num_int)) {
-    *node = Value::CreateIntegerValue(num_int);
-    return true;
+  // Determine if we want to try to parse as an int or a double.
+  bool is_double = false;
+  for (int i = 0; i < token.length; ++i) {
+    wchar_t c = *(token.begin + i);
+    if ('e' == c || 'E' == c || '.' == c) {
+      is_double = true;
+      break;
+    }
   }
 
-  double num_double;
-  if (StringToDouble(num_string, &num_double) && base::IsFinite(num_double)) {
-    *node = Value::CreateRealValue(num_double);
-    return true;
+  if (is_double) {
+    // Try parsing as a double.
+    double num_double;
+    int parsed_values = swscanf_s(token.begin, L"%lf", &num_double);
+    // Make sure we're not -INF, INF or NAN.
+    if (1 == parsed_values && _finite(num_double)) {
+      *node = Value::CreateRealValue(num_double);
+      return true;
+    }
+  } else {
+    int num_int;
+    int parsed_values = swscanf_s(token.begin, L"%d", &num_int);
+    if (1 == parsed_values) {
+      // Ensure the parsed value matches the string.  This makes sure we don't
+      // overflow/underflow.
+      const std::wstring& back_to_str = StringPrintf(L"%d", num_int);
+      if (0 == wcsncmp(back_to_str.c_str(), token.begin,
+                       back_to_str.length())) {
+        *node = Value::CreateIntegerValue(num_int);
+        return true;
+      }
+    }
   }
-
   return false;
 }
 
@@ -574,4 +619,3 @@ bool JSONReader::EatComment() {
   }
   return true;
 }
-

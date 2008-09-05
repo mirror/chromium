@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef BASE_PICKLE_H__
 #define BASE_PICKLE_H__
@@ -65,7 +90,6 @@ class Pickle {
   // be extracted.
   bool ReadBool(void** iter, bool* result) const;
   bool ReadInt(void** iter, int* result) const;
-  bool ReadLong(void** iter, long* result) const;
   bool ReadSize(void** iter, size_t* result) const;
   bool ReadInt64(void** iter, int64* result) const;
   bool ReadIntPtr(void** iter, intptr_t* result) const;
@@ -76,7 +100,7 @@ class Pickle {
 
   // Safer version of ReadInt() checks for the result not being negative.
   // Use it for reading the object sizes.
-  bool ReadLength(void** iter, int* result) const;
+  bool Pickle::ReadLength(void** iter, int* result) const;
 
   // Methods for adding to the payload of the Pickle.  These values are
   // appended to the end of the Pickle's payload.  When reading values from a
@@ -86,9 +110,6 @@ class Pickle {
     return WriteInt(value ? 1 : 0);
   }
   bool WriteInt(int value) {
-    return WriteBytes(&value, sizeof(value));
-  }
-  bool WriteLong(long value) {
     return WriteBytes(&value, sizeof(value));
   }
   bool WriteSize(size_t value) {
@@ -126,9 +147,9 @@ class Pickle {
   // not been changed.
   void TrimWriteData(int length);
 
-  // Payload follows after allocation of Header (header size is customizable).
+  // payload follows after allocation of Header (header size is customizable)
   struct Header {
-    uint32 payload_size;  // Specifies the size of the payload.
+    size_t payload_size;  // specifies the size of the payload
   };
 
   // Returns the header, cast to a user-specified type T.  The type T must be a
@@ -197,14 +218,14 @@ class Pickle {
   bool Resize(size_t new_capacity);
 
   // Aligns 'i' by rounding it up to the next multiple of 'alignment'
-  static size_t AlignInt(size_t i, int alignment) {
+  static inline size_t AlignInt(size_t i, int alignment) {
     return i + (alignment - (i % alignment)) % alignment;
   }
 
   // Moves the iterator by the given number of bytes, making sure it is aligned.
   // Pointer (iterator) is NOT aligned, but the change in the pointer
   // is guaranteed to be a multiple of sizeof(uint32).
-  static void UpdateIter(void** iter, int bytes) {
+  static inline void UpdateIter(void** iter, int bytes) {
     *iter = static_cast<char*>(*iter) + AlignInt(bytes, sizeof(uint32));
   }
 
@@ -218,6 +239,12 @@ class Pickle {
   static const int kPayloadUnit;
 
  private:
+  // A buffer of variable length; used internally
+  struct VariableLengthBuffer {
+    int length;
+    char data;   // This is variable length.
+  };
+
   Header* header_;
   size_t header_size_;  // Supports extra data between header and payload.
   // Allocation size of payload (or -1 if allocation is const).
@@ -230,4 +257,3 @@ class Pickle {
 };
 
 #endif  // BASE_PICKLE_H__
-

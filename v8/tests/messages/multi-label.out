@@ -1,0 +1,3 @@
+multi-label.js:1: Uncaught SyntaxError: Label 'mylabel' has already been declared
+mylabel: mylabel: return 0;
+         ^^^^^^^

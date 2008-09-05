@@ -27,7 +27,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# TODO(keunwoo): Use better cross-platform abstraction; see chrome/SConstruct
 Import('env')
 
 env = env.Clone(
@@ -43,22 +42,17 @@ env.Append(
     CPPDEFINES = [
         '_LZMA_IN_CB',
     ],
-)
-
-if env['PLATFORM'] == 'win32':
-  env.Append(
     CCFLAGS = [
         '/TP',
+
         '/wd4800',
+        '/wd4503',
+        '/wd4819',
     ],
-  )
-elif env['PLATFORM'] == 'posix':
-  if '-Wall' in env['CCFLAGS']:
-    # We're not responsible for bad warning hygiene in this third party code.
-    env['CCFLAGS'].remove('-Wall')
+)
 
-input_files = [
-    'mbspatch.cc',
-]
+input_files = Split('''
+    mbspatch.cc
+''')
 
-env.ChromeStaticLibrary('bspatch', input_files)
+env.StaticLibrary('bspatch', input_files)

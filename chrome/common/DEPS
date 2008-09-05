@@ -1,8 +1,0 @@
-include_rules = [
-  "+chrome/plugin",  # For checking whether we're a plugin process.
-
-  # Other libraries.
-  "+third_party/bzip2",
-  "+third_party/npapi",
-]
-

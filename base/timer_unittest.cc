@@ -1,17 +1,41 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/message_loop.h"
 #include "base/task.h"
 #include "base/timer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using base::TimerComparison;
-
 namespace {
-
-class TimerTest : public testing::Test {};
+  class TimerTest : public testing::Test {
+  };
+};
 
 // A base class timer task that sanity-checks timer functionality and counts
 // the number of times it has run.  Handles all message loop and memory
@@ -46,7 +70,8 @@ class TimerTask : public Task {
 
  private:
   static MessageLoop* message_loop() {
-    return MessageLoop::current();
+    static MessageLoop* loop = MessageLoop::current();
+    return loop;
   }
 
   static int timer_count_;
@@ -75,13 +100,12 @@ TimerTask::TimerTask(int delay, bool repeating)
       timer_(NULL) {
   Reset();  // This will just set up the variables to indicate we have a
             // running timer.
-  timer_ = message_loop()->timer_manager_deprecated()->StartTimer(
-      delay, this, repeating);
+  timer_ = message_loop()->timer_manager()->StartTimer(delay, this, repeating);
 }
 
 TimerTask::~TimerTask() {
   if (timer_) {
-    message_loop()->timer_manager_deprecated()->StopTimer(timer_);
+    message_loop()->timer_manager()->StopTimer(timer_);
     delete timer_;
   }
   if (timer_running_) {
@@ -98,7 +122,7 @@ void TimerTask::Reset() {
   }
   if (timer_) {
     start_ticks_ = TimeTicks::Now();
-    message_loop()->timer_manager_deprecated()->ResetTimer(timer_);
+    message_loop()->timer_manager()->ResetTimer(timer_);
   }
 }
 
@@ -117,7 +141,7 @@ void TimerTask::Run() {
   // If we're done running, shut down the message loop.
   if (timer_->repeating() && (iterations_ < 10))
     return;  // Iterate 10 times before terminating.
-  message_loop()->timer_manager_deprecated()->StopTimer(timer_);
+  message_loop()->timer_manager()->StopTimer(timer_);
   timer_running_ = false;
   if (--timer_count_ <= 0)
     QuitMessageLoop();
@@ -197,12 +221,7 @@ void RunTimerTest() {
   EXPECT_EQ(10, task3.iterations());
 }
 
-//-----------------------------------------------------------------------------
-// The timer test cases:
-
-void RunTest_TimerComparison(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
+TEST(TimerTest, TimerComparison) {
   // Make sure TimerComparison sorts correctly.
   const TimerTask task1(10, false);
   const Timer* timer1 = task1.timer();
@@ -213,39 +232,31 @@ void RunTest_TimerComparison(MessageLoop::Type message_loop_type) {
   EXPECT_TRUE(comparison(timer2, timer1));
 }
 
-void RunTest_BasicTimer(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
+TEST(TimerTest, TimerCase) {
   RunTimerTest();
 }
 
-void RunTest_BrokenTimer(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
+TEST(TimerTest, BrokenTimerCase) {
   // Simulate faulty early-firing timers. The tasks in RunTimerTest should
   // nevertheless be invoked after their specified delays, regardless of when
   // WM_TIMER fires.
-  TimerManager* manager = MessageLoop::current()->timer_manager_deprecated();
+  TimerManager* manager = MessageLoop::current()->timer_manager();
   manager->set_use_broken_delay(true);
   RunTimerTest();
   manager->set_use_broken_delay(false);
 }
 
-void RunTest_DeleteFromRun(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
+TEST(TimerTest, DeleteFromRun) {
   // Make sure TimerManager correctly handles a Task that deletes itself when
   // run.
-  new DeletingTask(50, true);
+  DeletingTask* deleting_task1 = new DeletingTask(50, true);
   TimerTask timer_task(150, false);
-  new DeletingTask(250, true);
+  DeletingTask* deleting_task2 = new DeletingTask(250, true);
   TimerTask::RunTimers();
   EXPECT_EQ(1, timer_task.iterations());
 }
 
-void RunTest_Reset(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
+TEST(TimerTest, Reset) {
   // Make sure resetting a timer after it has fired works.
   TimerTask timer_task1(250, false);
   TimerTask timer_task2(100, true);
@@ -267,9 +278,7 @@ void RunTest_Reset(MessageLoop::Type message_loop_type) {
   EXPECT_EQ(0, timer_task4.iterations());
 }
 
-void RunTest_FifoOrder(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
+TEST(TimerTest, FifoOrder) {
   // Creating timers with the same timeout should
   // always compare to result in FIFO ordering.
 
@@ -286,9 +295,6 @@ void RunTest_FifoOrder(MessageLoop::Type message_loop_type) {
 
   class MockTimerManager : public TimerManager {
    public:
-    MockTimerManager() : TimerManager(MessageLoop::current()) {
-    }
-    
     // Pops the most-recent to fire timer and returns its timer id.
     // Returns -1 if there are no timers in the list.
     int pop() {
@@ -317,209 +323,10 @@ void RunTest_FifoOrder(MessageLoop::Type message_loop_type) {
   MockTimerManager manager;
   const int kNumTimers = 1024;
   for (int i=0; i < kNumTimers; i++)
-    manager.StartTimer(0, NULL, false);
+    Timer* timer = manager.StartTimer(0, NULL, false);
 
   int last_id = -1;
   int new_id = 0;
   while((new_id = manager.pop()) > 0)
     EXPECT_GT(new_id, last_id);
-}
-
-namespace {
-
-class OneShotTimerTester {
- public:
-  OneShotTimerTester(bool* did_run) : did_run_(did_run) {
-  }
-  void Start() {
-    timer_.Start(TimeDelta::FromMilliseconds(10), this,
-                 &OneShotTimerTester::Run);
-  }
- private:
-  void Run() {
-    *did_run_ = true;
-    MessageLoop::current()->Quit();
-  }
-  bool* did_run_;
-  base::OneShotTimer<OneShotTimerTester> timer_;
-};
-
-class RepeatingTimerTester {
- public:
-  RepeatingTimerTester(bool* did_run) : did_run_(did_run), counter_(10) {
-  }
-  void Start() {
-    timer_.Start(TimeDelta::FromMilliseconds(10), this,
-                 &RepeatingTimerTester::Run);
-  }
- private:
-  void Run() {
-    if (--counter_ == 0) {
-      *did_run_ = true;
-      MessageLoop::current()->Quit();
-    }
-  }
-  bool* did_run_;
-  int counter_;
-  base::RepeatingTimer<RepeatingTimerTester> timer_;
-};
-
-}  // namespace
-
-void RunTest_OneShotTimer(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
-  bool did_run = false;
-  OneShotTimerTester f(&did_run);
-  f.Start();
-
-  MessageLoop::current()->Run();
-
-  EXPECT_TRUE(did_run);
-}
-
-void RunTest_OneShotTimer_Cancel(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
-  bool did_run_a = false;
-  OneShotTimerTester* a = new OneShotTimerTester(&did_run_a);
-
-  // This should run before the timer expires.
-  MessageLoop::current()->DeleteSoon(FROM_HERE, a);
-
-  // Now start the timer.
-  a->Start();
- 
-  bool did_run_b = false;
-  OneShotTimerTester b(&did_run_b);
-  b.Start();
-
-  MessageLoop::current()->Run();
-
-  EXPECT_FALSE(did_run_a);
-  EXPECT_TRUE(did_run_b);
-}
-
-void RunTest_RepeatingTimer(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
-  bool did_run = false;
-  RepeatingTimerTester f(&did_run);
-  f.Start();
-
-  MessageLoop::current()->Run();
-
-  EXPECT_TRUE(did_run);
-}
-
-void RunTest_RepeatingTimer_Cancel(MessageLoop::Type message_loop_type) {
-  MessageLoop loop(message_loop_type);
-
-  bool did_run_a = false;
-  RepeatingTimerTester* a = new RepeatingTimerTester(&did_run_a);
-
-  // This should run before the timer expires.
-  MessageLoop::current()->DeleteSoon(FROM_HERE, a);
-
-  // Now start the timer.
-  a->Start();
- 
-  bool did_run_b = false;
-  RepeatingTimerTester b(&did_run_b);
-  b.Start();
-
-  MessageLoop::current()->Run();
-
-  EXPECT_FALSE(did_run_a);
-  EXPECT_TRUE(did_run_b);
-}
-
-}  // namespace
-
-//-----------------------------------------------------------------------------
-// Each test is run against each type of MessageLoop.  That way we are sure
-// that timers work properly in all configurations.
-
-TEST(TimerTest, TimerComparison) {
-  Time s = Time::Now();
-  RunTest_TimerComparison(MessageLoop::TYPE_DEFAULT);
-  RunTest_TimerComparison(MessageLoop::TYPE_UI);
-  RunTest_TimerComparison(MessageLoop::TYPE_IO);
-  Time e = Time::Now();
-  TimeDelta el = e - s;
-  printf("comparison elapsed time %lld\n", el.ToInternalValue());
-}
-
-TEST(TimerTest, BasicTimer) {
-  Time s = Time::Now();
-  RunTest_BasicTimer(MessageLoop::TYPE_DEFAULT);
-  RunTest_BasicTimer(MessageLoop::TYPE_UI);
-  RunTest_BasicTimer(MessageLoop::TYPE_IO);
-  Time e = Time::Now();
-  TimeDelta el = e - s;
-  printf("basic elapsed time %lld\n", el.ToInternalValue());
-}
-
-TEST(TimerTest, BrokenTimer) {
-  Time s = Time::Now();
-  RunTest_BrokenTimer(MessageLoop::TYPE_DEFAULT);
-  RunTest_BrokenTimer(MessageLoop::TYPE_UI);
-  RunTest_BrokenTimer(MessageLoop::TYPE_IO);
-  Time e = Time::Now();
-  TimeDelta el = e - s;
-  printf("broken elapsed time %lld\n", el.ToInternalValue());
-}
-
-TEST(TimerTest, DeleteFromRun) {
-  Time s = Time::Now();
-  RunTest_DeleteFromRun(MessageLoop::TYPE_DEFAULT);
-  RunTest_DeleteFromRun(MessageLoop::TYPE_UI);
-  RunTest_DeleteFromRun(MessageLoop::TYPE_IO);
-  Time e = Time::Now();
-  TimeDelta el = e - s;
-  printf("delete elapsed time %lld\n", el.ToInternalValue());
-}
-
-TEST(TimerTest, Reset) {
-  Time s = Time::Now();
-  RunTest_Reset(MessageLoop::TYPE_DEFAULT);
-  RunTest_Reset(MessageLoop::TYPE_UI);
-  RunTest_Reset(MessageLoop::TYPE_IO);
-  Time e = Time::Now();
-  TimeDelta el = e - s;
-  printf("reset elapsed time %lld\n", el.ToInternalValue());
-}
-
-TEST(TimerTest, FifoOrder) {
-  Time s = Time::Now();
-  RunTest_FifoOrder(MessageLoop::TYPE_DEFAULT);
-  RunTest_FifoOrder(MessageLoop::TYPE_UI);
-  RunTest_FifoOrder(MessageLoop::TYPE_IO);
-  Time e = Time::Now();
-  TimeDelta el = e - s;
-  printf("fifo elapsed time %lld\n", el.ToInternalValue());
-}
-
-TEST(TimerTest, OneShotTimer) {
-  RunTest_OneShotTimer(MessageLoop::TYPE_DEFAULT);
-  RunTest_OneShotTimer(MessageLoop::TYPE_UI);
-  RunTest_OneShotTimer(MessageLoop::TYPE_IO);
-}
-
-TEST(TimerTest, OneShotTimer_Cancel) {
-  RunTest_OneShotTimer_Cancel(MessageLoop::TYPE_DEFAULT);
-  RunTest_OneShotTimer_Cancel(MessageLoop::TYPE_UI);
-  RunTest_OneShotTimer_Cancel(MessageLoop::TYPE_IO);
-}
-
-TEST(TimerTest, RepeatingTimer) {
-  RunTest_RepeatingTimer(MessageLoop::TYPE_DEFAULT);
-  RunTest_RepeatingTimer(MessageLoop::TYPE_UI);
-  RunTest_RepeatingTimer(MessageLoop::TYPE_IO);
-}
-
-TEST(TimerTest, RepeatingTimer_Cancel) {
-  RunTest_RepeatingTimer_Cancel(MessageLoop::TYPE_DEFAULT);
-  RunTest_RepeatingTimer_Cancel(MessageLoop::TYPE_UI);
-  RunTest_RepeatingTimer_Cancel(MessageLoop::TYPE_IO);
 }

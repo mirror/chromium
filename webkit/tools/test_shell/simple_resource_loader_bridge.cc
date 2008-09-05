@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // This file contains an implementation of the ResourceLoaderBridge class.
 // The class is implemented using URLRequest, meaning it is a "simple" version
@@ -35,7 +60,6 @@
 #include "base/message_loop.h"
 #include "base/ref_counted.h"
 #include "base/thread.h"
-#include "base/waitable_event.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/net_util.h"
 #include "net/base/upload_data.h"
@@ -51,11 +75,11 @@ namespace {
 //-----------------------------------------------------------------------------
 
 URLRequestContext* request_context = NULL;
-base::Thread* io_thread = NULL;
+Thread* io_thread = NULL;
 
-class IOThread : public base::Thread {
+class IOThread : public Thread {
  public:
-  IOThread() : base::Thread("IOThread") {
+  IOThread() : Thread("IOThread") {
   }
 
   ~IOThread() {
@@ -80,9 +104,7 @@ bool EnsureIOThread() {
     SimpleResourceLoaderBridge::Init(NULL);
 
   io_thread = new IOThread();
-  base::Thread::Options options;
-  options.message_loop_type = MessageLoop::TYPE_IO;
-  return io_thread->StartWithOptions(options);
+  return io_thread->Start();
 }
 
 //-----------------------------------------------------------------------------
@@ -308,12 +330,16 @@ class RequestProxy : public URLRequest::Delegate,
 class SyncRequestProxy : public RequestProxy {
  public:
   explicit SyncRequestProxy(ResourceLoaderBridge::SyncLoadResponse* result)
-      : event_(true, false), result_(result) {
+      : event_(::CreateEvent(NULL, TRUE, FALSE, NULL)),
+        result_(result) {
   }
 
-  void WaitForCompletion() {
-    if (!event_.Wait())
-      NOTREACHED();
+  virtual ~SyncRequestProxy() {
+    CloseHandle(event_);
+  }
+
+  HANDLE event() const {
+    return event_;
   }
 
   // --------------------------------------------------------------------------
@@ -335,12 +361,12 @@ class SyncRequestProxy : public RequestProxy {
 
   virtual void OnCompletedRequest(const URLRequestStatus& status) {
     result_->status = status;
-    event_.Signal();
+    ::SetEvent(event_);
   }
 
  private:
   ResourceLoaderBridge::SyncLoadResponse* result_;
-  base::WaitableEvent event_;
+  HANDLE event_;
 };
 
 //-----------------------------------------------------------------------------
@@ -426,7 +452,10 @@ class ResourceLoaderBridgeImpl : public ResourceLoaderBridge {
 
     proxy_->Start(NULL, params_.release());
 
-    static_cast<SyncRequestProxy*>(proxy_)->WaitForCompletion();
+    HANDLE event = static_cast<SyncRequestProxy*>(proxy_)->event();
+
+    if (WaitForSingleObject(event, INFINITE) != WAIT_OBJECT_0)
+      NOTREACHED();
   }
 
  private:
@@ -450,22 +479,27 @@ class CookieSetter : public base::RefCountedThreadSafe<CookieSetter> {
 
 class CookieGetter : public base::RefCountedThreadSafe<CookieGetter> {
  public:
-  CookieGetter() : event_(false, false) {
+  CookieGetter()
+      : event_(::CreateEvent(NULL, FALSE, FALSE, NULL)) {
+  }
+
+  ~CookieGetter() {
+    CloseHandle(event_);
   }
 
   void Get(const GURL& url) {
     result_ = request_context->cookie_store()->GetCookies(url);
-    event_.Signal();
+    SetEvent(event_);
   }
 
   std::string GetResult() {
-    if (!event_.Wait())
+    if (WaitForSingleObject(event_, INFINITE) != WAIT_OBJECT_0)
       NOTREACHED();
     return result_;
   }
 
  private:
-  base::WaitableEvent event_;
+  HANDLE event_;
   std::string result_;
 };
 
@@ -548,4 +582,3 @@ void SimpleResourceLoaderBridge::Shutdown() {
     DCHECK(!request_context) << "should have been nulled by thread dtor";
   }
 }
-

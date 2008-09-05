@@ -31,7 +31,7 @@ void XMLCDECL xmlGenericErrorDefaultFunc	(void *ctx ATTRIBUTE_UNUSED,
 								\
     size = 150;							\
 								\
-    while (size < 64000) {					\
+    while (1) {							\
 	va_start(ap, msg);					\
   	chars = vsnprintf(str, size, msg, ap);			\
 	va_end(ap);						\

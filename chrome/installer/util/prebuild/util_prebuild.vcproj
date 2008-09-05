@@ -16,7 +16,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			ConfigurationType="10"
+			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops"
 			>
 			<Tool
@@ -26,10 +26,52 @@
 				Name="VCCustomBuildTool"
 				CommandLine="create_string_rc.bat $(IntDir)"
 				AdditionalDependencies="create_string_rc.py;$(SolutionDir)\app\generated_resources.grd"
-				Outputs="$(IntDir)\installer_util_strings.rc;$(IntDir)\installer_util_strings.h"
+				Outputs="$(IntDir)\setup_strings.rc;$(IntDir)\setup_strings.h"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
 			/>
 			<Tool
 				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -37,7 +79,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			ConfigurationType="10"
+			ConfigurationType="1"
 			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops"
 			>
 			<Tool
@@ -47,10 +89,52 @@
 				Name="VCCustomBuildTool"
 				CommandLine="create_string_rc.bat $(IntDir)"
 				AdditionalDependencies="create_string_rc.py;$(SolutionDir)\app\generated_resources.grd"
-				Outputs="$(IntDir)\installer_util_strings.rc;$(IntDir)\installer_util_strings.h"
+				Outputs="$(IntDir)\setup_strings.rc;$(IntDir)\setup_strings.h"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
 			/>
 			<Tool
 				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -60,14 +144,6 @@
 	<References>
 	</References>
 	<Files>
-		<File
-			RelativePath=".\create_string_rc.bat"
-			>
-		</File>
-		<File
-			RelativePath=".\create_string_rc.py"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

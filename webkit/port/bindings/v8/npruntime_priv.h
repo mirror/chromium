@@ -27,7 +27,7 @@
 #define NP_RUNTIME_PRIV_H_
 
 
-#include "third_party/npapi/bindings/npruntime.h"
+#include "bindings/npruntime.h"
 
 #ifdef __cplusplus
 extern "C" {

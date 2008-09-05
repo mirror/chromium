@@ -720,6 +720,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\port\platform\FontMetrics.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\port\platform\FontMetrics.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\port\platform\FramelessScrollView.cpp"
 				>
 			</File>

@@ -142,11 +142,7 @@ END
 // the icon from the current module). We can perhaps work around this in the
 // future to get the icon from the .exe, which would save a copy.
 
-#if defined(GOOGLE_CHROME_BUILD)
-IDR_MAINFRAME           ICON                    "theme\google_chrome\chrome.ico"
-#else
-IDR_MAINFRAME           ICON                    "theme\chromium\chromium.ico"
-#endif
+IDR_MAINFRAME           ICON                    "resources\\chrome.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -206,7 +202,6 @@ END
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 
-#include "installer_util_strings.rc"
 
 
 #ifndef APSTUDIO_INVOKED

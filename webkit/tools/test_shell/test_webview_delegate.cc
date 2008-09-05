@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This file contains the implementation of TestWebViewDelegate, which serves
 // as the WebViewDelegate for the TestShellWebHost.  The host is expected to
@@ -14,7 +39,6 @@
 #include "base/gfx/point.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
-#include "base/trace_event.h"
 #include "net/base/net_errors.h"
 #include "webkit/glue/webdatasource.h"
 #include "webkit/glue/webdropdata.h"
@@ -186,14 +210,12 @@ void TestWebViewDelegate::WillSendRequest(WebView* webview,
            request_url.c_str());
   }
 
-  TRACE_EVENT_BEGIN("url.load", identifier, request_url);
   // Set the new substituted URL.
   request->SetURL(GURL(TestShell::RewriteLocalUrl(request_url)));
 }
 
 void TestWebViewDelegate::DidFinishLoading(WebView* webview,
                                            uint32 identifier) {
-  TRACE_EVENT_END("url.load", identifier, "");
   if (shell_->ShouldDumpResourceLoadCallbacks()) {
     printf("%s - didFinishLoading\n",
            GetResourceDescription(identifier).c_str());
@@ -307,7 +329,6 @@ void TestWebViewDelegate::DidReceiveTitle(WebView* webview,
 
 void TestWebViewDelegate::DidFinishLoadForFrame(WebView* webview,
                                                 WebFrame* frame) {
-  TRACE_EVENT_END("frame.load", this, frame->GetURL().spec());
   if (shell_->ShouldDumpFrameLoadCallbacks()) {
     printf("%S - didFinishLoadForFrame\n",
            GetFrameDescription(frame).c_str());
@@ -486,8 +507,7 @@ void TestWebViewDelegate::ShowContextMenu(WebView* webview,
                                           const GURL& frame_url,
                                           const std::wstring& selection_text,
                                           const std::wstring& misspelled_word,
-                                          int edit_flags,
-                                          const std::string& frame_encoding) {
+                                          int edit_flags) {
   CapturedContextMenuEvent context(type, x, y);
   captured_context_menu_events_.push_back(context);
 }
@@ -726,12 +746,12 @@ void TestWebViewDelegate::SetCursor(WebWidget* webwidget,
   }
 }
 
-void TestWebViewDelegate::GetWindowRect(WebWidget* webwidget,
-                                        gfx::Rect* out_rect) {
+void TestWebViewDelegate::GetWindowLocation(WebWidget* webwidget,
+                                            gfx::Point* origin) {
   if (WebWidgetHost* host = GetHostForWidget(webwidget)) {
     RECT rect;
-    ::GetWindowRect(host->window_handle(), &rect);
-    *out_rect = gfx::Rect(rect);
+    GetWindowRect(host->window_handle(), &rect);
+    origin->SetPoint(rect.left, rect.top);
   }
 }
 
@@ -742,16 +762,6 @@ void TestWebViewDelegate::SetWindowRect(WebWidget* webwidget,
   } else if (webwidget == shell_->popup()) {
     MoveWindow(shell_->popupWnd(),
                rect.x(), rect.y(), rect.width(), rect.height(), FALSE);
-  }
-}
-
-void TestWebViewDelegate::GetRootWindowRect(WebWidget* webwidget,
-                                            gfx::Rect* out_rect) {
-  if (WebWidgetHost* host = GetHostForWidget(webwidget)) {
-    RECT rect;
-    HWND root_window = ::GetAncestor(host->window_handle(), GA_ROOT);
-    ::GetWindowRect(root_window, &rect);
-    *out_rect = gfx::Rect(rect);
   }
 }
 
@@ -868,6 +878,24 @@ void TestWebViewDelegate::UpdateURL(WebFrame* frame) {
     entry->SetURL(GURL(request.GetURL()));
   }
 
+  if (shell_->webView()->GetMainFrame() == frame) {
+    // Top-level navigation.
+
+    PageTransition::Type transition = extra_data ?
+        extra_data->transition_type : PageTransition::LINK;
+    if (!PageTransition::IsMainFrame(transition)) {
+      transition = PageTransition::LINK;
+    }
+    entry->SetTransition(transition);
+  } else {
+    PageTransition::Type transition;
+    if (page_id_ > last_page_id_updated_)
+      transition = PageTransition::MANUAL_SUBFRAME;
+    else
+      transition = PageTransition::AUTO_SUBFRAME;
+    entry->SetTransition(transition);
+  }
+
   shell_->navigation_controller()->DidNavigateToEntry(entry.release());
 
   last_page_id_updated_ = std::max(last_page_id_updated_, page_id_);
@@ -881,7 +909,8 @@ void TestWebViewDelegate::UpdateSessionHistory(WebFrame* frame) {
     return;
 
   TestNavigationEntry* entry = static_cast<TestNavigationEntry*>(
-      shell_->navigation_controller()->GetEntryWithPageID(page_id_));
+      shell_->navigation_controller()->GetEntryWithPageID(
+          TestNavigationEntry::GetTabContentsType(), page_id_));
   if (!entry)
     return;
 
@@ -912,4 +941,3 @@ std::wstring TestWebViewDelegate::GetFrameDescription(WebFrame* webframe) {
       return L"frame (anonymous)";
   }
 }
-

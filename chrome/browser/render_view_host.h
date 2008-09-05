@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_RENDER_VIEW_HOST_H__
 #define CHROME_BROWSER_RENDER_VIEW_HOST_H__
@@ -9,11 +34,7 @@
 #include <vector>
 
 #include "base/scoped_handle.h"
-#include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/browser/render_widget_host.h"
-#ifdef CHROME_PERSONALIZATION
-#include "chrome/personalization/personalization.h"
-#endif
 #include "webkit/glue/password_form_dom_manager.h"
 
 enum ConsoleMessageLevel;
@@ -188,11 +209,19 @@ class RenderViewHost : public RenderWidgetHost {
   // clear the selection on the focused frame.
   void StopFinding(bool clear_selection);
 
+  // Sends a notification to the renderer that we are ready to receive more
+  // results from the scoping effort of the Find operation. The FindInPage
+  // scoping is asynchronous and periodically sends results back up to the
+  // browser using IPC. In an effort to not spam the browser we have the
+  // browser send an ACK for each FindReply message and have the renderer
+  // queue up the latest status message while waiting for this ACK.
+  void SendFindReplyAck();
+
   // Change the text size of the page.
   void AlterTextSize(text_zoom::TextSize size);
 
   // Change the encoding of the page.
-  void SetPageEncoding(const std::string& encoding_name);
+  void SetPageEncoding(const std::wstring& encoding_name);
 
   // Change the alternate error page URL.  An empty GURL disables the use of
   // alternate error pages.
@@ -236,7 +265,7 @@ class RenderViewHost : public RenderWidgetHost {
                            ConsoleMessageLevel level);
 
   // Send command to the debugger
-  void DebugCommand(const std::wstring& cmd);
+  void SendToDebugger(const std::wstring& cmd);
 
   // Attach to the V8 instance for debugging
   void DebugAttach();
@@ -244,10 +273,9 @@ class RenderViewHost : public RenderWidgetHost {
   // Detach from the V8 instance for debugging
   void DebugDetach();
 
-  // Cause the V8 debugger to trigger a debug break. If the force flag is set
-  // force a debug break even if no JS code is running (this actually causes a
-  // simple JS script to be executed).
-  void DebugBreak(bool force);
+  // Cause the V8 debugger to trigger a breakpoint
+  // (even if no JS code is running)
+  void DebugBreak();
 
   // Edit operations.
   void Undo();
@@ -308,10 +336,6 @@ class RenderViewHost : public RenderWidgetHost {
   // content can send JSON-encoded data back to automation in the parent
   // process.
   void AllowDomAutomationBindings();
-
-  // Tell the render view to allow the javascript access to
-  // the external host via automation.
-  void AllowExternalHostBindings();
 
   // Tell the render view to expose DOM bindings so that the JS content
   // can send JSON-encoded data back to the browser process.
@@ -378,19 +402,8 @@ class RenderViewHost : public RenderWidgetHost {
   // and we're necessarily leaving the page.
   void UnloadListenerHasFired() { has_unload_listener_ = false; }
 
-#ifdef CHROME_PERSONALIZATION
-  // Tells the RenderView to raise an personalization event with the given name 
-  // and argument.
-  void RaisePersonalizationEvent(std::string event_name, std::string event_arg);
-
-  HostPersonalization personalization() {
-    return personalization_;
-  }
-#endif
-
-  // Forward a message from external host to chrome renderer.
-  void ForwardMessageFromExternalHost(const std::string& target,
-                                      const std::string& message);
+  // Invoked on ui theme changes.
+  void OnThemeChanged();
 
  protected:
   // Overridden from RenderWidgetHost:
@@ -413,7 +426,7 @@ class RenderViewHost : public RenderWidgetHost {
                         const std::wstring& title,
                         const std::string& state);
   void OnMsgUpdateTitle(int32 page_id, const std::wstring& title);
-  void OnMsgUpdateEncoding(const std::string& encoding_name);
+  void OnMsgUpdateEncoding(const std::wstring& encoding_name);
   void OnMsgUpdateTargetURL(int32 page_id, const GURL& url);
   void OnMsgThumbnail(const IPC::Message& msg);
   void OnMsgClose();
@@ -447,12 +460,6 @@ class RenderViewHost : public RenderWidgetHost {
                                  int automation_id);
   void OnMsgDOMUISend(const std::string& message,
                       const std::string& content);
-  void OnMsgForwardMessageToExternalHost(const std::string& receiver,
-                                         const std::string& message);
-#ifdef CHROME_PERSONALIZATION
-  void OnPersonalizationEvent(const std::string& message,
-                              const std::string& content);
-#endif
   void OnMsgGoToEntryAtOffset(int offset);
   void OnMsgSetTooltipText(const std::wstring& tooltip_text);
   void OnMsgRunFileChooser(const std::wstring& default_file);
@@ -519,10 +526,6 @@ class RenderViewHost : public RenderWidgetHost {
   // Our delegate, which wants to know about changes in the RenderView.
   RenderViewHostDelegate* delegate_;
 
-#ifdef CHROME_PERSONALIZATION
-  HostPersonalization personalization_;
-#endif
-
   // true if a renderer has once been valid. We use this flag to display a sad
   // tab only when we lose our renderer and not if a paint occurs during
   // initialization.
@@ -538,10 +541,6 @@ class RenderViewHost : public RenderWidgetHost {
   // True if we've been told to set up the the Javascript bindings for
   // sending messages back to the browser.
   bool enable_dom_ui_bindings_;
-
-  // True if javascript access to the external host (through
-  // automation) is allowed.
-  bool enable_external_host_bindings_;
 
   // Handle to an event that's set when the page is showing a modal dialog box
   // (or equivalent constrained window).  The renderer and plugin processes
@@ -588,4 +587,3 @@ class RenderViewHostFactory {
 };
 
 #endif  // CHROME_BROWSER_RENDER_VIEW_HOST_H__
-

@@ -1,0 +1,35 @@
+# People
+\bager\b
+\bbak\b
+\bbrakowski\b
+\bdion\b
+\berikcorry\b
+\bfqian\b
+\bgri\b
+\biposva\b
+\bkasperl\b
+\bkmillikin\b
+\bkoda\b
+\blesleyb\b
+\blinus\b
+\bmbelshe\b
+\bolehougaard\b
+\bpjohnson\b
+\bplesner\b
+\bregis\b
+\bsandholm\b
+\bsgjesse\b
+\bsrdjan\b
+\bwhesse\b
+
+# Internal code names
+\bchrome\b
+\bgears\b
+
+# Other useful patterns
+\.google\.com
+@google\.com
+\bnolint\b
+
+# Todos that don't match TODO(<number>)
+TODO\(\d*[^\d)]

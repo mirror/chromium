@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/file_util.h"
 #include "base/string_util.h"
@@ -16,7 +41,6 @@
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_unittest.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 namespace {
@@ -48,20 +72,6 @@ class BrowserTest : public UITest {
      ::GetWindowText(window_handle, WriteInto(&result, length), length);
      return result;
    }
-
-   void LoadUnloadPageAndQuitBrowser(const std::wstring& test_filename) {
-     scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(0));
- 
-     std::wstring test_file = test_data_directory_;
-     file_util::AppendToPath(&test_file, L"unload");
-     file_util::AppendToPath(&test_file, test_filename);
-
-     NavigateToURL(net::FilePathToFileURL(test_file));
-     Sleep(kWaitForActionMsec);
-
-     bool application_closed = false;
-     EXPECT_TRUE(CloseBrowser(browser.get(), &application_closed));
-   }
 };
 
 class VisibleBrowserTest : public UITest {
@@ -79,7 +89,7 @@ TEST_F(BrowserTest, NoTitle) {
   std::wstring test_file = test_data_directory_;
   file_util::AppendToPath(&test_file, L"title1.html");
 
-  NavigateToURL(net::FilePathToFileURL(test_file));
+  NavigateToURL(net_util::FilePathToFileURL(test_file));
   Sleep(kWaitForActionMsec);  // The browser lazily updates the title.
 
   EXPECT_EQ(WindowCaptionFromPageTitle(L"title1.html"), GetWindowTitle());
@@ -92,7 +102,7 @@ TEST_F(BrowserTest, Title) {
   std::wstring test_file = test_data_directory_;
   file_util::AppendToPath(&test_file, L"title2.html");
 
-  NavigateToURL(net::FilePathToFileURL(test_file));
+  NavigateToURL(net_util::FilePathToFileURL(test_file));
   Sleep(kWaitForActionMsec);  // The browser lazily updates the title.
 
   const std::wstring test_title(L"Title Of Awesomeness");
@@ -100,45 +110,12 @@ TEST_F(BrowserTest, Title) {
   EXPECT_EQ(test_title, GetActiveTabTitle());
 }
 
-// Tests closing the browser on a page with no unload listeners registered.
-TEST_F(BrowserTest, BrowserCloseNoUnloadListeners) {
-  LoadUnloadPageAndQuitBrowser(L"nolisteners.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered.
-TEST_F(BrowserTest, BrowserCloseUnload) {
-  LoadUnloadPageAndQuitBrowser(L"unload.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered where
-// the unload handler has an infinite loop.
-TEST_F(BrowserTest, BrowserCloseUnloadLooping) {
-  LoadUnloadPageAndQuitBrowser(L"unloadlooping.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered where
-// the unload handler has an infinite loop followed by an alert.
-TEST_F(BrowserTest, BrowserCloseUnloadLoopingAlert) {
-  LoadUnloadPageAndQuitBrowser(L"unloadloopingalert.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered where
-// the unload handler has an 2 second long loop followed by an alert.
-TEST_F(BrowserTest, BrowserCloseUnloadLoopingTwoSecondsAlert) {
-  LoadUnloadPageAndQuitBrowser(L"unloadloopingtwosecondsalert.html");
-}
-
-// TODO(ojan): Test popping up an alert in the unload handler and test
-// beforeunload. In addition add tests where we open all of these pages
-// in the browser and then close it, as well as having two windows and
-// closing only one of them.
-
 // The browser should quit quickly if it receives a WM_ENDSESSION message.
 TEST_F(BrowserTest, WindowsSessionEnd) {
   std::wstring test_file = test_data_directory_;
   file_util::AppendToPath(&test_file, L"title1.html");
 
-  NavigateToURL(net::FilePathToFileURL(test_file));
+  NavigateToURL(net_util::FilePathToFileURL(test_file));
   Sleep(kWaitForActionMsec);
 
   // Simulate an end of session. Normally this happens when the user
@@ -232,8 +209,8 @@ TEST_F(BrowserTest, DuplicateTab) {
   std::wstring path_prefix = test_data_directory_;
   file_util::AppendToPath(&path_prefix, L"session_history");
   path_prefix += file_util::kPathSeparator;
-  GURL url1 = net::FilePathToFileURL(path_prefix + L"bot1.html");
-  GURL url2 = net::FilePathToFileURL(path_prefix + L"bot2.html");
+  GURL url1 = net_util::FilePathToFileURL(path_prefix + L"bot1.html");
+  GURL url2 = net_util::FilePathToFileURL(path_prefix + L"bot2.html");
   GURL url3 = GURL("about:blank");
 
   scoped_ptr<BrowserProxy> browser_proxy(automation()->GetBrowserWindow(0));
@@ -259,7 +236,7 @@ TEST_F(BrowserTest, DuplicateTab) {
   browser_proxy.reset(automation()->GetBrowserWindow(1));
   tab_proxy.reset(browser_proxy->GetTab(0));
 
-  ASSERT_TRUE(tab_proxy->WaitForTabToBeRestored(kWaitForActionMsec));
+  ASSERT_TRUE(tab_proxy->WaitForTabToBeRestored());
 
   // Verify the stack of urls.
   GURL url;
@@ -296,7 +273,7 @@ TEST_F(BrowserTest, NullOpenerRedirectForksProcess) {
 
   // Start with a file:// url
   file_util::AppendToPath(&test_file, L"title2.html");
-  tab->NavigateToURL(net::FilePathToFileURL(test_file));
+  tab->NavigateToURL(net_util::FilePathToFileURL(test_file));
   int orig_tab_count = -1;
   ASSERT_TRUE(window->GetTabCount(&orig_tab_count));
   int orig_process_count = GetBrowserProcessCount();
@@ -334,7 +311,7 @@ TEST_F(BrowserTest, OtherRedirectsDontForkProcess) {
 
   // Start with a file:// url
   file_util::AppendToPath(&test_file, L"title2.html");
-  tab->NavigateToURL(net::FilePathToFileURL(test_file));
+  tab->NavigateToURL(net_util::FilePathToFileURL(test_file));
   int orig_tab_count = -1;
   ASSERT_TRUE(window->GetTabCount(&orig_tab_count));
   int orig_process_count = GetBrowserProcessCount();
@@ -368,7 +345,7 @@ TEST_F(VisibleBrowserTest, WindowOpenClose) {
   std::wstring test_file(test_data_directory_);
   file_util::AppendToPath(&test_file, L"window.close.html");
 
-  NavigateToURL(net::FilePathToFileURL(test_file));
+  NavigateToURL(net_util::FilePathToFileURL(test_file));
 
   int i;
   for (i = 0; i < 10; ++i) {
@@ -383,4 +360,3 @@ TEST_F(VisibleBrowserTest, WindowOpenClose) {
   if (i == 10)
     FAIL() << "failed to get error page title";
 }
-

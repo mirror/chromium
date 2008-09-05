@@ -2366,9 +2366,7 @@ xmlSAX2Reference(void *ctx, const xmlChar *name)
     xmlGenericError(xmlGenericErrorContext,
 	    "add xmlSAX2Reference %s to %s \n", name, ctxt->node->name);
 #endif
-    if (xmlAddChild(ctxt->node, ret) == NULL) {
-        xmlFreeNode(ret);
-    }
+    xmlAddChild(ctxt->node, ret);
 }
 
 /**

@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <fstream>
 
@@ -9,7 +34,6 @@
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
-#include "chrome/browser/character_encoding.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/libxml_utils.h"
@@ -35,8 +59,6 @@ const wchar_t* const kOutputFilePathSwitch = L"output";
 
 const wchar_t* const kDebugModeSwitch = L"debug";
 
-const wchar_t* const kWaitSwitch = L"wait-after-action";
-
 const wchar_t* const kDefaultInputFilePath = L"C:\\automated_ui_tests.txt";
 
 const wchar_t* const kDefaultOutputFilePath
@@ -51,45 +73,21 @@ const int kTestDialogActionsToRun = 7;
 
 // This subset of commands is used to test dialog boxes, which aren't likely
 // to respond to most other commands.
-const std::string kTestDialogPossibleActions[] = {
-  // See FuzzyTestDialog for details on why Enter and SpaceBar must appear first
-  // in this list.
+std::string AutomatedUITest::test_dialog_possible_actions_[] = {
+  "PressTabKey",
   "PressEnterKey",
   "PressSpaceBar",
-  "PressTabKey",
   "DownArrow"
-};
-
-// The list of dialogs that can be shown.
-const std::string kDialogs[] = {
-  "About",
-  "Options",
-  "TaskManager",
-  "JavaScriptDebugger",
-  "JavaScriptConsole",
-  "ClearBrowsingData",
-  "ImportSettings",
-  "EditSearchEngines",
-  "ViewPasswords"
 };
 
 AutomatedUITest::AutomatedUITest()
     : total_crashes_(0),
-      debug_logging_enabled_(false),
-      post_action_delay_(0) {
+      debug_logging_enabled_(false) {
   show_window_ = true;
   GetSystemTimeAsFileTime(&test_start_time_);
   CommandLine parsed_command_line;
   if (parsed_command_line.HasSwitch(kDebugModeSwitch))
     debug_logging_enabled_ = true;
-  if (parsed_command_line.HasSwitch(kWaitSwitch)) {
-    std::wstring str = parsed_command_line.GetSwitchValue(kWaitSwitch);
-    if (str.empty()) {
-      post_action_delay_ = 1;
-    } else {
-      post_action_delay_ = static_cast<int>(StringToInt64(str));
-    }
-  }
 }
 
 AutomatedUITest::~AutomatedUITest() {}
@@ -175,7 +173,7 @@ void AutomatedUITest::RunAutomatedUITest() {
       DoAction("SetUp");
 
       // Record the depth of the root of the command subtree, then advance to
-      // the first element in preparation for parsing.
+      // the first element in preperation for parsing.
       int start_depth = init_reader_.Depth();
       ASSERT_TRUE(init_reader_.Read()) << "Malformed XML file.";
       init_reader_.SkipToElement();
@@ -184,6 +182,7 @@ void AutomatedUITest::RunAutomatedUITest() {
       if (DidCrash(true)) {
         LogCrashResult(WideToASCII(GetMostRecentCrashDump()), false);
         // Try and start up again.
+        Sleep(500);
         CloseBrowserAndServer();
         LaunchBrowserAndServer();
         if (DidCrash(true)) {
@@ -238,6 +237,7 @@ void AutomatedUITest::RunAutomatedUITest() {
       } else {
         // If there was a previous crash, just tear down without logging, so
         // that we know what the last command was before we crashed.
+        Sleep(500);
         CloseBrowserAndServer();
       }
 
@@ -255,245 +255,98 @@ bool AutomatedUITest::DoAction(const std::string & action) {
   if (debug_logging_enabled_)
     AppendToOutputFile(action);
 
-  if (LowerCaseEqualsASCII(action, "about")) {
-    did_complete_action = OpenAboutDialog();
-  } else if (LowerCaseEqualsASCII(action, "back")) {
-    did_complete_action = BackButton();
-  } else if (LowerCaseEqualsASCII(action, "changeencoding")) {
-    did_complete_action = ChangeEncoding();
-  } else if (LowerCaseEqualsASCII(action, "closetab")) {
-    did_complete_action = CloseActiveTab();
-  } else if (LowerCaseEqualsASCII(action, "clearbrowsingdata")) {
-    did_complete_action = OpenClearBrowsingDataDialog();
-  } else if (LowerCaseEqualsASCII(action, "crash")) {
-    did_complete_action = ForceCrash();
-  } else if (LowerCaseEqualsASCII(action, "dialog")) {
-    did_complete_action = ExerciseDialog();
-  } else if (LowerCaseEqualsASCII(action, "downarrow")) {
-    did_complete_action = PressDownArrow();
-  } else if (LowerCaseEqualsASCII(action, "downloads")) {
-    did_complete_action = ShowDownloads();
-  } else if (LowerCaseEqualsASCII(action, "dragtableft")) {
-    did_complete_action = DragActiveTab(false, false);
-  } else if (LowerCaseEqualsASCII(action, "dragtabout")) {
-    did_complete_action = DragActiveTab(false, true);
-  } else if (LowerCaseEqualsASCII(action, "dragtabright")) {
-    did_complete_action = DragActiveTab(true, false);
-  } else if (LowerCaseEqualsASCII(action, "duplicatetab")) {
-    did_complete_action = DuplicateTab();
-  } else if (LowerCaseEqualsASCII(action, "editsearchengines")) {
-    did_complete_action = OpenEditSearchEnginesDialog();
-  } else if (LowerCaseEqualsASCII(action, "findinpage")) {
-    did_complete_action = FindInPage();
-  } else if (LowerCaseEqualsASCII(action, "forward")) {
-    did_complete_action = ForwardButton();
-  } else if (LowerCaseEqualsASCII(action, "goofftherecord")) {
-    did_complete_action = GoOffTheRecord();
-  } else if (LowerCaseEqualsASCII(action, "history")) {
-    did_complete_action = ShowHistory();
-  } else if (LowerCaseEqualsASCII(action, "home")) {
-    did_complete_action = Home();
-  } else if (LowerCaseEqualsASCII(action, "importsettings")) {
-    did_complete_action = OpenImportSettingsDialog();
-  } else if (LowerCaseEqualsASCII(action, "javascriptconsole")) {
-    did_complete_action = JavaScriptConsole();
-  } else if (LowerCaseEqualsASCII(action, "javascriptdebugger")) {
-    did_complete_action = JavaScriptDebugger();
-  } else if (LowerCaseEqualsASCII(action, "navigate")) {
+  if (LowerCaseEqualsASCII(action, "navigate")) {
     did_complete_action = Navigate();
   } else if (LowerCaseEqualsASCII(action, "newtab")) {
     did_complete_action = NewTab();
+  } else if (LowerCaseEqualsASCII(action, "back")) {
+    did_complete_action = BackButton();
+  } else if (LowerCaseEqualsASCII(action, "forward")) {
+    did_complete_action = ForwardButton();
+  } else if (LowerCaseEqualsASCII(action, "closetab")) {
+    did_complete_action = CloseActiveTab();
   } else if (LowerCaseEqualsASCII(action, "openwindow")) {
     did_complete_action = OpenAndActivateNewBrowserWindow();
-  } else if (LowerCaseEqualsASCII(action, "options")) {
-    did_complete_action = Options();
-  } else if (LowerCaseEqualsASCII(action, "pagedown")) {
-    did_complete_action = PressPageDown();
-  } else if (LowerCaseEqualsASCII(action, "pageup")) {
-    did_complete_action = PressPageUp();
-  } else if (LowerCaseEqualsASCII(action, "pressenterkey")) {
-    did_complete_action = PressEnterKey();
-  } else if (LowerCaseEqualsASCII(action, "pressescapekey")) {
-    did_complete_action = PressEscapeKey();
-  } else if (LowerCaseEqualsASCII(action, "pressspacebar")) {
-    did_complete_action = PressSpaceBar();
-  } else if (LowerCaseEqualsASCII(action, "presstabkey")) {
-    did_complete_action = PressTabKey();
   } else if (LowerCaseEqualsASCII(action, "reload")) {
     did_complete_action = ReloadPage();
-  } else if (LowerCaseEqualsASCII(action, "restoretab")) {
-    did_complete_action = RestoreTab();
+  } else if (LowerCaseEqualsASCII(action, "star")) {
+    did_complete_action = StarPage();
+  } else if (LowerCaseEqualsASCII(action, "findinpage")) {
+    did_complete_action = FindInPage();
   } else if (LowerCaseEqualsASCII(action, "selectnexttab")) {
     did_complete_action = SelectNextTab();
   } else if (LowerCaseEqualsASCII(action, "selectprevtab")) {
     did_complete_action = SelectPreviousTab();
-  } else if (LowerCaseEqualsASCII(action, "showbookmarks")) {
-    did_complete_action = ShowBookmarksBar();
-  } else if (LowerCaseEqualsASCII(action, "setup")) {
-    LaunchBrowserAndServer();
-    did_complete_action = true;
-  } else if (LowerCaseEqualsASCII(action, "sleep")) {
-    // This is for debugging, it probably shouldn't be used real tests.
-    Sleep(kDebuggingTimeoutMsec);
-    did_complete_action = true;
-  } else if (LowerCaseEqualsASCII(action, "star")) {
-    did_complete_action = StarPage();
-  } else if (LowerCaseEqualsASCII(action, "taskmanager")) {
-    did_complete_action = OpenTaskManagerDialog();
-  } else if (LowerCaseEqualsASCII(action, "teardown")) {
-    CloseBrowserAndServer();
-    did_complete_action = true;
-  } else if (LowerCaseEqualsASCII(action, "testaboutchrome")) {
-    did_complete_action = TestAboutChrome();
-  } else if (LowerCaseEqualsASCII(action, "testclearbrowsingdata")) {
-    did_complete_action = TestClearBrowsingData();
-  } else if (LowerCaseEqualsASCII(action, "testeditsearchengines")) {
-    did_complete_action = TestEditSearchEngines();
-  } else if (LowerCaseEqualsASCII(action, "testimportsettings")) {
-    did_complete_action = TestImportSettings();
-  } else if (LowerCaseEqualsASCII(action, "testoptions")) {
-    did_complete_action = TestOptions();
-  } else if (LowerCaseEqualsASCII(action, "testtaskmanager")) {
-    did_complete_action = TestTaskManager();
-  } else if (LowerCaseEqualsASCII(action, "testviewpasswords")) {
-    did_complete_action = TestViewPasswords();
-  } else if (LowerCaseEqualsASCII(action, "uparrow")) {
-    did_complete_action = PressUpArrow();
-  } else if (LowerCaseEqualsASCII(action, "viewpasswords")) {
-    did_complete_action = OpenViewPasswordsDialog();
-  } else if (LowerCaseEqualsASCII(action, "viewsource")) {
-    did_complete_action = ViewSource();
   } else if (LowerCaseEqualsASCII(action, "zoomplus")) {
     did_complete_action = ZoomPlus();
   } else if (LowerCaseEqualsASCII(action, "zoomminus")) {
     did_complete_action = ZoomMinus();
-  } else {
-    NOTREACHED() << "Unknown command passed into DoAction: "
-                 << action.c_str();
+  } else if (LowerCaseEqualsASCII(action, "history")) {
+    did_complete_action = ShowHistory();
+  } else if (LowerCaseEqualsASCII(action, "downloads")) {
+    did_complete_action = ShowDownloads();
+  } else if (LowerCaseEqualsASCII(action, "importsettings")) {
+    did_complete_action = ImportSettings();
+  } else if (LowerCaseEqualsASCII(action, "viewpasswords")) {
+    did_complete_action = ViewPasswords();
+  } else if (LowerCaseEqualsASCII(action, "clearbrowserdata")) {
+    did_complete_action = ClearBrowserData();
+  } else if (LowerCaseEqualsASCII(action, "taskmanager")) {
+    did_complete_action = TaskManager();
+  } else if (LowerCaseEqualsASCII(action, "goofftherecord")) {
+    did_complete_action = GoOffTheRecord();
+  } else if (LowerCaseEqualsASCII(action, "pressescapekey")) {
+    did_complete_action = PressEscapeKey();
+  } else if (LowerCaseEqualsASCII(action, "presstabkey")) {
+    did_complete_action = PressTabKey();
+  } else if (LowerCaseEqualsASCII(action, "pressenterkey")) {
+    did_complete_action = PressEnterKey();
+  } else if (LowerCaseEqualsASCII(action, "pressspacebar")) {
+    did_complete_action = PressSpaceBar();
+  } else if (LowerCaseEqualsASCII(action, "pagedown")) {
+    did_complete_action = PageDown();
+  } else if (LowerCaseEqualsASCII(action, "pageup")) {
+    did_complete_action = PageUp();
+  } else if (LowerCaseEqualsASCII(action, "dragtabright")) {
+    did_complete_action = DragActiveTab(true, false);
+  } else if (LowerCaseEqualsASCII(action, "dragtableft")) {
+    did_complete_action = DragActiveTab(false, false);
+  } else if (LowerCaseEqualsASCII(action, "dragtabout")) {
+    did_complete_action = DragActiveTab(false, true);
+  } else if (LowerCaseEqualsASCII(action, "uparrow")) {
+    did_complete_action = UpArrow();
+  } else if (LowerCaseEqualsASCII(action, "downarrow")) {
+    did_complete_action = DownArrow();
+  } else if (LowerCaseEqualsASCII(action, "testeditkeywords")) {
+    did_complete_action = TestEditKeywords();
+  } else if (LowerCaseEqualsASCII(action, "testtaskmanager")) {
+    did_complete_action = TestTaskManager();
+  } else if (LowerCaseEqualsASCII(action, "testviewpasswords")) {
+    did_complete_action = TestViewPasswords();
+  } else if (LowerCaseEqualsASCII(action, "testclearbrowserdata")) {
+    did_complete_action = TestClearBrowserData();
+  } else if (LowerCaseEqualsASCII(action, "testimportsettings")) {
+    did_complete_action = TestImportSettings();
+  } else if (LowerCaseEqualsASCII(action, "crash")) {
+    did_complete_action = ForceCrash();
+  } else if (LowerCaseEqualsASCII(action, "sleep")) {
+    // This is for debugging, it probably shouldn't be used real tests.
+    Sleep(kDebuggingTimeoutMsec);
+    did_complete_action = true;
+  } else if (LowerCaseEqualsASCII(action, "setup")) {
+    LaunchBrowserAndServer();
+    did_complete_action = true;
+  } else if (LowerCaseEqualsASCII(action, "teardown")) {
+    Sleep(500);
+    CloseBrowserAndServer();
+    did_complete_action = true;
   }
 
   if (!did_complete_action)
     xml_writer_.AddAttribute("failed_to_complete", "yes");
   xml_writer_.EndElement();
 
-  if (post_action_delay_)
-    ::Sleep(1000 * post_action_delay_);
-
   return did_complete_action;
-}
-
-bool AutomatedUITest::OpenAndActivateNewBrowserWindow() {
-  if (!automation()->OpenNewBrowserWindow(SW_SHOWNORMAL)) {
-    AddWarningAttribute("failed_to_open_new_browser_window");
-    return false;
-  }
-  int num_browser_windows;
-  automation()->GetBrowserWindowCount(&num_browser_windows);
-  // Get the most recently opened browser window and activate the tab
-  // in order to activate this browser window.
-  scoped_ptr<BrowserProxy> browser(
-    automation()->GetBrowserWindow(num_browser_windows - 1));
-  if (browser.get() == NULL) {
-    AddErrorAttribute("browser_window_not_found");
-    return false;
-  }
-  bool is_timeout;
-  if (!browser->ActivateTabWithTimeout(0, kWaitForActionMaxMsec,
-                                       &is_timeout)) {
-    AddWarningAttribute("failed_to_activate_tab");
-    return false;
-  }
-  return true;
-}
-
-bool AutomatedUITest::BackButton() {
-  return RunCommand(IDC_BACK);
-}
-
-bool AutomatedUITest::ChangeEncoding() {
-  // Get the encoding list that is used to populate the UI (encoding menu)
-  const std::vector<int>* encoding_ids =
-      CharacterEncoding::GetCurrentDisplayEncodings(
-          L"ISO-8859-1,windows-1252", L"");
-  DCHECK(encoding_ids);
-  DCHECK(!encoding_ids->empty());
-  unsigned len = static_cast<unsigned>(encoding_ids->size());
-
-  // The vector will contain mostly IDC values for encoding commands plus a few
-  // menu separators (0 values). If we hit a separator we just retry.
-  int index = rand_util::RandInt(0, len);
-  while ((*encoding_ids)[index] == 0) {
-    index = rand_util::RandInt(0, len);
-  }
-
-  return RunCommand((*encoding_ids)[index]);
-}
-
-bool AutomatedUITest::CloseActiveTab() {
-  bool return_value = false;
-  scoped_ptr<BrowserProxy> browser(automation()->GetLastActiveBrowserWindow());
-  if (browser.get() == NULL) {
-    AddErrorAttribute("browser_window_not_found");
-    return false;
-  }
-  int browser_windows_count;
-  int tab_count;
-  bool is_timeout;
-  browser->GetTabCountWithTimeout(&tab_count, kWaitForActionMaxMsec,
-                                  &is_timeout);
-  automation()->GetBrowserWindowCount(&browser_windows_count);
-  // Avoid quitting the application by not closing the last window.
-  if (tab_count > 1) {
-    int new_tab_count;
-    return_value = browser->RunCommand(IDC_CLOSETAB);
-    // Wait for the tab to close before we continue.
-    if (!browser->WaitForTabCountToChange(
-        tab_count, &new_tab_count, kWaitForActionMaxMsec)) {
-      AddWarningAttribute("tab_count_failed_to_change");
-      return false;
-    }
-  } else if (tab_count == 1 && browser_windows_count > 1) {
-    int new_window_count;
-    return_value = browser->RunCommand(IDC_CLOSETAB);
-    // Wait for the window to close before we continue.
-    if (!automation()->WaitForWindowCountToChange(
-        browser_windows_count, &new_window_count, kWaitForActionMaxMsec)) {
-      AddWarningAttribute("window_count_failed_to_change");
-      return false;
-    }
-  } else {
-    AddInfoAttribute("would_have_exited_application");
-    return false;
-  }
-  return return_value;
-}
-
-bool AutomatedUITest::DuplicateTab() {
-  return RunCommand(IDC_DUPLICATE);
-}
-
-bool AutomatedUITest::FindInPage() {
-  return RunCommand(IDC_FIND);
-}
-
-bool AutomatedUITest::ForwardButton() {
-  return RunCommand(IDC_FORWARD);
-}
-
-bool AutomatedUITest::GoOffTheRecord() {
-  return RunCommand(IDC_GOOFFTHERECORD);
-}
-
-bool AutomatedUITest::Home() {
-  return RunCommand(IDC_HOME);
-}
-
-bool AutomatedUITest::JavaScriptConsole() {
-  return RunCommand(IDC_SHOW_JS_CONSOLE);
-}
-
-bool AutomatedUITest::JavaScriptDebugger() {
-  return RunCommand(IDC_DEBUGGER);
 }
 
 bool AutomatedUITest::Navigate() {
@@ -538,10 +391,10 @@ bool AutomatedUITest::NewTab() {
   int new_tab_count;
   bool is_timeout;
   browser->GetTabCountWithTimeout(&old_tab_count, kWaitForActionMaxMsec,
-      &is_timeout);
+                                  &is_timeout);
   // Apply accelerator and wait for a new tab to open, if either
   // fails, return false. Apply Accelerator takes care of logging its failure.
-  bool return_value = RunCommand(IDC_NEWTAB);
+  bool return_value = ApplyAccelerator(IDC_NEWTAB);
   if (!browser->WaitForTabCountToChange(
       old_tab_count, &new_tab_count, kWaitForActionMaxMsec)) {
     AddWarningAttribute("tab_count_failed_to_change");
@@ -550,164 +403,198 @@ bool AutomatedUITest::NewTab() {
   return return_value;
 }
 
-bool AutomatedUITest::OpenAboutDialog() {
-  return RunCommand(IDC_ABOUT);
+bool AutomatedUITest::BackButton() {
+  return ApplyAccelerator(IDC_BACK);
 }
 
-bool AutomatedUITest::OpenClearBrowsingDataDialog() {
-  return RunCommand(IDC_CLEAR_BROWSING_DATA);
+bool AutomatedUITest::ForwardButton() {
+  return ApplyAccelerator(IDC_FORWARD);
 }
 
-bool AutomatedUITest::OpenEditSearchEnginesDialog() {
-  return RunCommand(IDC_EDIT_SEARCH_ENGINES);
+bool AutomatedUITest::CloseActiveTab() {
+  bool return_value = false;
+  scoped_ptr<BrowserProxy> browser(automation()->GetLastActiveBrowserWindow());
+  if (browser.get() == NULL) {
+    AddErrorAttribute("browser_window_not_found");
+    return false;
+  }
+  int browser_windows_count;
+  int tab_count;
+  bool is_timeout;
+  browser->GetTabCountWithTimeout(&tab_count, kWaitForActionMaxMsec,
+                                  &is_timeout);
+  automation()->GetBrowserWindowCount(&browser_windows_count);
+  // Avoid quitting the application by not closing the last window.
+  if (tab_count > 1) {
+    int new_tab_count;
+    return_value = browser->ApplyAccelerator(IDC_CLOSETAB);
+    // Wait for the tab to close before we continue.
+    if (!browser->WaitForTabCountToChange(
+        tab_count, &new_tab_count, kWaitForActionMaxMsec)) {
+      AddWarningAttribute("tab_count_failed_to_change");
+      return false;
+    }
+  } else if (tab_count == 1 && browser_windows_count > 1) {
+    int new_window_count;
+    return_value = browser->ApplyAccelerator(IDC_CLOSETAB);
+    // Wait for the window to close before we continue.
+    if (!automation()->WaitForWindowCountToChange(
+        browser_windows_count, &new_window_count, kWaitForActionMaxMsec)) {
+      AddWarningAttribute("window_count_failed_to_change");
+      return false;
+    }
+  } else {
+    AddInfoAttribute("would_have_exited_application");
+    return false;
+  }
+  return return_value;
 }
 
-bool AutomatedUITest::OpenImportSettingsDialog() {
-  return RunCommand(IDC_IMPORT_SETTINGS);
+bool AutomatedUITest::OpenAndActivateNewBrowserWindow() {
+  if (!automation()->OpenNewBrowserWindow(SW_SHOWNORMAL)) {
+    AddWarningAttribute("failed_to_open_new_browser_window");
+    return false;
+  }
+  int num_browser_windows;
+  automation()->GetBrowserWindowCount(&num_browser_windows);
+  // Get the most recently opened browser window and activate the tab
+  // in order to activate this browser window.
+  scoped_ptr<BrowserProxy> browser(
+    automation()->GetBrowserWindow(num_browser_windows - 1));
+  if (browser.get() == NULL) {
+    AddErrorAttribute("browser_window_not_found");
+    return false;
+  }
+  bool is_timeout;
+  if (!browser->ActivateTabWithTimeout(0, kWaitForActionMaxMsec,
+                                       &is_timeout)) {
+    AddWarningAttribute("failed_to_activate_tab");
+    return false;
+  }
+  return true;
 }
 
-bool AutomatedUITest::OpenTaskManagerDialog() {
-  return RunCommand(IDC_TASKMANAGER);
+bool AutomatedUITest::ReloadPage() {
+  return ApplyAccelerator(IDC_RELOAD);
 }
 
-bool AutomatedUITest::OpenViewPasswordsDialog() {
-  return RunCommand(IDC_VIEW_PASSWORDS);
+bool AutomatedUITest::StarPage() {
+  return ApplyAccelerator(IDC_STAR);
 }
 
-bool AutomatedUITest::Options() {
-  return RunCommand(IDC_OPTIONS);
+bool AutomatedUITest::FindInPage() {
+  return ApplyAccelerator(IDC_FIND);
 }
 
-bool AutomatedUITest::PressDownArrow() {
-  return SimulateKeyPressInActiveWindow(VK_DOWN, 0);
+bool AutomatedUITest::SelectNextTab() {
+  return ApplyAccelerator(IDC_SELECT_NEXT_TAB);
 }
 
-bool AutomatedUITest::PressEnterKey() {
-  return SimulateKeyPressInActiveWindow(VK_RETURN, 0);
+bool AutomatedUITest::SelectPreviousTab() {
+  return ApplyAccelerator(IDC_SELECT_PREV_TAB);
+}
+
+bool AutomatedUITest::ZoomPlus() {
+  return ApplyAccelerator(IDC_ZOOM_PLUS);
+}
+
+bool AutomatedUITest::ZoomMinus() {
+  return ApplyAccelerator(IDC_ZOOM_MINUS);
+}
+
+bool AutomatedUITest::ShowHistory() {
+  return ApplyAccelerator(IDC_SHOW_HISTORY);
+}
+
+bool AutomatedUITest::ShowDownloads() {
+  return ApplyAccelerator(IDC_SHOW_DOWNLOADS);
+}
+
+bool AutomatedUITest::ImportSettings() {
+  return ApplyAccelerator(IDC_IMPORT_SETTINGS);
+}
+
+bool AutomatedUITest::ViewPasswords() {
+  return ApplyAccelerator(IDC_VIEW_PASSWORDS);
+}
+
+bool AutomatedUITest::ClearBrowserData() {
+  return ApplyAccelerator(IDC_CLEAR_BROWSING_DATA);
+}
+
+bool AutomatedUITest::TaskManager() {
+  return ApplyAccelerator(IDC_TASKMANAGER);
+}
+
+bool AutomatedUITest::GoOffTheRecord() {
+  return ApplyAccelerator(IDC_GOOFFTHERECORD);
 }
 
 bool AutomatedUITest::PressEscapeKey() {
   return SimulateKeyPressInActiveWindow(VK_ESCAPE, 0);
 }
 
-bool AutomatedUITest::PressPageDown() {
-  return SimulateKeyPressInActiveWindow(VK_PRIOR, 0);
+bool AutomatedUITest::PressTabKey() {
+  return SimulateKeyPressInActiveWindow(VK_TAB, 0);
 }
 
-bool AutomatedUITest::PressPageUp() {
-  return SimulateKeyPressInActiveWindow(VK_NEXT, 0);
+bool AutomatedUITest::PressEnterKey() {
+  return SimulateKeyPressInActiveWindow(VK_RETURN, 0);
 }
 
 bool AutomatedUITest::PressSpaceBar() {
   return SimulateKeyPressInActiveWindow(VK_SPACE, 0);
 }
 
-bool AutomatedUITest::PressTabKey() {
-  return SimulateKeyPressInActiveWindow(VK_TAB, 0);
+bool AutomatedUITest::PageDown() {
+  return SimulateKeyPressInActiveWindow(VK_PRIOR, 0);
 }
 
-bool AutomatedUITest::PressUpArrow() {
+
+bool AutomatedUITest::PageUp() {
+  return SimulateKeyPressInActiveWindow(VK_NEXT, 0);
+}
+
+bool AutomatedUITest::UpArrow() {
   return SimulateKeyPressInActiveWindow(VK_UP, 0);
 }
 
-bool AutomatedUITest::ReloadPage() {
-  return RunCommand(IDC_RELOAD);
+bool AutomatedUITest::DownArrow() {
+  return SimulateKeyPressInActiveWindow(VK_DOWN, 0);
 }
 
-bool AutomatedUITest::RestoreTab() {
-  return RunCommand(IDC_RESTORE_TAB);
-}
-
-bool AutomatedUITest::SelectNextTab() {
-  return RunCommand(IDC_SELECT_NEXT_TAB);
-}
-
-bool AutomatedUITest::SelectPreviousTab() {
-  return RunCommand(IDC_SELECT_PREV_TAB);
-}
-
-bool AutomatedUITest::ShowBookmarksBar() {
-  return RunCommand(IDC_SHOW_BOOKMARKS_BAR);
-}
-
-bool AutomatedUITest::ShowDownloads() {
-  return RunCommand(IDC_SHOW_DOWNLOADS);
-}
-
-bool AutomatedUITest::ShowHistory() {
-  return RunCommand(IDC_SHOW_HISTORY);
-}
-
-bool AutomatedUITest::StarPage() {
-  return RunCommand(IDC_STAR);
-}
-
-bool AutomatedUITest::ViewSource() {
-  return RunCommand(IDC_VIEWSOURCE);
-}
-
-bool AutomatedUITest::ZoomMinus() {
-  return RunCommand(IDC_ZOOM_MINUS);
-}
-
-bool AutomatedUITest::ZoomPlus() {
-  return RunCommand(IDC_ZOOM_PLUS);
-}
-
-bool AutomatedUITest::TestAboutChrome() {
-  DoAction("About");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
-}
-
-bool AutomatedUITest::TestClearBrowsingData() {
-  DoAction("ClearBrowsingData");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
-}
-
-bool AutomatedUITest::TestEditSearchEngines() {
-  DoAction("EditSearchEngines");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
-}
-
-bool AutomatedUITest::TestImportSettings() {
-  DoAction("ImportSettings");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
+bool AutomatedUITest::TestEditKeywords() {
+  DoAction("EditKeywords");
+  return TestDialog(kTestDialogActionsToRun);
 }
 
 bool AutomatedUITest::TestTaskManager() {
   DoAction("TaskManager");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
-}
-
-bool AutomatedUITest::TestOptions() {
-  DoAction("Options");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
+  return TestDialog(kTestDialogActionsToRun);
 }
 
 bool AutomatedUITest::TestViewPasswords() {
   DoAction("ViewPasswords");
-  return FuzzyTestDialog(kTestDialogActionsToRun);
+  return TestDialog(kTestDialogActionsToRun);
 }
 
-bool AutomatedUITest::ExerciseDialog() {
-  int index = rand_util::RandInt(0, arraysize(kDialogs) - 1);
-  return DoAction(kDialogs[index]) && FuzzyTestDialog(kTestDialogActionsToRun);
+bool AutomatedUITest::TestClearBrowserData() {
+  DoAction("ClearBrowserData");
+  return TestDialog(kTestDialogActionsToRun);
 }
 
-bool AutomatedUITest::FuzzyTestDialog(int num_actions) {
+bool AutomatedUITest::TestImportSettings() {
+  DoAction("ImportSettings");
+  return TestDialog(kTestDialogActionsToRun);
+}
+
+bool AutomatedUITest::TestDialog(int num_actions) {
   bool return_value = true;
 
   for (int i = 0; i < num_actions; i++) {
-    // We want to make sure the first action performed on the dialog is not
-    // Space or Enter because focus is likely on the Close button. Both Space
-    // and Enter would close the dialog without performing more actions. We
-    // rely on the fact that those two actions are first in the array and set
-    // the lower bound to 2 if i == 0 to skip those two actions.
-    int action_index = rand_util::RandInt(i == 0 ? 2 : 0,
-                                          arraysize(kTestDialogPossibleActions)
-                                          - 1);
+    int action_index = rand_util::RandInt(0, kNumTestDialogActions - 1);
     return_value = return_value &&
-                   DoAction(kTestDialogPossibleActions[action_index]);
+                   DoAction(test_dialog_possible_actions_[action_index]);
     if (DidCrash(false))
       break;
   }
@@ -795,7 +682,7 @@ bool AutomatedUITest::DragActiveTab(bool drag_right, bool drag_out) {
                                         destination_point,
                                         ChromeViews::Event::EF_LEFT_BUTTON_DOWN,
                                         kWaitForActionMaxMsec,
-                                        &is_timeout, false)) {
+                                        &is_timeout)) {
     AddWarningAttribute("failed_to_simulate_drag");
     return false;
   }
@@ -827,21 +714,23 @@ WindowProxy* AutomatedUITest::GetAndActivateWindowForBrowser(
   return window;
 }
 
-bool AutomatedUITest::RunCommand(int browser_command) {
+bool AutomatedUITest::ApplyAccelerator(int id) {
   scoped_ptr<BrowserProxy> browser(automation()->GetLastActiveBrowserWindow());
   if (browser.get() == NULL) {
     AddErrorAttribute("browser_window_not_found");
     return false;
   }
-  if (!browser->RunCommand(browser_command)) {
-    AddWarningAttribute("failure_running_browser_command");
+  if (!browser->ApplyAccelerator(id)) {
+    AddWarningAttribute("failure_applying_accelerator");
     return false;
   }
   return true;
 }
 
 bool AutomatedUITest::SimulateKeyPressInActiveWindow(wchar_t key, int flags) {
-  scoped_ptr<WindowProxy> window(automation()->GetActiveWindow());
+  scoped_ptr<BrowserProxy> browser(automation()->GetLastActiveBrowserWindow());
+  scoped_ptr<WindowProxy> window(
+      GetAndActivateWindowForBrowser(browser.get()));
   if (window.get() == NULL) {
     AddErrorAttribute("active_window_not_found");
     return false;
@@ -999,4 +888,3 @@ TEST_F(AutomatedUITest, TheOneAndOnlyTest) {
   else
     RunAutomatedUITest();
 }
-

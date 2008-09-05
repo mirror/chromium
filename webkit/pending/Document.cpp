@@ -34,6 +34,7 @@
 #include "ClassNodeList.h"
 #include "Comment.h"
 #include "CookieJar.h"
+#include "Database.h"
 #include "DOMImplementation.h"
 #include "DocLoader.h"
 #include "DocumentFragment.h"
@@ -111,7 +112,6 @@
 #include "JSBridge.h"
 
 #if ENABLE(DATABASE)
-#include "Database.h"
 #include "DatabaseThread.h"
 #endif
 
@@ -136,12 +136,6 @@
 #include "SVGZoomEvent.h"
 #include "SVGStyleElement.h"
 #include "TimeScheduler.h"
-#endif
-
-#if defined(__APPLE__)
-// we need to be PLATFORM(CHROME) for this file, even if we're not building
-// that particular target, for the a11y ifdefs.
-#define WTF_PLATFORM_CHROME 1
 #endif
 
 using namespace std;
@@ -2511,7 +2505,7 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
         }
    }
 
-#if PLATFORM(MAC) && !PLATFORM(CHROME)
+#if PLATFORM(MAC)
     if (!focusChangeBlocked && m_focusedNode && AXObjectCache::accessibilityEnabled())
         axObjectCache()->handleFocusedUIElementChanged();
 #endif

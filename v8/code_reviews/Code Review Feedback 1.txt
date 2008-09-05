@@ -1,0 +1,88 @@
+Marked check boxes [x] indicate items that have been done.
+
+objects.h:
+[x] high-level comments on Smi, Failure usage
+[x] comments for all other objects w/ the respective classes
+[x] rename Function -> JSFunction (make naming more consistent?)
+[x] JSArray and JSObject will be merged
+[x] tagging will be changed to accommodate 31bit Smis
+[x] Feng: will cleanup RegExpObject (remove it, use JSObject instead)
+[x] comment on Hint (for ToPrimitive), perhaps make a real type? (kasperl)
+[x] comment on MapType (add comment that ordering is relevant, perhaps make explicit assignment of value to enum)
+[x] Naming of MapState, MapState enum values perhaps better? e.g. SlowState refers to the representation in the JSObject, 
+    but is stored in the map. Also, comment explaining what the enum values mean would be very useful.
+[ ] CompareResult needs a comment, also the enum values should probably have more specific names instead of just "UNDEFINED", etc.
+[ ] high-level comments on Handle needed (how it is used, where it must be used, etc.)
+[ ] Handle usage: perhaps pattern detailing how to use them inside loops etc. to avoid memory overflow
+[x] Also: Move Handles out into a separate file, perhaps together with HandleScope
+[x] perhaps: add high-level one-line comments before groups of functions in Object class
+[x] cleanup grouping of Object accessors/predicates
+[ ] Object::xxxEquality naming??? clash with Equal()???
+[x] should have a comment on difference between Print vs ShortPrint (once for Object)
+[x] should have a comment kSize (once for Object), if not used, perhaps just a comment?
+[ ] the VM assumes sizeof(int) == 4, it is ok to use int instead of int32 - however make sure to distinguish between int and intptr_t
+[ ] subclasses of Object: naming convention regarding conversion routines should be commented on (why SmiToString)
+[ ] also: perhaps comments on when to use virtuals and when not (why we are not using vtable ptrs)
+[ ] should add a global comment explaining our local VM style! 
+[x] for instance: we like: "static inline", not "inline static"
+[x] class Smi: kMin/MaxValue constant expression should use proper constant instead of 3
+[x] class Failure needs comments
+[ ] Failure::request(): bad name - how about requested_size() or something; + comments
+[ ] JSObject class: comment on JSEnv parameter for Set/GetProperty
+[ ] TODO: need iteration interface over properties eventually
+[ ] JSObject::InFastMode() needs comment
+[ ] JSObject: need comments for all the special Property setters, also are they used VM internally only, or publicly
+[ ] better name for JSObject::Normalize()? but needs comment!
+[x] rename FixedArray::modified -> set_modified, or better
+[ ] FixedArray::CopyAppend -> CopyAdd?
+[x] FixedArray: add prefix for printing interface, also verification?
+[x] ByteArray: better name? (maybe not) but: unify accessor names
+[ ] Map: describe extension of meta-hierarchy
+[ ] Map: instance descriptors: need comment, also structure of the FixedArray needs to be described
+[x] MapState enum: perhaps just define it in Map (Map::State) instead
+[ ] Function: prototype field may need a comment
+[ ] Function: better comments on the various code variants
+[ ] Function: consider renaming xxxAccessor -> xxxCallbacks (PropertyAccessCallback, PAC)
+[x] class ValueObject -> class JSValueObject?
+[x] class String: comments missing
+[x] String::Add() => String::Concatenate()? Also, needs comment. Maybe doesn't need to be in the String class?
+[ ] class Code: consider using Address instead of byte*
+[x] move Code::Invoke to JSEnv, also make it simpler, cleaner
+[x] Code: ConvertICTargetXXX -> ConvertICTargetsXXX etc. (plural!)
+[ ] class Oddball: explain design decision (comment)
+[x] JSArray: set_length and SetLength is confusing: rename!
+
+
+objects-inl.h
+[ ] ToUint32, ToUint16: contains UNIMPLEMENTED
+[ ] some TODOs
+[x] TODO: undefine all local #defines
+
+
+objects.cc:
+[ ] file contains several UNIMPLEMENTED
+[ ] Object::ToPrimitive: do callback for Object
+[ ] Smi::ToBoolean: perhaps global function to convert C bool -> JS bool (util, globals?)
+[ ] Smi::FromInt(NOT_EQUAL), etc: perhaps have smi constants?
+[ ] Object::BinaryOperator: need comment on switch() particulars!!
+    (FastAllocateHeapNumber vs NumberFromDouble)
+[ ] Failure::Print: should print type and requested size!
+[ ] HeapObject::Verify: formatting?!?
+[ ] HeapNumber::HeapNumberToString: use the Gay library
+[ ] AddFastPropertyUsingMap may need a comment, perhaps in the header file
+[ ] class DescriptorStream needs comments, is there a better way
+
+
+Comments of global style:
+[ ] why we "always" return Object* (Failure object, need for retry)
+[ ] how we name ToString functions
+[ ] where to use virtuals and where not
+[ ] need to have comment on design decision re: not using explicit C fields in Object classes, but use explicit constants 
+    defining the field offsets, mark all the sections w/ "Layout" comment
+[ ] naming conventions (kSize vs kHeaderSize)
+[ ] convention: Object size() always in bytes
+[ ] convention: format [ foobar ] indicates a foobar slot
+[ ] try to keep macro defs as local as possible (use #undef)
+[ ] It is OK to remove the parameter name in the implementation if the parameter is not used (however, it should be in the 
+    header file unless that's where the implementation is)
+

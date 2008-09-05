@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // A browser-side server debugger built with V8 providing a scriptable
 // interface to a JavaScript debugger as well as browser automation.
@@ -12,33 +37,27 @@
 // If DebuggerWraper doesn't expose the interface you need, extend it to do so.
 // See comments in debugger_wrapper.h for more details.
 
-#ifndef CHROME_BROWSER_DEBUGGER_DEBUGGER_SHELL_H_
-#define CHROME_BROWSER_DEBUGGER_DEBUGGER_SHELL_H_
+#ifndef CHROME_BROWSER_DEBUGGER_DEBUGGER_SHELL_H__
+#define CHROME_BROWSER_DEBUGGER_DEBUGGER_SHELL_H__
 
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
 
 #ifdef CHROME_DEBUGGER_DISABLED
-
-#include "base/logging.h"
-
 class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
  public:
   DebuggerShell() {
-    LOG(ERROR) << "Debugger not enabled for KJS";
+    LOG(ERROR) << "Debug Debugger not enabled for KJS";
   }
   virtual ~DebuggerShell() {}
   void Start() {}
   void DebugMessage(const std::wstring& msg) {}
   void OnDebugDisconnect() {}
-  void OnDebugAttach() {}
 };
-
 #else
-
 #include "debugger_io.h"
 #include "debugger_node.h"
-#include "v8/include/v8.h"
+#include "v8/public/v8.h"
 
 class DebuggerInputOutput;
 class MessageLoop;
@@ -60,15 +79,11 @@ class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
   void DebugMessage(const std::wstring& msg);
 
   // The renderer we're attached to is gone.
-  void OnDebugAttach();
-
-  // The renderer we're attached to is gone.
   void OnDebugDisconnect();
 
   // SocketInputOutput callback methods
   void DidConnect();
-  void DidDisconnect();
-  void ProcessCommand(const std::wstring& data);
+  void ProcessCommand(const std::string& data);
 
   static v8::Handle<v8::Value> SetDebuggerReady(const v8::Arguments& args,
                                                 DebuggerShell* debugger);
@@ -93,8 +108,6 @@ class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
   void PrintLine(const std::string& out);
   void PrintString(const std::string& out);
   void PrintPrompt();
-  v8::Handle<v8::Value> CompileAndRun(const std::wstring& wstr,
-                                      const std::string& filename = "");
   v8::Handle<v8::Value> CompileAndRun(const std::string& str,
                                       const std::string& filename = "");
 
@@ -107,7 +120,7 @@ class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
 
   void MessageListener(v8::Handle<v8::Message> message);
 
-  // global shell() function designed to allow command-line processing by
+  // global debugger() function designed to allow command-line processing by
   // javascript code rather than by this object.
   static v8::Handle<v8::Value> DelegateSubshell(const v8::Arguments& args);
   v8::Handle<v8::Value> Subshell(const v8::Arguments& args);
@@ -130,9 +143,8 @@ class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
   // If the debugger is ready to process another command or is busy.
   bool debugger_ready_;
 
-  DISALLOW_COPY_AND_ASSIGN(DebuggerShell);
+  DISALLOW_EVIL_CONSTRUCTORS(DebuggerShell);
 };
 
 #endif // else CHROME_DEBUGGER_DISABLED
-#endif // CHROME_BROWSER_DEBUGGER_DEBUGGER_SHELL_H_
-
+#endif // CHROME_BROWSER_DEBUGGER_DEBUGGER_SHELL_H__

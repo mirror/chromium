@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Disabled right now as this won't work on BuildBots right now as this test
 // require the box it runs on to be unlocked (and no screen-savers).
@@ -14,15 +39,16 @@
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
 #include "chrome/views/checkbox.h"
+#include "chrome/views/focus_manager.h"
 #include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/label.h"
 #include "chrome/views/link.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/radio_button.h"
-#include "chrome/views/root_view.h"
 #include "chrome/views/scroll_view.h"
 #include "chrome/views/tabbed_pane.h"
 #include "chrome/views/text_field.h"
+#include "chrome/views/view.h"
 #include "chrome/views/window.h"
 #include "chrome/views/window_delegate.h"
 #include "SkColor.h"
@@ -115,8 +141,7 @@ class BorderView : public ChromeViews::NativeControl {
                                         parent_container, NULL, NULL, NULL);
     // Create the view container which is a child of the TabControl.
     view_container_ = new ChromeViews::HWNDViewContainer();
-    view_container_->Init(tab_control, gfx::Rect(), false);
-    view_container_->SetContentsView(child_);
+    view_container_->Init(tab_control, gfx::Rect(), child_, false);
     view_container_->SetFocusTraversableParentView(this);
     ResizeContents(tab_control);
     return tab_control;
@@ -167,15 +192,14 @@ private:
   DISALLOW_EVIL_CONSTRUCTORS(BorderView);
 };
 
-class TestViewWindow : public ChromeViews::HWNDViewContainer {
+class TestViewWindow : public ChromeViews::Window,
+                       public ChromeViews::WindowDelegate {
  public:
   explicit TestViewWindow(FocusManagerTest* test);
   ~TestViewWindow() { }
 
   void Init();
-
-  ChromeViews::View* contents() const { return contents_; }
-  
+  virtual std::wstring GetWindowTitle() const;
 
   // Return the ID of the component that currently has the focus.
   int GetFocusedComponentID();
@@ -217,7 +241,6 @@ class FocusManagerTest : public testing::Test {
   virtual void SetUp();
   virtual void TearDown();
 
-  MessageLoopForUI message_loop_;
   TestViewWindow* test_window_;
 };
 
@@ -239,8 +262,7 @@ void TestViewWindow::Init() {
   contents_->SetBackground(
       ChromeViews::Background::CreateSolidBackground(255, 255, 255));
 
-  HWNDViewContainer::Init(NULL, bounds, true);
-  SetContentsView(contents_);
+  Window::Init(NULL, bounds, contents_, this);
 
   ChromeViews::CheckBox* cb =
       new ChromeViews::CheckBox(L"This is a checkbox");
@@ -499,6 +521,11 @@ void TestViewWindow::Init() {
   contents->SetBounds(200, y, 200, 50);
 }
 
+// WindowDelegate Implementation.
+std::wstring TestViewWindow::GetWindowTitle() const {
+  return L"Focus Manager Test Window";
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // FocusManagerTest
 ////////////////////////////////////////////////////////////////////////////////
@@ -516,14 +543,11 @@ TestViewWindow* FocusManagerTest::GetWindow() {
 void FocusManagerTest::SetUp() {
   test_window_ = new TestViewWindow(this);
   test_window_->Init();
-  ShowWindow(test_window_->GetHWND(), SW_SHOW);
+  test_window_->Show();
 }
 
 void FocusManagerTest::TearDown() {
   test_window_->CloseNow();
-
-  // Flush the message loop to make Purify happy.
-  message_loop_.RunAllPending();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -662,4 +686,3 @@ TEST_F(FocusManagerTest, TraversalWithNonEnabledViews) {
 }
 
 }
-

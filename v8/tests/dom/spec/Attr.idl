@@ -1,0 +1,13 @@
+interface Attr : Node {
+  readonly attribute DOMString       name;
+  readonly attribute boolean         specified;
+           attribute DOMString       value;
+                                        // raises(DOMException) on setting
+
+  // Introduced in DOM Level 2:
+  readonly attribute Element         ownerElement;
+  // Introduced in DOM Level 3:
+  readonly attribute TypeInfo        schemaTypeInfo;
+  // Introduced in DOM Level 3:
+  readonly attribute boolean         isId;
+};

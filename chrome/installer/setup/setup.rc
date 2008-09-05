@@ -62,7 +62,11 @@ IDI_SETUP               ICON                    "setup.ico"
 //
 // String Table
 //
-#include "installer_util_strings.rc"
+
+STRINGTABLE 
+BEGIN
+    IDS_UNINSTALL_SURVEY_URL                   "http://www.google.com/support/chrome/bin/request.py?hl=$1&contact_type=uninstall"
+END
 
 
 #ifndef APSTUDIO_INVOKED

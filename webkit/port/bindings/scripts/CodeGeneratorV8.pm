@@ -175,9 +175,6 @@ sub AddIncludesForType
         $joinedName = $type;
         $joinedName =~ s/Abs|Rel//;
         $implIncludes{"${joinedName}.h"} = 1;
-    } elsif ($type eq "CSSStyleDeclaration") {
-        $implIncludes{"CSSStyleDeclaration.h"} = 1;
-        $implIncludes{"CSSMutableStyleDeclaration.h"} = 1;
     } else {
         # default, include the same named file
         $implIncludes{GetImplementationFileName(${type})} = 1;
@@ -230,7 +227,7 @@ sub GetImplementationFileName
     return "Event.h" if $iface eq "DOMTimeStamp";
     return "NamedAttrMap.h" if $iface eq "NamedNodeMap";
     return "NameNodeList.h" if $iface eq "NodeList";
-    return "XMLHttpRequest.h" if $iface eq "XMLHttpRequest";
+    return "xmlhttprequest.h" if $iface eq "XMLHttpRequest";
 
     return "${iface}.h";
 }
@@ -433,7 +430,7 @@ END
 
   if ($isPodType) {
     push(@implContentDecls, <<END);
-    V8SVGPODTypeWrapper<$implClassName>* imp_wrapper = V8Proxy::FastToNativeObject<V8SVGPODTypeWrapper<$implClassName> >(V8ClassIndex::$classIndex, info.Holder());
+    V8SVGPODTypeWrapper<$implClassName>* imp_wrapper = V8Proxy::FastToNativeObject<V8SVGPODTypeWrapper<$implClassName>>(V8ClassIndex::$classIndex, info.Holder());
     $implClassName imp_instance = *imp_wrapper;
     $implClassName* imp = &imp_instance;
 END
@@ -471,15 +468,9 @@ END
   my $getterFunc = WK_lcfirst($attrName);
   $getterFunc .= "Animated" if $codeGenerator->IsSVGAnimatedType($attribute->signature->type);
 
-  my $returnType = $codeGenerator->StripModule($attribute->signature->type);
-
   my $getterString = "imp->$getterFunc(";
   $getterString .= "ec" if $useExceptions;
   $getterString .= ")";
-  if (IsRefPtrType($returnType)) {
-    $implIncludes{"wtf/GetPtr.h"} = 1;
-    $getterString = "WTF::getPtr(" . $getterString . ")";
-  }
   if ($nativeType eq "int" and $attribute->signature->extendedAttributes->{"ConvertFromString"}) {
     $getterString .= ".toInt()";
   }
@@ -503,9 +494,8 @@ END
     }
 
     $result = "v";
-    if (IsRefPtrType($returnType)) {
-      $result = "WTF::getPtr(" . $result . ")";
-    }
+    my $returnType = $codeGenerator->StripModule($attribute->signature->type);
+    $result .= ".get()" if IsRefPtrType($returnType);
   } else {
     # Special case: RGBColor is noncopyable
     $result = $getterString;
@@ -572,7 +562,7 @@ sub GenerateNormalAttrSetter
   if ($isPodType) {
     $implClassName = GetNativeType($implClassName);
     $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
-    push(@implContentDecls, "    V8SVGPODTypeWrapper<$implClassName>* wrapper = V8Proxy::FastToNativeObject<V8SVGPODTypeWrapper<$implClassName> >(V8ClassIndex::$classIndex, info.Holder());\n");
+    push(@implContentDecls, "    V8SVGPODTypeWrapper<$implClassName>* wrapper = V8Proxy::FastToNativeObject<V8SVGPODTypeWrapper<$implClassName>>(V8ClassIndex::$classIndex, info.Holder());\n");
     push(@implContentDecls, "    $implClassName imp_instance = *wrapper;\n");
     push(@implContentDecls, "    $implClassName* imp = &imp_instance;\n");
 
@@ -601,9 +591,7 @@ END
     $result .= ")";
   }
   my $returnType = $codeGenerator->StripModule($attribute->signature->type);
-  if (IsRefPtrType($returnType)) {
-    $result = "WTF::getPtr(" . $result . ")";
-  }
+  $result .= ".get()" if IsRefPtrType($returnType);
   
   my $useExceptions = 1 if @{$attribute->setterExceptions} and !($isPodType); 
 
@@ -688,7 +676,7 @@ sub GenerateFunctionCallback
 
   if ($codeGenerator->IsPodType($implClassName)) {
     my $nativeClassName = GetNativeType($implClassName);
-    push(@implContentDecls, "    V8SVGPODTypeWrapper<$nativeClassName>* imp_wrapper = V8Proxy::FastToNativeObject<V8SVGPODTypeWrapper<$nativeClassName> >(V8ClassIndex::$classIndex, args.Holder());\n");
+    push(@implContentDecls, "    V8SVGPODTypeWrapper<$nativeClassName>* imp_wrapper = V8Proxy::FastToNativeObject<V8SVGPODTypeWrapper<$nativeClassName>>(V8ClassIndex::$classIndex, args.Holder());\n");
     push(@implContentDecls, "    $nativeClassName imp_instance = *imp_wrapper;\n");
     push(@implContentDecls, "    $nativeClassName* imp = &imp_instance;\n");
   } else {
@@ -831,9 +819,9 @@ sub GenerateImplementation
       }
     }
 
-    if ($hasConstructors) {
-      GenerateConstructorGetter($implClassName);
-    }
+	if ($hasConstructors) {
+	  GenerateConstructorGetter($implClassName);
+	}
 
     # Generate methods for functions.
     foreach my $function (@{$dataNode->functions}) {
@@ -857,12 +845,25 @@ sub GenerateImplementation
       }
     }
 
-    # Attributes
-    my $has_attributes = 0;
-    if (@{$dataNode->attributes}) {
-      $has_attributes = 1;
-      push(@implContent, "static const BatchedAttribute attrs[] = {\n");
+    push(@implContentDecls, "} // namespace ${interfaceName}Internal\n\n");
+
+    # Generate the template configuration method
+    push(@implContent,  <<END
+static v8::Persistent<v8::FunctionTemplate> Configure${className}Template(v8::Persistent<v8::FunctionTemplate> desc) {
+  v8::Local<v8::ObjectTemplate> instance = desc->InstanceTemplate();
+  instance->SetInternalFieldCount(2);
+  v8::Local<v8::Signature> default_signature = v8::Signature::New(desc);
+  v8::Local<v8::ObjectTemplate> proto = desc->PrototypeTemplate();
+END
+);
+
+    my $needsAccessCheck = 0;
+    if ($dataNode->extendedAttributes->{"CheckDomainSecurity"}) {
+      push(@implContent,
+         "  instance->SetAccessCheckCallbacks(V8Custom::v8${interfaceName}NamedSecurityCheck, V8Custom::v8${interfaceName}IndexedSecurityCheck, v8::External::New((void*)V8ClassIndex::${classIndex}));\n");
+      $needsAccessCheck = 1;
     }
+
     foreach my $attribute (@{$dataNode->attributes}) {
       my $attrName = $attribute->signature->name;
       my $attrExt = $attribute->signature->extendedAttributes;
@@ -894,15 +895,15 @@ sub GenerateImplementation
         $propAttr .= "|v8::DontEnum";
       }
 
-      my $on_proto = "0 /* on instance */";
-      my $data = "V8ClassIndex::INVALID_CLASS_INDEX /* no data */";
+      my $holder = "instance";
+      my $data = "v8::Handle<v8::Value>()";
 
       # Constructor
       if ($attribute->signature->type =~ /Constructor$/) {
         my $constructorType = $codeGenerator->StripModule($attribute->signature->type);
         $constructorType =~ s/Constructor$//;
         my $constructorIndex = uc($constructorType);
-        $data = "V8ClassIndex::${constructorIndex}";
+        $data = "v8::Integer::New(V8ClassIndex::ToInt(V8ClassIndex::${constructorIndex}))";
         $getter = "${interfaceName}Internal::${implClassName}ConstructorGetter";
         $setter = "0";
         $propAttr = "v8::ReadOnly";
@@ -937,72 +938,26 @@ sub GenerateImplementation
 
       # An accessor can be installed on the proto
       if ($attrExt->{"v8OnProto"}) {
-        $on_proto = "1 /* on proto */";
+        $holder = "proto";
       }
 
       my $commentInfo = "Attribute '$attrName' (Type: '" . $attribute->type .
                         "' ExtAttr: '" . join(' ', keys(%{$attrExt})) . "')";
       push(@implContent, <<END);
+
   // $commentInfo
-  { "$attrName",
-    $getter,
-    $setter,
-    $data,
-    $accessControl,
-    static_cast<v8::PropertyAttribute>($propAttr),
-    $on_proto },
+  $holder->SetAccessor(
+      v8::String::New("$attrName"),
+      $getter,
+      $setter,
+      $data,
+      $accessControl,
+      static_cast<v8::PropertyAttribute>($propAttr));
 END
-    }
-    if ($has_attributes) {
-      push(@implContent, "};\n");
+
     }
 
-    # Setup constants
-    my $has_constants = 0;
-    if (@{$dataNode->constants}) {
-      $has_constants = 1;
-      push(@implContent, "static const BatchedConstant consts[] = {\n");
-    }
-    foreach my $constant (@{$dataNode->constants}) {
-      my $name = $constant->name;
-      my $value = $constant->value;
-      # TODO we need the static_cast here only because of one constant, NodeFilter.idl
-      # defines "const unsigned long SHOW_ALL = 0xFFFFFFFF".  It would be better if we
-      # handled this here, and converted it to a -1 constant in the c++ output.
-      push(@implContent, <<END);
-  { "${name}", static_cast<signed int>($value) },
-END
-    }
-    if ($has_constants) {
-      push(@implContent, "};\n");
-    }
 
-    push(@implContentDecls, "} // namespace ${interfaceName}Internal\n\n");
-
-    my $access_check = "/* no access check */";
-    if ($dataNode->extendedAttributes->{"CheckDomainSecurity"}) {
-      $access_check = "instance->SetAccessCheckCallbacks(V8Custom::v8${interfaceName}NamedSecurityCheck, V8Custom::v8${interfaceName}IndexedSecurityCheck, v8::External::New((void*)V8ClassIndex::${classIndex}));";
-    }
-
-    # Generate the template configuration method
-    push(@implContent,  <<END
-static v8::Persistent<v8::FunctionTemplate> Configure${className}Template(v8::Persistent<v8::FunctionTemplate> desc) {
-  v8::Local<v8::ObjectTemplate> instance = desc->InstanceTemplate();
-  instance->SetInternalFieldCount(2);
-  v8::Local<v8::Signature> default_signature = v8::Signature::New(desc);
-  v8::Local<v8::ObjectTemplate> proto = desc->PrototypeTemplate();
-  $access_check
-END
-);
-
-    # Set up our attributes if we have them
-    if ($has_attributes) {
-      push(@implContent, <<END);
-  BatchConfigureAttributes(instance, proto, attrs, sizeof(attrs)/sizeof(*attrs));
-END
-    }
-
-    # Define our functions with Set() or SetAccessor()
     foreach my $function (@{$dataNode->functions}) {
       my $attrExt = $function->signature->extendedAttributes;
       my $name = $function->signature->name;
@@ -1086,9 +1041,13 @@ END
     # Set the class name.  This is used when printing objects.
     push(@implContent, "  desc->SetClassName(v8::String::New(\"" . GetClassName(${interfaceName}) . "\"));\n");
 
-    if ($has_constants) {
+    # Setup constants
+    foreach my $constant (@{$dataNode->constants}) {
+      my $name = $constant->name;
+      my $value = $constant->value;
       push(@implContent, <<END);
-  BatchConfigureConstants(desc, proto, consts, sizeof(consts)/sizeof(*consts));
+  desc->Set(v8::String::New("${name}"), v8::Integer::New(static_cast<signed int>($value)), v8::ReadOnly);
+  proto->Set(v8::String::New("${name}"), v8::Integer::New(static_cast<signed int>($value)), v8::ReadOnly);
 END
     }
 
@@ -1096,8 +1055,10 @@ END
   return desc;
 }
 
+static v8::Persistent<v8::FunctionTemplate> ${className}_raw_cache_;
+static v8::Persistent<v8::FunctionTemplate> ${className}_cache_;
+
 v8::Persistent<v8::FunctionTemplate> ${className}::GetRawTemplate() {
-  static v8::Persistent<v8::FunctionTemplate> ${className}_raw_cache_;
   if (${className}_raw_cache_.IsEmpty()) {
     v8::HandleScope scope;
     v8::Local<v8::FunctionTemplate> result = v8::FunctionTemplate::New(V8Proxy::CheckNewLegal);
@@ -1107,7 +1068,6 @@ v8::Persistent<v8::FunctionTemplate> ${className}::GetRawTemplate() {
 }
 
 v8::Persistent<v8::FunctionTemplate> ${className}::GetTemplate() {
-  static v8::Persistent<v8::FunctionTemplate> ${className}_cache_;
   if (${className}_cache_.IsEmpty())
     ${className}_cache_ = Configure${className}Template(GetRawTemplate());
   return ${className}_cache_;
@@ -1162,7 +1122,7 @@ sub GenerateFunctionCallString()
   # SVG lists functions that return POD types require special handling
   if (IsSVGListTypeNeedingSpecialHandling($implClassName) && IsSVGListMethod($name) && $returnsPodType) {
     $returnsListItemPodType = 1;
-    $result .= $indent . "SVGList<RefPtr<SVGPODListItem<$nativeReturnType> > >* listImp = imp;\n";
+    $result .= $indent . "SVGList<RefPtr<SVGPODListItem<$nativeReturnType>>>* listImp = imp;\n";
     $functionString = "listImp->${name}(";
   } 
   
@@ -1197,14 +1157,6 @@ sub GenerateFunctionCallString()
   }
   $functionString .= ")";
 
-  if ((IsRefPtrType($returnType) || $returnsListItemPodType) &&
-      !$nodeToReturn) {
-    # We don't use getPtr when $nodeToReturn because that situation is
-    # special-cased below to return a bool.
-    $implIncludes{"wtf/GetPtr.h"} = 1;
-    $functionString = "WTF::getPtr(" . $functionString . ")";
-  }
-
   if ($nodeToReturn) {
     # Special case for insertBefore, replaceChild, removeChild and
     # appendChild functions from Node.
@@ -1224,7 +1176,7 @@ sub GenerateFunctionCallString()
       $indent . GetNativeType($returnType, 0) . " result = *imp;\n" .
       $indent . "$functionString;\n";
   } elsif ($returnsListItemPodType) {
-    $result .= $indent . "RefPtr<SVGPODListItem<$nativeReturnType> > result = $functionString;\n";
+    $result .= $indent . "RefPtr<SVGPODListItem<$nativeReturnType>> result = $functionString;\n";
   } else {
     $result .= $indent . $nativeReturnType . " result = $functionString;\n";
   }
@@ -1234,10 +1186,7 @@ sub GenerateFunctionCallString()
   }
 
   my $return = "result";
-  if (IsRefPtrType($returnType) || $returnsListItemPodType) {
-    $implIncludes{"wtf/GetPtr.h"} = 1;
-    $return = "WTF::getPtr(" . $return . ")";
-  }
+  $return .= ".get()" if IsRefPtrType($returnType) || $returnsListItemPodType;
 
   # If the return type is a POD type, separate out the wrapper generation
   if ($returnsListItemPodType) {
@@ -1530,7 +1479,7 @@ sub JSValueToNative
         $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
 
         # TODO(jhass): perform type checking like others???
-        return "*V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<${nativeType}> >(V8ClassIndex::${classIndex}, $value)"
+        return "*V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<${nativeType}>>(V8ClassIndex::${classIndex}, $value)"
       }
       
       $implIncludes{"V8${type}.h"} = 1;
@@ -1713,7 +1662,6 @@ sub NativeToJSValue
 
     else {
       $implIncludes{"wtf/RefCounted.h"} = 1;
-      $implIncludes{"wtf/RefPtr.h"} = 1;
       my $classIndex = uc($type);
       
       if ($codeGenerator->IsPodType($type)) {

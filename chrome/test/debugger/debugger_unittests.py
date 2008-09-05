@@ -13,29 +13,25 @@ import google.path_utils
 import google.process_utils
 
 def RunTests(build_dir=None):
-  '''This is just a simple wrapper for running the test through v8_shell_sample.
-  Since v8_shell_sample always returns 0 whether the test passes or fails,
-  buildbot looks at stdout to test for failure.
+  '''This is just a simple wrapper for running the test through v8_shell.
+  Since v8_shell always returns 0 whether the test passes or fails, buildbot
+  looks at stdout to test for failure.
   '''
   script_dir = google.path_utils.ScriptDir()
   chrome_dir = google.path_utils.FindUpward(script_dir, "chrome")
   v8_dir = google.path_utils.FindUpward(script_dir, "v8")
   if build_dir:
-    v8_shell_sample = os.path.join(build_dir, "v8_shell_sample.exe")
+    v8_shell = os.path.join(build_dir, "v8_shell.exe")
   else:
-    v8_shell_sample = os.path.join(chrome_dir, "Debug", "v8_shell_sample.exe")
+    v8_shell = os.path.join(chrome_dir, "Debug", "v8_shell.exe")
     # look for Debug version first
-    if not os.path.isfile(v8_shell_sample):
-      v8_shell_sample = os.path.join(chrome_dir, "Release", "v8_shell_sample.exe")
-  cmd = [v8_shell_sample,
+    if not os.path.isfile(v8_shell):
+      v8_shell = os.path.join(chrome_dir, "Release", "v8_shell.exe")
+  cmd = [v8_shell,
          "--allow-natives-syntax",
-         "--expose-debug-as", "debugContext",
-         os.path.join(chrome_dir, "browser", "debugger", "resources", "debugger_shell.js"),
-         # TODO Change the location of mjsunit.js from the copy in this
-         # directory to the copy in V8 when switching to use V8 from
-         # code.google.com.
-         # os.path.join(v8_dir, "test", "mjsunit", "mjsunit.js"),
-         os.path.join(chrome_dir, "test", "debugger", "mjsunit.js"),
+         "--expose-debug-as", "debugContext", # these two are together
+         os.path.join(chrome_dir, "browser", "resources", "debugger_shell.js"),
+         os.path.join(v8_dir, "tests", "mjsunit.js"),
          os.path.join(chrome_dir, "test", "debugger", "test_protocol.js")
         ]
   (retcode, output) = google.process_utils.RunCommandFull(cmd, 
@@ -48,7 +44,7 @@ def RunTests(build_dir=None):
 if __name__ == "__main__":
   parser = optparse.OptionParser("usage: %prog [--build_dir=dir]")
   parser.add_option("", "--build_dir",
-                    help="directory where v8_shell_sample.exe was built")
+                    help="directory where v8_shell.exe was built")
   (options, args) = parser.parse_args()
   ret = RunTests(options.build_dir)
   sys.exit(ret)

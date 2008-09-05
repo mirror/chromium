@@ -1,9 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_TEST_UI_UI_TEST_H_
-#define CHROME_TEST_UI_UI_TEST_H_
+#ifndef CHROME_TEST_UI_UI_TEST_H__
+#define CHROME_TEST_UI_UI_TEST_H__
 
 // This file provides a common base for running UI unit tests, which operate
 // the entire browser application in a separate process for holistic
@@ -24,10 +49,10 @@
 #include "base/scoped_ptr.h"
 #include "base/time.h"
 #include "chrome/test/automation/automation_proxy.h"
+#include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class DictionaryValue;
-class GURL;
 class TabProxy;
 
 class UITest : public testing::Test {
@@ -122,37 +147,12 @@ class UITest : public testing::Test {
   // as possible.
   bool WaitForDownloadShelfVisible(TabProxy* tab);
 
-  // Waits until the Find window has become fully visible (and stopped
-  // animating) in the specified tab. This function can time out (return false)
-  // if the window doesn't appear within a specific time.
-  bool WaitForFindWindowFullyVisible(TabProxy* tab);
-
   // Closes the specified browser.  Returns true if the browser was closed.
   // This call is blocking.  |application_closed| is set to true if this was
   // the last browser window (and therefore as a result of it closing the
   // browser process terminated).  Note that in that case this method returns
   // after the browser process has terminated.
   bool CloseBrowser(BrowserProxy* browser, bool* application_closed) const;
-
-  // Prints numerical information to stdout in a controlled format, for
-  // post-processing. |measurement| is a description of the quantity being
-  // measured, e.g. "vm_peak"; |modifier| is provided as a convenience and
-  // will be appended directly to the name of the |measurement|, e.g.
-  // "_browser"; |trace| is a description of the particular data point, e.g.
-  // "reference"; |value| is the measured value; and |units| is a description
-  // of the units of measure, e.g. "bytes". If |important| is true, the output
-  // line will be specially marked, to notify the post-processor. The strings
-  // may be empty.  They should not contain any colons (:) or equals signs (=).
-  // A typical post-processing step would be to produce graphs of the data
-  // produced for various builds, using the combined |measurement| + |modifier|
-  // string to specify a particular graph and the |trace| to identify a trace
-  // (i.e., data series) on that graph.
-  void PrintResult(const std::wstring& measurement,
-                   const std::wstring& modifier,
-                   const std::wstring& trace,
-                   size_t value,
-                   const std::wstring& units,
-                   bool important);
 
   // Gets the directory for the currently active profile in the browser.
   std::wstring GetDownloadDirectory();
@@ -194,12 +194,6 @@ class UITest : public testing::Test {
   static bool silent_dump_on_dcheck() { return silent_dump_on_dcheck_; }
   static void set_silent_dump_on_dcheck(bool value) {
     silent_dump_on_dcheck_ = value;
-  }
-
-  // Get/Set a flag to disable breakpad handling.
-  static bool disable_breakpad() { return disable_breakpad_; }
-  static void set_disable_breakpad(bool value) {
-    disable_breakpad_ = value;
   }
 
   // Get/Set a flag to run the plugin processes inside the sandbox when running
@@ -331,12 +325,9 @@ class UITest : public testing::Test {
   static bool enable_dcheck_;           // Enable dchecks in release mode.
   static bool silent_dump_on_dcheck_;   // Dump process memory on dcheck without
                                         // crashing.
-  static bool disable_breakpad_;        // Disable breakpad on the browser.
   static int timeout_ms_;               // Timeout in milliseconds to wait
                                         // for an test to finish.
   ::scoped_ptr<AutomationProxy> server_;
-
-  MessageLoop message_loop_;            // Enables PostTask to main thread.
 };
 
 // These exist only to support the gTest assertion macros, and
@@ -350,4 +341,4 @@ std::ostream& operator<<(std::ostream& out, const ::scoped_ptr<T>& ptr) {
 }
 #endif  // UNIT_TEST
 
-#endif  // CHROME_TEST_UI_UI_TEST_H_
+#endif  // CHROME_TEST_UI_UI_TEST_H__

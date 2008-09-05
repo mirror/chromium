@@ -35,6 +35,7 @@
 #include "webkit/tools/test_shell/event_sending_controller.h"
 #include "webkit/tools/test_shell/layout_test_controller.h"
 #include "webkit/tools/test_shell/resource.h"
+#include "webkit/tools/test_shell/temp/page_transition_types.h"
 #include "webkit/tools/test_shell/text_input_controller.h"
 #include "webkit/tools/test_shell/test_webview_delegate.h"
 #include "webkit/tools/test_shell/webview_host.h"
@@ -43,7 +44,7 @@
 typedef std::list<HWND> WindowList;
 
 struct WebPreferences;
-class TestNavigationEntry;
+class NavigationEntry;
 class TestNavigationController;
 
 class TestShell {
@@ -137,7 +138,7 @@ public:
     void LoadURLForFrame(const wchar_t* url, const wchar_t* frame_name);
     void GoBackOrForward(int offset);
     void Reload();
-    bool Navigate(const TestNavigationEntry& entry, bool reload);
+    bool Navigate(const NavigationEntry& entry, bool reload);
 
     bool PromptForSaveFile(const wchar_t* prompt_title, std::wstring* result);
     std::wstring GetDocumentText();

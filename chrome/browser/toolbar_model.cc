@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/toolbar_model.h"
 
@@ -10,7 +35,6 @@
 #include "chrome/browser/ssl_error_info.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/common/gfx/url_elider.h"
-#include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "net/base/net_util.h"
@@ -39,7 +63,7 @@ std::wstring ToolbarModel::GetText() {
       // Explicitly hide the URL for this tab.
       url = GURL();
     } else if (entry) {
-      url = entry->display_url();
+      url = entry->GetDisplayURL();
     }
   }
   return gfx::ElideUrl(url, ChromeFont(), 0, languages);
@@ -57,9 +81,9 @@ ToolbarModel::SecurityLevel ToolbarModel::GetSecurityLevel() {
   if (!entry)
     return ToolbarModel::NORMAL;
 
-  switch (entry->ssl().security_style()) {
+  switch (entry->GetSecurityStyle()) {
     case SECURITY_STYLE_AUTHENTICATED:
-      if (entry->ssl().has_mixed_content())
+      if (entry->HasMixedContent())
         return ToolbarModel::NORMAL;
       return ToolbarModel::SECURE;
     case SECURITY_STYLE_AUTHENTICATION_BROKEN:
@@ -90,10 +114,9 @@ ToolbarModel::Icon ToolbarModel::GetIcon() {
   if (!entry)
     return ToolbarModel::NO_ICON;
 
-  const NavigationEntry::SSLStatus& ssl = entry->ssl();
-  switch (ssl.security_style()) {
+  switch (entry->GetSecurityStyle()) {
     case SECURITY_STYLE_AUTHENTICATED:
-      if (ssl.has_mixed_content())
+      if (entry->HasMixedContent())
         return ToolbarModel::WARNING_ICON;
       return ToolbarModel::LOCK_ICON;
     case SECURITY_STYLE_AUTHENTICATION_BROKEN:
@@ -122,20 +145,19 @@ void ToolbarModel::GetIconHoverText(std::wstring* text, SkColor* text_color) {
   NavigationEntry* entry = navigation_controller->GetActiveEntry();
   DCHECK(entry);
 
-  
-  const NavigationEntry::SSLStatus& ssl = entry->ssl();
-  switch (ssl.security_style()) {
+  switch (entry->GetSecurityStyle()) {
     case SECURITY_STYLE_AUTHENTICATED: {
-      if (ssl.has_mixed_content()) {
+      if (entry->HasMixedContent()) {
         SSLErrorInfo error_info =
             SSLErrorInfo::CreateError(SSLErrorInfo::MIXED_CONTENTS,
                                       NULL, GURL::EmptyGURL());
         text->assign(error_info.short_description());
         *text_color = kBrokenHttpsInfoBubbleTextColor;
       } else {
-        DCHECK(entry->url().has_host());
+        GURL url = entry->GetURL();
+        DCHECK(url.has_host());
         text->assign(l10n_util::GetStringF(IDS_SECURE_CONNECTION,
-                                           UTF8ToWide(entry->url().host())));
+                                           UTF8ToWide(url.host())));
         *text_color = kOKHttpsInfoBubbleTextColor;
       }
       break;
@@ -173,14 +195,13 @@ void ToolbarModel::GetInfoText(std::wstring* text,
     return;
 
   NavigationEntry* entry = navigation_controller->GetActiveEntry();
-  const NavigationEntry::SSLStatus& ssl = entry->ssl();
-  if (!entry || ssl.has_mixed_content() ||
-      net::IsCertStatusError(ssl.cert_status()) ||
-      ((ssl.cert_status() & net::CERT_STATUS_IS_EV) == 0))
+  if (!entry || entry->HasMixedContent() ||
+      net::IsCertStatusError(entry->GetSSLCertStatus()) ||
+      ((entry->GetSSLCertStatus() & net::CERT_STATUS_IS_EV) == 0))
     return;
 
-  scoped_refptr<net::X509Certificate> cert;
-  CertStore::GetSharedInstance()->RetrieveCert(ssl.cert_id(), &cert);
+  scoped_refptr<X509Certificate> cert;
+  CertStore::GetSharedInstance()->RetrieveCert(entry->GetSSLCertID(), &cert);
   if (!cert.get()) {
     NOTREACHED();
     return;
@@ -191,17 +212,16 @@ void ToolbarModel::GetInfoText(std::wstring* text,
 }
 
 void ToolbarModel::CreateErrorText(NavigationEntry* entry, std::wstring* text) {
-  const NavigationEntry::SSLStatus& ssl = entry->ssl();
   std::vector<SSLErrorInfo> errors;
-  SSLErrorInfo::GetErrorsForCertStatus(ssl.cert_id(),
-                                       ssl.cert_status(),
-                                       entry->url(),
+  SSLErrorInfo::GetErrorsForCertStatus(entry->GetSSLCertID(),
+                                       entry->GetSSLCertStatus(),
+                                       entry->GetURL(),
                                        &errors);
-  if (ssl.has_mixed_content()) {
+  if (entry->HasMixedContent()) {
     errors.push_back(SSLErrorInfo::CreateError(SSLErrorInfo::MIXED_CONTENTS,
                                                NULL, GURL::EmptyGURL()));
   }
-  if (ssl.has_unsafe_content()) {
+  if (entry->HasUnsafeContent()) {
    errors.push_back(SSLErrorInfo::CreateError(SSLErrorInfo::UNSAFE_CONTENTS,
                                               NULL, GURL::EmptyGURL()));
   }
@@ -222,4 +242,3 @@ void ToolbarModel::CreateErrorText(NavigationEntry* entry, std::wstring* text) {
     }
   }
 }
-

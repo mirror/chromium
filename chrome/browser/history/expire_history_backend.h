@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_HISTORY_EXPIRE_HISTORY_BACKEND_H__
 #define CHROME_BROWSER_HISTORY_EXPIRE_HISTORY_BACKEND_H__
@@ -15,7 +40,6 @@
 #include "chrome/browser/history/text_database_manager.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
-class BookmarkService;
 class GURL;
 enum NotificationType;
 
@@ -44,11 +68,7 @@ class BroadcastNotificationDelegate {
 class ExpireHistoryBackend {
  public:
   // The delegate pointer must be non-NULL. We will NOT take ownership of it.
-  // BookmarkService may be NULL. The BookmarkService is used when expiring
-  // URLs so that we don't remove any URLs or favicons that are bookmarked
-  // (visits are removed though).
-  ExpireHistoryBackend(BroadcastNotificationDelegate* delegate,
-                       BookmarkService* bookmark_service);
+  explicit ExpireHistoryBackend(BroadcastNotificationDelegate* delegate);
   ~ExpireHistoryBackend();
 
   // Completes initialization by setting the databases that this class will use.
@@ -61,7 +81,8 @@ class ExpireHistoryBackend {
   // will continue until the object is deleted.
   void StartArchivingOldStuff(TimeDelta expiration_threshold);
 
-  // Deletes everything associated with a URL.
+  // Deletes everything associated with a URL, regardless of whether it is
+  // starred or not.
   void DeleteURL(const GURL& url);
 
   // Removes all visits in the given time range, updating the URLs accordingly.
@@ -85,7 +106,6 @@ class ExpireHistoryBackend {
   FRIEND_TEST(ExpireHistoryTest, DeleteTextIndexForURL);
   FRIEND_TEST(ExpireHistoryTest, DeleteFaviconsIfPossible);
   FRIEND_TEST(ExpireHistoryTest, ArchiveSomeOldHistory);
-  friend class TestingProfile;
 
   struct DeleteDependencies {
     // The time range affected. These can be is_null() to be unbounded in one
@@ -107,6 +127,10 @@ class ExpireHistoryBackend {
     // shared between all URLs with the same favicon, so this is the set of IDs
     // that we will need to check when the delete operations are complete.
     std::set<FavIconID> affected_favicons;
+
+    // URLs that were unstarred as a result of the delete.
+    std::set<GURL> unstarred_urls;
+    std::vector<StarredEntry> unstarred_entries;
 
     // Tracks the set of databases that have changed so we can optimize when
     // when we're done.
@@ -150,13 +174,7 @@ class ExpireHistoryBackend {
   // check for shared information at the end).
   //
   // Assumes the main_db_ is non-NULL.
-  //
-  // NOTE: If the url is bookmarked only the segments and text db are updated,
-  // everything else is unchanged. This is done so that bookmarks retain their
-  // favicons and thumbnails.
-  void DeleteOneURL(const URLRow& url_row,
-                    bool is_bookmarked,
-                    DeleteDependencies* dependencies);
+  void DeleteOneURL(const URLRow& url_row, DeleteDependencies* dependencies);
 
   // Adds or merges the given URL row with the archived database, returning the
   // ID of the URL in the archived database, or 0 on failure. The main (source)
@@ -203,7 +221,12 @@ class ExpireHistoryBackend {
   // care about favicons so much, so don't want to stop everything if it fails).
   void DeleteFaviconsIfPossible(const std::set<FavIconID>& favicon_id);
 
-  // Broadcast the URL deleted notification.
+  // Broadcasts that the given URLs and star entries were deleted. Either list
+  // can be empty, in which case no notification will be sent for that type.
+  //
+  // The passed-in arguments will be cleared becuase they will be swapped into
+  // the destination message to avoid copying). However, ownership of the
+  // dependencies object will not transfer.
   void BroadcastDeleteNotifications(DeleteDependencies* dependencies);
 
   // Schedules a call to DoArchiveIteration at the given time in the
@@ -224,10 +247,6 @@ class ExpireHistoryBackend {
   // and deletes items. For example, URLs with no visits.
   void ParanoidExpireHistory();
 
-  // Returns the BookmarkService, blocking until it is loaded. This may return
-  // NULL.
-  BookmarkService* GetBookmarkService();
-
   // Non-owning pointer to the notification delegate (guaranteed non-NULL).
   BroadcastNotificationDelegate* delegate_;
 
@@ -244,12 +263,6 @@ class ExpireHistoryBackend {
   // The threshold for "old" history where we will automatically expire it to
   // the archived database.
   TimeDelta expiration_threshold_;
-
-  // The BookmarkService; may be null. This is owned by the Profile.
-  //
-  // Use GetBookmarkService to access this, which makes sure the service is
-  // loaded.
-  BookmarkService* bookmark_service_;
 
   DISALLOW_EVIL_CONSTRUCTORS(ExpireHistoryBackend);
 };

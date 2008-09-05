@@ -1,7 +1,32 @@
 #!/bin/env python
-# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+# Copyright 2008, Google Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#
+#    * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above
+# copyright notice, this list of conditions and the following disclaimer
+# in the documentation and/or other materials provided with the
+# distribution.
+#    * Neither the name of Google Inc. nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """Run layout tests using the test_shell.
 
@@ -158,16 +183,21 @@ class TestRunner:
     logging.info('Run: %d tests' % len(self._test_files))
     logging.info('Skipped: %d tests' % len(skipped))
     logging.info('Skipped tests do not appear in any of the below numbers\n')
+    logging.info('Deferred: %d tests' % len(expectations.GetFixableDeferred()))
     logging.info('Expected passes: %d tests' % 
                  len(self._test_files - 
                      expectations.GetFixable() - 
                      expectations.GetIgnored())) 
-    logging.info(('Expected failures: %d fixable, %d ignored') % 
+    logging.info(('Expected failures: %d fixable, %d ignored '
+                  'and %d deferred tests') % 
                  (len(expectations.GetFixableFailures()),
-                  len(expectations.GetIgnoredFailures())))
-    logging.info(('Expected timeouts: %d fixable, %d ignored') % 
+                  len(expectations.GetIgnoredFailures()),
+                  len(expectations.GetFixableDeferredFailures())))
+    logging.info(('Expected timeouts: %d fixable, %d ignored '
+                  'and %d deferred tests') % 
                  (len(expectations.GetFixableTimeouts()),
-                  len(expectations.GetIgnoredTimeouts())))   
+                  len(expectations.GetIgnoredTimeouts()),
+                  len(expectations.GetFixableDeferredTimeouts())))   
     logging.info('Expected crashes: %d fixable tests' % 
                  len(expectations.GetFixableCrashes()))
 
@@ -299,9 +329,11 @@ class TestRunner:
     """
 
     failure_counts = {}
+    deferred_counts = {}
     fixable_counts = {}
     non_ignored_counts = {}
     fixable_failures = set()
+    deferred_failures = set()
     non_ignored_failures = set()
 
     # Aggregate failures in a dictionary (TestFailure -> frequency),
@@ -318,7 +350,11 @@ class TestRunner:
         if self._expectations.IsFixable(test):
           AddFailure(fixable_counts, failure.__class__)
           fixable_failures.add(test)
-        if not self._expectations.IsIgnored(test):
+        if self._expectations.IsDeferred(test):
+          AddFailure(deferred_counts, failure.__class__)
+          deferred_failures.add(test)
+        if (not self._expectations.IsIgnored(test) and 
+            not self._expectations.IsDeferred(test)):
           AddFailure(non_ignored_counts, failure.__class__)
           non_ignored_failures.add(test)                
                              
@@ -327,20 +363,28 @@ class TestRunner:
 
     # Print breakdown of tests we need to fix and want to pass. 
     # Include skipped fixable tests in the statistics.
-    skipped = self._expectations.GetFixableSkipped()
+    skipped = (self._expectations.GetFixableSkipped() - 
+               self._expectations.GetFixableSkippedDeferred())
 
-    self._PrintResultSummary("=> Tests to be fixed",
+    self._PrintResultSummary("=> Tests to be fixed for the current release",
                              self._expectations.GetFixable(),
                              fixable_failures,
                              fixable_counts,
                              skipped)
 
-    self._PrintResultSummary("=> Tests we want to pass",
+    self._PrintResultSummary("=> Tests we want to pass for the current release",
                              (self._test_files - 
-                              self._expectations.GetIgnored()),
+                              self._expectations.GetIgnored() - 
+                              self._expectations.GetFixableDeferred()),
                              non_ignored_failures,
                              non_ignored_counts,
                              skipped)
+
+    self._PrintResultSummary("=> Tests to be fixed for a future release",
+                             self._expectations.GetFixableDeferred(),
+                             deferred_failures,
+                             deferred_counts,
+                             self._expectations.GetFixableSkippedDeferred())
 
     # Print breakdown of all tests including all skipped tests.
     skipped |= self._expectations.GetIgnoredSkipped()
@@ -607,4 +651,3 @@ if '__main__' == __name__:
                            metavar="FILE")
   options, args = option_parser.parse_args()
   main(options, args)
-

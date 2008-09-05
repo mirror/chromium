@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // The query parser is used to parse queries entered into the history
 // search into more normalized queries can be passed to the SQLite backend.
@@ -11,18 +36,7 @@
 #include <set>
 #include <vector>
 
-#include "chrome/browser/history/snippet.h"
-
 class QueryNodeList;
-
-// Used by HasMatchIn.
-struct QueryWord {
-  // The work to match against.
-  std::wstring word;
-
-  // The starting position of the word in the original text.
-  int position;
-};
 
 // QueryNode is used by QueryNodeParser to represent the elements that
 // constitute a query. While QueryNode is exposed by way of ParseQuery, it
@@ -43,11 +57,8 @@ class QueryNode {
   // comparison.
   virtual bool Matches(const std::wstring& word, bool exact) const = 0;
 
-  // Returns true if this node matches at least one of the words in words. If
-  // the node matches at least one word, an entry is added to match_positions
-  // giving the matching region.
-  virtual bool HasMatchIn(const std::vector<QueryWord>& words,
-                          Snippet::MatchPositions* match_positions) const = 0;
+  // Returns true if this node matches at least one of the words in words.
+  virtual bool HasMatchIn(const std::vector<std::wstring>& words) const = 0;
 };
 
 
@@ -68,11 +79,9 @@ class QueryParser {
                   std::vector<QueryNode*>* nodes);
 
   // Returns true if the string text matches the query nodes created by a call
-  // to ParseQuery. If the query does match each of the matching positions in
-  // the text is added to |match_positions|.
+  // to ParseQuery.
   bool DoesQueryMatch(const std::wstring& text,
-                      const std::vector<QueryNode*>& nodes,
-                      Snippet::MatchPositions* match_positions);
+                      const std::vector<QueryNode*>& nodes);
 
  private:
   // Does the work of parsing a query; creates nodes in QueryNodeList as
@@ -81,9 +90,8 @@ class QueryParser {
                       QueryNodeList* root);
 
   // Extracts the words from text, placing each word into words.
-  void ExtractQueryWords(const std::wstring& text,
-                         std::vector<QueryWord>* words);
+  void ExtractWords(const std::wstring& text,
+                    std::vector<std::wstring>* words);
 };
 
 #endif  // CHROME_BROWSER_HISTORY_QUERY_PARSER_H__
-

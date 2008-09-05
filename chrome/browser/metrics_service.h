@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This file defines a service that collects information about the user
 // experience in order to help improve future versions of the app.
@@ -194,19 +219,10 @@ class MetricsService : public NotificationObserver,
                                   int response_code,
                                   const ResponseCookies& cookies,
                                   const std::string& data);
-
-  // Called by OnURLFetchComplete to handle the case when the server returned
-  // a response code not equal to 200.
-  void HandleBadResponseCode();
-
-  // Called by OnURLFetchComplete with data as the argument
-  // parses the xml returned by the server in the call to OnURLFetchComplete
-  // and extracts settings for subsequent frequency and content of log posts.
-  void GetSettingsFromResponseData(const std::string& data);
-
-  // This is a helper function for GetSettingsFromResponseData which iterates
-  // through the xml tree at the level of the <config> node.
-  void GetSettingsFromConfigNode(xmlNodePtr config_node);
+  // Extract the time interval suggested by the server for waiting after a log
+  // transmision before starting the next transmision.  The result is set into
+  // interlog_duration_.
+  void GetSuggestedInterlogTime(const std::string& server_data);
 
   // Records a window-related notification.
   void LogWindowChange(NotificationType type,
@@ -312,9 +328,6 @@ class MetricsService : public NotificationObserver,
   std::vector<std::string> unsent_initial_logs_;
   std::vector<std::string> unsent_ongoing_logs_;
 
-  // Maps NavigationControllers (corresponding to tabs) or Browser
-  // (corresponding to Windows) to a unique integer that we will use to identify
-  // it. |next_window_id_| is used to track which IDs we have used so far.
   typedef std::map<uintptr_t, int> WindowMap;
   WindowMap window_map_;
   int next_window_id_;
@@ -334,20 +347,9 @@ class MetricsService : public NotificationObserver,
   // histogram) so that we can send only the delta with the next log.
   MetricsService::LoggedSampleMap logged_samples_;
 
-  // The interval between consecutive log transmissions (to avoid hogging the
-  // outbound network link).  This is usually also the duration for which we
-  // build up a log, but if other unsent-logs from previous sessions exist, we
-  // quickly transmit those unsent logs while we continue to build a log.
+  // The duration for which we build up a log. After that period, we try to
+  // send the log (unless another log is already pending).
   TimeDelta interlog_duration_;
-
-  // The maximum number of events which get transmitted in the log.  This is
-  // provided by the UMA server in the server response data.
-  int event_limit_;
-
-  // The types of data that are to be included in the log.  These are called
-  // "collectors" in the server response data.
-  std::set<std::string> collectors_;
-
   // Indicate that a timer for sending the next log has already been queued,
   // or that a URLFetch (i.e., log transmission) is in progress.
   bool timer_pending_;
@@ -356,4 +358,3 @@ class MetricsService : public NotificationObserver,
 };
 
 #endif  // CHROME_BROWSER_METRICS_SERVICE_H__
-

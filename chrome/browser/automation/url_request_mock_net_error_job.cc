@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/automation/url_request_mock_net_error_job.h"
 
@@ -18,7 +43,7 @@ URLRequestMockNetErrorJob::URLMockInfoMap
 void URLRequestMockNetErrorJob::AddMockedURL(const GURL& url,
                                              const std::wstring& base,
                                              const std::vector<int>& errors,
-                                             net::X509Certificate* ssl_cert) {
+                                             X509Certificate* ssl_cert) {
 #ifndef NDEBUG
   URLMockInfoMap::const_iterator iter = url_mock_info_map_.find(url);
   DCHECK(iter == url_mock_info_map_.end());
@@ -58,13 +83,13 @@ URLRequestJob* URLRequestMockNetErrorJob::Factory(URLRequest* request,
   file_url.append(UTF8ToWide(url.path()));
   // Convert the file:/// URL to a path on disk.
   std::wstring file_path;
-  net::FileURLToFilePath(GURL(file_url), &file_path);
+  net_util::FileURLToFilePath(GURL(file_url), &file_path);
   job->file_path_ = file_path;
   return job;
 }
 
 URLRequestMockNetErrorJob::URLRequestMockNetErrorJob(URLRequest* request,
-    const std::vector<int>& errors, net::X509Certificate* cert)
+    const std::vector<int>& errors, X509Certificate* cert)
     : URLRequestMockHTTPJob(request),
       errors_(errors),
       ssl_cert_(cert) {
@@ -98,4 +123,3 @@ void URLRequestMockNetErrorJob::StartAsync() {
 void URLRequestMockNetErrorJob::ContinueDespiteLastError() {
   Start();
 }
-

@@ -1,0 +1,3 @@
+non-method-called.js:1: Uncaught TypeError: Property 'foo' of object #<an Object> is not a function
+({foo: 0}).foo()
+           ^

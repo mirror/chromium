@@ -1,15 +1,38 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "net/disk_cache/entry_impl.h"
 
-#include "base/histogram.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/backend_impl.h"
-#include "net/disk_cache/cache_util.h"
 
 namespace {
 
@@ -99,8 +122,6 @@ EntryImpl::EntryImpl(BackendImpl* backend, Addr address)
 // written before).
 EntryImpl::~EntryImpl() {
   if (doomed_) {
-    UMA_HISTOGRAM_COUNTS(L"DiskCache.DeleteHeader", GetDataSize(0));
-    UMA_HISTOGRAM_COUNTS(L"DiskCache.DeleteData", GetDataSize(1));
     for (int index = 0; index < kKeyFileIndex; index++) {
       Addr address(entry_.Data()->data_addr[index]);
       if (address.is_initialized()) {
@@ -218,11 +239,6 @@ int EntryImpl::ReadData(int index, int offset, char* buf, int buf_len,
   if (buf_len < 0)
     return net::ERR_INVALID_ARGUMENT;
 
-  Time start = Time::Now();
-  static Histogram stats(L"DiskCache.ReadTime", TimeDelta::FromMilliseconds(1),
-                         TimeDelta::FromSeconds(10), 50);
-  stats.SetFlags(kUmaTargetedHistogramFlag);
-
   if (offset + buf_len > entry_size)
     buf_len = entry_size - offset;
 
@@ -234,7 +250,6 @@ int EntryImpl::ReadData(int index, int offset, char* buf, int buf_len,
     // Complete the operation locally.
     DCHECK(kMaxBlockSize >= offset + buf_len);
     memcpy(buf , user_buffers_[index].get() + offset, buf_len);
-    stats.AddTime(Time::Now() - start);
     return buf_len;
   }
 
@@ -266,7 +281,6 @@ int EntryImpl::ReadData(int index, int offset, char* buf, int buf_len,
   if (io_callback && completed)
     io_callback->Discard();
 
-  stats.AddTime(Time::Now() - start);
   return (completed || !completion_callback) ? buf_len : net::ERR_IO_PENDING;
 }
 
@@ -292,11 +306,6 @@ int EntryImpl::WriteData(int index, int offset, const char* buf, int buf_len,
     return net::ERR_FAILED;
   }
 
-  Time start = Time::Now();
-  static Histogram stats(L"DiskCache.WriteTime", TimeDelta::FromMilliseconds(1),
-                         TimeDelta::FromSeconds(10), 50);
-  stats.SetFlags(kUmaTargetedHistogramFlag);
-
   // Read the size at this point (it may change inside prepare).
   int entry_size = entry_.Data()->data_size[index];
   if (!PrepareTarget(index, offset, buf_len, truncate))
@@ -306,8 +315,6 @@ int EntryImpl::WriteData(int index, int offset, const char* buf, int buf_len,
     unreported_size_[index] += offset + buf_len - entry_size;
     entry_.Data()->data_size[index] = offset + buf_len;
     entry_.set_modified();
-    if (!buf_len)
-      truncate = true;  // Force file extension.
   } else if (truncate) {
       // If the size was modified inside PrepareTarget, we should not do
       // anything here.
@@ -330,7 +337,6 @@ int EntryImpl::WriteData(int index, int offset, const char* buf, int buf_len,
     // Complete the operation locally.
     DCHECK(kMaxBlockSize >= offset + buf_len);
     memcpy(user_buffers_[index].get() + offset, buf, buf_len);
-    stats.AddTime(Time::Now() - start);
     return buf_len;
   }
 
@@ -365,7 +371,6 @@ int EntryImpl::WriteData(int index, int offset, const char* buf, int buf_len,
   if (io_callback && completed)
     io_callback->Discard();
 
-  stats.AddTime(Time::Now() - start);
   return (completed || !completion_callback) ? buf_len : net::ERR_IO_PENDING;
 }
 
@@ -419,8 +424,7 @@ bool EntryImpl::CreateEntry(Addr node_address, const std::string& key,
 }
 
 bool EntryImpl::IsSameEntry(const std::string& key, uint32 hash) {
-  if (entry_.Data()->hash != hash ||
-      static_cast<size_t>(entry_.Data()->key_len) != key.size())
+  if (entry_.Data()->hash != hash || entry_.Data()->key_len != key.size())
     return false;
 
   std::string my_key = GetKey();
@@ -553,7 +557,7 @@ void EntryImpl::DeleteData(Addr address, int index) {
     if (files_[index])
       files_[index] = NULL;  // Releases the object.
 
-    if (!DeleteCacheFile(backend_->GetFileName(address)))
+    if (!DeleteFile(backend_->GetFileName(address).c_str()))
       LOG(ERROR) << "Failed to delete " << backend_->GetFileName(address) <<
                     " from the cache.";
   } else {
@@ -668,7 +672,7 @@ bool EntryImpl::MoveToLocalBuffer(int index) {
   Addr address(entry_.Data()->data_addr[index]);
   DCHECK(!user_buffers_[index].get());
   DCHECK(address.is_initialized());
-  scoped_array<char> buffer(new char[kMaxBlockSize]);
+  scoped_ptr<char> buffer(new char[kMaxBlockSize]);
 
   File* file = GetBackingFile(address, index);
   size_t len = entry_.Data()->data_size[index];
@@ -734,7 +738,7 @@ bool EntryImpl::Flush(int index, int size, bool async) {
     offset = address.start_block() * address.BlockSize() + kBlockHeaderSize;
 
   // We just told the backend to store len bytes for real.
-  DCHECK(len == static_cast<size_t>(unreported_size_[index]));
+  DCHECK(len == unreported_size_[index]);
   backend_->ModifyStorageSize(0, static_cast<int>(len));
   unreported_size_[index] = 0;
 
@@ -774,4 +778,3 @@ void EntryImpl::Log(const char* msg) {
 }
 
 }  // namespace disk_cache
-

@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_HISTORY_HISTORY_DATABASE_H__
 #define CHROME_BROWSER_HISTORY_HISTORY_DATABASE_H__
@@ -15,6 +40,7 @@
 #include "chrome/browser/meta_table_helper.h"
 #include "chrome/common/sqlite_compiled_statement.h"
 #include "chrome/common/sqlite_utils.h"
+#include "googleurl/src/gurl.h"
 
 struct sqlite3;
 
@@ -31,9 +57,6 @@ class TextDatabaseManager;
 // as the storage interface. Logic for manipulating this storage layer should
 // be in HistoryBackend.cc.
 class HistoryDatabase : public DownloadDatabase,
-  // TODO(sky): See if we can nuke StarredURLDatabase and just create on the
-  // stack for migration. Then HistoryDatabase would directly descend from
-  // URLDatabase.
                         public StarredURLDatabase,
                         public VisitDatabase,
                         public VisitSegmentDatabase {
@@ -62,8 +85,7 @@ class HistoryDatabase : public DownloadDatabase,
   // Must call this function to complete initialization. Will return true on
   // success. On false, no other function should be called. You may want to call
   // BeginExclusiveMode after this when you are ready.
-  InitStatus Init(const std::wstring& history_name,
-                  const std::wstring& tmp_bookmarks_path);
+  InitStatus Init(const std::wstring& history_name);
 
   // Call to set the mode on the database to exclusive. The default locking mode
   // is "normal" but we want to run in exclusive mode for slightly better
@@ -88,8 +110,8 @@ class HistoryDatabase : public DownloadDatabase,
     return transaction_nesting_;
   }
 
-  // Drops all tables except the URL, and download tables, and recreates them
-  // from scratch. This is done to rapidly clean up stuff when deleting all
+  // Drops all tables except the URL, starred and download tables, and recreates
+  // them from scratch. This is done to rapidly clean up stuff when deleting all
   // history. It is faster and less likely to have problems that deleting all
   // rows in the tables.
   //
@@ -102,10 +124,10 @@ class HistoryDatabase : public DownloadDatabase,
   // This should be treated the same as an init failure, and the database
   // should not be used any more.
   //
-  // This will also recreate the supplementary URL indices, since these
+  // This will also recreate the supplimentary URL indices, since these
   // indices won't be created automatically when using the temporary URL
-  // table (what the caller does right before calling this).
-  bool RecreateAllTablesButURL();
+  // talbe (what the caller does right before calling this).
+  bool RecreateAllButStarAndURLTables();
 
   // Vacuums the database. This will cause sqlite to defragment and collect
   // unused space in the file. It can be VERY SLOW.
@@ -120,9 +142,6 @@ class HistoryDatabase : public DownloadDatabase,
   // visit id wasn't found.
   SegmentID GetSegmentID(VisitID visit_id);
 
-  // Drops the starred table and star_id from urls.
-  bool MigrateFromVersion15ToVersion16();
-
  private:
   // Implemented for URLDatabase.
   virtual sqlite3* GetDB();
@@ -134,6 +153,9 @@ class HistoryDatabase : public DownloadDatabase,
   // in on-demand (which causes lots of seeks).
   void PrimeCache();
 
+  // Sets the fields of the supplied entry from the starred select statement.
+  void FillInStarredEntry(SQLStatement* s, StarredEntry* entry);
+
   // Migration -----------------------------------------------------------------
 
   // Makes sure the version is up-to-date, updating if necessary. If the
@@ -143,7 +165,7 @@ class HistoryDatabase : public DownloadDatabase,
   //
   // This assumes it is called from the init function inside a transaction. It
   // may commit the transaction and start a new one if migration requires it.
-  InitStatus EnsureCurrentVersion(const std::wstring& tmp_bookmarks_path);
+  InitStatus EnsureCurrentVersion();
 
   // ---------------------------------------------------------------------------
 
@@ -168,4 +190,3 @@ class HistoryDatabase : public DownloadDatabase,
 }  // history
 
 #endif  // CHROME_BROWSER_HISTORY_HISTORY_DATABASE_H__
-

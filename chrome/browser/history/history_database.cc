@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/history/history_database.h"
 
@@ -18,7 +43,7 @@ namespace history {
 namespace {
 
 // Current version number.
-const int kCurrentVersionNumber = 16;
+const int kCurrentVersionNumber = 15;
 
 }  // namespace
 
@@ -30,8 +55,7 @@ HistoryDatabase::HistoryDatabase()
 HistoryDatabase::~HistoryDatabase() {
 }
 
-InitStatus HistoryDatabase::Init(const std::wstring& history_name,
-                                 const std::wstring& bookmarks_path) {
+InitStatus HistoryDatabase::Init(const std::wstring& history_name) {
   // Open the history database, using the narrow version of open indicates to
   // sqlite that we want the database to be in UTF-8 if it doesn't already
   // exist.
@@ -70,15 +94,17 @@ InitStatus HistoryDatabase::Init(const std::wstring& history_name,
     return INIT_FAILURE;
   if (!CreateURLTable(false) || !InitVisitTable() ||
       !InitKeywordSearchTermsTable() || !InitDownloadTable() ||
-      !InitSegmentTables())
+      !InitSegmentTables() || !InitStarTable())
     return INIT_FAILURE;
   CreateMainURLIndex();
   CreateSupplimentaryURLIndices();
 
   // Version check.
-  InitStatus version_status = EnsureCurrentVersion(bookmarks_path);
+  InitStatus version_status = EnsureCurrentVersion();
   if (version_status != INIT_OK)
     return version_status;
+
+  EnsureStarredIntegrity();
 
   // Succeeded: keep the DB open by detaching the auto-closer.
   scoper.Detach();
@@ -127,7 +153,7 @@ void HistoryDatabase::CommitTransaction() {
   }
 }
 
-bool HistoryDatabase::RecreateAllTablesButURL() {
+bool HistoryDatabase::RecreateAllButStarAndURLTables() {
   if (!DropVisitTable())
     return false;
   if (!InitVisitTable())
@@ -143,7 +169,7 @@ bool HistoryDatabase::RecreateAllTablesButURL() {
   if (!InitSegmentTables())
     return false;
 
-  // We also add the supplementary URL indices at this point. This index is
+  // We also add the supplimentary URL indices at this point. This index is
   // over parts of the URL table that weren't automatically created when the
   // temporary URL table was
   CreateSupplimentaryURLIndices();
@@ -196,8 +222,7 @@ SqliteStatementCache& HistoryDatabase::GetStatementCache() {
 
 // Migration -------------------------------------------------------------------
 
-InitStatus HistoryDatabase::EnsureCurrentVersion(
-    const std::wstring& tmp_bookmarks_path) {
+InitStatus HistoryDatabase::EnsureCurrentVersion() {
   // We can't read databases newer than we were designed for.
   if (meta_table_.GetCompatibleVersionNumber() > kCurrentVersionNumber)
     return INIT_TOO_NEW;
@@ -214,16 +239,6 @@ InitStatus HistoryDatabase::EnsureCurrentVersion(
 
   // Put migration code here
 
-  if (cur_version == 15) {
-    if (!MigrateBookmarksToFile(tmp_bookmarks_path))
-      return INIT_FAILURE;
-    if (!DropStarredIDFromURLs())
-      return INIT_FAILURE;
-    cur_version = 16;
-    meta_table_.SetVersionNumber(cur_version);
-    meta_table_.SetCompatibleVersionNumber(cur_version);
-  }
-
   LOG_IF(WARNING, cur_version < kCurrentVersionNumber) <<
       "History database version " << cur_version << " is too old to handle.";
 
@@ -231,4 +246,3 @@ InitStatus HistoryDatabase::EnsureCurrentVersion(
 }
 
 }  // namespace history
-

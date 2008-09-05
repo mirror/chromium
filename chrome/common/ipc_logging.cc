@@ -1,35 +1,56 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#include <windows.h>
 
 #include "chrome/common/ipc_logging.h"
 
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "base/message_loop.h"
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "base/time.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/ipc_sync_message.h"
-#include "chrome/common/ipc_message_utils.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/plugin_messages.h"
 
 #ifdef IPC_MESSAGE_LOG_ENABLED
 
-// IPC::Logging is allocated as a singleton, so we don't need any kind of
-// special retention program.
-template <>
-struct RunnableMethodTraits<IPC::Logging> {
-  static void RetainCallee(IPC::Logging*) {}
-  static void ReleaseCallee(IPC::Logging*) {}
-};
-
 namespace IPC {
 
 const wchar_t kLoggingEventName[] = L"ChromeIPCLog.%d";
 const int kLogSendDelayMs = 100;
+
+scoped_refptr<Logging> Logging::current_;
+
+Lock Logging::logger_lock_;
 
 Logging::Logging()
     : logging_event_on_(NULL),
@@ -66,18 +87,24 @@ Logging::Logging()
 }
 
 Logging::~Logging() {
-  watcher_.StopWatching();
   CloseHandle(logging_event_on_);
   CloseHandle(logging_event_off_);
 }
 
 Logging* Logging::current() {
-  return Singleton<Logging>::get();
+  AutoLock lock(logger_lock_);
+
+  if (!current_.get())
+    current_ = new Logging();
+
+  return current_;
 }
 
 void Logging::RegisterWaitForEvent(bool enabled) {
-  watcher_.StopWatching();
-  watcher_.StartWatching(
+  MessageLoop::current()->WatchObject(
+      enabled ? logging_event_off_ : logging_event_on_, NULL);
+
+  MessageLoop::current()->WatchObject(
       enabled ? logging_event_on_ : logging_event_off_, this);
 }
 
@@ -267,4 +294,3 @@ void GenerateLogData(const std::wstring& channel, const Message& message,
 }
 
 #endif  // IPC_MESSAGE_LOG_ENABLED
-

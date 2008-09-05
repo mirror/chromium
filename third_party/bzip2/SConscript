@@ -27,23 +27,18 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# TODO(keunwoo): Use better cross-platform abstraction; see chrome/SConstruct
 Import('env')
 
 env = env.Clone()
 
-if env['PLATFORM'] == 'win32':
-  env.Append(
-      CCFLAGS = [
-          '/TC',
-          '/wd4996',
-          '/wd4800',
-      ],
-  )
-
 env.Append(
-    CPPDEFINES = [
-        'BZ_NO_STDIO',
+    CCFLAGS = [
+        '/TC',
+
+        '/wd4996',
+        '/wd4800',
+        '/wd4503',
+        '/wd4819',
     ],
 )
 
@@ -57,4 +52,4 @@ input_files = [
     'randtable.c',
 ]
 
-env.ChromeStaticLibrary('bzip2', input_files)
+env.StaticLibrary('bzip2', input_files)

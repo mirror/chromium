@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
 #include <unicode/ucnv.h>
@@ -9,10 +34,8 @@
 #include <unicode/uniset.h>
 #include <unicode/uscript.h>
 #include <unicode/uset.h>
-
-#ifdef OS_WIN
 #include <windows.h>
-#endif
+#include <wininet.h>
 
 #include "net/base/net_util.h"
 
@@ -21,13 +44,10 @@
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/scoped_ptr.h"
-#include "base/string_escape.h"
-#include "base/string_piece.h"
 #include "base/string_tokenizer.h"
 #include "base/string_util.h"
-#include "base/sys_string_conversions.h"
 #include "base/time.h"
-#include "base/time_format.h"
+#include "base/string_escape.h"
 #include "googleurl/src/gurl.h"
 #include "googleurl/src/url_canon.h"
 #include "googleurl/src/url_parse.h"
@@ -129,16 +149,16 @@ STR GetSpecificHeaderT(const STR& headers, const STR& name) {
   match.append(name);
   match.push_back(':');
 
-  typename STR::const_iterator begin =
+  STR::const_iterator begin =
       search(headers.begin(), headers.end(), match.begin(), match.end(),
-             CaseInsensitiveCompareASCII<typename STR::value_type>());
+             CaseInsensitiveCompareASCII<STR::value_type>());
 
   if (begin == headers.end())
     return STR();
 
   begin += match.length();
 
-  typename STR::const_iterator end = find(begin, headers.end(), '\n');
+  STR::const_iterator end = find(begin, headers.end(), '\n');
 
   STR ret;
   TrimWhitespace(STR(begin, end), TRIM_ALL, &ret);
@@ -148,7 +168,7 @@ STR GetSpecificHeaderT(const STR& headers, const STR& name) {
 // TODO(jungshik): We have almost identical hex-decoding code else where.
 // Consider refactoring and moving it somewhere(base?). Bug 1224311
 inline bool IsHexDigit(unsigned char c) {
-  return (('0' <= c && c <= '9') || ('A' <= c && c <= 'F') || ('a' <= c && c <= 'f'));
+  return ('0' <= c && c <= '9' || 'A' <= c && c <= 'F' || 'a' <= c && c <= 'f');
 }
 
 inline unsigned char HexToInt(unsigned char c) {
@@ -199,7 +219,7 @@ bool DecodeBQEncoding(const std::string& part, RFC2047EncodingType enc_type,
                        const std::string& charset, std::string* output) {
   std::string decoded;
   if (enc_type == B_ENCODING) {
-    if (!net::Base64Decode(part, &decoded)) {
+    if (!Base64Decode(part, &decoded)) {
       return false;
     }
   } else {
@@ -240,7 +260,7 @@ bool DecodeWord(const std::string& encoded_word,
     if (IsStringUTF8(encoded_word.c_str())) {
       *output = encoded_word;
     } else {
-      *output = WideToUTF8(base::SysNativeMBToWide(encoded_word));
+      *output = WideToUTF8(NativeMBToWide(encoded_word));
     }
     *is_rfc2047 = false;
     return true;
@@ -374,9 +394,9 @@ bool DecodeParamValue(const std::string& input, std::string* output) {
 template<typename STR>
 STR GetHeaderParamValueT(const STR& header, const STR& param_name) {
   // This assumes args are formatted exactly like "bla; arg1=value; arg2=value".
-  typename STR::const_iterator param_begin =
+  STR::const_iterator param_begin =
       search(header.begin(), header.end(), param_name.begin(), param_name.end(),
-             CaseInsensitiveCompareASCII<typename STR::value_type>());
+             CaseInsensitiveCompareASCII<STR::value_type>());
 
   if (param_begin == header.end())
     return STR();
@@ -385,7 +405,7 @@ STR GetHeaderParamValueT(const STR& header, const STR& param_name) {
   STR whitespace;
   whitespace.push_back(' ');
   whitespace.push_back('\t');
-  const typename STR::size_type equals_offset =
+  const STR::size_type equals_offset =
       header.find_first_not_of(whitespace, param_begin - header.begin());
   if (equals_offset == STR::npos || header.at(equals_offset) != '=')
     return STR();
@@ -394,7 +414,7 @@ STR GetHeaderParamValueT(const STR& header, const STR& param_name) {
   if (param_begin == header.end())
     return STR();
 
-  typename STR::const_iterator param_end;
+  STR::const_iterator param_end;
   if (*param_begin == '"') {
     param_end = find(param_begin+1, header.end(), '"');
     if (param_end == header.end())
@@ -425,8 +445,8 @@ UScriptCode NormalizeScript(UScriptCode code) {
   }
 }
 
-bool IsIDNComponentInSingleScript(const char16* str, int str_len) {
-  UScriptCode first_script = USCRIPT_INVALID_CODE;
+bool IsIDNComponentInSingleScript(const wchar_t* str, int str_len) {
+  UScriptCode first_script;
   bool is_first = true;
 
   int i = 0;
@@ -465,7 +485,7 @@ bool IsCompatibleWithASCIILetters(const std::string& lang) {
 
 // Returns true if the given Unicode host component is safe to display to the
 // user.
-bool IsIDNComponentSafe(const char16* str,
+bool IsIDNComponentSafe(const wchar_t* str,
                         int str_len,
                         const std::wstring& languages) {
   // Most common cases (non-IDN) do not reach here so that we don't
@@ -565,10 +585,10 @@ bool IsIDNComponentSafe(const char16* str,
 // Converts one component of a host (between dots) to IDN if safe. The result
 // will be APPENDED to the given output string and  will be the same as the
 // input if it is not IDN or the IDN is unsafe to display.
-void IDNToUnicodeOneComponent(const char16* comp,
+void IDNToUnicodeOneComponent(const wchar_t* comp,
                               int comp_len,
                               const std::wstring& languages,
-                              string16* out) {
+                              std::wstring* out) {
   DCHECK(comp_len >= 0);
   if (comp_len == 0)
     return;
@@ -579,8 +599,7 @@ void IDNToUnicodeOneComponent(const char16* comp,
   size_t host_begin_in_output = out->size();
 
   // Just copy the input if it can't be an IDN component.
-  if (comp_len < 4 ||
-      comp[0] != 'x' || comp[1] != 'n' || comp[2] != '-' || comp[3] != '-') {
+  if (comp_len < 4 || wcsncmp(comp, L"xn--", 4)) {
     out->resize(host_begin_in_output + comp_len);
     for (int i = 0; i < comp_len; i++)
       (*out)[host_begin_in_output + i] = comp[i];
@@ -588,11 +607,11 @@ void IDNToUnicodeOneComponent(const char16* comp,
   }
 
   while (true) {
-    UErrorCode status = U_ZERO_ERROR;
     out->resize(out->size() + extra_space);
-    int output_chars =
-        uidna_IDNToUnicode(comp, comp_len, &(*out)[host_begin_in_output],
-                           extra_space, UIDNA_DEFAULT, NULL, &status);
+    UErrorCode status = U_ZERO_ERROR;
+    int output_chars = uidna_IDNToUnicode(
+        comp, comp_len, &(*out)[host_begin_in_output], extra_space,
+        UIDNA_DEFAULT, NULL, &status);
     if (status == U_ZERO_ERROR) {
       // Converted successfully.
       out->resize(host_begin_in_output + output_chars);
@@ -619,9 +638,29 @@ void IDNToUnicodeOneComponent(const char16* comp,
     (*out)[host_begin_in_output + i] = comp[i];
 }
 
+// Convert a FILETIME to a localized string. |filetime| may be NULL.
+// TODO(tc): Remove this once bug 1164516 is fixed.
+std::wstring LocalizedDateTime(const FILETIME* filetime) {
+  if (!filetime)
+    return std::wstring();
+
+  Time time = Time::FromFileTime(*filetime);
+  scoped_ptr<DateFormat> formatter(DateFormat::createDateTimeInstance(
+      DateFormat::kShort));
+  UnicodeString date_string;
+  formatter->format(static_cast<UDate>(time.ToDoubleT() * 1000), date_string);
+
+  std::wstring formatted;
+  int capacity = date_string.length() + 1;
+  UErrorCode error = U_ZERO_ERROR;
+  date_string.extract(static_cast<UChar*>(WriteInto(&formatted, capacity)),
+                      capacity, error);
+  return formatted;
+}
+
 }  // namespace
 
-namespace net {
+namespace net_util {
 
 GURL FilePathToFileURL(const std::wstring& file_path) {
   // Produce a URL like "file:///C:/foo" for a regular file, or
@@ -643,11 +682,78 @@ GURL FilePathToFileURL(const std::wstring& file_path) {
 
   ReplaceSubstringsAfterOffset(&url_str, 0, L"#", L"%23");
 
-#if defined(WCHAR_T_IS_UTF32)
-  return GURL(WideToUTF8(url_str));
-#else
   return GURL(url_str);
-#endif
+}
+
+bool FileURLToFilePath(const GURL& url, std::wstring* file_path) {
+  file_path->clear();
+
+  if (!url.is_valid())
+    return false;
+
+  std::string path;
+  std::string host = url.host();
+  if (host.empty()) {
+    // URL contains no host, the path is the filename. In this case, the path
+    // will probably be preceeded with a slash, as in "/C:/foo.txt", so we
+    // trim out that here.
+    path = url.path();
+    size_t first_non_slash = path.find_first_not_of("/\\");
+    if (first_non_slash != std::string::npos && first_non_slash > 0)
+      path.erase(0, first_non_slash);
+  } else {
+    // URL contains a host: this means it's UNC. We keep the preceeding slash
+    // on the path.
+    path = "\\\\";
+    path.append(host);
+    path.append(url.path());
+  }
+
+  if (path.empty())
+    return false;
+  std::replace(path.begin(), path.end(), '/', '\\');
+
+  // GURL stores strings as percent-encoded UTF-8, this will undo if possible.
+  path = UnescapeURLComponent(path,
+      UnescapeRule::SPACES | UnescapeRule::URL_SPECIAL_CHARS);
+
+  if (!IsStringUTF8(path.c_str())) {
+    // Not UTF-8, assume encoding is native codepage and we're done. We know we
+    // are giving the conversion function a nonempty string, and it may fail if
+    // the given string is not in the current encoding and give us an empty
+    // string back. We detect this and report failure.
+    *file_path = NativeMBToWide(path);
+    return !file_path->empty();
+  }
+  file_path->assign(UTF8ToWide(path));
+
+  // Now we have an unescaped filename, but are still not sure about its
+  // encoding. For example, each character could be part of a UTF-8 string.
+  if (file_path->empty() || !IsString8Bit(*file_path)) {
+    // assume our 16-bit encoding is correct if it won't fit into an 8-bit
+    // string
+    return true;
+  }
+
+  // Convert our narrow string into the native wide path.
+  std::string narrow;
+  if (!WideToLatin1(*file_path, &narrow)) {
+    NOTREACHED() << "Should have filtered out non-8-bit strings above.";
+    return false;
+  }
+  if (IsStringUTF8(narrow.c_str())) {
+    // Our string actually looks like it could be UTF-8, convert to 8-bit
+    // UTF-8 and then to the corresponding wide string.
+    *file_path = UTF8ToWide(narrow);
+  } else {
+    // Our wide string contains only 8-bit characters and it's not UTF-8, so
+    // we assume it's in the native codepage.
+    *file_path = NativeMBToWide(narrow);
+  }
+
+  // Fail if 8-bit -> wide conversion failed and gave us an empty string back
+  // (we already filtered out empty strings above).
+  return !file_path->empty();
 }
 
 std::wstring GetSpecificHeader(const std::wstring& headers,
@@ -696,56 +802,41 @@ void IDNToUnicode(const char* host,
                   const std::wstring& languages,
                   std::wstring* out) {
   // Convert the ASCII input to a wide string for ICU.
-  string16 input16;
-  input16.reserve(host_len);
+  std::wstring wide_input;
+  wide_input.reserve(host_len);
   for (int i = 0; i < host_len; i++)
-    input16.push_back(host[i]);
-
-  string16 out16;
-  // The output string is appended to, so convert what's already there if
-  // needed.
-#if defined(WCHAR_T_IS_UTF32)
-  WideToUTF16(out->data(), out->length(), &out16);
-  out->clear();  // for equivalence with the swap below
-#elif defined(WCHAR_T_IS_UTF16)
-  out->swap(out16);
-#endif
+    wide_input.push_back(host[i]);
 
   // Do each component of the host separately, since we enforce script matching
   // on a per-component basis.
   size_t cur_begin = 0;  // Beginning of the current component (inclusive).
-  while (cur_begin < input16.size()) {
+  while (cur_begin < wide_input.size()) {
     // Find the next dot or the end of the string.
-    size_t next_dot = input16.find_first_of('.', cur_begin);
+    size_t next_dot = wide_input.find_first_of('.', cur_begin);
     if (next_dot == std::wstring::npos)
-      next_dot = input16.size();  // For getting the last component.
+      next_dot = wide_input.size();  // For getting the last component.
 
     if (next_dot > cur_begin) {
       // Add the substring that we just found.
-      IDNToUnicodeOneComponent(&input16[cur_begin],
+      IDNToUnicodeOneComponent(&wide_input[cur_begin],
                                static_cast<int>(next_dot - cur_begin),
                                languages,
-                               &out16);
+                               out);
     }
 
     // Need to add the dot we just found (if we found one). This needs to be
     // done before we break out below in case the URL ends in a dot.
-    if (next_dot < input16.size())
-      out16.push_back('.');
+    if (next_dot < wide_input.size())
+      out->push_back('.');
     else
       break;  // No more components left.
 
     cur_begin = next_dot + 1;
   }
-
-#if defined(WCHAR_T_IS_UTF32)
-  UTF16ToWide(out16.data(), out16.length(), out);
-#elif defined(WCHAR_T_IS_UTF16)
-  out->swap(out16);
-#endif
 }
 
-std::string CanonicalizeHost(const std::string& host, bool* is_ip_address) {
+template <typename str>
+std::string CanonicalizeHost(const str& host, bool* is_ip_address) {
   // Try to canonicalize the host.
   const url_parse::Component raw_host_component(0,
       static_cast<int>(host.length()));
@@ -772,19 +863,19 @@ std::string CanonicalizeHost(const std::string& host, bool* is_ip_address) {
 
   // Return the host as a string, stripping any unnecessary bits off the ends.
   if ((canon_host_component.begin == 0) &&
-      (static_cast<size_t>(canon_host_component.len) == canon_host.length()))
+      (canon_host_component.len == canon_host.length()))
     return canon_host;
   return canon_host.substr(canon_host_component.begin,
                            canon_host_component.len);
 }
 
-std::string CanonicalizeHost(const std::wstring& host, bool* is_ip_address) {
-  std::string converted_host;
-  WideToUTF8(host.c_str(), host.length(), &converted_host);
-  return CanonicalizeHost(converted_host, is_ip_address);
-}
-  
-#ifdef OS_WIN
+// Forcibly instantiate narrow and wide versions of this function so we don't
+// need to put the function definition in the header.
+template std::string CanonicalizeHost<std::string>(const std::string& host,
+                                                   bool* is_ip_address);
+template std::string CanonicalizeHost<std::wstring>(const std::wstring& host,
+                                                    bool* is_ip_address);
+
 std::string GetDirectoryListingHeader(const std::string& title) {
   std::string result = NetModule::GetResource(IDR_DIR_HEADER_HTML);
   if (result.empty()) {
@@ -819,15 +910,13 @@ std::string GetDirectoryListingEntry(const std::string& name,
 
   result.append(",");
 
-  Time time(Time::FromFileTime(*modified));
-  string_escape::JavascriptDoubleQuote(base::TimeFormatShortDateAndTime(time),
-      true, &result);
+  string_escape::JavascriptDoubleQuote(
+      LocalizedDateTime(modified), true, &result);
 
   result.append(");</script>\n");
 
   return result;
 }
-#endif
 
 std::wstring StripWWW(const std::wstring& text) {
   const std::wstring www(L"www.");
@@ -903,5 +992,4 @@ bool IsPortAllowedByFtp(int port) {
   return IsPortAllowedByDefault(port);
 }
 
-}  // namespace net
-
+}  // namespace net_util

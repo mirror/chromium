@@ -2,12 +2,11 @@
 <VisualStudioPropertySheet
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="release_defaults"
+	Name="release"
 	InheritedPropertySheets=".\essential.vsprops"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		Optimization="2"
 		PreprocessorDefinitions="NDEBUG"
 		StringPooling="true"
 	/>

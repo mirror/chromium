@@ -1,27 +1,49 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-#include "chrome/browser/native_ui_contents.h"
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/browser.h"
 #include "chrome/browser/download_tab_view.h"
 #include "chrome/browser/history_tab_ui.h"
+#include "chrome/browser/native_ui_contents.h"
 #include "chrome/browser/navigation_entry.h"
-#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/background.h"
+#include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/checkbox.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/hwnd_view_container.h"
-#include "chrome/views/image_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/scroll_view.h"
 #include "chrome/views/throbber.h"
+#include "chrome/views/background.h"
 
 #include "generated_resources.h"
 
@@ -74,7 +96,7 @@ namespace {
 class NativeRootView : public ChromeViews::RootView {
  public:
   explicit NativeRootView(NativeUIContents* host)
-      : RootView(host),
+      : RootView(host, true),
         host_(host) { }
 
   virtual ~NativeRootView() { }
@@ -151,7 +173,7 @@ NativeUIContents::~NativeUIContents() {
 void NativeUIContents::CreateView(HWND parent_hwnd,
                                   const gfx::Rect& initial_bounds) {
   set_delete_on_destroy(false);
-  HWNDViewContainer::Init(parent_hwnd, initial_bounds, false);
+  HWNDViewContainer::Init(parent_hwnd, initial_bounds, NULL, false);
 }
 
 LRESULT NativeUIContents::OnCreate(LPCREATESTRUCT create_struct) {
@@ -216,9 +238,9 @@ void NativeUIContents::SetPageState(PageState* page_state) {
       DCHECK(ne);
       std::string rep;
       state_->GetByteRepresentation(&rep);
-      ne->set_content_state(rep);
+      ne->SetContentState(rep);
       // This is not a WebContents, so we use a NULL SiteInstance.
-      ctrl->NotifyEntryChangedByPageID(type(), NULL, ne->page_id());
+      ctrl->SyncSessionWithEntryByPageID(type(), NULL, ne->GetPageID());
     }
   }
 }
@@ -234,7 +256,7 @@ bool NativeUIContents::Navigate(const NavigationEntry& entry, bool reload) {
     current_view_ = NULL;
   }
 
-  NativeUI* new_ui = GetNativeUIForURL(entry.url());
+  NativeUI* new_ui = GetNativeUIForURL(entry.GetURL());
   if (new_ui) {
     current_ui_ = new_ui;
     is_visible_ = true;
@@ -242,9 +264,9 @@ bool NativeUIContents::Navigate(const NavigationEntry& entry, bool reload) {
     current_view_ = new_ui->GetView();
     root_view->AddChildView(current_view_);
 
-    std::string s = entry.content_state();
+    std::string s = entry.GetContentState();
     if (s.empty())
-      state_->InitWithURL(entry.url());
+      state_->InitWithURL(entry.GetURL());
     else
       state_->InitWithBytes(s);
 
@@ -253,28 +275,25 @@ bool NativeUIContents::Navigate(const NavigationEntry& entry, bool reload) {
   }
 
   NavigationEntry* new_entry = new NavigationEntry(entry);
-  if (new_entry->page_id() == -1)
-    new_entry->set_page_id(++g_next_page_id);
-  new_entry->set_title(GetDefaultTitle());
-  new_entry->favicon().set_bitmap(GetFavIcon());
-  new_entry->favicon().set_is_valid(true);
+  if (new_entry->GetPageID() == -1)
+    new_entry->SetPageID(++g_next_page_id);
+  new_entry->SetTitle(GetDefaultTitle());
+  new_entry->SetFavIcon(GetFavIcon());
+  new_entry->SetValidFavIcon(true);
   if (new_ui) {
     // Strip out the query params, they should have moved to state.
     // TODO(sky): use GURL methods for replacements once bug is fixed.
     size_t scheme_end, host_end;
-    GetSchemeAndHostEnd(entry.url(), &scheme_end, &host_end);
-    new_entry->set_url(GURL(entry.url().spec().substr(0, host_end)));
+    GetSchemeAndHostEnd(entry.GetURL(), &scheme_end, &host_end);
+    new_entry->SetURL(GURL(entry.GetURL().spec().substr(0, host_end)));
   }
   std::string content_state;
   state_->GetByteRepresentation(&content_state);
-  new_entry->set_content_state(content_state);
-  const int32 page_id = new_entry->page_id();
-
-  // The default details is "new navigation", and that's OK with us.
-  NavigationController::LoadCommittedDetails details;
-  DidNavigateToEntry(new_entry, &details);
+  new_entry->SetContentState(content_state);
+  const int32 page_id = new_entry->GetPageID();
+  DidNavigateToEntry(new_entry);
   // This is not a WebContents, so we use a NULL SiteInstance.
-  controller()->NotifyEntryChangedByPageID(type(), NULL, page_id);
+  controller()->SyncSessionWithEntryByPageID(type(), NULL, page_id);
   return true;
 }
 
@@ -668,4 +687,3 @@ void SearchableUIContainer::DoSearch() {
 
   scroll_view_->ScrollToPosition(scroll_view_->vertical_scroll_bar(), 0);
 }
-

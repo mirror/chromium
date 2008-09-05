@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef BASE_TASK_H__
 #define BASE_TASK_H__
@@ -11,13 +36,8 @@
 #include "base/logging.h"
 #include "base/non_thread_safe.h"
 #include "base/revocable_store.h"
-#include "base/time.h"
 #include "base/tracked.h"
 #include "base/tuple.h"
-
-namespace base {
-class TimerManager;
-}
 
 //------------------------------------------------------------------------------
 // Base class of Task, where we store info to help MessageLoop handle PostTask()
@@ -25,12 +45,10 @@ class TimerManager;
 
 class Task;
 
-// TODO(darin): Eliminate TaskBase.  This data is ML specific and is not
-// applicable to other uses of Task.
-class TaskBase : public tracked_objects::Tracked {
+class MessageLoopOwnable : public tracked_objects::Tracked {
  public:
-  TaskBase() { Reset(); }
-  virtual ~TaskBase() {}
+  MessageLoopOwnable() { Reset(); }
+  virtual ~MessageLoopOwnable() {}
 
   // Use this method to adjust the priority given to a task by MessageLoop.
   void set_priority(int priority) { priority_ = priority; }
@@ -40,9 +58,6 @@ class TaskBase : public tracked_objects::Tracked {
   void set_nestable(bool nestable) { nestable_ = nestable; }
   bool nestable() { return nestable_; }
 
-  // Used to manage a linked-list of tasks.
-  Task* next_task() const { return next_task_; }
-  void set_next_task(Task* next) { next_task_ = next; }
 
  protected:
   // If a derived class wishes to re-use this instance, then it should override
@@ -56,23 +71,32 @@ class TaskBase : public tracked_objects::Tracked {
   // derived classes should attempt this feat, as a replacement for creating a
   // new instance.
   void Reset() {
+    posted_task_delay_ = -1;
     priority_ = 0;
-    delayed_run_time_ = Time();
     next_task_ = NULL;
     nestable_ = true;
-    owned_by_message_loop_ = false;
   }
 
  private:
-  friend class base::TimerManager;  // To check is_owned_by_message_loop().
-  friend class MessageLoop;         // To maintain posted_task_delay().
+  friend class TimerManager;  // To check is_owned_by_message_loop().
+  friend class MessageLoop;   // To maintain posted_task_delay().
+  friend class WorkerPool;    // To release the task.
+
+  // Access methods used ONLY by friends in MessageLoop and TimerManager
+  int posted_task_delay() const { return posted_task_delay_; }
+  bool is_owned_by_message_loop() const { return 0 <= posted_task_delay_; }
+  void set_posted_task_delay(int delay) { posted_task_delay_ = delay; }
+
+  Task* next_task() const { return next_task_; }
+  void set_next_task(Task* next) { next_task_ = next; }
 
   // Priority for execution by MessageLoop. 0 is default. Higher means run
   // sooner, and lower (including negative) means run less soon.
   int priority_;
 
-  // The time when a delayed task should be run.
-  Time delayed_run_time_;
+  // Slot to hold delay if the task was passed to PostTask().  If it was not
+  // passed to PostTask, then the delay is negative (the default).
+  int posted_task_delay_;
 
   // When tasks are collected into a queue by MessageLoop, this member is used
   // to form a null terminated list.
@@ -82,10 +106,7 @@ class TaskBase : public tracked_objects::Tracked {
   // only in the top level message loop.
   bool nestable_;
 
-  // True if this Task is owned by the message loop.
-  bool owned_by_message_loop_;
-
-  DISALLOW_COPY_AND_ASSIGN(TaskBase);
+  DISALLOW_EVIL_CONSTRUCTORS(MessageLoopOwnable);
 };
 
 
@@ -94,7 +115,7 @@ class TaskBase : public tracked_objects::Tracked {
 // A task is a generic runnable thingy, usually used for running code on a
 // different thread or for scheduling future tasks off of the message loop.
 
-class Task : public TaskBase {
+class Task : public MessageLoopOwnable {
  public:
   Task() {}
   virtual ~Task() {}
@@ -702,4 +723,3 @@ typename Callback5<Arg1, Arg2, Arg3, Arg4, Arg5>::Type* NewCallback(
 }
 
 #endif  // BASE_TASK_H__
-

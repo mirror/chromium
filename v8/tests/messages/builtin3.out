@@ -1,0 +1,3 @@
+builtin3.js:3: Uncaught ReferenceError: StringEquals is not defined
+  x = 0 %StringEquals('a', 'b');
+         ^

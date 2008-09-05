@@ -50,6 +50,7 @@ void SVGResourceClipper::applyClip(GraphicsContext* context, const FloatRect& bo
 
     for (unsigned int x = 0; x < count; x++) {
         Path path = data[x].path;
+        WindRule rule = data[x].windRule;
 
         if (path.isEmpty())
             continue;

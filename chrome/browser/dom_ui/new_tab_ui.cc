@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 
@@ -21,10 +46,8 @@
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 // The URL scheme used for the new tab.
@@ -494,61 +517,35 @@ void TemplateURLHandler::OnTemplateURLModelChanged() {
 }
 
 RecentlyBookmarkedHandler::RecentlyBookmarkedHandler(DOMUIHost* dom_ui_host)
-    : dom_ui_host_(dom_ui_host),
-      model_(NULL) {
+    : dom_ui_host_(dom_ui_host) {
   dom_ui_host->RegisterMessageCallback("getRecentlyBookmarked",
       NewCallback(this,
                   &RecentlyBookmarkedHandler::HandleGetRecentlyBookmarked));
 }
 
-RecentlyBookmarkedHandler::~RecentlyBookmarkedHandler() {
-  if (model_)
-    model_->RemoveObserver(this);
-}
-
 void RecentlyBookmarkedHandler::HandleGetRecentlyBookmarked(const Value*) {
-  if (!model_) {
-    model_ = dom_ui_host_->profile()->GetBookmarkBarModel();
-    model_->AddObserver(this);
+  HistoryService* hs =
+      dom_ui_host_->profile()->GetHistoryService(Profile::EXPLICIT_ACCESS);
+  if (hs) {
+    HistoryService::Handle handle = hs->GetMostRecentStarredEntries(
+        kRecentBookmarks,
+        &cancelable_consumer_,
+        NewCallback(this,
+            &RecentlyBookmarkedHandler::OnMostRecentStarredEntries));
   }
-  // If the model is loaded, synchronously send the bookmarks down. Otherwise
-  // when the model loads we'll send the bookmarks down.
-  if (model_->IsLoaded())
-    SendBookmarksToPage();
 }
 
-void RecentlyBookmarkedHandler::SendBookmarksToPage() {
-  std::vector<BookmarkBarNode*> recently_bookmarked;
-  model_->GetMostRecentlyAddedEntries(kRecentBookmarks, &recently_bookmarked);
+void RecentlyBookmarkedHandler::OnMostRecentStarredEntries(
+    HistoryService::Handle request_handle,
+    std::vector<history::StarredEntry>* entries) {
   ListValue list_value;
-  for (size_t i = 0; i < recently_bookmarked.size(); ++i) {
-    BookmarkBarNode* node = recently_bookmarked[i];
+  for (size_t i = 0; i < entries->size(); ++i) {
+    const history::StarredEntry& entry = (*entries)[i];
     DictionaryValue* entry_value = new DictionaryValue;
-    SetURLAndTitle(entry_value, node->GetTitle(), node->GetURL());
+    SetURLAndTitle(entry_value, entry.title, entry.url);
     list_value.Append(entry_value);
   }
   dom_ui_host_->CallJavascriptFunction(L"recentlyBookmarked", list_value);
-}
-
-void RecentlyBookmarkedHandler::Loaded(BookmarkBarModel* model) {
-  SendBookmarksToPage();
-}
-
-void RecentlyBookmarkedHandler::BookmarkNodeAdded(BookmarkBarModel* model,
-                                                  BookmarkBarNode* parent,
-                                                  int index) {
-  SendBookmarksToPage();
-}
-
-void RecentlyBookmarkedHandler::BookmarkNodeRemoved(BookmarkBarModel* model,
-                                                    BookmarkBarNode* parent,
-                                                    int index) {
-  SendBookmarksToPage();
-}
-
-void RecentlyBookmarkedHandler::BookmarkNodeChanged(BookmarkBarModel* model,
-                                                    BookmarkBarNode* node) {
-  SendBookmarksToPage();
 }
 
 RecentlyClosedTabsHandler::RecentlyClosedTabsHandler(DOMUIHost* dom_ui_host)
@@ -804,7 +801,7 @@ bool NewTabUIContents::Navigate(const NavigationEntry& entry, bool reload) {
   // also the pending entry.
   NavigationEntry* pending_entry = controller()->GetPendingEntry();
   DCHECK(pending_entry && pending_entry == &entry);
-  pending_entry->set_title(forced_title_);
+  pending_entry->SetTitle(forced_title_);
 
   return result;
 }
@@ -855,4 +852,3 @@ void NewTabUIContents::RequestOpenURL(const GURL& url,
     }
   }
 }
-

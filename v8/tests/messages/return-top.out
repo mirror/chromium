@@ -1,0 +1,3 @@
+return-top.js:1: Uncaught SyntaxError: Illegal return statement
+return
+^

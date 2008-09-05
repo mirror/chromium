@@ -1,18 +1,44 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_VIEWS_MENU_H_
-#define CHROME_VIEWS_MENU_H_
+#ifndef CHROME_VIEWS_MENU_H__
+#define CHROME_VIEWS_MENU_H__
 
-#include <windows.h>
-
+#include <atlbase.h>
+#include <atlapp.h>
+#include <atlmisc.h>
 #include <vector>
 
-#include "base/basictypes.h"
+#include "base/message_loop.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/views/controller.h"
-
-class SkBitmap;
+#include "skia/include/SkBitmap.h"
 
 namespace {
 class MenuHostWindow;
@@ -44,8 +70,6 @@ class Menu {
   /////////////////////////////////////////////////////////////////////////////
   class Delegate : public Controller {
    public:
-    virtual ~Delegate() { }
-
     // Whether or not an item should be shown as checked.
     virtual bool IsItemChecked(int id) const {
       return false;
@@ -115,7 +139,9 @@ class Menu {
     // is a right-to-left menu only if the view's layout is right-to-left
     // (since the view can use a different layout than the locale's language
     // layout).
-    virtual bool IsRightToLeftUILayout() const;
+    virtual bool IsRightToLeftUILayout() const {
+      return l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT;
+    }
 
     // Controller
     virtual bool SupportsCommand(int id) const {
@@ -133,7 +159,11 @@ class Menu {
    protected:
     // Returns an empty icon. Will initialize kEmptyIcon if it hasn't been
     // initialized.
-    const SkBitmap& GetEmptyIcon() const;
+    const SkBitmap& GetEmptyIcon() const {
+      if (kEmptyIcon == NULL)
+        kEmptyIcon = new SkBitmap();
+      return *kEmptyIcon;
+    }
 
    private:
     // Will be initialized to an icon of 0 width and 0 height when first using.
@@ -170,7 +200,7 @@ class Menu {
     // actions to.
     Controller* controller_;
 
-    DISALLOW_COPY_AND_ASSIGN(BaseControllerDelegate);
+    DISALLOW_EVIL_CONSTRUCTORS(BaseControllerDelegate);
   };
 
   // How this popup should align itself relative to the point it is run at.
@@ -187,6 +217,13 @@ class Menu {
     SEPARATOR
   };
 
+  // The data of menu items needed to display.
+  struct ItemData {
+    std::wstring label;
+    SkBitmap icon;
+    bool submenu;
+  };
+
   // Construct a Menu using the specified controller to determine command
   // state.
   // delegate     A Menu::Delegate implementation that provides more
@@ -196,14 +233,7 @@ class Menu {
   //              to. Not actually used for anything but must not be
   //              NULL.
   Menu(Delegate* delegate, AnchorPoint anchor, HWND owner);
-  // Alternatively, a Menu object can be constructed wrapping an existing
-  // HMENU. This can be used to use the convenience methods to insert
-  // menu items and manage label string ownership. However this kind of
-  // Menu object cannot use the delegate.
-  explicit Menu(HMENU hmenu);
   virtual ~Menu();
-
-  void set_delegate(Delegate* delegate) { delegate_ = delegate; }
 
   // Adds an item to this menu.
   // item_id    The id of the item, used to identify it in delegate callbacks
@@ -215,17 +245,17 @@ class Menu {
   // type       The type of item.
   void AppendMenuItem(int item_id,
                       const std::wstring& label,
-                      MenuItemType type);
-  void AddMenuItem(int index,
-                   int item_id,
-                   const std::wstring& label,
-                   MenuItemType type);
+                      MenuItemType type) {
+    if (type == SEPARATOR)
+      AppendSeparator();
+    else
+      AppendMenuItemInternal(item_id, label, SkBitmap(), NULL, type);
+  }
 
   // Append a submenu to this menu.
   // The returned pointer is owned by this menu.
   Menu* AppendSubMenu(int item_id,
                       const std::wstring& label);
-  Menu* AddSubMenu(int index, int item_id, const std::wstring& label);
 
   // Append a submenu with an icon to this menu
   // The returned pointer is owned by this menu.
@@ -234,39 +264,33 @@ class Menu {
   Menu* AppendSubMenuWithIcon(int item_id,
                               const std::wstring& label,
                               const SkBitmap& icon);
-  Menu* AddSubMenuWithIcon(int index,
-                           int item_id,
-                           const std::wstring& label,
-                           const SkBitmap& icon);
 
   // This is a convenience for standard text label menu items where the label
   // is provided with this call.
-  void AppendMenuItemWithLabel(int item_id, const std::wstring& label);
-  void AddMenuItemWithLabel(int index, int item_id, const std::wstring& label);
+  void AppendMenuItemWithLabel(int item_id,
+                               const std::wstring& label) {
+    AppendMenuItem(item_id, label, Menu::NORMAL);
+  }
 
   // This is a convenience for text label menu items where the label is
   // provided by the delegate.
-  void AppendDelegateMenuItem(int item_id);
-  void AddDelegateMenuItem(int index, int item_id);
+  void AppendDelegateMenuItem(int item_id) {
+    AppendMenuItem(item_id, std::wstring(), Menu::NORMAL);
+  }
 
   // Adds a separator to this menu
   void AppendSeparator();
-  void AddSeparator(int index);
 
   // Appends a menu item with an icon. This is for the menu item which
   // needs an icon. Calling this function forces the Menu class to draw
   // the menu, instead of relying on Windows.
   void AppendMenuItemWithIcon(int item_id,
                               const std::wstring& label,
-                              const SkBitmap& icon);
-  void AddMenuItemWithIcon(int index,
-                           int item_id,
-                           const std::wstring& label,
-                           const SkBitmap& icon);
-
-  // Enables or disables the item with the specified id.
-  void EnableMenuItemByID(int item_id, bool enabled);
-  void EnableMenuItemAt(int index, bool enabled);
+                              const SkBitmap& icon) {
+    if (!owner_draw_)
+      owner_draw_ = true;
+    AppendMenuItemInternal(item_id, label, icon, NULL, Menu::NORMAL);
+  }
 
   // Sets an icon for an item with a given item_id. Calling this function
   // also forces the Menu class to draw the menu, instead of relying on Windows.
@@ -281,25 +305,18 @@ class Menu {
   // Cancels the menu.
   virtual void Cancel();
 
-  // Returns the number of menu items.
-  int ItemCount();
-
  protected:
   // The delegate that is being used to get information about the presentation.
   Delegate* delegate_;
 
  private:
-  // The data of menu items needed to display.
-  struct ItemData;
-
   explicit Menu(Menu* parent);
 
-  void AddMenuItemInternal(int index,
-                           int item_id,
-                           const std::wstring& label,
-                           const SkBitmap& icon,
-                           HMENU submenu,
-                           MenuItemType type);
+  void AppendMenuItemInternal(int item_id,
+                              const std::wstring& label,
+                              const SkBitmap& icon,
+                              HMENU submenu,
+                              MenuItemType type);
 
   // Sets menu information before displaying, including sub-menus.
   void SetMenuInfo();
@@ -346,8 +363,7 @@ class Menu {
   // Whether the menu is visible.
   bool is_menu_visible_;
 
-  DISALLOW_COPY_AND_ASSIGN(Menu);
+  DISALLOW_EVIL_CONSTRUCTORS(Menu);
 };
 
-#endif  // CHROME_VIEWS_MENU_H_
-
+#endif  // CHROME_VIEWS_MENU_H__

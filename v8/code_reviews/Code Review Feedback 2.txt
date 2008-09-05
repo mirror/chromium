@@ -1,0 +1,229 @@
+Marked check boxes [x] indicate items that have been done.
+
+jsenv.h:
+[ ] exception handling: Throw/HasCatch: comments/renames?
+[ ] comments on difference between CreateXXX and AllocateXXX
+[ ] make sure we only use 0-terminated strings where legal; better: always provide length
+[ ] instead of const char* perhaps have type utf8*
+[ ] use a macro to access all Heap roots (false_value(), null_value(), etc)
+[ ] do we need the Heap versions of all these accessors?
+[ ] some comments on the CodeStubs stuff
+[ ] OFFSET_OF: can this be done w/o the class name?
+[x] make boolean_function_ etc private?
+[ ] message_handler needs a comment, also shouldn't be under GC support
+[ ] should have a test creating more then one JSEnv and run some code in each of them
+[ ] Make Stack abstraction and move stack behavior from JSEnv into it.
+
+jsenv.cc:
+[ ] Comments on BuiltinFunction etc.
+[x] simplify the built-in function setup (seems a lot of the same)
+[ ] InstallFunction: can we have fewer parameters or cluster them somehow?
+ => should clean this up?
+[ ] HasCatch could use better naming and comments
+[ ] CreateFunctionWithPrototype: cleanup (for instance: force_initial_map)
+ => change it such that it always created it with initial map
+[x] replace #ifdefs w/ FLAG_gc_greedy with a simple ASSERT
+[ ] better solutions for boiler-plate wrappers of CreateXXX, AllocateXXX would be useful
+[x] check all CollectGarbage() calls and make sure we collect the right space.
+[ ] perhaps not use NULL where we rely on it being Smi::FromInt(0)
+[ ] I need a picture here: CreateRoots (Lars, you!)
+[ ] CreateRoots: rename FunctionNofProperties
+[ ] CreateRoots: general comment on how the thing works and why
+[x] set the class name for a function inside InstallFunction? factor this code
+[ ] rename GlobalNofFunctions
+
+messages.h:
+[ ] some comments on overall structure and how it is supposed to work/be used
+[ ] rename MessageCallback to Listener? Or something else?
+[ ] MessageLocation and Scanner::Location are close [ ] should unify this
+[ ] should perhaps compute line number from file/source offset [ ] so only need carry around source position instead of lines number & column number
+[ ] UnpackVarArgs etc.: some of these should probably not be public
+[ ] think about consistent use of std::string vs C strings
+[ ] remove use_detail_string argument
+[ ] change language -> language_
+[ ] change language_cache -> language_cache_
+[ ] need tests w/ multiple listeners
+[ ] MessageListener should go into .cc file
+
+
+messages.cc:
+[ ] kMessageInfo: comment on the "o", etc. fields (one per parameter)
+[ ] perhaps: rename Message::message -> Message::format?
+[ ] move GetMessageAccessor into JS
+
+
+list.h:
+[x] GenericList::RemoveLast perhaps should not return a T&? (just void)
+    (is it used in the form: delete RemoveLast() ?)
+[x] remove defavlt value for List(int capacity)
+
+
+property.h:
+[ ] consider renaming Descriptor to PropertyDesc
+[ ] enum PropertyType entries: need comments
+[ ] Descriptor functions: need comments on usage
+[ ] CreateAttributes should check that the field smi is not overflowing
+[ ] instead of using classes for the various Descriptor classes, perhaps use factory methods [ ] may be less clutter
+[ ] LookupResult: comments (e.g., what is the holder?
+[ ] DescriptorResult: perhaps rename, same with the others (they sound like they return something)
+
+
+heap.h:
+[ ] fix comments on Failure::FromInt()
+[x] AllocateHeapNumber/FastAllocateHeapNumber/NumberFromDouble, etc:
+    what are the differences? Find better names!
+[ ] CreateXXX vs AllocateXXX: what is the convention? cleanup
+[ ] LookupSymbol: should probably always use the length (not use 0-termination)
+[x] CollectGarbage: use an enum instead of bool parameter
+[x] rename Iterate -> IterateRoots? (make consistent everywhere)
+[ ] CreateSymbol()? Do we still need it? yes, make it private?
+[x] rename: los_space_ -> lo_space_
+[ ] implement growable handle area (handle_block_)
+[x] rename: los_space_exhausted -> lo_space_exhausted (search globally for lo_)
+[x] cleanup public/private sections/ordering
+
+
+heap-inl.cc:
+[x] check if inlining works as expected: if all the code is inlined of AllocateRaw(), we should remove the 'inline' and move this into the .cc file
+[x] LOS_SPACE => LO_SPACE
+
+
+heap.cc:
+[x] add a comment about gc_dummies
+[x] add comment to Heap::Capacity() (in header file) - should we remove this? DEBUG only?
+[x] same w/ Heap::Available()
+[x] Heap::CollectGarbage: perhaps can factor out some code (factoring)
+[x] Heap::Scavenge: consider updating promoted_bytes_ in Heap::CopyObject to get the precise number of bytes promoted
+[x] Heap::CopyObject: can be sped up by using tags for IsMap() test
+[x] Heap::CopyObject: room_in_to_space computation can be improved
+[x] Heap::CopyObject: ALIGN_HEAP_NUMBER_OBJECTS: dangling 'else' - cleanup!
+[x] Heap::CopyObject: mustn't fail! (no ASSERT(false))
+[ ] Write down why need AllocatePartialMap?
+[ ] clean up experimental flags (ALIGN_HEAP_NUMBER_OBJECTS)
+[x] FastAllocateRaw vs. AllocateRaw [ ] try to get rid of 'fast'
+[ ] cleanup/sharing of some of the OddBall creation
+[ ] NumberFromDouble() could be improved perhaps (need profiling before making changes)
+[ ] see where we can use static_cast instead of reinterpret_cast
+[ ] AllocateString instead of AllocateStringArray (it's not an array of strings)
+[ ] Add a string benchmark and try to come up with the best loops for concatenating strings, 
+    copying chars, etc. (Concatenate() may be exercised a lot for large strings)
+[x] make IsFailure() test consistent (if (IsFailure()) return; instead of negative test)
+[x] MarkCompactCollector::Genesis(): perhaps rename to Setup? (NOT!)
+[x] define a Space::bottom() and top() function
+[ ] AllocateJSObject(): problem as it may return once, and then a second time, and then we won't retry 
+    but die (we should keep retrying as long as there is progress, but there should be better way)
+[x] AllocateJSObject(): code for lazy initial map setup should be out of line
+[ ] AllocateJSObject(): cleanup code for properties slot setup
+[x] comments on which one of the testers (InObjectArea() vs Contains()) to use
+[ ] TODO: SymbolHashValue() needs to be improved!
+[ ] Since we should be passing around pairs of (string, length) instead of 0-terminated C strings, consider introducing an abstraction for our v8 strings
+[ ] LookupSymbol(): do not re-use value over and over again w/ different meanings
+[x] FastAllocateRawInNextPage(): Feng, look at TODO
+
+
+spaces.h:
+[ ] move commentary of GC readme files into the code
+[x] HeapObjectCallback function should be globally available (globals.h)
+[x] class Page, Chunk: perhaps also in globals.h
+[x] if both iteration and callback are same speed, try to use iterators everywhere
+    (note: everything is a virtual call - may be expensive)
+[x] instead: have separate iterators w/o the need for virtuals
+[x] add comment about page size (8K): why, and what is involved to change it
+[x] RSetState enum values: capitalize, make private
+[x] class Page: instead of having friends, make public
+[x] constructor: remove default argument
+[x] empty virtual deconstructor? check if removable
+[x] remove inline where not needed
+[x] remove/change: advance() => next()
+[x] alignment_padding, etc.: use Address instead of unsigned int, capitalize (these are not accessors); also move them out of here (utils.*)
+[x] rename page_of() -> FromAddress()
+[x] find a more clear name instead of page_offset() (it's not the offset of the page)
+[x] unsigned int? OFFSET type? (overkill) => use int for offset
+[x] kBottomOffset instead of having a function bottom_offset?
+[x] group functions that belong together (setters + getters, etc.)
+[x] gc_allocate_raw(): better comment? not lowercase
+[x] introduce page header desc
+[x] rename 'remember' -> 'remembered'
+[x] memset -> Memory::Clear - no need anymore w/ Address == byte* (gri)
+[x] memcpy -> Memory::Copy - no need anymore w/ Address == byte* (gri)
+[x] memove -> Memory::Move - no need anymore w/ Address == byte* (gri)
+[x] make assembly version of set_rset(); use it directly
+[x] capitalize! Hey, YOU!
+[x] set_rset/unset_rset/is_set_rset: all the same code - sharing?
+[x] do not capitalize Get/SetRSetState
+[x] re-organize public/private - no mixing
+[x] rename kMapIndexOffset etc. to kGCMapIndexOffset
+[x] make separate page header descs for GC and non-GC modes
+[x] move gc mode checks into page header accessors
+[x] class Chunk: constructor/destructor comments (side-effects)
+[x] rename: estimate_capacity_conservatively (this is a function not an 'action')
+    (e.g., capacity_estimate_for())
+[x] make a constant? for kPageSize - bottom_offset
+[x] has_contents? bad name or bad comment - rename to: is_empty()?
+[x] capitalize allocate_raw/aligned; why are they public? comments
+[x] same w/ gc_allocate_raw/raw_unligned; perhaps change into allocate + confirm instead of tentative bool
+[x] if low() and high() are only used internally, use the fields directly
+[x] class Space: who does the allocation?
+[x] Space constructor: no default parameter; also add a comment about what it does
+[x] better comments/names on Initialize() (-> Setup) and Cleanup (-> Teardown); what do they do?
+[x] Capacity -> estimated_capacity() ? be consistent
+[x] To do:
+    size: currently allocated
+    available: what is available before growing
+    capacity = size + available
+    max_capacity = max. capacity possible by allocating all we can
+    (all sizes excluding page header descriptors)
+    public interface should only contain what is important for the interface (raw info should not be there)
+ => constructor: Space(int max_capacity, int chunk_size)
+[x] Expand()/Shrink() should be private
+ => Think about general abstraction over memory spaces
+[x] look at public vs private in Space class
+[x] current_index vs current_chunk_index, set_current_chunk_index => unify names!
+[x] max_object_size(): no need for the accessor
+[x] look at the protected interface: most probably not all should be protected!
+[x] cleanup/remove SmallObjectIterator
+[x] class NewSpace: low()/high() vs bottom()/top() : make sure used consistently
+[x] Rewrite "returns Failure(requested_size)" to "may return Failure*" (global).
+[x] Factor Allocate and GCAllocateRaw{Aligned,}.
+[x] Add comment about alignment for gc_end_of_last_copied_object_.
+[x] Add class name prefix to Initialize in ChunkedOldSpace etc.
+[x] Fix InObjectArea and Contains naming.
+[x] Rename space_offset in NewSpace to SpaceOffsetForAddress(...) .
+[x] ChunkedOldSpace::IterateRSet set if it is possible to avoid two spaces
+    and please add implementation comment explaining why!
+[x] OldSpace::FindObject replace expensive with a better explanation.
+[x] NumberOfPages should be total_number_of_pages_
+[ ] Comment on ReportStatistics should be better.
+[x] gc_end_of_last_copied_object_ should be moved to super class.
+[x] Inline MapTable::MapTable since it does nothing.
+[x] Remove friend in MapTable.
+[x] Rename pages_ and entries_ to match comments.
+[x] Introduce Setup and TearDown in MapTable.
+[x] Add reason for having obj_size. Why is obj->Size() not enough?
+[x] Consider making LOSChunk::New that sets the internal state and use data members.
+[x] Fix naming of size_limit and Capacity in LargeObjectSpace.
+[x] Use LargeObjectChunk instead of LOSChunk to be consistent.
+[x] Rename Compact to FreeUnMarkedObjects or FreeUnreachableObjects.
+[x] Rename empty to is_this_space_empty_enough.
+[x] Make MaxObjectSize an accessor.
+[x] Consider renaming Contains to SlowContains.
+[ ] Cleanup code in allocated_raw_aligned, i should be offset.
+    Explain the allocation of filler objects.
+    Consider Memory::FillWith(leave_it_to_the_implementor)
+
+spaces-inl.h:
+[x] combine the various align asserts
+[x] capcity/available code is difficult to read
+
+
+Style:
+[ ] we use 'const' when we are forced to use it (library, language)
+    and for simple accessors, but we avoid being "consistent" everywhere
+    (it works for real "leaf" routines)
+[ ] if we split arguments into multiple lines because the lines get too long,
+    it's ok to have more then one per line, ideally they should be grouped
+    as they go together
+[ ] we use 'i' instead of 'index' in simple loop iterations
+[ ] no need to use 'inline' if the code is in the class definition.
+
+

@@ -1,0 +1,2 @@
+CORRECT, exception thrown: ReferenceError: b is not defined
+CORRECT, exception thrown: ReferenceError: a is not defined

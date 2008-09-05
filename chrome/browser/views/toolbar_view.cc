@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/views/toolbar_view.h"
 
@@ -13,6 +38,7 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/character_encoding.h"
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/browser/drag_utils.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
@@ -25,29 +51,22 @@
 #include "chrome/browser/views/toolbar_star_toggle.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/common/chrome_constants.h"
-#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/button_dropdown.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/view_container.h"
 #include "chrome/views/background.h"
 #include "chrome/views/label.h"
-#include "chrome/views/tooltip_manager.h"
 #include "net/base/net_util.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 static const int kControlHorizOffset = 4;
 static const int kControlVertOffset = 6;
-static const int kControlVertOffsetLocationOnly = 4;
-// The left and right margin of the toolbar in location-bar only mode.
-static const int kToolbarHorizontalMargin = 1;
 static const int kControlIndent = 3;
 static const int kStatusBubbleWidth = 480;
 
@@ -77,11 +96,6 @@ BrowserToolbarView::BrowserToolbarView(CommandController* controller,
       browser, BackForwardMenuModel::BACKWARD_MENU_DELEGATE));
   forward_menu_model_.reset(new BackForwardMenuModel(
       browser, BackForwardMenuModel::FORWARD_MENU_DELEGATE));
-
-  if (browser->GetType() == BrowserType::TABBED_BROWSER)
-    display_mode_ = DISPLAYMODE_NORMAL;
-  else
-    display_mode_ = DISPLAYMODE_LOCATION;
 }
 
 BrowserToolbarView::~BrowserToolbarView() {
@@ -191,8 +205,8 @@ void BrowserToolbarView::CreateCenterStack(Profile *profile) {
   AddChildView(star_);
   controller_->AddManagedButton(star_, IDC_STAR);
 
-  location_bar_ = new LocationBarView(profile, controller_, model_, this,
-                                      display_mode_ == DISPLAYMODE_LOCATION);
+  location_bar_ = new LocationBarView(profile, controller_, model_,
+                                      this, false);
   AddChildView(location_bar_);
   location_bar_->Init();
 
@@ -266,82 +280,67 @@ void BrowserToolbarView::Layout() {
   if (back_ == NULL)
     return;
 
-  int location_bar_y = kControlVertOffset;
-  int location_bar_height = 0;
-  // The width of all of the controls to the left of the location bar.
-  int left_side_width = 0;
-  // The width of all of the controls to the right of the location bar.
-  int right_side_width = 0;
-  if (IsDisplayModeNormal()) {
-    back_->GetPreferredSize(&sz);
-    back_->SetBounds(kControlIndent, kControlVertOffset, sz.cx, sz.cy);
+  back_->GetPreferredSize(&sz);
+  back_->SetBounds(kControlIndent,
+                   kControlVertOffset,
+                   sz.cx,
+                   sz.cy);
 
-    forward_->GetPreferredSize(&sz);
-    forward_->SetBounds(back_->GetX() + back_->GetWidth(), kControlVertOffset,
-                        sz.cx, sz.cy);
+  forward_->GetPreferredSize(&sz);
+  forward_->SetBounds(back_->GetX() + back_->GetWidth(),
+                      kControlVertOffset,
+                      sz.cx,
+                      sz.cy);
 
-    reload_->GetPreferredSize(&sz);
-    reload_->SetBounds(forward_->GetX() + forward_->GetWidth() +
-                           kControlHorizOffset,
-                       kControlVertOffset, sz.cx, sz.cy);
+  reload_->GetPreferredSize(&sz);
+  reload_->SetBounds(forward_->GetX() + forward_->GetWidth() +
+                     kControlHorizOffset,
+                     kControlVertOffset,
+                     sz.cx,
+                     sz.cy);
 
-    int offset = 0;
-    if (show_home_button_.GetValue()) {
-      home_->GetPreferredSize(&sz);
-      offset = kControlHorizOffset;
-      home_->SetVisible(true);
-    } else {
-      sz = CSize(0, 0);
-      home_->SetVisible(false);
-    }
-    home_->SetBounds(reload_->GetX() + reload_->GetWidth() + offset,
-                     kControlVertOffset, sz.cx, sz.cy);
-
-    star_->GetPreferredSize(&sz);
-    star_->SetBounds(home_->GetX() + home_->GetWidth() + kControlHorizOffset,
-                     kControlVertOffset, sz.cx, sz.cy);
-
-    page_menu_->GetPreferredSize(&sz);
-    right_side_width = sz.cx + kMenuButtonOffset;
-
-    app_menu_->GetPreferredSize(&sz);
-    right_side_width += sz.cx + kPaddingRight;
-
-    go_->GetPreferredSize(&sz);
-    location_bar_height = sz.cy;
-    right_side_width += sz.cx;
-
-    left_side_width = star_->GetX() + star_->GetWidth();
+  int offset = 0;
+  if (show_home_button_.GetValue()) {
+    home_->GetPreferredSize(&sz);
+    offset = kControlHorizOffset;
   } else {
-    CSize temp;
-    location_bar_->GetPreferredSize(&temp);
-    location_bar_height = temp.cy;
-    left_side_width = kToolbarHorizontalMargin;
-    right_side_width = kToolbarHorizontalMargin;
-    location_bar_y = kControlVertOffsetLocationOnly;
+    sz = CSize(0, 0);
   }
-
-  location_bar_->SetBounds(left_side_width, location_bar_y,
-                           GetWidth() - left_side_width - right_side_width,
-                           location_bar_height);
-
-  if (IsDisplayModeNormal()) {
-    go_->SetBounds(location_bar_->GetX() + location_bar_->GetWidth(),
+  home_->SetBounds(reload_->GetX() + reload_->GetWidth() + offset,
                    kControlVertOffset, sz.cx, sz.cy);
 
-    // Make sure the Page menu never overlaps the location bar.
-    int page_x = go_->GetX() + go_->GetWidth() + kMenuButtonOffset;
-    page_menu_->GetPreferredSize(&sz);
-    page_menu_->SetBounds(page_x, kControlVertOffset, sz.cx, go_->GetHeight());
-    app_menu_->GetPreferredSize(&sz);
-    app_menu_->SetBounds(page_menu_->GetX() + page_menu_->GetWidth(),
-                         page_menu_->GetY(), sz.cx, go_->GetHeight());
-  }
-}
+  star_->GetPreferredSize(&sz);
+  star_->SetBounds(home_->GetX() + home_->GetWidth() + kControlHorizOffset,
+                   kControlVertOffset, sz.cx, sz.cy);
 
-void BrowserToolbarView::DidChangeBounds(const CRect& previous,
-                                         const CRect& current) {
-  Layout();
+  page_menu_->GetPreferredSize(&sz);
+  int right_side_width = sz.cx + kMenuButtonOffset;
+
+  app_menu_->GetPreferredSize(&sz);
+  right_side_width += sz.cx + kPaddingRight;
+
+  go_->GetPreferredSize(&sz);
+  int go_button_height = sz.cy;
+
+  location_bar_->SetBounds(star_->GetX() + star_->GetWidth(),
+                           kControlVertOffset,
+                           GetWidth() - right_side_width -
+                           (star_->GetX() + star_->GetWidth() +
+                             sz.cx),  // go preferred width
+                           sz.cy);
+
+  go_->SetBounds(location_bar_->GetX() + location_bar_->GetWidth(),
+                 kControlVertOffset,
+                 sz.cx,
+                 sz.cy);
+
+  // Make sure the Page menu never overlaps the location bar.
+  int page_x = go_->GetX() + go_->GetWidth() + kMenuButtonOffset;
+  page_menu_->GetPreferredSize(&sz);
+  page_menu_->SetBounds(page_x, kControlVertOffset, sz.cx, go_->GetHeight());
+  app_menu_->GetPreferredSize(&sz);
+  app_menu_->SetBounds(page_menu_->GetX() + page_menu_->GetWidth(),
+                       page_menu_->GetY(), sz.cx, go_->GetHeight());
 }
 
 void BrowserToolbarView::DidGainFocus() {
@@ -360,13 +359,6 @@ void BrowserToolbarView::DidGainFocus() {
   // Set hot-tracking for child, and update focused_view for MSAA focus event.
   if (acc_focused_view_) {
     acc_focused_view_->SetHotTracked(true);
-    
-    // Show the tooltip for the view that got the focus.
-    if (GetViewContainer()->GetTooltipManager()) {
-      GetViewContainer()->GetTooltipManager()->
-          ShowKeyboardTooltip(acc_focused_view_);
-    }
-
     // Update focused_view with MSAA-adjusted child id.
     view_index = acc_focused_view_->GetID();
   }
@@ -381,9 +373,6 @@ void BrowserToolbarView::DidGainFocus() {
 void BrowserToolbarView::WillLoseFocus() {
   // Resetting focus state.
   acc_focused_view_->SetHotTracked(false);
-  // Any tooltips that are active should be hidden when toolbar loses focus.
-  if (GetViewContainer() && GetViewContainer()->GetTooltipManager())
-    GetViewContainer()->GetTooltipManager()->HideKeyboardTooltip();
   acc_focused_view_ = NULL;
 }
 
@@ -407,11 +396,7 @@ bool BrowserToolbarView::OnKeyPressed(const ChromeViews::KeyEvent& e) {
       // VK_SPACE is already handled by the default case.
       if (acc_focused_view_->GetID() == VIEW_ID_PAGE_MENU ||
           acc_focused_view_->GetID() == VIEW_ID_APP_MENU) {
-        // If a menu button in toolbar is activated and its menu is displayed,
-        // then active tooltip should be hidden.
-        if (GetViewContainer()->GetTooltipManager())
-          GetViewContainer()->GetTooltipManager()->HideKeyboardTooltip();
-        // Safe to cast, given to above view id check.
+        // Safe to cast, given to above check.
         static_cast<ChromeViews::MenuButton*>(acc_focused_view_)->Activate();
         // Re-enable hot-tracking, as Activate() will disable it.
         acc_focused_view_->SetHotTracked(true);
@@ -441,11 +426,6 @@ bool BrowserToolbarView::OnKeyPressed(const ChromeViews::KeyEvent& e) {
     int view_id = acc_focused_view_->GetID();
     HWND hwnd = GetViewContainer()->GetHWND();
 
-    // Show the tooltip for the view that got the focus.
-    if (GetViewContainer()->GetTooltipManager()) {
-      GetViewContainer()->GetTooltipManager()->
-          ShowKeyboardTooltip(GetChildViewAt(next_view));
-    }
     // Notify Access Technology that there was a change in keyboard focus.
     ::NotifyWinEvent(EVENT_OBJECT_FOCUS, hwnd, OBJID_CLIENT,
                      static_cast<LONG>(view_id));
@@ -463,23 +443,6 @@ bool BrowserToolbarView::OnKeyReleased(const ChromeViews::KeyEvent& e) {
   return acc_focused_view_->OnKeyReleased(e);
 }
 
-void BrowserToolbarView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  out->cx = 0;
-
-  if (IsDisplayModeNormal()) {
-    static SkBitmap normal_background;
-    if (normal_background.isNull()) {
-      ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-      normal_background = *rb.GetBitmapNamed(IDR_CONTENT_TOP_CENTER);
-    }
-    out->cy = normal_background.height();
-  } else {
-    CSize ps;
-    location_bar_->GetPreferredSize(&ps);
-    out->cy = ps.cy + 2 * kControlVertOffsetLocationOnly;
-  }
-}
 
 void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
   Menu::AnchorPoint anchor = Menu::TOPRIGHT;
@@ -641,22 +604,13 @@ int BrowserToolbarView::GetNextAccessibleViewIndex(int view_index,
 
   int current_view_index = view_index + modifier;
 
-  while ((current_view_index >= 0) &&
-         (current_view_index < GetChildViewCount())) {
-    // Skip the location bar, as it has its own keyboard navigation. Also skip
-    // any views that cannot be interacted with.
-    if (current_view_index == GetChildIndex(location_bar_) ||
-        !GetChildViewAt(current_view_index)->IsEnabled() ||
-        !GetChildViewAt(current_view_index)->IsVisible()) {
+  if ((current_view_index >= 0) && (current_view_index < GetChildViewCount())) {
+    // Skip the location bar, as it has its own keyboard navigation.
+    if (current_view_index == GetChildIndex(location_bar_))
       current_view_index += modifier;
-      continue;
-    }
-    // Update view_index with the available button index found.
+
     view_index = current_view_index;
-    break;
   }
-  // Returns the next available button index, or if no button is available in
-  // the specified direction, remains where it was.
   return view_index;
 }
 
@@ -719,4 +673,3 @@ bool BrowserToolbarView::GetAcceleratorInfo(int id,
   // Else, we retrieve the accelerator information from the frame.
   return GetViewContainer()->GetAccelerator(id, accel);
 }
-

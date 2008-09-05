@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_TEST_ACCISSIBILITY_CONSTANTS_H__
 #define CHROME_TEST_ACCISSIBILITY_CONSTANTS_H__
@@ -35,21 +60,12 @@
 #define CHROME_CLIENT_ACC_INDEX         (0)
 
 // Chrome Client chidren.
-#define BROWSER_VIEW_ACC_INDEX          (0)
+#define TOOLBAR_ACC_INDEX               (0)
 #define TABSTRIP_ACC_INDEX              (1)
-#if defined(GOOGLE_CHROME_BUILD)
 #define CHROME_MIN_ACC_INDEX            (4)
 #define CHROME_MAX_ACC_INDEX            (5)
 #define CHROME_RESTORE_ACC_INDEX        (6)
 #define CHROME_CLOSE_ACC_INDEX          (7)
-#else
-#define CHROME_MIN_ACC_INDEX            (3)
-#define CHROME_MAX_ACC_INDEX            (4)
-#define CHROME_RESTORE_ACC_INDEX        (5)
-#define CHROME_CLOSE_ACC_INDEX          (6)
-#endif
-// Browser View children.
-#define TOOLBAR_ACC_INDEX               (0)
 
 // Toolbar children.
 #define BACK_BTN_INDEX                  (0)
@@ -69,7 +85,6 @@
 #define TOOLBAR_STR                      _T("toolbar")
 #define TABSTRIP_STR                     _T("tabstrip")
 #define TAB_STR                          _T("tab")
-#define BROWSER_VIEW_STR                 _T("browser_view")
 
 // Enums for keyboard keys. These values are directed to virtual-key values.
 enum KEYBD_KEYS {
@@ -117,4 +132,3 @@ enum KEYBD_KEYS {
 
 
 #endif  // CHROME_TEST_ACCISSIBILITY_CONSTANTS_H__
-

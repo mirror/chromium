@@ -1,0 +1,79 @@
+Marked check boxes [x] indicate items that have been done.
+
+mark_compact.*:
+[x] MarkingStack: push, pop: capitalize!
+[x] MarkingStack, MarkCompactCollector::marking_stack_ => into .cc file
+[x] CollectorStates => CollectorState (?)
+[ ] consider doing recursive visits of large-ish fixed object arrays
+[x] please move the k* constants to globals.h
+[x] remove Setup/TearDown at all
+[x] capitalize gc_begin, gc_end; also call it: MarkCompactBegin, MarkCompactEnd
+[x] simplify CollectGarbage, make unnecessary details disappear
+[ ] move dummy computation into Heap
+[x] encode_pointers, decode_offset, decode_*: Capitalize!
+[x] encode_pointers: consider use a new variable instead of changing parameters
+[ ] MarkLiveObjects: try to restructure the while(true) loop
+[ ] VerifyHeapAfterMarkingPhase, make one call of Heap::Verify()
+[x] introduce different variable names for HeapObjectIterator, e.g., new_it, old_it, etc.
+[x] Phase 2: encode/deccode_*: capitalize
+[x] *_p: consider remove the _p's!
+[x] rename: BuildListOfLives => BuildListOfLiveObjects
+[x] rename *Lives => *LiveObjects
+[x] gc_save_first_live_area: capitalize
+[x] move/relocate Heap::los_space_->Compact() into the compact phase
+[x] IterateLivesBetween, rename live_one to live_objects???
+[ ] IsOldAliveCallback: way too looong! also, function name could be improved?
+ => alignment functionality: try to factor out
+[ ] grep for all Fatal/CHECKs etc. and fix it
+[ ] grep for USE(x) and remove the USEs which we don't need
+[x] Use space enum values for VerifyPageHeaders instead of bools.
+[x] Use the name has_next in the the iterators.
+[ ] Maybe rename ASSERT_PAGE_OFFSET?  
+
+
+v8api.h:
+[ ] change namespace to v8::internal::
+[ ] naming convention: V8xxx (no underscores)
+[ ] add a comment on V8Scope
+[ ] fix void* problem (we don't want V8Scope and V8Env to be interchangeable)
+[ ] add usage example
+[ ] make pointers explicit
+[ ] fix ordering of functions (*Equals*)
+[ ] remove void from empty parameter lists
+[ ] fix the Scope issue, can they be nested? move it to V8Env (Push, Pop)??? => perhaps change into Acquire/Release on the JSEnv instead (get rid of the Scope)
+[ ] JSEnv should always be at the beginning
+[ ] rename Invoke -> RunScript
+[ ] consider CreateXXX -> NewXXX
+[ ] V8_Compile(... file_name): perhaps use script_id instead (could be a void* ?)
+[ ] add interface for adding global handle that survives acquire/release
+[ ] V8Script should not refer to a Code object! Code objects should not be exposed so we can do whatever with them as we please
+[ ] may want to take exceptions into account
+[ ] remove _SE_ and _RE_ from message type names
+[ ] remove leading underscores
+[ ] consider having types in the beginning
+[ ] listeners: consider rename 'data' to 'context'
+[ ] reason for functional interface (and why not using structs) (different C compilers, etc.)
+[ ] Messages should be JS objects! Can use GetProperty calls to get info about messages. Can also provide convenience functions.
+[ ] consider internationalization into JS
+
+
+v8api.cc:
+[ ] generally use xxx_cast instead of (T)
+[ ] V8::lock should probably be V8::mutex
+[ ] try to wrap lock/unlock machinery as it appears repeatedly
+[ ] FromXXX, ToXXX: are they pure casts
+[ ] If Unlock fails, we cannot do anything!
+[ ] probably need locks on everything! (GC!!!)
+[ ] V8_SetProperty implementation is all very strange
+[ ] NULL V8Objects are legal or not?
+[ ] Perhaps use strcpy instead of manually copying strings?
+[ ] See if we need to expand tabs in GetUnderline.  Maybe expand in both the real string and the underline string to ensure alignment?
+
+v8api:  (C++ api)
+[ ] Do not indent in large namespaces.
+[ ] Remove implementation of the private copy constructor.
+[ ] Does Get/SetProperty change the Scope?  If not, const the Scope?
+[ ] Declare Initialize and Dispose at the top of the file and move the comments.
+[ ] Use local HandleScopes where possible.  Add Push/PopScope to Env.
+
+

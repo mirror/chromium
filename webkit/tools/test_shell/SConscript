@@ -1,6 +1,31 @@
-# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+# Copyright 2008, Google Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#
+#    * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above
+# copyright notice, this list of conditions and the following disclaimer
+# in the documentation and/or other materials provided with the
+# distribution.
+#    * Neither the name of Google Inc. nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Import('env', 'env_res')
 
@@ -18,54 +43,62 @@ env_res.Append(
     ],
 )
 
+input_files = [
+    'drag_delegate.cc',
+    'drop_delegate.cc',
+    'event_sending_controller.cc',
+    'layout_test_controller.cc',
+    'simple_resource_loader_bridge.cc',
+    'test_navigation_controller.cc',
+    'test_shell.cc',
+    'test_shell_switches.cc',
+    'test_shell_request_context.cc',
+    'test_webview_delegate.cc',
+    'text_input_controller.cc',
+    'webview_host.cc',
+    'webwidget_host.cc',
+    'temp/navigation_controller_base.cc',
+]
+
 env.Append(
     CPPPATH = [
         '$BREAKPAD_DIR/src',
         '$WEBKIT_DIR/glue',
         '$GTEST_DIR/include',
     ],
-    LIBS = [
-       'test_shell',
-       'base',
-       'base_gfx',
-       'breakpad_handler',
-       'breakpad_sender',
-       'googleurl',
-       'net',
-       'skia',
-       'gtest',
-       'bzip2',
-       'icuuc',
-       'libjpeg',
-       'libpng',
-       'libxml',
-       'libxslt',
-       'modp_b64',
-       'zlib',
-       'v8',
-       'JavaScriptCore_pcre',
-       'Port',
-       'activex_shim',
-       'WTF',
-       'V8Bindings',
-       'WebCore',
-       'default_plugin',
-       'Glue',
-    ],
-)
-
-env.Append(
     CCFLAGS = [
         '/TP',
         '/WX',
         '/Wp64',
+        '/wd4503',
+        '/wd4819',
     ],
 
     LIBS = [
         'comctl32.lib',
-        'rpcrt4.lib',
         'shlwapi.lib',
+        'rpcrt4.lib',
         'winmm.lib',
+        'wininet.lib',
+        'version.lib',
+        'msimg32.lib',
+        'ws2_32.lib',
+        'usp10.lib',
+        'psapi.lib',
+        'kernel32.lib',
+        'user32.lib',
+        'gdi32.lib',
+        'winspool.lib',
+        'comdlg32.lib',
+        'advapi32.lib',
+        'shell32.lib',
+        'ole32.lib',
+        'oleaut32.lib',
+        'uuid.lib',
+        'odbc32.lib',
+        'odbccp32.lib',
+
+        'delayimp.lib',
     ],
 
     LINKFLAGS = [
@@ -82,23 +115,8 @@ env.Append(
     ],
 )
 
-input_files = [
-    'drag_delegate.cc',
-    'drop_delegate.cc',
-    'event_sending_controller.cc',
-    'layout_test_controller.cc',
-    'simple_resource_loader_bridge.cc',
-    'test_navigation_controller.cc',
-    'test_shell.cc',
-    'test_shell_switches.cc',
-    'test_shell_request_context.cc',
-    'test_webview_delegate.cc',
-    'text_input_controller.cc',
-    'webview_host.cc',
-    'webwidget_host.cc',
-]
+lib = env.Library('test_shell', input_files)
 
-lib = env.ChromeStaticLibrary('test_shell', input_files)
 
 
 
@@ -108,13 +126,42 @@ resources = [
     '$WEBKIT_DIR/build/localized_strings/webkit_strings_en-US.res',
 ]
 
+components = [
+    lib,
 
-exe_input_files = [
-    'test_shell_main.cc',
-    '$V8_DIR/snapshot-empty$OBJSUFFIX'
+    '$BASE_DIR/base.lib',
+    '$BASE_DIR/gfx/base_gfx.lib',
+    '$BREAKPAD_DIR/breakpad_handler.lib',
+    '$BREAKPAD_DIR/breakpad_sender.lib',
+    '$GOOGLEURL_DIR/googleurl.lib',
+    '$NET_DIR/net.lib',
+    '$SKIA_DIR/skia.lib',
+    '$TESTING_DIR/gtest.lib',
+    '$BZIP2_DIR/bzip2.lib',
+    '$ICU38_DIR/icuuc.lib',
+    '$LIBJPEG_DIR/libjpeg.lib',
+    '$LIBPNG_DIR/libpng.lib',
+    '$LIBXML_DIR/libxml.lib',
+    '$LIBXSLT_DIR/libxslt.lib',
+    '$MODP_B64_DIR/modp_b64.lib',
+    '$ZLIB_DIR/zlib.lib',
+    '$V8_DIR/v8.lib',
+    '$V8_DIR/snapshot-empty.obj',
+    '$WEBKIT_DIR/JavaScriptCore_pcre.lib',
+    '$WEBKIT_DIR/Port.lib',
+    '$WEBKIT_DIR/activex_shim/activex_shim.lib',
+    '$WEBKIT_DIR/build/JavaScriptCore/WTF.lib',
+    '$WEBKIT_DIR/build/V8Bindings/V8Bindings.lib',
+    '$WEBKIT_DIR/build/WebCore/WebCore.lib',
+    '$WEBKIT_DIR/default_plugin/default_plugin.lib',
+    '$WEBKIT_DIR/glue/Glue.lib',
 ]
 
-test_shell = env.ChromeProgram('test_shell', resources + exe_input_files)
+test_shell = env.Program(['test_shell.exe',
+                          'test_shell.ilk',
+                          'test_shell.pdb'],
+                         components + resources +
+                         ['test_shell_main.cc'])
 i = env.Install('$TARGET_ROOT', test_shell)
 env.Alias('webkit', i)
 
@@ -138,6 +185,7 @@ test_files = [
     'plugin_tests.cc',
     'run_all_tests.cc',
     'simple_resource_loader_bridge.cc',
+    'temp/navigation_controller_base.cc',
     'test_navigation_controller.cc',
     'test_shell.cc',
     'test_shell_request_context.cc',
@@ -164,18 +212,16 @@ test_files = [
     '$WEBKIT_DIR/glue/resource_fetcher_unittest.cc',
     # Commented out until a regression is fixed and this file is restored.
     #'$WEBKIT_DIR/glue/stringimpl_unittest.cc',
-    '$WEBKIT_DIR/glue/webframe_unittest.cc',
     '$WEBKIT_DIR/glue/webplugin_impl_unittest.cc',
     '$WEBKIT_DIR/port/platform/GKURL_unittest.cpp',
     '$WEBKIT_DIR/port/platform/image-decoders/bmp/BMPImageDecoder_unittest.cpp',
     '$WEBKIT_DIR/port/platform/image-decoders/ico/ICOImageDecoder_unittest.cpp',
     '$WEBKIT_DIR/port/platform/image-decoders/xbm/XBMImageDecoder_unittest.cpp',
-
-    '$V8_DIR/snapshot-empty$OBJSUFFIX',
 ]
 
-test_shell_tests = env.ChromeTestProgram('test_shell_tests',
-                                         resources + test_files)
+test_shell_tests = env.Program(['test_shell_tests',
+                                'test_shell_tests.ilk',
+                                'test_shell_tests.pdb'],
+                               components + resources + test_files)
 i = env.Install('$TARGET_ROOT', test_shell_tests)
 env.Alias('webkit', i)
-

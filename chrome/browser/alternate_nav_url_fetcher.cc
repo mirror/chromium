@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/alternate_nav_url_fetcher.h"
 
@@ -16,14 +41,14 @@ AlternateNavURLFetcher::AlternateNavURLFetcher(
     state_(NOT_STARTED),
     navigated_to_entry_(false) {
   NotificationService::current()->AddObserver(this,
-      NOTIFY_NAV_ENTRY_PENDING, NotificationService::AllSources());
+      NOTIFY_NAVIGATION_STATE_CHANGED, NotificationService::AllSources());
 }
 
 AlternateNavURLFetcher::~AlternateNavURLFetcher() {
   if (state_ == NOT_STARTED) {
     // Never caught the NavigationController notification.
     NotificationService::current()->RemoveObserver(this,
-        NOTIFY_NAV_ENTRY_PENDING, NotificationService::AllSources());
+        NOTIFY_NAVIGATION_STATE_CHANGED, NotificationService::AllSources());
   }  // Otherwise, Observe() removed the observer already.
 }
 
@@ -44,7 +69,7 @@ void AlternateNavURLFetcher::Observe(NotificationType type,
   controller_->SetAlternateNavURLFetcher(this);
 
   NotificationService::current()->RemoveObserver(this,
-      NOTIFY_NAV_ENTRY_PENDING, NotificationService::AllSources());
+      NOTIFY_NAVIGATION_STATE_CHANGED, NotificationService::AllSources());
 
   DCHECK_EQ(NOT_STARTED, state_);
   state_ = IN_PROGRESS;
@@ -76,7 +101,7 @@ void AlternateNavURLFetcher::OnURLFetchComplete(const URLFetcher* source,
 void AlternateNavURLFetcher::ShowInfobar() {
   const NavigationEntry* const entry = controller_->GetActiveEntry();
   DCHECK(entry);
-  if (entry->tab_type() != TAB_CONTENTS_WEB)
+  if (entry->GetType() != TAB_CONTENTS_WEB)
     return;
   TabContents* tab_contents =
       controller_->GetTabContents(TAB_CONTENTS_WEB);
@@ -87,4 +112,3 @@ void AlternateNavURLFetcher::ShowInfobar() {
   web_contents->GetInfoBarView()->AddChildView(new InfoBarAlternateNavURLView(
       alternate_nav_url_));
 }
-

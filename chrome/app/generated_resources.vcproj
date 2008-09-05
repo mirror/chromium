@@ -37,14 +37,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\google_chrome_strings.grd"
-			>
-		</File>
-		<File
-			RelativePath=".\chromium_strings.grd"
-			>
-		</File>
-		<File
 			RelativePath="$(IntDir)\generated_resources.h"
 			>
 		</File>

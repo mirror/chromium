@@ -1,43 +1,91 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/browser.h"
 
 #include <commdlg.h>
 #include <shellapi.h>
 
+#include <map>
+#include <iostream>
+#include <fstream>
+
+#include "base/command_line.h"
 #include "base/file_version_info.h"
-#include "chrome/app/chrome_dll_resource.h"
+#include "base/gfx/png_encoder.h"
+#include "base/path_service.h"
+#include "base/string_util.h"
+#include "base/win_util.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/automation/ui_controls.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/browser_window.h"
+#include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/character_encoding.h"
-#include "chrome/browser/debugger/debugger_window.h"
+#include "chrome/browser/chrome_frame.h"
+#include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/download_tab_view.h"
 #include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/interstitial_page_delegate.h"
+#include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
+#include "chrome/browser/network_status_view.h"
 #include "chrome/browser/options_window.h"
+#include "chrome/browser/profile.h"
+#include "chrome/browser/session_startup_pref.h"
 #include "chrome/browser/tab_restore_service.h"
 #include "chrome/browser/task_manager.h"
+#include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/user_metrics.h"
+#include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/about_chrome_view.h"
+#include "chrome/browser/views/bookmark_bubble_view.h"
 #include "chrome/browser/views/bug_report_view.h"
 #include "chrome/browser/views/clear_browsing_data.h"
 #include "chrome/browser/views/importer_view.h"
+#include "chrome/browser/views/info_bubble.h"
+#include "chrome/browser/views/first_run_view.h"
 #include "chrome/browser/views/keyword_editor_view.h"
+#include "chrome/browser/views/location_bar_view.h"
 #include "chrome/browser/views/password_manager_view.h"
 #include "chrome/browser/views/toolbar_star_toggle.h"
 #include "chrome/browser/views/toolbar_view.h"
-#include "chrome/browser/web_contents.h"
+#include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/common/l10n_util.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
+#include "chrome/common/text_zoom.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/window.h"
+#include "net/base/escape.h"
 #include "net/base/net_util.h"
-
 #include "generated_resources.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,7 +144,7 @@ void Browser::InitCommandState() {
   controller_.UpdateCommandEnabled(IDC_PRINT, true);
   controller_.UpdateCommandEnabled(IDC_COPY_URL, true);
   controller_.UpdateCommandEnabled(IDC_DUPLICATE, true);
-  controller_.UpdateCommandEnabled(IDC_GOOFFTHERECORD, true);
+  controller_.UpdateCommandEnabled(IDC_GOOFFTHERECORD, false);
   controller_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, true);
   controller_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS, true);
   controller_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA, true);
@@ -309,13 +357,12 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_NEWWINDOW:
       UserMetrics::RecordAction(L"NewWindow", profile_);
-      Browser::OpenNewBrowserWindow(profile_->GetOriginalProfile(),
-                                    SW_SHOWNORMAL);
+      Browser::OpenNewBrowserWindow(profile_, SW_SHOWNORMAL);
       break;
 
     case IDC_CLOSEWINDOW:
       UserMetrics::RecordAction(L"CloseWindow", profile_);
-      window_->Close();
+      frame_->Close();
       break;
 
     case IDC_FOCUS_LOCATION:
@@ -345,7 +392,10 @@ void Browser::ExecuteCommand(int id) {
     case IDC_FOCUS_TOOLBAR:
       UserMetrics::RecordAction(L"FocusToolbar", profile_);
       {
-        window_->FocusToolbar();
+        ChromeViews::View* tb = GetToolbar();
+        if (tb) {
+          tb->RequestFocus();
+        }
       }
       break;
 
@@ -446,12 +496,11 @@ void Browser::ExecuteCommand(int id) {
       UserMetrics::RecordAction(L"ViewSource", profile_);
 
       TabContents* current_tab = GetSelectedTabContents();
-      NavigationEntry* entry =
-          current_tab->controller()->GetLastCommittedEntry();
-      if (entry) {
-        GURL url("view-source:" + entry->url().spec());
-        AddTabWithURL(url, PageTransition::LINK, true, NULL);
-      }
+      DCHECK(current_tab->controller()->GetLastCommittedEntry());
+      GURL url("view-source:" +
+        current_tab->controller()->GetLastCommittedEntry()->GetURL().spec());
+
+      AddTabWithURL(url, PageTransition::LINK, true, NULL);
       break;
     }
 
@@ -474,8 +523,7 @@ void Browser::ExecuteCommand(int id) {
     }
 
     case IDC_GOOFFTHERECORD: {
-      Browser::OpenNewBrowserWindow(profile_->GetOffTheRecordProfile(),
-                                    SW_SHOWNORMAL);
+      Browser::OpenURLOffTheRecord(profile_, NewTabUIURL());
       break;
     }
 
@@ -498,10 +546,14 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_ABOUT: {
       UserMetrics::RecordAction(L"AboutChrome", profile_);
-      ChromeViews::Window::CreateChromeWindow(
-          GetTopLevelHWND(),
-          gfx::Rect(),
-          new AboutChromeView(profile_))->Show();
+      AboutChromeView* about_view = new AboutChromeView(profile_);
+      ChromeViews::Window* about_dialog =
+          ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(),
+                                                  gfx::Rect(),
+                                                  about_view,
+                                                  about_view);
+      about_dialog->Show();
+      about_view->SetDialog(about_dialog);
       break;
     }
 
@@ -625,7 +677,7 @@ void Browser::ExecuteCommand(int id) {
     case IDC_ENCODING_WINDOWS1255:
     case IDC_ENCODING_WINDOWS1258: {
       UserMetrics::RecordAction(L"OverrideEncoding", profile_);
-      const std::string cur_encoding_name =
+      const std::wstring cur_encoding_name =
           CharacterEncoding::GetCanonicalEncodingNameByCommandId(id);
       TabContents* current_tab = GetSelectedTabContents();
       if (!cur_encoding_name.empty() && current_tab)
@@ -733,7 +785,7 @@ void Browser::GoBack() {
     // to the previous page as it is already available in a render view host
     // of the WebContents.  This makes the back more snappy and avoids potential
     // reloading of POST pages.
-    if (web_contents && web_contents->showing_interstitial_page()) {
+    if (web_contents && web_contents->IsShowingInterstitialPage()) {
       // Let the delegate decide (if any) if it wants to handle the back
       // navigation (it may have extra things to do).
      if (web_contents->interstitial_page_delegate() &&
@@ -750,7 +802,7 @@ void Browser::GoBack() {
       //   recreated.
       // - we have not yet visited that navigation entry (typically session
       //   restore), in which case the page is not already available.
-      if (prev_nav_entry->tab_type() == TAB_CONTENTS_WEB &&
+      if (prev_nav_entry->GetType() == TAB_CONTENTS_WEB &&
           !prev_nav_entry->restored()) {
         // It is the job of the code that shows the interstitial to listen for
         // notifications of the interstitial getting hidden and appropriately
@@ -783,10 +835,10 @@ void Browser::Reload() {
   TabContents* current_tab = GetSelectedTabContents();
   if (current_tab) {
     WebContents* web_contents = current_tab->AsWebContents();
-    if (web_contents && web_contents->showing_interstitial_page()) {
+    if (web_contents && web_contents->IsShowingInterstitialPage()) {
       NavigationEntry* entry = current_tab->controller()->GetActiveEntry();
       DCHECK(entry);  // Should exist if interstitial is showing.
-      OpenURL(entry->url(), CURRENT_TAB, PageTransition::RELOAD);
+      OpenURL(entry->GetURL(), CURRENT_TAB, PageTransition::RELOAD);
       return;
     }
   }
@@ -817,22 +869,22 @@ void Browser::StarCurrentTabContents() {
   NavigationEntry* entry = rvh->controller()->GetActiveEntry();
   if (!entry)
     return;  // Can't star if there is no URL.
-  const GURL& url = entry->display_url();
+  const GURL& url = entry->GetDisplayURL();
   if (url.is_empty() || !url.is_valid())
     return;
 
-  if (window_->GetStarButton()) {
-    if (!window_->GetStarButton()->is_bubble_showing()) {
+  if (toolbar_.star_button()) {
+    if (!toolbar_.star_button()->is_bubble_showing()) {
       const bool newly_bookmarked = (model->GetNodeByURL(url) == NULL);
       if (newly_bookmarked) {
-        model->SetURLStarred(url, entry->title(), true);
+        model->SetURLStarred(url, entry->GetTitle(), true);
         if (!model->GetNodeByURL(url)) {
           // Starring failed. This shouldn't happen.
           NOTREACHED();
           return;
         }
       }
-      window_->GetStarButton()->ShowStarBubble(url, newly_bookmarked);
+      toolbar_.star_button()->ShowStarBubble(url, newly_bookmarked);
     }
   } else if (model->GetNodeByURL(url)) {
     // If we can't find the star button and the user wanted to unstar it,
@@ -868,10 +920,13 @@ void Browser::OpenDebuggerWindow() {
     return;
 
   if (current_tab->AsWebContents()) {
-    // Only one debugger instance can exist at a time right now.
-    // TODO(erikkay): need an alert, dialog, something
-    // or better yet, fix the one instance limitation
-    if (!DebuggerWindow::DoesDebuggerExist()) {
+    if (DebuggerWindow::DoesDebuggerExist()) {
+      // Only one debugger instance can exist at a time right now.
+      // TODO(erikkay): need an alert, dialog, something
+      // or better yet, fix the one instance limitation
+      return;
+    }
+    if (!debugger_window_.get()) {
       debugger_window_ = new DebuggerWindow();
     }
     debugger_window_->Show(current_tab);
@@ -884,8 +939,12 @@ void Browser::OpenKeywordEditor() {
 }
 
 void Browser::OpenImportSettingsDialog() {
-  ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
-                                          new ImporterView(profile_))->Show();
+  ImporterView* importer_view = new ImporterView(profile_);
+  ChromeViews::Window* importer_dialog =
+      ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
+                                              importer_view, importer_view);
+  importer_dialog->Show();
+  importer_view->set_dialog(importer_dialog);
 }
 
 void Browser::OpenBugReportDialog() {
@@ -900,7 +959,7 @@ void Browser::OpenBugReportDialog() {
     if (current_tab->type() == TAB_CONTENTS_WEB) {
       // URL for the current page
       bug_report_view->SetUrl(
-          current_tab->controller()->GetActiveEntry()->url());
+          current_tab->controller()->GetActiveEntry()->GetURL());
     }
   }
 
@@ -924,15 +983,22 @@ void Browser::OpenBugReportDialog() {
   bug_report_view->set_png_data(screenshot_png);
 
   // Create and show the dialog
-  ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
-                                          bug_report_view)->Show();
+  ChromeViews::Window* bug_report_dialog =
+      ChromeViews::Window::CreateChromeWindow(GetTopLevelHWND(), gfx::Rect(),
+                                              bug_report_view, bug_report_view);
+  bug_report_dialog->Show();
+  bug_report_view->set_dialog(bug_report_dialog);
 }
 
 void Browser::OpenClearBrowsingDataDialog() {
-    ChromeViews::Window::CreateChromeWindow(
-        GetTopLevelHWND(),
-        gfx::Rect(),
-        new ClearBrowsingDataView(profile_))->Show();
+  ClearBrowsingDataView* clear_browsing_data_view =
+      new ClearBrowsingDataView(profile_);
+  ChromeViews::Window* clear_browsing_data_dialog =
+      ChromeViews::Window::CreateChromeWindow(
+          GetTopLevelHWND(), gfx::Rect(),
+          clear_browsing_data_view, clear_browsing_data_view);
+  clear_browsing_data_dialog->Show();
+  clear_browsing_data_view->SetDialog(clear_browsing_data_dialog);
 }
 
 void Browser::RunSimpleFrameMenu(const CPoint& pt, HWND hwnd) {
@@ -1065,8 +1131,7 @@ void Browser::DuplicateContentsAt(int index) {
 // Browser, SelectFileDialog::Listener implementation:
 
 void Browser::FileSelected(const std::wstring& path, void* params) {
-  GURL file_url = net::FilePathToFileURL(path);
+  GURL file_url = net_util::FilePathToFileURL(path);
   if (!file_url.is_empty())
     OpenURL(file_url, CURRENT_TAB, PageTransition::TYPED);
 }
-

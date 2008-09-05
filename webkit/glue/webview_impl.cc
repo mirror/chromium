@@ -57,11 +57,7 @@
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
 #include "PluginInfoStore.h"
-#if defined(OS_WIN)
 #include "RenderThemeWin.h"
-#elif defined(OS_MACOSX)
-#include "RenderThemeMac.h"
-#endif
 #include "ResourceHandle.h"
 #include "SelectionController.h"
 #include "Settings.h"
@@ -96,7 +92,6 @@
 
 // Get rid of WTF's pow define so we can use std::pow.
 #undef pow
-#include <cmath> // for std::pow
 
 using namespace WebCore;
 
@@ -226,48 +221,44 @@ void WebViewImpl::MouseDown(const WebMouseEvent& event) {
       MakePlatformMouseEvent(main_frame_->frameview(), event));
 }
 
-void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
-  page_->contextMenuController()->clearContextMenu();
-
-  MakePlatformMouseEvent pme(main_frame_->frameview(), event);
-
-  // Find the right target frame. See issue 1186900.
-  IntPoint doc_point(
-      main_frame_->frame()->view()->windowToContents(pme.pos()));
-  HitTestResult result =
-      main_frame_->frame()->eventHandler()->hitTestResultAtPoint(doc_point,
-                                                                 false);
-  Frame* target_frame;
-  if (result.innerNonSharedNode())
-      target_frame = result.innerNonSharedNode()->document()->frame();
-  else
-      target_frame = page_->focusController()->focusedOrMainFrame();
-
-  target_frame->view()->setCursor(pointerCursor());
-
-  context_menu_allowed_ = true;
-  target_frame->eventHandler()->sendContextMenuEvent(pme);
-  context_menu_allowed_ = false;
-  // Actually showing the context menu is handled by the ContextMenuClient
-  // implementation...
-}
-
 void WebViewImpl::MouseUp(const WebMouseEvent& event) {
+  if (event.button == WebMouseEvent::BUTTON_RIGHT) {
+    page_->contextMenuController()->clearContextMenu();
+
+    MakePlatformMouseEvent pme(main_frame_->frameview(), event);
+
+    // Find the right target frame. See issue 1186900.
+    IntPoint doc_point(
+        main_frame_->frame()->view()->windowToContents(pme.pos()));
+    HitTestResult result =
+        main_frame_->frame()->eventHandler()->hitTestResultAtPoint(doc_point,
+                                                                   false);
+    Frame* target_frame;
+    if (result.innerNonSharedNode())
+        target_frame = result.innerNonSharedNode()->document()->frame();
+    else
+        target_frame = page_->focusController()->focusedOrMainFrame();
+
+    target_frame->view()->setCursor(pointerCursor());
+
+    context_menu_allowed_ = true;
+    target_frame->eventHandler()->sendContextMenuEvent(pme);
+    context_menu_allowed_ = false;
+    // Actually showing the context menu is handled by the ContextMenuClient
+    // implementation...
+  }
+
   if (!main_frame_->frameview())
     return;
 
   MouseCaptureLost();
   main_frame_->frameview()->frame()->eventHandler()->handleMouseReleaseEvent(
       MakePlatformMouseEvent(main_frame_->frameview(), event));
-
-  // Dispatch the contextmenu event regardless of if the click was swallowed.
-  if (event.button == WebMouseEvent::BUTTON_RIGHT)
-    MouseContextMenu(event);
 }
 
 void WebViewImpl::MouseWheel(const WebMouseWheelEvent& event) {
-  MakePlatformWheelEvent platform_event(main_frame_->frameview(), event);
-  main_frame_->frame()->eventHandler()->handleWheelEvent(platform_event);
+  main_frame_->frame()->eventHandler()->handleWheelEvent(
+      MakePlatformWheelEvent(main_frame_->frameview(), event));
 }
 
 bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
@@ -290,19 +281,15 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
   if (!handler)
     return KeyEventDefault(event);
 
-#if defined(OS_WIN)
-  // TODO(pinkerton): figure out these keycodes on non-windows
   if (((event.modifiers == 0) && (event.key_code == VK_APPS)) ||
       ((event.modifiers == WebInputEvent::SHIFT_KEY) &&
        (event.key_code == VK_F10))) {
     SendContextMenuEvent(event);
     return true;
   }
-#endif
 
   MakePlatformKeyboardEvent evt(event);
 
-#if defined(OS_WIN)
   if (WebInputEvent::KEY_DOWN == event.type) {
     MakePlatformKeyboardEvent evt_rawkeydown = evt;
     evt_rawkeydown.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
@@ -315,19 +302,6 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
       return true;
     }
   }
-#elif defined(OS_MACOSX)
-  // Windows and Cocoa handle events in rather different ways. On Windows,
-  // you get two events: WM_KEYDOWN/WM_KEYUP and WM_CHAR. In
-  // PlatformKeyboardEvent, RawKeyDown represents the raw messages. When
-  // processing them, we don't process text editing events, since we'll be
-  // getting the data soon enough. In Cocoa, we get one event with both the
-  // raw and processed data. Therefore we need to keep the type as KeyDown, so
-  // that we'll know that this is the only time we'll have the event and that
-  // we need to do our thing.
-  if (handler->keyEvent(evt)) {
-    return true;
-  }
-#endif
 
   return KeyEventDefault(event);
 }
@@ -358,12 +332,10 @@ bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
   if (!evt.IsCharacterKey())
     return true;
 
-#if defined(OS_WIN)
   // Safari 3.1 does not pass off WM_SYSCHAR messages to the
   // eventHandler::keyEvent. We mimic this behavior.
   if (evt.isSystemKey())
     return handler->handleAccessKey(evt);
-#endif
 
   if (!handler->keyEvent(evt))
     return KeyEventDefault(event);
@@ -379,8 +351,6 @@ bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
 * function is the code to convert from a Keyboard event to the Right
 * Mouse button up event.
 */
-#if defined(OS_WIN)
-// TODO(pinkerton): implement on non-windows
 bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
   static const int kContextMenuMargin = 1;
   FrameView* view = page()->mainFrame()->view();
@@ -457,7 +427,6 @@ bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
   context_menu_allowed_ = false;
   return handled;
 }
-#endif
 
 bool WebViewImpl::KeyEventDefault(const WebKeyboardEvent& event) {
   Frame* frame = GetFocusedWebCoreFrame();
@@ -466,14 +435,11 @@ bool WebViewImpl::KeyEventDefault(const WebKeyboardEvent& event) {
 
   switch (event.type) {
     case WebInputEvent::CHAR: {
-#if defined(OS_WIN)
-      // TODO(pinkerton): hook this up for non-win32
       if (event.key_code == VK_SPACE) {
         int key_code = ((event.modifiers & WebInputEvent::SHIFT_KEY) ?
                          VK_PRIOR : VK_NEXT);
         return ScrollViewWithKeyboard(key_code);
       }
-#endif
       break;
     }
 
@@ -483,9 +449,7 @@ bool WebViewImpl::KeyEventDefault(const WebKeyboardEvent& event) {
           case 'A':
             GetFocusedFrame()->SelectAll();
             return true;
-#if defined(OS_WIN)
           case VK_INSERT:
-#endif
           case 'C':
             GetFocusedFrame()->Copy();
             return true;
@@ -493,20 +457,16 @@ bool WebViewImpl::KeyEventDefault(const WebKeyboardEvent& event) {
           // key combinations which affect scrolling. Safari is buggy in the
           // sense that it scrolls the page for all Ctrl+scrolling key
           // combinations. For e.g. Ctrl+pgup/pgdn/up/down, etc.
-#if defined(OS_WIN)
           case VK_HOME:
           case VK_END:
-#endif
             break;
           default:
             return false;
         }
       }
-#if defined(OS_WIN)
       if (!event.system_key) {
         return ScrollViewWithKeyboard(event.key_code);
       }
-#endif
       break;
     }
 
@@ -524,7 +484,6 @@ bool WebViewImpl::ScrollViewWithKeyboard(int key_code) {
   ScrollDirection scroll_direction;
   ScrollGranularity scroll_granularity;
 
-#if defined(OS_WIN)
   switch (key_code) {
     case VK_LEFT:
       scroll_direction = ScrollLeft;
@@ -561,10 +520,6 @@ bool WebViewImpl::ScrollViewWithKeyboard(int key_code) {
     default:
       return false;
   }
-#elif defined(OS_MACOSX) || defined(OS_LINUX)
-  scroll_direction = ScrollDown;
-  scroll_granularity = ScrollByLine;
-#endif
 
   bool scroll_handled =
       frame->eventHandler()->scrollOverflow(scroll_direction,
@@ -913,8 +868,7 @@ void WebViewImpl::ImeSetComposition(int string_type, int cursor_position,
     if (string_length > 0) {
       if (target_start < 0) target_start = 0;
       if (target_end < 0) target_end = string_length;
-      std::wstring temp(string_data, string_length);
-      WebCore::String composition_string(webkit_glue::StdWStringToString(temp));
+      WebCore::String composition_string(string_data, string_length);
       // Create custom underlines.
       // To emphasize the selection, the selected region uses a solid black
       // for its underline while other regions uses a pale gray for theirs.
@@ -939,14 +893,12 @@ void WebViewImpl::ImeSetComposition(int string_type, int cursor_position,
       editor->setComposition(composition_string, underlines,
                              cursor_position, cursor_position);
     }
-#if defined(OS_WIN)
     // The given string is a result string, which means the ongoing
     // composition has been completed. I have to call the
     // Editor::confirmCompletion() and complete this composition.
     if (string_type == GCS_RESULTSTR) {
       editor->confirmComposition();
     }
-#endif
   }
 }
 
@@ -1015,9 +967,7 @@ void WebViewImpl::SetInitialFocus(bool reverse) {
     keyboard_event.type = WebInputEvent::KEY_DOWN;
     if (reverse)
       keyboard_event.modifiers = WebInputEvent::SHIFT_KEY;
-#if defined(OS_WIN)
     keyboard_event.key_code = VK_TAB;
-#endif
     keyboard_event.key_data = L'\t';
     MakePlatformKeyboardEvent platform_event(keyboard_event);
     // We have to set the key type explicitly to avoid an assert in the
@@ -1125,13 +1075,9 @@ void WebViewImpl::SetPreferences(const WebPreferences& preferences) {
   settings->setFontRenderingMode(NormalRenderingMode);
   settings->setJavaEnabled(preferences.java_enabled);
 
-#if defined(OS_WIN)
   // RenderTheme is a singleton that needs to know the default font size to
   // draw some form controls.  We let it know each time the size changes.
   WebCore::RenderThemeWin::setDefaultFontSize(preferences.default_font_size);
-#elif defined(OS_MACOSX)
-  WebCore::RenderThemeMac::setDefaultFontSize(preferences.default_font_size);
-#endif
 
   // Used to make sure if the frameview needs layout, layout is triggered
   // during Document::updateLayout().  TODO(tc): See bug 1199269 for more
@@ -1147,7 +1093,7 @@ const WebPreferences& WebViewImpl::GetPreferences() {
 
 // Set the encoding of the current main frame to the one selected by
 // a user in the encoding menu.
-void WebViewImpl::SetPageEncoding(const std::string& encoding_name) {
+void WebViewImpl::SetPageEncoding(const std::wstring& encoding_name) {
   if (!main_frame_)
     return;
 
@@ -1159,12 +1105,12 @@ void WebViewImpl::SetPageEncoding(const std::string& encoding_name) {
 }
 
 // Return the canonical encoding name of current main webframe in webview.
-std::string WebViewImpl::GetMainFrameEncodingName() {
+std::wstring WebViewImpl::GetMainFrameEncodingName() {
   if (!main_frame_)
-    return std::string();
+    return std::wstring(L"");
 
   String encoding_name = main_frame_->frame()->loader()->encoding();
-  return WideToUTF8(webkit_glue::StringToStdWString(encoding_name));
+  return std::wstring(encoding_name.charactersWithNullTermination());
 }
 
 void WebViewImpl::MakeTextLarger() {
@@ -1275,15 +1221,9 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
   *drop_data_copy = drop_data;
   current_drop_data_.reset(drop_data_copy);
 
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
       kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
   DragOperation effect = page_->dragController()->dragEntered(&drag_data);
   return effect != DragOperationNone;
 }
@@ -1291,28 +1231,17 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
 bool WebViewImpl::DragTargetDragOver(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
       kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
   DragOperation effect = page_->dragController()->dragUpdated(&drag_data);
   return effect != DragOperationNone;
 }
 
 void WebViewImpl::DragTargetDragLeave() {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(), IntPoint(), DragOperationNone);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(), IntPoint(), DragOperationNone, nil);
-#endif
   page_->dragController()->dragExited(&drag_data);
   current_drop_data_.reset(NULL);
 }
@@ -1320,15 +1249,9 @@ void WebViewImpl::DragTargetDragLeave() {
 void WebViewImpl::DragTargetDrop(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
       kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
   page_->dragController()->performDrag(&drag_data);
   current_drop_data_.reset(NULL);
 }
@@ -1398,7 +1321,7 @@ void WebViewImpl::ImageResourceDownloadDone(ImageResourceFetcher* fetcher,
 //-----------------------------------------------------------------------------
 // WebCore::WidgetClientWin
 
-gfx::ViewHandle WebViewImpl::containingWindow() {
+HWND WebViewImpl::containingWindow() {
   return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
 }
 
@@ -1434,11 +1357,8 @@ void WebViewImpl::popupClosed(WebCore::Widget* widget) {
 }
 
 void WebViewImpl::setCursor(const WebCore::Cursor& cursor) {
-#if defined(OS_WIN)
-  // TODO(pinkerton): figure out the cursor delegate methods
   if (delegate_)
     delegate_->SetCursor(this, cursor.impl());
-#endif
 }
 
 void WebViewImpl::setFocus() {

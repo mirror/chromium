@@ -1,10 +1,35 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-#include "base/thread_local_storage.h"
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <windows.h>
+
+#include "base/thread_local_storage.h"
 
 #include "base/logging.h"
 
@@ -30,7 +55,7 @@ long ThreadLocalStorage::tls_max_ = 1;
 ThreadLocalStorage::TLSDestructorFunc
   ThreadLocalStorage::tls_destructors_[kThreadLocalStorageSize];
 
-void** ThreadLocalStorage::Initialize() {
+void **ThreadLocalStorage::Initialize() {
   if (tls_key_ == TLS_OUT_OF_INDEXES) {
     long value = TlsAlloc();
     DCHECK(value != TLS_OUT_OF_INDEXES);
@@ -48,59 +73,52 @@ void** ThreadLocalStorage::Initialize() {
   DCHECK(TlsGetValue(tls_key_) == NULL);
 
   // Create an array to store our data.
-  void** tls_data = new void*[kThreadLocalStorageSize];
+  void **tls_data = new void*[kThreadLocalStorageSize];
   memset(tls_data, 0, sizeof(void*[kThreadLocalStorageSize]));
   TlsSetValue(tls_key_, tls_data);
   return tls_data;
 }
 
-ThreadLocalStorage::Slot::Slot(TLSDestructorFunc destructor)
-    : initialized_(false) {
-  Initialize(destructor);
-}
-
-bool ThreadLocalStorage::Slot::Initialize(TLSDestructorFunc destructor) {
+TLSSlot ThreadLocalStorage::Alloc(TLSDestructorFunc destructor) {
   if (tls_key_ == TLS_OUT_OF_INDEXES || !TlsGetValue(tls_key_))
-    ThreadLocalStorage::Initialize();
+    Initialize();
 
   // Grab a new slot.
-  slot_ = InterlockedIncrement(&tls_max_) - 1;
-  if (slot_ >= kThreadLocalStorageSize) {
+  int slot = InterlockedIncrement(&tls_max_) - 1;
+  if (slot >= kThreadLocalStorageSize) {
     NOTREACHED();
-    return false;
+    return -1;
   }
 
   // Setup our destructor.
-  tls_destructors_[slot_] = destructor;
-  initialized_ = true;
-  return true;
+  tls_destructors_[slot] = destructor;
+  return slot;
 }
 
-void ThreadLocalStorage::Slot::Free() {
+void ThreadLocalStorage::Free(TLSSlot slot) {
   // At this time, we don't reclaim old indices for TLS slots.
   // So all we need to do is wipe the destructor.
-  tls_destructors_[slot_] = NULL;
-  initialized_ = false;
+  tls_destructors_[slot] = NULL;
 }
 
-void* ThreadLocalStorage::Slot::Get() const {
-  void** tls_data = static_cast<void**>(TlsGetValue(tls_key_));
+void* ThreadLocalStorage::Get(TLSSlot slot) {
+  void **tls_data = static_cast<void**>(TlsGetValue(tls_key_));
   if (!tls_data)
-    tls_data = ThreadLocalStorage::Initialize();
-  DCHECK(slot_ >= 0 && slot_ < kThreadLocalStorageSize);
-  return tls_data[slot_];
+    tls_data = Initialize();
+  DCHECK(slot >= 0 && slot < kThreadLocalStorageSize);
+  return tls_data[slot];
 }
 
-void ThreadLocalStorage::Slot::Set(void* value) {
-  void** tls_data = static_cast<void**>(TlsGetValue(tls_key_));
+void ThreadLocalStorage::Set(TLSSlot slot, void* value) {
+  void **tls_data = static_cast<void**>(TlsGetValue(tls_key_));
   if (!tls_data)
-    tls_data = ThreadLocalStorage::Initialize();
-  DCHECK(slot_ >= 0 && slot_ < kThreadLocalStorageSize);
-  tls_data[slot_] = value;
+    tls_data = Initialize();
+  DCHECK(slot >= 0 && slot < kThreadLocalStorageSize);
+  tls_data[slot] = value;
 }
 
 void ThreadLocalStorage::ThreadExit() {
-  void** tls_data = static_cast<void**>(TlsGetValue(tls_key_));
+  void **tls_data = static_cast<void**>(TlsGetValue(tls_key_));
 
   // Maybe we have never initialized TLS for this thread.
   if (!tls_data)
@@ -108,7 +126,7 @@ void ThreadLocalStorage::ThreadExit() {
 
   for (int slot = 0; slot < tls_max_; slot++) {
     if (tls_destructors_[slot] != NULL) {
-      void* value = tls_data[slot];
+      void *value = tls_data[slot];
       tls_destructors_[slot](value);
     }
   }
@@ -126,19 +144,9 @@ void ThreadLocalStorage::ThreadExit() {
 // This magic is from http://www.codeproject.com/threads/tls.asp
 // and it works for VC++ 7.0 and later.
 
-#ifdef _WIN64
-
-// This makes the linker create the TLS directory if it's not already
-// there.  (e.g. if __declspec(thread) is not used).
-#pragma comment(linker, "/INCLUDE:_tls_used")
-
-#else  // _WIN64
-
 // This makes the linker create the TLS directory if it's not already
 // there.  (e.g. if __declspec(thread) is not used).
 #pragma comment(linker, "/INCLUDE:__tls_used")
-
-#endif  // _WIN64
 
 // Static callback function to call with each thread termination.
 void NTAPI OnThreadExit(PVOID module, DWORD reason, PVOID reserved)
@@ -149,6 +157,9 @@ void NTAPI OnThreadExit(PVOID module, DWORD reason, PVOID reserved)
     ThreadLocalStorage::ThreadExit();
 }
 
+// Note: .CRT section get merged with .rdata on x64 so it should be constant
+// data.
+//
 // .CRT$XLA to .CRT$XLZ is an array of PIMAGE_TLS_CALLBACK pointers that are
 // called automatically by the OS loader code (not the CRT) when the module is
 // loaded and on thread creation. They are NOT called if the module has been
@@ -159,26 +170,8 @@ void NTAPI OnThreadExit(PVOID module, DWORD reason, PVOID reserved)
 // implicitly loaded.
 //
 // See VC\crt\src\tlssup.c for reference.
-#ifdef _WIN64
-
-// .CRT section is merged with .rdata on x64 so it must be constant data.
-#pragma const_seg(".CRT$XLB")
-// When defining a const variable, it must have external linkage to be sure the
-// linker doesn't discard it. If this value is discarded, the OnThreadExit
-// function will never be called.
-extern const PIMAGE_TLS_CALLBACK p_thread_callback;
-const PIMAGE_TLS_CALLBACK p_thread_callback = OnThreadExit;
-
-// Reset the default section.
-#pragma const_seg()
-
-#else  // _WIN64
-
 #pragma data_seg(".CRT$XLB")
 PIMAGE_TLS_CALLBACK p_thread_callback = OnThreadExit;
 
 // Reset the default section.
 #pragma data_seg()
-
-#endif  // _WIN64
-

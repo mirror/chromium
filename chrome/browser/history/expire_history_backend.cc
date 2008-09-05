@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/history/expire_history_backend.h"
 
@@ -8,7 +33,6 @@
 #include <limits>
 
 #include "base/file_util.h"
-#include "chrome/browser/bookmarks/bookmark_service.h"
 #include "chrome/browser/history/archived_database.h"
 #include "chrome/browser/history/history_database.h"
 #include "chrome/browser/history/history_notifications.h"
@@ -64,16 +88,14 @@ const int kExpirationEmptyDelayMin = 5;
 }  // namespace
 
 ExpireHistoryBackend::ExpireHistoryBackend(
-    BroadcastNotificationDelegate* delegate,
-    BookmarkService* bookmark_service)
+    BroadcastNotificationDelegate* delegate)
     : delegate_(delegate),
       main_db_(NULL),
       archived_db_(NULL),
       thumb_db_(NULL),
       text_db_(NULL),
 #pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      factory_(this),
-      bookmark_service_(bookmark_service) {
+      factory_(this) {
 }
 
 ExpireHistoryBackend::~ExpireHistoryBackend() {
@@ -97,9 +119,13 @@ void ExpireHistoryBackend::DeleteURL(const GURL& url) {
   if (!main_db_->GetRowForURL(url, &url_row))
     return;  // Nothing to delete.
 
+  // The URL may be in the text database manager's temporary cache.
+  if (text_db_)
+    text_db_->DeleteURLFromUncommitted(url);
+
   // Collect all the visits and delete them. Note that we don't give up if
-  // there are no visits, since the URL could still have an entry that we should
-  // delete.
+  // there are no visits, since the URL could still have an entry (for example,
+  // if it's starred) that we should delete.
   // TODO(brettw): bug 1171148: We should also delete from the archived DB.
   VisitVector visits;
   main_db_->GetVisitsForURL(url_row.id(), &visits);
@@ -110,18 +136,11 @@ void ExpireHistoryBackend::DeleteURL(const GURL& url) {
   // We skip ExpireURLsForVisits (since we are deleting from the URL, and not
   // starting with visits in a given time range). We therefore need to call the
   // deletion and favicon update functions manually.
-
-  BookmarkService* bookmark_service = GetBookmarkService();
-  bool is_bookmarked =
-      (bookmark_service && bookmark_service->IsBookmarked(url));
-
-  DeleteOneURL(url_row, is_bookmarked, &dependencies);
-  if (!is_bookmarked)
-    DeleteFaviconsIfPossible(dependencies.affected_favicons);
+  DeleteOneURL(url_row, &dependencies);
+  DeleteFaviconsIfPossible(dependencies.affected_favicons);
 
   if (text_db_)
     text_db_->OptimizeChangedDatabases(dependencies.text_db_changes);
-
   BroadcastDeleteNotifications(&dependencies);
 }
 
@@ -186,6 +205,14 @@ void ExpireHistoryBackend::DeleteFaviconsIfPossible(
 
 void ExpireHistoryBackend::BroadcastDeleteNotifications(
     DeleteDependencies* dependencies) {
+  // Broadcast the "unstarred" notification.
+  if (!dependencies->unstarred_urls.empty()) {
+    URLsStarredDetails* unstarred_details = new URLsStarredDetails(false);
+    unstarred_details->changed_urls.swap(dependencies->unstarred_urls);
+    unstarred_details->star_entries.swap(dependencies->unstarred_entries);
+    delegate_->BroadcastNotifications(NOTIFY_URLS_STARRED, unstarred_details);
+  }
+
   if (!dependencies->deleted_urls.empty()) {
     // Broadcast the URL deleted notification. Note that we also broadcast when
     // we were requested to delete everything even if that was a NOP, since
@@ -249,28 +276,29 @@ void ExpireHistoryBackend::DeleteVisitRelatedInfo(
 
 void ExpireHistoryBackend::DeleteOneURL(
     const URLRow& url_row,
-    bool is_bookmarked,
     DeleteDependencies* dependencies) {
+  dependencies->deleted_urls.push_back(url_row);
+
+  // Delete stuff that references this URL.
+  if (thumb_db_)
+    thumb_db_->DeleteThumbnail(url_row.id());
   main_db_->DeleteSegmentForURL(url_row.id());
 
-  // The URL may be in the text database manager's temporary cache.
-  if (text_db_)
-    text_db_->DeleteURLFromUncommitted(url_row.url());
-
-  if (!is_bookmarked) {
-    dependencies->deleted_urls.push_back(url_row);
-
-    // Delete stuff that references this URL.
-    if (thumb_db_)
-      thumb_db_->DeleteThumbnail(url_row.id());
-
-    // Collect shared information.
-    if (url_row.favicon_id())
-      dependencies->affected_favicons.insert(url_row.favicon_id());
-
-    // Last, delete the URL entry.
-    main_db_->DeleteURLRow(url_row.id());
+  // The starred table may need to have its corresponding item deleted.
+  if (url_row.star_id()) {
+    // Note that this will update the URLRow's starred field, but our variable
+    // won't be updated correspondingly.
+    main_db_->DeleteStarredEntry(url_row.star_id(),
+                                 &dependencies->unstarred_urls,
+                                 &dependencies->unstarred_entries);
   }
+
+  // Collect shared information.
+  if (url_row.favicon_id())
+    dependencies->affected_favicons.insert(url_row.favicon_id());
+
+  // Last, delete the URL entry.
+  main_db_->DeleteURLRow(url_row.id());
 }
 
 URLID ExpireHistoryBackend::ArchiveOneURL(const URLRow& url_row) {
@@ -318,7 +346,6 @@ void ExpireHistoryBackend::ExpireURLsForVisits(
   }
 
   // Check each unique URL with deleted visits.
-  BookmarkService* bookmark_service = GetBookmarkService();
   for (std::map<URLID, ChangedURL>::const_iterator i = changed_urls.begin();
        i != changed_urls.end(); ++i) {
     // The unique URL rows should already be filled into the dependencies.
@@ -335,22 +362,20 @@ void ExpireHistoryBackend::ExpireURLsForVisits(
     else
       url_row.set_last_visit(Time());
 
-    // Don't delete URLs with visits still in the DB, or bookmarked.
-    bool is_bookmarked =
-        (bookmark_service && bookmark_service->IsBookmarked(url_row.url()));
-    if (!is_bookmarked && url_row.last_visit().is_null()) {
-      // Not bookmarked and no more visits. Nuke the url.
-      DeleteOneURL(url_row, is_bookmarked, dependencies);
-    } else {
+    // Don't delete starred URLs or ones with visits still in the DB.
+    if (url_row.starred() || !url_row.last_visit().is_null()) {
+      // We're not deleting the URL, update its counts when we're deleting those
+      // visits.
       // NOTE: The calls to std::max() below are a backstop, but they should
       // never actually be needed unless the database is corrupt (I think).
       url_row.set_visit_count(
           std::max(0, url_row.visit_count() - i->second.visit_count));
       url_row.set_typed_count(
           std::max(0, url_row.typed_count() - i->second.typed_count));
-
-      // Update the db with the new details.
       main_db_->UpdateURLRow(url_row.id(), url_row);
+    } else {
+      // This URL is toast.
+      DeleteOneURL(url_row, dependencies);
     }
   }
 }
@@ -484,15 +509,4 @@ void ExpireHistoryBackend::ParanoidExpireHistory() {
   // FIXME(brettw): Bug 1067331: write this to clean up any errors.
 }
 
-BookmarkService* ExpireHistoryBackend::GetBookmarkService() {
-  // We use the bookmark service to determine if a URL is bookmarked. The
-  // bookmark service is loaded on a separate thread and may not be done by the
-  // time we get here. We therefor block until the bookmarks have finished
-  // loading.
-  if (bookmark_service_)
-    bookmark_service_->BlockTillLoaded();
-  return bookmark_service_;
-}
-
 }  // namespace history
-

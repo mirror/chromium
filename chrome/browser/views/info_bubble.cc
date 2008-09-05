@@ -1,18 +1,42 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/views/info_bubble.h"
 
 #include "base/win_util.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/browser_window.h"
-#include "chrome/browser/frame_util.h"
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/root_view.h"
+#include "chrome/views/focus_manager.h"
 
 using ChromeViews::View;
 
@@ -71,7 +95,7 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
   window->Init(parent_hwnd, position_relative_to, content);
-  BrowserWindow* frame = window->GetHostingWindow();
+  ChromeFrame* frame = window->GetHostingFrame();
   if (frame)
     frame->InfoBubbleShowing();
   window->ShowWindow(SW_SHOW);
@@ -107,8 +131,7 @@ void InfoBubble::Init(HWND parent_hwnd,
       (win_util::GetWinVersion() < win_util::WINVERSION_XP) ?
       0 : CS_DROPSHADOW);
 
-  HWNDViewContainer::Init(parent_hwnd, bounds, true);
-  SetContentsView(content_view_);
+  HWNDViewContainer::Init(parent_hwnd, bounds, content_view_, true);
   // The preferred size may differ when parented. Ask for the bounds again
   // and if they differ reset the bounds.
   gfx::Rect parented_bounds = content_view_->
@@ -141,7 +164,7 @@ void InfoBubble::Init(HWND parent_hwnd,
 
 void InfoBubble::Close() {
   // We don't fade out because it looks terrible.
-  BrowserWindow* frame = GetHostingWindow();
+  ChromeFrame* frame = GetHostingFrame();
   if (delegate_)
     delegate_->InfoBubbleClosing(this);
   if (frame)
@@ -189,9 +212,9 @@ InfoBubble::ContentView* InfoBubble::CreateContentView(View* content) {
   return new ContentView(content, this);
 }
 
-BrowserWindow* InfoBubble::GetHostingWindow() {
+ChromeFrame* InfoBubble::GetHostingFrame() {
   HWND owning_frame_hwnd = GetAncestor(GetHWND(), GA_ROOTOWNER);
-  BrowserWindow* frame = FrameUtil::GetBrowserWindowForHWND(owning_frame_hwnd);
+  ChromeFrame* frame = ChromeFrame::GetChromeFrameForWindow(owning_frame_hwnd);
   if (!frame) {
     // We should always have a frame, but there was a bug else where that
     // made it possible for the frame to be NULL, so we have the check. If
@@ -420,4 +443,3 @@ gfx::Rect InfoBubble::ContentView::CalculateWindowBounds(
   }
   return gfx::Rect(x, y, pref.cx, pref.cy);
 }
-

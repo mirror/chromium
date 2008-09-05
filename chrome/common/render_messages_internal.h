@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This header is meant to be included in multiple passes, hence no traditional
 // header guard.
@@ -10,14 +35,17 @@
 #include <vector>
 
 #include "base/gfx/rect.h"
+#include "base/gfx/size.h"
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_message_macros.h"
 #include "webkit/glue/dom_operations.h"
+#include "webkit/glue/find_in_page_request.h"
+#include "webkit/glue/cache_manager.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/context_node_types.h"
-#include "webkit/glue/webcursor.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webinputevent.h"
+#include "webkit/glue/window_open_disposition.h"
 
 void RenderMessagesInit();
 
@@ -212,15 +240,8 @@ IPC_BEGIN_MESSAGES(View, 1)
   // Initialize the V8 debugger in the renderer.
   IPC_MESSAGE_ROUTED0(ViewMsg_DebugAttach)
 
-  // Shutdown the V8 debugger in the renderer.
-  IPC_MESSAGE_ROUTED0(ViewMsg_DebugDetach)
-
-  // Break V8 execution.
-  IPC_MESSAGE_ROUTED1(ViewMsg_DebugBreak,
-                      bool  /* force */)
-
   // Send a command to the V8 debugger.
-  IPC_MESSAGE_ROUTED1(ViewMsg_DebugCommand,
+  IPC_MESSAGE_ROUTED1(ViewMsg_SendToDebugger,
                       std::wstring  /* cmd */)
 
   // Change the text size in the renderer.
@@ -229,7 +250,7 @@ IPC_BEGIN_MESSAGES(View, 1)
 
   // Change encoding of page in the renderer.
   IPC_MESSAGE_ROUTED1(ViewMsg_SetPageEncoding,
-                      std::string /*new encoding name*/)
+                      std::wstring /*new encoding name*/)
 
   // Inspect the element at the specified coordinates
   IPC_MESSAGE_ROUTED2(ViewMsg_InspectElement,
@@ -289,9 +310,7 @@ IPC_BEGIN_MESSAGES(View, 1)
   // Used to tell a render view whether it should expose DOM UI bindings
   // that allow JS content in the DOM to send a JSON-encoded value to the
   // browser process.  This is for HTML-based UI.
-  IPC_MESSAGE_ROUTED2(ViewMsg_AllowBindings,
-                      bool /* enable_dom_ui_bindings */,
-                      bool /* enable_external_host_bindings */)
+  IPC_MESSAGE_ROUTED0(ViewMsg_AllowDOMUIBindings)
 
   // Tell the renderer to add a property to the DOMUI binding object.  This
   // only works if we allowed DOMUI bindings.
@@ -414,21 +433,6 @@ IPC_BEGIN_MESSAGES(View, 1)
   // Notifies the renderer about ui theme changes
   IPC_MESSAGE_ROUTED0(ViewMsg_ThemeChanged)
 
-  // Notifies the renderer that a paint is to be generated for the rectangle
-  // passed in.
-  IPC_MESSAGE_ROUTED1(ViewMsg_Repaint,
-                      gfx::Size /* The view size to be repainted */)
-
-#ifdef CHROME_PERSONALIZATION
-  IPC_MESSAGE_ROUTED2(ViewMsg_PersonalizationEvent, 
-                      std::string /* event name */,
-                      std::string /* event arguments */)                      
-#endif
-  // Posts a message to the renderer.
-  IPC_MESSAGE_ROUTED2(ViewMsg_HandleMessageFromExternalHost,
-                      std::string /* The target for the message */,
-                      std::string /* The message */)
-
 IPC_END_MESSAGES(View)
 
 
@@ -529,7 +533,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // Change the encoding name of the page in UI when the page has detected proper
   // encoding name.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UpdateEncoding,
-                      std::string /* new encoding name */)
+                      std::wstring /* new encoding name */)
 
   // Notifies the browser that we want to show a destination url for a potential
   // action (e.g. when the user is hovering over a link).
@@ -643,16 +647,6 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                               std::wstring /* filename */,
                               std::string /* actual mime type for url */)
 
-  // Retrieve the data directory associated with the renderer's profile.
-  IPC_SYNC_MESSAGE_CONTROL0_1(ViewHostMsg_GetDataDir,
-                              std::wstring /* data_dir_retval */)
-
-  // Allows a chrome plugin loaded in a renderer process to send arbitrary
-  // data to an instance of the same plugin loaded in the browser process.
-  IPC_MESSAGE_CONTROL2(ViewHostMsg_PluginMessage,
-                       std::wstring /* dll_path of plugin */,
-                       std::vector<uint8> /* opaque data */)
-
   // Requests spellcheck for a word.
   IPC_SYNC_MESSAGE_ROUTED1_2(ViewHostMsg_SpellCheck,
                              std::wstring /* word to check */,
@@ -715,20 +709,6 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   IPC_MESSAGE_ROUTED2(ViewHostMsg_DOMUISend,
                       std::string  /* message */,
                       std::string  /* args (as a JSON string) */)
-
-  // A message for an external host.
-  // |receiver| can be a receiving script and |message| is any
-  // arbitrary string that makes sense to the receiver. For
-  // example, a user of automation can use it to execute a script
-  // in the form of javascript:receiver("message");
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_ForwardMessageToExternalHost,
-                      std::string  /* receiver */,
-                      std::string  /* message */)
-
-#ifdef CHROME_PERSONALIZATION
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_PersonalizationEvent,
-                      std::string, std::string)
-#endif
 
   // A renderer sends this to the browser process when it wants to create a
   // plugin.  The browser will create the plugin process if necessary, and
@@ -1020,10 +1000,5 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // beforeunload or unload handler.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UnloadListenerChanged,
                       bool /* has_listener */)
-
-  // Returns the window location of the window this widget is embeded in.
-  IPC_SYNC_MESSAGE_ROUTED1_1(ViewHostMsg_GetRootWindowRect,
-                             HWND /* window */,
-                             gfx::Rect /* Out: Window location */)
 
 IPC_END_MESSAGES(ViewHost)

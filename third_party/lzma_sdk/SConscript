@@ -44,29 +44,28 @@ env.Append(
         '_LZMA_PROB32',
         '_LZMA_IN_CB',
     ],
-)
-
-if env['PLATFORM'] == 'win32':
-  env.Append(
     CCFLAGS = [
         '/TC',
+
         '/wd4800',
+        '/wd4503',
+        '/wd4819',
     ],
-  )
+)
 
-input_files = [
-    '7zCrc.c',
-    'Archive/7z/7zAlloc.c',
-    'Archive/7z/7zBuffer.c',
-    'Archive/7z/7zDecode.c',
-    'Archive/7z/7zExtract.c',
-    'Archive/7z/7zHeader.c',
-    'Archive/7z/7zIn.c',
-    'Archive/7z/7zItem.c',
-    'Archive/7z/7zMethodID.c',
-    'Compress/Branch/BranchX86.c',
-    'Compress/Branch/BranchX86_2.c',
-    'Compress/Lzma/LzmaDecode.c',
-]
+input_files = Split('''
+    Compress/Lzma/LzmaDecode.c
+    Archive/7z/7zMethodID.c
+    Archive/7z/7zItem.c
+    Archive/7z/7zIn.c
+    Archive/7z/7zHeader.c
+    Archive/7z/7zExtract.c
+    Archive/7z/7zDecode.c
+    Archive/7z/7zBuffer.c
+    Archive/7z/7zAlloc.c
+    Compress/Branch/BranchX86_2.c
+    Compress/Branch/BranchX86.c
+    7zCrc.c
+''')
 
-env.ChromeStaticLibrary('lzma_sdk', input_files)
+env.StaticLibrary('lzma_sdk', input_files)

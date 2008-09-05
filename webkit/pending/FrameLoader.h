@@ -247,7 +247,6 @@ namespace WebCore {
         void didChangeTitle(DocumentLoader*);
 
         FrameLoadType loadType() const;
-        FrameLoadType policyLoadType() const { return m_policyLoadType; }
 
         void didFirstLayout();
         bool firstLayoutDone() const;

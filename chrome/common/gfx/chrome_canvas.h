@@ -1,16 +1,42 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_COMMON_GFX_CHROME_CANVAS_H_
-#define CHROME_COMMON_GFX_CHROME_CANVAS_H_
+#ifndef CHROME_COMMON_GFX_CHROME_CANVAS_H__
+#define CHROME_COMMON_GFX_CHROME_CANVAS_H__
 
 #include <windows.h>
 #include <string>
 #include "base/basictypes.h"
-#include "base/gfx/platform_canvas_win.h"
+#include "base/gfx/platform_canvas.h"
+#include "chrome/common/gfx/chrome_font.h"
+#include "chrome/common/l10n_util.h"
 
-class ChromeFont;
 namespace gfx {
 class Rect;
 }
@@ -31,7 +57,7 @@ class Rect;
 // source and destination colors are combined. Unless otherwise specified,
 // the variant that does not take a SkPorterDuff::Mode uses a transfer mode
 // of kSrcOver_Mode.
-class ChromeCanvas : public gfx::PlatformCanvasWin {
+class ChromeCanvas : public gfx::PlatformCanvas {
  public:
   // Specifies the alignment for text rendered with the DrawStringInt method.
   static const int TEXT_ALIGN_LEFT = 1;
@@ -129,7 +155,10 @@ class ChromeCanvas : public gfx::PlatformCanvasWin {
   // aligned to the left, vertically centered, clipped to the region. If the
   // text is too big, it is truncated and '...' is added to the end.
   void DrawStringInt(const std::wstring& text, const ChromeFont& font,
-                     const SkColor& color, int x, int y, int w, int h);
+                     const SkColor& color, int x, int y, int w, int h) {
+    DrawStringInt(text, font, color, x, y, w, h,
+                  l10n_util::DefaultCanvasTextAlignment());
+  }
 
   // Draws text with the specified color, font and location. The last argument
   // specifies flags for how the text should be rendered. It can be one of
@@ -161,8 +190,8 @@ class ChromeCanvas : public gfx::PlatformCanvasWin {
 
  private:
   // Draws text with the specified color, font and location. The text is
-  // aligned to the left, vertically centered, clipped to the region. If the
-  // text is too big, it is truncated and '...' is added to the end.
+   // aligned to the left, vertically centered, clipped to the region. If the
+   // text is too big, it is truncated and '...' is added to the end.
   void DrawStringInt(const std::wstring& text, HFONT font,
                      const SkColor& color, int x, int y, int w, int h,
                      int flags);
@@ -181,5 +210,4 @@ class ChromeCanvas : public gfx::PlatformCanvasWin {
 
 typedef gfx::CanvasPaintT<ChromeCanvas> ChromeCanvasPaint;
 
-#endif  // CHROME_COMMON_GFX_CHROME_CANVAS_H_
-
+#endif  // CHROME_COMMON_GFX_CHROME_CANVAS_H__

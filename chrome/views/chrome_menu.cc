@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/views/chrome_menu.h"
 
@@ -22,7 +47,6 @@
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/views/border.h"
 #include "chrome/views/hwnd_view_container.h"
-#include "chrome/views/root_view.h"
 #include "generated_resources.h"
 
 // Margins between the top of the item and the label.
@@ -181,14 +205,34 @@ static void ScrollToVisible(View* view) {
 // MenuScrollTask --------------------------------------------------------------
 
 // MenuScrollTask is used when the SubmenuView does not all fit on screen and
-// the mouse is over the scroll up/down buttons. MenuScrollTask schedules
-// itself with a RepeatingTimer. When Run is invoked MenuScrollTask scrolls
+// the mouse is over the scroll up/down buttons. MenuScrollTask schedules itself
+// with the TimerManager. When Run is invoked MenuScrollTask scrolls
 // appropriately.
 
-class MenuScrollTask {
+class MenuScrollTask : public Task {
 public:
   MenuScrollTask() : submenu_(NULL) {
     pixels_per_second_ = pref_menu_height * 20;
+  }
+
+  virtual ~MenuScrollTask() {
+    StopScrolling();
+  }
+
+  virtual void Run() {
+    DCHECK(submenu_);
+    gfx::Rect vis_rect = submenu_->GetVisibleBounds();
+    const int delta_y = static_cast<int>(
+        (Time::Now() - start_scroll_time_).InMilliseconds() *
+        pixels_per_second_ / 1000);
+    int target_y = start_y_;
+    if (is_scrolling_up_)
+      target_y = std::max(0, target_y - delta_y);
+    else
+      target_y = std::min(submenu_->GetHeight() - vis_rect.height(),
+                          target_y + delta_y);
+    submenu_->ScrollRectToVisible(vis_rect.x(), target_y, vis_rect.width(),
+                                  vis_rect.height());
   }
 
   void Update(const MenuController::MenuPart& part) {
@@ -207,15 +251,18 @@ public:
     submenu_ = new_menu;
     is_scrolling_up_ = new_is_up;
 
-    if (!scrolling_timer_.IsRunning()) {
-      scrolling_timer_.Start(TimeDelta::FromMilliseconds(kScrollTimerMS), this,
-                             &MenuScrollTask::Run);
+    if (!scrolling_timer_.get()) {
+      scrolling_timer_.reset(new Timer(kScrollTimerMS, this, true));
+      TimerManager* tm = MessageLoop::current()->timer_manager();
+      tm->StartTimer(scrolling_timer_.get());
     }
   }
 
   void StopScrolling() {
-    if (scrolling_timer_.IsRunning()) {
-      scrolling_timer_.Stop();
+    if (scrolling_timer_.get()) {
+      TimerManager* tm = MessageLoop::current()->timer_manager();
+      tm->StopTimer(scrolling_timer_.get());
+      scrolling_timer_.reset(NULL);
       submenu_ = NULL;
     }
   }
@@ -224,22 +271,6 @@ public:
   SubmenuView* submenu() const { return submenu_; }
 
  private:
-  void Run() {
-    DCHECK(submenu_);
-    gfx::Rect vis_rect = submenu_->GetVisibleBounds();
-    const int delta_y = static_cast<int>(
-        (Time::Now() - start_scroll_time_).InMilliseconds() *
-        pixels_per_second_ / 1000);
-    int target_y = start_y_;
-    if (is_scrolling_up_)
-      target_y = std::max(0, target_y - delta_y);
-    else
-      target_y = std::min(submenu_->GetHeight() - vis_rect.height(),
-                          target_y + delta_y);
-    submenu_->ScrollRectToVisible(vis_rect.x(), target_y, vis_rect.width(),
-                                  vis_rect.height());
-  }
-
   // SubmenuView being scrolled.
   SubmenuView* submenu_;
 
@@ -247,7 +278,7 @@ public:
   bool is_scrolling_up_;
 
   // Timer to periodically scroll.
-  base::RepeatingTimer<MenuScrollTask> scrolling_timer_;
+  scoped_ptr<Timer> scrolling_timer_;
 
   // Time we started scrolling at.
   Time start_scroll_time_;
@@ -519,7 +550,7 @@ class MenuHostRootView : public RootView {
  public:
   explicit MenuHostRootView(ViewContainer* container,
                             SubmenuView* submenu)
-      : RootView(container),
+      : RootView(container, true),
         submenu_(submenu),
         forward_drag_to_menu_controller_(true),
         suspend_events_(false) {
@@ -647,8 +678,7 @@ class MenuHost : public HWNDViewContainer {
             const gfx::Rect& bounds,
             View* contents_view,
             bool do_capture) {
-    HWNDViewContainer::Init(parent, bounds, true);
-    SetContentsView(contents_view);
+    HWNDViewContainer::Init(parent, bounds, contents_view, true);
     // We don't want to take focus away from the hosting window.
     ShowWindow(SW_SHOWNA);
     owns_capture_ = do_capture;
@@ -1040,9 +1070,6 @@ const int MenuItemView::kMenuItemViewID = 1001;
 
 //  static
 const int MenuItemView::kDropBetweenPixels = 5;
-
-// static
-bool MenuItemView::allow_task_nesting_during_run_ = false;
 
 MenuItemView::MenuItemView(MenuDelegate* delegate) {
   DCHECK(delegate_);
@@ -1543,15 +1570,7 @@ MenuItemView* MenuController::Run(HWND parent,
   DLOG(INFO) << " entering nested loop, depth=" << nested_depth;
 #endif
 
-  MessageLoopForUI* loop = MessageLoopForUI::current();
-  if (MenuItemView::allow_task_nesting_during_run_) {
-    bool did_allow_task_nesting = loop->NestableTasksAllowed();
-    loop->SetNestableTasksAllowed(true);
-    loop->Run(this);
-    loop->SetNestableTasksAllowed(did_allow_task_nesting);
-  } else {
-    loop->Run(this);
-  }
+  MessageLoop::current()->Run(this);
 
 #ifdef DEBUG_MENU
   nested_depth--;
@@ -1612,9 +1631,6 @@ void MenuController::SetSelection(MenuItemView* menu_item,
   // Notify the new path it is selected.
   for (size_t i = paths_differ_at; i < new_size; ++i)
     new_path[i]->SetSelected(true);
-
-  if (menu_item && menu_item->GetDelegate())
-    menu_item->GetDelegate()->SelectionChanged(menu_item);
 
   pending_state_.item = menu_item;
   pending_state_.submenu_open = open_submenu;
@@ -2081,7 +2097,13 @@ MenuController::MenuController(bool blocking)
       showing_(false),
       exit_all_(false),
       did_capture_(false),
+#pragma warning(suppress: 4355)  // Okay to pass "this" here.
+      show_task_(this),
       result_(NULL),
+      show_timer_(NULL),
+#pragma warning(suppress: 4355)  // Okay to pass "this" here.
+      cancel_all_task_(this),
+      cancel_all_timer_(NULL),
       drop_target_(NULL),
       owner_(NULL),
       possible_drag_(false),
@@ -2371,21 +2393,31 @@ void MenuController::BuildMenuItemPath(MenuItemView* item,
 }
 
 void MenuController::StartShowTimer() {
-  show_timer_.Start(TimeDelta::FromMilliseconds(kShowDelay), this,
-                    &MenuController::CommitPendingSelection);
+  StopShowTimer();
+  show_timer_ = MessageLoop::current()->timer_manager()->
+      StartTimer(kShowDelay, &show_task_, false);
 }
 
 void MenuController::StopShowTimer() {
-  show_timer_.Stop();
+  if (show_timer_) {
+    MessageLoop::current()->timer_manager()->StopTimer(show_timer_);
+    delete show_timer_;
+    show_timer_ = NULL;
+  }
 }
 
 void MenuController::StartCancelAllTimer() {
-  cancel_all_timer_.Start(TimeDelta::FromMilliseconds(kCloseOnExitTime),
-                          this, &MenuController::CancelAll);
+  StopCancelAllTimer();
+  cancel_all_timer_ = MessageLoop::current()->timer_manager()->
+      StartTimer(kCloseOnExitTime, &cancel_all_task_, false);
 }
 
 void MenuController::StopCancelAllTimer() {
-  cancel_all_timer_.Stop();
+  if (cancel_all_timer_) {
+    MessageLoop::current()->timer_manager()->StopTimer(cancel_all_timer_);
+    delete cancel_all_timer_;
+    cancel_all_timer_ = NULL;
+  }
 }
 
 gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
@@ -2709,4 +2741,3 @@ void MenuController::StopScrolling() {
 }
 
 }  // namespace ChromeViews
-

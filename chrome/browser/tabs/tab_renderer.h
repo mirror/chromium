@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_TABS_TAB_RENDERER_H__
 #define CHROME_BROWSER_TABS_TAB_RENDERER_H__
@@ -8,7 +33,7 @@
 #include "base/gfx/point.h"
 #include "chrome/common/animation.h"
 #include "chrome/common/slide_animation.h"
-#include "chrome/common/throb_animation.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/views/button.h"
 #include "chrome/views/menu.h"
 #include "chrome/views/view.h"
@@ -49,9 +74,8 @@ class TabRenderer : public ChromeViews::View,
   // the tab isn't loading.
   void ValidateLoadingAnimation(AnimationState animation_state);
 
-  // Starts/Stops a pulse animation.
-  void StartPulse();
-  void StopPulse();
+  // AnimationDelegate implementation.
+  virtual void AnimationProgressed(const Animation* animation);
 
   // Returns the minimum possible size of a single unselected Tab.
   static gfx::Size GetMinimumSize();
@@ -62,6 +86,10 @@ class TabRenderer : public ChromeViews::View,
   // Returns the preferred size of a single Tab, assuming space is
   // available.
   static gfx::Size GetStandardSize();
+
+  // Remove invalid characters from the title (e.g. newlines) that may
+  // interfere with rendering.
+  static void FormatTitleForDisplay(std::wstring* title);
 
  protected:
   ChromeViews::Button* close_button() const { return close_button_; }
@@ -78,11 +106,6 @@ class TabRenderer : public ChromeViews::View,
   virtual void OnMouseEntered(const ChromeViews::MouseEvent& event);
   virtual void OnMouseExited(const ChromeViews::MouseEvent& event);
 
-  // Overridden from AnimationDelegate:
-  virtual void AnimationProgressed(const Animation* animation);
-  virtual void AnimationCanceled(const Animation* animation);
-  virtual void AnimationEnded(const Animation* animation);
-
   // Starts/Stops the crash animation.
   void StartCrashAnimation();
   void StopCrashAnimation();
@@ -97,7 +120,6 @@ class TabRenderer : public ChromeViews::View,
   void ResetCrashedFavIcon();
 
   // Paint various portions of the Tab
-  void PaintTabBackground(ChromeCanvas* canvas);
   void PaintInactiveTabBackground(ChromeCanvas* canvas);
   void PaintActiveTabBackground(ChromeCanvas* canvas);
   void PaintHoverTabBackground(ChromeCanvas* canvas, double opacity);
@@ -129,9 +151,6 @@ class TabRenderer : public ChromeViews::View,
 
   // Hover animation.
   scoped_ptr<SlideAnimation> hover_animation_;
-
-  // Pulse animation.
-  scoped_ptr<ThrobAnimation> pulse_animation_;
 
   // Model data. We store this here so that we don't need to ask the underlying
   // model, which is tricky since instances of this object can outlive the
@@ -170,5 +189,4 @@ class TabRenderer : public ChromeViews::View,
   DISALLOW_EVIL_CONSTRUCTORS(TabRenderer);
 };
 
-#endif  // CHROME_BROWSER_TABS_TAB_RENDERER_H__
-
+#endif CHROME_BROWSER_TABS_TAB_RENDERER_H__

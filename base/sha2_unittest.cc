@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/sha2.h"
 
@@ -21,12 +46,12 @@ TEST(Sha256Test, Test1) {
 
   uint8 output1[base::SHA256_LENGTH];
   base::SHA256HashString(input1, output1, sizeof(output1));
-  for (size_t i = 0; i < base::SHA256_LENGTH; i++)
+  for (int i = 0; i < base::SHA256_LENGTH; i++)
     EXPECT_EQ(expected1[i], static_cast<int>(output1[i]));
 
   uint8 output_truncated1[4];  // 4 bytes == 32 bits
   base::SHA256HashString(input1, output_truncated1, sizeof(output_truncated1));
-  for (size_t i = 0; i < sizeof(output_truncated1); i++)
+  for (int i = 0; i < sizeof(output_truncated1); i++)
     EXPECT_EQ(expected1[i], static_cast<int>(output_truncated1[i]));
 }
 
@@ -45,12 +70,12 @@ TEST(Sha256Test, Test2) {
 
   uint8 output2[base::SHA256_LENGTH];
   base::SHA256HashString(input2, output2, sizeof(output2));
-  for (size_t i = 0; i < base::SHA256_LENGTH; i++)
+  for (int i = 0; i < base::SHA256_LENGTH; i++)
     EXPECT_EQ(expected2[i], static_cast<int>(output2[i]));
 
   uint8 output_truncated2[6];
   base::SHA256HashString(input2, output_truncated2, sizeof(output_truncated2));
-  for (size_t i = 0; i < sizeof(output_truncated2); i++)
+  for (int i = 0; i < sizeof(output_truncated2); i++)
     EXPECT_EQ(expected2[i], static_cast<int>(output_truncated2[i]));
 }
 
@@ -68,12 +93,11 @@ TEST(Sha256Test, Test3) {
 
   uint8 output3[base::SHA256_LENGTH];
   base::SHA256HashString(input3, output3, sizeof(output3));
-  for (size_t i = 0; i < base::SHA256_LENGTH; i++)
+  for (int i = 0; i < base::SHA256_LENGTH; i++)
     EXPECT_EQ(expected3[i], static_cast<int>(output3[i]));
 
   uint8 output_truncated3[12];
   base::SHA256HashString(input3, output_truncated3, sizeof(output_truncated3));
-  for (size_t i = 0; i < sizeof(output_truncated3); i++)
+  for (int i = 0; i < sizeof(output_truncated3); i++)
     EXPECT_EQ(expected3[i], static_cast<int>(output_truncated3[i]));
 }
-

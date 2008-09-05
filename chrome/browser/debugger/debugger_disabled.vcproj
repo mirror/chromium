@@ -122,15 +122,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\debugger_contents.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\debugger_contents.h"
-			>
-		</File>
-		<File
-			RelativePath=".\debugger_shell.h"
+			RelativePath=".\debugger.h"
 			>
 		</File>
 		<File

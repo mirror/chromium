@@ -52,6 +52,8 @@ env.Append(
         '/TP',
 
         '/wd4800',
+        '/wd4503',
+        '/wd4819',
     ],
 )
 
@@ -67,7 +69,7 @@ input_files = [
     'src/parsers/textparser.cxx',
 ]
 
-env.ChromeStaticLibrary('hunspell', input_files)
+env.StaticLibrary('hunspell', input_files)
 
 
 

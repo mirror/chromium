@@ -5,14 +5,6 @@ dependents = [
   'USER32.dll',
   'ADVAPI32.dll',
   'SHELL32.dll',
-  'VERSION.dll',  # Used by breakpad
-]
-
-dependents_google_chrome = [
-  'KERNEL32.dll',
-  'USER32.dll',
-  'ADVAPI32.dll',
-  'SHELL32.dll',
   'VERSION.dll',
 ]
 

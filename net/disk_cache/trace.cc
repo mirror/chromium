@@ -1,12 +1,35 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#include <windows.h>
 
 #include "net/disk_cache/trace.h"
-
-#if defined(OS_WIN)
-#include <windows.h>
-#endif
 
 #include "base/logging.h"
 
@@ -14,7 +37,7 @@
 // tracing is enabled only on debug builds.
 #define ENABLE_TRACING 0
 
-#ifndef NDEBUG
+#if _DEBUG
 #undef ENABLE_TRACING
 #define ENABLE_TRACING 1
 #endif
@@ -32,12 +55,8 @@ struct TraceBuffer {
 
 TraceBuffer* s_trace_buffer = NULL;
 
-void DebugOutput(const char* msg) {
-#if defined(OS_WIN)
+void DebugOutput(char* msg) {
   OutputDebugStringA(msg);
-#else
-  NOTIMPLEMENTED();
-#endif
 }
 
 }  // namespace
@@ -67,13 +86,7 @@ void Trace(const char* format, ...) {
   va_list ap;
   va_start(ap, format);
 
-#if defined(OS_WIN)
   vsprintf_s(s_trace_buffer->buffer[s_trace_buffer->current], format, ap);
-#else
-  vsnprintf(s_trace_buffer->buffer[s_trace_buffer->current],
-            sizeof(s_trace_buffer->buffer[s_trace_buffer->current]), format,
-            ap);
-#endif
   s_trace_buffer->num_traces++;
   s_trace_buffer->current++;
   if (s_trace_buffer->current == kNumberOfEntries)
@@ -131,4 +144,3 @@ void Trace(const char* format, ...) {
 #endif  // ENABLE_TRACING
 
 }  // namespace disk_cache
-

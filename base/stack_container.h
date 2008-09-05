@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef BASE_STACK_CONTAINER_H__
 #define BASE_STACK_CONTAINER_H__
@@ -31,9 +56,6 @@
 template<typename T, size_t stack_capacity>
 class StackAllocator : public std::allocator<T> {
  public:
-  typedef typename std::allocator<T>::pointer pointer;
-  typedef typename std::allocator<T>::size_type size_type;
-
   // Backing store for the allocator. The container owner is responsible for
   // maintaining this for as long as any containers using this allocator are
   // live.
@@ -108,10 +130,10 @@ class StackAllocator : public std::allocator<T> {
 // WATCH OUT: the ContainerType MUST use the proper StackAllocator for this
 // type. This object is really intended to be used only internally. You'll want
 // to use the wrappers below for different types.
-template<typename TContainerType, int stack_capacity>
+template<typename ContainerType, int stack_capacity>
 class StackContainer {
  public:
-  typedef TContainerType ContainerType;
+  typedef typename ContainerType ContainerType;
   typedef typename ContainerType::value_type ContainedType;
   typedef StackAllocator<ContainedType, stack_capacity> Allocator;
 
@@ -140,7 +162,7 @@ class StackContainer {
 #ifdef UNIT_TEST
   // Retrieves the stack source so that that unit tests can verify that the
   // buffer is being used properly.
-  const typename Allocator::Source& stack_data() const {
+  typename const Allocator::Source& stack_data() const {
     return stack_data_;
   }
 #endif
@@ -215,22 +237,19 @@ class StackVector : public StackContainer<
       : StackContainer<
             std::vector<T, StackAllocator<T, stack_capacity> >,
             stack_capacity>() {
-    this->container().assign(other->begin(), other->end());
+    container().assign(other->begin(), other->end());
   }
 
   StackVector<T, stack_capacity>& operator=(
       const StackVector<T, stack_capacity>& other) {
-    this->container().assign(other->begin(), other->end());
+    container().assign(other->begin(), other->end());
     return *this;
   }
 
   // Vectors are commonly indexed, which isn't very convenient even with
   // operator-> (using "->at()" does exception stuff we don't want).
-  T& operator[](size_t i) { return this->container().operator[](i); }
-  const T& operator[](size_t i) const { 
-    return this->container().operator[](i); 
-  }
+  T& operator[](size_t i) { return container().operator[](i); }
+  const T& operator[](size_t i) const { return container().operator[](i); }
 };
 
 #endif  // BASE_STACK_CONTAINER_H__
-

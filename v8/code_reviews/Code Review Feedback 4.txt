@@ -1,0 +1,132 @@
+Marked check boxes [x] indicate items that have been done.
+
+globals.h:
+[x] use int32_t, uint32_t, etc.
+[x] byte -> Byte? - Decided not to do it - i did a global replace and it looks weird. The comments
+    usually refer to 'bytes' and not 'Bytes', but the type would be 'Byte'. Seems better to leave
+    as it is (gri 1/24/07).
+[x] try out if Address = Byte*
+[x] Byte = uint8_t
+[ ] use if(kDebug) instead of #ifdef DEBUG where possible
+[x] don't use size_t, just use int
+[ ] cleanup TagSize business, proper TagMask sizes
+[ ] use intptr_t where we need correspondence between int and void*
+[x] Arguments + comments should go into a runtime support module
+[ ] runtime functions in compiler.cc should go into a runtime support module
+[ ] comment on AccessorDescriptor
+[ ] see if OFFSET_OF can be used in a const declaration, if not, try to fix it or comment on it
+[ ] how much do we need FUNCTION_ADDR, FUNCTION_CAST? remove if possible
+
+
+globals.cc:
+[x] please remove
+
+
+utils.h:
+[x] move CStringToDouble into double-related conversion code header file
+[x] remove cvttsd2si (send to Kasper)
+[x] move FastD2I implementation into utils-inl.h
+[x] DoubleToInt32 etc. should probably not be inlined, maybe they all should be elsewhere (like all ECMA-specific stuff)
+[x] rename printf => PrintF()
+[ ] change implementation of ReadChar to use STL strings, or better: our own string
+    (in that case, should probably moved out of utils.h!)
+
+
+utils.cc:
+[x] move HexValue() out of Scanner and re-use for CStringToDouble
+[ ] perhaps unify scanner routine and this CStringToDouble
+[ ] ReadFile: proper error reporting?
+
+
+ast.h:
+[ ] consider replacing EmptyStatement w/ NULL
+[ ] general comment on Node class
+[x] for AST: use constructors instead of the factory method here
+[ ] try to use Lists directly in the Nodes instead of List*
+[x] TryStatement: will be simplified
+[x] isTryFinally vs IsTryCatch: capitalization
+[ ] comment on use of Handles for Literals
+[x] change Identifier to have a Handle<Symbol>
+[ ] consider renaming variable, or comment
+[ ] have JS code example for each class
+[ ] consider renaming Property => IndexedProperty
+[ ] consider use a enum/flag instead of having CallNew and New
+[ ] consider rename Conditional left, right!
+[ ] FunctionScope: consider moving it out of AST, rename it to Scope?
+[ ] consider a better name for FunctionImplementation
+[ ] try to make Program a FunctionImplementation
+
+
+ast-inl.h:
+[x] perhaps move into ast.h?
+
+
+ast.cc:
+[x] DEBUG only for pretty printing routines?
+
+
+Strings:
+[ ] need to come up with a better V8 specific string representation
+
+
+spaces.cc:
+[x] in gc_allocate_raw_aligned: xxx_eoa -> rename xxx_top; consider changing eoa everywhere
+[x] consider removing Page::set_address by using constructor
+[x] Rename InitializePageLinks to BuildPageLinks.
+[ ] Add a debug-only Page::Zap for clearing memory.
+[x] Only initialize start_ in Chunk::Chunk(), not the other fields
+[x] Be sure to clear start_ in Cleanup
+[x] Rename Chunk::Initialize to Setup and Chunk::Cleanup to TearDown
+[x] clear_rset => ClearRSet
+[ ] there should be a Page Print()
+[ ] Space::Shrink(): rename to_release (new_top_index), factor code
+[x] IterateObjectFrom: fix kDebug loop
+[x] Spaces, Chunks, Pages: we should not cross abstraction boundaries
+[x] consider better name for NewSpace::Reset
+[x] NewSpace::AllocateRawAligned doesn't do much
+[x] object_typenames array can be too small
+[x] consider adding struct to contain histogram information per type
+[x] simplify ChunkedOldSpace::IterateRSet
+[x] accessor for (current_index_ + 1 == top_index_)
+[x] ChunkedOldSpace::AllocateRawAligned: include Expand() and If as well
+[x] factor all 4 allocation routines
+[x] OldSpace constructor/destructor into the .h file
+[x] MarkCompactCollector::InMC -> change name!
+[x] PrepareForGC: NumberOfPages should be computed on demand (no #ifdef)
+[x] lot's of top_page().next_page() => think about something here
+[ ] ReportStatistics should try to use abstractions instead of inlined code
+[x] MapSpace constructor/destructor => .h file
+[x] MapSpace::PrepareForGC: comment on the ASSERT; also rename 'i'
+[ ] ReportStatistics: same code again!
+[ ] MapTable::Initialize: use new, not malloc!
+[ ] IterateRSet: simplify
+[x] LargeObjectSpace::Compact: commentify!
+[x] LargeObjectSpace::Contains: signature is a bad name; have a tester? abstraction?
+
+
+builtins.h, .cc:
+[ ] should have a high-level comment describing overall structure
+[ ] explain why they cannot be code stubs
+[ ] V(Illegal) still used? if yes, add comment
+[x] SliceString? => StringPrototypeSlice?
+[x] MATH_BUILTIN_LIST: perhaps rename and combine with previous list
+[ ] use new macro to refer to built-ins
+[ ] move builtins_ into .cc file
+[ ] use class Arguments instead of the macros
+[ ] clean up Arguments class to always include and count a receiver
+[ ] think about handling also JSEnv in Arguments (may not be possible)
+[ ] probably have a global Eval(JSEnv*, Context*, char* source)
+[ ] Print needs to be able to handle a variable number of args
+[ ] implementation of ParseInt should go to the same place as CStringToDouble
+[ ] Arguments array should probably return handles! YES! (stack is already GCed)
+[ ] do we need the { NULL, NULL } terminator?
+
+
+codestubs.h:
+[ ] rename buffer_ or change buffer accessor names (comments?)
+[ ] consider: making these real Code objects
+[x] make sure that BEGIN/END_STUB enforce ';'
+
+codestubs.cc:
+[ ] entry/Descriptor ASSERT should have some comments (hard to understand)
+[ ] BUG: when re-enter JS, the code stub info stored in the JSEnv must be saved/restored (stub_return_address)

@@ -419,6 +419,7 @@ static xmlDocPtr
 xmlXIncludeParseFile(xmlXIncludeCtxtPtr ctxt, const char *URL) {
     xmlDocPtr ret;
     xmlParserCtxtPtr pctxt;
+    char *directory = NULL;
     xmlParserInputPtr inputStream;
 
     xmlInitParser();
@@ -455,8 +456,10 @@ xmlXIncludeParseFile(xmlXIncludeCtxtPtr ctxt, const char *URL) {
 
     inputPush(pctxt, inputStream);
 
-    if (pctxt->directory == NULL)
-        pctxt->directory = xmlParserGetDirectory(URL);
+    if ((pctxt->directory == NULL) && (directory == NULL))
+        directory = xmlParserGetDirectory(URL);
+    if ((pctxt->directory == NULL) && (directory != NULL))
+        pctxt->directory = (char *) xmlStrdup((xmlChar *) directory);
 
     pctxt->loadsubset |= XML_DETECT_IDS;
 
@@ -513,8 +516,9 @@ xmlXIncludeAddNode(xmlXIncludeCtxtPtr ctxt, xmlNodePtr cur) {
 	href = xmlStrdup(BAD_CAST ""); /* @@@@ href is now optional */
 	if (href == NULL) 
 	    return(-1);
+	local = 1;
     }
-    if ((href[0] == '#') || (href[0] == 0))
+    if (href[0] == '#')
 	local = 1;
     parse = xmlXIncludeGetProp(ctxt, cur, XINCLUDE_PARSE);
     if (parse != NULL) {
@@ -607,19 +611,6 @@ xmlXIncludeAddNode(xmlXIncludeCtxtPtr ctxt, xmlNodePtr cur) {
     if (URL == NULL) {
 	xmlXIncludeErr(ctxt, cur, XML_XINCLUDE_HREF_URI,
 	               "invalid value URI %s\n", URI);
-	if (fragment != NULL)
-	    xmlFree(fragment);
-	return(-1);
-    }
-
-    /*
-     * If local and xml then we need a fragment
-     */
-    if ((local == 1) && (xml == 1) &&
-        ((fragment == NULL) || (fragment[0] == 0))) {
-	xmlXIncludeErr(ctxt, cur, XML_XINCLUDE_RECURSION,
-	               "detected a local recursion with no xpointer in %s\n",
-		       URL);
 	if (fragment != NULL)
 	    xmlFree(fragment);
 	return(-1);

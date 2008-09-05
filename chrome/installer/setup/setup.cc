@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <shlobj.h>
 
@@ -12,7 +37,6 @@
 #include "base/string_util.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/installer/setup/setup_constants.h"
-#include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/create_reg_key_work_item.h"
 #include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/logging_installer.h"
@@ -22,7 +46,7 @@
 #include "chrome/installer/util/version.h"
 #include "chrome/installer/util/work_item_list.h"
 
-#include "installer_util_strings.h"
+#include "setup_strings.h"
 
 namespace {
 
@@ -36,8 +60,26 @@ void AddChromeToMediaPlayerList() {
 
   // if the operation fails we log the error but still continue
   if (!work_item.get()->Do())
-    LOG(ERROR) << "Could not add Chrome to media player inclusion list.";
+    LOG(ERROR) << "Couldn't add Chrome to media player inclusion list.";
 
+}
+
+// If we ever rename Chrome shortcuts under Windows Start menu, this
+// function deletes any of the old Chrome shortcuts if they exist. This
+// function will probably contain hard coded names of old shortcuts as they
+// will not longer be used anywhere else.
+// Method returns true if it finds and deletes successfully any old shortcut,
+// in all other cases it returns false.
+bool DeleteOldShortcuts(const std::wstring shortcut_path) {
+  // Check for the existence of shortcuts when they were still created under
+  // Start->Programs->Chrome (as opposed to Start->Programs->Google Chrome).
+  std::wstring shortcut_folder(shortcut_path);
+  file_util::AppendToPath(&shortcut_folder, L"Chrome");
+  if (file_util::PathExists(shortcut_folder)) {
+    LOG(INFO) << "Old shortcut path " << shortcut_folder << " exists.";
+    return file_util::Delete(shortcut_folder, true);
+  }
+  return false;
 }
 
 // Update shortcuts that are created by chrome.exe during first run, but
@@ -48,8 +90,25 @@ void UpdateChromeExeShortcuts(const std::wstring& chrome_exe) {
       !ShellUtil::GetDesktopPath(&desktop_shortcut) ||
       !ShellUtil::GetChromeShortcutName(&shortcut_name))
     return;
+  // Migrate the old shortcuts from Chrome.lnk to the localized name.
+  std::wstring old_ql_shortcut = ql_shortcut;
+  file_util::AppendToPath(&old_ql_shortcut, L"Chrome.lnk");
   file_util::AppendToPath(&ql_shortcut, shortcut_name);
+  std::wstring old_desktop_shortcut = desktop_shortcut;
+  file_util::AppendToPath(&old_desktop_shortcut, L"Chrome.lnk");
   file_util::AppendToPath(&desktop_shortcut, shortcut_name);
+
+  if (file_util::Move(old_ql_shortcut, ql_shortcut)) {
+    // Notify the Windows Shell that we renamed the file so it can remove the
+    // old icon.  It's safe to not cehck for MAX_PATH because file_util::Move
+    // does the check for us.
+    SHChangeNotify(SHCNE_RENAMEITEM, SHCNF_PATH, old_ql_shortcut.c_str(),
+                   ql_shortcut.c_str());
+  }
+  if (file_util::Move(old_desktop_shortcut, desktop_shortcut)) {
+    SHChangeNotify(SHCNE_RENAMEITEM, SHCNF_PATH, old_desktop_shortcut.c_str(),
+                   desktop_shortcut.c_str());
+  }
 
   // Go ahead and update the shortcuts if they exist.
   ShellUtil::UpdateChromeShortcut(chrome_exe, ql_shortcut, false);
@@ -83,9 +142,12 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
     return false;
   }
 
+  // Check for existence of old shortcuts
+  bool old_shortcuts_existed = DeleteOldShortcuts(shortcut_path);
+
   // The location of Start->Programs->Google Chrome folder
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  const std::wstring& product_name = dist->GetApplicationName();
+  const std::wstring& product_name =
+      installer_util::GetLocalizedString(IDS_PRODUCT_NAME_BASE);
   file_util::AppendToPath(&shortcut_path, product_name);
 
   // Create/update Chrome link (points to chrome.exe) & Uninstall Chrome link
@@ -102,7 +164,8 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
   file_util::AppendToPath(&chrome_exe, installer_util::kChromeExe);
 
   if ((install_status == installer_util::FIRST_INSTALL_SUCCESS) ||
-      (install_status == installer_util::INSTALL_REPAIRED)) {
+      (install_status == installer_util::INSTALL_REPAIRED) ||
+      (old_shortcuts_existed)) {
     if (!file_util::PathExists(shortcut_path))
       file_util::CreateDirectoryW(shortcut_path);
 
@@ -117,10 +180,12 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
   // Create/update uninstall link
   bool ret2 = true;
   std::wstring uninstall_link(shortcut_path);  // Uninstall Chrome link
+
   file_util::AppendToPath(&uninstall_link,
-      dist->GetUninstallLinkName() + L".lnk");
+      installer_util::GetLocalizedString(IDS_UNINSTALL_CHROME_BASE) + L".lnk");
   if ((install_status == installer_util::FIRST_INSTALL_SUCCESS) ||
       (install_status == installer_util::INSTALL_REPAIRED) ||
+      (old_shortcuts_existed) ||
       (file_util::PathExists(uninstall_link))) {
     if (!file_util::PathExists(shortcut_path))
       file_util::CreateDirectoryW(shortcut_path);
@@ -131,10 +196,9 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
     std::wstring arguments(L" --");
     arguments.append(installer_util::switches::kUninstall);
     LOG(INFO) << "Creating/updating uninstall link at " << uninstall_link;
-    std::wstring target_folder = file_util::GetDirectoryFromPath(install_path);
     ret2 = file_util::CreateShortcutLink(setup_exe.c_str(),
                                          uninstall_link.c_str(),
-                                         target_folder.c_str(),
+                                         install_path.c_str(),
                                          arguments.c_str(),
                                          NULL,
                                          setup_exe.c_str(),
@@ -165,7 +229,7 @@ installer_util::InstallStatus installer::InstallOrUpdateChrome(
 
   std::wstring install_path(GetChromeInstallPath(system_install));
   if (install_path.empty()) {
-    LOG(ERROR) << "Could not get installation destination path.";
+    LOG(ERROR) << "Couldn't get installation destination path";
     return installer_util::INSTALL_FAILED;
   } else {
     LOG(INFO) << "install destination path: " << install_path;
@@ -215,12 +279,17 @@ installer_util::InstallStatus installer::InstallOrUpdateChrome(
       LOG(INFO) << "Registering Chrome as browser";
       ShellUtil::RegisterStatus ret =
           ShellUtil::AddChromeToSetAccessDefaults(chrome_exe, true);
-      LOG(INFO) << "Return status of Chrome browser registration " << ret;
+      LOG(ERROR) << "Return status of Chrome browser registration " << ret;
     } else {
+      UpdateChromeExeShortcuts(chrome_exe);
       RemoveOldVersionDirs(install_path, new_version.GetString());
+      // Delete the old key for Uninstall link (this code can be removed once
+      // everyone has migrated to the new "Google Chrome" version of the key).
+      RegKey key(reg_root, L"", KEY_ALL_ACCESS);
+      key.DeleteKey(L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Chrome");
+      key.Close();
     }
   }
 
   return result;
 }
-

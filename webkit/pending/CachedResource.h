@@ -133,10 +133,6 @@ public:
     virtual void destroyDecodedData() {};
 
     void setDocLoader(DocLoader* docLoader) { m_docLoader = docLoader; }
-
-#if PLATFORM(MAC)
-    SharedBuffer* data() const { return m_data.get(); }
-#endif
     
 protected:
     void setEncodedSize(unsigned);

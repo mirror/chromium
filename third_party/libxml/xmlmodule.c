@@ -190,7 +190,7 @@ xmlModuleFree(xmlModulePtr module)
     return (0);
 }
 
-#if defined(HAVE_DLOPEN) && !defined(_WIN32)
+#ifdef HAVE_DLOPEN
 #ifdef HAVE_DLFCN_H
 #include <dlfcn.h>
 #endif

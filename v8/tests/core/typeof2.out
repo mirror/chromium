@@ -1,0 +1,6 @@
+f0: typeof foo = undefined
+f1: typeof foo = undefined
+f2: typeof obj.foo = number
+f2: typeof obj.bar = undefined
+f3: typeof ( sel ? foo : bar) = string
+f3: typeof (!sel ? foo : bar) = undefined

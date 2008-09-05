@@ -1,57 +1,46 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <string>
+#include <hash_set>
+#include <string.h>
 
 #include "net/base/mime_util.h"
-#include "net/base/platform_mime_util.h"
 
-#include "base/hash_tables.h"
+#include "base/basictypes.h"
 #include "base/logging.h"
-#include "base/singleton.h"
+#include "base/registry.h"
 #include "base/string_util.h"
 
 using std::string;
 using std::wstring;
 
-namespace net {
-
-// Singleton utility class for mime types.
-class MimeUtil : public PlatformMimeUtil {
- public:
-  bool GetMimeTypeFromExtension(const std::wstring& ext,
-                                std::string* mime_type) const;
-
-  bool GetMimeTypeFromFile(const std::wstring& file_path,
-                           std::string* mime_type) const;
-
-  bool IsSupportedImageMimeType(const char* mime_type) const;
-  bool IsSupportedNonImageMimeType(const char* mime_type) const;
-  bool IsSupportedJavascriptMimeType(const char* mime_type) const;
-
-  bool IsViewSourceMimeType(const char* mime_type) const;
-
-  bool IsSupportedMimeType(const std::string& mime_type) const;
-
-  bool MatchesMimeType(const std::string &mime_type_pattern,
-                       const std::string &mime_type) const;
-
-private:
-  friend struct DefaultSingletonTraits<MimeUtil>;
-  MimeUtil() {
-    InitializeMimeTypeMaps();
-  }
-
-  // For faster lookup, keep hash sets.
-  void InitializeMimeTypeMaps();
-
-  typedef base::hash_set<std::string> MimeMappings;
-  MimeMappings image_map_;
-  MimeMappings non_image_map_;
-  MimeMappings javascript_map_;
-  MimeMappings view_source_map_;
-}; // class MimeUtil
+namespace mime_util {
 
 struct MimeInfo {
   const char* mime_type;
@@ -90,8 +79,7 @@ static const MimeInfo secondary_mappings[] = {
   { "application/x-shockwave-flash", "swf,swl" }
 };
 
-static const char* FindMimeType(const MimeInfo* mappings,
-                                size_t mappings_len,
+static const char* FindMimeType(const MimeInfo* mappings, size_t mappings_len,
                                 const char* ext) {
   size_t ext_len = strlen(ext);
 
@@ -99,8 +87,7 @@ static const char* FindMimeType(const MimeInfo* mappings,
     const char* extensions = mappings[i].extensions;
     for (;;) {
       size_t end_pos = strcspn(extensions, ",");
-      if (end_pos == ext_len &&
-          base::strncasecmp(extensions, ext, ext_len) == 0)
+      if (end_pos == ext_len && _strnicmp(extensions, ext, ext_len) == 0)
         return mappings[i].mime_type;
       extensions += end_pos;
       if (!*extensions)
@@ -111,8 +98,7 @@ static const char* FindMimeType(const MimeInfo* mappings,
   return NULL;
 }
 
-bool MimeUtil::GetMimeTypeFromExtension(const wstring& ext,
-                                        string* result) const {
+bool GetMimeTypeFromExtension(const wstring& ext, string* result) {
   // We implement the same algorithm as Mozilla for mapping a file extension to
   // a mime type.  That is, we first check a hard-coded list (that cannot be
   // overridden), and then if not found there, we defer to the system registry.
@@ -129,8 +115,14 @@ bool MimeUtil::GetMimeTypeFromExtension(const wstring& ext,
     return true;
   }
 
-  if (GetPlatformMimeTypeFromExtension(ext, result))
+  // check windows registry for file extension's mime type (registry key
+  // names are not case-sensitive).
+  wstring value, key = L"." + ext;
+  RegKey(HKEY_CLASSES_ROOT, key.c_str()).ReadValue(L"Content Type", &value);
+  if (!value.empty()) {
+    *result = WideToUTF8(value);
     return true;
+  }
 
   mime_type = FindMimeType(secondary_mappings, arraysize(secondary_mappings),
                            ext_utf8.c_str());
@@ -142,15 +134,19 @@ bool MimeUtil::GetMimeTypeFromExtension(const wstring& ext,
   return false;
 }
 
-bool MimeUtil::GetMimeTypeFromFile(const wstring& file_path,
-                                   string* result) const {
-  // TODO(ericroman): this doesn't work properly with paths like
-  // /home/foo/.ssh/known_hosts
+bool GetMimeTypeFromFile(const wstring& file_path, string* result) {
   wstring::size_type dot = file_path.find_last_of('.');
   if (dot == wstring::npos)
     return false;
   return GetMimeTypeFromExtension(file_path.substr(dot + 1), result);
 }
+
+bool GetPreferredExtensionForMimeType(const std::string& mime_type,
+                                      std::wstring* ext) {
+  wstring key(L"MIME\\Database\\Content Type\\" + UTF8ToWide(mime_type));
+  return RegKey(HKEY_CLASSES_ROOT, key.c_str()).ReadValue(L"Extension", ext);
+}
+
 
 // From WebKit's WebCore/platform/MIMETypeRegistry.cpp:
 
@@ -207,51 +203,70 @@ static const char* view_source_types[] = {
   "image/svg+xml"
 };
 
-void MimeUtil::InitializeMimeTypeMaps() {
-  for (size_t i = 0; i < arraysize(supported_image_types); ++i)
-    image_map_.insert(supported_image_types[i]);
+// For faster lookup
+static stdext::hash_set<string>* image_map = NULL;
+static stdext::hash_set<string>* non_image_map = NULL;
+static stdext::hash_set<string>* javascript_map = NULL;
+static stdext::hash_set<string>* view_source_map = NULL;
+
+static void InitializeMimeTypeMaps() {
+  image_map = new stdext::hash_set<string>;
+  non_image_map = new stdext::hash_set<string>;
+  javascript_map = new stdext::hash_set<string>;
+  view_source_map = new stdext::hash_set<string>;
+
+  for (int i = 0; i < arraysize(supported_image_types); ++i)
+    image_map->insert(supported_image_types[i]);
 
   // Initialize the supported non-image types
-  for (size_t i = 0; i < arraysize(supported_non_image_types); ++i)
-    non_image_map_.insert(supported_non_image_types[i]);
-  for (size_t i = 0; i < arraysize(supported_javascript_types); ++i)
-    non_image_map_.insert(supported_javascript_types[i]);
+  for (int i = 0; i < arraysize(supported_non_image_types); ++i)
+    non_image_map->insert(supported_non_image_types[i]);
+  for (int i = 0; i < arraysize(supported_javascript_types); ++i)
+    non_image_map->insert(supported_javascript_types[i]);
 
-  for (size_t i = 0; i < arraysize(supported_javascript_types); ++i)
-    javascript_map_.insert(supported_javascript_types[i]);
+  for (int i = 0; i < arraysize(supported_javascript_types); ++i)
+    javascript_map->insert(supported_javascript_types[i]);
 
-  for (size_t i = 0; i < arraysize(view_source_types); ++i)
-    view_source_map_.insert(view_source_types[i]);
+  for (int i = 0; i < arraysize(view_source_types); ++i)
+    view_source_map->insert(view_source_types[i]);
 }
 
-bool MimeUtil::IsSupportedImageMimeType(const char* mime_type) const {
-  return image_map_.find(mime_type) != image_map_.end();
+bool IsSupportedImageMimeType(const char* mime_type) {
+  if (!image_map)
+    InitializeMimeTypeMaps();
+  return image_map->find(mime_type) != image_map->end();
 }
 
-bool MimeUtil::IsSupportedNonImageMimeType(const char* mime_type) const {
-  return non_image_map_.find(mime_type) != non_image_map_.end();
+bool IsSupportedNonImageMimeType(const char* mime_type) {
+  if (!non_image_map)
+    InitializeMimeTypeMaps();
+  return non_image_map->find(mime_type) != non_image_map->end();
 }
 
-bool MimeUtil::IsSupportedJavascriptMimeType(const char* mime_type) const {
-  return javascript_map_.find(mime_type) != javascript_map_.end();
+bool IsSupportedJavascriptMimeType(const char* mime_type) {
+  if (!javascript_map)
+    InitializeMimeTypeMaps();
+  return javascript_map->find(mime_type) != javascript_map->end();
 }
 
-bool MimeUtil::IsViewSourceMimeType(const char* mime_type) const {
-  return view_source_map_.find(mime_type) != view_source_map_.end();
+bool IsViewSourceMimeType(const char* mime_type) {
+  if (!view_source_map)
+    InitializeMimeTypeMaps();
+  return view_source_map->find(mime_type) != view_source_map->end();
 }
 
 // Mirrors WebViewImpl::CanShowMIMEType()
-bool MimeUtil::IsSupportedMimeType(const std::string& mime_type) const {
+bool IsSupportedMimeType(const std::string& mime_type) {
   if (mime_type.compare(0, 5, "text/") == 0 ||
       (mime_type.compare(0, 6, "image/") == 0 &&
-       IsSupportedImageMimeType(mime_type.c_str())) ||
-      IsSupportedNonImageMimeType(mime_type.c_str()))
+       mime_util::IsSupportedImageMimeType(mime_type.c_str())) ||
+      mime_util::IsSupportedNonImageMimeType(mime_type.c_str()))
     return true;
   return false;
 }
 
-bool MimeUtil::MatchesMimeType(const std::string &mime_type_pattern,
-                               const std::string &mime_type) const {
+bool MatchesMimeType(const std::string &mime_type_pattern,
+                     const std::string &mime_type) {
   // verify caller is passing lowercase
   DCHECK(mime_type_pattern == StringToLowerASCII(mime_type_pattern));
   DCHECK(mime_type == StringToLowerASCII(mime_type));
@@ -287,51 +302,4 @@ bool MimeUtil::MatchesMimeType(const std::string &mime_type_pattern,
   return true;
 }
 
-//----------------------------------------------------------------------------
-// Wrappers for the singleton
-//----------------------------------------------------------------------------
-
-static MimeUtil* GetMimeUtil() {
-  return Singleton<MimeUtil>::get();
-}
-
-bool GetMimeTypeFromExtension(const std::wstring& ext, std::string* mime_type) {
-  return GetMimeUtil()->GetMimeTypeFromExtension(ext, mime_type);
-}
-
-bool GetMimeTypeFromFile(const std::wstring& file_path, std::string* mime_type) {
-  return GetMimeUtil()->GetMimeTypeFromFile(file_path, mime_type);
-}
-
-bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                      std::wstring* extension) {
-  return GetMimeUtil()->GetPreferredExtensionForMimeType(mime_type, extension);
-}
-
-bool IsSupportedImageMimeType(const char* mime_type) {
-  return GetMimeUtil()->IsSupportedImageMimeType(mime_type);
-}
-
-bool IsSupportedNonImageMimeType(const char* mime_type) {
-  return GetMimeUtil()->IsSupportedNonImageMimeType(mime_type);
-}
-
-bool IsSupportedJavascriptMimeType(const char* mime_type) {
-  return GetMimeUtil()->IsSupportedJavascriptMimeType(mime_type);
-}
-
-bool IsViewSourceMimeType(const char* mime_type) {
-  return GetMimeUtil()->IsViewSourceMimeType(mime_type);
-}
-
-bool IsSupportedMimeType(const std::string& mime_type) {
-  return GetMimeUtil()->IsSupportedMimeType(mime_type);
-}
-
-bool MatchesMimeType(const std::string &mime_type_pattern,
-                     const std::string &mime_type) {
-  return GetMimeUtil()->MatchesMimeType(mime_type_pattern, mime_type);
-}
-
-}  // namespace net
-
+}  // namespace mime_util

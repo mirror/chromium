@@ -1,15 +1,40 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef NET_HTTP_RESPONSE_HEADERS_H_
-#define NET_HTTP_RESPONSE_HEADERS_H_
+#ifndef NET_HTTP_RESPONSE_HEADERS_H__
+#define NET_HTTP_RESPONSE_HEADERS_H__
 
+#include <hash_set>
 #include <string>
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/hash_tables.h"
 #include "base/ref_counted.h"
 
 class Pickle;
@@ -178,7 +203,7 @@ class HttpResponseHeaders :
   const std::string& raw_headers() const { return raw_headers_; }
 
  private:
-  friend class base::RefCountedThreadSafe<HttpResponseHeaders>;
+  friend RefCountedThreadSafe<HttpResponseHeaders>;
 
   HttpResponseHeaders() {}
   ~HttpResponseHeaders() {}
@@ -215,8 +240,8 @@ class HttpResponseHeaders :
   // index |from|.  Returns string::npos if not found.
   size_t FindHeader(size_t from, const std::string& name) const;
 
-  // Add a header->value pair to our list.  If we already have header in our
-  // list, append the value to it.
+  // Add a header->value pair to our list.  If we already have header in our list,
+  // append the value to it.
   void AddHeader(std::string::const_iterator name_begin,
                  std::string::const_iterator name_end,
                  std::string::const_iterator value_begin,
@@ -228,7 +253,7 @@ class HttpResponseHeaders :
                    std::string::const_iterator value_begin,
                    std::string::const_iterator value_end);
 
-  typedef base::hash_set<std::string> HeaderSet;
+  typedef stdext::hash_set<std::string> HeaderSet;
 
   // Returns the values from any 'cache-control: no-cache="foo,bar"' headers as
   // well as other known-to-be-transient header names.  The header names are
@@ -262,10 +287,9 @@ class HttpResponseHeaders :
   // This is the parsed HTTP response code.
   int response_code_;
 
-  DISALLOW_COPY_AND_ASSIGN(HttpResponseHeaders);
+  DISALLOW_EVIL_CONSTRUCTORS(HttpResponseHeaders);
 };
 
 }  // namespace net
 
-#endif  // NET_HTTP_RESPONSE_HEADERS_H_
-
+#endif  // NET_HTTP_RESPONSE_HEADERS_H__

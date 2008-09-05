@@ -727,8 +727,8 @@ xmlNodeDumpOutputInternal(xmlSaveCtxtPtr ctxt, xmlNodePtr cur) {
 	return;
     }
     if (cur->type == XML_CDATA_SECTION_NODE) {
-	if (cur->content == NULL || *cur->content == '\0') {
-	    xmlOutputBufferWrite(buf, 12, "<![CDATA[]]>");
+	if (cur->content == NULL) {
+		xmlOutputBufferWrite(buf, 12, "<![CDATA[]]>");
 	} else {
 	    start = end = cur->content;
 	    while (*end != '\0') {
@@ -1236,25 +1236,21 @@ xhtmlNodeDumpOutput(xmlSaveCtxtPtr ctxt, xmlNodePtr cur) {
 	return;
     }
     if (cur->type == XML_CDATA_SECTION_NODE) {
-	if (cur->content == NULL || *cur->content == '\0') {
-	    xmlOutputBufferWrite(buf, 12, "<![CDATA[]]>");
-	} else {
-	    start = end = cur->content;
-	    while (*end != '\0') {
-		if (*end == ']' && *(end + 1) == ']' && *(end + 2) == '>') {
-		    end = end + 2;
-		    xmlOutputBufferWrite(buf, 9, "<![CDATA[");
-		    xmlOutputBufferWrite(buf, end - start, (const char *)start);
-		    xmlOutputBufferWrite(buf, 3, "]]>");
-		    start = end;
-		}
-		end++;
-	    }
-	    if (start != end) {
+	start = end = cur->content;
+	while (*end != '\0') {
+	    if (*end == ']' && *(end + 1) == ']' && *(end + 2) == '>') {
+		end = end + 2;
 		xmlOutputBufferWrite(buf, 9, "<![CDATA[");
-		xmlOutputBufferWriteString(buf, (const char *)start);
+		xmlOutputBufferWrite(buf, end - start, (const char *)start);
 		xmlOutputBufferWrite(buf, 3, "]]>");
+		start = end;
 	    }
+	    end++;
+	}
+	if (start != end) {
+	    xmlOutputBufferWrite(buf, 9, "<![CDATA[");
+	    xmlOutputBufferWriteString(buf, (const char *)start);
+	    xmlOutputBufferWrite(buf, 3, "]]>");
 	}
 	return;
     }

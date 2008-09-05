@@ -768,7 +768,6 @@ xmlDictOwns
 xmlDictQLookup
 xmlDictReference
 xmlDictSize
-xmlDllMain
 xmlDocCopyNode
 xmlDocCopyNodeList
 xmlDocDump
@@ -1784,7 +1783,6 @@ xmlSchematronNewMemParserCtxt
 xmlSchematronNewParserCtxt
 xmlSchematronNewValidCtxt
 xmlSchematronParse
-xmlSchematronSetValidStructuredErrors
 xmlSchematronValidateDoc
 xmlSearchNs
 xmlSearchNsByHref

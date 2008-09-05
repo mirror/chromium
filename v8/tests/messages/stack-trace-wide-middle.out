@@ -1,0 +1,3 @@
+stack-trace-wide-middle.js:2: Uncaught ReferenceError: xxx is not defined
+line_which_raises_an_exception_to_be_more_that_78_characters_long"; xxx(); "Th
+                                                                    ^

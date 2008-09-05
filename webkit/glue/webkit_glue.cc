@@ -1,12 +1,36 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <objidl.h>
 #include <mlang.h>
 
 #include "config.h"
-#include "webkit_version.h"
 #pragma warning(push, 0)
 #include "BackForwardList.h"
 #include "Document.h"
@@ -161,7 +185,7 @@ std::wstring DumpFrameScrollPosition(WebFrame* web_frame, bool recursive) {
 
   if (offset.width() > 0 || offset.height() > 0) {
     if (webFrameImpl->GetParent()) {
-      StringAppendF(&result, L"frame '%ls' ", StringToStdWString(
+      StringAppendF(&result, L"frame '%s' ", StringToStdWString(
           webFrameImpl->frame()->tree()->name()).c_str());
     }
     StringAppendF(&result, L"scrolled to %d,%d\n",
@@ -320,10 +344,6 @@ void NotifyFormStateChanged(const WebCore::Document* document) {
   delegate->OnNavStateChanged(webview);
 }
 
-std::string GetWebKitVersion() {
-  return StringPrintf("%d.%d", WEBKIT_VERSION_MAJOR, WEBKIT_VERSION_MINOR);
-}
-
 const std::string& GetDefaultUserAgent() {
   static std::string user_agent;
   static bool generated_user_agent;
@@ -348,16 +368,11 @@ const std::string& GetDefaultUserAgent() {
     // Derived from Safari's UA string.
     StringAppendF(
         &user_agent,
-        "Mozilla/5.0 (Windows; U; Windows NT %d.%d; en-US) AppleWebKit/%d.%d"
-        " (KHTML, like Gecko) %s Safari/%d.%d",
+        "Mozilla/5.0 (Windows; U; Windows NT %d.%d; en-US) AppleWebKit/525.13"
+        " (KHTML, like Gecko) %s Safari/525.13",
         info.dwMajorVersion,
         info.dwMinorVersion,
-        WEBKIT_VERSION_MAJOR,
-        WEBKIT_VERSION_MINOR,
-        product.c_str(),
-        WEBKIT_VERSION_MAJOR,
-        WEBKIT_VERSION_MINOR
-        );
+        product.c_str());
 
     generated_user_agent = true;
   }
@@ -382,4 +397,3 @@ void NotifyJSOutOfMemory(WebCore::Frame* frame) {
 }
 
 } // namespace webkit_glue
-

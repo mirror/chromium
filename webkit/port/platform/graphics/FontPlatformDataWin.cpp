@@ -29,9 +29,11 @@
 namespace WebCore {
 
 FontPlatformData::FontPlatformData(HFONT font, float size,
+                                   const FontMetrics* overrideFontMetrics,
                                    bool isMLangFont)
     : m_font(RefCountedHFONT::create(font))
     , m_size(size)
+    , m_overrideFontMetrics(overrideFontMetrics)
     , m_isMLangFont(isMLangFont)
 {
 }
@@ -41,6 +43,7 @@ FontPlatformData::FontPlatformData(HFONT font, float size,
 FontPlatformData::FontPlatformData(float size, bool bold, bool oblique)
     : m_size(size)
     , m_font(0)
+    , m_overrideFontMetrics(0)
 {
 }
 

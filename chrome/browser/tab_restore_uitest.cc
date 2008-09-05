@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/command_line.h"
 #include "base/file_util.h"
@@ -22,8 +47,8 @@ class TabRestoreUITest : public UITest {
     std::wstring path_prefix = test_data_directory_;
     file_util::AppendToPath(&path_prefix, L"session_history");
     path_prefix += file_util::kPathSeparator;
-    url1_ = net::FilePathToFileURL(path_prefix + L"bot1.html");
-    url2_ = net::FilePathToFileURL(path_prefix + L"bot2.html");
+    url1_ = net_util::FilePathToFileURL(path_prefix + L"bot1.html");
+    url2_ = net_util::FilePathToFileURL(path_prefix + L"bot2.html");
   }
 
  protected:
@@ -48,7 +73,7 @@ class TabRestoreUITest : public UITest {
     // Wait for the restored tab to finish loading.
     scoped_ptr<TabProxy> restored_tab_proxy(
         browser_proxy->GetTab(restored_tab_count - 1));
-    ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored(kWaitForActionMsec));
+    ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored());
   }
 
   GURL url1_;
@@ -221,4 +246,3 @@ TEST_F(TabRestoreUITest, RestoreCrossSiteWithExistingSiteInstance) {
   ASSERT_FALSE(tab->GoForward());
   ASSERT_EQ(http_url2, GetActiveTabURL());
 }
-

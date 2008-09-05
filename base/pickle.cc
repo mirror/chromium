@@ -1,21 +1,41 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-#include "base/pickle.h"
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
-
-#include <limits>
 #include <string>
+
+#include "base/pickle.h"
 
 //------------------------------------------------------------------------------
 
 // static
 const int Pickle::kPayloadUnit = 64;
-
-// We mark a read only pickle with a special capacity_.
-static const size_t kCapacityReadOnly = std::numeric_limits<size_t>::max();
 
 // Payload is uint32 aligned.
 
@@ -33,7 +53,7 @@ Pickle::Pickle(int header_size)
       header_size_(AlignInt(header_size, sizeof(uint32))),
       capacity_(0),
       variable_buffer_offset_(0) {
-  DCHECK(static_cast<size_t>(header_size) >= sizeof(Header));
+  DCHECK(header_size >= sizeof(Header));
   DCHECK(header_size <= kPayloadUnit);
   Resize(kPayloadUnit);
   header_->payload_size = 0;
@@ -42,7 +62,7 @@ Pickle::Pickle(int header_size)
 Pickle::Pickle(const char* data, int data_len)
     : header_(reinterpret_cast<Header*>(const_cast<char*>(data))),
       header_size_(data_len - header_->payload_size),
-      capacity_(kCapacityReadOnly),
+      capacity_(-1),
       variable_buffer_offset_(0) {
   DCHECK(header_size_ >= sizeof(Header));
   DCHECK(header_size_ == AlignInt(header_size_, sizeof(uint32)));
@@ -60,12 +80,12 @@ Pickle::Pickle(const Pickle& other)
 }
 
 Pickle::~Pickle() {
-  if (capacity_ != kCapacityReadOnly)
+  if (capacity_ != -1)
     free(header_);
 }
 
 Pickle& Pickle::operator=(const Pickle& other) {
-  if (header_size_ != other.header_size_ && capacity_ != kCapacityReadOnly) {
+  if (header_size_ != other.header_size_ && capacity_ != -1) {
     free(header_);
     header_ = NULL;
     header_size_ = other.header_size_;
@@ -100,22 +120,6 @@ bool Pickle::ReadInt(void** iter, int* result) const {
   // alignment.
   // Next line is otherwise the same as: memcpy(result, *iter, sizeof(*result));
   *result = *reinterpret_cast<int*>(*iter);
-
-  UpdateIter(iter, sizeof(*result));
-  return true;
-}
-
-bool Pickle::ReadLong(void** iter, long* result) const {
-  DCHECK(iter);
-  if (!*iter)
-    *iter = const_cast<char*>(payload());
-
-  if (!IteratorHasRoomFor(*iter, sizeof(*result)))
-    return false;
-
-  // TODO(jar) bug 1129285: Pickle should be cleaned up, and not dependent on
-  // alignment.
-  memcpy(result, *iter, sizeof(*result));
 
   UpdateIter(iter, sizeof(*result));
   return true;
@@ -236,11 +240,7 @@ char* Pickle::BeginWrite(size_t length) {
   if (header_size_ + new_size > capacity_ && !Resize(header_size_ + new_size))
     return NULL;
 
-#ifdef ARCH_CPU_64_BITS
-  DCHECK_LE(length, std::numeric_limits<uint32>::max());
-#endif
-
-  header_->payload_size = static_cast<uint32>(new_size);
+  header_->payload_size = new_size;
   return payload() + offset;
 }
 
@@ -252,7 +252,7 @@ void Pickle::EndWrite(char* dest, int length) {
 }
 
 bool Pickle::WriteBytes(const void* data, int data_len) {
-  DCHECK(capacity_ != kCapacityReadOnly) << "oops: pickle is readonly";
+  DCHECK(capacity_ != -1) << "oops: pickle is readonly";
 
   char* dest = BeginWrite(data_len);
   if (!dest)
@@ -284,7 +284,7 @@ bool Pickle::WriteData(const char* data, int length) {
 }
 
 char* Pickle::BeginWriteData(int length) {
-  DCHECK_EQ(variable_buffer_offset_, 0U) <<
+  DCHECK_EQ(variable_buffer_offset_, 0) <<
     "There can only be one variable buffer in a Pickle";
 
   if (!WriteInt(length))
@@ -303,21 +303,20 @@ char* Pickle::BeginWriteData(int length) {
   return data_ptr;
 }
 
-void Pickle::TrimWriteData(int new_length) {
+void Pickle::TrimWriteData(int length) {
   DCHECK(variable_buffer_offset_ != 0);
 
-  // Fetch the the variable buffer size
-  int* cur_length = reinterpret_cast<int*>(
+  VariableLengthBuffer *buffer = reinterpret_cast<VariableLengthBuffer*>(
       reinterpret_cast<char*>(header_) + variable_buffer_offset_);
 
-  if (new_length < 0 || new_length > *cur_length) {
-    NOTREACHED() << "Invalid length in TrimWriteData.";
-    return;
-  }
+  DCHECK_GE(buffer->length, length);
 
-  // Update the payload size and variable buffer size
-  header_->payload_size -= (*cur_length - new_length);
-  *cur_length = new_length;
+  int old_length = buffer->length;
+  int trimmed_bytes = old_length - length;
+  if (trimmed_bytes > 0) {
+    header_->payload_size -= trimmed_bytes;
+    buffer->length = length;
+  }
 }
 
 bool Pickle::Resize(size_t new_capacity) {
@@ -337,7 +336,7 @@ const char* Pickle::FindNext(size_t header_size,
                              const char* start,
                              const char* end) {
   DCHECK(header_size == AlignInt(header_size, sizeof(uint32)));
-  DCHECK(header_size <= static_cast<size_t>(kPayloadUnit));
+  DCHECK(header_size <= kPayloadUnit);
 
   const Header* hdr = reinterpret_cast<const Header*>(start);
   const char* payload_base = start + header_size;
@@ -347,4 +346,3 @@ const char* Pickle::FindNext(size_t header_size,
 
   return (payload_end > end) ? NULL : payload_end;
 }
-

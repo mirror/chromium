@@ -1,0 +1,27 @@
+deps = {
+  "build":
+    "https://svn/chrome/trunk/build@43201",
+
+  "third_party/scons-0.97":
+    "https://svn/chrome/trunk/third_party/scons-0.97@13757",
+
+  "third_party/cygwin":
+    "https://svn/chrome/trunk/third_party/cygwin@14575",
+
+  "third_party/WebKit/SunSpider":
+    "https://svn/chrome/trunk/third_party/WebKit/SunSpider",
+
+  "data/mozilla_js_tests":
+    "https://svn/chrome/trunk/data/mozilla_js_tests",
+
+  "data/esctf":
+    "https://svn.corp.google.com/r/third-party/esctf",
+
+# third_party/python_24 and tools/python should be kept in sync with the
+# revision in base.
+  "third_party/python_24":
+    "https://svn/chrome/trunk/third_party/python_24@39885",
+
+  "tools/python":
+    "https://svn/chrome/trunk/tools/python@26186",
+}
