@@ -265,6 +265,7 @@ class ArmCodeGenerator: public CodeGenerator {
   virtual void GenerateSquashFrame(ZoneList<Expression*>* args);
   virtual void GenerateExpandFrame(ZoneList<Expression*>* args);
   virtual void GenerateIsSmi(ZoneList<Expression*>* args);
+  virtual void GenerateIsNonNegativeSmi(ZoneList<Expression*>* args);
   virtual void GenerateIsArray(ZoneList<Expression*>* args);
 
   virtual void GenerateArgumentsLength(ZoneList<Expression*>* args);
@@ -3700,6 +3701,27 @@ void ArmCodeGenerator::GenerateIsSmi(ZoneList<Expression*>* args) {
   __ pop(r0);
   cc_reg_ = eq;
 }
+
+
+void ArmCodeGenerator::GenerateIsNonNegativeSmi(ZoneList<Expression*>* args) {
+  ASSERT(args->length() == 1);
+  Load(args->at(0));
+  __ pop(r0);
+  __ tst(r0, Operand(kSmiTagMask | 0x80000000));
+  cc_reg_ = eq;
+}
+
+
+
+// This should generate code that performs a charCodeAt() call or returns
+// undefined in order to trigger the slow case, Runtime_StringCharCodeAt.
+// It is not yet implemented on ARM, so it always goes to the slow case.
+void ArmCodeGenerator::GenerateFastCharCodeAt(ZoneList<Expression*>* args) {
+  ASSERT(args->length() == 2);
+  __ mov(r0, Operand(Factory::undefined_value()));
+  __ push(r0);
+}
+
 
 
 // This is used in the implementation of apply on ia32 but it is not

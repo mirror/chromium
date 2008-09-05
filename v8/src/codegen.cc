@@ -218,6 +218,8 @@ bool CodeGenerator::CheckForInlineRuntimeCall(CallRuntime* node) {
      "_ExpandFrame"},
     {&v8::internal::CodeGenerator::GenerateIsSmi,
      "_IsSmi"},
+    {&v8::internal::CodeGenerator::GenerateIsNonNegativeSmi,
+     "_IsNonNegativeSmi"},
     {&v8::internal::CodeGenerator::GenerateIsArray,
      "_IsArray"},
     {&v8::internal::CodeGenerator::GenerateArgumentsLength,
