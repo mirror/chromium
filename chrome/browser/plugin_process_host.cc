@@ -64,7 +64,7 @@
 #include "sandbox/src/sandbox.h"
 
 static const char kDefaultPluginFinderURL[] =
-    "http://dl.google.com/chrome/plugins/plugins.xml";
+    "http://cache.pack.google.com/chrome/plugins/plugins.xml";
 
 // The NotificationTask is used to notify about plugin process connection/
 // disconnection. It is needed because the notifications in the
