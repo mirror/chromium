@@ -37,6 +37,8 @@
 
 #include "base/basictypes.h"
 
+namespace base {
+
 // Safe standard library wrappers for all platforms.  The Str* variants
 // operate on NUL-terminated char* strings, like the standard library's str*
 // functions.
