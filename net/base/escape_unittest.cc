@@ -175,6 +175,7 @@ TEST(Escape, UnescapeAndDecodeURLComponent) {
     // The expected output when run through UnescapeAndDecodeURLComponent.
     const wchar_t* decoded;
   } unescape_cases[] = {
+    {"UTF8", "%", "%", "%", L"%"},
     {"UTF8", "+", "+", " ", L"+"},
     {"UTF8", "%2+", "%2+", "%2 ", L"%2+"},
     {"UTF8", "+%%%+%%%", "+%%%+%%%", " %%% %%%", L"+%%%+%%%"},
