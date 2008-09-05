@@ -420,7 +420,7 @@ bool SaveFileAsWithFilter(HWND owner,
   // GetSaveFileName.  From MSDN "The buffer must be large enough to store the
   // path and file name string or strings, including the terminating NULL
   // character.  ... The buffer should be at least 256 characters long.".
-  static const size_t kMaxFilenameSize = MAX_PATH + 1;
+  static const size_t kMaxFilenameSize = MAX_PATH;
 
   DCHECK(final_name);
 
@@ -430,7 +430,7 @@ bool SaveFileAsWithFilter(HWND owner,
   // will be written into by Windows when the user is done with the dialog box.
   wchar_t file_name[kMaxFilenameSize];
   
-  base::wclscpy(file_name, file_part.c_str(), kMaxFilenameSize);
+  base::wcslcpy(file_name, file_part.c_str(), kMaxFilenameSize);
   
   OPENFILENAME save_as;
   // We must do this otherwise the ofn's FlagsEx may be initialized to random
