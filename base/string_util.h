@@ -37,6 +37,7 @@
 
 #include "base/basictypes.h"
 
+namespace base {
 
 // Safe standard library wrappers for all platforms.  The Str* variants
 // operate on NUL-terminated char* strings, like the standard library's str*
@@ -101,7 +102,6 @@ inline int SWPrintF(wchar_t* buffer, size_t size, const wchar_t* format, ...) {
   return result;
 }
 
-namespace base {
 // BSD-style safe and consistent string copy functions.
 // Copies |src| to |dst|, where |dst_size| is the total allocated size of |dst|.
 // Copies at most |dst_size|-1 characters, and always NULL terminates |dst|, as
@@ -113,7 +113,13 @@ size_t wcslcpy(wchar_t* dst, const wchar_t* src, size_t dst_size);
 
 }  // namespace base
 
+#if defined(OS_WIN)
 #include "base/string_util_win.h"
+#elif defined(OS_POSIX)
+#include "base/string_util_posix.h"
+#else
+#error Define string operations appropriately for your platform
+#endif
 
 // Old names for the above string functions, kept for compatibility.
 // TODO(evanm): excise all references to these old names.
