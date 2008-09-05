@@ -41,7 +41,7 @@
 
 // Database version.  If this is different than what's stored on disk, the
 // database is reset.
-static const int kDatabaseVersion = 3;
+static const int kDatabaseVersion = 4;
 
 // Filename suffix for the bloom filter.
 static const wchar_t kBloomFilterFile[] = L" Filter";
@@ -243,6 +243,7 @@ bool SafeBrowsingDatabase::CreateTables() {
 // The SafeBrowsing service assumes this operation is synchronous.
 bool SafeBrowsingDatabase::ResetDatabase() {
   hash_cache_.clear();
+  prefix_miss_cache_.clear();
 
   bool rv = Close();
   DCHECK(rv);
@@ -319,6 +320,17 @@ bool SafeBrowsingDatabase::ContainsUrl(
   }
 
   if (!matching_list->empty() || !prefix_hits->empty()) {
+    // If all the prefixes are cached as 'misses', don't issue a GetHash.
+    bool all_misses = true;
+    for (std::vector<SBPrefix>::const_iterator it = prefix_hits->begin();
+         it != prefix_hits->end(); ++it) {
+      if (prefix_miss_cache_.find(*it) == prefix_miss_cache_.end()) {
+        all_misses = false;
+        break;
+      }
+    }
+    if (all_misses)
+      return false;
     GetCachedFullHashes(prefix_hits, full_hits, last_update);
     return true;
   }
@@ -465,6 +477,7 @@ void SafeBrowsingDatabase::StartThrottledWork() {
 }
 
 void SafeBrowsingDatabase::RunThrottledWork() {
+  prefix_miss_cache_.clear();
   while (true) {
     bool done = ProcessChunks();
 
@@ -1207,7 +1220,18 @@ void SafeBrowsingDatabase::GetCachedFullHashes(
 }
 
 void SafeBrowsingDatabase::CacheHashResults(
+    const std::vector<SBPrefix>& prefixes,
     const std::vector<SBFullHashResult>& full_hits) {
+  if (full_hits.empty()) {
+    // These prefixes returned no results, so we store them in order to prevent
+    // asking for them again. We flush this cache at the next update.
+    for (std::vector<SBPrefix>::const_iterator it = prefixes.begin();
+         it != prefixes.end(); ++it) {
+      prefix_miss_cache_.insert(*it);
+    }
+    return;
+  }
+
   const Time now = Time::Now();
   for (std::vector<SBFullHashResult>::const_iterator it = full_hits.begin();
        it != full_hits.end(); ++it) {
