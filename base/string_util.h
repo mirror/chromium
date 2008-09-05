@@ -113,13 +113,7 @@ size_t wcslcpy(wchar_t* dst, const wchar_t* src, size_t dst_size);
 
 }  // namespace base
 
-#if defined(OS_WIN)
 #include "base/string_util_win.h"
-#elif defined(OS_POSIX)
-#include "base/string_util_posix.h"
-#else
-#error Define string operations appropriately for your platform
-#endif
 
 // Old names for the above string functions, kept for compatibility.
 // TODO(evanm): excise all references to these old names.
