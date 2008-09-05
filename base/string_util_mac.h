@@ -27,30 +27,36 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef BASE_STRING_UTIL_POSIX_H_
-#define BASE_STRING_UTIL_POSIX_H_
+#ifndef BASE_STRING_UTIL_MAC_H__
+#define BASE_STRING_UTIL_MAC_H__
 
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <wchar.h>
 
-namespace base {
-
-inline int strncasecmp(const char* string1, const char* string2, size_t count) {
-  return ::strncasecmp(string1, string2, count);
+inline bool StrCpy(char* dst, const char* src, size_t dst_size) {
+  return strlcpy(dst, src, dst_size) < dst_size;
 }
 
-inline int vsnprintf(char* buffer, size_t size,
+inline int StrNCaseCmp(const char* string1, const char* string2, size_t count) {
+  return strncasecmp(string1, string2, count);
+}
+
+inline int VSNPrintF(char* buffer, size_t size,
                      const char* format, va_list arguments) {
-  return ::vsnprintf(buffer, size, format, arguments);
+  return vsnprintf(buffer, size, format, arguments);
 }
 
-inline int vswprintf(wchar_t* buffer, size_t size,
+inline bool WcsCpy(char* dst, const char* src, size_t dst_size) {
+  return strlcpy(dst, src, dst_size) < dst_size;
+}
+
+inline int VSWPrintF(wchar_t* buffer, size_t size,
                      const wchar_t* format, va_list arguments) {
-  return ::vswprintf(buffer, size, format, arguments);
+  return vswprintf(buffer, size, format, arguments);
 }
 
-}  // namespace base
+// StrNCpy and WcsNCpy are not inline, so they're implemented in the .cc file.
 
-#endif  // BASE_STRING_UTIL_POSIX_H_
+#endif  // BASE_STRING_UTIL_MAC_H__
