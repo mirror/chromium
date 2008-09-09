@@ -14,10 +14,12 @@ import tempfile
 import upload
 import urllib2
 
-SERVER = 'codereview.chromium.org'  # Rietveld server to use
-SVN_REV = 'http://src.chromium.org/viewvc/chrome?view=rev&revision='
-CC_LIST = 'chromium-reviews@googlegroups.com'  # CC'd on all emails.
-
+CODEREVIEW_SETTINGS = {
+  # Default values.
+  "CODE_REVIEW_SERVER": "codereview.chromium.org",
+  "CC_LIST": "chromium-reviews@googlegroups.com",
+  "VIEW_VC": "http://src.chromium.org/viewvc/chrome?view=rev&revision=",
+}
 
 # Use a shell for subcommands on Windows to get a PATH search, and because svn
 # may be a batch file.
@@ -54,7 +56,21 @@ def GetRepositoryRoot():
       if GetSVNFileInfo(parent, "Repository Root") != cur_dir_repo_root:
         break
       repository_root = parent
+  # Now read the code review settings for this repository.
+  settings_file = os.path.join(repository_root, "codereview.settings")
+  if os.path.exists(settings_file):
+    output = ReadFile(settings_file)
+    for line in output.splitlines():
+      if not line or line.startswith("#"):
+        continue
+      key, value = line.split(": ", 1)
+      CODEREVIEW_SETTINGS[key] = value
   return repository_root
+
+
+def GetCodeReviewSetting(key):
+  """Returns a value for the given key for this repository."""
+  return CODEREVIEW_SETTINGS.get(key, "")
 
 
 def GetInfoDir():
@@ -71,11 +87,11 @@ def ErrorExit(msg):
   sys.exit(1)
 
 
-def RunShell(command, print_output=False, universal_newlines=False):
+def RunShell(command, print_output=False):
   """Executes a command and returns the output."""
   p = subprocess.Popen(command, stdout = subprocess.PIPE,
                        stderr = subprocess.STDOUT, shell = use_shell,
-                       universal_newlines=universal_newlines)
+                       universal_newlines=True)
   if print_output:
     output_array = []
     while True:
@@ -293,9 +309,10 @@ def SendToRietveld(request_path, payload=None,
     password = getpass.getpass("Password for %s: " % email)
     return email, password
 
-  rpc_server = upload.HttpRpcServer(SERVER,
+  server = GetCodeReviewSetting("CODE_REVIEW_SERVER")
+  rpc_server = upload.HttpRpcServer(server,
                                     GetUserCredentials,
-                                    host_override=SERVER,
+                                    host_override=server,
                                     save_cookies=True)
   return rpc_server.Send(request_path, payload, content_type)
 
@@ -413,8 +430,7 @@ def GenerateDiff(files):
     bogus_dir = os.path.join(parent_dir, "temp_svn_config")
     if not os.path.exists(bogus_dir):
       os.mkdir(bogus_dir)
-    diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir, file],
-                         universal_newlines=True))
+    diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir, file]))
   return "".join(diff)
 
 
@@ -424,7 +440,7 @@ def UploadCL(change_info, args):
     return
 
   upload_arg = ["upload.py", "-y", "-l"]
-  upload_arg.append("--server=" + SERVER)
+  upload_arg.append("--server=" + GetCodeReviewSetting("CODE_REVIEW_SERVER"))
   upload_arg.extend(args)
 
   desc_file = ""
@@ -436,7 +452,7 @@ def UploadCL(change_info, args):
     os.write(handle, change_info.description)
     os.close(handle)
 
-    upload_arg.append("--cc=" + CC_LIST)
+    upload_arg.append("--cc=" + GetCodeReviewSetting("CC_LIST"))
     upload_arg.append("--description_file=" + desc_file + "")
     if change_info.description:
       subject = change_info.description[:77]
@@ -488,7 +504,8 @@ def Commit(change_info):
   commit_message = change_info.description.replace('\r\n', '\n')
   if change_info.issue:
     commit_message += ('\nReview URL: http://%s/%s' %
-                       (SERVER, change_info.issue))
+                       (GetCodeReviewSetting("CODE_REVIEW_SERVER"),
+                        change_info.issue))
 
   handle, commit_filename = tempfile.mkstemp(text=True)
   os.write(handle, commit_message)
@@ -511,8 +528,9 @@ def Commit(change_info):
     if change_info.issue:
       revision = re.compile(".*?\nCommitted revision (\d+)",
                             re.DOTALL).match(output).group(1)
+      viewvc_url = GetCodeReviewSetting("VIEW_VC")
       change_info.description = (change_info.description +
-                                 "\n\nCommitted: " + SVN_REV + revision)
+                                 "\n\nCommitted: " + viewvc_url + revision)
       change_info.CloseIssue()
 
 
