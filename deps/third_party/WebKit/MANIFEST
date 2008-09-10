@@ -12,6 +12,8 @@ WebCore\dom\NodeFilter.cpp
 WebCore\dom\NodeFilter.h
 WebCore\dom\NodeIterator.cpp
 WebCore\dom\NodeIterator.h
+WebCore\dom\Traversal.cpp
+WebCore\dom\Traversal.h
 WebCore\dom\TreeWalker.cpp
 WebCore\dom\TreeWalker.h
 WebCore\editing\Selection.cpp
