@@ -7,9 +7,9 @@ WebCore\dom\Document.h
 WebCore\dom\Node.cpp
 WebCore\dom\Node.h
 WebCore\dom\NodeFilterCondition.h
-WebCore\dom\NodeFilterCondition.h
-WebCore\dom\NodeFitler.cpp
-WebCore\dom\NodeFitler.cpp
+WebCore\dom\NodeFilterCondition.cpp
+WebCore\dom\NodeFilter.cpp
+WebCore\dom\NodeFilter.h
 WebCore\dom\NodeIterator.cpp
 WebCore\dom\NodeIterator.h
 WebCore\dom\TreeWalker.cpp
@@ -44,6 +44,7 @@ WebCore\platform\KURL.h
 WebCore\platform\SecurityOrigin.cpp
 WebCore\platform\StaticConstructors.h
 WebCore\platform\TreeShared.h
+WebCore\platform\graphics\Font.cpp
 WebCore\platform\graphics\FontCache.cpp
 WebCore\platform\graphics\FontCache.h
 WebCore\platform\graphics\FontDescription.h
