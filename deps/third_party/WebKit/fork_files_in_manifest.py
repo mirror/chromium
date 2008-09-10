@@ -75,11 +75,15 @@ def RevertFile(file):
   
   # If the file is no longer in svn, remove it from the file system.
   if not FileIsInVersionControl(file) and os.path.exists(file):
-    print 'Remove unversioned file: ' + file
+    print 'Removing unversioned file: ' + file
     os.remove(file)
 
 def GetNormalizedPath(root, filename):
-  return os.path.normpath(os.path.join(root, filename))
+  normalized_path = os.path.normpath(os.path.join(root, filename))
+  # Cygwin's python doesn't seem to normalize to \ (unlike windows python),
+  # so we just force normalization to / in any case
+  normalized_path = normalized_path.replace('\\', '/')
+  return normalized_path
 
 def AssertOnlyOneFileExists(file, obsoleted_file):
   if FileIsInVersionControl(file) and FileIsInVersionControl(obsoleted_file):
@@ -112,7 +116,13 @@ def main(manifest):
   for root, dirs, files in os.walk('.'):
     for file in files:
       if file.endswith(OBSOLETED_EXTENSION):
-        already_obsoleted_files.add(GetNormalizedPath(root, file))
+        full_path = GetNormalizedPath(root, file)
+        if (FileIsInVersionControl(full_path)):
+          print full_path + " is already obsoleted"
+          already_obsoleted_files.add(full_path)
+        else:
+          print "extra obsoleted file found, removing: " + full_path
+          os.remove(full_path)
 
   if manifest != 'unfork':
     for file in open(manifest):
@@ -120,18 +130,18 @@ def main(manifest):
       file = file.strip()
       if file.startswith('//') or not len(file): continue
 
-      file = os.path.normpath(file)
       obsoleted_file = GetNormalizedPath('.', AddObsoletedExtension(file))
-
 
       if obsoleted_file in already_obsoleted_files:
         already_obsoleted_files.remove(obsoleted_file)
-
+      
       if not FileIsInVersionControl(obsoleted_file):
+        print 'Not already obsoleted in version control: ' + obsoleted_file
         MoveFile(file, obsoleted_file)
 
   # Files leftover are the ones that have been unforked.
   for obsoleted_file in already_obsoleted_files:
+    print obsoleted_file + " must have been unforked"
     MoveFile(obsoleted_file, StripObsoletedExtension(obsoleted_file))
 
 if '__main__' == __name__:
