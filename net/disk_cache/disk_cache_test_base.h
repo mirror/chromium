@@ -1,37 +1,19 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H__
-#define NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H__
+#ifndef NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H_
+#define NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H_
 
 #include "base/basictypes.h"
+#include "base/platform_test.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+// These tests can use the path service, which uses autoreleased objects on the
+// Mac, so this needs to be a PlatformTest.  Even tests that do not require a
+// cache (and that do not need to be a DiskCacheTestWithCache) are susceptible
+// to this problem; all such tests should use TEST_F(DiskCacheTest, ...).
+typedef PlatformTest DiskCacheTest;
 
 namespace disk_cache {
 
@@ -39,18 +21,20 @@ class Backend;
 class BackendImpl;
 class MemBackendImpl;
 
-}
+}  // namespace disk_cache
 
 // Provides basic support for cache related tests.
-class DiskCacheTestBase : public testing::Test {
+class DiskCacheTestWithCache : public DiskCacheTest {
  protected:
-  DiskCacheTestBase()
+  DiskCacheTestWithCache()
       : cache_(NULL), cache_impl_(NULL), mem_cache_(NULL), mask_(0), size_(0),
-        memory_only_(false), implementation_(false), force_creation_(false) {}
+        memory_only_(false), implementation_(false), force_creation_(false),
+        first_cleanup_(true) {}
 
   void InitCache();
   virtual void TearDown();
   void SimulateCrash();
+  void SetTestMode();
 
   void SetMemoryOnlyMode() {
     memory_only_ = true;
@@ -72,6 +56,10 @@ class DiskCacheTestBase : public testing::Test {
     force_creation_ = true;
   }
 
+  void DisableFirstCleanup() {
+    first_cleanup_ = false;
+  }
+
   // cache_ will always have a valid object, regardless of how the cache was
   // initialized. The implementation pointers can be NULL.
   disk_cache::Backend* cache_;
@@ -83,10 +71,11 @@ class DiskCacheTestBase : public testing::Test {
   bool memory_only_;
   bool implementation_;
   bool force_creation_;
+  bool first_cleanup_;
 
  private:
   void InitMemoryCache();
   void InitDiskCache();
 };
 
-#endif  // NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H__
+#endif  // NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H_

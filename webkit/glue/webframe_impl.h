@@ -29,6 +29,7 @@
 #include <string>
 
 #include "base/basictypes.h"
+#include "base/gfx/platform_canvas.h"
 #include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "webkit/glue/webdatasource_impl.h"
@@ -63,8 +64,7 @@ struct WindowFeatures;
 }
 
 namespace gfx {
-class PlatformCanvas;
-class BitmapPlatformDevice;
+class BitmapPlatformDeviceWin;
 }
 
 // Implementation of WebFrame, note that this is a reference counted object.
@@ -108,7 +108,7 @@ class WebFrameImpl : public WebFrame {
   virtual WebFrame* GetParent() const;
   virtual WebFrame* GetChildFrame(const std::wstring& xpath) const;
   virtual WebView* GetView() const;
-  virtual gfx::BitmapPlatformDevice CaptureImage(bool scroll_to_zero);
+  virtual gfx::BitmapPlatformDeviceWin CaptureImage(bool scroll_to_zero);
 
   // This method calls createRuntimeObject (in KJS::Bindings::Instance), which
   // increments the refcount of the NPObject passed in.
@@ -198,7 +198,7 @@ class WebFrameImpl : public WebFrame {
     plugin_delegate_ = plugin_delegate;
   }
 
-  WebCore::Frame* frame() {
+  WebCore::Frame* frame() const {
     return frame_.get();
   }
 
@@ -236,7 +236,7 @@ class WebFrameImpl : public WebFrame {
     return inspected_node_;
   }
 
-  void WebFrameImpl::selectNodeFromInspector(WebCore::Node* node);
+  void selectNodeFromInspector(WebCore::Node* node);
 
   // Returns which frame has an active tickmark. This function should only be
   // called on the main frame, as it is the only frame keeping track. Returned
@@ -259,6 +259,7 @@ class WebFrameImpl : public WebFrame {
   bool printing() const { return printing_; }
 
   virtual bool HasUnloadListener();
+  virtual bool IsReloadAllowingStaleData() const;
 
  protected:
   friend class WebFrameLoaderClient;
@@ -387,7 +388,7 @@ class WebFrameImpl : public WebFrame {
 
  private:
   // A bit mask specifying area of the frame to invalidate.
-  typedef enum AreaToInvalidate {
+  enum AreaToInvalidate {
     INVALIDATE_NOTHING      = 0,
     INVALIDATE_CONTENT_AREA = 1,
     INVALIDATE_SCROLLBAR    = 2,  // vertical scrollbar only.

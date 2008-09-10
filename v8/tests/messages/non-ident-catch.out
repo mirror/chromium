@@ -1,3 +1,0 @@
-non-ident-catch.js:3: Uncaught SyntaxError: Unexpected string
-} catch ("foo" "bar") {
-         ^^^^^

@@ -1,36 +1,17 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/stats_table.h"
 
+#include "base/string_util.h"
 #include "base/logging.h"
 #include "base/thread_local_storage.h"
+#include "base/platform_thread.h"
+
+#if defined(OS_POSIX)
+#include "errno.h"
+#endif
 
 // The StatsTable uses a shared memory segment that is laid out as follows
 //
@@ -89,14 +70,6 @@ const int kTableVersion = 0x13131313;
 // The name for un-named counters and threads in the table.
 const wchar_t kUnknownName[] = L"<unknown>";
 
-// Various header information contained in the memory mapped segment.
-struct TableHeader {
-  int version;
-  int size;
-  int max_counters;
-  int max_threads;
-};
-
 // Calculates delta to align an offset to the size of an int
 inline int AlignOffset(int offset) {
   return (sizeof(int) - (offset % sizeof(int))) % sizeof(int);
@@ -134,6 +107,14 @@ static void SlotReturnFunction(void* data) {
 // clean and accessible.
 class StatsTablePrivate {
  public:
+  // Various header information contained in the memory mapped segment.
+  struct TableHeader {
+    int version;
+    int size;
+    int max_counters;
+    int max_threads;
+  };
+
   // Create the StatsTablePrivate based on expected size parameters.
   StatsTablePrivate(void* memory, int size, int max_threads, int max_counters);
 
@@ -248,9 +229,9 @@ StatsTable* StatsTable::global_table_ = NULL;
 
 StatsTable::StatsTable(const std::wstring& name, int max_threads,
                        int max_counters)
-    : tls_index_(ThreadLocalStorage::Alloc(SlotReturnFunction)) {
+    : tls_index_(SlotReturnFunction) {
   int table_size =
-    AlignedSize(sizeof(TableHeader)) +
+    AlignedSize(sizeof(StatsTablePrivate::TableHeader)) +
     AlignedSize((max_counters * sizeof(wchar_t) * kMaxCounterNameLength)) +
     AlignedSize((max_threads * sizeof(wchar_t) * kMaxThreadNameLength)) +
     AlignedSize(max_threads * sizeof(int)) +
@@ -263,8 +244,13 @@ StatsTable::StatsTable(const std::wstring& name, int max_threads,
     if (shared_memory_.Map(table_size))
       impl_ = new StatsTablePrivate(shared_memory_.memory(), table_size,
                                     max_threads, max_counters);
+#if defined(OS_WIN)
   if (!impl_)
     LOG(ERROR) << "StatsTable did not initialize:" << GetLastError();
+#elif defined(OS_POSIX)
+  if (!impl_)
+    LOG(ERROR) << "StatsTable did not initialize:" << strerror(errno);
+#endif
 }
 
 StatsTable::~StatsTable() {
@@ -274,7 +260,7 @@ StatsTable::~StatsTable() {
 
   // Return ThreadLocalStorage.  At this point, if any registered threads
   // still exist, they cannot Unregister.
-  ThreadLocalStorage::Free(tls_index_);
+  tls_index_.Free();
 
   // Cleanup our shared memory.
   delete impl_;
@@ -303,23 +289,28 @@ int StatsTable::RegisterThread(const std::wstring& name) {
     std::wstring thread_name = name;
     if (name.empty())
       thread_name = kUnknownName;
-    wcsncpy_s(impl_->thread_name(slot), kMaxThreadNameLength,
-      thread_name.c_str(), _TRUNCATE);
-    *(impl_->thread_tid(slot)) = GetCurrentThreadId();
+    base::wcslcpy(impl_->thread_name(slot), thread_name.c_str(),
+                  kMaxThreadNameLength);
+    *(impl_->thread_tid(slot)) = PlatformThread::CurrentId();
+    // TODO(pinkerton): these should go into process_utils when it's ported
+#if defined(OS_WIN)
     *(impl_->thread_pid(slot)) = GetCurrentProcessId();
+#elif defined(OS_POSIX)
+    *(impl_->thread_pid(slot)) = getpid();
+#endif  
   }
 
   // Set our thread local storage.
   StatsTableTLSData* data = new StatsTableTLSData;
   data->table = this;
   data->slot = slot;
-  ThreadLocalStorage::Set(tls_index_, data);
+  tls_index_.Set(data);
   return slot;
 }
 
 StatsTableTLSData* StatsTable::GetTLSData() const {
   StatsTableTLSData* data =
-    static_cast<StatsTableTLSData*>(ThreadLocalStorage::Get(tls_index_));
+    static_cast<StatsTableTLSData*>(tls_index_.Get());
   if (!data)
     return NULL;
 
@@ -339,7 +330,7 @@ void StatsTable::UnregisterThread() {
   *name = L'\0';
 
   // Remove the calling thread's TLS so that it cannot use the slot.
-  ThreadLocalStorage::Set(tls_index_, NULL);
+  tls_index_.Set(NULL);
   delete data;
 }
 
@@ -452,8 +443,8 @@ int StatsTable::AddCounter(const std::wstring& name) {
     std::wstring counter_name = name;
     if (name.empty())
       counter_name = kUnknownName;
-    wcsncpy_s(impl_->counter_name(counter_id), kMaxCounterNameLength,
-      counter_name.c_str(), _TRUNCATE);
+    base::wcslcpy(impl_->counter_name(counter_id), counter_name.c_str(),
+                  kMaxCounterNameLength);
   }
 
   // now add to our in-memory cache
@@ -543,3 +534,4 @@ int* StatsTable::FindLocation(const wchar_t* name) {
   // Now we can find the location in the table.
   return table->GetLocation(counter, slot);
 }
+

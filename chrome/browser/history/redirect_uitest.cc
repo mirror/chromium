@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Navigates the browser to server and client redirect pages and makes sure
 // that the correct redirects are reflected in the history database. Errors
@@ -102,7 +77,7 @@ TEST_F(RedirectTest, ClientEmptyReferer) {
     GURL final_url = server.TestServerPageW(std::wstring());
     std::wstring test_file = test_data_directory_;
     file_util::AppendToPath(&test_file, L"file_client_redirect.html");
-    GURL first_url = net_util::FilePathToFileURL(test_file);
+    GURL first_url = net::FilePathToFileURL(test_file);
 
     NavigateToURL(first_url);
     std::vector<GURL> redirects;
@@ -128,7 +103,7 @@ TEST_F(RedirectTest, ClientEmptyReferer) {
 TEST_F(RedirectTest, ClientCancelled) {
   std::wstring first_path = test_data_directory_;
   file_util::AppendToPath(&first_path, L"cancelled_redirect_test.html");
-  GURL first_url = net_util::FilePathToFileURL(first_path);
+  GURL first_url = net::FilePathToFileURL(first_path);
 
   NavigateToURL(first_url);
   Sleep(kWaitForActionMsec);
@@ -151,7 +126,7 @@ TEST_F(RedirectTest, ClientCancelled) {
   // %23, but in current_url the anchor will be '#'.
   std::string final_ref = "myanchor";
   std::wstring current_path;
-  ASSERT_TRUE(net_util::FileURLToFilePath(current_url, &current_path));
+  ASSERT_TRUE(net::FileURLToFilePath(current_url, &current_path));
   // Path should remain unchanged.
   EXPECT_EQ(StringToLowerASCII(first_path), StringToLowerASCII(current_path));
   EXPECT_EQ(final_ref, current_url.ref());
@@ -215,7 +190,7 @@ TEST_F(RedirectTest, NoHttpToFile) {
   TestServer server(kDocRoot);
   std::wstring test_file = test_data_directory_;
   file_util::AppendToPath(&test_file, L"http_to_file.html");
-  GURL file_url = net_util::FilePathToFileURL(test_file);
+  GURL file_url = net::FilePathToFileURL(test_file);
 
   GURL initial_url = server.TestServerPageW(
     std::wstring(L"client-redirect?") + UTF8ToWide(file_url.spec()));
@@ -236,7 +211,7 @@ TEST_F(RedirectTest, ClientFragments) {
   TestServer server(kDocRoot);
   std::wstring test_file = test_data_directory_;
   file_util::AppendToPath(&test_file, L"ref_redirect.html");
-  GURL first_url = net_util::FilePathToFileURL(test_file);
+  GURL first_url = net::FilePathToFileURL(test_file);
   std::vector<GURL> redirects;
 
   NavigateToURL(first_url);
@@ -252,3 +227,64 @@ TEST_F(RedirectTest, ClientFragments) {
   EXPECT_EQ(1, redirects.size());
   EXPECT_EQ(first_url.spec() + "#myanchor", redirects[0].spec());
 }
+
+// TODO(timsteele): This is disabled because our current testserver can't
+// handle multiple requests in parallel, making it hang on the first request to
+// /slow?60. It's unable to serve our second request for files/title2.html until
+// /slow? completes, which doesn't give the desired behavior. We could
+// alternatively load the second page from disk, but we would need to start the
+// browser for this testcase with --process-per-tab, and I don't think we can do
+// this at test-case-level granularity at the moment.
+TEST_F(RedirectTest, DISABLED_ClientCancelledByNewNavigationAfterProvisionalLoad) {
+  // We want to initiate a second navigation after the provisional load for
+  // the client redirect destination has started, but before this load is
+  // committed. To achieve this, we tell the browser to load a slow page,
+  // which causes it to start a provisional load, and while it is waiting
+  // for the response (which means it hasn't committed the load for the client
+  // redirect destination page yet), we issue a new navigation request.
+  TestServer server(kDocRoot);
+  
+  GURL final_url = server.TestServerPageW(std::wstring(L"files/title2.html"));
+  GURL slow = server.TestServerPageW(std::wstring(L"slow?60"));
+  GURL first_url = server.TestServerPageW(
+      std::wstring(L"client-redirect?") + UTF8ToWide(slow.spec()));
+  std::vector<GURL> redirects;
+
+  NavigateToURL(first_url);
+  // We don't sleep here - the first navigation won't have been committed yet
+  // because we told the server to wait a minute. This means the browser has
+  // started it's provisional load for the client redirect destination page but
+  // hasn't completed. Our time is now!
+  NavigateToURL(final_url);
+  
+  std::wstring tab_title;
+  std::wstring final_url_title = L"Title Of Awesomeness";
+  // Wait till the final page has been loaded.
+  for (int i = 0; i < 10; ++i) {
+    Sleep(kWaitForActionMaxMsec / 10);
+    scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
+    ASSERT_TRUE(tab_proxy.get());
+    ASSERT_TRUE(tab_proxy->GetTabTitle(&tab_title));
+    if (tab_title == final_url_title) {
+      ASSERT_TRUE(tab_proxy->GetRedirectsFrom(first_url, &redirects));
+      break;
+    }
+  }
+
+  // Check to make sure the navigation did in fact take place and we are 
+  // at the expected page.
+  EXPECT_EQ(final_url_title, tab_title); 
+
+  bool final_navigation_not_redirect = true;
+  // Check to make sure our request for files/title2.html doesn't get flagged
+  // as a client redirect from the first (/client-redirect?) page.
+  for (std::vector<GURL>::iterator it = redirects.begin();
+       it != redirects.end(); ++it) {
+    if (final_url.spec() == it->spec()) {
+      final_navigation_not_redirect = false;
+      break;
+    }
+  }
+  EXPECT_TRUE(final_navigation_not_redirect);
+}
+

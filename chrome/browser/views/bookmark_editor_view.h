@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_VIEWS_BOOKMARK_EDITOR_VIEW_H__
 #define CHROME_BROWSER_VIEWS_BOOKMARK_EDITOR_VIEW_H__
@@ -33,7 +8,7 @@
 #include <set>
 
 #include "chrome/views/tree_node_model.h"
-#include "chrome/browser/bookmark_bar_model.h"
+#include "chrome/browser/bookmarks/bookmark_bar_model.h"
 #include "chrome/views/checkbox.h"
 #include "chrome/views/dialog_delegate.h"
 #include "chrome/views/menu.h"
@@ -64,6 +39,12 @@ class BookmarkEditorView : public ChromeViews::View,
                            public ChromeViews::ContextMenuController,
                            public Menu::Delegate,
                            public BookmarkBarModelObserver {
+  FRIEND_TEST(BookmarkEditorViewTest, ChangeParent);
+  FRIEND_TEST(BookmarkEditorViewTest, ChangeURLToExistingURL);
+  FRIEND_TEST(BookmarkEditorViewTest, EditTitleKeepsPosition);
+  FRIEND_TEST(BookmarkEditorViewTest, EditURLKeepsPosition);
+  FRIEND_TEST(BookmarkEditorViewTest, ModelsMatch);
+  FRIEND_TEST(BookmarkEditorViewTest, MoveToNewParent);
  public:
   // Shows the BookmarkEditorView editing the specified entry.
   static void Show(HWND parent_window,
@@ -83,6 +64,7 @@ class BookmarkEditorView : public ChromeViews::View,
   virtual std::wstring GetWindowTitle() const;
   virtual bool Accept();
   virtual bool AreAcceleratorsEnabled(DialogButton button);
+  virtual ChromeViews::View* GetContentsView();
 
   // View methods.
   virtual void Layout();
@@ -128,7 +110,7 @@ class BookmarkEditorView : public ChromeViews::View,
 
  private:
   // Type of node in the tree.
-  typedef ChromeViews::TreeNodeWithValue<history::UIStarID> BookmarkNode;
+  typedef ChromeViews::TreeNodeWithValue<int> BookmarkNode;
 
   // Model for the TreeView. Trivial subclass that doesn't allow titles with
   // empty strings.
@@ -190,11 +172,14 @@ class BookmarkEditorView : public ChromeViews::View,
                    BookmarkNode* b_node);
 
   // Returns the node with the specified id, or NULL if one can't be found.
-  BookmarkNode* FindNodeWithID(BookmarkEditorView::BookmarkNode* node,
-                               history::UIStarID id);
+  BookmarkNode* FindNodeWithID(BookmarkEditorView::BookmarkNode* node, int id);
 
-  // Applies the edits done by the user.
+  // Invokes ApplyEdits with the selected node.
   void ApplyEdits();
+
+  // Applies the edits done by the user. |parent| gives the parent of the URL
+  // being edited.
+  void ApplyEdits(BookmarkNode* parent);
 
   // Recursively adds newly created groups and sets the title of nodes to
   // match the user edited title.
@@ -226,6 +211,11 @@ class BookmarkEditorView : public ChromeViews::View,
   // editing on the new gorup as well.
   void NewGroup();
 
+  // Creates a new BookmarkNode as the last child of parent. The new node is
+  // added to the model and returned. This does NOT start editing. This is used
+  // internally by NewGroup and broken into a separate method for testing.
+  BookmarkNode* AddNewGroup(BookmarkNode* parent);
+
   // Profile the entry is from.
   Profile* profile_;
 
@@ -243,9 +233,6 @@ class BookmarkEditorView : public ChromeViews::View,
 
   // Used for editing the title.
   ChromeViews::TextField title_tf_;
-
-  // Dialog we're contained in.
-  ChromeViews::Window* dialog_;
 
   // URL we were created with.
   const GURL url_;
@@ -267,3 +254,4 @@ class BookmarkEditorView : public ChromeViews::View,
 };
 
 #endif  // CHROME_BROWSER_VIEWS_BOOKMARK_EDITOR_VIEW_H__
+

@@ -1,49 +1,23 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#include <windows.h>
+#include "chrome/views/menu.h"
+
 #include <atlbase.h>
 #include <atlcrack.h>
 #include <atlapp.h>
 #include <atlframe.h>
-
-#include "chrome/views/menu.h"
+#include <atlmisc.h>
 
 #include "base/gfx/rect.h"
+#include "base/logging.h"
 #include "chrome/views/accelerator.h"
-#include "chrome/views/controller.h"
 #include "base/string_util.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/stl_util-inl.h"
-#include "chrome/common/win_util.h"
 
 const SkBitmap* Menu::Delegate::kEmptyIcon = 0;
 
@@ -63,6 +37,13 @@ static const int kArrowWidth = 10;
 
 // Current active MenuHostWindow. If NULL, no menu is active.
 static MenuHostWindow* active_host_window = NULL;
+
+// The data of menu items needed to display.
+struct Menu::ItemData {
+  std::wstring label;
+  SkBitmap icon;
+  bool submenu;
+};
 
 namespace {
 
@@ -219,6 +200,16 @@ class MenuHostWindow : public CWindowImpl<MenuHostWindow, CWindow,
 
 }  // namespace
 
+bool Menu::Delegate::IsRightToLeftUILayout() const {
+  return l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT;
+}
+
+const SkBitmap& Menu::Delegate::GetEmptyIcon() const {
+  if (kEmptyIcon == NULL)
+    kEmptyIcon = new SkBitmap();
+  return *kEmptyIcon;
+}
+
 Menu::Menu(Delegate* delegate, AnchorPoint anchor, HWND owner)
     : delegate_(delegate),
       menu_(CreatePopupMenu()),
@@ -236,6 +227,16 @@ Menu::Menu(Menu* parent)
       owner_(parent->owner_),
       is_menu_visible_(false),
       owner_draw_(false) {
+}
+
+Menu::Menu(HMENU hmenu)
+    : delegate_(NULL),
+      menu_(hmenu),
+      anchor_(TOPLEFT),
+      owner_(NULL),
+      is_menu_visible_(false),
+      owner_draw_(false) {
+  DCHECK(menu_);
 }
 
 Menu::~Menu() {
@@ -258,11 +259,14 @@ UINT Menu::GetStateFlagsForItemID(int item_id) const {
   return flags;
 }
 
-void Menu::AppendMenuItemInternal(int item_id,
-                                  const std::wstring& label,
-                                  const SkBitmap& icon,
-                                  HMENU submenu,
-                                  MenuItemType type) {
+void Menu::AddMenuItemInternal(int index,
+                               int item_id,
+                               const std::wstring& label,
+                               const SkBitmap& icon,
+                               HMENU submenu,
+                               MenuItemType type) {
+  DCHECK(type != SEPARATOR) << "Call AddSeparator instead!";
+
   MENUITEMINFO mii;
   mii.cbSize = sizeof(mii);
   mii.fMask = MIIM_FTYPE | MIIM_ID;
@@ -294,7 +298,7 @@ void Menu::AppendMenuItemInternal(int item_id,
 
   // Find out if there is a shortcut we need to append to the label.
   ChromeViews::Accelerator accelerator(0, false, false, false);
-  if (delegate_->GetAcceleratorInfo(item_id, &accelerator)) {
+  if (delegate_ && delegate_->GetAcceleratorInfo(item_id, &accelerator)) {
     actual_label += L'\t';
     actual_label += accelerator.GetShortcutText();
   }
@@ -309,28 +313,104 @@ void Menu::AppendMenuItemInternal(int item_id,
     mii.dwTypeData = const_cast<wchar_t*>(labels_.back().c_str());
   }
 
-  InsertMenuItem(menu_, -1, TRUE, &mii);
+  InsertMenuItem(menu_, index, TRUE, &mii);
 }
 
-Menu* Menu::AppendSubMenu(int item_id,
-                          const std::wstring& label) {
-  return AppendSubMenuWithIcon(item_id, label, SkBitmap());
+void Menu::AppendMenuItem(int item_id,
+                          const std::wstring& label,
+                          MenuItemType type) {
+  AddMenuItem(-1, item_id, label, type);
+}
+
+void Menu::AddMenuItem(int index,
+                       int item_id,
+                       const std::wstring& label,
+                       MenuItemType type) {
+  if (type == SEPARATOR)
+    AddSeparator(index);
+  else
+    AddMenuItemInternal(index, item_id, label, SkBitmap(), NULL, type);
+}
+
+Menu* Menu::AppendSubMenu(int item_id, const std::wstring& label) {
+  return AddSubMenu(-1, item_id, label);
+}
+
+Menu* Menu::AddSubMenu(int index, int item_id, const std::wstring& label) {
+  return AddSubMenuWithIcon(index, item_id, label, SkBitmap());
 }
 
 Menu* Menu::AppendSubMenuWithIcon(int item_id,
                                   const std::wstring& label,
                                   const SkBitmap& icon) {
+  return AddSubMenuWithIcon(-1, item_id, label, icon);
+}
+
+Menu* Menu::AddSubMenuWithIcon(int index,
+                               int item_id,
+                               const std::wstring& label,
+                               const SkBitmap& icon) {
   if (!owner_draw_ && icon.width() != 0 && icon.height() != 0)
     owner_draw_ = true;
 
   Menu* submenu = new Menu(this);
   submenus_.push_back(submenu);
-  AppendMenuItemInternal(item_id, label, icon, submenu->menu_, NORMAL);
+  AddMenuItemInternal(index, item_id, label, icon, submenu->menu_, NORMAL);
   return submenu;
 }
 
+void Menu::AppendMenuItemWithLabel(int item_id, const std::wstring& label) {
+  AddMenuItemWithLabel(-1, item_id, label);
+}
+
+void Menu::AddMenuItemWithLabel(int index, int item_id,
+                                const std::wstring& label) {
+  AddMenuItem(index, item_id, label, Menu::NORMAL);
+}
+
+void Menu::AppendDelegateMenuItem(int item_id) {
+  AddDelegateMenuItem(-1, item_id);
+}
+
+void Menu::AddDelegateMenuItem(int index, int item_id) {
+  AddMenuItem(index, item_id, std::wstring(), Menu::NORMAL);
+}
+
 void Menu::AppendSeparator() {
-  AppendMenu(menu_, MF_SEPARATOR, 0, NULL);
+  AddSeparator(-1);
+}
+
+void Menu::AddSeparator(int index) {
+  MENUITEMINFO mii;
+  mii.cbSize = sizeof(mii);
+  mii.fMask = MIIM_FTYPE;
+  mii.fType = MFT_SEPARATOR;
+  InsertMenuItem(menu_, index, TRUE, &mii);
+}
+
+void Menu::AppendMenuItemWithIcon(int item_id,
+                                  const std::wstring& label,
+                                  const SkBitmap& icon) {
+  AddMenuItemWithIcon(-1, item_id, label, icon);
+}
+
+void Menu::AddMenuItemWithIcon(int index,
+                               int item_id,
+                               const std::wstring& label,
+                               const SkBitmap& icon) {
+  if (!owner_draw_)
+    owner_draw_ = true;
+  AddMenuItemInternal(index, item_id, label, icon, NULL, Menu::NORMAL);
+}
+
+void Menu::EnableMenuItemByID(int item_id, bool enabled) {
+  UINT enable_flags = enabled ? MF_ENABLED : MF_DISABLED | MF_GRAYED;
+  EnableMenuItem(menu_, item_id, MF_BYCOMMAND | enable_flags);
+}
+
+void Menu::EnableMenuItemAt(int index, bool enabled) {
+  UINT enable_flags = enabled ? MF_ENABLED : MF_DISABLED | MF_GRAYED;
+  EnableMenuItem(menu_, index, MF_BYPOSITION | enable_flags);
 }
 
 DWORD Menu::GetTPMAlignFlags() const {
@@ -466,7 +546,7 @@ void Menu::RunMenuAt(int x, int y) {
 
   // Show the menu.  Blocks until the menu is dismissed or an item is chosen.
   UINT flags =
-      GetTPMAlignFlags() | TPM_LEFTBUTTON | TPM_RETURNCMD | TPM_RECURSE;
+      GetTPMAlignFlags() | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_RECURSE;
   is_menu_visible_ = true;
   DCHECK(owner_);
   // In order for context menus on menus to work, the context menu needs to
@@ -493,3 +573,8 @@ void Menu::Cancel() {
   DCHECK(is_menu_visible_);
   EndMenu();
 }
+
+int Menu::ItemCount() {
+  return GetMenuItemCount(menu_);
+}
+

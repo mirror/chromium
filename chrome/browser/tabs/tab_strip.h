@@ -1,37 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_TABS_TAB_STRIP_H__
 #define CHROME_BROWSER_TABS_TAB_STRIP_H__
 
 #include "base/gfx/point.h"
-#include "base/task.h"
 #include "chrome/browser/tabs/tab.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/views/button.h"
@@ -42,7 +16,6 @@
 class DraggedTabController;
 class ScopedMouseCloseWidthCalculator;
 class TabStripModel;
-class Timer;
 
 namespace ChromeViews {
 class ImageView;
@@ -65,8 +38,7 @@ class TabStrip : public ChromeViews::View,
                  public TabStripModelObserver,
                  public Tab::TabDelegate,
                  public ChromeViews::Button::ButtonListener,
-                 public Task,
-                 public MessageLoop::Observer {
+                 public MessageLoopForUI::Observer {
  public:
   TabStrip(TabStripModel* model);
   virtual ~TabStrip();
@@ -89,6 +61,12 @@ class TabStrip : public ChromeViews::View,
   // when the TabStrip is animating to a new state and as such the user should
   // not be allowed to interact with the TabStrip.
   bool CanProcessInputEvents() const;
+
+  // Returns true if the specified point (in TabStrip coordinates) is within a
+  // portion of the TabStrip that should be treated as the containing Window's
+  // titlebar for dragging purposes.
+  // TODO(beng): (Cleanup) should be const, but GetViewForPoint isn't, so fie!
+  bool PointIsWithinWindowCaption(const CPoint& point);
 
   // Return true if this tab strip is compatible with the provided tab strip.
   // Compatible tab strips can transfer tabs during drag and drop.
@@ -133,6 +111,9 @@ class TabStrip : public ChromeViews::View,
   virtual bool GetAccessibleRole(VARIANT* role);
   virtual bool GetAccessibleName(std::wstring* name);
   virtual void SetAccessibleName(const std::wstring& name);
+  virtual ChromeViews::View* GetViewForPoint(const CPoint& point);
+  virtual ChromeViews::View* GetViewForPoint(const CPoint& point,
+                                             bool can_create_floating);
 
  protected:
   // TabStripModelObserver implementation:
@@ -156,6 +137,11 @@ class TabStrip : public ChromeViews::View,
       TabStripModel::ContextMenuCommand command_id, const Tab* tab) const;
   virtual void ExecuteCommandForTab(
       TabStripModel::ContextMenuCommand command_id, Tab* tab);
+  virtual void StartHighlightTabsForCommand(
+      TabStripModel::ContextMenuCommand command_id, Tab* tab);
+  virtual void StopHighlightTabsForCommand(
+      TabStripModel::ContextMenuCommand command_id, Tab* tab);
+  virtual void StopAllHighlighting();
   virtual void MaybeStartDrag(Tab* tab,
                               const ChromeViews::MouseEvent& event);
   virtual void ContinueDrag(const ChromeViews::MouseEvent& event);
@@ -163,9 +149,6 @@ class TabStrip : public ChromeViews::View,
 
   // ChromeViews::Button::ButtonListener implementation:
   virtual void ButtonPressed(ChromeViews::BaseButton* sender);
-
-  // Task implementation:
-  virtual void Run();
 
   // MessageLoop::Observer implementation:
   virtual void WillProcessMessage(const MSG& msg);
@@ -183,8 +166,18 @@ class TabStrip : public ChromeViews::View,
   TabStrip();
   void Init();
 
-  // Retrieves the Tab at the specified index.
+  // Retrieves the Tab at the specified index. Take care in using this, you may
+  // need to use GetTabAtAdjustForAnimation.
   Tab* GetTabAt(int index) const;
+
+  // Returns the tab at the specified index. If a remove animation is on going
+  // and the index is >= the index of the tab being removed, the index is
+  // incremented. While a remove operation is on going the indices of the model
+  // do not line up with the indices of the view. This method adjusts the index
+  // accordingly.
+  //
+  // Use this instead of GetTabAt if the index comes from the model.
+  Tab* GetTabAtAdjustForAnimation(int index) const;
 
   // Gets the number of Tabs in the collection.
   int GetTabCount() const;
@@ -282,6 +275,10 @@ class TabStrip : public ChromeViews::View,
   // Calculates the available width for tabs, assuming a Tab is to be closed.
   int GetAvailableWidthForTabs(Tab* last_tab) const;
 
+  // Returns true if the specified point in TabStrip coords is within the
+  // hit-test region of the specified Tab.
+  bool IsPointInTab(Tab* tab, const CPoint& point_in_tabstrip_coords);
+
   // -- Member Variables ------------------------------------------------------
 
   // Our model.
@@ -300,7 +297,7 @@ class TabStrip : public ChromeViews::View,
   bool resize_layout_scheduled_;
 
   // The timer used to update frames for the Loading Animation.
-  scoped_ptr<Timer> loading_animation_timer_;
+  base::RepeatingTimer<TabStrip> loading_animation_timer_;
 
   // The "New Tab" button.
   ChromeViews::Button* newtab_button_;
@@ -372,4 +369,5 @@ class TabStrip : public ChromeViews::View,
   DISALLOW_EVIL_CONSTRUCTORS(TabStrip);
 };
 
-#endif CHROME_BROWSER_TABS_TAB_STRIP_H__
+#endif  // CHROME_BROWSER_TABS_TAB_STRIP_H__
+

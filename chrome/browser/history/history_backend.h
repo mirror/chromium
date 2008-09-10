@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_HISTORY_HISTORY_BACKEND_H__
 #define CHROME_BROWSER_HISTORY_HISTORY_BACKEND_H__
@@ -50,6 +25,7 @@
 #include "chrome/common/scoped_vector.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
+class BookmarkService;
 struct ThumbnailScore;
 
 namespace history {
@@ -100,6 +76,9 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
     // Ownership of the HistoryDetails is transferred to this function.
     virtual void BroadcastNotifications(NotificationType type,
                                         HistoryDetails* details) = 0;
+
+    // Invoked when the backend has finished loading the db.
+    virtual void DBLoaded() = 0;
   };
 
   // Init must be called to complete object creation. This object can be
@@ -110,8 +89,13 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // See the definition of BroadcastNotificationsCallback above. This function
   // takes ownership of the callback pointer.
   //
+  // |bookmark_service| is used to determine bookmarked URLs when deleting and
+  // may be NULL.
+  //
   // This constructor is fast and does no I/O, so can be called at any time.
-  HistoryBackend(const std::wstring& history_dir, Delegate* delegate);
+  HistoryBackend(const std::wstring& history_dir,
+                 Delegate* delegate,
+                 BookmarkService* bookmark_service);
 
   ~HistoryBackend();
 
@@ -205,26 +189,6 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   void SetImportedFavicons(
       const std::vector<ImportedFavIconUsage>& favicon_usage);
 
-  // Starring ------------------------------------------------------------------
-
-  void GetAllStarredEntries(
-      scoped_refptr<GetStarredEntriesRequest> request);
-
-  void UpdateStarredEntry(const StarredEntry& new_entry);
-
-  void CreateStarredEntry(scoped_refptr<CreateStarredEntryRequest> request,
-                          const StarredEntry& entry);
-
-  void DeleteStarredGroup(UIStarID group_id);
-
-  void DeleteStarredURL(const GURL& url);
-
-  void DeleteStarredEntry(history::StarID star_id);
-
-  void GetMostRecentStarredEntries(
-      scoped_refptr<GetMostRecentStarredEntriesRequest> request,
-      int max_count);
-
   // Downloads -----------------------------------------------------------------
 
   void QueryDownloads(scoped_refptr<DownloadQueryRequest> request);
@@ -272,6 +236,12 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                             Time begin_time,
                             Time end_time);
 
+  // Bookmarks -----------------------------------------------------------------
+
+  // Notification that a URL is no longer bookmarked. If there are no visits
+  // for the specified url, it is deleted.
+  void URLsNoLongerBookmarked(const std::set<GURL>& urls);
+
   // Testing -------------------------------------------------------------------
 
   // Sets the task to run and the message loop to run it on when this object
@@ -287,6 +257,8 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   friend class CommitLaterTask;  // The commit task needs to call Commit().
   friend class HistoryTest;  // So the unit tests can poke our innards.
   FRIEND_TEST(HistoryBackendTest, DeleteAll);
+  FRIEND_TEST(HistoryBackendTest, URLsNoLongerBookmarked);
+  friend class TestingProfile;
 
   // For invoking methods that circumvent requests.
   friend class HistoryTest;
@@ -297,6 +269,9 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
   class URLQuerier;
   friend class URLQuerier;
+
+  // Does the work of Init.
+  void InitImpl();
 
   // Adds a single visit to the database, updating the URL information such
   // as visit and typed count. The visit ID of the added visit and the URL ID
@@ -337,15 +312,6 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   void QueryHistoryFTS(const std::wstring& text_query,
                        const QueryOptions& options,
                        QueryResults* result);
-
-  // Queries the starred database for all URL entries whose title contains the
-  // specified text. This is called as necessary from QueryHistoryFTS. The
-  // matches will be added to the beginning of the result vector in no
-  // particular order.
-  void QueryStarredEntriesByText(URLQuerier* querier,
-                                 const std::wstring& text_query,
-                                 const QueryOptions& options,
-                                 QueryResults* results);
 
   // Committing ----------------------------------------------------------------
 
@@ -426,15 +392,16 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // vector to reference the new IDs.
   bool ClearAllThumbnailHistory(std::vector<URLRow>* kept_urls);
 
-  // Deletes all information in the history database, except the star table
-  // (all entries should be in the given vector) and the given URLs in the URL
-  // table (these should correspond to the bookmarked URLs).
+  // Deletes all information in the history database, except for the supplied
+  // set of URLs in the URL table (these should correspond to the bookmarked
+  // URLs).
   //
-  // The IDs of the URLs may change, and the starred table will be updated
-  // accordingly. This function will also update the |starred_entries| input
-  // vector.
-  bool ClearAllMainHistory(std::vector<StarredEntry>* starred_entries,
-                           const std::vector<URLRow>& kept_urls);
+  // The IDs of the URLs may change.
+  bool ClearAllMainHistory(const std::vector<URLRow>& kept_urls);
+
+  // Returns the BookmarkService, blocking until it is loaded. This may return
+  // NULL during testing.
+  BookmarkService* GetBookmarkService();
 
   // Data ----------------------------------------------------------------------
 
@@ -508,6 +475,13 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // HistoryDBTasks to run. Be sure to AddRef when adding, and Release when
   // done.
   std::list<HistoryDBTaskRequest*> db_task_requests_;
+
+  // Used to determine if a URL is bookmarked. This is owned by the Profile and
+  // may be NULL (during testing).
+  //
+  // Use GetBookmarkService to access this, which makes sure the service is
+  // loaded.
+  BookmarkService* bookmark_service_;
 
   DISALLOW_EVIL_CONSTRUCTORS(HistoryBackend);
 };

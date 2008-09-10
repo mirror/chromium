@@ -1,3 +1,0 @@
-property-call-init.js:1: Uncaught TypeError: Cannot call method 'x' of null
-null.x()
-     ^

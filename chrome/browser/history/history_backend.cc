@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/history/history_backend.h"
 
@@ -38,6 +13,7 @@
 #include "base/string_util.h"
 #include "base/time.h"
 #include "chrome/browser/autocomplete/history_url_provider.h"
+#include "chrome/browser/bookmarks/bookmark_service.h"
 #include "chrome/browser/history/download_types.h"
 #include "chrome/browser/history/in_memory_history_backend.h"
 #include "chrome/browser/history/page_usage_data.h"
@@ -50,8 +26,7 @@
 /* The HistoryBackend consists of a number of components:
 
     HistoryDatabase (stores past 3 months of history)
-      StarredURLDatabase (stores starred pages)
-        URLDatabase (stores a list of URLs)
+      URLDatabase (stores a list of URLs)
       DownloadDatabase (stores a list of downloads)
       VisitDatabase (stores a list of visits for the URLs)
       VisitSegmentDatabase (stores groups of URLs for the most visited view).
@@ -61,8 +36,7 @@
       DownloadDatabase (stores a list of downloads)
       VisitDatabase (stores a list of visits for the URLs)
 
-      (this does not store starred things or visit segments, all starred info
-      is stored in HistoryDatabase, and visit segments expire after 3 mos.)
+      (this does not store visit segments as they expire after 3 mos.)
 
     TextDatabaseManager (manages multiple text database for different times)
       TextDatabase (represents a single month of full-text index).
@@ -212,15 +186,17 @@ class HistoryBackend::URLQuerier {
 // HistoryBackend --------------------------------------------------------------
 
 HistoryBackend::HistoryBackend(const std::wstring& history_dir,
-                               Delegate* delegate)
+                               Delegate* delegate,
+                               BookmarkService* bookmark_service)
     : delegate_(delegate),
       history_dir_(history_dir),
 #pragma warning(suppress: 4355)  // OK to pass "this" here.
-      expirer_(this),
+      expirer_(this, bookmark_service),
       backend_destroy_message_loop_(NULL),
       recent_redirects_(kMaxRedirectCount),
       backend_destroy_task_(NULL),
-      segment_queried_(false) {
+      segment_queried_(false),
+      bookmark_service_(bookmark_service) {
 }
 
 HistoryBackend::~HistoryBackend() {
@@ -254,100 +230,8 @@ HistoryBackend::~HistoryBackend() {
 }
 
 void HistoryBackend::Init() {
-  DCHECK(!db_.get()) << "Initializing HistoryBackend twice";
-  // In the rare case where the db fails to initialize a dialog may get shown
-  // the blocks the caller, yet allows other messages through. For this reason
-  // we only set db_ to the created database if creation is successful. That
-  // way other methods won't do anything as db_ is still NULL.
-
-  TimeTicks beginning_time = TimeTicks::Now();
-
-  // Compute the file names. Note that the index file can be removed when the
-  // text db manager is finished being hooked up.
-  std::wstring history_name = history_dir_;
-  file_util::AppendToPath(&history_name, chrome::kHistoryFilename);
-  std::wstring thumbnail_name = GetThumbnailFileName();
-  std::wstring archived_name = GetArchivedFileName();
-
-  // History database.
-  db_.reset(new HistoryDatabase());
-  switch (db_->Init(history_name)) {
-    case INIT_OK:
-      break;
-    case INIT_FAILURE:
-      // A NULL db_ will cause all calls on this object to notice this error
-      // and to not continue.
-      LOG(WARNING) << "Unable to initialize history DB.";
-      db_.reset();
-      return;
-    case INIT_TOO_NEW:
-      delegate_->NotifyTooNew();
-      db_.reset();
-      return;
-    default:
-      NOTREACHED();
-  }
-
-  // Fill the in-memory database and send it back to the history service on the
-  // main thread.
-  InMemoryHistoryBackend* mem_backend = new InMemoryHistoryBackend;
-  if (mem_backend->Init(history_name))
-    delegate_->SetInMemoryBackend(mem_backend);  // Takes ownership of pointer.
-  else
-    delete mem_backend;  // Error case, run without the in-memory DB.
-  db_->BeginExclusiveMode();  // Must be after the mem backend read the data.
-
-  // Full-text database. This has to be first so we can pass it to the
-  // HistoryDatabase for migration.
-  text_database_.reset(new TextDatabaseManager(history_dir_, db_.get()));
-  if (!text_database_->Init()) {
-    LOG(WARNING) << "Text database initialization failed, running without it.";
-    text_database_.reset();
-  }
-
-  // Thumbnail database.
-  thumbnail_db_.reset(new ThumbnailDatabase());
-  if (thumbnail_db_->Init(thumbnail_name) != INIT_OK) {
-    // Unlike the main database, we don't error out when the database is too
-    // new because this error is much less severe. Generally, this shouldn't
-    // happen since the thumbnail and main datbase versions should be in sync.
-    // We'll just continue without thumbnails & favicons in this case or any
-    // other error.
-    LOG(WARNING) << "Could not initialize the thumbnail database.";
-    thumbnail_db_.reset();
-  }
-
-  // Archived database.
-  archived_db_.reset(new ArchivedDatabase());
-  if (!archived_db_->Init(archived_name)) {
-    LOG(WARNING) << "Could not initialize the archived database.";
-    archived_db_.reset();
-  }
-
-  // Tell the expiration module about all the nice databases we made. This must
-  // happen before db_->Init() is called since the callback ForceArchiveHistory
-  // may need to expire stuff.
-  //
-  // *sigh*, this can all be cleaned up when that migration code is removed.
-  // The main DB initialization should intuitively be first (not that it
-  // actually matters) and the expirer should be set last.
-  expirer_.SetDatabases(db_.get(), archived_db_.get(),
-                        thumbnail_db_.get(), text_database_.get());
-
-  // Open the long-running transaction.
-  db_->BeginTransaction();
-  if (thumbnail_db_.get())
-    thumbnail_db_->BeginTransaction();
-  if (archived_db_.get())
-    archived_db_->BeginTransaction();
-  if (text_database_.get())
-    text_database_->BeginTransaction();
-
-  // Start expiring old stuff.
-  expirer_.StartArchivingOldStuff(TimeDelta::FromDays(kArchiveDaysThreshold));
-
-  HISTOGRAM_TIMES(L"History.InitTime",
-                  TimeTicks::Now() - beginning_time);
+  InitImpl();
+  delegate_->DBLoaded();
 }
 
 void HistoryBackend::SetOnBackendDestroyTask(MessageLoop* message_loop,
@@ -594,6 +478,106 @@ void HistoryBackend::AddPage(scoped_refptr<HistoryAddPageArgs> request) {
   }
 
   ScheduleCommit();
+}
+
+void HistoryBackend::InitImpl() {
+  DCHECK(!db_.get()) << "Initializing HistoryBackend twice";
+  // In the rare case where the db fails to initialize a dialog may get shown
+  // the blocks the caller, yet allows other messages through. For this reason
+  // we only set db_ to the created database if creation is successful. That
+  // way other methods won't do anything as db_ is still NULL.
+
+  TimeTicks beginning_time = TimeTicks::Now();
+
+  // Compute the file names. Note that the index file can be removed when the
+  // text db manager is finished being hooked up.
+  std::wstring history_name = history_dir_;
+  file_util::AppendToPath(&history_name, chrome::kHistoryFilename);
+  std::wstring thumbnail_name = GetThumbnailFileName();
+  std::wstring archived_name = GetArchivedFileName();
+  std::wstring tmp_bookmarks_file = history_dir_;
+  file_util::AppendToPath(&tmp_bookmarks_file,
+                          chrome::kHistoryBookmarksFileName);
+
+  // History database.
+  db_.reset(new HistoryDatabase());
+  switch (db_->Init(history_name, tmp_bookmarks_file)) {
+    case INIT_OK:
+      break;
+    case INIT_FAILURE:
+      // A NULL db_ will cause all calls on this object to notice this error
+      // and to not continue.
+      LOG(WARNING) << "Unable to initialize history DB.";
+      db_.reset();
+      return;
+    case INIT_TOO_NEW:
+      delegate_->NotifyTooNew();
+      db_.reset();
+      return;
+    default:
+      NOTREACHED();
+  }
+
+  // Fill the in-memory database and send it back to the history service on the
+  // main thread.
+  InMemoryHistoryBackend* mem_backend = new InMemoryHistoryBackend;
+  if (mem_backend->Init(history_name))
+    delegate_->SetInMemoryBackend(mem_backend);  // Takes ownership of pointer.
+  else
+    delete mem_backend;  // Error case, run without the in-memory DB.
+  db_->BeginExclusiveMode();  // Must be after the mem backend read the data.
+
+  // Full-text database. This has to be first so we can pass it to the
+  // HistoryDatabase for migration.
+  text_database_.reset(new TextDatabaseManager(history_dir_, db_.get()));
+  if (!text_database_->Init()) {
+    LOG(WARNING) << "Text database initialization failed, running without it.";
+    text_database_.reset();
+  }
+
+  // Thumbnail database.
+  thumbnail_db_.reset(new ThumbnailDatabase());
+  if (thumbnail_db_->Init(thumbnail_name) != INIT_OK) {
+    // Unlike the main database, we don't error out when the database is too
+    // new because this error is much less severe. Generally, this shouldn't
+    // happen since the thumbnail and main datbase versions should be in sync.
+    // We'll just continue without thumbnails & favicons in this case or any
+    // other error.
+    LOG(WARNING) << "Could not initialize the thumbnail database.";
+    thumbnail_db_.reset();
+  }
+
+  // Archived database.
+  archived_db_.reset(new ArchivedDatabase());
+  if (!archived_db_->Init(archived_name)) {
+    LOG(WARNING) << "Could not initialize the archived database.";
+    archived_db_.reset();
+  }
+
+  // Tell the expiration module about all the nice databases we made. This must
+  // happen before db_->Init() is called since the callback ForceArchiveHistory
+  // may need to expire stuff.
+  //
+  // *sigh*, this can all be cleaned up when that migration code is removed.
+  // The main DB initialization should intuitively be first (not that it
+  // actually matters) and the expirer should be set last.
+  expirer_.SetDatabases(db_.get(), archived_db_.get(),
+                        thumbnail_db_.get(), text_database_.get());
+
+  // Open the long-running transaction.
+  db_->BeginTransaction();
+  if (thumbnail_db_.get())
+    thumbnail_db_->BeginTransaction();
+  if (archived_db_.get())
+    archived_db_->BeginTransaction();
+  if (text_database_.get())
+    text_database_->BeginTransaction();
+
+  // Start expiring old stuff.
+  expirer_.StartArchivingOldStuff(TimeDelta::FromDays(kArchiveDaysThreshold));
+
+  HISTOGRAM_TIMES(L"History.InitTime",
+                  TimeTicks::Now() - beginning_time);
 }
 
 std::pair<URLID, VisitID> HistoryBackend::AddPageVisit(
@@ -995,16 +979,6 @@ void HistoryBackend::QueryHistory(scoped_refptr<QueryHistoryRequest> request,
 
   if (db_.get()) {
     if (text_query.empty()) {
-      if (options.begin_time.is_null() && options.end_time.is_null() &&
-          options.only_starred && options.max_count == 0) {
-        DLOG(WARNING) << "Querying for all bookmarks. You should probably use "
-            "the dedicated starring functions which will also report unvisited "
-            "bookmarks and will be faster.";
-        // If this case is needed and the starring functions aren't right, we
-        // can optimize the case where we're just querying for starred URLs
-        // and remove the warning.
-      }
-
       // Basic history query for the main database.
       QueryHistoryBasic(db_.get(), db_.get(), options, &request->value);
 
@@ -1060,75 +1034,13 @@ void HistoryBackend::QueryHistoryBasic(URLDatabase* url_db,
       // catch any interesting stuff. This will update it if it exists in the
       // main DB, and do nothing otherwise.
       db_->GetRowForURL(url_result.url(), &url_result);
-    } else {
-      // URLs not in the main DB can't be starred, reset this just in case.
-      url_result.set_star_id(0);
     }
-
-    if (!url_result.starred() && options.only_starred)
-      continue;  // Want non-starred items filtered out.
 
     url_result.set_visit_time(visit.visit_time);
 
     // We don't set any of the query-specific parts of the URLResult, since
     // snippets and stuff don't apply to basic querying.
     result->AppendURLBySwapping(&url_result);
-  }
-}
-
-void HistoryBackend::QueryStarredEntriesByText(
-    URLQuerier* querier,
-    const std::wstring& text_query,
-    const QueryOptions& options,
-    QueryResults* results) {
-  // Collect our prepends so we can bulk add them at the end. It is more
-  // efficient to bluk prepend the URLs than to do one at a time.
-  QueryResults our_results;
-
-  // We can use only the main DB (not archived) for this operation since we know
-  // that all currently starred URLs will be in the main DB.
-  std::set<URLID> ids;
-  db_->GetURLsForTitlesMatching(text_query, &ids);
-
-  VisitRow visit;
-  PageVisit page_visit;
-  URLResult url_result;
-  for (std::set<URLID>::iterator i = ids.begin(); i != ids.end(); ++i) {
-    // Turn the ID (associated with the main DB) into a visit row.
-    if (!db_->GetURLRow(*i, &url_result))
-      continue;  // Not found, some crazy error.
-
-    // Make sure we haven't already reported this URL and don't add it if so.
-    if (querier->HasURL(url_result.url()))
-      continue;
-
-    // Consistency check, all URLs should be valid and starred.
-    if (!url_result.url().is_valid() || !url_result.starred())
-      continue;
-
-    db_->GetStarredEntry(url_result.star_id(), &url_result.starred_entry_);
-
-    // Use the last visit time as the visit time for this result.
-    // TODO(brettw) when we are not querying for the most recent visit only,
-    // we should get all the visits in the time range for the given URL and add
-    // separate results for each of them. Until then, just treat as unique:
-    //
-    // Just add this one visit for the last time they visited it, except for
-    // starred only queries which have no visit times.
-    if (options.only_starred) {
-      url_result.set_visit_time(Time());
-    } else {
-      url_result.set_visit_time(url_result.last_visit());
-    }
-    our_results.AppendURLBySwapping(&url_result);
-  }
-
-  // Now prepend all of the bookmark matches we found. We do this by appending
-  // the old values to the new ones and swapping the results.
-  if (our_results.size() > 0) {
-    our_results.AppendResultsBySwapping(results,
-                                        options.most_recent_visit_only);
-    our_results.Swap(results);
   }
 }
 
@@ -1146,8 +1058,7 @@ void HistoryBackend::QueryHistoryFTS(const std::wstring& text_query,
 
   URLQuerier querier(db_.get(), archived_db_.get(), true);
 
-  // Now get the row and visit information for each one, optionally
-  // filtering on starred items.
+  // Now get the row and visit information for each one.
   URLResult url_result;  // Declare outside loop to prevent re-construction.
   for (size_t i = 0; i < fts_matches.size(); i++) {
     if (options.max_count != 0 &&
@@ -1162,8 +1073,6 @@ void HistoryBackend::QueryHistoryFTS(const std::wstring& text_query,
 
     if (!url_result.url().is_valid())
       continue;  // Don't report invalid URLs in case of corruption.
-    if (options.only_starred && !url_result.star_id())
-      continue;  // Don't add this unstarred item.
 
     // Copy over the FTS stuff that the URLDatabase doesn't know about.
     // We do this with swap() to avoid copying, since we know we don't
@@ -1179,21 +1088,10 @@ void HistoryBackend::QueryHistoryFTS(const std::wstring& text_query,
     // has the time, we can avoid an extra query of the visits table.
     url_result.set_visit_time(fts_matches[i].time);
 
-    if (options.only_starred) {
-      // When querying for starred pages fetch the starred entry.
-      DCHECK(url_result.star_id());
-      db_->GetStarredEntry(url_result.star_id(), &url_result.starred_entry_);
-    } else {
-      url_result.ResetStarredEntry();
-    }
-
     // Add it to the vector, this will clear our |url_row| object as a
     // result of the swap.
     result->AppendURLBySwapping(&url_result);
   }
-
-  if (options.include_all_starred)
-    QueryStarredEntriesByText(&querier, text_query, options, result);
 }
 
 // Frontend to GetMostRecentRedirectsFrom from the history thread.
@@ -1398,8 +1296,8 @@ void HistoryBackend::SetImportedFavicons(
 
   Time now = Time::Now();
 
-  // Track all starred URLs that had their favicons set or updated.
-  std::set<GURL> starred_favicons_changed;
+  // Track all URLs that had their favicons set or updated.
+  std::set<GURL> favicons_changed;
 
   for (size_t i = 0; i < favicon_usage.size(); i++) {
     FavIconID favicon_id = thumbnail_db_->GetFavIconIDForFavIconURL(
@@ -1422,16 +1320,15 @@ void HistoryBackend::SetImportedFavicons(
       url_row.set_favicon_id(favicon_id);
       db_->UpdateURLRow(url_row.id(), url_row);
 
-      if (url_row.starred())
-        starred_favicons_changed.insert(*url);
+      favicons_changed.insert(*url);
     }
   }
 
-  if (!starred_favicons_changed.empty()) {
-    // Send the notification about the changed favicons for starred URLs.
+  if (!favicons_changed.empty()) {
+    // Send the notification about the changed favicon URLs.
     FavIconChangeDetails* changed_details = new FavIconChangeDetails;
-    changed_details->urls.swap(starred_favicons_changed);
-    BroadcastNotifications(NOTIFY_STARRED_FAVICON_CHANGED, changed_details);
+    changed_details->urls.swap(favicons_changed);
+    BroadcastNotifications(NOTIFY_FAVICON_CHANGED, changed_details);
   }
 }
 
@@ -1544,7 +1441,7 @@ void HistoryBackend::SetFavIconMapping(const GURL& page_url,
     redirects = &dummy_list;
   }
 
-  std::set<GURL> starred_favicons_changed;
+  std::set<GURL> favicons_changed;
 
   // Save page <-> favicon association.
   for (HistoryService::RedirectList::const_iterator i(redirects->begin());
@@ -1569,147 +1466,15 @@ void HistoryBackend::SetFavIconMapping(const GURL& page_url,
         thumbnail_db_->DeleteFavIcon(old_id);
     }
 
-    if (row.starred())
-      starred_favicons_changed.insert(row.url());
+    favicons_changed.insert(row.url());
   }
 
-  if (!starred_favicons_changed.empty()) {
-    // Send the notification about the changed favicons for starred URLs.
-    FavIconChangeDetails* changed_details = new FavIconChangeDetails;
-    changed_details->urls.swap(starred_favicons_changed);
-    BroadcastNotifications(NOTIFY_STARRED_FAVICON_CHANGED, changed_details);
-  }
+  // Send the notification about the changed favicons.
+  FavIconChangeDetails* changed_details = new FavIconChangeDetails;
+  changed_details->urls.swap(favicons_changed);
+  BroadcastNotifications(NOTIFY_FAVICON_CHANGED, changed_details);
 
   ScheduleCommit();
-}
-
-void HistoryBackend::GetAllStarredEntries(
-    scoped_refptr<GetStarredEntriesRequest> request) {
-  if (request->canceled())
-    return;
-  // Only query for the entries if the starred table is valid. If the starred
-  // table isn't valid, we may get back garbage which could cause the UI grief.
-  //
-  // TODO(sky): bug 1207654: this is temporary, the UI should really query for
-  // valid state than avoid GetAllStarredEntries if not valid.
-  if (db_.get() && db_->is_starred_valid())
-    db_->GetStarredEntries(0, &(request->value));
-  request->ForwardResult(
-      GetStarredEntriesRequest::TupleType(request->handle(),
-                                          &(request->value)));
-}
-
-void HistoryBackend::UpdateStarredEntry(const StarredEntry& new_entry) {
-  if (!db_.get())
-    return;
-
-  StarredEntry resulting_entry = new_entry;
-  if (!db_->UpdateStarredEntry(&resulting_entry) || !delegate_.get())
-    return;
-
-  ScheduleCommit();
-
-  // Send out notification that the star entry changed.
-  StarredEntryDetails* entry_details = new StarredEntryDetails();
-  entry_details->entry = resulting_entry;
-  BroadcastNotifications(NOTIFY_STAR_ENTRY_CHANGED, entry_details);
-}
-
-void HistoryBackend::CreateStarredEntry(
-    scoped_refptr<CreateStarredEntryRequest> request,
-    const StarredEntry& entry) {
-  // This method explicitly allows request to be NULL.
-  if (request.get() && request->canceled())
-    return;
-
-  StarID id = 0;
-  StarredEntry resulting_entry(entry);
-  if (db_.get()) {
-    if (entry.type == StarredEntry::USER_GROUP) {
-      id = db_->CreateStarredEntry(&resulting_entry);
-      if (id) {
-        // Broadcast group created notifications.
-        StarredEntryDetails* entry_details = new StarredEntryDetails;
-        entry_details->entry = resulting_entry;
-        BroadcastNotifications(NOTIFY_STAR_GROUP_CREATED, entry_details);
-      }
-    } else if (entry.type == StarredEntry::URL) {
-      // Currently, we only allow one starred entry for this URL. Therefore, we
-      // check for an existing starred entry for this URL and update it if it
-      // exists.
-      if (!db_->GetStarIDForEntry(resulting_entry)) {
-        // Adding a new starred URL.
-        id = db_->CreateStarredEntry(&resulting_entry);
-
-        // Broadcast starred notification.
-        URLsStarredDetails* details = new URLsStarredDetails(true);
-        details->changed_urls.insert(resulting_entry.url);
-        details->star_entries.push_back(resulting_entry);
-        BroadcastNotifications(NOTIFY_URLS_STARRED, details);
-      } else {
-        // Updating an existing one.
-        db_->UpdateStarredEntry(&resulting_entry);
-
-        // Broadcast starred update notification.
-        StarredEntryDetails* entry_details = new StarredEntryDetails;
-        entry_details->entry = resulting_entry;
-        BroadcastNotifications(NOTIFY_STAR_ENTRY_CHANGED, entry_details);
-      }
-    } else {
-      NOTREACHED();
-    }
-  }
-
-  ScheduleCommit();
-
-  if (request.get()) {
-    request->ForwardResult(
-        CreateStarredEntryRequest::TupleType(request->handle(), id));
-  }
-}
-
-void HistoryBackend::DeleteStarredGroup(UIStarID group_id) {
-  if (!db_.get())
-    return;
-
-  DeleteStarredEntry(db_->GetStarIDForGroupID(group_id));
-}
-
-void HistoryBackend::DeleteStarredURL(const GURL& url) {
-  if (!db_.get())
-    return;
-
-  history::StarredEntry entry;
-  entry.url = url;
-  DeleteStarredEntry(db_->GetStarIDForEntry(entry));
-}
-
-void HistoryBackend::DeleteStarredEntry(history::StarID star_id) {
-  if (!star_id) {
-    NOTREACHED() << "Deleting a nonexistent entry";
-    return;
-  }
-
-  // Delete the entry.
-  URLsStarredDetails* details = new URLsStarredDetails(false);
-  db_->DeleteStarredEntry(star_id, &details->changed_urls,
-                          &details->star_entries);
-
-  ScheduleCommit();
-
-  BroadcastNotifications(NOTIFY_URLS_STARRED, details);
-}
-
-void HistoryBackend::GetMostRecentStarredEntries(
-    scoped_refptr<GetMostRecentStarredEntriesRequest> request,
-    int max_count) {
-  if (request->canceled())
-    return;
-  if (db_.get())
-    db_->GetMostRecentStarredEntries(max_count, &(request->value));
-  request->ForwardResult(
-      GetMostRecentStarredEntriesRequest::TupleType(request->handle(),
-                                                    &(request->value)));
 }
 
 void HistoryBackend::Commit() {
@@ -1842,6 +1607,23 @@ void HistoryBackend::ExpireHistoryBetween(
   request->ForwardResult(ExpireHistoryRequest::TupleType());
 }
 
+void HistoryBackend::URLsNoLongerBookmarked(const std::set<GURL>& urls) {
+  if (!db_.get())
+    return;
+
+  for (std::set<GURL>::const_iterator i = urls.begin(); i != urls.end(); ++i) {
+    URLRow url_row;
+    if (!db_->GetRowForURL(*i, &url_row))
+      continue;  // The URL isn't in the db; nothing to do.
+
+    VisitVector visits;
+    db_->GetVisitsForURL(url_row.id(), &visits);
+
+    if (visits.empty())
+      expirer_.DeleteURL(*i);  // There are no more visits; nuke the URL.
+  }
+}
+
 void HistoryBackend::ProcessDBTask(
     scoped_refptr<HistoryDBTaskRequest> request) {
   DCHECK(request.get());
@@ -1880,30 +1662,23 @@ void HistoryBackend::DeleteAllHistory() {
   // Since we are likely to have very few bookmarks and their dependencies
   // compared to all history, this is also much faster than just deleting from
   // the original tables directly.
-  //
-  // TODO(brettw): bug 989802: When we store bookmarks in a separate file, this
-  // function can be simplified to having all the database objects close their
-  // connections and we just delete the files.
 
-  // Get starred entries and their corresponding URL rows.
-  std::vector<StarredEntry> starred_entries;
-  db_->GetStarredEntries(0, &starred_entries);
+  // Get the bookmarked URLs.
+  std::vector<GURL> starred_urls;
+  BookmarkService* bookmark_service = GetBookmarkService();
+  if (bookmark_service)
+    bookmark_service_->GetBookmarks(&starred_urls);
 
   std::vector<URLRow> kept_urls;
-  for (size_t i = 0; i < starred_entries.size(); i++) {
-    if (starred_entries[i].type != StarredEntry::URL)
-      continue;
-
+  for (size_t i = 0; i < starred_urls.size(); i++) {
     URLRow row;
-    if (!db_->GetURLRow(starred_entries[i].url_id, &row))
+    if (!db_->GetRowForURL(starred_urls[i], &row))
       continue;
 
     // Clear the last visit time so when we write these rows they are "clean."
-    // We keep the typed and visit counts. Since the kept URLs are bookmarks,
-    // we can assume that the user isn't trying to hide that they like them,
-    // and we can use these counts for giving better autocomplete suggestions.
     row.set_last_visit(Time());
-
+    row.set_visit_count(0);
+    row.set_typed_count(0);
     kept_urls.push_back(row);
   }
 
@@ -1917,7 +1692,7 @@ void HistoryBackend::DeleteAllHistory() {
 
   // ClearAllMainHistory will change the IDs of the URLs in kept_urls. Therfore,
   // we clear the list afterwards to make sure nobody uses this invalid data.
-  if (!ClearAllMainHistory(&starred_entries, kept_urls))
+  if (!ClearAllMainHistory(kept_urls))
     LOG(ERROR) << "Main history could not be cleared";
   kept_urls.clear();
 
@@ -2011,7 +1786,6 @@ bool HistoryBackend::ClearAllThumbnailHistory(
 }
 
 bool HistoryBackend::ClearAllMainHistory(
-    std::vector<StarredEntry>* starred_entries,
     const std::vector<URLRow>& kept_urls) {
   // Create the duplicate URL table. We will copy the kept URLs into this.
   if (!db_->CreateTemporaryURLTable())
@@ -2032,21 +1806,8 @@ bool HistoryBackend::ClearAllMainHistory(
   if (!db_->CommitTemporaryURLTable())
     return false;
 
-  // The starred table references the old URL IDs. We need to fix it up to refer
-  // to the new ones.
-  for (std::vector<StarredEntry>::iterator i = starred_entries->begin();
-       i != starred_entries->end();
-       ++i) {
-    if (i->type != StarredEntry::URL)
-      continue;
-
-    DCHECK(old_to_new.find(i->url_id) != old_to_new.end());
-    i->url_id = old_to_new[i->url_id];
-    db_->UpdateURLIDForStar(i->id, i->url_id);
-  }
-
   // Delete the old tables and recreate them empty.
-  db_->RecreateAllButStarAndURLTables();
+  db_->RecreateAllTablesButURL();
 
   // Vacuum to reclaim the space from the dropped tables. This must be done
   // when there is no transaction open, and we assume that our long-running
@@ -2057,4 +1818,11 @@ bool HistoryBackend::ClearAllMainHistory(
   return true;
 }
 
+BookmarkService* HistoryBackend::GetBookmarkService() {
+  if (bookmark_service_)
+    bookmark_service_->BlockTillLoaded();
+  return bookmark_service_;
+}
+
 }  // namespace history
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_TEST_TESTING_PROFILE_H__
 #define CHROME_TEST_TESTING_PROFILE_H__
@@ -33,21 +8,43 @@
 #include "base/base_paths.h"
 #include "base/path_service.h"
 #include "base/file_util.h"
+#include "chrome/browser/bookmarks/bookmark_bar_model.h"
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/template_url_model.h"
 #include "chrome/common/pref_service.h"
 
 class TestingProfile : public Profile {
  public:
-  TestingProfile() : start_time_(Time::Now()) {}
+  TestingProfile();
   virtual ~TestingProfile();
 
-  // Creates the HistoryService. Normally there is no HistoryService.
-  void CreateHistoryService();
+  // Creates the history service. If |delete_file| is true, the history file is
+  // deleted first, then the HistoryService is created. As TestingProfile
+  // deletes the directory containing the files used by HistoryService, the
+  // boolean only matters if you're recreating the HistoryService.
+  void CreateHistoryService(bool delete_file);
+
+  // Creates the BookmkarBarModel. If not invoked the bookmark bar model is
+  // NULL. If |delete_file| is true, the bookmarks file is deleted first, then
+  // the model is created. As TestingProfile deletes the directory containing
+  // the files used by HistoryService, the boolean only matters if you're
+  // recreating the BookmarkBarModel.
+  //
+  // NOTE: this does not block until the bookmarks are loaded. For that use
+  // BlockUntilBookmarkModelLoaded.
+  void CreateBookmarkBarModel(bool delete_file);
+
+  // Blocks until the BookmarkBarModel finishes loaded. This is NOT invoked
+  // from CreateBookmarkBarModel.
+  void BlockUntilBookmarkModelLoaded();
+
+  // Creates a TemplateURLModel. If not invoked the TemplateURLModel is NULL.
+  void CreateTemplateURLModel();
 
   virtual std::wstring GetPath() {
-    return std::wstring();
+    return path_;
   }
   virtual bool IsOffTheRecord() {
     return false;
@@ -64,8 +61,8 @@ class TestingProfile : public Profile {
   virtual HistoryService* GetHistoryService(ServiceAccessType access) {
     return history_service_.get();
   }
-  virtual bool HasHistoryService() const {
-    return (history_service_.get() != NULL);
+  void set_has_history_service(bool has_history_service) {
+    has_history_service_ = has_history_service;
   }
   virtual WebDataService* GetWebDataService(ServiceAccessType access) {
     return NULL;
@@ -82,7 +79,7 @@ class TestingProfile : public Profile {
     return prefs_.get();
   }
   virtual TemplateURLModel* GetTemplateURLModel() {
-    return NULL;
+    return template_url_model_.get();
   }
   virtual TemplateURLFetcher* GetTemplateURLFetcher() {
     return NULL;
@@ -134,10 +131,10 @@ class TestingProfile : public Profile {
   virtual void MergeResourceBoolean(int message_id, bool* output_value) {
   }
   virtual bool HasBookmarkBarModel() {
-    return false;
+    return (bookmark_bar_model_.get() != NULL);
   }
   virtual BookmarkBarModel* GetBookmarkBarModel() {
-    return NULL;
+    return bookmark_bar_model_.get();
   }
   virtual bool Profile::IsSameProfile(Profile *p) {
     return this == p;
@@ -156,7 +153,15 @@ class TestingProfile : public Profile {
   virtual void MarkAsCleanShutdown() {
   }
 
+#ifdef CHROME_PERSONALIZATION
+  virtual ProfilePersonalization GetProfilePersonalization() {
+  }
+#endif
+
  protected:
+  // The path of the profile; the various database and other files are relative
+  // to this.
+  std::wstring path_;
   Time start_time_;
   ProfileControllerSet controllers_;
   scoped_ptr<PrefService> prefs_;
@@ -166,11 +171,18 @@ class TestingProfile : public Profile {
   // from the destructor.
   void DestroyHistoryService();
 
-  // Directory for the history service.
-  std::wstring history_dir_;
-
   // The history service. Only created if CreateHistoryService is invoked.
   scoped_refptr<HistoryService> history_service_;
+
+  // The BookmarkBarModel. Only created if CreateBookmarkBarModel is invoked.
+  scoped_ptr<BookmarkBarModel> bookmark_bar_model_;
+
+  // The TemplateURLFetcher. Only created if CreateTemplateURLModel is invoked.
+  scoped_ptr<TemplateURLModel> template_url_model_;
+
+  // Do we have a history service? This defaults to the value of
+  // history_service, but can be explicitly set.
+  bool has_history_service_;
 };
 
 #endif  // CHROME_TEST_TESTING_PROFILE_H__

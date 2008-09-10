@@ -1,40 +1,58 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_REF_COUNTED_H__
-#define BASE_REF_COUNTED_H__
+#ifndef BASE_REF_COUNTED_H_
+#define BASE_REF_COUNTED_H_
 
-#include "base/atomic.h"
+#include "base/atomic_ref_count.h"
 #include "base/basictypes.h"
-#include "base/logging.h"
 
 namespace base {
+
+namespace subtle {
+
+class RefCountedBase {
+ protected:
+  RefCountedBase();
+  ~RefCountedBase();
+
+  void AddRef();
+
+  // Returns true if the object should self-delete.
+  bool Release();
+
+ private:
+  int ref_count_;
+#ifndef NDEBUG
+  bool in_dtor_;
+#endif
+
+  DISALLOW_COPY_AND_ASSIGN(RefCountedBase);
+};
+
+class RefCountedThreadSafeBase {
+ protected:
+  RefCountedThreadSafeBase();
+  ~RefCountedThreadSafeBase();
+
+  void AddRef();
+
+  // Returns true if the object should self-delete.
+  bool Release();
+
+ private:
+  AtomicRefCount ref_count_;
+#ifndef NDEBUG
+  bool in_dtor_;
+#endif
+
+  DISALLOW_COPY_AND_ASSIGN(RefCountedThreadSafeBase);
+};
+
+
+
+}  // namespace subtle
 
 //
 // A base class for reference counted classes.  Otherwise, known as a cheap
@@ -46,46 +64,23 @@ namespace base {
 //   };
 //
 template <class T>
-class RefCounted {
+class RefCounted : public subtle::RefCountedBase {
  public:
-  RefCounted() : ref_count_(0) {
-#ifndef NDEBUG
-    in_dtor_ = false;
-#endif
-  }
-
-  ~RefCounted() {
-#ifndef NDEBUG
-    DCHECK(in_dtor_) << "RefCounted object deleted without calling Release()";
-#endif
-  }
+  RefCounted() { }
+  ~RefCounted() { }
 
   void AddRef() {
-#ifndef NDEBUG
-    DCHECK(!in_dtor_);
-#endif
-    ++ref_count_;
+    subtle::RefCountedBase::AddRef();
   }
 
   void Release() {
-#ifndef NDEBUG
-    DCHECK(!in_dtor_);
-#endif
-    if (--ref_count_ == 0) {
-#ifndef NDEBUG
-      in_dtor_ = true;
-#endif
+    if (subtle::RefCountedBase::Release()) {
       delete static_cast<T*>(this);
     }
   }
 
  private:
-  int ref_count_;
-#ifndef NDEBUG
-  bool in_dtor_;
-#endif
-
-  DISALLOW_EVIL_CONSTRUCTORS(RefCounted<T>);
+  DISALLOW_COPY_AND_ASSIGN(RefCounted<T>);
 };
 
 //
@@ -96,54 +91,25 @@ class RefCounted {
 //   };
 //
 template <class T>
-class RefCountedThreadSafe {
+class RefCountedThreadSafe : public subtle::RefCountedThreadSafeBase {
  public:
-  RefCountedThreadSafe() : ref_count_(0) {
-#ifndef NDEBUG
-    in_dtor_ = false;
-#endif
-  }
-
-  ~RefCountedThreadSafe() {
-#ifndef NDEBUG
-    DCHECK(in_dtor_) << "RefCountedThreadSafe object deleted without " <<
-                        "calling Release()";
-#endif
-  }
+  RefCountedThreadSafe() { }
+  ~RefCountedThreadSafe() { }
 
   void AddRef() {
-#ifndef NDEBUG
-    DCHECK(!in_dtor_);
-#endif
-    AtomicIncrement(&ref_count_);
+    subtle::RefCountedThreadSafeBase::AddRef();
   }
 
   void Release() {
-#ifndef NDEBUG
-    DCHECK(!in_dtor_);
-#endif
-    // We need to insert memory barriers to ensure that state written before
-    // the reference count became 0 will be visible to a thread that has just
-    // made the count 0.
-    // TODO(wtc): Bug 1112286: use the barrier variant of AtomicDecrement.
-    if (AtomicDecrement(&ref_count_) == 0) {
-#ifndef NDEBUG
-      in_dtor_ = true;
-#endif
+    if (subtle::RefCountedThreadSafeBase::Release()) {
       delete static_cast<T*>(this);
     }
   }
 
- private:
-  int32 ref_count_;
-#ifndef NDEBUG
-  bool in_dtor_;
-#endif
-
-  DISALLOW_EVIL_CONSTRUCTORS(RefCountedThreadSafe<T>);
+  DISALLOW_COPY_AND_ASSIGN(RefCountedThreadSafe<T>);
 };
 
-} // namespace base
+}  // namespace base
 
 //
 // A smart pointer class for reference counted objects.  Use this class instead
@@ -246,4 +212,5 @@ class scoped_refptr {
   T* ptr_;
 };
 
-#endif  // BASE_REF_COUNTED_H__
+#endif  // BASE_REF_COUNTED_H_
+

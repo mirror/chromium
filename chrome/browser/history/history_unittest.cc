@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // History unit tests come in two flavors:
 //
@@ -115,16 +90,11 @@ class BackendDelegate : public HistoryBackend::Delegate {
   virtual void SetInMemoryBackend(InMemoryHistoryBackend* backend);
   virtual void BroadcastNotifications(NotificationType type,
                                       HistoryDetails* details);
+  virtual void DBLoaded() {}
 
  private:
   HistoryTest* history_test_;
 };
-
-bool IsURLStarred(URLDatabase* db, const GURL& url) {
-  URLRow row;
-  EXPECT_TRUE(db->GetRowForURL(url, &row)) << "URL not found";
-  return row.starred();
-}
 
 }  // namespace
 
@@ -153,7 +123,8 @@ class HistoryTest : public testing::Test {
   // Creates the HistoryBackend and HistoryDatabase on the current thread,
   // assigning the values to backend_ and db_.
   void CreateBackendAndDatabase() {
-    backend_ = new HistoryBackend(history_dir_, new BackendDelegate(this));
+    backend_ =
+        new HistoryBackend(history_dir_, new BackendDelegate(this), NULL);
     backend_->Init();
     db_ = backend_->db_.get();
     DCHECK(in_mem_backend_.get()) << "Mem backend should have been set by "
@@ -271,21 +242,8 @@ class HistoryTest : public testing::Test {
       saved_redirects_.clear();
     MessageLoop::current()->Quit();
   }
-
-  void SetURLStarred(const GURL& url, bool starred) {
-    history::StarredEntry entry;
-    entry.type = history::StarredEntry::URL;
-    entry.url = url;
-    history::StarID star_id = db_->GetStarIDForEntry(entry);
-    if (star_id && !starred) {
-      // Unstar.
-      backend_->DeleteStarredEntry(star_id);
-    } else if (!star_id && starred) {
-      // Star.
-      entry.parent_group_id = HistoryService::kBookmarkBarID;
-      backend_->CreateStarredEntry(NULL, entry);
-    }
-  }
+  
+  MessageLoopForUI message_loop_;
 
   // PageUsageData vector to test segments.
   ScopedVector<PageUsageData> page_usage_data_;
@@ -417,7 +375,7 @@ TEST_F(HistoryTest, ClearBrowsingData_Downloads) {
 TEST_F(HistoryTest, AddPage) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   // Add the page once from a child frame.
   const GURL test_url("http://www.google.com/");
@@ -441,7 +399,7 @@ TEST_F(HistoryTest, AddPage) {
 TEST_F(HistoryTest, AddPageSameTimes) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   Time now = Time::Now();
   const GURL test_urls[] = {
@@ -481,7 +439,7 @@ TEST_F(HistoryTest, AddPageSameTimes) {
 TEST_F(HistoryTest, AddRedirect) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   const wchar_t* first_sequence[] = {
     L"http://first.page/",
@@ -552,7 +510,7 @@ TEST_F(HistoryTest, AddRedirect) {
 TEST_F(HistoryTest, Typed) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   // Add the page once as typed.
   const GURL test_url("http://www.google.com/");
@@ -595,7 +553,7 @@ TEST_F(HistoryTest, Typed) {
 TEST_F(HistoryTest, SetTitle) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   // Add a URL.
   const GURL existing_url(L"http://www.google.com/");
@@ -626,7 +584,7 @@ TEST_F(HistoryTest, Segments) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
 
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   static const void* scope = static_cast<void*>(this);
 
@@ -692,7 +650,7 @@ TEST_F(HistoryTest, Segments) {
 TEST_F(HistoryTest, Thumbnails) {
   scoped_refptr<HistoryService> history(new HistoryService);
   history_service_ = history;
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
 
   scoped_ptr<SkBitmap> thumbnail(
       JPEGCodec::Decode(kGoogleThumbnail, sizeof(kGoogleThumbnail)));
@@ -769,15 +727,16 @@ TEST(HistoryProfileTest, TypicalProfileVersion) {
   sqlite3* db;
   ASSERT_EQ(SQLITE_OK, sqlite3_open(WideToUTF8(file).c_str(), &db));
 
-  SQLStatement s;
-  ASSERT_EQ(SQLITE_OK, s.prepare(db,
-      "SELECT value FROM meta WHERE key = 'version'"));
-  EXPECT_EQ(SQLITE_ROW, s.step());
-  int file_version = s.column_int(0);
+  {
+    SQLStatement s;
+    ASSERT_EQ(SQLITE_OK, s.prepare(db,
+        "SELECT value FROM meta WHERE key = 'version'"));
+    EXPECT_EQ(SQLITE_ROW, s.step());
+    int file_version = s.column_int(0);
+    EXPECT_EQ(cur_version, file_version);
+  }
 
-  sqlite3_close(db);
-
-  EXPECT_EQ(cur_version, file_version);
+  ASSERT_EQ(SQLITE_OK, sqlite3_close(db));
 }
 
 namespace {
@@ -841,7 +800,7 @@ class HistoryDBTaskImpl : public HistoryDBTask {
 TEST_F(HistoryTest, HistoryDBTask) {
   CancelableRequestConsumerT<int, 0> request_consumer;
   HistoryService* history = new HistoryService();
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
   scoped_refptr<HistoryDBTaskImpl> task(new HistoryDBTaskImpl());
   history_service_ = history;
   history->ScheduleDBTask(task.get(), &request_consumer);
@@ -859,7 +818,7 @@ TEST_F(HistoryTest, HistoryDBTask) {
 TEST_F(HistoryTest, HistoryDBTaskCanceled) {
   CancelableRequestConsumerT<int, 0> request_consumer;
   HistoryService* history = new HistoryService();
-  ASSERT_TRUE(history->Init(history_dir_));
+  ASSERT_TRUE(history->Init(history_dir_, NULL));
   scoped_refptr<HistoryDBTaskImpl> task(new HistoryDBTaskImpl());
   history_service_ = history;
   history->ScheduleDBTask(task.get(), &request_consumer);
@@ -870,56 +829,5 @@ TEST_F(HistoryTest, HistoryDBTaskCanceled) {
   ASSERT_FALSE(task->done_invoked);
 }
 
-TEST_F(HistoryTest, Starring) {
-  CreateBackendAndDatabase();
-
-  // Add one page and star it.
-  GURL simple_page("http://google.com");
-  scoped_refptr<HistoryAddPageArgs> args(MakeAddArgs(simple_page));
-  backend_->AddPage(args);
-  EXPECT_FALSE(IsURLStarred(db_, simple_page));
-  EXPECT_FALSE(IsURLStarred(in_mem_backend_->db(), simple_page));
-  SetURLStarred(simple_page, true);
-
-  // The URL should be starred in both the main and memory DBs.
-  EXPECT_TRUE(IsURLStarred(db_, simple_page));
-  EXPECT_TRUE(IsURLStarred(in_mem_backend_->db(), simple_page));
-
-  // Unstar it.
-  SetURLStarred(simple_page, false);
-  EXPECT_FALSE(IsURLStarred(db_, simple_page));
-  EXPECT_FALSE(IsURLStarred(in_mem_backend_->db(), simple_page));
-}
-
-TEST_F(HistoryTest, SetStarredOnPageWithTypeCount0) {
-  CreateBackendAndDatabase();
-
-  // Add a page to the backend.
-  const GURL url(L"http://google.com/");
-  scoped_refptr<HistoryAddPageArgs> args(new HistoryAddPageArgs(
-      url, Time::Now(), NULL, 1, GURL(), HistoryService::RedirectList(),
-      PageTransition::LINK));
-  backend_->AddPage(args);
-
-  // Now fetch the URLInfo from the in memory db, it should not be there since
-  // it was not typed.
-  URLRow url_info;
-  EXPECT_EQ(0, in_mem_backend_->db()->GetRowForURL(url, &url_info));
-
-  // Mark the URL starred.
-  SetURLStarred(url, true);
-
-  // The type count is 0, so the page shouldn't be starred in the in memory
-  // db.
-  EXPECT_EQ(0, in_mem_backend_->db()->GetRowForURL(url, &url_info));
-  EXPECT_TRUE(IsURLStarred(db_, url));
-
-  // Now unstar it.
-  SetURLStarred(url, false);
-
-  // Make sure both the back end and in memory DB think it is unstarred.
-  EXPECT_EQ(0, in_mem_backend_->db()->GetRowForURL(url, &url_info));
-  EXPECT_FALSE(IsURLStarred(db_, url));
-}
-
 }  // namespace history
+

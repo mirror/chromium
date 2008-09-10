@@ -1,7 +1,0 @@
-from os.path import join
-
-SConscript(
-  join('src', 'SConscript'),
-  build_dir = 'bin',
-  duplicate = False
-)

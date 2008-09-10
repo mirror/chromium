@@ -1,49 +1,21 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <vector>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/download_item_view.h"
 
-#include "base/message_loop.h"
-#include "base/task.h"
-#include "base/timer.h"
+#include <vector>
+
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download_util.h"
 #include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
-#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view_container.h"
+
 #include "generated_resources.h"
 
 // TODO(paulg): These may need to be adjusted when download progress
@@ -74,8 +46,6 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
     parent_(parent),
     model_(model),
     progress_angle_(download_util::kStartAngleDegrees),
-    progress_timer_(NULL),
-    progress_task_(NULL),
     body_state_(NORMAL),
     drop_down_state_(NORMAL),
     drop_down_pressed_(false),
@@ -203,24 +173,15 @@ void DownloadItemView::UpdateDownloadProgress() {
 }
 
 void DownloadItemView::StartDownloadProgress() {
-  if (progress_task_ || progress_timer_)
+  if (progress_timer_.IsRunning())
     return;
-  progress_task_ =
-      new download_util::DownloadProgressTask<DownloadItemView>(this);
-  progress_timer_ =
-      MessageLoop::current()->timer_manager()->
-          StartTimer(download_util::kProgressRateMs, progress_task_, true);
+  progress_timer_.Start(
+      TimeDelta::FromMilliseconds(download_util::kProgressRateMs), this,
+      &DownloadItemView::UpdateDownloadProgress);
 }
 
 void DownloadItemView::StopDownloadProgress() {
-  if (progress_timer_) {
-    DCHECK(progress_task_);
-    MessageLoop::current()->timer_manager()->StopTimer(progress_timer_);
-    delete progress_timer_;
-    progress_timer_ = NULL;
-    delete progress_task_;
-    progress_task_ = NULL;
-  }
+  progress_timer_.Stop();
 }
 
 // DownloadObserver interface
@@ -466,7 +427,7 @@ bool DownloadItemView::OnMousePressed(const ChromeViews::MouseEvent& event) {
     complete_animation_->End();
 
   if (event.IsOnlyLeftMouseButton()) {
-    CPoint point(event.GetLocation());
+    WTL::CPoint point(event.GetX(), event.GetY());
     if (event.GetX() < drop_down_x_) {
       SetState(PUSHED, NORMAL);
       return true;
@@ -530,7 +491,6 @@ void DownloadItemView::OnMouseReleased(const ChromeViews::MouseEvent& event,
     starting_drag_ = false;
     return;
   }
-  CPoint point(event.GetLocation());
   if (event.IsOnlyLeftMouseButton() && event.GetX() < drop_down_x_)
     OpenDownload();
 
@@ -583,3 +543,4 @@ void DownloadItemView::LoadIcon() {
                &icon_consumer_,
                NewCallback(this, &DownloadItemView::OnExtractIconComplete));
 }
+

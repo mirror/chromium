@@ -5,10 +5,10 @@
  * @fileoverview Unit tests for testing debugger protocol betweeen front-end JS 
  * and back-end. 
  * Run with the following command line:
- * v8_shell.exe --allow-natives-syntax --expose-debug-as debugContext
- *              chrome/browser/resources/shell.js
- *              v8/tests/mjsunit.js
- *              chrome/test/debugger/test_protocol.js
+ * v8_shell_sample.exe --allow-natives-syntax --expose-debug-as debugContext
+ *                     chrome/browser/resources/shell.js
+ *                     v8/tests/mjsunit.js
+ *                     chrome/test/debugger/test_protocol.js
  */
 
 
@@ -18,7 +18,6 @@
  */
 function shell(sh) {
   shell_ = sh;
-  shell_.response("{type: 'event', event: 'attach'}");
 };
 
 
@@ -202,9 +201,6 @@ DebuggerTest.commandList = [
 ];
 
 DebuggerTest.expectedOutput = [
-  "< event:attach",
-  "attached to testing",
-  "< response:scripts",
   "< event:break",
   "g(), foo.html",
   "60:   debugger;",

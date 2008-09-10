@@ -1,3 +1,0 @@
-builtin.js:2: Uncaught SyntaxError: Unexpected token %
-  return %StringEquals("a", "b");
-         ^

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/basictypes.h"
 #include "base/command_line.h"
@@ -86,7 +61,7 @@ class PageCyclerTest : public UITest {
       file_util::AppendToPath(&test_path, L"page_cycler");
       file_util::AppendToPath(&test_path, name);
       file_util::AppendToPath(&test_path, L"start.html");
-      test_url = net_util::FilePathToFileURL(test_path);
+      test_url = net::FilePathToFileURL(test_path);
     }
 
     // run N iterations
@@ -115,7 +90,7 @@ class PageCyclerTest : public UITest {
 
   void PrintIOPerfInfo(const wchar_t* test_name) {
     printf("\n");
-    BrowserProcessFilter chrome_filter;
+    BrowserProcessFilter chrome_filter(L"");
     process_util::NamedProcessIterator
         chrome_process_itr(chrome::kBrowserProcessExecutableName,
                            &chrome_filter);
@@ -144,17 +119,17 @@ class PageCyclerTest : public UITest {
         }
 
         // print out IO performance
-        wprintf(L"%s_%s_read_op = %d\n",
+        wprintf(L"%ls_%ls_read_op = %d\n",
                 test_name, chrome_name, io_counters.ReadOperationCount);
-        wprintf(L"%s_%s_write_op = %d\n",
+        wprintf(L"%ls_%ls_write_op = %d\n",
                 test_name, chrome_name, io_counters.WriteOperationCount);
-        wprintf(L"%s_%s_other_op = %d\n",
+        wprintf(L"%ls_%ls_other_op = %d\n",
                 test_name, chrome_name, io_counters.OtherOperationCount);
-        wprintf(L"%s_%s_read_byte = %d K\n",
+        wprintf(L"%ls_%ls_read_byte = %d K\n",
                 test_name, chrome_name, io_counters.ReadTransferCount / 1024);
-        wprintf(L"%s_%s_write_byte = %d K\n",
+        wprintf(L"%ls_%ls_write_byte = %d K\n",
                 test_name, chrome_name, io_counters.WriteTransferCount / 1024);
-        wprintf(L"%s_%s_other_byte = %d K\n",
+        wprintf(L"%ls_%ls_other_byte = %d K\n",
                 test_name, chrome_name, io_counters.OtherTransferCount / 1024);
       }
     }
@@ -162,7 +137,7 @@ class PageCyclerTest : public UITest {
 
   void PrintMemoryUsageInfo(const wchar_t* test_name) {
     printf("\n");
-    BrowserProcessFilter chrome_filter;
+    BrowserProcessFilter chrome_filter(L"");
     process_util::NamedProcessIterator
         chrome_process_itr(chrome::kBrowserProcessExecutableName,
                            &chrome_filter);
@@ -177,21 +152,21 @@ class PageCyclerTest : public UITest {
       if (GetMemoryInfo(pid, &peak_virtual_size, &current_virtual_size,
                         &peak_working_set_size, &current_working_set_size)) {
         if (pid == chrome_filter.browser_process_id()) {
-          wprintf(L"%s_browser_vm_peak = %d\n", test_name, peak_virtual_size);
-          wprintf(L"%s_browser_vm_final = %d\n", test_name,
-                                                 current_virtual_size);
-          wprintf(L"%s_browser_ws_peak = %d\n", test_name,
-                                                 peak_working_set_size);
-          wprintf(L"%s_browser_ws_final = %d\n", test_name,
-                                                 current_working_set_size);
+          wprintf(L"%ls_browser_vm_peak = %d\n", test_name, peak_virtual_size);
+          wprintf(L"%ls_browser_vm_final = %d\n", test_name,
+                                                  current_virtual_size);
+          wprintf(L"%ls_browser_ws_peak = %d\n", test_name,
+                                                  peak_working_set_size);
+          wprintf(L"%ls_browser_ws_final = %d\n", test_name,
+                                                  current_working_set_size);
         } else {
-          wprintf(L"%s_render_vm_peak = %d\n", test_name, peak_virtual_size);
-          wprintf(L"%s_render_vm_final = %d\n", test_name,
-                                                current_virtual_size);
-          wprintf(L"%s_render_ws_peak = %d\n", test_name,
+          wprintf(L"%ls_render_vm_peak = %d\n", test_name, peak_virtual_size);
+          wprintf(L"%ls_render_vm_final = %d\n", test_name,
+                                                 current_virtual_size);
+          wprintf(L"%ls_render_ws_peak = %d\n", test_name,
                                                 peak_working_set_size);
-          wprintf(L"%s_render_ws_final = %d\n", test_name,
-                                                current_working_set_size);
+          wprintf(L"%ls_render_ws_final = %d\n", test_name,
+                                                 current_working_set_size);
         }
       }
     };
@@ -211,8 +186,8 @@ class PageCyclerTest : public UITest {
     PrintIOPerfInfo(L"__pc");
 
     printf("\n");
-    wprintf(L"__pc_pages = [%s]\n", pages.c_str());
-    wprintf(L"__pc_timings = [%s]\n", timings.c_str());
+    wprintf(L"__pc_pages = [%ls]\n", pages.c_str());
+    wprintf(L"__pc_timings = [%ls]\n", timings.c_str());
   }
 };
 
@@ -239,7 +214,7 @@ class PageCyclerReferenceTest : public PageCyclerTest {
     PrintIOPerfInfo(L"__pc_reference");
 
     printf("\n");
-    wprintf(L"__pc_reference_timings = [%s]\n", timings.c_str());
+    wprintf(L"__pc_reference_timings = [%ls]\n", timings.c_str());
   }
 };
 
@@ -326,3 +301,4 @@ TEST_F(PageCyclerTest, BloatHttp) {
 TEST_F(PageCyclerReferenceTest, BloatHttp) {
   RunTest(L"bloat", true);
 }
+

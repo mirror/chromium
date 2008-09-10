@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // When each service is created, we set a flag indicating this. At this point,
 // the service initialization could fail or succeed. This allows us to remember
@@ -38,10 +13,12 @@
 #include <string>
 
 #include "base/basictypes.h"
+#include "base/command_line.h"
 #include "base/message_loop.h"
 #include "base/non_thread_safe.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
+#include "base/shared_event.h"
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/browser_process.h"
 #include "sandbox/src/sandbox.h"
@@ -71,21 +48,21 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
     return metrics_service_.get();
   }
 
-  virtual Thread* io_thread() {
+  virtual base::Thread* io_thread() {
     DCHECK(CalledOnValidThread());
     if (!created_io_thread_)
       CreateIOThread();
     return io_thread_.get();
   }
 
-  virtual Thread* file_thread() {
+  virtual base::Thread* file_thread() {
     DCHECK(CalledOnValidThread());
     if (!created_file_thread_)
       CreateFileThread();
     return file_thread_.get();
   }
 
-  virtual Thread* db_thread() {
+  virtual base::Thread* db_thread() {
     DCHECK(CalledOnValidThread());
     if (!created_db_thread_)
       CreateDBThread();
@@ -196,6 +173,18 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
     return suspend_controller_.get();
   }
 
+  // TODO(beng): remove once XPFrame/VistaFrame are gone.
+  virtual bool IsUsingNewFrames() {
+    DCHECK(CalledOnValidThread());
+    if (!checked_for_new_frames_) {
+      using_new_frames_ = CommandLine().HasSwitch(L"magic_browzR");
+      checked_for_new_frames_ = true;
+    }
+    return using_new_frames_;
+  }
+
+  virtual HANDLE shutdown_event() { return shutdown_event_; }
+
  private:
   void CreateResourceDispatcherHost();
   void CreatePrefService();
@@ -223,13 +212,13 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
   scoped_ptr<MetricsService> metrics_service_;
 
   bool created_io_thread_;
-  scoped_ptr<Thread> io_thread_;
+  scoped_ptr<base::Thread> io_thread_;
 
   bool created_file_thread_;
-  scoped_ptr<Thread> file_thread_;
+  scoped_ptr<base::Thread> file_thread_;
 
   bool created_db_thread_;
-  scoped_ptr<Thread> db_thread_;
+  scoped_ptr<base::Thread> db_thread_;
 
   bool created_profile_manager_;
   scoped_ptr<ProfileManager> profile_manager_;
@@ -267,7 +256,14 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
 
   scoped_refptr<SuspendController> suspend_controller_;
 
+  bool checked_for_new_frames_;
+  bool using_new_frames_;
+
+  // An event that notifies when we are shutting-down.
+  HANDLE shutdown_event_;
+
   DISALLOW_EVIL_CONSTRUCTORS(BrowserProcessImpl);
 };
 
 #endif  // CHROME_BROWSER_BROWSER_PROCESS_IMPL_H__
+

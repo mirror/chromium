@@ -1,41 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "net/disk_cache/block_files.h"
 
-#include "base/scoped_handle.h"
+#include "base/file_util.h"
+#include "base/histogram.h"
 #include "base/string_util.h"
+#include "base/time.h"
 #include "net/disk_cache/file_lock.h"
 
 namespace {
 
-const wchar_t* kBlockName = L"\\data_";
+const wchar_t* kBlockName = L"data_";
 
 // This array is used to perform a fast lookup of the nibble bit pattern to the
 // type of entry that can be stored there (number of consecutive blocks).
@@ -61,6 +38,7 @@ bool CreateMapBlock(int target, int size, disk_cache::BlockFileHeader* header,
     return false;
   }
 
+  Time start = Time::Now();
   // We are going to process the map on 32-block chunks (32 bits), and on every
   // chunk, iterate through the 8 nibbles where the new block can be located.
   int current = header->hints[target - 1];
@@ -86,6 +64,7 @@ bool CreateMapBlock(int target, int size, disk_cache::BlockFileHeader* header,
       if (target != size) {
         header->empty[target - size - 1]++;
       }
+      HISTOGRAM_TIMES(L"DiskCache.CreateBlock", Time::Now() - start);
       return true;
     }
   }
@@ -104,6 +83,7 @@ void DeleteMapBlock(int index, int size, disk_cache::BlockFileHeader* header) {
     NOTREACHED();
     return;
   }
+  Time start = Time::Now();
   int byte_index = index / 8;
   uint8* byte_map = reinterpret_cast<uint8*>(header->allocation_map);
   uint8 map_block = byte_map[byte_index];
@@ -132,6 +112,7 @@ void DeleteMapBlock(int index, int size, disk_cache::BlockFileHeader* header) {
   }
   header->num_entries--;
   DCHECK(header->num_entries >= 0);
+  HISTOGRAM_TIMES(L"DiskCache.DeleteBlock", Time::Now() - start);
 }
 
 // Restores the "empty counters" and allocation hints.
@@ -204,18 +185,20 @@ void BlockFiles::CloseFiles() {
 std::wstring BlockFiles::Name(int index) {
   // The file format allows for 256 files.
   DCHECK(index < 256 || index >= 0);
-  std::wstring name = StringPrintf(L"%s%s%d", path_.c_str(), kBlockName, index);
+  std::wstring name(path_);
+  std::wstring tmp = StringPrintf(L"%ls%d", kBlockName, index);
+  file_util::AppendToPath(&name, tmp);
 
   return name;
 }
 
 bool BlockFiles::CreateBlockFile(int index, FileType file_type, bool force) {
   std::wstring name = Name(index);
-  DWORD disposition = force ? CREATE_ALWAYS : CREATE_NEW;
+  int flags = force ? OS_FILE_CREATE_ALWAYS : OS_FILE_CREATE;
+  flags |= OS_FILE_WRITE | OS_FILE_SHARE_READ;
 
-  ScopedHandle file(CreateFile(name.c_str(), GENERIC_WRITE, FILE_SHARE_READ,
-                               NULL, disposition, 0, NULL));
-  if (!file.IsValid())
+  scoped_refptr<File> file(new File(CreateOSFile(name.c_str(), flags, NULL)));
+  if (!file->IsValid())
     return false;
 
   BlockFileHeader header;
@@ -223,12 +206,7 @@ bool BlockFiles::CreateBlockFile(int index, FileType file_type, bool force) {
   header.this_file = static_cast<int16>(index);
   DCHECK(index <= kint16max && index >= 0);
 
-  DWORD actual;
-  if (!WriteFile(file.Get(), &header, sizeof(header), &actual, NULL) ||
-      sizeof(header) != actual)
-    return false;
-
-  return true;
+  return file->Write(&header, sizeof(header), 0);
 }
 
 bool BlockFiles::OpenBlockFile(int index) {
@@ -313,6 +291,7 @@ MappedFile* BlockFiles::FileForNewBlock(FileType block_type, int block_count) {
   MappedFile* file = block_files_[block_type - 1];
   BlockFileHeader* header = reinterpret_cast<BlockFileHeader*>(file->buffer());
 
+  Time start = Time::Now();
   while (NeedToGrowBlockFile(header, block_count)) {
     if (kMaxBlocks == header->max_entries) {
       file = NextFile(file);
@@ -326,6 +305,7 @@ MappedFile* BlockFiles::FileForNewBlock(FileType block_type, int block_count) {
       return NULL;
     break;
   }
+  HISTOGRAM_TIMES(L"DiskCache.GetFileForNewBlock", Time::Now() - start);
   return file;
 }
 

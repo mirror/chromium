@@ -1,3 +1,0 @@
-unknown-continue-label.js:2: Uncaught SyntaxError: Undefined label 'knark'
-  continue knark;
-           ^

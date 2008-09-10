@@ -1,39 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include "minmax.h"
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <fstream>
 #include <iostream>
 
 #include "base/file_util.h"
 #include "base/path_service.h"
+#include "base/platform_test.h"
 #include "base/scoped_ptr.h"
 #include "net/base/bzip2_filter.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -49,9 +23,13 @@ const int kMaxBufferSize = 1048576;    // 1048576 == 2^20 == 1 MB
 
 const char kApplicationOctetStream[] = "application/octet-stream";
 
-class BZip2FilterUnitTest : public testing::Test {
+// These tests use the path service, which uses autoreleased objects on the
+// Mac, so this needs to be a PlatformTest.
+class BZip2FilterUnitTest : public PlatformTest {
  protected:
   virtual void SetUp() {
+    PlatformTest::SetUp();
+
     bzip2_encode_buffer_ = NULL;
 
     // Get the path of source data file.
@@ -104,6 +82,8 @@ class BZip2FilterUnitTest : public testing::Test {
   virtual void TearDown() {
     delete[] bzip2_encode_buffer_;
     bzip2_encode_buffer_ = NULL;
+
+    PlatformTest::TearDown();
   }
 
   // Use filter to decode compressed data, and compare the decoding result with
@@ -140,14 +120,15 @@ class BZip2FilterUnitTest : public testing::Test {
       int encode_data_len;
       if (get_extra_data && !encode_avail_size)
         break;
-      encode_data_len = min(encode_avail_size, filter->stream_buffer_size());
+      encode_data_len = std::min(encode_avail_size,
+                                 filter->stream_buffer_size());
       memcpy(filter->stream_buffer(), encode_next, encode_data_len);
       filter->FlushStreamBuffer(encode_data_len);
       encode_next += encode_data_len;
       encode_avail_size -= encode_data_len;
 
       while (1) {
-        int decode_data_len = min(decode_avail_size, output_buffer_size);
+        int decode_data_len = std::min(decode_avail_size, output_buffer_size);
 
         code = filter->ReadFilteredData(decode_next, &decode_data_len);
         decode_next += decode_data_len;
@@ -195,8 +176,6 @@ class BZip2FilterUnitTest : public testing::Test {
   char* bzip2_encode_buffer_;
   int bzip2_encode_len_;
 };
-
-};  // namespace
 
 // Basic scenario: decoding bzip2 data with big enough buffer.
 TEST_F(BZip2FilterUnitTest, DecodeBZip2) {
@@ -392,3 +371,5 @@ TEST_F(BZip2FilterUnitTest, DecodeWithExtraDataAndSmallInputBuffer) {
                              kDefaultBufferSize,
                              true);
 }
+
+}  // namespace

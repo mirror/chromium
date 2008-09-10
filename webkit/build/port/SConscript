@@ -1,31 +1,6 @@
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 import os.path
 import re
@@ -58,6 +33,7 @@ env = env.Clone(
     WEBKIT_PORT_DIR = '$WEBKIT_DIR/port',
 
     FEATURE_DEFINES = [
+        'ENABLE_CROSS_DOCUMENT_MESSAGING',
         'ENABLE_XSLT',
         'ENABLE_XPATH',
         'ENABLE_SVG',
@@ -96,7 +72,11 @@ bindings_perl_modules = env.Glob('$BINDINGS_SCRIPTS_DIR/*.pm')
 
 
 def BindingsEmitter(target, source, env):
-  idl_contents = open(source[0].rfile().abspath, 'r').read()
+  source.append('$BINDINGS_SCRIPT')
+  try:
+    idl_contents = open(source[0].rfile().abspath, 'r').read()
+  except EnvironmentError:
+    return target, source
   idl_contents = re.sub('//[^\\n]*\\n', '', idl_contents)
   interfaces = re.findall('interface\\s*(?:\\[[^]]+\\])?\\s*'
                           '(\\w+)[^{]*[{]', idl_contents)
@@ -107,17 +87,16 @@ def BindingsEmitter(target, source, env):
     new_target.extend([new_cpp, new_h])
     env.Depends(new_cpp, bindings_perl_modules)
     env.Depends(new_h, bindings_perl_modules)
-  source.append('$BINDINGS_SCRIPT')
   return new_target, source
 
-
 env.Append(
-    BUILDERS = {'Bindings' : Builder(action = '$BINDINGSCOM',
-                                     src_suffix = '.idl',
-                                     emitter = BindingsEmitter,
-                                    ),
-               },
+  BUILDERS = {'Bindings': Builder(
+    action = Action('$BINDINGSCOM', '$BINDINGSCOMSTR'),
+    src_suffix = '.idl',
+    emitter = BindingsEmitter,
+  )},
 )
+
 env.Replace(
     # TODO(bradnelson): don't have the path change here!!!
     # TODO(bradnelson): fix ugly hack with one include!
@@ -542,16 +521,23 @@ env.Command(['$DERIVED_DIR/XLinkNames.cpp',
 #WebCore.exp : WebCore.base.exp WebCore.SVG.exp
 #	cat $^ > $@
 
+def cat_files(target, source, env):
+  fout = open(str(target[0]), "w")
+  for src in source:
+    fin = open(str(src))
+    fout.writelines(fin.readlines())
+    fin.close()
+  fout.close()
 
 env.Command('$DERIVED_DIR/html4.css',
             ['$WEBKIT_PORT_DIR/css/html4.css',
              '$PORTROOT/css/html4-overrides.css'],
-            'type $SOURCES > $TARGETS')
+            cat_files)
 
 env.Command('$DERIVED_DIR/quirks.css',
             ['$WEBKIT_PORT_DIR/css/quirks.css',
              '$PORTROOT/css/quirks-overrides.css'],
-            'type $SOURCES > $TARGETS')
+            cat_files)
 
 env.Command(['$DERIVED_DIR/UserAgentStyleSheets.h',
              '$DERIVED_DIR/UserAgentStyleSheetsData.cpp'],
@@ -562,33 +548,31 @@ env.Command(['$DERIVED_DIR/UserAgentStyleSheets.h',
              '$DERIVED_DIR/quirks.css'],
             '$PERL ${SOURCES[0].posix} ${TARGETS.posix} ${SOURCES[1:].posix}')
 
-env.Command(['$DERIVED_DIR/XPathGrammar.cpp',
-             '$DERIVED_DIR/XPathGrammar.h'],
-            ['$WEBKIT_PORT_DIR/xml/XPathGrammar.y'],
-            '$YACC -d -p xpathyy ${SOURCES[0].posix} -o ${TARGET.posix} && ' + \
-            'echo #ifndef XPathGrammar_h ' + \
-               '> $DERIVED_DIR\\XPathGrammar.h && ' + \
-            'echo #define XPathGrammar_h ' + \
-               '>> $DERIVED_DIR\\XPathGrammar.h && ' + \
-            'type $DERIVED_DIR\\XPathGrammar.hpp ' + \
-               '>> $DERIVED_DIR\\XPathGrammar.h && ' + \
-            'echo #endif ' + \
-               '>> $DERIVED_DIR\\XPathGrammar.h && ' + \
-            'del $DERIVED_DIR\\XPathGrammar.hpp')
+def create_h_wrapper(target, source, env):
+  """
+  Create a *.h file by surrounding the contents of a
+  yacc-generated *.hpp with a #ifndef-#define-#endif guard.
+  """
+  t = str(target[1])
+  fp = open(t, 'w')
+  define = os.path.splitext(os.path.split(t)[1])[0]
+  fp.write('#ifndef %s_h\n' % define)
+  fp.write('#define %s_h\n' % define)
+  fp.write(open(t + 'pp', 'r').read())
+  fp.write('#endif // %s_h\n' % define)
 
-env.Command(['$DERIVED_DIR/CSSGrammar.cpp',
-             '$DERIVED_DIR/CSSGrammar.h'],
-            ['$WEBKIT_PORT_DIR/css/CSSGrammar.y'],
-            '$YACC -d -p cssyy ${SOURCES[0].posix} -o ${TARGET.posix} && ' + \
-            'echo #ifndef CSSGrammar_h ' + \
-               '> $DERIVED_DIR\\CSSGrammar.h && ' + \
-            'echo #define CSSGrammar_h ' + \
-               '>> $DERIVED_DIR\\CSSGrammar.h && ' + \
-            'type $DERIVED_DIR\\CSSGrammar.hpp ' + \
-               '>> $DERIVED_DIR\\CSSGrammar.h && ' + \
-            'echo #endif ' + \
-               '>> $DERIVED_DIR\\CSSGrammar.h && ' + \
-            'del $DERIVED_DIR\\CSSGrammar.hpp')
+# TODO(sgk):  make this a real pseudo-Builder
+def BuildYacc(env, dir, name, file):
+  env.Command(['$DERIVED_DIR/%s.cpp' % file,
+               '$DERIVED_DIR/%s.h'   % file],
+              ['$WEBKIT_PORT_DIR/%s/%s.y' % (dir, file)],
+              ['$YACC -d -p %s ${SOURCES[0].posix} ' % name +
+                 '-o ${TARGET.posix}',
+               Action(create_h_wrapper),
+               Delete('${TARGETS[1]}pp')])
+
+BuildYacc(env, 'xml', 'xpathyy', 'XPathGrammar')
+BuildYacc(env, 'css', 'cssyy',   'CSSGrammar')
 
 # TODO(bradnelson): need to add in error checking
 
@@ -654,4 +638,3 @@ env.Command('$DERIVED_DIR/tokenizer.cpp',
             ['$WEBKIT_PORT_DIR/css/tokenizer.flex',
              '$WEBKIT_PORT_DIR/css/maketokenizer'],
             'flex -t $SOURCE | perl ${SOURCES[1]} > $TARGET')
-

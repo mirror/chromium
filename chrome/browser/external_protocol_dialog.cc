@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/external_protocol_dialog.h"
 
@@ -40,6 +15,7 @@
 #include "chrome/views/message_box_view.h"
 #include "chrome/views/window.h"
 
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 namespace {
@@ -53,11 +29,12 @@ const int kMessageWidth = 400;
 
 // static
 void ExternalProtocolDialog::RunExternalProtocolDialog(
-    const GURL& url, int render_process_host_id, int routing_id) {
+    const GURL& url, const std::wstring& command, int render_process_host_id,
+    int routing_id) {
   TabContents* tab_contents = tab_util::GetTabContentsByID(
       render_process_host_id, routing_id);
   ExternalProtocolDialog* handler =
-      new ExternalProtocolDialog(tab_contents, url);
+      new ExternalProtocolDialog(tab_contents, url, command);
 }
 
 ExternalProtocolDialog::~ExternalProtocolDialog() {
@@ -105,11 +82,16 @@ bool ExternalProtocolDialog::Accept() {
   return true;
 }
 
+ChromeViews::View* ExternalProtocolDialog::GetContentsView() {
+  return message_box_view_;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // ExternalProtocolDialog, private:
 
 ExternalProtocolDialog::ExternalProtocolDialog(TabContents* tab_contents,
-                                               const GURL& url)
+                                               const GURL& url,
+                                               const std::wstring& command)
     : tab_contents_(tab_contents),
       url_(url) {
   std::wstring message_text = l10n_util::GetStringF(
@@ -118,8 +100,7 @@ ExternalProtocolDialog::ExternalProtocolDialog(TabContents* tab_contents,
       ASCIIToWide(url.possibly_invalid_spec())) + L"\n\n";
 
   message_text += l10n_util::GetStringF(
-      IDS_EXTERNAL_PROTOCOL_APPLICATION_TO_LAUNCH,
-      GetApplicationForProtocol()) + L"\n\n";
+      IDS_EXTERNAL_PROTOCOL_APPLICATION_TO_LAUNCH, command) + L"\n\n";
 
   message_text += l10n_util::GetString(IDS_EXTERNAL_PROTOCOL_WARNING);
 
@@ -135,17 +116,15 @@ ExternalProtocolDialog::ExternalProtocolDialog(TabContents* tab_contents,
     root_hwnd = NULL;
   }
 
-  ChromeViews::Window* dialog =
-      ChromeViews::Window::CreateChromeWindow(root_hwnd, gfx::Rect(),
-                                              message_box_view_, this);
-
-  dialog->Show();
+  ChromeViews::Window::CreateChromeWindow(root_hwnd, gfx::Rect(), this)->Show();
 }
 
-std::wstring ExternalProtocolDialog::GetApplicationForProtocol() {
-  std::wstring url_spec = ASCIIToWide(url_.possibly_invalid_spec());
+/* static */
+std::wstring ExternalProtocolDialog::GetApplicationForProtocol(
+    const GURL& url) {
+  std::wstring url_spec = ASCIIToWide(url.possibly_invalid_spec());
   std::wstring cmd_key_path =
-      ASCIIToWide(url_.scheme() + "\\shell\\open\\command");
+      ASCIIToWide(url.scheme() + "\\shell\\open\\command");
   RegKey cmd_key(HKEY_CLASSES_ROOT, cmd_key_path.c_str(), KEY_READ);
   size_t split_offset = url_spec.find(L':');
   if (split_offset == std::wstring::npos)
@@ -160,3 +139,4 @@ std::wstring ExternalProtocolDialog::GetApplicationForProtocol() {
     return std::wstring();
   }
 }
+

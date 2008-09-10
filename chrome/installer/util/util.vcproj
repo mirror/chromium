@@ -17,7 +17,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;$(SolutionDir)common\common.vsprops;$(SolutionDir)..\third_party\lzma_sdk\using_lzma_sdk.vsprops;prebuild\util_prebuild.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;$(SolutionDir)common\common.vsprops;$(SolutionDir)installer\util\using_util.vsprops;$(SolutionDir)..\third_party\lzma_sdk\using_lzma_sdk.vsprops"
 			>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -29,7 +29,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;$(SolutionDir)common\common.vsprops;$(SolutionDir)..\third_party\lzma_sdk\using_lzma_sdk.vsprops;prebuild\util_prebuild.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;$(SolutionDir)common\common.vsprops;$(SolutionDir)installer\util\using_util.vsprops;$(SolutionDir)..\third_party\lzma_sdk\using_lzma_sdk.vsprops"
 			>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -41,11 +41,11 @@
 	</Configurations>
 	<Files>
 		<File
-			RelativePath="..\..\app\google_update_settings.cc"
+			RelativePath="browser_distribution.cc"
 			>
 		</File>
 		<File
-			RelativePath="..\..\app\google_update_settings.h"
+			RelativePath="browser_distribution.h"
 			>
 		</File>
 		<File
@@ -78,6 +78,22 @@
 		</File>
 		<File
 			RelativePath="delete_tree_work_item.h"
+			>
+		</File>
+		<File
+			RelativePath="google_chrome_distribution.cc"
+			>
+		</File>
+		<File
+			RelativePath="google_chrome_distribution.h"
+			>
+		</File>
+		<File
+			RelativePath="google_update_settings.cc"
+			>
+		</File>
+		<File
+			RelativePath="google_update_settings.h"
 			>
 		</File>
 		<File

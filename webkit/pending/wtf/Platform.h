@@ -79,6 +79,12 @@
 
 /* Operating environments */
 
+/* Define a platform for Chromium, requires |BUILDING_CHROMIUM__| to be */
+/* defined.  This is temporary until the merge lands. */
+#if defined(BUILDING_CHROMIUM__)
+#define WTF_PLATFORM_CHROMIUM 1
+#endif
+
 /* PLATFORM(QT) */
 /* PLATFORM(GTK) */
 /* PLATFORM(MAC) */
@@ -108,6 +114,11 @@
 #if PLATFORM(MAC)
 #define WTF_PLATFORM_CG 1
 #define WTF_PLATFORM_CI 1
+#if PLATFORM(CHROMIUM)
+#define WTF_PLATFORM_SKIA 1
+#endif
+#elif PLATFORM(CHROMIUM)
+#define WTF_PLATFORM_SKIA 1
 #elif !PLATFORM(QT) && !PLATFORM(WX)
 #define WTF_PLATFORM_CAIRO 1
 #endif

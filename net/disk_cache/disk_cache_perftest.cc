@@ -1,37 +1,15 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
+#include "base/file_util.h"
 #include "base/perftimer.h"
 #include "base/scoped_handle.h"
 #include "base/timer.h"
 #include "net/base/net_errors.h"
+#include "net/disk_cache/block_files.h"
 #include "net/disk_cache/disk_cache.h"
+#include "net/disk_cache/disk_cache_test_base.h"
 #include "net/disk_cache/disk_cache_test_util.h"
 #include "net/disk_cache/hash.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -186,9 +164,14 @@ int TimeRead(int num_entries, disk_cache::Backend* cache,
   return expected;
 }
 
+int BlockSize() {
+  // We can use form 1 to 4 blocks.
+  return (rand() & 0x3) + 1;
+}
+
 }  // namespace
 
-TEST(DiskCacheTest, Hash) {
+TEST_F(DiskCacheTest, Hash) {
   int seed = static_cast<int>(Time::Now().ToInternalValue());
   srand(seed);
 
@@ -200,7 +183,9 @@ TEST(DiskCacheTest, Hash) {
   timer.Done();
 }
 
-TEST(DiskCacheTest, CacheBackendPerformance) {
+TEST_F(DiskCacheTest, CacheBackendPerformance) {
+  MessageLoopForIO message_loop;
+
   std::wstring path = GetCachePath();
   ASSERT_TRUE(DeleteCache(path.c_str()));
   disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
@@ -217,11 +202,25 @@ TEST(DiskCacheTest, CacheBackendPerformance) {
 
   delete cache;
 
-  ASSERT_TRUE(EvictFileFromSystemCache((path + L"\\index").c_str()));
-  ASSERT_TRUE(EvictFileFromSystemCache((path + L"\\data_0").c_str()));
-  ASSERT_TRUE(EvictFileFromSystemCache((path + L"\\data_1").c_str()));
-  ASSERT_TRUE(EvictFileFromSystemCache((path + L"\\data_2").c_str()));
-  ASSERT_TRUE(EvictFileFromSystemCache((path + L"\\data_3").c_str()));
+  std::wstring filename(path);
+  file_util::AppendToPath(&filename, L"index");
+  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
+
+  filename = path;
+  file_util::AppendToPath(&filename, L"data_0");
+  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
+
+  filename = path;
+  file_util::AppendToPath(&filename, L"data_1");
+  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
+
+  filename = path;
+  file_util::AppendToPath(&filename, L"data_2");
+  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
+
+  filename = path;
+  file_util::AppendToPath(&filename, L"data_3");
+  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
 
   cache = disk_cache::CreateCacheBackend(path, false, 0);
   ASSERT_TRUE(NULL != cache);
@@ -233,4 +232,49 @@ TEST(DiskCacheTest, CacheBackendPerformance) {
   EXPECT_EQ(ret, g_cache_tests_received);
 
   delete cache;
+}
+
+// Creating and deleting "entries" on a block-file is something quite frequent
+// (after all, almost everything is stored on block files). The operation is
+// almost free when the file is empty, but can be expensive if the file gets
+// fragmented, or if we have multiple files. This test measures that scenario,
+// by using multiple, highly fragmented files.
+TEST_F(DiskCacheTest, BlockFilesPerformance) {
+  std::wstring path = GetCachePath();
+  ASSERT_TRUE(DeleteCache(path.c_str()));
+
+  disk_cache::BlockFiles files(path);
+  ASSERT_TRUE(files.Init(true));
+
+  int seed = static_cast<int>(Time::Now().ToInternalValue());
+  srand(seed);
+
+  const int kNumEntries = 60000;
+  int32 buffer[kNumEntries];
+  memset(buffer, 0, sizeof(buffer));
+  disk_cache::Addr* address = reinterpret_cast<disk_cache::Addr*>(buffer);
+  ASSERT_EQ(sizeof(*address), sizeof(*buffer));
+  
+  PerfTimeLogger timer1("Fill three block-files");
+
+  // Fill up the 32-byte block file (use three files).
+  for (int i = 0; i < kNumEntries; i++) {
+    EXPECT_TRUE(files.CreateBlock(disk_cache::RANKINGS, BlockSize(),
+                                  &address[i]));
+  }
+
+  timer1.Done();
+  PerfTimeLogger timer2("Create and delete blocks");
+
+  for (int i = 0; i < 200000; i++) {
+    int entry = rand() * (kNumEntries / RAND_MAX + 1);
+    if (entry >= kNumEntries)
+      entry = 0;
+
+    files.DeleteBlock(address[entry], false);
+    EXPECT_TRUE(files.CreateBlock(disk_cache::RANKINGS, BlockSize(),
+                                  &address[entry]));
+  }
+
+  timer2.Done();
 }

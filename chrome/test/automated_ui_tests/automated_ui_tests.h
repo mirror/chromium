@@ -1,34 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_TEST_AUTOMATED_UI_TESTS_AUTOMATED_UI_TESTS_H__
-#define CHROME_TEST_AUTOMATED_UI_TESTS_AUTOMATED_UI_TESTS_H__
+#ifndef CHROME_TEST_AUTOMATED_UI_TESTS_AUTOMATED_UI_TESTS_H_
+#define CHROME_TEST_AUTOMATED_UI_TESTS_AUTOMATED_UI_TESTS_H_
 
 // This takes an input file of commands, which consist of a series of
 // actions, and runs every command, reporting the status of each one
@@ -121,11 +96,12 @@
 //          will be overwritten with the normal results. This flag is used to
 //          help debug the tests if they are crashing before they get a chance
 //          to write their results to file.
+//
+// --wait-after-action : waits the specified amount of time (1s by default)
+//                       after each action. Useful for debugging.
+//
 
 #include "chrome/test/ui/ui_test.h"
-
-// Size of the array of possible actions to use when testing a dialog.
-const int kNumTestDialogActions = 4;
 
 class AutomatedUITest : public UITest {
  protected:
@@ -146,6 +122,64 @@ class AutomatedUITest : public UITest {
 
   // Actions ------------------------------------------------------------------
 
+  // NOTE: This list is sorted alphabetically, so that we can easily detect
+  // missing actions.
+
+  // Activates back button in active window.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <Back/>
+  bool BackButton();
+
+  // Changes the encoding of the page (the encoding is selected at random
+  // from a list of encodings).
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <ChangeEncoding/>
+  bool ChangeEncoding();
+
+  // Uses accelerator to close the active tab if it isn't the only tab.
+  // Returns false if active tab is the only tab, true otherwise.
+  // XML element: <CloseTab/>
+  bool CloseActiveTab();
+
+  // Duplicates the current tab.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <DuplicateTab/>
+  bool DuplicateTab();
+
+  // Opens one of the dialogs (chosen randomly) and exercises it.
+  // XML element: <Dialog/>
+  bool ExerciseDialog();
+
+  // Activates "find in page" on the current page.
+  // XML element: <FindInPage/>
+  bool FindInPage();
+
+  // Activates forward button in active window.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <Forward/>
+  bool ForwardButton();
+
+  // Opens and focuses an OffTheRecord browser window.
+  // XML element: <GoOffTheRecord/>
+  bool GoOffTheRecord();
+
+  // Navigates to the Home page.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <Home/>
+  bool Home();
+
+  // Opens the JavaScriptConsole window. While it isn't modal, it takes focus
+  // from the current browser window, so most of the test can't continue until
+  // it is dismissed.
+  // XML element: <JavaScriptConsole/>
+  bool JavaScriptConsole();
+
+  // Opens the JavaScriptDebugger window. While it isn't modal, it takes focus
+  // from the current browser window, so most of the test can't continue until
+  // it is dismissed.
+  // XML element: <JavaScriptDebugger/>
+  bool JavaScriptDebugger();
+
   // Navigates the activate tab to about:blank.
   // XML element: <Navigate/>
   // Optional Attributes: url="|address|" will navigate to |address|
@@ -156,39 +190,90 @@ class AutomatedUITest : public UITest {
   // XML element: <NewTab/>
   bool NewTab();
 
-  // Activates back button in active window.
-  // Returns true if call to activate the accelerator is successful.
-  // XML element: <Back/>
-  bool BackButton();
-
-  // Activates forward button in active window.
-  // Returns true if call to activate the accelerator is successful.
-  // XML element: <Forward/>
-  bool ForwardButton();
-
-  // Uses accelerator to close the active tab if it isn't the only tab.
-  // Returns false if active tab is the only tab, true otherwise.
-  // XML element: <CloseTab/>
-  bool CloseActiveTab();
-
   // Opens a new browser window by calling automation()->OpenNewBrowserWindow
   // Then activates the tab opened in the new window.
   // Returns true if window is successfully created.
   // XML element: <OpenWindow/>
   bool OpenAndActivateNewBrowserWindow();
 
+  // Opens the About dialog. This dialog is modal so a majority of the test
+  // can't be completed until it is dismissed.
+  // XML element: <About/>
+  bool OpenAboutDialog();
+
+  // Opens the Clear Browsing Data dialog, this dialog is modal so a majority of
+  // the test can't be completed until it is dismissed.
+  // XML element: <ClearBrowsingData/>
+  bool OpenClearBrowsingDataDialog();
+
+  // Opens the Search Engines dialog. While it isn't modal, it takes focus from
+  // the current browser window, so most of the test can't continue until it is
+  // dismissed.
+  // XML element: <EditSearchEngines/>
+  bool OpenEditSearchEnginesDialog();
+
+  // Opens the Import Settings dialog, this dialog is modal so a majority of
+  // the test can't be completed until it is dismissed.
+  // XML element: <ImportSettings/>
+  bool OpenImportSettingsDialog();
+
+  // Opens the Task Manager dialog. While it isn't modal, it takes focus from
+  // the current browser window, so most of the test can't continue until it is
+  // dismissed.
+  // XML element: <TaskManager/>
+  bool OpenTaskManagerDialog();
+
+  // Opens the View Passwords dialog, this dialog is modal so a majority of
+  // the test can't be completed until it is dismissed.
+  // XML element: <ViewPasswords/>
+  bool OpenViewPasswordsDialog();
+
+  // Opens the Options dialog. While it isn't modal, it takes focus from
+  // the current browser window, so most of the test can't continue until it is
+  // dismissed.
+  // XML element: <Options/>
+  bool Options();
+
+  // Simulates a page up key press on the active window.
+  // XML element: <DownArrow/>
+  bool PressDownArrow();
+
+  // Simulates an enter key press on the active window.
+  // XML element: <PressEnterKey/>
+  bool PressEnterKey();
+
+  // Simulates an escape key press on the active window.
+  // XML element: <PressEscapeKey/>
+  bool PressEscapeKey();
+
+  // Simulates a page down key press on the active window.
+  // XML element: <PageDown/>
+  bool PressPageDown();
+
+  // Simulates a page up key press on the active window.
+  // XML element: <PageUp/>
+  bool PressPageUp();
+
+  // Simulates a space bar press on the active window.
+  // XML element: <PressSpaceBar/>
+  bool PressSpaceBar();
+
+  // Simulates a tab key press on the active window.
+  // XML element: <PressTabKey/>
+  bool PressTabKey();
+
+  // Simulates a page up key press on the active window.
+  // XML element: <UpArrow/>
+  bool PressUpArrow();
+
   // Reload the active tab. Returns false on failure.
   // XML element: <Reload/>
   bool ReloadPage();
 
-  // Stars the current page. This opens a dialog that may or may not be
-  // dismissed.
-  // XML element: <Star/>
-  bool StarPage();
-
-  // Activates "find in page" on the current page.
-  // XML element: <FindInPage/>
-  bool FindInPage();
+  // Restores a previously closed tab.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <RestoreTab/>
+  bool RestoreTab();
 
   // Activates the next tab on the active browser window.
   // XML element: <SelectNextTab/>
@@ -198,78 +283,36 @@ class AutomatedUITest : public UITest {
   // XML element: <SelectPrevTab/>
   bool SelectPreviousTab();
 
-  // Increases the text size on the current active tab.
-  // XML element: <ZoomPlus/>
-  bool ZoomPlus();
-
-  // Decreases the text size on the current active tab.
-  // XML element: <ZoomMinus/>
-  bool ZoomMinus();
-
-  // Opens the History page in the current active browser window.
-  // XML element: <History/>
-  bool ShowHistory();
+  // Displays the bookmark bar.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <ShowBookmarks/>
+  bool ShowBookmarksBar();
 
   // Opens the Downloads page in the current active browser window.
   // XML element: <Downloads/>
   bool ShowDownloads();
 
-  // Opens the Import Settings dialog, this dialog is modal so a majority of
-  // the test can't be completed until it is dismissed.
-  // XML element: <ImportSettings/>
-  bool ImportSettings();
+  // Opens the History page in the current active browser window.
+  // XML element: <History/>
+  bool ShowHistory();
 
-  // Opens the View Passwords dialog, this dialog is modal so a majority of
-  // the test can't be completed until it is dismissed.
-  // XML element: <ViewPasswords/>
-  bool ViewPasswords();
-
-  // Opens the Clear Browser Data dialog, this dialog is modal so a majority of
-  // the test can't be completed until it is dismissed.
-  // XML element: <ClearBrowserData/>
-  bool ClearBrowserData();
-
-  // Opens the Task Manager dialog. While it isn't modal, it takes focus from
-  // the current browser window, so most of the test can't continue until is
+  // Stars the current page. This opens a dialog that may or may not be
   // dismissed.
-  // XML element: <TaskManager/>
-  bool TaskManager();
+  // XML element: <Star/>
+  bool StarPage();
 
-  // Opens and focuses an OffTheRecord browser window.
-  // XML element: <GoOffTheRecord/>
-  bool GoOffTheRecord();
+  // Views source of the current page.
+  // Returns true if call to activate the accelerator is successful.
+  // XML element: <ViewSource/>
+  bool ViewSource();
 
-  // Simulates an escape key press on the active window.
-  // XML element: <PressEscapeKey/>
-  bool PressEscapeKey();
+  // Decreases the text size on the current active tab.
+  // XML element: <ZoomMinus/>
+  bool ZoomMinus();
 
-  // Simulates a tab key press on the active window.
-  // XML element: <PressTabKey/>
-  bool PressTabKey();
-
-  // Simulates an enter key press on the active window.
-  // XML element: <PressEnterKey/>
-  bool PressEnterKey();
-
-  // Simulates a space bar press on the active window.
-  // XML element: <PressSpaceBar/>
-  bool PressSpaceBar();
-
-  // Simulates a page down key press on the active window.
-  // XML element: <PageDown/>
-  bool PageDown();
-
-  // Simulates a page up key press on the active window.
-  // XML element: <PageUp/>
-  bool PageUp();
-
-  // Simulates a page up key press on the active window.
-  // XML element: <UpArrow/>
-  bool UpArrow();
-
-  // Simulates a page up key press on the active window.
-  // XML element: <DownArrow/>
-  bool DownArrow();
+  // Increases the text size on the current active tab.
+  // XML element: <ZoomPlus/>
+  bool ZoomPlus();
 
   // Test Dialog Actions ******************************************************
   // These are a special set of actions that perform multiple actions on a
@@ -283,9 +326,25 @@ class AutomatedUITest : public UITest {
   // <TestEditKeywords> <PressTabKey/><PressEnterKey/><DownArrow/>
   // <DownArrow/><PressEscapeKey/> </TestEditKeywords>
 
+  // Opens About dialog and runs random actions on it.
+  // XML element: <TestAboutChrome/>
+  bool TestAboutChrome();
+
+  // Opens Clear Browsing Data dialog and runs random actions on it.
+  // XML element: <TestClearBrowsingData/>
+  bool TestClearBrowsingData();
+
   // Opens Edit Keywords dialog and runs random actions on it.
-  // XML element: <TestEditKeywords/>
-  bool TestEditKeywords();
+  // XML element: <TestEditSearchEngines/>
+  bool TestEditSearchEngines();
+
+  // Opens Import Settings dialog and runs random actions on it.
+  // XML element: <TestImportSettings/>
+  bool TestImportSettings();
+
+  // Opens Options dialog and runs random actions on it.
+  // XML element: <TestOptions/>
+  bool TestOptions();
 
   // Opens Task Manager and runs random actions on it.
   // This has the possibility of killing both the browser and renderer
@@ -298,19 +357,11 @@ class AutomatedUITest : public UITest {
   // XML element: <TestViewPasswords/>
   bool TestViewPasswords();
 
-  // Opens Clear Browser Data dialog and runs random actions on it.
-  // XML element: <TestClearBrowserData/>
-  bool TestClearBrowserData();
-
-  // Opens Import Settings dialog and runs random actions on it.
-  // XML element: <TestImportSettings/>
-  bool TestImportSettings();
-
   // End Test Dialog Actions **************************************************
 
   // Runs a limited set of actions designed to test dialogs. Will run
   // |num_actions| from the set defined in test_dialog_possible_actions_.
-  bool TestDialog(int num_actions);
+  bool FuzzyTestDialog(int num_actions);
 
   // Navigates to about:crash.
   // XML element: <Crash/>
@@ -337,15 +388,16 @@ class AutomatedUITest : public UITest {
   // window to the top.
   WindowProxy* GetAndActivateWindowForBrowser(BrowserProxy* browser);
 
-  // Applies the accelerator with the given ID to the current active window.
+  // Runs the specified browser command in the current active browser.
+  // See browser_commands.cc for the list of commands.
   // Returns true if the call is successful.
   // Returns false if the active window is not a browser window or if the
   // message to apply the accelerator fails.
-  bool ApplyAccelerator(int id);
+  bool RunCommand(int browser_command);
 
   // Calls SimulateOSKeyPress on the active window. Simulates a key press at
   // the OS level. |key| is the key pressed  and |flags| specifies which
-  // modifiers keys are also pressed (as defined inchrome/views/event.h).
+  // modifiers keys are also pressed (as defined in chrome/views/event.h).
   bool SimulateKeyPressInActiveWindow(wchar_t key, int flags);
 
   // Opens init file, reads it into the reader, and closes the file.
@@ -435,9 +487,11 @@ class AutomatedUITest : public UITest {
   // results.
   bool debug_logging_enabled_;
 
-  static std::string test_dialog_possible_actions_[kNumTestDialogActions];
+  // A delay in second we wait for after each action.  Useful for debugging.
+  int post_action_delay_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(AutomatedUITest);
+  DISALLOW_COPY_AND_ASSIGN(AutomatedUITest);
 };
 
-#endif  // #define CHROME_TEST_AUTOMATED_UI_TESTS_AUTOMATED_UI_TESTS_H__
+#endif  // CHROME_TEST_AUTOMATED_UI_TESTS_AUTOMATED_UI_TESTS_H_
+

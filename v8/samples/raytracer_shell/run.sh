@@ -1,1 +1,0 @@
-v8 js/prototype.js js/flog/color.js js/flog/light.js js/flog/vector.js js/flog/ray.js    js/flog/scene.js js/flog/material/basematerial.js js/flog/material/solid.js    js/flog/material/chessboard.js js/flog/shape/baseshape.js js/flog/shape/sphere.js    js/flog/shape/plane.js js/flog/intersectioninfo.js js/flog/camera.js    js/flog/background.js js/flog/engine.js shell.js

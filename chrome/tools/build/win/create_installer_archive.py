@@ -1,32 +1,7 @@
 #!/usr/bin/python
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 """Script to create Chrome Installer archive.
 
@@ -113,15 +88,29 @@ def MakeStagingDirectory(output_dir):
   os.makedirs(file_path)
   return file_path
 
-
-def CopyFilesToStagingDir(config, staging_dir, output_dir):
-  """Copies files required for installer archive to staging dir.
+def CopyAllFilesToStagingDir(config, distribution, staging_dir, output_dir):
+  """Copies the files required for installer archive.
+  Copies all common files required for various distributions of Chromium and
+  also files for the specific Chromium build specified by distribution.
   """
-  for option in config.options('FILES'):
+  CopySectionFilesToStagingDir(config, 'GENERAL', staging_dir, output_dir)
+  if distribution:
+    if len(distribution) > 1 and distribution[0] == '_':
+      distribution = distribution[1:]
+    CopySectionFilesToStagingDir(config, distribution.upper(),
+                                 staging_dir, output_dir)
+
+
+def CopySectionFilesToStagingDir(config, section, staging_dir, output_dir):
+  """Copies installer archive files specified in section to staging dir.
+  This method copies reads section from config file and copies all the files
+  specified to staging dir.
+  """
+  for option in config.options(section):
     if option.endswith('dir'):
       continue
 
-    dst = os.path.join(staging_dir, config.get('FILES', option))
+    dst = os.path.join(staging_dir, config.get(section, option))
     if not os.path.exists(dst):
       os.makedirs(dst)
     for file in glob.glob(os.path.join(output_dir, option)):
@@ -134,7 +123,7 @@ def RunSystemCommand(cmd):
 
 
 def CreateArchiveFile(output_dir, staging_dir, current_version,
-                        prev_version_dir, prev_version, rebuild_archive):
+                        prev_version_dir, prev_version, skip_rebuild_archive):
   """Creates a new installer archive file after deleting any existing old file.
   """
   # First create an uncompressed archive file for the current build
@@ -148,7 +137,7 @@ def CreateArchiveFile(output_dir, staging_dir, current_version,
   # we always delete before creating a new one.
   if not os.path.exists(archive_file):
     RunSystemCommand(cmd)
-  elif rebuild_archive:
+  elif skip_rebuild_archive != "true":
     os.remove(archive_file)
     RunSystemCommand(cmd)
 
@@ -240,13 +229,14 @@ def main(options):
 
   staging_dir = MakeStagingDirectory(options.output_dir)
 
-  CopyFilesToStagingDir(config, staging_dir, options.output_dir)
+  CopyAllFilesToStagingDir(config, options.distribution,
+                           staging_dir, options.output_dir)
   
-  # Name of the archive file built (for example - chrome.lz or
-  # patch-<old_version>-<new_version>.lz or patch-<new_version>.lz
+  # Name of the archive file built (for example - chrome.7z or
+  # patch-<old_version>-<new_version>.7z or patch-<new_version>.7z
   archive_file_name = CreateArchiveFile(options.output_dir, staging_dir,
       current_version, options.last_chrome_installer,
-      options.last_chrome_version, options.rebuild_archive)
+      options.last_chrome_version, options.skip_rebuild_archive)
 
   CreateResourceInputFile(options.output_dir, options.last_chrome_installer,
                           archive_file_name)
@@ -256,8 +246,10 @@ if '__main__' == __name__:
   option_parser = optparse.OptionParser()
   option_parser.add_option('-o', '--output_dir', help='Output directory')
   option_parser.add_option('-i', '--input_file', help='Input file')
-  option_parser.add_option('-r', '--rebuild_archive', action='store_true',
-      default=False, help='Rebuild Chrome.7z archive, even if it exists.')
+  option_parser.add_option('-d', '--distribution',
+      help='Name of Chromium Distribution. Optional.')
+  option_parser.add_option('-s', '--skip_rebuild_archive',
+      default="False", help='Skip re-building Chrome.7z archive if it exists.')
   option_parser.add_option('-l', '--last_chrome_installer', 
       help='Generate differential installer. The value of this parameter ' +
            'specifies the directory that contains base versions of ' +
@@ -268,3 +260,4 @@ if '__main__' == __name__:
 
   options, args = option_parser.parse_args()
   sys.exit(main(options))
+

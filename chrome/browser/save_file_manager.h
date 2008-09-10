@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // Objects that handle file operations for saving files, on the file thread.
 //
@@ -83,22 +58,20 @@
 #ifndef CHROME_BROWSER_SAVE_FILE_MANAGER_H__
 #define CHROME_BROWSER_SAVE_FILE_MANAGER_H__
 
-#include <hash_map>
-#include <hash_set>
 #include <utility>
 
 #include "base/basictypes.h"
+#include "base/hash_tables.h"
 #include "base/ref_counted.h"
 #include "base/thread.h"
 #include "chrome/browser/save_types.h"
-#include "googleurl/src/gurl.h"
 
+class GURL;
 class SaveFile;
 class SavePackage;
 class MessageLoop;
 class ResourceDispatcherHost;
 class Task;
-class Timer;
 class URLRequestContext;
 
 class SaveFileManager
@@ -248,7 +221,7 @@ class SaveFileManager
   int next_id_;
 
   // A map of all saving jobs by using save id.
-  typedef stdext::hash_map<int, SaveFile*> SaveFileMap;
+  typedef base::hash_map<int, SaveFile*> SaveFileMap;
   SaveFileMap save_file_map_;
 
   // Message loop that the SavePackages live on.
@@ -266,7 +239,7 @@ class SaveFileManager
 
   // Tracks which SavePackage to send data to, called only on UI thread.
   // SavePackageMap maps save IDs to their SavePackage.
-  typedef stdext::hash_map<int, SavePackage*> SavePackageMap;
+  typedef base::hash_map<int, SavePackage*> SavePackageMap;
   SavePackageMap packages_;
 
   // There is a gap between after calling SaveURL() and before calling
@@ -279,8 +252,8 @@ class SaveFileManager
   // use a hashmap to map the tab id (we actually use render_process_id) to the
   // hashmap since it is possible to save same URL in different tab at
   // same time.
-  typedef stdext::hash_map<std::wstring, SavePackage*> StartingRequestsMap;
-  typedef stdext::hash_map<int, StartingRequestsMap> TabToStartingRequestsMap;
+  typedef base::hash_map<std::wstring, SavePackage*> StartingRequestsMap;
+  typedef base::hash_map<int, StartingRequestsMap> TabToStartingRequestsMap;
   TabToStartingRequestsMap tab_starting_requests_;
 
   DISALLOW_EVIL_CONSTRUCTORS(SaveFileManager);

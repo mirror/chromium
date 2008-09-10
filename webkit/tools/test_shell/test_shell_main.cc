@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Creates an instance of the test_shell.
 
@@ -34,23 +9,26 @@
 #include <windows.h>
 #include <commctrl.h>
 
+#include "base/at_exit.h"
 #include "base/basictypes.h"
 #include "base/command_line.h"
 #include "base/event_recorder.h"
 #include "base/file_util.h"
-#include "base/fixed_string.h"
 #include "base/gfx/native_theme.h"
 #include "base/icu_util.h"
 #include "base/memory_debug.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/resource_util.h"
+#include "base/stack_container.h"
 #include "base/stats_table.h"
 #include "base/string_util.h"
+#include "base/trace_event.h"
 #include "breakpad/src/client/windows/handler/exception_handler.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/net_module.h"
 #include "net/http/http_cache.h"
+#include "net/http/http_network_layer.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/window_open_disposition.h"
@@ -108,23 +86,26 @@ bool MinidumpCallback(const wchar_t *dumpPath,
         return false;
 
     // Try to rename the minidump file to include the crashed test's name.
-    FixedString<wchar_t, MAX_PATH> origPath;
-    origPath.Append(dumpPath);
-    origPath.Append(file_util::kPathSeparator);
-    origPath.Append(minidumpID);
-    origPath.Append(L".dmp");
+    // StackString uses the stack but overflows onto the heap.  But we don't
+    // care too much about being completely correct here, since most crashes
+    // will be happening on developers' machines where they have debuggers.
+    StackWString<MAX_PATH*2> origPath;
+    origPath->append(dumpPath);
+    origPath->push_back(file_util::kPathSeparator);
+    origPath->append(minidumpID);
+    origPath->append(L".dmp");
 
-    FixedString<wchar_t, MAX_PATH> newPath;
-    newPath.Append(dumpPath);
-    newPath.Append(file_util::kPathSeparator);
-    newPath.Append(g_currentTestName);
-    newPath.Append(L"-");
-    newPath.Append(minidumpID);
-    newPath.Append(L".dmp");
+    StackWString<MAX_PATH*2>  newPath;
+    newPath->append(dumpPath);
+    newPath->push_back(file_util::kPathSeparator);
+    newPath->append(g_currentTestName);
+    newPath->append(L"-");
+    newPath->append(minidumpID);
+    newPath->append(L".dmp");
 
     // May use the heap, but oh well.  If this fails, we'll just have the
     // original dump file lying around.
-    _wrename(origPath.get(), newPath.get());
+    _wrename(origPath->c_str(), newPath->c_str());
 
     return false;
 }
@@ -136,6 +117,9 @@ int main(int argc, char* argv[])
     _CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDERR);
     _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
 #endif
+    // Some tests may use base::Singleton<>, thus we need to instanciate
+    // the AtExitManager or else we will leak objects.
+    base::AtExitManager at_exit_manager;  
 
     CommandLine parsed_command_line;
     if (parsed_command_line.HasSwitch(test_shell::kStartupDialog))
@@ -144,7 +128,7 @@ int main(int argc, char* argv[])
 
     // Allocate a message loop for this thread.  Although it is not used
     // directly, its constructor sets up some necessary state.
-    MessageLoop main_message_loop;
+    MessageLoopForUI main_message_loop;
 
     bool suppress_error_dialogs = 
          (GetEnvironmentVariable(L"CHROME_HEADLESS", NULL, 0) ||
@@ -157,6 +141,14 @@ int main(int argc, char* argv[])
     if (suppress_error_dialogs) {
         _set_abort_behavior(0, _WRITE_ABORT_MSG);
     }
+
+    if (parsed_command_line.HasSwitch(test_shell::kEnableTracing))
+      base::TraceLog::StartTracing();
+
+    // Make the selection of network stacks early on before any consumers try to
+    // issue HTTP requests.
+    if (parsed_command_line.HasSwitch(test_shell::kUseNewHttp))
+      net::HttpNetworkLayer::UseWinHttp(false);
 
     bool layout_test_mode =
         parsed_command_line.HasSwitch(test_shell::kLayoutTests);
@@ -174,7 +166,7 @@ int main(int argc, char* argv[])
 
     if (layout_test_mode ||
         parsed_command_line.HasSwitch(test_shell::kEnableFileCookies))
-      CookieMonster::EnableFileScheme();
+      net::CookieMonster::EnableFileScheme();
 
     std::wstring cache_path =
         parsed_command_line.GetSwitchValue(test_shell::kCacheDir);
@@ -192,7 +184,7 @@ int main(int argc, char* argv[])
     icu_util::Initialize();
 
     // Config the network module so it has access to a limited set of resources.
-    NetModule::SetResourceProvider(NetResourceProvider);
+    net::NetModule::SetResourceProvider(NetResourceProvider);
 
     INITCOMMONCONTROLSEX InitCtrlEx;
 
@@ -333,11 +325,10 @@ int main(int argc, char* argv[])
             MessageLoop::current()->Run();
         }
 
-        // Flush any remaining messages.  This ensures that any 
-        // accumulated Task objects get destroyed before we exit, 
-        // which avoids noise in purify leak-test results.
-        MessageLoop::current()->Quit();
-        MessageLoop::current()->Run();
+        // Flush any remaining messages.  This ensures that any accumulated
+        // Task objects get destroyed before we exit, which avoids noise in
+        // purify leak-test results.
+        MessageLoop::current()->RunAllPending();
 
         if (record_mode)
           base::EventRecorder::current()->StopRecording();
@@ -357,4 +348,5 @@ int main(int argc, char* argv[])
 #endif
     return 0;
 }
+
 

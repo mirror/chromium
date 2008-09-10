@@ -1,54 +1,48 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// All Rights Reserved.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_SCOPED_PTR_H__
-#define BASE_SCOPED_PTR_H__
-
-//  This is an implementation designed to match the anticipated future TR2
-//  implementation of the scoped_ptr class, and its closely-related brethren,
-//  scoped_array, scoped_ptr_malloc, and make_scoped_ptr.
+// Scopers help you manage ownership of a pointer, helping you easily manage the
+// a pointer within a scope, and automatically destroying the pointer at the
+// end of a scope.  There are two main classes you will use, which coorespond
+// to the operators new/delete and new[]/delete[].
 //
-//  See http://wiki/Main/ScopedPointerInterface for the spec that drove this
-//  file.
+// Example usage (scoped_ptr):
+//   {
+//     scoped_ptr<Foo> foo(new Foo("wee"));
+//   }  // foo goes out of scope, releasing the pointer with it.
+//
+//   {
+//     scoped_ptr<Foo> foo;          // No pointer managed.
+//     foo.reset(new Foo("wee"));    // Now a pointer is managed.
+//     foo.reset(new Foo("wee2"));   // Foo("wee") was destroyed.
+//     foo.reset(new Foo("wee3"));   // Foo("wee2") was destroyed.
+//     foo->Method();                // Foo::Method() called.
+//     foo.get()->Method();          // Foo::Method() called.
+//     SomeFunc(foo.Release());      // SomeFunc takes owernship, foo no longer
+//                                   // manages a pointer.
+//     foo.reset(new Foo("wee4"));   // foo manages a pointer again.
+//     foo.reset();                  // Foo("wee4") destroyed, foo no longer
+//                                   // manages a pointer.
+//   }  // foo wasn't managing a pointer, so nothing was destroyed.
+//
+// Example usage (scoped_array):
+//   {
+//     scoped_array<Foo> foo(new Foo[100]);
+//     foo.get()->Method();  // Foo::Method on the 0th element.
+//     foo[10].Method();     // Foo::Method on the 10th element.
+//   }
+
+#ifndef BASE_SCOPED_PTR_H_
+#define BASE_SCOPED_PTR_H_
+
+// This is an implementation designed to match the anticipated future TR2
+// implementation of the scoped_ptr class, and its closely-related brethren,
+// scoped_array, scoped_ptr_malloc.
 
 #include <assert.h>
 #include <stdlib.h>
 #include <cstddef>
-
-
-template <class C> class scoped_ptr;
-template <class C, class Free> class scoped_ptr_malloc;
-template <class C> class scoped_array;
-
-template <class C>
-scoped_ptr<C> make_scoped_ptr(C *);
 
 // A scoped_ptr<T> is like a T*, except that the destructor of scoped_ptr<T>
 // automatically deletes the pointer it holds (if any).
@@ -128,8 +122,6 @@ class scoped_ptr {
  private:
   C* ptr_;
 
-  friend scoped_ptr<C> make_scoped_ptr<C>(C *p);
-
   // Forbid comparison of scoped_ptr types.  If C2 != C, it totally doesn't
   // make sense, and if C2 == C, it still doesn't make sense because you should
   // never have the same object owned by two different scoped_ptrs.
@@ -155,20 +147,6 @@ bool operator==(C* p1, const scoped_ptr<C>& p2) {
 template <class C>
 bool operator!=(C* p1, const scoped_ptr<C>& p2) {
   return p1 != p2.get();
-}
-
-template <class C>
-scoped_ptr<C> make_scoped_ptr(C *p) {
-  // This does nothing but to return a scoped_ptr of the type that the passed
-  // pointer is of.  (This eliminates the need to specify the name of T when
-  // making a scoped_ptr that is used anonymously/temporarily.)  From an
-  // access control point of view, we construct an unnamed scoped_ptr here
-  // which we return and thus copy-construct.  Hence, we need to have access
-  // to scoped_ptr::scoped_ptr(scoped_ptr const &).  However, it is guaranteed
-  // that we never actually call the copy constructor, which is a good thing
-  // as we would call the temporary's object destructor (and thus delete p)
-  // if we actually did copy some object, here.
-  return scoped_ptr<C>(p);
 }
 
 // scoped_array<C> is like scoped_ptr<C>, except that the caller must allocate
@@ -399,4 +377,4 @@ bool operator!=(C* p, const scoped_ptr_malloc<C, FP>& b) {
   return p != b.get();
 }
 
-#endif  // BASE_SCOPED_PTR_H__
+#endif  // BASE_SCOPED_PTR_H_

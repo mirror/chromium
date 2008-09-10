@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // Unit tests for the SafeBrowsing storage system (SafeBrowsingDatabase).
 
@@ -39,6 +14,7 @@
 #include "base/time.h"
 #include "chrome/browser/safe_browsing/protocol_parser.h"
 #include "chrome/browser/safe_browsing/safe_browsing_database.h"
+#include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -71,7 +47,7 @@ void SubDelChunk(SafeBrowsingDatabase* db, const std::string& list, int chunk_id
   DelChunk(db, list, chunk_id, true);
 }
 
-// Checks database reading/writing.
+// Checks database reading and writing.
 TEST(SafeBrowsing, Database) {
   std::wstring filename;
   PathService::Get(base::DIR_TEMP, &filename);
@@ -475,7 +451,11 @@ TEST(SafeBrowsing, HashCaching) {
   EXPECT_EQ(full_hashes.size(), 1);
 
 
-  // Testing prefix miss caching.
+  // Testing prefix miss caching. First, we clear out the existing database,
+  // Since PopulateDatabaseForCacheTest() doesn't handle adding duplicate
+  // chunks.
+  AddDelChunk(&database, "goog-malware-shavar", 1);
+
   std::vector<SBPrefix> prefix_misses;
   std::vector<SBFullHashResult> empty_full_hash;
   prefix_misses.push_back(Sha256Prefix("http://www.bad.com/malware.html"));
@@ -494,7 +474,7 @@ TEST(SafeBrowsing, HashCaching) {
 
 void PrintStat(const wchar_t* name) {
   int value = StatsTable::current()->GetCounterValue(name);
-  std::wstring out = StringPrintf(L"%s %d\r\n", name, value);
+  std::wstring out = StringPrintf(L"%ls %d\r\n", name, value);
   OutputDebugStringW(out.c_str());
 }
 
@@ -668,3 +648,4 @@ TEST(SafeBrowsing, DISABLED_DatabaseOldLotsofDeletesIO) {
   deletes->push_back(del);
   PeformUpdate(L"old\\SafeBrowsing", chunks, deletes);
 }
+

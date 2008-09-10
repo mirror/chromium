@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <set>
 #include <vector>
@@ -39,6 +14,7 @@
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/time.h"
+#include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/url_fixer_upper.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
@@ -51,6 +27,7 @@
 #include "chrome/test/automation/tab_proxy.h"
 #include "chrome/test/automation/window_proxy.h"
 #include "chrome/test/test_file_util.h"
+#include "googleurl/src/gurl.h"
 
 bool UITest::in_process_renderer_ = false;
 bool UITest::in_process_plugins_ = false;
@@ -62,6 +39,7 @@ bool UITest::default_use_existing_browser_ = false;
 bool UITest::dump_histograms_on_exit_ = false;
 bool UITest::enable_dcheck_ = false;
 bool UITest::silent_dump_on_dcheck_ = false;
+bool UITest::disable_breakpad_ = false;
 int UITest::timeout_ms_ = 20 * 60 * 1000;
 
 // Uncomment this line to have the spawned process wait for the debugger to
@@ -136,7 +114,9 @@ void UITest::TearDown() {
   std::wstring error_msg =
       L"Encountered an unexpected crash in the program during this test.";
   if (expected_crashes_ > 0 && actual_crashes == 0)
-    error_msg += L"  Have you started crash_service.exe?";
+    error_msg += L"  NOTE: This test is expected to fail if crash_service.exe "
+                 L"is not running. Start it manually before running this "
+                 L"test (see the build output directory).";
   EXPECT_EQ(expected_crashes_, actual_crashes) << error_msg;
 }
 
@@ -206,6 +186,8 @@ void UITest::LaunchBrowser(const std::wstring& arguments, bool clear_profile) {
     CommandLine::AppendSwitch(&command_line, switches::kEnableDCHECK);
   if (silent_dump_on_dcheck_)
     CommandLine::AppendSwitch(&command_line, switches::kSilentDumpOnDCHECK);
+  if (disable_breakpad_)
+    CommandLine::AppendSwitch(&command_line, switches::kDisableBreakpad);
   if (!homepage_.empty())
     CommandLine::AppendSwitchWithValue(&command_line,
                                        switches::kHomePage,
@@ -270,12 +252,12 @@ void UITest::LaunchBrowser(const std::wstring& arguments, bool clear_profile) {
 }
 
 void UITest::QuitBrowser() {
-  typedef std::vector<HWND> HandleVector;
+  typedef std::vector<BrowserProxy*> BrowserVector;
 
   // There's nothing to do here if the browser is not running.
   if (IsBrowserRunning()) {
     automation()->SetFilteredInet(false);
-    HandleVector handles;
+    BrowserVector browsers;
 
     // Build up a list of HWNDs; we do this as a separate step so that closing
     // the windows doesn't mess up the iteration.
@@ -283,18 +265,21 @@ void UITest::QuitBrowser() {
     EXPECT_TRUE(automation()->GetBrowserWindowCount(&window_count));
 
     for (int i = 0; i < window_count; ++i) {
-      HWND window_handle;
-      scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(i));
-      scoped_ptr<WindowProxy> window(
-          automation()->GetWindowForBrowser(browser.get()));
-      EXPECT_TRUE(window->GetHWND(&window_handle));
-      handles.push_back(window_handle);
+      BrowserProxy* browser_proxy = automation()->GetBrowserWindow(i);
+      browsers.push_back(browser_proxy);
     }
 
-    for (HandleVector::iterator iter = handles.begin(); iter != handles.end();
-      ++iter) {
-      ::PostMessage(*iter, WM_CLOSE, 0, 0);
+    //for (HandleVector::iterator iter = handles.begin(); iter != handles.end();
+    for (BrowserVector::iterator iter = browsers.begin();
+      iter != browsers.end(); ++iter) {
+      // Use ApplyAccelerator since it doesn't wait
+      (*iter)->ApplyAccelerator(IDC_CLOSEWINDOW);
+      delete (*iter);
     }
+
+    // Now, drop the automation IPC channel so that the automation provider in
+    // the browser notices and drops its reference to the browser process.
+    server_->Disconnect();
 
     // Wait for the browser process to quit. It should quit once all tabs have
     // been closed.
@@ -319,7 +304,7 @@ void UITest::AssertAppNotRunning(const std::wstring& error_message) {
 }
 
 void UITest::CleanupAppProcesses() {
-  BrowserProcessFilter filter;
+  BrowserProcessFilter filter(L"");
 
   // Make sure that no instances of the browser remain.
   const int kExitTimeoutMs = 5000;
@@ -376,6 +361,38 @@ bool UITest::WaitForDownloadShelfVisible(TabProxy* tab) {
   return false;
 }
 
+bool UITest::WaitForFindWindowFullyVisible(TabProxy* tab) {
+  const int kCycles = 20;
+  for (int i = 0; i < kCycles; i++) {
+    bool visible = false;
+    if (!tab->IsFindWindowFullyVisible(&visible))
+      return false;  // Some error.
+    if (visible)
+      return true;  // Find window is visible.
+
+    // Give it a chance to catch up.
+    Sleep(kWaitForActionMaxMsec / kCycles);
+  }
+  return false;
+}
+
+bool UITest::WaitForBookmarkBarVisibilityChange(BrowserProxy* browser,
+                                                bool wait_for_open) {
+  const int kCycles = 20;
+  for (int i = 0; i < kCycles; i++) {
+    bool visible = false;
+    bool animating = true;
+    if (!browser->GetBookmarkBarVisibility(&visible, &animating))
+      return false;  // Some error.
+    if (visible == wait_for_open && !animating)
+      return true;  // Bookmark bar visibility change complete.
+
+    // Give it a chance to catch up.
+    Sleep(kWaitForActionMaxMsec / kCycles);
+  }
+  return false;
+}
+
 GURL UITest::GetActiveTabURL() {
   scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
   if (!tab_proxy.get())
@@ -407,7 +424,7 @@ bool UITest::CrashAwareSleep(int time_out_ms) {
 
 /*static*/
 int UITest::GetBrowserProcessCount() {
-  BrowserProcessFilter filter;
+  BrowserProcessFilter filter(L"");
   return process_util::GetProcessCount(chrome::kBrowserProcessExecutableName,
                                        &filter);
 }
@@ -433,7 +450,7 @@ DictionaryValue* UITest::GetLocalState() {
 }
 
 DictionaryValue* UITest::GetDefaultProfilePreferences() {
-   std::wstring path;
+  std::wstring path;
   PathService::Get(chrome::DIR_USER_DATA, &path);
   file_util::AppendToPath(&path, chrome::kNotSignedInProfile);
   file_util::AppendToPath(&path, chrome::kPreferencesFilename);
@@ -552,3 +569,17 @@ bool UITest::CloseBrowser(BrowserProxy* browser,
   delete response;
   return result;
 }
+
+void UITest::PrintResult(const std::wstring& measurement,
+                         const std::wstring& modifier,
+                         const std::wstring& trace,
+                         size_t value,
+                         const std::wstring& units,
+                         bool important) {
+  wprintf(L"%lsRESULT %ls%ls: %ls= %d %ls\n",
+          important ? L"*" : L"", measurement.c_str(), modifier.c_str(),
+          trace.c_str(), value, units.c_str());
+}
+
+
+

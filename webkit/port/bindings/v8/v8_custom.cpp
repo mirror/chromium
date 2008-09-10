@@ -72,7 +72,7 @@
 #include "EventTargetNode.h"
 #include "EventTarget.h"
 #include "ExceptionCode.h"
-#include "xmlhttprequest.h"
+#include "XMLHttpRequest.h"
 #include "XMLSerializer.h"
 #include "KURL.h"
 #include "DeprecatedString.h"
@@ -528,28 +528,6 @@ ACCESSOR_SETTER(DocumentLocation) {
   DOMWindow* window = imp->frame()->domWindow();
   // DOMWindow::setLocation does security checks.
   window->setLocation(ToWebCoreString(value));
-}
-
-
-ACCESSOR_GETTER(DOMWindowLocation) {
-  v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(
-      V8ClassIndex::DOMWINDOW, info.This());
-  if (holder.IsEmpty())
-    return v8::Undefined();
-
-  DOMWindow* imp = V8Proxy::FastToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, holder);
-
-  // Give subframes precedence.
-  if (imp->frame()) {
-    Frame* child = imp->frame()->tree()->child("location");
-    if (child)
-      return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, child->domWindow());
-  }
-
-  // Normal getter or real 'location' property.
-  Location* v = imp->location();
-  return V8Proxy::ToV8Object(V8ClassIndex::LOCATION, static_cast<Peerable*>(v));
 }
 
 
@@ -1184,8 +1162,13 @@ CALLBACK_FUNC_DECL(DOMWindowOpen) {
 
   // In the case of a named frame or a new window, we'll use the createWindow()
   // helper.
-  WindowFeatures window_features(
+
+  // Parse the values, and then work with a copy of the parsed values
+  // so we can restore the values we may not want to overwrite after
+  // we do the multiple monitor fixes.
+  WindowFeatures raw_features(
       valueToStringWithNullOrUndefinedCheck(args[2]));
+  WindowFeatures window_features(raw_features);
   FloatRect screen_rect = screenAvailableRect(page->mainFrame()->view());
 
   // Set default size and location near parent window if none were specified.
@@ -1215,11 +1198,21 @@ CALLBACK_FUNC_DECL(DOMWindowOpen) {
   window_rect.move(screen_rect.x(), screen_rect.y());
   WebCore::DOMWindow::adjustWindowRect(screen_rect, window_rect, window_rect);
 
-  // createWindow expects the location to be specified relative to the parent.
-  window_features.x = window_rect.x() - parent->screenX();
-  window_features.y = window_rect.y() - parent->screenY();
+  window_features.x = window_rect.x();
+  window_features.y = window_rect.y();
   window_features.height = window_rect.height();
   window_features.width = window_rect.width();
+
+  // If either of the origin coordinates weren't set in the original
+  // string, make sure they aren't set now.
+  if (!raw_features.xSet) {
+    window_features.x = 0;
+    window_features.xSet = false;
+  }
+  if (!raw_features.ySet) {
+    window_features.y = 0;
+    window_features.ySet = false;
+  }
 
   frame = createWindow(frame, url_string, frame_name,
                        window_features, v8::Local<v8::Value>());
@@ -1476,7 +1469,7 @@ NAMED_PROPERTY_GETTER(HTMLFormElement) {
   }
   // Second call may return different results from the first call,
   // but if the first the size cannot be zero.
-  Vector<RefPtr<Node>> elements;
+  Vector<RefPtr<Node> > elements;
   imp->getNamedElements(v, elements);
   ASSERT(elements.size() != 0);
   if (elements.size() == 1) {
@@ -2719,11 +2712,11 @@ CALLBACK_FUNC_DECL(EventTargetNodeRemoveEventListener) {
 static void CreateHiddenXHRDependency(v8::Local<v8::Object> xhr,
                                       v8::Local<v8::Value> value) {
   ASSERT(V8Proxy::GetDOMWrapperType(xhr) == V8ClassIndex::XMLHTTPREQUEST);
-  int last_internal_field_index = xhr->InternalFieldCount() - 1;
-  v8::Local<v8::Value> cache = xhr->GetInternalField(last_internal_field_index);
+  v8::Local<v8::Value> cache =
+      xhr->GetInternalField(V8Custom::kXMLHttpRequestCacheIndex);
   if (cache->IsNull() || cache->IsUndefined()) {
     cache = v8::Array::New();
-    xhr->SetInternalField(last_internal_field_index, cache);
+    xhr->SetInternalField(V8Custom::kXMLHttpRequestCacheIndex, cache);
   }
 
   v8::Local<v8::Array> cache_array = v8::Local<v8::Array>::Cast(cache);
@@ -2734,8 +2727,8 @@ static void CreateHiddenXHRDependency(v8::Local<v8::Object> xhr,
 static void RemoveHiddenXHRDependency(v8::Local<v8::Object> xhr,
                                       v8::Local<v8::Value> value) {
   ASSERT(V8Proxy::GetDOMWrapperType(xhr) == V8ClassIndex::XMLHTTPREQUEST);
-  int last_internal_field_index = xhr->InternalFieldCount() - 1;
-  v8::Local<v8::Value> cache = xhr->GetInternalField(last_internal_field_index);
+  v8::Local<v8::Value> cache =
+      xhr->GetInternalField(V8Custom::kXMLHttpRequestCacheIndex);
   ASSERT(cache->IsArray());
   v8::Local<v8::Array> cache_array = v8::Local<v8::Array>::Cast(cache);
   for (int i = cache_array->Length() - 1; i >= 0; i--) {

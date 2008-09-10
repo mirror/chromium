@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/ssl_manager.h"
 
@@ -213,7 +188,7 @@ void SSLManager::ShowMessageWithLink(const std::wstring& msg,
     return;
 
   // Don't show the message if the user doesn't expect an authenticated session.
-  if (entry->GetSecurityStyle() <= SECURITY_STYLE_UNAUTHENTICATED)
+  if (entry->ssl().security_style() <= SECURITY_STYLE_UNAUTHENTICATED)
     return;
 
   InfoBarView* info_bar_view =
@@ -240,17 +215,18 @@ void SSLManager::ShowMessageWithLink(const std::wstring& msg,
 }
 
 // Delegate API method.
-void SSLManager::SetMaxSecurityStyle(SecurityStyle style) {
+bool SSLManager::SetMaxSecurityStyle(SecurityStyle style) {
   NavigationEntry* entry = controller_->GetActiveEntry();
   if (!entry) {
     NOTREACHED();
-    return;
+    return false;
   }
 
-  if (entry->GetSecurityStyle() > style) {
-    entry->SetSecurityStyle(style);
-    controller_->EntryUpdated(entry);
+  if (entry->ssl().security_style() > style) {
+    entry->ssl().set_security_style(style);
+    return true;
   }
+  return false;
 }
 
 // Delegate API method.
@@ -261,12 +237,12 @@ void SSLManager::AddMessageToConsole(const std::wstring& msg,
   if (!web_contents)
     return;
 
-  web_contents->AddMessageToConsole(L"", msg, level);
+  web_contents->AddMessageToConsole(std::wstring(), msg, level);
 }
 
 
 // Delegate API method.
-void SSLManager::DenyCertForHost(X509Certificate* cert,
+void SSLManager::DenyCertForHost(net::X509Certificate* cert,
                                  const std::string& host) {
   // Remember that we don't like this cert for this host.
   // TODO(abarth): Do we want to persist this information in the user's profile?
@@ -274,7 +250,7 @@ void SSLManager::DenyCertForHost(X509Certificate* cert,
 }
 
 // Delegate API method.
-void SSLManager::AllowCertForHost(X509Certificate* cert,
+void SSLManager::AllowCertForHost(net::X509Certificate* cert,
                                   const std::string& host) {
   // Remember that we do like this cert for this host.
   // TODO(abarth): Do we want to persist this information in the user's profile?
@@ -282,8 +258,8 @@ void SSLManager::AllowCertForHost(X509Certificate* cert,
 }
 
 // Delegate API method.
-X509Certificate::Policy::Judgment SSLManager::QueryPolicy(
-    X509Certificate* cert, const std::string& host) {
+net::X509Certificate::Policy::Judgment SSLManager::QueryPolicy(
+    net::X509Certificate* cert, const std::string& host) {
   // TODO(abarth): Do we want to read this information from the user's profile?
   return cert_policy_for_host_[host].Check(cert);
 }
@@ -310,7 +286,7 @@ bool SSLManager::ProcessedSSLErrorFromRequest() const {
     return false;
   }
 
-  return net::IsCertStatusError(entry->GetSSLCertStatus());
+  return net::IsCertStatusError(entry->ssl().cert_status());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -512,7 +488,7 @@ SSLManager::CertError::CertError(
     URLRequest* request,
     ResourceType::Type resource_type,
     int cert_error,
-    X509Certificate* cert,
+    net::X509Certificate* cert,
     MessageLoop* ui_loop)
     : ErrorHandler(rdh, request, ui_loop),
       cert_error_(cert_error),
@@ -529,7 +505,7 @@ SSLManager::CertError::CertError(
 void SSLManager::OnSSLCertificateError(ResourceDispatcherHost* rdh,
                                        URLRequest* request,
                                        int cert_error,
-                                       X509Certificate* cert,
+                                       net::X509Certificate* cert,
                                        MessageLoop* ui_loop) {
   DLOG(INFO) << "OnSSLCertificateError() cert_error: " << cert_error <<
                 " url: " << request->url().spec();
@@ -558,13 +534,13 @@ void SSLManager::OnMixedContentRequest(ResourceDispatcherHost* rdh,
 void SSLManager::OnCertError(CertError* error) {
   // Ask our delegate to deal with the error.
   NavigationEntry* entry = controller_->GetActiveEntry();
-  delegate()->OnCertError(entry->GetURL(), error);
+  delegate()->OnCertError(entry->url(), error);
 }
 
 void SSLManager::OnMixedContent(MixedContentHandler* mixed_content) {
   // Ask our delegate to deal with the mixed content.
   NavigationEntry* entry = controller_->GetActiveEntry();
-  delegate()->OnMixedContent(controller_, entry->GetURL(), mixed_content);
+  delegate()->OnMixedContent(controller_, entry->url(), mixed_content);
 }
 
 void SSLManager::Observe(NotificationType type,
@@ -603,8 +579,10 @@ void SSLManager::InitializeEntryIfNeeded(NavigationEntry* entry) {
 
   // If the security style of the entry is SECURITY_STYLE_UNKNOWN, then it is a
   // fresh entry and should get the default style.
-  if (entry->GetSecurityStyle() == SECURITY_STYLE_UNKNOWN)
-    entry->SetSecurityStyle(delegate()->GetDefaultStyle(entry->GetURL()));
+  if (entry->ssl().security_style() == SECURITY_STYLE_UNKNOWN) {
+    entry->ssl().set_security_style(
+        delegate()->GetDefaultStyle(entry->url()));
+  }
 }
 
 void SSLManager::NavigationStateChanged() {
@@ -634,6 +612,7 @@ void SSLManager::DidCommitProvisionalLoad(ProvisionalLoadDetails* details) {
   if (details->in_page_navigation())
     return;
 
+  bool changed = false;
   if (details->main_frame()) {
     // We are navigating to a new page, it's time to close the info bars.  They
     // will automagically disappear from the visible_info_bars_ list (when
@@ -648,12 +627,13 @@ void SSLManager::DidCommitProvisionalLoad(ProvisionalLoadDetails* details) {
     NavigationEntry* entry = controller_->GetActiveEntry();
     if (entry) {
       // We may not have an entry if this is a navigation to an initial blank
-      // page.
-      entry->ResetSSLStates();  // Clears mixed/unsafe content state.
-      entry->SetSSLCertID(details->ssl_cert_id());
-      entry->SetSSLCertStatus(details->ssl_cert_status());
-      entry->SetSSLSecurityBits(details->ssl_security_bits());
-      controller_->EntryUpdated(entry);
+      // page. Reset the SSL information and add the new data we have.
+      entry->ssl() = NavigationEntry::SSLStatus();
+      InitializeEntryIfNeeded(entry);  // For security_style.
+      entry->ssl().set_cert_id(details->ssl_cert_id());
+      entry->ssl().set_cert_status(details->ssl_cert_status());
+      entry->ssl().set_security_bits(details->ssl_security_bits());
+      changed = true;
     }
 
     if (details->interstitial_page()) {
@@ -668,9 +648,17 @@ void SSLManager::DidCommitProvisionalLoad(ProvisionalLoadDetails* details) {
   // happens, use the unauthenticated (HTTP) rather than the authentication
   // broken security style so that we can detect this error condition.
   if (net::IsCertStatusError(details->ssl_cert_status()))
-    SetMaxSecurityStyle(SECURITY_STYLE_AUTHENTICATION_BROKEN);
+    changed |= SetMaxSecurityStyle(SECURITY_STYLE_AUTHENTICATION_BROKEN);
   else if (details->url().SchemeIsSecure() && !details->ssl_cert_id())
-    SetMaxSecurityStyle(SECURITY_STYLE_UNAUTHENTICATED);
+    changed |= SetMaxSecurityStyle(SECURITY_STYLE_UNAUTHENTICATED);
+
+  if (changed) {
+    // Only send the notification when something actually changed.
+    NotificationService::current()->Notify(
+        NOTIFY_SSL_STATE_CHANGED,
+        Source<NavigationController>(controller_),
+        Details<NavigationEntry>(controller_->GetActiveEntry()));
+  }
 }
 
 void SSLManager::DidFailProvisionalLoadWithError(
@@ -751,7 +739,7 @@ bool SSLManager::DeserializeSecurityInfo(const std::string& state,
 }
 
 // static
-bool SSLManager::GetEVCertNames(const X509Certificate& cert,
+bool SSLManager::GetEVCertNames(const net::X509Certificate& cert,
                                 std::wstring* short_name,
                                 std::wstring* ca_name) {
   DCHECK(short_name || ca_name);
@@ -778,3 +766,4 @@ bool SSLManager::GetEVCertNames(const X509Certificate& cert,
   }
   return true;
 }
+

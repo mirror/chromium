@@ -1,9 +1,0 @@
-// Introduced in DOM Level 3:
-interface NameList {
-  DOMString          getName(in unsigned long index);
-  DOMString          getNamespaceURI(in unsigned long index);
-  readonly attribute unsigned long   length;
-  boolean            contains(in DOMString str);
-  boolean            containsNS(in DOMString namespaceURI, 
-                                in DOMString name);
-};

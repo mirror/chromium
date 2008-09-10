@@ -1,36 +1,10 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_RENDERER_RENDER_VIEW_H__
 #define CHROME_RENDERER_RENDER_VIEW_H__
 
-#include <hash_map>
 #include <string>
 #include <vector>
 
@@ -41,8 +15,12 @@
 #include "base/timer.h"
 #include "base/values.h"
 #include "chrome/common/resource_dispatcher.h"
+#ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
+#endif
 #include "chrome/renderer/automation/dom_automation_controller.h"
 #include "chrome/renderer/dom_ui_bindings.h"
+#include "chrome/renderer/external_host_bindings.h"
 #include "chrome/renderer/external_js_object.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_widget.h"
@@ -116,6 +94,9 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   virtual void OnMessageReceived(const IPC::Message& msg);
 
   // WebViewDelegate
+  virtual void ShowModalHTMLDialog(const GURL& url, int width, int height,
+                                   const std::string& json_arguments,
+                                   std::string* json_retval);
   virtual void RunJavaScriptAlert(WebView* webview,
                                   const std::wstring& message);
   virtual bool RunJavaScriptConfirm(WebView* webview,
@@ -224,7 +205,8 @@ class RenderView : public RenderWidget, public WebViewDelegate,
                                const GURL& frame_url,
                                const std::wstring& selection_text,
                                const std::wstring& misspelled_word,
-                               int edit_flags);
+                               int edit_flags,
+                               const std::string& frame_encoding);
   virtual void StartDragging(WebView* webview,
                              const WebDropData& drag_data);
 
@@ -275,11 +257,6 @@ class RenderView : public RenderWidget, public WebViewDelegate,
 
   // Called when a plugin is crashed.
   void PluginCrashed(const std::wstring& plugin_path);
-
-  // Shows a modal HTML dialog.
-  void ShowModalHTMLDialog(const GURL& url, int width, int height,
-                           const std::string& json_arguments,
-                           std::string* json_retval);
 
   // Called from JavaScript window.external.AddSearchProvider() to add a
   // keyword for a provider described in the given OpenSearch document.
@@ -333,7 +310,7 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // c) function:DidFinishDocumentLoadForFrame. When this function is
   // called, that means we have got whole html page. In here we should
   // finally get right encoding of page.
-  void UpdateEncoding(WebFrame* frame, const std::wstring& encoding_name);
+  void UpdateEncoding(WebFrame* frame, const std::string& encoding_name);
 
   // Captures the thumbnail and text contents for indexing for the given load
   // ID. If the view's load ID is different than the parameter, this call is
@@ -395,7 +372,7 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   void OnCancelDownload(int32 download_id);
   void OnFind(const FindInPageRequest& request);
   void OnAlterTextSize(int size);
-  void OnSetPageEncoding(const std::wstring& encoding_name);
+  void OnSetPageEncoding(const std::string& encoding_name);
   void OnGetAllSavableResourceLinksForCurrentPage(const GURL& page_url);
   void OnGetSerializedHtmlDataForCurrentPageWithLocalLinks(
       const std::vector<std::wstring>& links,
@@ -413,7 +390,8 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   void OnDragTargetDrop(const gfx::Point& client_pt,
                         const gfx::Point& screen_pt);
   void OnAllowDomAutomationBindings(bool allow_binding);
-  void OnAllowDOMUIBindings();
+  void OnAllowBindings(bool enable_dom_ui_bindings,
+                       bool enable_external_host_bindings);
   void OnSetDOMUIProperty(const std::string& name, const std::string& value);
   void OnSetInitialFocus(bool reverse);
   void OnUpdateWebPreferences(const WebPreferences& prefs);
@@ -451,6 +429,14 @@ class RenderView : public RenderWidget, public WebViewDelegate,
 
   // Notification about ui theme changes.
   void OnThemeChanged();
+
+#ifdef CHROME_PERSONALIZATION
+  void OnPersonalizationEvent(std::string event_name, std::string event_args);
+#endif
+
+  // Handles messages posted from automation.
+  void OnMessageFromExternalHost(const std::string& target,
+                                 const std::string& message);
 
   // Switches the frame's CSS media type to "print" and calculate the number of
   // printed pages that are to be expected. |frame| will be used to calculate
@@ -492,25 +478,35 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   std::string GetAltHTMLForTemplate(const DictionaryValue& error_strings,
                                     int template_resource_id) const;
 
+  virtual void TransitionToCommittedForNewPage();
+
   // A helper method used by WasOpenedByUserGesture.
   bool WasOpenedByUserGestureHelper() const;
 
   // Handles resource loads for this view.
   scoped_refptr<ResourceDispatcher> resource_dispatcher_;
 
-  // DOM Automation Controller CppBoundClass
+  // DOM Automation Controller CppBoundClass.
   bool enable_dom_automation_;
   DomAutomationController dom_automation_controller_;
 
-  // Chrome page<->browser messaging CppBoundClass
+  // Chrome page<->browser messaging CppBoundClass.
   bool enable_dom_ui_bindings_;
   DOMUIBindings dom_ui_bindings_;
+
+#ifdef CHROME_PERSONALIZATION
+  RendererPersonalization personalization_;
+#endif
 
   // window.external object for "built-in" JS extensions
   ExternalJSObject external_js_object_;
 
+  // External host exposed through automation controller.
+  bool enable_external_host_bindings_;
+  ExternalHostBindings external_host_bindings_;
+
   // The last gotten main frame's encoding.
-  std::wstring last_encoding_name_;
+  std::string last_encoding_name_;
 
   // The URL we think the user's mouse is hovering over. We use this to
   // determine if we want to send a new one (we do not need to send
@@ -577,7 +573,7 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   ScopedRunnableMethodFactory<RenderView> method_factory_;
 
   // Timer used to delay the updating of nav state (see SyncNavigationState).
-  OneShotTimer nav_state_sync_timer_;
+  base::OneShotTimer<RenderView> nav_state_sync_timer_;
 
   typedef std::vector<WebPluginDelegateProxy*> PluginDelegateList;
   PluginDelegateList plugin_delegates_;

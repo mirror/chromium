@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/safe_browsing/safe_browsing_util.h"
 
@@ -34,6 +9,7 @@
 #include "base/sha2.h"
 #include "base/string_util.h"
 #include "chrome/browser/google_util.h"
+#include "googleurl/src/gurl.h"
 #include "net/base/base64.h"
 #include "net/base/escape.h"
 #include "unicode/locid.h"
@@ -164,16 +140,16 @@ bool VerifyMAC(const std::string& key, const std::string& mac,
   std::string key_copy = key;
   DecodeWebSafe(&key_copy);
   std::string decoded_key;
-  Base64Decode(key_copy, &decoded_key);
+  net::Base64Decode(key_copy, &decoded_key);
 
   std::string mac_copy = mac;
   DecodeWebSafe(&mac_copy);
   std::string decoded_mac;
-  Base64Decode(mac_copy, &decoded_mac);
+  net::Base64Decode(mac_copy, &decoded_mac);
 
-  HMAC hmac(HMAC::SHA1,
-            reinterpret_cast<const unsigned char*>(decoded_key.data()),
-            static_cast<int>(decoded_key.length()));
+  base::HMAC hmac(base::HMAC::SHA1,
+                  reinterpret_cast<const unsigned char*>(decoded_key.data()),
+                  static_cast<int>(decoded_key.length()));
   const std::string data_str(data, data_length);
   unsigned char digest[kSafeBrowsingMacDigestSize];
   if (!hmac.Sign(data_str, digest, kSafeBrowsingMacDigestSize))
@@ -637,3 +613,4 @@ bool SBHostInfo::GetNextEntry(const SBEntry** entry) {
 
   return false;
 }
+

@@ -1,3 +1,0 @@
-undefined-access.js:1: Uncaught TypeError: Cannot read property 'x' of undefined
-(void 0).x
-        ^

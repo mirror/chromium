@@ -1,3 +1,0 @@
-unexpected-primary.js:1: Uncaught SyntaxError: Unexpected token &
-true &&& false
-       ^

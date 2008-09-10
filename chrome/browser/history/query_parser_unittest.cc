@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/history/query_parser.h"
 #include "base/logging.h"
@@ -113,25 +88,43 @@ TEST_F(QueryParserTest, ParseQueryNodesAndMatch) {
     const std::wstring query;
     const std::wstring text;
     const bool matches;
+    const int m1_start;
+    const int m1_end;
+    const int m2_start;
+    const int m2_end;
   } data[] = {
-    { L"blah",                  L"blah",                          true  },
-    { L"blah",                  L"foo",                           false },
-    { L"blah",                  L"blahblah",                      true  },
-    { L"blah",                  L"foo blah",                      true  },
-    { L"foo blah",              L"blah",                          false },
-    { L"foo blah",              L"blahx foobar",                  true  },
-    { L"\"foo blah\"",          L"foo blah",                      true  },
-    { L"\"foo blah\"",          L"foox blahx",                    false },
-    { L"\"foo blah\"",          L"foo blah",                      true  },
-    { L"\"foo blah\"",          L"\"foo blah\"",                  true },
-    { L"foo blah",              L"\"foo bar blah\"",              true },
+    { L"blah",          L"blah",             true,  0, 4, 0, 0 },
+    { L"blah",          L"foo",              false, 0, 0, 0, 0 },
+    { L"blah",          L"blahblah",         true,  0, 4, 0, 0 },
+    { L"blah",          L"foo blah",         true,  4, 8, 0, 0 },
+    { L"foo blah",      L"blah",             false, 0, 0, 0, 0 },
+    { L"foo blah",      L"blahx foobar",     true,  6, 9, 0, 4 },
+    { L"\"foo blah\"",  L"foo blah",         true,  0, 8, 0, 0 },
+    { L"\"foo blah\"",  L"foox blahx",       false, 0, 0, 0, 0 },
+    { L"\"foo blah\"",  L"foo blah",         true,  0, 8, 0, 0 },
+    { L"\"foo blah\"",  L"\"foo blah\"",     true,  1, 9, 0, 0 },
+    { L"foo blah",      L"\"foo bar blah\"", true,  1, 4, 9, 13 },
   };
   for (int i = 0; i < arraysize(data); ++i) {
     std::vector<std::wstring> results;
     QueryParser parser;
     ScopedVector<QueryNode> query_nodes;
     parser.ParseQuery(data[i].query, &query_nodes.get());
+    Snippet::MatchPositions match_positions;
     ASSERT_EQ(data[i].matches,
-              parser.DoesQueryMatch(data[i].text, query_nodes.get()));
+              parser.DoesQueryMatch(data[i].text, query_nodes.get(),
+                                    &match_positions));
+    size_t offset = 0;
+    if (data[i].m1_start != 0 || data[i].m1_end != 0) {
+      ASSERT_TRUE(match_positions.size() >= 1);
+      EXPECT_EQ(data[i].m1_start, match_positions[0].first);
+      EXPECT_EQ(data[i].m1_end, match_positions[0].second);
+      offset++;
+    }
+    if (data[i].m2_start != 0 || data[i].m2_end != 0) {
+      ASSERT_TRUE(match_positions.size() == 1 + offset);
+      EXPECT_EQ(data[i].m2_start, match_positions[offset].first);
+      EXPECT_EQ(data[i].m2_end, match_positions[offset].second);
+    }
   }
 }

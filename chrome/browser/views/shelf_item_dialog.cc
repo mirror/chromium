@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/shelf_item_dialog.h"
 
@@ -242,8 +217,7 @@ class PossibleURLModel : public ChromeViews::TableModel {
 ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
                                  Profile* profile,
                                  bool show_title)
-    : dialog_(NULL),
-      profile_(profile),
+    : profile_(profile),
       expected_title_handle_(0),
       delegate_(delegate) {
   DCHECK(profile_);
@@ -338,10 +312,8 @@ ShelfItemDialog::~ShelfItemDialog() {
 }
 
 void ShelfItemDialog::Show(HWND parent) {
-  DCHECK(!dialog_);
-  dialog_ =
-      ChromeViews::Window::CreateChromeWindow(parent, gfx::Rect(), this, this);
-  dialog_->Show();
+  DCHECK(!window());
+  ChromeViews::Window::CreateChromeWindow(parent, gfx::Rect(), this)->Show();
   if (title_field_) {
     title_field_->SetText(l10n_util::GetString(IDS_ASI_DEFAULT_TITLE));
     title_field_->SelectAll();
@@ -354,8 +326,8 @@ void ShelfItemDialog::Show(HWND parent) {
 }
 
 void ShelfItemDialog::Close() {
-  DCHECK(dialog_);
-  dialog_->Close();
+  DCHECK(window());
+  window()->Close();
 }
 
 std::wstring ShelfItemDialog::GetWindowTitle() const {
@@ -416,7 +388,7 @@ void ShelfItemDialog::ContentsChanged(ChromeViews::TextField* sender,
   // so we reset the expected handle to an impossible value.
   if (sender == title_field_)
     expected_title_handle_ = 0;
-  dialog_->UpdateDialogButtons();
+  GetDialogClientView()->UpdateDialogButtons();
 }
 
 bool ShelfItemDialog::Accept() {
@@ -437,6 +409,10 @@ bool ShelfItemDialog::IsDialogButtonEnabled(DialogButton button) const {
   return true;
 }
 
+ChromeViews::View* ShelfItemDialog::GetContentsView() {
+  return this;
+}
+
 void ShelfItemDialog::PerformModelChange() {
   DCHECK(delegate_);
   GURL url(GetInputURL());
@@ -455,7 +431,7 @@ void ShelfItemDialog::GetPreferredSize(CSize *out) {
 bool ShelfItemDialog::AcceleratorPressed(
     const ChromeViews::Accelerator& accelerator) {
   if (accelerator.GetKeyCode() == VK_ESCAPE) {
-    dialog_->Close();
+    window()->Close();
   } else if (accelerator.GetKeyCode() == VK_RETURN) {
     ChromeViews::FocusManager* fm = ChromeViews::FocusManager::GetFocusManager(
         GetViewContainer()->GetHWND());
@@ -467,8 +443,8 @@ bool ShelfItemDialog::AcceleratorPressed(
       // is invalid, focus is left on the url field.
       if (GetInputURL().is_valid()) {
         PerformModelChange();
-        if (dialog_)
-          dialog_->Close();
+        if (window())
+          window()->Close();
       } else {
         url_field_->SelectAll();
       }
@@ -492,7 +468,7 @@ void ShelfItemDialog::OnSelectionChanged() {
         UTF8ToWide(url_table_model_->GetURL(selection).spec()));
     if (title_field_)
       title_field_->SetText(url_table_model_->GetTitle(selection));
-    dialog_->UpdateDialogButtons();
+    GetDialogClientView()->UpdateDialogButtons();
   }
 }
 
@@ -501,11 +477,12 @@ void ShelfItemDialog::OnDoubleClick() {
   if (selection >= 0 && selection < url_table_model_->RowCount()) {
     OnSelectionChanged();
     PerformModelChange();
-    if (dialog_)
-      dialog_->Close();
+    if (window())
+      window()->Close();
   }
 }
 
 GURL ShelfItemDialog::GetInputURL() const {
   return GURL(URLFixerUpper::FixupURL(url_field_->GetText(), L""));
 }
+

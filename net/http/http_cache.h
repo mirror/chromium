@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // This file declares a HttpTransactionFactory implementation that can be
 // layered on top of another HttpTransactionFactory to add HTTP caching.  The
@@ -36,15 +11,14 @@
 //
 // See HttpTransactionFactory and HttpTransaction for more details.
 
-#ifndef NET_HTTP_HTTP_CACHE_H__
-#define NET_HTTP_HTTP_CACHE_H__
+#ifndef NET_HTTP_HTTP_CACHE_H_
+#define NET_HTTP_HTTP_CACHE_H_
 
-#include <hash_map>
-#include <hash_set>
 #include <list>
 #include <string>
 
 #include "base/basictypes.h"
+#include "base/hash_tables.h"
 #include "base/task.h"
 #include "net/http/http_transaction_factory.h"
 
@@ -55,9 +29,9 @@ class Entry;
 
 namespace net {
 
-class HttpProxyInfo;
 class HttpRequestInfo;
 class HttpResponseInfo;
+class ProxyInfo;
 
 class HttpCache : public HttpTransactionFactory {
  public:
@@ -78,7 +52,7 @@ class HttpCache : public HttpTransactionFactory {
   // disk cache is initialized lazily (by CreateTransaction) in this case. If
   // |cache_size| is zero, a default value will be calculated automatically.
   // If the proxy information is null, then the system settings will be used.
-  HttpCache(const HttpProxyInfo* proxy_info,
+  HttpCache(const ProxyInfo* proxy_info,
             const std::wstring& cache_dir,
             int cache_size);
 
@@ -86,7 +60,7 @@ class HttpCache : public HttpTransactionFactory {
   // (by CreateTransaction) in this case. If |cache_size| is zero, a default
   // value will be calculated automatically. If the proxy information is null,
   // then the system settings will be used.
-  HttpCache(const HttpProxyInfo* proxy_info, int cache_size);
+  HttpCache(const ProxyInfo* proxy_info, int cache_size);
 
   // Initialize the cache from its component parts, which is useful for
   // testing.  The lifetime of the network_layer and disk_cache are managed by
@@ -125,7 +99,7 @@ class HttpCache : public HttpTransactionFactory {
   // Types --------------------------------------------------------------------
 
   class Transaction;
-  friend Transaction;
+  friend class Transaction;
 
   typedef std::list<Transaction*> TransactionList;
 
@@ -141,8 +115,8 @@ class HttpCache : public HttpTransactionFactory {
     ~ActiveEntry();
   };
 
-  typedef stdext::hash_map<std::string, ActiveEntry*> ActiveEntriesMap;
-  typedef stdext::hash_set<ActiveEntry*> ActiveEntriesSet;
+  typedef base::hash_map<std::string, ActiveEntry*> ActiveEntriesMap;
+  typedef std::set<ActiveEntry*> ActiveEntriesSet;
 
 
   // Methods ------------------------------------------------------------------
@@ -189,12 +163,13 @@ class HttpCache : public HttpTransactionFactory {
   bool in_memory_cache_;
   int cache_size_;
 
-  typedef stdext::hash_map<std::string, int> PlaybackCacheMap;
+  typedef base::hash_map<std::string, int> PlaybackCacheMap;
   scoped_ptr<PlaybackCacheMap> playback_cache_map_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(HttpCache);
+  DISALLOW_COPY_AND_ASSIGN(HttpCache);
 };
 
 }  // namespace net
 
-#endif  // NET_HTTP_HTTP_CACHE_H__
+#endif  // NET_HTTP_HTTP_CACHE_H_
+

@@ -90,7 +90,7 @@
 #endif
 
 #if PLATFORM(MAC)
-#define WTF_USE_JAVASCRIPTCORE_BINDINGS 1
+// #define WTF_USE_JAVASCRIPTCORE_BINDINGS 1
 #ifdef __LP64__
 #define WTF_USE_NPOBJECT 0
 #else
@@ -133,4 +133,10 @@ typedef float CGFloat;
 #define ENABLE_FTPDIR 0
 //#endif
 
+#ifndef WEBCORE_NAVIGATOR_VENDOR
+#ifdef GOOGLE_CHROME_BUILD
 #define WEBCORE_NAVIGATOR_VENDOR "Google Inc."
+#else
+#define WEBCORE_NAVIGATOR_VENDOR ""
+#endif // ifdef GOOGLE_CHROME_BUILD
+#endif // ifndef WEBCORE_NAVIGATOR_VENDOR

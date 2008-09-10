@@ -1,36 +1,14 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_PORT_H__
-#define BASE_PORT_H__
+#ifndef BASE_PORT_H_
+#define BASE_PORT_H_
 
-#ifdef MSC_VER
+#include <stdarg.h>
+#include "build/build_config.h"
+
+#ifdef COMPILER_MSVC
 #define GG_LONGLONG(x) x##I64
 #define GG_ULONGLONG(x) x##UI64
 #else
@@ -54,4 +32,30 @@
 #define GG_UINT32_C(x)  (x ## U)
 #define GG_UINT64_C(x)  GG_ULONGLONG(x)
 
-#endif // BASE_PORT_H__
+namespace base {
+
+// It's possible for functions that use a va_list, such as StringPrintf, to
+// invalidate the data in it upon use.  The fix is to make a copy of the
+// structure before using it and use that copy instead.  va_copy is provided
+// for this purpose.  MSVC does not provide va_copy, so define an
+// implementation here.  It is not guaranteed that assignment is a copy, so the
+// StringUtil.VariableArgsFunc unit test tests this capability.
+inline void va_copy(va_list& a, va_list& b) {
+#if defined(COMPILER_GCC)
+  ::va_copy(a, b);
+#elif defined(COMPILER_MSVC)
+  a = b;
+#endif
+}
+
+}  // namespace base
+
+// Define an OS-neutral wrapper for shared library entry points
+#if defined(OS_WIN)
+#define API_CALL __stdcall
+#elif defined(OS_POSIX)
+#define API_CALL 
+#endif
+
+#endif  // BASE_PORT_H_
+

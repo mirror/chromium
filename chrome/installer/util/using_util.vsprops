@@ -5,7 +5,11 @@
 	Name="using_util"
 	>
 	<Tool
-		Name="VCLinkerTool"
-		AdditionalDependencies="shlwapi.lib"
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(IntDir)\..\util_prebuild\"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		AdditionalIncludeDirectories="$(IntDir)\..\util_prebuild\"
 	/>
 </VisualStudioPropertySheet>

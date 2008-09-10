@@ -1,4 +1,0 @@
-Caught stack overflow exception.
-RangeError: Maximum call stack size exceeded
-Caught stack overflow exception from parser.
-RangeError: Maximum call stack size exceeded

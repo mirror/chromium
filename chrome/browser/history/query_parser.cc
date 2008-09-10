@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/history/query_parser.h"
 
@@ -71,7 +46,8 @@ class QueryNodeWord : public QueryNode {
   const std::wstring& word() const { return word_; }
   void set_literal(bool literal) { literal_ = literal; }
 
-  virtual bool HasMatchIn(const std::vector<std::wstring>& words) const;
+  virtual bool HasMatchIn(const std::vector<QueryWord>& words,
+                          Snippet::MatchPositions* match_positions) const;
 
   virtual bool Matches(const std::wstring& word, bool exact) const;
 
@@ -80,10 +56,16 @@ class QueryNodeWord : public QueryNode {
   bool literal_;
 };
 
-bool QueryNodeWord::HasMatchIn(const std::vector<std::wstring>& words) const {
+bool QueryNodeWord::HasMatchIn(const std::vector<QueryWord>& words,
+                               Snippet::MatchPositions* match_positions) const {
   for (size_t i = 0; i < words.size(); ++i) {
-    if (Matches(words[i], false))
+    if (Matches(words[i].word, false)) {
+      int match_start = words[i].position;
+      match_positions->push_back(
+          std::pair<int, int>(match_start,
+                              match_start + static_cast<int>(word_.size())));
       return true;
+    }
   }
   return false;
 }
@@ -128,7 +110,8 @@ class QueryNodeList : public QueryNode {
     NOTREACHED();
     return false;
   }
-  virtual bool HasMatchIn(const std::vector<std::wstring>& words) const {
+  virtual bool HasMatchIn(const std::vector<QueryWord>& words,
+                          Snippet::MatchPositions* match_positions) const {
     NOTREACHED();
     return false;
   }
@@ -167,7 +150,8 @@ class QueryNodePhrase : public QueryNodeList {
   }
 
   virtual bool Matches(const std::wstring& word, bool exact) const;
-  virtual bool HasMatchIn(const std::vector<std::wstring>& words) const;
+  virtual bool HasMatchIn(const std::vector<QueryWord>& words,
+                          Snippet::MatchPositions* match_positions) const;
 };
 
 bool QueryNodePhrase::Matches(const std::wstring& word, bool exact) const {
@@ -175,20 +159,27 @@ bool QueryNodePhrase::Matches(const std::wstring& word, bool exact) const {
   return false;
 }
 
-bool QueryNodePhrase::HasMatchIn(const std::vector<std::wstring>& words) const {
+bool QueryNodePhrase::HasMatchIn(
+    const std::vector<QueryWord>& words,
+    Snippet::MatchPositions* match_positions) const {
   if (words.size() < children_.size())
     return false;
 
   for (size_t i = 0, max = words.size() - children_.size() + 1; i < max; ++i) {
     bool matched_all = true;
     for (size_t j = 0; j < children_.size(); ++j) {
-      if (!children_[j]->Matches(words[i + j], true)) {
+      if (!children_[j]->Matches(words[i + j].word, true)) {
         matched_all = false;
         break;
       }
     }
-    if (matched_all)
+    if (matched_all) {
+      const QueryWord& last_word = words[i + children_.size() - 1];
+      match_positions->push_back(
+          std::pair<int, int>(words[i].position,
+                              last_word.position + last_word.word.length()));
       return true;
+    }
   }
   return false;
 }
@@ -222,20 +213,23 @@ void QueryParser::ParseQuery(const std::wstring& query,
 }
 
 bool QueryParser::DoesQueryMatch(const std::wstring& text,
-                                 const std::vector<QueryNode*>& query_nodes) {
+                                 const std::vector<QueryNode*>& query_nodes,
+                                 Snippet::MatchPositions* match_positions) {
   if (query_nodes.empty())
     return false;
 
-  std::vector<std::wstring> query_words;
-  ExtractWords(l10n_util::ToLower(text), &query_words);
+  std::vector<QueryWord> query_words;
+  ExtractQueryWords(l10n_util::ToLower(text), &query_words);
 
   if (query_words.empty())
     return false;
 
+  Snippet::MatchPositions matches;
   for (size_t i = 0; i < query_nodes.size(); ++i) {
-    if (!query_nodes[i]->HasMatchIn(query_words))
+    if (!query_nodes[i]->HasMatchIn(query_words, &matches))
       return false;
   }
+  match_positions->swap(matches);
   return true;
 }
 
@@ -282,8 +276,8 @@ bool QueryParser::ParseQueryImpl(const std::wstring& query,
   return true;
 }
 
-void QueryParser::ExtractWords(const std::wstring& text,
-                               std::vector<std::wstring>* words) {
+void QueryParser::ExtractQueryWords(const std::wstring& text,
+                                    std::vector<QueryWord>* words) {
   WordIterator iter(text, WordIterator::BREAK_WORD);
   // TODO(evanm): support a locale here
   if (!iter.Init())
@@ -295,8 +289,11 @@ void QueryParser::ExtractWords(const std::wstring& text,
     // or whitespace.
     if (iter.IsWord()) {
       std::wstring word = iter.GetWord();
-      if (!word.empty())
-        words->push_back(word);
+      if (!word.empty()) {
+        words->push_back(QueryWord());
+        words->back().word = word;
+        words->back().position = iter.prev();
+      }
     }
   }
 }

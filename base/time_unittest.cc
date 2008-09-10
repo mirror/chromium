@@ -1,36 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#include <process.h>
 #include <time.h>
 
+#include "base/platform_thread.h"
 #include "base/time.h"
+#include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // Test conversions to/from time_t and exploding/unexploding.
@@ -38,7 +14,11 @@ TEST(Time, TimeT) {
   // C library time and exploded time.
   time_t now_t_1 = time(NULL);
   struct tm tms;
+#if defined(OS_WIN)
   localtime_s(&tms, &now_t_1);
+#elif defined(OS_POSIX)
+  localtime_r(&now_t_1, &tms);
+#endif
 
   // Convert to ours.
   Time our_time_1 = Time::FromTimeT(now_t_1);
@@ -60,14 +40,19 @@ TEST(Time, TimeT) {
   time_t now_t_2 = our_time_2.ToTimeT();
   EXPECT_EQ(now_t_1, now_t_2);
 
+  EXPECT_EQ(10, Time().FromTimeT(10).ToTimeT());
+  EXPECT_EQ(10.0, Time().FromTimeT(10).ToDoubleT());
+
   // Conversions of 0 should stay 0.
   EXPECT_EQ(0, Time().ToTimeT());
   EXPECT_EQ(0, Time::FromTimeT(0).ToInternalValue());
 }
 
 TEST(Time, ZeroIsSymmetric) {
-  Time zeroTime(Time::FromTimeT(0));
-  EXPECT_EQ(0, zeroTime.ToTimeT());
+  Time zero_time(Time::FromTimeT(0));
+  EXPECT_EQ(0, zero_time.ToTimeT());
+
+  EXPECT_EQ(0.0, zero_time.ToDoubleT());
 }
 
 TEST(Time, LocalExplode) {
@@ -91,9 +76,18 @@ TEST(Time, UTCExplode) {
   EXPECT_TRUE((a - b) < TimeDelta::FromMilliseconds(1));
 }
 
+TEST(Time, LocalMidnight) {
+  Time::Exploded exploded;
+  Time::Now().LocalMidnight().LocalExplode(&exploded);
+  EXPECT_EQ(0, exploded.hour);
+  EXPECT_EQ(0, exploded.minute);
+  EXPECT_EQ(0, exploded.second);
+  EXPECT_EQ(0, exploded.millisecond);
+}
+
 TEST(TimeTicks, Deltas) {
   TimeTicks ticks_start = TimeTicks::Now();
-  Sleep(10);
+  PlatformThread::Sleep(10);
   TimeTicks ticks_stop = TimeTicks::Now();
   TimeDelta delta = ticks_stop - ticks_start;
   EXPECT_GE(delta.InMilliseconds(), 10);
@@ -101,95 +95,27 @@ TEST(TimeTicks, Deltas) {
   EXPECT_EQ(delta.InSeconds(), 0);
 }
 
-namespace {
-
-class MockTimeTicks : public TimeTicks {
- public:
-  static int Ticker() {
-    return static_cast<int>(InterlockedIncrement(&ticker_));
-  }
-
-  static void InstallTicker() {
-    old_tick_function_ = tick_function_;
-    tick_function_ = reinterpret_cast<TickFunction>(&Ticker);
-    ticker_ = -5;
-  }
-
-  static void UninstallTicker() {
-    tick_function_ = old_tick_function_;
-  }
-
- private:
-  static volatile LONG ticker_;
-  static TickFunction old_tick_function_;
-};
-
-volatile LONG MockTimeTicks::ticker_;
-MockTimeTicks::TickFunction MockTimeTicks::old_tick_function_;
-
-HANDLE g_rollover_test_start;
-
-unsigned __stdcall RolloverTestThreadMain(void* param) {
-  int64 counter = reinterpret_cast<int64>(param);
-  DWORD rv = WaitForSingleObject(g_rollover_test_start, INFINITE);
-  EXPECT_EQ(rv, WAIT_OBJECT_0);
-
-  TimeTicks last = TimeTicks::Now();
-  for (int index = 0; index < counter; index++) {
-    TimeTicks now = TimeTicks::Now();
-    int64 milliseconds = (now - last).InMilliseconds();
-    EXPECT_GT(milliseconds, 0);
-    EXPECT_LT(milliseconds, 250);
-    last = now;
-  }
-  return 0;
+TEST(TimeTicks, UnreliableHighResNow) {
+  TimeTicks ticks_start = TimeTicks::UnreliableHighResNow();
+  PlatformThread::Sleep(10);
+  TimeTicks ticks_stop = TimeTicks::UnreliableHighResNow();
+  TimeDelta delta = ticks_stop - ticks_start;
+  EXPECT_GE(delta.InMilliseconds(), 10);
 }
 
-} // namespace
-
-TEST(TimeTicks, Rollover) {
-  // The internal counter rolls over at ~49days.  We'll use a mock
-  // timer to test this case.
-  // Basic test algorithm:
-  //   1) Set clock to rollover - N
-  //   2) Create N threads
-  //   3) Start the threads
-  //   4) Each thread loops through TimeTicks() N times
-  //   5) Each thread verifies integrity of result.
-
-  const int kThreads = 8;
-  // Use int64 so we can cast into a void* without a compiler warning.
-  const int64 kChecks = 10;
-
-  // It takes a lot of iterations to reproduce the bug!
-  // (See bug 1081395)
-  for (int loop = 0; loop < 4096; loop++) {
-    // Setup
-    MockTimeTicks::InstallTicker();
-    g_rollover_test_start = CreateEvent(0, TRUE, FALSE, 0);
-    HANDLE threads[kThreads];
-
-    for (int index = 0; index < kThreads; index++) {
-      void* argument = reinterpret_cast<void*>(kChecks);
-      unsigned thread_id;
-      threads[index] = reinterpret_cast<HANDLE>(
-        _beginthreadex(NULL, 0, RolloverTestThreadMain, argument, 0,
-          &thread_id));
-      EXPECT_NE((HANDLE)NULL, threads[index]);
-    }
-
-    // Start!
-    SetEvent(g_rollover_test_start);
-
-    // Wait for threads to finish
-    for (int index = 0; index < kThreads; index++) {
-      DWORD rv = WaitForSingleObject(threads[index], INFINITE);
-      EXPECT_EQ(rv, WAIT_OBJECT_0);
-    }
-
-    CloseHandle(g_rollover_test_start);
-
-    // Teardown
-    MockTimeTicks::UninstallTicker();
-  }
+TEST(TimeDelta, FromAndIn) {
+  EXPECT_TRUE(TimeDelta::FromDays(2) == TimeDelta::FromHours(48));
+  EXPECT_TRUE(TimeDelta::FromHours(3) == TimeDelta::FromMinutes(180));
+  EXPECT_TRUE(TimeDelta::FromMinutes(2) == TimeDelta::FromSeconds(120));
+  EXPECT_TRUE(TimeDelta::FromSeconds(2) == TimeDelta::FromMilliseconds(2000));
+  EXPECT_TRUE(TimeDelta::FromMilliseconds(2) ==
+              TimeDelta::FromMicroseconds(2000));
+  EXPECT_EQ(13, TimeDelta::FromDays(13).InDays());
+  EXPECT_EQ(13, TimeDelta::FromHours(13).InHours());
+  EXPECT_EQ(13, TimeDelta::FromMinutes(13).InMinutes());
+  EXPECT_EQ(13, TimeDelta::FromSeconds(13).InSeconds());
+  EXPECT_EQ(13.0, TimeDelta::FromSeconds(13).InSecondsF());
+  EXPECT_EQ(13, TimeDelta::FromMilliseconds(13).InMilliseconds());
+  EXPECT_EQ(13.0, TimeDelta::FromMilliseconds(13).InMillisecondsF());
+  EXPECT_EQ(13, TimeDelta::FromMicroseconds(13).InMicroseconds());
 }

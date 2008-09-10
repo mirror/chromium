@@ -1,3 +1,0 @@
-property-store-megamorphic.js:3: Uncaught TypeError: Cannot set property 'foo' of null
-function set_foo(obj) { obj.foo = 4; }
-                                ^

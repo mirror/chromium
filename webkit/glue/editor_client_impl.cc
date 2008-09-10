@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // The Mac interface forwards most of these commands to the application layer,
 // and I'm not really sure what to do about most of them.
@@ -42,7 +17,6 @@
 #include "KeyboardEvent.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformString.h"
-#include "WebView.h"
 #pragma warning(pop)
 
 #undef LOG
@@ -51,6 +25,7 @@
 #include "webkit/glue/editor_client_impl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webkit_glue.h"
+#include "webkit/glue/webview.h"
 #include "webkit/glue/webview_impl.h"
 
 // The notImplemented() from NotImplemented.h is now being dragged in via
@@ -422,6 +397,7 @@ struct KeyPressEntry {
 };
 
 static const KeyDownEntry keyDownEntries[] = {
+#if defined(OS_WIN)
   { VK_LEFT,   0,                  "MoveLeft"                                    },
   { VK_LEFT,   ShiftKey,           "MoveLeftAndModifySelection"                  },
   { VK_LEFT,   CtrlKey,            "MoveWordLeft"                                },
@@ -453,11 +429,13 @@ static const KeyDownEntry keyDownEntries[] = {
   { VK_DELETE, 0,                  "DeleteForward"                               },
   { VK_BACK,   CtrlKey,            "DeleteWordBackward"                          },
   { VK_DELETE, CtrlKey,            "DeleteWordForward"                           },
+#endif
 	   
   { 'B',       CtrlKey,            "ToggleBold"                                  },
   { 'I',       CtrlKey,            "ToggleItalic"                                },
   { 'U',       CtrlKey,            "ToggleUnderline"                             },
 
+#if defined(OS_WIN)
   { VK_ESCAPE, 0,                  "Cancel"                                      },
   { VK_OEM_PERIOD, CtrlKey,        "Cancel"                                      },
   { VK_TAB,    0,                  "InsertTab"                                   },
@@ -468,13 +446,14 @@ static const KeyDownEntry keyDownEntries[] = {
   { VK_RETURN, AltKey | ShiftKey,  "InsertNewline"                               },
   { VK_RETURN, ShiftKey,           "InsertLineBreak"                             },	
 
-  { 'C',       CtrlKey,            "Copy"                                        },
   { VK_INSERT, CtrlKey,            "Copy"                                        },	
-  { 'V',       CtrlKey,            "Paste"                                       },
   { VK_INSERT, ShiftKey,           "Paste"                                       },	
+  { VK_DELETE, ShiftKey,           "Cut"                                         },	
+#endif
+  { 'C',       CtrlKey,            "Copy"                                        },
+  { 'V',       CtrlKey,            "Paste"                                       },
   { 'V',       CtrlKey | ShiftKey, "PasteAndMatchStyle"                          },
   { 'X',       CtrlKey,            "Cut"                                         },
-  { VK_DELETE, ShiftKey,           "Cut"                                         },	
   { 'A',       CtrlKey,            "SelectAll"                                   },
   { 'Z',       CtrlKey,            "Undo"                                        },
   { 'Z',       CtrlKey | ShiftKey, "Redo"                                        },
@@ -504,13 +483,13 @@ const char* EditorClientImpl::interpretKeyEvent(
     keyDownCommandsMap = new HashMap<int, const char*>;
     keyPressCommandsMap = new HashMap<int, const char*>;
 
-    for (unsigned i = 0; i < _countof(keyDownEntries); i++) {
+    for (unsigned i = 0; i < arraysize(keyDownEntries); i++) {
       keyDownCommandsMap->set(
         keyDownEntries[i].modifiers << 16 | keyDownEntries[i].virtualKey,
         keyDownEntries[i].name);
     }
 
-    for (unsigned i = 0; i < _countof(keyPressEntries); i++) {
+    for (unsigned i = 0; i < arraysize(keyPressEntries); i++) {
       keyPressCommandsMap->set(
         keyPressEntries[i].modifiers << 16 | keyPressEntries[i].charCode, 
         keyPressEntries[i].name);
@@ -537,9 +516,11 @@ const char* EditorClientImpl::interpretKeyEvent(
 bool EditorClientImpl::handleEditingKeyboardEvent(
   WebCore::KeyboardEvent* evt) {
   const WebCore::PlatformKeyboardEvent* keyEvent = evt->keyEvent();
+#if defined(OS_WIN)
   // do not treat this as text input if it's a system key event
   if (!keyEvent || keyEvent->isSystemKey())
       return false;
+#endif
 
   WebCore::Frame* frame = evt->target()->toNode()->document()->frame();
   if (!frame)
@@ -628,6 +609,23 @@ void EditorClientImpl::textDidChangeInTextArea(WebCore::Element*) {
   notImplemented();
 }
 
+#if defined(OS_MACOSX)
+// TODO(pinkerton): implement these when we get to copy/paste
+NSData* EditorClientImpl::dataForArchivedSelection(WebCore::Frame*) {
+  notImplemented();
+}
+
+NSString* EditorClientImpl::userVisibleString(NSURL*) {
+  notImplemented();
+}
+
+#ifdef BUILDING_ON_TIGER
+NSArray* EditorClientImpl::pasteboardTypesForSelection(WebCore::Frame*) {
+  notImplemented();
+}
+#endif
+#endif
+
 void EditorClientImpl::ignoreWordInSpellDocument(const WebCore::String&) {
   notImplemented();
 }
@@ -645,7 +643,8 @@ void EditorClientImpl::checkSpellingOfString(const UChar* str, int length,
   int spell_length = 0;
   WebViewDelegate* d = web_view_->delegate();
   if (web_view_->FocusedFrameNeedsSpellchecking() && d) {
-    std::wstring word(str, length);
+    std::wstring word = 
+        webkit_glue::StringToStdWString(WebCore::String(str, length));
     d->SpellCheck(word, spell_location, spell_length);
   } else {
     spell_location = 0;
@@ -706,9 +705,7 @@ std::wstring EditorClientImpl::DescribeOrError(int number,
   if (ec)
     return L"ERROR";
 
-  wchar_t buffer[128];
-  _itow_s(number, buffer, arraysize(buffer), 10);
-  return std::wstring(buffer);
+  return IntToWString(number);
 }
 
 std::wstring EditorClientImpl::DescribeOrError(WebCore::Node* node, 
@@ -784,3 +781,4 @@ std::wstring EditorClientImpl::Describe(WebCore::CSSStyleDeclaration* style) {
   // an example.  But because none of them use it, it's not yet important.
   return std::wstring();
 }
+

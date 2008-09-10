@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/autocomplete/autocomplete_edit.h"
 
@@ -34,9 +9,11 @@
 #include "base/base_drag_source.h"
 #include "base/clipboard_util.h"
 #include "base/gfx/skia_utils.h"
+#include "base/iat_patch.h"
 #include "base/ref_counted.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/browser/autocomplete/autocomplete_popup.h"
 #include "chrome/browser/autocomplete/edit_drop_target.h"
 #include "chrome/browser/autocomplete/keyword_provider.h"
 #include "chrome/browser/browser_process.h"
@@ -148,7 +125,7 @@ AutocompleteEdit::AutocompleteEdit(const ChromeFont& font,
                                    bool popup_window_mode)
     : controller_(controller),
       model_(model),
-      popup_(new AutocompletePopup(font, this, profile)),
+      popup_(new AutocompletePopupModel(font, this, profile)),
       popup_window_mode_(popup_window_mode),
       has_focus_(false),
       user_input_in_progress_(false),
@@ -221,8 +198,9 @@ AutocompleteEdit::AutocompleteEdit(const ChromeFont& font,
                                      // approximate.
   font_x_height_ = static_cast<int>((static_cast<float>(font_ascent_ -
       tm.tmInternalLeading) * kXHeightRatio) + 0.5);
-  const int kTextBaseline = 18;  // The distance from the top of the field to
-                                 // the desired baseline of the rendered text.
+  // The distance from the top of the field to the desired baseline of the
+  // rendered text.
+  const int kTextBaseline = popup_window_mode_ ? 15 : 18;
   font_y_adjustment_ = kTextBaseline - font_ascent_;
   font_descent_ = tm.tmDescent;
 
@@ -477,7 +455,7 @@ void AutocompleteEdit::AcceptInput(WindowOpenDisposition disposition,
   }
 
   OpenURL(url, disposition, transition, alternate_nav_url,
-          AutocompletePopup::kNoMatch,
+          AutocompletePopupModel::kNoMatch,
           is_keyword_hint_ ? std::wstring() : keyword_);
 }
 
@@ -501,6 +479,14 @@ void AutocompleteEdit::OpenURL(const std::wstring& url,
 
 void AutocompleteEdit::ClosePopup() {
   popup_->StopAutocomplete();
+}
+
+bool AutocompleteEdit::query_in_progress() const {
+  return popup_->query_in_progress();
+}
+
+const AutocompleteResult* AutocompleteEdit::latest_result() const {
+  return popup_->latest_result();
 }
 
 IAccessible* AutocompleteEdit::GetIAccessible() {
@@ -2153,7 +2139,7 @@ void AutocompleteEdit::PasteAndGo() {
   // enough of an edge case that we ignore this possibility.
   RevertAll();
   OpenURL(paste_and_go_url_, CURRENT_TAB, paste_and_go_transition_,
-          paste_and_go_alternate_nav_url_, AutocompletePopup::kNoMatch,
+          paste_and_go_alternate_nav_url_, AutocompletePopupModel::kNoMatch,
           std::wstring());
 }
 
@@ -2171,7 +2157,7 @@ void AutocompleteEdit::SendOpenNotification(size_t selected_line,
   // open).
   if (popup_->is_open()) {
     scoped_ptr<AutocompleteLog> log(popup_->GetAutocompleteLog());
-    if (selected_line != AutocompletePopup::kNoMatch)
+    if (selected_line != AutocompletePopupModel::kNoMatch)
       log->selected_index = selected_line;
     else if (!has_temporary_text_)
       log->inline_autocompleted_length = inline_autocomplete_text_.length();
@@ -2331,3 +2317,4 @@ void AutocompleteEdit::RepaintDropHighlight(int position) {
     InvalidateRect(&highlight_bounds, false);
   }
 }
+

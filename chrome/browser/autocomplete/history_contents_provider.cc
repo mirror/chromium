@@ -1,34 +1,10 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/autocomplete/history_contents_provider.h"
 
+#include "base/histogram.h"
 #include "base/string_util.h"
 #include "chrome/browser/history/query_parser.h"
 #include "chrome/browser/profile.h"
@@ -67,9 +43,9 @@ void HistoryContentsProvider::Start(const AutocompleteInput& input,
   matches_.clear();
 
   if (input.text().empty() || (input.type() == AutocompleteInput::INVALID) ||
-      // The history service must exist.
-      (!history_service_ &&
-       (!profile_ || !profile_->GetHistoryService(Profile::EXPLICIT_ACCESS)))) {
+      // The history service or bookmark bar model must exist.
+      !(profile_->GetHistoryService(Profile::EXPLICIT_ACCESS) ||
+        profile_->GetBookmarkBarModel())) {
     Stop();
     return;
   }
@@ -100,16 +76,32 @@ void HistoryContentsProvider::Start(const AutocompleteInput& input,
     ConvertResults();
     return;
   } else if (!done_) {
-    // We're still running the previous query.  If we're allowed to keep running
-    // it, do so, and when it finishes, its results will get marked up for this
-    // new input.  In synchronous_only mode, just cancel.
-    if (synchronous_only)
-      Stop();
+    // We're still running the previous query on the HistoryService.  If we're
+    // allowed to keep running it, do so, and when it finishes, its results will
+    // get marked up for this new input.  In synchronous_only mode, cancel the
+    // history query.
+    if (synchronous_only) {
+      done_ = true;
+      request_consumer_.CancelAllRequests();
+    }
+    ConvertResults();
     return;
   }
 
+  if (results_.size() != 0) {
+    // Clear the results. We swap in an empty one as the easy way to clear it.
+    history::QueryResults empty_results;
+    results_.Swap(&empty_results);
+  }
+
+  // Querying bookmarks is synchronous, so we always do it.
+  QueryBookmarks(input);
+
+  // Convert the bookmark results.
+  ConvertResults();
+
   if (!synchronous_only) {
-    HistoryService* history = history_service_ ? history_service_ :
+    HistoryService* history =
         profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
     if (history) {
       done_ = false;
@@ -132,17 +124,14 @@ void HistoryContentsProvider::Stop() {
   history::QueryResults empty_results;
   results_.Swap(&empty_results);
   have_results_ = false;
-
-  db_match_count_ = 0;
 }
 
 void HistoryContentsProvider::QueryComplete(HistoryService::Handle handle,
                                             history::QueryResults* results) {
-  results_.Swap(results);
+  results_.AppendResultsBySwapping(results, true);
   have_results_ = true;
   ConvertResults();
 
-  db_match_count_ = static_cast<int>(results_.size());
   done_ = true;
   if (listener_)
     listener_->OnProviderUpdate(!matches_.empty());
@@ -201,7 +190,9 @@ AutocompleteMatch HistoryContentsProvider::ResultToMatch(
   match.contents_class.push_back(
       ACMatchClassification(0, ACMatchClassification::URL));
   match.description = result.title();
-  match.starred = result.starred();
+  match.starred =
+      (profile_->GetBookmarkBarModel() &&
+       profile_->GetBookmarkBarModel()->IsBookmarked(result.url()));
 
   ClassifyDescription(result, &match);
   return match;
@@ -235,11 +226,14 @@ void HistoryContentsProvider::ClassifyDescription(
 int HistoryContentsProvider::CalculateRelevance(
     const history::URLResult& result) {
   bool in_title = !!result.title_match_positions().size();
+  bool is_starred =
+      (profile_->GetBookmarkBarModel() &&
+       profile_->GetBookmarkBarModel()->IsBookmarked(result.url()));
 
   switch (input_type_) {
     case AutocompleteInput::UNKNOWN:
     case AutocompleteInput::REQUESTED_URL:
-      if (result.starred()) {
+      if (is_starred) {
         return in_title ? 1000 + star_title_count_++ :
                           550 + star_contents_count_++;
       } else {
@@ -249,7 +243,7 @@ int HistoryContentsProvider::CalculateRelevance(
 
     case AutocompleteInput::QUERY:
     case AutocompleteInput::FORCED_QUERY:
-      if (result.starred()) {
+      if (is_starred) {
         return in_title ? 1200 + star_title_count_++ :
                           750 + star_contents_count_++;
       } else {
@@ -261,4 +255,29 @@ int HistoryContentsProvider::CalculateRelevance(
       NOTREACHED();
       return 0;
   }
+}
+
+void HistoryContentsProvider::QueryBookmarks(const AutocompleteInput& input) {
+  BookmarkBarModel* bookmark_model = profile_->GetBookmarkBarModel();
+  if (!bookmark_model)
+    return;
+
+  DCHECK(results_.size() == 0);  // When we get here the results should be
+                                 // empty.
+
+  TimeTicks start_time = TimeTicks::Now();
+  std::vector<BookmarkBarModel::TitleMatch> matches;
+  bookmark_model->GetBookmarksMatchingText(input.text(), kMaxMatchCount,
+                                           &matches);
+  for (size_t i = 0; i < matches.size(); ++i)
+    AddBookmarkTitleMatchToResults(matches[i]);
+  UMA_HISTOGRAM_TIMES(L"Omnibox.QueryBookmarksTime",
+                      TimeTicks::Now() - start_time);
+}
+
+void HistoryContentsProvider::AddBookmarkTitleMatchToResults(
+    const BookmarkBarModel::TitleMatch& match) {
+  history::URLResult url_result(match.node->GetURL(), match.match_positions);
+  url_result.set_title(match.node->GetTitle());
+  results_.AppendURLBySwapping(&url_result);
 }

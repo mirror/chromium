@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 
@@ -41,6 +16,12 @@
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_file_job.h"
 #include "net/url_request/url_request_job.h"
+#ifdef CHROME_PERSONALIZATION
+// TODO(timsteele): Remove all CHROME_PERSONALIZATION code in this file.
+// It is only temporarily needed to configure some personalization data sources
+// that will go away soon.
+#include "chrome/personalization/personalization.h"
+#endif
 
 // The URL scheme used for internal chrome resources.
 // This URL scheme is never needed by code external to this module.
@@ -114,13 +95,24 @@ void RegisterURLRequestChromeJob() {
 
   URLRequest::RegisterProtocolFactory(kChromeURLScheme,
                                       &ChromeURLDataManager::Factory);
+#ifdef CHROME_PERSONALIZATION
+  url_util::AddStandardScheme(kPersonalizationScheme);
+  URLRequest::RegisterProtocolFactory(kPersonalizationScheme,
+                                      &ChromeURLDataManager::Factory); 
+#endif
 }
 
 // static
 void ChromeURLDataManager::URLToRequest(const GURL& url,
                                         std::string* source_name,
                                         std::string* path) {
+#ifdef CHROME_PERSONALIZATION
+  DCHECK(url.SchemeIs(kChromeURLScheme) ||
+         url.SchemeIs(kPersonalizationScheme));
+#else
   DCHECK(url.SchemeIs(kChromeURLScheme));
+#endif
+
   if (!url.is_valid()) {
     NOTREACHED();
     return;
@@ -334,3 +326,4 @@ URLRequestChromeFileJob::URLRequestChromeFileJob(URLRequest* request,
 }
 
 URLRequestChromeFileJob::~URLRequestChromeFileJob() { }
+

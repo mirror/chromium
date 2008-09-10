@@ -1,4 +1,0 @@
-This directory comes from http://www.scons.org/
-This is the "scons-local" version, meaning that instead of installing into
-the libs directory of your python installation, it can live in a standalone
-location and used more easily in automated checkouts.

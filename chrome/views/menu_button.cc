@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <atlbase.h>
 #include <atlapp.h>
@@ -33,6 +8,7 @@
 #include "chrome/views/menu_button.h"
 
 #include "chrome/app/theme/theme_resources.h"
+#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
@@ -70,7 +46,7 @@ MenuButton::MenuButton(const std::wstring& text,
                        bool show_menu_marker)
     : TextButton(text),
       menu_visible_(false),
-      menu_closed_time_(Time::Now()),
+      menu_closed_time_(),
       menu_delegate_(menu_delegate),
       show_menu_marker_(show_menu_marker) {
   if (kMenuMarker == NULL) {
@@ -206,7 +182,7 @@ bool MenuButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
   if (GetState() != BS_DISABLED) {
     // If we're draggable (GetDragOperations returns a non-zero value), then
     // don't pop on press, instead wait for release.
-    if (e.IsOnlyLeftMouseButton() && HitTest(e.GetLocation()) &&
+    if (e.IsOnlyLeftMouseButton() && HitTest(WTL::CPoint(e.GetX(), e.GetY())) &&
         GetDragOperations(e.GetX(), e.GetY()) == DragDropTypes::DRAG_NONE) {
       TimeDelta delta = Time::Now() - menu_closed_time_;
       int64 delta_in_milliseconds = delta.InMilliseconds();
@@ -222,7 +198,7 @@ void MenuButton::OnMouseReleased(const ChromeViews::MouseEvent& e,
                                  bool canceled) {
   if (GetDragOperations(e.GetX(), e.GetY()) != DragDropTypes::DRAG_NONE &&
       GetState() != BS_DISABLED && !canceled && !InDrag() &&
-      e.IsOnlyLeftMouseButton() && HitTest(e.GetLocation())) {
+      e.IsOnlyLeftMouseButton() && HitTest(WTL::CPoint(e.GetX(), e.GetY()))) {
     Activate();
   } else {
     TextButton::OnMouseReleased(e, canceled);
@@ -231,7 +207,7 @@ void MenuButton::OnMouseReleased(const ChromeViews::MouseEvent& e,
 
 // When the space bar or the enter key is pressed we need to show the menu.
 bool MenuButton::OnKeyReleased(const KeyEvent& e) {
-  if ((e.GetCharacter() == L' ') || (e.GetCharacter() == L'\n')) {
+  if ((e.GetCharacter() == VK_SPACE) || (e.GetCharacter() == VK_RETURN)) {
     return Activate();
   }
   return true;
@@ -278,3 +254,4 @@ void MenuButton::OnMouseExited(const MouseEvent& event) {
 }
 
 }  // namespace ChromeViews
+

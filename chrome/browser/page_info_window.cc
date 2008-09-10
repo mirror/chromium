@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/page_info_window.h"
 
@@ -33,6 +8,7 @@
 #pragma comment(lib, "cryptui.lib")
 
 #include "base/string_util.h"
+#include "base/time_format.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_process.h"
@@ -46,7 +22,6 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/common/time_format.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/grid_layout.h"
@@ -118,7 +93,8 @@ class SecurityTabView : public ChromeViews::View {
 
   // Returns a name that can be used to represent the issuer.  It tries in this
   // order CN, O and OU and returns the first non-empty one found.
-  static std::string GetIssuerName(const X509Certificate::Principal& issuer);
+  static std::string GetIssuerName(
+      const net::X509Certificate::Principal& issuer);
 
   // Callback from history service with number of visits to url.
   void OnGotVisitCountToHost(HistoryService::Handle handle,
@@ -253,28 +229,28 @@ SecurityTabView::SecurityTabView(Profile* profile,
   std::wstring identity_title;
   std::wstring identity_msg;
   std::wstring connection_msg;
-  scoped_refptr<X509Certificate> cert;
-  int cert_id = navigation_entry->GetSSLCertID();
-  int cert_status = navigation_entry->GetSSLCertStatus();
+  scoped_refptr<net::X509Certificate> cert;
+  const NavigationEntry::SSLStatus& ssl = navigation_entry->ssl();
 
   // Identity section.
-  std::wstring subject_name(UTF8ToWide(navigation_entry->GetURL().host()));
+  std::wstring subject_name(UTF8ToWide(navigation_entry->url().host()));
   bool empty_subject_name = false;
   if (subject_name.empty()) {
     subject_name.assign(
         l10n_util::GetString(IDS_PAGE_INFO_SECURITY_TAB_UNKNOWN_PARTY));
     empty_subject_name = true;
   }
-  if (navigation_entry->GetPageType() == NavigationEntry::NORMAL_PAGE &&
-      cert_id && CertStore::GetSharedInstance()->RetrieveCert(cert_id, &cert) &&
-      !net::IsCertStatusError(cert_status)) {
+  if (navigation_entry->page_type() == NavigationEntry::NORMAL_PAGE &&
+      ssl.cert_id() &&
+      CertStore::GetSharedInstance()->RetrieveCert(ssl.cert_id(), &cert) &&
+      !net::IsCertStatusError(ssl.cert_status())) {
     // OK HTTPS page.
-    if ((cert_status & net::CERT_STATUS_IS_EV) != 0) {
+    if ((ssl.cert_status() & net::CERT_STATUS_IS_EV) != 0) {
       DCHECK(!cert->subject().organization_names.empty());
       identity_title =
           l10n_util::GetStringF(IDS_PAGE_INFO_EV_IDENTITY_TITLE,
               UTF8ToWide(cert->subject().organization_names[0]),
-              UTF8ToWide(navigation_entry->GetURL().host()));
+              UTF8ToWide(navigation_entry->url().host()));
       // An EV Cert is required to have a city (localityName) and country but
       // state is "if any".
       DCHECK(!cert->subject().locality_name.empty());
@@ -325,14 +301,13 @@ SecurityTabView::SecurityTabView(Profile* profile,
   // We consider anything less than 80 bits encryption to be weak encryption.
   // TODO(wtc): Bug 1198735: report mixed/unsafe content for unencrypted and
   // weakly encrypted connections.
-  int security_bits = navigation_entry->GetSSLSecurityBits();
-  if (security_bits <= 0) {
+  if (ssl.security_bits() <= 0) {
     connection_ok = false;
     connection_msg.assign(
         l10n_util::GetStringF(
             IDS_PAGE_INFO_SECURITY_TAB_NOT_ENCRYPTED_CONNECTION_TEXT,
             subject_name));
-  } else if (security_bits < 80) {
+  } else if (ssl.security_bits() < 80) {
     connection_ok = false;
     connection_msg.assign(
         l10n_util::GetStringF(
@@ -343,8 +318,8 @@ SecurityTabView::SecurityTabView(Profile* profile,
         l10n_util::GetStringF(
             IDS_PAGE_INFO_SECURITY_TAB_ENCRYPTED_CONNECTION_TEXT,
             subject_name,
-            IntToWString(security_bits)));
-    if (navigation_entry->HasMixedContent()) {
+            IntToWString(ssl.security_bits())));
+    if (ssl.has_mixed_content()) {
       connection_ok = false;
       connection_msg.assign(
           l10n_util::GetStringF(
@@ -352,7 +327,7 @@ SecurityTabView::SecurityTabView(Profile* profile,
               connection_msg,
               l10n_util::GetString(
                   IDS_PAGE_INFO_SECURITY_TAB_ENCRYPTED_MIXED_CONTENT_WARNING)));
-    } else if (navigation_entry->HasUnsafeContent()) {
+    } else if (ssl.has_unsafe_content()) {
       connection_ok = false;
       connection_msg.assign(
           l10n_util::GetStringF(
@@ -374,7 +349,7 @@ SecurityTabView::SecurityTabView(Profile* profile,
       Profile::EXPLICIT_ACCESS);
   if (history) {
     history->GetVisitCountToHost(
-        navigation_entry->GetURL(),
+        navigation_entry->url(),
         &request_consumer_,
         NewCallback(this, &SecurityTabView::OnGotVisitCountToHost));
   }
@@ -408,7 +383,7 @@ void SecurityTabView::Layout() {
 
 // static
 std::string SecurityTabView::GetIssuerName(
-    const X509Certificate::Principal& issuer) {
+    const net::X509Certificate::Principal& issuer) {
   if (!issuer.common_name.empty())
     return issuer.common_name;
   if (!issuer.organization_names.empty())
@@ -445,7 +420,7 @@ void SecurityTabView::OnGotVisitCountToHost(HistoryService::Handle handle,
         l10n_util::GetString(IDS_PAGE_INFO_SECURITY_TAB_PERSONAL_HISTORY_TITLE),
         true, std::wstring(),
         l10n_util::GetStringF(IDS_PAGE_INFO_SECURITY_TAB_VISITED_BEFORE_TODAY,
-                              TimeFormat::ShortDate(first_visit)));
+                              base::TimeFormatShortDate(first_visit)));
   }
   Layout();
   SchedulePaint();
@@ -509,7 +484,7 @@ void PageInfoWindow::RegisterPrefs(PrefService* prefs) {
   prefs->RegisterDictionaryPref(prefs::kPageInfoWindowPlacement);
 }
 
-PageInfoWindow::PageInfoWindow() : cert_id_(0) {
+PageInfoWindow::PageInfoWindow() : cert_id_(0), contents_(NULL) {
 }
 
 PageInfoWindow::~PageInfoWindow() {
@@ -520,21 +495,21 @@ PageInfoWindow::~PageInfoWindow() {
 void PageInfoWindow::Init(Profile* profile,
                           NavigationEntry* navigation_entry,
                           HWND parent) {
-  cert_id_ = navigation_entry->GetSSLCertID();
+  cert_id_ = navigation_entry->ssl().cert_id();
 
   cert_info_button_ = new ChromeViews::NativeButton(
       l10n_util::GetString(IDS_PAGEINFO_CERT_INFO_BUTTON));
   cert_info_button_->SetListener(this);
 
-  PageInfoContentView* contents = new PageInfoContentView();
+  contents_ = new PageInfoContentView();
   DWORD sys_color = ::GetSysColor(COLOR_3DFACE);
   SkColor color = SkColorSetRGB(GetRValue(sys_color), GetGValue(sys_color),
                                 GetBValue(sys_color));
-  contents->SetBackground(
+  contents_->SetBackground(
       ChromeViews::Background::CreateSolidBackground(color));
 
-  ChromeViews::GridLayout* layout = new ChromeViews::GridLayout(contents);
-  contents->SetLayoutManager(layout);
+  ChromeViews::GridLayout* layout = new ChromeViews::GridLayout(contents_);
+  contents_->SetLayoutManager(layout);
   ChromeViews::ColumnSet* columns = layout->AddColumnSet(0);
   columns->AddPaddingColumn(0, kHorizontalPadding);
   columns->AddColumn(ChromeViews::GridLayout::FILL,  // Horizontal resize.
@@ -569,17 +544,18 @@ void PageInfoWindow::Init(Profile* profile,
     }
   }
 
-  window_ = ChromeViews::Window::CreateChromeWindow(parent, gfx::Rect(),
-                                                    contents, this);
+  ChromeViews::Window::CreateChromeWindow(parent, gfx::Rect(), this);
+  // TODO(beng): (Cleanup) - cert viewer button should use GetExtraView.
+  
   if (cert_id_) {
-    scoped_refptr<X509Certificate> cert;
+    scoped_refptr<net::X509Certificate> cert;
     CertStore::GetSharedInstance()->RetrieveCert(cert_id_, &cert);
     // When running with Gears, we have no os certificate, so there is no cert
     // to show. Don't bother showing the cert info button in that case.
     if (cert.get() && cert->os_cert_handle()) {
-      contents->GetParent()->AddChildView(cert_info_button_);
-      contents->set_cert_viewer_button(cert_info_button_);
-      contents->Layout();
+      contents_->GetParent()->AddChildView(cert_info_button_);
+      contents_->set_cert_viewer_button(cert_info_button_);
+      contents_->Layout();
     }
   }
 }
@@ -595,7 +571,7 @@ ChromeViews::View* PageInfoWindow::CreateSecurityTabView(
 }
 
 void PageInfoWindow::Show() {
-  window_->Show();
+  window()->Show();
   opened_window_count_++;
 }
 
@@ -610,18 +586,22 @@ std::wstring PageInfoWindow::GetWindowTitle() const {
 void PageInfoWindow::SaveWindowPosition(const CRect& bounds,
                                         bool maximized,
                                         bool always_on_top) {
-  window_->SaveWindowPositionToPrefService(g_browser_process->local_state(),
-                                           prefs::kPageInfoWindowPlacement,
-                                           bounds, maximized, always_on_top);
+  window()->SaveWindowPositionToPrefService(g_browser_process->local_state(),
+                                            prefs::kPageInfoWindowPlacement,
+                                            bounds, maximized, always_on_top);
 }
 
 bool PageInfoWindow::RestoreWindowPosition(CRect* bounds,
                                            bool* maximized,
                                            bool* always_on_top) {
-  return window_->RestoreWindowPositionFromPrefService(
+  return window()->RestoreWindowPositionFromPrefService(
       g_browser_process->local_state(),
       prefs::kPageInfoWindowPlacement,
       bounds, maximized, always_on_top);
+}
+
+ChromeViews::View* PageInfoWindow::GetContentsView() {
+  return contents_;
 }
 
 void PageInfoWindow::ButtonPressed(ChromeViews::NativeButton* sender) {
@@ -669,7 +649,7 @@ void PageInfoWindow::CalculateWindowBounds(CRect* bounds) {
 }
 
 void PageInfoWindow::ShowCertDialog(int cert_id) {
-  scoped_refptr<X509Certificate> cert;
+  scoped_refptr<net::X509Certificate> cert;
   CertStore::GetSharedInstance()->RetrieveCert(cert_id, &cert);
   if (!cert.get()) {
     // The certificate was not found. Could be that the renderer crashed before
@@ -681,7 +661,7 @@ void PageInfoWindow::ShowCertDialog(int cert_id) {
   view_info.dwSize = sizeof(view_info); 		
   // We set our parent to the tab window. This makes the cert dialog created 		
   // in CryptUIDlgViewCertificate modal to the browser. 		
-  view_info.hwndParent = window_->owning_window();
+  view_info.hwndParent = window()->owning_window();
   view_info.dwFlags = CRYPTUI_DISABLE_EDITPROPERTIES |
                       CRYPTUI_DISABLE_ADDTOSTORE;
   view_info.pCertContext = cert->os_cert_handle();
@@ -695,3 +675,4 @@ void PageInfoWindow::ShowCertDialog(int cert_id) {
   // modal to the browser window.
   BOOL rv = ::CryptUIDlgViewCertificate(&view_info, &properties_changed);
 }
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <shlobj.h>
@@ -507,7 +482,7 @@ TEST(URLRequestTest, BZip2ContentTest) {
   const std::string& got_bz2_content = d2.data_received();
 
   // compare those two results
-  EXPECT_TRUE(got_content == got_bz2_content);
+  EXPECT_EQ(got_content, got_bz2_content);
 }
 
 TEST(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
@@ -532,7 +507,7 @@ TEST(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
   const std::string& got_bz2_content = d2.data_received();
 
   // compare those two results
-  EXPECT_TRUE(got_content == got_bz2_content);
+  EXPECT_EQ(got_content, got_bz2_content);
 }
 
 TEST(URLRequestTest, ResolveShortcutTest) {
@@ -571,7 +546,7 @@ TEST(URLRequestTest, ResolveShortcutTest) {
 
   TestDelegate d;
   {
-    TestURLRequest r(net_util::FilePathToFileURL(lnk_path), &d);
+    TestURLRequest r(net::FilePathToFileURL(lnk_path), &d);
 
     r.Start();
     EXPECT_TRUE(r.is_pending());
@@ -626,7 +601,7 @@ TEST(URLRequestTest, ContentTypeNormalizationTest) {
 
 TEST(URLRequestTest, FileDirCancelTest) {
   // Put in mock resource provider.
-  NetModule::SetResourceProvider(TestNetResourceProvider);
+  net::NetModule::SetResourceProvider(TestNetResourceProvider);
 
   TestDelegate d;
   {
@@ -636,7 +611,7 @@ TEST(URLRequestTest, FileDirCancelTest) {
     file_util::AppendToPath(&file_path, L"data");
     file_util::AppendToPath(&file_path, L"");
 
-    TestURLRequest req(net_util::FilePathToFileURL(file_path), &d);
+    TestURLRequest req(net::FilePathToFileURL(file_path), &d);
     req.Start();
     EXPECT_TRUE(req.is_pending());
 
@@ -649,7 +624,7 @@ TEST(URLRequestTest, FileDirCancelTest) {
 #endif
 
   // Take out mock resource provider.
-  NetModule::SetResourceProvider(NULL);
+  net::NetModule::SetResourceProvider(NULL);
 }
 
 TEST(URLRequestTest, RestrictRedirects) {
@@ -790,3 +765,4 @@ TEST(URLRequestTest, BasicAuth) {
     EXPECT_TRUE(response_time == r.response_time());
   }
 }
+
