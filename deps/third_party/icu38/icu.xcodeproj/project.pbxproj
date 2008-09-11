@@ -2278,6 +2278,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B836C970E55C96100F6AD31 /* debug.xcconfig */;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = (
 					public/common,
 					public/i18n,
@@ -2306,7 +2307,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					U_COMMON_IMPLEMENTATION,
+					U_STATIC_IMPLEMENTATION,
+				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PRODUCT_NAME = icuuc;
 			};
@@ -2316,7 +2321,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = U_COMMON_IMPLEMENTATION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					U_COMMON_IMPLEMENTATION,
+					U_STATIC_IMPLEMENTATION,
+				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				PRODUCT_NAME = icuuc;
 			};
@@ -2326,7 +2335,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = U_I18N_IMPLEMENTATION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					U_I18N_IMPLEMENTATION,
+					U_STATIC_IMPLEMENTATION,
+				);
 				PRODUCT_NAME = icui18n;
 			};
 			name = Debug;
@@ -2335,7 +2348,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = U_I18N_IMPLEMENTATION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					U_I18N_IMPLEMENTATION,
+					U_STATIC_IMPLEMENTATION,
+				);
 				PRODUCT_NAME = icui18n;
 			};
 			name = Release;
@@ -2344,7 +2361,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = U_TOOLUTIL_IMPLEMENTATION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					U_STATIC_IMPLEMENTATION,
+					U_TOOLUTIL_IMPLEMENTATION,
+				);
 				PRODUCT_NAME = icutu;
 			};
 			name = Debug;
@@ -2353,7 +2374,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7BED30CE0E59F65F00A747DB /* staticlib.xcconfig */;
 			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = U_TOOLUTIL_IMPLEMENTATION;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					U_STATIC_IMPLEMENTATION,
+					U_TOOLUTIL_IMPLEMENTATION,
+				);
 				PRODUCT_NAME = icutu;
 			};
 			name = Release;
