@@ -42,11 +42,21 @@ env.Prepend(
     ],
 )
 
-env.Append(
-    CPPDEFINES = [
-        "U_STATIC_IMPLEMENTATION",
-    ],
-)
+if env['PLATFORM'] == 'darwin':
+  env.Append(
+      CPPDEFINES = [
+          "U_I18N_IMPLEMENTATION",
+      ],
+  )
+  env['CCFLAGS'].remove('-Werror')
+  env['CPPDEFINES'].remove('DEBUG')
+else:
+  env.Append(
+      CPPDEFINES = [
+          "U_STATIC_IMPLEMENTATION",
+      ],
+  )
+
 if env['PLATFORM'] == 'win32':
   env.Append(
       CCFLAGS = [
