@@ -1813,7 +1813,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82C262E80DCF946A005CFE91 /* Build configuration list for PBXNativeTarget "icudata" */;
 			buildPhases = (
-				82C262D20DCF9438005CFE91 /* Generate Data */,
+				82C262D20DCF9438005CFE91 /* Pre-Build */,
 				82C262C10DCF9411005CFE91 /* Sources */,
 				82C262C20DCF9411005CFE91 /* Frameworks */,
 			);
@@ -1854,7 +1854,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		82C262D20DCF9438005CFE91 /* Generate Data */ = {
+		82C262D20DCF9438005CFE91 /* Pre-Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1864,13 +1864,14 @@
 				"$(BUILT_PRODUCTS_DIR)/icupkg",
 				"$(BUILT_PRODUCTS_DIR)/genccode",
 			);
-			name = "Generate Data";
+			name = "Pre-Build";
 			outputPaths = (
 				"$(CONFIGURATION_TEMP_DIR)/generated/icudt38l_dat.s",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -ex\nGENERATED_DIR=\"${CONFIGURATION_TEMP_DIR}/generated\"\nmkdir -p \"${GENERATED_DIR}/icudt38l\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -d \"${GENERATED_DIR}/icudt38l\" --list -x \"*\" source/data/in/icudt38l.dat > \"${GENERATED_DIR}/icudata.lst\"\n\"${BUILT_PRODUCTS_DIR}/icupkg\" -tl -c -s \"${GENERATED_DIR}/icudt38l\" -a \"${GENERATED_DIR}/icudata.lst\" new \"${GENERATED_DIR}/icudt38l.dat\"\n\"${BUILT_PRODUCTS_DIR}/genccode\" -a gcc-darwin -n icudt38l -e icudt38 -d \"${GENERATED_DIR}\" \"${GENERATED_DIR}/icudt38l.dat\"\n";
+			shellScript = "set -ex\nexec \"${PROJECT_FILE_PATH}/${PRODUCT_NAME}_prebuild.sh\" \"${@}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
