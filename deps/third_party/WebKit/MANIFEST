@@ -36,6 +36,7 @@ WebCore\page\EventHandler.cpp
 WebCore\page\Frame.cpp
 WebCore\page\InspectorController.cpp
 WebCore\page\InspectorController.h
+WebCore\page\Page.cpp
 WebCore\page\Page.h
 WebCore\page\Settings.cpp
 WebCore\page\Settings.h
