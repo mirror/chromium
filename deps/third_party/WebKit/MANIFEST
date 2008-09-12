@@ -72,6 +72,7 @@ WebCore\rendering\RenderText.cpp
 WebCore\rendering\RenderTextControl.cpp
 WebCore\rendering\RenderTheme.h
 WebCore\rendering\style\RenderStyle.h
+WebCore\svg\animation\SMILTimeContainer.h
 WebCore\xml\XMLHttpRequest.cpp
 WebCore\xml\XMLHttpRequest.h
 WebCore\xml\XSLImportRule.cpp
