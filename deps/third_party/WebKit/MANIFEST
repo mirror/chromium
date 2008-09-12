@@ -1,4 +1,5 @@
 JavaScriptCore\wtf\RefCounted.h
+JavaScriptCore\wtf\ThreadingWin.cpp
 WebCore\DerivedSources.make
 WebCore\config.h
 WebCore\css\CSSStyleSelector.cpp
