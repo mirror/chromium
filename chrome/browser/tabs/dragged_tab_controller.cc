@@ -145,14 +145,12 @@ void DraggedTabController::OpenURLFromTab(
     TabContents* source,
     const GURL& url,
     WindowOpenDisposition disposition,
-    PageTransition::Type transition,
-    const std::string& override_encoding) {
+    PageTransition::Type transition) {
   if (original_delegate_) {
     if (disposition == CURRENT_TAB)
       disposition = NEW_WINDOW;
 
-    original_delegate_->OpenURLFromTab(source, url, disposition, transition,
-                                       override_encoding);
+    original_delegate_->OpenURLFromTab(source, url, disposition, transitions);
   }
 }
 
