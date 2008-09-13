@@ -150,7 +150,7 @@ void DraggedTabController::OpenURLFromTab(
     if (disposition == CURRENT_TAB)
       disposition = NEW_WINDOW;
 
-    original_delegate_->OpenURLFromTab(source, url, disposition, transitions);
+    original_delegate_->OpenURLFromTab(source, url, disposition, transition);
   }
 }
 
