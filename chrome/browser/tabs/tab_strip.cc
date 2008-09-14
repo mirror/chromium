@@ -828,13 +828,13 @@ bool TabStrip::IsTabSelected(const Tab* tab) const {
 
 void TabStrip::SelectTab(Tab* tab) {
   int index = GetIndexOfTab(tab);
-  if (index != -1)
+  if (model_->ContainsIndex(index))
     model_->SelectTabContentsAt(index, true);
 }
 
 void TabStrip::CloseTab(Tab* tab) {
   int tab_index = GetIndexOfTab(tab);
-  if (tab_index != -1) {
+  if (model_->ContainsIndex(tab_index)) {
     TabContents* contents = model_->GetTabContentsAt(tab_index);
     if (contents)
       UserMetrics::RecordAction(L"CloseTab_Mouse", contents->profile());
@@ -852,7 +852,7 @@ void TabStrip::CloseTab(Tab* tab) {
 bool TabStrip::IsCommandEnabledForTab(
     TabStripModel::ContextMenuCommand command_id, const Tab* tab) const {
   int index = GetIndexOfTab(tab);
-  if (index != -1)
+  if (model_->ContainsIndex(index))
     return model_->IsContextMenuCommandEnabled(index, command_id);
   return false;
 }
@@ -860,8 +860,54 @@ bool TabStrip::IsCommandEnabledForTab(
 void TabStrip::ExecuteCommandForTab(
     TabStripModel::ContextMenuCommand command_id, Tab* tab) {
   int index = GetIndexOfTab(tab);
-  if (index != -1)
+  if (model_->ContainsIndex(index))
     model_->ExecuteContextMenuCommand(index, command_id);
+}
+
+void TabStrip::StartHighlightTabsForCommand(
+    TabStripModel::ContextMenuCommand command_id, Tab* tab) {
+  if (command_id == TabStripModel::CommandCloseTabsOpenedBy) {
+    int index = GetIndexOfTab(tab);
+    if (model_->ContainsIndex(index)) {
+      std::vector<int> indices = model_->GetIndexesOpenedBy(index);
+      std::vector<int>::const_iterator iter = indices.begin();
+      for (; iter != indices.end(); ++iter) {
+        int current_index = *iter;
+        DCHECK(current_index >= 0 && current_index < GetTabCount());
+        Tab* current_tab = GetTabAt(current_index);
+        current_tab->StartPulse();
+      }
+    }
+  } else if (command_id == TabStripModel::CommandCloseTabsToRight) {
+    int index = GetIndexOfTab(tab);
+    if (model_->ContainsIndex(index)) {
+      for (int i = index + 1; i < GetTabCount(); ++i) {
+        Tab* current_tab = GetTabAt(i);
+        current_tab->StartPulse();
+      }
+    }
+  } else if (command_id == TabStripModel::CommandCloseOtherTabs) {
+    for (int i = 0; i < GetTabCount(); ++i) {
+      Tab* current_tab = GetTabAt(i);
+      if (current_tab != tab)
+        current_tab->StartPulse();
+    }
+  }
+}
+
+void TabStrip::StopHighlightTabsForCommand(
+    TabStripModel::ContextMenuCommand command_id, Tab* tab) {
+  if (command_id == TabStripModel::CommandCloseTabsOpenedBy ||
+      command_id == TabStripModel::CommandCloseTabsToRight ||
+      command_id == TabStripModel::CommandCloseOtherTabs) {
+    // Just tell all Tabs to stop pulsing - it's safe.
+    StopAllHighlighting();
+  }
+}
+
+void TabStrip::StopAllHighlighting() {
+  for (int i = 0; i < GetTabCount(); ++i)
+    GetTabAt(i)->StopPulse();
 }
 
 void TabStrip::MaybeStartDrag(Tab* tab, const ChromeViews::MouseEvent& event) {
