@@ -157,6 +157,7 @@ class WebViewImpl : public WebView,
   void MouseLeave(const WebMouseEvent& mouse_event);
   void MouseDown(const WebMouseEvent& mouse_event);
   void MouseUp(const WebMouseEvent& mouse_event);
+  void MouseContextMenu(const WebMouseEvent& mouse_event);
   void MouseDoubleClick(const WebMouseEvent& mouse_event);
   void MouseWheel(const WebMouseWheelEvent& wheel_event);
   bool KeyEvent(const WebKeyboardEvent& key_event);
