@@ -224,7 +224,7 @@ void ResetGoogleUpdateApKey(bool system_install, bool incremental_install,
   if (!key.Open(reg_root, reg_key.c_str(), KEY_ALL_ACCESS) ||
       !key.ReadValue(google_update::kRegApFieldName, &ap_key_value)) {
     LOG(INFO) << "Application key not found.";
-    if (!incremental_install || !GetInstallReturnCode(install_status)) {
+    if (!incremental_install) {
       LOG(INFO) << "Returning without changing application key.";
       key.Close();
       return;
