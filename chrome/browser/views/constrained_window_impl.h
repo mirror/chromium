@@ -112,6 +112,9 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   // this suppressed constrained popup window.
   void StartSuppressedAnimation();
 
+  // Stops the ConstrainedWindowAnimation, making the entire titlebar visible.
+  void StopSuppressedAnimationIfRunning();
+
  protected:
   // Windows message handlers:
   virtual void OnDestroy();
@@ -211,4 +214,4 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   DISALLOW_EVIL_CONSTRUCTORS(ConstrainedWindowImpl);
 };
 
-#endif  // #ifndef CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H__
+#endif  // #ifndef CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H_
