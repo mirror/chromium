@@ -47,6 +47,9 @@ int TooltipManager::tooltip_height_ = 0;
 // Maximum number of lines we allow in the tooltip.
 static const int kMaxLines = 6;
 
+// Maximum number of characters we allow in a tooltip.
+static const int kMaxTooltipLength = 1024;
+
 // Breaks |text| along line boundaries, placing each line of text into lines.
 static void SplitTooltipString(const std::wstring& text,
                                std::vector<std::wstring>* lines) {
@@ -282,6 +285,12 @@ void TooltipManager::TrimTooltipToFit(std::wstring* text,
                                       int* line_count) {
   *max_width = 0;
   *line_count = 0;
+
+  // Clamp the tooltip length to kMaxTooltipLength so that we don't
+  // accidentally DOS the user with a mega tooltip (since Windows doesn't seem
+  // to do this itself).
+  if (text->length() > kMaxTooltipLength)
+    *text = text->substr(0, kMaxTooltipLength);
 
   // Determine the available width for the tooltip.
   CPoint screen_loc(last_mouse_x_, last_mouse_y_);
