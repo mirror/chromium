@@ -189,22 +189,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\client_socket_handle.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\base\client_socket_handle.h"
-				>
-			</File>
-			<File
-				RelativePath="..\base\client_socket_pool.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\base\client_socket_pool.h"
-				>
-			</File>
-			<File
 				RelativePath="..\base\completion_callback.h"
 				>
 			</File>
@@ -357,19 +341,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\net_util_win.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\base\net_util.h"
-				>
-			</File>
-			<File
-				RelativePath="..\base\platform_mime_util.h"
-				>
-			</File>
-			<File
-				RelativePath="..\base\platform_mime_util_win.cc"
 				>
 			</File>
 			<File
@@ -557,11 +529,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\url_request\url_request_http_job.cc"
+				RelativePath="..\url_request\url_request_http_cache_job.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\url_request\url_request_http_job.h"
+				RelativePath="..\url_request\url_request_http_cache_job.h"
 				>
 			</File>
 			<File
@@ -665,6 +637,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\http\http_connection.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_connection.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_connection_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_connection_manager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\http\http_network_layer.cc"
 				>
 			</File>
@@ -682,6 +670,30 @@
 			</File>
 			<File
 				RelativePath="..\http\http_network_transaction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_proxy_resolver_fixed.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_proxy_resolver_fixed.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_proxy_resolver_winhttp.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_proxy_resolver_winhttp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_proxy_service.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_proxy_service.h"
 				>
 			</File>
 			<File
@@ -765,14 +777,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\disk_cache\cache_util.h"
-				>
-			</File>
-			<File
-				RelativePath="..\disk_cache\cache_util_win.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\disk_cache\disk_cache.h"
 				>
 			</File>
@@ -793,6 +797,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\disk_cache\file.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\disk_cache\file.h"
 				>
 			</File>
@@ -809,10 +817,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\disk_cache\file_win.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\disk_cache\hash.cc"
 				>
 			</File>
@@ -821,11 +825,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\disk_cache\mapped_file.h"
+				RelativePath="..\disk_cache\mapped_file.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\disk_cache\mapped_file_win.cc"
+				RelativePath="..\disk_cache\mapped_file.h"
 				>
 			</File>
 			<File
@@ -850,14 +854,6 @@
 			</File>
 			<File
 				RelativePath="..\disk_cache\mem_rankings.h"
-				>
-			</File>
-			<File
-				RelativePath="..\disk_cache\os_file.h"
-				>
-			</File>
-			<File
-				RelativePath="..\disk_cache\os_file_win.cc"
 				>
 			</File>
 			<File
@@ -890,34 +886,6 @@
 			</File>
 			<File
 				RelativePath="..\disk_cache\trace.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="proxy"
-			>
-			<File
-				RelativePath="..\proxy\proxy_resolver_fixed.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\proxy\proxy_resolver_fixed.h"
-				>
-			</File>
-			<File
-				RelativePath="..\proxy\proxy_resolver_winhttp.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\proxy\proxy_resolver_winhttp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\proxy\proxy_service.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\proxy\proxy_service.h"
 				>
 			</File>
 		</Filter>

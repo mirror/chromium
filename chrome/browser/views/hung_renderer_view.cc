@@ -1,15 +1,39 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/views/hung_renderer_view.h"
 
-#include "chrome/app/result_codes.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/standard_layout.h"
-#include "chrome/browser/web_contents.h"
+#include "chrome/browser/tab_contents.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
@@ -22,8 +46,6 @@
 #include "chrome/views/group_table_view.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/native_button.h"
-
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,6 +140,8 @@ class HungRendererWarningView : public ChromeViews::View,
   void ShowForWebContents(WebContents* contents);
   void EndForWebContents(WebContents* contents);
 
+  void set_window(ChromeViews::Window* window) { window_ = window; }
+
   // ChromeViews::WindowDelegate overrides:
   virtual std::wstring GetWindowTitle() const;
   virtual void WindowClosing();
@@ -126,8 +150,7 @@ class HungRendererWarningView : public ChromeViews::View,
       ChromeViews::DialogDelegate::DialogButton button) const;
   virtual ChromeViews::View* GetExtraView();
   virtual bool Accept(bool window_closing);
-  virtual ChromeViews::View* GetContentsView();
-  
+
   // ChromeViews::NativeButton::Listener overrides:
   virtual void ButtonPressed(ChromeViews::NativeButton* sender);
 
@@ -170,6 +193,9 @@ class HungRendererWarningView : public ChromeViews::View,
   };
   ButtonContainer* kill_button_container_;
 
+  // The Window that contains this view.
+  ChromeViews::Window* window_;
+
   // The model that provides the contents of the table that shows a list of
   // pages affected by the hang.
   scoped_ptr<HungPagesTableModel> hung_pages_table_model_;
@@ -207,6 +233,7 @@ HungRendererWarningView::HungRendererWarningView()
       hung_pages_table_(NULL),
       kill_button_(NULL),
       kill_button_container_(NULL),
+      window_(NULL),
       contents_(NULL),
       initialized_(false) {
   InitClass();
@@ -217,7 +244,7 @@ HungRendererWarningView::~HungRendererWarningView() {
 }
 
 void HungRendererWarningView::ShowForWebContents(WebContents* contents) {
-  DCHECK(contents && window());
+  DCHECK(contents && window_);
   contents_ = contents;
 
   // Don't show the warning unless the foreground window is the frame, or this
@@ -226,13 +253,13 @@ void HungRendererWarningView::ShowForWebContents(WebContents* contents) {
   HWND frame_hwnd = GetAncestor(contents->GetContainerHWND(), GA_ROOT);
   HWND foreground_window = GetForegroundWindow();
   if (foreground_window != frame_hwnd &&
-      foreground_window != window()->GetHWND()) {
+      foreground_window != window_->GetHWND()) {
     return;
   }
 
-  if (!window()->IsActive()) {
+  if (!window_->IsActive()) {
     gfx::Rect bounds = GetDisplayBounds(contents);
-    window()->SetBounds(bounds, frame_hwnd);
+    window_->SetBounds(bounds, frame_hwnd);
 
     // We only do this if the window isn't active (i.e. hasn't been shown yet,
     // or is currently shown but deactivated for another WebContents). This is
@@ -241,14 +268,14 @@ void HungRendererWarningView::ShowForWebContents(WebContents* contents) {
     // the list of hung pages for a potentially unrelated renderer while this
     // one is showing.
     hung_pages_table_model_->InitForWebContents(contents);
-    window()->Show();
+    window_->Show();
   }
 }
 
 void HungRendererWarningView::EndForWebContents(WebContents* contents) {
   DCHECK(contents);
   if (contents_ && contents_->process() == contents->process()) {
-    window()->Close();
+    window_->Close();
     // Since we're closing, we no longer need this WebContents.
     contents_ = NULL;
   }
@@ -299,19 +326,12 @@ bool HungRendererWarningView::Accept(bool window_closing) {
   return true;
 }
 
-ChromeViews::View* HungRendererWarningView::GetContentsView() {
-  return this;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// HungRendererWarningView, ChromeViews::NativeButton::Listener implementation:
-
 void HungRendererWarningView::ButtonPressed(
     ChromeViews::NativeButton* sender) {
   if (sender == kill_button_) {
     // Kill the process.
     HANDLE process = contents_->process()->process();
-    TerminateProcess(process, ResultCodes::HUNG);
+    TerminateProcess(process, 0);
   }
 }
 
@@ -381,7 +401,7 @@ void HungRendererWarningView::CreateKillButtonView() {
   kill_button_->SetListener(this);
 
   kill_button_container_ = new ButtonContainer;
- 
+
   using ChromeViews::GridLayout;
   using ChromeViews::ColumnSet;
 
@@ -406,7 +426,7 @@ gfx::Rect HungRendererWarningView::GetDisplayBounds(
   GetWindowRect(contents_hwnd, &contents_bounds);
 
   CRect window_bounds;
-  window()->GetBounds(&window_bounds, true);
+  window_->GetBounds(&window_bounds, true);
 
   int window_x = contents_bounds.left +
       (contents_bounds.Width() - window_bounds.Width()) / 2;
@@ -433,7 +453,9 @@ HungRendererWarningView* HungRendererWarning::instance_ = NULL;
 
 static HungRendererWarningView* CreateHungRendererWarningView() {
   HungRendererWarningView* cv = new HungRendererWarningView;
-  ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), cv);
+  ChromeViews::Window* window =
+      ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), cv, cv);
+  cv->set_window(window);
   return cv;
 }
 
@@ -451,4 +473,3 @@ void HungRendererWarning::HideForWebContents(WebContents* contents) {
   if (!logging::DialogsAreSuppressed() && instance_)
     instance_->EndForWebContents(contents);
 }
-

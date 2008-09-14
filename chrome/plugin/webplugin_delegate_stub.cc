@@ -1,13 +1,40 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/plugin/webplugin_delegate_stub.h"
 
 #include "base/command_line.h"
 #include "base/time.h"
 #include "base/gfx/bitmap_header.h"
-#include "base/gfx/platform_device_win.h"
+#include "base/gfx/platform_device.h"
+#include "bindings/npapi.h"
+#include "bindings/npruntime.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/emf.h"
 #include "chrome/common/plugin_messages.h"
@@ -16,8 +43,6 @@
 #include "chrome/plugin/plugin_channel.h"
 #include "chrome/plugin/plugin_thread.h"
 #include "chrome/plugin/webplugin_proxy.h"
-#include "third_party/npapi/bindings/npapi.h"
-#include "third_party/npapi/bindings/npruntime.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/webcursor.h"
 
@@ -232,7 +257,7 @@ void WebPluginDelegateStub::OnPaint(const PluginMsg_Paint_Params& params) {
     NOTREACHED();
     return;
   }
-  gfx::PlatformDeviceWin::InitializeDC(hdc);
+  gfx::PlatformDevice::InitializeDC(hdc);
   SelectObject(hdc, hbitmap);
   SetWorldTransform(hdc, &params.xf);
 
@@ -249,7 +274,7 @@ void WebPluginDelegateStub::OnPrint(PluginMsg_PrintResponse_Params* params) {
     return;
   }
   HDC hdc = emf.hdc();
-  gfx::PlatformDeviceWin::InitializeDC(hdc);
+  gfx::PlatformDevice::InitializeDC(hdc);
   delegate_->Print(hdc);
   if (!emf.CloseDc()) {
     NOTREACHED();
@@ -280,7 +305,7 @@ void WebPluginDelegateStub::OnPaintIntoSharedMemory(
     return;
   }
   HDC hdc = emf.hdc();
-  gfx::PlatformDeviceWin::InitializeDC(hdc);
+  gfx::PlatformDevice::InitializeDC(hdc);
 
   if (delegate_->windowless()) {
     WindowlessPaint(hdc, params);
@@ -435,4 +460,3 @@ void WebPluginDelegateStub::OnURLRequestRouted(const std::string& url,
                                                HANDLE notify_data) {
   delegate_->URLRequestRouted(url, notify_needed, notify_data);
 }
-

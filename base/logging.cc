@@ -1,45 +1,42 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-#include "base/logging.h"
-
-#if defined(OS_WIN)
-#include <windows.h>
-typedef HANDLE FileHandle;
-typedef HANDLE MutexHandle;
-#endif
-
-#if defined(OS_MACOSX)
-#include <CoreFoundation/CoreFoundation.h>
-#include <mach/mach.h>
-#include <mach/mach_time.h>
-#include <mach-o/dyld.h>
-#endif
-
-#if defined(OS_POSIX)
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-#define MAX_PATH PATH_MAX
-typedef FILE* FileHandle;
-typedef pthread_mutex_t* MutexHandle;
-#endif
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <ctime>
 #include <iomanip>
 #include <cstring>
+#include <windows.h>
 #include <algorithm>
-
 #include "base/base_switches.h"
 #include "base/command_line.h"
-#include "base/debug_util.h"
 #include "base/lock_impl.h"
-#include "base/string_piece.h"
-#include "base/string_util.h"
-#include "base/sys_string_conversions.h"
-  
+#include "base/logging.h"
+
 namespace logging {
 
 bool g_enable_dcheck = false;
@@ -49,37 +46,18 @@ const char* const log_severity_names[LOG_NUM_SEVERITIES] = {
 
 int min_log_level = 0;
 LogLockingState lock_log_file = LOCK_LOG_FILE;
-
-// The default set here for logging_destination will only be used if
-// InitLogging is not called.  On Windows, use a file next to the exe;
-// on POSIX platforms, where it may not even be possible to locate the
-// executable on disk, use stderr.
-#if defined(OS_WIN)
 LoggingDestination logging_destination = LOG_ONLY_TO_FILE;
-#elif defined(OS_POSIX)
-LoggingDestination logging_destination = LOG_ONLY_TO_SYSTEM_DEBUG_LOG;
-#endif
 
 const int kMaxFilteredLogLevel = LOG_WARNING;
-std::string* log_filter_prefix;
+char* log_filter_prefix = NULL;
 
-// For LOG_ERROR and above, always print to stderr.
-const int kAlwaysPrintErrorLevel = LOG_ERROR;
-
-// Which log file to use? This is initialized by InitLogging or
+// which log file to use? This is initialized by InitLogging or
 // will be lazily initialized to the default value when it is
 // first needed.
-#if defined(OS_WIN)
-typedef wchar_t PathChar;
-typedef std::wstring PathString;
-#else
-typedef char PathChar;
-typedef std::string PathString;
-#endif
-PathString* log_file_name = NULL;
+wchar_t log_file_name[MAX_PATH] = { 0 };
 
 // this file is lazily opened and the handle may be NULL
-FileHandle log_file = NULL;
+HANDLE log_file = NULL;
 
 // what should be prepended to each message?
 bool log_process_id = false;
@@ -98,59 +76,7 @@ static LockImpl* log_lock = NULL;
 
 // When we don't use a lock, we are using a global mutex. We need to do this
 // because LockFileEx is not thread safe.
-#if defined(OS_WIN)
-MutexHandle log_mutex = NULL;
-#elif defined(OS_POSIX)
-pthread_mutex_t log_mutex = PTHREAD_MUTEX_INITIALIZER;
-#endif
-
-// Helper functions to wrap platform differences.
-
-int32 CurrentProcessId() {
-#if defined(OS_WIN)
-  return GetCurrentProcessId();
-#elif defined(OS_POSIX)
-  return getpid();
-#endif
-}
-
-int32 CurrentThreadId() {
-#if defined(OS_WIN)
-  return GetCurrentThreadId();
-#elif defined(OS_MACOSX)
-  return mach_thread_self();
-#else
-  NOTIMPLEMENTED();
-  return 0;
-#endif
-}
-
-uint64 TickCount() {
-#if defined(OS_WIN)
-  return GetTickCount();
-#elif defined(OS_MACOSX)
-  return mach_absolute_time();
-#else
-  NOTIMPLEMENTED();
-  return 0;
-#endif
-}
-
-void CloseFile(FileHandle log) {
-#if defined(OS_WIN)
-  CloseHandle(log);
-#else
-  fclose(log);
-#endif
-}
-
-void DeleteFilePath(const PathString& log_name) {
-#if defined(OS_WIN)
-  DeleteFile(log_name.c_str());
-#else
-  unlink(log_name.c_str());
-#endif
-}
+HANDLE log_mutex = NULL;
 
 // Called by logging functions to ensure that debug_file is initialized
 // and can be used for writing. Returns false if the file could not be
@@ -159,75 +85,52 @@ bool InitializeLogFileHandle() {
   if (log_file)
     return true;
 
-  if (!log_file_name) {
-    // Nobody has called InitLogging to specify a debug log file, so here we
-    // initialize the log file name to a default.
-#if defined(OS_WIN)
-    // On Windows we use the same path as the exe.
-    wchar_t module_name[MAX_PATH];
-    GetModuleFileName(NULL, module_name, MAX_PATH);
-    log_file_name = new std::wstring(module_name);
-    std::wstring::size_type last_backslash =
-        log_file_name->rfind('\\', log_file_name->size());
-    if (last_backslash != std::wstring::npos)
-      log_file_name->erase(last_backslash + 1);
-    *log_file_name += L"debug.log";
-#elif defined(OS_POSIX)
-    // On other platforms we just use the current directory.
-    log_file_name = new std::string("debug.log");
-#endif
+  if (!log_file_name[0]) {
+    // nobody has called InitLogging to specify a debug log file, so here we
+    // initialize the log file name to the default
+    GetModuleFileName(NULL, log_file_name, MAX_PATH);
+    wchar_t* last_backslash = wcsrchr(log_file_name, '\\');
+    if (last_backslash)
+      last_backslash[1] = 0; // name now ends with the backslash
+    wcscat_s(log_file_name, L"debug.log");
   }
 
-  if (logging_destination == LOG_ONLY_TO_FILE ||
-      logging_destination == LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG) {
-#if defined(OS_WIN)
-    log_file = CreateFile(log_file_name->c_str(), GENERIC_WRITE,
+  log_file = CreateFile(log_file_name, GENERIC_WRITE,
+                        FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
+                        OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+  if (log_file == INVALID_HANDLE_VALUE || log_file == NULL) {
+    // try the current directory
+    log_file = CreateFile(L".\\debug.log", GENERIC_WRITE,
                           FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
                           OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (log_file == INVALID_HANDLE_VALUE || log_file == NULL) {
-      // try the current directory
-      log_file = CreateFile(L".\\debug.log", GENERIC_WRITE,
-                            FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
-                            OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-      if (log_file == INVALID_HANDLE_VALUE || log_file == NULL) {
-        log_file = NULL;
-        return false;
-      }
-    }
-    SetFilePointer(log_file, 0, 0, FILE_END);
-#elif defined(OS_POSIX)
-    log_file = fopen(log_file_name->c_str(), "a");
-    if (log_file == NULL)
+      log_file = NULL;
       return false;
-#endif
+    }
   }
-
+  SetFilePointer(log_file, 0, 0, FILE_END);
   return true;
 }
 
 void InitLogMutex() {
-#if defined(OS_WIN)
   if (!log_mutex) {
     // \ is not a legal character in mutex names so we replace \ with /
-    std::wstring safe_name(*log_file_name);
+    std::wstring safe_name(log_file_name);
     std::replace(safe_name.begin(), safe_name.end(), '\\', '/');
     std::wstring t(L"Global\\");
     t.append(safe_name);
     log_mutex = ::CreateMutex(NULL, FALSE, t.c_str());
   }
-#elif defined(OS_POSIX)
-  // statically initialized
-#endif
 }
 
-void InitLogging(const PathChar* new_log_file, LoggingDestination logging_dest,
+void InitLogging(const wchar_t* new_log_file, LoggingDestination logging_dest,
                  LogLockingState lock_log, OldFileDeletionState delete_old) {
   g_enable_dcheck = CommandLine().HasSwitch(switches::kEnableDCHECK);
 
   if (log_file) {
     // calling InitLogging twice or after some log call has already opened the
     // default log file will re-initialize to the new options
-    CloseFile(log_file);
+    CloseHandle(log_file);
     log_file = NULL;
   }
 
@@ -239,11 +142,9 @@ void InitLogging(const PathChar* new_log_file, LoggingDestination logging_dest,
       logging_destination == LOG_ONLY_TO_SYSTEM_DEBUG_LOG)
     return;
 
-  if (!log_file_name)
-    log_file_name = new PathString();
-  *log_file_name = new_log_file;
+  wcscpy_s(log_file_name, MAX_PATH, new_log_file);
   if (delete_old == DELETE_OLD_LOG_FILE)
-    DeleteFilePath(*log_file_name);
+    DeleteFile(log_file_name);
 
   if (lock_log_file == LOCK_LOG_FILE) {
     InitLogMutex();
@@ -264,12 +165,15 @@ int GetMinLogLevel() {
 
 void SetLogFilterPrefix(const char* filter)  {
   if (log_filter_prefix) {
-    delete log_filter_prefix;
+    delete[] log_filter_prefix;
     log_filter_prefix = NULL;
   }
 
-  if (filter)
-    log_filter_prefix = new std::string(filter);
+  if (filter) {
+    size_t size = strlen(filter)+1;
+    log_filter_prefix = new char[size];
+    strcpy_s(log_filter_prefix, size, filter);
+  }
 }
 
 void SetLogItems(bool enable_process_id, bool enable_thread_id,
@@ -295,7 +199,6 @@ void DisplayDebugMessage(const std::string& str) {
   if (str.empty())
     return;
 
-#if defined(OS_WIN)
   // look for the debug dialog program next to our application
   wchar_t prog_name[MAX_PATH];
   GetModuleFileNameW(NULL, prog_name, MAX_PATH);
@@ -304,29 +207,30 @@ void DisplayDebugMessage(const std::string& str) {
     backslash[1] = 0;
   wcscat_s(prog_name, MAX_PATH, L"debug_message.exe");
 
-  // Stupid CreateProcess requires a non-const command line and may modify it.
-  // We also want to use the wide string.
-  std::wstring cmdline_string = base::SysUTF8ToWide(str);
-  wchar_t* cmdline = const_cast<wchar_t*>(cmdline_string.c_str());
+  // stupid CreateProcess requires a non-const command line and may modify it.
+  // We also want to use the wide string
+  int charcount = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
+  if (!charcount)
+    return;
+  scoped_array<wchar_t> cmdline(new wchar_t[charcount]);
+  if (!MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, cmdline.get(), charcount))
+    return;
 
   STARTUPINFO startup_info;
   memset(&startup_info, 0, sizeof(startup_info));
   startup_info.cb = sizeof(startup_info);
 
   PROCESS_INFORMATION process_info;
-  if (CreateProcessW(prog_name, cmdline, NULL, NULL, false, 0, NULL,
+  if (CreateProcessW(prog_name, cmdline.get(), NULL, NULL, false, 0, NULL,
                      NULL, &startup_info, &process_info)) {
     WaitForSingleObject(process_info.hProcess, INFINITE);
     CloseHandle(process_info.hThread);
     CloseHandle(process_info.hProcess);
   } else {
     // debug process broken, let's just do a message box
-    MessageBoxW(NULL, cmdline, L"Fatal error",
+    MessageBoxW(NULL, cmdline.get(), L"Fatal error",
                 MB_OK | MB_ICONHAND | MB_TOPMOST);
   }
-#else
-  fprintf(stderr, "%s\n", str.c_str());
-#endif
 }
 
 LogMessage::LogMessage(const char* file, int line, LogSeverity severity,
@@ -362,9 +266,9 @@ void LogMessage::Init(const char* file, int line) {
 
   stream_ <<  '[';
   if (log_process_id)
-    stream_ << CurrentProcessId() << ':';
+    stream_ << GetCurrentProcessId() << ':';
   if (log_thread_id)
-    stream_ << CurrentThreadId() << ':';
+    stream_ << GetCurrentThreadId() << ':';
   if (log_timestamp) {
      time_t t = time(NULL);
 #if _MSC_VER >= 1400
@@ -384,7 +288,7 @@ void LogMessage::Init(const char* file, int line) {
             << ':';
   }
   if (log_tickcount)
-    stream_ << TickCount() << ':';
+    stream_ << GetTickCount() << ':';
   stream_ << log_severity_names[severity_] << ":" << file << "(" << line << ")] ";
 
   message_start_ = stream_.tellp();
@@ -397,41 +301,18 @@ LogMessage::~LogMessage() {
     return;
 
   std::string str_newline(stream_.str());
-#if defined(OS_WIN)
   str_newline.append("\r\n");
-#else
-  str_newline.append("\n");
-#endif
 
   if (log_filter_prefix && severity_ <= kMaxFilteredLogLevel &&
-      str_newline.compare(message_start_, log_filter_prefix->size(),
-                          log_filter_prefix->data()) != 0) {
+      str_newline.compare(message_start_, strlen(log_filter_prefix),
+                          log_filter_prefix) != 0) {
     return;
   }
 
   if (logging_destination == LOG_ONLY_TO_SYSTEM_DEBUG_LOG ||
-      logging_destination == LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG) {
-#if defined(OS_WIN)
+      logging_destination == LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG)
     OutputDebugStringA(str_newline.c_str());
-    if (severity_ >= kAlwaysPrintErrorLevel)
-#endif
-    // TODO(erikkay): this interferes with the layout tests since it grabs
-    // stderr and stdout and diffs them against known data. Our info and warn
-    // logs add noise to that.  Ideally, the layout tests would set the log
-    // level to ignore anything below error.  When that happens, we should
-    // take this fprintf out of the #else so that Windows users can benefit
-    // from the output when running tests from the command-line.  In the
-    // meantime, we leave this in for Mac and Linux, but until this is fixed
-    // they won't be able to pass any layout tests that have info or warn logs.
-    // See http://b/1343647
-    fprintf(stderr, "%s", str_newline.c_str());
-  } else if (severity_ >= kAlwaysPrintErrorLevel) {
-    // When we're only outputting to a log file, above a certain log level, we
-    // should still output to stderr so that we can better detect and diagnose
-    // problems with unit tests, especially on the buildbots.
-    fprintf(stderr, "%s", str_newline.c_str());
-  }
-  
+
   // write to log file
   if (logging_destination != LOG_NONE &&
       logging_destination != LOG_ONLY_TO_SYSTEM_DEBUG_LOG &&
@@ -443,12 +324,8 @@ LogMessage::~LogMessage() {
       // call InitLogging. This is not thread safe. See below
       InitLogMutex();
 
-#if defined(OS_WIN)
       DWORD r = ::WaitForSingleObject(log_mutex, INFINITE);
       DCHECK(r != WAIT_ABANDONED);
-#elif defined(OS_POSIX)
-      pthread_mutex_lock(&log_mutex);
-#endif
     } else {
       // use the lock
       if (!log_lock) {
@@ -462,20 +339,12 @@ LogMessage::~LogMessage() {
       log_lock->Lock();
     }
 
-#if defined(OS_WIN)
     SetFilePointer(log_file, 0, 0, SEEK_END);
     DWORD num_written;
     WriteFile(log_file, (void*)str_newline.c_str(), (DWORD)str_newline.length(), &num_written, NULL);
-#else
-    fprintf(log_file, "%s", str_newline.c_str());
-#endif
 
     if (lock_log_file == LOCK_LOG_FILE) {
-#if defined(OS_WIN)
       ReleaseMutex(log_mutex);
-#elif defined(OS_POSIX)
-      pthread_mutex_unlock(&log_mutex);
-#endif
     } else {
       log_lock->Unlock();
     }
@@ -483,8 +352,8 @@ LogMessage::~LogMessage() {
 
   if (severity_ == LOG_FATAL) {
     // display a message or break into the debugger on a fatal error
-    if (DebugUtil::BeingDebugged()) {
-      DebugUtil::BreakDebugger();
+    if (::IsDebuggerPresent()) {
+      __debugbreak();
     } else {
       if (log_assert_handler) {
         // make a copy of the string for the handler out of paranoia
@@ -494,9 +363,7 @@ LogMessage::~LogMessage() {
         // the debug message process
         DisplayDebugMessage(stream_.str());
         // Crash the process to generate a dump.
-        DebugUtil::BreakDebugger();
-        // TODO(mmentovai): when we have breakpad support, generate a breakpad
-        // dump, but until then, do not invoke the Apple crash reporter.
+        __debugbreak();
       }
     }
   }
@@ -506,13 +373,24 @@ void CloseLogFile() {
   if (!log_file)
     return;
 
-  CloseFile(log_file);
+  CloseHandle(log_file);
   log_file = NULL;
 }
 
 } // namespace logging
 
 std::ostream& operator<<(std::ostream& out, const wchar_t* wstr) {
-  return out << base::SysWideToUTF8(std::wstring(wstr));
-}
+  if (!wstr || !wstr[0])
+    return out;
 
+  // compute the length of the buffer we'll need
+  int charcount = WideCharToMultiByte(CP_UTF8, 0, wstr, -1,
+                                      NULL, 0, NULL, NULL);
+  if (charcount == 0)
+    return out;
+
+  // convert
+  scoped_array<char> buf(new char[charcount]);
+  WideCharToMultiByte(CP_UTF8, 0, wstr, -1, buf.get(), charcount, NULL, NULL);
+  return out << buf.get();
+}

@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Structs that hold data used in broadcasting notifications.
 
@@ -45,8 +70,14 @@ struct URLsDeletedDetails : public HistoryDetails {
   std::set<GURL> urls;
 };
 
+// Details for NOTIFY_HOST_DELETED_FROM_HISTORY.
+struct HostDeletedDetails : public HistoryDetails {
+  std::string host_name;
+};
+
 // Details for NOTIFY_URLS_STARRED.
 struct URLsStarredDetails : public HistoryDetails {
+
   URLsStarredDetails(bool being_starred) : starred(being_starred) {}
 
   // The new starred state of the list of URLs. True when they are being
@@ -55,9 +86,25 @@ struct URLsStarredDetails : public HistoryDetails {
 
   // The list of URLs that are changing.
   std::set<GURL> changed_urls;
+
+  // The star entries that were added or removed as the result of starring
+  // the entry. This may be empty.
+  std::vector<StarredEntry> star_entries;
 };
 
-// Details for NOTIFY_FAVICON_CHANGED.
+// Details for NOTIFY_STAR_ENTRY_CHANGED and others.
+struct StarredEntryDetails : public HistoryDetails {
+  StarredEntry entry;
+};
+
+// Details for NOTIFY_PAGE_PRESENTATION_INDEX_CHANGED.
+struct PresentationIndexDetails : public HistoryDetails {
+  GURL url;
+  URLID url_id;
+  int index;
+};
+
+// Details for NOTIFY_STARRED_FAVICON_CHANGED.
 struct FavIconChangeDetails : public HistoryDetails {
   std::set<GURL> urls;
 };
@@ -65,4 +112,3 @@ struct FavIconChangeDetails : public HistoryDetails {
 }  // namespace history
 
 #endif  // CHROME_BROWSER_HISTORY_HISTORY_NOTIFICATIONS_H__
-

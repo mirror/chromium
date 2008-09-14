@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef NET_URL_REQUEST_URL_REQUEST_JOB_MANAGER_H__
 #define NET_URL_REQUEST_URL_REQUEST_JOB_MANAGER_H__
@@ -8,7 +33,6 @@
 #include <map>
 
 #include "base/lock.h"
-#include "base/platform_thread.h"
 #include "net/url_request/url_request.h"
 
 // This class is responsible for managing the set of protocol factories and
@@ -57,31 +81,16 @@ class URLRequestJobManager {
 #ifndef NDEBUG
   // We use this to assert that CreateJob and the registration functions all
   // run on the same thread.
-  mutable int allowed_thread_;
-  mutable bool allowed_thread_initialized_;
+  mutable HANDLE allowed_thread_;
 
   // The first guy to call this function sets the allowed thread.  This way we
   // avoid needing to define that thread externally.  Since we expect all
   // callers to be on the same thread, we don't worry about threads racing to
   // set the allowed thread.
   bool IsAllowedThread() const {
-#if 0
-    if (!allowed_thread_initialized_) {
-      allowed_thread_ = PlatformThread::CurrentId();
-      allowed_thread_initialized_ = true;
-    }
-    return allowed_thread_ == PlatformThread::CurrentId();
-#else
-    // The previous version of this check used GetCurrentThread on Windows to
-    // get thread handles to compare. Unfortunately, GetCurrentThread returns
-    // a constant psuedo-handle (0xFFFFFFFE), and therefore IsAllowedThread
-    // always returned true. The above code that's turned off is the correct
-    // code, but causes the tree to turn red because some caller isn't
-    // respecting our thread requirements. We're turning off the check for now;
-    // bug http://b/issue?id=1338969 has been filed to fix things and turn the
-    // check back on.
-    return true;
-#endif
+    if (!allowed_thread_)
+      allowed_thread_ = GetCurrentThread();
+    return allowed_thread_ == GetCurrentThread();
   }
 #endif
 
@@ -89,4 +98,3 @@ class URLRequestJobManager {
 };
 
 #endif  // NET_URL_REQUEST_URL_REQUEST_JOB_MANAGER_H__
-

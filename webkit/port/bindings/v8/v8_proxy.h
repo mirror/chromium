@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef V8_PROXY_H__
 #define V8_PROXY_H__
@@ -102,41 +127,6 @@ class GlobalHandleInfo {
 };
 
 #endif  // NDEBUG
-
-// The following Batch structs and methods are used for setting multiple
-// properties on an ObjectTemplate, used from the generated bindings
-// initialization (ConfigureXXXTemplate).  This greatly reduces the binary
-// size by moving from code driven setup to data table driven setup.
-
-// BatchedAttribute translates into calls to SetAccessor() on either the
-// instance or the prototype ObjectTemplate, based on |on_proto|.
-struct BatchedAttribute {
-  const char* const name;
-  v8::AccessorGetter getter;
-  v8::AccessorSetter setter;
-  V8ClassIndex::V8WrapperType data;
-  v8::AccessControl settings;
-  v8::PropertyAttribute attribute;
-  bool on_proto;
-};
-
-void BatchConfigureAttributes(v8::Handle<v8::ObjectTemplate> inst,
-                              v8::Handle<v8::ObjectTemplate> proto,
-                              const BatchedAttribute* attrs,
-                              size_t num_attrs);
-
-// BhatchedConstant translates into calls to Set() for setting up an object's
-// constants.  It sets the constant on both the FunctionTemplate |desc| and the
-// ObjectTemplate |proto|.  PropertyAttributes is always ReadOnly.
-struct BatchedConstant {
-  const char* const name;
-  int value;
-};
-
-void BatchConfigureConstants(v8::Handle<v8::FunctionTemplate> desc,
-                             v8::Handle<v8::ObjectTemplate> proto,
-                             const BatchedConstant* consts,
-                             size_t num_consts);
 
 class V8Proxy {
  public:
@@ -358,11 +348,11 @@ class V8Proxy {
 
   // Create an instance of a function descriptor and set to the global object
   // as a named property. Used by v8_test_shell.
-  static void BindJSObjectToWindow(Frame* frame,
-                                   const char* name,
-                                   int type,
-                                   v8::Handle<v8::FunctionTemplate> desc,
-                                   void* imp);
+  static void V8Proxy::BindJSObjectToWindow(Frame* frame,
+                                          const char* name,
+                                          int type,
+                                          v8::Handle<v8::FunctionTemplate> desc,
+                                          void* imp);
 
   static v8::Handle<v8::Value> EventToV8Object(Event* event);
   static Event* ToNativeEvent(v8::Handle<v8::Value> jsevent) {
@@ -428,7 +418,7 @@ class V8Proxy {
   static v8::Handle<v8::Object> CSSRuleToV8Object(CSSRule* rule);
   // Returns the JS wrapper of a window object, initializes the environment
   // of the window frame if needed.
-  static v8::Handle<v8::Object> WindowToV8Object(DOMWindow* window);
+  static v8::Handle<v8::Object> V8Proxy::WindowToV8Object(DOMWindow* window);
 
 #if ENABLE(SVG)
   static v8::Handle<v8::Object> SVGElementInstanceToV8Object(
@@ -436,11 +426,6 @@ class V8Proxy {
   static v8::Handle<v8::Object> SVGObjectWithContextToV8Object(
     Peerable* object, V8ClassIndex::V8WrapperType type);
 #endif
-
-  // Set hidden references in a DOMWindow object of a frame.
-  static void SetHiddenWindowReference(Frame* frame,
-                                       const int internal_index,
-                                       v8::Handle<v8::Object> jsobj);
 
   static V8ClassIndex::V8WrapperType GetHTMLElementType(HTMLElement* elm);
 
@@ -501,6 +486,20 @@ class V8Proxy {
   int m_recursion;
 };
 
+
+// Add indexed getter to the function template for a collection.
+template <class T>
+static void SetCollectionIndexedGetter(v8::Handle<v8::FunctionTemplate> desc,
+                                       V8ClassIndex::V8WrapperType type) {
+  desc->InstanceTemplate()->SetIndexedPropertyHandler(
+      CollectionIndexedPropertyGetter<T>,
+      0,
+      0,
+      0,
+      CollectionIndexedPropertyEnumerator<T>,
+      v8::External::New(reinterpret_cast<void*>(type)));
+}
+
 template <int tag, typename T>
 v8::Handle<v8::Value> V8Proxy::ConstructDOMObject(const v8::Arguments& args) {
   if (!args.IsConstructCall()) {
@@ -515,7 +514,58 @@ v8::Handle<v8::Value> V8Proxy::ConstructDOMObject(const v8::Arguments& args) {
   return args.Holder();
 }
 
+// Add named getter to the function template for a collection.
+template <class T>
+static void SetCollectionNamedGetter(v8::Handle<v8::FunctionTemplate> desc,
+                                     V8ClassIndex::V8WrapperType type) {
+  desc->InstanceTemplate()->SetNamedPropertyHandler(
+      CollectionNamedPropertyGetter<T>,
+      0,
+      0,
+      0,
+      0,
+      v8::External::New(reinterpret_cast<void*>(type)));
+}
+
+
+// Add named and indexed getters to the function template for a collection.
+template <class T>
+static void SetCollectionIndexedAndNamedGetters(
+    v8::Handle<v8::FunctionTemplate> desc, V8ClassIndex::V8WrapperType type) {
+  // If we interceptor before object, accessing 'length' can trigger
+  // a webkit assertion error.
+  // (see fast/dom/HTMLDocument/document-special-properties.html
+  desc->InstanceTemplate()->SetNamedPropertyHandler(
+      CollectionNamedPropertyGetter<T>,
+      0,
+      0,
+      0,
+      0,
+      v8::External::New(reinterpret_cast<void*>(type)));
+  desc->InstanceTemplate()->SetIndexedPropertyHandler(
+      CollectionIndexedPropertyGetter<T>,
+      0,
+      0,
+      0,
+      CollectionIndexedPropertyEnumerator<T>,
+      v8::External::New(reinterpret_cast<void*>(type)));
+}
+
+
+// Add indexed getter returning a string or null to a function template
+// for a collection.
+template <class T>
+static void SetCollectionStringOrNullIndexedGetter(
+    v8::Handle<v8::FunctionTemplate> desc) {
+  desc->InstanceTemplate()->SetIndexedPropertyHandler(
+      CollectionStringOrNullIndexedPropertyGetter<T>,
+      0,
+      0,
+      0,
+      CollectionIndexedPropertyEnumerator<T>);
+}
+
+
 }  // namespace WebCore
 
 #endif  // V8_PROXY_H__
-

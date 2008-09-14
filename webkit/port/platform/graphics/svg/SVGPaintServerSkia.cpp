@@ -35,6 +35,7 @@
 #include "GraphicsContext.h"
 #include "RenderPath.h"
 
+#include "base/gfx/platform_canvas.h"
 #include "SkiaUtils.h"
 #include "SkDashPathEffect.h"
 

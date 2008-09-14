@@ -1,63 +1,82 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // This file defines utility functions for working with strings.
 
-#ifndef BASE_STRING_UTIL_H_
-#define BASE_STRING_UTIL_H_
+#ifndef BASE_STRING_UTIL_H__
+#define BASE_STRING_UTIL_H__
 
 #include <string>
 #include <vector>
-#include <stdarg.h>   // va_list
 
 #include "base/basictypes.h"
-#include "base/string16.h"
 
-// Safe standard library wrappers for all platforms.
+// Safe standard library wrappers for all platforms.  The Str* variants
+// operate on NUL-terminated char* strings, like the standard library's str*
+// functions.
 
-namespace base {
+// Copy at most (dst_size - 1) characters from src to dest, guaranteeing dst
+// will be NUL-terminated.  If the string is copied without truncation,
+// returns true.  dst is undefined if the string cannot be copied without
+// truncation, and the function will either return false or cause termination.
+bool StrCpy(char* dest, const char* src, size_t dst_size);
 
-// C standard-library functions like "strncasecmp" and "snprintf" that aren't
-// cross-platform are provided as "base::strncasecmp", and their prototypes
-// are listed below.  These functions are then implemented as inline calls
-// to the platform-specific equivalents in the platform-specific headers.
+// As with StrCpy, but copies at most the minimum of (dst_size - 1) and
+// src_size characters.
+bool StrNCpy(char* dest, const char* src, size_t dst_size, size_t src_size);
 
 // Compare up to count characters of s1 and s2 without regard to case using
 // the current locale; returns 0 if they are equal, 1 if s1 > s2, and -1 if
 // s2 > s1 according to a lexicographic comparison.
-int strncasecmp(const char* s1, const char* s2, size_t count);
+int StrNCaseCmp(const char* s1, const char* s2, size_t count);
 
-// Wrapper for vsnprintf that always null-terminates and always returns the
-// number of characters that would be in an untruncated formatted
+// Wrapper for vsnprintf, snprintf that always NUL-terminates and always
+// returns the number of characters that would be in an untruncated formatted
 // string, even when truncation occurs.
-int vsnprintf(char* buffer, size_t size, const char* format, va_list arguments);
+int VSNPrintF(char* buffer, size_t size,
+	      const char* format, va_list arguments);
+int SNPrintF(char* buffer, size_t size, const char* format, ...);
 
-// vswprintf always null-terminates, but when truncation occurs, it will either
-// return -1 or the number of characters that would be in an untruncated
-// formatted string.  The actual return value depends on the underlying
-// C library's vswprintf implementation.
-int vswprintf(wchar_t* buffer, size_t size,
+// The Wcs* variants operate on NUL-terminated wchar_t* strings, like the
+// standard library's wcs* functions.  Otherwise, these behave the same as
+// the Str* variants above.
+
+bool WcsCpy(wchar_t* dest, const wchar_t* src, size_t dst_size);
+bool WcsNCpy(wchar_t* dest, const wchar_t* src, size_t dst_size);
+
+int VSWPrintF(wchar_t* buffer, size_t size,
               const wchar_t* format, va_list arguments);
+int SWPrintF(wchar_t* buffer, size_t size, const wchar_t* format, ...);
 
 // Some of these implementations need to be inlined.
 
-inline int snprintf(char* buffer, size_t size, const char* format, ...) {
-  va_list arguments;
-  va_start(arguments, format);
-  int result = vsnprintf(buffer, size, format, arguments);
-  va_end(arguments);
-  return result;
-}
-
-inline int swprintf(wchar_t* buffer, size_t size, const wchar_t* format, ...) {
-  va_list arguments;
-  va_start(arguments, format);
-  int result = vswprintf(buffer, size, format, arguments);
-  va_end(arguments);
-  return result;
-}
-
+namespace base {
 // BSD-style safe and consistent string copy functions.
 // Copies |src| to |dst|, where |dst_size| is the total allocated size of |dst|.
 // Copies at most |dst_size|-1 characters, and always NULL terminates |dst|, as
@@ -67,47 +86,31 @@ inline int swprintf(wchar_t* buffer, size_t size, const wchar_t* format, ...) {
 size_t strlcpy(char* dst, const char* src, size_t dst_size);
 size_t wcslcpy(wchar_t* dst, const wchar_t* src, size_t dst_size);
 
-// Scan a wprintf format string to determine whether it's portable across a
-// variety of systems.  This function only checks that the conversion
-// specifiers used by the format string are supported and have the same meaning
-// on a variety of systems.  It doesn't check for other errors that might occur
-// within a format string.
-//
-// Nonportable conversion specifiers for wprintf are:
-//  - 's' and 'c' without an 'l' length modifier.  %s and %c operate on char
-//     data on all systems except Windows, which treat them as wchar_t data.
-//     Use %ls and %lc for wchar_t data instead.
-//  - 'S' and 'C', which operate on wchar_t data on all systems except Windows,
-//     which treat them as char data.  Use %ls and %lc for wchar_t data
-//     instead.
-//  - 'F', which is not identified by Windows wprintf documentation.
-//  - 'D', 'O', and 'U', which are deprecated and not available on all systems.
-//     Use %ld, %lo, and %lu instead.
-//
-// Note that there is no portable conversion specifier for char data when
-// working with wprintf.
-//
-// This function is intended to be called from base::vswprintf.
-bool IsWprintfFormatPortable(const wchar_t* format);
-
 }  // namespace base
 
-#if defined(OS_WIN)
+#if defined(WIN32)
 #include "base/string_util_win.h"
-#elif defined(OS_POSIX)
-#include "base/string_util_posix.h"
+#elif defined(__APPLE__)
+#include "base/string_util_mac.h"
 #else
 #error Define string operations appropriately for your platform
 #endif
 
-// Old names for the above string functions, kept for compatibility.
-// TODO(evanm): excise all references to these old names.
-#define StrNCaseCmp base::strncasecmp
-#define SWPrintF base::swprintf
-#define VSNPrintF base::vsnprintf
-#define SNPrintF base::snprintf
-#define SWPrintF base::swprintf
+inline int SNPrintF(char* buffer, size_t size, const char* format, ...) {
+  va_list arguments;
+  va_start(arguments, format);
+  int result = VSNPrintF(buffer, size, format, arguments);
+  va_end(arguments);
+  return result;
+}
 
+inline int SWPrintF(wchar_t* buffer, size_t size, const wchar_t* format, ...) {
+  va_list arguments;
+  va_start(arguments, format);
+  int result = VSWPrintF(buffer, size, format, arguments);
+  va_end(arguments);
+  return result;
+}
 
 // Returns a reference to a globally unique empty string that functions can
 // return.  Use this to avoid static construction of strings, not to replace
@@ -125,10 +128,10 @@ extern const char* const kCodepageUTF8;
 // Removes characters in trim_chars from the beginning and end of input.
 // NOTE: Safe to use the same variable for both input and output.
 bool TrimString(const std::wstring& input,
-                const wchar_t trim_chars[],
+                wchar_t trim_chars[],
                 std::wstring* output);
 bool TrimString(const std::string& input,
-                const char trim_chars[],
+                char trim_chars[],
                 std::string* output);
 
 // Trims any whitespace from either end of the input string.  Returns where
@@ -164,26 +167,20 @@ std::wstring CollapseWhitespace(const std::wstring& text,
 std::string WideToASCII(const std::wstring& wide);
 std::wstring ASCIIToWide(const std::string& ascii);
 
-// These convert between UTF-8, -16, and -32 strings. They are potentially slow,
-// so avoid unnecessary conversions. The low-level versions return a boolean
-// indicating whether the conversion was 100% valid. In this case, it will still
-// do the best it can and put the result in the output buffer. The versions that
-// return strings ignore this error and just return the best conversion
-// possible.
-bool WideToUTF8(const wchar_t* src, size_t src_len, std::string* output);
+// These convert between UTF8 and UTF16 strings. They are potentially slow,
+// so avoid unnecessary conversions. Most things should be in UTF16.
 std::string WideToUTF8(const std::wstring& wide);
-bool UTF8ToWide(const char* src, size_t src_len, std::wstring* output);
 std::wstring UTF8ToWide(const std::string& utf8);
 
-bool WideToUTF16(const wchar_t* src, size_t src_len, string16* output);
-string16 WideToUTF16(const std::wstring& wide);
-bool UTF16ToWide(const char16* src, size_t src_len, std::wstring* output);
-std::wstring UTF16ToWide(const string16& utf8);
-
-bool UTF8ToUTF16(const char* src, size_t src_len, string16* output);
-string16 UTF8ToUTF16(const std::string& utf8);
-bool UTF16ToUTF8(const char16* src, size_t src_len, std::string* output);
-std::string UTF16ToUTF8(const string16& utf16);
+// Converts between wide strings and whatever the native multibyte encoding
+// is. The native multibyte encoding on English machines will often Latin-1,
+// but could be ShiftJIS or even UTF-8, among others.
+//
+// These functions can be dangerous. Do not use unless you are sure you are
+// giving them to/getting them from somebody who expects the current platform
+// 8-bit encoding.
+std::string WideToNativeMB(const std::wstring& wide);
+std::wstring NativeMBToWide(const std::string& native_mb);
 
 // Defines the error handling modes of WideToCodepage and CodepageToWide.
 class OnStringUtilConversionError {
@@ -338,51 +335,13 @@ void ReplaceSubstringsAfterOffset(std::string* str,
                                   const std::string& replace_with);
 
 // Specialized string-conversion functions.
+std::string Uint64ToString(uint64 value);
 std::string IntToString(int value);
-std::wstring IntToWString(int value);
-std::string UintToString(unsigned int value);
-std::wstring UintToWString(unsigned int value);
 std::string Int64ToString(int64 value);
 std::wstring Int64ToWString(int64 value);
-std::string Uint64ToString(uint64 value);
-std::wstring Uint64ToWString(uint64 value);
-
-// Perform a best-effort conversion of the input string to a numeric type,
-// setting |*output| to the result of the conversion.  Returns true for
-// "perfect" conversions; returns false in the following cases:
-//  - Overflow/underflow.  |*output| will be set to the maximum value supported
-//    by the data type.
-//  - Trailing characters in the string after parsing the number.  |*output|
-//    will be set to the value of the number that was parsed.
-//  - No characters parseable as a number at the beginning of the string.
-//    |*output| will be set to 0.
-//  - Empty string.  |*output| will be set to 0.
-bool StringToInt(const std::string& input, int* output);
-bool StringToInt(const std::wstring& input, int* output);
-bool StringToInt64(const std::string& input, int64* output);
-bool StringToInt64(const std::wstring& input, int64* output);
-bool HexStringToInt(const std::string& input, int* output);
-bool HexStringToInt(const std::wstring& input, int* output);
-
-// For floating-point conversions, only conversions of input strings in decimal
-// form are defined to work.  Behavior with strings representing floating-point
-// numbers in hexadecimal, and strings representing non-fininte values (such
-// as NaN and inf) is undefined.  Otherwise, these behave the same as the
-// integral variants above.
-bool StringToDouble(const std::string& input, double* output);
-bool StringToDouble(const std::wstring& input, double* output);
-
-// Convenience forms of the above, when the caller is uninterested in the
-// boolean return value.  These return only the |*output| value from the
-// above conversions: a best-effort conversion when possible, otherwise, 0.
-int StringToInt(const std::string& value);
-int StringToInt(const std::wstring& value);
+std::wstring IntToWString(int value);
 int64 StringToInt64(const std::string& value);
 int64 StringToInt64(const std::wstring& value);
-int HexStringToInt(const std::string& value);
-int HexStringToInt(const std::wstring& value);
-double StringToDouble(const std::string& value);
-double StringToDouble(const std::wstring& value);
 
 // Return a C++ string given printf-like input.
 std::string StringPrintf(const char* format, ...);
@@ -426,6 +385,49 @@ inline char_type* WriteInto(
   str->resize(length_including_null - 1);
   return &((*str)[0]);
 }
+
+//-----------------------------------------------------------------------------
+// CharTraits is provides wrappers with common function names for char/wchar_t
+// specific CRT functions.
+
+template <class CharT> struct CharTraits {
+};
+
+template <>
+struct CharTraits<char> {
+  static inline size_t length(const char* s) {
+    return strlen(s);
+  }
+  static inline bool copy(char* dst, size_t dst_size, const char* s) {
+    return StrCpy(dst, s, dst_size);
+  }
+  static inline bool copy_num(char* dst, size_t dst_size, const char* s,
+                              size_t s_len) {
+    if (dst_size < (s_len + 1))
+      return false;
+    memcpy(dst, s, s_len);
+    dst[s_len] = '\0';
+    return true;
+  }
+};
+
+template <>
+struct CharTraits<wchar_t> {
+  static inline size_t length(const wchar_t* s) {
+    return wcslen(s);
+  }
+  static inline bool copy(wchar_t* dst, size_t dst_size, const wchar_t* s) {
+    return WcsCpy(dst, s, dst_size);
+  }
+  static inline bool copy_num(wchar_t* dst, size_t dst_size, const wchar_t* s,
+                              size_t s_len) {
+    if (dst_size < (s_len + 1))
+      return false;
+    memcpy(dst, s, s_len * sizeof(wchar_t));
+    dst[s_len] = '\0';
+    return true;
+  }
+};
 
 //-----------------------------------------------------------------------------
 
@@ -511,5 +513,4 @@ std::wstring ReplaceStringPlaceholders(const std::wstring& format_string,
 bool MatchPattern(const std::wstring& string, const std::wstring& pattern);
 bool MatchPattern(const std::string& string, const std::string& pattern);
 
-#endif  // BASE_STRING_UTIL_H_
-
+#endif  // BASE_STRING_UTIL_H__

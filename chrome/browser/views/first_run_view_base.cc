@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/views/first_run_view_base.h"
 
@@ -29,7 +54,8 @@
 #include "generated_resources.h"
 
 FirstRunViewBase::FirstRunViewBase(Profile* profile)
-    : preferred_width_(0),
+    : dialog_(NULL),
+      preferred_width_(0),
       background_image_(NULL),
       separator_1_(NULL),
       separator_2_(NULL),
@@ -122,7 +148,9 @@ void FirstRunViewBase::Layout() {
                      background_image_->GetHeight() - 2;
 
   separator_1_->GetPreferredSize(&pref_size);
-  separator_1_->SetBounds(0 , next_v_space, canvas.cx + 1, pref_size.cy);
+  separator_1_->SetBounds(0, next_v_space,
+                          canvas.cx + 1,
+                          pref_size.cy);
 
   next_v_space = canvas.cy - kPanelSubVerticalSpacing;
   separator_2_->GetPreferredSize(&pref_size);
@@ -154,10 +182,13 @@ int FirstRunViewBase::GetDefaultImportItems() const {
 };
 
 void FirstRunViewBase::DisableButtons() {
-  window()->EnableClose(false);
-  ChromeViews::DialogClientView* dcv = GetDialogClientView();
-  dcv->ok_button()->SetEnabled(false);
-  dcv->cancel_button()->SetEnabled(false);
+  dialog_->EnableClose(false);
+  ChromeViews::ClientView* cv =
+      reinterpret_cast<ChromeViews::ClientView*>(GetParent());
+  if (cv) {
+    cv->ok_button()->SetEnabled(false);
+    cv->cancel_button()->SetEnabled(false);
+  }
 }
 
 bool FirstRunViewBase::CreateDesktopShortcut() {
@@ -171,4 +202,3 @@ bool FirstRunViewBase::CreateQuickLaunchShortcut() {
 bool FirstRunViewBase::FirstRunComplete() {
   return FirstRun::CreateSentinel();
 }
-

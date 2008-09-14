@@ -1,6 +1,31 @@
-# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+# Copyright 2008, Google Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+#
+#    * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above
+# copyright notice, this list of conditions and the following disclaimer
+# in the documentation and/or other materials provided with the
+# distribution.
+#    * Neither the name of Google Inc. nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Import('env')
 
@@ -25,6 +50,12 @@ env.Append(
         '/TP',
         '/WX',          # treat warnings as errors
         '/Wp64',        # warn about potential 64-bit problems
+        '/wd4503',
+        '/wd4819',
+    ],
+    CPPDEFINES = [
+        'CERT_CHAIN_PARA_HAS_EXTRA_FIELDS',
+        'WIN32_LEAN_AND_MEAN',
     ],
 )
 
@@ -102,7 +133,7 @@ env['PCHSTOP'] = 'stdafx.h'
 env.Append(CCPCHFLAGS = ['/FIstdafx.h'])
 
 
-env.ChromeStaticLibrary('sandbox', input_files + [obj])
+env.StaticLibrary('sandbox', input_files + [obj])
 
 
 env_tests.Prepend(
@@ -117,10 +148,31 @@ env_tests.Prepend(
         '/nxcompat',
     ],
     LIBS = [
-        'base',
-        'gtest',
-        'sandbox',
-    ],
+        # System libraries.
+        'DelayImp.lib',
+        'advapi32.lib',
+        'comdlg32.lib',
+        'gdi32.lib',
+        'kernel32.lib',
+        'msimg32.lib',
+        'odbc32.lib',
+        'odbccp32.lib',
+        'ole32.lib',
+        'oleaut32.lib',
+        'psapi.lib',
+        'shell32.lib',
+        'user32.lib',
+        'usp10.lib',
+        'uuid.lib',
+        'version.lib',
+        'wininet.lib',
+        'winspool.lib',
+        'ws2_32.lib',
+
+        # Chrome libraries.
+        'base.lib',
+        'sandbox.lib',
+        ],
     LIBPATH = [
         '.',
         '$BASE_DIR'
@@ -128,6 +180,8 @@ env_tests.Prepend(
 )
 
 controller_obj = env_tests.StaticObject('$TESTS_DIR/common/controller.cc')
+
+extra_libs = ['$TESTING_DIR/gtest.lib']
 
 
 # Unit Tests
@@ -168,10 +222,13 @@ env_unit_tests['PCHSTOP'] = 'stdafx.h'
 env_unit_tests.Append(CCPCHFLAGS = ['/FIstdafx.h'])
 
 
-unit_tests = env_unit_tests.ChromeTestProgram(
-    'sbox_unittests',
-    unit_test_files,
+unit_tests = env_unit_tests.Program(
+    ['../sandbox_unit_tests.exe',
+    '../sandbox_unit_tests.ilk',
+    '../sandbox_unit_tests.pdb'],
+    unit_test_files + extra_libs,
 )
+
 
 # Integration Tests
 
@@ -209,9 +266,13 @@ env_integration_tests['PCH'] = pch
 env_integration_tests['PCHSTOP'] = 'stdafx.h'
 env_integration_tests.Append(CCPCHFLAGS = ['/FIstdafx.h'])
 
-integration_tests = env_integration_tests.ChromeTestProgram(
-    'sbox_integration_tests',
-    integration_test_files,
+integration_tests = env_integration_tests.Program(
+    ['../integration_tests.exe',
+    '../integration_tests.ilk',
+    '../integration_tests.lib',
+    '../integration_tests.exp',
+    '../integration_tests.pdb'],
+    integration_test_files + extra_libs,
 )
 
 
@@ -244,9 +305,13 @@ env_validation_tests['PCH'] = pch
 env_validation_tests['PCHSTOP'] = 'stdafx.h'
 env_validation_tests.Append(CCPCHFLAGS = ['/FIstdafx.h'])
 
-validation_tests = env_validation_tests.ChromeTestProgram(
-    'sbox_validation_tests',
-    validation_test_files,
+validation_tests = env_validation_tests.Program(
+    ['../validation_tests.exe',
+    '../validation_tests.ilk',
+    '../validation_tests.lib',
+    '../validation_tests.exp',
+    '../validation_tests.pdb'],
+    validation_test_files + extra_libs,
 )
 
 
@@ -257,4 +322,5 @@ installed_tests = env.Install('$OBJ_ROOT',
 
 # Setup alias for sandbox related targets.
 env.Alias('sandbox', ['.', installed_tests])
+
 

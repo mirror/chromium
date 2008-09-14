@@ -1,0 +1,3 @@
+property-call-megamorphic.js:3: Uncaught TypeError: Cannot call method 'foo' of null
+function call_foo(obj) { return obj.foo(); }
+                                    ^

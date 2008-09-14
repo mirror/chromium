@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // Unit test for SyncChannel.
 
@@ -27,13 +52,6 @@
 #include "chrome/common/ipc_sync_channel_unittest.h"
 
 using namespace IPC;
-
-namespace {
-
-class IPCSyncChannelTest : public testing::Test {
- private:
-  MessageLoop message_loop_;
-};
 
 // SyncChannel should only be used in child processes as we don't want to hang
 // the browser.  So in the unit test we need to have a ChildProcess object.
@@ -98,19 +116,15 @@ class Worker : public Channel::Listener, public Message::Sender {
   void AddRef() { }
   void Release() { }
   bool Send(Message* msg) { return channel_->Send(msg); }
-  bool SendWithTimeout(Message* msg, int timeout_ms) {
-    return channel_->SendWithTimeout(msg, timeout_ms);
-  }
   void WaitForChannelCreation() { channel_created_.Wait(); }
   void CloseChannel() { channel_.reset(); }
   void Start() {
-    StartThread(&listener_thread_);
-    base::Thread* thread =
-        overrided_thread_ ? overrided_thread_ : &listener_thread_;
+    listener_thread_.Start();
+    Thread* thread = overrided_thread_ ? overrided_thread_ : &listener_thread_;
     thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
         this, &Worker::OnStart));
   }
-  void OverrideThread(base::Thread* overrided_thread) {
+  void OverrideThread(Thread* overrided_thread) {
     DCHECK(overrided_thread_ == NULL);
     overrided_thread_ = overrided_thread;
   }
@@ -141,11 +155,10 @@ class Worker : public Channel::Listener, public Message::Sender {
  private:
   // Called on the listener thread to create the sync channel.
   void OnStart() {
+    ipc_thread_.Start();
     // Link ipc_thread_, listener_thread_ and channel_ altogether.
-    StartThread(&ipc_thread_);
     channel_.reset(new SyncChannel(
-        channel_name_, mode_, this, NULL, ipc_thread_.message_loop(), true,
-        TestProcess::GetShutDownEvent()));
+        channel_name_, mode_, this, ipc_thread_.message_loop(), true));
     channel_created_.Set();
     Run();
   }
@@ -158,20 +171,14 @@ class Worker : public Channel::Listener, public Message::Sender {
     IPC_END_MESSAGE_MAP()
   }
 
-  void StartThread(base::Thread* thread) {
-    base::Thread::Options options;
-    options.message_loop_type = MessageLoop::TYPE_IO;
-    thread->StartWithOptions(options);
-  }
-
   Event done_;
   Event channel_created_;
   std::wstring channel_name_;
   Channel::Mode mode_;
   scoped_ptr<SyncChannel> channel_;
-  base::Thread ipc_thread_;
-  base::Thread listener_thread_;
-  base::Thread* overrided_thread_;
+  Thread ipc_thread_;
+  Thread listener_thread_;
+  Thread* overrided_thread_;
 
   DISALLOW_EVIL_CONSTRUCTORS(Worker);
 };
@@ -205,17 +212,10 @@ void RunTest(std::vector<Worker*> workers) {
   int count = static_cast<int>(done_handles.size());
   WaitForMultipleObjects(count, &done_handles.front(), TRUE, INFINITE);
   STLDeleteContainerPointers(workers.begin(), workers.end());
-  
-  TestProcess::GlobalCleanup();
 }
-
-}  // namespace
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class SimpleServer : public Worker {
  public:
   SimpleServer() : Worker(Channel::MODE_SERVER, "simpler_server") { }
@@ -238,10 +238,8 @@ class SimpleClient : public Worker {
   }
 };
 
-}  // namespace
-
 // Tests basic synchronous call
-TEST_F(IPCSyncChannelTest, Simple) {
+TEST(IPCSyncChannelTest, Simple) {
   std::vector<Worker*> workers;
   workers.push_back(new SimpleServer());
   workers.push_back(new SimpleClient());
@@ -250,9 +248,6 @@ TEST_F(IPCSyncChannelTest, Simple) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class DelayClient : public Worker {
  public:
   DelayClient() : Worker(Channel::MODE_CLIENT, "delay_client") { }
@@ -264,10 +259,8 @@ class DelayClient : public Worker {
   }
 };
 
-}  // namespace
-
 // Tests that asynchronous replies work
-TEST_F(IPCSyncChannelTest, DelayReply) {
+TEST(IPCSyncChannelTest, DelayReply) {
   std::vector<Worker*> workers;
   workers.push_back(new SimpleServer());
   workers.push_back(new DelayClient());
@@ -276,9 +269,6 @@ TEST_F(IPCSyncChannelTest, DelayReply) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class NoHangServer : public Worker {
  public:
   explicit NoHangServer(Event* got_first_reply)
@@ -318,10 +308,8 @@ class NoHangClient : public Worker {
   Event* got_first_reply_;
 };
 
-}  // namespace
-
 // Tests that caller doesn't hang if receiver dies
-TEST_F(IPCSyncChannelTest, NoHang) {
+TEST(IPCSyncChannelTest, NoHang) {
   Event got_first_reply;
 
   std::vector<Worker*> workers;
@@ -332,9 +320,6 @@ TEST_F(IPCSyncChannelTest, NoHang) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class RecursiveServer : public Worker {
  public:
   RecursiveServer() : Worker(Channel::MODE_SERVER, "recursive_server") { }
@@ -362,10 +347,8 @@ class RecursiveClient : public Worker {
   }
 };
 
-}  // namespace
-
 // Tests that the caller unblocks to answer a sync message from the receiver.
-TEST_F(IPCSyncChannelTest, Recursive) {
+TEST(IPCSyncChannelTest, Recursive) {
   std::vector<Worker*> workers;
   workers.push_back(new RecursiveServer());
   workers.push_back(new RecursiveClient());
@@ -374,9 +357,6 @@ TEST_F(IPCSyncChannelTest, Recursive) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class MultipleServer1 : public Worker {
  public:
   MultipleServer1() : Worker(L"test_channel1", Channel::MODE_SERVER) { }
@@ -438,15 +418,13 @@ class MultipleClient2 : public Worker {
   Event *client1_msg_received_, *client1_can_reply_;
 };
 
-}  // namespace
-
 // Tests that multiple SyncObjects on the same listener thread can unblock each
 // other.
-TEST_F(IPCSyncChannelTest, Multiple) {
+TEST(IPCSyncChannelTest, Multiple) {
   std::vector<Worker*> workers;
 
   // A shared worker thread so that server1 and server2 run on one thread.
-  base::Thread worker_thread("Multiple");
+  Thread worker_thread("Multiple");
   worker_thread.Start();
 
   // Server1 sends a sync msg to client1, which blocks the reply until
@@ -477,9 +455,6 @@ TEST_F(IPCSyncChannelTest, Multiple) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class QueuedReplyServer1 : public Worker {
  public:
   QueuedReplyServer1() : Worker(L"test_channel1", Channel::MODE_SERVER) { }
@@ -548,17 +523,15 @@ class QueuedReplyClient2 : public Worker {
   Event *client1_msg_received_;
 };
 
-}  // namespace
-
 // While a blocking send is in progress, the listener thread might answer other
 // synchronous messages.  This tests that if during the response to another
 // message the reply to the original messages comes, it is queued up correctly
 // and the original Send is unblocked later.
-TEST_F(IPCSyncChannelTest, QueuedReply) {
+TEST(IPCSyncChannelTest, QueuedReply) {
   std::vector<Worker*> workers;
 
   // A shared worker thread so that server1 and server2 run on one thread.
-  base::Thread worker_thread("QueuedReply");
+  Thread worker_thread("QueuedReply");
   worker_thread.Start();
 
   Event client1_msg_received, server2_can_reply;
@@ -585,9 +558,6 @@ TEST_F(IPCSyncChannelTest, QueuedReply) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class BadServer : public Worker {
  public:
   BadServer() : Worker(Channel::MODE_SERVER, "simpler_server") { }
@@ -615,10 +585,8 @@ class BadServer : public Worker {
   }
 };
 
-}  // namespace
-
 // Tests that if a message is not serialized correctly, the Send() will fail.
-TEST_F(IPCSyncChannelTest, BadMessage) {
+TEST(IPCSyncChannelTest, BadMessage) {
   std::vector<Worker*> workers;
   workers.push_back(new BadServer());
   workers.push_back(new SimpleClient());
@@ -627,9 +595,6 @@ TEST_F(IPCSyncChannelTest, BadMessage) {
 
 
 //-----------------------------------------------------------------------------
-
-namespace {
-
 class ChattyRecursiveClient : public Worker {
  public:
   ChattyRecursiveClient() :
@@ -649,119 +614,12 @@ class ChattyRecursiveClient : public Worker {
   }
 };
 
-}  // namespace
-
 // Tests http://b/issue?id=1093251 - that sending lots of sync messages while
 // the receiver is waiting for a sync reply does not overflow the PostMessage
 // queue.
-TEST_F(IPCSyncChannelTest, ChattyServer) {
+TEST(IPCSyncChannelTest, ChattyServer) {
   std::vector<Worker*> workers;
   workers.push_back(new RecursiveServer());
   workers.push_back(new ChattyRecursiveClient());
-  RunTest(workers);
-}
-
-
-//------------------------------------------------------------------------------
-
-namespace {
-
-class TimeoutServer : public Worker {
- public:
-   TimeoutServer(int timeout_ms,
-                 std::vector<bool> timeout_seq)
-      : Worker(Channel::MODE_SERVER, "timeout_server"),
-        timeout_ms_(timeout_ms),
-        timeout_seq_(timeout_seq) {
-  }
-
-  void Run() {
-    for (std::vector<bool>::const_iterator iter = timeout_seq_.begin();
-         iter != timeout_seq_.end(); ++iter) {
-      int answer = 0;
-      bool result =
-          SendWithTimeout(new SyncChannelTestMsg_AnswerToLife(&answer),
-                          timeout_ms_);
-      if (*iter) {
-        // Time-out expected.
-        DCHECK(!result);
-        DCHECK(answer == 0);
-      } else {
-        DCHECK(result);
-        DCHECK(answer == 42);
-      }
-    }
-    Done();
-  }
-
- private:
-  int timeout_ms_;
-  std::vector<bool> timeout_seq_;
-};
-
-class UnresponsiveClient : public Worker {
- public:
-   UnresponsiveClient(std::vector<bool> timeout_seq)
-      : Worker(Channel::MODE_CLIENT, "unresponsive_client"),
-        timeout_seq_(timeout_seq) {
-   }
-
-  void OnAnswerDelay(Message* reply_msg) {
-    DCHECK(!timeout_seq_.empty());
-    if (!timeout_seq_[0]) {
-      SyncChannelTestMsg_AnswerToLife::WriteReplyParams(reply_msg, 42);
-      Send(reply_msg);
-    } else {
-      // Don't reply.
-      delete reply_msg;
-    }
-    timeout_seq_.erase(timeout_seq_.begin());
-    if (timeout_seq_.empty())
-      Done();
-  }
-
- private:
-  // Whether we should time-out or respond to the various messages we receive.
-  std::vector<bool> timeout_seq_;
-};
-
-}  // namespace
-
-// Tests that SendWithTimeout does not time-out if the response comes back fast
-// enough.
-TEST_F(IPCSyncChannelTest, SendWithTimeoutOK) {
-  std::vector<Worker*> workers;
-  std::vector<bool> timeout_seq;
-  timeout_seq.push_back(false);
-  timeout_seq.push_back(false);
-  timeout_seq.push_back(false);
-  workers.push_back(new TimeoutServer(5000, timeout_seq));
-  workers.push_back(new SimpleClient());
-  RunTest(workers);
-}
-
-// Tests that SendWithTimeout does time-out.
-TEST_F(IPCSyncChannelTest, SendWithTimeoutTimeout) {
-  std::vector<Worker*> workers;
-  std::vector<bool> timeout_seq;
-  timeout_seq.push_back(true);
-  timeout_seq.push_back(false);
-  timeout_seq.push_back(false);
-  workers.push_back(new TimeoutServer(100, timeout_seq));
-  workers.push_back(new UnresponsiveClient(timeout_seq));
-  RunTest(workers);
-}
-
-// Sends some message that time-out and some that succeed.
-TEST_F(IPCSyncChannelTest, SendWithTimeoutMixedOKAndTimeout) {
-  std::vector<Worker*> workers;
-  std::vector<bool> timeout_seq;
-  timeout_seq.push_back(true);
-  timeout_seq.push_back(false);
-  timeout_seq.push_back(false);
-  timeout_seq.push_back(true);
-  timeout_seq.push_back(false);
-  workers.push_back(new TimeoutServer(100, timeout_seq));
-  workers.push_back(new UnresponsiveClient(timeout_seq));
   RunTest(workers);
 }

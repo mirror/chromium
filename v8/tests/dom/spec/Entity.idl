@@ -1,0 +1,11 @@
+interface Entity : Node {
+  readonly attribute DOMString       publicId;
+  readonly attribute DOMString       systemId;
+  readonly attribute DOMString       notationName;
+  // Introduced in DOM Level 3:
+  readonly attribute DOMString       inputEncoding;
+  // Introduced in DOM Level 3:
+  readonly attribute DOMString       xmlEncoding;
+  // Introduced in DOM Level 3:
+  readonly attribute DOMString       xmlVersion;
+};

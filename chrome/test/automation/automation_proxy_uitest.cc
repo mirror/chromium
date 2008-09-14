@@ -1,16 +1,39 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
 
-#include "base/command_line.h"
 #include "base/file_util.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/common/chrome_constants.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/json_value_serializer.h"
 #include "chrome/test/automation/constrained_window_proxy.h"
 #include "chrome/test/automation/browser_proxy.h"
@@ -20,14 +43,7 @@
 #include "chrome/views/event.h"
 #include "net/base/net_util.h"
 
-class AutomationProxyTest : public UITest {
- protected:
-  AutomationProxyTest() {
-    CommandLine::AppendSwitchWithValue(&launch_arguments_,
-                                       switches::kLang,
-                                       L"en-us");
-  }
-};
+typedef UITest AutomationProxyTest;
 
 class AutomationProxyVisibleTest : public UITest {
  protected:
@@ -181,7 +197,7 @@ TEST_F(AutomationProxyVisibleTest, AppendTab) {
 
   std::wstring filename(test_data_directory_);
   file_util::AppendToPath(&filename, L"title2.html");
-  ASSERT_TRUE(window->AppendTab(net::FilePathToFileURL(filename)));
+  ASSERT_TRUE(window->AppendTab(net_util::FilePathToFileURL(filename)));
 
   int appended_tab_index;
   // Append tab will also be active tab
@@ -250,7 +266,7 @@ TEST_F(AutomationProxyTest, NavigateToURL) {
   std::wstring filename(test_data_directory_);
   file_util::AppendToPath(&filename, L"title2.html");
 
-  tab->NavigateToURL(net::FilePathToFileURL(filename));
+  tab->NavigateToURL(net_util::FilePathToFileURL(filename));
   ASSERT_TRUE(tab->GetTabTitle(&title));
   ASSERT_STREQ(L"Title Of Awesomeness", title.c_str());
 
@@ -268,7 +284,7 @@ TEST_F(AutomationProxyTest, DISABLED_NavigateToURLWithTimeout1) {
   file_util::AppendToPath(&filename, L"title2.html");
 
   bool is_timeout;
-  tab->NavigateToURLWithTimeout(net::FilePathToFileURL(filename),
+  tab->NavigateToURLWithTimeout(net_util::FilePathToFileURL(filename),
                                 10000, &is_timeout);
   ASSERT_FALSE(is_timeout);
 
@@ -276,7 +292,7 @@ TEST_F(AutomationProxyTest, DISABLED_NavigateToURLWithTimeout1) {
   ASSERT_TRUE(tab->GetTabTitle(&title));
   ASSERT_STREQ(L"Title Of Awesomeness", title.c_str());
 
-  tab->NavigateToURLWithTimeout(net::FilePathToFileURL(filename),
+  tab->NavigateToURLWithTimeout(net_util::FilePathToFileURL(filename),
                                 1, &is_timeout);
   ASSERT_TRUE(is_timeout);
 
@@ -295,13 +311,13 @@ TEST_F(AutomationProxyTest, DISABLED_NavigateToURLWithTimeout2) {
   file_util::AppendToPath(&filename1, L"title1.html");
 
   bool is_timeout;
-  tab->NavigateToURLWithTimeout(net::FilePathToFileURL(filename1),
+  tab->NavigateToURLWithTimeout(net_util::FilePathToFileURL(filename1),
                                 1, &is_timeout);
   ASSERT_TRUE(is_timeout);
 
   std::wstring filename2(test_data_directory_);
   file_util::AppendToPath(&filename2, L"title2.html");
-  tab->NavigateToURLWithTimeout(net::FilePathToFileURL(filename2),
+  tab->NavigateToURLWithTimeout(net_util::FilePathToFileURL(filename2),
                                 10000, &is_timeout);
   ASSERT_FALSE(is_timeout);
 
@@ -325,7 +341,7 @@ TEST_F(AutomationProxyTest, GoBackForward) {
 
   std::wstring filename(test_data_directory_);
   file_util::AppendToPath(&filename, L"title2.html");
-  ASSERT_TRUE(tab->NavigateToURL(net::FilePathToFileURL(filename)));
+  ASSERT_TRUE(tab->NavigateToURL(net_util::FilePathToFileURL(filename)));
   ASSERT_TRUE(tab->GetTabTitle(&title));
   ASSERT_STREQ(L"Title Of Awesomeness", title.c_str());
 
@@ -354,7 +370,7 @@ TEST_F(AutomationProxyTest, GetCurrentURL) {
 
   std::wstring filename(test_data_directory_);
   file_util::AppendToPath(&filename, L"cookie1.html");
-  GURL newurl = net::FilePathToFileURL(filename);
+  GURL newurl = net_util::FilePathToFileURL(filename);
   ASSERT_TRUE(tab->NavigateToURL(newurl));
   ASSERT_TRUE(tab->GetCurrentURL(&url));
   // compare canonical urls...
@@ -460,7 +476,7 @@ TEST_F(AutomationProxyTest, NavigateToURLAsync) {
 
   std::wstring filename(test_data_directory_);
   file_util::AppendToPath(&filename, L"cookie1.html");
-  GURL newurl = net::FilePathToFileURL(filename);
+  GURL newurl = net_util::FilePathToFileURL(filename);
 
   ASSERT_TRUE(tab->NavigateToURLAsync(newurl));
   std::string value = WaitUntilCookieNonEmpty(tab.get(), newurl,
@@ -506,8 +522,7 @@ class AutomationProxyTest4 : public UITest {
 std::wstring SynthesizeJSURL(const std::wstring& value) {
   std::wstring jscript;
   SStringPrintf(&jscript,
-      L"javascript:void(window.domAutomationController.send(%ls));",
-      value.c_str());
+    L"javascript:void(window.domAutomationController.send(%s));", value.c_str());
   return jscript;
 }
 
@@ -584,8 +599,8 @@ std::wstring SynthesizeJSURLForDOMQuery(const std::wstring& id) {
   std::wstring jscript;
   SStringPrintf(&jscript,
       L"javascript:void(window.domAutomationController)");
-  StringAppendF(&jscript, L".send(document.getElementById('%ls').nodeName);",
-      id.c_str());
+  StringAppendF(&jscript, L".send(document.getElementById('%s').nodeName);",
+    id.c_str());
   return jscript;
 }
 
@@ -637,7 +652,7 @@ TEST_F(AutomationProxyTest3, FrameDocumentCanBeAccessed) {
 #endif
 }
 
-TEST_F(AutomationProxyTest, DISABLED_ConstrainedWindowTest) {
+TEST_F(AutomationProxyTest, ConstrainedWindowTest) {
   scoped_ptr<BrowserProxy> window(automation()->GetBrowserWindow(0));
   ASSERT_TRUE(window.get());
 
@@ -649,7 +664,7 @@ TEST_F(AutomationProxyTest, DISABLED_ConstrainedWindowTest) {
   file_util::AppendToPath(&filename, L"constrained_files");
   file_util::AppendToPath(&filename, L"constrained_window.html");
 
-  ASSERT_TRUE(tab->NavigateToURL(net::FilePathToFileURL(filename)));
+  ASSERT_TRUE(tab->NavigateToURL(net_util::FilePathToFileURL(filename)));
 
   int count;
   ASSERT_TRUE(tab->WaitForChildWindowCountToChange(0, &count, 5000));
@@ -661,20 +676,13 @@ TEST_F(AutomationProxyTest, DISABLED_ConstrainedWindowTest) {
 
   std::wstring title;
   ASSERT_TRUE(cwindow->GetTitle(&title));
-#if defined(GOOGLE_CHROME_BUILD)
-  std::wstring app_name = L"Google Chrome";
-#else
-  std::wstring app_name = L"Chromium";
-#endif
-  std::wstring window_title = L"Constrained Window 0 - " + app_name;
-  ASSERT_STREQ(window_title.c_str(), title.c_str());
+  ASSERT_STREQ(L"Constrained Window 0 - Google Chrome", title.c_str());
   delete cwindow;
 
   cwindow = tab->GetConstrainedWindow(1);
   ASSERT_TRUE(cwindow);
   ASSERT_TRUE(cwindow->GetTitle(&title));
-  window_title = L"Constrained Window 1 - " + app_name;
-  ASSERT_STREQ(window_title.c_str(), title.c_str());
+  ASSERT_STREQ(L"Constrained Window 1 - Google Chrome", title.c_str());
   delete cwindow;
 }
 
@@ -690,7 +698,7 @@ TEST_F(AutomationProxyTest, CantEscapeByOnloadMoveto) {
   file_util::AppendToPath(&filename, L"constrained_files");
   file_util::AppendToPath(&filename, L"constrained_window_onload_moveto.html");
 
-  ASSERT_TRUE(tab->NavigateToURL(net::FilePathToFileURL(filename)));
+  ASSERT_TRUE(tab->NavigateToURL(net_util::FilePathToFileURL(filename)));
 
   int count;
   ASSERT_TRUE(tab->WaitForChildWindowCountToChange(0, &count, 5000));
@@ -792,7 +800,7 @@ TEST_F(AutomationProxyTest, AutocompleteParallelProxy)
   scoped_ptr<AutocompleteEditProxy> edit2(
       automation()->GetAutocompleteEditForBrowser(browser2.get()));
   ASSERT_TRUE(edit2.get());
-  EXPECT_TRUE(browser2->GetTab(0)->WaitForTabToBeRestored(kWaitForActionMsec));
+  EXPECT_TRUE(browser2->GetTab(0)->WaitForTabToBeRestored());
   const std::wstring text_to_set1 = L"Lollerskates";
   const std::wstring text_to_set2 = L"Roflcopter";
   std::wstring actual_text1, actual_text2;

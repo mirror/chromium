@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/ssl_policy.h"
 
@@ -16,7 +41,6 @@
 #include "chrome/browser/web_contents.h"
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
@@ -103,8 +127,7 @@ static void ShowErrorPage(SSLPolicy* policy, SSLManager::CertError* error) {
                                                    true,
                                                    error->request_url(),
                                                    security_info);
-  tab->controller()->GetActiveEntry()->set_page_type(
-      NavigationEntry::ERROR_PAGE);
+  tab->controller()->GetActiveEntry()->SetPageType(NavigationEntry::ERROR_PAGE);
 }
 
 static void ShowBlockingPage(SSLPolicy* policy, SSLManager::CertError* error) {
@@ -280,32 +303,26 @@ class DefaultPolicy : public SSLPolicy {
     }
 
     // First we check if we know the policy for this error.
-    net::X509Certificate::Policy::Judgment judgment =
+    X509Certificate::Policy::Judgment judgment =
         error->manager()->QueryPolicy(error->ssl_info().cert,
                                       error->request_url().host());
 
-    switch (judgment) {
-      case net::X509Certificate::Policy::ALLOWED:
-        // We've been told to allow this certificate.
-        if (error->manager()->SetMaxSecurityStyle(
-                SECURITY_STYLE_AUTHENTICATION_BROKEN)) {
-          NotificationService::current()->Notify(
-              NOTIFY_SSL_STATE_CHANGED,
-              Source<NavigationController>(error->manager()->controller()),
-              Details<NavigationEntry>(
-                  error->manager()->controller()->GetActiveEntry()));
-        }
-        error->ContinueRequest();
-        break;
-      case net::X509Certificate::Policy::DENIED:
-        // For now we handle the DENIED as the UNKNOWN, which means a blocking
-        // page is shown to the user every time he comes back to the page.
-      case net::X509Certificate::Policy::UNKNOWN:
-        // We don't know how to handle this error.  Ask our sub-policies.
-        sub_policies_[index]->OnCertError(main_frame_url, error);
-        break;
-      default:
-        NOTREACHED();
+    switch(judgment) {
+    case X509Certificate::Policy::ALLOWED:
+      // We've been told to allow this certificate.
+      error->manager()->SetMaxSecurityStyle(
+          SECURITY_STYLE_AUTHENTICATION_BROKEN);
+      error->ContinueRequest();
+      break;
+    case X509Certificate::Policy::DENIED:
+      // For now we handle the DENIED as the UNKNOWN, which means a blocking
+      // page is shown to the user every time he comes back to the page.
+    case X509Certificate::Policy::UNKNOWN:
+      // We don't know how to handle this error.  Ask our sub-policies.
+      sub_policies_[index]->OnCertError(main_frame_url, error);
+      break;
+    default:
+      NOTREACHED();
     }
   }
 
@@ -328,11 +345,8 @@ class DefaultPolicy : public SSLPolicy {
     mixed_content_handler->StartRequest(filter_policy);
 
     NavigationEntry* entry = navigation_controller->GetActiveEntry();
-    entry->ssl().set_has_mixed_content();
-    NotificationService::current()->Notify(
-        NOTIFY_SSL_STATE_CHANGED,
-        Source<NavigationController>(navigation_controller),
-        Details<NavigationEntry>(entry));
+    entry->SetHasMixedContent();
+    navigation_controller->EntryUpdated(entry);
   }
 
   void OnDenyCertificate(SSLManager::CertError* error) {
@@ -395,11 +409,9 @@ void SSLPolicy::OnRequestStarted(SSLManager* manager, const GURL& url,
     return;
   }
 
-  NavigationEntry::SSLStatus& ssl = entry->ssl();
-  bool changed = false;
-  if (!entry->url().SchemeIsSecure() ||  // Current page is not secure.
+  if (!entry->GetURL().SchemeIsSecure() ||  // Current page is not secure.
       resource_type == ResourceType::MAIN_FRAME ||  // Main frame load.
-      net::IsCertStatusError(ssl.cert_status())) {  // There is already
+      net::IsCertStatusError(entry->GetSSLCertStatus())) {  // There is already
           // an error for the main page, don't report sub-resources as unsafe
           // content.
     // No mixed/unsafe content check necessary.
@@ -416,9 +428,8 @@ void SSLPolicy::OnRequestStarted(SSLManager* manager, const GURL& url,
     //    net::IsCertStatusError(ssl_cert_status)) {
     if (net::IsCertStatusError(ssl_cert_status)) {
       // The resource is unsafe.
-      if (!ssl.has_unsafe_content()) {
-        changed = true;
-        ssl.set_has_unsafe_content();
+      if (!entry->HasUnsafeContent()) {
+        entry->SetHasUnsafeContent();
         manager->SetMaxSecurityStyle(SECURITY_STYLE_AUTHENTICATION_BROKEN);
       }
     }
@@ -431,24 +442,13 @@ void SSLPolicy::OnRequestStarted(SSLManager* manager, const GURL& url,
   // state will be reset.
 
   // Now check for mixed content.
-  if (entry->url().SchemeIsSecure() && !url.SchemeIsSecure()) {
-    if (!ssl.has_mixed_content()) {
-      changed = true;
-      ssl.set_has_mixed_content();
-    }
+  if (entry->GetURL().SchemeIsSecure() && !url.SchemeIsSecure()) {
+    entry->SetHasMixedContent();
     const std::wstring& msg = l10n_util::GetStringF(
         IDS_MIXED_CONTENT_LOG_MESSAGE,
-        UTF8ToWide(entry->url().spec()),
+        UTF8ToWide(entry->GetURL().spec()),
         UTF8ToWide(url.spec()));
     manager->AddMessageToConsole(msg, MESSAGE_LEVEL_WARNING);
-  }
-
-  if (changed) {
-    // Only send the notification when something actually changed.
-    NotificationService::current()->Notify(
-        NOTIFY_SSL_STATE_CHANGED,
-        Source<NavigationController>(manager->controller()),
-        Details<NavigationEntry>(entry));
   }
 }
 
@@ -492,4 +492,3 @@ void SSLPolicy::OnAllowCertificate(SSLManager::CertError* error) {
   error->manager()->AllowCertForHost(error->ssl_info().cert,
                                      error->request_url().host());
 }
-

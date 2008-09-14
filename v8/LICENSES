@@ -1,0 +1,124 @@
+This file contains the licenses for all externally maintained
+libraries that are included in V8.  There are two kinds of libraries:
+core libraries which will eventually be distributed with V8 and
+non-core which are only used internally for testing and debugging.
+
+This is an overview of the licenses of the libraries.  The full
+licenses are available in full below.
+
+1) PCRE
+   - type: BSD w. advertising clause (U. of Cambridge)
+   - license location: v8/src/third_party/jscre/COPYING
+   - files: v8/src/third_party/jscre/*
+
+2) Intel assembler
+   - type: BSD w. advertising clause (Sun, Google)
+   - license location: v8/src/assembler-ia32.h, v8/src/assembler-ia32-inl.h, v8/src/assembler-ia32.cc
+   - files: v8/src/assembler-ia32.h, v8/src/assembler-ia32-inl.h, v8/src/assembler-ia32.cc
+
+3) DTOA (Double value to text conversion)
+   - license location: v8/src/third_party/dtoa/dtoa.c
+   - files: v8/src/third_party/dtoa/dtoa.c
+
+4) Scons (Build system)
+   - type: MIT
+   - license location: v8/third_party/scons/scons-LICENSE
+   - files: v8/third_party/scons/*
+
+---------------------------------------------
+--- Third party test code and benchmarks ---
+--- TODO: MOVED OUTSIDE BEFORE RELEASE   ---
+---------------------------------------------
+
+ical test           Google internal
+jsUnit              Mozilla public
+cryptobench.js      BSD
+jsparsefuzz.js      No license
+fbench.js           Custom MIT-like
+mb.js               No license
+Shootout benchmarks No copyright
+base64.js           No copyright
+lisp.js             No license
+timetest.js         No copyright or author
+
+######### ical test #########
+
+Copyright 2004 Google Inc.
+All Rights Reserved.
+Author: msamuel@google.com
+
+######### jsUnit #########
+
+@author Edward Hieatt, edward@jsunit.net
+
+(Mozilla license available at http://www.mozilla.org/MPL/MPL-1.1.html)
+
+######### cryptobench.js #########
+
+Copyright (c) 2003-2005  Tom Wu
+All Rights Reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND, 
+EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY 
+WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.  
+
+IN NO EVENT SHALL TOM WU BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
+INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
+RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER OR NOT ADVISED OF
+THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF LIABILITY, ARISING OUT
+OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+In addition, the following condition applies:
+
+All redistributions must retain an intact copy of this copyright notice
+and disclaimer.
+
+Address all questions regarding this license to:
+
+  Tom Wu
+  tjw@cs.Stanford.EDU
+
+######### fbench.js #########
+
+By John Walker
+   http://www.fourmilab.ch/
+
+This  program may be used, distributed, and modified freely as
+long as the origin information is preserved.
+
+######### mb.js #########
+
+Copyright 1996 Ronald H. Nicholson, Jr.; All Rights Reserved
+
+######### Shootout benchmarks #########
+
+The Great Computer Language Shootout
+http://shootout.alioth.debian.org/
+contributed by Isaac Gouy
+
+######### base64.js #########
+
+by Danny Goodman (http://www.dannyg.com).
+
+######### lisp.js #########
+
+JavaScript Lisp Interpreter
+by Joe Ganley, http://joeganley.com/
+Email: jslisp at joe ganley dot com
+Copyright (C) 1997-2006 J. L. Ganley.  All rights reserved.
+
+######### timetest.js #########
+
+This micro-benchmark is adapted from:
+http://wd-testnet.world-direct.at/mozilla/dhtml/funo/jsTimeTest.htm

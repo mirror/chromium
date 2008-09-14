@@ -57,7 +57,7 @@ TEST_F(LayoutPluginTester, UnloadNoCrash) {
   std::wstring path;
   PathService::Get(chrome::DIR_TEST_DATA, &path);
   file_util::AppendToPath(&path, L"npapi/layout_test_plugin.html");
-  NavigateToURL(net::FilePathToFileURL(path));
+  NavigateToURL(net_util::FilePathToFileURL(path));
 
   std::wstring title;
   TabProxy* tab = GetActiveTab();

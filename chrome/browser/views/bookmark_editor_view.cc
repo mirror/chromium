@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/views/bookmark_editor_view.h"
 
@@ -18,10 +43,8 @@
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/label.h"
 #include "chrome/views/window.h"
-#include "googleurl/src/gurl.h"
-
-#include "chromium_strings.h"
 #include "generated_resources.h"
+#include "googleurl/src/gurl.h"
 
 using ChromeViews::ColumnSet;
 using ChromeViews::GridLayout;
@@ -56,6 +79,7 @@ BookmarkEditorView::BookmarkEditorView(Profile* profile,
 #pragma warning(suppress: 4355)  // Okay to pass "this" here.
       new_group_button_(
           l10n_util::GetString(IDS_BOOMARK_EDITOR_NEW_FOLDER_BUTTON)),
+      dialog_(NULL),
       url_(url),
       title_(title),
       running_menu_for_root_(false) {
@@ -96,10 +120,6 @@ bool BookmarkEditorView::Accept() {
 
 bool BookmarkEditorView::AreAcceleratorsEnabled(DialogButton button) {
   return !tree_view_.GetEditingNode();
-}
-
-ChromeViews::View* BookmarkEditorView::GetContentsView() {
-  return this;
 }
 
 void BookmarkEditorView::Layout() {
@@ -185,11 +205,12 @@ bool BookmarkEditorView::IsCommandEnabled(int id) const {
 }
 
 void BookmarkEditorView::Show(HWND parent_hwnd) {
-  ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(), this);
+  dialog_ = ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(),
+                                                    this, this);
   UserInputChanged();
   if (bb_model_->IsLoaded())
     ExpandAndSelect();
-  window()->Show();
+  dialog_->Show();
   // Select all the text in the name textfield.
   title_tf_.SelectAll();
   // Give focus to the name textfield.
@@ -197,8 +218,8 @@ void BookmarkEditorView::Show(HWND parent_hwnd) {
 }
 
 void BookmarkEditorView::Close() {
-  DCHECK(window());
-  window()->Close();
+  DCHECK(dialog_);
+  dialog_->Close();
 }
 
 void BookmarkEditorView::ShowContextMenu(View* source,
@@ -368,7 +389,7 @@ void BookmarkEditorView::UserInputChanged() {
     url_tf_.SetBackgroundColor(kErrorColor);
   else
     url_tf_.SetDefaultBackgroundColor();
-  GetDialogClientView()->UpdateDialogButtons();
+  dialog_->UpdateDialogButtons();
 }
 
 void BookmarkEditorView::NewGroup() {
@@ -380,26 +401,22 @@ void BookmarkEditorView::NewGroup() {
     return;
   }
 
-  tree_view_.StartEditing(AddNewGroup(parent));
-}
-
-BookmarkEditorView::BookmarkNode* BookmarkEditorView::AddNewGroup(
-    BookmarkNode* parent) {
   BookmarkNode* new_node = new BookmarkNode();
   new_node->SetTitle(l10n_util::GetString(IDS_BOOMARK_EDITOR_NEW_FOLDER_NAME));
   new_node->value = 0;
   // new_node is now owned by parent.
   tree_model_->Add(parent, parent->GetChildCount(), new_node);
-  return new_node;
+  // Edit the new node.
+  tree_view_.StartEditing(new_node);
 }
 
 void BookmarkEditorView::ExpandAndSelect() {
   tree_view_.ExpandAll();
 
   BookmarkBarNode* to_select = bb_model_->GetNodeByURL(url_);
-  int group_id_to_select =
-      to_select ? to_select->GetParent()->id() :
-                  bb_model_->GetParentForNewNodes()->id();
+  history::UIStarID group_id_to_select =
+      to_select ? to_select->GetParent()->GetGroupID() :
+                  bb_model_->GetParentForNewNodes()->GetGroupID();
 
   DCHECK(group_id_to_select);  // GetMostRecentParent should never return NULL.
   BookmarkNode* b_node =
@@ -425,9 +442,9 @@ void BookmarkEditorView::CreateNodes(BookmarkBarNode* bb_node,
                                      BookmarkEditorView::BookmarkNode* b_node) {
   for (int i = 0; i < bb_node->GetChildCount(); ++i) {
     BookmarkBarNode* child_bb_node = bb_node->GetChild(i);
-    if (child_bb_node->is_folder()) {
+    if (child_bb_node->GetType() != history::StarredEntry::URL) {
       BookmarkNode* new_b_node = new BookmarkNode(child_bb_node->GetTitle(),
-                                                  child_bb_node->id());
+                                                  child_bb_node->GetGroupID());
       b_node->Add(b_node->GetChildCount(), new_b_node);
       CreateNodes(child_bb_node, new_b_node);
     }
@@ -436,7 +453,7 @@ void BookmarkEditorView::CreateNodes(BookmarkBarNode* bb_node,
 
 BookmarkEditorView::BookmarkNode* BookmarkEditorView::FindNodeWithID(
     BookmarkEditorView::BookmarkNode* node,
-    int id) {
+    history::UIStarID id) {
   if (node->value == id)
     return node;
   for (int i = 0; i < node->GetChildCount(); ++i) {
@@ -454,11 +471,6 @@ void BookmarkEditorView::ApplyEdits() {
     NOTREACHED();
     return;
   }
-  ApplyEdits(tree_model_->AsNode(tree_view_.GetSelectedNode()));
-}
-
-void BookmarkEditorView::ApplyEdits(BookmarkNode* parent) {
-  DCHECK(parent);
 
   // We're going to apply edits to the bookmark bar model, which will call us
   // back. Normally when a structural edit occurs we reset the tree model.
@@ -480,7 +492,8 @@ void BookmarkEditorView::ApplyEdits(BookmarkNode* parent) {
   // Create the new groups and update the titles.
   BookmarkBarNode* new_parent = NULL;
   ApplyNameChangesAndCreateNewGroups(
-      bb_model_->root_node(), tree_model_->GetRoot(), parent, &new_parent);
+      bb_model_->root_node(), tree_model_->GetRoot(),
+      tree_model_->AsNode(tree_view_.GetSelectedNode()), &new_parent);
 
   if (!new_parent) {
     // Bookmarks must be parented.
@@ -533,7 +546,8 @@ void BookmarkEditorView::ApplyNameChangesAndCreateNewGroups(
       // is the same).
       for (int j = 0; j < bb_node->GetChildCount(); ++j) {
         BookmarkBarNode* node = bb_node->GetChild(j);
-        if (node->is_folder() && node->id() == child_b_node->value) {
+        if (node->GetType() != history::StarredEntry::URL &&
+            node->GetGroupID() == child_b_node->value) {
           child_bb_node = node;
           break;
         }
@@ -545,4 +559,3 @@ void BookmarkEditorView::ApplyNameChangesAndCreateNewGroups(
                                        parent_b_node, parent_bb_node);
   }
 }
-

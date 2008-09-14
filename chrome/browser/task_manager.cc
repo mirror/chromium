@@ -1,12 +1,38 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/task_manager.h"
 
 #include "base/process_util.h"
 #include "base/stats_table.h"
 #include "base/string_util.h"
+#include "base/timer.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/render_process_host.h"
@@ -19,13 +45,11 @@
 #include "chrome/views/accelerator.h"
 #include "chrome/views/background.h"
 #include "chrome/views/link.h"
-#include "chrome/views/menu.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/window.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 // The task manager window default size.
@@ -43,6 +67,26 @@ static const int kGoatsTeleportedColumn =
     (94024 * kNuthMagicNumber) & kBitMask;
 
 ////////////////////////////////////////////////////////////////////////////////
+// TaskManagerUpdateTask class.
+//
+// Used to periodically updates the task manager contents.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+class TaskManagerUpdateTask : public Task {
+ public:
+  explicit TaskManagerUpdateTask(TaskManagerTableModel* model) : model_(model) {
+  }
+  void Run() {
+    if (model_) model_->Refresh();
+  }
+
+ private:
+  TaskManagerTableModel* model_;
+  DISALLOW_EVIL_CONSTRUCTORS(TaskManagerUpdateTask);
+};
+
+////////////////////////////////////////////////////////////////////////////////
 // TaskManagerTableModel class
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -51,6 +95,7 @@ int TaskManagerTableModel::goats_teleported_ = 0;
 
 TaskManagerTableModel::TaskManagerTableModel(TaskManager* task_manager)
     : observer_(NULL),
+      timer_(NULL),
       ui_loop_(MessageLoop::current()),
       is_updating_(false) {
 
@@ -66,9 +111,11 @@ TaskManagerTableModel::TaskManagerTableModel(TaskManager* task_manager)
       new TaskManagerPluginProcessResourceProvider(task_manager);
   plugin_provider->AddRef();
   providers_.push_back(plugin_provider);
+  update_task_.reset(new TaskManagerUpdateTask(this));
 }
 
 TaskManagerTableModel::~TaskManagerTableModel() {
+  DCHECK(timer_ == NULL);
   for (ResourceProviderList::iterator iter = providers_.begin();
        iter != providers_.end(); ++iter) {
     (*iter)->Release();
@@ -205,12 +252,13 @@ HANDLE TaskManagerTableModel::GetProcessAt(int index) {
 void TaskManagerTableModel::StartUpdating() {
   DCHECK(!is_updating_);
   is_updating_ = true;
-  update_timer_.Start(TimeDelta::FromMilliseconds(kUpdateTimeMs), this,
-                      &TaskManagerTableModel::Refresh);
+  DCHECK(timer_ == NULL);
+  TimerManager* tm = MessageLoop::current()->timer_manager();
+  timer_ = tm->StartTimer(kUpdateTimeMs, update_task_.get(), true);
 
   // Register jobs notifications so we can compute network usage (it must be
   // done from the IO thread).
-  base::Thread* thread = g_browser_process->io_thread();
+  Thread* thread = g_browser_process->io_thread();
   if (thread)
     thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
         this, &TaskManagerTableModel::RegisterForJobDoneNotifications));
@@ -225,7 +273,9 @@ void TaskManagerTableModel::StartUpdating() {
 void TaskManagerTableModel::StopUpdating() {
   DCHECK(is_updating_);
   is_updating_ = false;
-  update_timer_.Stop();
+  MessageLoop::current()->timer_manager()->StopTimer(timer_);
+  delete timer_;
+  timer_ = NULL;
 
   // Notify resource providers that we are done updating.
   for (ResourceProviderList::const_iterator iter = providers_.begin();
@@ -234,7 +284,7 @@ void TaskManagerTableModel::StopUpdating() {
   }
 
   // Unregister jobs notification (must be done from the IO thread).
-  base::Thread* thread = g_browser_process->io_thread();
+  Thread* thread = g_browser_process->io_thread();
   if (thread)
     thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
         this, &TaskManagerTableModel::UnregisterForJobDoneNotifications));
@@ -424,9 +474,9 @@ void TaskManagerTableModel::BytesRead(BytesReadParam param) {
 
   // TODO(jcampan): this should be improved once we have a better way of
   // linking a network notification back to the object that initiated it.
-  TaskManager::Resource* resource = NULL;
+  TaskManager::Resource* resource;
   for (ResourceProviderList::iterator iter = providers_.begin();
-       iter != providers_.end(); ++iter) {
+       iter != providers_.end(); iter++) {
     resource = (*iter)->GetResource(param.origin_pid,
                                     param.render_process_host_id,
                                     param.routing_id);
@@ -773,7 +823,7 @@ void TaskManager::RegisterPrefs(PrefService* prefs) {
   prefs->RegisterDictionaryPref(prefs::kTaskManagerWindowPlacement);
 }
 
-TaskManager::TaskManager() {
+TaskManager::TaskManager() : window_(NULL) {
   table_model_ = new TaskManagerTableModel(this);
   contents_.reset(new TaskManagerContents(this, table_model_));
 }
@@ -784,16 +834,19 @@ TaskManager::~TaskManager() {
 // static
 void TaskManager::Open() {
   TaskManager* task_manager = GetInstance();
-  if (task_manager->window()) {
-    task_manager->window()->MoveToFront(true);
+  if (task_manager->window_) {
+    task_manager->window_->MoveToFront(true);
   } else {
-    ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), task_manager);
+    task_manager->window_ =
+        ChromeViews::Window::CreateChromeWindow(
+            NULL, gfx::Rect(), task_manager->contents_.get(), task_manager);
     task_manager->table_model_->StartUpdating();
-    task_manager->window()->Show();
+    task_manager->window_->Show();
   }
 }
 
 void TaskManager::Close() {
+  window_ = NULL;
   table_model_->StopUpdating();
   table_model_->Clear();
 }
@@ -870,15 +923,15 @@ std::wstring TaskManager::GetWindowTitle() const {
 void TaskManager::SaveWindowPosition(const CRect& bounds,
                                      bool maximized,
                                      bool always_on_top) {
-  window()->SaveWindowPositionToPrefService(g_browser_process->local_state(),
-                                            prefs::kTaskManagerWindowPlacement,
-                                            bounds, maximized, always_on_top);
+  window_->SaveWindowPositionToPrefService(g_browser_process->local_state(),
+                                           prefs::kTaskManagerWindowPlacement,
+                                           bounds, maximized, always_on_top);
 }
 
 bool TaskManager::RestoreWindowPosition(CRect* bounds,
                                         bool* maximized,
                                         bool* always_on_top) {
-  return window()->RestoreWindowPositionFromPrefService(
+  return window_->RestoreWindowPositionFromPrefService(
       g_browser_process->local_state(),
       prefs::kTaskManagerWindowPlacement,
       bounds, maximized, always_on_top);
@@ -894,16 +947,9 @@ void TaskManager::WindowClosing() {
   // non-client view.
   contents_->GetParent()->RemoveChildView(contents_.get());
   Close();
-
-  ReleaseWindow();
-}
-
-ChromeViews::View* TaskManager::GetContentsView() {
-  return contents_.get();
 }
 
 // static
 TaskManager* TaskManager::GetInstance() {
   return Singleton<TaskManager>::get();
 }
-

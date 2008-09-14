@@ -31,7 +31,6 @@
 #include <string>
 #include <v8.h>
 #include "base/stats_counters.h"
-#include "base/string_piece.h"
 #include "bindings/npruntime.h"
 #include "np_v8object.h"
 #include "npruntime_priv.h"
@@ -50,7 +49,7 @@ using namespace v8;
 // Need a platform abstraction which we can use.
 // static Lock StringIdentifierMapLock;
 
-typedef std::map<StringPiece, PrivateIdentifier*> StringIdentifierMap;
+typedef std::map<std::string, PrivateIdentifier*> StringIdentifierMap;
 
 static StringIdentifierMap* getStringIdentifierMap() {
     static StringIdentifierMap* stringIdentifierMap = 0;
@@ -79,26 +78,18 @@ NPIdentifier NPN_GetStringIdentifier(const NPUTF8* name) {
     if (name) {
         // AutoLock safeLock(StringIdentifierMapLock);
 
-        StringIdentifierMap* identMap = getStringIdentifierMap();
-
-        // We use StringPiece here as the key-type to avoid a string copy to
-        // construct the map key.
-        StringPiece nameStr(name);
-        StringIdentifierMap::iterator iter = identMap->find(nameStr);
-        if (iter != identMap->end())
+        StringIdentifierMap::iterator iter =
+            getStringIdentifierMap()->find(std::string(name));
+        if (iter != getStringIdentifierMap()->end())
             return static_cast<NPIdentifier>(iter->second);
 
-        size_t nameLen = nameStr.length();
-
-        // We never release identifier names, so this dictionary will grow, as
-        // will the memory for the identifier name strings.
-        PrivateIdentifier* identifier = static_cast<PrivateIdentifier*>(
-            malloc(sizeof(PrivateIdentifier) + nameLen + 1));
-        memcpy(identifier + 1, name, nameLen + 1);
+        PrivateIdentifier* identifier = reinterpret_cast<PrivateIdentifier*>(
+            malloc(sizeof(PrivateIdentifier)));
+        // We never release identifier names, so this dictionary will grow,
+        // as will the memory for the identifier name strings.
         identifier->isString = true;
-        identifier->value.string = reinterpret_cast<NPUTF8*>(identifier + 1);
-        (*identMap)[StringPiece(identifier->value.string, nameLen)] =
-            identifier;
+        identifier->value.string = strdup(name);
+        (*getStringIdentifierMap())[std::string(name)] = identifier;
         return (NPIdentifier)identifier;
     }
 
@@ -118,10 +109,8 @@ void NPN_GetStringIdentifiers(const NPUTF8** names, int32_t nameCount,
 NPIdentifier NPN_GetIntIdentifier(int32_t intid) {
     // AutoLock safeLock(IntIdentifierMapLock);
 
-    IntIdentifierMap* identMap = getIntIdentifierMap();
-
-    IntIdentifierMap::iterator iter = identMap->find(intid);
-    if (iter != identMap->end())
+    IntIdentifierMap::iterator iter = getIntIdentifierMap()->find(intid);
+    if (iter != getIntIdentifierMap()->end())
         return static_cast<NPIdentifier>(iter->second);
 
     PrivateIdentifier* identifier = reinterpret_cast<PrivateIdentifier*>(
@@ -129,7 +118,7 @@ NPIdentifier NPN_GetIntIdentifier(int32_t intid) {
     // We never release identifier names, so this dictionary will grow.
     identifier->isString = false;
     identifier->value.number = intid;
-    (*identMap)[intid] = identifier;
+    (*getIntIdentifierMap())[intid] = identifier;
     return (NPIdentifier)identifier;
 }
 

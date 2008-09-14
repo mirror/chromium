@@ -1,9 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_COMMON_RENDER_MESSAGES_H_
-#define CHROME_COMMON_RENDER_MESSAGES_H_
+#ifndef CHROME_COMMON_RENDER_MESSAGES_H__
+#define CHROME_COMMON_RENDER_MESSAGES_H__
 
 #include <string>
 #include <vector>
@@ -158,17 +183,12 @@ struct ViewHostMsg_PaintRect_Flags {
   enum {
     IS_RESIZE_ACK = 1 << 0,
     IS_RESTORE_ACK = 1 << 1,
-    IS_REPAINT_ACK = 1 << 2,
   };
   static bool is_resize_ack(int flags) {
     return (flags & IS_RESIZE_ACK) != 0;
   }
   static bool is_restore_ack(int flags) {
     return (flags & IS_RESTORE_ACK) != 0;
-  }
-
-  static bool is_repaint_ack(int flags) {
-    return (flags & IS_REPAINT_ACK) != 0;
   }
 };
 
@@ -281,8 +301,8 @@ struct ViewHostMsg_Resource_Request {
 };
 
 // Parameters for a resource response header.
-struct ViewMsg_Resource_ResponseHead
-    : webkit_glue::ResourceLoaderBridge::ResponseInfo {
+struct ViewMsg_Resource_ResponseHead :
+    webkit_glue::ResourceLoaderBridge::ResponseInfo {
   // The response status.
   URLRequestStatus status;
 
@@ -415,7 +435,7 @@ struct ParamTraits<ResourceType::Type> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring type;
-    switch (p) {
+    switch(p) {
       case ResourceType::MAIN_FRAME:
         type = L"MAIN_FRAME";
        break;
@@ -452,7 +472,7 @@ struct ParamTraits<FilterPolicy::Type> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring type;
-    switch (p) {
+    switch(p) {
       case FilterPolicy::DONT_FILTER:
         type = L"DONT_FILTER";
         break;
@@ -486,7 +506,7 @@ struct ParamTraits<ContextNode::Type> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring type;
-    switch (p) {
+    switch(p) {
      case WebInputEvent::MOUSE_DOWN:
       type = L"MOUSE_DOWN";
       break;
@@ -535,7 +555,7 @@ struct ParamTraits<WebInputEvent::Type> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring event;
-    switch (p) {
+    switch(p) {
      case ContextNode::NONE:
       event = L"NONE";
       break;
@@ -587,7 +607,7 @@ struct ParamTraits<ViewHostMsg_ImeControl> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring control;
-    switch (p) {
+    switch(p) {
      case IME_DISABLE:
       control = L"IME_DISABLE";
       break;
@@ -975,6 +995,30 @@ struct ParamTraits<ViewMsg_UploadFile_Params> {
   }
 };
 
+// Traits for ViewMsg_FindInPageMsg_Request structure to pack/unpack.
+template <>
+struct ParamTraits<FindInPageRequest> {
+  typedef FindInPageRequest param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.request_id);
+    WriteParam(m, p.search_string);
+    WriteParam(m, p.forward);
+    WriteParam(m, p.match_case);
+    WriteParam(m, p.find_next);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    return
+      ReadParam(m, iter, &p->request_id) &&
+      ReadParam(m, iter, &p->search_string) &&
+      ReadParam(m, iter, &p->forward) &&
+      ReadParam(m, iter, &p->match_case) &&
+      ReadParam(m, iter, &p->find_next);
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<FindInPageRequest>");
+  }
+};
+
 // Traits for net::UploadData::Element.
 template <>
 struct ParamTraits<net::UploadData::Element> {
@@ -1077,7 +1121,7 @@ struct ParamTraits<NavigationGesture> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring event;
-    switch (p) {
+    switch(p) {
       case NavigationGestureUser:
         event = L"GESTURE_USER";
         break;
@@ -1163,7 +1207,7 @@ struct ParamTraits<URLRequestStatus> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     std::wstring status;
-    switch (p.status()) {
+    switch(p.status()) {
      case URLRequestStatus::SUCCESS:
       status = L"SUCCESS";
       break;
@@ -1501,4 +1545,4 @@ struct ParamTraits<WebDropData> {
 
 }  // namespace IPC
 
-#endif  // CHROME_COMMON_RENDER_MESSAGES_H_
+#endif  // CHROME_COMMON_RENDER_MESSAGES_H__

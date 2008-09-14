@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_VIEWS_ROOT_VIEW_H__
 #define CHROME_VIEWS_ROOT_VIEW_H__
@@ -44,7 +69,7 @@ class RootView : public View,
  public:
   static const char kViewClassName[];
 
-  explicit RootView(ViewContainer* view_container);
+  RootView(ViewContainer* view_container, bool double_buffer);
 
   virtual ~RootView();
 
@@ -62,9 +87,7 @@ class RootView : public View,
   // Paint this RootView and its child Views.
   virtual void ProcessPaint(ChromeCanvas* canvas);
 
-  // If the invalid rect is non-empty and there is a pending paint the RootView
-  // is painted immediately. This is internally invoked as the result of
-  // invoking SchedulePaint.
+  // Paint this View's invalid rect immediately.
   virtual void PaintNow();
 
   // Whether or not this View needs repainting. If |urgent| is true, this method
@@ -220,6 +243,9 @@ class RootView : public View,
   void RegisterViewForVisibleBoundsNotification(View* view);
   void UnregisterViewForVisibleBoundsNotification(View* view);
 
+  // Invoked by PaintTask to paint the root view in a non urgent way.
+  void ProcessPendingPaint();
+
   // Returns the next focusable view or view containing a FocusTraversable (NULL
   // if none was found), starting at the starting_view.
   // skip_starting_view, can_go_up and can_go_down controls the traversal of
@@ -260,6 +286,9 @@ class RootView : public View,
 
   // If a view is dragging, this returns it. Otherwise returns NULL.
   View* GetDragView();
+
+  // Whether or not we're double buffering paints
+  bool double_buffer_;
 
   // The view currently handing down - drag - up
   View* mouse_pressed_handler_;
@@ -342,4 +371,3 @@ class RootView : public View,
 }
 
 #endif // CHROME_VIEWS_ROOT_VIEW_H__
-

@@ -1,25 +1,46 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// StringPrintf stuff based on strings/stringprintf.cc by Sanjay Ghemawat
 
 #include "base/string_util.h"
 
-#include <ctype.h>
-#include <errno.h>
+#include <algorithm>
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <wchar.h>
-#include <wctype.h>
-
-#include <algorithm>
 #include <vector>
 
 #include "base/basictypes.h"
 #include "base/logging.h"
+#include "base/scoped_ptr.h"
 #include "base/singleton.h"
 
 namespace {
@@ -42,11 +63,7 @@ struct ToUnsigned<signed char> {
 };
 template<>
 struct ToUnsigned<wchar_t> {
-#if defined(WCHAR_T_IS_UTF16)
   typedef unsigned short Unsigned;
-#elif defined(WCHAR_T_IS_UTF32)
-  typedef uint32 Unsigned;
-#endif
 };
 template<>
 struct ToUnsigned<short> {
@@ -72,208 +89,7 @@ static bool CompareParameter(const ReplacementOffset& elem1,
   return elem1.parameter < elem2.parameter;
 }
 
-// Generalized string-to-number conversion.
-//
-// StringToNumberTraits should provide:
-//  - a typedef for string_type, the STL string type used as input.
-//  - a typedef for value_type, the target numeric type.
-//  - a static function, convert_func, which dispatches to an appropriate
-//    strtol-like function and returns type value_type.
-//  - a static function, valid_func, which validates |input| and returns a bool
-//    indicating whether it is in proper form.  This is used to check for
-//    conditions that convert_func tolerates but should result in
-//    StringToNumber returning false.  For strtol-like funtions, valid_func
-//    should check for leading whitespace.
-template<typename StringToNumberTraits>
-bool StringToNumber(const typename StringToNumberTraits::string_type& input,
-                    typename StringToNumberTraits::value_type* output) {
-  typedef StringToNumberTraits traits;
-
-  errno = 0;  // Thread-safe?  It is on at least Mac, Linux, and Windows.
-  typename traits::string_type::value_type* endptr = NULL;
-  typename traits::value_type value = traits::convert_func(input.c_str(),
-                                                           &endptr);
-  *output = value;
-
-  // Cases to return false:
-  //  - If errno is ERANGE, there was an overflow or underflow.
-  //  - If the input string is empty, there was nothing to parse.
-  //  - If endptr does not point to the end of the string, there are either
-  //    characters remaining in the string after a parsed number, or the string
-  //    does not begin with a parseable number.  endptr is compared to the
-  //    expected end given the string's stated length to correctly catch cases
-  //    where the string contains embedded NUL characters.
-  //  - valid_func determines that the input is not in preferred form.
-  return errno == 0 &&
-         !input.empty() &&
-         input.c_str() + input.length() == endptr &&
-         traits::valid_func(input);
-}
-
-class StringToLongTraits {
- public:
-  typedef std::string string_type;
-  typedef long value_type;
-  static const int kBase = 10;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-    return strtol(str, endptr, kBase);
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !isspace(str[0]);
-  }
-};
-
-class WStringToLongTraits {
- public:
-  typedef std::wstring string_type;
-  typedef long value_type;
-  static const int kBase = 10;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-    return wcstol(str, endptr, kBase);
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !iswspace(str[0]);
-  }
-};
-
-class StringToInt64Traits {
- public:
-  typedef std::string string_type;
-  typedef int64 value_type;
-  static const int kBase = 10;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-#ifdef OS_WIN
-    return _strtoi64(str, endptr, kBase);
-#else  // assume OS_POSIX
-    return strtoll(str, endptr, kBase);
-#endif
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !isspace(str[0]);
-  }
-};
-
-class WStringToInt64Traits {
- public:
-  typedef std::wstring string_type;
-  typedef int64 value_type;
-  static const int kBase = 10;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-#ifdef OS_WIN
-    return _wcstoi64(str, endptr, kBase);
-#else  // assume OS_POSIX
-    return wcstoll(str, endptr, kBase);
-#endif
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !iswspace(str[0]);
-  }
-};
-
-// For the HexString variants, use the unsigned variants like strtoul for
-// convert_func so that input like "0x80000000" doesn't result in an overflow.
-
-class HexStringToLongTraits {
- public:
-  typedef std::string string_type;
-  typedef long value_type;
-  static const int kBase = 16;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-    return strtoul(str, endptr, kBase);
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !isspace(str[0]);
-  }
-};
-
-class HexWStringToLongTraits {
- public:
-  typedef std::wstring string_type;
-  typedef long value_type;
-  static const int kBase = 16;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-    return wcstoul(str, endptr, kBase);
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !iswspace(str[0]);
-  }
-};
-
-class StringToDoubleTraits {
- public:
-  typedef std::string string_type;
-  typedef double value_type;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-    return strtod(str, endptr);
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !isspace(str[0]);
-  }
-};
-
-class WStringToDoubleTraits {
- public:
-  typedef std::wstring string_type;
-  typedef double value_type;
-  static inline value_type convert_func(const string_type::value_type* str,
-                                        string_type::value_type** endptr) {
-    return wcstod(str, endptr);
-  }
-  static inline bool valid_func(const string_type& str) {
-    return !str.empty() && !iswspace(str[0]);
-  }
-};
-
 }  // namespace
-
-
-namespace base {
-
-bool IsWprintfFormatPortable(const wchar_t* format) {
-  for (const wchar_t* position = format; *position != '\0'; ++position) {
-
-    if (*position == '%') {
-      bool in_specification = true;
-      bool modifier_l = false;
-      while (in_specification) {
-        // Eat up characters until reaching a known specifier.
-        if (*++position == '\0') {
-          // The format string ended in the middle of a specification.  Call
-          // it portable because no unportable specifications were found.  The
-          // string is equally broken on all platforms.
-          return true;
-        }
-
-        if (*position == 'l') {
-          // 'l' is the only thing that can save the 's' and 'c' specifiers.
-          modifier_l = true;
-        } else if (((*position == 's' || *position == 'c') && !modifier_l) ||
-                   *position == 'S' || *position == 'C' || *position == 'F' ||
-                   *position == 'D' || *position == 'O' || *position == 'U') {
-          // Not portable.
-          return false;
-        }
-
-        if (wcschr(L"diouxXeEfgGaAcspn%", *position)) {
-          // Portable, keep scanning the rest of the format string.
-          in_specification = false;
-        }
-      }
-    }
-
-  }
-
-  return true;
-}
-
-}  // namespace base
 
 
 const std::string& EmptyString() {
@@ -360,13 +176,13 @@ TrimPositions TrimStringT(const STR& input,
 }
 
 bool TrimString(const std::wstring& input,
-                const wchar_t trim_chars[],
+                wchar_t trim_chars[],
                 std::wstring* output) {
   return TrimStringT(input, trim_chars, TRIM_ALL, output) != TRIM_NONE;
 }
 
 bool TrimString(const std::string& input,
-                const char trim_chars[],
+                char trim_chars[],
                 std::string* output) {
   return TrimStringT(input, trim_chars, TRIM_ALL, output) != TRIM_NONE;
 }
@@ -584,13 +400,13 @@ static bool IsStringUTF8T(const CHAR* str) {
         return false;  // end of string but not end of character sequence
 
       // non-character : EF BF [BE-BF] or F[0-7] [89AB]F BF [BE-BF]
-      if (nonchar && ((!positions_left && c < 0xBE) ||
-                      (positions_left == 1 && c != 0xBF) ||
-                      (positions_left == 2 && 0x0F != (0x0F & c) ))) {
+      if (nonchar && (!positions_left && c < 0xBE ||
+                      positions_left == 1 && c != 0xBF ||
+                      positions_left == 2 && 0x0F != (0x0F & c) )) {
         nonchar = false;
       }
-      if (!IsInUTF8Sequence(c) || (overlong && c <= olupper) ||
-          (surrogate && slower <= c) || (nonchar && !positions_left) ) {
+      if (!IsInUTF8Sequence(c) || overlong && c <= olupper ||
+          surrogate && slower <= c || nonchar && !positions_left ) {
         return false;
       }
       overlong = surrogate = false;
@@ -655,7 +471,7 @@ bool StartsWithASCII(const std::string& str,
   if (case_sensitive)
     return str.compare(0, search.length(), search) == 0;
   else
-    return base::strncasecmp(str.c_str(), search.c_str(), search.length()) == 0;
+    return StrNCaseCmp(str.c_str(), search.c_str(), search.length()) == 0;
 }
 
 DataUnits GetByteDisplayUnits(int64 bytes) {
@@ -721,12 +537,10 @@ std::wstring FormatBytesInternal(int64 bytes,
   double int_part;
   double fractional_part = modf(unit_amount, &int_part);
   modf(fractional_part * 10, &int_part);
-  if (int_part == 0) {
-    base::swprintf(tmp, arraysize(tmp),
-                   L"%lld", static_cast<int64>(unit_amount));
-  } else {
-    base::swprintf(tmp, arraysize(tmp), L"%.1lf", unit_amount);
-  }
+  if (int_part == 0)
+    SWPrintF(tmp, arraysize(tmp), L"%lld", static_cast<int64>(unit_amount));
+  else
+    SWPrintF(tmp, arraysize(tmp), L"%.1lf", unit_amount);
 
   std::wstring ret(tmp);
   if (show_units) {
@@ -777,22 +591,21 @@ void ReplaceSubstringsAfterOffset(std::string* str,
 
 // Overloaded wrappers around vsnprintf and vswprintf. The buf_size parameter
 // is the size of the buffer. These return the number of characters in the
-// formatted string excluding the NUL terminator. If the buffer is not
-// large enough to accommodate the formatted string without truncation, they
-// return the number of characters that would be in the fully-formatted string
-// (vsnprintf, and vswprintf on Windows), or -1 (vswprintf on POSIX platforms).
+// formatted string excluding the NUL terminator, or if the buffer is not
+// large enough to accommodate the formatted string without truncation, the
+// number of characters that would be in the fully-formatted string.
 inline int vsnprintfT(char* buffer,
                       size_t buf_size,
                       const char* format,
                       va_list argptr) {
-  return base::vsnprintf(buffer, buf_size, format, argptr);
+  return VSNPrintF(buffer, buf_size, format, argptr);
 }
 
 inline int vsnprintfT(wchar_t* buffer,
                       size_t buf_size,
                       const wchar_t* format,
                       va_list argptr) {
-  return base::vswprintf(buffer, buf_size, format, argptr);
+  return VSWPrintF(buffer, buf_size, format, argptr);
 }
 
 // Templatized backend for StringPrintF/StringAppendF. This does not finalize
@@ -804,168 +617,66 @@ static void StringAppendVT(
     va_list ap) {
 
   // First try with a small fixed size buffer.
-  // This buffer size should be kept in sync with StringUtilTest.GrowBoundary
-  // and StringUtilTest.StringPrintfBounds.
-  char_type stack_buf[1024];
+  // This buffer size should be kept in sync with StringUtilTest.GrowBoundary.
+  const int kStackLength = 1024;
+  char_type stack_buf[kStackLength];
 
-  va_list backup_ap;
-  base::va_copy(backup_ap, ap);
-
-#if !defined(OS_WIN)
-  errno = 0;
-#endif
-  int result = vsnprintfT(stack_buf, arraysize(stack_buf), format, backup_ap);
+  // It's possible for methods that use a va_list to invalidate the data in it
+  // upon use.  The fix is to make a copy of the structure before using it and
+  // use that copy instead. It is not guaranteed that assignment is a copy, and
+  // va_copy is not supported by VC, so the UnitTest tests this capability.
+  va_list backup_ap = ap;
+  int result = vsnprintfT(stack_buf, kStackLength, format, backup_ap);
   va_end(backup_ap);
 
-  if (result >= 0 && result < static_cast<int>(arraysize(stack_buf))) {
+  if (result >= 0 && result < kStackLength) {
     // It fit.
     dst->append(stack_buf, result);
     return;
   }
 
-  // Repeatedly increase buffer size until it fits.
-  int mem_length = arraysize(stack_buf);
-  while (true) {
-    if (result < 0) {
-#if !defined(OS_WIN)
-      // On Windows, vsnprintfT always returns the number of characters in a
-      // fully-formatted string, so if we reach this point, something else is
-      // wrong and no amount of buffer-doubling is going to fix it.
-      if (errno != 0 && errno != EOVERFLOW)
-#endif
-      {
-        // If an error other than overflow occurred, it's never going to work.
-        DLOG(WARNING) << "Unable to printf the requested string due to error.";
-        return;
-      }
-      // Try doubling the buffer size.
-      mem_length *= 2;
-    } else {
-      // We need exactly "result + 1" characters.
-      mem_length = result + 1;
-    }
+  int mem_length = result;
 
-    if (mem_length > 32 * 1024 * 1024) {
-      // That should be plenty, don't try anything larger.  This protects
-      // against huge allocations when using vsnprintfT implementations that
-      // return -1 for reasons other than overflow without setting errno.
-      DLOG(WARNING) << "Unable to printf the requested string due to size.";
-      return;
-    }
-
-    std::vector<char_type> mem_buf(mem_length);
-
-    // Restore the va_list before we use it again.
-    base::va_copy(backup_ap, ap);
-
-    result = vsnprintfT(&mem_buf[0], mem_length, format, ap);
-    va_end(backup_ap);
-
-    if ((result >= 0) && (result < mem_length)) {
-      // It fit.
-      dst->append(&mem_buf[0], result);
-      return;
-    }
+  // vsnprintfT may have failed for some reason other than an insufficient
+  // buffer, such as an invalid characer.  Check that the requested buffer
+  // size is smaller than what was already attempted
+  if (mem_length < 0 || mem_length < kStackLength) {
+    DLOG(WARNING) << "Unable to compute size of the requested string.";
+    return;
   }
+
+  mem_length++;  // Include the NULL terminator.
+  scoped_ptr<char_type> mem_buf(new char_type[mem_length]);
+
+  // Do the printf.
+  result = vsnprintfT(mem_buf.get(), mem_length, format, ap);
+  DCHECK(result < mem_length);
+  if (result < 0) {
+    DLOG(WARNING) << "Unable to printf the requested string.";
+    return;
+  }
+
+  dst->append(mem_buf.get(), result);
 }
 
-namespace {
+std::string Uint64ToString(uint64 value) {
+  return StringPrintf("%llu", value);
+}
 
-template <typename STR, typename INT, typename UINT, bool NEG>
-struct IntToStringT {
+std::string Int64ToString(int64 value) {
+  return StringPrintf("%I64d", value);
+}
 
-  // This is to avoid a compiler warning about unary minus on unsigned type.
-  // For example, say you had the following code:
-  //   template <typename INT>
-  //   INT abs(INT value) { return value < 0 ? -value : value; }
-  // Even though if INT is unsigned, it's impossible for value < 0, so the
-  // unary minus will never be taken, the compiler will still generate a
-  // warning.  We do a little specialization dance...
-  template <typename INT2, typename UINT2, bool NEG2>
-  struct ToUnsignedT { };
-
-  template <typename INT2, typename UINT2>
-  struct ToUnsignedT<INT2, UINT2, false> {
-    static UINT2 ToUnsigned(INT2 value) {
-      return static_cast<UINT2>(value);
-    }
-  };
-
-  template <typename INT2, typename UINT2>
-  struct ToUnsignedT<INT2, UINT2, true> {
-    static UINT2 ToUnsigned(INT2 value) {
-      return static_cast<UINT2>(value < 0 ? -value : value);
-    }
-  };
-
-  static STR IntToString(INT value) {
-    // log10(2) ~= 0.3 bytes needed per bit or per byte log10(2**8) ~= 2.4.
-    // So round up to allocate 3 output characters per byte, plus 1 for '-'.
-    const int kOutputBufSize = 3 * sizeof(INT) + 1;
-
-    // Allocate the whole string right away, we will right back to front, and
-    // then return the substr of what we ended up using.
-    STR outbuf(kOutputBufSize, 0);
-
-    bool is_neg = value < 0;
-    // Even though is_neg will never be true when INT is parameterized as
-    // unsigned, even the presence of the unary operation causes a warning.
-    UINT res = ToUnsignedT<INT, UINT, NEG>::ToUnsigned(value);
-
-    for (typename STR::iterator it = outbuf.end();;) {
-      --it;
-      DCHECK(it != outbuf.begin());
-      *it = static_cast<typename STR::value_type>((res % 10) + '0');
-      res /= 10;
-
-      // We're done..
-      if (res == 0) {
-        if (is_neg) {
-          --it;
-          DCHECK(it != outbuf.begin());
-          *it = static_cast<typename STR::value_type>('-');
-        }
-        return STR(it, outbuf.end());
-      }
-    }
-    NOTREACHED();
-    return STR();
-  }
-};
-
+std::wstring Int64ToWString(int64 value) {
+  return StringPrintf(L"%I64d", value);
 }
 
 std::string IntToString(int value) {
-  return IntToStringT<std::string, int, unsigned int, true>::
-      IntToString(value);
+  return StringPrintf("%d", value);
 }
+
 std::wstring IntToWString(int value) {
-  return IntToStringT<std::wstring, int, unsigned int, true>::
-      IntToString(value);
-}
-std::string UintToString(unsigned int value) {
-  return IntToStringT<std::string, unsigned int, unsigned int, false>::
-      IntToString(value);
-}
-std::wstring UintToWString(unsigned int value) {
-  return IntToStringT<std::wstring, unsigned int, unsigned int, false>::
-      IntToString(value);
-}
-std::string Int64ToString(int64 value) {
-  return IntToStringT<std::string, int64, uint64, true>::
-      IntToString(value);
-}
-std::wstring Int64ToWString(int64 value) {
-  return IntToStringT<std::wstring, int64, uint64, true>::
-      IntToString(value);
-}
-std::string Uint64ToString(uint64 value) {
-  return IntToStringT<std::string, uint64, uint64, false>::
-      IntToString(value);
-}
-std::wstring Uint64ToWString(uint64 value) {
-  return IntToStringT<std::wstring, uint64, uint64, false>::
-      IntToString(value);
+  return StringPrintf(L"%d", value);
 }
 
 inline void StringAppendV(std::string* dst, const char* format, va_list ap) {
@@ -1309,98 +1020,6 @@ bool MatchPattern(const std::string& eval, const std::string& pattern) {
   return MatchPatternT(eval.c_str(), pattern.c_str());
 }
 
-// For the various *ToInt conversions, there are no *ToIntTraits classes to use
-// because there's no such thing as strtoi.  Use *ToLongTraits through a cast
-// instead, requiring that long and int are compatible and equal-width.  They
-// are on our target platforms.
-
-bool StringToInt(const std::string& input, int* output) {
-  COMPILE_ASSERT(sizeof(int) == sizeof(long), cannot_strtol_to_int);
-  return StringToNumber<StringToLongTraits>(input,
-                                            reinterpret_cast<long*>(output));
-}
-
-bool StringToInt(const std::wstring& input, int* output) {
-  COMPILE_ASSERT(sizeof(int) == sizeof(long), cannot_wcstol_to_int);
-  return StringToNumber<WStringToLongTraits>(input,
-                                             reinterpret_cast<long*>(output));
-}
-
-bool StringToInt64(const std::string& input, int64* output) {
-  return StringToNumber<StringToInt64Traits>(input, output);
-}
-
-bool StringToInt64(const std::wstring& input, int64* output) {
-  return StringToNumber<WStringToInt64Traits>(input, output);
-}
-
-bool HexStringToInt(const std::string& input, int* output) {
-  COMPILE_ASSERT(sizeof(int) == sizeof(long), cannot_strtol_to_int);
-  return StringToNumber<HexStringToLongTraits>(input,
-                                               reinterpret_cast<long*>(output));
-}
-
-bool HexStringToInt(const std::wstring& input, int* output) {
-  COMPILE_ASSERT(sizeof(int) == sizeof(long), cannot_wcstol_to_int);
-  return StringToNumber<HexWStringToLongTraits>(
-      input, reinterpret_cast<long*>(output));
-}
-
-bool StringToDouble(const std::string& input, double* output) {
-  return StringToNumber<StringToDoubleTraits>(input, output);
-}
-
-bool StringToDouble(const std::wstring& input, double* output) {
-  return StringToNumber<WStringToDoubleTraits>(input, output);
-}
-
-int StringToInt(const std::string& value) {
-  int result;
-  StringToInt(value, &result);
-  return result;
-}
-
-int StringToInt(const std::wstring& value) {
-  int result;
-  StringToInt(value, &result);
-  return result;
-}
-
-int64 StringToInt64(const std::string& value) {
-  int64 result;
-  StringToInt64(value, &result);
-  return result;
-}
-
-int64 StringToInt64(const std::wstring& value) {
-  int64 result;
-  StringToInt64(value, &result);
-  return result;
-}
-
-int HexStringToInt(const std::string& value) {
-  int result;
-  HexStringToInt(value, &result);
-  return result;
-}
-
-int HexStringToInt(const std::wstring& value) {
-  int result;
-  HexStringToInt(value, &result);
-  return result;
-}
-
-double StringToDouble(const std::string& value) {
-  double result;
-  StringToDouble(value, &result);
-  return result;
-}
-
-double StringToDouble(const std::wstring& value) {
-  double result;
-  StringToDouble(value, &result);
-  return result;
-}
 
 // The following code is compatible with the OpenBSD lcpy interface.  See:
 //   http://www.gratisoft.us/todd/papers/strlcpy.html
@@ -1432,4 +1051,3 @@ size_t base::strlcpy(char* dst, const char* src, size_t dst_size) {
 size_t base::wcslcpy(wchar_t* dst, const wchar_t* src, size_t dst_size) {
   return lcpyT<wchar_t>(dst, src, dst_size);
 }
-

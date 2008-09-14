@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_TAB_CONTENTS_H_
 #define CHROME_BROWSER_TAB_CONTENTS_H_
@@ -65,7 +90,8 @@ class TabContents : public PageNavigator,
     INVALIDATE_URL = 1,      // The URL has changed.
     INVALIDATE_TITLE = 2,    // The title has changed.
     INVALIDATE_FAVICON = 4,  // The favicon has changed.
-    INVALIDATE_LOAD = 8,     // The loading state has changed
+    INVALIDATE_STATE = 8,    // Forms, scroll position, etc.) have changed.
+    INVALIDATE_LOAD = 16,    // The loading state has changed
 
     // Helper for forcing a refresh.
     INVALIDATE_EVERYTHING = 0xFFFFFFFF
@@ -165,9 +191,6 @@ class TabContents : public PageNavigator,
   // Sets up a new NavigationController for this TabContents.
   // |profile| is the user profile that should be associated with
   // the new controller.
-  //
-  // TODO(brettw) this seems bogus and I couldn't find any legitimate need for
-  // it. I think it should be passed in the constructor.
   void SetupController(Profile* profile);
 
   // Returns the user profile associated with this TabContents (via the
@@ -236,6 +259,10 @@ class TabContents : public PageNavigator,
   // adds it to child_windows_.
   void AddConstrainedPopup(TabContents* new_contents,
                            const gfx::Rect& initial_pos);
+
+  // Find functions: subclasses should override to implement "Find" in a
+  // sensible way for their content types
+  virtual bool CanFind() const { return false; }
 
   // An asynchronous call to trigger the string search in the page.
   // It sends an IPC message to the Renderer that handles the string
@@ -482,11 +509,8 @@ class TabContents : public PageNavigator,
   void SetIsLoading(bool is_loading, LoadNotificationDetails* details);
 
   // Called by subclasses when a navigation occurs.  Ownership of the entry
-  // object is passed to this method. The details object should be filled in
-  // *except* for the entry (which the NavigationController will set). This
-  // behaves the same as NavigationController::DidNavigate, see that for more.
-  void DidNavigateToEntry(NavigationEntry* entry,
-                          NavigationController::LoadCommittedDetails* details);
+  // object is passed to this method.
+  void DidNavigateToEntry(NavigationEntry* entry);
 
   // Called by a derived class when the TabContents is resized, causing
   // suppressed constrained web popups to be repositioned to the new bounds
@@ -538,4 +562,3 @@ class TabContents : public PageNavigator,
 };
 
 #endif  // CHROME_BROWSER_TAB_CONTENTS_H_
-

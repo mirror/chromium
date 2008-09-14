@@ -355,7 +355,7 @@ document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
   </td>
   <td valign="top" width="230">
     <div align="right">
-        <img src="../../app/theme/%DISTRIBUTION%/product_logo.png" 
+        <img src="../../app/theme/product_logo.png" 
              width="145" height="52" style="padding-bottom:8px;" />
     </div>
     <div id="searches" class="sidebar">
@@ -373,7 +373,6 @@ document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
 
     <div id="recentlyBookmarked" class="sidebar" style="display:none">
       <span class="section-title" jscontent="bookmarks"></span>
-      <div id="recentlyBookmarkedContainer"></div>
     </div>
 
     <div id="recentlyClosedTabs" class="sidebar" style="display:none">
@@ -538,16 +537,10 @@ function renderSearchURLs(urls) {
    attributes. */
 function renderRecentlyBookmarked(entries) {
   logEvent('renderRecentlyBookmarked called: ' + entries.length);
-  var section   = document.getElementById('recentlyBookmarked');
-  var container = document.getElementById('recentlyBookmarkedContainer');
-
-  /* recentlyBookmarked is called any time the bookmarks change. Remove existing
-     entries before adding new ones. */
-  section.style.display = 'none';
-  container.innerHTML = '';
+  var container = document.getElementById('recentlyBookmarked');
 
   if (entries.length > 0) {
-    section.style.display = 'block';
+    container.style.display = 'block';
     for (var i = 0, entry = entries[0]; entry = entries[i]; ++i) {
       var link = DOM('a', {href: entry.url, className:'recent-bookmark', title:entry.title});
       link.style.backgroundImage =
@@ -571,7 +564,9 @@ function renderRecentlyClosedTabs(entries) {
      date. Therefore, reset the recentlyClosedTabs state on every
      call. */
   section.style.display = 'none';
-  container.innerHTML = '';
+  while(container.hasChildNodes()) {
+    container.removeChild(container.firstChild);
+  }
 
   if (entries.length > 0) {
     section.style.display = 'block';

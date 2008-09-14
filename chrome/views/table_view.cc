@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <windowsx.h>
 
@@ -49,8 +74,8 @@ TableView::TableView(TableModel* model,
       autosize_columns_(autosize_columns),
       resizable_columns_(resizable_columns),
       list_view_(NULL),
+      list_view_original_handler_(NULL),
       header_original_handler_(NULL),
-      original_handler_(NULL),
       table_view_wrapper_(this),
       custom_cell_font_(NULL),
       content_offset_(0) {
@@ -393,28 +418,6 @@ bool TableView::GetCellColors(int row,
   return false;
 }
 
-LRESULT CALLBACK TableView::TableWndProc(HWND window,
-                                         UINT message,
-                                         WPARAM w_param,
-                                         LPARAM l_param) {
-  TableView* table_view = reinterpret_cast<TableViewWrapper*>(
-      GetWindowLongPtr(window, GWLP_USERDATA))->table_view;
-
-  switch (message) {
-    case WM_ERASEBKGND:
-      // We make WM_ERASEBKGND do nothing (returning 1 indicates we handled
-      // the request). We do this so that the table view doesn't flicker during
-      // resizing.
-      return 1;
-
-    default:
-      break;
-  }
-  DCHECK(table_view->original_handler_);
-  return CallWindowProc(table_view->original_handler_, window, message, w_param,
-                        l_param);
-}
-
 LRESULT CALLBACK TableView::TableHeaderWndProc(HWND window, UINT message,
                                                WPARAM w_param, LPARAM l_param) {
   TableView* table_view = reinterpret_cast<TableViewWrapper*>(
@@ -533,11 +536,6 @@ HWND TableView::CreateNativeControl(HWND parent_container) {
     header_original_handler_ = win_util::SetWindowProc(header,
         &TableView::TableHeaderWndProc);
   }
-
-  SetWindowLongPtr(list_view_, GWLP_USERDATA,
-      reinterpret_cast<LONG_PTR>(&table_view_wrapper_));
-  original_handler_ =
-      win_util::SetWindowProc(list_view_, &TableView::TableWndProc);
 
   // Bug 964884: detach the IME attached to this window.
   // We should attach IMEs only when we need to input CJK strings.
@@ -941,25 +939,37 @@ void TableView::OnCheckedStateChanged(int item, bool is_checked) {
   }
 }
 
-int TableView::PreviousSelectedIndex(int item) {
-  DCHECK(item >= 0);
-  if (!list_view_ || item <= 0)
+int TableView::NextSelectedIndex(int item) {
+  if (!list_view_)
     return -1;
-
-  int row_count = RowCount();
-  if (row_count == 0)
-    return -1;  // Empty table, nothing can be selected.
-
-  // For some reason
-  // ListView_GetNextItem(list_view_,item, LVNI_SELECTED | LVNI_ABOVE)
-  // fails on Vista (always returns -1), so we iterate through the indices.
-  item = std::min(item, row_count);
-  while (--item >= 0 && !IsItemSelected(item));
-  return item;
+  DCHECK(item >= 0);
+  if (item >= RowCount()) {
+    return LastSelectedIndex();
+  }
+  // It seems if the list has only 1 element and it is selected that
+  // ListView_GetNextItem always returns 0.
+  if (RowCount() == 1) {
+    return -1;
+  }
+  return ListView_GetNextItem(list_view_,
+                              item, LVNI_ALL | LVNI_SELECTED | LVNI_ABOVE);
 }
 
 int TableView::LastSelectedIndex() {
-  return PreviousSelectedIndex(RowCount());
+  if (!list_view_)
+    return -1;
+  int row_count = RowCount();
+  int last_selected_row = -1;
+  if (row_count > 0) {
+    if (ListView_GetItemState(list_view_, row_count - 1,
+                              LVIS_SELECTED) == LVIS_SELECTED) {
+        last_selected_row = row_count - 1;
+    } else {
+      last_selected_row = ListView_GetNextItem(list_view_,
+          row_count - 1, LVNI_ALL | LVNI_SELECTED | LVNI_ABOVE);
+    }
+  }
+  return last_selected_row;
 }
 
 void TableView::UpdateContentOffset() {
@@ -1004,7 +1014,7 @@ bool TableSelectionIterator::operator!=(const TableSelectionIterator& other) {
 }
 
 TableSelectionIterator& TableSelectionIterator::operator++() {
-  index_ = table_view_->PreviousSelectedIndex(index_);
+  index_ = table_view_->NextSelectedIndex(index_);
   return *this;
 }
 

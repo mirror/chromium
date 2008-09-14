@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
 
@@ -134,8 +159,7 @@ bool IsDuplicateName(const std::string& locale_name) {
   return false;
 }
 
-bool IsLocaleAvailable(const std::wstring& locale,
-                       const std::wstring& locale_path) {
+bool IsLocaleAvailable(const std::wstring& locale, const std::wstring& locale_path) {
   std::wstring test_locale = locale;
   // If locale has any illegal characters in it, we don't want to try to
   // load it because it may be pointing outside the locale dll directory.
@@ -156,8 +180,11 @@ bool CheckAndResolveLocale(const std::wstring& locale,
     return true;
   }
   // If the locale matches language but not country, use that instead.
-  // TODO(jungshik) : Nothing is done about languages that Chrome
-  // does not support but available on Windows. We fall
+  // TODO(jungshik) : we need a more extensive resolution (aliasing,
+  // contraction/expansion) to take care of various edge cases
+  // (zh-{HK,SG,MK}, en => en-US, es => es-{ES,419}).
+  // Also, this does not do anything about languages that Chrome
+  // currently does not support but available on Windows. We fall
   // back to en-US in GetApplicationLocale so that it's a not critical,
   // but we can do better.
   std::wstring::size_type hyphen_pos = locale.find(L'-');
@@ -165,46 +192,14 @@ bool CheckAndResolveLocale(const std::wstring& locale,
     std::wstring lang(locale, 0, hyphen_pos);
     std::wstring region(locale, hyphen_pos + 1);
     std::wstring tmp_locale(lang);
-    // Map es-RR other than es-ES to es-419 (Chrome's Latin American
-    // Spanish locale).
+    // Map es-RR other than es-ES to es-419 (Chrome's Latin American Spanish locale).
     if (LowerCaseEqualsASCII(lang, "es") && !LowerCaseEqualsASCII(region, "es"))
       tmp_locale.append(L"-419");
-    else if (LowerCaseEqualsASCII(lang, "zh")) {
-      // Map zh-HK and zh-MK to zh-TW. Otherwise, zh-FOO is mapped to zh-CN.
-     if (LowerCaseEqualsASCII(region, "hk") ||
-         LowerCaseEqualsASCII(region, "mk")) {
-       tmp_locale.append(L"-TW");
-     } else {
-       tmp_locale.append(L"-CN");
-     }
-    }
     if (IsLocaleAvailable(tmp_locale, locale_path)) {
       resolved_locale->swap(tmp_locale);
       return true;
     }
   }
-
-  // Google updater uses no, iw and en for our nb, he, and en-US.
-  // We need to map them to our codes. 
-  struct {
-    const char* source;
-    const wchar_t* dest;} alias_map[] = {
-      {"no", L"nb"},
-      {"tl", L"fil"},
-      {"iw", L"he"},
-      {"en", L"en-US"},
-  };
-
-  for (int i = 0; i < arraysize(alias_map); ++i) {
-    if (LowerCaseEqualsASCII(locale, alias_map[i].source)) {
-      std::wstring tmp_locale(alias_map[i].dest);
-      if (IsLocaleAvailable(tmp_locale, locale_path)) {
-        resolved_locale->swap(tmp_locale);
-        return true;
-      }
-    }
-  }
-
   return false;
 }
 
@@ -573,4 +568,3 @@ const std::vector<std::wstring>& GetAvailableLocales() {
 }
 
 }
-

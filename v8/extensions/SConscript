@@ -1,0 +1,105 @@
+Import('common share')
+import sys, platform, os, js2c, re
+from os.path import join
+
+
+def LoadExtensionsConfig():
+  import ConfigParser
+  config = ConfigParser.ConfigParser()
+  config.read(str(File('extensions.ini')))
+  return config
+
+
+short_name_matcher = re.compile(r'([a-zA-Z0-9_]+)', re.M)
+
+
+def BuildSourceString(source, target, env):
+  output = open(str(target[0]), "w")
+  attribs = env.attribs
+  for h_file in env.h_files:
+    output.write('#include "' + join('..', '..', 'extensions', h_file) + '"\n')
+  class_name = attribs['title_name'] + "Extension"
+  output.write("\nclass " + class_name + " : public v8::Extension {\n")
+  output.write(" public:\n")
+  output.write("  " + class_name + "() : v8::Extension(\"" + attribs['id'] + "\", kSource) {\n")
+  if 'auto_enable' in attribs:
+    output.write("    set_auto_enable(" + attribs['auto_enable'] + ");\n")
+  output.write("  }\n")
+  output.write("  virtual v8::Handle<v8::Function> GetNativeFunction(v8::Handle<v8::String> name);\n")
+  output.write(" private:\n")
+  output.write("  static const char* kSource;\n");
+  output.write("};\n\n")
+  output.write("v8::Handle<v8::Function> " + class_name + "::GetNativeFunction(v8::Handle<v8::String> name) {\n")
+  for native in env.natives:
+    short_native_name = short_name_matcher.findall(native)[-1]
+    output.write('  if (name->Equals(v8::String::New(\"' + short_native_name + '\"))) return v8::FunctionTemplate::New(' + native + ')->GetFunction();\n')
+  output.write('  else return v8::Handle<v8::Function>();\n')
+  output.write("}\n\n")
+  lines = ''
+  for s in source:
+    file_lines = File(s).get_contents()
+    lines += file_lines
+    lines += "\n"
+  lines = js2c.CompressScript(lines)
+  output.write('const char* ' + attribs['title_name'] + 'Extension::kSource =\n')
+  js2c.WriteLines(output, lines, 72, 88)
+  output.write(';\n\n')
+  output.write('static ' + class_name + ' kExtensionInstance;\n')
+  output.write('static v8::DeclareExtension kDeclaration(&kExtensionInstance);\n')
+  output.close()
+
+
+common['BUILDERS']['BuildSourceString'] = Builder(action=BuildSourceString)
+
+
+scanMatcher = re.compile(r'native:\s*([^\s]+)', re.M)
+
+
+def GetNativesList(cc_files):
+  natives = []
+  for cc_file in cc_files:
+    natives += scanMatcher.findall(File(cc_file).get_contents())
+  return natives
+
+
+config = LoadExtensionsConfig()
+
+for section in config.sections():
+  name = section.lower()
+  title_name = name[0].upper() + name[1:]
+  env = common.Copy()
+  cc_files = []
+  js_files = []
+  h_files = [name + '.h']
+  js_source_var = None
+  attribs = {
+    'title_name': title_name
+  }
+  for key, value in config.items(section):
+    attribs[key] = value
+    if key == 'cc_files': cc_files += value.split()
+    elif key == 'js_files': js_files += value.split()
+    else: env.Replace(**{key.upper(): value})
+  cc_files = common.expand(cc_files)
+
+  # Not all platforms support extensions yet.  Verify that all files are
+  # present for the extensions.  If they are all available, go ahead and
+  # add to the build script, otherwise assume it's not supported on this
+  # platform and skip.
+  supported = True
+  for fname in cc_files:
+    if not os.path.exists(fname):
+      supported = False
+
+  if supported :
+    env.attribs = attribs
+    env.h_files = h_files
+    env.natives = GetNativesList(cc_files)
+    combined_source_file = 'combined-' + name + '.cc'
+    env.BuildSourceString(combined_source_file, js_files)
+    env.Depends(combined_source_file, 'extensions.ini')
+    env.Append(CPPPATH=join('..', '..', 'public'))
+    obj = env.SharedLibrary('v8' + name, cc_files + [combined_source_file])
+    lib = env.StaticLibrary('v8' + name, cc_files + [combined_source_file]) 
+    Alias(name + '-ext', lib)
+    share['extension_list'].append(obj)

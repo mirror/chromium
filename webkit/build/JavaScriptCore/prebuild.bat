@@ -11,9 +11,6 @@ set PATH=%CYGWIN_ROOT%bin;%GNU_ROOT%;%SystemRoot%;%SystemRoot%\system32
 :: Ensure that the cygwin mount points are defined
 CALL %CYGWIN_ROOT%setup_mount.bat > NUL
 
-:: Fix tempfile() on vista: without this flag, the files that it creates are not accessible.
-set CYGWIN=nontsec
-
 :: Help dftables script to find a usable temporary directory. For an unknown
 :: reason, /tmp is not defined on cygwin and this script looks at TMPDIR
 :: environment variable, which is usually not defined on Windows either.
@@ -27,6 +24,4 @@ if "%TMPDIR%" == "" (
 ) else (
 	bash build-generated-files.sh "%IntDir%" "..\..\..\third_party\WebKit"
 )
-
-call copy_files.bat %IntDir%\JavaScriptCore
-endlocal
+copy_files.bat %IntDir%\JavaScriptCore

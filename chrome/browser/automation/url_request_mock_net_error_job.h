@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // A URLRequestJob class that simulates network errors (including https
 // related).
@@ -16,7 +41,7 @@ class URLRequestMockNetErrorJob : public URLRequestMockHTTPJob {
  public:
   URLRequestMockNetErrorJob(URLRequest* request,
                             const std::vector<int>& errors,
-                            net::X509Certificate* ssl_cert);
+                            X509Certificate* ssl_cert);
   virtual ~URLRequestMockNetErrorJob();
 
   virtual void Start();
@@ -31,7 +56,7 @@ class URLRequestMockNetErrorJob : public URLRequestMockHTTPJob {
   static void AddMockedURL(const GURL& url,
                            const std::wstring& base,
                            const std::vector<int>& errors,
-                           net::X509Certificate* ssl_cert);
+                           X509Certificate* ssl_cert);
 
   // Removes the specified |url| from the list of mocked urls.
   static void RemoveMockedURL(const GURL& url);
@@ -41,14 +66,14 @@ class URLRequestMockNetErrorJob : public URLRequestMockHTTPJob {
     MockInfo() : ssl_cert(NULL) { }
     MockInfo(std::wstring base,
              std::vector<int> errors,
-             net::X509Certificate* ssl_cert)
+             X509Certificate* ssl_cert)
         : base(base),
           errors(errors),
           ssl_cert(ssl_cert) { }
 
     std::wstring base;
     std::vector<int> errors;
-    scoped_refptr<net::X509Certificate> ssl_cert;
+    scoped_refptr<X509Certificate> ssl_cert;
   };
 
   static URLRequest::ProtocolFactory Factory;
@@ -59,7 +84,7 @@ class URLRequestMockNetErrorJob : public URLRequestMockHTTPJob {
   std::vector<int> errors_;
 
   // The certificate to use for SSL errors.
-  scoped_refptr<net::X509Certificate> ssl_cert_;
+  scoped_refptr<X509Certificate> ssl_cert_;
 
   typedef std::map<GURL, MockInfo> URLMockInfoMap;
   static URLMockInfoMap url_mock_info_map_;
@@ -68,4 +93,3 @@ class URLRequestMockNetErrorJob : public URLRequestMockHTTPJob {
 };
 
 #endif  // #define CHROME_BROWSER_AUTOMATION_URL_REQUEST_MOCK_NET_ERROR_H__
-

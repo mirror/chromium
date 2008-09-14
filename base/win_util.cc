@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/win_util.h"
 
@@ -195,7 +220,7 @@ bool GetLogonSessionOnlyDACL(SECURITY_DESCRIPTOR** security_descriptor) {
   if (!ConvertSidToStringSid(logon_sid, &sid_string))
     return false;
 
-  static const wchar_t dacl_format[] = L"D:(A;OICI;GA;;;%ls)";
+  static const wchar_t dacl_format[] = L"D:(A;OICI;GA;;;%s)";
   wchar_t dacl[SECURITY_MAX_SID_SIZE + arraysize(dacl_format) + 1] = {0};
   wsprintf(dacl, dacl_format, sid_string);
 
@@ -320,7 +345,7 @@ bool UserAccountControlIsEnabled() {
 // If the ASSERT below fails, please install Visual Studio 2005 Service Pack 1.
 //
 extern char VisualStudio2005ServicePack1Detection[10];
-COMPILE_ASSERT(sizeof(&VisualStudio2005ServicePack1Detection) == sizeof(void*),
+COMPILE_ASSERT(sizeof(&VisualStudio2005ServicePack1Detection) == 4,
                VS2005SP1Detect);
 //
 // Chrome requires at least Service Pack 1 for Visual Studio 2005.
@@ -330,10 +355,5 @@ COMPILE_ASSERT(sizeof(&VisualStudio2005ServicePack1Detection) == sizeof(void*),
 #ifndef COPY_FILE_COPY_SYMLINK
 #error You must install the Windows 2008 or Vista Software Development Kit and \
 set it as your default include path to build this library. You can grab it by \
-searching for "download windows sdk 2008" in your favorite web search engine.  \
-Also make sure you register the SDK with Visual Studio, by selecting \
-"Integrate Windows SDK with Visual Studio 2005" from the Windows SDK \
-menu (see Start - All Programs - Microsoft Windows SDK - \
-Visual Studio Registration).
+searching for "download windows sdk 2008" in your favorite web search engine.
 #endif
-

@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // This file defines functions that integrate Chrome in Windows shell. These
 // functions can be used by Chrome as well as Chrome installer. All of the
@@ -22,14 +47,13 @@
 #include "base/win_util.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/create_reg_key_work_item.h"
 #include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/set_reg_value_work_item.h"
 #include "chrome/installer/util/util_constants.h"
 #include "chrome/installer/util/work_item.h"
 
-#include "installer_util_strings.h"
+#include "setup_strings.h"
 
 namespace {
 
@@ -56,10 +80,9 @@ class RegistryEntry {
     entries.push_front(new RegistryEntry(
         L"Software\\Classes\\ChromeHTML\\shell\\open\\command", open_cmd));
 
-    BrowserDistribution* dist = BrowserDistribution::GetDistribution();
     entries.push_front(new RegistryEntry(
         L"Software\\Clients\\StartMenuInternet\\chrome.exe",
-        dist->GetApplicationName()));
+        installer_util::kApplicationName));
     entries.push_front(new RegistryEntry(
         L"Software\\Clients\\StartMenuInternet\\chrome.exe\\shell\\open\\command",
         quoted_exe_path));
@@ -84,17 +107,17 @@ class RegistryEntry {
 
     entries.push_front(new RegistryEntry(
         ShellUtil::kRegRegisteredApplications,
-        dist->GetApplicationName(),
+        installer_util::kApplicationName,
         L"Software\\Clients\\StartMenuInternet\\chrome.exe\\Capabilities"));
     entries.push_front(new RegistryEntry(
         L"Software\\Clients\\StartMenuInternet\\chrome.exe\\Capabilities",
-        L"ApplicationDescription", dist->GetApplicationName()));
+        L"ApplicationDescription", installer_util::kApplicationName));
     entries.push_front(new RegistryEntry(
         L"Software\\Clients\\StartMenuInternet\\chrome.exe\\Capabilities",
         L"ApplicationIcon", icon_path));
     entries.push_front(new RegistryEntry(
         L"Software\\Clients\\StartMenuInternet\\chrome.exe\\Capabilities",
-        L"ApplicationName", dist->GetApplicationName()));
+        L"ApplicationName", installer_util::kApplicationName));
 
     entries.push_front(new RegistryEntry(
         L"Software\\Clients\\StartMenuInternet\\chrome.exe\\Capabilities\\StartMenu",
@@ -228,8 +251,7 @@ ShellUtil::RegisterStatus RegisterOnVista(const std::wstring& chrome_exe,
     std::wstring exe_path(file_util::GetDirectoryFromPath(chrome_exe));
     file_util::AppendToPath(&exe_path, installer_util::kSetupExe);
     if (!file_util::PathExists(exe_path)) {
-      BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-      RegKey key(HKEY_CURRENT_USER, dist->GetUninstallRegPath().c_str());
+      RegKey key(HKEY_CURRENT_USER, installer_util::kUninstallRegPath);
       key.ReadValue(installer_util::kUninstallStringField, &exe_path);
       exe_path = exe_path.substr(0, exe_path.find_first_of(L" --"));
       TrimString(exe_path, L" \"", &exe_path);
@@ -308,8 +330,7 @@ bool ShellUtil::GetChromeIcon(std::wstring& chrome_icon) {
 }
 
 bool ShellUtil::GetChromeShortcutName(std::wstring* shortcut) {
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  shortcut->assign(dist->GetApplicationName());
+  shortcut->assign(installer_util::GetLocalizedString(IDS_PRODUCT_NAME_BASE));
   shortcut->append(L".lnk");
   return true;
 }
@@ -353,4 +374,3 @@ bool ShellUtil::UpdateChromeShortcut(const std::wstring& chrome_exe,
                                          0);                      // icon index
   }
 }
-

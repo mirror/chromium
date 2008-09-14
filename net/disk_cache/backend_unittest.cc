@@ -1,11 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/file_util.h"
 #include "base/path_service.h"
-#include "base/platform_thread.h"
-#include "base/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/backend_impl.h"
 #include "net/disk_cache/disk_cache_test_base.h"
@@ -78,7 +101,7 @@ int TestTransaction(const std::wstring& name, int num_entries, bool load) {
 }  // namespace
 
 // Tests that can run with different types of caches.
-class DiskCacheBackendTest : public DiskCacheTestWithCache {
+class DiskCacheBackendTest : public DiskCacheTestBase {
  protected:
   void BackendBasics();
   void BackendSetSize();
@@ -88,9 +111,6 @@ class DiskCacheBackendTest : public DiskCacheTestWithCache {
   void BackendDoomRecent();
   void BackendDoomBetween();
   void BackendDoomAll();
-  void BackendInvalidRankings();
-  void BackendDisable();
-  void BackendDisable2();
 };
 
 void DiskCacheBackendTest::BackendBasics() {
@@ -160,17 +180,17 @@ void DiskCacheBackendTest::BackendKeying() {
   entry2->Close();
 
   char buffer[30];
-  base::strlcpy(buffer, kName1, sizeof(buffer));
+  EXPECT_EQ(0, strcpy_s(buffer, kName1));
   ASSERT_TRUE(cache_->OpenEntry(buffer, &entry2));
   EXPECT_TRUE(entry1 == entry2);
   entry2->Close();
 
-  base::strlcpy(buffer + 1, kName1, sizeof(buffer) - 1);
+  EXPECT_EQ(0, strcpy_s(buffer + 1, sizeof(buffer) - 1 , kName1));
   ASSERT_TRUE(cache_->OpenEntry(buffer + 1, &entry2));
   EXPECT_TRUE(entry1 == entry2);
   entry2->Close();
 
-  base::strlcpy(buffer + 3,  kName1, sizeof(buffer) - 3);
+  EXPECT_EQ(0, strcpy_s(buffer + 3, sizeof(buffer) - 3,  kName1));
   ASSERT_TRUE(cache_->OpenEntry(buffer + 3, &entry2));
   EXPECT_TRUE(entry1 == entry2);
   entry2->Close();
@@ -198,29 +218,6 @@ TEST_F(DiskCacheBackendTest, MemoryOnlyKeying) {
   SetMemoryOnlyMode();
   InitCache();
   BackendKeying();
-}
-
-TEST_F(DiskCacheBackendTest, ExternalFiles) {
-  InitCache();
-  // First, lets create a file on the folder.
-  std::wstring filename = GetCachePath();
-  file_util::AppendToPath(&filename, L"f_000001");
-
-  const int kDataSize = 50;
-  char data[kDataSize];
-  CacheTestFillBuffer(data, kDataSize, false);
-  ASSERT_EQ(kDataSize, file_util::WriteFile(filename, data, kDataSize));
-
-  // Now let's create a file with the cache.
-  disk_cache::Entry* entry;
-  ASSERT_TRUE(cache_->CreateEntry("key", &entry));
-  ASSERT_EQ(0, entry->WriteData(0, 20000, data, 0, NULL, false));
-  entry->Close();
-
-  // And verify that the first file is still there.
-  char buffer[kDataSize];
-  ASSERT_EQ(kDataSize, file_util::ReadFile(filename, buffer, kDataSize));
-  EXPECT_EQ(0, memcmp(data, buffer, kDataSize));
 }
 
 void DiskCacheBackendTest::BackendSetSize() {
@@ -336,8 +333,8 @@ TEST_F(DiskCacheBackendTest, ValidEntry) {
   ASSERT_TRUE(cache_->CreateEntry(key, &entry1));
 
   char data[] = "And the data to save";
-  EXPECT_TRUE(sizeof(data) == entry1->WriteData(0, 0, data, sizeof(data), NULL,
-                                                false));
+  EXPECT_EQ(sizeof(data), entry1->WriteData(0, 0, data, sizeof(data), NULL,
+                                            false));
   entry1->Close();
   SimulateCrash();
 
@@ -345,8 +342,7 @@ TEST_F(DiskCacheBackendTest, ValidEntry) {
 
   char buffer[40];
   memset(buffer, 0, sizeof(buffer));
-  EXPECT_TRUE(sizeof(data) == entry1->ReadData(0, 0, buffer, sizeof(data),
-                                               NULL));
+  EXPECT_EQ(sizeof(data), entry1->ReadData(0, 0, buffer, sizeof(data), NULL));
   entry1->Close();
   EXPECT_STREQ(data, buffer);
 }
@@ -364,8 +360,8 @@ TEST_F(DiskCacheBackendTest, InvalidEntry) {
   ASSERT_TRUE(cache_->CreateEntry(key, &entry1));
 
   char data[] = "And the data to save";
-  EXPECT_TRUE(sizeof(data) == entry1->WriteData(0, 0, data, sizeof(data), NULL,
-                                                false));
+  EXPECT_EQ(sizeof(data), entry1->WriteData(0, 0, data, sizeof(data), NULL,
+                                            false));
   SimulateCrash();
 
   EXPECT_FALSE(cache_->OpenEntry(key, &entry1));
@@ -384,11 +380,11 @@ TEST_F(DiskCacheBackendTest, InvalidEntryRead) {
   ASSERT_TRUE(cache_->CreateEntry(key, &entry1));
 
   char data[] = "And the data to save";
-  EXPECT_TRUE(sizeof(data) == entry1->WriteData(0, 0, data, sizeof(data), NULL,
-                                                false));
+  EXPECT_EQ(sizeof(data), entry1->WriteData(0, 0, data, sizeof(data), NULL,
+                                            false));
   entry1->Close();
   ASSERT_TRUE(cache_->OpenEntry(key, &entry1));
-  EXPECT_TRUE(sizeof(data) == entry1->ReadData(0, 0, data, sizeof(data), NULL));
+  EXPECT_EQ(sizeof(data), entry1->ReadData(0, 0, data, sizeof(data), NULL));
 
   SimulateCrash();
 
@@ -547,11 +543,11 @@ TEST_F(DiskCacheBackendTest, InvalidEntryEnumeration) {
   ASSERT_TRUE(cache_->CreateEntry(key, &entry1));
 
   char data[] = "And the data to save";
-  EXPECT_TRUE(sizeof(data) == entry1->WriteData(0, 0, data, sizeof(data), NULL,
-                                                false));
+  EXPECT_EQ(sizeof(data), entry1->WriteData(0, 0, data, sizeof(data), NULL,
+                                            false));
   entry1->Close();
   ASSERT_TRUE(cache_->OpenEntry(key, &entry1));
-  EXPECT_TRUE(sizeof(data) == entry1->ReadData(0, 0, data, sizeof(data), NULL));
+  EXPECT_EQ(sizeof(data), entry1->ReadData(0, 0, data, sizeof(data), NULL));
 
   std::string key2("Another key");
   ASSERT_TRUE(cache_->CreateEntry(key2, &entry2));
@@ -637,7 +633,7 @@ void DiskCacheBackendTest::BackendDoomRecent() {
   ASSERT_TRUE(cache_->CreateEntry("second", &entry));
   entry->Close();
 
-  PlatformThread::Sleep(20);
+  Sleep(20);
   Time middle = Time::Now();
 
   ASSERT_TRUE(cache_->CreateEntry("third", &entry));
@@ -645,7 +641,7 @@ void DiskCacheBackendTest::BackendDoomRecent() {
   ASSERT_TRUE(cache_->CreateEntry("fourth", &entry));
   entry->Close();
 
-  PlatformThread::Sleep(20);
+  Sleep(20);
   Time final = Time::Now();
 
   ASSERT_EQ(4, cache_->GetEntryCount());
@@ -666,7 +662,7 @@ void DiskCacheBackendTest::BackendDoomBetween() {
   ASSERT_TRUE(cache_->CreateEntry("first", &entry));
   entry->Close();
 
-  PlatformThread::Sleep(20);
+  Sleep(20);
   Time middle_start = Time::Now();
 
   ASSERT_TRUE(cache_->CreateEntry("second", &entry));
@@ -674,13 +670,13 @@ void DiskCacheBackendTest::BackendDoomBetween() {
   ASSERT_TRUE(cache_->CreateEntry("third", &entry));
   entry->Close();
 
-  PlatformThread::Sleep(20);
+  Sleep(20);
   Time middle_end = Time::Now();
 
   ASSERT_TRUE(cache_->CreateEntry("fourth", &entry));
   entry->Close();
 
-  PlatformThread::Sleep(20);
+  Sleep(20);
   Time final = Time::Now();
 
   ASSERT_EQ(4, cache_->GetEntryCount());
@@ -719,7 +715,7 @@ TEST_F(DiskCacheBackendTest, MemoryOnlyDoomBetween) {
   BackendDoomBetween();
 }
 
-TEST_F(DiskCacheTest, Backend_RecoverInsert) {
+TEST(DiskCacheTest, Backend_RecoverInsert) {
   // Tests with an empty cache.
   EXPECT_EQ(0, TestTransaction(L"insert_empty1", 0, false));
   EXPECT_EQ(0, TestTransaction(L"insert_empty2", 0, false));
@@ -735,7 +731,7 @@ TEST_F(DiskCacheTest, Backend_RecoverInsert) {
   EXPECT_EQ(0, TestTransaction(L"insert_load2", 100, true));
 }
 
-TEST_F(DiskCacheTest, Backend_RecoverRemove) {
+TEST(DiskCacheTest, Backend_RecoverRemove) {
   // Removing the only element.
   EXPECT_EQ(0, TestTransaction(L"remove_one1", 0, false));
   EXPECT_EQ(0, TestTransaction(L"remove_one2", 0, false));
@@ -764,7 +760,7 @@ TEST_F(DiskCacheTest, Backend_RecoverRemove) {
 }
 
 // Tests dealing with cache files that cannot be recovered.
-TEST_F(DiskCacheTest, Backend_DeleteOld) {
+TEST(DiskCacheTest, Backend_DeleteOld) {
   ASSERT_TRUE(CopyTestCache(L"wrong_version"));
   std::wstring path = GetCachePath();
   scoped_ptr<disk_cache::Backend> cache;
@@ -781,7 +777,7 @@ TEST_F(DiskCacheTest, Backend_DeleteOld) {
 }
 
 // We want to be able to deal with messed up entries on disk.
-TEST_F(DiskCacheTest, Backend_InvalidEntry) {
+TEST(DiskCacheTest, Backend_InvalidEntry) {
   ASSERT_TRUE(CopyTestCache(L"bad_entry"));
   std::wstring path = GetCachePath();
   disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
@@ -797,7 +793,7 @@ TEST_F(DiskCacheTest, Backend_InvalidEntry) {
 }
 
 // We want to be able to deal with messed up entries on disk.
-TEST_F(DiskCacheTest, Backend_InvalidRankings) {
+TEST(DiskCacheTest, Backend_InvalidRankings) {
   ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
   std::wstring path = GetCachePath();
   disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
@@ -813,101 +809,74 @@ TEST_F(DiskCacheTest, Backend_InvalidRankings) {
 }
 
 // If the LRU is corrupt, we delete the cache.
-void DiskCacheBackendTest::BackendInvalidRankings() {
+TEST(DiskCacheTest, Backend_InvalidRankings2) {
+  ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
+  std::wstring path = GetCachePath();
+  disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
+  ASSERT_TRUE(NULL != cache);
+
   disk_cache::Entry* entry;
   void* iter = NULL;
-  ASSERT_TRUE(cache_->OpenNextEntry(&iter, &entry));
+  ASSERT_TRUE(cache->OpenNextEntry(&iter, &entry));
   entry->Close();
-  EXPECT_EQ(2, cache_->GetEntryCount());
+  EXPECT_EQ(2, cache->GetEntryCount());
 
-  EXPECT_FALSE(cache_->OpenNextEntry(&iter, &entry));
-  EXPECT_EQ(0, cache_->GetEntryCount());
-}
+  EXPECT_FALSE(cache->OpenNextEntry(&iter, &entry));
+  EXPECT_EQ(0, cache->GetEntryCount());
 
-TEST_F(DiskCacheBackendTest, InvalidRankingsSuccess) {
-  ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
-  DisableFirstCleanup();
-  SetDirectMode();
-  InitCache();
-  BackendInvalidRankings();
-}
-
-TEST_F(DiskCacheBackendTest, InvalidRankingsFailure) {
-  ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
-  DisableFirstCleanup();
-  SetDirectMode();
-  InitCache();
-  SetTestMode();  // Fail cache reinitialization.
-  BackendInvalidRankings();
+  delete cache;
+  EXPECT_TRUE(CheckCacheIntegrity(path));
 }
 
 // If the LRU is corrupt and we have open entries, we disable the cache.
-void DiskCacheBackendTest::BackendDisable() {
+TEST(DiskCacheTest, Backend_Disable) {
+  ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
+  std::wstring path = GetCachePath();
+  disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
+  ASSERT_TRUE(NULL != cache);
+
   disk_cache::Entry *entry1, *entry2;
   void* iter = NULL;
-  ASSERT_TRUE(cache_->OpenNextEntry(&iter, &entry1));
+  ASSERT_TRUE(cache->OpenNextEntry(&iter, &entry1));
 
-  EXPECT_FALSE(cache_->OpenNextEntry(&iter, &entry2));
-  EXPECT_EQ(2, cache_->GetEntryCount());
-  EXPECT_FALSE(cache_->CreateEntry("Something new", &entry2));
+  EXPECT_FALSE(cache->OpenNextEntry(&iter, &entry2));
+  EXPECT_EQ(2, cache->GetEntryCount());
+  EXPECT_FALSE(cache->CreateEntry("Something new", &entry2));
 
   entry1->Close();
 
-  EXPECT_EQ(0, cache_->GetEntryCount());
-}
+  EXPECT_EQ(0, cache->GetEntryCount());
 
-TEST_F(DiskCacheBackendTest, DisableSuccess) {
-  ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
-  DisableFirstCleanup();
-  SetDirectMode();
-  InitCache();
-  BackendDisable();
-}
-
-TEST_F(DiskCacheBackendTest, DisableFailure) {
-  ASSERT_TRUE(CopyTestCache(L"bad_rankings"));
-  DisableFirstCleanup();
-  SetDirectMode();
-  InitCache();
-  SetTestMode();  // Fail cache reinitialization.
-  BackendDisable();
+  delete cache;
+  EXPECT_TRUE(CheckCacheIntegrity(path));
 }
 
 // This is another type of corruption on the LRU; disable the cache.
-void DiskCacheBackendTest::BackendDisable2() {
-  EXPECT_EQ(8, cache_->GetEntryCount());
+TEST(DiskCacheTest, Backend_Disable2) {
+  ASSERT_TRUE(CopyTestCache(L"list_loop"));
+  std::wstring path = GetCachePath();
+  disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
+  ASSERT_TRUE(NULL != cache);
+
+  EXPECT_EQ(8, cache->GetEntryCount());
 
   disk_cache::Entry* entry;
   void* iter = NULL;
   int count = 0;
-  while (cache_->OpenNextEntry(&iter, &entry)) {
+  while (cache->OpenNextEntry(&iter, &entry)) {
     ASSERT_TRUE(NULL != entry);
     entry->Close();
     count++;
     ASSERT_LT(count, 9);
   };
 
-  EXPECT_EQ(0, cache_->GetEntryCount());
+  EXPECT_EQ(0, cache->GetEntryCount());
+
+  delete cache;
+  EXPECT_TRUE(CheckCacheIntegrity(path));
 }
 
-TEST_F(DiskCacheBackendTest, DisableSuccess2) {
-  ASSERT_TRUE(CopyTestCache(L"list_loop"));
-  DisableFirstCleanup();
-  SetDirectMode();
-  InitCache();
-  BackendDisable2();
-}
-
-TEST_F(DiskCacheBackendTest, DisableFailure2) {
-  ASSERT_TRUE(CopyTestCache(L"list_loop"));
-  DisableFirstCleanup();
-  SetDirectMode();
-  InitCache();
-  SetTestMode();  // Fail cache reinitialization.
-  BackendDisable2();
-}
-
-TEST_F(DiskCacheTest, Backend_UsageStats) {
+TEST(DiskCacheTest, Backend_UsageStats) {
   MessageLoopHelper helper;
 
   std::wstring path = GetCachePath();
@@ -973,4 +942,3 @@ TEST_F(DiskCacheBackendTest, MemoryOnlyDoomAll) {
   InitCache();
   BackendDoomAll();
 }
-

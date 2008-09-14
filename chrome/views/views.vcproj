@@ -278,18 +278,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\dialog_client_view.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\dialog_client_view.h"
-			>
-		</File>
-		<File
-			RelativePath=".\dialog_delegate.cc"
-			>
-		</File>
-		<File
 			RelativePath=".\dialog_delegate.h"
 			>
 		</File>
@@ -431,14 +419,6 @@
 		</File>
 		<File
 			RelativePath=".\native_scroll_bar.h"
-			>
-		</File>
-		<File
-			RelativePath=".\non_client_view.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\non_client_view.h"
 			>
 		</File>
 		<File
@@ -619,10 +599,6 @@
 		</File>
 		<File
 			RelativePath=".\window.h"
-			>
-		</File>
-		<File
-			RelativePath=".\window_delegate.cc"
 			>
 		</File>
 		<File

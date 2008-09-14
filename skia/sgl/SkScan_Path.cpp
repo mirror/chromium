@@ -368,7 +368,7 @@ extern "C" {
             valuea = edgea->fX;
             valueb = edgeb->fX;
         }
-        return valuea > valueb ? 1 : valuea < valueb ? -1 : 0;
+        return valuea - valueb;
     }
 }
 
@@ -387,7 +387,6 @@ static SkEdge* sort_edges(SkEdge* list[], int count, SkEdge** last)
     return list[0];
 }
 
-#ifdef SK_DEBUG
 /* 'quick' computation of the max sized needed to allocated for
     our edgelist.
 */
@@ -423,7 +422,6 @@ static int worst_case_edge_count(const SkPath& path, size_t* storage)
     *storage = size;
     return edgeCount;
 }
-#endif
 
 /* Much faster than worst_case_edge_count, but over estimates even more
 */

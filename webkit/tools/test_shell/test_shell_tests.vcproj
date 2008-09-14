@@ -183,6 +183,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\temp\navigation_controller_base.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\net\base\net_resources.rc"
 				>
 			</File>

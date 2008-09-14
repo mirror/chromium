@@ -1,17 +1,37 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef NET_BASE_NET_UTIL_H__
 #define NET_BASE_NET_UTIL_H__
 
-#include "build/build_config.h"
-
 #include <string>
-
-#ifdef OS_WIN
 #include <windows.h>
-#endif
 
 #include "base/basictypes.h"
 #include "googleurl/src/url_canon.h"
@@ -19,7 +39,7 @@
 
 class GURL;
 
-namespace net {
+namespace net_util {
 
 // Given the full path to a file name, creates a file: URL. The returned URL
 // may not be valid if the input is malformed.
@@ -92,18 +112,15 @@ void IDNToUnicode(const char* host,
 
 // Canonicalizes |host| and returns it.  If |is_ip_address| is non-NULL, sets it
 // to true if |host| is an IP address.
-std::string CanonicalizeHost(const std::string& host, bool* is_ip_address);
-std::string CanonicalizeHost(const std::wstring& host, bool* is_ip_address);
+template <typename str>
+std::string CanonicalizeHost(const str& host, bool* is_ip_address);
 
-#ifdef OS_WIN
-// TODO: Port GetDirectoryListingEntry for OSX and linux.
 // Call these functions to get the html for a directory listing.
 // They will pass non-7bit-ascii characters unescaped, allowing
 // the browser to interpret the encoding (utf8, etc).
 std::string GetDirectoryListingHeader(const std::string& title);
 std::string GetDirectoryListingEntry(const std::string& name, DWORD attrib,
                                      int64 size, const FILETIME* modified);
-#endif
 
 // If text starts with "www." it is removed, otherwise text is returned
 // unmodified.
@@ -131,7 +148,6 @@ bool IsPortAllowedByDefault(int port);
 // restricted.
 bool IsPortAllowedByFtp(int port);
 
-}  // namespace net
+}  // namespace net_util
 
 #endif  // NET_BASE_NET_UTIL_H__
-

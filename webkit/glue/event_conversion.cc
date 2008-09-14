@@ -1,12 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "config.h"
-
-#if defined(OS_WIN)
 #include <windows.h>
-#endif
 
 #include "StringImpl.h"  // This is so that the KJS build works
 #pragma warning(push, 0)
@@ -32,20 +54,14 @@ using namespace WebCore;
 // MakePlatformMouseEvent -----------------------------------------------------
 
 int MakePlatformMouseEvent::last_click_count_ = 0;
-uint32 MakePlatformMouseEvent::last_click_time_ = 0;
+long MakePlatformMouseEvent::last_click_time_ = 0;
 
 MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
                                                const WebMouseEvent& e)
-#if defined(OS_WIN)
     : PlatformMouseEvent(NULL, 0, 0, 0, false /* TODO(darin): do we care? */) {
-#elif defined(OS_MACOSX)
-    : PlatformMouseEvent(e.mac_event.get()) {
-#endif
-#if defined(OS_WIN) || defined(OS_LINUX)
   // TODO(mpcomplete): widget is always toplevel, unless it's a popup.  We
   // may be able to get rid of this once we abstract popups into a WebKit API.
   m_position = widget->convertFromContainingWindow(IntPoint(e.x, e.y));
-#endif
   m_globalPosition = IntPoint(e.global_x, e.global_y);
   m_button = static_cast<MouseButton>(e.button);
   m_shiftKey = (e.modifiers & WebInputEvent::SHIFT_KEY) != 0;
@@ -60,17 +76,13 @@ MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
   static IntPoint last_click_position;
   static MouseButton last_click_button = LeftButton;
 
-  const uint32 current_time = static_cast<uint32>(m_timestamp * 1000);
-#if defined(OS_WIN)
+  const DWORD current_time = static_cast<DWORD>(m_timestamp * 1000);
   const bool cancel_previous_click =
       (abs(last_click_position.x() - m_position.x()) >
        (GetSystemMetrics(SM_CXDOUBLECLK) / 2)) ||
       (abs(last_click_position.y() - m_position.y()) >
        (GetSystemMetrics(SM_CYDOUBLECLK) / 2)) ||
       ((current_time - last_click_time_) > GetDoubleClickTime());
-#elif defined(OS_MACOSX) || defined(OS_LINUX)
-  const bool cancel_previous_click = false;
-#endif
 
   switch (e.type) {
     case WebInputEvent::MOUSE_MOVE:
@@ -80,9 +92,7 @@ MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
         last_click_position = IntPoint();
         last_click_time_ = 0;
       }
-#if defined(OS_WIN)
       setClickCount(last_click_count_);
-#endif
       m_eventType = MouseEventMoved;
       break;
 
@@ -96,16 +106,12 @@ MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
       }
       last_click_time_ = current_time;
       last_click_button = m_button;
-#if defined(OS_WIN)
       setClickCount(last_click_count_);
-#endif
       m_eventType = MouseEventPressed;
       break;
 
     case WebInputEvent::MOUSE_UP:
-#if defined(OS_WIN)
       setClickCount(last_click_count_);
-#endif
       m_eventType = MouseEventReleased;
       break;
 
@@ -114,9 +120,7 @@ MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
   }
 
   if (webkit_glue::IsLayoutTestMode()) {
-#if defined(OS_WIN)
     setClickCount(e.layout_test_click_count);
-#endif
   }
 }
 
@@ -124,14 +128,8 @@ MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
 
 MakePlatformWheelEvent::MakePlatformWheelEvent(Widget* widget,
                                                const WebMouseWheelEvent& e)
-#if defined(OS_WIN)
     : PlatformWheelEvent(NULL, 0, 0, false) {  // TODO(jackson): Check if it's a horizontal event
-#elif defined(OS_MACOSX)
-    : PlatformWheelEvent(e.mac_event.get()) {
-#endif
-#if defined(OS_WIN) || defined(OS_LINUX)
   m_position = widget->convertFromContainingWindow(IntPoint(e.x, e.y));
-#endif
   m_globalPosition = IntPoint(e.global_x, e.global_y);
   m_deltaX = static_cast<float>(e.delta_x);
   m_deltaY = static_cast<float>(e.delta_y);
@@ -157,13 +155,9 @@ static inline const PlatformKeyboardEvent::Type platformKeyTypeForWebInputEventT
 // MakePlatformKeyboardEvent --------------------------------------------------
 
 MakePlatformKeyboardEvent::MakePlatformKeyboardEvent(const WebKeyboardEvent& e)
-#if defined(OS_WIN)
     : PlatformKeyboardEvent(NULL, e.key_code, e.key_data,
                             platformKeyTypeForWebInputEventType(e.type), 
                             e.system_key) {
-#elif defined(OS_MACOSX)
-    : PlatformKeyboardEvent(e.mac_event.get()) {
-#endif
   m_autoRepeat = (e.modifiers & WebInputEvent::IS_AUTO_REPEAT) != 0;
   m_isKeypad = (e.modifiers & WebInputEvent::IS_KEYPAD) != 0;
   m_shiftKey = (e.modifiers & WebInputEvent::SHIFT_KEY) != 0;
@@ -194,10 +188,8 @@ void MakePlatformKeyboardEvent::SetKeyType(Type type) {
 // which don't have associated character events. 
 bool MakePlatformKeyboardEvent::IsCharacterKey() const {
   switch (windowsVirtualKeyCode()) {
-#if defined(OS_WIN)
     case VK_BACK:
     case VK_ESCAPE:
-#endif
       return false;
 
     default:
@@ -205,4 +197,3 @@ bool MakePlatformKeyboardEvent::IsCharacterKey() const {
   }
   return true;
 }
-

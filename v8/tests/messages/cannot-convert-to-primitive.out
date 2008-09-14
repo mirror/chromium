@@ -1,0 +1,3 @@
+native runtime.js:294: Uncaught TypeError: Cannot convert object to primitive value
+  throw %MakeTypeError('cannot_convert_to_primitive', []);
+  ^

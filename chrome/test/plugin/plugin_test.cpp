@@ -114,7 +114,7 @@ class PluginTest : public UITest {
     PathService::Get(chrome::DIR_TEST_DATA, &path);
     file_util::AppendToPath(&path, L"plugin");
     file_util::AppendToPath(&path, test_case);
-    return net::FilePathToFileURL(path);
+    return net_util::FilePathToFileURL(path);
   }
 
   // Waits for the test case to finish.

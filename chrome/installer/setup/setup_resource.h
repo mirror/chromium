@@ -3,6 +3,7 @@
 // Used by setup.rc
 //
 #define IDI_SETUP                       101
+#define IDS_UNINSTALL_SURVEY_URL        102
 
 // Next default values for new objects
 //

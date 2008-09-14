@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/browser.h"
 
@@ -16,14 +41,13 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_url_handler.h"
 #include "chrome/browser/cert_store.h"
-#include "chrome/browser/debugger/debugger_window.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
-#include "chrome/browser/frame_util.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/render_view_host.h"
 #include "chrome/browser/save_package.h"
 #include "chrome/browser/ssl_error_info.h"
 #include "chrome/browser/site_instance.h"
@@ -34,7 +58,6 @@
 #include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/browser/views/go_button.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
-#include "chrome/browser/views/html_dialog_view.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/browser/views/toolbar_star_toggle.h"
 #include "chrome/browser/vista_frame.h"
@@ -44,13 +67,11 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-#include "chrome/common/win_util.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/cookie_policy.h"
 #include "net/base/net_util.h"
 #include "net/base/registry_controlled_domain.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 static BrowserList g_browserlist;
@@ -63,7 +84,7 @@ static const int kBrowserReleaseMemoryInterval = 30;  // In seconds.
 
 // How much horizontal and vertical offset there is between newly opened
 // windows.
-static const int kWindowTilePixels = 20;
+static const int kWindowTilePixels = 10;
 
 // How frequently we check for hung plugin windows.
 static const int kDefaultHungPluginDetectFrequency = 2000;
@@ -89,11 +110,11 @@ class ReducePluginsWorkingSetTask : public Task {
 // A browser task to run when the user is not using the browser.
 // In our case, we're trying to be nice to the operating system and release
 // memory not in use.
-class BrowserIdleTimer : public base::IdleTimer {
+class BrowserIdleTask : public IdleTimerTask {
  public:
-  BrowserIdleTimer()
-      : base::IdleTimer(TimeDelta::FromSeconds(kBrowserReleaseMemoryInterval),
-                        false) {
+  BrowserIdleTask()
+    : IdleTimerTask(
+          TimeDelta::FromSeconds(kBrowserReleaseMemoryInterval), false) {
   }
 
   virtual void OnIdle() {
@@ -174,7 +195,7 @@ void Browser::RegisterUserPrefs(PrefService* prefs) {
   prefs->RegisterStringPref(prefs::kHomePage, L"chrome-internal:");
   prefs->RegisterBooleanPref(prefs::kHomePageIsNewTabPage, true);
   prefs->RegisterIntegerPref(prefs::kCookieBehavior,
-      net::CookiePolicy::ALLOW_ALL_COOKIES);
+      CookiePolicy::ALLOW_ALL_COOKIES);
   prefs->RegisterBooleanPref(prefs::kShowHomeButton, false);
   prefs->RegisterStringPref(prefs::kRecentlySelectedEncoding, L"");
 }
@@ -185,10 +206,11 @@ Browser::Browser(const gfx::Rect& initial_bounds,
                  BrowserType::Type type,
                  const std::wstring& app_name)
     : profile_(profile),
-      window_(NULL),
+      frame_(NULL),
       initial_show_command_(show_command),
       is_attempting_to_close_browser_(false),
       controller_(this),
+      toolbar_(&controller_, this),
       chrome_updater_factory_(this),
       method_factory_(this),
       hung_window_detector_(&hung_plugin_action_),
@@ -197,7 +219,7 @@ Browser::Browser(const gfx::Rect& initial_bounds,
       toolbar_model_(this),
       type_(type),
       app_name_(app_name),
-      idle_task_(new BrowserIdleTimer()) {
+      idle_task_(new BrowserIdleTask()) {
   tabstrip_model_.AddObserver(this);
 
   CommandLine parsed_command_line;
@@ -210,17 +232,17 @@ Browser::Browser(const gfx::Rect& initial_bounds,
     maximized = true;
   if (maximized)
     initial_show_command_ = SW_SHOWMAXIMIZED;
-  window_ = BrowserWindow::CreateBrowserWindow(this, create_bounds,
-                                               show_command);
+  frame_ = ChromeFrame::CreateChromeFrame(create_bounds, this);
+
+  toolbar_.SetID(VIEW_ID_TOOLBAR);
+  toolbar_.Init(profile_);
 
   // See note where SIZE_TO_CONTENTS is defined in browser.h for an explanation
   // of this hack.
   if (show_command == SIZE_TO_CONTENTS) {
-    // This codepath is deprecated with the new frames.
-    DCHECK(!g_browser_process->IsUsingNewFrames());
     // SizeToContents causes a Layout so make sure the tab strip and toolbar
     // are already initialized.
-    window_->SizeToContents(initial_bounds);
+    frame_->SizeToContents(initial_bounds);
     initial_show_command_ = SW_SHOWNORMAL;
   }
 
@@ -229,13 +251,9 @@ Browser::Browser(const gfx::Rect& initial_bounds,
   if (!parsed_command_line.HasSwitch(switches::kDisableHangMonitor))
     InitHangMonitor();
 
-  if (!g_browser_process->IsUsingNewFrames()) {
-    NotificationService::current()->
-        AddObserver(this, NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED,
-                    NotificationService::AllSources());
-  }
-  NotificationService::current()->AddObserver(
-      this, NOTIFY_SSL_STATE_CHANGED, NotificationService::AllSources());
+  NotificationService::current()->
+      AddObserver(this, NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED,
+                  NotificationService::AllSources());
 
   if (profile->HasSessionService()) {
     SessionService* session_service = profile->GetSessionService();
@@ -284,13 +302,18 @@ Browser::~Browser() {
   if (session_service)
     session_service->WindowClosed(session_id_);
 
-  if (!g_browser_process->IsUsingNewFrames()) {
-    NotificationService::current()->
-        RemoveObserver(this, NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED,
-                       NotificationService::AllSources());
-  }
-  NotificationService::current()->RemoveObserver(
-      this, NOTIFY_SSL_STATE_CHANGED, NotificationService::AllSources());
+  NotificationService::current()->
+      RemoveObserver(this, NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED,
+                     NotificationService::AllSources());
+
+  ChromeViews::View* p;
+  // Remove our main views from the view hierarchy to prevent
+  // a double delete (the Browser is deleted before the RootView that contains
+  // the toolbar and tab_strip).
+  if ((p = toolbar_.GetParent()))
+    p->RemoveChildView(&toolbar_);
+  if (bookmark_bar_view_.get() && (p = bookmark_bar_view_->GetParent()))
+    p->RemoveChildView(bookmark_bar_view_.get());
 
   // Stop hung plugin monitoring.
   ticker_.Stop();
@@ -318,13 +341,13 @@ void Browser::ShowAndFit(bool resize_to_fit) {
   if (initial_show_command_ < 0) {
     // The frame is already visible, we're being invoked again either by the
     // user clicking a link in another app or from a desktop shortcut.
-    window_->Activate();
+    frame_->Activate();
     return;
   }
-  window_->Show(initial_show_command_, resize_to_fit);
+  frame_->Show(initial_show_command_, resize_to_fit);
   if ((initial_show_command_ == SW_SHOWNORMAL) ||
       (initial_show_command_ == SW_SHOWMAXIMIZED))
-    window_->Activate();
+    frame_->Activate();
   initial_show_command_ = -1;
 
   // Setting the focus doesn't work when the window is invisible, so any focus
@@ -343,7 +366,11 @@ void Browser::ShowAndFit(bool resize_to_fit) {
 }
 
 void Browser::CloseFrame() {
-  window_->Close();
+  frame_->Close();
+}
+
+ChromeViews::View* Browser::GetToolbar() {
+  return &toolbar_;
 }
 
 GURL Browser::GetHomePage() {
@@ -363,15 +390,13 @@ GURL Browser::GetHomePage() {
 ////////////////////////////////////////////////////////////////////////////////
 
 void Browser::SyncWindowTitle() {
-  DCHECK(!g_browser_process->IsUsingNewFrames());
-
   TabContents* current_tab = GetSelectedTabContents();
   if (!current_tab || current_tab->GetTitle().empty()) {
-    window_->SetWindowTitle(l10n_util::GetString(IDS_PRODUCT_NAME));
+    frame_->SetWindowTitle(l10n_util::GetString(IDS_PRODUCT_NAME));
     return;
   }
 
-  window_->SetWindowTitle(
+  frame_->SetWindowTitle(
       l10n_util::GetStringF(IDS_BROWSER_WINDOW_TITLE_FORMAT,
                             current_tab->GetTitle()));
 }
@@ -388,14 +413,14 @@ void Browser::WindowActivationChanged(bool is_active) {
 // Toolbar creation, management
 
 LocationBarView* Browser::GetLocationBarView() const {
-  return window_->GetLocationBarView();
+  return toolbar_.GetLocationBarView();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Chrome update coalescing
 
 void Browser::UpdateToolBar(bool should_restore_state) {
-  window_->UpdateToolbar(GetSelectedTabContents(), should_restore_state);
+  toolbar_.Update(GetSelectedTabContents(), should_restore_state);
 }
 
 void Browser::ScheduleUIUpdate(const TabContents* source,
@@ -482,10 +507,8 @@ void Browser::ProcessPendingUIUpdates() {
 
     // Updating the URL happens synchronously in ScheduleUIUpdate.
 
-    if (flags & TabContents::INVALIDATE_TITLE &&
-        !g_browser_process->IsUsingNewFrames()) {
+    if (flags & TabContents::INVALIDATE_TITLE)
       SyncWindowTitle();  // We'll update the tab due to invalide_tab below.
-    }
 
     if (flags & TabContents::INVALIDATE_LOAD)
       GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
@@ -493,7 +516,7 @@ void Browser::ProcessPendingUIUpdates() {
     if (invalidate_tab) {  // INVALIDATE_TITLE or INVALIDATE_FAVICON.
       tabstrip_model_.UpdateTabContentsStateAt(
           tabstrip_model_.GetIndexOfController(contents->controller()));
-      window_->UpdateTitleBar();
+      frame_->UpdateTitleBar();
 
       if (contents == GetSelectedTabContents()) {
         TabContents* current_tab = GetSelectedTabContents();
@@ -581,30 +604,14 @@ void Browser::OpenURLFromTab(TabContents* source,
         transition == PageTransition::AUTO_BOOKMARK ||
         transition == PageTransition::GENERATED ||
         transition == PageTransition::START_PAGE) {
-      // Don't forget the openers if this tab is a New Tab page opened at the
-      // end of the TabStrip (e.g. by pressing Ctrl+T). Give the user one
-      // navigation of one of these transition types before resetting the
-      // opener relationships (this allows for the use case of opening a new
-      // tab to do a quick look-up of something while viewing a tab earlier in
-      // the strip). We can make this heuristic more permissive if need be.
-      // TODO(beng): (http://b/1306495) write unit tests for this once this
-      //             object is unit-testable.
-      int current_tab_index =
-          tabstrip_model_.GetIndexOfTabContents(current_tab);
-      bool forget_openers = 
-          !(current_tab->type() == TAB_CONTENTS_NEW_TAB_UI &&
-          current_tab_index == (tab_count() - 1) &&
-          current_tab->controller()->GetEntryCount() == 1);
-      if (forget_openers) {
-        // If the user navigates the current tab to another page in any way
-        // other than by clicking a link, we want to pro-actively forget all
-        // TabStrip opener relationships since we assume they're beginning a
-        // different task by reusing the current tab.
-        tabstrip_model_.ForgetAllOpeners();
-        // In this specific case we also want to reset the group relationship,
-        // since it is now technically invalid.
-        tabstrip_model_.ForgetGroup(current_tab);
-      }
+      // If the user navigates the current tab to another page in any way other
+      // than by clicking a link, we want to pro-actively forget all TabStrip
+      // opener relationships since we assume they're beginning a different
+      // task by reusing the current tab.
+      tabstrip_model_.ForgetAllOpeners();
+      // In this specific case we also want to reset the group relationship,
+      // since it is now technically invalid.
+      tabstrip_model_.ForgetGroup(current_tab);
     }
     current_tab->controller()->LoadURL(url, transition);
     // The TabContents might have changed as part of the navigation (ex: new tab
@@ -641,13 +648,14 @@ void Browser::NavigationStateChanged(const TabContents* source,
   }
 
   // Only update the UI when something visible has changed.
-  if (changed_flags)
+  if (changed_flags && changed_flags != TabContents::INVALIDATE_STATE)
     ScheduleUIUpdate(source, changed_flags);
 
   // We don't schedule updates to the navigation commands since they will only
   // change once per navigation, so we don't have to worry about flickering.
-  if (changed_flags & TabContents::INVALIDATE_URL)
+  if (changed_flags & TabContents::INVALIDATE_URL) {
     UpdateNavigationCommands();
+  }
 }
 
 void Browser::ReplaceContents(TabContents* source, TabContents* new_contents) {
@@ -727,51 +735,36 @@ void Browser::StartDraggingDetachedContents(TabContents* source,
                                             const gfx::Rect& contents_bounds,
                                             const gfx::Point& mouse_pt,
                                             int frame_component) {
-  if (!g_browser_process->IsUsingNewFrames()) {
-    BrowserType::Type new_type = BrowserType::BROWSER;
+  BrowserType::Type new_type = BrowserType::BROWSER;
 
-    // If this is a minimal chrome browser, propagate to detached contents to
-    // avoid having URL fields in popups.
-    if (type_ == BrowserType::APPLICATION)
-      new_type = type_;
+  // If this is a minimal chrome browser, propagate to detached contents to
+  // avoid having URL fields in popups.
+  if (type_ == BrowserType::APPLICATION)
+    new_type = type_;
 
-    Browser* browser = new Browser(contents_bounds, SIZE_TO_CONTENTS, profile_,
-                                   new_type, L"");
-    browser->AddNewContents(
-        source, new_contents, NEW_FOREGROUND_TAB, contents_bounds, true);
-    browser->Show();
-    browser->window_->ContinueDetachConstrainedWindowDrag(
-        mouse_pt, frame_component);
-  } else {
-    // If we're inside an application frame, preserve that type (i.e. don't
-    // show a location bar on the new window), otherwise open a tab-less
-    // browser window with a location bar.
-    BrowserType::Type new_type =
-        type_ == BrowserType::APPLICATION ? type_ : BrowserType::BROWSER;
-    Browser* browser = new Browser(contents_bounds, SW_SHOWNORMAL, profile_,
-                                   BrowserType::BROWSER, std::wstring());
-    browser->AddNewContents(source, new_contents,
-                            NEW_FOREGROUND_TAB, gfx::Rect(), true);
-    browser->Show();
-    browser->window()->ContinueDetachConstrainedWindowDrag(mouse_pt,
-                                                           frame_component);
-  }
+  Browser* browser = new Browser(contents_bounds, SIZE_TO_CONTENTS, profile_,
+                                 new_type, L"");
+  browser->AddNewContents(
+      source, new_contents, NEW_FOREGROUND_TAB, contents_bounds, true);
+  browser->Show();
+  browser->frame_->ContinueDetachConstrainedWindowDrag(
+      mouse_pt, frame_component);
 }
 
 void Browser::ActivateContents(TabContents* contents) {
   tabstrip_model_.SelectTabContentsAt(
       tabstrip_model_.GetIndexOfTabContents(contents), false);
-  window_->Activate();
+  frame_->Activate();
 }
 
 HWND Browser::GetTopLevelHWND() const {
-  return window_ ? reinterpret_cast<HWND>(window_->GetPlatformID()) : NULL;
+  return frame_ ? reinterpret_cast<HWND>(frame_->GetPlatformID()) : NULL;
 }
 
 void Browser::LoadingStateChanged(TabContents* source) {
   tabstrip_model_.UpdateTabContentsLoadingAnimations();
 
-  window_->UpdateTitleBar();
+  frame_->UpdateTitleBar();
 
   // Let the go button know that it should change appearance if possible.
   if (source == GetSelectedTabContents()) {
@@ -820,54 +813,34 @@ void Browser::ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                              HWND parent_hwnd) {
   parent_hwnd = parent_hwnd ? parent_hwnd : GetTopLevelHWND();
   HtmlDialogView* html_view = new HtmlDialogView(this, profile_, delegate);
-  ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(),
-                                          html_view);
-  html_view->InitDialog();
-  html_view->window()->Show();
+  ChromeViews::Window* html_dialog = ChromeViews::Window::CreateChromeWindow(
+      parent_hwnd, gfx::Rect(), html_view, html_view);
+  html_view->InitDialog(html_dialog);
+  html_dialog->Show();
 }
 
 void Browser::Observe(NotificationType type,
                       const NotificationSource& source,
                       const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED: {
-      DCHECK(!g_browser_process->IsUsingNewFrames());
-      TabContents* current_tab = GetSelectedTabContents();
-      if (current_tab) {
-        Profile* event_profile = Source<Profile>(source).ptr();
-        if (event_profile->IsSameProfile(current_tab->profile())) {
-          // This forces the browser to query for the BookmarkBar again.
-          window_->ShelfVisibilityChanged();
-        }
+  if (type == NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED) {
+    TabContents* current_tab = GetSelectedTabContents();
+    if (current_tab) {
+      Profile* event_profile = Source<Profile>(source).ptr();
+      if (event_profile->IsSameProfile(current_tab->profile())) {
+        // This forces the browser to query for the BookmarkBar again.
+        frame_->ShelfVisibilityChanged();
       }
-      break;
     }
-
-    case NOTIFY_WEB_CONTENTS_DISCONNECTED:
-      if (is_attempting_to_close_browser_) {
-        // Need to do this asynchronously as it will close the tab, which is
-        // currently on the call stack above us.
-        MessageLoop::current()->PostTask(FROM_HERE,
-            method_factory_.NewRunnableMethod(&Browser::ClearUnloadState,
-                Source<TabContents>(source).ptr()));
-      }
-      break;
-
-    case NOTIFY_SSL_STATE_CHANGED:
-      // When the current tab's SSL state changes, we need to update the URL
-      // bar to reflect the new state. Note that it's possible for the selected
-      // tab contents to be NULL. This is because we listen for all sources
-      // (NavigationControllers) for convenience, so the notification could
-      // actually be for a different window while we're doing asynchronous
-      // closing of this one.
-      if (GetSelectedTabContents() &&
-          GetSelectedTabContents()->controller() ==
-          Source<NavigationController>(source).ptr())
-        UpdateToolBar(false);
-      break;
-
-    default:
-      NOTREACHED() << "Got a notification we didn't register for.";
+  } else if (type == NOTIFY_WEB_CONTENTS_DISCONNECTED) {
+    if (is_attempting_to_close_browser_) {
+      // Need to do this asynchronously as it will close the tab, which is
+      // currently on the call stack above us.
+      MessageLoop::current()->PostTask(FROM_HERE,
+          method_factory_.NewRunnableMethod(&Browser::ClearUnloadState,
+              Source<TabContents>(source).ptr()));
+    }
+  } else {
+    NOTREACHED() << "Got a notification we didn't register for.";
   }
 }
 
@@ -917,6 +890,9 @@ void Browser::UpdateNavigationCommands() {
   controller_.UpdateCommandEnabled(IDC_PRINT, web_contents != NULL);
   controller_.UpdateCommandEnabled(IDC_DUPLICATE,
                                    CanDuplicateContentsAt(selected_index()));
+
+  controller_.UpdateCommandEnabled(IDC_GOOFFTHERECORD,
+      profile_->GetOffTheRecordProfile() != profile_);
 }
 
 // Notification that the starredness of a tab changed.
@@ -926,13 +902,12 @@ void Browser::URLStarredChanged(TabContents* source, bool starred) {
 }
 
 StatusBubble* Browser::GetStatusBubble() {
-  return window_->GetStatusBubble();
+  return frame_->GetStatusBubble();
 }
 
 // Called whenever the window is moved so that we can update the position
 // of any WS_POPUP HWNDs.
 void Browser::WindowMoved() {
-  DCHECK(!g_browser_process->IsUsingNewFrames());
   GetStatusBubble()->Reposition();
 
   // Close the omnibox popup, if any.
@@ -959,11 +934,11 @@ void Browser::UpdateTargetURL(TabContents* source, const GURL& url) {
 }
 
 void Browser::SetStarredButtonToggled(bool starred) {
-  window_->GetStarButton()->SetToggled(starred);
+  toolbar_.star_button()->SetToggled(starred);
 }
 
 GoButton* Browser::GetGoButton() {
-  return window_->GetGoButton();
+  return toolbar_.GetGoButton();
 }
 
 void Browser::ContentsZoomChange(bool zoom_in) {
@@ -984,6 +959,19 @@ bool Browser::ShouldDisplayURLField() {
   return !IsApplication();
 }
 
+BookmarkBarView* Browser::GetBookmarkBarView() {
+  TabContents* current_tab = GetSelectedTabContents();
+  if (!current_tab || !current_tab->profile())
+    return NULL;
+
+  if (!bookmark_bar_view_.get())
+    bookmark_bar_view_.reset(new BookmarkBarView(current_tab->profile(), this));
+  else
+    bookmark_bar_view_->SetProfile(current_tab->profile());
+  bookmark_bar_view_->SetPageNavigator(current_tab);
+  return bookmark_bar_view_.get();
+}
+
 void Browser::SaveWindowPlacementToDatabase() {
   // We don't want to be the ones who cause lazy initialization of the session
   // service. This function gets called during initial window showing, and we
@@ -997,7 +985,7 @@ void Browser::SaveWindowPlacementToDatabase() {
   WINDOWPLACEMENT wp;
   wp.length = sizeof(wp);
 
-  HWND hwnd = reinterpret_cast<HWND>(window_->GetPlatformID());
+  HWND hwnd = reinterpret_cast<HWND>(frame_->GetPlatformID());
   if (!::GetWindowPlacement(hwnd, &wp))
     return;
 
@@ -1010,7 +998,7 @@ void Browser::SaveWindowPlacement() {
   WINDOWPLACEMENT wp;
   wp.length = sizeof(wp);
 
-  HWND hwnd = reinterpret_cast<HWND>(window_->GetPlatformID());
+  HWND hwnd = reinterpret_cast<HWND>(frame_->GetPlatformID());
   if (!::GetWindowPlacement(hwnd, &wp))
     return;
 
@@ -1055,12 +1043,12 @@ void Browser::SyncHistoryWithTabs(int index) {
 void Browser::ToolbarSizeChanged(TabContents* source, bool is_animating) {
   if (source == GetSelectedTabContents() || source == NULL) {
     // This will refresh the shelf if needed.
-    window_->SelectedTabToolbarSizeChanged(is_animating);
+    frame_->SelectedTabToolbarSizeChanged(is_animating);
   }
 }
 
 void Browser::MoveToFront(bool should_activate) {
-  window_->Activate();
+  frame_->Activate();
 }
 
 bool Browser::ShouldCloseWindow() {
@@ -1095,9 +1083,11 @@ void Browser::ProcessPendingTabs() {
 
   // Process beforeunload tabs first. When that queue is empty, process
   // unload tabs.
+  // TODO(ojan): Move some of this logic down into TabContents and/or 
+  // WebContents so we don't need to dig into RenderViewHost here.
   if (!tabs_needing_before_unload_fired_.empty()) {
     TabContents* tab = tabs_needing_before_unload_fired_.back();
-    tab->AsWebContents()->FirePageBeforeUnload();
+    tab->AsWebContents()->render_view_host()->FirePageBeforeUnload();
   } else if (!tabs_needing_unload_fired_.empty()) {
     // We've finished firing all beforeunload events and can proceed with unload
     // events.
@@ -1108,7 +1098,7 @@ void Browser::ProcessPendingTabs() {
     // get a perf benefit from that in the cases where the tab hangs in it's
     // unload handler or takes a long time to page in.
     TabContents* tab = tabs_needing_unload_fired_.back();
-    tab->AsWebContents()->FirePageUnload();
+    tab->AsWebContents()->render_view_host()->FirePageUnload();
   } else {
     NOTREACHED();
   }
@@ -1256,10 +1246,8 @@ NavigationController* Browser::AddRestoredTab(
   NavigationController* restored_controller =
       BuildRestoredNavigationController(navigations, selected_navigation);
 
-  tabstrip_model_.InsertTabContentsAt(
-      tabstrip_model_.count(),
-      restored_controller->active_contents(),
-      select, false);
+  tabstrip_model_.AppendTabContents(restored_controller->active_contents(),
+                                    select);
   if (profile_->HasSessionService()) {
     SessionService* session_service = profile_->GetSessionService();
     if (session_service)
@@ -1288,7 +1276,7 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
 
   // Create an empty new browser window the same size as the old one.
   CRect browser_rect;
-  GetWindowRect(reinterpret_cast<HWND>(window_->GetPlatformID()), &browser_rect);
+  GetWindowRect(reinterpret_cast<HWND>(frame_->GetPlatformID()), &browser_rect);
   gfx::Rect rect(0, 0);
   if (drop_point.x() != 0 || drop_point.y() != 0) {
     rect.SetRect(drop_point.x(), drop_point.y(), browser_rect.Width(),
@@ -1341,10 +1329,10 @@ TabContents* Browser::CreateTabContentsForURL(
 }
 
 void Browser::ShowApplicationMenu(const gfx::Point p) {
-  if (!window_)
+  if (!frame_)
     return;
 
-  HWND hwnd = reinterpret_cast<HWND>(window_->GetPlatformID());
+  HWND hwnd = reinterpret_cast<HWND>(frame_->GetPlatformID());
   CPoint t;
   t.x = p.x();
   t.y = p.y();
@@ -1352,8 +1340,8 @@ void Browser::ShowApplicationMenu(const gfx::Point p) {
 }
 
 void Browser::ValidateLoadingAnimations() {
-  if (window_)
-    window_->ValidateThrobber();
+  if (frame_)
+    frame_->ValidateThrobber();
 }
 
 void Browser::CloseFrameAfterDragSession() {
@@ -1371,6 +1359,14 @@ void Browser::TabInsertedAt(TabContents* contents,
                             int index,
                             bool foreground) {
   contents->set_delegate(this);
+
+  NavigationController* controller = contents->controller();
+  DCHECK(controller);
+  NotificationService::current()->
+      Notify(NOTIFY_TAB_APPENDED,
+             Source<NavigationController>(controller),
+              Details<Browser>(this));
+
   contents->controller()->SetWindowID(session_id());
 
   SyncHistoryWithTabs(tabstrip_model_.GetIndexOfTabContents(contents));
@@ -1399,23 +1395,20 @@ void Browser::TabClosingAt(TabContents* contents, int index) {
   // Sever the TabContents' connection back to us.
   contents->set_delegate(NULL);
 
-  if (!g_browser_process->IsUsingNewFrames() &&
-      contents == GetSelectedTabContents()) {
+  if (contents == GetSelectedTabContents()) {
     // We need to reset the current tab contents to NULL before it gets
     // freed. This is because the focus manager performs some operation
     // on the selected tab contents when it is removed.
-    window_->ShowTabContents(NULL);
+    frame_->ShowTabContents(NULL);
   }
 }
 
 void Browser::TabDetachedAt(TabContents* contents, int index) {
-  if (!g_browser_process->IsUsingNewFrames()) {
-    // TODO(beng): (http://b/1085418) figure out if we really need to do this
-    //             here - surely the subsequent selection of another tab would
-    //             result in this action taking place?
-    if (contents == GetSelectedTabContents())
-      RemoveShelvesForTabContents(contents);
-  }
+  // TODO(beng): (http://b/1085418) figure out if we really need to do this
+  //             here - surely the subsequent selection of another tab would
+  //             result in this action taking place?
+  if (contents == GetSelectedTabContents())
+    RemoveShelvesForTabContents(contents);
 
   contents->set_delegate(NULL);
   if (!tabstrip_model_.closing_all())
@@ -1432,7 +1425,8 @@ void Browser::TabSelectedAt(TabContents* old_contents,
                             TabContents* new_contents,
                             int index,
                             bool user_gesture) {
-  DCHECK(old_contents != new_contents);
+  if (new_contents == old_contents)
+    return;
 
   // If we have any update pending, do it now.
   if (!chrome_updater_factory_.empty() && old_contents)
@@ -1440,10 +1434,8 @@ void Browser::TabSelectedAt(TabContents* old_contents,
 
   LocationBarView* location_bar = GetLocationBarView();
   if (old_contents) {
-    if (!g_browser_process->IsUsingNewFrames()) {
-      // Have the contents remember where focus was.
-      old_contents->StoreFocus();
-    }
+    // Have the contents remember where focus was.
+    old_contents->StoreFocus();
 
     // Save what the user's currently typing, so it can be restored when we
     // switch back to this tab.
@@ -1451,19 +1443,16 @@ void Browser::TabSelectedAt(TabContents* old_contents,
       location_bar->location_entry()->SaveStateToTab(old_contents);
   }
 
-  if (!g_browser_process->IsUsingNewFrames()) {
-    // Tell the frame what happened so that the TabContents gets resized, etc.
-    window_->ShowTabContents(new_contents);
+  // Tell the frame what happened so that the TabContents gets resized, etc.
+  frame_->ShowTabContents(new_contents);
 
-    // Inform the tab that it is now selected.
-    new_contents->DidBecomeSelected();
-    if (BrowserList::GetLastActive() == this)
-      new_contents->RestoreFocus();
-  }
+  // Inform the tab that it is now selected.
+  new_contents->DidBecomeSelected();
+  if (BrowserList::GetLastActive() == this)
+    new_contents->RestoreFocus();
 
   // Propagate the profile to the location bar.
-  if (!g_browser_process->IsUsingNewFrames())
-    window_->ProfileChanged(new_contents->profile());
+  toolbar_.SetProfile(new_contents->profile());
   UpdateToolBar(true);
 
   // Force the go/stop button to change.
@@ -1483,8 +1472,7 @@ void Browser::TabSelectedAt(TabContents* old_contents,
   // Show the loading state (if any).
   GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
 
-  if (!g_browser_process->IsUsingNewFrames())
-    SyncWindowTitle();
+  SyncWindowTitle();
 
   // Update sessions. Don't force creation of sessions. If sessions doesn't
   // exist, the change will be picked up by sessions when created.
@@ -1506,11 +1494,9 @@ void Browser::TabMoved(TabContents* contents,
 }
 
 void Browser::TabStripEmpty() {
-  if (!g_browser_process->IsUsingNewFrames()) {
-    // We need to reset the frame contents just in case this wasn't done while
-    // detaching the tab. This happens when dragging out the last tab.
-    window_->ShowTabContents(NULL);
-  }
+  // We need to reset the frame contents just in case this wasn't done while
+  // detaching the tab. This happens when dragging out the last tab.
+  frame_->ShowTabContents(NULL);
 
   // Close the frame after we return to the message loop (not immediately,
   // otherwise it will destroy this object before the stack has a chance to
@@ -1525,8 +1511,6 @@ void Browser::TabStripEmpty() {
 }
 
 void Browser::RemoveShelvesForTabContents(TabContents* contents) {
-  DCHECK(!g_browser_process->IsUsingNewFrames());
-
   ChromeViews::View* shelf = contents->GetDownloadShelfView();
   if (shelf && shelf->GetParent() != NULL)
     shelf->GetParent()->RemoveChildView(shelf);
@@ -1646,9 +1630,8 @@ void Browser::OpenURLOffTheRecord(Profile* profile, const GURL& url) {
 // static
 std::wstring Browser::ComputePopupTitle(const GURL& url,
                                         const std::wstring& title) {
-  DCHECK(!g_browser_process->IsUsingNewFrames());
   std::wstring result(title);
-  FormatTitleForDisplay(&result);
+  Tab::FormatTitleForDisplay(&result);
   return result;
 }
 
@@ -1670,36 +1653,24 @@ void Browser::ConvertToTabbedBrowser() {
 void Browser::BuildPopupWindow(TabContents* source,
                                TabContents* new_contents,
                                const gfx::Rect& initial_pos) {
-  BrowserType::Type type =
-      type_ == BrowserType::APPLICATION ? type_ : BrowserType::BROWSER;
-  Browser* browser = new Browser(initial_pos, SW_SHOWNORMAL, profile_, type,
-                                 std::wstring());
+  Browser* browser = new Browser(gfx::Rect(), SW_SHOWNORMAL, profile_,
+                                 BrowserType::BROWSER, std::wstring());
   browser->AddNewContents(source, new_contents,
                           NEW_FOREGROUND_TAB, gfx::Rect(), true);
 
-  if (!g_browser_process->IsUsingNewFrames()) {
-    // TODO(beng): (1031854) Move most of this to the frames!!
-    // For newly opened popup windows, the incoming width/height
-    // numbers are for the content area, but x/y are for the actual
-    // window position. Thus we can't just call MoveContents().
-    gfx::Rect window_rect =
-        browser->window()->GetBoundsForContentBounds(initial_pos);
-    window_rect.set_origin(initial_pos.origin());
+  // TODO(erg): Need to move all popup sizing logic here, instead of
+  // having it spread across three files.
 
-    // When we are given x/y coordinates of 0 on a created popup window,
-    // assume none were given by the window.open() command.
-    if (window_rect.x() == 0 && window_rect.y() == 0) {
-      gfx::Point origin = window()->GetNormalBounds().origin();
-      origin.set_x(origin.x() + kWindowTilePixels);
-      origin.set_y(origin.y() + kWindowTilePixels);
-      window_rect.set_origin(origin);
-    }
-
-    ::SetWindowPos(browser->GetTopLevelHWND(), NULL,
-                   window_rect.x(), window_rect.y(),
-                   window_rect.width(), window_rect.height(), 0);
-    win_util::AdjustWindowToFit(browser->GetTopLevelHWND());
-  }
+  // For newly opened popup windows, the incoming width/height
+  // numbers are for the content area, but x/y are for the actual
+  // window position. Thus we can't just call MoveContents().
+  gfx::Rect window_rect =
+      browser->frame()->GetBoundsForContentBounds(initial_pos);
+  window_rect.set_origin(initial_pos.origin());
+  ::SetWindowPos(browser->GetTopLevelHWND(), NULL,
+                 window_rect.x(), window_rect.y(),
+                 window_rect.width(), window_rect.height(), 0);
+  win_util::AdjustWindowToFit(browser->GetTopLevelHWND());
 
   browser->Show();
 }
@@ -1782,76 +1753,3 @@ NavigationController* Browser::GetSelectedNavigationController() const {
   else
     return NULL;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// NEW FRAME TODO(beng): clean up this file
-// DO NOT PLACE METHODS NOT RELATED TO NEW FRAMES BELOW THIS LINE.
-
-void Browser::SaveWindowPosition(const gfx::Rect& bounds, bool maximized) {
-  // We don't save window position for popups.
-  if (GetType() == BrowserType::BROWSER)
-    return;
-
-  // First save to local state, this is for remembering on subsequent starts.
-  PrefService* prefs = g_browser_process->local_state();
-  DCHECK(prefs);
-  std::wstring name(prefs::kBrowserWindowPlacement);
-  if (!app_name_.empty()) {
-    name.append(L"_");
-    name.append(app_name_);
-  }
-
-  DictionaryValue* win_pref = prefs->GetMutableDictionary(name.c_str());
-  DCHECK(win_pref);
-  win_pref->SetInteger(L"top", bounds.y());
-  win_pref->SetInteger(L"left", bounds.x());
-  win_pref->SetInteger(L"bottom", bounds.bottom());
-  win_pref->SetInteger(L"right", bounds.right());
-  win_pref->SetBoolean(L"maximized", maximized);
-
-  // Then save to the session storage service, used when reloading a past
-  // session. Note that we don't want to be the ones who cause lazy
-  // initialization of the session service. This function gets called during
-  // initial window showing, and we don't want to bring in the session service
-  // this early.
-  if (profile()->HasSessionService()) {
-    SessionService* session_service = profile()->GetSessionService();
-    if (session_service)
-      session_service->SetWindowBounds(session_id_, bounds, maximized);
-  }
-}
-
-void Browser::RestoreWindowPosition(gfx::Rect* bounds, bool* maximized) {
-  DCHECK(bounds && maximized);
-  WindowSizer::GetBrowserWindowBounds(app_name_, *bounds, bounds, maximized);
-}
-
-SkBitmap Browser::GetCurrentPageIcon() const {
-  TabContents* contents = tabstrip_model_.GetSelectedTabContents();
-  return contents ? contents->GetFavIcon() : SkBitmap();
-}
-
-std::wstring Browser::GetCurrentPageTitle() const {
-  TabContents* contents = tabstrip_model_.GetSelectedTabContents();
-  std::wstring title;
-  if (contents) {
-    title = contents->GetTitle();
-    FormatTitleForDisplay(&title);
-  }
-  if (title.empty())
-    title = l10n_util::GetString(IDS_TAB_UNTITLED_TITLE);
-
-  return l10n_util::GetStringF(IDS_BROWSER_WINDOW_TITLE_FORMAT, title);
-}
-
-// static
-void Browser::FormatTitleForDisplay(std::wstring* title) {
-  size_t current_index = 0;
-  size_t match_index;
-  while ((match_index = title->find(L'\n', current_index)) !=
-         std::wstring::npos) {
-    title->replace(match_index, 1, L"");
-    current_index = match_index;
-  }
-}
-

@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/common/time_format.h"
 
@@ -11,7 +36,6 @@
 #include "base/singleton.h"
 #include "base/string_util.h"
 #include "base/time.h"
-#include "base/time_format.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/stl_util-inl.h"
 #include "generated_resources.h"
@@ -20,6 +44,28 @@
 #include "unicode/plurfmt.h"
 #include "unicode/plurrule.h"
 #include "unicode/smpdtfmt.h"
+
+namespace {
+
+UDate TimeToUDate(const Time& time) {
+  return static_cast<UDate>(time.ToDoubleT() * 1000);
+}
+
+std::wstring FormatTime(const DateFormat* formatter, const Time& time) {
+  DCHECK(formatter);
+  UnicodeString date_string;
+  formatter->format(TimeToUDate(time), date_string);
+  std::wstring formatted;
+  int capacity = date_string.length() + 1;
+
+  UErrorCode error = U_ZERO_ERROR;
+  date_string.extract(static_cast<UChar*>(WriteInto(&formatted, capacity)),
+                      capacity, error);
+  DCHECK(U_SUCCESS(error));
+  return formatted;
+}
+
+}  // namespace
 
 class TimeRemainingFormat {
   public:
@@ -228,7 +274,7 @@ std::wstring TimeFormat::TimeRemainingShort(const TimeDelta& delta) {
 }
 
 // static
-std::wstring TimeFormat::RelativeDate(
+std::wstring TimeFormat::FriendlyDay(
     const Time& time,
     const Time* optional_midnight_today) {
   Time midnight_today = optional_midnight_today ? *optional_midnight_today :
@@ -244,3 +290,45 @@ std::wstring TimeFormat::RelativeDate(
   return std::wstring();
 }
 
+std::wstring TimeFormat::TimeOfDay(const Time& time) {
+  // We can omit the locale parameter because the default should match
+  // Chrome's application locale.
+  scoped_ptr<DateFormat> formatter(DateFormat::createTimeInstance(
+      DateFormat::kShort));
+  return FormatTime(formatter.get(), time);
+}
+
+std::wstring TimeFormat::ShortDate(const Time& time) {
+  scoped_ptr<DateFormat> formatter(DateFormat::createDateInstance(
+      DateFormat::kMedium));
+  return FormatTime(formatter.get(), time);
+}
+
+std::wstring TimeFormat::ShortDateNumeric(const Time& time) {
+  scoped_ptr<DateFormat> formatter(DateFormat::createDateInstance(
+      DateFormat::kShort));
+  return FormatTime(formatter.get(), time);
+}
+
+std::wstring TimeFormat::FriendlyDateAndTime(const Time& time) {
+  scoped_ptr<DateFormat> formatter(DateFormat::createDateTimeInstance(
+      DateFormat::kFull));
+  return FormatTime(formatter.get(), time);
+}
+
+std::wstring TimeFormat::FriendlyDate(const Time& time) {
+  scoped_ptr<DateFormat> formatter(DateFormat::createDateInstance(
+      DateFormat::kFull));
+  return FormatTime(formatter.get(), time);
+}
+
+std::wstring TimeFormat::CookieExpires(const Time& time) {
+  UErrorCode error = U_ZERO_ERROR;
+  SimpleDateFormat simple_date_formatter("EEE, dd-MMM-yyyy HH:mm:ss 'GMT'",
+                                         Locale::getEnglish(), error);
+  if (U_FAILURE(error))
+    return std::wstring();
+
+  simple_date_formatter.adoptTimeZone(TimeZone::getGMT()->clone());
+  return FormatTime(&simple_date_formatter, time);
+}

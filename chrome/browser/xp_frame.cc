@@ -1,31 +1,52 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/xp_frame.h"
 
 #include <windows.h>
 
-#include "base/command_line.h"
 #include "base/gfx/native_theme.h"
 #include "base/gfx/rect.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
-#include "chrome/browser/frame_util.h"
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/browser/point_buffer.h"
 #include "chrome/browser/suspend_controller.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tab_contents_container_view.h"
 #include "chrome/browser/tabs/tab_strip.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
-#include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/download_shelf_view.h"
-#include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/window_clipping_info.h"
 #include "chrome/common/chrome_constants.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
@@ -41,7 +62,6 @@
 #include "chrome/views/tooltip_manager.h"
 #include "chrome/views/view.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 // Needed for accessibility support.
@@ -94,6 +114,10 @@ static const int kMinTitleBarHeight = 25;
 // OTR image offsets.
 static const int kOTRImageHorizMargin = 2;
 static const int kOTRImageVertMargin = 2;
+
+// Status Bubble metrics.
+static const int kStatusBubbleHeight = 20;
+static const int kStatusBubbleOffset = 2;
 
 // The line drawn to separate tab end contents.
 static const int kSeparationLineHeight = 1;
@@ -311,20 +335,16 @@ XPFrame* XPFrame::CreateFrame(const gfx::Rect& bounds,
       l10n_util::GetString(IDS_PRODUCT_NAME).c_str());
   instance->InitAfterHWNDCreated();
   instance->SetIsOffTheRecord(is_otr);
-#ifdef CHROME_PERSONALIZATION
-  instance->EnablePersonalization(CommandLine().HasSwitch(
-      switches::kEnableP13n));
-#endif
   FocusManager::CreateFocusManager(instance->m_hWnd, &(instance->root_view_));
   return instance;
 }
 
 XPFrame::XPFrame(Browser* browser)
     : browser_(browser),
-      root_view_(this),
+      root_view_(this, true),
       frame_view_(NULL),
       tabstrip_(NULL),
-      active_bookmark_bar_(NULL),
+      toolbar_(NULL),
       tab_contents_container_(NULL),
       min_button_(NULL),
       max_button_(NULL),
@@ -334,6 +354,7 @@ XPFrame::XPFrame(Browser* browser)
       saved_window_placement_(false),
       current_action_(FA_NONE),
       on_mouse_leave_armed_(false),
+      browser_paint_pending_(false),
       previous_cursor_(NULL),
       minimum_size_(100, 100),
       shelf_view_(NULL),
@@ -345,12 +366,7 @@ XPFrame::XPFrame(Browser* browser)
       off_the_record_image_(NULL),
       distributor_logo_(NULL),
       ignore_ncactivate_(false),
-#ifdef CHROME_PERSONALIZATION
-      personalization_enabled_(false),
-      personalization_(NULL),
-#endif
-      paint_as_active_(false),
-      browser_view_(NULL) {
+      paint_as_active_(false) {
   InitializeIfNeeded();
 }
 
@@ -367,7 +383,7 @@ ChromeViews::TooltipManager* XPFrame::GetTooltipManager() {
 }
 
 StatusBubble* XPFrame::GetStatusBubble() {
-  return NULL;
+  return status_bubble_.get();
 }
 
 void XPFrame::InitializeIfNeeded() {
@@ -400,7 +416,7 @@ void XPFrame::InitializeIfNeeded() {
 void XPFrame::Init() {
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
 
-  FrameUtil::RegisterBrowserWindow(this);
+  ChromeFrame::RegisterChromeFrame(this);
 
   // Link the HWND with its root view so we can retrieve the RootView from the
   // HWND for automation purposes.
@@ -425,8 +441,9 @@ void XPFrame::Init() {
   root_view_.SetBackground(
       ChromeViews::Background::CreateSolidBackground(SK_ColorWHITE));
 
-  browser_view_ = new BrowserView(this, browser_, NULL, NULL);
-  frame_view_->AddChildView(browser_view_);
+  toolbar_ = browser_->GetToolbar();
+  toolbar_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TOOLBAR));
+  frame_view_->AddChildView(toolbar_);
 
   tabstrip_ = CreateTabStrip(browser_);
   tabstrip_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TABSTRIP));
@@ -434,13 +451,6 @@ void XPFrame::Init() {
 
   tab_contents_container_ = new TabContentsContainerView();
   frame_view_->AddChildView(tab_contents_container_);
-
-#ifdef CHROME_PERSONALIZATION    
-  if (PersonalizationEnabled()) {
-    personalization_ = Personalization::CreateFramePersonalization(
-        browser_->profile(), frame_view_);
-  }
-#endif
 
   if (is_off_the_record_) {
     off_the_record_image_ = new ChromeViews::ImageView();
@@ -452,13 +462,10 @@ void XPFrame::Init() {
     frame_view_->AddViewToDropList(off_the_record_image_);
   }
 
-  SkBitmap* image = rb.GetBitmapNamed(IDR_DISTRIBUTOR_LOGO_LIGHT);
-  if (!image->isNull()) {
-    distributor_logo_ = new ChromeViews::ImageView();
-    frame_view_->AddViewToDropList(distributor_logo_);
-    distributor_logo_->SetImage(image);
-    frame_view_->AddChildView(distributor_logo_);
-  }
+  distributor_logo_ = new ChromeViews::ImageView();
+  frame_view_->AddViewToDropList(distributor_logo_);
+  distributor_logo_->SetImage(rb.GetBitmapNamed(IDR_DISTRIBUTOR_LOGO_LIGHT));
+  frame_view_->AddChildView(distributor_logo_);
 
   min_button_ = new ChromeViews::Button();
   min_button_->SetListener(this, MINIATURIZE_TAG);
@@ -512,6 +519,8 @@ void XPFrame::Init() {
       l10n_util::GetString(IDS_XPFRAME_CLOSE_TOOLTIP));
   frame_view_->AddChildView(close_button_);
 
+  status_bubble_.reset(new StatusBubble(this));
+
   // Add the task manager item to the system menu before the last entry.
   task_manager_label_text_ = l10n_util::GetString(IDS_TASKMANAGER);
   HMENU system_menu = ::GetSystemMenu(m_hWnd, FALSE);
@@ -539,7 +548,7 @@ void XPFrame::Init() {
   // Register accelerators.
   HACCEL accelerators_table = AtlLoadAccelerators(IDR_MAINFRAME);
   DCHECK(accelerators_table);
-  FrameUtil::LoadAccelerators(this, accelerators_table, this);
+  ChromeFrame::LoadAccelerators(this, accelerators_table, this);
 
   ShelfVisibilityChanged();
   root_view_.OnViewContainerCreated();
@@ -564,7 +573,7 @@ int XPFrame::GetContentsYOrigin() {
   if (info_bar_view_)
     min_y = std::min(min_y, info_bar_view_->GetY());
 
-  if (bookmark_bar_view_.get())
+  if (bookmark_bar_view_)
     min_y = std::min(min_y, bookmark_bar_view_->GetY());
 
   return min_y;
@@ -696,20 +705,18 @@ void XPFrame::Layout() {
       }
     }
 
-    if (distributor_logo_) {
-      if (IsZoomed()) {
-        distributor_logo_->SetVisible(false);
-      } else {
-        CSize distributor_logo_size;
-        distributor_logo_->GetPreferredSize(&distributor_logo_size);
-        distributor_logo_->SetVisible(true);
-        distributor_logo_->SetBounds(min_button_->GetX() - 
-                                         distributor_logo_size.cx -
-                                         kDistributorLogoHorizontalOffset,
-                                     kDistributorLogoVerticalOffset,
-                                     distributor_logo_size.cx,
-                                     distributor_logo_size.cy);
-      }
+    if (IsZoomed()) {
+      distributor_logo_->SetVisible(false);
+    } else {
+      CSize distributor_logo_size;
+      distributor_logo_->GetPreferredSize(&distributor_logo_size);
+      distributor_logo_->SetVisible(true);
+      distributor_logo_->SetBounds(min_button_->GetX() - 
+                                       distributor_logo_size.cx -
+                                       kDistributorLogoHorizontalOffset,
+                                   kDistributorLogoVerticalOffset,
+                                   distributor_logo_size.cx,
+                                   distributor_logo_size.cy);
     }
 
     tabstrip_->SetBounds(tab_strip_x, top_margin - 1,
@@ -724,21 +731,15 @@ void XPFrame::Layout() {
       off_the_record_image_->SetVisible(false);
   }
 
-  int browser_view_width = width - left_margin - right_margin;
-#ifdef CHROME_PERSONALIZATION
-  if (PersonalizationEnabled())
-    Personalization::AdjustBrowserView(personalization_, &browser_view_width);
-#endif
-
   if (IsToolBarVisible()) {
-    browser_view_->SetVisible(true);
-    browser_view_->SetBounds(left_margin,
-                             last_y - kToolbarOverlapVertOffset,
-                             browser_view_width,
-                             bitmaps[CT_TOP_CENTER]->height());
-    browser_view_->Layout();
-    title_bar_height_ = browser_view_->GetY();
-    last_y = browser_view_->GetY() + browser_view_->GetHeight();
+    toolbar_->SetVisible(true);
+    toolbar_->SetBounds(left_margin,
+                        last_y - kToolbarOverlapVertOffset,
+                        width - left_margin - right_margin,
+                        bitmaps[CT_TOP_CENTER]->height());
+    toolbar_->Layout();
+    title_bar_height_ = toolbar_->GetY();
+    last_y = toolbar_->GetY() + toolbar_->GetHeight();
   } else {
     // If the tab strip is visible, we need to expose the toolbar for a small
     // offset. (kCollapsedToolbarHeight).
@@ -750,7 +751,7 @@ void XPFrame::Layout() {
                         close_button_->GetY() + close_button_->GetHeight());
       title_bar_height_ = last_y;
     }
-    browser_view_->SetVisible(false);
+    toolbar_->SetVisible(false);
   }
 
   int browser_h = height - last_y - bottom_margin;
@@ -768,7 +769,7 @@ void XPFrame::Layout() {
   CSize bookmark_bar_size;
   CSize info_bar_size;
 
-  if (bookmark_bar_view_.get()) {
+  if (bookmark_bar_view_) {
     bookmark_bar_view_->GetPreferredSize(&bookmark_bar_size);
     bookmark_bar_height = bookmark_bar_size.cy;
   }
@@ -779,9 +780,9 @@ void XPFrame::Layout() {
   // If we're showing a bookmarks bar in the new tab page style and we
   // have an infobar showing, we need to flip them.
   if (info_bar_view_ &&
-      bookmark_bar_view_.get() &&
-      bookmark_bar_view_->IsNewTabPage() &&
-      !bookmark_bar_view_->IsAlwaysShown()) {
+      bookmark_bar_view_ &&
+      static_cast<BookmarkBarView*>(bookmark_bar_view_)->IsNewTabPage() &&
+      !static_cast<BookmarkBarView*>(bookmark_bar_view_)->IsAlwaysShown()) {
     info_bar_view_->SetBounds(left_margin,
                               last_y,
                               client_rect.Width() - left_margin - right_margin,
@@ -799,7 +800,7 @@ void XPFrame::Layout() {
     browser_h -= (bookmark_bar_size.cy - kSeparationLineHeight);
     last_y += bookmark_bar_size.cy;
   } else {
-    if (bookmark_bar_view_.get()) {
+    if (bookmark_bar_view_) {
       // We want our bookmarks bar to be responsible for drawing its own
       // separator, so we let it overlap ours.
       last_y -= kSeparationLineHeight;
@@ -828,14 +829,12 @@ void XPFrame::Layout() {
                                      last_y,
                                      width - left_margin - right_margin,
                                      browser_h);
-#ifdef CHROME_PERSONALIZATION
-  if (PersonalizationEnabled()) {
-    Personalization::ConfigureFramePersonalization(personalization_,
-                                                   browser_view_, top_margin);
-  }
-#endif
 
-  browser_view_->LayoutStatusBubble(last_y + browser_h);
+  status_bubble_->SetBounds(left_margin - kStatusBubbleOffset,
+                            last_y + browser_h - kStatusBubbleHeight +
+                            kStatusBubbleOffset,
+                            width / 3,
+                            kStatusBubbleHeight);
 
   frame_view_->SchedulePaint();
 }
@@ -844,7 +843,7 @@ void XPFrame::Layout() {
 // the application or we are going to be flagged as flaky.
 void XPFrame::OnEndSession(BOOL ending, UINT logoff) {
   tabstrip_->AbortActiveDragSession();
-  FrameUtil::EndSession();
+  EndSession();
 }
 
 // Note: called directly by the handler macros to handle WM_CLOSE messages.
@@ -1022,7 +1021,7 @@ void XPFrame::OnSize(UINT param, const CSize& size) {
     RedrawWindow(root_view_.GetScheduledPaintRect(),
                  NULL,
                  RDW_UPDATENOW | RDW_INVALIDATE | RDW_ALLCHILDREN);
-    MessageLoopForUI::current()->PumpOutPendingPaintMessages();
+    MessageLoop::current()->PumpOutPendingPaintMessages();
   }
 
   if (!saved_window_placement_ && should_save_window_placement_)
@@ -1251,7 +1250,7 @@ void XPFrame::OnKeyUp(TCHAR c, UINT rep_cnt, UINT flags) {
 }
 
 void XPFrame::OnActivate(UINT n_state, BOOL is_minimized, HWND other) {
-  if (FrameUtil::ActivateAppModalDialog(browser_))
+  if (ActivateAppModalDialog(browser_))
     return;
 
   // We get deactivation notices before the window is deactivated,
@@ -1272,8 +1271,7 @@ void XPFrame::OnActivate(UINT n_state, BOOL is_minimized, HWND other) {
 }
 
 int XPFrame::OnMouseActivate(CWindow wndTopLevel, UINT nHitTest, UINT message) {
-  return FrameUtil::ActivateAppModalDialog(browser_) ? MA_NOACTIVATEANDEAT
-                                                     : MA_ACTIVATE;
+  return ActivateAppModalDialog(browser_) ? MA_NOACTIVATEANDEAT : MA_ACTIVATE;
 }
 
 void XPFrame::OnPaint(HDC dc) {
@@ -1509,6 +1507,7 @@ BOOL XPFrame::OnPowerBroadcast(DWORD power_event, DWORD data) {
 void XPFrame::OnThemeChanged() {
   // Notify NativeTheme.
   gfx::NativeTheme::instance()->CloseHandles();
+  ChromeFrame::NotifyTabsOfThemeChange(browser_);
 }
 
 LRESULT XPFrame::OnAppCommand(
@@ -1588,6 +1587,10 @@ void XPFrame::ButtonPressed(ChromeViews::BaseButton *sender) {
 // Window move and resize
 //
 ////////////////////////////////////////////////////////////////////////////////
+
+void XPFrame::BrowserDidPaint(HRGN rgn) {
+  browser_paint_pending_ = false;
+}
 
 bool XPFrame::ShouldRefreshCurrentTabContents() {
   if (browser_->tabstrip_model()) {
@@ -1833,6 +1836,16 @@ gfx::Rect XPFrame::GetBoundsForContentBounds(const gfx::Rect content_rect) {
   return r;
 }
 
+void XPFrame::SetBounds(const gfx::Rect& bounds) {
+  SetWindowPos(NULL, bounds.x(), bounds.y(), bounds.width(), bounds.height(),
+               SWP_NOZORDER | SWP_NOACTIVATE);
+}
+
+void XPFrame::DetachFromBrowser() {
+  browser_->tabstrip_model()->RemoveObserver(tabstrip_);
+  browser_ = NULL;
+}
+
 void XPFrame::InfoBubbleShowing() {
   ignore_ncactivate_ = true;
   paint_as_active_ = true;
@@ -1840,67 +1853,10 @@ void XPFrame::InfoBubbleShowing() {
 
 void XPFrame::InfoBubbleClosing() {
   paint_as_active_ = false;
-  BrowserWindow::InfoBubbleClosing();
+  ChromeFrame::InfoBubbleClosing();
   // How we render the frame has changed, we need to force a paint otherwise
   // visually the user won't be able to tell.
   InvalidateRect(NULL, false);
-}
-
-ToolbarStarToggle* XPFrame::GetStarButton() const {
-  return browser_view_->GetStarButton();
-}
-
-LocationBarView* XPFrame::GetLocationBarView() const {
-  return browser_view_->GetLocationBarView();
-}
-
-GoButton* XPFrame::GetGoButton() const {
-  return browser_view_->GetGoButton();
-}
-
-BookmarkBarView* XPFrame::GetBookmarkBarView() {
-  TabContents* current_tab = browser_->GetSelectedTabContents();
-  if (!current_tab || !current_tab->profile())
-    return NULL;
-
-  if (!bookmark_bar_view_.get()) {
-    bookmark_bar_view_.reset(new BookmarkBarView(current_tab->profile(),
-                                                 browser_));
-    bookmark_bar_view_->SetParentOwned(false);
-  } else {
-    bookmark_bar_view_->SetProfile(current_tab->profile());
-  }
-  bookmark_bar_view_->SetPageNavigator(current_tab);
-  return bookmark_bar_view_.get();
-}
-
-BrowserView* XPFrame::GetBrowserView() const {
-  return browser_view_;
-}
-
-void XPFrame::UpdateToolbar(TabContents* contents, bool should_restore_state) {
-  browser_view_->UpdateToolbar(contents, should_restore_state);
-}
-
-void XPFrame::ProfileChanged(Profile* profile) {
-  browser_view_->ProfileChanged(profile);
-}
-
-void XPFrame::FocusToolbar() {
-  browser_view_->FocusToolbar();
-}
-
-bool XPFrame::IsBookmarkBarVisible() const {
-  if (!bookmark_bar_view_.get())
-    return false;
-
-  if (bookmark_bar_view_->IsNewTabPage() || bookmark_bar_view_->IsAnimating())
-    return true;
-
-  CSize sz;
-  bookmark_bar_view_->GetPreferredSize(&sz);
-  // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
 }
 
 void XPFrame::MoveToFront(bool should_activate) {
@@ -2225,7 +2181,7 @@ void XPFrame::XPFrameView::Paint(ChromeCanvas* canvas) {
     int y;
     bool should_draw_separator = false;
     if (parent_->IsToolBarVisible()) {
-      y = parent_->browser_view_->GetY();
+      y = parent_->toolbar_->GetY();
     } else if (parent_->IsTabStripVisible()) {
       y = parent_->GetContentsYOrigin() - kCollapsedToolbarHeight -
           kToolbarOverlapVertOffset;
@@ -2238,8 +2194,8 @@ void XPFrame::XPFrameView::Paint(ChromeCanvas* canvas) {
     PaintFrameBorder(canvas);
     int y, height;
     if (parent_->IsToolBarVisible()) {
-      y = parent_->browser_view_->GetY();
-      height = GetHeight() - (parent_->browser_view_->GetY() +
+      y = parent_->toolbar_->GetY();
+      height = GetHeight() - (parent_->toolbar_->GetY() +
                               kContentBorderVertBottomOffset);
     } else {
       if (parent_->IsTabStripVisible()) {
@@ -2475,18 +2431,6 @@ void XPFrame::DestroyBrowser() {
   // the tabstrip from the model's observer list because the model was
   // destroyed with browser_.
   if (browser_) {
-    if (bookmark_bar_view_.get() && bookmark_bar_view_->GetParent()) {
-      // The bookmark bar should not be parented by the time we get here.
-      // If you hit this NOTREACHED file a bug with the trace.
-      NOTREACHED();
-      bookmark_bar_view_->GetParent()->RemoveChildView(bookmark_bar_view_.get());
-    }
-
-    // Explicitly delete the BookmarkBarView now. That way we don't have to
-    // worry about the BookmarkBarView potentially outliving the Browser &
-    // Profile.
-    bookmark_bar_view_.reset(NULL);
-
     browser_->tabstrip_model()->RemoveObserver(tabstrip_);
     delete browser_;
     browser_ = NULL;
@@ -2508,10 +2452,10 @@ void XPFrame::ShelfVisibilityChangedImpl(TabContents* current_tab) {
   changed |= UpdateChildViewAndLayout(new_info_bar, &info_bar_view_);
 
   ChromeViews::View* new_bookmark_bar_view = NULL;
-  if (SupportsBookmarkBar())
-    new_bookmark_bar_view = GetBookmarkBarView();
+  if (SupportsBookmarkBar() && current_tab)
+    new_bookmark_bar_view = browser_->GetBookmarkBarView();
   changed |= UpdateChildViewAndLayout(new_bookmark_bar_view,
-                                      &active_bookmark_bar_);
+                                      &bookmark_bar_view_);
 
   // Only do a layout if the current contents is non-null. We assume that if the
   // contents is NULL, we're either being destroyed, or ShowTabContents is going
@@ -2521,4 +2465,3 @@ void XPFrame::ShelfVisibilityChangedImpl(TabContents* current_tab) {
   if (changed && current_tab)
     Layout();
 }
-

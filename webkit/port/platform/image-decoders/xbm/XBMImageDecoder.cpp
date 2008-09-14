@@ -228,6 +228,7 @@ bool XBMImageDecoder::decodeData()
     ASSERT(frame.status() == RGBA32Buffer::FramePartial);
 
     const int bitsPerRow = size().width();
+    const int totalBits = bitsPerRow * size().height();
 
     ASSERT(m_dataType != UNKNOWN);
 

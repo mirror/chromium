@@ -1,9 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef BASE_CLIPBOARD_H_
-#define BASE_CLIPBOARD_H_
+#ifndef BASE_CLIPBOARD_H__
+#define BASE_CLIPBOARD_H__
 
 #include <string>
 #include <vector>
@@ -12,68 +37,56 @@
 #include "base/gfx/size.h"
 #include "base/shared_memory.h"
 
-#if defined(OS_MACOSX)
-@class NSString;
-#endif
-
 class Clipboard {
  public:
-#if defined(OS_WIN)
-  typedef unsigned int FormatType;
-#elif defined(OS_MACOSX)
-  typedef NSString *FormatType;
-#endif
-  
   Clipboard();
   ~Clipboard();
 
   // Clears the clipboard.  It is usually a good idea to clear the clipboard
   // before writing content to the clipboard.
-  void Clear();
+  void Clear() const;
 
   // Adds UNICODE and ASCII text to the clipboard.
-  void WriteText(const std::wstring& text);
+  void WriteText(const std::wstring& text) const;
 
   // Adds HTML to the clipboard.  The url parameter is optional, but especially
   // useful if the HTML fragment contains relative links
-  void WriteHTML(const std::wstring& markup, const std::string& src_url);
+  void WriteHTML(const std::wstring& markup, const std::string& src_url) const;
 
   // Adds a bookmark to the clipboard
-  void WriteBookmark(const std::wstring& title, const std::string& url);
+  void WriteBookmark(const std::wstring& title, const std::string& url) const;
 
   // Adds both a bookmark and an HTML hyperlink to the clipboard.  It is a
   // convenience wrapper around WriteBookmark and WriteHTML.
-  void WriteHyperlink(const std::wstring& title, const std::string& url);
+  void WriteHyperlink(const std::wstring& title, const std::string& url) const;
 
-#if defined(OS_WIN)
   // Adds a bitmap to the clipboard
   // This is the slowest way to copy a bitmap to the clipboard as we must first
   // memcpy the pixels into GDI and the blit the bitmap to the clipboard.
   // Pixel format is assumed to be 32-bit BI_RGB.
-  void WriteBitmap(const void* pixels, const gfx::Size& size);
+  void WriteBitmap(const void* pixels, const gfx::Size& size) const;
 
   // Adds a bitmap to the clipboard
   // This function requires read and write access to the bitmap, but does not
   // actually modify the shared memory region.
   // Pixel format is assumed to be 32-bit BI_RGB.
   void WriteBitmapFromSharedMemory(const SharedMemory& bitmap,
-                                   const gfx::Size& size);
+                                   const gfx::Size& size) const;
 
   // Adds a bitmap to the clipboard
   // This is the fastest way to copy a bitmap to the clipboard.  The HBITMAP
   // may either be device-dependent or device-independent.
-  void WriteBitmapFromHandle(HBITMAP hbitmap, const gfx::Size& size);
+  void WriteBitmapFromHandle(HBITMAP hbitmap, const gfx::Size& size) const;
 
   // Used by WebKit to determine whether WebKit wrote the clipboard last
-  void WriteWebSmartPaste();
-#endif
+  void WriteWebSmartPaste() const;
 
   // Adds a file or group of files to the clipboard.
-  void WriteFile(const std::wstring& file);
-  void WriteFiles(const std::vector<std::wstring>& files);
+  void WriteFile(const std::wstring& file) const;
+  void WriteFiles(const std::vector<std::wstring>& files) const;
 
   // Tests whether the clipboard contains a certain format
-  bool IsFormatAvailable(FormatType format) const;
+  bool IsFormatAvailable(unsigned int format) const;
 
   // Reads UNICODE text from the clipboard, if available.
   void ReadText(std::wstring* result) const;
@@ -88,12 +101,11 @@ class Clipboard {
   void ReadBookmark(std::wstring* title, std::string* url) const;
 
   // Reads a file or group of files from the clipboard, if available, into the
-  // out parameter.
+  // out paramter.
   void ReadFile(std::wstring* file) const;
   void ReadFiles(std::vector<std::wstring>* files) const;
 
  private:
-#if defined(OS_WIN)
   static void MarkupToHTMLClipboardFormat(const std::wstring& markup,
                                           const std::string& src_url,
                                           std::string* html_fragment);
@@ -107,10 +119,8 @@ class Clipboard {
                                            std::string* url);
 
   HWND clipboard_owner_;
-#endif
 
   DISALLOW_EVIL_CONSTRUCTORS(Clipboard);
 };
 
-#endif  // BASE_CLIPBOARD_H_
-
+#endif  // BASE_CLIPBOARD_H__

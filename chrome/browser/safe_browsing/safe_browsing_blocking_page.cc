@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // Implementation of the SafeBrowsingBlockingPage class.
 
@@ -24,19 +49,14 @@
 
 // For malware interstitial pages, we link the problematic URL to Google's
 // diagnostic page.
-#if defined(GOOGLE_CHROME_BUILD)
 static const char* const kSbDiagnosticUrl =
-    "http://safebrowsing.clients.google.com/safebrowsing/diagnostic?site=%ls&client=googlechrome";
-#else
-static const char* const kSbDiagnosticUrl =
-    "http://safebrowsing.clients.google.com/safebrowsing/diagnostic?site=%ls&client=chromium";
-#endif
+    "http://safebrowsing.clients.google.com/safebrowsing/diagnostic?site=%s&client=googlechrome";
 
 static const char* const kSbReportPhishingUrl =
     "http://www.google.com/safebrowsing/report_error/";
 
 static const wchar_t* const kSbDiagnosticHtml =
-    L"<a href=\"\" onClick=\"sendCommand(4); return false;\">%ls</a>";
+    L"<a href=\"\" onClick=\"sendCommand(4); return false;\">%s</a>";
 
 // Created on the io_thread.
 SafeBrowsingBlockingPage::SafeBrowsingBlockingPage(
@@ -177,13 +197,10 @@ void SafeBrowsingBlockingPage::DisplayBlockingPage() {
     // this dummy entry a new one.  Because we'll remove the entry when the
     // interstitial is going away, it will not conflict with any future
     // navigations.
-    nav_entry->set_page_id(tab_->GetMaxPageID() + 1);
-    nav_entry->set_page_type(NavigationEntry::INTERSTITIAL_PAGE);
-    nav_entry->set_url(url_);
-
-    // The default details is "new navigation", and that's OK with us.
-    NavigationController::LoadCommittedDetails details;
-    tab_->controller()->DidNavigateToEntry(nav_entry, &details);
+    nav_entry->SetPageID(tab_->GetMaxPageID() + 1);
+    nav_entry->SetPageType(NavigationEntry::INTERSTITIAL_PAGE);
+    nav_entry->SetURL(url_);
+    tab_->controller()->DidNavigateToEntry(nav_entry);
     created_temporary_entry_ = true;
   }
 
@@ -220,7 +237,7 @@ bool SafeBrowsingBlockingPage::GoBack() {
     // interstitial to hide which will trigger "this" to be deleted.
     tab_->controller()->LoadURL(GURL("about:blank"),
                                 PageTransition::AUTO_BOOKMARK);
-  } else if (prev_entry->tab_type() != TAB_CONTENTS_WEB ||
+  } else if (prev_entry->GetType() != TAB_CONTENTS_WEB ||
              prev_entry->restored() ||
              !is_main_frame_) {
     // We do navigate back if any of these is true:
@@ -332,7 +349,7 @@ void SafeBrowsingBlockingPage::NotifyDone() {
     tab_->AsWebContents()->set_interstitial_delegate(NULL);
   }
 
-  base::Thread* io_thread = g_browser_process->io_thread();
+  Thread* io_thread = g_browser_process->io_thread();
   if (!io_thread)
     return;
 
@@ -341,4 +358,3 @@ void SafeBrowsingBlockingPage::NotifyDone() {
       &SafeBrowsingService::OnBlockingPageDone,
       this, client_, proceed_));
 }
-

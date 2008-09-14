@@ -52,11 +52,8 @@ VPATH = \
 
 ifeq ($(OS),MACOS)
 all : \
-    CharsetData.cpp
-endif
-
-# Not needed because we don't want obj-c bindings generated    
-#   DOMAbstractView.h\
+    CharsetData.cpp \
+    DOMAbstractView.h \
     DOMAttr.h \
     DOMCDATASection.h \
     DOMCSSCharsetRule.h \
@@ -312,7 +309,7 @@ endif
     DOMWheelEvent.h \
     DOMXPathExpression.h \
     DOMXPathNSResolver.h \
-    DOMXPathResult.h \
+    DOMXPathResult.h
 endif
 
 # Not needed for V8\
@@ -999,7 +996,7 @@ UserAgentStyleSheets.h : css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS) 
 
 # character set name table
 
-CharsetData.cpp : platform/text/mac/make-charset-table.pl platform/text/mac/character-sets.txt $(ENCODINGS_FILE)
+CharsetData.cpp : platform/mac/make-charset-table.pl platform/mac/character-sets.txt $(ENCODINGS_FILE)
 	perl $^ $(ENCODINGS_PREFIX) > $@
 
 # lookup tables for old-style JavaScript bindings
@@ -1092,7 +1089,7 @@ OBJC_BINDINGS_SCRIPTS = \
     bindings/scripts/generate-bindings.pl \
 #
 
-DOM%.h : %.idl $(OBJC_BINDINGS_SCRIPTS) $(PUBLICDOMINTERFACES)
+DOM%.h : %.idl $(OBJC_BINDINGS_SCRIPTS) bindings/objc/PublicDOMInterfaces.h
 	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_OBJECTIVE_C" --generator ObjC --include dom --include html --include css --include page --include xml --include svg --include bindings/js --outputdir . $<
 
 # new-style JavaScript bindings

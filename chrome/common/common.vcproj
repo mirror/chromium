@@ -257,10 +257,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ipc_message_utils.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\ipc_message_utils.h"
 				>
 			</File>
@@ -395,10 +391,6 @@
 		</File>
 		<File
 			RelativePath=".\clipboard_service.h"
-			>
-		</File>
-		<File
-			RelativePath=".\common_glue.cc"
 			>
 		</File>
 		<File
@@ -538,6 +530,22 @@
 			>
 		</File>
 		<File
+			RelativePath=".\slide_animation.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\slide_animation.h"
+			>
+		</File>
+		<File
+			RelativePath=".\throb_animation.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\throb_animation.h"
+			>
+		</File>
+		<File
 			RelativePath="..\tools\build\win\precompiled.cc"
 			>
 			<FileConfiguration
@@ -551,10 +559,6 @@
 		</File>
 		<File
 			RelativePath="..\tools\build\win\precompiled.h"
-			>
-		</File>
-		<File
-			RelativePath=".\pref_member.cc"
 			>
 		</File>
 		<File
@@ -626,14 +630,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\slide_animation.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\slide_animation.h"
-			>
-		</File>
-		<File
 			RelativePath=".\sqlite_compiled_statement.cc"
 			>
 		</File>
@@ -663,14 +659,6 @@
 		</File>
 		<File
 			RelativePath=".\text_zoom.h"
-			>
-		</File>
-		<File
-			RelativePath=".\throb_animation.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\throb_animation.h"
 			>
 		</File>
 		<File

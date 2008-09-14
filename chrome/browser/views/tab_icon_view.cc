@@ -1,20 +1,39 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <windows.h>
-#include <shellapi.h>
-
-#include "chrome/browser/views/tab_icon_view.h"
-
-#include "base/file_util.h"
-#include "base/path_service.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/favicon_size.h"
 #include "chrome/common/gfx/icon_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/browser/tab_contents.h"
+#include "chrome/browser/views/tab_icon_view.h"
 #include "chrome/app/chrome_dll_resource.h"
 
 static bool g_initialized = false;
@@ -27,17 +46,7 @@ static int g_throbber_frame_count;
 void TabIconView::InitializeIfNeeded() {
   if (!g_initialized) {
     ResourceBundle &rb = ResourceBundle::GetSharedInstance();
-
-    // The default window icon is the application icon, not the default
-    // favicon.
-    std::wstring exe_path;
-    PathService::Get(base::DIR_EXE, &exe_path);
-    file_util::AppendToPath(&exe_path, L"chrome.exe");
-    HICON app_icon = ExtractIcon(NULL, exe_path.c_str(), 0);
-    g_default_fav_icon =
-        IconUtil::CreateSkBitmapFromHICON(app_icon, gfx::Size(16, 16));
-    DestroyIcon(app_icon);
-
+    g_default_fav_icon = rb.GetBitmapNamed(IDR_DEFAULT_FAVICON);
     g_throbber_frames = rb.GetBitmapNamed(IDR_THROBBER);
     g_throbber_frames_light = rb.GetBitmapNamed(IDR_THROBBER_LIGHT);
     g_throbber_frame_count = g_throbber_frames->width() /
@@ -130,4 +139,3 @@ void TabIconView::Paint(ChromeCanvas* canvas) {
 void TabIconView::GetPreferredSize(CSize* out) {
   out->cx = out->cy = kFavIconSize;
 }
-

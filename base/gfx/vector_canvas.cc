@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/gfx/vector_canvas.h"
 
@@ -27,7 +52,7 @@ void VectorCanvas::initialize(HDC context, int width, int height) {
 
 SkBounder* VectorCanvas::setBounder(SkBounder* bounder) {
   if (!IsTopDeviceVectorial())
-    return PlatformCanvasWin::setBounder(bounder);
+    return PlatformCanvas::setBounder(bounder);
 
   // This function isn't used in the code. Verify this assumption.
   NOTREACHED();
@@ -54,12 +79,12 @@ SkDevice* VectorCanvas::createPlatformDevice(int width,
     // TODO(maruel):  http://b/1184002 1184002 When restoring a semi-transparent
     // layer, i.e. merging it, we need to rasterize it because GDI doesn't
     // support transparency except for AlphaBlend(). Right now, a
-    // BitmapPlatformDeviceWin is created when VectorCanvas think a saveLayers()
+    // BitmapPlatformDevice is created when VectorCanvas think a saveLayers()
     // call is being done. The way to save a layer would be to create an
     // EMF-based VectorDevice and have this device registers the drawing. When
     // playing back the device into a bitmap, do it at the printer's dpi instead
     // of the layout's dpi (which is much lower).
-    return PlatformCanvasWin::createPlatformDevice(width, height, is_opaque,
+    return PlatformCanvas::createPlatformDevice(width, height, is_opaque,
                                                 shared_section);
   }
 
@@ -72,7 +97,7 @@ SkDevice* VectorCanvas::createPlatformDevice(int width,
   // SkScalarRound(value * 10). Safari is already doing the same for text
   // rendering.
   DCHECK(shared_section);
-  PlatformDeviceWin* device = VectorDevice::create(
+  PlatformDevice* device = VectorDevice::create(
       reinterpret_cast<HDC>(shared_section), width, height);
   return device;
 }
@@ -82,4 +107,3 @@ bool VectorCanvas::IsTopDeviceVectorial() const {
 }
 
 }  // namespace gfx
-

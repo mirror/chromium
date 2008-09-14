@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# A script to view side-by-side diffs of 2 directories.
+#
+# For the comparison to work, a local copy of the svn
+# repository is required. Change the directories below
+# as appropriate:
+
+REP_DIR=$HOME/v8_repository
+NEW_DIR=$HOME/v8
+
+# prerequisites
+CMP=/usr/bin/cmp
+DIFF0=/usr/bin/diff
+
+function TryDiff {
+  if [ -x "$1" ]; then
+    DIFF0="$1"
+  fi
+}
+
+# try better diff tools then diff
+TryDiff /usr/pubsw/bin/tdiff
+TryDiff /usr/bin/opendiff
+
+DIFF=${DIFF=$DIFF0}  # allow environment to override $DIFF
+
+echo "repository files are in $REP_DIR"
+echo "new files are in $NEW_DIR"
+
+function Filter {
+  egrep -v '~|/build/|/\.svn/|/\._|/V8\.xcodeproj/|\.sconsign'
+}
+
+# create file lists
+REP_LIST=`mktemp -t list.$USER.XXXXXX` || exit 1
+NEW_LIST=`mktemp -t list.$USER.XXXXXX` || exit 1
+(cd $REP_DIR; find . -path ./.snapshot -prune -o -print | sort | Filter) > $REP_LIST
+(cd $NEW_DIR; find . -path ./.snapshot -prune -o -print | sort | Filter) > $NEW_LIST
+
+# compare files that exist in both directories
+COUNT=0
+for F in `comm -12 $REP_LIST $NEW_LIST`; do
+  REP_FILE=$REP_DIR/$F
+  NEW_FILE=$NEW_DIR/$F
+  if [ -f $REP_FILE ] && [ -f $NEW_FILE ]; then
+    if ! $CMP -s $REP_FILE $NEW_FILE; then
+      # file has changed
+      $DIFF $REP_FILE $NEW_FILE
+      let COUNT=$COUNT+1
+    fi
+  fi
+done
+stty sane
+echo "$COUNT files have changed"
+echo
+
+# report new files
+echo "files only in $NEW_DIR:"
+comm -13 $REP_LIST $NEW_LIST
+echo
+
+# report old files
+echo "files only in $REP_DIR:"
+comm -23 $REP_LIST $NEW_LIST
+echo
+
+# cleanup
+rm -f $REP_LIST
+rm -f $NEW_LIST
+
+exit 0

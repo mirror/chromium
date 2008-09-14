@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This interfaces is for managing the global services of the application. Each
 // service is lazily created when requested the first time. The service getters
@@ -26,13 +51,10 @@ class ProfileManager;
 class RenderProcessHost;
 class ResourceDispatcherHost;
 class DebuggerWrapper;
+class Thread;
 class WebAppInstallerService;
-class SharedEvent;
 class SuspendController;
 
-namespace base {
-class Thread;
-}
 namespace sandbox {
 class BrokerServices;
 }
@@ -83,16 +105,16 @@ class BrowserProcess {
   // Returns the thread that we perform I/O coordination on (network requests,
   // communication with renderers, etc.
   // NOTE: need to check the return value for NULL.
-  virtual base::Thread* io_thread() = 0;
+  virtual Thread* io_thread() = 0;
 
   // Returns the thread that we perform random file operations on. For code
   // that wants to do I/O operations (not network requests or even file: URL
   // requests), this is the thread to use to avoid blocking the UI thread.
   // It might be nicer to have a thread pool for this kind of thing.
-  virtual base::Thread* file_thread() = 0;
+  virtual Thread* file_thread() = 0;
 
   // Returns the thread that is used for database operations such as history.
-  virtual base::Thread* db_thread() = 0;
+  virtual Thread* db_thread() = 0;
 
   virtual sandbox::BrokerServices* broker_services() = 0;
 
@@ -121,12 +143,6 @@ class BrowserProcess {
 
   virtual SuspendController* suspend_controller() = 0;
 
-  // TODO(beng): remove once XPFrame/VistaFrame are gone.
-  virtual bool IsUsingNewFrames() = 0;
-
-  // Returns an event that is signaled when the browser shutdown.
-  virtual HANDLE shutdown_event() = 0;
-
  private:
   DISALLOW_EVIL_CONSTRUCTORS(BrowserProcess);
 };
@@ -134,4 +150,3 @@ class BrowserProcess {
 extern BrowserProcess* g_browser_process;
 
 #endif  // CHROME_BROWSER_BROWSER_PROCESS_H__
-

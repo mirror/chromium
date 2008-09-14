@@ -1,9 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H_
-#define CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H_
+#ifndef CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H__
+#define CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H__
 
 #include <map>
 #include <string>
@@ -443,7 +468,7 @@ class AutocompleteProvider
   //
   // |minimal_changes| is an optimization that lets the provider do less work
   // when the |input|'s text hasn't changed.  See the body of
-  // AutocompletePopupModel::StartAutocomplete().
+  // AutocompletePopup::StartAutocomplete().
   //
   // If |synchronous_only| is true, no asynchronous work should be scheduled;
   // the provider should stop after it has returned all the
@@ -482,10 +507,6 @@ class AutocompleteProvider
   static size_t max_matches() { return max_matches_; }
 
  protected:
-  // Updates the starred state of each of the matches in matches_ from the
-  // profile's bookmark bar model.
-  void UpdateStarredStateOfMatches();
-
   // The profile associated with the AutocompleteProvider.  Reference is not
   // owned by us.
   Profile* profile_;
@@ -768,7 +789,7 @@ struct AutocompleteLog {
   }
   // The user's input text in the omnibox.
   std::wstring text;
-  // Selected index (if selected) or -1 (AutocompletePopupModel::kNoMatch).
+  // Selected index (if selected) or -1 (AutocompletePopup::kNoMatch).
   size_t selected_index;
   // Inline autocompleted length (if displayed).
   size_t inline_autocompleted_length;
@@ -776,5 +797,4 @@ struct AutocompleteLog {
   const AutocompleteResult& result;
 };
 
-#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H_
-
+#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H__

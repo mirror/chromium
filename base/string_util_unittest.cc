@@ -1,12 +1,34 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <math.h>
-#include <stdarg.h>
-
-#include <limits>
 #include <sstream>
+#include <stdarg.h>
 
 #include "base/basictypes.h"
 #include "base/logging.h"
@@ -54,7 +76,7 @@ static const struct trim_case_ascii {
 
 TEST(StringUtilTest, TrimWhitespace) {
   std::wstring output;  // Allow contents to carry over to next testcase
-  for (size_t i = 0; i < arraysize(trim_cases); ++i) {
+  for (int i = 0; i < arraysize(trim_cases); ++i) {
     const trim_case& value = trim_cases[i];
     EXPECT_EQ(value.return_value,
               TrimWhitespace(value.input, value.positions, &output));
@@ -72,7 +94,7 @@ TEST(StringUtilTest, TrimWhitespace) {
   EXPECT_EQ(L"", output);
 
   std::string output_ascii;
-  for (size_t i = 0; i < arraysize(trim_cases_ascii); ++i) {
+  for (int i = 0; i < arraysize(trim_cases_ascii); ++i) {
     const trim_case_ascii& value = trim_cases_ascii[i];
     EXPECT_EQ(value.return_value,
               TrimWhitespace(value.input, value.positions, &output_ascii));
@@ -107,7 +129,7 @@ static const struct collapse_case {
 };
 
 TEST(StringUtilTest, CollapseWhitespace) {
-  for (size_t i = 0; i < arraysize(collapse_cases); ++i) {
+  for (int i = 0; i < arraysize(collapse_cases); ++i) {
     const collapse_case& value = collapse_cases[i];
     EXPECT_EQ(value.output, CollapseWhitespace(value.input, value.trim));
   }
@@ -126,25 +148,23 @@ static const wchar_t* const kConvertRoundtripCases[] = {
   L"\x0020\x0440\x0443\x0441\x0441\x043a\x043e\x043c",
   // "전체서비스"
   L"\xc804\xccb4\xc11c\xbe44\xc2a4",
-
-  // Test characters that take more than 16 bits. This will depend on whether
-  // wchar_t is 16 or 32 bits.
-#if defined(WCHAR_T_IS_UTF16)
-  L"\xd800\xdf00",
   // ?????  (Mathematical Alphanumeric Symbols (U+011d40 - U+011d44 : A,B,C,D,E)
   L"\xd807\xdd40\xd807\xdd41\xd807\xdd42\xd807\xdd43\xd807\xdd44",
-#elif defined(WCHAR_T_IS_UTF32)
-  L"\x10300",
-  // ?????  (Mathematical Alphanumeric Symbols (U+011d40 - U+011d44 : A,B,C,D,E)
-  L"\x11d40\x11d41\x11d42\x11d43\x11d44",
-#endif
+
+  // Test a character that takes more than 16-bits. This will depend on whether
+  // wchar_t is 16 or 32 bits.
+  #ifdef WIN32
+    L"\xd800\xdf00",
+  #else
+    "\x10300,
+  #endif
 };
 
 TEST(StringUtilTest, ConvertUTF8AndWide) {
   // we round-trip all the wide strings through UTF-8 to make sure everything
   // agrees on the conversion. This uses the stream operators to test them
   // simultaneously.
-  for (size_t i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
+  for (int i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
     std::ostringstream utf8;
     utf8 << WideToUTF8(kConvertRoundtripCases[i]);
     std::wostringstream wide;
@@ -162,118 +182,6 @@ TEST(StringUtilTest, ConvertUTF8AndWideEmptyString) {
   EXPECT_EQ(empty, WideToUTF8(wempty));
   EXPECT_EQ(wempty, UTF8ToWide(empty));
 }
-
-TEST(StringUtilTest, ConvertUTF8ToWide) {
-  struct UTF8ToWideCase {
-    const char* utf8;
-    const wchar_t* wide;
-    bool success;
-  } convert_cases[] = {
-    // Regular UTF-8 input.
-    {"\xe4\xbd\xa0\xe5\xa5\xbd", L"\x4f60\x597d", true},
-    // Invalid Unicode code point.
-    {"\xef\xbf\xbfHello", L"Hello", false},
-    // Truncated UTF-8 sequence.
-    {"\xe4\xa0\xe5\xa5\xbd", L"\x597d", false},
-    // Truncated off the end.
-    {"\xe5\xa5\xbd\xe4\xa0", L"\x597d", false},
-    // Non-shortest-form UTF-8.
-    {"\xf0\x84\xbd\xa0\xe5\xa5\xbd", L"\x597d", false},
-    // This UTF-8 character decodes to a UTF-16 surrogate, which is illegal.
-    {"\xed\xb0\x80", L"", false},
-    // Non-BMP character. The result will either be in UTF-16 or UTF-32.
-#if defined(WCHAR_T_IS_UTF16)
-    {"A\xF0\x90\x8C\x80z", L"A\xd800\xdf00z", true},
-#elif defined(WCHAR_T_IS_UTF32)
-    {"A\xF0\x90\x8C\x80z", L"A\x10300z", true},
-#endif
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(convert_cases); i++) {
-    std::wstring converted;
-    EXPECT_EQ(convert_cases[i].success,
-              UTF8ToWide(convert_cases[i].utf8,
-                         strlen(convert_cases[i].utf8),
-                         &converted));
-    std::wstring expected(convert_cases[i].wide);
-    EXPECT_EQ(expected, converted);
-  }
-
-  // Manually test an embedded NULL.
-  std::wstring converted;
-  EXPECT_TRUE(UTF8ToWide("\00Z\t", 3, &converted));
-  ASSERT_EQ(3U, converted.length());
-  EXPECT_EQ(0, converted[0]);
-  EXPECT_EQ('Z', converted[1]);
-  EXPECT_EQ('\t', converted[2]);
-
-  // Make sure that conversion replaces, not appends.
-  EXPECT_TRUE(UTF8ToWide("B", 1, &converted));
-  ASSERT_EQ(1U, converted.length());
-  EXPECT_EQ('B', converted[0]);
-}
-
-#if defined(WCHAR_T_IS_UTF16)
-// This test is only valid when wchar_t == UTF-16.
-TEST(StringUtilTest, ConvertUTF16ToUTF8) {
-  struct UTF16ToUTF8Case {
-    const wchar_t* utf16;
-    const char* utf8;
-    bool success;
-  } convert_cases[] = {
-    // Regular UTF-16 input.
-    {L"\x4f60\x597d", "\xe4\xbd\xa0\xe5\xa5\xbd", true},
-    // Test a non-BMP character.
-    {L"\xd800\xdf00", "\xF0\x90\x8C\x80", true},
-    // Invalid Unicode code point.
-    {L"\xffffHello", "Hello", false},
-    // The first character is a truncated UTF-16 character.
-    {L"\xd800\x597d", "\xe5\xa5\xbd", false},
-    // Truncated at the end.
-    {L"\x597d\xd800", "\xe5\xa5\xbd", false},
-  };
-
-  for (int i = 0; i < arraysize(convert_cases); i++) {
-    std::string converted;
-    EXPECT_EQ(convert_cases[i].success,
-              WideToUTF8(convert_cases[i].utf16,
-                         wcslen(convert_cases[i].utf16),
-                         &converted));
-    std::string expected(convert_cases[i].utf8);
-    EXPECT_EQ(expected, converted);
-  }
-}
-
-#elif defined(WCHAR_T_IS_UTF32)
-// This test is only valid when wchar_t == UTF-32.
-TEST(StringUtilTest, ConvertUTF32ToUTF8) {
-  struct UTF8ToWideCase {
-    const wchar_t* utf32;
-    const char* utf8;
-    bool success;
-  } convert_cases[] = {
-    // Regular 16-bit input.
-    {L"\x4f60\x597d", "\xe4\xbd\xa0\xe5\xa5\xbd", true},
-    // Test a non-BMP character.
-    {L"A\x10300z", "A\xF0\x90\x8C\x80z", true},
-    // Invalid Unicode code points.
-    {L"\xffffHello", "Hello", false},
-    {L"\xfffffffHello", "Hello", false},
-    // The first character is a truncated UTF-16 character.
-    {L"\xd800\x597d", "\xe5\xa5\xbd", false},
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(convert_cases); i++) {
-    std::string converted;
-    EXPECT_EQ(convert_cases[i].success,
-              WideToUTF8(convert_cases[i].utf32,
-                         wcslen(convert_cases[i].utf32),
-                         &converted));
-    std::string expected(convert_cases[i].utf8);
-    EXPECT_EQ(expected, converted);
-  }
-}
-#endif  // defined(WCHAR_T_IS_UTF32)
 
 TEST(StringUtilTest, ConvertMultiString) {
   static wchar_t wmulti[] = {
@@ -301,7 +209,7 @@ TEST(StringUtilTest, ConvertMultiString) {
 
 TEST(StringUtilTest, ConvertCodepageUTF8) {
   // Make sure WideToCodepage works like WideToUTF8.
-  for (size_t i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
+  for (int i = 0; i < arraysize(kConvertRoundtripCases); ++i) {
     std::string expected(WideToUTF8(kConvertRoundtripCases[i]));
     std::string utf8;
     EXPECT_TRUE(WideToCodepage(kConvertRoundtripCases[i], kCodepageUTF8,
@@ -408,7 +316,7 @@ TEST(StringUtilTest, ConvertBetweenCodepageAndWide) {
      L"\x0E04\x0E23\x0e31\x0E1A"},
   };
 
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(kConvertCodepageCases); ++i) {
+  for (int i = 0; i < arraysize(kConvertCodepageCases); ++i) {
     std::wstring wide;
     bool success = CodepageToWide(kConvertCodepageCases[i].encoded,
                                   kConvertCodepageCases[i].codepage_name,
@@ -442,7 +350,7 @@ TEST(StringUtilTest, ConvertBetweenCodepageAndWide) {
                              OnStringUtilConversionError::SKIP, &encoded));
   EXPECT_STREQ("Chinese", encoded.c_str());
 
-#if defined(WCHAR_T_IS_UTF16)
+#ifdef WIN32
   // When we're in UTF-16 mode, test an invalid UTF-16 character in the input.
   EXPECT_FALSE(WideToCodepage(L"a\xd800z", "iso-8859-1",
                               OnStringUtilConversionError::FAIL, &encoded));
@@ -450,7 +358,7 @@ TEST(StringUtilTest, ConvertBetweenCodepageAndWide) {
   EXPECT_TRUE(WideToCodepage(L"a\xd800z", "iso-8859-1",
                              OnStringUtilConversionError::SKIP, &encoded));
   EXPECT_STREQ("az", encoded.c_str());
-#endif  // WCHAR_T_IS_UTF16
+#endif
 
   // Invalid characters should fail.
   EXPECT_TRUE(WideToCodepage(L"a\xffffz", "iso-8859-1",
@@ -475,7 +383,7 @@ TEST(StringUtilTest, ConvertASCII) {
     L"0123ABCDwxyz \a\b\t\r\n!+,.~"
   };
 
-  for (size_t i = 0; i < arraysize(char_cases); ++i) {
+  for (int i = 0; i < arraysize(char_cases); ++i) {
     EXPECT_TRUE(IsStringASCII(char_cases[i]));
     std::wstring wide = ASCIIToWide(char_cases[i]);
     EXPECT_EQ(wchar_cases[i], wide);
@@ -493,18 +401,6 @@ TEST(StringUtilTest, ConvertASCII) {
   std::string empty;
   EXPECT_EQ(empty, WideToASCII(wempty));
   EXPECT_EQ(wempty, ASCIIToWide(empty));
-
-  // Convert strings with an embedded NUL character.
-  const char chars_with_nul[] = "test\0string";
-  const int length_with_nul = arraysize(chars_with_nul) - 1;
-  std::string string_with_nul(chars_with_nul, length_with_nul);
-  std::wstring wide_with_nul = ASCIIToWide(string_with_nul);
-  EXPECT_EQ(static_cast<std::wstring::size_type>(length_with_nul),
-            wide_with_nul.length());
-  std::string narrow_with_nul = WideToASCII(wide_with_nul);
-  EXPECT_EQ(static_cast<std::string::size_type>(length_with_nul),
-            narrow_with_nul.length());
-  EXPECT_EQ(0, string_with_nul.compare(narrow_with_nul));
 }
 
 static const struct {
@@ -518,7 +414,7 @@ static const struct {
 };
 
 TEST(StringUtilTest, LowerCaseEqualsASCII) {
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(lowercase_cases); ++i) {
+  for (int i = 0; i < arraysize(lowercase_cases); ++i) {
     EXPECT_TRUE(LowerCaseEqualsASCII(lowercase_cases[i].src_w,
                                      lowercase_cases[i].dst));
     EXPECT_TRUE(LowerCaseEqualsASCII(lowercase_cases[i].src_a,
@@ -542,7 +438,7 @@ TEST(StringUtilTest, GetByteDisplayUnits) {
 #endif
   };
 
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i)
+  for (int i = 0; i < arraysize(cases); ++i)
     EXPECT_EQ(cases[i].expected, GetByteDisplayUnits(cases[i].bytes));
 }
 
@@ -572,7 +468,7 @@ TEST(StringUtilTest, FormatBytes) {
 #endif
   };
 
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
+  for (int i = 0; i < arraysize(cases); ++i) {
     EXPECT_EQ(cases[i].expected,
               FormatBytes(cases[i].bytes, cases[i].units, false));
     EXPECT_EQ(cases[i].expected_with_units,
@@ -582,11 +478,11 @@ TEST(StringUtilTest, FormatBytes) {
 
 TEST(StringUtilTest, ReplaceSubstringsAfterOffset) {
   static const struct {
-    const wchar_t* str;
+    wchar_t* str;
     std::wstring::size_type start_offset;
-    const wchar_t* find_this;
-    const wchar_t* replace_with;
-    const wchar_t* expected;
+    wchar_t* find_this;
+    wchar_t* replace_with;
+    wchar_t* expected;
   } cases[] = {
     {L"aaa", 0, L"a", L"b", L"bbb"},
     {L"abb", 0, L"ab", L"a", L"ab"},
@@ -602,7 +498,7 @@ TEST(StringUtilTest, ReplaceSubstringsAfterOffset) {
     {L"abababab", 2, L"ab", L"c", L"abccc"},
   };
 
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); i++) {
+  for (int i = 0; i < arraysize(cases); i++) {
     std::wstring str(cases[i].str);
     ReplaceSubstringsAfterOffset(&str, cases[i].start_offset,
                                  cases[i].find_this, cases[i].replace_with);
@@ -610,50 +506,20 @@ TEST(StringUtilTest, ReplaceSubstringsAfterOffset) {
   }
 }
 
-namespace {
-
-template <typename INT>
-struct IntToStringTest {
-  INT num;
-  const char* sexpected;
-  const char* uexpected;
-};
-
-}
-
 TEST(StringUtilTest, IntToString) {
-
-  static const IntToStringTest<int> int_tests[] = {
-      { 0, "0", "0" },
-      { -1, "-1", "4294967295" },
-      { std::numeric_limits<int>::max(), "2147483647", "2147483647" },
-      { std::numeric_limits<int>::min(), "-2147483648", "2147483648" },
-  };
-  static const IntToStringTest<int64> int64_tests[] = {
-      { 0, "0", "0" },
-      { -1, "-1", "18446744073709551615" },
-      { std::numeric_limits<int64>::max(),
-        "9223372036854775807",
-        "9223372036854775807", },
-      { std::numeric_limits<int64>::min(),
-        "-9223372036854775808",
-        "9223372036854775808" },
+  static const struct {
+    int input;
+    std::string output;
+  } cases[] = {
+    {0, "0"},
+    {42, "42"},
+    {-42, "-42"},
+    {INT_MAX, "2147483647"},
+    {INT_MIN, "-2147483648"},
   };
 
-  for (size_t i = 0; i < arraysize(int_tests); ++i) {
-    const IntToStringTest<int>* test = &int_tests[i];
-    EXPECT_EQ(IntToString(test->num), test->sexpected);
-    EXPECT_EQ(IntToWString(test->num), UTF8ToWide(test->sexpected));
-    EXPECT_EQ(UintToString(test->num), test->uexpected);
-    EXPECT_EQ(UintToWString(test->num), UTF8ToWide(test->uexpected));
-  }
-  for (size_t i = 0; i < arraysize(int64_tests); ++i) {
-    const IntToStringTest<int64>* test = &int64_tests[i];
-    EXPECT_EQ(Int64ToString(test->num), test->sexpected);
-    EXPECT_EQ(Int64ToWString(test->num), UTF8ToWide(test->sexpected));
-    EXPECT_EQ(Uint64ToString(test->num), test->uexpected);
-    EXPECT_EQ(Uint64ToWString(test->num), UTF8ToWide(test->uexpected));
-  }
+  for (int i = 0; i < arraysize(cases); ++i)
+    EXPECT_EQ(cases[i].output, IntToString(cases[i].input));
 }
 
 TEST(StringUtilTest, Uint64ToString) {
@@ -667,249 +533,8 @@ TEST(StringUtilTest, Uint64ToString) {
     {kuint64max, "18446744073709551615"},
   };
 
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i)
+  for (int i = 0; i < arraysize(cases); ++i)
     EXPECT_EQ(cases[i].output, Uint64ToString(cases[i].input));
-}
-
-TEST(StringUtilTest, StringToInt) {
-  static const struct {
-    std::string input;
-    int output;
-    bool success;
-  } cases[] = {
-    {"0", 0, true},
-    {"42", 42, true},
-    {"-2147483648", INT_MIN, true},
-    {"2147483647", INT_MAX, true},
-    {"", 0, false},
-    {" 42", 42, false},
-    {"42 ", 42, false},
-    {"\t\n\v\f\r 42", 42, false},
-    {"blah42", 0, false},
-    {"42blah", 42, false},
-    {"blah42blah", 0, false},
-    {"-273.15", -273, false},
-    {"+98.6", 98, false},
-    {"--123", 0, false},
-    {"++123", 0, false},
-    {"-+123", 0, false},
-    {"+-123", 0, false},
-    {"-", 0, false},
-    {"-2147483649", INT_MIN, false},
-    {"-99999999999", INT_MIN, false},
-    {"2147483648", INT_MAX, false},
-    {"99999999999", INT_MAX, false},
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    EXPECT_EQ(cases[i].output, StringToInt(cases[i].input));
-    int output;
-    EXPECT_EQ(cases[i].success, StringToInt(cases[i].input, &output));
-    EXPECT_EQ(cases[i].output, output);
-
-    std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].output, StringToInt(wide_input));
-    EXPECT_EQ(cases[i].success, StringToInt(wide_input, &output));
-    EXPECT_EQ(cases[i].output, output);
-  }
-
-  // One additional test to verify that conversion of numbers in strings with
-  // embedded NUL characters.  The NUL and extra data after it should be
-  // interpreted as junk after the number.
-  const char input[] = "6\06";
-  std::string input_string(input, arraysize(input) - 1);
-  int output;
-  EXPECT_FALSE(StringToInt(input_string, &output));
-  EXPECT_EQ(6, output);
-
-  std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(StringToInt(wide_input, &output));
-  EXPECT_EQ(6, output);
-}
-
-TEST(StringUtilTest, StringToInt64) {
-  static const struct {
-    std::string input;
-    int64 output;
-    bool success;
-  } cases[] = {
-    {"0", 0, true},
-    {"42", 42, true},
-    {"-2147483648", INT_MIN, true},
-    {"2147483647", INT_MAX, true},
-    {"-2147483649", GG_INT64_C(-2147483649), true},
-    {"-99999999999", GG_INT64_C(-99999999999), true},
-    {"2147483648", GG_INT64_C(2147483648), true},
-    {"99999999999", GG_INT64_C(99999999999), true},
-    {"9223372036854775807", kint64max, true},
-    {"-9223372036854775808", kint64min, true},
-    {"09", 9, true},
-    {"-09", -9, true},
-    {"", 0, false},
-    {" 42", 42, false},
-    {"42 ", 42, false},
-    {"\t\n\v\f\r 42", 42, false},
-    {"blah42", 0, false},
-    {"42blah", 42, false},
-    {"blah42blah", 0, false},
-    {"-273.15", -273, false},
-    {"+98.6", 98, false},
-    {"--123", 0, false},
-    {"++123", 0, false},
-    {"-+123", 0, false},
-    {"+-123", 0, false},
-    {"-", 0, false},
-    {"-9223372036854775809", kint64min, false},
-    {"-99999999999999999999", kint64min, false},
-    {"9223372036854775808", kint64max, false},
-    {"99999999999999999999", kint64max, false},
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    EXPECT_EQ(cases[i].output, StringToInt64(cases[i].input));
-    int64 output;
-    EXPECT_EQ(cases[i].success, StringToInt64(cases[i].input, &output));
-    EXPECT_EQ(cases[i].output, output);
-
-    std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].output, StringToInt64(wide_input));
-    EXPECT_EQ(cases[i].success, StringToInt64(wide_input, &output));
-    EXPECT_EQ(cases[i].output, output);
-  }
-
-  // One additional test to verify that conversion of numbers in strings with
-  // embedded NUL characters.  The NUL and extra data after it should be
-  // interpreted as junk after the number.
-  const char input[] = "6\06";
-  std::string input_string(input, arraysize(input) - 1);
-  int64 output;
-  EXPECT_FALSE(StringToInt64(input_string, &output));
-  EXPECT_EQ(6, output);
-
-  std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(StringToInt64(wide_input, &output));
-  EXPECT_EQ(6, output);
-}
-
-TEST(StringUtilTest, HexStringToInt) {
-  static const struct {
-    std::string input;
-    int output;
-    bool success;
-  } cases[] = {
-    {"0", 0, true},
-    {"42", 66, true},
-    {"-42", -66, true},
-    {"+42", 66, true},
-    {"7fffffff", INT_MAX, true},
-    {"80000000", INT_MIN, true},
-    {"ffffffff", -1, true},
-    {"DeadBeef", 0xdeadbeef, true},
-    {"0x42", 66, true},
-    {"-0x42", -66, true},
-    {"+0x42", 66, true},
-    {"0x7fffffff", INT_MAX, true},
-    {"0x80000000", INT_MIN, true},
-    {"0xffffffff", -1, true},
-    {"0XDeadBeef", 0xdeadbeef, true},
-    {"0x0f", 15, true},
-    {"0f", 15, true},
-    {" 45", 0x45, false},
-    {"\t\n\v\f\r 0x45", 0x45, false},
-    {" 45", 0x45, false},
-    {"45 ", 0x45, false},
-    {"efgh", 0xef, false},
-    {"0xefgh", 0xef, false},
-    {"hgfe", 0, false},
-    {"100000000", -1, false},  // don't care about |output|, just |success|
-    {"-", 0, false},
-    {"", 0, false},
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    EXPECT_EQ(cases[i].output, HexStringToInt(cases[i].input));
-    int output;
-    EXPECT_EQ(cases[i].success, HexStringToInt(cases[i].input, &output));
-    EXPECT_EQ(cases[i].output, output);
-
-    std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].output, HexStringToInt(wide_input));
-    EXPECT_EQ(cases[i].success, HexStringToInt(wide_input, &output));
-    EXPECT_EQ(cases[i].output, output);
-  }
-  // One additional test to verify that conversion of numbers in strings with
-  // embedded NUL characters.  The NUL and extra data after it should be
-  // interpreted as junk after the number.
-  const char input[] = "0xc0ffee\09";
-  std::string input_string(input, arraysize(input) - 1);
-  int output;
-  EXPECT_FALSE(HexStringToInt(input_string, &output));
-  EXPECT_EQ(0xc0ffee, output);
-
-  std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(HexStringToInt(wide_input, &output));
-  EXPECT_EQ(0xc0ffee, output);
-}
-
-TEST(StringUtilTest, StringToDouble) {
-  static const struct {
-    std::string input;
-    double output;
-    bool success;
-  } cases[] = {
-    {"0", 0.0, true},
-    {"42", 42.0, true},
-    {"-42", -42.0, true},
-    {"123.45", 123.45, true},
-    {"-123.45", -123.45, true},
-    {"+123.45", 123.45, true},
-    {"2.99792458e8", 299792458.0, true},
-    {"149597870.691E+3", 149597870691.0, true},
-    {"6.", 6.0, true},
-    {"9e99999999999999999999", HUGE_VAL, false},
-    {"-9e99999999999999999999", -HUGE_VAL, false},
-    {"1e-2", 0.01, true},
-    {" 1e-2", 0.01, false},
-    {"1e-2 ", 0.01, false},
-    {"-1E-7", -0.0000001, true},
-    {"01e02", 100, true},
-    {"2.3e15", 2.3e15, true},
-    {"\t\n\v\f\r -123.45e2", -12345.0, false},
-    {"+123 e4", 123.0, false},
-    {"123e ", 123.0, false},
-    {"123e", 123.0, false},
-    {" 2.99", 2.99, false},
-    {"1e3.4", 1000.0, false},
-    {"nothing", 0.0, false},
-    {"-", 0.0, false},
-    {"+", 0.0, false},
-    {"", 0.0, false},
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    EXPECT_DOUBLE_EQ(cases[i].output, StringToDouble(cases[i].input));
-    double output;
-    EXPECT_EQ(cases[i].success, StringToDouble(cases[i].input, &output));
-    EXPECT_DOUBLE_EQ(cases[i].output, output);
-
-    std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_DOUBLE_EQ(cases[i].output, StringToDouble(wide_input));
-    EXPECT_EQ(cases[i].success, StringToDouble(wide_input, &output));
-    EXPECT_DOUBLE_EQ(cases[i].output, output);
-  }
-
-  // One additional test to verify that conversion of numbers in strings with
-  // embedded NUL characters.  The NUL and extra data after it should be
-  // interpreted as junk after the number.
-  const char input[] = "3.14\0159";
-  std::string input_string(input, arraysize(input) - 1);
-  double output;
-  EXPECT_FALSE(StringToDouble(input_string, &output));
-  EXPECT_DOUBLE_EQ(3.14, output);
-
-  std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(StringToDouble(wide_input, &output));
-  EXPECT_DOUBLE_EQ(3.14, output);
 }
 
 // This checks where we can use the assignment operator for a va_list. We need
@@ -920,8 +545,7 @@ static void VariableArgsFunc(const char* format, ...) {
   va_list org;
   va_start(org, format);
 
-  va_list dup;
-  base::va_copy(dup, org);
+  va_list dup = org;
   int i1 = va_arg(org, int);
   int j1 = va_arg(org, int);
   char* s1 = va_arg(org, char*);
@@ -953,7 +577,7 @@ TEST(StringUtilTest, StringPrintfEmptyFormat) {
 
 TEST(StringUtilTest, StringPrintfMisc) {
   EXPECT_EQ("123hello w", StringPrintf("%3d%2s %1c", 123, "hello", 'w'));
-  EXPECT_EQ(L"123hello w", StringPrintf(L"%3d%2ls %1lc", 123, L"hello", 'w'));
+  EXPECT_EQ(L"123hello w", StringPrintf(L"%3d%2s %1c", 123, L"hello", 'w'));
 }
 
 TEST(StringUtilTest, StringAppendfStringEmptyParam) {
@@ -972,7 +596,7 @@ TEST(StringUtilTest, StringAppendfEmptyString) {
   EXPECT_EQ("Hello", value);
 
   std::wstring valuew(L"Hello");
-  StringAppendF(&valuew, L"%ls", L"");
+  StringAppendF(&valuew, L"%s", L"");
   EXPECT_EQ(L"Hello", valuew);
 }
 
@@ -982,7 +606,7 @@ TEST(StringUtilTest, StringAppendfString) {
   EXPECT_EQ("Hello World", value);
 
   std::wstring valuew(L"Hello");
-  StringAppendF(&valuew, L" %ls", L"World");
+  StringAppendF(&valuew, L" %s", L"World");
   EXPECT_EQ(L"Hello World", valuew);
 }
 
@@ -1001,11 +625,11 @@ TEST(StringUtilTest, StringAppendfInt) {
 TEST(StringUtilTest, StringPrintfBounds) {
   const int src_len = 1026;
   char src[src_len];
-  for (size_t i = 0; i < arraysize(src); i++)
+  for (int i = 0; i < arraysize(src); i++)
     src[i] = 'A';
 
   wchar_t srcw[src_len];
-  for (size_t i = 0; i < arraysize(srcw); i++)
+  for (int i = 0; i < arraysize(srcw); i++)
     srcw[i] = 'A';
 
   for (int i = 1; i < 3; i++) {
@@ -1016,7 +640,7 @@ TEST(StringUtilTest, StringPrintfBounds) {
 
     srcw[src_len - i] = 0;
     std::wstring outw;
-    SStringPrintf(&outw, L"%ls", srcw);
+    SStringPrintf(&outw, L"%s", srcw);
     EXPECT_STREQ(srcw, outw.c_str());
   }
 }
@@ -1024,24 +648,20 @@ TEST(StringUtilTest, StringPrintfBounds) {
 // Test very large sprintfs that will cause the buffer to grow.
 TEST(StringUtilTest, Grow) {
   char src[1026];
-  for (size_t i = 0; i < arraysize(src); i++)
+  for (int i = 0; i < arraysize(src); i++)
     src[i] = 'A';
   src[1025] = 0;
 
-  const char* fmt = "%sB%sB%sB%sB%sB%sB%s";
+  char* fmt = "%sB%sB%sB%sB%sB%sB%s";
 
   std::string out;
   SStringPrintf(&out, fmt, src, src, src, src, src, src, src);
 
   char* ref = new char[320000];
-#if defined(OS_WIN)
   sprintf_s(ref, 320000, fmt, src, src, src, src, src, src, src);
-#elif defined(OS_POSIX)
-  snprintf(ref, 320000, fmt, src, src, src, src, src, src, src);
-#endif
 
   EXPECT_STREQ(ref, out.c_str());
-  delete[] ref;
+  delete ref;
 }
 
 // Test the boundary condition for the size of the string_util's
@@ -1062,8 +682,6 @@ TEST(StringUtilTest, GrowBoundary) {
   EXPECT_STREQ(src, out.c_str());
 }
 
-// TODO(evanm): what's the proper cross-platform test here?
-#if defined(OS_WIN)
 // sprintf in Visual Studio fails when given U+FFFF. This tests that the
 // failure case is gracefuly handled.
 TEST(StringUtilTest, Invalid) {
@@ -1072,60 +690,59 @@ TEST(StringUtilTest, Invalid) {
   invalid[1] = 0;
 
   std::wstring out;
-  SStringPrintf(&out, L"%ls", invalid);
+  SStringPrintf(&out, L"%s", invalid);
   EXPECT_STREQ(L"", out.c_str());
 }
-#endif
 
 // Test for SplitString
 TEST(StringUtilTest, SplitString) {
   std::vector<std::wstring> r;
 
   SplitString(L"a,b,c", L',', &r);
-  EXPECT_EQ(3U, r.size());
+  EXPECT_EQ(r.size(), 3);
   EXPECT_EQ(r[0], L"a");
   EXPECT_EQ(r[1], L"b");
   EXPECT_EQ(r[2], L"c");
   r.clear();
 
   SplitString(L"a, b, c", L',', &r);
-  EXPECT_EQ(3U, r.size());
+  EXPECT_EQ(r.size(), 3);
   EXPECT_EQ(r[0], L"a");
   EXPECT_EQ(r[1], L"b");
   EXPECT_EQ(r[2], L"c");
   r.clear();
 
   SplitString(L"a,,c", L',', &r);
-  EXPECT_EQ(3U, r.size());
+  EXPECT_EQ(r.size(), 3);
   EXPECT_EQ(r[0], L"a");
   EXPECT_EQ(r[1], L"");
   EXPECT_EQ(r[2], L"c");
   r.clear();
 
   SplitString(L"", L'*', &r);
-  EXPECT_EQ(1U, r.size());
+  EXPECT_EQ(r.size(), 1);
   EXPECT_EQ(r[0], L"");
   r.clear();
 
   SplitString(L"foo", L'*', &r);
-  EXPECT_EQ(1U, r.size());
+  EXPECT_EQ(r.size(), 1);
   EXPECT_EQ(r[0], L"foo");
   r.clear();
 
   SplitString(L"foo ,", L',', &r);
-  EXPECT_EQ(2U, r.size());
+  EXPECT_EQ(r.size(), 2);
   EXPECT_EQ(r[0], L"foo");
   EXPECT_EQ(r[1], L"");
   r.clear();
 
   SplitString(L",", L',', &r);
-  EXPECT_EQ(2U, r.size());
+  EXPECT_EQ(r.size(), 2);
   EXPECT_EQ(r[0], L"");
   EXPECT_EQ(r[1], L"");
   r.clear();
 
   SplitString(L"\t\ta\t", L'\t', &r);
-  EXPECT_EQ(4U, r.size());
+  EXPECT_EQ(r.size(), 4);
   EXPECT_EQ(r[0], L"");
   EXPECT_EQ(r[1], L"");
   EXPECT_EQ(r[2], L"a");
@@ -1133,7 +750,7 @@ TEST(StringUtilTest, SplitString) {
   r.clear();
 
   SplitStringDontTrim(L"\t\ta\t", L'\t', &r);
-  EXPECT_EQ(4U, r.size());
+  EXPECT_EQ(r.size(), 4);
   EXPECT_EQ(r[0], L"");
   EXPECT_EQ(r[1], L"");
   EXPECT_EQ(r[2], L"a");
@@ -1141,13 +758,13 @@ TEST(StringUtilTest, SplitString) {
   r.clear();
 
   SplitString(L"\ta\t\nb\tcc", L'\n', &r);
-  EXPECT_EQ(2U, r.size());
+  EXPECT_EQ(r.size(), 2);
   EXPECT_EQ(r[0], L"a");
   EXPECT_EQ(r[1], L"b\tcc");
   r.clear();
 
   SplitStringDontTrim(L"\ta\t\nb\tcc", L'\n', &r);
-  EXPECT_EQ(2U, r.size());
+  EXPECT_EQ(r.size(), 2);
   EXPECT_EQ(r[0], L"\ta\t");
   EXPECT_EQ(r[1], L"b\tcc");
   r.clear();
@@ -1166,23 +783,23 @@ TEST(StringUtilTest, GetStringFWithOffsets) {
 
   ReplaceStringPlaceholders(L"Hello, $1. Your number is $2.", L"1", L"2",
                             &offsets);
-  EXPECT_EQ(2U, offsets.size());
-  EXPECT_EQ(7U, offsets[0]);
-  EXPECT_EQ(25U, offsets[1]);
+  EXPECT_EQ(2, offsets.size());
+  EXPECT_EQ(7, offsets[0]);
+  EXPECT_EQ(25, offsets[1]);
   offsets.clear();
 
   ReplaceStringPlaceholders(L"Hello, $2. Your number is $1.", L"1", L"2",
                             &offsets);
-  EXPECT_EQ(2U, offsets.size());
-  EXPECT_EQ(25U, offsets[0]);
-  EXPECT_EQ(7U, offsets[1]);
+  EXPECT_EQ(2, offsets.size());
+  EXPECT_EQ(25, offsets[0]);
+  EXPECT_EQ(7, offsets[1]);
   offsets.clear();
 }
 
 TEST(StringUtilTest, SplitStringAlongWhitespace) {
   struct TestData {
     const std::wstring input;
-    const size_t expected_result_count;
+    const int expected_result_count;
     const std::wstring output1;
     const std::wstring output2;
   } data[] = {
@@ -1200,7 +817,7 @@ TEST(StringUtilTest, SplitStringAlongWhitespace) {
     { L"b\tat",   2, L"b",  L"at" },
     { L"b\t at",  2, L"b",  L"at" },
   };
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(data); ++i) {
+  for (size_t i = 0; i < arraysize(data); ++i) {
     std::vector<std::wstring> results;
     SplitStringAlongWhitespace(data[i].input, &results);
     ASSERT_EQ(data[i].expected_result_count, results.size());
@@ -1228,90 +845,4 @@ TEST(StringUtilTest, MatchPatternTest) {
   EXPECT_EQ(MatchPattern("Hello*", "Hello*"), true);  // narrow string
 }
 
-TEST(StringUtilTest, LcpyTest) {
-  // Test the normal case where we fit in our buffer.
-  {
-    char dst[10];
-    wchar_t wdst[10];
-    EXPECT_EQ(7U, base::strlcpy(dst, "abcdefg", arraysize(dst)));
-    EXPECT_EQ(0, memcmp(dst, "abcdefg", 8));
-    EXPECT_EQ(7U, base::wcslcpy(wdst, L"abcdefg", arraysize(wdst)));
-    EXPECT_EQ(0, memcmp(wdst, L"abcdefg", sizeof(wchar_t) * 8));
-  }
-
-  // Test dst_size == 0, nothing should be written to |dst| and we should
-  // have the equivalent of strlen(src).
-  {
-    char dst[2] = {1, 2};
-    wchar_t wdst[2] = {1, 2};
-    EXPECT_EQ(7U, base::strlcpy(dst, "abcdefg", 0));
-    EXPECT_EQ(1, dst[0]);
-    EXPECT_EQ(2, dst[1]);
-    EXPECT_EQ(7U, base::wcslcpy(wdst, L"abcdefg", 0));
-    EXPECT_EQ(1, wdst[0]);
-    EXPECT_EQ(2, wdst[1]);
-  }
-
-  // Test the case were we _just_ competely fit including the null.
-  {
-    char dst[8];
-    wchar_t wdst[8];
-    EXPECT_EQ(7U, base::strlcpy(dst, "abcdefg", arraysize(dst)));
-    EXPECT_EQ(0, memcmp(dst, "abcdefg", 8));
-    EXPECT_EQ(7U, base::wcslcpy(wdst, L"abcdefg", arraysize(wdst)));
-    EXPECT_EQ(0, memcmp(wdst, L"abcdefg", sizeof(wchar_t) * 8));
-  }
-
-  // Test the case were we we are one smaller, so we can't fit the null.
-  {
-    char dst[7];
-    wchar_t wdst[7];
-    EXPECT_EQ(7U, base::strlcpy(dst, "abcdefg", arraysize(dst)));
-    EXPECT_EQ(0, memcmp(dst, "abcdef", 7));
-    EXPECT_EQ(7U, base::wcslcpy(wdst, L"abcdefg", arraysize(wdst)));
-    EXPECT_EQ(0, memcmp(wdst, L"abcdef", sizeof(wchar_t) * 7));
-  }
-
-  // Test the case were we are just too small.
-  {
-    char dst[3];
-    wchar_t wdst[3];
-    EXPECT_EQ(7U, base::strlcpy(dst, "abcdefg", arraysize(dst)));
-    EXPECT_EQ(0, memcmp(dst, "ab", 3));
-    EXPECT_EQ(7U, base::wcslcpy(wdst, L"abcdefg", arraysize(wdst)));
-    EXPECT_EQ(0, memcmp(wdst, L"ab", sizeof(wchar_t) * 3));
-  }
-}
-
-TEST(StringUtilTest, WprintfFormatPortabilityTest) {
-  struct TestData {
-    const wchar_t* input;
-    bool portable;
-  } cases[] = {
-    { L"%ls", true },
-    { L"%s", false },
-    { L"%S", false },
-    { L"%lS", false },
-    { L"Hello, %s", false },
-    { L"%lc", true },
-    { L"%c", false },
-    { L"%C", false },
-    { L"%lC", false },
-    { L"%ls %s", false },
-    { L"%s %ls", false },
-    { L"%s %ls %s", false },
-    { L"%f", true },
-    { L"%f %F", false },
-    { L"%d %D", false },
-    { L"%o %O", false },
-    { L"%u %U", false },
-    { L"%f %d %o %u", true },
-    { L"%-8d (%02.1f%)", true },
-    { L"% 10s", false },
-    { L"% 10ls", true }
-  };
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    EXPECT_EQ(cases[i].portable, base::IsWprintfFormatPortable(cases[i].input));
-  }
-}
 

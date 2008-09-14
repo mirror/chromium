@@ -1,0 +1,3 @@
+property-store-miss.js:2: Uncaught TypeError: Cannot set property 'foo' of null
+function set_foo(obj) { obj.foo = 0; }
+                                ^

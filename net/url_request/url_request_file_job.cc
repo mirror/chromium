@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // For loading files, we make use of overlapped i/o to ensure that reading from
 // the filesystem (e.g., a network filesystem) does not block the calling
@@ -50,7 +75,7 @@ DWORD WINAPI NetworkFileThread(LPVOID param) {
 URLRequestJob* URLRequestFileJob::Factory(URLRequest* request,
                                           const std::string& scheme) {
   std::wstring file_path;
-  if (net::FileURLToFilePath(request->url(), &file_path)) {
+  if (net_util::FileURLToFilePath(request->url(), &file_path)) {
     if (file_path[file_path.size() - 1] == file_util::kPathSeparator) {
       // Only directories have trailing slashes.
       return new URLRequestFileDirJob(request, file_path);
@@ -140,7 +165,7 @@ void URLRequestFileJob::Start() {
 void URLRequestFileJob::Kill() {
   // If we are killed while waiting for an overlapped result...
   if (is_waiting_) {
-    MessageLoopForIO::current()->WatchObject(overlapped_.hEvent, NULL);
+    MessageLoop::current()->WatchObject(overlapped_.hEvent, NULL);
     is_waiting_ = false;
     Release();
   }
@@ -178,7 +203,7 @@ bool URLRequestFileJob::ReadRawData(char* dest, int dest_size,
   DWORD err = GetLastError();
   if (err == ERROR_IO_PENDING) {
     // OK, wait for the object to become signaled
-    MessageLoopForIO::current()->WatchObject(overlapped_.hEvent, this);
+    MessageLoop::current()->WatchObject(overlapped_.hEvent, this);
     is_waiting_ = true;
     SetStatus(URLRequestStatus(URLRequestStatus::IO_PENDING, 0));
     AddRef();
@@ -196,7 +221,7 @@ bool URLRequestFileJob::ReadRawData(char* dest, int dest_size,
 
 bool URLRequestFileJob::GetMimeType(std::string* mime_type) {
   DCHECK(request_);
-  return net::GetMimeTypeFromFile(file_path_, mime_type);
+  return mime_util::GetMimeTypeFromFile(file_path_, mime_type);
 }
 
 void URLRequestFileJob::CloseHandles() {
@@ -261,7 +286,7 @@ void URLRequestFileJob::OnObjectSignaled(HANDLE object) {
 
   // We'll resume watching this handle if need be when we do
   // another IO.
-  MessageLoopForIO::current()->WatchObject(object, NULL);
+  MessageLoop::current()->WatchObject(object, NULL);
   is_waiting_ = false;
 
   DWORD bytes_read = 0;
@@ -318,8 +343,7 @@ bool URLRequestFileJob::IsRedirectResponse(GURL* location,
   if (!resolved)
     return false;
 
-  *location = net::FilePathToFileURL(new_path);
+  *location = net_util::FilePathToFileURL(new_path);
   *http_status_code = 301;
   return true;
 }
-

@@ -1,16 +1,39 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/external_tab_container.h"
 
 #include "base/logging.h"
-#include "base/win_util.h"
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tab_contents_container_view.h"
-#include "chrome/browser/web_contents.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/hwnd_view_container.h"
@@ -24,7 +47,7 @@ static const wchar_t kWindowObjectKey[] = L"ChromeWindowObject";
 ExternalTabContainer::ExternalTabContainer(
     AutomationProvider* automation)
     : automation_(automation),
-      root_view_(this),
+      root_view_(this, true),
       tab_contents_(NULL),
       external_accel_table_(NULL),
       external_accel_entry_count_(0),
@@ -65,11 +88,6 @@ bool ExternalTabContainer::Init(Profile* profile) {
   }
   tab_contents_->SetupController(profile);
   tab_contents_->set_delegate(this);
-
-  WebContents* web_conents = tab_contents_->AsWebContents();
-  if (web_conents)
-    web_conents->render_view_host()->AllowExternalHostBindings();
-
   // Create a TabContentsContainerView to handle focus cycling using Tab and
   // Shift-Tab.
   // TODO(sanjeevr): We need to create a dummy FocusTraversable object to
@@ -217,14 +235,6 @@ void ExternalTabContainer::DidNavigate(NavigationType nav_type,
   }
 }
 
-void ExternalTabContainer::ForwardMessageToExternalHost(
-    const std::string& receiver, const std::string& message) {
-  if(automation_) {
-    automation_->Send(
-        new AutomationMsg_ForwardMessageToExternalHost(0, receiver, message));
-  }
-}
-
 void ExternalTabContainer::Observe(NotificationType type,
                                    const NotificationSource& source,
                                    const NotificationDetails& details) {
@@ -322,4 +332,3 @@ ExternalTabContainer* ExternalTabContainer::GetContainerForTab(
       GetProp(parent_window, kWindowObjectKey));
   return container;
 }
-

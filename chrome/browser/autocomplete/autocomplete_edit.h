@@ -1,33 +1,53 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_EDIT_H_
-#define CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_EDIT_H_
+#ifndef CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_EDIT_H__
+#define CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_EDIT_H__
 
 #include <atlbase.h>
 #include <atlapp.h>
-#include <atlcrack.h>
+#include <atlcomcli.h>
 #include <atlctrls.h>
-#include <atlmisc.h>
+#include <oleacc.h>
 #include <tom.h> // For ITextDocument, a COM interface to CRichEditCtrl
 
+#include "base/iat_patch.h"
 #include "base/scoped_ptr.h"
-#include "chrome/browser/autocomplete/autocomplete.h"
+#include "chrome/browser/autocomplete/autocomplete_popup.h"
+#include "chrome/browser/security_style.h"
 #include "chrome/browser/toolbar_model.h"
 #include "chrome/common/gfx/chrome_font.h"
-#include "chrome/common/page_transition_types.h"
 #include "chrome/views/menu.h"
-#include "webkit/glue/window_open_disposition.h"
 
-class AutocompletePopupModel;
 class CommandController;
 class Profile;
 class TabContents;
-
-namespace ChromeViews {
-class View;
-}
 
 // Provides the implementation of an edit control with a drop-down
 // autocomplete box. The box itself is implemented in autocomplete_popup.cc
@@ -181,7 +201,8 @@ class AutocompleteEdit
   // |alternate_nav_url|, if non-empty, contains the alternate navigation URL
   // for |url|.  See comments on AutocompleteResult::GetAlternateNavURL().
   //
-  // |selected_line| is passed to SendOpenNotification(); see comments there.
+  // |selected_line| is passed to AutocompletePopup::LogOpenedURL(); see
+  // comments there.
   //
   // If the URL was expanded from a keyword, |keyword| is that keyword.
   //
@@ -215,12 +236,14 @@ class AutocompleteEdit
   // in progress.  This logic should in the future live in
   // AutocompleteController but resides here for now.  This method is used by
   // AutomationProvider::AutocompleteEditIsQueryInProgress.
-  bool query_in_progress() const;
+  bool query_in_progress() const { return popup_->query_in_progress(); }
 
   // Returns the lastest autocomplete results.  This logic should in the future
   // live in AutocompleteController but resides here for now.  This method is
   // used by AutomationProvider::AutocompleteEditGetMatches.
-  const AutocompleteResult* latest_result() const;
+  const AutocompleteResult* latest_result() const {
+    return popup_->latest_result();
+  }
 
   // Exposes custom IAccessible implementation to the overall MSAA hierarchy.
   IAccessible* GetIAccessible();
@@ -250,8 +273,8 @@ class AutocompleteEdit
   // send us events that we should treat as if they were events on us.
   void HandleExternalMsg(UINT msg, UINT flags, const CPoint& screen_point);
 
-  // Called back by the AutocompletePopupModel when any relevant data changes.
-  // This rolls together several separate pieces of data into one call so we can
+  // Called back by the AutocompletePopup when any relevant data changes.  This
+  // rolls together several separate pieces of data into one call so we can
   // update all the UI efficiently:
   //   |text| is either the new temporary text (if |is_temporary_text| is true)
   //     from the user manually selecting a different match, or the inline
@@ -576,7 +599,7 @@ class AutocompleteEdit
   Controller* controller_;
 
   // The Popup itself.
-  scoped_ptr<AutocompletePopupModel> popup_;
+  scoped_ptr<AutocompletePopup> popup_;
 
   // When true, the location bar view is read only and also is has a slightly
   // different presentation (font size / color). This is used for popups.
@@ -784,8 +807,7 @@ class AutocompleteEdit
   // Instance of accessibility information and handling.
   mutable CComPtr<IAccessible> autocomplete_accessibility_;
 
-  DISALLOW_COPY_AND_ASSIGN(AutocompleteEdit);
+  DISALLOW_EVIL_CONSTRUCTORS(AutocompleteEdit);
 };
 
-#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_EDIT_H_
-
+#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_EDIT_H__

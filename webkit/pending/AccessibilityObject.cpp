@@ -70,7 +70,7 @@ using namespace EventNames;
 using namespace HTMLNames;
 
 AccessibilityObject::AccessibilityObject(RenderObject* renderer)
-    : RefCounted<AccessibilityObject>(1)
+    : RefCounted(1)
     , m_renderer(renderer)
     , m_id(0)
     , m_haveChildren(false)

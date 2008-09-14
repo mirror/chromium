@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/file_util.h"
 #include "base/path_service.h"
@@ -34,11 +59,10 @@ class TabStripModelTestTabContents : public TabContents {
 
   bool Navigate(const NavigationEntry& entry, bool reload) {
     NavigationEntry* pending_entry = new NavigationEntry(entry);
-    if (pending_entry->page_id() == -1) {
-      pending_entry->set_page_id(g_page_id_++);
+    if (pending_entry->GetPageID() == -1) {
+      pending_entry->SetPageID(g_page_id_++);
     }
-    NavigationController::LoadCommittedDetails details;
-    DidNavigateToEntry(pending_entry, &details);
+    DidNavigateToEntry(pending_entry);
 
     return true;
   }
@@ -97,9 +121,6 @@ class TabStripModelTest : public testing::Test {
     // Clean up test directory
     ASSERT_TRUE(file_util::Delete(test_dir_, true));
     ASSERT_FALSE(file_util::PathExists(test_dir_));
-
-    // Flush the message loop to make Purify happy.
-    message_loop_.RunAllPending();
   }
 
  protected:
@@ -112,12 +133,6 @@ class TabStripModelTest : public testing::Test {
   TabContents* CreateReplacementContents() {
     TabStripModelTestTabContents* contents =
         new TabStripModelTestTabContents(kReplacementContentsType);
-    contents->SetupController(profile_);
-    return contents;
-  }
-  TabContents* CreateNewTabTabContents() {
-    TabStripModelTestTabContents* contents =
-        new TabStripModelTestTabContents(TAB_CONTENTS_NEW_TAB_UI);
     contents->SetupController(profile_);
     return contents;
   }
@@ -143,7 +158,6 @@ class TabStripModelTest : public testing::Test {
  Profile* profile_;
 
  private:
-  MessageLoopForUI message_loop_;
   std::wstring test_dir_;
   std::wstring profile_path_;
   ProfileManager pm_;
@@ -1058,12 +1072,10 @@ TEST_F(TabStripModelTest, AppendContentsReselectionTest) {
   EXPECT_EQ(0, tabstrip.selected_index());
 
   // Now open a blank tab...
-  // (see also AddTabContents_NewTabAtEndOfStripInheritsGroup for an
-  // explanation of this behavior)
   tabstrip.AddBlankTab(true);
   EXPECT_EQ(2, tabstrip.selected_index());
   tabstrip.CloseTabContentsAt(2);
-  EXPECT_EQ(0, tabstrip.selected_index());
+  EXPECT_EQ(1, tabstrip.selected_index());
 
   // clean up after ourselves
   tabstrip.CloseAllTabs();
@@ -1116,70 +1128,3 @@ TEST_F(TabStripModelTest, ReselectionConsidersChildrenTest) {
   // Clean up.
   strip.CloseAllTabs();
 }
-
-TEST_F(TabStripModelTest, AddTabContents_NewTabAtEndOfStripInheritsGroup) {
-  TabStripDummyDelegate delegate(NULL);
-  TabStripModel strip(&delegate, profile_);
-
-  // Open page A
-  TabContents* page_a_contents = CreateTabContents();
-  strip.AddTabContents(page_a_contents, -1, PageTransition::START_PAGE, true);
-
-  // Open pages B, C and D in the background from links on page A...
-  TabContents* page_b_contents = CreateTabContents();
-  TabContents* page_c_contents = CreateTabContents();
-  TabContents* page_d_contents = CreateTabContents();
-  strip.AddTabContents(page_b_contents, -1, PageTransition::LINK, false);
-  strip.AddTabContents(page_c_contents, -1, PageTransition::LINK, false);
-  strip.AddTabContents(page_d_contents, -1, PageTransition::LINK, false);
-
-  // Switch to page B's tab.
-  strip.SelectTabContentsAt(1, true);
-
-  // Open a New Tab at the end of the strip (simulate Ctrl+T)
-  TabContents* new_tab_contents = CreateNewTabTabContents();
-  strip.AddTabContents(new_tab_contents, -1, PageTransition::TYPED, true);
-
-  EXPECT_EQ(4, strip.GetIndexOfTabContents(new_tab_contents));
-  EXPECT_EQ(4, strip.selected_index());
-
-  // Close the New Tab that was just opened. We should be returned to page B's
-  // Tab...
-  strip.CloseTabContentsAt(4);
-
-  EXPECT_EQ(1, strip.selected_index());
-
-  // Open a non-New Tab tab at the end of the strip, with a TYPED transition.
-  // This is like typing a URL in the address bar and pressing Alt+Enter. The
-  // behavior should be the same as above.
-  TabContents* page_e_contents = CreateTabContents();
-  strip.AddTabContents(page_e_contents, -1, PageTransition::TYPED, true);
-
-  EXPECT_EQ(4, strip.GetIndexOfTabContents(page_e_contents));
-  EXPECT_EQ(4, strip.selected_index());
-
-  // Close the Tab. Selection should shift back to page B's Tab.
-  strip.CloseTabContentsAt(4);
-
-  EXPECT_EQ(1, strip.selected_index());
-
-  // Open a non-New Tab tab at the end of the strip, with some other
-  // transition. This is like right clicking on a bookmark and choosing "Open
-  // in New Tab". No opener relationship should be preserved between this Tab
-  // and the one that was active when the gesture was performed.
-  TabContents* page_f_contents = CreateTabContents();
-  strip.AddTabContents(page_f_contents, -1, PageTransition::AUTO_BOOKMARK,
-                       true);
-
-  EXPECT_EQ(4, strip.GetIndexOfTabContents(page_f_contents));
-  EXPECT_EQ(4, strip.selected_index());
-
-  // Close the Tab. The next-adjacent should be selected.
-  strip.CloseTabContentsAt(4);
-
-  EXPECT_EQ(3, strip.selected_index());
-
-  // Clean up.
-  strip.CloseAllTabs();
-}
-

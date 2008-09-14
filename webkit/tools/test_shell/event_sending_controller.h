@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 /*
@@ -13,18 +38,15 @@
   WebKit/WebKitTools/DumpRenderTree/EventSendingController.m
 */
 
-#ifndef WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H_
-#define WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H_
+#ifndef WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H__
+#define WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H__
 
-#include "build/build_config.h"
 #include "base/gfx/point.h"
 #include "webkit/glue/cpp_bound_class.h"
 #include "webkit/glue/webinputevent.h"
 
-#if defined(OS_WIN)
 struct IDataObject;
 struct IDropSource;
-#endif
 class TestShell;
 class WebView;
 
@@ -37,10 +59,8 @@ class EventSendingController : public CppBoundClass {
   // Resets some static variable state.
   void Reset();
 
-#if defined(OS_WIN)
   // Simulate Windows' drag&drop system call.
   static void DoDragDrop(IDataObject* drag_data);
-#endif
 
   // JS callback methods.
   void mouseDown(const CppArgumentList& args, CppVariant* result);
@@ -71,10 +91,6 @@ class EventSendingController : public CppBoundClass {
   static void DoMouseUp(const WebMouseEvent& e);
   static void ReplaySavedEvents();
 
-  // Helper to extract the optional arg from mouseDown() and mouseUp()
-  static WebMouseEvent::Button GetButtonTypeFromSingleArg(
-      const CppArgumentList& args);
-
   // Returns true if the key_code passed in needs a shift key modifier to
   // be passed into the generated event.
   bool NeedsShiftModifer(wchar_t key_code);
@@ -89,5 +105,4 @@ class EventSendingController : public CppBoundClass {
   static WebMouseEvent::Button pressed_button_;
 };
 
-#endif  // WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H_
-
+#endif  // WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H__

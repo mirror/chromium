@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="libv8core"
+	InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\src&quot;;&quot;$(ProjectDir)\..\src\pcre\jscre&quot;;&quot;$(SolutionDir)\third_party\webkit\src\JavaScriptCore\os-win32&quot;;$(IntDir)\DerivedSources"
+		PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_USE_32BIT_TIME_T;PCRE_STATIC;ENABLE_LOGGING_AND_PROFILING"
+		Detect64BitPortabilityProblems="false"
+		DisableSpecificWarnings="4099;4355;4800"
+	/>
+</VisualStudioPropertySheet>

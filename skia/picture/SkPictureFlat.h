@@ -48,7 +48,7 @@ enum DrawVertexFlags {
 class SkRefCntPlayback {
 public:
     SkRefCntPlayback();
-    virtual ~SkRefCntPlayback();
+    ~SkRefCntPlayback();
     
     int count() const { return fCount; }
     

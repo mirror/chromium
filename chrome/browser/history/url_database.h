@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_HISTORY_URL_DATABASE_H__
 #define CHROME_BROWSER_HISTORY_URL_DATABASE_H__
@@ -222,8 +247,6 @@ class URLDatabase {
       int max_count,
       std::vector<KeywordSearchTermVisit>* matches);
 
-  // Migration -----------------------------------------------------------------
-
   // Do to a bug we were setting the favicon of about:blank. This forces
   // about:blank to have no icon or title. Returns true on success, false if
   // the favicon couldn't be updated.
@@ -239,11 +262,6 @@ class URLDatabase {
   // fields, they can add their 0-based index to this value to get the index of
   // fields following kURLRowFields.
   static const int kNumURLRowFields;
-
-  // Drops the starred_id column from urls, returning true on success. This does
-  // nothing (and returns true) if the urls doesn't contain the starred_id
-  // column.
-  bool DropStarredIDFromURLs();
 
   // Initialization functions. The indexing functions are separate from the
   // table creation functions so the in-memory database and the temporary tables
@@ -301,9 +319,8 @@ class URLDatabase {
 // string dynamically anyway, use the constant, it will save space.
 #define HISTORY_URL_ROW_FIELDS \
     " urls.id, urls.url, urls.title, urls.visit_count, urls.typed_count, " \
-    "urls.last_visit_time, urls.hidden, urls.favicon_id "
+    "urls.last_visit_time, urls.hidden, urls.favicon_id, urls.starred_id "
 
 }  // history
 
 #endif  // CHROME_BROWSER_HISTORY_URL_DATABASE_H__
-

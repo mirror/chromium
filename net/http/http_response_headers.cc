@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // The rules for header parsing were borrowed from Firefox:
 // http://lxr.mozilla.org/seamonkey/source/netwerk/protocol/http/src/nsHttpResponseHead.cpp
@@ -10,6 +35,7 @@
 #include "net/http/http_response_headers.h"
 
 #include <algorithm>
+#include <hash_map>
 
 #include "base/logging.h"
 #include "base/pickle.h"
@@ -239,7 +265,7 @@ void HttpResponseHeaders::GetNormalizedHeaders(string* output) const {
   // be a web app, we cannot be certain of the semantics of commas despite the
   // fact that RFC 2616 says that they should be regarded as value separators.
   //
-  typedef base::hash_map<string, size_t> HeadersMap;
+  typedef stdext::hash_map<string, size_t> HeadersMap;
   HeadersMap headers_map;
   HeadersMap::iterator iter = headers_map.end();
 
@@ -485,7 +511,7 @@ size_t HttpResponseHeaders::FindHeader(size_t from,
       continue;
     const string::const_iterator& name_begin = parsed_[i].name_begin;
     const string::const_iterator& name_end = parsed_[i].name_end;
-    if (static_cast<size_t>(name_end - name_begin) == search.size() &&
+    if ((name_end - name_begin) == search.size() &&
         std::equal(name_begin, name_end, search.begin(),
                    CaseInsensitiveCompare<char>()))
       return i;
@@ -615,7 +641,7 @@ bool HttpResponseHeaders::IsRedirect(string* location) const {
   // If we lack a Location header, then we can't treat this as a redirect.
   // We assume that the first non-empty location value is the target URL that
   // we want to follow.  TODO(darin): Is this consistent with other browsers?
-  size_t i = string::npos;
+  size_t i = -1;
   do {
     i = FindHeader(++i, "location");
     if (i == string::npos)
@@ -806,7 +832,7 @@ bool HttpResponseHeaders::GetMaxAgeValue(TimeDelta* result) const {
   string value;
 
   const char kMaxAgePrefix[] = "max-age=";
-  const size_t kMaxAgePrefixLen = arraysize(kMaxAgePrefix) - 1;
+  const int kMaxAgePrefixLen = arraysize(kMaxAgePrefix) - 1;
 
   void* iter = NULL;
   while (EnumerateHeader(&iter, name, &value)) {
@@ -857,7 +883,7 @@ bool HttpResponseHeaders::GetTimeValuedHeader(const std::string& name,
 
 bool HttpResponseHeaders::IsKeepAlive() const {
   const char kPrefix[] = "HTTP/1.0";
-  const size_t kPrefixLen = arraysize(kPrefix) - 1;
+  const int kPrefixLen = arraysize(kPrefix) - 1;
   if (raw_headers_.size() < kPrefixLen)  // Lacking a status line?
     return false;
 
@@ -883,8 +909,6 @@ bool HttpResponseHeaders::IsKeepAlive() const {
   return keep_alive;
 }
 
-// From RFC 2616:
-// Content-Length = "Content-Length" ":" 1*DIGIT
 int64 HttpResponseHeaders::GetContentLength() const {
   void* iter = NULL;
   string content_length_val;
@@ -894,16 +918,19 @@ int64 HttpResponseHeaders::GetContentLength() const {
   if (content_length_val.empty())
     return -1;
 
-  if (content_length_val[0] == '+')
+  // NOTE: We do not use StringToInt64 here since we want to know if
+  // parsing failed.
+
+  char* end;
+  int64 result = _strtoi64(content_length_val.c_str(), &end, 10);
+
+  if (result < 0)
     return -1;
 
-  int64 result;
-  bool ok = StringToInt64(content_length_val, &result);
-  if (!ok || result < 0) 
+  if (end != content_length_val.c_str() + content_length_val.length())
     return -1;
 
   return result;
 }
 
 }  // namespace net
-

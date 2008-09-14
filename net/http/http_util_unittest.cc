@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
 
@@ -124,285 +149,6 @@ TEST(HttpUtilTest, AssembleRawHeaders) {
 
     { "HTTP/1.0 200 OK\nFoo: 1\nBar: 2\n\n",
       "HTTP/1.0 200 OK|Foo: 1|Bar: 2||" },
-
-    // Valid line continuation (single SP).
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      " continuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1 continuation|"
-      "Bar: 2||"
-    },
-
-    // Valid line continuation (single HT).
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "\tcontinuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1 continuation|"
-      "Bar: 2||"
-    },
-
-    // Valid line continuation (multiple SP).
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "   continuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1 continuation|"
-      "Bar: 2||"
-    },
-
-    // Valid line continuation (multiple HT).
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "\t\t\tcontinuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1 continuation|"
-      "Bar: 2||"
-    },
-
-    // Valid line continuation (mixed HT, SP).
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      " \t \t continuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1 continuation|"
-      "Bar: 2||"
-    },
-
-    // Valid multi-line continuation
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      " continuation1\n"
-      "\tcontinuation2\n"
-      "  continuation3\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1 continuation1 continuation2 continuation3|"
-      "Bar: 2||"
-    },
-
-    // Continuation of quoted value.
-    // This is different from what Firefox does, since it
-    // will preserve the LWS.
-    {
-      "HTTP/1.0 200 OK\n"
-      "Etag: \"34534-d3\n"
-      "    134q\"\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Etag: \"34534-d3 134q\"|"
-      "Bar: 2||"
-    },
-
-    // Valid multi-line continuation, full LWS lines
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "         \n"
-      "\t\t\t\t\n"
-      "\t  continuation\n"
-      "Bar: 2\n\n",
-
-      // One SP per continued line = 3.
-      "HTTP/1.0 200 OK|"
-      "Foo: 1   continuation|"
-      "Bar: 2||"
-    },
-
-    // Valid multi-line continuation, all LWS
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "         \n"
-      "\t\t\t\t\n"
-      "\t  \n"
-      "Bar: 2\n\n",
-
-      // One SP per continued line = 3.
-      "HTTP/1.0 200 OK|"
-      "Foo: 1   |"
-      "Bar: 2||"
-    },
-
-    // Valid line continuation (No value bytes in first line).
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo:\n"
-      " value\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: value|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation (can't continue status line).
-    {
-      "HTTP/1.0 200 OK\n"
-      " Foo: 1\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      " Foo: 1|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation (can't continue status line).
-    {
-      "HTTP/1.0\n"
-      " 200 OK\n"
-      "Foo: 1\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0|"
-      " 200 OK|"
-      "Foo: 1|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation (can't continue status line).
-    {
-      "HTTP/1.0 404\n"
-      " Not Found\n"
-      "Foo: 1\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 404|"
-      " Not Found|"
-      "Foo: 1|"
-      "Bar: 2||"
-    },
-
-    // Unterminated status line.
-    {
-      "HTTP/1.0 200 OK",
-      
-      "HTTP/1.0 200 OK||"
-    },
-
-    // Single terminated, with headers
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "Bar: 2\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1|"
-      "Bar: 2||"
-    },
-
-    // Not terminated, with headers
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "Bar: 2",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation (VT)
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "\vInvalidContinuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1|"
-      "\vInvalidContinuation|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation (formfeed)
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "\fInvalidContinuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1|"
-      "\fInvalidContinuation|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation -- can't continue header names.
-    {
-      "HTTP/1.0 200 OK\n"
-      "Serv\n"
-      " er: Apache\n"
-      "\tInvalidContinuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Serv|"
-      " er: Apache|"
-      "\tInvalidContinuation|"
-      "Bar: 2||"
-    },
-
-    // Not a line continuation -- no value to continue.
-    {
-      "HTTP/1.0 200 OK\n"
-      "Foo: 1\n"
-      "garbage\n"
-      "  not-a-continuation\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "Foo: 1|"
-      "garbage|"
-      "  not-a-continuation|"
-      "Bar: 2||",
-    },
-
-    // Not a line continuation -- no valid name.
-    {
-      "HTTP/1.0 200 OK\n"
-      ": 1\n"
-      "  garbage\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      ": 1|"
-      "  garbage|"
-      "Bar: 2||",
-    },
-
-    // Not a line continuation -- no valid name (whitespace)
-    {
-      "HTTP/1.0 200 OK\n"
-      "   : 1\n"
-      "  garbage\n"
-      "Bar: 2\n\n",
-
-      "HTTP/1.0 200 OK|"
-      "   : 1|"
-      "  garbage|"
-      "Bar: 2||",
-    },
-
   };
   for (size_t i = 0; i < arraysize(tests); ++i) {
     int input_len = static_cast<int>(strlen(tests[i].input));
@@ -411,4 +157,3 @@ TEST(HttpUtilTest, AssembleRawHeaders) {
     EXPECT_TRUE(raw == tests[i].expected_result);
   }
 }
-

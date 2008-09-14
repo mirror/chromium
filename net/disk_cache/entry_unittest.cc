@@ -1,10 +1,33 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "base/platform_thread.h"
 #include "base/timer.h"
-#include "base/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/disk_cache_test_base.h"
 #include "net/disk_cache/disk_cache_test_util.h"
@@ -16,7 +39,7 @@ extern volatile int g_cache_tests_received;
 extern volatile bool g_cache_tests_error;
 
 // Tests that can run with different types of caches.
-class DiskCacheEntryTest : public DiskCacheTestWithCache {
+class DiskCacheEntryTest : public DiskCacheTestBase {
  protected:
   void InternalSyncIO();
   void InternalAsyncIO();
@@ -25,7 +48,7 @@ class DiskCacheEntryTest : public DiskCacheTestWithCache {
   void GetKey();
   void GrowData();
   void TruncateData();
-  void ReuseEntry(int size);
+  void ReuseEntry();
   void InvalidData();
   void DoomEntry();
   void DoomedEntry();
@@ -39,7 +62,7 @@ void DiskCacheEntryTest::InternalSyncIO() {
   char buffer1[10];
   CacheTestFillBuffer(buffer1, sizeof(buffer1), false);
   EXPECT_EQ(0, entry1->ReadData(0, 0, buffer1, sizeof(buffer1), NULL));
-  base::strlcpy(buffer1, "the data", sizeof(buffer1));
+  strcpy_s(buffer1, "the data");
   EXPECT_EQ(10, entry1->WriteData(0, 0, buffer1, sizeof(buffer1), NULL, false));
   memset(buffer1, 0, sizeof(buffer1));
   EXPECT_EQ(10, entry1->ReadData(0, 0, buffer1, sizeof(buffer1), NULL));
@@ -48,7 +71,7 @@ void DiskCacheEntryTest::InternalSyncIO() {
   char buffer2[5000];
   char buffer3[10000] = {0};
   CacheTestFillBuffer(buffer2, sizeof(buffer2), false);
-  base::strlcpy(buffer2, "The really big data goes here", sizeof(buffer2));
+  strcpy_s(buffer2, "The really big data goes here");
   EXPECT_EQ(5000, entry1->WriteData(1, 1500, buffer2, sizeof(buffer2), NULL,
                                     false));
   memset(buffer2, 0, sizeof(buffer2));
@@ -114,7 +137,7 @@ void DiskCacheEntryTest::InternalAsyncIO() {
   CacheTestFillBuffer(buffer3, sizeof(buffer3), false);
 
   EXPECT_EQ(0, entry1->ReadData(0, 0, buffer1, sizeof(buffer1), &callback1));
-  base::strlcpy(buffer1, "the data", sizeof(buffer1));
+  strcpy_s(buffer1, "the data");
   int expected = 0;
   int ret = entry1->WriteData(0, 0, buffer1, sizeof(buffer1), &callback2,
                               false);
@@ -132,7 +155,7 @@ void DiskCacheEntryTest::InternalAsyncIO() {
   EXPECT_TRUE(helper.WaitUntilCacheIoFinished(expected));
   EXPECT_STREQ("the data", buffer2);
 
-  base::strlcpy(buffer2, "The really big data goes here", sizeof(buffer2));
+  strcpy_s(buffer2, sizeof(buffer2), "The really big data goes here");
   ret = entry1->WriteData(1, 1500, buffer2, sizeof(buffer2), &callback4, false);
   EXPECT_TRUE(5000 == ret || net::ERR_IO_PENDING == ret);
   if (net::ERR_IO_PENDING == ret)
@@ -219,14 +242,14 @@ void DiskCacheEntryTest::ExternalSyncIO() {
   char buffer1[17000], buffer2[25000];
   CacheTestFillBuffer(buffer1, sizeof(buffer1), false);
   CacheTestFillBuffer(buffer2, sizeof(buffer2), false);
-  base::strlcpy(buffer1, "the data", sizeof(buffer1));
+  strcpy_s(buffer1, "the data");
   EXPECT_EQ(17000, entry1->WriteData(0, 0, buffer1, sizeof(buffer1), NULL,
                                      false));
   memset(buffer1, 0, sizeof(buffer1));
   EXPECT_EQ(17000, entry1->ReadData(0, 0, buffer1, sizeof(buffer1), NULL));
   EXPECT_STREQ("the data", buffer1);
 
-  base::strlcpy(buffer2, "The really big data goes here", sizeof(buffer2));
+  strcpy_s(buffer2, "The really big data goes here");
   EXPECT_EQ(25000, entry1->WriteData(1, 10000, buffer2, sizeof(buffer2), NULL,
                                      false));
   memset(buffer2, 0, sizeof(buffer2));
@@ -284,7 +307,7 @@ void DiskCacheEntryTest::ExternalAsyncIO() {
   CacheTestFillBuffer(buffer1, sizeof(buffer1), false);
   CacheTestFillBuffer(buffer2, sizeof(buffer2), false);
   CacheTestFillBuffer(buffer3, sizeof(buffer3), false);
-  base::strlcpy(buffer1, "the data", sizeof(buffer1));
+  strcpy_s(buffer1, "the data");
   int ret = entry1->WriteData(0, 0, buffer1, sizeof(buffer1), &callback1,
                               false);
   EXPECT_TRUE(17000 == ret || net::ERR_IO_PENDING == ret);
@@ -304,7 +327,7 @@ void DiskCacheEntryTest::ExternalAsyncIO() {
   EXPECT_TRUE(helper.WaitUntilCacheIoFinished(expected));
   EXPECT_STREQ("the data", buffer1);
 
-  base::strlcpy(buffer2, "The really big data goes here", sizeof(buffer2));
+  strcpy_s(buffer2, "The really big data goes here");
   ret = entry1->WriteData(1, 10000, buffer2, sizeof(buffer2), &callback3,
                           false);
   EXPECT_TRUE(25000 == ret || net::ERR_IO_PENDING == ret);
@@ -427,7 +450,7 @@ void DiskCacheEntryTest::GrowData() {
   CacheTestFillBuffer(buffer1, sizeof(buffer1), false);
   memset(buffer2, 0, sizeof(buffer2));
 
-  base::strlcpy(buffer1, "the data", sizeof(buffer1));
+  strcpy_s(buffer1, "the data");
   EXPECT_EQ(10, entry1->WriteData(0, 0, buffer1, 10, NULL, false));
   EXPECT_EQ(10, entry1->ReadData(0, 0, buffer2, 10, NULL));
   EXPECT_STREQ("the data", buffer2);
@@ -541,11 +564,6 @@ void DiskCacheEntryTest::TruncateData() {
 TEST_F(DiskCacheEntryTest, TruncateData) {
   InitCache();
   TruncateData();
-
-  // We generate asynchronous IO that is not really tracked until completion
-  // so we just wait here before running the next test.
-  MessageLoopHelper helper;
-  helper.WaitUntilCacheIoFinished(1);
 }
 
 TEST_F(DiskCacheEntryTest, MemoryOnlyTruncateData) {
@@ -554,9 +572,8 @@ TEST_F(DiskCacheEntryTest, MemoryOnlyTruncateData) {
   TruncateData();
 }
 
-// Write more than the total cache capacity but to a single entry. |size| is the
-// amount of bytes to write each time.
-void DiskCacheEntryTest::ReuseEntry(int size) {
+// Write more than the total cache capacity but to a single entry.
+void DiskCacheEntryTest::ReuseEntry() {
   std::string key1("the first key");
   disk_cache::Entry *entry;
   ASSERT_TRUE(cache_->CreateEntry(key1, &entry));
@@ -565,12 +582,12 @@ void DiskCacheEntryTest::ReuseEntry(int size) {
   std::string key2("the second key");
   ASSERT_TRUE(cache_->CreateEntry(key2, &entry));
 
-  scoped_array<char> buffer(new char[size]);
-  CacheTestFillBuffer(buffer.get(), size, false);
+  char buffer[20000];
+  CacheTestFillBuffer(buffer, sizeof(buffer), false);
 
   for (int i = 0; i < 15; i++) {
-    EXPECT_EQ(0, entry->WriteData(0, 0, buffer.get(), 0, NULL, true));
-    EXPECT_EQ(size, entry->WriteData(0, 0, buffer.get(), size, NULL, false));
+    EXPECT_EQ(0, entry->WriteData(0, 0, buffer, 0, NULL, true));
+    EXPECT_EQ(20000, entry->WriteData(0, 0, buffer, 20000, NULL, false));
     entry->Close();
     ASSERT_TRUE(cache_->OpenEntry(key2, &entry));
   }
@@ -580,34 +597,19 @@ void DiskCacheEntryTest::ReuseEntry(int size) {
   entry->Close();
 }
 
-TEST_F(DiskCacheEntryTest, ReuseExternalEntry) {
+TEST_F(DiskCacheEntryTest, ReuseEntry) {
   SetDirectMode();
   SetMaxSize(200 * 1024);
   InitCache();
-  ReuseEntry(20 * 1024);
+  ReuseEntry();
 }
 
-TEST_F(DiskCacheEntryTest, MemoryOnlyReuseExternalEntry) {
+TEST_F(DiskCacheEntryTest, MemoryOnlyReuseEntry) {
   SetDirectMode();
   SetMemoryOnlyMode();
   SetMaxSize(200 * 1024);
   InitCache();
-  ReuseEntry(20 * 1024);
-}
-
-TEST_F(DiskCacheEntryTest, ReuseInternalEntry) {
-  SetDirectMode();
-  SetMaxSize(100 * 1024);
-  InitCache();
-  ReuseEntry(10 * 1024);
-}
-
-TEST_F(DiskCacheEntryTest, MemoryOnlyReuseInternalEntry) {
-  SetDirectMode();
-  SetMemoryOnlyMode();
-  SetMaxSize(100 * 1024);
-  InitCache();
-  ReuseEntry(10 * 1024);
+  ReuseEntry();
 }
 
 // Reading somewhere that was not written should return zeros.
@@ -724,7 +726,7 @@ void DiskCacheEntryTest::DoomedEntry() {
 
   EXPECT_EQ(0, cache_->GetEntryCount());
   Time initial = Time::Now();
-  PlatformThread::Sleep(20);
+  Sleep(20);
 
   char buffer1[2000];
   char buffer2[2000];
@@ -750,4 +752,3 @@ TEST_F(DiskCacheEntryTest, MemoryOnlyDoomedEntry) {
   InitCache();
   DoomEntry();
 }
-

@@ -1,30 +1,55 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This file/namespace contains utility functions for enumerating, ending and
 // computing statistics of processes.
 
-#ifndef BASE_PROCESS_UTIL_H_
-#define BASE_PROCESS_UTIL_H_
-
-#include "base/basictypes.h"
-
-#ifdef OS_WIN
-#include <windows.h>
-#include <tlhelp32.h>
-#endif
+#ifndef BASE_PROCESS_UTIL_H__
+#define BASE_PROCESS_UTIL_H__
 
 #include <string>
+#ifdef WIN32
+#include <windows.h>
+#include <tlhelp32.h>
+#endif // WIN32
 
+#include "base/basictypes.h"
 #include "base/process.h"
 
-#if defined(OS_WIN)
+// ProcessHandle is a platform specific type which represents the underlying OS
+// handle to a process.
+#ifdef WIN32
 typedef PROCESSENTRY32 ProcessEntry;
 typedef IO_COUNTERS IoCounters;
-#elif defined(OS_POSIX)
+#else
 typedef int ProcessEntry;
-typedef int IoCounters;  //TODO(awalker): replace with struct when available
+typedef int IoCounters; //TODO(awalker): replace with struct when available
 #endif
 
 namespace process_util {
@@ -60,7 +85,6 @@ class ProcessFilter {
   // Returns true to indicate set-inclusion and false otherwise.  This method
   // should not have side-effects and should be idempotent.
   virtual bool Includes(uint32 pid, uint32 parent_pid) const = 0;
-  virtual ~ProcessFilter() { }
 };
 
 // Returns the number of processes on the machine that are running from the
@@ -137,9 +161,9 @@ class NamedProcessIterator {
   void InitProcessEntry(ProcessEntry* entry);
 
   std::wstring executable_name_;
-#ifdef OS_WIN
+#ifdef WIN32
   HANDLE snapshot_;
-#endif
+#endif WIN32
   bool started_iteration_;
   ProcessEntry entry_;
   const ProcessFilter* filter_;
@@ -255,10 +279,7 @@ class ProcessMetrics {
 // Note: Returns true on Windows 2000 without doing anything.
 bool EnableLowFragmentationHeap();
 
-// If supported on the platform, and the user has sufficent rights, increase
-// the current process's scheduling priority to a high priority.
-void RaiseProcessToHighPriority();
-
 }  // namespace process_util
 
-#endif  // BASE_PROCESS_UTIL_H_
+
+#endif  // BASE_PROCESS_UTIL_H__

@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef BASE_TRACKED_OBJECTS_H_
 #define BASE_TRACKED_OBJECTS_H_
@@ -132,7 +157,7 @@ class Snapshot {
   int64 square_duration() const { return death_data_.square_duration(); }
   int AverageMsDuration() const { return death_data_.AverageMsDuration(); }
 
-  void Write(std::string* output) const;
+  void Snapshot::Write(std::string* output) const;
 
   void Add(const Snapshot& other);
 
@@ -148,7 +173,7 @@ class Snapshot {
 
 class DataCollector {
  public:
-  typedef std::vector<Snapshot> Collection;
+  typedef std::vector<const Snapshot> Collection;
 
   // Construct with a list of how many threads should contribute.  This helps us
   // determine (in the async case) when we are done with all contributions.
@@ -362,7 +387,6 @@ class ThreadData {
   static bool StartTracking(bool status);
   static bool IsActive();
 
-#ifdef OS_WIN
   // WARNING: ONLY call this function when all MessageLoops are still intact for
   // all registered threads.  IF you call it later, you will crash.
   // Note: You don't need to call it at all, and you can wait till you are
@@ -374,7 +398,6 @@ class ThreadData {
   // it Posts a Task to all registered threads to be sure they are aware that no
   // more accumulation can take place.
   static void ShutdownMultiThreadTracking();
-#endif
 
   // WARNING: ONLY call this function when you are running single threaded
   // (again) and all message loops and threads have terminated.  Until that
@@ -409,7 +432,6 @@ class ThreadData {
     Lock lock_;  // protect access to remaining_count_.
   };
 
-#ifdef OS_WIN
   // A Task class that runs a static method supplied, and checks to see if this
   // is the last tasks instance (on last thread) that will run the method.
   // IF this is the last run, then the supplied event is signalled.
@@ -430,7 +452,6 @@ class ThreadData {
 
     DISALLOW_EVIL_CONSTRUCTORS(RunTheStatic);
   };
-#endif
 
   // Each registered thread is called to set status_ to SHUTDOWN.
   // This is done redundantly on every registered thread because it is not
@@ -486,4 +507,3 @@ class ThreadData {
 }  // namespace tracked_objects
 
 #endif  // BASE_TRACKED_OBJECTS_H_
-

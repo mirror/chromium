@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/vista_frame.h"
 
@@ -17,16 +42,13 @@
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
-#include "chrome/browser/frame_util.h"
 #include "chrome/browser/suspend_controller.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tab_contents_container_view.h"
 #include "chrome/browser/tabs/tab_strip.h"
 #include "chrome/browser/window_clipping_info.h"
-#include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/download_shelf_view.h"
-#include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
@@ -40,7 +62,6 @@
 #include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/hwnd_notification_source.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 
 // By how much the toolbar overlaps with the tab strip.
@@ -54,6 +75,10 @@ static const int kResizeCornerSize = 12;
 static const int kResizeBorder = 5;
 static const int kTitlebarHeight = 14;
 static const int kTabShadowSize = 2;
+
+// Status Bubble metrics.
+static const int kStatusBubbleHeight = 20;
+static const int kStatusBubbleOffset = 2;
 
 // The line drawn to separate tab end contents.
 static const int kSeparationLineHeight = 1;
@@ -116,14 +141,15 @@ VistaFrame* VistaFrame::CreateFrame(const gfx::Rect& bounds,
 
 VistaFrame::VistaFrame(Browser* browser)
     : browser_(browser),
-      root_view_(this),
+      root_view_(this, true),
       tabstrip_(NULL),
-      active_bookmark_bar_(NULL),
+      toolbar_(NULL),
       tab_contents_container_(NULL),
       custom_window_enabled_(false),
       saved_window_placement_(false),
       on_mouse_leave_armed_(false),
       in_drag_session_(false),
+      browser_paint_pending_(false),
       shelf_view_(NULL),
       bookmark_bar_view_(NULL),
       info_bar_view_(NULL),
@@ -131,8 +157,7 @@ VistaFrame::VistaFrame(Browser* browser)
       off_the_record_image_(NULL),
       distributor_logo_(NULL),
       ignore_ncactivate_(false),
-      should_save_window_placement_(browser->GetType() != BrowserType::BROWSER),
-      browser_view_(NULL) {
+      should_save_window_placement_(browser->GetType() != BrowserType::BROWSER) {
   InitializeIfNeeded();
 }
 
@@ -225,30 +250,28 @@ void VistaFrame::Layout() {
     // If we are maxmized, the tab strip will be in line with the window
     // controls, so we need to make sure they don't overlap.
     int zoomed_offset = 0;
-    if (distributor_logo_) {
-      if(IsZoomed()) {
-        zoomed_offset = std::max(min_offset, kWindowControlsMinOffset);
+    if(IsZoomed()) {
+      zoomed_offset = std::max(min_offset, kWindowControlsMinOffset);
 
-        // Hide the distributor logo if we're zoomed.
-        distributor_logo_->SetVisible(false);
-      } else {
-        CSize distributor_logo_size;
-        distributor_logo_->GetPreferredSize(&distributor_logo_size);
+      // Hide the distributor logo if we're zoomed.
+      distributor_logo_->SetVisible(false);
+    } else {
+      CSize distributor_logo_size;
+      distributor_logo_->GetPreferredSize(&distributor_logo_size);
 
-        int logo_x;
-        // Because of Bug 1128173, our Window controls aren't actually flipped 
-        // on Vista, yet all our math and layout presumes that they are.
-        if (frame_view_->UILayoutIsRightToLeft())
-          logo_x = width - distributor_logo_size.cx;
-        else
-          logo_x = width - min_offset - distributor_logo_size.cx;
+      int logo_x;
+      // Because of Bug 1128173, our Window controls aren't actually flipped 
+      // on Vista, yet all our math and layout presumes that they are.
+      if (frame_view_->UILayoutIsRightToLeft())
+        logo_x = width - distributor_logo_size.cx;
+      else
+        logo_x = width - min_offset - distributor_logo_size.cx;
 
-        distributor_logo_->SetVisible(true);
-        distributor_logo_->SetBounds(logo_x,
-            kDistributorLogoVerticalOffset,
-            distributor_logo_size.cx,
-            distributor_logo_size.cy);
-      }
+      distributor_logo_->SetVisible(true);
+      distributor_logo_->SetBounds(logo_x,
+          kDistributorLogoVerticalOffset,
+          distributor_logo_size.cx,
+          distributor_logo_size.cy);
     }
 
     gfx::Rect tabstrip_bounds(tabstrip_x,
@@ -278,18 +301,18 @@ void VistaFrame::Layout() {
 
   int toolbar_bottom;
   if (IsToolBarVisible()) {
-    browser_view_->SetVisible(true);
-    browser_view_->SetBounds(g_bitmaps[CT_LEFT_SIDE]->width(),
-                             tabstrip_->GetY() + tabstrip_->GetHeight() -
-                             kToolbarOverlapVertOffset,
-                             width - g_bitmaps[CT_LEFT_SIDE]->width() -
-                             g_bitmaps[CT_RIGHT_SIDE]->width(),
-                             g_bitmaps[CT_TOP_CENTER]->height());
-    browser_view_->Layout();
-    toolbar_bottom = browser_view_->GetY() + browser_view_->GetHeight();
+    toolbar_->SetVisible(true);
+    toolbar_->SetBounds(g_bitmaps[CT_LEFT_SIDE]->width(),
+                        tabstrip_->GetY() + tabstrip_->GetHeight() -
+                        kToolbarOverlapVertOffset,
+                        width - g_bitmaps[CT_LEFT_SIDE]->width() -
+                        g_bitmaps[CT_RIGHT_SIDE]->width(),
+                        g_bitmaps[CT_TOP_CENTER]->height());
+    toolbar_->Layout();
+    toolbar_bottom = toolbar_->GetY() + toolbar_->GetHeight();
   } else {
-    browser_view_->SetBounds(0, 0, 0, 0);
-    browser_view_->SetVisible(false);
+    toolbar_->SetBounds(0, 0, 0, 0);
+    toolbar_->SetVisible(false);
     toolbar_bottom = tabstrip_->GetY() + tabstrip_->GetHeight();
   }
   int browser_x, browser_y;
@@ -322,7 +345,7 @@ void VistaFrame::Layout() {
   CSize bookmark_bar_size;
   CSize info_bar_size;
 
-  if (bookmark_bar_view_.get())
+  if (bookmark_bar_view_)
     bookmark_bar_view_->GetPreferredSize(&bookmark_bar_size);
 
   if (info_bar_view_)
@@ -331,9 +354,9 @@ void VistaFrame::Layout() {
   // If we're showing a bookmarks bar in the new tab page style and we
   // have an infobar showing, we need to flip them.
   if (info_bar_view_ &&
-      bookmark_bar_view_.get() &&
-      bookmark_bar_view_->IsNewTabPage() &&
-      !bookmark_bar_view_->IsAlwaysShown()) {
+      bookmark_bar_view_ &&
+      static_cast<BookmarkBarView*>(bookmark_bar_view_)->IsNewTabPage() &&
+      !static_cast<BookmarkBarView*>(bookmark_bar_view_)->IsAlwaysShown()) {
     info_bar_view_->SetBounds(browser_x,
                               browser_y,
                               browser_w,
@@ -349,7 +372,7 @@ void VistaFrame::Layout() {
     browser_h -= bookmark_bar_size.cy - kSeparationLineHeight;
     browser_y += bookmark_bar_size.cy;
   } else {
-    if (bookmark_bar_view_.get()) {
+    if (bookmark_bar_view_) {
       // We want our bookmarks bar to be responsible for drawing its own
       // separator, so we let it overlap ours.
       browser_y -= kSeparationLineHeight;
@@ -382,19 +405,23 @@ void VistaFrame::Layout() {
                                      browser_w,
                                      browser_h);
 
-  browser_view_->LayoutStatusBubble(browser_y + browser_h);
+  status_bubble_->SetBounds(browser_x - kStatusBubbleOffset,
+                            browser_y + browser_h - kStatusBubbleHeight +
+                            kStatusBubbleOffset,
+                            width / 3,
+                            kStatusBubbleHeight);
 
   frame_view_->SchedulePaint();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// BrowserWindow implementation
+// ChromeFrame implementation
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 void VistaFrame::Init() {
-  FrameUtil::RegisterBrowserWindow(this);
+  ChromeFrame::RegisterChromeFrame(this);
 
   // Link the HWND with its root view so we can retrieve the RootView from the
   // HWND for automation purposes.
@@ -405,8 +432,9 @@ void VistaFrame::Init() {
   root_view_.SetAccessibleName(l10n_util::GetString(IDS_PRODUCT_NAME));
   frame_view_->SetAccessibleName(l10n_util::GetString(IDS_PRODUCT_NAME));
 
-  browser_view_ = new BrowserView(this, browser_, NULL, NULL);
-  frame_view_->AddChildView(browser_view_);
+  toolbar_ = browser_->GetToolbar();
+  toolbar_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TOOLBAR));
+  frame_view_->AddChildView(toolbar_);
 
   tabstrip_ = CreateTabStrip(browser_);
   tabstrip_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TABSTRIP));
@@ -426,16 +454,15 @@ void VistaFrame::Init() {
     frame_view_->AddChildView(off_the_record_image_);
   }
 
-  SkBitmap* image = rb.GetBitmapNamed(IDR_DISTRIBUTOR_LOGO);
-  if (!image->isNull()) {
-    distributor_logo_ = new ChromeViews::ImageView();
-    frame_view_->AddViewToDropList(distributor_logo_);
-    distributor_logo_->SetImage(image);
-    frame_view_->AddChildView(distributor_logo_);
-  }
+  distributor_logo_ = new ChromeViews::ImageView();
+  frame_view_->AddViewToDropList(distributor_logo_);
+  distributor_logo_->SetImage(rb.GetBitmapNamed(IDR_DISTRIBUTOR_LOGO));
+  frame_view_->AddChildView(distributor_logo_);
 
   tab_contents_container_ = new TabContentsContainerView();
   frame_view_->AddChildView(tab_contents_container_);
+
+  status_bubble_.reset(new StatusBubble(this));
 
   // Add the task manager item to the system menu before the last entry.
   task_manager_label_text_ = l10n_util::GetString(IDS_TASKMANAGER);
@@ -465,7 +492,7 @@ void VistaFrame::Init() {
   // Register accelerators.
   HACCEL accelerators_table = AtlLoadAccelerators(IDR_MAINFRAME);
   DCHECK(accelerators_table);
-  FrameUtil::LoadAccelerators(this, accelerators_table, this);
+  ChromeFrame::LoadAccelerators(this, accelerators_table, this);
 
   ShelfVisibilityChanged();
   root_view_.OnViewContainerCreated();
@@ -482,12 +509,16 @@ void VistaFrame::Show(int command, bool adjust_to_fit) {
   ::ShowWindow(*this, command);
 }
 
+void VistaFrame::BrowserDidPaint(HRGN region) {
+  browser_paint_pending_ = false;
+}
+
 // This is called when we receive WM_ENDSESSION. In Vista the we have 5 seconds
 // or will be forcefully terminated if we get stuck servicing this message and
 // not pump the final messages.
 void VistaFrame::OnEndSession(BOOL ending, UINT logoff) {
   tabstrip_->AbortActiveDragSession();
-  FrameUtil::EndSession();
+  EndSession();
 }
 
 // Note: called directly by the handler macros to handle WM_CLOSE messages.
@@ -603,63 +634,18 @@ gfx::Rect VistaFrame::GetBoundsForContentBounds(const gfx::Rect content_rect) {
   return r;
 }
 
+void VistaFrame::SetBounds(const gfx::Rect& bounds) {
+  SetWindowPos(NULL, bounds.x(), bounds.y(), bounds.width(), bounds.height(),
+               SWP_NOZORDER | SWP_NOACTIVATE);
+}
+
+void VistaFrame::DetachFromBrowser() {
+  browser_->tabstrip_model()->RemoveObserver(tabstrip_);
+  browser_ = NULL;
+}
+
 void VistaFrame::InfoBubbleShowing() {
   ignore_ncactivate_ = true;
-}
-
-ToolbarStarToggle* VistaFrame::GetStarButton() const {
-  return NULL;
-}
-
-LocationBarView* VistaFrame::GetLocationBarView() const {
-  return NULL;
-}
-
-GoButton* VistaFrame::GetGoButton() const {
-  return NULL;
-}
-
-BookmarkBarView* VistaFrame::GetBookmarkBarView() {
-  TabContents* current_tab = browser_->GetSelectedTabContents();
-  if (!current_tab || !current_tab->profile())
-    return NULL;
-
-  if (!bookmark_bar_view_.get()) {
-    bookmark_bar_view_.reset(new BookmarkBarView(current_tab->profile(),
-                                                 browser_));
-    bookmark_bar_view_->SetParentOwned(false);
-  } else {
-    bookmark_bar_view_->SetProfile(current_tab->profile());
-  }
-  bookmark_bar_view_->SetPageNavigator(current_tab);
-  return bookmark_bar_view_.get();
-}
-
-BrowserView* VistaFrame::GetBrowserView() const {
-  return browser_view_;
-}
-
-void VistaFrame::UpdateToolbar(TabContents* contents,
-                               bool should_restore_state) {
-}
-
-void VistaFrame::ProfileChanged(Profile* profile) {
-}
-
-void VistaFrame::FocusToolbar() {
-}
-
-bool VistaFrame::IsBookmarkBarVisible() const {
-  if (!bookmark_bar_view_.get())
-    return false;
-
-  if (bookmark_bar_view_->IsNewTabPage() || bookmark_bar_view_->IsAnimating())
-    return true;
-
-  CSize sz;
-  bookmark_bar_view_->GetPreferredSize(&sz);
-  // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -706,6 +692,7 @@ BOOL VistaFrame::OnPowerBroadcast(DWORD power_event, DWORD data) {
 void VistaFrame::OnThemeChanged() {
   // Notify NativeTheme.
   gfx::NativeTheme::instance()->CloseHandles();
+  ChromeFrame::NotifyTabsOfThemeChange(browser_);
 }
 
 void VistaFrame::OnMouseButtonDown(UINT flags, const CPoint& pt) {
@@ -1049,7 +1036,7 @@ LRESULT VistaFrame::OnNCHitTest(const CPoint& pt) {
 }
 
 void VistaFrame::OnActivate(UINT n_state, BOOL is_minimized, HWND other) {
-  if (FrameUtil::ActivateAppModalDialog(browser_))
+  if (ActivateAppModalDialog(browser_))
     return;
 
   // Enable our custom window if we haven't already (this works in combination
@@ -1078,8 +1065,7 @@ void VistaFrame::OnActivate(UINT n_state, BOOL is_minimized, HWND other) {
 
 int VistaFrame::OnMouseActivate(CWindow wndTopLevel, UINT nHitTest,
                                 UINT message) {
-  return FrameUtil::ActivateAppModalDialog(browser_) ? MA_NOACTIVATEANDEAT
-                                                     : MA_ACTIVATE;
+  return ActivateAppModalDialog(browser_) ? MA_NOACTIVATEANDEAT : MA_ACTIVATE;
 }
 
 void VistaFrame::OnPaint(HDC dc) {
@@ -1394,7 +1380,7 @@ ChromeViews::TooltipManager* VistaFrame::GetTooltipManager() {
 }
 
 StatusBubble* VistaFrame::GetStatusBubble() {
-  return NULL;
+  return status_bubble_.get();
 }
 
 void VistaFrame::InitAfterHWNDCreated() {
@@ -1415,7 +1401,7 @@ void VistaFrame::ResetDWMFrame() {
                        g_bitmaps[CT_TOP_RIGHT_CORNER]->width(),
                        kDwmBorderSize +
                        IsToolBarVisible() ?
-                         browser_view_->GetY() + kToolbarOverlapVertOffset :
+                         toolbar_->GetY() + kToolbarOverlapVertOffset :
                          tabstrip_->GetHeight(),
                        kDwmBorderSize +
                        g_bitmaps[CT_BOTTOM_CENTER]->height()};
@@ -1589,18 +1575,6 @@ void VistaFrame::DestroyBrowser() {
   // the tabstrip from the model's observer list because the model was
   // destroyed with browser_.
   if (browser_) {
-    if (bookmark_bar_view_.get() && bookmark_bar_view_->GetParent()) {
-      // The bookmark bar should not be parented by the time we get here.
-      // If you hit this NOTREACHED file a bug with the trace.
-      NOTREACHED();
-      bookmark_bar_view_->GetParent()->RemoveChildView(bookmark_bar_view_.get());
-    }
-
-    // Explicitly delete the BookmarkBarView now. That way we don't have to
-    // worry about the BookmarkBarView potentially outliving the Browser &
-    // Profile.
-    bookmark_bar_view_.reset(NULL);
-
     browser_->tabstrip_model()->RemoveObserver(tabstrip_);
     delete browser_;
     browser_ = NULL;
@@ -1622,10 +1596,10 @@ void VistaFrame::ShelfVisibilityChangedImpl(TabContents* current_tab) {
   changed |= UpdateChildViewAndLayout(new_info_bar, &info_bar_view_);
 
   ChromeViews::View* new_bookmark_bar_view = NULL;
-  if (SupportsBookmarkBar())
-    new_bookmark_bar_view = GetBookmarkBarView();
+  if (SupportsBookmarkBar() && current_tab)
+    new_bookmark_bar_view = browser_->GetBookmarkBarView();
   changed |= UpdateChildViewAndLayout(new_bookmark_bar_view,
-                                      &active_bookmark_bar_);
+                                      &bookmark_bar_view_);
 
   // Only do a layout if the current contents is non-null. We assume that if the
   // contents is NULL, we're either being destroyed, or ShowTabContents is going

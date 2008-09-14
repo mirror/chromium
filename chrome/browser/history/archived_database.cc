@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/string_util.h"
 #include "chrome/browser/history/archived_database.h"
@@ -9,7 +34,7 @@ namespace history {
 
 namespace {
 
-static const int kCurrentVersionNumber = 2;
+static const int kDatabaseVersion = 1;
 
 }  // namespace
 
@@ -48,17 +73,21 @@ bool ArchivedDatabase::Init(const std::wstring& file_name) {
   BeginTransaction();
 
   // Version check.
-  if (!meta_table_.Init(std::string(), kCurrentVersionNumber, db_))
+  if (!meta_table_.Init(std::string(), kDatabaseVersion, db_))
     return false;
+  if (meta_table_.GetCompatibleVersionNumber() > kDatabaseVersion) {
+    // We ignore this error and just run without the database. Normally, if
+    // the user is running two versions, the main history DB will give a
+    // warning about a version from the future.
+    LOG(WARNING) << "Archived database is a future version.";
+    return false;
+  }
 
   // Create the tables.
   if (!CreateURLTable(false) || !InitVisitTable() ||
       !InitKeywordSearchTermsTable())
     return false;
   CreateMainURLIndex();
-
-  if (EnsureCurrentVersion() != INIT_OK)
-    return false;
 
   // Succeeded: keep the DB open by detaching the auto-closer.
   scoper.Detach();
@@ -94,37 +123,4 @@ SqliteStatementCache& ArchivedDatabase::GetStatementCache() {
   return *statement_cache_;
 }
 
-// Migration -------------------------------------------------------------------
-
-InitStatus ArchivedDatabase::EnsureCurrentVersion() {
-  // We can't read databases newer than we were designed for.
-  if (meta_table_.GetCompatibleVersionNumber() > kCurrentVersionNumber)
-    return INIT_TOO_NEW;
-
-  // NOTICE: If you are changing structures for things shared with the archived
-  // history file like URLs, visits, or downloads, that will need migration as
-  // well. Instead of putting such migration code in this class, it should be
-  // in the corresponding file (url_database.cc, etc.) and called from here and
-  // from the archived_database.cc.
-
-  // When the version is too old, we just try to continue anyway, there should
-  // not be a released product that makes a database too old for us to handle.
-  int cur_version = meta_table_.GetVersionNumber();
-
-  // Put migration code here
-
-  if (cur_version == 1) {
-    if (!DropStarredIDFromURLs())
-      return INIT_FAILURE;
-    cur_version = 2;
-    meta_table_.SetVersionNumber(cur_version);
-    meta_table_.SetCompatibleVersionNumber(cur_version);
-  }
-
-  LOG_IF(WARNING, cur_version < kCurrentVersionNumber) <<
-      "Archived database version " << cur_version << " is too old to handle.";
-
-  return INIT_OK;
-}
 }  // namespace history
-

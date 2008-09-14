@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_COMMON_IPC_SYNC_SENDER_H__
 #define CHROME_COMMON_IPC_SYNC_SENDER_H__
@@ -27,19 +52,12 @@ class SyncMessage;
 class SyncChannel : public ChannelProxy {
  public:
   SyncChannel(const std::wstring& channel_id, Channel::Mode mode,
-              Channel::Listener* listener, MessageFilter* filter,
-              MessageLoop* ipc_message_loop, bool create_pipe_now,
-              HANDLE shutdown_handle);
+              Channel::Listener* listener, MessageLoop* ipc_message_loop,
+              bool create_pipe_now);
   ~SyncChannel();
 
   virtual bool Send(Message* message);
-  virtual bool SendWithTimeout(Message* message, int timeout_ms);
   bool UnblockListener(Message* message);
-
-  // Whether we allow sending messages with no time-out.
-  void set_sync_messages_with_no_timeout_allowed(bool value) {
-    sync_messages_with_no_timeout_allowed_ = value;
-  }
 
  protected:
   class ReceivedSyncMsgQueue;
@@ -77,9 +95,6 @@ class SyncChannel : public ChannelProxy {
     // Otherwise the function returns false.
     bool UnblockListener(const Message* msg);
 
-    // Cleanly remove the top deserializer (and throw it away).
-    void PopDeserializer(bool close_reply_event);
-
    private:
     void OnMessageReceived(const Message& msg);
     void OnChannelError();
@@ -94,13 +109,14 @@ class SyncChannel : public ChannelProxy {
       HANDLE reply_event;
     };
 
+    // Cleanly remove the top deserializer (and throw it away).
+    void PopDeserializer();
+
     typedef std::stack<PendingSyncMsg> PendingSyncMessageQueue;
     PendingSyncMessageQueue deserializers_;
     Lock deserializers_lock_;
 
-    // This can't be a scoped_refptr because it needs to be released on the
-    // listener thread.
-    ReceivedSyncMsgQueue* received_sync_msgs_;
+    scoped_refptr<ReceivedSyncMsgQueue> received_sync_msgs_;
 
     bool channel_closed_;
     bool reply_deserialize_result_;
@@ -114,12 +130,9 @@ class SyncChannel : public ChannelProxy {
 
   std::stack<HANDLE> pump_messages_events_;
 
-  bool sync_messages_with_no_timeout_allowed_;
-
   DISALLOW_EVIL_CONSTRUCTORS(SyncChannel);
 };
 
 }  // namespace IPC
 
 #endif  // CHROME_COMMON_IPC_SYNC_SENDER_H__
-

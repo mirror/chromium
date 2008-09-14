@@ -33,7 +33,7 @@
 #include "Timer.h"
 
 namespace gfx {
-class PlatformCanvasWin;
+class PlatformCanvas;
 }
 
 namespace WebCore {

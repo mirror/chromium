@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_TEST_AUTOMATION_AUTOCOMPLETE_EDIT_PROXY_H__
 #define CHROME_TEST_AUTOMATION_AUTOCOMPLETE_EDIT_PROXY_H__
@@ -96,19 +121,11 @@ struct ParamTraits<AutocompleteMatchData> {
   }
 
   static void Log(const param_type& p, std::wstring* l) {
-    std::wstring provider_name_wide = UTF8ToWide(p.provider_name);
-    l->append(StringPrintf(L"[%ls %ls %ls %ls %ls %d %ls %ls %d %ls %ls]",
-        p.contents,
-        p.deletable ? L"true" : L"false",
-        p.description,
-        p.destination_url,
-        p.fill_into_edit,
-        p.inline_autocomplete_offset,
-        p.is_history_what_you_typed_match ? L"true" : L"false",
-        provider_name_wide,
-        p.relevance,
-        p.starred ? L"true" : L"false",
-        p.str_type));
+    l->append(StringPrintf(L"[%S %s %S %S %S %d %s %s %d %s %S]",
+      p.contents, p.deletable ? "true" : "false", p.description,
+      p.destination_url, p.fill_into_edit, p.inline_autocomplete_offset,
+      p.is_history_what_you_typed_match ? "true" : "false", p.provider_name,
+      p.relevance, p.starred ? "true" : "false", p.str_type));
   }
 };
 }  // namespace IPC
@@ -149,5 +166,4 @@ class AutocompleteEditProxy : public AutomationResourceProxy {
 };
 
 #endif  // #define CHROME_TEST_AUTOMATION_AUTOCOMPLETE_EDIT_PROXY_H__
-
 

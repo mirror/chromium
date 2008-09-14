@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <windows.h>
 #include <CommCtrl.h>
@@ -401,7 +426,7 @@ DWORD MainUIWindow::ListenPipe() {
                                   FILE_ATTRIBUTE_NORMAL,
                                   NULL);  // No template
     if (INVALID_HANDLE_VALUE == logfile_handle) {
-      AddDebugMessage(L"Failed to open \"%ls\" for logging. Error %d",
+      AddDebugMessage(L"Failed to open \"%s\" for logging. Error %d",
                       file_to_open.GetBuffer(), ::GetLastError());
       logfile_handle = NULL;
     }
@@ -499,7 +524,7 @@ bool MainUIWindow::SpawnTarget() {
   }
 
   wchar_t * arguments = new wchar_t[size_call];
-  wnsprintf(arguments, static_cast<int>(size_call), L"%ls %ls \"%ls\" %ls",
+  wnsprintf(arguments, static_cast<int>(size_call), L"%s %s \"%s\" %s",
             spawn_target_.c_str(), entry_point_.c_str(),
             dll_path_.c_str(), log_pipe);
 
@@ -528,7 +553,7 @@ bool MainUIWindow::SpawnTarget() {
   bool return_value = false;
   if (sandbox::SBOX_ALL_OK != result) {
     AddDebugMessage(
-        L"Failed to spawn target %ls w/args (%ls), sandbox error code: %d",
+        L"Failed to spawn target %s w/args (%s), sandbox error code: %d",
         spawn_target_.c_str(), arguments, result);
     return_value = false;
   } else {
@@ -567,7 +592,7 @@ bool MainUIWindow::SpawnTarget() {
 
     ::ResumeThread(target_.hThread);
 
-    AddDebugMessage(L"Successfully spawned target w/args (%ls)", arguments);
+    AddDebugMessage(L"Successfully spawned target w/args (%s)", arguments);
     return_value = true;
   }
 
@@ -666,5 +691,4 @@ void MainUIWindow::InsertLineInListView(wchar_t* debug_message) {
 
   delete[] message_time;
 }
-
 

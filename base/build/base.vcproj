@@ -122,27 +122,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\at_exit.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\at_exit.h"
-			>
-		</File>
-		<File
-			RelativePath="..\atomic_ref_count.h"
-			>
-		</File>
-		<File
-			RelativePath="..\atomic_sequence_num.h"
-			>
-		</File>
-		<File
-			RelativePath="..\atomicops.h"
-			>
-		</File>
-		<File
-			RelativePath="..\atomicops_internals_x86_msvc.h"
+			RelativePath="..\atomic.h"
 			>
 		</File>
 		<File
@@ -170,14 +150,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\base_paths_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\base_paths_win.h"
-			>
-		</File>
-		<File
 			RelativePath="..\base_switches.cc"
 			>
 		</File>
@@ -198,11 +170,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\build\build_config.h"
-			>
-		</File>
-		<File
-			RelativePath="..\bzip2_error_handler.cc"
+			RelativePath="..\clipboard.cc"
 			>
 		</File>
 		<File
@@ -218,10 +186,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\clipboard_win.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\command_line.cc"
 			>
 		</File>
@@ -230,15 +194,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\compiler_specific.h"
+			RelativePath="..\condition_variable.cc"
 			>
 		</File>
 		<File
 			RelativePath="..\condition_variable.h"
-			>
-		</File>
-		<File
-			RelativePath="..\condition_variable_win.cc"
 			>
 		</File>
 		<File
@@ -258,10 +218,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\debug_util_win.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\event_recorder.cc"
 			>
 		</File>
@@ -278,10 +234,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\file_util_win.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\file_version_info.cc"
 			>
 		</File>
@@ -294,11 +246,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\float_util.h"
-			>
-		</File>
-		<File
-			RelativePath="..\hash_tables.h"
+			RelativePath="..\fixed_string.h"
 			>
 		</File>
 		<File
@@ -310,11 +258,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\hmac.h"
+			RelativePath="..\hmac.cc"
 			>
 		</File>
 		<File
-			RelativePath="..\hmac_win.cc"
+			RelativePath="..\hmac.h"
 			>
 		</File>
 		<File
@@ -370,14 +318,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\lazy_instance.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\lazy_instance.h"
-			>
-		</File>
-		<File
 			RelativePath="..\linked_ptr.h"
 			>
 		</File>
@@ -430,39 +370,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\message_pump.h"
-			>
-		</File>
-		<File
-			RelativePath="..\message_pump_default.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\message_pump_default.h"
-			>
-		</File>
-		<File
-			RelativePath="..\message_pump_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\message_pump_win.h"
-			>
-		</File>
-		<File
 			RelativePath="..\non_thread_safe.cc"
 			>
 		</File>
 		<File
 			RelativePath="..\non_thread_safe.h"
-			>
-		</File>
-		<File
-			RelativePath="..\object_watcher.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\object_watcher.h"
 			>
 		</File>
 		<File
@@ -494,11 +406,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\platform_thread.h"
+			RelativePath="..\platform_thread.cc"
 			>
 		</File>
 		<File
-			RelativePath="..\platform_thread_win.cc"
+			RelativePath="..\platform_thread.h"
 			>
 		</File>
 		<File
@@ -522,11 +434,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\process_util.h"
+			RelativePath="..\process_util.cc"
 			>
 		</File>
 		<File
-			RelativePath="..\process_util_win.cc"
+			RelativePath="..\process_util.h"
 			>
 		</File>
 		<File
@@ -547,10 +459,6 @@
 		</File>
 		<File
 			RelativePath="..\third_party\purify\pure_api.c"
-			>
-		</File>
-		<File
-			RelativePath="..\ref_counted.cc"
 			>
 		</File>
 		<File
@@ -614,23 +522,19 @@
 			>
 		</File>
 		<File
+			RelativePath="..\shared_memory.cc"
+			>
+		</File>
+		<File
 			RelativePath="..\shared_memory.h"
 			>
 		</File>
 		<File
-			RelativePath="..\shared_memory_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\simple_thread.h"
-			>
-		</File>
-		<File
-			RelativePath="..\simple_thread.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\singleton.h"
+			>
+		</File>
+		<File
+			RelativePath="..\singleton_internal.h"
 			>
 		</File>
 		<File
@@ -690,15 +594,11 @@
 			>
 		</File>
 		<File
+			RelativePath="..\string_util_win.cc"
+			>
+		</File>
+		<File
 			RelativePath="..\string_util_win.h"
-			>
-		</File>
-		<File
-			RelativePath="..\sys_string_conversions.h"
-			>
-		</File>
-		<File
-			RelativePath="..\sys_string_conversions_win.cc"
 			>
 		</File>
 		<File
@@ -722,27 +622,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\thread_local.h"
-			>
-		</File>
-		<File
-			RelativePath="..\thread_local_win.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\time.cc"
 			>
 		</File>
 		<File
 			RelativePath="..\time.h"
-			>
-		</File>
-		<File
-			RelativePath="..\time_format.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\time_format.h"
 			>
 		</File>
 		<File
@@ -755,14 +639,6 @@
 		</File>
 		<File
 			RelativePath="..\timer.h"
-			>
-		</File>
-		<File
-			RelativePath="..\trace_event.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\trace_event.h"
 			>
 		</File>
 		<File
@@ -791,14 +667,6 @@
 		</File>
 		<File
 			RelativePath="..\values.h"
-			>
-		</File>
-		<File
-			RelativePath="..\waitable_event.h"
-			>
-		</File>
-		<File
-			RelativePath="..\waitable_event_win.cc"
 			>
 		</File>
 		<File

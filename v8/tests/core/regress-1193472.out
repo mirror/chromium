@@ -1,0 +1,4 @@
+regress-1193472.js:5: Uncaught 42
+    throw 42;
+    ^
+1234

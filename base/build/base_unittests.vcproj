@@ -144,6 +144,10 @@
 			Name="support"
 			>
 			<File
+				RelativePath="..\check_handler.h"
+				>
+			</File>
+			<File
 				RelativePath="..\multiprocess_test.h"
 				>
 			</File>
@@ -164,11 +168,11 @@
 			Name="base_tests"
 			>
 			<File
-				RelativePath="..\at_exit_unittest.cc"
+				RelativePath="..\atomic_unittest.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\atomicops_unittest.cc"
+				RelativePath="..\check_handler_unittest.cc"
 				>
 			</File>
 			<File
@@ -180,7 +184,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\condition_variable_unittest.cc"
+				RelativePath="..\condition_variable_test.cc"
 				>
 			</File>
 			<File
@@ -192,7 +196,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\histogram_unittest.cc"
+				RelativePath="..\fixed_string_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\histogram_test.cc"
 				>
 			</File>
 			<File
@@ -212,10 +220,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\lazy_instance_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\linked_ptr_unittest.cc"
 				>
 			</File>
@@ -225,10 +229,6 @@
 			</File>
 			<File
 				RelativePath="..\gfx\native_theme_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\object_watcher_unittest.cc"
 				>
 			</File>
 			<File
@@ -244,7 +244,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\pr_time_unittest.cc"
+				RelativePath="..\pr_time_test.cc"
 				>
 			</File>
 			<File
@@ -260,10 +260,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\scoped_ptr_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\sha2_unittest.cc"
 				>
 			</File>
@@ -273,10 +269,6 @@
 			</File>
 			<File
 				RelativePath="..\shared_memory_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\simple_thread_unittest.cc"
 				>
 			</File>
 			<File
@@ -308,15 +300,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\sys_string_conversions_win_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\thread_local_storage_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\thread_local_unittest.cc"
 				>
 			</File>
 			<File
@@ -328,19 +312,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\time_unittest_win.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\timer_unittest.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\tracked_objects_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\tuple_unittest.cc"
+				RelativePath="..\tracked_objects_test.cc"
 				>
 			</File>
 			<File
@@ -348,11 +324,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\waitable_event_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\watchdog_unittest.cc"
+				RelativePath="..\watchdog_test.cc"
 				>
 			</File>
 			<File
@@ -361,10 +333,6 @@
 			</File>
 			<File
 				RelativePath="..\wmi_util_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\word_iterator_unittest.cc"
 				>
 			</File>
 		</Filter>

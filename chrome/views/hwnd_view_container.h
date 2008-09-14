@@ -1,27 +1,47 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_VIEWS_HWND_VIEW_CONTAINER_H_
-#define CHROME_VIEWS_HWND_VIEW_CONTAINER_H_
+#ifndef CHROME_VIEWS_HWND_VIEW_CONTAINER_H__
+#define CHROME_VIEWS_HWND_VIEW_CONTAINER_H__
 
 #include <atlbase.h>
+#include <atlapp.h>
 #include <atlcrack.h>
 
 #include "base/message_loop.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/layout_manager.h"
+#include "chrome/views/root_view.h"
 #include "chrome/views/view_container.h"
-
-class ChromeCanvas;
-
-namespace gfx {
-class Rect;
-}
 
 namespace ChromeViews {
 
-class RootView;
 class TooltipManager;
 
 bool SetRootViewForHWND(HWND hwnd, RootView* root_view);
@@ -75,9 +95,8 @@ class FillLayout : public LayoutManager {
 //
 ///////////////////////////////////////////////////////////////////////////////
 class HWNDViewContainer : public ViewContainer,
-                          public MessageLoopForUI::Observer,
-                          public FocusTraversable,
-                          public AcceleratorTarget {
+                          public MessageLoop::Observer,
+                          public FocusTraversable {
  public:
   HWNDViewContainer();
   virtual ~HWNDViewContainer();
@@ -93,13 +112,8 @@ class HWNDViewContainer : public ViewContainer,
   // the window.
   void Init(HWND parent,
             const gfx::Rect& bounds,
+            View* contents_view,
             bool has_own_focus_manager);
-
-  // Sets the specified view as the contents of this HWNDViewContainer. There
-  // can only be one contnets view child of this ViewContainer's RootView. This
-  // view is sized to fit the entire size of the RootView. The RootView takes
-  // ownership of this View, unless it is set as not being parent-owned.
-  virtual void SetContentsView(View* view);
 
   // Sets the window styles. This is ONLY used when the window is created.
   // In other words, if you invoke this after invoking Init, nothing happens.
@@ -159,13 +173,9 @@ class HWNDViewContainer : public ViewContainer,
 
     // Reflected message handler
     MESSAGE_HANDLER_EX(kReflectedMessage, OnReflectedMessage)
-    
-    // Non-atlcrack.h handlers
-    MESSAGE_HANDLER_EX(WM_GETOBJECT, OnGetObject)
 
     // This list is in _ALPHABETICAL_ order! OR I WILL HURT YOU.
     MSG_WM_ACTIVATE(OnActivate)
-    MSG_WM_APPCOMMAND(OnAppCommand)
     MSG_WM_CANCELMODE(OnCancelMode)
     MSG_WM_CAPTURECHANGED(OnCaptureChanged)
     MSG_WM_CLOSE(OnClose)
@@ -173,12 +183,9 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_CREATE(OnCreate)
     MSG_WM_DESTROY(OnDestroy)
     MSG_WM_ERASEBKGND(OnEraseBkgnd)
-    MSG_WM_ENDSESSION(OnEndSession)
-    MSG_WM_EXITMENULOOP(OnExitMenuLoop)
     MSG_WM_GETMINMAXINFO(OnGetMinMaxInfo)
     MSG_WM_HSCROLL(OnHScroll)
     MSG_WM_INITMENU(OnInitMenu)
-    MSG_WM_INITMENUPOPUP(OnInitMenuPopup)
     MSG_WM_KEYDOWN(OnKeyDown)
     MSG_WM_KEYUP(OnKeyUp)
     MSG_WM_LBUTTONDBLCLK(OnLButtonDblClk)
@@ -191,7 +198,6 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_MOUSELEAVE(OnMouseLeave)
     MSG_WM_MOUSEMOVE(OnMouseMove)
     MSG_WM_MOUSEWHEEL(OnMouseWheel)
-    MSG_WM_MOVE(OnMove)
     MSG_WM_MOVING(OnMoving)
     MSG_WM_NCACTIVATE(OnNCActivate)
     MSG_WM_NCCALCSIZE(OnNCCalcSize)
@@ -206,7 +212,6 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_NCRBUTTONUP(OnNCRButtonUp)
     MSG_WM_NOTIFY(OnNotify)
     MSG_WM_PAINT(OnPaint)
-    MSG_WM_POWERBROADCAST(OnPowerBroadcast)
     MSG_WM_RBUTTONDBLCLK(OnRButtonDblClk)
     MSG_WM_RBUTTONDOWN(OnRButtonDown)
     MSG_WM_RBUTTONUP(OnRButtonUp)
@@ -214,7 +219,6 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_SETFOCUS(OnSetFocus)
     MSG_WM_SIZE(OnSize)
     MSG_WM_SYSCOMMAND(OnSysCommand)
-    MSG_WM_THEMECHANGED(OnThemeChanged)
     MSG_WM_VSCROLL(OnVScroll)
     MSG_WM_WINDOWPOSCHANGED(OnWindowPosChanged)
   END_MSG_MAP()
@@ -242,11 +246,6 @@ class HWNDViewContainer : public ViewContainer,
                                       View** focus_traversable_view);
   virtual FocusTraversable* GetFocusTraversableParent();
   virtual View* GetFocusTraversableParentView();
-
-  // Overridden from AcceleratorTarget:
-  virtual bool AcceleratorPressed(const Accelerator& accelerator) {
-    return false;
-  }
 
   void SetFocusTraversableParent(FocusTraversable* parent);
   void SetFocusTraversableParentView(View* parent_view);
@@ -325,32 +324,21 @@ class HWNDViewContainer : public ViewContainer,
   //       subclasses can easily override these methods to do different things
   //       and have a convenient function to call to get the default behavior.
   virtual void OnActivate(UINT action, BOOL minimized, HWND window) { }
-  virtual LRESULT OnAppCommand(HWND window, short app_command, WORD device,
-                               int keystate) {
-    SetMsgHandled(FALSE);
-    return 0;
-  }
   virtual void OnCancelMode() {}
   virtual void OnCaptureChanged(HWND hwnd);
   virtual void OnClose();
   virtual void OnCommand(
-    UINT notification_code, int command_id, HWND window) { SetMsgHandled(FALSE); }
+    UINT notification_code, int command_id, HWND window) { }
   virtual LRESULT OnCreate(LPCREATESTRUCT create_struct) { return 0; }
   // WARNING: If you override this be sure and invoke super, otherwise we'll
   // leak a few things.
   virtual void OnDestroy();
-  virtual void OnEndSession(BOOL ending, UINT logoff) { SetMsgHandled(FALSE); }
-  virtual void OnExitMenuLoop(BOOL is_track_popup_menu) { SetMsgHandled(FALSE); }
   virtual LRESULT OnEraseBkgnd(HDC dc);
   virtual void OnGetMinMaxInfo(LPMINMAXINFO mm_info) { }
-  virtual LRESULT OnGetObject(UINT uMsg, WPARAM w_param, LPARAM l_param);
   virtual void OnHScroll(int scroll_type, short position, HWND scrollbar) {
     SetMsgHandled(FALSE);
   }
   virtual void OnInitMenu(HMENU menu) { SetMsgHandled(FALSE); }
-  virtual void OnInitMenuPopup(HMENU menu, UINT position, BOOL is_system_menu) {
-    SetMsgHandled(FALSE);
-  }
   virtual void OnKeyDown(TCHAR c, UINT rep_cnt, UINT flags);
   virtual void OnKeyUp(TCHAR c, UINT rep_cnt, UINT flags);
   virtual void OnLButtonDblClk(UINT flags, const CPoint& point);
@@ -362,7 +350,6 @@ class HWNDViewContainer : public ViewContainer,
   virtual LRESULT OnMouseActivate(HWND window, UINT hittest_code, UINT message);
   virtual void OnMouseMove(UINT flags, const CPoint& point);
   virtual void OnMouseLeave();
-  virtual void OnMove(const CPoint& point) { SetMsgHandled(FALSE); }
   virtual void OnMoving(UINT param, const LPRECT new_bounds) { }
   virtual LRESULT OnMouseWheel(UINT flags, short distance, const CPoint& point);
   virtual LRESULT OnMouseRange(UINT msg, WPARAM w_param, LPARAM l_param);
@@ -379,10 +366,6 @@ class HWNDViewContainer : public ViewContainer,
   virtual void OnNCRButtonUp(UINT flags, const CPoint& point);
   virtual LRESULT OnNotify(int w_param, NMHDR* l_param);
   virtual void OnPaint(HDC dc);
-  virtual LRESULT OnPowerBroadcast(DWORD power_event, DWORD data) {
-    SetMsgHandled(FALSE);
-    return 0;
-  }
   virtual void OnRButtonDblClk(UINT flags, const CPoint& point);
   virtual void OnRButtonDown(UINT flags, const CPoint& point);
   virtual void OnRButtonUp(UINT flags, const CPoint& point);
@@ -400,7 +383,6 @@ class HWNDViewContainer : public ViewContainer,
   virtual LRESULT OnSettingChange(UINT msg, WPARAM w_param, LPARAM l_param);
   virtual void OnSize(UINT param, const CSize& size);
   virtual void OnSysCommand(UINT notification_code, CPoint click) { }
-  virtual void OnThemeChanged();
   virtual void OnVScroll(int scroll_type, short position, HWND scrollbar) {
     SetMsgHandled(FALSE);
   }
@@ -530,18 +512,14 @@ class HWNDViewContainer : public ViewContainer,
   // If true, the last event was a mouse move event.
   bool last_mouse_event_was_move_;
 
-  // Coordinates of the last mouse move event, in screen coordinates.
+  // Coordinates of the last mouse move event, in terms of the screen.
   int last_mouse_move_x_;
   int last_mouse_move_y_;
-
-  // Instance of accessibility information and handling for MSAA root
-  CComPtr<IAccessible> accessibility_root_;
 
   // Our hwnd.
   HWND hwnd_;
 };
 
-}  // namespace ChromeViews
+}
 
-#endif  // #ifndef CHROME_VIEWS_HWND_VIEW_CONTAINER_H_
-
+#endif  // #ifndef CHROME_VIEWS_HWND_VIEW_CONTAINER_H__

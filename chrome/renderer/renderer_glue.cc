@@ -1,20 +1,58 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This file provides the embedder's side of random webkit glue functions.
 
 #include <windows.h>
 #include <wininet.h>
 
+#include "base/command_line.h"
+#include "base/logging.h"
+#include "base/path_service.h"
+#include "base/string_util.h"
 #include "chrome/renderer/net/render_dns_master.h"
+#include "chrome/common/chrome_paths.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/resource_dispatcher.h"
 #include "chrome/plugin/npobject_util.h"
+#include "chrome/renderer/render_process.h"
+#include "chrome/renderer/render_thread.h"
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/visitedlink_slave.h"
+#include "googleurl/src/gurl.h"
 #include "googleurl/src/url_util.h"
 #include "net/base/mime_util.h"
+#include "webkit/glue/resource_type.h"
 #include "webkit/glue/webframe.h"
+#include "webkit/glue/webview.h"
 #include "webkit/glue/webkit_glue.h"
 
 #include "SkBitmap.h"
@@ -124,7 +162,7 @@ void webkit_glue::AppendToLog(const char* file, int line, const char* msg) {
 bool webkit_glue::GetMimeTypeFromExtension(std::wstring &ext,
                                            std::string *mime_type) {
   if (IsPluginProcess())
-    return net::GetMimeTypeFromExtension(ext, mime_type);
+    return mime_util::GetMimeTypeFromExtension(ext, mime_type);
 
   // The sandbox restricts our access to the registry, so we need to proxy
   // these calls over to the browser process.
@@ -137,7 +175,7 @@ bool webkit_glue::GetMimeTypeFromExtension(std::wstring &ext,
 bool webkit_glue::GetMimeTypeFromFile(const std::wstring &file_path,
                                       std::string *mime_type) {
   if (IsPluginProcess())
-    return net::GetMimeTypeFromFile(file_path, mime_type);
+    return mime_util::GetMimeTypeFromFile(file_path, mime_type);
 
   // The sandbox restricts our access to the registry, so we need to proxy
   // these calls over to the browser process.
@@ -150,7 +188,7 @@ bool webkit_glue::GetMimeTypeFromFile(const std::wstring &file_path,
 bool webkit_glue::GetPreferredExtensionForMimeType(const std::string& mime_type,
                                                    std::wstring* ext) {
   if (IsPluginProcess())
-    return net::GetPreferredExtensionForMimeType(mime_type, ext);
+    return mime_util::GetPreferredExtensionForMimeType(mime_type, ext);
 
   // The sandbox restricts our access to the registry, so we need to proxy
   // these calls over to the browser process.
@@ -162,6 +200,10 @@ bool webkit_glue::GetPreferredExtensionForMimeType(const std::string& mime_type,
 
 IMLangFontLink2* webkit_glue::GetLangFontLink() {
   return RenderProcess::GetLangFontLink();
+}
+
+std::wstring webkit_glue::GetLocalizedString(int message_id) {
+  return ResourceBundle::GetSharedInstance().GetLocalizedString(message_id);
 }
 
 std::string webkit_glue::GetDataResource(int resource_id) {
@@ -247,6 +289,11 @@ void webkit_glue::ClipboardReadHTML(std::wstring* markup, GURL* url) {
   RenderThread::current()->Send(new ViewHostMsg_ClipboardReadHTML(markup, url));
 }
 
+
+bool webkit_glue::GetApplicationDirectory(std::wstring *path) {
+  return PathService::Get(chrome::DIR_APP, path);
+}
+
 GURL webkit_glue::GetInspectorURL() {
   return GURL("chrome-resource://inspector/inspector.html");
 }
@@ -255,10 +302,18 @@ std::string webkit_glue::GetUIResourceProtocol() {
   return "chrome-resource";
 }
 
+bool webkit_glue::GetExeDirectory(std::wstring *path) {
+  return PathService::Get(base::DIR_EXE, path);
+}
+
 bool webkit_glue::GetPlugins(bool refresh,
                              std::vector<WebPluginInfo>* plugins) {
   return RenderThread::current()->Send(
       new ViewHostMsg_GetPlugins(refresh, plugins));
+}
+
+bool webkit_glue::IsPluginRunningInRendererProcess() {
+  return !IsPluginProcess();
 }
 
 bool webkit_glue::EnsureFontLoaded(HFONT font) {
@@ -274,6 +329,15 @@ MONITORINFOEX webkit_glue::GetMonitorInfoForWindow(HWND window) {
   return monitor_info;
 }
 
+std::wstring webkit_glue::GetWebKitLocale() {
+  // The browser process should have passed the locale to the renderer via the
+  // --lang command line flag.
+  CommandLine parsed_command_line;
+  const std::wstring& lang =
+      parsed_command_line.GetSwitchValue(switches::kLang);
+  DCHECK(!lang.empty());
+  return lang;
+}
 
 #ifndef USING_SIMPLE_RESOURCE_LOADER_BRIDGE
 
@@ -341,4 +405,3 @@ void NotifyCacheStats() {
 #endif  // !USING_SIMPLE_RESOURCE_LOADER_BRIDGE
 
 }  // namespace webkit_glue
-

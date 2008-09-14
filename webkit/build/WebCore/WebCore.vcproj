@@ -13,9 +13,6 @@
 		/>
 	</Platforms>
 	<ToolFiles>
-		<ToolFile
-			RelativePath="..\webkit_version.rules"
-		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -28,9 +25,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="WebKitVersion"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -82,9 +76,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="WebKitVersion"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -5760,28 +5751,6 @@
 			<File
 				RelativePath="..\precompiled_webkit.h"
 				>
-			</File>
-		</Filter>
-		<Filter
-			Name="version"
-			>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\Configurations\Version.xcconfig"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="WebKitVersion"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="WebKitVersion"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

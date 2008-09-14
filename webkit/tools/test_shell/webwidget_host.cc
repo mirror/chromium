@@ -1,13 +1,37 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "webkit/tools/test_shell/webwidget_host.h"
 
 #include "base/gfx/platform_canvas.h"
-#include "base/gfx/platform_canvas_win.h"
 #include "base/gfx/rect.h"
-#include "base/logging.h"
+#include "base/gfx/size.h"
 #include "base/win_util.h"
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webwidget.h"
@@ -15,8 +39,7 @@
 static const wchar_t kWindowClassName[] = L"WebWidgetHost";
 
 /*static*/
-WebWidgetHost* WebWidgetHost::Create(gfx::WindowHandle parent_window,
-                                     WebWidgetDelegate* delegate) {
+WebWidgetHost* WebWidgetHost::Create(HWND parent_window, WebWidgetDelegate* delegate) {
   WebWidgetHost* host = new WebWidgetHost();
 
   static bool registered_class = false;
@@ -32,12 +55,12 @@ WebWidgetHost* WebWidgetHost::Create(gfx::WindowHandle parent_window,
     registered_class = true;
   }
 
-  host->view_ = CreateWindowEx(WS_EX_TOOLWINDOW,
+  host->hwnd_ = CreateWindowEx(WS_EX_TOOLWINDOW,
                                kWindowClassName, kWindowClassName, WS_POPUP,
                                0, 0, 0, 0,
                                parent_window, NULL, GetModuleHandle(NULL), NULL);
 
-  win_util::SetWindowUserData(host->view_, host);
+  win_util::SetWindowUserData(host->hwnd_, host);
 
   host->webwidget_ = WebWidget::Create(delegate);
 
@@ -45,7 +68,7 @@ WebWidgetHost* WebWidgetHost::Create(gfx::WindowHandle parent_window,
 }
 
 /*static*/
-WebWidgetHost* WebWidgetHost::FromWindow(gfx::WindowHandle hwnd) {
+WebWidgetHost* WebWidgetHost::FromWindow(HWND hwnd) {
   return reinterpret_cast<WebWidgetHost*>(win_util::GetWindowUserData(hwnd));
 }
 
@@ -131,7 +154,7 @@ void WebWidgetHost::DidInvalidateRect(const gfx::Rect& damaged_rect) {
   paint_rect_ = paint_rect_.Union(damaged_rect);
 
   RECT r = damaged_rect.ToRECT();
-  InvalidateRect(view_, &r, FALSE);
+  InvalidateRect(hwnd_, &r, FALSE);
 }
 
 void WebWidgetHost::DidScrollRect(int dx, int dy, const gfx::Rect& clip_rect) {
@@ -151,11 +174,11 @@ void WebWidgetHost::DidScrollRect(int dx, int dy, const gfx::Rect& clip_rect) {
   scroll_dy_ = dy;
 
   RECT r = clip_rect.ToRECT();
-  InvalidateRect(view_, &r, FALSE);
+  InvalidateRect(hwnd_, &r, FALSE);
 }
 
 void WebWidgetHost::SetCursor(HCURSOR cursor) {
-  SetClassLong(view_, GCL_HCURSOR,
+  SetClassLong(hwnd_, GCL_HCURSOR,
       static_cast<LONG>(reinterpret_cast<LONG_PTR>(cursor)));
   ::SetCursor(cursor);
 }
@@ -165,7 +188,7 @@ void WebWidgetHost::DiscardBackingStore() {
 }
 
 WebWidgetHost::WebWidgetHost()
-    : view_(NULL),
+    : hwnd_(NULL),
       webwidget_(NULL),
       track_mouse_leave_(false),
       scroll_dx_(0),
@@ -174,7 +197,7 @@ WebWidgetHost::WebWidgetHost()
 }
 
 WebWidgetHost::~WebWidgetHost() {
-  win_util::SetWindowUserData(view_, 0);
+  win_util::SetWindowUserData(hwnd_, 0);
 
   TrackMouseLeave(false);
 
@@ -186,7 +209,7 @@ bool WebWidgetHost::WndProc(UINT message, WPARAM wparam, LPARAM lparam) {
   switch (message) {
   case WM_ACTIVATE:
     if (wparam == WA_INACTIVE) {
-      PostMessage(view_, WM_CLOSE, 0, 0);
+      PostMessage(hwnd_, WM_CLOSE, 0, 0);
       return true;
     }
     break;
@@ -197,7 +220,7 @@ bool WebWidgetHost::WndProc(UINT message, WPARAM wparam, LPARAM lparam) {
 
 void WebWidgetHost::Paint() {
   RECT r;
-  GetClientRect(view_, &r);
+  GetClientRect(hwnd_, &r);
   gfx::Rect client_rect(r);
   
   // Allocate a canvas if necessary
@@ -240,15 +263,15 @@ void WebWidgetHost::Paint() {
 
   // Paint to the screen
   PAINTSTRUCT ps;
-  BeginPaint(view_, &ps);
+  BeginPaint(hwnd_, &ps);
   canvas_->getTopPlatformDevice().drawToHDC(ps.hdc,
                                             ps.rcPaint.left,
                                             ps.rcPaint.top,
                                             &ps.rcPaint);
-  EndPaint(view_, &ps);
+  EndPaint(hwnd_, &ps);
 
   // Draw children
-  UpdateWindow(view_);
+  UpdateWindow(hwnd_);
 }
 
 void WebWidgetHost::Resize(LPARAM lparam) {
@@ -259,7 +282,7 @@ void WebWidgetHost::Resize(LPARAM lparam) {
 }
 
 void WebWidgetHost::MouseEvent(UINT message, WPARAM wparam, LPARAM lparam) {
-  WebMouseEvent event(view_, message, wparam, lparam);
+  WebMouseEvent event(hwnd_, message, wparam, lparam);
   switch (event.type) {
     case WebInputEvent::MOUSE_MOVE:
       TrackMouseLeave(true);
@@ -268,10 +291,10 @@ void WebWidgetHost::MouseEvent(UINT message, WPARAM wparam, LPARAM lparam) {
       TrackMouseLeave(false);
       break;
     case WebInputEvent::MOUSE_DOWN:
-      SetCapture(view_);
+      SetCapture(hwnd_);
       break;
     case WebInputEvent::MOUSE_UP:
-      if (GetCapture() == view_)
+      if (GetCapture() == hwnd_)
         ReleaseCapture();
       break;
   }
@@ -279,12 +302,12 @@ void WebWidgetHost::MouseEvent(UINT message, WPARAM wparam, LPARAM lparam) {
 }
 
 void WebWidgetHost::WheelEvent(WPARAM wparam, LPARAM lparam) {
-  WebMouseWheelEvent event(view_, WM_MOUSEWHEEL, wparam, lparam);
+  WebMouseWheelEvent event(hwnd_, WM_MOUSEWHEEL, wparam, lparam);
   webwidget_->HandleInputEvent(&event);
 }
 
 void WebWidgetHost::KeyEvent(UINT message, WPARAM wparam, LPARAM lparam) {
-  WebKeyboardEvent event(view_, message, wparam, lparam);
+  WebKeyboardEvent event(hwnd_, message, wparam, lparam);
   webwidget_->HandleInputEvent(&event);
 }
 
@@ -301,14 +324,14 @@ void WebWidgetHost::TrackMouseLeave(bool track) {
     return;
   track_mouse_leave_ = track;
 
-  DCHECK(view_);
+  DCHECK(hwnd_);
 
   TRACKMOUSEEVENT tme;
   tme.cbSize = sizeof(TRACKMOUSEEVENT);
   tme.dwFlags = TME_LEAVE;
   if (!track_mouse_leave_)
     tme.dwFlags |= TME_CANCEL;
-  tme.hwndTrack = view_;
+  tme.hwndTrack = hwnd_;
 
   TrackMouseEvent(&tme);
 }

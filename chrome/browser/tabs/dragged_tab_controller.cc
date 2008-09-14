@@ -1,13 +1,37 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-#include "chrome/browser/tabs/dragged_tab_controller.h"
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <math.h>
 
-#include "chrome/browser/browser_window.h"
-#include "chrome/browser/frame_util.h"
+#include "chrome/browser/tabs/dragged_tab_controller.h"
+
+#include "chrome/browser/chrome_frame.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tabs/dragged_tab_view.h"
 #include "chrome/browser/tabs/hwnd_photobooth.h"
@@ -15,7 +39,6 @@
 #include "chrome/browser/tabs/tab_strip.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/views/event.h"
-#include "chrome/views/root_view.h"
 #include "skia/include/SkBitmap.h"
 
 static const int kHorizontalMoveThreshold = 16; // pixels
@@ -96,13 +119,13 @@ DraggedTabController::DraggedTabController(Tab* source_tab,
   ChangeDraggedContents(
       source_tabstrip_->model()->GetTabContentsAt(source_model_index_));
   // Listen for Esc key presses.
-  MessageLoopForUI::current()->AddObserver(this);
+  MessageLoop::current()->AddObserver(this);
 }
 
 DraggedTabController::~DraggedTabController() {
   in_destructor_ = true;
   CleanUpSourceTab();
-  MessageLoopForUI::current()->RemoveObserver(this);
+  MessageLoop::current()->RemoveObserver(this);
   ChangeDraggedContents(NULL); // This removes our observer.
 }
 
@@ -141,11 +164,10 @@ bool DraggedTabController::IsDragSourceTab(Tab* tab) const {
 ///////////////////////////////////////////////////////////////////////////////
 // DraggedTabController, PageNavigator implementation:
 
-void DraggedTabController::OpenURLFromTab(
-    TabContents* source,
-    const GURL& url,
-    WindowOpenDisposition disposition,
-    PageTransition::Type transition) {
+void DraggedTabController::OpenURLFromTab(TabContents* source,
+                                          const GURL& url,
+                                          WindowOpenDisposition disposition,
+                                          PageTransition::Type transition) {
   if (original_delegate_) {
     if (disposition == CURRENT_TAB)
       disposition = NEW_WINDOW;
@@ -396,7 +418,7 @@ TabStrip* DraggedTabController::GetTabStripForPoint(
   if (!other_hwnd)
     return NULL;
 
-  BrowserWindow* other_frame = FrameUtil::GetBrowserWindowForHWND(other_hwnd);
+  ChromeFrame* other_frame = ChromeFrame::GetChromeFrameForWindow(other_hwnd);
   if (other_frame) {
     TabStrip* other_tabstrip = other_frame->GetTabStrip();
     if (!other_tabstrip->IsCompatibleWith(source_tabstrip_))
@@ -793,4 +815,3 @@ void DraggedTabController::OnAnimateToBoundsComplete() {
   if (!in_destructor_)
     source_tabstrip_->DestroyDragController();
 }
-

@@ -41,6 +41,7 @@
 #include "SVGPaintServer.h"
 #include "SVGRenderStyle.h"
 
+#include "base/gfx/platform_canvas.h"
 #include "SkiaUtils.h"
 #include "SkDashPathEffect.h"
 

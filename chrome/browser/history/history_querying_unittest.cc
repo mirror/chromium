@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "base/basictypes.h"
 #include "base/file_util.h"
@@ -86,7 +111,7 @@ class HistoryQueryTest : public testing::Test {
     file_util::CreateDirectory(history_dir_);
 
     history_ = new HistoryService;
-    if (!history_->Init(history_dir_, NULL)) {
+    if (!history_->Init(history_dir_)) {
       history_ = NULL;  // Tests should notice this NULL ptr & fail.
       return;
     }
@@ -107,6 +132,19 @@ class HistoryQueryTest : public testing::Test {
       history_->SetPageTitle(url, test_entries[i].title);
       history_->SetPageContents(url, test_entries[i].body);
     }
+
+    // Set one of the pages starred.
+    history::StarredEntry entry;
+    entry.id = 5;
+    entry.title = L"Some starred page";
+    entry.date_added = Time::Now();
+    entry.parent_group_id = StarredEntry::BOOKMARK_BAR;
+    entry.group_id = 0;
+    entry.visual_order = 0;
+    entry.type = history::StarredEntry::URL;
+    entry.url = GURL(test_entries[0].url);
+    entry.date_group_modified = Time::Now();
+    history_->CreateStarredEntry(entry, NULL, NULL);
   }
 
   virtual void TearDown() {
@@ -124,8 +162,6 @@ class HistoryQueryTest : public testing::Test {
     MessageLoop::current()->Quit();  // Will return out to QueryHistory.
   }
 
-  MessageLoop message_loop_;
-  
   std::wstring history_dir_;
 
   CancelableRequestConsumer consumer_;
@@ -152,6 +188,9 @@ TEST_F(HistoryQueryTest, Basic) {
   EXPECT_TRUE(NthResultIs(results, 2, 3));
   EXPECT_TRUE(NthResultIs(results, 3, 1));
   EXPECT_TRUE(NthResultIs(results, 4, 0));
+
+  // Check that the starred one is marked starred.
+  EXPECT_TRUE(results[4].starred());
 
   // Next query a time range. The beginning should be inclusive, the ending
   // should be exclusive.
@@ -208,10 +247,11 @@ TEST_F(HistoryQueryTest, FTS) {
   // this query will return the starred item twice since we requested all
   // starred entries and no de-duping.
   QueryHistory(std::wstring(L"some"), options, &results);
-  EXPECT_EQ(3, results.size());
-  EXPECT_TRUE(NthResultIs(results, 0, 2));
-  EXPECT_TRUE(NthResultIs(results, 1, 3));
-  EXPECT_TRUE(NthResultIs(results, 2, 1));
+  EXPECT_EQ(4, results.size());
+  EXPECT_TRUE(NthResultIs(results, 0, 4));  // Starred item.
+  EXPECT_TRUE(NthResultIs(results, 1, 2));
+  EXPECT_TRUE(NthResultIs(results, 2, 3));
+  EXPECT_TRUE(NthResultIs(results, 3, 1));
 
   // Do a query that should only match one of them.
   QueryHistory(std::wstring(L"PAGETWO"), options, &results);
@@ -222,6 +262,7 @@ TEST_F(HistoryQueryTest, FTS) {
   // should be exclusive.
   options.begin_time = test_entries[1].time;
   options.end_time = test_entries[3].time;
+  options.include_all_starred = false;
   QueryHistory(std::wstring(L"some"), options, &results);
   EXPECT_EQ(1, results.size());
   EXPECT_TRUE(NthResultIs(results, 0, 1));
@@ -254,9 +295,10 @@ TEST_F(HistoryQueryTest, FTSCount) {
   // get the N most recent entries.
   options.max_count = 2;
   QueryHistory(std::wstring(L"some"), options, &results);
-  EXPECT_EQ(2, results.size());
-  EXPECT_TRUE(NthResultIs(results, 0, 2));
-  EXPECT_TRUE(NthResultIs(results, 1, 3));
+  EXPECT_EQ(3, results.size());
+  EXPECT_TRUE(NthResultIs(results, 0, 4));
+  EXPECT_TRUE(NthResultIs(results, 1, 2));
+  EXPECT_TRUE(NthResultIs(results, 2, 3));
 
   // Now query a subset of the pages and limit by N items. "FOO" should match
   // the 2nd & 3rd pages, but we should only get the 3rd one because of the one

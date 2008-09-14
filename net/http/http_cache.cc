@@ -1,12 +1,36 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "net/http/http_cache.h"
 
 #include <algorithm>
 
-#include "base/compiler_specific.h"
 #include "base/message_loop.h"
 #include "base/pickle.h"
 #include "base/ref_counted.h"
@@ -16,10 +40,13 @@
 #include "net/base/net_errors.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/http/http_network_layer.h"
+#include "net/http/http_proxy_service.h"
 #include "net/http/http_request_info.h"
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
 #include "net/http/http_util.h"
+
+#pragma warning(disable: 4355)
 
 namespace net {
 
@@ -143,9 +170,8 @@ std::string HttpCache::GenerateCacheKey(const HttpRequestInfo* request) {
 
 //-----------------------------------------------------------------------------
 
-HttpCache::ActiveEntry::ActiveEntry(disk_cache::Entry* e)
+HttpCache::ActiveEntry::ActiveEntry(disk_cache::Entry *e)
     : disk_entry(e),
-      writer(NULL),
       will_process_pending_queue(false),
       doomed(false) {
 }
@@ -170,12 +196,9 @@ class HttpCache::Transaction : public HttpTransaction,
         read_offset_(0),
         effective_load_flags_(0),
         final_upload_progress_(0),
-        ALLOW_THIS_IN_INITIALIZER_LIST(
-            network_info_callback_(this, &Transaction::OnNetworkInfoAvailable)),
-        ALLOW_THIS_IN_INITIALIZER_LIST(
-            network_read_callback_(this, &Transaction::OnNetworkReadCompleted)),
-        ALLOW_THIS_IN_INITIALIZER_LIST(
-            cache_read_callback_(this, &Transaction::OnCacheReadCompleted)) {
+        network_info_callback_(this, &Transaction::OnNetworkInfoAvailable),
+        network_read_callback_(this, &Transaction::OnNetworkReadCompleted),
+        cache_read_callback_(this, &Transaction::OnCacheReadCompleted) {
     AddRef();  // Balanced in Destroy
   }
 
@@ -608,7 +631,7 @@ void HttpCache::Transaction::SetRequest(const HttpRequestInfo* request) {
                                request_->extra_headers.end(),
                                "\r\n");
   while (it.GetNext()) {
-    for (size_t i = 0; i < ARRAYSIZE_UNSAFE(kSpecialHeaders); ++i) {
+    for (size_t i = 0; i < arraysize(kSpecialHeaders); ++i) {
       if (HeaderMatches(it, kSpecialHeaders[i].search)) {
         effective_load_flags_ |= kSpecialHeaders[i].load_flag;
         break;
@@ -709,7 +732,7 @@ bool HttpCache::Transaction::RequiresValidation() {
   //  - make sure we have a matching request method
   //  - watch out for cached responses that depend on authentication
   // In playback mode, nothing requires validation.
-  if (cache_->mode() == net::HttpCache::PLAYBACK)
+  if (mode_ == PLAYBACK)
     return false;
 
   if (effective_load_flags_ & LOAD_VALIDATE_CACHE)
@@ -917,21 +940,21 @@ void HttpCache::Transaction::OnCacheReadCompleted(int result) {
 
 //-----------------------------------------------------------------------------
 
-HttpCache::HttpCache(const ProxyInfo* proxy_info,
+HttpCache::HttpCache(const HttpProxyInfo* proxy_info,
                      const std::wstring& cache_dir,
                      int cache_size)
     : disk_cache_dir_(cache_dir),
       mode_(NORMAL),
       network_layer_(HttpNetworkLayer::CreateFactory(proxy_info)),
-      ALLOW_THIS_IN_INITIALIZER_LIST(task_factory_(this)),
+      task_factory_(this),
       in_memory_cache_(false),
       cache_size_(cache_size) {
 }
 
-HttpCache::HttpCache(const ProxyInfo* proxy_info, int cache_size)
+HttpCache::HttpCache(const HttpProxyInfo* proxy_info, int cache_size)
     : mode_(NORMAL),
       network_layer_(HttpNetworkLayer::CreateFactory(proxy_info)),
-      ALLOW_THIS_IN_INITIALIZER_LIST(task_factory_(this)),
+      task_factory_(this),
       in_memory_cache_(true),
       cache_size_(cache_size) {
 }
@@ -941,7 +964,7 @@ HttpCache::HttpCache(HttpTransactionFactory* network_layer,
     : mode_(NORMAL),
       network_layer_(network_layer),
       disk_cache_(disk_cache),
-      ALLOW_THIS_IN_INITIALIZER_LIST(task_factory_(this)),
+      task_factory_(this),
       in_memory_cache_(false),
       cache_size_(0) {
 }
@@ -1093,7 +1116,7 @@ bool HttpCache::WriteResponseInfo(disk_cache::Entry* disk_entry,
     response_info->vary_data.Persist(&pickle);
 
   const char* data = static_cast<const char*>(pickle.data());
-  int len = static_cast<int>(pickle.size());
+  int len = pickle.size();
 
   return disk_entry->WriteData(kResponseInfoIndex, 0, data, len, NULL,
                                true) == len;
@@ -1172,6 +1195,7 @@ HttpCache::ActiveEntry* HttpCache::ActivateEntry(
     const std::string& key,
     disk_cache::Entry* disk_entry) {
   ActiveEntry* entry = new ActiveEntry(disk_entry);
+  entry->writer = NULL;
   active_entries_[key] = entry;
   return entry;
 }
@@ -1333,4 +1357,3 @@ void HttpCache::OnProcessPendingQueue(ActiveEntry* entry) {
 //-----------------------------------------------------------------------------
 
 }  // namespace net
-

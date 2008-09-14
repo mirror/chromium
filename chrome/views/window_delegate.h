@@ -1,28 +1,46 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_VIEWS_WINDOW_DELEGATE_H_
-#define CHROME_VIEWS_WINDOW_DELEGATE_H_
+#ifndef CHROME_VIEWS_WINDOW_DELEGATE_H__
+#define CHROME_VIEWS_WINDOW_DELEGATE_H__
 
+#include <atlbase.h>
+#include <atlapp.h>
+#include <atlmisc.h>
 #include <string>
 
-#include "base/scoped_ptr.h"
-
-class SkBitmap;
-
-// TODO(maruel):  Remove once gfx::Rect is used instead.
-namespace WTL {
-class CRect;
-}
-using WTL::CRect;
+#include "skia/include/SkBitmap.h"
 
 namespace ChromeViews {
 
-class ClientView;
 class DialogDelegate;
 class View;
-class Window;
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -35,9 +53,6 @@ class Window;
 ///////////////////////////////////////////////////////////////////////////////
 class WindowDelegate {
  public:
-  WindowDelegate();
-  virtual ~WindowDelegate();
-
   virtual DialogDelegate* AsDialogDelegate() { return NULL; }
 
   // Returns true if the window can be resized.
@@ -85,16 +100,17 @@ class WindowDelegate {
   }
 
   // Returns the icon to be displayed in the window.
-  virtual SkBitmap GetWindowIcon();
+  virtual SkBitmap GetWindowIcon() {
+    return SkBitmap();
+  }
 
   // Returns true if a window icon should be shown.
   virtual bool ShouldShowWindowIcon() const {
     return false;
   }
 
-  // Execute a command in the window's controller. Returns true if the command
-  // was handled, false if it was not.
-  virtual bool ExecuteWindowsCommand(int command_id) { return false; }
+  // Execute a command in the window's controller.
+  virtual void ExecuteWindowsCommand(int command_id) { }
 
   // Saves the specified bounds, maximized and always on top state as the
   // window's position to/ be restored the next time it is shown.
@@ -112,36 +128,8 @@ class WindowDelegate {
 
   // Called when the window closes.
   virtual void WindowClosing() { }
-
-  // Returns the View that is contained within this Window.
-  virtual View* GetContentsView() {
-    return NULL;
-  }
-
-  // Called by the Window to create the Client View used to host the contents
-  // of the window.
-  virtual ClientView* CreateClientView(Window* window);
-
-  // An accessor to the Window this delegate is bound to.
-  Window* window() const { return window_.get(); }
-
- protected:
-  // Releases the Window* we maintain. This should be done by a delegate in its
-  // WindowClosing handler if it intends to be re-cycled to be used on a
-  // different Window.
-  void ReleaseWindow();
-
- private:
-  friend Window;
-  // This is a little unusual. We use a scoped_ptr here because it's
-  // initialized to NULL automatically. We do this because we want to allow
-  // people using this helper to not have to call a ctor on this object.
-  // Instead we just release the owning ref this pointer has when we are
-  // destroyed.
-  scoped_ptr<Window> window_;
 };
 
 }  // namespace ChromeViews
 
-#endif  // CHROME_VIEWS_WINDOW_DELEGATE_H_
-
+#endif  // #ifndef CHROME_VIEWS_WINDOW_DELEGATE_H__

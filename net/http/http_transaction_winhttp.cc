@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "net/http/http_transaction_winhttp.h"
 
@@ -9,9 +34,7 @@
 #include "base/lock.h"
 #include "base/memory_debug.h"
 #include "base/message_loop.h"
-#include "base/string_piece.h"
 #include "base/string_util.h"
-#include "base/sys_string_conversions.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/auth_cache.h"
 #include "net/base/cert_status_flags.h"
@@ -22,9 +45,9 @@
 #include "net/base/ssl_config_service.h"
 #include "net/base/upload_data_stream.h"
 #include "net/http/cert_status_cache.h"
+#include "net/http/http_proxy_resolver_winhttp.h"
 #include "net/http/http_request_info.h"
 #include "net/http/winhttp_request_throttle.h"
-#include "net/proxy/proxy_resolver_winhttp.h"
 
 #pragma comment(lib, "winhttp.lib")
 #pragma warning(disable: 4355)
@@ -56,7 +79,6 @@ static int TranslateOSError(DWORD error) {
       return ERR_ABORTED;
     case ERROR_WINHTTP_SECURE_CHANNEL_ERROR:
     case ERROR_WINHTTP_SECURE_FAILURE:
-    case SEC_E_ILLEGAL_MESSAGE:
       return ERR_SSL_PROTOCOL_ERROR;
     case ERROR_WINHTTP_CLIENT_AUTH_CERT_NEEDED:
       return ERR_SSL_CLIENT_AUTH_CERT_NEEDED;
@@ -198,7 +220,7 @@ class HttpTransactionWinHttp::Session
   // The message loop of the thread where the session was created.
   MessageLoop* message_loop() { return message_loop_; }
 
-  ProxyService* proxy_service() { return proxy_service_.get(); }
+  HttpProxyService* proxy_service() { return proxy_service_.get(); }
 
   // Gets the HTTP authentication cache for the session.
   AuthCache* auth_cache() { return &auth_cache_; }
@@ -242,8 +264,8 @@ class HttpTransactionWinHttp::Session
   HINTERNET internet_;
   HINTERNET internet_no_tls_;
   MessageLoop* message_loop_;
-  scoped_ptr<ProxyService> proxy_service_;
-  scoped_ptr<ProxyResolver> proxy_resolver_;
+  scoped_ptr<HttpProxyService> proxy_service_;
+  scoped_ptr<HttpProxyResolver> proxy_resolver_;
   AuthCache auth_cache_;
 
   // This event object is used when destroying a transaction.  It is given
@@ -330,8 +352,8 @@ bool HttpTransactionWinHttp::Session::Init() {
   if (!internet_)
     return false;
 
-  proxy_resolver_.reset(new ProxyResolverWinHttp());
-  proxy_service_.reset(new ProxyService(proxy_resolver_.get()));
+  proxy_resolver_.reset(new HttpProxyResolverWinHttp());
+  proxy_service_.reset(new HttpProxyService(proxy_resolver_.get()));
 
   ConfigureSSL();
 
@@ -766,7 +788,7 @@ void HttpTransactionWinHttp::Factory::Suspend(bool suspend) {
 // Transaction ----------------------------------------------------------------
 
 HttpTransactionWinHttp::HttpTransactionWinHttp(Session* session,
-                                               const ProxyInfo* info)
+                                               const HttpProxyInfo* info)
     : session_(session),
       request_(NULL),
       load_flags_(0),
@@ -942,9 +964,6 @@ int HttpTransactionWinHttp::Restart(CompletionCallback* callback) {
 
   // ensure that we only have one asynchronous call at a time.
   DCHECK(!callback_);
-
-  content_length_remaining_ = -1;
-  upload_progress_ = 0;
 
   int rv = SendRequest();
   if (rv != ERR_IO_PENDING)
@@ -1136,7 +1155,7 @@ bool HttpTransactionWinHttp::OpenRequest() {
   // Add request headers.  WinHttp is known to convert the headers to bytes
   // using the system charset converter, so we use the same converter to map
   // our request headers to UTF-16 before handing the data to WinHttp.
-  std::wstring request_headers = base::SysNativeMBToWide(GetRequestHeaders());
+  std::wstring request_headers = NativeMBToWide(GetRequestHeaders());
 
   DWORD len = static_cast<DWORD>(request_headers.size());
   if (!WinHttpAddRequestHeaders(request_handle_,
@@ -1254,7 +1273,7 @@ int HttpTransactionWinHttp::SendRequest() {
   if (proxy_info_.is_direct())
     connect_peer_ = request_->url.GetOrigin().spec();
   else
-    connect_peer_ = proxy_info_.proxy_server();
+    connect_peer_ = WideToASCII(proxy_info_.proxy_server());
   DWORD_PTR ctx = reinterpret_cast<DWORD_PTR>(session_callback_.get());
   if (!session_->request_throttle()->SubmitRequest(connect_peer_,
                                                    request_handle_,
@@ -1471,8 +1490,7 @@ int HttpTransactionWinHttp::DidReceiveHeaders() {
   // From experimentation, it appears that WinHttp translates non-ASCII bytes
   // found in the response headers to UTF-16 assuming that they are encoded
   // using the default system charset.  We attempt to undo that here.
-  response_.headers =
-      new HttpResponseHeaders(base::SysWideToNativeMB(raw_headers));
+  response_.headers = new HttpResponseHeaders(WideToNativeMB(raw_headers));
 
   // WinHTTP truncates a response longer than 2GB.  Perhaps it stores the
   // response's content length in a signed 32-bit integer.  We fail rather
@@ -1523,15 +1541,15 @@ void HttpTransactionWinHttp::PopulateAuthChallenge() {
     return;
 
   // TODO(darin): Need to support RFC 2047 encoded realm strings.  For now, we
-  // limit our support to ASCII and "native code page" realm strings.
-  std::wstring auth_header = base::SysNativeMBToWide(header_value);
+  // just match Mozilla and limit our support to ASCII realm strings.
+  std::wstring auth_header = ASCIIToWide(header_value);
 
   // auth_header is a string which looks like:
   // Digest realm="The Awesome Site", domain="/page.html", ...
   std::wstring::const_iterator space = find(auth_header.begin(),
-                                            auth_header.end(), L' ');
+                                            auth_header.end(), ' ');
   auth_info->scheme.assign(auth_header.begin(), space);
-  auth_info->realm = GetHeaderParamValue(auth_header, L"realm");
+  auth_info->realm = net_util::GetHeaderParamValue(auth_header, L"realm");
 
   // Now auth_info has been fully populated.  Before we swap it with
   // response_.auth_challenge, update the auth cache key and remove any
@@ -1787,4 +1805,3 @@ void HttpTransactionWinHttp::HandleStatusCallback(DWORD status,
 }
 
 }  // namespace net
-

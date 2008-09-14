@@ -1,12 +1,37 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H_
-#define CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H_
+#ifndef CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H__
+#define CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H__
 
-#include "chrome/browser/bookmarks/bookmark_bar_model.h"
-#include "chrome/browser/bookmarks/bookmark_drag_data.h"
+#include "chrome/browser/bookmark_bar_model.h"
+#include "chrome/browser/bookmark_drag_data.h"
 #include "chrome/common/slide_animation.h"
 #include "chrome/views/label.h"
 #include "chrome/views/menu.h"
@@ -14,18 +39,17 @@
 #include "chrome/views/view.h"
 #include "chrome/views/view_menu_delegate.h"
 
-class Browser;
 class PageNavigator;
 class PrefService;
+class Browser;
 
 namespace {
+class BookmarkNodeMenuController;
+// See description in declaration at bookmark_bar_view.cc.
+class ModelChangedListener;
 class MenuRunner;
 class ButtonSeparatorView;
 struct DropInfo;
-}
-
-namespace ChromeViews {
-class MenuItemView;
 }
 
 // BookmarkBarView renders the BookmarkBarModel.  Each starred entry
@@ -45,31 +69,11 @@ class BookmarkBarView : public ChromeViews::View,
                         public ChromeViews::ContextMenuController,
                         public ChromeViews::DragController,
                         public AnimationDelegate {
+  friend class BookmarkNodeMenuController;
   friend class MenuRunner;
   friend class ShowFolderMenuTask;
 
  public:
-  // Interface implemented by controllers/views that need to be notified any
-  // time the model changes, typically to cancel an operation that is showing
-  // data from the model such as a menu. This isn't intended as a general
-  // way to be notified of changes, rather for cases where a controller/view is
-  // showing data from the model in a modal like setting and needs to cleanly
-  // exit the modal loop if the model changes out from under it.
-  //
-  // A controller/view that needs this notification should install itself as the
-  // ModelChangeListener via the SetModelChangedListener method when shown and
-  // reset the ModelChangeListener of the BookmarkBarView when it closes by way
-  // of either the SetModelChangedListener method or the
-  // ClearModelChangedListenerIfEquals method.
-  class ModelChangedListener {
-   public:
-    virtual ~ModelChangedListener() {}
-
-    // Invoked when the model changes. Should cancel the edit and close any
-    // dialogs.
-    virtual void ModelChanged() = 0;
-  };
-
   explicit BookmarkBarView(Profile* profile, Browser* browser);
   virtual ~BookmarkBarView();
 
@@ -135,39 +139,12 @@ class BookmarkBarView : public ChromeViews::View,
   // True if we're supposed to draw the bookmarks bar in the new tab style.
   bool IsNewTabPage();
 
-  // Whether or not we are animating.
-  bool IsAnimating() { return size_animation_->IsAnimating(); }
-
   // SlideAnimationDelegate implementation.
   void AnimationProgressed(const Animation* animation);
   void AnimationEnded(const Animation* animation);
 
-  // Returns the button at the specified index.
-  ChromeViews::TextButton* GetBookmarkButton(int index);
-
-  // Returns the button responsible for showing bookmarks in the other bookmark
-  // folder.
-  ChromeViews::TextButton* other_bookmarked_button() const {
-    return other_bookmarked_button_;
-  }
-
-  // Returns the active MenuItemView, or NULL if a menu isn't showing.
-  ChromeViews::MenuItemView* GetMenu();
-
-  // Returns the drop MenuItemView, or NULL if a menu isn't showing.
-  ChromeViews::MenuItemView* GetDropMenu();
-
-  // Returns the context menu, or null if one isn't showing.
-  ChromeViews::MenuItemView* GetContextMenu();
-
-  // Returns the button used when not all the items on the bookmark bar fit.
-  ChromeViews::TextButton* overflow_button() const { return overflow_button_; }
-
   // Maximum size of buttons on the bookmark bar.
   static const int kMaxButtonWidth;
-
-  // If true we're running tests. This short circuits a couple of animations.
-  static bool testing_;
 
  private:
   // Task that invokes ShowDropFolderForNode when run. ShowFolderDropMenuTask
@@ -197,7 +174,7 @@ class BookmarkBarView : public ChromeViews::View,
     BookmarkBarView* view_;
     BookmarkBarNode* node_;
 
-    DISALLOW_COPY_AND_ASSIGN(ShowFolderDropMenuTask);
+    DISALLOW_EVIL_CONSTRUCTORS(ShowFolderDropMenuTask);
   };
 
   // Creates recent bookmark button and when visible button as well as
@@ -215,12 +192,12 @@ class BookmarkBarView : public ChromeViews::View,
   // bookmark bar model has.
   int GetBookmarkButtonCount();
 
+  // Returns the button at the specified index.
+  ChromeViews::TextButton* GetBookmarkButton(int index);
+
   // Invoked when the bookmark bar model has finished loading. Creates a button
   // for each of the children of the root node from the model.
   virtual void Loaded(BookmarkBarModel* model);
-
-  // Invoked when the model is being deleted.
-  virtual void BookmarkModelBeingDeleted(BookmarkBarModel* model);
 
   // Invokes added followed by removed.
   virtual void BookmarkNodeMoved(BookmarkBarModel* model,
@@ -315,10 +292,15 @@ class BookmarkBarView : public ChromeViews::View,
   // visible. Updates the preferences to match the users choice as appropriate.
   virtual void ExecuteCommand(int id);
 
-  // NotificationService method.
+  // Notification that the HistoryService is up an running. Removes us as
+  // a listener on the notification service and invokes
+  // ProfileHasValidHistoryService.
   virtual void Observe(NotificationType type,
                        const NotificationSource& source,
                        const NotificationDetails& details);
+
+  // Invoked when the profile has a history service. Recreates the models.
+  void ProfileHasValidHistoryService();
 
   // If we have registered an observer on the notification service, this
   // unregisters it. This does nothing if we have not installed ourself as an
@@ -422,7 +404,7 @@ class BookmarkBarView : public ChromeViews::View,
 
   ButtonSeparatorView* bookmarks_separator_view_;
 
-  // Owning browser. This is NULL duing testing.
+  // Owning browser.
   Browser* browser_;
 
   // Animation controlling showing and hiding of the bar.
@@ -436,8 +418,7 @@ class BookmarkBarView : public ChromeViews::View,
   // overflow_button_ or a button on the bar.
   ChromeViews::BaseButton* throbbing_view_;
 
-  DISALLOW_COPY_AND_ASSIGN(BookmarkBarView);
+  DISALLOW_EVIL_CONSTRUCTORS(BookmarkBarView);
 };
 
-#endif  // CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H_
-
+#endif  // CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H__

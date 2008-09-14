@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #ifndef CHROME_BROWSER_SESSION_SERVICE_H__
 #define CHROME_BROWSER_SESSION_SERVICE_H__
@@ -13,8 +38,6 @@
 #include "base/time.h"
 #include "chrome/browser/browser_type.h"
 #include "chrome/browser/cancelable_request.h"
-#include "chrome/browser/session_id.h"
-#include "chrome/common/notification_service.h"
 #include "chrome/common/page_transition_types.h"
 #include "chrome/common/stl_util-inl.h"
 #include "googleurl/src/gurl.h"
@@ -24,12 +47,37 @@ class NavigationController;
 class NavigationEntry;
 class Profile;
 class TabContents;
+class Thread;
+class Timer;
 class SessionBackend;
 class SessionCommand;
 
-namespace base {
-class Thread;
-}
+// SessionID ------------------------------------------------------------------
+
+// Uniquely identifies a session, tab or window.
+
+class SessionID {
+  friend class SessionService;
+ public:
+  typedef int32 id_type;
+
+  SessionID();
+  ~SessionID() {}
+
+  // Returns the underlying id.
+  id_type id() const { return id_; }
+
+  // Returns true if the two commands are equal.
+  bool Equals(const SessionID& other) const;
+
+ private:
+  explicit SessionID(id_type id) : id_(id) {}
+
+  // Resets the id. This is used when restoring a session
+  void set_id(id_type id) { id_ = id; }
+
+  id_type id_;
+};
 
 // TabNavigation  ------------------------------------------------------------
 
@@ -172,7 +220,6 @@ struct SessionWindow {
 // of the browser.
 
 class SessionService : public CancelableRequestProvider,
-                       public NotificationObserver,
                        public base::RefCountedThreadSafe<SessionService> {
   friend class SessionServiceTestHelper;
  public:
@@ -325,10 +372,6 @@ class SessionService : public CancelableRequestProvider,
 
   // Various initialization; called from the constructor.
   void Init(const std::wstring& path);
-
-  virtual void Observe(NotificationType type,
-                       const NotificationSource& source,
-                       const NotificationDetails& details);
 
   // Get*Session call into this to schedule the request. The request
   // does NOT directly invoke the callback, rather the callback invokes
@@ -553,7 +596,7 @@ class SessionService : public CancelableRequestProvider,
 
   // Thread backend tasks are run on. This comes from the profile, and is
   // null during testing.
-  base::Thread* backend_thread_;
+  Thread* backend_thread_;
 
   // Are there any open open tabbed browsers?
   bool has_open_tabbed_browsers_;
@@ -563,4 +606,3 @@ class SessionService : public CancelableRequestProvider,
 };
 
 #endif  // CHROME_BROWSER_SESSION_SERVICE_H__
-

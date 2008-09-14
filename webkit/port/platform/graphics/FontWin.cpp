@@ -32,7 +32,7 @@
 #include "SimpleFontData.h"
 #include "UniscribeStateTextRun.h"
 
-#include "base/gfx/platform_canvas_win.h"
+#include "base/gfx/platform_canvas.h"
 #include "graphics/SkiaUtils.h"
 #include "webkit/glue/webkit_glue.h"
 

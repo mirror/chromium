@@ -42,7 +42,6 @@
 
 #include "base/file_util.h"
 #include "base/string_util.h"
-#include "base/sys_string_conversions.h"
 #include "webkit/glue/plugins/plugin_list.h"
 #include "glue/glue_util.h"
 #include "glue/webkit_glue.h"
@@ -110,9 +109,9 @@ bool PluginInfoStore::supportsMIMEType(const WebCore::String &mime_type)
 
     for (size_t i = 0; i < g_plugins.size(); ++i) {
         for (size_t j = 0; j < g_plugins[i].mime_types.size(); ++j) {
-            if (net::MatchesMimeType(
+            if (mime_util::MatchesMimeType(
                     g_plugins[i].mime_types[j].mime_type,
-                    base::SysWideToNativeMB(converted_mime_type))) {
+                    WideToNativeMB(converted_mime_type))) {
                 // Don't allow wildcard matches here as this will result in
                 // plugins being instantiated in cases where they should not.
                 // For e.g. clicking on a link which causes a file to be

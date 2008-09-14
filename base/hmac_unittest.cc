@@ -1,29 +1,55 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Program to generate an HMAC-SHA1 digest for a given string, for use in
+// calculating and verifying SafeBrowsing MACs.
 
 #include <string>
 
 #include "base/hmac.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "base/no_windows2000_unittest.h"
 
+static const int kKeySize = 16;
 static const int kDigestSize = 20;
 
-TEST(HMACTest, HmacSafeBrowsingResponseTest) {
-  const int kKeySize = 16;
+// Client key.
+const unsigned char kClientKey[kKeySize] =
+    { 0xbf, 0xf6, 0x83, 0x4b, 0x3e, 0xa3, 0x23, 0xdd,
+      0x96, 0x78, 0x70, 0x8e, 0xa1, 0x9d, 0x3b, 0x40 };
 
-  // Client key.
-  const unsigned char kClientKey[kKeySize] =
-      { 0xbf, 0xf6, 0x83, 0x4b, 0x3e, 0xa3, 0x23, 0xdd,
-        0x96, 0x78, 0x70, 0x8e, 0xa1, 0x9d, 0x3b, 0x40 };
+// Expected HMAC result using kMessage and kClientKey.
+const unsigned char kReceivedHmac[kDigestSize] =
+    { 0xb9, 0x3c, 0xd6, 0xf0, 0x49, 0x47, 0xe2, 0x52,
+      0x59, 0x7a, 0xbd, 0x1f, 0x2b, 0x4c, 0x83, 0xad,
+      0x86, 0xd2, 0x48, 0x85 };
 
-  // Expected HMAC result using kMessage and kClientKey.
-  const unsigned char kReceivedHmac[kDigestSize] =
-      { 0xb9, 0x3c, 0xd6, 0xf0, 0x49, 0x47, 0xe2, 0x52,
-        0x59, 0x7a, 0xbd, 0x1f, 0x2b, 0x4c, 0x83, 0xad,
-        0x86, 0xd2, 0x48, 0x85 };
-
-  const char kMessage[] =
+const char kMessage[] =
 "n:1896\ni:goog-malware-shavar\nu:s.ytimg.com/safebrowsing/rd/goog-malware-shav"
 "ar_s_445-450\nu:s.ytimg.com/safebrowsing/rd/goog-malware-shavar_s_439-444\nu:s"
 ".ytimg.com/safebrowsing/rd/goog-malware-shavar_s_437\nu:s.ytimg.com/safebrowsi"
@@ -49,115 +75,20 @@ TEST(HMACTest, HmacSafeBrowsingResponseTest) {
 "-phish-shavar_a_2629-2631\nu:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_2"
 "626-2628\nu:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_2625\n";
 
+// TODO(paulg): Bug: http://b/1084719, skip this test on Windows 2000 until
+//              this bug is fixed.
+class HMACTest : public NoWindows2000Test<testing::Test> {
+};
+
+TEST_F(HMACTest, HmacSafeBrowsingResponseTest) {
+  if (IsTestCaseDisabled())
+    return;
+
   std::string message_data(kMessage);
 
-  base::HMAC hmac(base::HMAC::SHA1, kClientKey, kKeySize);
+  HMAC hmac(HMAC::SHA1, kClientKey, kKeySize);
   unsigned char calculated_hmac[kDigestSize];
 
   EXPECT_TRUE(hmac.Sign(message_data, calculated_hmac, kDigestSize));
   EXPECT_EQ(memcmp(kReceivedHmac, calculated_hmac, kDigestSize), 0);
-}
-
-// Test cases from RFC 2202 section 3
-TEST(HMACTest, RFC2202TestCases) {
-  const struct {
-    const char *key;
-    const int key_len;
-    const char *data;
-    const int data_len;
-    const char *digest;
-  } cases[] = {
-    { "\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B\x0B"
-          "\x0B\x0B\x0B\x0B", 20,
-      "Hi There", 8,
-      "\xB6\x17\x31\x86\x55\x05\x72\x64\xE2\x8B\xC0\xB6\xFB\x37\x8C\x8E"
-          "\xF1\x46\xBE\x00" },
-    { "Jefe", 4,
-      "what do ya want for nothing?", 28,
-      "\xEF\xFC\xDF\x6A\xE5\xEB\x2F\xA2\xD2\x74\x16\xD5\xF1\x84\xDF\x9C"
-          "\x25\x9A\x7C\x79" },
-    { "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA", 20,
-      "\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD"
-          "\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD"
-          "\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD"
-          "\xDD\xDD", 50,
-      "\x12\x5D\x73\x42\xB9\xAC\x11\xCD\x91\xA3\x9A\xF4\x8A\xA1\x7B\x4F"
-          "\x63\xF1\x75\xD3" },
-    { "\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F\x10"
-          "\x11\x12\x13\x14\x15\x16\x17\x18\x19", 25,
-      "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
-          "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
-          "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
-          "\xCD\xCD", 50,
-      "\x4C\x90\x07\xF4\x02\x62\x50\xC6\xBC\x84\x14\xF9\xBF\x50\xC8\x6C"
-          "\x2D\x72\x35\xDA" },
-    { "\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C\x0C"
-          "\x0C\x0C\x0C\x0C", 20,
-      "Test With Truncation", 20,
-      "\x4C\x1A\x03\x42\x4B\x55\xE0\x7F\xE7\xF2\x7B\xE1\xD5\x8B\xB9\x32"
-          "\x4A\x9A\x5A\x04" },
-    { "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA",
-      80,
-      "Test Using Larger Than Block-Size Key - Hash Key First", 54,
-      "\xAA\x4A\xE5\xE1\x52\x72\xD0\x0E\x95\x70\x56\x37\xCE\x8A\x3B\x55"
-          "\xED\x40\x21\x12" },
-    { "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-          "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA",
-      80,
-      "Test Using Larger Than Block-Size Key and Larger "
-          "Than One Block-Size Data", 73,
-      "\xE8\xE9\x9D\x0F\x45\x23\x7D\x78\x6D\x6B\xBA\xA7\x96\x5C\x78\x08"
-          "\xBB\xFF\x1A\x91" }
-  };
-
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    base::HMAC hmac(base::HMAC::SHA1,
-                    reinterpret_cast<const unsigned char*>(cases[i].key),
-                    cases[i].key_len);
-    std::string data_string(cases[i].data, cases[i].data_len);
-    unsigned char digest[kDigestSize];
-    EXPECT_TRUE(hmac.Sign(data_string, digest, kDigestSize));
-    EXPECT_EQ(memcmp(cases[i].digest, digest, kDigestSize), 0);
-  }
-}
-
-TEST(HMACTest, HMACObjectReuse) {
-  const char *key =
-      "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-      "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-      "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-      "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA"
-      "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA";
-  const int key_len = 80;
-
-  const struct {
-    const char *data;
-    const int data_len;
-    const char *digest;
-  } cases[] = {
-    { "Test Using Larger Than Block-Size Key - Hash Key First", 54,
-      "\xAA\x4A\xE5\xE1\x52\x72\xD0\x0E\x95\x70\x56\x37\xCE\x8A\x3B\x55"
-          "\xED\x40\x21\x12" },
-    { "Test Using Larger Than Block-Size Key and Larger "
-          "Than One Block-Size Data", 73,
-      "\xE8\xE9\x9D\x0F\x45\x23\x7D\x78\x6D\x6B\xBA\xA7\x96\x5C\x78\x08"
-          "\xBB\xFF\x1A\x91" }
-  };
-
-  base::HMAC hmac(base::HMAC::SHA1,
-                  reinterpret_cast<const unsigned char*>(key), key_len);
-  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); ++i) {
-    std::string data_string(cases[i].data, cases[i].data_len);
-    unsigned char digest[kDigestSize];
-    EXPECT_TRUE(hmac.Sign(data_string, digest, kDigestSize));
-    EXPECT_EQ(memcmp(cases[i].digest, digest, kDigestSize), 0);
-  }
 }

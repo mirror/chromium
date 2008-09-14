@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Windows.h>
 #include <objbase.h>
@@ -12,6 +37,7 @@
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/task.h"
+#include "base/timer.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download_manager.h"
 #include "chrome/browser/profile.h"
@@ -22,7 +48,6 @@
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/win_util.h"
 #include "chrome/common/win_safe_util.h"
-#include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_context.h"
 
@@ -136,6 +161,8 @@ bool DownloadFile::Open(const wchar_t* open_mode) {
 DownloadFileManager::DownloadFileManager(MessageLoop* ui_loop,
                                          ResourceDispatcherHost* rdh)
     : next_id_(0),
+      update_task_(NULL),
+      update_timer_(NULL),
       ui_loop_(ui_loop),
       resource_dispatcher_host_(rdh) {
 }
@@ -143,6 +170,7 @@ DownloadFileManager::DownloadFileManager(MessageLoop* ui_loop,
 DownloadFileManager::~DownloadFileManager() {
   // Check for clean shutdown.
   DCHECK(downloads_.empty());
+  DCHECK(!update_timer_ && !update_task_);
   ui_progress_.clear();
 }
 
@@ -193,15 +221,22 @@ void DownloadFileManager::RemoveDownloadFromUIProgress(int id) {
 // regularly controlled interval.
 void DownloadFileManager::StartUpdateTimer() {
   DCHECK(MessageLoop::current() == ui_loop_);
-  if (!update_timer_.IsRunning()) {
-    update_timer_.Start(TimeDelta::FromMilliseconds(kUpdatePeriodMs), this,
-                        &DownloadFileManager::UpdateInProgressDownloads);
+  if (update_timer_ == NULL) {
+    update_task_ = new DownloadFileUpdateTask(this);
+    TimerManager* tm = ui_loop_->timer_manager();
+    update_timer_ = tm->StartTimer(kUpdatePeriodMs, update_task_, true);
   }
 }
 
 void DownloadFileManager::StopUpdateTimer() {
   DCHECK(MessageLoop::current() == ui_loop_);
-  update_timer_.Stop();
+  if (update_timer_ && update_task_) {
+    ui_loop_->timer_manager()->StopTimer(update_timer_);
+    delete update_timer_;
+    update_timer_ = NULL;
+    delete update_task_;
+    update_task_ = NULL;
+  }
 }
 
 // Called on the IO thread once the ResourceDispatcherHost has decided that a
@@ -404,7 +439,7 @@ void DownloadFileManager::DownloadUrl(const GURL& url,
                                       int render_view_id,
                                       URLRequestContext* request_context) {
   DCHECK(MessageLoop::current() == ui_loop_);
-  base::Thread* thread = g_browser_process->io_thread();
+  Thread* thread = g_browser_process->io_thread();
   if (thread) {
     thread->message_loop()->PostTask(FROM_HERE,
         NewRunnableMethod(this,

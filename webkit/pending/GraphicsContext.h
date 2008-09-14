@@ -41,7 +41,7 @@
 
 #if PLATFORM(CG)
 typedef struct CGContext PlatformGraphicsContext;
-#elif PLATFORM(CAIRO) || PLATFORM(SKIA)
+#elif PLATFORM(CAIRO)
 // TODO(jhaas)
 // We're currently masquerading as Cairo. Change to use PLATFORM(SKIA)
 //typedef struct _cairo PlatformGraphicsContext;
@@ -287,7 +287,8 @@ namespace WebCore {
         PlatformPath* currentPath();
 #endif
 
-#if PLATFORM(CAIRO) || PLATFORM(SKIA)
+// TODO(jhaas): change to PLATFORM(SKIA)
+#if PLATFORM(CAIRO)
         void setFillRule(WindRule);
         PlatformPath* currentPath();
 #endif

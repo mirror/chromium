@@ -1,0 +1,3 @@
+1: String properties (should be '0,1,2,'): '0,1,2,'
+2: String properties (should be '0,1,2,getClass,'): '0,1,2,getClass,'
+3: String properties (should be '0,1,2,'): '0,1,2,'

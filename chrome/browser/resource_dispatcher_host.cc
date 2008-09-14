@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // See http://wiki.corp.google.com/twiki/bin/view/Main/ChromeMultiProcessResourceLoading
 
@@ -17,6 +42,7 @@
 #include "chrome/browser/download_manager.h"
 #include "chrome/browser/external_protocol_handler.h"
 #include "chrome/browser/login_prompt.h"
+#include "chrome/browser/navigation_profiler.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/renderer_security_policy.h"
 #include "chrome/browser/render_view_host.h"
@@ -270,7 +296,10 @@ class ResourceDispatcherHost::DownloadEventHandler
         save_as_(save_as),
         buffer_(new DownloadBuffer),
         rdh_(rdh),
-        is_paused_(false) {
+        is_paused_(false),
+        pause_timer_(TimeDelta::FromMilliseconds(kThrottleTimeMs)) {
+    pause_timer_.set_task(
+        NewRunnableMethod(this, &DownloadEventHandler::CheckWriteProgress));
   }
 
   // Not needed, as this event handler ought to be the final resource.
@@ -341,7 +370,7 @@ class ResourceDispatcherHost::DownloadEventHandler
     // We schedule a pause outside of the read loop if there is too much file
     // writing work to do.
     if (buffer_->contents.size() > kLoadsToWrite)
-      StartPauseTimer();
+      pause_timer_.Start();
 
     return true;
   }
@@ -386,7 +415,7 @@ class ResourceDispatcherHost::DownloadEventHandler
 
     // We'll come back later and see if it's okay to unpause the request.
     if (should_pause)
-      StartPauseTimer();
+      pause_timer_.Start();
 
     if (is_paused_ != should_pause) {
       rdh_->PauseRequest(global_id_.render_process_host_id,
@@ -397,11 +426,6 @@ class ResourceDispatcherHost::DownloadEventHandler
   }
 
  private:
-  void StartPauseTimer() {
-    pause_timer_.Start(TimeDelta::FromMilliseconds(kThrottleTimeMs), this,
-                       &DownloadEventHandler::CheckWriteProgress);
-  }
-
   int download_id_;
   ResourceDispatcherHost::GlobalRequestID global_id_;
   int render_view_id_;
@@ -415,7 +439,7 @@ class ResourceDispatcherHost::DownloadEventHandler
   DownloadBuffer* buffer_;
   ResourceDispatcherHost* rdh_;
   bool is_paused_;
-  base::OneShotTimer<DownloadEventHandler> pause_timer_;
+  OneShotTimer pause_timer_;
 
   static const int kReadBufSize = 32768;  // bytes
   static const int kLoadsToWrite = 100;  // number of data buffers queued
@@ -950,7 +974,7 @@ bool ResourceDispatcherHost::BufferedEventHandler::DelayResponse() {
   std::string mime_type;
   request_->GetMimeType(&mime_type);
 
-  if (net::ShouldSniffMimeType(request_->url(), mime_type)) {
+  if (mime_util::ShouldSniffMimeType(request_->url(), mime_type)) {
     // We're going to look at the data before deciding what the content type
     // is.  That means we need to delay sending the ResponseStarted message
     // over the IPC channel.
@@ -995,8 +1019,8 @@ bool ResourceDispatcherHost::BufferedEventHandler::KeepBuffering(
     std::string type_hint, new_type;
     request_->GetMimeType(&type_hint);
 
-    if (!net::SniffMimeType(read_buffer_, bytes_read_, request_->url(),
-                            type_hint, &new_type)) {
+    if (!mime_util::SniffMimeType(read_buffer_, bytes_read_, request_->url(),
+                                  type_hint, &new_type)) {
       // SniffMimeType() returns false if there is not enough data to determine
       // the mime type. However, even if it returns false, it returns a new type
       // that is probably better than the current one.
@@ -1062,10 +1086,10 @@ bool ResourceDispatcherHost::BufferedEventHandler::CompleteResponseStarted(
     if (bytes_read_) {
       // a Read has already occurred and we need to copy the data into the
       // DownloadEventHandler.
-      char *buf = NULL;
-      int buf_len = 0;
+      char *buf;
+      int buf_len;
       download_handler->OnWillRead(request_id, &buf, &buf_len, bytes_read_);
-      CHECK((buf_len >= bytes_read_) && (bytes_read_ >= 0));
+      DCHECK(buf_len >= bytes_read_);
       memcpy(buf, read_buffer_, bytes_read_);
     }
     // Update the renderer with the response headers which will cause it to
@@ -1233,6 +1257,8 @@ class ResourceDispatcherHost::SaveFileEventHandler
 ResourceDispatcherHost::ResourceDispatcherHost(MessageLoop* io_loop)
     : ui_loop_(MessageLoop::current()),
       io_loop_(io_loop),
+      update_load_states_timer_(
+          TimeDelta::FromMilliseconds(kUpdateLoadStatesIntervalMsec)),
       download_file_manager_(new DownloadFileManager(ui_loop_, this)),
       save_file_manager_(new SaveFileManager(ui_loop_, io_loop, this)),
       safe_browsing_(new SafeBrowsingService),
@@ -1240,6 +1266,8 @@ ResourceDispatcherHost::ResourceDispatcherHost(MessageLoop* io_loop)
       plugin_service_(PluginService::GetInstance()),
       method_runner_(this),
       is_shutdown_(false) {
+  update_load_states_timer_.set_task(method_runner_.NewRunnableMethod(
+      &ResourceDispatcherHost::UpdateLoadStates));
 }
 
 ResourceDispatcherHost::~ResourceDispatcherHost() {
@@ -1349,6 +1377,7 @@ void ResourceDispatcherHost::BeginRequest(
   request->set_referrer(request_data.referrer.spec());
   request->SetExtraRequestHeaders(request_data.headers);
   request->set_load_flags(request_data.load_flags);
+  request->set_enable_profiling(g_navigation_profiler.is_profiling());
   request->set_context(request_context);
   request->set_origin_pid(request_data.origin_pid);
 
@@ -1464,6 +1493,7 @@ void ResourceDispatcherHost::BeginDownload(const GURL& url,
 
   request->set_method("GET");
   request->set_referrer(referrer.spec());
+  request->set_enable_profiling(g_navigation_profiler.is_profiling());
   request->set_context(request_context);
 
   ExtraRequestInfo* extra_info =
@@ -1513,6 +1543,7 @@ void ResourceDispatcherHost::BeginSaveFile(const GURL& url,
   URLRequest* request = new URLRequest(url, this);
   request->set_method("GET");
   request->set_referrer(referrer.spec());
+  request->set_enable_profiling(g_navigation_profiler.is_profiling());
   // So far, for saving page, we need fetch content from cache, in the
   // future, maybe we can use a configuration to configure this behavior.
   request->set_load_flags(net::LOAD_ONLY_FROM_CACHE);
@@ -1771,9 +1802,8 @@ void ResourceDispatcherHost::OnReceivedRedirect(URLRequest* request,
     CancelRequest(info->render_process_host_id, info->request_id, false);
 }
 
-void ResourceDispatcherHost::OnAuthRequired(
-    URLRequest* request,
-    net::AuthChallengeInfo* auth_info) {
+void ResourceDispatcherHost::OnAuthRequired(URLRequest* request,
+                                            AuthChallengeInfo* auth_info) {
   // Create a login dialog on the UI thread to get authentication data,
   // or pull from cache and continue on the IO thread.
   // TODO(mpcomplete): We should block the parent tab while waiting for
@@ -1789,7 +1819,7 @@ void ResourceDispatcherHost::OnAuthRequired(
 void ResourceDispatcherHost::OnSSLCertificateError(
     URLRequest* request,
     int cert_error,
-    net::X509Certificate* cert) {
+    X509Certificate* cert) {
   DCHECK(request);
   SSLManager::OnSSLCertificateError(this, request, cert_error, cert, ui_loop_);
 }
@@ -1887,11 +1917,7 @@ void ResourceDispatcherHost::BeginRequestInternal(URLRequest* request,
   request->Start();
 
   // Make sure we have the load state monitor running
-  if (!update_load_states_timer_.IsRunning()) {
-    update_load_states_timer_.Start(
-        TimeDelta::FromMilliseconds(kUpdateLoadStatesIntervalMsec),
-        this, &ResourceDispatcherHost::UpdateLoadStates);
-  }
+  update_load_states_timer_.Start();
 }
 
 // This test mirrors the decision that WebKit makes in
@@ -1933,7 +1959,7 @@ bool ResourceDispatcherHost::ShouldDownload(
   }
 
   // MIME type checking.
-  if (net::IsSupportedMimeType(type))
+  if (mime_util::IsSupportedMimeType(type))
     return false;
 
   // Finally, check the plugin service.
@@ -2306,4 +2332,3 @@ void ResourceDispatcherHost::MaybeUpdateUploadProgress(ExtraRequestInfo *info,
     info->last_upload_position = position;
   }
 }
-

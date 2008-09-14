@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "chrome/browser/download_tab_view.h"
 
@@ -12,7 +37,6 @@
 #include "base/file_util.h"
 #include "base/string_util.h"
 #include "base/task.h"
-#include "base/time_format.h"
 #include "base/timer.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_process.h"
@@ -228,13 +252,13 @@ void DownloadItemTabView::LayoutDate() {
 
   CSize since_size;
 
-  since_->SetText(TimeFormat::RelativeDate(model_->start_time(), NULL));
+  since_->SetText(TimeFormat::FriendlyDay(model_->start_time(), NULL));
   since_->GetPreferredSize(&since_size);
   since_->SetBounds(kLeftMargin, kIconOffset, kDateSize, since_size.cy);
   since_->SetVisible(true);
 
   CSize date_size;
-  date_->SetText(base::TimeFormatShortDate(model_->start_time()));
+  date_->SetText(TimeFormat::ShortDate(model_->start_time()));
   date_->GetPreferredSize(&date_size);
   date_->SetBounds(kLeftMargin, since_size.cy + kVerticalPadding + kIconOffset,
                    kDateSize, date_size.cy);
@@ -583,7 +607,7 @@ void DownloadItemTabView::DidChangeBounds(const CRect& previous,
 }
 
 bool DownloadItemTabView::OnMousePressed(const ChromeViews::MouseEvent& event) {
-  CPoint point(event.GetX(), event.GetY());
+  CPoint point(event.GetLocation());
 
   // If the click is in the highlight region, then highlight this download.
   // Otherwise, remove the highlighting from any download.
@@ -618,7 +642,7 @@ bool DownloadItemTabView::OnMouseDragged(const ChromeViews::MouseEvent& event) {
   if (model_->state() != DownloadItem::COMPLETE)
     return false;
 
-  CPoint point(event.GetX(), event.GetY());
+  CPoint point(event.GetLocation());
 
   // In order to make sure drag and drop works as expected when the UI is
   // mirrored, we can either flip the mouse X coordinate or flip the X position
@@ -663,6 +687,8 @@ void DownloadItemTabView::LinkActivated(ChromeViews::Link* source,
 
 DownloadTabView::DownloadTabView(DownloadManager* model)
     : model_(model),
+      progress_timer_(NULL),
+      progress_task_(NULL),
       start_angle_(download_util::kStartAngleDegrees),
       scroll_helper_(kSpacer, kProgressIconSize + kSpacer),
       selected_index_(-1) {
@@ -686,16 +712,25 @@ void DownloadTabView::Initialize() {
 
 // Start progress animation timers when we get our first (in-progress) download.
 void DownloadTabView::StartDownloadProgress() {
-  if (progress_timer_.IsRunning())
+  if (progress_task_ || progress_timer_)
     return;
-  progress_timer_.Start(
-      TimeDelta::FromMilliseconds(download_util::kProgressRateMs), this,
-      &DownloadTabView::UpdateDownloadProgress);
+  progress_task_ =
+      new download_util::DownloadProgressTask<DownloadTabView>(this);
+  progress_timer_ =
+      MessageLoop::current()->timer_manager()->
+          StartTimer(download_util::kProgressRateMs, progress_task_, true);
 }
 
 // Stop progress animation when there are no more in-progress downloads.
 void DownloadTabView::StopDownloadProgress() {
-  progress_timer_.Stop();
+  if (progress_timer_) {
+    DCHECK(progress_task_);
+    MessageLoop::current()->timer_manager()->StopTimer(progress_timer_);
+    delete progress_timer_;
+    progress_timer_ = NULL;
+    delete progress_task_;
+    progress_task_ = NULL;
+  }
 }
 
 // Update our animations.
@@ -809,7 +844,7 @@ void DownloadTabView::OnDownloadUpdated(DownloadItem* download) {
   switch (download->state()) {
     case DownloadItem::COMPLETE:
     case DownloadItem::CANCELLED: {
-      base::hash_set<DownloadItem*>::iterator d = in_progress_.find(download);
+      stdext::hash_set<DownloadItem*>::iterator d = in_progress_.find(download);
       if (d != in_progress_.end()) {
         (*d)->RemoveObserver(this);
         in_progress_.erase(d);
@@ -824,7 +859,7 @@ void DownloadTabView::OnDownloadUpdated(DownloadItem* download) {
       // further progress updates until at least one download is active again.
       if (download->is_paused()) {
         bool continue_update = false;
-        base::hash_set<DownloadItem*>::iterator it = in_progress_.begin();
+        stdext::hash_set<DownloadItem*>::iterator it = in_progress_.begin();
         for (; it != in_progress_.end(); ++it) {
           if (!(*it)->is_paused()) {
             continue_update = true;
@@ -937,7 +972,7 @@ void DownloadTabView::LoadIcon(DownloadItem* download) {
 }
 
 void DownloadTabView::ClearDownloadInProgress() {
-  for (base::hash_set<DownloadItem*>::iterator it = in_progress_.begin();
+  for (stdext::hash_set<DownloadItem*>::iterator it = in_progress_.begin();
        it != in_progress_.end(); ++it)
     (*it)->RemoveObserver(this);
   in_progress_.clear();
@@ -1169,4 +1204,3 @@ void DownloadTabUI::Observe(NotificationType type,
       break;
   }
 }
-

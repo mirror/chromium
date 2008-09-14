@@ -27,7 +27,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# TODO(keunwoo): Use better cross-platform abstraction; see chrome/SConstruct
 Import('env')
 
 env = env.Clone()
@@ -38,16 +37,23 @@ env.Prepend(
     ]
 )
 
-if env['PLATFORM'] == 'win32':
-  env.Append(
+env.Append(
     CCFLAGS = [
         '/TP',
+
         '/wd4800',
+        '/wd4503',
+        '/wd4819',
     ],
-  )
+
+    CPPDEFINES = [
+        'CERT_CHAIN_PARA_HAS_EXTRA_FIELDS',
+        'WIN32_LEAN_AND_MEAN',
+    ],
+)
 
 input_files = [
     "mbsdiff.cc",
 ]
 
-env.ChromeStaticLibrary('bsdiff', input_files)
+env.StaticLibrary('bsdiff', input_files)

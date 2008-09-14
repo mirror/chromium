@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "config.h"
 
@@ -72,26 +97,16 @@ void ChromeClientImpl::setWindowRect(const WebCore::FloatRect& r) {
 }
 
 WebCore::FloatRect ChromeClientImpl::windowRect() {
-  if (webview_->delegate()) {
-    gfx::Rect rect;
-    webview_->delegate()->GetRootWindowRect(webview_, &rect);
-    return WebCore::FloatRect(
-        static_cast<float>(rect.x()),
-        static_cast<float>(rect.y()),
-        static_cast<float>(rect.width()),
-        static_cast<float>(rect.height()));
-  } else {
-    // These numbers will be fairly wrong. The window's x/y coordinates will
-    // be the top left corner of the screen and the size will be the content
-    // size instead of the window size.
-    gfx::Point origin;
-    const gfx::Size size = webview_->size();
-    return WebCore::FloatRect(
-        static_cast<float>(origin.x()),
-        static_cast<float>(origin.y()),
-        static_cast<float>(size.width()),
-        static_cast<float>(size.height()));
-  }
+  gfx::Point origin;
+  if (webview_->delegate())
+    webview_->delegate()->GetWindowLocation(webview_, &origin);
+  const gfx::Size size = webview_->size();
+
+  return WebCore::FloatRect(
+      static_cast<float>(origin.x()),
+      static_cast<float>(origin.y()),
+      static_cast<float>(size.width()),
+      static_cast<float>(size.height()));
 }
 
 WebCore::FloatRect ChromeClientImpl::pageRect() {
@@ -405,9 +420,9 @@ WebCore::IntRect ChromeClientImpl::windowToScreen(const WebCore::IntRect& rect) 
 
   WebViewDelegate* d = webview_->delegate();
   if (d) {
-    gfx::Rect window_rect;
-    d->GetWindowRect(webview_, &window_rect);
-    screen_rect.move(window_rect.x(), window_rect.y());
+    gfx::Point window_pos;
+    d->GetWindowLocation(webview_, &window_pos);
+    screen_rect.move(window_pos.x(), window_pos.y());
   }
 
   return screen_rect;
@@ -424,4 +439,3 @@ void ChromeClientImpl::exceededDatabaseQuota(WebCore::Frame* frame,
     const WebCore::String& databaseName) {
   // TODO(tc): If we enable the storage API, we need to implement this function.
 }
-

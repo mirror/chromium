@@ -1,6 +1,31 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // This provides a way to access the application's current preferences.
 // This service has two preference stores, one for "persistent" preferences,
@@ -12,13 +37,14 @@
 // persistent and transient stores, where any corresponding value in the
 // transient store overrides the one in the persistent store.
 
-#ifndef CHROME_COMMON_PREF_SERVICE_H_
-#define CHROME_COMMON_PREF_SERVICE_H_
+#ifndef CHROME_COMMON_PREF_SERVICE_H__
+#define CHROME_COMMON_PREF_SERVICE_H__
 
+#include <hash_map>
 #include <string>
 
 #include "base/basictypes.h"
-#include "base/hash_tables.h"
+#include "base/logging.h"
 #include "base/non_thread_safe.h"
 #include "base/observer_list.h"
 #include "base/scoped_ptr.h"
@@ -28,10 +54,7 @@
 
 class NotificationObserver;
 class Preference;
-
-namespace base {
 class Thread;
-}
 
 class PrefService : public NonThreadSafe {
  public:
@@ -73,7 +96,7 @@ class PrefService : public NonThreadSafe {
     // A reference to the pref service's persistent prefs.
     DictionaryValue* root_pref_;
 
-    DISALLOW_COPY_AND_ASSIGN(Preference);
+    DISALLOW_EVIL_CONSTRUCTORS(Preference);
   };
 
   // |pref_filename| is the path to the prefs file we will try to load or save to.
@@ -91,12 +114,12 @@ class PrefService : public NonThreadSafe {
   // (since it's on a different thread).  This should only be used if we need
   // to save immediately (basically, during shutdown).  Otherwise, you should
   // use ScheduleSavePersistentPrefs.
-  bool SavePersistentPrefs(base::Thread* thread) const;
+  bool SavePersistentPrefs(Thread* thread) const;
 
   // Starts a timer that ends up saving the preferences.  This helps to batch
   // together save requests that happen in a close time frame so we don't write
   // to disk too frequently.
-  void ScheduleSavePersistentPrefs(base::Thread* thread);
+  void ScheduleSavePersistentPrefs(Thread* thread);
 
   DictionaryValue* transient() { return transient_.get(); }
 
@@ -230,11 +253,11 @@ class PrefService : public NonThreadSafe {
   // A map from pref names to a list of observers.  Observers get fired in the
   // order they are added.
   typedef ObserverList<NotificationObserver> NotificationObserverList;
-  typedef base::hash_map<std::wstring, NotificationObserverList*>
+  typedef stdext::hash_map<std::wstring, NotificationObserverList*>
       PrefObserverMap;
   PrefObserverMap pref_observers_;
 
-  DISALLOW_COPY_AND_ASSIGN(PrefService);
+  DISALLOW_EVIL_CONSTRUCTORS(PrefService);
 };
 
-#endif  // CHROME_COMMON_PREF_SERVICE_H_
+#endif  // CHROME_COMMON_PREF_SERVICE_H__

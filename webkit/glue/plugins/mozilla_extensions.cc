@@ -1,17 +1,45 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+// Copyright 2008, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//    * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//    * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//    * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "webkit/glue/plugins/mozilla_extensions.h"
+#include <windows.h>
+#include <Winhttp.h>
 
 #include <algorithm>
+
+#include "webkit/glue/plugins/mozilla_extensions.h"
 
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_errors.h"
-#include "net/proxy/proxy_service.h"
-#include "net/proxy/proxy_resolver_winhttp.h"
+#include "net/http/http_proxy_service.h"
+#include "net/http/http_proxy_resolver_winhttp.h"
 #include "third_party/npapi/bindings/npapi.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/plugins/plugin_instance.h"
@@ -42,16 +70,16 @@ bool MozillaExtensionApi::FindProxyForUrl(const char* url,
     return result;
   }
 
-  net::ProxyResolverWinHttp proxy_resolver;
-  net::ProxyService proxy_service(&proxy_resolver);
-  net::ProxyInfo proxy_info;
+  net::HttpProxyResolverWinHttp proxy_resolver;
+  net::HttpProxyService proxy_service(&proxy_resolver);
+  net::HttpProxyInfo proxy_info;
 
   if (proxy_service.ResolveProxy(GURL(std::string(url)),
                                  &proxy_info,
                                  NULL,
                                  NULL) == net::OK) {
     if (!proxy_info.is_direct()) {
-      std::string winhttp_proxy = proxy_info.proxy_server();
+      std::wstring winhttp_proxy = proxy_info.proxy_server();
 
       // Winhttp returns proxy in the the following format:
       // - HTTP proxy: "111.111.111.111:11"
@@ -65,9 +93,9 @@ bool MozillaExtensionApi::FindProxyForUrl(const char* url,
       // iv)  Mixed. e.g. "PROXY 111.111.111.111;PROXY 112.112.112.112",
       //                  "PROXY 111.111.111.111;SOCKS 112.112.112.112"....
       StringToLowerASCII(winhttp_proxy);
-      if (std::string::npos == winhttp_proxy.find('=')) {
+      if (std::wstring::npos == winhttp_proxy.find(L'=')) {
         // Proxy is in the form: "111.111.111.111:11"
-        winhttp_proxy.insert(0, "http ");
+        winhttp_proxy.insert(0, L"http ");
       } else {
         // Proxy is in the following form. 
         // -.SOCKS proxy: "socks=111.111.111.111:11"
@@ -75,10 +103,10 @@ bool MozillaExtensionApi::FindProxyForUrl(const char* url,
         // in this case just replace the '=' with a space
         std::replace_if(winhttp_proxy.begin(),
                         winhttp_proxy.end(),
-                        std::bind2nd(std::equal_to<char>(), '='), ' ');
+                        std::bind2nd(std::equal_to<wchar_t>(), L'='), L' ');
       }
 
-      *proxy = winhttp_proxy;
+      *proxy = WideToASCII(std::wstring(winhttp_proxy));
       result = true;
     }
   }
@@ -365,4 +393,3 @@ NS_IMETHODIMP MozillaExtensionApi::SetCookie(
 
 
 } // namespace NPAPI
-
