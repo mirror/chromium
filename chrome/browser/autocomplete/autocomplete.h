@@ -218,9 +218,13 @@ class AutocompleteInput {
   // Resets all internal variables to the null-constructed state.
   void Clear();
 
+  // Returns parsed URL components.
+  const url_parse::Parsed& parts() const { return parts_; }
+
  private:
   std::wstring text_;
   Type type_;
+  url_parse::Parsed parts_;
   std::wstring scheme_;
   std::wstring desired_tld_;
   bool prevent_inline_autocomplete_;
@@ -797,4 +801,4 @@ struct AutocompleteLog {
   const AutocompleteResult& result;
 };
 
-#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H__
+#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_H_

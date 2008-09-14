@@ -129,6 +129,11 @@ class SearchProvider : public AutocompleteProvider,
   void StartOrStopHistoryQuery(bool minimal_changes, bool synchronous_only);
   void StartOrStopSuggestQuery(bool minimal_changes, bool synchronous_only);
 
+  // Returns true when the current query can be sent to the Suggest service.
+  // This will be false e.g. when Suggest is disabled, the query contains
+  // potentially private data, etc.
+  bool IsQuerySuitableForSuggest() const;
+
   // Functions to stop the separate asynchronous subcomponents.
   // NOTE: These functions do not update |done_|.  Callers must do so.
   void StopHistory();

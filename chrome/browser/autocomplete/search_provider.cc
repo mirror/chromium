@@ -173,16 +173,7 @@ void SearchProvider::StartOrStopHistoryQuery(bool minimal_changes,
 
 void SearchProvider::StartOrStopSuggestQuery(bool minimal_changes,
                                              bool synchronous_only) {
-  // Don't run Suggest when off the record, the engine doesn't support it, or
-  // the user has disabled it.  Also don't query the server for URLs that aren't
-  // http/https/ftp.  Sending things like file: and data: is both a waste of
-  // time and a disclosure of potentially private, local data.
-  if (profile_->IsOffTheRecord() ||
-      !default_provider_.suggestions_url() ||
-      !profile_->GetPrefs()->GetBoolean(prefs::kSearchSuggestEnabled) ||
-      ((input_.type() == AutocompleteInput::URL) &&
-       (input_.scheme() != L"http") && (input_.scheme() != L"https") &&
-       (input_.scheme() != L"ftp"))) {
+  if (!IsQuerySuitableForSuggest()) {
     StopSuggest();
     return;
   }
@@ -205,6 +196,46 @@ void SearchProvider::StartOrStopSuggestQuery(bool minimal_changes,
   // the user types another character.
   suggest_results_pending_ = true;
   MessageLoop::current()->timer_manager()->ResetTimer(timer_.get());
+}
+
+bool SearchProvider::IsQuerySuitableForSuggest() const {
+  // Don't run Suggest when off the record, the engine doesn't support it, or
+  // the user has disabled it.
+  if (profile_->IsOffTheRecord() ||
+      !default_provider_.suggestions_url() ||
+      !profile_->GetPrefs()->GetBoolean(prefs::kSearchSuggestEnabled))
+    return false;
+
+  // If the input type is URL, we take extra care so that private data in URL
+  // isn't sent to the server.
+  if (input_.type() == AutocompleteInput::URL) {
+    // Don't query the server for URLs that aren't http/https/ftp.  Sending
+    // things like file: and data: is both a waste of time and a disclosure of
+    // potentially private, local data.
+    if ((input_.scheme() != L"http") && (input_.scheme() != L"https") &&
+        (input_.scheme() != L"ftp"))
+      return false;
+
+    // Don't leak private data in URL
+    const url_parse::Parsed& parts = input_.parts();
+
+    // Don't send URLs with usernames, queries or refs.  Some of these are
+    // private, and the Suggest server is unlikely to have any useful results
+    // for any of them.
+    // Password is optional and may be omitted.  Checking username is
+    // sufficient.
+    if (parts.username.is_nonempty() || parts.query.is_nonempty() ||
+        parts.ref.is_nonempty())
+      return false;
+    // Don't send anything for https except hostname and port number.
+    // Hostname and port number are OK because they are visible when TCP
+    // connection is established and the Suggest server may provide some
+    // useful completed URL.
+    if (input_.scheme() == L"https" && parts.path.is_nonempty())
+      return false;
+  }
+
+  return true;
 }
 
 void SearchProvider::StopHistory() {
