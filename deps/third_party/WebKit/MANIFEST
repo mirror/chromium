@@ -1,4 +1,5 @@
 JavaScriptCore\wtf\RefCounted.h
+JavaScriptCore\wtf\RefPtrHashMap.h
 JavaScriptCore\wtf\ThreadingWin.cpp
 WebCore\DerivedSources.make
 WebCore\config.h
@@ -60,6 +61,7 @@ WebCore\platform\image-decoders\ImageDecoder.h
 WebCore\platform\image-decoders\gif\GIFImageDecoder.cpp
 WebCore\platform\image-decoders\jpeg\JPEGImageDecoder.cpp
 WebCore\platform\image-decoders\png\PNGImageDecoder.cpp
+WebCore\platform\network\NetworkStateNotifier.h
 WebCore\platform\text\AtomicString.cpp
 WebCore\platform\text\AtomicString.h
 WebCore\platform\text\String.cpp
