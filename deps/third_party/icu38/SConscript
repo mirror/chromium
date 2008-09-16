@@ -348,12 +348,15 @@ env_stray.Append(CPPDEFINES = ["U_COMMON_IMPLEMENTATION"])
 stray_object_files = [env_stray.Object(i) for i in common_implementation_files]
 
 
-env.ChromeStaticLibrary('icuuc', cpp_object_files +
-                           c_object_files +
-                           stray_object_files)
-
 # On Windows the ICU data is built into a DLL.  On Linux, install the .dat file.
 if env['PLATFORM'] == 'win32':
-  env.Install('$OBJ_ROOT', 'icudt38.dll')
+  icu_data = env.Install('$OBJ_ROOT', 'icudt38.dll')
 else:
-  env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
+  icu_data = env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
+
+icu_lib = env.ChromeStaticLibrary('icuuc', cpp_object_files +
+                                    c_object_files +
+                                    stray_object_files)
+
+# The ICU library isn't useful without the data properly installed.
+env.Requires(icu_lib, icu_data)
