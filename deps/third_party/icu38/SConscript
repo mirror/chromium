@@ -67,6 +67,9 @@ else:
   env.Append(
       CCFLAGS = [
           '-Wno-parentheses',
+
+           # See uprv_UnicodeStringDummy at end of source/common/unistr.cpp.
+           '-Wno-unused-function'
       ]
   )
 
