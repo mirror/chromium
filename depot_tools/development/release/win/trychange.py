@@ -76,11 +76,10 @@ def EscapeDot(name):
 def _SendChange(try_name, diff, bot):
   """Send a change to the try server."""
   script_locals = ExecuteTryServerScript()
+  patch_name = EscapeDot(getpass.getuser()) + '.' + EscapeDot(try_name)
   if bot:
-    patch_name = EscapeDot(getpass.getuser()) + '.' + EscapeDot(try_name)
-    patch_name += '.' + EscapeDot(bot) + '.diff'
-  else:
-    patch_name = getpass.getuser() + '-' + try_name + '.diff'
+    patch_name += '.' + EscapeDot(bot)
+  patch_name += '.diff'
   patch_path = os.path.join(script_locals['try_server'], patch_name)
   gcl.WriteFile(patch_path, diff)
   return patch_name
@@ -95,7 +94,7 @@ def TryChange(argv, name='Unnamed', file_list=None):
                     help="List of files to include in the try.")
   parser.add_option("-b", "--bot", default=None,
                     help="Force a specific build bot.")
-  options, args = parser.parse_args(argv[1:])
+  options, args = parser.parse_args(argv)
   if not options.file_list:
     print "Nothing to try, changelist is empty."
     return
