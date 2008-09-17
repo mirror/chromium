@@ -149,6 +149,10 @@ class AbstractRpcServer(object):
     Returns:
       The authentication token returned by ClientLogin.
     """
+    account_type = "GOOGLE"
+    if self.host.endswith(".google.com"):
+      # Needed for use inside Google.
+      account_type = "HOSTED"
     req = self._CreateRequest(
         url="https://www.google.com/accounts/ClientLogin",
         data=urllib.urlencode({
@@ -156,7 +160,7 @@ class AbstractRpcServer(object):
             "Passwd": password,
             "service": "ah",
             "source": "rietveld-codereview-upload",
-            "accountType": "GOOGLE",
+            "accountType": account_type,
         }),
     )
     try:

@@ -31,6 +31,12 @@ use_shell = sys.platform.startswith("win")
 repository_root = ""
 gcl_info_dir = ""
 
+# Filename where we store repository specific information for gcl.
+CODEREVIEW_SETTINGS_FILE = "codereview.settings"
+
+# Caches whether we read the codereview.settings file yet or not.
+read_gcl_info = False
+
 
 def GetSVNFileInfo(file, field):
   """Returns a field from the svn info output for the given file."""
@@ -56,21 +62,7 @@ def GetRepositoryRoot():
       if GetSVNFileInfo(parent, "Repository Root") != cur_dir_repo_root:
         break
       repository_root = parent
-  # Now read the code review settings for this repository.
-  settings_file = os.path.join(repository_root, "codereview.settings")
-  if os.path.exists(settings_file):
-    output = ReadFile(settings_file)
-    for line in output.splitlines():
-      if not line or line.startswith("#"):
-        continue
-      key, value = line.split(": ", 1)
-      CODEREVIEW_SETTINGS[key] = value
   return repository_root
-
-
-def GetCodeReviewSetting(key):
-  """Returns a value for the given key for this repository."""
-  return CODEREVIEW_SETTINGS.get(key, "")
 
 
 def GetInfoDir():
@@ -81,14 +73,40 @@ def GetInfoDir():
   return gcl_info_dir
 
 
+def GetCodeReviewSetting(key):
+  """Returns a value for the given key for this repository."""
+  global read_gcl_info
+  if not read_gcl_info:
+    read_gcl_info = True
+    # First we check if we have a cached version.
+    cached_settings_file = os.path.join(GetInfoDir(), CODEREVIEW_SETTINGS_FILE)
+    if not os.path.exists(cached_settings_file):
+      repo_root = GetSVNFileInfo(".", "Repository Root")
+      svn_path = repo_root + "/" + CODEREVIEW_SETTINGS_FILE
+      settings, rc = RunShellWithReturnCode(["svn", "cat", svn_path])
+      if rc:
+        settings = ""
+      # Write a cached version even if there isn't a file, so we don't try to
+      # fetch it each time.
+      WriteFile(cached_settings_file, settings)
+
+    output = ReadFile(cached_settings_file)
+    for line in output.splitlines():
+      if not line or line.startswith("#"):
+        continue
+      k, v = line.split(": ", 1)
+      CODEREVIEW_SETTINGS[k] = v
+  return CODEREVIEW_SETTINGS.get(key, "")
+
+
 def ErrorExit(msg):
   """Print an error message to stderr and exit."""
   print >>sys.stderr, msg
   sys.exit(1)
 
 
-def RunShell(command, print_output=False):
-  """Executes a command and returns the output."""
+def RunShellWithReturnCode(command, print_output=False):
+  """Executes a command and returns the output and the return code."""
   p = subprocess.Popen(command, stdout = subprocess.PIPE,
                        stderr = subprocess.STDOUT, shell = use_shell,
                        universal_newlines=True)
@@ -106,7 +124,12 @@ def RunShell(command, print_output=False):
     output = p.stdout.read()
   p.wait()
   p.stdout.close()
-  return output
+  return output, p.returncode
+
+
+def RunShell(command, print_output=False):
+  """Executes a command and returns the output."""
+  return RunShellWithReturnCode(command, print_output)[0]
 
 
 def ReadFile(filename):
@@ -234,7 +257,10 @@ def LoadChangelistInfo(changename, fail_on_not_found=True,
 
 def GetCLs():
   """Returns a list of all the changelists in this repository."""
-  return os.listdir(GetInfoDir())
+  cls = os.listdir(GetInfoDir())
+  if CODEREVIEW_SETTINGS_FILE in cls:
+    cls.remove(CODEREVIEW_SETTINGS_FILE)
+  return cls
 
 
 def GenerateChangeName():
