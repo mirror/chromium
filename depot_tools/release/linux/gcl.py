@@ -181,7 +181,7 @@ SEPARATOR = "\n-----\n"
 
 def GetChangelistInfoFile(changename):
   """Returns the file that stores information about a changelist."""
-  if not changename or re.search(r'\W', changename):
+  if not changename or re.search(r'[^\w-]', changename):
     ErrorExit("Invalid changelist name: " + changename)
   return os.path.join(GetInfoDir(), changename)
 
@@ -439,7 +439,7 @@ def UploadCL(change_info, args):
     print "Nothing to upload, changelist is empty."
     return
 
-  upload_arg = ["upload.py", "-y", "-l"]
+  upload_arg = ["upload.py", "-y"]
   upload_arg.append("--server=" + GetCodeReviewSetting("CODE_REVIEW_SERVER"))
   upload_arg.extend(args)
 
@@ -563,9 +563,18 @@ def Change(change_info):
   handle, filename = tempfile.mkstemp(text=True)
   os.write(handle, text)
   os.close(handle)
-  
-  command = GetEditor() + " " + filename
-  os.system(command)
+  editor = GetEditor()
+  if sys.platform in ('win32', 'cygwin'):
+    # Check if the user is running this under Cygwin and they're using an
+    # editor inside Cygwin, in which case we want to use Unix paths.  Can't use
+    # sys.platform since on Windows this script is running in the Python from
+    # depot_tools.
+    cygpath = RunShell(["cygpath", "-u", filename]).strip()
+    if (cygpath.startswith("/cygdrive/") and not
+        RunShell(["which", editor]).startswith("/cygdrive")):
+      filename = cygpath
+
+  os.system(editor + " " + filename)
 
   result = ReadFile(filename)
   os.remove(filename)
