@@ -599,18 +599,8 @@ def Change(change_info):
   handle, filename = tempfile.mkstemp(text=True)
   os.write(handle, text)
   os.close(handle)
-  editor = GetEditor()
-  if sys.platform in ('win32', 'cygwin'):
-    # Check if the user is running this under Cygwin and they're using an
-    # editor inside Cygwin, in which case we want to use Unix paths.  Can't use
-    # sys.platform since on Windows this script is running in the Python from
-    # depot_tools.
-    cygpath = RunShell(["cygpath", "-u", filename]).strip()
-    if (cygpath.startswith("/cygdrive/") and not
-        RunShell(["which", editor]).startswith("/cygdrive")):
-      filename = cygpath
 
-  os.system(editor + " " + filename)
+  os.system(GetEditor() + " " + filename)
 
   result = ReadFile(filename)
   os.remove(filename)
