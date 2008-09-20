@@ -506,7 +506,7 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
   # Once uploaded to Rietveld, send it to the try server.
-  # TODO(maruel): TryChange(change_info, [], SwallowException=True)
+  TryChange(change_info, [], SwallowException=True)
 
 
 def TryChange(change_info, args, SwallowException=False):
