@@ -24,7 +24,8 @@ Supported version control systems:
   Git
   Subversion
 
-(It is important for Git users to specify a tree-ish to diff against.)
+It is important for Git users to specify a tree-ish to diff against
+by using the '--rev' option.
 """
 # This code is derived from appcfg.py in the App Engine SDK (open source),
 # and from ASPN recipe #146306.
@@ -413,6 +414,9 @@ group.add_option("--download_base", action="store_true",
                  dest="download_base", default=False,
                  help="Base files will be downloaded by the server "
                  "(side-by-side diffs may not work on files with CRs).")
+group.add_option("--rev", action="store", dest="revision",
+                 metavar="REV", default=None,
+                 help="Branch/tree/revision to diff against (used by DVCS).")
 group.add_option("--send_mail", action="store_true",
                  dest="send_mail", default=False,
                  help="Send notification email to reviewers.")
@@ -507,7 +511,7 @@ def RunShell(command, silent_ok=False, universal_newlines=True):
   logging.info("Running %s", command)
   p = subprocess.Popen(command, stdout=subprocess.PIPE,
                        stderr=subprocess.STDOUT, shell=use_shell,
-                       universal_newlines=True)
+                       universal_newlines=universal_newlines)
   data = p.stdout.read()
   p.wait()
   p.stdout.close()
@@ -520,6 +524,14 @@ def RunShell(command, silent_ok=False, universal_newlines=True):
 
 class VersionControlSystem(object):
   """Abstract base class providing an interface to the VCS."""
+
+  def __init__(self, options):
+    """Constructor.
+
+    Args:
+      options: Command line options.
+    """
+    self.options = options
 
   def GenerateDiff(self, args):
     """Return the current diff as a string.
@@ -605,9 +617,9 @@ class VersionControlSystem(object):
     for filename in patches.keys():
       file_id = int(patches.get(filename))
       base_content, new_content, is_binary, status = self.GetBaseFile(filename)
-      if base_content:
+      if base_content != None:
         UploadFile(filename, file_id, base_content, is_binary, status, True)
-      if new_content:
+      if new_content != None:
         UploadFile(filename, file_id, new_content, is_binary, status, False)
 
 
@@ -744,8 +756,8 @@ class SubversionVCS(VersionControlSystem):
       status = status_lines[2]
     else:
       status = status_lines[0]
-    base_content = ""
-    new_content = ""
+    base_content = None
+    new_content = None
 
     # If a file is copied its status will be "A  +", which signifies
     # "addition-with-history".  See "svn st" for more information.  We need to
@@ -757,19 +769,19 @@ class SubversionVCS(VersionControlSystem):
       mimetype = RunShell(["svn", "propget", "svn:mime-type", filename],
                           silent_ok=True)
       is_binary = mimetype and not mimetype.startswith("text/")
-      if is_binary and self.IsImage(filename):
+      if not is_binary:
+        base_content = ""
+      elif self.IsImage(filename):
         new_content = self.ReadFile(filename)
-    elif status[0] == " " and status[1] == "M":
-      # Property changed, don't need to do anything.
-      pass
     elif (status[0] in ("M", "D", "R") or
-          (status[0] == "A" and status[3] == "+")):
+          (status[0] == "A" and status[3] == "+") or  # Copied file.
+          (status[0] == " " and status[1] == "M")):  # Property change.
       mimetype = RunShell(["svn", "-rBASE", "propget", "svn:mime-type",
                            filename],
                           silent_ok=True)
       is_binary = mimetype and not mimetype.startswith("text/")
       get_base = False
-      if not is_binary:
+      if status[0] == " " or not is_binary:
         get_base = True
       elif self.IsImage(filename) and status[0] == "M":          
         new_content = self.ReadFile(filename)
@@ -797,7 +809,8 @@ class SubversionVCS(VersionControlSystem):
 class GitVCS(VersionControlSystem):
   """Implementation of the VersionControlSystem interface for Git."""
 
-  def __init__(self):
+  def __init__(self, options):
+    super(GitVCS, self).__init__(options)
     # Map of filename -> hash of base file.
     self.base_hashes = {}
 
@@ -805,6 +818,8 @@ class GitVCS(VersionControlSystem):
     # This is more complicated than svn's GenerateDiff because we must convert
     # the diff output to include an svn-style "Index:" line as well as record
     # the hashes of the base files, so we can upload them along with our diff.
+    if self.options.revision:
+      extra_args = [self.options.revision] + extra_args
     gitdiff = RunShell(["git", "diff", "--full-index"] + extra_args)
     svndiff = []
     filecount = 0
@@ -834,11 +849,12 @@ class GitVCS(VersionControlSystem):
 
   def GetBaseFile(self, filename):
     hash = self.base_hashes[filename]
-    base_content = ""
-    new_content = ""
+    base_content = None
+    new_content = None
     is_binary = False
     if hash == "0" * 40:  # All-zero hash indicates no base file.
       status = "A"
+      base_content = ""
     else:
       status = "M"
       base_content = RunShell(["git", "show", hash])
@@ -914,7 +930,7 @@ def UploadSeparatePatches(issue, rpc_server, patchset, data, options):
   return rv
 
 
-def GuessVCS():
+def GuessVCS(options):
   """Helper to guess the version control system.
 
   This examines the current directory, guesses which VersionControlSystem
@@ -927,7 +943,7 @@ def GuessVCS():
   # Subversion has a .svn in all working directories.
   if os.path.isdir('.svn'):
     logging.info("Guessed VCS = Subversion")
-    return SubversionVCS()
+    return SubversionVCS(options)
 
   # Git has a command to test if you're in a git tree.
   # Try running it, but don't die if we don't have git installed.
@@ -935,7 +951,7 @@ def GuessVCS():
     subproc = subprocess.Popen(["git", "rev-parse", "--is-inside-work-tree"],
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if subproc.wait() == 0:
-      return GitVCS()
+      return GitVCS(options)
   except OSError, (errno, message):
     if errno != 2:  # ENOENT -- they don't have git installed.
       raise
@@ -955,7 +971,7 @@ def RealMain(argv, data=None):
     logging.getLogger().setLevel(logging.DEBUG)
   elif verbosity >= 2:
     logging.getLogger().setLevel(logging.INFO)
-  vcs = GuessVCS()
+  vcs = GuessVCS(options)
   if isinstance(vcs, SubversionVCS):
     # base field is only allowed for Subversion.
     # Note: Fetching base files may become deprecated in future releases.
