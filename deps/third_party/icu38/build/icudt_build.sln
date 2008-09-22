@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "icuuc", "icuuc.vcproj", "{8C27D792-2648-4F5E-9ED0-374276327308}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "icu", "icu.vcproj", "{8C27D792-2648-4F5E-9ED0-374276327308}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "genccode", "genccode.vcproj", "{0A4A018B-9AEB-43EF-84FF-D2AF5F7C33CF}"
 	ProjectSection(ProjectDependencies) = postProject

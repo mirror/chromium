@@ -144,7 +144,7 @@ G. Plural formatter was ported back from ICU 4.0 to ICU 3.8 by
        public/i18n/unicode/plurfmt.h
        public/i18n/unicode/plurrule.h
 
-  Besides, builds/icuuc.vcproj was modified to add plurrule.cpp and
+  Besides, builds/icu.vcproj was modified to add plurrule.cpp and
   plurfmt.cpp to the list of files to compile. Note that this change
-  is not a part of plural.patch because builds/icuuc.vcproj is 
+  is not a part of plural.patch because builds/icu.vcproj is 
   our own file. 

@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="icuuc"
+	Name="icu"
 	ProjectGUID="{8C27D792-2648-4F5E-9ED0-374276327308}"
-	RootNamespace="icuuc"
+	RootNamespace="icu"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
