@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // CancelableRequestProviders and Consumers work together to make requests that
 // execute on a background thread in the provider and return data to the
@@ -156,6 +131,9 @@ class CancelableRequestProvider {
   void RequestCompleted(Handle handle);
 
  private:
+  // Only call this when you already have acquired pending_request_lock_.
+  void CancelRequestLocked(Handle handle);
+
   friend class CancelableRequestBase;
 
   typedef std::map<Handle, scoped_refptr<CancelableRequestBase> >
@@ -259,7 +237,7 @@ class CancelableRequestConsumerT : public CancelableRequestConsumerBase {
   // Cancels all requests outstanding.
   void CancelAllRequests() {
     PendingRequestList copied_requests(pending_requests_);
-    for (PendingRequestList::iterator i = copied_requests.begin();
+    for (typename PendingRequestList::iterator i = copied_requests.begin();
          i != copied_requests.end(); ++i)
       i->first.provider->CancelRequest(i->first.handle);
     copied_requests.clear();
@@ -271,7 +249,7 @@ class CancelableRequestConsumerT : public CancelableRequestConsumerBase {
   // Gets the client data for all pending requests.
   void GetAllClientData(std::vector<T>* data) {
     DCHECK(data);
-    for (PendingRequestList::iterator i = pending_requests_.begin();
+    for (typename PendingRequestList::iterator i = pending_requests_.begin();
          i != pending_requests_.end(); ++i)
       data->push_back(i->second);
   }
@@ -304,7 +282,7 @@ class CancelableRequestConsumerT : public CancelableRequestConsumerBase {
 
   virtual void OnRequestRemoved(CancelableRequestProvider* provider,
                                 CancelableRequestProvider::Handle handle) {
-    PendingRequestList::iterator i =
+    typename PendingRequestList::iterator i =
         pending_requests_.find(PendingRequest(provider, handle));
     if (i == pending_requests_.end()) {
       NOTREACHED() << "Got a complete notification for a nonexistant request";
@@ -539,8 +517,9 @@ class CancelableRequest : public CancelableRequestBase {
 template<typename CB, typename Type>
 class CancelableRequest1 : public CancelableRequest<CB> {
  public:
-  explicit CancelableRequest1(CallbackType* callback)
-      : CancelableRequest(callback) {
+  explicit CancelableRequest1(
+      typename CancelableRequest<CB>::CallbackType* callback)
+      : CancelableRequest<CB>(callback) {
   }
 
   virtual ~CancelableRequest1() {
@@ -551,3 +530,4 @@ class CancelableRequest1 : public CancelableRequest<CB> {
 };
 
 #endif  // CHROME_BROWSER_CANCELABLE_REQUEST_H__
+

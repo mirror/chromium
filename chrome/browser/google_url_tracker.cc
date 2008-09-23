@@ -1,38 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/google_url_tracker.h"
 
+#include "base/compiler_specific.h"
 #include "base/string_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
-#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "net/base/load_flags.h"
@@ -41,10 +16,17 @@ const char GoogleURLTracker::kDefaultGoogleHomepage[] =
     "http://www.google.com/";
 
 GoogleURLTracker::GoogleURLTracker()
-    : google_url_(g_browser_process->local_state()->GetString(
-          prefs::kLastKnownGoogleURL)),
-#pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      fetcher_factory_(this) {
+    : google_url_(WideToUTF8(g_browser_process->local_state()->GetString(
+          prefs::kLastKnownGoogleURL))),
+      ALLOW_THIS_IN_INITIALIZER_LIST(fetcher_factory_(this)),
+      in_startup_sleep_(true),
+      already_fetched_(false),
+      need_to_fetch_(false),
+      request_context_available_(!!Profile::GetDefaultRequestContext()) {
+  NotificationService::current()->AddObserver(this,
+      NOTIFY_DEFAULT_REQUEST_CONTEXT_AVAILABLE,
+      NotificationService::AllSources());
+
   // Because this function can be called during startup, when kicking off a URL
   // fetch can eat up 20 ms of time, we delay five seconds, which is hopefully
   // long enough to be after startup, but still get results back quickly.
@@ -53,16 +35,31 @@ GoogleURLTracker::GoogleURLTracker()
   // no function to do this.
   static const int kStartFetchDelayMS = 5000;
   MessageLoop::current()->PostDelayedTask(FROM_HERE,
-      fetcher_factory_.NewRunnableMethod(&GoogleURLTracker::StartFetch),
+      fetcher_factory_.NewRunnableMethod(&GoogleURLTracker::FinishSleep),
       kStartFetchDelayMS);
 }
 
+GoogleURLTracker::~GoogleURLTracker() {
+  NotificationService::current()->RemoveObserver(this,
+      NOTIFY_DEFAULT_REQUEST_CONTEXT_AVAILABLE,
+      NotificationService::AllSources());
+}
+
+// static
 GURL GoogleURLTracker::GoogleURL() {
   const GoogleURLTracker* const tracker =
       g_browser_process->google_url_tracker();
   return tracker ? tracker->google_url_ : GURL(kDefaultGoogleHomepage);
 }
 
+// static
+void GoogleURLTracker::RequestServerCheck() {
+  GoogleURLTracker* const tracker = g_browser_process->google_url_tracker();
+  if (tracker)
+    tracker->SetNeedToFetch();
+}
+
+// static
 void GoogleURLTracker::RegisterPrefs(PrefService* prefs) {
   prefs->RegisterStringPref(prefs::kLastKnownGoogleURL,
                             ASCIIToWide(kDefaultGoogleHomepage));
@@ -96,10 +93,38 @@ bool GoogleURLTracker::CheckAndConvertToGoogleBaseURL(const GURL& url,
   return true;
 }
 
-void GoogleURLTracker::StartFetch() {
+void GoogleURLTracker::SetNeedToFetch() {
+  need_to_fetch_ = true;
+  StartFetchIfDesirable();
+}
+
+void GoogleURLTracker::FinishSleep() {
+  in_startup_sleep_ = false;
+  StartFetchIfDesirable();
+}
+
+void GoogleURLTracker::StartFetchIfDesirable() {
+  // Bail if a fetch isn't appropriate right now.  This function will be called
+  // again each time one of the preconditions changes, so we'll fetch
+  // immediately once all of them are met.
+  //
+  // See comments in header on the class, on RequestServerCheck(), and on the
+  // various members here for more detail on exactly what the conditions are.
+  if (in_startup_sleep_ || already_fetched_ || !need_to_fetch_ ||
+      !request_context_available_)
+    return;
+
+  need_to_fetch_ = false;
+  already_fetched_ = true;  // If fetching fails, we don't bother to reset this
+                            // flag; we just live with an outdated URL for this
+                            // run of the browser.
   fetcher_.reset(new URLFetcher(GURL(kDefaultGoogleHomepage), URLFetcher::HEAD,
                                 this));
-  fetcher_->set_load_flags(net::LOAD_DISABLE_CACHE);
+  // We don't want this fetch to affect existing state in the profile.  For
+  // example, if a user has no Google cookies, this automatic check should not
+  // cause one to be set, lest we alarm the user.
+  fetcher_->set_load_flags(net::LOAD_DISABLE_CACHE |
+                           net::LOAD_DO_NOT_SAVE_COOKIES);
   fetcher_->set_request_context(Profile::GetDefaultRequestContext());
   fetcher_->Start();
 }
@@ -134,4 +159,12 @@ void GoogleURLTracker::OnURLFetchComplete(const URLFetcher* source,
                                            NotificationService::AllSources(),
                                            NotificationService::NoDetails());
   }
+}
+
+void GoogleURLTracker::Observe(NotificationType type,
+                               const NotificationSource& source,
+                               const NotificationDetails& details) {
+  DCHECK_EQ(NOTIFY_DEFAULT_REQUEST_CONTEXT_AVAILABLE, type);
+  request_context_available_ = true;
+  StartFetchIfDesirable();
 }

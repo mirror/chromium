@@ -1,3 +1,0 @@
-to-string.js:1: Uncaught <toString failed>
-var key = { toString: function() { throw '<toString failed>'; } };
-                                   ^

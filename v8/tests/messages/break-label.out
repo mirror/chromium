@@ -1,3 +1,0 @@
-break-label.js:2: Uncaught SyntaxError: Unexpected number
-  break 1;
-        ^

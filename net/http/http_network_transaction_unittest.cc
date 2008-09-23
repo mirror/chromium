@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "net/base/client_socket_factory.h"
 #include "net/base/test_completion_callback.h"
@@ -171,14 +146,14 @@ class MockClientSocketFactory : public net::ClientSocketFactory {
 
 MockClientSocketFactory mock_socket_factory;
 
-class NullProxyResolver : public net::HttpProxyResolver {
+class NullProxyResolver : public net::ProxyResolver {
  public:
-  virtual int GetProxyConfig(net::HttpProxyConfig* config) {
+  virtual int GetProxyConfig(net::ProxyConfig* config) {
     return net::ERR_FAILED;
   }
-  virtual int GetProxyForURL(const std::wstring& query_url,
-                             const std::wstring& pac_url,
-                             net::HttpProxyInfo* results) {
+  virtual int GetProxyForURL(const std::string& query_url,
+                             const std::string& pac_url,
+                             net::ProxyInfo* results) {
     return net::ERR_FAILED;
   }
 };
@@ -195,17 +170,14 @@ class HttpNetworkTransactionTest : public testing::Test {
   }
 };
 
-}  // namespace
+struct SimpleGetHelperResult {
+  std::string status_line;
+  std::string response_data;
+};
 
-//-----------------------------------------------------------------------------
+SimpleGetHelperResult SimpleGetHelper(MockRead data_reads[]) {
+  SimpleGetHelperResult out;
 
-TEST_F(HttpNetworkTransactionTest, Basic) {
-  net::HttpTransaction* trans = new net::HttpNetworkTransaction(
-      CreateSession(), &mock_socket_factory);
-  trans->Destroy();
-}
-
-TEST_F(HttpNetworkTransactionTest, SimpleGET) {
   net::HttpTransaction* trans = new net::HttpNetworkTransaction(
       CreateSession(), &mock_socket_factory);
 
@@ -214,11 +186,6 @@ TEST_F(HttpNetworkTransactionTest, SimpleGET) {
   request.url = GURL("http://www.google.com/");
   request.load_flags = 0;
 
-  MockRead data_reads[] = {
-    { true, 0, "HTTP/1.0 200 OK\r\n\r\n", -1 },
-    { true, 0, "hello world", -1 },
-    { false, net::OK, NULL, 0 },
-  };
   MockSocket data;
   data.connect.async = true;
   data.connect.result = net::OK;
@@ -238,18 +205,110 @@ TEST_F(HttpNetworkTransactionTest, SimpleGET) {
   EXPECT_TRUE(response != NULL);
 
   EXPECT_TRUE(response->headers != NULL);
-  EXPECT_TRUE(response->headers->GetStatusLine() == "HTTP/1.0 200 OK");
+  out.status_line = response->headers->GetStatusLine();
 
-  std::string response_data;
-  rv = ReadTransaction(trans, &response_data);
+  rv = ReadTransaction(trans, &out.response_data);
   EXPECT_EQ(net::OK, rv);
-  EXPECT_TRUE(response_data == "hello world");
 
   trans->Destroy();
 
   // Empty the current queue.
-  MessageLoop::current()->Quit();
-  MessageLoop::current()->Run();
+  MessageLoop::current()->RunAllPending();
+
+  return out;
+}
+
+}  // namespace
+
+//-----------------------------------------------------------------------------
+
+TEST_F(HttpNetworkTransactionTest, Basic) {
+  net::HttpTransaction* trans = new net::HttpNetworkTransaction(
+      CreateSession(), &mock_socket_factory);
+  trans->Destroy();
+}
+
+TEST_F(HttpNetworkTransactionTest, SimpleGET) {
+  MockRead data_reads[] = {
+    { true, 0, "HTTP/1.0 200 OK\r\n\r\n", -1 },
+    { true, 0, "hello world", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_EQ("HTTP/1.0 200 OK", out.status_line);
+  EXPECT_EQ("hello world", out.response_data);
+}
+
+// Response with no status line.
+TEST_F(HttpNetworkTransactionTest, SimpleGETNoHeaders) {
+  MockRead data_reads[] = {
+    { true, 0, "hello world", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_EQ("HTTP/0.9 200 OK", out.status_line);
+  EXPECT_EQ("hello world", out.response_data);
+}
+
+// Allow up to 4 bytes of junk to precede status line.
+TEST_F(HttpNetworkTransactionTest, StatusLineJunk2Bytes) {
+  MockRead data_reads[] = {
+    { true, 0, "xxxHTTP/1.0 404 Not Found\nServer: blah\n\nDATA", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_EQ("HTTP/1.0 404 Not Found", out.status_line);
+  EXPECT_EQ("DATA", out.response_data);
+}
+
+// Allow up to 4 bytes of junk to precede status line.
+TEST_F(HttpNetworkTransactionTest, StatusLineJunk4Bytes) {
+  MockRead data_reads[] = {
+    { true, 0, "\n\nQJHTTP/1.0 404 Not Found\nServer: blah\n\nDATA", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_EQ("HTTP/1.0 404 Not Found", out.status_line);
+  EXPECT_EQ("DATA", out.response_data);
+}
+
+// Beyond 4 bytes of slop and it should fail to find a status line.
+TEST_F(HttpNetworkTransactionTest, StatusLineJunk5Bytes) {
+  MockRead data_reads[] = {
+    { true, 0, "xxxxxHTTP/1.1 404 Not Found\nServer: blah", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_TRUE(out.status_line == "HTTP/0.9 200 OK");
+  EXPECT_TRUE(out.response_data == "xxxxxHTTP/1.1 404 Not Found\nServer: blah");
+}
+
+// Same as StatusLineJunk4Bytes, except the read chunks are smaller.
+TEST_F(HttpNetworkTransactionTest, StatusLineJunk4Bytes_Slow) {
+  MockRead data_reads[] = {
+    { true, 0, "\n", -1 },
+    { true, 0, "\n", -1 },
+    { true, 0, "Q", -1 },
+    { true, 0, "J", -1 },
+    { true, 0, "HTTP/1.0 404 Not Found\nServer: blah\n\nDATA", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_EQ("HTTP/1.0 404 Not Found", out.status_line);
+  EXPECT_EQ("DATA", out.response_data);
+}
+
+// Close the connection before enough bytes to have a status line.
+TEST_F(HttpNetworkTransactionTest, StatusLinePartial) {
+  MockRead data_reads[] = {
+    { true, 0, "HTT", -1 },
+    { false, net::OK, NULL, 0 },
+  };
+  SimpleGetHelperResult out = SimpleGetHelper(data_reads);
+  EXPECT_EQ("HTTP/0.9 200 OK", out.status_line);
+  EXPECT_EQ("HTT", out.response_data);
 }
 
 TEST_F(HttpNetworkTransactionTest, ReuseConnection) {
@@ -304,8 +363,7 @@ TEST_F(HttpNetworkTransactionTest, ReuseConnection) {
     trans->Destroy();
 
     // Empty the current queue.
-    MessageLoop::current()->Quit();
-    MessageLoop::current()->Run();
+    MessageLoop::current()->RunAllPending();
   }
 }
 
@@ -355,8 +413,7 @@ TEST_F(HttpNetworkTransactionTest, Ignores100) {
   trans->Destroy();
 
   // Empty the current queue.
-  MessageLoop::current()->Quit();
-  MessageLoop::current()->Run();
+  MessageLoop::current()->RunAllPending();
 }
 
 TEST_F(HttpNetworkTransactionTest, KeepAliveConnectionReset) {
@@ -419,7 +476,6 @@ TEST_F(HttpNetworkTransactionTest, KeepAliveConnectionReset) {
     trans->Destroy();
 
     // Empty the current queue.
-    MessageLoop::current()->Quit();
-    MessageLoop::current()->Run();
+    MessageLoop::current()->RunAllPending();
   }
 }

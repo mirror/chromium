@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/shell_dialogs.h"
 
@@ -38,6 +13,7 @@
 
 #include "base/file_util.h"
 #include "base/registry.h"
+#include "base/string_util.h"
 #include "base/thread.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/gfx/chrome_font.h"
@@ -45,9 +21,9 @@
 #include "chrome/common/win_util.h"
 #include "generated_resources.h"
 
-class ShellDialogThread : public Thread {
+class ShellDialogThread : public base::Thread {
  public:
-  ShellDialogThread() : Thread("Chrome_ShellDialogThread") { }
+  ShellDialogThread() : base::Thread("Chrome_ShellDialogThread") { }
 
  protected:
   void Init() {
@@ -62,7 +38,7 @@ class ShellDialogThread : public Thread {
   }
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(ShellDialogThread);
+  DISALLOW_COPY_AND_ASSIGN(ShellDialogThread);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -80,7 +56,7 @@ class BaseShellDialogImpl {
     HWND owner;
 
     // Thread dialog is run on.
-    Thread* dialog_thread;
+    base::Thread* dialog_thread;
   };
 
   // Called at the beginning of a modal dialog run. Disables the owner window
@@ -118,7 +94,7 @@ class BaseShellDialogImpl {
   // thread otherwise in some situations where a singleton owns a single
   // instance of this object we can have a situation where a modal dialog in
   // one window blocks the appearance of a modal dialog in another.
-  static Thread* CreateDialogThread();
+  static base::Thread* CreateDialogThread();
 
   // Enables the window |owner_|. Can only be run from the ui thread.
   void EnableOwner(HWND owner);
@@ -139,7 +115,7 @@ class BaseShellDialogImpl {
   static Owners owners_;
   static int instance_count_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(BaseShellDialogImpl);
+  DISALLOW_COPY_AND_ASSIGN(BaseShellDialogImpl);
 };
 
 // static
@@ -194,8 +170,8 @@ void BaseShellDialogImpl::DisableOwner(HWND owner) {
 }
 
 // static
-Thread* BaseShellDialogImpl::CreateDialogThread() {
-  Thread* thread = new ShellDialogThread;
+base::Thread* BaseShellDialogImpl::CreateDialogThread() {
+  base::Thread* thread = new ShellDialogThread;
   bool started = thread->Start();
   DCHECK(started);
   return thread;
@@ -255,7 +231,7 @@ class SelectFileDialogImpl : public SelectFileDialog,
   // The listener to be notified of selection completion.
   Listener* listener_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(SelectFileDialogImpl);
+  DISALLOW_COPY_AND_ASSIGN(SelectFileDialogImpl);
 };
 
 SelectFileDialogImpl::SelectFileDialogImpl(Listener* listener)
@@ -366,11 +342,13 @@ bool SelectFileDialogImpl::RunOpenFileDialog(const std::wstring& title,
   ofn.hwndOwner = owner;
 
   wchar_t filename[MAX_PATH];
-  memcpy(filename, path->c_str(), (path->length()+1) * sizeof(wchar_t));
+  base::wcslcpy(filename, path->c_str(), arraysize(filename));
 
   ofn.lpstrFile = filename;
   ofn.nMaxFile = MAX_PATH;
-  ofn.Flags = OFN_FILEMUSTEXIST;
+  // We use OFN_NOCHANGEDIR so that the user can rename or delete the directory
+  // without having to close Chrome first.
+  ofn.Flags = OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
 
   // TODO(beng): (http://b/issue?id=1126563) edit the filter options in the
   //             dropdown list.
@@ -427,7 +405,7 @@ class SelectFontDialogImpl : public SelectFontDialog,
   // The listener to be notified of selection completion.
   Listener* listener_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(SelectFontDialogImpl);
+  DISALLOW_COPY_AND_ASSIGN(SelectFontDialogImpl);
 };
 
 SelectFontDialogImpl::SelectFontDialogImpl(Listener* listener)
@@ -549,3 +527,4 @@ void SelectFontDialogImpl::FontNotSelected(void* params, RunState run_state) {
 SelectFontDialog* SelectFontDialog::Create(Listener* listener) {
   return new SelectFontDialogImpl(listener);
 }
+

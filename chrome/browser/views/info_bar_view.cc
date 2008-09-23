@@ -1,35 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/info_bar_view.h"
 
 #include "base/logging.h"
+#include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/tab_contents_delegate.h"
 #include "chrome/browser/web_contents.h"
@@ -56,9 +32,16 @@ static const int kSeparatorHeight = 1;
 InfoBarView::InfoBarView(WebContents* web_contents)
     : web_contents_(web_contents) {
   Init();
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_NAV_ENTRY_COMMITTED,
+      Source<NavigationController>(web_contents_->controller()));
 }
 
-InfoBarView::~InfoBarView() {}
+InfoBarView::~InfoBarView() {
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_NAV_ENTRY_COMMITTED,
+      Source<NavigationController>(web_contents_->controller()));
+}
 
 void InfoBarView::AppendInfoBarItem(ChromeViews::View* view, bool auto_expire) {
   // AddChildView adds an entry to expire_map_ for view.
@@ -81,18 +64,15 @@ void InfoBarView::GetPreferredSize(CSize *out) {
     if (v->IsVisible()) {
       CSize view_size;
       v->GetPreferredSize(&view_size);
-      out->cx = std::max(static_cast<int>(out->cx), v->GetWidth());
+      out->cx = std::max(static_cast<int>(out->cx), v->width());
       out->cy += static_cast<int>(view_size.cy) + kSeparatorHeight;
     }
   }
 }
 
 void InfoBarView::Layout() {
-  int width = GetWidth();
-  int height = GetHeight();
-
   int x = 0;
-  int y = height;
+  int y = height();
 
   // We lay the bars out from bottom to top.
   for (int i = 0; i < GetChildViewCount(); ++i) {
@@ -102,7 +82,7 @@ void InfoBarView::Layout() {
 
     CSize view_size;
     v->GetPreferredSize(&view_size);
-    int view_width = std::max(static_cast<int>(view_size.cx), width);
+    int view_width = std::max(static_cast<int>(view_size.cx), width());
     y = y - view_size.cy - kSeparatorHeight;
     v->SetBounds(x,
                  y,
@@ -130,41 +110,6 @@ void InfoBarView::ChildAnimationProgressed() {
 void InfoBarView::ChildAnimationEnded() {
   if (web_contents_)
     web_contents_->ToolbarSizeChanged(false);
-}
-
-void InfoBarView::DidNavigate(NavigationEntry* entry) {
-  // Determine the views to remove first.
-  std::vector<ChromeViews::View*> to_remove;
-  NavigationEntry* pending_entry =
-      web_contents_->controller()->GetPendingEntry();
-  const int active_id = pending_entry ? pending_entry->unique_id() :
-                                        entry->unique_id();
-  for (std::map<View*,int>::iterator i = expire_map_.begin();
-       i != expire_map_.end(); ++i) {
-    if ((i->second) != active_id)
-      to_remove.push_back(i->first);
-  }
-
-  if (to_remove.empty())
-    return;
-
-  // Remove the views.
-  for (std::vector<ChromeViews::View*>::iterator i = to_remove.begin();
-       i != to_remove.end(); ++i) {
-    // RemoveChildView takes care of removing from expire_map for us.
-    RemoveChildView(*i);
-
-    // We own the child and we're removing it, need to delete it.
-    delete *i;
-  }
-
-  if (GetChildViewCount() == 0) {
-    // All our views have been removed, no need to stay visible.
-    web_contents_->SetInfoBarVisible(false);
-  } else if (web_contents_) {
-    // This triggers a layout.
-    web_contents_->ToolbarSizeChanged(false);
-  }
 }
 
 void InfoBarView::ViewHierarchyChanged(bool is_add, View *parent,
@@ -208,14 +153,14 @@ int InfoBarView::GetActiveID() const {
 }
 
 void InfoBarView::PaintBorder(ChromeCanvas* canvas) {
-  canvas->FillRectInt(kBorderColorTop, 0, 0, GetWidth(), 1);
+  canvas->FillRectInt(kBorderColorTop, 0, 0, width(), 1);
   canvas->FillRectInt(kBorderColorBottom,
-                      0, GetHeight() - kSeparatorHeight - 1,
-                      GetWidth(), kSeparatorHeight);
+                      0, height() - kSeparatorHeight - 1,
+                      width(), kSeparatorHeight);
 
   if (GetChildViewCount() > 0)
-    canvas->FillRectInt(kSeparatorColor, 0, GetHeight() - kSeparatorHeight,
-                        GetWidth(), kSeparatorHeight);
+    canvas->FillRectInt(kSeparatorColor, 0, height() - kSeparatorHeight,
+                        width(), kSeparatorHeight);
 }
 
 void InfoBarView::PaintSeparators(ChromeCanvas* canvas) {
@@ -239,7 +184,56 @@ void InfoBarView::PaintSeparator(ChromeCanvas* canvas,
                                  ChromeViews::View* v2) {
   canvas->FillRectInt(kSeparatorColor,
                       0,
-                      v2->GetY() - kSeparatorHeight,
-                      GetWidth(),
+                      v2->y() - kSeparatorHeight,
+                      width(),
                       kSeparatorHeight);
+}
+
+void InfoBarView::Observe(NotificationType type,
+                          const NotificationSource& source,
+                          const NotificationDetails& in_details) {
+  // We should get only commit notifications from our controller.
+  DCHECK(type == NOTIFY_NAV_ENTRY_COMMITTED);
+  DCHECK(web_contents_->controller() ==
+         Source<NavigationController>(source).ptr());
+
+  NavigationController::LoadCommittedDetails& details =
+      *(Details<NavigationController::LoadCommittedDetails>(in_details).ptr());
+
+  // Only hide infobars when the user has done something that makes the main
+  // frame load. We don't want various automatic or subframe navigations making
+  // it disappear.
+  if (!details.is_user_initiated_main_frame_load())
+    return;
+
+  // Determine the views to remove first.
+  std::vector<ChromeViews::View*> to_remove;
+  for (std::map<View*,int>::iterator i = expire_map_.begin();
+       i != expire_map_.end(); ++i) {
+    if (PageTransition::StripQualifier(details.entry->transition_type()) ==
+            PageTransition::RELOAD ||
+        i->second != details.entry->unique_id())
+      to_remove.push_back(i->first);
+  }
+
+  if (to_remove.empty())
+    return;
+
+  // Remove the views.
+  for (std::vector<ChromeViews::View*>::iterator i = to_remove.begin();
+       i != to_remove.end(); ++i) {
+    // RemoveChildView takes care of removing from expire_map for us.
+    RemoveChildView(*i);
+
+    // We own the child and we're removing it, need to delete it.
+    delete *i;
+  }
+
+  if (GetChildViewCount() == 0) {
+    // All our views have been removed, no need to stay visible.
+    web_contents_->SetInfoBarVisible(false);
+  } else if (web_contents_) {
+    // This triggers a layout.
+    web_contents_->ToolbarSizeChanged(false);
+  }
 }

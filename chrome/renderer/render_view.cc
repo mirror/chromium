@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/renderer/render_view.h"
 
@@ -35,7 +10,7 @@
 
 #include "base/command_line.h"
 #include "base/gfx/bitmap_header.h"
-#include "base/gfx/bitmap_platform_device.h"
+#include "base/gfx/bitmap_platform_device_win.h"
 #include "base/gfx/image_operations.h"
 #include "base/gfx/native_theme.h"
 #include "base/gfx/vector_canvas.h"
@@ -52,7 +27,9 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/text_zoom.h"
 #include "chrome/common/thumbnail_score.h"
+#include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/renderer/about_handler.h"
+#include "chrome/renderer/chrome_plugin_host.h"
 #include "chrome/renderer/debug_message_handler.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/renderer_resources.h"
@@ -163,7 +140,6 @@ RenderView::RenderView()
     last_page_id_sent_to_browser_(-1),
     last_indexed_page_id_(-1),
     method_factory_(this),
-    nav_state_sync_timer_(kDelayForNavigationSync),
     opened_by_user_gesture_(true),
     enable_dom_automation_(false),
     enable_dom_ui_bindings_(false),
@@ -176,8 +152,9 @@ RenderView::RenderView()
     disable_popup_blocking_(false),
     has_unload_listener_(false) {
   resource_dispatcher_ = new ResourceDispatcher(this);
-  nav_state_sync_timer_.set_task(
-      method_factory_.NewRunnableMethod(&RenderView::SyncNavigationState));
+#ifdef CHROME_PERSONALIZATION
+  personalization_ = Personalization::CreateRendererPersonalization();
+#endif
 }
 
 RenderView::~RenderView() {
@@ -190,6 +167,11 @@ RenderView::~RenderView() {
   }
 
   RenderThread::current()->RemoveFilter(debug_message_handler_);
+
+#ifdef CHROME_PERSONALIZATION
+  Personalization::CleanupRendererPersonalization(personalization_);
+  personalization_ = NULL;
+#endif
 }
 
 /*static*/
@@ -315,6 +297,7 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_ScriptEvalRequest, OnScriptEvalRequest)
     IPC_MESSAGE_HANDLER(ViewMsg_AddMessageToConsole, OnAddMessageToConsole)
     IPC_MESSAGE_HANDLER(ViewMsg_DebugAttach, OnDebugAttach)
+    IPC_MESSAGE_HANDLER(ViewMsg_DebugDetach, OnDebugDetach)
     IPC_MESSAGE_HANDLER(ViewMsg_ReservePageIDRange, OnReservePageIDRange)
     IPC_MESSAGE_HANDLER(ViewMsg_UploadFile, OnUploadFileRequest)
     IPC_MESSAGE_HANDLER(ViewMsg_FormFill, OnFormFill)
@@ -325,7 +308,7 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_DragTargetDrop, OnDragTargetDrop)
     IPC_MESSAGE_HANDLER(ViewMsg_AllowDomAutomationBindings,
                         OnAllowDomAutomationBindings)
-    IPC_MESSAGE_HANDLER(ViewMsg_AllowDOMUIBindings, OnAllowDOMUIBindings)
+    IPC_MESSAGE_HANDLER(ViewMsg_AllowBindings, OnAllowBindings)
     IPC_MESSAGE_HANDLER(ViewMsg_SetDOMUIProperty, OnSetDOMUIProperty)
     IPC_MESSAGE_HANDLER(ViewMsg_DragSourceEndedOrMoved, OnDragSourceEndedOrMoved)
     IPC_MESSAGE_HANDLER(ViewMsg_DragSourceSystemDragEnded,
@@ -348,6 +331,11 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_ShouldClose, OnMsgShouldClose)
     IPC_MESSAGE_HANDLER(ViewMsg_ClosePage, OnClosePage)
     IPC_MESSAGE_HANDLER(ViewMsg_ThemeChanged, OnThemeChanged)
+#ifdef CHROME_PERSONALIZATION
+    IPC_MESSAGE_HANDLER(ViewMsg_PersonalizationEvent, OnPersonalizationEvent)
+#endif
+    IPC_MESSAGE_HANDLER(ViewMsg_HandleMessageFromExternalHost,
+                        OnMessageFromExternalHost)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidget::OnMessageReceived(message))
   IPC_END_MESSAGE_MAP()
@@ -456,7 +444,7 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   emf.CreateDc(NULL, NULL);
   HDC hdc = emf.hdc();
   DCHECK(hdc);
-  gfx::PlatformDevice::InitializeDC(hdc);
+  gfx::PlatformDeviceWin::InitializeDC(hdc);
 
   gfx::Rect rect;
   frame->GetPageRect(params.page_number, &rect);
@@ -480,7 +468,7 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   // GDI drawing code fails.
 
   // Mix of Skia and GDI based.
-  gfx::PlatformCanvas canvas(src_size_x, src_size_y, true);
+  gfx::PlatformCanvasWin canvas(src_size_x, src_size_y, true);
   canvas.drawARGB(255, 255, 255, 255, SkPorterDuff::kSrc_Mode);
   PlatformContextSkia context(&canvas);
   if (!frame->SpoolPage(params.page_number, &context)) {
@@ -701,7 +689,7 @@ void RenderView::CaptureThumbnail(WebFrame* frame,
   double begin = time_util::GetHighResolutionTimeNow();
 #endif
 
-  gfx::BitmapPlatformDevice device(frame->CaptureImage(true));
+  gfx::BitmapPlatformDeviceWin device(frame->CaptureImage(true));
   const SkBitmap& src_bmp = device.accessBitmap(false);
 
   SkRect dest_rect;
@@ -1024,6 +1012,7 @@ void RenderView::UpdateURL(WebFrame* frame) {
     // the page contained a client redirect (meta refresh, document.loc...),
     // so we set the referrer and transition to match.
     if (completed_client_redirect_src_.is_valid()) {
+      DCHECK(completed_client_redirect_src_ == params.redirects[0]);
       params.referrer = completed_client_redirect_src_;
       params.transition = static_cast<PageTransition::Type>(
           params.transition | PageTransition::CLIENT_REDIRECT);
@@ -1075,11 +1064,10 @@ void RenderView::UpdateEncoding(WebFrame* frame,
   // Only update main frame's encoding_name.
   if (webview()->GetMainFrame() == frame &&
       last_encoding_name_ != encoding_name) {
-    // save the encoding name for later comparing.
+    // Save the encoding name for later comparing.
     last_encoding_name_ = encoding_name;
 
-    Send(new ViewHostMsg_UpdateEncoding(routing_id_,
-                                        last_encoding_name_));
+    Send(new ViewHostMsg_UpdateEncoding(routing_id_, last_encoding_name_));
   }
 }
 
@@ -1155,8 +1143,12 @@ void RenderView::DidStartProvisionalLoadForFrame(
     WebView* webview,
     WebFrame* frame,
     NavigationGesture gesture) {
-  if (webview->GetMainFrame() == frame)
+  if (webview->GetMainFrame() == frame) {
     navigation_gesture_ = gesture;
+    
+    // Make sure redirect tracking state is clear for the new load.
+    completed_client_redirect_src_ = GURL();
+  }
 
   Send(new ViewHostMsg_DidStartProvisionalLoadForFrame(
        routing_id_, webview->GetMainFrame() == frame,
@@ -1216,10 +1208,6 @@ void RenderView::DidFailProvisionalLoadWithError(WebView* webview,
       routing_id_, frame == webview->GetMainFrame(),
       error.GetErrorCode(), error.GetFailedURL(),
       show_repost_interstitial));
-
-  // TODO(darin): This should not be necessary!
-  if (is_loading_)
-    DidStopLoading(webview);
 
   // Don't display an error page if this is simply a cancelled load.  Aside
   // from being dumb, WebCore doesn't expect it and it will cause a crash.
@@ -1411,6 +1399,16 @@ void RenderView::WindowObjectCleared(WebFrame* webframe) {
     dom_ui_bindings_.set_routing_id(routing_id_);
     dom_ui_bindings_.BindToJavascript(webframe, L"chrome");
   }
+  if (enable_external_host_bindings_) {
+    external_host_bindings_.set_message_sender(this);
+    external_host_bindings_.set_routing_id(routing_id_);
+    external_host_bindings_.BindToJavascript(webframe, L"externalHost");
+  }
+
+#ifdef CHROME_PERSONALIZATION
+  Personalization::ConfigureRendererPersonalization(personalization_, this,
+                                                    routing_id_, webframe);
+#endif
 }
 
 WindowOpenDisposition RenderView::DispositionForNavigationAction(
@@ -1663,13 +1661,28 @@ WebWidget* RenderView::CreatePopupWidget(WebView* webview) {
   return widget->webwidget();
 }
 
+static bool ShouldLoadPluginInProcess(const std::string& mime_type,
+                                      bool* is_gears) {
+  if (RenderProcess::ShouldLoadPluginsInProcess())
+    return true;
+
+  if (mime_type == "application/x-googlegears") {
+    *is_gears = true;
+    CommandLine cmd;
+    return cmd.HasSwitch(switches::kGearsInRenderer);
+  }
+
+  return false;
+}
+
 WebPluginDelegate* RenderView::CreatePluginDelegate(
     WebView* webview,
     const GURL& url,
     const std::string& mime_type,
     const std::string& clsid,
     std::string* actual_mime_type) {
-  if (RenderProcess::ShouldLoadPluginsInProcess()) {
+  bool is_gears = false;
+  if (ShouldLoadPluginInProcess(mime_type, &is_gears)) {
     std::wstring path;
     RenderThread::current()->Send(
         new ViewHostMsg_GetPluginPath(url, mime_type, clsid, &path,
@@ -1683,6 +1696,8 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
     else
       mime_type_to_use = mime_type;
 
+    if (is_gears)
+      ChromePluginLib::Create(path, GetCPBrowserFuncsForRenderer());
     return WebPluginDelegateImpl::Create(path, mime_type_to_use, host_window_);
   }
 
@@ -2172,7 +2187,9 @@ int RenderView::GetHistoryForwardListCount() {
 }
 
 void RenderView::OnNavStateChanged(WebView* webview) {
-  nav_state_sync_timer_.Start();
+  if (!nav_state_sync_timer_.IsRunning())
+    nav_state_sync_timer_.Start(kDelayForNavigationSync, this,
+                                &RenderView::SyncNavigationState);
 }
 
 void RenderView::SetTooltipText(WebView* webview,
@@ -2221,7 +2238,6 @@ void RenderView::OnAddMessageToConsole(const std::wstring& frame_xpath,
 }
 
 void RenderView::OnDebugAttach() {
-  EvaluateScriptUrl(L"", L"javascript:void(0)");
   Send(new ViewHostMsg_DidDebugAttach(routing_id_));
   // Tell the plugin host to stop accepting messages in order to avoid
   // hangs while the renderer is paused.
@@ -2239,8 +2255,11 @@ void RenderView::OnAllowDomAutomationBindings(bool allow_bindings) {
   enable_dom_automation_ = allow_bindings;
 }
 
-void RenderView::OnAllowDOMUIBindings() {
-  enable_dom_ui_bindings_ = true;
+void RenderView::OnAllowBindings(bool enable_dom_ui_bindings,
+                                 bool enable_external_host_bindings)
+{
+  enable_dom_ui_bindings_ = enable_dom_ui_bindings;
+  enable_external_host_bindings_ = enable_external_host_bindings;
 }
 
 void RenderView::OnSetDOMUIProperty(const std::string& name,
@@ -2458,6 +2477,46 @@ void RenderView::OnThemeChanged() {
   DidInvalidateRect(webwidget_, view_rect);
 }
 
+#ifdef CHROME_PERSONALIZATION
+void RenderView::OnPersonalizationEvent(std::string event_name,
+                                        std::string event_args) {
+  Personalization::HandleViewMsgPersonalizationEvent(personalization_,
+                                                     webview(),
+                                                     event_name,
+                                                     event_args);
+}
+#endif
+
+void RenderView::TransitionToCommittedForNewPage() {
+#ifdef CHROME_PERSONALIZATION
+  Personalization::HandleTransitionToCommittedForNewPage(personalization_);
+#endif
+}
+
+void RenderView::OnMessageFromExternalHost(
+    const std::string& target, const std::string& message) {
+  if (message.empty())
+    return;
+
+  WebFrame* main_frame = webview()->GetMainFrame();
+  if (!main_frame)
+    return;
+
+  std::string script = "javascript:";
+  script += target;
+  script += "(";
+  script += "'";
+  script += message;
+  script += "'";
+  script += ");void(0);";
+
+  GURL script_url(script);
+  scoped_ptr<WebRequest> request(WebRequest::Create(script_url));
+  // TODO(iyengar)
+  // Need a mechanism to send results back.
+  main_frame->LoadRequest(request.get());
+}
+
 std::string RenderView::GetAltHTMLForTemplate(
     const DictionaryValue& error_strings, int template_resource_id) const {
   const StringPiece template_html(
@@ -2472,3 +2531,4 @@ std::string RenderView::GetAltHTMLForTemplate(
   return jstemplate_builder::GetTemplateHtml(
       template_html, &error_strings, "t");
 }
+

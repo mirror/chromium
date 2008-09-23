@@ -1,33 +1,16 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
+// TODO(awalker): clean up the const/non-const reference handling in this test
+
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
 #include <windows.h>
+#else
+#include <unistd.h>
+#endif
 
 #include "base/gfx/platform_canvas.h"
 #include "base/gfx/platform_device.h"
@@ -77,7 +60,8 @@ bool VerifyCanvasColor(const PlatformCanvas& canvas, uint32_t canvas_color) {
   return VerifyRect(canvas, canvas_color, 0, 0, 0, 0, 0);
 }
 
-void DrawGDIRect(PlatformCanvas& canvas, int x, int y, int w, int h) {
+#if defined(OS_WIN)
+void DrawNativeRect(PlatformCanvas& canvas, int x, int y, int w, int h) {
   HDC dc = canvas.beginPlatformPaint();
 
   RECT inner_rc;
@@ -89,6 +73,22 @@ void DrawGDIRect(PlatformCanvas& canvas, int x, int y, int w, int h) {
 
   canvas.endPlatformPaint();
 }
+#elif defined(OS_MACOSX)
+void DrawNativeRect(PlatformCanvas& canvas, int x, int y, int w, int h) {
+  CGContextRef context = canvas.beginPlatformPaint();
+  
+  CGRect inner_rc = CGRectMake(x, y, w, h);
+  CGFloat black[] = { 0.0, 0.0, 0.0, 1.0 };  // RGBA opaque black
+  CGContextSetFillColor(context, black);
+  CGContextFillRect(context, inner_rc);
+  
+  canvas.endPlatformPaint();
+}
+#else
+void DrawNativeRect(PlatformCanvas& canvas, int x, int y, int w, int h) {
+  NOTIMPLEMENTED();
+}
+#endif
 
 // Clips the contents of the canvas to the given rectangle. This will be
 // intersected with any existing clip.
@@ -162,8 +162,8 @@ TEST(PlatformCanvas, SkLayer) {
   EXPECT_TRUE(VerifyBlackSquare(canvas, kLayerX, kLayerY, kLayerW, kLayerH));
 }
 
-// Test the GDI clipping.
-TEST(PlatformCanvas, GDIClipRegion) {
+// Test native clipping.
+TEST(PlatformCanvas, ClipRegion) {
   // Initialize a white canvas
   PlatformCanvas canvas(16, 16, true);
   canvas.drawColor(SK_ColorWHITE);
@@ -172,7 +172,7 @@ TEST(PlatformCanvas, GDIClipRegion) {
   // Test that initially the canvas has no clip region, by filling it
   // with a black rectangle.
   // Note: Don't use LayerSaver, since internally it sets a clip region.
-  DrawGDIRect(canvas, 0, 0, 16, 16);
+  DrawNativeRect(canvas, 0, 0, 16, 16);
   canvas.getTopPlatformDevice().fixupAlphaBeforeCompositing();
   EXPECT_TRUE(VerifyCanvasColor(canvas, SK_ColorBLACK));
 
@@ -183,13 +183,13 @@ TEST(PlatformCanvas, GDIClipRegion) {
     LayerSaver layer(canvas, 0, 0, 16, 16);
     AddClip(canvas, 2, 3, 4, 5);
     AddClip(canvas, 4, 9, 10, 10);
-    DrawGDIRect(canvas, 0, 0, 16, 16);
+    DrawNativeRect(canvas, 0, 0, 16, 16);
   }
   EXPECT_TRUE(VerifyCanvasColor(canvas, SK_ColorWHITE));
 }
 
-// Test the layers get filled properly by GDI.
-TEST(PlatformCanvas, GDILayer) {
+// Test the layers get filled properly by native rendering.
+TEST(PlatformCanvas, FillLayer) {
   // Create the canvas initialized to opaque white.
   PlatformCanvas canvas(16, 16, true);
 
@@ -198,7 +198,7 @@ TEST(PlatformCanvas, GDILayer) {
   canvas.drawColor(SK_ColorWHITE);
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
-    DrawGDIRect(canvas, 0, 0, 100, 100);
+    DrawNativeRect(canvas, 0, 0, 100, 100);
   }
   EXPECT_TRUE(VerifyBlackSquare(canvas, kLayerX, kLayerY, kLayerW, kLayerH));
 
@@ -206,17 +206,17 @@ TEST(PlatformCanvas, GDILayer) {
   canvas.drawColor(SK_ColorWHITE);
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
-    DrawGDIRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
+    DrawNativeRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
   }
   EXPECT_TRUE(VerifyBlackSquare(canvas, kInnerX, kInnerY, kInnerW, kInnerH));
 
-  // Add a clip on the layer and fill to make make sure clip is correct.
+  // Add a clip on the layer and fill to make sure clip is correct.
   canvas.drawColor(SK_ColorWHITE);
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     canvas.save();
     AddClip(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
-    DrawGDIRect(canvas, 0, 0, 100, 100);
+    DrawNativeRect(canvas, 0, 0, 100, 100);
     canvas.restore();
   }
   EXPECT_TRUE(VerifyBlackSquare(canvas, kInnerX, kInnerY, kInnerW, kInnerH));
@@ -227,14 +227,14 @@ TEST(PlatformCanvas, GDILayer) {
   AddClip(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
-    DrawGDIRect(canvas, 0, 0, 100, 100);
+    DrawNativeRect(canvas, 0, 0, 100, 100);
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackSquare(canvas, kInnerX, kInnerY, kInnerW, kInnerH));
 }
 
 // Test that translation + make layer works properly.
-TEST(PlatformCanvas, GDITranslateLayer) {
+TEST(PlatformCanvas, TranslateLayer) {
   // Create the canvas initialized to opaque white.
   PlatformCanvas canvas(16, 16, true);
 
@@ -245,7 +245,7 @@ TEST(PlatformCanvas, GDITranslateLayer) {
   canvas.translate(1, 1);
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
-    DrawGDIRect(canvas, 0, 0, 100, 100);
+    DrawNativeRect(canvas, 0, 0, 100, 100);
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackSquare(canvas, kLayerX + 1, kLayerY + 1,
@@ -257,7 +257,7 @@ TEST(PlatformCanvas, GDITranslateLayer) {
   canvas.translate(1, 1);
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
-    DrawGDIRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
+    DrawNativeRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackSquare(canvas, kInnerX + 1, kInnerY + 1,
@@ -269,7 +269,7 @@ TEST(PlatformCanvas, GDITranslateLayer) {
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     canvas.translate(1, 1);
-    DrawGDIRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
+    DrawNativeRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackSquare(canvas, kInnerX + 1, kInnerY + 1,
@@ -283,7 +283,7 @@ TEST(PlatformCanvas, GDITranslateLayer) {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     canvas.translate(1, 1);
     AddClip(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
-    DrawGDIRect(canvas, 0, 0, 100, 100);
+    DrawNativeRect(canvas, 0, 0, 100, 100);
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackSquare(canvas, kInnerX + 2, kInnerY + 2,
@@ -291,3 +291,4 @@ TEST(PlatformCanvas, GDITranslateLayer) {
 }
 
 }  // namespace
+

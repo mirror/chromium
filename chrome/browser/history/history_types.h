@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_HISTORY_HISTORY_TYPES_H__
 #define CHROME_BROWSER_HISTORY_HISTORY_TYPES_H__
@@ -136,14 +111,6 @@ class URLRow {
     hidden_ = hidden;
   }
 
-  StarID star_id() const { return star_id_; }
-  void set_star_id(StarID star_id) {
-    star_id_ = star_id;
-  }
-
-  // Simple boolean query to see if the page is starred.
-  bool starred() const { return (star_id_ != 0); }
-
   // ID of the favicon. A value of 0 means the favicon isn't known yet.
   FavIconID favicon_id() const { return favicon_id_; }
   void set_favicon_id(FavIconID favicon_id) {
@@ -189,13 +156,6 @@ class URLRow {
   // Indicates this entry should now be shown in typical UI or queries, this
   // is usually for subframes.
   bool hidden_;
-
-  // ID of the starred entry.
-  //
-  // NOTE: This is ignored by Add/UpdateURL. To modify the starred state you
-  // must invoke SetURLStarred.
-  // TODO: revisit this to see if this limitation can be removed.
-  StarID star_id_;
 
   // The ID of the favicon for this url.
   FavIconID favicon_id_;
@@ -357,6 +317,12 @@ class URLResult : public URLRow {
       : URLRow(url),
         visit_time_(visit_time) {
   }
+  // Constructor that create a URLResult from the specified URL and title match
+  // positions from title_matches.
+  URLResult(const GURL& url, const Snippet::MatchPositions& title_matches)
+      : URLRow(url) {
+    title_match_positions_ = title_matches;
+  }
 
   Time visit_time() const { return visit_time_; }
   void set_visit_time(Time visit_time) { visit_time_ = visit_time; }
@@ -372,23 +338,15 @@ class URLResult : public URLRow {
 
   virtual void Swap(URLResult* other);
 
-  // Returns the starred entry for this url. This is only set if the query
-  // was configured to search for starred only entries (only_starred is true).
-  const StarredEntry& starred_entry() const { return starred_entry_; }
-  void ResetStarredEntry() { starred_entry_ = StarredEntry(); }
-
  private:
   friend class HistoryBackend;
 
   // The time that this result corresponds to.
   Time visit_time_;
 
-  // When setting, these values are set directly by the HistoryBackend.
+  // These values are typically set by HistoryBackend.
   Snippet snippet_;
   Snippet::MatchPositions title_match_positions_;
-
-  // See comment above getter.
-  StarredEntry starred_entry_;
 
   // We support the implicit copy constructor and operator=.
 };
@@ -488,8 +446,6 @@ class QueryResults {
 struct QueryOptions {
   QueryOptions()
       : most_recent_visit_only(false),
-        only_starred(false),
-        include_all_starred(true),
         max_count(0) {
   }
 
@@ -520,26 +476,6 @@ struct QueryOptions {
   //
   // Defaults to false (all visits).
   bool most_recent_visit_only;
-
-  // Indicates if only starred items should be matched.
-  //
-  // Defaults to false.
-  bool only_starred;
-
-  // When true, and we're doing a full text query, starred entries that have
-  // never been visited or have been visited outside of the given time range
-  // will also be included in the results. These items will appear at the
-  // beginning of the result set. Non-full-text queries won't check this flag
-  // and will never return unvisited bookmarks.
-  //
-  // When false, full text queries will not return unvisited bookmarks, they
-  // will only be included when they were visited in the given time range.
-  //
-  // You probably want to use this in conjunction with most_recent_visit_only
-  // since it will cause duplicates otherwise.
-  //
-  // Defaults to true.
-  bool include_all_starred;
 
   // The maximum number of results to return. The results will be sorted with
   // the most recent first, so older results may not be returned if there is not

@@ -1,34 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_URL_REQUEST_URL_REQUEST_JOB_H__
-#define BASE_URL_REQUEST_URL_REQUEST_JOB_H__
+#ifndef NET_URL_REQUEST_URL_REQUEST_JOB_H_
+#define NET_URL_REQUEST_URL_REQUEST_JOB_H_
 
 #include <vector>
 
@@ -48,7 +23,10 @@ class GURL;
 class URLRequest;
 class URLRequestJobMetrics;
 
-class URLRequestJob : public base::RefCounted<URLRequestJob> {
+// The URLRequestJob is using RefCounterThreadSafe because some sub classes
+// can be destroyed on multiple threads. This is the case of the
+// UrlRequestFileJob.
+class URLRequestJob : public base::RefCountedThreadSafe<URLRequestJob> {
  public:
   URLRequestJob(URLRequest* request);
   virtual ~URLRequestJob();
@@ -168,42 +146,25 @@ class URLRequestJob : public base::RefCounted<URLRequestJob> {
 
   // Fills the authentication info with the server's response.
   virtual void GetAuthChallengeInfo(
-      scoped_refptr<AuthChallengeInfo>* auth_info) {
-    // This will only be called if NeedsAuth() returns true, in which
-    // case the derived class should implement this!
-    NOTREACHED();
-  }
+      scoped_refptr<net::AuthChallengeInfo>* auth_info);
 
   // Returns cached auth data for the auth challenge.  Returns NULL if there
   // is no auth cache or if the auth cache doesn't have the auth data for
   // the auth challenge.
-  virtual void GetCachedAuthData(const AuthChallengeInfo& auth_info,
-                                 scoped_refptr<AuthData>* auth_data) {
+  virtual void GetCachedAuthData(const net::AuthChallengeInfo& auth_info,
+                                 scoped_refptr<net::AuthData>* auth_data) {
     *auth_data = NULL;
   }
 
   // Resend the request with authentication credentials.
   virtual void SetAuth(const std::wstring& username,
-                       const std::wstring& password) {
-    // This will only be called if NeedsAuth() returns true, in which
-    // case the derived class should implement this!
-    NOTREACHED();
-  }
+                       const std::wstring& password);
 
   // Display the error page without asking for credentials again.
-  virtual void CancelAuth() {
-    // This will only be called if NeedsAuth() returns true, in which
-    // case the derived class should implement this!
-    NOTREACHED();
-  }
+  virtual void CancelAuth();
 
   // Continue processing the request ignoring the last error.
-  virtual void ContinueDespiteLastError() {
-    // Implementations should know how to recover from errors they generate.
-    // If this code was reached, we are trying to recover from an error that
-    // we don't know how to recover from.
-    NOTREACHED();
-  }
+  virtual void ContinueDespiteLastError();
 
   // Returns true if the Job is done producing response data and has called
   // NotifyDone on the request.
@@ -330,7 +291,8 @@ class URLRequestJob : public base::RefCounted<URLRequestJob> {
   // Expected content size
   int64 expected_content_size_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(URLRequestJob);
+  DISALLOW_COPY_AND_ASSIGN(URLRequestJob);
 };
 
-#endif  // BASE_URL_REQUEST_URL_REQUEST_JOB_H__
+#endif  // NET_URL_REQUEST_URL_REQUEST_JOB_H_
+

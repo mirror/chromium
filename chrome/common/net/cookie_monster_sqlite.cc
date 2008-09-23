@@ -1,34 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/common/net/cookie_monster_sqlite.h"
 
+#include <list>
+
+#include "base/basictypes.h"
 #include "base/logging.h"
 #include "base/ref_counted.h"
 #include "base/string_util.h"
@@ -59,9 +37,9 @@ class SQLitePersistentCookieStore::Backend
 
   // Batch a cookie add
   void AddCookie(const std::string& key,
-                 const CookieMonster::CanonicalCookie& cc);
+                 const net::CookieMonster::CanonicalCookie& cc);
   // Batch a cookie delete
-  void DeleteCookie(const CookieMonster::CanonicalCookie& cc);
+  void DeleteCookie(const net::CookieMonster::CanonicalCookie& cc);
   // Commit and pending operations and close the database, must be called
   // before the object is destructed.
   void Close();
@@ -76,24 +54,24 @@ class SQLitePersistentCookieStore::Backend
 
     PendingOperation(OperationType op,
                      const std::string& key,
-                     const CookieMonster::CanonicalCookie& cc)
+                     const net::CookieMonster::CanonicalCookie& cc)
         : op_(op), key_(key), cc_(cc) { }
 
     OperationType op() const { return op_; }
     const std::string& key() const { return key_; }
-    const CookieMonster::CanonicalCookie& cc() const { return cc_; }
+    const net::CookieMonster::CanonicalCookie& cc() const { return cc_; }
 
    private:
     OperationType op_;
     std::string key_;  // Only used for OP_ADD
-    CookieMonster::CanonicalCookie cc_;
+    net::CookieMonster::CanonicalCookie cc_;
   };
 
  private:
   // Batch a cookie operation (add or delete)
   void BatchOperation(PendingOperation::OperationType op,
                       const std::string& key,
-                      const CookieMonster::CanonicalCookie& cc);
+                      const net::CookieMonster::CanonicalCookie& cc);
   // Commit our pending operations to the database.
   void Commit();
   // Close() executed on the background thread.
@@ -113,23 +91,23 @@ class SQLitePersistentCookieStore::Backend
 
 void SQLitePersistentCookieStore::Backend::AddCookie(
     const std::string& key,
-    const CookieMonster::CanonicalCookie& cc) {
+    const net::CookieMonster::CanonicalCookie& cc) {
   BatchOperation(PendingOperation::COOKIE_ADD, key, cc);
 }
 
 void SQLitePersistentCookieStore::Backend::DeleteCookie(
-    const CookieMonster::CanonicalCookie& cc) {
+    const net::CookieMonster::CanonicalCookie& cc) {
   BatchOperation(PendingOperation::COOKIE_DELETE, std::string(), cc);
 }
 
 void SQLitePersistentCookieStore::Backend::BatchOperation(
     PendingOperation::OperationType op,
     const std::string& key,
-    const CookieMonster::CanonicalCookie& cc) {
+    const net::CookieMonster::CanonicalCookie& cc) {
   // Commit every 30 seconds.
   static const int kCommitIntervalMs = 30 * 1000;
   // Commit right away if we have more than 512 outstanding operations.
-  static const int kCommitAfterBatchSize = 512;
+  static const size_t kCommitAfterBatchSize = 512;
   DCHECK(MessageLoop::current() != background_loop_);
 
   // We do a full copy of the cookie here, and hopefully just here.
@@ -288,7 +266,7 @@ bool InitTable(sqlite3* db) {
 }  // namespace
 
 bool SQLitePersistentCookieStore::Load(
-    std::vector<CookieMonster::KeyedCanonicalCookie>* cookies) {
+    std::vector<net::CookieMonster::KeyedCanonicalCookie>* cookies) {
   DCHECK(!path_.empty());
   sqlite3* db;
   if (sqlite3_open(WideToUTF8(path_).c_str(), &db) != SQLITE_OK) {
@@ -323,8 +301,8 @@ bool SQLitePersistentCookieStore::Load(
 
   while (smt.step() == SQLITE_ROW) {
     std::string key = smt.column_string(1);
-    scoped_ptr<CookieMonster::CanonicalCookie> cc(
-        new CookieMonster::CanonicalCookie(
+    scoped_ptr<net::CookieMonster::CanonicalCookie> cc(
+        new net::CookieMonster::CanonicalCookie(
             smt.column_string(2),                            // name
             smt.column_string(3),                            // value
             smt.column_string(4),                            // path
@@ -340,8 +318,8 @@ bool SQLitePersistentCookieStore::Load(
     DLOG_IF(WARNING,
             cc->CreationDate() > Time::Now()) << L"CreationDate too recent";
     cookies->push_back(
-        CookieMonster::KeyedCanonicalCookie(smt.column_string(1),
-                                            cc.release()));
+        net::CookieMonster::KeyedCanonicalCookie(smt.column_string(1),
+                                                 cc.release()));
   }
 
   // Create the backend, this will take ownership of the db pointer.
@@ -366,13 +344,14 @@ bool SQLitePersistentCookieStore::EnsureDatabaseVersion(sqlite3* db) {
 
 void SQLitePersistentCookieStore::AddCookie(
     const std::string& key,
-    const CookieMonster::CanonicalCookie& cc) {
+    const net::CookieMonster::CanonicalCookie& cc) {
   if (backend_.get())
     backend_->AddCookie(key, cc);
 }
 
 void SQLitePersistentCookieStore::DeleteCookie(
-    const CookieMonster::CanonicalCookie& cc) {
+    const net::CookieMonster::CanonicalCookie& cc) {
   if (backend_.get())
     backend_->DeleteCookie(cc);
 }
+

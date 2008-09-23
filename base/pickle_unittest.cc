@@ -1,39 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#include <windows.h>
-#include <string.h>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include <string>
 
 #include "base/basictypes.h"
-#include "base/check_handler.h"
 #include "base/logging.h"
-#include "base/scoped_ptr.h"
 #include "base/pickle.h"
+#include "base/scoped_ptr.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -94,9 +68,12 @@ TEST(PickleTest, EncodeDecode) {
   EXPECT_TRUE(pickle.WriteBool(testbool2));
   EXPECT_TRUE(pickle.WriteData(testdata, testdatalen));
 
-  char* dest = pickle.BeginWriteData(testdatalen);
+  // Over allocate BeginWriteData so we can test TrimWriteData.
+  char* dest = pickle.BeginWriteData(testdatalen + 100);
   EXPECT_TRUE(dest);
   memcpy(dest, testdata, testdatalen);
+
+  pickle.TrimWriteData(testdatalen);
 
   VerifyResult(pickle);
 
@@ -177,26 +154,27 @@ TEST(PickleTest, IteratorHasRoom) {
 }
 
 TEST(PickleTest, Resize) {
-  int unit = Pickle::kPayloadUnit;
+  size_t unit = Pickle::kPayloadUnit;
   scoped_array<char> data(new char[unit]);
   char* data_ptr = data.get();
-  for (int i = 0; i < unit; i++)
+  for (size_t i = 0; i < unit; i++)
     data_ptr[i] = 'G';
 
   // construct a message that will be exactly the size of one payload unit,
   // note that any data will have a 4-byte header indicating the size
-  const int payload_size_after_header = unit - sizeof(uint32);
+  const size_t payload_size_after_header = unit - sizeof(uint32);
   Pickle pickle;
-  pickle.WriteData(data_ptr, payload_size_after_header - sizeof(uint32));
-  int cur_payload = payload_size_after_header;
+  pickle.WriteData(data_ptr,
+      static_cast<int>(payload_size_after_header - sizeof(uint32)));
+  size_t cur_payload = payload_size_after_header;
 
   EXPECT_EQ(pickle.capacity(), unit);
   EXPECT_EQ(pickle.payload_size(), payload_size_after_header);
 
   // fill out a full page (noting data header)
-  pickle.WriteData(data_ptr, unit - sizeof(uint32));
+  pickle.WriteData(data_ptr, static_cast<int>(unit - sizeof(uint32)));
   cur_payload += unit;
-  EXPECT_EQ(unit*2, pickle.capacity());
+  EXPECT_EQ(unit * 2, pickle.capacity());
   EXPECT_EQ(cur_payload, pickle.payload_size());
 
   // one more byte should expand the capacity by one unit
@@ -206,11 +184,15 @@ TEST(PickleTest, Resize) {
   EXPECT_EQ(cur_payload, pickle.payload_size());
 }
 
-TEST(PickleTest, HeaderPadding) {
-  struct CustomHeader : Pickle::Header {
-    int blah;
-  };
+namespace {
 
+struct CustomHeader : Pickle::Header {
+  int blah;
+};
+
+}  // namespace
+
+TEST(PickleTest, HeaderPadding) {
   const uint32 kMagic = 0x12345678;
 
   Pickle pickle(sizeof(CustomHeader));
@@ -223,7 +205,7 @@ TEST(PickleTest, HeaderPadding) {
   int result;
   ASSERT_TRUE(pickle.ReadInt(&iter, &result));
 
-  EXPECT_EQ(result, kMagic);
+  EXPECT_EQ(static_cast<uint32>(result), kMagic);
 }
 
 TEST(PickleTest, EqualsOperator) {
@@ -236,3 +218,4 @@ TEST(PickleTest, EqualsOperator) {
   copy = copy_refs_source_buffer;
   ASSERT_EQ(source.size(), copy.size());
 }
+

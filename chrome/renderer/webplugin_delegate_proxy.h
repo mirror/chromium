@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H__
 #define CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H__
@@ -35,6 +10,7 @@
 
 #include "base/gfx/rect.h"
 #include "base/ref_counted.h"
+#include "base/scoped_handle.h"
 #include "chrome/common/ipc_message.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/plugin/npobject_stub.h"
@@ -46,6 +22,10 @@ class GURL;
 struct PluginHostMsg_RouteToFrame_Params;
 class RenderView;
 class SkBitmap;
+namespace gfx {
+class PlatformCanvasWin;
+}
+
 
 // An implementation of WebPluginDelegate that proxies all calls to
 // the plugin process.
@@ -107,7 +87,8 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   virtual WebPluginResourceClient* CreateResourceClient(int resource_id,
                                                         const std::string &url,
                                                         bool notify_needed,
-                                                        void *notify_data);
+                                                        void* notify_data,
+                                                        void* existing_stream);
 
   // Notifies the delegate about a Get/Post URL request getting routed
   virtual void URLRequestRouted(const std::string&url, bool notify_needed,
@@ -143,6 +124,11 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
                              std::string* json_retval);
   void OnMissingPluginStatus(int status);
   void OnGetCPBrowsingContext(uint32* context);
+  void OnCancelDocumentLoad();
+  void OnInitiateHTTPRangeRequest(const std::string& url,
+                                  const std::string& range_info,
+                                  HANDLE existing_stream, bool notify_needed,
+                                  HANDLE notify_data);
 
   // Draw a graphic indicating a crashed plugin.
   void PaintSadPlugin(HDC hdc, const gfx::Rect& rect);
@@ -167,12 +153,19 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
 
   // Event passed in by the plugin process and is used to decide if
   // messages need to be pumped in the NPP_HandleEvent sync call.
-  HANDLE modal_loop_pump_messages_event_;
+  ScopedHandle modal_loop_pump_messages_event_;
 
   // Bitmap for crashed plugin
   SkBitmap* sad_plugin_;
+
+  // Used for desynchronized windowless painting.  See the comment in
+  // webplugin_proxy.h for information about how this works.
+  scoped_ptr<SharedMemory> windowless_buffer_;
+  scoped_ptr<gfx::PlatformCanvasWin> windowless_canvas_;
+  ScopedHandle windowless_buffer_lock_;
 
   DISALLOW_EVIL_CONSTRUCTORS(WebPluginDelegateProxy);
 };
 
 #endif  // #ifndef CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H__
+

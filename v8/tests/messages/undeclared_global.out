@@ -1,3 +1,0 @@
-undeclared_global.js:3: Uncaught ReferenceError: x is not defined
-print(x);
-^

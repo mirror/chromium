@@ -1,4 +1,0 @@
-all parsed
-lazy-syntax-error.js:12: Uncaught error
-throw "error";
-^

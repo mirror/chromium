@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/find_in_page_view.h"
 
@@ -55,7 +30,6 @@ static const int kMarginLeftOfFindTextField = 12;
 // The margins around the match count label (We add extra space so that the
 // background highlight extends beyond just the text).
 static const int kMatchCountExtraWidth = 9;
-static const int kMatchCountExtraHeight = 1;
 
 // Minimum width for the match count label.
 static const int kMatchCountMinWidth = 30;
@@ -368,26 +342,26 @@ void FindInPageView::Layout() {
   // First we draw the close button on the far right.
   close_button_->GetPreferredSize(&sz);
   close_button_->SetBounds(panel_size.cx - sz.cx - kMarginRightOfCloseButton,
-                           (GetHeight() - sz.cy) / 2,
+                           (height() - sz.cy) / 2,
                            sz.cx,
                            sz.cy);
   close_button_->SetListener(this, CLOSE_TAG);
 
   // Next, the FindNext button to the left the close button.
   find_next_button_->GetPreferredSize(&sz);
-  find_next_button_->SetBounds(close_button_->GetX() -
-                                   find_next_button_->GetWidth() -
+  find_next_button_->SetBounds(close_button_->x() -
+                                   find_next_button_->width() -
                                    kMarginLeftOfCloseButton,
-                               (GetHeight() - sz.cy) / 2,
+                               (height() - sz.cy) / 2,
                                 sz.cx,
                                 sz.cy);
   find_next_button_->SetListener(this, FIND_NEXT_TAG);
 
   // Then, the FindPrevious button to the left the FindNext button.
   find_previous_button_->GetPreferredSize(&sz);
-  find_previous_button_->SetBounds(find_next_button_->GetX() -
-                                       find_previous_button_->GetWidth(),
-                                   (GetHeight() - sz.cy) / 2,
+  find_previous_button_->SetBounds(find_next_button_->x() -
+                                       find_previous_button_->width(),
+                                   (height() - sz.cy) / 2,
                                    sz.cx,
                                    sz.cy);
   find_previous_button_->SetListener(this, FIND_PREVIOUS_TAG);
@@ -397,20 +371,19 @@ void FindInPageView::Layout() {
   // We extend the label bounds a bit to give the background highlighting a bit
   // of breathing room (margins around the text).
   sz.cx += kMatchCountExtraWidth;
-  sz.cy += kMatchCountExtraHeight;
   sz.cx = std::max(kMatchCountMinWidth, static_cast<int>(sz.cx));
-  match_count_text_->SetBounds(find_previous_button_->GetX() -
+  match_count_text_->SetBounds(find_previous_button_->x() -
                                    kWhiteSpaceAfterMatchCountLabel -
                                    sz.cx,
-                               (GetHeight() - sz.cy) / 2 + 1,
+                               (height() - sz.cy) / 2 + 1,
                                sz.cx,
                                sz.cy);
 
   // And whatever space is left in between, gets filled up by the find edit box.
   find_text_->GetPreferredSize(&sz);
-  sz.cx = match_count_text_->GetX() - kMarginLeftOfFindTextField;
-  find_text_->SetBounds(match_count_text_->GetX() - sz.cx,
-                        (GetHeight() - sz.cy) / 2 + 1,
+  sz.cx = match_count_text_->x() - kMarginLeftOfFindTextField;
+  find_text_->SetBounds(match_count_text_->x() - sz.cx,
+                        (height() - sz.cy) / 2 + 1,
                         sz.cx,
                         sz.cy);
   find_text_->SetController(this);
@@ -419,12 +392,12 @@ void FindInPageView::Layout() {
   // The focus forwarder view is a hidden view that should cover the area
   // between the find text box and the find button so that when the user clicks
   // in that area we focus on the find text box.
-  int find_text_edge = find_text_->GetX() + find_text_->GetWidth();
+  int find_text_edge = find_text_->x() + find_text_->width();
   focus_forwarder_view_->SetBounds(find_text_edge,
-                                   find_previous_button_->GetY(),
-                                   find_previous_button_->GetX() -
+                                   find_previous_button_->y(),
+                                   find_previous_button_->x() -
                                        find_text_edge,
-                                   find_previous_button_->GetHeight());
+                                   find_previous_button_->height());
 }
 
 void FindInPageView::DidChangeBounds(const CRect& old_bounds,
@@ -529,3 +502,4 @@ bool FindInPageView::FocusForwarderView::OnMousePressed(
   }
   return true;
 }
+

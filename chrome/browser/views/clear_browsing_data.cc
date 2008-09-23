@@ -1,38 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/clear_browsing_data.h"
 
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/standard_layout.h"
 #include "chrome/browser/template_url_model.h"
+#include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/checkbox.h"
@@ -40,6 +15,8 @@
 #include "chrome/views/native_button.h"
 #include "chrome/views/throbber.h"
 #include "chrome/views/window.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
 #include "net/url_request/url_request_context.h"
 
 #include "generated_resources.h"
@@ -54,8 +31,7 @@ static const int kExtraMarginForTimePeriodLabel = 3;
 // ClearBrowsingDataView, public:
 
 ClearBrowsingDataView::ClearBrowsingDataView(Profile* profile)
-    : dialog_(NULL),
-      del_history_checkbox_(NULL),
+    : del_history_checkbox_(NULL),
       del_downloads_checkbox_(NULL),
       del_cache_checkbox_(NULL),
       del_cookies_checkbox_(NULL),
@@ -63,12 +39,19 @@ ClearBrowsingDataView::ClearBrowsingDataView(Profile* profile)
       time_period_label_(NULL),
       time_period_combobox_(NULL),
       delete_in_progress_(false),
-      profile_(profile) {
+      profile_(profile),
+      remover_(NULL) {
   DCHECK(profile);
   Init();
 }
 
 ClearBrowsingDataView::~ClearBrowsingDataView(void) {
+  if (remover_) {
+    // We were destroyed while clearing history was in progress. This can only
+    // occur during automated tests (normally the user can't close the dialog
+    // while clearing is in progress as the dialog is modal and not closeable).
+    remover_->RemoveObserver(this);
+  }
 }
 
 void ClearBrowsingDataView::Init() {
@@ -89,19 +72,24 @@ void ClearBrowsingDataView::Init() {
 
   // Add all the check-boxes.
   del_history_checkbox_ =
-      AddCheckbox(l10n_util::GetString(IDS_DEL_BROWSING_HISTORY_CHKBOX), true);
+      AddCheckbox(l10n_util::GetString(IDS_DEL_BROWSING_HISTORY_CHKBOX),
+      profile_->GetPrefs()->GetBoolean(prefs::kDeleteBrowsingHistory));
 
   del_downloads_checkbox_ =
-      AddCheckbox(l10n_util::GetString(IDS_DEL_DOWNLOAD_HISTORY_CHKBOX), true);
+      AddCheckbox(l10n_util::GetString(IDS_DEL_DOWNLOAD_HISTORY_CHKBOX),
+      profile_->GetPrefs()->GetBoolean(prefs::kDeleteDownloadHistory));
 
   del_cache_checkbox_ =
-      AddCheckbox(l10n_util::GetString(IDS_DEL_CACHE_CHKBOX), true);
+      AddCheckbox(l10n_util::GetString(IDS_DEL_CACHE_CHKBOX),
+      profile_->GetPrefs()->GetBoolean(prefs::kDeleteCache));
 
   del_cookies_checkbox_ =
-      AddCheckbox(l10n_util::GetString(IDS_DEL_COOKIES_CHKBOX), true);
+      AddCheckbox(l10n_util::GetString(IDS_DEL_COOKIES_CHKBOX),
+      profile_->GetPrefs()->GetBoolean(prefs::kDeleteCookies));
 
   del_passwords_checkbox_ =
-      AddCheckbox(l10n_util::GetString(IDS_DEL_PASSWORDS_CHKBOX), false);
+      AddCheckbox(l10n_util::GetString(IDS_DEL_PASSWORDS_CHKBOX),
+      profile_->GetPrefs()->GetBoolean(prefs::kDeletePasswords));
 
   // Add a label which appears before the combo box for the time period.
   time_period_label_ = new ChromeViews::Label(
@@ -137,44 +125,44 @@ void ClearBrowsingDataView::Layout() {
   // Check-boxes go beneath it (with a little indentation).
   del_history_checkbox_->GetPreferredSize(&sz);
   del_history_checkbox_->SetBounds(2 * kPanelHorizMargin,
-                                   delete_all_label_->GetY() +
-                                       delete_all_label_->GetHeight() +
+                                   delete_all_label_->y() +
+                                       delete_all_label_->height() +
                                        kRelatedControlVerticalSpacing,
                                    sz.cx, sz.cy);
 
   del_downloads_checkbox_->GetPreferredSize(&sz);
   del_downloads_checkbox_->SetBounds(2 * kPanelHorizMargin,
-                                     del_history_checkbox_->GetY() +
-                                         del_history_checkbox_->GetHeight() +
+                                     del_history_checkbox_->y() +
+                                         del_history_checkbox_->height() +
                                          kRelatedControlVerticalSpacing,
                                      sz.cx, sz.cy);
 
   del_cache_checkbox_->GetPreferredSize(&sz);
   del_cache_checkbox_->SetBounds(2 * kPanelHorizMargin,
-                                 del_downloads_checkbox_->GetY() +
-                                     del_downloads_checkbox_->GetHeight() +
+                                 del_downloads_checkbox_->y() +
+                                     del_downloads_checkbox_->height() +
                                      kRelatedControlVerticalSpacing,
                                  sz.cx, sz.cy);
 
   del_cookies_checkbox_->GetPreferredSize(&sz);
   del_cookies_checkbox_->SetBounds(2 * kPanelHorizMargin,
-                                   del_cache_checkbox_->GetY() +
-                                       del_cache_checkbox_->GetHeight() +
+                                   del_cache_checkbox_->y() +
+                                       del_cache_checkbox_->height() +
                                        kRelatedControlVerticalSpacing,
                                    sz.cx, sz.cy);
 
   del_passwords_checkbox_->GetPreferredSize(&sz);
   del_passwords_checkbox_->SetBounds(2 * kPanelHorizMargin,
-                                     del_cookies_checkbox_->GetY() +
-                                         del_cookies_checkbox_->GetHeight() +
+                                     del_cookies_checkbox_->y() +
+                                         del_cookies_checkbox_->height() +
                                          kRelatedControlVerticalSpacing,
                                      sz.cx, sz.cy);
 
   // Time period label is next below the combo boxes.
   time_period_label_->GetPreferredSize(&sz);
   time_period_label_->SetBounds(kPanelHorizMargin,
-                                del_passwords_checkbox_->GetY() +
-                                    del_passwords_checkbox_->GetHeight() +
+                                del_passwords_checkbox_->y() +
+                                    del_passwords_checkbox_->height() +
                                     kRelatedControlVerticalSpacing +
                                     kExtraMarginForTimePeriodLabel,
                                 sz.cx, sz.cy);
@@ -183,10 +171,10 @@ void ClearBrowsingDataView::Layout() {
   // vertically to the label as well.
   int label_y_size = sz.cy;
   time_period_combobox_->GetPreferredSize(&sz);
-  time_period_combobox_->SetBounds(time_period_label_->GetX() +
-                                       time_period_label_->GetWidth() +
+  time_period_combobox_->SetBounds(time_period_label_->x() +
+                                       time_period_label_->width() +
                                        kRelatedControlVerticalSpacing,
-                                   time_period_label_->GetY() -
+                                   time_period_label_->y() -
                                        ((sz.cy - label_y_size) / 2),
                                    sz.cx, sz.cy);
 
@@ -204,7 +192,7 @@ void ClearBrowsingDataView::Layout() {
   // The status label should be at the bottom of the screen, to the right of
   // the throbber.
   status_label_.GetPreferredSize(&sz);
-  int status_label_x = throbber_->GetX() + throbber_->GetWidth() +
+  int status_label_x = throbber_->x() + throbber_->width() +
                        kRelatedControlHorizontalSpacing;
   status_label_.SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
   status_label_.SetBounds(status_label_x,
@@ -289,7 +277,11 @@ bool ClearBrowsingDataView::Accept() {
   }
 
   OnDelete();
-  return false;  // We close the dialog in OnDeletionDone().
+  return false;  // We close the dialog in OnBrowsingDataRemoverDone().
+}
+
+ChromeViews::View* ClearBrowsingDataView::GetContentsView() {
+  return this;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -317,9 +309,25 @@ std::wstring ClearBrowsingDataView::GetItemAt(ChromeViews::ComboBox* source,
 // ClearBrowsingDataView, ChromeViews::ButtonListener implementation:
 
 void ClearBrowsingDataView::ButtonPressed(ChromeViews::NativeButton* sender) {
+  if (sender == del_history_checkbox_)
+    profile_->GetPrefs()->SetBoolean(prefs::kDeleteBrowsingHistory,
+        del_history_checkbox_->IsSelected() ? true : false);
+  else if (sender == del_downloads_checkbox_)
+    profile_->GetPrefs()->SetBoolean(prefs::kDeleteDownloadHistory,
+        del_downloads_checkbox_->IsSelected() ? true : false);
+  else if (sender == del_cache_checkbox_)
+    profile_->GetPrefs()->SetBoolean(prefs::kDeleteCache,
+        del_cache_checkbox_->IsSelected() ? true : false);
+  else if (sender == del_cookies_checkbox_)
+    profile_->GetPrefs()->SetBoolean(prefs::kDeleteCookies,
+        del_cookies_checkbox_->IsSelected() ? true : false);
+  else if (sender == del_passwords_checkbox_)
+    profile_->GetPrefs()->SetBoolean(prefs::kDeletePasswords,
+        del_passwords_checkbox_->IsSelected() ? true : false);
+
   // When no checkbox is checked we should not have the action button enabled.
   // This forces the button to evaluate what state they should be in.
-  dialog_->UpdateDialogButtons();
+  GetDialogClientView()->UpdateDialogButtons();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -335,7 +343,7 @@ ChromeViews::CheckBox* ClearBrowsingDataView::AddCheckbox(
 }
 
 void ClearBrowsingDataView::UpdateControlEnabledState() {
-  dialog_->EnableClose(!delete_in_progress_);
+  window()->EnableClose(!delete_in_progress_);
 
   del_history_checkbox_->SetEnabled(!delete_in_progress_);
   del_downloads_checkbox_->SetEnabled(!delete_in_progress_);
@@ -352,7 +360,7 @@ void ClearBrowsingDataView::UpdateControlEnabledState() {
     throbber_->Stop();
 
   // Make sure to update the state for OK and Cancel buttons.
-  dialog_->UpdateDialogButtons();
+  GetDialogClientView()->UpdateDialogButtons();
 }
 
 // Convenience method that returns true if the supplied checkbox is selected
@@ -392,12 +400,16 @@ void ClearBrowsingDataView::OnDelete() {
   UpdateControlEnabledState();
 
   // BrowsingDataRemover deletes itself when done.
-  BrowsingDataRemover* remover =
+  remover_ =
       new BrowsingDataRemover(profile_, delete_begin, Time());
-  remover->AddObserver(this);
-  remover->Remove(remove_mask);
+  remover_->AddObserver(this);
+  remover_->Remove(remove_mask);
 }
 
 void ClearBrowsingDataView::OnBrowsingDataRemoverDone() {
-  dialog_->Close();
+  // No need to remove ourselves as an observer as BrowsingDataRemover deletes
+  // itself after we return.
+  remover_ = NULL;
+  window()->Close();
 }
+

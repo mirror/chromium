@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // This command-line program converts an effective-TLD data file in UTF-8 from
 // the format provided by Mozilla to the format expected by Chrome.  Any errors
@@ -45,6 +20,7 @@
 #include <set>
 #include <string>
 
+#include "base/at_exit.h"
 #include "base/file_util.h"
 #include "base/icu_util.h"
 #include "base/logging.h"
@@ -160,7 +136,7 @@ NormalizeResult NormalizeFile(const std::wstring& in_filename,
                               const std::wstring& out_filename) {
   std::string data;
   if (!file_util::ReadFileToString(in_filename, &data)) {
-    fwprintf(stderr, L"Unable to read file %s\n", in_filename.c_str());
+    fwprintf(stderr, L"Unable to read file %ls\n", in_filename.c_str());
     // We return success since we've already reported the error.
     return kSuccess;
   }
@@ -173,7 +149,7 @@ NormalizeResult NormalizeFile(const std::wstring& in_filename,
                             FILE_ATTRIBUTE_NORMAL,
                             NULL));
   if (outfile == INVALID_HANDLE_VALUE) {
-    fwprintf(stderr, L"Unable to write file %s\n", out_filename.c_str());
+    fwprintf(stderr, L"Unable to write file %ls\n", out_filename.c_str());
     // We return success since we've already reported the error.
     return kSuccess;
   }
@@ -235,6 +211,9 @@ int main(int argc, const char* argv[]) {
     return 1;
   }
 
+  // Manages the destruction of singletons.
+  base::AtExitManager exit_manager;
+
   // Only use OutputDebugString in debug mode.
 #ifdef NDEBUG
   logging::LoggingDestination destination = logging::LOG_ONLY_TO_FILE;
@@ -256,7 +235,7 @@ int main(int argc, const char* argv[]) {
   NormalizeResult result = NormalizeFile(UTF8ToWide(argv[1]),
                                          UTF8ToWide(argv[2]));
   if (result != kSuccess) {
-    fwprintf(stderr, L"Errors or warnings processing file.  See log in %s.",
+    fwprintf(stderr, L"Errors or warnings processing file.  See log in %ls.",
              kLogFileName);
   }
 
@@ -264,3 +243,4 @@ int main(int argc, const char* argv[]) {
     return 1;
   return 0;
 }
+

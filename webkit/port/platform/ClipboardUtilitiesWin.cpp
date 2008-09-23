@@ -50,7 +50,7 @@ HGLOBAL createGlobalData(const KURL& url, const String& title)
 
     if (cbData) {
         PWSTR buffer = (PWSTR)::GlobalLock(cbData);
-        swprintf_s(buffer, size, L"%s\n%s", mutableURL.charactersWithNullTermination(), mutableTitle.charactersWithNullTermination());
+        swprintf_s(buffer, size, L"%s\n%s", mutableURL.charactersWithNullTermination(), mutableTitle.isNull() ? L"" : mutableTitle.charactersWithNullTermination());
         ::GlobalUnlock(cbData);
     }
     return cbData;
@@ -136,6 +136,20 @@ String urlToMarkup(const KURL& url, const String& title)
     markup.append("\">");
     markup.append(title);
     markup.append("</a>");
+    return markup;
+}
+
+String urlToImageMarkup(const KURL& url, const String& altStr) {
+    String markup("<img src=\"");
+    markup.append(url.string());
+    markup.append("\"");
+    if (!altStr.isEmpty()) {
+        markup.append(" alt=\"");
+        // TODO(dglazkov): escape string
+        markup.append(altStr);
+        markup.append("\"");
+    }
+    markup.append("/>");
     return markup;
 }
 

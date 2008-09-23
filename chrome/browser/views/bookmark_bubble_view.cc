@@ -1,42 +1,17 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/bookmark_bubble_view.h"
 
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/bookmark_bar_model.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/standard_layout.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/bookmark_editor_view.h"
 #include "chrome/browser/views/info_bubble.h"
+#include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
@@ -76,7 +51,7 @@ static SkBitmap* kCloseImage = NULL;
 // RecentlyUsedFoldersModel ---------------------------------------------------
 
 BookmarkBubbleView::RecentlyUsedFoldersModel::RecentlyUsedFoldersModel(
-    BookmarkBarModel* bb_model, BookmarkBarNode* node)
+    BookmarkModel* bb_model, BookmarkNode* node)
       // Use + 2 to account for bookmark bar and other node.
     : nodes_(bb_model->GetMostRecentlyModifiedGroups(kMaxMRUFolders + 2)),
       node_parent_index_(0) {
@@ -118,14 +93,14 @@ std::wstring BookmarkBubbleView::RecentlyUsedFoldersModel::GetItemAt(
   return nodes_[index]->GetTitle();
 }
 
-BookmarkBarNode* BookmarkBubbleView::RecentlyUsedFoldersModel::GetNodeAt(
+BookmarkNode* BookmarkBubbleView::RecentlyUsedFoldersModel::GetNodeAt(
     int index) {
   return nodes_[index];
 }
 
 void BookmarkBubbleView::RecentlyUsedFoldersModel::RemoveNode(
-    BookmarkBarNode* node) {
-  std::vector<BookmarkBarNode*>::iterator i =
+    BookmarkNode* node) {
+  std::vector<BookmarkNode*>::iterator i =
       find(nodes_.begin(), nodes_.end(), node);
   if (i != nodes_.end())
     nodes_.erase(i);
@@ -188,8 +163,9 @@ BookmarkBubbleView::BookmarkBubbleView(InfoBubbleDelegate* delegate,
       profile_(profile),
       url_(url),
       newly_bookmarked_(newly_bookmarked),
-      parent_model_(profile_->GetBookmarkBarModel(),
-                    profile_->GetBookmarkBarModel()->GetNodeByURL(url)) {
+      parent_model_(
+          profile_->GetBookmarkModel(),
+          profile_->GetBookmarkModel()->GetMostRecentlyAddedNodeForURL(url)) {
   Init();
 }
 
@@ -279,8 +255,8 @@ void BookmarkBubbleView::Init() {
 }
 
 std::wstring BookmarkBubbleView::GetTitle() {
-  BookmarkBarModel* bookmark_model= profile_->GetBookmarkBarModel();
-  BookmarkBarNode* node = bookmark_model->GetNodeByURL(url_);
+  BookmarkModel* bookmark_model= profile_->GetBookmarkModel();
+  BookmarkNode* node = bookmark_model->GetMostRecentlyAddedNodeForURL(url_);
   if (node)
     return node->GetTitle();
   else
@@ -313,10 +289,10 @@ void BookmarkBubbleView::ItemChanged(ComboBox* combo_box,
     ShowEditor();
     return;
   }
-  BookmarkBarModel* model = profile_->GetBookmarkBarModel();
-  BookmarkBarNode* node = model->GetNodeByURL(url_);
+  BookmarkModel* model = profile_->GetBookmarkModel();
+  BookmarkNode* node = model->GetMostRecentlyAddedNodeForURL(url_);
   if (node) {
-    BookmarkBarNode* new_parent = parent_model_.GetNodeAt(new_index);
+    BookmarkNode* new_parent = parent_model_.GetNodeAt(new_index);
     if (new_parent != node->GetParent()) {
       UserMetrics::RecordAction(L"BookmarkBubble_ChangeParent", profile_);
       model->Move(node, new_parent, new_parent->GetChildCount());
@@ -345,7 +321,7 @@ void BookmarkBubbleView::RemoveBookmark() {
   UserMetrics::RecordAction(L"BookmarkBubble_Unstar", profile_);
 
   GURL url = url_;
-  BookmarkBarModel* model = profile_->GetBookmarkBarModel();
+  BookmarkModel* model = profile_->GetBookmarkModel();
   // Close first, then notify the service. That way we know we won't be
   // visible and don't have to worry about some other window becoming
   // activated and deleting us before we invoke Close.
@@ -356,6 +332,12 @@ void BookmarkBubbleView::RemoveBookmark() {
 }
 
 void BookmarkBubbleView::ShowEditor() {
+  BookmarkNode* node =
+      profile_->GetBookmarkModel()->GetMostRecentlyAddedNodeForURL(url_);
+
+  // The user may have edited the title, commit it now.
+  SetNodeTitleFromTextField();
+
   // Parent the editor to our root ancestor (not the root we're in, as that
   // is the info bubble and will close shortly).
   HWND parent = GetAncestor(GetViewContainer()->GetHWND(), GA_ROOTOWNER);
@@ -373,12 +355,13 @@ void BookmarkBubbleView::ShowEditor() {
   // the delete and all that.
   Close();
 
-  BookmarkEditorView::Show(parent, profile_, url_, title_);
+  if (node)
+    BookmarkEditorView::Show(parent, profile_, NULL, node);
 }
 
 void BookmarkBubbleView::SetNodeTitleFromTextField() {
-  BookmarkBarModel* model = profile_->GetBookmarkBarModel();
-  BookmarkBarNode* node = model->GetNodeByURL(url_);
+  BookmarkModel* model = profile_->GetBookmarkModel();
+  BookmarkNode* node = model->GetMostRecentlyAddedNodeForURL(url_);
   if (node) {
     const std::wstring new_title = title_tf_->GetText();
     if (new_title != node->GetTitle()) {

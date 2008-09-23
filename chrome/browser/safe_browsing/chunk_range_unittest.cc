@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // Test program to convert lists of integers into ranges, and vice versa.
 
@@ -73,7 +48,7 @@ TEST(SafeBrowsingChunkRangeTest, TestChunksToRanges) {
   chunks.push_back(4);
   chunks.push_back(7);
   ChunksToRanges(chunks, &ranges);
-  EXPECT_EQ(ranges.size(), 2);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(2));
   EXPECT_EQ(ranges[0].start(), 1);
   EXPECT_EQ(ranges[0].stop(),  4);
   EXPECT_EQ(ranges[1].start(), 7);
@@ -92,7 +67,7 @@ TEST(SafeBrowsingChunkRangeTest, TestChunksToRanges) {
   chunks.push_back(9);
   chunks.push_back(10);
   ChunksToRanges(chunks, &ranges);
-  EXPECT_EQ(ranges.size(), 1);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(1));
   EXPECT_EQ(ranges[0].start(), 3);
   EXPECT_EQ(ranges[0].stop(),  10);
 
@@ -109,7 +84,7 @@ TEST(SafeBrowsingChunkRangeTest, TestChunksToRanges) {
   chunks.push_back(15);
   chunks.push_back(17);
   ChunksToRanges(chunks, &ranges);
-  EXPECT_EQ(ranges.size(), 8);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(8));
 
   chunks.clear();
   ranges.clear();
@@ -117,7 +92,7 @@ TEST(SafeBrowsingChunkRangeTest, TestChunksToRanges) {
   // Test a single chunk number.
   chunks.push_back(17);
   ChunksToRanges(chunks, &ranges);
-  EXPECT_EQ(ranges.size(), 1);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(1));
   EXPECT_EQ(ranges[0].start(), 17);
   EXPECT_EQ(ranges[0].stop(),  17);
 
@@ -135,7 +110,7 @@ TEST(SafeBrowsingChunkRangeTest, TestChunksToRanges) {
   chunks.push_back(7);
   chunks.push_back(7);
   ChunksToRanges(chunks, &ranges);
-  EXPECT_EQ(ranges.size(), 2);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(2));
   EXPECT_EQ(ranges[0].start(), 1);
   EXPECT_EQ(ranges[0].stop(), 3);
   EXPECT_EQ(ranges[1].start(), 7);
@@ -148,7 +123,7 @@ TEST(SafeBrowsingChunkRangeTest, TestStringToRanges) {
 
   std::string input = "1-100,398,415,1138-2001,2019";
   EXPECT_TRUE(StringToRanges(input, &ranges));
-  EXPECT_EQ(ranges.size(), 5);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(5));
   EXPECT_EQ(ranges[0].start(), 1);
   EXPECT_EQ(ranges[0].stop(),  100);
   EXPECT_EQ(ranges[1].start(), 398);
@@ -160,13 +135,13 @@ TEST(SafeBrowsingChunkRangeTest, TestStringToRanges) {
 
   input = "1,2,3,4,5,6,7";
   EXPECT_TRUE(StringToRanges(input, &ranges));
-  EXPECT_EQ(ranges.size(), 7);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(7));
 
   ranges.clear();
 
   input = "300-3001";
   EXPECT_TRUE(StringToRanges(input, &ranges));
-  EXPECT_EQ(ranges.size(), 1);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(1));
   EXPECT_EQ(ranges[0].start(),  300);
   EXPECT_EQ(ranges[0].stop(),  3001);
 
@@ -174,7 +149,7 @@ TEST(SafeBrowsingChunkRangeTest, TestStringToRanges) {
 
   input = "17";
   EXPECT_TRUE(StringToRanges(input, &ranges));
-  EXPECT_EQ(ranges.size(), 1);
+  EXPECT_EQ(ranges.size(), static_cast<size_t>(1));
   EXPECT_EQ(ranges[0].start(), 17);
   EXPECT_EQ(ranges[0].stop(),  17);
 
@@ -193,7 +168,7 @@ TEST(SafeBrowsingChunkRangeTest, TestRangesToChunks) {
   std::vector<int> chunks;
   RangesToChunks(ranges, &chunks);
 
-  EXPECT_EQ(chunks.size(), 5);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(5));
   EXPECT_EQ(chunks[0], 1);
   EXPECT_EQ(chunks[1], 2);
   EXPECT_EQ(chunks[2], 3);

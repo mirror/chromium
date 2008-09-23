@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_message_macros.h"
@@ -81,6 +56,12 @@ IPC_BEGIN_MESSAGES(PluginProcessHost, 4)
   IPC_MESSAGE_CONTROL1(PluginProcessHostMsg_PluginMessage,
                        std::vector<uint8> /* opaque data */)
 
+  // Allows a chrome plugin loaded in a plugin process to send arbitrary
+  // data to an instance of the same plugin loaded in the browser process.
+  IPC_SYNC_MESSAGE_CONTROL1_1(PluginProcessHostMsg_PluginSyncMessage,
+                              std::vector<uint8> /* opaque data */,
+                              std::vector<uint8> /* opaque data response */)
+
   // Retrieve the given type of info that is associated with the given
   // CPBrowsingContext.  Returns the result in a string.
   IPC_SYNC_MESSAGE_CONTROL0_1(PluginProcessHostMsg_GetPluginDataDir,
@@ -121,17 +102,8 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
                              PluginMsg_Init_Params,
                              bool /* result */)
 
-  IPC_SYNC_MESSAGE_ROUTED1_0(PluginMsg_Paint,
-                             PluginMsg_Paint_Params /* params */)
-
   IPC_SYNC_MESSAGE_ROUTED0_1(PluginMsg_Print,
                              PluginMsg_PrintResponse_Params /* params */)
-
-  // Returns a shared memory handle to a EMF buffer.
-  IPC_SYNC_MESSAGE_ROUTED1_2(PluginMsg_PaintIntoSharedMemory,
-                             PluginMsg_Paint_Params /* params */,
-                             SharedMemoryHandle /* emf_buffer */,
-                             size_t /* bytes */)
 
   IPC_SYNC_MESSAGE_ROUTED0_2(PluginMsg_GetPluginScriptableObject,
                              int /* route_id */,
@@ -140,10 +112,12 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
   IPC_SYNC_MESSAGE_ROUTED1_0(PluginMsg_DidFinishLoadWithReason,
                              int /* reason */)
 
-  IPC_MESSAGE_ROUTED3(PluginMsg_UpdateGeometry,
+  IPC_MESSAGE_ROUTED5(PluginMsg_UpdateGeometry,
                       gfx::Rect /* window_rect */,
                       gfx::Rect /* clip_rect */,
-                      bool /* visible */)
+                      bool /* visible */,
+                      SharedMemoryHandle /* windowless_buffer */,
+                      SharedMemoryLock /* windowless_buffer_lock */)
 
   IPC_SYNC_MESSAGE_ROUTED0_0(PluginMsg_SetFocus)
 
@@ -160,9 +134,10 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
                              PluginMsg_DidReceiveResponseParams,
                              bool /* cancel */)
 
-  IPC_SYNC_MESSAGE_ROUTED2_0(PluginMsg_DidReceiveData,
+  IPC_SYNC_MESSAGE_ROUTED3_0(PluginMsg_DidReceiveData,
                              int /* id */,
-                             std::vector<char> /* buffer */)
+                             std::vector<char> /* buffer */,
+                             int /* data_offset */)
 
   IPC_SYNC_MESSAGE_ROUTED1_0(PluginMsg_DidFinishLoading,
                              int /* id */)
@@ -263,6 +238,15 @@ IPC_BEGIN_MESSAGES(PluginHost, 6)
   IPC_SYNC_MESSAGE_ROUTED0_1(PluginHostMsg_GetCPBrowsingContext,
                              uint32 /* context */)
 
+  IPC_MESSAGE_ROUTED0(PluginHostMsg_CancelDocumentLoad)
+
+  IPC_MESSAGE_ROUTED5(PluginHostMsg_InitiateHTTPRangeRequest,
+                      std::string /* url */,
+                      std::string /* range_info */,
+                      HANDLE      /* existing_stream */,
+                      bool        /* notify_needed */,
+                      HANDLE      /* notify_data */)
+
 IPC_END_MESSAGES(PluginHost)
 
 //-----------------------------------------------------------------------------
@@ -316,3 +300,4 @@ IPC_BEGIN_MESSAGES(NPObject, 7)
                              std::string /* message */)
 
 IPC_END_MESSAGES(NPObject)
+

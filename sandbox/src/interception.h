@@ -1,38 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Defines InterceptionManager, the class in charge of setting up interceptions
 // for the sandboxed process. For more datails see
 // http://wiki/Main/ChromeSandboxInterceptionDesign
 
-#ifndef SANDBOX_SRC_INTERCEPTION_H__
-#define SANDBOX_SRC_INTERCEPTION_H__
+#ifndef SANDBOX_SRC_INTERCEPTION_H_
+#define SANDBOX_SRC_INTERCEPTION_H_
 
 #include <list>
 #include <string>
@@ -84,7 +59,8 @@ struct DllInterceptionData;
 //
 class InterceptionManager {
   // The unit test will access private members.
-  FRIEND_TEST(InterceptionManagerTest, BufferLayout);
+  FRIEND_TEST(InterceptionManagerTest, BufferLayout1);
+  FRIEND_TEST(InterceptionManagerTest, BufferLayout2);
 
  public:
   // An interception manager performs interceptions on a given child process.
@@ -124,11 +100,14 @@ class InterceptionManager {
                              InterceptionType interception_type,
                              const char* replacement_function_name);
 
+  // The interception agent will unload the dll with dll_name.
+  bool AddToUnloadModules(const wchar_t* dll_name);
+
   // Initializes all interceptions on the client.
   // Returns true on success.
   //
   // The child process must be created suspended, and cannot be resumed until
-  // after this method returns. In addition, no action should be perfomed on
+  // after this method returns. In addition, no action should be performed on
   // the child that may cause it to resume momentarily, such as injecting
   // threads or APCs.
   //
@@ -139,11 +118,11 @@ class InterceptionManager {
  private:
   // Used to store the interception information until the actual set-up.
   struct InterceptionData {
-    InterceptionType type;            // Interception type
-    std::wstring dll;                 // Name of dll to intercept
-    std::string function;             // Name of function to intercept
-    std::string interceptor;          // Name of interceptor function
-    const void* interceptor_address;  // Interceptor's entry point
+    InterceptionType type;            // Interception type.
+    std::wstring dll;                 // Name of dll to intercept.
+    std::string function;             // Name of function to intercept.
+    std::string interceptor;          // Name of interceptor function.
+    const void* interceptor_address;  // Interceptor's entry point.
   };
 
   // Calculates the size of the required configuration buffer.
@@ -194,10 +173,10 @@ class InterceptionManager {
   bool CopyDataToChild(const void* local_buffer, size_t buffer_bytes,
                        void** remote_buffer) const;
 
-  // Performs the cold patch (from the parent) of ntdll.dll.
+  // Performs the cold patch (from the parent) of ntdll.
   // Returns true on success.
   //
-  // This method will inser aditional interceptions to launch the interceptor
+  // This method will insert additional interceptions to launch the interceptor
   // agent on the child process, if there are additional interceptions to do.
   bool PatchNtdll(bool hot_patch_needed);
 
@@ -221,9 +200,10 @@ class InterceptionManager {
   // true if we are allowed to patch already-patched functions.
   bool relaxed_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(InterceptionManager);
+  DISALLOW_COPY_AND_ASSIGN(InterceptionManager);
 };
 
 }  // namespace sandbox
 
-#endif  // SANDBOX_SRC_INTERCEPTION_H__
+#endif  // SANDBOX_SRC_INTERCEPTION_H_
+

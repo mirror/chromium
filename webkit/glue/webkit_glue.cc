@@ -1,51 +1,34 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
+#include "base/compiler_specific.h"
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
 #include <objidl.h>
 #include <mlang.h>
+#endif
 
 #include "config.h"
-#pragma warning(push, 0)
+#include "webkit_version.h"
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "BackForwardList.h"
 #include "Document.h"
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "Frame.h"
 #include "HistoryItem.h"
+#if defined(OS_WIN)  // TODO(port): unnecessary after the webkit merge lands.
 #include "ImageSource.h"
+#endif
 #include "KURL.h"
 #include "LogWin.h"
 #include "Page.h"
 #include "PlatformString.h"
 #include "RenderTreeAsText.h"
 #include "SharedBuffer.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #if USE(V8_BINDING) || USE(JAVASCRIPTCORE_BINDINGS)
 #include "JSBridge.h"  // for set flags
@@ -92,6 +75,7 @@ bool IsLayoutTestMode() {
   return layout_test_mode_;
 }
 
+#if defined(OS_WIN)
 MONITORINFOEX GetMonitorInfoForWindowHelper(HWND window) {
   HMONITOR monitor = MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY);
   MONITORINFOEX monitorInfo;
@@ -135,6 +119,7 @@ IMLangFontLink2* GetLangFontLinkHelper() {
 
   return lang_font_link;
 }
+#endif  // defined(OS_WIN)
 
 std::wstring DumpDocumentText(WebFrame* web_frame) {
   WebFrameImpl* webFrameImpl = static_cast<WebFrameImpl*>(web_frame);
@@ -185,7 +170,7 @@ std::wstring DumpFrameScrollPosition(WebFrame* web_frame, bool recursive) {
 
   if (offset.width() > 0 || offset.height() > 0) {
     if (webFrameImpl->GetParent()) {
-      StringAppendF(&result, L"frame '%s' ", StringToStdWString(
+      StringAppendF(&result, L"frame '%ls' ", StringToStdWString(
           webFrameImpl->frame()->tree()->name()).c_str());
     }
     StringAppendF(&result, L"scrolled to %d,%d\n",
@@ -309,6 +294,7 @@ void CheckForLeaks() {
 }
 
 bool DecodeImage(const std::string& image_data, SkBitmap* image) {
+#if defined(OS_WIN)  // TODO(port): unnecessary after the webkit merge lands.
    RefPtr<WebCore::SharedBuffer> buffer(
        new WebCore::SharedBuffer(image_data.data(),
                                  static_cast<int>(image_data.length())));
@@ -321,6 +307,11 @@ bool DecodeImage(const std::string& image_data, SkBitmap* image) {
   }
   // We failed to decode the image.
   return false;
+#else
+  // This ought to work; we just need the webkit merge.
+  NOTIMPLEMENTED();
+  return false;
+#endif
 }
 
 // Convert from WebKit types to Glue types and notify the embedder. This should
@@ -344,13 +335,32 @@ void NotifyFormStateChanged(const WebCore::Document* document) {
   delegate->OnNavStateChanged(webview);
 }
 
+std::string GetWebKitVersion() {
+  return StringPrintf("%d.%d", WEBKIT_VERSION_MAJOR, WEBKIT_VERSION_MINOR);
+}
+
 const std::string& GetDefaultUserAgent() {
+#if defined(OS_WIN)
   static std::string user_agent;
   static bool generated_user_agent;
   if (!generated_user_agent) {
+    int32 os_major_version = 0;
+    int32 os_minor_version = 0;
+    int32 os_bugfix_version = 0;
+#if defined(OS_WIN)
     OSVERSIONINFO info = {0};
     info.dwOSVersionInfoSize = sizeof(info);
     GetVersionEx(&info);
+    os_major_version = info.dwMajorVersion;
+    os_minor_version = info.dwMinorVersion;
+#elif defined(OS_MACOSX)
+    Gestalt(gestaltSystemVersionMajor, 
+        reinterpret_cast<SInt32*>(&os_major_version));
+    Gestalt(gestaltSystemVersionMinor, 
+        reinterpret_cast<SInt32*>(&os_minor_version));
+    Gestalt(gestaltSystemVersionBugFix, 
+        reinterpret_cast<SInt32*>(&os_bugfix_version));
+#endif
 
     // Get the product name and version, and replace Safari's Version/X string
     // with it.  This is done to expose our product name in a manner that is
@@ -368,16 +378,33 @@ const std::string& GetDefaultUserAgent() {
     // Derived from Safari's UA string.
     StringAppendF(
         &user_agent,
-        "Mozilla/5.0 (Windows; U; Windows NT %d.%d; en-US) AppleWebKit/525.13"
-        " (KHTML, like Gecko) %s Safari/525.13",
-        info.dwMajorVersion,
-        info.dwMinorVersion,
-        product.c_str());
+#if defined(OS_WIN)
+        "Mozilla/5.0 (Windows; U; Windows NT %d.%d; en-US) AppleWebKit/%d.%d"
+#elif defined(OS_MACOSX)
+        "Mozilla/5.0 (Macintosh; U; Intel Mac OS X %d_%d_%d; en-US) AppleWebKit/%d.%d"
+#endif
+        " (KHTML, like Gecko) %s Safari/%d.%d",
+        os_major_version,
+        os_minor_version,
+#if defined(OS_MACOSX)
+        os_bugfix_version,
+#endif
+        WEBKIT_VERSION_MAJOR,
+        WEBKIT_VERSION_MINOR,
+        product.c_str(),
+        WEBKIT_VERSION_MAJOR,
+        WEBKIT_VERSION_MINOR
+        );
 
     generated_user_agent = true;
   }
 
   return user_agent;
+#else
+  // TODO(port): we need something like FileVersionInfo for our UA string.
+  NOTIMPLEMENTED();
+  return EmptyString();
+#endif
 }
 
 

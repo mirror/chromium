@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "sandbox/src/sandbox_nt_util.h"
 
@@ -302,22 +277,31 @@ UNICODE_STRING* AnsiToUnicode(const char* string) {
   return out_string;
 }
 
-UNICODE_STRING* GetImageNameFromModule(HMODULE module) {
+UNICODE_STRING* GetImageInfoFromModule(HMODULE module, uint32* flags) {
   UNICODE_STRING* out_name = NULL;
   __try {
     do {
+      *flags = 0;
       PEImage pe(module);
 
       if (!pe.VerifyMagic())
         break;
+      *flags |= MODULE_IS_PE_IMAGE;
 
       PIMAGE_EXPORT_DIRECTORY exports = pe.GetExportDirectory();
-      if (!exports)
-        break;
+      if (exports) {
+        char* name = reinterpret_cast<char*>(pe.RVAToAddr(exports->Name));
+        out_name = AnsiToUnicode(name);
+      }
 
-      char* name = reinterpret_cast<char*>(pe.RVAToAddr(exports->Name));
+      PIMAGE_NT_HEADERS headers = pe.GetNTHeaders();
+      if (headers) {
+        if (headers->OptionalHeader.AddressOfEntryPoint)
+          *flags |= MODULE_HAS_ENTRY_POINT;
+        if (headers->OptionalHeader.SizeOfCode)
+          *flags |= MODULE_HAS_CODE;
+      }
 
-      out_name = AnsiToUnicode(name);
     } while (false);
   } __except(EXCEPTION_EXECUTE_HANDLER) {
   }
@@ -355,6 +339,51 @@ UNICODE_STRING* GetBackingFilePath(PVOID address) {
 
     return reinterpret_cast<UNICODE_STRING*>(section_name);
   }
+}
+
+UNICODE_STRING* ExtractModuleName(const UNICODE_STRING* module_path) {
+  if ((!module_path) || (!module_path->Buffer)) 
+    return NULL;
+
+  wchar_t* sep = NULL;
+  int start_pos = module_path->Length / sizeof(wchar_t) - 1;
+  int ix = start_pos;
+
+  for(; ix >= 0; --ix) {
+    if (module_path->Buffer[ix] == L'\\') {
+      sep = &module_path->Buffer[ix];
+      break;
+    }
+  }
+
+  // Ends with path separator. Not a valid module name.
+  if ((ix == start_pos) && sep)
+    return NULL;
+
+  // No path separator found. Use the entire name.
+  if ((ix == 0) && !sep) {
+    sep = &module_path->Buffer[-1];
+  }
+
+  // Add one to the size so we can null terminate the string.
+  size_t size_bytes = (start_pos - ix + 1) * sizeof(wchar_t);
+  char* str_buffer = new(NT_ALLOC) char[size_bytes + sizeof(UNICODE_STRING)];
+  if (!str_buffer)
+    return NULL;
+
+  UNICODE_STRING* out_string = reinterpret_cast<UNICODE_STRING*>(str_buffer);
+  out_string->Buffer = reinterpret_cast<wchar_t*>(&out_string[1]);
+  out_string->Length = size_bytes - sizeof(wchar_t);
+  out_string->MaximumLength = size_bytes;
+
+  NTSTATUS ret = CopyData(out_string->Buffer, &sep[1], out_string->Length);
+  if (!NT_SUCCESS(ret)) {
+    operator delete(out_string, NT_ALLOC);
+    return NULL;
+  }
+
+  out_string->Buffer[out_string->Length / sizeof(wchar_t)] = L'\0';
+  return out_string;
 }
 
 NTSTATUS AutoProtectMemory::ChangeProtection(void* address, size_t bytes,
@@ -473,3 +502,4 @@ void __cdecl operator delete(void* memory, void* buffer,
   UNREFERENCED_PARAMETER(buffer);
   UNREFERENCED_PARAMETER(type);
 }
+

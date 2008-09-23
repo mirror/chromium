@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/message_loop.h"
 #include "base/ref_counted.h"
@@ -135,6 +110,7 @@ class AutocompleteProviderTest : public testing::Test,
   AutocompleteResult result_;
 
  private:
+  MessageLoopForUI message_loop_;
   scoped_ptr<AutocompleteController> controller_;
 };
 
@@ -174,7 +150,7 @@ void AutocompleteProviderTest::OnAutocompleteUpdate(bool updated_result,
 
 void AutocompleteProviderTest::RunTest() {
   result_.Reset();
-  const AutocompleteInput input(L"a", std::wstring(), true);
+  const AutocompleteInput input(L"a", std::wstring(), true, false);
   EXPECT_FALSE(controller_->Start(input, false, false));
 
   // The message loop will terminate when all autocomplete input has been
@@ -193,86 +169,11 @@ std::ostream& operator<<(std::ostream& os,
 TEST_F(AutocompleteProviderTest, Query) {
   RunTest();
 
-  // Make sure the default match gets set to the highest relevance match when
-  // we have no preference.  The highest relevance matches should come from
-  // the second provider.
-  AutocompleteResult::Selection selection;
-  result_.SetDefaultMatch(selection);
+  // Make sure the default match gets set to the highest relevance match.  The
+  // highest relevance matches should come from the second provider.
   EXPECT_EQ(num_results_per_provider * 2, result_.size());  // two providers
   ASSERT_NE(result_.end(), result_.default_match());
   EXPECT_EQ(providers_[1], result_.default_match()->provider);
-
-  // Change provider affinity.
-  selection.provider_affinity = providers_[0];
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(providers_[0], result_.default_match()->provider);
-}
-
-TEST_F(AutocompleteProviderTest, UpdateSelection) {
-  RunTest();
-
-  // An empty selection should simply result in the default match overall.
-  AutocompleteResult::Selection selection;
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(providers_[1], result_.default_match()->provider);
-
-  // ...As should specifying a provider that didn't return results.
-  scoped_refptr<TestProvider> test_provider = new TestProvider(0, L"");
-  selection.provider_affinity = test_provider.get();
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(providers_[1], result_.default_match()->provider);
-  selection.provider_affinity = NULL;
-  test_provider = NULL;
-
-  // ...As should specifying a destination URL that doesn't exist, and no
-  // provider.
-  selection.destination_url = L"garbage";
-  selection.provider_affinity = NULL;
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(providers_[1], result_.default_match()->provider);
-  delete selection.provider_affinity;
-
-  // Specifying a valid provider should result in the default match from that
-  // provider.
-  selection.destination_url.clear();
-  selection.provider_affinity = providers_[0];
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(providers_[0], result_.default_match()->provider);
-
-  // ...And nothing should change if we specify a destination that doesn't
-  // exist.
-  selection.destination_url = L"garbage";
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(providers_[0], result_.default_match()->provider);
-
-  // Specifying a particular URL should match that URL.
-  std::wstring non_default_url_from_provider_0(L"a2");
-  selection.destination_url = non_default_url_from_provider_0;
-  selection.provider_affinity = providers_[0];
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(non_default_url_from_provider_0,
-            result_.default_match()->destination_url);
-
-  // ...Even when we ask for a different provider.
-  selection.provider_affinity = providers_[1];
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(non_default_url_from_provider_0,
-            result_.default_match()->destination_url);
-
-  // ...Or when we don't ask for a provider at all.
-  selection.provider_affinity = NULL;
-  result_.SetDefaultMatch(selection);
-  ASSERT_NE(result_.end(), result_.default_match());
-  EXPECT_EQ(non_default_url_from_provider_0,
-            result_.default_match()->destination_url);
 }
 
 TEST_F(AutocompleteProviderTest, RemoveDuplicates) {
@@ -327,7 +228,7 @@ TEST(AutocompleteTest, InputType) {
   };
 
   for (int i = 0; i < arraysize(input_cases); ++i) {
-    AutocompleteInput input(input_cases[i].input, std::wstring(), true);
+    AutocompleteInput input(input_cases[i].input, std::wstring(), true, false);
     EXPECT_EQ(input_cases[i].type, input.type()) << "Input: " <<
         input_cases[i].input;
   }
@@ -359,3 +260,4 @@ TEST(AutocompleteMatch, MoreRelevant) {
               AutocompleteMatch::MoreRelevant(m1, m2));
   }
 }
+

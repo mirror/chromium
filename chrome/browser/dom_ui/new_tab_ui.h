@@ -1,35 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_DOM_UI_NEW_TAB_UI_H__
 #define CHROME_BROWSER_DOM_UI_NEW_TAB_UI_H__
 
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/dom_ui/dom_ui_host.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/history/history.h"
@@ -202,9 +178,11 @@ class TemplateURLHandler : public DOMMessageHandler,
   DISALLOW_EVIL_CONSTRUCTORS(TemplateURLHandler);
 };
 
-class RecentlyBookmarkedHandler : public DOMMessageHandler {
+class RecentlyBookmarkedHandler : public DOMMessageHandler,
+                                  public BookmarkModelObserver {
  public:
   explicit RecentlyBookmarkedHandler(DOMUIHost* dom_ui_host);
+  ~RecentlyBookmarkedHandler();
 
   // Callback which navigates to the bookmarks page.
   void HandleShowBookmarkPage(const Value*);
@@ -213,13 +191,32 @@ class RecentlyBookmarkedHandler : public DOMMessageHandler {
   // It takes no arguments.
   void HandleGetRecentlyBookmarked(const Value*);
 
-  void OnMostRecentStarredEntries(
-      HistoryService::Handle request_handle,
-      std::vector<history::StarredEntry>* entries);
-
  private:
+  void SendBookmarksToPage();
+
+  // BookmarkModelObserver methods. These invoke SendBookmarksToPage.
+  virtual void Loaded(BookmarkModel* model);
+  virtual void BookmarkNodeAdded(BookmarkModel* model,
+                                 BookmarkNode* parent,
+                                 int index);
+  virtual void BookmarkNodeRemoved(BookmarkModel* model,
+                                   BookmarkNode* parent,
+                                   int index);
+  virtual void BookmarkNodeChanged(BookmarkModel* model,
+                                   BookmarkNode* node);
+
+  // These two won't effect what is shown, so they do nothing.
+  virtual void BookmarkNodeMoved(BookmarkModel* model,
+                                 BookmarkNode* old_parent,
+                                 int old_index,
+                                 BookmarkNode* new_parent,
+                                 int new_index) {}
+  virtual void BookmarkNodeFavIconLoaded(BookmarkModel* model,
+                                         BookmarkNode* node) {}
+
   DOMUIHost* dom_ui_host_;
-  CancelableRequestConsumerT<int, 0> cancelable_consumer_;
+  // The model we're getting bookmarks from. The model is owned by the Profile.
+  BookmarkModel* model_;
 
   DISALLOW_EVIL_CONSTRUCTORS(RecentlyBookmarkedHandler);
 };
@@ -293,7 +290,7 @@ class NewTabUIContents : public DOMUIHost {
 
   // WebContents overrides.
   // Overriden to force the title of the page to forced_title_.
-  virtual bool Navigate(const NavigationEntry& entry, bool reload);
+  virtual bool NavigateToPendingEntry(bool reload);
   // We don't want a favicon on the new tab page.
   virtual bool ShouldDisplayFavIcon() { return false; }
   // The bookmark bar is always visible on the new tab.
@@ -328,4 +325,5 @@ class NewTabUIContents : public DOMUIHost {
   DISALLOW_EVIL_CONSTRUCTORS(NewTabUIContents);
 };
 
-#endif CHROME_BROWSER_DOM_UI_NEW_TAB_UI_H__
+#endif  // CHROME_BROWSER_DOM_UI_NEW_TAB_UI_H__
+

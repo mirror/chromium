@@ -1,39 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // Program to test the SafeBrowsing protocol parsing v2.1.
 
-#include <hash_map>
-
+#include "base/hash_tables.h"
 #include "base/logging.h"
 #include "base/string_util.h"
-#include "base/win_util.h"
 #include "chrome/browser/safe_browsing/protocol_parser.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -52,9 +25,9 @@ TEST(SafeBrowsingProtocolParsingTest, TestAddChunk) {
                                   "", "",  &re_key, &chunks);
   EXPECT_TRUE(result);
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(chunks.size(), 1);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(1));
   EXPECT_EQ(chunks[0].chunk_number, 1);
-  EXPECT_EQ(chunks[0].hosts.size(), 3);
+  EXPECT_EQ(chunks[0].hosts.size(), static_cast<size_t>(3));
 
   EXPECT_EQ(chunks[0].hosts[0].host, 0x61616161);
   SBEntry* entry = chunks[0].hosts[0].entry;
@@ -102,9 +75,9 @@ TEST(SafeBrowsingProtocolParsingTest, TestAddFullChunk) {
                                   "", "", &re_key, &chunks);
   EXPECT_TRUE(result);
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(chunks.size(), 1);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(1));
   EXPECT_EQ(chunks[0].chunk_number, 1);
-  EXPECT_EQ(chunks[0].hosts.size(), 1);
+  EXPECT_EQ(chunks[0].hosts.size(), static_cast<size_t>(1));
 
   EXPECT_EQ(chunks[0].hosts[0].host, 0x61616161);
   SBEntry* entry = chunks[0].hosts[0].entry;
@@ -132,9 +105,9 @@ TEST(SafeBrowsingProtocolParsingTest, TestAddChunks) {
                                   "", "", &re_key, &chunks);
   EXPECT_TRUE(result);
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(chunks.size(), 2);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(2));
   EXPECT_EQ(chunks[0].chunk_number, 1);
-  EXPECT_EQ(chunks[0].hosts.size(), 3);
+  EXPECT_EQ(chunks[0].hosts.size(), static_cast<size_t>(3));
 
   EXPECT_EQ(chunks[0].hosts[0].host, 0x61616161);
   SBEntry* entry = chunks[0].hosts[0].entry;
@@ -158,7 +131,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestAddChunks) {
 
 
   EXPECT_EQ(chunks[1].chunk_number, 2);
-  EXPECT_EQ(chunks[1].hosts.size(), 1);
+  EXPECT_EQ(chunks[1].hosts.size(), static_cast<size_t>(1));
 
   EXPECT_EQ(chunks[1].hosts[0].host, 0x35353535);
   entry = chunks[1].hosts[0].entry;
@@ -190,10 +163,10 @@ TEST(SafeBrowsingProtocolParsingTest, TestAddBigChunk) {
                                   "", "", &re_key, &chunks);
   EXPECT_TRUE(result);
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(chunks.size(), 1);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(1));
   EXPECT_EQ(chunks[0].chunk_number, 1);
 
-  EXPECT_EQ(chunks[0].hosts.size(), 1);
+  EXPECT_EQ(chunks[0].hosts.size(), static_cast<size_t>(1));
 
   const SBChunkHost& host = chunks[0].hosts[0];
   EXPECT_EQ(host.host, 0x61616161);
@@ -218,9 +191,9 @@ TEST(SafeBrowsingProtocolParsingTest, TestSubChunk) {
                                   "", "", &re_key, &chunks);
   EXPECT_TRUE(result);
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(chunks.size(), 1);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(1));
   EXPECT_EQ(chunks[0].chunk_number, 9);
-  EXPECT_EQ(chunks[0].hosts.size(), 3);
+  EXPECT_EQ(chunks[0].hosts.size(), static_cast<size_t>(3));
 
   EXPECT_EQ(chunks[0].hosts[0].host, 0x61616161);
   SBEntry* entry = chunks[0].hosts[0].entry;
@@ -276,9 +249,9 @@ TEST(SafeBrowsingProtocolParsingTest, TestSubFullChunk) {
                                   "", "", &re_key, &chunks);
   EXPECT_TRUE(result);
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(chunks.size(), 1);
+  EXPECT_EQ(chunks.size(), static_cast<size_t>(1));
   EXPECT_EQ(chunks[0].chunk_number, 1);
-  EXPECT_EQ(chunks[0].hosts.size(), 1);
+  EXPECT_EQ(chunks[0].hosts.size(), static_cast<size_t>(1));
 
   EXPECT_EQ(chunks[0].hosts[0].host, 0x61616161);
   SBEntry* entry = chunks[0].hosts[0].entry;
@@ -312,15 +285,15 @@ TEST(SafeBrowsingProtocolParsingTest, TestChunkDelete) {
   EXPECT_FALSE(re_key);
   EXPECT_FALSE(reset);
   EXPECT_EQ(next_query_sec, 1700);
-  EXPECT_EQ(deletes.size(), 2);
+  EXPECT_EQ(deletes.size(), static_cast<size_t>(2));
 
-  EXPECT_EQ(deletes[0].chunk_del.size(), 4);
+  EXPECT_EQ(deletes[0].chunk_del.size(), static_cast<size_t>(4));
   EXPECT_TRUE(deletes[0].chunk_del[0] == ChunkRange(1, 7));
   EXPECT_TRUE(deletes[0].chunk_del[1] == ChunkRange(43, 597));
   EXPECT_TRUE(deletes[0].chunk_del[2] == ChunkRange(44444));
   EXPECT_TRUE(deletes[0].chunk_del[3] == ChunkRange(99999));
 
-  EXPECT_EQ(deletes[1].chunk_del.size(), 3);
+  EXPECT_EQ(deletes[1].chunk_del.size(), static_cast<size_t>(3));
   EXPECT_TRUE(deletes[1].chunk_del[0] == ChunkRange(21, 27));
   EXPECT_TRUE(deletes[1].chunk_del[1] == ChunkRange(42));
   EXPECT_TRUE(deletes[1].chunk_del[2] == ChunkRange(171717));
@@ -359,7 +332,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestRedirects) {
 
   EXPECT_FALSE(re_key);
   EXPECT_FALSE(reset);
-  EXPECT_EQ(urls.size(), 4);
+  EXPECT_EQ(urls.size(), static_cast<size_t>(4));
   EXPECT_EQ(urls[0].url,
       "cache.googlevideo.com/safebrowsing/rd/goog-malware-shavar_s_1");
   EXPECT_EQ(urls[1].url,
@@ -395,7 +368,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestRedirectsWithMac) {
 
   EXPECT_FALSE(re_key);
   EXPECT_FALSE(reset);
-  EXPECT_EQ(urls.size(), 2);
+  EXPECT_EQ(urls.size(), static_cast<size_t>(2));
   EXPECT_EQ(urls[0].url,
       "s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6501-6505:6501-6505");
   EXPECT_EQ(urls[0].mac, "pcY6iVeT9-CBQ3fdAF0rpnKjR1Y=");
@@ -441,7 +414,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestGetHash) {
                       &full_hashes);
 
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(full_hashes.size(), 3);
+  EXPECT_EQ(full_hashes.size(), static_cast<size_t>(3));
   EXPECT_EQ(memcmp(&full_hashes[0].hash,
                    "00112233445566778899aabbccddeeff",
                    sizeof(SBFullHash)), 0);
@@ -467,7 +440,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestGetHash) {
                       &full_hashes);
 
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(full_hashes.size(), 3);
+  EXPECT_EQ(full_hashes.size(), static_cast<size_t>(3));
   EXPECT_EQ(memcmp(&full_hashes[0].hash,
                    "00112233445566778899aabbccddeeff",
                    sizeof(SBFullHash)), 0);
@@ -483,11 +456,6 @@ TEST(SafeBrowsingProtocolParsingTest, TestGetHash) {
 }
 
 TEST(SafeBrowsingProtocolParsingTest, TestGetHashWithMac) {
-  // TODO(paulg): Bug: http://b/1084719, skip this test on Windows 2000 until
-  //              this bug is fixed.
-  if (win_util::GetWinVersion() <= win_util::WINVERSION_2000)
-    return;
-
   const unsigned char get_hash[] = {
     0x32, 0x56, 0x74, 0x6f, 0x6b, 0x36, 0x64, 0x41,
     0x51, 0x72, 0x65, 0x51, 0x62, 0x38, 0x51, 0x68,
@@ -519,10 +487,9 @@ TEST(SafeBrowsingProtocolParsingTest, TestGetHashWithMac) {
                                   &re_key,
                                   &full_hashes));
   EXPECT_FALSE(re_key);
-  EXPECT_EQ(full_hashes.size(), 1);
+  EXPECT_EQ(full_hashes.size(), static_cast<size_t>(1));
   EXPECT_EQ(memcmp(hash_result, &full_hashes[0].hash, sizeof(SBFullHash)), 0);
 }
-
 
 TEST(SafeBrowsingProtocolParsingTest, TestFormatHash) {
   SafeBrowsingProtocolParser parser;
@@ -585,11 +552,6 @@ TEST(SafeBrowsingProtocolParsingTest, TestReset) {
 }
 
 TEST(SafeBrowsingProtocolParsingTest, TestVerifyUpdateMac) {
-  // TODO(paulg): Bug: http://b/1084719, skip this test on Windows 2000 until
-  //              this bug is fixed.
-  if (win_util::GetWinVersion() <= win_util::WINVERSION_2000)
-    return;
-
   SafeBrowsingProtocolParser parser;
 
   const std::string update =
@@ -625,11 +587,6 @@ TEST(SafeBrowsingProtocolParsingTest, TestVerifyUpdateMac) {
 }
 
 TEST(SafeBrowsingProtocolParsingTest, TestVerifyChunkMac) {
-  // TODO(paulg): Bug: http://b/1084719, skip this test on Windows 2000 until
-  //              this bug is fixed.
-  if (win_util::GetWinVersion() <= win_util::WINVERSION_2000)
-    return;
-
   SafeBrowsingProtocolParser parser;
 
   const unsigned char chunk[] = {

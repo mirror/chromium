@@ -1,35 +1,8 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/render_widget_host_hwnd.h"
-
-#include <windows.h>
 
 #include "base/command_line.h"
 #include "base/gfx/bitmap_header.h"
@@ -43,6 +16,7 @@
 #include "chrome/browser/render_widget_host.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/hwnd_view_container.h"
@@ -520,6 +494,10 @@ void RenderWidgetHostHWND::OnInputLangChange(DWORD character_set,
   }
 }
 
+void RenderWidgetHostHWND::OnThemeChanged() {
+  render_widget_host_->SystemThemeChanged();
+}
+
 LRESULT RenderWidgetHostHWND::OnNotify(int w_param, NMHDR* header) {
   if (tooltip_hwnd_ == NULL)
     return 0;
@@ -746,39 +724,6 @@ LRESULT RenderWidgetHostHWND::OnWheelEvent(UINT message, WPARAM wparam,
   return 0;
 }
 
-LRESULT RenderWidgetHostHWND::OnNcCalcSize(UINT message, WPARAM w_param,
-                                           LPARAM l_param, BOOL& handled) {
-  // Handle WM_NCCALCSIZE and make scrollbar size to 0.
-  // Here we indicate that the entire window area is our
-  // client area. The assumption is that we won't have a border
-  // or any other non-client widget.
-  return 0;
-}
-
-LRESULT RenderWidgetHostHWND::OnSize(UINT message, WPARAM w_param,
-                                     LPARAM l_param, BOOL& handled) {
-  // Set arbitrary but valid scroll information so that
-  // our window will get WS_VSCROLL and WS_HSCROLL style.
-
-  // TODO(joshia): The correct thing to do here is to get
-  // the correct scroll information from the renderer and
-  // set it here.
-  SCROLLINFO si = {0};
-  si.cbSize = sizeof(si);
-  si.fMask = SIF_ALL;
-
-  si.nMin = 1;
-  si.nMax = 100;
-  si.nPage = 10;
-  si.nTrackPos = 50;
-
-  SetScrollInfo(SB_HORZ, &si, FALSE);
-  SetScrollInfo(SB_VERT, &si, FALSE);
-
-  handled = FALSE;
-  return 0;
-}
-
 LRESULT RenderWidgetHostHWND::OnMouseActivate(UINT, WPARAM, LPARAM,
                                               BOOL& handled) {
   // We handle WM_MOUSEACTIVATE to set focus to the underlying plugin
@@ -875,3 +820,4 @@ void RenderWidgetHostHWND::ShutdownHost() {
   render_widget_host_->Shutdown();
   // Do not touch any members at this point, |this| has been deleted.
 }
+

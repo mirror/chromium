@@ -1,44 +1,21 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_RENDER_PROCESS_HOST_H__
-#define CHROME_BROWSER_RENDER_PROCESS_HOST_H__
+#ifndef CHROME_BROWSER_RENDER_PROCESS_HOST_H_
+#define CHROME_BROWSER_RENDER_PROCESS_HOST_H_
 
+#include <set>
 #include <vector>
 #include <windows.h>
 
 #include "base/id_map.h"
-#include "base/message_loop.h"
+#include "base/object_watcher.h"
 #include "base/process.h"
 #include "base/ref_counted.h"
+#include "base/scoped_handle.h"
 #include "base/scoped_ptr.h"
-#include "chrome/common/ipc_channel_proxy.h"
+#include "chrome/common/ipc_sync_channel.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/rand_util.h"
 #include "chrome/common/render_messages.h"
@@ -46,8 +23,11 @@
 class PrefService;
 class Profile;
 class RenderWidgetHelper;
-class Thread;
 class WebContents;
+
+namespace base {
+class Thread;
+}
 
 // Represents the browser side of the browser <--> renderer communication
 // channel. There will be one RenderProcessHost per renderer process.
@@ -61,8 +41,8 @@ class WebContents;
 // are correlated with IDs. This way, the Views and the corresponding ViewHosts
 // communicate through the two process objects.
 class RenderProcessHost : public IPC::Channel::Listener,
-                          public MessageLoop::Watcher,
                           public IPC::Channel::Sender,
+                          public base::ObjectWatcher::Delegate,
                           public NotificationObserver {
  public:
   // Returns the RenderProcessHost given its ID.  Returns NULL if the ID does
@@ -117,7 +97,7 @@ class RenderProcessHost : public IPC::Channel::Listener,
   void ReportExpectingClose(int32 listener_id);
 
   // getters, these may return NULL if there is no connection
-  IPC::ChannelProxy* channel() {
+  IPC::SyncChannel* channel() {
     return channel_.get();
   }
   HANDLE process() {
@@ -155,7 +135,7 @@ class RenderProcessHost : public IPC::Channel::Listener,
   virtual void OnMessageReceived(const IPC::Message& msg);
   virtual void OnChannelConnected(int32 peer_pid);
 
-  // MessageLoop watcher callback
+  // ObjectWatcher::Delegate
   virtual void OnObjectSignaled(HANDLE object);
 
   // IPC::Channel::Sender callback
@@ -201,6 +181,9 @@ class RenderProcessHost : public IPC::Channel::Listener,
   // to register/unregister visibility.
   void WidgetRestored();
   void WidgetHidden();
+  
+  // Add a word in the spellchecker.
+  void AddWord(const std::wstring& word);
 
   // NotificationObserver implementation.
   virtual void Observe(NotificationType type,
@@ -239,10 +222,13 @@ class RenderProcessHost : public IPC::Channel::Listener,
 
   // A proxy for our IPC::Channel that lives on the IO thread (see
   // browser_process.h)
-  scoped_ptr<IPC::ChannelProxy> channel_;
+  scoped_ptr<IPC::SyncChannel> channel_;
 
   // Our renderer process.
   Process process_;
+
+  // Used to watch the renderer process handle.
+  base::ObjectWatcher watcher_;
 
   // The profile associated with this renderer process.
   Profile* profile_;
@@ -289,4 +275,5 @@ inline std::wstring GenerateRandomChannelID(void* instance) {
 }
 
 
-#endif  // CHROME_BROWSER_RENDER_PROCESS_HOST_H__
+#endif  // CHROME_BROWSER_RENDER_PROCESS_HOST_H_
+

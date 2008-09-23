@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Defines messages between the browser and plugin process, as well as between
 // the renderer and plugin process.
@@ -38,10 +13,13 @@
 #include <string>
 #include <vector>
 
+#include "base/gfx/rect.h"
 #include "base/basictypes.h"
-#include "bindings/npapi.h"
 #include "chrome/common/ipc_message.h"
 #include "chrome/common/ipc_message_utils.h"
+#include "googleurl/src/gurl.h"
+#include "third_party/npapi/bindings/npapi.h"
+#include "webkit/glue/npruntime_util.h"
 
 void PluginMessagesInit();
 
@@ -77,18 +55,7 @@ struct PluginMsg_URLRequestReply_Params {
   std::string url;
   bool notify_needed;
   HANDLE notify_data;
-};
-
-struct PluginMsg_Paint_Params {
-  gfx::Size size;
-  gfx::Rect clip_rect;
-  gfx::Rect damaged_rect;
-
-  // Bitmap's bits.
-  HANDLE shared_memory;
-
-  // Information about the world transform (see GetWorldTransform).
-  XFORM xf;
+  HANDLE stream;
 };
 
 struct PluginMsg_PrintResponse_Params {
@@ -105,9 +72,7 @@ struct PluginMsg_DidReceiveResponseParams {
 };
 
 struct NPIdentifier_Param {
-  bool is_string;
-  std::string string;
-  int number;
+  NPIdentifier identifier;
 };
 
 enum NPVariant_ParamEnum {
@@ -251,13 +216,15 @@ struct ParamTraits<PluginMsg_URLRequestReply_Params> {
     WriteParam(m, p.url);
     WriteParam(m, p.notify_needed);
     WriteParam(m, p.notify_data);
+    WriteParam(m, p.stream);
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
       ReadParam(m, iter, &p->resource_id) &&
       ReadParam(m, iter, &p->url) &&
       ReadParam(m, iter, &p->notify_needed) &&
-      ReadParam(m, iter, &p->notify_data);
+      ReadParam(m, iter, &p->notify_data) && 
+      ReadParam(m, iter, &p->stream);
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"(");
@@ -268,39 +235,8 @@ struct ParamTraits<PluginMsg_URLRequestReply_Params> {
     LogParam(p.notify_needed, l);
     l->append(L", ");
     LogParam(p.notify_data, l);
-    l->append(L")");
-  }
-};
-
-template <>
-struct ParamTraits<PluginMsg_Paint_Params> {
-  typedef PluginMsg_Paint_Params param_type;
-  static void Write(Message* m, const param_type& p) {
-    WriteParam(m, p.size);
-    WriteParam(m, p.clip_rect);
-    WriteParam(m, p.damaged_rect);
-    WriteParam(m, p.shared_memory);
-    WriteParam(m, p.xf);
-  }
-  static bool Read(const Message* m, void** iter, param_type* r) {
-    return
-      ReadParam(m, iter, &r->size) &&
-      ReadParam(m, iter, &r->clip_rect) &&
-      ReadParam(m, iter, &r->damaged_rect) &&
-      ReadParam(m, iter, &r->shared_memory) &&
-      ReadParam(m, iter, &r->xf);
-  }
-  static void Log(const param_type& p, std::wstring* l) {
-    l->append(L"(");
-    LogParam(p.size, l);
     l->append(L", ");
-    LogParam(p.clip_rect, l);
-    l->append(L", ");
-    LogParam(p.damaged_rect, l);
-    l->append(L", ");
-    LogParam(p.shared_memory, l);
-    l->append(L", ");
-    LogParam(p.xf, l);
+    LogParam(p.stream, l);
     l->append(L")");
   }
 };
@@ -442,31 +378,18 @@ template <>
 struct ParamTraits<NPIdentifier_Param> {
   typedef NPIdentifier_Param param_type;
   static void Write(Message* m, const param_type& p) {
-    WriteParam(m, p.is_string);
-    if (p.is_string) {
-      WriteParam(m, p.string);
-    } else {
-      WriteParam(m, p.number);
-    }
+    webkit_glue::SerializeNPIdentifier(p.identifier, m);
   }
   static bool Read(const Message* m, void** iter, param_type* r) {
-    if (!ReadParam(m, iter, &r->is_string))
-      return false;
-
-    bool result;
-    if (r->is_string) {
-      result = ReadParam(m, iter, &r->string);
-    } else {
-      result = ReadParam(m, iter, &r->number);
-    }
-
-    return result;
+    return webkit_glue::DeserializeNPIdentifier(*m, iter, &r->identifier);
   }
   static void Log(const param_type& p, std::wstring* l) {
-    if (p.is_string) {
-      l->append(ASCIIToWide(p.string));
+    if (NPN_IdentifierIsString(p.identifier)) {
+      NPUTF8* str = NPN_UTF8FromIdentifier(p.identifier);
+      l->append(UTF8ToWide(str));
+      NPN_MemFree(str);
     } else {
-      l->append(StringPrintf(L"%d", p.number));
+      l->append(IntToWString(NPN_IntFromIdentifier(p.identifier)));
     }
   }
 };
@@ -483,7 +406,7 @@ struct ParamTraits<NPVariant_Param> {
     } else if (p.type == NPVARIANT_PARAM_DOUBLE) {
       WriteParam(m, p.double_value);
     } else if (p.type == NPVARIANT_PARAM_STRING) {
-      WriteParam(m, std::string(p.string_value));
+      WriteParam(m, p.string_value);
     } else if (p.type == NPVARIANT_PARAM_OBJECT_ROUTING_ID) {
       // This is the routing id used to connect NPObjectProxy in the other
       // process with NPObjectStub in this process.
@@ -548,3 +471,4 @@ struct ParamTraits<NPVariant_Param> {
 }  // namespace IPC
 
 #endif  // CHROME_COMMON_PLUGIN_MESSAGES_H__
+

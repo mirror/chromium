@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/string_util.h"
 #include "chrome/browser/browser_process.h"
@@ -61,10 +36,8 @@ void DebuggerWindow::Show(TabContents* tab) {
     view_->OnShow();
     return;
   }
-  view_ = new DebuggerView(this);
-  window_ = ChromeViews::Window::CreateChromeWindow(
-    NULL, gfx::Rect(), view_, this);
-  view_->OnInit();
+  view_ = new DebuggerView();
+  window_ = ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), this);
   window_->Show();
   view_->OnShow();
   debugger_ready_ = true;
@@ -132,7 +105,8 @@ void DebuggerWindow::SetDebuggerReady(bool ready) {
 #ifndef CHROME_DEBUGGER_DISABLED
   if (debugger_ready_ != ready) {
     debugger_ready_ = ready;
-    window_->UpdateWindowTitle();
+    if (window_)
+      window_->UpdateWindowTitle();
   }
 #endif
 }
@@ -141,9 +115,13 @@ void DebuggerWindow::SetDebuggerBreak(bool brk) {
 #ifndef CHROME_DEBUGGER_DISABLED
   if (debugger_break_ != brk) {
     debugger_break_ = brk;
-    window_->UpdateWindowTitle();
-    if (brk)
-      window_->Activate();
+    if (window_) {
+      if (view_)
+        view_->SetDebuggerBreak(brk);
+      window_->UpdateWindowTitle();
+      if (brk)
+        window_->Activate();
+    }
   }
 #endif
 }
@@ -165,15 +143,22 @@ void DebuggerWindow::WindowClosing() {
 #ifndef CHROME_DEBUGGER_DISABLED
   view_->OnClose();
 #endif
-  debugger_ = NULL;
   window_ = NULL;
   view_ = NULL;
+#ifndef CHROME_DEBUGGER_DISABLED
+  debugger_->DidDisconnect();
+#endif
+  debugger_ = NULL;
   DebuggerWrapper* wrapper = g_browser_process->debugger_wrapper();
   wrapper->SetDebugger(NULL);
 }
 
 bool DebuggerWindow::CanResize() const {
   return true;
+}
+
+ChromeViews::View* DebuggerWindow::GetContentsView() {
+  return view_;
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -191,9 +176,10 @@ void DebuggerWindow::HandleKeystroke(ChromeViews::TextField* sender, UINT messag
     std::wstring txt = sender->GetText();
     if (txt.length()) {
       view_->Output(L"$ " + txt);
-      debugger_->ProcessCommand(WideToUTF8(txt));
+      debugger_->ProcessCommand(txt);
       sender->SetText(L"");
     }
   }
 #endif
 }
+

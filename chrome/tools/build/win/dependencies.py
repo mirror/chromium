@@ -1,32 +1,7 @@
-#!/usr/bin/python 
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#!/usr/bin/python
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 """Script to verify a Portable Executable's dependencies.
 
@@ -45,17 +20,25 @@ import os
 import subprocess
 import sys
 
+# The default distribution name and the environment variable that overrides it.
+DIST_DEFAULT = '_chromium'
+DIST_ENV_VAR = 'CHROMIUM_BUILD'
+
 DUMPBIN = "dumpbin.exe"
 
 
 class Error(Exception):
   def __init__(self, message):
     self.message = message
+  def __str__(self):
+    return self.message
 
 
 def RunSystemCommand(cmd):
-  return subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
-
+  try:
+    return subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+  except:
+    raise Error("Failed to execute: " + cmd)
 
 def RunDumpbin(binary_file):
   """Runs dumpbin and parses its output.
@@ -97,13 +80,13 @@ def RunDumpbin(binary_file):
       if line == "Image has the following dependencies:":
         if current_section != START:
           raise Error("Internal parsing error.")
-        current_section = DEPENDENCIES_HEADER;
+        current_section = DEPENDENCIES_HEADER
       elif line == "Image has the following delay load dependencies:":
         if current_section != DEPENDENCIES:
           raise Error("Internal parsing error.")
-        current_section = DELAY_LOAD_HEADER;
+        current_section = DELAY_LOAD_HEADER
       elif line == "Summary":
-        current_section = SUMMARY_HEADER;
+        current_section = SUMMARY_HEADER
       elif current_section == DEPENDENCIES:
         # Got a dependent
         dependents.append(line)
@@ -143,18 +126,18 @@ def Diff(name, type, current, expected, deps_file):
   if len(only_in_expected) or len(only_in_current):
     print name.upper() + " DEPENDENCIES MISMATCH\n"
 
-  if len(only_in_current):
+  if len(only_in_expected):
     found_extra = 1
     print "%s is no longer dependent on these %s: %s." % (name,
         type,
-        ' '.join(only_in_current))
+        ' '.join(only_in_expected))
     print "Please update \"%s\"." % deps_file
 
-  if len(only_in_expected):
+  if len(only_in_current):
     found_extra = 2
     string = "%s is now dependent on these %s, but shouldn't: %s." % (name,
         type,
-        ' '.join(only_in_expected))
+        ' '.join(only_in_current))
     stars = '*' * len(string)
     print "**" + stars + "**"
     print "* " + string + " *"
@@ -163,19 +146,48 @@ def Diff(name, type, current, expected, deps_file):
   return found_extra
 
 
-def VerifyDependents(pe_name, dependents, delay_loaded, list_file):
+def VerifyDependents(pe_name, dependents, delay_loaded, list_file, verbose):
   """Compare the actual dependents to the expected ones."""
   scope = {}
-  execfile(list_file, scope)
+  try:
+    execfile(list_file, scope)
+  except:
+    raise Error("Failed to load " + list_file)
+
+  # The dependency files have dependencies in two section - dependents and delay_loaded
+  # Also various distributions of Chromium can have different dependencies. So first
+  # we read generic dependencies ("dependents" and "delay_loaded"). If distribution
+  # specific dependencies exist (i.e. "dependents_google_chrome" and 
+  # "delay_loaded_google_chrome") we use those instead.
+  distribution = DIST_DEFAULT
+  if DIST_ENV_VAR in os.environ.keys():
+    distribution = os.environ[DIST_ENV_VAR].lower()
+
+  expected_dependents = scope["dependents"]
+  dist_dependents = "dependents" + distribution
+  if dist_dependents in scope.keys():
+    expected_dependents = scope[dist_dependents]
+    
+  expected_delay_loaded = scope["delay_loaded"]
+  dist_delay_loaded = "delay_loaded" + distribution
+  if dist_delay_loaded in scope.keys():
+    expected_delay_loaded = scope[dist_delay_loaded]
+
+  if verbose:
+    print "Expected dependents:"
+    print "\n".join(expected_dependents)
+    print "Expected delayloaded:"
+    print "\n".join(expected_delay_loaded)
+    
   deps_result = Diff(pe_name,
                      "dll",
                      dependents,
-                     scope["dependents"],
+                     expected_dependents,
                      list_file)
   delayed_result = Diff(pe_name,
                         "delay loaded dll",
                         delay_loaded,
-                        scope["delay_loaded"],
+                        expected_delay_loaded,
                         list_file)
   return max(deps_result, delayed_result)
 
@@ -185,13 +197,26 @@ def main(options, args):
   pe_name = args[0]
   deps_file = args[1]
   dependents, delay_loaded = RunDumpbin(pe_name)
-  return VerifyDependents(pe_name, dependents, delay_loaded, deps_file)
+  if options.debug:
+    print "Dependents:"
+    print "\n".join(dependents)
+    print "Delayloaded:"
+    print "\n".join(delay_loaded)
+  return VerifyDependents(pe_name, dependents, delay_loaded, deps_file,
+                          options.debug)
 
 
 if '__main__' == __name__:
   usage = "usage: %prog [options] input output"
   option_parser = optparse.OptionParser(usage = usage)
+  option_parser.add_option("-d",
+                           "--debug",
+                           dest="debug",
+                           action="store_true",
+                           default=False,
+                           help="Display debugging information")
   options, args = option_parser.parse_args()
   if len(args) != 2:
-      parser.error("Incorrect number of arguments")
+    option_parser.error("Incorrect number of arguments")
   sys.exit(main(options, args))
+

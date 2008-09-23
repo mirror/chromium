@@ -1,42 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/info_bubble.h"
 
 #include "base/win_util.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/chrome_frame.h"
+#include "chrome/browser/browser_window.h"
+#include "chrome/browser/frame_util.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/views/root_view.h"
 
 using ChromeViews::View;
 
@@ -95,7 +71,7 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
   window->Init(parent_hwnd, position_relative_to, content);
-  ChromeFrame* frame = window->GetHostingFrame();
+  BrowserWindow* frame = window->GetHostingWindow();
   if (frame)
     frame->InfoBubbleShowing();
   window->ShowWindow(SW_SHOW);
@@ -131,7 +107,8 @@ void InfoBubble::Init(HWND parent_hwnd,
       (win_util::GetWinVersion() < win_util::WINVERSION_XP) ?
       0 : CS_DROPSHADOW);
 
-  HWNDViewContainer::Init(parent_hwnd, bounds, content_view_, true);
+  HWNDViewContainer::Init(parent_hwnd, bounds, true);
+  SetContentsView(content_view_);
   // The preferred size may differ when parented. Ask for the bounds again
   // and if they differ reset the bounds.
   gfx::Rect parented_bounds = content_view_->
@@ -164,7 +141,7 @@ void InfoBubble::Init(HWND parent_hwnd,
 
 void InfoBubble::Close() {
   // We don't fade out because it looks terrible.
-  ChromeFrame* frame = GetHostingFrame();
+  BrowserWindow* frame = GetHostingWindow();
   if (delegate_)
     delegate_->InfoBubbleClosing(this);
   if (frame)
@@ -212,9 +189,9 @@ InfoBubble::ContentView* InfoBubble::CreateContentView(View* content) {
   return new ContentView(content, this);
 }
 
-ChromeFrame* InfoBubble::GetHostingFrame() {
+BrowserWindow* InfoBubble::GetHostingWindow() {
   HWND owning_frame_hwnd = GetAncestor(GetHWND(), GA_ROOTOWNER);
-  ChromeFrame* frame = ChromeFrame::GetChromeFrameForWindow(owning_frame_hwnd);
+  BrowserWindow* frame = FrameUtil::GetBrowserWindowForHWND(owning_frame_hwnd);
   if (!frame) {
     // We should always have a frame, but there was a bug else where that
     // made it possible for the frame to be NULL, so we have the check. If
@@ -274,15 +251,15 @@ void InfoBubble::ContentView::Layout() {
   View* content = GetChildViewAt(0);
   int x = kBorderSize;
   int y = kBorderSize;
-  int width = GetWidth() - kBorderSize - kBorderSize -
+  int content_width = width() - kBorderSize - kBorderSize -
               kInfoBubbleViewLeftMargin - kInfoBubbleViewRightMargin;
-  int height = GetHeight() - kBorderSize - kBorderSize - kArrowSize -
+  int content_height = height() - kBorderSize - kBorderSize - kArrowSize -
                kInfoBubbleViewTopMargin - kInfoBubbleViewBottomMargin;
   if (IsTop())
     y += kArrowSize;
   x += kInfoBubbleViewLeftMargin;
   y += kInfoBubbleViewTopMargin;
-  content->SetBounds(x, y, width, height);
+  content->SetBounds(x, y, content_width, content_height);
 }
 
 HRGN InfoBubble::ContentView::GetMask(const CSize &size) {
@@ -350,8 +327,8 @@ HRGN InfoBubble::ContentView::GetMask(const CSize &size) {
 void InfoBubble::ContentView::Paint(ChromeCanvas* canvas) {
   int bubble_x = 0;
   int bubble_y = 0;
-  int bubble_w = GetWidth();
-  int bubble_h = GetHeight() - kArrowSize;
+  int bubble_w = width();
+  int bubble_h = height() - kArrowSize;
 
   int border_w = bubble_w - 2 * kInfoBubbleCornerWidth;
   int border_h = bubble_h - 2 * kInfoBubbleCornerHeight;
@@ -391,7 +368,7 @@ void InfoBubble::ContentView::Paint(ChromeCanvas* canvas) {
 
   // Right border.
   canvas->DrawRectInt(kBorderColor1,
-                      GetWidth() - 1, bubble_y + kInfoBubbleCornerHeight,
+                      width() - 1, bubble_y + kInfoBubbleCornerHeight,
                       0, border_h);
 
   // Draw the corners.
@@ -405,7 +382,7 @@ void InfoBubble::ContentView::Paint(ChromeCanvas* canvas) {
                         bubble_y + bubble_h - kInfoBubbleCornerHeight);
 
   // Draw the arrow and the notch of the arrow.
-  int arrow_x = IsLeft() ? kArrowXOffset : GetWidth() - kArrowXOffset;
+  int arrow_x = IsLeft() ? kArrowXOffset : width() - kArrowXOffset;
   int arrow_y = IsTop() ? bubble_y : bubble_y + bubble_h - 1;
   const int arrow_delta = IsTop() ? -1 : 1;
   for (int i = 0, y = arrow_y; i <= kArrowSize; ++i, y += arrow_delta) {
@@ -443,3 +420,4 @@ gfx::Rect InfoBubble::ContentView::CalculateWindowBounds(
   }
   return gfx::Rect(x, y, pref.cx, pref.cy);
 }
+

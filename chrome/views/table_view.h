@@ -1,36 +1,14 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_VIEWS_TABLE_VIEW_H__
-#define CHROME_VIEWS_TABLE_VIEW_H__
+#ifndef CHROME_VIEWS_TABLE_VIEW_H_
+#define CHROME_VIEWS_TABLE_VIEW_H_
 
 #include <windows.h>
+
+#include <map>
+#include <vector>
 
 #include "base/logging.h"
 #include "chrome/common/l10n_util.h"
@@ -155,8 +133,14 @@ struct TableColumn {
     LEFT, RIGHT, CENTER
   };
 
-  TableColumn() : id(0), title(), alignment(LEFT), width(-1), percent(), min_visible_width(0) {}
-
+  TableColumn()
+      : id(0),
+        title(),
+        alignment(LEFT),
+        width(-1),
+        percent(),
+        min_visible_width(0) {
+  }
   TableColumn(int id, const std::wstring title, Alignment alignment, int width)
       : id(id),
         title(title),
@@ -219,7 +203,8 @@ struct TableColumn {
   int width;
   float percent;
 
-  // The minimum width required for all items in this column (including the header)
+  // The minimum width required for all items in this column
+  // (including the header)
   // to be visible.
   int min_visible_width;
 };
@@ -242,11 +227,16 @@ class TableSelectionIterator {
 // TableViewObserver is notified about the TableView selection.
 class TableViewObserver {
  public:
+  virtual ~TableViewObserver() {}
+
   // Invoked when the selection changes.
   virtual void OnSelectionChanged() = 0;
 
   // Optional method invoked when the user double clicks on the table.
   virtual void OnDoubleClick() {}
+
+  // Optional method invoked when the user hits a key with the table in focus.
+  virtual void OnKeyDown(unsigned short virtual_keycode) {}
 };
 
 class TableView : public NativeControl,
@@ -365,6 +355,10 @@ class TableView : public NativeControl,
   // Notification from the ListView that the used double clicked the table.
   virtual void OnDoubleClick();
 
+  // Subclasses can implement this method if they need to be notified of a key
+  // press event.  Other wise, it appeals to table_view_observer_
+  virtual void OnKeyDown(unsigned short virtual_keycode);
+
   // Invoked to customize the colors or font at a particular cell. If you
   // change the colors or font, return true. This is only invoked if
   // SetCustomColorsEnabled(true) has been invoked.
@@ -382,10 +376,6 @@ class TableView : public NativeControl,
   virtual void PostPaint(int row, int column, bool selected,
                          const CRect& bounds, HDC device_context) { }
 
-  // Subclasses can implement this method if they need to be notified of a key
-  // press event.
-  virtual void OnKeyDown(unsigned short virtual_keycode) {}
-
   virtual HWND CreateNativeControl(HWND parent_container);
 
   virtual LRESULT OnNotify(int w_param, LPNMHDR l_param);
@@ -399,7 +389,7 @@ class TableView : public NativeControl,
   // cast from GetWindowLongPtr would break the pointer if it is pointing to a
   // subclass (in the OO sense of TableView).
   struct TableViewWrapper {
-    TableViewWrapper(TableView* view) : table_view(view) { }
+    explicit TableViewWrapper(TableView* view) : table_view(view) { }
     TableView* table_view;
   };
 
@@ -430,9 +420,9 @@ class TableView : public NativeControl,
   // changed.
   void OnCheckedStateChanged(int item, bool is_checked);
 
-  // Returns the index of the selected item after |item|, or -1 if |item| is
-  // the last selected item.
-  int NextSelectedIndex(int item);
+  // Returns the index of the selected item before |item|, or -1 if |item| is
+  // the first selected item.
+  int PreviousSelectedIndex(int item);
 
   // Returns the last selected index in the table view, or -1 if the table
   // is empty, or nothing is selected.
@@ -440,6 +430,13 @@ class TableView : public NativeControl,
 
   // The TableColumn visible at position pos.
   const TableColumn& GetColumnAtPosition(int pos);
+
+  // Window procedure of the list view class. We subclass the list view to
+  // ignore WM_ERASEBKGND, which gives smoother painting during resizing.
+  static LRESULT CALLBACK TableWndProc(HWND window,
+                                       UINT message,
+                                       WPARAM w_param,
+                                       LPARAM l_param);
 
   // Window procedure of the header class. We subclass the header of the table
   // to disable resizing of columns.
@@ -493,13 +490,12 @@ class TableView : public NativeControl,
   // a wrapper around the List-View window.
   HWND list_view_;
 
-  // The list view original proc handler. It is required when subclassing the
-  // list view.
-  WNDPROC list_view_original_handler_;
-
   // The list view's header original proc handler. It is required when
   // subclassing.
   WNDPROC header_original_handler_;
+
+  // Window procedure of the listview before we subclassed it.
+  WNDPROC original_handler_;
 
   // A wrapper around 'this' used when "subclassing" the list view and header.
   TableViewWrapper table_view_wrapper_;
@@ -513,9 +509,8 @@ class TableView : public NativeControl,
   // The offset from the top of the client area to the start of the content.
   int content_offset_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(TableView);
+  DISALLOW_COPY_AND_ASSIGN(TableView);
 };
-
 }
 
-#endif  // CHROME_VIEWS_TABLE_VIEW_H__
+#endif  // CHROME_VIEWS_TABLE_VIEW_H_

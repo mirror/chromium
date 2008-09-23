@@ -1,42 +1,21 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_TASK_MANAGER_H__
 #define CHROME_BROWSER_TASK_MANAGER_H__
 
+#include <map>
+#include <vector>
+
 #include "base/lock.h"
 #include "base/singleton.h"
 #include "base/ref_counted.h"
-#include "chrome/common/notification_service.h"
+#include "base/timer.h"
 #include "chrome/views/dialog_delegate.h"
 #include "chrome/views/group_table_view.h"
 #include "chrome/browser/cache_manager_host.h"
+#include "chrome/browser/tab_contents.h"
 #include "net/url_request/url_request_job_tracker.h"
 
 class MessageLoop;
@@ -48,7 +27,6 @@ class TaskManager;
 class TaskManagerContents;
 class TaskManagerTableModel;
 class TaskManagerWindow;
-class Timer;
 
 struct BytesReadParam;
 
@@ -68,9 +46,15 @@ class TaskManager : public ChromeViews::DialogDelegate {
   // Resources from similar processes are grouped together by the task manager.
   class Resource {
    public:
+    virtual ~Resource() {}
+
     virtual std::wstring GetTitle() const = 0;
     virtual SkBitmap GetIcon() const = 0;
     virtual HANDLE GetProcess() const = 0;
+
+    // A helper function for ActivateFocusedTab.  Returns NULL by default
+    // because not all resources have an assoiciated tab.
+    virtual TabContents* GetTabContents() const {return NULL;}
 
     // Whether this resource does report the network usage accurately.
     // This controls whether 0 or N/A is displayed when no bytes have been
@@ -125,6 +109,10 @@ class TaskManager : public ChromeViews::DialogDelegate {
   // Terminates the selected tab(s) in the list.
   void KillSelectedProcesses();
 
+  // Activates the browser tab associated with the focused row in the task
+  // manager table.  This happens when the user double clicks or hits return.
+  void ActivateFocusedTab();
+
   void AddResourceProvider(ResourceProvider* provider);
   void RemoveResourceProvider(ResourceProvider* provider);
 
@@ -150,6 +138,7 @@ class TaskManager : public ChromeViews::DialogDelegate {
                                      bool* always_on_top);
   virtual int GetDialogButtons() const;
   virtual void WindowClosing();
+  virtual ChromeViews::View* GetContentsView();
 
  private:
   // Obtain an instance via GetInstance().
@@ -162,8 +151,6 @@ class TaskManager : public ChromeViews::DialogDelegate {
 
   // Returns the singleton instance (and initializes it if necessary).
   static TaskManager* GetInstance();
-
-  ChromeViews::Window* window_;
 
   // The model used for the list in the table that displays the list of tab
   // processes. It is ref counted because it is passed as a parameter to
@@ -287,9 +274,8 @@ class TaskManagerTableModel : public ChromeViews::GroupTableModel,
   // The timer controlling the updates of the information. The timer is
   // allocated every time the task manager is shown and deleted when it is
   // hidden/closed.
-  Timer* timer_;
+  base::RepeatingTimer<TaskManagerTableModel> update_timer_;
 
-  scoped_ptr<Task> update_task_;
   MessageLoop* ui_loop_;
 
   // See design doc at http://go/at-teleporter for more information.
@@ -299,4 +285,5 @@ class TaskManagerTableModel : public ChromeViews::GroupTableModel,
 };
 
 #endif  // CHROME_BROWSER_TASK_MANAGER_H__
+
 

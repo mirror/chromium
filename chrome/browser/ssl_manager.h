@@ -1,34 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_SSL_MANAGER_H__
-#define CHROME_BROWSER_SSL_MANAGER_H__
+#ifndef CHROME_BROWSER_SSL_MANAGER_H_
+#define CHROME_BROWSER_SSL_MANAGER_H_
 
 #include <string>
 #include <map>
@@ -36,11 +11,11 @@
 #include "base/basictypes.h"
 #include "base/observer_list.h"
 #include "base/ref_counted.h"
-#include "base/task.h"
-#include "chrome/browser/views/info_bar_message_view.h"
 #include "chrome/browser/provisional_load_details.h"
 #include "chrome/browser/resource_dispatcher_host.h"
 #include "chrome/browser/security_style.h"
+#include "chrome/browser/views/info_bar_message_view.h"
+#include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/render_messages.h"
 #include "googleurl/src/gurl.h"
@@ -51,15 +26,17 @@
 #include "webkit/glue/resource_type.h"
 
 class InfoBarItemView;
-class NavigationController;
 class NavigationEntry;
 class LoadFromMemoryCacheDetails;
 class LoadNotificationDetails;
+class NavigationController;
+class PrefService;
 class ResourceRedirectDetails;
 class ResourceRequestDetails;
 class SSLErrorInfo;
 class SSLInfoBar;
 class TabContents;
+class Task;
 class URLRequest;
 
 // The SSLManager SSLManager controls the SSL UI elements in a TabContents.  It
@@ -215,7 +192,7 @@ class SSLManager : public NotificationObserver {
               URLRequest* request,
               ResourceType::Type resource_type,
               int cert_error,
-              X509Certificate* cert,
+              net::X509Certificate* cert,
               MessageLoop* ui_loop);
 
     // ErrorHandler methods
@@ -311,21 +288,25 @@ class SSLManager : public NotificationObserver {
   // Sets the maximum security style for the page.  If the current security
   // style is lower than |style|, this will not have an effect on the security
   // indicators.
-  void SetMaxSecurityStyle(SecurityStyle style);
+  //
+  // It will return true if the navigation entry was updated or false if
+  // nothing changed. The caller is responsible for broadcasting
+  // NOTIFY_SSY_STATE_CHANGED if it returns true.
+  bool SetMaxSecurityStyle(SecurityStyle style);
 
   // Logs a message to the console of the page.
   void AddMessageToConsole(const std::wstring& msg,
                            ConsoleMessageLevel level);
 
   // Records that |cert| is permitted to be used for |host| in the future.
-  void DenyCertForHost(X509Certificate* cert, const std::string& host);
+  void DenyCertForHost(net::X509Certificate* cert, const std::string& host);
 
   // Records that |cert| is not permitted to be used for |host| in the future.
-  void AllowCertForHost(X509Certificate* cert, const std::string& host);
+  void AllowCertForHost(net::X509Certificate* cert, const std::string& host);
 
   // Queries whether |cert| is allowed or denied for |host|.
-  X509Certificate::Policy::Judgment QueryPolicy(X509Certificate* cert,
-                                                const std::string& host);
+  net::X509Certificate::Policy::Judgment QueryPolicy(
+      net::X509Certificate* cert, const std::string& host);
 
   // Allow mixed/unsafe content to be visible (non filtered) for the specified
   // URL.
@@ -353,7 +334,7 @@ class SSLManager : public NotificationObserver {
   static void OnSSLCertificateError(ResourceDispatcherHost* resource_dispatcher,
                                     URLRequest* request,
                                     int cert_error,
-                                    X509Certificate* cert,
+                                    net::X509Certificate* cert,
                                     MessageLoop* ui_loop);
 
   // Called when a mixed-content sub-resource request has been detected.  The
@@ -414,7 +395,7 @@ class SSLManager : public NotificationObserver {
   // Sets |short_name| to <organization_name> [<country>] and |ca_name|
   // to something like:
   // "Verified by <issuer_organization_name>"
-  static bool GetEVCertNames(const X509Certificate& cert,
+  static bool GetEVCertNames(const net::X509Certificate& cert,
                              std::wstring* short_name,
                              std::wstring* ca_name);
 
@@ -442,9 +423,12 @@ class SSLManager : public NotificationObserver {
      Task* action;
    };
 
-  // Entry points for notifications to which we subscribe.
+  // Entry points for notifications to which we subscribe. Note that
+  // DidCommitProvisionalLoad uses the abstract NotificationDetails type since
+  // the type we need is in NavigationController which would create a circular
+  // header file dependency.
   void DidLoadFromMemoryCache(LoadFromMemoryCacheDetails* details);
-  void DidCommitProvisionalLoad(ProvisionalLoadDetails* details);
+  void DidCommitProvisionalLoad(const NotificationDetails& details);
   void DidFailProvisionalLoadWithError(ProvisionalLoadDetails* details);
   void DidStartResourceResponse(ResourceRequestDetails* details);
   void DidReceiveResourceRedirect(ResourceRedirectDetails* details);
@@ -469,8 +453,11 @@ class SSLManager : public NotificationObserver {
   // The list of currently visible SSL InfoBars.
   ObserverList<SSLInfoBar> visible_info_bars_;
 
+  // Handles registering notifications with the NotificationService.
+  NotificationRegistrar registrar_;
+
   // Certificate policies for each host.
-  std::map<std::string, X509Certificate::Policy> cert_policy_for_host_;
+  std::map<std::string, net::X509Certificate::Policy> cert_policy_for_host_;
 
   // Domains for which it is OK to show insecure content.
   std::set<std::string> can_show_insecure_content_for_host_;
@@ -479,7 +466,8 @@ class SSLManager : public NotificationObserver {
   // currently loading had loaded.
   std::vector<SSLMessageInfo> pending_messages_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(SSLManager);
+  DISALLOW_COPY_AND_ASSIGN(SSLManager);
 };
 
-#endif // CHROME_BROWSER_SSL_MANAGER_H__
+#endif // CHROME_BROWSER_SSL_MANAGER_H_
+

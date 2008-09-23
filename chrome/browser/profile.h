@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // This class gathers state related to a single user profile.
 
@@ -39,9 +14,12 @@
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
 #include "base/task.h"
-#include "base/time.h"
+#include "base/timer.h"
+#ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
+#endif
 
-class BookmarkBarModel;
+class BookmarkModel;
 class DownloadManager;
 class HistoryService;
 class NavigationController;
@@ -51,7 +29,6 @@ class SpellChecker;
 class TabRestoreService;
 class TemplateURLFetcher;
 class TemplateURLModel;
-class Timer;
 class URLRequestContext;
 class VisitedLinkMaster;
 class WebDataService;
@@ -92,13 +69,13 @@ class Profile {
   // Create a new profile given a path.
   static Profile* CreateProfile(const std::wstring& path);
 
-  // Returns the request context for the "default" profile.  This is a temporary
-  // measure while we still only support 1 profile.  Consumers of this will need
-  // to figure out what to do when we start having multiple profiles.  This may
-  // be called from any thread.
+  // Returns the request context for the "default" profile.  This may be called
+  // from any thread.  This CAN return NULL if a first request context has not
+  // yet been created.  If necessary, listen on the UI thread for
+  // NOTIFY_DEFAULT_REQUEST_CONTEXT_AVAILABLE.
   //
-  // This object is NOT THREADSAFE and must be used and destroyed only on the
-  // I/O thread.
+  // The returned object is ref'd by the profile.  Callers who AddRef() it (to
+  // keep it alive longer than the profile) must Release() it on the I/O thread.
   static URLRequestContext* GetDefaultRequestContext();
 
   // Returns the path of the directory where this profile's data is stored.
@@ -133,14 +110,6 @@ class Profile {
   // the ServiceAccessType definition above.
   virtual HistoryService* GetHistoryService(ServiceAccessType access) = 0;
 
-  // Returns true if the history service has been initialized. Some callers may
-  // want to use the history service for not very important things, and do not
-  // want to be the ones who cause lazy initialization of the service (can cause
-  // startup regressions).
-  //
-  // If this returns true, history_service() is guaranteed to return non-NULL.
-  virtual bool HasHistoryService() const = 0;
-
   // Returns the WebDataService for this profile. This is owned by
   // the Profile. Callers that outlive the life of this profile need to be
   // sure they refcount the returned value.
@@ -166,10 +135,12 @@ class Profile {
   virtual DownloadManager* GetDownloadManager() = 0;
   virtual bool HasCreatedDownloadManager() const = 0;
 
-  // Returns the request context information associated with this profile.
+  // Returns the request context information associated with this profile.  Call
+  // this only on the UI thread, since it can send notifications that should
+  // happen on the UI thread.
   //
-  // This object is NOT THREADSAFE and must be used and destroyed only on the
-  // I/O thread.
+  // The returned object is ref'd by the profile.  Callers who AddRef() it (to
+  // keep it alive longer than the profile) must Release() it on the I/O thread.
   virtual URLRequestContext* GetRequestContext() = 0;
 
   // Returns the session service for this profile. This may return NULL. If
@@ -196,28 +167,15 @@ class Profile {
   virtual std::wstring GetID() = 0;
   virtual void SetID(const std::wstring& id) = 0;
 
-  // Allows open tabs using this profile to be registered, so that they
-  // can be closed.  When the last tab is unregistered, the profile removes
-  // itself from the profile manager and deletes itself.
-  // NOTE: NavigationController is the most stable object associated with
-  //       a notional tab, so we're using that to track tabs.
-  virtual void RegisterNavigationController(
-      NavigationController* controller) = 0;
-  virtual void UnregisterNavigationController(
-      NavigationController* controller) = 0;
-
-  // Return the registered navigation controllers.
-  typedef std::set<NavigationController*> ProfileControllerSet;
-  virtual const ProfileControllerSet& GetNavigationControllers() = 0;
-
   // Returns true if the last time this profile was open it was exited cleanly.
   virtual bool DidLastSessionExitCleanly() = 0;
 
-  // Returns true if the BookmarkBarMOdel has been created.
-  virtual bool HasBookmarkBarModel() = 0;
+  // Returns the BookmarkModel, creating if not yet created.
+  virtual BookmarkModel* GetBookmarkModel() = 0;
 
-  // Returns the BookmarkBarModel, creating if not yet created.
-  virtual BookmarkBarModel* GetBookmarkBarModel() = 0;
+#ifdef CHROME_PERSONALIZATION
+  virtual ProfilePersonalization GetProfilePersonalization() = 0;
+#endif
 
   // Return whether 2 profiles are the same. 2 profiles are the same if they
   // represent the same profile. This can happen if there is pointer equality
@@ -272,7 +230,6 @@ class ProfileImpl : public Profile {
   virtual Profile* GetOriginalProfile();
   virtual VisitedLinkMaster* GetVisitedLinkMaster();
   virtual HistoryService* GetHistoryService(ServiceAccessType sat);
-  virtual bool HasHistoryService() const;
   virtual WebDataService* GetWebDataService(ServiceAccessType sat);
   virtual PrefService* GetPrefs();
   virtual TemplateURLModel* GetTemplateURLModel();
@@ -287,38 +244,20 @@ class ProfileImpl : public Profile {
   virtual void SetName(const std::wstring& name);
   virtual std::wstring GetID();
   virtual void SetID(const std::wstring& id);
-  virtual void RegisterNavigationController(NavigationController* controller);
-  virtual void UnregisterNavigationController(NavigationController* controller);
-  virtual const Profile::ProfileControllerSet& GetNavigationControllers();
   virtual bool DidLastSessionExitCleanly();
-  virtual bool HasBookmarkBarModel();
-  virtual BookmarkBarModel* GetBookmarkBarModel();
+  virtual BookmarkModel* GetBookmarkModel();
   virtual bool IsSameProfile(Profile* profile);
   virtual Time GetStartTime() const;
   virtual TabRestoreService* GetTabRestoreService();
   virtual void ResetTabRestoreService();
   virtual SpellChecker* GetSpellChecker();
   virtual void MarkAsCleanShutdown();
+#ifdef CHROME_PERSONALIZATION
+  virtual ProfilePersonalization GetProfilePersonalization();
+#endif
 
  private:
   class RequestContext;
-
-  // TODO(sky): replace this with a generic invokeLater that doesn't require
-  // arg to be ref counted.
-  class CreateSessionServiceTask : public Task {
-   public:
-    explicit CreateSessionServiceTask(ProfileImpl* profile)
-        : profile_(profile) {
-    }
-    void Run() {
-      profile_->GetSessionService();
-    }
-
-   private:
-    ProfileImpl* profile_;
-
-    DISALLOW_EVIL_CONSTRUCTORS(CreateSessionServiceTask);
-  };
 
   friend class Profile;
 
@@ -328,6 +267,10 @@ class ProfileImpl : public Profile {
   std::wstring GetPrefFilePath();
 
   void StopCreateSessionServiceTimer();
+  
+  void EnsureSessionServiceCreated() {
+    GetSessionService();
+  }
 
   std::wstring path_;
   bool off_the_record_;
@@ -335,7 +278,11 @@ class ProfileImpl : public Profile {
   scoped_ptr<PrefService> prefs_;
   scoped_ptr<TemplateURLFetcher> template_url_fetcher_;
   scoped_ptr<TemplateURLModel> template_url_model_;
-  scoped_ptr<BookmarkBarModel> bookmark_bar_model_;
+  scoped_ptr<BookmarkModel> bookmark_bar_model_;
+
+#ifdef CHROME_PERSONALIZATION
+  ProfilePersonalization personalization_;
+#endif
 
   RequestContext* request_context_;
 
@@ -349,10 +296,7 @@ class ProfileImpl : public Profile {
   // Whether or not the last session exited cleanly. This is set only once.
   bool last_session_exited_cleanly_;
 
-  ProfileControllerSet controllers_;
-
-  Timer* create_session_service_timer_;
-  CreateSessionServiceTask create_session_service_task_;
+  base::OneShotTimer<ProfileImpl> create_session_service_timer_;
 
   scoped_ptr<OffTheRecordProfileImpl> off_the_record_profile_;
 
@@ -373,3 +317,4 @@ class ProfileImpl : public Profile {
 };
 
 #endif  // CHROME_BROWSER_PROFILE_H__
+

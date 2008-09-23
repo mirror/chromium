@@ -37,6 +37,7 @@
 #include "v8_events.h"
 #include "v8_binding.h"
 #include "v8_custom.h"
+#include "v8_collection.h"
 #include "v8_nodefilter.h"
 #include "V8Bridge.h"
 
@@ -54,6 +55,7 @@
 #include "HTMLOptionsCollection.h"
 #include "Page.h"
 #include "DOMWindow.h"
+#include "Location.h"
 #include "Navigator.h"  // for MimeTypeArray
 #include "V8DOMWindow.h"
 #include "V8HTMLElement.h"
@@ -71,7 +73,7 @@
 #include "EventTarget.h"
 #include "Event.h"
 #include "HTMLInputElement.h"
-#include "xmlhttprequest.h"
+#include "XMLHttpRequest.h"
 #include "StyleSheet.h"
 #include "StyleSheetList.h"
 #include "CSSRule.h"
@@ -96,7 +98,9 @@
 #endif
 
 #include "base/stats_table.h"
+#include "base/trace_event.h"
 #include "webkit/glue/glue_util.h"
+#include "webkit/glue/webkit_glue.h"
 
 namespace WebCore {
 
@@ -181,7 +185,40 @@ void V8Proxy::UnregisterGlobalHandle(void* host,
   ASSERT(info->host_ == host);
   delete info;
 }
-#endif
+#endif  // ifndef NDEBUG
+
+void BatchConfigureAttributes(v8::Handle<v8::ObjectTemplate> inst,
+                              v8::Handle<v8::ObjectTemplate> proto,
+                              const BatchedAttribute* attrs,
+                              size_t num_attrs) {
+  for (size_t i = 0; i < num_attrs; ++i) {
+    const BatchedAttribute* a = &attrs[i];
+    (a->on_proto ? proto : inst)->SetAccessor(
+        v8::String::New(a->name),
+        a->getter,
+        a->setter,
+        a->data == V8ClassIndex::INVALID_CLASS_INDEX
+            ? v8::Handle<v8::Value>()
+            : v8::Integer::New(V8ClassIndex::ToInt(a->data)),
+        a->settings,
+        a->attribute);
+  }
+}
+
+void BatchConfigureConstants(v8::Handle<v8::FunctionTemplate> desc,
+                             v8::Handle<v8::ObjectTemplate> proto,
+                             const BatchedConstant* consts,
+                             size_t num_consts) {
+  for (size_t i = 0; i < num_consts; ++i) {
+    const BatchedConstant* c = &consts[i];
+    desc->Set(v8::String::New(c->name),
+              v8::Integer::New(c->value),
+              v8::ReadOnly);
+    proto->Set(v8::String::New(c->name),
+               v8::Integer::New(c->value),
+               v8::ReadOnly);
+  }
+}
 
 
 typedef HashMap<Node*, v8::Object*> NodeMap;
@@ -192,12 +229,12 @@ template<class T>
 class DOMPeerableWrapperMap : public DOMWrapperMap<T> {
  public:
   explicit DOMPeerableWrapperMap(v8::WeakReferenceCallback callback) :
-       DOMWrapperMap(callback) { }
+       DOMWrapperMap<T>(callback) { }
 
   // Get the JS wrapper object of an object.
   v8::Persistent<v8::Object> get(T* obj) {
     v8::Object* peer = static_cast<v8::Object*>(obj->peer());
-    ASSERT(peer == map_.get(obj));
+    ASSERT(peer == this->map_.get(obj));
     return peer ? v8::Persistent<v8::Object>(peer)
       : v8::Persistent<v8::Object>();
   }
@@ -210,7 +247,7 @@ class DOMPeerableWrapperMap : public DOMWrapperMap<T> {
 
   void forget(T* obj) {
     v8::Object* peer = static_cast<v8::Object*>(obj->peer());
-    ASSERT(peer == map_.get(obj));
+    ASSERT(peer == this->map_.get(obj));
     if (peer)
       obj->setPeer(0);
     DOMWrapperMap<T>::forget(obj);
@@ -925,12 +962,17 @@ v8::Local<v8::Value> V8Proxy::Evaluate(const String& fileName, int baseLine,
 
   // Compile the script.
   v8::Local<v8::String> code = v8ExternalString(str);
+  TRACE_EVENT_BEGIN("v8.compile", n, "");
   v8::Handle<v8::Script> script = CompileScript(code, fileName, baseLine);
+  TRACE_EVENT_END("v8.compile", n, "");
 
   // Set inlineCode to true for <a href="javascript:doSomething()">
   // and false for <script>doSomething</script>. For some reason, fileName
   // gives us this information.
-  return RunScript(script, fileName.isNull());
+  TRACE_EVENT_BEGIN("v8.run", n, "");
+  v8::Local<v8::Value> result = RunScript(script, fileName.isNull());
+  TRACE_EVENT_END("v8.run", n, "");
+  return result;
 }
 
 
@@ -1216,6 +1258,12 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
                                     default_signature),
           v8::None);
       desc->SetHiddenPrototype(true);
+
+      // Reserve spaces for references to location and navigator objects.
+      v8::Local<v8::ObjectTemplate> instance_template =
+          desc->InstanceTemplate();
+      instance_template->SetInternalFieldCount(
+          V8Custom::kDOMWindowInternalFieldCount);      
       break;
     }
     case V8ClassIndex::LOCATION: {
@@ -1237,9 +1285,9 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
     case V8ClassIndex::XMLHTTPREQUEST: {
       // Reserve one more internal field for keeping event listeners.
       v8::Local<v8::ObjectTemplate> instance_template =
-        desc->InstanceTemplate();
-      int internal_field_count = instance_template->InternalFieldCount() + 1;
-      instance_template->SetInternalFieldCount(internal_field_count);
+          desc->InstanceTemplate();
+      instance_template->SetInternalFieldCount(
+          V8Custom::kXMLHttpRequestInternalFieldCount);
       desc->SetCallHandler(USE_CALLBACK(XMLHttpRequestConstructor));
       break;
     }
@@ -1804,9 +1852,41 @@ v8::Handle<v8::Value> V8Proxy::ToV8Object(V8ClassIndex::V8WrapperType type,
     if (!v8obj.IsEmpty()) {
       result = v8::Persistent<v8::Object>::New(v8obj);
       dom_object_map().set(obj, result);
+
+      // Special case for Location and Navigator. Both Safari and FF let
+      // Location and Navigator JS wrappers survive GC. To mimic their
+      // behaviors, V8 creates hidden references from the DOMWindow to
+      // location and navigator objects. These references get cleared
+      // when the DOMWindow is reused by a new page.
+      if (type == V8ClassIndex::LOCATION) {
+        SetHiddenWindowReference(static_cast<Location*>(imp)->frame(),
+          V8Custom::kDOMWindowLocationIndex, result);
+      } else if (type == V8ClassIndex::NAVIGATOR) {
+        SetHiddenWindowReference(static_cast<Navigator*>(imp)->frame(),
+          V8Custom::kDOMWindowNavigatorIndex, result);
+      }
     }
   }
   return result;
+}
+
+
+void V8Proxy::SetHiddenWindowReference(Frame* frame,
+                                       const int internal_index,
+                                       v8::Handle<v8::Object> jsobj) {
+  // Get DOMWindow
+  if (!frame) return;  // Object might be detached from window
+  v8::Handle<v8::Context> context = GetContext(frame);
+  if (context.IsEmpty()) return;
+
+  ASSERT(internal_index < V8Custom::kDOMWindowInternalFieldCount);
+
+  v8::Handle<v8::Object> global = context->Global();
+  ASSERT(!global.IsEmpty());
+  // Look for real DOM wrapper.
+  global = LookupDOMWrapper(V8ClassIndex::DOMWINDOW, global);
+  ASSERT(global->GetInternalField(internal_index)->IsUndefined());
+  global->SetInternalField(internal_index, jsobj);
 }
 
 
@@ -1982,8 +2062,8 @@ void* V8Proxy::ExtractCPointerImpl(v8::Handle<v8::Value> obj) {
 
 bool V8Proxy::SetDOMWrapper(v8::Handle<v8::Object> obj, int type, void* cptr) {
   ASSERT(obj->InternalFieldCount() >= 2);
-  obj->SetInternalField(0, WrapCPointer(cptr));
-  obj->SetInternalField(1, v8::Integer::New(type));
+  obj->SetInternalField(V8Custom::kDOMWrapperObjectIndex, WrapCPointer(cptr));
+  obj->SetInternalField(V8Custom::kDOMWrapperTypeIndex, v8::Integer::New(type));
   return true;
 }
 
@@ -1992,12 +2072,15 @@ bool V8Proxy::MaybeDOMWrapper(v8::Handle<v8::Value> value) {
   if (value.IsEmpty() || !value->IsObject()) return false;
 
   v8::Handle<v8::Object> obj = v8::Handle<v8::Object>::Cast(value);
-  if (obj->InternalFieldCount() < 2) return false;
+  if (obj->InternalFieldCount() < V8Custom::kDefaultWrapperInternalFieldCount)
+    return false;
 
-  v8::Handle<v8::Value> wrapper = obj->GetInternalField(0);
+  v8::Handle<v8::Value> wrapper =
+      obj->GetInternalField(V8Custom::kDOMWrapperObjectIndex);
   if (!wrapper->IsNumber() && !wrapper->IsExternal()) return false;
 
-  v8::Handle<v8::Value> type = obj->GetInternalField(1);
+  v8::Handle<v8::Value> type =
+      obj->GetInternalField(V8Custom::kDOMWrapperTypeIndex);
   if (!type->IsNumber()) return false;
 
   return true;

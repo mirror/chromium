@@ -1,36 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/basictypes.h"
+#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "base/scoped_ptr.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/archived_database.h"
 #include "chrome/browser/history/expire_history_backend.h"
 #include "chrome/browser/history/history_database.h"
@@ -52,8 +29,10 @@ namespace history {
 class ExpireHistoryTest : public testing::Test,
                           public BroadcastNotificationDelegate {
  public:
-#pragma warning(suppress: 4355)  // OK to pass "this" here.
-  ExpireHistoryTest() : expirer_(this), now_(Time::Now()) {
+  ExpireHistoryTest()
+      : bookmark_model_(NULL),
+        ALLOW_THIS_IN_INITIALIZER_LIST(expirer_(this, &bookmark_model_)),
+        now_(Time::Now()) {
   }
 
  protected:
@@ -79,7 +58,16 @@ class ExpireHistoryTest : public testing::Test,
     notifications_.clear();
   }
 
+  void StarURL(const GURL& url) {
+    bookmark_model_.AddURL(
+        bookmark_model_.GetBookmarkBarNode(), 0, std::wstring(), url);
+  }
+
   static bool IsStringInFile(std::wstring& filename, const char* str);
+
+  BookmarkModel bookmark_model_;
+
+  MessageLoop message_loop_;
 
   ExpireHistoryBackend expirer_;
 
@@ -111,7 +99,7 @@ class ExpireHistoryTest : public testing::Test,
     std::wstring history_name(dir_);
     file_util::AppendToPath(&history_name, L"History");
     main_db_.reset(new HistoryDatabase);
-    if (main_db_->Init(history_name) != INIT_OK)
+    if (main_db_->Init(history_name, std::wstring()) != INIT_OK)
       main_db_.reset();
 
     std::wstring archived_name(dir_);
@@ -460,8 +448,8 @@ TEST_F(ExpireHistoryTest, DeleteURLWithoutFavicon) {
   EXPECT_TRUE(HasFavIcon(last_row.favicon_id()));
 }
 
-// DeletdeURL should delete URLs that are starred.
-TEST_F(ExpireHistoryTest, DeleteStarredURL) {
+// DeleteURL should not delete starred urls.
+TEST_F(ExpireHistoryTest, DontDeleteStarredURL) {
   URLID url_ids[3];
   Time visit_times[4];
   AddExampleData(url_ids, visit_times);
@@ -470,20 +458,35 @@ TEST_F(ExpireHistoryTest, DeleteStarredURL) {
   ASSERT_TRUE(main_db_->GetURLRow(url_ids[2], &url_row));
 
   // Star the last URL.
-  StarredEntry starred;
-  starred.type = StarredEntry::URL;
-  starred.url = url_row.url();
-  starred.url_id = url_row.id();
-  starred.parent_group_id = HistoryService::kBookmarkBarID;
-  ASSERT_TRUE(main_db_->CreateStarredEntry(&starred));
-  ASSERT_TRUE(main_db_->GetURLRow(url_ids[2], &url_row));
+  StarURL(url_row.url());
 
-  // Now delete it, this should delete it even though it's starred.
+  // Attempt to delete the url.
   expirer_.DeleteURL(url_row.url());
 
-  // All the normal data + the favicon should be gone.
+  // Because the url is starred, it shouldn't be deleted.
+  GURL url = url_row.url();
+  ASSERT_TRUE(main_db_->GetRowForURL(url, &url_row));
+
+  // And the favicon should exist.
+  EXPECT_TRUE(HasFavIcon(url_row.favicon_id()));
+
+  // But there should be no fts. 
+  ASSERT_EQ(0, CountTextMatchesForURL(url_row.url()));
+
+  // And no visits.
+  VisitVector visits;
+  main_db_->GetVisitsForURL(url_row.id(), &visits);
+  ASSERT_EQ(0, visits.size());
+
+  // Should still have the thumbnail.
+  ASSERT_TRUE(HasThumbnail(url_row.id()));
+
+  // Unstar the URL and delete again.
+  bookmark_model_.SetURLStarred(url, std::wstring(), false);
+  expirer_.DeleteURL(url);
+  
+  // Now it should be completely deleted.
   EnsureURLInfoGone(url_row);
-  EXPECT_FALSE(HasFavIcon(url_row.favicon_id()));
 }
 
 // Expires all URLs more recent than a given time, with no starred items.
@@ -540,8 +543,7 @@ TEST_F(ExpireHistoryTest, FlushRecentURLsUnstarred) {
   EXPECT_FALSE(HasFavIcon(url_row2.favicon_id()));
 }
 
-// Expire a starred URL, it shouldn't get deleted and its visit counts should
-// be updated properly.
+// Expire a starred URL, it shouldn't get deleted
 TEST_F(ExpireHistoryTest, FlushRecentURLsStarred) {
   URLID url_ids[3];
   Time visit_times[4];
@@ -552,21 +554,8 @@ TEST_F(ExpireHistoryTest, FlushRecentURLsStarred) {
   ASSERT_TRUE(main_db_->GetURLRow(url_ids[2], &url_row2));
 
   // Star the last two URLs.
-  StarredEntry starred1;
-  starred1.type = StarredEntry::URL;
-  starred1.url = url_row1.url();
-  starred1.url_id = url_row1.id();
-  starred1.parent_group_id = HistoryService::kBookmarkBarID;
-  ASSERT_TRUE(main_db_->CreateStarredEntry(&starred1));
-  ASSERT_TRUE(main_db_->GetURLRow(url_ids[1], &url_row1));
-
-  StarredEntry starred2;
-  starred2.type = StarredEntry::URL;
-  starred2.url = url_row2.url();
-  starred2.url_id = url_row2.id();
-  starred2.parent_group_id = HistoryService::kBookmarkBarID;
-  ASSERT_TRUE(main_db_->CreateStarredEntry(&starred2));
-  ASSERT_TRUE(main_db_->GetURLRow(url_ids[2], &url_row2));
+  StarURL(url_row1.url());
+  StarURL(url_row2.url());
 
   // This should delete the last two visits.
   expirer_.ExpireHistoryBetween(visit_times[2], Time());
@@ -580,7 +569,7 @@ TEST_F(ExpireHistoryTest, FlushRecentURLsStarred) {
   EXPECT_TRUE(new_url_row1.last_visit() == visit_times[1]);
   EXPECT_TRUE(new_url_row2.last_visit().is_null());  // No last visit time.
 
-  // Visit counts should be updated.
+  // Visit/typed count should not be updated for bookmarks.
   EXPECT_EQ(0, new_url_row1.typed_count());
   EXPECT_EQ(1, new_url_row1.visit_count());
   EXPECT_EQ(0, new_url_row2.typed_count());
@@ -594,6 +583,7 @@ TEST_F(ExpireHistoryTest, FlushRecentURLsStarred) {
   EXPECT_TRUE(HasThumbnail(new_url_row1.id()));
   EXPECT_TRUE(HasFavIcon(new_url_row2.favicon_id()));
   EXPECT_TRUE(HasThumbnail(new_url_row2.id()));
+
 }
 
 TEST_F(ExpireHistoryTest, ArchiveHistoryBeforeUnstarred) {
@@ -643,14 +633,12 @@ TEST_F(ExpireHistoryTest, ArchiveHistoryBeforeStarred) {
   ASSERT_TRUE(main_db_->GetURLRow(url_ids[0], &url_row0));
   ASSERT_TRUE(main_db_->GetURLRow(url_ids[1], &url_row1));
 
-  // Star the URLs. We use fake star IDs here, but that doesn't matter.
-  url_row0.set_star_id(1);
-  main_db_->UpdateURLRow(url_row0.id(), url_row0);
-  url_row1.set_star_id(2);
-  main_db_->UpdateURLRow(url_row1.id(), url_row1);
+  // Star the URLs.
+  StarURL(url_row0.url());
+  StarURL(url_row1.url());
 
   // Now archive the first three visits (first two URLs). The first two visits
-  // should be, the thirddeleted, but the URL records should not.
+  // should be, the third deleted, but the URL records should not.
   expirer_.ArchiveHistoryBefore(visit_times[2]);
 
   // The first URL should have its visit deleted, but it should still be present

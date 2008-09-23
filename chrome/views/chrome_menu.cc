@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/chrome_menu.h"
 
@@ -47,6 +22,7 @@
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/views/border.h"
 #include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/root_view.h"
 #include "generated_resources.h"
 
 // Margins between the top of the item and the label.
@@ -127,6 +103,9 @@ static const int kScrollTimerMS = 30;
 // Preferred height of menu items. Reset every time a menu is run.
 static int pref_menu_height;
 
+// Are mnemonics shown? This is updated before the menus are shown.
+static bool show_mnemonics;
+
 using gfx::NativeTheme;
 
 namespace ChromeViews {
@@ -199,40 +178,20 @@ namespace {
 
 // Convenience for scrolling the view such that the origin is visible.
 static void ScrollToVisible(View* view) {
-  view->ScrollRectToVisible(0, 0, view->GetWidth(), view->GetHeight());
+  view->ScrollRectToVisible(0, 0, view->width(), view->height());
 }
 
 // MenuScrollTask --------------------------------------------------------------
 
 // MenuScrollTask is used when the SubmenuView does not all fit on screen and
-// the mouse is over the scroll up/down buttons. MenuScrollTask schedules itself
-// with the TimerManager. When Run is invoked MenuScrollTask scrolls
+// the mouse is over the scroll up/down buttons. MenuScrollTask schedules
+// itself with a RepeatingTimer. When Run is invoked MenuScrollTask scrolls
 // appropriately.
 
-class MenuScrollTask : public Task {
+class MenuScrollTask {
 public:
   MenuScrollTask() : submenu_(NULL) {
     pixels_per_second_ = pref_menu_height * 20;
-  }
-
-  virtual ~MenuScrollTask() {
-    StopScrolling();
-  }
-
-  virtual void Run() {
-    DCHECK(submenu_);
-    gfx::Rect vis_rect = submenu_->GetVisibleBounds();
-    const int delta_y = static_cast<int>(
-        (Time::Now() - start_scroll_time_).InMilliseconds() *
-        pixels_per_second_ / 1000);
-    int target_y = start_y_;
-    if (is_scrolling_up_)
-      target_y = std::max(0, target_y - delta_y);
-    else
-      target_y = std::min(submenu_->GetHeight() - vis_rect.height(),
-                          target_y + delta_y);
-    submenu_->ScrollRectToVisible(vis_rect.x(), target_y, vis_rect.width(),
-                                  vis_rect.height());
   }
 
   void Update(const MenuController::MenuPart& part) {
@@ -251,18 +210,15 @@ public:
     submenu_ = new_menu;
     is_scrolling_up_ = new_is_up;
 
-    if (!scrolling_timer_.get()) {
-      scrolling_timer_.reset(new Timer(kScrollTimerMS, this, true));
-      TimerManager* tm = MessageLoop::current()->timer_manager();
-      tm->StartTimer(scrolling_timer_.get());
+    if (!scrolling_timer_.IsRunning()) {
+      scrolling_timer_.Start(TimeDelta::FromMilliseconds(kScrollTimerMS), this,
+                             &MenuScrollTask::Run);
     }
   }
 
   void StopScrolling() {
-    if (scrolling_timer_.get()) {
-      TimerManager* tm = MessageLoop::current()->timer_manager();
-      tm->StopTimer(scrolling_timer_.get());
-      scrolling_timer_.reset(NULL);
+    if (scrolling_timer_.IsRunning()) {
+      scrolling_timer_.Stop();
       submenu_ = NULL;
     }
   }
@@ -271,6 +227,22 @@ public:
   SubmenuView* submenu() const { return submenu_; }
 
  private:
+  void Run() {
+    DCHECK(submenu_);
+    gfx::Rect vis_rect = submenu_->GetVisibleBounds();
+    const int delta_y = static_cast<int>(
+        (Time::Now() - start_scroll_time_).InMilliseconds() *
+        pixels_per_second_ / 1000);
+    int target_y = start_y_;
+    if (is_scrolling_up_)
+      target_y = std::max(0, target_y - delta_y);
+    else
+      target_y = std::min(submenu_->height() - vis_rect.height(),
+                          target_y + delta_y);
+    submenu_->ScrollRectToVisible(vis_rect.x(), target_y, vis_rect.width(),
+                                  vis_rect.height());
+  }
+
   // SubmenuView being scrolled.
   SubmenuView* submenu_;
 
@@ -278,7 +250,7 @@ public:
   bool is_scrolling_up_;
 
   // Timer to periodically scroll.
-  scoped_ptr<Timer> scrolling_timer_;
+  base::RepeatingTimer<MenuScrollTask> scrolling_timer_;
 
   // Time we started scrolling at.
   Time start_scroll_time_;
@@ -340,14 +312,14 @@ class MenuScrollButton : public View {
     HDC dc = canvas->beginPlatformPaint();
 
     // The background.
-    RECT item_bounds = { 0, 0, GetWidth(), GetHeight() };
+    RECT item_bounds = { 0, 0, width(), height() };
     NativeTheme::instance()->PaintMenuItemBackground(
         NativeTheme::MENU, dc, MENU_POPUPITEM, MPI_NORMAL, false,
         &item_bounds);
 
     // Then the arrow.
-    int x = GetWidth() / 2;
-    int y = (GetHeight() - kScrollArrowHeight) / 2;
+    int x = width() / 2;
+    int y = (height() - kScrollArrowHeight) / 2;
     int delta_y = 1;
     if (!is_up_) {
       delta_y = -1;
@@ -394,11 +366,11 @@ class MenuScrollView : public View {
 
     View* child = GetContents();
     // Convert y to view's coordinates.
-    y -= child->GetY();
+    y -= child->y();
     CSize pref;
     child->GetPreferredSize(&pref);
     // Constrain y to make sure we don't show past the bottom of the view.
-    y = std::max(0, std::min(static_cast<int>(pref.cy) - GetHeight(), y));
+    y = std::max(0, std::min(static_cast<int>(pref.cy) - this->height(), y));
     child->SetY(-y);
   }
 
@@ -434,7 +406,7 @@ class MenuScrollViewContainer : public View {
 
   virtual void Paint(ChromeCanvas* canvas) {
     HDC dc = canvas->beginPlatformPaint();
-    CRect bounds(0, 0, GetWidth(), GetHeight());
+    CRect bounds(0, 0, width(), height());
     NativeTheme::instance()->PaintMenuBackground(
         NativeTheme::MENU, dc, MENU_POPUPBACKGROUND, 0, &bounds);
     canvas->endPlatformPaint();
@@ -448,8 +420,8 @@ class MenuScrollViewContainer : public View {
     gfx::Insets insets = GetInsets();
     int x = insets.left();
     int y = insets.top();
-    int width = GetWidth() - insets.width();
-    int content_height = GetHeight() - insets.height();
+    int width = View::width() - insets.width();
+    int content_height = height() - insets.height();
     if (!scroll_up_button_->IsVisible()) {
       scroll_view_->SetBounds(x, y, width, content_height);
       scroll_view_->Layout();
@@ -464,7 +436,7 @@ class MenuScrollViewContainer : public View {
     const int scroll_view_y = y + pref.cy;
 
     scroll_down_button_->GetPreferredSize(&pref);
-    scroll_down_button_->SetBounds(x, GetHeight() - pref.cy - insets.top(),
+    scroll_down_button_->SetBounds(x, height() - pref.cy - insets.top(),
                                    width, pref.cy);
     content_height -= pref.cy;
 
@@ -475,8 +447,8 @@ class MenuScrollViewContainer : public View {
   virtual void DidChangeBounds(const CRect& previous, const CRect& current) {
     CSize content_pref;
     scroll_view_->GetContents()->GetPreferredSize(&content_pref);
-    scroll_up_button_->SetVisible(content_pref.cy > GetHeight());
-    scroll_down_button_->SetVisible(content_pref.cy > GetHeight());
+    scroll_up_button_->SetVisible(content_pref.cy > height());
+    scroll_down_button_->SetVisible(content_pref.cy > height());
   }
 
   virtual void GetPreferredSize(CSize* out) {
@@ -509,20 +481,20 @@ class MenuSeparator : public View {
   void Paint(ChromeCanvas* canvas) {
     // The gutter is rendered before the background.
     int start_x = 0;
-    int start_y = GetHeight() / 3;
+    int start_y = height() / 3;
     HDC dc = canvas->beginPlatformPaint();
     if (render_gutter) {
       // If render_gutter is true, we're on Vista and need to render the
       // gutter, then indent the separator from the gutter.
       RECT gutter_bounds = { label_start - kGutterToLabel - gutter_width, 0, 0,
-                              GetHeight() };
+                              height() };
       gutter_bounds.right = gutter_bounds.left + gutter_width;
       NativeTheme::instance()->PaintMenuGutter(dc, MENU_POPUPGUTTER, MPI_NORMAL,
                                                &gutter_bounds);
       start_x = gutter_bounds.left + gutter_width;
       start_y = 0;
     }
-    RECT separator_bounds = { start_x, start_y, GetWidth(), GetHeight() };
+    RECT separator_bounds = { start_x, start_y, width(), height() };
     NativeTheme::instance()->PaintMenuSeparator(dc, MENU_POPUPSEPARATOR,
                                                 MPI_NORMAL, &separator_bounds);
     canvas->endPlatformPaint();
@@ -550,7 +522,7 @@ class MenuHostRootView : public RootView {
  public:
   explicit MenuHostRootView(ViewContainer* container,
                             SubmenuView* submenu)
-      : RootView(container, true),
+      : RootView(container),
         submenu_(submenu),
         forward_drag_to_menu_controller_(true),
         suspend_events_(false) {
@@ -564,8 +536,8 @@ class MenuHostRootView : public RootView {
       return true;
 
     forward_drag_to_menu_controller_ =
-        ((event.GetX() < 0 || event.GetY() < 0 || event.GetX() >= GetWidth() ||
-          event.GetY() >= GetHeight()) ||
+        ((event.x() < 0 || event.y() < 0 || event.x() >= width() ||
+          event.y() >= height()) ||
          !RootView::OnMousePressed(event));
     if (forward_drag_to_menu_controller_)
       GetMenuController()->OnMousePressed(submenu_, event);
@@ -678,7 +650,8 @@ class MenuHost : public HWNDViewContainer {
             const gfx::Rect& bounds,
             View* contents_view,
             bool do_capture) {
-    HWNDViewContainer::Init(parent, bounds, contents_view, true);
+    HWNDViewContainer::Init(parent, bounds, true);
+    SetContentsView(contents_view);
     // We don't want to take focus away from the hosting window.
     ShowWindow(SW_SHOWNA);
     owns_capture_ = do_capture;
@@ -831,12 +804,12 @@ void SubmenuView::Layout() {
     return;
   CSize pref;
   GetPreferredSize(&pref);
-  SetBounds(GetX(), GetY(), parent->GetWidth(), pref.cy);
+  SetBounds(x(), y(), parent->width(), pref.cy);
 
   gfx::Insets insets = GetInsets();
   int x = insets.left();
   int y = insets.top();
-  int menu_item_width = GetWidth() - insets.width();
+  int menu_item_width = width() - insets.width();
   for (int i = 0; i < GetChildViewCount(); ++i) {
     View* child = GetChildViewAt(i);
     CSize child_pref_size;
@@ -904,7 +877,7 @@ int SubmenuView::OnPerformDrop(const DropTargetEvent& event) {
 bool SubmenuView::OnMouseWheel(const MouseWheelEvent& e) {
   gfx::Rect vis_bounds = GetVisibleBounds();
   int menu_item_count = GetMenuItemCount();
-  if (vis_bounds.height() == GetHeight() || !menu_item_count) {
+  if (vis_bounds.height() == height() || !menu_item_count) {
     // All menu items are visible, nothing to scroll.
     return true;
   }
@@ -914,10 +887,10 @@ bool SubmenuView::OnMouseWheel(const MouseWheelEvent& e) {
   int first_vis_index = -1;
   for (int i = 0; i < menu_item_count; ++i) {
     MenuItemView* menu_item = GetMenuItemAt(i);
-    if (menu_item->GetY() == vis_bounds.y()) {
+    if (menu_item->y() == vis_bounds.y()) {
       first_vis_index = i;
       break;
-    } else if (menu_item->GetY() > vis_bounds.y()) {
+    } else if (menu_item->y() > vis_bounds.y()) {
       first_vis_index = std::max(0, i - 1);
       break;
     }
@@ -932,23 +905,23 @@ bool SubmenuView::OnMouseWheel(const MouseWheelEvent& e) {
   while (delta-- > 0) {
     int scroll_amount = 0;
     if (scroll_up) {
-      if (GetMenuItemAt(first_vis_index)->GetY() == vis_bounds.y()) {
+      if (GetMenuItemAt(first_vis_index)->y() == vis_bounds.y()) {
         if (first_vis_index != 0) {
-          scroll_amount = GetMenuItemAt(first_vis_index - 1)->GetY() -
+          scroll_amount = GetMenuItemAt(first_vis_index - 1)->y() -
                           vis_bounds.y();
           first_vis_index--;
         } else {
           break;
         }
       } else {
-        scroll_amount = GetMenuItemAt(first_vis_index)->GetY() - vis_bounds.y();
+        scroll_amount = GetMenuItemAt(first_vis_index)->y() - vis_bounds.y();
       }
     } else {
       if (first_vis_index + 1 == GetMenuItemCount())
         break;
-      scroll_amount = GetMenuItemAt(first_vis_index + 1)->GetY() -
+      scroll_amount = GetMenuItemAt(first_vis_index + 1)->y() -
                       vis_bounds.y();
-      if (GetMenuItemAt(first_vis_index)->GetY() == vis_bounds.y())
+      if (GetMenuItemAt(first_vis_index)->y() == vis_bounds.y())
         first_vis_index++;
     }
     ScrollRectToVisible(0, vis_bounds.y() + scroll_amount, vis_bounds.width(),
@@ -1071,6 +1044,9 @@ const int MenuItemView::kMenuItemViewID = 1001;
 //  static
 const int MenuItemView::kDropBetweenPixels = 5;
 
+// static
+bool MenuItemView::allow_task_nesting_during_run_ = false;
+
 MenuItemView::MenuItemView(MenuDelegate* delegate) {
   DCHECK(delegate_);
   Init(NULL, 0, SUBMENU, delegate);
@@ -1096,8 +1072,8 @@ MenuItemView::~MenuItemView() {
 void MenuItemView::RunMenuAt(HWND parent,
                              const gfx::Rect& bounds,
                              AnchorPosition anchor,
-                             bool show_mnemonics) {
-  PrepareForRun(show_mnemonics);
+                             bool has_mnemonics) {
+  PrepareForRun(has_mnemonics);
 
   int mouse_event_flags;
 
@@ -1217,6 +1193,9 @@ MenuItemView* MenuItemView::GetRootMenuItem() {
 }
 
 wchar_t MenuItemView::GetMnemonic() {
+  if (!has_mnemonics_)
+    return 0;
+
   const std::wstring& title = GetTitle();
   size_t index = 0;
   do {
@@ -1312,7 +1291,7 @@ void MenuItemView::DropMenuClosed(bool notify_delegate) {
   // WARNING: its possible the delegate deleted us at this point.
 }
 
-void MenuItemView::PrepareForRun(bool show_mnemonics) {
+void MenuItemView::PrepareForRun(bool has_mnemonics) {
   // Currently we only support showing the root.
   DCHECK(!parent_menu_item_);
 
@@ -1324,11 +1303,16 @@ void MenuItemView::PrepareForRun(bool show_mnemonics) {
 
   canceled_ = false;
 
-  show_mnemonics_ = show_mnemonics;
+  has_mnemonics_ = has_mnemonics;
 
   AddEmptyMenus();
 
   UpdateMenuPartSizes();
+
+  BOOL show_cues;
+  show_mnemonics =
+      (SystemParametersInfo(SPI_GETKEYBOARDCUES, 0, &show_cues, 0) &&
+       show_cues == TRUE);
 }
 
 int MenuItemView::GetDrawStringFlags() {
@@ -1338,8 +1322,13 @@ int MenuItemView::GetDrawStringFlags() {
   else
     flags |= ChromeCanvas::TEXT_ALIGN_LEFT;
 
-  return flags |
-      (show_mnemonics_ ? ChromeCanvas::SHOW_PREFIX : ChromeCanvas::HIDE_PREFIX);
+  if (has_mnemonics_) {
+    if (show_mnemonics)
+      flags |= ChromeCanvas::SHOW_PREFIX;
+    else
+      flags |= ChromeCanvas::HIDE_PREFIX;
+  }
+  return flags;
 }
 
 void MenuItemView::AddEmptyMenus() {
@@ -1389,7 +1378,7 @@ void MenuItemView::Paint(ChromeCanvas* canvas, bool for_drag) {
   // The gutter is rendered before the background.
   if (render_gutter && !for_drag) {
     RECT gutter_bounds = { label_start - kGutterToLabel - gutter_width, 0, 0,
-                           GetHeight() };
+                           height() };
     gutter_bounds.right = gutter_bounds.left + gutter_width;
     AdjustBoundsForRTLUI(&gutter_bounds);
     NativeTheme::instance()->PaintMenuGutter(dc, MENU_POPUPGUTTER, MPI_NORMAL, &gutter_bounds);
@@ -1397,7 +1386,7 @@ void MenuItemView::Paint(ChromeCanvas* canvas, bool for_drag) {
 
   // Render the background.
   if (!for_drag) {
-    RECT item_bounds = { 0, 0, GetWidth(), GetHeight() };
+    RECT item_bounds = { 0, 0, width(), height() };
     AdjustBoundsForRTLUI(&item_bounds);
     NativeTheme::instance()->PaintMenuItemBackground(
         NativeTheme::MENU, dc, MENU_POPUPITEM, state, render_selection,
@@ -1405,14 +1394,14 @@ void MenuItemView::Paint(ChromeCanvas* canvas, bool for_drag) {
   }
 
   int icon_x = kItemLeftMargin;
-  int icon_y = kItemTopMargin + (GetHeight() - kItemTopMargin -
+  int icon_y = kItemTopMargin + (height() - kItemTopMargin -
                                  kItemBottomMargin - check_height) / 2;
   int icon_height = check_height;
   int icon_width = check_width;
 
   if (type_ == CHECKBOX && GetDelegate()->IsItemChecked(GetCommand())) {
     // Draw the check background.
-    RECT check_bg_bounds = { 0, 0, icon_x + icon_width, GetHeight() };
+    RECT check_bg_bounds = { 0, 0, icon_x + icon_width, height() };
     const int bg_state = IsEnabled() ? MCB_NORMAL : MCB_DISABLED;
     AdjustBoundsForRTLUI(&check_bg_bounds);
     NativeTheme::instance()->PaintMenuCheckBackground(
@@ -1437,7 +1426,7 @@ void MenuItemView::Paint(ChromeCanvas* canvas, bool for_drag) {
       (IsEnabled() ? COLOR_MENUTEXT : COLOR_GRAYTEXT);
   SkColor fg_color = NativeTheme::instance()->GetThemeColorWithDefault(
       NativeTheme::MENU, MENU_POPUPITEM, state, TMT_TEXTCOLOR, default_sys_color);
-  int width = GetWidth() - item_right_margin - label_start;
+  int width = this->width() - item_right_margin - label_start;
   gfx::Rect text_bounds(label_start, kItemTopMargin, width, font_.height());
   text_bounds.set_x(MirroredLeftPointForRect(text_bounds));
   canvas->DrawStringInt(GetTitle(), font_, fg_color, text_bounds.x(),
@@ -1447,7 +1436,7 @@ void MenuItemView::Paint(ChromeCanvas* canvas, bool for_drag) {
 
   if (icon_.width() > 0) {
     gfx::Rect icon_bounds(kItemLeftMargin,
-                          kItemTopMargin + (GetHeight() - kItemTopMargin -
+                          kItemTopMargin + (height() - kItemTopMargin -
                           kItemBottomMargin - icon_.height()) / 2,
                           icon_.width(),
                           icon_.height());
@@ -1457,8 +1446,8 @@ void MenuItemView::Paint(ChromeCanvas* canvas, bool for_drag) {
 
   if (HasSubmenu()) {
     int state_id = IsEnabled() ? MSM_NORMAL : MSM_DISABLED;
-    RECT arrow_bounds = { GetWidth() - item_right_margin + kLabelToArrowPadding,
-                          0, 0, GetHeight() };
+    RECT arrow_bounds = { this->width() - item_right_margin + kLabelToArrowPadding,
+                          0, 0, height() };
     arrow_bounds.right = arrow_bounds.left + arrow_width;
     AdjustBoundsForRTLUI(&arrow_bounds);
 
@@ -1570,7 +1559,15 @@ MenuItemView* MenuController::Run(HWND parent,
   DLOG(INFO) << " entering nested loop, depth=" << nested_depth;
 #endif
 
-  MessageLoop::current()->Run(this);
+  MessageLoopForUI* loop = MessageLoopForUI::current();
+  if (MenuItemView::allow_task_nesting_during_run_) {
+    bool did_allow_task_nesting = loop->NestableTasksAllowed();
+    loop->SetNestableTasksAllowed(true);
+    loop->Run(this);
+    loop->SetNestableTasksAllowed(did_allow_task_nesting);
+  } else {
+    loop->Run(this);
+  }
 
 #ifdef DEBUG_MENU
   nested_depth--;
@@ -1632,6 +1629,9 @@ void MenuController::SetSelection(MenuItemView* menu_item,
   for (size_t i = paths_differ_at; i < new_size; ++i)
     new_path[i]->SetSelected(true);
 
+  if (menu_item && menu_item->GetDelegate())
+    menu_item->GetDelegate()->SelectionChanged(menu_item);
+
   pending_state_.item = menu_item;
   pending_state_.submenu_open = open_submenu;
 
@@ -1678,7 +1678,7 @@ void MenuController::OnMousePressed(SubmenuView* source,
     return;
 
   MenuPart part =
-      GetMenuPartByScreenCoordinate(source, event.GetX(), event.GetY());
+      GetMenuPartByScreenCoordinate(source, event.x(), event.y());
   if (part.is_scroll())
     return;  // Ignore presses on scroll buttons.
 
@@ -1706,8 +1706,8 @@ void MenuController::OnMousePressed(SubmenuView* source,
   } else {
     if (part.menu->GetDelegate()->CanDrag(part.menu)) {
       possible_drag_ = true;
-      press_x_ = event.GetX();
-      press_y_ = event.GetY();
+      press_x_ = event.x();
+      press_y_ = event.y();
     }
     if (part.menu->HasSubmenu())
       open_submenu = true;
@@ -1723,15 +1723,15 @@ void MenuController::OnMouseDragged(SubmenuView* source,
   DLOG(INFO) << "OnMouseDragged source=" << source;
 #endif
   MenuPart part =
-      GetMenuPartByScreenCoordinate(source, event.GetX(), event.GetY());
+      GetMenuPartByScreenCoordinate(source, event.x(), event.y());
   UpdateScrolling(part);
 
   if (!blocking_run_)
     return;
 
   if (possible_drag_) {
-    if (ChromeViews::View::ExceededDragThreshold(event.GetX() - press_x_,
-                                                 event.GetY() - press_y_)) {
+    if (ChromeViews::View::ExceededDragThreshold(event.x() - press_x_,
+                                                 event.y() - press_y_)) {
       MenuItemView* item = state_.item;
       DCHECK(item);
       // Points are in the coordinates of the submenu, need to map to that of
@@ -1740,17 +1740,17 @@ void MenuController::OnMouseDragged(SubmenuView* source,
       CPoint press_loc(press_x_, press_y_);
       View::ConvertPointToScreen(source->GetScrollViewContainer(), &press_loc);
       View::ConvertPointToView(NULL, item, &press_loc);
-      CPoint drag_loc(event.GetX(), event.GetY());
+      CPoint drag_loc(event.x(), event.y());
       View::ConvertPointToScreen(source->GetScrollViewContainer(), &drag_loc);
       View::ConvertPointToView(NULL, item, &drag_loc);
       in_drag_ = true;
-      ChromeCanvas canvas(item->GetWidth(), item->GetHeight(), false);
+      ChromeCanvas canvas(item->width(), item->height(), false);
       item->Paint(&canvas, true);
 
       scoped_refptr<OSExchangeData> data(new OSExchangeData);
       item->GetDelegate()->WriteDragData(item, data.get());
-      drag_utils::SetDragImageOnDataObject(canvas, item->GetWidth(),
-                                           item->GetHeight(), press_loc.x,
+      drag_utils::SetDragImageOnDataObject(canvas, item->width(),
+                                           item->height(), press_loc.x,
                                            press_loc.y, data);
 
       scoped_refptr<BaseDragSource> drag_source(new BaseDragSource);
@@ -1790,7 +1790,7 @@ void MenuController::OnMouseReleased(SubmenuView* source,
   possible_drag_ = false;
   DCHECK(blocking_run_);
   MenuPart part =
-      GetMenuPartByScreenCoordinate(source, event.GetX(), event.GetY());
+      GetMenuPartByScreenCoordinate(source, event.x(), event.y());
   any_menu_contains_mouse_ = (part.type == MenuPart::MENU_ITEM);
   if (event.IsRightMouseButton() && (part.type == MenuPart::MENU_ITEM &&
                                      part.menu)) {
@@ -1799,11 +1799,16 @@ void MenuController::OnMouseReleased(SubmenuView* source,
     bool open_submenu = (state_.item == pending_state_.item &&
                          state_.submenu_open);
     SetSelection(pending_state_.item, open_submenu, true);
-    CPoint loc(event.GetX(), event.GetY());
+    CPoint loc(event.x(), event.y());
     View::ConvertPointToScreen(source->GetScrollViewContainer(), &loc);
-    part.menu->GetDelegate()->ShowContextMenu(
-        part.menu, part.menu->GetCommand(), loc.x, loc.y, true);
-  } else if (!part.is_scroll() && part.menu && !part.menu->HasSubmenu()) {
+
+    // If we open a context menu just return now
+    if (part.menu->GetDelegate()->ShowContextMenu(
+        part.menu, part.menu->GetCommand(), loc.x, loc.y, true))
+      return;
+  }
+
+  if (!part.is_scroll() && part.menu && !part.menu->HasSubmenu()) {
     if (part.menu->GetDelegate()->IsTriggerableEvent(event)) {
       Accept(part.menu, event.GetFlags());
       return;
@@ -1823,7 +1828,7 @@ void MenuController::OnMouseMoved(SubmenuView* source,
     return;
 
   MenuPart part =
-      GetMenuPartByScreenCoordinate(source, event.GetX(), event.GetY());
+      GetMenuPartByScreenCoordinate(source, event.x(), event.y());
 
   UpdateScrolling(part);
 
@@ -1864,7 +1869,7 @@ int MenuController::OnDragUpdated(SubmenuView* source,
                                   const DropTargetEvent& event) {
   StopCancelAllTimer();
 
-  CPoint screen_loc(event.GetX(), event.GetY());
+  CPoint screen_loc(event.x(), event.y());
   View::ConvertPointToScreen(source, &screen_loc);
   if (valid_drop_coordinates_ && screen_loc.x == drop_x_ &&
       screen_loc.y == drop_y_) {
@@ -1874,22 +1879,22 @@ int MenuController::OnDragUpdated(SubmenuView* source,
   drop_y_ = screen_loc.y;
   valid_drop_coordinates_ = true;
 
-  MenuItemView* menu_item = GetMenuItemAt(source, event.GetX(), event.GetY());
+  MenuItemView* menu_item = GetMenuItemAt(source, event.x(), event.y());
   bool over_empty_menu = false;
   if (!menu_item) {
     // See if we're over an empty menu.
-    menu_item = GetEmptyMenuItemAt(source, event.GetX(), event.GetY());
+    menu_item = GetEmptyMenuItemAt(source, event.x(), event.y());
     if (menu_item)
       over_empty_menu = true;
   }
   MenuDelegate::DropPosition drop_position = MenuDelegate::DROP_NONE;
   int drop_operation = DragDropTypes::DRAG_NONE;
   if (menu_item) {
-    CPoint menu_item_loc(event.GetX(), event.GetY());
+    CPoint menu_item_loc(event.x(), event.y());
     View::ConvertPointToView(source, menu_item, &menu_item_loc);
     MenuItemView* query_menu_item;
     if (!over_empty_menu) {
-      int menu_item_height = menu_item->GetHeight();
+      int menu_item_height = menu_item->height();
       if (menu_item->HasSubmenu() &&
           (menu_item_loc.y > MenuItemView::kDropBetweenPixels &&
            menu_item_loc.y < (menu_item_height -
@@ -2097,13 +2102,7 @@ MenuController::MenuController(bool blocking)
       showing_(false),
       exit_all_(false),
       did_capture_(false),
-#pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      show_task_(this),
       result_(NULL),
-      show_timer_(NULL),
-#pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      cancel_all_task_(this),
-      cancel_all_timer_(NULL),
       drop_target_(NULL),
       owner_(NULL),
       possible_drag_(false),
@@ -2218,9 +2217,9 @@ bool MenuController::GetMenuPartByScreenCoordinateImpl(
   View* scroll_view_container = menu->GetScrollViewContainer();
   View::ConvertPointToView(NULL, scroll_view_container, &scroll_view_loc);
   if (scroll_view_loc.x < 0 ||
-      scroll_view_loc.x >= scroll_view_container->GetWidth() ||
+      scroll_view_loc.x >= scroll_view_container->width() ||
       scroll_view_loc.y < 0 ||
-      scroll_view_loc.y >= scroll_view_container->GetHeight()) {
+      scroll_view_loc.y >= scroll_view_container->height()) {
     // Point isn't contained in menu.
     return false;
   }
@@ -2393,31 +2392,21 @@ void MenuController::BuildMenuItemPath(MenuItemView* item,
 }
 
 void MenuController::StartShowTimer() {
-  StopShowTimer();
-  show_timer_ = MessageLoop::current()->timer_manager()->
-      StartTimer(kShowDelay, &show_task_, false);
+  show_timer_.Start(TimeDelta::FromMilliseconds(kShowDelay), this,
+                    &MenuController::CommitPendingSelection);
 }
 
 void MenuController::StopShowTimer() {
-  if (show_timer_) {
-    MessageLoop::current()->timer_manager()->StopTimer(show_timer_);
-    delete show_timer_;
-    show_timer_ = NULL;
-  }
+  show_timer_.Stop();
 }
 
 void MenuController::StartCancelAllTimer() {
-  StopCancelAllTimer();
-  cancel_all_timer_ = MessageLoop::current()->timer_manager()->
-      StartTimer(kCloseOnExitTime, &cancel_all_task_, false);
+  cancel_all_timer_.Start(TimeDelta::FromMilliseconds(kCloseOnExitTime),
+                          this, &MenuController::CancelAll);
 }
 
 void MenuController::StopCancelAllTimer() {
-  if (cancel_all_timer_) {
-    MessageLoop::current()->timer_manager()->StopTimer(cancel_all_timer_);
-    delete cancel_all_timer_;
-    cancel_all_timer_ = NULL;
-  }
+  cancel_all_timer_.Stop();
 }
 
 gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
@@ -2479,7 +2468,7 @@ gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
                                (!prefer_leading && layout_is_rtl);
 
     if (create_on_the_right) {
-      x = item_loc.x + item->GetWidth() - kSubmenuHorizontalInset;
+      x = item_loc.x + item->width() - kSubmenuHorizontalInset;
       if (state_.monitor_bounds.width() != 0 &&
           x + pref.cx > state_.monitor_bounds.right()) {
         if (layout_is_rtl)
@@ -2495,7 +2484,7 @@ gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
           *is_leading = false;
         else
           *is_leading = true;
-        x = item_loc.x + item->GetWidth() - kSubmenuHorizontalInset;
+        x = item_loc.x + item->width() - kSubmenuHorizontalInset;
       }
     }
     y = item_loc.y - kSubmenuBorderSize;
@@ -2649,7 +2638,7 @@ bool MenuController::SelectByChar(wchar_t character) {
 
 void MenuController::RepostEvent(SubmenuView* source,
                                  const MouseEvent& event) {
-  CPoint screen_loc(event.GetX(), event.GetY());
+  CPoint screen_loc(event.x(), event.y());
   View::ConvertPointToScreen(source->GetScrollViewContainer(), &screen_loc);
   HWND window = WindowFromPoint(screen_loc);
   if (window) {
@@ -2741,3 +2730,4 @@ void MenuController::StopScrolling() {
 }
 
 }  // namespace ChromeViews
+

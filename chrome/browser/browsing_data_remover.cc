@@ -1,37 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/browsing_data_remover.h"
 
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/download_manager.h"
+#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/session_service.h"
 #include "chrome/browser/tab_restore_service.h"
@@ -117,7 +92,7 @@ void BrowsingDataRemover::Remove(int remove_mask) {
 
   if (remove_mask & REMOVE_COOKIES) {
     UserMetrics::RecordAction(L"ClearBrowsingData_Cookies", profile_);
-    CookieMonster* cookie_monster =
+    net::CookieMonster* cookie_monster =
         profile_->GetRequestContext()->cookie_store();
     cookie_monster->DeleteAllCreatedBetween(delete_begin_, delete_end_, true);
   }
@@ -132,7 +107,7 @@ void BrowsingDataRemover::Remove(int remove_mask) {
 
   if (remove_mask & REMOVE_CACHE) {
     // Invoke ClearBrowsingDataView::ClearCache on the IO thread.
-    Thread* thread = g_browser_process->io_thread();
+    base::Thread* thread = g_browser_process->io_thread();
     if (thread) {
       waiting_for_clear_cache_ = true;
       UserMetrics::RecordAction(L"ClearBrowsingData_Cache", profile_);
@@ -225,3 +200,4 @@ void BrowsingDataRemover::ClearCacheOnIOThread(Time delete_begin,
   ui_loop->PostTask(FROM_HERE, NewRunnableMethod(
       this, &BrowsingDataRemover::ClearedCache));
 }
+

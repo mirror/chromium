@@ -1,43 +1,25 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/view.h"
 
 #include <algorithm>
-#include <sstream>
+
+#ifndef NDEBUG
 #include <iostream>
+#endif
 
 #include "base/logging.h"
 #include "base/message_loop.h"
+#include "base/scoped_handle.h"
 #include "base/string_util.h"
+#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
+#include "chrome/common/gfx/path.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
+#include "chrome/views/accessibility/accessible_wrapper.h"
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
 #include "chrome/views/layout_manager.h"
@@ -143,8 +125,8 @@ void View::GetBounds(CRect* out, PositionMirroringSettings settings) const {
   }
 }
 
-// GetY(), GetWidth() and GetHeight() are agnostic to the RTL UI layout of the
-// parent view. GetX(), on the other hand, is not.
+// y(), width() and height() are agnostic to the RTL UI layout of the
+// parent view. x(), on the other hand, is not.
 int View::GetX(PositionMirroringSettings settings) const {
   if (settings == IGNORE_MIRRORING_TRANSFORMATION) {
     return bounds_.left;
@@ -190,26 +172,26 @@ void View::GetLocalBounds(CRect* out, bool include_border) const {
   if (include_border || border_ == NULL) {
     out->left = 0;
     out->top = 0;
-    out->right = GetWidth();
-    out->bottom = GetHeight();
+    out->right = width();
+    out->bottom = height();
   } else {
     gfx::Insets insets;
     border_->GetInsets(&insets);
     out->left = insets.left();
     out->top = insets.top();
-    out->right = GetWidth() - insets.left();
-    out->bottom = GetHeight() - insets.top();
+    out->right = width() - insets.left();
+    out->bottom = height() - insets.top();
   }
 }
 
 void View::GetSize(CSize* sz) const {
-  sz->cx = GetWidth();
-  sz->cy = GetHeight();
+  sz->cx = width();
+  sz->cy = height();
 }
 
 void View::GetPosition(CPoint* p) const {
   p->x = GetX(APPLY_MIRRORING_TRANSFORMATION);
-  p->y = GetY();
+  p->y = y();
 }
 
 void View::GetPreferredSize(CSize* out) {
@@ -223,8 +205,8 @@ void View::GetPreferredSize(CSize* out) {
 void View::SizeToPreferredSize() {
   CSize size;
   GetPreferredSize(&size);
-  if ((size.cx != GetWidth()) || (size.cy != GetHeight()))
-    SetBounds(GetX(), GetY(), size.cx, size.cy);
+  if ((size.cx != width()) || (size.cy != height()))
+    SetBounds(x(), y(), size.cx, size.cy);
 }
 
 void View::GetMinimumSize(CSize* out) {
@@ -250,7 +232,7 @@ void View::ScrollRectToVisible(int x, int y, int width, int height) {
   // the region.
   if (parent)
     parent->ScrollRectToVisible(
-        GetX(APPLY_MIRRORING_TRANSFORMATION) + x, GetY() + y, width, height);
+        GetX(APPLY_MIRRORING_TRANSFORMATION) + x, View::y() + y, width, height);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -288,6 +270,11 @@ void View::SetLayoutManager(LayoutManager* layout_manager) {
   }
 }
 
+bool View::UILayoutIsRightToLeft() const {
+  return (ui_mirroring_is_enabled_for_rtl_languages_ &&
+          l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // View - Right-to-left UI layout
@@ -297,7 +284,7 @@ void View::SetLayoutManager(LayoutManager* layout_manager) {
 inline int View::MirroredX() const {
   View* parent = GetParent();
   if (parent && parent->UILayoutIsRightToLeft()) {
-    return parent->GetWidth() - bounds_.left - GetWidth();
+    return parent->width() - bounds_.left - width();
   }
   return bounds_.left;
 }
@@ -306,7 +293,7 @@ int View::MirroredLeftPointForRect(const gfx::Rect& bounds) const {
   if (!UILayoutIsRightToLeft()) {
     return bounds.x();
   }
-  return GetWidth() - bounds.x() - bounds.width();
+  return width() - bounds.x() - bounds.width();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -408,7 +395,7 @@ void View::PaintBorder(ChromeCanvas* canvas) {
 
 void View::PaintFocusBorder(ChromeCanvas* canvas) {
   if (HasFocus() && IsFocusable())
-    canvas->DrawFocusRect(0, 0, GetWidth(), GetHeight());
+    canvas->DrawFocusRect(0, 0, width(), height());
 }
 
 void View::PaintChildren(ChromeCanvas* canvas) {
@@ -451,7 +438,7 @@ void View::ProcessPaint(ChromeCanvas* canvas) {
     // should change the transform appropriately.
     bool flip_canvas = FlipCanvasOnPaintForRTLUI();
     if (flip_canvas) {
-      canvas->TranslateInt(GetWidth(), 0);
+      canvas->TranslateInt(width(), 0);
       canvas->ScaleInt(-1, 1);
       canvas->save();
     }
@@ -540,8 +527,8 @@ void View::SetContextMenuController(ContextMenuController* menu_controller) {
 bool View::ProcessMousePressed(const MouseEvent& e, DragInfo* drag_info) {
   const bool enabled = enabled_;
   int drag_operations;
-  if (enabled && e.IsOnlyLeftMouseButton() && HitTest(e.GetLocation()))
-    drag_operations = GetDragOperations(e.GetX(), e.GetY());
+  if (enabled && e.IsOnlyLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y())))
+    drag_operations = GetDragOperations(e.x(), e.y());
   else
     drag_operations = 0;
   ContextMenuController* context_menu_controller = context_menu_controller_;
@@ -553,7 +540,7 @@ bool View::ProcessMousePressed(const MouseEvent& e, DragInfo* drag_info) {
     return result;
 
   if (drag_operations != DragDropTypes::DRAG_NONE) {
-    drag_info->PossibleDrag(e.GetX(), e.GetY());
+    drag_info->PossibleDrag(e.x(), e.y());
     return true;
   }
   return !!context_menu_controller || result;
@@ -564,8 +551,8 @@ bool View::ProcessMouseDragged(const MouseEvent& e, DragInfo* drag_info) {
   // done.
   ContextMenuController* context_menu_controller = context_menu_controller_;
   const bool possible_drag = drag_info->possible_drag;
-  if (possible_drag && ExceededDragThreshold(drag_info->start_x - e.GetX(),
-                                             drag_info->start_y - e.GetY())) {
+  if (possible_drag && ExceededDragThreshold(drag_info->start_x - e.x(),
+                                             drag_info->start_y - e.y())) {
     DoDrag(e, drag_info->start_x, drag_info->start_y);
   } else {
     if (OnMouseDragged(e))
@@ -580,7 +567,7 @@ void View::ProcessMouseReleased(const MouseEvent& e, bool canceled) {
   if (!canceled && context_menu_controller_ && e.IsOnlyRightMouseButton()) {
     // Assume that if there is a context menu controller we won't be deleted
     // from mouse released.
-    CPoint location(e.GetX(), e.GetY());
+    CPoint location(e.x(), e.y());
     ConvertPointToScreen(this, &location);
     ContextMenuController* context_menu_controller = context_menu_controller_;
     OnMouseReleased(e, canceled);
@@ -727,6 +714,14 @@ bool View::IsProcessingPaint() const {
 }
 #endif
 
+bool View::HasHitTestMask() const {
+  return false;
+}
+
+void View::GetHitTestMask(gfx::Path* mask) const {
+  DCHECK(mask);
+}
+
 void View::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
 }
 
@@ -783,16 +778,13 @@ View* View::GetViewForPoint(const CPoint& point, bool can_create_floating) {
   // tightly encloses the specified point.
   for (int i = GetChildViewCount() - 1 ; i >= 0 ; --i) {
     View* child = GetChildViewAt(i);
-    if (!child->IsVisible()) {
+    if (!child->IsVisible())
       continue;
-    }
-    CRect bounds;
-    child->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(point)) {
-      CPoint cl(point);
-      cl.Offset(-bounds.left, -bounds.top);
-      return child->GetViewForPoint(cl, true);
-    }
+
+    CPoint point_in_child_coords(point);
+    View::ConvertPointToView(this, child, &point_in_child_coords);
+    if (child->HitTest(point_in_child_coords))
+      return child->GetViewForPoint(point_in_child_coords, true);
   }
 
   // We haven't found a view for the point. Try to create floating views
@@ -1167,8 +1159,8 @@ bool View::HasFloatingViewForPoint(int x, int y) {
 
   for (i = 0, c = static_cast<int>(floating_views_.size()); i < c; ++i) {
     v = floating_views_[i];
-    r.SetRect(v->GetX(APPLY_MIRRORING_TRANSFORMATION), v->GetY(),
-              v->GetWidth(), v->GetHeight());
+    r.SetRect(v->GetX(APPLY_MIRRORING_TRANSFORMATION), v->y(),
+              v->width(), v->height());
     if (r.Contains(x, y))
       return true;
   }
@@ -1320,7 +1312,7 @@ void View::ConvertPointToView(View* src,
 
   for (v = dst; v && v != src; v = v->GetParent()) {
     offset.SetPoint(offset.x() + v->GetX(APPLY_MIRRORING_TRANSFORMATION),
-                    offset.y() + v->GetY());
+                    offset.y() + v->y());
   }
 
   // The source was not found. The caller wants a conversion
@@ -1357,7 +1349,7 @@ void View::ConvertPointToViewContainer(View* src, CPoint* p) {
 
   for (v = src; v; v = v->GetParent()) {
     offset.x += v->GetX(APPLY_MIRRORING_TRANSFORMATION);
-    offset.y += v->GetY();
+    offset.y += v->y();
   }
   p->x += offset.x;
   p->y += offset.y;
@@ -1452,13 +1444,19 @@ bool View::IsVisibleInRootView() const {
     return false;
 }
 
-bool View::HitTest(const CPoint &l) const {
-  if (l.x >= 0 && l.x < static_cast<int>(GetWidth()) &&
-      l.y >= 0 && l.y < static_cast<int>(GetHeight())) {
+bool View::HitTest(const CPoint& l) const {
+  if (l.x >= 0 && l.x < width() && l.y >= 0 && l.y < height()) {
+    if (HasHitTestMask()) {
+      gfx::Path mask;
+      GetHitTestMask(&mask);
+      ScopedHRGN rgn(mask.CreateHRGN());
+      return !!PtInRegion(rgn, l.x, l.y);
+    }
+    // No mask, but inside our bounds.
     return true;
-  } else {
-    return false;
   }
+  // Outside our bounds.
+  return false;
 }
 
 HCURSOR View::GetCursorForPoint(Event::EventType event_type, int x, int y) {
@@ -1591,7 +1589,7 @@ std::string View::GetClassName() const {
 }
 
 gfx::Rect View::GetVisibleBounds() {
-  gfx::Rect vis_bounds(0, 0, GetWidth(), GetHeight());
+  gfx::Rect vis_bounds(0, 0, width(), height());
   gfx::Rect ancestor_bounds;
   View* view = this;
   int root_x = 0;
@@ -1599,12 +1597,12 @@ gfx::Rect View::GetVisibleBounds() {
   bool has_view_container = false;
   while (view != NULL && !vis_bounds.IsEmpty()) {
     root_x += view->GetX(APPLY_MIRRORING_TRANSFORMATION);
-    root_y += view->GetY();
-    vis_bounds.Offset(view->GetX(APPLY_MIRRORING_TRANSFORMATION), view->GetY());
+    root_y += view->y();
+    vis_bounds.Offset(view->GetX(APPLY_MIRRORING_TRANSFORMATION), view->y());
     View* ancestor = view->GetParent();
     if (ancestor != NULL) {
-      ancestor_bounds.SetRect(0, 0, ancestor->GetWidth(),
-                              ancestor->GetHeight());
+      ancestor_bounds.SetRect(0, 0, ancestor->width(),
+                              ancestor->height());
       vis_bounds = vis_bounds.Intersect(ancestor_bounds);
     } else if (!view->GetViewContainer()) {
       // If the view has no ViewContainer, we're not visible. Return an empty
@@ -1708,3 +1706,4 @@ void View::DragInfo::PossibleDrag(int x, int y) {
 }
 
 }  // namespace
+

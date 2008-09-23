@@ -77,6 +77,8 @@
 
 #include "config.h"
 
+#include "build/build_config.h"
+
 #include <algorithm>
 #include <string>
 
@@ -93,7 +95,6 @@
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "FrameWin.h"
-#include "graphics/SkiaUtils.h"
 #include "GraphicsContext.h"
 #include "HTMLHeadElement.h"
 #include "HTMLLinkElement.h"
@@ -106,21 +107,24 @@
 #include "RenderWidget.h"
 #include "ReplaceSelectionCommand.h"
 #include "ResourceHandle.h"
+#if defined(OS_WIN)
 #include "ResourceHandleWin.h"
+#endif
 #include "ResourceRequest.h"
 #include "SelectionController.h"
 #include "Settings.h"
+#include "SkiaUtils.h"
 #include "SubstituteData.h"
 #include "TextIterator.h"
 #include "TextAffinity.h"
-#include "xml/XPathResult.h"
+#include "XPathResult.h"
 
 #pragma warning(pop)
 
 #undef LOG
 #include "base/gfx/bitmap_platform_device.h"
-#include "base/gfx/rect.h"
 #include "base/gfx/platform_canvas.h"
+#include "base/gfx/rect.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/stats_counters.h"
@@ -274,6 +278,7 @@ WebFrameImpl::WebFrameImpl()
     inspected_node_(NULL),
     active_tickmark_frame_(NULL),
     active_tickmark_(WidgetClientWin::kNoTickmark),
+    locating_active_rect_(false),
     last_active_range_(NULL),
     frames_scoping_count_(-1),
     scoping_complete_(false),
@@ -718,6 +723,8 @@ void WebFrameImpl::InvalidateArea(AreaToInvalidate area) {
   ASSERT(frame() && frame()->view());
   FrameView* view = frame()->view();
 
+#if defined(OS_WIN)
+  // TODO(pinkerton): Fix Mac invalidation to be more like Win ScrollView
   if ((area & INVALIDATE_ALL) == INVALIDATE_ALL) {
     view->addToDirtyRegion(view->frameGeometry());
   } else {
@@ -738,15 +745,19 @@ void WebFrameImpl::InvalidateArea(AreaToInvalidate area) {
       view->addToDirtyRegion(scroll_bar_vert);
     }
   }
+#endif
 }
 
 void WebFrameImpl::InvalidateTickmark(RefPtr<WebCore::Range> tickmark) {
   ASSERT(frame() && frame()->view());
   FrameView* view = frame()->view();
 
+#if defined(OS_WIN)
+  // TODO(pinkerton): Fix Mac invalidation to be more like Win ScrollView
   IntRect pos = tickmark->boundingBox();
   pos.move(-view->contentsX(), -view->contentsY());
   view->addToDirtyRegion(pos);
+#endif
 }
 
 void WebFrameImpl::IncreaseMatchCount(int count, int request_id) {
@@ -801,23 +812,41 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
   bool found = frame()->findString(webcore_string, request.forward,
                                    request.match_case, wrap_within_frame,
                                    start_in_selection);
+  // If we find something on the page, we'll need to have the scoping effort
+  // locate it so that we can highlight it as active.
+  locating_active_rect_ = found;
+
   if (found) {
+    // Set this frame as the active frame (the one with the active tick-mark).
+    WebFrameImpl* const main_frame_impl =
+        static_cast<WebFrameImpl*>(GetView()->GetMainFrame());
+    main_frame_impl->active_tickmark_frame_ = this;
+
     // We found something, so we can now query the selection for its position.
     Selection new_selection(frame()->selectionController()->selection());
 
     // If we thought we found something, but it couldn't be selected (perhaps
-    // because it was marked -webkit-user-select: none), call it not-found so
-    // we don't crash. See http://b/1169294.  This matches Safari's behavior,
-    // including some oddities when selectable and un-selectable text are mixed
-    // on a page: see http://b/1180007.
-    if (new_selection.isNone()) {
-      // Fall through to clean up selection and tickmarks.
-      found = false;
+    // because it was marked -webkit-user-select: none), we can't set it to
+    // be active but we still continue searching. This matches Safari's
+    // behavior, including some oddities when selectable and un-selectable text
+    // are mixed on a page: see https://bugs.webkit.org/show_bug.cgi?id=19127.
+    if (new_selection.isNone() ||
+        (new_selection.start() == new_selection.end())) {
+      // The selection controller is not giving us a valid selection so we don't
+      // know what the active rect is. The scoping effort should still continue,
+      // in case there are other selectable matches on the page. Setting the
+      // active_selection_rect to a default rect causes the scoping effort to
+      // mark the first match it finds as active and continue scoping.
+      active_selection_rect_ = IntRect();
+      last_active_range_ = new_selection.toRange();
+      *selection_rect = gfx::Rect();
     } else {
       last_active_range_ = new_selection.toRange();
       active_selection_rect_ = new_selection.toRange()->boundingBox();
       ClearSelection();  // We'll draw our own highlight for the active item.
 
+#if defined(OS_WIN)
+      // TODO(pinkerton): Fix Mac scrolling to be more like Win ScrollView
       if (selection_rect) {
         gfx::Rect rect(
             frame()->view()->convertToContainingWindow(active_selection_rect_));
@@ -825,6 +854,7 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
                     -frameview()->scrollOffset().height());
         *selection_rect = rect;
       }
+#endif
     }
   }
 
@@ -851,7 +881,7 @@ bool WebFrameImpl::FindNext(const FindInPageRequest& request,
   // Save the old tickmark (if any). We will use this to invalidate the area
   // of the tickmark that becomes unselected.
   WebFrameImpl* const main_frame_impl =
-    static_cast<WebFrameImpl*>(GetView()->GetMainFrame());
+      static_cast<WebFrameImpl*>(GetView()->GetMainFrame());
   WebFrameImpl* const active_frame = main_frame_impl->active_tickmark_frame_;
   RefPtr<WebCore::Range> old_tickmark = NULL;
   if (active_frame &&
@@ -919,6 +949,8 @@ bool WebFrameImpl::FindNext(const FindInPageRequest& request,
   last_active_range_ = tickmarks_[active_tickmark_];
   ClearSelection();  // We will draw our own highlighting.
 
+#if defined(OS_WIN)
+  // TODO(pinkerton): Fix Mac invalidation to be more like Win ScrollView
   // Notify browser of new location for the selected rectangle.
   IntRect pos = tickmarks_[active_tickmark_]->boundingBox();
   pos.move(-frameview()->scrollOffset().width(),
@@ -927,6 +959,7 @@ bool WebFrameImpl::FindNext(const FindInPageRequest& request,
       gfx::Rect(frame()->view()->convertToContainingWindow(pos)),
       active_tickmark_ + 1,
       request.request_id);
+#endif
 
   return true;  // Found a match.
 }
@@ -1101,19 +1134,34 @@ void WebFrameImpl::ScopeStringMatches(FindInPageRequest request,
 
     setStart(searchRange.get(), newStart);
 
+    // Catch a special case where Find found something but doesn't know
+    // what the bounding box for it is. In this case we set the first match
+    // we find as the active rect. Note: This does not affect FindNext, it will
+    // still do the right thing. This is only affecting the initial Find, so if
+    // you start searching from the middle of the page AND there is a match
+    // below AND we don't have a bounding box for that match, then we will mark
+    // the first match as active. We probably should look into converting Find
+    // to use the same function as the scoping effort (findPlainText), since it
+    // seems to always get the right bounding box.
+    IntRect result_bounds = resultRange->boundingBox();
+    if (locating_active_rect_ && active_selection_rect_.isEmpty()) {
+      active_selection_rect_ = result_bounds;
+    }
+
     // If the Find function found a match it will have stored where the
     // match was found in active_selection_rect_ on the current frame. If we
     // find this rect during scoping it means we have found the active
     // tickmark.
-    if (!active_selection_rect_.isEmpty() &&
-        active_selection_rect_ == resultRange->boundingBox()) {
+    if (locating_active_rect_ && (active_selection_rect_ == result_bounds)) {
       // We have found the active tickmark frame.
       main_frame_impl->active_tickmark_frame_ = this;
       // We also know which tickmark is active now.
       active_tickmark_ = tickmarks_.size() - 1;
-      // To stop looking for the active tickmark, we clear this rectangle.
-      active_selection_rect_ = IntRect();
+      // To stop looking for the active tickmark, we set this flag.
+      locating_active_rect_ = false;
 
+#if defined(OS_WIN)
+      // TODO(pinkerton): Fix Mac invalidation to be more like Win ScrollView
       // Notify browser of new location for the selected rectangle.
       IntRect pos = tickmarks_[active_tickmark_]->boundingBox();
       pos.move(-frameview()->scrollOffset().width(),
@@ -1122,6 +1170,7 @@ void WebFrameImpl::ScopeStringMatches(FindInPageRequest request,
           gfx::Rect(frame()->view()->convertToContainingWindow(pos)),
           active_tickmark_ + 1,
           request.request_id);
+#endif
     }
 
     timeout = (Time::Now() - start_time).InMilliseconds() >= kTimeout;
@@ -1208,6 +1257,7 @@ void WebFrameImpl::Cut() {
     d->UserMetricsRecordAction(L"Cut");
 }
 
+#if defined(OS_WIN)
 // Returns a copy of data from a data handle retrieved from the clipboard. The
 // data is decoded according to the format that it is in. The caller is
 // responsible for freeing the data.
@@ -1249,6 +1299,7 @@ static wchar_t* GetDataFromHandle(HGLOBAL data_handle,
   }
   return NULL;
 }
+#endif
 
 void WebFrameImpl::Paste() {
   frame()->editor()->paste();
@@ -1299,10 +1350,13 @@ void WebFrameImpl::CreateFrameView() {
 
   DCHECK(page->mainFrame() != NULL);
 
+#if defined(OS_WIN)
+  // TODO(pinkerton): figure out view show/hide like win
   // Detach the current view. This ensures that UI widgets like plugins,
   // etc are detached(hidden)
   if (frame_->view())
     frame_->view()->detachFromWindow();
+#endif
 
   frame_->setView(0);
 
@@ -1310,9 +1364,11 @@ void WebFrameImpl::CreateFrameView() {
 
   frame_->setView(view);
 
+#if defined(OS_WIN)
   // Attaching the view ensures that UI widgets like plugins, display/hide
   // correctly.
   frame_->view()->attachToWindow();
+#endif
 
   if (margin_width_ >= 0)
     view->setMarginWidth(margin_width_);
@@ -1381,22 +1437,29 @@ void WebFrameImpl::Paint(gfx::PlatformCanvas* canvas, const gfx::Rect& rect) {
   }
 }
 
+#if defined(OS_WIN)
 gfx::BitmapPlatformDevice WebFrameImpl::CaptureImage(bool scroll_to_zero) {
   // Must layout before painting.
   Layout();
 
-  gfx::PlatformCanvas canvas(frameview()->width(), frameview()->height(), true);
+  gfx::PlatformCanvasWin canvas(frameview()->width(), frameview()->height(), true);
   PlatformContextSkia context(&canvas);
 
   GraphicsContext gc(reinterpret_cast<PlatformGraphicsContext*>(&context));
   frameview()->paint(&gc, IntRect(0, 0, frameview()->width(),
                                   frameview()->height()));
 
-  gfx::BitmapPlatformDevice& device =
-      static_cast<gfx::BitmapPlatformDevice&>(canvas.getTopPlatformDevice());
+  gfx::BitmapPlatformDeviceWin& device =
+      static_cast<gfx::BitmapPlatformDeviceWin&>(canvas.getTopPlatformDevice());
   device.fixupAlphaBeforeCompositing();
   return device;
 }
+#else
+// TODO(pinkerton): waiting on bitmap re-factor from awalker
+gfx::BitmapPlatformDevice WebFrameImpl::CaptureImage(bool scroll_to_zero) {
+  NOTIMPLEMENTED();
+}
+#endif
 
 bool WebFrameImpl::IsLoading() {
   // I'm assuming this does what we want.
@@ -1650,7 +1713,10 @@ gfx::Size WebFrameImpl::ScrollOffset() const {
 
 void WebFrameImpl::SetAllowsScrolling(bool flag) {
   allows_scrolling_ = flag;
+#if defined(OS_WIN)
+  // TODO(pinkerton): fix when we figure out scrolling apis
   frame_->view()->setAllowsScrolling(flag);
+#endif
 }
 
 bool WebFrameImpl::SetPrintingMode(bool printing,
@@ -1737,6 +1803,15 @@ bool WebFrameImpl::HasUnloadListener() {
   if (frame() && frame()->document()) {
     Document* doc = frame()->document();
     return doc->hasUnloadEventListener();
+  }
+  return false;
+}
+
+bool WebFrameImpl::IsReloadAllowingStaleData() const {
+  FrameLoader* loader = frame() ? frame()->loader() : NULL;
+  if (loader) {
+    return WebCore::FrameLoadTypeReloadAllowingStaleData ==
+           loader->policyLoadType();
   }
   return false;
 }

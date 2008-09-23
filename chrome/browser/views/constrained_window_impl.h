@@ -1,43 +1,22 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H__
-#define CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H__
+#ifndef CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H_
+#define CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H_
 
+#include "base/gfx/rect.h"
 #include "chrome/browser/constrained_window.h"
 #include "chrome/browser/tab_contents_delegate.h"
-#include "chrome/views/client_view.h"
 #include "chrome/views/custom_frame_window.h"
 
 class ConstrainedTabContentsWindowDelegate;
 class ConstrainedWindowAnimation;
 class ConstrainedWindowNonClientView;
+namespace ChromeViews {
+class HWNDView;
+class WindowDelegate;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // ConstrainedWindowImpl
@@ -64,7 +43,6 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   // Overridden from ConstrainedWindow:
   virtual void CloseConstrainedWindow();
   virtual void ActivateConstrainedWindow();
-  virtual void ResizeConstrainedWindow(int width, int height);
   virtual void RepositionConstrainedWindowTo(const gfx::Point& anchor_point);
   virtual bool IsSuppressedConstrainedWindow() const;
   virtual void WasHidden();
@@ -73,11 +51,13 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   virtual void UpdateWindowTitle();
   virtual const gfx::Rect& GetCurrentBounds() const;
 
-  // Overridden from TabContentsDelegate:
+  // Overridden from PageNavigator (TabContentsDelegate's base interface):
   virtual void OpenURLFromTab(TabContents* source,
                               const GURL& url,
                               WindowOpenDisposition disposition,
                               PageTransition::Type transition);
+
+  // Overridden from TabContentsDelegate:
   virtual void NavigationStateChanged(const TabContents* source,
                                       unsigned changed_flags);
   virtual void ReplaceContents(TabContents* source,
@@ -124,24 +104,32 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   virtual void OnWindowPosChanged(WINDOWPOS* window_pos);
 
  private:
-  // Use the static factory methods on ConstrainedWindow to construct a
-  // ConstrainedWindow.
-  ConstrainedWindowImpl(TabContents* owner);
-
   friend class ConstrainedWindow;
 
+  // Use the static factory methods on ConstrainedWindow to construct a
+  // ConstrainedWindow.
+  ConstrainedWindowImpl(TabContents* owner,
+                        ChromeViews::WindowDelegate* window_delegate,
+                        TabContents* constrained_contents);
+  ConstrainedWindowImpl(TabContents* owner,
+                        ChromeViews::WindowDelegate* window_delegate);
+  void Init(TabContents* owner);
+
   // Called after changing either the anchor point or titlebar
-  // visibility of a suppressed popup. This does the actual resizing.
+  // visibility of a suppressed popup.
   //
   // @see RepositionConstrainedWindowTo
   // @see SetTitlebarVisibilityPercentage
   void ResizeConstrainedTitlebar();
 
+  // Called to change the size of a constrained window. Moves the
+  // window to the anchor point (taking titlebar visibility into
+  // account) and sets the pop up size.
+  void ResizeConstrainedWindow(int width, int height);
+
   // Initialize the Constrained Window as a Constrained Dialog containing a
   // ChromeViews::View client area.
-  void InitAsDialog(const gfx::Rect& initial_bounds,
-                    ChromeViews::View* contents_view,
-                    ChromeViews::WindowDelegate* window_delegate);
+  void InitAsDialog(const gfx::Rect& initial_bounds);
 
   // Builds the underlying HWND and window delegates for a newly
   // created popup window.
@@ -151,7 +139,8 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   // so that when we query for desired size, we get accurate data. If
   // we didn't do this, windows will initialize to being smaller then
   // the desired content size plus room for browser chrome.
-  void InitWindowForContents(TabContents* constrained_contents);
+  void InitWindowForContents(TabContents* constrained_contents,
+                             ConstrainedTabContentsWindowDelegate* delegate);
 
   // Sets the initial bounds for a newly created popup window.
   //
@@ -186,7 +175,7 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   // A default ChromeViews::WindowDelegate implementation for this window when
   // a TabContents is being constrained. (For the Constrained Dialog case, the
   // caller is required to provide the WindowDelegate).
-  scoped_ptr<ConstrainedTabContentsWindowDelegate> contents_window_delegate_;
+  scoped_ptr<ChromeViews::WindowDelegate> contents_window_delegate_;
 
   // We keep a reference on the HWNDView so we can properly detach the tab
   // contents when detaching.
@@ -211,7 +200,7 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   // Current display rectangle (relative to owner_'s visible area).
   gfx::Rect current_bounds_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(ConstrainedWindowImpl);
+  DISALLOW_COPY_AND_ASSIGN(ConstrainedWindowImpl);
 };
 
 #endif  // #ifndef CHROME_BROWSER_CONSTRAINED_WINDOW_IMPL_H_

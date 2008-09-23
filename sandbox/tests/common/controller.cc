@@ -1,80 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "sandbox/tests/common/controller.h"
 
 #include <string>
 
+#include "base/sys_string_conversions.h"
 #include "sandbox/src/sandbox_factory.h"
 #include "sandbox/src/sandbox_utils.h"
 
 namespace {
 
-// Set this value to 1 to avoid timeouts while debugging the tests.
-#define RUN_WITHOUT_TIMEOUTS 0
-
 static const int kDefaultTimeout = 3000;
-
-// Grabbed from chrome/common/string_util.h
-template <class char_type>
-inline char_type* WriteInto(
-    std::basic_string<char_type, std::char_traits<char_type>,
-                      std::allocator<char_type> >* str,
-    size_t length_including_null) {
-  str->reserve(length_including_null);
-  str->resize(length_including_null - 1);
-  return &((*str)[0]);
-}
-
-// Grabbed from chrome/common/string_util.cc
-std::string WideToMultiByte(const std::wstring& wide, UINT code_page) {
-  if (wide.length() == 0)
-    return std::string();
-
-  // compute the length of the buffer we'll need
-  int charcount = WideCharToMultiByte(code_page, 0, wide.c_str(), -1,
-                                      NULL, 0, NULL, NULL);
-  if (charcount == 0)
-    return std::string();
-
-  // convert
-  std::string mb;
-  WideCharToMultiByte(code_page, 0, wide.c_str(), -1,
-                      WriteInto(&mb, charcount), charcount, NULL, NULL);
-
-  return mb;
-}
-
-// Grabbed from chrome/common/string_util.cc
-std::string WideToUTF8(const std::wstring& wide) {
-  return WideToMultiByte(wide, CP_UTF8);
-}
 
 }  // namespace
 
@@ -203,11 +141,11 @@ int TestRunner::InternalRunTest(const wchar_t* command) {
   if (!is_init_)
     return SBOX_TEST_FAILED_TO_RUN_TEST;
 
-  // Get the path to the sandboxed app.
+  // Get the path to the sandboxed process.
   wchar_t prog_name[MAX_PATH];
   GetModuleFileNameW(NULL, prog_name, MAX_PATH);
 
-  // Launch the app.
+  // Launch the sandboxed process.
   ResultCode result = SBOX_ALL_OK;
   PROCESS_INFORMATION target = {0};
 
@@ -224,9 +162,10 @@ int TestRunner::InternalRunTest(const wchar_t* command) {
 
   ::ResumeThread(target.hThread);
 
-#if RUN_WITHOUT_TIMEOUTS
-  timeout_ = INFINITE;
-#endif
+  if (::IsDebuggerPresent()) {
+    // Don't kill the target process on a time-out while we are debugging.
+    timeout_ = INFINITE;
+  }
 
   if (WAIT_TIMEOUT == ::WaitForSingleObject(target.hProcess, timeout_)) {
     ::TerminateProcess(target.hProcess, SBOX_TEST_TIMED_OUT);
@@ -262,7 +201,7 @@ void TestRunner::SetTestState(SboxTestsState desired_state) {
 //  argv[1] = "-child"
 //  argv[2] = SboxTestsState when to run the command
 //  argv[3] = command to run
-//  argv[4...] = command arguments
+//  argv[4...] = command arguments.
 int DispatchCall(int argc, wchar_t **argv) {
   if (argc < 4)
     return SBOX_TEST_INVALID_PARAMETER;
@@ -287,10 +226,9 @@ int DispatchCall(int argc, wchar_t **argv) {
                              &module))
     return SBOX_TEST_FAILED_TO_EXECUTE_COMMAND;
 
-  std::string command_name = WideToUTF8(argv[3]);
+  std::string command_name = base::SysWideToUTF8(argv[3]);
   CommandFunction command = reinterpret_cast<CommandFunction>(
                                 ::GetProcAddress(module, command_name.c_str()));
-
   if (!command)
     return SBOX_TEST_FAILED_TO_EXECUTE_COMMAND;
 
@@ -312,8 +250,8 @@ int DispatchCall(int argc, wchar_t **argv) {
     command(argc - 4, argv + 4);
 
   target->LowerToken();
-
   return command(argc - 4, argv + 4);
 }
 
 }  // namespace sandbox
+

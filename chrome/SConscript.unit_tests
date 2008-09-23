@@ -1,35 +1,17 @@
-# Copyright 2008, Google Inc.
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
-#
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
 
 Import('env_test')
 
 env_test = env_test.Clone()
+
+if env_test['PLATFORM'] == 'posix':
+  env_test.Prepend(
+      LIBS = [
+          'event',
+      ]
+  )
 
 env_test.Prepend(
     CPPPATH = [
@@ -55,206 +37,223 @@ env_test.Prepend(
         'CHROME_PNG_WRITE_SUPPORT',
         'UNIT_TEST',
     ],
-    LINKFLAGS = [
-        '/INCREMENTAL',
 
-        '/safeseh',
-        '/dynamicbase',
-        '/ignore:4199',
-        '/nxcompat',
-
-        '/MANIFEST',
-        '/DELAYLOAD:"ws2_32.dll"',
-        '/DELAYLOAD:"dwmapi.dll"',
-        '/DELAYLOAD:"uxtheme.dll"',
-
-        '/DEBUG',
-        '/MACHINE:X86',
-        '/FIXED:No',
-    ],
+    # On Linux, dependencies must come after the libraries that depend on it.
+    # base must come after net, bzip2 must come before base, etc.
     LIBS = [
-        'winmm.lib',
-        'rpcrt4.lib',
-        'oleacc.lib',
-        'comsupp.lib',
+        'net',        # On Linux, dependencies must follow dependents.
+        'bzip2',
+        'base',
+        'base_gfx',
+        'googleurl',
+        'gtest',
+        'icuuc',
+        'libjpeg',
+        'libpng',
+        'libxml',
+        'libxslt',
+        'modp_b64',
+        'skia',
+        'v8',
+        'zlib',
 
-        'wininet.lib',
-        'version.lib',
-        'msimg32.lib',
-        'ws2_32.lib',
-        'usp10.lib',
-        'psapi.lib',
-        'kernel32.lib',
-        'user32.lib',
-        'gdi32.lib',
-        'winspool.lib',
-        'comdlg32.lib',
-        'advapi32.lib',
-        'shell32.lib',
-        'ole32.lib',
-        'oleaut32.lib',
-        'uuid.lib',
-        'odbc32.lib',
-        'odbccp32.lib',
-
-        'DelayImp.lib',
+        'WTF',
+        'V8Bindings',
+        'default_plugin',
+        'glue',
+        'JavaScriptCore_pcre',
+        'port',
     ],
 )
 
-#/MANIFESTFILE:"C:\src\trunk-vs\chrome\Debug\obj\unit_tests\unit_tests.exe.intermediate.manifest"
-#/PDB:"c:\src\trunk-vs\chrome\Debug\unit_tests.pdb"
+if env_test['PLATFORM'] == 'win32':
+  # TODO(port): Port or mark as Windows-specific.
+  env_test.Prepend(
+      LIBS = [
+          'WebCore',
+      ],
+  )
 
-libs = [
-    'snapshotv8.lib',
+if env_test['PLATFORM'] == 'win32':
+  env_test.Prepend(
+      LINKFLAGS = [
+          '/INCREMENTAL',
 
-    'browser/browser.lib',
-    'browser/debugger/debugger.lib',
-    'common/common.lib',
-    'installer/util/util.lib',
-    'libjscre.lib',
-    'plugin/plugin.lib',
-    'renderer/renderer.lib',
-    'test/chrome_plugin/test_chrome_plugin.lib',
-    'third_party/hunspell/hunspell.lib',
-    'third_party/sqlite/sqlite.lib',
-    'views/views.lib',
+          '/safeseh',
+          '/dynamicbase',
+          '/ignore:4199',
+          '/nxcompat',
 
-    '$BASE_DIR/base.lib',
-    '$BASE_DIR/gfx/base_gfx.lib',
-    '$BZIP2_DIR/bzip2.lib',
-    '$GOOGLEURL_DIR/googleurl.lib',
-    '$ICU38_DIR/icuuc.lib',
-    '$LIBJPEG_DIR/libjpeg.lib',
-    '$LIBPNG_DIR/libpng.lib',
-    '$LIBXML_DIR/libxml.lib',
-    '$LIBXSLT_DIR/libxslt.lib',
-    '$MODP_B64_DIR/modp_b64.lib',
-    '$NET_DIR/net.lib',
-    '$SKIA_DIR/skia.lib',
-    '$TESTING_DIR/gtest.lib',
-    '$WEBKIT_DIR/activex_shim/activex_shim.lib',
-    '$WEBKIT_DIR/build/JavaScriptCore/WTF.lib',
-    '$WEBKIT_DIR/build/V8Bindings/V8Bindings.lib',
-    '$WEBKIT_DIR/build/WebCore/WebCore.lib',
-    '$WEBKIT_DIR/default_plugin/default_plugin.lib',
-    '$WEBKIT_DIR/glue/Glue.lib',
-    '$WEBKIT_DIR/JavaScriptCore_pcre.lib',
-    '$WEBKIT_DIR/port.lib',
-    '$V8_DIR/v8.lib',
-    '$ZLIB_DIR/zlib.lib',
-]
+          '/MANIFEST',
+          '/DELAYLOAD:"ws2_32.dll"',
+          '/DELAYLOAD:"dwmapi.dll"',
+          '/DELAYLOAD:"uxtheme.dll"',
 
-#/Yu"precompiled_wtl.h"
-#/Fp"C:\src\trunk-vs\chrome\Debug\obj\unit_tests\precompiled_wtl.pch"
-#/Fo"C:\src\trunk-vs\chrome\Debug\obj\unit_tests\\"
-#/Fd"C:\src\trunk-vs\chrome\Debug\obj\unit_tests\vc80.pdb"
-#/FI
-#"precompiled_wtl.h"
+          '/DEBUG',
+          '/MACHINE:X86',
+          '/FIXED:No',
+      ],
+      LIBS = [
+          'activex_shim',
 
-unit_test_files = [
-    'browser/autocomplete/autocomplete_unittest.cc',
-    'browser/autocomplete/history_contents_provider_unittest.cc',
-    'browser/autocomplete/history_url_provider_unittest.cc',
-    'browser/autocomplete/keyword_provider_unittest.cc',
-    'browser/back_forward_menu_model_unittest.cc',
-    'browser/bookmark_bar_model_unittest.cc',
-    'browser/bookmark_drag_data_unittest.cc',
-    'browser/cache_manager_host_unittest.cc',
-    'browser/chrome_thread_unittest.cc',
-    'browser/controller_unittest.cc',
-    'browser/download_manager_unittest.cc',
-    'browser/encryptor_unittest.cc',
-    'browser/firefox_importer_unittest.cc',
-    'browser/google_url_tracker_unittest.cc',
-    'browser/history/expire_history_backend_unittest.cc',
-    'browser/history/history_backend_unittest.cc',
-    'browser/history/history_querying_unittest.cc',
-    'browser/history/history_types_unittest.cc',
-    'browser/history/history_unittest.cc',
-    'browser/history/query_parser_unittest.cc',
-    'browser/history/snippet_unittest.cc',
-    'browser/history/starred_url_database_unittest.cc',
-    'browser/history/text_database_manager_unittest.cc',
-    'browser/history/text_database_unittest.cc',
-    'browser/history/thumbnail_database_unittest.cc',
-    'browser/history/url_database_unittest.cc',
-    'browser/history/visit_database_unittest.cc',
-    'browser/history/visit_tracker_unittest.cc',
-    'browser/importer_unittest.cc',
-    'browser/metrics_log_unittest.cc',
-    'browser/metrics_response_unittest.cc',
-    'browser/navigation_controller_unittest.cc',
-    'browser/navigation_profiler_unittest.cc',
-    'browser/net/dns_host_info_unittest.cc',
-    'browser/net/dns_master_unittest.cc',
-    'browser/page_load_tracker_unittest.cc',
-    'browser/password_form_manager_unittest.cc',
-    'browser/printing/page_setup_unittest.cc',
-    'browser/printing/win_printing_context_unittest.cc',
-    'browser/profile_manager_unittest.cc',
-    'browser/renderer_security_policy_unittest.cc',
-    'browser/resource_dispatcher_host_unittest.cc',
-    'browser/rlz/rlz_unittest.cc',
-    'browser/safe_browsing/bloom_filter_unittest.cc',
-    'browser/safe_browsing/chunk_range_unittest.cc',
-    'browser/safe_browsing/protocol_manager_unittest.cc',
-    'browser/safe_browsing/protocol_parser_unittest.cc',
-    'browser/safe_browsing/safe_browsing_database_unittest.cc',
-    'browser/safe_browsing/safe_browsing_util_unittest.cc',
-    'browser/save_package_unittest.cc',
-    'browser/session_backend_unittest.cc',
-    'browser/session_service_test_helper.cc',
-    'browser/session_service_unittest.cc',
-    'browser/site_instance_unittest.cc',
-    'browser/tabs/tab_strip_model_unittest.cc',
-    'browser/template_url_model_unittest.cc',
-    'browser/template_url_parser_unittest.cc',
-    'browser/template_url_unittest.cc',
-    'browser/title_chomper_unittest.cc',
-    'browser/url_fetcher_unittest.cc',
-    'browser/url_fixer_upper_unittest.cc',
-    'browser/visitedlink_unittest.cc',
-    'browser/web_contents_unittest.cc',
-    'browser/webdata/web_database_unittest.cc',
-    'browser/window_sizer_unittest.cc',
-    'common/animation_unittest.cc',
-    'common/bzip2_unittest.cc',
-    'common/chrome_plugin_unittest.cc',
-    'common/gfx/emf_unittest.cc',
-    'common/gfx/icon_util_unittest.cc',
-    'common/gfx/url_elider_unittest.cc',
-    'common/ipc_message_unittest.cc',
-    'common/ipc_sync_channel_unittest.cc',
-    'common/ipc_sync_message_unittest.cc',
-    'common/jpeg_codec_unittest.cc',
-    'common/json_value_serializer_unittest.cc',
-    'common/l10n_util_unittest.cc',
-    'common/mru_cache_unittest.cc',
-    'common/notification_service_unittest.cc',
-    'common/os_exchange_data_unittest.cc',
-    'common/pref_member_unittest.cc',
-    'common/pref_service_unittest.cc',
-    'common/resource_dispatcher_unittest.cc',
-    'common/time_format_unittest.cc',
-    'common/win_util_unittest.cc',
-    'renderer/net/render_dns_master_unittest.cc',
-    'renderer/net/render_dns_queue_unittest.cc',
-    'renderer/spellcheck_unittest.cc',
-    'views/focus_manager_unittest.cc',
-    'views/grid_layout_unittest.cc',
-    'views/view_unittest.cc',
-    'test/testing_profile.cc',
-    'test/unit/run_all_unittests.cc',
-    # Commented out for now because googleurl_tests doesn't build with
-    # gtest; see ../build/SConscript.googleurl.
-    #'$GOOGLEURL_DIR/googleurl_tests.lib',
-    '$NET_DIR/url_request/url_request_test_job$OBJSUFFIX',
+          'winmm.lib',
+          'rpcrt4.lib',
+          'oleacc.lib',
+          'comsupp.lib',
+      ],
+  )
 
-    env_test['BROWSER_RES'],
-    env_test['TEST_DATA_RES'],
-]
+  libs = [
+      'snapshotv8.lib',
 
-unit_tests = env_test.Program('unit_tests.exe', unit_test_files + libs)
+      'browser/browser.lib',
+      'browser/views/browser_views.lib',
+      'browser/debugger/debugger.lib',
+      'installer/util/util.lib',
+      'libjscre.lib',
+      'plugin/plugin.lib',
+      'renderer/renderer.lib',
+      'test/chrome_plugin/test_chrome_plugin.lib',
+      'third_party/hunspell/hunspell.lib',
+      'third_party/sqlite/sqlite.lib',
+      'views/views.lib',
+  ]
 
-i = env_test.Install('$TARGET_ROOT', unit_tests)
-Alias('chrome', i)
+unit_test_files = []
+
+if env_test['PLATFORM'] in ('posix', 'win32'):
+  # TODO(port): Port to Mac.
+  unit_test_files.extend([
+      'browser/chrome_thread_unittest.cc',
+      'browser/metrics_response_unittest.cc',
+      'browser/net/dns_host_info_unittest.cc',
+      'browser/printing/page_range_unittest.cc',
+      'browser/printing/page_setup_unittest.cc',
+      'browser/printing/units_unittest.cc',
+      'browser/safe_browsing/chunk_range_unittest.cc',
+      'browser/safe_browsing/protocol_parser_unittest.cc',
+      'browser/safe_browsing/safe_browsing_util_unittest.cc',
+      'common/animation_unittest.cc',
+      'common/bzip2_unittest.cc',
+      'common/jpeg_codec_unittest.cc',
+      'common/json_value_serializer_unittest.cc',
+      'test/unit/run_all_unittests.cc',
+  ])
+
+  env_test.Prepend(
+      LIBS = [
+          'browser',
+          'common',
+      ],
+  )
+
+if env_test['PLATFORM'] == 'win32':
+  # TODO(port): Port these.
+  unit_test_files.extend([
+      'browser/autocomplete/autocomplete_unittest.cc',
+      'browser/autocomplete/history_contents_provider_unittest.cc',
+      'browser/autocomplete/history_url_provider_unittest.cc',
+      'browser/autocomplete/keyword_provider_unittest.cc',
+      'browser/back_forward_menu_model_unittest.cc',
+      'browser/bookmark_bar_context_menu_controller_test.cc',
+      'browser/bookmarks/bookmark_bar_unittest.cc',
+      'browser/bookmarks/bookmark_drag_data_unittest.cc',
+      'browser/cache_manager_host_unittest.cc',
+      'browser/controller_unittest.cc',
+      'browser/download_manager_unittest.cc',
+      'browser/encryptor_unittest.cc',
+      'browser/firefox_importer_unittest.cc',
+      'browser/google_url_tracker_unittest.cc',
+      'browser/history/expire_history_backend_unittest.cc',
+      'browser/history/history_backend_unittest.cc',
+      'browser/history/history_querying_unittest.cc',
+      'browser/history/history_types_unittest.cc',
+      'browser/history/history_unittest.cc',
+      'browser/history/query_parser_unittest.cc',
+      'browser/history/snippet_unittest.cc',
+      'browser/history/starred_url_database_unittest.cc',
+      'browser/history/text_database_manager_unittest.cc',
+      'browser/history/text_database_unittest.cc',
+      'browser/history/thumbnail_database_unittest.cc',
+      'browser/history/url_database_unittest.cc',
+      'browser/history/visit_database_unittest.cc',
+      'browser/history/visit_tracker_unittest.cc',
+      'browser/importer_unittest.cc',
+      'browser/metrics_log_unittest.cc',
+      'browser/navigation_controller_unittest.cc',
+      'browser/net/dns_master_unittest.cc',
+      'browser/password_form_manager_unittest.cc',
+      'browser/printing/page_number_unittest.cc',
+      'browser/printing/page_overlays_unittest.cc',
+      'browser/printing/win_printing_context_unittest.cc',
+      'browser/profile_manager_unittest.cc',
+      'browser/renderer_security_policy_unittest.cc',
+      'browser/resource_dispatcher_host_unittest.cc',
+      'browser/rlz/rlz_unittest.cc',
+      'browser/safe_browsing/bloom_filter_unittest.cc',
+      'browser/safe_browsing/protocol_manager_unittest.cc',
+      'browser/safe_browsing/safe_browsing_database_unittest.cc',
+      'browser/save_package_unittest.cc',
+      'browser/session_backend_unittest.cc',
+      'browser/session_service_test_helper.cc',
+      'browser/session_service_unittest.cc',
+      'browser/site_instance_unittest.cc',
+      'browser/tabs/tab_strip_model_unittest.cc',
+      'browser/template_url_model_unittest.cc',
+      'browser/template_url_parser_unittest.cc',
+      'browser/template_url_unittest.cc',
+      'browser/title_chomper_unittest.cc',
+      'browser/url_fetcher_unittest.cc',
+      'browser/url_fixer_upper_unittest.cc',
+      'browser/views/bookmark_bar_view_test.cc',
+      'browser/views/bookmark_editor_view_unittest.cc',
+      'browser/views/keyword_editor_view_unittest.cc',
+      'browser/visitedlink_unittest.cc',
+      'browser/web_contents_unittest.cc',
+      'browser/webdata/web_database_unittest.cc',
+      'browser/window_sizer_unittest.cc',
+      'common/chrome_plugin_unittest.cc',
+      'common/gfx/emf_unittest.cc',
+      'common/gfx/icon_util_unittest.cc',
+      'common/gfx/url_elider_unittest.cc',
+      'common/ipc_message_unittest.cc',
+      'common/ipc_sync_channel_unittest.cc',
+      'common/ipc_sync_message_unittest.cc',
+      'common/l10n_util_unittest.cc',
+      'common/mru_cache_unittest.cc',
+      'common/notification_service_unittest.cc',
+      'common/os_exchange_data_unittest.cc',
+      'common/pref_member_unittest.cc',
+      'common/pref_service_unittest.cc',
+      'common/resource_dispatcher_unittest.cc',
+      'common/time_format_unittest.cc',
+      'common/win_util_unittest.cc',
+      'renderer/net/render_dns_master_unittest.cc',
+      'renderer/net/render_dns_queue_unittest.cc',
+      'renderer/spellcheck_unittest.cc',
+      'views/focus_manager_unittest.cc',
+      'views/grid_layout_unittest.cc',
+      'views/view_unittest.cc',
+      'test/test_notification_tracker.cc',
+      'test/testing_profile.cc',
+      'test/ui/view_event_test_base.cc',
+      # Commented out for now because googleurl_tests doesn't build with
+      # gtest; see ../build/SConscript.googleurl.
+      #'$GOOGLEURL_DIR/googleurl_tests.lib',
+      '$NET_DIR/url_request/url_request_test_job$OBJSUFFIX',
+
+      env_test['BROWSER_RES'],
+      env_test['TEST_DATA_RES'],
+  ])
+
+if env_test['PLATFORM'] in ('posix', 'win32'):
+  # TODO(port): This should work on all platforms.
+
+  test_program_files = unit_test_files
+  if env_test['PLATFORM'] == 'win32':
+    # This is probably Windows-specific.
+    test_program_files.extend(libs)
+  unit_tests = env_test.ChromeTestProgram('unit_tests', test_program_files)
+
+  i = env_test.Install('$TARGET_ROOT', unit_tests)
+  Alias('chrome', i)

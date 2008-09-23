@@ -1,41 +1,16 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/first_run_customize_view.h"
 
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/importer.h"
+#include "chrome/browser/importer/importer.h"
 #include "chrome/browser/first_run.h"
 #include "chrome/browser/shell_integration.h"
-#include "chrome/browser/standard_layout.h"
 #include "chrome/browser/user_metrics.h"
+#include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/checkbox.h"
@@ -45,10 +20,12 @@
 #include "chrome/views/throbber.h"
 #include "chrome/views/window.h"
 
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 FirstRunCustomizeView::FirstRunCustomizeView(Profile* profile,
-                                             ImporterHost* importer_host)
+                                             ImporterHost* importer_host,
+                                             CustomizeViewObserver* observer)
     : FirstRunViewBase(profile),
       main_label_(NULL),
       import_cbox_(NULL),
@@ -57,7 +34,7 @@ FirstRunCustomizeView::FirstRunCustomizeView(Profile* profile,
       shortcuts_label_(NULL),
       desktop_shortcut_cbox_(NULL),
       quick_shortcut_cbox_(NULL),
-      customize_observer_(NULL) {
+      customize_observer_(observer) {
   importer_host_ = importer_host;
   DCHECK(importer_host_);
   SetupControls();
@@ -127,8 +104,8 @@ void FirstRunCustomizeView::Layout() {
                          canvas.cx - pref_size.cx, pref_size.cy);
   AdjustDialogWidth(main_label_);
 
-  int next_v_space = background_image()->GetY() +
-                     background_image()->GetHeight() + kPanelVertMargin;
+  int next_v_space = background_image()->y() +
+                     background_image()->height() + kPanelVertMargin;
 
   import_cbox_->GetPreferredSize(&pref_size);
   import_cbox_->SetBounds(kPanelHorizMargin, next_v_space,
@@ -136,8 +113,8 @@ void FirstRunCustomizeView::Layout() {
 
   import_cbox_->SetIsSelected(true);
 
-  int x_offset = import_cbox_->GetX() +
-                 import_cbox_->GetWidth();
+  int x_offset = import_cbox_->x() +
+                 import_cbox_->width();
 
   import_from_combo_->GetPreferredSize(&pref_size);
   import_from_combo_->SetBounds(x_offset, next_v_space,
@@ -145,7 +122,7 @@ void FirstRunCustomizeView::Layout() {
 
   AdjustDialogWidth(import_from_combo_);
 
-  next_v_space = import_cbox_->GetY() + import_cbox_->GetHeight() +
+  next_v_space = import_cbox_->y() + import_cbox_->height() +
                  kUnrelatedControlVerticalSpacing;
 
   default_browser_cbox_->GetPreferredSize(&pref_size);
@@ -154,7 +131,7 @@ void FirstRunCustomizeView::Layout() {
 
   AdjustDialogWidth(default_browser_cbox_);
 
-  next_v_space += default_browser_cbox_->GetHeight() +
+  next_v_space += default_browser_cbox_->height() +
                   kUnrelatedControlVerticalSpacing;
 
   shortcuts_label_->GetPreferredSize(&pref_size);
@@ -163,7 +140,7 @@ void FirstRunCustomizeView::Layout() {
 
   AdjustDialogWidth(shortcuts_label_);
 
-  next_v_space += shortcuts_label_->GetHeight() +
+  next_v_space += shortcuts_label_->height() +
                   kRelatedControlVerticalSpacing;
 
   desktop_shortcut_cbox_->GetPreferredSize(&pref_size);
@@ -172,7 +149,7 @@ void FirstRunCustomizeView::Layout() {
 
   AdjustDialogWidth(desktop_shortcut_cbox_);
 
-  next_v_space += desktop_shortcut_cbox_->GetHeight() +
+  next_v_space += desktop_shortcut_cbox_->height() +
                   kRelatedControlVerticalSpacing;
 
   quick_shortcut_cbox_->GetPreferredSize(&pref_size);
@@ -202,6 +179,10 @@ std::wstring FirstRunCustomizeView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_FR_CUSTOMIZE_DLG_TITLE);
 }
 
+ChromeViews::View* FirstRunCustomizeView::GetContentsView() {
+  return this;
+}
+
 bool FirstRunCustomizeView::Accept() {
   if (!IsDialogButtonEnabled(DIALOGBUTTON_OK))
     return false;
@@ -226,7 +207,7 @@ bool FirstRunCustomizeView::Accept() {
   } else {
     int browser_selected = import_from_combo_->GetSelectedItem();
     FirstRun::ImportSettings(profile_, browser_selected,
-                             GetDefaultImportItems(), dialog_->GetHWND());
+                             GetDefaultImportItems(), window()->GetHWND());
   }
   if (default_browser_cbox_->IsSelected()) {
     UserMetrics::RecordAction(L"FirstRunCustom_Do_DefBrowser", profile_);
@@ -251,3 +232,4 @@ bool FirstRunCustomizeView::Cancel() {
 
   return true;
 }
+

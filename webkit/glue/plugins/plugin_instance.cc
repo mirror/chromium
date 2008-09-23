@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "webkit/glue/plugins/plugin_instance.h"
 
@@ -35,7 +10,6 @@
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webkit_glue.h"
-#include "webkit/glue/plugins/plugin_data_stream.h"
 #include "webkit/glue/plugins/plugin_host.h"
 #include "webkit/glue/plugins/plugin_lib.h"
 #include "webkit/glue/plugins/plugin_stream_url.h"
@@ -45,7 +19,9 @@
 
 namespace NPAPI
 {
-int PluginInstance::plugin_instance_tls_index_ = ThreadLocalStorage::Alloc();
+
+// TODO(evanm): don't rely on static initialization.
+ThreadLocalStorage::Slot PluginInstance::plugin_instance_tls_index_;
 
 PluginInstance::PluginInstance(PluginLib *plugin, const std::string &mime_type)
     : plugin_(plugin),
@@ -116,7 +92,7 @@ void PluginInstance::RemoveStream(PluginStream* stream) {
 
   std::vector<scoped_refptr<PluginStream> >::iterator stream_index;
   for (stream_index = open_streams_.begin();
-          stream_index != open_streams_.end(); ++stream_index) {
+       stream_index != open_streams_.end(); ++stream_index) {
     if (*stream_index == stream) {
       open_streams_.erase(stream_index);
       break;
@@ -379,32 +355,37 @@ void PluginInstance::DidReceiveManualResponse(const std::string& url,
     response_url = instance_url_.spec();
   }
 
-  plugin_data_stream_ = new PluginDataStream(this, response_url, mime_type,
-                                             headers, expected_length,
-                                             last_modified);
+  bool cancel = false;
+
+  plugin_data_stream_ = CreateStream(-1, url, mime_type, false, NULL);
+
+  plugin_data_stream_->DidReceiveResponse(mime_type, headers, expected_length,
+                                          last_modified, &cancel);
   AddStream(plugin_data_stream_.get());
 }
 
 void PluginInstance::DidReceiveManualData(const char* buffer, int length) {
   DCHECK(load_manually_);
-  DCHECK(plugin_data_stream_.get() != NULL);
-  plugin_data_stream_->SendToPlugin(buffer, length);
+  if (plugin_data_stream_.get() != NULL) {
+    plugin_data_stream_->DidReceiveData(buffer, length, 0);
+  }
 }
 
 void PluginInstance::DidFinishManualLoading() {
   DCHECK(load_manually_);
-  DCHECK(plugin_data_stream_);
-  plugin_data_stream_->Close(NPRES_DONE);
-  RemoveStream(plugin_data_stream_.get());
-  plugin_data_stream_ = NULL;
+  if (plugin_data_stream_.get() != NULL) {
+    plugin_data_stream_->DidFinishLoading();
+    plugin_data_stream_->Close(NPRES_DONE);
+    plugin_data_stream_ = NULL;
+  }
 }
 
 void PluginInstance::DidManualLoadFail() {
   DCHECK(load_manually_);
-  DCHECK(plugin_data_stream_);
-  plugin_data_stream_->Close(NPRES_NETWORK_ERR);
-  RemoveStream(plugin_data_stream_.get());
-  plugin_data_stream_ = NULL;
+  if (plugin_data_stream_.get() != NULL) {
+    plugin_data_stream_->DidFail();
+    plugin_data_stream_ = NULL;
+  }
 }
 
 void PluginInstance::PluginThreadAsyncCall(void (*func)(void *),
@@ -429,17 +410,16 @@ void PluginInstance::OnPluginThreadAsyncCall(void (*func)(void *),
 PluginInstance* PluginInstance::SetInitializingInstance(
     PluginInstance* instance) {
   PluginInstance* old_instance =
-      static_cast<PluginInstance*>(
-          ThreadLocalStorage::Get(plugin_instance_tls_index_));
-  ThreadLocalStorage::Set(plugin_instance_tls_index_, instance);
+      static_cast<PluginInstance*>(plugin_instance_tls_index_.Get());
+  plugin_instance_tls_index_.Set(instance);
   return old_instance;
 }
 
 PluginInstance* PluginInstance::GetInitializingInstance() {
   PluginInstance* instance =
-      static_cast<PluginInstance*>(
-          ThreadLocalStorage::Get(plugin_instance_tls_index_));
-  return instance;}
+      static_cast<PluginInstance*>(plugin_instance_tls_index_.Get());
+  return instance;
+}
 
 NPError PluginInstance::GetServiceManager(void** service_manager) {
   if (!mozilla_extenstions_) {
@@ -460,4 +440,50 @@ void PluginInstance::PopPopupsEnabledState() {
   popups_enabled_stack_.pop();
 }
 
+void PluginInstance::RequestRead(NPStream* stream, NPByteRange* range_list) {
+  std::string range_info = "bytes=";
+
+  while (range_list) {
+    range_info += IntToString(range_list->offset);
+    range_info += "-";
+    range_info += IntToString(range_list->offset + range_list->length - 1);
+    range_list = range_list->next;
+    if (range_list) {
+      range_info += ",";
+    }
+  }
+
+  if (plugin_data_stream_) {
+    if (plugin_data_stream_->stream() == stream) {
+      webplugin_->CancelDocumentLoad();
+      plugin_data_stream_ = NULL;
+    }
+  }
+
+  // The lifetime of a NPStream instance depends on the PluginStream instance
+  // which owns it. When a plugin invokes NPN_RequestRead on a seekable stream,
+  // we don't want to create a new stream when the corresponding response is
+  // received. We send over a cookie which represents the PluginStream
+  // instance which is sent back from the renderer when the response is
+  // received.
+  std::vector<scoped_refptr<PluginStream> >::iterator stream_index;
+  for (stream_index = open_streams_.begin();
+          stream_index != open_streams_.end(); ++stream_index) {
+    PluginStream* plugin_stream = *stream_index;
+    if (plugin_stream->stream() == stream) {
+      // A stream becomes seekable the first time NPN_RequestRead
+      // is called on it.
+      plugin_stream->set_seekable(true);
+
+      webplugin_->InitiateHTTPRangeRequest(
+          stream->url, range_info.c_str(),
+          plugin_stream,
+          plugin_stream->notify_needed(), 
+          plugin_stream->notify_data());
+      break;
+    }
+  }
+}
+
 }  // namespace NPAPI
+

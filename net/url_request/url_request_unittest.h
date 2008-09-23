@@ -1,34 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_URL_REQUEST_URL_REQUEST_UNITTEST_H_
-#define BASE_URL_REQUEST_URL_REQUEST_UNITTEST_H_
+#ifndef NET_URL_REQUEST_URL_REQUEST_UNITTEST_H_
+#define NET_URL_REQUEST_URL_REQUEST_UNITTEST_H_
 
 #include <sstream>
 #include <string>
@@ -38,6 +13,8 @@
 #include "base/path_service.h"
 #include "base/process_util.h"
 #include "base/string_util.h"
+#include "base/thread.h"
+#include "base/waitable_event.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_network_layer.h"
 #include "net/url_request/url_request.h"
@@ -138,12 +115,12 @@ class TestDelegate : public URLRequest::Delegate {
       request->Cancel();
   }
 
-  void OnResponseCompleted(URLRequest* request) {
+  virtual void OnResponseCompleted(URLRequest* request) {
     if (quit_on_complete_)
       MessageLoop::current()->Quit();
   }
 
-  void OnAuthRequired(URLRequest* request, AuthChallengeInfo* auth_info) {
+  void OnAuthRequired(URLRequest* request, net::AuthChallengeInfo* auth_info) {
     if (!username_.empty() || !password_.empty()) {
       request->SetAuth(username_, password_);
     } else {
@@ -153,7 +130,7 @@ class TestDelegate : public URLRequest::Delegate {
 
   virtual void OnSSLCertificateError(URLRequest* request,
                                      int cert_error,
-                                     X509Certificate* cert) {
+                                     net::X509Certificate* cert) {
     // Ignore SSL errors, we test the server is started and shut it down by
     // performing GETs, no security restrictions should apply as we always want
     // these GETs to go through.
@@ -208,8 +185,7 @@ class TestDelegate : public URLRequest::Delegate {
 class TestServer : public process_util::ProcessFilter {
  public:
   TestServer(const std::wstring& document_root)
-      : context_(new TestURLRequestContext),
-        process_handle_(NULL),
+      : process_handle_(NULL),
         is_shutdown_(true) {
     Init(kDefaultHostName, kDefaultPort, document_root, std::wstring());
   }
@@ -238,16 +214,23 @@ class TestServer : public process_util::ProcessFilter {
 
   // A subclass may wish to send the request in a different manner
   virtual bool MakeGETRequest(const std::string& page_name) {
-    TestDelegate d;
-    URLRequest r(TestServerPage(page_name), &d);
-    r.set_context(context_);
-    r.set_method("GET");
-    r.Start();
-    EXPECT_TRUE(r.is_pending());
+    const GURL& url = TestServerPage(page_name);
 
-    MessageLoop::current()->Run();
-
-    return r.status().is_success();
+    // Spin up a background thread for this request so that we have access to
+    // an IO message loop, and in cases where this thread already has an IO
+    // message loop, we also want to avoid spinning a nested message loop.
+    
+    SyncTestDelegate d;
+    {
+      base::Thread io_thread("MakeGETRequest");
+      base::Thread::Options options;
+      options.message_loop_type = MessageLoop::TYPE_IO;
+      io_thread.StartWithOptions(options);
+      io_thread.message_loop()->PostTask(FROM_HERE, NewRunnableFunction(
+          &TestServer::StartGETRequest, url, &d));
+      d.Wait();
+    }
+    return d.did_succeed();
   }
 
  protected:
@@ -257,8 +240,7 @@ class TestServer : public process_util::ProcessFilter {
   // constructed.  The subclass should call Init once it is ready (usually in
   // its constructor).
   TestServer(ManualInit)
-      : context_(new TestURLRequestContext),
-        process_handle_(NULL),
+      : process_handle_(NULL),
         is_shutdown_(true) {
   }
 
@@ -359,7 +341,31 @@ class TestServer : public process_util::ProcessFilter {
   }
 
  private:
-  scoped_refptr<TestURLRequestContext> context_;
+  // Used by MakeGETRequest to implement sync load behavior.
+  class SyncTestDelegate : public TestDelegate {
+   public:
+    SyncTestDelegate() : event_(false, false), success_(false) {
+    }
+    virtual void OnResponseCompleted(URLRequest* request) {
+      MessageLoop::current()->DeleteSoon(FROM_HERE, request);
+      success_ = request->status().is_success();
+      event_.Signal();
+    }
+    void Wait() { event_.Wait(); }
+    bool did_succeed() const { return success_; }
+   private:
+    base::WaitableEvent event_;
+    bool success_;
+    DISALLOW_COPY_AND_ASSIGN(SyncTestDelegate);
+  };
+  static void StartGETRequest(const GURL& url, URLRequest::Delegate* delegate) {
+    URLRequest* request = new URLRequest(url, delegate);
+    request->set_context(new TestURLRequestContext());
+    request->set_method("GET");
+    request->Start();
+    EXPECT_TRUE(request->is_pending());
+  }
+
   std::string base_address_;
   std::wstring python_runtime_;
   HANDLE process_handle_;
@@ -377,4 +383,5 @@ class HTTPSTestServer : public TestServer {
   virtual std::string scheme() { return std::string("https"); }
 };
 
-#endif  // BASE_URL_REQUEST_URL_REQUEST_UNITTEST_H_
+#endif  // NET_URL_REQUEST_URL_REQUEST_UNITTEST_H_
+

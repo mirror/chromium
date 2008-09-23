@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Represents the browser side of the browser <--> renderer communication
 // channel. There will be one RenderProcessHost per renderer process.
@@ -44,8 +19,10 @@
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
+#include "base/shared_event.h"
 #include "base/shared_memory.h"
 #include "base/string_util.h"
+#include "base/sys_info.h"
 #include "base/thread.h"
 #include "base/win_util.h"
 #include "chrome/app/result_codes.h"
@@ -59,6 +36,7 @@
 #include "chrome/browser/renderer_security_policy.h"
 #include "chrome/browser/resource_message_filter.h"
 #include "chrome/browser/sandbox_policy.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/common/chrome_constants.h"
@@ -83,22 +61,21 @@
 
 namespace {
 
-// Defines the maximum number of renderer processes according to the amount
-// of installed memory as reported by the OS. The table values are calculated
-// by assuming that you want the renderers to use half of the installed ram
-// and assuming that each tab uses ~25MB.
-const int kMaxRenderersByRamTier[] = {
-  4,                                  // less than 256MB
-  8,                                  // 256MB
-  12,                                 // 512MB
-  16,                                 // 768MB
-  chrome::kMaxRendererProcessCount,   // 1GB or more.
-};
-
 unsigned int GetMaxRendererProcessCount() {
+  // Defines the maximum number of renderer processes according to the amount
+  // of installed memory as reported by the OS. The table values are calculated
+  // by assuming that you want the renderers to use half of the installed ram
+  // and assuming that each tab uses ~25MB.
+  static const int kMaxRenderersByRamTier[] = {
+    4,                                  // less than 256MB
+    8,                                  // 256MB
+    12,                                 // 512MB
+    16,                                 // 768MB
+  };
+
   static unsigned int max_count = 0;
   if (!max_count) {
-    int memory_tier = env_util::GetPhysicalMemoryMB() / 256;
+    int memory_tier = base::SysInfo::AmountOfPhysicalMemoryMB() / 256;
     if (memory_tier >= arraysize(kMaxRenderersByRamTier))
       max_count = chrome::kMaxRendererProcessCount;
     else
@@ -109,10 +86,10 @@ unsigned int GetMaxRendererProcessCount() {
 
 // ----------------------------------------------------------------------------
 
-class RendererMainThread : public Thread {
+class RendererMainThread : public base::Thread {
  public:
   explicit RendererMainThread(const std::wstring& channel_id)
-      : Thread("Chrome_InProcRendererThread"),
+      : base::Thread("Chrome_InProcRendererThread"),
         channel_id_(channel_id) {
   }
 
@@ -127,7 +104,7 @@ class RendererMainThread : public Thread {
     // this thread, so just force the flag manually.
     // If we want to avoid this, we could create the InProcRendererThread
     // directly with _beginthreadex() rather than using the Thread class.
-    Thread::SetThreadWasQuitProperly(true);
+    base::Thread::SetThreadWasQuitProperly(true);
   }
 
   virtual void CleanUp() {
@@ -202,7 +179,7 @@ RenderProcessHost::~RenderProcessHost() {
   channel_.reset();
 
   if (process_.handle() && !run_renderer_in_process_) {
-    MessageLoop::current()->WatchObject(process_.handle(), NULL);
+    watcher_.StopWatching();
     ProcessWatcher::EnsureProcessTerminated(process_.handle());
   }
 
@@ -225,7 +202,7 @@ bool RenderProcessHost::Init() {
     return true;
 
   // run the IPC channel on the shared IO thread.
-  Thread* io_thread = g_browser_process->io_thread();
+  base::Thread* io_thread = g_browser_process->io_thread();
 
   scoped_refptr<ResourceMessageFilter> resource_message_filter =
       new ResourceMessageFilter(g_browser_process->resource_dispatcher_host(),
@@ -241,9 +218,14 @@ bool RenderProcessHost::Init() {
   // setup IPC channel
   std::wstring channel_id = GenerateRandomChannelID(this);
   channel_.reset(
-      new IPC::ChannelProxy(channel_id, IPC::Channel::MODE_SERVER, this,
-                            resource_message_filter,
-                            io_thread->message_loop()));
+      new IPC::SyncChannel(channel_id, IPC::Channel::MODE_SERVER, this,
+                           resource_message_filter,
+                           io_thread->message_loop(), true,
+                           g_browser_process->shutdown_event()));
+  // As a preventive mesure, we DCHECK if someone sends a synchronous message
+  // with no time-out, which in the context of the browser process we should not
+  // be doing.
+  channel_->set_sync_messages_with_no_timeout_allowed(false);
 
   // build command line for renderer, we have to quote the executable name to
   // deal with spaces
@@ -275,17 +257,17 @@ bool RenderProcessHost::Init() {
     switches::kEnableLogging,
     switches::kDumpHistogramsOnExit,
     switches::kDisableLogging,
+    switches::kLoggingLevel,
     switches::kDebugPrint,
-    switches::kDnsPrefetchDisable,
     switches::kAllowAllActiveX,
     switches::kMemoryProfiling,
     switches::kEnableWatchdog,
-    switches::kMessageLoopStrategy,
     switches::kMessageLoopHistogrammer,
     switches::kEnableDCHECK,
     switches::kSilentDumpOnDCHECK,
     switches::kDisablePopupBlocking,
-    switches::kUseLowFragHeapCrt
+    switches::kUseLowFragHeapCrt,
+    switches::kGearsInRenderer,
   };
 
   for (int i = 0; i < arraysize(switch_names); ++i) {
@@ -326,22 +308,22 @@ bool RenderProcessHost::Init() {
 
   bool run_in_process = RenderProcessHost::run_renderer_in_process();
   if (run_in_process) {
-    // Crank up a thread and run the initialization there.  With the
-    // way that messages flow between the browser and renderer, this
-    // thread is required to prevent a deadlock in single-process mode.
-    // When using multiple processes, the primordial thread in the
-    // renderer process has a message loop which is used for sending
-    // messages asynchronously to the io thread in the browser process.
-    // If we don't create this thread, then the RenderThread is both
-    // responsible for rendering and also for communicating IO.
-    // This can lead to deadlocks where the RenderThread is waiting
-    // for the IO to complete, while the browsermain is trying to
-    // pass an event to the RenderThread.
+    // Crank up a thread and run the initialization there.  With the way that
+    // messages flow between the browser and renderer, this thread is required
+    // to prevent a deadlock in single-process mode.  When using multiple
+    // processes, the primordial thread in the renderer process has a message
+    // loop which is used for sending messages asynchronously to the io thread
+    // in the browser process.  If we don't create this thread, then the
+    // RenderThread is both responsible for rendering and also for
+    // communicating IO.  This can lead to deadlocks where the RenderThread is
+    // waiting for the IO to complete, while the browsermain is trying to pass
+    // an event to the RenderThread.
     //
-    // TODO: We should consider how to better cleanup threads on
-    // exit.
-    Thread *renderThread = new RendererMainThread(channel_id);
-    renderThread->Start();
+    // TODO: We should consider how to better cleanup threads on exit.
+    base::Thread *render_thread = new RendererMainThread(channel_id);
+    base::Thread::Options options;
+    options.message_loop_type = MessageLoop::TYPE_IO;
+    render_thread->StartWithOptions(options);
   } else {
     if (g_browser_process->local_state() &&
         g_browser_process->local_state()->GetBoolean(
@@ -389,6 +371,11 @@ bool RenderProcessHost::Init() {
           return false;
         }
 
+        if (!AddDllEvictionPolicy(policy)) {
+          NOTREACHED();
+          return false;          
+        }
+
         result = broker_service->SpawnTarget(renderer_path.c_str(),
                                              cmd_line.c_str(),
                                              policy, &target);
@@ -421,7 +408,7 @@ bool RenderProcessHost::Init() {
         process_.set_handle(process);
       }
 
-      MessageLoop::current()->WatchObject(process_.handle(), this);
+      watcher_.StartWatching(process_.handle(), this);
     }
   }
 
@@ -509,7 +496,7 @@ bool RenderProcessHost::FastShutdownIfPossible() {
   }
   // Otherwise, call TerminateProcess.  Using exit code 0 means that UMA won't
   // treat this as a renderer crash.
-  ::TerminateProcess(proc, 0);
+  ::TerminateProcess(proc, ResultCodes::NORMAL_EXIT);
   return true;
 }
 
@@ -582,7 +569,7 @@ void RenderProcessHost::OnChannelConnected(int32 peer_pid) {
       // returned by CreateProcess() has to the process object.
       process_.set_handle(OpenProcess(MAXIMUM_ALLOWED, FALSE, peer_pid));
       DCHECK(process_.handle());
-      MessageLoop::current()->WatchObject(process_.handle(), this);
+      watcher_.StartWatching(process_.handle(), this);
     }
   } else {
     // Need to verify that the peer_pid is actually the process we know, if
@@ -596,8 +583,6 @@ void RenderProcessHost::OnObjectSignaled(HANDLE object) {
   DCHECK(process_.handle());
   DCHECK(channel_.get());
   DCHECK_EQ(object, process_.handle());
-
-  MessageLoop::current()->WatchObject(object, NULL);
 
   bool clean_shutdown = !process_util::DidProcessCrash(object);
 
@@ -744,6 +729,12 @@ void RenderProcessHost::WidgetHidden() {
   }
 }
 
+void RenderProcessHost::AddWord(const std::wstring& word) {
+  base::Thread* io_thread = g_browser_process->io_thread();
+  io_thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
+      profile_->GetSpellChecker(), &SpellChecker::AddWord, word));
+}
+
 // NotificationObserver implementation.
 void RenderProcessHost::Observe(NotificationType type,
                                 const NotificationSource& source,
@@ -781,3 +772,4 @@ bool RenderProcessHost::ShouldTryToUseExistingProcessHost() {
   return run_renderer_in_process() ||
          (renderer_process_count >= GetMaxRendererProcessCount());
 }
+

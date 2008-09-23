@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_SESSION_SERVICE_H__
 #define CHROME_BROWSER_SESSION_SERVICE_H__
@@ -38,6 +13,8 @@
 #include "base/time.h"
 #include "chrome/browser/browser_type.h"
 #include "chrome/browser/cancelable_request.h"
+#include "chrome/browser/session_id.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/page_transition_types.h"
 #include "chrome/common/stl_util-inl.h"
 #include "googleurl/src/gurl.h"
@@ -47,65 +24,39 @@ class NavigationController;
 class NavigationEntry;
 class Profile;
 class TabContents;
-class Thread;
-class Timer;
 class SessionBackend;
 class SessionCommand;
 
-// SessionID ------------------------------------------------------------------
-
-// Uniquely identifies a session, tab or window.
-
-class SessionID {
-  friend class SessionService;
- public:
-  typedef int32 id_type;
-
-  SessionID();
-  ~SessionID() {}
-
-  // Returns the underlying id.
-  id_type id() const { return id_; }
-
-  // Returns true if the two commands are equal.
-  bool Equals(const SessionID& other) const;
-
- private:
-  explicit SessionID(id_type id) : id_(id) {}
-
-  // Resets the id. This is used when restoring a session
-  void set_id(id_type id) { id_ = id; }
-
-  id_type id_;
-};
+namespace base {
+class Thread;
+}
 
 // TabNavigation  ------------------------------------------------------------
 
 // TabNavigation corresponds to a NavigationEntry.
 
 struct TabNavigation {
+  friend class SessionService;
+
   enum TypeMask {
     HAS_POST_DATA = 1
   };
 
-  TabNavigation() : index(-1), transition(PageTransition::TYPED), type_mask(0) {
+  TabNavigation() : transition(PageTransition::TYPED), type_mask(0), index(-1) {
   }
   TabNavigation(int index,
                 const GURL& url,
                 const std::wstring& title,
                 const std::string& state,
                 PageTransition::Type transition)
-      : index(index),
-        url(url),
+      : url(url),
         title(title),
         state(state),
         transition(transition),
-        type_mask(0) {}
+        type_mask(0),
+        index(index) {}
 
 
-  // The index in the NavigationController. If this is -1, it means this
-  // TabNavigation is bogus.
-  int index;
   GURL url;
   // The title of the page.
   std::wstring title;
@@ -115,6 +66,14 @@ struct TabNavigation {
   // A mask used for arbitrary boolean values needed to represent a
   // NavigationEntry. Currently only contains HAS_POST_DATA or 0.
   int type_mask;
+
+ private:
+  // The index in the NavigationController. If this is -1, it means this
+  // TabNavigation is bogus.
+  //
+  // This is used when determining the selected TabNavigation and only useful
+  // by SessionService.
+  int index;
 };
 
 // SessionTab ----------------------------------------------------------------
@@ -220,6 +179,7 @@ struct SessionWindow {
 // of the browser.
 
 class SessionService : public CancelableRequestProvider,
+                       public NotificationObserver,
                        public base::RefCountedThreadSafe<SessionService> {
   friend class SessionServiceTestHelper;
  public:
@@ -276,10 +236,17 @@ class SessionService : public CancelableRequestProvider,
   // (should_track_changes_for_browser_type returns true).
   void SetWindowType(const SessionID& window_id, BrowserType::Type type);
 
-  // Removes the navigation entries for tab_id whose indices are >= index.
-  void TabNavigationPathPruned(const SessionID& window_id,
-                               const SessionID& tab_id,
-                               int index);
+  // Invoked when the NavigationController has removed entries from the back of
+  // the list. |count| gives the number of entries in the navigation controller.
+  void TabNavigationPathPrunedFromBack(const SessionID& window_id,
+                                       const SessionID& tab_id,
+                                       int count);
+
+  // Invoked when the NavigationController has removed entries from the front of
+  // the list. |count| gives the number of entries that were removed.
+  void TabNavigationPathPrunedFromFront(const SessionID& window_id,
+                                        const SessionID& tab_id,
+                                        int count);
 
   // Updates the navigation entry for the specified tab.
   void UpdateTabNavigation(const SessionID& window_id,
@@ -372,6 +339,10 @@ class SessionService : public CancelableRequestProvider,
 
   // Various initialization; called from the constructor.
   void Init(const std::wstring& path);
+
+  virtual void Observe(NotificationType type,
+                       const NotificationSource& source,
+                       const NotificationDetails& details);
 
   // Get*Session call into this to schedule the request. The request
   // does NOT directly invoke the callback, rather the callback invokes
@@ -540,6 +511,9 @@ class SessionService : public CancelableRequestProvider,
   // Returns true if changes to tabs in the specified window should be tracked.
   bool ShouldTrackChangesToWindow(const SessionID& window_id);
 
+  // Should we track the specified entry?
+  bool SessionService::ShouldTrackEntry(const NavigationEntry& entry);
+
   // Returns true if we track changes to the specified browser type.
   static bool should_track_changes_for_browser_type(BrowserType::Type type) {
     return type == BrowserType::TABBED_BROWSER;
@@ -596,7 +570,7 @@ class SessionService : public CancelableRequestProvider,
 
   // Thread backend tasks are run on. This comes from the profile, and is
   // null during testing.
-  Thread* backend_thread_;
+  base::Thread* backend_thread_;
 
   // Are there any open open tabbed browsers?
   bool has_open_tabbed_browsers_;
@@ -606,3 +580,4 @@ class SessionService : public CancelableRequestProvider,
 };
 
 #endif  // CHROME_BROWSER_SESSION_SERVICE_H__
+

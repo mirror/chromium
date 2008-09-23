@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/resource_message_filter.h"
 
@@ -41,6 +16,8 @@
 #include "chrome/browser/render_process_host.h"
 #include "chrome/browser/render_widget_helper.h"
 #include "chrome/browser/spellchecker.h"
+#include "chrome/common/chrome_plugin_lib.h"
+#include "chrome/common/chrome_plugin_util.h"
 #include "chrome/common/clipboard_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -167,6 +144,9 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
 
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetCookie, OnSetCookie)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetCookies, OnGetCookies)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_GetDataDir, OnGetDataDir)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_PluginMessage, OnPluginMessage)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_PluginSyncMessage, OnPluginSyncMessage)
     IPC_MESSAGE_HANDLER(ViewHostMsg_LoadFont, OnLoadFont)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetMonitorInfoForWindow,
                         OnGetMonitorInfoForWindow)
@@ -205,6 +185,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardReadHTML,
                         OnClipboardReadHTML)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetWindowRect, OnGetWindowRect)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_GetRootWindowRect, OnGetRootWindowRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetMimeTypeFromExtension,
                         OnGetMimeTypeFromExtension)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetMimeTypeFromFile,
@@ -264,10 +245,15 @@ void ResourceMessageFilter::OnReceiveContextMenuMsg(const IPC::Message& msg) {
   if (!params.misspelled_word.empty() &&
       spellchecker_ != NULL) {
     int misspell_location, misspell_length;
-    spellchecker_->SpellCheckWord(params.misspelled_word.c_str(),
-       static_cast<int>(params.misspelled_word.length()),
-       &misspell_location, &misspell_length,
-       &params.dictionary_suggestions);
+    bool is_misspelled = !spellchecker_->SpellCheckWord(
+        params.misspelled_word.c_str(),
+        static_cast<int>(params.misspelled_word.length()),
+        &misspell_location, &misspell_length,
+        &params.dictionary_suggestions);
+
+    // If not misspelled, make the misspelled_word param empty.
+    if (!is_misspelled)
+      params.misspelled_word.clear();
   }
 
   // Create a new ViewHostMsg_ContextMenu message.
@@ -362,6 +348,45 @@ void ResourceMessageFilter::OnGetCookies(const GURL& url,
     *cookies = request_context_->cookie_store()->GetCookies(url);
 }
 
+void ResourceMessageFilter::OnGetDataDir(std::wstring* data_dir) {
+  *data_dir = plugin_service_->GetChromePluginDataDir();
+}
+
+void ResourceMessageFilter::OnPluginMessage(const std::wstring& dll_path,
+                                            const std::vector<uint8>& data) {
+  DCHECK(MessageLoop::current() ==
+         ChromeThread::GetMessageLoop(ChromeThread::IO));
+
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
+  if (chrome_plugin) {
+    void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
+    uint32 data_len = static_cast<uint32>(data.size());
+    chrome_plugin->functions().on_message(data_ptr, data_len);
+  }
+}
+
+void ResourceMessageFilter::OnPluginSyncMessage(const std::wstring& dll_path,
+                                                const std::vector<uint8>& data,
+                                                std::vector<uint8> *retval) {
+  DCHECK(MessageLoop::current() ==
+         ChromeThread::GetMessageLoop(ChromeThread::IO));
+
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
+  if (chrome_plugin) {
+    void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
+    uint32 data_len = static_cast<uint32>(data.size());
+    void *retval_buffer = 0;
+    uint32 retval_size = 0;
+    chrome_plugin->functions().on_sync_message(data_ptr, data_len,
+                                               &retval_buffer, &retval_size);
+    if (retval_buffer) {
+      retval->resize(retval_size);
+      memcpy(&(retval->at(0)), retval_buffer, retval_size);
+      CPB_Free(retval_buffer);
+    }
+  }
+}
+
 void ResourceMessageFilter::OnGetPlugins(bool refresh,
                                          std::vector<WebPluginInfo>* plugins) {
   plugin_service_->GetPlugins(refresh, plugins);
@@ -440,24 +465,30 @@ void ResourceMessageFilter::OnClipboardReadHTML(std::wstring* markup,
 
 void ResourceMessageFilter::OnGetWindowRect(HWND window, gfx::Rect *rect) {
   RECT window_rect = {0};
-  // GetWindowRect can fail if window is invalid.
   GetWindowRect(window, &window_rect);
+  *rect = window_rect;
+}
+
+void ResourceMessageFilter::OnGetRootWindowRect(HWND window, gfx::Rect *rect) {
+  RECT window_rect = {0};
+  HWND root_window = ::GetAncestor(window, GA_ROOT);
+  GetWindowRect(root_window, &window_rect);
   *rect = window_rect;
 }
 
 void ResourceMessageFilter::OnGetMimeTypeFromExtension(
     const std::wstring& ext, std::string* mime_type) {
-  mime_util::GetMimeTypeFromExtension(ext, mime_type);
+  net::GetMimeTypeFromExtension(ext, mime_type);
 }
 
 void ResourceMessageFilter::OnGetMimeTypeFromFile(
     const std::wstring& file_path, std::string* mime_type) {
-  mime_util::GetMimeTypeFromFile(file_path, mime_type);
+  net::GetMimeTypeFromFile(file_path, mime_type);
 }
 
 void ResourceMessageFilter::OnGetPreferredExtensionForMimeType(
     const std::string& mime_type, std::wstring* ext) {
-  mime_util::GetPreferredExtensionForMimeType(mime_type, ext);
+  net::GetPreferredExtensionForMimeType(mime_type, ext);
 }
 
 void ResourceMessageFilter::OnGetCPBrowsingContext(uint32* context) {
@@ -658,7 +689,7 @@ class SpellCheckTask : public Task {
     if (checker)
       checker->SpellCheckWord(word_.c_str(), static_cast<int>(word_.length()),
                               &misspell_location, &misspell_length, NULL);
-    Thread* io_thread = g_browser_process->io_thread();
+    base::Thread* io_thread = g_browser_process->io_thread();
     if (io_thread) {
       io_thread->message_loop()->PostTask(FROM_HERE,
           new SpellCheckReplyTask(filter_, reply_msg_,

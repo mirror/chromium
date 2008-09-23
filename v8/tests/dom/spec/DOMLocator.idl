@@ -1,9 +1,0 @@
-// Introduced in DOM Level 3:
-interface DOMLocator {
-  readonly attribute long            lineNumber;
-  readonly attribute long            columnNumber;
-  readonly attribute long            byteOffset;
-  readonly attribute long            utf16Offset;
-  readonly attribute Node            relatedNode;
-  readonly attribute DOMString       uri;
-};

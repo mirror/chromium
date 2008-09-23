@@ -1,40 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/plugin/webplugin_delegate_stub.h"
 
 #include "base/command_line.h"
 #include "base/time.h"
-#include "base/gfx/bitmap_header.h"
-#include "base/gfx/platform_device.h"
-#include "bindings/npapi.h"
-#include "bindings/npruntime.h"
+#include "base/gfx/platform_device_win.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/emf.h"
 #include "chrome/common/plugin_messages.h"
@@ -43,6 +15,8 @@
 #include "chrome/plugin/plugin_channel.h"
 #include "chrome/plugin/plugin_thread.h"
 #include "chrome/plugin/webplugin_proxy.h"
+#include "third_party/npapi/bindings/npapi.h"
+#include "third_party/npapi/bindings/npruntime.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/webcursor.h"
 
@@ -106,10 +80,7 @@ void WebPluginDelegateStub::OnMessageReceived(const IPC::Message& msg) {
                         OnDidFinishLoadWithReason)
     IPC_MESSAGE_HANDLER(PluginMsg_SetFocus, OnSetFocus)
     IPC_MESSAGE_HANDLER(PluginMsg_HandleEvent, OnHandleEvent)
-    IPC_MESSAGE_HANDLER(PluginMsg_Paint, OnPaint)
     IPC_MESSAGE_HANDLER(PluginMsg_Print, OnPrint)
-    IPC_MESSAGE_HANDLER(PluginMsg_PaintIntoSharedMemory,
-                        OnPaintIntoSharedMemory)
     IPC_MESSAGE_HANDLER(PluginMsg_GetPluginScriptableObject,
                         OnGetPluginScriptableObject)
     IPC_MESSAGE_HANDLER(PluginMsg_UpdateGeometry, OnUpdateGeometry)
@@ -188,12 +159,14 @@ void WebPluginDelegateStub::OnDidReceiveResponse(
 }
 
 void WebPluginDelegateStub::OnDidReceiveData(int id,
-                                             const std::vector<char>& buffer) {
+                                             const std::vector<char>& buffer,
+                                             int data_offset) {
   WebPluginResourceClient* client = webplugin_->GetResourceClient(id);
   if (!client)
     return;
 
-  client->DidReceiveData(&buffer.front(), static_cast<int>(buffer.size()));
+  client->DidReceiveData(&buffer.front(), static_cast<int>(buffer.size()),
+                         data_offset);
 }
 
 void WebPluginDelegateStub::OnDidFinishLoading(int id) {
@@ -226,47 +199,6 @@ void WebPluginDelegateStub::OnHandleEvent(const NPEvent& event,
   *handled = delegate_->HandleEvent(const_cast<NPEvent*>(&event), cursor);
 }
 
-void WebPluginDelegateStub::OnPaint(const PluginMsg_Paint_Params& params) {
-  // Convert the shared memory handle to a handle that works in our process,
-  // and then use that to create an HDC.
-  win_util::ScopedHandle shared_section(win_util::GetSectionFromProcess(
-      params.shared_memory, channel_->renderer_handle(), false));
-
-  if (shared_section == NULL) {
-    NOTREACHED();
-    return;
-  }
-
-  void* data = NULL;
-  HDC screen_dc = GetDC(NULL);
-  BITMAPINFOHEADER bitmap_header;
-  gfx::CreateBitmapHeader(params.size.width(), params.size.height(),
-                          &bitmap_header);
-  win_util::ScopedBitmap hbitmap(CreateDIBSection(
-      screen_dc, reinterpret_cast<const BITMAPINFO*>(&bitmap_header),
-      DIB_RGB_COLORS, &data,
-      shared_section, 0));
-  ReleaseDC(NULL, screen_dc);
-  if (hbitmap == NULL) {
-    NOTREACHED();
-    return;
-  }
-
-  win_util::ScopedHDC hdc(CreateCompatibleDC(NULL));
-  if (hdc == NULL) {
-    NOTREACHED();
-    return;
-  }
-  gfx::PlatformDevice::InitializeDC(hdc);
-  SelectObject(hdc, hbitmap);
-  SetWorldTransform(hdc, &params.xf);
-
-  win_util::ScopedHRGN hrgn(CreateRectRgnIndirect(&params.clip_rect.ToRECT()));
-  SelectClipRgn(hdc, hrgn);
-  webplugin_->WillPaint();
-  delegate_->Paint(hdc, params.damaged_rect);
-}
-
 void WebPluginDelegateStub::OnPrint(PluginMsg_PrintResponse_Params* params) {
   gfx::Emf emf;
   if (!emf.CreateDc(NULL, NULL)) {
@@ -274,7 +206,7 @@ void WebPluginDelegateStub::OnPrint(PluginMsg_PrintResponse_Params* params) {
     return;
   }
   HDC hdc = emf.hdc();
-  gfx::PlatformDevice::InitializeDC(hdc);
+  gfx::PlatformDeviceWin::InitializeDC(hdc);
   delegate_->Print(hdc);
   if (!emf.CloseDc()) {
     NOTREACHED();
@@ -292,80 +224,14 @@ void WebPluginDelegateStub::OnPrint(PluginMsg_PrintResponse_Params* params) {
   DCHECK(success);
 }
 
-void WebPluginDelegateStub::OnPaintIntoSharedMemory(
-    const PluginMsg_Paint_Params& params,
-    SharedMemoryHandle* emf_buffer,
-    size_t* bytes) {
-  *emf_buffer = NULL;
-  *bytes = 0;
-
-  gfx::Emf emf;
-  if (!emf.CreateDc(NULL, NULL)) {
-    NOTREACHED();
-    return;
-  }
-  HDC hdc = emf.hdc();
-  gfx::PlatformDevice::InitializeDC(hdc);
-
-  if (delegate_->windowless()) {
-    WindowlessPaint(hdc, params);
-  } else {
-    WindowedPaint(hdc, params.damaged_rect);
-  }
-
-  // Need to send back the data as shared memory.
-  if (!emf.CloseDc()) {
-    NOTREACHED();
-    return;
-  }
-
-  size_t size = emf.GetDataSize();
-  DCHECK(size);
-  *bytes = size;
-  SharedMemory shared_buf;
-  CreateSharedBuffer(size, &shared_buf, emf_buffer);
-
-  // Retrieve a copy of the data.
-  bool success = emf.GetData(shared_buf.memory(), size);
-  DCHECK(success);
-}
-
-void WebPluginDelegateStub::WindowedPaint(HDC hdc,
-                                          const gfx::Rect& window_rect) {
-  // Use the NPAPI print() function to render the plugin.
-  delegate_->Print(hdc);
-}
-
-void WebPluginDelegateStub::WindowlessPaint(
-    HDC hdc,
-    const PluginMsg_Paint_Params& params) {
-  void* data = NULL;
-  HDC screen_dc = GetDC(NULL);
-  BITMAPINFOHEADER bitmap_header;
-  gfx::CreateBitmapHeader(params.size.width(), params.size.height(),
-                          &bitmap_header);
-  win_util::ScopedBitmap hbitmap(CreateDIBSection(
-      screen_dc, reinterpret_cast<const BITMAPINFO*>(&bitmap_header),
-      DIB_RGB_COLORS, &data, NULL, 0));
-  ReleaseDC(NULL, screen_dc);
-  if (hbitmap == NULL) {
-    NOTREACHED();
-    return;
-  }
-  SelectObject(hdc, hbitmap);
-
-  // Apply transform and clipping.
-  SetWorldTransform(hdc, &params.xf);
-  win_util::ScopedHRGN hrgn(CreateRectRgnIndirect(&params.clip_rect.ToRECT()));
-  SelectClipRgn(hdc, hrgn);
-  webplugin_->WillPaint();
-  delegate_->Paint(hdc, params.damaged_rect);
-}
-
-void WebPluginDelegateStub::OnUpdateGeometry(const gfx::Rect& window_rect,
-                                             const gfx::Rect& clip_rect,
-                                             bool visible) {
-  delegate_->UpdateGeometry(window_rect, clip_rect, visible);
+void WebPluginDelegateStub::OnUpdateGeometry(
+    const gfx::Rect& window_rect,
+    const gfx::Rect& clip_rect,
+    bool visible,
+    const SharedMemoryHandle& windowless_buffer,
+    const SharedMemoryLock& lock) {
+  webplugin_->UpdateGeometry(
+      window_rect, clip_rect, visible, windowless_buffer, lock);
 }
 
 void WebPluginDelegateStub::OnGetPluginScriptableObject(int* route_id,
@@ -451,7 +317,8 @@ void WebPluginDelegateStub::OnHandleURLRequestReply(
   WebPluginResourceClient* resource_client =
       delegate_->CreateResourceClient(params.resource_id, params.url,
                                       params.notify_needed,
-                                      params.notify_data);
+                                      params.notify_data,
+                                      params.stream);
   webplugin_->OnResourceCreated(params.resource_id, resource_client);
 }
 
@@ -460,3 +327,4 @@ void WebPluginDelegateStub::OnURLRequestRouted(const std::string& url,
                                                HANDLE notify_data) {
   delegate_->URLRequestRouted(url, notify_needed, notify_data);
 }
+

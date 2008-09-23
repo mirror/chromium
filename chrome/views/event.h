@@ -1,40 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_VIEWS_EVENT_H__
 #define CHROME_VIEWS_EVENT_H__
-
-// TODO(maruel):  Remove these as soon as LocatedEvent::GetLocation() is
-// removed.
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlmisc.h>
 
 #include "base/basictypes.h"
 #include "base/gfx/point.h"
@@ -115,18 +84,14 @@ class Event {
   int GetWindowsFlags() const;
 
   // Convert windows flags to ChromeViews::Event flags
-  static int ConvertWindowsFlags(UINT win_flags);
+  static int ConvertWindowsFlags(uint32 win_flags);
 
   // Convert WebInputEvent::Modifiers flags to ChromeViews::Event flags.
   // Note that this only deals with keyboard modifiers.
   static int ConvertWebInputEventFlags(int web_input_event_flags);
 
  protected:
-  Event(EventType type, int flags)
-      : type_(type),
-        time_stamp_(GetTickCount()),
-        flags_(flags) {
-  }
+  Event(EventType type, int flags);
 
   Event(const Event& model)
       : type_(model.GetType()),
@@ -163,23 +128,18 @@ class LocatedEvent : public Event {
   LocatedEvent(const LocatedEvent& model, View* from, View* to);
 
   // Returns the X location.
-  int GetX() const {
+  int x() const {
     return location_.x();
   }
 
   // Returns the Y location.
-  int GetY() const {
+  int y() const {
     return location_.y();
   }
 
   // Returns the location.
   const gfx::Point& location() const {
     return location_;
-  }
-
-  // WARNING: DEPRECATED. Returns the location in WTL::CPoint format.
-  WTL::CPoint GetLocation() const {
-    return WTL::CPoint(location_.x(), location_.y());
   }
 
  private:
@@ -271,9 +231,7 @@ class KeyEvent : public Event {
     return character_;
   }
 
-  bool IsExtendedKey() const {
-    return (message_flags_ & KF_EXTENDED) == KF_EXTENDED;
-  }
+  bool IsExtendedKey() const;
 
   int GetRepeatCount() const {
     return repeat_count_;
@@ -349,3 +307,4 @@ class DropTargetEvent : public LocatedEvent {
 }  // namespace ChromeViews
 
 #endif  // CHROME_VIEWS_EVENT_H__
+

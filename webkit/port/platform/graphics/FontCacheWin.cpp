@@ -28,7 +28,6 @@
 
 #include "config.h"
 #include "FontCache.h"
-#include "FontMetrics.h"
 #include "Font.h"
 #include "SimpleFontData.h"
 #include "StringHash.h"
@@ -354,24 +353,6 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
                                                     const UChar* characters,
                                                     int length)
 {
-    // Use Safari mac's font-fallback mechanism when in layout test mode.
-    if (webkit_glue::IsLayoutTestMode() && length == 1) {
-        // Get the family name for the font
-        String origFamily =
-            font.primaryFont()->platformData().overrideFontMetrics()->family;
-
-        const String* fallbackFamily =
-            FontFallbackMetrics::lookup(origFamily, characters[0]);
-
-        if (fallbackFamily) {
-            FontPlatformData* platformData = getCachedFontPlatformData(
-                font.fontDescription(), *fallbackFamily);
-            if (platformData) {
-                return new SimpleFontData(*platformData);
-            }
-        }
-    }
-
     // TODO(jungshik) : Consider passing fontDescription.dominantScript() 
     // to GetFallbackFamily here along with the corresponding change
     // in base/gfx.
@@ -412,7 +393,7 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
     };
 
     const static wchar_t* const commonFonts[] = {
-        L"tahoma", 
+        L"tahoma",
         L"arial unicode ms",
         L"microsoft sans serif",
         L"lucida sans unicode",
@@ -492,7 +473,7 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
         if (langFontLink->MapFont(hdc, actualCodePages, characters[0], &result) == S_OK) {
             // This font will have to be deleted using the IMLangFontLink2
             // rather than the normal way.
-            fontData = new SimpleFontData(FontPlatformData(result, 0, 0, true));
+            fontData = new SimpleFontData(FontPlatformData(result, 0, true));
         }
     }
 
@@ -548,9 +529,6 @@ FontPlatformData* FontCache::getSimilarFontPlatformData(const Font& font)
 FontPlatformData* FontCache::getLastResortFallbackFont(
     const FontDescription& description)
 {
-    if (webkit_glue::IsLayoutTestMode())
-        return getCachedFontPlatformData(description, AtomicString("Times"));
-
     FontDescription::GenericFamilyType generic = description.genericFamily();
     // TODO(jungshik): Mapping webkit generic to gfx::GenericFamilyType needs to be
     // more intelligent and the mapping function should be added to webkit_glue. 
@@ -653,20 +631,9 @@ FontPlatformData* FontCache::createFontPlatformData(const FontDescription& fontD
     if (!hfont)
         return 0;
 
-    const FontMetrics* overrideFontMetrics = NULL;
-
-    if (webkit_glue::IsLayoutTestMode()) {
-        // In layout-test mode, we have a font IFF it exists in our font size
-        // cache.  We want to ignore the existence/absence of the font in the
-        // system.
-        overrideFontMetrics = FontMetrics::lookup(family,
-                                                  fontDescription.bold(),
-                                                  fontDescription.italic());
-        if (!overrideFontMetrics) {
-            DeleteObject(hfont);
-            return 0;
-        }
-    } else if (!equalIgnoringCase(family, winName)) {
+	// TODO(pamg): Do we need to use predefined fonts "guaranteed" to exist
+	// when we're running in layout-test mode?
+    if (!equalIgnoringCase(family, winName)) {
         // For CJK fonts with both English and native names, 
         // GetTextFace returns a native name under the font's "locale"
         // and an English name under other locales regardless of 
@@ -683,9 +650,7 @@ FontPlatformData* FontCache::createFontPlatformData(const FontDescription& fontD
 
     return new FontPlatformData(hfont,
                                 fontDescription.computedPixelSize(),
-                                overrideFontMetrics,
                                 false);
 }
 
 }
-

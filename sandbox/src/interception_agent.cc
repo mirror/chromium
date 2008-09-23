@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // For information about interceptions as a whole see
 // http://wiki/Main/ChromeSandboxInterceptionDesign
@@ -56,22 +31,22 @@ SANDBOX_INTERCEPT NtExports g_nt;
 SANDBOX_INTERCEPT SharedMemory* g_interceptions = NULL;
 
 InterceptionAgent* InterceptionAgent::GetInterceptionAgent() {
-  static InterceptionAgent* s_singleton_pointer = NULL;
-  if (!s_singleton_pointer) {
+  static InterceptionAgent* s_singleton = NULL;
+  if (!s_singleton) {
     if (!g_interceptions)
       return NULL;
 
-    size_t object_bytes = g_interceptions->num_intercepted_dlls * sizeof(void*);
-    s_singleton_pointer = reinterpret_cast<InterceptionAgent*>(
-                              new(NT_ALLOC) char[object_bytes]);
+    size_t array_bytes = g_interceptions->num_intercepted_dlls * sizeof(void*);
+    s_singleton = reinterpret_cast<InterceptionAgent*>(
+        new(NT_ALLOC) char[array_bytes + sizeof(InterceptionAgent)]);
 
-    bool success = s_singleton_pointer->Init(g_interceptions);
+    bool success = s_singleton->Init(g_interceptions);
     if (!success) {
-      operator delete(s_singleton_pointer, NT_ALLOC);
-      s_singleton_pointer = NULL;
+      operator delete(s_singleton, NT_ALLOC);
+      s_singleton = NULL;
     }
   }
-  return s_singleton_pointer;
+  return s_singleton;
 }
 
 bool InterceptionAgent::Init(SharedMemory* shared_memory) {
@@ -95,13 +70,14 @@ bool InterceptionAgent::DllMatch(const UNICODE_STRING* full_path,
       !g_nt.RtlCompareUnicodeString(&current_name, full_path, case_insensitive))
     return true;
 
-  if (!g_nt.RtlCompareUnicodeString(&current_name, name, case_insensitive))
+  if (name &&
+      !g_nt.RtlCompareUnicodeString(&current_name, name, case_insensitive))
     return true;
 
   return false;
 }
 
-void InterceptionAgent::OnDllLoad(const UNICODE_STRING* full_path,
+bool InterceptionAgent::OnDllLoad(const UNICODE_STRING* full_path,
                                   const UNICODE_STRING* name,
                                   void* base_address) {
   DllPatchInfo* dll_info = interceptions_->dll_list;
@@ -113,12 +89,18 @@ void InterceptionAgent::OnDllLoad(const UNICODE_STRING* full_path,
     dll_info = reinterpret_cast<DllPatchInfo*>(
                    reinterpret_cast<char*>(dll_info) + dll_info->record_bytes);
   }
+
+  // Return now if the dll is not in our list of interest.
   if (i == interceptions_->num_intercepted_dlls)
-    return;
+    return true;
+
+  // The dll must be unloaded.
+  if (dll_info->unload_module)
+    return false;
 
   // Purify causes this condition to trigger.
   if (dlls_[i])
-    return;
+    return true;
 
   size_t buffer_bytes = offsetof(DllInterceptionData, thunks) +
                         dll_info->num_functions * sizeof(ThunkData);
@@ -127,7 +109,7 @@ void InterceptionAgent::OnDllLoad(const UNICODE_STRING* full_path,
 
   DCHECK_NT(dlls_[i]);
   if (!dlls_[i])
-    return;
+    return true;
 
   dlls_[i]->data_bytes = buffer_bytes;
   dlls_[i]->num_thunks = 0;
@@ -142,6 +124,7 @@ void InterceptionAgent::OnDllLoad(const UNICODE_STRING* full_path,
   VERIFY_SUCCESS(g_nt.ProtectVirtualMemory(NtCurrentProcess, &to_protect,
                                            &real_size, PAGE_EXECUTE_READ,
                                            &old_protect));
+  return true;
 }
 
 void InterceptionAgent::OnDllUnload(void* base_address) {
@@ -238,3 +221,4 @@ ResolverThunk* InterceptionAgent::GetResolver(InterceptionType type) {
 }
 
 }  // namespace sandbox
+

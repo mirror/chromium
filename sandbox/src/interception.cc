@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // For information about interceptions as a whole see
 // http://wiki/Main/ChromeSandboxInterceptionDesign
@@ -55,6 +30,9 @@ namespace sandbox {
 
 SANDBOX_INTERCEPT SharedMemory* g_interceptions;
 
+// Magic constant that identifies that this function is not to be patched.
+const char kUnloadDLLDummyFunction[] = "@";
+
 InterceptionManager::InterceptionManager(TargetProcess* child_process,
                                          bool relaxed)
     : child_(child_process), names_used_(false), relaxed_(relaxed) {
@@ -74,7 +52,6 @@ bool InterceptionManager::AddToPatchedFunctions(
   function.interceptor_address = replacement_code_address;
 
   interceptions_.push_back(function);
-
   return true;
 }
 
@@ -90,7 +67,19 @@ bool InterceptionManager::AddToPatchedFunctions(
 
   interceptions_.push_back(function);
   names_used_ = true;
+  return true;
+}
 
+bool InterceptionManager::AddToUnloadModules(const wchar_t* dll_name) {
+  InterceptionData module_to_unload;
+  module_to_unload.type = INTERCEPTION_UNLOAD_MODULE;
+  module_to_unload.dll = dll_name;
+  // The next two are dummy values that make the structures regular, instead
+  // of having special cases. They should not be used.
+  module_to_unload.function = kUnloadDLLDummyFunction;
+  module_to_unload.interceptor_address = reinterpret_cast<void*>(1);
+
+  interceptions_.push_back(module_to_unload);
   return true;
 }
 
@@ -229,6 +218,7 @@ bool InterceptionManager::SetupDllInfo(const InterceptionData& data,
   *buffer = reinterpret_cast<char*>(*buffer) + required;
 
   // set up the dll info to be what we know about it at this time
+  dll_info->unload_module = (data.type == INTERCEPTION_UNLOAD_MODULE);
   dll_info->record_bytes = required;
   dll_info->offset_to_functions = required;
   dll_info->num_functions = 0;
@@ -245,6 +235,12 @@ bool InterceptionManager::SetupInterceptionInfo(const InterceptionData& data,
   DCHECK(buffer_bytes);
   DCHECK(buffer);
   DCHECK(*buffer);
+
+  if ((dll_info->unload_module) && 
+      (data.function != kUnloadDLLDummyFunction)) {
+    // Can't specify a dll for both patch and unload.
+    NOTREACHED();
+  }
 
   FunctionInfo* function = reinterpret_cast<FunctionInfo*>(*buffer);
 
@@ -339,6 +335,10 @@ bool InterceptionManager::PatchNtdll(bool hot_patch_needed) {
 
   if (hot_patch_needed) {
 #if SANDBOX_EXPORTS
+    // Make sure the functions are not excluded by the linker.
+    #pragma comment(linker, "/include:_TargetNtMapViewOfSection@44")
+    #pragma comment(linker, "/include:_TargetNtUnmapViewOfSection@12")
+
     AddToPatchedFunctions(kNtdllName, kMapViewOfSectionName,
                           INTERCEPTION_SERVICE_CALL,
                           "_TargetNtMapViewOfSection@44");
@@ -483,3 +483,4 @@ bool InterceptionManager::PatchClientFunctions(DllInterceptionData* thunks,
 }
 
 }  // namespace sandbox
+

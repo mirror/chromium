@@ -1,3 +1,0 @@
-property-load-megamorphic.js:3: Uncaught TypeError: Cannot read property 'foo' of null
-function get_foo(obj) { return obj.foo; }
-                                  ^

@@ -33,7 +33,7 @@
 
 #include "base/gfx/image_operations.h"
 #include "base/gfx/native_theme.h"
-#include "base/gfx/platform_canvas.h"
+#include "base/gfx/platform_canvas_win.h"
 #include "base/gfx/skia_utils.h"
 #include "GraphicsContextPrivate.h"
 #include "NativeImageSkia.h"
@@ -243,9 +243,9 @@ void SkGraphicsContext::paintComplexText(UniscribeStateTextRun& state,
   canvas_->endPlatformPaint();
 }
 
-bool SkGraphicsContext::paintText(HFONT hfont,
+bool SkGraphicsContext::paintText(FontHandle hfont,
                                   int number_glyph,
-                                  const WORD* glyphs,
+                                  const uint16* glyphs,
                                   const int* advances,
                                   const SkPoint& origin) {
   SkColor color(paint_context_->fillColor());

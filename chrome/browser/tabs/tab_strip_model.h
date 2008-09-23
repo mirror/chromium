@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_TABS_TAB_STRIP_MODEL_H__
 #define CHROME_BROWSER_TABS_TAB_STRIP_MODEL_H__
@@ -95,6 +70,10 @@ class TabStripModelObserver {
   // The specified TabContents at |index| changed in some way.
   virtual void TabChangedAt(TabContents* contents, int index) { }
   // Loading progress representations for tabs should be validated/updated.
+  // TODO(beng): this wiring is cracktarded. consider revising. The loading
+  //             animation timer should live in BrowserView2, and from there
+  //             notify both the tabstrip and the window icon.
+  //             clean this up once XPFrame and VistaFrame have retired.
   virtual void TabValidateAnimations() { }
   // The TabStripModel now no longer has any "significant" (user created or
   // user manipulated) tabs. The implementer may use this as a trigger to try
@@ -353,8 +332,13 @@ class TabStripModel : public NotificationObserver {
   // Forgets the group affiliation of the specified TabContents. This should be
   // called when a TabContents that is part of a logical group of tabs is
   // moved to a new logical context by the user (e.g. by typing a new URL or
-  // selecting a bookmark).
+  // selecting a bookmark). This also forgets the opener, which is considered
+  // a weaker relationship than group.
   void ForgetGroup(TabContents* contents);
+
+  // Returns true if the group/opener relationships present for |contents|
+  // should be reset when _any_ selection change occurs in the model.
+  bool ShouldResetGroupOnSelect(TabContents* contents) const;
 
   // Command level API /////////////////////////////////////////////////////////
 
@@ -409,6 +393,10 @@ class TabStripModel : public NotificationObserver {
   // TabStripModel index |context_index|.
   void ExecuteContextMenuCommand(int context_index,
                                  ContextMenuCommand command_id);
+
+  // Returns a vector of indices of TabContentses opened from the TabContents
+  // at the specified |index|.
+  std::vector<int> GetIndexesOpenedBy(int index) const;
 
   // Overridden from notificationObserver:
   virtual void Observe(NotificationType type,
@@ -487,8 +475,17 @@ class TabStripModel : public NotificationObserver {
     // same group. This property is used to determine what tab to select next
     // when one is closed.
     NavigationController* opener;
+    // True if our group should be reset the moment selection moves away from
+    // this Tab. This is the case for tabs opened in the foreground at the end
+    // of the TabStrip while viewing another Tab. If these tabs are closed
+    // before selection moves elsewhere, their opener is selected. But if
+    // selection shifts to _any_ tab (including their opener), the group
+    // relationship is reset to avoid confusing close sequencing.
+    bool reset_group_on_select;
+
     explicit TabContentsData(TabContents* a_contents)
-        : contents(a_contents) {
+        : contents(a_contents),
+          reset_group_on_select(false) {
       SetGroup(NULL);
     }
 
@@ -539,3 +536,4 @@ class TabStripModel : public NotificationObserver {
 };
 
 #endif  // CHROME_BROWSER_TABS_TAB_STRIP_MODEL_H__
+

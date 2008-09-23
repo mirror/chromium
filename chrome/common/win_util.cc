@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/common/win_util.h"
 
@@ -180,30 +155,6 @@ bool ShouldUseVistaFrame() {
   return !!f;
 }
 
-std::wstring FormatMessage(unsigned messageid) {
-  wchar_t * string_buffer = NULL;
-  unsigned string_length = ::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                                      FORMAT_MESSAGE_FROM_SYSTEM |
-                                      FORMAT_MESSAGE_IGNORE_INSERTS, NULL,
-                                      messageid, 0,
-                                      reinterpret_cast<wchar_t *>(&string_buffer),
-                                      0, NULL);
-
-  std::wstring formatted_string;
-  if (string_buffer) {
-    formatted_string = string_buffer;
-    LocalFree(reinterpret_cast<HLOCAL>(string_buffer));
-  } else {
-    // The formating failed. simply convert the message value into a string.
-    SStringPrintf(&formatted_string, L"message number %d", messageid);
-  }
-  return formatted_string;
-}
-
-std::wstring FormatLastWin32Error() {
-  return FormatMessage(GetLastError());
-}
-
 void ShowItemInFolder(const std::wstring& full_path) {
   std::wstring dir = file_util::GetDirectoryFromPath(full_path);
   if (dir == L"" || !file_util::PathExists(full_path))
@@ -267,8 +218,10 @@ void ShowItemInFolder(const std::wstring& full_path) {
 // Open an item via a shell execute command. Error code checking and casting
 // explanation: http://msdn2.microsoft.com/en-us/library/ms647732.aspx
 bool OpenItemViaShell(const std::wstring& full_path, bool ask_for_app) {
-  HINSTANCE h = ::ShellExecuteW(NULL, NULL, full_path.c_str(), NULL,
-                                NULL, SW_SHOWNORMAL);
+  HINSTANCE h = ::ShellExecuteW(
+      NULL, NULL, full_path.c_str(), NULL,
+      file_util::GetDirectoryFromPath(full_path).c_str(), SW_SHOWNORMAL);
+
   LONG_PTR error = reinterpret_cast<LONG_PTR>(h);
   if (error > 32)
     return true;
@@ -416,22 +369,19 @@ bool SaveFileAsWithFilter(HWND owner,
                           const std::wstring& def_ext,
                           unsigned* index,
                           std::wstring* final_name) {
+  DCHECK(final_name);
+  std::wstring file_part = file_util::GetFilenameFromPath(suggested_name);
+
   // The size of the in/out buffer in number of characters we pass to win32
   // GetSaveFileName.  From MSDN "The buffer must be large enough to store the
   // path and file name string or strings, including the terminating NULL
   // character.  ... The buffer should be at least 256 characters long.".
-  static const size_t kMaxFilenameSize = MAX_PATH;
+  // _IsValidPathComDlg does a copy expecting at most MAX_PATH, otherwise will
+  // result in an error of FNERR_INVALIDFILENAME.  So we should only pass the
+  // API a buffer of at most MAX_PATH.
+  wchar_t file_name[MAX_PATH];
+  base::wcslcpy(file_name, file_part.c_str(), arraysize(file_name));
 
-  DCHECK(final_name);
-
-  std::wstring file_part = file_util::GetFilenameFromPath(suggested_name);
-
-  // Initially populated by the file component of 'suggested_name', this buffer
-  // will be written into by Windows when the user is done with the dialog box.
-  wchar_t file_name[kMaxFilenameSize];
-  
-  base::wcslcpy(file_name, file_part.c_str(), kMaxFilenameSize);
-  
   OPENFILENAME save_as;
   // We must do this otherwise the ofn's FlagsEx may be initialized to random
   // junk in release builds which can cause the Places Bar not to show up!
@@ -464,8 +414,14 @@ bool SaveFileAsWithFilter(HWND owner,
   save_as.pvReserved = NULL;
   save_as.dwReserved = 0;
 
-  if (!GetSaveFileName(&save_as))
+  if (!GetSaveFileName(&save_as)) {
+    // Zero means the dialog was closed, otherwise we had an error.
+    DWORD error_code = CommDlgExtendedError();
+    if (error_code != 0) {
+      NOTREACHED() << "GetSaveFileName failed with code: " << error_code;
+    }
     return false;
+  }
 
   // Return the user's choice.
   final_name->assign(save_as.lpstrFile);
@@ -621,9 +577,11 @@ void EnsureRectIsVisibleInRect(const gfx::Rect& parent_rect,
 
   // SECOND, clamp x,y position to padding,padding so we don't position child
   // windows in hyperspace.
-  if (child_rect->x() < 0 || child_rect->x() > parent_rect.width())
+  // TODO(mpcomplete): I don't see what the second check in each 'if' does that
+  // isn't handled by the LAST set of 'ifs'.  Maybe we can remove it.
+  if (child_rect->x() < 0 || child_rect->x() > parent_rect.right())
     child_rect->set_x(padding);
-  if (child_rect->y() < 0 || child_rect->y() > parent_rect.height())
+  if (child_rect->y() < 0 || child_rect->y() > parent_rect.bottom())
     child_rect->set_y(padding);
 
   // LAST, nudge the window back up into the client area if its x,y position is
@@ -848,3 +806,4 @@ int MessageBox(HWND hwnd,
 }
 
 }  // namespace win_util
+

@@ -1,42 +1,17 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_TEST_AUTOMATION_TAB_PROXY_H__
-#define CHROME_TEST_AUTOMATION_TAB_PROXY_H__
+#ifndef CHROME_TEST_AUTOMATION_TAB_PROXY_H_
+#define CHROME_TEST_AUTOMATION_TAB_PROXY_H_
 
 #include <wtypes.h>
 #include <string>
 #include <vector>
 
+#include "chrome/browser/download/save_package.h"
 #include "chrome/browser/security_style.h"
 #include "chrome/browser/navigation_entry.h"
-#include "chrome/browser/save_package.h"
 #include "chrome/test/automation/automation_handle_tracker.h"
 
 class ConstrainedWindowProxy;
@@ -188,12 +163,25 @@ class TabProxy : public AutomationResourceProxy {
   // unchanged.
   bool IsShelfVisible(bool* is_visible);
 
-  // Starts a search within the current tab. The parameter 'search_string'
-  // specifies what string to search for, 'forward' specifies whether to search
-  // in forward direction, and 'match_case' specifies case sensitivity
-  // (true=case sensitive). A return value of -1 indicates failure.
+  // Opens the FindInPage box. Note: If you just want to search within a tab
+  // you don't need to call this function, just use FindInPage(...) directly.
+  bool OpenFindInPage();
+
+  // Returns whether the Find window is fully visible If animating, |is_visible|
+  // will be false. Returns false on failure.
+  bool IsFindWindowFullyVisible(bool* is_visible);
+
+  // Get the x, y coordinates for the Find window. If animating, |x| and |y|
+  // will be -1, -1. Returns false on failure.
+  bool GetFindWindowLocation(int* x, int* y);
+
+  // Starts a search within the current tab. The parameter |search_string|
+  // specifies what string to search for, |forward| specifies whether to search
+  // in forward direction, and |match_case| specifies case sensitivity
+  // (true=case sensitive). |find_next| specifies whether this is a new search
+  // or a continuation of the old one. A return value of -1 indicates failure.
   int FindInPage(const std::wstring& search_string, FindInPageDirection forward,
-                 FindInPageCase match_case);
+                 FindInPageCase match_case, bool find_next);
 
   bool GetCookies(const GURL& url, std::string* cookies);
   bool GetCookieByName(const GURL& url,
@@ -233,7 +221,9 @@ class TabProxy : public AutomationResourceProxy {
   // to handle the keys
   bool ProcessUnhandledAccelerator(const MSG& msg);
 
-  bool WaitForTabToBeRestored();
+  // Waits for the tab to finish being restored. Returns true on success.
+  // timeout_ms gives the max amount of time to wait for restore to complete.
+  bool WaitForTabToBeRestored(uint32 timeout_ms);
 
   // Retrieves the different security states for the current tab.
   bool GetSecurityState(SecurityStyle* security_style,
@@ -259,8 +249,14 @@ class TabProxy : public AutomationResourceProxy {
                 const std::wstring& dir_path,
                 SavePackage::SavePackageType type);
 
+  // Posts a message to the external tab.
+  void HandleMessageFromExternalHost(AutomationHandle handle,
+                                     const std::string& target,
+                                     const std::string& message);
+
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(TabProxy);
+  DISALLOW_COPY_AND_ASSIGN(TabProxy);
 };
 
-#endif  // CHROME_TEST_AUTOMATION_TAB_PROXY_H__
+#endif  // CHROME_TEST_AUTOMATION_TAB_PROXY_H_
+

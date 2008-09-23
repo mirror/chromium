@@ -1,2 +1,0 @@
-Test "var a;" failed with exception: expected declaration error
-Test "throw 0;" failed with exception: 0

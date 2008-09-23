@@ -1,46 +1,24 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/tabbed_pane.h"
 
 #include <vssym32.h>
 
 #include "base/gfx/native_theme.h"
+#include "base/gfx/skia_utils.h"
 #include "base/logging.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/stl_util-inl.h"
+#include "chrome/common/throb_animation.h"
 #include "chrome/views/background.h"
 #include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/root_view.h"
 #include "skia/include/SkColor.h"
-#include "base/gfx/skia_utils.h"
 
 namespace ChromeViews {
 
@@ -61,7 +39,7 @@ class TabBackground : public Background {
 
   virtual void Paint(ChromeCanvas* canvas, View* view) const {
     HDC dc = canvas->beginPlatformPaint();
-    RECT r = {0, 0, view->GetWidth(), view->GetHeight()};
+    RECT r = {0, 0, view->width(), view->height()};
     gfx::NativeTheme::instance()->PaintTabPanelBackground(dc, &r);
     canvas->endPlatformPaint();
   }
@@ -180,7 +158,7 @@ HWND TabbedPane::CreateNativeControl(HWND parent_container) {
                                   WC_TABCONTROL,
                                   L"",
                                   WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,
-                                  0, 0, GetWidth(), GetHeight(),
+                                  0, 0, width(), height(),
                                   parent_container, NULL, NULL, NULL);
 
   HFONT font = ResourceBundle::GetSharedInstance().
@@ -189,7 +167,7 @@ HWND TabbedPane::CreateNativeControl(HWND parent_container) {
 
   // Create the view container which is a child of the TabControl.
   content_window_ = new HWNDViewContainer();
-  content_window_->Init(tab_control_, gfx::Rect(), NULL, false);
+  content_window_->Init(tab_control_, gfx::Rect(), false);
 
   // Explicitly setting the WS_EX_LAYOUTRTL property for the HWND (see above
   // for a thorough explanation regarding why we waited until |content_window_|
@@ -272,3 +250,4 @@ void TabbedPane::ResizeContents(HWND tab_control) {
 }
 
 }
+

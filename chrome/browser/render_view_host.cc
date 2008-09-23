@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/render_view_host.h"
 
@@ -101,6 +76,7 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
     : RenderWidgetHost(instance->GetProcess(), routing_id),
       instance_(instance),
       enable_dom_ui_bindings_(false),
+      enable_external_host_bindings_(false),
       delegate_(delegate),
       renderer_initialized_(false),
       waiting_for_drag_context_response_(false),
@@ -117,10 +93,18 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
     modal_dialog_event = CreateEvent(NULL, TRUE, FALSE, NULL);
 
   modal_dialog_event_.Set(modal_dialog_event);
+#ifdef CHROME_PERSONALIZATION
+  personalization_ = Personalization::CreateHostPersonalization(this);
+#endif
 }
 
 RenderViewHost::~RenderViewHost() {
   OnDebugDisconnect();
+
+#ifdef CHROME_PERSONALIZATION
+  Personalization::CleanupHostPersonalization(personalization_);
+  personalization_ = NULL;
+#endif
 
   // Be sure to clean up any leftover state from cross-site requests.
   Singleton<CrossSiteRequestManager>()->SetHasPendingCrossSiteRequest(
@@ -167,8 +151,8 @@ bool RenderViewHost::CreateRenderView() {
 
   // If it's enabled, tell the renderer to set up the Javascript bindings for
   // sending messages back to the browser.
-  if (enable_dom_ui_bindings_)
-    Send(new ViewMsg_AllowDOMUIBindings(routing_id_));
+  Send(new ViewMsg_AllowBindings(
+      routing_id_, enable_dom_ui_bindings_, enable_external_host_bindings_));
 
   // Let our delegate know that we created a RenderView.
   delegate_->RendererCreated(this);
@@ -275,7 +259,6 @@ void RenderViewHost::ClosePageIgnoringUnloadEvents(int render_process_host_id,
     return;
 
   rvh->StopHangMonitorTimeout();
-  DCHECK(rvh->is_waiting_for_unload_ack_);
   rvh->is_waiting_for_unload_ack_ = false;
 
   rvh->UnloadListenerHasFired();
@@ -340,10 +323,6 @@ void RenderViewHost::StopFinding(bool clear_selection) {
   Send(new ViewMsg_StopFinding(routing_id_, clear_selection));
 }
 
-void RenderViewHost::SendFindReplyAck() {
-  Send(new ViewMsg_FindReplyACK(routing_id_));
-}
-
 void RenderViewHost::AlterTextSize(text_zoom::TextSize size) {
   Send(new ViewMsg_AlterTextSize(routing_id_, size));
 }
@@ -373,7 +352,7 @@ void RenderViewHost::DragTargetDragEnter(const WebDropData& drop_data,
   for (std::vector<std::wstring>::const_iterator iter(drop_data.filenames.begin());
        iter != drop_data.filenames.end(); ++iter) {
     policy->GrantRequestURL(process()->host_id(),
-                            net_util::FilePathToFileURL(*iter));
+                            net::FilePathToFileURL(*iter));
     policy->GrantUploadFile(process()->host_id(), *iter);
   }
   Send(new ViewMsg_DragTargetDragEnter(routing_id_, drop_data, client_pt,
@@ -428,8 +407,8 @@ void RenderViewHost::AddMessageToConsole(
   Send(new ViewMsg_AddMessageToConsole(routing_id_, frame_xpath, msg, level));
 }
 
-void RenderViewHost::SendToDebugger(const std::wstring& cmd) {
-  Send(new ViewMsg_SendToDebugger(routing_id_, cmd));
+void RenderViewHost::DebugCommand(const std::wstring& cmd) {
+  Send(new ViewMsg_DebugCommand(routing_id_, cmd));
 }
 
 void RenderViewHost::DebugAttach() {
@@ -439,14 +418,14 @@ void RenderViewHost::DebugAttach() {
 
 void RenderViewHost::DebugDetach() {
   if (debugger_attached_) {
-    SendToDebugger(L"quit");
+    Send(new ViewMsg_DebugDetach(routing_id_));
     debugger_attached_ = false;
   }
 }
 
-void RenderViewHost::DebugBreak() {
+void RenderViewHost::DebugBreak(bool force) {
   if (debugger_attached_)
-    SendToDebugger(L"break");
+    Send(new ViewMsg_DebugBreak(routing_id_, force));
 }
 
 void RenderViewHost::Undo() {
@@ -471,6 +450,10 @@ void RenderViewHost::Paste() {
 
 void RenderViewHost::Replace(const std::wstring& text_to_replace) {
   Send(new ViewMsg_Replace(routing_id_, text_to_replace));
+}
+
+void RenderViewHost::AddToDictionary(const std::wstring& word) {
+  process_->AddWord(word);
 }
 
 void RenderViewHost::Delete() {
@@ -568,6 +551,10 @@ void RenderViewHost::AllowDOMUIBindings() {
   RendererSecurityPolicy::GetInstance()->GrantDOMUIBindings(process()->host_id());
 }
 
+void RenderViewHost::AllowExternalHostBindings() {
+  enable_external_host_bindings_ = true;
+}
+
 void RenderViewHost::SetDOMUIProperty(const std::string& name,
                                       const std::string& value) {
   DCHECK(enable_dom_ui_bindings_);
@@ -578,10 +565,10 @@ void RenderViewHost::SetDOMUIProperty(const std::string& name,
 void RenderViewHost::MakeNavigateParams(const NavigationEntry& entry,
                                         bool reload,
                                         ViewMsg_Navigate_Params* params) {
-  params->page_id = entry.GetPageID();
-  params->url = entry.GetURL();
-  params->transition = entry.GetTransitionType();
-  params->state = entry.GetContentState();
+  params->page_id = entry.page_id();
+  params->url = entry.url();
+  params->transition = entry.transition_type();
+  params->state = entry.content_state();
   params->reload = reload;
 }
 
@@ -662,6 +649,12 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
                         OnMsgDomOperationResponse)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DOMUISend,
                         OnMsgDOMUISend)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_ForwardMessageToExternalHost,
+                        OnMsgForwardMessageToExternalHost)
+#ifdef CHROME_PERSONALIZATION
+    IPC_MESSAGE_HANDLER(ViewHostMsg_PersonalizationEvent,
+                        OnPersonalizationEvent)
+#endif                       
     IPC_MESSAGE_HANDLER(ViewHostMsg_GoToEntryAtOffset,
                         OnMsgGoToEntryAtOffset)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetTooltipText, OnMsgSetTooltipText)
@@ -773,7 +766,7 @@ void RenderViewHost::OnMsgRendererGone() {
   current_size_ = gfx::Size();
   is_hidden_ = false;
 
-  backing_store_.reset();
+  RendererExited();
 
   if (view_) {
     view_->RendererGone();
@@ -937,9 +930,20 @@ void RenderViewHost::OnMsgFindReply(int request_id,
                                     const gfx::Rect& selection_rect,
                                     int active_match_ordinal,
                                     bool final_update) {
-  delegate_->FindReply(request_id, number_of_matches,
-                       selection_rect, active_match_ordinal, final_update);
-  SendFindReplyAck();
+  RenderViewHostDelegate::FindInPage* delegate =
+      delegate_->GetFindInPageDelegate();
+  if (!delegate)
+    return;
+  delegate->FindReply(request_id, number_of_matches, selection_rect,
+                      active_match_ordinal, final_update);
+
+  // Send a notification to the renderer that we are ready to receive more
+  // results from the scoping effort of the Find operation. The FindInPage
+  // scoping is asynchronous and periodically sends results back up to the
+  // browser using IPC. In an effort to not spam the browser we have the
+  // browser send an ACK for each FindReply message and have the renderer
+  // queue up the latest status message while waiting for this ACK.
+  Send(new ViewMsg_FindReplyACK(routing_id_));
 }
 
 void RenderViewHost::OnMsgUpdateFavIconURL(int32 page_id,
@@ -994,6 +998,19 @@ void RenderViewHost::OnMsgDOMUISend(
   }
   delegate_->ProcessDOMUIMessage(message, content);
 }
+
+void RenderViewHost::OnMsgForwardMessageToExternalHost(
+    const std::string& receiver,
+    const std::string& message) {
+  delegate_->ProcessExternalHostMessage(receiver, message);
+}
+
+#ifdef CHROME_PERSONALIZATION
+void RenderViewHost::OnPersonalizationEvent(const std::string& message,
+                                            const std::string& content) {
+  Personalization::HandlePersonalizationEvent(this, message, content);
+}
+#endif
 
 void RenderViewHost::OnMsgGoToEntryAtOffset(int offset) {
   delegate_->GoToEntryAtOffset(offset);
@@ -1072,7 +1089,7 @@ void RenderViewHost::DidPrintPage(
 void RenderViewHost::OnAddMessageToConsole(const std::wstring& message,
                                            int32 line_no,
                                            const std::wstring& source_id) {
-  std::wstring msg = StringPrintf(L"\"%s,\" source: %s (%d)", message.c_str(),
+  std::wstring msg = StringPrintf(L"\"%ls,\" source: %ls (%d)", message.c_str(),
                                   source_id.c_str(), line_no);
   logging::LogMessage("CONSOLE", 0).stream() << msg;
   if (debugger_attached_)
@@ -1087,7 +1104,7 @@ void RenderViewHost::OnDebuggerOutput(const std::wstring& output) {
 void RenderViewHost::DidDebugAttach() {
   if (!debugger_attached_) {
     debugger_attached_ = true;
-    SendToDebugger(L"attach");
+    g_browser_process->debugger_wrapper()->OnDebugAttach();
   }
 }
 
@@ -1187,7 +1204,17 @@ void RenderViewHost::OnDebugDisconnect() {
   }
 }
 
-void RenderViewHost::OnThemeChanged() {
-  Send (new ViewMsg_ThemeChanged(routing_id_));
+#ifdef CHROME_PERSONALIZATION
+void RenderViewHost::RaisePersonalizationEvent(std::string event_name, 
+                                               std::string event_arg) {
+  Send(new ViewMsg_PersonalizationEvent(routing_id_,
+                                        event_name,
+                                        event_arg));
+}
+#endif
+
+void RenderViewHost::ForwardMessageFromExternalHost(
+    const std::string& target, const std::string& message) {
+  Send(new ViewMsg_HandleMessageFromExternalHost(routing_id_, target, message));
 }
 

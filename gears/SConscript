@@ -1,0 +1,174 @@
+# Copyright (c) 2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone(
+    GEARS_DIR = ".",
+    OPEN_DIR = "$GEARS_DIR/googleclient/gears/opensource/gears",
+    THIRD_PARTY_DIR = "$GEARS_DIR/googleclient/gears/opensource/third_party",
+    GENFILES_DIR = "$GEARS_DIR/genfiles",
+    PRIVATE_THIRD_PARTY_DIR = "$GEARS_DIR/googleclient/third_party",
+)
+
+# Argument switches
+vars = Variables(None, ARGUMENTS)
+vars.AddVariables(
+  EnumVariable('BROWSER',
+      'Which browser we want to build the plugin for',
+      'NPAPI', ['IE', 'FF2', 'FF3', 'SF', 'NPAPI']),
+  EnumVariable('MODE',
+      'Type of binary to generate',
+      'dbg', ['dbg', 'opt']),
+  BoolVariable('OFFICIAL_BUILD',
+      'Create a binary suitable for public release', 0)
+)
+vars.Update(env)
+
+env.Append(
+    USING_CCTESTS = (env['MODE'] == 'dbg' or not env['OFFICIAL_BUILD'])
+)
+
+# Version
+env.Append(
+    MAJOR = '0',
+    MINOR = '4',
+    BUILD = '17',
+    PATCH = '0',
+    VERSION = '${MAJOR}.${MINOR}.${BUILD}.${PATCH}',
+
+    FRIENDLY_NAME = 'Gears',
+    SHORT_NAME = 'gears',
+)
+
+# Platform
+env.Append(
+    OS = '$PLATFORM',
+    ARCH = 'i386',
+)
+
+# C++ build flags.
+
+# TODO: fix Gears to not require this removal.
+env['CPPDEFINES'].remove('WIN32_LEAN_AND_MEAN')
+
+env.Replace(
+    CPPPATH = [
+        '$OPEN_DIR',
+        '$OPEN_DIR/..',
+        '$THIRD_PARTY_DIR',
+	'$THIRD_PARTY_DIR/breakpad/src',
+        '$THIRD_PARTY_DIR/googleurl',
+        '$THIRD_PARTY_DIR/npapi',
+        '$THIRD_PARTY_DIR/zlib',
+        '$THIRD_PARTY_DIR/v8/bindings_local',
+        '$GEARS_DIR',
+
+        # TODO: switch over to Chrome's SDK.
+        # Note: these must come last because we want our own npapi.h to take
+        # precedence.
+        '$PRIVATE_THIRD_PARTY_DIR/platformsdk_vc80/files/include',
+        '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80/files/include',
+    ],
+    CCFLAGS = [],
+)
+
+if env['MODE'] == 'dbg':
+  env['CPPDEFINES'] += ['DEBUG=1']
+  env['CPPDEFINES'] += ['_DEBUG=1']
+if env['USING_CCTESTS']:
+  env['CPPDEFINES'] += ['USING_CCTESTS=1']
+if env['OFFICIAL_BUILD']:
+  env['CPPDEFINES'] += ['OFFICIAL_BUILD=1']
+
+# TODO: if USING_PNG
+env.Append(
+    CPPDEFINES = [
+        'PNG_USER_CONFIG',
+    ],
+)
+
+# TODO: is this needed?
+if env['PLATFORM'] == 'win32':
+# We require APPVER=5.0 for things like HWND_MESSAGE.
+# When APPVER=5.0, win32.mak in the Platform SDK sets:
+#   C defines:  WINVER=0x0500
+#               _WIN32_WINNT=0x0500
+#               _WIN32_IE=0x0500
+#               _RICHEDIT_VER=0x0010
+#   RC defines: WINVER=0x0500
+#   MIDL flags: /target NT50
+# Note: _WIN32_WINDOWS was replaced by _WIN32_WINNT for post-Win95 builds.
+# Note: XP_WIN is only used by Firefox headers
+  env.Append(
+      CPPDEFINES = [
+          'STRICT',
+          '_USRDLL',
+          '_WINDLL',
+#          'WINVER=0x0500',
+#          '_WIN32_WINNT=0x0500',
+          '_WIN32_IE=0x0500',
+          '_RICHEDIT_VER=0x0010',
+          '_MERGE_PROXYSTUB',
+	  'BREAKPAD_AVOID_STREAMS',  # TODO: move to breakpad env
+          'XP_WIN',
+
+# In VC8, the way to disable exceptions is to remove all /EH* flags, and to
+# define _HAS_EXCEPTIONS=0 (for C++ headers) and _ATL_NO_EXCEPTIONS (for ATL).
+          '_HAS_EXCEPTIONS=0',
+          '_ATL_NO_EXCEPTIONS',
+# Do not export UTF functions.
+          'U_STATIC_IMPLEMENTATION',
+
+      ],
+      LINKFLAGS = [
+          '/NOLOGO',
+          '/DEBUG',
+          '/RELEASE',
+          '/NODEFAULTLIB:msvcrt',
+# Set the preferred base address.  This value was chosen because (a) it's near
+# the top of the valid address range, and (b) it doesn't conflict with other
+# DLLs loaded by Chrome in either the browser or plugin process.
+          '/BASE:0x65000000',
+# Flags for security hardening (only available for win32, not wince).
+          '/DYNAMICBASE',
+          '/SAFESEH',
+      ],
+      CPPFLAGS = [
+        '/MTd',  # TODO: release mode
+        '/Zi',  # TODO: Chrome defines /Z7, no idea what these are.
+        '/Zc:wchar_t-',
+        '/c',
+        '/W3',
+        '/WX',
+        '/GR-',
+      ],
+      CXXFLAGS = [
+        '/TP',
+        '/J',
+      ],
+  )
+
+# Load all the components
+
+sconscripts = [
+    'SConscript.googleurl',
+    'SConscript.libgd',
+    'SConscript.libjpeg',
+    'SConscript.libpng',
+    'SConscript.portaudio',
+    'SConscript.sqlite',
+    'SConscript.zlib',
+]
+
+for each in sconscripts:
+  env.SConscript(each,
+                 exports=['env'],
+                 variant_dir=env.subst('$MODE/common').lower(),
+                 duplicate=0)
+
+env.SConscript('SConscript.dll',
+               exports=['env'],
+               variant_dir=env.subst('$MODE/$BROWSER').lower(),
+               duplicate=0)

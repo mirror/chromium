@@ -1,35 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// Copied from base/basictypes.h with some modifications
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef BASE_BASICTYPES_H__
-#define BASE_BASICTYPES_H__
+#ifndef BASE_BASICTYPES_H_
+#define BASE_BASICTYPES_H_
 
 #include <assert.h>         // for use with down_cast<>
 #include <limits.h>         // So we can set the bounds of our types
@@ -37,6 +11,11 @@
 #include <string.h>         // for memcpy
 
 #include "base/port.h"    // Types that only need exist on certain systems
+
+#ifndef COMPILER_MSVC
+// stdint.h is part of C99 but MSVC doesn't have it.
+#include <stdint.h>         // For intptr_t.
+#endif
 
 typedef signed char         schar;
 typedef signed char         int8;
@@ -71,18 +50,18 @@ typedef unsigned long long uint64;
 // and it should always be the signed version of whatever int32 is.)
 typedef signed int         char32;
 
-const uint8  kuint8max  = UCHAR_MAX;
-const uint16 kuint16max = USHRT_MAX;
-const uint32 kuint32max = UINT_MAX;
-const uint64 kuint64max = ULLONG_MAX;
-const  int8  kint8min   = SCHAR_MIN;
-const  int8  kint8max   = SCHAR_MAX;
-const  int16 kint16min  = SHRT_MIN;
-const  int16 kint16max  = SHRT_MAX;
-const  int32 kint32min  = INT_MIN;
-const  int32 kint32max  = INT_MAX;
-const  int64 kint64min  = LLONG_MIN;
-const  int64 kint64max  = LLONG_MAX;
+const uint8  kuint8max  = (( uint8) 0xFF);
+const uint16 kuint16max = ((uint16) 0xFFFF);
+const uint32 kuint32max = ((uint32) 0xFFFFFFFF);
+const uint64 kuint64max = ((uint64) GG_LONGLONG(0xFFFFFFFFFFFFFFFF));
+const  int8  kint8min   = ((  int8) 0x80);
+const  int8  kint8max   = ((  int8) 0x7F);
+const  int16 kint16min  = (( int16) 0x8000);
+const  int16 kint16max  = (( int16) 0x7FFF);
+const  int32 kint32min  = (( int32) 0x80000000);
+const  int32 kint32max  = (( int32) 0x7FFFFFFF);
+const  int64 kint64min  = (( int64) GG_LONGLONG(0x8000000000000000));
+const  int64 kint64max  = (( int64) GG_LONGLONG(0x7FFFFFFFFFFFFFFF));
 
 // id for odp categories
 typedef uint32 CatId;
@@ -325,9 +304,6 @@ enum { MLOCK_ALL = -1, MLOCK_NONE = 0 };
 // If pos is large enough, "pos + N" may overflow.  For example,
 // pos==0xfffff000 and N==1MB.
 //
-// This often happens on Nacona's in 32-bit mode, because the
-// main thread's stack is put very close to address 0xffffffff.
-//
 // PointerRangeSize(a,b) returns the size of the range [a,b-1]
 inline size_t PointerRangeSize(const char* start, const char* end) {
   assert(start <= end);
@@ -399,5 +375,23 @@ inline Dest bit_cast(const Source& source) {
   return dest;
 }
 
+// The following enum should be used only as a constructor argument to indicate
+// that the variable has static storage class, and that the constructor should
+// do nothing to its state.  It indicates to the reader that it is legal to
+// declare a static instance of the class, provided the constructor is given
+// the base::LINKER_INITIALIZED argument.  Normally, it is unsafe to declare a
+// static variable that has a constructor or a destructor because invocation
+// order is undefined.  However, IF the type can be initialized by filling with
+// zeroes (which the loader does for static variables), AND the destructor also
+// does nothing to the storage, AND there are no virtual methods, then a
+// constructor declared as
+//       explicit MyClass(base::LinkerInitialized x) {}
+// and invoked as
+//       static MyClass my_variable_name(base::LINKER_INITIALIZED);
+namespace base {
+enum LinkerInitialized { LINKER_INITIALIZED };
+}  // base
 
-#endif  // BASE_BASICTYPES_H__
+
+#endif  // BASE_BASICTYPES_H_
+

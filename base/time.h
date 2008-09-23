@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // Time represents an absolute point in time, internally represented as
 // microseconds (s/1,000,000) since a platform-dependent epoch.  Each
@@ -44,18 +19,19 @@
 // These classes are represented as only a 64-bit value, so they can be
 // efficiently passed by value.
 
-#ifndef BASE_TIME_H__
-#define BASE_TIME_H__
+#ifndef BASE_TIME_H_
+#define BASE_TIME_H_
 
-#ifdef WIN32
+#include <time.h>
+
+#include "base/basictypes.h"
+#include "testing/gtest/include/gtest/gtest_prod.h"
+
+#if defined(OS_WIN)
 // For FILETIME in FromFileTime, until it moves to a new converter class.
 // See TODO(iyengar) below.
 #include <windows.h>
 #endif
-
-#include <time.h>
-#include "base/basictypes.h"
-#include "testing/gtest/include/gtest/gtest_prod.h"
 
 class Time;
 class TimeTicks;
@@ -89,6 +65,7 @@ class TimeDelta {
   // point value, the "regular" versions return a rounded-down value.
   int InDays() const;
   int InHours() const;
+  int InMinutes() const;
   double InSecondsF() const;
   int64 InSeconds() const;
   double InMillisecondsF() const;
@@ -196,6 +173,9 @@ class Time {
   static const int64 kMicrosecondsPerHour = kMicrosecondsPerMinute * 60;
   static const int64 kMicrosecondsPerDay = kMicrosecondsPerHour * 24;
   static const int64 kMicrosecondsPerWeek = kMicrosecondsPerDay * 7;
+  static const int64 kNanosecondsPerMicrosecond = 1000;
+  static const int64 kNanosecondsPerSecond = kNanosecondsPerMicrosecond *
+                                             kMicrosecondsPerSecond;
 
   // Represents an exploded time that can be formatted nicely. This is kind of
   // like the Win32 SYSTEMTIME structure or the Unix "struct tm" with a few
@@ -236,7 +216,7 @@ class Time {
   // (Jan 1, 1970).  Webkit uses this format to represent time.
   double ToDoubleT() const;
 
-#ifdef WIN32
+#if defined(OS_WIN)
   static Time FromFileTime(FILETIME ft);
   FILETIME ToFileTime() const;
 #endif
@@ -337,12 +317,6 @@ class Time {
  private:
   friend class TimeDelta;
 
-  // Platform-dependent wall clock interface
-  static int64 CurrentWallclockMicroseconds();
-
-  // Initialize or resynchronize the clock.
-  static void InitializeClock();
-
   // Explodes the given time to either local time |is_local = true| or UTC
   // |is_local = false|.
   void Explode(bool is_local, Exploded* exploded) const;
@@ -360,12 +334,6 @@ class Time {
 
   // Time in microseconds in UTC.
   int64 us_;
-
-  // The initial time sampled via this API.
-  static int64 initial_time_;
-
-  // The initial clock counter sampled via this API.
-  static TimeTicks initial_ticks_;
 };
 
 inline Time TimeDelta::operator+(Time t) const {
@@ -393,6 +361,11 @@ class TimeTicks {
   // Returns true if this object has not been initialized.
   bool is_null() const {
     return ticks_ == 0;
+  }
+
+  // Returns the internal numeric value of the TimeTicks object.
+  int64 ToInternalValue() const {
+    return ticks_;
   }
 
   TimeTicks& operator=(TimeTicks other) {
@@ -455,10 +428,9 @@ class TimeTicks {
   // Tick count in microseconds.
   int64 ticks_;
 
-#ifdef WIN32
-  // The function to use for counting ticks.
-  typedef int (__stdcall *TickFunction)(void);
-  static TickFunction tick_function_;
+#if defined(OS_WIN)
+  typedef DWORD (*TickFunctionType)(void);
+  static TickFunctionType SetMockTickFunction(TickFunctionType ticker);
 #endif
 };
 
@@ -466,4 +438,4 @@ inline TimeTicks TimeDelta::operator+(TimeTicks t) const {
   return TimeTicks(t.ticks_ + delta_);
 }
 
-#endif  // BASE_TIME_H__
+#endif  // BASE_TIME_H_

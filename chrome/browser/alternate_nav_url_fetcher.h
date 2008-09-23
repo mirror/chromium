@@ -1,44 +1,30 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-// TODO describe this file
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ALTERNATE_NAV_URL_FETCHER_H__
-#define CHROME_BROWSER_ALTERNATE_NAV_URL_FETCHER_H__
+#ifndef CHROME_BROWSER_ALTERNATE_NAV_URL_FETCHER_H_
+#define CHROME_BROWSER_ALTERNATE_NAV_URL_FETCHER_H_
 
 #include <string>
 
 #include "chrome/browser/url_fetcher.h"
+#include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
 
 class NavigationController;
 
+// Attempts to get the HEAD of a host name and displays an info bar if the
+// request was successful. This is used for single-word queries where we can't
+// tell if the entry was a search or an intranet hostname. The autocomplete bar
+// assumes it's a query and issues an AlternateNavURLFetcher to display a "did
+// you mean" infobar suggesting a navigation.
+//
+// The memory management of this object is a bit tricky. The location bar view
+// will create us and be responsible for us until we attach as an observer
+// after a pending load starts (it will delete us if this doesn't happen).
+// Once this pending load starts, we're responsible for deleting ourselves.
+// We'll do this when the load commits, or when the navigation controller
+// itself is deleted.
 class AlternateNavURLFetcher : public NotificationObserver,
                                public URLFetcher::Delegate {
  public:
@@ -50,15 +36,8 @@ class AlternateNavURLFetcher : public NotificationObserver,
   };
 
   explicit AlternateNavURLFetcher(const std::wstring& alternate_nav_url);
-  virtual ~AlternateNavURLFetcher();
 
   State state() const { return state_; }
-
-  // Called by the NavigationController when it successfully navigates to the
-  // entry for which the fetcher is looking up an alternative.
-  // NOTE: This can be theoretically called multiple times, if multiple
-  // navigations with the same unique ID succeed.
-  void OnNavigatedToEntry();
 
   // NotificationObserver
   virtual void Observe(NotificationType type,
@@ -74,7 +53,10 @@ class AlternateNavURLFetcher : public NotificationObserver,
                                   const std::string& data);
 
  private:
-  void ShowInfobar();
+  // Displays the infobar if all conditions are met (the page has loaded and
+  // the fetch of the alternate URL succeeded). If the infobar is displayed,
+  // this object is no longer necessary and this function WILL DELETE |this|!.
+  void ShowInfobarIfPossible();
 
   std::wstring alternate_nav_url_;
   scoped_ptr<URLFetcher> fetcher_;
@@ -82,7 +64,10 @@ class AlternateNavURLFetcher : public NotificationObserver,
   State state_;
   bool navigated_to_entry_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(AlternateNavURLFetcher);
+  NotificationRegistrar registrar_;
+
+  DISALLOW_COPY_AND_ASSIGN(AlternateNavURLFetcher);
 };
 
-#endif  // CHROME_BROWSER_ALTERNATE_NAV_URL_FETCHER_H__
+#endif  // CHROME_BROWSER_ALTERNATE_NAV_URL_FETCHER_H_
+

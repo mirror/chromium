@@ -1,40 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/label.h"
 
 #include <math.h>
 
+#include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
+#include "chrome/common/gfx/insets.h"
 #include "chrome/common/gfx/url_elider.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
 #include "chrome/views/view_container.h"
@@ -76,7 +54,7 @@ void Label::GetPreferredSize(CSize* out) {
   DCHECK(out);
   if (is_multi_line_) {
     ChromeCanvas cc(0, 0, true);
-    int w = GetWidth(), h = 0;
+    int w = width(), h = 0;
     cc.SizeStringInt(text_, font_, &w, &h, ComputeMultiLineFlags());
     out->cx = w;
     out->cy = h;
@@ -132,8 +110,8 @@ void Label::Paint(ChromeCanvas* canvas) {
   }
 
   if (is_multi_line_) {
-    canvas->DrawStringInt(paint_text, font_, color_, 0, 0, GetWidth(),
-                          GetHeight(), ComputeMultiLineFlags());
+    canvas->DrawStringInt(paint_text, font_, color_, 0, 0, width(),
+                          height(), ComputeMultiLineFlags());
     PaintFocusBorder(canvas);
   } else {
     gfx::Rect text_bounds = GetTextBounds();
@@ -284,7 +262,7 @@ bool Label::GetTooltipText(int x, int y, std::wstring* tooltip) {
   }
 
   // Show the full text if the text does not fit.
-  if (!is_multi_line_ && font_.GetStringWidth(text_) > GetWidth()) {
+  if (!is_multi_line_ && font_.GetStringWidth(text_) > width()) {
     *tooltip = text_;
     return true;
   }
@@ -324,7 +302,7 @@ ChromeFont Label::GetDefaultFont() {
 }
 
 void Label::UpdateContainsMouse(const MouseEvent& event) {
-  SetContainsMouse(GetTextBounds().Contains(event.GetX(), event.GetY()));
+  SetContainsMouse(GetTextBounds().Contains(event.x(), event.y()));
 }
 
 void Label::SetContainsMouse(bool contains_mouse) {
@@ -339,12 +317,12 @@ gfx::Rect Label::GetTextBounds() {
   CSize text_size;
   GetTextSize(&text_size);
   gfx::Insets insets = GetInsets();
-  int avail_width = GetWidth() - insets.left() - insets.right();
+  int avail_width = width() - insets.left() - insets.right();
   // Respect the size set by the owner view
   text_size.cx = std::min(avail_width, static_cast<int>(text_size.cx));
 
   int text_y = insets.top() +
-      (GetHeight() - text_size.cy - insets.top() - insets.bottom()) / 2;
+      (height() - text_size.cy - insets.top() - insets.bottom()) / 2;
   int text_x;
   switch (horiz_alignment_) {
     case ALIGN_LEFT:
@@ -356,7 +334,7 @@ gfx::Rect Label::GetTextBounds() {
       text_x = insets.left() + (avail_width + 1 - text_size.cx) / 2;
       break;
     case ALIGN_RIGHT:
-      text_x = GetWidth() - insets.right() - text_size.cx;
+      text_x = width() - insets.right() - text_size.cx;
       break;
   }
   return gfx::Rect(text_x, text_y, text_size.cx, text_size.cy);
@@ -404,3 +382,4 @@ bool Label::GetAccessibleState(VARIANT* state) {
 }
 
 }
+

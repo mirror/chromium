@@ -1,35 +1,10 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/history_model.h"
 
-#include "chrome/browser/bookmark_bar_model.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/profile.h"
 
 // The max number of results to retrieve when browsing user's history.
@@ -85,7 +60,11 @@ history::URLID HistoryModel::GetURLID(int index) {
 }
 
 bool HistoryModel::IsStarred(int index) {
-  return results_[index].starred();
+  if (star_state_[index] == UNKNOWN) {
+    bool is_starred = profile_->GetBookmarkModel()->IsBookmarked(GetURL(index));
+    star_state_[index] = is_starred ? STARRED : NOT_STARRED;
+  }
+  return (star_state_[index] == STARRED);
 }
 
 const Snippet& HistoryModel::GetSnippet(int index) {
@@ -138,7 +117,6 @@ void HistoryModel::InitVisitRequest(int depth) {
     start_exploded.day_of_month = 1;
     options.begin_time = Time::FromLocalExploded(start_exploded);
 
-    options.only_starred = false;
     options.max_count = max_total_results;
   } else {
     Time::Exploded exploded;
@@ -166,8 +144,6 @@ void HistoryModel::InitVisitRequest(int depth) {
     }
     options.begin_time = Time::FromLocalExploded(exploded);
 
-    options.only_starred = false;
-
     // Subtract off the number of pages we already got.
     options.max_count = max_total_results - static_cast<int>(results_.size());
   }
@@ -194,7 +170,7 @@ void HistoryModel::SetPageStarred(int index, bool state) {
   if (observer_)
     observer_->ModelChanged(false);
 
-  BookmarkBarModel* bb_model = profile_->GetBookmarkBarModel();
+  BookmarkModel* bb_model = profile_->GetBookmarkModel();
   if (bb_model)
     bb_model->SetURLStarred(result.url(), result.title(), state);
 }
@@ -205,6 +181,20 @@ void HistoryModel::Refresh() {
     observer_->ModelEndWork();
   search_depth_ = 0;
   InitVisitRequest(search_depth_);
+
+  if (results_.size() > 0) {
+    // There are results and we've been asked to reload. If we don't swap out
+    // the results now, the view is left holding indices that are going to
+    // change as soon as the load completes, which poses problems for deletion.
+    // In particular, if the user deletes a range, then clicks on delete again
+    // a modal dialog is shown. If during the time the modal dialog is shown
+    // and the user clicks ok the load completes, the index passed to delete is
+    // no longer valid. To avoid this we empty out the results immediately.
+    history::QueryResults empty_results;
+    results_.Swap(&empty_results);
+    if (observer_)
+      observer_->ModelChanged(true);
+  }
 }
 
 void HistoryModel::Observe(NotificationType type,
@@ -261,8 +251,12 @@ void HistoryModel::VisitedPagesQueryComplete(
 
   is_search_results_ = !search_text_.empty();
 
-  if (changed && observer_)
-    observer_->ModelChanged(true);
+  if (changed) {
+    star_state_.reset(new StarState[results_.size()]);
+    memset(star_state_.get(), 0, sizeof(StarState) * results_.size());
+    if (observer_)
+      observer_->ModelChanged(true);
+  }
 
   search_depth_++;
 
@@ -287,10 +281,8 @@ bool HistoryModel::UpdateStarredStateOfURL(const GURL& url, bool is_starred) {
   size_t num_matches;
   const size_t* match_indices = results_.MatchesForURL(url, &num_matches);
   for (size_t i = 0; i < num_matches; i++) {
-    // Update the view. (We don't care about the ID, just 0 or nonzero.)
-    history::URLResult& result = results_[match_indices[i]];
-    if (result.starred() != is_starred) {
-      result.set_star_id(is_starred ? 1 : 0);
+    if (IsStarred(static_cast<int>(match_indices[i])) != is_starred) {
+      star_state_[match_indices[i]] = is_starred ? STARRED : NOT_STARRED;
       changed = true;
     }
   }

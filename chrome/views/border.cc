@@ -1,33 +1,10 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#include "border.h"
+#include "chrome/views/border.h"
+
+#include "base/logging.h"
 
 namespace ChromeViews {
 
@@ -62,25 +39,25 @@ void SolidBorder::Paint(const View& view, ChromeCanvas* canvas) const {
     return;  // Empty clip rectangle, nothing to paint.
 
   // Top border.
-  gfx::Rect border_bounds(0, 0, view.GetWidth(), insets_.top());
+  gfx::Rect border_bounds(0, 0, view.width(), insets_.top());
   if (clip_rect.Intersects(border_bounds))
-    canvas->FillRectInt(color_, 0, 0, view.GetWidth(), insets_.top());
+    canvas->FillRectInt(color_, 0, 0, view.width(), insets_.top());
   // Left border.
-  border_bounds.SetRect(0, 0, insets_.left(), view.GetHeight());
+  border_bounds.SetRect(0, 0, insets_.left(), view.height());
   if (clip_rect.Intersects(border_bounds))
-    canvas->FillRectInt(color_, 0, 0, insets_.left(), view.GetHeight());
+    canvas->FillRectInt(color_, 0, 0, insets_.left(), view.height());
   // Bottom border.
-  border_bounds.SetRect(0, view.GetHeight() - insets_.bottom(),
-                        view.GetWidth(), insets_.bottom());
+  border_bounds.SetRect(0, view.height() - insets_.bottom(),
+                        view.width(), insets_.bottom());
   if (clip_rect.Intersects(border_bounds))
-    canvas->FillRectInt(color_, 0, view.GetHeight() - insets_.bottom(),
-                        view.GetWidth(), insets_.bottom());
+    canvas->FillRectInt(color_, 0, view.height() - insets_.bottom(),
+                        view.width(), insets_.bottom());
   // Right border.
-  border_bounds.SetRect(view.GetWidth() - insets_.right(), 0,
-                       insets_.right(), view.GetHeight());
+  border_bounds.SetRect(view.width() - insets_.right(), 0,
+                       insets_.right(), view.height());
   if (clip_rect.Intersects(border_bounds))
-    canvas->FillRectInt(color_, view.GetWidth() - insets_.right(), 0,
-                        insets_.right(), view.GetHeight());
+    canvas->FillRectInt(color_, view.width() - insets_.right(), 0,
+                        insets_.right(), view.height());
 }
 
 void SolidBorder::GetInsets(gfx::Insets* insets) const {
@@ -127,3 +104,4 @@ Border* Border::CreateEmptyBorder(int top, int left, int bottom, int right) {
 }
 
 } // namespace
+

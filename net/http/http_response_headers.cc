@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // The rules for header parsing were borrowed from Firefox:
 // http://lxr.mozilla.org/seamonkey/source/netwerk/protocol/http/src/nsHttpResponseHead.cpp
@@ -35,7 +10,6 @@
 #include "net/http/http_response_headers.h"
 
 #include <algorithm>
-#include <hash_map>
 
 #include "base/logging.h"
 #include "base/pickle.h"
@@ -222,7 +196,11 @@ void HttpResponseHeaders::Parse(const string& raw_input) {
   // ParseStatusLine adds a normalized status line to raw_headers_
   string::const_iterator line_begin = raw_input.begin();
   string::const_iterator line_end = find(line_begin, raw_input.end(), '\0');
-  ParseStatusLine(line_begin, line_end);
+  // has_headers = true, if there is any data following the status line.
+  // Used by ParseStatusLine() to decide if a HTTP/0.9 is really a HTTP/1.0.
+  bool has_headers = line_end != raw_input.end() &&
+      (line_end + 1) != raw_input.end() && *(line_end + 1) != '\0';
+  ParseStatusLine(line_begin, line_end, has_headers);
 
   if (line_end == raw_input.end()) {
     raw_headers_.push_back('\0');
@@ -265,7 +243,7 @@ void HttpResponseHeaders::GetNormalizedHeaders(string* output) const {
   // be a web app, we cannot be certain of the semantics of commas despite the
   // fact that RFC 2616 says that they should be regarded as value separators.
   //
-  typedef stdext::hash_map<string, size_t> HeadersMap;
+  typedef base::hash_map<string, size_t> HeadersMap;
   HeadersMap headers_map;
   HeadersMap::iterator iter = headers_map.end();
 
@@ -337,6 +315,17 @@ string HttpResponseHeaders::GetStatusLine() const {
   return string(raw_headers_.c_str());
 }
 
+std::string HttpResponseHeaders::GetStatusText() const {
+  // GetStatusLine() is already normalized, so it has the format:
+  // <http_version> SP <response_code> SP <status_text>
+  std::string status_text = GetStatusLine();
+  std::string::const_iterator begin = status_text.begin();
+  std::string::const_iterator end = status_text.end();
+  for (int i = 0; i < 2; ++i)
+    begin = find(begin, end, ' ') + 1;
+  return std::string(begin, end);
+}
+
 bool HttpResponseHeaders::EnumerateHeaderLines(void** iter,
                                                string* name,
                                                string* value) const {
@@ -401,62 +390,74 @@ bool HttpResponseHeaders::HasHeaderValue(const std::string& name,
 
 // Note: this implementation implicitly assumes that line_end points at a valid
 // sentinel character (such as '\0').
-void HttpResponseHeaders::ParseVersion(string::const_iterator line_begin,
-                                       string::const_iterator line_end) {
+// static
+HttpVersion HttpResponseHeaders::ParseVersion(
+    string::const_iterator line_begin,
+    string::const_iterator line_end) {
   string::const_iterator p = line_begin;
 
   // RFC2616 sec 3.1: HTTP-Version   = "HTTP" "/" 1*DIGIT "." 1*DIGIT
-  // (1*DIGIT apparently means one or more digits, but we only handle 1).
+  // TODO: (1*DIGIT apparently means one or more digits, but we only handle 1).
+  // TODO: handle leading zeros, which is allowed by the rfc1616 sec 3.1.
 
   if ((line_end - p < 4) || !LowerCaseEqualsASCII(p, p + 4, "http")) {
-    DLOG(INFO) << "missing status line; assuming HTTP/0.9";
-    // Morph this into HTTP/1.0 since HTTP/0.9 has no status line.
-    raw_headers_ = "HTTP/1.0";
-    return;
+    DLOG(INFO) << "missing status line";
+    return HttpVersion();
   }
 
   p += 4;
 
   if (p >= line_end || *p != '/') {
-    DLOG(INFO) << "missing version; assuming HTTP/1.0";
-    raw_headers_ = "HTTP/1.0";
-    return;
+    DLOG(INFO) << "missing version";
+    return HttpVersion();
   }
 
   string::const_iterator dot = find(p, line_end, '.');
   if (dot == line_end) {
-    DLOG(INFO) << "malformed version; assuming HTTP/1.0";
-    raw_headers_ = "HTTP/1.0";
-    return;
+    DLOG(INFO) << "malformed version";
+    return HttpVersion();
   }
 
   ++p;  // from / to first digit.
   ++dot;  // from . to second digit.
 
   if (!(*p >= '0' && *p <= '9' && *dot >= '0' && *dot <= '9')) {
-    DLOG(INFO) << "malformed version number; assuming HTTP/1.0";
-    raw_headers_ = "HTTP/1.0";
-    return;
+    DLOG(INFO) << "malformed version number";
+    return HttpVersion();
   }
 
-  int major = *p - '0';
-  int minor = *dot - '0';
+  uint16 major = *p - '0';
+  uint16 minor = *dot - '0';
 
-  if ((major > 1) || ((major == 1) && (minor >= 1))) {
-    // at least HTTP/1.1
-    raw_headers_ = "HTTP/1.1";
-  } else {
-    // treat anything else as version 1.0
-    raw_headers_ = "HTTP/1.0";
-  }
+  return HttpVersion(major, minor);
 }
 
 // Note: this implementation implicitly assumes that line_end points at a valid
 // sentinel character (such as '\0').
 void HttpResponseHeaders::ParseStatusLine(string::const_iterator line_begin,
-                                          string::const_iterator line_end) {
-  ParseVersion(line_begin, line_end);
+                                          string::const_iterator line_end,
+                                          bool has_headers) {
+  // Extract the version number
+  parsed_http_version_ = ParseVersion(line_begin, line_end);
 
+  // Clamp the version number to one of: {0.9, 1.0, 1.1}
+  if (parsed_http_version_ == HttpVersion(0, 9) && !has_headers) {
+    http_version_ = HttpVersion(0, 9);
+    raw_headers_ = "HTTP/0.9";
+  } else if (parsed_http_version_ >= HttpVersion(1, 1)) {
+    http_version_ = HttpVersion(1, 1);
+    raw_headers_ = "HTTP/1.1";
+  } else {
+    // Treat everything else like HTTP 1.0
+    http_version_ = HttpVersion(1, 0);
+    raw_headers_ = "HTTP/1.0";
+  }
+  if (parsed_http_version_ != http_version_) {
+    DLOG(INFO) << "assuming HTTP/" << http_version_.major() << "."
+               << http_version_.minor();
+  }
+
+  // TODO(eroman): this doesn't make sense if ParseVersion failed.
   string::const_iterator p = find(line_begin, line_end, ' ');
 
   if (p == line_end) {
@@ -477,14 +478,14 @@ void HttpResponseHeaders::ParseStatusLine(string::const_iterator line_begin,
 
   if (p == code) {
     DLOG(INFO) << "missing response status number; assuming 200";
-    raw_headers_.append(" 200 ");
+    raw_headers_.append(" 200 OK");
     response_code_ = 200;
-  } else {
-    raw_headers_.push_back(' ');
-    raw_headers_.append(code, p);
-    raw_headers_.push_back(' ');
-    response_code_ = static_cast<int>(StringToInt64(string(code, p)));
-  }
+    return;
+  } 
+  raw_headers_.push_back(' ');
+  raw_headers_.append(code, p);
+  raw_headers_.push_back(' ');
+  response_code_ = static_cast<int>(StringToInt64(string(code, p)));
 
   // Skip whitespace.
   while (*p == ' ')
@@ -496,6 +497,8 @@ void HttpResponseHeaders::ParseStatusLine(string::const_iterator line_begin,
 
   if (p == line_end) {
     DLOG(INFO) << "missing response status text; assuming OK";
+    // Not super critical what we put here. Just use "OK"
+    // even if it isn't descriptive of response_code_.
     raw_headers_.append("OK");
   } else {
     raw_headers_.append(p, line_end);
@@ -511,7 +514,7 @@ size_t HttpResponseHeaders::FindHeader(size_t from,
       continue;
     const string::const_iterator& name_begin = parsed_[i].name_begin;
     const string::const_iterator& name_end = parsed_[i].name_end;
-    if ((name_end - name_begin) == search.size() &&
+    if (static_cast<size_t>(name_end - name_begin) == search.size() &&
         std::equal(name_begin, name_end, search.begin(),
                    CaseInsensitiveCompare<char>()))
       return i;
@@ -641,7 +644,7 @@ bool HttpResponseHeaders::IsRedirect(string* location) const {
   // If we lack a Location header, then we can't treat this as a redirect.
   // We assume that the first non-empty location value is the target URL that
   // we want to follow.  TODO(darin): Is this consistent with other browsers?
-  size_t i = -1;
+  size_t i = string::npos;
   do {
     i = FindHeader(++i, "location");
     if (i == string::npos)
@@ -832,7 +835,7 @@ bool HttpResponseHeaders::GetMaxAgeValue(TimeDelta* result) const {
   string value;
 
   const char kMaxAgePrefix[] = "max-age=";
-  const int kMaxAgePrefixLen = arraysize(kMaxAgePrefix) - 1;
+  const size_t kMaxAgePrefixLen = arraysize(kMaxAgePrefix) - 1;
 
   void* iter = NULL;
   while (EnumerateHeader(&iter, name, &value)) {
@@ -883,7 +886,7 @@ bool HttpResponseHeaders::GetTimeValuedHeader(const std::string& name,
 
 bool HttpResponseHeaders::IsKeepAlive() const {
   const char kPrefix[] = "HTTP/1.0";
-  const int kPrefixLen = arraysize(kPrefix) - 1;
+  const size_t kPrefixLen = arraysize(kPrefix) - 1;
   if (raw_headers_.size() < kPrefixLen)  // Lacking a status line?
     return false;
 
@@ -909,6 +912,8 @@ bool HttpResponseHeaders::IsKeepAlive() const {
   return keep_alive;
 }
 
+// From RFC 2616:
+// Content-Length = "Content-Length" ":" 1*DIGIT
 int64 HttpResponseHeaders::GetContentLength() const {
   void* iter = NULL;
   string content_length_val;
@@ -918,19 +923,16 @@ int64 HttpResponseHeaders::GetContentLength() const {
   if (content_length_val.empty())
     return -1;
 
-  // NOTE: We do not use StringToInt64 here since we want to know if
-  // parsing failed.
-
-  char* end;
-  int64 result = _strtoi64(content_length_val.c_str(), &end, 10);
-
-  if (result < 0)
+  if (content_length_val[0] == '+')
     return -1;
 
-  if (end != content_length_val.c_str() + content_length_val.length())
+  int64 result;
+  bool ok = StringToInt64(content_length_val, &result);
+  if (!ok || result < 0) 
     return -1;
 
   return result;
 }
 
 }  // namespace net
+

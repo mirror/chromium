@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // This header specifies the Chrome Plugin API.  It is based heavily on NPAPI.
 // The key difference is that Chrome plugins can be loaded for the lifetime
@@ -55,7 +30,7 @@ extern "C" {
 // The current version of the API, used by the 'version' field of CPPluginFuncs
 // and CPBrowserFuncs.
 #define CP_MAJOR_VERSION 0
-#define CP_MINOR_VERSION 6
+#define CP_MINOR_VERSION 8
 #define CP_VERSION       ((CP_MAJOR_VERSION << 8) | (CP_MINOR_VERSION))
 
 #define CP_GET_MAJOR_VERSION(version) ((version & 0xff00) >> 8)
@@ -67,6 +42,7 @@ typedef unsigned char CPBool;
 typedef enum {
   CP_PROCESS_BROWSER = 0,
   CP_PROCESS_PLUGIN,
+  CP_PROCESS_RENDERER,
 } CPProcessType;
 
 // Return codes.  Error values are negative.
@@ -398,8 +374,28 @@ typedef CPError (STDCALL *CPB_SendMessageFunc)(CPID id,
                                                const void *data,
                                                uint32 data_len);
 
+// Asks the browser to send raw data to the other process hosting an instance of
+// this plugin. This function only works from the plugin or renderer process.
+// This function blocks until the message is processed.  The memory should be
+// freed using CPB_Free when done.
+typedef CPError (STDCALL *CPB_SendSyncMessageFunc)(CPID id,
+                                                   const void *data,
+                                                   uint32 data_len,
+                                                   void **retval,
+                                                   uint32 *retval_len);
+
+// This function asynchronously calls the provided function on the plugin
+// thread.  user_data is passed as the argument to the function.
+typedef CPError (STDCALL *CPB_PluginThreadAsyncCallFunc)(CPID id,
+                                                         void (*func)(void *),
+                                                         void *user_data);
+
 // Informs the plugin of raw data having been sent from another process.
 typedef void (STDCALL *CPP_OnMessageFunc)(void *data, uint32 data_len);
+
+// Informs the plugin of raw data having been sent from another process.
+typedef void (STDCALL *CPP_OnSyncMessageFunc)(void *data, uint32 data_len,
+                                              void **retval, uint32 *retval_len);
 
 // Function table for issuing requests using via the other side's network stack.
 // For the plugin, this functions deal with issuing requests through the
@@ -443,6 +439,7 @@ typedef struct _CPPluginFuncs {
   CPP_OnMessageFunc on_message;
   CPP_HtmlDialogClosedFunc html_dialog_closed;
   CPP_HandleCommandFunc handle_command;
+  CPP_OnSyncMessageFunc on_sync_message;
 } CPPluginFuncs;
 
 // Function table CPB functions (functions provided by host to plugin).
@@ -470,6 +467,8 @@ typedef struct _CPBrowserFuncs {
   CPB_GetCommandLineArgumentsFunc get_command_line_arguments;
   CPB_AddUICommandFunc add_ui_command;
   CPB_HandleCommandFunc handle_command;
+  CPB_SendSyncMessageFunc send_sync_message;
+  CPB_PluginThreadAsyncCallFunc plugin_thread_async_call;
 } CPBrowserFuncs;
 
 
@@ -505,3 +504,4 @@ typedef CPError (STDCALL *CP_InitializeFunc)(
 #endif
 
 #endif // CHROME_COMMON_CHROME_PLUGIN_API_H__
+

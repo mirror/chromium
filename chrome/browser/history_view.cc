@@ -1,35 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/history_view.h"
 
 #include "base/string_util.h"
+#include "base/time_format.h"
 #include "base/word_iterator.h"
 #include "chrome/browser/browsing_data_remover.h"
 #include "chrome/browser/drag_utils.h"
@@ -39,6 +15,7 @@
 #include "chrome/browser/views/bookmark_bubble_view.h"
 #include "chrome/browser/views/event_utils.h"
 #include "chrome/browser/views/star_toggle.h"
+#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/favicon_size.h"
 #include "chrome/common/resource_bundle.h"
@@ -185,10 +162,10 @@ void SnippetRenderer::Paint(ChromeCanvas* canvas) {
     const int width = ProcessRun(NULL, 0, 0,
                                  match_iter, iter.prev(), iter.pos());
     // Advance to the next line if necessary.
-    if (x + width > GetWidth()) {
+    if (x + width > View::width()) {
       x = 0;
       y += line_height;
-      if (y >= GetHeight())
+      if (y >= height())
         return;  // Out of vertical space.
     }
     ProcessRun(canvas, x, y, match_iter, iter.prev(), iter.pos());
@@ -232,7 +209,7 @@ int SnippetRenderer::ProcessRun(
     if (canvas) {
       canvas->DrawStringInt(run, *font, SkColorSetRGB(0, 0, 0),
                             x + total_width, y,
-                            width, GetHeight(),
+                            width, height(),
                             ChromeCanvas::TEXT_VALIGN_BOTTOM);
     }
 
@@ -361,7 +338,7 @@ HistoryItemRenderer::~HistoryItemRenderer() {
 
 void HistoryItemRenderer::GetThumbnailBounds(CRect* rect) {
   DCHECK(rect);
-  rect->right = GetWidth() - kEntryPadding;
+  rect->right = width() - kEntryPadding;
   rect->left = rect->right - kThumbnailWidth;
   rect->top = kEntryPadding;
   rect->bottom = rect->top + kThumbnailHeight;
@@ -444,7 +421,7 @@ void HistoryItemRenderer::Layout() {
     GetThumbnailBounds(&thumbnail_rect);
     max_x = thumbnail_rect.left - kEntryPadding;
   } else {
-    max_x = GetWidth() - kEntryPadding;
+    max_x = width() - kEntryPadding;
   }
 
   // Calculate the ideal positions of some items. If possible, we
@@ -474,9 +451,9 @@ void HistoryItemRenderer::Layout() {
     time_label_->SetText(std::wstring());
   } else if (show_full_) {
     time_x = 0;
-    time_label_->SetText(TimeFormat::ShortDate(visit_time));
+    time_label_->SetText(base::TimeFormatShortDate(visit_time));
   } else {
-    time_label_->SetText(TimeFormat::TimeOfDay(visit_time));
+    time_label_->SetText(base::TimeFormatTimeOfDay(visit_time));
   }
   time_label_->GetPreferredSize(&time_size);
 
@@ -587,8 +564,8 @@ void HistoryItemRenderer::StarStateChanged(bool state) {
   // Shift the location to make the bubble appear at a visually pleasing
   // location.
   gfx::Rect star_bounds(star_location.x, star_location.y + 4,
-                        star_toggle_->GetWidth(),
-                        star_toggle_->GetHeight());
+                        star_toggle_->width(),
+                        star_toggle_->height());
   HWND parent = GetViewContainer()->GetHWND();
   Profile* profile = model_->profile();
   GURL url = model_->GetURL(model_index_);
@@ -892,9 +869,7 @@ void HistoryView::Layout() {
                       kEntryPadding + kNoResultTextHeight);
   }
 
-  int x = GetX();
-  int y = GetY();
-  SetBounds(x, y, width, height);
+  SetBounds(x(), y(), width, height);
 }
 
 HistoryView::BreakOffsets::iterator HistoryView::GetBreakOffsetIteratorForY(
@@ -927,7 +902,7 @@ void HistoryView::Paint(ChromeCanvas* canvas) {
   if (!canvas->getClipBounds(&clip))
     return;
 
-  const int content_width = GetWidth() - kLeftMargin - kRightMargin;
+  const int content_width = width() - kLeftMargin - kRightMargin;
 
   const int x1 = kLeftMargin;
   int clip_y = SkScalarRound(clip.fTop);
@@ -982,14 +957,14 @@ void HistoryView::Paint(ChromeCanvas* canvas) {
           DCHECK(visit_time.ToInternalValue() > 0);
 
           // If it's the first day, then it has a special presentation.
-          std::wstring date_str = TimeFormat::FriendlyDay(visit_time,
-                                                          &midnight_today);
+          std::wstring date_str = TimeFormat::RelativeDate(visit_time,
+                                                           &midnight_today);
           if (date_str.empty()) {
-            date_str = TimeFormat::FriendlyDate(visit_time);
+            date_str = base::TimeFormatFriendlyDate(visit_time);
           } else {
             date_str = l10n_util::GetStringF(
                 IDS_HISTORY_DATE_WITH_RELATIVE_TIME,
-                date_str, TimeFormat::FriendlyDate(visit_time));
+                date_str, base::TimeFormatFriendlyDate(visit_time));
           }
 
           // Draw date
@@ -1137,7 +1112,7 @@ bool HistoryView::GetFloatingViewIDForPoint(int x, int y, int* id) {
   //  +--------------
 
   // First, verify the x coordinate is within the correct region.
-  if (x < kLeftMargin || x > GetWidth() - kRightMargin ||
+  if (x < kLeftMargin || x > width() - kRightMargin ||
       y >= GetLastEntryMaxY()) {
     return false;
   }
@@ -1230,7 +1205,7 @@ ChromeViews::View* HistoryView::ValidateFloatingViewForID(int id) {
                                 show_results_);
     renderer->SetModel(model_.get(), model_index);
     renderer->SetBounds(kLeftMargin, y,
-                        GetWidth() - kLeftMargin - kRightMargin,
+                        width() - kLeftMargin - kRightMargin,
                         GetEntryHeight());
     floating_view = renderer;
   }
@@ -1276,6 +1251,12 @@ void HistoryView::DeleteDayAtModelIndex(int index) {
 
   if (win_util::MessageBox(GetViewContainer()->GetHWND(),
                            text, caption, flags) !=  IDOK) {
+    return;
+  }
+
+  if (index < 0 || index >= model_->GetItemCount()) {
+    // Bogus index.
+    NOTREACHED();
     return;
   }
 
@@ -1329,9 +1310,10 @@ gfx::Rect HistoryView::CalculateDeleteControlBounds(int base_y) {
   // the link. Additionally this should be baseline aligned with the date. I'm
   // not doing that now as a redesign of HistoryView is in the works.
   const int delete_width = GetDeleteControlWidth();
-  const int delete_x = GetWidth() - kRightMargin - delete_width;
+  const int delete_x = width() - kRightMargin - delete_width;
   return gfx::Rect(delete_x,
                    base_y + kDeleteControlOffset,
                    delete_width,
                    kBrowseResultsHeight);
 }
+

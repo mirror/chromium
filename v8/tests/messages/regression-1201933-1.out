@@ -1,3 +1,0 @@
-regression-1201933-1.js:7: Uncaught TypeError: const 'a' has already been declared
-  var a;
-      ^

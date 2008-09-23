@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/gfx/font_utils.h"
 
@@ -93,9 +68,9 @@ struct ScriptToFontMapSingletonTraits
       {USCRIPT_KHMER, L"daunpenh"},
       {USCRIPT_THAANA, L"mv boli"},
       {USCRIPT_MONGOLIAN, L"mongolian balti"},
-      // For common, perhaps we should return a font
-      // for the current application/system locale.
-      //{USCRIPT_COMMON, L"times new roman"}
+      {USCRIPT_MYANMAR, L"padauk"},
+      // For USCRIPT_COMMON, we map blocks to scripts when
+      // that makes sense.
     };
 
     ScriptToFontMap* new_instance = new ScriptToFontMap;
@@ -235,7 +210,6 @@ const wchar_t* GetFallbackFamily(const wchar_t *characters,
   // by fonts for scripts closely related to them.
   // See http://unicode.org/cldr/utility/list-unicodeset.jsp?a=[:Script=Common:]
   // TODO(jungshik): make this more efficient with a wider coverage
-  // (Armenian, Georgian, Devanagari, etc)
   if (script == USCRIPT_COMMON || script == USCRIPT_INHERITED) { 
     UBlockCode block = ublock_getCode(ucs4);
     switch (block) {
@@ -248,8 +222,28 @@ const wchar_t* GetFallbackFamily(const wchar_t *characters,
       case UBLOCK_HIRAGANA:
       case UBLOCK_KATAKANA:
         script = USCRIPT_HIRAGANA;
+        break;
       case UBLOCK_ARABIC:
         script = USCRIPT_ARABIC;
+        break;
+      case UBLOCK_GREEK:
+        script = USCRIPT_GREEK;
+        break;
+      case UBLOCK_DEVANAGARI:
+        // For Danda and Double Danda (U+0964, U+0965), use a Devanagari
+        // font for now although they're used by other scripts as well.
+        // Without a context, we can't do any better. 
+        script = USCRIPT_DEVANAGARI;
+        break;
+      case UBLOCK_ARMENIAN:
+        script = USCRIPT_ARMENIAN;
+        break;
+      case UBLOCK_GEORGIAN:
+        script = USCRIPT_GEORGIAN;
+        break;
+      case UBLOCK_KANNADA:
+        script = USCRIPT_KANNADA;
+        break;
     }
   }
 
@@ -295,7 +289,7 @@ bool GetDerivedFontData(const wchar_t *family,
   // TODO(jungshik) : This comes up pretty high in the profile so that
   // we need to measure whether using SHA256 (after coercing all the
   // fields to char*) is faster than StringPrintf.
-  std::wstring font_key = StringPrintf(L"%1d:%d:%s", style, logfont->lfHeight,
+  std::wstring font_key = StringPrintf(L"%1d:%d:%ls", style, logfont->lfHeight,
                                        family);
   FontDataCache::const_iterator iter = font_data_cache->find(font_key);
   FontData *derived;
@@ -339,3 +333,4 @@ int GetStyleFromLogfont(const LOGFONT* logfont) {
 }
 
 }  // namespace gfx
+

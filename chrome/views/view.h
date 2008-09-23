@@ -1,52 +1,28 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_VIEWS_VIEW_H__
-#define CHROME_VIEWS_VIEW_H__
+#ifndef CHROME_VIEWS_VIEW_H_
+#define CHROME_VIEWS_VIEW_H_
 
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlmisc.h>
 #include <map>
 #include <vector>
 
-#include "base/basictypes.h"
+// TODO(maruel):  Remove these once WTL::CRect and WTL::CPoint are no more used.
+#include <atlbase.h>
+#include <atlapp.h>
+#include <atlmisc.h>
+
 #include "base/gfx/rect.h"
 #include "base/scoped_ptr.h"
-#include "chrome/common/drag_drop_types.h"
-#include "chrome/common/l10n_util.h"
-#include "chrome/common/gfx/insets.h"
-#include "chrome/views/accessibility/accessible_wrapper.h"
 #include "chrome/views/accelerator.h"
-#include "chrome/views/event.h"
-#include "chrome/views/view_container.h"
 
+namespace gfx {
+class Insets;
+class Path;
+}
+
+class AccessibleWrapper;
 class ChromeCanvas;
 class OSExchangeData;
 class SkBitmap;
@@ -142,7 +118,7 @@ class View : public AcceleratorTarget {
     CURRENT
   };
 
-  // Used in the versions of GetBounds() and GetX() that take a transformation
+  // Used in the versions of GetBounds() and x() that take a transformation
   // parameter in order to determine whether or not to take into account the
   // mirroring setting of the View when returning bounds positions.
   enum PositionMirroringSettings {
@@ -184,17 +160,19 @@ class View : public AcceleratorTarget {
   // Set the bounds in the parent's coordinate system.
   void SetBounds(const CRect& bounds);
   void SetBounds(int x, int y, int width, int height);
-  void SetX(int x) { SetBounds(x, GetY(), GetWidth(), GetHeight()); }
-  void SetY(int y) { SetBounds(GetX(), y, GetWidth(), GetHeight()); }
+  void SetX(int x) { SetBounds(x, y(), width(), height()); }
+  void SetY(int y) { SetBounds(x(), y, width(), height()); }
 
   // Returns the left coordinate of the View, relative to the parent View,
-  // which is essentially the value of bounds_.left.
+  // which is the value of bounds_.left.
   //
   // This is the function subclasses should use whenever they need to obtain
   // the left position of one of their child views (for example, when
   // implementing View::Layout()).
-  inline int GetX() const {
-    return GetX(IGNORE_MIRRORING_TRANSFORMATION);
+  int x() const {
+    // This is equivalent to GetX(IGNORE_MIRRORING_TRANSFORMATION), but
+    // inlinable.
+    return bounds_.left;
   };
 
   // Return the left coordinate of the View, relative to the parent. If
@@ -205,22 +183,22 @@ class View : public AcceleratorTarget {
   //
   // NOTE: in the vast majority of the cases, the mirroring implementation is
   //       transparent to the View subclasses and therefore you should use the
-  //       paremeterless version of GetX() when you need to get the X
+  //       paremeterless version of x() when you need to get the X
   //       coordinate of a child View.
   int GetX(PositionMirroringSettings settings) const;
 
-  inline int GetY() const {
+  int y() const {
     return bounds_.top;
   };
-  inline int GetWidth() const {
+  int width() const {
     return bounds_.Width();
   };
-  inline int GetHeight() const {
+  int height() const {
     return bounds_.Height();
   };
 
   // Return this control local bounds. If include_border is true, local bounds
-  // is the rectangle {0, 0, GetWidth(), GetHeight()}, otherwise, it does not
+  // is the rectangle {0, 0, width(), height()}, otherwise, it does not
   // include the area where the border (if any) is painted.
   void GetLocalBounds(CRect* out, bool include_border) const;
 
@@ -230,7 +208,7 @@ class View : public AcceleratorTarget {
   // Get the position of the View, relative to the parent.
   //
   // Note that if the parent uses right-to-left UI layout, then the mirrored
-  // position of this View is returned. Use GetX()/GetY() if you want to ignore
+  // position of this View is returned. Use x()/y() if you want to ignore
   // mirroring.
   void GetPosition(CPoint* out) const;
 
@@ -306,10 +284,7 @@ class View : public AcceleratorTarget {
   // Indicates whether the UI layout for this view is right-to-left. The view
   // has an RTL UI layout if RTL hasn't been disabled for the view and if the
   // locale's language is an RTL language.
-  bool UILayoutIsRightToLeft() const {
-    return (ui_mirroring_is_enabled_for_rtl_languages_ &&
-            l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT);
-  }
+  bool UILayoutIsRightToLeft() const;
 
   // Enables or disables the right-to-left layout for the view. If |enable| is
   // true, the layout will become right-to-left only if the locale's language
@@ -356,7 +331,7 @@ class View : public AcceleratorTarget {
   // UI mirroring is transparent to most View subclasses and therefore there is
   // no need to call this routine from anywhere within your subclass
   // implementation.
-  inline int View::MirroredX() const;
+  int View::MirroredX() const;
 
   // Given a rectangle specified in this View's coordinate system, the function
   // computes the 'left' value for the mirrored rectangle within this View. If
@@ -379,7 +354,7 @@ class View : public AcceleratorTarget {
   // MirroredXCoordinateInsideView(20) -> 80
   // MirroredXCoordinateInsideView(99) -> 1
   int MirroredXCoordinateInsideView(int x) const {
-    return UILayoutIsRightToLeft() ? GetWidth() - x : x;
+    return UILayoutIsRightToLeft() ? width() - x : x;
   }
 
   // Painting functions
@@ -1001,6 +976,7 @@ class View : public AcceleratorTarget {
                                      bool is_horizontal, bool is_positive);
 
  protected:
+  // TODO(beng): these members should NOT be protected per style guide.
   // This View's bounds in the parent coordinate system.
   CRect bounds_;
 
@@ -1016,6 +992,16 @@ class View : public AcceleratorTarget {
   // Returns true if the View is currently processing a paint.
   virtual bool IsProcessingPaint() const;
 #endif
+
+  // Called by HitTest to see if this View has a custom hit test mask. If the
+  // return value is true, GetHitTestMask will be called to obtain the mask.
+  // Default value is false, in which case the View will hit-test against its
+  // bounds.
+  virtual bool HasHitTestMask() const;
+
+  // Called by HitTest to retrieve a mask for hit-testing against. Subclasses
+  // override to provide custom shaped hit test regions.
+  virtual void GetHitTestMask(gfx::Path* mask) const;
 
   // This method is invoked when the tree changes.
   //
@@ -1291,7 +1277,7 @@ class View : public AcceleratorTarget {
   View* previous_focusable_view_;
 
   // The list of accelerators.
-  scoped_ptr<std::vector<Accelerator>> accelerators_;
+  scoped_ptr<std::vector<Accelerator> > accelerators_;
 
   // The task used to restore automatically the focus to the last focused
   // floating view.
@@ -1315,9 +1301,10 @@ class View : public AcceleratorTarget {
   // right-to-left locales for this View.
   bool flip_canvas_on_paint_for_rtl_ui_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(View);
+  DISALLOW_COPY_AND_ASSIGN(View);
 };
 
-}
+}  // namespace ChromeViews
 
-#endif  // CHROME_VIEWS_VIEW_H__
+#endif  // CHROME_VIEWS_VIEW_H_
+

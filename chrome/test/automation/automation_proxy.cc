@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <sstream>
 
@@ -207,8 +182,11 @@ void AutomationProxy::InitializeChannelID() {
 }
 
 void AutomationProxy::InitializeThread() {
-  scoped_ptr<Thread> thread(new Thread("AutomationProxy_BackgroundThread"));
-  bool thread_result = thread->Start();
+  scoped_ptr<base::Thread> thread(
+      new base::Thread("AutomationProxy_BackgroundThread"));
+  base::Thread::Options options;
+  options.message_loop_type = MessageLoop::TYPE_IO;
+  bool thread_result = thread->StartWithOptions(options);
   DCHECK(thread_result);
   thread_.swap(thread);
 }
@@ -323,6 +301,10 @@ bool AutomationProxy::WaitForWindowCountToBecome(int count,
 
 bool AutomationProxy::SetFilteredInet(bool enabled) {
   return Send(new AutomationMsg_SetFilteredInet(0, enabled));
+}
+
+void AutomationProxy::Disconnect() {
+  channel_.reset();
 }
 
 void AutomationProxy::OnMessageReceived(const IPC::Message& msg) {
@@ -491,6 +473,15 @@ AutocompleteEditProxy* AutomationProxy::GetAutocompleteEditForBrowser(
                                    autocomplete_edit_handle);
 }
 
+bool AutomationProxy::Send(IPC::Message* message) {
+  if (channel_.get())
+    return channel_->Send(message);
+
+  DLOG(WARNING) << "Channel has been closed; dropping message!";
+  delete message;
+  return false;
+}
+
 bool AutomationProxy::SendAndWaitForResponse(IPC::Message* request,
                                              IPC::Message** response,
                                              int response_type) {
@@ -565,3 +556,4 @@ TabProxy* AutomationProxy::CreateExternalTab(HWND* external_tab_container) {
   delete response;
   return tab_proxy;
 }
+

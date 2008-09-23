@@ -1,3 +1,0 @@
-Test "function () {
-    check(0, 1);
-  }" failed with exception: check failed: 0 != 1

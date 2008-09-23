@@ -1,47 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <algorithm>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/root_view.h"
+
+#include <algorithm>
 
 #include "base/base_drag_source.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
-#include "chrome/common/notification_service.h"
-#include "chrome/common/os_exchange_data.h"
-#include "chrome/views/event.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/common/drag_drop_types.h"
+#include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/views/root_view_drop_target.h"
 #include "chrome/views/view_container.h"
-
-#include "chrome/common/gfx/chrome_canvas.h"
 
 namespace ChromeViews {
 
@@ -63,7 +34,7 @@ class PaintTask : public Task {
 
   void Run() {
     if (root_view_)
-      root_view_->ProcessPendingPaint();
+      root_view_->PaintNow();
   }
  private:
   // The target root view.
@@ -80,9 +51,8 @@ const char RootView::kViewClassName[] = "chrome/views/RootView";
 //
 /////////////////////////////////////////////////////////////////////////////
 
-RootView::RootView(ViewContainer* view_container, bool double_buffer)
-  : double_buffer_(double_buffer),
-    view_container_(view_container),
+RootView::RootView(ViewContainer* view_container)
+  : view_container_(view_container),
     invalid_rect_(0,0,0,0),
     mouse_pressed_handler_(NULL),
     mouse_move_handler_(NULL),
@@ -149,18 +119,6 @@ void RootView::SchedulePaint(int x, int y, int w, int h) {
   View::SchedulePaint();
 }
 
-void RootView::ProcessPendingPaint() {
-  if (pending_paint_task_) {
-    pending_paint_task_->Cancel();
-    pending_paint_task_ = NULL;
-  }
-  if (!paint_task_needed_)
-    return;
-  ViewContainer* vc = GetViewContainer();
-  if (vc)
-    vc->PaintNow(invalid_rect_);
-}
-
 #ifndef NDEBUG
 // Sets the value of RootView's |is_processing_paint_| member to true as long
 // as ProcessPaint is being called. Sets it to |false| when it returns.
@@ -200,9 +158,9 @@ void RootView::ProcessPaint(ChromeCanvas* canvas) {
   canvas->save();
 
   // Set the clip rect according to the invalid rect.
-  int x = invalid_rect_.left + GetX();
-  int y = invalid_rect_.top + GetY();
-  canvas->ClipRectInt(x, y, invalid_rect_.Width(), invalid_rect_.Height());
+  int clip_x = invalid_rect_.left + x();
+  int clip_y = invalid_rect_.top + y();
+  canvas->ClipRectInt(clip_x, clip_y, invalid_rect_.Width(), invalid_rect_.Height());
 
   // Paint the tree
   View::ProcessPaint(canvas);
@@ -214,7 +172,15 @@ void RootView::ProcessPaint(ChromeCanvas* canvas) {
 }
 
 void RootView::PaintNow() {
-  GetViewContainer()->PaintNow(invalid_rect_);
+  if (pending_paint_task_) {
+    pending_paint_task_->Cancel();
+    pending_paint_task_ = NULL;
+  }
+  if (!paint_task_needed_)
+    return;
+  ViewContainer* vc = GetViewContainer();
+  if (vc)
+    vc->PaintNow(invalid_rect_);
 }
 
 bool RootView::NeedsPainting(bool urgent) {
@@ -312,7 +278,7 @@ bool RootView::OnMousePressed(const MouseEvent& e) {
 
   bool hit_disabled_view = false;
   // Walk up the tree until we find a view that wants the mouse event.
-  for (mouse_pressed_handler_ = GetViewForPoint(e.GetLocation());
+  for (mouse_pressed_handler_ = GetViewForPoint(WTL::CPoint(e.x(), e.y()));
        mouse_pressed_handler_ && (mouse_pressed_handler_ != this);
        mouse_pressed_handler_ = mouse_pressed_handler_->GetParent()) {
     if (!mouse_pressed_handler_->IsEnabled()) {
@@ -389,7 +355,7 @@ bool RootView::OnMouseDragged(const MouseEvent& e) {
     SetMouseLocationAndFlags(e);
 
     CPoint p;
-    ConvertPointToMouseHandler(e.GetLocation(), &p);
+    ConvertPointToMouseHandler(WTL::CPoint(e.x(), e.y()), &p);
     MouseEvent mouse_event(e.GetType(), p.x, p.y, e.GetFlags());
     if (!mouse_pressed_handler_->ProcessMouseDragged(mouse_event,
                                                      &drag_info)) {
@@ -407,7 +373,7 @@ void RootView::OnMouseReleased(const MouseEvent& e, bool canceled) {
 
   if (mouse_pressed_handler_) {
     CPoint p;
-    ConvertPointToMouseHandler(e.GetLocation(), &p);
+    ConvertPointToMouseHandler(WTL::CPoint(e.x(), e.y()), &p);
     MouseEvent mouse_released(e.GetType(), p.x, p.y, e.GetFlags());
     // We allow the view to delete us from ProcessMouseReleased. As such,
     // configure state such that we're done first, then call View.
@@ -420,10 +386,10 @@ void RootView::OnMouseReleased(const MouseEvent& e, bool canceled) {
 }
 
 void RootView::UpdateCursor(const MouseEvent& e) {
-  View *v = GetViewForPoint(e.GetLocation());
+  View *v = GetViewForPoint(WTL::CPoint(e.x(), e.y()));
 
   if (v && v != this) {
-    CPoint l(e.GetLocation());
+    CPoint l(e.x(), e.y());
     View::ConvertPointToView(this, v, &l);
     HCURSOR cursor = v->GetCursorForPoint(e.GetType(), l.x, l.y);
     if (cursor) {
@@ -437,7 +403,7 @@ void RootView::UpdateCursor(const MouseEvent& e) {
 }
 
 void RootView::OnMouseMoved(const MouseEvent& e) {
-  View *v = GetViewForPoint(e.GetLocation());
+  View *v = GetViewForPoint(WTL::CPoint(e.x(), e.y()));
   // Find the first enabled view.
   while (v && !v->IsEnabled())
     v = v->GetParent();
@@ -465,7 +431,7 @@ void RootView::OnMouseMoved(const MouseEvent& e) {
     mouse_move_handler_->OnMouseMoved(moved_event);
 
     HCURSOR cursor = mouse_move_handler_->GetCursorForPoint(
-        moved_event.GetType(), moved_event.GetX(), moved_event.GetY());
+        moved_event.GetType(), moved_event.x(), moved_event.y());
     if (cursor) {
       previous_cursor_ = ::SetCursor(cursor);
     } else if (previous_cursor_) {
@@ -914,8 +880,8 @@ void RootView::UnregisterViewForVisibleBoundsNotification(View* view) {
 
 void RootView::SetMouseLocationAndFlags(const MouseEvent& e) {
   last_mouse_event_flags_ = e.GetFlags();
-  last_mouse_event_x_ = e.GetX();
-  last_mouse_event_y_ = e.GetY();
+  last_mouse_event_x_ = e.x();
+  last_mouse_event_y_ = e.y();
 }
 
 std::string RootView::GetClassName() const {
@@ -1001,3 +967,4 @@ View* RootView::GetDragView() {
 }
 
 }
+

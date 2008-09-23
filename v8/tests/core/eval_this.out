@@ -1,5 +1,0 @@
-T0: [object Object]
-9
-10
-context: x = 11, this.x = 9
-context: x = 12, this.x = 10

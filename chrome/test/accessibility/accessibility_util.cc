@@ -1,41 +1,36 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#include "accessibility_util.h"
-#include "constants.h"
+#include "chrome/test/accessibility/accessibility_util.h"
+
+#include "base/win_util.h"
 #include "chrome/common/win_util.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/browser/xp_frame.h"
-#include "chrome/browser/vista_frame.h"
+#include "chrome/browser/views/old_frames/xp_frame.h"
+#include "chrome/browser/views/old_frames/vista_frame.h"
+#include "chrome/test/accessibility/constants.h"
+
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 VARIANT g_var_self = {VT_I4, CHILDID_SELF};
+
+// TODO(beng): clean this up
+static const wchar_t* kBrowserWindowKey = L"__BROWSER_WINDOW__";
+
+static BOOL CALLBACK WindowEnumProc(HWND hwnd, LPARAM data) {
+  std::wstring class_name = win_util::GetClassName(hwnd);
+  if (class_name == L"Chrome_HWNDViewContainer_0") {
+    HANDLE window_interface = GetProp(hwnd, kBrowserWindowKey);
+    if (window_interface) {
+      HWND* out = reinterpret_cast<HWND*>(data);
+      *out = hwnd;
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
 
 HWND GetChromeBrowserWnd(IAccessible** ppi_access) {
   HRESULT      hr   = S_OK;
@@ -45,11 +40,15 @@ HWND GetChromeBrowserWnd(IAccessible** ppi_access) {
 
   const std::wstring product_name = l10n_util::GetString(IDS_PRODUCT_NAME);
 
-  // Get Chrome window handle.
-  if (win_util::ShouldUseVistaFrame()) {
-    hwnd = FindWindow(VISTA_FRAME_CLASSNAME, NULL);
-  } else {
-    hwnd = FindWindow(XP_FRAME_CLASSNAME, NULL);
+  EnumWindows(WindowEnumProc, reinterpret_cast<LPARAM>(&hwnd));
+  if (!IsWindow(hwnd)) {
+    // Didn't find the window handle by looking for the new frames, assume the
+    // old frames are being used instead...
+    if (win_util::ShouldUseVistaFrame()) {
+      hwnd = FindWindow(VISTA_FRAME_CLASSNAME, NULL);
+    } else {
+      hwnd = FindWindow(XP_FRAME_CLASSNAME, NULL);
+    }
   }
 
   if (NULL == hwnd) {
@@ -181,6 +180,8 @@ HRESULT GetChildWndOf(std::wstring parent_name, unsigned int child_index,
   IAccessible *pi_parent = NULL;
   if (0 == parent_name.compare(BROWSER_STR))
     GetChromeBrowserWnd(&pi_parent);
+  if (0 == parent_name.compare(BROWSER_VIEW_STR))
+    GetBrowserViewWnd(&pi_parent);
   if (0 == parent_name.compare(TOOLBAR_STR))
     GetToolbarWnd(&pi_parent);
   if (0 == parent_name.compare(TABSTRIP_STR))
@@ -220,11 +221,19 @@ HRESULT GetChildWndOf(std::wstring parent_name, unsigned int child_index,
 }
 
 HRESULT GetTabStripWnd(IAccessible** ppi_access) {
+#ifdef NEW_FRAMES
+  return GetChildWndOf(BROWSER_VIEW_STR, TABSTRIP_ACC_INDEX, ppi_access, NULL);
+#else
   return GetChildWndOf(BROWSER_STR, TABSTRIP_ACC_INDEX, ppi_access, NULL);
+#endif
+}
+
+HRESULT GetBrowserViewWnd(IAccessible** ppi_access) {
+  return GetChildWndOf(BROWSER_STR, BROWSER_VIEW_ACC_INDEX, ppi_access, NULL);
 }
 
 HRESULT GetToolbarWnd(IAccessible** ppi_access) {
-  return GetChildWndOf(BROWSER_STR, TOOLBAR_ACC_INDEX, ppi_access, NULL);
+  return GetChildWndOf(BROWSER_VIEW_STR, TOOLBAR_ACC_INDEX, ppi_access, NULL);
 }
 
 HRESULT GetBrowserMinimizeButton(IAccessible** ppi_access,
@@ -618,3 +627,4 @@ std::wstring GetState(IAccessible* pi_access, VARIANT child) {
   VariantClear(&state);
   return complete_state;
 }
+

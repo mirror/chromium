@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/ssl_blocking_page.h"
 
@@ -76,7 +51,7 @@ SSLBlockingPage::SSLBlockingPage(SSLManager::CertError* error,
 
     // Since WebContents::InterstitialPageGone won't be called, we need
     // to clear the last NavigationEntry manually.
-    tab_->controller()->RemoveLastEntry();
+    tab_->controller()->RemoveLastEntryForInterstitial();
   }
   (*tab_to_blocking_page_)[tab_] = this;
 
@@ -87,7 +62,7 @@ SSLBlockingPage::SSLBlockingPage(SSLManager::CertError* error,
 
   NotificationService::current()->AddObserver(this,
       NOTIFY_INTERSTITIAL_PAGE_CLOSED,
-      Source<TabContents>(tab_));
+      Source<NavigationController>(tab_->controller()));
 
   // Register for DOM operations, this is how the blocking page notifies us of
   // what the user chooses.
@@ -103,7 +78,7 @@ SSLBlockingPage::~SSLBlockingPage() {
 
   NotificationService::current()->RemoveObserver(this,
       NOTIFY_INTERSTITIAL_PAGE_CLOSED,
-      Source<TabContents>(tab_));
+      Source<NavigationController>(tab_->controller()));
 
   NotificationService::current()->RemoveObserver(this,
       NOTIFY_DOM_OPERATION_RESPONSE,
@@ -157,31 +132,31 @@ void SSLBlockingPage::Show() {
   int cert_id = CertStore::GetSharedInstance()->StoreCert(
       ssl_info.cert, tab->render_view_host()->process()->host_id());
 
-  NavigationEntry* nav_entry = new NavigationEntry(TAB_CONTENTS_WEB);
   if (tab_->controller()->GetPendingEntryIndex() == -1) {
-    // New navigation.
-    // We set the page ID to max page id so to ensure the controller considers
-    // this dummy entry a new one.  Because we'll remove the entry when the
-    // interstitial is going away, it will not conflict with any future
-    // navigations.
+    // For new navigations, we just create a new navigation entry.
+    NavigationEntry new_entry(TAB_CONTENTS_WEB);
+    new_entry.set_url(error_->request_url());
+    tab_->controller()->AddDummyEntryForInterstitial(new_entry);
     created_nav_entry_ = true;
-    nav_entry->SetPageID(tab_->GetMaxPageID() + 1);
-    nav_entry->SetURL(error_->request_url());
   } else {
-    // Make sure to update the current entry ssl state to reflect the error.
-    *nav_entry = *(tab_->controller()->GetPendingEntry());
+    // When there is a pending entry index, that means we're doing a
+    // back/forward navigation. Clone that entry instead.
+    tab_->controller()->AddDummyEntryForInterstitial(
+        *tab_->controller()->GetPendingEntry());
   }
-  nav_entry->SetPageType(NavigationEntry::INTERSTITIAL_PAGE);
-  nav_entry->SetSecurityStyle(SECURITY_STYLE_AUTHENTICATION_BROKEN);
-  nav_entry->SetSSLCertID(cert_id);
-  nav_entry->SetSSLCertStatus(ssl_info.cert_status);
-  nav_entry->SetSSLSecurityBits(ssl_info.security_bits);
-  // The controller will own the entry.
-  int page_id = nav_entry->GetPageID();
-  tab_->controller()->DidNavigateToEntry(nav_entry);
-  tab_->controller()->SyncSessionWithEntryByPageID(TAB_CONTENTS_WEB,
-                                                   NULL,
-                                                   page_id);
+
+  NavigationEntry* entry = tab_->controller()->GetActiveEntry();
+  entry->set_page_type(NavigationEntry::INTERSTITIAL_PAGE);
+
+  entry->ssl().set_security_style(SECURITY_STYLE_AUTHENTICATION_BROKEN);
+  entry->ssl().set_cert_id(cert_id);
+  entry->ssl().set_cert_status(ssl_info.cert_status);
+  entry->ssl().set_security_bits(ssl_info.security_bits);
+  NotificationService::current()->Notify(
+      NOTIFY_SSL_STATE_CHANGED,
+      Source<NavigationController>(tab_->controller()),
+      NotificationService::NoDetails());
+ 
   tab->ShowInterstitialPage(html_text, NULL);
 }
 
@@ -196,9 +171,12 @@ void SSLBlockingPage::Observe(NotificationType type,
       // the last entry is kept for the restoring on next start-up.
       Browser* browser = Browser::GetBrowserForController(tab_->controller(),
                                                           NULL);
-      if (remove_last_entry_ &&
+      // We may not have a browser (this is the case for constrained popups), in
+      // which case it does not matter if we do not remove the temporary entry
+      // as their navigation history is not saved.
+      if (remove_last_entry_ && browser &&
           !browser->tabstrip_model()->closing_all()) {
-        tab_->controller()->RemoveLastEntry();
+        tab_->controller()->RemoveLastEntryForInterstitial();
       }
       delete this;
       break;
@@ -242,7 +220,7 @@ void SSLBlockingPage::DontProceed() {
 
   // We are navigating, remove the current entry before we mess with it.
   remove_last_entry_ = false;
-  tab_->controller()->RemoveLastEntry();
+  tab_->controller()->RemoveLastEntryForInterstitial();
 
   NavigationEntry* entry = tab_->controller()->GetActiveEntry();
   if (!entry) {
@@ -250,7 +228,7 @@ void SSLBlockingPage::DontProceed() {
     // interstitial to hide which will trigger "this" to be deleted.
     tab_->controller()->LoadURL(GURL("about:blank"),
                                 PageTransition::AUTO_BOOKMARK);
-  } else if (entry->GetType() != TAB_CONTENTS_WEB) {
+  } else if (entry->tab_type() != TAB_CONTENTS_WEB) {
     // Not a WebContent, reload it so to recreate the TabContents for it.
     tab_->controller()->Reload();
   } else {
@@ -314,3 +292,4 @@ void SSLBlockingPage::SetExtraInfo(
     strings->SetString(keys[i], L"");
   }
 }
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef WEBKIT_GLUE_PLUGIN_PLUGIN_STREAM_H__
 #define WEBKIT_GLUE_PLUGIN_PLUGIN_STREAM_H__
@@ -36,6 +11,8 @@
 #include "base/ref_counted.h"
 #include "third_party/npapi/bindings/npapi.h"
 
+
+class WebPluginResourceClient;
 
 namespace NPAPI {
 
@@ -68,7 +45,7 @@ class PluginStream : public base::RefCounted<PluginStream> {
             uint32 last_modified);
 
   // Writes to the stream.
-  int Write(const char *buf, const int len);
+  int Write(const char *buf, const int len, int data_offset);
 
   // Write the result as a file.
   void WriteAsFile();
@@ -79,9 +56,22 @@ class PluginStream : public base::RefCounted<PluginStream> {
   // Close the stream.
   virtual bool Close(NPReason reason);
 
-  const NPStream* stream() const {
-    return &stream_;
-  }
+  virtual WebPluginResourceClient* AsResourceClient() { return NULL; }
+
+  // Cancels any HTTP requests initiated by the stream.
+  virtual void CancelRequest() {}
+
+  const NPStream* stream() const { return &stream_; }
+
+  // setter/getter for the seekable attribute on the stream.
+  bool seekable() const { return seekable_stream_; }
+
+  void set_seekable(bool seekable) { seekable_stream_ = seekable; }
+
+  // getters for reading the notification related attributes on the stream.
+  bool notify_needed() const { return notify_needed_; }
+
+  void* notify_data() const { return notify_data_; }
 
  protected:
   PluginInstance* instance() { return instance_.get(); }
@@ -105,11 +95,11 @@ class PluginStream : public base::RefCounted<PluginStream> {
 
   // Sends the data to the plugin.  If it's not ready, handles buffering it
   // and retrying later.
-  bool WriteToPlugin(const char *buf, const int length);
+  bool WriteToPlugin(const char *buf, const int length, const int data_offset);
 
   // Send the data to the plugin, returning how many bytes it accepted, or -1
   // if an error occurred.
-  int TryWriteToPlugin(const char *buf, const int length);
+  int TryWriteToPlugin(const char *buf, const int length, const int data_offset);
 
   // The callback which calls TryWriteToPlugin.
   void OnDelayDelivery();
@@ -118,7 +108,6 @@ class PluginStream : public base::RefCounted<PluginStream> {
   NPStream                      stream_;
   std::string                   headers_;
   scoped_refptr<PluginInstance> instance_;
-  int                           bytes_sent_;
   bool                          notify_needed_;
   void *                        notify_data_;
   bool                          close_on_write_data_;
@@ -127,10 +116,13 @@ class PluginStream : public base::RefCounted<PluginStream> {
   char                          temp_file_name_[MAX_PATH];
   HANDLE                        temp_file_handle_;
   std::vector<char>             delivery_data_;
-
+  int                           data_offset_;
+  bool                          seekable_stream_;
+  std::string                   mime_type_;
   DISALLOW_EVIL_CONSTRUCTORS(PluginStream);
 };
 
 } // namespace NPAPI
 
 #endif // WEBKIT_GLUE_PLUGIN_PLUGIN_STREAM_H__
+

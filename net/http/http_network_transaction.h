@@ -1,41 +1,19 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef NET_HTTP_HTTP_NETWORK_TRANSACTION_H_
 #define NET_HTTP_HTTP_NETWORK_TRANSACTION_H_
 
+#include <string>
+
 #include "base/ref_counted.h"
 #include "net/base/address_list.h"
-#include "net/http/http_connection.h"
-#include "net/http/http_proxy_service.h"
+#include "net/base/client_socket_handle.h"
+#include "net/base/host_resolver.h"
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
+#include "net/proxy/proxy_service.h"
 
 namespace net {
 
@@ -66,6 +44,7 @@ class HttpNetworkTransaction : public HttpTransaction {
  private:
   ~HttpNetworkTransaction();
   void BuildRequestHeaders();
+  void BuildTunnelRequest();
   void DoCallback(int result);
   void OnIOComplete(int result);
 
@@ -84,6 +63,8 @@ class HttpNetworkTransaction : public HttpTransaction {
   int DoResolveHostComplete(int result);
   int DoConnect();
   int DoConnectComplete(int result);
+  int DoSSLConnectOverTunnel();
+  int DoSSLConnectOverTunnelComplete(int result);
   int DoWriteHeaders();
   int DoWriteHeadersComplete(int result);
   int DoWriteBody();
@@ -93,13 +74,25 @@ class HttpNetworkTransaction : public HttpTransaction {
   int DoReadBody();
   int DoReadBodyComplete(int result);
 
-  // Called when read_buf_ contains the complete response headers.
+  // Called when header_buf_ contains the complete response headers.
   int DidReadResponseHeaders();
+
+  // Called to handle a certificate error.  Returns OK if the error should be
+  // ignored.  Otherwise, stores the certificate in response_.ssl_info and
+  // returns the same error code.
+  int HandleCertificateError(int error);
 
   // Called to possibly recover from the given error.  Sets next_state_ and
   // returns OK if recovering from the error.  Otherwise, the same error code
   // is returned.
   int HandleIOError(int error);
+
+  // Return true if based on the bytes read so far, the start of the
+  // status line is known. This is used to distingish between HTTP/0.9
+  // responses (which have no status line).
+  bool has_found_status_line_start() const {
+    return header_buf_http_offset_ != -1;
+  }
 
   CompletionCallbackImpl<HttpNetworkTransaction> io_callback_;
   CompletionCallback* user_callback_;
@@ -109,23 +102,30 @@ class HttpNetworkTransaction : public HttpTransaction {
   const HttpRequestInfo* request_;
   HttpResponseInfo response_;
 
-  HttpProxyService::PacRequest* pac_request_;
-  HttpProxyInfo proxy_info_;
+  ProxyService::PacRequest* pac_request_;
+  ProxyInfo proxy_info_;
 
-  scoped_ptr<HostResolver> resolver_;
+  HostResolver resolver_;
   AddressList addresses_;
 
   ClientSocketFactory* socket_factory_;
-  HttpConnection connection_;
+  ClientSocketHandle connection_;
   bool reused_socket_;
 
   bool using_ssl_;     // True if handling a HTTPS request
-  bool using_proxy_;   // True if using a HTTP proxy
+  bool using_proxy_;   // True if using a proxy for HTTP (not HTTPS)
   bool using_tunnel_;  // True if using a tunnel for HTTPS
 
+  // True while establishing a tunnel.  This allows the HTTP CONNECT
+  // request/response to reuse the STATE_WRITE_HEADERS,
+  // STATE_WRITE_HEADERS_COMPLETE, STATE_READ_HEADERS, and
+  // STATE_READ_HEADERS_COMPLETE states and allows us to tell them apart from
+  // the real request/response of the transaction.
+  bool establishing_tunnel_;
+
   std::string request_headers_;
+  size_t request_headers_bytes_sent_;
   scoped_ptr<UploadDataStream> request_body_stream_;
-  uint64 bytes_sent_;
 
   // The read buffer may be larger than it is full.  The 'capacity' indicates
   // the allocation size of the buffer, and the 'len' indicates how much data
@@ -136,6 +136,8 @@ class HttpNetworkTransaction : public HttpTransaction {
   int header_buf_len_;
   int header_buf_body_offset_;
   enum { kHeaderBufInitialSize = 4096 };
+  // The position where status line starts; -1 if not found yet.
+  int header_buf_http_offset_;
 
   // Indicates the content length remaining to read.  If this value is less
   // than zero (and chunked_decoder_ is null), then we read until the server
@@ -151,7 +153,6 @@ class HttpNetworkTransaction : public HttpTransaction {
   char* read_buf_;
   int read_buf_len_;
 
-  // The different states for the 'Start' routine.
   enum State {
     STATE_RESOLVE_PROXY,
     STATE_RESOLVE_PROXY_COMPLETE,
@@ -161,6 +162,8 @@ class HttpNetworkTransaction : public HttpTransaction {
     STATE_RESOLVE_HOST_COMPLETE,
     STATE_CONNECT,
     STATE_CONNECT_COMPLETE,
+    STATE_SSL_CONNECT_OVER_TUNNEL,
+    STATE_SSL_CONNECT_OVER_TUNNEL_COMPLETE,
     STATE_WRITE_HEADERS,
     STATE_WRITE_HEADERS_COMPLETE,
     STATE_WRITE_BODY,
@@ -177,3 +180,4 @@ class HttpNetworkTransaction : public HttpTransaction {
 }  // namespace net
 
 #endif  // NET_HTTP_HTTP_NETWORK_TRANSACTION_H_
+

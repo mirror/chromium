@@ -1,51 +1,26 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef WEBKIT_GLUE_WEBWIDGET_DELEGATE_H__
 #define WEBKIT_GLUE_WEBWIDGET_DELEGATE_H__
 
-typedef struct HWND__* HWND;
+#include "base/gfx/native_widget_types.h"
+#include "webkit/glue/window_open_disposition.h"
 
 namespace gfx {
   class Point;
   class Rect;
 }
 
-enum WindowOpenDisposition;
 class WebWidget;
 class WebCursor;
 struct WebPluginGeometry;
 
 class WebWidgetDelegate {
  public:
-  // Returns the HWND in which the WebWidget is embedded.
-  virtual HWND GetContainingWindow(WebWidget* webwidget) = 0;
+  // Returns the view in which the WebWidget is embedded.
+  virtual gfx::ViewHandle GetContainingWindow(WebWidget* webwidget) = 0;
 
   // Called when a region of the WebWidget needs to be re-painted.
   virtual void DidInvalidateRect(WebWidget* webwidget, const gfx::Rect& rect) = 0;
@@ -77,8 +52,8 @@ class WebWidgetDelegate {
 
   virtual void SetCursor(WebWidget* webwidget, 
                          const WebCursor& cursor) = 0;
-  // Returns the location (x,y) of the WebWidget in screen coordinates.
-  virtual void GetWindowLocation(WebWidget* webwidget, gfx::Point* origin) = 0;
+  // Returns the rectangle of the WebWidget in screen coordinates.
+  virtual void GetWindowRect(WebWidget* webwidget, gfx::Rect* rect) = 0;
 
   // This method is called to re-position the WebWidget on the screen.  The given
   // rect is in screen coordinates.  The implementation may choose to ignore
@@ -88,11 +63,14 @@ class WebWidgetDelegate {
   // synchronously?
   virtual void SetWindowRect(WebWidget* webwidget, const gfx::Rect& rect) = 0;
 
+  // Returns the rectangle of the window in which this WebWidget is embeded in.
+  virtual void GetRootWindowRect(WebWidget* webwidget, gfx::Rect* rect) = 0;
+
   // Keeps track of the necessary window move for a plugin window that resulted
   // from a scroll operation.  That way, all plugin windows can be moved at the
   // same time as each other and the page.
   virtual void DidMove(WebWidget* webwidget, const WebPluginGeometry& move) = 0;
-  
+
   // Suppress input events to other windows, and do not return until the widget
   // is closed.  This is used to support |window.showModalDialog|.
   virtual void RunModal(WebWidget* webwidget) = 0;

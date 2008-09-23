@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/thread.h"
 #include "base/time.h"
@@ -41,7 +16,7 @@ namespace {
 
   class URLFetcherTest : public testing::Test, public URLFetcher::Delegate {
    public:
-    URLFetcherTest() : main_loop_(MessageLoop::current()), fetcher_(NULL) { }
+    URLFetcherTest() : fetcher_(NULL) { }
 
     // Creates a URLFetcher, using the program's main thread to do IO.
     virtual void CreateFetcher(const GURL& url);
@@ -55,7 +30,12 @@ namespace {
                                     const std::string& data);
 
    protected:
-    MessageLoop* main_loop_;
+    // URLFetcher is designed to run on the main UI thread, but in our tests
+    // we assume that the current thread is the IO thread where the URLFetcher
+    // dispatches its requests to.  When we wish to simulate being used from
+    // a UI thread, we dispatch a worker thread to do so.
+    MessageLoopForIO io_loop_;
+
     URLFetcher* fetcher_;
   };
 
@@ -139,7 +119,7 @@ namespace {
   void URLFetcherTest::CreateFetcher(const GURL& url) {
     fetcher_ = new URLFetcher(url, URLFetcher::GET, this);
     fetcher_->set_request_context(new TestURLRequestContext());
-    fetcher_->set_io_loop(main_loop_);
+    fetcher_->set_io_loop(&io_loop_);
     fetcher_->Start();
   }
 
@@ -157,8 +137,8 @@ namespace {
                       // because the destructor won't necessarily run on the
                       // same thread that CreateFetcher() did.
 
-    main_loop_->Quit();
-    // If MessageLoop::current() != main_loop_, it will be shut down when the
+    io_loop_.PostTask(FROM_HERE, new MessageLoop::QuitTask());
+    // If MessageLoop::current() != io_loop_, it will be shut down when the
     // main loop returns and this thread subsequently goes out of scope.
   }
 
@@ -170,7 +150,7 @@ namespace {
   void URLFetcherPostTest::CreateFetcher(const GURL& url) {
     fetcher_ = new URLFetcher(url, URLFetcher::POST, this);
     fetcher_->set_request_context(new TestURLRequestContext());
-    fetcher_->set_io_loop(main_loop_);
+    fetcher_->set_io_loop(&io_loop_);
     fetcher_->set_upload_data("application/x-www-form-urlencoded",
                               "bobsyeruncle");
     fetcher_->Start();
@@ -205,11 +185,11 @@ namespace {
   void URLFetcherProtectTest::CreateFetcher(const GURL& url) {
     fetcher_ = new URLFetcher(url, URLFetcher::GET, this);
     fetcher_->set_request_context(new TestURLRequestContext());
-    fetcher_->set_io_loop(main_loop_);
+    fetcher_->set_io_loop(&io_loop_);
     start_time_ = Time::Now();
     fetcher_->Start();
   }
-
+  
   void URLFetcherProtectTest::OnURLFetchComplete(const URLFetcher* source,
                                                  const GURL& url,
                                                  const URLRequestStatus& status,
@@ -224,7 +204,7 @@ namespace {
       EXPECT_TRUE(status.is_success());
       EXPECT_FALSE(data.empty());
       delete fetcher_;
-      main_loop_->Quit();
+      io_loop_.Quit();
     } else {
       // Now running Overload test.
       static int count = 0;
@@ -268,7 +248,7 @@ namespace {
 
     // The rest is the same as URLFetcherTest::OnURLFetchComplete.
     delete fetcher_;
-    main_loop_->Quit();
+    io_loop_.Quit();
   }
 
   std::wstring URLFetcherBadHTTPSTest::GetExpiredCertPath() {
@@ -296,7 +276,7 @@ TEST_F(URLFetcherTest, DifferentThreadsTest) {
   // terminate the main thread's message loop; then the other thread's
   // message loop will be shut down automatically as the thread goes out of
   // scope.
-  Thread t("URLFetcher test thread");
+  base::Thread t("URLFetcher test thread");
   t.Start();
   t.message_loop()->PostTask(FROM_HERE, new FetcherWrapperTask(this,
       GURL(server.TestServerPage("defaultresponse"))));
@@ -357,3 +337,4 @@ TEST_F(URLFetcherBadHTTPSTest, BadHTTPSTest) {
 
   MessageLoop::current()->Run();
 }
+

@@ -1,35 +1,10 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <string>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "config.h"
+#include <string>
+
 #pragma warning(push, 0)
 #include "HTTPHeaderMap.h"
 #include "ResourceHandle.h"
@@ -97,6 +72,11 @@ void MultipartResponseDelegate::OnReceivedData(const char* data, int data_len) {
 
   // Headers
   if (processing_headers_) {
+    // Eat leading \r\n
+    int pos = PushOverLine(data_, 0);
+    if (pos)
+      data_ = data_.substr(pos);
+
     if (ParseHeaders()) {
       // Successfully parsed headers.
       processing_headers_ = false;
@@ -192,10 +172,8 @@ bool MultipartResponseDelegate::ParseHeaders() {
   // Create a ResourceResponse based on the original set of headers + the
   // replacement headers.  We only replace the same few headers that gecko
   // does.  See netwerk/streamconv/converters/nsMultiMixedConv.cpp.
-  std::string mime_type = net_util::GetSpecificHeader(headers,
-                                                      "content-type");
-  std::string charset = net_util::GetHeaderParamValue(mime_type,
-                                                      "charset");
+  std::string mime_type = net::GetSpecificHeader(headers, "content-type");
+  std::string charset = net::GetHeaderParamValue(mime_type, "charset");
   WebCore::ResourceResponse response(original_response_.url(),
       webkit_glue::StdStringToString(mime_type.c_str()),
       -1,
@@ -224,7 +202,7 @@ bool MultipartResponseDelegate::ParseHeaders() {
   };
   for (int i = 0; i < arraysize(replace_headers); ++i) {
     std::string name(replace_headers[i]);
-    std::string value = net_util::GetSpecificHeader(headers, name);
+    std::string value = net::GetSpecificHeader(headers, name);
     if (!value.empty()) {
       response.setHTTPHeaderField(webkit_glue::StdStringToString(name.c_str()),
           webkit_glue::StdStringToString(value.c_str()));
@@ -252,4 +230,80 @@ size_t MultipartResponseDelegate::FindBoundary() {
     }
   }
   return boundary_pos;
+}
+
+bool MultipartResponseDelegate::ReadMultipartBoundary(
+    const WebCore::ResourceResponse& response,
+    std::string* multipart_boundary) {
+
+  WebCore::String content_type = response.httpHeaderField("Content-Type");
+  std::string content_type_as_string =
+      webkit_glue::StringToStdString(content_type);
+
+  size_t boundary_start_offset = content_type_as_string.find("boundary=");
+  if (boundary_start_offset == std::wstring::npos) {
+    return false;
+  }
+
+  boundary_start_offset += strlen("boundary=");
+  size_t boundary_end_offset = content_type.length();
+
+  size_t boundary_length = boundary_end_offset - boundary_start_offset;
+
+  *multipart_boundary = 
+      content_type_as_string.substr(boundary_start_offset, boundary_length);
+  return true;
+}
+
+bool MultipartResponseDelegate::ReadContentRanges(
+    const WebCore::ResourceResponse& response,
+    int* content_range_lower_bound,
+    int* content_range_upper_bound) {
+
+  std::string content_range = 
+      webkit_glue::StringToStdString(
+          response.httpHeaderField("Content-Range"));
+
+  size_t byte_range_lower_bound_start_offset =
+      content_range.find(" ");
+  if (byte_range_lower_bound_start_offset == std::string::npos) {
+    return false;
+  }
+
+  // Skip over the initial space.
+  byte_range_lower_bound_start_offset++;
+
+  size_t byte_range_lower_bound_end_offset =
+      content_range.find("-", byte_range_lower_bound_start_offset);
+  if (byte_range_lower_bound_end_offset == std::string::npos) {
+    return false;
+  }
+
+  size_t byte_range_lower_bound_characters = 
+      byte_range_lower_bound_end_offset - byte_range_lower_bound_start_offset;
+  std::string byte_range_lower_bound =
+      content_range.substr(byte_range_lower_bound_start_offset,
+                           byte_range_lower_bound_characters);
+
+  size_t byte_range_upper_bound_start_offset =
+      byte_range_lower_bound_end_offset + 1;
+
+  size_t byte_range_upper_bound_end_offset =
+      content_range.find("/", byte_range_upper_bound_start_offset);
+  if (byte_range_upper_bound_end_offset == std::string::npos) {
+    return false;
+  }
+
+  size_t byte_range_upper_bound_characters =
+      byte_range_upper_bound_end_offset - byte_range_upper_bound_start_offset;
+
+  std::string byte_range_upper_bound =
+      content_range.substr(byte_range_upper_bound_start_offset,
+                           byte_range_upper_bound_characters);
+
+  if (!StringToInt(byte_range_lower_bound, content_range_lower_bound))
+    return false;
+  if (!StringToInt(byte_range_upper_bound, content_range_upper_bound))
+    return false;
+  return true;
 }

@@ -1,61 +1,32 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_BROWSER_BROWSER_H_
 #define CHROME_BROWSER_BROWSER_H_
 
-#include "chrome/app/chrome_dll_resource.h"
-#include "chrome/browser/browser_type.h"
+#include "chrome/browser/controller.h"
 #include "chrome/browser/hang_monitor/hung_plugin_action.h"
 #include "chrome/browser/hang_monitor/hung_window_detector.h"
-#include "chrome/browser/render_process_host.h"
 #include "chrome/browser/shell_dialogs.h"
-#include "chrome/browser/debugger/debugger_window.h"
+#include "chrome/browser/browser_type.h"
+#include "chrome/browser/session_id.h"
 #include "chrome/browser/tab_contents_delegate.h"
-#include "chrome/browser/tab_contents_type.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
-#include "chrome/browser/tabs/tab.h"
 #include "chrome/browser/toolbar_model.h"
-#include "chrome/browser/views/html_dialog_view.h"
-#include "chrome/browser/views/toolbar_view.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_member.h"
 
-class BookmarkBarView;
-class ChromeFrame;
+class BrowserIdleTimer;
+class BrowserWindow;
+class DebuggerWindow;
 class GoButton;
 class LocationBarView;
 class PrefService;
 class Profile;
 class StatusBubble;
+struct TabNavigation;
 class WebContents;
-class BrowserIdleTask;
 class WebApp;
 
 class Browser : public TabStripModelDelegate,
@@ -146,7 +117,7 @@ class Browser : public TabStripModelDelegate,
 
   Profile* profile() const { return profile_; }
 
-  ChromeFrame* frame() const { return frame_; }
+  BrowserWindow* window() const { return window_; }
 
   ToolbarModel* toolbar_model() { return &toolbar_model_; }
 
@@ -336,9 +307,6 @@ class Browser : public TabStripModelDelegate,
   // point and for the provided hwnd.
   void RunSimpleFrameMenu(const CPoint& pt, HWND hwnd);
 
-  // Returns the bookmark bar view, creating if NULL.
-  BookmarkBarView* GetBookmarkBarView();
-
   // Show some native UI given a URL. If a tab with the same URL is already
   // visible in this browser, it becomes selected. Otherwise a new tab is
   // created.
@@ -383,10 +351,26 @@ class Browser : public TabStripModelDelegate,
 
   void ConvertTabToApplication(TabContents* contents);
 
+  // NEW FRAME METHODS BELOW THIS LINE ONLY... TODO(beng): clean up this file!
+
+  // Save and restore the window position.
+  void SaveWindowPosition(const gfx::Rect& bounds, bool maximized);
+  void RestoreWindowPosition(gfx::Rect* bounds, bool* maximized);
+
+  // Gets the FavIcon of the page in the selected tab.
+  SkBitmap GetCurrentPageIcon() const;
+
+  // Gets the title of the page in the selected tab.
+  std::wstring GetCurrentPageTitle() const;
+
+  // Prepares a title string for display (removes embedded newlines, etc).
+  static void FormatTitleForDisplay(std::wstring* title);
+
  private:
   friend class XPFrame;
   friend class VistaFrame;
   friend class SimpleFrame;
+  friend class BrowserView2;
 
   // Tracks invalidates to the UI, see the declaration in the .cc file.
   struct UIUpdate;
@@ -398,9 +382,6 @@ class Browser : public TabStripModelDelegate,
 
   // Closes the frame.
   void CloseFrame();
-
-  // Invoked by the frame. Return the toolbar for this browser.
-  ChromeViews::View* GetToolbar();
 
   // Returns the root view for this browser.
   ChromeViews::RootView* GetRootView() const;
@@ -424,6 +405,7 @@ class Browser : public TabStripModelDelegate,
 
   // Returns the StatusBubble from the current toolbar. It is possible for
   // this to return NULL if called before the toolbar has initialized.
+  // TODO(beng): remove this.
   StatusBubble* GetStatusBubble();
 
   // Syncs the window title with current_tab_.  This may be necessary because
@@ -482,6 +464,7 @@ class Browser : public TabStripModelDelegate,
 
   // Removes the InfoBar and download shelf for the specified TabContents, if
   // they are presently attached.
+  // TODO(beng): REMOVE
   void RemoveShelvesForTabContents(TabContents* contents);
 
   // Copy the current page URL to the clipboard.
@@ -541,7 +524,7 @@ class Browser : public TabStripModelDelegate,
   void ClearUnloadState(TabContents* tab);
 
   // The frame
-  ChromeFrame* frame_;
+  BrowserWindow* window_;
 
   // Controls how the window will appear when Show() is called. This is one
   // of the SW_* constants passed to ShowWindow, and will be initialized in the
@@ -550,9 +533,6 @@ class Browser : public TabStripModelDelegate,
   // After the first call to Show() succeeds, this is set to -1, indicating that
   // subsequent calls to Show() should be ignored.
   int initial_show_command_;
-
-  // The toolbar view.
-  BrowserToolbarView toolbar_;
 
   class BrowserToolbarModel : public ToolbarModel {
    public:
@@ -615,9 +595,6 @@ class Browser : public TabStripModelDelegate,
   // This browser type.
   BrowserType::Type type_;
 
-  // The bookmark bar. This is lazily created.
-  scoped_ptr<BookmarkBarView> bookmark_bar_view_;
-
   // Lists all UI updates that are pending. We don't update things like the
   // URL or tab title right away to avoid flickering and extra painting.
   // See ScheduleUIUpdate and ProcessPendingUIUpdates.
@@ -639,12 +616,13 @@ class Browser : public TabStripModelDelegate,
   scoped_refptr<SelectFileDialog> select_file_dialog_;
 
   // The browser idle task helps cleanup unused memory resources when idle.
-  scoped_ptr<BrowserIdleTask> idle_task_;
+  scoped_ptr<BrowserIdleTimer> idle_task_;
 
   // Keep track of the encoding auto detect pref.
   BooleanPrefMember encoding_auto_detect_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(Browser);
+  DISALLOW_COPY_AND_ASSIGN(Browser);
 };
 
 #endif  // CHROME_BROWSER_BROWSER_H_
+

@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "net/url_request/url_request_ftp_job.h"
 
@@ -79,7 +54,7 @@ URLRequestJob* URLRequestFtpJob::Factory(URLRequest* request,
   DCHECK(scheme == "ftp");
 
   if (request->url().has_port() &&
-      !net_util::IsPortAllowedByFtp(request->url().IntPort()))
+      !net::IsPortAllowedByFtp(request->url().IntPort()))
     return new URLRequestErrorJob(request, net::ERR_UNSAFE_PORT);
 
   return new URLRequestFtpJob(request);
@@ -146,7 +121,7 @@ void URLRequestFtpJob::SendRequest() {
   // in the url (if anything).
   string username, password;
   bool have_auth = false;
-  if (server_auth_ != NULL && server_auth_->state == AUTH_STATE_HAVE_AUTH) {
+  if (server_auth_ && server_auth_->state == net::AUTH_STATE_HAVE_AUTH) {
     // Add auth info to cache
     have_auth = true;
     username = WideToUTF8(server_auth_->username);
@@ -194,13 +169,13 @@ void URLRequestFtpJob::OnIOComplete(const AsyncResult& result) {
         // fall through
       case ERROR_INTERNET_INCORRECT_PASSWORD:
         if (server_auth_ != NULL &&
-            server_auth_->state == AUTH_STATE_HAVE_AUTH) {
+            server_auth_->state == net::AUTH_STATE_HAVE_AUTH) {
           request_->context()->ftp_auth_cache()->Remove(request_->url().host());
         } else {
-          server_auth_ = new AuthData();
+          server_auth_ = new net::AuthData();
         }
         // Try again, prompting for authentication.
-        server_auth_->state = AUTH_STATE_NEED_AUTH;
+        server_auth_->state = net::AUTH_STATE_NEED_AUTH;
         // The io completed fine, the error was due to invalid auth.
         SetStatus(URLRequestStatus());
         NotifyHeadersComplete();
@@ -271,15 +246,14 @@ bool URLRequestFtpJob::NeedsAuth() {
   // requires auth (and not a proxy), because connecting to FTP via proxy
   // effectively means the browser communicates via HTTP, and uses HTTP's
   // Proxy-Authenticate protocol when proxy servers require auth.
-  return ((server_auth_ != NULL) &&
-          server_auth_->state == AUTH_STATE_NEED_AUTH);
+  return server_auth_ && server_auth_->state == net::AUTH_STATE_NEED_AUTH;
 }
 
 void URLRequestFtpJob::GetAuthChallengeInfo(
-    scoped_refptr<AuthChallengeInfo>* result) {
+    scoped_refptr<net::AuthChallengeInfo>* result) {
   DCHECK((server_auth_ != NULL) &&
-         (server_auth_->state == AUTH_STATE_NEED_AUTH));
-  scoped_refptr<AuthChallengeInfo> auth_info = new AuthChallengeInfo;
+         (server_auth_->state == net::AUTH_STATE_NEED_AUTH));
+  scoped_refptr<net::AuthChallengeInfo> auth_info = new net::AuthChallengeInfo;
   auth_info->is_proxy = false;
   auth_info->host = UTF8ToWide(request_->url().host());
   auth_info->scheme = L"";
@@ -288,8 +262,8 @@ void URLRequestFtpJob::GetAuthChallengeInfo(
 }
 
 void URLRequestFtpJob::GetCachedAuthData(
-    const AuthChallengeInfo& auth_info,
-    scoped_refptr<AuthData>* auth_data) {
+    const net::AuthChallengeInfo& auth_info,
+    scoped_refptr<net::AuthData>* auth_data) {
   *auth_data = request_->context()->ftp_auth_cache()->
                Lookup(WideToUTF8(auth_info.host));
 }
@@ -397,7 +371,7 @@ void URLRequestFtpJob::OnFindFile(DWORD last_error) {
 
     // We don't know the encoding, and can't assume utf8, so pass the 8bit
     // directly to the browser for it to decide.
-    string file_entry = net_util::GetDirectoryListingEntry(
+    string file_entry = net::GetDirectoryListingEntry(
         find_data_.cFileName, find_data_.dwFileAttributes, size,
         &find_data_.ftLastWriteTime);
     WriteData(&file_entry, true);
@@ -414,14 +388,14 @@ void URLRequestFtpJob::OnStartDirectoryTraversal() {
   state_ = GETTING_DIRECTORY;
 
   // Unescape the URL path and pass the raw 8bit directly to the browser.
-  string html = net_util::GetDirectoryListingHeader(
+  string html = net::GetDirectoryListingHeader(
       UnescapeURLComponent(request_->url().path(),
           UnescapeRule::SPACES | UnescapeRule::URL_SPECIAL_CHARS));
 
   // If this isn't top level directory (i.e. the path isn't "/",) add a link to
   // the parent directory.
   if (request_->url().path().length() > 1)
-    html.append(net_util::GetDirectoryListingEntry("..", 0, 0, NULL));
+    html.append(net::GetDirectoryListingEntry("..", 0, 0, NULL));
 
   WriteData(&html, true);
 
@@ -545,3 +519,4 @@ bool URLRequestFtpJob::IsRedirectResponse(GURL* location,
 
   return false;
 }
+

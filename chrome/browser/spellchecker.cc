@@ -1,42 +1,15 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <io.h>
-#include <vector>
 
 #include "chrome/browser/spellchecker.h"
-
 #include "base/basictypes.h"
 #include "base/file_util.h"
 #include "base/histogram.h"
 #include "base/logging.h"
-#include "base/scoped_ptr.h"
+#include "base/path_service.h"
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "base/win_util.h"
@@ -44,7 +17,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/url_fetcher.h"
+#include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_counters.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -56,6 +31,36 @@
 #include "generated_resources.h"
 
 static const int kMaxSuggestions = 5;  // Max number of dictionary suggestions.
+
+// This is a helper class which acts as a proxy for invoking a task from the
+// file loop back to the IO loop. Invoking a task from file loop to the IO
+// loop directly is not safe as during browser shutdown, the IO loop tears
+// down before the file loop. To avoid a crash, this object is invoked in the
+// UI loop from the file loop, from where it gets the IO thread directly from
+// g_browser_process and invokes the given task in the IO loop if it is not
+// NULL. This object also takes ownership of the given task.
+class UIProxyForIOTask : public Task {
+ public:
+  explicit UIProxyForIOTask(Task* spellchecker_flag_set_task)
+      : spellchecker_flag_set_task_(spellchecker_flag_set_task) {
+  }
+
+ private:
+  void Run() {
+    // This has been invoked in the UI thread.
+    base::Thread* io_thread = g_browser_process->io_thread();
+    if (io_thread) {  // io_thread has not been torn down yet.
+      MessageLoop* io_loop = io_thread->message_loop();
+      if (io_loop) {
+        io_loop->PostTask(FROM_HERE, spellchecker_flag_set_task_);
+        spellchecker_flag_set_task_ = NULL;
+      }
+    }
+  }
+
+  Task* spellchecker_flag_set_task_;
+  DISALLOW_COPY_AND_ASSIGN(UIProxyForIOTask);
+};
 
 // ############################################################################
 // This part of the spellchecker code is used for downloading spellchecking
@@ -143,7 +148,8 @@ class SpellChecker::DictionaryDownloadController
     }  // Unsuccessful save is taken care of spellchecker |Initialize|.
 
     // Set Flag that dictionary is not downloading anymore.
-    ui_loop_->PostTask(FROM_HERE, spellchecker_flag_set_task_);
+    ui_loop_->PostTask(FROM_HERE,
+                       new UIProxyForIOTask(spellchecker_flag_set_task_));
   }
 
   // factory object to invokelater back to spellchecker in io thread on
@@ -171,38 +177,7 @@ class SpellChecker::DictionaryDownloadController
 
   // this invokes back to io loop when downloading is over.
   MessageLoop* ui_loop_;
-  DISALLOW_EVIL_CONSTRUCTORS(DictionaryDownloadController);
-};
-
-
-// This is a helper class which acts as a proxy for invoking a task from the
-// file loop back to the IO loop. Invoking a task from file loop to the IO
-// loop directly is not safe as during browser shutdown, the IO loop tears
-// down before the file loop. To avoid a crash, this object is invoked in the
-// UI loop from the file loop, from where it gets the IO thread directly from
-// g_browser_process and invokes the given task in the IO loop if it is not
-// NULL. This object also takes ownership of the given task.
-class UIProxyForIOTask : public Task {
- public:
-  explicit UIProxyForIOTask(Task* spellchecker_flag_set_task)
-      : spellchecker_flag_set_task_(spellchecker_flag_set_task) {
-  }
-
- private:
-  void Run() {
-    // This has been invoked in the UI thread.
-    Thread* io_thread = g_browser_process->io_thread();
-    if (io_thread) {  // io_thread has not been torn down yet.
-      MessageLoop* io_loop = io_thread->message_loop();
-      if (io_loop) {
-        scoped_ptr<Task> this_task(spellchecker_flag_set_task_);
-        io_loop->PostTask(FROM_HERE, this_task.release());
-      }
-    }
-  }
-
-  Task* spellchecker_flag_set_task_;
-  DISALLOW_EVIL_CONSTRUCTORS(UIProxyForIOTask);
+  DISALLOW_COPY_AND_ASSIGN(DictionaryDownloadController);
 };
 
 void SpellChecker::set_file_is_downloading(bool value) {
@@ -221,8 +196,10 @@ void SpellChecker::RegisterUserPrefs(PrefService* prefs) {
 
 SpellChecker::SpellChecker(const std::wstring& dict_dir,
                            const std::wstring& language,
-                           URLRequestContext* request_context)
+                           URLRequestContext* request_context,
+                           const std::wstring& custom_dictionary_file_name)
     : bdict_file_name_(dict_dir),
+      custom_dictionary_file_name_(custom_dictionary_file_name),
       bdict_file_(NULL),
       bdict_mapping_(NULL),
       bdict_mapped_data_(NULL),
@@ -240,16 +217,22 @@ SpellChecker::SpellChecker(const std::wstring& dict_dir,
   // Remember UI loop to later use this as a proxy to get IO loop.
   ui_loop_ = MessageLoop::current();
 
-  // Reset dictionary flag setting task to NULL.
-  dic_task_.reset(NULL);
-
   // Get File Loop - hunspell gets initialized here.
-  Thread* file_thread = g_browser_process->file_thread();
+  base::Thread* file_thread = g_browser_process->file_thread();
   if (file_thread)
     file_loop_ = file_thread->message_loop();
 
   // Get the path to the spellcheck file.
   file_util::AppendToPath(&bdict_file_name_, language + L".bdic");
+
+  // Get the path to the custom dictionary file.
+  if (custom_dictionary_file_name_.empty()) {
+    std::wstring personal_file_directory;
+    PathService::Get(chrome::DIR_USER_DATA, &personal_file_directory);
+    custom_dictionary_file_name_ = personal_file_directory;
+    file_util::AppendToPath(&custom_dictionary_file_name_,
+                            chrome::kCustomDictionaryFileName);
+  }
 
   // Use this dictionary language as the default one of the
   // SpecllcheckCharAttribute object.
@@ -295,9 +278,9 @@ bool SpellChecker::Initialize() {
   bool dic_exists = file_util::PathExists(bdict_file_name_);
   if (!dic_exists) {
     if (file_loop_ && !tried_to_download_ && url_request_context_) {
-      dic_task_.reset(dic_download_state_changer_factory_.NewRunnableMethod(
-          &SpellChecker::set_file_is_downloading, false));
-      ddc_dic_ = new DictionaryDownloadController(dic_task_.release(),
+      Task* dic_task = dic_download_state_changer_factory_.NewRunnableMethod(
+          &SpellChecker::set_file_is_downloading, false);
+      ddc_dic_ = new DictionaryDownloadController(dic_task,
                                                   bdict_file_name_,
                                                   url_request_context_,
                                                   ui_loop_);
@@ -318,14 +301,33 @@ bool SpellChecker::Initialize() {
 
   const unsigned char* bdict_data;
   size_t bdict_length;
-  if (MapBdictFile(&bdict_data, &bdict_length))
+  if (MapBdictFile(&bdict_data, &bdict_length)) {
     hunspell_ = new Hunspell(bdict_data, bdict_length);
+    AddCustomWordsToHunspell();
+  }
 
   TimeTicks end_time = TimeTicks::Now();
   DHISTOGRAM_TIMES(L"Spellcheck.InitTime", end_time - begin_time);
 
   tried_to_init_ = true;
   return false;
+}
+
+void SpellChecker::AddCustomWordsToHunspell() {
+  // Add custom words to Hunspell.
+  // This should be done in File Loop, but since Hunspell is in this IO Loop,
+  // this too has to be initialized here.
+  // TODO (sidchat): Work out a way to initialize Hunspell in the File Loop.
+  std::string contents;
+  file_util::ReadFileToString(custom_dictionary_file_name_, &contents);
+  std::vector<std::string> list_of_words;
+  SplitString(contents, '\n', &list_of_words);
+  if (hunspell_) {
+    for (std::vector<std::string>::iterator it = list_of_words.begin();
+         it < list_of_words.end(); ++it) {
+      hunspell_->put_word((*it).c_str());
+    }
+  }
 }
 
 bool SpellChecker::MapBdictFile(const unsigned char** data, size_t* length) {
@@ -450,4 +452,51 @@ bool SpellChecker::SpellCheckWord(
     return false;
   }
   return true;
+}
+
+// This task is called in the file loop to write the new word to the custom
+// dictionary in disc.
+class AddWordToCustomDictionaryTask : public Task {
+ public:
+  AddWordToCustomDictionaryTask(const std::wstring& file_name,
+                                const std::wstring& word)
+      : file_name_(WideToUTF8(file_name)),
+        word_(WideToUTF8(word)) {
+  }
+
+ private:
+  void Run() {
+    // Add the word with a new line. Note that, although this would mean an
+    // extra line after the list of words, this is potentially harmless and
+    // faster, compared to verifying everytime whether to append a new line
+    // or not.
+    word_ += "\n";
+    const char* file_name_char = file_name_.c_str();
+    FILE* f = fopen(file_name_char, "a+");
+    fputs(word_.c_str(), f);
+    fclose(f);
+  }
+
+  std::string file_name_;
+  std::string word_;
+};
+
+void SpellChecker::AddWord(const std::wstring& word) {
+  // Check if the |hunspell_| has been initialized at all.
+  Initialize();
+
+  // Add the word to hunspell.
+  std::string word_to_add = WideToUTF8(word);
+  if (!word_to_add.empty())
+    hunspell_->put_word(word_to_add.c_str());
+
+  // Now add the word to the custom dictionary file in the file loop.
+  if (file_loop_) {
+    file_loop_->PostTask(FROM_HERE, new AddWordToCustomDictionaryTask(
+        custom_dictionary_file_name_, word));
+  } else {  // just run it in this thread.
+    Task* write_word_task = new AddWordToCustomDictionaryTask(
+        custom_dictionary_file_name_, word);
+    write_word_task->Run();
+  }
 }

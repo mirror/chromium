@@ -1,34 +1,9 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_POPUP_H__
-#define CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_POPUP_H__
+#ifndef CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_POPUP_H_
+#define CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_POPUP_H_
 
 #include <atlbase.h>
 #include <atlapp.h>
@@ -42,25 +17,29 @@
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/views/view.h"
 
-#define AUTOCOMPLETEPOPUP_CLASSNAME L"Chrome_AutocompletePopup"
-
-class AutocompleteEdit;
+class AutocompleteEditModel;
+class AutocompleteEditView;
 class Profile;
-class SkBitmap;
 class MirroringContext;
+class SkBitmap;
 
-// This class implements a popup window used by AutocompleteEdit to display
-// autocomplete results.
-class AutocompletePopup
-    : public CWindowImpl<AutocompletePopup, CWindow, CControlWinTraits>,
-      public ACControllerListener,
-      public Task {
+class AutocompletePopupModel;
+class AutocompletePopupView;
+
+// TODO(pkasting): http://b/1343512  The names and contents of the classes in
+// this file are temporary.  I am in hack-and-slash mode right now.
+
+#define AUTOCOMPLETEPOPUPVIEW_CLASSNAME L"Chrome_AutocompletePopupView"
+
+// This class implements a popup window used to display autocomplete results.
+class AutocompletePopupView
+    : public CWindowImpl<AutocompletePopupView, CWindow, CControlWinTraits> {
  public:
-  DECLARE_WND_CLASS_EX(AUTOCOMPLETEPOPUP_CLASSNAME,
+  DECLARE_WND_CLASS_EX(AUTOCOMPLETEPOPUPVIEW_CLASSNAME,
                        ((win_util::GetWinVersion() < win_util::WINVERSION_XP) ?
                            0 : CS_DROPSHADOW), COLOR_WINDOW)
 
-  BEGIN_MSG_MAP(AutocompletePopup)
+  BEGIN_MSG_MAP(AutocompletePopupView)
     MSG_WM_ERASEBKGND(OnEraseBkgnd)
     MSG_WM_LBUTTONDOWN(OnLButtonDown)
     MSG_WM_MBUTTONDOWN(OnMButtonDown)
@@ -72,114 +51,22 @@ class AutocompletePopup
     MSG_WM_PAINT(OnPaint)
   END_MSG_MAP()
 
-  AutocompletePopup(const ChromeFont& font,
-                    AutocompleteEdit* editor,
-                    Profile* profile);
-  ~AutocompletePopup();
-
-  // Invoked when the profile has changed.
-  void SetProfile(Profile* profile);
-
-  // Gets autocomplete results for the given text. If there are results, opens
-  // the popup if necessary and fills it with the new data. Otherwise, closes
-  // the popup if necessary.
-  //
-  // |prevent_inline_autocomplete| is true if the generated result set should
-  // not require inline autocomplete for the default match.  This is difficult
-  // to explain in the abstract; the practical use case is that after the user
-  // deletes text in the edit, the HistoryURLProvider should make sure not to
-  //promote a match requiring inline autocomplete too highly.
-  void StartAutocomplete(const std::wstring& text,
-                         const std::wstring& desired_tld,
-                         bool prevent_inline_autocomplete);
-
-  // Closes the window and cancels any pending asynchronous queries
-  void StopAutocomplete();
-
-  // Returns true if no autocomplete query is currently running.
-  bool query_in_progress() const { return query_in_progress_; }
+  AutocompletePopupView(AutocompletePopupModel* model,
+                        const ChromeFont& font,
+                        AutocompleteEditView* edit_view);
 
   // Returns true if the popup is currently open.
   bool is_open() const { return m_hWnd != NULL; }
 
-  // Returns the URL for the selected match.  If an update is in progress,
-  // "selected" means "default in the latest results".  If there are no
-  // results, returns the empty string.
-  //
-  // If |transition_type| is non-NULL, it will be set to the appropriate
-  // transition type for the selected entry (TYPED or GENERATED).
-  //
-  // If |is_history_what_you_typed_match| is non-NULL, it will be set based on
-  // the selected entry's is_history_what_you_typed value.
-  //
-  // If |alternate_nav_url| is non-NULL, it will be set to the alternate
-  // navigation URL for |url| if one exists, or left unchanged otherwise.  See
-  // comments on AutocompleteResult::GetAlternateNavURL().
-  std::wstring URLsForCurrentSelection(
-      PageTransition::Type* transition,
-      bool* is_history_what_you_typed_match,
-      std::wstring* alternate_nav_url) const;
+  // Invalidates one line of the autocomplete popup.
+  void InvalidateLine(size_t line);
 
-  // This is sort of a hybrid between StartAutocomplete() and
-  // URLForCurrentSelection().  When the popup isn't open and the user hits
-  // enter, we want to get the default result for the user's input immediately,
-  // and not open the popup, continue running autocomplete, etc.  Therefore,
-  // this does a query for only the synchronously available results for the
-  // provided input parameters, sets |transition|,
-  // |is_history_what_you_typed_match|, and |alternate_nav_url| (if applicable)
-  // based on the default match, and returns its url. |transition|,
-  // |is_history_what_you_typed_match| and/or |alternate_nav_url| may be null,
-  // in which case they are not updated.
-  //
-  // If there are no matches for |text|, leaves the outparams unset and returns
-  // the empty string.
-  std::wstring URLsForDefaultMatch(const std::wstring& text,
-                                   const std::wstring& desired_tld,
-                                   PageTransition::Type* transition,
-                                   bool* is_history_what_you_typed_match,
-                                   std::wstring* alternate_nav_url);
+  // Redraws the popup window to match any changes in result_; this may mean
+  // opening or closing the window.
+  void UpdatePopupAppearance();
 
-  // Returns a pointer to a heap-allocated AutocompleteLog containing the
-  // current input text, selected match, and result set.  The caller is
-  // responsible for deleting the object.
-  AutocompleteLog* GetAutocompleteLog();
-
-  // Immediately updates and opens the popup if necessary, then moves the
-  // current selection down (|count| > 0) or up (|count| < 0), clamping to the
-  // first or last result if necessary.  If |count| == 0, the selection will be
-  // unchanged, but the popup will still redraw and modify the text in the
-  // AutocompleteEdit.
-  void Move(int count);
-
-  // Called when the user hits shift-delete.  This should determine if the item
-  // can be removed from history, and if so, remove it and update the popup.
-  void TryDeletingCurrentItem();
-
-  // ACControllerListener - called when more autocomplete data is available or
-  // when the query is complete.
-  //
-  // When the input for the current query has a provider affinity, we try to
-  // keep the current result set's default match as the new default match.
-  virtual void OnAutocompleteUpdate(bool updated_result, bool query_complete);
-
-  // Task - called when either timer fires.  Calls CommitLatestResults().
-  virtual void Run();
-
-  // Returns the AutocompleteController used by this popup.
-  AutocompleteController* autocomplete_controller() const {
-    return controller_.get();
-  }
-
-  const AutocompleteResult* latest_result() const {
-    return &latest_result_;
-  }
-
-  // The match the user has manually chosen, if any.
-  AutocompleteResult::Selection manually_selected_match_;
-
-  // The token value for selected_line_, hover_line_ and functions dealing with
-  // a "line number" that indicates "no line".
-  static const size_t kNoMatch = -1;
+  // Called by the model when hover is enabled or disabled.
+  void OnHoverEnabledOrDisabled(bool disabled);
 
  private:
   // Caches GDI objects and information for drawing.
@@ -243,20 +130,6 @@ class AutocompletePopup
   // disposition.
   void OnButtonUp(const CPoint& point, WindowOpenDisposition disposition);
 
-  // Sets the correct default match in latest_result_, then updates the popup
-  // appearance to match.  If |immediately| is true this update happens
-  // synchronously; otherwise, it's deferred until the next scheduled update.
-  void SetDefaultMatchAndUpdate(bool immediately);
-
-  // If an update is pending or |force| is true, immediately updates result_ to
-  // match latest_result_, and calls UpdatePopup() to reflect those changes
-  // back to the user.
-  void CommitLatestResults(bool force);
-
-  // Redraws the popup window to match any changes in result_; this may mean
-  // opening or closing the window.
-  void UpdatePopupAppearance();
-
   // Gives the topmost y coordinate within |line|, which should be within the
   // range of valid lines.
   int LineTopPixel(size_t line) const;
@@ -268,58 +141,13 @@ class AutocompletePopup
   // bottom edges of the window, respectively.
   size_t PixelToLine(int y) const;
 
-  // Call to change the hovered line.  |line| should be within the range of
-  // valid lines (to enable hover) or kNoMatch (to disable hover).
-  void SetHoveredLine(size_t line);
-
-  // Call to change the selected line.  This will update all state and repaint
-  // the necessary parts of the window, as well as updating the edit with the
-  // new temporary text.  |line| should be within the range of valid lines.
-  // NOTE: This assumes the popup is open, and thus both old and new values for
-  // the selected line should not be kNoMatch.
-  void SetSelectedLine(size_t line);
-
-  // Invalidates one line of the autocomplete popup.
-  void InvalidateLine(size_t line);
-
   // Draws a light border around the inside of the window with the given client
   // rectangle and DC.
   void DrawBorder(const RECT& rc, HDC dc);
 
-  // Draw a string at the specified location with the specified style.
-  // This function is a wrapper function of the DrawText() function to handle
-  // bidirectional strings.
-  // Parameters
-  //   * dc [in] (HDC)
-  //     Represents the display context to render the given string.
-  //   * x [in] (int)
-  //     Specifies the left of the bounding rectangle,
-  //   * y [in] (int)
-  //     Specifies the top of the bounding rectangle,
-  //   * max_x [in] (int)
-  //     Specifies the right of the bounding rectangle.
-  //   * text [in] (const wchar_t*)
-  //     Specifies the pointer to the string to be rendered.
-  //   * length [in] (int)
-  //     Specifies the number of characters in the string.
-  //   * style [in] (int)
-  //     Specifies the classifications for this string.
-  //     This value is a combination of the following values:
-  //       - ACMatchClassifications::NONE
-  //       - ACMatchClassifications::URL
-  //       - ACMatchClassifications::MATCH
-  //       - ACMatchClassifications::DIM
-  //   * status [in] (const DrawLineInfo::LineStatus)
-  //     Specifies the classifications for this line.
-  //   * context [in] (const MirroringContext*)
-  //     Specifies the context used for mirroring the x-coordinates.
-  //   * text_direction_is_rtl [in] (bool)
-  //    Determines whether we need to render the string as an RTL string, which
-  //    impacts, for example, which side leading/trailing whitespace and
-  //    punctuation appear on.
-  // Return Values
-  //   * a positive value
-  //     Represents the width of the displayed string, in pixels.
+  // Draws a single run of text with a particular style.  Handles both LTR and
+  // RTL text as well as eliding.  Returns the width, in pixels, of the string
+  // as it was actually displayed.
   int DrawString(HDC dc,
                  int x,
                  int y,
@@ -352,6 +180,145 @@ class AutocompletePopup
   // Draws the star at the specified location
   void DrawStar(HDC dc, int x, int y) const;
 
+  AutocompletePopupModel* model_;
+
+  AutocompleteEditView* edit_view_;
+
+  // Cached GDI information for drawing.
+  DrawLineInfo line_info_;
+
+  // Bitmap for the star.  This is owned by the ResourceBundle.
+  SkBitmap* star_;
+
+  // A context used for mirroring regions.
+  scoped_ptr<MirroringContext> mirroring_context_;
+
+  // When hovered_line_ is kNoMatch, this holds the screen coordinates of the
+  // mouse position when hover tracking was turned off.  If the mouse moves to a
+  // point over the popup that has different coordinates, hover tracking will be
+  // re-enabled.  When hovered_line_ is a valid line, the value here is
+  // out-of-date and should be ignored.
+  CPoint last_hover_coordinates_;
+
+  DISALLOW_COPY_AND_ASSIGN(AutocompletePopupView);
+};
+
+class AutocompletePopupModel : public ACControllerListener, public Task {
+ public:
+  AutocompletePopupModel(const ChromeFont& font,
+                         AutocompleteEditView* edit_view,
+                         AutocompleteEditModel* edit_model,
+                         Profile* profile);
+  ~AutocompletePopupModel();
+
+  // Invoked when the profile has changed.
+  void SetProfile(Profile* profile);
+
+  // Gets autocomplete results for the given text. If there are results, opens
+  // the popup if necessary and fills it with the new data. Otherwise, closes
+  // the popup if necessary.
+  //
+  // |prevent_inline_autocomplete| is true if the generated result set should
+  // not require inline autocomplete for the default match.  This is difficult
+  // to explain in the abstract; the practical use case is that after the user
+  // deletes text in the edit, the HistoryURLProvider should make sure not to
+  // promote a match requiring inline autocomplete too highly.
+  //
+  // |prefer_keyword| should be true when the keyword UI is onscreen; this will
+  // bias the autocomplete results toward the keyword provider when the input
+  // string is a bare keyword.
+  void StartAutocomplete(const std::wstring& text,
+                         const std::wstring& desired_tld,
+                         bool prevent_inline_autocomplete,
+                         bool prefer_keyword);
+
+  // Closes the window and cancels any pending asynchronous queries.
+  void StopAutocomplete();
+
+  // Returns true if the popup is currently open.
+  bool is_open() const { return view_->is_open(); }
+
+  // Returns the AutocompleteController used by this popup.
+  AutocompleteController* autocomplete_controller() const {
+    return controller_.get();
+  }
+
+  // Returns true if no autocomplete query is currently running.
+  bool query_in_progress() const { return query_in_progress_; }
+
+  const AutocompleteResult* result() const {
+    return &result_;
+  }
+
+  const AutocompleteResult* latest_result() const {
+    return &latest_result_;
+  }
+
+  size_t hovered_line() const {
+    return hovered_line_;
+  }
+
+  // Call to change the hovered line.  |line| should be within the range of
+  // valid lines (to enable hover) or kNoMatch (to disable hover).
+  void SetHoveredLine(size_t line);
+
+  size_t selected_line() const {
+    return selected_line_;
+  }
+
+  // Call to change the selected line.  This will update all state and repaint
+  // the necessary parts of the window, as well as updating the edit with the
+  // new temporary text.  |line| should be within the range of valid lines.
+  // |reset_to_default| is true when the selection is being reset back to the
+  // default match, and thus there is no temporary text (and no
+  // |manually_selected_match_|).
+  // NOTE: This assumes the popup is open, and thus both old and new values for
+  // the selected line should not be kNoMatch.
+  void SetSelectedLine(size_t line, bool reset_to_default);
+
+  // Called when the user hits escape after arrowing around the popup.  This
+  // will change the selected line back to the default match and redraw.
+  void ResetToDefaultMatch() {
+    SetSelectedLine(result_.default_match() - result_.begin(), true);
+  }
+
+  // Returns the URL for the selected match.  If an update is in progress,
+  // "selected" means "default in the latest results".  If there are no
+  // results, returns the empty string.
+  //
+  // If |transition_type| is non-NULL, it will be set to the appropriate
+  // transition type for the selected entry (TYPED or GENERATED).
+  //
+  // If |is_history_what_you_typed_match| is non-NULL, it will be set based on
+  // the selected entry's is_history_what_you_typed value.
+  //
+  // If |alternate_nav_url| is non-NULL, it will be set to the alternate
+  // navigation URL for |url| if one exists, or left unchanged otherwise.  See
+  // comments on AutocompleteResult::GetAlternateNavURL().
+  std::wstring URLsForCurrentSelection(
+      PageTransition::Type* transition,
+      bool* is_history_what_you_typed_match,
+      std::wstring* alternate_nav_url) const;
+
+  // This is sort of a hybrid between StartAutocomplete() and
+  // URLForCurrentSelection().  When the popup isn't open and the user hits
+  // enter, we want to get the default result for the user's input immediately,
+  // and not open the popup, continue running autocomplete, etc.  Therefore,
+  // this does a query for only the synchronously available results for the
+  // provided input parameters, sets |transition|,
+  // |is_history_what_you_typed_match|, and |alternate_nav_url| (if applicable)
+  // based on the default match, and returns its url. |transition|,
+  // |is_history_what_you_typed_match| and/or |alternate_nav_url| may be null,
+  // in which case they are not updated.
+  //
+  // If there are no matches for |text|, leaves the outparams unset and returns
+  // the empty string.
+  std::wstring URLsForDefaultMatch(const std::wstring& text,
+                                   const std::wstring& desired_tld,
+                                   PageTransition::Type* transition,
+                                   bool* is_history_what_you_typed_match,
+                                   std::wstring* alternate_nav_url);
+
   // Gets the selected keyword or keyword hint for the given match.  Returns
   // true if |keyword| represents a keyword hint, or false if |keyword|
   // represents a selected keyword.  (|keyword| will always be set [though
@@ -360,14 +327,57 @@ class AutocompletePopup
   bool GetKeywordForMatch(const AutocompleteMatch& match,
                           std::wstring* keyword);
 
-  AutocompleteEdit* editor_;
+  // Returns a pointer to a heap-allocated AutocompleteLog containing the
+  // current input text, selected match, and result set.  The caller is
+  // responsible for deleting the object.
+  AutocompleteLog* GetAutocompleteLog();
+
+  // Immediately updates and opens the popup if necessary, then moves the
+  // current selection down (|count| > 0) or up (|count| < 0), clamping to the
+  // first or last result if necessary.  If |count| == 0, the selection will be
+  // unchanged, but the popup will still redraw and modify the text in the
+  // AutocompleteEditModel.
+  void Move(int count);
+
+  // Called when the user hits shift-delete.  This should determine if the item
+  // can be removed from history, and if so, remove it and update the popup.
+  void TryDeletingCurrentItem();
+
+  // ACControllerListener - called when more autocomplete data is available or
+  // when the query is complete.
+  //
+  // When the input for the current query has a provider affinity, we try to
+  // keep the current result set's default match as the new default match.
+  virtual void OnAutocompleteUpdate(bool updated_result, bool query_complete);
+
+  // Task - called when either timer fires.  Calls CommitLatestResults().
+  virtual void Run();
+
+  // The token value for selected_line_, hover_line_ and functions dealing with
+  // a "line number" that indicates "no line".
+  static const size_t kNoMatch = -1;
+
+ private:
+   // Stops an existing query but doesn't close the popup.
+   void StopQuery();
+
+  // Sets the correct default match in latest_result_, then updates the popup
+  // appearance to match.  If |immediately| is true this update happens
+  // synchronously; otherwise, it's deferred until the next scheduled update.
+  void SetDefaultMatchAndUpdate(bool immediately);
+
+  // If an update is pending or |force| is true, immediately updates result_ to
+  // match latest_result_, and calls UpdatePopupAppearance() to reflect those
+  // changes back to the user.
+  void CommitLatestResults(bool force);
+
+  scoped_ptr<AutocompletePopupView> view_;
+
+  AutocompleteEditModel* edit_model_;
   scoped_ptr<AutocompleteController> controller_;
 
   // Profile for current tab.
   Profile* profile_;
-
-  // Cached GDI information for drawing.
-  DrawLineInfo line_info_;
 
   // The input for the current query.
   AutocompleteInput input_;
@@ -391,36 +401,26 @@ class AutocompletePopup
   // Timer that tracks how long it's been since the last provider update we
   // received.  Instead of displaying each update immediately, we batch updates
   // into groups, which reduces flicker.
-  //
-  // NOTE: Both coalesce_timer_ and max_delay_timer_ (below) are set up during
-  // the constructor, and are guaranteed non-NULL for the life of the popup.
-  scoped_ptr<Timer> coalesce_timer_;
+  base::OneShotTimer<AutocompletePopupModel> coalesce_timer_;
 
   // Timer that tracks how long it's been since the last time we updated the
   // onscreen results.  This is used to ensure that the popup is somewhat
   // responsive even when the user types continuously.
-  scoped_ptr<Timer> max_delay_timer_;
+  base::RepeatingTimer<AutocompletePopupModel> max_delay_timer_;
 
   // The line that's currently hovered.  If we're not drawing a hover rect,
   // this will be kNoMatch, even if the cursor is over the popup contents.
   size_t hovered_line_;
 
-  // When hover_line_ is kNoMatch, this holds the screen coordinates of the
-  // mouse position when hover tracking was turned off.  If the mouse moves to a
-  // point over the popup that has different coordinates, hover tracking will be
-  // re-enabled.  When hover_line_ is a valid line, the value here is
-  // out-of-date and should be ignored.
-  CPoint last_hover_coordinates_;
-
   // The currently selected line.  This is kNoMatch when nothing is selected,
   // which should only be true when the popup is closed.
   size_t selected_line_;
 
-  // Bitmap for the star.  This is owned by the ResourceBundle.
-  SkBitmap* star_;
+  // The match the user has manually chosen, if any.
+  AutocompleteResult::Selection manually_selected_match_;
 
-  // A context used for mirroring regions.
-  scoped_ptr<MirroringContext> mirroring_context_;
+  DISALLOW_COPY_AND_ASSIGN(AutocompletePopupModel);
 };
 
-#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_POPUP_H__
+#endif  // CHROME_BROWSER_AUTOCOMPLETE_AUTOCOMPLETE_POPUP_H_
+

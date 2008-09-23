@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "base/gfx/vector_canvas.h"
 
@@ -163,7 +138,7 @@ class Image {
   }
 
   // Loads the image from a canvas.
-  Image(const gfx::PlatformCanvas& canvas) : ignore_alpha_(true) {
+  Image(const gfx::PlatformCanvasWin& canvas) : ignore_alpha_(true) {
     // Use a different way to access the bitmap. The normal way would be to
     // query the SkBitmap.
     HDC context = canvas.getTopPlatformDevice().getBitmapDC();
@@ -302,7 +277,7 @@ class ImageTest : public DataUnitTest {
   // kGenerating value. Returns 0 on success or any positive value between ]0,
   // 100] on failure. The return value is the percentage of difference between
   // the image in the file and the image in the canvas.
-  double ProcessCanvas(const gfx::PlatformCanvas& canvas,
+  double ProcessCanvas(const gfx::PlatformCanvasWin& canvas,
                        std::wstring filename) const {
     filename +=  L".png";
     switch (action_) {
@@ -321,7 +296,7 @@ class ImageTest : public DataUnitTest {
 
   // Compares the bitmap currently loaded in the context with the file. Returns
   // the percentage of pixel difference between both images, between 0 and 100.
-  double CompareImage(const gfx::PlatformCanvas& canvas,
+  double CompareImage(const gfx::PlatformCanvasWin& canvas,
                     const std::wstring& filename) const {
     Image image1(canvas);
     Image image2(test_file(filename));
@@ -330,7 +305,7 @@ class ImageTest : public DataUnitTest {
   }
 
   // Saves the bitmap currently loaded in the context into the file.
-  void SaveImage(const gfx::PlatformCanvas& canvas,
+  void SaveImage(const gfx::PlatformCanvasWin& canvas,
                  const std::wstring& filename) const {
     Image(canvas).SaveToFile(test_file(filename));
   }
@@ -420,7 +395,7 @@ class VectorCanvasTest : public ImageTest {
     context_ = new Context();
     bitmap_ = new Bitmap(*context_, size_, size_);
     vcanvas_ = new gfx::VectorCanvas(context_->context(), size_, size_);
-    pcanvas_ = new gfx::PlatformCanvas(size_, size_, false);
+    pcanvas_ = new gfx::PlatformCanvasWin(size_, size_, false);
 
     // Clear white.
     vcanvas_->drawARGB(255, 255, 255, 255, SkPorterDuff::kSrc_Mode);
@@ -464,7 +439,7 @@ class VectorCanvasTest : public ImageTest {
   gfx::VectorCanvas* vcanvas_;
 
   // Pixel based canvas.
-  gfx::PlatformCanvas* pcanvas_;
+  gfx::PlatformCanvasWin* pcanvas_;
 
   // When true (default), vcanvas_ and pcanvas_ contents are compared and
   // verified to be identical.
@@ -485,7 +460,7 @@ TEST_F(VectorCanvasTest, Uninitialized) {
   context_ = new Context();
   bitmap_ = new Bitmap(*context_, size_, size_);
   vcanvas_ = new gfx::VectorCanvas(context_->context(), size_, size_);
-  pcanvas_ = new gfx::PlatformCanvas(size_, size_, false);
+  pcanvas_ = new gfx::PlatformCanvasWin(size_, size_, false);
 
   // VectorCanvas default initialization is black.
   // PlatformCanvas default initialization is almost white 0x01FFFEFD (invalid
@@ -1030,3 +1005,4 @@ TEST_F(VectorCanvasTest, Matrix) {
     EXPECT_EQ(0., ProcessImage(L"rotate"));
   }
 }
+

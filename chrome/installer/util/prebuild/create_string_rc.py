@@ -38,6 +38,7 @@ import FP
 kStringIds = [
   'IDS_PRODUCT_NAME',
   'IDS_UNINSTALL_CHROME',
+  'IDS_ABOUT_VERSION_COMPANY_NAME',
 ]
 
 # The ID of the first resource string.
@@ -56,14 +57,15 @@ class TranslationStruct:
 
 
 def CollectTranslatedStrings():
-  """Collects all the translations for "Google Chrome" from the XTB files. 
-  Returns a list of tuples of (language, translated string).  The list is
-  sorted by language codes."""
+  """Collects all the translations for all the strings specified by kStringIds.
+  Returns a list of tuples of (string_id, language, translated string). The
+  list is sorted by language codes."""
   kGeneratedResourcesPath = os.path.join(path_utils.ScriptDir(), '..', '..',
-                                         '..', 'app/generated_resources.grd')
+                                         '..', 'app/google_chrome_strings.grd')
   kTranslationDirectory = os.path.join(path_utils.ScriptDir(), '..', '..',
                                        '..', 'app', 'resources')
-  kTranslationFiles = glob.glob(os.path.join(kTranslationDirectory, '*.xtb'))
+  kTranslationFiles = glob.glob(os.path.join(kTranslationDirectory,
+                                             'google_chrome_strings*.xtb'))
 
   # Get the strings out of generated_resources.grd.
   dom = minidom.parse(kGeneratedResourcesPath)
@@ -116,10 +118,10 @@ def WriteRCFile(translated_strings, out_filename):
   """Writes a resource (rc) file with all the language strings provided in
   |translated_strings|."""
   kHeaderText = (
-    u'#include "setup_strings.h"\n\n'
+    u'#include "%s.h"\n\n'
     u'STRINGTABLE\n'
     u'BEGIN\n'
-  )
+  ) % os.path.basename(out_filename)
   kFooterText = (
     u'END\n'
   )
@@ -128,7 +130,7 @@ def WriteRCFile(translated_strings, out_filename):
     lines.append(u'  %s "%s"\n' % (translation_struct.resource_id_str,
                                    translation_struct.translation))
   lines.append(kFooterText)
-  outfile = open(out_filename, 'wb')
+  outfile = open(out_filename + '.rc', 'wb')
   outfile.write(''.join(lines).encode('utf-16'))
   outfile.close()
 
@@ -162,16 +164,16 @@ def WriteHeaderFile(translated_strings, out_filename):
                                              string_id,
                                              translated_strings[0].language))
 
-  outfile = open(out_filename, 'wb')
+  outfile = open(out_filename + '.h', 'wb')
   outfile.write('\n'.join(lines))
   outfile.write('\n')  # .rc files must end in a new line
   outfile.close()
   
 def main(argv):
   translated_strings = CollectTranslatedStrings()
-  kFilebase = os.path.join(argv[1], 'setup_strings')
-  WriteRCFile(translated_strings, kFilebase + '.rc')
-  WriteHeaderFile(translated_strings, kFilebase + '.h')
+  kFilebase = os.path.join(argv[1], 'installer_util_strings')
+  WriteRCFile(translated_strings, kFilebase)
+  WriteHeaderFile(translated_strings, kFilebase)
 
 if '__main__' == __name__:
   if len(sys.argv) < 2:

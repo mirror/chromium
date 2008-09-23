@@ -1,4 +1,0 @@
-// Introduced in DOM Level 3:
-interface DOMErrorHandler {
-  boolean            handleError(in DOMError error);
-};

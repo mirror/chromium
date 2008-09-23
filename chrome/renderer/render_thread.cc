@@ -1,39 +1,18 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <algorithm>
 
 #include "chrome/renderer/render_thread.h"
 
+#include "base/lazy_instance.h"
 #include "base/shared_memory.h"
+#include "base/thread_local.h"
+#include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/ipc_logging.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/plugin/plugin_channel.h"
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/renderer/render_process.h"
@@ -46,11 +25,16 @@ static const unsigned int kCacheStatsDelayMS = 2000 /* milliseconds */;
 // V8 needs a 1MB stack size.
 static const size_t kStackSize = 1024 * 1024;
 
-/*static*/
-DWORD RenderThread::tls_index_ = ThreadLocalStorage::Alloc();
+static base::LazyInstance<base::ThreadLocalPointer<RenderThread> >
+    lazy_tls_ptr(base::LINKER_INITIALIZED);
 
 //-----------------------------------------------------------------------------
 // Methods below are only called on the owner's thread:
+
+// static
+RenderThread* RenderThread::current() {
+  return lazy_tls_ptr.Pointer()->Get();
+}
 
 RenderThread::RenderThread(const std::wstring& channel_name)
     : Thread("Chrome_RenderThread"),
@@ -60,7 +44,13 @@ RenderThread::RenderThread(const std::wstring& channel_name)
       render_dns_master_(NULL),
       in_send_(0) {
   DCHECK(owner_loop_);
-  StartWithStackSize(kStackSize);
+  base::Thread::Options options;
+  options.stack_size = kStackSize;
+  // When we run plugins in process, we actually run them on the render thread,
+  // which means that we need to make the render thread pump UI events.
+  if (RenderProcess::ShouldLoadPluginsInProcess())
+    options.message_loop_type = MessageLoop::TYPE_UI;
+  StartWithOptions(options);
 }
 
 RenderThread::~RenderThread() {
@@ -68,8 +58,7 @@ RenderThread::~RenderThread() {
 }
 
 void RenderThread::OnChannelError() {
-  // XXX(darin): is this really correct/sufficient?
-  owner_loop_->Quit();
+  owner_loop_->PostTask(FROM_HERE, new MessageLoop::QuitTask());
 }
 
 bool RenderThread::Send(IPC::Message* msg) {
@@ -106,16 +95,18 @@ void RenderThread::RemoveRoute(int32 routing_id) {
 }
 
 void RenderThread::Init() {
-  DCHECK(tls_index_) << "static initializer failed";
   DCHECK(!current()) << "should only have one RenderThread per thread";
+
+  notification_service_.reset(new NotificationService);
 
   cache_stats_factory_.reset(
       new ScopedRunnableMethodFactory<RenderThread>(this));
 
   channel_.reset(new IPC::SyncChannel(channel_name_,
-      IPC::Channel::MODE_CLIENT, this, owner_loop_, true));
+      IPC::Channel::MODE_CLIENT, this, NULL, owner_loop_, true,
+      RenderProcess::GetShutDownEvent()));
 
-  ThreadLocalStorage::Set(tls_index_, this);
+  lazy_tls_ptr.Pointer()->Set(this);
 
   // The renderer thread should wind-up COM.
   CoInitialize(0);
@@ -134,12 +125,18 @@ void RenderThread::Init() {
 void RenderThread::CleanUp() {
   DCHECK(current() == this);
 
+  // Need to destruct the SyncChannel to the browser before we go away because
+  // it caches a pointer to this thread.
+  channel_.reset();
+
   // Clean up plugin channels before this thread goes away.
   PluginChannelBase::CleanupChannels();
 
 #ifdef IPC_MESSAGE_LOG_ENABLED
   IPC::Logging::current()->SetIPCSender(NULL);
 #endif
+
+  notification_service_.reset();
 
   delete visited_link_slave_;
   visited_link_slave_ = NULL;
@@ -165,11 +162,23 @@ void RenderThread::OnMessageReceived(const IPC::Message& msg) {
       IPC_MESSAGE_HANDLER(ViewMsg_SetCacheCapacities, OnSetCacheCapacities)
       IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
                           OnGetCacheResourceStats)
+      IPC_MESSAGE_HANDLER(ViewMsg_PluginMessage, OnPluginMessage)
       // send the rest to the router
       IPC_MESSAGE_UNHANDLED(router_.OnMessageReceived(msg))
     IPC_END_MESSAGE_MAP()
   } else {
     router_.OnMessageReceived(msg);
+  }
+}
+
+void RenderThread::OnPluginMessage(const std::wstring& dll_path,
+                                   const std::vector<uint8>& data) {
+  CHECK(ChromePluginLib::IsPluginThread());
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
+  if (chrome_plugin) {
+    void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
+    uint32 data_len = static_cast<uint32>(data.size());
+    chrome_plugin->functions().on_message(data_ptr, data_len);
   }
 }
 
@@ -218,3 +227,4 @@ void RenderThread::InformHostOfCacheStatsLater() {
           &RenderThread::InformHostOfCacheStats),
       kCacheStatsDelayMS);
 }
+

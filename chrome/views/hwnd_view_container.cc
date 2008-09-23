@@ -1,42 +1,16 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/hwnd_view_container.h"
 
-#include "base/message_loop.h"
+#include "base/gfx/native_theme.h"
 #include "base/string_util.h"
 #include "base/win_util.h"
 #include "chrome/common/gfx/chrome_canvas.h"
-#include "chrome/common/notification_service.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/aero_tooltip_manager.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/views/accessibility/view_accessibility.h"
 #include "chrome/views/hwnd_notification_source.h"
 #include "chrome/views/root_view.h"
 
@@ -164,12 +138,11 @@ HWNDViewContainer::HWNDViewContainer()
 }
 
 HWNDViewContainer::~HWNDViewContainer() {
-  MessageLoop::current()->RemoveObserver(this);
+  MessageLoopForUI::current()->RemoveObserver(this);
 }
 
 void HWNDViewContainer::Init(HWND parent,
                              const gfx::Rect& bounds,
-                             View* contents_view,
                              bool has_own_focus_manager) {
   toplevel_ = parent == NULL;
 
@@ -207,24 +180,10 @@ void HWNDViewContainer::Init(HWND parent,
     FocusManager::InstallFocusSubclass(hwnd_, NULL);
   }
 
-  // The RootView is set up _after_ the window is created so that its
-  // ViewContainer pointer is valid.
-  if (contents_view) {
-    // The FillLayout only applies when we have been provided with a single
-    // contents view. If the user intends to manage the RootView themselves,
-    // they are responsible for providing their own LayoutManager, since
-    // FillLayout is only capable of laying out a single child view.
-    root_view_->SetLayoutManager(new FillLayout());
-    root_view_->AddChildView(contents_view);
-  }
-
-  // Manually size the window here to ensure the root view is laid out.
-  ChangeSize(0, CSize(bounds.width(), bounds.height()));
-
   // Sets the RootView as a property, so the automation can introspect windows.
   SetRootViewForHWND(hwnd_, root_view_.get());
 
-  MessageLoop::current()->AddObserver(this);
+  MessageLoopForUI::current()->AddObserver(this);
 
   // Windows special DWM window frame requires a special tooltip manager so
   // that window controls in Chrome windows don't flicker when you move your
@@ -245,6 +204,21 @@ void HWNDViewContainer::Init(HWND parent,
   // Bug 964884: detach the IME attached to this window.
   // We should attach IMEs only when we need to input CJK strings.
   ::ImmAssociateContextEx(GetHWND(), NULL, 0);
+}
+
+void HWNDViewContainer::SetContentsView(View* view) {
+  DCHECK(view && hwnd_) << "Can't be called until after the HWND is created!";
+  // The ContentsView must be set up _after_ the window is created so that its
+  // ViewContainer pointer is valid.
+  root_view_->SetLayoutManager(new FillLayout);
+  if (root_view_->GetChildViewCount() != 0)
+    root_view_->RemoveAllChildViews(true);
+  root_view_->AddChildView(view);
+
+  // Manually size the window here to ensure the root view is laid out.
+  RECT wr;
+  GetWindowRect(&wr);
+  ChangeSize(0, CSize(wr.right - wr.left, wr.bottom - wr.top));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -473,6 +447,53 @@ LRESULT HWNDViewContainer::OnEraseBkgnd(HDC dc) {
   return 1;
 }
 
+LRESULT HWNDViewContainer::OnGetObject(UINT uMsg, WPARAM w_param,
+                                       LPARAM l_param) {
+  LRESULT reference_result = static_cast<LRESULT>(0L);
+
+  // Accessibility readers will send an OBJID_CLIENT message
+  if (OBJID_CLIENT == l_param) {
+    // If our MSAA root is already created, reuse that pointer. Otherwise,
+    // create a new one.
+    if (!accessibility_root_) {
+      CComObject<ViewAccessibility>* instance = NULL;
+
+      HRESULT hr = CComObject<ViewAccessibility>::CreateInstance(&instance);
+      DCHECK(SUCCEEDED(hr));
+
+      if (!instance) {
+        // Return with failure.
+        return static_cast<LRESULT>(0L);
+      }
+
+      CComPtr<IAccessible> accessibility_instance(instance);
+
+      if (!SUCCEEDED(instance->Initialize(root_view_.get()))) {
+        // Return with failure.
+        return static_cast<LRESULT>(0L);
+      }
+
+      // All is well, assign the temp instance to the class smart pointer
+      accessibility_root_.Attach(accessibility_instance.Detach());
+
+      if (!accessibility_root_) {
+        // Return with failure.
+        return static_cast<LRESULT>(0L);
+      }
+
+      // Notify that an instance of IAccessible was allocated for m_hWnd
+      ::NotifyWinEvent(EVENT_OBJECT_CREATE, GetHWND(), OBJID_CLIENT,
+                       CHILDID_SELF);
+    }
+
+    // Create a reference to ViewAccessibility that MSAA will marshall
+    // to the client.
+    reference_result = LresultFromObject(IID_IAccessible, w_param,
+        static_cast<IAccessible*>(accessibility_root_));
+  }
+  return reference_result;
+}
+
 void HWNDViewContainer::OnKeyDown(TCHAR c, UINT rep_cnt, UINT flags) {
   KeyEvent event(Event::ET_KEY_PRESSED, c, rep_cnt, flags);
   root_view_->ProcessKeyEvent(event);
@@ -616,6 +637,11 @@ LRESULT HWNDViewContainer::OnSettingChange(UINT msg,
 
 void HWNDViewContainer::OnSize(UINT param, const CSize& size) {
   ChangeSize(param, size);
+}
+
+void HWNDViewContainer::OnThemeChanged() {
+  // Notify NativeTheme.
+  gfx::NativeTheme::instance()->CloseHandles();
 }
 
 void HWNDViewContainer::OnFinalMessage(HWND window) {
@@ -770,7 +796,7 @@ void HWNDViewContainer::ChangeSize(UINT size_param, const CSize& size) {
 }
 
 RootView* HWNDViewContainer::CreateRootView() {
-  return new RootView(this, true);
+  return new RootView(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -875,3 +901,4 @@ LRESULT CALLBACK HWNDViewContainer::WndProc(HWND window,
 }
 
 }  // namespace ChromeViews
+

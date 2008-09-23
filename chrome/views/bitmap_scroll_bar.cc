@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/bitmap_scroll_bar.h"
 
@@ -34,6 +9,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/menu.h"
 #include "chrome/views/scroll_view.h"
+#include "chrome/views/view_container.h"
 #include "skia/include/SkBitmap.h"
 
 #include "generated_resources.h"
@@ -170,14 +146,14 @@ class BitmapScrollBarThumb : public View {
     canvas->DrawBitmapInt(*start_cap_bitmap(), 0, 0);
     int top_cap_height = start_cap_bitmap()->height();
     int bottom_cap_height = end_cap_bitmap()->height();
-    int thumb_body_height = GetHeight() - top_cap_height - bottom_cap_height;
+    int thumb_body_height = height() - top_cap_height - bottom_cap_height;
     canvas->TileImageInt(*background_bitmap(), 0, top_cap_height,
                          background_bitmap()->width(), thumb_body_height);
     canvas->DrawBitmapInt(*end_cap_bitmap(), 0,
-                          GetHeight() - bottom_cap_height);
+                          height() - bottom_cap_height);
 
     // Paint the grippy over the track.
-    int grippy_x = (GetWidth() - grippy_bitmap()->width()) / 2;
+    int grippy_x = (width() - grippy_bitmap()->width()) / 2;
     int grippy_y = (thumb_body_height - grippy_bitmap()->height()) / 2;
     canvas->DrawBitmapInt(*grippy_bitmap(), grippy_x, grippy_y);
   }
@@ -191,7 +167,7 @@ class BitmapScrollBarThumb : public View {
   }
 
   virtual bool OnMousePressed(const MouseEvent& event) {
-    mouse_offset_ = scroll_bar_->IsHorizontal() ? event.GetX() : event.GetY();
+    mouse_offset_ = scroll_bar_->IsHorizontal() ? event.x() : event.y();
     drag_start_position_ = GetPosition();
     SetState(BaseButton::BS_PUSHED);
     return true;
@@ -202,24 +178,24 @@ class BitmapScrollBarThumb : public View {
     // the bounds of the thumb, the scrollbar will snap the scroll back to the
     // point it was at before the drag began.
     if (scroll_bar_->IsHorizontal()) {
-      if ((event.GetY() < GetY() - kScrollThumbDragOutSnap) ||
-          (event.GetY() > (GetY() + GetHeight() + kScrollThumbDragOutSnap))) {
+      if ((event.y() < y() - kScrollThumbDragOutSnap) ||
+          (event.y() > (y() + height() + kScrollThumbDragOutSnap))) {
         scroll_bar_->ScrollToThumbPosition(drag_start_position_, false);
         return true;
       }
     } else {
-      if ((event.GetX() < GetX() - kScrollThumbDragOutSnap) ||
-          (event.GetX() > (GetX() + GetWidth() + kScrollThumbDragOutSnap))) {
+      if ((event.x() < x() - kScrollThumbDragOutSnap) ||
+          (event.x() > (x() + width() + kScrollThumbDragOutSnap))) {
         scroll_bar_->ScrollToThumbPosition(drag_start_position_, false);
         return true;
       }
     }
     if (scroll_bar_->IsHorizontal()) {
-      int thumb_x = event.GetX() - mouse_offset_;
-      scroll_bar_->ScrollToThumbPosition(GetX() + thumb_x, false);
+      int thumb_x = event.x() - mouse_offset_;
+      scroll_bar_->ScrollToThumbPosition(x() + thumb_x, false);
     } else {
-      int thumb_y = event.GetY() - mouse_offset_;
-      scroll_bar_->ScrollToThumbPosition(GetY() + thumb_y, false);
+      int thumb_y = event.y() - mouse_offset_;
+      scroll_bar_->ScrollToThumbPosition(y() + thumb_y, false);
     }
     return true;
   }
@@ -316,14 +292,14 @@ gfx::Rect BitmapScrollBar::GetTrackBounds() const {
     if (!show_scroll_buttons_)
       prefsize.cx = 0;
     int new_width = std::max(0,
-                             static_cast<int>(GetWidth() - (prefsize.cx * 2)));
+                             static_cast<int>(width() - (prefsize.cx * 2)));
     gfx::Rect track_bounds(prefsize.cx, 0, new_width, prefsize.cy);
     return track_bounds;
   }
   if (!show_scroll_buttons_)
     prefsize.cy = 0;
   gfx::Rect track_bounds(0, prefsize.cy, prefsize.cx,
-                         std::max(0l, GetHeight() - (prefsize.cy * 2)));
+                         std::max(0l, height() - (prefsize.cy * 2)));
   return track_bounds;
 }
 
@@ -441,10 +417,10 @@ void BitmapScrollBar::Layout() {
     prev_button_->SetBounds(0, 0, prefsize.cx, prefsize.cy);
     next_button_->GetPreferredSize(&prefsize);
     if (IsHorizontal()) {
-      next_button_->SetBounds(GetWidth() - prefsize.cx, 0, prefsize.cx,
+      next_button_->SetBounds(width() - prefsize.cx, 0, prefsize.cx,
                               prefsize.cy);
     } else {
-      next_button_->SetBounds(0, GetHeight() - prefsize.cy, prefsize.cx,
+      next_button_->SetBounds(0, height() - prefsize.cy, prefsize.cx,
                               prefsize.cy);
     }
   } else {
@@ -492,15 +468,15 @@ bool BitmapScrollBar::OnMousePressed(const MouseEvent& event) {
     CRect thumb_bounds;
     thumb_->GetBounds(&thumb_bounds);
     if (IsHorizontal()) {
-      if (event.GetX() < thumb_bounds.left) {
+      if (event.x() < thumb_bounds.left) {
         last_scroll_amount_ = SCROLL_PREV_PAGE;
-      } else if (event.GetX() > thumb_bounds.right) {
+      } else if (event.x() > thumb_bounds.right) {
         last_scroll_amount_ = SCROLL_NEXT_PAGE;
       }
     } else {
-      if (event.GetY() < thumb_bounds.top) {
+      if (event.y() < thumb_bounds.top) {
         last_scroll_amount_ = SCROLL_PREV_PAGE;
-      } else if (event.GetY() > thumb_bounds.bottom) {
+      } else if (event.y() > thumb_bounds.bottom) {
         last_scroll_amount_ = SCROLL_NEXT_PAGE;
       }
     }
@@ -747,3 +723,4 @@ void BitmapScrollBar::SetThumbTrackState(BaseButton::ButtonState state) {
 }
 
 }
+

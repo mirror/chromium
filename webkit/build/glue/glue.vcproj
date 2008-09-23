@@ -417,6 +417,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\glue\npruntime_util.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\npruntime_util.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\glue\password_autocomplete_listener.cc"
 				>
 			</File>
@@ -529,7 +537,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\glue\webinputevent.cc"
+				RelativePath="..\..\glue\webinputevent_win.cc"
 				>
 			</File>
 			<File
@@ -598,14 +606,6 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\plugins\nphostapi.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\glue\plugins\plugin_data_stream.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\glue\plugins\plugin_data_stream.h"
 				>
 			</File>
 			<File

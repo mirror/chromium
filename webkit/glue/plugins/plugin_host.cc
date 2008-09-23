@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "webkit/glue/plugins/plugin_host.h"
 
@@ -198,6 +173,16 @@ void PluginHost::InvalidateRect(NPP id, NPRect* invalidRect) {
   DCHECK(plugin.get() != NULL);
 
   if (plugin.get() && plugin->webplugin()) {
+    if (!plugin->windowless()) {
+      RECT rect = {0};
+      rect.left = invalidRect->left;
+      rect.right = invalidRect->right;
+      rect.top = invalidRect->top;
+      rect.bottom = invalidRect->bottom;
+      ::InvalidateRect(plugin->window_handle(), &rect, FALSE);
+      return;
+    }
+
     if (plugin->throttle_invalidate()) {
       // We need to track plugin invalidates on a per instance basis.
       ThrottledInvalidates plugin_instance_invalidates;
@@ -406,12 +391,23 @@ uint32 NPN_MemFlush(uint32 size) {
 // Should force a re-scan of the plugins directory to load new ones.
 void  NPN_ReloadPlugins(NPBool reloadPages) {
   // TODO: implement me
+  DLOG(INFO) << "NPN_ReloadPlugin is not implemented yet.";
 }
 
 // Requests a range of bytes for a seekable stream.
-NPError  NPN_RequestRead(NPStream* stream, NPByteRange* rangeList) {
-  // TODO: implement me
-  return NPERR_GENERIC_ERROR;
+NPError  NPN_RequestRead(NPStream* stream, NPByteRange* range_list) {
+  if (!stream || !range_list) {
+    return NPERR_GENERIC_ERROR;
+  }
+
+  scoped_refptr<NPAPI::PluginInstance> plugin = 
+      reinterpret_cast<NPAPI::PluginInstance*>(stream->ndata);
+  if (!plugin.get()) {
+    return NPERR_GENERIC_ERROR;
+  }
+
+  plugin->RequestRead(stream, range_list);
+  return NPERR_NO_ERROR;
 }
 
 static bool IsJavaScriptUrl(const std::string& url) {
@@ -596,8 +592,8 @@ NPError NPN_NewStream(NPP id,
   // 
   // Browser should put this stream into a window target.
   //
-
   // TODO: implement me
+  DLOG(INFO) << "NPN_NewStream is not implemented yet.";
   return NPERR_GENERIC_ERROR;
 }
 
@@ -605,6 +601,7 @@ int32 NPN_Write(NPP id, NPStream* stream, int32 len, void* buffer) {
   // Writes data to an existing Plugin-created stream.
 
   // TODO: implement me
+  DLOG(INFO) << "NPN_Write is not implemented yet.";
   return NPERR_GENERIC_ERROR;
 }
 
@@ -645,6 +642,7 @@ void NPN_Status(NPP id, const char* message) {
   // Displays a message on the status line of the browser window.
 
   // TODO: implement me
+  DLOG(INFO) << "NPN_Status is not implemented yet.";
 }
 
 void NPN_InvalidateRect(NPP id, NPRect *invalidRect) {
@@ -661,6 +659,7 @@ void NPN_InvalidateRegion(NPP id, NPRegion invalidRegion) {
   // Similar to NPN_InvalidateRect.
 
   // TODO: implement me
+  DLOG(INFO) << "NPN_InvalidateRegion is not implemented yet.";
 }
 
 void NPN_ForceRedraw(NPP id) {
@@ -681,6 +680,7 @@ void NPN_ForceRedraw(NPP id) {
   //
 
   // TODO: implement me
+  DLOG(INFO) << "NPN_ForceRedraw is not implemented yet.";
 }
 
 NPError NPN_GetValue(NPP id, NPNVariable variable, void *value) {
@@ -779,6 +779,7 @@ NPError NPN_GetValue(NPP id, NPNVariable variable, void *value) {
   default:
   {
     // TODO: implement me
+    DLOG(INFO) << "NPN_GetValue(" << variable << ") is not implemented yet.";
     break;
   }
   }
@@ -818,13 +819,16 @@ NPError  NPN_SetValue(NPP id, NPPVariable variable, void *value) {
     // Specifies whether you are pushing or popping the JSContext off
     // the stack
     // TODO: implement me
+    DLOG(INFO) << "NPN_SetValue(NPPVJavascriptPushCallerBool) is not implemented.";
     return NPERR_GENERIC_ERROR;
   case NPPVpluginKeepLibraryInMemory:
     // Tells browser that plugin dll should live longer than usual.
     // TODO: implement me
+    DLOG(INFO) << "NPN_SetValue(NPPVpluginKeepLibraryInMemory) is not implemented.";
     return NPERR_GENERIC_ERROR;
   default:
     // TODO: implement me
+    DLOG(INFO) << "NPN_SetValue(" << variable << ") is not implemented.";
     break;
   }
 
@@ -834,11 +838,13 @@ NPError  NPN_SetValue(NPP id, NPPVariable variable, void *value) {
 
 void *NPN_GetJavaEnv() {
   // TODO: implement me
+  DLOG(INFO) << "NPN_GetJavaEnv is not implemented.";
   return NULL;
 }
 
 void *NPN_GetJavaPeer(NPP) {
   // TODO: implement me
+  DLOG(INFO) << "NPN_GetJavaPeer is not implemented.";
   return NULL;
 }
 
@@ -875,3 +881,4 @@ bool NPN_Construct(NPP npp,
 }
 
 } // extern "C"
+

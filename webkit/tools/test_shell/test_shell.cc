@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <atlbase.h>
@@ -39,7 +14,7 @@
 #include "base/command_line.h"
 #include "base/debug_on_start.h"
 #include "base/file_util.h"
-#include "base/gfx/bitmap_platform_device.h"
+#include "base/gfx/bitmap_platform_device_win.h"
 #include "base/gfx/png_encoder.h"
 #include "base/gfx/size.h"
 #include "base/icu_util.h"
@@ -49,6 +24,7 @@
 #include "base/path_service.h"
 #include "base/stats_table.h"
 #include "base/string_util.h"
+#include "base/trace_event.h"
 #include "base/win_util.h"
 #include "googleurl/src/url_util.h"
 #include "net/base/mime_util.h"
@@ -227,6 +203,12 @@ void TestShell::CleanupLogging() {
 }
 
 // static
+void TestShell::SetAllowScriptsToCloseWindows() {
+  if (web_prefs_)
+    web_prefs_->allow_scripts_to_close_windows = true;
+}
+
+// static
 void TestShell::InitializeTestShell(bool interactive) {
     // Start COM stuff.
     HRESULT res = OleInitialize(NULL);
@@ -268,6 +250,7 @@ void TestShell::ResetWebPreferences() {
         web_prefs_->user_agent = webkit_glue::GetDefaultUserAgent();
         web_prefs_->dashboard_compatibility_mode = false;
         web_prefs_->java_enabled = true;
+        web_prefs_->allow_scripts_to_close_windows = false;
     }
 }
 	
@@ -466,8 +449,7 @@ void TestShell::CallJSGC() {
 
 /*static*/
 bool TestShell::CreateNewWindow(const std::wstring& startingURL,
-                                TestShell** result)
-{
+                                TestShell** result) {
     TestShell* shell = new TestShell();
     bool rv = shell->Initialize(startingURL);
     if (rv) {
@@ -476,6 +458,12 @@ bool TestShell::CreateNewWindow(const std::wstring& startingURL,
         TestShell::windowList()->push_back(shell->m_mainWnd);
     }
     return rv;
+}
+
+/*static*/
+void TestShell::DestroyWindow(gfx::WindowHandle windowHandle) {
+  // Do we want to tear down some of the machinery behind the scenes too?
+  ::DestroyWindow(windowHandle);
 }
 
 WebView* TestShell::CreateWebView(WebView* webview) {
@@ -542,7 +530,7 @@ void TestShell::ResizeSubViews() {
 /* static */ std::string TestShell::DumpImage(
         WebFrame* web_frame,
         const std::wstring& file_name) {
-    gfx::BitmapPlatformDevice device(web_frame->CaptureImage(true));
+    gfx::BitmapPlatformDeviceWin device(web_frame->CaptureImage(true));
     const SkBitmap& src_bmp = device.accessBitmap(false);
 
     // Encode image.
@@ -769,8 +757,10 @@ LRESULT CALLBACK TestShell::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPAR
             if (entry != TestShell::windowList()->end())
                 TestShell::windowList()->erase(entry);
 
-            if (TestShell::windowList()->empty() || shell->is_modal())
-              MessageLoop::current()->Quit();
+            if (TestShell::windowList()->empty() || shell->is_modal()) {
+                MessageLoop::current()->PostTask(
+                    FROM_HERE, new MessageLoop::QuitTask());
+            }
             delete shell;
         }
         return 0;
@@ -839,6 +829,7 @@ void TestShell::LoadURLForFrame(const wchar_t* url,
     if (!url)
         return;
 
+    TRACE_EVENT_BEGIN("url.load", this, WideToUTF8(url));
     bool bIsSVGTest = wcsstr(url, L"W3C-SVG-1.1") > 0;
 
     if (bIsSVGTest) {
@@ -860,11 +851,10 @@ void TestShell::LoadURLForFrame(const wchar_t* url,
         frame_string = frame_name;
 
     navigation_controller_->LoadEntry(new TestNavigationEntry(
-        -1, GURL(urlString), std::wstring(), PageTransition::LINK,
-        frame_string));
+        -1, GURL(urlString), std::wstring(), frame_string));
 }
 
-bool TestShell::Navigate(const NavigationEntry& entry, bool reload) {
+bool TestShell::Navigate(const TestNavigationEntry& entry, bool reload) {
     const TestNavigationEntry& test_entry =
         *static_cast<const TestNavigationEntry*>(&entry);
 
@@ -885,8 +875,7 @@ bool TestShell::Navigate(const NavigationEntry& entry, bool reload) {
       request->SetHistoryState(entry.GetContentState());
       
     request->SetExtraData(
-        new TestShellExtraRequestData(entry.GetPageID(),
-                                      entry.GetTransition()));
+        new TestShellExtraRequestData(entry.GetPageID()));
 
     // Get the right target frame for the entry.
     WebFrame* frame = webView()->GetMainFrame();
@@ -896,6 +885,12 @@ bool TestShell::Navigate(const NavigationEntry& entry, bool reload) {
     // back/forward navigations maintain the target frame?
 
     frame->LoadRequest(request.get());
+    // Restore focus to the main frame prior to loading new request.
+    // This makes sure that we don't have a focused iframe. Otherwise, that
+    // iframe would keep focus when the SetFocus called immediately after
+    // LoadRequest, thus making some tests fail (see http://b/issue?id=845337
+    // for more details).
+    webView()->SetFocusedFrame(frame);
     SetFocus(webViewHost(), true);
 
     return true;
@@ -1008,17 +1003,17 @@ void AppendToLog(const char* file, int line, const char* msg) {
 }
 
 bool GetMimeTypeFromExtension(std::wstring &ext, std::string *mime_type) {
-  return mime_util::GetMimeTypeFromExtension(ext, mime_type);
+  return net::GetMimeTypeFromExtension(ext, mime_type);
 }
 
 bool GetMimeTypeFromFile(const std::wstring &file_path,
                          std::string *mime_type) {
-  return mime_util::GetMimeTypeFromFile(file_path, mime_type);
+  return net::GetMimeTypeFromFile(file_path, mime_type);
 }
 
 bool GetPreferredExtensionForMimeType(const std::string& mime_type,
                                       std::wstring* ext) {
-  return mime_util::GetPreferredExtensionForMimeType(mime_type, ext);
+  return net::GetPreferredExtensionForMimeType(mime_type, ext);
 }
 
 IMLangFontLink2* GetLangFontLink() {
@@ -1126,3 +1121,4 @@ std::wstring GetWebKitLocale() {
 }
 
 }  // namespace webkit_glue
+

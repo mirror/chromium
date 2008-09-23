@@ -1,35 +1,16 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 //
 // Parse the data returned from the SafeBrowsing v2.1 protocol response.
 
-#include <Winsock2.h>  // for htonl
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
+#include <Winsock2.h>
+#elif defined(OS_POSIX)
+#include <arpa/inet.h>
+#endif
 
 #include "chrome/browser/safe_browsing/protocol_parser.h"
 
@@ -110,7 +91,7 @@ bool SafeBrowsingProtocolParser::ParseGetHash(
     int full_hash_len = atoi(cmd_parts[2].c_str());
 
     while (full_hash_len > 0) {
-      DCHECK(full_hash_len >= sizeof(SBFullHash));
+      DCHECK(static_cast<size_t>(full_hash_len) >= sizeof(SBFullHash));
       memcpy(&full_hash.hash, data, sizeof(SBFullHash));
       full_hashes->push_back(full_hash);
       data += sizeof(SBFullHash);
@@ -474,7 +455,7 @@ bool SafeBrowsingProtocolParser::ParseNewKey(const char* chunk_data,
     if (cmd_parts.size() != 3)
       return false;
 
-    if (cmd_parts[2].size() != atoi(cmd_parts[1].c_str()))
+    if (static_cast<int>(cmd_parts[2].size()) != atoi(cmd_parts[1].c_str()))
       return false;
 
     if (cmd_parts[0] == "clientkey") {

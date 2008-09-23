@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/options/advanced_contents_view.h"
 
@@ -44,16 +19,16 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/download_manager.h"
+#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/gears_integration.h"
 #include "chrome/browser/metrics_service.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/resource_dispatcher_host.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
-#include "chrome/browser/standard_layout.h"
-#include "chrome/browser/views/restart_message_box.h"
 #include "chrome/browser/views/options/cookies_view.h"
 #include "chrome/browser/views/options/language_combobox_model.h"
+#include "chrome/browser/views/restart_message_box.h"
+#include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/filter_policy.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/pref_member.h"
@@ -66,6 +41,7 @@
 #include "chrome/views/scroll_view.h"
 #include "net/base/ssl_config_service.h"
 
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 namespace {
@@ -409,8 +385,8 @@ void GeneralSection::Layout() {
   // do this then it will return 0 as a preferred width when GridLayout (called
   // from View::Layout) tries to access it.
   ChromeViews::View* parent = GetParent();
-  if (parent && parent->GetWidth()) {
-    const int parent_width = parent->GetWidth();
+  if (parent && parent->width()) {
+    const int parent_width = parent->width();
     reporting_enabled_checkbox_->SetBounds(0, 0, parent_width - 20, 0);
   }
   View::Layout();
@@ -636,16 +612,16 @@ class CookieBehaviorComboModel : public ChromeViews::ComboBox::Model {
     return L"";
   }
 
-  static int CookiePolicyToIndex(CookiePolicy::Type policy) {
+  static int CookiePolicyToIndex(net::CookiePolicy::Type policy) {
     return policy;
   }
 
-  static CookiePolicy::Type IndexToCookiePolicy(int index) {
-    if (CookiePolicy::ValidType(index))
-      return CookiePolicy::FromInt(index);
+  static net::CookiePolicy::Type IndexToCookiePolicy(int index) {
+    if (net::CookiePolicy::ValidType(index))
+      return net::CookiePolicy::FromInt(index);
 
     NOTREACHED();
-    return CookiePolicy::ALLOW_ALL_COOKIES;
+    return net::CookiePolicy::ALLOW_ALL_COOKIES;
   }
 
  private:
@@ -775,7 +751,7 @@ void SecuritySection::ItemChanged(ChromeViews::ComboBox* sender,
     UserMetricsRecordAction(kUserMetrics[filter_policy], profile()->GetPrefs());
     filter_mixed_content_.SetValue(filter_policy);
   } else if (sender == cookie_behavior_combobox_) {
-    CookiePolicy::Type cookie_policy =
+    net::CookiePolicy::Type cookie_policy =
         CookieBehaviorComboModel::IndexToCookiePolicy(new_index);
     const wchar_t* kUserMetrics[] = {
       L"Options_AllowAllCookies",
@@ -884,7 +860,7 @@ void SecuritySection::NotifyPrefChanged(const std::wstring* pref_name) {
   if (!pref_name || *pref_name == prefs::kCookieBehavior) {
     cookie_behavior_combobox_->SetSelectedItem(
         CookieBehaviorComboModel::CookiePolicyToIndex(
-            CookiePolicy::FromInt(cookie_behavior_.GetValue())));
+            net::CookiePolicy::FromInt(cookie_behavior_.GetValue())));
   }
   if (!pref_name || *pref_name == prefs::kSafeBrowsingEnabled)
     enable_safe_browsing_checkbox_->SetIsSelected(safe_browsing_.GetValue());
@@ -982,7 +958,7 @@ NetworkSection::NetworkSection(Profile* profile)
 void NetworkSection::ButtonPressed(ChromeViews::NativeButton* sender) {
   if (sender == change_proxies_button_) {
     UserMetricsRecordAction(L"Options_ChangeProxies", NULL);
-    Thread* thread = g_browser_process->file_thread();
+    base::Thread* thread = g_browser_process->file_thread();
     DCHECK(thread);
     thread->message_loop()->PostTask(FROM_HERE, new OpenConnectionDialogTask);
   } else if (sender == enable_link_doctor_checkbox_) {
@@ -1125,8 +1101,8 @@ int AdvancedContentsView::GetLineScrollIncrement(
 
 void AdvancedContentsView::Layout() {
   ChromeViews::View* parent = GetParent();
-  if (parent && parent->GetWidth()) {
-    const int width = parent->GetWidth();
+  if (parent && parent->width()) {
+    const int width = parent->width();
     const int height = GetHeightForWidth(width);
     SetBounds(0, 0, width, height);
   } else {
@@ -1201,3 +1177,4 @@ void AdvancedScrollViewContainer::Layout() {
   scroll_view_->SetBounds(lb);
   scroll_view_->Layout();
 }
+

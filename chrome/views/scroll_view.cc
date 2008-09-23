@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/scroll_view.h"
 
@@ -50,8 +25,8 @@ class Viewport : public View {
       return;
 
     View* contents = GetChildViewAt(0);
-    x -= contents->GetX();
-    y -= contents->GetY();
+    x -= contents->x();
+    y -= contents->y();
     static_cast<ScrollView*>(GetParent())->ScrollContentsRegionToBeVisible(
         x, y, width, height);
   }
@@ -202,7 +177,7 @@ void ScrollView::Layout() {
   bool horiz_sb_required = false;
   bool vert_sb_required = false;
   if (contents_) {
-    WTL::CSize content_size(contents_->GetWidth(), contents_->GetHeight());
+    WTL::CSize content_size(contents_->width(), contents_->height());
     ComputeScrollBarsVisibility(viewport_size,
                                 content_size,
                                 &horiz_sb_required,
@@ -271,15 +246,15 @@ void ScrollView::CheckScrollBounds() {
   if (contents_) {
     int x, y;
 
-    x = CheckScrollBounds(viewport_->GetWidth(),
-                          contents_->GetWidth(),
-                          -contents_->GetX());
-    y = CheckScrollBounds(viewport_->GetHeight(),
-                          contents_->GetHeight(),
-                          -contents_->GetY());
+    x = CheckScrollBounds(viewport_->width(),
+                          contents_->width(),
+                          -contents_->x());
+    y = CheckScrollBounds(viewport_->height(),
+                          contents_->height(),
+                          -contents_->y());
 
     // This is no op if bounds are the same
-    contents_->SetBounds(-x, -y, contents_->GetWidth(), contents_->GetHeight());
+    contents_->SetBounds(-x, -y, contents_->width(), contents_->height());
   }
 }
 
@@ -295,7 +270,7 @@ gfx::Rect ScrollView::GetVisibleRect() const {
       (horiz_sb_ && horiz_sb_->IsVisible()) ? horiz_sb_->GetPosition() : 0;
   const int y =
       (vert_sb_ && vert_sb_->IsVisible()) ? vert_sb_->GetPosition() : 0;
-  return gfx::Rect(x, y, viewport_->GetWidth(), viewport_->GetHeight());
+  return gfx::Rect(x, y, viewport_->width(), viewport_->height());
 }
 
 void ScrollView::ScrollContentsRegionToBeVisible(int x,
@@ -308,24 +283,24 @@ void ScrollView::ScrollContentsRegionToBeVisible(int x,
   }
 
   const int contents_max_x =
-      std::max(viewport_->GetWidth(), contents_->GetWidth());
+      std::max(viewport_->width(), contents_->width());
   const int contents_max_y =
-      std::max(viewport_->GetHeight(), contents_->GetHeight());
+      std::max(viewport_->height(), contents_->height());
   x = std::max(0, std::min(contents_max_x, x));
   y = std::max(0, std::min(contents_max_y, y));
   const int max_x = std::min(contents_max_x,
-                             x + std::min(width, viewport_->GetWidth()));
+                             x + std::min(width, viewport_->width()));
   const int max_y = std::min(contents_max_y,
                              y + std::min(height,
-                                          viewport_->GetHeight()));
+                                          viewport_->height()));
   const gfx::Rect vis_rect = GetVisibleRect();
   if (vis_rect.Contains(gfx::Rect(x, y, max_x, max_y)))
     return;
 
   const int new_x =
-      (vis_rect.x() < x) ? x : std::max(0, max_x - viewport_->GetWidth());
+      (vis_rect.x() < x) ? x : std::max(0, max_x - viewport_->width());
   const int new_y =
-      (vis_rect.y() < y) ? y : std::max(0, max_x - viewport_->GetHeight());
+      (vis_rect.y() < y) ? y : std::max(0, max_x - viewport_->height());
 
   contents_->SetX(-new_x);
   contents_->SetY(-new_y);
@@ -338,15 +313,15 @@ void ScrollView::UpdateScrollBarPositions() {
   }
 
   if (horiz_sb_->IsVisible()) {
-    int vw = viewport_->GetWidth();
-    int cw = contents_->GetWidth();
-    int origin = contents_->GetX();
+    int vw = viewport_->width();
+    int cw = contents_->width();
+    int origin = contents_->x();
     horiz_sb_->Update(vw, cw, -origin);
   }
   if (vert_sb_->IsVisible()) {
-    int vh = viewport_->GetHeight();
-    int ch = contents_->GetHeight();
-    int origin = contents_->GetY();
+    int vh = viewport_->height();
+    int ch = contents_->height();
+    int origin = contents_->y();
     vert_sb_->Update(vh, ch, -origin);
   }
 }
@@ -357,9 +332,9 @@ void ScrollView::ScrollToPosition(ScrollBar* source, int position) {
     return;
 
   if (source == horiz_sb_ && horiz_sb_->IsVisible()) {
-    int vw = viewport_->GetWidth();
-    int cw = contents_->GetWidth();
-    int origin = contents_->GetX();
+    int vw = viewport_->width();
+    int cw = contents_->width();
+    int origin = contents_->x();
     if (-origin != position) {
       int max_pos = std::max(0, cw - vw);
       if (position < 0)
@@ -372,9 +347,9 @@ void ScrollView::ScrollToPosition(ScrollBar* source, int position) {
       contents_->SchedulePaint(bounds, true);
     }
   } else if (source == vert_sb_ && vert_sb_->IsVisible()) {
-    int vh = viewport_->GetHeight();
-    int ch = contents_->GetHeight();
-    int origin = contents_->GetY();
+    int vh = viewport_->height();
+    int ch = contents_->height();
+    int origin = contents_->y();
     if (-origin != position) {
       int max_pos = std::max(0, ch - vh);
       if (position < 0)
@@ -404,8 +379,8 @@ int ScrollView::GetScrollIncrement(ScrollBar* source, bool is_page,
   }
   // No view, or the view didn't return a valid amount.
   if (is_page)
-    return is_horizontal ? viewport_->GetWidth() : viewport_->GetHeight();
-  return is_horizontal ? viewport_->GetWidth() / 5 : viewport_->GetHeight() / 5;
+    return is_horizontal ? viewport_->width() : viewport_->height();
+  return is_horizontal ? viewport_->width() / 5 : viewport_->height() / 5;
 }
 
 void ScrollView::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
@@ -472,11 +447,11 @@ int VariableRowHeightScrollHelper::GetPageScrollIncrement(
   if (is_horizontal)
     return 0;
   // y coordinate is most likely negative.
-  int y = abs(scroll_view->GetContents()->GetY());
-  int vis_height = scroll_view->GetContents()->GetParent()->GetHeight();
+  int y = abs(scroll_view->GetContents()->y());
+  int vis_height = scroll_view->GetContents()->GetParent()->height();
   if (is_positive) {
     // Align the bottom most row to the top of the view.
-    int bottom = std::min(scroll_view->GetContents()->GetHeight() - 1,
+    int bottom = std::min(scroll_view->GetContents()->height() - 1,
                           y + vis_height);
     RowInfo bottom_row_info = GetRowInfo(bottom);
     // If 0, ScrollView will provide a default value.
@@ -496,7 +471,7 @@ int VariableRowHeightScrollHelper::GetLineScrollIncrement(
   if (is_horizontal)
     return 0;
   // y coordinate is most likely negative.
-  int y = abs(scroll_view->GetContents()->GetY());
+  int y = abs(scroll_view->GetContents()->y());
   RowInfo row = GetRowInfo(y);
   if (is_positive) {
     return row.height - (y - row.origin);
@@ -532,3 +507,4 @@ VariableRowHeightScrollHelper::RowInfo
 }
 
 }
+

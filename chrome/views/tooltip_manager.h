@@ -1,39 +1,13 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-#ifndef CHROME_VIEWS_TOOLTIP_MANAGER_H__
-#define CHROME_VIEWS_TOOLTIP_MANAGER_H__
+#ifndef CHROME_VIEWS_TOOLTIP_MANAGER_H_
+#define CHROME_VIEWS_TOOLTIP_MANAGER_H_
 
 #include <windows.h>
 #include <string>
 #include "base/basictypes.h"
-#include "googleurl/src/gurl.h"
 
 class ChromeFont;
 
@@ -93,6 +67,12 @@ class TooltipManager {
   // Invoked when the tooltip text changes for the specified views.
   void TooltipTextChanged(View* view);
 
+  // Invoked when toolbar icon gets focus.
+  void ShowKeyboardTooltip(View* view);
+
+  // Invoked when toolbar loses focus.
+  void HideKeyboardTooltip();
+
   // Message handlers. These forward to the tooltip control.
   virtual void OnMouse(UINT u_msg, WPARAM w_param, LPARAM l_param);
   LRESULT OnNotify(int w_param, NMHDR* l_param, bool* handled);
@@ -133,7 +113,13 @@ class TooltipManager {
   // of text in the tooltip.
   void TrimTooltipToFit(std::wstring* text,
                         int* width,
-                        int* line_count);
+                        int* line_count,
+                        int position_x,
+                        int position_y,
+                        HWND window);
+
+  // Invoked when the timer elapses and tooltip has to be destroyed.
+  void DestroyKeyboardTooltipWindow(HWND window_to_destroy);
 
   // Hosting view container.
   ViewContainer* view_container_;
@@ -162,9 +148,16 @@ class TooltipManager {
   // Height for a tooltip; lazily calculated.
   static int tooltip_height_;
 
+  // control window for tooltip displayed using keyboard.
+  HWND keyboard_tooltip_hwnd_;
+
+  // Used to register DestroyTooltipWindow function with postdelayedtask
+  // function.
+  ScopedRunnableMethodFactory<TooltipManager> keyboard_tooltip_factory_;
+
   DISALLOW_EVIL_CONSTRUCTORS(TooltipManager);
 };
 
 } // namespace ChromeViews
 
-#endif // CHROME_VIEWS_TOOLTIP_MANAGER_H__
+#endif // CHROME_VIEWS_TOOLTIP_MANAGER_H_

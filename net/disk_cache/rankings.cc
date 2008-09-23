@@ -1,44 +1,19 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "net/disk_cache/rankings.h"
 
+#include "base/histogram.h"
 #include "net/disk_cache/backend_impl.h"
 #include "net/disk_cache/entry_impl.h"
 #include "net/disk_cache/errors.h"
 
 // This is used by crash_cache.exe to generate unit test files.
-extern disk_cache::RankCrashes g_rankings_crash = disk_cache::NO_CRASH;
+disk_cache::RankCrashes g_rankings_crash = disk_cache::NO_CRASH;
 
 namespace {
 
-const wchar_t* kBlockName = L"\\data_";
 const int kHeadIndex = 0;
 const int kTailIndex = 1;
 const int kTransactionIndex = 2;
@@ -90,6 +65,7 @@ enum CrashLocation {
 // Generates a crash on debug builds, acording to the value of g_rankings_crash.
 // This used by crash_cache.exe to generate unit-test files.
 void GenerateCrash(CrashLocation location) {
+#if defined(OS_WIN)
 #ifndef NDEBUG
   if (disk_cache::NO_CRASH == g_rankings_crash)
     return;
@@ -168,7 +144,8 @@ void GenerateCrash(CrashLocation location) {
       NOTREACHED();
       return;
   }
-#endif
+#endif  // NDEBUG
+#endif  // OS_WIN
 }
 
 }  // namespace
@@ -203,6 +180,7 @@ void Rankings::Reset() {
 }
 
 bool Rankings::GetRanking(CacheRankingsBlock* rankings) {
+  Time start = Time::Now();
   if (!rankings->address().is_initialized())
     return false;
 
@@ -233,6 +211,7 @@ bool Rankings::GetRanking(CacheRankingsBlock* rankings) {
   EntryImpl* cache_entry =
       reinterpret_cast<EntryImpl*>(rankings->Data()->pointer);
   rankings->SetData(cache_entry->rankings()->Data());
+  UMA_HISTOGRAM_TIMES(L"DiskCache.GetRankings", Time::Now() - start);
   return true;
 }
 
@@ -380,8 +359,10 @@ void Rankings::Remove(CacheRankingsBlock* node) {
 // but the net effect is just an assert on debug when attempting to remove the
 // entry. Otherwise we'll need reentrant transactions, which is an overkill.
 void Rankings::UpdateRank(CacheRankingsBlock* node, bool modified) {
+  Time start = Time::Now();
   Remove(node);
   Insert(node, modified);
+  UMA_HISTOGRAM_TIMES(L"DiskCache.UpdateRank", Time::Now() - start);
 }
 
 void Rankings::CompleteTransaction() {
@@ -695,3 +676,4 @@ void Rankings::UpdateIterators(CacheRankingsBlock* node) {
 }
 
 }  // namespace disk_cache
+

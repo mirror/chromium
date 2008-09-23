@@ -75,7 +75,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets=".\browser.vsprops;$(SolutionDir)..\build\release.vsprops"
+			InheritedPropertySheets=".\browser.vsprops;$(SolutionDir)..\build\release.vsprops;$(SolutionDir)\tools\build\win\js_engine.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -330,42 +330,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\download_exe.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\download_file.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\download_file.h"
-				>
-			</File>
-			<File
-				RelativePath=".\download_item_model.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\download_item_model.h"
-				>
-			</File>
-			<File
-				RelativePath=".\download_manager.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\download_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\download_util.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\download_util.h"
-				>
-			</File>
-			<File
 				RelativePath=".\fav_icon_helper.cc"
 				>
 			</File>
@@ -598,50 +562,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\save_file.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\save_file.h"
-				>
-			</File>
-			<File
-				RelativePath=".\save_file_manager.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\save_file_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\save_item.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\save_item.h"
-				>
-			</File>
-			<File
-				RelativePath=".\save_package.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\save_package.h"
-				>
-			</File>
-			<File
-				RelativePath=".\save_page_model.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\save_page_model.h"
-				>
-			</File>
-			<File
-				RelativePath=".\save_types.h"
-				>
-			</File>
-			<File
 				RelativePath=".\session_crashed_view.cc"
 				>
 			</File>
@@ -799,22 +719,50 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Bookmark Bar"
+			Name="Bookmarks"
 			>
 			<File
-				RelativePath=".\bookmark_bar_model.cc"
+				RelativePath=".\bookmark_bar_context_menu_controller.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\bookmark_bar_model.h"
+				RelativePath=".\bookmark_bar_context_menu_controller.h"
 				>
 			</File>
 			<File
-				RelativePath=".\bookmark_drag_data.cc"
+				RelativePath=".\bookmarks\bookmark_codec.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\bookmark_drag_data.h"
+				RelativePath=".\bookmarks\bookmark_codec.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_drag_data.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_drag_data.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_model.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_service.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_storage.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_storage.h"
 				>
 			</File>
 		</Filter>
@@ -842,35 +790,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\navigation_performance_viewer.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_performance_viewer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_profiler.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_profiler.h"
-				>
-			</File>
-			<File
 				RelativePath=".\network_status_view.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\network_status_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\page_load_tracker.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\page_load_tracker.h"
 				>
 			</File>
 			<File
@@ -891,6 +815,14 @@
 			</File>
 			<File
 				RelativePath=".\render_view_context_menu_controller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\render_view_host_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\render_view_host_manager.h"
 				>
 			</File>
 			<File
@@ -1006,11 +938,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\chrome_frame.cc"
+				RelativePath=".\browser_window.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\chrome_frame.h"
+				RelativePath=".\browser_window.h"
 				>
 			</File>
 			<File
@@ -1042,11 +974,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\frame_view.cc"
+				RelativePath=".\frame_util.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\frame_view.h"
+				RelativePath=".\frame_util.h"
 				>
 			</File>
 			<File
@@ -1087,14 +1019,6 @@
 			</File>
 			<File
 				RelativePath=".\navigation_controller.h"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_controller_base.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_controller_base.h"
 				>
 			</File>
 			<File
@@ -1142,27 +1066,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\title_chomper.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\title_chomper.h"
-				>
-			</File>
-			<File
 				RelativePath=".\web_app_icon_manager.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\web_app_icon_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\window_clipping_info.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\window_clipping_info.h"
 				>
 			</File>
 			<File
@@ -1195,498 +1103,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="XPFrame"
-			>
-			<File
-				RelativePath=".\point_buffer.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\point_buffer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\simple_xp_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\simple_xp_frame.h"
-				>
-			</File>
-			<File
-				RelativePath=".\xp_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\xp_frame.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Views (Browser Window)"
-			>
-			<File
-				RelativePath=".\views\about_chrome_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\about_chrome_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bookmark_bar_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bookmark_bar_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bookmark_bubble_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bookmark_bubble_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bookmark_editor_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bookmark_editor_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bug_report_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\bug_report_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\clear_browsing_data.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\clear_browsing_data.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\constrained_window_animation.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\constrained_window_animation.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\constrained_window_impl.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\constrained_window_impl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\delay_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\delay_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\dom_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_item_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_item_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_shelf_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_shelf_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_started_animation.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_started_animation.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\edit_keyword_controller.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\edit_keyword_controller.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\event_utils.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\event_utils.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\event_utils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\event_utils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\external_protocol_dialog.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\external_protocol_dialog.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_bubble.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_bubble.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_customize_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_customize_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_view_base.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\first_run_view_base.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\go_button.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\go_button.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\hung_renderer_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\hung_renderer_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\importer_lock_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\importer_lock_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\importer_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\importer_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\importing_progress_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\importing_progress_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\info_bubble.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\info_bubble.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\input_window.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\input_window.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\keyword_editor_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\keyword_editor_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\location_bar_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\location_bar_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\login_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\login_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\password_manager_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\password_manager_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\sad_tab_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\sad_tab_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\shelf_item_dialog.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\shelf_item_dialog.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\shell_dialogs.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\star_toggle.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\star_toggle.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\status_bubble.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\status_bubble.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\theme_helpers.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\theme_helpers.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\toolbar_star_toggle.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\toolbar_star_toggle.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\toolbar_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\toolbar_view.h"
-				>
-			</File>
-			<Filter
-				Name="Info Bars"
-				>
-				<File
-					RelativePath=".\views\info_bar_alternate_nav_url_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_alternate_nav_url_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_confirm_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_confirm_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_item_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_item_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_message_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_message_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\info_bar_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\tab_icon_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\tab_icon_view.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Options"
-				>
-				<File
-					RelativePath=".\views\options\advanced_contents_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\advanced_contents_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\advanced_page_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\advanced_page_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\content_page_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\content_page_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\cookies_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\cookies_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\fonts_languages_window_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\fonts_languages_window_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\fonts_page_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\fonts_page_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\general_page_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\general_page_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\language_combobox_model.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\language_combobox_model.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\languages_page_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\languages_page_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\options_group_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\options_group_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\options_page_view.cc"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\options_page_view.h"
-					>
-				</File>
-				<File
-					RelativePath=".\views\options\options_window_view.cc"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
 			Name="Destination"
 			>
 			<File
@@ -1698,11 +1114,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\download_tab_view.cc"
+				RelativePath=".\views\download_tab_view.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\download_tab_view.h"
+				RelativePath=".\views\download_tab_view.h"
 				>
 			</File>
 			<File
@@ -2022,6 +1438,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\session_id.h"
+				>
+			</File>
+			<File
 				RelativePath=".\session_service.cc"
 				>
 			</File>
@@ -2035,26 +1455,6 @@
 			</File>
 			<File
 				RelativePath=".\tab_restore_service.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="VistaFrame"
-			>
-			<File
-				RelativePath=".\simple_vista_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\simple_vista_frame.h"
-				>
-			</File>
-			<File
-				RelativePath=".\vista_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\vista_frame.h"
 				>
 			</File>
 		</Filter>
@@ -2087,18 +1487,62 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Wizard"
+			Name="Importer"
 			>
 			<File
-				RelativePath=".\wizard\wizard.cc"
+				RelativePath=".\importer\firefox2_importer.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\wizard\wizard.h"
+				RelativePath=".\importer\firefox2_importer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\wizard\wizard_step.h"
+				RelativePath=".\importer\firefox3_importer.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\firefox3_importer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\firefox_importer_utils.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\firefox_importer_utils.h"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\firefox_profile_lock.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\firefox_profile_lock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\ie_importer.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\ie_importer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\importer.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\importer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\mork_reader.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\mork_reader.h"
 				>
 			</File>
 		</Filter>
@@ -2131,56 +1575,8 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Tab Strip"
+			Name="Tabs"
 			>
-			<File
-				RelativePath=".\tabs\dragged_tab_controller.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\dragged_tab_controller.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\dragged_tab_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\dragged_tab_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\hwnd_photobooth.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\hwnd_photobooth.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\tab.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\tab.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\tab_renderer.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\tab_renderer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\tab_strip.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tabs\tab_strip.h"
-				>
-			</File>
 			<File
 				RelativePath=".\tabs\tab_strip_model.cc"
 				>
@@ -2530,6 +1926,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\safe_browsing\safe_browsing_database_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\safe_browsing\safe_browsing_database_impl.h"
+				>
+			</File>
+			<File
 				RelativePath=".\safe_browsing\safe_browsing_service.cc"
 				>
 			</File>
@@ -2543,6 +1947,94 @@
 			</File>
 			<File
 				RelativePath=".\safe_browsing\safe_browsing_util.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Download"
+			>
+			<File
+				RelativePath=".\download\download_exe.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_file.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_file.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_item_model.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_item_model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_util.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_util.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Save Page"
+			>
+			<File
+				RelativePath=".\download\save_file.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_file.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_file_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_file_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_item.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_item.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_package.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_package.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_page_model.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_page_model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\save_types.h"
 				>
 			</File>
 		</Filter>
@@ -2583,38 +2075,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\firefox2_importer.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox2_importer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox3_importer.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox3_importer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox_importer_utils.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox_importer_utils.h"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox_profile_lock.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\firefox_profile_lock.h"
-			>
-		</File>
-		<File
 			RelativePath=".\gears_integration.cc"
 			>
 		</File>
@@ -2631,30 +2091,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\views\html_dialog_view.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\views\html_dialog_view.h"
-			>
-		</File>
-		<File
-			RelativePath=".\ie_importer.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\ie_importer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\importer.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\importer.h"
-			>
-		</File>
-		<File
 			RelativePath=".\interstitial_page_delegate.h"
 			>
 		</File>
@@ -2664,22 +2100,6 @@
 		</File>
 		<File
 			RelativePath=".\modal_html_dialog_delegate.h"
-			>
-		</File>
-		<File
-			RelativePath=".\mork_reader.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\mork_reader.h"
-			>
-		</File>
-		<File
-			RelativePath=".\page_info_window.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\page_info_window.h"
 			>
 		</File>
 		<File
@@ -2699,23 +2119,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\views\restart_message_box.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\views\restart_message_box.h"
-			>
-		</File>
-		<File
 			RelativePath=".\ssl_blocking_page.cc"
 			>
 		</File>
 		<File
 			RelativePath=".\ssl_blocking_page.h"
-			>
-		</File>
-		<File
-			RelativePath=".\standard_layout.h"
 			>
 		</File>
 		<File
@@ -2727,27 +2135,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\tab_contents_container_view.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\tab_contents_container_view.h"
-			>
-		</File>
-		<File
 			RelativePath=".\toolbar_model.cc"
 			>
 		</File>
 		<File
 			RelativePath=".\toolbar_model.h"
-			>
-		</File>
-		<File
-			RelativePath=".\user_data_dir_dialog.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\user_data_dir_dialog.h"
 			>
 		</File>
 	</Files>

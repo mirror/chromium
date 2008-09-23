@@ -1,36 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/login_prompt.h"
 
-#include "base/atomic.h"
 #include "base/command_line.h"
+#include "base/lock.h"
 #include "base/message_loop.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/constrained_window.h"
@@ -80,7 +55,7 @@ class LoginHandlerImpl : public LoginHandler,
  public:
   LoginHandlerImpl(URLRequest* request, MessageLoop* ui_loop)
       : dialog_(NULL),
-        got_auth_(FALSE),
+        handled_auth_(false),
         request_(request),
         request_loop_(MessageLoop::current()),
         ui_loop_(ui_loop),
@@ -144,7 +119,7 @@ class LoginHandlerImpl : public LoginHandler,
     // Reference is no longer valid.
     dialog_ = NULL;
 
-    if (!GotAuth()) {
+    if (!WasAuthHandled(true)) {
       request_loop_->PostTask(FROM_HERE, NewRunnableMethod(
           this, &LoginHandlerImpl::CancelAuthDeferred));
       SendNotifications();
@@ -165,11 +140,14 @@ class LoginHandlerImpl : public LoginHandler,
     SetAuth(login_view_->GetUsername(), login_view_->GetPassword());
     return true;
   }
+  virtual ChromeViews::View* GetContentsView() {
+    return login_view_;
+  }
 
   // LoginHandler:
   virtual void SetAuth(const std::wstring& username,
                        const std::wstring& password) {
-    if (GotAuth())
+    if (WasAuthHandled(true))
       return;
 
     // Tell the password manager the credentials were submitted / accepted.
@@ -188,7 +166,7 @@ class LoginHandlerImpl : public LoginHandler,
   }
 
   virtual void CancelAuth() {
-    if (GotAuth())
+    if (WasAuthHandled(true))
       return;
 
     ui_loop_->PostTask(FROM_HERE, NewRunnableMethod(
@@ -244,9 +222,14 @@ class LoginHandlerImpl : public LoginHandler,
       dialog_->CloseConstrainedWindow();
   }
 
-  // Atomic test-and-set whether we've gotten (or cancelled) authentication.
-  int32 GotAuth() {
-    return base::AtomicSwap(&got_auth_, TRUE);
+  // Returns whether authentication had been handled (SetAuth or CancelAuth).
+  // If |set_handled| is true, it will mark authentication as handled.
+  bool WasAuthHandled(bool set_handled) {
+    AutoLock lock(handled_auth_lock_);
+    bool was_handled = handled_auth_;
+    if (set_handled)
+      handled_auth_ = true;
+    return was_handled;
   }
 
   // Notify observers that authentication is needed or received.  The automation
@@ -260,7 +243,8 @@ class LoginHandlerImpl : public LoginHandler,
       return;
 
     NavigationController* controller = requesting_contents->controller();
-    if (!got_auth_) {
+
+    if (!WasAuthHandled(false)) {
       LoginNotificationDetails details(this);
       service->Notify(NOTIFY_AUTH_NEEDED,
                       Source<NavigationController>(controller),
@@ -272,9 +256,9 @@ class LoginHandlerImpl : public LoginHandler,
     }
   }
 
-  // Whether SetAuth or CancelAuth have been called.
-  // Must be aligned on a 32-bit boundary.
-  int32 got_auth_;
+  // True if we've handled auth (SetAuth or CancelAuth has been called).
+  bool handled_auth_;
+  Lock handled_auth_lock_;
 
   // The ConstrainedWindow that is hosting our LoginView.
   // This should only be accessed on the ui_loop_.
@@ -320,7 +304,7 @@ class LoginHandlerImpl : public LoginHandler,
 // which then routes it to the URLRequest on the I/O thread.
 class LoginDialogTask : public Task {
  public:
-  LoginDialogTask(AuthChallengeInfo* auth_info, LoginHandlerImpl* handler)
+  LoginDialogTask(net::AuthChallengeInfo* auth_info, LoginHandlerImpl* handler)
       : auth_info_(auth_info), handler_(handler) {
   }
   virtual ~LoginDialogTask() {
@@ -377,15 +361,15 @@ class LoginDialogTask : public Task {
     // TODO(timsteele): Shouldn't depend on HttpKey since a change to the
     // format would result in not being able to retrieve existing logins
     // for a site. Refactor HttpKey behavior to be more reusable.
-    dialog_form.signon_realm = AuthCache::HttpKey(dialog_form.origin,
-                                                  *auth_info_);
+    dialog_form.signon_realm =
+        net::AuthCache::HttpKey(dialog_form.origin, *auth_info_);
     password_manager_input->push_back(dialog_form);
     // Set the password form for the handler (by copy).
     handler_->set_password_form(dialog_form);
   }
 
   // Info about who/where/what is asking for authentication.
-  scoped_refptr<AuthChallengeInfo> auth_info_;
+  scoped_refptr<net::AuthChallengeInfo> auth_info_;
 
   // Where to send the authentication when obtained.
   // This is owned by the ResourceDispatcherHost that invoked us.
@@ -397,10 +381,11 @@ class LoginDialogTask : public Task {
 // ----------------------------------------------------------------------------
 // Public API
 
-LoginHandler* CreateLoginPrompt(AuthChallengeInfo* auth_info,
+LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                 URLRequest* request,
                                 MessageLoop* ui_loop) {
   LoginHandlerImpl* handler = new LoginHandlerImpl(request, ui_loop);
   ui_loop->PostTask(FROM_HERE, new LoginDialogTask(auth_info, handler));
   return handler;
 }
+

@@ -58,8 +58,10 @@
 #pragma warning(pop)
 
 #include "base/clipboard_util.h"
+#include "base/string_util.h"
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/glue_util.h"
+#include "webkit/glue/webkit_glue.h"
 
 namespace WebCore {
 
@@ -104,20 +106,21 @@ static inline void pathRemoveBadFSCharacters(PWSTR psz, size_t length)
 static String filesystemPathFromUrlOrTitle(const String& url, const String& title, TCHAR* extension, bool isLink)
 {
     bool usedURL = false;
-    WCHAR fsPathBuffer[MAX_PATH + 1];
+    WCHAR fsPathBuffer[MAX_PATH];
     fsPathBuffer[0] = 0;
-    int extensionLen = extension ? lstrlen(extension) : 0;
+    int extensionLen = extension ? min(MAX_PATH - 1, lstrlen(extension)) : 0;
+    String extensionString = extension ? String(extension, extensionLen) : String(L"");
 
     // We make the filename based on the title only if there's an extension.
     if (!title.isEmpty() && extension) {
-        size_t len = min<size_t>(title.length(), MAX_PATH - extensionLen);
+        size_t len = min<size_t>(title.length(), MAX_PATH - extensionLen - 1);
         CopyMemory(fsPathBuffer, title.characters(), len * sizeof(UChar));
         fsPathBuffer[len] = 0;
         pathRemoveBadFSCharacters(fsPathBuffer, len);
     }
 
     if (!lstrlen(fsPathBuffer)) {
-        DWORD len = MAX_PATH;
+        DWORD len = MAX_PATH - 1;
         String nullTermURL = url;
         usedURL = true;
         if (UrlIsFileUrl((LPCWSTR)nullTermURL.charactersWithNullTermination()) 
@@ -133,10 +136,10 @@ static String filesystemPathFromUrlOrTitle(const String& url, const String& titl
             KURL kurl(url.deprecatedString());
             String lastComponent;
             if (!isLink && !(lastComponent = kurl.lastPathComponent()).isEmpty()) {
-                len = min<DWORD>(MAX_PATH, lastComponent.length());
+                len = min<DWORD>(MAX_PATH - 1, lastComponent.length());
                 CopyMemory(fsPathBuffer, lastComponent.characters(), len * sizeof(UChar));
             } else {
-                len = min<DWORD>(MAX_PATH, nullTermURL.length());
+                len = min<DWORD>(MAX_PATH - 1, nullTermURL.length());
                 CopyMemory(fsPathBuffer, nullTermURL.characters(), len * sizeof(UChar));
             }
             fsPathBuffer[len] = 0;
@@ -148,13 +151,13 @@ static String filesystemPathFromUrlOrTitle(const String& url, const String& titl
         return String((UChar*)fsPathBuffer);
 
     if (!isLink && usedURL) {
-        PathRenameExtension(fsPathBuffer, extension);
+        PathRenameExtension(fsPathBuffer, extensionString.charactersWithNullTermination());
         return String((UChar*)fsPathBuffer);
     }
 
     String result((UChar*)fsPathBuffer);
-    result += String((UChar*)extension);
-    return result;
+    result += extensionString;
+    return result.length() >= MAX_PATH ? result.substring(0, MAX_PATH - 1) : result;
 }
 
 static HGLOBAL createGlobalURLContent(const String& url, int estimatedFileSize)
@@ -488,7 +491,20 @@ String ClipboardWin::getData(const String& type, bool& success) const
     ClipboardDataType dataType = clipboardTypeFromMIMEType(type);
     if (dataType == ClipboardDataTypeText) {
         std::wstring text;
-        success = ClipboardUtil::GetPlainText(m_dataObject.get(), &text);
+        if (!isForDragging()) {
+            // If this isn't for a drag, it's for a cut/paste event handler.
+            // In this case, we need to use our glue methods to access the
+            // clipboard contents.
+            webkit_glue::ClipboardReadText(&text);
+            if (text.empty()) {
+                std::string asciiText;
+                webkit_glue::ClipboardReadAsciiText(&asciiText);
+                text = ASCIIToWide(asciiText);
+            }
+            success = !text.empty();
+        } else {
+            success = ClipboardUtil::GetPlainText(m_dataObject.get(), &text);
+        }
         return webkit_glue::StdWStringToString(text);
     } else if (dataType == ClipboardDataTypeURL) {
         std::wstring url;

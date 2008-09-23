@@ -1,35 +1,11 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "webkit/glue/webkit_glue.h"
 
 #include "base/file_util.h"
+#include "base/message_loop.h"
 #include "base/path_service.h"
 #include "chrome/browser/spellchecker.h"
 #include "chrome/common/chrome_paths.h"
@@ -37,7 +13,12 @@
 
 namespace {
 class SpellCheckTest : public testing::Test {
+ private:
+  MessageLoop message_loop_;
 };
+
+const std::wstring kTempCustomDictionaryFile(L"temp_custom_dictionary.txt");
+
 }  // namespace
 
 // Represents a special initialization function used only for the unit tests
@@ -75,7 +56,7 @@ extern void InitHunspellWithFiles(FILE* file_aff_hunspell,
 // A test with a "[ROBUSTNESS]" mark shows it is a robustness test and it uses
 // grammartically incorrect string.
 // TODO(hbono): Please feel free to add more tests.
-TEST(SpellCheckTest, SpellCheckStrings_EN_US) {
+TEST_F(SpellCheckTest, SpellCheckStrings_EN_US) {
   static const struct {
     // A string to be tested.
     const wchar_t* input;
@@ -273,7 +254,7 @@ TEST(SpellCheckTest, SpellCheckStrings_EN_US) {
                                &hunspell_directory));
 
   scoped_refptr<SpellChecker> spell_checker(new SpellChecker(
-      hunspell_directory, L"en-US", NULL));
+      hunspell_directory, L"en-US", NULL, L""));
 
   for (int i = 0; i < arraysize(kTestCases); i++) {
     size_t input_length = 0;
@@ -294,7 +275,7 @@ TEST(SpellCheckTest, SpellCheckStrings_EN_US) {
 }
 
 
-TEST(SpellCheckTest, SpellCheckSuggestions_EN_US) {
+TEST_F(SpellCheckTest, SpellCheckSuggestions_EN_US) {
   static const struct {
     // A string to be tested.
     const wchar_t* input;
@@ -327,7 +308,7 @@ TEST(SpellCheckTest, SpellCheckSuggestions_EN_US) {
                                &hunspell_directory));
 
   scoped_refptr<SpellChecker> spell_checker(new SpellChecker(
-      hunspell_directory, L"en-US", NULL));
+      hunspell_directory, L"en-US", NULL, L""));
 
   for (int i = 0; i < arraysize(kTestCases); i++) {
     std::vector<std::wstring> suggestions;
@@ -357,4 +338,150 @@ TEST(SpellCheckTest, SpellCheckSuggestions_EN_US) {
 
     EXPECT_TRUE(suggested_word_is_present);
   }
+}
+
+// This test Adds words to the SpellChecker and veifies that it remembers them.
+TEST_F(SpellCheckTest, DISABLED_SpellCheckAddToDictionary_EN_US) {
+  static const struct {
+    // A string to be added to SpellChecker.
+    const wchar_t* word_to_add;
+  } kTestCases[] = {  // word to be added to SpellChecker
+    {L"Googley"},
+    {L"Googleplex"},
+    {L"Googler"},
+  };
+
+  std::wstring hunspell_directory;
+  ASSERT_TRUE(PathService::Get(chrome::DIR_APP_DICTIONARIES,
+                               &hunspell_directory));
+
+  scoped_refptr<SpellChecker> spell_checker(new SpellChecker(
+      hunspell_directory, L"en-US", NULL, kTempCustomDictionaryFile));
+
+  for (int i = 0; i < arraysize(kTestCases); i++) {
+    // Add the word to spellchecker.
+    spell_checker->AddWord(std::wstring(kTestCases[i].word_to_add));
+
+    // Now check whether it is added to Spellchecker.
+    std::vector<std::wstring> suggestions;
+    size_t input_length = 0;
+    if (kTestCases[i].word_to_add != NULL) {
+      input_length = wcslen(kTestCases[i].word_to_add);
+    }
+    int misspelling_start;
+    int misspelling_length;
+    bool result = spell_checker->SpellCheckWord(kTestCases[i].word_to_add,
+                                                static_cast<int>(input_length),
+                                                &misspelling_start,
+                                                &misspelling_length,
+                                                &suggestions);
+
+    // Check for spelling.
+    EXPECT_TRUE(result);
+  }
+
+  // Now initialize another spellchecker to see that AddToWord is permanent.
+  scoped_refptr<SpellChecker> spell_checker_new(new SpellChecker(
+      hunspell_directory, L"en-US", NULL, kTempCustomDictionaryFile));
+
+  for (int i = 0; i < arraysize(kTestCases); i++) {
+    // Now check whether it is added to Spellchecker.
+    std::vector<std::wstring> suggestions;
+    size_t input_length = 0;
+    if (kTestCases[i].word_to_add != NULL) {
+      input_length = wcslen(kTestCases[i].word_to_add);
+    }
+    int misspelling_start;
+    int misspelling_length;
+    bool result = spell_checker_new->SpellCheckWord(
+        kTestCases[i].word_to_add,
+        static_cast<int>(input_length),
+        &misspelling_start,
+        &misspelling_length,
+        &suggestions);
+
+    // Check for spelling.
+    EXPECT_TRUE(result);
+  }
+
+  // Remove the temp custom dictionary file.
+  file_util::Delete(kTempCustomDictionaryFile, false);
+}
+
+// SpellChecker should suggest custome words for misspelled words.
+TEST_F(SpellCheckTest, DISABLED_SpellCheckSuggestionsAddToDictionary_EN_US) {
+  static const struct {
+    // A string to be added to SpellChecker.
+    const wchar_t* word_to_add;
+  } kTestCases[] = {  // word to be added to SpellChecker
+    {L"Googley"},
+    {L"Googleplex"},
+    {L"Googler"},
+  };
+
+  std::wstring hunspell_directory;
+  ASSERT_TRUE(PathService::Get(chrome::DIR_APP_DICTIONARIES,
+                               &hunspell_directory));
+
+  scoped_refptr<SpellChecker> spell_checker(new SpellChecker(
+      hunspell_directory, L"en-US", NULL, kTempCustomDictionaryFile));
+
+  for (int i = 0; i < arraysize(kTestCases); i++) {
+    // Add the word to spellchecker.
+    spell_checker->AddWord(std::wstring(kTestCases[i].word_to_add));
+  }
+
+  // Now check to see whether the custom words are suggested for 
+  // misspelled but similar words.
+  static const struct {
+    // A string to be tested.
+    const wchar_t* input;
+    // An expected result for this test case.
+    //   * true: the input string does not have any invalid words.
+    //   * false: the input string has one or more invalid words.
+    bool expected_result;
+    // The position and the length of the first invalid word.
+    int misspelling_start;
+    int misspelling_length;
+
+    // A suggested word that should occur.
+    const wchar_t* suggested_word;
+  } kTestCasesToBeTested[] = {
+    {L"oogley", false, 0, 0, L"Googley"},
+    {L"oogler", false, 0, 0, L"Googler"},
+    {L"oogleplex", false, 0, 0, L"Googleplex"},
+  };
+
+  for (int i = 0; i < arraysize(kTestCasesToBeTested); i++) {
+    std::vector<std::wstring> suggestions;
+    size_t input_length = 0;
+    if (kTestCasesToBeTested[i].input != NULL) {
+      input_length = wcslen(kTestCasesToBeTested[i].input);
+    }
+    int misspelling_start;
+    int misspelling_length;
+    bool result = spell_checker->SpellCheckWord(kTestCasesToBeTested[i].input,
+                                                static_cast<int>(input_length),
+                                                &misspelling_start,
+                                                &misspelling_length,
+                                                &suggestions);
+
+    // Check for spelling.
+    EXPECT_EQ(result, kTestCasesToBeTested[i].expected_result);
+
+    // Check if the suggested words occur.
+    bool suggested_word_is_present = false;
+    for (int j=0; j < static_cast<int>(suggestions.size()); j++) {
+      if (suggestions.at(j).compare(kTestCasesToBeTested[i].suggested_word) ==
+                                    0) {
+        suggested_word_is_present = true;
+        break;
+      }
+    }
+
+    EXPECT_TRUE(suggested_word_is_present);
+  }
+
+  // Remove the temp custom dictionary file.
+  file_util::Delete(kTempCustomDictionaryFile, false);
 }

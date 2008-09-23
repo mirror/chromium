@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/tab_contents.h"
 
@@ -36,8 +11,9 @@
 #include "chrome/browser/web_contents.h"
 #include "chrome/browser/tab_contents_delegate.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/common/pref_service.h"
 #include "chrome/views/native_scroll_bar.h"
+#include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
 #include "chrome/views/view_storage.h"
 
@@ -84,21 +60,23 @@ void TabContents::HideContents() {
 }
 
 int32 TabContents::GetMaxPageID() {
-  if (AsWebContents())
-    return AsWebContents()->site_instance()->max_page_id();
+  if (GetSiteInstance())
+    return GetSiteInstance()->max_page_id();
   else
     return max_page_id_;
 }
 
 void TabContents::UpdateMaxPageID(int32 page_id) {
-  if (AsWebContents()) {
-    // Ensure both the SiteInstance and RenderProcessHost update their max page
-    // IDs in sync.
-    AsWebContents()->site_instance()->UpdateMaxPageID(page_id);
+  // Ensure both the SiteInstance and RenderProcessHost update their max page
+  // IDs in sync. Only WebContents will also have site instances, except during
+  // testing.
+  if (GetSiteInstance())
+    GetSiteInstance()->UpdateMaxPageID(page_id);
+
+  if (AsWebContents())
     AsWebContents()->process()->UpdateMaxPageID(page_id);
-  } else {
+  else
     max_page_id_ = std::max(max_page_id_, page_id);
-  }
 }
 
 const std::wstring TabContents::GetDefaultTitle() const {
@@ -117,7 +95,7 @@ const GURL& TabContents::GetURL() const {
 
   // We may not have a navigation entry yet
   NavigationEntry* entry = controller_->GetActiveEntry();
-  return entry ? entry->GetDisplayURL() : kEmptyURL;
+  return entry ? entry->display_url() : kEmptyURL;
 }
 
 const std::wstring& TabContents::GetTitle() const {
@@ -129,7 +107,7 @@ const std::wstring& TabContents::GetTitle() const {
   // get a new title.
   NavigationEntry* entry = controller_->GetLastCommittedEntry();
   if (entry)
-    return entry->GetTitle();
+    return entry->title();
   else if (controller_->LoadingURLLazily())
     return controller_->GetLazyTitle();
   return EmptyWString();
@@ -142,7 +120,7 @@ SkBitmap TabContents::GetFavIcon() const {
   // entry rather than a pending navigation entry.
   NavigationEntry* entry = controller_->GetLastCommittedEntry();
   if (entry)
-    return entry->GetFavIcon();
+    return entry->favicon().bitmap();
   else if (controller_->LoadingURLLazily())
     return controller_->GetLazyFavIcon();
   return SkBitmap();
@@ -151,7 +129,7 @@ SkBitmap TabContents::GetFavIcon() const {
 SecurityStyle TabContents::GetSecurityStyle() const {
   // We may not have a navigation entry yet.
   NavigationEntry* entry = controller_->GetActiveEntry();
-  return entry ? entry->GetSecurityStyle() : SECURITY_STYLE_UNKNOWN;
+  return entry ? entry->ssl().security_style() : SECURITY_STYLE_UNKNOWN;
 }
 
 bool TabContents::GetSSLEVText(std::wstring* ev_text,
@@ -162,12 +140,12 @@ bool TabContents::GetSSLEVText(std::wstring* ev_text,
 
   NavigationEntry* entry = controller_->GetActiveEntry();
   if (!entry ||
-      net::IsCertStatusError(entry->GetSSLCertStatus()) ||
-      ((entry->GetSSLCertStatus() & net::CERT_STATUS_IS_EV) == 0))
+      net::IsCertStatusError(entry->ssl().cert_status()) ||
+      ((entry->ssl().cert_status() & net::CERT_STATUS_IS_EV) == 0))
     return false;
 
-  scoped_refptr<X509Certificate> cert;
-  CertStore::GetSharedInstance()->RetrieveCert(entry->GetSSLCertID(), &cert);
+  scoped_refptr<net::X509Certificate> cert;
+  CertStore::GetSharedInstance()->RetrieveCert(entry->ssl().cert_id(), &cert);
   if (!cert.get()) {
     NOTREACHED();
     return false;
@@ -234,15 +212,7 @@ void TabContents::AddNewContents(TabContents* new_contents,
 
   if ((disposition == NEW_POPUP) && !delegate_->IsPopup(this)) {
     if (user_gesture) {
-      // TODO(erg): Need a better policy about initial placement of
-      // popup windows.
-      gfx::Rect initial_bounds = initial_pos;
-      if (initial_bounds.x() == 0 || initial_bounds.y() == 0) {
-        ConstrainedWindow::GenerateInitialBounds(
-            initial_pos, this, &initial_bounds);
-      }
-
-      delegate_->AddNewContents(this, new_contents, disposition, initial_bounds,
+      delegate_->AddNewContents(this, new_contents, disposition, initial_pos,
                                 user_gesture);
     } else {
       AddConstrainedPopup(new_contents, initial_pos);
@@ -288,26 +258,10 @@ void TabContents::SetIsLoading(bool is_loading,
                         NotificationService::NoDetails());
 }
 
-void TabContents::DidNavigateToEntry(NavigationEntry* entry) {
-  // The entry may be deleted by DidNavigateToEntry...
-  int new_page_id = entry->GetPageID();
-
-  controller_->DidNavigateToEntry(entry);
-
-  // update after informing the navigation controller so it can check the
-  // previous value of the max page id.
-  UpdateMaxPageID(new_page_id);
-}
-
-bool TabContents::Navigate(const NavigationEntry& entry, bool reload) {
-  NavigationEntry* new_entry = new NavigationEntry(entry);
-  if (new_entry->GetPageID() == -1) {
-    // This is a new navigation.  Our behavior is to always navigate to the
-    // same page (page 0) in response to a navigation.
-    new_entry->SetPageID(0);
-    new_entry->SetTitle(GetDefaultTitle());
-  }
-  DidNavigateToEntry(new_entry);
+bool TabContents::NavigateToPendingEntry(bool reload) {
+  // Our benavior is just to report that the entry was committed.
+  controller()->GetPendingEntry()->set_title(GetDefaultTitle());
+  controller()->CommitPendingEntry();
   return true;
 }
 
@@ -602,3 +556,4 @@ void TabContents::MigrateShelfView(TabContents* from, TabContents* to) {
 void TabContents::RegisterUserPrefs(PrefService* prefs) {
   prefs->RegisterBooleanPref(prefs::kBlockPopups, false);
 }
+

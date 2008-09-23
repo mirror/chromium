@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef CHROME_RENDERER_RENDER_THREAD_H__
 #define CHROME_RENDERER_RENDER_THREAD_H__
@@ -34,7 +9,6 @@
 #include "base/shared_memory.h"
 #include "base/task.h"
 #include "base/thread.h"
-#include "base/thread_local_storage.h"
 #include "chrome/common/ipc_sync_channel.h"
 #include "chrome/common/message_router.h"
 
@@ -43,6 +17,7 @@ class Task;
 class VisitedLinkSlave;
 struct WebPreferences;
 class RenderDnsMaster;
+class NotificationService;
 
 // The RenderThread class represents a background thread where RenderView
 // instances live.  The RenderThread supports an API that is used by its
@@ -56,7 +31,7 @@ class RenderDnsMaster;
 
 class RenderThread : public IPC::Channel::Listener,
                      public IPC::Message::Sender,
-                     public Thread {
+                     public base::Thread {
  public:
   RenderThread(const std::wstring& channel_name);
   ~RenderThread();
@@ -72,9 +47,7 @@ class RenderThread : public IPC::Channel::Listener,
   void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter);
 
   // The RenderThread instance for the current thread.
-  static RenderThread* current() {
-    return static_cast<RenderThread*>(ThreadLocalStorage::Get(tls_index_));
-  }
+  static RenderThread* current();
 
   VisitedLinkSlave* visited_link_slave() const { return visited_link_slave_; }
 
@@ -102,6 +75,8 @@ class RenderThread : public IPC::Channel::Listener,
  private:
   void OnUpdateVisitedLinks(SharedMemoryHandle table);
 
+  void OnPluginMessage(const std::wstring& dll_path,
+                       const std::vector<uint8>& data);
   void OnSetNextPageID(int32 next_page_id);
   void OnCreateNewView(HWND parent_hwnd,
                        HANDLE modal_dialog_event,
@@ -117,8 +92,6 @@ class RenderThread : public IPC::Channel::Listener,
   // These functions should be call periodically so that the host can make
   // decisions about how to allocation resources using current information.
   void InformHostOfCacheStats();
-
-  static DWORD tls_index_;
 
   // The message loop used to run tasks on the thread that started this thread.
   MessageLoop* owner_loop_;
@@ -137,9 +110,12 @@ class RenderThread : public IPC::Channel::Listener,
 
   scoped_ptr<ScopedRunnableMethodFactory<RenderThread> > cache_stats_factory_;
 
+  scoped_ptr<NotificationService> notification_service_;
+
   int in_send_;
 
   DISALLOW_EVIL_CONSTRUCTORS(RenderThread);
 };
 
 #endif  // CHROME_RENDERER_RENDER_THREAD_H__
+

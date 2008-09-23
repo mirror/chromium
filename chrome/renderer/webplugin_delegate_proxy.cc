@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/renderer/webplugin_delegate_proxy.h"
 
@@ -69,7 +44,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
   }
 
   void Initialize(int resource_id, const std::string &url, bool notify_needed,
-                  void *notify_data) {
+                  void *notify_data, void* existing_stream) {
     resource_id_ = resource_id;
     url_ = url;
     notify_needed_ = notify_needed;
@@ -80,6 +55,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
     params.url = url_;
     params.notify_needed = notify_needed_;
     params.notify_data = notify_data_;
+    params.stream = existing_stream;
 
     channel_->Send(new PluginMsg_HandleURLRequestReply(instance_id_, params));
   }
@@ -110,7 +86,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
                                                     cancel));
   }
 
-  void DidReceiveData(const char* buffer, int length) {
+  void DidReceiveData(const char* buffer, int length, int data_offset) {
     DCHECK(channel_ != NULL);
     DCHECK(length > 0);
     std::vector<char> data;
@@ -120,7 +96,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
     // deleted from under us.
     scoped_refptr<PluginChannelHost> channel_ref(channel_);
     channel_->Send(new PluginMsg_DidReceiveData(instance_id_, resource_id_,
-                                                data));
+                                                data, data_offset));
   }
 
   void DidFinishLoading() {
@@ -137,7 +113,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
     MessageLoop::current()->DeleteSoon(FROM_HERE, this);
   }
 
- private:
+private:
   int resource_id_;
   int instance_id_;
   scoped_refptr<PluginChannelHost> channel_;
@@ -167,8 +143,7 @@ WebPluginDelegateProxy::WebPluginDelegateProxy(const std::string& mime_type,
       send_deferred_update_geometry_(false),
       visible_(false),
       sad_plugin_(NULL),
-      window_script_object_(NULL),
-      modal_loop_pump_messages_event_(NULL) {
+      window_script_object_(NULL) {
 }
 
 WebPluginDelegateProxy::~WebPluginDelegateProxy() {
@@ -178,10 +153,6 @@ WebPluginDelegateProxy::~WebPluginDelegateProxy() {
   if (window_script_object_) {
     window_script_object_->set_proxy(NULL);
     window_script_object_->set_invalid();
-  }
-
-  if (modal_loop_pump_messages_event_) {
-    CloseHandle(modal_loop_pump_messages_event_);
   }
 }
 
@@ -210,7 +181,9 @@ void WebPluginDelegateProxy::FlushGeometryUpdates() {
     Send(new PluginMsg_UpdateGeometry(instance_id_,
                                       plugin_rect_,
                                       deferred_clip_rect_,
-                                      visible_));
+                                      visible_,
+                                      NULL,
+                                      NULL));
   }
 }
 
@@ -341,6 +314,9 @@ void WebPluginDelegateProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(PluginHostMsg_URLRequest, OnHandleURLRequest)
     IPC_MESSAGE_HANDLER(PluginHostMsg_GetCPBrowsingContext,
                         OnGetCPBrowsingContext)
+    IPC_MESSAGE_HANDLER(PluginHostMsg_CancelDocumentLoad, OnCancelDocumentLoad)
+    IPC_MESSAGE_HANDLER(PluginHostMsg_InitiateHTTPRangeRequest,
+                        OnInitiateHTTPRangeRequest)
     IPC_MESSAGE_UNHANDLED_ERROR()
   IPC_END_MESSAGE_MAP()
 }
@@ -350,21 +326,60 @@ void WebPluginDelegateProxy::OnChannelError() {
   render_view_->PluginCrashed(plugin_path_);
 }
 
+// Copied from render_widget.cc
+static size_t GetPaintBufSize(const gfx::Rect& rect) {
+  // TODO(darin): protect against overflow
+  return 4 * rect.width() * rect.height();
+}
+
 void WebPluginDelegateProxy::UpdateGeometry(const gfx::Rect& window_rect,
                                             const gfx::Rect& clip_rect,
                                             bool visible) {
-  plugin_rect_ = window_rect;
-
-  if (windowless_) {
-    IPC::Message* msg = new PluginMsg_UpdateGeometry(
-        instance_id_, window_rect, clip_rect, visible);
-    msg->set_unblock(true);
-    Send(msg);
-  } else {
+  if (!windowless_) {
     deferred_clip_rect_ = clip_rect;
     visible_ = visible;
     send_deferred_update_geometry_ = true;
+    return;
   }
+
+  HANDLE windowless_buffer_handle = NULL;
+  bool moved = plugin_rect_.x() != window_rect.x() ||
+               plugin_rect_.y() != window_rect.y();
+  plugin_rect_ = window_rect;
+  if (!windowless_canvas_.get() ||
+      (window_rect.width() != windowless_canvas_->getDevice()->width() ||
+       window_rect.height() != windowless_canvas_->getDevice()->height())) {
+    // Create a shared memory section that the plugin paints asynchronously.
+    windowless_canvas_.reset();
+    if (!windowless_buffer_lock_)
+      windowless_buffer_lock_.Set(CreateMutex(NULL, FALSE, NULL));
+    windowless_buffer_.reset(new SharedMemory());
+    size_t size = GetPaintBufSize(plugin_rect_);
+    if (!windowless_buffer_->Create(L"", false, true, size)) {
+      DCHECK(false);
+      windowless_buffer_.reset();
+      return;
+    }
+
+    windowless_canvas_.reset(new gfx::PlatformCanvasWin(
+        plugin_rect_.width(), plugin_rect_.height(), false,
+        windowless_buffer_->handle()));
+    windowless_canvas_->translate(static_cast<SkScalar>(-plugin_rect_.x()),
+                                  static_cast<SkScalar>(-plugin_rect_.y()));
+    windowless_canvas_->getTopPlatformDevice().accessBitmap(true).
+        eraseARGB(0, 0, 0, 0);
+    windowless_buffer_handle = windowless_buffer_->handle();
+  } else if (moved) {
+    windowless_canvas_->resetMatrix();
+    windowless_canvas_->translate(static_cast<SkScalar>(-plugin_rect_.x()),
+                                  static_cast<SkScalar>(-plugin_rect_.y()));
+  }
+
+  IPC::Message* msg = new PluginMsg_UpdateGeometry(
+      instance_id_, window_rect, clip_rect, visible, windowless_buffer_handle,
+      windowless_buffer_lock_);
+  msg->set_unblock(true);
+  Send(msg);
 }
 
 void WebPluginDelegateProxy::Paint(HDC hdc, const gfx::Rect& damaged_rect) {
@@ -375,100 +390,40 @@ void WebPluginDelegateProxy::Paint(HDC hdc, const gfx::Rect& damaged_rect) {
     return;
   }
 
-  // Can't duplicate an HDC handle, so get all the parameters we need in
-  // order to recreate the same HDC in the plugin process.
-  PluginMsg_Paint_Params params;
-  HBITMAP bitmap = static_cast<HBITMAP>(GetCurrentObject(hdc, OBJ_BITMAP));
-  if (bitmap == NULL) {
-    NOTREACHED();
+  // No paint events for windowed plugins.  However, if it is the first paint
+  // we don't know yet whether the plugin is windowless or not, so we have to
+  // send the event.
+  if (!windowless_ && !first_paint_) {
+    // TODO(maruel): That's not true for printing and thumbnail capture.
+    // We shall use PrintWindow() to draw the window.
     return;
   }
+  first_paint_ = false;
 
-  DIBSECTION dibsection = { 0 };
-  int result = GetObject(bitmap, sizeof(dibsection), &dibsection);
-  if (!result) {
-    NOTREACHED();
-    return;
-  }
-
-  win_util::ScopedHRGN hrgn(CreateRectRgn(0, 0, 0, 0));
-  result = GetClipRgn(hdc, hrgn);
-  if (result == -1) {
-    NOTREACHED();
-    return;
-  }
-
-  params.size.SetSize(dibsection.dsBmih.biWidth, dibsection.dsBmih.biHeight);
-  if (result == 0) {
-    // No clipping region.
-    params.clip_rect.set_width(params.size.width());
-    params.clip_rect.set_height(params.size.height());
-  } else {
-    RECT clip_rect;
-    result = GetRgnBox(hrgn, &clip_rect);
-    DCHECK_NE(result, 0);
-    params.clip_rect = clip_rect;
-  }
-
-  if (!GetWorldTransform(hdc, &params.xf)) {
-    NOTREACHED();
-    return;
-  }
-
-  params.damaged_rect = damaged_rect;
-  params.shared_memory = dibsection.dshSection;
-
-  // Normal painting code path.
-  if (dibsection.dshSection) {
-    // No paint events for windowed plugins.  However, if it is the first paint
-    // we don't know yet whether the plugin is windowless or not, so we have to
-    // send the event.
-    if (!windowless_ && !first_paint_) {
-      // TODO(maruel): That's not true for printing and thumbnail capture.
-      // We shall use PrintWindow() to draw the window.
-      return;
-    }
-    first_paint_ = false;
-
-    DCHECK(params.size.width());
-    DCHECK(params.size.height());
-    Send(new PluginMsg_Paint(instance_id_, params));
-    return;
-  }
-
-  params.size.SetSize(damaged_rect.width(), damaged_rect.height());
-  // Pass the window size instead.
-  if (!windowless_)
-    params.damaged_rect = plugin_rect_;
-
-  // When the thumbnail is painted or during printing, a shared memory handle
-  // isn't given to CreateDIBSection so we don't get one now.
-  size_t bytes = 0;
-  SharedMemoryHandle emf_buffer = NULL;
-  PluginMsg_PaintIntoSharedMemory* msg =
-      new PluginMsg_PaintIntoSharedMemory(instance_id_, params, &emf_buffer,
-                                          &bytes);
-  if (!Send(msg))
+  // We got a paint before the plugin's coordinates, so there's no buffer to
+  // copy from.
+  if (!windowless_buffer_.get())
     return;
 
-  if (!emf_buffer) {
-    NOTREACHED();
-    return;
-  }
+  // Limit the damaged rectangle to whatever is contained inside the plugin
+  // rectangle, as that's the rectangle that we'll bitblt to the hdc.
+  gfx::Rect rect = damaged_rect.Intersect(plugin_rect_);
 
-  // memory's destructor will automatically close emf_buffer.
-  SharedMemory memory(emf_buffer, true);
-  if (!memory.Map(bytes)) {
-    NOTREACHED();
-    return;
-  }
+  DWORD wait_result = WaitForSingleObject(windowless_buffer_lock_, INFINITE);
+  DCHECK(wait_result == WAIT_OBJECT_0);
 
-  gfx::Emf emf;
-  if (!emf.CreateFromData(memory.memory(), bytes)) {
-    NOTREACHED();
-    return;
-  }
-  emf.Playback(hdc, NULL);
+  BLENDFUNCTION m_bf;
+  m_bf.BlendOp = AC_SRC_OVER;
+  m_bf.BlendFlags = 0;
+  m_bf.SourceConstantAlpha = 255;
+  m_bf.AlphaFormat = AC_SRC_ALPHA;
+
+  HDC new_hdc = windowless_canvas_->getTopPlatformDevice().getBitmapDC();
+  AlphaBlend(hdc, rect.x(), rect.y(), rect.width(), rect.height(),
+      new_hdc, rect.x(), rect.y(), rect.width(), rect.height(), m_bf);
+
+  BOOL result = ReleaseMutex(windowless_buffer_lock_);
+  DCHECK(result);
 }
 
 void WebPluginDelegateProxy::Print(HDC hdc) {
@@ -544,7 +499,8 @@ void WebPluginDelegateProxy::OnSetWindow(
   if (plugin_)
     plugin_->SetWindow(window, modal_loop_pump_messages_event);
 
-  modal_loop_pump_messages_event_ = modal_loop_pump_messages_event;
+  DCHECK(modal_loop_pump_messages_event_ == NULL);
+  modal_loop_pump_messages_event_.Set(modal_loop_pump_messages_event);
 }
 
 void WebPluginDelegateProxy::OnCancelResource(int id) {
@@ -680,10 +636,10 @@ void WebPluginDelegateProxy::OnHandleURLRequest(
 
 WebPluginResourceClient* WebPluginDelegateProxy::CreateResourceClient(
     int resource_id, const std::string &url, bool notify_needed,
-    void *notify_data) {
+    void* notify_data, void* npstream) {
   ResourceClientProxy* proxy = new ResourceClientProxy(channel_host_,
                                                        instance_id_);
-  proxy->Initialize(resource_id, url, notify_needed, notify_data);
+  proxy->Initialize(resource_id, url, notify_needed, notify_data, npstream);
   return proxy;
 }
 
@@ -692,4 +648,16 @@ void WebPluginDelegateProxy::URLRequestRouted(const std::string& url,
                                                void* notify_data) {
   Send(new PluginMsg_URLRequestRouted(instance_id_, url, notify_needed,
                                       notify_data));
+}
+
+void WebPluginDelegateProxy::OnCancelDocumentLoad() {
+  plugin_->CancelDocumentLoad();
+}
+
+void WebPluginDelegateProxy::OnInitiateHTTPRangeRequest(
+   const std::string& url, const std::string& range_info,
+   HANDLE existing_stream, bool notify_needed, HANDLE notify_data) {
+  plugin_->InitiateHTTPRangeRequest(url.c_str(), range_info.c_str(),
+                                    existing_stream, notify_needed,
+                                    notify_data);
 }

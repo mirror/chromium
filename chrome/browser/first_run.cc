@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include <windows.h>
 #include <shlobj.h>
@@ -36,6 +11,7 @@
 
 #include "base/file_util.h"
 #include "base/logging.h"
+#include "base/object_watcher.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
 #include "base/string_util.h"
@@ -43,7 +19,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/hang_monitor/hung_window_detector.h"
-#include "chrome/browser/importer.h"
+#include "chrome/browser/importer/importer.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/views/first_run_view.h"
 #include "chrome/common/chrome_constants.h"
@@ -182,17 +158,13 @@ bool Upgrade::RelaunchChromeBrowser(const CommandLine& command_line) {
 }
 
 void OpenFirstRunDialog(Profile* profile) {
-  FirstRunView* first_run_view = new FirstRunView(profile);
-  ChromeViews::Window* first_run_dialog =
-      ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(),
-                                              first_run_view, first_run_view);
-  first_run_dialog->Show();
-  first_run_view->set_dialog(first_run_dialog);
+  ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(),
+                                          new FirstRunView(profile))->Show();
   // We must now run a message loop (will be terminated when the First Run UI
   // is closed) so that the window can receive messages and we block the
   // browser window from showing up. We pass the accelerator handler here so
   // that keyboard accelerators (Enter, Esc, etc) work in the dialog box.
-  MessageLoop::current()->Run(g_browser_process->accelerator_handler());
+  MessageLoopForUI::current()->Run(g_browser_process->accelerator_handler());
 }
 
 namespace {
@@ -201,7 +173,7 @@ namespace {
 // process has ended and what was the result of the operation as reported by
 // the process exit code. This class executes in the context of the main chrome
 // process.
-class ImportProcessRunner : public MessageLoop::Watcher {
+class ImportProcessRunner : public base::ObjectWatcher::Delegate {
  public:
   // The constructor takes the importer process to watch and then it does a
   // message loop blocking wait until the process ends. This object now owns
@@ -209,7 +181,7 @@ class ImportProcessRunner : public MessageLoop::Watcher {
   explicit ImportProcessRunner(ProcessHandle import_process)
       : import_process_(import_process),
         exit_code_(ResultCodes::NORMAL_EXIT) {
-    MessageLoop::current()->WatchObject(import_process, this);
+    watcher_.StartWatching(import_process, this);
     MessageLoop::current()->Run();
   }
   virtual ~ImportProcessRunner() {
@@ -222,7 +194,6 @@ class ImportProcessRunner : public MessageLoop::Watcher {
   }
   // The child process has terminated. Find the exit code and quit the loop.
   virtual void OnObjectSignaled(HANDLE object) {
-    MessageLoop::current()->WatchObject(object, NULL);
     DCHECK(object == import_process_);
     if (!::GetExitCodeProcess(import_process_, &exit_code_)) {
       NOTREACHED();
@@ -231,6 +202,7 @@ class ImportProcessRunner : public MessageLoop::Watcher {
   }
 
  private:
+  base::ObjectWatcher watcher_;
   ProcessHandle import_process_;
   DWORD exit_code_;
 };
@@ -332,10 +304,17 @@ bool FirstRun::ImportSettings(Profile* profile, int browser,
                               int items_to_import, HWND parent_window) {
   CommandLine cmdline;
   std::wstring import_cmd(cmdline.program());
-  std::wstring data_dir(cmdline.GetSwitchValue(switches::kUserDataDir));
-  if (!data_dir.empty()) {
-    CommandLine::AppendSwitchWithValue(&import_cmd, switches::kUserDataDir,
-                                       data_dir);
+  // Propagate the following switches to the importer command line.
+  static const wchar_t* const switch_names[] = {
+    switches::kUserDataDir,
+    switches::kLang,
+  };
+  for (int i = 0; i < arraysize(switch_names); ++i) {
+    if (cmdline.HasSwitch(switch_names[i])) {
+      CommandLine::AppendSwitchWithValue(
+          &import_cmd, switch_names[i],
+          cmdline.GetSwitchValue(switch_names[i]));
+    }
   }
   CommandLine::AppendSwitchWithValue(&import_cmd, switches::kImport,
       EncodeImportParams(browser, items_to_import, parent_window));
@@ -387,3 +366,4 @@ int FirstRun::ImportWithUI(Profile* profile, const CommandLine& cmdline) {
   MessageLoop::current()->Run();
   return observer.import_result();
 }
+

@@ -1,8 +1,0 @@
-PCRE - Perl Compatible Regular Expressions
-==========================================
-
-The V8 runtime engine uses PCRE to do regular expression pattern
-matching. This directory contains the unmodified version currently in
-use (6.7) and some files to aid the compilation of the library.
-
-

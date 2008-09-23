@@ -1,40 +1,15 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/views/first_run_view.h"
 
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/importer.h"
+#include "chrome/browser/importer/importer.h"
 #include "chrome/browser/first_run.h"
-#include "chrome/browser/standard_layout.h"
 #include "chrome/browser/views/first_run_customize_view.h"
+#include "chrome/browser/views/standard_layout.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
@@ -44,6 +19,7 @@
 #include "chrome/views/separator.h"
 #include "chrome/views/window.h"
 
+#include "chromium_strings.h"
 #include "generated_resources.h"
 
 namespace {
@@ -131,30 +107,30 @@ void FirstRunView::Layout() {
   CSize pref_size;
   welcome_label_->GetPreferredSize(&pref_size);
   // Wrap the label text before we overlap the product icon.
-  int label_width = background_image()->GetWidth() -
+  int label_width = background_image()->width() -
       rb.GetBitmapNamed(IDR_WIZARD_ICON)->width() - kPanelHorizMargin;
   welcome_label_->SetBounds(kPanelHorizMargin, kPanelVertMargin,
                             label_width, pref_size.cy);
   AdjustDialogWidth(welcome_label_);
 
-  int next_v_space = background_image()->GetY() +
-                     background_image()->GetHeight() + kPanelVertMargin;
+  int next_v_space = background_image()->y() +
+                     background_image()->height() + kPanelVertMargin;
 
   actions_label_->GetPreferredSize(&pref_size);
   actions_label_->SetBounds(kPanelHorizMargin, next_v_space,
                             pref_size.cx, pref_size.cy);
   AdjustDialogWidth(actions_label_);
 
-  next_v_space = actions_label_->GetY() +
-                 actions_label_->GetHeight() + kVertSpacing;
+  next_v_space = actions_label_->y() +
+                 actions_label_->height() + kVertSpacing;
 
-  label_width = GetWidth() - (2 * kPanelHorizMargin);
+  label_width = width() - (2 * kPanelHorizMargin);
   int label_height = actions_import_->GetHeightForWidth(label_width);
   actions_import_->SetBounds(kPanelHorizMargin, next_v_space, label_width,
                              label_height);
 
-  next_v_space = actions_import_->GetY() +
-                 actions_import_->GetHeight() + kVertSpacing;
+  next_v_space = actions_import_->y() +
+                 actions_import_->height() + kVertSpacing;
   AdjustDialogWidth(actions_import_);
 
   label_height = actions_shorcuts_->GetHeightForWidth(label_width);
@@ -162,8 +138,8 @@ void FirstRunView::Layout() {
                                label_height);
   AdjustDialogWidth(actions_shorcuts_);
 
-  next_v_space = actions_shorcuts_->GetY() +
-                 actions_shorcuts_->GetHeight() +
+  next_v_space = actions_shorcuts_->y() +
+                 actions_shorcuts_->height() +
                  kUnrelatedControlVerticalSpacing;
 
   customize_link_->GetPreferredSize(&pref_size);
@@ -180,16 +156,10 @@ std::wstring FirstRunView::GetDialogButtonLabel(DialogButton button) const {
 
 void FirstRunView::OpenCustomizeDialog() {
   // The customize dialog now owns the importer host object.
-  FirstRunCustomizeView* customize_view =
-      new FirstRunCustomizeView(profile_, importer_host_);
-
-  ChromeViews::Window* customize_dialog =
-      ChromeViews::Window::CreateChromeWindow(dialog_->GetHWND(),
-                                              gfx::Rect(), customize_view,
-                                              customize_view);
-  customize_dialog->Show();
-  customize_view->set_dialog(customize_dialog);
-  customize_view->set_observer(this);
+  ChromeViews::Window::CreateChromeWindow(
+      window()->GetHWND(),
+      gfx::Rect(),
+      new FirstRunCustomizeView(profile_, importer_host_, this))->Show();
 }
 
 void FirstRunView::LinkActivated(ChromeViews::Link* source, int event_flags) {
@@ -198,6 +168,10 @@ void FirstRunView::LinkActivated(ChromeViews::Link* source, int event_flags) {
 
 std::wstring FirstRunView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_FIRSTRUN_DLG_TITLE);
+}
+
+ChromeViews::View* FirstRunView::GetContentsView() {
+  return this;
 }
 
 bool FirstRunView::Accept() {
@@ -210,7 +184,7 @@ bool FirstRunView::Accept() {
   CreateQuickLaunchShortcut();
   // Index 0 is the default browser.
   FirstRun::ImportSettings(profile_, 0, GetDefaultImportItems(),
-                           dialog_->GetHWND());
+                           window()->GetHWND());
   UserMetrics::RecordAction(L"FirstRunDef_Accept", profile_);
 
   return true;
@@ -224,10 +198,11 @@ bool FirstRunView::Cancel() {
 // Notification from the customize dialog that the user accepted. Since all
 // the work is done there we got nothing else to do.
 void FirstRunView::CustomizeAccepted() {
-  dialog_->Close();
+  window()->Close();
 }
 
 // Notification from the customize dialog that the user cancelled.
 void FirstRunView::CustomizeCanceled() {
   UserMetrics::RecordAction(L"FirstRunCustom_Cancel", profile_);
 }
+

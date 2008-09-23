@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/sandbox_policy.h"
 
@@ -113,6 +88,30 @@ bool AddKeyAndSubkeys(std::wstring key,
                            key.c_str());
   if (result != sandbox::SBOX_ALL_OK)
     return false;
+
+  return true;
+}
+
+// Eviction of injected DLLs is done by the sandbox. An interception on a
+// system call is added such that the blacklisted dll, don't fully load so
+// the injected module does not get a chance to execute any code.
+bool AddDllEvictionPolicy(sandbox::TargetPolicy* policy) {
+  // List of dlls to unmap.
+  const wchar_t* troublesome_dlls[] = {
+      L"smumhook.dll",  // Spyware Doctor version 5 and above.
+      L"GoogleDesktopNetwork3.DLL",  // Google Desktop Search v5.
+      L"npggNT.des",   // GameGuard version 2008. It is a packed dll.
+  };
+
+  for(int ix = 0; ix != arraysize(troublesome_dlls); ++ix) {
+    // To minimize the list we only add an unload policy if the dll is also
+    // loaded in this process. All the injected dlls of interest do this.
+    if (::GetModuleHandleW(troublesome_dlls[ix])) {
+      LOG(WARNING) << "dll to unload found: " << troublesome_dlls[ix];
+      if (sandbox::SBOX_ALL_OK != policy->AddDllToUnload(troublesome_dlls[ix]))
+        return false;
+    }
+  }
 
   return true;
 }

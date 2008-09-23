@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #ifndef NET_HTTP_HTTP_TRANSACTION_WINHTTP_H__
 #define NET_HTTP_HTTP_TRANSACTION_WINHTTP_H__
@@ -37,10 +12,10 @@
 
 #include "base/ref_counted.h"
 #include "net/base/completion_callback.h"
-#include "net/http/http_proxy_service.h"
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
 #include "net/http/http_transaction_factory.h"
+#include "net/proxy/proxy_service.h"
 
 namespace net {
 
@@ -54,10 +29,10 @@ class HttpTransactionWinHttp : public HttpTransaction {
   class Factory : public HttpTransactionFactory {
    public:
     Factory() : session_(NULL), proxy_info_(NULL), is_suspended_(false) {}
-    explicit Factory(const HttpProxyInfo* info)
+    explicit Factory(const ProxyInfo* info)
         : session_(NULL), proxy_info_(NULL), is_suspended_(false) {
       if (info) {
-        proxy_info_.reset(new HttpProxyInfo());
+        proxy_info_.reset(new ProxyInfo());
         proxy_info_->Use(*info);
       }
     }
@@ -70,7 +45,7 @@ class HttpTransactionWinHttp : public HttpTransaction {
 
    private:
     Session* session_;
-    scoped_ptr<HttpProxyInfo> proxy_info_;
+    scoped_ptr<ProxyInfo> proxy_info_;
     bool is_suspended_;
     DISALLOW_EVIL_CONSTRUCTORS(Factory);
   };
@@ -104,7 +79,7 @@ class HttpTransactionWinHttp : public HttpTransaction {
 
   // Methods ------------------------------------------------------------------
 
-  HttpTransactionWinHttp(Session* session, const HttpProxyInfo* info);
+  HttpTransactionWinHttp(Session* session, const ProxyInfo* info);
   ~HttpTransactionWinHttp();
 
   void DoCallback(int rv);
@@ -163,8 +138,8 @@ class HttpTransactionWinHttp : public HttpTransaction {
   // WinHttp (see bug 1063336).
   int64 content_length_remaining_;
 
-  HttpProxyInfo proxy_info_;
-  HttpProxyService::PacRequest* pac_request_;
+  ProxyInfo proxy_info_;
+  ProxyService::PacRequest* pac_request_;
   CompletionCallbackImpl<HttpTransactionWinHttp> proxy_callback_;
 
   HttpResponseInfo response_;
@@ -220,3 +195,4 @@ class HttpTransactionWinHttp : public HttpTransaction {
 }  // namespace net
 
 #endif  // NET_HTTP_HTTP_TRANSACTION_WINHTTP_H__
+

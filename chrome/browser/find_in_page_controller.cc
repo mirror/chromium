@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/find_in_page_controller.h"
 
@@ -37,9 +12,9 @@
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/views/external_focus_tracker.h"
-#include "chrome/views/focus_manager.h"
-#include "chrome/views/native_scroll_bar.h"
 #include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/native_scroll_bar.h"
+#include "chrome/views/root_view.h"
 #include "chrome/views/view_storage.h"
 
 int FindInPageController::request_id_counter_ = 0;
@@ -85,17 +60,12 @@ FindInPageController::FindInPageController(TabContents* parent_tab,
   gfx::Rect find_dlg_rect = GetDialogPosition(gfx::Rect());
   set_window_style(WS_CHILD | WS_CLIPCHILDREN);
   set_window_ex_style(WS_EX_TOPMOST);
-  HWNDViewContainer::Init(parent_hwnd, find_dlg_rect, view_, false);
+  HWNDViewContainer::Init(parent_hwnd, find_dlg_rect, false);
+  SetContentsView(view_);
 
   // Start the process of animating the opening of the window.
   animation_.reset(new SlideAnimation(this));
   animation_->Show();
-
-  // We need to be notified about when results from a find operation are
-  // available.
-  NotificationService::current()->
-      AddObserver(this, NOTIFY_FIND_RESULT_AVAILABLE,
-                        Source<TabContents>(parent_tab));
 }
 
 FindInPageController::~FindInPageController() {
@@ -231,6 +201,10 @@ void FindInPageController::Show() {
   view_->OnShow();
 }
 
+bool FindInPageController::IsAnimating() {
+  return animation_->IsAnimating();
+}
+
 void FindInPageController::EndFindSession() {
   if (IsVisible()) {
     show_on_tab_selection_ = false;
@@ -301,7 +275,7 @@ void FindInPageController::StartFinding(bool forward_direction) {
 }
 
 void FindInPageController::StopFinding(bool clear_selection) {
-  last_find_string_ = L"";
+  last_find_string_.clear();
   parent_tab_->StopFinding(clear_selection);
 }
 
@@ -363,10 +337,6 @@ void FindInPageController::OnFinalMessage(HWND window) {
   // destroyed resulting in the focus tracker trying to reference a deleted
   // focus manager.
   focus_tracker_.reset(NULL);
-
-  NotificationService::current()->
-      RemoveObserver(this, NOTIFY_FIND_RESULT_AVAILABLE,
-                     Source<TabContents>(parent_tab_));
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -409,7 +379,6 @@ bool FindInPageController::AcceleratorPressed(
   return true;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////
 // FindInPageController, AnimationDelegate implementation:
 
@@ -418,7 +387,7 @@ void FindInPageController::AnimationProgressed(
   // First, we calculate how many pixels to slide the window.
   find_dialog_animation_offset_ =
       static_cast<int>((1.0 - animation_->GetCurrentValue()) *
-      view_->GetHeight());
+      view_->height());
 
   // This call makes sure it appears in the right location, the size and shape
   // is correct and that it slides in the right direction.
@@ -440,6 +409,41 @@ void FindInPageController::AnimationEnded(
   } else {
     // Animation has finished opening.
   }
+}
+
+void FindInPageController::FindReply(int request_id,
+                                     int number_of_matches,
+                                     const gfx::Rect& selection_rect,
+                                     int active_match_ordinal,
+                                     bool final_update) {
+  // Ignore responses for requests other than the one we have most recently
+  // issued. That way we won't act on stale results when the user has
+  // already typed in another query.
+  if (view_ && request_id == current_request_id_) {
+    view_->UpdateMatchCount(number_of_matches, final_update);
+    view_->UpdateActiveMatchOrdinal(active_match_ordinal);
+    view_->UpdateResultLabel();
+
+    // We now need to check if the window is obscuring the search results.
+    if (!selection_rect.IsEmpty())
+      MoveWindowIfNecessary(selection_rect);
+
+    // Once we find a match we no longer want to keep track of what had
+    // focus. EndFindSession will then set the focus to the page content.
+    if (number_of_matches > 0)
+      focus_tracker_.reset(NULL);
+  }
+
+  // Notify all observers of this notification, such as the automation
+  // providers which do UI tests for find in page.
+  FindNotificationDetails detail(request_id,
+                                 number_of_matches,
+                                 selection_rect,
+                                 active_match_ordinal,
+                                 final_update);
+  NotificationService::current()->
+      Notify(NOTIFY_FIND_RESULT_AVAILABLE, Source<TabContents>(parent_tab_),
+             Details<FindNotificationDetails>(&detail));
 }
 
 void FindInPageController::GetDialogBounds(gfx::Rect* bounds) {
@@ -475,8 +479,19 @@ void FindInPageController::GetDialogBounds(gfx::Rect* bounds) {
 
   // Find the dimensions of the toolbar and the BookmarkBar.
   CRect toolbar_bounds, bookmark_bar_bounds;
-  if (toolbar)
-    toolbar->GetBounds(&toolbar_bounds);
+  if (toolbar) {
+    if (!g_browser_process->IsUsingNewFrames())
+      toolbar->GetBounds(&toolbar_bounds);
+    else
+      toolbar->GetLocalBounds(&toolbar_bounds, false);
+    // Need to convert toolbar bounds into ViewContainer coords because the
+    // toolbar is the child of another view that isn't the top level view.
+    // This is required to ensure correct positioning relative to the top,left
+    // of the window.
+    CPoint topleft(0, 0);
+    ChromeViews::View::ConvertPointToViewContainer(toolbar, &topleft);
+    toolbar_bounds.OffsetRect(topleft);
+  }
 
   // If the bookmarks bar is available, we need to update our
   // position and paint accordingly
@@ -653,54 +668,23 @@ void FindInPageController::RestoreSavedFocus() {
 void FindInPageController::RegisterEscAccelerator() {
   ChromeViews::Accelerator escape(VK_ESCAPE, false, false, false);
 
+  // TODO(finnur): Once we fix issue 1307173 we should not remember any old
+  // accelerator targets and just Register and Unregister when needed.
   ChromeViews::AcceleratorTarget* old_target =
       focus_manager_->RegisterAccelerator(escape, this);
 
-  // We can get a FocusWillChange event setting focus to something that is
-  // already focused, without loosing focus first, for example when you switch
-  // to another application and come back. We must take care not to overwrite
-  // what the old accelerator target is in that case.
-  if (old_target != this)
+  if (!old_accel_target_for_esc_)
     old_accel_target_for_esc_ = old_target;
 }
 
 void FindInPageController::UnregisterEscAccelerator() {
-  // This DCHECK can happen if we get FocusWillChange events in incorrect order
-  // so that we think we are loosing focus twice.
+  // TODO(finnur): Once we fix issue 1307173 we should not remember any old
+  // accelerator targets and just Register and Unregister when needed.
   DCHECK(old_accel_target_for_esc_ != NULL);
   ChromeViews::Accelerator escape(VK_ESCAPE, false, false, false);
-  focus_manager_->RegisterAccelerator(escape, old_accel_target_for_esc_);
-  old_accel_target_for_esc_ = NULL;
+  ChromeViews::AcceleratorTarget* current_target =
+      focus_manager_->GetTargetForAccelerator(escape);
+  if (current_target == this)
+    focus_manager_->RegisterAccelerator(escape, old_accel_target_for_esc_);
 }
 
-void FindInPageController::Observe(NotificationType type,
-                                   const NotificationSource& source,
-                                   const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_FIND_RESULT_AVAILABLE: {
-      Details<FindNotificationDetails> find_details(details);
-      // Ignore responses for requests other than the one we have most recently
-      // issued. That way we won't act on stale results when the user has
-      // already typed in another query.
-      if (view_ && find_details->request_id() == current_request_id_) {
-        view_->UpdateMatchCount(find_details->number_of_matches(),
-                                find_details->final_update());
-        view_->UpdateActiveMatchOrdinal(find_details->active_match_ordinal());
-        view_->UpdateResultLabel();
-
-        // We now need to check if the window is obscuring the search results.
-        if (!find_details->selection_rect().IsEmpty())
-          MoveWindowIfNecessary(find_details->selection_rect());
-
-        // Once we find a match we no longer want to keep track of what had
-        // focus. EndFindSession will then set the focus to the page content.
-        if (find_details->number_of_matches() > 0)
-          focus_tracker_.reset(NULL);
-      }
-      break;
-    }
-    default:
-      NOTREACHED() << L"Notification not handled";
-      return;
-  }
-}

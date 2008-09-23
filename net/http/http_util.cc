@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 // The rules for parsing content-types were borrowed from Firefox:
 // http://lxr.mozilla.org/mozilla/source/netwerk/base/src/nsURLHelper.cpp#834
@@ -35,6 +10,7 @@
 #include <algorithm>
 
 #include "base/logging.h"
+#include "base/string_piece.h"
 #include "base/string_util.h"
 
 using std::string;
@@ -75,6 +51,24 @@ static size_t FindStringEnd(const string& line, size_t start, char delim) {
 }
 
 //-----------------------------------------------------------------------------
+
+// static
+std::string HttpUtil::PathForRequest(const GURL& url) {
+  DCHECK(url.is_valid() && (url.SchemeIs("http") || url.SchemeIs("https")));
+  if (url.has_query())
+    return url.path() + "?" + url.query();
+  return url.path(); 
+}
+
+// static
+std::string HttpUtil::SpecForRequest(const GURL& url) {
+  DCHECK(url.is_valid() && (url.SchemeIs("http") || url.SchemeIs("https")));
+  GURL::Replacements replacements;
+  replacements.ClearUsername();
+  replacements.ClearPassword();
+  replacements.ClearRef();
+  return url.ReplaceComponents(replacements).spec();
+}
 
 // static
 size_t HttpUtil::FindDelimiter(const string& line, size_t search_start,
@@ -243,21 +237,43 @@ bool HttpUtil::IsNonCoalescingHeader(string::const_iterator name_begin,
   return false;
 }
 
+bool HttpUtil::IsLWS(char c) {
+  return strchr(HTTP_LWS, c) != NULL;
+}
+
 void HttpUtil::TrimLWS(string::const_iterator* begin,
                        string::const_iterator* end) {
   // leading whitespace
-  while (*begin < *end && strchr(HTTP_LWS, (*begin)[0]))
+  while (*begin < *end && IsLWS((*begin)[0]))
     ++(*begin);
 
   // trailing whitespace
-  while (*begin < *end && strchr(HTTP_LWS, (*end)[-1]))
+  while (*begin < *end && IsLWS((*end)[-1]))
     --(*end);
 }
 
-int HttpUtil::LocateEndOfHeaders(const char* buf, int buf_len) {
+// Find the "http" substring in a status line. This allows for
+// some slop at the start. If the "http" string could not be found
+// then returns -1.
+// static
+int HttpUtil::LocateStartOfStatusLine(const char* buf, int buf_len) {
+  const int slop = 4;
+  const int http_len = 4;
+
+  if (buf_len >= http_len) {
+    int i_max = std::min(buf_len - http_len, slop);
+    for (int i = 0; i <= i_max; ++i) {
+      if (LowerCaseEqualsASCII(buf + i, buf + i + http_len, "http"))
+        return i;
+    }
+  }
+  return -1; // Not found
+}
+
+int HttpUtil::LocateEndOfHeaders(const char* buf, int buf_len, int i) {
   bool was_lf = false;
   char last_c = '\0';
-  for (int i = 0; i < buf_len; ++i) {
+  for (; i < buf_len; ++i) {
     char c = buf[i];
     if (c == '\n') {
       if (was_lf)
@@ -271,27 +287,96 @@ int HttpUtil::LocateEndOfHeaders(const char* buf, int buf_len) {
   return -1;
 }
 
-std::string HttpUtil::AssembleRawHeaders(const char* buf, int buf_len) {
+// In order for a line to be continuable, it must specify a
+// non-blank header-name. Line continuations are specifically for
+// header values -- do not allow headers names to span lines.
+static bool IsLineSegmentContinuable(const char* begin, const char* end) {
+  if (begin == end)
+    return false;
+
+  const char* colon = std::find(begin, end, ':');
+  if (colon == end)
+    return false;
+
+  const char* name_begin = begin;
+  const char* name_end = colon;
+
+  // Name can't be empty.
+  if (name_begin == name_end)
+    return false;
+
+  // Can't start with LWS (this would imply the segment is a continuation)
+  if (HttpUtil::IsLWS(*name_begin))
+    return false;
+
+  return true;
+}
+
+// Helper used by AssembleRawHeaders, to find the end of the status line.
+static const char* FindStatusLineEnd(const char* begin, const char* end) {
+  size_t i = StringPiece(begin, end - begin).find_first_of("\r\n");
+  if (i == StringPiece::npos)
+    return end;
+  return begin + i;
+}
+
+// Helper used by AssembleRawHeaders, to skip past leading LWS.
+static const char* FindFirstNonLWS(const char* begin, const char* end) {
+  for (const char* cur = begin; cur != end; ++cur) {
+    if (!HttpUtil::IsLWS(*cur))
+      return cur;
+  }
+  return end; // Not found.
+}
+
+std::string HttpUtil::AssembleRawHeaders(const char* input_begin,
+                                         int input_len) {
   std::string raw_headers;
+  raw_headers.reserve(input_len);
 
-  // TODO(darin):
-  //   - Handle header line continuations.
-  //   - Be careful about CRs that appear spuriously mid header line.
+  const char* input_end = input_begin + input_len;
 
-  int line_start = 0;
-  for (int i = 0; i < buf_len; ++i) {
-    char c = buf[i];
-    if (c == '\r' || c == '\n') {
-      if (line_start != i) {
-        // (line_start,i) is a header line.
-        raw_headers.append(buf + line_start, buf + i);
-        raw_headers.push_back('\0');
-      }
-      line_start = i + 1;
+  // Skip any leading slop, since the consumers of this output
+  // (HttpResponseHeaders) don't deal with it.
+  int status_begin_offset = LocateStartOfStatusLine(input_begin, input_len);
+  if (status_begin_offset != -1)
+    input_begin += status_begin_offset;
+
+  // Copy the status line.
+  const char* status_line_end = FindStatusLineEnd(input_begin, input_end);
+  raw_headers.append(input_begin, status_line_end);
+
+  // After the status line, every subsequent line is a header line segment.
+  // Should a segment start with LWS, it is a continuation of the previous
+  // line's field-value.
+
+  // TODO(ericroman): is this too permissive? (delimits on [\r\n]+)
+  CStringTokenizer lines(status_line_end, input_end, "\r\n");
+
+  // This variable is true when the previous line was continuable.
+  bool prev_line_continuable = false;
+
+  while (lines.GetNext()) {
+    const char* line_begin = lines.token_begin();
+    const char* line_end = lines.token_end();
+     
+    if (prev_line_continuable && IsLWS(*line_begin)) {
+      // Join continuation; reduce the leading LWS to a single SP.
+      raw_headers.push_back(' ');
+      raw_headers.append(FindFirstNonLWS(line_begin, line_end), line_end);
+    } else {
+      // Terminate the previous line.
+      raw_headers.push_back('\0');
+
+      // Copy the raw data to output.
+      raw_headers.append(line_begin, line_end);
+
+      // Check if the current line can be continued.
+      prev_line_continuable = IsLineSegmentContinuable(line_begin, line_end);
     }
   }
-  raw_headers.push_back('\0');
 
+  raw_headers.append("\0\0", 2);
   return raw_headers;
 }
 
@@ -321,6 +406,13 @@ bool HttpUtil::HeadersIterator::GetNext() {
       continue;  // skip malformed header
 
     name_end_ = colon;
+
+    // If the name starts with LWS, it is an invalid line.
+    // Leading LWS implies a line continuation, and these should have
+    // already been joined by AssembleRawHeaders().
+    if (name_begin_ == name_end_ || IsLWS(*name_begin_))
+      continue;
+
     TrimLWS(&name_begin_, &name_end_);
     if (name_begin_ == name_end_)
       continue;  // skip malformed header
@@ -356,3 +448,4 @@ bool HttpUtil::ValuesIterator::GetNext() {
 }
 
 }  // namespace net
+

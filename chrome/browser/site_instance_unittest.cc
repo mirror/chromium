@@ -1,31 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/render_view_host.h"
@@ -34,7 +9,12 @@
 #include "chrome/test/testing_profile.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-typedef testing::Test SiteInstanceTest;
+namespace {
+
+class SiteInstanceTest : public testing::Test {
+ private:
+  MessageLoopForUI message_loop_;
+};
 
 class TestBrowsingInstance : public BrowsingInstance {
  public:
@@ -80,8 +60,10 @@ class TestSiteInstance : public SiteInstance {
   int* deleteCounter_;
 };
 
+}  // namespace
+
 // Test to ensure no memory leaks for SiteInstance objects.
-TEST(SiteInstanceTest, SiteInstanceDestructor) {
+TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
   int siteDeleteCounter = 0;
   int browsingDeleteCounter = 0;
   const GURL url("test:foo");
@@ -97,7 +79,7 @@ TEST(SiteInstanceTest, SiteInstanceDestructor) {
                                             PageTransition::LINK);
 
   // Redundantly setting e1's SiteInstance shouldn't affect the ref count.
-  e1->SetSiteInstance(instance);
+  e1->set_site_instance(instance);
   EXPECT_EQ(0, siteDeleteCounter);
 
   // Add a second reference
@@ -129,8 +111,7 @@ TEST(SiteInstanceTest, SiteInstanceDestructor) {
 
   contents->CloseContents();
   // Make sure that we flush any messages related to WebContents destruction.
-  MessageLoop::current()->Quit();
-  MessageLoop::current()->Run();
+  MessageLoop::current()->RunAllPending();
 
   EXPECT_EQ(2, siteDeleteCounter);
   EXPECT_EQ(2, browsingDeleteCounter);
@@ -140,7 +121,7 @@ TEST(SiteInstanceTest, SiteInstanceDestructor) {
 // Test that NavigationEntries with SiteInstances can be cloned, but that their
 // SiteInstances can be changed afterwards.  Also tests that the ref counts are
 // updated properly after the change.
-TEST(SiteInstanceTest, CloneNavigationEntry) {
+TEST_F(SiteInstanceTest, CloneNavigationEntry) {
   int siteDeleteCounter1 = 0;
   int siteDeleteCounter2 = 0;
   int browsingDeleteCounter = 0;
@@ -161,7 +142,7 @@ TEST(SiteInstanceTest, CloneNavigationEntry) {
   NavigationEntry* e2 = new NavigationEntry(*e1);
 
   // Should be able to change the SiteInstance of the cloned entry.
-  e2->SetSiteInstance(instance2);
+  e2->set_site_instance(instance2);
 
   // The first SiteInstance should go away after deleting e1, since e2 should
   // no longer be referencing it.
@@ -179,7 +160,7 @@ TEST(SiteInstanceTest, CloneNavigationEntry) {
 }
 
 // Test to ensure UpdateMaxPageID is working properly.
-TEST(SiteInstanceTest, UpdateMaxPageID) {
+TEST_F(SiteInstanceTest, UpdateMaxPageID) {
   scoped_refptr<SiteInstance> instance(SiteInstance::CreateSiteInstance(NULL));
   EXPECT_EQ(-1, instance.get()->max_page_id());
 
@@ -190,7 +171,7 @@ TEST(SiteInstanceTest, UpdateMaxPageID) {
 }
 
 // Test to ensure GetProcess returns and creates processes correctly.
-TEST(SiteInstanceTest, GetProcess) {
+TEST_F(SiteInstanceTest, GetProcess) {
   // Ensure that GetProcess returns the process based on its host id.
   scoped_ptr<TestingProfile> profile(new TestingProfile());
   scoped_ptr<RenderProcessHost> host1(new RenderProcessHost(profile.get()));
@@ -207,7 +188,7 @@ TEST(SiteInstanceTest, GetProcess) {
 }
 
 // Test to ensure SetSite and site() work properly.
-TEST(SiteInstanceTest, SetSite) {
+TEST_F(SiteInstanceTest, SetSite) {
   scoped_refptr<SiteInstance> instance(SiteInstance::CreateSiteInstance(NULL));
   EXPECT_FALSE(instance->has_site());
   EXPECT_TRUE(instance.get()->site().is_empty());
@@ -219,7 +200,7 @@ TEST(SiteInstanceTest, SetSite) {
 }
 
 // Test to ensure GetSiteForURL properly returns sites for URLs.
-TEST(SiteInstanceTest, GetSiteForURL) {
+TEST_F(SiteInstanceTest, GetSiteForURL) {
   GURL test_url = GURL("http://www.google.com/index.html");
   EXPECT_EQ(GURL("http://google.com"), SiteInstance::GetSiteForURL(test_url));
 
@@ -246,7 +227,7 @@ TEST(SiteInstanceTest, GetSiteForURL) {
 // Test of distinguishing URLs from different sites.  Most of this logic is
 // tested in RegistryControlledDomainTest.  This test focuses on URLs with
 // different schemes or ports.
-TEST(SiteInstanceTest, IsSameWebSite) {
+TEST_F(SiteInstanceTest, IsSameWebSite) {
   GURL url_foo = GURL("http://foo/a.html");
   GURL url_foo2 = GURL("http://foo/b.html");
   GURL url_foo_https = GURL("https://foo/a.html");
@@ -273,7 +254,7 @@ TEST(SiteInstanceTest, IsSameWebSite) {
 
 // Test to ensure that there is only one SiteInstance per site in a given
 // BrowsingInstance, when process-per-site is not in use.
-TEST(SiteInstanceTest, OneSiteInstancePerSite) {
+TEST_F(SiteInstanceTest, OneSiteInstancePerSite) {
   int deleteCounter = 0;
   TestBrowsingInstance* browsing_instance =
       new TestBrowsingInstance(NULL, &deleteCounter);
@@ -331,7 +312,7 @@ TEST(SiteInstanceTest, OneSiteInstancePerSite) {
 
 // Test to ensure that there is only one SiteInstance per site for an entire
 // Profile, if process-per-site is in use.
-TEST(SiteInstanceTest, OneSiteInstancePerSiteInProfile) {
+TEST_F(SiteInstanceTest, OneSiteInstancePerSiteInProfile) {
   int deleteCounter = 0;
   TestBrowsingInstance* browsing_instance =
       new TestBrowsingInstance(NULL, &deleteCounter);
@@ -400,3 +381,4 @@ TEST(SiteInstanceTest, OneSiteInstancePerSiteInProfile) {
 
   // browsing_instances will be deleted when their SiteInstances are deleted
 }
+

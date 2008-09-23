@@ -1,34 +1,6 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <atlbase.h>
-#include <atlapp.h>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/views/base_button.h"
 
@@ -37,6 +9,7 @@
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/os_exchange_data.h"
+#include "chrome/common/throb_animation.h"
 
 namespace ChromeViews {
 
@@ -171,7 +144,7 @@ void BaseButton::SetTooltipText(const std::wstring& tooltip) {
 
 bool BaseButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (IsTriggerableEvent(e) && HitTest(e.GetLocation())) {
+    if (IsTriggerableEvent(e) && HitTest(WTL::CPoint(e.x(), e.y()))) {
       SetState(BS_PUSHED);
     }
     if (IsFocusable())
@@ -182,7 +155,7 @@ bool BaseButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
 
 bool BaseButton::OnMouseDragged(const ChromeViews::MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (!HitTest(e.GetLocation()))
+    if (!HitTest(WTL::CPoint(e.x(), e.y())))
       SetState(BS_NORMAL);
     else if (IsTriggerableEvent(e))
       SetState(BS_PUSHED);
@@ -200,7 +173,7 @@ void BaseButton::OnMouseReleased(const ChromeViews::MouseEvent& e,
   }
 
   if (state_ != BS_DISABLED) {
-    if (canceled || !HitTest(e.GetLocation())) {
+    if (canceled || !HitTest(WTL::CPoint(e.x(), e.y()))) {
       SetState(BS_NORMAL);
     } else {
       SetState(BS_HOT);
@@ -225,7 +198,7 @@ void BaseButton::OnMouseMoved(const ChromeViews::MouseEvent& e) {
   using namespace ChromeViews;
 
   if (state_ != BS_DISABLED) {
-    if (HitTest(e.GetLocation())) {
+    if (HitTest(WTL::CPoint(e.x(), e.y()))) {
       SetState(BS_HOT);
     } else {
       SetState(BS_NORMAL);
@@ -251,7 +224,7 @@ void BaseButton::NotifyClick(int mouse_event_flags) {
 
 bool BaseButton::OnKeyPressed(const KeyEvent& e) {
   if (state_ != BS_DISABLED) {
-    if ((e.GetCharacter() == L' ') || (e.GetCharacter() == L'\n')) {
+    if ((e.GetCharacter() == VK_SPACE) || (e.GetCharacter() == VK_RETURN)) {
       SetState(BS_PUSHED);
       return true;
     }
@@ -261,7 +234,7 @@ bool BaseButton::OnKeyPressed(const KeyEvent& e) {
 
 bool BaseButton::OnKeyReleased(const KeyEvent& e) {
   if (state_ != BS_DISABLED) {
-    if ((e.GetCharacter() == L' ') || (e.GetCharacter() == L'\n')) {
+    if ((e.GetCharacter() == VK_SPACE) || (e.GetCharacter() == VK_RETURN)) {
       SetState(BS_NORMAL);
       NotifyClick(0);
       return true;
@@ -331,3 +304,4 @@ void BaseButton::Paint(ChromeCanvas* canvas, bool for_drag) {
 }
 
 }  // namespace ChromeViews
+

@@ -9,16 +9,19 @@ set IntDir=%~3
 set OutFile=%~4
 set VarsBat=%IntDir%/vers-vars.bat
 
-:: Use GNU tools
-call %SolutionDir%\..\third_party\gnu\setup_env.bat
+:: Put cygwin in the path
+call %SolutionDir%\..\third_party\cygwin\setup_env.bat
 
 :: Load version digits as environment variables
 cat %SolutionDir%\VERSION | sed "s/\(.*\)/set \1/" > %VarsBat%
 
 :: Load branding strings as environment variables
-cat %SolutionDir%\BRANDING | sed "s/\(.*\)/set \1/" >> %VarsBat%
+set Distribution="chromium"
+if "%CHROMIUM_BUILD%" == "_google_chrome" set Distribution="google_chrome"
+cat %SolutionDir%app\theme\%Distribution%\BRANDING | sed "s/\(.*\)/set \1/" >> %VarsBat%
 
-if not "%OFFICIAL_BUILD%" == "1" set OFFICIAL_BUILD=0
+set OFFICIAL_BUILD=0
+if "%CHROME_BUILD_TYPE%" == "_official" set OFFICIAL_BUILD=1
 
 :: Determine the current repository revision number
 set PATH=%~dp0..\..\..\..\third_party\svn;%PATH%

@@ -1,41 +1,12 @@
-// Copyright 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//    * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//    * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//    * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlmisc.h>
-#include <atlcrack.h>
-#include <atlwin.h>
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
 #include "chrome/common/gfx/chrome_canvas.h"
+#include "chrome/common/gfx/path.h"
 #include "chrome/views/background.h"
 #include "chrome/views/event.h"
+#include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
 #include "chrome/views/window.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -51,6 +22,9 @@ class ViewTest : public testing::Test {
   ~ViewTest() {
     OleUninitialize();
   }
+ 
+ private:
+  MessageLoopForUI message_loop_;
 };
 
 // Paints the RootView.
@@ -284,22 +258,22 @@ TEST_F(ViewTest, AddRemoveNotifications) {
 
 bool TestView::OnMousePressed(const MouseEvent& event) {
   last_mouse_event_type_ = event.GetType();
-  location_.x = event.GetX();
-  location_.y = event.GetY();
+  location_.x = event.x();
+  location_.y = event.y();
   return true;
 }
 
 bool TestView::OnMouseDragged(const MouseEvent& event) {
   last_mouse_event_type_ = event.GetType();
-  location_.x = event.GetX();
-  location_.y = event.GetY();
+  location_.x = event.x();
+  location_.y = event.y();
   return true;
 }
 
 void TestView::OnMouseReleased(const MouseEvent& event, bool canceled) {
   last_mouse_event_type_ = event.GetType();
-  location_.x = event.GetX();
-  location_.y = event.GetY();
+  location_.x = event.x();
+  location_.y = event.y();
 }
 
 TEST_F(ViewTest, MouseEvent) {
@@ -309,10 +283,10 @@ TEST_F(ViewTest, MouseEvent) {
   TestView* v2 = new TestView();
   v2->SetBounds (100, 100, 100, 100);
 
-  ChromeViews::Window window;
+  ChromeViews::HWNDViewContainer window;
   window.set_delete_on_destroy(false);
   window.set_window_style(WS_OVERLAPPEDWINDOW);
-  window.Init(NULL, gfx::Rect(50, 50, 650, 650), NULL, NULL);
+  window.Init(NULL, gfx::Rect(50, 50, 650, 650), false);
   RootView* root = window.GetRootView();
 
   root->AddChildView(v1);
@@ -383,10 +357,10 @@ TEST_F(ViewTest, Painting) {
                             RDW_UPDATENOW | RDW_INVALIDATE | RDW_ALLCHILDREN);
   bool empty_paint = paint_window.empty_paint();
 
-  ChromeViews::Window window;
+  ChromeViews::HWNDViewContainer window;
   window.set_delete_on_destroy(false);
   window.set_window_style(WS_OVERLAPPEDWINDOW);
-  window.Init(NULL, gfx::Rect(50, 50, 650, 650), NULL, NULL);
+  window.Init(NULL, gfx::Rect(50, 50, 650, 650), NULL);
   RootView* root = window.GetRootView();
 
   TestView* v1 = new TestView();
@@ -470,7 +444,7 @@ TEST_F(ViewTest, RemoveNotification) {
   NotificationService::current()->AddObserver(
       observer.get(), NOTIFY_VIEW_REMOVED, NotificationService::AllSources());
 
-  ChromeViews::Window* window = new ChromeViews::Window;
+  ChromeViews::HWNDViewContainer* window = new ChromeViews::HWNDViewContainer;
   ChromeViews::RootView* root_view = window->GetRootView();
 
   View* v1 = new View;
@@ -531,4 +505,78 @@ TEST_F(ViewTest, RemoveNotification) {
 
   NotificationService::current()->RemoveObserver(observer.get(),
       NOTIFY_VIEW_REMOVED, NotificationService::AllSources());
+}
+
+namespace {
+class HitTestView : public ChromeViews::View {
+ public:
+  explicit HitTestView(bool has_hittest_mask)
+      : has_hittest_mask_(has_hittest_mask) {
+  }
+  virtual ~HitTestView() {}
+
+ protected:
+  // Overridden from ChromeViews::View:
+  virtual bool HasHitTestMask() const {
+    return has_hittest_mask_;
+  }
+  virtual void GetHitTestMask(gfx::Path* mask) const {
+    DCHECK(has_hittest_mask_);
+    DCHECK(mask);
+
+    SkScalar w = SkIntToScalar(width());
+    SkScalar h = SkIntToScalar(height());
+
+    // Create a triangular mask within the bounds of this View.
+    mask->moveTo(w / 2, 0);
+    mask->lineTo(w, h);
+    mask->lineTo(0, h);
+    mask->close();
+  }
+
+ private:
+  bool has_hittest_mask_;
+
+  DISALLOW_COPY_AND_ASSIGN(HitTestView);
+};
+
+POINT ConvertPointToView(ChromeViews::View* view, const POINT& p) {
+  CPoint tmp = p;
+  ChromeViews::View::ConvertPointToView(view->GetRootView(), view, &tmp);
+  return tmp;
+}
+}
+
+TEST_F(ViewTest, HitTestMasks) {
+  ChromeViews::HWNDViewContainer window;
+  ChromeViews::RootView* root_view = window.GetRootView();
+  root_view->SetBounds(0, 0, 500, 500);
+
+  gfx::Rect v1_bounds = gfx::Rect(0, 0, 100, 100);
+  HitTestView* v1 = new HitTestView(false);
+  v1->SetBounds(v1_bounds.ToRECT());
+  root_view->AddChildView(v1);
+
+  gfx::Rect v2_bounds = gfx::Rect(105, 0, 100, 100);
+  HitTestView* v2 = new HitTestView(true);
+  v2->SetBounds(v2_bounds.ToRECT());
+  root_view->AddChildView(v2);
+
+  POINT v1_centerpoint = v1_bounds.CenterPoint().ToPOINT();
+  POINT v2_centerpoint = v2_bounds.CenterPoint().ToPOINT();
+  POINT v1_origin = v1_bounds.origin().ToPOINT();
+  POINT v2_origin = v2_bounds.origin().ToPOINT();
+
+  // Test HitTest
+  EXPECT_EQ(true, v1->HitTest(ConvertPointToView(v1, v1_centerpoint)));
+  EXPECT_EQ(true, v2->HitTest(ConvertPointToView(v2, v2_centerpoint)));
+
+  EXPECT_EQ(true, v1->HitTest(ConvertPointToView(v1, v1_origin)));
+  EXPECT_EQ(false, v2->HitTest(ConvertPointToView(v2, v2_origin)));
+
+  // Test GetViewForPoint
+  EXPECT_EQ(v1, root_view->GetViewForPoint(v1_centerpoint));
+  EXPECT_EQ(v2, root_view->GetViewForPoint(v2_centerpoint));
+  EXPECT_EQ(v1, root_view->GetViewForPoint(v1_origin));
+  EXPECT_EQ(root_view, root_view->GetViewForPoint(v2_origin));
 }
