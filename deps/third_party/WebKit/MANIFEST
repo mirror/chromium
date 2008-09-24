@@ -20,6 +20,8 @@ WebCore\dom\Traversal.h
 WebCore\dom\TreeWalker.cpp
 WebCore\dom\TreeWalker.h
 WebCore\editing\Selection.cpp
+WebCore\html\CanvasRenderingContext2D.cpp
+WebCore\html\CanvasRenderingContext2D.h
 WebCore\html\HTMLLinkElement.cpp
 WebCore\html\HTMLLinkElement.h
 WebCore\html\HTMLPlugInElement.cpp
