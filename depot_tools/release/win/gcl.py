@@ -506,24 +506,20 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
   # Once uploaded to Rietveld, send it to the try server.
-  TryChange(change_info, [], SwallowException=True)
+  TryChange(change_info, [], swallow_exception=True)
 
 
-def TryChange(change_info, args, SwallowException=False):
+def TryChange(change_info, args, swallow_exception=False):
   """Create a diff file of change_info and send it to the try server."""
   try:
     import trychange
   except ImportError:
-    if SwallowException:
+    if swallow_exception:
       return
     ErrorExit("You need to install trychange.py to use the try server.")
 
-  try:
-    trychange.TryChange(args, change_info.name, change_info.FileList())
-  except trychange.ScriptNotFound, e:
-    if SwallowException:
-      return
-    print e
+  trychange.TryChange(args, change_info.name, change_info.FileList(),
+                      swallow_exception)
 
 
 def Commit(change_info):

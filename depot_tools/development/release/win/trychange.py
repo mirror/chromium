@@ -17,19 +17,23 @@ HELP_STRING = ("Sorry, I couldn't retrieve or execute the tryserver script. "
 SCRIPT_PATH = os.path.join('src', 'tools', 'tryserver', 'tryserver.py')
 
 
-#globals
+# Globals
 checkout_root = ''
 
 
-class ScriptNotFound(Exception): pass
+class ScriptNotFound(Exception):
+  def __str__(self):
+    return self.args[0] + ' was not found.\n' + HELP_STRING
 
 
 class InvalidScript(Exception): 
-  def __init__(self, script):
-    self.script = script
-
   def __str__(self):
-    return self.script + '\n' + HELP_STRING
+    return self.args[0] + '\n' + HELP_STRING
+
+
+class NoTryServerAccess(Exception):
+  def __str__(self):
+    return self.args[0] + ' is unaccessible.\n' + HELP_STRING
 
 
 def GetCheckoutRoot():
@@ -44,7 +48,7 @@ def GetCheckoutRoot():
       parent = os.path.dirname(checkout_root)
       if parent == checkout_root:
         checkout_root = ''
-        raise ScriptNotFound(HELP_STRING)
+        raise ScriptNotFound(SCRIPT_PATH)
       checkout_root = parent
   return checkout_root
 
@@ -65,7 +69,9 @@ def ExecuteTryServerScript():
     exec(gcl.ReadFile(script_path), script_locals)
   except Exception, e:
     traceback.print_exc()
-    raise InvalidScript(script_path)
+    raise InvalidScript(script_path + ' is invalid.')
+  if not 'try_server' in script_locals or not script_locals['try_server']:
+    raise InvalidScript(script_path + ": 'try_server' variable was not found.")
   return script_locals
 
 
@@ -81,11 +87,14 @@ def _SendChange(try_name, diff, bot):
     patch_name += '.' + EscapeDot(bot)
   patch_name += '.diff'
   patch_path = os.path.join(script_locals['try_server'], patch_name)
-  gcl.WriteFile(patch_path, diff)
+  try:
+    gcl.WriteFile(patch_path, diff)
+  except IOError, e:
+    raise NoTryServerAccess(script_locals['try_server'])
   return patch_name
 
 
-def TryChange(argv, name='Unnamed', file_list=None):
+def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False):
   # Parse argv
   parser = optparse.OptionParser(usage="%prog [options]")
   parser.add_option("-n", "--name", default=name,
@@ -99,15 +108,28 @@ def TryChange(argv, name='Unnamed', file_list=None):
     print "Nothing to try, changelist is empty."
     return
 
-  # Change the current working directory before generating the diff so that it
-  # shows the correct base.
-  os.chdir(gcl.GetRepositoryRoot())
+  try:
+    # Change the current working directory before generating the diff so that it
+    # shows the correct base.
+    os.chdir(gcl.GetRepositoryRoot())
 
-  # Generate the diff and write it to the submit queue path. Fix the file list
-  # according to the new path.
-  subpath = PathDifference(GetCheckoutRoot(), os.getcwd())
-  os.chdir(GetCheckoutRoot())
-  diff = gcl.GenerateDiff([os.path.join(subpath, x)
-                           for x in options.file_list])
-  patch_name = _SendChange(options.name, diff, options.bot)
-  print 'Patch \'%s\' sent to try server.' % patch_name
+    # Generate the diff and write it to the submit queue path. Fix the file list
+    # according to the new path.
+    subpath = PathDifference(GetCheckoutRoot(), os.getcwd())
+    os.chdir(GetCheckoutRoot())
+    diff = gcl.GenerateDiff([os.path.join(subpath, x)
+                             for x in options.file_list])
+    patch_name = _SendChange(options.name, diff, options.bot)
+    print 'Patch \'%s\' sent to try server.' % patch_name
+  except ScriptNotFound, e:
+    if swallow_exception:
+      return
+    print e
+  except InvalidScript, e:
+    if swallow_exception:
+      return
+    print e
+  except NoTryServerAccess, e:
+    if swallow_exception:
+      return
+    print e
