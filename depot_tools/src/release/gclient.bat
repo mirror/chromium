@@ -9,10 +9,9 @@ IF "%DEPOT_TOOLS_UPDATE%" == "0" GOTO gclient
 
 IF NOT EXIST %~dp0..\.svn GOTO gclient
 
-set PATH=%~dp0svn;%WINDIR%\system32
+set PATH=%~dp0svn;%~dp0python_24;%PATH%
 set opt=-q
-
 svn %opt% up "%~dp0.."
 
 :gclient
-"%~dp0python_24\python.exe" "%~dp0\gclient.py" %*
+python.exe "%~dp0\gclient.py" %*
