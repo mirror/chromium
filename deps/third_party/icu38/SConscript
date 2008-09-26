@@ -354,9 +354,9 @@ if env['PLATFORM'] == 'win32':
 else:
   icu_data = env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
 
-icu_lib = env.ChromeStaticLibrary('icuuc', cpp_object_files +
-                                    c_object_files +
-                                    stray_object_files)
+icu_lib = env.ChromeStaticLibrary('icu', cpp_object_files +
+                                         c_object_files +
+                                         stray_object_files)
 
 # The ICU library isn't useful without the data properly installed.
 env.Requires(icu_lib, icu_data)
