@@ -387,8 +387,6 @@ if CombinedLib:
                                     CPPDEFINES = env['CPPDEFINES'] +
                                                  ['U_COMBINED_IMPLEMENTATION'])
 
-  env.Install('$LIBS_DIR', icu_lib)
-
 else:
 
   icu_lib = env.ChromeStaticLibrary('icuuc', common_input_files,
