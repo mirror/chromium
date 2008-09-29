@@ -1,35 +1,37 @@
-# Copyright 2008, Google Inc.
-# All rights reserved.
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+# Variables to control what does or doesn't get built here:
 #
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are
-# met:
+# CombinedLib
+#       When True, builds a combined libicu.a (or icu.lib) containing
+#       the common, i18n, stubdata and toolutil parts of ICU.  When
+#       False, builds those as separate libraries.
+# 
+# GeneratedDataLib
+#       When True, specifies that we want to build a libicudata.a
+#       (or icudata.lib) library containing the data.  When False,
+#       we copy out the icudt38l.dat file or the Chromium icudt38.dll
+#       file.
 #
-#    * Redistributions of source code must retain the above copyright
-# notice, this list of conditions and the following disclaimer.
-#    * Redistributions in binary form must reproduce the above
-# copyright notice, this list of conditions and the following disclaimer
-# in the documentation and/or other materials provided with the
-# distribution.
-#    * Neither the name of Google Inc. nor the names of its
-# contributors may be used to endorse or promote products derived from
-# this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Note that we've only verified the behavior that each platform
+# needs to build the way it currently wants, so don't expect that
+# you can just change the way a given platform builds without maybe
+# having to fix things.  For example, attempts to set GenerateDataLib
+# on Windows will need to fix problems executing the utilities that
+# handle the generation.
+
+CombinedLib = True
+GenerateDataLib = False
 
 Import('env')
 
-env = env.Clone()
+env = env.Clone(
+    GENERATED_DIR = env.Dir('$ICU38_DIR/generated'),
+    GENCCODE = env.File('$ICU38_DIR/generated/genccode$PROGSUFFIX'),
+    ICUPKG = env.File('$ICU38_DIR/generated/icupkg$PROGSUFFIX'),
+)
 
 env.Prepend(
     CPPPATH = [
@@ -40,29 +42,33 @@ env.Prepend(
         'source/tools/toolutil',
         '#/..',
     ],
+    CPPDEFINES = [
+        'U_STATIC_IMPLEMENTATION',
+    ],
 )
 
 if env['PLATFORM'] == 'darwin':
-  env.Append(
-      CPPDEFINES = [
-          "U_I18N_IMPLEMENTATION",
-      ],
-  )
+  CombinedLib = False
+  GenerateDataLib = True
+
   env['CCFLAGS'].remove('-Werror')
   env['CPPDEFINES'].remove('DEBUG')
-else:
-  env.Append(
-      CPPDEFINES = [
-          "U_STATIC_IMPLEMENTATION",
-      ],
-  )
+  env['GENCCODE_NAME'] = 'icudt38l'
+  env['GENCCODE_FLAGS'] = '-a gcc-darwin -n $GENCCODE_NAME -e icudt38'
+  env['GENCCODE_SUFFIX'] = '.s'
+
+if env['PLATFORM'] =='posix':
+  env['GENCCODE_NAME'] = 'icudt38l'
+  env['GENCCODE_FLAGS'] = '-a gcc -n $GENCCODE_NAME -e icudt38'
+  env['GENCCODE_SUFFIX'] = '.s'
 
 if env['PLATFORM'] == 'win32':
-  env.Append(
-      CCFLAGS = [
-          '/WX',
-      ]
-  )
+  env['GENCCODE_NAME'] = 'icudt38'
+  env['GENCCODE_FLAGS'] = '-e icudt38'
+  env['GENCCODE_SUFFIX'] = '.c'
+
+if env['PLATFORM'] == 'win32':
+  env.Append(CCFLAGS = ['/WX'])
 else:
   env.Append(
       CCFLAGS = [
@@ -76,7 +82,9 @@ else:
 if 'WIN32_LEAN_AND_MEAN' in env['CPPDEFINES']:
   env['CPPDEFINES'].remove('WIN32_LEAN_AND_MEAN')
 
-input_files = [
+#
+
+common_input_files = [
     'source/common/bmpset.cpp',
     'source/common/brkeng.cpp',
     'source/common/brkiter.cpp',
@@ -116,9 +124,9 @@ input_files = [
     'source/common/servslkf.cpp',
     'source/common/triedict.cpp',
     'source/common/uarrsort.c',
-    ###'source/common/ubidi.c',         # see separate list below
+    'source/common/ubidi.c',
     'source/common/ubidi_props.c',
-    ###'source/common/ubidiln.c',       # see separate list below
+    'source/common/ubidiln.c',
     'source/common/ubidiwrt.c',
     'source/common/ubrk.cpp',
     'source/common/ucase.c',
@@ -207,6 +215,11 @@ input_files = [
     'source/common/uvector.cpp',
     'source/common/uvectr32.cpp',
     'source/common/wintz.c',
+]
+
+#
+
+i18n_input_files = [
     'source/i18n/anytrans.cpp',
     'source/i18n/astro.cpp',
     'source/i18n/basictz.cpp',
@@ -319,44 +332,124 @@ input_files = [
     'source/i18n/vtzone.cpp',
     'source/i18n/windtfmt.cpp',
     'source/i18n/winnmfmt.cpp',
+]
+
+#
+
+stubdata_input_files = [
     'source/stubdata/stubdata.c',
 ]
 
-common_implementation_files = [
-    'source/common/ubidi.c',
-    'source/common/ubidiln.c',
+#
+
+toolutil_input_files = [
+    'source/tools/toolutil/filestrm.c',
+    'source/tools/toolutil/package.cpp',
+    'source/tools/toolutil/pkgitems.cpp',
+    'source/tools/toolutil/propsvec.c',
+    'source/tools/toolutil/swapimpl.cpp',
+    'source/tools/toolutil/toolutil.c',
+    'source/tools/toolutil/toolutil.vcproj',
+    'source/tools/toolutil/ucbuf.c',
+    'source/tools/toolutil/ucm.c',
+    'source/tools/toolutil/ucmstate.c',
+    'source/tools/toolutil/unewdata.c',
+    'source/tools/toolutil/uoptions.c',
+    'source/tools/toolutil/uparse.c',
+    'source/tools/toolutil/writesrc.c',
+    'source/tools/toolutil/xmlparser.cpp',
 ]
 
-c_input_files = [f for f in input_files if f.endswith('.c')]
-cpp_input_files = [f for f in input_files if f.endswith('.cpp')]
+#
 
-env_cpp = env.Clone()
-if env['PLATFORM'] == 'win32':
-  env_cpp.Append(CCFLAGS = ["/TP"])
-cpp_object_files = [env_cpp.Object(i) for i in cpp_input_files]
+if CombinedLib:
 
-env_c = env.Clone()
-if env['PLATFORM'] == 'win32':
-  env_c.Append(CCFLAGS = ["/TC"])
-c_object_files = [env_c.Object(i) for i in c_input_files]
+  # These empirically fail to build when U_COMMON_IMPLEMENTATION
+  # isn't defined in addition to U_COMBINED_IMPLEMENTATION.  Remove
+  # them from the source file list and re-append them with Nodes
+  # for custom-built object files with both defined.
 
+  need_common_implementation = [
+      'source/common/ubidi.c',
+      'source/common/ubidiln.c',
+  ]
 
-env_stray = env.Clone()
-if env['PLATFORM'] == 'win32':
-  env_stray.Append(CCFLAGS = ["/TC"])
-env_stray.Append(CPPDEFINES = ["U_COMMON_IMPLEMENTATION"])
-stray_object_files = [env_stray.Object(i) for i in common_implementation_files]
+  for n in need_common_implementation:
+    common_input_files.remove(n)
+    o = env.Object(n, CPPDEFINES = env['CPPDEFINES'] +
+                                   ['U_COMMON_IMPLEMENTATION',
+                                    'U_COMBINED_IMPLEMENTATION'])
+    common_input_files.append(o)
 
+  icu_lib = env.ChromeStaticLibrary('icu', common_input_files +
+                                           i18n_input_files +
+                                           stubdata_input_files,
+                                    CPPDEFINES = env['CPPDEFINES'] +
+                                                 ['U_COMBINED_IMPLEMENTATION'])
 
-# On Windows the ICU data is built into a DLL.  On Linux, install the .dat file.
-if env['PLATFORM'] == 'win32':
-  icu_data = env.Install('$OBJ_ROOT', 'icudt38.dll')
+  env.Install('$LIBS_DIR', icu_lib)
+
 else:
-  icu_data = env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
 
-icu_lib = env.ChromeStaticLibrary('icu', cpp_object_files +
-                                         c_object_files +
-                                         stray_object_files)
+  icu_lib = env.ChromeStaticLibrary('icuuc', common_input_files,
+                                    CPPDEFINES = env['CPPDEFINES'] +
+                                                 ['U_COMMON_IMPLEMENTATION'])
 
-# The ICU library isn't useful without the data properly installed.
-env.Requires(icu_lib, icu_data)
+  env.ChromeStaticLibrary('icui18n', i18n_input_files,
+                          CPPDEFINES = env['CPPDEFINES'] +
+                                       ['U_I18N_IMPLEMENTATION'])
+
+  env.ChromeStaticLibrary('icudata_stub', stubdata_input_files)
+
+  env.ChromeStaticLibrary('icutu', toolutil_input_files,
+                          CPPDEFINES = env['CPPDEFINES'] +
+                                       ['U_TOOLUTIL_IMPLEMENTATION'])
+
+
+#
+
+if GenerateDataLib:
+
+  icudata_lst = env.Command(['$GENERATED_DIR/icudata.lst',
+                             '$GENERATED_DIR/icudt38l/ucadata.icu'],
+                            ['source/data/in/icudt38l.dat'],
+                            ('$ICUPKG -d ${TARGETS[1].dir} --list -x "*"'
+                             ' $SOURCE > $TARGET'))
+  env.Depends(icudata_lst, '$ICUPKG')
+
+  icudt38_dat = env.Command(['$GENERATED_DIR/${GENCCODE_NAME}.dat'],
+                            icudata_lst,
+                            ('$ICUPKG -tl -c -s ${SOURCES[1].dir}'
+                             ' -a $SOURCE new $TARGET'))
+  env.Depends(icudt38_dat, '$ICUPKG')
+
+  icudt38_src = env.Command('$GENERATED_DIR/${GENCCODE_NAME}_dat${GENCCODE_SUFFIX}',
+                            icudt38_dat,
+                            '$GENCCODE $GENCCODE_FLAGS -d ${TARGET.dir} $SOURCE')
+  env.Depends(icudt38_src, '$GENCCODE')
+
+  icu_data = env.ChromeStaticLibrary('icudata', icudt38_src)
+
+  if CombinedLib:
+    lib_list = ['icu']
+  else:
+    lib_list = ['icui18n', 'icutu', 'icuuc', 'icudata_stub']
+
+  env_tools = env.Clone(LIBS = lib_list)
+
+  env_tools.Program(env['GENCCODE'], 'source/tools/genccode/genccode.c')
+  env_tools.Program(env['ICUPKG'], 'source/tools/icupkg/icupkg.cpp')
+
+  env.Install('$LIBS_DIR', icu_data)
+
+else:
+
+  icu_data = None
+
+  # The ICU library isn't useful without the data properly installed.
+  if env['PLATFORM'] == 'win32':
+    icu_data = env.Install('$OBJ_ROOT', 'icudt38.dll')
+  else:
+    icu_data = env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
+
+  env.Requires(icu_lib, icu_data)
