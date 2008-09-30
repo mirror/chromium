@@ -40,6 +40,8 @@ WebCore\page\EventHandler.cpp
 WebCore\page\Frame.cpp
 WebCore\page\InspectorController.cpp
 WebCore\page\InspectorController.h
+WebCore\page\Navigator.cpp
+WebCore\page\Navigator.h
 WebCore\page\Page.cpp
 WebCore\page\Page.h
 WebCore\page\Settings.cpp
@@ -71,6 +73,8 @@ WebCore\platform\text\String.cpp
 WebCore\platform\text\StringImpl.cpp
 WebCore\platform\text\TextCodecICU.cpp
 WebCore\platform\win\FileSystemWin.cpp
+WebCore\plugins\Plugins.cpp
+WebCore\plugins\Plugins.h
 WebCore\rendering\RenderButton.cpp
 WebCore\rendering\RenderButton.h
 WebCore\rendering\RenderPartObject.cpp 
