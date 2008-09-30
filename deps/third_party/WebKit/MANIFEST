@@ -71,10 +71,11 @@ WebCore\platform\text\AtomicString.cpp
 WebCore\platform\text\AtomicString.h
 WebCore\platform\text\String.cpp
 WebCore\platform\text\StringImpl.cpp
+WebCore\platform\text\StringImpl.h
 WebCore\platform\text\TextCodecICU.cpp
 WebCore\platform\win\FileSystemWin.cpp
-WebCore\plugins\Plugins.cpp
-WebCore\plugins\Plugins.h
+WebCore\plugins\Plugin.h
+WebCore\plugins\Plugin.cpp
 WebCore\rendering\RenderButton.cpp
 WebCore\rendering\RenderButton.h
 WebCore\rendering\RenderPartObject.cpp 
