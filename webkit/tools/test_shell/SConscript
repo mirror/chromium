@@ -32,10 +32,11 @@ env.Append(
         'breakpad_sender',
         'googleurl',
         'net',
+        'sdch',
         'skia',
         'gtest',
         'bzip2',
-        'icuuc',
+        env['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
         'libjpeg',
         'libpng',
         'libxml',
@@ -55,12 +56,6 @@ env.Append(
 )
 
 env.Append(
-    CCFLAGS = [
-        '/TP',
-        '/WX',
-        '/Wp64',
-    ],
-
     LIBS = [
         'comctl32.lib',
         'rpcrt4.lib',
@@ -116,11 +111,6 @@ exe_input_files = [
 
 test_shell = env.ChromeProgram('test_shell', resources + exe_input_files)
 i = env.Install('$TARGET_ROOT', test_shell)
-env.Alias('webkit', i)
-
-# This call can NOT use $WEBKIT_DIR because we need to copy
-# directly from the source location.
-i = env.Install('$TARGET_ROOT', '#/../webkit/tools/test_shell/resources/fonts')
 env.Alias('webkit', i)
 
 env.Depends(test_shell, '$V8_DIR/vc80.pdb')

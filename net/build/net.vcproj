@@ -21,7 +21,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\sdch\using_sdch.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -78,7 +78,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\sdch\using_sdch.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -269,6 +269,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\base\file_input_stream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\file_input_stream_win.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\base\filter.cc"
 				>
 			</File>
@@ -357,11 +365,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\net_util_win.cc"
+				RelativePath="..\base\net_util.h"
 				>
 			</File>
 			<File
-				RelativePath="..\base\net_util.h"
+				RelativePath="..\base\net_util_win.cc"
 				>
 			</File>
 			<File
@@ -402,6 +410,22 @@
 			</File>
 			<File
 				RelativePath="..\base\registry_controlled_domain.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\sdch_filter.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\base\sdch_filter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\sdch_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\base\sdch_manager.h"
 				>
 			</File>
 			<File
@@ -477,11 +501,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\x509_certificate_win.cc"
+				RelativePath="..\base\x509_certificate.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\base\x509_certificate.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\x509_certificate_win.cc"
 				>
 			</File>
 		</Filter>
@@ -725,6 +753,70 @@
 				>
 			</File>
 			<File
+				RelativePath="..\http\http_auth.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_basic.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_basic.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_digest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_digest.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_basic.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_basic.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_digest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_digest.h"
+				>
+			</File>
+			<File
 				RelativePath="..\http\http_vary_data.cc"
 				>
 			</File>
@@ -874,6 +966,14 @@
 			</File>
 			<File
 				RelativePath="..\disk_cache\stats.h"
+				>
+			</File>
+			<File
+				RelativePath="..\disk_cache\stats_histogram.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\disk_cache\stats_histogram.h"
 				>
 			</File>
 			<File

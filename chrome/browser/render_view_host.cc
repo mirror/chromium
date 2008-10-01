@@ -233,7 +233,7 @@ void RenderViewHost::FirePageBeforeUnload() {
     // Start the hang monitor in case the renderer hangs in the beforeunload
     // handler.
     is_waiting_for_unload_ack_ = true;
-    StartHangMonitorTimeout(kUnloadTimeoutMS);
+    StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
     Send(new ViewMsg_ShouldClose(routing_id_));
   } else {
     // This RenderViewHost doesn't have a live renderer, so just skip running
@@ -245,8 +245,8 @@ void RenderViewHost::FirePageBeforeUnload() {
 void RenderViewHost::FirePageUnload() {
   // Start the hang monitor in case the renderer hangs in the unload handler.
   is_waiting_for_unload_ack_ = true;
-  StartHangMonitorTimeout(kUnloadTimeoutMS);
-  ClosePage(site_instance()->process_host_id(), 
+  StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
+  ClosePage(site_instance()->process_host_id(),
             routing_id());
 }
 
@@ -307,6 +307,9 @@ void RenderViewHost::StartFinding(int request_id,
                                   bool forward,
                                   bool match_case,
                                   bool find_next) {
+  if (search_string.empty())
+    return;
+
   FindInPageRequest request;
   request.request_id = request_id;
   request.search_string = search_string;
@@ -371,25 +374,6 @@ void RenderViewHost::DragTargetDragLeave() {
 void RenderViewHost::DragTargetDrop(
     const gfx::Point& client_pt, const gfx::Point& screen_pt) {
   Send(new ViewMsg_DragTargetDrop(routing_id_, client_pt, screen_pt));
-}
-
-void RenderViewHost::UploadFile(const std::wstring& file_path,
-                                const std::wstring& form,
-                                const std::wstring& file,
-                                const std::wstring& submit,
-                                const std::wstring& other_values) {
-  if (!process_->channel())
-    return;
-
-  RendererSecurityPolicy::GetInstance()->GrantUploadFile(process()->host_id(),
-                                                         file);
-  ViewMsg_UploadFile_Params p;
-  p.file_path = file_path;
-  p.form = form;
-  p.file = file;
-  p.submit = submit;
-  p.other_values = other_values;
-  Send(new ViewMsg_UploadFile(routing_id_, p));
 }
 
 void RenderViewHost::ReservePageIDRange(int size) {
@@ -487,7 +471,7 @@ void RenderViewHost::JavaScriptMessageBoxClosed(IPC::Message* reply_msg,
                                                 bool success,
                                                 const std::wstring& prompt) {
   if (is_waiting_for_unload_ack_)
-    StartHangMonitorTimeout(kUnloadTimeoutMS);
+    StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
 
   if (--modal_dialog_count_ == 0)
     ResetEvent(modal_dialog_event_.Get());
@@ -498,7 +482,7 @@ void RenderViewHost::JavaScriptMessageBoxClosed(IPC::Message* reply_msg,
 void RenderViewHost::ModalHTMLDialogClosed(IPC::Message* reply_msg,
                                            const std::string& json_retval) {
   if (is_waiting_for_unload_ack_)
-    StartHangMonitorTimeout(kUnloadTimeoutMS);
+    StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
 
   if (--modal_dialog_count_ == 0)
     ResetEvent(modal_dialog_event_.Get());
@@ -654,7 +638,7 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
 #ifdef CHROME_PERSONALIZATION
     IPC_MESSAGE_HANDLER(ViewHostMsg_PersonalizationEvent,
                         OnPersonalizationEvent)
-#endif                       
+#endif
     IPC_MESSAGE_HANDLER(ViewHostMsg_GoToEntryAtOffset,
                         OnMsgGoToEntryAtOffset)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetTooltipText, OnMsgSetTooltipText)
@@ -1140,9 +1124,11 @@ void RenderViewHost::OnReceivedSavableResourceLinksForCurrentPage(
     const std::vector<GURL>& resources_list,
     const std::vector<GURL>& referrers_list,
     const std::vector<GURL>& frames_list) {
-  delegate_->OnReceivedSavableResourceLinksForCurrentPage(resources_list,
-                                                          referrers_list,
-                                                          frames_list);
+  RenderViewHostDelegate::Save* save_delegate = delegate_->GetSaveDelegate();
+  if (save_delegate) {
+    save_delegate->OnReceivedSavableResourceLinksForCurrentPage(
+        resources_list, referrers_list, frames_list);
+  }
 }
 
 void RenderViewHost::OnDidGetApplicationInfo(
@@ -1162,7 +1148,9 @@ void RenderViewHost::GetSerializedHtmlDataForCurrentPageWithLocalLinks(
 void RenderViewHost::OnReceivedSerializedHtmlData(const GURL& frame_url,
                                                   const std::string& data,
                                                   int32 status) {
-  delegate_->OnReceivedSerializedHtmlData(frame_url, data, status);
+  RenderViewHostDelegate::Save* save_delegate = delegate_->GetSaveDelegate();
+  if (save_delegate)
+    save_delegate->OnReceivedSerializedHtmlData(frame_url, data, status);
 }
 
 void RenderViewHost::OnMsgShouldCloseACK(bool proceed) {
@@ -1205,7 +1193,7 @@ void RenderViewHost::OnDebugDisconnect() {
 }
 
 #ifdef CHROME_PERSONALIZATION
-void RenderViewHost::RaisePersonalizationEvent(std::string event_name, 
+void RenderViewHost::RaisePersonalizationEvent(std::string event_name,
                                                std::string event_arg) {
   Send(new ViewMsg_PersonalizationEvent(routing_id_,
                                         event_name,

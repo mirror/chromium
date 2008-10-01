@@ -38,13 +38,12 @@ struct WebPreferences {
   bool dashboard_compatibility_mode;
   bool java_enabled;
   bool allow_scripts_to_close_windows;
+  bool uses_page_cache;
 
   // TODO(tc): User style sheets will not work in chrome because it tries to
   // load the style sheet using a request without a frame.
   bool user_style_sheet_enabled;
   GURL user_style_sheet_location;
-
-  std::string user_agent;
 
   // We try to keep the default values the same as the default values in
   // chrome, except for the cases where it would require lots of extra work for
@@ -73,6 +72,7 @@ struct WebPreferences {
         dashboard_compatibility_mode(false),
         java_enabled(true),
         allow_scripts_to_close_windows(false),
+        uses_page_cache(false),
         user_style_sheet_enabled(false) {
   }
 };

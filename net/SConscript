@@ -13,6 +13,7 @@ env.Prepend(
         '$ZLIB_DIR',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
+        '$SDCH_DIR/open_vcdiff/depot/opensource/open-vcdiff/src',
         '..',
     ],
 )
@@ -22,7 +23,6 @@ env.Append(
         'U_STATIC_IMPLEMENTATION',
     ],
 )
-
 
 # These net files work on *all* platforms; files that don't work
 # cross-platform live below.
@@ -48,7 +48,10 @@ input_files = [
     'base/net_module.cc',
     'base/net_util.cc',
     'base/registry_controlled_domain.cc',
+    'base/sdch_filter.cc',
+    'base/sdch_manager.cc',
     'base/upload_data.cc',
+    'base/x509_certificate.cc',
     'disk_cache/backend_impl.cc',
     'disk_cache/block_files.cc',
     'disk_cache/entry_impl.cc',
@@ -59,8 +62,13 @@ input_files = [
     'disk_cache/mem_rankings.cc',
     'disk_cache/rankings.cc',
     'disk_cache/stats.cc',
+    'disk_cache/stats_histogram.cc',
     'disk_cache/trace.cc',
     'http/cert_status_cache.cc',
+    'http/http_auth.cc',
+    'http/http_auth_handler.cc',
+    'http/http_auth_handler_basic.cc',
+    'http/http_auth_handler_digest.cc',
     'http/http_cache.cc',
     'http/http_chunked_decoder.cc',
     'http/http_response_headers.cc',
@@ -92,7 +100,6 @@ if env['PLATFORM'] == 'win32':
       'base/upload_data_stream.cc',
       'base/wininet_util.cc',
       'base/winsock_init.cc',
-      'base/x509_certificate_win.cc',
       'http/http_network_layer.cc',
       'http/http_network_transaction.cc',
       'http/http_transaction_winhttp.cc',
@@ -109,14 +116,11 @@ if env['PLATFORM'] == 'win32':
   ])
 
 if env['PLATFORM'] == 'win32':
-  env.Append(
-      CCFLAGS = [
-          '/Wp64',
-      ],
-  )
   input_files.extend([
+      'base/file_input_stream_win.cc',
       'base/net_util_win.cc',
       'base/platform_mime_util_win.cc',
+      'base/x509_certificate_win.cc',
       'disk_cache/cache_util_win.cc',
       'disk_cache/file_win.cc',
       'disk_cache/mapped_file_win.cc',
@@ -133,12 +137,13 @@ if env['PLATFORM'] == 'posix':
   input_files.extend([
       # TODO(tc): gnome-vfs? xdgmime? /etc/mime.types?
       'base/platform_mime_util_linux.cc',
-      'base/tcp_client_socket_libevent.cc',
   ])
 
 if env['PLATFORM'] in ('darwin', 'posix'):
   input_files.extend([
+      'base/file_input_stream_posix.cc',
       'base/net_util_posix.cc',
+      'base/tcp_client_socket_libevent.cc',
       'disk_cache/cache_util_posix.cc',
       'disk_cache/file_posix.cc',
       'disk_cache/mapped_file_posix.cc',
@@ -172,7 +177,8 @@ env_tests.Prepend(
         'base',
         'googleurl',
         'gtest',
-        'icuuc',
+        'sdch',
+        env_tests['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
         'modp_b64',
         'zlib',
     ]
@@ -189,7 +195,6 @@ if env['PLATFORM'] == 'win32':
       CCFLAGS = [
           '/TP',
           '/WX',
-          '/Wp64',
       ],
       CPPDEFINES = [
           '_WIN32_WINNT=0x0600',
@@ -208,7 +213,7 @@ if env['PLATFORM'] == 'win32':
       ],
   )
 
-if env['PLATFORM'] == 'posix':
+if env['PLATFORM'] in ('posix', 'darwin'):
   env_tests.Append(
       LIBS = [
           'event',
@@ -242,6 +247,9 @@ unittest_files = [
     'disk_cache/entry_unittest.cc',
     'disk_cache/mapped_file_unittest.cc',
     'disk_cache/storage_block_unittest.cc',
+    'http/http_auth_unittest.cc',
+    'http/http_auth_handler_basic_unittest.cc',
+    'http/http_auth_handler_digest_unittest.cc',
     'http/http_chunked_decoder_unittest.cc',
     'http/http_response_headers_unittest.cc',
     'http/http_vary_data_unittest.cc',
@@ -250,6 +258,8 @@ unittest_files = [
 if env['PLATFORM'] == 'win32':
   unittest_files.extend([
       'base/directory_lister_unittest.cc',
+      'base/file_input_stream_unittest.cc',
+      'base/sdch_filter_unitest.cc',
       'base/ssl_config_service_unittest.cc',
       'base/ssl_client_socket_unittest.cc',
       'base/wininet_util_unittest.cc',

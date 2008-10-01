@@ -64,7 +64,8 @@ class PluginRequestHandlerProxy
   }
 
   virtual void OnReceivedResponse(
-      const ResourceLoaderBridge::ResponseInfo& info) {
+      const ResourceLoaderBridge::ResponseInfo& info,
+      bool content_filtered) {
     response_headers_ = info.headers;
     plugin_->functions().response_funcs->start_completed(
         cprequest_.get(), CPERR_SUCCESS);
@@ -524,7 +525,7 @@ CPError STDCALL CPB_SendSyncMessage(CPID id, const void *data, uint32 data_len,
 CPError STDCALL CPB_PluginThreadAsyncCall(CPID id,
                                           void (*func)(void *),
                                           void *user_data) {
-  MessageLoop *message_loop = RenderThread::current()->message_loop();
+  MessageLoop *message_loop = ChromePluginLib::GetPluginThreadLoop();
   if (!message_loop) {
     return CPERR_FAILURE;
   }

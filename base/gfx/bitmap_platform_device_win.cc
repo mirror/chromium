@@ -6,6 +6,7 @@
 
 #include "base/gfx/bitmap_header.h"
 #include "base/logging.h"
+#include "base/process_util.h"
 #include "SkMatrix.h"
 #include "SkRegion.h"
 #include "SkUtils.h"
@@ -98,6 +99,33 @@ void FixupAlphaBeforeCompositing(uint32_t* pixel) {
     *pixel |= 0xFF000000;
 }
 
+// Crashes the process. This is called when a bitmap allocation fails, and this
+// function tries to determine why it might have failed, and crash on different
+// lines. This allows us to see in crash dumps the most likely reason for the
+// failure. It takes the size of the bitmap we were trying to allocate as its
+// arguments so we can check that as well.
+void CrashForBitmapAllocationFailure(int w, int h) {
+  // The maximum number of GDI objects per process is 10K. If we're very close
+  // to that, it's probably the problem.
+  const int kLotsOfGDIObjs = 9990;
+  CHECK(GetGuiResources(GetCurrentProcess(), GR_GDIOBJECTS) < kLotsOfGDIObjs);
+
+  // If the bitmap is ginormous, then we probably can't allocate it.
+  // We use 64M pixels = 256MB @ 4 bytes per pixel.
+  const int64 kGinormousBitmapPxl = 64000000;
+  CHECK(static_cast<int64>(w) * static_cast<int64>(h) < kGinormousBitmapPxl);
+
+  // If we're using a crazy amount of virtual address space, then maybe there
+  // isn't enough for our bitmap.
+  const int64 kLotsOfMem = 1500000000;  // 1.5GB.
+  scoped_ptr<process_util::ProcessMetrics> process_metrics(
+      process_util::ProcessMetrics::CreateProcessMetrics(GetCurrentProcess()));
+  CHECK(process_metrics->GetPagefileUsage() < kLotsOfMem);
+
+  // Everything else.
+  CHECK(0);
+}
+
 }  // namespace
 
 class BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData
@@ -114,16 +142,14 @@ class BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData
   // but will mark the config as dirty. The next call of LoadConfig will
   // pick up these changes.
   void SetMatrixClip(const SkMatrix& transform, const SkRegion& region);
-  // The device offset is already modified according to the transformation.
-  void SetDeviceOffset(int x, int y);
 
   const SkMatrix& transform() const {
     return transform_;
   }
 
  protected:
-  // Loads the current transform (taking into account offset_*_) and clip
-  // into the DC. Can be called even when the DC is NULL (will be a NOP).
+  // Loads the current transform and clip into the DC. Can be called even when
+  // the DC is NULL (will be a NOP).
   void LoadConfig();
 
   // Windows bitmap corresponding to our surface.
@@ -131,10 +157,6 @@ class BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData
 
   // Lazily-created DC used to draw into the bitmap, see getBitmapDC.
   HDC hdc_;
-
-  // Additional offset applied to the transform. See setDeviceOffset().
-  int offset_x_;
-  int offset_y_;
 
   // True when there is a transform or clip that has not been set to the DC.
   // The DC is retrieved for every text operation, and the transform and clip
@@ -160,8 +182,6 @@ BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData::BitmapPlatformDeviceWinDat
     HBITMAP hbitmap)
     : hbitmap_(hbitmap),
       hdc_(NULL),
-      offset_x_(0),
-      offset_y_(0),
       config_dirty_(true) {  // Want to load the config next time.
   // Initialize the clip region to the entire bitmap.
   BITMAP bitmap_data;
@@ -216,13 +236,6 @@ void BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData::SetMatrixClip(
   config_dirty_ = true;
 }
 
-void BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData::SetDeviceOffset(int x,
-                                                                     int y) {
-  offset_x_ = x;
-  offset_y_ = y;
-  config_dirty_ = true;
-}
-
 void BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData::LoadConfig() {
   if (!config_dirty_ || !hdc_)
     return;  // Nothing to do.
@@ -230,12 +243,10 @@ void BitmapPlatformDeviceWin::BitmapPlatformDeviceWinData::LoadConfig() {
 
   // Transform.
   SkMatrix t(transform_);
-  t.postTranslate(SkIntToScalar(-offset_x_), SkIntToScalar(-offset_y_));
   LoadTransformToDC(hdc_, t);
   // We don't use transform_ for the clipping region since the translation is
   // already applied to offset_x_ and offset_y_.
   t.reset();
-  t.postTranslate(SkIntToScalar(-offset_x_), SkIntToScalar(-offset_y_));
   LoadClippingRegionToDC(hdc_, clip_region_, t);
 }
 
@@ -270,7 +281,8 @@ BitmapPlatformDeviceWin* BitmapPlatformDeviceWin::create(HDC screen_dc,
   // bitmap here. This will cause us to crash later because the data pointer is
   // NULL. To make sure that we can assign blame for those crashes to this code,
   // we deliberately crash here, even in release mode.
-  CHECK(hbitmap);
+  if (!hbitmap)
+    CrashForBitmapAllocationFailure(width, height);
 
   bitmap.setConfig(SkBitmap::kARGB_8888_Config, width, height);
   bitmap.setPixels(data);
@@ -326,10 +338,6 @@ HDC BitmapPlatformDeviceWin::getBitmapDC() {
 void BitmapPlatformDeviceWin::setMatrixClip(const SkMatrix& transform,
                                          const SkRegion& region) {
   data_->SetMatrixClip(transform, region);
-}
-
-void BitmapPlatformDeviceWin::setDeviceOffset(int x, int y) {
-  data_->SetDeviceOffset(x, y);
 }
 
 void BitmapPlatformDeviceWin::drawToHDC(HDC dc, int x, int y,

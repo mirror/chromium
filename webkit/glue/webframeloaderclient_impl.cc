@@ -241,10 +241,10 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
                                                       unsigned long identifier,
                                                       const ResourceResponse& response) {
 
-  // True if the request was for the page's main frame, or a subframe.
-  bool is_frame = ResourceType::IsFrame(DetermineResourceTypeFromLoader(loader));
 
   /* TODO(evanm): reenable this once we properly sniff XHTML from text/xml documents.
+  // True if the request was for the page's main frame, or a subframe.
+  bool is_frame = ResourceType::IsFrame(DetermineResourceTypeFromLoader(loader));
   if (is_frame &&
       response.httpStatusCode() == 200 &&
       mime_util::IsViewSourceMimeType(
@@ -262,7 +262,8 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
   // If it's a 404 page, we wait until we get 512 bytes of data before trying
   // to load the document.  This allows us to put up an alternate 404 page if
   // there's short text.
-  postpone_loading_data_ = is_frame &&
+  postpone_loading_data_ =
+      ResourceType::MAIN_FRAME == DetermineResourceTypeFromLoader(loader) &&
       !is_substitute_data &&
       response.httpStatusCode() == 404 &&
       GetAlt404PageUrl(loader).is_valid();
@@ -1165,8 +1166,11 @@ bool WebFrameLoaderClient::canShowMIMEType(const String& mime_type) const {
   // "internally" (i.e. inside the browser) regardless of whether or not the
   // browser or a plugin is doing the rendering.
 
+  // mime_type strings are supposed to be ASCII, but if they are not for some
+  // reason, then it just means that the mime type will fail all of these "is
+  // supported" checks and go down the path of an unhandled mime type.
   if (net::IsSupportedMimeType(
-          WideToASCII(webkit_glue::StringToStdWString(mime_type))))
+          webkit_glue::CStringToStdString(mime_type.latin1())))
     return true;
 
   // See if the type is handled by an installed plugin, if so, we can show it.
@@ -1254,8 +1258,7 @@ void WebFrameLoaderClient::setTitle(const String& title, const KURL& url) {
 }
 
 String WebFrameLoaderClient::userAgent(const KURL& url) {
-  return webkit_glue::StdStringToString(
-      webframe_->webview_impl()->GetPreferences().user_agent);
+  return webkit_glue::StdStringToString(webkit_glue::GetUserAgent());
 }
 
 void WebFrameLoaderClient::savePlatformDataToCachedPage(WebCore::CachedPage*) {

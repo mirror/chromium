@@ -242,6 +242,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\cpu.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\cpu.h"
+			>
+		</File>
+		<File
 			RelativePath="..\debug_on_start.cc"
 			>
 		</File>
@@ -550,6 +558,18 @@
 			>
 		</File>
 		<File
+			RelativePath="..\rand_util.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\rand_util.h"
+			>
+		</File>
+		<File
+			RelativePath="..\rand_util_win.cc"
+			>
+		</File>
+		<File
 			RelativePath="..\ref_counted.cc"
 			>
 		</File>
@@ -583,6 +603,10 @@
 		</File>
 		<File
 			RelativePath="..\scoped_handle.h"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_nsautorelease_pool.h"
 			>
 		</File>
 		<File
@@ -707,6 +731,18 @@
 		</File>
 		<File
 			RelativePath="..\sys_string_conversions_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\system_monitor.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\system_monitor.h"
+			>
+		</File>
+		<File
+			RelativePath="..\system_monitor_win.cc"
 			>
 		</File>
 		<File

@@ -28,7 +28,7 @@ if env['PLATFORM'] == 'posix':
 env.Prepend(
     CPPPATH = [
         '$WEBKIT_DIR/build/localized_strings',
-        '$WEBKIT_DIR/build/JSConfig/obj/WebCore',
+        '$WEBKIT_DIR/build/JSConfig/WebCore',
         '$WEBKIT_DIR/build/WebCore',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
@@ -115,7 +115,7 @@ env.Append(
     SHARED_DIR = env.Dir("$WEBKIT_DIR/V8Bindings/SharedSources"),
 
     CPPDEFINES = [
-      'U_STATIC_IMPLEMENTATION'
+      'U_STATIC_IMPLEMENTATION',
       '_SCL_SECURE_NO_DEPRECATE',
       '_SCL_SECURE_NO_WARNINGS',
       ['ENABLE_CROSS_DOCUMENT_MESSAGING', '1'],
@@ -129,7 +129,12 @@ env.Append(
       ['ANDROID_CANVAS_IMPL', '1'],
       ['WEBCORE_NAVIGATOR_PLATFORM', '"\\"Win32\\""'],
       'USE_GOOGLE_URL_LIBRARY',
-      'BUILDING_CHROMIUM__',
+      # TODO:  Uncomment this when building the merged WebKit,
+      # so it uses the PLATFORM_SKIA definitions instead of
+      # the old cairo.h shim.
+      #'BUILDING_CHROMIUM__',
+      'CHROMIUM_BUILD',
+      '_SECURE_ATL',
 
       'LIBXSLT_STATIC',
       'LIBXML_STATIC',
@@ -153,6 +158,8 @@ sconscript_dirs = [
   'build/V8Bindings/SConscript',
   'default_plugin/SConscript',
   'glue/SConscript',
+  'glue/plugins/test/SConscript',
+  'tools/npapi_layout_test_plugin/SConscript',
 ]
 if env['PLATFORM'] == 'win32':
   # These extra dirs aren't win32-specific, they're just the dirs that
@@ -164,10 +171,7 @@ if env['PLATFORM'] == 'win32':
     'build/WebCore/SConscript',  # This almost works on linux.  It requires
                                  # some changes to WebKit that we'll get
                                  # in the merge.
-    'glue/plugins/test/SConscript',
-    'tools/npapi_layout_test_plugin/SConscript',
     'tools/test_shell/SConscript',
-    'tools/test_shell/resources/fonts/SConscript',
   ])
 
   env.Append(
@@ -196,7 +200,8 @@ env.SConscript(sconscript_dirs, exports=['env', 'env_res'])
 # Instead we're going to let all the subsidiary SConscript files
 # add their own individual targets to the 'webkit' Alias.
 #env.Alias('webkit', ['.', '../icudt38.dll'])
-env.Alias('webkit', ['../icudt38.dll'])
+if env['PLATFORM'] == 'win32':
+  env.Alias('webkit', ['../icudt38.dll'])
 
 
 version = env.Command('$WEBKIT_DIR/build/WebCore/webkit_version.h',

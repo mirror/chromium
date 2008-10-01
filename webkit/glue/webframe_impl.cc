@@ -1225,7 +1225,50 @@ void WebFrameImpl::CancelPendingScopingEffort() {
   active_tickmark_ = WidgetClientWin::kNoTickmark;
 }
 
-void WebFrameImpl::StopFinding() {
+void WebFrameImpl::SetFindEndstateFocusAndSelection() {
+  WebFrameImpl* main_frame_impl =
+      static_cast<WebFrameImpl*>(GetView()->GetMainFrame());
+
+  if (this == main_frame_impl->active_tickmark_frame() &&
+      active_tickmark_ != WidgetClientWin::kNoTickmark) {
+    RefPtr<Range> range = tickmarks_[active_tickmark_];
+
+    // Set the selection to what the active match is.
+    frame()->selectionController()->setSelectedRange(
+        range.get(), WebCore::DOWNSTREAM, false);
+
+    // We will be setting focus ourselves, so we want the view to forget its
+    // stored focus node so that it won't change it after we are done.
+    static_cast<WebViewImpl*>(GetView())->ReleaseFocusReferences();
+
+    // Try to find the first focusable node up the chain, which will, for
+    // example, focus links if we have found text within the link.
+    Node* node = range->startNode();
+    while (node && !node->isFocusable() && node != frame()->document())
+      node = node->parent();
+
+    if (node && node != frame()->document()) {
+      // Found a focusable parent node. Set focus to it.
+      frame()->document()->setFocusedNode(node);
+    } else {
+      // Iterate over all the nodes in the range until we find a focusable node.
+      // This, for example, sets focus to the first link if you search for
+      // text and text that is within one or more links.
+      node = range->startNode();
+      while (node && node != range->pastEndNode()) {
+        if (node->isFocusable()) {
+          frame()->document()->setFocusedNode(node);
+          break;
+        }
+        node = node->traverseNextNode();
+      }
+    }
+  }
+}
+
+void WebFrameImpl::StopFinding(bool clear_selection) {
+  if (!clear_selection)
+    SetFindEndstateFocusAndSelection();
   CancelPendingScopingEffort();
 
   // Let the frame know that we don't want tickmarks or highlighting anymore.
@@ -1423,12 +1466,16 @@ void WebFrameImpl::Paint(gfx::PlatformCanvas* canvas, const gfx::Rect& rect) {
   StatsScope<StatsRate> rendering_scope(rendering);
 
   if (!rect.IsEmpty()) {
+    IntRect dirty_rect(rect.x(), rect.y(), rect.width(), rect.height());
+#if defined(OS_MACOSX)
+    CGContextRef context = canvas->getTopPlatformDevice().GetBitmapContext();
+    GraphicsContext gc(context);
+#else
     PlatformContextSkia context(canvas);
 
     // PlatformGraphicsContext is actually a pointer to PlatformContextSkia
     GraphicsContext gc(reinterpret_cast<PlatformGraphicsContext*>(&context));
-    IntRect dirty_rect(rect.x(), rect.y(), rect.width(), rect.height());
-
+#endif
     if (frame_->document() && frameview()) {
       frameview()->paint(&gc, dirty_rect);
     } else {

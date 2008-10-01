@@ -10,6 +10,7 @@
 
 #include <objidl.h>
 #include <shlobj.h>
+#include <shlwapi.h>
 
 #include "base/gfx/point.h"
 #include "base/message_loop.h"
@@ -486,7 +487,8 @@ void TestWebViewDelegate::ShowContextMenu(WebView* webview,
                                           const GURL& frame_url,
                                           const std::wstring& selection_text,
                                           const std::wstring& misspelled_word,
-                                          int edit_flags) {
+                                          int edit_flags,
+                                          const std::string& security_info) {
   CapturedContextMenuEvent context(type, x, y);
   captured_context_menu_events_.push_back(context);
 }

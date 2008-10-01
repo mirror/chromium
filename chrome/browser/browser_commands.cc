@@ -230,7 +230,7 @@ bool Browser::IsCommandEnabled(int id) const {
     }
     case IDC_STOP: {
       TabContents* current_tab = GetSelectedTabContents();
-      return (current_tab && current_tab->IsLoading());
+      return (current_tab && current_tab->is_loading());
     }
     case IDC_CLOSETAB: {
       return !IsApplication();
@@ -460,7 +460,7 @@ void Browser::ExecuteCommand(int id) {
       TabContents* current_tab = GetSelectedTabContents();
       if (current_tab && current_tab->AsWebContents()) {
         WebContents* wc = current_tab->AsWebContents();
-        wc->ShowJavaScriptConsole();
+        wc->render_view_host()->ShowJavaScriptConsole();
       }
       break;
     }
@@ -514,24 +514,30 @@ void Browser::ExecuteCommand(int id) {
     case IDC_ZOOM_PLUS: {
       UserMetrics::RecordAction(L"ZoomPlus", profile_);
       TabContents* current_tab = GetSelectedTabContents();
-      DCHECK(current_tab);
-      current_tab->AlterTextSize(text_zoom::TEXT_LARGER);
+      if (current_tab->AsWebContents()) {
+        current_tab->AsWebContents()->render_view_host()->AlterTextSize(
+          text_zoom::TEXT_LARGER);
+      }
       break;
     }
 
     case IDC_ZOOM_MINUS: {
       UserMetrics::RecordAction(L"ZoomMinus", profile_);
       TabContents* current_tab = GetSelectedTabContents();
-      DCHECK(current_tab);
-      current_tab->AlterTextSize(text_zoom::TEXT_SMALLER);
+      if (current_tab->AsWebContents()) {
+        current_tab->AsWebContents()->render_view_host()->AlterTextSize(
+          text_zoom::TEXT_SMALLER);
+      }
       break;
     }
 
     case IDC_ZOOM_NORMAL: {
       UserMetrics::RecordAction(L"ZoomNormal", profile_);
       TabContents* current_tab = GetSelectedTabContents();
-      DCHECK(current_tab);
-      current_tab->AlterTextSize(text_zoom::TEXT_STANDARD);
+      if (current_tab->AsWebContents()) {
+        current_tab->AsWebContents()->render_view_host()->AlterTextSize(
+          text_zoom::TEXT_STANDARD);
+      }
       break;
     }
 
@@ -629,7 +635,7 @@ void Browser::ExecuteCommand(int id) {
           CharacterEncoding::GetCanonicalEncodingNameByCommandId(id);
       TabContents* current_tab = GetSelectedTabContents();
       if (!cur_encoding_name.empty() && current_tab)
-        current_tab->SetPageEncoding(cur_encoding_name);
+        current_tab->set_encoding(cur_encoding_name);
       // Update user recently selected encoding list.
       std::wstring new_selected_encoding_list;
       if (CharacterEncoding::UpdateRecentlySelectdEncoding(
@@ -1029,36 +1035,43 @@ bool Browser::CanDuplicateContentsAt(int index) {
 
 void Browser::DuplicateContentsAt(int index) {
   TabContents* contents = GetTabContentsAt(index);
+  TabContents* new_contents = NULL;
   DCHECK(contents);
 
-  Browser* new_browser = NULL;
+  if (type_ == BrowserType::TABBED_BROWSER) {
+    // If this is a tabbed browser, just create a duplicate tab inside the same
+    // window next to the tab being duplicated.
+    new_contents = contents->controller()->Clone(
+        GetTopLevelHWND())->active_contents();
+    // If you duplicate a tab that is not selected, we need to make sure to
+    // select the tab being duplicated so that DetermineInsertionIndex returns
+    // the right index (if tab 5 is selected and we right-click tab 1 we want
+    // the new tab to appear in index position 2, not 6).
+    if (tabstrip_model_.selected_index() != index)
+      tabstrip_model_.SelectTabContentsAt(index, true);
+    tabstrip_model_.AddTabContents(new_contents, index + 1,
+                                   PageTransition::LINK, true);
+  } else {
+    Browser* new_browser = new Browser(gfx::Rect(), SW_SHOWNORMAL, profile(),
+                                       BrowserType::APPLICATION, app_name_);
 
-  BrowserType::Type t;
+    // We need to show the browser now. Otherwise HWNDViewContainer assumes
+    // the tab contents is invisible and won't size it.
+    new_browser->Show();
 
-  // Is this an application?
-  if (type_ == BrowserType::TABBED_BROWSER)
-    t = BrowserType::TABBED_BROWSER;
-  else
-    t = BrowserType::APPLICATION;
+    // The page transition below is only for the purpose of inserting the tab.
+    new_contents = new_browser->AddTabWithNavigationController(
+        contents->controller()->Clone(new_browser->GetTopLevelHWND()),
+        PageTransition::LINK);
 
-  new_browser = new Browser(gfx::Rect(), SW_SHOWNORMAL, profile(), t,
-                            app_name_);
+    new_browser->MoveToFront(true);
+  }
 
-  // We need to show the browser now. Otherwise HWNDViewContainer assumes
-  // the tab contents is invisible and won't size it.
-  new_browser->Show();
-
-  // The page transition below is only for the purpose of inserting the tab.
-  TabContents* new_contents = new_browser->AddTabWithNavigationController(
-      contents->controller()->Clone(new_browser->GetTopLevelHWND()),
-      PageTransition::LINK);
   if (profile_->HasSessionService()) {
     SessionService* session_service = profile_->GetSessionService();
     if (session_service)
       session_service->TabRestored(new_contents->controller());
   }
-
-  new_browser->MoveToFront(true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

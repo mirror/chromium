@@ -104,7 +104,7 @@ env_dll.Append(
         'net',
         'skia',
         'bzip2',
-        'icuuc',
+        env_dll['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
         'libjpeg',
         'libpng',
         'libxml',
@@ -126,6 +126,9 @@ env_dll.Append(
 if env_dll['PLATFORM'] == 'win32':
   env_dll.Append(
       LIBS = [
+          # TODO(sgk):  to be ported to Mac and Linux
+          'sdch',
+
           'comctl32.lib',
           'dwmapi.lib',
           'rpcrt4.lib',
@@ -174,6 +177,7 @@ input_files = []
 if env_dll['PLATFORM'] == 'win32':
   input_files.extend([
       'app/chrome_dll_main.cc',
+      '$V8_DIR/snapshot-empty$OBJSUFFIX',
   ])
 
 libs = [
@@ -186,11 +190,11 @@ libs = [
     'plugin/plugin.lib',
     'renderer/renderer.lib',
     'third_party/hunspell/hunspell.lib',
-    'third_party/libevent/libevent.lib',
+    # TODO(sgk):  libevent isn't used on Windows, revisit when Linux gets here
+    #'third_party/libevent/libevent.lib',
     'third_party/sqlite/sqlite.lib',
     'views/views.lib',
     '$V8_DIR/v8.lib',
-    '$V8_DIR/snapshot-empty$OBJSUFFIX',
 ]
 
 
@@ -239,7 +243,8 @@ if env_dll['PLATFORM'] == 'win32':
 
   def chrome_version_emitter(target, source, env):
       source.append('$CHROME_SRC_DIR/VERSION')
-      source.append('$CHROME_SRC_DIR/BRANDING')
+      # TODO(sgk):  parameterize for chromium-vs.-google_chrome
+      source.append('$CHROME_SRC_DIR/app/theme/google_chrome/BRANDING')
       return target, source
 
   b = Builder(action = '$CHROME_VERSION_RC_COM',
@@ -288,7 +293,7 @@ env_exe.Prepend(
     LIBS = [
         'base',
         'breakpad_handler',
-        'icuuc',
+        'icu',
         'sandbox',
         'util',
     ],
@@ -354,30 +359,6 @@ if env['PLATFORM'] == 'win32':
   #                  '$PYTHON tools/build/win/dependencies.py $(TargetPath) chrome.exe.deps')
 
 
-  env_snapshot = env.Clone()
-
-  env_snapshot.Prepend(
-      CPPPATH = [
-          '$V8_DIR/src',
-          '$V8_DIR/src/pcre/jscre',
-          '..',
-      ],
-      CPPDEFINES = [
-          'ENABLE_DISASSEMBLER',
-      ],
-      CCFLAGS = [
-          '/wd4099',
-          '/wd4355',
-          '/wd4800',
-      ],
-  )
-
-  env_snapshot.ChromeStaticLibrary('snapshotv8', 'snapshot.cc')
-
-  env_snapshot.Command('snapshot.cc', '#/../v8/bin/debug/mksnapshot.exe',
-                       '$SOURCE $TARGET')
-
-
 
 env_flat = env.Clone(
     BROWSER_RESOURCES = Dir('browser_resources'),
@@ -430,6 +411,8 @@ env.SConscript(test_sconscript_files, exports=['env_test'])
 sconscript_files = [
     'browser/SConscript',
     'common/SConscript',
+    'test/chrome_plugin/SConscript',
+    'third_party/hunspell/SConscript',
     '$THIRD_PARTY_DIR/sqlite/SConscript',
 ]
 
@@ -446,7 +429,6 @@ if env['PLATFORM'] == 'win32':
       'renderer/SConscript',
       'test/activex_test_control/SConscript',
       'test/automation/SConscript',
-      'test/chrome_plugin/SConscript',
       'test/interactive_ui/SConscript',
       'test/memory_test/SConscript',
       'test/mini_installer_test/SConscript',
@@ -460,7 +442,6 @@ if env['PLATFORM'] == 'win32':
       'tools/crash_service/SConscript',
       'tools/perf/flush_cache/SConscript',
       'tools/test/image_diff/SConscript',
-      'third_party/hunspell/SConscript',
       'views/SConscript',
   ])
 

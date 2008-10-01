@@ -60,7 +60,7 @@ env_tests.Append(
     LIBS = [
         'googleurl',
         'base',
-        'icuuc',
+        env_tests['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
         'gtest',
     ]
 )
@@ -79,3 +79,5 @@ test_files = [
 gurl_unittests = env_tests.ChromeTestProgram('googleurl_unittests', test_files)
 
 installed_gurl_unittests = env.Install('$TARGET_ROOT', gurl_unittests)
+
+env.Alias('googleurl', installed_gurl_unittests)

@@ -51,6 +51,7 @@ env = Environment(
     NET_DIR               = '#/$BUILD_TYPE/net',
     RLZ_DIR               = '#/$BUILD_TYPE/rlz',
     SANDBOX_DIR           = '#/$BUILD_TYPE/sandbox',
+    SDCH_DIR              = '#/$BUILD_TYPE/sdch',
     SKIA_DIR              = '#/$BUILD_TYPE/skia',
     TESTING_DIR           = '#/$BUILD_TYPE/testing',
     THIRD_PARTY_DIR       = '#/$BUILD_TYPE/third_party',
@@ -248,6 +249,8 @@ if env['PLATFORM'] == 'win32':
         '/nologo',
         '/DEBUG',
     ],
+
+    ICU_LIBS = ['icu'],
   )
 
   env.Append(
@@ -306,6 +309,7 @@ elif env['PLATFORM'] == 'posix':
       'chrome',
       'googleurl',
       'net',
+      'sdch',
       'skia',
       'testing',
       'third_party',
@@ -332,6 +336,8 @@ elif env['PLATFORM'] == 'posix':
                              'PERL_INCLUDE_PATH, '
                              'PERL_INCLUDE_SUFFIX,'
                              '__env__, RDirs, TARGET, SOURCE)}'),
+
+      ICU_LIBS = ['icu'],
   )
   # Build with support for gcov when COVERAGE=1.
   if ARGUMENTS.get('COVERAGE') == '1':
@@ -349,6 +355,7 @@ elif env['PLATFORM'] == 'darwin':
       #'breakpad',
       'googleurl',
       'net',
+      'sdch',
       'skia',
       'testing',
       'third_party',
@@ -367,6 +374,7 @@ elif env['PLATFORM'] == 'darwin':
       ],
       CXXFLAGS = [
           '-fvisibility-inlines-hidden',
+          '${str(SOURCE).endswith(".mm") and "-fobjc-gc" or ""}',
       ],
       CCFLAGS = [
           '-fmessage-length=0',
@@ -391,9 +399,12 @@ elif env['PLATFORM'] == 'darwin':
           '/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks',
       ],
       FRAMEWORKS = [
+          'AppKit',
           'ApplicationServices',
           'Foundation',
       ],
+
+      ICU_LIBS = ['icui18n', 'icuuc', 'icudata'],
   )
 
 else:
@@ -405,16 +416,11 @@ else:
 if ARGUMENTS.get('VERBOSE') in (None, '0'):
   env['CCCOMSTR'] = 'Compiling $TARGET ...'
   env['CXXCOMSTR'] = 'Compiling $TARGET ...'
+  env['SHCCCOMSTR'] = 'Compiling $TARGET ...'
+  env['SHCXXCOMSTR'] = 'Compiling $TARGET ...'
   env['ARCOMSTR'] = 'Archiving $TARGET ...'
   env['LINKCOMSTR'] = 'Linking $TARGET ...'
   env['BINDINGSCOMSTR'] = 'Building bindings in $TARGET ...'
-
-
-# Place the .sconsign.dblite in the build directory.
-target_dir = env.Dir('$TARGET_ROOT')
-if not os.path.exists(target_dir.abspath):
-  Execute(Mkdir(target_dir))
-SConsignFile(target_dir.File('.sconsign').abspath)
 
 
 # Add --clobber (for the buildbot).
@@ -423,6 +429,14 @@ AddOption('--clobber', action='store_true', dest='clobber', default=False,
           help='Delete build directory before building.')
 if GetOption('clobber'):
   shutil.rmtree(env.Dir('$TARGET_ROOT').abspath, True)
+
+
+# Place the .sconsign.dblite in the build directory.
+target_dir = env.Dir('$TARGET_ROOT')
+if not os.path.exists(target_dir.abspath):
+  Execute(Mkdir(target_dir))
+SConsignFile(target_dir.File('.sconsign').abspath)
+
 
 # Use timestamps change, followed by MD5 for speed
 env.Decider('MD5-timestamp')
@@ -478,6 +492,9 @@ if LoadComponent('rlz'):
 if LoadComponent('sandbox'):
   sconscripts.append('$SANDBOX_DIR/src/SConscript')
 
+if LoadComponent('sdch'):
+  sconscripts.append('$SDCH_DIR/SConscript')
+
 if LoadComponent('skia'):
   sconscripts.append('$SKIA_DIR/SConscript')
 
@@ -501,7 +518,7 @@ if LoadComponent('third_party'):
       '$LIBXML_DIR/SConscript',
       '$LIBXSLT_DIR/SConscript',
     ])
-  if env['PLATFORM'] == 'posix':
+  if env['PLATFORM'] in ('posix', 'darwin'):
     sconscripts.extend([
       '$LIBEVENT_DIR/SConscript',
     ])

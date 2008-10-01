@@ -144,7 +144,6 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
     // Flash only requests windowless plugins if we return a Mozilla user
     // agent.
     instance_->set_use_mozilla_user_agent();
-    instance_->set_throttle_invalidate(true);
     quirks_ |= PLUGIN_QUIRK_THROTTLE_WM_USER_PLUS_ONE;
   } else if (plugin_info.name.find(L"Windows Media Player") !=
              std::wstring::npos) {
@@ -255,11 +254,7 @@ void WebPluginDelegateImpl::UpdateGeometry(const gfx::Rect& window_rect,
                                            const gfx::Rect& clip_rect,
                                            bool visible) {
   if (windowless_) {
-    window_.window =
-        reinterpret_cast<void *>(::GetDC(instance_->window_handle()));
     WindowlessUpdateGeometry(window_rect, clip_rect);
-    ::ReleaseDC(instance_->window_handle(),
-                reinterpret_cast<HDC>(window_.window));
   } else {
     WindowedUpdateGeometry(window_rect, clip_rect, visible);
   }
@@ -306,10 +301,6 @@ void WebPluginDelegateImpl::DidFinishLoadWithReason(NPReason reason) {
 int WebPluginDelegateImpl::GetProcessId() {
   // We are in process, so the plugin pid is this current process pid.
   return ::GetCurrentProcessId();
-}
-
-HWND WebPluginDelegateImpl::GetWindowHandle() {
-  return instance()->window_handle();
 }
 
 void WebPluginDelegateImpl::SendJavaScriptStream(const std::string& url,
@@ -831,8 +822,12 @@ void WebPluginDelegateImpl::WindowlessPaint(HDC hdc,
   damage_rect_win.right  = damage_rect_win.left + damage_rect.width();
   damage_rect_win.bottom = damage_rect_win.top + damage_rect.height();
 
-  window_.window = (void*)hdc;
+  // We need to pass the HDC to the plugin via NPP_SetWindow in the
+  // first paint to ensure that it initiates rect invalidations.
+  if (window_.window == NULL)
+    windowless_needs_set_window_ = true;
 
+  window_.window = hdc;
   // TODO(darin): we should avoid calling NPP_SetWindow here since it may
   // cause page layout to be invalidated.
 
@@ -1067,4 +1062,3 @@ void WebPluginDelegateImpl::OnUserGestureEnd() {
   user_gesture_message_posted_ = false;
   instance()->PopPopupsEnabledState();
 }
-

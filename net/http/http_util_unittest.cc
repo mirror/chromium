@@ -28,7 +28,7 @@ TEST(HttpUtilTest, HasHeader) {
     { "fOO: 1\r\nbar: 2", "foo", true },
     { "g: 0\r\nfoo: 1\r\nbar: 2", "foo", true },
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     bool result = HttpUtil::HasHeader(tests[i].headers, tests[i].name);
     EXPECT_EQ(tests[i].expected_result, result);
   }
@@ -95,6 +95,37 @@ TEST(HttpUtilTest, ValuesIterator_Blanks) {
   EXPECT_FALSE(it.GetNext());
 }
 
+TEST(HttpUtilTest, Unquote) {
+  // Replace <backslash> " with ".
+  EXPECT_STREQ("xyz\"abc", HttpUtil::Unquote("\"xyz\\\"abc\"").c_str());
+
+  // Replace <backslash> <backslash> with <backslash>
+  EXPECT_STREQ("xyz\\abc", HttpUtil::Unquote("\"xyz\\\\abc\"").c_str());
+  EXPECT_STREQ("xyz\\\\\\abc",
+               HttpUtil::Unquote("\"xyz\\\\\\\\\\\\abc\"").c_str());
+
+  // Replace <backslash> X with X
+  EXPECT_STREQ("xyzXabc", HttpUtil::Unquote("\"xyz\\Xabc\"").c_str());
+
+  // Act as identity function on unquoted inputs.
+  EXPECT_STREQ("X", HttpUtil::Unquote("X").c_str());
+  EXPECT_STREQ("\"", HttpUtil::Unquote("\"").c_str());
+
+  // Allow single quotes to act as quote marks.
+  // Not part of RFC 2616.
+  EXPECT_STREQ("x\"", HttpUtil::Unquote("'x\"'").c_str());
+}
+
+TEST(HttpUtilTest, Quote) {
+  EXPECT_STREQ("\"xyz\\\"abc\"", HttpUtil::Quote("xyz\"abc").c_str());
+
+  // Replace <backslash> <backslash> with <backslash>
+  EXPECT_STREQ("\"xyz\\\\abc\"", HttpUtil::Quote("xyz\\abc").c_str());
+
+  // Replace <backslash> X with X
+  EXPECT_STREQ("\"xyzXabc\"", HttpUtil::Quote("xyzXabc").c_str());
+}
+
 TEST(HttpUtilTest, LocateEndOfHeaders) {
   struct {
     const char* input;
@@ -107,7 +138,7 @@ TEST(HttpUtilTest, LocateEndOfHeaders) {
     { "foo\nbar\n\r\njunk", 10 },
     { "foo\nbar\r\n\njunk", 10 },
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     int input_len = static_cast<int>(strlen(tests[i].input));
     int eoh = HttpUtil::LocateEndOfHeaders(tests[i].input, input_len);
     EXPECT_EQ(tests[i].expected_result, eoh);
@@ -404,7 +435,7 @@ TEST(HttpUtilTest, AssembleRawHeaders) {
     },
 
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     int input_len = static_cast<int>(strlen(tests[i].input));
     std::string raw = HttpUtil::AssembleRawHeaders(tests[i].input, input_len);
     std::replace(raw.begin(), raw.end(), '\0', '|');
@@ -435,7 +466,7 @@ TEST(HttpUtilTest, RequestUrlSanitize) {
       "/"
     }
   };
-  for (size_t i = 0; i < arraysize(tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     GURL url(GURL(tests[i].url));
     std::string expected_spec(tests[i].expected_spec);
     std::string expected_path(tests[i].expected_path);

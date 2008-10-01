@@ -198,7 +198,7 @@ BrowserAboutHandler::BrowserAboutHandler(Profile* profile,
                            SiteInstance* instance,
                            RenderViewHostFactory* render_view_factory) :
   WebContents(profile, instance, render_view_factory, MSG_ROUTING_NONE, NULL) {
-  type_ = TAB_CONTENTS_ABOUT_UI;
+  set_type(TAB_CONTENTS_ABOUT_UI);
 
   // We only need to register the AboutSource once and it is
   // kept globally.  There is currently no way to remove a data source.
@@ -263,7 +263,7 @@ std::string BrowserAboutHandler::AboutVersion() {
       l10n_util::GetString(IDS_ABOUT_VERSION_UNOFFICIAL));
   }
   localized_strings.SetString(L"useragent",
-      UTF8ToWide(webkit_glue::GetDefaultUserAgent()));
+      UTF8ToWide(webkit_glue::GetUserAgent()));
 
   static const StringPiece version_html(
       ResourceBundle::GetSharedInstance().GetRawDataResource(

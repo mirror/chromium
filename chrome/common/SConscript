@@ -87,7 +87,6 @@ if env['PLATFORM'] == 'win32':
       'clipboard_service.cc',
       'common_glue.cc',
       'drag_drop_types.cc',
-      'env_util.cc',
       'gfx/chrome_canvas.cc',
       'gfx/chrome_font.cc',
       'gfx/emf.cc',
@@ -105,11 +104,11 @@ if env['PLATFORM'] == 'win32':
       'logging_chrome.cc',
       'message_router.cc',
       'net/url_request_intercept_job.cc',
+      'notification_registrar.cc',
       'os_exchange_data.cc',
       'plugin_messages.cc',
       'pref_service.cc',
       'process_watcher.cc',
-      'rand_util.cc',
       'render_messages.cc',
       'resource_bundle.cc',
       'resource_dispatcher.cc',
@@ -138,7 +137,7 @@ env_test.Append(
     LIBS = [
         'base',
         'gtest',
-        'icuuc',
+        env_test['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
     ],
 )
 

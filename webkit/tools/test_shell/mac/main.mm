@@ -14,6 +14,7 @@
 #include "base/file_util.h"
 #include "base/icu_util.h"
 #include "base/memory_debug.h"
+#include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "webkit/glue/webkit_glue.h"
@@ -50,6 +51,10 @@ int main(const int argc, const char *argv[]) {
 
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
+  // Allocate a message loop for this thread.  Although it is not used
+  // directly, its constructor sets up some necessary state.
+  MessageLoop main_message_loop(MessageLoop::TYPE_UI);
+
   // Force AppKit to init itself, but don't start the runloop yet
   [NSApplication sharedApplication];
   [NSBundle loadNibNamed:@"MainMenu" owner:NSApp];
@@ -58,6 +63,7 @@ int main(const int argc, const char *argv[]) {
   // the windows version, so that we can run the same test scripts. stop
   // if we hit something that's not a switch (like, oh, a URL).
 
+  CommandLine::SetArgcArgv(argc, argv);
   CommandLine parsed_command_line(argc, argv);
 
   if (parsed_command_line.HasSwitch(test_shell::kStartupDialog)) {
@@ -235,9 +241,7 @@ int main(const int argc, const char *argv[]) {
         TestShell::RunFileTest(WideToUTF8(uri).c_str(), params);
       }
     } else {
-      // we've done our own command line parsing, so tell AppKit that we just
-      // have the program name.
-      [NSApp run];
+      main_message_loop.Run();
     }
 
 #ifdef NOTYET

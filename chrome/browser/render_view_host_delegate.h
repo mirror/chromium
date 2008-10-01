@@ -57,8 +57,32 @@ class RenderViewHostDelegate {
                            bool final_update) = 0;
   };
 
-  // Returns the current find in page delegate, if any.
-  virtual FindInPage* GetFindInPageDelegate() { return NULL; }
+  // Interface for saving web pages.
+  class Save {
+   public:
+    // Notification that we get when we receive all savable links of
+    // sub-resources for the current page, their referrers and list of frames
+    // (include main frame and sub frames).
+    virtual void OnReceivedSavableResourceLinksForCurrentPage(
+        const std::vector<GURL>& resources_list,
+        const std::vector<GURL>& referrers_list,
+        const std::vector<GURL>& frames_list) = 0;
+
+    // Notification that we get when we receive serialized html content data of
+    // a specified web page from render process. The parameter frame_url
+    // specifies what frame the data belongs. The parameter data contains the
+    // available data for sending. The parameter status indicates the
+    // serialization status, See
+    // webkit_glue::DomSerializerDelegate::PageSavingSerializationStatus for
+    // the detail meaning of status.
+    virtual void OnReceivedSerializedHtmlData(const GURL& frame_url,
+                                              const std::string& data,
+                                              int32 status) = 0;
+  };
+
+  // Returns the current delegate associated with a feature. May be NULL.
+  virtual FindInPage* GetFindInPageDelegate() const { return NULL; }
+  virtual Save* GetSaveDelegate() const { return NULL; }
 
   // Retrieves the profile to be used.
   virtual Profile* GetProfile() const = 0;
@@ -211,12 +235,6 @@ class RenderViewHostDelegate {
   virtual void GetHistoryListCount(int* back_list_count,
                                    int* forward_list_count) { }
 
-  // The page wants to open a plugin to display the given URL, of a certain
-  // content type. |reply_msg| contains the name of the plugin.
-  virtual void OpenChannelToPlugin(const GURL& url,
-                                   const std::string& mime_type,
-                                   IPC::Message* reply_msg) { }
-
   // A file chooser should be shown.
   virtual void RunFileChooser(const std::wstring& default_file) { }
 
@@ -290,24 +308,6 @@ class RenderViewHostDelegate {
 
   // Notification from the renderer that JS runs out of memory.
   virtual void OnJSOutOfMemory() { }
-
-  // Notification that we get when we receive all savable links of
-  // sub-resources for the current page, their referrers and list of frames
-  // (include main frame and sub frames).
-  virtual void OnReceivedSavableResourceLinksForCurrentPage(
-      const std::vector<GURL>& resources_list,
-      const std::vector<GURL>& referrers_list,
-      const std::vector<GURL>& frames_list) { }
-
-  // Notification that we get when we receive serialized html content data of a
-  // specified web page from render process. The parameter frame_url specifies
-  // what frame the data belongs. The parameter data contains the available
-  // data for sending. The parameter status indicates the serialization status,
-  // See webkit_glue::DomSerializerDelegate::PageSavingSerializationStatus for
-  // the detail meaning of status.
-  virtual void OnReceivedSerializedHtmlData(const GURL& frame_url,
-                                            const std::string& data,
-                                            int32 status) { }
 
   // Notification whether we should close the page, after an explicit call to
   // AttemptToClosePage.  This is called before a cross-site request or before

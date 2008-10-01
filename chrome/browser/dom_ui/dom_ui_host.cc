@@ -20,7 +20,7 @@ DOMUIHost::DOMUIHost(Profile* profile,
                   MSG_ROUTING_NONE,
                   NULL) {
   // Implementors of this class will have a specific tab contents type.
-  type_ = TAB_CONTENTS_UNKNOWN_TYPE;
+  set_type(TAB_CONTENTS_UNKNOWN_TYPE);
 }
 
 DOMUIHost::~DOMUIHost() {
@@ -111,6 +111,7 @@ void DOMUIHost::ExecuteJavascript(const std::wstring& javascript) {
   // URL is interpreted, it will be unescaped.
   std::wstring escaped_js(javascript);
   ReplaceSubstringsAfterOffset(&escaped_js, 0, L"%", L"%25");
-  ExecuteJavascriptInWebFrame(L"", L"javascript:" + escaped_js);
+  render_view_host()->ExecuteJavascriptInWebFrame(std::wstring(),
+                                                  L"javascript:" + escaped_js);
 }
 

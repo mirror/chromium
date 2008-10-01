@@ -1861,6 +1861,14 @@
 				RelativePath=".\net\dns_slave.h"
 				>
 			</File>
+			<File
+				RelativePath=".\net\sdch_dictionary_fetcher.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\sdch_dictionary_fetcher.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="RLZ"
@@ -1947,6 +1955,30 @@
 			</File>
 			<File
 				RelativePath=".\safe_browsing\safe_browsing_util.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Accessibility"
+			>
+			<File
+				RelativePath=".\browser_accessibility.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\browser_accessibility.h"
+				>
+			</File>
+			<File
+				RelativePath=".\browser_accessibility_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\browser_accessibility_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\iaccessible_function_ids.h"
 				>
 			</File>
 		</Filter>

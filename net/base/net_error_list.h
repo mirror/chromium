@@ -35,6 +35,9 @@ NET_ERROR(FILE_TOO_BIG, -8)
 // invalid assumption.
 NET_ERROR(UNEXPECTED, -9)
 
+// Permission to access a resource was denied.
+NET_ERROR(ACCESS_DENIED, -10)
+
 // A connection was closed (corresponding to a TCP FIN).
 NET_ERROR(CONNECTION_CLOSED, -100)
 
@@ -191,6 +194,9 @@ NET_ERROR(INVALID_RESPONSE, -320)
 
 // Error in chunked transfer encoding.
 NET_ERROR(INVALID_CHUNKED_ENCODING, -321)
+
+// The server did not support the request method.
+NET_ERROR(METHOD_NOT_SUPPORTED, -322)
 
 // The cache does not have the requested entry.
 NET_ERROR(CACHE_MISS, -400)

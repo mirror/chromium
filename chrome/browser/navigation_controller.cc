@@ -492,9 +492,14 @@ bool NavigationController::RendererDidNavigate(
     const ViewHostMsg_FrameNavigate_Params& params,
     bool is_interstitial,
     LoadCommittedDetails* details) {
-  // Save the previous URL before we clobber it.
-  if (GetLastCommittedEntry())
+  // Save the previous state before we clobber it.
+  if (GetLastCommittedEntry()) {
     details->previous_url = GetLastCommittedEntry()->url();
+    details->previous_entry_index = GetLastCommittedEntryIndex();
+  } else {
+    details->previous_url = GURL();
+    details->previous_entry_index = -1;
+  }
 
   // Assign the current site instance to any pending entry, so we can find it
   // later by calling GetEntryIndexWithPageID. We only care about this if the
@@ -508,27 +513,28 @@ bool NavigationController::RendererDidNavigate(
     pending_entry_->set_site_instance(active_contents_->GetSiteInstance());
 
   // Do navigation-type specific actions. These will make and commit an entry.
-  switch (ClassifyNavigation(params)) {
-    case NAV_NEW_PAGE:
+  details->type = ClassifyNavigation(params);
+  switch (details->type) {
+    case NavigationType::NEW_PAGE:
       RendererDidNavigateToNewPage(params);
       break;
-    case NAV_EXISTING_PAGE:
+    case NavigationType::EXISTING_PAGE:
       RendererDidNavigateToExistingPage(params);
       break;
-    case NAV_SAME_PAGE:
+    case NavigationType::SAME_PAGE:
       RendererDidNavigateToSamePage(params);
       break;
-    case NAV_IN_PAGE:
+    case NavigationType::IN_PAGE:
       RendererDidNavigateInPage(params);
       break;
-    case NAV_NEW_SUBFRAME:
+    case NavigationType::NEW_SUBFRAME:
       RendererDidNavigateNewSubframe(params);
       break;
-    case NAV_AUTO_SUBFRAME:
+    case NavigationType::AUTO_SUBFRAME:
       if (!RendererDidNavigateAutoSubframe(params))
         return false;
       break;
-    case NAV_IGNORE:
+    case NavigationType::NAV_IGNORE:
       // There is nothing we can do with this navigation, so we just return to
       // the caller that nothing has happened.
       return false;
@@ -561,6 +567,7 @@ bool NavigationController::RendererDidNavigate(
   details->is_main_frame = PageTransition::IsMainFrame(params.transition);
   details->is_interstitial = is_interstitial;
   details->serialized_security_info = params.security_info;
+  details->is_content_filtered = params.is_content_filtered;
   NotifyNavigationEntryCommitted(details);
 
   // It is now a safe time to schedule collection for any tab contents of a
@@ -569,7 +576,7 @@ bool NavigationController::RendererDidNavigate(
   return true;
 }
 
-NavigationController::NavClass NavigationController::ClassifyNavigation(
+NavigationType::Type NavigationController::ClassifyNavigation(
     const ViewHostMsg_FrameNavigate_Params& params) const {
   // If a page makes a popup navigated to about blank, and then writes stuff
   // like a subframe navigated to a real site, we'll get a notification with an
@@ -577,7 +584,7 @@ NavigationController::NavClass NavigationController::ClassifyNavigation(
   if (params.page_id == -1) {
     DCHECK(!GetActiveEntry()) << "Got an invalid page ID but we seem to be "
       " navigated to a valid page. This should be impossible.";
-    return NAV_IGNORE;
+    return NavigationType::NAV_IGNORE;
   }
 
   if (params.page_id > active_contents_->GetMaxPageID()) {
@@ -585,8 +592,18 @@ NavigationController::NavClass NavigationController::ClassifyNavigation(
     // not have a pending entry for the page, and this may or may not be the
     // main frame.
     if (PageTransition::IsMainFrame(params.transition))
-      return NAV_NEW_PAGE;
-    return NAV_NEW_SUBFRAME;
+      return NavigationType::NEW_PAGE;
+
+    // When this is a new subframe navigation, we should have a committed page
+    // for which it's a suframe in. This may not be the case when an iframe is
+    // navigated on a popup navigated to about:blank (the iframe would be
+    // written into the popup by script on the main page). For these cases,
+    // there isn't any navigation stuff we can do, so just ignore it.
+    if (!GetLastCommittedEntry())
+      return NavigationType::NAV_IGNORE;
+
+    // Valid subframe navigation.
+    return NavigationType::NEW_SUBFRAME;
   }
 
   // Now we know that the notification is for an existing page. Find that entry.
@@ -599,7 +616,7 @@ NavigationController::NavClass NavigationController::ClassifyNavigation(
     // back/forward entries (not likely since we'll usually tell it to navigate
     // to such entries). It could also mean that the renderer is smoking crack.
     NOTREACHED();
-    return NAV_IGNORE;
+    return NavigationType::NAV_IGNORE;
   }
   NavigationEntry* existing_entry = entries_[existing_entry_index].get();
 
@@ -615,18 +632,23 @@ NavigationController::NavClass NavigationController::ClassifyNavigation(
     // (the user doesn't want to have a new back/forward entry when they do
     // this). In this case, we want to just ignore the pending entry and go
     // back to where we were (the "existing entry").
-    return NAV_SAME_PAGE;
+    return NavigationType::SAME_PAGE;
   }
 
   if (AreURLsInPageNavigation(existing_entry->url(), params.url))
-    return NAV_IN_PAGE;
+    return NavigationType::IN_PAGE;
 
-  if (!PageTransition::IsMainFrame(params.transition))
-    return NAV_AUTO_SUBFRAME;  // All manual subframes would get new IDs and
-                               // were handled above.
+  if (!PageTransition::IsMainFrame(params.transition)) {
+    // All manual subframes would get new IDs and were handled above, so we
+    // know this is auto. Since the current page was found in the navigation
+    // entry list, we're guaranteed to have a last committed entry.
+    DCHECK(GetLastCommittedEntry());
+    return NavigationType::AUTO_SUBFRAME;
+  }
+
   // Since we weeded out "new" navigations above, we know this is an existing
-  // navigation.
-  return NAV_EXISTING_PAGE;
+  // (back/forward) navigation.
+  return NavigationType::EXISTING_PAGE;
 }
 
 void NavigationController::RendererDidNavigateToNewPage(
@@ -663,8 +685,8 @@ void NavigationController::RendererDidNavigateToExistingPage(
   DCHECK(PageTransition::IsMainFrame(params.transition));
 
   // This is a back/forward navigation. The existing page for the ID is
-  // guaranteed to exist, and we just need to update it with new information
-  // from the renderer.
+  // guaranteed to exist by ClassifyNavigation, and we just need to update it
+  // with new information from the renderer.
   int entry_index = GetEntryIndexWithPageID(
       active_contents_->type(),
       active_contents_->GetSiteInstance(),
@@ -690,15 +712,14 @@ void NavigationController::RendererDidNavigateToExistingPage(
   if (entry == pending_entry_)
     DiscardPendingEntryInternal();
   
-  int old_committed_entry_index = last_committed_entry_index_;
   last_committed_entry_index_ = entry_index;
-  IndexOfActiveEntryChanged(old_committed_entry_index);
 }
 
 void NavigationController::RendererDidNavigateToSamePage(
     const ViewHostMsg_FrameNavigate_Params& params) {
   // This mode implies we have a pending entry that's the same as an existing
-  // entry for this page ID. All we need to do is update the existing entry.
+  // entry for this page ID. This entry is guaranteed to exist by
+  // ClassifyNavigation. All we need to do is update the existing entry.
   NavigationEntry* existing_entry = GetEntryWithPageID(
       active_contents_->type(),
       active_contents_->GetSiteInstance(),
@@ -737,7 +758,8 @@ void NavigationController::RendererDidNavigateNewSubframe(
   // can go back or forward to it. The actual subframe information will be
   // stored in the page state for each of those entries. This happens out of
   // band with the actual navigations.
-  DCHECK(GetLastCommittedEntry());
+  DCHECK(GetLastCommittedEntry()) << "ClassifyNavigation should guarantee "
+                                  << "that a last committed entry exists.";
   NavigationEntry* new_entry = new NavigationEntry(*GetLastCommittedEntry());
   new_entry->set_page_id(params.page_id);
   InsertEntry(new_entry);
@@ -764,9 +786,7 @@ bool NavigationController::RendererDidNavigateAutoSubframe(
 
   // Update the current navigation entry in case we're going back/forward.
   if (entry_index != last_committed_entry_index_) {
-    int old_committed_entry_index = last_committed_entry_index_;
     last_committed_entry_index_ = entry_index;
-    IndexOfActiveEntryChanged(old_committed_entry_index);
     return true;
   }
   return false;
@@ -778,19 +798,22 @@ void NavigationController::CommitPendingEntry() {
 
   // Need to save the previous URL for the notification.
   LoadCommittedDetails details;
-  if (GetLastCommittedEntry())
+  if (GetLastCommittedEntry()) {
     details.previous_url = GetLastCommittedEntry()->url();
+    details.previous_entry_index = GetLastCommittedEntryIndex();
+  } else {
+    details.previous_entry_index = -1;
+  }
 
   if (pending_entry_index_ >= 0) {
     // This is a previous navigation (back/forward) that we're just now
     // committing. Just mark it as committed.
+    details.type = NavigationType::EXISTING_PAGE;
     int new_entry_index = pending_entry_index_;
     DiscardPendingEntryInternal();
 
     // Mark that entry as committed.
-    int old_committed_entry_index = last_committed_entry_index_;
     last_committed_entry_index_ = new_entry_index;
-    IndexOfActiveEntryChanged(old_committed_entry_index);
   } else {
     // This is a new navigation. It's easiest to just copy the entry and insert
     // it new again, since InsertEntry expects to take ownership and also
@@ -798,6 +821,7 @@ void NavigationController::CommitPendingEntry() {
     // only do this because this function will only be called by our custom
     // TabContents types. For WebContents, the IDs are generated by the
     // renderer, so we can't do this.
+    details.type = NavigationType::NEW_PAGE;
     pending_entry_->set_page_id(active_contents_->GetMaxPageID() + 1);
     active_contents_->UpdateMaxPageID(pending_entry_->page_id());
     InsertEntry(new NavigationEntry(*pending_entry_));
@@ -834,16 +858,18 @@ void NavigationController::RemoveLastEntryForInterstitial() {
     if (last_committed_entry_index_ >= current_size - 1) {
       last_committed_entry_index_ = current_size - 2;
 
-      // Broadcast the notification of the navigation. This is kind of a hack,
-      // since the navigation wasn't actually committed. But this function is
-      // used for interstital pages, and the UI needs to get updated when the
-      // interstitial page
-      LoadCommittedDetails details;
-      details.entry = GetActiveEntry();
-      details.is_auto = false;
-      details.is_in_page = false;
-      details.is_main_frame = true;
-      NotifyNavigationEntryCommitted(&details);
+      if (last_committed_entry_index_ != -1) {
+        // Broadcast the notification of the navigation. This is kind of a hack,
+        // since the navigation wasn't actually committed. But this function is
+        // used for interstital pages, and the UI needs to get updated when the
+        // interstitial page
+        LoadCommittedDetails details;
+        details.entry = GetActiveEntry();
+        details.is_auto = false;
+        details.is_in_page = false;
+        details.is_main_frame = true;
+        NotifyNavigationEntryCommitted(&details);
+      }
     }
 
     NotifyPrunedEntries(this, false, 1);
@@ -883,13 +909,13 @@ void NavigationController::DiscardPendingEntry() {
   NavigationEntry* last_entry = GetLastCommittedEntry();
   if (last_entry && last_entry->tab_type() != active_contents_->type()) {
     TabContents* from_contents = active_contents_;
-    from_contents->SetActive(false);
+    from_contents->set_is_active(false);
 
     // Switch back to the previous tab contents.
     active_contents_ = GetTabContents(last_entry->tab_type());
     DCHECK(active_contents_);
 
-    active_contents_->SetActive(true);
+    active_contents_->set_is_active(true);
 
     // If we are transitioning from two types of WebContents, we need to migrate
     // the download shelf if it is visible. The download shelf may have been
@@ -945,10 +971,6 @@ void NavigationController::InsertEntry(NavigationEntry* entry) {
 
   // This is a new page ID, so we need everybody to know about it.
   active_contents_->UpdateMaxPageID(entry->page_id());
-  
-  // TODO(brettw) this seems bogus. The tab contents can listen for the
-  // notification or use the details that we pass back to it.
-  active_contents_->NotifyDidNavigate(NAVIGATION_NEW, 0);
 }
 
 void NavigationController::SetWindowID(const SessionID& id) {
@@ -972,14 +994,14 @@ void NavigationController::NavigateToPendingEntry(bool reload) {
   pending_entry_->ssl() = NavigationEntry::SSLStatus();
 
   if (from_contents && from_contents->type() != pending_entry_->tab_type())
-    from_contents->SetActive(false);
+    from_contents->set_is_active(false);
 
   HWND parent =
       from_contents ? GetParent(from_contents->GetContainerHWND()) : 0;
   TabContents* contents =
       GetTabContentsCreateIfNecessary(parent, *pending_entry_);
 
-  contents->SetActive(true);
+  contents->set_is_active(true);
   active_contents_ = contents;
 
   if (from_contents && from_contents != contents) {
@@ -1006,19 +1028,6 @@ void NavigationController::NotifyNavigationEntryCommitted(
       NOTIFY_NAV_ENTRY_COMMITTED,
       Source<NavigationController>(this),
       Details<LoadCommittedDetails>(details));
-}
-
-void NavigationController::IndexOfActiveEntryChanged(int prev_committed_index) {
-  NavigationType nav_type = NAVIGATION_BACK_FORWARD;
-  int relative_navigation_offset =
-      GetLastCommittedEntryIndex() - prev_committed_index;
-  if (relative_navigation_offset == 0)
-    nav_type = NAVIGATION_REPLACE;
-
-  // TODO(brettw) I don't think this call should be necessary. There is already
-  // a notification of this event that could be used, or maybe all the tab
-  // contents' know when we navigate (WebContents does).
-  active_contents_->NotifyDidNavigate(nav_type, relative_navigation_offset);
 }
 
 TabContents* NavigationController::GetTabContentsCreateIfNecessary(

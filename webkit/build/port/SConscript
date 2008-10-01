@@ -7,7 +7,7 @@ import re
 
 Import('env')
 
-webcore = env.Dir('$WEBKIT_DIR/WebCore')
+webcore = env.Dir('#../third_party/WebKit/WebCore')
 webcore_posix = webcore.abspath.replace('\\', '/')
 
 cygwin = env.Dir('$CYGWIN_DIR/bin')
@@ -19,8 +19,23 @@ webkit_build = env.Dir('#../webkit/build')
 bindings_output_dir = env.Dir('#/../webkit/$BUILD_TYPE/scons/V8Bindings')
 
 
+def PosixIncludes(env, prefix, files, suffix):
+  # This is basically a custom version of the _concat() function,
+  # which we need because the binding script needs posix style paths,
+  # even on windows, and _concat() doesn't make that easy to do...  :-(
+  #
+  # Note that because we're not using the RDirs function that the
+  # normal _concat() call uses, this will only add the build
+  # directory paths, not the paths in the underlying source directory,
+  # to its list.
+  posix_files = [str(env.Dir(f).abspath).replace('\\', '/') for f in files]
+  combined = [prefix + f + suffix for f in posix_files]
+  return ' '.join(combined)
+
+
 env = env.Clone(
     WEBCORE = webcore,
+    PENDING = pending,
     PORTROOT = portroot,
     WEBKIT_BUILD = webkit_build,
 
@@ -51,19 +66,25 @@ env = env.Clone(
     ],
 
     BINDINGS_INCLUDE_PATH = [
+        '$PENDING',
+        '$PORTROOT/dom',
+        '$PORTROOT/html',
+        '$PORTROOT/page',
+        '$PORTROOT/xml',
+        '$WEBCORE/svg',
         '$WEBCORE/dom',
         '$WEBCORE/html',
         '$WEBCORE/css',
         '$WEBCORE/page',
         '$WEBCORE/xml',
-        '$WEBCORE/svg',
     ],
     BINDINGS_INCLUDE_FLAG = '--include ',
     BINDINGS_INCLUDE_SUFFIX = '',
-    _BINDINGS_INCLUDE_FLAGS = '${_concat(BINDINGS_INCLUDE_FLAG, ' + \
-                                        'BINDINGS_INCLUDE_PATH, ' + \
-                                        'BINDINGS_INCLUDE_SUFFIX, ' + \
-                                        '__env__, RDirs, TARGET, SOURCE)}',
+    _posix_includes = PosixIncludes,
+    _BINDINGS_INCLUDE_FLAGS = '${_posix_includes(__env__, ' + \
+                              'BINDINGS_INCLUDE_FLAG, ' + \
+                              'BINDINGS_INCLUDE_PATH, ' + \
+                              'BINDINGS_INCLUDE_SUFFIX)}',
 )
 
 env.PrependENVPath('PATH', cygwin_posix)
@@ -98,12 +119,9 @@ env.Append(
 )
 
 env.Replace(
-    # TODO(bradnelson): don't have the path change here!!!
     # TODO(bradnelson): fix ugly hack with one include!
     BINDINGSCOM = '$PERL $_PERL_INCLUDE_FLAGS ' + \
-                  '${SOURCES[1]} ' + \
-                  '--include ../webkit/port/dom ' + \
-                  '--include ../third_party/WebKit/WebCore/svg ' + \
+                  '${SOURCES[1].posix} ' + \
                   '--defines "$FEATURE_DEFINES $BINDINGS_LANGUAGE" ' + \
                   '--generator $BINDINGS_GENERATOR_ARG ' + \
                   '$_BINDINGS_INCLUDE_FLAGS ' + \
@@ -126,12 +144,6 @@ elif True:
   env['BINDINGS_GENERATOR_ARG'] = 'V8'
   env['BINDINGS_LANGUAGE'] = 'LANGUAGE_JAVASCRIPT V8_BINDING'
   env.Prepend(PERL_INCLUDE_PATH = [ '$PORTROOT/bindings/scripts' ])
-  env.Prepend(BINDINGS_INCLUDE_PATH = [
-                '$PORTROOT/dom',
-                '$PORTROOT/html',
-                '$PORTROOT/page',
-                '$PORTROOT/xml',
-              ])
 else:
   print 'I am not going to generate bindings for you!'
 

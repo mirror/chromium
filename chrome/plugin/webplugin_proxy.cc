@@ -4,14 +4,19 @@
 
 #include "chrome/plugin/webplugin_proxy.h"
 
+#include "base/gfx/bitmap_header.h"
+#include "base/gfx/platform_device_win.h"
 #include "base/scoped_handle.h"
+#include "base/shared_memory.h"
 #include "base/singleton.h"
+#include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/plugin_messages.h"
+#include "chrome/common/win_util.h"
 #include "chrome/plugin/plugin_channel.h"
 #include "chrome/plugin/webplugin_delegate_stub.h"
 #include "chrome/plugin/npobject_proxy.h"
 #include "chrome/plugin/npobject_util.h"
-#include "webkit/glue/webplugin_delegate.h"
+#include "webkit/glue/plugins/webplugin_delegate_impl.h"
 
 typedef std::map<CPBrowsingContext, WebPluginProxy*> ContextMap;
 static ContextMap& GetContextMap() {
@@ -21,7 +26,7 @@ static ContextMap& GetContextMap() {
 WebPluginProxy::WebPluginProxy(
     PluginChannel* channel,
     int route_id,
-    WebPluginDelegate* delegate,
+    WebPluginDelegateImpl* delegate,
     HANDLE modal_dialog_event)
     : channel_(channel),
       route_id_(route_id),
@@ -74,21 +79,25 @@ void WebPluginProxy::CancelResource(int id) {
 }
 
 void WebPluginProxy::Invalidate() {
-  Send(new PluginHostMsg_Invalidate(route_id_));
+  gfx::Rect rect(0, 0, delegate_->rect().width(), delegate_->rect().height());
+  InvalidateRect(rect);
 }
 
 void WebPluginProxy::InvalidateRect(const gfx::Rect& rect) {
   // Ignore NPN_InvalidateRect calls with empty rects.
-  if (rect.IsEmpty()) {
+  if (rect.IsEmpty())
     return;
-  }
-  // Only send a single InvalidateRect message at a time.  From WillPaint we
+
+  damaged_rect_ = damaged_rect_.Union(rect);
+  // Only send a single InvalidateRect message at a time.  From DidPaint we
   // will dispatch an additional InvalidateRect message if necessary.
-  if (waiting_for_paint_) {
-    damaged_rect_ = damaged_rect_.Union(rect);
-  } else {
+  if (!waiting_for_paint_) {
     waiting_for_paint_ = true;
-    Send(new PluginHostMsg_InvalidateRect(route_id_, rect));
+    // Paint to the plugin bitmap and let the renderer know so it can update
+    // its backing store.
+    Paint(damaged_rect_);
+    Send(new PluginHostMsg_InvalidateRect(route_id_, damaged_rect_));
+    damaged_rect_ = gfx::Rect();
   }
 }
 
@@ -190,14 +199,12 @@ WebPluginResourceClient* WebPluginProxy::GetResourceClient(int id) {
   return iterator->second;
 }
 
-void WebPluginProxy::WillPaint() {
+void WebPluginProxy::DidPaint() {
   // If we have an accumulated damaged rect, then check to see if we need to
   // send out another InvalidateRect message.
   waiting_for_paint_ = false;
-  if (!damaged_rect_.IsEmpty()) {
+  if (!damaged_rect_.IsEmpty())
     InvalidateRect(damaged_rect_);
-    damaged_rect_ = gfx::Rect();
-  }
 }
 
 void WebPluginProxy::OnResourceCreated(int resource_id, HANDLE cookie) {
@@ -241,6 +248,115 @@ void WebPluginProxy::HandleURLRequest(const char *method,
   params.popups_allowed = popups_allowed;
 
   Send(new PluginHostMsg_URLRequest(route_id_, params));
+}
+
+void WebPluginProxy::Paint(const gfx::Rect& rect) {
+  if (!windowless_hdc_)
+    return;
+
+  // Clear the damaged area so that if the plugin doesn't paint there we won't
+  // end up with the old values.
+  gfx::Rect offset_rect = rect;
+      offset_rect.Offset(delegate_->rect().x(), delegate_->rect().y());
+  if (!background_hdc_) {
+    FillRect(windowless_hdc_, &offset_rect.ToRECT(),
+        static_cast<HBRUSH>(GetStockObject(BLACK_BRUSH)));
+  } else {
+    BitBlt(windowless_hdc_, offset_rect.x(), offset_rect.y(),
+      offset_rect.width(), offset_rect.height(), background_hdc_,
+      rect.x(), rect.y(), SRCCOPY);
+  }
+
+  // Before we send the invalidate, paint so that renderer uses the updated
+  // bitmap.
+  delegate_->Paint(windowless_hdc_, offset_rect);
+}
+
+void WebPluginProxy::UpdateGeometry(
+    const gfx::Rect& window_rect,
+    const gfx::Rect& clip_rect,
+    bool visible,
+    const SharedMemoryHandle& windowless_buffer,
+    const SharedMemoryHandle& background_buffer) {
+      gfx::Rect old = delegate_->rect();
+  bool moved = delegate_->rect().x() != window_rect.x() ||
+               delegate_->rect().y() != window_rect.y();
+  delegate_->UpdateGeometry(window_rect, clip_rect, visible);
+  if (windowless_buffer) {
+    // The plugin's rect changed, so now we have a new buffer to draw into.
+    SetWindowlessBuffer(windowless_buffer, background_buffer);
+  } else if (moved) {
+    // The plugin moved, so update our world transform.
+    UpdateTransform();
+  }
+}
+
+void WebPluginProxy::SetWindowlessBuffer(
+    const SharedMemoryHandle& windowless_buffer,
+    const SharedMemoryHandle& background_buffer) {
+  // Convert the shared memory handle to a handle that works in our process,
+  // and then use that to create an HDC.
+  ConvertBuffer(windowless_buffer,
+                &windowless_shared_section_,
+                &windowless_bitmap_,
+                &windowless_hdc_);
+  if (background_buffer) {
+    ConvertBuffer(background_buffer,
+                  &background_shared_section_,
+                  &background_bitmap_,
+                  &background_hdc_);
+  }
+  UpdateTransform();
+}
+
+void WebPluginProxy::ConvertBuffer(const SharedMemoryHandle& buffer,
+                                   ScopedHandle* shared_section,
+                                   ScopedBitmap* bitmap,
+                                   ScopedHDC* hdc) {
+  shared_section->Set(win_util::GetSectionFromProcess(
+      buffer, channel_->renderer_handle(), false));
+  if (shared_section->Get() == NULL) {
+    NOTREACHED();
+    return;
+  }
+
+  void* data = NULL;
+  HDC screen_dc = GetDC(NULL);
+  BITMAPINFOHEADER bitmap_header;
+  gfx::CreateBitmapHeader(delegate_->rect().width(),
+                          delegate_->rect().height(),
+                          &bitmap_header);
+  bitmap->Set(CreateDIBSection(
+      screen_dc, reinterpret_cast<const BITMAPINFO*>(&bitmap_header),
+      DIB_RGB_COLORS, &data, shared_section->Get(), 0));
+  ReleaseDC(NULL, screen_dc);
+  if (bitmap->Get() == NULL) {
+    NOTREACHED();
+    return;
+  }
+
+  hdc->Set(CreateCompatibleDC(NULL));
+  if (hdc->Get() == NULL) {
+    NOTREACHED();
+    return;
+  }
+
+  gfx::PlatformDeviceWin::InitializeDC(hdc->Get());
+  SelectObject(hdc->Get(), bitmap->Get());
+}
+
+void WebPluginProxy::UpdateTransform() {
+  if (!windowless_hdc_)
+    return;
+
+  XFORM xf;
+  xf.eDx = static_cast<FLOAT>(-delegate_->rect().x());
+  xf.eDy = static_cast<FLOAT>(-delegate_->rect().y());
+  xf.eM11 = 1;
+  xf.eM21 = 0;
+  xf.eM12 = 0;
+  xf.eM22 = 1;
+  SetWorldTransform(windowless_hdc_, &xf);
 }
 
 void WebPluginProxy::CancelDocumentLoad() {

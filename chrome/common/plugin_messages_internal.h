@@ -102,17 +102,16 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
                              PluginMsg_Init_Params,
                              bool /* result */)
 
+  // Used to synchronously request a paint for windowless plugins.
   IPC_SYNC_MESSAGE_ROUTED1_0(PluginMsg_Paint,
-                             PluginMsg_Paint_Params /* params */)
+                             gfx::Rect /* damaged_rect */)
+
+  // Sent by the renderer after it paints from its backing store so that the
+  // plugin knows it can send more invalidates.
+  IPC_MESSAGE_ROUTED0(PluginMsg_DidPaint)
 
   IPC_SYNC_MESSAGE_ROUTED0_1(PluginMsg_Print,
                              PluginMsg_PrintResponse_Params /* params */)
-
-  // Returns a shared memory handle to a EMF buffer.
-  IPC_SYNC_MESSAGE_ROUTED1_2(PluginMsg_PaintIntoSharedMemory,
-                             PluginMsg_Paint_Params /* params */,
-                             SharedMemoryHandle /* emf_buffer */,
-                             size_t /* bytes */)
 
   IPC_SYNC_MESSAGE_ROUTED0_2(PluginMsg_GetPluginScriptableObject,
                              int /* route_id */,
@@ -121,10 +120,16 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
   IPC_SYNC_MESSAGE_ROUTED1_0(PluginMsg_DidFinishLoadWithReason,
                              int /* reason */)
 
-  IPC_MESSAGE_ROUTED3(PluginMsg_UpdateGeometry,
+  // Updates the plugin location.  For windowless plugins, windowless_buffer
+  // contains a buffer that the plugin draws into.  background_buffer is used
+  // for transparent windowless plugins, and holds the background of the plugin
+  // rectangle.
+  IPC_MESSAGE_ROUTED5(PluginMsg_UpdateGeometry,
                       gfx::Rect /* window_rect */,
                       gfx::Rect /* clip_rect */,
-                      bool /* visible */)
+                      bool /* visible */,
+                      SharedMemoryHandle /* windowless_buffer */,
+                      SharedMemoryHandle /* background_buffer */)
 
   IPC_SYNC_MESSAGE_ROUTED0_0(PluginMsg_SetFocus)
 
@@ -203,8 +208,6 @@ IPC_BEGIN_MESSAGES(PluginHost, 6)
 
   IPC_SYNC_MESSAGE_ROUTED1_0(PluginHostMsg_CancelResource,
                              int /* id */)
-
-  IPC_MESSAGE_ROUTED0(PluginHostMsg_Invalidate)
 
   IPC_MESSAGE_ROUTED1(PluginHostMsg_InvalidateRect,
                       gfx::Rect /* rect */)

@@ -5,37 +5,17 @@
 #include "net/base/x509_certificate.h"
 
 #include <CommonCrypto/CommonDigest.h>
-#include <map>
 #include <time.h>
 
 #include "base/histogram.h"
-#include "base/lock.h"
+#include "base/logging.h"
 #include "base/pickle.h"
-#include "base/singleton.h"
-#include "base/string_tokenizer.h"
-#include "base/string_util.h"
 #include "net/base/cert_status_flags.h"
 #include "net/base/ev_root_ca_metadata.h"
-
-// NOTE: This Mac implementation is almost entirely untested. TODO(avi): test
-// it to make sure it does what the docs imply it does.
-// NOTE: This implementation doesn't keep track of dates. Calling code is
-// expected to use SecTrustEvaluate(x509cert.os_cert_handle()) and look at the
-// result there.
 
 namespace net {
 
 namespace {
-
-// Returns true if this cert fingerprint is the null (all zero) fingerprint.
-// We use this as a bogus fingerprint value.
-bool IsNullFingerprint(const X509Certificate::Fingerprint& fingerprint) {
-  for (size_t i = 0; i < arraysize(fingerprint.data); ++i) {
-    if (fingerprint.data[i] != 0)
-      return false;
-  }
-  return true;
-}
 
 // Calculates the SHA-1 fingerprint of the certificate.  Returns an empty
 // (all zero) fingerprint on failure.
@@ -141,8 +121,9 @@ OSStatus GetCertFieldsForOID(X509Certificate::OSCertHandle cert_handle,
   return status;
 }    
 
-void GetCertStringsForOID(X509Certificate::OSCertHandle cert_handle,
-                          CSSM_OID oid, std::vector<std::string>* result) {
+void GetCertGeneralNamesForOID(X509Certificate::OSCertHandle cert_handle,
+                               CSSM_OID oid, CE_GeneralNameType name_type,
+                               std::vector<std::string>* result) {
   uint32 num_of_fields;
   CSSM_FIELD_PTR fields;
   OSStatus status = GetCertFieldsForOID(cert_handle, oid, &num_of_fields,
@@ -152,17 +133,39 @@ void GetCertStringsForOID(X509Certificate::OSCertHandle cert_handle,
   
   for (size_t field = 0; field < num_of_fields; ++field) {
     if (CSSMOIDEqual(&fields[field].FieldOid, &oid)) {
-      std::string value =
+      CSSM_X509_EXTENSION_PTR cssm_ext =
+          (CSSM_X509_EXTENSION_PTR)fields[field].FieldValue.Data;
+      CE_GeneralNames* alt_name =
+          (CE_GeneralNames*) cssm_ext->value.parsedValue;
+      
+      for (size_t name = 0; name < alt_name->numNames; ++name) {
+        const CE_GeneralName& name_struct = alt_name->generalName[name];
+        // For future extension: We're assuming that these values are of types
+        // GNT_RFC822Name, GNT_DNSName or GNT_URI, all of which are encoded as
+        // IA5String. In general, we should be switching off
+        // |name_struct.nameType| and doing type-appropriate conversions. See
+        // certextensions.h and the comment immediately preceding
+        // CE_GeneralNameType for more information.
+        DCHECK(name_struct.nameType == GNT_RFC822Name ||
+               name_struct.nameType == GNT_DNSName ||
+               name_struct.nameType == GNT_URI);
+        if (name_struct.nameType == name_type) {
+          const CSSM_DATA& name_data = name_struct.name;
+          std::string value =
           std::string(reinterpret_cast<std::string::value_type*>
-                      (fields[field].FieldValue.Data),
-                      fields[field].FieldValue.Length);
-      result->push_back(value);
+                      (name_data.Data),
+                      name_data.Length);
+          result->push_back(value);
+        }
+      }
     }
   }
 }
 
 void GetCertDateForOID(X509Certificate::OSCertHandle cert_handle,
                        CSSM_OID oid, Time* result) {
+  *result = Time::Time(); 
+  
   uint32 num_of_fields;
   CSSM_FIELD_PTR fields;
   OSStatus status = GetCertFieldsForOID(cert_handle, oid, &num_of_fields,
@@ -172,20 +175,27 @@ void GetCertDateForOID(X509Certificate::OSCertHandle cert_handle,
   
   for (size_t field = 0; field < num_of_fields; ++field) {
     if (CSSMOIDEqual(&fields[field].FieldOid, &oid)) {
-      CSSM_X509_TIME *x509_time =
+      CSSM_X509_TIME* x509_time =
           reinterpret_cast<CSSM_X509_TIME *>(fields[field].FieldValue.Data);
       std::string time_string =
           std::string(reinterpret_cast<std::string::value_type*>
                       (x509_time->time.Data),
                       x509_time->time.Length);
       
+      DCHECK(x509_time->timeType == BER_TAG_UTC_TIME ||
+             x509_time->timeType == BER_TAG_GENERALIZED_TIME);
+      
       struct tm time;
-      const char *parse_string;
+      const char* parse_string;
       if (x509_time->timeType == BER_TAG_UTC_TIME)
         parse_string = "%y%m%d%H%M%SZ";
       else if (x509_time->timeType == BER_TAG_GENERALIZED_TIME)
         parse_string = "%y%m%d%H%M%SZ";
-      // else log?
+      else {
+        // Those are the only two BER tags for time; if neither are used then
+        // this is a rather broken cert.
+        return;
+      }
       
       strptime(time_string.c_str(), parse_string, &time);
       
@@ -200,95 +210,12 @@ void GetCertDateForOID(X509Certificate::OSCertHandle cert_handle,
       exploded.millisecond  = 0;
       
       *result = Time::FromUTCExploded(exploded);
+      break;
     }
   }
 }
 
 }  // namespace
-
-bool X509Certificate::FingerprintLessThan::operator()(
-    const Fingerprint& lhs,
-    const Fingerprint& rhs) const {
-  for (size_t i = 0; i < sizeof(lhs.data); ++i) {
-    if (lhs.data[i] < rhs.data[i])
-      return true;
-    if (lhs.data[i] > rhs.data[i])
-      return false;
-  }
-  return false;
-}
-
-bool X509Certificate::LessThan::operator()(X509Certificate* lhs,
-                                           X509Certificate* rhs) const {
-  if (lhs == rhs)
-    return false;
-
-  X509Certificate::FingerprintLessThan fingerprint_functor;
-  return fingerprint_functor(lhs->fingerprint_, rhs->fingerprint_);
-}
-
-// A thread-safe cache for X509Certificate objects.
-//
-// The cache does not hold a reference to the certificate objects.  The objects
-// must |Remove| themselves from the cache upon destruction (or else the cache
-// will be holding dead pointers to the objects).
-class X509Certificate::Cache {
- public:
-  // Get the singleton object for the cache.
-  static X509Certificate::Cache* GetInstance() {
-    return Singleton<X509Certificate::Cache>::get();
-  }
-
-  // Insert |cert| into the cache.  The cache does NOT AddRef |cert|.  The cache
-  // must not already contain a certificate with the same fingerprint.
-  void Insert(X509Certificate* cert) {
-    AutoLock lock(lock_);
-
-    DCHECK(!IsNullFingerprint(cert->fingerprint())) <<
-        "Only insert certs with real fingerprints.";
-    DCHECK(cache_.find(cert->fingerprint()) == cache_.end());
-    cache_[cert->fingerprint()] = cert;
-  };
-
-  // Remove |cert| from the cache.  The cache does not assume that |cert| is
-  // already in the cache.
-  void Remove(X509Certificate* cert) {
-    AutoLock lock(lock_);
-
-    CertMap::iterator pos(cache_.find(cert->fingerprint()));
-    if (pos == cache_.end())
-      return;  // It is not an error to remove a cert that is not in the cache.
-    cache_.erase(pos);
-  };
-
-  // Find a certificate in the cache with the given fingerprint.  If one does
-  // not exist, this method returns NULL.
-  X509Certificate* Find(const Fingerprint& fingerprint) {
-    AutoLock lock(lock_);
-
-    CertMap::iterator pos(cache_.find(fingerprint));
-    if (pos == cache_.end())
-      return NULL;
-
-    return pos->second;
-  };
-
- private:
-  typedef std::map<Fingerprint, X509Certificate*, FingerprintLessThan> CertMap;
-
-  // Obtain an instance of X509Certificate::Cache via GetInstance().
-  Cache() { }
-  friend struct DefaultSingletonTraits<X509Certificate::Cache>;
-
-  // You must acquire this lock before using any private data of this object.
-  // You must not block while holding this lock.
-  Lock lock_;
-
-  // The certificate cache.  You must acquire |lock_| before using |cache_|.
-  CertMap cache_;
-
-  DISALLOW_COPY_AND_ASSIGN(Cache);
-};
 
 void X509Certificate::Initialize() {
   const CSSM_X509_NAME* name;
@@ -395,10 +322,8 @@ X509Certificate::~X509Certificate() {
 void X509Certificate::GetDNSNames(std::vector<std::string>* dns_names) const {
   dns_names->clear();
   
-  GetCertStringsForOID(cert_handle_, CSSMOID_SubjectAltName, dns_names);
-  
-  // TODO(avi): wtc says we need more parsing here. Return and fix when the
-  // unit tests are complete and we can verify we're doing this right.
+  GetCertGeneralNamesForOID(cert_handle_, CSSMOID_SubjectAltName, GNT_DNSName,
+                            dns_names);
   
   if (dns_names->empty())
     dns_names->push_back(subject_.common_name);
@@ -418,38 +343,4 @@ bool X509Certificate::IsEV(int cert_status) const {
   return false;
 }
 
-X509Certificate::Policy::Judgment X509Certificate::Policy::Check(
-    X509Certificate* cert) const {
-  // It shouldn't matter which set we check first, but we check denied first
-  // in case something strange has happened.
-
-  if (denied_.find(cert->fingerprint()) != denied_.end()) {
-    // DCHECK that the order didn't matter.
-    DCHECK(allowed_.find(cert->fingerprint()) == allowed_.end());
-    return DENIED;
-  }
-
-  if (allowed_.find(cert->fingerprint()) != allowed_.end()) {
-    // DCHECK that the order didn't matter.
-    DCHECK(denied_.find(cert->fingerprint()) == denied_.end());
-    return ALLOWED;
-  }
-
-  // We don't have a policy for this cert.
-  return UNKNOWN;
-}
-
-void X509Certificate::Policy::Allow(X509Certificate* cert) {
-  // Put the cert in the allowed set and (maybe) remove it from the denied set.
-  denied_.erase(cert->fingerprint());
-  allowed_.insert(cert->fingerprint());
-}
-
-void X509Certificate::Policy::Deny(X509Certificate* cert) {
-  // Put the cert in the denied set and (maybe) remove it from the allowed set.
-  allowed_.erase(cert->fingerprint());
-  denied_.insert(cert->fingerprint());
-}
-
 }  // namespace net
-

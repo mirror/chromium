@@ -237,7 +237,7 @@ bool DecodeWord(const std::string& encoded_word,
   // UTF-16 assuming it's in the OS default encoding.
   if (!IsStringASCII(encoded_word)) {
     // Try falling back to the NativeMB encoding if the raw input is not UTF-8.
-    if (IsStringUTF8(encoded_word.c_str())) {
+    if (IsStringUTF8(encoded_word)) {
       *output = encoded_word;
     } else {
       *output = WideToUTF8(base::SysNativeMBToWide(encoded_word));
@@ -328,7 +328,7 @@ bool DecodeWord(const std::string& encoded_word,
   // support a rudimentary form of RFC 2231 with charset label, but
   // it'd gain us little in terms of compatibility.
   tmp = UnescapeURLComponent(encoded_word, UnescapeRule::SPACES);
-  if (IsStringUTF8(tmp.c_str())) {
+  if (IsStringUTF8(tmp)) {
     output->swap(tmp);
     return true;
     // We can try either the OS default charset or 'origin charset' here,
@@ -911,6 +911,28 @@ bool IsPortAllowedByFtp(int port) {
   }
   // Port not explicitly allowed by FTP, so return the default restrictions.
   return IsPortAllowedByDefault(port);
+}
+
+std::string GetImplicitPort(const GURL& url) {
+  if (url.has_port())
+    return url.port();
+
+  // TODO(eroman): unify with DefaultPortForScheme()
+  // [url_canon_stdurl.cc]
+
+  static const struct {
+    const char* scheme;
+    const char* port;
+  } scheme_map[] = {
+    { "http", "80" },
+    { "https", "443" },
+    { "ftp", "21" }
+  };
+  for (int i = 0; i < static_cast<int>(ARRAYSIZE_UNSAFE(scheme_map)); ++i) {
+    if (url.SchemeIs(scheme_map[i].scheme))
+      return scheme_map[i].port;
+  }
+  return std::string("");
 }
 
 }  // namespace net

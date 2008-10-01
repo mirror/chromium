@@ -128,6 +128,9 @@ const wchar_t kDomAutomationController[]       = L"dom-automation";
 // Tells the plugin process the path of the plugin to load
 const wchar_t kPluginPath[]                    = L"plugin-path";
 
+// A string used to override the default user agent with a custom one.
+const wchar_t kUserAgent[]                     = L"user-agent";
+
 // Specifies the flags passed to JS engine
 const wchar_t kJavaScriptFlags[]               = L"js-flags";
 
@@ -312,10 +315,20 @@ const wchar_t kGearsInRenderer[] = L"gears-in-renderer";
 // Enable new HTTP stack.
 const wchar_t kUseNewHttp[] = L"new-http";
 
+// Enable the fastback page cache.
+const wchar_t kEnableFastback[] = L"enable-fastback";
+
 // Allow loading of the javascript debugger UI from the filesystem.
 const wchar_t kJavaScriptDebuggerPath[] = L"javascript-debugger-path";
 
 const wchar_t kEnableP13n[] = L"enable-p13n";
+
+// Enable support for SDCH filtering (dictionary based expansion of content).
+// Optional argument is *the* only domain name that will have SDCH suppport.
+// Default is  "-enable-sdch" to advertise SDCH on all domains.
+// Sample usage with argument: "-enable-sdch=.google.com"
+// SDCH is currently only supported server-side for searches on google.com.
+const wchar_t kSdchFilter[] = L"enable-sdch";
 
 }  // namespace switches
 

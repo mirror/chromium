@@ -2,23 +2,26 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/platform_test.h"
 #include "net/base/address_list.h"
 #include "net/base/host_resolver.h"
 #include "net/base/net_errors.h"
+#include "net/base/scoped_host_mapper.h"
 #include "net/base/tcp_client_socket.h"
 #include "net/base/test_completion_callback.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-//-----------------------------------------------------------------------------
-
-namespace {
-
-class TCPClientSocketTest : public testing::Test {
+class TCPClientSocketTest : public PlatformTest {
+ public:
+  TCPClientSocketTest() {
+    // TODO(darin): kill this exception once we have a way to test out the
+    // TCPClientSocket class using loopback connections.
+    host_mapper_.AddRule("www.google.com", "www.google.com");
+  }
+ private:
+  net::ScopedHostMapper host_mapper_;
 };
 
-}  // namespace
-
-//-----------------------------------------------------------------------------
 
 TEST_F(TCPClientSocketTest, Connect) {
   net::AddressList addr;
@@ -168,4 +171,3 @@ TEST_F(TCPClientSocketTest, Read_Interrupted) {
 
   EXPECT_NE(rv, 0);
 }
-

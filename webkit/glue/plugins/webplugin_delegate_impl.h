@@ -51,7 +51,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   virtual NPObject* GetPluginScriptableObject();
   virtual void DidFinishLoadWithReason(NPReason reason);
   virtual int GetProcessId();
-  virtual HWND GetWindowHandle();
 
   virtual void FlushGeometryUpdates() {
   }
@@ -77,9 +76,8 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
 
   virtual void URLRequestRouted(const std::string&url, bool notify_needed,
                                 void* notify_data);
-  bool windowless() const {
-    return windowless_;
-  }
+  bool windowless() const { return windowless_ ; }
+  gfx::Rect rect() const { return window_rect_; }
 
   enum PluginQuirks {
     PLUGIN_QUIRK_SETWINDOW_TWICE = 1,

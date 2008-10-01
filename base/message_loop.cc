@@ -13,6 +13,9 @@
 #include "base/string_util.h"
 #include "base/thread_local.h"
 
+#if defined(OS_MACOSX)
+#include "base/message_pump_mac.h"
+#endif
 #if defined(OS_POSIX)
 #include "base/message_pump_libevent.h"
 #endif
@@ -75,22 +78,30 @@ MessageLoop::MessageLoop(Type type)
   DCHECK(!current()) << "should only have one message loop per thread";
   lazy_tls_ptr.Pointer()->Set(this);
 
-  // TODO(darin): Choose the pump based on the requested type.
 #if defined(OS_WIN)
+  // TODO(rvargas): Get rid of the OS guards.
   if (type_ == TYPE_DEFAULT) {
     pump_ = new base::MessagePumpDefault();
+  } else if (type_ == TYPE_IO) {
+    pump_ = new base::MessagePumpForIO();
   } else {
-    pump_ = new base::MessagePumpWin();
+    DCHECK(type_ == TYPE_UI);
+    pump_ = new base::MessagePumpForUI();
   }
 #elif defined(OS_POSIX)
+#if defined(OS_MACOSX)
+  if (type_ == TYPE_UI) {
+    pump_ = base::MessagePumpMac::Create();
+  } else
+#endif  // OS_MACOSX
   if (type_ == TYPE_IO) {
     pump_ = new base::MessagePumpLibevent();
   } else {
     pump_ = new base::MessagePumpDefault();
   }
-#else
+#else  // OS_POSIX
   pump_ = new base::MessagePumpDefault();
-#endif
+#endif  // OS_POSIX
 }
 
 MessageLoop::~MessageLoop() {
@@ -384,9 +395,9 @@ bool MessageLoop::DoWork() {
       PendingTask pending_task = work_queue_.front();
       work_queue_.pop();
       if (!pending_task.delayed_run_time.is_null()) {
-        bool was_empty = delayed_work_queue_.empty();
         AddToDelayedWorkQueue(pending_task);
-        if (was_empty)  // We only schedule the next delayed work item.
+        // If we changed the topmost task, then it is time to re-schedule.
+        if (delayed_work_queue_.top().task == pending_task.task)
           pump_->ScheduleDelayedWork(pending_task.delayed_run_time);
       } else {
         if (DeferOrRunPendingTask(pending_task))
@@ -568,7 +579,7 @@ void MessageLoopForUI::PumpOutPendingPaintMessages() {
 #if defined(OS_WIN)
 
 void MessageLoopForIO::WatchObject(HANDLE object, Watcher* watcher) {
-  pump_win()->WatchObject(object, watcher);
+  pump_io()->WatchObject(object, watcher);
 }
 
 #elif defined(OS_POSIX)

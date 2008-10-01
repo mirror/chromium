@@ -4,13 +4,21 @@
 
 #include "net/http/http_network_transaction.h"
 
+#include "base/scoped_ptr.h"
+#include "base/compiler_specific.h"
 #include "base/string_util.h"
 #include "base/trace_event.h"
+#include "build/build_config.h"
 #include "net/base/client_socket_factory.h"
 #include "net/base/host_resolver.h"
 #include "net/base/load_flags.h"
+#include "net/base/net_util.h"
+#if defined(OS_WIN)
 #include "net/base/ssl_client_socket.h"
+#endif
 #include "net/base/upload_data_stream.h"
+#include "net/http/http_auth.h"
+#include "net/http/http_auth_handler.h"
 #include "net/http/http_chunked_decoder.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_request_info.h"
@@ -18,8 +26,8 @@
 
 // TODO(darin):
 //  - authentication
-//  - proxies (need to call ReconsiderProxyAfterError and handle SSL tunnel)
-//  - ssl
+//    + pre-emptive authorization
+//    + use the username/password encoded in the URL.
 
 namespace net {
 
@@ -27,8 +35,8 @@ namespace net {
 
 HttpNetworkTransaction::HttpNetworkTransaction(HttpNetworkSession* session,
                                                ClientSocketFactory* csf)
-#pragma warning(suppress: 4355)
-    : io_callback_(this, &HttpNetworkTransaction::OnIOComplete),
+    : ALLOW_THIS_IN_INITIALIZER_LIST(
+          io_callback_(this, &HttpNetworkTransaction::OnIOComplete)),
       user_callback_(NULL),
       session_(session),
       request_(NULL),
@@ -82,7 +90,33 @@ int HttpNetworkTransaction::RestartWithAuth(
     const std::wstring& username,
     const std::wstring& password,
     CompletionCallback* callback) {
-  return ERR_FAILED;  // TODO(darin): implement me!
+
+  DCHECK(NeedAuth(HttpAuth::AUTH_PROXY) ||
+         NeedAuth(HttpAuth::AUTH_SERVER));
+
+  // Figure out whether this username password is for proxy or server.
+  // Proxy gets set first, then server.
+  HttpAuth::Target target = NeedAuth(HttpAuth::AUTH_PROXY) ?
+      HttpAuth::AUTH_PROXY : HttpAuth::AUTH_SERVER;
+
+  // Update the username/password.
+  auth_data_[target]->state = AUTH_STATE_HAVE_AUTH;
+  auth_data_[target]->username = username;
+  auth_data_[target]->password = password;
+
+  next_state_ = STATE_INIT_CONNECTION;
+  connection_.set_socket(NULL);
+  connection_.Reset();
+
+  // Reset the other member variables.
+  ResetStateForRestart();
+
+  DCHECK(user_callback_ == NULL);
+  int rv = DoLoop(OK);
+  if (rv == ERR_IO_PENDING)
+    user_callback_ = callback;
+
+  return rv;
 }
 
 int HttpNetworkTransaction::Read(char* buf, int buf_len,
@@ -195,6 +229,8 @@ void HttpNetworkTransaction::BuildRequestHeaders() {
     request_headers_ += "Cache-Control: max-age=0\r\n";
   }
 
+  ApplyAuth();
+
   // TODO(darin): Need to prune out duplicate headers.
 
   request_headers_ += request_->extra_headers;
@@ -205,12 +241,7 @@ void HttpNetworkTransaction::BuildRequestHeaders() {
 // in draft-luotonen-web-proxy-tunneling-01.txt and RFC 2817, Sections 5.2 and
 // 5.3.
 void HttpNetworkTransaction::BuildTunnelRequest() {
-  std::string port;
-  if (request_->url.has_port()) {
-    port = request_->url.port();
-  } else {
-    port = "443";
-  }
+  std::string port = GetImplicitPort(request_->url);
 
   // RFC 2616 Section 9 says the Host request-header field MUST accompany all
   // HTTP/1.1 requests.
@@ -223,8 +254,7 @@ void HttpNetworkTransaction::BuildTunnelRequest() {
   if (!request_->user_agent.empty())
     request_headers_ += "User-Agent: " + request_->user_agent + "\r\n";
 
-  // TODO(wtc): Add the Proxy-Authorization header, if necessary, to handle
-  // proxy authentication.
+  ApplyAuth();
 
   request_headers_ += "\r\n";
 }
@@ -435,8 +465,11 @@ int HttpNetworkTransaction::DoResolveHost() {
 }
 
 int HttpNetworkTransaction::DoResolveHostComplete(int result) {
-  if (result == OK)
+  if (result == OK) {
     next_state_ = STATE_CONNECT;
+  } else {
+    result = ReconsiderProxyAfterError(result);
+  }
   return result;
 }
 
@@ -457,12 +490,15 @@ int HttpNetworkTransaction::DoConnect() {
 }
 
 int HttpNetworkTransaction::DoConnectComplete(int result) {
+  if (IsCertificateError(result))
+    result = HandleCertificateError(result);
+
   if (result == OK) {
     next_state_ = STATE_WRITE_HEADERS;
     if (using_tunnel_)
       establishing_tunnel_ = true;
-  } else if (IsCertificateError(result)) {
-    result = HandleCertificateError(result);
+  } else {
+    result = ReconsiderProxyAfterError(result);
   }
   return result;
 }
@@ -470,6 +506,7 @@ int HttpNetworkTransaction::DoConnectComplete(int result) {
 int HttpNetworkTransaction::DoSSLConnectOverTunnel() {
   next_state_ = STATE_SSL_CONNECT_OVER_TUNNEL_COMPLETE;
 
+  // Add a SSL socket on top of our existing transport socket.
   ClientSocket* s = connection_.release_socket();
   s = socket_factory_->CreateSSLClientSocket(s, request_->url.host());
   connection_.set_socket(s);
@@ -477,11 +514,11 @@ int HttpNetworkTransaction::DoSSLConnectOverTunnel() {
 }
 
 int HttpNetworkTransaction::DoSSLConnectOverTunnelComplete(int result) {
-  if (result == OK) {
-    next_state_ = STATE_WRITE_HEADERS;
-  } else if (IsCertificateError(result)) {
+  if (IsCertificateError(result))
     result = HandleCertificateError(result);
-  }
+
+  if (result == OK)
+    next_state_ = STATE_WRITE_HEADERS;
   return result;
 }
 
@@ -572,6 +609,9 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
   if (result < 0)
     return HandleIOError(result);
 
+  if (result == 0 && ShouldResendRequest())
+    return result;
+
   // Record our best estimate of the 'response time' as the time when we read
   // the first bytes of the response headers.
   if (header_buf_len_ == 0)
@@ -631,6 +671,10 @@ int HttpNetworkTransaction::DoReadBody() {
   DCHECK(connection_.is_initialized());
 
   next_state_ = STATE_READ_BODY_COMPLETE;
+
+  // We may have already consumed the indicated content length.
+  if (content_length_ != -1 && content_read_ >= content_length_)
+    return 0;
 
   // We may have some data remaining in the header buffer.
   if (header_buf_.get() && header_buf_body_offset_ < header_buf_len_) {
@@ -711,18 +755,17 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     headers = new HttpResponseHeaders(std::string("HTTP/0.9 200 OK"));
   }
 
-  if (establishing_tunnel_ &&
-      headers->GetParsedHttpVersion() < HttpVersion(1, 0)) {
-    // Require the "HTTP/1.x" status line.
-    return ERR_TUNNEL_CONNECTION_FAILED;
-  }
+  if (headers->GetParsedHttpVersion() < HttpVersion(1, 0)) {
+    // Require the "HTTP/1.x" status line for SSL CONNECT.
+    if (establishing_tunnel_)
+      return ERR_TUNNEL_CONNECTION_FAILED;
 
-  // HTTP/0.9 doesn't support the PUT method, so lack of response headers
-  // indicates a buggy server.
-  // See: https://bugzilla.mozilla.org/show_bug.cgi?id=193921
-  if (headers->GetHttpVersion() == HttpVersion(0, 9) &&
-      request_->method == "PUT")
-    return ERR_ABORTED;
+    // HTTP/0.9 doesn't support the PUT method, so lack of response headers
+    // indicates a buggy server.  See:
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=193921
+    if (request_->method == "PUT")
+      return ERR_METHOD_NOT_SUPPORTED;
+  }
 
   // Check for an intermediate 100 Continue response.  An origin server is
   // allowed to send this response even if we didn't ask for it, so we just
@@ -755,9 +798,12 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     return OK;
   }
 
-  // TODO(wtc): Handle 401 server or 407 proxy authentication challenge.
   response_.headers = headers;
   response_.vary_data.Init(*request_, *response_.headers);
+
+  int rv = PopulateAuthChallenge();
+  if (rv != OK)
+    return rv;
 
   // Figure how to determine EOF:
 
@@ -773,7 +819,7 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
   if (content_length_ == -1) {
     // Ignore spurious chunked responses from HTTP/1.0 servers and proxies.
     // Otherwise "Transfer-Encoding: chunked" trumps "Content-Length: N"
-    if (response_.headers->GetHttpVersion() != HttpVersion(1, 0) &&
+    if (response_.headers->GetHttpVersion() >= HttpVersion(1, 1) &&
         response_.headers->HasHeaderValue("Transfer-Encoding", "chunked")) {
       chunked_decoder_.reset(new HttpChunkedDecoder());
     } else {
@@ -783,11 +829,13 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     }
   }
 
+#if defined(OS_WIN)
   if (using_ssl_ && !establishing_tunnel_) {
     SSLClientSocket* ssl_socket =
         reinterpret_cast<SSLClientSocket*>(connection_.socket());
     ssl_socket->GetSSLInfo(&response_.ssl_info);
   }
+#endif
 
   return OK;
 }
@@ -816,11 +864,13 @@ int HttpNetworkTransaction::HandleCertificateError(int error) {
     }
   }
 
+#if defined(OS_WIN)
   if (error != OK) {
     SSLClientSocket* ssl_socket =
         reinterpret_cast<SSLClientSocket*>(connection_.socket());
     ssl_socket->GetSSLInfo(&response_.ssl_info);
   }
+#endif
   return error;
 }
 
@@ -837,21 +887,175 @@ int HttpNetworkTransaction::HandleIOError(int error) {
     case ERR_CONNECTION_RESET:
     case ERR_CONNECTION_CLOSED:
     case ERR_CONNECTION_ABORTED:
-      if (!establishing_tunnel_ &&
-          reused_socket_ &&    // We reused a keep-alive connection.
-          !header_buf_len_) {  // We haven't received any response header yet.
-        connection_.set_socket(NULL);
-        connection_.Reset();
-        request_headers_bytes_sent_ = 0;
-        if (request_body_stream_.get())
-          request_body_stream_->Reset();
-        next_state_ = STATE_INIT_CONNECTION;  // Resend the request.
+      if (ShouldResendRequest())
         error = OK;
-      }
       break;
   }
   return error;
 }
 
-}  // namespace net
+void HttpNetworkTransaction::ResetStateForRestart() {
+  header_buf_.reset();
+  header_buf_capacity_ = 0;
+  header_buf_len_ = 0;
+  header_buf_body_offset_ = -1;
+  header_buf_http_offset_ = -1;
+  content_length_ = -1;
+  content_read_ = 0;
+  read_buf_ = NULL;
+  read_buf_len_ = 0;
+  request_headers_.clear();
+  request_headers_bytes_sent_ = 0;
+  chunked_decoder_.reset();
+}
 
+bool HttpNetworkTransaction::ShouldResendRequest() {
+  // NOTE: we resend a request only if we reused a keep-alive connection.
+  // This automatically prevents an infinite resend loop because we'll run
+  // out of the cached keep-alive connections eventually.
+  if (establishing_tunnel_ ||
+      !reused_socket_ ||  // We didn't reuse a keep-alive connection.
+      header_buf_len_) {  // We have received some response headers.
+    return false;
+  }
+  connection_.set_socket(NULL);
+  connection_.Reset();
+  request_headers_bytes_sent_ = 0;
+  if (request_body_stream_.get())
+    request_body_stream_->Reset();
+  next_state_ = STATE_INIT_CONNECTION;  // Resend the request.
+  return true;
+}
+
+int HttpNetworkTransaction::ReconsiderProxyAfterError(int error) {
+  DCHECK(!pac_request_);
+
+  // A failure to resolve the hostname or any error related to establishing a
+  // TCP connection could be grounds for trying a new proxy configuration.
+  //
+  // Why do this when a hostname cannot be resolved?  Some URLs only make sense
+  // to proxy servers.  The hostname in those URLs might fail to resolve if we
+  // are still using a non-proxy config.  We need to check if a proxy config
+  // now exists that corresponds to a proxy server that could load the URL.
+  //
+  switch (error) {
+    case ERR_NAME_NOT_RESOLVED:
+    case ERR_INTERNET_DISCONNECTED:
+    case ERR_ADDRESS_UNREACHABLE:
+    case ERR_CONNECTION_CLOSED:
+    case ERR_CONNECTION_RESET:
+    case ERR_CONNECTION_REFUSED:
+    case ERR_CONNECTION_ABORTED:
+    case ERR_TIMED_OUT:
+    case ERR_TUNNEL_CONNECTION_FAILED:
+      break;
+    default:
+      return error;
+  }
+
+  int rv = session_->proxy_service()->ReconsiderProxyAfterError(
+      request_->url, &proxy_info_, &io_callback_, &pac_request_);
+  if (rv == OK || rv == ERR_IO_PENDING) {
+    connection_.set_socket(NULL);
+    connection_.Reset();
+    DCHECK(!request_headers_bytes_sent_);
+    next_state_ = STATE_RESOLVE_PROXY_COMPLETE;
+  } else {
+    rv = error;
+  }
+
+  return rv;
+}
+
+void HttpNetworkTransaction::AddAuthorizationHeader(HttpAuth::Target target) {
+  DCHECK(HaveAuth(target));
+  DCHECK(!auth_cache_key_[target].empty());
+
+  // Add auth data to cache
+  session_->auth_cache()->Add(auth_cache_key_[target], auth_data_[target]);
+  
+  // Add a Authorization/Proxy-Authorization header line.
+  std::string credentials = auth_handler_[target]->GenerateCredentials(
+      auth_data_[target]->username,
+      auth_data_[target]->password,
+      request_,
+      &proxy_info_);
+  request_headers_ += HttpAuth::GetAuthorizationHeaderName(target) +
+      ": "  + credentials + "\r\n";
+}
+
+void HttpNetworkTransaction::ApplyAuth() {
+  // We expect using_proxy_ and using_tunnel_ to be mutually exclusive.
+  DCHECK(!using_proxy_ || !using_tunnel_);
+
+  // Don't send proxy auth after tunnel has been established.
+  bool should_apply_proxy_auth = using_proxy_ || establishing_tunnel_;
+
+  // Don't send origin server auth while establishing tunnel.
+  bool should_apply_server_auth = !establishing_tunnel_;
+
+  if (should_apply_proxy_auth && HaveAuth(HttpAuth::AUTH_PROXY))
+    AddAuthorizationHeader(HttpAuth::AUTH_PROXY);
+  if (should_apply_server_auth && HaveAuth(HttpAuth::AUTH_SERVER))
+    AddAuthorizationHeader(HttpAuth::AUTH_SERVER);
+}
+
+// Populates response_.auth_challenge with the authentication challenge info.
+// This info is consumed by URLRequestHttpJob::GetAuthChallengeInfo().
+int HttpNetworkTransaction::PopulateAuthChallenge() {
+  DCHECK(response_.headers);
+
+  int status = response_.headers->response_code();
+  if (status != 401 && status != 407)
+    return OK;
+  HttpAuth::Target target = status == 407 ?
+      HttpAuth::AUTH_PROXY : HttpAuth::AUTH_SERVER;
+
+  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct()) {
+    // TODO(eroman): Add a unique error code.
+    return ERR_INVALID_RESPONSE;
+  }
+
+  // Find the best authentication challenge that we support.
+  scoped_ptr<HttpAuthHandler> auth_handler(
+      HttpAuth::ChooseBestChallenge(response_.headers.get(), target));
+
+  // We found no supported challenge -- let the transaction continue
+  // so we end up displaying the error page.
+  if (!auth_handler.get())
+    return OK;
+
+  // Construct an AuthChallengeInfo.
+  scoped_refptr<AuthChallengeInfo> auth_info = new AuthChallengeInfo;
+  auth_info->is_proxy = target == HttpAuth::AUTH_PROXY;
+  auth_info->scheme = ASCIIToWide(auth_handler->scheme());
+  // TODO(eroman): decode realm according to RFC 2047.
+  auth_info->realm = ASCIIToWide(auth_handler->realm());
+  if (target == HttpAuth::AUTH_PROXY) {
+    auth_info->host = ASCIIToWide(proxy_info_.proxy_server());
+  } else {
+    DCHECK(target == HttpAuth::AUTH_SERVER);
+    auth_info->host = ASCIIToWide(request_->url.host());
+  }
+
+  // Update the auth cache key and remove any data in the auth cache.
+  if (!auth_data_[target])
+    auth_data_[target] = new AuthData;
+  auth_cache_key_[target] = AuthCache::HttpKey(request_->url, *auth_info);
+  DCHECK(!auth_cache_key_[target].empty());
+  auth_data_[target]->scheme = auth_info->scheme;
+  if (auth_data_[target]->state == AUTH_STATE_HAVE_AUTH) {
+    // The cached identity probably isn't valid so remove it.
+    // The assumption here is that the cached auth data is what we
+    // just used.
+    session_->auth_cache()->Remove(auth_cache_key_[target]);
+    auth_data_[target]->state = AUTH_STATE_NEED_AUTH;
+  }
+
+  response_.auth_challenge.swap(auth_info);
+  auth_handler_[target].reset(auth_handler.release());
+
+  return OK;
+}
+
+}  // namespace net

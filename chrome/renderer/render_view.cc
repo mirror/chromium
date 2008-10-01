@@ -134,7 +134,7 @@ class RenderViewExtraRequestData : public WebRequest::ExtraData {
 ///////////////////////////////////////////////////////////////////////////////
 
 RenderView::RenderView()
-  : RenderWidget(),
+  : RenderWidget(RenderThread::current()),
     is_loading_(false),
     page_id_(-1),
     last_page_id_sent_to_browser_(-1),
@@ -310,7 +310,8 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
                         OnAllowDomAutomationBindings)
     IPC_MESSAGE_HANDLER(ViewMsg_AllowBindings, OnAllowBindings)
     IPC_MESSAGE_HANDLER(ViewMsg_SetDOMUIProperty, OnSetDOMUIProperty)
-    IPC_MESSAGE_HANDLER(ViewMsg_DragSourceEndedOrMoved, OnDragSourceEndedOrMoved)
+    IPC_MESSAGE_HANDLER(ViewMsg_DragSourceEndedOrMoved,
+                        OnDragSourceEndedOrMoved)
     IPC_MESSAGE_HANDLER(ViewMsg_DragSourceSystemDragEnded,
                         OnDragSourceSystemDragEnded)
     IPC_MESSAGE_HANDLER(ViewMsg_SetInitialFocus, OnSetInitialFocus)
@@ -328,6 +329,9 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_GetSerializedHtmlDataForCurrentPageWithLocalLinks,
                         OnGetSerializedHtmlDataForCurrentPageWithLocalLinks)
     IPC_MESSAGE_HANDLER(ViewMsg_GetApplicationInfo, OnGetApplicationInfo)
+    IPC_MESSAGE_HANDLER(ViewMsg_GetAccessibilityInfo, OnGetAccessibilityInfo)
+    IPC_MESSAGE_HANDLER(ViewMsg_ClearAccessibilityInfo,
+                        OnClearAccessibilityInfo)
     IPC_MESSAGE_HANDLER(ViewMsg_ShouldClose, OnMsgShouldClose)
     IPC_MESSAGE_HANDLER(ViewMsg_ClosePage, OnClosePage)
     IPC_MESSAGE_HANDLER(ViewMsg_ThemeChanged, OnThemeChanged)
@@ -835,7 +839,7 @@ void RenderView::OnStopFinding(bool clear_selection) {
 
   WebFrame* frame = view->GetMainFrame();
   while (frame) {
-    frame->StopFinding();
+    frame->StopFinding(clear_selection);
     frame = view->GetNextFrameAfter(frame, false);
   }
 }
@@ -940,6 +944,7 @@ void RenderView::UpdateURL(WebFrame* frame) {
   ViewHostMsg_FrameNavigate_Params params;
   params.is_post = false;
   params.page_id = page_id_;
+  params.is_content_filtered = response.IsContentFiltered();
   if (!request.GetSecurityInfo().empty()) {
     // SSL state specified in the request takes precedence over the one in the
     // response.
@@ -1050,6 +1055,11 @@ void RenderView::UpdateURL(WebFrame* frame) {
   // we don't want the transition type to persist.
   if (extra_data)
     extra_data->transition_type = PageTransition::LINK;  // Just clear it.
+
+  if (glue_accessibility_.get()) {
+    // Clear accessibility info cache. 
+    glue_accessibility_->ClearIAccessibleMap(-1, true);
+  }
 }
 
 // Tell the embedding application that the title of the active page has changed
@@ -1145,7 +1155,7 @@ void RenderView::DidStartProvisionalLoadForFrame(
     NavigationGesture gesture) {
   if (webview->GetMainFrame() == frame) {
     navigation_gesture_ = gesture;
-    
+
     // Make sure redirect tracking state is clear for the new load.
     completed_client_redirect_src_ = GURL();
   }
@@ -1634,7 +1644,7 @@ void RenderView::DebuggerOutput(const std::wstring& out) {
 
 WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
   int32 routing_id = MSG_ROUTING_NONE;
-  HANDLE modal_dialog_event;
+  HANDLE modal_dialog_event = NULL;
   bool result = RenderThread::current()->Send(
       new ViewHostMsg_CreateView(routing_id_, user_gesture, &routing_id,
                                  &modal_dialog_event));
@@ -1657,7 +1667,8 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
 }
 
 WebWidget* RenderView::CreatePopupWidget(WebView* webview) {
-  RenderWidget* widget = RenderWidget::Create(routing_id_);
+  RenderWidget* widget = RenderWidget::Create(routing_id_,
+                                              RenderThread::current());
   return widget->webwidget();
 }
 
@@ -2258,8 +2269,7 @@ void RenderView::OnAllowDomAutomationBindings(bool allow_bindings) {
 }
 
 void RenderView::OnAllowBindings(bool enable_dom_ui_bindings,
-                                 bool enable_external_host_bindings)
-{
+                                 bool enable_external_host_bindings) {
   enable_dom_ui_bindings_ = enable_dom_ui_bindings;
   enable_external_host_bindings_ = enable_external_host_bindings;
 }
@@ -2402,6 +2412,29 @@ void RenderView::OnUpdateBackForwardListCount(int back_list_count,
                                               int forward_list_count) {
   history_back_list_count_ = back_list_count;
   history_forward_list_count_ = forward_list_count;
+}
+
+void RenderView::OnGetAccessibilityInfo(
+    const ViewMsg_Accessibility_In_Params& in_params,
+    ViewHostMsg_Accessibility_Out_Params* out_params) {
+
+  if (!glue_accessibility_.get())
+    glue_accessibility_.reset(new GlueAccessibility());
+
+  if (!glue_accessibility_->
+       GetAccessibilityInfo(webview(), in_params, out_params)) {
+    return;
+  }
+}
+
+void RenderView::OnClearAccessibilityInfo(int iaccessible_id, bool clear_all) {
+  if (!glue_accessibility_.get()) {
+    // If accessibility is not activated, ignore clearing message.
+    return;
+  }
+
+  if (!glue_accessibility_->ClearIAccessibleMap(iaccessible_id, clear_all))
+    return;
 }
 
 void RenderView::OnGetAllSavableResourceLinksForCurrentPage(
