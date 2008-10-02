@@ -52,7 +52,6 @@ WebCore\platform\FileSystem.h
 WebCore\platform\KURL.cpp
 WebCore\platform\KURL.h
 WebCore\platform\SecurityOrigin.cpp
-WebCore\platform\StaticConstructors.h
 WebCore\platform\TreeShared.h
 WebCore\platform\graphics\Font.cpp
 WebCore\platform\graphics\FontCache.cpp
