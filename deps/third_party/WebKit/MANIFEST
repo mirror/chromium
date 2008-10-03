@@ -1,4 +1,5 @@
 JavaScriptCore\pcre\pcre_exec.cpp
+JavaScriptCore\wtf\Platform.h
 JavaScriptCore\wtf\RefCounted.h
 JavaScriptCore\wtf\RefPtrHashMap.h
 JavaScriptCore\wtf\ThreadingWin.cpp
