@@ -106,6 +106,25 @@ namespace WebCore {
         // SecurityOrigin is represented with the null string.
         String toString() const;
 
+        // Non-empty security tokens can be used for fast access checks.  If the
+        // return value is a non-empty string, it can be used to compare with
+        // another security origin's securityToken.  An empty security token is
+        // invalid and should not be used to check security.  Instead, you must
+        // call canAccess.
+        //
+        // CAVEATS:
+        //
+        //  1) If either of the tokens is empty or if the tokens are not equal,
+        //     you must call canAccess to see if they match.  The tokens can be
+        //     used for fast allow judgments, but cannot be used for deny
+        //     judgments.
+        //
+        //  2) If one of the SecurityOrigins modifies their document.domain
+        //     property after you read its securityToken, you might get false
+        //     allows.
+        //
+        String securityToken() const;
+
         // Serialize the security origin for storage in the database. This format is
         // deprecated and should be used only for compatibility with old databases;
         // use toString() and createFromString() instead.

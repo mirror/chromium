@@ -115,9 +115,6 @@ void SecurityOrigin::setDomainFromDOM(const String& newDomain)
 
 bool SecurityOrigin::canAccess(const SecurityOrigin* other) const
 {  
-    if (isLocal())
-        return true;
-
     if (m_noAccess || other->m_noAccess)
         return false;
 
@@ -156,9 +153,6 @@ bool SecurityOrigin::canAccess(const SecurityOrigin* other) const
 
 bool SecurityOrigin::canRequest(const KURL& url) const
 {
-    if (isLocal())
-        return true;
-
     if (m_noAccess)
         return false;
 
@@ -290,6 +284,24 @@ bool SecurityOrigin::isSameSchemeHostPort(const SecurityOrigin* other) const
         return false;
 
     return true;
+}
+
+String SecurityOrigin::securityToken() const 
+{
+    if (isEmpty())
+        return String();
+
+    if (m_noAccess)
+        return String();
+
+    if (m_domainWasSetInDOM) {
+        // We could encode the document.domain state into the security token,
+        // but this is an uncommon case and leads to complexity.  We're better
+        // off sending these accesses down the slow path.
+        return String();
+    }
+
+    return toString();
 }
 
 } // namespace WebCore
