@@ -1,0 +1,59 @@
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/views/options/options_page_view.h"
+
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/user_metrics.h"
+#include "chrome/common/pref_service.h"
+#include "chrome/views/view_container.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// OptionsPageView
+
+OptionsPageView::OptionsPageView(Profile* profile)
+    : profile_(profile),
+      initialized_(false) {
+}
+
+OptionsPageView::~OptionsPageView() {
+}
+
+void OptionsPageView::UserMetricsRecordAction(const wchar_t* action,
+                                              PrefService* prefs) {
+  UserMetrics::RecordComputedAction(action, profile());
+  if (prefs)
+    prefs->ScheduleSavePersistentPrefs(g_browser_process->file_thread());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// OptionsPageView, NotificationObserver implementation:
+
+void OptionsPageView::Observe(NotificationType type,
+                              const NotificationSource& source,
+                              const NotificationDetails& details) {
+  if (type == NOTIFY_PREF_CHANGED)
+    NotifyPrefChanged(Details<std::wstring>(details).ptr());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// OptionsPageView, ChromeViews::View overrides:
+
+void OptionsPageView::ViewHierarchyChanged(bool is_add,
+                                           ChromeViews::View* parent,
+                                           ChromeViews::View* child) {
+  if (!initialized_ && is_add && GetViewContainer()) {
+    // It is important that this only get done _once_ otherwise we end up
+    // duplicating the view hierarchy when tabs are switched.
+    initialized_ = true;
+    InitControlLayout();
+    NotifyPrefChanged(NULL);
+  }
+}
+
+HWND OptionsPageView::GetRootWindow() const {
+  // Our ViewContainer is the TabbedPane content HWND, which is a child HWND.
+  // We need the root HWND for parenting.
+  return GetAncestor(GetViewContainer()->GetHWND(), GA_ROOT);
+}

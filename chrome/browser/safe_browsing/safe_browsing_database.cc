@@ -1,0 +1,94 @@
+// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/safe_browsing/safe_browsing_database.h"
+
+#include "base/file_util.h"
+#include "base/logging.h"
+#include "base/sha2.h"
+#include "chrome/browser/safe_browsing/safe_browsing_database_impl.h"
+#include "chrome/browser/safe_browsing/safe_browsing_database_bloom.h"
+#include "googleurl/src/gurl.h"
+
+// Filename suffix for the bloom filter.
+static const wchar_t kBloomFilterFile[] = L" Filter";
+
+// Factory method.
+SafeBrowsingDatabase* SafeBrowsingDatabase::Create() {
+  return new SafeBrowsingDatabaseImpl;
+}
+
+bool SafeBrowsingDatabase::NeedToCheckUrl(const GURL& url) {
+  if (!bloom_filter_.get())
+    return true;
+
+  IncrementBloomFilterReadCount();
+
+  std::vector<std::string> hosts;
+  safe_browsing_util::GenerateHostsToCheck(url, &hosts);
+  if (hosts.size() == 0)
+    return false;  // Could be about:blank.
+
+  SBPrefix host_key;
+  if (url.HostIsIPAddress()) {
+    base::SHA256HashString(url.host() + "/", &host_key, sizeof(SBPrefix));
+    if (bloom_filter_->Exists(host_key))
+      return true;
+  } else {
+    base::SHA256HashString(hosts[0] + "/", &host_key, sizeof(SBPrefix));
+    if (bloom_filter_->Exists(host_key))
+      return true;
+
+    if (hosts.size() > 1) {
+      base::SHA256HashString(hosts[1] + "/", &host_key, sizeof(SBPrefix));
+      if (bloom_filter_->Exists(host_key))
+        return true;
+    }
+  }
+  return false;
+}
+
+std::wstring SafeBrowsingDatabase::BloomFilterFilename(
+    const std::wstring& db_filename) {
+  return db_filename + kBloomFilterFile;
+}
+
+void SafeBrowsingDatabase::LoadBloomFilter() {
+  DCHECK(!bloom_filter_filename_.empty());
+
+  int64 size_64;
+  if (!file_util::GetFileSize(bloom_filter_filename_, &size_64) ||
+      size_64 == 0) {
+    BuildBloomFilter();
+    return;
+  }
+
+  int size = static_cast<int>(size_64);
+  char* data = new char[size];
+  CHECK(data);
+
+  Time before = Time::Now();
+  file_util::ReadFile(bloom_filter_filename_, data, size);
+  SB_DLOG(INFO) << "SafeBrowsingDatabase read bloom filter in " <<
+        (Time::Now() - before).InMilliseconds() << " ms";
+
+  bloom_filter_.reset(new BloomFilter(data, size));
+}
+
+void SafeBrowsingDatabase::DeleteBloomFilter() {
+  file_util::Delete(bloom_filter_filename_, false);
+}
+
+void SafeBrowsingDatabase::WriteBloomFilter() {
+  if (!bloom_filter_.get())
+    return;
+
+  Time before = Time::Now();
+  file_util::WriteFile(bloom_filter_filename_,
+                       bloom_filter_->data(),
+                       bloom_filter_->size());
+  SB_DLOG(INFO) << "SafeBrowsingDatabase wrote bloom filter in " <<
+      (Time::Now() - before).InMilliseconds() << " ms";
+}
+

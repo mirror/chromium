@@ -1,0 +1,51 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env', 'env_res')
+
+env = env.Clone()
+env_res = env_res.Clone()
+
+env_res.Append(
+    CPPPATH = [
+        '.',
+        '#/..',
+    ],
+    RCFLAGS = [
+        ['/l', '0x409'],
+    ],
+)
+
+res = [
+    env_res.RES('theme_resources.rc'),
+    env_res.RES('distribution_resources.rc'),
+]
+
+
+
+env.Append(
+    LINKFLAGS = [
+        '/INCREMENTAL:NO',
+        '/DELAYLOAD:"dwmapi.dll"',
+        '/DELAYLOAD:"uxtheme.dll"',
+
+        '/NOENTRY',
+        '/BASE:"0x3CE00000"',
+        '/MACHINE:X86',
+        '/FIXED:No',
+
+        '/safeseh',
+        '/dynamicbase',
+        '/ignore:4199',
+        '/nxcompat',
+    ],
+)
+
+themes_default = env.ChromeSharedLibrary("$CHROME_DIR/themes/default", res)
+
+env.AddPostAction(themes_default[1], Touch(themes_default[1:]))
+
+i = env.Install("$TARGET_ROOT/themes", themes_default)
+env.Alias('chrome', i)
+

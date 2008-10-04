@@ -1,0 +1,93 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+
+env.Prepend(
+    CPPPATH = [
+        '$CHROME_DIR/tools/build/win',
+        '#/..',
+    ],
+    CCFLAGS = [
+        '/TP',
+        #'/Wp64',
+    ],
+)
+
+env.Append(
+    CPPPATH = [
+        '../app/resources',
+        '$SKIA_DIR/include',
+        '$SKIA_DIR/include/corecg',
+        '$SKIA_DIR/include/platform',
+        'third_party/wtl/include',
+    ],
+)
+
+input_files = [
+    'accelerator.cc',
+    'accelerator_handler.cc',
+    'accessibility/accessible_wrapper.cc',
+    'accessibility/autocomplete_accessibility.cc',
+    'accessibility/view_accessibility.cc',
+    'aero_tooltip_manager.cc',
+    'background.cc',
+    'base_button.cc',
+    'bitmap_scroll_bar.cc',
+    'border.cc',
+    'button.cc',
+    'button_dropdown.cc',
+    'checkbox.cc',
+    'chrome_menu.cc',
+    'client_view.cc',
+    'combo_box.cc',
+    'custom_frame_window.cc',
+    'dialog_delegate.cc',
+    'dialog_client_view.cc',
+    'decision.cc',
+    'event.cc',
+    'external_focus_tracker.cc',
+    'focus_manager.cc',
+    'grid_layout.cc',
+    'group_table_view.cc',
+    'hwnd_view.cc',
+    'hwnd_view_container.cc',
+    'image_view.cc',
+    'label.cc',
+    'layout_manager.cc',
+    'link.cc',
+    'menu.cc',
+    'menu_button.cc',
+    'message_box_view.cc',
+    'native_button.cc',
+    'native_control.cc',
+    'native_scroll_bar.cc',
+    'non_client_view.cc',
+    'painter.cc',
+    'radio_button.cc',
+    'repeat_controller.cc',
+    'resize_corner.cc',
+    'root_view.cc',
+    'root_view_drop_target.cc',
+    'scroll_bar.cc',
+    'scroll_view.cc',
+    'separator.cc',
+    'tabbed_pane.cc',
+    'table_view.cc',
+    'text_button.cc',
+    'text_field.cc',
+    'throbber.cc',
+    'tooltip_manager.cc',
+    'tree_view.cc',
+    'view.cc',
+    'view_storage.cc',
+    'window.cc',
+    'window_delegate.cc',
+]
+
+env.ChromeStaticLibrary('views', input_files)
+
