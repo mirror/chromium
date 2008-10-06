@@ -1,33 +1,31 @@
-This directory is our unmodified copy of webkit.
+This directory is our copy of webkit, which we are currently transitioning to
+a vendor branch and getting ready for the continuous merge.
 
-BASE_REVISION: Specifies the webkit branch and revision we are synced to.
-MANIFEST: Specifies the list of files that we have forked
-fork_files_in_manifest.py: Does the forking magic given the MANIFEST file
-
-
-*NOTE* We are no longer forking files *NOTE*
-
-** If you feel you need to fork a file email eseidel@google.com and we can **
-** find an alternate solution.  All changes should be made @ webkit.org **
-** instead of forking our local copy.  **
+Here are the rules for making changes:
 
 
-Old instructions on how to fork/unfork a file:
-Changebranch #1
-1. Add/remove the file from the MANIFEST
-2. Run "../python_24/python.exe fork_files_in_manifest.py MANIFEST"
-3. Create a changebranch, send for review and checkin
+* If you need to tweak WebKit code and the file is in /trunk/src/webkit/port,
+  make changes there
 
-Changebranch #2
-4. Modify trunk/webkit/DEPS to pull in the version of third_party/WebKit that
-you just created.
-5. gvn cp the files you've forked to pending (or gvn rm them from pending if 
-you were unforking)
-6. Modify the vcproj files appropriately to point to the files in pending
-7. Send the changes out for review and submit.
+* If you are fixing a bug that involves a file that's still in pending:
 
-Changebranch #3
-8. Make any changes you wanted to make to the files in pending
+  * Unobsolete the file in third_party/WebKit (svn mv [file].obs [file]),
 
-TODO(ojan):Make the above involve fewer steps / changebranches and allow
-for adding the reasons files are forked directly in the MANIFEST file.
+  * Copy the file from pending over the newly unobsoleted file
+
+  * Remove the file from pending (svn rm [file])
+
+* Make your bug-fixing changes, ensuring that the changes are
+  "branch-friendly", ifdef'ing the changes if they are Chromium-specific,
+  using appropriate functionality-specific defines
+
+* Submit the change upstream to bugs.webkit.org and include the link to webkit
+  bug in your review
+
+* Add dglazkov@chromium.org to the list of reviewers
+
+* After the changes are committed, roll the WebKit revision in src/DEPS to let
+  others pick up your changes
+
+If you have any questions or comments about the process, please direct them to
+dglazkov@chromium.org.
