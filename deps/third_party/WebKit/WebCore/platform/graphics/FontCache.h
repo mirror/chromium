@@ -31,6 +31,7 @@
 
 #include <limits.h>
 #include <wtf/Vector.h>
+#include <unicode/uscript.h>
 #include <wtf/unicode/Unicode.h>
 
 #if PLATFORM(WIN)
@@ -71,6 +72,15 @@ public:
     static SimpleFontData* getCachedFontData(const FontPlatformData*);
     static FontPlatformData* getLastResortFallbackFont(const FontDescription&);
 
+    bool fontExists(const FontDescription&, const AtomicString& family);
+
+    // TODO(jungshik): Is this the best place to put this function? It may
+    // or may not be. Font.h is another place we can cosider.
+    // Return a font family for |script| and |FontDescription.genericFamily()|.
+    // It will return an empty atom if we can't find a font matching 
+    // script and genericFamily in FontDescription. A caller should check
+    // the emptyness before using it.
+    static AtomicString getGenericFontForScript(UScriptCode script, const FontDescription&);
     static void addClient(FontSelector*);
     static void removeClient(FontSelector*);
 
@@ -85,6 +95,7 @@ private:
     // These methods are implemented by each platform.
     static FontPlatformData* getSimilarFontPlatformData(const Font&);
     static FontPlatformData* createFontPlatformData(const FontDescription&, const AtomicString& family);
+    static const AtomicString& alternateFamilyName(const AtomicString& family);
 
     friend class SimpleFontData;
     friend class FontFallbackList;

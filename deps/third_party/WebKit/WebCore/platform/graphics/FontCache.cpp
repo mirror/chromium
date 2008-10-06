@@ -121,32 +121,6 @@ typedef HashMap<FontPlatformDataCacheKey, FontPlatformData*, FontPlatformDataCac
 
 static FontPlatformDataCache* gFontPlatformDataCache = 0;
 
-static const AtomicString& alternateFamilyName(const AtomicString& familyName)
-{
-    // Alias Courier <-> Courier New
-    static AtomicString courier("Courier"), courierNew("Courier New");
-    if (equalIgnoringCase(familyName, courier))
-        return courierNew;
-    if (equalIgnoringCase(familyName, courierNew))
-        return courier;
-
-    // Alias Times and Times New Roman.
-    static AtomicString times("Times"), timesNewRoman("Times New Roman");
-    if (equalIgnoringCase(familyName, times))
-        return timesNewRoman;
-    if (equalIgnoringCase(familyName, timesNewRoman))
-        return times;
-    
-    // Alias Arial and Helvetica
-    static AtomicString arial("Arial"), helvetica("Helvetica");
-    if (equalIgnoringCase(familyName, arial))
-        return helvetica;
-    if (equalIgnoringCase(familyName, helvetica))
-        return arial;
-
-    return emptyAtom;
-}
-
 FontPlatformData* FontCache::getCachedFontPlatformData(const FontDescription& fontDescription, 
                                                        const AtomicString& familyName,
                                                        bool checkingAlternateName)

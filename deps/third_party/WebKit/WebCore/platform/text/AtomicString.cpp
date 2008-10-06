@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#ifdef SKIP_STATIC_CONSTRUCTORS_ON_GCC
+#ifdef AVOID_STATIC_CONSTRUCTORS
 #define ATOMICSTRING_HIDE_GLOBALS 1
 #endif
 
@@ -250,7 +250,6 @@ PassRefPtr<StringImpl> AtomicString::add(const KJS::UString& ustring)
         return *addResult.first;
     return adoptRef(*addResult.first);
 }
-#endif
 
 AtomicStringImpl* AtomicString::find(const KJS::Identifier& identifier)
 {
@@ -273,7 +272,7 @@ AtomicString::operator UString() const
 {
     return m_string;
 }
-
+#endif
 DEFINE_GLOBAL(AtomicString, nullAtom)
 DEFINE_GLOBAL(AtomicString, emptyAtom, "")
 DEFINE_GLOBAL(AtomicString, textAtom, "#text")
