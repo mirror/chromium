@@ -31,6 +31,10 @@
 #include "SecurityOrigin.h"
 #include <wtf/Forward.h>
 #include <wtf/RefCounted.h>
+
+#if USE(V8)
+#include <wtf/HashMap.h>
+#endif
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
@@ -50,6 +54,13 @@ namespace WebCore {
     class Navigator;
     class PostMessageTimer;
     class Screen;
+    class String;
+
+#if USE(V8)
+    class ScheduledAction;
+    class PausedTimeouts;
+    class DOMWindowTimer;
+#endif
 
 #if ENABLE(DOM_STORAGE)
     class SessionStorage;
@@ -235,6 +246,56 @@ namespace WebCore {
 #endif
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
         mutable RefPtr<DOMApplicationCache> m_applicationCache;
+#endif
+
+    private:
+        void updateLayout() const;
+
+
+#if USE(V8)
+    public:
+        // DOM methods & attributes for Window.
+
+        DOMWindow* open(const String& url = "",
+                        const String& name = "_blank",
+                        const String& options = "");
+
+        void back();
+        void forward();
+
+        Navigator* navigator();
+        void dump(const String&);
+    
+        Location* location();
+
+        // Change the current window location to a new location.
+        // The function checks domain security.
+        void setLocation(const String& loc);
+
+//      void home();
+//      void stop();
+    
+        void clearTimeout(int id);
+        void clearInterval(int id) { clearTimeout(id); }
+
+        void timerFired(DOMWindowTimer* timer);
+    
+//      void updateCommands(const String&);
+//    
+//      String escape(const String&);
+//      String unescape(const String&);
+
+        int installTimeout(ScheduledAction* a, int t, bool singleShot);
+    
+        void scheduleClose();
+        void clearAllTimeouts();
+
+        void pauseTimeouts(OwnPtr<PausedTimeouts>&);
+        void resumeTimeouts(OwnPtr<PausedTimeouts>&);
+
+    private:
+        typedef HashMap<int, DOMWindowTimer*> TimeoutsMap;
+        TimeoutsMap m_timeouts;
 #endif
     };
 

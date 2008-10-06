@@ -53,6 +53,8 @@
 #include "PlatformString.h"
 #include "Screen.h"
 #include "SecurityOrigin.h"
+#include "Settings.h"
+#include "ScriptController.h"
 #include <algorithm>
 #include <wtf/MathExtras.h>
 
@@ -73,6 +75,29 @@
 
 using std::min;
 using std::max;
+
+#if USE(V8)
+#include "Location.h"
+#include "Navigator.h"
+#include "CString.h"
+#include "FloatRect.h"
+#include "FrameTree.h"
+#include "FrameView.h"
+#include "Page.h"
+#include "Chrome.h"
+#include "WindowFeatures.h"
+#include "FrameLoadRequest.h"
+#include "ScheduledAction.h"
+#include "PausedTimeouts.h"
+#include "v8_proxy.h"
+
+#if PLATFORM(WIN)
+#include <windows.h>
+#endif // WIN
+
+#include "CSSHelper.h"  // parseURL
+#endif // V8
+
 
 namespace WebCore {
 
@@ -138,6 +163,48 @@ void DOMWindow::adjustWindowRect(const FloatRect& screen, FloatRect& window, con
     window.setX(max(screen.x(), min(window.x(), screen.right() - window.width())));
     window.setY(max(screen.y(), min(window.y(), screen.bottom() - window.height())));
 }
+
+#if USE(V8)
+
+static int lastUsedTimeoutId;
+static int timerNestingLevel = 0;
+const int kMaxTimerNestingLevel = 5;
+const double kMinimumTimerInterval = 0.001;  // Change this to speed up Javascript's setTimeout!
+
+class DOMWindowTimer : public TimerBase {
+public:
+    DOMWindowTimer(int timeoutId, int nestingLevel,
+                   DOMWindow* o, ScheduledAction* a)
+        : m_timeoutId(timeoutId), m_nestingLevel(nestingLevel),
+          m_object(o), m_action(a) { }
+
+    virtual ~DOMWindowTimer() { delete m_action; }
+
+    int timeoutId() const { return m_timeoutId; }
+    
+    int nestingLevel() const { return m_nestingLevel; }
+    void setNestingLevel(int n) { m_nestingLevel = n; }
+    
+    ScheduledAction* action() const { return m_action; }
+    ScheduledAction* takeAction() { ScheduledAction* a = m_action; m_action = 0; return a; }
+
+private:
+    virtual void fired();
+
+    int m_timeoutId;
+    int m_nestingLevel;
+    DOMWindow* m_object;
+    ScheduledAction* m_action;
+};
+
+void DOMWindowTimer::fired() {
+    timerNestingLevel = m_nestingLevel;
+    m_object->timerFired(this);
+    timerNestingLevel = 0;
+}
+
+#endif  // V8
+
 
 DOMWindow::DOMWindow(Frame* frame)
     : m_frame(frame)
@@ -431,7 +498,13 @@ void DOMWindow::close()
     if (!m_frame)
         return;
 
-    if (m_frame->loader()->openedByDOM() || m_frame->loader()->getHistoryLength() <= 1)
+    Settings* settings = m_frame->settings();
+    bool allow_scripts_to_close_windows =
+        (settings && settings->allowScriptsToCloseWindows());
+
+    if (m_frame->loader()->openedByDOM()
+        || m_frame->loader()->getHistoryLength() <= 1
+        || allow_scripts_to_close_windows)
         m_frame->scheduleClose();
 }
 
@@ -452,13 +525,25 @@ void DOMWindow::stop()
     if (!m_frame)
         return;
 
-    // We must check whether the load is complete asynchronously, because we might still be parsing
-    // the document until the callstack unwinds.
+    // Ignores stop() in unload event handlers
+    if (m_frame->loader()->firingUnloadEvents())
+        return;
+
+    // We must check whether the load is complete asynchronously,
+    // because we might still be parsing the document until the
+    // callstack unwinds.
     m_frame->loader()->stopForUserCancel(true);
 }
 
 void DOMWindow::alert(const String& message)
 {
+#if USE(V8)
+    // Before showing the JavaScript dialog, we give
+    // the proxy implementation a chance to process any
+    // pending console messages.
+    V8Proxy::ProcessConsoleMessages();
+#endif
+
     if (!m_frame)
         return;
 
@@ -476,6 +561,13 @@ void DOMWindow::alert(const String& message)
 
 bool DOMWindow::confirm(const String& message)
 {
+#if USE(V8)
+    // Before showing the JavaScript dialog, we give
+    // the proxy implementation a chance to process any
+    // pending console messages.
+    V8Proxy::ProcessConsoleMessages();
+#endif
+
     if (!m_frame)
         return false;
 
@@ -493,6 +585,13 @@ bool DOMWindow::confirm(const String& message)
 
 String DOMWindow::prompt(const String& message, const String& defaultValue)
 {
+#if USE(V8)
+    // Before showing the JavaScript dialog, we give
+    // the proxy implementation a chance to process any
+    // pending console messages.
+    V8Proxy::ProcessConsoleMessages();
+#endif
+
     if (!m_frame)
         return String();
 
@@ -782,11 +881,303 @@ double DOMWindow::devicePixelRatio() const
     return page->chrome()->scaleFactor();
 }
 
+#if USE(V8)
+
+static void setWindowFeature(const String& keyString, const String& valueString, WindowFeatures& windowFeatures) {
+  int value;
+  
+  if (valueString.length() == 0 || // listing a key with no value is shorthand for key=yes
+      valueString == "yes")
+    value = 1;
+  else
+    value = valueString.toInt();
+  
+  if (keyString == "left" || keyString == "screenx") {
+    windowFeatures.xSet = true;
+    windowFeatures.x = value;
+  } else if (keyString == "top" || keyString == "screeny") {
+    windowFeatures.ySet = true;
+    windowFeatures.y = value;
+  } else if (keyString == "width" || keyString == "innerwidth") {
+    windowFeatures.widthSet = true;
+    windowFeatures.width = value;
+  } else if (keyString == "height" || keyString == "innerheight") {
+    windowFeatures.heightSet = true;
+    windowFeatures.height = value;
+  } else if (keyString == "menubar")
+    windowFeatures.menuBarVisible = value;
+  else if (keyString == "toolbar")
+    windowFeatures.toolBarVisible = value;
+  else if (keyString == "location")
+    windowFeatures.locationBarVisible = value;
+  else if (keyString == "status")
+    windowFeatures.statusBarVisible = value;
+  else if (keyString == "resizable")
+    windowFeatures.resizable = value;
+  else if (keyString == "fullscreen")
+    windowFeatures.fullscreen = value;
+  else if (keyString == "scrollbars")
+    windowFeatures.scrollbarsVisible = value;
+}
+
+
+void DOMWindow::back()
+{
+    if (m_history)
+        m_history->back();
+}
+
+void DOMWindow::forward()
+{
+    if (m_history)
+        m_history->forward();
+}
+
+Location* DOMWindow::location()
+{
+    if (!m_location)
+        m_location = Location::create(m_frame);
+    return m_location.get();
+}
+
+void DOMWindow::setLocation(const String& v) {
+  if (!m_frame)
+    return;
+
+  Frame* active_frame = ScriptController::retrieveActiveFrame();
+  if (!active_frame)
+    return;
+
+  if (!active_frame->loader()->shouldAllowNavigation(m_frame))
+    return;
+
+  if (!parseURL(v).startsWith("javascript:", false) ||
+    ScriptController::isSafeScript(m_frame)) {
+    String completed_url = active_frame->loader()->completeURL(v).string();
+
+    m_frame->loader()->scheduleLocationChange(completed_url,
+        active_frame->loader()->outgoingReferrer(), false,
+        active_frame->script()->processingUserGesture());
+  }
+}
+
+Navigator* DOMWindow::navigator()
+{
+    if (!m_navigator)
+        m_navigator = Navigator::create(m_frame);
+
+    return m_navigator.get();
+}
+
+void DOMWindow::dump(const String& msg)
+{
+    if (!m_frame)
+        return;
+
+    m_frame->domWindow()->console()->addMessage(JSMessageSource,
+        ErrorMessageLevel, msg, 0, m_frame->document()->url());
+}
+
+void DOMWindow::scheduleClose()
+{
+    if (!m_frame)
+        return;
+
+    m_frame->scheduleClose();
+}
+
+void DOMWindow::timerFired(DOMWindowTimer* timer) {
+  if (!m_frame)
+      return;
+
+  // Simple case for non-one-shot timers.
+  if (timer->isActive()) {
+    int timeoutId = timer->timeoutId();
+    
+    timer->action()->execute(this);
+    return;
+  }
+  
+  // Delete timer before executing the action for one-shot timers.
+  ScheduledAction* action = timer->takeAction();
+  m_timeouts.remove(timer->timeoutId());
+  delete timer;
+  action->execute(this);
+  delete action;
+}
+
+
+void DOMWindow::clearAllTimeouts()
+{
+    deleteAllValues(m_timeouts);
+    m_timeouts.clear();
+}
+
+int DOMWindow::installTimeout(ScheduledAction* a, int t, bool singleShot) {
+  if (!m_frame)
+    return 0;
+
+  int timeoutId = ++lastUsedTimeoutId;
+
+  // avoid wraparound going negative on us
+  if (timeoutId <= 0)
+    timeoutId = 1;
+
+  int nestLevel = timerNestingLevel + 1;
+
+  DOMWindowTimer* timer = new DOMWindowTimer(timeoutId, nestLevel, this, a);
+  ASSERT(!m_timeouts.get(timeoutId));
+  m_timeouts.set(timeoutId, timer);
+  double interval = max(kMinimumTimerInterval, t * 0.001);
+  if (singleShot)
+    timer->startOneShot(interval);
+  else
+    timer->startRepeating(interval);
+  
+  return timeoutId;
+}
+
+void DOMWindow::clearTimeout(int timeoutId)
+{
+    // timeout IDs have to be positive, and 0 and -1 are unsafe to
+    // even look up since they are the empty and deleted value
+    // respectively
+    if (timeoutId <= 0)
+        return;
+
+    delete m_timeouts.take(timeoutId);
+}
+
+void DOMWindow::pauseTimeouts(OwnPtr<PausedTimeouts>& pausedTimeouts)
+{
+    size_t count = m_timeouts.size();
+    if (count == 0) {
+        pausedTimeouts.clear();
+        return;
+    }
+
+    PausedTimeout* t = new PausedTimeout[count];
+    PausedTimeouts* result = new PausedTimeouts(t, count);
+
+    TimeoutsMap::iterator it = m_timeouts.begin();
+    for (size_t i = 0; i != count; ++i, ++it) {
+        int timeoutId = it->first;
+        DOMWindowTimer* timer = it->second;
+        t[i].timeoutId = timeoutId;
+        t[i].nestingLevel = timer->nestingLevel();
+        t[i].nextFireInterval = timer->nextFireInterval();
+        t[i].repeatInterval = timer->repeatInterval();
+        t[i].action = timer->takeAction();
+    }
+    ASSERT(it == m_timeouts.end());
+
+    deleteAllValues(m_timeouts);
+    m_timeouts.clear();
+
+    pausedTimeouts.set(result);
+}
+
+void DOMWindow::resumeTimeouts(OwnPtr<PausedTimeouts>& timeouts) {
+    if (!timeouts)
+        return;
+    size_t count = timeouts->numTimeouts();
+    PausedTimeout* array = timeouts->takeTimeouts();
+    for (size_t i = 0; i != count; ++i) {
+        int timeoutId = array[i].timeoutId;
+        DOMWindowTimer* timer = 
+          new DOMWindowTimer(timeoutId, array[i].nestingLevel,
+                             this, array[i].action);
+        m_timeouts.set(timeoutId, timer);
+        timer->start(array[i].nextFireInterval, array[i].repeatInterval);
+    }
+    delete[] array;
+    timeouts.clear();
+}
+
+#endif  // V8
+
+void DOMWindow::updateLayout() const {
+  WebCore::Document* docimpl = m_frame->document();
+  if (docimpl)
+    docimpl->updateLayoutIgnorePendingStylesheets();
+}
+
+void DOMWindow::moveTo(float x, float y) const {
+  if (!m_frame || !m_frame->page()) return;
+
+  Page* page = m_frame->page();
+  FloatRect fr = page->chrome()->windowRect();
+  FloatRect sr = screenAvailableRect(page->mainFrame()->view());
+  fr.setLocation(sr.location());
+  FloatRect update = fr;
+  update.move(x, y);
+  // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
+  adjustWindowRect(sr, fr, update);
+  page->chrome()->setWindowRect(fr);
+}
+ 
+void DOMWindow::moveBy(float x, float y) const {
+  if (!m_frame || !m_frame->page()) return;
+  
+  Page* page = m_frame->page();
+  FloatRect fr = page->chrome()->windowRect();
+  FloatRect update = fr;
+  update.move(x, y);
+  // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
+  adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
+  page->chrome()->setWindowRect(fr);
+}
+ 
+void DOMWindow::resizeTo(float x, float y) const {
+  if (!m_frame || !m_frame->page()) return;
+
+  Page* page = m_frame->page();
+  FloatRect fr = page->chrome()->windowRect();
+  FloatSize dest = FloatSize(x, y);
+  FloatRect update(fr.location(), dest);
+  adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
+  page->chrome()->setWindowRect(fr);
+}
+ 
+void DOMWindow::resizeBy(float x, float y) const {
+  if (!m_frame || !m_frame->page()) return;
+
+  Page* page = m_frame->page();
+  FloatRect fr = page->chrome()->windowRect();
+  FloatSize dest = fr.size() + FloatSize(x, y);
+  FloatRect update(fr.location(), dest);
+  adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
+  page->chrome()->setWindowRect(fr);
+}
+ 
+
+void DOMWindow::scrollTo(int x, int y) const {
+  if (!m_frame || !m_frame->view())
+        return;
+
+    if (m_frame->isDisconnected())
+        return;
+
+  updateLayout();
+  m_frame->view()->setContentsPos(x, y);
+}
+
+void DOMWindow::scrollBy(int x, int y) const {
+  if (!m_frame || !m_frame->view()) return;
+
+  updateLayout();
+  m_frame->view()->scrollBy(x, y);
+}
+
 #if ENABLE(DATABASE)
 PassRefPtr<Database> DOMWindow::openDatabase(const String& name, const String& version, const String& displayName, unsigned long estimatedSize, ExceptionCode& ec)
 {
     if (!m_frame)
         return 0;
+        return;
+
+    if (m_frame->isDisconnected())
+        return;
 
     Document* doc = m_frame->document();
     ASSERT(doc);
@@ -797,114 +1188,5 @@ PassRefPtr<Database> DOMWindow::openDatabase(const String& name, const String& v
 }
 #endif
 
-void DOMWindow::scrollBy(int x, int y) const
-{
-    if (!m_frame)
-        return;
-
-    Document* doc = m_frame->document();
-    ASSERT(doc);
-    if (doc)
-        doc->updateLayoutIgnorePendingStylesheets();
-
-    FrameView* view = m_frame->view();
-    if (!view)
-        return;
-
-    view->scrollBy(x, y);
-}
-
-void DOMWindow::scrollTo(int x, int y) const
-{
-    if (!m_frame)
-        return;
-
-    Document* doc = m_frame->document();
-    ASSERT(doc);
-    if (doc)
-        doc->updateLayoutIgnorePendingStylesheets();
-
-    FrameView* view = m_frame->view();
-    if (!view)
-        return;
-
-    int zoomedX = static_cast<int>(x * m_frame->pageZoomFactor());
-    int zoomedY = static_cast<int>(y * m_frame->pageZoomFactor());
-    view->setContentsPos(zoomedX, zoomedY);
-}
-
-void DOMWindow::moveBy(float x, float y) const
-{
-    if (!m_frame)
-        return;
-
-    Page* page = m_frame->page();
-    if (!page)
-        return;
-
-    FloatRect fr = page->chrome()->windowRect();
-    FloatRect update = fr;
-    update.move(x, y);
-    // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
-    adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
-    page->chrome()->setWindowRect(fr);
-}
-
-void DOMWindow::moveTo(float x, float y) const
-{
-    if (!m_frame)
-        return;
-
-    Page* page = m_frame->page();
-    if (!page)
-        return;
-
-    FloatRect fr = page->chrome()->windowRect();
-    FloatRect sr = screenAvailableRect(page->mainFrame()->view());
-    fr.setLocation(sr.location());
-    FloatRect update = fr;
-    update.move(x, y);     
-    // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
-    adjustWindowRect(sr, fr, update);
-    page->chrome()->setWindowRect(fr);
-}
-
-void DOMWindow::resizeBy(float x, float y) const
-{
-    if (!m_frame)
-        return;
-
-    if (m_frame->isDisconnected())
-        return;
-
-    Page* page = m_frame->page();
-    if (!page)
-        return;
-
-    FloatRect fr = page->chrome()->windowRect();
-    FloatSize dest = fr.size() + FloatSize(x, y);
-    FloatRect update(fr.location(), dest);
-    adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
-    page->chrome()->setWindowRect(fr);
-}
-
-void DOMWindow::resizeTo(float width, float height) const
-{
-    if (!m_frame)
-        return;
-
-    if (m_frame->isDisconnected())
-        return;
-
-    Page* page = m_frame->page();
-    if (!page)
-        return;
-
-    FloatRect fr = page->chrome()->windowRect();
-    FloatSize dest = FloatSize(width, height);
-    FloatRect update(fr.location(), dest);
-    adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
-    page->chrome()->setWindowRect(fr);
-}
 
 } // namespace WebCore

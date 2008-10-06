@@ -53,7 +53,6 @@
 #include "HTMLNames.h"
 #include "HTMLTableCellElement.h"
 #include "HitTestResult.h"
-#include "JSDOMWindowShell.h"
 #include "Logging.h"
 #include "markup.h"
 #include "MediaFeatureNames.h"
@@ -66,6 +65,7 @@
 #include "RenderTextControl.h"
 #include "RenderTheme.h"
 #include "RenderView.h"
+#include "ScriptController.h"
 #include "Settings.h"
 #include "SystemTime.h"
 #include "TextIterator.h"
@@ -76,6 +76,10 @@
 #include "runtime_root.h"
 #include "visible_units.h"
 #include <wtf/RefCountedLeakCounter.h>
+
+#if USE(JSC)
+#include "JSDOMWindowShell.h"
+#endif
 
 #if FRAME_LOADS_USER_STYLESHEET
 #include "UserStyleSheetLoader.h"
@@ -152,8 +156,7 @@ Frame::~Frame()
     frameCounter.decrement();
 #endif
 
-    if (d->m_script.haveWindowShell())
-        d->m_script.windowShell()->disconnectFrame();
+    d->m_script.disconnectFrame();
 
     disconnectOwnerElement();
     
@@ -744,7 +747,9 @@ void Frame::setNeedsReapplyStyles()
 
     // Invalidate the FrameView so that FrameView::layout will get called,
     // which calls reapplyStyles.
-    view()->invalidate();
+    FrameView* curView = view();
+    if (curView)
+        curView->invalidate();
 }
 
 bool Frame::needsReapplyStyles() const
@@ -1056,7 +1061,7 @@ void Frame::clearDOMWindow()
         d->m_liveFormerWindows.add(d->m_domWindow.get());
         d->m_domWindow->clear();
     }
-    d->m_domWindow = 0;
+    d->m_script.clearPluginObjects();
 }
 
 RenderView* Frame::contentRenderer() const
@@ -1681,8 +1686,7 @@ void Frame::pageDestroyed()
         page()->focusController()->setFocusedFrame(0);
 
     // This will stop any JS timers
-    if (script()->haveWindowShell())
-        script()->windowShell()->disconnectFrame();
+    script()->disconnectFrame();
 
     script()->clearScriptObjects();
 
@@ -1756,12 +1760,17 @@ bool Frame::shouldClose()
     if (!body)
         return true;
 
+    loader()->setFiringUnloadEvents(true);
+
     RefPtr<BeforeUnloadEvent> beforeUnloadEvent = BeforeUnloadEvent::create();
     beforeUnloadEvent->setTarget(doc);
     doc->handleWindowEvent(beforeUnloadEvent.get(), false);
 
     if (!beforeUnloadEvent->defaultPrevented() && doc)
         doc->defaultEventHandler(beforeUnloadEvent.get());
+
+    loader()->setFiringUnloadEvents(false);
+
     if (beforeUnloadEvent->result().isNull())
         return true;
 

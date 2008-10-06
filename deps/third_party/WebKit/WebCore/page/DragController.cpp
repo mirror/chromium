@@ -744,7 +744,9 @@ void DragController::doSystemDrag(DragImageRef image, const IntPoint& dragLoc, c
     // for the UIDelegate to take over the drag, and fail to send the appropriate
     // drag termination event.  As dragEnded just resets drag variables, we just 
     // call it anyway to be on the safe side
-    dragEnded();
+    // Except if drag and drop happens asynchronously, in which case dragging
+    // has not ended.
+    //dragEnded();
 }
     
 // Manual drag caret manipulation

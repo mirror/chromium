@@ -701,16 +701,6 @@ HitTestResult EventHandler::hitTestResultAtPoint(const IntPoint& point, bool all
         frame->contentRenderer()->layer()->hitTest(HitTestRequest(true, true), widgetHitTestResult);
         result = widgetHitTestResult;
     }
-    
-    // If our HitTestResult is not visible, then we started hit testing too far down the frame chain. 
-    // Another hit test at the main frame level should get us the correct visible result.
-    Frame* resultFrame = result.innerNonSharedNode() ? result.innerNonSharedNode()->document()->frame() : 0;
-    Frame* mainFrame = m_frame->page()->mainFrame();
-    if (resultFrame && resultFrame != mainFrame && !resultFrame->editor()->insideVisibleArea(result.point())) {
-        IntPoint windowPoint = resultFrame->view()->contentsToWindow(result.point());
-        IntPoint mainFramePoint = mainFrame->view()->windowToContents(windowPoint);
-        result = mainFrame->eventHandler()->hitTestResultAtPoint(mainFramePoint, allowShadowContent);
-    }
 
     if (!allowShadowContent)
         result.setToNonShadowAncestor();
@@ -740,7 +730,6 @@ void EventHandler::stopAutoscrollTimer(bool rendererIsBeingDestroyed)
 #if PLATFORM(WIN)
         if (m_panScrollInProgress) {
             m_frame->view()->removePanScrollIcon();
-            m_frame->view()->setCursor(pointerCursor());
         }
 #endif
 
@@ -1054,8 +1043,11 @@ bool EventHandler::handleMousePressEvent(const PlatformMouseEvent& mouseEvent)
 
     if (swallowEvent) {
         // scrollbars should get events anyway, even disabled controls might be scrollable
-        if (mev.scrollbar())
-            passMousePressEventToScrollbar(mev, mev.scrollbar());
+        PlatformScrollbar* scrollbar = mev.scrollbar();
+        if (!scrollbar)
+            scrollbar = m_frame->view()->scrollbarUnderMouse(mouseEvent);
+        if (scrollbar)
+            passMousePressEventToScrollbar(mev, scrollbar);
     } else {
         // Refetch the event target node if it currently is the shadow node inside an <input> element.
         // If a mouse event handler changes the input element type to one that has a widget associated,
@@ -1199,6 +1191,10 @@ bool EventHandler::handleMouseMoveEvent(const PlatformMouseEvent& mouseEvent, Hi
         
         // Event dispatch in updateMouseEventTargetNode may have caused the subframe of the target
         // node to be detached from its FrameView, in which case the event should not be passed.
+
+        // Manually merge changes from webkit trunk to fix the crash for
+        // http://www.coolpc.com.tw/evaluate.php
+        // See http://trac.webkit.org/changeset/31788.
         if (newSubframe->view())
             swallowEvent |= passMouseMoveEventToSubframe(mev, newSubframe.get(), hoveredNode);
     } else {
@@ -1550,6 +1546,13 @@ bool EventHandler::sendContextMenuEvent(const PlatformMouseEvent& event)
     IntPoint viewportPos = v->windowToContents(event.pos());
     MouseEventWithHitTestResults mev = doc->prepareMouseEvent(HitTestRequest(false, true), viewportPos, event);
 
+#if 0
+    // The following commented out code tries to select the word below the
+    // mouse cursor on right click.  This used to be behavior that could be
+    // changed by webkit embedders, but in change 24499, that functionality was
+    // removed.
+    // https://bugs.webkit.org/show_bug.cgi?id=15279
+
     if (!m_frame->selection()->contains(viewportPos) && 
         // FIXME: In the editable case, word selection sometimes selects content that isn't underneath the mouse.
         // If the selection is non-editable, we do word selection to make it easier to use the contextual menu items
@@ -1558,7 +1561,7 @@ bool EventHandler::sendContextMenuEvent(const PlatformMouseEvent& event)
         m_mouseDownMayStartSelect = true; // context menu events are always allowed to perform a selection
         selectClosestWordOrLinkFromMouseEvent(mev);
     }
-
+#endif
     swallowEvent = dispatchMouseEvent(contextmenuEvent, mev.targetNode(), true, 0, event, true);
     
     return swallowEvent;
@@ -1662,15 +1665,10 @@ bool EventHandler::needsKeyboardEventDisambiguationQuirks() const
 bool EventHandler::keyEvent(const PlatformKeyboardEvent& initialKeyEvent)
 {
 #if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS))
-    if (m_frame->page()->mainFrame()->eventHandler()->panScrollInProgress() || m_autoscrollInProgress) {
-        String escKeyId = "U+001B";
-        // If a key is pressed while the autoscroll/panScroll is in progress then we want to stop
-        if (initialKeyEvent.keyIdentifier() == escKeyId && initialKeyEvent.type() == PlatformKeyboardEvent::KeyUp) 
-            stopAutoscrollTimer();
-
-        // If we were in autoscroll/panscroll mode, we swallow the key event
-        return true;
-    }
+    String escKeyId = "U+001B";
+    // If a key is pressed while the autoscroll/panScroll is in progress then we want to stop
+    if (initialKeyEvent.keyIdentifier() == escKeyId && m_frame->page()->mainFrame()->eventHandler()->panScrollInProgress() || m_autoscrollInProgress) 
+        stopAutoscrollTimer();
 #endif
 
     // Check for cases where we are too early for events -- possible unmatched key up
