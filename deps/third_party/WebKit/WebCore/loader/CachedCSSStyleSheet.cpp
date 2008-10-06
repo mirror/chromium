@@ -76,6 +76,7 @@ void CachedCSSStyleSheet::data(PassRefPtr<SharedBuffer> data, bool allDataReceiv
     if (m_data.get()) {
         m_sheet = m_decoder->decode(m_data->data(), encodedSize());
         m_sheet += m_decoder->flush();
+        m_data = 0;  // We no longer need the raw buffer.
     }
     m_loading = false;
     checkNotify();

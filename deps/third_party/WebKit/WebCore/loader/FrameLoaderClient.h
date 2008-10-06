@@ -200,6 +200,8 @@ namespace WebCore {
         virtual void didPerformFirstNavigation() const = 0; // "Navigation" here means a transition from one page to another that ends up in the back/forward list.
         
         virtual void registerForIconNotification(bool listen = true) = 0;
+
+        virtual void unloadListenerChanged() = 0;
         
 #if PLATFORM(MAC)
 #if ENABLE(MAC_JAVA_BRIDGE)

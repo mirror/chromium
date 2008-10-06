@@ -261,6 +261,8 @@ public:
 
     virtual void registerForIconNotification(bool listen) {}
 
+    virtual void unloadListenerChanged() {}
+
 #if PLATFORM(MAC)
     virtual NSCachedURLResponse* willCacheResponse(DocumentLoader*, unsigned long identifier, NSCachedURLResponse* response) const { return response; }
 #endif

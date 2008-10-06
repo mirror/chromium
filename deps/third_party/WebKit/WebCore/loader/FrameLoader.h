@@ -47,10 +47,6 @@
 #include "CachedResourceClient.h"
 #endif
 
-namespace KJS {
-    class JSValue;
-}
-
 namespace WebCore {
 
     class Archive;
@@ -199,6 +195,7 @@ namespace WebCore {
         DocumentLoader* documentLoader() const;
         DocumentLoader* policyDocumentLoader() const;
         DocumentLoader* provisionalDocumentLoader() const;
+        DocumentLoader* policyDocumentLoader();
         FrameState state() const;
         static double timeOfLastCompletedLoad();
         
@@ -224,7 +221,7 @@ namespace WebCore {
         ResourceError cancelledError(const ResourceRequest&) const;
         ResourceError fileDoesNotExistError(const ResourceResponse&) const;
         ResourceError blockedError(const ResourceRequest&) const;
-        ResourceError cannotShowURLError(const ResourceRequest&) const;
+        ResourceError cannotShowURLError(const ResourceRequest&) const; 
 
         void cannotShowMIMEType(const ResourceResponse&);
         ResourceError interruptionForPolicyChangeError(const ResourceRequest&);
@@ -257,6 +254,7 @@ namespace WebCore {
         void didChangeTitle(DocumentLoader*);
 
         FrameLoadType loadType() const;
+        FrameLoadType policyLoadType() const { return m_policyLoadType; }
 
         void didFirstLayout();
         bool firstLayoutDone() const;
@@ -315,6 +313,7 @@ namespace WebCore {
 
         bool canGoBackOrForward(int distance) const;
         void goBackOrForward(int distance);
+        void goToHistoryItem(HistoryItem* item);
         int getHistoryLength();
         KURL historyURL(int distance);
 
@@ -332,8 +331,14 @@ namespace WebCore {
         // Returns true if url is a JavaScript URL.
         bool executeIfJavaScriptURL(const KURL& url, bool userGesture = false, bool replaceDocument = true);
 
-        KJS::JSValue* executeScript(const String& url, int baseLine, const String& script);
-        KJS::JSValue* executeScript(const String& script, bool forceUserGesture = false);
+        // Executes a script, ignore the result. For back compability.
+        void executeScript(const String& url, int baseLine, const String& script);
+        void executeScript(const String& script, bool forceUserGesture = false);
+
+        // Executes a script, returns results as a string, and sets succ
+        // to true if no errors.
+        String executeScript(const String& url, int baseLine, const String& script, bool* succ);
+        String executeScript(const String& script, bool* succ, bool forceUserGesture = false);
 
         void gotoAnchor();
         bool gotoAnchor(const String& name); // returns true if the anchor was found
@@ -457,6 +462,11 @@ namespace WebCore {
         void startIconLoader();
 
         void applyUserAgent(ResourceRequest& request);
+
+        bool firingUnloadEvents() { return m_firingUnloadEvents; }
+        void setFiringUnloadEvents(bool value) { m_firingUnloadEvents = value; }
+
+        void unloadListenerChanged();
 
     private:
         PassRefPtr<HistoryItem> createHistoryItem(bool useOriginal);
@@ -623,6 +633,7 @@ namespace WebCore {
         bool m_wasUnloadEventEmitted;
         bool m_isComplete;
         bool m_isLoadingMainResource;
+        bool m_firingUnloadEvents;  // frame or loader is firing unload or beforeUnload events.
 
         KURL m_URL;
         KURL m_workingURL;
