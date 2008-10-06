@@ -1,0 +1,34 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import(['env', 'env_res'])
+
+env = env.Clone()
+env_res = env_res.Clone()
+
+env_res.Append(
+  CPPPATH = [
+    ".",
+    #"#/../chrome/Debug/obj/chrome_dll",
+    "#/..",
+    #"#/../chrome/Debug/obj",
+  ],
+  RCFLAGS = [
+    ["/l", "0x409"],
+  ],
+)
+
+import os
+import sys
+sys.path.append(Dir('#/../tools/grit').abspath)
+env_grd = env.Clone()
+env_grd.Tool('scons', toolpath=['#/../tools/grit/grit'])
+# This dummy target (webkit_strings) is used to tell the emitter where
+# to put the target files.
+generated = env_grd.GRIT('webkit_strings',
+                         '#/../webkit/glue/webkit_strings.grd')
+for g in [ g for g in generated if str(g).endswith('.rc') ]:
+    env_res.RES(g)
+
+

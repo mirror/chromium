@@ -1,0 +1,54 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.Prepend(
+    CPPPATH = [
+        '#/../webkit/glue',
+        '$ICU38/public/common',
+        '$ICU38/public/i18n',
+        '#/../third_party/libxml/include',
+        '#/../third_party/npapi',
+        '#/..',
+    ],
+)
+
+env.Append(
+  CPPDEFINES = [
+      'U_STATIC_IMPLEMENTATION',
+      'LIBXML_STATIC',
+  ],
+)
+
+if env['PLATFORM'] == 'win32':
+  env.Append(
+      CCFLAGS = [
+          '/TP',
+
+          '/WX',
+          '/Wp64',
+      ],
+  )
+
+# Platform-independent files.
+input_files = [
+]
+
+# TODO: Quarantine files -- need porting to platform-specific blocks above.
+if env['PLATFORM'] == 'win32':
+  input_files.extend([
+      'activex_installer.cc',
+      'default_plugin.cc',
+      'plugin_main.cc',
+      'plugin_impl.cc',
+      'plugin_database_handler.cc',
+      'plugin_install_job_monitor.cc',
+      'install_dialog.cc',
+  ])
+
+env.ChromeStaticLibrary('default_plugin', input_files)
+

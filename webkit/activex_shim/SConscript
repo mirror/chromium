@@ -1,0 +1,44 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.Prepend(
+    CPPPATH = [
+        '$NPAPI_DIR',
+        '#/..',
+    ],
+)
+
+env.Append(
+    CPPDEFINES = [
+        'TRACK_INTERFACE',
+    ],
+    CCFLAGS = [
+        '/TP',
+
+        '/WX',
+        '/Wp64',
+    ],
+# TODO(bradnelson): Scons should really have a way to handle this.
+    ARFLAGS = [
+        '/LIBPATH:$PLATFORMSDK_VISTA_REL', 'Urlmon.Lib',
+    ],
+)
+
+input_files = [
+    'activex_plugin.cc',
+    'activex_shared.cc',
+    'activex_util.cc',
+    'dispatch_object.cc',
+    'npn_scripting.cc',
+    'npp_impl.cc',
+    'web_activex_container.cc',
+    'web_activex_site.cc',
+]
+
+env.ChromeStaticLibrary('activex_shim', input_files)
+

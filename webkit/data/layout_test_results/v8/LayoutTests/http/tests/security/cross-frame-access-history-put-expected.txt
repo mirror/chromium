@@ -1,0 +1,12 @@
+
+
+YOUR BROWSER DOES NOT SUPPORT window.postMessage
+To run this test manually, first click the button titled 'Step 1 - Set Test' in this frame.
+Then click the button in the sub frame titled 'Step 2 - Set Check' to finish the test.
+
+Step 1 - Set Test
+
+--------
+Frame: '<!--framePath //<!--frame0-->-->'
+--------
+Step 2 - Set Check
