@@ -34,6 +34,7 @@
 #include "KURL.h"
 #include "StringHash.h"
 #include "Timer.h"
+#include "unicode/uscript.h"
 #include <wtf/HashCountedSet.h>
 #include <wtf/ListHashSet.h>
 
@@ -234,6 +235,7 @@ public:
     String characterSet() const { return inputEncoding(); }
 
     void setCharset(const String&);
+    UScriptCode dominantScript() const;
 
     String contentLanguage() const { return m_contentLanguage; }
     void setContentLanguage(const String& lang) { m_contentLanguage = lang; }
@@ -438,6 +440,9 @@ public:
     void setPrinting(bool p) { m_printing = p; }
 
     enum ParseMode { Compat, AlmostStrict, Strict };
+
+    // Used by Chromium to know if it can just SIGKILL a renderer when navigating
+    bool hasUnloadEventListener();
 
 private:
     virtual void determineParseMode() {}
@@ -761,6 +766,10 @@ public:
     // Extension for manipulating canvas drawing contexts for use in CSS
     CanvasRenderingContext2D* getCSSCanvasContext(const String& type, const String& name, int width, int height);
     HTMLCanvasElement* getCSSCanvasElement(const String& name);
+
+     bool isDNSPrefetchEnabled() const { return m_isDNSPrefetchEnabled; }
+     void initDNSPrefetchEnabled();
+     void setDNSPrefetchControl(const WebCore::String&);
     
 protected:
     Document(Frame*, bool isXHTML);
@@ -866,6 +875,9 @@ private:
     bool m_usesFirstLetterRules;
     bool m_gotoAnchorNeededAfterStylesheetsLoad;
 
+    bool m_isDNSPrefetchEnabled;
+    bool m_haveExplicitlyDisabledDNSPrefetch;
+
     String m_title;
     bool m_titleSetExplicitly;
     RefPtr<Element> m_titleElement;
@@ -911,6 +923,20 @@ private:
     bool m_xmlStandalone;
 
     String m_contentLanguage;
+
+    // UScriptCode can be derived from non-Unicode charsets and help us select a fallback
+    // font. Because it's derived from charset, it's a document-wide constant.
+    // For instance, it'll be Latin, SimplifiedHan, TraditionalHan, Hiragana,
+    // Hangul, Arabic and Hebrew for documents in ISO-8859-1, GBK, Big5, Shift_JIS,
+    // EUC-KR, Windows-1256 and Windows-1255, respectively. In case of Japanese encodings,
+    // either Hiragana or Katakana should work but Han does not because it does not
+    // uniquely identify Japanese and as a result does not help the font selection. 
+    // Obviously, this does not work well for Unicode-encoded documents. In the meantime,
+    // we can resort to the 'dominant' script of the current UI language. 
+    // In the future, we should refer to the value of xml:lang and lang to infer 
+    // this value for invididual text nodes. CSSStyleSelector might be a good place for that.
+    // Moreover, the value of m_contentLanguage should be utilized as well. 
+    mutable UScriptCode m_dominantScript; 
 
 public:
     bool inPageCache();

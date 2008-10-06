@@ -48,6 +48,7 @@
 #include "CSSVariablesRule.h"
 #include "CachedImage.h"
 #include "Counter.h"
+#include "FontCache.h"
 #include "FontFamilyValue.h"
 #include "FontValue.h"
 #include "Frame.h"
@@ -1373,6 +1374,12 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, Element *e)
         if (style->width().isAuto())
             style->setWidth(Length(Intrinsic));
     }
+    
+    // Textarea considers overflow visible as auto.
+    if (e && e->hasTagName(textareaTag)) {
+        style->setOverflowX(style->overflowX() == OVISIBLE ? OAUTO : style->overflowX());
+        style->setOverflowY(style->overflowY() == OVISIBLE ? OAUTO : style->overflowY());
+    }
 
     // Finally update our text decorations in effect, but don't allow text-decoration to percolate through
     // tables, inline blocks, inline tables, or run-ins.
@@ -2527,6 +2534,30 @@ static void applyCounterList(RenderStyle* style, CSSValueList* list, bool isRese
                 directives.m_incrementValue = value;
             }
         }
+    }
+}
+
+struct ScriptFamilyState {
+  bool isGenericAdded;
+  bool isPerScriptGenericChecked;
+  ScriptFamilyState() : isGenericAdded(false), isPerScriptGenericChecked(false)
+  {}
+};
+
+inline static void handleScriptFamily(const char* webkitFamily, UScriptCode script,
+                                      FontDescription::GenericFamilyType generic,
+                                      AtomicString& face, ScriptFamilyState& state,                                       FontDescription& fontDescription,
+                                      int& familyIndex)
+{
+    if (!state.isGenericAdded) {
+        face = webkitFamily;
+        state.isGenericAdded = true;
+        fontDescription.setGenericFamily(generic);
+        // go through this once more to add per-script generic family.
+        --familyIndex;
+    } else if (!state.isPerScriptGenericChecked) {
+        face = FontCache::getGenericFontForScript(script, fontDescription);
+        state.isPerScriptGenericChecked = true;
     }
 }
 
@@ -3804,12 +3835,21 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
         bool oldFamilyIsMonospace = fontDescription.genericFamily() == FontDescription::MonospaceFamily;
         fontDescription.setGenericFamily(FontDescription::NoFamily);
 
+        // |script| is used to add a font per script and per CSS generic family. 
+        // Adding it here is not very efficient because we may never use it 
+        // if all the characters are covered by fonts specified for this element.
+        // TODO(jungshik): Currently, it's document-wide constant inferred from
+        // the document charset, but we should infer it from the value of 
+        // xml:lang or lang for |m_element|.
+        UScriptCode script = m_checker.m_document->dominantScript();
+        // serif, sans-serif, cursive, fantasy, monospace
+        ScriptFamilyState scriptFamilyStates[5]; 
+        Settings* settings = m_checker.m_document->settings();
         for (int i = 0; i < len; i++) {
             CSSValue *item = list->itemWithoutBoundsCheck(i);
             if (!item->isPrimitiveValue()) continue;
             CSSPrimitiveValue *val = static_cast<CSSPrimitiveValue*>(item);
             AtomicString face;
-            Settings* settings = m_checker.m_document->settings();
             if (val->primitiveType() == CSSPrimitiveValue::CSS_STRING)
                 face = static_cast<FontFamilyValue*>(val)->familyName();
             else if (val->primitiveType() == CSSPrimitiveValue::CSS_IDENT && settings) {
@@ -3817,25 +3857,44 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
                     case CSSValueWebkitBody:
                         face = settings->standardFontFamily();
                         break;
+                    // For each of 5 CSS generic families,
+                    // we add '-webkit-FOO' and a per-script generic family.
+                    // When |Settings| becomes expressive enough to support
+                    // per-script&per-generic family and we have a UI for
+                    // that, we'd just add the latter. Even without that,
+                    // I'm tempted to add per-script generic first, but I can't.
+                    // If I did, our font-selection UI would be all but
+                    // non-functional. Another issue is that we're adding 
+                    // these fonts without regard for actual need in page
+                    // rendering. That is, it's not done in a lazy manner.
+                    // Somewhere in getGlyphDataForCharacter() could be
+                    // a better place in terms of performance.
+                    // See https://bugs.webkit.org/show_bug.cgi?id=18085
+                    // and http://bugs.webkit.org/show_bug.cgi?id=10874
                     case CSSValueSerif:
-                        face = "-webkit-serif";
-                        fontDescription.setGenericFamily(FontDescription::SerifFamily);
+                        handleScriptFamily("-webkit-serif", script,
+                             FontDescription::SerifFamily, face,
+                             scriptFamilyStates[0], fontDescription, i);
                         break;
                     case CSSValueSansSerif:
-                        face = "-webkit-sans-serif";
-                        fontDescription.setGenericFamily(FontDescription::SansSerifFamily);
+                        handleScriptFamily("-webkit-sans-serif", script,
+                             FontDescription::SansSerifFamily, face,
+                             scriptFamilyStates[1], fontDescription, i);
                         break;
                     case CSSValueCursive:
-                        face = "-webkit-cursive";
-                        fontDescription.setGenericFamily(FontDescription::CursiveFamily);
+                        handleScriptFamily("-webkit-cursive", script,
+                             FontDescription::CursiveFamily, face,
+                             scriptFamilyStates[2], fontDescription, i);
                         break;
                     case CSSValueFantasy:
-                        face = "-webkit-fantasy";
-                        fontDescription.setGenericFamily(FontDescription::FantasyFamily);
+                        handleScriptFamily("-webkit-fantasy", script,
+                             FontDescription::FantasyFamily, face,
+                             scriptFamilyStates[3], fontDescription, i);
                         break;
                     case CSSValueMonospace:
-                        face = "-webkit-monospace";
-                        fontDescription.setGenericFamily(FontDescription::MonospaceFamily);
+                        handleScriptFamily("-webkit-monospace", script,
+                             FontDescription::MonospaceFamily, face,
+                             scriptFamilyStates[4], fontDescription, i);
                         break;
                 }
             }
@@ -3856,6 +3915,29 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
                 if (fontDescription.keywordSize() && (fontDescription.genericFamily() == FontDescription::MonospaceFamily) != oldFamilyIsMonospace)
                     setFontSize(fontDescription, fontSizeForKeyword(CSSValueXxSmall + fontDescription.keywordSize() - 1, m_style->htmlHacks(), !oldFamilyIsMonospace));
             
+                if (m_style->setFontDescription(fontDescription))
+                    m_fontDirty = true;
+            }
+        }
+
+        if (fontDescription.genericFamily() == FontDescription::NoFamily && currFamily) {
+            FontDescription::GenericFamilyType generic;
+            // TODO(jungshik) : Perhaps, we'd better add isStandardSerif()
+            // method to |Settings| which will be set via WebPreference.
+            if (settings) {
+                if (settings->serifFontFamily() == settings->standardFontFamily())
+                    generic = FontDescription::SerifFamily ;
+                else 
+                    generic = FontDescription::SansSerifFamily;
+            } else
+              generic = FontDescription::StandardFamily; 
+            fontDescription.setGenericFamily(generic);
+            AtomicString face = FontCache::getGenericFontForScript(script, fontDescription);
+            if (!face.isEmpty()) {
+                RefPtr<SharedFontFamily> newFamily = SharedFontFamily::create();
+                newFamily->setFamily(face);
+                currFamily->appendFamily(newFamily);
+                currFamily = newFamily.get();
                 if (m_style->setFontDescription(fontDescription))
                     m_fontDirty = true;
             }
@@ -4077,7 +4159,7 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
             m_style->setLineHeight(RenderStyle::initialLineHeight());
             m_lineHeightValue = 0;
             FontDescription fontDescription;
-            theme()->systemFont(primitiveValue->getIdent(), fontDescription);
+            theme()->systemFont(primitiveValue->getIdent(), m_checker.m_document, fontDescription);
             // Double-check and see if the theme did anything.  If not, don't bother updating the font.
             if (fontDescription.isAbsoluteSize()) {
                 // Handle the zoom factor.

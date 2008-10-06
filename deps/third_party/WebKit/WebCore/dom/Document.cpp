@@ -50,6 +50,7 @@
 #include "EventNames.h"
 #include "ExceptionCode.h"
 #include "FocusController.h"
+#include "FontCache.h"
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameTree.h"
@@ -108,9 +109,12 @@
 #include "XMLHttpRequest.h"
 #include "XMLNames.h"
 #include "XMLTokenizer.h"
-#include "JSDOMBinding.h"
 #include "ScriptController.h"
+
+#if USE(JSC)
 #include <kjs/JSLock.h>
+#include "JSDOMBinding.h"
+#endif
 
 #if ENABLE(DATABASE)
 #include "Database.h"
@@ -137,6 +141,12 @@
 #include "SVGElementFactory.h"
 #include "SVGZoomEvent.h"
 #include "SVGStyleElement.h"
+#endif
+
+#if defined(__APPLE__)
+// we need to be PLATFORM(CHROMIUM) for this file, even if we're not building
+// that particular target, for the a11y ifdefs.
+#define WTF_PLATFORM_CHROMIUM 1
 #endif
 
 using namespace std;
@@ -272,6 +282,7 @@ Document::Document(Frame* frame, bool isXHTML)
 #endif
     , m_xmlVersion("1.0")
     , m_xmlStandalone(false)
+    , m_dominantScript(USCRIPT_INVALID_CODE)
 #if ENABLE(XBL)
     , m_bindingManager(new XBLBindingManager(this))
 #endif
@@ -349,6 +360,7 @@ Document::Document(Frame* frame, bool isXHTML)
     m_overMinimumLayoutThreshold = false;
     
     initSecurityContext();
+    initDNSPrefetchEnabled();
 
     static int docID = 0;
     m_docID = docID++;
@@ -407,10 +419,12 @@ Document::~Document()
 #endif
 
     XMLHttpRequest::detachRequests(this);
+#if USE(JSC)
     {
         KJS::JSLock lock(false);
         ScriptInterpreter::forgetAllDOMNodesForDocument(this);
     }
+#endif
 
     if (m_docChanged && changedDocuments)
         changedDocuments->remove(this);
@@ -843,6 +857,76 @@ void Document::setCharset(const String& charset)
     decoder()->setEncoding(charset, TextResourceDecoder::UserChosenEncoding);
 }
 
+UScriptCode Document::dominantScript() const
+{
+    struct EncodingScript {
+        const char* encoding;
+        UScriptCode script;
+    };
+ 
+    // inputEncoding() always returns a canonical name. We use
+    // MIME names and IANA names (if the former is not available).
+    static const EncodingScript encodingScriptList[] = {
+        { "GB2312", USCRIPT_SIMPLIFIED_HAN },
+        { "GBK", USCRIPT_SIMPLIFIED_HAN },
+        { "GB18030", USCRIPT_SIMPLIFIED_HAN },
+        { "Big5", USCRIPT_TRADITIONAL_HAN },
+        { "Big5-HKSCS", USCRIPT_TRADITIONAL_HAN },
+        { "Shift_JIS", USCRIPT_HIRAGANA},
+        { "EUC-JP", USCRIPT_HIRAGANA },  // Japanese (USCRIPT_JAPANESE)
+        { "ISO-2022-KR", USCRIPT_HIRAGANA },
+        { "EUC-KR", USCRIPT_HANGUL },  // Korean (USCRIPT_KOREAN)
+        { "TIS-620", USCRIPT_THAI },
+        { "ISO-8859-1", USCRIPT_LATIN },
+        { "ISO-8859-15", USCRIPT_LATIN },
+        { "windows-1252", USCRIPT_LATIN },
+        { "ISO-8859-2", USCRIPT_LATIN },
+        { "windows-1250", USCRIPT_LATIN },
+        { "ISO-8859-3", USCRIPT_LATIN },
+        { "ISO-8859-4", USCRIPT_LATIN },
+        { "ISO-8859-13", USCRIPT_LATIN },
+        { "windows-1257", USCRIPT_LATIN },
+        { "ISO-8859-5", USCRIPT_CYRILLIC },
+        { "windows-1251", USCRIPT_CYRILLIC },
+        { "KOI8-R", USCRIPT_CYRILLIC },
+        { "KOI8-U", USCRIPT_CYRILLIC },
+        { "ISO-8859-6", USCRIPT_ARABIC },
+        { "windows-1256", USCRIPT_ARABIC },
+        { "ISO-8859-7", USCRIPT_GREEK },
+        { "windows-1253", USCRIPT_GREEK },
+        { "ISO-8859-8", USCRIPT_HEBREW },
+        { "windows-1255", USCRIPT_HEBREW },
+        { "ISO-8859-9", USCRIPT_LATIN },  // Turkish
+        { "windows-1254", USCRIPT_LATIN },
+        { "ISO-8859-10", USCRIPT_LATIN }, // Nordic
+        { "ISO-8859-14", USCRIPT_LATIN }, // Celtic
+        { "ISO-8859-16", USCRIPT_LATIN }, // Romanian
+        { "windows-1258", USCRIPT_LATIN }, // Vietnamese
+    };
+ 
+    static HashMap<String, UScriptCode> encodingScriptMap;
+ 
+    if (encodingScriptMap.isEmpty()) {
+        for (unsigned i = 0; i < sizeof(encodingScriptList) / sizeof(encodingScriptList[0]); ++i) 
+            encodingScriptMap.set(encodingScriptList[i].encoding,
+                                  encodingScriptList[i].script);
+    }
+ 
+    if (m_dominantScript != USCRIPT_INVALID_CODE) 
+        return m_dominantScript;
+    String encoding = inputEncoding();
+    if (encoding.isEmpty())
+        return m_dominantScript;
+ 
+    HashMap<String, UScriptCode>::iterator it = encodingScriptMap.find(encoding);
+    if (it != encodingScriptMap.end())
+        m_dominantScript = it->second;
+    else 
+        // TODO(jungshik) : should return a script corresponding to the locale.
+        m_dominantScript = USCRIPT_COMMON;
+    return m_dominantScript;
+}
+
 void Document::setXMLVersion(const String& version, ExceptionCode& ec)
 {
     if (!implementation()->hasFeature("XML", String())) {
@@ -1112,6 +1196,21 @@ void Document::recalcStyle(StyleChange change)
     
         FontDescription fontDescription;
         fontDescription.setUsePrinterFont(printing());
+        // TODO(jungshik): Eventually, we need to derive the dominant script
+        // for the current node based on 'xml:lang' and 'lang' specified for
+        // it or inherited from its parent rather than using the document-wide
+        // value (inferred from charset). Note also that it does not work 
+        // for 'script-agnostic' charsets like UTF-8. In that case, Firefox
+        // uses the script corresponding to the application locale.
+        // While a document is loaded, this function is called multiple
+        // times. At the beginning, the document charset is not known and
+        // dominantScript remains invalid. Only when it's determined, we
+        // change the font accordingly.
+        // See http://bugs.webkit.org/show_bug.cgi?id=10874 and 
+        // https://bugs.webkit.org/show_bug.cgi?id=18085
+        UScriptCode script = dominantScript();
+        if (script != USCRIPT_INVALID_CODE)
+            fontDescription.setDominantScript(script);
         if (Settings* settings = this->settings()) {
             fontDescription.setRenderingMode(settings->fontRenderingMode());
             if (printing() && !settings->shouldPrintBackgrounds())
@@ -1119,7 +1218,23 @@ void Document::recalcStyle(StyleChange change)
             const AtomicString& stdfont = settings->standardFontFamily();
             if (!stdfont.isEmpty()) {
                 fontDescription.firstFamily().setFamily(stdfont);
-                fontDescription.firstFamily().appendFamily(0);
+                FontFamily& currFamily = fontDescription.firstFamily();
+                if (script != USCRIPT_INVALID_CODE) {
+                  // TODO(jungshik) : I might as well modify |genericFamily| of
+                  // |fontDescription| here, but I'm wary of a potential breakage.
+                  // For now, just use a temporary variable.
+                  FontDescription tmpDescription;
+                  tmpDescription.setGenericFamily(FontDescription::StandardFamily);
+                  AtomicString docFont = FontCache::getGenericFontForScript(
+                      script, tmpDescription);
+                  if (!docFont.isEmpty()) {
+                      RefPtr<SharedFontFamily> newFamily(SharedFontFamily::create());
+                      newFamily->setFamily(docFont);
+                      currFamily.appendFamily(newFamily);
+                      currFamily = *newFamily;
+                  }
+                }
+                currFamily.appendFamily(0);
             }
             fontDescription.setKeywordSize(CSSValueMedium - CSSValueXxSmall + 1);
             m_styleSelector->setFontSize(fontDescription, m_styleSelector->fontSizeForKeyword(CSSValueMedium, inCompatMode(), false));
@@ -1950,6 +2065,8 @@ void Document::processHttpEquiv(const String &equiv, const String &content)
             static_cast<HTMLDocument*>(this)->setCookie(content);
     } else if (equalIgnoringCase(equiv, "content-language"))
         setContentLanguage(content);
+    else if (equalIgnoringCase(equiv, "x-dns-prefetch-control"))
+        setDNSPrefetchControl(content);
 }
 
 MouseEventWithHitTestResults Document::prepareMouseEvent(const HitTestRequest& request, const IntPoint& documentPoint, const PlatformMouseEvent& event)
@@ -2492,7 +2609,7 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
         }
    }
 
-#if PLATFORM(MAC)
+#if PLATFORM(MAC) && !PLATFORM(CHROMIUM)
     if (!focusChangeBlocked && m_focusedNode && AXObjectCache::accessibilityEnabled())
         axObjectCache()->handleFocusedUIElementChanged();
 #endif
@@ -2753,6 +2870,12 @@ void Document::addPendingFrameBeforeUnloadEventCount()
 {
     if (m_frame)
         m_frame->eventHandler()->removePendingFrameBeforeUnloadEventCount();
+}
+
+bool Document::hasUnloadEventListener()
+{
+  return (hasWindowEventListener(unloadEvent) || 
+          hasWindowEventListener(beforeunloadEvent));
 }
 
 PassRefPtr<EventListener> Document::createHTMLEventListener(const String& functionName, const String& code, Node *node)
@@ -4019,6 +4142,7 @@ void Document::initSecurityContext()
 void Document::setSecurityOrigin(SecurityOrigin* securityOrigin)
 {
     m_securityOrigin = securityOrigin;
+    initDNSPrefetchEnabled();
 }
 
 void Document::updateFocusAppearanceSoon()
@@ -4303,6 +4427,29 @@ HTMLCanvasElement* Document::getCSSCanvasElement(const String& name)
         m_cssCanvasElements.set(name, result);
     }
     return result.get();
+}
+
+void Document::initDNSPrefetchEnabled()
+{
+    m_haveExplicitlyDisabledDNSPrefetch = false;
+    m_isDNSPrefetchEnabled = (securityOrigin()->protocol() == "http");
+
+    // Inherit DNS prefetch opt-out from parent frame    
+    if (Document* parent = parentDocument())
+        if (!parent->isDNSPrefetchEnabled())
+            m_isDNSPrefetchEnabled = false;
+}
+
+void Document::setDNSPrefetchControl(const String& dnsPrefetchControl)
+{
+    if (equalIgnoringCase(dnsPrefetchControl, "on") && 
+        !m_haveExplicitlyDisabledDNSPrefetch) {
+        m_isDNSPrefetchEnabled = true;
+        return;
+    }
+
+    m_isDNSPrefetchEnabled = false;
+    m_haveExplicitlyDisabledDNSPrefetch = true;
 }
 
 } // namespace WebCore

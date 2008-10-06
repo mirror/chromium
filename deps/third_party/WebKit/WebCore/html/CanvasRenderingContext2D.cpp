@@ -70,6 +70,9 @@ const char* defaultFont = "10px sans-serif";
 CanvasRenderingContext2D::CanvasRenderingContext2D(HTMLCanvasElement* canvas)
     : m_canvas(canvas)
     , m_stateStack(1)
+#if USE(V8)
+    , m_peer(0)
+#endif
 {
 }
 
