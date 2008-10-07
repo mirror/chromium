@@ -267,8 +267,11 @@
 #define WTF_USE_PTHREADS 1
 #endif
 
+// allow build settings to override HAVE_ACCESSIBILITY
+#if !defined(HAVE_ACCESSIBILITY)
 #if PLATFORM(MAC) || PLATFORM(WIN) || PLATFORM(GTK)
 #define HAVE_ACCESSIBILITY 1
+#endif
 #endif
 
 #if COMPILER(GCC)

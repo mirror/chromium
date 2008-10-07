@@ -1589,7 +1589,7 @@ IntRect AccessibilityRenderObject::boundsForVisiblePositionRange(const VisiblePo
             ourrect = boundingBox;
     }
     
-#if PLATFORM(MAC)
+#if PLATFORM(MAC) && HAVE(ACCESSIBILITY)
     return m_renderer->document()->view()->contentsToScreen(ourrect);
 #else
     return ourrect;
@@ -1622,7 +1622,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
     IntPoint pointResult;
     while (1) {
         IntPoint ourpoint;
-#if PLATFORM(MAC)
+#if PLATFORM(MAC) && HAVE(ACCESSIBILITY)
         ourpoint = frameView->screenToContents(point);
 #else
         ourpoint = point;
