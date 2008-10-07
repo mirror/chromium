@@ -28,18 +28,15 @@
 
 #include <wtf/RefCounted.h>
 
-namespace KJS {
-    class ExecState;
-}
-
 namespace WebCore {
 
+    class ExceptionContext;
     class String;
 
     class NSResolver : public RefCounted<NSResolver> {
     public:
         virtual ~NSResolver() { }
-        virtual String lookupNamespaceURI(KJS::ExecState*, const String& prefix) = 0;
+        virtual String lookupNamespaceURI(ExceptionContext*, const String& prefix) = 0;
         virtual void mark() { }
     };
 
