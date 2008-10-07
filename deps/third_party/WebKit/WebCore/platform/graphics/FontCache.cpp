@@ -193,7 +193,8 @@ typedef HashMap<FontPlatformData, pair<SimpleFontData*, unsigned>, FontDataCache
 
 static FontDataCache* gFontDataCache = 0;
 
-const int cMaxInactiveFontData = 120;  // Pretty Low Threshold
+// TODO(mbelshe): Webkit bug https://bugs.webkit.org/show_bug.cgi?id=21451
+const int cMaxInactiveFontData = 256;
 const float cTargetInactiveFontData = 100;
 static ListHashSet<const SimpleFontData*>* gInactiveFontData = 0;
 
