@@ -62,7 +62,7 @@ HTMLPlugInElement::HTMLPlugInElement(const QualifiedName& tagName, Document* doc
 HTMLPlugInElement::~HTMLPlugInElement()
 {
 #if USE(JSC)
-    ASSERT(!m_instance); // cleared in detach()
+    ASSERT(m_instance.IsEmpty()); // cleared in detach()
 #endif
 
 #if ENABLE(NETSCAPE_PLUGIN_API)
