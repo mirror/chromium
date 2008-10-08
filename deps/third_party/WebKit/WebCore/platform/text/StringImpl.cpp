@@ -35,11 +35,17 @@
 #include "TextBreakIterator.h"
 #include "TextEncoding.h"
 #include <kjs/dtoa.h>
+#include <kjs/identifier.h>
 #include <wtf/Assertions.h>
 #include <wtf/unicode/Unicode.h>
 
 using namespace WTF;
 using namespace Unicode;
+
+#if USE(JSC)
+using KJS::Identifier;
+using KJS::UString;
+#endif
 
 namespace WebCore {
 
@@ -361,7 +367,7 @@ PassRefPtr<StringImpl> StringImpl::lower()
     if (!error && realLength == length)
         return adopt(data);
     data.resize(realLength);
-    Unicode::toLower(data.characters(), length, m_data, m_length, &error);
+    Unicode::toLower(data.characters(), realLength, m_data, m_length, &error);
     if (error)
         return this;
     return adopt(data);

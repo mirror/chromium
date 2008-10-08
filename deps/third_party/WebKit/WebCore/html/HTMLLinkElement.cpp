@@ -25,10 +25,12 @@
 
 #include "CSSHelper.h"
 #include "CachedCSSStyleSheet.h"
+#include "DNS.h"
 #include "DocLoader.h"
 #include "Document.h"
 #include "Frame.h"
 #include "FrameLoader.h"
+#include "FrameLoaderClient.h"
 #include "FrameTree.h"
 #include "HTMLNames.h"
 #include "MediaList.h"
@@ -48,6 +50,7 @@ HTMLLinkElement::HTMLLinkElement(Document *doc)
     , m_alternate(false)
     , m_isStyleSheet(false)
     , m_isIcon(false)
+    , m_isDNSPrefetch(false)
     , m_createdByParser(false)
 {
 }
@@ -131,7 +134,7 @@ void HTMLLinkElement::tokenizeRelAttribute(const AtomicString& rel, bool& styleS
 {
     styleSheet = false;
     icon = false; 
-    alternate = false;;
+    alternate = false;
     if (equalIgnoringCase(rel, "stylesheet"))
         styleSheet = true;
     else if (equalIgnoringCase(rel, "icon") || equalIgnoringCase(rel, "shortcut icon"))
@@ -168,6 +171,9 @@ void HTMLLinkElement::process()
     // We'll record this URL per document, even if we later only use it in top level frames
     if (m_isIcon && !m_url.isEmpty())
         document()->setIconURL(m_url, type);
+
+    if (m_isDNSPrefetch && !m_url.isEmpty())
+        prefetchDNS(KURL(m_url).host());
 
     // Stylesheet
     // This was buggy and would incorrectly match <link rel="alternate">, which has a different specified meaning. -dwh

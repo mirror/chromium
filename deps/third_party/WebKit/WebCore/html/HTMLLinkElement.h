@@ -110,6 +110,7 @@ protected:
     bool m_alternate;
     bool m_isStyleSheet;
     bool m_isIcon;
+    bool m_isDNSPrefetch;
     bool m_createdByParser;
 };
 

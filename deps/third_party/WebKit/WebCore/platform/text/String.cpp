@@ -623,7 +623,6 @@ String::String(const UString& str)
         return;
     m_impl = StringImpl::create(str.data(), str.size());
 }
-#endif
 
 String::operator UString() const
 {
@@ -631,6 +630,7 @@ String::operator UString() const
         return UString();
     return UString(m_impl->characters(), m_impl->length());
 }
+#endif
 
 // String Operations
 
@@ -801,7 +801,11 @@ double charactersToDouble(const UChar* data, size_t length, bool* ok)
         bytes[i] = data[i] < 0x7F ? data[i] : '?';
     bytes[length] = '\0';
     char* end;
+#if USE(JSC)
     double val = KJS::strtod(bytes.data(), &end);
+#elif USE(V8)
+    double val = strtod(bytes.data(), &end);
+#endif
     if (ok)
         *ok = (end == 0 || *end == '\0');
     return val;
