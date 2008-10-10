@@ -310,6 +310,9 @@ static const int kWindowIconTitleSpacing = 3;
 // The distance between the top of the window and the title text when a
 // title-bar is showing.
 static const int kTitleTopOffset = 6;
+// The distance between the right edge of the title text bounding box and the
+// left edge of the distributor logo.
+static const int kTitleLogoSpacing = 5;
 // The distance between the bottom of the title text and the TabStrip when a
 // title-bar is showing.
 static const int kTitleBottomSpacing = 6;
@@ -962,11 +965,8 @@ void OpaqueNonClientView::LayoutOTRAvatar() {
 }
 
 void OpaqueNonClientView::LayoutDistributorLogo() {
-  if (distributor_logo_.empty())
-    return;
-
-  int logo_w = distributor_logo_.width();
-  int logo_h = distributor_logo_.height();
+  int logo_w = distributor_logo_.empty() ? 0 : distributor_logo_.width();
+  int logo_h = distributor_logo_.empty() ? 0 : distributor_logo_.height();
 
   int logo_x = 0;
   if (UILayoutIsRightToLeft()) {
@@ -997,7 +997,7 @@ void OpaqueNonClientView::LayoutTitleBar() {
   // Size the title, if visible.
   if (d->ShouldShowWindowTitle()) {
     int spacing = d->ShouldShowWindowIcon() ? kWindowIconTitleSpacing : 0;
-    int title_right = minimize_button_->x();
+    int title_right = logo_bounds_.x() - kTitleLogoSpacing;
     int icon_right = icon_bounds_.right();
     int title_left = icon_right + spacing;
     title_bounds_.SetRect(title_left, kTitleTopOffset + top_offset,
