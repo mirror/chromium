@@ -1,0 +1,25 @@
+This directory is our (mostly) unmodified copy of webkit.
+
+BASE_REVISION: Specifies the webkit branch and revision we are synced to.
+MANIFEST: Specifies the list of files that we have forked
+fork_files_in_manifest.py: Does the forking magic given the MANIFEST file
+
+To fork/unfork a file:
+Changebranch #1
+1. Add/remove the file from the MANIFEST
+2. Run "../python_24/python.exe fork_files_in_manifest.py MANIFEST"
+3. Create a changebranch, send for review and checkin
+
+Changebranch #2
+4. Modify trunk/webkit/DEPS to pull in the version of third_party/WebKit that
+you just created.
+5. gvn cp the files you've forked to pending (or gvn rm them from pending if 
+you were unforking)
+6. Modify the vcproj files appropriately to point to the files in pending
+7. Send the changes out for review and submit.
+
+Changebranch #3
+8. Make any changes you wanted to make to the files in pending
+
+TODO(ojan):Make the above involve fewer steps / changebranches and allow
+for adding the reasons files are forked directly in the MANIFEST file.
