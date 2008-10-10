@@ -1026,6 +1026,10 @@ ifeq ($(findstring ENABLE_VIDEO,$(FEATURE_DEFINES)), ENABLE_VIDEO)
     HTML_FLAGS := $(HTML_FLAGS) ENABLE_VIDEO=1
 endif
 
+ifeq ($(findstring ENABLE_BACKGROUND_TASK,$(FEATURE_DEFINES)), ENABLE_BACKGROUND_TASK)
+    HTML_FLAGS := $(HTML_FLAGS) ENABLE_BACKGROUND_TASK=1
+endif
+
 ifdef HTML_FLAGS
 
 HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
