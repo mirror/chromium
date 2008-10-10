@@ -58,6 +58,7 @@
 #include <wtf/RefCountedLeakCounter.h>
 
 #if USE(JSC)
+#include "JSDOMBinding.h"
 #include <kjs/JSLock.h>
 #endif
 
