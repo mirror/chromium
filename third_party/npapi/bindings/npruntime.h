@@ -366,7 +366,8 @@ bool NPN_Enumerate(NPP npp, NPObject *npobj, NPIdentifier **identifier, uint32_t
 // result
 //  On return contains the value returned by the script.
 // Returns true on success.
-bool NPN_EvaluateHelper(NPP npp, bool popups_allowed, NPObject *npobj, NPString *npscript, NPVariant *result);
+bool NPN_EvaluateHelper(NPP npp, bool popups_allowed, NPObject* npobj, 
+                        NPString* npscript, NPVariant *result);
 
 // BEGIN GOOGLE MODIFICATIONS
 
