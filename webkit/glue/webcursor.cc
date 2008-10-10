@@ -2,9 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/gfx/bitmap_header.h"
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webkit_resources.h"
+
+#if PLATFORM(WIN)
+#include "base/gfx/gdi_util.h"
+#endif
 
 WebCursor::WebCursor()
   : type_(ARROW),

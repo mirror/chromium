@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
-#include "base/gfx/bitmap_header.h"
+#include "base/gfx/gdi_util.h"
 #include "base/gfx/platform_device_win.h"
 #include "base/gfx/png_decoder.h"
 #include "base/gfx/png_encoder.h"
