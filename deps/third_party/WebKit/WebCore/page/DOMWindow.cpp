@@ -169,7 +169,7 @@ void DOMWindow::adjustWindowRect(const FloatRect& screen, FloatRect& window, con
 static int lastUsedTimeoutId;
 static int timerNestingLevel = 0;
 const int kMaxTimerNestingLevel = 5;
-const double kMinimumTimerInterval = 0.001;  // Change this to speed up Javascript's setTimeout!
+const double kMinimumTimerInterval = 0.004;  // Change this to speed up Javascript's setTimeout!
 
 class DOMWindowTimer : public TimerBase {
 public:
@@ -987,23 +987,38 @@ void DOMWindow::scheduleClose()
 }
 
 void DOMWindow::timerFired(DOMWindowTimer* timer) {
-  if (!m_frame)
-      return;
+    if (!m_frame)
+        return;
 
-  // Simple case for non-one-shot timers.
-  if (timer->isActive()) {
-    int timeoutId = timer->timeoutId();
+    // Simple case for non-one-shot timers.
+    if (timer->isActive()) {
+        int timeoutId = timer->timeoutId();
     
-    timer->action()->execute(this);
-    return;
-  }
+        timer->action()->execute(this);
+
+        // The DOMWindowTimer object may have been deleted or replaced during
+        // execution.  so we re-fetch it.
+        timer = m_timeouts.get(timeoutId);
+        if (!timer)
+            return;
+
+        if (timer->repeatInterval() &&
+            timer->repeatInterval() < kMinimumTimerInterval) {
+            timer->setNestingLevel(timer->nestingLevel() + 1);
+            if (timer->nestingLevel() >= kMaxTimerNestingLevel) {
+                timer->augmentRepeatInterval(
+                    kMinimumTimerInterval - timer->repeatInterval());
+            }
+        }   
+        return;
+    }
   
-  // Delete timer before executing the action for one-shot timers.
-  ScheduledAction* action = timer->takeAction();
-  m_timeouts.remove(timer->timeoutId());
-  delete timer;
-  action->execute(this);
-  delete action;
+    // Delete timer before executing the action for one-shot timers.
+    ScheduledAction* action = timer->takeAction();
+    m_timeouts.remove(timer->timeoutId());
+    delete timer;
+    action->execute(this);
+    delete action;
 }
 
 
@@ -1014,27 +1029,29 @@ void DOMWindow::clearAllTimeouts()
 }
 
 int DOMWindow::installTimeout(ScheduledAction* a, int t, bool singleShot) {
-  if (!m_frame)
-    return 0;
+    if (!m_frame)
+        return 0;
 
-  int timeoutId = ++lastUsedTimeoutId;
+    int timeoutId = ++lastUsedTimeoutId;
 
-  // avoid wraparound going negative on us
-  if (timeoutId <= 0)
-    timeoutId = 1;
+    // avoid wraparound going negative on us
+    if (timeoutId <= 0)
+        timeoutId = 1;
 
-  int nestLevel = timerNestingLevel + 1;
+    int nestLevel = timerNestingLevel + 1;
 
-  DOMWindowTimer* timer = new DOMWindowTimer(timeoutId, nestLevel, this, a);
-  ASSERT(!m_timeouts.get(timeoutId));
-  m_timeouts.set(timeoutId, timer);
-  double interval = max(kMinimumTimerInterval, t * 0.001);
-  if (singleShot)
-    timer->startOneShot(interval);
-  else
-    timer->startRepeating(interval);
+    DOMWindowTimer* timer = new DOMWindowTimer(timeoutId, nestLevel, this, a);
+    ASSERT(!m_timeouts.get(timeoutId));
+    m_timeouts.set(timeoutId, timer);
+    double interval = max(0.001, t * 0.001);
+    if (interval < kMinimumTimerInterval && nestLevel >= kMaxTimerNestingLevel)
+        interval = kMinimumTimerInterval;
+    if (singleShot)
+        timer->startOneShot(interval);
+    else
+        timer->startRepeating(interval);
   
-  return timeoutId;
+    return timeoutId;
 }
 
 void DOMWindow::clearTimeout(int timeoutId)
