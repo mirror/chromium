@@ -43,6 +43,10 @@
 #include "DOMWindow.h"
 #include "glue/plugins/plugin_instance.h"
 
+#ifdef OS_WIN
+#include "webkit/glue/plugins/plugin_instance.h"
+#endif // OS_WIN
+
 using WebCore::V8ClassIndex;
 using WebCore::V8Proxy;
 
@@ -245,12 +249,14 @@ bool NPN_Evaluate(NPP npp, NPObject *npobj, NPString *npscript,
                   NPVariant *result) {
   bool popups_allowed = false;
 
+#ifdef OS_WIN
   if (npp) {
     NPAPI::PluginInstance* plugin_instance =
         reinterpret_cast<NPAPI::PluginInstance*>(npp->ndata);
     if (plugin_instance)
       popups_allowed = plugin_instance->popups_allowed();
   }
+#endif // OS_WIN
 
   return NPN_EvaluateHelper(npp, popups_allowed, npobj, npscript, result);
 }
