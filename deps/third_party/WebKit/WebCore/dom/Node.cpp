@@ -1328,12 +1328,14 @@ static bool resolveNamespacesForSelector(CSSSelector* currentSelector, NSResolve
 
 PassRefPtr<Element> Node::querySelector(const String& selectors, ExceptionCode& ec)
 {
-    return querySelector(selectors, 0, ec, ExceptionContext::createFromNode(this));
+    ExceptionContext context(this);
+    return querySelector(selectors, 0, ec, &context);
 }
 
 PassRefPtr<NodeList> Node::querySelectorAll(const String& selectors, ExceptionCode& ec)
 {
-    return querySelectorAll(selectors, 0, ec, ExceptionContext::createFromNode(this));
+    ExceptionContext context(this);
+    return querySelectorAll(selectors, 0, ec, &context);
 }
 
 PassRefPtr<Element> Node::querySelector(const String& selectors, NSResolver* resolver, ExceptionCode& ec, ExceptionContext* exec)

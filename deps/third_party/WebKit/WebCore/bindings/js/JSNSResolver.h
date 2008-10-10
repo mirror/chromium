@@ -33,6 +33,8 @@ namespace KJS {
     class JSValue;
 }
 
+class ExceptionContext;
+
 namespace WebCore {
 
     class JSNSResolver : public NSResolver {
@@ -45,7 +47,7 @@ namespace WebCore {
     private:
         JSNSResolver(KJS::JSValue* resolver);
 
-        virtual String lookupNamespaceURI(KJS::ExecState*, const String& prefix);
+        virtual String lookupNamespaceURI(ExceptionContext*, const String& prefix);
         virtual void mark();
 
         KJS::JSValue* m_resolver;

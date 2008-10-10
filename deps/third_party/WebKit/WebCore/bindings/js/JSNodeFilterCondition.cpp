@@ -20,6 +20,7 @@
 #include "config.h"
 #include "JSNodeFilterCondition.h"
 
+#include "ExceptionContext.h"
 #include "JSNode.h"
 #include "JSNodeFilter.h"
 #include "NodeFilter.h"
@@ -42,7 +43,7 @@ void JSNodeFilterCondition::mark()
         m_filter->mark();
 }
 
-short JSNodeFilterCondition::acceptNode(KJS::ExecState* exec, Node* filterNode) const
+short JSNodeFilterCondition::acceptNode(ExceptionContext* context, Node* filterNode) const
 {
     JSLock lock(false);
 
@@ -51,6 +52,7 @@ short JSNodeFilterCondition::acceptNode(KJS::ExecState* exec, Node* filterNode) 
     if (callType == CallTypeNone)
         return NodeFilter::FILTER_ACCEPT;
 
+    KJS::ExecState* exec = context->exec();
    // The exec argument here should only be null if this was called from a
    // non-JavaScript language, and this is a JavaScript filter, and the document
    // in question is not associated with the frame. In that case, we're going to

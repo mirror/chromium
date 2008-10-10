@@ -30,6 +30,7 @@ namespace KJS {
 namespace WebCore {
 
     class Node;
+    class ExceptionContext;
 
     class JSNodeFilterCondition : public NodeFilterCondition {
     public:
@@ -41,7 +42,7 @@ namespace WebCore {
     private:
         JSNodeFilterCondition(KJS::JSValue* filter);
 
-        virtual short acceptNode(KJS::ExecState*, Node*) const;
+        virtual short acceptNode(ExceptionContext*, Node*) const;
         virtual void mark();
 
         KJS::JSValue* m_filter;

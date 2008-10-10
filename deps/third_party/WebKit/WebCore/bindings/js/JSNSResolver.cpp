@@ -26,6 +26,7 @@
 #include "config.h"
 #include "JSNSResolver.h"
 
+#include "ExceptionContext.h"
 #include "JSDOMBinding.h"
 #include "PlatformString.h"
 #include <kjs/JSLock.h>
@@ -49,10 +50,11 @@ void JSNSResolver::mark()
         m_resolver->mark();
 }
 
-String JSNSResolver::lookupNamespaceURI(ExecState* exec, const String& prefix)
+String JSNSResolver::lookupNamespaceURI(ExceptionContext* context, const String& prefix)
 {
     JSLock lock(false);
 
+    KJS::ExecState* exec = context->exec();
     JSValue* function = m_resolver->get(exec, Identifier(exec, "lookupNamespaceURI"));
     if (exec->hadException())
         return String();

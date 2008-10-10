@@ -29,6 +29,7 @@
 #include "DocumentFragment.h"
 #include "Element.h"
 #include "ExceptionCode.h"
+#include "ExceptionContext.h"
 #include "JSElement.h"
 #include "JSNSResolver.h"
 #include "JSNodeList.h"
@@ -45,7 +46,8 @@ JSValue* JSDocumentFragment::querySelector(ExecState* exec, const ArgList& args)
     const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
     RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
 
-    RefPtr<Element> element = imp->querySelector(selectors, resolver.get(), ec, exec);
+    ExceptionContext context(exec);
+    RefPtr<Element> element = imp->querySelector(selectors, resolver.get(), ec, &context);
     if (exec->hadException())
         return jsUndefined();
     JSValue* result = toJS(exec, element.get());
@@ -60,7 +62,8 @@ JSValue* JSDocumentFragment::querySelectorAll(ExecState* exec, const ArgList& ar
     const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
     RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
 
-    RefPtr<NodeList> nodeList = imp->querySelectorAll(selectors, resolver.get(), ec, exec);
+    ExceptionContext context(exec);
+    RefPtr<NodeList> nodeList = imp->querySelectorAll(selectors, resolver.get(), ec, &context);
     if (exec->hadException())
         return jsUndefined();
     JSValue* result = toJS(exec, nodeList.get());
