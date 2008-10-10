@@ -11,9 +11,6 @@ deps = {
   "src/testing/gtest":
     "http://googletest.googlecode.com/svn/trunk@63",
 
-  "src/third_party/WebKit":
-    "/trunk/third_party/WebKit@19",
-
   "src/third_party/cygwin":
     "/trunk/deps/third_party/cygwin@1788",
 
