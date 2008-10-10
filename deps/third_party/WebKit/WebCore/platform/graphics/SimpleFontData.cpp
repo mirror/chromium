@@ -212,6 +212,13 @@ void ZeroWidthFontData::init(SimpleFontData* fontData)
 #if PLATFORM(WIN)
     m_scriptCache = 0;
     m_scriptFontProperties = 0;
+#elif PLATFORM(MACOS_X)
+    m_styleGroup = 0;
+    m_ATSUStyle = 0;
+    m_ATSUStyleInitialized = false;
+    m_ATSUMirrors = false;
+    m_checkedShapesArabic = false;
+    m_shapesArabic = false;
 #endif
 }
 
