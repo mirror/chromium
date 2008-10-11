@@ -27,8 +27,8 @@
 #include "chrome/views/window.h"
 #include "webkit/glue/webkit_glue.h"
 
+#include "chromium_strings.h"
 #include "generated_resources.h"
-#include "google_chrome_strings.h"
 
 // The pixel width of the version text field. Ideally, we'd like to have the
 // bounds set to the edge of the icon. However, the icon is not a view but a
