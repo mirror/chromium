@@ -27,7 +27,6 @@
 #include "chrome/views/window.h"
 #include "webkit/glue/webkit_glue.h"
 
-#include "chromium_strings.h"
 #include "generated_resources.h"
 #include "google_chrome_strings.h"
 
