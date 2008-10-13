@@ -11,6 +11,7 @@
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/win_util.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/window_resources.h"
 #include "chromium_strings.h"
@@ -306,7 +307,7 @@ static const int kWindowIconLeftOffset = 5;
 static const int kWindowIconTopOffset = 5;
 // The distance between the window icon and the window title when a title-bar
 // is showing.
-static const int kWindowIconTitleSpacing = 3;
+static const int kWindowIconTitleSpacing = 4;
 // The distance between the top of the window and the title text when a
 // title-bar is showing.
 static const int kTitleTopOffset = 6;
@@ -888,7 +889,7 @@ void OpaqueNonClientView::LayoutWindowControls() {
   if (frame_->IsMaximized()) {
     close_button_->GetPreferredSize(&ps);
     close_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                     ChromeViews::Button::ALIGN_BOTTOM);
+                                     ChromeViews::Button::ALIGN_TOP);
     close_button_->SetBounds(
         width() - ps.cx - kWindowControlsRightZoomedOffset,
         0, ps.cx + kWindowControlsRightZoomedOffset,
@@ -896,13 +897,13 @@ void OpaqueNonClientView::LayoutWindowControls() {
 
     restore_button_->GetPreferredSize(&ps);
     restore_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                       ChromeViews::Button::ALIGN_BOTTOM);
+                                       ChromeViews::Button::ALIGN_TOP);
     restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
                                ps.cy + kWindowControlsTopZoomedOffset);
 
     minimize_button_->GetPreferredSize(&ps);
     minimize_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                        ChromeViews::Button::ALIGN_BOTTOM);
+                                        ChromeViews::Button::ALIGN_TOP);
     minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
                                 ps.cy + kWindowControlsTopZoomedOffset);
   } else if (frame_->IsMinimized()) {
@@ -985,8 +986,6 @@ void OpaqueNonClientView::LayoutTitleBar() {
   icon_bounds_.SetRect(kWindowIconLeftOffset, kWindowIconLeftOffset,
                        show_icon ? kWindowIconSize : 0,
                        show_icon ? kWindowIconSize : 0);
-  if (window_icon_)
-    window_icon_->SetBounds(icon_bounds_.ToRECT());
 
   // Size the title, if visible.
   if (d->ShouldShowWindowTitle()) {
@@ -997,7 +996,17 @@ void OpaqueNonClientView::LayoutTitleBar() {
     title_bounds_.SetRect(title_left, kTitleTopOffset + top_offset,
         std::max(0, static_cast<int>(title_right - icon_right)),
         title_font_.height());
+
+    // Adjust the Y-position of the icon to be vertically centered within
+    // the bounds of the title text.
+    int delta_y = title_bounds_.height() - icon_bounds_.height();
+    if (delta_y > 0)
+      icon_bounds_.set_y(title_bounds_.y() + static_cast<int>(delta_y / 2));
   }
+
+  // Do this last, after the icon has been moved.
+  if (window_icon_)
+    window_icon_->SetBounds(icon_bounds_.ToRECT());
 }
 
 void OpaqueNonClientView::LayoutClientView() {
@@ -1030,8 +1039,7 @@ void OpaqueNonClientView::InitClass() {
 void OpaqueNonClientView::InitAppWindowResources() {
   static bool initialized = false;
   if (!initialized) {
-    title_font_ = ResourceBundle::GetSharedInstance().GetFont(
-        ResourceBundle::BaseFont).DeriveFont(1, ChromeFont::BOLD);
+    title_font_ = win_util::GetWindowTitleFont();
     initialized = true;
   }
 }
