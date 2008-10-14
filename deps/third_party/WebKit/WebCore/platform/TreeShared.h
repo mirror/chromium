@@ -21,10 +21,112 @@
 #ifndef TreeShared_h
 #define TreeShared_h
 
-#include <wtf/Assertions.h>
-#include <wtf/Noncopyable.h>
+#include "Peerable.h"
+#include "RefCounted.h"
 
 namespace WebCore {
+
+#if USE(V8)
+
+template<class T> class TreeShared : public Peerable {
+public:
+    TreeShared() : m_refCount(0), m_parent(0), m_peer(0)
+    {
+#ifndef NDEBUG
+        m_deletionHasBegun = false;
+        m_inRemovedLastRefFunction = false;
+#endif
+    }
+
+    TreeShared(T* parent) : m_refCount(0), m_parent(parent), m_peer(0)
+    {
+#ifndef NDEBUG
+        m_deletionHasBegun = false;
+        m_inRemovedLastRefFunction = false;
+#endif
+    }
+
+    virtual ~TreeShared()
+    { 
+        ASSERT(m_deletionHasBegun);
+        ASSERT(!m_peer);
+    }
+
+    void ref()
+    {
+        ASSERT(!m_deletionHasBegun);
+        ASSERT(!m_inRemovedLastRefFunction);
+        ++m_refCount;
+    }
+
+    void deref() 
+    { 
+        ASSERT(!m_deletionHasBegun);
+        ASSERT(!m_inRemovedLastRefFunction);
+
+        if (--m_refCount <= 0 && !m_parent && !m_peer) {
+#ifndef NDEBUG
+            m_inRemovedLastRefFunction = true;
+#endif
+            removedLastRef();
+        } 
+    }
+
+    void setPeer(void* peer) 
+    {
+        m_peer = peer;
+        if (m_refCount <= 0 && !m_parent && !m_peer) {
+#ifndef NDEBUG
+            m_inRemovedLastRefFunction = true;
+#endif
+            removedLastRef();
+        }
+    }
+
+    void* peer() const { return m_peer; }
+
+    bool hasOneRef()
+    {
+        ASSERT(!m_deletionHasBegun);
+        ASSERT(!m_inRemovedLastRefFunction);
+        if (m_peer)
+            return m_refCount == 0;
+        return m_refCount == 1; 
+    }
+
+    int refCount() const
+    {
+        if (m_peer)
+            return m_refCount + 1;
+        return m_refCount; 
+    }
+
+    // setParent never deletes the node even if the node only has a
+    // parent and no other references.  For DOM nodes the deletion
+    // done in ContainerNode::removeAllChildren.
+    void setParent(T* parent) { m_parent = parent; }
+    T* parent() const { return m_parent; }
+
+#ifndef NDEBUG
+    bool m_deletionHasBegun;
+    bool m_inRemovedLastRefFunction;
+#endif
+
+private:
+    virtual void removedLastRef()
+    {
+#ifndef NDEBUG
+        m_deletionHasBegun = true;
+#endif
+        delete static_cast<T*>(this);
+    }
+
+    int m_refCount;
+    T* m_parent;
+    void* m_peer;
+};
+
+#elif USE(JSC)
 
 template<class T> class TreeShared : Noncopyable {
 public:
@@ -102,6 +204,10 @@ private:
     int m_refCount;
     T* m_parent;
 };
+
+#else
+#error "You must include config.h before TreeShared.h"
+#endif
 
 }
 

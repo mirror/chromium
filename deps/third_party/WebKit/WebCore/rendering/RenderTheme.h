@@ -128,11 +128,12 @@ public:
     virtual double caretBlinkFrequency() const { return 0.5; }
 
     // System fonts and colors for CSS.
-    virtual void systemFont(int cssValueId, FontDescription&) const = 0;
+    virtual void systemFont(int cssValueId, Document*, FontDescription&) const = 0;
     virtual Color systemColor(int cssValueId) const;
 
     virtual int minimumMenuListSize(RenderStyle*) const { return 0; }
 
+    virtual void adjustButtonInnerStyle(RenderStyle* style) const { }
     virtual void adjustSliderThumbSize(RenderObject*) const;
 
     // Methods for state querying

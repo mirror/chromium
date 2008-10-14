@@ -6,13 +6,13 @@
  * are met:
  *
  * 1.  Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer. 
+ *     notice, this list of conditions and the following disclaimer.
  * 2.  Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution. 
+ *     documentation and/or other materials provided with the distribution.
  * 3.  Neither the name of Apple Computer, Inc. ("Apple") nor the names of
  *     its contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission. 
+ *     from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -29,20 +29,31 @@
 #ifndef InspectorController_h
 #define InspectorController_h
 
+#if USE(JSC)
 #include "JavaScriptDebugListener.h"
+#endif
 
 #include "Console.h"
 #include "PlatformString.h"
 #include "StringHash.h"
+#include "DOMWindow.h"
+#include <wtf/RefCounted.h>
+#if USE(JSC)
 #include <JavaScriptCore/JSContextRef.h>
+#include <profiler/Profiler.h>
+#elif USE(V8)
+#include <v8.h>
+#endif
 #include <wtf/HashMap.h>
 #include <wtf/HashSet.h>
 #include <wtf/Vector.h>
 
+#if USE(JSC)
 namespace KJS {
     class Profile;
     class UString;
 }
+#endif
 
 namespace WebCore {
 
@@ -62,9 +73,14 @@ struct InspectorDatabaseResource;
 struct InspectorResource;
 class ResourceRequest;
 
-class InspectorController : JavaScriptDebugListener {
+// TODO(ojan): Webkit's version of this inherits from JavaScriptDebugListener.
+// We need to do this once we start adding debugger hooks or when we do the next
+// full webkit merge, whichever comes first.
+class InspectorController : public RefCounted<InspectorController> {
 public:
-    typedef HashMap<long long, RefPtr<InspectorResource> > ResourcesMap;
+    int m_bug1228513_inspectorState;
+
+    typedef HashMap<unsigned long, RefPtr<InspectorResource> > ResourcesMap;
     typedef HashMap<RefPtr<Frame>, ResourcesMap*> FrameResourcesMap;
     typedef HashSet<RefPtr<InspectorDatabaseResource> > DatabaseResourcesSet;
 
@@ -95,34 +111,47 @@ public:
     void hideHighlight();
 
     void show();
-    void showPanel(SpecialPanels);
+    void showPanel(SpecialPanels); 
     void close();
 
-    bool isRecordingUserInitiatedProfile() const { return m_recordingUserInitiatedProfile; }
-    void startUserInitiatedProfiling();
-    void stopUserInitiatedProfiling();
+#if USE(JSC)
+    bool isRecordingUserInitiatedProfile() const { return m_recordingUserInitiatedProfile; } 
+    void startUserInitiatedProfiling(); 
+    void stopUserInitiatedProfiling(); 
+#endif
 
     bool windowVisible();
     void setWindowVisible(bool visible = true, bool attached = false);
 
+#if USE(JSC)
     void addMessageToConsole(MessageSource, MessageLevel, KJS::ExecState*, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceID);
+#elif USE(V8)
+    // TODO(ojan): Do we need to implement this version?
+#endif
     void addMessageToConsole(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceID);
-    void clearConsoleMessages();
-    void toggleRecordButton(bool);
 
-    void addProfile(PassRefPtr<KJS::Profile>, unsigned lineNumber, const KJS::UString& sourceURL);
-    void addProfileMessageToConsole(PassRefPtr<KJS::Profile> prpProfile, unsigned lineNumber, const KJS::UString& sourceURL);
-    void addScriptProfile(KJS::Profile* profile);
-    const Vector<RefPtr<KJS::Profile> >& profiles() const { return m_profiles; }
+    void clearConsoleMessages(); 
+    void toggleRecordButton(bool); 
+
+#if USE(JSC)
+    void addProfile(PassRefPtr<KJS::Profile>, unsigned lineNumber, const KJS::UString& sourceURL); 
+    void addProfileMessageToConsole(PassRefPtr<KJS::Profile> prpProfile, unsigned lineNumber, const KJS::UString& sourceURL); 
+    void addScriptProfile(KJS::Profile* profile); 
+    const Vector<RefPtr<KJS::Profile> >& profiles() const { return m_profiles; } 
+#endif
 
     void attachWindow();
     void detachWindow();
 
-    void setAttachedWindow(bool);
-    void setAttachedWindowHeight(unsigned height);
+    void setAttachedWindow(bool); 
+    void setAttachedWindowHeight(unsigned height); 
 
+#if USE(JSC)
     JSContextRef scriptContext() const { return m_scriptContext; };
     void setScriptContext(JSContextRef context) { m_scriptContext = context; };
+#elif USE(V8)
+    void setScriptObject(v8::Handle<v8::Object> newScriptObject);
+#endif
 
     void inspectedWindowScriptObjectCleared(Frame*);
     void windowScriptObjectAvailable();
@@ -143,7 +172,11 @@ public:
     void didReceiveContentLength(DocumentLoader*, unsigned long identifier, int lengthReceived);
     void didFinishLoading(DocumentLoader*, unsigned long identifier);
     void didFailLoading(DocumentLoader*, unsigned long identifier, const ResourceError&);
+#if USE(JSC)
     void resourceRetrievedByXMLHttpRequest(unsigned long identifier, KJS::UString& sourceString);
+#elif USE(V8)
+    void resourceRetrievedByXMLHttpRequest(unsigned long identifier, String& sourceString);
+#endif
 
 #if ENABLE(DATABASE)
     void didOpenDatabase(Database*, const String& domain, const String& name, const String& version);
@@ -156,32 +189,52 @@ public:
 
     void startDebuggingAndReloadInspectedPage();
     void stopDebugging();
+
+#if USE(JSC)
     bool debuggerAttached() const { return m_debuggerAttached; }
 
-    JavaScriptCallFrame* currentCallFrame() const;
+    JavaScriptCallFrame* currentCallFrame() const; 
 
-    void addBreakpoint(int sourceID, unsigned lineNumber);
-    void removeBreakpoint(int sourceID, unsigned lineNumber);
+    void addBreakpoint(int sourceID, unsigned lineNumber); 
+    void removeBreakpoint(int sourceID, unsigned lineNumber); 
 
-    bool pauseOnExceptions();
-    void setPauseOnExceptions(bool pause);
+    bool pauseOnExceptions(); 
+    void setPauseOnExceptions(bool pause); 
 
-    void pauseInDebugger();
-    void resumeDebugger();
+    void pauseInDebugger(); 
+    void resumeDebugger(); 
 
-    void stepOverStatementInDebugger();
-    void stepIntoStatementInDebugger();
-    void stepOutOfFunctionInDebugger();
+    void stepOverStatementInDebugger(); 
+    void stepIntoStatementInDebugger(); 
+    void stepOutOfFunctionInDebugger(); 
+#endif
 
     void drawNodeHighlight(GraphicsContext&) const;
-    
-    void count(const KJS::UString& title, unsigned lineNumber, const String& sourceID);
 
-    void startTiming(const KJS::UString& title);
-    bool stopTiming(const KJS::UString& title, double& elapsed);
+#if USE(JSC)
+    void count(const KJS::UString& title, unsigned lineNumber, const String& sourceID); 
 
-    void startGroup(MessageSource source, KJS::ExecState* exec, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceURL);
-    void endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL);
+    void startTiming(const KJS::UString& title); 
+    bool stopTiming(const KJS::UString& title, double& elapsed); 
+
+    void startGroup(MessageSource source, KJS::ExecState* exec, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceURL); 
+    void endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL); 
+#endif
+
+#if USE(V8)
+    // InspectorController.idl
+    void addSourceToFrame(unsigned long identifier, Node* frame);
+    Node* getResourceDocumentNode(unsigned long identifier);
+    void highlightDOMNode(Node* node);
+    void hideDOMNodeHighlight();
+    void loaded();
+    void attach();
+    void detach();
+    // TODO(jackson): search should return an array of JSRanges
+    void search(Node* node, const String& query);
+    DOMWindow* inspectedWindow();
+    String platform() const;
+#endif
 
 private:
     void focusNode();
@@ -192,10 +245,18 @@ private:
     void addResource(InspectorResource*);
     void removeResource(InspectorResource*);
 
+#if USE(JSC)
     JSObjectRef addScriptResource(InspectorResource*);
+#elif USE(V8)
+    void addScriptResource(InspectorResource*);
+#endif
     void removeScriptResource(InspectorResource*);
 
+#if USE(JSC)
     JSObjectRef addAndUpdateScriptResource(InspectorResource*);
+#elif USE(V8)
+    void addAndUpdateScriptResource(InspectorResource*);
+#endif
     void updateScriptResourceRequest(InspectorResource*);
     void updateScriptResourceResponse(InspectorResource*);
     void updateScriptResourceType(InspectorResource*);
@@ -206,21 +267,48 @@ private:
     void pruneResources(ResourcesMap*, DocumentLoader* loaderToKeep = 0);
     void removeAllResources(ResourcesMap* map) { pruneResources(map); }
 
-#if ENABLE(DATABASE)
-    JSObjectRef addDatabaseScriptResource(InspectorDatabaseResource*);
-    void removeDatabaseScriptResource(InspectorDatabaseResource*);
+    // Return true if the inspector should track request/response activity.
+    // Chrome's policy is to only log requests if the inspector is already open.
+    // This reduces the passive bloat from InspectorController: http://b/1113875
+    bool trackResources() const { return m_trackResources; }
+
+    // Start/stop resource tracking.
+    void enableTrackResources(bool trackResources);
+
+    bool m_trackResources;
+
+    // Helper function to determine when the script object is initialized
+#if USE(JSC)
+    inline bool hasScriptObject() const { return m_scriptObject; }
+#elif USE(V8)
+    inline bool hasScriptObject() { return !m_scriptObject.IsEmpty(); }
 #endif
 
-    JSValueRef callSimpleFunction(JSContextRef, JSObjectRef thisObject, const char* functionName) const;
-    JSValueRef callFunction(JSContextRef, JSObjectRef thisObject, const char* functionName, size_t argumentCount, const JSValueRef arguments[], JSValueRef& exception) const;
+#if ENABLE(DATABASE)
+#if USE(JSC)
+    JSObjectRef addDatabaseScriptResource(InspectorDatabaseResource*);
+    void removeDatabaseScriptResource(InspectorDatabaseResource*);
+#elif USE(V8)
+    // TODO(ojan): implement when we turn on databases.
+#endif
+#endif
 
-    bool handleException(JSContextRef, JSValueRef exception, unsigned lineNumber) const;
+#if USE(JSC)
+    JSValueRef callSimpleFunction(JSContextRef, JSObjectRef thisObject, const char* functionName) const;
+    JSValueRef callFunction(JSContextRef, JSObjectRef thisObject, const char* functionName, size_t argumentCount, const JSValueRef arguments[], JSValueRef& exception) const; 
+
+    bool handleException(JSContextRef, JSValueRef exception, unsigned lineNumber) const; 
+#endif
 
     void showWindow();
 
-    virtual void didParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int sourceID);
-    virtual void failedToParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int errorLine, const KJS::UString& errorMessage);
+#if USE(JSC)
+    virtual void didParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int sourceID); 
+    virtual void failedToParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int errorLine, const KJS::UString& errorMessage); 
     virtual void didPause();
+#elif USE(V8)
+    // TODO(ojan): implement when we start integrating in the debugger.
+#endif
 
     Page* m_inspectedPage;
     InspectorClient* m_client;
@@ -228,24 +316,30 @@ private:
     RefPtr<Node> m_nodeToFocus;
     RefPtr<InspectorResource> m_mainResource;
     ResourcesMap m_resources;
-    HashSet<String> m_knownResources;
+    HashSet<String> m_knownResources; 
     FrameResourcesMap m_frameResources;
     Vector<ConsoleMessage*> m_consoleMessages;
-    Vector<RefPtr<KJS::Profile> > m_profiles;
-    HashMap<String, double> m_times;
-    HashMap<String, unsigned> m_counts;
+#if USE(JSC)
+    Vector<RefPtr<KJS::Profile> > m_profiles; 
+#endif
+    HashMap<String, double> m_times; 
+    HashMap<String, unsigned> m_counts; 
 #if ENABLE(DATABASE)
     DatabaseResourcesSet m_databaseResources;
 #endif
+#if USE(JSC)
     JSObjectRef m_scriptObject;
     JSObjectRef m_controllerScriptObject;
     JSContextRef m_scriptContext;
+#elif USE(V8)
+    v8::Persistent<v8::Object> m_scriptObject;
+#endif
     bool m_windowVisible;
     bool m_debuggerAttached;
     bool m_attachDebuggerWhenShown;
     bool m_recordingUserInitiatedProfile;
     SpecialPanels m_showAfterVisible;
-    long long m_nextIdentifier;
+    unsigned long m_nextIdentifier;
     RefPtr<Node> m_highlightedNode;
     unsigned m_groupLevel;
 };

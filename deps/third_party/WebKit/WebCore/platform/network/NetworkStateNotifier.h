@@ -34,6 +34,10 @@ typedef const struct __CFArray * CFArrayRef;
 typedef const struct __SCDynamicStore * SCDynamicStoreRef;
 #endif
 
+#if PLATFORM(WIN)
+#include <windows.h>
+#endif
+
 namespace WebCore {
 
 class NetworkStateNotifier {
