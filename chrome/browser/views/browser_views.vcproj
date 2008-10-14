@@ -442,6 +442,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\background_task_drop_view.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\background_task_drop_view.h"
+			>
+		</File>
+		<File
 			RelativePath=".\bookmark_bar_view.cc"
 			>
 		</File>

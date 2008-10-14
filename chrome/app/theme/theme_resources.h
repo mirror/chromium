@@ -312,3 +312,13 @@
 #define IDR_PRODUCT_LOGO                                 9381
 #define IDR_DISTRIBUTOR_LOGO                             9382
 #define IDR_DISTRIBUTOR_LOGO_LIGHT                       9383
+#if ENABLE_BACKGROUND_TASK == 1
+#define IDR_DROP_BOX_HOVER_TOP_LEFT                      9384
+#define IDR_DROP_BOX_HOVER_TOP_CENTER                    9385
+#define IDR_DROP_BOX_HOVER_LEFT                          9386
+#define IDR_DROP_BOX_HOVER_CENTER                        9387
+#define IDR_DROP_BOX_INACTIVE_TOP_LEFT                   9388
+#define IDR_DROP_BOX_INACTIVE_TOP_CENTER                 9389
+#define IDR_DROP_BOX_INACTIVE_LEFT                       9390
+#define IDR_DROP_BOX_INACTIVE_CENTER                     9391
+#endif  // ENABLE_BACKGROUND_TASK == 1

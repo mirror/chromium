@@ -300,3 +300,13 @@ IDR_FIND_DLG_RIGHT_BB_BACKGROUND   BINDATA  "find_dlg_right_bb_bg.png"
 IDR_FIND_DLG_MIDDLE_BB_BACKGROUND  BINDATA  "find_dlg_middle_bb_bg.png"
 IDR_THROBBER_LIGHT                 BINDATA  "throbber_light.png"
 IDR_OTR_ICON_STANDALONE            BINDATA  "otr_icon_standalone.png"
+#if ENABLE_BACKGROUND_TASK == 1
+IDR_DROP_BOX_HOVER_TOP_LEFT        BINDATA  "drop_box_hover_top_left.png"
+IDR_DROP_BOX_HOVER_TOP_CENTER      BINDATA  "drop_box_hover_top_center.png"
+IDR_DROP_BOX_HOVER_LEFT            BINDATA  "drop_box_hover_left.png"
+IDR_DROP_BOX_HOVER_CENTER          BINDATA  "drop_box_hover_center.png"
+IDR_DROP_BOX_INACTIVE_TOP_LEFT     BINDATA  "drop_box_inactive_top_left.png"
+IDR_DROP_BOX_INACTIVE_TOP_CENTER   BINDATA  "drop_box_inactive_top_center.png"
+IDR_DROP_BOX_INACTIVE_LEFT         BINDATA  "drop_box_inactive_left.png"
+IDR_DROP_BOX_INACTIVE_CENTER       BINDATA  "drop_box_inactive_center.png"
+#endif  // ENABLE_BACKGROUND_TASK == 1
