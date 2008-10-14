@@ -37,6 +37,8 @@
 
 #include "bindings/npruntime.h"
 #if USE(JSC)
+#include "JSDOMWindowShell.h"
+#include "runtime.h"
 #include <kjs/ustring.h>
 #endif
 
@@ -124,7 +126,6 @@ typedef struct _NPRuntimeFunctions {
 #if USE(JSC)
 namespace KJS {
     namespace Bindings {
-        class Instance;
         class RootObject;
     } 
 }
@@ -141,22 +142,18 @@ class PausedTimeouts;
 class String;
 class Widget;
 
-// JSString is the string class used for XMLHttpRequest's
-// m_responseText field.
 #if USE(JSC)
 typedef HashMap<void*, RefPtr<KJS::Bindings::RootObject> > RootObjectMap;
-typedef KJS::UString JSString;
 typedef KJS::Bindings::Instance* JSInstance;
-typedef PassRefPtr<KJS::Bindings::Instance> JSInstanceReturnValue;
-typedef KJS::Bindings::Instance* JSPersistentInstance;
+typedef PassRefPtr<KJS::Bindings::Instance> JSInstanceHandle;
+typedef RefPtr<KJS::Bindings::Instance> JSPersistentInstance;
 typedef KJS::JSValue* JSException;
 typedef KJS::JSValue* JSResult;
 #endif
 
 #if USE(V8)
-typedef String JSString;
 typedef v8::Local<v8::Object> JSInstance;
-typedef v8::Local<v8::Object> JSInstanceReturnValue;
+typedef v8::Local<v8::Object> JSInstanceHandle;
 typedef v8::Persistent<v8::Object> JSPersistentInstance;
 typedef v8::Local<v8::Value> JSException;
 typedef v8::Persistent<v8::Value> JSResult;
@@ -166,6 +163,21 @@ class ScriptController {
 public:
     ScriptController(Frame*);
     ~ScriptController();
+
+#if USE(JSC)
+    bool haveWindowShell() const { return m_windowShell; }
+    JSDOMWindowShell* windowShell()
+    {
+        initScriptIfNeeded();
+        return m_windowShell;
+    }
+
+    JSDOMWindow* globalObject()
+    {
+        initScriptIfNeeded();
+        return m_windowShell->window();
+    }
+#endif
 
 #if USE(V8)
     // TODO(eseidel): V8Proxy should either be folded into ScriptController
@@ -192,14 +204,12 @@ public:
     PassRefPtr<EventListener> createSVGEventHandler(const String& functionName, const String& code, Node*);
 #endif
 
-    // Get the Root object
-    //  JSRootObject* getRootObject();
     // Creates a property of the global object of a frame.
     void BindToWindowObject(Frame*, const String& key, NPObject*);
 
     NPRuntimeFunctions* functions();
 
-    JSInstanceReturnValue createScriptInstanceForWidget(Widget*);
+    JSInstanceHandle createScriptInstanceForWidget(Widget*);
 
     void clearPluginObjects();
     void clearDocumentWrapper();
@@ -210,7 +220,7 @@ public:
 
     bool isEnabled() const;
 
-    // TODO(eseide): void* is a compile hack
+    // TODO(eseidel): void* is a compile hack
     void attachDebugger(void*);
 
     // Create a NPObject wrapper for a JSObject
@@ -263,6 +273,9 @@ public:
     const String* sourceURL() const { return m_sourceURL; } // 0 if we are not evaluating any script
 
     void clearWindowShell();
+#if USE(JSC)
+    void clearFormerWindow(JSDOMWindow* window) { m_liveFormerWindows.remove(window); }
+#endif
     void updateDocument();
 
     void pauseTimeouts(OwnPtr<PausedTimeouts>&);
@@ -271,12 +284,32 @@ public:
     void clearScriptObjects();
     void cleanupScriptObjectsForPlugin(void*);
 
+#if USE(JSC)
+    KJS::Bindings::RootObject* bindingRootObject();
+#endif
+
 #if ENABLE(NETSCAPE_PLUGIN_API)
     NPObject* createScriptObjectForPluginElement(HTMLPlugInElement*);
     NPObject* windowScriptNPObject();
 #endif
 
 private:
+#if USE(JSC)
+    void initScriptIfNeeded()
+    {
+        if (!m_windowShell)
+            initScript();
+    }
+    void initScript();
+
+    void clearPlatformScriptObjects();
+    void disconnectPlatformScriptObjects();
+
+    KJS::ProtectedPtr<JSDOMWindowShell> m_windowShell;
+    HashSet<JSDOMWindow*> m_liveFormerWindows;
+    int m_handlerLineno;
+#endif
+
     static bool m_recordPlaybackMode;
 
     Frame* m_frame;
@@ -311,7 +344,7 @@ private:
 class JSInstanceHolder {
 public:
     JSInstanceHolder();
-    JSInstanceHolder(JSInstance);
+    JSInstanceHolder(JSInstanceHandle);
     ~JSInstanceHolder();
     // Returns true if the holder is empty.
     bool IsEmpty();
@@ -319,7 +352,7 @@ public:
     JSInstance Get();
     // Clear the contained JSInstance.
     void Clear();
-    JSInstanceHolder& operator=(JSInstance);
+    JSInstanceHolder& operator=(JSInstanceHandle);
     static JSInstance EmptyInstance();
 
 private:

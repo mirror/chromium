@@ -25,7 +25,6 @@
 #include "FormData.h"
 #include "ResourceResponse.h"
 #include "SubresourceLoaderClient.h"
-#include "ScriptController.h"
 #include <wtf/OwnPtr.h>
 
 namespace WebCore {
@@ -33,6 +32,13 @@ namespace WebCore {
 class Document;
 class File;
 class TextResourceDecoder;
+
+#if USE(JSC)
+typedef KJS::UString JSUString;
+#endif
+#if USE(V8)
+typedef String JSUString;
+#endif
 
 class XMLHttpRequest : public RefCounted<XMLHttpRequest>, public EventTarget, private SubresourceLoaderClient {
 public:
@@ -68,7 +74,7 @@ public:
     void overrideMimeType(const String& override);
     String getAllResponseHeaders(ExceptionCode&) const;
     String getResponseHeader(const String& name, ExceptionCode&) const;
-    const JSString& responseText() const;
+    const JSUString& responseText() const;
     Document* responseXML() const;
 
     XMLHttpRequestUpload* upload();
@@ -229,7 +235,7 @@ private:
     // to be able to share the buffer with JavaScript versions of the whole or partial string.
     // In contrast, this string doesn't interact much with the rest of the engine so it's not that
     // big a cost that it isn't a String.
-    JSString m_responseText;
+    JSUString m_responseText;
     mutable bool m_createdDocument;
     mutable RefPtr<Document> m_responseXML;
 

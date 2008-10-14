@@ -51,6 +51,10 @@
 #include "JSDOMBinding.h"
 #endif
 
+#if USE(V8)
+#include "ScriptController.h"
+#endif
+
 #include "base/stats_counters.h"
 
 namespace WebCore {
@@ -239,7 +243,7 @@ XMLHttpRequest::State XMLHttpRequest::readyState() const
     return m_state;
 }
 
-const JSString& XMLHttpRequest::responseText() const
+const JSUString& XMLHttpRequest::responseText() const
 {
     return m_responseText;
 }
