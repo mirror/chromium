@@ -342,4 +342,8 @@
 #define ENABLE_SAMPLING_TOOL 0
 #endif
 
+#if !defined(ENABLE_PAN_SCROLLING) && (PLATFORM(WIN) || PLATFORM(CHROMIUM) || (PLATFORM(WX) && PLATFORM(WIN_OS)))
+#define ENABLE_PAN_SCROLLING 1
+#endif
+
 #endif /* WTF_Platform_h */
