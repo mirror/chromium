@@ -67,10 +67,14 @@ HTMLPlugInElement::~HTMLPlugInElement()
 
 #if ENABLE(NETSCAPE_PLUGIN_API)
     if (m_NPObject) {
+#if USE(JSC)
+        _NPN_ReleaseObject(m_NPObject);
+#else if USE(V8)
         // NOTE: mbelshe - can the frame be inaccessible here?  If so,
         // do we leak objects?
         if (document() && document()->frame()) 
             document()->frame()->script()->functions()->releaseObject(m_NPObject);
+#endif
         m_NPObject = 0;
     }
 #endif

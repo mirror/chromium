@@ -156,7 +156,12 @@ Frame::~Frame()
     frameCounter.decrement();
 #endif
 
+#if USE(JSC)
+    if (d->m_script.haveWindowShell())
+        d->m_script.windowShell()->disconnectFrame();
+#else if USE(V8)
     d->m_script.disconnectFrame();
+#endif
 
     disconnectOwnerElement();
     
@@ -1061,7 +1066,11 @@ void Frame::clearDOMWindow()
         d->m_liveFormerWindows.add(d->m_domWindow.get());
         d->m_domWindow->clear();
     }
+#if USE(JSC)
+    d->m_domWindow = 0;
+#else if USE(V8)
     d->m_script.clearPluginObjects();
+#endif
 }
 
 RenderView* Frame::contentRenderer() const
@@ -1686,7 +1695,12 @@ void Frame::pageDestroyed()
         page()->focusController()->setFocusedFrame(0);
 
     // This will stop any JS timers
+#if USE(JSC)
+    if (script()->haveWindowShell())
+        script()->windowShell()->disconnectFrame();
+#else if USE(V8)
     script()->disconnectFrame();
+#endif
 
     script()->clearScriptObjects();
 

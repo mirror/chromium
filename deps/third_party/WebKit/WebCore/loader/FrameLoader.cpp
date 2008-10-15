@@ -89,6 +89,7 @@
 #if USE(JSC)
 #include "JSDOMBinding.h"
 #include <kjs/JSObject.h>
+using KJS::JSValue;
 #endif
 
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
@@ -790,7 +791,13 @@ String FrameLoader::executeScript(const String& url, int baseLine, const String&
     bool wasRunningScript = m_isRunningScript;
     m_isRunningScript = true;
 
+#if USE(JSC)
+    // TODO(pkasting): This doesn't actually compile, because down below we're
+    // supposed to return this as a String.
+    JSValue* result = m_frame->script()->evaluate(url, baseLine, script);
+#else if USE(V8)
     String result = m_frame->script()->evaluate(url, baseLine, script, 0, succ);
+#endif
 
     if (!wasRunningScript) {
         m_isRunningScript = false;

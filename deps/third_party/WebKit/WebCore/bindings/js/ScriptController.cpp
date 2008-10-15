@@ -382,4 +382,38 @@ void ScriptController::resumeTimeouts(OwnPtr<PausedTimeouts>& pausedTimeouts)
     windowShell()->window()->resumeTimeouts(pausedTimeouts);
 }
 
+// JSInstanceHolder
+JSInstanceHolder::JSInstanceHolder()
+    : m_instance(0) {
+}
+
+JSInstanceHolder::JSInstanceHolder(JSInstanceHandle instance) {
+    m_instance = instance;
+}
+
+JSInstanceHolder::~JSInstanceHolder() {
+    Clear();
+}
+
+bool JSInstanceHolder::IsEmpty() {
+    return m_instance == 0;
+}
+
+void JSInstanceHolder::Clear() {
+    m_instance = 0;
+}
+
+JSInstance JSInstanceHolder::Get() {
+    return m_instance.get();
+}
+
+JSInstance JSInstanceHolder::EmptyInstance() {
+    return 0;
+}
+
+JSInstanceHolder& JSInstanceHolder::operator=(JSInstanceHandle instance) {
+    m_instance = instance;
+    return *this;
+}
+
 } // namespace WebCore
