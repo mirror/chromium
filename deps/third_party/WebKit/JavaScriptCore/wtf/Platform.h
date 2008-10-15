@@ -342,7 +342,8 @@
 #define ENABLE_SAMPLING_TOOL 0
 #endif
 
-#if !defined(ENABLE_PAN_SCROLLING) && (PLATFORM(WIN) || PLATFORM(CHROMIUM) || (PLATFORM(WX) && PLATFORM(WIN_OS)))
+#if !defined(ENABLE_PAN_SCROLLING) && (PLATFORM(WIN) || PLATFORM(CHROMIUM) || (PLATFORM(WX) && PLATFORM(WIN_OS))) && !PLATFORM(MAC)
+// note the PLATFORM(MAC) part should not be up-streamed, it's a temporary fix.
 #define ENABLE_PAN_SCROLLING 1
 #endif
 
