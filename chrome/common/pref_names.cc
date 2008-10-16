@@ -429,5 +429,10 @@ const wchar_t kNumFoldersInOtherBookmarkFolder[] =
 // Number of keywords.
 const wchar_t kNumKeywords[] = L"user_experience_metrics.num_keywords";
 
+// Stores the information of registered background tasks.
+#if ENABLE_BACKGROUND_TASK == 1
+const wchar_t kBackgroundTasks[] = L"background_tasks";
+#endif  // ENABLE_BACKGROUND_TASK == 1
+
 }  // namespace prefs
 

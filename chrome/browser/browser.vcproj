@@ -2078,6 +2078,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Background Task"
+			>
+			<File
+				RelativePath=".\background_task_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\background_task_manager.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\cert_store.cc"
 			>

@@ -962,6 +962,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="TestBackgroundTask"
+			>
+			<File
+				RelativePath="..\..\browser\background_task_manager_unittest.cc"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

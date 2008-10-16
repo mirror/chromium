@@ -12,6 +12,9 @@
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#if ENABLE_BACKGROUND_TASK == 1
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK == 1
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
@@ -204,6 +207,9 @@ Browser::Browser(const gfx::Rect& initial_bounds,
       toolbar_model_(this),
       type_(type),
       app_name_(app_name),
+#if ENABLE_BACKGROUND_TASK == 1
+      background_task_manager_(new BackgroundTaskManager(this, profile_)),
+#endif  // ENABLE_BACKGROUND_TASK
       idle_task_(new BrowserIdleTimer()) {
   tabstrip_model_.AddObserver(this);
 
