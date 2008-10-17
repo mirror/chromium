@@ -126,6 +126,10 @@ static void printToStandardOut(MessageSource source, MessageLevel level, const S
 #if USE(JSC)
     if (!Interpreter::shouldPrintExceptions())
         return;
+#elif USE(V8)
+    // TODO(dglazkov): This is a temporary measure to greenify layout tests.
+    // We should decide whether to do this at all for Chromium.
+    return;
 #endif
 
     printSourceURLAndLine(sourceURL, lineNumber);
@@ -139,6 +143,10 @@ static void printToStandardOut(MessageLevel level, ScriptCallContext* context)
 #if USE(JSC)
     if (!Interpreter::shouldPrintExceptions())
         return;
+#elif USE(V8)
+    // TODO(dglazkov): This is a temporary measure to greenify layout tests.
+    // We should decide whether to do this at all for Chromium.
+    return;
 #endif
 
     printSourceURLAndLine(context->sourceURL().prettyURL(), 0);
