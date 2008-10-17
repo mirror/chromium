@@ -88,7 +88,10 @@
 
 #if USE(JSC)
 #include "JSDOMBinding.h"
+#include <kjs/JSLock.h>
 #include <kjs/JSObject.h>
+using KJS::UString;
+using KJS::JSLock;
 using KJS::JSValue;
 #endif
 
@@ -184,6 +187,20 @@ struct ScheduledRedirection {
 
 static double storedTimeOfLastCompletedLoad;
 static FrameLoader::LocalLoadPolicy localLoadPolicy = FrameLoader::AllowLocalLoadsForLocalOnly;
+
+#if USE(JSC)
+static bool getString(JSValue* result, String& string)
+{
+    if (!result)
+        return false;
+    JSLock lock(false);
+    UString ustring;
+    if (!result->getString(ustring))
+        return false;
+    string = ustring;
+    return true;
+}
+#endif
 
 bool isBackForwardLoadType(FrameLoadType type)
 {
@@ -792,9 +809,10 @@ String FrameLoader::executeScript(const String& url, int baseLine, const String&
     m_isRunningScript = true;
 
 #if USE(JSC)
-    // TODO(pkasting): This doesn't actually compile, because down below we're
-    // supposed to return this as a String.
-    JSValue* result = m_frame->script()->evaluate(url, baseLine, script);
+    JSValue* scriptResult = m_frame->script()->evaluate(url, baseLine, script);
+    String result;
+    if (getString(scriptResult, result))
+      *succ = true;
 #else if USE(V8)
     String result = m_frame->script()->evaluate(url, baseLine, script, 0, succ);
 #endif
