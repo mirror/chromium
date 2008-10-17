@@ -41,11 +41,14 @@
 namespace KJS {
 class ExecState;
 }
+#elif USE(V8)
+#include "v8.h"
 #endif
 
 namespace WebCore {
 
 class KURL;
+class String;
 
 #if USE(V8)
 typedef v8::Local<v8::Value> JSValueRef;
