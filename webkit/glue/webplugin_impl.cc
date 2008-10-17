@@ -17,7 +17,6 @@
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "GraphicsContext.h"
-#include "HTMLNames.h"
 #include "HTMLPluginElement.h"
 #include "IntRect.h"
 #include "KURL.h"
@@ -46,7 +45,6 @@
 #include "webkit/glue/webplugin_impl.h"
 #include "webkit/glue/plugins/plugin_host.h"
 #include "webkit/glue/plugins/plugin_instance.h"
-#include "webkit/glue/stacking_order_iterator.h"
 #include "webkit/glue/webview_impl.h"
 #include "googleurl/src/gurl.h"
 #include "webkit/port/platform/cursor.h"
@@ -178,11 +176,6 @@ void WebPluginContainer::attachToWindow() {
 void WebPluginContainer::detachFromWindow() {
   Widget::detachFromWindow();
   hide();
-}
-
-void WebPluginContainer::windowCutoutRects(WTF::Vector<WebCore::IntRect>*
-                                           cutouts) const {
-  impl_->windowCutoutRects(cutouts);
 }
 
 void WebPluginContainer::didReceiveResponse(
@@ -538,36 +531,6 @@ WebCore::IntRect WebPluginImpl::windowClipRect() const {
   return clip_rect;
 }
 
-void WebPluginImpl::windowCutoutRects(
-    WTF::Vector<WebCore::IntRect>* cutouts) const {
-  WebCore::RenderObject* plugin_node = element_->renderer();
-  ASSERT(plugin_node);
-
-  // Find all iframes that stack higher than this plugin.
-  bool higher = false;
-  StackingOrderIterator iterator;
-  WebCore::RenderLayer* root = element_->document()->renderer()->
-                               enclosingLayer();
-  iterator.Reset(root);
-
-  while (WebCore::RenderObject* ro = iterator.Next()) {
-    if (ro == plugin_node) {
-      // All nodes after this one are higher than plugin.
-      higher = true;
-    } else if (higher) {
-      // Is this a visible iframe?
-      WebCore::Node* n = ro->node();
-      if (n && n->hasTagName(WebCore::HTMLNames::iframeTag)) {
-        if (!ro->style() || ro->style()->visibility() == WebCore::VISIBLE) {
-          int x, y;
-          ro->absolutePosition(x, y);
-          cutouts->append(WebCore::IntRect(x, y, ro->width(), ro->height()));
-        }
-      }
-    }
-  }
-}
-
 void WebPluginImpl::geometryChanged() const {
   if (!widget_)
     return;
@@ -576,7 +539,7 @@ void WebPluginImpl::geometryChanged() const {
   // our parent view was scrolled.
   const_cast<WebPluginImpl*>(this)->widget_->setFrameGeometry(
       widget_->frameGeometry());
-}
+  }
 
 void WebPluginImpl::setFrameGeometry(const WebCore::IntRect& rect) {
   // Compute a new position and clip rect for ourselves relative to the
@@ -602,8 +565,7 @@ void WebPluginImpl::setFrameGeometry(const WebCore::IntRect& rect) {
 
   WebCore::IntRect window_rect;
   WebCore::IntRect clip_rect;
-  std::vector<gfx::Rect> cutout_rects;
-  CalculateBounds(rect, &window_rect, &clip_rect, &cutout_rects);
+  CalculateBounds(rect, &window_rect, &clip_rect);
 
   if (window_ && received_first_paint_notification_) {
     // Let the WebViewDelegate know that the plugin window needs to be moved,
@@ -612,14 +574,12 @@ void WebPluginImpl::setFrameGeometry(const WebCore::IntRect& rect) {
     move.window = window_;
     move.window_rect = gfx::Rect(window_rect);
     move.clip_rect = gfx::Rect(clip_rect);
-    move.cutout_rects = cutout_rects;
     move.visible = visible_;
-
     webview->delegate()->DidMove(webview, move);
   }
 
   delegate_->UpdateGeometry(
-      gfx::Rect(window_rect), gfx::Rect(clip_rect), cutout_rects,
+      gfx::Rect(window_rect), gfx::Rect(clip_rect),
       received_first_paint_notification_? visible_ : false);
 
   // delegate_ can go away as a result of above call, so check it first.
@@ -654,13 +614,11 @@ void WebPluginImpl::paint(WebCore::GraphicsContext* gc,
     if (!windowless_) {
       WebCore::IntRect window_rect;
       WebCore::IntRect clip_rect;
-      std::vector<gfx::Rect> cutout_rects;
 
-      CalculateBounds(widget_->frameGeometry(), &window_rect, &clip_rect,
-                      &cutout_rects);
+      CalculateBounds(widget_->frameGeometry(), &window_rect, &clip_rect);
 
       delegate_->UpdateGeometry(gfx::Rect(window_rect), gfx::Rect(clip_rect),
-                                cutout_rects, visible_);
+                                visible_);
       delegate_->FlushGeometryUpdates();
     }
   }
@@ -1039,8 +997,7 @@ WebCore::ScrollView* WebPluginImpl::parent() const {
 
 void WebPluginImpl::CalculateBounds(const WebCore::IntRect& frame_rect,
                                     WebCore::IntRect* window_rect,
-                                    WebCore::IntRect* clip_rect,
-                                    std::vector<gfx::Rect>* cutout_rects) {
+                                    WebCore::IntRect* clip_rect) {
   DCHECK(parent()->isFrameView());
   WebCore::FrameView* view = static_cast<WebCore::FrameView*>(parent());
 
@@ -1050,16 +1007,6 @@ void WebPluginImpl::CalculateBounds(const WebCore::IntRect& frame_rect,
   // Calculate a clip-rect so that we don't overlap the scrollbars, etc.
   *clip_rect = widget_->windowClipRect();
   clip_rect->move(-window_rect->x(), -window_rect->y());
-
-  cutout_rects->clear();
-  WTF::Vector<WebCore::IntRect> rects;
-  widget_->windowCutoutRects(&rects);
-  // Convert to gfx::Rect and subtract out the plugin position.
-  for (size_t i = 0; i < rects.size(); i++) {
-    gfx::Rect r(rects[i]);
-    r.Offset(-frame_rect.x(), -frame_rect.y());
-    cutout_rects->push_back(r);
-  }
 }
 
 void WebPluginImpl::HandleURLRequest(const char *method,

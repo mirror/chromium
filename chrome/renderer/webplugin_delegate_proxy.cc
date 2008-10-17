@@ -183,7 +183,6 @@ void WebPluginDelegateProxy::FlushGeometryUpdates() {
     Send(new PluginMsg_UpdateGeometry(instance_id_,
                                       plugin_rect_,
                                       deferred_clip_rect_,
-                                      deferred_cutout_rects_,
                                       visible_,
                                       NULL,
                                       NULL));
@@ -334,15 +333,12 @@ void WebPluginDelegateProxy::OnChannelError() {
   render_view_->PluginCrashed(plugin_path_);
 }
 
-void WebPluginDelegateProxy::UpdateGeometry(
-                const gfx::Rect& window_rect,
-                const gfx::Rect& clip_rect,
-                const std::vector<gfx::Rect>& cutout_rects,
-                bool visible) {
+void WebPluginDelegateProxy::UpdateGeometry(const gfx::Rect& window_rect,
+                                            const gfx::Rect& clip_rect,
+                                            bool visible) {
   plugin_rect_ = window_rect;
   if (!windowless_) {
     deferred_clip_rect_ = clip_rect;
-    deferred_cutout_rects_ = cutout_rects;
     visible_ = visible;
     send_deferred_update_geometry_ = true;
     return;
@@ -373,8 +369,8 @@ void WebPluginDelegateProxy::UpdateGeometry(
   }
 
   IPC::Message* msg = new PluginMsg_UpdateGeometry(
-      instance_id_, window_rect, clip_rect, cutout_rects, visible,
-      transport_store_handle, background_store_handle);
+      instance_id_, window_rect, clip_rect, visible, transport_store_handle,
+      background_store_handle);
   msg->set_unblock(true);
   Send(msg);
 }
