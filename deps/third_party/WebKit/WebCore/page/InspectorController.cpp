@@ -64,6 +64,7 @@
 #include "SystemTime.h"
 #include "TextEncoding.h"
 #include "TextIterator.h"
+#include "ScriptCallContext.h"
 #include "ScriptController.h"
 #include <JavaScriptCore/APICast.h>
 #include <JavaScriptCore/JSRetainPtr.h>
@@ -162,17 +163,17 @@ struct ConsoleMessage {
     {
     }
 
-    ConsoleMessage(MessageSource s, MessageLevel l, ExecState* exec, const ArgList& args, unsigned li, const String& u, unsigned g)
+    ConsoleMessage(MessageSource s, MessageLevel l, ScriptCallContext* context, unsigned g)
         : source(s)
         , level(l)
-        , wrappedArguments(args.size())
-        , line(li)
-        , url(u)
+        , wrappedArguments(context->argumentCount())
+        , line(context->lineNumber())
+        , url(context->sourceURL())
         , groupLevel(g)
     {
         JSLock lock(false);
-        for (unsigned i = 0; i < args.size(); ++i)
-            wrappedArguments[i] = JSInspectedObjectWrapper::wrap(exec, args.at(exec, i));
+        for (unsigned i = 0; i < context->argumentCount(); ++i)
+            wrappedArguments[i] = JSInspectedObjectWrapper::wrap(context->exec(), context->argumentAt(i));
     }
 
     MessageSource source;
@@ -1254,12 +1255,12 @@ void InspectorController::setWindowVisible(bool visible, bool attached)
     m_showAfterVisible = CurrentPanel;
 }
 
-void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, ExecState* exec, const ArgList& arguments, unsigned lineNumber, const String& sourceURL)
+void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, ScriptCallContext* context)
 {
     if (!enabled())
         return;
 
-    addConsoleMessage(new ConsoleMessage(source, level, exec, arguments, lineNumber, sourceURL, m_groupLevel));
+    addConsoleMessage(new ConsoleMessage(source, level, context, m_groupLevel));
 }
 
 void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceID)
@@ -1297,11 +1298,11 @@ void InspectorController::toggleRecordButton(bool isProfiling)
     callFunction(m_scriptContext, m_scriptObject, "setRecordingProfile", 1, &isProvingValue, exception);
 }
 
-void InspectorController::startGroup(MessageSource source, ExecState* exec, const ArgList& arguments, unsigned lineNumber, const String& sourceURL)
+void InspectorController::startGroup(MessageSource source, ScriptCallContext* context)
 {    
     ++m_groupLevel;
 
-    addConsoleMessage(new ConsoleMessage(source, StartGroupMessageLevel, exec, arguments, lineNumber, sourceURL, m_groupLevel));
+    addConsoleMessage(new ConsoleMessage(source, StartGroupMessageLevel, context, m_groupLevel));
 }
 
 void InspectorController::endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL)

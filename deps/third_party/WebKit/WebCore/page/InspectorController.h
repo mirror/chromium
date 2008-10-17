@@ -66,6 +66,7 @@ class Node;
 class Page;
 class ResourceResponse;
 class ResourceError;
+class ScriptCallContext;
 class SharedBuffer;
 
 struct ConsoleMessage;
@@ -123,11 +124,7 @@ public:
     bool windowVisible();
     void setWindowVisible(bool visible = true, bool attached = false);
 
-#if USE(JSC)
-    void addMessageToConsole(MessageSource, MessageLevel, KJS::ExecState*, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceID);
-#elif USE(V8)
-    // TODO(ojan): Do we need to implement this version?
-#endif
+    void addMessageToConsole(MessageSource, MessageLevel, ScriptCallContext*);
     void addMessageToConsole(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceID);
 
     void clearConsoleMessages(); 
@@ -216,10 +213,10 @@ public:
 
     void startTiming(const KJS::UString& title); 
     bool stopTiming(const KJS::UString& title, double& elapsed); 
-
-    void startGroup(MessageSource source, KJS::ExecState* exec, const KJS::ArgList& arguments, unsigned lineNumber, const String& sourceURL); 
-    void endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL); 
 #endif
+
+    void startGroup(MessageSource source, ScriptCallContext*); 
+    void endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL); 
 
 #if USE(V8)
     // InspectorController.idl

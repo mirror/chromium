@@ -44,6 +44,7 @@ namespace WebCore {
 
     class Frame;
     class Page;
+    class ScriptCallContext;
     class String;
 
     enum MessageSource {
@@ -72,33 +73,34 @@ namespace WebCore {
 
         void addMessage(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceURL);
 
+        void debug(ScriptCallContext*);
+        void error(ScriptCallContext*);
+        void info(ScriptCallContext*);
+        void log(ScriptCallContext*);
+        void warn(ScriptCallContext*);
+        void dir(ScriptCallContext*);
+        void assertCondition(bool condition, ScriptCallContext*);
+        void count(ScriptCallContext*);
+
 #if USE(JSC)
-        void debug(KJS::ExecState*, const KJS::ArgList&);
-        void error(KJS::ExecState*, const KJS::ArgList&);
-        void info(KJS::ExecState*, const KJS::ArgList&);
-        void log(KJS::ExecState*, const KJS::ArgList&);
-        void warn(KJS::ExecState*, const KJS::ArgList&);
-        void dir(KJS::ExecState*, const KJS::ArgList&);
-        void assertCondition(bool condition, KJS::ExecState*, const KJS::ArgList&);
-        void count(KJS::ExecState*, const KJS::ArgList&);
         void profile(KJS::ExecState*, const KJS::ArgList&);
         void profileEnd(KJS::ExecState*, const KJS::ArgList&);
         void time(const KJS::UString& title);
         void timeEnd(KJS::ExecState*, const KJS::ArgList&);
-        void group(KJS::ExecState*, const KJS::ArgList&);
+#endif
+
+        void group(ScriptCallContext*);
         void groupEnd();
 
-        void reportException(KJS::ExecState*, KJS::JSValue*);
+#if USE(JSC)
+        void reportException(KJS::ExecState*,  KJS::JSValue*);
         void reportCurrentException(KJS::ExecState*);
-#elif USE(V8)
-        void debug(const String& message);
-        void error(const String& message);
-        void info(const String& message);
-        void log(const String& message);
-        void warn(const String& message);
-        void time(const String& title);
-        void groupEnd();
 #endif
+
+#if USE(V8)
+        void time(const String& title);
+#endif
+
     private:
         inline Page* page() const;
     

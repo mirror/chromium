@@ -27,6 +27,7 @@
 #include "JSConsole.h"
 
 #include "Console.h"
+#include "ScriptCallContext.h"
 
 using namespace KJS;
 
@@ -34,52 +35,57 @@ namespace WebCore {
 
 JSValue* JSConsole::debug(ExecState* exec, const ArgList& arguments)
 {
-    impl()->debug(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->debug(&context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::error(ExecState* exec, const ArgList& arguments)
 {
-    impl()->error(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->error(&context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::info(ExecState* exec, const ArgList& arguments)
 {
-    impl()->info(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->info(&context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::log(ExecState* exec, const ArgList& arguments)
 {
-    impl()->log(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->log(&context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::warn(ExecState* exec, const ArgList& arguments)
 {
-    impl()->warn(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->warn(&context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::dir(ExecState* exec, const ArgList& arguments)
 {
-    impl()->dir(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->dir(&context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::assertCondition(ExecState* exec, const ArgList& arguments)
 {
-    ArgList messageParameters;
-    arguments.getSlice(1, messageParameters);
-
-    impl()->assertCondition(arguments.at(exec, 0)->toBoolean(exec), exec, messageParameters);
+    ScriptCallContext context(exec, arguments, 1);
+    impl()->assertCondition(arguments.at(exec, 0)->toBoolean(exec), &context);
     return jsUndefined();
 }
 
 JSValue* JSConsole::count(ExecState* exec, const ArgList& arguments)
 {
-    impl()->count(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->count(&context);
     return jsUndefined();
 }
 
@@ -103,7 +109,8 @@ JSValue* JSConsole::profileEnd(ExecState* exec, const ArgList& arguments)
 
 JSValue* JSConsole::group(ExecState* exec, const ArgList& arguments)
 {
-    impl()->group(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->group(&context);
     return jsUndefined();
 }
 

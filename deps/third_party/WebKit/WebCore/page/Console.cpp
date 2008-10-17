@@ -35,16 +35,20 @@
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "InspectorController.h"
+#if USE(JSC)
 #include "JSDOMBinding.h"
+#endif
 #include "Page.h"
 #include "PageGroup.h"
 #include "PlatformString.h"
+#include "ScriptCallContext.h"
+#if USE(JSC)
 #include <kjs/ArgList.h>
 #include <kjs/interpreter.h>
 #include <kjs/JSObject.h>
-#include <VM/Machine.h>
 #include <profiler/Profile.h>
 #include <profiler/Profiler.h>
+#endif
 #include <stdio.h>
 
 using namespace KJS;
@@ -119,8 +123,10 @@ static void printMessageSourceAndLevelPrefix(MessageSource source, MessageLevel 
 
 static void printToStandardOut(MessageSource source, MessageLevel level, const String& message, const String& sourceURL, unsigned lineNumber)
 {
+#if USE(JSC)
     if (!Interpreter::shouldPrintExceptions())
         return;
+#endif
 
     printSourceURLAndLine(sourceURL, lineNumber);
     printMessageSourceAndLevelPrefix(source, level);
@@ -128,33 +134,21 @@ static void printToStandardOut(MessageSource source, MessageLevel level, const S
     printf(" %s\n", message.utf8().data());
 }
 
-static void printToStandardOut(MessageLevel level, ExecState* exec, const ArgList& args, const KURL& url)
+static void printToStandardOut(MessageLevel level, ScriptCallContext* context)
 {
+#if USE(JSC)
     if (!Interpreter::shouldPrintExceptions())
         return;
+#endif
 
-    printSourceURLAndLine(url.prettyURL(), 0);
+    printSourceURLAndLine(context->sourceURL().prettyURL(), 0);
     printMessageSourceAndLevelPrefix(JSMessageSource, level);
 
-    for (size_t i = 0; i < args.size(); ++i) {
-        UString argAsString = args.at(exec, i)->toString(exec);
-        printf(" %s", argAsString.UTF8String().c_str());
+    for (size_t i = 0; i < context->argumentCount(); ++i) {
+        printf(" %s", context->argumentStringAt(i).utf8().data());
     }
 
     printf("\n");
-}
-
-static inline void retrieveLastCaller(ExecState* exec, KURL& url, unsigned& lineNumber)
-{
-    int signedLineNumber;
-    int sourceIdentifer;
-    UString urlString;
-    JSValue* function;
-
-    exec->machine()->retrieveLastCaller(exec, signedLineNumber, sourceIdentifer, urlString, function);
-
-    url = KURL(urlString);
-    lineNumber = (signedLineNumber >= 0 ? signedLineNumber : 0);
 }
 
 void Console::addMessage(MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceURL)
@@ -171,15 +165,15 @@ void Console::addMessage(MessageSource source, MessageLevel level, const String&
     printToStandardOut(source, level, message, sourceURL, lineNumber);
 }
 
-void Console::debug(ExecState* exec, const ArgList& args)
+void Console::debug(ScriptCallContext* context)
 {
     // In Firebug, console.debug has the same behavior as console.log. So we'll do the same.
-    log(exec, args);
+    log(context);
 }
 
-void Console::error(ExecState* exec, const ArgList& args)
+void Console::error(ScriptCallContext* context)
 {
-    if (args.isEmpty())
+    if (!context->hasArguments())
         return;
 
     if (!m_frame)
@@ -189,21 +183,15 @@ void Console::error(ExecState* exec, const ArgList& args)
     if (!page)
         return;
 
-    String message = args.at(exec, 0)->toString(exec);
+    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, ErrorMessageLevel, context);
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
-
-    page->chrome()->client()->addMessageToConsole(message, lineNumber, url.prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, ErrorMessageLevel, exec, args, lineNumber, url.string());
-
-    printToStandardOut(ErrorMessageLevel, exec, args, url);
+    printToStandardOut(ErrorMessageLevel, context);
 }
 
-void Console::info(ExecState* exec, const ArgList& args)
+void Console::info(ScriptCallContext* context)
 {
-    if (args.isEmpty())
+    if (!context->hasArguments())
         return;
 
     if (!m_frame)
@@ -213,21 +201,15 @@ void Console::info(ExecState* exec, const ArgList& args)
     if (!page)
         return;
 
-    String message = args.at(exec, 0)->toString(exec);
+    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, context);
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
-
-    page->chrome()->client()->addMessageToConsole(message, lineNumber, url.prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, exec, args, lineNumber, url.string());
-
-    printToStandardOut(LogMessageLevel, exec, args, url);
+    printToStandardOut(LogMessageLevel, context);
 }
 
-void Console::log(ExecState* exec, const ArgList& args)
+void Console::log(ScriptCallContext* context)
 {
-    if (args.isEmpty())
+    if (!context->hasArguments())
         return;
 
     if (!m_frame)
@@ -237,31 +219,27 @@ void Console::log(ExecState* exec, const ArgList& args)
     if (!page)
         return;
 
-    String message = args.at(exec, 0)->toString(exec);
+    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, context);
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
-
-    page->chrome()->client()->addMessageToConsole(message, lineNumber, url.prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, exec, args, lineNumber, url.string());
-
-    printToStandardOut(LogMessageLevel, exec, args, url);
+    printToStandardOut(LogMessageLevel, context);
 }
 
-void Console::dir(ExecState* exec, const ArgList& args)
+#if USE(JSC)
+
+void Console::dir(ScriptCallContext* context)
 {
-    if (args.isEmpty())
+    if (!context->hasArguments())
         return;
 
     Page* page = this->page();
     if (!page)
         return;
 
-    page->inspectorController()->addMessageToConsole(JSMessageSource, ObjectMessageLevel, exec, args, 0, String());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, ObjectMessageLevel, context);
 }
 
-void Console::assertCondition(bool condition, ExecState* exec, const ArgList& args)
+void Console::assertCondition(bool condition, ScriptCallContext* context)
 {
     if (condition)
         return;
@@ -273,19 +251,15 @@ void Console::assertCondition(bool condition, ExecState* exec, const ArgList& ar
     if (!page)
         return;
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
-
     // FIXME: <https://bugs.webkit.org/show_bug.cgi?id=19135> It would be nice to prefix assertion failures with a message like "Assertion failed: ".
     // FIXME: <https://bugs.webkit.org/show_bug.cgi?id=19136> We should print a message even when args.isEmpty() is true.
 
-    page->inspectorController()->addMessageToConsole(JSMessageSource, ErrorMessageLevel, exec, args, lineNumber, url.string());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, ErrorMessageLevel, context);
 
-    printToStandardOut(ErrorMessageLevel, exec, args, url);
+    printToStandardOut(ErrorMessageLevel, context);
 }
 
-void Console::count(ExecState* exec, const ArgList& args)
+void Console::count(ScriptCallContext* context)
 {
     if (!m_frame)
         return;
@@ -294,15 +268,12 @@ void Console::count(ExecState* exec, const ArgList& args)
     if (!page)
         return;
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
+    String title;
+    if (context->argumentCount() >= 1)
+        title = context->argumentStringAt(0, true);
 
-    UString title;
-    if (args.size() >= 1)
-        title = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
-
-    page->inspectorController()->count(title, lineNumber, url.string());
+    page->inspectorController()->count(title, context->lineNumber(),
+                                       context->sourceURL().string());
 }
 
 void Console::profile(ExecState* exec, const ArgList& args)
@@ -320,11 +291,10 @@ void Console::profileEnd(ExecState* exec, const ArgList& args)
     RefPtr<Profile> profile = Profiler::profiler()->stopProfiling(exec, title);
 
     if (Page* page = this->page()) {
-        KURL url;
-        unsigned lineNumber;
-        retrieveLastCaller(exec, url, lineNumber);
+        ScriptCallContext context(exec, args);
 
-        page->inspectorController()->addProfile(profile, lineNumber, url);
+        page->inspectorController()->addProfile(profile, context.lineNumber(),
+                                                context.sourceURL().string());
     }
 }
 
@@ -358,20 +328,22 @@ void Console::timeEnd(ExecState* exec, const ArgList& args)
 
     String message = String(title) + String::format(": %.0fms", elapsed);
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
+    ScriptCallContext context(exec, args);
 
-    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, message, lineNumber, url.string());
+    page->inspectorController()->addMessageToConsole(JSMessageSource,
+        LogMessageLevel, message, context.lineNumber(),
+        context.sourceURL().string());
 }
 
-void Console::group(ExecState* exec, const ArgList& arguments)
+#endif
+
+void Console::group(ScriptCallContext* context)
 {
     Page* page = this->page();
     if (!page)
         return;
 
-    page->inspectorController()->startGroup(JSMessageSource, exec, arguments, 0, String());
+    page->inspectorController()->startGroup(JSMessageSource, context);
 }
 
 void Console::groupEnd()
@@ -383,9 +355,18 @@ void Console::groupEnd()
     page->inspectorController()->endGroup(JSMessageSource, 0, String());
 }
 
-void Console::warn(ExecState* exec, const ArgList& args)
+#if USE(V8)
+
+void Console::time(const String& title)
 {
-    if (args.isEmpty())
+    notImplemented();
+}
+
+#endif
+
+void Console::warn(ScriptCallContext* context)
+{
+    if (!context->hasArguments())
         return;
 
     if (!m_frame)
@@ -395,17 +376,13 @@ void Console::warn(ExecState* exec, const ArgList& args)
     if (!page)
         return;
 
-    String message = args.at(exec, 0)->toString(exec);
+    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, WarningMessageLevel, context);
 
-    KURL url;
-    unsigned lineNumber;
-    retrieveLastCaller(exec, url, lineNumber);
-
-    page->chrome()->client()->addMessageToConsole(message, lineNumber, url.prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, WarningMessageLevel, exec, args, lineNumber, url.string());
-
-    printToStandardOut(WarningMessageLevel, exec, args, url);
+    printToStandardOut(WarningMessageLevel, context);
 }
+
+#if USE(JSC)
 
 void Console::reportException(ExecState* exec, JSValue* exception)
 {
@@ -422,6 +399,8 @@ void Console::reportCurrentException(ExecState* exec)
     exec->clearException();
     reportException(exec, exception);
 }
+
+#endif
 
 Page* Console::page() const
 {
