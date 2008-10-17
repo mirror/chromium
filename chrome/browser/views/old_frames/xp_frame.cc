@@ -341,6 +341,7 @@ XPFrame::XPFrame(Browser* browser)
       is_active_(false),
       is_off_the_record_(false),
       title_bar_height_(0),
+      needs_layout_(false),
       off_the_record_image_(NULL),
       distributor_logo_(NULL),
       ignore_ncactivate_(false),
@@ -837,6 +838,7 @@ void XPFrame::Layout() {
   browser_view_->LayoutStatusBubble(last_y + browser_h);
 
   frame_view_->SchedulePaint();
+  needs_layout_ = false;
 }
 
 // This is called when we receive WM_ENDSESSION. We have 5 seconds to quit
@@ -2489,30 +2491,27 @@ void XPFrame::DestroyBrowser() {
 
 void XPFrame::ShelfVisibilityChangedImpl(TabContents* current_tab) {
   // Coalesce layouts.
-  bool changed = false;
-
   ChromeViews::View* new_shelf = NULL;
   if (current_tab && current_tab->IsDownloadShelfVisible())
     new_shelf = current_tab->GetDownloadShelfView();
-  changed |= UpdateChildViewAndLayout(new_shelf, &shelf_view_);
+  needs_layout_ |= UpdateChildViewAndLayout(new_shelf, &shelf_view_);
 
   ChromeViews::View* new_info_bar = NULL;
   if (current_tab && current_tab->IsInfoBarVisible())
     new_info_bar = current_tab->GetInfoBarView();
-  changed |= UpdateChildViewAndLayout(new_info_bar, &info_bar_view_);
+  needs_layout_ |= UpdateChildViewAndLayout(new_info_bar, &info_bar_view_);
 
   ChromeViews::View* new_bookmark_bar_view = NULL;
   if (SupportsBookmarkBar())
     new_bookmark_bar_view = GetBookmarkBarView();
-  changed |= UpdateChildViewAndLayout(new_bookmark_bar_view,
-                                      &active_bookmark_bar_);
+  needs_layout_ |= UpdateChildViewAndLayout(new_bookmark_bar_view,
+                                            &active_bookmark_bar_);
 
   // Only do a layout if the current contents is non-null. We assume that if the
   // contents is NULL, we're either being destroyed, or ShowTabContents is going
   // to be invoked with a non-null TabContents again so that there is no need
   // in doing a layout now (and would result in extra work/invalidation on
   // tab switches).
-  if (changed && current_tab)
+  if (needs_layout_ && current_tab)
     Layout();
 }
-
