@@ -2,12 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_GFX_GDI_UTIL_H__
-#define BASE_GFX_GDI_UTIL_H__
+#ifndef BASE_GFX_BITMAP_HEADER_H__
+#define BASE_GFX_BITMAP_HEADER_H__
 
-#include <vector>
 #include <windows.h>
-#include "base/gfx/rect.h"
 
 namespace gfx {
 
@@ -27,10 +25,8 @@ void CreateBitmapV4Header(int width, int height, BITMAPV4HEADER* hdr);
 // Creates a monochrome bitmap header.
 void CreateMonochromeBitmapHeader(int width, int height, BITMAPINFOHEADER* hdr);
 
-// Modify the given hrgn by subtracting the given rectangles.
-void SubtractRectanglesFromRegion(HRGN hrgn,
-                                  const std::vector<gfx::Rect>& cutouts);
 
 }  // namespace gfx
 
-#endif // BASE_GFX_GDI_UTIL_H__
+#endif // BASE_GFX_BITMAP_HEADER_H__
+
