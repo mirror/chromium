@@ -32,6 +32,9 @@
 
 typedef const struct __CFArray * CFArrayRef;
 typedef const struct __SCDynamicStore * SCDynamicStoreRef;
+
+#elif PLATFORM(CHROMIUM)
+#include "NetworkStateNotifierPrivate.h"
 #endif
 
 #if PLATFORM(WIN)
@@ -69,10 +72,13 @@ private:
     void registerForAddressChange();
     HANDLE m_waitHandle;
     OVERLAPPED m_overlapped;
+
+#elif PLATFORM(CHROMIUM)
+    NetworkStateNotifierPrivate p;
 #endif
 };
 
-#if !PLATFORM(MAC) && !PLATFORM(WIN)
+#if !PLATFORM(MAC) && !PLATFORM(WIN) && !PLATFORM(CHROMIUM)
 inline NetworkStateNotifier::NetworkStateNotifier()
     : m_isOnLine(true)
 {    

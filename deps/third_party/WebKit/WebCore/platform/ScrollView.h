@@ -39,10 +39,6 @@
 typedef struct _GtkAdjustment GtkAdjustment;
 #endif
 
-#if PLATFORM(WIN)
-typedef struct HRGN__* HRGN;
-#endif
-
 #if PLATFORM(WX)
 class wxScrollWinEvent;
 #endif
@@ -158,7 +154,7 @@ namespace WebCore {
         void updateScrollbars(const IntSize& desiredOffset);
 #endif
 
-#if PLATFORM(WIN) || PLATFORM(QT)
+#if PLATFORM(WIN) || PLATFORM(QT) || PLATFORM(CHROMIUM)
     public:
         IntRect windowResizerRect();
         bool resizerOverlapsContent() const;
@@ -168,7 +164,7 @@ namespace WebCore {
         virtual void setParent(ScrollView*);
 #endif
 
-#if PLATFORM(WIN)
+#if PLATFORM(WIN) || PLATFORM(CHROMIUM)
     public:
         virtual void themeChanged();
 

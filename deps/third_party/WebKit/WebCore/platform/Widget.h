@@ -63,6 +63,10 @@ class wxWindow;
 typedef wxWindow* PlatformWidget;
 #endif
 
+#if PLATFORM(CHROMIUM)
+#include "PlatformWidget.h"
+#endif
+
 namespace WebCore {
 
     class Cursor;
@@ -131,7 +135,7 @@ namespace WebCore {
         void setContainingWindow(PlatformWidget);
         PlatformWidget containingWindow() const;
 
-#if PLATFORM(WIN)
+#if PLATFORM(WIN) || PLATFORM(CHROMIUM)
         virtual void setParent(ScrollView*);
         ScrollView* parent() const;
 

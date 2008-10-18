@@ -3048,7 +3048,8 @@ void FrameLoader::didReceiveServerRedirectForProvisionalLoadForFrame()
 
 void FrameLoader::finishedLoadingDocument(DocumentLoader* loader)
 {
-#if PLATFORM(WIN)
+    // FIXME: Platforms shouldn't differ here!
+#if PLATFORM(WIN) || PLATFORM(CHROMIUM)
     if (m_creatingInitialEmptyDocument)
         return;
 #endif

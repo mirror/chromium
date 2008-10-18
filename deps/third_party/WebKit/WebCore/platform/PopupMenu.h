@@ -56,6 +56,8 @@ typedef struct _GtkWidget GtkWidget;
 class wxMenu;
 #include <wx/defs.h>
 #include <wx/event.h>
+#elif PLATFORM(CHROMIUM)
+#include "PopupMenuPrivate.h"
 #endif
 
 namespace WebCore {
@@ -171,6 +173,8 @@ private:
 #elif PLATFORM(WX)
     wxMenu* m_menu;
     void OnMenuItemSelected(wxCommandEvent&);
+#elif PLATFORM(CHROMIUM)
+    PopupMenuPrivate p;
 #endif
 
 };

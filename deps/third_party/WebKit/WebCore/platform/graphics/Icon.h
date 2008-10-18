@@ -37,6 +37,8 @@ typedef struct HICON__* HICON;
 #include <QIcon>
 #elif PLATFORM(GTK)
 #include <gdk/gdk.h>
+#elif PLATFORM(CHROMIUM)
+#include "PlatformIcon.h"
 #endif
 
 namespace WebCore {
@@ -65,6 +67,9 @@ private:
 #elif PLATFORM(GTK)
     Icon();
     GdkPixbuf* m_icon;
+#elif PLATFORM(CHROMIUM)
+    Icon(const PlatformIcon&);
+    PlatformIcon m_icon;
 #endif
 };
 

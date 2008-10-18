@@ -111,7 +111,7 @@ SimpleFontData::SimpleFontData(const FontPlatformData& f, bool customFont, bool 
     m_adjustedSpaceWidth = m_treatAsFixedPitch ? ceilf(width) : roundf(width);
 
     // TODO(dglazkov): Investigate and implement across platforms, if needed
-#if PLATFORM(WIN)
+#if PLATFORM(WIN_OS)
     // ZERO WIDTH SPACES are explicitly mapped to share the glyph
     // with SPACE (with width adjusted to 0) during GlyphPage::fill
     // This is currently only implemented for Windows port. The FontData
