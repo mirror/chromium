@@ -92,6 +92,12 @@
 /* PLATFORM(WIN) */
 #if defined(BUILDING_CHROMIUM__)
 #define WTF_PLATFORM_CHROMIUM 1
+
+// FIXME: we should not be defining WTF_PLATFORM_MAC here!!
+#if PLATFORM(DARWIN)
+#define WTF_PLATFORM_MAC 1
+#endif
+
 #elif defined(BUILDING_QT__)
 #define WTF_PLATFORM_QT 1
 
