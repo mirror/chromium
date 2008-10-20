@@ -20,6 +20,7 @@
 #ifndef PluginArray_h
 #define PluginArray_h
 
+#include "AtomicString.h"
 #include "Plugin.h"
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefCounted.h>
@@ -50,6 +51,11 @@ namespace WebCore {
         PassRefPtr<Plugin> item(unsigned index);
         bool canGetItemsForName(const AtomicString& propertyName);
         PassRefPtr<Plugin> nameGetter(const AtomicString& propertyName);
+
+        PassRefPtr<Plugin> namedItem(const String& propertyName) { 
+          AtomicString s(propertyName);
+          return nameGetter(s); 
+        }
 
         void refresh(bool reload);
     private:

@@ -22,6 +22,8 @@ module window {
     interface [HasNameGetter, HasIndexGetter] PluginArray {
         readonly attribute unsigned long length;
         void refresh(in boolean reload);
+        Plugin item(in unsigned long index);
+        Plugin namedItem(in DOMString name);
     };
 
 }

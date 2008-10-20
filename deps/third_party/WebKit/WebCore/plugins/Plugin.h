@@ -20,6 +20,7 @@
 #ifndef Plugin_h
 #define Plugin_h
 
+#include "AtomicString.h"
 #include "MimeType.h"
 #include <wtf/RefPtr.h>
 #include <wtf/RefCounted.h>
@@ -54,6 +55,11 @@ namespace WebCore {
         PassRefPtr<MimeType> item(unsigned index);
         bool canGetItemsForName(const AtomicString& propertyName);
         PassRefPtr<MimeType> nameGetter(const AtomicString& propertyName);
+
+        PassRefPtr<MimeType> namedItem(const String& propertyName) { 
+          AtomicString s(propertyName);
+          return nameGetter(s); 
+        }
 
     private:
         Plugin(PluginData*, unsigned index);
