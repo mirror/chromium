@@ -77,7 +77,11 @@ class ResourceRequest;
 // TODO(ojan): Webkit's version of this inherits from JavaScriptDebugListener.
 // We need to do this once we start adding debugger hooks or when we do the next
 // full webkit merge, whichever comes first.
-class InspectorController : public RefCounted<InspectorController> {
+class InspectorController : public RefCounted<InspectorController>
+#if USE(JSC)
+                            , JavaScriptDebugListener
+#endif
+{
 public:
     int m_bug1228513_inspectorState;
 
