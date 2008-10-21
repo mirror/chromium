@@ -460,7 +460,7 @@ def GenerateDiff(files):
   return "".join(diff)
 
 
-def UploadCL(change_info, args):
+def UploadCL(change_info, args, no_try):
   if not change_info.FileList():
     print "Nothing to upload, changelist is empty."
     return
@@ -507,7 +507,8 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
   # Once uploaded to Rietveld, send it to the try server.
-  TryChange(change_info, [], True, patchset)
+  if not no_try:
+    TryChange(change_info, [], True, patchset)
 
 
 def TryChange(change_info, args, swallow_exception=False, patchset=None):
@@ -687,7 +688,8 @@ def main(argv=None):
   if command == "change":
     Change(change_info)
   elif command == "upload":
-    UploadCL(change_info, argv[3:])
+    no_try = "--no-try" in argv
+    UploadCL(change_info, argv[3:], no_try)
   elif command == "commit":
     Commit(change_info)
   elif command == "delete":
