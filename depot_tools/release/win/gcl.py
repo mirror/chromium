@@ -497,7 +497,8 @@ def UploadCL(change_info, args):
   # If we have a lot of files with long paths, then we won't be able to fit
   # the command to "svn diff".  Instead, we generate the diff manually for
   # each file and concatenate them before passing it to upload.py.
-  issue = upload.RealMain(upload_arg, GenerateDiff(change_info.FileList()))
+  issue, patchset = upload.RealMain(upload_arg,
+                                    GenerateDiff(change_info.FileList()))
   if issue and issue != change_info.issue:
     change_info.issue = issue
     change_info.Save()
@@ -506,10 +507,10 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
   # Once uploaded to Rietveld, send it to the try server.
-  TryChange(change_info, [], swallow_exception=True)
+  TryChange(change_info, [], True, patchset)
 
 
-def TryChange(change_info, args, swallow_exception=False):
+def TryChange(change_info, args, swallow_exception=False, patchset=None):
   """Create a diff file of change_info and send it to the try server."""
   try:
     import trychange
@@ -519,7 +520,7 @@ def TryChange(change_info, args, swallow_exception=False):
     ErrorExit("You need to install trychange.py to use the try server.")
 
   trychange.TryChange(args, change_info.name, change_info.FileList(),
-                      swallow_exception)
+                      swallow_exception, patchset)
 
 
 def Commit(change_info):

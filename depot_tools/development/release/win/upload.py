@@ -1321,7 +1321,7 @@ def RealMain(argv, data=None):
     vcs.UploadBaseFiles(issue, rpc_server, patches, patchset, options, files)
     if options.send_mail:
       rpc_server.Send("/" + issue + "/mail", payload="")
-  return issue
+  return issue, patchset
 
 
 def main():

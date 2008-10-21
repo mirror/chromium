@@ -79,7 +79,7 @@ def EscapeDot(name):
   return name.replace('.', '-')
 
 
-def _SendChange(try_name, diff, bot):
+def _SendChangeNFS(try_name, diff, bot):
   """Send a change to the try server."""
   script_locals = ExecuteTryServerScript()
   patch_name = EscapeDot(getpass.getuser()) + '.' + EscapeDot(try_name)
@@ -94,7 +94,8 @@ def _SendChange(try_name, diff, bot):
   return patch_name
 
 
-def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False):
+def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
+              patchset=None):
   # Parse argv
   parser = optparse.OptionParser(usage="%prog [options]")
   parser.add_option("-n", "--name", default=name,
@@ -103,6 +104,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False):
                     help="List of files to include in the try.")
   parser.add_option("-b", "--bot", default=None,
                     help="Force a specific build bot.")
+  parser.add_option("-p", "--patchset", default=patchset,
+                    help="Define the Rietveld's patchset id.")
   options, args = parser.parse_args(argv)
   if not options.file_list:
     print "Nothing to try, changelist is empty."
@@ -119,7 +122,7 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False):
     os.chdir(GetCheckoutRoot())
     diff = gcl.GenerateDiff([os.path.join(subpath, x)
                              for x in options.file_list])
-    patch_name = _SendChange(options.name, diff, options.bot)
+    patch_name = _SendChangeNFS(options.name, diff, options.bot)
     print 'Patch \'%s\' sent to try server.' % patch_name
   except ScriptNotFound, e:
     if swallow_exception:
