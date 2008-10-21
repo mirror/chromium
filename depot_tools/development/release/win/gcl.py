@@ -396,7 +396,7 @@ def Help():
   print ("      Add/remove files to a changelist.  Only scans the current "
          "directory and subdirectories.\n")
   print ("   gcl upload change_name [-r reviewer1@gmail.com,"
-         "reviewer2@gmail.com,...] [--send_mail]")
+         "reviewer2@gmail.com,...] [--send_mail] [--no-try]")
   print "      Uploads the changelist to the server for review.\n"
   print "   gcl commit change_name"
   print "      Commits the changelist to the repository.\n"
@@ -460,10 +460,14 @@ def GenerateDiff(files):
   return "".join(diff)
 
 
-def UploadCL(change_info, args, no_try):
+def UploadCL(change_info, args):
   if not change_info.FileList():
     print "Nothing to upload, changelist is empty."
     return
+
+  no_try = "--no-try" in args
+  if no_try:
+    args.remove("--no-try")
 
   upload_arg = ["upload.py", "-y"]
   upload_arg.append("--server=" + GetCodeReviewSetting("CODE_REVIEW_SERVER"))
@@ -688,8 +692,7 @@ def main(argv=None):
   if command == "change":
     Change(change_info)
   elif command == "upload":
-    no_try = "--no-try" in argv
-    UploadCL(change_info, argv[3:], no_try)
+    UploadCL(change_info, argv[3:])
   elif command == "commit":
     Commit(change_info)
   elif command == "delete":
