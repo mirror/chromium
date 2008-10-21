@@ -159,7 +159,7 @@ Frame::~Frame()
 #if USE(JSC)
     if (d->m_script.haveWindowShell())
         d->m_script.windowShell()->disconnectFrame();
-#else if USE(V8)
+#elif USE(V8)
     d->m_script.disconnectFrame();
 #endif
 
@@ -1068,7 +1068,7 @@ void Frame::clearDOMWindow()
     }
 #if USE(JSC)
     d->m_domWindow = 0;
-#else if USE(V8)
+#elif USE(V8)
     d->m_script.clearPluginObjects();
 #endif
 }
@@ -1698,7 +1698,7 @@ void Frame::pageDestroyed()
 #if USE(JSC)
     if (script()->haveWindowShell())
         script()->windowShell()->disconnectFrame();
-#else if USE(V8)
+#elif USE(V8)
     script()->disconnectFrame();
 #endif
 

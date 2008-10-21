@@ -813,7 +813,7 @@ String FrameLoader::executeScript(const String& url, int baseLine, const String&
     String result;
     if (getString(scriptResult, result))
       *succ = true;
-#else if USE(V8)
+#elif USE(V8)
     String result = m_frame->script()->evaluate(url, baseLine, script, 0, succ);
 #endif
 

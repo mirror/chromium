@@ -69,7 +69,7 @@ HTMLPlugInElement::~HTMLPlugInElement()
     if (m_NPObject) {
 #if USE(JSC)
         _NPN_ReleaseObject(m_NPObject);
-#else if USE(V8)
+#elif USE(V8)
         // NOTE: mbelshe - can the frame be inaccessible here?  If so,
         // do we leak objects?
         if (document() && document()->frame()) 
