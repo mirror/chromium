@@ -1761,7 +1761,7 @@ v8::Handle<v8::Value> V8Proxy::GenerateSecurityToken(
   // Ask the document's SecurityOrigin to generate a security token.
   // If two tokens are equal, then the SecurityOrigins canAccess each other.
   // If two tokens are not equal, then we have to call canAccess.
-  String token = document->securityOrigin()->securityToken();
+  String token = document->securityOrigin()->toHTTPOrigin();
 
   // An empty token means we always have to call canAccess.  In this case, we
   // use the global object as the security token to avoid calling canAccess
