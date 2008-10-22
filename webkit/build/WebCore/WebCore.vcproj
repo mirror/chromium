@@ -826,7 +826,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\pending\DNS.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\DNS.h"
 				>
 			</File>
 			<File
