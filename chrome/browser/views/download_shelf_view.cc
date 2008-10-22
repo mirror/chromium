@@ -212,9 +212,6 @@ void DownloadShelfView::Layout() {
   if (!GetViewContainer())
     return;
 
-  gfx::Size image_size = arrow_image_->GetPreferredSize();
-  gfx::Size close_button_size = close_button_->GetPreferredSize();
-  gfx::Size show_all_size = show_all_view_->GetPreferredSize();
   CSize image_size;
   arrow_image_->GetPreferredSize(&image_size);
   CSize close_button_size;
