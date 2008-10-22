@@ -1511,6 +1511,7 @@ my %typeCanFailConversion = (
     "HTMLOptionElement" => 0,
     "Node" => 0,
     "NodeFilter" => 0,
+    "MessagePort" => 0,
     "NSResolver" => 0,
     "Range" => 0,
     "SQLResultSet" => 0,
