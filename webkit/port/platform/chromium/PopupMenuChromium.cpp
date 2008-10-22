@@ -45,13 +45,11 @@
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformScreen.h"
-#include "PlatformScrollbar.h"
 #include "PlatformWheelEvent.h"
 #include "SystemTime.h"
 #include "RenderBlock.h"
 #include "RenderTheme.h"
 #include "Widget.h"
-#include "WidgetClientChromium.h"
 #pragma warning(pop)
 
 using namespace WTF;

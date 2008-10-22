@@ -1092,22 +1092,4 @@ void GraphicsContext::setImageInterpolationQuality(InterpolationQuality)
     notImplemented();
 }
 
-// Skia platform gradients and patterns are handled at draw time
-// Upstream is considering removing these methods anyway
-void GraphicsContext::setPlatformStrokePattern(Pattern* pattern)
-{
-}
-
-void GraphicsContext::setPlatformFillPattern(Pattern* pattern)
-{
-}
-
-void GraphicsContext::setPlatformStrokeGradient(Gradient*)
-{
-}
-
-void GraphicsContext::setPlatformFillGradient(Gradient*)
-{
-}
-
 }
