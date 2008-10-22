@@ -29,7 +29,7 @@
 #include "GlyphWidthMap.h"
 #include <wtf/OwnPtr.h>
 
-#if PLATFORM(MAC)
+#if USE(ATSUI)
 typedef struct OpaqueATSUStyle* ATSUStyle;
 #endif
 
@@ -101,7 +101,7 @@ public:
 
     const GlyphData& missingGlyphData() const { return m_missingGlyphData; }
 
-#if PLATFORM(MAC)
+#if USE(ATSUI)
     NSFont* getNSFont() const { return m_font.font(); }
     void checkShapesArabic() const;
     bool shapesArabic() const
@@ -179,7 +179,7 @@ public:
     float m_syntheticBoldOffset;
 #endif
 
-#if PLATFORM(MAC)
+#if USE(ATSUI)
     void* m_styleGroup;
     mutable ATSUStyle m_ATSUStyle;
     mutable bool m_ATSUStyleInitialized;

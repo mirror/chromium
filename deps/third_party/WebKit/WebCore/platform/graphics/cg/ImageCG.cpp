@@ -37,7 +37,7 @@
 #include "PlatformString.h"
 #include <ApplicationServices/ApplicationServices.h>
 
-#if PLATFORM(MAC)
+#if PLATFORM(MAC) || PLATFORM(CHROMIUM)
 #include "WebCoreSystemInterface.h"
 #endif
 

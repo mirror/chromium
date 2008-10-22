@@ -95,7 +95,13 @@
 
 // FIXME: we should not be defining WTF_PLATFORM_MAC here!!
 #if PLATFORM(DARWIN)
-#define WTF_PLATFORM_MAC 1
+//#define WTF_PLATFORM_MAC 1
+//XXXPINK -- need a better way to pick these up w/out PLATFORM(MAC)
+#define WTF_PLATFORM_CF 1
+#define WTF_USE_PTHREADS 1
+#define WTF_USE_ATSUI 1
+#define WTF_PLATFORM_CG 1
+#define WTF_PLATFORM_CI 1
 #endif
 
 #elif defined(BUILDING_QT__)
@@ -250,6 +256,7 @@
 #if PLATFORM(MAC)
 #define WTF_PLATFORM_CF 1
 #define WTF_USE_PTHREADS 1
+#define WTF_USE_ATSUI 1
 #if !defined(ENABLE_MAC_JAVA_BRIDGE)
 #define ENABLE_MAC_JAVA_BRIDGE 1
 #endif

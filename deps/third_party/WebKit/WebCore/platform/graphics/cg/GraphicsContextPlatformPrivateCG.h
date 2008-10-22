@@ -45,7 +45,7 @@ public:
         CGContextRelease(m_cgContext);
     }
 
-#if PLATFORM(MAC)
+#if PLATFORM(MAC) || PLATFORM(CHROMIUM)
     // These methods do nothing on Mac.
     void save() {}
     void restore() {}
