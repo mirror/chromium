@@ -354,14 +354,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\InspectorClient.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\InspectorController.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\page\Location.h"
 				>
 			</File>
@@ -534,6 +526,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\loader\CachedResourceHandle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\loader\CachedResourceHandle.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\loader\CachedScript.cpp"
 				>
 			</File>
@@ -627,6 +627,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\loader\ImageDocument.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\loader\ImageLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\loader\ImageLoader.h"
 				>
 			</File>
 			<File
@@ -761,10 +769,6 @@
 		<Filter
 			Name="platform"
 			>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Arena.cpp"
-				>
-			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Arena.h"
 				>
@@ -914,6 +918,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\HostWindow.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\KURL.cpp"
 				>
 			</File>
@@ -986,6 +994,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\PopupMenuStyle.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollBar.cpp"
 				>
 			</File>
@@ -994,7 +1006,27 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollTypes.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollbarClient.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollbarTheme.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollbarThemeComposite.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollbarThemeComposite.h"
+				>
+			</File>
+			<File
+				RelativePath="...\..\..\third_party\WebKit\WebCore\platform\ScrollTypes.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ScrollView.cpp"
 				>
 			</File>
 			<File
@@ -1059,10 +1091,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Widget.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\WidgetClient.h"
 				>
 			</File>
 			<Filter
@@ -1368,6 +1396,10 @@
 			<Filter
 				Name="win"
 				>
+ 				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Arena.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\win\FileSystemWin.cpp"
 					>
@@ -1470,6 +1502,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\StringTruncator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.h"
 					>
 				</File>
 				<File
@@ -1751,6 +1791,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\css\CSSNamespace.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\css\CSSNthSelector.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\css\CSSNthSelector.h"
 				>
 			</File>
 			<File
@@ -2486,6 +2534,30 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderScrollbar.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderScrollbar.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderScrollbarPart.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderScrollbarPart.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderScrollbarTheme.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderScrollbarTheme.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderSlider.cpp"
 				>
 			</File>
@@ -2793,11 +2865,111 @@
 				Name="style"
 				>
 				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\Animation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\Animation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\AnimationList.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\AnimationList.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\BindingURI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\BindingURI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\BorderData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\BorderValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\CollapsedBorderValue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\ContentData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\ContentData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\CounterContent.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\CounterDirectives.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\CounterDirectives.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\CursorData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\CursorList.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\DataRef.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\FillLayer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\FillLayer.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\IdentityTransformOperation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\KeyframeList.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\KeyframeList.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\MatrixTransformOperation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\MatrixTransformOperation.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\NinePieceImage.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\NinePieceImage.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\OutlineValue.h"
 					>
 				</File>
 				<File
@@ -2809,11 +2981,71 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\RenderStyleConstants.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\RotateTransformOperation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\RotateTransformOperation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\ScaleTransformOperation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\ScaleTransformOperation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\ShadowData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\ShadowData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\SkewTransformOperation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\SkewTransformOperation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleBackgroundData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleBackgroundData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleBoxData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleBoxData.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleCachedImage.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleCachedImage.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleFlexibleBoxData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleFlexibleBoxData.h"
 					>
 				</File>
 				<File
@@ -2826,6 +3058,114 @@
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleImage.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleInheritedData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleInheritedData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleMarqueeData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleMarqueeData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleMultiColData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleMultiColData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleRareInheritedData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleRareInheritedData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleRareNonInheritedData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleRareNonInheritedData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleReflection.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleSurroundData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleSurroundData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleTransformData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleTransformData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleVisualData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\StyleVisualData.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\SVGRenderStyle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\SVGRenderStyle.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\SVGRenderStyleDefs.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\SVGRenderStyleDefs.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\TimingFunction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\TransformOperation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\TransformOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\TransformOperations.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\TranslateTransformOperation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\style\TranslateTransformOperation.h"
 					>
 				</File>
 			</Filter>
@@ -2886,7 +3226,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\xml\XPathException.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\xml\XPathException.h"
 				>
 			</File>
 			<File
@@ -3326,11 +3666,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\MessageChannel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\MessageChannel.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\MessageEvent.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\MessageEvent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\MessagePort.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\MessagePort.h"
 				>
 			</File>
 			<File
@@ -3423,10 +3779,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\Notation.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\NSResolver.h"
 				>
 			</File>
 			<File
@@ -3627,6 +3979,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\XMLTokenizer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\XMLTokenizerLibxml2.cpp"
 				>
 			</File>
 		</Filter>
