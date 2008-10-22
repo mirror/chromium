@@ -21,17 +21,21 @@ if '__main__' == __name__:
 
   # Set the python path.
   parent_dir = os.path.abspath(os.path.pardir)
+  python_path = [
+	# Put anything that you want to keep private in this path.
+    os.path.join(parent_dir, 'scripts', 'private'),
+    os.path.join(parent_dir, 'scripts', 'common'),
+    os.path.join(parent_dir, 'scripts', 'slave'),
+    os.path.join(parent_dir, 'pylibs'),
+    os.path.join(parent_dir, 'symsrc'),
+  ]
+  os.environ['PYTHONPATH'] = os.pathsep.join(python_path)
 
-  sys.path.insert(0, os.path.join(parent_dir, 'scripts', 'common'))
-  sys.path.insert(0, os.path.join(parent_dir, 'scripts', 'private'))
-  sys.path.insert(0, os.path.join(parent_dir, 'scripts', 'slave'))
-  sys.path.insert(0, os.path.join(parent_dir, 'pylibs'))
-  sys.path.insert(0, os.path.join(parent_dir, 'symsrc'))
+  # Add these in from of the PATH too.
+  new_path = python_path
+  new_path.extend(sys.path)
+  sys.path = new_path
 
-  # Copy these paths into the PYTHONPATH env variable. If you add
-  # more path to sys.path, you need to change this line to reflect the
-  # change.
-  os.environ['PYTHONPATH'] = os.pathsep.join(sys.path[:4])
   os.environ['CHROME_HEADLESS'] = '1'
 
   # Platform-specific initialization.
