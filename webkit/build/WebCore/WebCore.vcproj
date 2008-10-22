@@ -826,10 +826,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\DNS.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\DragData.cpp"
 				>
 			</File>
@@ -962,7 +958,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\pending\PlatformKeyboardEvent.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\PlatformKeyboardEvent.h"
 				>
 			</File>
 			<File
@@ -1030,7 +1026,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\pending\StaticConstructors.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\StaticConstructors.h"
 				>
 			</File>
 			<File
@@ -1292,10 +1288,10 @@
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\Credential.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\pending\DNS.h"
-					>
-				</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\DNS.h"
+				>
+			</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\FormData.cpp"
 					>
@@ -3314,7 +3310,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\pending\KeyboardEvent.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\KeyboardEvent.h"
 				>
 			</File>
 			<File
@@ -5864,7 +5860,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\..\pending\SVGPaintServer.h"
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\SVGPaintServer.h"
 						>
 					</File>
 					<File
