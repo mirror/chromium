@@ -1487,6 +1487,34 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="Notifications"
+			>
+			<File
+				RelativePath=".\notifications\balloons.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\balloons.h"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\notification.h"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\notification_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\notification_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\user_activity.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="Importer"
 			>
 			<File
