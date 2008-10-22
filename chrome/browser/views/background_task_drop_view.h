@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VIEWS_BACKGROUND_TASK_DROP_VIEW_H__
-#define CHROME_BROWSER_VIEWS_BACKGROUND_TASK_DROP_VIEW_H__
+#ifndef CHROME_BROWSER_VIEWS_BACKGROUND_TASK_DROP_VIEW_H_
+#define CHROME_BROWSER_VIEWS_BACKGROUND_TASK_DROP_VIEW_H_
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 #include "base/basictypes.h"
 #include "base/gfx/size.h"
 #include "chrome/common/animation.h"
@@ -28,7 +28,7 @@ class SlideAnimation;
 class BackgroundTaskDropView : public ChromeViews::View,
                                public AnimationDelegate {
  public:
-  BackgroundTaskDropView(const std::wstring& site);
+  explicit BackgroundTaskDropView(const std::wstring& site);
   virtual ~BackgroundTaskDropView();
 
  private:
@@ -64,8 +64,8 @@ class BackgroundTaskDropView : public ChromeViews::View,
   SkBitmap* drop_box_inactive_left_;
   SkBitmap* drop_box_inactive_center_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(BackgroundTaskDropView);
+  DISALLOW_COPY_AND_ASSIGN(BackgroundTaskDropView);
 };
 
-#endif  // ENABLE_BACKGROUND_TASK == 1
-#endif  // CHROME_BROWSER_VIEWS_BACKGROUND_TASK_DROP_VIEW_H__
+#endif  // ENABLE_BACKGROUND_TASK
+#endif  // CHROME_BROWSER_VIEWS_BACKGROUND_TASK_DROP_VIEW_H_

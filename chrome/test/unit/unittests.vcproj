@@ -439,6 +439,18 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="TestNotifications"
+			>
+			<File
+				RelativePath="..\..\browser\notifications\notification_manager_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\browser\\notifications\notification_manager_test.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="TestPrefService"
 			>
 			<File

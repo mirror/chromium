@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 #include "chrome/browser/views/background_task_drop_view.h"
 
 #include "base/gfx/image_operations.h"
@@ -51,6 +51,11 @@ gfx::Rect GetSysTrayLocation() {
 }
 }
 
+// TODO(levin): Right now this assumes that the taskbar is at the bottom
+// of the screen.  This should be fixed to allow to all locations of
+// the taskbar.  Also, this has to be tested on Vista to ensure that it works
+// on that platform as well.
+
 BackgroundTaskDropView::BackgroundTaskDropView(const std::wstring& site)
     : container_(NULL) {
   hover_animation_.reset(new SlideAnimation(this));
@@ -88,7 +93,7 @@ BackgroundTaskDropView::BackgroundTaskDropView(const std::wstring& site)
                            width - 2 * kTextMargin, height);
   contents_size_.SetSize(width, height + 2 * kTextMargin);
 
-  // Create the only real window to allow this to be displayed.
+  // Create the only real window to enable everything to be displayed.
   container_ = new ChromeViews::HWNDViewContainer;
   container_->set_window_style(WS_POPUP);
   container_->set_window_ex_style(
@@ -185,4 +190,4 @@ void BackgroundTaskDropView::AnimationEnded(const Animation* animation) {
   SchedulePaint();
 }
 
-#endif  // ENABLE_BACKGROUND_TASK == 1
+#endif  // ENABLE_BACKGROUND_TASK

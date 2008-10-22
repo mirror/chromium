@@ -5,7 +5,7 @@
 #ifndef CHROME_VIEWS_SYSTRAY_ICON_H_
 #define CHROME_VIEWS_SYSTRAY_ICON_H_
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 #include <vector>
 #include <windows.h>
 #include "base/time.h"
@@ -75,5 +75,5 @@ class SystrayIcon : public CWindowImpl<SystrayIcon> {
 
 }  // namespace ChromeViews
 
-#endif  // ENABLE_BACKGROUND_TASK == 1
+#endif  // ENABLE_BACKGROUND_TASK
 #endif  // CHROME_VIEWS_SYSTRAY_ICON_H_

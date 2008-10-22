@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 #include "chrome/views/systray_icon.h"
 
 #include <ShellAPI.h>
@@ -216,4 +216,4 @@ LRESULT SystrayIcon::OnTaskbarCreated(UINT message,
 }
 
 }  // namespace ChromeViews
-#endif  // ENABLE_BACKGROUND_TASK == 1
+#endif  // ENABLE_BACKGROUND_TASK
