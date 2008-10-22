@@ -27,7 +27,13 @@
 #include "config.h"
 #include "ScriptController.h"
 
+#if PLATFORM(CHROMIUM)
+#include "webkit/glue/webplugin_impl.h"
+#include "c_instance.h"
+#include "npruntime.h"
+#else
 #include "PluginView.h"
+#endif
 #include "runtime.h"
 
 using namespace KJS::Bindings;
@@ -39,7 +45,24 @@ JSInstanceHandle ScriptController::createScriptInstanceForWidget(Widget* widget)
     if (!widget->isPluginView())
         return 0;
 
+#if PLATFORM(CHROMIUM)
+    WebPluginContainer* container = static_cast<WebPluginContainer*>(widget);
+    NPObject* object = container->GetPluginScriptableObject();
+    if (!object)
+        return 0;
+
+    // Register 'widget' with the frame so that we can teardown
+    // subobjects when the container goes away.
+    RefPtr<KJS::Bindings::RootObject> root = m_frame->script()->createRootObject(this);
+    RefPtr<KJS::Bindings::Instance> instance = KJS::Bindings::CInstance::create(object, root.release());
+
+    // GetPluginScriptableObject returns a retained NPObject.  
+    // The caller is expected to release it   
+    NPN_ReleaseObject(object);
+    return instance;
+#else
     return static_cast<PluginView*>(widget)->bindingInstance();
+#endif
 }
 
 } // namespace WebCore
