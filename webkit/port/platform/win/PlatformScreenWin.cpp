@@ -24,7 +24,7 @@
  */
 
 #include "config.h"
-#include "Screen.h"
+#include "PlatformScreen.h"
 
 #include "IntRect.h"
 #include "FloatRect.h"
@@ -44,7 +44,7 @@ static FloatRect ToFloatRect(const RECT& rect) {
 // Returns info for the default monitor if widget is NULL
 static MONITORINFOEX monitorInfoForWidget(Widget* widget)
 {
-    HWND window = widget ? widget->containingWindow() : 0;
+    HWND window = widget ? widget->root()->hostWindow()->platformWindow() : 0;
     return webkit_glue::GetMonitorInfoForWindow(window);
 }
 
