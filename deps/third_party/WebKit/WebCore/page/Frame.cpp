@@ -1066,9 +1066,8 @@ void Frame::clearDOMWindow()
         d->m_liveFormerWindows.add(d->m_domWindow.get());
         d->m_domWindow->clear();
     }
-#if USE(JSC)
     d->m_domWindow = 0;
-#elif USE(V8)
+#if USE(V8)
     d->m_script.clearPluginObjects();
 #endif
 }
@@ -1669,10 +1668,12 @@ DOMWindow* Frame::domWindow() const
     return d->m_domWindow.get();
 }
 
+
 void Frame::clearFormerDOMWindow(DOMWindow* window)
 {
     d->m_liveFormerWindows.remove(window);    
 }
+
 
 Page* Frame::page() const
 {

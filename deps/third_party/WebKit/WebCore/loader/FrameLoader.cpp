@@ -977,6 +977,11 @@ void FrameLoader::begin(const KURL& url, bool dispatch, SecurityOrigin* origin)
 
     updatePolicyBaseURL();
 
+#if USE(V8)
+    // Notify script controller that the new DOMWindow is ready
+    m_frame->script()->notifyDOMWindowReady();
+#endif
+
     Settings* settings = document->settings();
     document->docLoader()->setAutoLoadImages(settings && settings->loadsImagesAutomatically());
 
