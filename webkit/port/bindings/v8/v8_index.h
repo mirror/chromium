@@ -94,6 +94,13 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(HTMLULISTELEMENT, HTMLUListElement)                                 \
   V(HTMLELEMENT, HTMLElement)
 
+#if ENABLE(BACKGROUND_TASK)
+#define BACKGROUND_TASK_ELEMENT_TYPES(V)                                \
+  V(HTMLBBELEMENT, HTMLBbElement)
+#else
+#define BACKGROUND_TASK_ELEMENT_TYPES(V)
+#endif
+
 #if ENABLE(SVG_ANIMATION)
 #define SVG_ANIMATION_ELEMENT_TYPES(V)                                  \
   V(SVGANIMATECOLORELEMENT, SVGAnimateColorElement)                     \
@@ -360,6 +367,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #define WRAPPER_TYPES(V)                                \
     NODE_WRAPPER_TYPES(V)                               \
     HTMLELEMENT_TYPES(V)                                \
+    BACKGROUND_TASK_ELEMENT_TYPES(V)                    \
     NONNODE_WRAPPER_TYPES(V)                            \
     SVGNODE_WRAPPER_TYPES(V)                            \
     SVGELEMENT_TYPES(V)                                 \
@@ -368,6 +376,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #define WRAPPER_TYPES(V)                                \
     NODE_WRAPPER_TYPES(V)                               \
     HTMLELEMENT_TYPES(V)                                \
+    BACKGROUND_TASK_ELEMENT_TYPES(V)                    \
     NONNODE_WRAPPER_TYPES(V)
 #endif
 

@@ -187,6 +187,10 @@
 #include "V8XSLTProcessor.h"
 #include "V8RGBColor.h"
 
+#if ENABLE(BACKGROUND_TASK)
+#include "V8HTMLBbElement.h"
+#endif
+
 #if ENABLE(SVG_ANIMATION)
 #include "V8SVGAnimateColorElement.h"
 #include "V8SVGAnimateElement.h"

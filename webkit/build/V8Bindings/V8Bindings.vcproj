@@ -560,6 +560,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\V8HTMLBbElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8HTMLBbElement.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\V8HTMLBlockquoteElement.cpp"
 				>
 			</File>

@@ -2062,8 +2062,15 @@ bool V8Proxy::IsDOMEventWrapper(v8::Handle<v8::Value> value) {
   return V8ClassIndex::FromInt(type->Int32Value()) == V8ClassIndex::EVENT;
 }
 
+#if ENABLE(BACKGROUND_TASK)
+#define FOR_EACH_BACKGROUND_TASK_TAG(macro)      \
+    macro(bb, BB)
+#else
+#define FOR_EACH_BACKGROUND_TASK_TAG(macro)
+#endif
 
 #define FOR_EACH_TAG(macro)                      \
+  FOR_EACH_BACKGROUND_TASK_TAG(macro)            \
   macro(a, ANCHOR)                               \
   macro(applet, APPLET)                          \
   macro(area, AREA)                              \

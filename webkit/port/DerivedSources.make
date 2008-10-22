@@ -673,6 +673,7 @@ all : \
     V8HTMLAreaElement.h \
     V8HTMLBaseElement.h \
     V8HTMLBaseFontElement.h \
+    V8HTMLBbElement.h \
     V8HTMLBlockquoteElement.h \
     V8HTMLBodyElement.h \
     V8HTMLBRElement.h \
