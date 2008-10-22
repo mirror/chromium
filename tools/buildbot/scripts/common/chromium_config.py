@@ -83,10 +83,26 @@ class Master(object):
   # Magic step return code inidicating "warning(s)" rather than "error".
   retcode_warnings = -88
 
-  bot_password = 'change_me'
+  bot_password = None
 
   @staticmethod
   def GetBotPassword():
+    """Returns the slave password retrieved from a local file, or None.
+
+    The slave password is loaded from a local file next to this module file, if
+    it exists.  This is a function rather than a variable so it's not called
+    when it's not needed.
+
+    We can't both make this a property and also keep it static unless we use a
+    <metaclass, which is overkill for this usage.
+    """
+    # Note: could be overriden by chromium_config_private.
+    if not Master.bot_password:
+      # If the bot_password has been requested, the file is required to exist
+      # if not overriden in chromium_config_private.
+      bot_password_path = os.path.join(os.path.dirname(__file__),
+                                       '.bot_password')
+      Master.bot_password = open(bot_password_path).read().strip('\n\r')
     return Master.bot_password
 
 
