@@ -258,6 +258,8 @@ DECLARE_CALLBACK(ConsoleProfile)
 DECLARE_CALLBACK(ConsoleProfileEnd)
 DECLARE_CALLBACK(ConsoleTimeEnd)
 DECLARE_CALLBACK(ConsoleWarn)
+DECLARE_CALLBACK(ConsoleDirxml)
+DECLARE_CALLBACK(ConsoleTrace)
 
 // Implementation of Clipboard attributes and methods.
 DECLARE_PROPERTY_ACCESSOR_GETTER(ClipboardTypes)

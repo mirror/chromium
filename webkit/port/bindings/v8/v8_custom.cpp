@@ -2333,6 +2333,18 @@ CALLBACK_FUNC_DECL(ConsoleWarn) {
   return v8::Undefined();
 }
 
+CALLBACK_FUNC_DECL(ConsoleDirxml) {
+  INC_STATS(L"DOM.Console.dirxml()");
+  V8Proxy::SetDOMException(NOT_SUPPORTED_ERR);
+  return v8::Undefined();
+}
+
+CALLBACK_FUNC_DECL(ConsoleTrace) {
+  INC_STATS(L"DOM.Console.trace()");
+  V8Proxy::SetDOMException(NOT_SUPPORTED_ERR);
+  return v8::Undefined();
+}
+
 
 // Clipboard -------------------------------------------------------------------
 
@@ -3174,7 +3186,7 @@ ACCESSOR_SETTER(DOMWindowEventHandler) {
  
   if (value->IsNull()) {
     // Clear the event listener
-    doc->removeHTMLWindowEventListener(event_type);
+    doc->removeWindowEventListenerForType(event_type);
   } else {
     V8Proxy* proxy = V8Proxy::retrieve(imp->frame());
     if (!proxy)
