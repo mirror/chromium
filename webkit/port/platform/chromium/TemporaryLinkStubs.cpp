@@ -63,7 +63,6 @@ void scheduleDispatchFunctionsOnMainThread() { notImplemented(); }
 #include "DOMWindow.h"
 #include "EventLoop.h"
 #include "JSStorageCustom.h"
-#include "PluginView.h"
 #include "SQLResultSet.h"
 #include "SQLTransaction.h"
 #include "SQLValue.h"
@@ -86,7 +85,6 @@ bool JSStorage::deleteProperty(ExecState* exec, const Identifier& propertyName) 
 bool JSStorage::customPut(ExecState* exec, const Identifier& propertyName, JSValue* value, PutPropertySlot&) { notImplemented(); return false; }
 bool JSStorage::customGetPropertyNames(ExecState* exec, PropertyNameArray& propertyNames) { notImplemented(); return false; }
 
-void PluginView::setJavaScriptPaused(bool) { notImplemented(); }
 PassRefPtr<KJS::Bindings::Instance> PluginView::bindingInstance() { notImplemented(); return PassRefPtr<KJS::Bindings::Instance>(0); }
 
 SQLiteDatabase::~SQLiteDatabase() { notImplemented(); }

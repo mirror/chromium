@@ -601,10 +601,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\JSJavaScriptCallFrame.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\JSKeyboardEvent.h"
 				>
 			</File>
@@ -1441,26 +1437,6 @@
 			Name="page"
 			>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptCallFrame.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptCallFrame.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptDebugListener.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptDebugServer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptDebugServer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptProfile.cpp"
 				>
 			</File>
@@ -1883,10 +1859,6 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSInspectorCallbackWrapper.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSJavaScriptCallFrameCustom.cpp"
 			>
 		</File>
 		<File
