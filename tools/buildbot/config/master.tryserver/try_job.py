@@ -39,7 +39,7 @@ class TryJob(Try_Jobdir):
       os.mkdir(os.path.join(jobdir, 'new'))
       os.mkdir(os.path.join(jobdir, 'cur'))
       os.mkdir(os.path.join(jobdir, 'tmp'))
-      os.chmod(jobdir,
+      os.chmod(os.path.join(jobdir, 'new'),
                stat.S_IXUSR | stat.S_IXGRP | stat.S_IWUSR | stat.S_IWGRP |
                stat.S_IRUSR | stat.S_IRGRP)
     self.jobdir = jobdir
