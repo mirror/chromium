@@ -29,7 +29,7 @@
 #ifndef InspectorController_h
 #define InspectorController_h
 
-#if USE(JSC)
+#if ENABLE(JAVASCRIPT_DEBUGGER)
 #include "JavaScriptDebugListener.h"
 #endif
 
@@ -74,11 +74,8 @@ struct InspectorDatabaseResource;
 struct InspectorResource;
 class ResourceRequest;
 
-// TODO(ojan): Webkit's version of this inherits from JavaScriptDebugListener.
-// We need to do this once we start adding debugger hooks or when we do the next
-// full webkit merge, whichever comes first.
 class InspectorController : public RefCounted<InspectorController>
-#if USE(JSC)
+#if USE(JAVASCRIPT_DEBUGGER)
                             , JavaScriptDebugListener
 #endif
 {
@@ -188,10 +185,10 @@ public:
     void moveWindowBy(float x, float y) const;
     void closeWindow();
 
+#if ENABLE(JAVASCRIPT_DEBUGGER)
     void startDebuggingAndReloadInspectedPage();
     void stopDebugging();
 
-#if USE(JSC)
     bool debuggerAttached() const { return m_debuggerAttached; }
 
     JavaScriptCallFrame* currentCallFrame() const; 
@@ -286,12 +283,8 @@ private:
 #endif
 
 #if ENABLE(DATABASE)
-#if USE(JSC)
     JSObjectRef addDatabaseScriptResource(InspectorDatabaseResource*);
     void removeDatabaseScriptResource(InspectorDatabaseResource*);
-#elif USE(V8)
-    // TODO(ojan): implement when we turn on databases.
-#endif
 #endif
 
 #if USE(JSC)
@@ -303,12 +296,10 @@ private:
 
     void showWindow();
 
-#if USE(JSC)
+#if ENABLE(JAVASCRIPT_DEBUGGER)
     virtual void didParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int sourceID); 
     virtual void failedToParseSource(KJS::ExecState*, const KJS::SourceProvider& source, int startingLineNumber, const KJS::UString& sourceURL, int errorLine, const KJS::UString& errorMessage); 
     virtual void didPause();
-#elif USE(V8)
-    // TODO(ojan): implement when we start integrating in the debugger.
 #endif
 
     Page* m_inspectedPage;
@@ -336,8 +327,10 @@ private:
     v8::Persistent<v8::Object> m_scriptObject;
 #endif
     bool m_windowVisible;
+#if ENABLE(JAVASCRIPT_DEBUGGER)
     bool m_debuggerAttached;
     bool m_attachDebuggerWhenShown;
+#endif
     bool m_recordingUserInitiatedProfile;
     SpecialPanels m_showAfterVisible;
     unsigned long m_nextIdentifier;
