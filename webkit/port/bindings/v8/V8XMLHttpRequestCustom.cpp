@@ -107,9 +107,9 @@ ACCESSOR_GETTER(XMLHttpRequestOnabort) {
   INC_STATS(L"DOM.XMLHttpRequest.onabort._get");
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (imp->onAbortListener()) {
+  if (imp->onabort()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onAbortListener());
+        static_cast<V8XHREventListener*>(imp->onabort());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -121,15 +121,15 @@ ACCESSOR_SETTER(XMLHttpRequestOnabort) {
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
   if (value->IsNull()) {
-    if (imp->onAbortListener()) {
+    if (imp->onabort()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onAbortListener());
+          static_cast<V8XHREventListener*>(imp->onabort());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnAbortListener(0);
+    imp->setOnabort(0);
   } else {
     V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
     if (!proxy)
@@ -138,7 +138,7 @@ ACCESSOR_SETTER(XMLHttpRequestOnabort) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnAbortListener(listener);
+      imp->setOnabort(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -148,9 +148,9 @@ ACCESSOR_GETTER(XMLHttpRequestOnerror) {
   INC_STATS(L"DOM.XMLHttpRequest.onerror._get");
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (imp->onErrorListener()) {
+  if (imp->onerror()) {
     RefPtr<V8XHREventListener> listener =
-        static_cast<V8XHREventListener*>(imp->onErrorListener());
+        static_cast<V8XHREventListener*>(imp->onerror());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -162,15 +162,15 @@ ACCESSOR_SETTER(XMLHttpRequestOnerror) {
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
   if (value->IsNull()) {
-    if (imp->onErrorListener()) {
+    if (imp->onerror()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onErrorListener());
+          static_cast<V8XHREventListener*>(imp->onerror());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnErrorListener(0);
+    imp->setOnerror(0);
   } else {
     V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
     if (!proxy)
@@ -179,7 +179,7 @@ ACCESSOR_SETTER(XMLHttpRequestOnerror) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnErrorListener(listener);
+      imp->setOnerror(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -189,9 +189,9 @@ ACCESSOR_GETTER(XMLHttpRequestOnload) {
   INC_STATS(L"DOM.XMLHttpRequest.onload._get");
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (imp->onLoadListener()) {
+  if (imp->onload()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onLoadListener());
+        static_cast<V8XHREventListener*>(imp->onload());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -230,9 +230,9 @@ ACCESSOR_GETTER(XMLHttpRequestOnloadstart) {
   INC_STATS(L"DOM.XMLHttpRequest.onloadstart._get");
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (imp->onLoadStartListener()) {
+  if (imp->onloadstart()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onLoadStartListener());
+        static_cast<V8XHREventListener*>(imp->onloadstart());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -244,15 +244,15 @@ ACCESSOR_SETTER(XMLHttpRequestOnloadstart) {
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
   if (value->IsNull()) {
-    if (imp->onLoadStartListener()) {
+    if (imp->onloadstart()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onLoadStartListener());
+          static_cast<V8XHREventListener*>(imp->onloadstart());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnLoadStartListener(0);
+    imp->setOnloadstart(0);
   } else {
     V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
     if (!proxy)
@@ -261,7 +261,7 @@ ACCESSOR_SETTER(XMLHttpRequestOnloadstart) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnLoadStartListener(listener);
+      imp->setOnloadstart(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -271,9 +271,9 @@ ACCESSOR_GETTER(XMLHttpRequestOnprogress) {
   INC_STATS(L"DOM.XMLHttpRequest.onprogress._get");
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (imp->onProgressListener()) {
+  if (imp->onprogress()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onProgressListener());
+        static_cast<V8XHREventListener*>(imp->onprogress());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -285,15 +285,15 @@ ACCESSOR_SETTER(XMLHttpRequestOnprogress) {
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
   if (value->IsNull()) {
-    if (imp->onProgressListener()) {
+    if (imp->onprogress()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onProgressListener());
+          static_cast<V8XHREventListener*>(imp->onprogress());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnProgressListener(0);
+    imp->setOnprogress(0);
   } else {
     V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
     if (!proxy)
@@ -302,7 +302,7 @@ ACCESSOR_SETTER(XMLHttpRequestOnprogress) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnProgressListener(listener);
+      imp->setOnprogress(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -312,9 +312,9 @@ ACCESSOR_GETTER(XMLHttpRequestOnreadystatechange) {
   INC_STATS(L"DOM.XMLHttpRequest.onreadystatechange._get");
   XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
       V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (imp->onReadyStateChangeListener()) {
+  if (imp->onreadystatechange()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onReadyStateChangeListener());
+        static_cast<V8XHREventListener*>(imp->onreadystatechange());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -544,9 +544,9 @@ ACCESSOR_GETTER(XMLHttpRequestUploadOnabort) {
   INC_STATS(L"DOM.XMLHttpRequestUpload.onabort._get");
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
-  if (imp->onAbortListener()) {
+  if (imp->onabort()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onAbortListener());
+        static_cast<V8XHREventListener*>(imp->onabort());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -558,15 +558,15 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnabort) {
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
   if (value->IsNull()) {
-    if (imp->onAbortListener()) {
+    if (imp->onabort()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onAbortListener());
+          static_cast<V8XHREventListener*>(imp->onabort());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnAbortListener(0);
+    imp->setOnabort(0);
   } else {
     XMLHttpRequest* xmlhttprequest = imp->associatedXMLHttpRequest();
     V8Proxy* proxy = V8Proxy::retrieve(xmlhttprequest->document()->frame());
@@ -576,7 +576,7 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnabort) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnAbortListener(listener);
+      imp->setOnabort(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -586,9 +586,9 @@ ACCESSOR_GETTER(XMLHttpRequestUploadOnerror) {
   INC_STATS(L"DOM.XMLHttpRequestUpload.onerror._get");
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
-  if (imp->onErrorListener()) {
+  if (imp->onerror()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onErrorListener());
+        static_cast<V8XHREventListener*>(imp->onerror());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -600,15 +600,15 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnerror) {
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
   if (value->IsNull()) {
-    if (imp->onErrorListener()) {
+    if (imp->onerror()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onErrorListener());
+          static_cast<V8XHREventListener*>(imp->onerror());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnErrorListener(0);
+    imp->setOnerror(0);
   } else {
     XMLHttpRequest* xmlhttprequest = imp->associatedXMLHttpRequest();
     V8Proxy* proxy = V8Proxy::retrieve(xmlhttprequest->document()->frame());
@@ -618,7 +618,7 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnerror) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnErrorListener(listener);
+      imp->setOnerror(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -628,9 +628,9 @@ ACCESSOR_GETTER(XMLHttpRequestUploadOnload) {
   INC_STATS(L"DOM.XMLHttpRequestUpload.onload._get");
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
-  if (imp->onLoadListener()) {
+  if (imp->onload()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onLoadListener());
+        static_cast<V8XHREventListener*>(imp->onload());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -642,15 +642,15 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnload) {
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
   if (value->IsNull()) {
-    if (imp->onLoadListener()) {
+    if (imp->onload()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onLoadListener());
+          static_cast<V8XHREventListener*>(imp->onload());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnLoadListener(0);
+    imp->setOnload(0);
   } else {
     XMLHttpRequest* xmlhttprequest = imp->associatedXMLHttpRequest();
     V8Proxy* proxy = V8Proxy::retrieve(xmlhttprequest->document()->frame());
@@ -660,7 +660,7 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnload) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnLoadListener(listener);
+      imp->setOnload(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -670,9 +670,9 @@ ACCESSOR_GETTER(XMLHttpRequestUploadOnloadstart) {
   INC_STATS(L"DOM.XMLHttpRequestUpload.onloadstart._get");
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
-  if (imp->onLoadStartListener()) {
+  if (imp->onloadstart()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onLoadStartListener());
+        static_cast<V8XHREventListener*>(imp->onloadstart());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -684,15 +684,15 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnloadstart) {
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
   if (value->IsNull()) {
-    if (imp->onLoadStartListener()) {
+    if (imp->onloadstart()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onLoadStartListener());
+          static_cast<V8XHREventListener*>(imp->onloadstart());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnLoadStartListener(0);
+    imp->setOnloadstart(0);
   } else {
     XMLHttpRequest* xmlhttprequest = imp->associatedXMLHttpRequest();
     V8Proxy* proxy = V8Proxy::retrieve(xmlhttprequest->document()->frame());
@@ -702,7 +702,7 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnloadstart) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnLoadStartListener(listener);
+      imp->setOnloadstart(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
@@ -712,9 +712,9 @@ ACCESSOR_GETTER(XMLHttpRequestUploadOnprogress) {
   INC_STATS(L"DOM.XMLHttpRequestUpload.onprogress._get");
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
-  if (imp->onProgressListener()) {
+  if (imp->onprogress()) {
     V8XHREventListener* listener =
-        static_cast<V8XHREventListener*>(imp->onProgressListener());
+        static_cast<V8XHREventListener*>(imp->onprogress());
     v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
     return v8_listener;
   }
@@ -726,15 +726,15 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnprogress) {
   XMLHttpRequestUpload* imp = V8Proxy::ToNativeObject<XMLHttpRequestUpload>(
       V8ClassIndex::XMLHTTPREQUESTUPLOAD, info.Holder());
   if (value->IsNull()) {
-    if (imp->onProgressListener()) {
+    if (imp->onprogress()) {
       V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onProgressListener());
+          static_cast<V8XHREventListener*>(imp->onprogress());
       v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
       RemoveHiddenXHRDependency(info.Holder(), v8_listener);
     }
 
     // Clear the listener
-    imp->setOnProgressListener(0);
+    imp->setOnprogress(0);
   } else {
     XMLHttpRequest* xmlhttprequest = imp->associatedXMLHttpRequest();
     V8Proxy* proxy = V8Proxy::retrieve(xmlhttprequest->document()->frame());
@@ -744,7 +744,7 @@ ACCESSOR_SETTER(XMLHttpRequestUploadOnprogress) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateXHREventListener(value, false);
     if (listener) {
-      imp->setOnProgressListener(listener);
+      imp->setOnprogress(listener);
       CreateHiddenXHRDependency(info.Holder(), value);
     }
   }
