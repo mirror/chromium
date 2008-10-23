@@ -75,7 +75,7 @@ struct InspectorResource;
 class ResourceRequest;
 
 class InspectorController : public RefCounted<InspectorController>
-#if USE(JAVASCRIPT_DEBUGGER)
+#if ENABLE(JAVASCRIPT_DEBUGGER)
                             , JavaScriptDebugListener
 #endif
 {
