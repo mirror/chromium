@@ -34,6 +34,7 @@
 #include "GraphicsContextPlatformPrivateCG.h"
 #include "ImageBuffer.h"
 #include "KURL.h"
+#include "NotImplemented.h"
 #include "Path.h"
 #include "Pattern.h"
 #include <CoreGraphics/CGBitmapContext.h>
@@ -892,6 +893,7 @@ void GraphicsContext::drawLineForText(const IntPoint& point, int width, bool pri
 
 void GraphicsContext::setURLForRect(const KURL& link, const IntRect& destRect)
 {
+#if PLATFORM(CF) && !defined(USE_GOOGLE_URL_LIBRARY)
     if (paintingDisabled())
         return;
         
@@ -911,6 +913,9 @@ void GraphicsContext::setURLForRect(const KURL& link, const IntRect& destRect)
 
         CFRelease(urlRef);
     }
+#else
+    notImplemented();
+#endif
 }
 
 void GraphicsContext::setImageInterpolationQuality(InterpolationQuality mode)
