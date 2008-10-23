@@ -261,7 +261,6 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(NODEFILTER, NodeFilter)                                             \
   V(NODEITERATOR, NodeIterator)                                         \
   V(NODELIST, NodeList)                                                 \
-  V(NSRESOLVER, NSResolver)                                             \
   V(OVERFLOWEVENT, OverflowEvent)                                       \
   V(PLUGIN, Plugin)                                                     \
   V(PLUGINARRAY, PluginArray)                                           \

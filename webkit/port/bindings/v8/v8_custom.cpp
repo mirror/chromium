@@ -43,7 +43,6 @@
 #include "V8HTMLImageElement.h"
 #include "V8HTMLOptionElement.h"
 #include "V8Node.h"
-#include "V8NSResolver.h"
 #include "V8XPathNSResolver.h"
 #include "V8XPathResult.h"
 
@@ -85,7 +84,6 @@
 #include "HTMLOptionsCollection.h"
 #include "HTMLSelectElement.h"
 #include "History.h"
-#include "JSNSResolver.h"
 #include "JSXPathNSResolver.h"
 #include "KURL.h"
 #include "Location.h"
@@ -2499,69 +2497,6 @@ static bool AllowSettingFrameSrcToJavascriptUrl(HTMLFrameElementBase* frame,
 
 // Element ---------------------------------------------------------------------
 
-CALLBACK_FUNC_DECL(ElementQuerySelector) {
-  INC_STATS(L"DOM.Element.querySelector()");
-  Element* element = V8Proxy::DOMWrapperToNode<Element>(args.Holder());
-
-  ExceptionCode ec = 0;
-
-  String selectors = valueToStringWithNullOrUndefinedCheck(args[0]);
-
-  NSResolver* resolver = 0;
-  if (V8NSResolver::HasInstance(args[1])) {
-    resolver = V8Proxy::ToNativeObject<NSResolver>(
-      V8ClassIndex::NSRESOLVER, args[1]);
-  } else if  (args[1]->IsObject()) {
-    resolver = new JSNSResolver(args[1]->ToObject());
-  } else if (!args[1]->IsNull() && !args[1]->IsUndefined()) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Handle<v8::Value>();
-  }
-  OwnPtr<ExceptionContext> context(new ExceptionContext());
-  RefPtr<Element> result = WTF::getPtr(
-      element->querySelector(selectors, resolver, ec, context.get()));
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  if (context->hadException()) {
-    v8::ThrowException(context->exception());
-    return v8::Undefined();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::NODE, WTF::getPtr(result));
-}
-
-CALLBACK_FUNC_DECL(ElementQuerySelectorAll) {
-  INC_STATS(L"DOM.Element.querySelectorAll()");
-  Element* element = V8Proxy::DOMWrapperToNode<Element>(args.Holder());
-  ExceptionCode ec = 0;
-
-  String selectors = valueToStringWithNullOrUndefinedCheck(args[0]);
-
-  NSResolver* resolver = 0;
-  if (V8NSResolver::HasInstance(args[1])) {
-    resolver = V8Proxy::ToNativeObject<NSResolver>(
-      V8ClassIndex::NSRESOLVER, args[1]);
-  } else if (args[1]->IsObject()) {
-    resolver = new JSNSResolver(args[1]->ToObject());
-  } else if (!args[1]->IsNull() && !args[1]->IsUndefined()) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Handle<v8::Value>();
-  }
-  OwnPtr<ExceptionContext> context(new ExceptionContext());
-  RefPtr<NodeList> result = WTF::getPtr(
-      element->querySelectorAll(selectors, resolver, ec, context.get()));
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  if (context->hadException()) {
-    v8::ThrowException(context->exception());
-    return v8::Undefined();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, WTF::getPtr(result));
-}
-
 CALLBACK_FUNC_DECL(ElementSetAttribute) {
   INC_STATS(L"DOM.Element.setAttribute()");
   Element* imp = V8Proxy::DOMWrapperToNode<Element>(args.Holder());
@@ -2879,132 +2814,6 @@ CALLBACK_FUNC_DECL(DocumentEvaluate) {
   }
   return V8Proxy::ToV8Object(V8ClassIndex::XPATHRESULT,
                              static_cast<Peerable*>(result.get()));
-}
-
-CALLBACK_FUNC_DECL(DocumentQuerySelector) {
-  INC_STATS(L"DOM.Document.querySelector()");
-  Document* document = V8Proxy::DOMWrapperToNode<Document>(args.Holder());
-  ExceptionCode ec = 0;
-
-  String selectors = valueToStringWithNullOrUndefinedCheck(args[0]);
-
-  NSResolver* resolver = 0;
-  if (V8NSResolver::HasInstance(args[1])) {
-    resolver = V8Proxy::ToNativeObject<NSResolver>(
-      V8ClassIndex::NSRESOLVER, args[1]);
-  } else if (args[1]->IsObject()) {
-    resolver = new JSNSResolver(args[1]->ToObject());
-  } else if (!args[1]->IsNull() && !args[1]->IsUndefined()) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Handle<v8::Value>();
-  }
-  OwnPtr<ExceptionContext> context(new ExceptionContext());
-  RefPtr<Element> result = WTF::getPtr(
-      document->querySelector(selectors, resolver, ec, context.get()));
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  if (context->hadException()) {
-    v8::ThrowException(context->exception());
-    return v8::Undefined();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::NODE, WTF::getPtr(result));
-}
-
-CALLBACK_FUNC_DECL(DocumentQuerySelectorAll) {
-  INC_STATS(L"DOM.Document.querySelectorAll()");
-  Document* document = V8Proxy::DOMWrapperToNode<Document>(args.Holder());
-  ExceptionCode ec = 0;
-
-  String selectors = valueToStringWithNullOrUndefinedCheck(args[0]);
-
-  NSResolver* resolver = 0;
-  if (V8NSResolver::HasInstance(args[1])) {
-    resolver = V8Proxy::ToNativeObject<NSResolver>(
-      V8ClassIndex::NSRESOLVER, args[1]);
-  } else if (args[1]->IsObject()) {
-    resolver = new JSNSResolver(args[1]->ToObject());
-  } else if (!args[1]->IsNull() && !args[1]->IsUndefined()) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Handle<v8::Value>();
-  }
-  OwnPtr<ExceptionContext> context(new ExceptionContext());
-  RefPtr<NodeList> result = WTF::getPtr(
-      document->querySelectorAll(selectors, resolver, ec, context.get()));
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  if (context->hadException()) {
-    v8::ThrowException(context->exception());
-    return v8::Undefined();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, WTF::getPtr(result));
-}
-
-CALLBACK_FUNC_DECL(DocumentFragmentQuerySelector) {
-  INC_STATS(L"DOM.DocumentFragment.querySelector()");
-  DocumentFragment* fragment = 
-      V8Proxy::DOMWrapperToNode<DocumentFragment>(args.Holder());
-  ExceptionCode ec = 0;
-
-  String selectors = valueToStringWithNullOrUndefinedCheck(args[0]);
-
-  NSResolver* resolver = 0;
-  if (V8NSResolver::HasInstance(args[1])) {
-    resolver = V8Proxy::ToNativeObject<NSResolver>(
-      V8ClassIndex::NSRESOLVER, args[1]);
-  } else if (args[1]->IsObject()) {
-    resolver = new JSNSResolver(args[1]->ToObject());
-  } else if (!args[1]->IsNull() && !args[1]->IsUndefined()) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Handle<v8::Value>();
-  }
-  OwnPtr<ExceptionContext> context(new ExceptionContext());
-  RefPtr<Element> result = WTF::getPtr(
-      fragment->querySelector(selectors, resolver, ec, context.get()));
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  if (context->hadException()) {
-    v8::ThrowException(context->exception());
-    return v8::Undefined();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::NODE, WTF::getPtr(result));
-}
-
-CALLBACK_FUNC_DECL(DocumentFragmentQuerySelectorAll) {
-  INC_STATS(L"DOM.DocumentFragment.querySelectorAll()");
-  DocumentFragment* fragment = 
-      V8Proxy::DOMWrapperToNode<DocumentFragment>(args.Holder());
-  ExceptionCode ec = 0;
-
-  String selectors = valueToStringWithNullOrUndefinedCheck(args[0]);
-
-  NSResolver* resolver = 0;
-  if (V8NSResolver::HasInstance(args[1])) {
-    resolver = V8Proxy::ToNativeObject<NSResolver>(
-      V8ClassIndex::NSRESOLVER, args[1]);
-  } else if (args[1]->IsObject()) {
-    resolver = new JSNSResolver(args[1]->ToObject());
-  } else if (!args[1]->IsNull() && !args[1]->IsUndefined()) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Handle<v8::Value>();
-  }
-  OwnPtr<ExceptionContext> context(new ExceptionContext());
-  RefPtr<NodeList> result = WTF::getPtr(
-      fragment->querySelectorAll(selectors, resolver, ec, context.get()));
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  if (context->hadException()) {
-    v8::ThrowException(context->exception());
-    return v8::Undefined();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, WTF::getPtr(result));
 }
 
 // DOMWindow -------------------------------------------------------------------

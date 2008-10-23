@@ -141,7 +141,6 @@
 #include "V8NodeList.h"
 #include "V8NodeFilter.h"
 #include "V8Notation.h"
-#include "V8NSResolver.h"
 #include "V8ProcessingInstruction.h"
 #include "V8ProgressEvent.h"
 #include "V8StyleSheet.h"
