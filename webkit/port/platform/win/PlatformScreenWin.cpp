@@ -44,6 +44,7 @@ static FloatRect ToFloatRect(const RECT& rect) {
 // Returns info for the default monitor if widget is NULL
 static MONITORINFOEX monitorInfoForWidget(Widget* widget)
 {
+    // TODO(darin): We should not be dealing with native widgets here!
     HWND window = widget ? widget->root()->hostWindow()->platformWindow() : 0;
     return webkit_glue::GetMonitorInfoForWindow(window);
 }

@@ -12,10 +12,6 @@
 #include "base/gfx/size.h"
 #include "webkit/glue/webwidget.h"
 
-MSVC_PUSH_WARNING_LEVEL(0);
-#include "WidgetClientChromium.h"
-MSVC_POP_WARNING();
-
 namespace WebCore {
   class Frame;
   class FramelessScrollView;
@@ -31,7 +27,7 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebWidgetDelegate;
 
-class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientChromium {
+class WebWidgetImpl : public WebWidget {
  public:
   // WebWidget
   virtual void Close();
@@ -72,6 +68,8 @@ class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientChromium {
   WebWidgetImpl(WebWidgetDelegate* delegate);
   ~WebWidgetImpl();
 
+  // TODO(darin): Figure out what happens to these methods.
+#if 0
   // WebCore::WidgetClientWin
   virtual gfx::ViewHandle containingWindow();
   virtual void invalidateRect(const WebCore::IntRect& damaged_rect);
@@ -87,6 +85,7 @@ class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientChromium {
       WebCore::Frame* frame);
   virtual size_t getActiveTickmarkIndex(WebCore::Frame* frame);
   virtual bool isHidden();
+#endif
 
   WebWidgetDelegate* delegate_;
   gfx::Size size_;

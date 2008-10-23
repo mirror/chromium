@@ -45,16 +45,21 @@ WebWidgetImpl::WebWidgetImpl(WebWidgetDelegate* delegate)
 }
 
 WebWidgetImpl::~WebWidgetImpl() {
-  if (widget_) {
+  // TODO(darin): Do we still need something like this?
+#if 0
+  if (widget_)
     widget_->setClient(NULL);
-  }
+#endif
 }
 
 void WebWidgetImpl::Init(WebCore::Widget* widget, const gfx::Rect& bounds) {
   DCHECK(widget->isFrameView());
   widget_ = static_cast<FramelessScrollView*>(widget);
 
+  // TODO(darin): Do we still need something like this?
+#if 0
   widget_->setClient(this);
+#endif
 
   if (delegate_) {
     delegate_->SetWindowRect(this, bounds);
@@ -109,7 +114,7 @@ void WebWidgetImpl::Resize(const gfx::Size& new_size) {
 
   if (widget_) {
     IntRect new_geometry(0, 0, size_.width(), size_.height());
-    widget_->setFrameGeometry(new_geometry);
+    widget_->setFrameRect(new_geometry);
   }
 
   if (delegate_) {
@@ -192,25 +197,11 @@ bool WebWidgetImpl::ImeUpdateStatus(bool* enable_ime, const void** id,
   return false;
 }
 
-const SkBitmap* WebWidgetImpl::getPreloadedResourceBitmap(int resource_id) {
-  return NULL;
-}
-
-const WTF::Vector<RefPtr<WebCore::Range> >* WebWidgetImpl::getTickmarks(
-    WebCore::Frame* frame) {
-  return NULL;
-}
-
-size_t WebWidgetImpl::getActiveTickmarkIndex(WebCore::Frame* frame) {
-  return kNoTickmark;
-}
-
-void WebWidgetImpl::onScrollPositionChanged(Widget* widget) {
-}
-
 //-----------------------------------------------------------------------------
 // WebCore::WidgetClientWin
 
+// TODO(darin): Figure out what happens to these methods.
+#if 0
 gfx::ViewHandle WebWidgetImpl::containingWindow() {
   return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
 }
@@ -257,9 +248,26 @@ void WebWidgetImpl::setFocus() {
   delegate_->Focus(this);
 }
 
+const SkBitmap* WebWidgetImpl::getPreloadedResourceBitmap(int resource_id) {
+  return NULL;
+}
+
+void WebWidgetImpl::onScrollPositionChanged(Widget* widget) {
+}
+
+const WTF::Vector<RefPtr<WebCore::Range> >* WebWidgetImpl::getTickmarks(
+    WebCore::Frame* frame) {
+  return NULL;
+}
+
+size_t WebWidgetImpl::getActiveTickmarkIndex(WebCore::Frame* frame) {
+  return kNoTickmark;
+}
+
 bool WebWidgetImpl::isHidden() {
   if (!delegate_)
     return true;
 
   return delegate_->IsHidden();
 }
+#endif

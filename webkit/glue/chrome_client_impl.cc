@@ -356,23 +356,45 @@ WebCore::IntRect ChromeClientImpl::windowResizerRect() const {
   return rv;
 }
 
-void ChromeClientImpl::addToDirtyRegion(const WebCore::IntRect& damaged_rect) {
-  ASSERT_NOT_REACHED();
+void ChromeClientImpl::repaint(
+    const WebCore::IntRect& paint_rect, bool content_changed, bool immediate,
+    bool repaint_content_only) {
+  NOTIMPLEMENTED();
 }
 
-void ChromeClientImpl::scrollBackingStore(int dx, int dy,
-                                          const WebCore::IntRect& scroll_rect,
-                                          const WebCore::IntRect& clip_rect) {
-  ASSERT_NOT_REACHED();
+void ChromeClientImpl::scroll(
+    const WebCore::IntSize& scroll_delta, const WebCore::IntRect& scroll_rect,
+    const WebCore::IntRect& clip_rect) {
+  NOTIMPLEMENTED();
 }
 
-void ChromeClientImpl::updateBackingStore() {
-  ASSERT_NOT_REACHED();
+WebCore::IntPoint ChromeClientImpl::screenToWindow(
+    const WebCore::IntPoint&) const {
+  NOTIMPLEMENTED();
+  return WebCore::IntPoint();
 }
 
-void ChromeClientImpl::mouseDidMoveOverElement(const WebCore::HitTestResult& result,
-                                               unsigned modifierFlags) {
+WebCore::IntRect ChromeClientImpl::windowToScreen(
+    const WebCore::IntRect& rect) const {
+  WebCore::IntRect screen_rect(rect);
 
+  WebViewDelegate* d = webview_->delegate();
+  if (d) {
+    gfx::Rect window_rect;
+    d->GetWindowRect(webview_, &window_rect);
+    screen_rect.move(window_rect.x(), window_rect.y());
+  }
+
+  return screen_rect;
+}
+
+PlatformWidget ChromeClientImpl::platformWindow() const {
+  NOTIMPLEMENTED();
+  return NULL;
+}
+
+void ChromeClientImpl::mouseDidMoveOverElement(
+    const WebCore::HitTestResult& result, unsigned modifierFlags) {
   // Find out if the mouse is over a link, and if so, let our UI know... somehow
   WebViewDelegate* d = webview_->delegate();
   if (d) {
@@ -401,19 +423,6 @@ void ChromeClientImpl::runFileChooser(const WebCore::String& default_path,
   std::wstring suggestion = webkit_glue::StringToStdWString(default_path);
   WebFileChooserCallbackImpl* chooser = new WebFileChooserCallbackImpl(fileChooser);
   delegate->RunFileChooser(suggestion, chooser);
-}
-
-WebCore::IntRect ChromeClientImpl::windowToScreen(const WebCore::IntRect& rect) {
-  WebCore::IntRect screen_rect(rect);
-
-  WebViewDelegate* d = webview_->delegate();
-  if (d) {
-    gfx::Rect window_rect;
-    d->GetWindowRect(webview_, &window_rect);
-    screen_rect.move(window_rect.x(), window_rect.y());
-  }
-
-  return screen_rect;
 }
 
 void ChromeClientImpl::print(WebCore::Frame* frame) {

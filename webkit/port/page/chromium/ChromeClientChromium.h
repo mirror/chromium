@@ -24,19 +24,9 @@ namespace WebCore {
         virtual void runFileChooser(const String& defaultFileName,
                                     PassRefPtr<FileChooser> file_chooser) = 0;
 
-        // Given a rect in main frame coordinates, returns a new rect relative
-        // to the screen.
-        virtual IntRect windowToScreen(const IntRect& rect) = 0;
-
         // Notifies the client of a new popup widget.  The client should place
         // and size the widget with the given bounds, relative to the screen.
         virtual void popupOpened(Widget* widget, const IntRect& bounds) = 0;
-
-        // Notifies the client that the given popup widget has closed.
-        virtual void popupClosed(Widget* widget) = 0;
-
-        // Indicates that a new cursor should be shown.
-        virtual void setCursor(const Cursor& cursor) = 0;
     };
 }
 

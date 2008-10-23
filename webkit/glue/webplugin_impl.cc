@@ -117,17 +117,9 @@ NPObject* WebPluginContainer::GetPluginScriptableObject() {
   return impl_->GetPluginScriptableObject();
 }
 
-WebCore::IntRect WebPluginContainer::windowClipRect() const {
-  return impl_->windowClipRect();
-}
-
-void WebPluginContainer::geometryChanged() const {
-  impl_->geometryChanged();
-}
-
-void WebPluginContainer::setFrameGeometry(const WebCore::IntRect& rect) {
-  WebCore::Widget::setFrameGeometry(rect);
-  impl_->setFrameGeometry(rect);
+void WebPluginContainer::setFrameRect(const WebCore::IntRect& rect) {
+  WebCore::Widget::setFrameRect(rect);
+  impl_->setFrameRect(rect);
 }
 
 void WebPluginContainer::paint(WebCore::GraphicsContext* gc,
@@ -156,7 +148,7 @@ void WebPluginContainer::show() {
     WebCore::Widget::show();
     // This is to force an updategeometry call to the plugin process
     // where the plugin window can be hidden or shown.
-    geometryChanged();
+    frameRectsChanged();
   }
 }
 
@@ -168,7 +160,7 @@ void WebPluginContainer::hide() {
     WebCore::Widget::hide();
     // This is to force an updategeometry call to the plugin process
     // where the plugin window can be hidden or shown.
-    geometryChanged();
+    frameRectsChanged();
   }
 }
 
@@ -176,6 +168,8 @@ void WebPluginContainer::handleEvent(WebCore::Event* event) {
   impl_->handleEvent(event);
 }
 
+  // TODO(darin): Figure out if we need something like this now.
+#if 0
 void WebPluginContainer::attachToWindow() {
   Widget::attachToWindow();
   show();
@@ -185,6 +179,7 @@ void WebPluginContainer::detachFromWindow() {
   Widget::detachFromWindow();
   hide();
 }
+#endif
 
 void WebPluginContainer::windowCutoutRects(const WebCore::IntRect& bounds,
                                            WTF::Vector<WebCore::IntRect>*
@@ -584,11 +579,11 @@ void WebPluginImpl::geometryChanged() const {
 
   // This is a hack to tickle re-positioning of the plugin in the case where
   // our parent view was scrolled.
-  const_cast<WebPluginImpl*>(this)->widget_->setFrameGeometry(
-      widget_->frameGeometry());
+  const_cast<WebPluginImpl*>(this)->widget_->setFrameRect(
+      widget_->frameRect());
 }
 
-void WebPluginImpl::setFrameGeometry(const WebCore::IntRect& rect) {
+void WebPluginImpl::setFrameRect(const WebCore::IntRect& rect) {
   // Compute a new position and clip rect for ourselves relative to the
   // containing window.  We ask our delegate to reposition us accordingly.
 
@@ -649,7 +644,7 @@ void WebPluginImpl::paint(WebCore::GraphicsContext* gc,
     return;
 
   // Don't paint anything if the plugin doesn't intersect the damage rect.
-  if (!widget_->frameGeometry().intersects(damage_rect))
+  if (!widget_->frameRect().intersects(damage_rect))
     return;
 
   // A windowed plugin starts out by being invisible regardless of the style
@@ -667,7 +662,7 @@ void WebPluginImpl::paint(WebCore::GraphicsContext* gc,
       WebCore::IntRect clip_rect;
       std::vector<gfx::Rect> cutout_rects;
 
-      CalculateBounds(widget_->frameGeometry(), &window_rect, &clip_rect,
+      CalculateBounds(widget_->frameRect(), &window_rect, &clip_rect,
                       &cutout_rects);
 
       delegate_->UpdateGeometry(webkit_glue::FromIntRect(window_rect),
@@ -1077,7 +1072,7 @@ void WebPluginImpl::CalculateBounds(const WebCore::IntRect& frame_rect,
       WebCore::IntRect(view->contentsToWindow(frame_rect.location()),
                                               frame_rect.size());
   // Calculate a clip-rect so that we don't overlap the scrollbars, etc.
-  *clip_rect = widget_->windowClipRect();
+  *clip_rect = windowClipRect();
   clip_rect->move(-window_rect->x(), -window_rect->y());
 
   cutout_rects->clear();

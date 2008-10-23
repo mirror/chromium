@@ -70,6 +70,8 @@ static const TimeStamp kTypeAheadTimeoutMs = 1000;
 
 class PopupListBox;
 
+// TODO(darin): Our FramelessScrollView classes need to implement HostWindow!
+
 // This class holds a PopupListBox.  Its sole purpose is to be able to draw
 // a border around its child.  All its paint/event handling is just forwarded
 // to the child listBox (with the appropriate transforms).
@@ -377,10 +379,15 @@ void PopupContainer::hidePopup()
     m_listBox->disconnectClient();
     removeChild(m_listBox.get());
 
+    // TODO(darin): frame() returns null here, so we cannot rely on communicating
+    // back to the WebWidget via the ChromeClient.  We probably want to use the
+    // HostWindow or PlatformWidget to communicate this.
+#if 0
     ChromeClientChromium* chromeClient = static_cast<ChromeClientChromium*>(
         frame()->page()->chrome()->client());
     if (chromeClient)
         chromeClient->popupClosed(this);
+#endif
 }
 
 void PopupContainer::layout()
@@ -836,7 +843,7 @@ void PopupListBox::invalidateRow(int index)
     if (index < 0)
         return;
 
-    repaintContentRectangle(getRowBounds(index), false);
+    invalidateRect(getRowBounds(index));
 }
 
 void PopupListBox::scrollToRevealRow(int index)

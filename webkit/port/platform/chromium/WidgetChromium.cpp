@@ -27,25 +27,8 @@
 #include "Widget.h"
 
 #include "Assertions.h"
-#include "Chrome.h"
-#include "ChromeClientChromium.h"
-#include "ScrollView.h"
 
 namespace WebCore {
-
-// This sucks
-static ChromeClientChromium* chromeClientChromium(Widget* widget)
-{
-    ScrollView* root = widget->root();
-    if (root) {
-        HostWindow* host = root->hostWindow();
-        if (host) {
-            Chrome* chrome = static_cast<Chrome*>(host);
-            return static_cast<ChromeClientChromium*>(chrome->client());
-        }
-    }
-    return 0;
-}
 
 Widget::Widget(PlatformWidget widget)
 {
@@ -67,9 +50,7 @@ void Widget::hide()
 
 void Widget::setCursor(const Cursor& cursor)
 {
-    ChromeClientChromium* client = chromeClientChromium(this);
-    if (client)
-        client->setCursor(cursor);
+    // TODO(darin): Figure out what to do here!
 }
 
 void Widget::paint(GraphicsContext*, const IntRect&)

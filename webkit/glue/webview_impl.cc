@@ -686,13 +686,13 @@ void WebViewImpl::Layout() {
     // they need to be told that we are updating the screen.  The problem is
     // that the native widgets need to recalculate their clip region and not
     // overlap any of our non-native widgets.  To force the resizing, call
-    // setFrameGeometry().  This will be a quick operation for most frames, but
+    // setFrameRect().  This will be a quick operation for most frames, but
     // the NativeWindowWidgets will update a proper clipping region.
     FrameView* frameview = main_frame_->frameview();
     if (frameview)
-      frameview->setFrameGeometry(frameview->frameGeometry());
+      frameview->setFrameRect(frameview->frameRect());
 
-    // setFrameGeometry may have the side-effect of causing existing page
+    // setFrameRect may have the side-effect of causing existing page
     // layout to be invalidated, so layout needs to be called last.
 
     main_frame_->Layout();
@@ -1392,6 +1392,8 @@ void WebViewImpl::ImageResourceDownloadDone(ImageResourceFetcher* fetcher,
 //-----------------------------------------------------------------------------
 // WebCore::WidgetClientWin
 
+// TODO(darin): Figure out what to do with these methods.
+#if 0
 gfx::ViewHandle WebViewImpl::containingWindow() {
   return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
 }
@@ -1482,6 +1484,7 @@ bool WebViewImpl::isHidden() {
 
   return delegate_->IsHidden();
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // WebCore::BackForwardListClient
