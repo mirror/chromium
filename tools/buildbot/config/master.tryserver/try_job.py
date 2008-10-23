@@ -8,6 +8,7 @@
 
 import os
 import random
+import stat
 
 from buildbot import buildset
 from buildbot.changes.maildir import MaildirService, NoSuchMaildir
@@ -33,6 +34,14 @@ class TryJob(Try_Jobdir):
         if not builder in builderNames:
           builderNames.append(builder)
     TryBase.__init__(self, name, builderNames)
+    if not os.path.exists(jobdir):
+      os.mkdir(jobdir)
+      os.mkdir(os.path.join(jobdir, 'new'))
+      os.mkdir(os.path.join(jobdir, 'cur'))
+      os.mkdir(os.path.join(jobdir, 'tmp'))
+      os.chmod(jobdir,
+               stat.S_IXUSR | stat.S_IXGRP | stat.S_IWUSR | stat.S_IWGRP |
+               stat.S_IRUSR | stat.S_IRGRP)
     self.jobdir = jobdir
     self.watcher = PoolingMaildirService()
     self.watcher.setServiceParent(self)
