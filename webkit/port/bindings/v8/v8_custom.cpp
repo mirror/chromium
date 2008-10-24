@@ -79,6 +79,7 @@
 #include "HTMLFrameSetElement.h"
 #include "HTMLIFrameElement.h"
 #include "HTMLImageElement.h"
+#include "HTMLInputElement.h"
 #include "HTMLNames.h"
 #include "HTMLOptionElement.h"
 #include "HTMLOptionsCollection.h"
@@ -87,6 +88,7 @@
 #include "JSXPathNSResolver.h"
 #include "KURL.h"
 #include "Location.h"
+#include "MessagePort.h"
 #include "MouseEvent.h"
 #include "NodeIterator.h"
 #include "Page.h"
@@ -108,6 +110,7 @@
 
 #if ENABLE(SVG)
 #include "V8SVGPODTypeWrapper.h"
+#include "SVGElementInstance.h"
 #include "SVGException.h"
 #include "SVGPathSeg.h"
 #endif
@@ -863,18 +866,30 @@ CALLBACK_FUNC_DECL(DOMWindowPostMessage) {
   v8::TryCatch try_catch;
 
   String message = ToWebCoreString(args[0]);
-  String domain = ToWebCoreString(args[1]);
+  MessagePort* port = NULL;
+  String domain;
+
+  // This function has variable arguments and can either be:
+  //   postMessage(message, port, domain);
+  // or
+  //   postMessage(message, domain);
+  if (args.Length() == 2) {
+    port = V8Proxy::ToNativeObject<MessagePort>(
+        V8ClassIndex::MESSAGEPORT, args[1]);
+    domain = valueToStringWithNullOrUndefinedCheck(args[2]);
+  } else {
+    domain = valueToStringWithNullOrUndefinedCheck(args[1]);
+  }
 
   if (try_catch.HasCaught()) return v8::Undefined();
 
   ExceptionCode ec;
-  window->postMessage(message, domain, source, ec);
+  window->postMessage(message, port, domain, source, ec);
   if (ec)
     V8Proxy::SetDOMException(ec);
 
   return v8::Undefined();
 }
-
 
 static bool canShowModalDialogNow(const Frame* frame) {
   // A frame can out live its page. See bug 1219613.
@@ -3195,7 +3210,7 @@ ACCESSOR_SETTER(DOMWindowEventHandler) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateV8EventListener(value, true);
     if (listener) {
-      doc->setHTMLWindowEventListener(event_type, listener);
+      doc->setWindowEventListenerForType(event_type, listener);
     }
   }
 }
@@ -3219,7 +3234,7 @@ ACCESSOR_GETTER(DOMWindowEventHandler) {
   String key = ToWebCoreString(name);
   String event_type = EventNameFromAttributeName(key);
 
-  EventListener* listener = doc->getHTMLWindowEventListener(event_type);
+  EventListener* listener = doc->windowEventListenerForType(event_type);
   return V8Proxy::EventListenerToV8Object(listener);
 }
 
@@ -3247,10 +3262,10 @@ ACCESSOR_SETTER(ElementEventHandler) {
     RefPtr<EventListener> listener =
       proxy->FindOrCreateV8EventListener(value, true);
     if (listener) {
-      node->setHTMLEventListener(event_type, listener);
+      node->setEventListenerForType(event_type, listener);
     }
   } else {
-    node->removeHTMLEventListener(event_type);
+    node->removeEventListenerForType(event_type);
   }
 }
 
@@ -3264,7 +3279,7 @@ ACCESSOR_GETTER(ElementEventHandler) {
   ASSERT(key.startsWith("on"));
   String event_type = key.substring(2);
 
-  EventListener* listener = node->getHTMLEventListener(event_type);
+  EventListener* listener = node->eventListenerForType(event_type);
   return V8Proxy::EventListenerToV8Object(listener);
 }
 
@@ -3287,6 +3302,30 @@ ACCESSOR_SETTER(HTMLOptionsCollectionLength) {
   }
   if (!ec) imp->setLength(value->Uint32Value(), ec);
   V8Proxy::SetDOMException(ec);
+}
+
+ACCESSOR_GETTER(HTMLInputElementSelectionStart) {
+  INC_STATS(L"DOM.HTMLInputElement.selectionStart._get");
+  v8::Handle<v8::Object> holder = info.Holder();
+  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
+
+  if (!imp->canHaveSelection())
+    return v8::Undefined();
+
+  int v = imp->selectionStart();
+  return v8::Integer::New(v);
+}
+
+ACCESSOR_GETTER(HTMLInputElementSelectionEnd) {
+  INC_STATS(L"DOM.HTMLInputElement.selectionEnd._get");
+  v8::Handle<v8::Object> holder = info.Holder();
+  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
+
+  if (!imp->canHaveSelection())
+    return v8::Undefined();
+
+  int v = imp->selectionEnd();
+  return v8::Integer::New(v);
 }
 
 #if ENABLE(SVG)
@@ -3349,6 +3388,48 @@ CALLBACK_FUNC_DECL(SVGMatrixRotateFromVector) {
   Peerable* peer = static_cast<Peerable*>(
       new V8SVGStaticPODTypeWrapper<AffineTransform>(result));
   return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX, peer);
+}
+
+CALLBACK_FUNC_DECL(SVGElementInstanceAddEventListener) {
+  INC_STATS(L"DOM.SVGElementInstance.AddEventListener()");
+  SVGElementInstance* instance =
+      V8Proxy::DOMWrapperToNative<SVGElementInstance>(args.Holder());
+
+  V8Proxy* proxy = V8Proxy::retrieve(instance->associatedFrame());
+  if (!proxy)
+    return v8::Undefined();
+
+  RefPtr<EventListener> listener =
+    proxy->FindOrCreateV8EventListener(args[1], false);
+  if (listener) {
+    String type = ToWebCoreString(args[0]);
+    bool useCapture = args[2]->BooleanValue();
+    instance->addEventListener(type, listener, useCapture);
+  }
+  return v8::Undefined();
+}
+
+CALLBACK_FUNC_DECL(SVGElementInstanceRemoveEventListener) {
+  INC_STATS(L"DOM.SVGElementInstance.RemoveEventListener()");
+  SVGElementInstance* instance =
+      V8Proxy::DOMWrapperToNative<SVGElementInstance>(args.Holder());
+
+  V8Proxy* proxy = V8Proxy::retrieve(instance->associatedFrame());
+  // It is possbile that the owner document of the node is detached
+  // from the frame, return immediately in this case.
+  // See issue 878909
+  if (!proxy)
+    return v8::Undefined();
+
+  RefPtr<EventListener> listener =
+    proxy->FindV8EventListener(args[1], false);
+  if (listener) {
+    String type = ToWebCoreString(args[0]);
+    bool useCapture = args[2]->BooleanValue();
+    instance->removeEventListener(type, listener.get(), useCapture);
+  }
+
+  return v8::Undefined();
 }
 
 #endif  // ENABLE(SVG)

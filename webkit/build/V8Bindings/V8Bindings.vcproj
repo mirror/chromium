@@ -920,14 +920,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLSelectionInputElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLSelectionInputElement.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8HTMLStyleElement.cpp"
 				>
 			</File>

@@ -224,7 +224,6 @@ sub GetImplementationFileName
 {
     my $iface = shift;
     return "HTMLCollection.h" if $iface eq "UndetectableHTMLCollection";
-    return "HTMLInputElement.h" if $iface eq "HTMLSelectionInputElement";
     return "Event.h" if $iface eq "DOMTimeStamp";
     return "NamedAttrMap.h" if $iface eq "NamedNodeMap";
     return "NameNodeList.h" if $iface eq "NodeList";
@@ -240,7 +239,7 @@ sub GenerateHeader
 
     my $interfaceName = $dataNode->name;
     my $className = "V8$interfaceName";
-    my $implClassName = GetImplementationClassName($interfaceName);
+    my $implClassName = $interfaceName;
 
     # Copy contents of parent classes except the first parent or if it is
     # EventTarget.
@@ -830,7 +829,7 @@ sub GenerateImplementation
     my $dataNode = shift;
     my $interfaceName = $dataNode->name;
     my $className = "V8$interfaceName";
-    my $implClassName = GetImplementationClassName($interfaceName);
+    my $implClassName = $interfaceName;
     my $classIndex = uc($codeGenerator->StripModule($interfaceName));
 
     my $hasLegacyParent = $dataNode->extendedAttributes->{"LegacyParent"};
@@ -1374,18 +1373,7 @@ sub GetClassName
 {
   my $type = shift;
   return "HTMLCollection" if $type eq "UndetectableHTMLCollection";
-  return "HTMLInputElement" if $type eq "HTMLSelectionInputElement";
   return $type;
-}
-
-
-sub GetImplementationClassName
-{
-    my $type = shift;
-
-    return "HTMLInputElement" if $type eq "HTMLSelectionInputElement";
-
-    return $type;
 }
 
 
@@ -1482,9 +1470,6 @@ sub GetNativeType
     return "EventTargetNode*" if $type eq "EventTarget" and $isParameter;
 
     return "String" if $type eq "DOMUserData";  # temporary hack, TODO
-
-    # temporary hack
-    $type = GetImplementationClassName($type);
 
     # temporary hack
     return "RefPtr<NodeFilter>" if $type eq "NodeFilter";
@@ -1616,7 +1601,7 @@ sub JSValueToNative
     } else {
       # TODO: Temporary to avoid Window name conflict.
       my $classIndex = uc($type);
-      my $implClassName = GetImplementationClassName(${type});
+      my $implClassName = ${type};
 
       $implIncludes{"V8$type.h"} = 1;
       
@@ -1778,7 +1763,7 @@ sub NativeToJSValue
     }
 
     # V8 specific.
-    my $implClassName = GetImplementationClassName($type);
+    my $implClassName = $type;
     AddIncludesForType($type);
     # $implIncludes{GetImplementationFileName($type)} = 1 unless AvoidInclusionOfType($type);
 

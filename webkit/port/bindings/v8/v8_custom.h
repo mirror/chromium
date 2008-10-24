@@ -172,6 +172,10 @@ DECLARE_PROPERTY_ACCESSOR_SETTER(AttrValue)
 // Customized setter of HTMLOptionsCollection length
 DECLARE_PROPERTY_ACCESSOR_SETTER(HTMLOptionsCollectionLength)
 
+// Customized accessors for HTMLInputElement
+DECLARE_PROPERTY_ACCESSOR_GETTER(HTMLInputElementSelectionStart)
+DECLARE_PROPERTY_ACCESSOR_GETTER(HTMLInputElementSelectionEnd)
+
 DECLARE_NAMED_ACCESS_CHECK(Location)
 DECLARE_INDEXED_ACCESS_CHECK(History)
 
@@ -371,6 +375,8 @@ DECLARE_PROPERTY_ACCESSOR_GETTER(SVGLengthValue)
 DECLARE_CALLBACK(SVGLengthConvertToSpecifiedUnits)
 DECLARE_CALLBACK(SVGMatrixInverse)
 DECLARE_CALLBACK(SVGMatrixRotateFromVector)
+DECLARE_CALLBACK(SVGElementInstanceAddEventListener)
+DECLARE_CALLBACK(SVGElementInstanceRemoveEventListener)
 #endif
 
 #undef DECLARE_INDEXED_ACCESS_CHECK

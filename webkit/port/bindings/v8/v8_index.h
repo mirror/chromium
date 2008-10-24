@@ -61,7 +61,6 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(HTMLIFRAMEELEMENT, HTMLIFrameElement)                               \
   V(HTMLIMAGEELEMENT, HTMLImageElement)                                 \
   V(HTMLINPUTELEMENT, HTMLInputElement)                                 \
-  V(HTMLSELECTIONINPUTELEMENT, HTMLSelectionInputElement)               \
   V(HTMLISINDEXELEMENT, HTMLIsIndexElement)                             \
   V(HTMLLABELELEMENT, HTMLLabelElement)                                 \
   V(HTMLLEGENDELEMENT, HTMLLegendElement)                               \
@@ -252,6 +251,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(LOCATION, Location)                                                 \
   V(MEDIALIST, MediaList)                                               \
   V(MESSAGEEVENT, MessageEvent)                                         \
+  V(MESSAGEPORT, MessagePort)                                           \
   V(MIMETYPE, MimeType)                                                 \
   V(MIMETYPEARRAY, MimeTypeArray)                                       \
   V(MOUSEEVENT, MouseEvent)                                             \

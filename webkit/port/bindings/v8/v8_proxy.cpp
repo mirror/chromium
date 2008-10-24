@@ -1761,12 +1761,16 @@ v8::Handle<v8::Value> V8Proxy::GenerateSecurityToken(
   // Ask the document's SecurityOrigin to generate a security token.
   // If two tokens are equal, then the SecurityOrigins canAccess each other.
   // If two tokens are not equal, then we have to call canAccess.
-  String token = document->securityOrigin()->securityToken();
+  // Note: we can't use the HTTPOrigin if it was set from the DOM.
+  SecurityOrigin* origin = document->securityOrigin();
+  String token;
+  if (!origin->domainWasSetInDOM())
+    token = document->securityOrigin()->toString();
 
   // An empty token means we always have to call canAccess.  In this case, we
   // use the global object as the security token to avoid calling canAccess
   // when a script accesses its own objects.
-  if (token.isEmpty())
+  if (token.isEmpty() || token == "null")
     return context->Global();
 
   CString utf8_token = token.utf8();
@@ -2025,13 +2029,6 @@ v8::Local<v8::Object> V8Proxy::InstantiateV8Object(
   if (desc_type == V8ClassIndex::HTMLCOLLECTION &&
       static_cast<HTMLCollection*>(imp)->type() == HTMLCollection::DocAll) {
     desc_type = V8ClassIndex::UNDETECTABLEHTMLCOLLECTION;
-  }
-
-  // Special case for HTMLInputElements that support selection.
-  if (desc_type == V8ClassIndex::HTMLINPUTELEMENT) {
-    HTMLInputElement* element = static_cast<HTMLInputElement*>(imp);
-    if (element->canHaveSelection())
-      desc_type = V8ClassIndex::HTMLSELECTIONINPUTELEMENT;
   }
 
   v8::Persistent<v8::FunctionTemplate> desc = GetTemplate(desc_type);
