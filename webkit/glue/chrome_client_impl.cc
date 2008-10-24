@@ -414,17 +414,6 @@ void ChromeClientImpl::setToolTip(const WebCore::String& tooltip_text) {
   }
 }
 
-void ChromeClientImpl::runFileChooser(const WebCore::String& default_path,
-                                      PassRefPtr<WebCore::FileChooser> fileChooser) {
-  WebViewDelegate* delegate = webview_->delegate();
-  if (!delegate)
-    return;
-
-  std::wstring suggestion = webkit_glue::StringToStdWString(default_path);
-  WebFileChooserCallbackImpl* chooser = new WebFileChooserCallbackImpl(fileChooser);
-  delegate->RunFileChooser(suggestion, chooser);
-}
-
 void ChromeClientImpl::print(WebCore::Frame* frame) {
   WebViewDelegate* d = webview_->delegate();
   if (d) {
@@ -437,3 +426,18 @@ void ChromeClientImpl::exceededDatabaseQuota(WebCore::Frame* frame,
   // TODO(tc): If we enable the storage API, we need to implement this function.
 }
 
+void ChromeClientImpl::runFileChooser(const WebCore::String& default_path,
+                                      PassRefPtr<WebCore::FileChooser> fileChooser) {
+  WebViewDelegate* delegate = webview_->delegate();
+  if (!delegate)
+    return;
+
+  std::wstring suggestion = webkit_glue::StringToStdWString(default_path);
+  WebFileChooserCallbackImpl* chooser = new WebFileChooserCallbackImpl(fileChooser);
+  delegate->RunFileChooser(suggestion, chooser);
+}
+
+void ChromeClientImpl::popupOpened(
+    WebCore::Widget* widget, const WebCore::IntRect& bounds) {
+  NOTIMPLEMENTED();
+}

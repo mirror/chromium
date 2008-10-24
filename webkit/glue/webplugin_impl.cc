@@ -130,6 +130,10 @@ void WebPluginContainer::paint(WebCore::GraphicsContext* gc,
   impl_->paint(gc, damage_rect);
 }
 
+void WebPluginContainer::invalidateRect(const WebCore::IntRect& rect) {
+  NOTIMPLEMENTED();
+}
+
 void WebPluginContainer::setFocus() {
   WebCore::Widget::setFocus();
   impl_->setFocus();

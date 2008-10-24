@@ -98,6 +98,14 @@ String WebCore::AXImageMapText() {
 String WebCore::AXHeadingText() {
   return GetLocalizedString(IDS_AX_ROLE_HEADING);
 }
+String WebCore::AXDefinitionListTermText() {
+  NOTIMPLEMENTED();
+  return String("term");
+}
+String WebCore::AXDefinitionListDefinitionText() {
+  NOTIMPLEMENTED();
+  return String("definition");
+}
 #endif  // OS_WIN || OS_LINUX
 String WebCore::AXButtonActionVerb() {
   return GetLocalizedString(IDS_AX_BUTTON_ACTION_VERB);

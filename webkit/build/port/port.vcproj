@@ -787,6 +787,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\port\platform\chromium\ScrollbarThemeWin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\port\platform\chromium\ScrollbarThemeWin.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\port\platform\chromium\SearchPopupMenuChromium.cpp"
 					>
 				</File>
