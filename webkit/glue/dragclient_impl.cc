@@ -42,10 +42,12 @@ void DragClientImpl::willPerformDragDestinationAction(
 }
 
 void DragClientImpl::willPerformDragSourceAction(
-    WebCore::DragSourceAction,
+    WebCore::DragSourceAction drag_action,
     const WebCore::IntPoint&,
     WebCore::Clipboard*) {
-  // FIXME
+#ifdef ENABLE_BACKGROUND_TASK
+  is_bb_drag_ = (drag_action == WebCore::DragSourceActionBB);
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 WebCore::DragDestinationAction DragClientImpl::actionMaskForDrag(
@@ -77,6 +79,10 @@ void DragClientImpl::startDrag(WebCore::DragImageRef drag_image,
 #elif defined(OS_MACOSX) || defined(OS_LINUX)
   WebDropData drop_data;
 #endif
+
+#ifdef ENABLE_BACKGROUND_TASK
+  drop_data.is_bb_drag = is_bb_drag_;
+#endif  // ENABLE_BACKGROUND_TASK
 
   webview_->StartDragging(drop_data);
 }

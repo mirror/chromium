@@ -24,7 +24,12 @@ class WebViewImpl;
 
 class DragClientImpl : public WebCore::DragClient {
 public:
-  DragClientImpl(WebViewImpl* webview) : webview_(webview) {}
+#if ENABLE_BACKGROUND_TASK
+  DragClientImpl(WebViewImpl* webview) : webview_(webview), is_bb_drag_(false) {
+#else
+  DragClientImpl(WebViewImpl* webview) : webview_(webview) {
+#endif  // ENABLE_BACKGROUND_TASK
+  }
   virtual ~DragClientImpl() {}
 
   virtual void willPerformDragDestinationAction(WebCore::DragDestinationAction,
@@ -50,6 +55,9 @@ public:
 private:
   DISALLOW_EVIL_CONSTRUCTORS(DragClientImpl);
   WebViewImpl* webview_;
+#if ENABLE_BACKGROUND_TASK
+  bool is_bb_drag_;
+#endif  // ENABLE_BACKGROUND_TASK
 };
 
 #endif  // #ifndef WEBKIT_GLUE_DRAGCLIENT_IMPL_H__

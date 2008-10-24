@@ -16,6 +16,11 @@
 struct IDataObject;
 
 struct WebDropData {
+
+#ifdef ENABLE_BACKGROUND_TASK
+  WebDropData() : is_bb_drag(false), data_object(NULL) {}
+#endif  // ENABLE_BACKGROUND_TASK
+
   // User is dropping a link on the webview.
   GURL url;
   std::wstring url_title;  // The title associated with |url|.
@@ -35,6 +40,15 @@ struct WebDropData {
   // User is dragging data from the webview (e.g., an image).
   std::wstring file_description_filename;
   std::string file_contents;
+
+#ifdef ENABLE_BACKGROUND_TASK
+  // HTML5 defines a <BB> element that is a special "Browser Button". A browser
+  // implementation decides what happens when a user clicks it or drags it.
+  // If the user drags it, WebKit initializes 'url', 'url_title' and starts
+  // the drag operation. The WebDropData for such operation has
+  // is_bb_drag == true.
+  bool is_bb_drag;
+#endif  // ENABLE_BACKGROUND_TASK
 
   // A reference to the underlying IDataObject.  This is a Windows drag and
   // drop specific object.  This should only be used by the test shell.

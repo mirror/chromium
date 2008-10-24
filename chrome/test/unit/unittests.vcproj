@@ -1006,6 +1006,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="TestBbDragData"
+			>
+			<File
+				RelativePath="..\..\browser\background_task\bb_drag_data_unittest.cc"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

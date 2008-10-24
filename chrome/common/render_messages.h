@@ -1628,6 +1628,9 @@ struct ParamTraits<WebDropData> {
     WriteParam(m, p.text_html);
     WriteParam(m, p.file_description_filename);
     WriteParam(m, p.file_contents);
+#ifdef ENABLE_BACKGROUND_TASK
+    WriteParam(m, p.is_bb_drag);
+#endif  // ENABLE_BACKGROUND_TASK
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
@@ -1638,7 +1641,12 @@ struct ParamTraits<WebDropData> {
       ReadParam(m, iter, &p->cf_html) &&
       ReadParam(m, iter, &p->text_html) &&
       ReadParam(m, iter, &p->file_description_filename) &&
+#ifdef ENABLE_BACKGROUND_TASK
+      ReadParam(m, iter, &p->file_contents) &&
+      ReadParam(m, iter, &p->is_bb_drag);
+#else
       ReadParam(m, iter, &p->file_contents);
+#endif  // ENABLE_BACKGROUND_TASK
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"<WebDropData>");
