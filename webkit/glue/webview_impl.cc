@@ -1398,22 +1398,6 @@ gfx::ViewHandle WebViewImpl::containingWindow() {
   return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
 }
 
-void WebViewImpl::invalidateRect(const IntRect& damaged_rect) {
-  if (delegate_)
-    delegate_->DidInvalidateRect(this, gfx::Rect(damaged_rect.x(),
-                                                 damaged_rect.y(),
-                                                 damaged_rect.width(),
-                                                 damaged_rect.height()));
-}
-
-void WebViewImpl::scrollRect(int dx, int dy, const IntRect& clip_rect) {
-  if (delegate_)
-    delegate_->DidScrollRect(this, dx, dy, gfx::Rect(clip_rect.x(),
-                                                     clip_rect.y(),
-                                                     clip_rect.width(),
-                                                     clip_rect.height()));
-}
-
 void WebViewImpl::popupOpened(WebCore::Widget* widget,
                               const WebCore::IntRect& bounds) {
   if (!delegate_)

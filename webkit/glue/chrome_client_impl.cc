@@ -359,13 +359,20 @@ WebCore::IntRect ChromeClientImpl::windowResizerRect() const {
 void ChromeClientImpl::repaint(
     const WebCore::IntRect& paint_rect, bool content_changed, bool immediate,
     bool repaint_content_only) {
-  NOTIMPLEMENTED();
+  WebViewDelegate* d = webview_->delegate();
+  if (d)
+    d->DidInvalidateRect(webview_, webkit_glue::FromIntRect(paint_rect));
 }
 
 void ChromeClientImpl::scroll(
     const WebCore::IntSize& scroll_delta, const WebCore::IntRect& scroll_rect,
     const WebCore::IntRect& clip_rect) {
-  NOTIMPLEMENTED();
+  WebViewDelegate* d = webview_->delegate();
+  if (d) {
+    int dx = scroll_delta.width();
+    int dy = scroll_delta.height();
+    d->DidScrollRect(webview_, dx, dy, webkit_glue::FromIntRect(clip_rect));
+  }
 }
 
 WebCore::IntPoint ChromeClientImpl::screenToWindow(

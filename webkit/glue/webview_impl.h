@@ -190,8 +190,6 @@ class WebViewImpl : public WebView, public WebCore::BackForwardListClient {
 #if 0
   // WebCore::WidgetClientWin
   virtual gfx::ViewHandle containingWindow();
-  virtual void invalidateRect(const WebCore::IntRect& damaged_rect);
-  virtual void scrollRect(int dx, int dy, const WebCore::IntRect& clip_rect);
   virtual void popupOpened(WebCore::Widget* widget,
                            const WebCore::IntRect& bounds);
   virtual void popupClosed(WebCore::Widget* widget);
