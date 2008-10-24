@@ -16,11 +16,11 @@
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/throb_animation.h"
 #include "chrome/views/background.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/root_view.h"
 #include "skia/include/SkColor.h"
 
-namespace ChromeViews {
+namespace views {
 
 // A background object that paints the tab panel background which may be
 // rendered by the system visual styles system.
@@ -146,13 +146,13 @@ HWND TabbedPane::CreateNativeControl(HWND parent_container) {
   // we do that, then the HWND we create for |content_window_| below will
   // inherit the WS_EX_LAYOUTRTL property and this will result in the contents
   // being flipped, which is not what we want (because we handle mirroring in
-  // ChromeViews without the use of Windows' support for mirroring). Therefore,
+  // views without the use of Windows' support for mirroring). Therefore,
   // we initially create our HWND without the aforementioned property and we
   // explicitly set this property our child is created. This way, on RTL
   // locales, our tabs will be nicely rendered from right to left (by virtue of
   // Windows doing the right thing with the TabbedPane HWND) and each tab
   // contents will use an RTL layout correctly (by virtue of the mirroring
-  // infrastructure in ChromeViews doing the right thing with each View we put
+  // infrastructure in views doing the right thing with each View we put
   // in the tab).
   tab_control_ = ::CreateWindowEx(0,
                                   WC_TABCONTROL,
@@ -166,7 +166,7 @@ HWND TabbedPane::CreateNativeControl(HWND parent_container) {
   SendMessage(tab_control_, WM_SETFONT, reinterpret_cast<WPARAM>(font), FALSE);
 
   // Create the view container which is a child of the TabControl.
-  content_window_ = new HWNDViewContainer();
+  content_window_ = new ContainerWin();
   content_window_->Init(tab_control_, gfx::Rect(), false);
 
   // Explicitly setting the WS_EX_LAYOUTRTL property for the HWND (see above
@@ -249,5 +249,5 @@ void TabbedPane::ResizeContents(HWND tab_control) {
                               TRUE);
 }
 
-}
+}  // namespace views
 

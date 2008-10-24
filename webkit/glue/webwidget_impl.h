@@ -6,14 +6,15 @@
 #define WEBKIT_GLUE_WEBWIDGET_IMPL_H__
 
 #include "base/basictypes.h"
+#include "base/compiler_specific.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/point.h"
 #include "base/gfx/size.h"
 #include "webkit/glue/webwidget.h"
 
-#pragma warning(push, 0)
-#include "WidgetClientWin.h"
-#pragma warning(pop)
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "WidgetClientChromium.h"
+MSVC_POP_WARNING();
 
 namespace WebCore {
   class Frame;
@@ -30,7 +31,7 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebWidgetDelegate;
 
-class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientWin {
+class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientChromium {
  public:
   // WebWidget
   virtual void Close();
@@ -85,6 +86,7 @@ class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientWin {
   virtual const WTF::Vector<RefPtr<WebCore::Range> >* getTickmarks(
       WebCore::Frame* frame);
   virtual size_t getActiveTickmarkIndex(WebCore::Frame* frame);
+  virtual bool isHidden();
 
   WebWidgetDelegate* delegate_;
   gfx::Size size_;

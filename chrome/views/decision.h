@@ -11,7 +11,7 @@
 #include "chrome/views/native_button.h"
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 class Label;
 class Option;
@@ -36,13 +36,9 @@ class Decision : public View {
                     const std::wstring& description,
                     const std::wstring& action);
 
-  // Need to override this to call layout.
-  virtual void DidChangeBounds(const CRect& old_bounds,
-                               const CRect& new_bounds);
-
   // Overridden from View for custom layout.
   virtual void Layout();
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
  protected:
   // Override to call Layout().
@@ -60,7 +56,7 @@ class Decision : public View {
   std::vector<Option*> options_;
 };
 
-} // namespace ChromeViews
+}  // namespace views
 
 #endif // CHROME_VIEWS_DECISION_H__
 

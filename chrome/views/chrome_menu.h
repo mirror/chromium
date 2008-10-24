@@ -17,9 +17,9 @@
 #include "chrome/views/view.h"
 #include "skia/include/SkBitmap.h"
 
-namespace ChromeViews {
+namespace views {
 
-class HWNDViewContainer;
+class ContainerWin;
 class MenuController;
 class MenuItemView;
 class SubmenuView;
@@ -95,7 +95,7 @@ class MenuDelegate : Controller {
   }
 
   // Executes the specified command. mouse_event_flags give the flags of the
-  // mouse event that triggered this to be invoked (ChromeViews::MouseEvent
+  // mouse event that triggered this to be invoked (views::MouseEvent
   // flags). mouse_event_flags is 0 if this is triggered by a user gesture
   // other than a mouse event.
   virtual void ExecuteCommand(int id, int mouse_event_flags) {
@@ -358,7 +358,7 @@ class MenuItemView : public View {
   virtual void Paint(ChromeCanvas* canvas);
 
   // Returns the preferred size of this item.
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // Returns the object responsible for controlling showing the menu.
   MenuController* GetMenuController();
@@ -477,8 +477,8 @@ class MenuItemView : public View {
 // . Forwards the appropriate events to the MenuController. This allows the
 //   MenuController to update the selection as the user moves the mouse around.
 // . Renders the drop indicator during a drop operation.
-// . Shows and hides the window (an HWNDViewContainer) when the menu is
-//   shown on screen.
+// . Shows and hides the window (a ContainerWin) when the menu is shown on
+//   screen.
 //
 // SubmenuView is itself contained in a MenuScrollViewContainer.
 // MenuScrollViewContainer handles showing as much of the SubmenuView as the
@@ -500,11 +500,12 @@ class SubmenuView : public View {
   // Positions and sizes the child views. This tiles the views vertically,
   // giving each child the available width.
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // View method. Overriden to schedule a paint. We do this so that when
   // scrolling occurs, everything is repainted correctly.
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual void DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current);
 
   // Painting.
   void PaintChildren(ChromeCanvas* canvas);
@@ -571,7 +572,7 @@ class SubmenuView : public View {
   // Parent menu item.
   MenuItemView* parent_menu_item_;
 
-  // HWNDViewContainer subclass used to show the children.
+  // ContainerWin subclass used to show the children.
   MenuHost* host_;
 
   // If non-null, indicates a drop is in progress and drop_item is the item
@@ -757,13 +758,13 @@ class MenuController : public MessageLoopForUI::Dispatcher {
   // true if the supplied SubmenuView contains the location in terms of the
   // screen. If it does, part is set appropriately and true is returned.
   bool GetMenuPartByScreenCoordinateImpl(SubmenuView* menu,
-                                         const CPoint& screen_loc,
+                                         const gfx::Point& screen_loc,
                                          MenuPart* part);
 
   // Returns true if the SubmenuView contains the specified location. This does
   // NOT included the scroll buttons, only the submenu view.
   bool DoesSubmenuContainLocation(SubmenuView* submenu,
-                                  const CPoint& screen_loc);
+                                  const gfx::Point& screen_loc);
 
   // Opens/Closes the necessary menus such that state_ matches that of
   // pending_state_. This is invoked if submenus are not opened immediately,
@@ -938,7 +939,7 @@ class MenuController : public MessageLoopForUI::Dispatcher {
   DISALLOW_EVIL_CONSTRUCTORS(MenuController);
 };
 
-} // namespace
+}  // namespace views
 
 #endif  // CHROME_VIEWS_CHROME_MENU_H__
 

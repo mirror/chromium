@@ -5,6 +5,7 @@
 #include <string>
 #include <windows.h>
 #include <msi.h>
+#include <shlobj.h>
 
 #include "base/at_exit.h"
 #include "base/basictypes.h"
@@ -13,6 +14,7 @@
 #include "base/path_service.h"
 #include "base/registry.h"
 #include "base/string_util.h"
+#include "base/win_util.h"
 #include "chrome/installer/setup/setup.h"
 #include "chrome/installer/setup/setup_constants.h"
 #include "chrome/installer/setup/uninstall.h"
@@ -28,33 +30,9 @@
 #include "chrome/installer/util/work_item.h"
 #include "third_party/bspatch/mbspatch.h"
 
+#include "installer_util_strings.h"
+
 namespace {
-
-// Checks if the current system is running Windows XP or later. We are not
-// supporting Windows 2K for beta release.
-bool IsWindowsXPorLater() {
-  OSVERSIONINFOEX osvi;
-  ZeroMemory(&osvi, sizeof(OSVERSIONINFOEX));
-  osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-  GetVersionEx((OSVERSIONINFO *) &osvi);
-
-  // Windows versioning scheme doesn't seem very clear but here is what
-  // the code is checking as the minimum version required for Chrome:
-  // * Major > 5 is Vista or later so no further checks for Service Pack
-  // * Major = 5 && Minor > 1 is Windows Server 2003 so again no SP checks
-  // * Major = 5 && Minor = 1 is WinXP so check for SP1 or later
-  LOG(INFO) << "Windows Version: Major - " << osvi.dwMajorVersion
-            << " Minor - " << osvi.dwMinorVersion
-            << " Service Pack Major - " << osvi.wServicePackMajor
-            << " Service Pack Minor - " << osvi.wServicePackMinor;
-  if ((osvi.dwMajorVersion > 5) || // Vista or later
-      ((osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion > 1)) || // Win 2003
-      ((osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion == 1) &&
-       (osvi.wServicePackMajor >= 1))) { // WinXP with SP1
-    return true;
-  }
-  return false;
-}
 
 // Applies a binary patch to existing Chrome installer archive on the system.
 // Uses bspatch library.
@@ -128,7 +106,7 @@ DWORD UnPackArchive(const std::wstring& archive, bool system_install,
                    << "installed on the system.";
         return 1;
       }
-      if (int i = PatchArchiveFile(system_install, temp_path, 
+      if (int i = PatchArchiveFile(system_install, temp_path,
                                    uncompressed_archive, installed_version)) {
         LOG(ERROR) << "Binary patching failed with error " << i;
         return 1;
@@ -202,6 +180,9 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
   if (!file_util::CreateNewTempDirectory(std::wstring(L"chrome_"),
                                          &temp_path)) {
     LOG(ERROR) << "Could not create temporary path.";
+    InstallUtil::SetInstallerError(system_install,
+                                   installer_util::TEMP_DIR_FAILED,
+                                   IDS_INSTALL_TEMP_DIR_FAILED_BASE);
     return installer_util::TEMP_DIR_FAILED;
   }
   LOG(INFO) << "created path " << temp_path;
@@ -214,6 +195,8 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
   if (UnPackArchive(archive, system_install, installed_version,
                     temp_path, unpack_path, incremental_install)) {
     install_status = installer_util::UNCOMPRESSION_FAILED;
+    InstallUtil::SetInstallerError(system_install, install_status,
+                                   IDS_INSTALL_UNCOMPRESSION_FAILED_BASE);
   } else {
     LOG(INFO) << "unpacked to " << unpack_path;
     std::wstring src_path(unpack_path);
@@ -224,12 +207,16 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
     if (!installer_version.get()) {
       LOG(ERROR) << "Did not find any valid version in installer.";
       install_status = installer_util::INVALID_ARCHIVE;
+      InstallUtil::SetInstallerError(system_install, install_status,
+                                     IDS_INSTALL_INVALID_ARCHIVE_BASE);
     } else {
       LOG(INFO) << "version to install: " << installer_version->GetString();
       if (installed_version &&
           installed_version->IsHigherThan(installer_version.get())) {
         LOG(ERROR) << "Higher version is already installed.";
         install_status = installer_util::HIGHER_VERSION_EXISTS;
+        InstallUtil::SetInstallerError(system_install, install_status,
+                                       IDS_INSTALL_HIGHER_VERSION_BASE);
       } else {
         // We want to keep uncompressed archive (chrome.7z) that we get after
         // uncompressing and binary patching. Get the location for this file.
@@ -272,24 +259,27 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
 
   BrowserDistribution* dist = BrowserDistribution::GetDistribution();
   dist->UpdateDiffInstallStatus(system_install, incremental_install,
-                                 install_status);
+                                install_status);
   return install_status;
 }
 
 installer_util::InstallStatus UninstallChrome(const CommandLine& cmd_line,
                                               const installer::Version* version,
                                               bool system_install) {
-  bool remove_all = true;
-  if (cmd_line.HasSwitch(installer_util::switches::kDoNotRemoveSharedItems))
-    remove_all = false;
   LOG(INFO) << "Uninstalling Chome";
   if (!version) {
     LOG(ERROR) << "No Chrome installation found for uninstall.";
+    InstallUtil::SetInstallerError(system_install,
+                                   installer_util::CHROME_NOT_INSTALLED,
+                                   IDS_UNINSTALL_FAILED_BASE);
     return installer_util::CHROME_NOT_INSTALLED;
-  } else {
-    return installer_setup::UninstallChrome(cmd_line.program(), system_install,
-                                            *version, remove_all);
   }
+
+  bool remove_all = !cmd_line.HasSwitch(
+      installer_util::switches::kDoNotRemoveSharedItems);
+  bool force = cmd_line.HasSwitch(installer_util::switches::kForceUninstall);
+  return installer_setup::UninstallChrome(cmd_line.program(), system_install,
+                                          *version, remove_all, force);
 }
 }  // namespace
 
@@ -298,32 +288,44 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                     wchar_t* command_line, int show_command) {
   // The exit manager is in charge of calling the dtors of singletons.
   base::AtExitManager exit_manager;
-
   CommandLine parsed_command_line;
   installer::InitInstallerLogging(parsed_command_line);
+  bool system_install =
+      parsed_command_line.HasSwitch(installer_util::switches::kSystemLevel);
+  LOG(INFO) << "system install is " << system_install;
 
   // Check to make sure current system is WinXP or later. If not, log
   // error message and get out.
-  if (!IsWindowsXPorLater()) {
+  if (!InstallUtil::IsOSSupported()) {
     LOG(ERROR) << "Chrome only supports Windows XP or later.";
+    InstallUtil::SetInstallerError(system_install,
+                                   installer_util::OS_NOT_SUPPORTED,
+                                   IDS_INSTALL_OS_NOT_SUPPORTED_BASE);
     return installer_util::OS_NOT_SUPPORTED;
   }
 
   // Initialize COM for use later.
   if (CoInitializeEx(NULL, COINIT_APARTMENTTHREADED) != S_OK) {
     LOG(ERROR) << "COM initialization failed.";
+    InstallUtil::SetInstallerError(system_install,
+                                   installer_util::OS_ERROR,
+                                   IDS_INSTALL_OS_ERROR_BASE);
     return installer_util::OS_ERROR;
   }
 
-  bool system_install =
-      parsed_command_line.HasSwitch(installer_util::switches::kSystemInstall);
-  LOG(INFO) << "system install is " << system_install;
-
-  // Check the existing version installed.
+  // Check to avoid simultaneous per-user and per-machine installs.
   scoped_ptr<installer::Version>
-      installed_version(InstallUtil::GetChromeVersion(system_install));
-  if (installed_version.get()) {
-    LOG(INFO) << "version on the system: " << installed_version->GetString();
+      chrome_version(InstallUtil::GetChromeVersion(!system_install));
+  if (chrome_version.get()) {
+    LOG(ERROR) << "Already installed version " << chrome_version->GetString()
+               << " conflicts with the current install mode.";
+    installer_util::InstallStatus status = system_install ?
+        installer_util::USER_LEVEL_INSTALL_EXISTS :
+        installer_util::SYSTEM_LEVEL_INSTALL_EXISTS;
+    int str_id = system_install ? IDS_INSTALL_USER_LEVEL_EXISTS_BASE :
+                                  IDS_INSTALL_SYSTEM_LEVEL_EXISTS_BASE;
+    InstallUtil::SetInstallerError(system_install, status, str_id);
+    return status;
   }
 
   // If --register-chrome-browser option is specified, register all
@@ -336,6 +338,23 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
     std::wstring chrome_exe(parsed_command_line.GetSwitchValue(
         installer_util::switches::kRegisterChromeBrowser));
     return ShellUtil::AddChromeToSetAccessDefaults(chrome_exe, true);
+  }
+
+  if (system_install &&
+      win_util::GetWinVersion() == win_util::WINVERSION_VISTA &&
+      !IsUserAnAdmin()) {
+    std::wstring exe = parsed_command_line.program();
+    std::wstring params(command_line);
+    DWORD exit_code = installer_util::UNKNOWN_STATUS;
+    InstallUtil::ExecuteExeAsAdmin(exe, params, &exit_code);
+    return exit_code;
+  }
+
+  // Check the existing version installed.
+  scoped_ptr<installer::Version>
+      installed_version(InstallUtil::GetChromeVersion(system_install));
+  if (installed_version.get()) {
+    LOG(INFO) << "version on the system: " << installed_version->GetString();
   }
 
   installer_util::InstallStatus install_status = installer_util::UNKNOWN_STATUS;
@@ -355,4 +374,3 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
   BrowserDistribution* dist = BrowserDistribution::GetDistribution();
   return dist->GetInstallReturnCode(install_status);
 }
-

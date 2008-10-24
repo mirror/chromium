@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_RENDERER_RENDER_VIEW_H__
-#define CHROME_RENDERER_RENDER_VIEW_H__
+#ifndef CHROME_RENDERER_RENDER_VIEW_H_
+#define CHROME_RENDERER_RENDER_VIEW_H_
 
 #include <string>
 #include <vector>
@@ -14,6 +14,7 @@
 #include "base/gfx/rect.h"
 #include "base/timer.h"
 #include "base/values.h"
+#include "chrome/common/page_zoom.h"
 #include "chrome/common/resource_dispatcher.h"
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
@@ -50,6 +51,20 @@ namespace webkit_glue {
   struct FileUploadData;
 }
 
+// We need to prevent a page from trying to create infinite popups. It is not
+// as simple as keeping a count of the number of immediate children
+// popups. Having an html file that window.open()s itself would create
+// an unlimited chain of RenderViews who only have one RenderView child.
+//
+// Therefore, each new top level RenderView creates a new counter and shares it
+// with all its children and grandchildren popup RenderViews created with
+// CreateWebView() to have a sort of global limit for the page so no more than
+// kMaximumNumberOfPopups popups are created.
+//
+// This is a RefCounted holder of an int because I can't say
+// scoped_refptr<int>.
+typedef base::RefCountedData<int> SharedRenderViewCounter;
+
 //
 // RenderView is an object that manages a WebView object, and provides a
 // communication interface with an embedding application process
@@ -63,12 +78,15 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // the renderer and plugin processes know to pump window messages.  If this
   // is a constrained popup or as a new tab, opener_id is the routing ID of the
   // RenderView responsible for creating this RenderView (corresponding to the
-  // parent_hwnd).
-  static RenderView* Create(HWND parent_hwnd,
-                            HANDLE modal_dialog_event,
-                            int32 opener_id,
-                            const WebPreferences& webkit_prefs,
-                            int32 routing_id);
+  // parent_hwnd). |counter| is either a currently initialized counter, or NULL
+  // (in which case we treat this RenderView as a top level window).
+  static RenderView* Create(
+      HWND parent_hwnd,
+      HANDLE modal_dialog_event,
+      int32 opener_id,
+      const WebPreferences& webkit_prefs,
+      SharedRenderViewCounter* counter,
+      int32 routing_id);
 
   // Sets the "next page id" counter.
   static void SetNextPageID(int32 next_page_id);
@@ -292,6 +310,7 @@ class RenderView : public RenderWidget, public WebViewDelegate,
             HANDLE modal_dialog_event,
             int32 opener_id,
             const WebPreferences& webkit_prefs,
+            SharedRenderViewCounter* counter,
             int32 routing_id);
 
   void UpdateURL(WebFrame* frame);
@@ -372,7 +391,7 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   void OnShowJavaScriptConsole();
   void OnCancelDownload(int32 download_id);
   void OnFind(const FindInPageRequest& request);
-  void OnAlterTextSize(int size);
+  void OnZoom(int function);
   void OnSetPageEncoding(const std::wstring& encoding_name);
   void OnGetAllSavableResourceLinksForCurrentPage(const GURL& page_url);
   void OnGetSerializedHtmlDataForCurrentPageWithLocalLinks(
@@ -442,6 +461,10 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   void OnMessageFromExternalHost(const std::string& target,
                                  const std::string& message);
 
+  // Message that we should no longer be part of the current popup window
+  // grouping, and should form our own grouping.
+  void OnDisassociateFromPopupCount();
+
   // Switches the frame's CSS media type to "print" and calculate the number of
   // printed pages that are to be expected. |frame| will be used to calculate
   // the number of expected pages for this frame only.
@@ -484,8 +507,14 @@ class RenderView : public RenderWidget, public WebViewDelegate,
 
   virtual void TransitionToCommittedForNewPage();
 
+  virtual void DidAddHistoryItem();
+
   // A helper method used by WasOpenedByUserGesture.
   bool WasOpenedByUserGestureHelper() const;
+
+  void set_waiting_for_create_window_ack(bool wait) {
+    waiting_for_create_window_ack_ = wait;
+  }
 
   // Handles resource loads for this view.
   scoped_refptr<ResourceDispatcher> resource_dispatcher_;
@@ -616,11 +645,31 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // True if the page has any frame-level unload or beforeunload listeners.
   bool has_unload_listener_;
 
+  // The total number of unrequested popups that exist and can be followed back
+  // to a common opener. This count is shared among all RenderViews created
+  // with CreateWebView(). All popups are treated as unrequested until
+  // specifically instructed otherwise by the Browser process.
+  scoped_refptr<SharedRenderViewCounter> shared_popup_counter_;
+
+  // Whether this is a top level window (instead of a popup). Top level windows
+  // shouldn't count against their own |shared_popup_counter_|.
+  bool decrement_shared_popup_at_destruction_;
+
   // Handles accessibility requests into the renderer side, as well as
   // maintains the cache and other features of the accessibility tree.
   scoped_ptr<GlueAccessibility> glue_accessibility_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(RenderView);
+  // True if Greasemonkey is enabled in this process.
+  bool greasemonkey_enabled_;
+
+  // Resource message queue. Used to queue up resource IPCs if we need
+  // to wait for an ACK from the browser before proceeding.
+  std::queue<IPC::Message*> queued_resource_messages_;
+
+  // Set if we are waiting for an ack for ViewHostMsg_CreateWindow
+  bool waiting_for_create_window_ack_;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderView);
 };
 
-#endif  // CHROME_RENDERER_RENDER_VIEW_H__
+#endif  // CHROME_RENDERER_RENDER_VIEW_H_

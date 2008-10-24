@@ -326,8 +326,8 @@ void RenderViewHost::StopFinding(bool clear_selection) {
   Send(new ViewMsg_StopFinding(routing_id_, clear_selection));
 }
 
-void RenderViewHost::AlterTextSize(text_zoom::TextSize size) {
-  Send(new ViewMsg_AlterTextSize(routing_id_, size));
+void RenderViewHost::Zoom(PageZoom::Function function) {
+  Send(new ViewMsg_Zoom(routing_id_, function));
 }
 
 void RenderViewHost::SetPageEncoding(const std::wstring& encoding_name) {
@@ -599,7 +599,7 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
 
   bool msg_is_ok = true;
   IPC_BEGIN_MESSAGE_MAP_EX(RenderViewHost, msg, msg_is_ok)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateViewWithRoute, OnMsgCreateView)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWindowWithRoute, OnMsgCreateWindow)
     IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWidgetWithRoute, OnMsgCreateWidget)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowView, OnMsgShowView)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowWidget, OnMsgShowWidget)
@@ -701,24 +701,33 @@ void RenderViewHost::Shutdown() {
   RenderWidgetHost::Shutdown();
 }
 
-void RenderViewHost::OnMsgCreateView(int route_id, HANDLE modal_dialog_event) {
-  delegate_->CreateView(route_id, modal_dialog_event);
+void RenderViewHost::OnMsgCreateWindow(int route_id,
+                                       HANDLE modal_dialog_event) {
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->CreateNewWindow(route_id, modal_dialog_event);
 }
 
 void RenderViewHost::OnMsgCreateWidget(int route_id) {
-  delegate_->CreateWidget(route_id);
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->CreateNewWidget(route_id);
 }
 
 void RenderViewHost::OnMsgShowView(int route_id,
                                    WindowOpenDisposition disposition,
                                    const gfx::Rect& initial_pos,
                                    bool user_gesture) {
-  delegate_->ShowView(route_id, disposition, initial_pos, user_gesture);
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->ShowCreatedWindow(route_id, disposition, initial_pos, user_gesture);
 }
 
 void RenderViewHost::OnMsgShowWidget(int route_id,
                                      const gfx::Rect& initial_pos) {
-  delegate_->ShowWidget(route_id, initial_pos);
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->ShowCreatedWidget(route_id, initial_pos);
 }
 
 void RenderViewHost::OnMsgRunModal(IPC::Message* reply_msg) {
@@ -914,12 +923,11 @@ void RenderViewHost::OnMsgFindReply(int request_id,
                                     const gfx::Rect& selection_rect,
                                     int active_match_ordinal,
                                     bool final_update) {
-  RenderViewHostDelegate::FindInPage* delegate =
-      delegate_->GetFindInPageDelegate();
-  if (!delegate)
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (!view)
     return;
-  delegate->FindReply(request_id, number_of_matches, selection_rect,
-                      active_match_ordinal, final_update);
+  view->OnFindReply(request_id, number_of_matches, selection_rect,
+                        active_match_ordinal, final_update);
 
   // Send a notification to the renderer that we are ready to receive more
   // results from the scoping effort of the Find operation. The FindInPage
@@ -945,6 +953,10 @@ void RenderViewHost::OnMsgDidDownloadImage(
 
 void RenderViewHost::OnMsgContextMenu(
     const ViewHostMsg_ContextMenu_Params& params) {
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (!view)
+    return;
+
   // Validate the URLs in |params|.  If the renderer can't request the URLs
   // directly, don't show them in the context menu.
   ViewHostMsg_ContextMenu_Params validated_params(params);
@@ -956,7 +968,7 @@ void RenderViewHost::OnMsgContextMenu(
   FilterURL(policy, renderer_id, &validated_params.page_url);
   FilterURL(policy, renderer_id, &validated_params.frame_url);
 
-  delegate_->ShowContextMenu(validated_params);
+  view->ShowContextMenu(validated_params);
 }
 
 void RenderViewHost::OnMsgOpenURL(const GURL& url,
@@ -995,6 +1007,10 @@ void RenderViewHost::OnPersonalizationEvent(const std::string& message,
   Personalization::HandlePersonalizationEvent(this, message, content);
 }
 #endif
+
+void RenderViewHost::DisassociateFromPopupCount() {
+  Send(new ViewMsg_DisassociateFromPopupCount(routing_id_));
+}
 
 void RenderViewHost::OnMsgGoToEntryAtOffset(int offset) {
   delegate_->GoToEntryAtOffset(offset);
@@ -1045,15 +1061,21 @@ void RenderViewHost::OnMsgPasswordFormsSeen(
 
 void RenderViewHost::OnMsgStartDragging(
     const WebDropData& drop_data) {
-  delegate_->StartDragging(drop_data);
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->StartDragging(drop_data);
 }
 
 void RenderViewHost::OnUpdateDragCursor(bool is_drop_target) {
-  delegate_->UpdateDragCursor(is_drop_target);
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->UpdateDragCursor(is_drop_target);
 }
 
 void RenderViewHost::OnTakeFocus(bool reverse) {
-  delegate_->TakeFocus(reverse);
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->TakeFocus(reverse);
 }
 
 void RenderViewHost::OnMsgPageHasOSDD(int32 page_id, const GURL& doc_url,
@@ -1097,10 +1119,25 @@ void RenderViewHost::OnUserMetricsRecordAction(const std::wstring& action) {
 }
 
 void RenderViewHost::UnhandledInputEvent(const WebInputEvent& event) {
-  if ((event.type == WebInputEvent::KEY_DOWN) ||
-      (event.type == WebInputEvent::CHAR))
-    delegate_->HandleKeyboardEvent(
-        static_cast<const WebKeyboardEvent&>(event));
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view) {
+    // TODO(brettw) why do we have to filter these types of events here. Can't
+    // the renderer just send us the ones we care abount, or maybe the view
+    // should be able to decide which ones it wants or not?
+    if ((event.type == WebInputEvent::KEY_DOWN) ||
+        (event.type == WebInputEvent::CHAR)) {
+      view->HandleKeyboardEvent(
+          static_cast<const WebKeyboardEvent&>(event));
+    }
+  }
+}
+
+void RenderViewHost::ForwardKeyboardEvent(const WebKeyboardEvent& key_event) {
+  if (key_event.type == WebKeyboardEvent::CHAR &&
+      (key_event.key_code == VK_RETURN || key_event.key_code == VK_SPACE)) {
+    delegate_->OnEnterOrSpace();
+  }
+  RenderWidgetHost::ForwardKeyboardEvent(key_event);
 }
 
 void RenderViewHost::OnMissingPluginStatus(int status) {
@@ -1205,4 +1242,3 @@ void RenderViewHost::ForwardMessageFromExternalHost(
     const std::string& target, const std::string& message) {
   Send(new ViewMsg_HandleMessageFromExternalHost(routing_id_, target, message));
 }
-

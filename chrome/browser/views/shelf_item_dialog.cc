@@ -26,8 +26,8 @@
 #include "generated_resources.h"
 #include "net/base/net_util.h"
 
-using ChromeViews::ColumnSet;
-using ChromeViews::GridLayout;
+using views::ColumnSet;
+using views::GridLayout;
 
 // Preferred height of the table.
 static const int kTableWidth = 300;
@@ -45,7 +45,7 @@ static SkBitmap* default_fav_icon = NULL;
 // How long we query entry points for.
 static const int kPossibleURLTimeScope = 30;
 
-class PossibleURLModel : public ChromeViews::TableModel {
+class PossibleURLModel : public views::TableModel {
  public:
   PossibleURLModel() : profile_(NULL) {
     if (!default_fav_icon) {
@@ -77,7 +77,17 @@ class PossibleURLModel : public ChromeViews::TableModel {
 
   void OnHistoryQueryComplete(HistoryService::Handle h,
                               history::QueryResults* result) {
-    results_.Swap(result);
+    results_.resize(result->size());
+    std::wstring languages = profile_
+        ? profile_->GetPrefs()->GetString(prefs::kAcceptLanguages)
+        : std::wstring();
+    for (size_t i = 0; i < result->size(); ++i) {
+      results_[i].url = (*result)[i].url();
+      results_[i].index = i;
+      results_[i].display_url =
+          gfx::SortedDisplayURL((*result)[i].url(), languages);
+      results_[i].title = (*result)[i].title();
+    }
 
     // The old version of this code would filter out all but the most recent
     // visit to each host, plus all typed URLs and AUTO_BOOKMARK transitions. I
@@ -102,7 +112,7 @@ class PossibleURLModel : public ChromeViews::TableModel {
       NOTREACHED();
       return GURL::EmptyGURL();
     }
-    return results_[row].url();
+    return results_[row].url;
   }
 
   const std::wstring& GetTitle(int row) {
@@ -110,7 +120,7 @@ class PossibleURLModel : public ChromeViews::TableModel {
       NOTREACHED();
       return EmptyWString();
     }
-    return results_[row].title();
+    return results_[row].title;
   }
 
   virtual std::wstring GetText(int row, int col_id) {
@@ -124,9 +134,7 @@ class PossibleURLModel : public ChromeViews::TableModel {
 
     // TODO(brettw): this should probably pass the GURL up so the URL elider
     // can be used at a higher level when we know the width.
-    return gfx::ElideUrl(GetURL(row), ChromeFont(), 0, profile_ ?
-        profile_->GetPrefs()->GetString(prefs::kAcceptLanguages) :
-        std::wstring());
+    return results_[row].display_url.display_url();
   }
 
   virtual SkBitmap GetIcon(int row) {
@@ -135,9 +143,10 @@ class PossibleURLModel : public ChromeViews::TableModel {
       return *default_fav_icon;
     }
 
-    const history::URLResult& result = results_[row];
-    FavIconMap::iterator i = fav_icon_map_.find(result.id());
+    Result& result = results_[row];
+    FavIconMap::iterator i = fav_icon_map_.find(result.index);
     if (i != fav_icon_map_.end()) {
+      // We already requested the favicon, return it.
       if (!i->second.isNull())
         return i->second;
     } else if (profile_) {
@@ -146,12 +155,23 @@ class PossibleURLModel : public ChromeViews::TableModel {
       if (hs) {
         CancelableRequestProvider::Handle h =
             hs->GetFavIconForURL(
-                result.url(), &consumer_,
+                result.url, &consumer_,
                 NewCallback(this, &PossibleURLModel::OnFavIconAvailable));
-        consumer_.SetClientData(hs, h, result.id());
+        consumer_.SetClientData(hs, h, result.index);
+        // Add an entry to the map so that we don't attempt to request the
+        // favicon again.
+        fav_icon_map_[result.index] = SkBitmap();
       }
     }
     return *default_fav_icon;
+  }
+
+  virtual int CompareValues(int row1, int row2, int column_id) {
+    if (column_id == IDS_ASI_URL_COLUMN) {
+      return results_[row1].display_url.Compare(
+          results_[row2].display_url, GetCollator());
+    }
+    return TableModel::CompareValues(row1, row2, column_id);
   }
 
   virtual void OnFavIconAvailable(
@@ -163,47 +183,50 @@ class PossibleURLModel : public ChromeViews::TableModel {
     if (profile_) {
       HistoryService* hs =
           profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
-      history::URLID pid = consumer_.GetClientData(hs, h);
-      if (pid) {
-        SkBitmap bm;
-        if (fav_icon_available) {
-          // The decoder will leave our bitmap empty on error.
-          PNGDecoder::Decode(&data->data, &bm);
-        }
+      size_t index = consumer_.GetClientData(hs, h);
+      if (fav_icon_available) {
+        // The decoder will leave our bitmap empty on error.
+        PNGDecoder::Decode(&data->data, &(fav_icon_map_[index]));
 
-        // Store the bitmap. We store it even if it is empty to make sure we
-        // don't query it again.
-        fav_icon_map_[pid] = bm;
-        if (!bm.isNull() && observer_) {
-          for (size_t i = 0; i < results_.size(); ++i) {
-            if (results_[i].id() == pid)
-              observer_->OnItemsChanged(static_cast<int>(i), 1);
-          }
-        }
+        // Notify the observer.
+        if (!fav_icon_map_[index].isNull() && observer_)
+          observer_->OnItemsChanged(static_cast<int>(index), 1);
       }
     }
   }
 
-  virtual void SetObserver(ChromeViews::TableModelObserver* observer) {
+  virtual void SetObserver(views::TableModelObserver* observer) {
     observer_ = observer;
   }
 
  private:
+  // Contains the data needed to show a result.
+  struct Result {
+    Result() : index(0) {}
+
+    GURL url;
+    // Index of this Result in results_. This is used as the key into
+    // fav_icon_map_ to lookup the favicon for the url, as well as the index
+    // into results_ when the favicon is received.
+    size_t index;
+    gfx::SortedDisplayURL display_url;
+    std::wstring title;
+  };
+
   // The current profile.
   Profile* profile_;
 
   // Our observer.
-  ChromeViews::TableModelObserver* observer_;
+  views::TableModelObserver* observer_;
 
   // Our consumer for favicon requests.
-  CancelableRequestConsumerT<history::URLID, NULL> consumer_;
+  CancelableRequestConsumerT<size_t, NULL> consumer_;
 
-  // The results provided by the history service.
-  history::QueryResults results_;
+  // The results we're showing.
+  std::vector<Result> results_;
 
-  // Map URLID -> Favicon. If we queried for a favicon and there is none, that
-  // URL will have an entry, and the bitmap will be empty.
-  typedef std::map<history::URLID, SkBitmap> FavIconMap;
+  // Map Result::index -> Favicon.
+  typedef std::map<size_t, SkBitmap> FavIconMap;
   FavIconMap fav_icon_map_;
 
   DISALLOW_EVIL_CONSTRUCTORS(PossibleURLModel);
@@ -226,22 +249,19 @@ ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
 
   url_table_model_.reset(new PossibleURLModel());
 
-  ChromeViews::TableColumn col1(IDS_ASI_PAGE_COLUMN,
-                                ChromeViews::TableColumn::LEFT, -1,
-                                50);
-  ChromeViews::TableColumn col2(IDS_ASI_URL_COLUMN,
-                                ChromeViews::TableColumn::LEFT, -1,
-                                50);
-  std::vector<ChromeViews::TableColumn> cols;
+  views::TableColumn col1(IDS_ASI_PAGE_COLUMN, views::TableColumn::LEFT, -1,
+                          50);
+  col1.sortable = true;
+  views::TableColumn col2(IDS_ASI_URL_COLUMN, views::TableColumn::LEFT, -1,
+                          50);
+  col2.sortable = true;
+  std::vector<views::TableColumn> cols;
   cols.push_back(col1);
   cols.push_back(col2);
 
-  url_table_ = new ChromeViews::TableView(url_table_model_.get(),
-                                          cols,
-                                          ChromeViews::ICON_AND_TEXT,
-                                          true,
-                                          true,
-                                          true);
+  url_table_ = new views::TableView(url_table_model_.get(), cols,
+                                    views::ICON_AND_TEXT, true, true,
+                                    true);
   url_table_->SetObserver(this);
 
   // Yummy layout code.
@@ -262,12 +282,12 @@ ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
 
   if (show_title) {
     layout->StartRow(0, labels_column_set_id);
-    ChromeViews::Label* title_label = new ChromeViews::Label();
-    title_label->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+    views::Label* title_label = new views::Label();
+    title_label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
     title_label->SetText(l10n_util::GetString(IDS_ASI_TITLE_LABEL));
     layout->AddView(title_label);
 
-    title_field_ = new ChromeViews::TextField();
+    title_field_ = new views::TextField();
     title_field_->SetController(this);
     layout->AddView(title_field_);
 
@@ -277,20 +297,20 @@ ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
   }
 
   layout->StartRow(0, labels_column_set_id);
-  ChromeViews::Label* url_label = new ChromeViews::Label();
-  url_label->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  views::Label* url_label = new views::Label();
+  url_label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   url_label->SetText(l10n_util::GetString(IDS_ASI_URL));
   layout->AddView(url_label);
 
-  url_field_ = new ChromeViews::TextField();
+  url_field_ = new views::TextField();
   url_field_->SetController(this);
   layout->AddView(url_field_);
 
   layout->AddPaddingRow(0, kUnrelatedControlVerticalSpacing);
 
   layout->StartRow(0, single_column_view_set_id);
-  ChromeViews::Label* description_label = new ChromeViews::Label();
-  description_label->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  views::Label* description_label = new views::Label();
+  description_label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   description_label->SetText(l10n_util::GetString(IDS_ASI_DESCRIPTION));
   description_label->SetFont(
       description_label->GetFont().DeriveFont(0, ChromeFont::BOLD));
@@ -303,8 +323,8 @@ ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
 
   layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
 
-  AddAccelerator(ChromeViews::Accelerator(VK_ESCAPE, false, false, false));
-  AddAccelerator(ChromeViews::Accelerator(VK_RETURN, false, false, false));
+  AddAccelerator(views::Accelerator(VK_ESCAPE, false, false, false));
+  AddAccelerator(views::Accelerator(VK_RETURN, false, false, false));
 }
 
 ShelfItemDialog::~ShelfItemDialog() {
@@ -313,7 +333,7 @@ ShelfItemDialog::~ShelfItemDialog() {
 
 void ShelfItemDialog::Show(HWND parent) {
   DCHECK(!window());
-  ChromeViews::Window::CreateChromeWindow(parent, gfx::Rect(), this)->Show();
+  views::Window::CreateChromeWindow(parent, gfx::Rect(), this)->Show();
   if (title_field_) {
     title_field_->SetText(l10n_util::GetString(IDS_ASI_DEFAULT_TITLE));
     title_field_->SelectAll();
@@ -382,7 +402,7 @@ void ShelfItemDialog::InitiateTitleAutoFill(const GURL& url) {
       NewCallback(this, &ShelfItemDialog::OnURLInfoAvailable));
 }
 
-void ShelfItemDialog::ContentsChanged(ChromeViews::TextField* sender,
+void ShelfItemDialog::ContentsChanged(views::TextField* sender,
                                       const std::wstring& new_contents) {
   // If the user has edited the title field we no longer want to autofill it
   // so we reset the expected handle to an impossible value.
@@ -409,7 +429,7 @@ bool ShelfItemDialog::IsDialogButtonEnabled(DialogButton button) const {
   return true;
 }
 
-ChromeViews::View* ShelfItemDialog::GetContentsView() {
+views::View* ShelfItemDialog::GetContentsView() {
   return this;
 }
 
@@ -421,20 +441,19 @@ void ShelfItemDialog::PerformModelChange() {
   delegate_->AddBookmark(this, title, url);
 }
 
-void ShelfItemDialog::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size ShelfItemDialog::GetPreferredSize() {
+  return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_SHELFITEM_DIALOG_WIDTH_CHARS,
-      IDS_SHELFITEM_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_SHELFITEM_DIALOG_HEIGHT_LINES));
 }
 
 bool ShelfItemDialog::AcceleratorPressed(
-    const ChromeViews::Accelerator& accelerator) {
+    const views::Accelerator& accelerator) {
   if (accelerator.GetKeyCode() == VK_ESCAPE) {
     window()->Close();
   } else if (accelerator.GetKeyCode() == VK_RETURN) {
-    ChromeViews::FocusManager* fm = ChromeViews::FocusManager::GetFocusManager(
-        GetViewContainer()->GetHWND());
+    views::FocusManager* fm = views::FocusManager::GetFocusManager(
+        GetContainer()->GetHWND());
     if (fm->GetFocusedView() == url_table_) {
       // Return on table behaves like a double click.
       OnDoubleClick();
@@ -454,11 +473,6 @@ bool ShelfItemDialog::AcceleratorPressed(
     }
   }
   return true;
-}
-
-void ShelfItemDialog::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
-  Layout();
 }
 
 void ShelfItemDialog::OnSelectionChanged() {

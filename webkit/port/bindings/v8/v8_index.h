@@ -176,6 +176,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   SVG_FOREIGN_OBJECT_ELEMENT_TYPES(V)                                   \
   SVG_USE_ELEMENT_TYPES(V)                                              \
   V(SVGAELEMENT, SVGAElement)                                           \
+  V(SVGALTGLYPHELEMENT, SVGAltGlyphElement)                             \
   V(SVGCIRCLEELEMENT, SVGCircleElement)                                 \
   V(SVGCLIPPATHELEMENT, SVGClipPathElement)                             \
   V(SVGCURSORELEMENT, SVGCursorElement)                                 \
@@ -183,6 +184,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGDESCELEMENT, SVGDescElement)                                     \
   V(SVGELLIPSEELEMENT, SVGEllipseElement)                               \
   V(SVGGELEMENT, SVGGElement)                                           \
+  V(SVGGLYPHELEMENT, SVGGlyphElement)                                           \
   V(SVGGRADIENTELEMENT, SVGGradientElement)                             \
   V(SVGIMAGEELEMENT, SVGImageElement)                                   \
   V(SVGLINEARGRADIENTELEMENT, SVGLinearGradientElement)                 \
@@ -282,10 +284,16 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(TEXTMETRICS, TextMetrics)                                           \
   V(TREEWALKER, TreeWalker)                                             \
   V(UIEVENT, UIEvent)                                                   \
+  V(WEBKITANIMATIONEVENT, WebKitAnimationEvent)                         \
+  V(WEBKITCSSKEYFRAMERULE, WebKitCSSKeyframeRule)                       \
+  V(WEBKITCSSKEYFRAMESRULE, WebKitCSSKeyframesRule)                     \
+  V(WEBKITCSSTRANSFORMVALUE, WebKitCSSTransformValue)                   \
+  V(WEBKITTRANSITIONEVENT, WebKitTransitionEvent)                       \
   V(WHEELEVENT, WheelEvent)                                             \
   V(XMLHTTPREQUEST, XMLHttpRequest)                                     \
   V(XMLHTTPREQUESTUPLOAD, XMLHttpRequestUpload)                         \
   V(XMLHTTPREQUESTEXCEPTION, XMLHttpRequestException)                   \
+  V(XMLHTTPREQUESTPROGRESSEVENT, XMLHttpRequestProgressEvent)           \
   V(XMLSERIALIZER, XMLSerializer)                                       \
   V(XPATHEVALUATOR, XPathEvaluator)                                     \
   V(XPATHEXCEPTION, XPathException)                                     \
@@ -394,10 +402,6 @@ ALL_WRAPPER_TYPES(DEFINE_ENUM)
 #undef DEFINE_ENUM
     CLASSINDEX_END,
   };
-  static inline V8WrapperType ToWrapperType(v8::Handle<v8::Value> obj) {
-    return static_cast<V8WrapperType>(
-        reinterpret_cast<int>(v8::Handle<v8::External>::Cast(obj)->Value()));
-  }
 
   static int ToInt(V8WrapperType type) { return static_cast<int>(type); }
 

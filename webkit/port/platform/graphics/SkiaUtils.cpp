@@ -39,7 +39,7 @@
 
 #include "base/basictypes.h"
 #if defined(OS_WIN)
-#include "base/gfx/bitmap_header.h"
+#include "base/gfx/gdi_util.h"
 #endif
 
 void WebCorePointToSkiaPoint(const WebCore::FloatPoint& src, SkPoint* dst)
@@ -119,8 +119,7 @@ static U8CPU InvScaleByte(U8CPU component, uint32_t scale)
     return (component * scale + 0x8000) >> 16;
 }
 
-// move this guy into SkColor.h
-static SkColor SkPMColorToColor(SkPMColor pm)
+SkColor SkPMColorToColor(SkPMColor pm)
 {
     if (0 == pm)
         return 0;
@@ -229,47 +228,3 @@ bool SkPathContainsPoint(SkPath* orig_path, WebCore::FloatPoint point, SkPath::F
     orig_path->setFillType(orig_ft);    // restore
     return contains;
 }
-
-#if defined(OS_MACOSX)
-PassRefPtr<WebCore::SharedBuffer> SerializeSkBitmap(const SkBitmap& bitmap)
-{
-  // TODO(playmobil): implement.
-  ASSERT_NOT_REACHED();
-  RefPtr<WebCore::SharedBuffer> buffer(NULL);
-  return buffer;
-}
-#elif defined(OS_WIN)
-PassRefPtr<WebCore::SharedBuffer> SerializeSkBitmap(const SkBitmap& bitmap)
-{
-    int width = bitmap.width();
-    int height = bitmap.height();
-
-    // Create a BMP v4 header that we can serialize.
-    BITMAPV4HEADER v4Header;
-    gfx::CreateBitmapV4Header(width, height, &v4Header);
-    v4Header.bV4SizeImage = width * sizeof(uint32_t) * height;
-
-    // Serialize the bitmap.
-    BITMAPFILEHEADER fileHeader;
-    fileHeader.bfType = 0x4d42;  // "BM" header
-    fileHeader.bfOffBits = sizeof(BITMAPFILEHEADER) + v4Header.bV4Size;
-    fileHeader.bfSize = fileHeader.bfOffBits + v4Header.bV4SizeImage;
-    fileHeader.bfReserved1 = fileHeader.bfReserved2 = 0;
-
-    // Write BITMAPFILEHEADER
-    RefPtr<WebCore::SharedBuffer> buffer(WebCore::SharedBuffer::create(
-        reinterpret_cast<const char*>(&fileHeader),
-        sizeof(BITMAPFILEHEADER)));
-
-    // Write BITMAPINFOHEADER
-    buffer->append(reinterpret_cast<const char*>(&v4Header),
-                   sizeof(BITMAPV4HEADER));
-
-    // Write the image body.
-    SkAutoLockPixels bitmap_lock(bitmap);
-    buffer->append(reinterpret_cast<const char*>(bitmap.getAddr32(0, 0)),
-                   v4Header.bV4SizeImage);
-
-    return buffer;
-}
-#endif

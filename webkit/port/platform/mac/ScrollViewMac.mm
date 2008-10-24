@@ -49,6 +49,12 @@
 
 namespace WebCore {
 
+ScrollView::ScrollView() {
+}
+
+ScrollView::~ScrollView() {
+}
+
 int ScrollView::visibleWidth() const {
   return frameGeometry().width();
 }
@@ -205,9 +211,54 @@ bool ScrollView::scroll(ScrollDirection direction, ScrollGranularity granularity
   return true;
 }
 
-NSView* ScrollView::getDocumentView() const {
+NSView* ScrollView::documentView() const {
   // TODO(pinkerton): we really gotta figure out how we're doing scrolling
   return nil;
+}
+
+bool ScrollView::isScrollable() {
+  // placeholder until we pull new ScrollView implementation from WebKit
+  return false;
+}
+
+// PLATFORM(CHROMIUM) is defined, so we need to stub these methods:
+
+void ScrollView::detachFromWindow()
+{
+}
+
+void ScrollView::attachToWindow()
+{
+}
+
+void ScrollView::hide()
+{
+}
+
+void ScrollView::show()
+{
+}
+
+void ScrollView::themeChanged()
+{
+}
+
+void ScrollView::setParent(ScrollView* parentView)
+{
+}
+
+void Widget::setParent(ScrollView* parentView)
+{
+}
+
+IntPoint Widget::convertSelfToChild(const Widget* child, const IntPoint& point) const
+{
+    return IntPoint();
+}
+
+IntPoint Widget::convertChildToSelf(const Widget* child, const IntPoint& point) const
+{
+    return IntPoint();
 }
 
 }

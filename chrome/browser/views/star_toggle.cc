@@ -40,30 +40,29 @@ void StarToggle::Paint(ChromeCanvas* canvas) {
                         (height() - state_off_->height()) / 2);
 }
 
-void StarToggle::GetPreferredSize(CSize* out) {
-  out->cx = state_off_->width();
-  out->cy = state_off_->height();
+gfx::Size StarToggle::GetPreferredSize() {
+  return gfx::Size(state_off_->width(), state_off_->height());
 }
 
-bool StarToggle::OnMouseDragged(const ChromeViews::MouseEvent& e) {
+bool StarToggle::OnMouseDragged(const views::MouseEvent& e) {
   return e.IsLeftMouseButton();
 }
 
-bool StarToggle::OnMousePressed(const ChromeViews::MouseEvent& e) {
-  if (e.IsLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y()))) {
+bool StarToggle::OnMousePressed(const views::MouseEvent& e) {
+  if (e.IsLeftMouseButton() && HitTest(e.location())) {
     RequestFocus();
     return true;
   }
   return false;
 }
 
-void StarToggle::OnMouseReleased(const ChromeViews::MouseEvent& e,
+void StarToggle::OnMouseReleased(const views::MouseEvent& e,
                                  bool canceled) {
-  if (e.IsLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y())))
+  if (e.IsLeftMouseButton() && HitTest(e.location()))
     SwitchState();
 }
 
-bool StarToggle::OnKeyPressed(const ChromeViews::KeyEvent& e) {
+bool StarToggle::OnKeyPressed(const views::KeyEvent& e) {
   if ((e.GetCharacter() == L' ') || (e.GetCharacter() == L'\n')) {
     SwitchState();
     return true;

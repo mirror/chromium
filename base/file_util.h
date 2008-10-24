@@ -208,6 +208,10 @@ bool UpdateShortcutLink(const wchar_t *source, const wchar_t *destination,
                         const wchar_t *working_dir, const wchar_t *arguments,
                         const wchar_t *description, const wchar_t *icon,
                         int icon_index);
+
+// Return true if the given directory is empty
+bool IsDirectoryEmpty(const std::wstring& dir_path);
+
 #endif
 
   
@@ -219,6 +223,10 @@ bool GetTempDir(std::wstring* path);
 // be empty and all handles closed after this function returns.
 // TODO(erikkay): rename this function and track down all of the callers.
 bool CreateTemporaryFileName(std::wstring* temp_file);
+
+// Same as CreateTemporaryFileName but the file is created in |dir|.
+bool CreateTemporaryFileNameInDir(const std::wstring& dir,
+                                  std::wstring* temp_file);
 
 // Create a new directory under TempPath. If prefix is provided, the new
 // directory name is in the format of prefixyyyy.

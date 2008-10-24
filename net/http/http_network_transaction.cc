@@ -13,9 +13,7 @@
 #include "net/base/host_resolver.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_util.h"
-#if defined(OS_WIN)
 #include "net/base/ssl_client_socket.h"
-#endif
 #include "net/base/upload_data_stream.h"
 #include "net/http/http_auth.h"
 #include "net/http/http_auth_handler.h"
@@ -58,10 +56,10 @@ HttpNetworkTransaction::HttpNetworkTransaction(HttpNetworkSession* session,
       read_buf_(NULL),
       read_buf_len_(0),
       next_state_(STATE_NONE) {
-}
-
-void HttpNetworkTransaction::Destroy() {
-  delete this;
+#if defined(OS_WIN)
+  // TODO(port): Port the SSLConfigService class to Linux and Mac OS X.
+  session->ssl_config_service()->GetSSLConfig(&ssl_config_);
+#endif
 }
 
 int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
@@ -83,7 +81,7 @@ int HttpNetworkTransaction::RestartIgnoringLastError(
   int rv = DoLoop(OK);
   if (rv == ERR_IO_PENDING)
     user_callback_ = callback;
-  return rv; 
+  return rv;
 }
 
 int HttpNetworkTransaction::RestartWithAuth(
@@ -241,13 +239,12 @@ void HttpNetworkTransaction::BuildRequestHeaders() {
 // in draft-luotonen-web-proxy-tunneling-01.txt and RFC 2817, Sections 5.2 and
 // 5.3.
 void HttpNetworkTransaction::BuildTunnelRequest() {
-  std::string port = GetImplicitPort(request_->url);
-
   // RFC 2616 Section 9 says the Host request-header field MUST accompany all
   // HTTP/1.1 requests.
-  request_headers_ = "CONNECT " + request_->url.host() + ":" + port +
-      " HTTP/1.1\r\nHost: " + request_->url.host();
-  if (request_->url.IntPort() != -1)
+  request_headers_ = StringPrintf("CONNECT %s:%d HTTP/1.1\r\n",
+      request_->url.host().c_str(), request_->url.EffectiveIntPort());
+  request_headers_ += "Host: " + request_->url.host();
+  if (request_->url.has_port())
     request_headers_ += ":" + request_->url.port();
   request_headers_ += "\r\n";
 
@@ -447,18 +444,11 @@ int HttpNetworkTransaction::DoResolveHost() {
     t.GetNext();
     host = t.token();
     t.GetNext();
-    port = static_cast<int>(StringToInt64(t.token()));
+    port = StringToInt(t.token());
   } else {
     // Direct connection
     host = request_->url.host();
-    port = request_->url.IntPort();
-    if (port == url_parse::PORT_UNSPECIFIED) {
-      if (using_ssl_) {
-        port = 443;  // Default HTTPS port
-      } else {
-        port = 80;   // Default HTTP port
-      }
-    }
+    port = request_->url.EffectiveIntPort();
   }
 
   return resolver_.Resolve(host, port, &addresses_, &io_callback_);
@@ -483,7 +473,8 @@ int HttpNetworkTransaction::DoConnect() {
   // If we are using a direct SSL connection, then go ahead and create the SSL
   // wrapper socket now.  Otherwise, we need to first issue a CONNECT request.
   if (using_ssl_ && !using_tunnel_)
-    s = socket_factory_->CreateSSLClientSocket(s, request_->url.host());
+    s = socket_factory_->CreateSSLClientSocket(s, request_->url.host(),
+                                               ssl_config_);
 
   connection_.set_socket(s);
   return connection_.socket()->Connect(&io_callback_);
@@ -498,7 +489,9 @@ int HttpNetworkTransaction::DoConnectComplete(int result) {
     if (using_tunnel_)
       establishing_tunnel_ = true;
   } else {
-    result = ReconsiderProxyAfterError(result);
+    result = HandleSSLHandshakeError(result);
+    if (result != OK)
+      result = ReconsiderProxyAfterError(result);
   }
   return result;
 }
@@ -508,7 +501,8 @@ int HttpNetworkTransaction::DoSSLConnectOverTunnel() {
 
   // Add a SSL socket on top of our existing transport socket.
   ClientSocket* s = connection_.release_socket();
-  s = socket_factory_->CreateSSLClientSocket(s, request_->url.host());
+  s = socket_factory_->CreateSSLClientSocket(s, request_->url.host(),
+                                             ssl_config_);
   connection_.set_socket(s);
   return connection_.socket()->Connect(&io_callback_);
 }
@@ -517,8 +511,11 @@ int HttpNetworkTransaction::DoSSLConnectOverTunnelComplete(int result) {
   if (IsCertificateError(result))
     result = HandleCertificateError(result);
 
-  if (result == OK)
+  if (result == OK) {
     next_state_ = STATE_WRITE_HEADERS;
+  } else {
+    result = HandleSSLHandshakeError(result);
+  }
   return result;
 }
 
@@ -605,6 +602,33 @@ int HttpNetworkTransaction::DoReadHeaders() {
   return connection_.socket()->Read(buf, buf_len, &io_callback_);
 }
 
+int HttpNetworkTransaction::HandleConnectionClosedBeforeEndOfHeaders() {
+  if (establishing_tunnel_) {
+    // The connection was closed before the tunnel could be established.
+    return ERR_TUNNEL_CONNECTION_FAILED;
+  }
+
+  if (has_found_status_line_start()) {
+    // Assume EOF is end-of-headers.
+    header_buf_body_offset_ = header_buf_len_;
+    return OK;
+  }
+
+  // No status line was matched yet. Could have been a HTTP/0.9 response, or
+  // a partial HTTP/1.x response.
+
+  if (header_buf_len_ == 0) {
+    // The connection was closed before any data was sent. Likely an error
+    // rather than empty HTTP/0.9 response.
+    return ERR_EMPTY_RESPONSE;
+  }
+
+  // Assume everything else is a HTTP/0.9 response (including responses
+  // of 'h', 'ht', 'htt').
+  header_buf_body_offset_ = 0;
+  return OK;
+}
+
 int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
   if (result < 0)
     return HandleIOError(result);
@@ -619,18 +643,9 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
 
   // The socket was closed before we found end-of-headers.
   if (result == 0) {
-    if (establishing_tunnel_) {
-      // The socket was closed before the tunnel could be established.
-      return ERR_TUNNEL_CONNECTION_FAILED;
-    }
-    if (has_found_status_line_start()) {
-      // Assume EOF is end-of-headers.
-      header_buf_body_offset_ = header_buf_len_;
-    } else {
-      // No status line was matched yet, assume HTTP/0.9
-      // (this will also match a HTTP/1.x that got closed early).
-      header_buf_body_offset_ = 0;
-    }
+    int rv = HandleConnectionClosedBeforeEndOfHeaders();
+    if (rv != OK)
+      return rv;
   } else {
     header_buf_len_ += result;
     DCHECK(header_buf_len_ <= header_buf_capacity_);
@@ -829,13 +844,11 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     }
   }
 
-#if defined(OS_WIN)
   if (using_ssl_ && !establishing_tunnel_) {
     SSLClientSocket* ssl_socket =
         reinterpret_cast<SSLClientSocket*>(connection_.socket());
     ssl_socket->GetSSLInfo(&response_.ssl_info);
   }
-#endif
 
   return OK;
 }
@@ -864,13 +877,29 @@ int HttpNetworkTransaction::HandleCertificateError(int error) {
     }
   }
 
-#if defined(OS_WIN)
   if (error != OK) {
     SSLClientSocket* ssl_socket =
         reinterpret_cast<SSLClientSocket*>(connection_.socket());
     ssl_socket->GetSSLInfo(&response_.ssl_info);
   }
-#endif
+  return error;
+}
+
+int HttpNetworkTransaction::HandleSSLHandshakeError(int error) {
+  switch (error) {
+    case ERR_SSL_PROTOCOL_ERROR:
+    case ERR_SSL_VERSION_OR_CIPHER_MISMATCH:
+      if (ssl_config_.tls1_enabled) {
+        // This could be a TLS-intolerant server or an SSL 3.0 server that
+        // chose a TLS-only cipher suite.  Turn off TLS 1.0 and retry.
+        ssl_config_.tls1_enabled = false;
+        connection_.set_socket(NULL);
+        connection_.Reset();
+        next_state_ = STATE_INIT_CONNECTION;
+        error = OK;
+      }
+      break;
+  }
   return error;
 }
 
@@ -907,6 +936,9 @@ void HttpNetworkTransaction::ResetStateForRestart() {
   request_headers_.clear();
   request_headers_bytes_sent_ = 0;
   chunked_decoder_.reset();
+  // Reset the scoped_refptr
+  response_.headers = NULL;
+  response_.auth_challenge = NULL;
 }
 
 bool HttpNetworkTransaction::ShouldResendRequest() {
@@ -973,7 +1005,7 @@ void HttpNetworkTransaction::AddAuthorizationHeader(HttpAuth::Target target) {
 
   // Add auth data to cache
   session_->auth_cache()->Add(auth_cache_key_[target], auth_data_[target]);
-  
+
   // Add a Authorization/Proxy-Authorization header line.
   std::string credentials = auth_handler_[target]->GenerateCredentials(
       auth_data_[target]->username,
@@ -1011,10 +1043,8 @@ int HttpNetworkTransaction::PopulateAuthChallenge() {
   HttpAuth::Target target = status == 407 ?
       HttpAuth::AUTH_PROXY : HttpAuth::AUTH_SERVER;
 
-  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct()) {
-    // TODO(eroman): Add a unique error code.
-    return ERR_INVALID_RESPONSE;
-  }
+  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct())
+    return ERR_UNEXPECTED_PROXY_AUTH;
 
   // Find the best authentication challenge that we support.
   scoped_ptr<HttpAuthHandler> auth_handler(

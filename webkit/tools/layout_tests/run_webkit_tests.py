@@ -76,10 +76,6 @@ class TestRunner:
     # a set of test files
     self._test_files = set()
 
-    if options.nosvg:
-      TestRunner._supported_file_extensions.remove('.svg')
-      TestRunner._skipped_directories.add('svg')
-
     self._GatherTestFiles(paths)
 
   def __del__(self):
@@ -125,12 +121,6 @@ class TestRunner:
             filename = os.path.normpath(filename)
             self._test_files.add(filename)
 
-    # Filter out http tests if we're not running them.
-    if self._options.nohttp:
-      for path in list(self._test_files):
-        if path.find(self.HTTP_SUBDIR) >= 0:
-          self._test_files.remove(path)
-
     # Filter and sort out files from the skipped, ignored, and fixable file
     # lists.
     saved_test_files = set()
@@ -140,6 +130,7 @@ class TestRunner:
       saved_test_files = self._test_files
 
     file_dir = os.path.join(os.path.dirname(sys.argv[0]), TEST_FILE_DIR)
+    file_dir = os.path.join(file_dir, path_utils.TestListPlatformDir())
     file_dir = path_utils.GetAbsolutePath(file_dir)
     
     expectations = test_expectations.TestExpectations(self._test_files, 
@@ -236,6 +227,9 @@ class TestRunner:
                                 "png_result%s.png" % i)
         shell_args.append("--pixel-tests=" + png_path)
         test_args.png_path = png_path
+
+      if self._options.wdiff:
+        test_args.wdiff = True
 
       if self._options.new_baseline:
         test_args.new_baseline = self._options.new_baseline
@@ -505,11 +499,19 @@ def main(options, args):
     options.results_directory = path_utils.GetAbsolutePath(
         os.path.join(basedir, options.results_directory))
 
+  try:
+    test_shell_binary_path = path_utils.TestShellBinaryPath(options.target)
+  except:
+    print "\nERROR: test_shell is not found. Be sure that you have built it and"
+    print "that you are using the correct build. This script will run the"
+    print "release one by default. Use --debug to use the debug build.\n"
+    sys.exit(1)
+
   logging.info("Using expected results from %s" %
                 path_utils.CustomExpectedResultsDir(options.build_type))
   logging.info("Placing test results in %s" % options.results_directory)
-  logging.info("Using %s build at %s" % (options.target,
-      path_utils.TestShellBinaryPath(options.target)))
+  logging.info("Using %s build at %s" %
+               (options.target, test_shell_binary_path))
   if options.pixel_tests:
     logging.info("Running pixel tests")
 
@@ -522,10 +524,15 @@ def main(options, args):
     sys.exit(1)
 
   # Delete the disk cache if any to ensure a clean test run.
-  cachedir = os.path.split(path_utils.TestShellBinaryPath(options.target))[0]
+  cachedir = os.path.split(test_shell_binary_path)[0]
   cachedir = os.path.join(cachedir, "cache")
   if os.path.exists(cachedir):
     shutil.rmtree(cachedir)
+
+  # This was an experimental feature where we would run more than one
+  # test_shell in parallel.  For some reason, this would result in different
+  # layout test results, so just use 1 test_shell for now.
+  options.num_test_shells = 1
 
   # Include all tests if none are specified.
   paths = []
@@ -546,13 +553,12 @@ def main(options, args):
 
 if '__main__' == __name__:
   option_parser = optparse.OptionParser()
-  option_parser.add_option("", "--nohttp", action="store_true", default=False,
-                           help="disable http tests")
-  option_parser.add_option("", "--nosvg", action="store_true", default=False,
-                           help="disable svg tests")
   option_parser.add_option("", "--pixel-tests", action="store_true",
                            default=False,
                            help="enable pixel-to-pixel PNG comparisons")
+  option_parser.add_option("", "--wdiff", action="store_true",
+                           default=False,
+                           help="enable word-by-word diffing")
   option_parser.add_option("", "--results-directory",
                            default="layout-test-results",
                            help="Output results directory source dir,"
@@ -569,14 +575,6 @@ if '__main__' == __name__:
   option_parser.add_option("", "--full-results-html", action="store_true",
                            default=False, help="show all failures in"
                            "results.html, rather than only regressions")
-  option_parser.add_option("", "--num-test-shells",
-                           default=1,
-                           help="The number of test shells to run in"
-                                " parallel. EXPERIMENTAL.")
-  option_parser.add_option("", "--save-failures", action="store_true",
-                           default=False,
-                           help="Save lists of expected failures and crashes "
-                                "and use them in computing regressions.")
   option_parser.add_option("", "--nocompare-failures", action="store_true",
                            default=False,
                            help="Disable comparison to the last test run. "
@@ -607,4 +605,3 @@ if '__main__' == __name__:
                            metavar="FILE")
   options, args = option_parser.parse_args()
   main(options, args)
-

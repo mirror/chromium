@@ -42,6 +42,15 @@ static const int kBitMask = 0x7FFFFFFF;
 static const int kGoatsTeleportedColumn =
     (94024 * kNuthMagicNumber) & kBitMask;
 
+template <class T>
+static int ValueCompare(T value1, T value2) {
+  if (value1 < value2)
+    return -1;
+  if (value1 == value2)
+    return 0;
+  return 1;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // TaskManagerTableModel class
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +61,7 @@ int TaskManagerTableModel::goats_teleported_ = 0;
 TaskManagerTableModel::TaskManagerTableModel(TaskManager* task_manager)
     : observer_(NULL),
       ui_loop_(MessageLoop::current()),
-      is_updating_(false) {
+      update_state_(IDLE) {
 
   TaskManagerBrowserProcessResourceProvider* browser_provider =
       new TaskManagerBrowserProcessResourceProvider(task_manager);
@@ -98,76 +107,107 @@ std::wstring TaskManagerTableModel::GetText(int row, int col_id) {
 
     // Only the first item from a group shows the process info.
     case IDS_TASK_MANAGER_NET_COLUMN: {  // Net
-      int64 net_usage = GetNetworkUsageForResource(resources_[row]);
-      if (net_usage == 0 && !resource->SupportNetworkUsage()) {
+      int64 net_usage = GetNetworkUsage(resource);
+      if (net_usage == -1)
         return l10n_util::GetString(IDS_TASK_MANAGER_NA_CELL_TEXT);
-      } else {
-        if (net_usage == 0)
-          return std::wstring(L"0");
-        return FormatSpeed(net_usage, GetByteDisplayUnits(net_usage), true);
-      }
+      if (net_usage == 0)
+        return std::wstring(L"0");
+      return FormatSpeed(net_usage, GetByteDisplayUnits(net_usage), true);
     }
 
     case IDS_TASK_MANAGER_CPU_COLUMN:  // CPU
-      if (first_in_group)
-        return IntToWString(process_metrics->GetCPUUsage());
-      return std::wstring();
+      if (!first_in_group)
+        return std::wstring();
+      return IntToWString(GetCPUUsage(resource));
 
     case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN:  // Memory
       // We report committed (working set + paged) private usage. This is NOT
       // going to match what Windows Task Manager shows (which is working set).
-      if (first_in_group) {
-        size_t private_kbytes = process_metrics->GetPrivateBytes() / 1024;
-        return l10n_util::GetStringF(IDS_TASK_MANAGER_MEM_CELL_TEXT,
-                                     FormatNumber(private_kbytes));
-      }
-      return std::wstring();
+      if (!first_in_group)
+        return std::wstring();
+      return l10n_util::GetStringF(
+          IDS_TASK_MANAGER_MEM_CELL_TEXT,
+          FormatNumber(GetPrivateMemory(process_metrics)));
 
     case IDS_TASK_MANAGER_SHARED_MEM_COLUMN:  // Memory
-      if (first_in_group) {
-        process_util::WorkingSetKBytes ws_usage;
-        process_metrics->GetWorkingSetKBytes(&ws_usage);
-        size_t shared_kbytes = ws_usage.shared;
-        return l10n_util::GetStringF(IDS_TASK_MANAGER_MEM_CELL_TEXT,
-                                     FormatNumber(shared_kbytes));
-      }
-      return std::wstring();
+      if (!first_in_group)
+        return std::wstring();
+      return l10n_util::GetStringF(
+          IDS_TASK_MANAGER_MEM_CELL_TEXT,
+          FormatNumber(GetSharedMemory(process_metrics)));      
 
     case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN:  // Memory
-      // Memory = working_set.private + working_set.shareable.
-      // We exclude the shared memory.
-      if (first_in_group) {
-        size_t total_kbytes = process_metrics->GetWorkingSetSize() / 1024;
-        process_util::WorkingSetKBytes ws_usage;
-        process_metrics->GetWorkingSetKBytes(&ws_usage);
-        total_kbytes -= ws_usage.shared;
-        return l10n_util::GetStringF(IDS_TASK_MANAGER_MEM_CELL_TEXT,
-                                     FormatNumber(total_kbytes));
-      }
-      return std::wstring();
+      if (!first_in_group)
+        return std::wstring();
+      return l10n_util::GetStringF(
+          IDS_TASK_MANAGER_MEM_CELL_TEXT,
+          FormatNumber(GetPhysicalMemory(process_metrics)));
 
     case IDS_TASK_MANAGER_PROCESS_ID_COLUMN:
-      if (first_in_group)
-        return IntToWString(process_util::GetProcId(resource->GetProcess()));
-      return std::wstring();
+      if (!first_in_group)
+        return std::wstring();
+      return IntToWString(process_util::GetProcId(resource->GetProcess()));
+      
     case kGoatsTeleportedColumn:  // Goats Teleported.
       goats_teleported_ += rand();
       return FormatNumber(goats_teleported_);
 
     default:
-      StatsTable* table = StatsTable::current();
-      if (table != NULL) {
-        const wchar_t* counter = table->GetRowName(col_id);
-        if (counter != NULL && counter[0] != '\0') {
-          int val = table->GetCounterValue(counter,
-              process_util::GetProcId(resource->GetProcess()));
-          return IntToWString(val);
-        } else {
-          NOTREACHED() << "Invalid column.";
-        }
-      }
-      return std::wstring(L"0");
+      return IntToWString(GetStatsValue(resource, col_id));
   }
+}
+
+int64 TaskManagerTableModel::GetNetworkUsage(TaskManager::Resource* resource) {
+  int64 net_usage = GetNetworkUsageForResource(resource);
+  if (net_usage == 0 && !resource->SupportNetworkUsage())
+    return -1;
+  return net_usage;
+}
+
+int TaskManagerTableModel::GetCPUUsage(TaskManager::Resource* resource) {
+  CPUUsageMap::const_iterator iter =
+      cpu_usage_map_.find(resource->GetProcess());
+   if (iter == cpu_usage_map_.end())
+     return 0;
+   return iter->second;
+}
+
+size_t TaskManagerTableModel::GetPrivateMemory(
+    process_util::ProcessMetrics* process_metrics) {
+  return process_metrics->GetPrivateBytes() / 1024;
+}
+
+size_t TaskManagerTableModel::GetSharedMemory(
+    process_util::ProcessMetrics* process_metrics) {
+  process_util::WorkingSetKBytes ws_usage;
+  process_metrics->GetWorkingSetKBytes(&ws_usage);
+  return ws_usage.shared;
+}
+
+size_t TaskManagerTableModel::GetPhysicalMemory(
+    process_util::ProcessMetrics* process_metrics) {
+  // Memory = working_set.private + working_set.shareable.
+  // We exclude the shared memory.
+  size_t total_kbytes = process_metrics->GetWorkingSetSize() / 1024;
+  process_util::WorkingSetKBytes ws_usage;
+  process_metrics->GetWorkingSetKBytes(&ws_usage);
+  total_kbytes -= ws_usage.shared;
+  return total_kbytes;
+}
+
+int TaskManagerTableModel::GetStatsValue(TaskManager::Resource* resource,
+                                         int col_id) {
+  StatsTable* table = StatsTable::current();
+  if (table != NULL) {
+    const wchar_t* counter = table->GetRowName(col_id);
+    if (counter != NULL && counter[0] != '\0') {
+      return table->GetCounterValue(counter,
+          process_util::GetProcId(resource->GetProcess()));
+     } else {
+        NOTREACHED() << "Invalid column.";
+     }
+  }
+  return 0;
 }
 
 SkBitmap TaskManagerTableModel::GetIcon(int row) {
@@ -176,7 +216,7 @@ SkBitmap TaskManagerTableModel::GetIcon(int row) {
 }
 
 void TaskManagerTableModel::GetGroupRangeForItem(int item,
-    ChromeViews::GroupRange* range) {
+                                                 views::GroupRange* range) {
   DCHECK((item >= 0) && (item < RowCount())) <<
       " invalid item "<< item << " (items count=" << RowCount() << ")";
 
@@ -203,10 +243,16 @@ HANDLE TaskManagerTableModel::GetProcessAt(int index) {
 }
 
 void TaskManagerTableModel::StartUpdating() {
-  DCHECK(!is_updating_);
-  is_updating_ = true;
-  update_timer_.Start(TimeDelta::FromMilliseconds(kUpdateTimeMs), this,
-                      &TaskManagerTableModel::Refresh);
+  DCHECK_NE(TASK_PENDING, update_state_);
+ 
+  // If update_state_ is STOPPING, it means a task is still pending.  Setting
+  // it to TASK_PENDING ensures the tasks keep being posted (by Refresh()).
+  if (update_state_ == IDLE) {
+      MessageLoop::current()->PostDelayedTask(FROM_HERE,
+          NewRunnableMethod(this, &TaskManagerTableModel::Refresh),
+          kUpdateTimeMs);
+  }
+  update_state_ = TASK_PENDING;
 
   // Register jobs notifications so we can compute network usage (it must be
   // done from the IO thread).
@@ -223,9 +269,8 @@ void TaskManagerTableModel::StartUpdating() {
 }
 
 void TaskManagerTableModel::StopUpdating() {
-  DCHECK(is_updating_);
-  is_updating_ = false;
-  update_timer_.Stop();
+  DCHECK_EQ(TASK_PENDING, update_state_);
+  update_state_ = STOPPING;
 
   // Notify resource providers that we are done updating.
   for (ResourceProviderList::const_iterator iter = providers_.begin();
@@ -327,6 +372,10 @@ void TaskManagerTableModel::RemoveResource(TaskManager::Resource* resource) {
       delete pm_iter->second;
       metrics_map_.erase(process);
     }
+    // And we don't need the CPU usage anymore either.
+    CPUUsageMap::iterator cpu_iter = cpu_usage_map_.find(process);
+    if (cpu_iter != cpu_usage_map_.end())
+      cpu_usage_map_.erase(cpu_iter);
   }
 
   // Remove the entry from the model list.
@@ -360,12 +409,13 @@ void TaskManagerTableModel::Clear() {
     }
     group_map_.clear();
 
-    // Clear the process metrics.
+    // Clear the process related info.
     for (MetricsMap::iterator iter = metrics_map_.begin();
          iter != metrics_map_.end(); ++iter) {
       delete iter->second;
     }
     metrics_map_.clear();
+    cpu_usage_map_.clear();
 
     // Clear the network maps.
     current_byte_count_map_.clear();
@@ -375,13 +425,37 @@ void TaskManagerTableModel::Clear() {
   }
 }
 
-// Called by the timer when we need to refresh the row contents.
 void TaskManagerTableModel::Refresh() {
+  DCHECK_NE(IDLE, update_state_);
+
+  if (update_state_ == STOPPING) {
+    // We have been asked to stop.
+    update_state_ = IDLE;
+    return;
+  }
+
+  // Compute the CPU usage values.
+  // Note that we compute the CPU usage for all resources (instead of doing it
+  // lazily) as process_util::GetCPUUsage() returns the CPU usage since the last
+  // time it was called, and not calling it everytime would skew the value the
+  // next time it is retrieved (as it would be for more than 1 cycle).
+  cpu_usage_map_.clear();
+  for (ResourceList::iterator iter = resources_.begin();
+       iter != resources_.end(); ++iter) {
+    HANDLE process = (*iter)->GetProcess();
+    CPUUsageMap::iterator cpu_iter = cpu_usage_map_.find(process);
+    if (cpu_iter != cpu_usage_map_.end())
+      continue;  // Already computed.
+
+    MetricsMap::iterator metrics_iter = metrics_map_.find(process);
+    DCHECK(metrics_iter != metrics_map_.end());
+    cpu_usage_map_[process] = metrics_iter->second->GetCPUUsage();
+  }
+
   // Compute the new network usage values.
   displayed_network_usage_map_.clear();
   for (ResourceValueMap::iterator iter = current_byte_count_map_.begin();
-       iter != current_byte_count_map_.end();
-       ++iter) {
+       iter != current_byte_count_map_.end(); ++iter) {
     if (kUpdateTimeMs > 1000) {
       int divider = (kUpdateTimeMs / 1000);
       displayed_network_usage_map_[iter->first] = iter->second / divider;
@@ -393,25 +467,86 @@ void TaskManagerTableModel::Refresh() {
     // Then we reset the current byte count.
     iter->second = 0;
   }
-  if (resources_.size() > 0)
+  if (!resources_.empty())
     observer_->OnItemsChanged(0, RowCount());
+
+  // Schedule the next update.
+  MessageLoop::current()->PostDelayedTask(FROM_HERE,
+      NewRunnableMethod(this, &TaskManagerTableModel::Refresh),
+      kUpdateTimeMs);
 }
 
-void TaskManagerTableModel::SetObserver(
-    ChromeViews::TableModelObserver* observer) {
+void TaskManagerTableModel::SetObserver(views::TableModelObserver* observer) {
   observer_ = observer;
+}
+
+int TaskManagerTableModel::CompareValues(int row1, int row2, int column_id) {
+  switch (column_id) {
+    case IDS_TASK_MANAGER_PAGE_COLUMN:
+      // Let's do the default, string compare on the resource title.
+      return TableModel::CompareValues(row1, row2, column_id);
+
+    case IDS_TASK_MANAGER_NET_COLUMN:
+      return ValueCompare<int64>(GetNetworkUsage(resources_[row1]),
+                                 GetNetworkUsage(resources_[row2]));
+
+    case IDS_TASK_MANAGER_CPU_COLUMN:
+      return ValueCompare<int>(GetCPUUsage(resources_[row1]),
+                               GetCPUUsage(resources_[row2]));
+
+    case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN: {
+      process_util::ProcessMetrics* pm1;
+      process_util::ProcessMetrics* pm2;
+      if (!GetProcessMetricsForRows(row1, row2, &pm1, &pm2))
+        return 0;
+      return ValueCompare<size_t>(GetPrivateMemory(pm1),
+                                  GetPrivateMemory(pm2));
+    }
+
+    case IDS_TASK_MANAGER_SHARED_MEM_COLUMN: {
+      process_util::ProcessMetrics* pm1;
+      process_util::ProcessMetrics* pm2;
+      if (!GetProcessMetricsForRows(row1, row2, &pm1, &pm2))
+        return 0;
+      return ValueCompare<size_t>(GetSharedMemory(pm1),
+                                  GetSharedMemory(pm2));
+    }
+
+    case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN: {
+      process_util::ProcessMetrics* pm1;
+      process_util::ProcessMetrics* pm2;
+      if (!GetProcessMetricsForRows(row1, row2, &pm1, &pm2))
+        return 0;
+      return ValueCompare<size_t>(GetPhysicalMemory(pm1),
+                                  GetPhysicalMemory(pm2));
+    }
+
+    case IDS_TASK_MANAGER_PROCESS_ID_COLUMN: {
+      int proc1_id = process_util::GetProcId(resources_[row1]->GetProcess());
+      int proc2_id = process_util::GetProcId(resources_[row2]->GetProcess());
+      return ValueCompare<int>(proc1_id, proc2_id);
+    }
+      
+    case kGoatsTeleportedColumn:
+      return 0;  // Don't bother, numbers are random.
+
+    default:
+      return ValueCompare<int>(GetStatsValue(resources_[row1], column_id),
+                               GetStatsValue(resources_[row2], column_id));
+  }
 }
 
 int64 TaskManagerTableModel::GetNetworkUsageForResource(
     TaskManager::Resource* resource) {
-  ResourceValueMap::iterator iter = displayed_network_usage_map_.find(resource);
+  ResourceValueMap::iterator iter =
+      displayed_network_usage_map_.find(resource);
   if (iter == displayed_network_usage_map_.end())
     return 0;
   return iter->second;
 }
 
 void TaskManagerTableModel::BytesRead(BytesReadParam param) {
-  if (!is_updating_) {
+  if (update_state_ != TASK_PENDING) {
     // A notification sneaked in while we were stopping the updating, just
     // ignore it.
     return;
@@ -474,16 +609,40 @@ void TaskManagerTableModel::OnJobRedirect(URLRequestJob* job,
 }
 
 void TaskManagerTableModel::OnBytesRead(URLRequestJob* job, int byte_count) {
-  int render_process_host_id, routing_id;
-  if (tab_util::GetTabContentsID(job->request(),
-                                 &render_process_host_id, &routing_id)) {
-    // This happens in the IO thread, post it to the UI thread.
-    ui_loop_->PostTask(FROM_HERE, NewRunnableMethod(
-        this, &TaskManagerTableModel::BytesRead,
-        BytesReadParam(job->request()->origin_pid(),
-                       render_process_host_id, routing_id,
-                       byte_count)));
-  }
+  int render_process_host_id = -1, routing_id = -1;
+  tab_util::GetTabContentsID(job->request(),
+                             &render_process_host_id, &routing_id);
+  // This happens in the IO thread, post it to the UI thread.
+  ui_loop_->PostTask(FROM_HERE,
+                     NewRunnableMethod(
+                        this,
+                        &TaskManagerTableModel::BytesRead,
+                        BytesReadParam(job->request()->origin_pid(),
+                                       render_process_host_id, routing_id,
+                                       byte_count)));
+}
+
+bool TaskManagerTableModel::GetProcessMetricsForRows(
+    int row1, int row2,
+    process_util::ProcessMetrics** proc_metrics1,
+    process_util::ProcessMetrics** proc_metrics2) {
+
+  DCHECK(row1 < static_cast<int>(resources_.size()) &&
+         row2 < static_cast<int>(resources_.size()));
+  *proc_metrics1 = NULL;
+  *proc_metrics2 = NULL;
+
+  MetricsMap::iterator iter = metrics_map_.find(resources_[row1]->GetProcess());
+  if (iter == metrics_map_.end())
+    return false;
+  *proc_metrics1 = iter->second;
+
+  iter = metrics_map_.find(resources_[row2]->GetProcess());
+  if (iter == metrics_map_.end())
+    return false;
+  *proc_metrics2 = iter->second;
+
+  return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -493,11 +652,11 @@ void TaskManagerTableModel::OnBytesRead(URLRequestJob* job, int byte_count) {
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-class TaskManagerContents : public ChromeViews::View,
-                            public ChromeViews::NativeButton::Listener,
-                            public ChromeViews::TableViewObserver,
-                            public ChromeViews::LinkController,
-                            public ChromeViews::ContextMenuController,
+class TaskManagerContents : public views::View,
+                            public views::NativeButton::Listener,
+                            public views::TableViewObserver,
+                            public views::LinkController,
+                            public views::ContextMenuController,
                             public Menu::Delegate {
  public:
   TaskManagerContents(TaskManager* task_manager,
@@ -506,30 +665,29 @@ class TaskManagerContents : public ChromeViews::View,
 
   void Init(TaskManagerTableModel* table_model);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
-  virtual void ViewHierarchyChanged(bool is_add, ChromeViews::View* parent,
-                                    ChromeViews::View* child);
+  virtual gfx::Size GetPreferredSize();
+  virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
+                                    views::View* child);
   void GetSelection(std::vector<int>* selection);
   void GetFocused(std::vector<int>* focused);
 
   // NativeButton::Listener implementation.
-  virtual void ButtonPressed(ChromeViews::NativeButton* sender);
+  virtual void ButtonPressed(views::NativeButton* sender);
 
-  // ChromeViews::TableViewObserver implementation.
+  // views::TableViewObserver implementation.
   virtual void OnSelectionChanged();
   virtual void OnDoubleClick();
   virtual void OnKeyDown(unsigned short virtual_keycode);
 
-  // ChromeViews::LinkController implementation.
-  virtual void LinkActivated(ChromeViews::Link* source, int event_flags);
+  // views::LinkController implementation.
+  virtual void LinkActivated(views::Link* source, int event_flags);
 
   // Called by the column picker to pick up any new stat counters that
   // may have appeared since last time.
   void UpdateStatsCounters();
 
   // Menu::Delegate
-  virtual void ShowContextMenu(ChromeViews::View* source,
+  virtual void ShowContextMenu(views::View* source,
                                int x,
                                int y,
                                bool is_mouse_gesture);
@@ -537,14 +695,14 @@ class TaskManagerContents : public ChromeViews::View,
   virtual void ExecuteCommand(int id);
 
  private:
-  scoped_ptr<ChromeViews::NativeButton> kill_button_;
-  scoped_ptr<ChromeViews::Link> about_memory_link_;
-  ChromeViews::GroupTableView* tab_table_;
+  scoped_ptr<views::NativeButton> kill_button_;
+  scoped_ptr<views::Link> about_memory_link_;
+  views::GroupTableView* tab_table_;
 
   TaskManager* task_manager_;
 
   // all possible columns, not necessarily visible
-  std::vector<ChromeViews::TableColumn> columns_;
+  std::vector<views::TableColumn> columns_;
 
   DISALLOW_EVIL_CONSTRUCTORS(TaskManagerContents);
 };
@@ -559,39 +717,31 @@ TaskManagerContents::~TaskManagerContents() {
 }
 
 void TaskManagerContents::Init(TaskManagerTableModel* table_model) {
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_PAGE_COLUMN,
-          ChromeViews::TableColumn::LEFT, -1, 1));
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0));
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_SHARED_MEM_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0));
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0));
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_CPU_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0));
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_NET_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0));
-  columns_.push_back(
-      ChromeViews::TableColumn(
-          IDS_TASK_MANAGER_PROCESS_ID_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0));
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_PAGE_COLUMN,
+                                        views::TableColumn::LEFT, -1, 1));
+  columns_.back().sortable = true;
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN,
+                                        views::TableColumn::RIGHT, -1, 0));
+  columns_.back().sortable = true;
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_SHARED_MEM_COLUMN,
+                                        views::TableColumn::RIGHT, -1, 0));
+  columns_.back().sortable = true;
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN,
+                                        views::TableColumn::RIGHT, -1, 0));
+  columns_.back().sortable = true;
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_CPU_COLUMN,
+                                        views::TableColumn::RIGHT, -1, 0));
+  columns_.back().sortable = true;
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_NET_COLUMN,
+                                        views::TableColumn::RIGHT, -1, 0));
+  columns_.back().sortable = true;
+  columns_.push_back(views::TableColumn(IDS_TASK_MANAGER_PROCESS_ID_COLUMN,
+                                        views::TableColumn::RIGHT, -1, 0));
+  columns_.back().sortable = true;
 
-  tab_table_ = new ChromeViews::GroupTableView(table_model,
-                                               columns_,
-                                               ChromeViews::ICON_AND_TEXT,
-                                               false, true, true);
+  tab_table_ = new views::GroupTableView(table_model, columns_,
+                                         views::ICON_AND_TEXT, false, true,
+                                         true);
 
   // Hide some columns by default
   tab_table_->SetColumnVisibility(IDS_TASK_MANAGER_PROCESS_ID_COLUMN, false);
@@ -599,16 +749,17 @@ void TaskManagerContents::Init(TaskManagerTableModel* table_model) {
   tab_table_->SetColumnVisibility(IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN, false);
 
   UpdateStatsCounters();
-  ChromeViews::TableColumn col(kGoatsTeleportedColumn, L"Goats Teleported",
-                               ChromeViews::TableColumn::RIGHT, -1, 0);
+  views::TableColumn col(kGoatsTeleportedColumn, L"Goats Teleported",
+                         views::TableColumn::RIGHT, -1, 0);
+  col.sortable = true;
   columns_.push_back(col);
   tab_table_->AddColumn(col);
   tab_table_->SetObserver(this);
   SetContextMenuController(this);
-  kill_button_.reset(new ChromeViews::NativeButton(
+  kill_button_.reset(new views::NativeButton(
       l10n_util::GetString(IDS_TASK_MANAGER_KILL)));
   kill_button_->SetListener(this);
-  about_memory_link_.reset(new ChromeViews::Link(
+  about_memory_link_.reset(new views::Link(
       l10n_util::GetString(IDS_TASK_MANAGER_ABOUT_MEMORY_LINK)));
   about_memory_link_->SetController(this);
 
@@ -631,8 +782,8 @@ void TaskManagerContents::UpdateStatsCounters() {
         // stat names not in the string table would be filtered out.
         // TODO(erikkay): Width is hard-coded right now, so many column
         // names are clipped.
-        ChromeViews::TableColumn col(i, row, ChromeViews::TableColumn::RIGHT,
-                                     90, 0);
+        views::TableColumn col(i, row, views::TableColumn::RIGHT, 90, 0);
+        col.sortable = true;
         columns_.push_back(col);
         tab_table_->AddColumn(col);
       }
@@ -640,14 +791,9 @@ void TaskManagerContents::UpdateStatsCounters() {
   }
 }
 
-void TaskManagerContents::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
-}
-
 void TaskManagerContents::ViewHierarchyChanged(bool is_add,
-                                               ChromeViews::View* parent,
-                                               ChromeViews::View* child) {
+                                               views::View* parent,
+                                               views::View* child) {
   // Since we want the Kill button and the Memory Details link to show up in
   // the same visual row as the close button, which is provided by the
   // framework, we must add the buttons to the non-client view, which is the
@@ -670,54 +816,45 @@ void TaskManagerContents::ViewHierarchyChanged(bool is_add,
 void TaskManagerContents::Layout() {
   // kPanelHorizMargin is too big.
   const int kTableButtonSpacing = 12;
-  CRect bounds;
-  GetLocalBounds(&bounds, true);
-  int x = bounds.left;
-  int y = bounds.top;
 
-  CSize size;
-  kill_button_->GetPreferredSize(&size);
-  int prefered_width = size.cx;
-  int prefered_height = size.cy;
+  gfx::Size size = kill_button_->GetPreferredSize();
+  int prefered_width = size.width();
+  int prefered_height = size.height();
 
-  tab_table_->SetBounds(
-      x + kPanelHorizMargin,
-      y + kPanelVertMargin,
-      bounds.Width() - 2 * kPanelHorizMargin,
-      bounds.Height() - 2 * kPanelVertMargin - prefered_height);
-
+  tab_table_->SetBounds(x() + kPanelHorizMargin,
+                        y() + kPanelVertMargin,
+                        width() - 2 * kPanelHorizMargin,
+                        height() - 2 * kPanelVertMargin - prefered_height);
+  
   // y-coordinate of button top left.
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
-  int y_buttons = parent_bounds.bottom - prefered_height - kButtonVEdgeMargin;
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
+  int y_buttons = parent_bounds.bottom() - prefered_height - kButtonVEdgeMargin;
 
-  kill_button_->SetBounds(
-      x + bounds.Width() - prefered_width - kPanelHorizMargin,
-      y_buttons,
-      prefered_width,
-      prefered_height);
+  kill_button_->SetBounds(x() + width() - prefered_width - kPanelHorizMargin,
+                          y_buttons,
+                          prefered_width,
+                          prefered_height);
 
-  about_memory_link_->GetPreferredSize(&size);
-  int link_prefered_width = size.cx;
-  int link_prefered_height = size.cy;
+  size = about_memory_link_->GetPreferredSize();
+  int link_prefered_width = size.width();
+  int link_prefered_height = size.height();
   // center between the two buttons horizontally, and line up with
   // bottom of buttons vertically.
   int link_y_offset = std::max(0, prefered_height - link_prefered_height) / 2;
   about_memory_link_->SetBounds(
-      x + kPanelHorizMargin,
+      x() + kPanelHorizMargin,
       y_buttons + prefered_height - link_prefered_height - link_y_offset,
       link_prefered_width,
       link_prefered_height);
 }
 
-void TaskManagerContents::GetPreferredSize(CSize* out) {
-  out->cx = kDefaultWidth;
-  out->cy = kDefaultHeight;
+gfx::Size TaskManagerContents::GetPreferredSize() {
+  return gfx::Size(kDefaultWidth, kDefaultHeight);
 }
 
 void TaskManagerContents::GetSelection(std::vector<int>* selection) {
   DCHECK(selection);
-  for (ChromeViews::TableSelectionIterator iter  = tab_table_->SelectionBegin();
+  for (views::TableSelectionIterator iter  = tab_table_->SelectionBegin();
        iter != tab_table_->SelectionEnd(); ++iter) {
     // The TableView returns the selection starting from the end.
     selection->insert(selection->begin(), *iter);
@@ -735,12 +872,12 @@ void TaskManagerContents::GetFocused(std::vector<int>* focused) {
 }
 
 // NativeButton::Listener implementation.
-void TaskManagerContents::ButtonPressed(ChromeViews::NativeButton* sender) {
+void TaskManagerContents::ButtonPressed(views::NativeButton* sender) {
   if (sender == kill_button_)
     task_manager_->KillSelectedProcesses();
 }
 
-// ChromeViews::TableViewObserver implementation.
+// views::TableViewObserver implementation.
 void TaskManagerContents::OnSelectionChanged() {
   kill_button_->SetEnabled(!task_manager_->BrowserProcessIsSelected() &&
                            tab_table_->SelectedRowCount() > 0);
@@ -755,8 +892,8 @@ void TaskManagerContents::OnKeyDown(unsigned short virtual_keycode) {
     task_manager_->ActivateFocusedTab();
 }
 
-// ChromeViews::LinkController implementation
-void TaskManagerContents::LinkActivated(ChromeViews::Link* source,
+// views::LinkController implementation
+void TaskManagerContents::LinkActivated(views::Link* source,
                                         int event_flags) {
   DCHECK(source == about_memory_link_);
   Browser* browser = BrowserList::GetLastActive();
@@ -765,13 +902,13 @@ void TaskManagerContents::LinkActivated(ChromeViews::Link* source,
                    PageTransition::LINK);
 }
 
-void TaskManagerContents::ShowContextMenu(ChromeViews::View* source,
+void TaskManagerContents::ShowContextMenu(views::View* source,
                                           int x,
                                           int y,
                                           bool is_mouse_gesture) {
   UpdateStatsCounters();
-  Menu menu(this, Menu::TOPLEFT, source->GetViewContainer()->GetHWND());
-  for (std::vector<ChromeViews::TableColumn>::iterator i =
+  Menu menu(this, Menu::TOPLEFT, source->GetContainer()->GetHWND());
+  for (std::vector<views::TableColumn>::iterator i =
        columns_.begin(); i != columns_.end(); ++i) {
     menu.AppendMenuItem(i->id, i->title, Menu::CHECKBOX);
   }
@@ -809,7 +946,7 @@ void TaskManager::Open() {
   if (task_manager->window()) {
     task_manager->window()->MoveToFront(true);
   } else {
-    ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), task_manager);
+    views::Window::CreateChromeWindow(NULL, gfx::Rect(), task_manager);
     task_manager->table_model_->StartUpdating();
     task_manager->window()->Show();
   }
@@ -948,7 +1085,7 @@ void TaskManager::WindowClosing() {
   ReleaseWindow();
 }
 
-ChromeViews::View* TaskManager::GetContentsView() {
+views::View* TaskManager::GetContentsView() {
   return contents_.get();
 }
 

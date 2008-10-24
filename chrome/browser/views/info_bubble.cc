@@ -14,7 +14,7 @@
 #include "chrome/common/win_util.h"
 #include "chrome/views/root_view.h"
 
-using ChromeViews::View;
+using views::View;
 
 // All sizes are in pixels.
 
@@ -67,7 +67,7 @@ static const int kMinimumAlpha = 72;
 // static
 InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              const gfx::Rect& position_relative_to,
-                             ChromeViews::View* content,
+                             views::View* content,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
   window->Init(parent_hwnd, position_relative_to, content);
@@ -87,7 +87,7 @@ InfoBubble::~InfoBubble() {
 
 void InfoBubble::Init(HWND parent_hwnd,
                       const gfx::Rect& position_relative_to,
-                      ChromeViews::View* content) {
+                      views::View* content) {
   if (kInfoBubbleCornerTopLeft == NULL) {
     kInfoBubbleCornerTopLeft = ResourceBundle::GetSharedInstance()
         .GetBitmapNamed(IDR_INFO_BUBBLE_CORNER_TOP_LEFT);
@@ -107,7 +107,7 @@ void InfoBubble::Init(HWND parent_hwnd,
       (win_util::GetWinVersion() < win_util::WINVERSION_XP) ?
       0 : CS_DROPSHADOW);
 
-  HWNDViewContainer::Init(parent_hwnd, bounds, true);
+  ContainerWin::Init(parent_hwnd, bounds, true);
   SetContentsView(content_view_);
   // The preferred size may differ when parented. Ask for the bounds again
   // and if they differ reset the bounds.
@@ -128,11 +128,10 @@ void InfoBubble::Init(HWND parent_hwnd,
   }
 
   // Register the Escape accelerator for closing.
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetHWND());
-  focus_manager->RegisterAccelerator(ChromeViews::Accelerator(VK_ESCAPE,
-                                                              false, false,
-                                                              false),
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetHWND());
+  focus_manager->RegisterAccelerator(views::Accelerator(VK_ESCAPE, false,
+                                                        false, false),
                                      this);
 
   fade_animation_.reset(new SlideAnimation(this));
@@ -146,7 +145,7 @@ void InfoBubble::Close() {
     delegate_->InfoBubbleClosing(this);
   if (frame)
     frame->InfoBubbleClosing();
-  HWNDViewContainer::Close();
+  ContainerWin::Close();
 }
 
 void InfoBubble::AnimationProgressed(const Animation* animation) {
@@ -161,8 +160,7 @@ void InfoBubble::AnimationProgressed(const Animation* animation) {
   content_view_->SchedulePaint();
 }
 
-bool InfoBubble::AcceleratorPressed(
-    const ChromeViews::Accelerator& accelerator) {
+bool InfoBubble::AcceleratorPressed(const views::Accelerator& accelerator) {
   DCHECK(accelerator.GetKeyCode() == VK_ESCAPE);
   if (!delegate_ || delegate_->CloseOnEscape()) {
     Close();
@@ -203,8 +201,7 @@ BrowserWindow* InfoBubble::GetHostingWindow() {
 
 // ContentView ----------------------------------------------------------------
 
-InfoBubble::ContentView::ContentView(ChromeViews::View* content,
-                                     InfoBubble* host)
+InfoBubble::ContentView::ContentView(views::View* content, InfoBubble* host)
     : host_(host) {
   if (UILayoutIsRightToLeft()) {
     arrow_edge_ = TOP_RIGHT;
@@ -236,14 +233,15 @@ gfx::Rect InfoBubble::ContentView::CalculateWindowBounds(
   return CalculateWindowBounds(position_relative_to);
 }
 
-void InfoBubble::ContentView::GetPreferredSize(CSize* pref) {
+gfx::Size InfoBubble::ContentView::GetPreferredSize() {
   DCHECK(GetChildViewCount() == 1);
   View* content = GetChildViewAt(0);
-  content->GetPreferredSize(pref);
-  pref->cx += kBorderSize + kBorderSize + kInfoBubbleViewLeftMargin +
-              kInfoBubbleViewRightMargin;
-  pref->cy += kBorderSize + kBorderSize + kArrowSize +
-              kInfoBubbleViewTopMargin + kInfoBubbleViewBottomMargin;
+  gfx::Size pref = content->GetPreferredSize();
+  pref.Enlarge(kBorderSize + kBorderSize + kInfoBubbleViewLeftMargin +
+                   kInfoBubbleViewRightMargin,
+               kBorderSize + kBorderSize + kArrowSize +
+                   kInfoBubbleViewTopMargin + kInfoBubbleViewBottomMargin);
+  return pref;
 }
 
 void InfoBubble::ContentView::Layout() {
@@ -405,19 +403,18 @@ void InfoBubble::ContentView::Paint(ChromeCanvas* canvas) {
 
 gfx::Rect InfoBubble::ContentView::CalculateWindowBounds(
     const gfx::Rect& position_relative_to) {
-  CSize pref;
-  GetPreferredSize(&pref);
+  gfx::Size pref = GetPreferredSize();
   int x = position_relative_to.x() + position_relative_to.width() / 2;
   int y;
   if (IsLeft())
     x -= kArrowXOffset;
   else
-    x = x + kArrowXOffset - pref.cx;
+    x = x + kArrowXOffset - pref.width();
   if (IsTop()) {
     y = position_relative_to.bottom() + kArrowToContentPadding;
   } else {
-    y = position_relative_to.y() - kArrowToContentPadding - pref.cy;
+    y = position_relative_to.y() - kArrowToContentPadding - pref.height();
   }
-  return gfx::Rect(x, y, pref.cx, pref.cy);
+  return gfx::Rect(x, y, pref.width(), pref.height());
 }
 

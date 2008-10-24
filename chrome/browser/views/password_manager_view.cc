@@ -7,6 +7,8 @@
 #include "chrome/browser/profile.h"
 #include "chrome/browser/views/password_manager_view.h"
 #include "chrome/browser/views/standard_layout.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
 #include "chrome/views/background.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/native_button.h"
@@ -14,8 +16,8 @@
 
 #include "generated_resources.h"
 
-using ChromeViews::ColumnSet;
-using ChromeViews::GridLayout;
+using views::ColumnSet;
+using views::GridLayout;
 
 // We can only have one PasswordManagerView at a time.
 static PasswordManagerView* instance_ = NULL;
@@ -34,32 +36,35 @@ MultiLabelButtons::MultiLabelButtons(const std::wstring& label,
       pref_size_(-1, -1) {
 }
 
-void MultiLabelButtons::GetPreferredSize(CSize *out) {
-  if (pref_size_.cx == -1 && pref_size_.cy == -1) {
+gfx::Size MultiLabelButtons::GetPreferredSize() {
+  if (pref_size_.width() == -1 && pref_size_.height() == -1) {
     // Let's compute our preferred size.
     std::wstring current_label = GetLabel();
     SetLabel(label_);
-    NativeButton::GetPreferredSize(&pref_size_);
+    pref_size_ = NativeButton::GetPreferredSize();
     SetLabel(alt_label_);
-    CSize alt_pref_size;
-    NativeButton::GetPreferredSize(&alt_pref_size);
+    gfx::Size alt_pref_size = NativeButton::GetPreferredSize();
     // Revert to the original label.
     SetLabel(current_label);
-    pref_size_.cx = std::max(pref_size_.cx, alt_pref_size.cx);
-    pref_size_.cy = std::max(pref_size_.cy, alt_pref_size.cy);
+    pref_size_.SetSize(std::max(pref_size_.width(), alt_pref_size.width()),
+                       std::max(pref_size_.height(), alt_pref_size.height()));
   }
-  *out = pref_size_;
+  return gfx::Size(pref_size_.width(), pref_size_.height());
+}
+
+////////////////////////////////////////////////////////////////////
+// PasswordManagerTableModel::PasswordRow
+PasswordManagerTableModel::PasswordRow::~PasswordRow() {
+  delete form;
 }
 
 ////////////////////////////////////////////////////////////////////
 // PasswordManagerTableModel
-PasswordManagerTableModel::PasswordManagerTableModel(
-    WebDataService* profile_web_data_service)
-    : saved_signons_deleter_(&saved_signons_),
-      observer_(NULL),
+PasswordManagerTableModel::PasswordManagerTableModel(Profile* profile)
+    : observer_(NULL),
       pending_login_query_(NULL),
-      web_data_service_(profile_web_data_service) {
-  DCHECK(web_data_service_);
+      profile_(profile) {
+  DCHECK(profile && profile->GetWebDataService(Profile::EXPLICIT_ACCESS));
 }
 
 PasswordManagerTableModel::~PasswordManagerTableModel() {
@@ -72,27 +77,34 @@ int PasswordManagerTableModel::RowCount() {
 
 std::wstring PasswordManagerTableModel::GetText(int row,
                                                 int col_id) {
-  PasswordForm* signon = GetPasswordFormAt(row);
-  DCHECK(signon);
   switch (col_id) {
     case IDS_PASSWORD_MANAGER_VIEW_SITE_COLUMN:  // Site.
-      return UTF8ToWide(signon->origin.spec());
+      return saved_signons_[row].display_url.display_url();
     case IDS_PASSWORD_MANAGER_VIEW_USERNAME_COLUMN:  // Username.
-      return signon->username_value;
+      return GetPasswordFormAt(row)->username_value;
     default:
       NOTREACHED() << "Invalid column.";
       return std::wstring();
   }
 }
 
+int PasswordManagerTableModel::CompareValues(int row1, int row2,
+                                             int column_id) {
+  if (column_id == IDS_PASSWORD_MANAGER_VIEW_SITE_COLUMN) {
+    return saved_signons_[row1].display_url.Compare(
+        saved_signons_[row2].display_url, GetCollator());
+  }
+  return TableModel::CompareValues(row1, row2, column_id);
+}
+
 void PasswordManagerTableModel::SetObserver(
-    ChromeViews::TableModelObserver* observer) {
+    views::TableModelObserver* observer) {
   observer_ = observer;
 }
 
 void PasswordManagerTableModel::GetAllSavedLoginsForProfile() {
   DCHECK(!pending_login_query_);
-  pending_login_query_ = web_data_service_->GetAllAutofillableLogins(this);
+  pending_login_query_ = web_data_service()->GetAllAutofillableLogins(this);
 }
 
 void PasswordManagerTableModel::OnWebDataServiceRequestDone(
@@ -109,41 +121,46 @@ void PasswordManagerTableModel::OnWebDataServiceRequestDone(
   // Get the result from the database into a useable form.
   const WDResult<std::vector<PasswordForm*> >* r =
       static_cast<const WDResult<std::vector<PasswordForm*> >*>(result);
-  // Copy vector of *pointers* to saved_logins_, thus taking ownership of the
-  // PasswordForm's in the result.
-  saved_signons_ = r->GetValue();
+  std::vector<PasswordForm*> rows = r->GetValue();
+  saved_signons_.clear();
+  saved_signons_.resize(rows.size());
+  std::wstring languages =
+      profile_->GetPrefs()->GetString(prefs::kAcceptLanguages);
+  for (size_t i = 0; i < rows.size(); ++i) {
+    saved_signons_[i].form = rows[i];
+    saved_signons_[i].display_url =
+        gfx::SortedDisplayURL(rows[i]->origin, languages);
+  }
   if (observer_)
     observer_->OnModelChanged();
 }
 
 void PasswordManagerTableModel::CancelLoginsQuery() {
   if (pending_login_query_) {
-    web_data_service_->CancelRequest(pending_login_query_);
+    web_data_service()->CancelRequest(pending_login_query_);
     pending_login_query_ = NULL;
   }
 }
 
 PasswordForm* PasswordManagerTableModel::GetPasswordFormAt(int row) {
   DCHECK(row >= 0 && row < RowCount());
-  return saved_signons_[row];
+  return saved_signons_[row].form;
 }
 
 void PasswordManagerTableModel::ForgetAndRemoveSignon(int row) {
   DCHECK(row >= 0 && row < RowCount());
-  PasswordForms::iterator target_iter = saved_signons_.begin() + row;
+  PasswordRows::iterator target_iter = saved_signons_.begin() + row;
   // Remove from DB, memory, and vector.
-  web_data_service_->RemoveLogin(**target_iter);
-  delete *target_iter;
+  web_data_service()->RemoveLogin(*(target_iter->form));
   saved_signons_.erase(target_iter);
   if (observer_)
     observer_->OnItemsRemoved(row, 1);
 }
 
 void PasswordManagerTableModel::ForgetAndRemoveAllSignons() {
-  PasswordForms::iterator iter = saved_signons_.begin();
+  PasswordRows::iterator iter = saved_signons_.begin();
   while (iter != saved_signons_.end()) {
-    web_data_service_->RemoveLogin(**iter);
-    delete *iter;
+    web_data_service()->RemoveLogin(*(iter->form));
     iter = saved_signons_.erase(iter);
   }
   if (observer_)
@@ -160,7 +177,7 @@ void PasswordManagerView::Show(Profile* profile) {
     instance_ = new PasswordManagerView(profile);
 
     // manager is owned by the dialog window, so Close() will delete it.
-    ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), instance_);
+    views::Window::CreateChromeWindow(NULL, gfx::Rect(), instance_);
   }
   if (!instance_->window()->IsVisible()) {
     instance_->window()->Show();
@@ -177,26 +194,28 @@ PasswordManagerView::PasswordManagerView(Profile* profile)
           IDS_PASSWORD_MANAGER_VIEW_REMOVE_BUTTON)),
       remove_all_button_(l10n_util::GetString(
           IDS_PASSWORD_MANAGER_VIEW_REMOVE_ALL_BUTTON)),
-      table_model_(profile->GetWebDataService(Profile::EXPLICIT_ACCESS)) {
+      table_model_(profile) {
   Init();
 }
 
 void PasswordManagerView::SetupTable() {
   // Creates the different columns for the table.
   // The float resize values are the result of much tinkering.
-  std::vector<ChromeViews::TableColumn> columns;
-  columns.push_back(
-      ChromeViews::TableColumn(
-          IDS_PASSWORD_MANAGER_VIEW_SITE_COLUMN,
-          ChromeViews::TableColumn::LEFT, -1, 0.55f));
-  columns.push_back(
-      ChromeViews::TableColumn(
-          IDS_PASSWORD_MANAGER_VIEW_USERNAME_COLUMN,
-          ChromeViews::TableColumn::RIGHT, -1, 0.37f));
-  table_view_ = new ChromeViews::TableView(&table_model_,
-                                           columns,
-                                           ChromeViews::TEXT_ONLY,
-                                           true, true, true);
+  std::vector<views::TableColumn> columns;
+  columns.push_back(views::TableColumn(IDS_PASSWORD_MANAGER_VIEW_SITE_COLUMN,
+                                       views::TableColumn::LEFT, -1, 0.55f));
+  columns.back().sortable = true;
+  columns.push_back(views::TableColumn(
+      IDS_PASSWORD_MANAGER_VIEW_USERNAME_COLUMN, views::TableColumn::RIGHT,
+      -1, 0.37f));
+  columns.back().sortable = true;
+  table_view_ = new views::TableView(&table_model_, columns, views::TEXT_ONLY,
+                                     true, true, true);
+  // Make the table initially sorted by host.
+  views::TableView::SortDescriptors sort;
+  sort.push_back(views::TableView::SortDescriptor(
+      IDS_PASSWORD_MANAGER_VIEW_SITE_COLUMN, true));
+  table_view_->SetSortDescriptors(sort);
   table_view_->SetObserver(this);
 }
 
@@ -268,23 +287,21 @@ void PasswordManagerView::Layout() {
 
   // Manually lay out the Remove All button in the same row as
   // the close button.
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
-  CSize prefsize;
-  remove_all_button_.GetPreferredSize(&prefsize);
-  int button_y = parent_bounds.bottom - prefsize.cy - kButtonVEdgeMargin;
-  remove_all_button_.SetBounds(kPanelHorizMargin, button_y, prefsize.cx,
-                               prefsize.cy);
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
+  gfx::Size prefsize = remove_all_button_.GetPreferredSize();
+  int button_y =
+      parent_bounds.bottom() - prefsize.height() - kButtonVEdgeMargin;
+  remove_all_button_.SetBounds(kPanelHorizMargin, button_y, prefsize.width(),
+                               prefsize.height());
 }
 
-void PasswordManagerView::GetPreferredSize(CSize* out) {
-  out->cx = kDefaultWindowWidth;
-  out->cy = kDefaultWindowHeight;
+gfx::Size PasswordManagerView::GetPreferredSize() {
+  return gfx::Size(kDefaultWindowWidth, kDefaultWindowHeight);
 }
 
 void PasswordManagerView::ViewHierarchyChanged(bool is_add,
-                                               ChromeViews::View* parent,
-                                               ChromeViews::View* child) {
+                                               views::View* parent,
+                                               views::View* child) {
   if (child == this) {
     // Add and remove the Remove All button from the ClientView's hierarchy.
     if (is_add) {
@@ -329,7 +346,7 @@ std::wstring PasswordManagerView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_PASSWORD_MANAGER_VIEW_TITLE);
 }
 
-void PasswordManagerView::ButtonPressed(ChromeViews::NativeButton* sender) {
+void PasswordManagerView::ButtonPressed(views::NativeButton* sender) {
   DCHECK(window());
   // Close will result in our destruction.
   if (sender == &remove_all_button_) {
@@ -339,7 +356,7 @@ void PasswordManagerView::ButtonPressed(ChromeViews::NativeButton* sender) {
 
   // The following require a selection (and only one, since table is single-
   // select only).
-  ChromeViews::TableSelectionIterator iter = table_view_->SelectionBegin();
+  views::TableSelectionIterator iter = table_view_->SelectionBegin();
   int row = *iter;
   PasswordForm* selected = table_model_.GetPasswordFormAt(row);
   DCHECK(++iter == table_view_->SelectionEnd());
@@ -370,7 +387,6 @@ void PasswordManagerView::WindowClosing() {
   instance_ = NULL;
 }
 
-ChromeViews::View* PasswordManagerView::GetContentsView() {
+views::View* PasswordManagerView::GetContentsView() {
   return this;
 }
-

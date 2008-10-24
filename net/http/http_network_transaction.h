@@ -11,6 +11,7 @@
 #include "net/base/address_list.h"
 #include "net/base/client_socket_handle.h"
 #include "net/base/host_resolver.h"
+#include "net/base/ssl_config_service.h"
 #include "net/http/http_auth.h"
 #include "net/http/http_auth_handler.h"
 #include "net/http/http_response_info.h"
@@ -30,8 +31,9 @@ class HttpNetworkTransaction : public HttpTransaction {
   HttpNetworkTransaction(HttpNetworkSession* session,
                          ClientSocketFactory* socket_factory);
 
+  virtual ~HttpNetworkTransaction();
+
   // HttpTransaction methods:
-  virtual void Destroy();
   virtual int Start(const HttpRequestInfo* request_info,
                     CompletionCallback* callback);
   virtual int RestartIgnoringLastError(CompletionCallback* callback);
@@ -44,7 +46,6 @@ class HttpNetworkTransaction : public HttpTransaction {
   virtual uint64 GetUploadProgress() const;
 
  private:
-  ~HttpNetworkTransaction();
   void BuildRequestHeaders();
   void BuildTunnelRequest();
   void DoCallback(int result);
@@ -84,6 +85,11 @@ class HttpNetworkTransaction : public HttpTransaction {
   // returns the same error code.
   int HandleCertificateError(int error);
 
+  // Called to possibly recover from an SSL handshake error.  Sets next_state_
+  // and returns OK if recovering from the error.  Otherwise, the same error
+  // code is returned.
+  int HandleSSLHandshakeError(int error);
+
   // Called to possibly recover from the given error.  Sets next_state_ and
   // returns OK if recovering from the error.  Otherwise, the same error code
   // is returned.
@@ -101,6 +107,11 @@ class HttpNetworkTransaction : public HttpTransaction {
   // available synchronously or asynchronously.  Otherwise, the given error
   // code is simply returned.
   int ReconsiderProxyAfterError(int error);
+
+  // Decides the policy when the connection is closed before the end of headers
+  // has been read. This only applies to reading responses, and not writing
+  // requests.
+  int HandleConnectionClosedBeforeEndOfHeaders();
 
   // Return true if based on the bytes read so far, the start of the
   // status line is known. This is used to distingish between HTTP/0.9
@@ -180,6 +191,8 @@ class HttpNetworkTransaction : public HttpTransaction {
   // STATE_READ_HEADERS_COMPLETE states and allows us to tell them apart from
   // the real request/response of the transaction.
   bool establishing_tunnel_;
+
+  SSLConfig ssl_config_;
 
   std::string request_headers_;
   size_t request_headers_bytes_sent_;

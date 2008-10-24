@@ -198,6 +198,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\test_tab_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\test_tab_contents.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\net\url_request\url_request_test_job.cc"
 				>
 			</File>
@@ -539,10 +547,26 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="TestDownloadRequestManager"
+			>
+			<File
+				RelativePath="..\..\browser\download\download_request_manager_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="TestTemplateURLParser"
 			>
 			<File
 				RelativePath="..\..\browser\template_url_parser_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestTemplateURLPrepopulateData"
+			>
+			<File
+				RelativePath="..\..\browser\template_url_prepopulate_data_unittest.cc"
 				>
 			</File>
 		</Filter>

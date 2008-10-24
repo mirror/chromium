@@ -10,12 +10,14 @@
 #include <vector>
 
 #include "config.h"
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "ResourceHandle.h"
 #include "ResourceHandleClient.h"
 #include "ResourceRequest.h"
 #include "Widget.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #include "base/basictypes.h"
 #include "base/scoped_ptr.h"
@@ -64,7 +66,20 @@ class WebPluginContainer : public WebCore::Widget {
   virtual void attachToWindow();
   virtual void detachFromWindow();
 
-  // These methods are invoked from webkit when it has data to be sent to the 
+#if USE(JSC)
+  virtual bool isPluginView() const;
+#endif
+
+  // Returns window-relative rectangles that should clip this widget.
+  // Only rects that intersect the given bounds are relevant.
+  // Use this to implement iframe shim behavior.
+  //
+  // TODO(tulrich): add this method to WebCore/platform/Widget.h so it
+  // can be used by any platform.
+  void windowCutoutRects(const WebCore::IntRect& bounds,
+                         WTF::Vector<WebCore::IntRect>* cutouts) const;
+
+  // These methods are invoked from webkit when it has data to be sent to the
   // plugin. The plugin in this case does not initiate a download for the data.
   void didReceiveResponse(const WebCore::ResourceResponse& response);
   void didReceiveData(const char *buffer, int length);
@@ -77,7 +92,7 @@ class WebPluginContainer : public WebCore::Widget {
     uint32 last_modified;
     uint32 expected_length;
   };
-  // Helper function to read fields in a HTTP response structure. 
+  // Helper function to read fields in a HTTP response structure.
   // These fields are written to the HttpResponseInfo structure passed in.
   static void ReadHttpResponseInfo(const WebCore::ResourceResponse& response,
                                    HttpResponseInfo* http_response);
@@ -107,7 +122,7 @@ class WebPluginImpl : public WebPlugin,
 
   virtual NPObject* GetPluginScriptableObject();
 
-  // Helper function for sorting post data. 
+  // Helper function for sorting post data.
   static bool SetPostData(WebCore::ResourceRequest* request,
                           const char *buf,
                           uint32 length);
@@ -126,10 +141,10 @@ class WebPluginImpl : public WebPlugin,
 
   // Executes the script passed in. The notify_needed and notify_data arguments
   // are passed in by the plugin process. These indicate whether the plugin
-  // expects a notification on script execution. We pass them back to the 
+  // expects a notification on script execution. We pass them back to the
   // plugin as is. This avoids having to track the notification arguments
   // in the plugin process.
-  bool ExecuteScript(const std::string& url, const std::wstring& script, 
+  bool ExecuteScript(const std::string& url, const std::wstring& script,
                      bool notify_needed, int notify_data, bool popups_allowed);
 
   // Given a download request, check if we need to route the output
@@ -175,6 +190,15 @@ class WebPluginImpl : public WebPlugin,
   // Widget implementation:
   virtual WebCore::IntRect windowClipRect() const;
   virtual void geometryChanged() const;
+
+  // Returns window-relative rectangles that should clip this widget.
+  // Only rects that intersect the given bounds are relevant.
+  // Use this to implement iframe shim behavior.
+  //
+  // TODO(tulrich): windowCutoutRects() is not in WebCore::Widgets
+  // yet; need to add it.
+  void windowCutoutRects(const WebCore::IntRect& bounds,
+                         WTF::Vector<WebCore::IntRect>* rects) const;
 
   // Override for when our window changes size or position.
   // Used to notify the plugin when the size or position changes.
@@ -235,9 +259,10 @@ class WebPluginImpl : public WebPlugin,
   // Calculates the bounds of the plugin widget based on the frame rect passed in.
   void CalculateBounds(const WebCore::IntRect& frame_rect,
                        WebCore::IntRect* window_rect,
-                       WebCore::IntRect* clip_rect);
+                       WebCore::IntRect* clip_rect,
+                       std::vector<gfx::Rect>* cutout_rects);
 
-  void HandleURLRequest(const char *method, 
+  void HandleURLRequest(const char *method,
                         bool is_javascript_url,
                         const char* target, unsigned int len,
                         const char* buf, bool is_file_data,
@@ -247,7 +272,7 @@ class WebPluginImpl : public WebPlugin,
   void CancelDocumentLoad();
 
   void InitiateHTTPRangeRequest(const char* url, const char* range_info,
-                                HANDLE existing_stream, bool notify_needed, 
+                                HANDLE existing_stream, bool notify_needed,
                                 HANDLE notify_data);
 
   // Handles HTTP multipart responses, i.e. responses received with a HTTP

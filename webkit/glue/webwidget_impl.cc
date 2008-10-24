@@ -4,7 +4,9 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "Cursor.h"
 #include "FramelessScrollView.h"
 #include "FrameView.h"
@@ -13,7 +15,7 @@
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
 #include "SkiaUtils.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #undef LOG
 #include "base/gfx/platform_canvas.h"
@@ -166,6 +168,9 @@ bool WebWidgetImpl::HandleInputEvent(const WebInputEvent* input_event) {
     case WebInputEvent::KEY_DOWN:
     case WebInputEvent::KEY_UP:
       return KeyEvent(*static_cast<const WebKeyboardEvent*>(input_event));
+
+    default:
+      break;
   }
   return false;
 }
@@ -252,3 +257,9 @@ void WebWidgetImpl::setFocus() {
   delegate_->Focus(this);
 }
 
+bool WebWidgetImpl::isHidden() {
+  if (!delegate_)
+    return true;
+
+  return delegate_->IsHidden();
+}

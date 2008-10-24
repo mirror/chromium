@@ -10,7 +10,7 @@
 #include "googleurl/src/gurl.h"
 #include "SkColor.h"
 
-namespace ChromeViews {
+namespace views {
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -39,11 +39,11 @@ class Label : public View {
   virtual ~Label();
 
   // Overridden to compute the size required to display this label
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // Return the height necessary to display this label with the provided width.
   // This method is used to layout multi-line labels. It is equivalent to
-  // GetPreferredSize().cy if the receiver is not multi-line
+  // GetPreferredSize().height() if the receiver is not multi-line
   virtual int GetHeightForWidth(int w);
 
   // Returns chrome/views/Label.
@@ -154,13 +154,13 @@ class Label : public View {
   gfx::Rect GetTextBounds();
 
   int ComputeMultiLineFlags();
-  void GetTextSize(CSize* out);
+  gfx::Size GetTextSize();
   void Init(const std::wstring& text, const ChromeFont& font);
   std::wstring text_;
   GURL url_;
   ChromeFont font_;
   SkColor color_;
-  CSize text_size_;
+  gfx::Size text_size_;
   bool text_size_valid_;
   bool is_multi_line_;
   bool url_set_;
@@ -171,6 +171,7 @@ class Label : public View {
   scoped_ptr<Background> mouse_over_background_;
 };
 
-}
+}  // namespace views
+
 #endif  // CHROME_VIEWS_VIEW_H__
 

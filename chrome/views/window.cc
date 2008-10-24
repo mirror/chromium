@@ -22,7 +22,7 @@
 
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 
 // static
 HCURSOR Window::nwse_cursor_ = NULL;
@@ -85,12 +85,19 @@ gfx::Size Window::CalculateMaximumSize() const {
 }
 
 void Window::Show() {
-  ShowWindow(SW_SHOW);
+  Show(SW_SHOW);
+}
+
+void Window::Show(int show_style) {
+  ShowWindow(show_style);
   SetInitialFocus();
 }
 
 void Window::Activate() {
+  if (IsMinimized())
+    ::ShowWindow(GetHWND(), SW_RESTORE);
   ::SetWindowPos(GetHWND(), HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE);
+  SetForegroundWindow(GetHWND());
 }
 
 void Window::SetBounds(const gfx::Rect& bounds) {
@@ -114,7 +121,7 @@ void Window::Close() {
   if (client_view_->CanClose()) {
     SaveWindowPosition();
     RestoreEnabledIfNecessary();
-    HWNDViewContainer::Close();
+    ContainerWin::Close();
     // If the user activates another app after opening us, then comes back and
     // closes us, we want our owner to gain activation.  But only if the owner
     // is visible. If we don't manually force that here, the other app will
@@ -256,7 +263,7 @@ gfx::Size Window::GetLocalizedContentsSize(int col_resource_id,
 // Window, protected:
 
 Window::Window(WindowDelegate* window_delegate)
-    : HWNDViewContainer(),
+    : ContainerWin(),
       focus_on_creation_(true),
       window_delegate_(window_delegate),
       non_client_view_(NULL),
@@ -283,7 +290,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   // return NULL.
   owning_hwnd_ = parent;
   // We call this after initializing our members since our implementations of
-  // assorted HWNDViewContainer functions may be called during initialization.
+  // assorted ContainerWin functions may be called during initialization.
   is_modal_ = window_delegate_->IsModal();
   if (is_modal_)
     BecomeModal();
@@ -294,7 +301,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   if (window_ex_style() == 0)
     set_window_ex_style(CalculateWindowExStyle());
 
-  HWNDViewContainer::Init(parent, bounds, true);
+  ContainerWin::Init(parent, bounds, true);
   win_util::SetWindowUserData(GetHWND(), this);
   
   std::wstring window_title = window_delegate_->GetWindowTitle();
@@ -315,23 +322,24 @@ void Window::SetClientView(ClientView* client_view) {
   client_view_ = client_view;
   if (non_client_view_) {
     // This will trigger the ClientView to be added by the non-client view.
-    HWNDViewContainer::SetContentsView(non_client_view_);
+    ContainerWin::SetContentsView(non_client_view_);
   } else {
-    HWNDViewContainer::SetContentsView(client_view_);
+    ContainerWin::SetContentsView(client_view_);
   }
 }
 
 void Window::SizeWindowToDefault() {
-  CSize pref(0, 0);
+  gfx::Size pref;
   if (non_client_view_) {
-    non_client_view_->GetPreferredSize(&pref);
+    pref = non_client_view_->GetPreferredSize();
   } else {
-    client_view_->GetPreferredSize(&pref);
+    pref = client_view_->GetPreferredSize();
   }
-  DCHECK(pref.cx > 0 && pref.cy > 0);
+  DCHECK(pref.width() > 0 && pref.height() > 0);
   // CenterAndSizeWindow adjusts the window size to accommodate the non-client
   // area.
-  win_util::CenterAndSizeWindow(owning_window(), GetHWND(), pref, true);
+  win_util::CenterAndSizeWindow(owning_window(), GetHWND(), pref.ToSIZE(),
+                                true);
 }
 
 void Window::RunSystemMenu(const CPoint& point) {
@@ -339,7 +347,7 @@ void Window::RunSystemMenu(const CPoint& point) {
   // We need to call this otherwise there's a small chance that we aren't going
   // to get a system menu. We also can't take the return value of this
   // function. We need to call it *again* to get a valid HMENU.
-  ::GetSystemMenu(GetHWND(), TRUE);
+  //::GetSystemMenu(GetHWND(), TRUE);
   HMENU system_menu = ::GetSystemMenu(GetHWND(), FALSE);
   int id = ::TrackPopupMenu(system_menu,
                             TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_RETURNCMD,
@@ -348,7 +356,7 @@ void Window::RunSystemMenu(const CPoint& point) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Window, HWNDViewContainer overrides:
+// Window, ContainerWin overrides:
 
 void Window::OnActivate(UINT action, BOOL minimized, HWND window) {
   if (action == WA_INACTIVE)
@@ -359,17 +367,14 @@ LRESULT Window::OnAppCommand(HWND window, short app_command, WORD device,
                              int keystate) {
   // We treat APPCOMMAND ids as an extension of our command namespace, and just
   // let the delegate figure out what to do...
-  if (!window_delegate_->ExecuteWindowsCommand(app_command)) {
-    return HWNDViewContainer::OnAppCommand(window, app_command, device,
-                                           keystate);
-  }
+  if (!window_delegate_->ExecuteWindowsCommand(app_command))
+    return ContainerWin::OnAppCommand(window, app_command, device, keystate);
   return 0;
 }
 
-
 void Window::OnCommand(UINT notification_code, int command_id, HWND window) {
   if (!window_delegate_->ExecuteWindowsCommand(command_id))
-    HWNDViewContainer::OnCommand(notification_code, command_id, window);
+    ContainerWin::OnCommand(notification_code, command_id, window);
 }
 
 void Window::OnDestroy() {
@@ -378,12 +383,7 @@ void Window::OnDestroy() {
     window_delegate_ = NULL;
   }
   RestoreEnabledIfNecessary();
-  HWNDViewContainer::OnDestroy();
-}
-
-LRESULT Window::OnEraseBkgnd(HDC dc) {
-  SetMsgHandled(TRUE);
-  return 1;
+  ContainerWin::OnDestroy();
 }
 
 LRESULT Window::OnNCActivate(BOOL active) {
@@ -392,7 +392,7 @@ LRESULT Window::OnNCActivate(BOOL active) {
     return DefWindowProc(GetHWND(), WM_NCACTIVATE, TRUE, 0);
   }
   // Otherwise just do the default thing.
-  return HWNDViewContainer::OnNCActivate(active);
+  return ContainerWin::OnNCActivate(active);
 }
 
 LRESULT Window::OnNCHitTest(const CPoint& point) {
@@ -418,14 +418,14 @@ LRESULT Window::OnNCHitTest(const CPoint& point) {
 void Window::OnNCLButtonDown(UINT ht_component, const CPoint& point) {
   if (non_client_view_ && ht_component == HTSYSMENU)
     RunSystemMenu(non_client_view_->GetSystemMenuPoint());
-  HWNDViewContainer::OnNCLButtonDown(ht_component, point);
+  ContainerWin::OnNCLButtonDown(ht_component, point);
 }
 
 void Window::OnNCRButtonDown(UINT ht_component, const CPoint& point) {
   if (ht_component == HTCAPTION || ht_component == HTSYSMENU) {
     RunSystemMenu(point);
   } else {
-    HWNDViewContainer::OnNCRButtonDown(ht_component, point);
+    ContainerWin::OnNCRButtonDown(ht_component, point);
   }
 }
 
@@ -501,21 +501,10 @@ void Window::SetInitialFocus() {
   if (!focus_on_creation_)
     return;
 
-  bool focus_set = false;
-  ChromeViews::View* v = window_delegate_->GetInitiallyFocusedView();
+  View* v = window_delegate_->GetInitiallyFocusedView();
   if (v) {
-    focus_set = true;
-    // In order to make that view the initially focused one, we make it the
-    // focused view on the focus manager and we store the focused view.
-    // When the window is activated, the focus manager will restore the
-    // stored focused view.
-    FocusManager* focus_manager = FocusManager::GetFocusManager(GetHWND());
-    DCHECK(focus_manager);
-    focus_manager->SetFocusedView(v);
-    focus_manager->StoreFocusedView();
-  }
-
-  if (!focus_set && focus_on_creation_) {
+    v->RequestFocus();
+  } else {
     // The window does not get keyboard messages unless we focus it, not sure
     // why.
     SetFocus(GetHWND());
@@ -638,11 +627,8 @@ DWORD Window::CalculateWindowStyle() {
 
 DWORD Window::CalculateWindowExStyle() {
   DWORD window_ex_styles = 0;
-  if (window_delegate_->AsDialogDelegate()) {
+  if (window_delegate_->AsDialogDelegate())
     window_ex_styles |= WS_EX_DLGMODALFRAME;
-  } else if (!(window_style() & WS_CHILD)) {
-    window_ex_styles |= WS_EX_APPWINDOW;
-  }
   if (window_delegate_->IsAlwaysOnTop())
     window_ex_styles |= WS_EX_TOPMOST;
   return window_ex_styles;
@@ -670,5 +656,5 @@ void Window::InitClass() {
   }
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

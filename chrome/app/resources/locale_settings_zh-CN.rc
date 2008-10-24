@@ -7,10 +7,10 @@ BEGIN
   IDS_DEFAULT_ENCODING          "gb18030"
   IDS_STANDARD_FONT_IS_SERIF    "false"
   IDS_FIXED_FONT_FAMILY         "NSimsun"
-  IDS_SERIF_FONT_FAMILY         "Simhei"
+  IDS_SERIF_FONT_FAMILY         "Simsun"
   IDS_SANS_SERIF_FONT_FAMILY    "Simsun"
-  IDS_CURSIVE_FONT_FAMILY       "Script"
-  IDS_FANTASY_FONT_FAMILY       "Comic Sans MS"
+  IDS_CURSIVE_FONT_FAMILY       "Comic Sans MS"
+  IDS_FANTASY_FONT_FAMILY       "Impact"
   IDS_DEFAULT_FONT_SIZE         "16"
   IDS_DEFAULT_FIXED_FONT_SIZE   "13"
   IDS_MINIMUM_FONT_SIZE         "1"
@@ -60,11 +60,12 @@ BEGIN
   IDS_WELCOME_PAGE_URL "http://tools.google.com/chrome/intl/zh-CN/welcome.html"
   IDS_LEARN_MORE_INCOGNITO_URL "http://www.google.com/support/chrome/bin/answer.py?answer=95464&hl=zh-CN"
   IDS_LEARN_MORE_HELPMAKECHROMEBETTER_URL "http://www.google.com/support/chrome/bin/answer.py?answer=96817&hl=zh-CN"
-  IDS_ABOUT_VERSION_LICENSE_URL "http://www.google.com/support/chrome/bin/answer.py?answer=100336"
 END
 
 #if defined(GOOGLE_CHROME_BUILD)
 #include "google_chrome_strings_zh-CN.rc"
+IDR_TERMS_HTML  BINDATA   "terms\\terms_zh-CN.html"
 #else
 #include "chromium_strings_zh-CN.rc"
+IDR_TERMS_HTML  BINDATA   "terms\\terms_chromium.html"
 #endif

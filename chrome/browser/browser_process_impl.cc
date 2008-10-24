@@ -5,9 +5,10 @@
 #include "chrome/browser/browser_process_impl.h"
 
 #include "base/command_line.h"
-#include "base/thread.h"
 #include "base/path_service.h"
+#include "base/thread.h"
 #include "chrome/browser/automation/automation_provider_list.h"
+#include "chrome/browser/browser_trial.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/download/download_file.h"
 #include "chrome/browser/download/save_file_manager.h"
@@ -115,6 +116,16 @@ BrowserProcessImpl::BrowserProcessImpl(CommandLine& command_line)
       else if (model == L"medium")
         memory_model_ = MEDIUM_MEMORY_MODEL;
     }
+  } else {
+    // Randomly choose what memory model to use.
+    const double probability = 0.5;
+    FieldTrial* trial(new FieldTrial(BrowserTrial::kMemoryModelFieldTrial,
+                                     probability));
+    DCHECK(FieldTrialList::Find(BrowserTrial::kMemoryModelFieldTrial) == trial);
+    if (trial->boolean_value())
+      memory_model_ = HIGH_MEMORY_MODEL;
+    else
+      memory_model_ = MEDIUM_MEMORY_MODEL;
   }
 
   suspend_controller_ = new SuspendController();
@@ -183,7 +194,7 @@ BrowserProcessImpl::~BrowserProcessImpl() {
   print_job_manager_.reset();
 
   // The ViewStorage needs to go before the NotificationService.
-  ChromeViews::ViewStorage::DeleteSharedInstance();
+  views::ViewStorage::DeleteSharedInstance();
 
   // Now OK to destroy NotificationService.
   main_notification_service_.reset();
@@ -341,8 +352,8 @@ void BrowserProcessImpl::CreateDebuggerWrapper(int port) {
 
 void BrowserProcessImpl::CreateAcceleratorHandler() {
   DCHECK(accelerator_handler_.get() == NULL);
-  scoped_ptr<ChromeViews::AcceleratorHandler> accelerator_handler(
-      new ChromeViews::AcceleratorHandler);
+  scoped_ptr<views::AcceleratorHandler> accelerator_handler(
+      new views::AcceleratorHandler);
   accelerator_handler_.swap(accelerator_handler);
 }
 

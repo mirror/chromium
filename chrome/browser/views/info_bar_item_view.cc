@@ -7,22 +7,21 @@
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/views/container.h"
 #include "chrome/views/external_focus_tracker.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/view_container.h"
 
 #include "generated_resources.h"
 
 namespace {
 
-class HorizontalSpacer : public ChromeViews::View {
+class HorizontalSpacer : public views::View {
  public:
   explicit HorizontalSpacer(int width) : width_(width) {}
 
-  void GetPreferredSize(CSize* out) {
-    out->cx = width_;
-    out->cy = 0;
+  gfx::Size GetPreferredSize() {
+    return gfx::Size(width_, 0);
   }
 
  private:
@@ -50,9 +49,10 @@ int InfoBarItemView::CenterPosition(int size, int target_size) {
   return (target_size - size) / 2;
 }
 
-void InfoBarItemView::GetPreferredSize(CSize* out) {
-  out->cx = GetParent()->width();
-  out->cy = static_cast<int>(kInfoBarHeight * animation_->GetCurrentValue());
+gfx::Size InfoBarItemView::GetPreferredSize() {
+  return gfx::Size(
+      GetParent()->width(),
+      static_cast<int>(kInfoBarHeight * animation_->GetCurrentValue()));
 }
 
 // The following is an overall note on the underlying implementation. You don't
@@ -99,14 +99,13 @@ void InfoBarItemView::Layout() {
   for (int i = child_count - 1; i >= insert_index_ ; i--) {
     View* v = GetChildViewAt(i);
     if (v->IsVisible()) {
-      CSize view_size;
-      v->GetPreferredSize(&view_size);
-      next_x = next_x - view_size.cx;
+      gfx::Size view_size = v->GetPreferredSize();
+      next_x = next_x - view_size.width();
       v->SetBounds(next_x,
-                   CenterPosition(view_size.cy,
+                   CenterPosition(view_size.height(),
                        static_cast<int>(kInfoBarHeight)) - height_diff,
-                   view_size.cx,
-                   view_size.cy);
+                   view_size.width(),
+                   view_size.height());
     }
   }
   int left_most_x = next_x;
@@ -118,24 +117,23 @@ void InfoBarItemView::Layout() {
   for (int i = 0; i < insert_index_ ; i++) {
     View* v = GetChildViewAt(i);
     if (v->IsVisible()) {
-      CSize view_size;
-      v->GetPreferredSize(&view_size);
+      gfx::Size view_size = v->GetPreferredSize();
       int remaining_space = std::max(0, left_most_x - next_x);
-      if (view_size.cx > remaining_space) {
-        view_size.cx = remaining_space;
+      if (view_size.width() > remaining_space) {
+        view_size.set_width(remaining_space);
       }
       v->SetBounds(next_x,
-                   CenterPosition(view_size.cy,
+                   CenterPosition(view_size.height(),
                        static_cast<int>(kInfoBarHeight)) - height_diff,
-                   view_size.cx,
-                   view_size.cy);
-      next_x = next_x + view_size.cx;
+                   view_size.width(),
+                   view_size.height());
+      next_x = next_x + view_size.width();
     }
   }
 }
 
-void InfoBarItemView::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
+void InfoBarItemView::DidChangeBounds(const gfx::Rect& previous,
+                                      const gfx::Rect& current) {
   if (GetParent() != NULL)
     Layout();
 }
@@ -145,7 +143,7 @@ void InfoBarItemView::BeginClose() {
 }
 
 void InfoBarItemView::Close() {
-  ChromeViews::View* parent = GetParent();
+  views::View* parent = GetParent();
   parent->RemoveChildView(this);
   if (focus_tracker_.get() != NULL)
     focus_tracker_->FocusLastFocusedExternalView();
@@ -157,27 +155,27 @@ void InfoBarItemView::CloseButtonPressed() {
   BeginClose();
 }
 
-void InfoBarItemView::AddChildViewTrailing(ChromeViews::View* view,
+void InfoBarItemView::AddChildViewTrailing(views::View* view,
                                           int leading_padding) {
-  ChromeViews::View::AddChildView(insert_index_, view);
+  views::View::AddChildView(insert_index_, view);
   View* padding = new HorizontalSpacer(leading_padding);
-  ChromeViews::View::AddChildView(insert_index_, padding);
+  views::View::AddChildView(insert_index_, padding);
 }
 
-void InfoBarItemView::AddChildViewTrailing(ChromeViews::View* view) {
+void InfoBarItemView::AddChildViewTrailing(views::View* view) {
   AddChildViewTrailing(view, kUnrelatedControlHorizontalSpacing);
 }
 
-void InfoBarItemView::AddChildViewLeading(ChromeViews::View* view,
+void InfoBarItemView::AddChildViewLeading(views::View* view,
                                          int trailing_padding) {
-  ChromeViews::View::AddChildView(insert_index_, view);
+  views::View::AddChildView(insert_index_, view);
   insert_index_++;
   View* padding = new HorizontalSpacer(trailing_padding);
-  ChromeViews::View::AddChildView(insert_index_, padding);
+  views::View::AddChildView(insert_index_, padding);
   insert_index_++;
 }
 
-void InfoBarItemView::AddChildViewLeading(ChromeViews::View* view) {
+void InfoBarItemView::AddChildViewLeading(views::View* view) {
   AddChildViewLeading(view, kRelatedControlSmallHorizontalSpacing);
 }
 
@@ -185,10 +183,10 @@ void InfoBarItemView::SetIcon(const SkBitmap& icon) {
   if (icon_ == NULL) {
     // Add the icon and its padding to the far left of the info bar, and adjust
     // the insert index accordingly.
-    icon_ = new ChromeViews::ImageView();
+    icon_ = new views::ImageView();
     View* padding = new HorizontalSpacer(kRelatedControlHorizontalSpacing);
-    ChromeViews::View::AddChildView(0, padding);
-    ChromeViews::View::AddChildView(0, icon_);
+    views::View::AddChildView(0, padding);
+    views::View::AddChildView(0, icon_);
     insert_index_ += 2;
   }
   icon_->SetImage(icon);
@@ -205,11 +203,11 @@ void InfoBarItemView::ViewHierarchyChanged(bool is_add,
       View* root_view = GetRootView();
       HWND root_hwnd = NULL;
       if (root_view)
-        root_hwnd = root_view->GetViewContainer()->GetHWND();
+        root_hwnd = root_view->GetContainer()->GetHWND();
 
       if (root_hwnd) {
-        focus_tracker_.reset(new ChromeViews::ExternalFocusTracker(
-            this, ChromeViews::FocusManager::GetFocusManager(root_hwnd)));
+        focus_tracker_.reset(new views::ExternalFocusTracker(
+            this, views::FocusManager::GetFocusManager(root_hwnd)));
       }
     } else {
       // When we're removed from the hierarchy our focus manager is no longer
@@ -220,26 +218,26 @@ void InfoBarItemView::ViewHierarchyChanged(bool is_add,
   }
 }
 
-void InfoBarItemView::AddChildView(ChromeViews::View* view) {
+void InfoBarItemView::AddChildView(views::View* view) {
   AddChildViewTrailing(view, kUnrelatedControlHorizontalSpacing);
 }
 
-void InfoBarItemView::AddChildView(int index, ChromeViews::View* view) {
+void InfoBarItemView::AddChildView(int index, views::View* view) {
   if (index < insert_index_)
     AddChildViewLeading(view);
   else
     AddChildViewTrailing(view);
 }
 
-void InfoBarItemView::RemoveChildView(ChromeViews::View* view) {
+void InfoBarItemView::RemoveChildView(views::View* view) {
   int index = GetChildIndex(view);
   if (index >= 0) {
     if (index < insert_index_) {
       // We're removing a leading view. So the view at index + 1 (immediately
       // trailing) is the corresponding spacer view.
       View* spacer_view = GetChildViewAt(index + 1);
-      ChromeViews::View::RemoveChildView(view);
-      ChromeViews::View::RemoveChildView(spacer_view);
+      views::View::RemoveChildView(view);
+      views::View::RemoveChildView(spacer_view);
       delete spacer_view;
       // Need to change the insert_index_ so it is still pointing at the
       // "middle" index between left and right aligned views.
@@ -248,14 +246,14 @@ void InfoBarItemView::RemoveChildView(ChromeViews::View* view) {
       // We're removing a trailing view. So the view at index - 1 (immediately
       // leading) is the corresponding spacer view.
       View* spacer_view = GetChildViewAt(index - 1);
-      ChromeViews::View::RemoveChildView(view);
-      ChromeViews::View::RemoveChildView(spacer_view);
+      views::View::RemoveChildView(view);
+      views::View::RemoveChildView(spacer_view);
       delete spacer_view;
     }
   }
 }
 
-void InfoBarItemView::ButtonPressed(ChromeViews::BaseButton* button) {
+void InfoBarItemView::ButtonPressed(views::BaseButton* button) {
   if (button == close_button_)
     CloseButtonPressed();
 }
@@ -273,12 +271,12 @@ void InfoBarItemView::AnimationEnded(const Animation* animation) {
 
 void InfoBarItemView::Init() {
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
-  close_button_ = new ChromeViews::Button();
-  close_button_->SetImage(ChromeViews::Button::BS_NORMAL,
+  close_button_ = new views::Button();
+  close_button_->SetImage(views::Button::BS_NORMAL,
                           rb.GetBitmapNamed(IDR_CLOSE_BAR));
-  close_button_->SetImage(ChromeViews::Button::BS_HOT,
+  close_button_->SetImage(views::Button::BS_HOT,
                           rb.GetBitmapNamed(IDR_CLOSE_BAR_H));
-  close_button_->SetImage(ChromeViews::Button::BS_PUSHED,
+  close_button_->SetImage(views::Button::BS_PUSHED,
                           rb.GetBitmapNamed(IDR_CLOSE_BAR_P));
   close_button_->SetListener(this, 0);
   close_button_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_CLOSE));

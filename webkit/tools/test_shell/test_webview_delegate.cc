@@ -759,7 +759,8 @@ void TestWebViewDelegate::GetRootWindowRect(WebWidget* webwidget,
 void TestWebViewDelegate::DidMove(WebWidget* webwidget,
                                   const WebPluginGeometry& move) {
   WebPluginDelegateImpl::MoveWindow(
-      move.window, move.window_rect, move.clip_rect, move.visible);
+      move.window, move.window_rect, move.clip_rect, move.cutout_rects,
+      move.visible);
 }
 
 void TestWebViewDelegate::RunModal(WebWidget* webwidget) {
@@ -776,6 +777,10 @@ void TestWebViewDelegate::RunModal(WebWidget* webwidget) {
 
   for (WindowList::const_iterator i = wl->begin(); i != wl->end(); ++i)
     EnableWindow(*i, TRUE);
+}
+
+bool TestWebViewDelegate::IsHidden() {
+  return false;
 }
 
 void TestWebViewDelegate::RegisterDragDrop() {

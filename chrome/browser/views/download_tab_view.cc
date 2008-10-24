@@ -30,7 +30,8 @@
 
 // Approximate spacing, in pixels, taken from initial UI mock up screens
 static const int kVerticalPadding = 5;
-static const int kHorizontalButtonPadding = 15;
+static const int kHorizontalLinkPadding = 15;
+static const int kHorizontalButtonPadding = 8;
 
 // For vertical and horizontal element spacing
 static const int kSpacer = 20;
@@ -65,11 +66,18 @@ static const SkColor kUrlColor = SkColorSetRGB(0, 128, 0);
 // Paused download indicator (red)
 static const SkColor kPauseColor = SkColorSetRGB(128, 0, 0);
 
+// Warning label color (blue)
+static const SkColor kWarningColor = SkColorSetRGB(87, 108, 149);
+
 // Selected item background color
 static const SkColor kSelectedItemColor = SkColorSetRGB(215, 232, 255);
 
 // State key used to identify search text.
 static const wchar_t kSearchTextKey[] = L"st";
+
+// The maximum number of characters we show in a file name when displaying the
+// dangerous download message.
+static const int kFileNameMaxLength = 20;
 
 // Sorting functor for DownloadItem --------------------------------------------
 
@@ -87,65 +95,88 @@ class DownloadItemSorter : public std::binary_function<DownloadItem*,
 // DownloadItemTabView implementation ------------------------------------------
 DownloadItemTabView::DownloadItemTabView()
     : model_(NULL),
-      parent_(NULL) {
+      parent_(NULL),
+      is_floating_view_renderer_(false) {
   // Create our element views using empty strings for now,
   // set them based on the model's state in Layout().
-  since_ = new ChromeViews::Label(L"");
+  since_ = new views::Label(L"");
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   ChromeFont font = rb.GetFont(ResourceBundle::WebFont);
-  since_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  since_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   since_->SetFont(font);
   AddChildView(since_);
 
-  date_ = new ChromeViews::Label(L"");
+  date_ = new views::Label(L"");
   date_->SetColor(kStatusColor);
-  date_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  date_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   date_->SetFont(font);
   AddChildView(date_);
 
   // file_name_ is enabled once the download has finished and we can open
   // it via ShellExecute.
-  file_name_ = new ChromeViews::Link(L"");
-  file_name_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  file_name_ = new views::Link(L"");
+  file_name_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   file_name_->SetController(this);
   file_name_->SetFont(font);
   AddChildView(file_name_);
 
+  // dangerous_download_warning_ is enabled when a dangerous download has been
+  // initiated.
+  dangerous_download_warning_ = new views::Label();
+  dangerous_download_warning_ ->SetMultiLine(true);
+  dangerous_download_warning_->SetColor(kWarningColor);
+  dangerous_download_warning_->SetHorizontalAlignment(
+      views::Label::ALIGN_LEFT);
+  dangerous_download_warning_->SetFont(font);
+  AddChildView(dangerous_download_warning_);
+
+  // The save and discard buttons are shown to prompt the user when a dangerous
+  // download was started.
+  save_button_ = new views::NativeButton(
+      l10n_util::GetString(IDS_SAVE_DOWNLOAD));
+  save_button_->set_enforce_dlu_min_size(false);
+  save_button_->SetListener(this);
+  discard_button_ = new views::NativeButton(
+      l10n_util::GetString(IDS_DISCARD_DOWNLOAD));
+  discard_button_->SetListener(this);
+  discard_button_->set_enforce_dlu_min_size(false);
+  AddChildView(save_button_);
+  AddChildView(discard_button_);
+
   // Set our URL name
-  download_url_ = new ChromeViews::Label(L"");
+  download_url_ = new views::Label(L"");
   download_url_->SetColor(kUrlColor);
-  download_url_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  download_url_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   download_url_->SetFont(font);
   AddChildView(download_url_);
 
   // Set our time remaining
-  time_remaining_ = new ChromeViews::Label(L"");
+  time_remaining_ = new views::Label(L"");
   time_remaining_->SetColor(kStatusColor);
-  time_remaining_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  time_remaining_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   time_remaining_->SetFont(font);
   AddChildView(time_remaining_);
 
   // Set our download progress
-  download_progress_ = new ChromeViews::Label(L"");
+  download_progress_ = new views::Label(L"");
   download_progress_->SetColor(kStatusColor);
-  download_progress_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  download_progress_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   download_progress_->SetFont(font);
   AddChildView(download_progress_);
 
   // Set our 'Pause', 'Cancel' and 'Show in folder' links using
   // actual strings, since these are constant
-  pause_ = new ChromeViews::Link(l10n_util::GetString(IDS_DOWNLOAD_LINK_PAUSE));
+  pause_ = new views::Link(l10n_util::GetString(IDS_DOWNLOAD_LINK_PAUSE));
   pause_->SetController(this);
   pause_->SetFont(font);
   AddChildView(pause_);
 
-  cancel_ = new ChromeViews::Link(
-                  l10n_util::GetString(IDS_DOWNLOAD_LINK_CANCEL));
+  cancel_ = new views::Link(l10n_util::GetString(IDS_DOWNLOAD_LINK_CANCEL));
   cancel_->SetController(this);
   cancel_->SetFont(font);
   AddChildView(cancel_);
 
-  show_ = new ChromeViews::Link(l10n_util::GetString(IDS_DOWNLOAD_LINK_SHOW));
+  show_ = new views::Link(l10n_util::GetString(IDS_DOWNLOAD_LINK_SHOW));
   show_->SetController(this);
   show_->SetFont(font);
   AddChildView(show_);
@@ -162,22 +193,19 @@ void DownloadItemTabView::SetModel(DownloadItem* model,
   parent_->LookupIcon(model_);
 }
 
-void DownloadItemTabView::GetPreferredSize(CSize* out) {
-  CSize pause_size;
-  pause_->GetPreferredSize(&pause_size);
-  CSize cancel_size;
-  cancel_->GetPreferredSize(&cancel_size);
-  CSize show_size;
-  show_->GetPreferredSize(&show_size);
-
-  out->cx = download_util::kBigProgressIconSize +
-            2 * kSpacer +
-            kHorizontalButtonPadding +
-            kFilenameSize +
-            std::max(pause_size.cx + cancel_size.cx + kHorizontalButtonPadding,
-                     show_size.cx);
-
-  out->cy = download_util::kBigProgressIconSize;
+gfx::Size DownloadItemTabView::GetPreferredSize() {
+  gfx::Size pause_size = pause_->GetPreferredSize();
+  gfx::Size cancel_size = cancel_->GetPreferredSize();
+  gfx::Size show_size = show_->GetPreferredSize();
+  return gfx::Size(
+      download_util::kBigProgressIconSize +
+          2 * kSpacer +
+          kHorizontalLinkPadding +
+          kFilenameSize +
+          std::max(pause_size.width() + cancel_size.width() +
+                       kHorizontalLinkPadding,
+                   show_size.width()),
+      download_util::kBigProgressIconSize);
 }
 
 // Each DownloadItemTabView has reasonably complex layout requirements
@@ -188,13 +216,19 @@ void DownloadItemTabView::Layout() {
   DCHECK(model_);
   switch (model_->state()) {
     case DownloadItem::COMPLETE:
-      LayoutComplete();
+      if (model_->safety_state() == DownloadItem::DANGEROUS)
+        LayoutPromptDangerousDownload();
+      else
+        LayoutComplete();
       break;
     case DownloadItem::CANCELLED:
       LayoutCancelled();
       break;
     case DownloadItem::IN_PROGRESS:
-      LayoutInProgress();
+      if (model_->safety_state() == DownloadItem::DANGEROUS)
+        LayoutPromptDangerousDownload();
+      else
+        LayoutInProgress();
       break;
     case DownloadItem::REMOVING:
       break;
@@ -212,20 +246,17 @@ void DownloadItemTabView::LayoutDate() {
     return;
   }
 
-  CSize since_size;
-
   since_->SetText(TimeFormat::RelativeDate(model_->start_time(), NULL));
-  since_->GetPreferredSize(&since_size);
+  gfx::Size since_size = since_->GetPreferredSize();
   since_->SetBounds(kLeftMargin, download_util::kBigProgressIconOffset,
-                    kDateSize, since_size.cy);
+                    kDateSize, since_size.height());
   since_->SetVisible(true);
 
-  CSize date_size;
   date_->SetText(base::TimeFormatShortDate(model_->start_time()));
-  date_->GetPreferredSize(&date_size);
-  date_->SetBounds(kLeftMargin, since_size.cy + kVerticalPadding +
-                      download_util::kBigProgressIconOffset,
-                   kDateSize, date_size.cy);
+  gfx::Size date_size = date_->GetPreferredSize();
+  date_->SetBounds(kLeftMargin, since_size.height() + kVerticalPadding +
+                       download_util::kBigProgressIconOffset,
+                   kDateSize, date_size.height());
   date_->SetVisible(true);
 }
 
@@ -238,41 +269,43 @@ void DownloadItemTabView::LayoutComplete() {
   cancel_->SetEnabled(false);
   time_remaining_->SetVisible(false);
   download_progress_->SetVisible(false);
+  dangerous_download_warning_->SetVisible(false);
+  save_button_->SetVisible(false);
+  save_button_->SetEnabled(false);
+  discard_button_->SetVisible(false);
+  discard_button_->SetEnabled(false);
 
   LayoutDate();
   int dx = kDownloadIconOffset - download_util::kBigProgressIconOffset +
            download_util::kBigProgressIconSize + kInfoPadding;
 
   // File name and URL
-  CSize file_name_size;
-  file_name_->SetText(model_->file_name());
-  file_name_->GetPreferredSize(&file_name_size);
+  file_name_->SetText(model_->GetFileName());
+  gfx::Size file_name_size = file_name_->GetPreferredSize();
   file_name_->SetBounds(dx, download_util::kBigProgressIconOffset,
                         std::min(kFilenameSize,
-                                 static_cast<int>(file_name_size.cx)),
-                        file_name_size.cy);
+                                 static_cast<int>(file_name_size.width())),
+                        file_name_size.height());
   file_name_->SetVisible(true);
   file_name_->SetEnabled(true);
 
   GURL url(model_->url());
   download_url_->SetURL(url);
-  CSize url_size;
-  download_url_->GetPreferredSize(&url_size);
+  gfx::Size url_size = download_url_->GetPreferredSize();
   download_url_->SetBounds(dx,
-                           file_name_size.cy + kVerticalPadding +
-                              download_util::kBigProgressIconOffset,
+                           file_name_size.height() + kVerticalPadding +
+                               download_util::kBigProgressIconOffset,
                            std::min(kFilenameSize,
                                     static_cast<int>(width() - dx)),
-                           url_size.cy);
+                           url_size.height());
   download_url_->SetVisible(true);
   dx += kFilenameSize + kSpacer;
 
   // Action button (text is constant and set in constructor)
-  CSize show_size;
-  show_->GetPreferredSize(&show_size);
-  show_->SetBounds(dx, ((file_name_size.cy + url_size.cy) / 2) +
+  gfx::Size show_size = show_->GetPreferredSize();
+  show_->SetBounds(dx, ((file_name_size.height() + url_size.height()) / 2) +
                       download_util::kBigProgressIconOffset,
-                   show_size.cx, show_size.cy);
+                   show_size.width(), show_size.height());
   show_->SetVisible(true);
   show_->SetEnabled(true);
 }
@@ -286,42 +319,44 @@ void DownloadItemTabView::LayoutCancelled() {
   pause_->SetEnabled(false);
   cancel_->SetVisible(false);
   cancel_->SetEnabled(false);
+  dangerous_download_warning_->SetVisible(false);
+  save_button_->SetVisible(false);
+  save_button_->SetEnabled(false);
+  discard_button_->SetVisible(false);
+  discard_button_->SetEnabled(false);
 
   LayoutDate();
   int dx = kDownloadIconOffset - download_util::kBigProgressIconOffset +
       download_util::kBigProgressIconSize + kInfoPadding;
 
   // File name and URL, truncated to show cancelled status
-  CSize file_name_size;
-  file_name_->SetText(model_->file_name());
-  file_name_->GetPreferredSize(&file_name_size);
+  file_name_->SetText(model_->GetFileName());
+  gfx::Size file_name_size = file_name_->GetPreferredSize();
   file_name_->SetBounds(dx, download_util::kBigProgressIconOffset,
                         kFilenameSize - kProgressSize - kSpacer,
-                        file_name_size.cy);
+                        file_name_size.height());
   file_name_->SetVisible(true);
   file_name_->SetEnabled(false);
 
   GURL url(model_->url());
   download_url_->SetURL(url);
-  CSize url_size;
-  download_url_->GetPreferredSize(&url_size);
+  gfx::Size url_size = download_url_->GetPreferredSize();
   download_url_->SetBounds(dx,
-                           file_name_size.cy + kVerticalPadding +
+                           file_name_size.height() + kVerticalPadding +
                               download_util::kBigProgressIconOffset,
                            std::min(kFilenameSize - kProgressSize - kSpacer,
                                     static_cast<int>(width() - dx)),
-                           url_size.cy);
+                           url_size.height());
   download_url_->SetVisible(true);
 
   dx += kFilenameSize - kProgressSize;
 
   // Display cancelled status
-  CSize cancel_size;
   time_remaining_->SetColor(kStatusColor);
   time_remaining_->SetText(l10n_util::GetString(IDS_DOWNLOAD_TAB_CANCELLED));
-  time_remaining_->GetPreferredSize(&cancel_size);
+  gfx::Size cancel_size = time_remaining_->GetPreferredSize();
   time_remaining_->SetBounds(dx, download_util::kBigProgressIconOffset,
-                             kProgressSize, cancel_size.cy);
+                             kProgressSize, cancel_size.height());
   time_remaining_->SetVisible(true);
 
   // Display received size, we may not know the total size if the server didn't
@@ -350,20 +385,19 @@ void DownloadItemTabView::LayoutCancelled() {
       total_text.assign(total_text_localized);
 
     // Note that there is no need to adjust the new amount string for the
-    // locale direction as ChromeViews::Label does that for us.
+    // locale direction as views::Label does that for us.
     amount = l10n_util::GetStringF(IDS_DOWNLOAD_TAB_PROGRESS_SIZE,
                                    received_size,
                                    total_text);
   }
 
-  CSize byte_size;
   download_progress_->SetText(amount);
-  download_progress_->GetPreferredSize(&byte_size);
+  gfx::Size byte_size = download_progress_->GetPreferredSize();
   download_progress_->SetBounds(dx,
-                                file_name_size.cy + kVerticalPadding +
+                                file_name_size.height() + kVerticalPadding +
                                 download_util::kBigProgressIconOffset,
                                 kProgressSize,
-                                byte_size.cy);
+                                byte_size.height());
   download_progress_->SetVisible(true);
 }
 
@@ -372,6 +406,11 @@ void DownloadItemTabView::LayoutInProgress() {
   // Hide unused UI elements
   show_->SetVisible(false);
   show_->SetEnabled(false);
+  dangerous_download_warning_->SetVisible(false);
+  save_button_->SetVisible(false);
+  save_button_->SetEnabled(false);
+  discard_button_->SetVisible(false);
+  discard_button_->SetEnabled(false);
 
   LayoutDate();
   int dx = kDownloadIconOffset - download_util::kBigProgressIconOffset +
@@ -379,24 +418,22 @@ void DownloadItemTabView::LayoutInProgress() {
            kInfoPadding;
 
   // File name and URL, truncated to show progress status
-  CSize file_name_size;
-  file_name_->SetText(model_->file_name());
-  file_name_->GetPreferredSize(&file_name_size);
+  file_name_->SetText(model_->GetFileName());
+  gfx::Size file_name_size = file_name_->GetPreferredSize();
   file_name_->SetBounds(dx, download_util::kBigProgressIconOffset,
                         kFilenameSize - kProgressSize - kSpacer,
-                        file_name_size.cy);
+                        file_name_size.height());
   file_name_->SetVisible(true);
   file_name_->SetEnabled(false);
 
   GURL url(model_->url());
   download_url_->SetURL(url);
-  CSize url_size;
-  download_url_->GetPreferredSize(&url_size);
-  download_url_->SetBounds(dx, file_name_size.cy + kVerticalPadding +
+  gfx::Size url_size = download_url_->GetPreferredSize();
+  download_url_->SetBounds(dx, file_name_size.height() + kVerticalPadding +
                            download_util::kBigProgressIconOffset,
                            std::min(kFilenameSize - kProgressSize - kSpacer,
                                     static_cast<int>(width() - dx)),
-                           url_size.cy);
+                           url_size.height());
   download_url_->SetVisible(true);
 
   dx += kFilenameSize - kProgressSize;
@@ -465,41 +502,40 @@ void DownloadItemTabView::LayoutInProgress() {
   }
 
   // Time remaining
-  int y_pos = file_name_size.cy + kVerticalPadding +
+  int y_pos = file_name_size.height() + kVerticalPadding +
               download_util::kBigProgressIconOffset;
-  CSize time_size;
+  gfx::Size time_size;
   time_remaining_->SetColor(kStatusColor);
   if (model_->is_paused()) {
     time_remaining_->SetColor(kPauseColor);
     time_remaining_->SetText(
         l10n_util::GetString(IDS_DOWNLOAD_PROGRESS_PAUSED));
-    time_remaining_->GetPreferredSize(&time_size);
+    time_size = time_remaining_->GetPreferredSize();
     time_remaining_->SetBounds(dx, download_util::kBigProgressIconOffset,
-                               kProgressSize, time_size.cy);
+                               kProgressSize, time_size.height());
     time_remaining_->SetVisible(true);
   } else if (total > 0)  {
     TimeDelta remaining;
     if (model_->TimeRemaining(&remaining))
       time_remaining_->SetText(TimeFormat::TimeRemaining(remaining));
-    time_remaining_->GetPreferredSize(&time_size);
+    time_size = time_remaining_->GetPreferredSize();
     time_remaining_->SetBounds(dx, download_util::kBigProgressIconOffset,
-                               kProgressSize, time_size.cy);
+                               kProgressSize, time_size.height());
     time_remaining_->SetVisible(true);
   } else {
     time_remaining_->SetText(L"");
-    y_pos = ((file_name_size.cy + url_size.cy) / 2) +
+    y_pos = ((file_name_size.height() + url_size.height()) / 2) +
             download_util::kBigProgressIconOffset;
   }
 
-  CSize byte_size;
   download_progress_->SetText(progress);
-  download_progress_->GetPreferredSize(&byte_size);
+  gfx::Size byte_size = download_progress_->GetPreferredSize();
   download_progress_->SetBounds(dx, y_pos,
-                                kProgressSize, byte_size.cy);
+                                kProgressSize, byte_size.height());
   download_progress_->SetVisible(true);
 
   dx += kProgressSize + kSpacer;
-  y_pos = ((file_name_size.cy + url_size.cy) / 2) +
+  y_pos = ((file_name_size.height() + url_size.height()) / 2) +
           download_util::kBigProgressIconOffset;
 
   // Pause (or Resume) / Cancel buttons.
@@ -508,25 +544,79 @@ void DownloadItemTabView::LayoutInProgress() {
   else
     pause_->SetText(l10n_util::GetString(IDS_DOWNLOAD_LINK_PAUSE));
 
-  CSize pause_size;
   pause_->SetVisible(true);
   pause_->SetEnabled(true);
-  pause_->GetPreferredSize(&pause_size);
-  pause_->SetBounds(dx, y_pos, pause_size.cx, pause_size.cy);
+  gfx::Size pause_size = pause_->GetPreferredSize();
+  pause_->SetBounds(dx, y_pos, pause_size.width(), pause_size.height());
 
-  dx += pause_size.cx + kHorizontalButtonPadding;
+  dx += pause_size.width() + kHorizontalLinkPadding;
 
-  CSize cancel_size;
-  cancel_->GetPreferredSize(&cancel_size);
-  cancel_->SetBounds(dx, y_pos, cancel_size.cx, cancel_size.cy);
+  gfx::Size cancel_size = cancel_->GetPreferredSize();
+  cancel_->SetBounds(dx, y_pos, cancel_size.width(), cancel_size.height());
   cancel_->SetVisible(true);
   cancel_->SetEnabled(true);
+}
+
+void DownloadItemTabView::LayoutPromptDangerousDownload() {
+  // Hide unused UI elements
+  show_->SetVisible(false);
+  show_->SetEnabled(false);
+  file_name_->SetVisible(false);
+  file_name_->SetEnabled(false);
+  pause_->SetVisible(false);
+  pause_->SetEnabled(false);
+  cancel_->SetVisible(false);
+  cancel_->SetEnabled(false);
+  time_remaining_->SetVisible(false);
+  download_progress_->SetVisible(false);
+
+  LayoutDate();
+  int dx = kDownloadIconOffset - download_util::kBigProgressIconOffset +
+           download_util::kBigProgressIconSize +
+           kInfoPadding;
+
+  // Warning message and URL.
+  std::wstring file_name;
+  ElideString(model_->original_name(), kFileNameMaxLength, &file_name);
+  dangerous_download_warning_->SetText(
+      l10n_util::GetStringF(IDS_PROMPT_DANGEROUS_DOWNLOAD, file_name));
+  gfx::Size warning_size = dangerous_download_warning_->GetPreferredSize();
+  dangerous_download_warning_->SetBounds(dx, 0,
+                                         kFilenameSize, warning_size.height());
+  dangerous_download_warning_->SetVisible(true);
+
+  GURL url(model_->url());
+  download_url_->SetURL(url);
+  gfx::Size url_size = download_url_->GetPreferredSize();
+  download_url_->SetBounds(dx, height() - url_size.height(),
+                           std::min(kFilenameSize - kSpacer,
+                                    static_cast<int>(width() - dx)),
+                           url_size.height());
+  download_url_->SetVisible(true);
+
+  dx += kFilenameSize + kSpacer;
+
+  // Save/Discard buttons.
+  gfx::Size button_size = save_button_->GetPreferredSize();
+  save_button_->SetBounds(dx, (height() - button_size.height()) / 2,
+                          button_size.width(), button_size.height());
+  save_button_->SetVisible(true);
+  save_button_->SetEnabled(true);
+
+  dx += button_size.width() + kHorizontalButtonPadding;
+
+  button_size = discard_button_->GetPreferredSize();
+  discard_button_->SetBounds(dx, (height() - button_size.height()) / 2,
+                             button_size.width(), button_size.height());
+  discard_button_->SetVisible(true);
+  discard_button_->SetEnabled(true);
 }
 
 void DownloadItemTabView::Paint(ChromeCanvas* canvas) {
   PaintBackground(canvas);
 
-  if (model_->state() == DownloadItem::IN_PROGRESS) {
+  if (model_->state() == DownloadItem::IN_PROGRESS  &&
+      model_->safety_state() != DownloadItem::DANGEROUS) {
     download_util::PaintDownloadProgress(canvas,
                                          this,
                                          kDownloadIconOffset -
@@ -579,37 +669,34 @@ void DownloadItemTabView::PaintBackground(ChromeCanvas* canvas) {
   }
 }
 
-void DownloadItemTabView::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
-}
-
-bool DownloadItemTabView::OnMousePressed(const ChromeViews::MouseEvent& event) {
-  CPoint point(event.x(), event.y());
+bool DownloadItemTabView::OnMousePressed(const views::MouseEvent& event) {
+  gfx::Point point(event.location());
 
   // If the click is in the highlight region, then highlight this download.
   // Otherwise, remove the highlighting from any download.
-  CRect select_rect(kDownloadIconOffset - download_util::kBigProgressIconOffset,
-                    0,
-                    kDownloadIconOffset -
-                        download_util::kBigProgressIconOffset +
-                        download_util::kBigProgressIconSize + kInfoPadding +
-                        kFilenameSize,
-                    download_util::kBigProgressIconSize);
+  gfx::Rect select_rect(
+      kDownloadIconOffset - download_util::kBigProgressIconOffset,
+      0,
+      kDownloadIconOffset - download_util::kBigProgressIconOffset +
+          download_util::kBigProgressIconSize + kInfoPadding + kFilenameSize,
+      download_util::kBigProgressIconSize);
 
   // The position of the highlighted region does not take into account the
   // View's UI layout so we have to manually mirror the position if the View is
   // using a right-to-left UI layout.
   gfx::Rect mirrored_rect(select_rect);
-  select_rect.MoveToX(MirroredLeftPointForRect(mirrored_rect));
-  if (select_rect.PtInRect(point)) {
+  select_rect.set_x(MirroredLeftPointForRect(mirrored_rect));
+  if (select_rect.Contains(point)) {
     parent_->ItemBecameSelected(model_);
 
-    if (event.IsRightMouseButton()) {
-      ChromeViews::View::ConvertPointToScreen(this, &point);
+    // Don't show the right-click menu if we are prompting the user for a
+    // dangerous download.
+    if (event.IsRightMouseButton() &&
+        model_->safety_state() != DownloadItem::DANGEROUS) {
+      views::View::ConvertPointToScreen(this, &point);
 
       download_util::DownloadDestinationContextMenu menu(
-          model_, GetViewContainer()->GetHWND(), point);
+          model_, GetContainer()->GetHWND(), point.ToPOINT());
     }
   } else {
     parent_->ItemBecameSelected(NULL);
@@ -619,8 +706,9 @@ bool DownloadItemTabView::OnMousePressed(const ChromeViews::MouseEvent& event) {
 }
 
 // Handle drag (file copy) operations.
-bool DownloadItemTabView::OnMouseDragged(const ChromeViews::MouseEvent& event) {
-  if (model_->state() != DownloadItem::COMPLETE)
+bool DownloadItemTabView::OnMouseDragged(const views::MouseEvent& event) {
+  if (model_->state() != DownloadItem::COMPLETE ||
+      model_->safety_state() == DownloadItem::DANGEROUS)
     return false;
 
   CPoint point(event.x(), event.y());
@@ -645,11 +733,10 @@ bool DownloadItemTabView::OnMouseDragged(const ChromeViews::MouseEvent& event) {
   return true;
 }
 
-void DownloadItemTabView::LinkActivated(ChromeViews::Link* source,
-                                        int event_flags) {
+void DownloadItemTabView::LinkActivated(views::Link* source, int event_flags) {
   // There are several links in our view that could have been clicked:
   if (source == file_name_) {
-    ChromeViews::ViewContainer* container = this->GetViewContainer();
+    views::Container* container = this->GetContainer();
     HWND parent_window = container ? container->GetHWND() : NULL;
     model_->manager()->OpenDownloadInShell(model_, parent_window);
   } else if (source == pause_) {
@@ -665,6 +752,18 @@ void DownloadItemTabView::LinkActivated(ChromeViews::Link* source,
   parent_->ItemBecameSelected(model_);
 }
 
+void DownloadItemTabView::ButtonPressed(views::NativeButton* sender) {
+  if (sender == save_button_) {
+    parent_->model()->DangerousDownloadValidated(model_);
+    // Relayout and repaint to display the right mode (complete or in progress).
+    Layout();
+    SchedulePaint();
+  } else if (sender == discard_button_) {
+    model_->Remove(true);
+  } else  {
+    NOTREACHED();
+  }
+}
 
 // DownloadTabView implementation ----------------------------------------------
 
@@ -683,6 +782,7 @@ DownloadTabView::~DownloadTabView() {
   // DownloadManager owns the contents.
   downloads_.clear();
   ClearDownloadInProgress();
+  ClearDangerousDownloads();
 
   icon_consumer_.CancelAllRequests();
 }
@@ -712,17 +812,25 @@ void DownloadTabView::UpdateDownloadProgress() {
   SchedulePaint();
 }
 
-void DownloadTabView::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
-  Layout();
-}
-
 void DownloadTabView::Layout() {
-  CRect r;
   DetachAllFloatingViews();
+  // Dangerous downloads items use NativeButtons, so they need to be attached
+  // as NativeControls are not supported yet in floating views.
+  gfx::Rect visible_bounds = GetVisibleBounds();
+  int row_start = (visible_bounds.y() - kSpacer) /
+                  (download_util::kBigProgressIconSize + kSpacer);
+  int row_stop = (visible_bounds.y() - kSpacer + visible_bounds.height()) /
+                 (download_util::kBigProgressIconSize + kSpacer);
+  row_stop = std::min(row_stop, static_cast<int>(downloads_.size()) - 1);
+  for (int i = row_start; i <= row_stop; ++i) {
+    // The DownloadManager stores downloads earliest first, but this view
+    // displays latest first, so adjust the index:
+    int index = static_cast<int>(downloads_.size()) - 1 - i;
+    if (downloads_[index]->safety_state() == DownloadItem::DANGEROUS)
+      ValidateFloatingViewForID(index);
+  }
   View* v = GetParent();
   if (v) {
-    v->GetLocalBounds(&r, true);
     int h = static_cast<int>(downloads_.size()) *
             (download_util::kBigProgressIconSize + kSpacer) + kSpacer;
     SetBounds(x(), y(), v->width(), h);
@@ -731,7 +839,7 @@ void DownloadTabView::Layout() {
 
 // Paint our scrolled region
 void DownloadTabView::Paint(ChromeCanvas* canvas) {
-  ChromeViews::View::Paint(canvas);
+  views::View::Paint(canvas);
 
   if (download_util::kBigIconSize == 0 || downloads_.size() == 0)
     return;
@@ -782,7 +890,7 @@ bool DownloadTabView::GetFloatingViewIDForPoint(int x, int y, int* id) {
   return false;
 }
 
-ChromeViews::View* DownloadTabView::CreateFloatingViewForIndex(int index) {
+views::View* DownloadTabView::CreateFloatingViewForIndex(int index) {
   if (index >= static_cast<int>(downloads_.size())) {
     // It's possible that the downloads have been cleared via the "Clear
     // Browsing Data" command, so this index is gone.
@@ -790,24 +898,27 @@ ChromeViews::View* DownloadTabView::CreateFloatingViewForIndex(int index) {
   }
 
   DownloadItemTabView* dl = new DownloadItemTabView();
+  // We attach the view before layout as the Save/Discard buttons are native
+  // and need to be in the tree hierarchy to compute their preferred size
+  // correctly.
+  AttachFloatingView(dl, index);
   dl->SetModel(downloads_[index], this);
   int row = static_cast<int>(downloads_.size()) - 1 - index;
   int y_pos = row * (download_util::kBigProgressIconSize + kSpacer) + kSpacer;
   dl->SetBounds(0, y_pos, width(), download_util::kBigProgressIconSize);
   dl->Layout();
-  AttachFloatingView(dl, index);
   return dl;
 }
 
 bool DownloadTabView::EnumerateFloatingViews(
-      ChromeViews::View::FloatingViewPosition position,
+      views::View::FloatingViewPosition position,
       int starting_id, int* id) {
   DCHECK(id);
   return View::EnumerateFloatingViewsForInterval(
       0, static_cast<int>(downloads_.size()), false, position, starting_id, id);
 }
 
-ChromeViews::View* DownloadTabView::ValidateFloatingViewForID(int id) {
+views::View* DownloadTabView::ValidateFloatingViewForID(int id) {
   return CreateFloatingViewForIndex(id);
 }
 
@@ -817,7 +928,10 @@ void DownloadTabView::OnDownloadUpdated(DownloadItem* download) {
     case DownloadItem::CANCELLED: {
       base::hash_set<DownloadItem*>::iterator d = in_progress_.find(download);
       if (d != in_progress_.end()) {
-        (*d)->RemoveObserver(this);
+        // If this is a dangerous download not yet validated by the user, we
+        // still need to be notified when the validation happens.
+        if (download->safety_state() != DownloadItem::DANGEROUS)
+          (*d)->RemoveObserver(this);
         in_progress_.erase(d);
       }
       if (in_progress_.empty())
@@ -877,6 +991,7 @@ void DownloadTabView::OnDownloadUpdated(DownloadItem* download) {
 void DownloadTabView::ModelChanged() {
   downloads_.clear();
   ClearDownloadInProgress();
+  ClearDangerousDownloads();
   DetachAllFloatingViews();
 
   // Issue the query.
@@ -890,6 +1005,7 @@ void DownloadTabView::SetDownloads(std::vector<DownloadItem*>& downloads) {
   // Clear out old state and remove self as observer for each download.
   downloads_.clear();
   ClearDownloadInProgress();
+  ClearDangerousDownloads();
 
   // Swap new downloads in.
   downloads_.swap(downloads);
@@ -902,6 +1018,10 @@ void DownloadTabView::SetDownloads(std::vector<DownloadItem*>& downloads) {
     if (download->state() == DownloadItem::IN_PROGRESS) {
       download->AddObserver(this);
       in_progress_.insert(download);
+    } else if (download->safety_state() == DownloadItem::DANGEROUS) {
+      // We need to be notified when the user validates the dangerous download.
+      download->AddObserver(this);
+      dangerous_downloads_.insert(download);
     }
   }
 
@@ -949,6 +1069,14 @@ void DownloadTabView::ClearDownloadInProgress() {
   in_progress_.clear();
 }
 
+void DownloadTabView::ClearDangerousDownloads() {
+  base::hash_set<DownloadItem*>::const_iterator it;
+  for (it = dangerous_downloads_.begin();
+       it != dangerous_downloads_.end(); ++it)
+    (*it)->RemoveObserver(this);
+  dangerous_downloads_.clear();
+}
+
 // Check to see if the download is the latest download on a given day.
 // We use this to determine when to draw the date next to a particular
 // download view: if the DownloadItem is the latest download on a given
@@ -977,14 +1105,14 @@ bool DownloadTabView::ShouldDrawDateForDownload(DownloadItem* download) {
 }
 
 int DownloadTabView::GetPageScrollIncrement(
-    ChromeViews::ScrollView* scroll_view, bool is_horizontal,
+    views::ScrollView* scroll_view, bool is_horizontal,
     bool is_positive) {
   return scroll_helper_.GetPageScrollIncrement(scroll_view, is_horizontal,
                                                is_positive);
 }
 
 int DownloadTabView::GetLineScrollIncrement(
-    ChromeViews::ScrollView* scroll_view, bool is_horizontal,
+    views::ScrollView* scroll_view, bool is_horizontal,
     bool is_positive) {
   return scroll_helper_.GetLineScrollIncrement(scroll_view, is_horizontal,
                                                is_positive);
@@ -1118,7 +1246,7 @@ const std::wstring DownloadTabUI::GetSearchButtonText() const {
   return l10n_util::GetString(IDS_DOWNLOAD_SEARCH_BUTTON);
 }
 
-ChromeViews::View* DownloadTabUI::GetView() {
+views::View* DownloadTabUI::GetView() {
   return &searchable_container_;
 }
 

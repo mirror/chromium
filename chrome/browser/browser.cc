@@ -43,6 +43,7 @@
 #include "chrome/browser/views/status_bubble.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/browser/views/toolbar_star_toggle.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/browser/window_sizer.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
@@ -833,8 +834,7 @@ void Browser::ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                              HWND parent_hwnd) {
   parent_hwnd = parent_hwnd ? parent_hwnd : GetTopLevelHWND();
   HtmlDialogView* html_view = new HtmlDialogView(this, profile_, delegate);
-  ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(),
-                                          html_view);
+  views::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(), html_view);
   html_view->InitDialog();
   html_view->window()->Show();
 }
@@ -1318,7 +1318,10 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
   // When we detach a tab we need to make sure any associated Find window moves
   // along with it to its new home (basically we just make new_window the parent
   // of the Find window).
-  new_window->AdoptFindWindow(detached_contents);
+  // TODO(brettw) this could probably be improved, see
+  // WebContentsView::ReparentFindWindow for more.
+  if (detached_contents->AsWebContents())
+    detached_contents->AsWebContents()->view()->ReparentFindWindow(new_window);
 }
 
 int Browser::GetDragActions() const {
@@ -1353,15 +1356,12 @@ TabContents* Browser::CreateTabContentsForURL(
   return contents;
 }
 
-void Browser::ShowApplicationMenu(const gfx::Point p) {
+void Browser::ShowApplicationMenu(const gfx::Point& p) {
   if (!window_)
     return;
 
   HWND hwnd = reinterpret_cast<HWND>(window_->GetPlatformID());
-  CPoint t;
-  t.x = p.x();
-  t.y = p.y();
-  RunSimpleFrameMenu(t, hwnd);
+  RunSimpleFrameMenu(p, hwnd);
 }
 
 void Browser::ValidateLoadingAnimations() {
@@ -1392,7 +1392,10 @@ void Browser::TabInsertedAt(TabContents* contents,
   // associated Find window is moved along with it. We therefore change the
   // parent of the Find window (if the parent is already correctly set this
   // does nothing).
-  AdoptFindWindow(contents);
+  // TODO(brettw) this could probably be improved, see
+  // WebContentsView::ReparentFindWindow for more.
+  if (contents->AsWebContents())
+    contents->AsWebContents()->view()->ReparentFindWindow(this);
 
   // If the tab crashes in the beforeunload or unload handler, it won't be
   // able to ack. But we know we can close it.
@@ -1540,13 +1543,16 @@ void Browser::TabStripEmpty() {
 void Browser::RemoveShelvesForTabContents(TabContents* contents) {
   DCHECK(!g_browser_process->IsUsingNewFrames());
 
-  ChromeViews::View* shelf = contents->GetDownloadShelfView();
+  views::View* shelf = contents->GetDownloadShelfView();
   if (shelf && shelf->GetParent() != NULL)
     shelf->GetParent()->RemoveChildView(shelf);
 
-  ChromeViews::View* info_bar = contents->GetInfoBarView();
-  if (info_bar && info_bar->GetParent() != NULL)
-    info_bar->GetParent()->RemoveChildView(info_bar);
+  if (contents->AsWebContents()) {
+    views::View* info_bar =
+        contents->AsWebContents()->view()->GetInfoBarView();
+    if (info_bar && info_bar->GetParent() != NULL)
+      info_bar->GetParent()->RemoveChildView(info_bar);
+  }
 }
 
 BrowserType::Type Browser::GetType() const {

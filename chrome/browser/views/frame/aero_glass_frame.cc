@@ -24,15 +24,22 @@ static const int kToolbarOverlapVertOffset = 5;
 // remove it.
 static const int kWindowsDWMBevelSize = 2;
 
+HICON AeroGlassFrame::throbber_icons_[AeroGlassFrame::kThrobberIconCount];
+
 ///////////////////////////////////////////////////////////////////////////////
 // AeroGlassFrame, public:
 
 AeroGlassFrame::AeroGlassFrame(BrowserView2* browser_view)
     : Window(browser_view),
       browser_view_(browser_view),
-      frame_initialized_(false) {
+      frame_initialized_(false),
+      throbber_running_(false),
+      throbber_frame_(0) {
   non_client_view_ = new AeroGlassNonClientView(this, browser_view);
   browser_view_->set_frame(this);
+
+  if (window_delegate()->ShouldShowWindowIcon())
+    InitThrobberIcons();
 }
 
 AeroGlassFrame::~AeroGlassFrame() {
@@ -67,19 +74,24 @@ gfx::Rect AeroGlassFrame::GetBoundsForTabStrip(TabStrip* tabstrip) const {
   return GetAeroGlassNonClientView()->GetBoundsForTabStrip(tabstrip);
 }
 
-ChromeViews::Window* AeroGlassFrame::GetWindow() {
+void AeroGlassFrame::UpdateThrobber(bool running) {
+  if (throbber_running_) {
+    if (running) {
+      DisplayNextThrobberFrame();
+    } else {
+      StopThrobber();
+    }
+  } else if (running) {
+    StartThrobber();
+  }
+}
+
+views::Window* AeroGlassFrame::GetWindow() {
   return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, ChromeViews::Window overrides:
-
-void AeroGlassFrame::UpdateWindowIcon() {
-  Window::UpdateWindowIcon();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, ChromeViews::HWNDViewContainer implementation:
+// AeroGlassFrame, views::ContainerWin implementation:
 
 void AeroGlassFrame::OnInitMenuPopup(HMENU menu, UINT position,
                                      BOOL is_system_menu) {
@@ -88,10 +100,6 @@ void AeroGlassFrame::OnInitMenuPopup(HMENU menu, UINT position,
 
 void AeroGlassFrame::OnEndSession(BOOL ending, UINT logoff) {
   FrameUtil::EndSession();
-}
-
-void AeroGlassFrame::OnExitMenuLoop(bool is_track_popup_menu) {
-  browser_view_->SystemMenuEnded();
 }
 
 LRESULT AeroGlassFrame::OnMouseActivate(HWND window, UINT hittest_code,
@@ -171,15 +179,14 @@ LRESULT AeroGlassFrame::OnNCHitTest(const CPoint& pt) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, ChromeViews::HWNDViewContainer overrides:
+// AeroGlassFrame, views::ContainerWin overrides:
 
-bool AeroGlassFrame::AcceleratorPressed(
-    ChromeViews::Accelerator* accelerator) {
+bool AeroGlassFrame::AcceleratorPressed(views::Accelerator* accelerator) {
   return browser_view_->AcceleratorPressed(*accelerator);
 }
 
 bool AeroGlassFrame::GetAccelerator(int cmd_id,
-                                    ChromeViews::Accelerator* accelerator) {
+                                    views::Accelerator* accelerator) {
   return browser_view_->GetAccelerator(cmd_id, accelerator);
 }
 
@@ -225,3 +232,36 @@ AeroGlassNonClientView* AeroGlassFrame::GetAeroGlassNonClientView() const {
   return static_cast<AeroGlassNonClientView*>(non_client_view_);
 }
 
+void AeroGlassFrame::StartThrobber() {
+  if (!throbber_running_) {
+    throbber_running_ = true;
+    throbber_frame_ = 0;
+    InitThrobberIcons();
+    ::SendMessage(GetHWND(), WM_SETICON, static_cast<WPARAM>(ICON_SMALL),
+                  reinterpret_cast<LPARAM>(throbber_icons_[throbber_frame_]));
+  }
+}
+
+void AeroGlassFrame::StopThrobber() {
+  if (throbber_running_)
+    throbber_running_ = false;
+}
+
+void AeroGlassFrame::DisplayNextThrobberFrame() {
+  throbber_frame_ = (throbber_frame_ + 1) % kThrobberIconCount;
+  ::SendMessage(GetHWND(), WM_SETICON, static_cast<WPARAM>(ICON_SMALL),
+                reinterpret_cast<LPARAM>(throbber_icons_[throbber_frame_]));
+}
+
+// static
+void AeroGlassFrame::InitThrobberIcons() {
+  static bool initialized = false;
+  if (!initialized) {
+    ResourceBundle &rb = ResourceBundle::GetSharedInstance();
+    for (int i = 0; i < kThrobberIconCount; ++i) {
+      throbber_icons_[i] = rb.LoadThemeIcon(IDR_THROBBER_01 + i);
+      DCHECK(throbber_icons_[i]);
+    }
+    initialized = true;
+  }
+}

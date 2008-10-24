@@ -12,7 +12,7 @@
 
 class ChromeCanvas;
 
-namespace ChromeViews {
+namespace views {
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -48,12 +48,12 @@ class ImageView : public View {
   const SkBitmap& GetImage();
 
   // Set the desired image size for the receiving ImageView.
-  void SetImageSize(const CSize& image_size);
+  void SetImageSize(const gfx::Size& image_size);
 
   // Return the preferred size for the receiving view. Returns false if the
   // preferred size is not defined, which means that the view uses the image
   // size.
-  bool GetImageSize(CSize* image_size);
+  bool GetImageSize(gfx::Size* image_size);
 
   // Reset the image size to the current image dimensions.
   void ResetImageSize();
@@ -72,7 +72,7 @@ class ImageView : public View {
 
   // Return whether the image should be centered inside the view.
   // Overriden from View
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Paint(ChromeCanvas* canvas);
 
   // Overriden from View.
@@ -87,7 +87,7 @@ class ImageView : public View {
   bool image_size_set_;
 
   // The actual image size.
-  CSize image_size_;
+  gfx::Size image_size_;
 
   // The underlying bitmap.
   SkBitmap image_;
@@ -104,7 +104,7 @@ class ImageView : public View {
   DISALLOW_EVIL_CONSTRUCTORS(ImageView);
 };
 
-}
+}  // namespace views
 
 #endif  // CHROME_VIEWS_IMAGE_VIEW_H__
 

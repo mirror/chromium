@@ -11,7 +11,7 @@
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/throb_animation.h"
 
-namespace ChromeViews {
+namespace views {
 
 // How long the hover animation takes if uninterrupted.
 static const int kHoverFadeDurationMs = 150;
@@ -41,7 +41,7 @@ BaseButton::~BaseButton() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-bool BaseButton::IsTriggerableEvent(const ChromeViews::MouseEvent& e) {
+bool BaseButton::IsTriggerableEvent(const MouseEvent& e) {
   return e.IsLeftMouseButton();
 }
 
@@ -142,9 +142,9 @@ void BaseButton::SetTooltipText(const std::wstring& tooltip) {
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-bool BaseButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
+bool BaseButton::OnMousePressed(const MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (IsTriggerableEvent(e) && HitTest(WTL::CPoint(e.x(), e.y()))) {
+    if (IsTriggerableEvent(e) && HitTest(e.location())) {
       SetState(BS_PUSHED);
     }
     if (IsFocusable())
@@ -153,9 +153,9 @@ bool BaseButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
   return true;
 }
 
-bool BaseButton::OnMouseDragged(const ChromeViews::MouseEvent& e) {
+bool BaseButton::OnMouseDragged(const MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (!HitTest(WTL::CPoint(e.x(), e.y())))
+    if (!HitTest(e.location()))
       SetState(BS_NORMAL);
     else if (IsTriggerableEvent(e))
       SetState(BS_PUSHED);
@@ -165,15 +165,14 @@ bool BaseButton::OnMouseDragged(const ChromeViews::MouseEvent& e) {
   return true;
 }
 
-void BaseButton::OnMouseReleased(const ChromeViews::MouseEvent& e,
-                                 bool canceled) {
+void BaseButton::OnMouseReleased(const MouseEvent& e, bool canceled) {
   if (InDrag()) {
     // Starting a drag results in a MouseReleased, we need to ignore it.
     return;
   }
 
   if (state_ != BS_DISABLED) {
-    if (canceled || !HitTest(WTL::CPoint(e.x(), e.y()))) {
+    if (canceled || !HitTest(e.location())) {
       SetState(BS_NORMAL);
     } else {
       SetState(BS_HOT);
@@ -187,18 +186,14 @@ void BaseButton::OnMouseReleased(const ChromeViews::MouseEvent& e,
   }
 }
 
-void BaseButton::OnMouseEntered(const ChromeViews::MouseEvent& e) {
-  using namespace ChromeViews;
-  if (state_ != BS_DISABLED) {
+void BaseButton::OnMouseEntered(const MouseEvent& e) {
+  if (state_ != BS_DISABLED)
     SetState(BS_HOT);
-  }
 }
 
-void BaseButton::OnMouseMoved(const ChromeViews::MouseEvent& e) {
-  using namespace ChromeViews;
-
+void BaseButton::OnMouseMoved(const MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (HitTest(WTL::CPoint(e.x(), e.y()))) {
+    if (HitTest(e.location())) {
       SetState(BS_HOT);
     } else {
       SetState(BS_NORMAL);
@@ -206,12 +201,10 @@ void BaseButton::OnMouseMoved(const ChromeViews::MouseEvent& e) {
   }
 }
 
-void BaseButton::OnMouseExited(const ChromeViews::MouseEvent& e) {
-  using namespace ChromeViews;
+void BaseButton::OnMouseExited(const MouseEvent& e) {
   // Starting a drag results in a MouseExited, we need to ignore it.
-  if (state_ != BS_DISABLED && !InDrag()) {
+  if (state_ != BS_DISABLED && !InDrag())
     SetState(BS_NORMAL);
-  }
 }
 
 void BaseButton::NotifyClick(int mouse_event_flags) {
@@ -303,5 +296,5 @@ void BaseButton::Paint(ChromeCanvas* canvas, bool for_drag) {
   Paint(canvas);
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

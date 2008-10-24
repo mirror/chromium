@@ -6,7 +6,10 @@
 // and I'm not really sure what to do about most of them.
 
 #include "config.h"
-#pragma warning(push, 0)
+
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "Document.h"
 #include "EditCommand.h"
 #include "Editor.h"
@@ -17,10 +20,9 @@
 #include "KeyboardEvent.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformString.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #undef LOG
-
 #include "base/string_util.h"
 #include "webkit/glue/editor_client_impl.h"
 #include "webkit/glue/glue_util.h"
@@ -28,16 +30,11 @@
 #include "webkit/glue/webview.h"
 #include "webkit/glue/webview_impl.h"
 
-// The notImplemented() from NotImplemented.h is now being dragged in via
-// webview_impl.h.  We want the one from LogWin.h instead.
-#undef notImplemented
-#include "LogWin.h"
-
 // Arbitrary depth limit for the undo stack, to keep it from using
 // unbounded memory.  This is the maximum number of distinct undoable
 // actions -- unbroken stretches of typed characters are coalesced
 // into a single action.
-static const int kMaximumUndoStackDepth = 1000;
+static const size_t kMaximumUndoStackDepth = 1000;
 
 namespace {
 
@@ -105,25 +102,23 @@ bool EditorClientImpl::isContinuousSpellCheckingEnabled() {
 }
 
 void EditorClientImpl::toggleContinuousSpellChecking() {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 bool EditorClientImpl::isGrammarCheckingEnabled() {
-  notImplemented();
   return false;
 }
 
 void EditorClientImpl::toggleGrammarChecking() {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 int EditorClientImpl::spellCheckerDocumentTag() {
-  notImplemented();
+  NOTIMPLEMENTED();
   return 0;
 }
 
 bool EditorClientImpl::isEditable() {
-  notImplemented();
   return false;
 }
 
@@ -226,7 +221,6 @@ bool EditorClientImpl::shouldApplyStyle(WebCore::CSSStyleDeclaration* style,
 bool EditorClientImpl::shouldMoveRangeAfterDelete(
     WebCore::Range* /*range*/,
     WebCore::Range* /*rangeToBeReplaced*/) {
-  notImplemented();
   return true;
 }
 
@@ -282,11 +276,9 @@ void EditorClientImpl::didEndEditing() {
 }
 
 void EditorClientImpl::didWriteSelectionToPasteboard() {
-  notImplemented();
 }
 
 void EditorClientImpl::didSetSelectionTypesForPasteboard() {
-  notImplemented();
 }
 
 void EditorClientImpl::registerCommandForUndo(
@@ -336,17 +328,6 @@ void EditorClientImpl::redo() {
     // reapply will call us back to push this command onto the undo stack.
     in_redo_ = false;
   }
-}
-
-// Get the distance we should go (in pixels) when doing a pageup/pagedown.
-static int GetVerticalPageDistance(WebCore::KeyboardEvent* event) {
-  if (event->target()) {
-    WebCore::Node* node = event->target()->toNode();
-    if (node && node->renderer())
-      return node->renderer()->contentHeight();
-  }
-
-  return 0;
 }
 
 // The below code was adapted from the WebKit file webview.cpp
@@ -573,17 +554,15 @@ void EditorClientImpl::handleKeyboardEvent(WebCore::KeyboardEvent* evt) {
 }
 
 void EditorClientImpl::handleInputMethodKeydown(WebCore::KeyboardEvent* keyEvent) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::textFieldDidBeginEditing(WebCore::Element*) {
-  notImplemented();
 }
 
 void EditorClientImpl::textFieldDidEndEditing(WebCore::Element*) {
-  // Notification that focus was lost.
-  // Be careful with this, it's also sent when the page is being closed.
-  notImplemented();
+  // Notification that focus was lost.  Be careful with this, it's also sent
+  // when the page is being closed.
 }
 
 void EditorClientImpl::textDidChangeInTextField(WebCore::Element* element) {
@@ -602,36 +581,17 @@ bool EditorClientImpl::doTextFieldCommandFromEvent(WebCore::Element*,
 }
 
 void EditorClientImpl::textWillBeDeletedInTextField(WebCore::Element*) {
-  notImplemented();
 }
 
 void EditorClientImpl::textDidChangeInTextArea(WebCore::Element*) {
-  notImplemented();
 }
-
-#if defined(OS_MACOSX)
-// TODO(pinkerton): implement these when we get to copy/paste
-NSData* EditorClientImpl::dataForArchivedSelection(WebCore::Frame*) {
-  notImplemented();
-}
-
-NSString* EditorClientImpl::userVisibleString(NSURL*) {
-  notImplemented();
-}
-
-#ifdef BUILDING_ON_TIGER
-NSArray* EditorClientImpl::pasteboardTypesForSelection(WebCore::Frame*) {
-  notImplemented();
-}
-#endif
-#endif
 
 void EditorClientImpl::ignoreWordInSpellDocument(const WebCore::String&) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::learnWord(const WebCore::String&) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::checkSpellingOfString(const UChar* str, int length,
@@ -663,7 +623,7 @@ void EditorClientImpl::checkGrammarOfString(const UChar*, int length,
                                             WTF::Vector<WebCore::GrammarDetail>&,
                                             int* badGrammarLocation,
                                             int* badGrammarLength) {
-  notImplemented();
+  NOTIMPLEMENTED();
   if (badGrammarLocation)
     *badGrammarLocation = 0;
   if (badGrammarLength)
@@ -672,15 +632,15 @@ void EditorClientImpl::checkGrammarOfString(const UChar*, int length,
 
 void EditorClientImpl::updateSpellingUIWithGrammarString(const WebCore::String&,
                                                          const WebCore::GrammarDetail& detail) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::updateSpellingUIWithMisspelledWord(const WebCore::String&) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::showSpellingUI(bool show) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 bool EditorClientImpl::spellingUIIsShowing() {
@@ -689,7 +649,7 @@ bool EditorClientImpl::spellingUIIsShowing() {
 
 void EditorClientImpl::getGuessesForWord(const WebCore::String&,
                                          WTF::Vector<WebCore::String>& guesses) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::setInputMethodState(bool enabled) {

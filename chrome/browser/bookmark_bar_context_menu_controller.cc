@@ -16,7 +16,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-#include "chrome/views/view_container.h"
+#include "chrome/views/container.h"
 #include "chrome/views/window.h"
 
 #include "chromium_strings.h"
@@ -121,7 +121,7 @@ class EditFolderController : public InputWindowDelegate,
         visual_order_(visual_order),
         is_new_(is_new) {
     DCHECK(is_new_ || node);
-    window_ = CreateInputWindow(view->GetViewContainer()->GetHWND(), this);
+    window_ = CreateInputWindow(view->GetContainer()->GetHWND(), this);
     view_->SetModelChangedListener(this);
   }
 
@@ -172,7 +172,7 @@ class EditFolderController : public InputWindowDelegate,
         l10n_util::GetString(IDS_BOOMARK_FOLDER_EDITOR_WINDOW_TITLE);
   }
 
-  virtual ChromeViews::View* GetContentsView() {
+  virtual views::View* GetContentsView() {
     return view_;
   }
 
@@ -184,7 +184,7 @@ class EditFolderController : public InputWindowDelegate,
 
   int visual_order_;
   bool is_new_;
-  ChromeViews::Window* window_;
+  views::Window* window_;
 
   DISALLOW_EVIL_CONSTRUCTORS(EditFolderController);
 };
@@ -192,18 +192,6 @@ class EditFolderController : public InputWindowDelegate,
 }  // namespace
 
 // BookmarkBarContextMenuController -------------------------------------------
-
-const int BookmarkBarContextMenuController::always_show_command_id = 1;
-const int BookmarkBarContextMenuController::open_bookmark_id = 2;
-const int BookmarkBarContextMenuController::open_bookmark_in_new_window_id = 3;
-const int BookmarkBarContextMenuController::open_bookmark_in_new_tab_id = 4;
-const int BookmarkBarContextMenuController::open_all_bookmarks_id = 5;
-const int
-    BookmarkBarContextMenuController::open_all_bookmarks_in_new_window_id = 6;
-const int BookmarkBarContextMenuController::edit_bookmark_id = 7;
-const int BookmarkBarContextMenuController::delete_bookmark_id = 8;
-const int BookmarkBarContextMenuController::add_bookmark_id = 9;
-const int BookmarkBarContextMenuController::new_folder_id = 10;
 
 // static
 void BookmarkBarContextMenuController::OpenAll(
@@ -227,43 +215,46 @@ BookmarkBarContextMenuController::BookmarkBarContextMenuController(
       menu_(this) {
   if (node->GetType() == history::StarredEntry::URL) {
     menu_.AppendMenuItemWithLabel(
-        open_bookmark_id,
-        l10n_util::GetString(IDS_BOOMARK_BAR_OPEN));
-    menu_.AppendMenuItemWithLabel(
-        open_bookmark_in_new_tab_id,
+        IDS_BOOMARK_BAR_OPEN_IN_NEW_TAB,
         l10n_util::GetString(IDS_BOOMARK_BAR_OPEN_IN_NEW_TAB));
     menu_.AppendMenuItemWithLabel(
-        open_bookmark_in_new_window_id,
+        IDS_BOOMARK_BAR_OPEN_IN_NEW_WINDOW,
         l10n_util::GetString(IDS_BOOMARK_BAR_OPEN_IN_NEW_WINDOW));
+    menu_.AppendMenuItemWithLabel(
+        IDS_BOOMARK_BAR_OPEN_INCOGNITO,
+        l10n_util::GetString(IDS_BOOMARK_BAR_OPEN_INCOGNITO));
   } else {
     menu_.AppendMenuItemWithLabel(
-        open_all_bookmarks_id,
+        IDS_BOOMARK_BAR_OPEN_ALL,
         l10n_util::GetString(IDS_BOOMARK_BAR_OPEN_ALL));
     menu_.AppendMenuItemWithLabel(
-        open_all_bookmarks_in_new_window_id,
+        IDS_BOOMARK_BAR_OPEN_ALL_NEW_WINDOW,
         l10n_util::GetString(IDS_BOOMARK_BAR_OPEN_ALL_NEW_WINDOW));
+    menu_.AppendMenuItemWithLabel(
+        IDS_BOOMARK_BAR_OPEN_ALL_INCOGNITO,
+        l10n_util::GetString(IDS_BOOMARK_BAR_OPEN_ALL_INCOGNITO));
   }
   menu_.AppendSeparator();
 
   if (node->GetParent() !=
       view->GetProfile()->GetBookmarkModel()->root_node()) {
-    menu_.AppendMenuItemWithLabel(edit_bookmark_id,
+    menu_.AppendMenuItemWithLabel(IDS_BOOKMARK_BAR_EDIT,
                                   l10n_util::GetString(IDS_BOOKMARK_BAR_EDIT));
     menu_.AppendMenuItemWithLabel(
-        delete_bookmark_id,
+        IDS_BOOKMARK_BAR_REMOVE,
         l10n_util::GetString(IDS_BOOKMARK_BAR_REMOVE));
   }
 
   menu_.AppendMenuItemWithLabel(
-      add_bookmark_id,
+      IDS_BOOMARK_BAR_ADD_NEW_BOOKMARK,
       l10n_util::GetString(IDS_BOOMARK_BAR_ADD_NEW_BOOKMARK));
   menu_.AppendMenuItemWithLabel(
-      new_folder_id,
+      IDS_BOOMARK_BAR_NEW_FOLDER,
       l10n_util::GetString(IDS_BOOMARK_BAR_NEW_FOLDER));
   menu_.AppendSeparator();
-  menu_.AppendMenuItem(always_show_command_id,
+  menu_.AppendMenuItem(IDS_BOOMARK_BAR_ALWAYS_SHOW,
                        l10n_util::GetString(IDS_BOOMARK_BAR_ALWAYS_SHOW),
-                       ChromeViews::MenuItemView::CHECKBOX);
+                       views::MenuItemView::CHECKBOX);
 }
 
 void BookmarkBarContextMenuController::RunMenuAt(int x, int y) {
@@ -274,8 +265,8 @@ void BookmarkBarContextMenuController::RunMenuAt(int x, int y) {
   view_->SetModelChangedListener(this);
 
   // width/height don't matter here.
-  menu_.RunMenuAt(view_->GetViewContainer()->GetHWND(), gfx::Rect(x, y, 0, 0),
-                  ChromeViews::MenuItemView::TOPLEFT, true);
+  menu_.RunMenuAt(view_->GetContainer()->GetHWND(), gfx::Rect(x, y, 0, 0),
+                  views::MenuItemView::TOPLEFT, true);
 
   if (view_->GetModelChangedListener() == this)
     view_->SetModelChangedListener(last_listener);
@@ -289,14 +280,15 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
   Profile* profile = view_->GetProfile();
 
   switch (id) {
-    case open_bookmark_id:
-      UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_Open", profile);
+    case IDS_BOOMARK_BAR_OPEN_INCOGNITO:
+      UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_OpenInIncognito",
+                                profile);
 
-      view_->GetPageNavigator()->OpenURL(node_->GetURL(), CURRENT_TAB,
+      view_->GetPageNavigator()->OpenURL(node_->GetURL(), OFF_THE_RECORD,
                                          PageTransition::AUTO_BOOKMARK);
       break;
 
-    case open_bookmark_in_new_window_id:
+    case IDS_BOOMARK_BAR_OPEN_IN_NEW_WINDOW:
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_OpenInNewWindow",
                                 profile);
 
@@ -304,7 +296,7 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
                                          PageTransition::AUTO_BOOKMARK);
       break;
 
-    case open_bookmark_in_new_tab_id:
+    case IDS_BOOMARK_BAR_OPEN_IN_NEW_TAB:
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_OpenInNewTab",
                                 profile);
 
@@ -312,36 +304,38 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
                                          PageTransition::AUTO_BOOKMARK);
       break;
 
-    case open_all_bookmarks_id:
-    case open_all_bookmarks_in_new_window_id: {
-      if (id == open_all_bookmarks_id) {
+    case IDS_BOOMARK_BAR_OPEN_ALL:
+    case IDS_BOOMARK_BAR_OPEN_ALL_INCOGNITO:
+    case IDS_BOOMARK_BAR_OPEN_ALL_NEW_WINDOW: {
+      WindowOpenDisposition initial_disposition;
+      if (id == IDS_BOOMARK_BAR_OPEN_ALL) {
+        initial_disposition = CURRENT_TAB;
         UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_OpenAll",
                                   profile);
-      } else {
+      } else if (id == IDS_BOOMARK_BAR_OPEN_ALL_NEW_WINDOW) {
+        initial_disposition = NEW_WINDOW;
         UserMetrics::RecordAction(
             L"BookmarkBar_ContextMenu_OpenAllInNewWindow", profile);
+      } else {
+        initial_disposition = OFF_THE_RECORD;
+        UserMetrics::RecordAction(
+            L"BookmarkBar_ContextMenu_OpenAllIncognito", profile);
       }
 
-      WindowOpenDisposition initial_disposition;
-      if (id == open_all_bookmarks_in_new_window_id)
-        initial_disposition = NEW_WINDOW;
-      else
-        initial_disposition = CURRENT_TAB;
-
-      // GetViewContainer is NULL during testing.
-      HWND parent_hwnd = view_->GetViewContainer() ?
-          view_->GetViewContainer()->GetHWND() : 0;
+      // GetContainer is NULL during testing.
+      HWND parent_hwnd = view_->GetContainer() ?
+          view_->GetContainer()->GetHWND() : 0;
 
       OpenAll(parent_hwnd, view_->GetPageNavigator(), node_,
               initial_disposition);
       break;
     }
 
-    case edit_bookmark_id:
+    case IDS_BOOKMARK_BAR_EDIT:
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_Edit", profile);
 
       if (node_->GetType() == history::StarredEntry::URL) {
-        BookmarkEditorView::Show(view_->GetViewContainer()->GetHWND(),
+        BookmarkEditorView::Show(view_->GetContainer()->GetHWND(),
                                  view_->GetProfile(), NULL, node_);
       } else {
         // Controller deletes itself when done.
@@ -351,7 +345,7 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
       }
       break;
 
-    case delete_bookmark_id: {
+    case IDS_BOOKMARK_BAR_REMOVE: {
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_Remove", profile);
 
       view_->GetModel()->Remove(node_->GetParent(),
@@ -359,15 +353,15 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
       break;
     }
 
-    case add_bookmark_id: {
+    case IDS_BOOMARK_BAR_ADD_NEW_BOOKMARK: {
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_Add", profile);
 
-      BookmarkEditorView::Show(view_->GetViewContainer()->GetHWND(),
+      BookmarkEditorView::Show(view_->GetContainer()->GetHWND(),
                                view_->GetProfile(), node_, NULL);
       break;
     }
 
-    case new_folder_id: {
+    case IDS_BOOMARK_BAR_NEW_FOLDER: {
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_NewFolder",
                                 profile);
 
@@ -382,7 +376,7 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
       break;
     }
 
-    case always_show_command_id:
+    case IDS_BOOMARK_BAR_ALWAYS_SHOW:
       view_->ToggleWhenVisible();
       break;
 
@@ -392,14 +386,22 @@ void BookmarkBarContextMenuController::ExecuteCommand(int id) {
 }
 
 bool BookmarkBarContextMenuController::IsItemChecked(int id) const {
-  DCHECK(id == always_show_command_id);
+  DCHECK(id == IDS_BOOMARK_BAR_ALWAYS_SHOW);
   return view_->GetProfile()->GetPrefs()->GetBoolean(prefs::kShowBookmarkBar);
 }
 
 bool BookmarkBarContextMenuController::IsCommandEnabled(int id) const {
-  if (id == open_all_bookmarks_id || id == open_all_bookmarks_in_new_window_id)
-    return NodeHasURLs(node_);
+  switch (id) {
+    case IDS_BOOMARK_BAR_OPEN_INCOGNITO:
+      return !view_->GetProfile()->IsOffTheRecord();
 
+    case IDS_BOOMARK_BAR_OPEN_ALL_INCOGNITO:
+      return NodeHasURLs(node_) && !view_->GetProfile()->IsOffTheRecord();
+
+    case IDS_BOOMARK_BAR_OPEN_ALL:
+    case IDS_BOOMARK_BAR_OPEN_ALL_NEW_WINDOW:
+      return NodeHasURLs(node_);
+  }
   return true;
 }
 

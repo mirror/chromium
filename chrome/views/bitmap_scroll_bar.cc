@@ -7,14 +7,17 @@
 #include "base/message_loop.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/menu.h"
 #include "chrome/views/scroll_view.h"
-#include "chrome/views/view_container.h"
 #include "skia/include/SkBitmap.h"
 
 #include "generated_resources.h"
 
-namespace ChromeViews {
+#undef min
+#undef max
+
+namespace views {
 
 namespace {
 
@@ -85,59 +88,52 @@ class BitmapScrollBarThumb : public View {
   void SetSize(int size) {
     // Make sure the thumb is never sized smaller than its minimum possible
     // display size.
-    CSize prefsize;
-    GetPreferredSize(&prefsize);
+    gfx::Size prefsize = GetPreferredSize();
     size = std::max(size,
                     static_cast<int>(scroll_bar_->IsHorizontal() ?
-                        prefsize.cx : prefsize.cy));
-    CRect bounds;
-    GetBounds(&bounds);
+                        prefsize.width() : prefsize.height()));
+    gfx::Rect thumb_bounds = bounds();
     if (scroll_bar_->IsHorizontal()) {
-      bounds.right = bounds.left + size;
+      thumb_bounds.set_width(size);
     } else {
-      bounds.bottom = bounds.top + size;
+      thumb_bounds.set_height(size);
     }
-    SetBounds(bounds);
+    SetBounds(thumb_bounds);
   }
 
   // Retrieves the size (width or height) of the thumb.
   int GetSize() const {
-    CRect bounds;
-    GetBounds(&bounds);
     if (scroll_bar_->IsHorizontal())
-      return bounds.Width();
-    return bounds.Height();
+      return width();
+    return height();
   }
 
   // Sets the position of the thumb on the x or y axis.
   void SetPosition(int position) {
-    CRect bounds;
-    GetBounds(&bounds);
+    gfx::Rect thumb_bounds = bounds();
     gfx::Rect track_bounds = scroll_bar_->GetTrackBounds();
     if (scroll_bar_->IsHorizontal()) {
-      bounds.MoveToX(track_bounds.x() + position);
+      thumb_bounds.set_x(track_bounds.x() + position);
     } else {
-      bounds.MoveToY(track_bounds.y() + position);
+      thumb_bounds.set_x(track_bounds.y() + position);
     }
-    SetBounds(bounds);
+    SetBounds(thumb_bounds);
   }
 
   // Gets the position of the thumb on the x or y axis.
   int GetPosition() const {
-    CRect bounds;
-    GetBounds(&bounds);
     gfx::Rect track_bounds = scroll_bar_->GetTrackBounds();
     if (scroll_bar_->IsHorizontal())
-      return bounds.left - track_bounds.x();
-    return bounds.top - track_bounds.y();
+      return x() - track_bounds.x();
+    return y() - track_bounds.y();
   }
 
   // View overrides:
-  virtual void GetPreferredSize(CSize* preferred_size) {
-    DCHECK(preferred_size);
-    preferred_size->cx = background_bitmap()->width();
-    preferred_size->cy = start_cap_bitmap()->height() +
-        end_cap_bitmap()->height() + grippy_bitmap()->height();
+  virtual gfx::Size GetPreferredSize() {
+    return gfx::Size(background_bitmap()->width(),
+                     start_cap_bitmap()->height() +
+                         end_cap_bitmap()->height() +
+                         grippy_bitmap()->height());
   }
 
  protected:
@@ -286,20 +282,19 @@ BitmapScrollBar::BitmapScrollBar(bool horizontal, bool show_scroll_buttons)
 }
 
 gfx::Rect BitmapScrollBar::GetTrackBounds() const {
-  CSize prefsize;
-  prev_button_->GetPreferredSize(&prefsize);
+  gfx::Size prefsize = prev_button_->GetPreferredSize();
   if (IsHorizontal()) {
     if (!show_scroll_buttons_)
-      prefsize.cx = 0;
-    int new_width = std::max(0,
-                             static_cast<int>(width() - (prefsize.cx * 2)));
-    gfx::Rect track_bounds(prefsize.cx, 0, new_width, prefsize.cy);
+      prefsize.set_width(0);
+    int new_width =
+        std::max(0, static_cast<int>(width() - (prefsize.width() * 2)));
+    gfx::Rect track_bounds(prefsize.width(), 0, new_width, prefsize.height());
     return track_bounds;
   }
   if (!show_scroll_buttons_)
-    prefsize.cy = 0;
-  gfx::Rect track_bounds(0, prefsize.cy, prefsize.cx,
-                         std::max(0l, height() - (prefsize.cy * 2)));
+    prefsize.set_height(0);
+  gfx::Rect track_bounds(0, prefsize.height(), prefsize.width(),
+                         std::max(0, height() - (prefsize.height() * 2)));
   return track_bounds;
 }
 
@@ -380,25 +375,18 @@ void BitmapScrollBar::ScrollByContentsOffset(int contents_offset) {
 }
 
 void BitmapScrollBar::TrackClicked() {
-  if (last_scroll_amount_ != SCROLL_NONE) {
-    CRect thumb_bounds;
-    thumb_->GetBounds(&thumb_bounds);
+  if (last_scroll_amount_ != SCROLL_NONE)
     ScrollByAmount(last_scroll_amount_);
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // BitmapScrollBar, View implementation:
 
-void BitmapScrollBar::GetPreferredSize(CSize* preferred_size) {
-  DCHECK(preferred_size);
-
+gfx::Size BitmapScrollBar::GetPreferredSize() {
   // In this case, we're returning the desired width of the scrollbar and its
   // minimum allowable height.
-  CSize button_prefsize;
-  prev_button_->GetPreferredSize(&button_prefsize);
-  preferred_size->cx = button_prefsize.cx;
-  preferred_size->cy = button_prefsize.cy * 2;
+  gfx::Size button_prefsize = prev_button_->GetPreferredSize();
+  return gfx::Size(button_prefsize.width(), button_prefsize.height() * 2);
 }
 
 void BitmapScrollBar::Paint(ChromeCanvas* canvas) {
@@ -412,16 +400,15 @@ void BitmapScrollBar::Paint(ChromeCanvas* canvas) {
 void BitmapScrollBar::Layout() {
   // Size and place the two scroll buttons.
   if (show_scroll_buttons_) {
-    CSize prefsize;
-    prev_button_->GetPreferredSize(&prefsize);
-    prev_button_->SetBounds(0, 0, prefsize.cx, prefsize.cy);
-    next_button_->GetPreferredSize(&prefsize);
+    gfx::Size prefsize = prev_button_->GetPreferredSize();
+    prev_button_->SetBounds(0, 0, prefsize.width(), prefsize.height());
+    prefsize = next_button_->GetPreferredSize();
     if (IsHorizontal()) {
-      next_button_->SetBounds(width() - prefsize.cx, 0, prefsize.cx,
-                              prefsize.cy);
+      next_button_->SetBounds(width() - prefsize.width(), 0, prefsize.width(),
+                              prefsize.height());
     } else {
-      next_button_->SetBounds(0, height() - prefsize.cy, prefsize.cx,
-                              prefsize.cy);
+      next_button_->SetBounds(0, height() - prefsize.height(), prefsize.width(),
+                              prefsize.height());
     }
   } else {
     prev_button_->SetBounds(0, 0, 0, 0);
@@ -429,54 +416,45 @@ void BitmapScrollBar::Layout() {
   }
 
   // Size and place the thumb
-  CSize thumb_prefsize;
-  thumb_->GetPreferredSize(&thumb_prefsize);
+  gfx::Size thumb_prefsize = thumb_->GetPreferredSize();
   gfx::Rect track_bounds = GetTrackBounds();
 
   // Preserve the height/width of the thumb (depending on orientation) as set
   // by the last call to |Update|, but coerce the width/height to be the
   // appropriate value for the bitmaps provided.
-  CRect bounds;
-  thumb_->GetBounds(&bounds);
   if (IsHorizontal()) {
-    thumb_->SetBounds(bounds.left, bounds.top, bounds.Width(),
-                      thumb_prefsize.cy);
+    thumb_->SetBounds(thumb_->x(), thumb_->y(), thumb_->width(),
+                      thumb_prefsize.height());
   } else {
-    thumb_->SetBounds(bounds.left, bounds.top, thumb_prefsize.cx,
-                      bounds.Height());
+    thumb_->SetBounds(thumb_->x(), thumb_->y(), thumb_prefsize.width(),
+                      thumb_->height());
   }
 
   // Hide the thumb if the track isn't tall enough to display even a tiny
   // thumb. The user can only use the mousewheel, scroll buttons or keyboard
   // in this scenario.
-  if ((IsHorizontal() && (track_bounds.width() < thumb_prefsize.cx)) ||
-      (!IsHorizontal() && (track_bounds.height() < thumb_prefsize.cy))) {
+  if ((IsHorizontal() && (track_bounds.width() < thumb_prefsize.width()) ||
+      (!IsHorizontal() && (track_bounds.height() < thumb_prefsize.height())))) {
     thumb_->SetVisible(false);
   } else if (!thumb_->IsVisible()) {
     thumb_->SetVisible(true);
   }
 }
 
-void BitmapScrollBar::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
-  Layout();
-}
-
 bool BitmapScrollBar::OnMousePressed(const MouseEvent& event) {
   if (event.IsOnlyLeftMouseButton()) {
     SetThumbTrackState(BaseButton::BS_PUSHED);
-    CRect thumb_bounds;
-    thumb_->GetBounds(&thumb_bounds);
+    gfx::Rect thumb_bounds = thumb_->bounds();
     if (IsHorizontal()) {
-      if (event.x() < thumb_bounds.left) {
+      if (event.x() < thumb_bounds.x()) {
         last_scroll_amount_ = SCROLL_PREV_PAGE;
-      } else if (event.x() > thumb_bounds.right) {
+      } else if (event.x() > thumb_bounds.right()) {
         last_scroll_amount_ = SCROLL_NEXT_PAGE;
       }
     } else {
-      if (event.y() < thumb_bounds.top) {
+      if (event.y() < thumb_bounds.y()) {
         last_scroll_amount_ = SCROLL_PREV_PAGE;
-      } else if (event.y() > thumb_bounds.bottom) {
+      } else if (event.y() > thumb_bounds.bottom()) {
         last_scroll_amount_ = SCROLL_NEXT_PAGE;
       }
     }
@@ -551,14 +529,14 @@ enum ScrollBarContextMenuCommands {
 
 void BitmapScrollBar::ShowContextMenu(View* source, int x, int y,
                                       bool is_mouse_gesture) {
-  ViewContainer* vc = GetViewContainer();
+  Container* vc = GetContainer();
   CRect vc_bounds;
   vc->GetBounds(&vc_bounds, true);
-  CPoint temp_pt(x - vc_bounds.left, y - vc_bounds.top);
-  View::ConvertPointFromViewContainer(this, &temp_pt);
-  context_menu_mouse_position_ = IsHorizontal() ? temp_pt.x : temp_pt.y;
+  gfx::Point temp_pt(x - vc_bounds.left, y - vc_bounds.top);
+  View::ConvertPointFromContainer(this, &temp_pt);
+  context_menu_mouse_position_ = IsHorizontal() ? temp_pt.x() : temp_pt.y();
 
-  Menu menu(this, Menu::TOPLEFT, GetViewContainer()->GetHWND());
+  Menu menu(this, Menu::TOPLEFT, GetContainer()->GetHWND());
   menu.AppendDelegateMenuItem(ScrollBarContextMenuCommand_ScrollHere);
   menu.AppendSeparator();
   menu.AppendDelegateMenuItem(ScrollBarContextMenuCommand_ScrollStart);
@@ -684,9 +662,8 @@ void BitmapScrollBar::Update(int viewport_size, int content_size,
 }
 
 int BitmapScrollBar::GetLayoutSize() const {
-  CSize prefsize;
-  prev_button_->GetPreferredSize(&prefsize);
-  return IsHorizontal() ? prefsize.cy : prefsize.cx;
+  gfx::Size prefsize = prev_button_->GetPreferredSize();
+  return IsHorizontal() ? prefsize.height() : prefsize.width();
 }
 
 int BitmapScrollBar::GetPosition() const {
@@ -722,5 +699,5 @@ void BitmapScrollBar::SetThumbTrackState(BaseButton::ButtonState state) {
   SchedulePaint();
 }
 
-}
+}  // namespace views
 

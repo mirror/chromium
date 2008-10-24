@@ -14,10 +14,9 @@
 #include "chrome/common/gfx/url_elider.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/label.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/view_container.h"
+#include "chrome/views/container_win.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
 #include "SkPaint.h"
@@ -65,12 +64,11 @@ static const int kFramerate = 25;
 // View -----------------------------------------------------------------------
 // StatusView manages the display of the bubble, applying text changes and
 // fading in or out the bubble as required.
-class StatusBubble::StatusView : public ChromeViews::Label,
+class StatusBubble::StatusView : public views::Label,
                                  public Animation,
                                  public AnimationDelegate {
  public:
-  StatusView(StatusBubble* status_bubble,
-             ChromeViews::HWNDViewContainer* popup)
+  StatusView(StatusBubble* status_bubble, views::ContainerWin* popup)
       : Animation(kFramerate, this),
         status_bubble_(status_bubble),
         popup_(popup),
@@ -154,7 +152,7 @@ class StatusBubble::StatusView : public ChromeViews::Label,
   StatusBubble* status_bubble_;
 
   // Handle to the HWND that contains us.
-  ChromeViews::HWNDViewContainer* popup_;
+  views::ContainerWin* popup_;
 
   // The currently-displayed text.
   std::wstring text_;
@@ -415,7 +413,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
   int text_width = std::min(static_cast<int>(parent_rect.right -
                                 parent_rect.left - kTextPositionX -
                                 kTextPadding),
-                            static_cast<int>(ChromeViews::Label::GetFont()
+                            static_cast<int>(views::Label::GetFont()
                                 .GetStringWidth(text_)));
 
   // Draw highlight text and then the text body. In order to make sure the text
@@ -427,7 +425,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
                         parent_rect.bottom - parent_rect.top);
   body_bounds.set_x(MirroredLeftPointForRect(body_bounds));
   canvas->DrawStringInt(text_,
-                        ChromeViews::Label::GetFont(),
+                        views::Label::GetFont(),
                         kTextHighlightColor,
                         body_bounds.x() + 1,
                         body_bounds.y() + 1,
@@ -435,7 +433,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
                         body_bounds.height());
 
   canvas->DrawStringInt(text_,
-                        ChromeViews::Label::GetFont(),
+                        views::Label::GetFont(),
                         kTextColor,
                         body_bounds.x(),
                         body_bounds.y(),
@@ -445,7 +443,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
 
 // StatusBubble ---------------------------------------------------------------
 
-StatusBubble::StatusBubble(ChromeViews::ViewContainer* frame)
+StatusBubble::StatusBubble(views::Container* frame)
     : popup_(NULL),
       frame_(frame),
       view_(NULL),
@@ -467,7 +465,7 @@ StatusBubble::~StatusBubble() {
 
 void StatusBubble::Init() {
   if (!popup_) {
-    popup_ = new ChromeViews::HWNDViewContainer();
+    popup_ = new views::ContainerWin();
     popup_->set_delete_on_destroy(false);
 
     if (!view_) {
@@ -567,12 +565,12 @@ void StatusBubble::AvoidMouse() {
   GetCursorPos(&cursor_location);
 
   // Get the position of the frame.
-  CPoint top_left(0, 0);
-  ChromeViews::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
+  gfx::Point top_left;
+  views::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
 
   // Get the cursor position relative to the popup.
-  cursor_location.x -= (top_left.x + position_.x);
-  cursor_location.y -= (top_left.y + position_.y);
+  cursor_location.x -= (top_left.x() + position_.x);
+  cursor_location.y -= (top_left.y() + position_.y);
 
   // If the mouse is in a position where we think it would move the
   // status bubble, figure out where and how the bubble should be moved.
@@ -605,15 +603,15 @@ void StatusBubble::AvoidMouse() {
     }
 
     offset_ = offset;
-    popup_->MoveWindow(top_left.x + position_.x,
-                       top_left.y + position_.y + offset_,
+    popup_->MoveWindow(top_left.x() + position_.x,
+                       top_left.y() + position_.y + offset_,
                        size_.cx,
                        size_.cy);
   } else if (offset_ != 0) {
     offset_ = 0;
     view_->SetStyle(StatusView::STYLE_STANDARD);
-    popup_->MoveWindow(top_left.x + position_.x,
-                       top_left.y + position_.y,
+    popup_->MoveWindow(top_left.x() + position_.x,
+                       top_left.y() + position_.y,
                        size_.cx,
                        size_.cy);
   }
@@ -621,11 +619,11 @@ void StatusBubble::AvoidMouse() {
 
 void StatusBubble::Reposition() {
   if (popup_) {
-    CPoint top_left(0, 0);
-    ChromeViews::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
+    gfx::Point top_left;
+    views::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
 
-    popup_->MoveWindow(top_left.x + position_.x,
-                       top_left.y + position_.y,
+    popup_->MoveWindow(top_left.x() + position_.x,
+                       top_left.y() + position_.y,
                        size_.cx,
                        size_.cy);
   }

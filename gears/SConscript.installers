@@ -1,0 +1,267 @@
+# Copyright (c) 2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import os
+import re
+import subprocess
+
+Import('env')
+
+env = env.Clone(
+    INSTALLER_BASEDIR = 'installers',
+    INSTALLER_BASENAME = 'gears-${OS}-${MODE}-${VERSION}',
+    FF_XPI = '$INSTALLER_BASEDIR/${INSTALLER_BASENAME}.xpi',
+    WIN32_INSTALLER_MSI = '$INSTALLER_BASEDIR/${INSTALLER_BASENAME}.msi',
+    WINCE_INSTALLER_CAB = '$INSTALLER_BASEDIR/${INSTALLER_BASENAME}.cab',
+
+    FF2_MODULE = '${SHLIBPREFIX}gears_ff2${SHLIBSUFFIX}',
+    MODULE = '${SHLIBPREFIX}gears${SHLIBSUFFIX}',
+    WINCE_SETUP = '${SHLIBPREFIX}setup${SHLIBSUFFIX}',
+
+    # Clean up the '#' in *_OUTDIR.
+    BASE_OUTDIR = env.Entry('$BASE_OUTDIR').path,
+)
+
+ff3_resources = [
+    '$FF3_OUTDIR/genfiles/browser-overlay.js',
+    '$FF3_OUTDIR/genfiles/browser-overlay.xul',
+    '$FF3_OUTDIR/genfiles/permissions_dialog.html',
+    '$FF3_OUTDIR/genfiles/settings_dialog.html',
+    '$FF3_OUTDIR/genfiles/shortcuts_dialog.html',
+]
+
+common_resources = [
+    '$OPEN_DIR/ui/common/blank.gif',
+    '$OPEN_DIR/ui/common/button_bg.gif',
+    '$OPEN_DIR/ui/common/button_corner_black.gif',
+    '$OPEN_DIR/ui/common/button_corner_blue.gif',
+    '$OPEN_DIR/ui/common/button_corner_grey.gif',
+    '$OPEN_DIR/ui/common/icon_32x32.png',
+    '$OPEN_DIR/ui/common/local_data.png',
+    '$OPEN_DIR/ui/common/location_data.png',
+]
+
+def Shell(cmd):
+  """Execute a shell command and return the output."""
+  cmd[0] = env.Entry(cmd[0]).abspath
+  cmd = env.subst(cmd)
+  return subprocess.Popen(
+      cmd, shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+if env['OS'] == 'win32':
+  def GGUIDGen(value):
+    """Generate a GGUID for the given value."""
+    return Shell(['$GGUIDGEN', '$NAMESPACE_GUID', value + '-$VERSION'])
+  env.Replace(
+      GGUIDGEN = '#/$OPEN_DIR/tools/gguidgen.exe',
+      NAMESPACE_GUID = '36F65206-5D4E-4752-9D52-27708E10DA79',
+# MSI version numbers must have the form <major>.<minor>.<build>. To meet this,
+# we combine our build and patch version numbers like so:
+# MSI_VERSION = <major>.<minor>.<BUILD * 100 + PATCH>.
+# Note: This assumes that the BUILD and PATCH variables adhere to the range
+# requirements in version.mk. See comments in version.mk for more details.
+      MSI_BUILD = eval(env.subst('$BUILD * 100 + $PATCH')),
+      MSI_VERSION = '${MAJOR}.${MINOR}.${MSI_BUILD}',
+  )
+
+  # Building wxiobjs with candle
+  env.Replace(
+      CANDLEDEFPREFIX = '-d',
+      CANDLEDEFSUFFIX = '',
+      _CANDLEDEFFLAGS = ('${_defines(CANDLEDEFPREFIX, CANDLEDEFINES, '
+                         'CANDLEDEFSUFFIX, __env__)}'),
+      CANDLECOM = 'candle.exe -out $TARGET $SOURCE ${_CANDLEDEFFLAGS}',
+  )
+  env.Append(
+# Note: Since light.exe is run from $OPEN_DIR, candle.exe must generate
+# output with paths relative to that dir.
+      SCONS_DIR = '../../../..',  # the scons dir relative to OPEN_DIR
+# You can change the names of ProductId vars, but NEVER change their values!
+      CANDLEDEFINES = [
+          ('OurWin32ProductId',
+            GGUIDGen('OUR_PRODUCT_ID')),
+          ('OurComponentGUID_FFComponentsDirFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_FF_COMPONENTS_DIR_FILES')),
+          ('OurComponentGUID_FFContentDirFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_FF_CONTENT_DIR_FILES')),
+          ('OurComponentGUID_FFDirFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_FF_DIR_FILES')),
+          ('OurComponentGUID_FFLibDirFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_FF_LIB_DIR_FILES')),
+          ('OurComponentGUID_FFRegistry',
+            GGUIDGen('OUR_COMPONENT_GUID_FF_REGISTRY')),
+          ('OurComponentGUID_IEFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_IE_FILES')),
+          ('OurComponentGUID_IERegistry',
+            GGUIDGen('OUR_COMPONENT_GUID_IE_REGISTRY')),
+          ('OurComponentGUID_SharedFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_SHARED_FILES')),
+          ('OurComponentGUID_SharedVersionedFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_SHARED_VERSIONED_FILES')),
+          ('OurComponentGUID_SharedRegistry',
+            GGUIDGen('OUR_COMPONENT_GUID_SHARED_REGISTRY')),
+          ('OurNpapiProductId',
+            GGUIDGen('OUR_2ND_PRODUCT_ID')),
+          ('OurComponentGUID_NpapiFiles',
+            GGUIDGen('OUR_COMPONENT_GUID_NPAPI_FILES')),
+          ('OurComponentGUID_NpapiRegistry',
+            GGUIDGen('OUR_COMPONENT_GUID_NPAPI_REGISTRY')),
+          ('OurMsiVersion', '$MSI_VERSION'),
+          ('OurCommonPath', '$SCONS_DIR/$COMMON_OUTDIR'),
+          ('OurIEPath', '$SCONS_DIR/$IE_OUTDIR'),
+          ('OurIpcTestPath', '$SCONS_DIR/$BASE_OUTDIR/common'),
+          ('OurFFPath',
+            '$SCONS_DIR/$BASE_OUTDIR/$INSTALLER_BASEDIR/$INSTALLER_BASENAME'),
+          ('OurNpapiPath', '$SCONS_DIR/$NPAPI_OUTDIR'),
+      ]
+  )
+  wix_langs = [re.sub('-', '_', lang) for lang in env['I18N_LANGS']]
+  env.Append(
+      CANDLEDEFINES =
+        [('OurComponentGUID_FFLang' + lang + 'DirFiles',
+           GGUIDGen('OUR_COMPONENT_GUID_FF_' + lang + '_DIR_FILES'))
+         for lang in wix_langs],
+  )
+
+def IsDir(path):
+  """Test if path (relative to the toplevel dir) is a directory."""
+  path = env.Entry("#/" + path).abspath
+  return os.path.isdir(path)
+
+def StripOutdir(paths):
+  """Strips the Hammer/gears/$MODE/ part from the paths, if its there."""
+  def StripOne(path):
+    path = os.path.normpath(env.subst(path))
+    is_dir = IsDir(path)
+    pattern = env.subst('$BASE_OUTDIR')
+    if path.startswith(pattern): path = path[len(pattern)+1:]
+    if is_dir:
+      # Workaround: SCons doesn't like directories in a source list.
+      return env.Glob(path + "/*")
+    return path
+  return [StripOne(path) for path in paths]
+
+def SafeMkdir(dir):
+  """Like the builtin Mkdir, but doesn't fail if the dir exists."""
+  def Func(target, source, env):
+    dir_subst = env.subst(dir, target=target)
+    if not os.path.exists(dir_subst):
+      os.makedirs(dir_subst)
+    return 0
+  return Action(Func, 'SafeMkdir(' + dir + ')')
+
+def ToUnixPath(path):
+  """Converts windows-style \ to unix-style /."""
+  return re.sub(r'\\', r'/', path)
+
+def FirefoxInstaller(env):
+  # This step is a little hackish.
+  # Why: We want to copy files from both the build and source dirs.  We have
+  # to be explicit about which tree to pull from, because otherwise scons gets
+  # confused - specifically, when copying a directory from the source dir,
+  # scons uses the build dir's version instead. 
+  # How: We specify "*_OUTDIR" for outputs to pull from the build dir.
+  # However, this won't work as an input to a builder, so we strip that off
+  # when passing to Command().  The Copy action, however, receives the full
+  # qualified path, since it knows nothing about variant build dirs.
+  #
+  # Note: as shorthand, if the target ends with a '/', then the sources will
+  # be placed into that dir.  Otherwise, source is renamed into the target.
+  copysrcs = [
+      ('/', ['$FF3_OUTDIR/genfiles/install.rdf',
+             '$FF3_OUTDIR/genfiles/chrome.manifest']),
+      ('lib/', ['$OPEN_DIR/base/firefox/static_files/lib/updater.js']),
+      ('chrome/chromeFiles/content/', ff3_resources + common_resources),
+      ('chrome/chromeFiles/locale', ['$FF3_OUTDIR/genfiles/i18n']),
+      ('components/',
+          ['$FF3_OUTDIR/gears.xpt',
+           '$OPEN_DIR/base/firefox/static_files/components/bootstrap.js']),
+      ('components/$FF2_MODULE', ['$FF2_OUTDIR/$MODULE']),
+      ('components/$MODULE', ['$FF3_OUTDIR/$MODULE']),
+  ]
+
+  if env['USING_CCTESTS']:
+    copysrcs += [
+        ('components/', ['$COMMON_OUTDIR/ipc_test${PROGSUFFIX}']),
+    ]
+  if env['OS'] != 'win32':
+    # TODO(playmobil): Inspector should be located in extensions dir on win32.
+    copysrcs += [
+        ('resources/inspector', ['$OPEN_DIR/inspector']),
+        ('resources/inspector/common/', ['$OPEN_DIR/sdk/gears_init.js',
+                                         '$OPEN_DIR/sdk/samples/sample.js']),
+    ]
+  if env['MODE'] == 'dbg' and env['OS'] in ['win32', 'wince']:
+    copysrcs += [
+        ('components/gears_ff2.pdb', ['$FF2_OUTDIR/gears.pdb']),
+        ('components/gears.pdb', ['$FF3_OUTDIR/gears.pdb']),
+    ]
+  # TODO: notifier, os x
+
+  srcs = []
+  actions = [Delete('${TARGET.base}')]
+  for target, sources in copysrcs:
+    srcs += StripOutdir(sources)
+
+    is_dir = target.endswith('/')
+    if is_dir:
+      actions.append(SafeMkdir('${TARGET.base}/' + target))
+    else:
+      actions.append(SafeMkdir('${TARGET.base}/' + os.path.dirname(target)))
+    for source in sources:
+      if is_dir:
+        actions.append(
+            Copy('${TARGET.base}/' + target + os.path.basename(source),
+                 source))
+      else:
+        actions.append(Copy('${TARGET.base}/' + target, source))
+ 
+  actions += [
+      # Mark files writeable to allow .xpi rebuilds
+      'chmod -R 777 ${TARGET.base}',
+      '(cd ${TARGET.base} && zip -r ../${TARGET.file} .)'
+  ]
+
+  return env.Command('$FF_XPI', srcs, actions)
+env.AddMethod(FirefoxInstaller, 'FirefoxInstaller')
+
+def Win32Installer(env):
+  wxiobj = env.Command(
+      StripOutdir(['$COMMON_GENFILES_DIR/win32_msi.wxiobj']),
+      StripOutdir(['$COMMON_GENFILES_DIR/win32_msi.wxs']),
+      '$CANDLECOM')
+  # light.exe must be run from $OPEN_DIR
+  msi = env.Command(
+      '$WIN32_INSTALLER_MSI',
+      [wxiobj, '$FF_XPI', StripOutdir(['$IE_OUTDIR/$MODULE'])],
+      'cd $OPEN_DIR && light.exe -out ${TARGET.abspath} ${SOURCES[0].abspath}')
+  return msi
+env.AddMethod(Win32Installer, 'Win32Installer')
+
+def WinCEInstaller(env):
+  env['ToUnixPath'] = ToUnixPath
+  inf_outdir = ToUnixPath(env.subst('$IE_OUTDIR'))
+  inf = env.Command(
+      StripOutdir(['$COMMON_GENFILES_DIR/wince_cab_fixed.inf']),
+      StripOutdir(['$COMMON_GENFILES_DIR/wince_cab.inf']),
+      'sed -e "s#bin-....wince-arm.ie.#' + inf_outdir + '#g" $SOURCE > $TARGET')
+  cab = env.Command(
+      '$WINCE_INSTALLER_CAB',
+      [inf, StripOutdir(['$IE_OUTDIR/$MODULE']),
+       StripOutdir(['$IE_OUTDIR/$WINCE_SETUP'])],
+      ['cabwiz ${ToUnixPath(str(SOURCE))} /compress'
+       ' /err ${SOURCES[0].base}.log',
+       Copy('$TARGET', '${SOURCE.base}.CAB')])
+  return cab
+env.AddMethod(WinCEInstaller, 'WinCEInstaller')
+
+installers = []
+if 'FF3' in env['VALID_BROWSERS']:
+  installers += env.FirefoxInstaller()
+if env['OS'] == 'win32':
+  installers += env.Win32Installer()
+if env['OS'] == 'wince':
+  installers += env.WinCEInstaller()
+
+env.Alias('gears-installers', installers)

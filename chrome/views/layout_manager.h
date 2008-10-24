@@ -9,7 +9,11 @@
 #include <atlapp.h>
 #include <atlmisc.h>
 
-namespace ChromeViews {
+namespace gfx {
+class Size;
+}
+
+namespace views {
 
 class View;
 
@@ -40,7 +44,7 @@ class LayoutManager {
 
   // Return the preferred size which is the size required to give each
   // children their respective preferred size.
-  virtual void GetPreferredSize(View* host, CSize* out) = 0;
+  virtual gfx::Size GetPreferredSize(View* host) = 0;
 
   // Returns the preferred height for the specified width. The default
   // implementation returns the value from GetPreferredSize.
@@ -53,7 +57,7 @@ class LayoutManager {
   virtual void ViewRemoved(View* host, View* view) {}
 };
 
-}
+}  // namespace views
 
 #endif // CHROME_VIEWS_LAYOUT_MANAGER_H__
 

@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DB687D70EAFE7C800AB2128 /* libxslt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB687D40EAFE79200AB2128 /* libxslt.a */; };
+		4DB7FA6F0E9BF33B00C66CE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB7FA6E0E9BF33B00C66CE0 /* SystemConfiguration.framework */; };
+		4DB7FEA40E9BF92100C66CE0 /* libwebcoresysteminterface.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB7FE760E9BF6CB00C66CE0 /* libwebcoresysteminterface.a */; };
+		4DB7FEA80E9BF98C00C66CE0 /* libWebKitSystemInterfaceLeopard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB7FEA70E9BF98C00C66CE0 /* libWebKitSystemInterfaceLeopard.a */; };
 		7B779D510E83001A00C2971E /* libevent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B779D500E82FFAC00C2971E /* libevent.a */; };
 		7BA363BD0E8C40C30023C8B9 /* libsdch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BA363BA0E8C409A0023C8B9 /* libsdch.a */; };
 		82F372150E82AE0500DF5AFE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F372140E82AE0500DF5AFE /* Security.framework */; };
-		82F399480E7EE4D500785E15 /* libWebKitSystemInterfaceLeopard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F399470E7EE4D500785E15 /* libWebKitSystemInterfaceLeopard.a */; };
 		82F399B70E7EF75800785E15 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8205260E770291008F45CF /* libbase.a */; };
 		82F399B80E7EF75A00785E15 /* libbase_gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8205280E770291008F45CF /* libbase_gfx.a */; };
 		82F399F90E7EF7C000785E15 /* libgoogleurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8205370E770291008F45CF /* libgoogleurl.a */; };
@@ -21,7 +24,6 @@
 		82F39A220E7EF85F00785E15 /* libgtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F39A210E7EF85C00785E15 /* libgtest.a */; };
 		82F39CF40E7EF90F00785E15 /* libzlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8205B90E770291008F45CF /* libzlib.a */; };
 		82F39CF90E7EF92500785E15 /* libbzip2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B82052F0E770291008F45CF /* libbzip2.a */; };
-		82F39CFD0E7EF93600785E15 /* WebSystemInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 820A5E760DE35E2E00871E2D /* WebSystemInterface.m */; };
 		82F39D050E7EF95D00785E15 /* libmodp_b64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82F39D040E7EF95A00785E15 /* libmodp_b64.a */; };
 		82F39D080E7EF97000785E15 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B82055E0E770291008F45CF /* libpng.a */; };
 		82F39D0E0E7EFA5500785E15 /* libglue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8205AA0E770291008F45CF /* libglue.a */; };
@@ -88,6 +90,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4DB687D30EAFE79200AB2128 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DB687CA0EAFE79200AB2128 /* libxslt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DB684930EAFDF7000AB2128;
+			remoteInfo = xslt;
+		};
+		4DB687D50EAFE7B100AB2128 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DB687CA0EAFE79200AB2128 /* libxslt.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DB684920EAFDF7000AB2128;
+			remoteInfo = xslt;
+		};
+		4DB7FE750E9BF6CB00C66CE0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 829E2E250DBE7DE200819EBF /* webkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DB7FE6F0E9BF6AC00C66CE0;
+			remoteInfo = webcoresysteminterface;
+		};
+		4DB7FEA20E9BF90A00C66CE0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 829E2E250DBE7DE200819EBF /* webkit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DB7FE6E0E9BF6AC00C66CE0;
+			remoteInfo = webcoresysteminterface;
+		};
 		7B779D3B0E82FF2200C2971E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7B42A4C40DE20F1700659DE0 /* v8.xcodeproj */;
@@ -525,6 +555,9 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = "<group>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* TestShell_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestShell_Prefix.pch; sourceTree = "<group>"; };
+		4DB687CA0EAFE79200AB2128 /* libxslt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libxslt.xcodeproj; path = third_party/libxslt/libxslt.xcodeproj; sourceTree = "<group>"; };
+		4DB7FA6E0E9BF33B00C66CE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<group>"; };
+		4DB7FEA70E9BF98C00C66CE0 /* libWebKitSystemInterfaceLeopard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWebKitSystemInterfaceLeopard.a; path = ../../../../third_party/WebKit/WebKitLibraries/libWebKitSystemInterfaceLeopard.a; sourceTree = SOURCE_ROOT; };
 		7B42A4C40DE20F1700659DE0 /* v8.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = v8.xcodeproj; path = build/v8.xcodeproj; sourceTree = "<group>"; };
 		7B779D4B0E82FFAC00C2971E /* libevent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libevent.xcodeproj; path = third_party/libevent/libevent.xcodeproj; sourceTree = "<group>"; };
 		7B8200950E76FDA1008F45CF /* common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = common.xcconfig; sourceTree = "<group>"; };
@@ -535,9 +568,6 @@
 		7B8203F10E76FED8008F45CF /* libxml.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libxml.xcodeproj; path = third_party/libxml/libxml.xcodeproj; sourceTree = "<group>"; };
 		7BA363B50E8C409A0023C8B9 /* sdch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sdch.xcodeproj; path = sdch/sdch.xcodeproj; sourceTree = "<group>"; };
 		7BFDF6620E37AE2100F1D7D8 /* libjpeg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libjpeg.xcodeproj; path = third_party/libjpeg/libjpeg.xcodeproj; sourceTree = "<group>"; };
-		820A5E750DE35E2E00871E2D /* WebSystemInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebSystemInterface.h; path = temp/WebSystemInterface.h; sourceTree = "<group>"; };
-		820A5E760DE35E2E00871E2D /* WebSystemInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebSystemInterface.m; path = temp/WebSystemInterface.m; sourceTree = "<group>"; };
-		820A5E850DE35FC600871E2D /* WebKitSystemInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebKitSystemInterface.h; path = temp/WebKitSystemInterface.h; sourceTree = "<group>"; };
 		820A61B80DE7623F00871E2D /* missingImage.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = missingImage.tiff; sourceTree = "<group>"; };
 		824CB6100DAFEF14000C5DDE /* test_shell */ = {isa = PBXFileReference; lastKnownFileType = folder; name = test_shell; path = ../../../data/test_shell; sourceTree = SOURCE_ROOT; };
 		8287BDFA0E0AA28000CC8F2F /* aliasCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aliasCursor.png; sourceTree = "<group>"; };
@@ -575,7 +605,6 @@
 		829E35590DC0D37B00819EBF /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = "<group>"; };
 		829E355C0DC0D47400819EBF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = "<group>"; };
 		82F372140E82AE0500DF5AFE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = "<group>"; };
-		82F399470E7EE4D500785E15 /* libWebKitSystemInterfaceLeopard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWebKitSystemInterfaceLeopard.a; path = temp/libWebKitSystemInterfaceLeopard.a; sourceTree = "<group>"; };
 		82F39A1C0E7EF85C00785E15 /* gtest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gtest.xcodeproj; path = testing/gtest.xcodeproj; sourceTree = "<group>"; };
 		82F39CFF0E7EF95A00785E15 /* modp_b64.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = modp_b64.xcodeproj; path = third_party/modp_b64/modp_b64.xcodeproj; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -645,12 +674,15 @@
 				82F39D2B0E7EFC2600785E15 /* libskia.a in Frameworks */,
 				82F39D4A0E7EFDAA00785E15 /* libv8.a in Frameworks */,
 				82F39D110E7EFA5A00785E15 /* libwebcore.a in Frameworks */,
-				82F399480E7EE4D500785E15 /* libWebKitSystemInterfaceLeopard.a in Frameworks */,
+				4DB7FEA40E9BF92100C66CE0 /* libwebcoresysteminterface.a in Frameworks */,
+				4DB7FEA80E9BF98C00C66CE0 /* libWebKitSystemInterfaceLeopard.a in Frameworks */,
 				82F39D100E7EFA5800785E15 /* libwtf.a in Frameworks */,
 				82F39D400E7EFD9300785E15 /* libxml.a in Frameworks */,
+				4DB687D70EAFE7C800AB2128 /* libxslt.a in Frameworks */,
 				82F39CF40E7EF90F00785E15 /* libzlib.a in Frameworks */,
 				E456292D0E26B4FE005E4685 /* QuartzCore.framework in Frameworks */,
 				82F372150E82AE0500DF5AFE /* Security.framework in Frameworks */,
+				4DB7FA6F0E9BF33B00C66CE0 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -669,7 +701,7 @@
 			isa = PBXGroup;
 			children = (
 				7B8200940E76FD84008F45CF /* Configuration */,
-				AB1E8EFA0DB7B95C00742926 /* test_shell */,
+				AB1E8EFA0DB7B95C00742926 /* Source */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				7B8200D20E76FE73008F45CF /* Projects */,
@@ -698,11 +730,21 @@
 				829E35590DC0D37B00819EBF /* Carbon.framework */,
 				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+				4DB7FEA70E9BF98C00C66CE0 /* libWebKitSystemInterfaceLeopard.a */,
 				829E355C0DC0D47400819EBF /* QuartzCore.framework */,
 				82F372140E82AE0500DF5AFE /* Security.framework */,
+				4DB7FA6E0E9BF33B00C66CE0 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = SDKROOT;
+		};
+		4DB687CB0EAFE79200AB2128 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DB687D40EAFE79200AB2128 /* libxslt.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 		7B779D4C0E82FFAC00C2971E /* Products */ = {
 			isa = PBXGroup;
@@ -737,6 +779,7 @@
 				7BFDF6620E37AE2100F1D7D8 /* libjpeg.xcodeproj */,
 				ABC8C3EE0DC7F72600B59C21 /* libpng.xcodeproj */,
 				7B8203F10E76FED8008F45CF /* libxml.xcodeproj */,
+				4DB687CA0EAFE79200AB2128 /* libxslt.xcodeproj */,
 				82F39CFF0E7EF95A00785E15 /* modp_b64.xcodeproj */,
 				E45629460E26B5A7005E4685 /* net.xcodeproj */,
 				7BA363B50E8C409A0023C8B9 /* sdch.xcodeproj */,
@@ -853,6 +896,7 @@
 				7B8205AE0E770291008F45CF /* libpcre.a */,
 				7B8205B00E770291008F45CF /* libport.a */,
 				7B8205B20E770291008F45CF /* libwebcore.a */,
+				4DB7FE760E9BF6CB00C66CE0 /* libwebcoresysteminterface.a */,
 				7B8205B40E770291008F45CF /* libwtf.a */,
 			);
 			name = Products;
@@ -877,14 +921,10 @@
 		7BFDF4FD0E37AB4200F1D7D8 /* mac */ = {
 			isa = PBXGroup;
 			children = (
-				82F399470E7EE4D500785E15 /* libWebKitSystemInterfaceLeopard.a */,
 				29B97316FDCFA39411CA2CEA /* main.mm */,
 				ABA65EFD0DD50BFF003A4FC8 /* test_shell_webview.h */,
 				ABA65EFE0DD50BFF003A4FC8 /* test_shell_webview.mm */,
 				32CA4F630368D1EE00C91783 /* TestShell_Prefix.pch */,
-				820A5E850DE35FC600871E2D /* WebKitSystemInterface.h */,
-				820A5E750DE35E2E00871E2D /* WebSystemInterface.h */,
-				820A5E760DE35E2E00871E2D /* WebSystemInterface.m */,
 			);
 			path = mac;
 			sourceTree = "<group>";
@@ -942,7 +982,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AB1E8EFA0DB7B95C00742926 /* test_shell */ = {
+		AB1E8EFA0DB7B95C00742926 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				7BFDF4FD0E37AB4200F1D7D8 /* mac */,
@@ -972,7 +1012,7 @@
 				ABD16F390DC6A73B0013D3AA /* webwidget_host.h */,
 				ABD16F380DC6A73B0013D3AA /* webwidget_host.mm */,
 			);
-			name = test_shell;
+			name = Source;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -1001,6 +1041,7 @@
 				7B779D530E83002A00C2971E /* PBXTargetDependency */,
 				82F39D0A0E7EF97500785E15 /* PBXTargetDependency */,
 				82F39D420E7EFD9C00785E15 /* PBXTargetDependency */,
+				4DB687D60EAFE7B100AB2128 /* PBXTargetDependency */,
 				82F39D070E7EF96400785E15 /* PBXTargetDependency */,
 				82F39A1A0E7EF82B00785E15 /* PBXTargetDependency */,
 				7BA363BC0E8C40A30023C8B9 /* PBXTargetDependency */,
@@ -1010,6 +1051,7 @@
 				82F39D190E7EFA6800785E15 /* PBXTargetDependency */,
 				82F39D1B0E7EFA6800785E15 /* PBXTargetDependency */,
 				82F39D1D0E7EFA6800785E15 /* PBXTargetDependency */,
+				4DB7FEA30E9BF90A00C66CE0 /* PBXTargetDependency */,
 				82F39D1F0E7EFA6800785E15 /* PBXTargetDependency */,
 				82F39D4C0E7EFDB500785E15 /* PBXTargetDependency */,
 				82F39D4E0E7EFDB500785E15 /* PBXTargetDependency */,
@@ -1069,6 +1111,10 @@
 					ProjectRef = 7B8203F10E76FED8008F45CF /* libxml.xcodeproj */;
 				},
 				{
+					ProductGroup = 4DB687CB0EAFE79200AB2128 /* Products */;
+					ProjectRef = 4DB687CA0EAFE79200AB2128 /* libxslt.xcodeproj */;
+				},
+				{
 					ProductGroup = 82F39D000E7EF95A00785E15 /* Products */;
 					ProjectRef = 82F39CFF0E7EF95A00785E15 /* modp_b64.xcodeproj */;
 				},
@@ -1105,6 +1151,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		4DB687D40EAFE79200AB2128 /* libxslt.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libxslt.a;
+			remoteRef = 4DB687D30EAFE79200AB2128 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4DB7FE760E9BF6CB00C66CE0 /* libwebcoresysteminterface.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libwebcoresysteminterface.a;
+			remoteRef = 4DB7FE750E9BF6CB00C66CE0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		7B779D3C0E82FF2200C2971E /* libv8-arm.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1425,7 +1485,6 @@
 				E456291E0E26B4FE005E4685 /* test_shell_webview.mm in Sources */,
 				E456291C0E26B4FE005E4685 /* test_webview_delegate.mm in Sources */,
 				E456291D0E26B4FE005E4685 /* text_input_controller.cc in Sources */,
-				82F39CFD0E7EF93600785E15 /* WebSystemInterface.m in Sources */,
 				E456290F0E26B4FE005E4685 /* webview_host.mm in Sources */,
 				E45629100E26B4FE005E4685 /* webwidget_host.mm in Sources */,
 			);
@@ -1434,6 +1493,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4DB687D60EAFE7B100AB2128 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = xslt;
+			targetProxy = 4DB687D50EAFE7B100AB2128 /* PBXContainerItemProxy */;
+		};
+		4DB7FEA30E9BF90A00C66CE0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = webcoresysteminterface;
+			targetProxy = 4DB7FEA20E9BF90A00C66CE0 /* PBXContainerItemProxy */;
+		};
 		7B779D530E83002A00C2971E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = libevent;
@@ -1580,31 +1649,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B8200960E76FDA1008F45CF /* debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(FRAMEWORK_SEARCH_PATHS)",
-					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Frameworks",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(GCC_PREPROCESSOR_DEFINITIONS)",
-					BUILDING_CHROMIUM__,
-				);
-				HEADER_SEARCH_PATHS = (
-					"$(HEADER_SEARCH_PATHS)",
-					../../../..,
-					../../../../skia/include,
-					../../../../skia/include/corecg,
-					../../../../testing/gtest/include,
-					../../../../third_party/icu38/public/common,
-					../../../../third_party/icu38/public/i18n,
-					../../../pending,
-					../../../../third_party/WebKit/WebCore,
-					../../../../third_party/WebKit/JavaScriptCore,
-					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/WebCore/v8",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(LIBRARY_SEARCH_PATHS)",
-					"$(SRCROOT)/temp",
-				);
 				XCODEPROJ_DEPTH = ../../../..;
 			};
 			name = Debug;
@@ -1613,10 +1657,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B8200980E76FDA1008F45CF /* release.xcconfig */;
 			buildSettings = {
+				XCODEPROJ_DEPTH = ../../../..;
+			};
+			name = Release;
+		};
+		E456293C0E26B4FE005E4685 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B8200970E76FDA1008F45CF /* executable.xcconfig */;
+			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS)",
 					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Frameworks",
 				);
+				GCC_PREFIX_HEADER = TestShell_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(GCC_PREPROCESSOR_DEFINITIONS)",
 					BUILDING_CHROMIUM__,
@@ -1629,25 +1682,18 @@
 					../../../../testing/gtest/include,
 					../../../../third_party/icu38/public/common,
 					../../../../third_party/icu38/public/i18n,
+					../../../../third_party/npapi,
 					../../../pending,
 					../../../../third_party/WebKit/WebCore,
+					../../../../third_party/WebKit/WebKit/mac/WebCoreSupport,
 					../../../../third_party/WebKit/JavaScriptCore,
 					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/WebCore/v8",
 				);
+				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(LIBRARY_SEARCH_PATHS)",
-					"$(SRCROOT)/temp",
+					"$(SRCROOT)/../../../../third_party/WebKit/WebKitLibraries",
 				);
-				XCODEPROJ_DEPTH = ../../../..;
-			};
-			name = Release;
-		};
-		E456293C0E26B4FE005E4685 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B8200970E76FDA1008F45CF /* executable.xcconfig */;
-			buildSettings = {
-				GCC_PREFIX_HEADER = TestShell_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = TestShell;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1657,8 +1703,35 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B8200970E76FDA1008F45CF /* executable.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(FRAMEWORK_SEARCH_PATHS)",
+					"$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Frameworks",
+				);
 				GCC_PREFIX_HEADER = TestShell_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(GCC_PREPROCESSOR_DEFINITIONS)",
+					BUILDING_CHROMIUM__,
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					../../../..,
+					../../../../skia/include,
+					../../../../skia/include/corecg,
+					../../../../testing/gtest/include,
+					../../../../third_party/icu38/public/common,
+					../../../../third_party/icu38/public/i18n,
+					../../../../third_party/npapi,
+					../../../pending,
+					../../../../third_party/WebKit/WebCore,
+					../../../../third_party/WebKit/WebKit/mac/WebCoreSupport,
+					../../../../third_party/WebKit/JavaScriptCore,
+					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/WebCore/v8",
+				);
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(LIBRARY_SEARCH_PATHS)",
+					"$(SRCROOT)/../../../../third_party/WebKit/WebKitLibraries",
+				);
 				PRODUCT_NAME = TestShell;
 				WRAPPER_EXTENSION = app;
 			};

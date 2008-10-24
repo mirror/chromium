@@ -9,8 +9,8 @@ BEGIN
   IDS_FIXED_FONT_FAMILY         "Courier New"
   IDS_SERIF_FONT_FAMILY         "Times New Roman"
   IDS_SANS_SERIF_FONT_FAMILY    "Arial"
-  IDS_CURSIVE_FONT_FAMILY       "Script"
-  IDS_FANTASY_FONT_FAMILY       "Comic Sans MS"
+  IDS_CURSIVE_FONT_FAMILY       "Comic Sans MS"
+  IDS_FANTASY_FONT_FAMILY       "Impact"
   IDS_DEFAULT_FONT_SIZE         "16"
   IDS_DEFAULT_FIXED_FONT_SIZE   "13"
   IDS_MINIMUM_FONT_SIZE         "1"
@@ -60,11 +60,12 @@ BEGIN
   IDS_WELCOME_PAGE_URL "http://tools.google.com/chrome/intl/de/welcome.html"
   IDS_LEARN_MORE_INCOGNITO_URL "http://www.google.com/support/chrome/bin/answer.py?answer=95464&hl=de"
   IDS_LEARN_MORE_HELPMAKECHROMEBETTER_URL "http://www.google.com/support/chrome/bin/answer.py?answer=96817&hl=de"
-  IDS_ABOUT_VERSION_LICENSE_URL "http://www.google.com/support/chrome/bin/answer.py?answer=100336"
 END
 
 #if defined(GOOGLE_CHROME_BUILD)
 #include "google_chrome_strings_de.rc"
+IDR_TERMS_HTML  BINDATA   "terms\\terms_de.html"
 #else
 #include "chromium_strings_de.rc"
+IDR_TERMS_HTML  BINDATA   "terms\\terms_chromium.html"
 #endif

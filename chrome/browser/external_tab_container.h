@@ -15,9 +15,9 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
+#include "chrome/views/container.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/view_container.h"
 
 class AutomationProvider;
 class TabContents;
@@ -27,11 +27,11 @@ class TabContentsContainerView;
 // An external tab is a Chrome tab that is meant to displayed in an
 // external process. This class provides the FocusManger needed by the
 // TabContents as well as an implementation of TabContentsDelagate.
-// It also implements ViewContainer
+// It also implements Container
 class ExternalTabContainer : public TabContentsDelegate,
                              public NotificationObserver,
-                             public ChromeViews::ViewContainer,
-                             public ChromeViews::KeystrokeListener,
+                             public views::Container,
+                             public views::KeystrokeListener,
                              public CWindowImpl<ExternalTabContainer,
                                                 CWindow,
                                                 CWinTraits<WS_POPUP |
@@ -88,21 +88,21 @@ class ExternalTabContainer : public TabContentsDelegate,
                        const NotificationDetails& details);
 
   ////////////////////////////////////////////////////////////////////////////////
-  // ChromeViews::ViewContainer
+  // views::Container
   ////////////////////////////////////////////////////////////////////////////////
   virtual void GetBounds(CRect *out, bool including_frame) const;
   virtual void MoveToFront(bool should_activate);
   virtual HWND GetHWND() const;
-  virtual void PaintNow(const CRect& update_rect);
-  virtual ChromeViews::RootView* GetRootView();
+  virtual void PaintNow(const gfx::Rect& update_rect);
+  virtual views::RootView* GetRootView();
   virtual bool IsVisible();
   virtual bool IsActive();
   virtual bool GetAccelerator(int cmd_id,
-                              ChromeViews::Accelerator* accelerator) {
+                              views::Accelerator* accelerator) {
     return false;
   }
 
-  // ChromeViews::KeystrokeListener implementation
+  // views::KeystrokeListener implementation
   // This method checks whether this keydown message is needed by the
   // external host. If so, it sends it over to the external host
   virtual bool ProcessKeyDown(HWND window, UINT message, WPARAM wparam,
@@ -135,7 +135,7 @@ class ExternalTabContainer : public TabContentsDelegate,
   NotificationRegistrar registrar_;
 
   // Root view
-  ChromeViews::RootView root_view_;
+  views::RootView root_view_;
   // The accelerator table of the external host.
   HACCEL external_accel_table_;
   unsigned int external_accel_entry_count_;

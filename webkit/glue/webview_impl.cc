@@ -31,9 +31,13 @@
 */
 
 #include "config.h"
+#include "build/build_config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+MSVC_PUSH_WARNING_LEVEL(0);
+#if defined(OS_WIN)
 #include "Cursor.h"
+#endif
 #include "Document.h"
 #include "DocumentLoader.h"
 #include "DragController.h"
@@ -53,7 +57,6 @@
 #include "KeyboardEvent.h"
 #include "MIMETypeRegistry.h"
 #include "Page.h"
-#include "Pasteboard.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
@@ -66,7 +69,7 @@
 #include "Settings.h"
 #include "TypingCommand.h"
 #include "event_conversion.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
 #include "base/gfx/rect.h"
@@ -134,11 +137,11 @@ WebView* WebView::Create(WebViewDelegate* delegate,
 WebViewImpl::WebViewImpl()
     : delegate_(NULL),
       pending_history_item_(NULL),
+      observed_new_navigation_(false),
 #ifndef NDEBUG
       new_navigation_loader_(NULL),
 #endif
-      observed_new_navigation_(false),
-      text_zoom_level_(0),
+      zoom_level_(0),
       context_menu_allowed_(false),
       doing_drag_and_drop_(false),
       suppress_next_keypress_event_(false),
@@ -248,7 +251,9 @@ void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
   else
       target_frame = page_->focusController()->focusedOrMainFrame();
 
+#if defined(OS_WIN)
   target_frame->view()->setCursor(pointerCursor());
+#endif
 
   context_menu_allowed_ = true;
   target_frame->eventHandler()->sendContextMenuEvent(pme);
@@ -396,7 +401,7 @@ bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
   if (!view)
     return false;
 
-  POINT coords = {-1, -1};
+  IntPoint coords(-1, -1);
   int right_aligned = ::GetSystemMetrics(SM_MENUDROPALIGNMENT);
   IntPoint location;
 
@@ -439,8 +444,8 @@ bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
   focused_frame->view()->setCursor(pointerCursor());
   WebMouseEvent mouse_event;
   mouse_event.button = WebMouseEvent::BUTTON_RIGHT;
-  mouse_event.x = coords.x;
-  mouse_event.y = coords.y;
+  mouse_event.x = coords.x();
+  mouse_event.y = coords.y();
   mouse_event.type = WebInputEvent::MOUSE_UP;
 
   MakePlatformMouseEvent platform_event(view, mouse_event);
@@ -1009,10 +1014,8 @@ void WebViewImpl::SetInitialFocus(bool reverse) {
     keyboard_event.type = WebInputEvent::KEY_DOWN;
     if (reverse)
       keyboard_event.modifiers = WebInputEvent::SHIFT_KEY;
-#if defined(OS_WIN)
-    keyboard_event.key_code = VK_TAB;
-#endif
-    keyboard_event.key_data = L'\t';
+    // VK_TAB which is only defined on Windows.
+    keyboard_event.key_code = 0x09;
     MakePlatformKeyboardEvent platform_event(keyboard_event);
     // We have to set the key type explicitly to avoid an assert in the
     // KeyboardEvent constructor.
@@ -1154,33 +1157,37 @@ std::wstring WebViewImpl::GetMainFrameEncodingName() {
   return webkit_glue::StringToStdWString(encoding_name);
 }
 
-void WebViewImpl::MakeTextLarger() {
+void WebViewImpl::ZoomIn(bool text_only) {
   Frame* frame = main_frame()->frame();
   double multiplier = std::min(std::pow(kTextSizeMultiplierRatio,
-                                        text_zoom_level_ + 1),
+                                        zoom_level_ + 1),
                                kMaxTextSizeMultiplier);
   float zoom_factor = static_cast<float>(multiplier);
   if (zoom_factor != frame->zoomFactor()) {
-    ++text_zoom_level_;
-    frame->setZoomFactor(zoom_factor, true);
+    ++zoom_level_;
+    frame->setZoomFactor(zoom_factor, text_only);
   }
 }
 
-void WebViewImpl::MakeTextSmaller() {
+void WebViewImpl::ZoomOut(bool text_only) {
   Frame* frame = main_frame()->frame();
   double multiplier = std::max(std::pow(kTextSizeMultiplierRatio,
-                                        text_zoom_level_ - 1),
+                                        zoom_level_ - 1),
                                kMinTextSizeMultiplier);
   float zoom_factor = static_cast<float>(multiplier);
   if (zoom_factor != frame->zoomFactor()) {
-    --text_zoom_level_;
-    frame->setZoomFactor(zoom_factor, true);
+    --zoom_level_;
+    frame->setZoomFactor(zoom_factor, text_only);
   }
 }
 
-void WebViewImpl::MakeTextStandardSize() {
-  text_zoom_level_ = 0;
-  main_frame()->frame()->setZoomFactor(1.0f, true);
+void WebViewImpl::ResetZoom() {
+  // We don't change the zoom mode (text only vs. full page) here. We just want
+  // to reset whatever is already set.
+  zoom_level_ = 0;
+  main_frame()->frame()->setZoomFactor(
+      1.0f,
+      main_frame()->frame()->isZoomFactorTextOnly());
 }
 
 void WebViewImpl::CopyImageAt(int x, int y) {
@@ -1225,7 +1232,7 @@ void WebViewImpl::InspectElement(int x, int y) {
 }
 
 void WebViewImpl::ShowJavaScriptConsole() {
-  page_->inspectorController()->showConsole();
+  page_->inspectorController()->showPanel(InspectorController::ConsolePanel);
 }
 
 void WebViewImpl::DragSourceEndedAt(
@@ -1262,15 +1269,9 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
   *drop_data_copy = drop_data;
   current_drop_data_.reset(drop_data_copy);
 
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
       kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
   DragOperation effect = page_->dragController()->dragEntered(&drag_data);
   return effect != DragOperationNone;
 }
@@ -1278,28 +1279,17 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
 bool WebViewImpl::DragTargetDragOver(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
       kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
   DragOperation effect = page_->dragController()->dragUpdated(&drag_data);
   return effect != DragOperationNone;
 }
 
 void WebViewImpl::DragTargetDragLeave() {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(), IntPoint(), DragOperationNone);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(), IntPoint(), DragOperationNone, nil);
-#endif
   page_->dragController()->dragExited(&drag_data);
   current_drop_data_.reset(NULL);
 }
@@ -1307,15 +1297,9 @@ void WebViewImpl::DragTargetDragLeave() {
 void WebViewImpl::DragTargetDrop(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
   DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
       IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
       kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
   page_->dragController()->performDrag(&drag_data);
   current_drop_data_.reset(NULL);
 }
@@ -1469,6 +1453,13 @@ size_t WebViewImpl::getActiveTickmarkIndex(WebCore::Frame* frame) {
   return webframe_impl->active_tickmark_index();
 }
 
+bool WebViewImpl::isHidden() {
+  if (!delegate_)
+    return true;
+
+  return delegate_->IsHidden();
+}
+
 //-----------------------------------------------------------------------------
 // WebCore::BackForwardListClient
 
@@ -1479,6 +1470,7 @@ void WebViewImpl::didAddHistoryItem(WebCore::HistoryItem* item) {
 #ifndef NDEBUG
   new_navigation_loader_ = main_frame_->frame()->loader()->documentLoader();
 #endif
+  delegate_->DidAddHistoryItem();
 }
 
 void WebViewImpl::willGoToHistoryItem(WebCore::HistoryItem* item) {

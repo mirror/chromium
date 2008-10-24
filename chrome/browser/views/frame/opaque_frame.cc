@@ -42,12 +42,20 @@ gfx::Rect OpaqueFrame::GetBoundsForTabStrip(TabStrip* tabstrip) const {
   return GetOpaqueNonClientView()->GetBoundsForTabStrip(tabstrip);
 }
 
-ChromeViews::Window* OpaqueFrame::GetWindow() {
+void OpaqueFrame::UpdateThrobber(bool running) {
+  // TODO(beng): pass |running| through rather than letting
+  //             OpaqueNonClientView's TabIconView try and figure it out.
+  // The throbber doesn't run in the Windows TaskBar, so we just update the
+  // non-client view. Updating the taskbar is muy expensivo.
+  GetOpaqueNonClientView()->UpdateWindowIcon();
+}
+
+views::Window* OpaqueFrame::GetWindow() {
   return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueFrame, ChromeViews::CustomFrameWindow overrides:
+// OpaqueFrame, views::CustomFrameWindow overrides:
 
 void OpaqueFrame::UpdateWindowIcon() {
   CustomFrameWindow::UpdateWindowIcon();
@@ -55,23 +63,18 @@ void OpaqueFrame::UpdateWindowIcon() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueFrame, ChromeViews::HWNDViewContainer overrides:
+// OpaqueFrame, views::ContainerWin overrides:
 
-bool OpaqueFrame::AcceleratorPressed(ChromeViews::Accelerator* accelerator) {
+bool OpaqueFrame::AcceleratorPressed(views::Accelerator* accelerator) {
   return browser_view_->AcceleratorPressed(*accelerator);
 }
 
-bool OpaqueFrame::GetAccelerator(int cmd_id,
-                                 ChromeViews::Accelerator* accelerator) {
+bool OpaqueFrame::GetAccelerator(int cmd_id, views::Accelerator* accelerator) {
   return browser_view_->GetAccelerator(cmd_id, accelerator);
 }
 
 void OpaqueFrame::OnEndSession(BOOL ending, UINT logoff) {
   FrameUtil::EndSession();
-}
-
-void OpaqueFrame::OnExitMenuLoop(bool is_track_popup_menu) {
-  browser_view_->SystemMenuEnded();
 }
 
 void OpaqueFrame::OnInitMenuPopup(HMENU menu, UINT position,
@@ -106,7 +109,7 @@ void OpaqueFrame::OnSysCommand(UINT notification_code, CPoint click) {
   if (!browser_view_->SystemCommandReceived(notification_code,
                                             gfx::Point(click))) {
     // Use the default implementation for any other command.
-    SetMsgHandled(FALSE);
+    CustomFrameWindow::OnSysCommand(notification_code, click);
   }
 }
 

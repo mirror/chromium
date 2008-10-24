@@ -54,23 +54,21 @@ URLRequestHttpJob::URLRequestHttpJob(URLRequest* request)
 }
 
 URLRequestHttpJob::~URLRequestHttpJob() {
-  if (transaction_)
-    DestroyTransaction();
 }
 
 void URLRequestHttpJob::SetUpload(net::UploadData* upload) {
-  DCHECK(!transaction_) << "cannot change once started";
+  DCHECK(!transaction_.get()) << "cannot change once started";
   request_info_.upload_data = upload;
 }
 
 void URLRequestHttpJob::SetExtraRequestHeaders(
     const std::string& headers) {
-  DCHECK(!transaction_) << "cannot change once started";
+  DCHECK(!transaction_.get()) << "cannot change once started";
   request_info_.extra_headers = headers;
 }
 
 void URLRequestHttpJob::Start() {
-  DCHECK(!transaction_);
+  DCHECK(!transaction_.get());
 
   // TODO(darin): URLRequest::referrer() should return a GURL
   GURL referrer(request_->referrer());
@@ -97,7 +95,7 @@ void URLRequestHttpJob::Start() {
 }
 
 void URLRequestHttpJob::Kill() {
-  if (!transaction_)
+  if (!transaction_.get())
     return;
 
   DestroyTransaction();
@@ -105,15 +103,16 @@ void URLRequestHttpJob::Kill() {
 }
 
 net::LoadState URLRequestHttpJob::GetLoadState() const {
-  return transaction_ ? transaction_->GetLoadState() : net::LOAD_STATE_IDLE;
+  return transaction_.get() ?
+      transaction_->GetLoadState() : net::LOAD_STATE_IDLE;
 }
 
 uint64 URLRequestHttpJob::GetUploadProgress() const {
-  return transaction_ ? transaction_->GetUploadProgress() : 0;
+  return transaction_.get() ? transaction_->GetUploadProgress() : 0;
 }
 
 bool URLRequestHttpJob::GetMimeType(std::string* mime_type) {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   if (!response_info_)
     return false;
@@ -122,7 +121,7 @@ bool URLRequestHttpJob::GetMimeType(std::string* mime_type) {
 }
 
 bool URLRequestHttpJob::GetCharset(std::string* charset) {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   if (!response_info_)
     return false;
@@ -132,7 +131,7 @@ bool URLRequestHttpJob::GetCharset(std::string* charset) {
 
 void URLRequestHttpJob::GetResponseInfo(net::HttpResponseInfo* info) {
   DCHECK(request_);
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   if (response_info_)
     *info = *response_info_;
@@ -140,7 +139,7 @@ void URLRequestHttpJob::GetResponseInfo(net::HttpResponseInfo* info) {
 
 bool URLRequestHttpJob::GetResponseCookies(
     std::vector<std::string>* cookies) {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   if (!response_info_)
     return false;
@@ -154,7 +153,7 @@ bool URLRequestHttpJob::GetResponseCookies(
 }
 
 int URLRequestHttpJob::GetResponseCode() {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   if (!response_info_)
     return -1;
@@ -164,7 +163,7 @@ int URLRequestHttpJob::GetResponseCode() {
 
 bool URLRequestHttpJob::GetContentEncodings(
     std::vector<std::string>* encoding_types) {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   if (!response_info_)
     return false;
@@ -173,9 +172,63 @@ bool URLRequestHttpJob::GetContentEncodings(
   void* iter = NULL;
   while (response_info_->headers->EnumerateHeader(&iter, "Content-Encoding",
                                                   &encoding_type)) {
-    encoding_types->push_back(encoding_type);
+    encoding_types->push_back(StringToLowerASCII(encoding_type));
   }
+
+  // TODO(jar): Transition to returning enums, rather than strings, and perform
+  // all content encoding fixups here, rather than doing some in the
+  // FilterFactor().  Note that enums generated can be more specific than mere
+  // restatement of strings.  For example, rather than just having a GZIP
+  // encoding we can have a GZIP_OPTIONAL encoding to help with odd SDCH related
+  // fixups.
+
+  // TODO(jar): Refactor code so that content-encoding error recovery is
+  // testable via unit tests.
+
+  if (!IsSdchResponse())
+    return !encoding_types->empty();
+
+  // If content encoding included SDCH, then everything is fine.
+  if (!encoding_types->empty() && ("sdch" == encoding_types->front()))
+    return !encoding_types->empty();
+
+  // SDCH "search results" protective hack: To make sure we don't break the only
+  // currently deployed SDCH enabled server, be VERY cautious about proxies that
+  // strip all content-encoding to not include sdch.  IF we don't see content
+  // encodings that seem to match what we'd expect from a server that asked us
+  // to use a dictionary (and we advertised said dictionary in the GET), then
+  // we set the encoding to (try to) use SDCH to decode.  Note that SDCH will
+  // degrade into a pass-through filter if it doesn't have a viable dictionary
+  // hash in its header.  Also note that a solo "sdch" will implicitly create
+  // a "sdch,gzip" decoding filter, where the gzip portion will degrade to a
+  // pass through if a gzip header is not encountered.  Hence we can replace
+  // "gzip" with "sdch" and "everything will work."
+  // The one failure mode comes when we advertise a dictionary, and the server
+  // tries to *send* a gzipped file (not gzip encode content), and then we could
+  // do a gzip decode :-(.  Since current server support does not ever see such
+  // a transfer, we are safe (for now).
+
+  std::string mime_type;
+  GetMimeType(&mime_type);
+  if (std::string::npos != mime_type.find_first_of("text/html")) {
+    // Suspicious case: Advertised dictionary, but server didn't use sdch, even
+    // though it is text_html content.
+    if (encoding_types->empty())
+      SdchManager::SdchErrorRecovery(SdchManager::ADDED_CONTENT_ENCODING);
+    else if (encoding_types->size() == 1)
+      SdchManager::SdchErrorRecovery(SdchManager::FIXED_CONTENT_ENCODING);
+    else
+      SdchManager::SdchErrorRecovery(SdchManager::FIXED_CONTENT_ENCODINGS);
+    encoding_types->clear();
+    encoding_types->push_back("sdch");  // Handle SDCH/GZIP-opt encoding.
+  }
+
   return !encoding_types->empty();
+}
+
+bool URLRequestHttpJob::IsSdchResponse() const {
+  return response_info_ &&
+      (request_info_.load_flags & net::LOAD_SDCH_DICTIONARY_ADVERTISED);
 }
 
 bool URLRequestHttpJob::IsRedirectResponse(GURL* location,
@@ -238,7 +291,7 @@ bool URLRequestHttpJob::NeedsAuth() {
 
 void URLRequestHttpJob::GetAuthChallengeInfo(
     scoped_refptr<net::AuthChallengeInfo>* result) {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
   DCHECK(response_info_);
 
   // sanity checks:
@@ -266,7 +319,7 @@ void URLRequestHttpJob::GetCachedAuthData(
 
 void URLRequestHttpJob::SetAuth(const std::wstring& username,
                                 const std::wstring& password) {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
   // Proxy gets set first, then WWW.
   if (proxy_auth_state_ == net::AUTH_STATE_NEED_AUTH) {
@@ -321,7 +374,7 @@ void URLRequestHttpJob::CancelAuth() {
 }
 
 void URLRequestHttpJob::ContinueDespiteLastError() {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
   DCHECK(!response_info_) << "should not have a response yet";
 
   // No matter what, we want to report our status as IO pending since we will
@@ -339,7 +392,7 @@ void URLRequestHttpJob::ContinueDespiteLastError() {
 }
 
 bool URLRequestHttpJob::GetMoreData() {
-  return transaction_ && !read_in_progress_;
+  return transaction_.get() && !read_in_progress_;
 }
 
 bool URLRequestHttpJob::ReadRawData(char* buf, int buf_size, int *bytes_read) {
@@ -370,7 +423,7 @@ void URLRequestHttpJob::OnStartCompleted(int result) {
 
   // If the transaction was destroyed, then the job was cancelled, and
   // we can just ignore this notification.
-  if (!transaction_)
+  if (!transaction_.get())
     return;
 
   // Clear the IO_PENDING status
@@ -443,10 +496,9 @@ void URLRequestHttpJob::NotifyHeadersComplete() {
 }
 
 void URLRequestHttpJob::DestroyTransaction() {
-  DCHECK(transaction_);
+  DCHECK(transaction_.get());
 
-  transaction_->Destroy();
-  transaction_ = NULL;
+  transaction_.reset();
   response_info_ = NULL;
 }
 
@@ -454,20 +506,20 @@ void URLRequestHttpJob::StartTransaction() {
   // NOTE: This method assumes that request_info_ is already setup properly.
 
   // Create a transaction.
-  DCHECK(!transaction_);
+  DCHECK(!transaction_.get());
 
   DCHECK(request_->context());
   DCHECK(request_->context()->http_transaction_factory());
 
-  transaction_ =
-      request_->context()->http_transaction_factory()->CreateTransaction();
+  transaction_.reset(
+      request_->context()->http_transaction_factory()->CreateTransaction());
 
   // No matter what, we want to report our status as IO pending since we will
   // be notifying our consumer asynchronously via OnStartCompleted.
   SetStatus(URLRequestStatus(URLRequestStatus::IO_PENDING, 0));
 
   int rv;
-  if (transaction_) {
+  if (transaction_.get()) {
     rv = transaction_->Start(&request_info_, &start_callback_);
     if (rv == net::ERR_IO_PENDING)
       return;
@@ -516,9 +568,11 @@ void URLRequestHttpJob::AddExtraHeaders() {
   std::string avail_dictionaries;
   SdchManager::Global()->GetAvailDictionaryList(request_->url(),
                                                 &avail_dictionaries);
-  if (!avail_dictionaries.empty())
+  if (!avail_dictionaries.empty()) {
     request_info_.extra_headers += "Avail-Dictionary: "
         + avail_dictionaries + "\r\n";
+    request_info_.load_flags |= net::LOAD_SDCH_DICTIONARY_ADVERTISED;
+  }
 
   scoped_ptr<FileVersionInfo> file_version_info(
     FileVersionInfo::CreateFileVersionInfoForCurrentModule());

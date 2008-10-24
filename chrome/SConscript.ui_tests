@@ -14,12 +14,12 @@ env_test.Prepend(
         '$SKIA_DIR/include',
         '$SKIA_DIR/include/corecg',
         '$SKIA_DIR/platform',
-        '#/..',
+        '$CHROME_SRC_DIR',
         '$GTEST_DIR/include',
         'third_party/wtl/include',
         '$LIBXSLT_DIR',
         '$LIBXML_DIR/include',
-        '$LIBXML_DIR/scons/include',
+        '$LIBXML_DIR/DerivedSources/include',
         'tools/build/win',
     ],
     CPPDEFINES = [
@@ -129,6 +129,7 @@ ui_test_files = [
     'test/ui/sandbox_uitests.cc',
     'test/ui/ui_test.cc',
     'test/ui/ui_test_suite.cc',
+    'test/ui/history_uitest.cc',
     '$CHROME_DIR/test/test_file_util$OBJSUFFIX',
     '$NET_DIR/url_request/url_request_test_job$OBJSUFFIX',
 ]

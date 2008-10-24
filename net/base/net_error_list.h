@@ -38,6 +38,9 @@ NET_ERROR(UNEXPECTED, -9)
 // Permission to access a resource was denied.
 NET_ERROR(ACCESS_DENIED, -10)
 
+// The operation failed because of unimplemented functionality.
+NET_ERROR(NOT_IMPLEMENTED, -11)
+
 // A connection was closed (corresponding to a TCP FIN).
 NET_ERROR(CONNECTION_CLOSED, -100)
 
@@ -76,6 +79,16 @@ NET_ERROR(SSL_CLIENT_AUTH_CERT_NEEDED, -110)
 
 // A tunnel connection through the proxy could not be established.
 NET_ERROR(TUNNEL_CONNECTION_FAILED, -111)
+
+// No SSL protocol versions are enabled.
+NET_ERROR(NO_SSL_VERSIONS_ENABLED, -112)
+
+// The client and server don't support a common SSL protocol version or
+// cipher suite.
+NET_ERROR(SSL_VERSION_OR_CIPHER_MISMATCH, -113)
+
+// The server requested a renegotiation (rehandshake).
+NET_ERROR(SSL_RENEGOTIATION_REQUESTED, -114)
 
 // Certificate error codes
 //
@@ -197,6 +210,13 @@ NET_ERROR(INVALID_CHUNKED_ENCODING, -321)
 
 // The server did not support the request method.
 NET_ERROR(METHOD_NOT_SUPPORTED, -322)
+
+// The response was 407 (Proxy Authentication Required), yet we did not send
+// the request to a proxy.
+NET_ERROR(UNEXPECTED_PROXY_AUTH, -323)
+
+// The server closed the connection without sending any data.
+NET_ERROR(EMPTY_RESPONSE, -324)
 
 // The cache does not have the requested entry.
 NET_ERROR(CACHE_MISS, -400)

@@ -22,13 +22,13 @@
 #include "chrome/views/accessibility/accessible_wrapper.h"
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
+#include "chrome/views/container.h"
 #include "chrome/views/layout_manager.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/tooltip_manager.h"
-#include "chrome/views/view_container.h"
 #include "SkShader.h"
 
-namespace ChromeViews {
+namespace views {
 
 // static
 char View::kViewClassName[] = "chrome/views/View";
@@ -114,115 +114,81 @@ View::~View() {
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void View::GetBounds(CRect* out, PositionMirroringSettings settings) const {
-  *out = bounds_;
+gfx::Rect View::GetBounds(PositionMirroringSettings settings) const {
+  gfx::Rect bounds(bounds_);
 
   // If the parent uses an RTL UI layout and if we are asked to transform the
   // bounds to their mirrored position if necessary, then we should shift the
   // rectangle appropriately.
-  if (settings == APPLY_MIRRORING_TRANSFORMATION) {
-    out->MoveToX(MirroredX());
-  }
+  if (settings == APPLY_MIRRORING_TRANSFORMATION)
+    bounds.set_x(MirroredX());
+  
+  return bounds;
 }
 
 // y(), width() and height() are agnostic to the RTL UI layout of the
 // parent view. x(), on the other hand, is not.
 int View::GetX(PositionMirroringSettings settings) const {
-  if (settings == IGNORE_MIRRORING_TRANSFORMATION) {
-    return bounds_.left;
-  }
-  return MirroredX();
+  return settings == IGNORE_MIRRORING_TRANSFORMATION ? x() : MirroredX();
 }
 
-void View::SetBounds(const CRect& bounds) {
-  if (bounds.left == bounds_.left &&
-      bounds.top == bounds_.top &&
-      bounds.Width() == bounds_.Width() &&
-      bounds.Height() == bounds_.Height()) {
+void View::SetBounds(const gfx::Rect& bounds) {
+  if (bounds == bounds_)
     return;
-  }
 
-  CRect prev = bounds_;
+  gfx::Rect prev = bounds_;
   bounds_ = bounds;
-  if (bounds_.right < bounds_.left)
-    bounds_.right = bounds_.left;
-
-  if (bounds_.bottom < bounds_.top)
-    bounds_.bottom = bounds_.top;
-
   DidChangeBounds(prev, bounds_);
 
   RootView* root = GetRootView();
   if (root) {
-    bool size_changed = (prev.Width() != bounds_.Width() ||
-                         prev.Height() != bounds_.Height());
-    bool position_changed = (prev.left != bounds_.left ||
-                             prev.top != bounds_.top);
+    bool size_changed = prev.size() != bounds_.size();
+    bool position_changed = prev.origin() != bounds_.origin();
     if (size_changed || position_changed)
       root->ViewBoundsChanged(this, size_changed, position_changed);
   }
 }
 
-void View::SetBounds(int x, int y, int width, int height) {
-  CRect tmp(x, y, x + width, y + height);
-  SetBounds(tmp);
+gfx::Rect View::GetLocalBounds(bool include_border) const {
+  if (include_border || border_ == NULL)
+    return gfx::Rect(0, 0, width(), height());
+
+  gfx::Insets insets;
+  border_->GetInsets(&insets);
+  return gfx::Rect(insets.left(), insets.top(),
+                   width() - insets.width(), height() - insets.height());
 }
 
-void View::GetLocalBounds(CRect* out, bool include_border) const {
-  if (include_border || border_ == NULL) {
-    out->left = 0;
-    out->top = 0;
-    out->right = width();
-    out->bottom = height();
-  } else {
-    gfx::Insets insets;
-    border_->GetInsets(&insets);
-    out->left = insets.left();
-    out->top = insets.top();
-    out->right = width() - insets.left();
-    out->bottom = height() - insets.top();
-  }
+gfx::Point View::GetPosition() const {
+  return gfx::Point(GetX(APPLY_MIRRORING_TRANSFORMATION), y());
 }
 
-void View::GetSize(CSize* sz) const {
-  sz->cx = width();
-  sz->cy = height();
-}
-
-void View::GetPosition(CPoint* p) const {
-  p->x = GetX(APPLY_MIRRORING_TRANSFORMATION);
-  p->y = y();
-}
-
-void View::GetPreferredSize(CSize* out) {
-  if (layout_manager_.get()) {
-    layout_manager_->GetPreferredSize(this, out);
-  } else {
-    out->cx = out->cy = 0;
-  }
+gfx::Size View::GetPreferredSize() {
+  if (layout_manager_.get())
+    return layout_manager_->GetPreferredSize(this);
+  return gfx::Size();
 }
 
 void View::SizeToPreferredSize() {
-  CSize size;
-  GetPreferredSize(&size);
-  if ((size.cx != width()) || (size.cy != height()))
-    SetBounds(x(), y(), size.cx, size.cy);
+  gfx::Size prefsize = GetPreferredSize();
+  if ((prefsize.width() != width()) || (prefsize.height() != height()))
+    SetBounds(x(), y(), prefsize.width(), prefsize.height());
 }
 
-void View::GetMinimumSize(CSize* out) {
-  GetPreferredSize(out);
+gfx::Size View::GetMinimumSize() {
+  return GetPreferredSize();
 }
 
 int View::GetHeightForWidth(int w) {
   if (layout_manager_.get())
     return layout_manager_->GetPreferredHeightForWidth(this, w);
 
-  CSize size;
-  GetPreferredSize(&size);
-  return size.cy;
+  return GetPreferredSize().height();
 }
 
-void View::DidChangeBounds(const CRect& previous, const CRect& current) {
+void View::DidChangeBounds(const gfx::Rect& previous,
+                           const gfx::Rect& current) {
+  Layout();
 }
 
 void View::ScrollRectToVisible(int x, int y, int width, int height) {
@@ -282,11 +248,11 @@ bool View::UILayoutIsRightToLeft() const {
 ////////////////////////////////////////////////////////////////////////////////
 
 inline int View::MirroredX() const {
+  // TODO(beng): reimplement in terms of MirroredLeftPointForRect.
   View* parent = GetParent();
-  if (parent && parent->UILayoutIsRightToLeft()) {
-    return parent->width() - bounds_.left - width();
-  }
-  return bounds_.left;
+  if (parent && parent->UILayoutIsRightToLeft())
+    return parent->width() - x() - width();
+  return x();
 }
 
 int View::MirroredLeftPointForRect(const gfx::Rect& bounds) const {
@@ -322,7 +288,7 @@ void View::SetFocusable(bool focusable) {
 }
 
 FocusManager* View::GetFocusManager() {
-  ViewContainer* container = GetViewContainer();
+  Container* container = GetContainer();
   if (!container)
     return NULL;
 
@@ -330,7 +296,7 @@ FocusManager* View::GetFocusManager() {
   if (!hwnd)
     return NULL;
 
-  return ChromeViews::FocusManager::GetFocusManager(hwnd);
+  return FocusManager::GetFocusManager(hwnd);
 }
 
 bool View::HasFocus() {
@@ -350,31 +316,25 @@ void View::SetHotTracked(bool flag) {
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void View::SchedulePaint(const CRect& r, bool urgent) {
-  if (!IsVisible()) {
+void View::SchedulePaint(const gfx::Rect& r, bool urgent) {
+  if (!IsVisible())
     return;
-  }
 
   if (parent_) {
     // Translate the requested paint rect to the parent's coordinate system
     // then pass this notification up to the parent.
-    CRect paint_rect(r);
-    CPoint p;
-    GetPosition(&p);
-    paint_rect.OffsetRect(p);
+    gfx::Rect paint_rect = r;
+    paint_rect.Offset(GetPosition());
     parent_->SchedulePaint(paint_rect, urgent);
   }
 }
 
 void View::SchedulePaint() {
-  CRect lb;
-  GetLocalBounds(&lb, true);
-  SchedulePaint(lb, false);
+  SchedulePaint(GetLocalBounds(true), false);
 }
 
 void View::SchedulePaint(int x, int y, int w, int h) {
-  CRect r(x, y, x + w, y + h);
-  SchedulePaint(&r, false);
+  SchedulePaint(gfx::Rect(x, y, w, h), false);
 }
 
 void View::Paint(ChromeCanvas* canvas) {
@@ -425,11 +385,10 @@ void View::ProcessPaint(ChromeCanvas* canvas) {
   // Note that the X (or left) position we pass to ClipRectInt takes into
   // consideration whether or not the view uses a right-to-left layout so that
   // we paint our view in its mirrored position if need be.
-  if (canvas->ClipRectInt(MirroredX(), bounds_.top, bounds_.Width(),
-                          bounds_.Height())) {
+  if (canvas->ClipRectInt(MirroredX(), y(), width(), height())) {
     // Non-empty clip, translate the graphics such that 0,0 corresponds to
     // where this view is located (related to its parent).
-    canvas->TranslateInt(MirroredX(), bounds_.top);
+    canvas->TranslateInt(MirroredX(), y());
 
     // Save the state again, so that any changes don't effect PaintChildren.
     canvas->save();
@@ -527,7 +486,7 @@ void View::SetContextMenuController(ContextMenuController* menu_controller) {
 bool View::ProcessMousePressed(const MouseEvent& e, DragInfo* drag_info) {
   const bool enabled = enabled_;
   int drag_operations;
-  if (enabled && e.IsOnlyLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y())))
+  if (enabled && e.IsOnlyLeftMouseButton() && HitTest(e.location()))
     drag_operations = GetDragOperations(e.x(), e.y());
   else
     drag_operations = 0;
@@ -567,11 +526,11 @@ void View::ProcessMouseReleased(const MouseEvent& e, bool canceled) {
   if (!canceled && context_menu_controller_ && e.IsOnlyRightMouseButton()) {
     // Assume that if there is a context menu controller we won't be deleted
     // from mouse released.
-    CPoint location(e.x(), e.y());
+    gfx::Point location(e.location());
     ConvertPointToScreen(this, &location);
     ContextMenuController* context_menu_controller = context_menu_controller_;
     OnMouseReleased(e, canceled);
-    context_menu_controller_->ShowContextMenu(this, location.x, location.y,
+    context_menu_controller_->ShowContextMenu(this, location.x(), location.y(),
                                               true);
   } else {
     OnMouseReleased(e, canceled);
@@ -752,7 +711,7 @@ void View::PropagateVisibilityNotifications(View* start, bool is_visible) {
 void View::VisibilityChanged(View* starting_from, bool is_visible) {
 }
 
-View* View::GetViewForPoint(const CPoint& point) {
+View* View::GetViewForPoint(const gfx::Point& point) {
   return GetViewForPoint(point, true);
 }
 
@@ -773,7 +732,8 @@ bool View::GetNotifyWhenVisibleBoundsInRootChanges() {
   return notify_when_visible_bounds_in_root_changes_;
 }
 
-View* View::GetViewForPoint(const CPoint& point, bool can_create_floating) {
+View* View::GetViewForPoint(const gfx::Point& point,
+                            bool can_create_floating) {
   // Walk the child Views recursively looking for the View that most
   // tightly encloses the specified point.
   for (int i = GetChildViewCount() - 1 ; i >= 0 ; --i) {
@@ -781,7 +741,7 @@ View* View::GetViewForPoint(const CPoint& point, bool can_create_floating) {
     if (!child->IsVisible())
       continue;
 
-    CPoint point_in_child_coords(point);
+    gfx::Point point_in_child_coords(point);
     View::ConvertPointToView(this, child, &point_in_child_coords);
     if (child->HitTest(point_in_child_coords))
       return child->GetViewForPoint(point_in_child_coords, true);
@@ -793,21 +753,22 @@ View* View::GetViewForPoint(const CPoint& point, bool can_create_floating) {
   // GetFloatingViewIDForPoint lies or if RetrieveFloatingViewForID creates a
   // view which doesn't contain the provided point
   int id;
-  if (can_create_floating && GetFloatingViewIDForPoint(point.x, point.y, &id)) {
+  if (can_create_floating &&
+      GetFloatingViewIDForPoint(point.x(), point.y(), &id)) {
     RetrieveFloatingViewForID(id);  // This creates the floating view.
     return GetViewForPoint(point, false);
   }
   return this;
 }
 
-ViewContainer* View::GetViewContainer() const {
+Container* View::GetContainer() const {
   // The root view holds a reference to this view hierarchy's container.
-  return parent_ ? parent_->GetViewContainer() : NULL;
+  return parent_ ? parent_->GetContainer() : NULL;
 }
 
 // Get the containing RootView
 RootView* View::GetRootView() {
-  ViewContainer* vc = GetViewContainer();
+  Container* vc = GetContainer();
   if (vc) {
     return vc->GetRootView();
   } else {
@@ -964,8 +925,8 @@ void View::PrintViewHierarchyImp(int indent) {
   buf << L' ';
   buf << GetID();
   buf << L' ';
-  buf << bounds_.left << L"," << bounds_.top << L",";
-  buf << bounds_.right << L"," << bounds_.bottom;
+  buf << bounds_.x() << L"," << bounds_.y() << L",";
+  buf << bounds_.right() << L"," << bounds_.bottom();
   buf << L' ';
   buf << this;
 
@@ -1282,26 +1243,12 @@ bool View::EnumerateFloatingViewsForInterval(int low_bound, int high_bound,
 }
 
 // static
-void View::ConvertPointToView(View* src,
-                              View* dst,
-                              gfx::Point* point) {
+void View::ConvertPointToView(View* src, View* dst, gfx::Point* point) {
   ConvertPointToView(src, dst, point, true);
 }
 
 // static
-void View::ConvertPointToView(View* src,
-                              View* dst,
-                              CPoint* point) {
-  gfx::Point tmp_point(point->x, point->y);
-  ConvertPointToView(src, dst, &tmp_point, true);
-  point->x = tmp_point.x();
-  point->y = tmp_point.y();
-}
-
-// static
-void View::ConvertPointToView(View* src,
-                              View* dst,
-                              gfx::Point* point,
+void View::ConvertPointToView(View* src, View* dst, gfx::Point* point,
                               bool try_other_direction) {
   // src can be NULL
   DCHECK(dst);
@@ -1330,7 +1277,7 @@ void View::ConvertPointToView(View* src,
 
     // If src is NULL, sp is in the screen coordinate system
     if (src == NULL) {
-      ViewContainer* vc = dst->GetViewContainer();
+      Container* vc = dst->GetContainer();
       if (vc) {
         CRect b;
         vc->GetBounds(&b, false);
@@ -1341,45 +1288,38 @@ void View::ConvertPointToView(View* src,
 }
 
 // static
-void View::ConvertPointToViewContainer(View* src, CPoint* p) {
+void View::ConvertPointToContainer(View* src, gfx::Point* p) {
   DCHECK(src);
   DCHECK(p);
+
   View *v;
-  CPoint offset(0, 0);
-
+  gfx::Point offset;
   for (v = src; v; v = v->GetParent()) {
-    offset.x += v->GetX(APPLY_MIRRORING_TRANSFORMATION);
-    offset.y += v->y();
+    offset.set_x(offset.x() + v->GetX(APPLY_MIRRORING_TRANSFORMATION));
+    offset.set_y(offset.y() + v->y());
   }
-  p->x += offset.x;
-  p->y += offset.y;
+  p->SetPoint(p->x() + offset.x(), p->y() + offset.y());
 }
 
 // static
-void View::ConvertPointFromViewContainer(View *source, CPoint *p) {
-  CPoint t(0, 0);
-  ConvertPointToViewContainer(source, &t);
-  p->x -= t.x;
-  p->y -= t.y;
+void View::ConvertPointFromContainer(View *source, gfx::Point* p) {
+  gfx::Point t;
+  ConvertPointToContainer(source, &t);
+  p->SetPoint(p->x() - t.x(), p->y() - t.y());
 }
 
 // static
-void View::ConvertPointToScreen(View* src, CPoint* p) {
+void View::ConvertPointToScreen(View* src, gfx::Point* p) {
   DCHECK(src);
   DCHECK(p);
 
-  // If the view is not connected to a tree, do nothing
-  if (src->GetViewContainer() == NULL) {
-    return;
-  }
-
-  ConvertPointToViewContainer(src, p);
-  ViewContainer* vc = src->GetViewContainer();
+  // If the view is not connected to a tree, there's nothing we can do.
+  Container* vc = src->GetContainer();
   if (vc) {
+    ConvertPointToContainer(src, p);
     CRect r;
     vc->GetBounds(&r, false);
-    p->x += r.left;
-    p->y += r.top;
+    p->SetPoint(p->x() + r.left, p->y() + r.top);
   }
 }
 
@@ -1444,14 +1384,14 @@ bool View::IsVisibleInRootView() const {
     return false;
 }
 
-bool View::HitTest(const CPoint& l) const {
-  if (l.x >= 0 && l.x < static_cast<int>(width()) &&
-      l.y >= 0 && l.y < static_cast<int>(height())) {
+bool View::HitTest(const gfx::Point& l) const {
+  if (l.x() >= 0 && l.x() < static_cast<int>(width()) &&
+      l.y() >= 0 && l.y() < static_cast<int>(height())) {
     if (HasHitTestMask()) {
       gfx::Path mask;
       GetHitTestMask(&mask);
       ScopedHRGN rgn(mask.CreateHRGN());
-      return !!PtInRegion(rgn, l.x, l.y);
+      return !!PtInRegion(rgn, l.x(), l.y());
     }
     // No mask, but inside our bounds.
     return true;
@@ -1549,7 +1489,7 @@ void View::Focus() {
   // messages.
   FocusManager* focus_manager = GetFocusManager();
   if (focus_manager)
-    focus_manager->FocusHWND(GetRootView()->GetViewContainer()->GetHWND());
+    focus_manager->FocusHWND(GetRootView()->GetContainer()->GetHWND());
 }
 
 bool View::CanProcessTabKeyEvents() {
@@ -1561,18 +1501,18 @@ bool View::GetTooltipText(int x, int y, std::wstring* tooltip) {
   return false;
 }
 
-bool View::GetTooltipTextOrigin(int x, int y, CPoint* loc) {
+bool View::GetTooltipTextOrigin(int x, int y, gfx::Point* loc) {
   return false;
 }
 
 void View::TooltipTextChanged() {
-  ViewContainer* view_container = GetViewContainer();
+  Container* view_container = GetContainer();
   if (view_container != NULL && view_container->GetTooltipManager())
     view_container->GetTooltipManager()->TooltipTextChanged(this);
 }
 
 void View::UpdateTooltip() {
-  ViewContainer* view_container = GetViewContainer();
+  Container* view_container = GetContainer();
   if (view_container != NULL && view_container->GetTooltipManager())
     view_container->GetTooltipManager()->UpdateTooltip();
 }
@@ -1605,8 +1545,8 @@ gfx::Rect View::GetVisibleBounds() {
       ancestor_bounds.SetRect(0, 0, ancestor->width(),
                               ancestor->height());
       vis_bounds = vis_bounds.Intersect(ancestor_bounds);
-    } else if (!view->GetViewContainer()) {
-      // If the view has no ViewContainer, we're not visible. Return an empty
+    } else if (!view->GetContainer()) {
+      // If the view has no Container, we're not visible. Return an empty
       // rect.
       return gfx::Rect();
     }

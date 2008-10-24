@@ -18,7 +18,6 @@
 #include "base/non_thread_safe.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
-#include "base/shared_event.h"
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/browser_process.h"
 #include "sandbox/src/sandbox.h"
@@ -145,7 +144,7 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
     return 0 == module_ref_count_;
   }
 
-  virtual ChromeViews::AcceleratorHandler* accelerator_handler() {
+  virtual views::AcceleratorHandler* accelerator_handler() {
     DCHECK(CalledOnValidThread());
     if (!accelerator_handler_.get())
       CreateAcceleratorHandler();
@@ -177,7 +176,7 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
   virtual bool IsUsingNewFrames() {
     DCHECK(CalledOnValidThread());
     if (!checked_for_new_frames_) {
-      using_new_frames_ = CommandLine().HasSwitch(L"magic_browzR");
+      using_new_frames_ = !CommandLine().HasSwitch(L"use-old-frames");
       checked_for_new_frames_ = true;
     }
     return using_new_frames_;
@@ -239,7 +238,7 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
 
   scoped_ptr<AutomationProviderList> automation_provider_list_;
 
-  scoped_ptr<ChromeViews::AcceleratorHandler> accelerator_handler_;
+  scoped_ptr<views::AcceleratorHandler> accelerator_handler_;
 
   scoped_ptr<GoogleURLTracker> google_url_tracker_;
 

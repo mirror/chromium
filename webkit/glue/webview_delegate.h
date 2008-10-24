@@ -640,7 +640,8 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
 
   enum ErrorPageType {
     DNS_ERROR,
-    HTTP_404
+    HTTP_404,
+    CONNECTION_ERROR,
   };
   // If providing an alternate error page (like link doctor), returns the URL
   // to fetch instead.  If an invalid url is returned, just fall back on local
@@ -714,6 +715,9 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // Called when the FrameLoader goes into a state in which a new page load
   // will occur.
   virtual void TransitionToCommittedForNewPage() { }
+
+  // Called when an item was added to the history
+  virtual void DidAddHistoryItem() { }
 
   WebViewDelegate() { }
   virtual ~WebViewDelegate() { }

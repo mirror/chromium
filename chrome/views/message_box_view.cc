@@ -22,7 +22,7 @@ MessageBoxView::MessageBoxView(int dialog_flags,
                                const std::wstring& message,
                                const std::wstring& default_prompt,
                                int message_width)
-    : message_label_(new ChromeViews::Label(message)),
+    : message_label_(new views::Label(message)),
       prompt_field_(NULL),
       icon_(NULL),
       check_box_(NULL),
@@ -34,7 +34,7 @@ MessageBoxView::MessageBoxView(int dialog_flags,
 MessageBoxView::MessageBoxView(int dialog_flags,
                                const std::wstring& message,
                                const std::wstring& default_prompt)
-    : message_label_(new ChromeViews::Label(message)),
+    : message_label_(new views::Label(message)),
       prompt_field_(NULL),
       icon_(NULL),
       check_box_(NULL),
@@ -57,7 +57,7 @@ bool MessageBoxView::IsCheckBoxSelected() {
 
 void MessageBoxView::SetIcon(const SkBitmap& icon) {
   if (!icon_)
-    icon_ = new ChromeViews::ImageView();
+    icon_ = new views::ImageView();
   icon_->SetImage(icon);
   icon_->SetBounds(0, 0, icon.width(), icon.height());
   ResetLayoutManager();
@@ -65,18 +65,18 @@ void MessageBoxView::SetIcon(const SkBitmap& icon) {
 
 void MessageBoxView::SetCheckBoxLabel(const std::wstring& label) {
   if (!check_box_)
-    check_box_ = new ChromeViews::CheckBox(label);
+    check_box_ = new views::CheckBox(label);
   else
     check_box_->SetLabel(label);
   ResetLayoutManager();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// MessageBoxView, ChromeViews::View overrides:
+// MessageBoxView, views::View overrides:
 
 void MessageBoxView::ViewHierarchyChanged(bool is_add,
-                                          ChromeViews::View* parent,
-                                          ChromeViews::View* child) {
+                                          views::View* parent,
+                                          views::View* child) {
   if (child == this && is_add) {
     if (prompt_field_)
       prompt_field_->SelectAll();
@@ -101,10 +101,10 @@ void MessageBoxView::FocusFirstFocusableControl() {
 void MessageBoxView::Init(int dialog_flags,
                           const std::wstring& default_prompt) {
   message_label_->SetMultiLine(true);
-  message_label_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  message_label_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
 
   if (dialog_flags & kFlagHasPromptField) {
-    prompt_field_ = new ChromeViews::TextField;
+    prompt_field_ = new views::TextField;
     prompt_field_->SetText(default_prompt);
   }
 
@@ -112,16 +112,16 @@ void MessageBoxView::Init(int dialog_flags,
 }
 
 void MessageBoxView::ResetLayoutManager() {
-  using ChromeViews::GridLayout;
-  using ChromeViews::ColumnSet;
+  using views::GridLayout;
+  using views::ColumnSet;
 
   // Initialize the Grid Layout Manager used for this dialog box.
   GridLayout* layout = CreatePanelGridLayout(this);
   SetLayoutManager(layout);
 
-  CSize icon_size;
+  gfx::Size icon_size;
   if (icon_)
-    icon_->GetPreferredSize(&icon_size);
+    icon_size = icon_->GetPreferredSize();
 
   // Add the column set for the message displayed at the top of the dialog box.
   // And an icon, if one has been set.
@@ -129,7 +129,8 @@ void MessageBoxView::ResetLayoutManager() {
   ColumnSet* column_set = layout->AddColumnSet(message_column_view_set_id);
   if (icon_) {
     column_set->AddColumn(GridLayout::LEADING, GridLayout::LEADING, 0,
-                          GridLayout::FIXED, icon_size.cx, icon_size.cy);
+                          GridLayout::FIXED, icon_size.width(),
+                          icon_size.height());
     column_set->AddPaddingColumn(0, kUnrelatedControlHorizontalSpacing);
   }
   column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
@@ -141,7 +142,7 @@ void MessageBoxView::ResetLayoutManager() {
     column_set = layout->AddColumnSet(textfield_column_view_set_id);
     if (icon_) {
       column_set->AddPaddingColumn(0,
-          icon_size.cx + kUnrelatedControlHorizontalSpacing);
+          icon_size.width() + kUnrelatedControlHorizontalSpacing);
     }
     column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
                           GridLayout::USE_PREF, 0, 0);
@@ -153,7 +154,7 @@ void MessageBoxView::ResetLayoutManager() {
     column_set = layout->AddColumnSet(checkbox_column_view_set_id);
     if (icon_) {
       column_set->AddPaddingColumn(0,
-          icon_size.cx + kUnrelatedControlHorizontalSpacing);
+          icon_size.width() + kUnrelatedControlHorizontalSpacing);
     }
     column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
                           GridLayout::USE_PREF, 0, 0);

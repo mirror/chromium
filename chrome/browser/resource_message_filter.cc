@@ -91,6 +91,7 @@ ResourceMessageFilter::ResourceMessageFilter(
       render_process_host_id_(render_process_host_id),
       render_handle_(NULL),
       request_context_(profile->GetRequestContext()),
+      profile_(profile),
       render_widget_helper_(render_widget_helper),
       spellchecker_(spellchecker) {
 
@@ -101,11 +102,23 @@ ResourceMessageFilter::ResourceMessageFilter(
 ResourceMessageFilter::~ResourceMessageFilter() {
   if (render_handle_)
     CloseHandle(render_handle_);
+
+  // This function should be called on the IO thread.
+  DCHECK(MessageLoop::current() ==
+         ChromeThread::GetMessageLoop(ChromeThread::IO));
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_SPELLCHECKER_REINITIALIZED,
+      Source<Profile>(profile_));
 }
 
 // Called on the IPC thread:
 void ResourceMessageFilter::OnFilterAdded(IPC::Channel* channel) {
   channel_ = channel;
+
+  // Add the observers to intercept 
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_SPELLCHECKER_REINITIALIZED,
+      Source<Profile>(profile_));
 }
 
 // Called on the IPC thread:
@@ -130,7 +143,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   bool msg_is_ok = true;
   IPC_BEGIN_MESSAGE_MAP_EX(ResourceMessageFilter, message, msg_is_ok)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateView, OnMsgCreateView)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWindow, OnMsgCreateWindow)
     IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWidget, OnMsgCreateWidget)
     // TODO(brettw): we should get the view ID for this so the resource
     // dispatcher can prioritize things based on the visible view.
@@ -273,16 +286,16 @@ bool ResourceMessageFilter::Send(IPC::Message* message) {
   return channel_->Send(message);
 }
 
-void ResourceMessageFilter::OnMsgCreateView(int opener_id,
-                                            bool user_gesture,
-                                            int* route_id,
-                                            HANDLE* modal_dialog_event) {
-  render_widget_helper_->CreateView(opener_id, user_gesture, route_id,
-                                    modal_dialog_event, render_handle_);
+void ResourceMessageFilter::OnMsgCreateWindow(int opener_id,
+                                              bool user_gesture,
+                                              int* route_id,
+                                              HANDLE* modal_dialog_event) {
+  render_widget_helper_->CreateNewWindow(opener_id, user_gesture, route_id,
+                                         modal_dialog_event, render_handle_);
 }
 
 void ResourceMessageFilter::OnMsgCreateWidget(int opener_id, int* route_id) {
-  render_widget_helper_->CreateWidget(opener_id, route_id);
+  render_widget_helper_->CreateNewWidget(opener_id, route_id);
 }
 
 void ResourceMessageFilter::OnRequestResource(
@@ -736,6 +749,15 @@ void ResourceMessageFilter::OnSpellCheck(const std::wstring& word,
     // on their own.
     // We could send a reply, but it doesn't seem necessary.
   }
+}
+
+void ResourceMessageFilter::Observe(NotificationType type, 
+                                    const NotificationSource &source,
+                                    const NotificationDetails &details) {
+    if (type == NOTIFY_SPELLCHECKER_REINITIALIZED) {
+      spellchecker_ = Details<SpellcheckerReinitializedDetails>
+          (details).ptr()->spellchecker;
+    }
 }
 
 void ResourceMessageFilter::OnDnsPrefetch(

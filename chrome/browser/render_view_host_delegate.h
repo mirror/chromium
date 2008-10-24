@@ -47,14 +47,65 @@ enum LoadState;
 //
 class RenderViewHostDelegate {
  public:
-  class FindInPage {
+  class View {
    public:
+    // The page is trying to open a new page (e.g. a popup window). The
+    // window should be created associated with the given route, but it should
+    // not be shown yet. That should happen in response to ShowCreatedWindow.
+    //
+    // Note: this is not called "CreateWindow" because that will clash with
+    // the Windows function which is actually a #define.
+    virtual void CreateNewWindow(int route_id, HANDLE modal_dialog_event) = 0;
+
+    // The page is trying to open a new widget (e.g. a select popup). The
+    // widget should be created associated with the given route, but it should
+    // not be shown yet. That should happen in response to ShowCreatedWidget.
+    virtual void CreateNewWidget(int route_id) = 0;
+
+    // Show a previously created page with the specified disposition and bounds.
+    // The window is identified by the route_id passed to CreateNewWindow.
+    //
+    // Note: this is not called "ShowWindow" because that will clash with
+    // the Windows function which is actually a #define.
+    virtual void ShowCreatedWindow(int route_id,
+                                   WindowOpenDisposition disposition,
+                                   const gfx::Rect& initial_pos,
+                                   bool user_gesture) = 0;
+
+    // Show the newly created widget with the specified bounds.
+    // The widget is identified by the route_id passed to CreateNewWidget.
+    virtual void ShowCreatedWidget(int route_id,
+                                   const gfx::Rect& initial_pos) = 0;
+
+    // A context menu should be shown, to be built using the context information
+    // provided in the supplied params.
+    virtual void ShowContextMenu(
+        const ViewHostMsg_ContextMenu_Params& params) = 0;
+
+    // The user started dragging content of the specified type within the
+    // RenderView. Contextual information about the dragged content is supplied
+    // by WebDropData.
+    virtual void StartDragging(const WebDropData& drop_data) = 0;
+
+    // The page wants to update the mouse cursor during a drag & drop operation.
+    // |is_drop_target| is true if the mouse is over a valid drop target.
+    virtual void UpdateDragCursor(bool is_drop_target) = 0;
+
+    // Callback to inform the browser it should take back focus. If reverse is
+    // true, it means the focus was retrieved by doing a Shift-Tab.
+    virtual void TakeFocus(bool reverse) = 0;
+
+    // Callback to inform the browser that the renderer did not process the
+    // specified events. This gives an opportunity to the browser to process the
+    // event (used for keyboard shortcuts).
+    virtual void HandleKeyboardEvent(const WebKeyboardEvent& event) = 0;
+
     // A find operation in the current page completed.
-    virtual void FindReply(int request_id,
-                           int number_of_matches,
-                           const gfx::Rect& selection_rect,
-                           int active_match_ordinal,
-                           bool final_update) = 0;
+    virtual void OnFindReply(int request_id,
+                             int number_of_matches,
+                             const gfx::Rect& selection_rect,
+                             int active_match_ordinal,
+                             bool final_update) = 0;
   };
 
   // Interface for saving web pages.
@@ -81,26 +132,11 @@ class RenderViewHostDelegate {
   };
 
   // Returns the current delegate associated with a feature. May be NULL.
-  virtual FindInPage* GetFindInPageDelegate() const { return NULL; }
+  virtual View* GetViewDelegate() const { return NULL; }
   virtual Save* GetSaveDelegate() const { return NULL; }
 
   // Retrieves the profile to be used.
   virtual Profile* GetProfile() const = 0;
-
-  // The page is trying to open a new page (e.g. a popup window).
-  virtual void CreateView(int route_id, HANDLE modal_dialog_event) { }
-
-  // The page is trying to open a new widget (e.g. a select popup).
-  virtual void CreateWidget(int route_id) { }
-
-  // Show the newly created page with the specified disposition and bounds.
-  virtual void ShowView(int route_id,
-                        WindowOpenDisposition disposition,
-                        const gfx::Rect& initial_pos,
-                        bool user_gesture) { }
-
-  // Show the newly created widget with the specified bounds.
-  virtual void ShowWidget(int route_id, const gfx::Rect& initial_pos) { }
 
   // The RenderView is being constructed (message sent to the renderer process
   // to construct a RenderView).  Now is a good time to send other setup events
@@ -131,7 +167,7 @@ class RenderViewHostDelegate {
 
   // The page's encoding was changed and should be updated.
   virtual void UpdateEncoding(RenderViewHost* render_view_host,
-                              const std::wstring& encoding_name) { }
+                              const std::wstring& encoding) { }
 
   // The destination URL has changed should be updated
   virtual void UpdateTargetURL(int32 page_id, const GURL& url) { }
@@ -191,20 +227,6 @@ class RenderViewHostDelegate {
                                 bool errored,
                                 const SkBitmap& image) { }
 
-  // A context menu should be shown, to be built using the context information
-  // provided in the supplied params.
-  virtual void ShowContextMenu(const ViewHostMsg_ContextMenu_Params& params) {
-  }
-
-  // The user started dragging content of the specified type within the
-  // RenderView. Contextual information about the dragged content is supplied
-  // by WebDropData.
-  virtual void StartDragging(const WebDropData& drop_data) { }
-
-  // The page wants to update the mouse cursor during a drag & drop operation.
-  // |is_drop_target| is true if the mouse is over a valid drop target.
-  virtual void UpdateDragCursor(bool is_drop_target) { }
-
   // The page wants to open a URL with the specified disposition.
   virtual void RequestOpenURL(const GURL& url,
                               WindowOpenDisposition disposition) { }
@@ -257,10 +279,6 @@ class RenderViewHostDelegate {
   // Password forms have been detected in the page.
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms) { }
 
-  // Callback to inform the browser it should take back focus. If reverse is
-  // true, it means the focus was retrieved by doing a Shift-Tab.
-  virtual void TakeFocus(bool reverse) { }
-
   // Notification that the page has an OpenSearch description document.
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
                            int32 page_id, const GURL& doc_url,
@@ -281,11 +299,6 @@ class RenderViewHostDelegate {
   virtual void DidPrintPage(const ViewHostMsg_DidPrintPage_Params& params) {
     NOTREACHED();
   }
-
-  // Callback to inform the browser that the renderer did not process the
-  // specified events. This gives an opportunity to the browser to process the
-  // event (used for keyboard shortcuts).
-  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event) { }
 
   // |url| is assigned to a server that can provide alternate error pages.  If
   // unchanged, just use the error pages built into our webkit.
@@ -342,6 +355,11 @@ class RenderViewHostDelegate {
   virtual void OnDidGetApplicationInfo(
       int32 page_id,
       const webkit_glue::WebApplicationInfo& app_info) { }
+
+  // Notification the user has pressed enter or space while focus was on the
+  // page. This is used to avoid uninitiated user downloads (aka carpet
+  // bombing), see DownloadRequestManager for details.
+  virtual void OnEnterOrSpace() { }
 };
 
 #endif  // CHROME_BROWSER_RENDER_VIEW_HOST_DELEGATE_H__

@@ -9,7 +9,7 @@
 
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -26,9 +26,9 @@ class HWNDView : public View {
   HWNDView();
   virtual ~HWNDView();
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
-  void SetPreferredSize(const CSize& size);
+  void set_preferred_size(const gfx::Size& size) { preferred_size_ = size; }
 
   // Attach a window handle to this View, making the window it represents
   // subject to sizing according to this View's parent container's Layout
@@ -38,7 +38,8 @@ class HWNDView : public View {
   // Detach the attached window handle. It will no longer be updated
   void Detach();
 
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual void DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current);
   virtual void VisibilityChanged(View* starting_from, bool is_visible);
 
   HWND GetHWND() const;
@@ -74,7 +75,7 @@ class HWNDView : public View {
   HWND hwnd_;
 
   // The preferred size of this View
-  CSize preferred_size_;
+  gfx::Size preferred_size_;
 
   // Have we installed a region on the HWND used to clip to only the visible
   // portion of the HWND?
@@ -92,7 +93,7 @@ class HWNDView : public View {
   View* focus_view_;
 };
 
-}
+}  // namespace views
 
 #endif // CHROME_VIEWS_HWND_VIEW_H__
 

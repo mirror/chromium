@@ -11,13 +11,13 @@
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/throb_animation.h"
+#include "chrome/views/container.h"
 #include "chrome/views/event.h"
-#include "chrome/views/view_container.h"
 #include "chrome/app/chrome_dll_resource.h"
 
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 
 static const int kDefaultWidth = 16;   // Default button width if no theme.
 static const int kDefaultHeight = 14;  // Default button height if no theme.
@@ -57,14 +57,10 @@ void Button::SetImageAlignment(HorizontalAlignment h_align,
   SchedulePaint();
 }
 
-void Button::GetPreferredSize(CSize *result) {
-  if (!images_[BS_NORMAL].isNull()) {
-    result->cx = images_[BS_NORMAL].width();
-    result->cy = images_[BS_NORMAL].height();
-  } else {
-    result->cx = kDefaultWidth;
-    result->cy = kDefaultHeight;
-  }
+gfx::Size Button::GetPreferredSize() {
+  if (!images_[BS_NORMAL].isNull())
+    return gfx::Size(images_[BS_NORMAL].width(), images_[BS_NORMAL].height());
+  return gfx::Size(kDefaultWidth, kDefaultHeight);
 }
 
 // Set the tooltip text for this button.
@@ -203,5 +199,6 @@ void ToggleButton::SetToggled(bool toggled) {
 void ToggleButton::SetToggledTooltipText(const std::wstring& tooltip) {
   toggled_tooltip_text_.assign(tooltip);
 }
-}  // namespace ChromeViews
+
+}  // namespace views
 

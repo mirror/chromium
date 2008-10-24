@@ -225,10 +225,6 @@ sub GetImplementationFileName
     my $iface = shift;
     return "HTMLCollection.h" if $iface eq "UndetectableHTMLCollection";
     return "HTMLInputElement.h" if $iface eq "HTMLSelectionInputElement";
-    return "Navigator.h" if $iface eq "MimeType";
-    return "Navigator.h" if $iface eq "MimeTypeArray";
-    return "Navigator.h" if $iface eq "Plugin";
-    return "Navigator.h" if $iface eq "PluginArray";
     return "Event.h" if $iface eq "DOMTimeStamp";
     return "NamedAttrMap.h" if $iface eq "NamedNodeMap";
     return "NameNodeList.h" if $iface eq "NodeList";
@@ -378,7 +374,7 @@ END
   HolderToNative($dataNode, $implClassName, $classIndex);
 
   push(@implContentDecls, <<END);
-    if (!V8Proxy::IsFromSameOrigin(imp->frame(), false)) {
+    if (!V8Proxy::CanAccessFrame(imp->frame(), false)) {
       static v8::Persistent<v8::FunctionTemplate> shared_template =
         v8::Persistent<v8::FunctionTemplate>::New($newTemplateString);
       return shared_template->GetFunction();
@@ -452,13 +448,6 @@ sub GenerateNormalAttrGetter
     $attrIsPodType = 0;
   }
   
-  my $creatorType = "";
-  if ($attrIsPodType) {  
-    if ($codeGenerator->IsSVGAnimatedType($implClassName)) {
-      $creatorType = $implClassName;
-    }
-  }
-
   my $getterStringUsesImp = $implClassName ne "double";
 
   # Getter
@@ -538,7 +527,30 @@ END
   my $wrapper;
   
   if ($attrIsPodType) {
-    $wrapper = GeneratePodTypeWrapper($attribute->signature, $getterString, $creatorType);
+    $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
+
+    my $getter = $getterString;
+    $getter =~ s/imp->//;
+    $getter =~ s/\(\)//;
+    my $setter = "set" . WK_ucfirst($getter);
+
+    my $implClassIsAnimatedType = $codeGenerator->IsSVGAnimatedType($implClassName);
+    if (not $implClassIsAnimatedType
+        and $codeGenerator->IsPodTypeWithWriteableProperties($attrType)
+        and not defined $attribute->signature->extendedAttributes->{"Immutable"}) {
+      if ($codeGenerator->IsPodType($implClassName)) {
+        $wrapper = "new V8SVGStaticPODTypeWrapperWithPODTypeParent<$nativeType, $implClassName>($getterString, imp_wrapper)";
+      } else {
+        $wrapper = "new V8SVGStaticPODTypeWrapperWithParent<$nativeType, $implClassName>(imp, &${implClassName}::$getter, &${implClassName}::$setter)";
+      }
+    } else {
+      if ($implClassIsAnimatedType) {
+        $wrapper = "V8SVGDynamicPODTypeWrapperCache<$nativeType, $implClassName>::lookupOrCreateWrapper(imp, &${implClassName}::$getter, &${implClassName}::$setter)";
+      } else {
+        $wrapper = GenerateSVGStaticPodTypeWrapper($returnType, $getterString);
+      }
+    }
+
     push(@implContentDecls, "    Peerable* wrapper = $wrapper;\n");
   } elsif ($nativeType ne "RGBColor") {
     push(@implContentDecls, "    $nativeType v = ");
@@ -753,7 +765,7 @@ END
     && !$function->signature->extendedAttributes->{"DoNotCheckDomainSecurity"}) {
     # We have not find real use cases yet.
     push(@implContentDecls,
-"    if (!V8Proxy::IsFromSameOrigin(imp->frame(), true)) {\n".
+"    if (!V8Proxy::CanAccessFrame(imp->frame(), true)) {\n".
 "      return v8::Undefined();\n" .
 "    }\n"); 
   }
@@ -1044,7 +1056,7 @@ END
 
     my $access_check = "/* no access check */";
     if ($dataNode->extendedAttributes->{"CheckDomainSecurity"}) {
-      $access_check = "instance->SetAccessCheckCallbacks(V8Custom::v8${interfaceName}NamedSecurityCheck, V8Custom::v8${interfaceName}IndexedSecurityCheck, v8::External::New((void*)V8ClassIndex::${classIndex}));";
+      $access_check = "instance->SetAccessCheckCallbacks(V8Custom::v8${interfaceName}NamedSecurityCheck, V8Custom::v8${interfaceName}IndexedSecurityCheck, v8::Integer::New(V8ClassIndex::ToInt(V8ClassIndex::${classIndex})));";
     }
 
     # Generate the template configuration method
@@ -1315,7 +1327,7 @@ sub GenerateFunctionCallString()
     $return = "wrapper";
   } elsif ($returnsPodType) {
     $result .= $indent . "V8SVGPODTypeWrapper<" . $nativeReturnType . ">* wrapper = ";
-    $result .= GenerateReadOnlyPodTypeWrapper($returnType, $return) . ";\n";
+    $result .= GenerateSVGStaticPodTypeWrapper($returnType, $return) . ";\n";
     $return = "wrapper";
   }
   
@@ -1417,11 +1429,13 @@ sub IsRefPtrType
     return 1 if $type eq "HTMLElement";
     return 1 if $type eq "HTMLOptionsCollection";
     return 1 if $type eq "ImageData";
+    return 1 if $type eq "MimeType";
     return 1 if $type eq "Node";
     return 1 if $type eq "NodeList";
     return 1 if $type eq "NodeFilter";
     return 1 if $type eq "NodeIterator";
     return 1 if $type eq "NSResolver";
+    return 1 if $type eq "Plugin";
     return 1 if $type eq "ProcessingInstruction";
     return 1 if $type eq "Range";
     return 1 if $type eq "Text";
@@ -1737,9 +1751,7 @@ sub NativeToJSValue
 {
     my $signature = shift;
     my $value = shift;
-
-    my $signatureType = $signature->type;
-    my $type = $codeGenerator->StripModule($signatureType);
+    my $type = $codeGenerator->StripModule($signature->type);
     my $className= "V8$type";
     
     return "v8::Date::New(static_cast<double>($value))" if $type eq "DOMTimeStamp";
@@ -1800,41 +1812,14 @@ sub NativeToJSValue
       my $classIndex = uc($type);
       
       if ($codeGenerator->IsPodType($type)) {
-        $value = GenerateReadOnlyPodTypeWrapper($type, $value);
+        $value = GenerateSVGStaticPodTypeWrapper($type, $value);
       }
 
       return "V8Proxy::ToV8Object(V8ClassIndex::$classIndex, $value)";
     }
 }
 
-sub GeneratePodTypeWrapper {
-  my $signature = shift;
-  my $value = shift;
-  my $creatorType = shift;
-
-  my $signatureType = $signature->type;
-  my $type = $codeGenerator->StripModule($signatureType);
-  
-  my $classIndex = uc($type);
-  my $nativeType = GetNativeType($type);
-  $implIncludes{"V8$type.h"}=1;
-  $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
-  
-  if ($creatorType ne "") {
-    my $getter = $value;
-    $getter =~ s/imp->//;
-    $getter =~ s/\(\)//;
-    my $setter = "set" . WK_ucfirst($getter); 
-    $value = "V8SVGPODTypeWrapperCache<$nativeType, $creatorType>::lookupOrCreateWrapper(imp, &${creatorType}::$getter, &${creatorType}::$setter)";
-  } else {
-    $value = GenerateReadOnlyPodTypeWrapper($type, $value);
-  }
-  AddIncludesForType($type);
-  
-  return $value;
-}
-
-sub GenerateReadOnlyPodTypeWrapper {
+sub GenerateSVGStaticPodTypeWrapper {
   my $type = shift;
   my $value = shift;
   
@@ -1842,7 +1827,7 @@ sub GenerateReadOnlyPodTypeWrapper {
   $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
 
   my $nativeType = GetNativeType($type);
-  return "new V8SVGPODTypeWrapperCreatorReadOnly<$nativeType>($value)";
+  return "new V8SVGStaticPODTypeWrapper<$nativeType>($value)";
 }
 
 # Internal helper

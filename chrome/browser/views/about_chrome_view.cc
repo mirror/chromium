@@ -9,9 +9,11 @@
 #include "base/file_version_info.h"
 #include "base/string_util.h"
 #include "base/win_util.h"
+#include "base/word_iterator.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_list.h"
+#include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/color_utils.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/restart_message_box.h"
@@ -28,11 +30,35 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
+namespace {
 // The pixel width of the version text field. Ideally, we'd like to have the
 // bounds set to the edge of the icon. However, the icon is not a view but a
 // part of the background, so we have to hard code the width to make sure
 // the version field doesn't overlap it.
 const int kVersionFieldWidth = 195;
+
+// The URLs that you navigate to when clicking the links in the About dialog.
+const wchar_t* const kChromiumUrl = L"http://www.chromium.org/";
+const wchar_t* const kAcknowledgements = L"about:credits";
+const wchar_t* const kTOS = L"about:terms";
+
+// These are used as placeholder text around the links in the text in the about
+// dialog.
+const wchar_t* kBeginLink = L"BEGIN_LINK";
+const wchar_t* kEndLink = L"END_LINK";
+const wchar_t* kBeginLinkChr = L"BEGIN_LINK_CHR";
+const wchar_t* kBeginLinkOss = L"BEGIN_LINK_OSS";
+const wchar_t* kEndLinkChr = L"END_LINK_CHR";
+const wchar_t* kEndLinkOss = L"END_LINK_OSS";
+
+// Returns a substring from |text| between start and end.
+std::wstring StringSubRange(const std::wstring& text, size_t start,
+                            size_t end) {
+  DCHECK(end > start);
+  return text.substr(start, end - start);
+}
+
+}  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
 // AboutChromeView, public:
@@ -42,8 +68,13 @@ AboutChromeView::AboutChromeView(Profile* profile)
       about_dlg_background_(NULL),
       about_title_label_(NULL),
       version_label_(NULL),
+      copyright_label_(NULL),
       main_text_label_(NULL),
-      copyright_url_(NULL),
+      main_text_label_height_(0),
+      terms_of_service_url_(NULL),
+      chromium_url_(NULL),
+      open_source_url_(NULL),
+      chromium_url_appears_first_(true),
       check_button_status_(CHECKBUTTON_HIDDEN) {
   DCHECK(profile);
   Init();
@@ -73,7 +104,7 @@ void AboutChromeView::Init() {
 
   // Views we will add to the *parent* of this dialog, since it will display
   // next to the buttons which we don't draw ourselves.
-  throbber_.reset(new ChromeViews::Throbber(50, true));
+  throbber_.reset(new views::Throbber(50, true));
   throbber_->SetParentOwned(false);
   throbber_->SetVisible(false);
 
@@ -96,7 +127,7 @@ void AboutChromeView::Init() {
   // image for the dialog. We have two different background bitmaps, one for
   // LTR UIs and one for RTL UIs. We load the correct bitmap based on the UI
   // layout of the view.
-  about_dlg_background_ = new ChromeViews::ImageView();
+  about_dlg_background_ = new views::ImageView();
   SkBitmap* about_background;
   if (UILayoutIsRightToLeft())
     about_background = rb.GetBitmapNamed(IDR_ABOUT_BACKGROUND_RTL);
@@ -107,14 +138,14 @@ void AboutChromeView::Init() {
   AddChildView(about_dlg_background_);
 
   // Add the dialog labels.
-  about_title_label_ = new ChromeViews::Label(
+  about_title_label_ = new views::Label(
       l10n_util::GetString(IDS_PRODUCT_NAME));
   about_title_label_->SetFont(ResourceBundle::GetSharedInstance().GetFont(
       ResourceBundle::BaseFont).DeriveFont(18, BOLD_FONTTYPE));
   AddChildView(about_title_label_);
 
   // This is a text field so people can copy the version number from the dialog.
-  version_label_ = new ChromeViews::TextField();
+  version_label_ = new views::TextField();
   version_label_->SetText(current_version_);
   version_label_->SetReadOnly(true);
   version_label_->RemoveBorder();
@@ -122,127 +153,314 @@ void AboutChromeView::Init() {
       ResourceBundle::BaseFont).DeriveFont(0, BOLD_FONTTYPE));
   AddChildView(version_label_);
 
-  // Text to display at the bottom of the dialog.
-  std::wstring main_text =
-      l10n_util::GetString(IDS_ABOUT_VERSION_COMPANY_NAME) + L"\n" +
-      l10n_util::GetString(IDS_ABOUT_VERSION_COPYRIGHT) + L"\n" +
-      l10n_util::GetString(IDS_ABOUT_VERSION_LICENSE);
-
-  main_text_label_ = new ChromeViews::Label(main_text);
-  main_text_label_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
-  main_text_label_->SetMultiLine(true);
-  AddChildView(main_text_label_);
-
   // The copyright URL portion of the main label.
-  copyright_url_ = new ChromeViews::Link(
-      l10n_util::GetString(IDS_ABOUT_VERSION_LICENSE_URL));
-  AddChildView(copyright_url_);
-  copyright_url_->SetController(this);
+  copyright_label_ = new views::Label(
+      l10n_util::GetString(IDS_ABOUT_VERSION_COPYRIGHT));
+  copyright_label_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
+  AddChildView(copyright_label_);
+
+  main_text_label_ = new views::Label(L"");
+
+  // Figure out what to write in the main label of the About box.
+  std::wstring text = l10n_util::GetString(IDS_ABOUT_VERSION_LICENSE);
+
+  chromium_url_appears_first_ =
+      text.find(kBeginLinkChr) < text.find(kBeginLinkOss);
+
+  size_t link1 = text.find(kBeginLink);
+  DCHECK(link1 != std::wstring::npos);
+  size_t link1_end = text.find(kEndLink, link1);
+  DCHECK(link1_end != std::wstring::npos);
+  size_t link2 = text.find(kBeginLink, link1_end);
+  DCHECK(link2 != std::wstring::npos);
+  size_t link2_end = text.find(kEndLink, link2);
+  DCHECK(link1_end != std::wstring::npos);
+
+  main_label_chunk1_ = text.substr(0, link1);
+  main_label_chunk2_ = StringSubRange(text, link1_end + wcslen(kEndLinkOss),
+                                      link2);
+  main_label_chunk3_ = text.substr(link2_end + wcslen(kEndLinkOss));
+
+  // The Chromium link within the main text of the dialog.
+  chromium_url_ = new views::Link(
+      StringSubRange(text, text.find(kBeginLinkChr) + wcslen(kBeginLinkChr),
+                     text.find(kEndLinkChr)));
+  AddChildView(chromium_url_);
+  chromium_url_->SetController(this);
+
+  // The Open Source link within the main text of the dialog.
+  open_source_url_ = new views::Link(
+      StringSubRange(text, text.find(kBeginLinkOss) + wcslen(kBeginLinkOss),
+                     text.find(kEndLinkOss)));
+  AddChildView(open_source_url_);
+  open_source_url_->SetController(this);
+
+#if defined(GOOGLE_CHROME_BUILD)
+  std::vector<size_t> url_offsets;
+  text = l10n_util::GetStringF(IDS_ABOUT_TERMS_OF_SERVICE,
+                               std::wstring(),
+                               std::wstring(),
+                               &url_offsets);
+
+  main_label_chunk4_ = text.substr(0, url_offsets[0]);
+  main_label_chunk5_ = text.substr(url_offsets[0]);
+
+  // The Terms of Service URL at the bottom.
+  terms_of_service_url_ =
+      new views::Link(l10n_util::GetString(IDS_TERMS_OF_SERVICE));
+  AddChildView(terms_of_service_url_);
+  terms_of_service_url_->SetController(this);
+#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// AboutChromeView, ChromeViews::View implementation:
+// AboutChromeView, views::View implementation:
 
-void AboutChromeView::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size AboutChromeView::GetPreferredSize() {
+  gfx::Size prefsize(views::Window::GetLocalizedContentsSize(
       IDS_ABOUT_DIALOG_WIDTH_CHARS,
-      IDS_ABOUT_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_ABOUT_DIALOG_HEIGHT_LINES));
   // We compute the height of the dialog based on the size of the image (it
   // would be nice to not hard code this), the text in the about dialog and the
   // margins around the text.
-  out->cy += 145 + (kPanelVertMargin * 2);
+  prefsize.Enlarge(0, 145 + (kPanelVertMargin * 2));
   // TODO(beng): Eventually the image should be positioned such that hard-
   //             coding the width isn't necessary.  This breaks with fonts
   //             that are large and cause wrapping.
-  out->cx = 422;
+  prefsize.set_width(422);
+  return prefsize;
 }
 
 void AboutChromeView::Layout() {
-  CSize panel_size;
-  GetPreferredSize(&panel_size);
-
-  CSize sz;
+  gfx::Size panel_size = GetPreferredSize();
 
   // Background image for the dialog.
-  about_dlg_background_->GetPreferredSize(&sz);
-  int background_image_height = sz.cy;  // used to position main text below.
-  about_dlg_background_->SetBounds(0, 0, sz.cx, sz.cy);
+  gfx::Size sz = about_dlg_background_->GetPreferredSize();
+  // used to position main text below.
+  int background_image_height = sz.height();
+  about_dlg_background_->SetBounds(0, 0, sz.width(), sz.height());
 
   // First label goes to the top left corner.
-  about_title_label_->GetPreferredSize(&sz);
+  sz = about_title_label_->GetPreferredSize();
   about_title_label_->SetBounds(kPanelHorizMargin, kPanelVertMargin,
-                                sz.cx, sz.cy);
+                                sz.width(), sz.height());
 
   // Then we have the version number right below it.
-  version_label_->GetPreferredSize(&sz);
+  sz = version_label_->GetPreferredSize();
   version_label_->SetBounds(kPanelHorizMargin,
                             about_title_label_->y() +
                                 about_title_label_->height() +
                                 kRelatedControlVerticalSpacing,
                             kVersionFieldWidth,
-                            sz.cy);
+                            sz.height());
 
   // For the width of the main text label we want to use up the whole panel
   // width and remaining height, minus a little margin on each side.
-  int y_pos = background_image_height + kPanelVertMargin;
-  sz.cx = panel_size.cx - 2 * kPanelHorizMargin;
-  sz.cy = main_text_label_->GetHeightForWidth(sz.cx);
-  // Draw the text right below the background image.
-  main_text_label_->SetBounds(kPanelHorizMargin,
-                              y_pos,
-                              sz.cx,
-                              sz.cy);
+  int y_pos = background_image_height + kRelatedControlVerticalSpacing;
+  sz.set_width(panel_size.width() - 2 * kPanelHorizMargin);
 
-  // Position the URL right below the main label.
-  copyright_url_->GetPreferredSize(&sz);
-  copyright_url_->SetBounds(kPanelHorizMargin,
-                            main_text_label_->y() + main_text_label_->height(),
-                            sz.cx,
-                            sz.cy);
+  // Draw the text right below the background image.
+  copyright_label_->SetBounds(kPanelHorizMargin,
+                              y_pos,
+                              sz.width(),
+                              sz.height());
+
+  // Then the main_text_label.
+  main_text_label_->SetBounds(kPanelHorizMargin,
+                              copyright_label_->y() +
+                                  copyright_label_->height(),
+                              sz.width(),
+                              main_text_label_height_);
 
   // Get the y-coordinate of our parent so we can position the text left of the
   // buttons at the bottom.
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
 
-  throbber_->GetPreferredSize(&sz);
+  sz = throbber_->GetPreferredSize();
   int throbber_topleft_x = kPanelHorizMargin;
-  int throbber_topleft_y = parent_bounds.bottom - sz.cy -
+  int throbber_topleft_y = parent_bounds.bottom() - sz.height() -
                            kButtonVEdgeMargin - 3;
-  throbber_->SetBounds(throbber_topleft_x, throbber_topleft_y, sz.cx, sz.cy);
+  throbber_->SetBounds(throbber_topleft_x, throbber_topleft_y,
+                       sz.width(), sz.height());
 
   // This image is hidden (see ViewHierarchyChanged) and displayed on demand.
-  success_indicator_.GetPreferredSize(&sz);
+  sz = success_indicator_.GetPreferredSize();
   success_indicator_.SetBounds(throbber_topleft_x, throbber_topleft_y,
-                               sz.cx, sz.cy);
+                               sz.width(), sz.height());
 
   // This image is hidden (see ViewHierarchyChanged) and displayed on demand.
-  update_available_indicator_.GetPreferredSize(&sz);
+  sz = update_available_indicator_.GetPreferredSize();
   update_available_indicator_.SetBounds(throbber_topleft_x, throbber_topleft_y,
-                                        sz.cx, sz.cy);
+                                        sz.width(), sz.height());
 
   // This image is hidden (see ViewHierarchyChanged) and displayed on demand.
-  timeout_indicator_.GetPreferredSize(&sz);
+  sz = timeout_indicator_.GetPreferredSize();
   timeout_indicator_.SetBounds(throbber_topleft_x, throbber_topleft_y,
-                                sz.cx, sz.cy);
+                               sz.width(), sz.height());
 
   // The update label should be at the bottom of the screen, to the right of
   // the throbber. We specify width to the end of the dialog because it contains
   // variable length messages.
-  update_label_.GetPreferredSize(&sz);
+  sz = update_label_.GetPreferredSize();
   int update_label_x = throbber_->x() + throbber_->width() +
                        kRelatedControlHorizontalSpacing;
-  update_label_.SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  update_label_.SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   update_label_.SetBounds(update_label_x,
                           throbber_topleft_y + 1,
-                          parent_bounds.Width() - update_label_x,
-                          sz.cy);
+                          parent_bounds.width() - update_label_x,
+                          sz.height());
+}
+
+
+void AboutChromeView::Paint(ChromeCanvas* canvas) {
+  views::View::Paint(canvas);
+
+  ChromeFont font =
+    ResourceBundle::GetSharedInstance().GetFont(ResourceBundle::BaseFont);
+
+  const gfx::Rect label_bounds = main_text_label_->bounds();
+
+  views::Link* link1 =
+      chromium_url_appears_first_ ? chromium_url_ : open_source_url_;
+  views::Link* link2 =
+      chromium_url_appears_first_ ? open_source_url_ : chromium_url_;
+  gfx::Rect* rect1 = chromium_url_appears_first_ ?
+      &chromium_url_rect_ : &open_source_url_rect_;
+  gfx::Rect* rect2 = chromium_url_appears_first_ ?
+      &open_source_url_rect_ : &chromium_url_rect_;
+
+  // This struct keeps track of where to write the next word (which x,y
+  // pixel coordinate). This struct is updated after drawing text and checking
+  // if we need to wrap.
+  gfx::Size position;
+  // Draw the first text chunk and position the Chromium url.
+  DrawTextAndPositionUrl(canvas, main_label_chunk1_, link1,
+                         rect1, &position, label_bounds, font);
+  // Draw the second text chunk and position the Open Source url.
+  DrawTextAndPositionUrl(canvas, main_label_chunk2_, link2,
+                         rect2, &position, label_bounds, font);
+  // Draw the third text chunk.
+  DrawTextStartingFrom(canvas, main_label_chunk3_, &position, label_bounds,
+                       font);
+
+#if defined(GOOGLE_CHROME_BUILD)
+  // Insert a line break and some whitespace.
+  position.set_width(0);
+  position.Enlarge(0, font.height() + kRelatedControlVerticalSpacing);
+
+  // And now the Terms of Service and position the TOS url.
+  DrawTextAndPositionUrl(canvas, main_label_chunk4_, terms_of_service_url_,
+                         &terms_of_service_url_rect_, &position, label_bounds,
+                         font);
+  // The last text chunk doesn't have a URL associated with it.
+  DrawTextStartingFrom(canvas, main_label_chunk5_, &position, label_bounds,
+                       font);
+
+  // Position the TOS URL within the main label.
+  terms_of_service_url_->SetBounds(terms_of_service_url_rect_.x(),
+                                   terms_of_service_url_rect_.y(),
+                                   terms_of_service_url_rect_.width(),
+                                   terms_of_service_url_rect_.height());
+#endif
+
+  // Position the URLs within the main label. First position the Chromium URL
+  // within the main label.
+  chromium_url_->SetBounds(chromium_url_rect_.x(),
+                           chromium_url_rect_.y(),
+                           chromium_url_rect_.width(),
+                           chromium_url_rect_.height());
+  // Then position the Open Source URL within the main label.
+  open_source_url_->SetBounds(open_source_url_rect_.x(),
+                              open_source_url_rect_.y(),
+                              open_source_url_rect_.width(),
+                              open_source_url_rect_.height());
+
+  // Save the height so we can set the bounds correctly.
+  main_text_label_height_ = position.height() + font.height();
+}
+
+void AboutChromeView::DrawTextAndPositionUrl(ChromeCanvas* canvas,
+                                             const std::wstring& text,
+                                             views::Link* link,
+                                             gfx::Rect* rect,
+                                             gfx::Size* position,
+                                             const gfx::Rect& bounds,
+                                             const ChromeFont& font) {
+  DCHECK(canvas && link && rect && position);
+  // Draw the text chunk.
+  DrawTextStartingFrom(canvas, text, position, bounds, font);
+
+  // And then position the link after it.
+  gfx::Size sz = link->GetPreferredSize();
+  WrapIfWordDoesntFit(sz.width(), font.height(), position, bounds);
+  *rect = gfx::Rect(position->width(), position->height(), sz.width(),
+                    sz.height());
+
+  // Going from relative to absolute pixel coordinates again.
+  rect->Offset(bounds.x(), bounds.y());
+  // And leave some space to draw the link in.
+  position->Enlarge(sz.width(), 0);
+}
+
+void AboutChromeView::DrawTextStartingFrom(ChromeCanvas* canvas,
+                                           const std::wstring& text,
+                                           gfx::Size* position,
+                                           const gfx::Rect& bounds,
+                                           const ChromeFont& font) {
+  // Iterate through line breaking opportunities (which in English would be
+  // spaces and such. This tells us where to wrap.
+  WordIterator iter(text, WordIterator::BREAK_LINE);
+  if (!iter.Init())
+    return;
+
+  int flags = (UILayoutIsRightToLeft() ?
+                   ChromeCanvas::TEXT_ALIGN_RIGHT :
+                   ChromeCanvas::TEXT_ALIGN_LEFT) |
+              ChromeCanvas::MULTI_LINE |
+              ChromeCanvas::HIDE_PREFIX;
+
+  // Iterate over each word in the text, or put in a more locale-neutral way:
+  // iterate to the next line breaking opportunity.
+  while (iter.Advance()) {
+    // Get the word and figure out the dimensions.
+    std::wstring word = iter.GetWord();
+    int w = font.GetStringWidth(word), h = font.height();
+    canvas->SizeStringInt(word, font, &w, &h, flags);
+
+    // If we exceed the boundaries, we need to wrap.
+    WrapIfWordDoesntFit(w, font.height(), position, bounds);
+
+    // Draw the word on the screen (mirrored if RTL locale).
+    canvas->DrawStringInt(word, font, SK_ColorBLACK,
+        main_text_label_->MirroredXCoordinateInsideView(
+            position->width() + bounds.x()),
+            position->height() + bounds.y(),
+            w, h, flags);
+
+    if (word.size() > 0 && word[word.size() - 1] == L'\x0a') {
+      // When we come across '\n', we move to the beginning of the next line.
+      position->set_width(0);
+      position->Enlarge(0, font.height());
+    } else {
+      // Otherwise, we advance position to the next word.
+      position->Enlarge(w, 0);
+    }
+  }
+}
+
+void AboutChromeView::WrapIfWordDoesntFit(int word_width,
+                                          int font_height,
+                                          gfx::Size* position,
+                                          const gfx::Rect& bounds) {
+  if (position->width() + word_width > bounds.right()) {
+    position->set_width(0);
+    position->Enlarge(0, font_height);
+  }
 }
 
 void AboutChromeView::ViewHierarchyChanged(bool is_add,
-                                           ChromeViews::View* parent,
-                                           ChromeViews::View* child) {
+                                           views::View* parent,
+                                           views::View* child) {
   // Since we want the some of the controls to show up in the same visual row
   // as the buttons, which are provided by the framework, we must add the
   // buttons to the non-client view, which is the parent of this view.
@@ -284,7 +502,7 @@ void AboutChromeView::ViewHierarchyChanged(bool is_add,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// AboutChromeView, ChromeViews::DialogDelegate implementation:
+// AboutChromeView, views::DialogDelegate implementation:
 
 int AboutChromeView::GetDialogButtons() const {
   return DIALOGBUTTON_OK | DIALOGBUTTON_CANCEL;
@@ -357,18 +575,27 @@ bool AboutChromeView::Accept() {
   return false;  // We never allow this button to close the window.
 }
 
-ChromeViews::View* AboutChromeView::GetContentsView() {
+views::View* AboutChromeView::GetContentsView() {
   return this;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// AboutChromeView, ChromeViews::LinkController implementation:
+// AboutChromeView, views::LinkController implementation:
 
-void AboutChromeView::LinkActivated(ChromeViews::Link* source,
+void AboutChromeView::LinkActivated(views::Link* source,
                                     int event_flags) {
-  DCHECK(source == copyright_url_);
+  GURL url;
+  if (source == terms_of_service_url_)
+    url = GURL(kTOS);
+  else if (source == chromium_url_)
+    url = GURL(kChromiumUrl);
+  else if (source == open_source_url_)
+    url = GURL(kAcknowledgements);
+  else
+    NOTREACHED() << "Unknown link source";
+
   Browser* browser = BrowserList::GetLastActive();
-  browser->OpenURL(GURL(source->GetText()), NEW_WINDOW, PageTransition::LINK);
+  browser->OpenURL(url, NEW_WINDOW, PageTransition::LINK);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -486,4 +713,3 @@ void AboutChromeView::UpdateStatus(GoogleUpdateUpgradeResult result,
   if (window())
     GetDialogClientView()->UpdateDialogButtons();
 }
-

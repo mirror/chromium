@@ -7,7 +7,7 @@
 
 #include "chrome/views/native_control.h"
 
-namespace ChromeViews {
+namespace views {
 
 // The Separator class is a view that shows a line used to visually separate
 // other views.  The current implementation is only horizontal.
@@ -22,12 +22,13 @@ class Separator : public NativeControl {
   virtual LRESULT OnNotify(int w_param, LPNMHDR l_param);
 
   // View overrides:
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  private:
 
   DISALLOW_EVIL_CONSTRUCTORS(Separator);
 };
 
-}
+}  // namespace views
+
 #endif  // #define CHROME_VIEWS_SEPARATOR_H__

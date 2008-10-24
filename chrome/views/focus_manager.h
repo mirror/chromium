@@ -18,7 +18,7 @@
 //
 // There are 2 types of focus:
 // - the native focus, which is the focus that an HWND has.
-// - the view focus, which is the focus that a ChromeViews::View has.
+// - the view focus, which is the focus that a views::View has.
 //
 // Each native view must register with their Focus Manager so the focus manager
 // gets notified when they are focused (and keeps track of the native focus) and
@@ -29,10 +29,10 @@
 // This is already done for you if you subclass the NativeControl class or if
 // you use the HWNDView class.
 //
-// When creating a top window, if it derives from HWNDViewContainer, the
+// When creating a top window, if it derives from ContainerWin, the
 // |has_own_focus_manager| of the Init method lets you specify whether that
 // window should have its own focus manager (so focus traversal stays confined
-// in that window). If you are not deriving from HWNDViewContainer or one of its
+// in that window). If you are not deriving from ContainerWin or one of its
 // derived classes (Window, FramelessWindow, ConstrainedWindow), you must
 // create a FocusManager when the window is created (it is automatically deleted
 // when the window is destroyed).
@@ -49,7 +49,7 @@
 // method SetNextFocusableView().
 //
 // If you are embedding a native view containing a nested RootView (for example
-// by adding a NativeControl that contains a HWNDViewContainer as its native
+// by adding a NativeControl that contains a ContainerWin as its native
 // component), then you need to:
 // - override the View::GetFocusTraversable() method in your outter component.
 //   It should return the RootView of the inner component. This is used when
@@ -72,7 +72,7 @@
 // Note that FocusTraversable do not have to be RootViews: TabContents is
 // FocusTraversable.
 
-namespace ChromeViews {
+namespace views {
 
 class View;
 class RootView;
@@ -325,7 +325,7 @@ class FocusManager : public NotificationObserver {
   DISALLOW_EVIL_CONSTRUCTORS(FocusManager);
 };
 
-}
+}  // namespace views
 
 #endif  // CHROME_VIEWS_FOCUS_MANAGER_H__
 

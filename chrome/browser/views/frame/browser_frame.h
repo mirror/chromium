@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VIEWS_FRAME_BROWSER_FRAME_H_
 
 class BrowserView2;
-namespace ChromeViews {
+namespace views {
 class Window;
 }
 namespace gfx {
@@ -37,8 +37,12 @@ class BrowserFrame {
   // TabStrip. The coordinate system is that of the window's client area.
   virtual gfx::Rect GetBoundsForTabStrip(TabStrip* tabstrip) const = 0;
 
-  // Returns the ChromeViews::Window associated with this frame.
-  virtual ChromeViews::Window* GetWindow() = 0;
+  // Updates the current frame of the Throbber animation, if applicable.
+  // |running| is whether or not the throbber should be running.
+  virtual void UpdateThrobber(bool running) = 0;
+
+  // Returns the views::Window associated with this frame.
+  virtual views::Window* GetWindow() = 0;
 
   enum FrameType {
     FRAMETYPE_OPAQUE,

@@ -22,13 +22,13 @@
 #include "chrome/views/text_field.h"
 #include "generated_resources.h"
 
-using ChromeViews::ComboBox;
-using ChromeViews::ColumnSet;
-using ChromeViews::GridLayout;
-using ChromeViews::Label;
-using ChromeViews::Link;
-using ChromeViews::NativeButton;
-using ChromeViews::View;
+using views::ComboBox;
+using views::ColumnSet;
+using views::GridLayout;
+using views::Label;
+using views::Link;
+using views::NativeButton;
+using views::View;
 
 // Color of the title.
 static const SkColor kTitleColor = SkColorSetRGB(6, 45, 117);
@@ -130,28 +130,30 @@ BookmarkBubbleView::~BookmarkBubbleView() {
   SetNodeTitleFromTextField();
 }
 
-void BookmarkBubbleView::DidChangeBounds(const CRect& previous,
-                                         const CRect& current) {
+void BookmarkBubbleView::DidChangeBounds(const gfx::Rect& previous,
+                                         const gfx::Rect& current) {
   Layout();
 }
 
 void BookmarkBubbleView::BubbleShown() {
-  DCHECK(GetViewContainer());
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetViewContainer()->GetHWND());
+  DCHECK(GetContainer());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetContainer()->GetHWND());
   focus_manager->RegisterAccelerator(
-      ChromeViews::Accelerator(VK_RETURN, false, false, false), this);
+      views::Accelerator(VK_RETURN, false, false, false), this);
 
   title_tf_->RequestFocus();
   title_tf_->SelectAll();
 }
 
 bool BookmarkBubbleView::AcceleratorPressed(
-    const ChromeViews::Accelerator& accelerator) {
+    const views::Accelerator& accelerator) {
   if (accelerator.GetKeyCode() != VK_RETURN)
     return false;
-
-  Close();
+  if (edit_button_->HasFocus())
+    ButtonPressed(edit_button_);
+  else
+    ButtonPressed(close_button_);
   return true;
 }
 
@@ -183,7 +185,7 @@ void BookmarkBubbleView::Init() {
       l10n_util::GetString(IDS_BOOMARK_BUBBLE_OPTIONS));
   edit_button_->SetListener(this);
 
-  close_button_ = new NativeButton(l10n_util::GetString(IDS_CLOSE));
+  close_button_ = new NativeButton(l10n_util::GetString(IDS_CLOSE), true);
   close_button_->SetListener(this);
 
   parent_combobox_ = new ComboBox(&parent_model_);
@@ -237,7 +239,7 @@ void BookmarkBubbleView::Init() {
   layout->StartRow(0, 2);
   layout->AddView(
       new Label(l10n_util::GetString(IDS_BOOMARK_BUBBLE_TITLE_TEXT)));
-  title_tf_ = new ChromeViews::TextField();
+  title_tf_ = new views::TextField();
   title_tf_->SetText(GetTitle());
   layout->AddView(title_tf_);
 
@@ -264,7 +266,7 @@ std::wstring BookmarkBubbleView::GetTitle() {
   return std::wstring();
 }
 
-void BookmarkBubbleView::ButtonPressed(ChromeViews::NativeButton* sender) {		
+void BookmarkBubbleView::ButtonPressed(views::NativeButton* sender) {		
   if (sender == edit_button_) {
     UserMetrics::RecordAction(L"BookmarkBubble_Edit", profile_);
     ShowEditor();
@@ -314,7 +316,7 @@ bool BookmarkBubbleView::CloseOnEscape() {
 }
 
 void BookmarkBubbleView::Close() {
-  static_cast<InfoBubble*>(GetViewContainer())->Close();
+  static_cast<InfoBubble*>(GetContainer())->Close();
 }
 
 void BookmarkBubbleView::RemoveBookmark() {
@@ -340,16 +342,16 @@ void BookmarkBubbleView::ShowEditor() {
 
   // Parent the editor to our root ancestor (not the root we're in, as that
   // is the info bubble and will close shortly).
-  HWND parent = GetAncestor(GetViewContainer()->GetHWND(), GA_ROOTOWNER);
+  HWND parent = GetAncestor(GetContainer()->GetHWND(), GA_ROOTOWNER);
 
   // We're about to show the bookmark editor. When the bookmark editor closes
-  // we want the browser to become active. HWNDViewContainer::Hide() does a
-  // hide in a such way that activation isn't changed, which means when we
-  // close Windows gets confused as to who it should give active status to.
-  // We explicitly hide the bookmark bubble window in such a way that
-  // activation status changes. That way, when the editor closes, activation
-  // is properly restored to the browser.
-  ShowWindow(GetViewContainer()->GetHWND(), SW_HIDE);
+  // we want the browser to become active. ContainerWin::Hide() does a hide in
+  // a such way that activation isn't changed, which means when we close
+  // Windows gets confused as to who it should give active status to. We
+  // explicitly hide the bookmark bubble window in such a way that activation
+  // status changes. That way, when the editor closes, activation is properly
+  // restored to the browser.
+  ShowWindow(GetContainer()->GetHWND(), SW_HIDE);
 
   // Even though we just hid the window, we need to invoke Close to schedule
   // the delete and all that.

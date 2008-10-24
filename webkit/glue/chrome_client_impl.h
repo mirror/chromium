@@ -5,9 +5,11 @@
 #ifndef WEBKIT_GLUE_CHROME_CLIENT_IMPL_H__
 #define WEBKIT_GLUE_CHROME_CLIENT_IMPL_H__
 
-#pragma warning(push, 0)
-#include "ChromeClientWin.h"
-#pragma warning(pop)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "ChromeClientChromium.h"
+MSVC_POP_WARNING();
 
 class WebViewImpl;
 namespace WebCore {
@@ -16,7 +18,7 @@ namespace WebCore {
 }
 
 // Handles window-level notifications from WebCore on behalf of a WebView.
-class ChromeClientImpl : public WebCore::ChromeClientWin {
+class ChromeClientImpl : public WebCore::ChromeClientChromium {
 public:
   ChromeClientImpl(WebViewImpl* webview);
   virtual ~ChromeClientImpl();

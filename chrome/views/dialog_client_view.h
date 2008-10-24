@@ -9,7 +9,7 @@
 #include "chrome/views/client_view.h"
 #include "chrome/views/native_button.h"
 
-namespace ChromeViews {
+namespace views {
 
 class DialogDelegate;
 class Window;
@@ -58,8 +58,7 @@ class DialogClientView : public ClientView,
   virtual void PaintChildren(ChromeCanvas* canvas);
   virtual void Layout();
   virtual void ViewHierarchyChanged(bool is_add, View* parent, View* child);
-  virtual void DidChangeBounds(const CRect& prev, const CRect& next);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
   virtual bool AcceleratorPressed(const Accelerator& accelerator);
 
   // NativeButton::Listener implementation:
@@ -103,7 +102,7 @@ class DialogClientView : public ClientView,
   DISALLOW_EVIL_CONSTRUCTORS(DialogClientView);
 };
 
-}
+}  // namespace views
 
 #endif  // #ifndef CHROME_VIEWS_DIALOG_CLIENT_VIEW_H_
 

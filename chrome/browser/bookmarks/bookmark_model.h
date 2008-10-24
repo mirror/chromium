@@ -32,7 +32,7 @@ class StarredURLDatabase;
 // BookmarkNode contains information about a starred entry: title, URL, favicon,
 // star id and type. BookmarkNodes are returned from a BookmarkModel.
 //
-class BookmarkNode : public ChromeViews::TreeNode<BookmarkNode> {
+class BookmarkNode : public views::TreeNode<BookmarkNode> {
   friend class BookmarkEditorView;
   friend class BookmarkModel;
   friend class BookmarkCodec;
@@ -202,7 +202,8 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   // modified groups. This never returns an empty vector.
   std::vector<BookmarkNode*> GetMostRecentlyModifiedGroups(size_t max_count);
 
-  // Returns the most recently added bookmarks.
+  // Returns the most recently added bookmarks. This does not return groups,
+  // only nodes of type url.
   void GetMostRecentlyAddedEntries(size_t count,
                                    std::vector<BookmarkNode*>* nodes);
 
@@ -294,6 +295,8 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   // combobox of most recently modified groups.
   void ResetDateGroupModified(BookmarkNode* node);
 
+  Profile* profile() const { return profile_; }
+
  private:
   // Used to order BookmarkNodes by URL.
   class NodeURLComparator {
@@ -302,6 +305,10 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
       return n1->GetURL() < n2->GetURL();
     }
   };
+
+  // Implementation of IsBookmarked. Before calling this the caller must
+  // obtain a lock on url_lock_.
+  bool IsBookmarkedNoLock(const GURL& url);
 
   // Overriden to notify the observer the favicon has been loaded.
   void FavIconLoaded(BookmarkNode* node);

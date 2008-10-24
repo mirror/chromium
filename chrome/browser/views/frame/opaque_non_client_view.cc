@@ -7,12 +7,13 @@
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/views/frame/browser_view2.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
-#include "chrome/browser/views/window_resources.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/win_util.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/window_resources.h"
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
@@ -64,7 +65,7 @@ enum {
   FRAME_PART_BITMAP_COUNT  // Must be last.
 };
 
-class ActiveWindowResources : public WindowResources {
+class ActiveWindowResources : public views::WindowResources {
  public:
   ActiveWindowResources() {
     InitClass();
@@ -72,7 +73,7 @@ class ActiveWindowResources : public WindowResources {
   virtual ~ActiveWindowResources() { }
 
   // WindowResources implementation:
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part) const {
     return standard_frame_bitmaps_[part];
   }
 
@@ -115,7 +116,7 @@ class ActiveWindowResources : public WindowResources {
   DISALLOW_EVIL_CONSTRUCTORS(ActiveWindowResources);
 };
 
-class InactiveWindowResources : public WindowResources {
+class InactiveWindowResources : public views::WindowResources {
  public:
   InactiveWindowResources() {
     InitClass();
@@ -123,7 +124,7 @@ class InactiveWindowResources : public WindowResources {
   virtual ~InactiveWindowResources() { }
 
   // WindowResources implementation:
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part) const {
     return standard_frame_bitmaps_[part];
   }
 
@@ -166,7 +167,7 @@ class InactiveWindowResources : public WindowResources {
   DISALLOW_EVIL_CONSTRUCTORS(InactiveWindowResources);
 };
 
-class OTRActiveWindowResources : public WindowResources {
+class OTRActiveWindowResources : public views::WindowResources {
  public:
   OTRActiveWindowResources() {
     InitClass();
@@ -174,7 +175,7 @@ class OTRActiveWindowResources : public WindowResources {
   virtual ~OTRActiveWindowResources() { }
 
   // WindowResources implementation:
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part) const {
     return standard_frame_bitmaps_[part];
   }
   
@@ -216,7 +217,7 @@ class OTRActiveWindowResources : public WindowResources {
   DISALLOW_EVIL_CONSTRUCTORS(OTRActiveWindowResources);
 };
 
-class OTRInactiveWindowResources : public WindowResources {
+class OTRInactiveWindowResources : public views::WindowResources {
  public:
   OTRInactiveWindowResources() {
     InitClass();
@@ -224,7 +225,7 @@ class OTRInactiveWindowResources : public WindowResources {
   virtual ~OTRInactiveWindowResources() { }
 
   // WindowResources implementation:
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part) const {
     return standard_frame_bitmaps_[part];
   }
 
@@ -273,10 +274,10 @@ SkBitmap* InactiveWindowResources::standard_frame_bitmaps_[];
 SkBitmap* OTRActiveWindowResources::standard_frame_bitmaps_[];
 SkBitmap* OTRInactiveWindowResources::standard_frame_bitmaps_[];
 
-WindowResources* OpaqueNonClientView::active_resources_ = NULL;
-WindowResources* OpaqueNonClientView::inactive_resources_ = NULL;
-WindowResources* OpaqueNonClientView::active_otr_resources_ = NULL;
-WindowResources* OpaqueNonClientView::inactive_otr_resources_ = NULL;
+views::WindowResources* OpaqueNonClientView::active_resources_ = NULL;
+views::WindowResources* OpaqueNonClientView::inactive_resources_ = NULL;
+views::WindowResources* OpaqueNonClientView::active_otr_resources_ = NULL;
+views::WindowResources* OpaqueNonClientView::inactive_otr_resources_ = NULL;
 SkBitmap OpaqueNonClientView::distributor_logo_;
 SkBitmap OpaqueNonClientView::app_top_left_;
 SkBitmap OpaqueNonClientView::app_top_center_;
@@ -306,10 +307,13 @@ static const int kWindowIconLeftOffset = 5;
 static const int kWindowIconTopOffset = 5;
 // The distance between the window icon and the window title when a title-bar
 // is showing.
-static const int kWindowIconTitleSpacing = 3;
+static const int kWindowIconTitleSpacing = 4;
 // The distance between the top of the window and the title text when a
 // title-bar is showing.
 static const int kTitleTopOffset = 6;
+// The distance between the right edge of the title text bounding box and the
+// left edge of the distributor logo.
+static const int kTitleLogoSpacing = 5;
 // The distance between the bottom of the title text and the TabStrip when a
 // title-bar is showing.
 static const int kTitleBottomSpacing = 6;
@@ -353,10 +357,10 @@ static const int kNewTabIconWindowControlsSpacing = 10;
 OpaqueNonClientView::OpaqueNonClientView(OpaqueFrame* frame,
                                          BrowserView2* browser_view)
     : NonClientView(),
-      minimize_button_(new ChromeViews::Button),
-      maximize_button_(new ChromeViews::Button),
-      restore_button_(new ChromeViews::Button),
-      close_button_(new ChromeViews::Button),
+      minimize_button_(new views::Button),
+      maximize_button_(new views::Button),
+      restore_button_(new views::Button),
+      close_button_(new views::Button),
       window_icon_(NULL),
       frame_(frame),
       browser_view_(browser_view) {
@@ -374,15 +378,15 @@ OpaqueNonClientView::OpaqueNonClientView(OpaqueFrame* frame,
     current_inactive_resources_ = inactive_resources_;
   }
 
-  WindowResources* resources = current_active_resources_;
+  views::WindowResources* resources = current_active_resources_;
   minimize_button_->SetImage(
-      ChromeViews::Button::BS_NORMAL,
+      views::Button::BS_NORMAL,
       resources->GetPartBitmap(FRAME_MINIMIZE_BUTTON_ICON));
   minimize_button_->SetImage(
-      ChromeViews::Button::BS_HOT,
+      views::Button::BS_HOT,
       resources->GetPartBitmap(FRAME_MINIMIZE_BUTTON_ICON_H));
   minimize_button_->SetImage(
-      ChromeViews::Button::BS_PUSHED,
+      views::Button::BS_PUSHED,
       resources->GetPartBitmap(FRAME_MINIMIZE_BUTTON_ICON_P));
   minimize_button_->SetListener(this, -1);
   minimize_button_->SetAccessibleName(
@@ -390,13 +394,13 @@ OpaqueNonClientView::OpaqueNonClientView(OpaqueFrame* frame,
   AddChildView(minimize_button_);
 
   maximize_button_->SetImage(
-      ChromeViews::Button::BS_NORMAL,
+      views::Button::BS_NORMAL,
       resources->GetPartBitmap(FRAME_MAXIMIZE_BUTTON_ICON));
   maximize_button_->SetImage(
-      ChromeViews::Button::BS_HOT,
+      views::Button::BS_HOT,
       resources->GetPartBitmap(FRAME_MAXIMIZE_BUTTON_ICON_H));
   maximize_button_->SetImage(
-      ChromeViews::Button::BS_PUSHED,
+      views::Button::BS_PUSHED,
       resources->GetPartBitmap(FRAME_MAXIMIZE_BUTTON_ICON_P));
   maximize_button_->SetListener(this, -1);
   maximize_button_->SetAccessibleName(
@@ -404,13 +408,13 @@ OpaqueNonClientView::OpaqueNonClientView(OpaqueFrame* frame,
   AddChildView(maximize_button_);
 
   restore_button_->SetImage(
-      ChromeViews::Button::BS_NORMAL,
+      views::Button::BS_NORMAL,
       resources->GetPartBitmap(FRAME_RESTORE_BUTTON_ICON));
   restore_button_->SetImage(
-      ChromeViews::Button::BS_HOT,
+      views::Button::BS_HOT,
       resources->GetPartBitmap(FRAME_RESTORE_BUTTON_ICON_H));
   restore_button_->SetImage(
-      ChromeViews::Button::BS_PUSHED,
+      views::Button::BS_PUSHED,
       resources->GetPartBitmap(FRAME_RESTORE_BUTTON_ICON_P));
   restore_button_->SetListener(this, -1);
   restore_button_->SetAccessibleName(
@@ -418,13 +422,13 @@ OpaqueNonClientView::OpaqueNonClientView(OpaqueFrame* frame,
   AddChildView(restore_button_);
 
   close_button_->SetImage(
-      ChromeViews::Button::BS_NORMAL,
+      views::Button::BS_NORMAL,
       resources->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON));
   close_button_->SetImage(
-      ChromeViews::Button::BS_HOT,
+      views::Button::BS_HOT,
       resources->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_H));
   close_button_->SetImage(
-      ChromeViews::Button::BS_PUSHED,
+      views::Button::BS_PUSHED,
       resources->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_P));
   close_button_->SetListener(this, -1);
   close_button_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_CLOSE));
@@ -483,9 +487,9 @@ SkBitmap OpaqueNonClientView::GetFavIcon() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueNonClientView, ChromeViews::BaseButton::ButtonListener implementation:
+// OpaqueNonClientView, views::BaseButton::ButtonListener implementation:
 
-void OpaqueNonClientView::ButtonPressed(ChromeViews::BaseButton* sender) {
+void OpaqueNonClientView::ButtonPressed(views::BaseButton* sender) {
   if (sender == minimize_button_) {
     frame_->ExecuteSystemMenuCommand(SC_MINIMIZE);
   } else if (sender == maximize_button_) {
@@ -498,7 +502,7 @@ void OpaqueNonClientView::ButtonPressed(ChromeViews::BaseButton* sender) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueNonClientView, ChromeViews::NonClientView implementation:
+// OpaqueNonClientView, views::NonClientView implementation:
 
 gfx::Rect OpaqueNonClientView::CalculateClientAreaBounds(int width,
                                                          int height) const {
@@ -523,9 +527,6 @@ CPoint OpaqueNonClientView::GetSystemMenuPoint() const {
 }
 
 int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
-  CRect bounds;
-  CPoint test_point = point.ToPOINT();
-
   // First see if it's within the grow box area, since that overlaps the client
   // bounds.
   int component = frame_->client_view()->NonClientHitTest(point);
@@ -533,21 +534,22 @@ int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
     return component;
 
   // Then see if the point is within any of the window controls.
-  close_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  gfx::Rect button_bounds =
+      close_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTCLOSE;
-  restore_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = restore_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMAXBUTTON;
-  maximize_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = maximize_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMAXBUTTON;
-  minimize_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = minimize_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMINBUTTON;
   if (window_icon_) {
-    window_icon_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    button_bounds = window_icon_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+    if (button_bounds.Contains(point))
       return HTSYSMENU;
   }
 
@@ -559,8 +561,7 @@ int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
       frame_->window_delegate()->CanResize());
   if (component == HTNOWHERE) {
     // Finally fall back to the caption.
-    GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    if (bounds().Contains(point))
       component = HTCAPTION;
     // Otherwise, the point is outside the window's bounds.
   }
@@ -591,8 +592,15 @@ void OpaqueNonClientView::EnableClose(bool enable) {
   close_button_->SetEnabled(enable);
 }
 
+void OpaqueNonClientView::ResetWindowControls() {
+  restore_button_->SetState(views::Button::BS_NORMAL);
+  minimize_button_->SetState(views::Button::BS_NORMAL);
+  maximize_button_->SetState(views::Button::BS_NORMAL);
+  // The close button isn't affected by this constraint.
+}
+
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueNonClientView, ChromeViews::View overrides:
+// OpaqueNonClientView, views::View overrides:
 
 void OpaqueNonClientView::Paint(ChromeCanvas* canvas) {
   // Clip the content area out of the rendering.
@@ -625,42 +633,35 @@ void OpaqueNonClientView::Layout() {
   LayoutClientView();
 }
 
-void OpaqueNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  frame_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalBorderSize;
-  out->cy += CalculateNonClientTopHeight() + kWindowVerticalBorderBottomSize;
+gfx::Size OpaqueNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = frame_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalBorderSize,
+                   CalculateNonClientTopHeight() +
+                       kWindowVerticalBorderBottomSize);
+  return prefsize;
 }
 
-ChromeViews::View* OpaqueNonClientView::GetViewForPoint(
-    const CPoint& point,
-    bool can_create_floating) {
+views::View* OpaqueNonClientView::GetViewForPoint(const gfx::Point& point,
+                                                  bool can_create_floating) {
   // We override this function because the ClientView can overlap the non -
   // client view, making it impossible to click on the window controls. We need
   // to ensure the window controls are checked _first_.
-  ChromeViews::View* views[] = { close_button_, restore_button_,
-                                 maximize_button_, minimize_button_ };
+  views::View* views[] = { close_button_, restore_button_, maximize_button_,
+                           minimize_button_ };
   for (int i = 0; i < arraysize(views); ++i) {
     if (!views[i]->IsVisible())
       continue;
-    CRect bounds;
-    views[i]->GetBounds(&bounds);
-    if (bounds.PtInRect(point))
+    if (views[i]->bounds().Contains(point))
       return views[i];
   }
   return View::GetViewForPoint(point, can_create_floating);
 }
 
-void OpaqueNonClientView::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
-}
-
 void OpaqueNonClientView::ViewHierarchyChanged(bool is_add,
-                                               ChromeViews::View* parent,
-                                               ChromeViews::View* child) {
+                                               views::View* parent,
+                                               views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetViewContainer());
+    DCHECK(GetContainer());
     DCHECK(frame_->client_view()->GetParent() != this);
     AddChildView(frame_->client_view());
 
@@ -763,8 +764,9 @@ void OpaqueNonClientView::PaintMaximizedFrameBorder(ChromeCanvas* canvas) {
 
 void OpaqueNonClientView::PaintOTRAvatar(ChromeCanvas* canvas) {
   if (browser_view_->ShouldShowOffTheRecordAvatar()) {
-    canvas->DrawBitmapInt(browser_view_->GetOTRAvatarIcon(),
-                          otr_avatar_bounds_.x(), otr_avatar_bounds_.y());
+    int icon_x = MirroredLeftPointForRect(otr_avatar_bounds_);
+    canvas->DrawBitmapInt(browser_view_->GetOTRAvatarIcon(), icon_x,
+                          otr_avatar_bounds_.y());
   }
 }
 
@@ -773,17 +775,18 @@ void OpaqueNonClientView::PaintDistributorLogo(ChromeCanvas* canvas) {
   // when we actually have a logo.
   if (!frame_->IsMaximized() && !frame_->IsMinimized() && 
       !distributor_logo_.empty()) {
-    canvas->DrawBitmapInt(distributor_logo_, logo_bounds_.x(),
-                          logo_bounds_.y());
+    int logo_x = MirroredLeftPointForRect(logo_bounds_);
+    canvas->DrawBitmapInt(distributor_logo_, logo_x, logo_bounds_.y());
   }
 }
 
 void OpaqueNonClientView::PaintTitleBar(ChromeCanvas* canvas) {
   // The window icon is painted by the TabIconView.
-  ChromeViews::WindowDelegate* d = frame_->window_delegate();
+  views::WindowDelegate* d = frame_->window_delegate();
   if (d->ShouldShowWindowTitle()) {
+    int title_x = MirroredLeftPointForRect(title_bounds_);
     canvas->DrawStringInt(d->GetWindowTitle(), title_font_, SK_ColorWHITE,
-                          title_bounds_.x(), title_bounds_.y(),
+                          title_x, title_bounds_.y(),
                           title_bounds_.width(), title_bounds_.height());
   }
 }
@@ -874,73 +877,78 @@ void OpaqueNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
 }
 
 void OpaqueNonClientView::LayoutWindowControls() {
-  CSize ps;
+  gfx::Size ps;
   if (frame_->IsMaximized() || frame_->IsMinimized()) {
     maximize_button_->SetVisible(false);
     restore_button_->SetVisible(true);
   }
 
   if (frame_->IsMaximized()) {
-    close_button_->GetPreferredSize(&ps);
-    close_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                     ChromeViews::Button::ALIGN_BOTTOM);
+    ps = close_button_->GetPreferredSize();
+    close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                     views::Button::ALIGN_TOP);
     close_button_->SetBounds(
-        width() - ps.cx - kWindowControlsRightZoomedOffset,
-        0, ps.cx + kWindowControlsRightZoomedOffset,
-        ps.cy + kWindowControlsTopZoomedOffset);
+        width() - ps.width() - kWindowControlsRightZoomedOffset,
+        0, ps.width() + kWindowControlsRightZoomedOffset,
+        ps.height() + kWindowControlsTopZoomedOffset);
 
-    restore_button_->GetPreferredSize(&ps);
-    restore_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                       ChromeViews::Button::ALIGN_BOTTOM);
-    restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
-                               ps.cy + kWindowControlsTopZoomedOffset);
+    ps = restore_button_->GetPreferredSize();
+    restore_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                       views::Button::ALIGN_TOP);
+    restore_button_->SetBounds(close_button_->x() - ps.width(), 0, ps.width(),
+                               ps.height() + kWindowControlsTopZoomedOffset);
 
-    minimize_button_->GetPreferredSize(&ps);
-    minimize_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                        ChromeViews::Button::ALIGN_BOTTOM);
-    minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
-                                ps.cy + kWindowControlsTopZoomedOffset);
+    ps = minimize_button_->GetPreferredSize();
+    minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                        views::Button::ALIGN_TOP);
+    minimize_button_->SetBounds(restore_button_->x() - ps.width(), 0,
+                                ps.width(),
+                                ps.height() + kWindowControlsTopZoomedOffset);
   } else if (frame_->IsMinimized()) {
-    close_button_->GetPreferredSize(&ps);
-    close_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                     ChromeViews::Button::ALIGN_BOTTOM);
+    ps = close_button_->GetPreferredSize();
+    close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                     views::Button::ALIGN_BOTTOM);
     close_button_->SetBounds(
-        width() - ps.cx - kWindowControlsRightZoomedOffset,
-        0, ps.cx + kWindowControlsRightZoomedOffset,
-        ps.cy + kWindowControlsTopZoomedOffset);
+        width() - ps.width() - kWindowControlsRightZoomedOffset,
+        0, ps.width() + kWindowControlsRightZoomedOffset,
+        ps.height() + kWindowControlsTopZoomedOffset);
 
-    restore_button_->GetPreferredSize(&ps);
-    restore_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                       ChromeViews::Button::ALIGN_BOTTOM);
-    restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
-                               ps.cy + kWindowControlsTopZoomedOffset);
+    ps = restore_button_->GetPreferredSize();
+    restore_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                       views::Button::ALIGN_BOTTOM);
+    restore_button_->SetBounds(close_button_->x() - ps.width(), 0, ps.width(),
+                               ps.height() + kWindowControlsTopZoomedOffset);
 
-    minimize_button_->GetPreferredSize(&ps);
-    minimize_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                        ChromeViews::Button::ALIGN_BOTTOM);
-    minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
-                                ps.cy + kWindowControlsTopZoomedOffset);
+    ps = minimize_button_->GetPreferredSize();
+    minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                        views::Button::ALIGN_BOTTOM);
+    minimize_button_->SetBounds(restore_button_->x() - ps.width(), 0,
+                                ps.width(),
+                                ps.height() + kWindowControlsTopZoomedOffset);
   } else {
-    close_button_->GetPreferredSize(&ps);
-    close_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                     ChromeViews::Button::ALIGN_TOP);
-    close_button_->SetBounds(width() - kWindowControlsRightOffset - ps.cx,
-                             kWindowControlsTopOffset, ps.cx, ps.cy);
+    ps = close_button_->GetPreferredSize();
+    close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                     views::Button::ALIGN_TOP);
+    close_button_->SetBounds(width() - kWindowControlsRightOffset - ps.width(),
+                             kWindowControlsTopOffset, ps.width(),
+                             ps.height());
 
     restore_button_->SetVisible(false);
 
     maximize_button_->SetVisible(true);
-    maximize_button_->GetPreferredSize(&ps);
-    maximize_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                        ChromeViews::Button::ALIGN_TOP);
-    maximize_button_->SetBounds(close_button_->x() - ps.cx,
-                                kWindowControlsTopOffset, ps.cx, ps.cy);
+    ps = maximize_button_->GetPreferredSize();
+    maximize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                        views::Button::ALIGN_TOP);
+    maximize_button_->SetBounds(close_button_->x() - ps.width(),
+                                kWindowControlsTopOffset, ps.width(),
+                                ps.height());
 
-    minimize_button_->GetPreferredSize(&ps);
-    minimize_button_->SetImageAlignment(ChromeViews::Button::ALIGN_LEFT,
-                                        ChromeViews::Button::ALIGN_TOP);
-    minimize_button_->SetBounds(maximize_button_->x() - ps.cx,
-                                kWindowControlsTopOffset, ps.cx, ps.cy);
+    ps = minimize_button_->GetPreferredSize();
+    minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
+                                        views::Button::ALIGN_TOP);
+    minimize_button_->SetBounds(maximize_button_->x() - ps.width(),
+                                kWindowControlsTopOffset, ps.width(),
+                                ps.height());
   }
 }
 
@@ -962,28 +970,17 @@ void OpaqueNonClientView::LayoutOTRAvatar() {
 }
 
 void OpaqueNonClientView::LayoutDistributorLogo() {
-  if (distributor_logo_.empty())
-    return;
+  int logo_w = distributor_logo_.empty() ? 0 : distributor_logo_.width();
+  int logo_h = distributor_logo_.empty() ? 0 : distributor_logo_.height();
 
-  int logo_w = distributor_logo_.width();
-  int logo_h = distributor_logo_.height();
-
-  int logo_x = 0;
-  if (UILayoutIsRightToLeft()) {
-    CRect minimize_bounds;
-    minimize_button_->GetBounds(&minimize_bounds,
-                                APPLY_MIRRORING_TRANSFORMATION);
-    logo_x = minimize_bounds.right + kDistributorLogoHorizontalOffset;
-  } else {
-    logo_x = minimize_button_->x() - logo_w -
-        kDistributorLogoHorizontalOffset;
-  }
+  int logo_x =
+      minimize_button_->x() - logo_w - kDistributorLogoHorizontalOffset;
   logo_bounds_.SetRect(logo_x, kDistributorLogoVerticalOffset, logo_w, logo_h);
 }
 
 void OpaqueNonClientView::LayoutTitleBar() {
   int top_offset = frame_->IsMaximized() ? kWindowTopMarginZoomed : 0;
-  ChromeViews::WindowDelegate* d = frame_->window_delegate();
+  views::WindowDelegate* d = frame_->window_delegate();
 
   // Size the window icon, even if it is hidden so we can size the title based
   // on its position.
@@ -991,25 +988,32 @@ void OpaqueNonClientView::LayoutTitleBar() {
   icon_bounds_.SetRect(kWindowIconLeftOffset, kWindowIconLeftOffset,
                        show_icon ? kWindowIconSize : 0,
                        show_icon ? kWindowIconSize : 0);
-  if (window_icon_)
-    window_icon_->SetBounds(icon_bounds_.ToRECT());
 
   // Size the title, if visible.
   if (d->ShouldShowWindowTitle()) {
     int spacing = d->ShouldShowWindowIcon() ? kWindowIconTitleSpacing : 0;
-    int title_right = minimize_button_->x();
+    int title_right = logo_bounds_.x() - kTitleLogoSpacing;
     int icon_right = icon_bounds_.right();
     int title_left = icon_right + spacing;
     title_bounds_.SetRect(title_left, kTitleTopOffset + top_offset,
         std::max(0, static_cast<int>(title_right - icon_right)),
         title_font_.height());
+
+    // Adjust the Y-position of the icon to be vertically centered within
+    // the bounds of the title text.
+    int delta_y = title_bounds_.height() - icon_bounds_.height();
+    if (delta_y > 0)
+      icon_bounds_.set_y(title_bounds_.y() + static_cast<int>(delta_y / 2));
   }
+
+  // Do this last, after the icon has been moved.
+  if (window_icon_)
+    window_icon_->SetBounds(icon_bounds_);
 }
 
 void OpaqueNonClientView::LayoutClientView() {
-  gfx::Rect client_bounds(
-      CalculateClientAreaBounds(width(), height()));
-  frame_->client_view()->SetBounds(client_bounds.ToRECT());
+  gfx::Rect client_bounds = CalculateClientAreaBounds(width(), height());
+  frame_->client_view()->SetBounds(client_bounds);
 }
 
 // static
@@ -1036,8 +1040,7 @@ void OpaqueNonClientView::InitClass() {
 void OpaqueNonClientView::InitAppWindowResources() {
   static bool initialized = false;
   if (!initialized) {
-    title_font_ = ResourceBundle::GetSharedInstance().GetFont(
-        ResourceBundle::BaseFont).DeriveFont(1, ChromeFont::BOLD);
+    title_font_ = win_util::GetWindowTitleFont();
     initialized = true;
   }
 }

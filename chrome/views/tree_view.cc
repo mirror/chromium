@@ -13,10 +13,10 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/stl_util-inl.h"
+#include "chrome/views/container.h"
 #include "chrome/views/focus_manager.h"
-#include "chrome/views/view_container.h"
 
-namespace ChromeViews {
+namespace views {
 
 static HIMAGELIST tree_image_list_ = NULL;
 
@@ -411,7 +411,7 @@ bool TreeView::OnKeyDown(int virtual_key_code) {
     }
     return true;
   } else if (virtual_key_code == VK_RETURN && !process_enter_) {
-    ViewContainer* vc = GetViewContainer();
+    Container* vc = GetContainer();
     DCHECK(vc);
     FocusManager* fm = FocusManager::GetFocusManager(vc->GetHWND());
     DCHECK(fm);
@@ -447,20 +447,20 @@ void TreeView::OnContextMenu(const CPoint& location) {
         x = width() / 2;
         y = height() / 2;
       }
-      CPoint screen_loc(x, y);
+      gfx::Point screen_loc(x, y);
       ConvertPointToScreen(this, &screen_loc);
-      GetContextMenuController()->ShowContextMenu(this, screen_loc.x,
-                                                  screen_loc.y, false);
+      GetContextMenuController()->ShowContextMenu(this, screen_loc.x(),
+                                                  screen_loc.y(), false);
     } else if (!show_context_menu_only_when_node_selected_) {
       GetContextMenuController()->ShowContextMenu(this, location.x, location.y,
                                                   true);
     } else if (GetSelectedNode()) {
       // Make sure the mouse is over the selected node.
       TVHITTESTINFO hit_info;
-      CPoint local_loc(location);
+      gfx::Point local_loc(location);
       ConvertPointToView(NULL, this, &local_loc);
-      hit_info.pt.x = local_loc.x;
-      hit_info.pt.y = local_loc.y;
+      hit_info.pt.x = local_loc.x();
+      hit_info.pt.y = local_loc.y();
       HTREEITEM hit_item = TreeView_HitTest(tree_view_, &hit_info);
       if (hit_item &&
           GetNodeDetails(GetSelectedNode())->tree_item == hit_item &&
@@ -590,5 +590,5 @@ LRESULT CALLBACK TreeView::TreeWndProc(HWND window,
   return CallWindowProc(handler, window, message, w_param, l_param);
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

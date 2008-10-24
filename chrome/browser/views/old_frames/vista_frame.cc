@@ -26,6 +26,8 @@
 #include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/tab_contents_container_view.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
+#include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
@@ -36,7 +38,6 @@
 #include "chrome/views/aero_tooltip_manager.h"
 #include "chrome/views/background.h"
 #include "chrome/views/event.h"
-#include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/hwnd_notification_source.h"
 
 #include "chromium_strings.h"
@@ -97,8 +98,8 @@ typedef enum { CT_BOTTOM_CENTER = 0, CT_BOTTOM_LEFT_CORNER,
                CT_BOTTOM_RIGHT_CORNER, CT_LEFT_SIDE, CT_RIGHT_SIDE,
                CT_TOP_CENTER, CT_TOP_LEFT_CORNER, CT_TOP_RIGHT_CORNER };
 
-using ChromeViews::Accelerator;
-using ChromeViews::FocusManager;
+using views::Accelerator;
+using views::FocusManager;
 
 //static
 VistaFrame* VistaFrame::CreateFrame(const gfx::Rect& bounds,
@@ -126,6 +127,7 @@ VistaFrame::VistaFrame(Browser* browser)
       shelf_view_(NULL),
       bookmark_bar_view_(NULL),
       info_bar_view_(NULL),
+      needs_layout_(false),
       is_off_the_record_(false),
       off_the_record_image_(NULL),
       distributor_logo_(NULL),
@@ -151,7 +153,7 @@ VistaFrame::~VistaFrame() {
 
 // On Vista (unlike on XP), we let the OS render the Windows decor (close
 // button, maximize button, etc.). Since the mirroring infrastructure in
-// ChromeViews does not rely on HWND flipping, the Windows decor on Vista are
+// views does not rely on HWND flipping, the Windows decor on Vista are
 // not mirrored for RTL locales; that is, they appear on the upper right
 // instead of on the upper left (see bug http://b/issue?id=1128173).
 //
@@ -160,7 +162,7 @@ VistaFrame::~VistaFrame() {
 // RTL locales by the mirroring infrastructure. In order to make sure they are
 // not mirrored, we flip them manually so make sure they don't overlap the
 // Windows decor. Unfortunately, there is no cleaner way to do this because the
-// current ChromeViews mirroring API does not allow mirroring the position of
+// current views mirroring API does not allow mirroring the position of
 // a subset of child Views; in other words, once a View is mirrored (in our
 // case frame_view_), then the positions of all its child Views (including, in
 // our case, the OTR image and the tabstrip) are mirrored. Once bug mentioned
@@ -179,24 +181,23 @@ void VistaFrame::Layout() {
     int tabstrip_x = g_bitmaps[CT_LEFT_SIDE]->width();
     if (is_off_the_record_) {
       off_the_record_image_->SetVisible(true);
-      CSize otr_image_size;
-      off_the_record_image_->GetPreferredSize(&otr_image_size);
-      tabstrip_x += otr_image_size.cx + (2 * kOTRImageHorizMargin);
+      gfx::Size otr_image_size = off_the_record_image_->GetPreferredSize();
+      tabstrip_x += otr_image_size.width() + (2 * kOTRImageHorizMargin);
       gfx::Rect off_the_record_bounds;
       if (IsZoomed()) {
         off_the_record_bounds.SetRect(g_bitmaps[CT_LEFT_SIDE]->width(),
                                       kResizeBorder,
-                                      otr_image_size.cx,
+                                      otr_image_size.width(),
                                       tabstrip_->GetPreferredHeight() -
                                       kToolbarOverlapVertOffset + 1);
       } else {
         off_the_record_bounds.SetRect(g_bitmaps[CT_LEFT_SIDE]->width(),
                                       kResizeBorder + kTitlebarHeight +
                                       tabstrip_->GetPreferredHeight() -
-                                      otr_image_size.cy -
+                                      otr_image_size.height() -
                                       kToolbarOverlapVertOffset + 1,
-                                      otr_image_size.cx,
-                                      otr_image_size.cy);
+                                      otr_image_size.width(),
+                                      otr_image_size.height());
       }
 
       if (frame_view_->UILayoutIsRightToLeft())
@@ -231,22 +232,22 @@ void VistaFrame::Layout() {
         // Hide the distributor logo if we're zoomed.
         distributor_logo_->SetVisible(false);
       } else {
-        CSize distributor_logo_size;
-        distributor_logo_->GetPreferredSize(&distributor_logo_size);
+        gfx::Size distributor_logo_size =
+            distributor_logo_->GetPreferredSize();
 
         int logo_x;
         // Because of Bug 1128173, our Window controls aren't actually flipped 
         // on Vista, yet all our math and layout presumes that they are.
         if (frame_view_->UILayoutIsRightToLeft())
-          logo_x = width - distributor_logo_size.cx;
+          logo_x = width - distributor_logo_size.width();
         else
-          logo_x = width - min_offset - distributor_logo_size.cx;
+          logo_x = width - min_offset - distributor_logo_size.width();
 
         distributor_logo_->SetVisible(true);
         distributor_logo_->SetBounds(logo_x,
             kDistributorLogoVerticalOffset,
-            distributor_logo_size.cx,
-            distributor_logo_size.cy);
+            distributor_logo_size.width(),
+            distributor_logo_size.height());
       }
     }
 
@@ -307,25 +308,25 @@ void VistaFrame::Layout() {
     browser_h = height;
   }
 
-  CSize preferred_size;
+  gfx::Size preferred_size;
   if (shelf_view_) {
-    shelf_view_->GetPreferredSize(&preferred_size);
+    preferred_size = shelf_view_->GetPreferredSize();
     shelf_view_->SetBounds(browser_x,
                            height - g_bitmaps[CT_BOTTOM_CENTER]->height() -
-                           preferred_size.cy,
+                           preferred_size.height(),
                            browser_w,
-                           preferred_size.cy);
-    browser_h -= preferred_size.cy;
+                           preferred_size.height());
+    browser_h -= preferred_size.height();
   }
 
-  CSize bookmark_bar_size;
-  CSize info_bar_size;
+  gfx::Size bookmark_bar_size;
+  gfx::Size info_bar_size;
 
   if (bookmark_bar_view_.get())
-    bookmark_bar_view_->GetPreferredSize(&bookmark_bar_size);
+    bookmark_bar_size = bookmark_bar_view_->GetPreferredSize();
 
   if (info_bar_view_)
-    info_bar_view_->GetPreferredSize(&info_bar_size);
+    info_bar_size = info_bar_view_->GetPreferredSize();
 
   // If we're showing a bookmarks bar in the new tab page style and we
   // have an infobar showing, we need to flip them.
@@ -336,17 +337,17 @@ void VistaFrame::Layout() {
     info_bar_view_->SetBounds(browser_x,
                               browser_y,
                               browser_w,
-                              info_bar_size.cy);
-    browser_h -= info_bar_size.cy;
+                              info_bar_size.height());
+    browser_h -= info_bar_size.height();
 
-    browser_y += info_bar_size.cy - kSeparationLineHeight;
+    browser_y += info_bar_size.height() - kSeparationLineHeight;
 
     bookmark_bar_view_->SetBounds(browser_x,
                                   browser_y,
                                   browser_w,
-                                  bookmark_bar_size.cy);
-    browser_h -= bookmark_bar_size.cy - kSeparationLineHeight;
-    browser_y += bookmark_bar_size.cy;
+                                  bookmark_bar_size.height());
+    browser_h -= bookmark_bar_size.height() - kSeparationLineHeight;
+    browser_y += bookmark_bar_size.height();
   } else {
     if (bookmark_bar_view_.get()) {
       // We want our bookmarks bar to be responsible for drawing its own
@@ -356,18 +357,18 @@ void VistaFrame::Layout() {
       bookmark_bar_view_->SetBounds(browser_x,
                                     browser_y,
                                     browser_w,
-                                    bookmark_bar_size.cy);
-      browser_h -= bookmark_bar_size.cy - kSeparationLineHeight;
-      browser_y += bookmark_bar_size.cy;
+                                    bookmark_bar_size.height());
+      browser_h -= bookmark_bar_size.height() - kSeparationLineHeight;
+      browser_y += bookmark_bar_size.height();
     }
 
     if (info_bar_view_) {
       info_bar_view_->SetBounds(browser_x,
                                 browser_y,
                                 browser_w,
-                                info_bar_size.cy);
-      browser_h -= info_bar_size.cy;
-      browser_y += info_bar_size.cy;
+                                info_bar_size.height());
+      browser_h -= info_bar_size.height();
+      browser_y += info_bar_size.height();
     }
   }
 
@@ -384,6 +385,7 @@ void VistaFrame::Layout() {
   browser_view_->LayoutStatusBubble(browser_y + browser_h);
 
   frame_view_->SchedulePaint();
+  needs_layout_ = false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -397,7 +399,7 @@ void VistaFrame::Init() {
 
   // Link the HWND with its root view so we can retrieve the RootView from the
   // HWND for automation purposes.
-  ChromeViews::SetRootViewForHWND(m_hWnd, &root_view_);
+  views::SetRootViewForHWND(m_hWnd, &root_view_);
 
   frame_view_ = new VistaFrameView(this);
   root_view_.AddChildView(frame_view_);
@@ -414,20 +416,19 @@ void VistaFrame::Init() {
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
 
   if (is_off_the_record_) {
-    off_the_record_image_ = new ChromeViews::ImageView();
+    off_the_record_image_ = new views::ImageView();
     frame_view_->AddViewToDropList(off_the_record_image_);
     SkBitmap* otr_icon = rb.GetBitmapNamed(IDR_OTR_ICON);
     off_the_record_image_->SetImage(*otr_icon);
     off_the_record_image_->SetTooltipText(
         l10n_util::GetString(IDS_OFF_THE_RECORD_TOOLTIP));
-    off_the_record_image_->SetVerticalAlignment(
-        ChromeViews::ImageView::LEADING);
+    off_the_record_image_->SetVerticalAlignment(views::ImageView::LEADING);
     frame_view_->AddChildView(off_the_record_image_);
   }
 
   SkBitmap* image = rb.GetBitmapNamed(IDR_DISTRIBUTOR_LOGO);
   if (!image->isNull()) {
-    distributor_logo_ = new ChromeViews::ImageView();
+    distributor_logo_ = new views::ImageView();
     frame_view_->AddViewToDropList(distributor_logo_);
     distributor_logo_->SetImage(image);
     frame_view_->AddChildView(distributor_logo_);
@@ -467,7 +468,7 @@ void VistaFrame::Init() {
   FrameUtil::LoadAccelerators(this, accelerators_table, this);
 
   ShelfVisibilityChanged();
-  root_view_.OnViewContainerCreated();
+  root_view_.OnContainerCreated();
   Layout();
 }
 
@@ -521,7 +522,7 @@ void VistaFrame::Close() {
     browser_->OnWindowClosing();
   } else {
     // Empty tab strip, it's now safe to clean-up.
-    root_view_.OnViewContainerDestroyed();
+    root_view_.OnContainerDestroyed();
 
     NotificationService::current()->Notify(
         NOTIFY_WINDOW_CLOSED, Source<HWND>(m_hWnd),
@@ -540,9 +541,8 @@ void VistaFrame::SetAcceleratorTable(
   accelerator_table_.reset(accelerator_table);
 }
 
-bool VistaFrame::GetAccelerator(int cmd_id,
-                                ChromeViews::Accelerator* accelerator) {
-  std::map<ChromeViews::Accelerator, int>::iterator it =
+bool VistaFrame::GetAccelerator(int cmd_id, views::Accelerator* accelerator) {
+  std::map<views::Accelerator, int>::iterator it =
       accelerator_table_->begin();
   for (; it != accelerator_table_->end(); ++it) {
     if(it->second == cmd_id) {
@@ -586,18 +586,18 @@ gfx::Rect VistaFrame::GetBoundsForContentBounds(const gfx::Rect content_rect) {
     Layout();
   }
 
-  CPoint p(0, 0);
-  ChromeViews::View::ConvertPointToViewContainer(tab_contents_container_, &p);
+  gfx::Point p;
+  views::View::ConvertPointToContainer(tab_contents_container_, &p);
   CRect bounds;
   GetBounds(&bounds, true);
 
   gfx::Rect r;
-  r.set_x(content_rect.x() - p.x);
-  r.set_y(content_rect.y() - p.y);
-  r.set_width(p.x + content_rect.width() +
-              (bounds.Width() - (p.x + tab_contents_container_->width())));
-  r.set_height(p.y + content_rect.height() +
-               (bounds.Height() - (p.y +
+  r.set_x(content_rect.x() - p.x());
+  r.set_y(content_rect.y() - p.y());
+  r.set_width(p.x() + content_rect.width() +
+              (bounds.Width() - (p.x() + tab_contents_container_->width())));
+  r.set_height(p.y() + content_rect.height() +
+               (bounds.Height() - (p.y() +
                                    tab_contents_container_->height())));
   return r;
 }
@@ -655,10 +655,8 @@ bool VistaFrame::IsBookmarkBarVisible() const {
   if (bookmark_bar_view_->IsNewTabPage() || bookmark_bar_view_->IsAnimating())
     return true;
 
-  CSize sz;
-  bookmark_bar_view_->GetPreferredSize(&sz);
   // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
+  return bookmark_bar_view_->GetPreferredSize().height() > 1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -850,14 +848,12 @@ LRESULT VistaFrame::OnGetObject(UINT uMsg, WPARAM w_param, LPARAM object_id) {
 }
 
 void VistaFrame::OnKeyDown(TCHAR c, UINT rep_cnt, UINT flags) {
-  ChromeViews::KeyEvent event(ChromeViews::Event::ET_KEY_PRESSED, c,
-                              rep_cnt, flags);
+  views::KeyEvent event(views::Event::ET_KEY_PRESSED, c, rep_cnt, flags);
   root_view_.ProcessKeyEvent(event);
 }
 
 void VistaFrame::OnKeyUp(TCHAR c, UINT rep_cnt, UINT flags) {
-  ChromeViews::KeyEvent event(ChromeViews::Event::ET_KEY_RELEASED, c,
-                              rep_cnt, flags);
+  views::KeyEvent event(views::Event::ET_KEY_RELEASED, c, rep_cnt, flags);
   root_view_.ProcessKeyEvent(event);
 }
 
@@ -970,14 +966,14 @@ LRESULT VistaFrame::OnNCHitTest(const CPoint& pt) {
   CRect cr;
   GetBounds(&cr, false);
 
-  CPoint tab_pt(pt);
-  ChromeViews::View::ConvertPointToView(NULL, tabstrip_, &tab_pt);
+  gfx::Point tab_pt(pt);
+  views::View::ConvertPointToView(NULL, tabstrip_, &tab_pt);
 
   // If we are over the tabstrip
-  if (tab_pt.x > 0 && tab_pt.y >= kTabShadowSize &&
-      tab_pt.x < tabstrip_->width() &&
-      tab_pt.y < tabstrip_->height()) {
-    ChromeViews::View* v = tabstrip_->GetViewForPoint(tab_pt);
+  if (tab_pt.x() > 0 && tab_pt.y() >= kTabShadowSize &&
+      tab_pt.x() < tabstrip_->width() &&
+      tab_pt.y() < tabstrip_->height()) {
+    views::View* v = tabstrip_->GetViewForPoint(tab_pt);
     if (v == tabstrip_)
       return HTCAPTION;
 
@@ -1119,7 +1115,7 @@ void VistaFrame::OnCaptureChanged(HWND hwnd) {
 
 bool VistaFrame::ProcessMousePressed(const CPoint& pt, UINT flags,
                                      bool dbl_click) {
-  using namespace ChromeViews;
+  using namespace views;
   MouseEvent mouse_pressed(Event::ET_MOUSE_PRESSED,
                            pt.x,
                            pt.y,
@@ -1138,7 +1134,7 @@ bool VistaFrame::ProcessMousePressed(const CPoint& pt, UINT flags,
 }
 
 void VistaFrame::ProcessMouseDragged(const CPoint& pt, UINT flags) {
-  using namespace ChromeViews;
+  using namespace views;
   MouseEvent drag_event(Event::ET_MOUSE_DRAGGED,
                         pt.x,
                         pt.y,
@@ -1147,7 +1143,7 @@ void VistaFrame::ProcessMouseDragged(const CPoint& pt, UINT flags) {
 }
 
 void VistaFrame::ProcessMouseReleased(const CPoint& pt, UINT flags) {
-  using namespace ChromeViews;
+  using namespace views;
   if (in_drag_session_) {
     in_drag_session_ = false;
     ReleaseCapture();
@@ -1160,7 +1156,7 @@ void VistaFrame::ProcessMouseReleased(const CPoint& pt, UINT flags) {
 }
 
 void VistaFrame::ProcessMouseMoved(const CPoint &pt, UINT flags) {
-  using namespace ChromeViews;
+  using namespace views;
   MouseEvent mouse_move(Event::ET_MOUSE_MOVED,
                         pt.x,
                         pt.y,
@@ -1174,7 +1170,7 @@ void VistaFrame::ProcessMouseExited() {
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// ChromeViews::ViewContainer
+// views::Container
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1207,16 +1203,17 @@ HWND VistaFrame::GetHWND() const {
   return m_hWnd;
 }
 
-void VistaFrame::PaintNow(const CRect& update_rect) {
-  if (!update_rect.IsRectNull() && IsVisible()) {
-    RedrawWindow(update_rect,
+void VistaFrame::PaintNow(const gfx::Rect& update_rect) {
+  if (!update_rect.IsEmpty() && IsVisible()) {
+    RECT native_update_rect = update_rect.ToRECT();
+    RedrawWindow(&native_update_rect,
                  NULL,
                  RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_NOERASE);
   }
 }
 
-ChromeViews::RootView* VistaFrame::GetRootView() {
-  return const_cast<ChromeViews::RootView*>(&root_view_);
+views::RootView* VistaFrame::GetRootView() {
+  return const_cast<views::RootView*>(&root_view_);
 }
 
 bool VistaFrame::IsVisible() {
@@ -1339,7 +1336,7 @@ static void UpdatePosition(const TITLEBARINFOEX& info,
 }
 
 bool VistaFrame::VistaFrameView::ShouldForwardToTabStrip(
-    const ChromeViews::DropTargetEvent& event) {
+    const views::DropTargetEvent& event) {
   if (!FrameView::ShouldForwardToTabStrip(event))
     return false;
 
@@ -1361,10 +1358,10 @@ bool VistaFrame::VistaFrameView::ShouldForwardToTabStrip(
   if (min_x != std::numeric_limits<int>::max() &&
       max_x != std::numeric_limits<int>::min() &&
       max_y != std::numeric_limits<int>::min()) {
-    CPoint screen_drag_point(event.x(), event.y());
+    gfx::Point screen_drag_point(event.x(), event.y());
     ConvertPointToScreen(this, &screen_drag_point);
-    if (screen_drag_point.x >= min_x && screen_drag_point.x <= max_x &&
-        screen_drag_point.y <= max_y) {
+    if (screen_drag_point.x() >= min_x && screen_drag_point.x() <= max_x &&
+        screen_drag_point.y() <= max_y) {
       return false;
     }
   }
@@ -1388,7 +1385,7 @@ LRESULT VistaFrame::OnNotify(int w_param, NMHDR* l_param) {
   return result;
 }
 
-ChromeViews::TooltipManager* VistaFrame::GetTooltipManager() {
+views::TooltipManager* VistaFrame::GetTooltipManager() {
   return tooltip_manager_.get();
 }
 
@@ -1397,7 +1394,7 @@ StatusBubble* VistaFrame::GetStatusBubble() {
 }
 
 void VistaFrame::InitAfterHWNDCreated() {
-  tooltip_manager_.reset(new ChromeViews::AeroTooltipManager(this, m_hWnd));
+  tooltip_manager_.reset(new views::AeroTooltipManager(this, m_hWnd));
 }
 
 void VistaFrame::ResetDWMFrame() {
@@ -1438,15 +1435,13 @@ void VistaFrame::SelectedTabToolbarSizeChanged(bool is_animating) {
   }
 }
 
-bool VistaFrame::UpdateChildViewAndLayout(ChromeViews::View* new_view,
-                                          ChromeViews::View** view) {
+bool VistaFrame::UpdateChildViewAndLayout(views::View* new_view,
+                                          views::View** view) {
   DCHECK(view);
   if (*view == new_view) {
     // The views haven't changed, if the views pref changed schedule a layout.
     if (new_view) {
-      CSize pref_size;
-      new_view->GetPreferredSize(&pref_size);
-      if (pref_size.cy != new_view->height())
+      if (new_view->GetPreferredSize().height() != new_view->height())
         return true;
     }
     return false;
@@ -1465,9 +1460,7 @@ bool VistaFrame::UpdateChildViewAndLayout(ChromeViews::View* new_view,
 
   int new_height = 0;
   if (new_view) {
-    CSize preferred_size;
-    new_view->GetPreferredSize(&preferred_size);
-    new_height = preferred_size.cy;
+    new_height = new_view->GetPreferredSize().height();
     root_view_.AddChildView(new_view);
   }
 
@@ -1477,10 +1470,7 @@ bool VistaFrame::UpdateChildViewAndLayout(ChromeViews::View* new_view,
   } else if (new_view && *view) {
     // The view changed, but the new view wants the same size, give it the
     // bounds of the last view and have it repaint.
-    CRect last_bounds;
-    (*view)->GetBounds(&last_bounds);
-    new_view->SetBounds(last_bounds.left, last_bounds.top,
-                        last_bounds.Width(), last_bounds.Height());
+    new_view->SetBounds((*view)->bounds());
     new_view->SchedulePaint();
   } else if (new_view) {
     DCHECK(new_height == 0);
@@ -1533,7 +1523,7 @@ void VistaFrame::ContinueDetachConstrainedWindowDrag(const gfx::Point& mouse_pt,
   // correct. (Otherwise parts of the tabstrip are clipped).
   CRect cr;
   GetClientRect(&cr);
-  PaintNow(cr);
+  PaintNow(gfx::Rect(cr));
 
   // The user's mouse is already moving, and the left button is down, but we
   // need to start moving this frame, so we _post_ it a NCLBUTTONDOWN message
@@ -1608,29 +1598,28 @@ void VistaFrame::DestroyBrowser() {
 
 void VistaFrame::ShelfVisibilityChangedImpl(TabContents* current_tab) {
   // Coalesce layouts.
-  bool changed = false;
-
-  ChromeViews::View* new_shelf = NULL;
+  views::View* new_shelf = NULL;
   if (current_tab && current_tab->IsDownloadShelfVisible())
     new_shelf = current_tab->GetDownloadShelfView();
-  changed |= UpdateChildViewAndLayout(new_shelf, &shelf_view_);
+  needs_layout_ |= UpdateChildViewAndLayout(new_shelf, &shelf_view_);
 
-  ChromeViews::View* new_info_bar = NULL;
-  if (current_tab && current_tab->IsInfoBarVisible())
-    new_info_bar = current_tab->GetInfoBarView();
-  changed |= UpdateChildViewAndLayout(new_info_bar, &info_bar_view_);
+  views::View* new_info_bar = NULL;
+  WebContents* web_contents = current_tab ? current_tab->AsWebContents() : NULL;
+  if (web_contents && web_contents->view()->IsInfoBarVisible())
+    new_info_bar = web_contents->view()->GetInfoBarView();
+  needs_layout_ |= UpdateChildViewAndLayout(new_info_bar, &info_bar_view_);
 
-  ChromeViews::View* new_bookmark_bar_view = NULL;
+  views::View* new_bookmark_bar_view = NULL;
   if (SupportsBookmarkBar())
     new_bookmark_bar_view = GetBookmarkBarView();
-  changed |= UpdateChildViewAndLayout(new_bookmark_bar_view,
-                                      &active_bookmark_bar_);
+  needs_layout_ |= UpdateChildViewAndLayout(new_bookmark_bar_view,
+                                            &active_bookmark_bar_);
 
   // Only do a layout if the current contents is non-null. We assume that if the
   // contents is NULL, we're either being destroyed, or ShowTabContents is going
   // to be invoked with a non-null TabContents again so that there is no need
   // in doing a layout now (and would result in extra work/invalidation on
   // tab switches).
-  if (changed && current_tab)
+  if (needs_layout_ && current_tab)
     Layout();
 }

@@ -11,10 +11,10 @@
 #include <atlframe.h>
 
 #include "base/message_loop.h"
+#include "chrome/views/container.h"
 #include "chrome/views/hwnd_view.h"
-#include "chrome/views/view_container.h"
 
-namespace ChromeViews {
+namespace views {
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -30,7 +30,7 @@ class ScrollBarContainer : public CWindowImpl<ScrollBarContainer,
  public:
   ScrollBarContainer(ScrollBar* parent) : parent_(parent),
                                           scrollbar_(NULL) {
-    Create(parent->GetViewContainer()->GetHWND());
+    Create(parent->GetContainer()->GetHWND());
     ::ShowWindow(m_hWnd, SW_SHOW);
   }
 
@@ -126,7 +126,7 @@ class ScrollBarContainer : public CWindowImpl<ScrollBarContainer,
     // If we receive an event from the scrollbar, make the view
     // component focused so we actually get mousewheel events.
     if (source != NULL) {
-      ViewContainer* vc = parent_->GetViewContainer();
+      Container* vc = parent_->GetContainer();
       if (vc && vc->GetHWND() != GetFocus()) {
         parent_->RequestFocus();
       }
@@ -227,8 +227,8 @@ NativeScrollBar::~NativeScrollBar() {
 
 void NativeScrollBar::ViewHierarchyChanged(bool is_add, View *parent,
                                            View *child) {
-  ViewContainer* vc;
-  if (is_add && (vc = GetViewContainer()) && !sb_view_) {
+  Container* vc;
+  if (is_add && (vc = GetContainer()) && !sb_view_) {
     sb_view_ = new HWNDView();
     AddChildView(sb_view_);
     sb_container_ = new ScrollBarContainer(this);
@@ -238,27 +238,14 @@ void NativeScrollBar::ViewHierarchyChanged(bool is_add, View *parent,
 }
 
 void NativeScrollBar::Layout() {
-  if (sb_view_) {
-    CRect lb;
-    GetLocalBounds(&lb, true);
-    sb_view_->SetBounds(0, 0, lb.Width(), lb.Height());
-  }
+  if (sb_view_)
+    sb_view_->SetBounds(GetLocalBounds(true));
 }
 
-void NativeScrollBar::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
-  Layout();
-}
-
-void NativeScrollBar::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  if (IsHorizontal()) {
-    out->cx = 0;
-    out->cy = GetLayoutSize();
-  } else {
-    out->cx = GetLayoutSize();
-    out->cy = 0;
-  }
+gfx::Size NativeScrollBar::GetPreferredSize() {
+  if (IsHorizontal())
+    return gfx::Size(0, GetLayoutSize());
+  return gfx::Size(GetLayoutSize(), 0);
 }
 
 void NativeScrollBar::Update(int viewport_size, int content_size, int current_pos) {
@@ -363,5 +350,5 @@ int NativeScrollBar::GetVerticalScrollBarWidth() {
   return ::GetSystemMetrics(SM_CXVSCROLL);
 }
 
-}
+}  // namespace views
 

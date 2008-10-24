@@ -54,8 +54,8 @@ SimpleVistaFrame* SimpleVistaFrame::CreateFrame(const gfx::Rect& bounds,
                    l10n_util::GetString(IDS_PRODUCT_NAME).c_str());
   instance->InitAfterHWNDCreated();
   instance->SetIsOffTheRecord(browser->profile()->IsOffTheRecord());
-  ChromeViews::FocusManager::CreateFocusManager(instance->m_hWnd,
-                                                instance->GetRootView());
+  views::FocusManager::CreateFocusManager(instance->m_hWnd,
+                                          instance->GetRootView());
   return instance;
 }
 
@@ -145,7 +145,7 @@ void SimpleVistaFrame::OnNCLButtonDown(UINT flags, const CPoint& pt) {
   if (flags == HTSYSMENU) {
     POINT p = {0, 0};
     ::ClientToScreen(*this, &p);
-    browser_->RunSimpleFrameMenu(p, *this);
+    browser_->RunSimpleFrameMenu(gfx::Point(p.x, p.y), *this);
     SetMsgHandled(true);
   } else {
     SetMsgHandled(false);
@@ -203,12 +203,11 @@ void SimpleVistaFrame::Layout() {
 
   if (browser_->ShouldDisplayURLField()) {
     TabContentsContainerView* container = GetTabContentsContainer();
-    CSize s;
-    location_bar_->GetPreferredSize(&s);
+    gfx::Size s = location_bar_->GetPreferredSize();
     location_bar_->SetBounds(container->x() - kLocationBarOutdent,
                              container->y() - kLocationBarOutdent,
                              container->width() + kLocationBarOutdent * 2,
-                             s.cy);
+                             s.height());
     container->SetBounds(container->x(),
                          location_bar_->y() + location_bar_->height() -
                          kLocationBarSpacing, container->width(),

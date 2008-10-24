@@ -12,7 +12,11 @@
 #include "base/base_drop_target.h"
 #include "chrome/common/os_exchange_data.h"
 
-namespace ChromeViews {
+namespace gfx {
+class Point;
+}
+
+namespace views {
 
 class RootView;
 class View;
@@ -51,7 +55,7 @@ class RootViewDropTarget : public BaseDropTarget {
   // the coordinate system of the rootview. This tries to avoid continually
   // querying CanDrop by returning target_view_ if the mouse is still over
   // target_view_.
-  View* CalculateTargetView(const CPoint& root_view_location,
+  View* CalculateTargetView(const gfx::Point& root_view_location,
                             const OSExchangeData& data);
 
   // RootView we were created for.
@@ -66,7 +70,7 @@ class RootViewDropTarget : public BaseDropTarget {
   DISALLOW_EVIL_CONSTRUCTORS(RootViewDropTarget);
 };
 
-}  // namespace
+}  // namespace views
 
 #endif  // CHROME_VIEWS_ROOT_VIEW_DROP_TARGET_H__
 

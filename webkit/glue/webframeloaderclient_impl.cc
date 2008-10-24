@@ -6,7 +6,9 @@
 #include <string>
 #include <vector>
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "Chrome.h"
 #include "CString.h"
 #include "Document.h"
@@ -25,7 +27,7 @@
 #include "PluginInfoStore.h"
 #include "RefPtr.h"
 #include "WindowFeatures.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #undef LOG
 #include "base/basictypes.h"
@@ -286,16 +288,6 @@ void WebFrameLoaderClient::dispatchDidFinishLoading(DocumentLoader* loader,
   if (d)
     d->DidFinishLoading(webview, identifier);
 }
-
-#if defined(OS_MACOSX)
-// This is TEMPORARY until we can pull this upstream. TODO(avi): do it
-NSCachedURLResponse* WebFrameLoaderClient::willCacheResponse(
-      WebCore::DocumentLoader*,
-      unsigned long identifier,
-      NSCachedURLResponse*) const {
-  return nil;
-}
-#endif
 
 GURL WebFrameLoaderClient::GetAlt404PageUrl(DocumentLoader* loader) {
   WebViewImpl* webview = webframe_->webview_impl();

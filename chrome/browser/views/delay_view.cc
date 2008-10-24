@@ -21,18 +21,17 @@ DelayView::DelayView(const std::wstring& text, CommandController* controller,
       cancel_button_(NULL) {
   DCHECK(controller);
 
-  label_ = new ChromeViews::Label(text);
+  label_ = new views::Label(text);
   AddChildView(label_);
 
   if (show_cancel) {
-    cancel_button_ =
-        new ChromeViews::NativeButton(l10n_util::GetString(IDS_CANCEL));
+    cancel_button_ = new views::NativeButton(l10n_util::GetString(IDS_CANCEL));
     cancel_button_->SetID(ID_CANCEL);
     cancel_button_->SetListener(this);
     AddChildView(cancel_button_);
   }
 
-  throbber_ = new ChromeViews::Throbber(50, true);
+  throbber_ = new views::Throbber(50, true);
   AddChildView(throbber_);
   throbber_->Start();
 }
@@ -40,7 +39,7 @@ DelayView::DelayView(const std::wstring& text, CommandController* controller,
 DelayView::~DelayView() {
 }
 
-void DelayView::ButtonPressed(ChromeViews::NativeButton *sender) {
+void DelayView::ButtonPressed(views::NativeButton *sender) {
   if (sender->GetID() == ID_CANCEL) {
     controller_->ExecuteCommand(IDCANCEL);
   }
@@ -50,40 +49,41 @@ void DelayView::Layout() {
   if (!GetParent())
     return;
 
-  CSize available;
-  GetParent()->GetSize(&available);
+  gfx::Size available = GetParent()->size();
 
   if (cancel_button_) {
-    CSize button_size;
-    cancel_button_->GetPreferredSize(&button_size);
-    cancel_button_->SetBounds(available.cx - kWindowMargin - button_size.cx,
-                              available.cy - kWindowMargin - button_size.cy,
-                              button_size.cx, button_size.cy);
+    gfx::Size button_size = cancel_button_->GetPreferredSize();
+    cancel_button_->SetBounds(available.width() - kWindowMargin -
+                                  button_size.width(),
+                              available.height() - kWindowMargin -
+                                  button_size.height(),
+                              button_size.width(), button_size.height());
   }
 
   DCHECK(label_);
-  CSize label_size;
-  label_->GetPreferredSize(&label_size);
+  gfx::Size label_size = label_->GetPreferredSize();
 
   DCHECK(throbber_);
-  CSize throbber_size;
-  throbber_->GetPreferredSize(&throbber_size);
+  gfx::Size throbber_size = throbber_->GetPreferredSize();
 
-  CRect main_rect(0, 0,
-                  throbber_size.cx + kThrobberLabelSpace + label_size.cx,
-                  std::max(throbber_size.cy, label_size.cy));
+  gfx::Rect main_rect(0, 0,
+                      throbber_size.width() + kThrobberLabelSpace +
+                          label_size.width(),
+                      std::max(throbber_size.height(), label_size.height()));
 
-  main_rect.MoveToXY((available.cx / 2) - (main_rect.Width() / 2),
-                     (available.cy / 2) - (main_rect.Height() / 2));
+  main_rect.set_x((available.width() / 2) - (main_rect.width() / 2));
+  main_rect.set_y((available.height() / 2) - (main_rect.height() / 2));
 
-  label_->SetBounds(main_rect.left + throbber_size.cx + kThrobberLabelSpace,
-                    main_rect.top + main_rect.Height() / 2 - label_size.cy / 2,
-                    label_size.cx,
-                    label_size.cy);
+  label_->SetBounds(main_rect.x() + throbber_size.width() +
+                        kThrobberLabelSpace,
+                    main_rect.y() + main_rect.height() / 2 -
+                        label_size.height() / 2,
+                    label_size.width(),
+                    label_size.height());
 
   throbber_->SetBounds(
-      main_rect.left,
-      main_rect.top + main_rect.Height() / 2 - throbber_size.cy / 2,
-      throbber_size.cx,
-      throbber_size.cy);
+      main_rect.x(),
+      main_rect.y() + main_rect.height() / 2 - throbber_size.height() / 2,
+      throbber_size.width(),
+      throbber_size.height());
 }

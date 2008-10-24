@@ -6,10 +6,12 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "ResourceRequest.h"
 #include "CString.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
 #include "webkit/glue/webplugin_impl.h"
@@ -123,21 +125,21 @@ TEST(WebPluginImplTest, PostParserBodyWithNewLines) {
 }
 
 TEST(WebPluginImplTest, PostParserErrorNoBody) {
-  // Test an error case with headers and no body
+  // Test with headers and no body
   char *ex1 = "Foo:bar\n";
   WebCore::ResourceRequest request;
   bool rv= WebPluginImpl::SetPostData(&request, ex1,
                                       static_cast<uint32>(strlen(ex1)));
-  EXPECT_EQ(false, rv);
+  EXPECT_EQ(true, rv);
 }
 
 TEST(WebPluginImplTest, PostParserErrorEmpty) {
-  // Test an error case with an empty string
+  // Test with an empty string
   char *ex1 = "";
   WebCore::ResourceRequest request;
   bool rv= WebPluginImpl::SetPostData(&request, ex1,
                                       static_cast<uint32>(strlen(ex1)));
-  EXPECT_EQ(false, rv);
+  EXPECT_EQ(true, rv);
 }
 
 TEST(WebPluginImplTest, PostParserEmptyName) {

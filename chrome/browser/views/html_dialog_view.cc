@@ -26,14 +26,16 @@ HtmlDialogView::~HtmlDialogView() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// HtmlDialogView, ChromeViews::View implementation:
+// HtmlDialogView, views::View implementation:
 
-void HtmlDialogView::GetPreferredSize(CSize *out) {
-  delegate_->GetDialogSize(out);
+gfx::Size HtmlDialogView::GetPreferredSize() {
+  CSize out;
+  delegate_->GetDialogSize(&out);
+  return gfx::Size(out.cx, out.cy);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// HtmlDialogView, ChromeViews::WindowDelegate implementation:
+// HtmlDialogView, views::WindowDelegate implementation:
 
 bool HtmlDialogView::CanResize() const {
   return true;
@@ -55,7 +57,7 @@ void HtmlDialogView::WindowClosing() {
     OnDialogClosed("");
 }
 
-ChromeViews::View* HtmlDialogView::GetContentsView() {
+views::View* HtmlDialogView::GetContentsView() {
   return this;
 }
 

@@ -35,6 +35,8 @@ gfx::Point EventSendingController::last_mouse_pos_;
 WebMouseEvent::Button EventSendingController::pressed_button_ = 
     WebMouseEvent::BUTTON_NONE;
 
+int EventSendingController::last_button_number_ = -1;
+
 namespace {
 
 #if defined(OS_WIN)
@@ -149,6 +151,7 @@ void EventSendingController::Reset() {
   dragMode.Set(true);
   last_click_time_sec = 0;
   click_count = 0;
+  last_button_number_ = -1;
 }
 
 /* static */ WebView* EventSendingController::webview() {
@@ -170,19 +173,27 @@ void EventSendingController::Reset() {
 }
 #endif
 
-// static
-WebMouseEvent::Button EventSendingController::GetButtonTypeFromSingleArg(
-    const CppArgumentList& args) {
-  if (args.size() > 0 && args[0].isNumber()) {
-    int button_code = args[0].ToInt32();
-    if (button_code == 1)
-      return WebMouseEvent::BUTTON_MIDDLE;
-    else if (button_code == 2)
-      return WebMouseEvent::BUTTON_RIGHT;
-  }
-  return WebMouseEvent::BUTTON_LEFT;
+WebMouseEvent::Button EventSendingController::GetButtonTypeFromButtonNumber(
+    int button_code) {
+  if (button_code == 0)
+    return WebMouseEvent::BUTTON_LEFT;
+  else if (button_code == 2)
+    return WebMouseEvent::BUTTON_RIGHT;
+
+  return WebMouseEvent::BUTTON_MIDDLE;
 }
 
+// static
+int EventSendingController::GetButtonNumberFromSingleArg(
+    const CppArgumentList& args) {
+  int button_code = 0;
+
+  if (args.size() > 0 && args[0].isNumber()) {
+    button_code = args[0].ToInt32();
+  }
+
+  return button_code;
+}
 //
 // Implemented javascript methods.
 //
@@ -193,14 +204,21 @@ WebMouseEvent::Button EventSendingController::GetButtonTypeFromSingleArg(
 
   webview()->Layout();
 
-  WebMouseEvent::Button button_type = GetButtonTypeFromSingleArg(args);
+  int button_number = GetButtonNumberFromSingleArg(args);
+  DCHECK(button_number != -1);
 
-  if ((GetCurrentEventTimeSec() - last_click_time_sec >= kMultiClickTimeSec) ||
-      outside_multiclick_radius(last_mouse_pos_, last_click_pos)) {
-    click_count = 1;
-  } else {
+  WebMouseEvent::Button button_type = GetButtonTypeFromButtonNumber(
+      button_number);
+
+  if ((GetCurrentEventTimeSec() - last_click_time_sec < kMultiClickTimeSec) &&
+      (!outside_multiclick_radius(last_mouse_pos_, last_click_pos)) &&
+      (button_number == last_button_number_)) {
     ++click_count;
+  } else {
+    click_count = 1;
   }
+
+  last_button_number_ = button_number;
 
   WebMouseEvent event;
   pressed_button_ = button_type;
@@ -215,7 +233,13 @@ WebMouseEvent::Button EventSendingController::GetButtonTypeFromSingleArg(
 
   webview()->Layout();
 
-  WebMouseEvent::Button button_type = GetButtonTypeFromSingleArg(args);
+  int button_number = GetButtonNumberFromSingleArg(args);
+  DCHECK(button_number != -1);
+
+  WebMouseEvent::Button button_type = GetButtonTypeFromButtonNumber(
+      button_number);
+
+  last_button_number_ = button_number;
 
   WebMouseEvent event;
   InitMouseEvent(WebInputEvent::MOUSE_UP, button_type,
@@ -381,7 +405,6 @@ WebMouseEvent::Button EventSendingController::GetButtonTypeFromSingleArg(
     event_down.type = WebInputEvent::KEY_DOWN;
     event_down.modifiers = 0;
     event_down.key_code = code;
-    event_down.key_data = code;
 
     if (args.size() >= 2 && args[1].isObject())
       ApplyKeyModifiers(&(args[1]), &event_down);
@@ -410,30 +433,24 @@ WebMouseEvent::Button EventSendingController::GetButtonTypeFromSingleArg(
         switch(code) {
           case '5':
             event_char.key_code = kPercentVirtualKeyCode;
-            event_char.key_data = kPercentVirtualKeyCode;
             break;
           case '7':
             event_char.key_code = kAmpersandVirtualKeyCode;
-            event_char.key_data = kAmpersandVirtualKeyCode;
             break;
           case '9':
             event_char.key_code = kLeftParenthesesVirtualKeyCode;
-            event_char.key_data = kLeftParenthesesVirtualKeyCode;
             break;
           case '0':
             event_char.key_code = kRightParenthesesVirtualKeyCode;
-            event_char.key_data = kRightParenthesesVirtualKeyCode;
             break;
 #if defined(OS_WIN)
           //  '[{' for US
           case VK_OEM_4:
             event_char.key_code = kLeftCurlyBracketVirtualKeyCode;
-            event_char.key_data = kLeftCurlyBracketVirtualKeyCode;
             break;
           //  ']}' for US
           case VK_OEM_6:
             event_char.key_code = kRightCurlyBracketVirtualKeyCode;
-            event_char.key_data = kRightCurlyBracketVirtualKeyCode;
             break;
 #endif
           default:
@@ -472,13 +489,13 @@ WebMouseEvent::Button EventSendingController::GetButtonTypeFromSingleArg(
 // WebKit/WebView/WebView.mm)
  void EventSendingController::textZoomIn(
     const CppArgumentList& args, CppVariant* result) {
-  webview()->MakeTextLarger();
+  webview()->ZoomIn(true);
   result->SetNull();
 }
 
  void EventSendingController::textZoomOut(
     const CppArgumentList& args, CppVariant* result) {
-  webview()->MakeTextSmaller();
+  webview()->ZoomOut(true);
   result->SetNull();
 }
 

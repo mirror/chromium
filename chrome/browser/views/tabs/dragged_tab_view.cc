@@ -9,7 +9,7 @@
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/views/tabs/hwnd_photobooth.h"
 #include "chrome/browser/views/tabs/tab_renderer.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "skia/include/SkShader.h"
 
 const int kTransparentAlpha = 200;
@@ -38,7 +38,7 @@ DraggedTabView::DraggedTabView(TabContents* datasource,
 
   renderer_->UpdateData(datasource);
 
-  container_ = new ChromeViews::HWNDViewContainer;
+  container_ = new views::ContainerWin;
   container_->set_window_style(WS_POPUP);
   container_->set_window_ex_style(
     WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW);
@@ -63,9 +63,8 @@ void DraggedTabView::MoveTo(const gfx::Point& screen_point) {
     // On RTL locales, a dragged tab (when it is not attached to a tab strip)
     // is rendered using a right-to-left orientation so we should calculate the
     // window position differently.
-    CSize ps;
-    GetPreferredSize(&ps);
-    x = screen_point.x() - ScaleValue(ps.cx) + mouse_tab_offset_.x() +
+    gfx::Size ps = GetPreferredSize();
+    x = screen_point.x() - ScaleValue(ps.width()) + mouse_tab_offset_.x() +
         ScaleValue(
             renderer_->MirroredXCoordinateInsideView(mouse_tab_offset_.x()));
   } else {
@@ -98,7 +97,7 @@ void DraggedTabView::Detach(HWNDPhotobooth* photobooth) {
 void DraggedTabView::Update() {
   container_->set_can_update_layered_window(true);
   SchedulePaint();
-  container_->PaintNow(CRect());
+  container_->PaintNow(gfx::Rect());
   container_->set_can_update_layered_window(false);
 }
 
@@ -107,7 +106,7 @@ void DraggedTabView::AnimateToBounds(const gfx::Rect& bounds,
   animation_callback_.reset(callback);
 
   RECT wr;
-  GetWindowRect(GetViewContainer()->GetHWND(), &wr);
+  GetWindowRect(GetContainer()->GetHWND(), &wr);
   animation_start_bounds_ = wr;
   animation_end_bounds_ = bounds;
 
@@ -139,7 +138,7 @@ void DraggedTabView::AnimationCanceled(const Animation* animation) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// DraggedTabView, ChromeViews::View overrides:
+// DraggedTabView, views::View overrides:
 
 void DraggedTabView::Paint(ChromeCanvas* canvas) {
   if (attached_) {
@@ -150,30 +149,27 @@ void DraggedTabView::Paint(ChromeCanvas* canvas) {
 }
 
 void DraggedTabView::Layout() {
-  CSize ps;
-  GetPreferredSize(&ps);
   if (attached_) {
-    renderer_->SetBounds(CRect(0, 0, ps.cx, ps.cy));
+    gfx::Size prefsize = GetPreferredSize();
+    renderer_->SetBounds(0, 0, prefsize.width(), prefsize.height());
   } else {
     int left = 0;
     if (UILayoutIsRightToLeft())
-      left = ps.cx - attached_tab_size_.width();
-    renderer_->SetBounds(CRect(left, 0, left + attached_tab_size_.width(),
-                               attached_tab_size_.height()));
+      left = GetPreferredSize().width() - attached_tab_size_.width();
+    renderer_->SetBounds(left, 0, left + attached_tab_size_.width(),
+                         attached_tab_size_.height());
   }
 }
 
-void DraggedTabView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  if (attached_) {
-    *out = attached_tab_size_.ToSIZE();
-  } else {
-    int width = std::max(attached_tab_size_.width(), contents_size_.width()) +
-        kTwiceDragFrameBorderSize;
-    int height = attached_tab_size_.height() + kDragFrameBorderSize +
-        contents_size_.height();
-    *out = CSize(width, height);
-  }
+gfx::Size DraggedTabView::GetPreferredSize() {
+  if (attached_)
+    return attached_tab_size_;
+
+  int width = std::max(attached_tab_size_.width(), contents_size_.width()) +
+      kTwiceDragFrameBorderSize;
+  int height = attached_tab_size_.height() + kDragFrameBorderSize +
+      contents_size_.height();
+  return gfx::Size(width, height);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -184,21 +180,20 @@ void DraggedTabView::PaintAttachedTab(ChromeCanvas* canvas) {
 }
 
 void DraggedTabView::PaintDetachedView(ChromeCanvas* canvas) {
-  CSize ps;
-  GetPreferredSize(&ps);
-  ChromeCanvas scale_canvas(ps.cx, ps.cy, false);
+  gfx::Size ps = GetPreferredSize();
+  ChromeCanvas scale_canvas(ps.width(), ps.height(), false);
   SkBitmap& bitmap_device = const_cast<SkBitmap&>(
       scale_canvas.getTopPlatformDevice().accessBitmap(true));
   bitmap_device.eraseARGB(0, 0, 0, 0);
 
   scale_canvas.FillRectInt(kDraggedTabBorderColor, 0,
       attached_tab_size_.height() - kDragFrameBorderSize,
-      ps.cx, ps.cy - attached_tab_size_.height());
+      ps.width(), ps.height() - attached_tab_size_.height());
   int image_x = kDragFrameBorderSize;
   int image_y = attached_tab_size_.height();
-  int image_w = ps.cx - kTwiceDragFrameBorderSize;
+  int image_w = ps.width() - kTwiceDragFrameBorderSize;
   int image_h =
-      ps.cy - kTwiceDragFrameBorderSize - attached_tab_size_.height();
+      ps.height() - kTwiceDragFrameBorderSize - attached_tab_size_.height();
   scale_canvas.FillRectInt(SK_ColorBLACK, image_x, image_y, image_w, image_h);
   photobooth_->PaintScreenshotIntoCanvas(
       &scale_canvas,
@@ -206,7 +201,7 @@ void DraggedTabView::PaintDetachedView(ChromeCanvas* canvas) {
   renderer_->ProcessPaint(&scale_canvas);
 
   SkIRect subset;
-  subset.set(0, 0, ps.cx, ps.cy);
+  subset.set(0, 0, ps.width(), ps.height());
   SkBitmap mipmap = scale_canvas.ExtractBitmap();
   mipmap.buildMipMap(true);
 
@@ -226,16 +221,16 @@ void DraggedTabView::PaintDetachedView(ChromeCanvas* canvas) {
   SkRect rc;
   rc.fLeft = 0;
   rc.fTop = 0;
-  rc.fRight = SkIntToScalar(ps.cx);
-  rc.fBottom = SkIntToScalar(ps.cy);
+  rc.fRight = SkIntToScalar(ps.width());
+  rc.fBottom = SkIntToScalar(ps.height());
   canvas->drawRect(rc, paint);
 }
 
 void DraggedTabView::ResizeContainer() {
-  CSize ps;
-  GetPreferredSize(&ps);
-  SetWindowPos(container_->GetHWND(), HWND_TOPMOST, 0, 0, ScaleValue(ps.cx),
-               ScaleValue(ps.cy), SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
+  gfx::Size ps = GetPreferredSize();
+  SetWindowPos(container_->GetHWND(), HWND_TOPMOST, 0, 0,
+               ScaleValue(ps.width()), ScaleValue(ps.height()),
+               SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
 
 int DraggedTabView::ScaleValue(int value) {

@@ -14,7 +14,7 @@ static int kCheckBoxWidth = 13;
 static int kCheckBoxHeight = 13;
 static int kCheckBoxToLabel = 4;
 
-namespace ChromeViews {
+namespace views {
 
 // Horizontal focus padding.
 const int CheckBox::kFocusPaddingHorizontal = 2;
@@ -27,7 +27,7 @@ CheckBox::CheckBox(const std::wstring& label)
       is_selected_(false) {
   // Note: we paint the label as a floating view
   SetMinSizeFromDLUs(gfx::Size(0, 0));
-  label_ = new ChromeViews::Label(label);
+  label_ = new Label(label);
   label_->SetHorizontalAlignment(Label::ALIGN_LEFT);
 }
 
@@ -61,7 +61,7 @@ std::string CheckBox::GetClassName() const {
 
 void CheckBox::Layout() {
   int label_x = GetTextIndent();
-  label_->SetBounds(label_x, 0, width() - label_x, height());
+  label_->SetBounds(label_x, 0, std::max(0, width() - label_x), height());
   if (hwnd_view_) {
     int first_line_height = label_->GetFont().height();
     hwnd_view_->SetBounds(0, ((first_line_height - kCheckBoxHeight) / 2) + 1,
@@ -71,14 +71,13 @@ void CheckBox::Layout() {
 }
 
 void CheckBox::ComputeTextRect(gfx::Rect* out) {
-  CSize s;
-  label_->GetPreferredSize(&s);
+  gfx::Size s = label_->GetPreferredSize();
   out->set_x(GetTextIndent());
   out->set_y(kFocusPaddingVertical);
   int new_width = std::min(width() - (kCheckBoxWidth + kCheckBoxToLabel),
-                           static_cast<int>(s.cx));
+                           s.width());
   out->set_width(std::max(0, new_width));
-  out->set_height(s.cy);
+  out->set_height(s.height());
 }
 
 void CheckBox::Paint(ChromeCanvas* canvas) {
@@ -119,11 +118,12 @@ void CheckBox::ConfigureNativeButton(HWND hwnd) {
   label_->SetText(GetLabel());
 }
 
-void CheckBox::GetPreferredSize(CSize *out) {
-  label_->GetPreferredSize(out);
-  out->cy = std::max(static_cast<int>(out->cy + kFocusPaddingVertical * 2),
-                     kCheckBoxHeight);
-  out->cx += GetTextIndent() * 2;
+gfx::Size CheckBox::GetPreferredSize() {
+  gfx::Size prefsize = label_->GetPreferredSize();
+  prefsize.set_height(std::max(prefsize.height() + kFocusPaddingVertical * 2,
+                               kCheckBoxHeight));
+  prefsize.Enlarge(GetTextIndent() * 2, 0);
+  return prefsize;
 }
 
 LRESULT CheckBox::OnCommand(UINT code, int id, HWND source) {
@@ -176,5 +176,5 @@ void CheckBox::OnMouseReleased(const MouseEvent& event,
     OnCommand(BN_CLICKED, 0, GetNativeControlHWND());
 }
 
-}
+}  // namespace views
 

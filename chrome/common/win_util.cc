@@ -12,7 +12,7 @@
 #include <shlobj.h>
 
 #include "base/file_util.h"
-#include "base/gfx/bitmap_header.h"
+#include "base/gfx/gdi_util.h"
 #include "base/gfx/png_encoder.h"
 #include "base/logging.h"
 #include "base/registry.h"
@@ -803,6 +803,13 @@ int MessageBox(HWND hwnd,
     caption_ptr = localized_caption.c_str();
 
   return ::MessageBox(hwnd, text_ptr, caption_ptr, actual_flags);
+}
+
+ChromeFont GetWindowTitleFont() {
+  NONCLIENTMETRICS ncm;
+  win_util::GetNonClientMetrics(&ncm);
+  ScopedHFONT caption_font(CreateFontIndirect(&(ncm.lfCaptionFont)));
+  return ChromeFont::CreateFont(caption_font);
 }
 
 }  // namespace win_util

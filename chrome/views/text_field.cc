@@ -20,15 +20,15 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/menu.h"
-#include "chrome/views/view_container.h"
 
 #include "generated_resources.h"
 
 using gfx::NativeTheme;
 
-namespace ChromeViews {
+namespace views {
 
 static const int kDefaultEditStyle = WS_CHILD | WS_VISIBLE;
 
@@ -248,7 +248,7 @@ TextField::Edit::Edit(TextField* parent, bool draw_border)
   DWORD ex_style = l10n_util::GetExtendedStyles();
 
   RECT r = {0, 0, parent_->width(), parent_->height()};
-  Create(parent_->GetViewContainer()->GetHWND(), r, NULL, style, ex_style);
+  Create(parent_->GetContainer()->GetHWND(), r, NULL, style, ex_style);
 
   // Set up the text_object_model_.
   CComPtr<IRichEditOle> ole_interface;
@@ -800,9 +800,9 @@ TextField::~TextField() {
 }
 
 void TextField::ViewHierarchyChanged(bool is_add, View* parent, View* child) {
-  ViewContainer* vc;
+  Container* vc;
 
-  if (is_add && (vc = GetViewContainer())) {
+  if (is_add && (vc = GetContainer())) {
     // This notification is called from the AddChildView call below. Ignore it.
     if (native_view_ && !edit_)
       return;
@@ -839,22 +839,17 @@ void TextField::ViewHierarchyChanged(bool is_add, View* parent, View* child) {
 
 void TextField::Layout() {
   if (native_view_) {
-    CRect lb;
-    GetLocalBounds(&lb, true);
-    native_view_->SetBounds(0, 0, lb.Width(), lb.Height());
+    native_view_->SetBounds(GetLocalBounds(true));
     native_view_->UpdateHWNDBounds();
   }
 }
 
-void TextField::DidChangeBounds(const CRect& previous, const CRect& current) {
-  Layout();
-}
-
-void TextField::GetPreferredSize(CSize *out) {
+gfx::Size TextField::GetPreferredSize() {
   gfx::Insets insets;
   CalculateInsets(&insets);
-  out->cx = default_width_in_chars_ * font_.ave_char_width() + insets.width();
-  out->cy = num_lines_ * font_.height() + insets.height();
+  return gfx::Size(default_width_in_chars_ * font_.ave_char_width() +
+                       insets.width(),
+                   num_lines_ * font_.height() + insets.height());
 }
 
 std::wstring TextField::GetText() const {
@@ -1001,5 +996,5 @@ bool TextField::ShouldLookupAccelerators(const KeyEvent& e) {
   return !win_util::IsNumPadDigit(e.GetCharacter(), e.IsExtendedKey());
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

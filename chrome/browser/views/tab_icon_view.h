@@ -14,7 +14,7 @@ class TabContents;
 // A view to display a tab fav icon or a throbber.
 //
 ////////////////////////////////////////////////////////////////////////////////
-class TabIconView : public ChromeViews::View {
+class TabIconView : public views::View {
  public:
   class TabContentsProvider {
    public:
@@ -39,7 +39,7 @@ class TabIconView : public ChromeViews::View {
 
   // Overriden from View
   virtual void Paint(ChromeCanvas* canvas);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  private:
   void PaintThrobber(ChromeCanvas* canvas);

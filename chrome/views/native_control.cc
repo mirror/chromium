@@ -12,13 +12,13 @@
 #include "base/win_util.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/border.h"
+#include "chrome/views/container.h"
 #include "chrome/views/focus_manager.h"
-#include "chrome/views/view_container.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/background.h"
 #include "base/gfx/native_theme.h"
 
-namespace ChromeViews {
+namespace views {
 
 // Maps to the original WNDPROC for the controller window before we subclassed
 // it.
@@ -36,7 +36,7 @@ class NativeControlContainer : public CWindowImpl<NativeControlContainer,
 
   explicit NativeControlContainer(NativeControl* parent) : parent_(parent),
                                                            control_(NULL) {
-    Create(parent->GetViewContainer()->GetHWND());
+    Create(parent->GetContainer()->GetHWND());
     ::ShowWindow(m_hWnd, SW_SHOW);
   }
 
@@ -199,24 +199,23 @@ void NativeControl::ValidateNativeControl() {
 
 void NativeControl::ViewHierarchyChanged(bool is_add, View *parent,
                                          View *child) {
-  if (is_add && GetViewContainer()) {
+  if (is_add && GetContainer()) {
     ValidateNativeControl();
     Layout();
   }
 }
 
 void NativeControl::Layout() {
-  if (!container_ && GetViewContainer())
+  if (!container_ && GetContainer())
     ValidateNativeControl();
 
   if (hwnd_view_) {
-    CRect lb;
-    GetLocalBounds(&lb, false);
+    gfx::Rect lb = GetLocalBounds(false);
 
-    int x = lb.left;
-    int y = lb.top;
-    int width = lb.Width();
-    int height = lb.Height();
+    int x = lb.x();
+    int y = lb.y();
+    int width = lb.width();
+    int height = lb.height();
     if (fixed_width_ > 0) {
       width = std::min(fixed_width_, width);
       switch (horizontal_alignment_) {
@@ -224,10 +223,10 @@ void NativeControl::Layout() {
           // Nothing to do.
           break;
         case CENTER:
-          x += (lb.Width() - width) / 2;
+          x += (lb.width() - width) / 2;
           break;
         case TRAILING:
-          x = x + lb.Width() - width;
+          x = x + lb.width() - width;
           break;
         default:
           NOTREACHED();
@@ -241,10 +240,10 @@ void NativeControl::Layout() {
           // Nothing to do.
           break;
         case CENTER:
-          y += (lb.Height() - height) / 2;
+          y += (lb.height() - height) / 2;
           break;
         case TRAILING:
-          y = y + lb.Height() - height;
+          y = y + lb.height() - height;
           break;
         default:
           NOTREACHED();
@@ -253,11 +252,6 @@ void NativeControl::Layout() {
 
     hwnd_view_->SetBounds(x, y, width, height);
   }
-}
-
-void NativeControl::DidChangeBounds(const CRect& previous,
-                                    const CRect& current) {
-  Layout();
 }
 
 void NativeControl::Focus() {
@@ -354,5 +348,5 @@ LRESULT CALLBACK NativeControl::NativeControlWndProc(HWND window, UINT message,
                         message, w_param, l_param);
 }
 
-}
+}  // namespace views
 

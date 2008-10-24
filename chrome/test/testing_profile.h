@@ -50,8 +50,12 @@ class TestingProfile : public Profile {
   virtual std::wstring GetPath() {
     return path_;
   }
+  // Sets whether we're off the record. Default is false.
+  void set_off_the_record(bool off_the_record) {
+    off_the_record_ = off_the_record;
+  }
   virtual bool IsOffTheRecord() {
-    return false;
+    return off_the_record_;
   }
   virtual Profile* GetOffTheRecordProfile() {
     return NULL;
@@ -140,6 +144,8 @@ class TestingProfile : public Profile {
   }
   virtual void ResetTabRestoreService() {
   }
+  virtual void InitializeSpellChecker() {
+  }
   virtual SpellChecker* GetSpellChecker() {
     return NULL;
   }
@@ -147,7 +153,8 @@ class TestingProfile : public Profile {
   }
 
 #ifdef CHROME_PERSONALIZATION
-  virtual ProfilePersonalization GetProfilePersonalization() {
+  virtual ProfilePersonalization* GetProfilePersonalization() {
+    return NULL;
   }
 #endif
 
@@ -177,6 +184,8 @@ class TestingProfile : public Profile {
   bool has_history_service_;
 
   std::wstring id_;
+
+  bool off_the_record_;
 };
 
 #endif  // CHROME_TEST_TESTING_PROFILE_H__

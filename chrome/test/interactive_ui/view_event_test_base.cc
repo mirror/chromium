@@ -12,16 +12,20 @@
 namespace {
 
 // View subclass that allows you to specify the preferred size.
-class TestView : public ChromeViews::View {
+class TestView : public views::View {
  public:
   TestView() {}
 
   void set_preferred_size(const gfx::Size& size) { preferred_size_ = size; }
-  void GetPreferredSize(CSize* out) {
+  gfx::Size GetPreferredSize() {
     if (!preferred_size_.IsEmpty())
-      *out = preferred_size_.ToSIZE();
-    else
-      View::GetPreferredSize(out);
+      return preferred_size_;
+    return View::GetPreferredSize();
+  }
+
+  virtual void Layout() {
+    View* child_view = GetChildViewAt(0);
+    child_view->SetBounds(0, 0, width(), height());
   }
 
  private:
@@ -48,7 +52,7 @@ ViewEventTestBase::ViewEventTestBase() : window_(NULL), content_view_(NULL) { }
 
 void ViewEventTestBase::SetUp() {
   OleInitialize(NULL);
-  window_ = ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), this);
+  window_ = views::Window::CreateChromeWindow(NULL, gfx::Rect(), this);
 }
 
 void ViewEventTestBase::TearDown() {
@@ -59,12 +63,11 @@ void ViewEventTestBase::TearDown() {
   OleUninitialize();
 }
 
-ChromeViews::View* ViewEventTestBase::GetContentsView() {
+views::View* ViewEventTestBase::GetContentsView() {
   if (!content_view_) {
     // Wrap the real view (as returned by CreateContentsView) in a View so
     // that we can customize the preferred size.
     TestView* test_view = new TestView();
-    test_view->SetLayoutManager(new ChromeViews::FillLayout());
     test_view->set_preferred_size(GetPreferredSize());
     test_view->AddChildView(CreateContentsView());
     content_view_ = test_view;

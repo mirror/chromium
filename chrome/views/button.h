@@ -8,7 +8,7 @@
 #include "chrome/views/base_button.h"
 #include "skia/include/SkBitmap.h"
 
-namespace ChromeViews {
+namespace views {
 
 class MouseEvent;
 
@@ -43,7 +43,7 @@ class Button : public BaseButton {
 
   //
   // Computes the minimum size given the current theme and graphics
-  void GetPreferredSize(CSize *result);
+  gfx::Size GetPreferredSize();
 
   // Returns the MSAA default action of the current view. The string returned
   // describes the default action that will occur when executing
@@ -128,7 +128,7 @@ class ToggleButton : public Button {
   DISALLOW_EVIL_CONSTRUCTORS(ToggleButton);
 };
 
-}  // namespace
+}  // namespace views
 
 #endif  // CHROME_VIEWS_BUTTON_H_
 

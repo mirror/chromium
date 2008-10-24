@@ -12,9 +12,9 @@
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/views/root_view_drop_target.h"
-#include "chrome/views/view_container.h"
+#include "chrome/views/container.h"
 
-namespace ChromeViews {
+namespace views {
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -51,9 +51,8 @@ const char RootView::kViewClassName[] = "chrome/views/RootView";
 //
 /////////////////////////////////////////////////////////////////////////////
 
-RootView::RootView(ViewContainer* view_container)
-  : view_container_(view_container),
-    invalid_rect_(0,0,0,0),
+RootView::RootView(Container* container)
+  : container_(container),
     mouse_pressed_handler_(NULL),
     mouse_move_handler_(NULL),
     explicit_mouse_handler_(FALSE),
@@ -91,14 +90,14 @@ RootView::~RootView() {
 //
 /////////////////////////////////////////////////////////////////////////////
 
-void RootView::SchedulePaint(const CRect& r, bool urgent) {
+void RootView::SchedulePaint(const gfx::Rect& r, bool urgent) {
   // If there is an existing invalid rect, add the union of the scheduled
   // rect with the invalid rect. This could be optimized further if
   // necessary.
-  if (invalid_rect_.IsRectNull())
+  if (invalid_rect_.IsEmpty())
     invalid_rect_ = r;
   else
-    invalid_rect_.UnionRect(invalid_rect_, r);
+    invalid_rect_ = invalid_rect_.Union(r);
 
   if (urgent || invalid_rect_urgent_) {
     invalid_rect_urgent_ = true;
@@ -146,9 +145,9 @@ void RootView::ProcessPaint(ChromeCanvas* canvas) {
 
   // Clip the invalid rect to our bounds. If a view is in a scrollview
   // it could be a lot larger
-  invalid_rect_ = GetScheduledPaintRectConstrainedToSize();
+  invalid_rect_ = gfx::Rect(GetScheduledPaintRectConstrainedToSize());
 
-  if (invalid_rect_.IsRectNull())
+  if (invalid_rect_.IsEmpty())
     return;
 
   // Clear the background.
@@ -158,9 +157,10 @@ void RootView::ProcessPaint(ChromeCanvas* canvas) {
   canvas->save();
 
   // Set the clip rect according to the invalid rect.
-  int clip_x = invalid_rect_.left + x();
-  int clip_y = invalid_rect_.top + y();
-  canvas->ClipRectInt(clip_x, clip_y, invalid_rect_.Width(), invalid_rect_.Height());
+  int clip_x = invalid_rect_.x() + x();
+  int clip_y = invalid_rect_.y() + y();
+  canvas->ClipRectInt(clip_x, clip_y, invalid_rect_.width(),
+                      invalid_rect_.height());
 
   // Paint the tree
   View::ProcessPaint(canvas);
@@ -178,13 +178,13 @@ void RootView::PaintNow() {
   }
   if (!paint_task_needed_)
     return;
-  ViewContainer* vc = GetViewContainer();
+  Container* vc = GetContainer();
   if (vc)
     vc->PaintNow(invalid_rect_);
 }
 
 bool RootView::NeedsPainting(bool urgent) {
-  bool has_invalid_rect = !invalid_rect_.IsRectNull();
+  bool has_invalid_rect = !invalid_rect_.IsEmpty();
   if (urgent) {
     if (invalid_rect_urgent_)
       return has_invalid_rect;
@@ -195,19 +195,15 @@ bool RootView::NeedsPainting(bool urgent) {
   }
 }
 
-const CRect& RootView::GetScheduledPaintRect() {
+const gfx::Rect& RootView::GetScheduledPaintRect() {
   return invalid_rect_;
 }
 
-CRect RootView::GetScheduledPaintRectConstrainedToSize() {
-  if (invalid_rect_.IsRectEmpty())
-    return invalid_rect_;
+RECT RootView::GetScheduledPaintRectConstrainedToSize() {
+  if (invalid_rect_.IsEmpty())
+    return invalid_rect_.ToRECT();
 
-  CRect local_bounds;
-  GetLocalBounds(&local_bounds, true);
-  CRect invalid_rect;
-  invalid_rect.IntersectRect(&invalid_rect_, &local_bounds);
-  return invalid_rect;
+  return invalid_rect_.Intersect(GetLocalBounds(true)).ToRECT();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -216,8 +212,8 @@ CRect RootView::GetScheduledPaintRectConstrainedToSize() {
 //
 /////////////////////////////////////////////////////////////////////////////
 
-ViewContainer* RootView::GetViewContainer() const {
-  return view_container_;
+Container* RootView::GetContainer() const {
+  return container_;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -278,7 +274,7 @@ bool RootView::OnMousePressed(const MouseEvent& e) {
 
   bool hit_disabled_view = false;
   // Walk up the tree until we find a view that wants the mouse event.
-  for (mouse_pressed_handler_ = GetViewForPoint(WTL::CPoint(e.x(), e.y()));
+  for (mouse_pressed_handler_ = GetViewForPoint(e.location());
        mouse_pressed_handler_ && (mouse_pressed_handler_ != this);
        mouse_pressed_handler_ = mouse_pressed_handler_->GetParent()) {
     if (!mouse_pressed_handler_->IsEnabled()) {
@@ -315,7 +311,7 @@ bool RootView::OnMousePressed(const MouseEvent& e) {
   mouse_pressed_handler_ = NULL;
 
   if (focus_on_mouse_pressed_) {
-    HWND hwnd = view_container_->GetHWND();
+    HWND hwnd = container_->GetHWND();
     if (::GetFocus() != hwnd) {
       ::SetFocus(hwnd);
     }
@@ -323,14 +319,15 @@ bool RootView::OnMousePressed(const MouseEvent& e) {
   return hit_disabled_view;
 }
 
-bool RootView::ConvertPointToMouseHandler(const CPoint &l, CPoint *p) {
+bool RootView::ConvertPointToMouseHandler(const gfx::Point& l,
+                                          gfx::Point* p) {
   //
   // If the mouse_handler was set explicitly, we need to keep
   // sending events even if it was reparented in a different
   // window. (a non explicit mouse handler is automatically
   // cleared when the control is removed from the hierarchy)
   if (explicit_mouse_handler_) {
-    if (mouse_pressed_handler_->GetViewContainer()) {
+    if (mouse_pressed_handler_->GetContainer()) {
       *p = l;
       ConvertPointToScreen(this, p);
       ConvertPointToView(NULL, mouse_pressed_handler_, p);
@@ -354,9 +351,9 @@ bool RootView::OnMouseDragged(const MouseEvent& e) {
   if (mouse_pressed_handler_) {
     SetMouseLocationAndFlags(e);
 
-    CPoint p;
-    ConvertPointToMouseHandler(WTL::CPoint(e.x(), e.y()), &p);
-    MouseEvent mouse_event(e.GetType(), p.x, p.y, e.GetFlags());
+    gfx::Point p;
+    ConvertPointToMouseHandler(e.location(), &p);
+    MouseEvent mouse_event(e.GetType(), p.x(), p.y(), e.GetFlags());
     if (!mouse_pressed_handler_->ProcessMouseDragged(mouse_event,
                                                      &drag_info)) {
       mouse_pressed_handler_ = NULL;
@@ -372,9 +369,9 @@ void RootView::OnMouseReleased(const MouseEvent& e, bool canceled) {
   UpdateCursor(e);
 
   if (mouse_pressed_handler_) {
-    CPoint p;
-    ConvertPointToMouseHandler(WTL::CPoint(e.x(), e.y()), &p);
-    MouseEvent mouse_released(e.GetType(), p.x, p.y, e.GetFlags());
+    gfx::Point p;
+    ConvertPointToMouseHandler(e.location(), &p);
+    MouseEvent mouse_released(e.GetType(), p.x(), p.y(), e.GetFlags());
     // We allow the view to delete us from ProcessMouseReleased. As such,
     // configure state such that we're done first, then call View.
     View* mouse_pressed_handler = mouse_pressed_handler_;
@@ -386,12 +383,12 @@ void RootView::OnMouseReleased(const MouseEvent& e, bool canceled) {
 }
 
 void RootView::UpdateCursor(const MouseEvent& e) {
-  View *v = GetViewForPoint(WTL::CPoint(e.x(), e.y()));
+  View *v = GetViewForPoint(e.location());
 
   if (v && v != this) {
-    CPoint l(e.x(), e.y());
+    gfx::Point l(e.location());
     View::ConvertPointToView(this, v, &l);
-    HCURSOR cursor = v->GetCursorForPoint(e.GetType(), l.x, l.y);
+    HCURSOR cursor = v->GetCursorForPoint(e.GetType(), l.x(), l.y());
     if (cursor) {
       ::SetCursor(cursor);
       return;
@@ -403,7 +400,7 @@ void RootView::UpdateCursor(const MouseEvent& e) {
 }
 
 void RootView::OnMouseMoved(const MouseEvent& e) {
-  View *v = GetViewForPoint(WTL::CPoint(e.x(), e.y()));
+  View *v = GetViewForPoint(e.location());
   // Find the first enabled view.
   while (v && !v->IsEnabled())
     v = v->GetParent();
@@ -462,17 +459,17 @@ void RootView::SetMouseHandler(View *new_mh) {
   mouse_pressed_handler_ = new_mh;
 }
 
-void RootView::OnViewContainerCreated() {
+void RootView::OnContainerCreated() {
   DCHECK(!drop_target_.get());
   drop_target_ = new RootViewDropTarget(this);
 }
 
-void RootView::OnViewContainerDestroyed() {
+void RootView::OnContainerDestroyed() {
   if (drop_target_.get()) {
-    RevokeDragDrop(GetViewContainer()->GetHWND());
+    RevokeDragDrop(GetContainer()->GetHWND());
     drop_target_ = NULL;
   }
-  view_container_ = NULL;
+  container_ = NULL;
 }
 
 void RootView::ProcessMouseDragCanceled() {
@@ -492,7 +489,7 @@ void RootView::FocusView(View* view) {
   if (view != GetFocusedView()) {
     FocusManager* focus_manager = GetFocusManager();
     DCHECK(focus_manager) << "No Focus Manager for Window " <<
-        (GetViewContainer() ? GetViewContainer()->GetHWND() : 0);
+        (GetContainer() ? GetContainer()->GetHWND() : 0);
     if (!focus_manager)
       return;
 
@@ -889,7 +886,7 @@ std::string RootView::GetClassName() const {
 }
 
 void RootView::ClearPaintRect() {
-  invalid_rect_.SetRectEmpty();
+  invalid_rect_.SetRect(0, 0, 0, 0);
 
   // This painting has been done. Reset the urgent flag.
   invalid_rect_urgent_ = false;
@@ -899,9 +896,8 @@ void RootView::ClearPaintRect() {
 }
 
 void RootView::OnPaint(HWND hwnd) {
-  CRect original_dirty_region =
-        GetScheduledPaintRectConstrainedToSize();
-  if (!original_dirty_region.IsRectEmpty()) {
+  RECT original_dirty_region = GetScheduledPaintRectConstrainedToSize();
+  if (!!IsRectEmpty(&original_dirty_region)) {
     // Invoke InvalidateRect so that the dirty region of the window includes the
     // region we need to paint. If we didn't do this and the region didn't
     // include the dirty region, ProcessPaint would incorrectly mark everything
@@ -912,7 +908,7 @@ void RootView::OnPaint(HWND hwnd) {
   ChromeCanvasPaint canvas(hwnd);
   if (!canvas.isEmpty()) {
     const PAINTSTRUCT& ps = canvas.paintStruct();
-    SchedulePaint(ps.rcPaint, false);
+    SchedulePaint(gfx::Rect(ps.rcPaint), false);
     if (NeedsPainting(false))
       ProcessPaint(&canvas);
   }
@@ -966,5 +962,5 @@ View* RootView::GetDragView() {
   return drag_view_;
 }
 
-}
+}  // namespace views
 

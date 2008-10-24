@@ -19,17 +19,17 @@
 
 MSVC_PUSH_WARNING_LEVEL(0);
 #include "webkit/port/history/BackForwardList.h"
-#include "webkit/port/platform/WidgetClientWin.h"
+#include "webkit/port/platform/chromium/WidgetClientChromium.h"
 MSVC_POP_WARNING();
 
 namespace WebCore {
-  class Frame;
-  class HistoryItem;
-  class KeyboardEvent;
-  class Page;
-  class PlatformKeyboardEvent;
-  class Range;
-  class Widget;
+class Frame;
+class HistoryItem;
+class KeyboardEvent;
+class Page;
+class PlatformKeyboardEvent;
+class Range;
+class Widget;
 }
 
 class ImageResourceFetcher;
@@ -42,7 +42,7 @@ class WebMouseWheelEvent;
 class WebViewDelegate;
 
 class WebViewImpl : public WebView,
-                    public WebCore::WidgetClientWin,
+                    public WebCore::WidgetClientChromium,
                     public WebCore::BackForwardListClient {
  public:
   // WebView
@@ -81,9 +81,9 @@ class WebViewImpl : public WebView,
   virtual const WebPreferences& GetPreferences();
   virtual void SetPageEncoding(const std::wstring& encoding_name);
   virtual std::wstring GetMainFrameEncodingName();
-  virtual void MakeTextLarger();
-  virtual void MakeTextSmaller();
-  virtual void MakeTextStandardSize();
+  virtual void ZoomIn(bool text_only);
+  virtual void ZoomOut(bool text_only);
+  virtual void ResetZoom();
   virtual void CopyImageAt(int x, int y);
   virtual void InspectElement(int x, int y);
   virtual void ShowJavaScriptConsole();
@@ -203,6 +203,7 @@ class WebViewImpl : public WebView,
   virtual const WTF::Vector<RefPtr<WebCore::Range> >* getTickmarks(
       WebCore::Frame* frame);
   virtual size_t getActiveTickmarkIndex(WebCore::Frame* frame);
+  virtual bool isHidden();
 
   // WebCore::BackForwardListClient
   virtual void didAddHistoryItem(WebCore::HistoryItem* item);
@@ -274,8 +275,8 @@ class WebViewImpl : public WebView,
   gfx::Point last_mouse_down_point_;
 
   // Keeps track of the current text zoom level.  0 means no zoom, positive
-  // values mean larger text, negative numbers mean smaller text.
-  int text_zoom_level_;
+  // values mean larger text, negative numbers mean smaller.
+  int zoom_level_;
 
   bool context_menu_allowed_;
 

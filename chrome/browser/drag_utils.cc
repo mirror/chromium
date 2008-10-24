@@ -9,7 +9,7 @@
 #include <shobjidl.h>
 
 #include "base/file_util.h"
-#include "base/gfx/bitmap_header.h"
+#include "base/gfx/gdi_util.h"
 #include "base/gfx/point.h"
 #include "base/string_util.h"
 #include "chrome/app/theme/theme_resources.h"
@@ -140,8 +140,7 @@ void SetURLAndDragImage(const GURL& url,
   data->SetURL(url, title);
 
   // Create a button to render the drag image for us.
-  ChromeViews::TextButton button(
-      title.empty() ? UTF8ToWide(url.spec()) : title);
+  views::TextButton button(title.empty() ? UTF8ToWide(url.spec()) : title);
   button.set_max_width(BookmarkBarView::kMaxButtonWidth);
   if (icon.isNull()) {
     button.SetIcon(*ResourceBundle::GetSharedInstance().GetBitmapNamed(
@@ -149,14 +148,14 @@ void SetURLAndDragImage(const GURL& url,
   } else {
     button.SetIcon(icon);
   }
-  CSize pref;
-  button.GetPreferredSize(&pref);
-  button.SetBounds(0, 0, pref.cx, pref.cy);
+  gfx::Size prefsize = button.GetPreferredSize();
+  button.SetBounds(0, 0, prefsize.width(), prefsize.height());
 
   // Render the image.
-  ChromeCanvas canvas(pref.cx, pref.cy, false);
+  ChromeCanvas canvas(prefsize.width(), prefsize.height(), false);
   button.Paint(&canvas, true);
-  SetDragImageOnDataObject(canvas, pref.cx, pref.cy, pref.cx / 2, pref.cy / 2,
+  SetDragImageOnDataObject(canvas, prefsize.width(), prefsize.height(),
+                           prefsize.width() / 2, prefsize.height() / 2,
                            data);
 }
 

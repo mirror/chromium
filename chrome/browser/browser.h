@@ -89,10 +89,6 @@ class Browser : public TabStripModelDelegate,
   static void RegisterPrefs(PrefService* prefs);
   static void RegisterUserPrefs(PrefService* prefs);
 
-  // Initialize the receiver with the provided bounds which
-  // is in the screen coordinate system.
-  void InitWithBounds(CRect* bounds, int show_command);
-
   void GoBack();
   void GoForward();
   void Stop();
@@ -104,19 +100,13 @@ class Browser : public TabStripModelDelegate,
 
   // Opens the FindInPage window for the currently open tab.
   void OpenFindInPageWindow();
-  // Becomes the parent window of the Find window of the specified tab. This is
-  // useful, for example, when tabs are dragged out of (or in to) the tab strip
-  // to make sure the Find window shows up in the right Browser window.
-  void AdoptFindWindow(TabContents* tab_contents);
 
   // debugger shell
   void OpenDebuggerWindow();
 
   // Advance the find selection by one. Direction is either forward or backwards
-  // depending on parameter passed in. If selection cannot be advanced (for
-  // example because no search has been issued, then the function returns false
-  // and caller can call OpenFindInPageWindow to show the search window.
-  bool AdvanceFindSelection(bool forward_direction);
+  // depending on parameter passed in.
+  void AdvanceFindSelection(bool forward_direction);
 
   Profile* profile() const { return profile_; }
 
@@ -247,7 +237,7 @@ class Browser : public TabStripModelDelegate,
       PageTransition::Type transition,
       bool defer_load,
       SiteInstance* instance) const;
-  virtual void ShowApplicationMenu(const gfx::Point p);
+  virtual void ShowApplicationMenu(const gfx::Point& p);
   virtual bool CanDuplicateContentsAt(int index);
   virtual void DuplicateContentsAt(int index);
   virtual void ValidateLoadingAnimations();
@@ -308,7 +298,7 @@ class Browser : public TabStripModelDelegate,
 
   // Invoke the menu we use for application and popup windows at the provided
   // point and for the provided hwnd.
-  void RunSimpleFrameMenu(const CPoint& pt, HWND hwnd);
+  void RunSimpleFrameMenu(const gfx::Point& pt, HWND hwnd);
 
   // Show some native UI given a URL. If a tab with the same URL is already
   // visible in this browser, it becomes selected. Otherwise a new tab is
@@ -387,7 +377,7 @@ class Browser : public TabStripModelDelegate,
   void CloseFrame();
 
   // Returns the root view for this browser.
-  ChromeViews::RootView* GetRootView() const;
+  views::RootView* GetRootView() const;
 
   // Returns what the user's home page is, or the new tab page if the home page
   // has not been set.
@@ -535,6 +525,8 @@ class Browser : public TabStripModelDelegate,
   //
   // After the first call to Show() succeeds, this is set to -1, indicating that
   // subsequent calls to Show() should be ignored.
+  // TODO(beng): This should be removed (http://crbug.com/3557) and put into
+  //             BrowserView2, or some more likely place.
   int initial_show_command_;
 
   class BrowserToolbarModel : public ToolbarModel {

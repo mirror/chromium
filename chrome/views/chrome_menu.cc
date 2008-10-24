@@ -21,9 +21,12 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/views/border.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/root_view.h"
 #include "generated_resources.h"
+
+#undef min
+#undef max
 
 // Margins between the top of the item and the label.
 static const int kItemTopMargin = 3;
@@ -95,7 +98,7 @@ static bool render_gutter = false;
 
 // Max width of a menu. There does not appear to be an OS value for this, yet
 // both IE and FF restrict the max width of a menu.
-static const LONG kMaxMenuWidth = 400;
+static const int kMaxMenuWidth = 400;
 
 // Period of the scroll timer (in milliseconds).
 static const int kScrollTimerMS = 30;
@@ -108,7 +111,7 @@ static bool show_mnemonics;
 
 using gfx::NativeTheme;
 
-namespace ChromeViews {
+namespace views {
 
 // Calculates all sizes that we can from the OS.
 //
@@ -167,11 +170,9 @@ void UpdateMenuPartSizes() {
 
   ReleaseDC(NULL, dc);
 
-  CSize pref;
   MenuItemView menu_item(NULL);
   menu_item.SetTitle(L"blah");  // Text doesn't matter here.
-  menu_item.GetPreferredSize(&pref);
-  pref_menu_height = pref.cy;
+  pref_menu_height = menu_item.GetPreferredSize().height();
 }
 
 namespace {
@@ -279,9 +280,8 @@ class MenuScrollButton : public View {
         pref_height_(pref_menu_height) {
   }
 
-  virtual void GetPreferredSize(CSize* out) {
-    out->cx = kScrollArrowHeight * 2 - 1;
-    out->cy = pref_height_;
+  virtual gfx::Size GetPreferredSize() {
+    return gfx::Size(kScrollArrowHeight * 2 - 1, pref_height_);
   }
 
   virtual bool CanDrop(const OSExchangeData& data) {
@@ -367,10 +367,9 @@ class MenuScrollView : public View {
     View* child = GetContents();
     // Convert y to view's coordinates.
     y -= child->y();
-    CSize pref;
-    child->GetPreferredSize(&pref);
+    gfx::Size pref = child->GetPreferredSize();
     // Constrain y to make sure we don't show past the bottom of the view.
-    y = std::max(0, std::min(static_cast<int>(pref.cy) - this->height(), y));
+    y = std::max(0, std::min(pref.height() - this->height(), y));
     child->SetY(-y);
   }
 
@@ -428,34 +427,33 @@ class MenuScrollViewContainer : public View {
       return;
     }
 
-    CSize pref;
-    scroll_up_button_->GetPreferredSize(&pref);
-    scroll_up_button_->SetBounds(x, y, width, pref.cy);
-    content_height -= pref.cy;
+    gfx::Size pref = scroll_up_button_->GetPreferredSize();
+    scroll_up_button_->SetBounds(x, y, width, pref.height());
+    content_height -= pref.height();
 
-    const int scroll_view_y = y + pref.cy;
+    const int scroll_view_y = y + pref.height();
 
-    scroll_down_button_->GetPreferredSize(&pref);
-    scroll_down_button_->SetBounds(x, height() - pref.cy - insets.top(),
-                                   width, pref.cy);
-    content_height -= pref.cy;
+    pref = scroll_down_button_->GetPreferredSize();
+    scroll_down_button_->SetBounds(x, height() - pref.height() - insets.top(),
+                                   width, pref.height());
+    content_height -= pref.height();
 
     scroll_view_->SetBounds(x, scroll_view_y, width, content_height);
     scroll_view_->Layout();
   }
 
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current) {
-    CSize content_pref;
-    scroll_view_->GetContents()->GetPreferredSize(&content_pref);
-    scroll_up_button_->SetVisible(content_pref.cy > height());
-    scroll_down_button_->SetVisible(content_pref.cy > height());
+  virtual void DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current) {
+    gfx::Size content_pref = scroll_view_->GetContents()->GetPreferredSize();
+    scroll_up_button_->SetVisible(content_pref.height() > height());
+    scroll_down_button_->SetVisible(content_pref.height() > height());
   }
 
-  virtual void GetPreferredSize(CSize* out) {
-    scroll_view_->GetContents()->GetPreferredSize(out);
+  virtual gfx::Size GetPreferredSize() {
+    gfx::Size prefsize = scroll_view_->GetContents()->GetPreferredSize();
     gfx::Insets insets = GetInsets();
-    out->cx += insets.width();
-    out->cy += insets.height();
+    prefsize.Enlarge(insets.width(), insets.height());
+    return prefsize;
   }
 
  private:
@@ -500,9 +498,9 @@ class MenuSeparator : public View {
     canvas->endPlatformPaint();
   }
 
-  void GetPreferredSize(CSize* out) {
-    out->cx = 10; // Just in case we're the only item in a menu.
-    out->cy = separator_height;
+  gfx::Size GetPreferredSize() {
+    return gfx::Size(10, // Just in case we're the only item in a menu.
+                     separator_height);
   }
 
  private:
@@ -520,7 +518,7 @@ class MenuSeparator : public View {
 
 class MenuHostRootView : public RootView {
  public:
-  explicit MenuHostRootView(ViewContainer* container,
+  explicit MenuHostRootView(Container* container,
                             SubmenuView* submenu)
       : RootView(container),
         submenu_(submenu),
@@ -626,7 +624,7 @@ class MenuHostRootView : public RootView {
 // DelayedClosed, which avoids timing issues with deleting the window while
 // capture or events are directed at it.
 
-class MenuHost : public HWNDViewContainer {
+class MenuHost : public ContainerWin {
  public:
   MenuHost(SubmenuView* submenu)
       : closed_(false),
@@ -650,7 +648,7 @@ class MenuHost : public HWNDViewContainer {
             const gfx::Rect& bounds,
             View* contents_view,
             bool do_capture) {
-    HWNDViewContainer::Init(parent, bounds, true);
+    ContainerWin::Init(parent, bounds, true);
     SetContentsView(contents_view);
     // We don't want to take focus away from the hosting window.
     ShowWindow(SW_SHOWNA);
@@ -677,11 +675,11 @@ class MenuHost : public HWNDViewContainer {
     GetRootView()->RemoveAllChildViews(false);
     closed_ = true;
     ReleaseCapture();
-    HWNDViewContainer::Hide();
+    ContainerWin::Hide();
   }
 
   virtual void OnCaptureChanged(HWND hwnd) {
-    HWNDViewContainer::OnCaptureChanged(hwnd);
+    ContainerWin::OnCaptureChanged(hwnd);
     owns_capture_ = false;
 #ifdef DEBUG_MENU
     DLOG(INFO) << "Capture changed";
@@ -802,9 +800,7 @@ void SubmenuView::Layout() {
   View* parent = GetParent();
   if (!parent)
     return;
-  CSize pref;
-  GetPreferredSize(&pref);
-  SetBounds(x(), y(), parent->width(), pref.cy);
+  SetBounds(x(), y(), parent->width(), GetPreferredSize().height());
 
   gfx::Insets insets = GetInsets();
   int x = insets.left();
@@ -812,33 +808,30 @@ void SubmenuView::Layout() {
   int menu_item_width = width() - insets.width();
   for (int i = 0; i < GetChildViewCount(); ++i) {
     View* child = GetChildViewAt(i);
-    CSize child_pref_size;
-    child->GetPreferredSize(&child_pref_size);
-    child->SetBounds(x, y, menu_item_width, child_pref_size.cy);
-    y += child_pref_size.cy;
+    gfx::Size child_pref_size = child->GetPreferredSize();
+    child->SetBounds(x, y, menu_item_width, child_pref_size.height());
+    y += child_pref_size.height();
   }
 }
 
-void SubmenuView::GetPreferredSize(CSize* out) {
-  if (GetChildViewCount() == 0) {
-    out->SetSize(0, 0);
-    return;
-  }
+gfx::Size SubmenuView::GetPreferredSize() {
+  if (GetChildViewCount() == 0)
+    return gfx::Size();
 
   int max_width = 0;
   int height = 0;
   for (int i = 0; i < GetChildViewCount(); ++i) {
     View* child = GetChildViewAt(i);
-    CSize child_pref_size;
-    child->GetPreferredSize(&child_pref_size);
-    max_width = std::max(max_width, static_cast<int>(child_pref_size.cx));
-    height += child_pref_size.cy;
+    gfx::Size child_pref_size = child->GetPreferredSize();
+    max_width = std::max(max_width, child_pref_size.width());
+    height += child_pref_size.height();
   }
   gfx::Insets insets = GetInsets();
-  out->SetSize(max_width + insets.width(), height + insets.height());
+  return gfx::Size(max_width + insets.width(), height + insets.height());
 }
 
-void SubmenuView::DidChangeBounds(const CRect& previous, const CRect& current) {
+void SubmenuView::DidChangeBounds(const gfx::Rect& previous,
+                                  const gfx::Rect& current) {
   SchedulePaint();
 }
 
@@ -1016,9 +1009,7 @@ gfx::Rect SubmenuView::CalculateDropIndicatorBounds(
     MenuItemView* item,
     MenuDelegate::DropPosition position) {
   DCHECK(position != MenuDelegate::DROP_NONE);
-  CRect item_bounds_c;
-  item->GetBounds(&item_bounds_c);
-  gfx::Rect item_bounds(item_bounds_c);
+  gfx::Rect item_bounds = item->bounds();
   switch (position) {
     case MenuDelegate::DROP_BEFORE:
       item_bounds.Offset(0, -kDropIndicatorHeight / 2);
@@ -1167,9 +1158,10 @@ void MenuItemView::Paint(ChromeCanvas* canvas) {
   Paint(canvas, false);
 }
 
-void MenuItemView::GetPreferredSize(CSize* out) {
-  out->cx = font_.GetStringWidth(title_) + label_start + item_right_margin;
-  out->cy = font_.height() + kItemBottomMargin + kItemTopMargin;
+gfx::Size MenuItemView::GetPreferredSize() {
+  return gfx::Size(
+      font_.GetStringWidth(title_) + label_start + item_right_margin,
+      font_.height() + kItemBottomMargin + kItemTopMargin);
 }
 
 MenuController* MenuItemView::GetMenuController() {
@@ -1730,17 +1722,17 @@ void MenuController::OnMouseDragged(SubmenuView* source,
     return;
 
   if (possible_drag_) {
-    if (ChromeViews::View::ExceededDragThreshold(event.x() - press_x_,
-                                                 event.y() - press_y_)) {
+    if (View::ExceededDragThreshold(event.x() - press_x_,
+                                    event.y() - press_y_)) {
       MenuItemView* item = state_.item;
       DCHECK(item);
       // Points are in the coordinates of the submenu, need to map to that of
       // the selected item. Additionally source may not be the parent of
       // the selected item, so need to map to screen first then to item.
-      CPoint press_loc(press_x_, press_y_);
+      gfx::Point press_loc(press_x_, press_y_);
       View::ConvertPointToScreen(source->GetScrollViewContainer(), &press_loc);
       View::ConvertPointToView(NULL, item, &press_loc);
-      CPoint drag_loc(event.x(), event.y());
+      gfx::Point drag_loc(event.location());
       View::ConvertPointToScreen(source->GetScrollViewContainer(), &drag_loc);
       View::ConvertPointToView(NULL, item, &drag_loc);
       in_drag_ = true;
@@ -1750,8 +1742,8 @@ void MenuController::OnMouseDragged(SubmenuView* source,
       scoped_refptr<OSExchangeData> data(new OSExchangeData);
       item->GetDelegate()->WriteDragData(item, data.get());
       drag_utils::SetDragImageOnDataObject(canvas, item->width(),
-                                           item->height(), press_loc.x,
-                                           press_loc.y, data);
+                                           item->height(), press_loc.x(),
+                                           press_loc.y(), data);
 
       scoped_refptr<BaseDragSource> drag_source(new BaseDragSource);
       int drag_ops = item->GetDelegate()->GetDragOperations(item);
@@ -1799,12 +1791,12 @@ void MenuController::OnMouseReleased(SubmenuView* source,
     bool open_submenu = (state_.item == pending_state_.item &&
                          state_.submenu_open);
     SetSelection(pending_state_.item, open_submenu, true);
-    CPoint loc(event.x(), event.y());
+    gfx::Point loc(event.location());
     View::ConvertPointToScreen(source->GetScrollViewContainer(), &loc);
 
     // If we open a context menu just return now
     if (part.menu->GetDelegate()->ShowContextMenu(
-        part.menu, part.menu->GetCommand(), loc.x, loc.y, true))
+        part.menu, part.menu->GetCommand(), loc.x(), loc.y(), true))
       return;
   }
 
@@ -1869,14 +1861,14 @@ int MenuController::OnDragUpdated(SubmenuView* source,
                                   const DropTargetEvent& event) {
   StopCancelAllTimer();
 
-  CPoint screen_loc(event.x(), event.y());
+  gfx::Point screen_loc(event.location());
   View::ConvertPointToScreen(source, &screen_loc);
-  if (valid_drop_coordinates_ && screen_loc.x == drop_x_ &&
-      screen_loc.y == drop_y_) {
+  if (valid_drop_coordinates_ && screen_loc.x() == drop_x_ &&
+      screen_loc.y() == drop_y_) {
     return last_drop_operation_;
   }
-  drop_x_ = screen_loc.x;
-  drop_y_ = screen_loc.y;
+  drop_x_ = screen_loc.x();
+  drop_y_ = screen_loc.y();
   valid_drop_coordinates_ = true;
 
   MenuItemView* menu_item = GetMenuItemAt(source, event.x(), event.y());
@@ -1890,17 +1882,17 @@ int MenuController::OnDragUpdated(SubmenuView* source,
   MenuDelegate::DropPosition drop_position = MenuDelegate::DROP_NONE;
   int drop_operation = DragDropTypes::DRAG_NONE;
   if (menu_item) {
-    CPoint menu_item_loc(event.x(), event.y());
+    gfx::Point menu_item_loc(event.location());
     View::ConvertPointToView(source, menu_item, &menu_item_loc);
     MenuItemView* query_menu_item;
     if (!over_empty_menu) {
       int menu_item_height = menu_item->height();
       if (menu_item->HasSubmenu() &&
-          (menu_item_loc.y > MenuItemView::kDropBetweenPixels &&
-           menu_item_loc.y < (menu_item_height -
-                              MenuItemView::kDropBetweenPixels))) {
+          (menu_item_loc.y() > MenuItemView::kDropBetweenPixels &&
+           menu_item_loc.y() < (menu_item_height -
+                                MenuItemView::kDropBetweenPixels))) {
         drop_position = MenuDelegate::DROP_ON;
-      } else if (menu_item_loc.y < menu_item_height / 2) {
+      } else if (menu_item_loc.y() < menu_item_height / 2) {
         drop_position = MenuDelegate::DROP_BEFORE;
       } else {
         drop_position = MenuDelegate::DROP_AFTER;
@@ -2150,7 +2142,7 @@ void MenuController::CloseAllNestedMenus() {
 }
 
 MenuItemView* MenuController::GetMenuItemAt(View* source, int x, int y) {
-  View* child_under_mouse = source->GetViewForPoint(CPoint(x, y));
+  View* child_under_mouse = source->GetViewForPoint(gfx::Point(x, y));
   if (child_under_mouse && child_under_mouse->IsEnabled() &&
       child_under_mouse->GetID() == MenuItemView::kMenuItemViewID) {
     return static_cast<MenuItemView*>(child_under_mouse);
@@ -2159,7 +2151,7 @@ MenuItemView* MenuController::GetMenuItemAt(View* source, int x, int y) {
 }
 
 MenuItemView* MenuController::GetEmptyMenuItemAt(View* source, int x, int y) {
-  View* child_under_mouse = source->GetViewForPoint(CPoint(x, y));
+  View* child_under_mouse = source->GetViewForPoint(gfx::Point(x, y));
   if (child_under_mouse &&
       child_under_mouse->GetID() == EmptyMenuMenuItem::kEmptyMenuItemViewID) {
     return static_cast<MenuItemView*>(child_under_mouse);
@@ -2172,7 +2164,7 @@ bool MenuController::IsScrollButtonAt(SubmenuView* source,
                                       int y,
                                       MenuPart::Type* part) {
   MenuScrollViewContainer* scroll_view = source->GetScrollViewContainer();
-  View* child_under_mouse = scroll_view->GetViewForPoint(CPoint(x, y));
+  View* child_under_mouse = scroll_view->GetViewForPoint(gfx::Point(x, y));
   if (child_under_mouse && child_under_mouse->IsEnabled()) {
     if (child_under_mouse == scroll_view->scroll_up_button()) {
       *part = MenuPart::SCROLL_UP;
@@ -2192,7 +2184,7 @@ MenuController::MenuPart MenuController::GetMenuPartByScreenCoordinate(
     int source_y) {
   MenuPart part;
 
-  CPoint screen_loc(source_x, source_y);
+  gfx::Point screen_loc(source_x, source_y);
   View::ConvertPointToScreen(source->GetScrollViewContainer(), &screen_loc);
 
   MenuItemView* item = state_.item;
@@ -2210,20 +2202,20 @@ MenuController::MenuPart MenuController::GetMenuPartByScreenCoordinate(
 
 bool MenuController::GetMenuPartByScreenCoordinateImpl(
     SubmenuView* menu,
-    const CPoint& screen_loc,
+    const gfx::Point& screen_loc,
     MenuPart* part) {
   // Is the mouse over the scroll buttons?
-  CPoint scroll_view_loc = screen_loc;
+  gfx::Point scroll_view_loc = screen_loc;
   View* scroll_view_container = menu->GetScrollViewContainer();
   View::ConvertPointToView(NULL, scroll_view_container, &scroll_view_loc);
-  if (scroll_view_loc.x < 0 ||
-      scroll_view_loc.x >= scroll_view_container->width() ||
-      scroll_view_loc.y < 0 ||
-      scroll_view_loc.y >= scroll_view_container->height()) {
+  if (scroll_view_loc.x() < 0 ||
+      scroll_view_loc.x() >= scroll_view_container->width() ||
+      scroll_view_loc.y() < 0 ||
+      scroll_view_loc.y() >= scroll_view_container->height()) {
     // Point isn't contained in menu.
     return false;
   }
-  if (IsScrollButtonAt(menu, scroll_view_loc.x, scroll_view_loc.y,
+  if (IsScrollButtonAt(menu, scroll_view_loc.x(), scroll_view_loc.y(),
                        &(part->type))) {
     part->submenu = menu;
     return true;
@@ -2231,9 +2223,9 @@ bool MenuController::GetMenuPartByScreenCoordinateImpl(
 
   // Not over the scroll button. Check the actual menu.
   if (DoesSubmenuContainLocation(menu, screen_loc)) {
-    CPoint menu_loc = screen_loc;
+    gfx::Point menu_loc = screen_loc;
     View::ConvertPointToView(NULL, menu, &menu_loc);
-    part->menu = GetMenuItemAt(menu, menu_loc.x, menu_loc.y);
+    part->menu = GetMenuItemAt(menu, menu_loc.x(), menu_loc.y());
     part->type = MenuPart::MENU_ITEM;
     return true;
   }
@@ -2245,11 +2237,11 @@ bool MenuController::GetMenuPartByScreenCoordinateImpl(
 }
 
 bool MenuController::DoesSubmenuContainLocation(SubmenuView* submenu,
-                                                const CPoint& screen_loc) {
-  CPoint view_loc = screen_loc;
+                                                const gfx::Point& screen_loc) {
+  gfx::Point view_loc = screen_loc;
   View::ConvertPointToView(NULL, submenu, &view_loc);
   gfx::Rect vis_rect = submenu->GetVisibleBounds();
-  return vis_rect.Contains(view_loc.x, view_loc.y);
+  return vis_rect.Contains(view_loc.x(), view_loc.y());
 }
 
 void MenuController::CommitPendingSelection() {
@@ -2417,15 +2409,13 @@ gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
   SubmenuView* submenu = item->GetSubmenu();
   DCHECK(submenu);
 
-  CSize pref;
-  submenu->GetScrollViewContainer()->GetPreferredSize(&pref);
+  gfx::Size pref = submenu->GetScrollViewContainer()->GetPreferredSize();
 
   // Don't let the menu go to wide. This is some where between what IE and FF
   // do.
-  pref.cx = std::min(pref.cx, kMaxMenuWidth);
+  pref.set_width(std::min(pref.width(), kMaxMenuWidth));
   if (!state_.monitor_bounds.IsEmpty())
-    pref.cx = std::min(pref.cx,
-                       static_cast<LONG>(state_.monitor_bounds.width()));
+    pref.set_width(std::min(pref.width(), state_.monitor_bounds.width()));
 
   // Assume we can honor prefer_leading.
   *is_leading = prefer_leading;
@@ -2437,27 +2427,27 @@ gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
     x = state_.initial_bounds.x();
     y = state_.initial_bounds.bottom();
     if (state_.anchor == MenuItemView::TOPRIGHT)
-      x = x + state_.initial_bounds.width() - pref.cx;
+      x = x + state_.initial_bounds.width() - pref.width();
     if (!state_.monitor_bounds.IsEmpty() &&
-        y + pref.cy > state_.monitor_bounds.bottom()) {
+        y + pref.height() > state_.monitor_bounds.bottom()) {
       // The menu doesn't fit on screen. If the first location is above the
       // half way point, show from the mouse location to bottom of screen.
       // Otherwise show from the top of the screen to the location of the mouse.
       // While odd, this behavior matches IE.
       if (y < (state_.monitor_bounds.y() +
                state_.monitor_bounds.height() / 2)) {
-        pref.cy = std::min(pref.cy,
-            static_cast<LONG>(state_.monitor_bounds.bottom() - y));
+        pref.set_height(std::min(pref.height(),
+                                 state_.monitor_bounds.bottom() - y));
       } else {
-        pref.cy = std::min(pref.cy, static_cast<LONG>(
+        pref.set_height(std::min(pref.height(),
             state_.initial_bounds.y() - state_.monitor_bounds.y()));
-        y = state_.initial_bounds.y() - pref.cy;
+        y = state_.initial_bounds.y() - pref.height();
       }
     }
   } else {
     // Not the first menu; position it relative to the bounds of the menu
     // item.
-    CPoint item_loc(0, 0);
+    gfx::Point item_loc;
     View::ConvertPointToScreen(item, &item_loc);
 
     // We must make sure we take into account the UI layout. If the layout is
@@ -2468,43 +2458,42 @@ gfx::Rect MenuController::CalculateMenuBounds(MenuItemView* item,
                                (!prefer_leading && layout_is_rtl);
 
     if (create_on_the_right) {
-      x = item_loc.x + item->width() - kSubmenuHorizontalInset;
+      x = item_loc.x() + item->width() - kSubmenuHorizontalInset;
       if (state_.monitor_bounds.width() != 0 &&
-          x + pref.cx > state_.monitor_bounds.right()) {
+          x + pref.width() > state_.monitor_bounds.right()) {
         if (layout_is_rtl)
           *is_leading = true;
         else
           *is_leading = false;
-        x = item_loc.x - pref.cx + kSubmenuHorizontalInset;
+        x = item_loc.x() - pref.width() + kSubmenuHorizontalInset;
       }
     } else {
-      x = item_loc.x - pref.cx + kSubmenuHorizontalInset;
+      x = item_loc.x() - pref.width() + kSubmenuHorizontalInset;
       if (state_.monitor_bounds.width() != 0 && x < state_.monitor_bounds.x()) {
         if (layout_is_rtl)
           *is_leading = false;
         else
           *is_leading = true;
-        x = item_loc.x + item->width() - kSubmenuHorizontalInset;
+        x = item_loc.x() + item->width() - kSubmenuHorizontalInset;
       }
     }
-    y = item_loc.y - kSubmenuBorderSize;
+    y = item_loc.y() - kSubmenuBorderSize;
     if (state_.monitor_bounds.width() != 0) {
-      pref.cy = std::min(pref.cy,
-                         static_cast<LONG>(state_.monitor_bounds.height()));
-      if (y + pref.cy > state_.monitor_bounds.bottom())
-        y = state_.monitor_bounds.bottom() - pref.cy;
+      pref.set_height(std::min(pref.height(), state_.monitor_bounds.height()));
+      if (y + pref.height() > state_.monitor_bounds.bottom())
+        y = state_.monitor_bounds.bottom() - pref.height();
       if (y < state_.monitor_bounds.y())
         y = state_.monitor_bounds.y();
     }
   }
 
   if (state_.monitor_bounds.width() != 0) {
-    if (x + pref.cx > state_.monitor_bounds.right())
-      x = state_.monitor_bounds.right() - pref.cx;
+    if (x + pref.width() > state_.monitor_bounds.right())
+      x = state_.monitor_bounds.right() - pref.width();
     if (x < state_.monitor_bounds.x())
       x = state_.monitor_bounds.x();
   }
-  return gfx::Rect(x, y, pref.cx, pref.cy);
+  return gfx::Rect(x, y, pref.width(), pref.height());
 }
 
 // static
@@ -2572,7 +2561,7 @@ bool MenuController::IsMenuWindow(MenuItemView* item, HWND window) {
   if (!item)
     return false;
   return ((item->HasSubmenu() && item->GetSubmenu()->IsShowing() &&
-           item->GetSubmenu()->GetViewContainer()->GetHWND() == window) ||
+           item->GetSubmenu()->GetContainer()->GetHWND() == window) ||
            IsMenuWindow(item->GetParentMenuItem(), window));
 }
 
@@ -2638,9 +2627,9 @@ bool MenuController::SelectByChar(wchar_t character) {
 
 void MenuController::RepostEvent(SubmenuView* source,
                                  const MouseEvent& event) {
-  CPoint screen_loc(event.x(), event.y());
+  gfx::Point screen_loc(event.location());
   View::ConvertPointToScreen(source->GetScrollViewContainer(), &screen_loc);
-  HWND window = WindowFromPoint(screen_loc);
+  HWND window = WindowFromPoint(screen_loc.ToPOINT());
   if (window) {
 #ifdef DEBUG_MENU
     DLOG(INFO) << "RepostEvent on press";
@@ -2663,13 +2652,14 @@ void MenuController::RepostEvent(SubmenuView* source,
     // Convert the coordinates to the target window.
     RECT window_bounds;
     GetWindowRect(window, &window_bounds);
-    int window_x = screen_loc.x - window_bounds.left;
-    int window_y = screen_loc.y - window_bounds.top;
+    int window_x = screen_loc.x() - window_bounds.left;
+    int window_y = screen_loc.y() - window_bounds.top;
 
     // Determine whether the click was in the client area or not.
     // NOTE: WM_NCHITTEST coordinates are relative to the screen.
     LRESULT nc_hit_result = SendMessage(window, WM_NCHITTEST, 0,
-                                        MAKELPARAM(screen_loc.x, screen_loc.y));
+                                        MAKELPARAM(screen_loc.x(),
+                                                   screen_loc.y()));
     const bool in_client_area = (nc_hit_result == HTCLIENT);
 
     // TODO(sky): this isn't right. The event to generate should correspond
@@ -2729,5 +2719,5 @@ void MenuController::StopScrolling() {
   scroll_task_.reset(NULL);
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

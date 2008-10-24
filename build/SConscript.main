@@ -15,6 +15,7 @@ elif p == 'name':
 
 
 default_warnings = ['no-missing-sconscript', 'no-no-parallel-support']
+default_warnings = ['no-no-parallel-support']
 SetOption('warn', default_warnings + GetOption('warn'))
 
 
@@ -27,36 +28,27 @@ else:
 
 env = Environment(
     BUILD_TYPE = ARGUMENTS.get('BUILD_TYPE', 'Hammer'),
-    TARGET_ROOT = '#/$BUILD_TYPE',
+    CHROME_SRC_DIR = Dir('#/..').abspath,
+    TARGET_ROOT = Dir('#/$BUILD_TYPE').abspath,
     OBJ_ROOT = '$TARGET_ROOT',
 
-    LIBS_DIR              = '#/$BUILD_TYPE/Libs',
+    LIBS_DIR              = '$OBJ_ROOT/Libs',
 
-    BASE_DIR              = '#/$BUILD_TYPE/base',
-    BREAKPAD_DIR          = '#/$BUILD_TYPE/breakpad',
-    CHROME_DIR            = '#/$BUILD_TYPE/chrome',
-    GEARS_DIR             = '#/$BUILD_TYPE/gears',
-    GOOGLE_UPDATE_DIR     = '#/$BUILD_TYPE/google_update',
-
-    # Work around a limitation (bug?) in SCons in that, when we build
-    # from a different directory, it forces the build targets defined
-    # the SConscript.googleurl file to be relative to that file (i.e.,
-    # here in the build/ directory with us), not relative to the
-    # the SConstruct directory from which SCons was launched.  When
-    # we roll forward to a version of SCons that fixes this, we'll
-    # need to revert to the $BUILD_TYPE definition of GOOGLEURL_DIR.
-    #GOOGLEURL_DIR         = '#/$BUILD_TYPE/googleurl',
-    GOOGLEURL_DIR         = '#/../build/googleurl',
-
-    NET_DIR               = '#/$BUILD_TYPE/net',
-    RLZ_DIR               = '#/$BUILD_TYPE/rlz',
-    SANDBOX_DIR           = '#/$BUILD_TYPE/sandbox',
-    SDCH_DIR              = '#/$BUILD_TYPE/sdch',
-    SKIA_DIR              = '#/$BUILD_TYPE/skia',
-    TESTING_DIR           = '#/$BUILD_TYPE/testing',
-    THIRD_PARTY_DIR       = '#/$BUILD_TYPE/third_party',
-    V8_DIR                = '#/$BUILD_TYPE/v8',
-    WEBKIT_DIR            = '#/$BUILD_TYPE/webkit',
+    BASE_DIR              = '$OBJ_ROOT/base',
+    BREAKPAD_DIR          = '$OBJ_ROOT/breakpad',
+    CHROME_DIR            = '$OBJ_ROOT/chrome',
+    GEARS_DIR             = '$OBJ_ROOT/gears',
+    GOOGLE_UPDATE_DIR     = '$OBJ_ROOT/google_update',
+    GOOGLEURL_DIR         = '$OBJ_ROOT/googleurl',
+    NET_DIR               = '$OBJ_ROOT/net',
+    RLZ_DIR               = '$OBJ_ROOT/rlz',
+    SANDBOX_DIR           = '$OBJ_ROOT/sandbox',
+    SDCH_DIR              = '$OBJ_ROOT/sdch',
+    SKIA_DIR              = '$OBJ_ROOT/skia',
+    TESTING_DIR           = '$OBJ_ROOT/testing',
+    THIRD_PARTY_DIR       = '$OBJ_ROOT/third_party',
+    V8_DIR                = '$OBJ_ROOT/v8',
+    WEBKIT_DIR            = '$OBJ_ROOT/webkit',
 
     GTEST_DIR             = '$TESTING_DIR/gtest',
 
@@ -329,6 +321,23 @@ elif env['PLATFORM'] == 'posix':
       CCFLAGS = ['-m32', '-g', '-pthread'],
       CXXFLAGS = ['-Wall', '-Werror'] + excluded_warnings,
       LINKFLAGS = ['-m32', '-pthread'],
+
+    # We have several cases where archives depend on each other in a cyclic
+    # fashion. (V8Bindings, libport and WebCore being the most significant
+    # example.) Since the GNU linker does only a single pass over the archives
+    # we need some extra trickery to deal with these unavoidable cycles. That
+    # trickery is --start-group and --end-group (aka -( and -) ). That causes ld
+    # to loop over the group until no more undefined symbols are found. In an
+    # ideal world we would only make groups from those libraries which we knew
+    # to be in cycles. However, that's tough with SCons, so we bodge it by
+    # making all the archives a group by redefining the linking command here.
+    SHLINKCOM = ('$SHLINK -shared -o $TARGET $SHLINKFLAGS $SOURCES '
+                 '$_LIBDIRFLAGS '
+                 '-Wl,--start-group $_LIBFLAGS -Wl,--end-group'),
+    LINKCOM = ('$LINK -o $TARGET $LINKFLAGS $SOURCES '
+               '$_LIBDIRFLAGS '
+               '-Wl,--start-group $_LIBFLAGS -Wl,--end-group'),
+
       # We need rt for clock_gettime.
       LIBS = ['rt'],
 
@@ -347,9 +356,9 @@ elif env['PLATFORM'] == 'posix':
     env.Append(CCFLAGS=['-fprofile-arcs', '-ftest-coverage'])
     env.Append(LINKFLAGS=['-fprofile-arcs'])
 
-  # Build with system-provided NSS and GLib
+  # Build with system-provided NSS and GTK.
   env.ParseConfig('pkg-config --cflags --libs nss')
-  env.ParseConfig('pkg-config --cflags --libs glib-2.0')
+  env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
 
 elif env['PLATFORM'] == 'darwin':
 
@@ -447,8 +456,8 @@ env.Decider('MD5-timestamp')
 
 
 # Overlay things from a layer below.
-env.Dir('$TARGET_ROOT').addRepository(Dir('..'))
-
+env.Dir('$TARGET_ROOT').addRepository(env.Dir('$CHROME_SRC_DIR'))
+env.Dir('$TARGET_ROOT/googleurl').addRepository(env.Dir('$CHROME_SRC_DIR/build'))
 
 included = [c for c in load if not c.startswith('-')]
 excluded = [c[1:] for c in load if c.startswith('-')]
@@ -466,7 +475,7 @@ def LoadComponent(c):
 sconscripts = []
 
 if LoadComponent('base'):
-  sconscripts.append('$BASE_DIR/SConscript')
+  sconscripts.append('$BASE_DIR/base.scons')
 
 if LoadComponent('breakpad'):
   sconscripts.append('$BREAKPAD_DIR/SConscript')
@@ -481,14 +490,12 @@ if LoadComponent('google_update'):
   sconscripts.append('$GOOGLE_UPDATE_DIR/SConscript')
 
 if LoadComponent('googleurl'):
-  env.SConscript('SConscript.googleurl',
-                 duplicate=0,
-                 variant_dir='$GOOGLEURL_DIR',
-                 src_dir='../googleurl',
-                 exports=['env'])
+  # googleurl comes from a different repository so we provide the SConscript
+  # file.
+  sconscripts.append('$GOOGLEURL_DIR/googleurl.scons')
 
 if LoadComponent('net'):
-  sconscripts.append('$NET_DIR/SConscript')
+  sconscripts.append('$NET_DIR/net.scons')
 
 if LoadComponent('rlz'):
   sconscripts.append('$RLZ_DIR/SConscript')
@@ -508,12 +515,12 @@ if LoadComponent('testing'):
 if LoadComponent('third_party'):
   sconscripts.extend([
       '$BSDIFF_DIR/SConscript',
-      '$BZIP2_DIR/SConscript',
-      '$ICU38_DIR/SConscript',
-      '$LIBPNG_DIR/SConscript',
+      '$BZIP2_DIR/bzip2.scons',
+      '$ICU38_DIR/icu38.scons',
+      '$LIBPNG_DIR/libpng.scons',
       '$LZMA_SDK_DIR/SConscript',
-      '$MODP_B64_DIR/SConscript',
-      '$ZLIB_DIR/SConscript',
+      '$MODP_B64_DIR/modp_b64.scons',
+      '$ZLIB_DIR/zlib.scons',
   ])
   # Temporary until we get these building on Mac.
   if env['PLATFORM'] != 'darwin':
@@ -524,7 +531,7 @@ if LoadComponent('third_party'):
     ])
   if env['PLATFORM'] in ('posix', 'darwin'):
     sconscripts.extend([
-      '$LIBEVENT_DIR/SConscript',
+      '$LIBEVENT_DIR/libevent.scons',
     ])
   # This is temporary until we get this lib to build on other platforms.
   if env['PLATFORM'] == 'win32':
@@ -532,7 +539,7 @@ if LoadComponent('third_party'):
         '$BSPATCH_DIR/SConscript',
     ])
 
-if LoadComponent('v8') and env.Dir('#/../v8').exists():
+if LoadComponent('v8') and env.Dir('$CHROME_SRC_DIR/v8').exists():
   env.SConscript('SConscript.v8',
                  exports=['env'])
 

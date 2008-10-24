@@ -13,7 +13,8 @@
 #include "chrome/browser/web_contents.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/hwnd_view_container.h"
+// Included for SetRootViewForHWND.
+#include "chrome/views/container_win.h"
 #include "chrome/test/automation/automation_messages.h"
 
 static const wchar_t kWindowObjectKey[] = L"ChromeWindowObject";
@@ -49,11 +50,11 @@ bool ExternalTabContainer::Init(Profile* profile) {
   // is the same as the lifetime of the window
   SetProp(*this, kWindowObjectKey, this);
 
-  ChromeViews::SetRootViewForHWND(m_hWnd, &root_view_);
+  views::SetRootViewForHWND(m_hWnd, &root_view_);
   // CreateFocusManager will subclass this window and delete the FocusManager
   // instance when this window goes away.
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::CreateFocusManager(m_hWnd, GetRootView());
+  views::FocusManager* focus_manager =
+      views::FocusManager::CreateFocusManager(m_hWnd, GetRootView());
   DCHECK(focus_manager);
   focus_manager->AddKeystrokeListener(this);
   tab_contents_ = TabContents::CreateWithType(TAB_CONTENTS_WEB,
@@ -92,8 +93,8 @@ bool ExternalTabContainer::Init(Profile* profile) {
 }
 
 void ExternalTabContainer::OnDestroy() {
-  ChromeViews::FocusManager * focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetHWND());
+  views::FocusManager * focus_manager =
+      views::FocusManager::GetFocusManager(GetHWND());
   if (focus_manager) {
     focus_manager->RemoveKeystrokeListener(this);
   }
@@ -252,14 +253,15 @@ HWND ExternalTabContainer::GetHWND() const {
   return m_hWnd;
 }
 
-void ExternalTabContainer::PaintNow(const CRect& update_rect) {
-  RedrawWindow(update_rect,
+void ExternalTabContainer::PaintNow(const gfx::Rect& update_rect) {
+  RECT native_update_rect = update_rect.ToRECT();
+  RedrawWindow(&native_update_rect,
                NULL,
                RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_NOERASE);
 }
 
-ChromeViews::RootView* ExternalTabContainer::GetRootView() {
-  return const_cast<ChromeViews::RootView*>(&root_view_);
+views::RootView* ExternalTabContainer::GetRootView() {
+  return const_cast<views::RootView*>(&root_view_);
 }
 
 bool ExternalTabContainer::IsVisible() {

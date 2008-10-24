@@ -6,13 +6,13 @@
 
 #include "base/logging.h"
 #include "base/win_util.h"
-#include "chrome/browser/render_widget_host_hwnd.h"
+#include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/common/notification_types.h"
 #include "chrome/views/accelerator.h"
+#include "chrome/views/container.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
-#include "chrome/views/view_container.h"
 #include "chrome/views/view_storage.h"
 
 // The following keys are used in SetProp/GetProp to associate additional
@@ -30,7 +30,7 @@ static const wchar_t* const kFocusManagerKey = L"__VIEW_CONTAINER__";
 // - prevent tab key events from being sent to views.
 static const wchar_t* const kViewKey = L"__CHROME_VIEW__";
 
-namespace ChromeViews {
+namespace views {
 
 static bool IsCompatibleWithMouseWheelRedirection(HWND window) {
   std::wstring class_name = win_util::GetClassName(window);
@@ -304,7 +304,7 @@ bool FocusManager::OnKeyDown(HWND window, UINT message, WPARAM wparam,
   DCHECK((message == WM_KEYDOWN) || (message == WM_SYSKEYDOWN));
 
   if (!IsWindowVisible(root_)) {
-    // We got a message for a hidden window. Because HWNDViewContainer::Close
+    // We got a message for a hidden window. Because ContainerWin::Close
     // hides the window, then destroys it, it it possible to get a message after
     // we've hidden the window. If we allow the message to be dispatched
     // chances are we'll crash in some weird place. By returning false we make
@@ -367,8 +367,8 @@ bool FocusManager::OnKeyDown(HWND window, UINT message, WPARAM wparam,
   int repeat_count = LOWORD(lparam);
   int flags = HIWORD(lparam);
   if (focused_view_ &&
-      !focused_view_->ShouldLookupAccelerators(ChromeViews::KeyEvent(
-          ChromeViews::Event::ET_KEY_PRESSED, virtual_key_code,
+      !focused_view_->ShouldLookupAccelerators(KeyEvent(
+          Event::ET_KEY_PRESSED, virtual_key_code,
           repeat_count, flags))) {
     // This should not be processed as an accelerator.
     return true;
@@ -425,7 +425,7 @@ bool FocusManager::ContainsView(View* view) {
   if (!root_view)
     return false;
 
-  ViewContainer* view_container = root_view->GetViewContainer();
+  Container* view_container = root_view->GetContainer();
   if (!view_container)
     return false;
 
@@ -457,7 +457,7 @@ View* FocusManager::GetNextFocusableView(View* original_starting_view,
   View* starting_view = NULL;
   if (original_starting_view) {
     // If the starting view has a focus traversable, use it.
-    // This is the case with HWNDViewContainers for example.
+    // This is the case with ContainerWins for example.
     focus_traversable = original_starting_view->GetFocusTraversable();
 
     // Otherwise default to the root view.
@@ -736,8 +736,7 @@ void FocusManager::Observe(NotificationType type,
                            const NotificationSource& source,
                            const NotificationDetails& details) {
   DCHECK(type == NOTIFY_VIEW_REMOVED);
-  if (focused_view_ &&
-      Source<ChromeViews::View>(focused_view_) == source)
+  if (focused_view_ && Source<View>(focused_view_) == source)
     focused_view_ = NULL;
 }
 
@@ -777,5 +776,5 @@ void FocusManager::RemoveFocusChangeListener(FocusChangeListener* listener) {
   focus_change_listeners_.erase(place);
 }
 
-}
+}  // namespace views
 

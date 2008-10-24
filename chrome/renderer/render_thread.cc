@@ -15,6 +15,7 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/plugin/plugin_channel.h"
 #include "chrome/renderer/net/render_dns_master.h"
+#include "chrome/renderer/greasemonkey_slave.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/visitedlink_slave.h"
@@ -41,6 +42,7 @@ RenderThread::RenderThread(const std::wstring& channel_name)
       channel_name_(channel_name),
       owner_loop_(MessageLoop::current()),
       visited_link_slave_(NULL),
+      greasemonkey_slave_(NULL),
       render_dns_master_(NULL),
       in_send_(0) {
   DCHECK(owner_loop_);
@@ -111,9 +113,8 @@ void RenderThread::Init() {
   // The renderer thread should wind-up COM.
   CoInitialize(0);
 
-  // TODO(darin): We should actually try to share this object between
-  // RenderThread instances.
   visited_link_slave_ = new VisitedLinkSlave();
+  greasemonkey_slave_ = new GreasemonkeySlave();
 
   render_dns_master_.reset(new RenderDnsMaster());
 
@@ -141,12 +142,20 @@ void RenderThread::CleanUp() {
   delete visited_link_slave_;
   visited_link_slave_ = NULL;
 
+  delete greasemonkey_slave_;
+  greasemonkey_slave_ = NULL;
+
   CoUninitialize();
 }
 
 void RenderThread::OnUpdateVisitedLinks(SharedMemoryHandle table) {
   DCHECK(table) << "Bad table handle";
   visited_link_slave_->Init(table);
+}
+
+void RenderThread::OnUpdateGreasemonkeyScripts(SharedMemoryHandle scripts) {
+  DCHECK(scripts) << "Bad scripts handle";
+  greasemonkey_slave_->UpdateScripts(scripts);  
 }
 
 void RenderThread::OnMessageReceived(const IPC::Message& msg) {
@@ -163,6 +172,8 @@ void RenderThread::OnMessageReceived(const IPC::Message& msg) {
       IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
                           OnGetCacheResourceStats)
       IPC_MESSAGE_HANDLER(ViewMsg_PluginMessage, OnPluginMessage)
+      IPC_MESSAGE_HANDLER(ViewMsg_Greasemonkey_NewScripts,
+                          OnUpdateGreasemonkeyScripts)
       // send the rest to the router
       IPC_MESSAGE_UNHANDLED(router_.OnMessageReceived(msg))
     IPC_END_MESSAGE_MAP()
@@ -194,9 +205,9 @@ void RenderThread::OnCreateNewView(HWND parent_hwnd,
                                    int32 view_id) {
   // TODO(darin): once we have a RenderThread per RenderView, this will need to
   // change to assert that we are not creating more than one view.
-
   RenderView::Create(
-      parent_hwnd, modal_dialog_event, MSG_ROUTING_NONE, webkit_prefs, view_id);
+      parent_hwnd, modal_dialog_event, MSG_ROUTING_NONE, webkit_prefs,
+      new SharedRenderViewCounter(0), view_id);
 }
 
 void RenderThread::OnSetCacheCapacities(size_t min_dead_capacity,
@@ -227,4 +238,3 @@ void RenderThread::InformHostOfCacheStatsLater() {
           &RenderThread::InformHostOfCacheStats),
       kCacheStatsDelayMS);
 }
-

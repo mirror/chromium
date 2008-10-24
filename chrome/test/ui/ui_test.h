@@ -160,6 +160,27 @@ class UITest : public testing::Test {
                    const std::wstring& units,
                    bool important);
 
+  // Like PrintResult(), but prints a (mean, standard deviation) result pair.
+  // The |<values>| should be two comma-seaprated numbers, the mean and
+  // standard deviation (or other error metric) of the measurement.
+  void PrintResultMeanAndError(const std::wstring& measurement,
+                               const std::wstring& modifier,
+                               const std::wstring& trace,
+                               const std::wstring& mean_and_error,
+                               const std::wstring& units,
+                               bool important);
+
+  // Like PrintResult(), but prints an entire list of results. The |values|
+  // will generally be a list of comma-separated numbers. A typical
+  // post-processing step might produce plots of their mean and standard
+  // deviation.
+  void PrintResultList(const std::wstring& measurement,
+                       const std::wstring& modifier,
+                       const std::wstring& trace,
+                       const std::wstring& values,
+                       const std::wstring& units,
+                       bool important);
+
   // Gets the directory for the currently active profile in the browser.
   std::wstring GetDownloadDirectory();
 
@@ -273,10 +294,33 @@ class UITest : public testing::Test {
   // error.
   DictionaryValue* GetDefaultProfilePreferences();
 
+  // Generate the URL for testing a particular test.
+  // HTML for the tests is all located in 
+  // test_root_directory\test_directory\<testcase>
+  static GURL GetTestUrl(const std::wstring& test_directory,
+                         const std::wstring &test_case);
+
+  // Waits for the test case to finish.
+  // ASSERTS if there are test failures.
+  void WaitForFinish(const std::string &name,
+                     const std::string &id, const GURL &url,
+                     const std::string& test_complete_cookie,
+                     const std::string& expected_cookie_value,
+                     const int wait_time);
  private:
   // Check that no processes related to Chrome exist, displaying
   // the given message if any do.
   void AssertAppNotRunning(const std::wstring& error_message);
+
+  // Common functionality for the public PrintResults methods.
+  void PrintResultsImpl(const std::wstring& measurement,
+                        const std::wstring& modifier,
+                        const std::wstring& trace,
+                        const std::wstring& values,
+                        const std::wstring& prefix,
+                        const std::wstring& suffix,
+                        const std::wstring& units,
+                        bool important);
 
  protected:
   AutomationProxy* automation() {

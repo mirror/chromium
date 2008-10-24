@@ -258,6 +258,18 @@
 			>
 		</File>
 		<File
+			RelativePath=".\container.h"
+			>
+		</File>
+		<File
+			RelativePath=".\container_win.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\container_win.h"
+			>
+		</File>
+		<File
 			RelativePath=".\controller.h"
 			>
 		</File>
@@ -343,14 +355,6 @@
 		</File>
 		<File
 			RelativePath=".\hwnd_view.h"
-			>
-		</File>
-		<File
-			RelativePath=".\hwnd_view_container.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\hwnd_view_container.h"
 			>
 		</File>
 		<File
@@ -606,10 +610,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\view_container.h"
-			>
-		</File>
-		<File
 			RelativePath=".\view_menu_delegate.h"
 			>
 		</File>
@@ -635,6 +635,10 @@
 		</File>
 		<File
 			RelativePath=".\window_delegate.h"
+			>
+		</File>
+		<File
+			RelativePath=".\window_resources.h"
 			>
 		</File>
 	</Files>

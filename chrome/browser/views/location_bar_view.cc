@@ -26,11 +26,11 @@
 #include "chrome/common/win_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
+#include "chrome/views/container.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/view_container.h"
 #include "generated_resources.h"
 
-using ChromeViews::View;
+using views::View;
 
 const int LocationBarView::kTextVertMargin = 2;
 
@@ -123,7 +123,7 @@ void LocationBarView::Init() {
   }
 
   // URL edit field.
-  ChromeViews::ViewContainer* vc = GetViewContainer();
+  views::Container* vc = GetContainer();
   DCHECK(vc) << "LocationBarView::Init - vc is NULL!";
   location_entry_.reset(new AutocompleteEditView(font_, this, model_, this,
                                                  vc->GetHWND(),
@@ -131,7 +131,7 @@ void LocationBarView::Init() {
                                                  popup_window_mode_));
 
   // View container for URL edit field.
-  location_entry_view_ = new ChromeViews::HWNDView;
+  location_entry_view_ = new views::HWNDView;
   DCHECK(location_entry_view_) << "LocationBarView::Init - OOM!";
   location_entry_view_->SetID(VIEW_ID_AUTOCOMPLETE);
   AddChildView(location_entry_view_);
@@ -204,19 +204,13 @@ void LocationBarView::SetProfile(Profile* profile) {
   }
 }
 
-void LocationBarView::GetPreferredSize(CSize *out) {
-  CSize size;
-  security_image_view_.GetPreferredSize(&size);
-  out->cx = 0;
-
-  out->cy = std::max(
-      (popup_window_mode_ ? kPopupBackgroundCenter : kBackground)->height(),
-      static_cast<int>(size.cy));
-}
-
-void LocationBarView::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
-  Layout();
+gfx::Size LocationBarView::GetPreferredSize() {
+  return gfx::Size(
+      0, 
+      std::max(
+          (popup_window_mode_ ? kPopupBackgroundCenter
+                              : kBackground)->height(),
+          security_image_view_.GetPreferredSize().width()));
 }
 
 void LocationBarView::Layout() {
@@ -272,16 +266,16 @@ void LocationBarView::VisibleBoundsInRootChanged() {
   location_entry_->ClosePopup();
 }
 
-bool LocationBarView::OnMousePressed(const ChromeViews::MouseEvent& event) {
+bool LocationBarView::OnMousePressed(const views::MouseEvent& event) {
   UINT msg;
   if (event.IsLeftMouseButton()) {
-    msg = (event.GetFlags() & ChromeViews::MouseEvent::EF_IS_DOUBLE_CLICK) ?
+    msg = (event.GetFlags() & views::MouseEvent::EF_IS_DOUBLE_CLICK) ?
         WM_LBUTTONDBLCLK : WM_LBUTTONDOWN;
   } else if (event.IsMiddleMouseButton()) {
-    msg = (event.GetFlags() & ChromeViews::MouseEvent::EF_IS_DOUBLE_CLICK) ?
+    msg = (event.GetFlags() & views::MouseEvent::EF_IS_DOUBLE_CLICK) ?
         WM_MBUTTONDBLCLK : WM_MBUTTONDOWN;
   } else if (event.IsRightMouseButton()) {
-    msg = (event.GetFlags() & ChromeViews::MouseEvent::EF_IS_DOUBLE_CLICK) ?
+    msg = (event.GetFlags() & views::MouseEvent::EF_IS_DOUBLE_CLICK) ?
         WM_RBUTTONDBLCLK : WM_RBUTTONDOWN;
   } else {
     NOTREACHED();
@@ -291,12 +285,12 @@ bool LocationBarView::OnMousePressed(const ChromeViews::MouseEvent& event) {
   return true;
 }
 
-bool LocationBarView::OnMouseDragged(const ChromeViews::MouseEvent& event) {
+bool LocationBarView::OnMouseDragged(const views::MouseEvent& event) {
   OnMouseEvent(event, WM_MOUSEMOVE);
   return true;
 }
 
-void LocationBarView::OnMouseReleased(const ChromeViews::MouseEvent& event,
+void LocationBarView::OnMouseReleased(const views::MouseEvent& event,
                                       bool canceled) {
   UINT msg;
   if (canceled) {
@@ -375,15 +369,15 @@ void LocationBarView::DoLayout(const bool force_layout) {
   location_entry_->GetClientRect(&edit_bounds);
 
   int entry_width = width() - kEntryPadding - kEntryPadding;
-  CSize security_image_size;
+  gfx::Size security_image_size;
   if (security_image_view_.IsVisible()) {
-    security_image_view_.GetPreferredSize(&security_image_size);
-    entry_width -= security_image_size.cx;
+    security_image_size = security_image_view_.GetPreferredSize();
+    entry_width -= security_image_size.width();
   }
-  CSize info_label_size;
+  gfx::Size info_label_size;
   if (info_label_.IsVisible()) {
-    info_label_.GetPreferredSize(&info_label_size);
-    entry_width -= (info_label_size.cx + kInnerPadding);
+    info_label_size = info_label_.GetPreferredSize();
+    entry_width -= (info_label_size.width() + kInnerPadding);
   }
 
   const int max_edit_width = entry_width - formatting_rect.left -
@@ -404,18 +398,18 @@ void LocationBarView::DoLayout(const bool force_layout) {
   int location_y = ((height() - bh) / 2) + kTextVertMargin;
   int location_height = bh - (2 * kTextVertMargin);
   if (info_label_.IsVisible()) {
-    info_label_.SetBounds(width() - kEntryPadding - info_label_size.cx,
+    info_label_.SetBounds(width() - kEntryPadding - info_label_size.width(),
                           location_y,
-                          info_label_size.cx, location_height);
+                          info_label_size.width(), location_height);
   }
   if (security_image_view_.IsVisible()) {
-    const int info_label_width = info_label_size.cx ?
-        info_label_size.cx + kInnerPadding : 0;
+    const int info_label_width = info_label_size.width() ?
+        info_label_size.width() + kInnerPadding : 0;
     security_image_view_.SetBounds(width() - kEntryPadding -
                                       info_label_width  -
-                                      security_image_size.cx,
+                                      security_image_size.width(),
                                    location_y,
-                                   security_image_size.cx, location_height);
+                                   security_image_size.width(), location_height);
   }
   gfx::Rect location_bounds(kEntryPadding, location_y, entry_width,
                             location_height);
@@ -455,11 +449,10 @@ bool LocationBarView::UsePref(int pref_width, int text_width, int max_width) {
 }
 
 bool LocationBarView::NeedsResize(View* view, int text_width, int max_width) {
-  CSize size;
-  view->GetPreferredSize(&size);
-  if (!UsePref(size.cx, text_width, max_width))
-    view->GetMinimumSize(&size);
-  return (view->width() != size.cx);
+  gfx::Size size = view->GetPreferredSize();
+  if (!UsePref(size.width(), text_width, max_width))
+    size = view->GetMinimumSize();
+  return (view->width() != size.width());
 }
 
 bool LocationBarView::AdjustHints(int text_width, int max_width) {
@@ -472,9 +465,8 @@ bool LocationBarView::AdjustHints(int text_width, int max_width) {
 
   if (show_search_hint) {
     // Only show type to search if all the text fits.
-    CSize view_pref;
-    type_to_search_view_.GetPreferredSize(&view_pref);
-    show_search_hint = UsePref(view_pref.cx, text_width, max_width);
+    gfx::Size view_pref = type_to_search_view_.GetPreferredSize();
+    show_search_hint = UsePref(view_pref.width(), text_width, max_width);
   }
 
   // NOTE: This isn't just one big || statement as ToggleVisibility MUST be
@@ -501,24 +493,24 @@ bool LocationBarView::AdjustHints(int text_width, int max_width) {
   return needs_layout;
 }
 
-void LocationBarView::LayoutView(bool leading, ChromeViews::View* view,
+void LocationBarView::LayoutView(bool leading, views::View* view,
                                  int text_width, int max_width,
                                  gfx::Rect* bounds) {
   DCHECK(view && bounds);
-  CSize view_size(0, 0);
-  view->GetPreferredSize(&view_size);
-  if (!UsePref(view_size.cx, text_width, max_width))
-    view->GetMinimumSize(&view_size);
-  if (view_size.cx + kInnerPadding < bounds->width()) {
+  gfx::Size view_size = view->GetPreferredSize();
+  if (!UsePref(view_size.width(), text_width, max_width))
+    view_size = view->GetMinimumSize();
+  if (view_size.width() + kInnerPadding < bounds->width()) {
     view->SetVisible(true);
     if (leading) {
-      view->SetBounds(bounds->x(), bounds->y(), view_size.cx, bounds->height());
-      bounds->Offset(view_size.cx + kInnerPadding, 0);
+      view->SetBounds(bounds->x(), bounds->y(), view_size.width(),
+                      bounds->height());
+      bounds->Offset(view_size.width() + kInnerPadding, 0);
     } else {
-      view->SetBounds(bounds->right() - view_size.cx, bounds->y(),
-                      view_size.cx, bounds->height());
+      view->SetBounds(bounds->right() - view_size.width(), bounds->y(),
+                      view_size.width(), bounds->height());
     }
-    bounds->set_width(bounds->width() - view_size.cx - kInnerPadding);
+    bounds->set_width(bounds->width() - view_size.width() - kInnerPadding);
   } else {
     view->SetVisible(false);
   }
@@ -562,8 +554,7 @@ bool LocationBarView::ToggleVisibility(bool new_vis, View* view) {
   return false;
 }
 
-void LocationBarView::OnMouseEvent(const ChromeViews::MouseEvent& event,
-                                   UINT msg) {
+void LocationBarView::OnMouseEvent(const views::MouseEvent& event, UINT msg) {
   UINT flags = 0;
   if (event.IsControlDown())
     flags |= MK_CONTROL;
@@ -576,10 +567,10 @@ void LocationBarView::OnMouseEvent(const ChromeViews::MouseEvent& event,
   if (event.IsRightMouseButton())
     flags |= MK_RBUTTON;
 
-  CPoint screen_point(event.x(), event.y());
+  gfx::Point screen_point(event.location());
   ConvertPointToScreen(this, &screen_point);
 
-  location_entry_->HandleExternalMsg(msg, flags, screen_point);
+  location_entry_->HandleExternalMsg(msg, flags, screen_point.ToPOINT());
 }
 
 bool LocationBarView::GetAccessibleRole(VARIANT* role) {
@@ -620,11 +611,11 @@ LocationBarView::SelectedKeywordView::SelectedKeywordView(Profile* profile)
   full_label_.SetVisible(false);
   partial_label_.SetVisible(false);
   full_label_.SetBorder(
-      ChromeViews::Border::CreateEmptyBorder(kTopInset, kLeftInset,
-                                             kBottomInset, kRightInset));
+      views::Border::CreateEmptyBorder(kTopInset, kLeftInset, kBottomInset,
+                                       kRightInset));
   partial_label_.SetBorder(
-      ChromeViews::Border::CreateEmptyBorder(kTopInset, kLeftInset,
-                                             kBottomInset, kRightInset));
+      views::Border::CreateEmptyBorder(kTopInset, kLeftInset, kBottomInset,
+                                       kRightInset));
 }
 
 LocationBarView::SelectedKeywordView::~SelectedKeywordView() {
@@ -641,24 +632,17 @@ void LocationBarView::SelectedKeywordView::Paint(ChromeCanvas* canvas) {
   canvas->TranslateInt(0, -kBackgroundYOffset);
 }
 
-void LocationBarView::SelectedKeywordView::GetPreferredSize(CSize* size) {
-  full_label_.GetPreferredSize(size);
+gfx::Size LocationBarView::SelectedKeywordView::GetPreferredSize() {
+  return full_label_.GetPreferredSize();
 }
 
-void LocationBarView::SelectedKeywordView::GetMinimumSize(CSize* size) {
-  partial_label_.GetMinimumSize(size);
-}
-
-void LocationBarView::SelectedKeywordView::DidChangeBounds(
-    const CRect& previous,
-    const CRect& current) {
-  Layout();
+gfx::Size LocationBarView::SelectedKeywordView::GetMinimumSize() {
+  return partial_label_.GetMinimumSize();
 }
 
 void LocationBarView::SelectedKeywordView::Layout() {
-  CSize pref;
-  GetPreferredSize(&pref);
-  bool at_pref = (width() == pref.cx);
+  gfx::Size pref = GetPreferredSize();
+  bool at_pref = (width() == pref.width());
   if (at_pref)
     full_label_.SetBounds(0, 0, width(), height());
   else
@@ -772,21 +756,21 @@ void LocationBarView::KeywordHintView::Paint(ChromeCanvas* canvas) {
                         tab_button_bounds.y());
 }
 
-void LocationBarView::KeywordHintView::GetPreferredSize(CSize *out) {
+gfx::Size LocationBarView::KeywordHintView::GetPreferredSize() {
   // TODO(sky): currently height doesn't matter, once baseline support is
   // added this should check baselines.
-  leading_label_.GetPreferredSize(out);
-  int width = out->cx;
+  gfx::Size prefsize = leading_label_.GetPreferredSize();
+  int width = prefsize.width();
   width += kTabButtonBitmap->width();
-  trailing_label_.GetPreferredSize(out);
-  width += out->cx;
-  out->cx = width;
+  prefsize = trailing_label_.GetPreferredSize();
+  width += prefsize.width();
+  return gfx::Size(width, prefsize.height());
 }
 
-void LocationBarView::KeywordHintView::GetMinimumSize(CSize* out) {
+gfx::Size LocationBarView::KeywordHintView::GetMinimumSize() {
   // TODO(sky): currently height doesn't matter, once baseline support is
   // added this should check baselines.
-  out->cx = kTabButtonBitmap->width();
+  return gfx::Size(kTabButtonBitmap->width(), 0);
 }
 
 void LocationBarView::KeywordHintView::Layout() {
@@ -796,26 +780,21 @@ void LocationBarView::KeywordHintView::Layout() {
   leading_label_.SetVisible(show_labels);
   trailing_label_.SetVisible(show_labels);
   int x = 0;
-  CSize pref;
+  gfx::Size pref;
 
   if (show_labels) {
-    leading_label_.GetPreferredSize(&pref);
-    leading_label_.SetBounds(x, 0, pref.cx, height());
+    pref = leading_label_.GetPreferredSize();
+    leading_label_.SetBounds(x, 0, pref.width(), height());
 
-    x += pref.cx + kTabButtonBitmap->width();
-    trailing_label_.GetPreferredSize(&pref);
-    trailing_label_.SetBounds(x, 0, pref.cx, height());
+    x += pref.width() + kTabButtonBitmap->width();
+    pref = trailing_label_.GetPreferredSize();
+    trailing_label_.SetBounds(x, 0, pref.width(), height());
   }
-}
-
-void LocationBarView::KeywordHintView::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
 }
 
 // We don't translate accelerators for ALT + numpad digit, they are used for
 // entering special characters.
-bool LocationBarView::ShouldLookupAccelerators(const ChromeViews::KeyEvent& e) {
+bool LocationBarView::ShouldLookupAccelerators(const views::KeyEvent& e) {
   if (!e.IsAltDown())
     return true;
 
@@ -847,7 +826,7 @@ void LocationBarView::ShowInfoBubbleTask::Run() {
   if (cancelled_)
     return;
 
-  if (!image_view_->GetViewContainer()->IsActive()) {
+  if (!image_view_->GetContainer()->IsActive()) {
     // The browser is no longer active.  Let's not show the info bubble, this
     // would make the browser the active window again.  Also makes sure we NULL
     // show_info_bubble_task_ to prevent the SecurityImageView from keeping a
@@ -868,32 +847,32 @@ void LocationBarView::ShowInfoBubbleTask::Cancel() {
 void LocationBarView::ShowFirstRunBubbleInternal() {
   if (!location_entry_view_)
     return;
-  if (!location_entry_view_->GetViewContainer()->IsActive()) {
+  if (!location_entry_view_->GetContainer()->IsActive()) {
     // The browser is no longer active.  Let's not show the info bubble, this
     // would make the browser the active window again.
     return;
   }
 
-  CPoint location(0, 0);
+  gfx::Point location;
 
   // If the UI layout is RTL, the coordinate system is not transformed and
   // therefore we need to adjust the X coordinate so that bubble appears on the
   // right hand side of the location bar.
   if (UILayoutIsRightToLeft())
-    location.x += width();
-  ChromeViews::View::ConvertPointToScreen(this, &location);
+    location.Offset(width(), 0);
+  views::View::ConvertPointToScreen(this, &location);
 
   // We try to guess that 20 pixels offset is a good place for the first
   // letter in the OmniBox.
-  gfx::Rect bounds(location.x, location.y, 20, height());
+  gfx::Rect bounds(location.x(), location.y(), 20, height());
 
   // Moving the bounds "backwards" so that it appears within the location bar
   // if the UI layout is RTL.
   if (UILayoutIsRightToLeft())
-    bounds.set_x(location.x - 20);
+    bounds.set_x(location.x() - 20);
 
   FirstRunBubble::Show(
-      location_entry_view_->GetRootView()->GetViewContainer()->GetHWND(),
+      location_entry_view_->GetRootView()->GetContainer()->GetHWND(),
       bounds);
 }
 
@@ -954,25 +933,25 @@ void LocationBarView::SecurityImageView::ShowInfoBubble() {
   SkColor text_color;
   model_->GetIconHoverText(&text, &text_color);
 
-  CPoint location(0, 0);
-  ChromeViews::View::ConvertPointToScreen(this, &location);
-  gfx::Rect bounds(location.x, location.y, width(), height());
+  gfx::Point location;
+  views::View::ConvertPointToScreen(this, &location);
+  gfx::Rect bounds(location.x(), location.y(), width(), height());
 
-  ChromeViews::Label* label = new ChromeViews::Label(text);
+  views::Label* label = new views::Label(text);
   label->SetMultiLine(true);
   label->SetColor(text_color);
   label->SetFont(ResourceBundle::GetSharedInstance().GetFont(
       ResourceBundle::BaseFont).DeriveFont(2));
-  label->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   label->SizeToFit(0);
   DCHECK(info_bubble_ == NULL);
-  info_bubble_ = InfoBubble::Show(GetRootView()->GetViewContainer()->GetHWND(),
+  info_bubble_ = InfoBubble::Show(GetRootView()->GetContainer()->GetHWND(),
                                   bounds, label, this);
   show_info_bubble_task_ = NULL;
 }
 
 void LocationBarView::SecurityImageView::OnMouseMoved(
-    const ChromeViews::MouseEvent& event) {
+    const views::MouseEvent& event) {
   if (show_info_bubble_task_) {
     show_info_bubble_task_->Cancel();
     show_info_bubble_task_ = NULL;
@@ -989,7 +968,7 @@ void LocationBarView::SecurityImageView::OnMouseMoved(
 }
 
 void LocationBarView::SecurityImageView::OnMouseExited(
-    const ChromeViews::MouseEvent& event) {
+    const views::MouseEvent& event) {
   if (show_info_bubble_task_) {
     show_info_bubble_task_->Cancel();
     show_info_bubble_task_ = NULL;
@@ -1000,7 +979,7 @@ void LocationBarView::SecurityImageView::OnMouseExited(
 }
 
 bool LocationBarView::SecurityImageView::OnMousePressed(
-    const ChromeViews::MouseEvent& event) {
+    const views::MouseEvent& event) {
   NavigationEntry* nav_entry =
       BrowserList::GetLastActive()->GetSelectedTabContents()->
           controller()->GetActiveEntry();
@@ -1010,7 +989,7 @@ bool LocationBarView::SecurityImageView::OnMousePressed(
   }
   PageInfoWindow::CreatePageInfo(profile_,
                                  nav_entry,
-                                 GetRootView()->GetViewContainer()->GetHWND(),
+                                 GetRootView()->GetContainer()->GetHWND(),
                                  PageInfoWindow::SECURITY);
   return true;
 }
@@ -1021,7 +1000,7 @@ void LocationBarView::SecurityImageView::InfoBubbleClosing(
 }
 
 bool LocationBarView::OverrideAccelerator(
-    const ChromeViews::Accelerator& accelerator)  {
+    const views::Accelerator& accelerator)  {
   return location_entry_->OverrideAccelerator(accelerator);
 }
 

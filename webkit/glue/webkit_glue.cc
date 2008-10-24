@@ -23,7 +23,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "ImageSource.h"
 #endif
 #include "KURL.h"
-#include "LogWin.h"
 #include "Page.h"
 #include "PlatformString.h"
 #include "RenderTreeAsText.h"
@@ -33,7 +32,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 #undef LOG
-#undef notImplemented
 #include "webkit/glue/webkit_glue.h"
 
 #include "base/file_version_info.h"
@@ -50,15 +48,18 @@ MSVC_POP_WARNING();
 
 namespace webkit_glue {
 
+// Global variable used by the plugin quirk "die after unload".
+bool g_forcefully_terminate_plugin_process = false;
+
 void SetJavaScriptFlags(const std::wstring& str) {
-#if USE(V8) || USE(JSC)
+#if USE(V8)
   std::string utf8_str = WideToUTF8(str);
   WebCore::ScriptController::setFlags(utf8_str.data(), static_cast<int>(utf8_str.size()));
 #endif
 }
 
 void SetRecordPlaybackMode(bool value) {
-#if USE(V8) || USE(JSC)
+#if USE(V8)
   WebCore::ScriptController::setRecordPlaybackMode(value);
 #endif
 }
@@ -373,9 +374,9 @@ void SetUserAgentToDefault() {
   // maximally compatible with Safari, we hope!!
   std::string product;
 
-  FileVersionInfo* version_info =
-      FileVersionInfo::CreateFileVersionInfoForCurrentModule();
-  if (version_info)
+  scoped_ptr<FileVersionInfo> version_info(
+      FileVersionInfo::CreateFileVersionInfoForCurrentModule());
+  if (version_info.get())
     product = "Chrome/" + WideToASCII(version_info->product_version());
 
   if (product.empty())
@@ -441,6 +442,19 @@ void NotifyJSOutOfMemory(WebCore::Frame* frame) {
   if (!delegate)
     return;
   delegate->JSOutOfMemory();
+}
+
+void SetForcefullyTerminatePluginProcess(bool value) {
+  if (IsPluginRunningInRendererProcess()) {
+    // Ignore this quirk when the plugins are not running in their own process.
+    return;
+  }
+
+  g_forcefully_terminate_plugin_process = value;
+}
+
+bool ShouldForcefullyTerminatePluginProcess() {
+  return g_forcefully_terminate_plugin_process;
 }
 
 } // namespace webkit_glue

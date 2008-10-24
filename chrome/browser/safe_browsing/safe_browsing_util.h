@@ -34,6 +34,7 @@ class SBEntry;
 typedef struct {
   std::string url;
   std::string mac;
+  std::string list_name;
 } ChunkUrl;
 
 // A truncated hash's type.
@@ -57,6 +58,8 @@ struct SBChunkHost {
 // Container for an add/sub chunk.
 struct SBChunk {
   int chunk_number;
+  int list_id;
+  bool is_add;
   std::deque<SBChunkHost> hosts;
 };
 

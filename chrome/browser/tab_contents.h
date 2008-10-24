@@ -14,11 +14,13 @@
 #include "chrome/browser/page_navigator.h"
 #include "chrome/browser/tab_contents_type.h"
 #include "chrome/common/navigation_types.h"
-#include "chrome/common/text_zoom.h"
 
 namespace gfx {
 class Rect;
 class Size;
+}
+namespace views {
+class WindowDelegate;
 }
 
 class DOMUIHost;
@@ -207,11 +209,6 @@ class TabContents : public PageNavigator,
   // Returns a human-readable description the tab's loading state.
   virtual std::wstring GetStatusText() const { return std::wstring(); }
 
-  const std::wstring& encoding() { return encoding_name_; }
-  void set_encoding(const std::wstring& encoding_name) {
-    encoding_name_ = encoding_name;
-  }
-
   // Return whether this tab contents is loading a resource.
   bool is_loading() const { return is_loading_; }
 
@@ -287,20 +284,6 @@ class TabContents : public PageNavigator,
   // Stop any pending navigation.
   virtual void Stop() {}
 
-  // An asynchronous call to trigger the string search in the page.
-  // It sends an IPC message to the Renderer that handles the string
-  // search, selecting the matches and setting the caret positions.
-  // This function also starts the asynchronous scoping effort.
-  virtual void StartFinding(int request_id,
-                            const std::wstring& string,
-                            bool forward, bool match_case,
-                            bool find_next) { }
-
-  // An asynchronous call to stop the string search in the page. If
-  // |clear_selection| is true, it will also clear the selection on the
-  // focused frame.
-  virtual void StopFinding(bool clear_selection) { }
-
   // TODO(erg): HACK ALERT! This was thrown together for beta and
   // needs to be completely removed after we ship it. Right now, the
   // cut/copy/paste menu items are always enabled and will send a
@@ -312,6 +295,9 @@ class TabContents : public PageNavigator,
   virtual void Copy() { }
   virtual void Paste() { }
 
+  // Called on a TabContents when it isn't a popup, but a new window.
+  virtual void DisassociateFromPopupCount() { }
+
   // Window management ---------------------------------------------------------
 
   // Create a new window constrained to this TabContents' clip and visibility.
@@ -320,8 +306,8 @@ class TabContents : public PageNavigator,
   // is sized according to the preferred size of the content_view, and centered
   // within the contents.
   ConstrainedWindow* CreateConstrainedDialog(
-      ChromeViews::WindowDelegate* window_delegate,
-      ChromeViews::View* contents_view);
+      views::WindowDelegate* window_delegate,
+      views::View* contents_view);
 
   // Adds a new tab or window with the given already-created contents
   void AddNewContents(TabContents* new_contents,
@@ -344,15 +330,6 @@ class TabContents : public PageNavigator,
   // right of the screen. This is a quick way for users to "clean up" a flurry
   // of unwanted popups.
   void CloseAllSuppressedPopups();
-
-  // Show, Hide and Size the TabContents.
-  // TODO(beng): (Cleanup) Show/Size TabContents should be made to actually
-  //             show and size the View. For simplicity sake, for now they're
-  //             just empty. This is currently a bit of a mess and is just a
-  //             band-aid.
-  virtual void ShowContents() {}
-  virtual void HideContents();
-  virtual void SizeContents(const gfx::Size& size) {}
 
   // Views and focus -----------------------------------------------------------
 
@@ -404,20 +381,12 @@ class TabContents : public PageNavigator,
   // this returns NULL, the TabContents is supposed to know how to process TAB
   // key events and is just sent the key messages.  If this returns a RootView,
   // the focus is passed to the RootView.
-  virtual ChromeViews::RootView* GetContentsRootView() { return NULL; }
+  virtual views::RootView* GetContentsRootView() { return NULL; }
 
   // Toolbars and such ---------------------------------------------------------
  
   // Returns whether the bookmark bar should be visible.
   virtual bool IsBookmarkBarAlwaysVisible() { return false; }
-
-  // Returns the View to display at the top of the tab.
-  virtual InfoBarView* GetInfoBarView() { return NULL; }
-
-  // Returns whether the info bar is visible.
-  // If the visibility dynamically changes, invoke ToolbarSizeChanged
-  // on the delegate. Which forces the frame to layout if size has changed.
-  virtual bool IsInfoBarVisible() { return false; }
 
   // Whether or not the shelf view is visible.
   virtual void SetDownloadShelfVisible(bool visible);
@@ -543,8 +512,6 @@ class TabContents : public PageNavigator,
 
   // The id used in the ViewStorage to store the last focused view.
   int last_focused_view_storage_id_;
-
-  std::wstring encoding_name_;
 
   // See capturing_contents() above.
   bool capturing_contents_;

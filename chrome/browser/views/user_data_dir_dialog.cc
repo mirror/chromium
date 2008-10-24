@@ -29,7 +29,7 @@ UserDataDirDialog::UserDataDirDialog(const std::wstring& user_data_dir)
   message_box_view_ = new MessageBoxView(MessageBoxView::kIsConfirmMessageBox,
       message_text.c_str(), std::wstring(), kDialogWidth);
 
-  ChromeViews::Window::CreateChromeWindow(NULL, gfx::Rect(), this)->Show();
+  views::Window::CreateChromeWindow(NULL, gfx::Rect(), this)->Show();
 }
 
 UserDataDirDialog::~UserDataDirDialog() {
@@ -70,7 +70,7 @@ bool UserDataDirDialog::Accept() {
   std::wstring dialog_title = l10n_util::GetString(
       IDS_CANT_WRITE_USER_DIRECTORY_CHOOSE_DIRECTORY_BUTTON);
   HWND owning_hwnd =
-      GetAncestor(message_box_view_->GetViewContainer()->GetHWND(), GA_ROOT);
+      GetAncestor(message_box_view_->GetContainer()->GetHWND(), GA_ROOT);
   select_file_dialog_->SelectFile(SelectFileDialog::SELECT_FOLDER,
                                   dialog_title, std::wstring(), owning_hwnd,
                                   NULL);
@@ -82,7 +82,7 @@ bool UserDataDirDialog::Cancel() {
   return true;
 }
 
-ChromeViews::View* UserDataDirDialog::GetContentsView() {
+views::View* UserDataDirDialog::GetContentsView() {
   return message_box_view_;
 }
 

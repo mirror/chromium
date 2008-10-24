@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_RENDER_WIDGET_HOST_VIEW_H__
-#define CHROME_BROWSER_RENDER_WIDGET_HOST_VIEW_H__
+#ifndef CHROME_BROWSER_RENDER_WIDGET_HOST_VIEW_H_
+#define CHROME_BROWSER_RENDER_WIDGET_HOST_VIEW_H_
 
 #include <windows.h>
 
@@ -18,6 +18,8 @@ namespace IPC {
 class Message;
 }
 
+class RenderProcessHost;
+class RenderWidgetHost;
 class WebCursor;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -35,6 +37,16 @@ class WebCursor;
 ///////////////////////////////////////////////////////////////////////////////
 class RenderWidgetHostView {
  public:
+  // Platform-specific creator. Use this to construct new RenderWidgetHostViews
+  // rather than using RenderWidgetHostViewWin & friends.
+  //
+  // The RenderWidgetHost must already be created (because we can't know if it's
+  // going to be a regular RenderWidgetHost or a RenderViewHost (a subclass).
+  static RenderWidgetHostView* CreateViewForWidget(RenderWidgetHost* widget);
+
+  // Returns the associated RenderWidgetHost.
+  virtual RenderWidgetHost* GetRenderWidgetHost() const = 0;
+
   // Notifies the View that it has become visible.
   virtual void DidBecomeSelected() = 0;
 
@@ -97,7 +109,14 @@ class RenderWidgetHostView {
   // Tells the View that the tooltip text for the current mouse position over
   // the page has changed.
   virtual void SetTooltipText(const std::wstring& tooltip_text) = 0;
+
+ protected:
+  // Interface class only, do not construct.
+  RenderWidgetHostView() {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostView);
 };
 
-#endif  // #ifndef CHROME_BROWSER_RENDER_WIDGET_HOST_VIEW_H__
+#endif  // #ifndef CHROME_BROWSER_RENDER_WIDGET_HOST_VIEW_H_
 

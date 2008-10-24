@@ -8,6 +8,8 @@
 #include <windows.h>
 #include <tchar.h>
 
+#define NEW_FRAMES
+
 ///////////////////////////////////////////////////////////////////
 // Constant Definitations specific to Chrome Accessibility Tests.
 ///////////////////////////////////////////////////////////////////
@@ -22,7 +24,7 @@
 #define CHROME_VIEWS_TEXT_FIELD_EDIT    _T("ChromeViewsTextFieldEdit")
 #define CHROME_AUTOCOMPLETE_EDIT        _T("Chrome_AutocompleteEdit")
 #define CHROME_VIEWS_NATIVE_CTRL_CONTNR _T("ChromeViewsNativeControlContainer")
-#define CHROME_HWND_VIEW_CONTAINER      _T("Chrome_HWNDViewContainer_0")
+#define CHROME_HWND_VIEW_CONTAINER      _T("Chrome_ContainerWin_0")
 #define STD_BUTTON                      _T("Button")
 #define AUTH_TITLE                      _T("Authentication Required - Chrome")
 #define CHROME_TAB_CONTENTS             _T("Chrome_TabContents")

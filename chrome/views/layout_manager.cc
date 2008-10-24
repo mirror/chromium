@@ -6,13 +6,11 @@
 
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 int LayoutManager::GetPreferredHeightForWidth(View* host, int width) {
-  CSize pref;
-  GetPreferredSize(host, &pref);
-  return pref.cy;
+  return GetPreferredSize(host).height();
 }
 
-}  // namespace
+}  // namespace views
 

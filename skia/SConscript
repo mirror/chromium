@@ -13,7 +13,7 @@ env.Prepend(
     'corecg',
     'sgl',
     'picture',
-    '#..',
+    '$CHROME_SRC_DIR',
   ],
 )
 
@@ -82,7 +82,6 @@ input_files = [
   'effects/SkUnitMappers.cpp',
   'images/SkImageDecoder.cpp',
   'images/SkImageRef.cpp',
-  'images/SkStream.cpp',
   'images/SkStream.cpp',
   'picture/SkPictureFlat.cpp',
   'picture/SkPicturePlayback.cpp',

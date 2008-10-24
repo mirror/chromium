@@ -26,8 +26,11 @@ class Clipboard {
   typedef unsigned int FormatType;
 #elif defined(OS_MACOSX)
   typedef NSString *FormatType;
+#elif defined(OS_LINUX)
+  typedef struct _GdkAtom* FormatType;
+  typedef struct _GtkClipboard GtkClipboard;
 #endif
-  
+
   Clipboard();
   ~Clipboard();
 
@@ -131,6 +134,8 @@ class Clipboard {
                                            std::string* url);
 
   HWND clipboard_owner_;
+#elif defined(OS_LINUX)
+  GtkClipboard* clipboard_;
 #endif
 
   DISALLOW_EVIL_CONSTRUCTORS(Clipboard);

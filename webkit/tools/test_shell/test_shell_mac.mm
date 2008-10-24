@@ -9,6 +9,7 @@
 
 #include "base/basictypes.h"
 #include "base/debug_on_start.h"
+#include "base/debug_util.h"
 #include "base/file_util.h"
 #include "base/gfx/bitmap_platform_device.h"
 #include "base/gfx/png_encoder.h"
@@ -125,16 +126,24 @@ static void UnitTestAssertHandler(const std::string& str) {
 }
 
 // static
-void TestShell::InitLogging(bool suppress_error_dialogs) {
+void TestShell::InitLogging(bool suppress_error_dialogs,
+                            bool running_layout_tests) {
   if (suppress_error_dialogs) {
     logging::SetLogAssertHandler(UnitTestAssertHandler);
   }
+
+  // Only log to a file if we're running layout tests. This prevents debugging
+  // output from disrupting whether or not we pass.
+  logging::LoggingDestination destination = 
+      logging::LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG;
+  if (running_layout_tests)
+    destination = logging::LOG_ONLY_TO_FILE;
   
   // We might have multiple test_shell processes going at once
   char log_filename_template[] = "/tmp/test_shell_XXXXXX";
   char* log_filename = mktemp(log_filename_template);
   logging::InitLogging(log_filename,
-                       logging::LOG_TO_BOTH_FILE_AND_SYSTEM_DEBUG_LOG,
+                       destination,
                        logging::LOCK_LOG_FILE,
                        logging::DELETE_OLD_LOG_FILE);
   
@@ -294,6 +303,61 @@ void TestShell::TestFinished() {
   MessageLoop::current()->Quit();
 }
 
+// A class to be the target/selector of the "watchdog" thread that ensures
+// pages timeout if they take too long and tells the test harness via stdout.
+@interface WatchDogTarget : NSObject {
+ @private
+  NSTimeInterval timeout_;
+}
+// |timeout| is in seconds
+- (id)initWithTimeout:(NSTimeInterval)timeout;
+// serves as the "run" method of a NSThread.
+- (void)run:(id)sender;
+@end
+
+@implementation WatchDogTarget
+
+- (id)initWithTimeout:(NSTimeInterval)timeout {
+  if ((self = [super init])) {
+    timeout_ = timeout;
+  }
+  return self;
+}
+
+- (void)run:(id)ignore {
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  
+  // check for debugger, just bail if so. We don't want the timeouts hitting
+  // when we're trying to track down an issue.
+  if (DebugUtil::BeingDebugged())
+    return;
+    
+  NSThread* currentThread = [NSThread currentThread];
+  
+  // Wait to be cancelled. If we are that means the test finished. If it hasn't,
+  // then we need to tell the layout script we timed out and start again.
+  NSDate* limitDate = [NSDate dateWithTimeIntervalSinceNow:timeout_];
+  while ([(NSDate*)[NSDate date] compare:limitDate] == NSOrderedAscending &&
+         ![currentThread isCancelled]) {
+    // sleep for a small increment then check again
+    NSDate* incrementDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+    [NSThread sleepUntilDate:incrementDate];
+  }
+  if (![currentThread isCancelled]) {
+    // Print a warning to be caught by the layout-test script.
+    // Note: the layout test driver may or may not recognize
+    // this as a timeout.
+    puts("#TEST_TIMED_OUT\n");
+    puts("#EOF\n");
+    fflush(stdout);
+    abort();
+  }
+
+  [pool release];
+}
+
+@end
+
 void TestShell::WaitTestFinished() {
   DCHECK(!test_is_pending_) << "cannot be used recursively";
   
@@ -305,13 +369,25 @@ void TestShell::WaitTestFinished() {
   // message loop.  If the watchdog is what catches a 
   // timeout, it can't do anything except terminate the test
   // shell, which is unfortunate.
-  
-  // TODO(port): implement this
+  // Windows multiplies by 2.5, but that causes us to run for far, far too
+  // long. We can adjust it down later if we need to.
+  NSTimeInterval timeout_seconds = GetFileTestTimeout() / 1000;
+  WatchDogTarget* watchdog = [[[WatchDogTarget alloc] 
+                                initWithTimeout:timeout_seconds] autorelease];
+  NSThread* thread = [[NSThread alloc] initWithTarget:watchdog
+                                             selector:@selector(run:) 
+                                               object:nil];
+  [thread start];
   
   // TestFinished() will post a quit message to break this loop when the page
   // finishes loading.
   while (test_is_pending_)
     MessageLoop::current()->Run();
+
+  // Tell the watchdog that we're finished. No point waiting to re-join, it'll
+  // die on its own.
+  [thread cancel];
+  [thread release];
 }
 
 void TestShell::Show(WebView* webview, WindowOpenDisposition disposition) {
@@ -492,8 +568,10 @@ void TestShell::ResizeSubViews() {
   ResetWebPreferences();
   shell->webView()->SetPreferences(*web_prefs_);
 
-  [shell->m_mainWnd setFrameTopLeftPoint:NSMakePoint(kTestWindowXLocation,
-                                                     kTestWindowYLocation)];
+  // Hide the window. We can't actually use NSWindow's |-setFrameTopLeftPoint:|
+  // because it leaves a chunk of the window visible instead of moving it
+  // offscreen.
+  [shell->m_mainWnd orderOut:nil];
   shell->ResizeSubViews();
 
   if (strstr(filename, "loading/"))
@@ -732,13 +810,7 @@ std::string TestShell::RewriteLocalUrl(const std::string& url) {
 
 namespace webkit_glue {
 
-bool HistoryContains(const char16* url, int url_length, 
-                     const char* document_host, int document_host_length,
-                     bool is_dns_prefetch_enabled) {
-  return false;
-}
-
-void DnsPrefetchUrl(const char16* url, int url_length) {}
+void PrefetchDns(const std::string& hostname) {}
 
 void PrecacheUrl(const char16* url, int url_length) {}
 

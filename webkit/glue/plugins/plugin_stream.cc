@@ -83,8 +83,10 @@ bool PluginStream::Open(const std::string &mime_type,
   NPError err = instance_->NPP_NewStream((NPMIMEType)char_mime_type,
                                          &stream_, seekable_stream,
                                          &requested_plugin_mode_);
-  if (err != NPERR_NO_ERROR)
+  if (err != NPERR_NO_ERROR) {
+    Notify(err);
     return false;
+  }
 
   opened_ = true;
 
@@ -113,7 +115,7 @@ int PluginStream::Write(const char *buffer, const int length,
   // to each stream, we'll return failure.
 
   DCHECK(opened_);
-  if (WriteToFile(buffer, length) && 
+  if (WriteToFile(buffer, length) &&
       WriteToPlugin(buffer, length, data_offset))
     return length;
 

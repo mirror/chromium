@@ -133,7 +133,7 @@ void BaseContextMenu::ExecuteCommand(int id) {
       break;
     }
     case REMOVE_ITEM:
-      download_->Remove();
+      download_->Remove(false);
       break;
     case CANCEL:
       download_->Cancel(true);
@@ -245,7 +245,7 @@ SkBitmap* g_foreground_32 = NULL;
 SkBitmap* g_background_32 = NULL;
 
 void PaintDownloadProgress(ChromeCanvas* canvas,
-                           ChromeViews::View* containing_view,
+                           views::View* containing_view,
                            int origin_x,
                            int origin_y,
                            int start_angle,
@@ -344,7 +344,7 @@ void PaintDownloadProgress(ChromeCanvas* canvas,
 }
 
 void PaintDownloadComplete(ChromeCanvas* canvas,
-                           ChromeViews::View* containing_view,
+                           views::View* containing_view,
                            int origin_x,
                            int origin_y,
                            double animation_progress,

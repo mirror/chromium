@@ -7,7 +7,7 @@
 
 #include "chrome/views/checkbox.h"
 
-namespace ChromeViews {
+namespace views {
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -29,7 +29,7 @@ class RadioButton : public CheckBox {
   RadioButton(const std::wstring& label, int group_id);
   virtual ~RadioButton();
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
 
   virtual std::string GetClassName() const;
@@ -55,6 +55,7 @@ class RadioButton : public CheckBox {
   DISALLOW_EVIL_CONSTRUCTORS(RadioButton);
 };
 
-}
+}  // namespace views
+
 #endif // CHROME_VIEWS_RADIO_BUTTON_H__
 

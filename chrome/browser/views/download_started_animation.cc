@@ -7,7 +7,7 @@
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 
 // How long to spend moving downwards and fading out after waiting.
 static const int kMoveTimeMs = 600;
@@ -44,7 +44,7 @@ DownloadStartedAnimation::DownloadStartedAnimation(TabContents* tab_contents)
   SetImage(kDownloadImage);
 
   gfx::Rect rc(0, 0, 0, 0);
-  popup_ = new ChromeViews::HWNDViewContainer;
+  popup_ = new views::ContainerWin;
   popup_->set_window_style(WS_POPUP);
   popup_->set_window_ex_style(WS_EX_LAYERED | WS_EX_TOOLWINDOW |
                               WS_EX_TRANSPARENT);
@@ -63,12 +63,13 @@ void DownloadStartedAnimation::Reposition() {
 
   // Align the image with the bottom left of the web contents (so that it
   // points to the newly created download).
-  CSize size;
-  GetPreferredSize(&size);
-  popup_->MoveWindow(tab_contents_bounds_.x(),
-                     static_cast<int>(tab_contents_bounds_.bottom() - size.cy -
-                     size.cy * (1 - GetCurrentValue())),
-                     size.cx, size.cy);
+  gfx::Size size = GetPreferredSize();
+  popup_->MoveWindow(
+      tab_contents_bounds_.x(),
+      static_cast<int>(tab_contents_bounds_.bottom() -
+          size.height() - size.height() * (1 - GetCurrentValue())),
+      size.width(),
+      size.height());
 }
 
 void DownloadStartedAnimation::Close() {

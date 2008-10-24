@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// These classes define a text field widget that can be used in the ChromeViews
-// UI toolkit.
+// These classes define a text field widget that can be used in the views UI
+// toolkit.
 
 #ifndef CHROME_VIEWS_TEXT_FIELD_H__
 #define CHROME_VIEWS_TEXT_FIELD_H__
@@ -15,7 +15,7 @@
 #include "chrome/views/view.h"
 #include "skia/include/SkColor.h"
 
-namespace ChromeViews {
+namespace views {
 
 class HWNDView;
 
@@ -72,8 +72,7 @@ class TextField : public View {
 
   // Overridden for layout purposes
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* sz);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual gfx::Size GetPreferredSize();
 
   // Controller accessors
   void SetController(Controller* controller);
@@ -192,7 +191,7 @@ class TextField : public View {
   DISALLOW_EVIL_CONSTRUCTORS(TextField);
 };
 
-}  // namespace ChromeViews
+}  // namespace views
 
 #endif  // CHROME_VIEWS_TEXT_FIELD_H__
 

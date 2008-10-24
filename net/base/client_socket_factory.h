@@ -11,6 +11,8 @@ namespace net {
 
 class AddressList;
 class ClientSocket;
+class SSLClientSocket;
+struct SSLConfig;
 
 // An interface used to instantiate ClientSocket objects.  Used to facilitate
 // testing code with mock socket implementations.
@@ -21,9 +23,10 @@ class ClientSocketFactory {
   virtual ClientSocket* CreateTCPClientSocket(
       const AddressList& addresses) = 0;
 
-  virtual ClientSocket* CreateSSLClientSocket(
+  virtual SSLClientSocket* CreateSSLClientSocket(
       ClientSocket* transport_socket,
-      const std::string& hostname) = 0;
+      const std::string& hostname,
+      const SSLConfig& ssl_config) = 0;
 
   // Returns the default ClientSocketFactory.
   static ClientSocketFactory* GetDefaultFactory();

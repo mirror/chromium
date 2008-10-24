@@ -413,6 +413,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\base\scoped_cert_chain_context.h"
+				>
+			</File>
+			<File
 				RelativePath="..\base\sdch_filter.cc"
 				>
 			</File>
@@ -433,11 +437,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\ssl_client_socket.cc"
+				RelativePath="..\base\ssl_client_socket.h"
 				>
 			</File>
 			<File
-				RelativePath="..\base\ssl_client_socket.h"
+				RelativePath="..\base\ssl_client_socket_win.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\base\ssl_client_socket_win.h"
 				>
 			</File>
 			<File
@@ -1002,6 +1010,10 @@
 			</File>
 			<File
 				RelativePath="..\proxy\proxy_resolver_fixed.h"
+				>
+			</File>
+			<File
+				RelativePath="..\proxy\proxy_resolver_null.h"
 				>
 			</File>
 			<File

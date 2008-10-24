@@ -11,8 +11,8 @@ env.Prepend(
     CPPPATH = [
         '$CHROME_DIR/app/resources',
         #'$OBJ_ROOT/google_update',
-        '#/tools/build/win',
-        '#/..',
+        '/chrome/tools/build/win',
+        '$CHROME_SRC_DIR',
     ],
     CPPDEFINES = [
         'U_STATIC_IMPLEMENTATION',
@@ -40,7 +40,7 @@ env.Append(
         '$CHROME_DIR/third_party/hunspell/src/hunspell',
         '$CHROME_DIR/third_party/wtl/include',
         '$NPAPI_DIR',
-        '$LIBXML_DIR/scons/include',
+        '$LIBXML_DIR/DerivedSources/include',
         '$LIBXML_DIR/include',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
@@ -158,6 +158,7 @@ if env['PLATFORM'] == 'win32':
       'download/download_item_model.cc',
       'download/download_manager.cc',
       'download/download_util.cc',
+      'download/download_request_manager.cc',
       'download/save_file.cc',
       'download/save_file_manager.cc',
       'download/save_item.cc',
@@ -198,6 +199,7 @@ if env['PLATFORM'] == 'win32':
       'importer/ie_importer.cc',
       'importer/importer.cc',
       'importer/mork_reader.cc',
+      'interstitial_page.cc',
       'ipc_status_view.cc',
       'jankometer.cc',
       'js_before_unload_handler.cc',
@@ -241,7 +243,6 @@ if env['PLATFORM'] == 'win32':
       'render_view_host_manager.cc',
       'render_widget_helper.cc',
       'render_widget_host.cc',
-      'render_widget_host_hwnd.cc',
       'repost_Form_warning_dialog.cc',
       'resource_dispatcher_host.cc',
       'resource_message_filter.cc',
@@ -289,12 +290,19 @@ if env['PLATFORM'] == 'win32':
       'web_app_icon_manager.cc',
       'web_app_launcher.cc',
       'web_contents.cc',
+      'web_contents_view.cc',
       'web_drag_source.cc',
       'web_drop_target.cc',
       'webdata/web_data_service.cc',
       'webdata/web_database.cc',
       'window_sizer.cc',
   ])
+
+  input_files.extend([
+      'web_contents_view_win.cc',
+      'render_widget_host_view_win.cc',
+  ])
+
 
 if env['PLATFORM'] in ('posix', 'win32'):
   # TODO: This should work for all platforms.

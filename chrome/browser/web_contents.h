@@ -14,26 +14,20 @@
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/web_app.h"
-#include "chrome/views/hwnd_view_container.h"
 
-class FindInPageController;
 class InterstitialPageDelegate;
 class PasswordManager;
 class PluginInstaller;
 class RenderViewHost;
 class RenderViewHostFactory;
 class RenderWidgetHost;
-class RenderWidgetHostHWND;
-class SadTabView;
-struct WebDropData;
-class WebDropTarget;
+class WebContentsView;
 
 // WebContents represents the contents of a tab that shows web pages. It embeds
 // a RenderViewHost (via RenderViewHostManager) to actually display the page.
 class WebContents : public TabContents,
                     public RenderViewHostDelegate,
                     public RenderViewHostManager::Delegate,
-                    public ChromeViews::HWNDViewContainer,
                     public SelectFileDialog::Listener,
                     public NotificationObserver,
                     public WebApp::Observer {
@@ -62,22 +56,26 @@ class WebContents : public TabContents,
   // Returns the SavePackage which manages the page saving job. May be NULL.
   SavePackage* save_package() const { return save_package_.get(); }
 
-  // Return the currently active RenderProcessHost, RenderViewHost, and
-  // SiteInstance, respectively.  Each of these may change over time.  Callers
-  // should be aware that the SiteInstance could be deleted if its ref count
-  // drops to zero (i.e., if all RenderViewHosts and NavigationEntries that
-  // use it are deleted).
+  // Return the currently active RenderProcessHost and RenderViewHost. Each of
+  // these may change over time.
   RenderProcessHost* process() const {
     return render_manager_.current_host()->process();
   }
   RenderViewHost* render_view_host() const {
     return render_manager_.current_host();
   }
-  RenderWidgetHostView* view() const {
-    return render_manager_.current_view();
+
+  // The WebContentsView will never change and is guaranteed non-NULL.
+  WebContentsView* view() const {
+    return view_.get();
   }
 
   bool is_starred() const { return is_starred_; }
+
+  const std::wstring& encoding() const { return encoding_; }
+  void set_encoding(const std::wstring& encoding) {
+    encoding_ = encoding;
+  }
 
   // TabContents (public overrides) --------------------------------------------
 
@@ -88,39 +86,23 @@ class WebContents : public TabContents,
   virtual std::wstring GetStatusText() const;
   virtual bool NavigateToPendingEntry(bool reload);
   virtual void Stop();
-  virtual void StartFinding(int request_id,
-                            const std::wstring& search_string,
-                            bool forward,
-                            bool match_case,
-                            bool find_next);
-  virtual void StopFinding(bool clear_selection);
   virtual void Cut();
   virtual void Copy();
   virtual void Paste();
+  virtual void DisassociateFromPopupCount();
   virtual void DidBecomeSelected();
   virtual void WasHidden();
   virtual void ShowContents();
   virtual void HideContents();
-  virtual void SizeContents(const gfx::Size& size);
-  virtual HWND GetContentHWND();
-  virtual void CreateView(HWND parent_hwnd, const gfx::Rect& initial_bounds);
-  virtual HWND GetContainerHWND() const { return GetHWND(); }
-  virtual void GetContainerBounds(gfx::Rect *out) const;
-  // Create the InfoBarView and returns it if none has been created.
-  // Just returns existing InfoBarView if it is already created.
-  virtual InfoBarView* GetInfoBarView();
-  virtual bool IsInfoBarVisible() { return info_bar_visible_; }
   virtual void SetDownloadShelfVisible(bool visible);
 
-  // Find in page --------------------------------------------------------------
-
-  // TODO(brettw) these should be commented.
-  void OpenFindInPageWindow(const Browser& browser);
-  void ReparentFindWindow(HWND new_parent);
-  bool AdvanceFindSelection(bool forward_direction);
-  bool IsFindWindowFullyVisible();
-  bool GetFindInPageWindowLocation(int* x, int* y);
-  void SetFindInPageVisible(bool visible);
+  // Retarded pass-throughs to the view.
+  // TODO(brettw) fix this, tab contents shouldn't have these methods, probably
+  // it should be killed altogether.
+  virtual void CreateView(HWND parent_hwnd, const gfx::Rect& initial_bounds);
+  virtual HWND GetContainerHWND() const;
+  virtual HWND GetContentHWND();
+  virtual void GetContainerBounds(gfx::Rect *out) const;
 
   // Web apps ------------------------------------------------------------------
 
@@ -144,22 +126,12 @@ class WebContents : public TabContents,
     return render_manager_.showing_repost_interstitial();
   }
 
-  // The rest of the system wants to interact with the delegate our render view
-  // host manager has. See those setters for more.
-  InterstitialPageDelegate* interstitial_page_delegate() const {
-    return render_manager_.interstitial_delegate();
-  }
-  void set_interstitial_delegate(InterstitialPageDelegate* delegate) {
-    render_manager_.set_interstitial_delegate(delegate);
-  }
-
-  // Displays the specified html in the current page. This method can be used to
-  // show temporary pages (such as security error pages).  It can be hidden by
+  // Displays the specified interstitial page. This method can be used to show
+  // temporary pages (such as security error pages).  It can be hidden by
   // calling HideInterstitialPage, in which case the original page is restored.
-  // An optional delegate may be passed, it is not owned by the WebContents.
-  void ShowInterstitialPage(const std::string& html_text,
-                            InterstitialPageDelegate* delegate) {
-    render_manager_.ShowInterstitialPage(html_text, delegate);
+  // |interstitial_page| is not owned by the WebContents.
+  void ShowInterstitialPage(InterstitialPage* interstitial_page) {
+    render_manager_.ShowInterstitialPage(interstitial_page);
   }
 
   // Reverts from the interstitial page to the original page.
@@ -173,12 +145,16 @@ class WebContents : public TabContents,
     render_manager_.HideInterstitialPage(wait_for_navigation, proceed);
   }
 
+  // Returns the interstitial page currently shown if any, NULL otherwise.
+  InterstitialPage* interstitial_page() const {
+    return render_manager_.interstitial_page();
+  }
+
   // Misc state & callbacks ----------------------------------------------------
 
   // Set whether the contents should block javascript message boxes or not.
   // Default is not to block any message boxes.
-  void set_suppress_javascript_messages(
-      bool suppress_javascript_messages) {
+  void set_suppress_javascript_messages(bool suppress_javascript_messages) {
     suppress_javascript_messages_ = suppress_javascript_messages;
   }
 
@@ -186,11 +162,6 @@ class WebContents : public TabContents,
   void OnJavaScriptMessageBoxClosed(IPC::Message* reply_msg,
                                     bool success,
                                     const std::wstring& prompt);
-
-  // Whether or not the info bar is visible. This delegates to
-  // the ChromeFrame method InfoBarVisibilityChanged. See also IsInfoBarVisible
-  // (a TabContents override).
-  void SetInfoBarVisible(bool visible);
 
   // Prepare for saving page.
   void OnSavePage();
@@ -222,9 +193,23 @@ class WebContents : public TabContents,
   // Returns true if this WebContents will notify about disconnection.
   bool notify_disconnection() const { return notify_disconnection_; }
 
+  // Override the encoding and reload the page by sending down
+  // ViewMsg_SetPageEncoding to the renderer. |UpdateEncoding| is kinda
+  // the opposite of this, by which 'browser' is notified of 
+  // the encoding of the current tab from 'renderer' (determined by
+  // auto-detect, http header, meta, bom detection, etc).
+  void override_encoding(const std::wstring& encoding) {
+    set_encoding(encoding);
+    render_view_host()->SetPageEncoding(encoding);
+  }
+
  protected:
   // Should be deleted via CloseContents.
   virtual ~WebContents();
+
+  RenderWidgetHostView* render_widget_host_view() const {
+    return render_manager_.current_view();
+  }
 
   // TabContents (private overrides) -------------------------------------------
 
@@ -233,16 +218,9 @@ class WebContents : public TabContents,
 
   // RenderViewHostDelegate ----------------------------------------------------
 
-  virtual RenderViewHostDelegate::FindInPage* GetFindInPageDelegate() const;
+  virtual RenderViewHostDelegate::View* GetViewDelegate() const;
   virtual RenderViewHostDelegate::Save* GetSaveDelegate() const;
   virtual Profile* GetProfile() const;
-  virtual void CreateView(int route_id, HANDLE modal_dialog_event);
-  virtual void CreateWidget(int route_id);
-  virtual void ShowView(int route_id,
-                        WindowOpenDisposition disposition,
-                        const gfx::Rect& initial_pos,
-                        bool user_gesture);
-  virtual void ShowWidget(int route_id, const gfx::Rect& initial_pos);
   virtual void RendererReady(RenderViewHost* render_view_host);
   virtual void RendererGone(RenderViewHost* render_view_host);
   virtual void DidNavigate(RenderViewHost* render_view_host,
@@ -256,7 +234,7 @@ class WebContents : public TabContents,
                            int32 page_id,
                            const std::wstring& title);
   virtual void UpdateEncoding(RenderViewHost* render_view_host,
-                              const std::wstring& encoding_name);
+                              const std::wstring& encoding);
   virtual void UpdateTargetURL(int32 page_id, const GURL& url);
   virtual void UpdateThumbnail(const GURL& url,
                                const SkBitmap& bitmap,
@@ -286,9 +264,6 @@ class WebContents : public TabContents,
                                 const GURL& image_url,
                                 bool errored,
                                 const SkBitmap& image);
-  virtual void ShowContextMenu(const ViewHostMsg_ContextMenu_Params& params);
-  virtual void StartDragging(const WebDropData& drop_data);
-  virtual void UpdateDragCursor(bool is_drop_target);
   virtual void RequestOpenURL(const GURL& url,
                               WindowOpenDisposition disposition);
   virtual void DomOperationResponse(const std::string& json_string,
@@ -309,13 +284,11 @@ class WebContents : public TabContents,
                                    const std::string& json_arguments,
                                    IPC::Message* reply_msg);
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms);
-  virtual void TakeFocus(bool reverse);
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
                            int32 page_id, const GURL& url, bool autodetected);
   virtual void InspectElementReply(int num_resources);
   virtual void DidGetPrintedPagesCount(int cookie, int number_pages);
   virtual void DidPrintPage(const ViewHostMsg_DidPrintPage_Params& params);
-  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event);
   virtual GURL GetAlternateErrorPageURL() const;
   virtual WebPreferences GetWebkitPrefs();
   virtual void OnMissingPluginStatus(int status);
@@ -339,6 +312,7 @@ class WebContents : public TabContents,
   virtual void OnDidGetApplicationInfo(
       int32 page_id,
       const webkit_glue::WebApplicationInfo& info);
+  virtual void OnEnterOrSpace();
 
   // SelectFileDialog::Listener ------------------------------------------------
 
@@ -384,6 +358,9 @@ class WebContents : public TabContents,
   FRIEND_TEST(WebContentsTest, UpdateTitle);
   friend class TestWebContents;
 
+  // Temporary until the view/contents separation is complete.
+  friend class WebContentsViewWin;
+
   // When CreateShortcut is invoked RenderViewHost::GetApplicationInfo is
   // invoked. CreateShortcut caches the state of the page needed to create the
   // shortcut in PendingInstall. When OnDidGetApplicationInfo is invoked, it
@@ -400,35 +377,12 @@ class WebContents : public TabContents,
     GearsCreateShortcutCallbackFunctor* callback_functor;
   };
 
+
   // NotificationObserver ------------------------------------------------------
 
   virtual void Observe(NotificationType type,
                        const NotificationSource& source,
                        const NotificationDetails& details);
-
-  // Windows events ------------------------------------------------------------
-
-  virtual void OnDestroy();
-  virtual void OnHScroll(int scroll_type, short position, HWND scrollbar);
-  virtual void OnMouseLeave();
-  virtual LRESULT OnMouseRange(UINT msg, WPARAM w_param, LPARAM l_param);
-  virtual void OnPaint(HDC junk_dc);
-  virtual LRESULT OnReflectedMessage(UINT msg, WPARAM w_param, LPARAM l_param);
-  virtual void OnSetFocus(HWND window);
-  virtual void OnVScroll(int scroll_type, short position, HWND scrollbar);
-  virtual void OnWindowPosChanged(WINDOWPOS* window_pos);
-  virtual void OnSize(UINT param, const CSize& size);
-  virtual LRESULT OnNCCalcSize(BOOL w_param, LPARAM l_param);
-  virtual void OnNCPaint(HRGN rgn);
-
-  // Backend for all scroll messages, the |message| parameter indicates which
-  // one it is.
-  void ScrollCommon(UINT message, int scroll_type, short position,
-                    HWND scrollbar);
-
-  // TODO(brettw) comment these. They're confusing. 
-  bool ScrollZoom(int scroll_type);
-  void WheelZoom(int distance);
 
   // Navigation helpers --------------------------------------------------------
   //
@@ -446,9 +400,11 @@ class WebContents : public TabContents,
       const NavigationController::LoadCommittedDetails& details,
       const ViewHostMsg_FrameNavigate_Params& params);
 
-  // Called when navigating the main frame to close all child windows if the
-  // domain is changing.
-  void MaybeCloseChildWindows(const ViewHostMsg_FrameNavigate_Params& params);
+  // Closes all child windows (constrained popups) when the domain changes.
+  // Supply the new and old URLs, and this function will figure out when the
+  // domain changing conditions are met.
+  void MaybeCloseChildWindows(const GURL& previous_url,
+                              const GURL& current_url);
 
   // Updates the starred state from the bookmark bar model. If the state has
   // changed, the delegate is notified.
@@ -488,16 +444,15 @@ class WebContents : public TabContents,
   virtual void UpdateHistoryForNavigation(const GURL& display_url,
       const ViewHostMsg_FrameNavigate_Params& params);
 
-  // Misc view stuff -----------------------------------------------------------
-
-  // Sets up the View that holds the rendered web page, receives messages for
-  // it and contains page plugins.
-  RenderWidgetHostHWND* CreatePageView(RenderViewHost* render_view_host);
-
-  // Enumerate and 'un-parent' any plugin windows that are children
-  // of this web contents.
-  void DetachPluginWindows();
-  static BOOL CALLBACK EnumPluginWindowsCallback(HWND window, LPARAM param);
+  // Saves the given title to the navigation entry and does associated work. It
+  // will update history and the view for the new title, and also synthesize
+  // titles for file URLs that have none (so we require that the URL of the
+  // entry already be set).
+  //
+  // This is used as the backend for state updates, which include a new title,
+  // or the dedicated set title message. It returns true if the new title is
+  // different and was therefore updated.
+  bool UpdateTitleForEntry(NavigationEntry* entry, const std::wstring& title);
 
   // Misc non-view stuff -------------------------------------------------------
 
@@ -511,6 +466,9 @@ class WebContents : public TabContents,
       const ViewHostMsg_FrameNavigate_Params& params);
 
   // Data ----------------------------------------------------------------------
+
+  // The corresponding view.
+  scoped_ptr<WebContentsView> view_;
 
   // Manages creation and swapping of render views.
   RenderViewHostManager render_manager_;
@@ -527,10 +485,6 @@ class WebContents : public TabContents,
   // once.
   bool notify_disconnection_;
 
-  // When a navigation occurs (and is committed), we record its URL. This lets
-  // us see where we are navigating from.
-  GURL last_url_;
-
   // Maps from handle to page_id.
   typedef std::map<HistoryService::Handle, int32> HistoryRequestMap;
   HistoryRequestMap history_requests_;
@@ -539,20 +493,13 @@ class WebContents : public TabContents,
   TimeTicks current_load_start_;
 
   // Whether we have a (non-empty) title for the current page.
-  // Used to prevent subsequent title updates from affecting history.
-  bool has_page_title_;
+  // Used to prevent subsequent title updates from affecting history. This
+  // prevents some weirdness because some AJAXy apps use titles for status
+  // messages.
+  bool received_page_title_;
 
   // SavePackage, lazily created.
   scoped_refptr<SavePackage> save_package_;
-
-  // InfoBarView, lazily created.
-  scoped_ptr<InfoBarView> info_bar_view_;
-
-  // Whether the info bar view is visible.
-  bool info_bar_visible_;
-
-  // Handles communication with the FindInPage popup.
-  scoped_ptr<FindInPageController> find_in_page_controller_;
 
   // Tracks our pending CancelableRequests. This maps pending requests to
   // page IDs so that we know whether a given callback still applies. The
@@ -573,22 +520,11 @@ class WebContents : public TabContents,
   // PluginInstaller, lazily created.
   scoped_ptr<PluginInstaller> plugin_installer_;
 
-  // A drop target object that handles drags over this WebContents.
-  scoped_refptr<WebDropTarget> drop_target_;
-
-  // The SadTab renderer.
-  scoped_ptr<SadTabView> sad_tab_;
-
   // Handles downloading favicons.
   FavIconHelper fav_icon_helper_;
 
   // Dialog box used for choosing files to upload from file form fields.
   scoped_refptr<SelectFileDialog> select_file_dialog_;
-
-  // Info bar for crashed plugin message.
-  // IMPORTANT: This instance is owned by the InfoBarView. It is valid
-  // only if InfoBarView::GetChildIndex for this view is valid.
-  InfoBarMessageView* crashed_plugin_info_bar_;
 
   // The time that the last javascript message was dismissed.
   TimeTicks last_javascript_message_dismissal_;
@@ -601,6 +537,9 @@ class WebContents : public TabContents,
   // used to check whether we can do something for some special contents.
   std::string contents_mime_type_;
 
+  // Character encoding. TODO(jungshik) : convert to std::string
+  std::wstring encoding_;
+
   PendingInstall pending_install_;
 
   // The last time that the download shelf was made visible.
@@ -609,14 +548,6 @@ class WebContents : public TabContents,
   // The current load state and the URL associated with it.
   net::LoadState load_state_;
   std::wstring load_state_host_;
-
-  // These maps hold on to the pages/widgets that we created on behalf of the
-  // renderer that haven't shown yet.
-  typedef base::hash_map<int, WebContents*> PendingViews;
-  PendingViews pending_views_;
-
-  typedef base::hash_map<int, RenderWidgetHost*> PendingWidgets;
-  PendingWidgets pending_widgets_;
 
   // Non-null if we're displaying content for a web app.
   scoped_refptr<WebApp> web_app_;

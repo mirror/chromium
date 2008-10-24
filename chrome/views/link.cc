@@ -8,7 +8,7 @@
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/views/event.h"
 
-namespace ChromeViews {
+namespace views {
 
 static HCURSOR g_hand_cursor = NULL;
 
@@ -84,7 +84,7 @@ bool Link::OnMousePressed(const MouseEvent& e) {
 bool Link::OnMouseDragged(const MouseEvent& e) {
   SetHighlighted(enabled_ &&
                  (e.IsLeftMouseButton() || e.IsMiddleMouseButton()) &&
-                 HitTest(WTL::CPoint(e.x(), e.y())));
+                 HitTest(e.location()));
   return true;
 }
 
@@ -94,7 +94,7 @@ void Link::OnMouseReleased(const MouseEvent& e, bool canceled) {
   SetHighlighted(false);
   if (enabled_ && !canceled &&
       (e.IsLeftMouseButton() || e.IsMiddleMouseButton()) &&
-      HitTest(WTL::CPoint(e.x(), e.y()))) {
+      HitTest(e.location())) {
     // Focus the link on click.
     RequestFocus();
 
@@ -184,5 +184,5 @@ HCURSOR Link::GetCursorForPoint(Event::EventType event_type, int x, int y) {
   }
 }
 
-}
+}  // namespace views
 

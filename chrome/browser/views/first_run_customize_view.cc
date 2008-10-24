@@ -48,17 +48,16 @@ FirstRunCustomizeView::FirstRunCustomizeView(Profile* profile,
 FirstRunCustomizeView::~FirstRunCustomizeView() {
 }
 
-ChromeViews::CheckBox* FirstRunCustomizeView::MakeCheckBox(int label_id) {
-  ChromeViews::CheckBox* cbox =
-      new ChromeViews::CheckBox(l10n_util::GetString(label_id));
+views::CheckBox* FirstRunCustomizeView::MakeCheckBox(int label_id) {
+  views::CheckBox* cbox = new views::CheckBox(l10n_util::GetString(label_id));
   cbox->SetListener(this);
   AddChildView(cbox);
   return cbox;
 }
 
 void FirstRunCustomizeView::SetupControls() {
-  using ChromeViews::Label;
-  using ChromeViews::CheckBox;
+  using views::Label;
+  using views::CheckBox;
 
   main_label_ = new Label(l10n_util::GetString(IDS_FR_CUSTOMIZE_DLG_TEXT));
   main_label_->SetMultiLine(true);
@@ -67,7 +66,7 @@ void FirstRunCustomizeView::SetupControls() {
 
   import_cbox_ = MakeCheckBox(IDS_FR_CUSTOMIZE_IMPORT);
 
-  import_from_combo_ = new ChromeViews::ComboBox(this);
+  import_from_combo_ = new views::ComboBox(this);
   AddChildView(import_from_combo_);
 
   shortcuts_label_ =
@@ -83,11 +82,10 @@ void FirstRunCustomizeView::SetupControls() {
   quick_shortcut_cbox_->SetIsSelected(true);
 }
 
-void FirstRunCustomizeView::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size FirstRunCustomizeView::GetPreferredSize() {
+  return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_FIRSTRUNCUSTOMIZE_DIALOG_WIDTH_CHARS,
-      IDS_FIRSTRUNCUSTOMIZE_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_FIRSTRUNCUSTOMIZE_DIALOG_HEIGHT_LINES));
 }
 
 void FirstRunCustomizeView::Layout() {
@@ -96,79 +94,78 @@ void FirstRunCustomizeView::Layout() {
   const int kVertSpacing = 8;
   const int kComboExtraPad = 8;
 
-  CSize canvas;
-  GetPreferredSize(&canvas);
+  gfx::Size canvas = GetPreferredSize();
 
   // Welcome label goes in to to the left. It does not go across the
   // entire window because the background gets busy on the right.
-  CSize pref_size;
-  main_label_->GetPreferredSize(&pref_size);
+  gfx::Size pref_size = main_label_->GetPreferredSize();
   main_label_->SetBounds(kPanelHorizMargin, kPanelVertMargin,
-                         canvas.cx - pref_size.cx, pref_size.cy);
+                         canvas.width() - pref_size.width(),
+                         pref_size.height());
   AdjustDialogWidth(main_label_);
 
   int next_v_space = background_image()->y() +
                      background_image()->height() + kPanelVertMargin;
 
-  import_cbox_->GetPreferredSize(&pref_size);
+  pref_size = import_cbox_->GetPreferredSize();
   import_cbox_->SetBounds(kPanelHorizMargin, next_v_space,
-                               pref_size.cx, pref_size.cy);
+                               pref_size.width(), pref_size.height());
 
   import_cbox_->SetIsSelected(true);
 
   int x_offset = import_cbox_->x() +
                  import_cbox_->width();
 
-  import_from_combo_->GetPreferredSize(&pref_size);
+  pref_size = import_from_combo_->GetPreferredSize();
   import_from_combo_->SetBounds(x_offset,
                                 next_v_space +
                                     (import_cbox_->height() -
-                                     pref_size.cy) / 2,
-                                pref_size.cx + kComboExtraPad,
-                                pref_size.cy);
+                                     pref_size.height()) / 2,
+                                pref_size.width() + kComboExtraPad,
+                                pref_size.height());
 
   AdjustDialogWidth(import_from_combo_);
 
   next_v_space = import_cbox_->y() + import_cbox_->height() +
                  kUnrelatedControlVerticalSpacing;
 
-  shortcuts_label_->GetPreferredSize(&pref_size);
+  pref_size = shortcuts_label_->GetPreferredSize();
   shortcuts_label_->SetBounds(kPanelHorizMargin, next_v_space,
-                              pref_size.cx, pref_size.cy);
+                              pref_size.width(), pref_size.height());
 
   AdjustDialogWidth(shortcuts_label_);
 
   next_v_space += shortcuts_label_->height() +
                   kRelatedControlVerticalSpacing;
 
-  desktop_shortcut_cbox_->GetPreferredSize(&pref_size);
+  pref_size = desktop_shortcut_cbox_->GetPreferredSize();
   desktop_shortcut_cbox_->SetBounds(kPanelHorizMargin, next_v_space,
-                                    pref_size.cx, pref_size.cy);
+                                    pref_size.width(), pref_size.height());
 
   AdjustDialogWidth(desktop_shortcut_cbox_);
 
   next_v_space += desktop_shortcut_cbox_->height() +
                   kRelatedControlVerticalSpacing;
 
-  quick_shortcut_cbox_->GetPreferredSize(&pref_size);
+  pref_size = quick_shortcut_cbox_->GetPreferredSize();
   quick_shortcut_cbox_->SetBounds(kPanelHorizMargin, next_v_space,
-                                  pref_size.cx, pref_size.cy);
+                                  pref_size.width(), pref_size.height());
 
   AdjustDialogWidth(quick_shortcut_cbox_);
 }
 
-void FirstRunCustomizeView::ButtonPressed(ChromeViews::NativeButton* sender) {
+void FirstRunCustomizeView::ButtonPressed(views::NativeButton* sender) {
   if (import_cbox_ == sender) {
     // Disable the import combobox if the user unchecks the checkbox.
     import_from_combo_->SetEnabled(import_cbox_->IsSelected());
   }
 }
 
-int FirstRunCustomizeView::GetItemCount(ChromeViews::ComboBox* source) {
+int FirstRunCustomizeView::GetItemCount(views::ComboBox* source) {
   return importer_host_->GetAvailableProfileCount();
 }
 
-std::wstring FirstRunCustomizeView::GetItemAt(ChromeViews::ComboBox* source,
+std::wstring FirstRunCustomizeView::GetItemAt(views::ComboBox* source,
                                               int index) {
   return importer_host_->GetSourceProfileNameAt(index);
 }
@@ -177,7 +174,7 @@ std::wstring FirstRunCustomizeView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_FR_CUSTOMIZE_DLG_TITLE);
 }
 
-ChromeViews::View* FirstRunCustomizeView::GetContentsView() {
+views::View* FirstRunCustomizeView::GetContentsView() {
   return this;
 }
 

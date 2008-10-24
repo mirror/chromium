@@ -135,7 +135,10 @@ int main(int argc, char* argv[]) {
        (GetEnvironmentVariable(L"CHROME_HEADLESS", NULL, 0) ||
        parsed_command_line.HasSwitch(test_shell::kNoErrorDialogs) ||
        parsed_command_line.HasSwitch(test_shell::kLayoutTests));
-  TestShell::InitLogging(suppress_error_dialogs);
+  bool layout_test_mode =
+      parsed_command_line.HasSwitch(test_shell::kLayoutTests);
+
+  TestShell::InitLogging(suppress_error_dialogs, layout_test_mode);
 
   // Suppress abort message in v8 library in debugging mode.
   // V8 calls abort() when it hits assertion errors.
@@ -146,13 +149,12 @@ int main(int argc, char* argv[]) {
   if (parsed_command_line.HasSwitch(test_shell::kEnableTracing))
     base::TraceLog::StartTracing();
 
+#if defined(OS_WIN)
   // Make the selection of network stacks early on before any consumers try to
   // issue HTTP requests.
-  if (parsed_command_line.HasSwitch(test_shell::kUseNewHttp))
-    net::HttpNetworkLayer::UseWinHttp(false);
-
-  bool layout_test_mode =
-      parsed_command_line.HasSwitch(test_shell::kLayoutTests);
+  if (parsed_command_line.HasSwitch(test_shell::kUseWinHttp))
+    net::HttpNetworkLayer::UseWinHttp(true);
+#endif
 
   net::HttpCache::Mode cache_mode = net::HttpCache::NORMAL;
   bool playback_mode = 
@@ -192,6 +194,16 @@ int main(int argc, char* argv[]) {
   InitCtrlEx.dwSize = sizeof(INITCOMMONCONTROLSEX);
   InitCtrlEx.dwICC  = ICC_STANDARD_CLASSES;
   InitCommonControlsEx(&InitCtrlEx);
+
+  // Register the Ahem font used by layout tests.
+  DWORD num_fonts = 1;
+  void* font_ptr;
+  size_t font_size;
+  if (base::GetDataResourceFromModule(::GetModuleHandle(NULL), IDR_AHEM_FONT, 
+                                      &font_ptr, &font_size)) {
+    HANDLE rc = AddFontMemResourceEx(font_ptr, font_size, 0, &num_fonts);
+    DCHECK(rc != 0);
+  }
 
   bool interactive = !layout_test_mode;
   TestShell::InitializeTestShell(interactive);

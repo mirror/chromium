@@ -58,6 +58,8 @@ static int TranslateOSError(DWORD error) {
     case ERROR_WINHTTP_SECURE_FAILURE:
     case SEC_E_ILLEGAL_MESSAGE:
       return ERR_SSL_PROTOCOL_ERROR;
+    case SEC_E_ALGORITHM_MISMATCH:
+      return ERR_SSL_VERSION_OR_CIPHER_MISMATCH;
     case ERROR_WINHTTP_CLIENT_AUTH_CERT_NEEDED:
       return ERR_SSL_CLIENT_AUTH_CERT_NEEDED;
     case ERROR_WINHTTP_UNRECOGNIZED_SCHEME:
@@ -823,10 +825,6 @@ HttpTransactionWinHttp::~HttpTransactionWinHttp() {
     session_->Release();
 }
 
-void HttpTransactionWinHttp::Destroy() {
-  delete this;
-}
-
 int HttpTransactionWinHttp::Start(const HttpRequestInfo* request_info,
                                   CompletionCallback* callback) {
   DCHECK(request_info);
@@ -1343,10 +1341,13 @@ int HttpTransactionWinHttp::DidReceiveError(DWORD error,
   last_error_ = error;
   rv = TranslateOSError(error);
 
-  if (rv == ERR_SSL_PROTOCOL_ERROR &&
+  if ((rv == ERR_SSL_PROTOCOL_ERROR ||
+       rv == ERR_SSL_VERSION_OR_CIPHER_MISMATCH) &&
       !session_callback_->request_was_probably_sent() &&
       session_->tls_enabled() && !is_tls_intolerant_) {
-    // The server might be TLS intolerant.  Downgrade to SSL 3.0 and retry.
+    // The server might be TLS intolerant.  Or it might be an SSL 3.0 server
+    // that chose a TLS-only cipher suite, which we handle in the same way.
+    // Downgrade to SSL 3.0 and retry.
     is_tls_intolerant_ = true;
     if (!ReopenRequest())
       return TranslateLastOSError();
@@ -1356,10 +1357,10 @@ int HttpTransactionWinHttp::DidReceiveError(DWORD error,
   }
   if (rv == ERR_SSL_CLIENT_AUTH_CERT_NEEDED) {
     // TODO(wtc): Bug 1230409: We don't support SSL client authentication yet.
-    // For now we set a null client certificate, which works on Vista and
-    // later.  On XP, this fails with ERROR_INVALID_PARAMETER (87).  This
-    // allows us to access servers that request but do not require client
-    // certificates.
+    // For now we set a null client certificate, which works on XP SP3, Vista
+    // and later.  On XP SP2 and below, this fails with ERROR_INVALID_PARAMETER
+    // (87).  This allows us to access servers that request but do not require
+    // client certificates.
     if (WinHttpSetOption(request_handle_,
                          WINHTTP_OPTION_CLIENT_CERT_CONTEXT,
                          WINHTTP_NO_CLIENT_CERT_CONTEXT, 0)) {

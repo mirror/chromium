@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "chrome/browser/webdata/web_data_service.h"
+#include "chrome/common/gfx/url_elider.h"
 #include "chrome/views/dialog_delegate.h"
 #include "chrome/views/label.h"
 #include "chrome/views/native_button.h"
@@ -17,16 +18,17 @@
 class Profile;
 struct PasswordForm;
 
-class PasswordManagerTableModel : public ChromeViews::TableModel,
+class PasswordManagerTableModel : public views::TableModel,
                                   public WebDataServiceConsumer {
  public:
-  explicit PasswordManagerTableModel(WebDataService* profile_web_data_service);
+  explicit PasswordManagerTableModel(Profile* profile);
   virtual ~PasswordManagerTableModel();
 
   // TableModel methods.
   virtual int RowCount();
   virtual std::wstring GetText(int row, int column);
-  virtual void SetObserver(ChromeViews::TableModelObserver* observer);
+  virtual int CompareValues(int row1, int row2, int column_id);
+  virtual void SetObserver(views::TableModelObserver* observer);
 
   // Delete the PasswordForm at specified row from the database (and remove
   // from view).
@@ -46,48 +48,61 @@ class PasswordManagerTableModel : public ChromeViews::TableModel,
   PasswordForm* GetPasswordFormAt(int row);
 
  private:
+  // Wraps the PasswordForm from the database and caches the display URL for
+  // quick sorting.
+  struct PasswordRow {
+    ~PasswordRow();
+
+    // Contains the URL that is displayed along with the 
+    gfx::SortedDisplayURL display_url;
+
+    // The underlying PasswordForm. We own this.
+    PasswordForm* form;
+  };
+
   // Cancel any pending login query involving a callback.
   void CancelLoginsQuery();
 
+  // The web data service associated with the currently active profile.
+  WebDataService* web_data_service() {
+    return profile_->GetWebDataService(Profile::EXPLICIT_ACCESS);
+  }
+
   // The TableView observing this model.
-  ChromeViews::TableModelObserver* observer_;
+  views::TableModelObserver* observer_;
 
   // Handle to any pending WebDataService::GetLogins query.
   WebDataService::Handle pending_login_query_;
 
-  // PasswordForms returned by the web data service query.
-  typedef std::vector<PasswordForm*> PasswordForms;
-  PasswordForms saved_signons_;
+  // The set of passwords we're showing.
+  typedef std::vector<PasswordRow> PasswordRows;
+  PasswordRows saved_signons_;
 
-  // Deleter for saved_logins_.
-  STLElementDeleter<PasswordForms> saved_signons_deleter_;
-
-  // The web data service associated with the currently active profile.
-  WebDataService* web_data_service_;
+  Profile* profile_;
 
   DISALLOW_EVIL_CONSTRUCTORS(PasswordManagerTableModel);
 };
 
 // A button that can have 2 different labels set on it and for which the
 // preferred size is the size of the widest string.
-class MultiLabelButtons : public ChromeViews::NativeButton {
+class MultiLabelButtons : public views::NativeButton {
  public:
   MultiLabelButtons(const std::wstring& label, const std::wstring& alt_label);
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
  private:
   std::wstring label_;
   std::wstring alt_label_;
-  CSize pref_size_;
+  gfx::Size pref_size_;
 
   DISALLOW_EVIL_CONSTRUCTORS(MultiLabelButtons);
 };
 
-class PasswordManagerView : public ChromeViews::View,
-                            public ChromeViews::DialogDelegate,
-                            public ChromeViews::TableViewObserver,
-                            public ChromeViews::NativeButton::Listener {
+class PasswordManagerView : public views::View,
+                            public views::DialogDelegate,
+                            public views::TableViewObserver,
+                            public views::NativeButton::Listener {
  public:
   explicit PasswordManagerView(Profile* profile);
   virtual ~PasswordManagerView();
@@ -97,17 +112,17 @@ class PasswordManagerView : public ChromeViews::View,
 
   // View methods.
   virtual void Layout();
-  virtual void GetPreferredSize(CSize *out);
-  virtual void ViewHierarchyChanged(bool is_add, ChromeViews::View* parent,
-                                    ChromeViews::View* child);
+  virtual gfx::Size GetPreferredSize();
+  virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
+                                    views::View* child);
 
-  // ChromeViews::TableViewObserver implementation.
+  // views::TableViewObserver implementation.
   virtual void OnSelectionChanged();
 
   // NativeButton::Listener implementation.
-  virtual void ButtonPressed(ChromeViews::NativeButton* sender);
+  virtual void ButtonPressed(views::NativeButton* sender);
 
-  // ChromeViews::DialogDelegate methods:
+  // views::DialogDelegate methods:
   virtual int GetDialogButtons() const;
   virtual bool CanResize() const;
   virtual bool CanMaximize() const;
@@ -115,7 +130,7 @@ class PasswordManagerView : public ChromeViews::View,
   virtual bool HasAlwaysOnTopMenu() const;
   virtual std::wstring GetWindowTitle() const;
   virtual void WindowClosing();
-  virtual ChromeViews::View* GetContentsView();
+  virtual views::View* GetContentsView();
 
  private:
   // Wire up buttons, the model, and the table view, and query the DB for
@@ -130,13 +145,13 @@ class PasswordManagerView : public ChromeViews::View,
 
   // Components in this view.
   PasswordManagerTableModel table_model_;
-  ChromeViews::TableView* table_view_;
+  views::TableView* table_view_;
 
   // The buttons and labels.
   MultiLabelButtons show_button_;
-  ChromeViews::NativeButton remove_button_;
-  ChromeViews::NativeButton remove_all_button_;
-  ChromeViews::Label password_label_;
+  views::NativeButton remove_button_;
+  views::NativeButton remove_all_button_;
+  views::Label password_label_;
 
   DISALLOW_EVIL_CONSTRUCTORS(PasswordManagerView);
 };

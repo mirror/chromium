@@ -14,12 +14,13 @@ env.Replace(
     LIBJPEG_DIR = '$THIRD_PARTY_DIR/libjpeg',
     CPPPATH = [
         '$LIBJPEG_DIR',
+        '$VC80_CPPPATH',
     ],
 )
 
-if env['OS'] == 'linux':
+if env['OS'] in ['osx', 'linux']:
   env.Append(
-      CCFLAGS = [
+      CFLAGS = [
           '-Wno-main',
       ],
   )

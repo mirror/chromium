@@ -8,6 +8,8 @@
 #include <windows.h>
 
 #include <map>
+#include <unicode/coll.h>
+#include <unicode/uchar.h>
 #include <vector>
 
 #include "base/logging.h"
@@ -39,7 +41,7 @@ class SkBitmap;
 // sort by way of overriding CompareValues.
 //
 // TableView is a wrapper around the window type ListView in report mode.
-namespace ChromeViews {
+namespace views {
 
 class HWNDView;
 class ListView;
@@ -147,6 +149,10 @@ class TableModel {
   // This implementation does a case insensitive locale specific string
   // comparison.
   virtual int CompareValues(int row1, int row2, int column_id);
+
+ protected:
+  // Returns the collator used by CompareValues.
+  Collator* GetCollator();
 };
 
 // TableColumn specifies the title, alignment and size of a particular column.
@@ -334,7 +340,8 @@ class TableView : public NativeControl,
   // Current sort.
   const SortDescriptors& sort_descriptors() const { return sort_descriptors_; }
 
-  void DidChangeBounds(const CRect& previous, const CRect& current);
+  void DidChangeBounds(const gfx::Rect& previous,
+                       const gfx::Rect& current);
 
   // Returns the number of rows in the TableView.
   int RowCount();
@@ -399,8 +406,8 @@ class TableView : public NativeControl,
 
   // Sometimes we may want to size the TableView to a specific width and
   // height.
-  void SetPreferredSize(const CSize& preferred_size);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
+  void set_preferred_size(const gfx::Size& size) { preferred_size_ = size; }
 
   // Is the table sorted?
   bool is_sorted() const { return !sort_descriptors_.empty(); }
@@ -576,7 +583,7 @@ class TableView : public NativeControl,
   std::vector<int> visible_columns_;
 
   // Mapping of an int id to a TableColumn representing all possible columns.
-  std::map<int,ChromeViews::TableColumn> all_columns_;
+  std::map<int, TableColumn> all_columns_;
 
   // Cached value of columns_.size()
   int column_count_;
@@ -621,7 +628,7 @@ class TableView : public NativeControl,
   HFONT custom_cell_font_;
 
   // The preferred size of the table view.
-  CSize preferred_size_;
+  gfx::Size preferred_size_;
 
   // The offset from the top of the client area to the start of the content.
   int content_offset_;
@@ -636,6 +643,6 @@ class TableView : public NativeControl,
   DISALLOW_COPY_AND_ASSIGN(TableView);
 };
 
-}  // namespace
+}  // namespace views
 
 #endif  // CHROME_VIEWS_TABLE_VIEW_H_

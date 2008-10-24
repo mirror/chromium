@@ -7,12 +7,12 @@
 #include "base/message_loop.h"
 #include "chrome/browser/back_forward_menu_model.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/view_menu_delegate.h"
-#include "chrome/views/view_container.h"
 
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 
 // How long to wait before showing the menu
 static const int kMenuTimerDelay = 500;
@@ -39,8 +39,8 @@ ButtonDropDown::~ButtonDropDown() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-bool ButtonDropDown::OnMousePressed(const ChromeViews::MouseEvent& e) {
-  if (IsEnabled() && e.IsLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y()))) {
+bool ButtonDropDown::OnMousePressed(const MouseEvent& e) {
+  if (IsEnabled() && e.IsLeftMouseButton() && HitTest(e.location())) {
     // Store the y pos of the mouse coordinates so we can use them later to
     // determine if the user dragged the mouse down (which should pop up the
     // drag down menu immediately, instead of waiting for the timer)
@@ -49,15 +49,14 @@ bool ButtonDropDown::OnMousePressed(const ChromeViews::MouseEvent& e) {
     // Schedule a task that will show the menu.
     MessageLoop::current()->PostDelayedTask(FROM_HERE,
         show_menu_factory_.NewRunnableMethod(&ButtonDropDown::ShowDropDownMenu,
-                                             GetViewContainer()->GetHWND()),
+                                             GetContainer()->GetHWND()),
         kMenuTimerDelay);
   }
 
   return Button::OnMousePressed(e);
 }
 
-void ButtonDropDown::OnMouseReleased(const ChromeViews::MouseEvent& e,
-                                     bool canceled) {
+void ButtonDropDown::OnMouseReleased(const MouseEvent& e, bool canceled) {
   Button::OnMouseReleased(e, canceled);
 
   if (canceled)
@@ -66,7 +65,7 @@ void ButtonDropDown::OnMouseReleased(const ChromeViews::MouseEvent& e,
   if (e.IsLeftMouseButton())
     show_menu_factory_.RevokeAll();
 
-  if (IsEnabled() && e.IsRightMouseButton() && HitTest(WTL::CPoint(e.x(), e.y()))) {
+  if (IsEnabled() && e.IsRightMouseButton() && HitTest(e.location())) {
     show_menu_factory_.RevokeAll();
     // Make the button look depressed while the menu is open.
     // NOTE: SetState() schedules a paint, but it won't occur until after the
@@ -74,11 +73,11 @@ void ButtonDropDown::OnMouseReleased(const ChromeViews::MouseEvent& e,
     //       update the appearance synchronously.
     SetState(BS_PUSHED);
     PaintNow();
-    ShowDropDownMenu(GetViewContainer()->GetHWND());
+    ShowDropDownMenu(GetContainer()->GetHWND());
   }
 }
 
-bool ButtonDropDown::OnMouseDragged(const ChromeViews::MouseEvent& e) {
+bool ButtonDropDown::OnMouseDragged(const MouseEvent& e) {
   bool result = Button::OnMouseDragged(e);
 
   if (!show_menu_factory_.empty()) {
@@ -92,7 +91,7 @@ bool ButtonDropDown::OnMouseDragged(const ChromeViews::MouseEvent& e) {
     // it immediately.
     if (e.y() > y_position_on_lbuttondown_ + dragging_threshold) {
       show_menu_factory_.RevokeAll();
-      ShowDropDownMenu(GetViewContainer()->GetHWND());
+      ShowDropDownMenu(GetContainer()->GetHWND());
     }
   }
 
@@ -107,15 +106,14 @@ bool ButtonDropDown::OnMouseDragged(const ChromeViews::MouseEvent& e) {
 
 void ButtonDropDown::ShowDropDownMenu(HWND window) {
   if (menu_delegate_) {
-    CRect lb;
-    GetLocalBounds(&lb, true);
+    gfx::Rect lb = GetLocalBounds(true);
 
     // Both the menu position and the menu anchor type change if the UI layout
     // is right-to-left.
-    CPoint menu_position = CPoint(lb.TopLeft());
-    menu_position.Offset(0, lb.Height() - 1);
+    gfx::Point menu_position(lb.origin());
+    menu_position.Offset(0, lb.height() - 1);
     if (UILayoutIsRightToLeft())
-      menu_position.Offset(lb.Width() - 1, 0);
+      menu_position.Offset(lb.width() - 1, 0);
 
     Menu::AnchorPoint anchor = Menu::TOPLEFT;
     if (UILayoutIsRightToLeft())
@@ -139,7 +137,7 @@ void ButtonDropDown::ShowDropDownMenu(HWND window) {
       }
     }
 
-    menu.RunMenuAt(menu_position.x, menu_position.y);
+    menu.RunMenuAt(menu_position.x(), menu_position.y());
 
     // Need to explicitly clear mouse handler so that events get sent
     // properly after the menu finishes running. If we don't do this, then
@@ -176,5 +174,5 @@ bool ButtonDropDown::GetAccessibleState(VARIANT* state) {
   return true;
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

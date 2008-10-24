@@ -5,10 +5,10 @@
 #include "chrome/browser/views/hwnd_html_view.h"
 
 #include "chrome/browser/render_view_host.h"
-#include "chrome/browser/render_widget_host_hwnd.h"
+#include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/browser/site_instance.h"
-#include "chrome/views/view_container.h"
+#include "chrome/views/container.h"
 
 HWNDHtmlView::~HWNDHtmlView() {
   if (render_view_host_) {
@@ -25,7 +25,7 @@ void HWNDHtmlView::Init(HWND parent_hwnd) {
     delegate_, MSG_ROUTING_NONE, NULL);
   render_view_host_ = rvh;
 
-  RenderWidgetHostHWND* view = new RenderWidgetHostHWND(rvh);
+  RenderWidgetHostViewWin* view = new RenderWidgetHostViewWin(rvh);
   rvh->set_view(view);
 
   // Create the HWND. Note:
@@ -35,7 +35,7 @@ void HWNDHtmlView::Init(HWND parent_hwnd) {
   // same z-order as constrained windows.
   HWND hwnd = view->Create(parent_hwnd);
   view->ShowWindow(SW_SHOW);
-  ChromeViews::HWNDView::Attach(hwnd);
+  views::HWNDView::Attach(hwnd);
 
   // Start up the renderer.
   if (allow_dom_ui_bindings_)
@@ -47,6 +47,6 @@ void HWNDHtmlView::Init(HWND parent_hwnd) {
 
 void HWNDHtmlView::ViewHierarchyChanged(bool is_add, View* parent,
                                         View* child) {
-  if (is_add && GetViewContainer() && !initialized_)
-    Init(GetViewContainer()->GetHWND());
+  if (is_add && GetContainer() && !initialized_)
+    Init(GetContainer()->GetHWND());
 }

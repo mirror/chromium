@@ -52,7 +52,7 @@ inline String GetLocalizedString(int message_id) {
   return webkit_glue::StdWStringToString(str);
 }
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
 String WebCore::searchableIndexIntroduction() {
   return GetLocalizedString(IDS_SEARCHABLE_INDEX_INTRO);
 }
@@ -98,7 +98,7 @@ String WebCore::AXImageMapText() {
 String WebCore::AXHeadingText() {
   return GetLocalizedString(IDS_AX_ROLE_HEADING);
 }
-#endif  // OS_WIN
+#endif  // OS_WIN || OS_LINUX
 String WebCore::AXButtonActionVerb() {
   return GetLocalizedString(IDS_AX_BUTTON_ACTION_VERB);
 }
@@ -123,16 +123,6 @@ String WebCore::unknownFileSizeText() {
   return String();
 }
 
-// These two are used in FileChooserWin.cpp.
-#if PLATFORM(WIN)
-String WebCore::uploadFileText() {
-  return String();
-}
-String WebCore::allFilesText() {
-  return String();
-}
-#endif
-
 // The following two functions are not declared in LocalizedStrings.h.
 // They are used by the menu for the HTML keygen tag.
 namespace WebCore {
@@ -153,7 +143,6 @@ String imageTitle(const String& filename, const IntSize& size) {
 
 } //namespace WebCore
 
-#if defined(OS_WIN)
 // We don't use these strings, so they return an empty String. We can't just
 // make them asserts because webcore still calls them.
 String WebCore::contextMenuItemTagOpenLinkInNewWindow() { return String(); }
@@ -192,4 +181,3 @@ String WebCore::contextMenuItemTagLeftToRight() { return String(); }
 String WebCore::contextMenuItemTagRightToLeft() { return String(); }
 String WebCore::contextMenuItemTagInspectElement() { return String(); }
 String WebCore::contextMenuItemTagShowSpellingPanel(bool show) { return String(); }
-#endif  // OS_WIN

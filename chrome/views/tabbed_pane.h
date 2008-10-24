@@ -7,12 +7,12 @@
 
 #include "chrome/views/native_control.h"
 
-namespace ChromeViews {
+namespace views {
 
 // The TabbedPane class is a view that shows tabs.  When the user clicks on a
 // tab, the associated view is displayed.
 // TODO (jcampan): implement GetPreferredSize().
-class HWNDViewContainer;
+class ContainerWin;
 
 class TabbedPane : public NativeControl {
  public:
@@ -75,7 +75,7 @@ class TabbedPane : public NativeControl {
   std::vector<View*> tab_views_;
 
   // The window displayed in the tab.
-  HWNDViewContainer* content_window_;
+  ContainerWin* content_window_;
 
   // The listener we notify about tab selection changes.
   Listener* listener_;
@@ -83,6 +83,6 @@ class TabbedPane : public NativeControl {
   DISALLOW_EVIL_CONSTRUCTORS(TabbedPane);
 };
 
-}
+}  // namespace views
 
 #endif  // #define CHROME_VIEWS_TABBED_PANE_H__

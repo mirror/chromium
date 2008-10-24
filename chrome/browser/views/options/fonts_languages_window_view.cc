@@ -38,7 +38,7 @@ FontsLanguagesWindowView::~FontsLanguagesWindowView() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// FontsLanguagesWindowView, ChromeViews::DialogDelegate implementation:
+// FontsLanguagesWindowView, views::DialogDelegate implementation:
 
 bool FontsLanguagesWindowView::Accept() {
   fonts_page_->SaveChanges();
@@ -47,19 +47,19 @@ bool FontsLanguagesWindowView::Accept() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// FontsLanguagesWindowView, ChromeViews::WindowDelegate implementation:
+// FontsLanguagesWindowView, views::WindowDelegate implementation:
 
 std::wstring FontsLanguagesWindowView::GetWindowTitle() const {
   return l10n_util::GetStringF(IDS_FONT_LANGUAGE_SETTING_WINDOWS_TITLE,
                                l10n_util::GetString(IDS_PRODUCT_NAME));
 }
 
-ChromeViews::View* FontsLanguagesWindowView::GetContentsView() {
+views::View* FontsLanguagesWindowView::GetContentsView() {
   return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// FontsLanguagesWindowView, ChromeViews::View overrides:
+// FontsLanguagesWindowView, views::View overrides:
 
 void FontsLanguagesWindowView::Layout() {
   tabs_->SetBounds(kDialogPadding, kDialogPadding,
@@ -67,16 +67,15 @@ void FontsLanguagesWindowView::Layout() {
                    height() - (2 * kDialogPadding));
 }
 
-void FontsLanguagesWindowView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size FontsLanguagesWindowView::GetPreferredSize() {
+  return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_FONTSLANG_DIALOG_WIDTH_CHARS,
-      IDS_FONTSLANG_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_FONTSLANG_DIALOG_HEIGHT_LINES));
 }
 
 void FontsLanguagesWindowView::ViewHierarchyChanged(
-    bool is_add, ChromeViews::View* parent, ChromeViews::View* child) {
-  // Can't init before we're inserted into a ViewContainer, because we require
+    bool is_add, views::View* parent, views::View* child) {
+  // Can't init before we're inserted into a Container, because we require
   // a HWND to parent native child controls to.
   if (is_add && child == this)
     Init();
@@ -86,7 +85,7 @@ void FontsLanguagesWindowView::ViewHierarchyChanged(
 // FontsLanguagesWindowView, private:
 
 void FontsLanguagesWindowView::Init() {
-  tabs_ = new ChromeViews::TabbedPane;
+  tabs_ = new views::TabbedPane;
   AddChildView(tabs_);
 
   fonts_page_ = new FontsPageView(profile_);

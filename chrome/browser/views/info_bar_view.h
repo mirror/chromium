@@ -17,7 +17,7 @@ class WebContents;
 //
 // It will paint all of its children vertically, with the most recently
 // added child displayed at the top of the info bar.
-class InfoBarView : public ChromeViews::View,
+class InfoBarView : public views::View,
                     public NotificationObserver {
  public:
   explicit InfoBarView(WebContents* web_contents);
@@ -28,9 +28,9 @@ class InfoBarView : public ChromeViews::View,
   // removed after 1 navigation, which is also the behavior if you set
   // |auto_expire| to true here.  You mainly need this function if you want to
   // add an infobar that should not expire.
-  void AppendInfoBarItem(ChromeViews::View* view, bool auto_expire);
+  void AppendInfoBarItem(views::View* view, bool auto_expire);
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
   virtual void Layout();
 
@@ -41,8 +41,6 @@ class InfoBarView : public ChromeViews::View,
   // Invokes the following methods to do painting:
   // PaintBackground, PaintBorder and PaintSeparators.
   virtual void Paint(ChromeCanvas* canvas);
-
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
 
   WebContents* web_contents() { return web_contents_; }
 
@@ -67,8 +65,8 @@ class InfoBarView : public ChromeViews::View,
 
   // Paints the separator between views.
   void PaintSeparator(ChromeCanvas* canvas,
-                      ChromeViews::View* v1,
-                      ChromeViews::View* v2);
+                      views::View* v1,
+                      views::View* v2);
 
   // NotificationObserver implementation.
   virtual void Observe(NotificationType type,

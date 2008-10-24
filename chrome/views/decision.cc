@@ -12,7 +12,7 @@
 
 using namespace std;
 
-namespace ChromeViews {
+namespace views {
 
 static const int kPaddingEdge = 10;
 static const int kSpacingInfoBottom = 20;
@@ -26,7 +26,7 @@ class Option : public View,
          Controller* controller);
 
   // NativeButton::Listener methods:
-  virtual void ButtonPressed(ChromeViews::NativeButton* sender);
+  virtual void ButtonPressed(NativeButton* sender);
 
  private:
   int command_id_;
@@ -59,11 +59,6 @@ void Decision::AppendOption(int command_id,
   AddChildView(option);
 }
 
-void Decision::DidChangeBounds(const CRect& old_bounds,
-                               const CRect& new_bounds) {
-  Layout();
-}
-
 void Decision::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
   if (is_add && child == this) {
     // Layout when this is added so that the buttons are laid out correctly.
@@ -72,58 +67,54 @@ void Decision::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
 }
 
 void Decision::Layout() {
-  CRect lb;
-  GetLocalBounds(&lb, false);
+  gfx::Rect lb = GetLocalBounds(false);
 
   // Resize for padding.
-  lb.DeflateRect(kPaddingEdge, kPaddingEdge);
-  int width = lb.Width();
+  lb.Inset(kPaddingEdge, kPaddingEdge);
+  int width = lb.width();
 
-  CPoint position(lb.TopLeft());
-  CSize size;
-  title_label_->GetPreferredSize(&size);
-  title_label_->SetBounds(position.x, position.y, width, size.cy);
-  position.y += size.cy + kSpacingInfoBottom;
+  gfx::Point position = lb.origin();
+  gfx::Size size = title_label_->GetPreferredSize();
+  title_label_->SetBounds(position.x(), position.y(), width, size.height());
+  position.set_y(position.y() + size.height() + kSpacingInfoBottom);
 
-  size.cy = details_label_->GetHeightForWidth(width);
-  details_label_->SetBounds(position.x, position.y, width, size.cy);
-  position.y += size.cy + kSpacingInfoBottom;
+  size.set_height(details_label_->GetHeightForWidth(width));
+  details_label_->SetBounds(position.x(), position.y(), width, size.height());
+  position.set_y(position.y() + size.height() + kSpacingInfoBottom);
 
   for (std::vector<Option*>::const_iterator iter = options_.begin();
        iter != options_.end(); ++iter) {
     Option* option = *iter;
-    option->GetPreferredSize(&size);
-    option->SetBounds(position.x, position.y, width, size.cy);
+    size = option->GetPreferredSize();
+    option->SetBounds(position.x(), position.y(), width, size.height());
     option->Layout();
-    position.y += size.cy + kSpacingInfoBottom;
+    position.set_y(position.y() + size.height() + kSpacingInfoBottom);
   }
 }
 
-void Decision::GetPreferredSize(CSize *out) {
+gfx::Size Decision::GetPreferredSize() {
   int width = 0;
   int height = 0;
 
   // We need to find the largest width from the title and the options, as the
   // details label is multi-line and we need to known its width in order to
   // compute its height.
-  CSize size;
-  title_label_->GetPreferredSize(&size);
-  width = size.cx;
-  height = size.cy + kSpacingInfoBottom;
+  gfx::Size size = title_label_->GetPreferredSize();
+  width = size.width();
+  height = size.height() + kSpacingInfoBottom;
 
   for (std::vector<Option*>::const_iterator iter = options_.begin();
        iter != options_.end(); ++iter) {
-    (*iter)->GetPreferredSize(&size);
-    if (size.cx > width)
-      width = size.cx;
-    height += size.cy + kSpacingInfoBottom;
+    size = (*iter)->GetPreferredSize();
+    if (size.width() > width)
+      width = size.width();
+    height += size.height() + kSpacingInfoBottom;
   }
 
   // Now we can compute the details label height.
   height += details_label_->GetHeightForWidth(width) + kSpacingInfoBottom;
 
-  out->cx = width + 2 * kPaddingEdge;
-  out->cy = height + 2 * kPaddingEdge;
+  return gfx::Size(width + 2 * kPaddingEdge, height + 2 * kPaddingEdge);
 }
 
 Option::Option(int command_id,
@@ -154,9 +145,9 @@ Option::Option(int command_id,
   layout->AddView(button);
 }
 
-void Option::ButtonPressed(ChromeViews::NativeButton* sender) {
+void Option::ButtonPressed(NativeButton* sender) {
   controller_->ExecuteCommand(command_id_);
 }
 
-} // namespace ChromeViews
+}  // namespace views
 

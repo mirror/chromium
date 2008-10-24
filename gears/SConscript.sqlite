@@ -18,6 +18,7 @@ env.Replace(
 
 	'$SQLITE_DIR/src',
 	'$SQLITE_DIR/preprocessed',
+        '$VC80_CPPPATH',
     ],
 )
 
@@ -48,7 +49,7 @@ env.Append(
     ],
 )
 
-if env['OS'] == 'win32':
+if env['OS'] in ['win32', 'wince']:
   env.Append(
       CPPFLAGS = [
           # from Chrome
@@ -61,11 +62,22 @@ if env['OS'] == 'win32':
           '/wd4146',
       ],
   )
+  env.Append(CPPFLAGS = ['/wd4146'])
 elif env['OS'] == 'linux':
   env.Append(
       CPPFLAGS = [
           '-Wno-uninitialized',
           '-Wno-unused-value',
+      ],
+      CPPDEFINES = [
+          'HAVE_USLEEP=1',
+      ],
+  )
+elif env['OS'] == 'osx':
+  env.Append(
+      CFLAGS = [
+          '-Wno-uninitialized',
+          '-Wno-pointer-sign',
       ],
       CPPDEFINES = [
           'HAVE_USLEEP=1',
@@ -120,6 +132,8 @@ input_files = [
     '$SQLITE_DIR/src/mutex_w32.c',
     '$SQLITE_DIR/preprocessed/opcodes.c',
     '$SQLITE_DIR/src/os.c',
+    '$SQLITE_DIR/src/os_os2.c',
+    '$SQLITE_DIR/src/os_unix.c',
     '$SQLITE_DIR/src/os_win.c',
     '$SQLITE_DIR/src/pager.c',
     '$SQLITE_DIR/preprocessed/parse.c',

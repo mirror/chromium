@@ -16,7 +16,6 @@ cygwin_posix = cygwin.abspath.replace('\\', '/')
 pending = env.Dir('#../webkit/pending')
 portroot = env.Dir('#../webkit/port')
 webkit_build = env.Dir('#../webkit/build')
-bindings_output_dir = env.Dir('#/../webkit/$BUILD_TYPE/scons/V8Bindings')
 
 
 def PosixIncludes(env, prefix, files, suffix):
@@ -43,7 +42,7 @@ env = env.Clone(
     BINDINGS_SCRIPT = '$BINDINGS_SCRIPTS_DIR/generate-bindings.pl',
 
     PERL_INCLUDE_PATH = ['$BINDINGS_SCRIPTS_DIR', 
-                         '#/../third_party/WebKit/WebCore/bindings/scripts'],
+                         '$CHROME_SRC_DIR/third_party/WebKit/WebCore/bindings/scripts'],
 
     WEBKIT_PORT_DIR = '$WEBKIT_DIR/port',
 
@@ -52,17 +51,19 @@ env = env.Clone(
         'ENABLE_XSLT',
         'ENABLE_XPATH',
         'ENABLE_SVG',
-        'ENABLE_SVG_FOREIGN_OBJECT',
-        'ENABLE_SVG_USE',
+        'ENABLE_SVG_ANIMATION',
         'ENABLE_SVG_AS_IMAGE',
         'ENABLE_SVG_FONTS',
+        'ENABLE_SVG_FOREIGN_OBJECT',
+        'ENABLE_SVG_USE',
     ],
 
     SVG_FLAGS = [
-        'ENABLE_SVG_FOREIGN_OBJECT=1',
-        'ENABLE_SVG_USE=1',
+        'ENABLE_SVG_ANIMATION=1',
         'ENABLE_SVG_AS_IMAGE=1',
         'ENABLE_SVG_FONTS=1',
+        'ENABLE_SVG_FOREIGN_OBJECT=1',
+        'ENABLE_SVG_USE=1',
     ],
 
     BINDINGS_INCLUDE_PATH = [
@@ -164,16 +165,21 @@ idl_files = [
     'css/CSSUnknownRule.idl',
     'css/CSSValue.idl',
     'css/CSSValueList.idl',
+    'css/CSSVariablesDeclaration.idl',
+    'css/CSSVariablesRule.idl',
     'css/MediaList.idl',
     'css/Rect.idl',
     'css/RGBColor.idl',
     'css/StyleSheet.idl',
     'css/StyleSheetList.idl',
+    'css/WebKitCSSKeyframeRule.idl',
+    'css/WebKitCSSKeyframesRule.idl',
+    'css/WebKitCSSTransformValue.idl',
 
     'dom/Attr.idl',
     'dom/CDATASection.idl',
     'dom/CharacterData.idl',
-    'dom/Clipboard.idl',                          # port only
+    'dom/Clipboard.idl',
     'dom/Comment.idl',
     'dom/Document.idl',
     'dom/DocumentFragment.idl',
@@ -187,7 +193,7 @@ idl_files = [
     'dom/EventException.idl',
     'dom/EventListener.idl',
     'dom/EventTarget.idl',
-    'dom/EventTargetNode.idl',                    # port only
+    'dom/EventTargetNode.idl',
     'dom/KeyboardEvent.idl',
     'dom/MessageEvent.idl',
     'dom/MouseEvent.idl',
@@ -198,6 +204,7 @@ idl_files = [
     'dom/NodeIterator.idl',
     'dom/NodeList.idl',
     'dom/Notation.idl',
+    'dom/NSResolver.idl',
     'dom/OverflowEvent.idl',
     'dom/ProcessingInstruction.idl',
     'dom/ProgressEvent.idl',
@@ -207,11 +214,16 @@ idl_files = [
     'dom/TextEvent.idl',
     'dom/TreeWalker.idl',
     'dom/UIEvent.idl',
+    'dom/WebKitAnimationEvent.idl',
+    'dom/WebKitTransitionEvent.idl',
     'dom/WheelEvent.idl',
 
     'html/CanvasGradient.idl',
+    'html/CanvasPixelArray.idl',
     'html/CanvasPattern.idl',
     'html/CanvasRenderingContext2D.idl',
+    'html/File.idl',
+    'html/FileList.idl',
     'html/HTMLAnchorElement.idl',
     'html/HTMLAppletElement.idl',
     'html/HTMLAreaElement.idl',
@@ -264,7 +276,7 @@ idl_files = [
     'html/HTMLQuoteElement.idl',
     'html/HTMLScriptElement.idl',
     'html/HTMLSelectElement.idl',
-    'html/HTMLSelectionInputElement.idl',         # port only
+    'html/HTMLSelectionInputElement.idl',
     'html/HTMLSourceElement.idl',
     'html/HTMLStyleElement.idl',
     'html/HTMLTableCaptionElement.idl',
@@ -276,11 +288,15 @@ idl_files = [
     'html/HTMLTextAreaElement.idl',
     'html/HTMLTitleElement.idl',
     'html/HTMLUListElement.idl',
-    'html/UndetectableHTMLCollection.idl',        # port only
     'html/HTMLVideoElement.idl',
+    'html/ImageData.idl',
     'html/MediaError.idl',
+    'html/TextMetrics.idl',
     'html/TimeRanges.idl',
+    'html/UndetectableHTMLCollection.idl',
     'html/VoidCallback.idl',
+
+    # 'loader/appcache/DOMApplicationCache.idl',
 
     'page/AbstractView.idl',
     'page/BarInfo.idl',
@@ -288,42 +304,28 @@ idl_files = [
     'page/DOMSelection.idl',
     'page/DOMWindow.idl',
     'page/History.idl',
+    'page/JavaScriptCallFrame.idl',
+    'page/Location.idl',
+    'page/Navigator.idl',
     'page/Screen.idl',
 
-    'page/inspector/InspectorController.idl',     # port only
+    'page/inspector/InspectorController.idl',
 
-    'page/Navigator.idl',                          # port only
-    'page/Location.idl',                           # port only
+    'plugins/MimeTypeArray.idl',
+    'plugins/MimeType.idl',
+    'plugins/PluginArray.idl',
+    'plugins/Plugin.idl',
 
+    'ksvg2/svg/SVGMatrix.idl',
+    'ksvg2/svg/SVGPathSegList.idl',
+    'ksvg2/svg/SVGPointList.idl',
+    'ksvg2/svg/SVGTransformList.idl',
 
-    'xml/DOMParser.idl',
-    'xml/DOMParser.idl',
-    'xml/XMLHttpRequest.idl',                     # port only
-    'xml/XMLHttpRequestException.idl',
-    'xml/XMLSerializer.idl',
-    'xml/XPathEvaluator.idl',
-    'xml/XPathException.idl',
-    'xml/XPathExpression.idl',
-    'xml/XPathNSResolver.idl',
-    'xml/XPathResult.idl',
-    'xml/XSLTProcessor.idl',                      # port only
-
-    'ksvg2/svg/SVGMatrix.idl',                    # port only
-    'ksvg2/svg/SVGPathSegList.idl',               # port only
-    'ksvg2/svg/SVGPointList.idl',                 # port only
-    'ksvg2/svg/SVGTransformList.idl',             # port only
-
-    'svg/SVGLength.idl',
-    'svg/SVGElement.idl',
+    'svg/ElementTimeControl.idl',
     'svg/SVGAElement.idl',
-    'svg/SVGURIReference.idl',
-    'svg/SVGRect.idl',
-    'svg/SVGRectElement.idl',
-    'svg/SVGRenderingIntent.idl',
+    'svg/SVGAltGlyphElement.idl',
     'svg/SVGAngle.idl',
     'svg/SVGAnimateColorElement.idl',
-    'svg/SVGAnimateElement.idl',
-    'svg/SVGAnimateTransformElement.idl',
     'svg/SVGAnimatedAngle.idl',
     'svg/SVGAnimatedBoolean.idl',
     'svg/SVGAnimatedEnumeration.idl',
@@ -338,6 +340,8 @@ idl_files = [
     'svg/SVGAnimatedRect.idl',
     'svg/SVGAnimatedString.idl',
     'svg/SVGAnimatedTransformList.idl',
+    'svg/SVGAnimateElement.idl',
+    'svg/SVGAnimateTransformElement.idl',
     'svg/SVGAnimationElement.idl',
     'svg/SVGCircleElement.idl',
     'svg/SVGClipPathElement.idl',
@@ -376,25 +380,26 @@ idl_files = [
     'svg/SVGFESpotLightElement.idl',
     'svg/SVGFETileElement.idl',
     'svg/SVGFETurbulenceElement.idl',
+    'svg/SVGFilterElement.idl',
+    'svg/SVGFilterPrimitiveStandardAttributes.idl',
+    'svg/SVGFitToViewBox.idl',
     'svg/SVGFontElement.idl',
     'svg/SVGFontFaceElement.idl',
     'svg/SVGFontFaceFormatElement.idl',
     'svg/SVGFontFaceNameElement.idl',
     'svg/SVGFontFaceSrcElement.idl',
     'svg/SVGFontFaceUriElement.idl',
-    'svg/SVGFilterElement.idl',
-    'svg/SVGFilterPrimitiveStandardAttributes.idl',
-    'svg/SVGFitToViewBox.idl',
     'svg/SVGForeignObjectElement.idl',
     'svg/SVGGElement.idl',
     'svg/SVGGlyphElement.idl',
     'svg/SVGGradientElement.idl',
+    'svg/SVGHKernElement.idl',
     'svg/SVGImageElement.idl',
     'svg/SVGLangSpace.idl',
     'svg/SVGLength.idl',
     'svg/SVGLengthList.idl',
-    'svg/SVGLineElement.idl',
     'svg/SVGLinearGradientElement.idl',
+    'svg/SVGLineElement.idl',
     'svg/SVGLocatable.idl',
     'svg/SVGMarkerElement.idl',
     'svg/SVGMaskElement.idl',
@@ -433,17 +438,15 @@ idl_files = [
     'svg/SVGRect.idl',
     'svg/SVGRectElement.idl',
     'svg/SVGRenderingIntent.idl',
-    'svg/SVGSVGElement.idl',
     'svg/SVGScriptElement.idl',
     'svg/SVGSetElement.idl',
     'svg/SVGStopElement.idl',
     'svg/SVGStringList.idl',
     'svg/SVGStylable.idl',
     'svg/SVGStyleElement.idl',
+    'svg/SVGSVGElement.idl',
     'svg/SVGSwitchElement.idl',
     'svg/SVGSymbolElement.idl',
-    'svg/SVGTRefElement.idl',
-    'svg/SVGTSpanElement.idl',
     'svg/SVGTests.idl',
     'svg/SVGTextContentElement.idl',
     'svg/SVGTextElement.idl',
@@ -452,20 +455,37 @@ idl_files = [
     'svg/SVGTitleElement.idl',
     'svg/SVGTransform.idl',
     'svg/SVGTransformable.idl',
-    'svg/SVGURIReference.idl',
+    'svg/SVGTRefElement.idl',
+    'svg/SVGTSpanElement.idl',
     'svg/SVGUnitTypes.idl',
+    'svg/SVGURIReference.idl',
     'svg/SVGUseElement.idl',
     'svg/SVGViewElement.idl',
+    'svg/SVGViewSpec.idl',
     'svg/SVGZoomAndPan.idl',
     'svg/SVGZoomEvent.idl',
+
+    'xml/DOMParser.idl',
+    'xml/DOMParser.idl',
+    'xml/XMLHttpRequest.idl',
+    'xml/XMLHttpRequestException.idl',
+    'xml/XMLHttpRequestProgressEvent.idl',
+    'xml/XMLHttpRequestUpload.idl',
+    'xml/XMLSerializer.idl',
+    'xml/XPathEvaluator.idl',
+    'xml/XPathException.idl',
+    'xml/XPathExpression.idl',
+    'xml/XPathNSResolver.idl',
+    'xml/XPathResult.idl',
+    'xml/XSLTProcessor.idl',
 ]
 
 for subdir in set([os.path.dirname(n) for n in idl_files]):
-  dir = env.Dir('#/$BUILD_TYPE/webkit/port/' + subdir)
+  dir = env.Dir('$OBJ_ROOT/webkit/port/' + subdir)
 
-  dir.addRepository(env.Dir('#/../webkit/pending'))
-  dir.addRepository(env.Dir('#/../webkit/port/' + subdir))
-  dir.addRepository(env.Dir('#/../third_party/WebKit/WebCore/' + subdir))
+  dir.addRepository(env.Dir('$CHROME_SRC_DIR/webkit/pending'))
+  dir.addRepository(env.Dir('$CHROME_SRC_DIR/webkit/port/' + subdir))
+  dir.addRepository(env.Dir('$CHROME_SRC_DIR/third_party/WebKit/WebCore/' + subdir))
 
 for name in idl_files:
   env.Bindings('$WEBKIT_DIR/port/' + name)
@@ -478,28 +498,26 @@ i = env.Install('$SHARED_DIR',
 env.Alias('webkit', i)
 
 # HTML tag and attribute names
+# If we add ENABLE_ flags via HTML_FLAGS, we need to pass in
+# --extraDefines $HTML_FLAGS.
 env.Command(['$DERIVED_DIR/HTMLNames.cpp',
              '$DERIVED_DIR/HTMLNames.h'],
             ['$WEBKIT_PORT_DIR/dom/make_names.pl',
              '$WEBKIT_PORT_DIR/html/HTMLTagNames.in',
              '$WEBKIT_PORT_DIR/html/HTMLAttributeNames.in'],
-            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} ' + \
-            '--tags ${SOURCES[1].posix} ' + \
-            '--attrs ${SOURCES[2].posix} ' + \
-            '--namespace HTML --namespacePrefix xhtml ' + \
-            '--cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/1999/xhtml" ' + \
-            '--attrsNullNamespace --output $DERIVED_DIR')
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--tags ${SOURCES[1].posix} '
+            '--attrs ${SOURCES[2].posix} '
+            '--wrapperFactory '
+            '--outputDir $DERIVED_DIR')
 
 env.Command(['$DERIVED_DIR/XMLNames.cpp',
              '$DERIVED_DIR/XMLNames.h'],
             ['$WEBKIT_PORT_DIR/dom/make_names.pl',
              '$WEBKIT_PORT_DIR/xml/xmlattrs.in'],
-            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} ' + \
-            '--attrs ${SOURCES[1].posix} ' + \
-            '--namespace XML --cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/XML/1998/namespace" ' + \
-            '--output $DERIVED_DIR')
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--attrs ${SOURCES[1].posix} '
+            '--outputDir $DERIVED_DIR')
 
 env.Command(['$DERIVED_DIR/SVGElementFactory.cpp',
              '$DERIVED_DIR/SVGElementFactory.h',
@@ -508,23 +526,21 @@ env.Command(['$DERIVED_DIR/SVGElementFactory.cpp',
             ['$WEBKIT_PORT_DIR/dom/make_names.pl',
              '$WEBKIT_PORT_DIR/svg/svgtags.in',
              '$WEBKIT_PORT_DIR/svg/svgattrs.in'],
-            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} ' + \
-            '--tags ${SOURCES[1].posix} ' + \
-            '--attrs ${SOURCES[2].posix} ' + \
-            '--extraDefines "$SVG_FLAGS" ' +  \
-            '--namespace SVG --cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/2000/svg" ' + \
-            '--factory --attrsNullNamespace --output $DERIVED_DIR')
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--tags ${SOURCES[1].posix} '
+            '--attrs ${SOURCES[2].posix} '
+            '--extraDefines "$SVG_FLAGS" '
+            '--factory '
+            '--wrapperFactory '
+            '--outputDir $DERIVED_DIR')
 
 env.Command(['$DERIVED_DIR/XLinkNames.cpp',
              '$DERIVED_DIR/XLinkNames.h'],
             ['$WEBKIT_PORT_DIR/dom/make_names.pl',
              '$WEBKIT_PORT_DIR/svg/xlinkattrs.in'],
-            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} ' + \
-            '--attrs ${SOURCES[1].posix} ' + \
-            '--namespace XLink --cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/1999/xlink" ' + \
-            '--output $DERIVED_DIR')
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--attrs ${SOURCES[1].posix} '
+            '--outputDir $DERIVED_DIR')
 
 # Add SVG Symbols to the WebCore exported symbols file
 # TODO(bradnelson): fix this
@@ -603,7 +619,7 @@ env.Command('$WEBKIT_PORT_DIR/CSSPropertyNames.in',
 env.Command(['$DERIVED_DIR/CSSValueKeywords.c',
              '$DERIVED_DIR/CSSValueKeywords.h'],
             ['$WEBKIT_PORT_DIR/css/makevalues.pl',
-             '$WEBKIT_PORT_DIR/css/CSSValueKeywords.in'],
+             '$WEBKIT_PORT_DIR/CSSValueKeywords.in'],
             ['cd ${SOURCES[1].dir} && $PERL ${str(SOURCES[0].abspath).replace("\\\\", "/")}',
              Move('${TARGETS[0]}', '${SOURCES[1].dir}/${TARGETS[0].file}'),
              Move('${TARGETS[1]}', '${SOURCES[1].dir}/${TARGETS[1].file}'),
@@ -612,7 +628,7 @@ env.Command(['$DERIVED_DIR/CSSValueKeywords.c',
 env.Command(['$DERIVED_DIR/CSSPropertyNames.cpp',
              '$DERIVED_DIR/CSSPropertyNames.h'],
             ['$WEBKIT_PORT_DIR/css/makeprop.pl',
-             '$WEBKIT_PORT_DIR/css/CSSPropertyNames.in'],
+             '$WEBKIT_PORT_DIR/CSSPropertyNames.in'],
             ['cd ${SOURCES[1].dir} && $PERL ${str(SOURCES[0].abspath).replace("\\\\", "/")}',
              Move('${TARGETS[0]}', '${SOURCES[1].dir}/${TARGETS[0].file}'),
              Move('${TARGETS[1]}', '${SOURCES[1].dir}/${TARGETS[1].file}'),

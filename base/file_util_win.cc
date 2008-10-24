@@ -365,6 +365,13 @@ bool UpdateShortcutLink(const wchar_t *source, const wchar_t *destination,
   return SUCCEEDED(result);
 }
 
+bool IsDirectoryEmpty(const std::wstring& dir_path) {
+  FileEnumerator files(dir_path, false, FileEnumerator::FILES_AND_DIRECTORIES);
+  if (files.Next().empty())
+    return true;
+  return false;
+}
+
 bool GetTempDir(std::wstring* path) {
   wchar_t temp_path[MAX_PATH + 1];
   DWORD path_len = ::GetTempPath(MAX_PATH, temp_path);
@@ -376,13 +383,19 @@ bool GetTempDir(std::wstring* path) {
 }
 
 bool CreateTemporaryFileName(std::wstring* temp_file) {
-  wchar_t temp_name[MAX_PATH + 1];
   std::wstring temp_path;
 
   if (!GetTempDir(&temp_path))
     return false;
 
-  if (!GetTempFileName(temp_path.c_str(), L"", 0, temp_name))
+  return CreateTemporaryFileNameInDir(temp_path, temp_file);
+}
+
+bool CreateTemporaryFileNameInDir(const std::wstring& dir,
+                                  std::wstring* temp_file) {
+  wchar_t temp_name[MAX_PATH + 1];
+
+  if (!GetTempFileName(dir.c_str(), L"", 0, temp_name))
     return false;  // fail!
 
   DWORD path_len = GetLongPathName(temp_name, temp_name, MAX_PATH);
@@ -670,11 +683,8 @@ std::wstring FileEnumerator::Next() {
       // it to pending_paths_ so we scan it after we finish scanning this
       // directory.
       pending_paths_.push(cur_file);
-      return (file_type_ & FileEnumerator::DIRECTORIES) ? cur_file : Next();
     }
-
-    if ((file_type_ & FileEnumerator::DIRECTORIES) == 0)
-      return Next();
+    return (file_type_ & FileEnumerator::DIRECTORIES) ? cur_file : Next();
   }
   return (file_type_ & FileEnumerator::FILES) ? cur_file : Next();
 }

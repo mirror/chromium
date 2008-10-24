@@ -12,6 +12,7 @@
 #include "base/gfx/vector_canvas.h"
 #include "base/histogram.h"
 #include "base/path_service.h"
+#include "base/process_util.h"
 #include "base/registry.h"
 #include "base/string_util.h"
 #include "base/tracked_objects.h"
@@ -24,6 +25,7 @@
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
+#include "chrome/browser/browser_trial.h"
 #include "chrome/browser/cert_store.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/first_run.h"
@@ -49,6 +51,9 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/win_util.h"
 #include "chrome/installer/util/google_update_settings.h"
+#include "chrome/installer/util/helper.h"
+#include "chrome/installer/util/install_util.h"
+#include "chrome/installer/util/version.h"
 #include "chrome/views/accelerator_handler.h"
 #include "net/base/net_module.h"
 #include "net/base/net_resources.h"
@@ -175,18 +180,13 @@ int DoUninstallTasks() {
 // functionality so we just ask the users if they want to uninstall Chrome.
 int HandleIconsCommands(const CommandLine &parsed_command_line) {
   if (parsed_command_line.HasSwitch(switches::kHideIcons)) {
-    OSVERSIONINFO version = {0};
-    version.dwOSVersionInfoSize = sizeof(version);
-    if (!GetVersionEx(&version))
-      return ResultCodes::UNSUPPORTED_PARAM;
-
     std::wstring cp_applet;
-    if (version.dwMajorVersion >= 6) {
+    if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA) {
       cp_applet.assign(L"Programs and Features");  // Windows Vista and later.
-    } else if (version.dwMajorVersion == 5 && version.dwMinorVersion >= 1) {
+    } else if (win_util::GetWinVersion() == win_util::WINVERSION_XP) {
       cp_applet.assign(L"Add/Remove Programs");  // Windows XP.
     } else {
-      return ResultCodes::UNSUPPORTED_PARAM;  // Not supported on Win2K?
+      return ResultCodes::UNSUPPORTED_PARAM;  // Not supported
     }
 
     const std::wstring msg = l10n_util::GetStringF(IDS_HIDE_ICONS_NOT_SUPPORTED,
@@ -226,6 +226,39 @@ bool CreateUniqueChromeEvent() {
   return already_running;
 }
 
+// Check if there is any machine level Chrome installed on the current
+// machine. If yes and the current Chrome process is user level, we do not
+// allow the user level Chrome to run. So we notify the user and uninstall
+// user level Chrome.
+bool CheckMachineLevelInstall() {
+  scoped_ptr<installer::Version> version(InstallUtil::GetChromeVersion(true));
+  if (version.get()) {
+    std::wstring exe;
+    PathService::Get(base::DIR_EXE, &exe);
+    std::transform(exe.begin(), exe.end(), exe.begin(), tolower);
+    std::wstring user_exe_path = installer::GetChromeInstallPath(false);
+    std::transform(user_exe_path.begin(), user_exe_path.end(),
+                   user_exe_path.begin(), tolower);
+    if (exe == user_exe_path) {
+      const std::wstring text =
+          l10n_util::GetString(IDS_MACHINE_LEVEL_INSTALL_CONFLICT);
+      const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
+      const UINT flags = MB_OK | MB_ICONERROR | MB_TOPMOST;
+      win_util::MessageBox(NULL, text, caption, flags);
+      std::wstring uninstall_cmd = InstallUtil::GetChromeUninstallCmd(false);
+      if (!uninstall_cmd.empty()) {
+        uninstall_cmd.append(L" --");
+        uninstall_cmd.append(installer_util::switches::kForceUninstall);
+        uninstall_cmd.append(L" --");
+        uninstall_cmd.append(installer_util::switches::kDoNotRemoveSharedItems);
+        process_util::LaunchApp(uninstall_cmd, false, false, NULL);
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
 // We record in UMA the conditions that can prevent breakpad from generating
 // and sending crash reports. Namely that the crash reporting registration
 // failed and that the process is being debugged.
@@ -249,6 +282,9 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   MessageLoop main_message_loop(MessageLoop::TYPE_UI);
 
+  // Initialize statistical testing infrastructure.
+  FieldTrialList field_trial;
+
   std::wstring app_name = chrome::kBrowserAppName;
   std::string thread_name_string = WideToASCII(app_name + L"_BrowserMain");
 
@@ -257,10 +293,12 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   main_message_loop.set_thread_name(thread_name);
   bool already_running = CreateUniqueChromeEvent();
 
+#if defined(OS_WIN)
   // Make the selection of network stacks early on before any consumers try to
   // issue HTTP requests.
-  if (parsed_command_line.HasSwitch(switches::kUseNewHttp))
-    net::HttpNetworkLayer::UseWinHttp(false);
+  if (parsed_command_line.HasSwitch(switches::kUseWinHttp))
+    net::HttpNetworkLayer::UseWinHttp(true);
+#endif
 
   std::wstring user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
@@ -286,6 +324,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   bool is_first_run = FirstRun::IsChromeFirstRun() ||
       parsed_command_line.HasSwitch(switches::kFirstRun);
+  bool first_run_ui_bypass = false;
 
   // Initialize ResourceBundle which handles files loaded from external
   // sources. This has to be done before uninstall code path and before prefs
@@ -293,7 +332,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   local_state->RegisterStringPref(prefs::kApplicationLocale, L"");
   local_state->RegisterBooleanPref(prefs::kMetricsReportingEnabled, false);
 
-  // During first run we read the google update registry key to find what
+  // During first run we read the google_update registry key to find what
   // language the user selected when downloading the installer. This
   // becomes our default language in the prefs.
   if (is_first_run) {
@@ -302,6 +341,12 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
       local_state->SetString(prefs::kApplicationLocale, install_lang);
     if (GoogleUpdateSettings::GetCollectStatsConsent())
       local_state->SetBoolean(prefs::kMetricsReportingEnabled, true);
+    // On first run, we  need to process the master preferences before the
+    // browser's profile_manager object is created.
+    FirstRun::MasterPrefResult master_pref_res =
+        FirstRun::ProcessMasterPreferences(user_data_dir, std::wstring());
+    first_run_ui_bypass =
+        (master_pref_res == FirstRun::MASTER_PROFILE_NO_FIRST_RUN_UI);
   }
 
   ResourceBundle::InitSharedInstance(
@@ -317,7 +362,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   // Initialize histogram statistics gathering system.
   StatisticsRecorder statistics;
 
-  // Strart tracking the creation and deletion of Task instances
+  // Start tracking the creation and deletion of Task instances
   bool tracking_objects = false;
 #ifdef TRACK_ALL_TASK_OBJECTS
   tracking_objects = tracked_objects::ThreadData::StartTracking(true);
@@ -402,6 +447,16 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
     return ResultCodes::NORMAL_EXIT;
   }
 
+  // Check if there is any machine level Chrome installed on the current
+  // machine. If yes and the current Chrome process is user level, we do not
+  // allow the user level Chrome to run. So we notify the user and uninstall
+  // user level Chrome.
+  // Note this check should only happen here, after all the checks above
+  // (uninstall, resource bundle initialization, other chrome browser
+  // processes etc).
+  if (CheckMachineLevelInstall())
+    return ResultCodes::MACHINE_LEVEL_INSTALL_EXISTS;
+
   message_window.Create();
 
   // Show the First Run UI if this is the first time Chrome has been run on
@@ -409,7 +464,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   // Note that this be done _after_ the PrefService is initialized and all
   // preferences are registered, since some of the code that the importer
   // touches reads preferences.
-  if (is_first_run) {
+  if (is_first_run && !first_run_ui_bypass) {
     // We need to avoid dispatching new tabs when we are doing the import
     // because that will lead to data corruption or a crash. Lock() does that.
     message_window.Lock();
@@ -454,7 +509,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   ShellIntegration::VerifyInstallation();
 
   browser_process->InitBrokerServices(broker_services);
-  
+
   // In unittest mode, this will do nothing.  In normal mode, this will create
   // the global GoogleURLTracker instance, which will promptly go to sleep for
   // five seconds (to avoid slowing startup), and wake up afterwards to see if
@@ -482,19 +537,31 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
     sdch_manager.set_sdch_fetcher(new SdchDictionaryFetcher);
     std::wstring switch_domain =
         parsed_command_line.GetSwitchValue(switches::kSdchFilter);
-    sdch_manager.enable_sdch_support(WideToASCII(switch_domain));
+    sdch_manager.EnableSdchSupport(WideToASCII(switch_domain));
   }
 
   MetricsService* metrics = NULL;
   if (!parsed_command_line.HasSwitch(switches::kDisableMetrics)) {
-    if (parsed_command_line.HasSwitch(switches::kDisableMetricsReporting)) {
+    if (parsed_command_line.HasSwitch(switches::kMetricsRecordingOnly)) {
       local_state->transient()->SetBoolean(prefs::kMetricsReportingEnabled,
                                            false);
     }
     metrics = browser_process->metrics_service();
     DCHECK(metrics);
-    // Start user experience metrics recording, if enabled.
-    metrics->SetRecording(local_state->GetBoolean(prefs::kMetricsIsRecording));
+
+    // If we're testing then we don't care what the user preference is, we turn
+    // on recording, but not reporting, otherwise tests fail.
+    if (parsed_command_line.HasSwitch(switches::kMetricsRecordingOnly)) {
+      metrics->StartRecordingOnly();
+    } else {
+      // If the user permits metrics reporting with the checkbox in the
+      // prefs, we turn on recording.
+      bool enabled = local_state->GetBoolean(prefs::kMetricsReportingEnabled);
+
+      metrics->SetUserPermitsUpload(enabled);
+      if (enabled)
+        metrics->Start();
+    }
   }
   InstallJankometer(parsed_command_line);
 
@@ -515,7 +582,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   }
 
   if (metrics)
-    metrics->SetRecording(false);  // Force persistent save.
+    metrics->Stop();
 
   // browser_shutdown takes care of deleting browser_process, so we need to
   // release it.

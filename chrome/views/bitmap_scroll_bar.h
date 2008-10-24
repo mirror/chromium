@@ -10,7 +10,7 @@
 #include "chrome/views/repeat_controller.h"
 #include "chrome/views/scroll_bar.h"
 
-namespace ChromeViews {
+namespace views {
 
 namespace {
 class BitmapScrollBarThumb;
@@ -87,10 +87,9 @@ class BitmapScrollBar : public ScrollBar,
   void ScrollByContentsOffset(int contents_offset);
 
   // View overrides:
-  virtual void GetPreferredSize(CSize* preferred_size);
+  virtual gfx::Size GetPreferredSize();
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual bool OnMousePressed(const MouseEvent& event);
   virtual void OnMouseReleased(const MouseEvent& event, bool canceled);
   virtual bool OnMouseWheel(const MouseWheelEvent& event);
@@ -179,7 +178,7 @@ class BitmapScrollBar : public ScrollBar,
   DISALLOW_EVIL_CONSTRUCTORS(BitmapScrollBar);
 };
 
-}
+}  // namespace views
 
 #endif  // #ifndef CHROME_VIEWS_BITMAP_SCROLL_BAR_H__
 

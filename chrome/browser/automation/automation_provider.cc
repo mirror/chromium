@@ -5,7 +5,8 @@
 #include "chrome/browser/automation/automation_provider.h"
 
 #include "base/path_service.h"
-#include "chrome/app/chrome_dll_resource.h"
+#include "base/process_util.h"
+#include "chrome/app/chrome_dll_resource.h" 
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/automation/ui_controls.h"
 #include "chrome/browser/automation/url_request_failed_dns_job.h"
@@ -24,6 +25,7 @@
 #include "chrome/browser/ssl_manager.h"
 #include "chrome/browser/ssl_blocking_page.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/common/chrome_paths.h"
@@ -570,6 +572,23 @@ class DocumentPrintedNotificationObserver : public NotificationObserver {
   scoped_refptr<AutomationProvider> automation_;
   int32 routing_id_;
   bool success_;
+};
+
+class AutomationInterstitialPage : public InterstitialPage {
+ public:
+  AutomationInterstitialPage(TabContents* tab,
+                             const GURL& url,
+                             const std::string& contents)
+      : InterstitialPage(tab, true, url),
+        contents_(contents) {
+  }
+
+  virtual std::string GetHTMLContents() { return contents_; }
+
+ private:
+  std::string contents_;
+  
+  DISALLOW_COPY_AND_ASSIGN(AutomationInterstitialPage);
 };
 
 AutomationProvider::AutomationProvider(Profile* profile)
@@ -1119,65 +1138,63 @@ void AutomationProvider::WindowGetViewBounds(const IPC::Message& message,
                                              int view_id,
                                              bool screen_coordinates) {
   bool succeeded = false;
-  CRect bounds;
-  bounds.SetRect(0, 0, 0, 0);
+  gfx::Rect bounds;
 
   void* iter = NULL;
   if (window_tracker_->ContainsHandle(handle)) {
     HWND hwnd = window_tracker_->GetResource(handle);
-    ChromeViews::RootView* root_view =
-        ChromeViews::HWNDViewContainer::FindRootView(hwnd);
+    views::RootView* root_view = views::ContainerWin::FindRootView(hwnd);
     if (root_view) {
-      ChromeViews::View* view = root_view->GetViewByID(view_id);
+      views::View* view = root_view->GetViewByID(view_id);
       if (view) {
         succeeded = true;
-        CPoint point(0, 0);
+        gfx::Point point;
         if (screen_coordinates)
-          ChromeViews::View::ConvertPointToScreen(view, &point);
+          views::View::ConvertPointToScreen(view, &point);
         else
-          ChromeViews::View::ConvertPointToView(view, root_view, &point);
-        view->GetLocalBounds(&bounds, false);
-        bounds.MoveToXY(point.x, point.y);
+          views::View::ConvertPointToView(view, root_view, &point);
+        bounds = view->GetLocalBounds(false);
+        bounds.set_origin(point);
       }
     }
   }
 
-  Send(new AutomationMsg_WindowViewBoundsResponse(
-           message.routing_id(), succeeded, gfx::Rect(bounds)));
+  Send(new AutomationMsg_WindowViewBoundsResponse(message.routing_id(),
+                                                  succeeded, bounds));
 }
 
 // This task enqueues a mouse event on the event loop, so that the view
 // that it's being sent to can do the requisite post-processing.
 class MouseEventTask : public Task {
  public:
-  MouseEventTask(ChromeViews::View* view,
-                 ChromeViews::Event::EventType type,
+  MouseEventTask(views::View* view,
+                 views::Event::EventType type,
                  POINT point,
                  int flags)
       : view_(view), type_(type), point_(point), flags_(flags) {}
   virtual ~MouseEventTask() {}
 
   virtual void Run() {
-    ChromeViews::MouseEvent event(type_, point_.x, point_.y, flags_);
+    views::MouseEvent event(type_, point_.x, point_.y, flags_);
     // We need to set the cursor position before we process the event because
     // some code (tab dragging, for instance) queries the actual cursor location
     // rather than the location of the mouse event. Note that the reason why
     // the drag code moved away from using mouse event locations was because
     // our conversion to screen location doesn't work well with multiple
     // monitors, so this only works reliably in a single monitor setup.
-    CPoint screen_location = CPoint(point_.x, point_.y);
+    gfx::Point screen_location(point_.x, point_.y);
     view_->ConvertPointToScreen(view_, &screen_location);
-    ::SetCursorPos(screen_location.x, screen_location.y);
+    ::SetCursorPos(screen_location.x(), screen_location.y());
     switch (type_) {
-      case ChromeViews::Event::ET_MOUSE_PRESSED:
+      case views::Event::ET_MOUSE_PRESSED:
         view_->OnMousePressed(event);
         break;
 
-      case ChromeViews::Event::ET_MOUSE_DRAGGED:
+      case views::Event::ET_MOUSE_DRAGGED:
         view_->OnMouseDragged(event);
         break;
 
-      case ChromeViews::Event::ET_MOUSE_RELEASED:
+      case views::Event::ET_MOUSE_RELEASED:
         view_->OnMouseReleased(event, false);
         break;
 
@@ -1187,16 +1204,16 @@ class MouseEventTask : public Task {
   }
 
  private:
-  ChromeViews::View* view_;
-  ChromeViews::Event::EventType type_;
+  views::View* view_;
+  views::Event::EventType type_;
   POINT point_;
   int flags_;
 
   DISALLOW_COPY_AND_ASSIGN(MouseEventTask);
 };
 
-void AutomationProvider::ScheduleMouseEvent(ChromeViews::View* view,
-                                            ChromeViews::Event::EventType type,
+void AutomationProvider::ScheduleMouseEvent(views::View* view,
+                                            views::Event::EventType type,
                                             POINT point,
                                             int flags) {
   MessageLoop::current()->PostTask(FROM_HERE,
@@ -1254,14 +1271,14 @@ void AutomationProvider::WindowSimulateClick(const IPC::Message& message,
     ui_controls::SendMouseMove(click.x, click.y);
 
     ui_controls::MouseButton button = ui_controls::LEFT;
-    if ((flags & ChromeViews::Event::EF_LEFT_BUTTON_DOWN) ==
-        ChromeViews::Event::EF_LEFT_BUTTON_DOWN) {
+    if ((flags & views::Event::EF_LEFT_BUTTON_DOWN) ==
+        views::Event::EF_LEFT_BUTTON_DOWN) {
       button = ui_controls::LEFT;
-    } else if ((flags & ChromeViews::Event::EF_RIGHT_BUTTON_DOWN) ==
-        ChromeViews::Event::EF_RIGHT_BUTTON_DOWN) {
+    } else if ((flags & views::Event::EF_RIGHT_BUTTON_DOWN) ==
+        views::Event::EF_RIGHT_BUTTON_DOWN) {
       button = ui_controls::RIGHT;
-    } else if ((flags & ChromeViews::Event::EF_MIDDLE_BUTTON_DOWN) ==
-        ChromeViews::Event::EF_MIDDLE_BUTTON_DOWN) {
+    } else if ((flags & views::Event::EF_MIDDLE_BUTTON_DOWN) ==
+        views::Event::EF_MIDDLE_BUTTON_DOWN) {
       button = ui_controls::MIDDLE;
     } else {
       NOTREACHED();
@@ -1282,21 +1299,21 @@ void AutomationProvider::WindowSimulateDrag(const IPC::Message& message,
     UINT down_message = 0;
     UINT up_message = 0;
     WPARAM wparam_flags = 0;
-    if (flags & ChromeViews::Event::EF_SHIFT_DOWN)
+    if (flags & views::Event::EF_SHIFT_DOWN)
       wparam_flags |= MK_SHIFT;
-    if (flags & ChromeViews::Event::EF_CONTROL_DOWN)
+    if (flags & views::Event::EF_CONTROL_DOWN)
       wparam_flags |= MK_CONTROL;
-    if (flags & ChromeViews::Event::EF_LEFT_BUTTON_DOWN) {
+    if (flags & views::Event::EF_LEFT_BUTTON_DOWN) {
       wparam_flags |= MK_LBUTTON;
       down_message = WM_LBUTTONDOWN;
       up_message = WM_LBUTTONUP;
     }
-    if (flags & ChromeViews::Event::EF_MIDDLE_BUTTON_DOWN) {
+    if (flags & views::Event::EF_MIDDLE_BUTTON_DOWN) {
       wparam_flags |= MK_MBUTTON;
       down_message = WM_MBUTTONDOWN;
       up_message = WM_MBUTTONUP;
     }
-    if (flags & ChromeViews::Event::EF_RIGHT_BUTTON_DOWN) {
+    if (flags & views::Event::EF_RIGHT_BUTTON_DOWN) {
       wparam_flags |= MK_RBUTTON;
       down_message = WM_LBUTTONDOWN;
       up_message = WM_LBUTTONUP;
@@ -1319,12 +1336,12 @@ void AutomationProvider::WindowSimulateDrag(const IPC::Message& message,
     if (press_escape_en_route) {
       // Press Escape.
       ui_controls::SendKeyPress(VK_ESCAPE,
-                               ((flags & ChromeViews::Event::EF_CONTROL_DOWN)
-                                == ChromeViews::Event::EF_CONTROL_DOWN),
-                               ((flags & ChromeViews::Event::EF_SHIFT_DOWN) ==
-                                ChromeViews::Event::EF_SHIFT_DOWN),
-                               ((flags & ChromeViews::Event::EF_ALT_DOWN) ==
-                                ChromeViews::Event::EF_ALT_DOWN));
+                               ((flags & views::Event::EF_CONTROL_DOWN)
+                                == views::Event::EF_CONTROL_DOWN),
+                               ((flags & views::Event::EF_SHIFT_DOWN) ==
+                                views::Event::EF_SHIFT_DOWN),
+                               ((flags & views::Event::EF_ALT_DOWN) ==
+                                views::Event::EF_ALT_DOWN));
     }
     SendMessage(top_level_hwnd, up_message, wparam_flags,
                 MAKELPARAM(end.x, end.y));
@@ -1346,12 +1363,12 @@ void AutomationProvider::WindowSimulateKeyPress(const IPC::Message& message,
 
   // The key event is sent to whatever window is active.
   ui_controls::SendKeyPress(key,
-                           ((flags & ChromeViews::Event::EF_CONTROL_DOWN) ==
-                              ChromeViews::Event::EF_CONTROL_DOWN),
-                            ((flags & ChromeViews::Event::EF_SHIFT_DOWN) ==
-                              ChromeViews::Event::EF_SHIFT_DOWN),
-                            ((flags & ChromeViews::Event::EF_ALT_DOWN) ==
-                              ChromeViews::Event::EF_ALT_DOWN));
+                           ((flags & views::Event::EF_CONTROL_DOWN) ==
+                              views::Event::EF_CONTROL_DOWN),
+                            ((flags & views::Event::EF_SHIFT_DOWN) ==
+                              views::Event::EF_SHIFT_DOWN),
+                            ((flags & views::Event::EF_ALT_DOWN) ==
+                              views::Event::EF_ALT_DOWN));
 }
 
 void AutomationProvider::GetFocusedViewID(const IPC::Message& message,
@@ -1359,10 +1376,10 @@ void AutomationProvider::GetFocusedViewID(const IPC::Message& message,
   int view_id = -1;
   if (window_tracker_->ContainsHandle(handle)) {
     HWND hwnd = window_tracker_->GetResource(handle);
-    ChromeViews::FocusManager* focus_manager =
-        ChromeViews::FocusManager::GetFocusManager(hwnd);
+    views::FocusManager* focus_manager =
+        views::FocusManager::GetFocusManager(hwnd);
     DCHECK(focus_manager);
-    ChromeViews::View* focused_view = focus_manager->GetFocusedView();
+    views::View* focused_view = focus_manager->GetFocusedView();
     if (focused_view)
       view_id = focused_view->GetID();
   }
@@ -1700,17 +1717,18 @@ void AutomationProvider::HandleFindRequest(const IPC::Message& message,
       FindInPageNotificationObserver(this, tab_contents, message.routing_id()));
 
   // The find in page dialog must be up for us to get the notification that the
-  // find was complete
-  if (tab_contents->AsWebContents()) {
+  // find was complete.
+  WebContents* web_contents = tab_contents->AsWebContents();
+  if (web_contents) {
     NavigationController* tab = tab_tracker_->GetResource(handle);
     Browser* browser = Browser::GetBrowserForController(tab, NULL);
-    tab_contents->AsWebContents()->OpenFindInPageWindow(*browser);
-  }
+    web_contents->view()->FindInPage(*browser, true, request.forward);
 
-  tab_contents->StartFinding(
-      FindInPageNotificationObserver::kFindInPageRequestId,
-      request.search_string, request.forward, request.match_case,
-      request.find_next);
+    web_contents->render_view_host()->StartFinding(
+        FindInPageNotificationObserver::kFindInPageRequestId,
+        request.search_string, request.forward, request.match_case,
+        request.find_next);
+  }
 }
 
 void AutomationProvider::HandleOpenFindInPageRequest(
@@ -1719,16 +1737,17 @@ void AutomationProvider::HandleOpenFindInPageRequest(
   WebContents* web_contents = GetWebContentsForHandle(handle, &tab);
   if (web_contents) {
     Browser* browser = Browser::GetBrowserForController(tab, NULL);
-    web_contents->OpenFindInPageWindow(*browser);
+    web_contents->view()->FindInPage(*browser, false, false);
   }
 }
 
 void AutomationProvider::GetFindWindowVisibility(const IPC::Message& message,
                                                  int handle) {
+  gfx::Point position;
   bool visible = false;
   WebContents* web_contents = GetWebContentsForHandle(handle, NULL);
   if (web_contents)
-    visible = web_contents->IsFindWindowFullyVisible();
+    web_contents->view()->GetFindBarWindowInfo(&position, &visible);
 
   Send(new AutomationMsg_FindWindowVisibilityResponse(message.routing_id(),
                                                       visible));
@@ -1736,13 +1755,15 @@ void AutomationProvider::GetFindWindowVisibility(const IPC::Message& message,
 
 void AutomationProvider::HandleFindWindowLocationRequest(
     const IPC::Message& message, int handle) {
-  int x = -1, y = -1;
+  gfx::Point position(0, 0);
+  bool visible = false;
   WebContents* web_contents = GetWebContentsForHandle(handle, NULL);
   if (web_contents)
-    web_contents->GetFindInPageWindowLocation(&x, &y);
+    web_contents->view()->GetFindBarWindowInfo(&position, &visible);
 
   Send(new AutomationMsg_FindWindowLocationResponse(message.routing_id(),
-                                                    x, y));
+                                                    position.x(),
+                                                    position.y()));
 }
 
 void AutomationProvider::GetBookmarkBarVisitility(const IPC::Message& message,
@@ -1906,7 +1927,11 @@ void AutomationProvider::ShowInterstitialPage(const IPC::Message& message,
                                                          true),
           NULL);
       WebContents* web_contents = tab_contents->AsWebContents();
-      web_contents->ShowInterstitialPage(html_text, NULL);
+      AutomationInterstitialPage* interstitial =
+          new AutomationInterstitialPage(web_contents,
+                                         GURL("about:interstitial"),
+                                         html_text);
+      web_contents->ShowInterstitialPage(interstitial);
       return;
     }
   }
@@ -2076,8 +2101,8 @@ void AutomationProvider::ActionOnSSLBlockingPage(const IPC::Message& message,
     NavigationEntry* entry = tab->GetActiveEntry();
     if (entry->page_type() == NavigationEntry::INTERSTITIAL_PAGE) {
       TabContents* tab_contents = tab->GetTabContents(TAB_CONTENTS_WEB);
-      SSLBlockingPage* ssl_blocking_page =
-          SSLBlockingPage::GetSSLBlockingPage(tab_contents);
+      InterstitialPage* ssl_blocking_page =
+          InterstitialPage::GetInterstitialPage(tab_contents);
       if (ssl_blocking_page) {
         if (proceed) {
           AddNavigationStatusListener(tab,
@@ -2207,10 +2232,10 @@ void AutomationProvider::AutocompleteEditGetMatches(
   bool success = false;
   std::vector<AutocompleteMatchData> matches;
   if (autocomplete_edit_tracker_->ContainsHandle(autocomplete_edit_handle)) {
-    const AutocompleteResult* result = autocomplete_edit_tracker_->
-        GetResource(autocomplete_edit_handle)->model()->latest_result();
-    for (AutocompleteResult::const_iterator i = result->begin();
-        i != result->end(); ++i)
+    const AutocompleteResult& result = autocomplete_edit_tracker_->
+        GetResource(autocomplete_edit_handle)->model()->result();
+    for (AutocompleteResult::const_iterator i = result.begin();
+        i != result.end(); ++i)
       matches.push_back(AutocompleteMatchData(*i));
     success = true;
   }

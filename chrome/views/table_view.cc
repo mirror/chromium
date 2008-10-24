@@ -15,14 +15,12 @@
 #include "chrome/common/gfx/icon_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/hwnd_view.h"
-#include "chrome/views/view_container.h"
 #include "SkBitmap.h"
 #include "SkColorFilter.h"
-#include "unicode/coll.h"
-#include "unicode/uchar.h"
 
-namespace ChromeViews {
+namespace views {
 
 // Added to column width to prevent truncation.
 const int kListViewTextPadding = 15;
@@ -45,16 +43,8 @@ int TableModel::CompareValues(int row1, int row2, int column_id) {
          row2 >= 0 && row2 < RowCount());
   std::wstring value1 = GetText(row1, column_id);
   std::wstring value2 = GetText(row2, column_id);
+  Collator* collator = GetCollator();
 
-  if (!collator) {
-    UErrorCode create_status = U_ZERO_ERROR;
-    collator = Collator::createInstance(create_status);
-    if (!U_SUCCESS(create_status)) {
-      collator = NULL;
-      NOTREACHED();
-    }
-  }
-  
   if (collator) {
     UErrorCode compare_status = U_ZERO_ERROR;
     UCollationResult compare_result = collator->compare(
@@ -68,6 +58,18 @@ int TableModel::CompareValues(int row1, int row2, int column_id) {
   }
   NOTREACHED();
   return 0;
+}
+
+Collator* TableModel::GetCollator() {
+  if (!collator) {
+    UErrorCode create_status = U_ZERO_ERROR;
+    collator = Collator::createInstance(create_status);
+    if (!U_SUCCESS(create_status)) {
+      collator = NULL;
+      NOTREACHED();
+    }
+  }
+  return collator;
 }
 
 // TableView ------------------------------------------------------------------
@@ -144,8 +146,8 @@ void TableView::SetSortDescriptors(const SortDescriptors& sort_descriptors) {
   SendMessage(list_view_, WM_SETREDRAW, static_cast<WPARAM>(TRUE), 0);
 }
 
-void TableView::DidChangeBounds(const CRect& previous,
-                                const CRect& current) {
+void TableView::DidChangeBounds(const gfx::Rect& previous,
+                                const gfx::Rect& current) {
   if (!list_view_)
     return;
   SendMessage(list_view_, WM_SETREDRAW, static_cast<WPARAM>(FALSE), 0);
@@ -552,7 +554,7 @@ HWND TableView::CreateNativeControl(HWND parent_container) {
   // If there's only one column and the title string is empty, don't show a
   // header.
   if (all_columns_.size() == 1) {
-    std::map<int, ChromeViews::TableColumn>::const_iterator first =
+    std::map<int, TableColumn>::const_iterator first =
         all_columns_.begin();
     if (first->second.title.empty())
       style |= LVS_NOCOLUMNHEADER;
@@ -1037,13 +1039,12 @@ void TableView::ResetColumnSizes() {
     return;
 
   // See comment in TableColumn for what this does.
-  CRect bounds;
-  GetLocalBounds(&bounds, false);  // false so it doesn't include the border.
-  int width = bounds.Width();
-  if (GetClientRect(GetNativeControlHWND(), &bounds) &&
-      bounds.Width() > 0) {
+  int width = this->width();
+  CRect native_bounds;
+  if (GetClientRect(GetNativeControlHWND(), &native_bounds) &&
+      native_bounds.Width() > 0) {
     // Prefer the bounds of the window over our bounds, which may be different.
-    width = bounds.Width();
+    width = native_bounds.Width();
   }
 
   float percent = 0;
@@ -1094,13 +1095,8 @@ void TableView::ResetColumnSizes() {
   }
 }
 
-void TableView::SetPreferredSize(const CSize& preferred_size) {
-  preferred_size_  = preferred_size;
-}
-
-void TableView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  *out = preferred_size_;
+gfx::Size TableView::GetPreferredSize() {
+  return preferred_size_;
 }
 
 void TableView::UpdateListViewCache0(int start, int length, bool add) {
@@ -1298,4 +1294,4 @@ void TableSelectionIterator::UpdateModelIndexFromViewIndex() {
     model_index_ = table_view_->view_to_model(view_index_);
 }
 
-}  // namespace
+}  // namespace views

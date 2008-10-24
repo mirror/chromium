@@ -29,8 +29,8 @@ static const int kStatusBubbleOffset = 2;
 
 BrowserView::BrowserView(BrowserWindow* frame,
                          Browser* browser,
-                         ChromeViews::Window* window,
-                         ChromeViews::View* contents_view)
+                         views::Window* window,
+                         views::View* contents_view)
     : frame_(frame),
       browser_(browser),
       initialized_(false)
@@ -61,7 +61,7 @@ void BrowserView::Init() {
   toolbar_->Init(browser_->profile());
   toolbar_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TOOLBAR));
 
-  status_bubble_.reset(new StatusBubble(GetViewContainer()));
+  status_bubble_.reset(new StatusBubble(GetContainer()));
 }
 
 void BrowserView::Show(int command, bool adjust_to_fit) {
@@ -123,7 +123,7 @@ void BrowserView::SizeToContents(const gfx::Rect& contents_bounds) {
 }
 
 void BrowserView::SetAcceleratorTable(
-    std::map<ChromeViews::Accelerator, int>* accelerator_table) {
+    std::map<views::Accelerator, int>* accelerator_table) {
   frame_->SetAcceleratorTable(accelerator_table);
 }
 
@@ -196,14 +196,12 @@ bool BrowserView::IsBookmarkBarVisible() const {
   if (bookmark_bar_view->IsNewTabPage() || bookmark_bar_view->IsAnimating())
     return true;
 
-  CSize sz;
-  bookmark_bar_view->GetPreferredSize(&sz);
   // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
+  return bookmark_bar_view->GetPreferredSize().height() > 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// BrowserView, ChromeViews::ClientView overrides:
+// BrowserView, views::ClientView overrides:
 
 /*
 bool BrowserView::CanClose() const {
@@ -216,24 +214,19 @@ int BrowserView::NonClientHitTest(const gfx::Point& point) {
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// BrowserView, ChromeViews::View overrides:
+// BrowserView, views::View overrides:
 
 void BrowserView::Layout() {
   toolbar_->SetBounds(0, 0, width(), height());
 }
 
-void BrowserView::DidChangeBounds(const CRect& previous,
-                                  const CRect& current) {
-  Layout();
-}
-
 void BrowserView::ViewHierarchyChanged(bool is_add,
-                                       ChromeViews::View* parent,
-                                       ChromeViews::View* child) {
-  if (is_add && child == this && GetViewContainer() && !initialized_) {
+                                       views::View* parent,
+                                       views::View* child) {
+  if (is_add && child == this && GetContainer() && !initialized_) {
     Init();
     // Make sure not to call Init() twice if we get inserted into a different
-    // ViewContainer.
+    // Container.
     initialized_ = true;
   }
 }

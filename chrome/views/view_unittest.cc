@@ -28,16 +28,16 @@ class ViewTest : public testing::Test {
 };
 
 // Paints the RootView.
-void PaintRootView(ChromeViews::RootView* root, bool empty_paint) {
+void PaintRootView(views::RootView* root, bool empty_paint) {
   if (!empty_paint) {
     root->PaintNow();
   } else {
     // User isn't logged in, so that PaintNow will generate an empty rectangle.
     // Invoke paint directly.
-    CRect paint_rect = root->GetScheduledPaintRect();
-    ChromeCanvas canvas(paint_rect.Width(), paint_rect.Height(), true);
-    canvas.TranslateInt(-paint_rect.left, -paint_rect.top);
-    canvas.ClipRectInt(0, 0, paint_rect.Width(), paint_rect.Height());
+    gfx::Rect paint_rect = root->GetScheduledPaintRect();
+    ChromeCanvas canvas(paint_rect.width(), paint_rect.height(), true);
+    canvas.TranslateInt(-paint_rect.x(), -paint_rect.y());
+    canvas.ClipRectInt(0, 0, paint_rect.width(), paint_rect.height());
     root->ProcessPaint(&canvas);
   }
 }
@@ -90,7 +90,7 @@ class EmptyWindow : public CWindowImpl<EmptyWindow,
 */
 }
 
-using namespace ChromeViews;
+using namespace views;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -115,7 +115,8 @@ class TestView : public View {
     last_clip_.setEmpty();
   }
 
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual void DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current);
   virtual void ViewHierarchyChanged(bool is_add, View *parent, View *child);
   virtual bool OnMousePressed(const MouseEvent& event);
   virtual bool OnMouseDragged(const MouseEvent& event);
@@ -124,8 +125,8 @@ class TestView : public View {
 
   // DidChangeBounds test
   bool did_change_bounds_;
-  CRect previous_bounds_;
-  CRect new_bounds_;
+  gfx::Rect previous_bounds_;
+  gfx::Rect new_bounds_;
 
   // AddRemoveNotifications test
   bool child_added_;
@@ -145,7 +146,8 @@ class TestView : public View {
 // DidChangeBounds
 ////////////////////////////////////////////////////////////////////////////////
 
-void TestView::DidChangeBounds(const CRect& previous, const CRect& current) {
+void TestView::DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current) {
   did_change_bounds_ = true;
   previous_bounds_ = previous;
   new_bounds_ = current;
@@ -154,8 +156,8 @@ void TestView::DidChangeBounds(const CRect& previous, const CRect& current) {
 TEST_F(ViewTest, DidChangeBounds) {
   TestView* v = new TestView();
 
-  CRect prev_rect(0, 0, 200, 200);
-  CRect new_rect(100, 100, 250, 250);
+  gfx::Rect prev_rect(0, 0, 200, 200);
+  gfx::Rect new_rect(100, 100, 250, 250);
 
   v->SetBounds(prev_rect);
   v->Reset();
@@ -165,9 +167,7 @@ TEST_F(ViewTest, DidChangeBounds) {
   EXPECT_EQ(v->previous_bounds_, prev_rect);
   EXPECT_EQ(v->new_bounds_, new_rect);
 
-  CRect r;
-  v->GetBounds(&r);
-  EXPECT_EQ(r, new_rect);
+  EXPECT_EQ(v->bounds(), gfx::Rect(new_rect));
   delete v;
 }
 
@@ -283,7 +283,7 @@ TEST_F(ViewTest, MouseEvent) {
   TestView* v2 = new TestView();
   v2->SetBounds (100, 100, 100, 100);
 
-  ChromeViews::HWNDViewContainer window;
+  views::ContainerWin window;
   window.set_delete_on_destroy(false);
   window.set_window_style(WS_OVERLAPPEDWINDOW);
   window.Init(NULL, gfx::Rect(50, 50, 650, 650), false);
@@ -357,7 +357,7 @@ TEST_F(ViewTest, Painting) {
                             RDW_UPDATENOW | RDW_INVALIDATE | RDW_ALLCHILDREN);
   bool empty_paint = paint_window.empty_paint();
 
-  ChromeViews::HWNDViewContainer window;
+  views::ContainerWin window;
   window.set_delete_on_destroy(false);
   window.set_window_style(WS_OVERLAPPEDWINDOW);
   window.Init(NULL, gfx::Rect(50, 50, 650, 650), NULL);
@@ -426,10 +426,10 @@ public:
   void Observe(NotificationType type, const NotificationSource& source,
     const NotificationDetails& details) {
       ASSERT_TRUE(type == NOTIFY_VIEW_REMOVED);
-      removed_views_.push_back(Source<ChromeViews::View>(source).ptr());
+      removed_views_.push_back(Source<views::View>(source).ptr());
   }
 
-  bool WasRemoved(ChromeViews::View* view) {
+  bool WasRemoved(views::View* view) {
     return std::find(removed_views_.begin(), removed_views_.end(), view) !=
         removed_views_.end();
   }
@@ -444,8 +444,8 @@ TEST_F(ViewTest, RemoveNotification) {
   NotificationService::current()->AddObserver(
       observer.get(), NOTIFY_VIEW_REMOVED, NotificationService::AllSources());
 
-  ChromeViews::HWNDViewContainer* window = new ChromeViews::HWNDViewContainer;
-  ChromeViews::RootView* root_view = window->GetRootView();
+  views::ContainerWin* window = new views::ContainerWin;
+  views::RootView* root_view = window->GetRootView();
 
   View* v1 = new View;
   root_view->AddChildView(v1);
@@ -508,7 +508,7 @@ TEST_F(ViewTest, RemoveNotification) {
 }
 
 namespace {
-class HitTestView : public ChromeViews::View {
+class HitTestView : public views::View {
  public:
   explicit HitTestView(bool has_hittest_mask)
       : has_hittest_mask_(has_hittest_mask) {
@@ -516,7 +516,7 @@ class HitTestView : public ChromeViews::View {
   virtual ~HitTestView() {}
 
  protected:
-  // Overridden from ChromeViews::View:
+  // Overridden from views::View:
   virtual bool HasHitTestMask() const {
     return has_hittest_mask_;
   }
@@ -540,32 +540,32 @@ class HitTestView : public ChromeViews::View {
   DISALLOW_COPY_AND_ASSIGN(HitTestView);
 };
 
-POINT ConvertPointToView(ChromeViews::View* view, const POINT& p) {
-  CPoint tmp = p;
-  ChromeViews::View::ConvertPointToView(view->GetRootView(), view, &tmp);
+gfx::Point ConvertPointToView(views::View* view, const gfx::Point& p) {
+  gfx::Point tmp(p);
+  views::View::ConvertPointToView(view->GetRootView(), view, &tmp);
   return tmp;
 }
 }
 
 TEST_F(ViewTest, HitTestMasks) {
-  ChromeViews::HWNDViewContainer window;
-  ChromeViews::RootView* root_view = window.GetRootView();
+  views::ContainerWin window;
+  views::RootView* root_view = window.GetRootView();
   root_view->SetBounds(0, 0, 500, 500);
 
   gfx::Rect v1_bounds = gfx::Rect(0, 0, 100, 100);
   HitTestView* v1 = new HitTestView(false);
-  v1->SetBounds(v1_bounds.ToRECT());
+  v1->SetBounds(v1_bounds);
   root_view->AddChildView(v1);
 
   gfx::Rect v2_bounds = gfx::Rect(105, 0, 100, 100);
   HitTestView* v2 = new HitTestView(true);
-  v2->SetBounds(v2_bounds.ToRECT());
+  v2->SetBounds(v2_bounds);
   root_view->AddChildView(v2);
 
-  POINT v1_centerpoint = v1_bounds.CenterPoint().ToPOINT();
-  POINT v2_centerpoint = v2_bounds.CenterPoint().ToPOINT();
-  POINT v1_origin = v1_bounds.origin().ToPOINT();
-  POINT v2_origin = v2_bounds.origin().ToPOINT();
+  gfx::Point v1_centerpoint = v1_bounds.CenterPoint();
+  gfx::Point v2_centerpoint = v2_bounds.CenterPoint();
+  gfx::Point v1_origin = v1_bounds.origin();
+  gfx::Point v2_origin = v2_bounds.origin();
 
   // Test HitTest
   EXPECT_EQ(true, v1->HitTest(ConvertPointToView(v1, v1_centerpoint)));

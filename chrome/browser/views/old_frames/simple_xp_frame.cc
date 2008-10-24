@@ -65,7 +65,7 @@ static const int kLocationBarSpacing = 1;
 //
 ////////////////////////////////////////////////////////////////////////////////
 TitleBarMenuButton::TitleBarMenuButton(SimpleXPFrameTitleBar* title_bar)
-    : ChromeViews::MenuButton(L"", title_bar, false),
+    : views::MenuButton(L"", title_bar, false),
       contents_(NULL),
       title_bar_(title_bar) {
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
@@ -75,19 +75,20 @@ TitleBarMenuButton::TitleBarMenuButton(SimpleXPFrameTitleBar* title_bar)
 TitleBarMenuButton::~TitleBarMenuButton() {
 }
 
-void TitleBarMenuButton::SetContents(ChromeViews::View* contents) {
+void TitleBarMenuButton::SetContents(views::View* contents) {
   contents_ = contents;
 }
 
-void TitleBarMenuButton::GetPreferredSize(CSize *out) {
+gfx::Size TitleBarMenuButton::GetPreferredSize() {
+  gfx::Size prefsize;
   if (contents_)
-    contents_->GetPreferredSize(out);
-  else
-    out->cx = out->cy = 0;
+    prefsize = contents_->GetPreferredSize();
 
-  out->cx += drop_arrow_->width() + kHorizMargin + (2 * kHorizBorderSize);
-  out->cy = std::max(drop_arrow_->height(), static_cast<int>(out->cy));
-  out->cy += (2 * kVertBorderSize);
+  prefsize.set_height(std::max(drop_arrow_->height(), prefsize.height()));
+  prefsize.Enlarge(
+      drop_arrow_->width() + kHorizMargin + (2 * kHorizBorderSize),
+      2 * kVertBorderSize);
+  return prefsize;
 }
 
 void TitleBarMenuButton::Paint(ChromeCanvas* canvas) {
@@ -97,20 +98,19 @@ void TitleBarMenuButton::Paint(ChromeCanvas* canvas) {
   }
 
   if (contents_) {
-    CSize s;
-    contents_->GetPreferredSize(&s);
+    gfx::Size s = contents_->GetPreferredSize();
     // Note: we use a floating view in this case because we never want the
     // contents to process any event.
     PaintFloatingView(canvas,
                       contents_,
                       kVertBorderSize,
-                      (height() - s.cy) / 2,
+                      (height() - s.height()) / 2,
                       width() - kHorizMargin - drop_arrow_->width() -
                       (2 * kHorizBorderSize),
-                      s.cy);
+                      s.height());
   }
 
-  // We can not use the mirroring infrastructure in ChromeViews in order to
+  // We can not use the mirroring infrastructure in views in order to
   // mirror the drop down arrow because is is drawn directly on the canvas
   // (instead of using a child View). Thus, we should mirror its position
   // manually.
@@ -122,9 +122,9 @@ void TitleBarMenuButton::Paint(ChromeCanvas* canvas) {
   canvas->DrawBitmapInt(*drop_arrow_, arrow_bounds.x(), arrow_bounds.y());
 }
 
-bool TitleBarMenuButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
-  if (e.GetFlags() & ChromeViews::MouseEvent::EF_IS_DOUBLE_CLICK) {
-    if (!HitTest(WTL::CPoint(e.x(), e.y())))
+bool TitleBarMenuButton::OnMousePressed(const views::MouseEvent& e) {
+  if (e.GetFlags() & views::MouseEvent::EF_IS_DOUBLE_CLICK) {
+    if (!HitTest(e.location()))
       return true;
     title_bar_->CloseWindow();
     return true;
@@ -151,9 +151,9 @@ SimpleXPFrameTitleBar::SimpleXPFrameTitleBar(SimpleXPFrame* parent)
 
   tab_icon_->Update();
 
-  label_ = new ChromeViews::Label();
+  label_ = new views::Label();
   label_->SetColor(kTitleBarTextColor);
-  label_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  label_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   AddChildView(label_);
 }
 
@@ -188,27 +188,26 @@ SkBitmap SimpleXPFrameTitleBar::GetFavIcon() {
   return SkBitmap();
 }
 
-void SimpleXPFrameTitleBar::RunMenu(ChromeViews::View* source,
+void SimpleXPFrameTitleBar::RunMenu(views::View* source,
                                     const CPoint& pt, HWND hwnd) {
   // Make sure we calculate the menu position based on the display bounds of
   // the menu button. The display bounds are different than the actual bounds
   // when the UI layout is RTL and hence we use the mirroring transformation
   // flag. We also adjust the menu position because RTL menus use a different
   // anchor point.
-  CPoint p(menu_button_->GetX(APPLY_MIRRORING_TRANSFORMATION),
-           menu_button_->y() + menu_button_->height());
+  gfx::Point p(menu_button_->GetX(APPLY_MIRRORING_TRANSFORMATION),
+               menu_button_->y() + menu_button_->height());
 
   if (UILayoutIsRightToLeft())
-    p.x += menu_button_->width();
+    p.set_x(p.x() + menu_button_->width());
   View::ConvertPointToScreen(this, &p);
-  parent_->RunMenu(p, hwnd);
+  parent_->RunMenu(p.ToPOINT(), hwnd);
 }
 
 void SimpleXPFrameTitleBar::Layout() {
-  CSize s;
-  menu_button_->GetPreferredSize(&s);
-  menu_button_->SetBounds(kFavIconMargin, (height() - s.cy) / 2,
-                          s.cx, s.cy);
+  gfx::Size s = menu_button_->GetPreferredSize();
+  menu_button_->SetBounds(kFavIconMargin, (height() - s.height()) / 2,
+                          s.width(), s.height());
   menu_button_->Layout();
   label_->SetBounds(menu_button_->x() + menu_button_->width() +
                     kFavIconPadding, kLabelVerticalOffset,
@@ -221,8 +220,8 @@ bool SimpleXPFrameTitleBar::WillHandleMouseEvent(int x, int y) {
   // If the locale is RTL, we must query for the bounds of the menu button in
   // a way that returns the mirrored position and not the position set using
   // SetX()/SetBounds().
-  CPoint p(x - menu_button_->GetX(APPLY_MIRRORING_TRANSFORMATION),
-           y - menu_button_->y());
+  gfx::Point p(x - menu_button_->GetX(APPLY_MIRRORING_TRANSFORMATION),
+               y - menu_button_->y());
   return menu_button_->HitTest(p);
 }
 
@@ -264,8 +263,8 @@ SimpleXPFrame* SimpleXPFrame::CreateFrame(const gfx::Rect& bounds,
                    l10n_util::GetString(IDS_PRODUCT_NAME).c_str());
   instance->InitAfterHWNDCreated();
   instance->SetIsOffTheRecord(browser->profile()->IsOffTheRecord());
-  ChromeViews::FocusManager::CreateFocusManager(instance->m_hWnd,
-                                                instance->GetRootView());
+  views::FocusManager::CreateFocusManager(instance->m_hWnd,
+                                          instance->GetRootView());
   return instance;
 }
 
@@ -322,12 +321,11 @@ void SimpleXPFrame::Layout() {
 
   if (browser_->ShouldDisplayURLField()) {
     TabContentsContainerView* container = GetTabContentsContainer();
-    CSize s;
-    location_bar_->GetPreferredSize(&s);
+    gfx::Size s = location_bar_->GetPreferredSize();
     location_bar_->SetBounds(container->x() - kLocationBarOffset,
                           container->y(),
                           container->width() + kLocationBarOffset * 2,
-                          s.cy);
+                          s.height());
     container->SetBounds(container->x(),
                          location_bar_->y() + location_bar_->height() +
                          kLocationBarSpacing, container->width(),
@@ -342,12 +340,12 @@ void SimpleXPFrame::Layout() {
 
 LRESULT SimpleXPFrame::OnNCHitTest(const CPoint& pt) {
   if (IsTitleBarVisible()) {
-    CPoint p(pt);
-    ChromeViews::View::ConvertPointToView(NULL, title_bar_, &p);
-    if (!title_bar_->WillHandleMouseEvent(p.x, p.y) &&
-        p.x >= 0 && p.y >= kTopResizeBarHeight &&
-        p.x < title_bar_->width() &&
-        p.y < title_bar_->height()) {
+    gfx::Point p(pt);
+    views::View::ConvertPointToView(NULL, title_bar_, &p);
+    if (!title_bar_->WillHandleMouseEvent(p.x(), p.y()) &&
+        p.x() >= 0 && p.y() >= kTopResizeBarHeight &&
+        p.x() < title_bar_->width() &&
+        p.y() < title_bar_->height()) {
       return HTCAPTION;
     }
   }
@@ -374,7 +372,7 @@ void SimpleXPFrame::ValidateThrobber() {
 }
 
 void SimpleXPFrame::RunMenu(const CPoint& pt, HWND hwnd) {
-  browser_->RunSimpleFrameMenu(pt, hwnd);
+  browser_->RunSimpleFrameMenu(gfx::Point(pt.x, pt.y), hwnd);
 }
 
 void SimpleXPFrame::ShowTabContents(TabContents* selected_contents) {

@@ -4,8 +4,9 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
-#include "csshelper.h"
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "CString.h"
 #include "Document.h"
 #include "DocumentLoader.h"
@@ -20,7 +21,6 @@
 #include "HTMLOptionsCollection.h"
 #include "HTMLSelectElement.h"
 #include "ResourceRequest.h"
-#include "String.h"
 #include "TextEncoding.h"
 #include <wtf/Vector.h>
 #pragma warning(pop)

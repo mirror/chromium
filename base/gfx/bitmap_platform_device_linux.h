@@ -24,6 +24,12 @@ class BitmapPlatformDeviceLinux : public PlatformDeviceLinux {
   /// the Windows and Mac versions of this class do.
   BitmapPlatformDeviceLinux(const SkBitmap& other);
   virtual ~BitmapPlatformDeviceLinux();
+
+  // A stub copy constructor.  Needs to be properly implemented.
+  BitmapPlatformDeviceLinux(const BitmapPlatformDeviceLinux& other);
+
+  // Bitmaps aren't vector graphics.
+  virtual bool IsVectorial() { return false; }
 };
 
 }  // namespace gfx

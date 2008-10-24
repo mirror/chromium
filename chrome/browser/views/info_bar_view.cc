@@ -9,6 +9,7 @@
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/tab_contents_delegate.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
@@ -43,7 +44,7 @@ InfoBarView::~InfoBarView() {
       Source<NavigationController>(web_contents_->controller()));
 }
 
-void InfoBarView::AppendInfoBarItem(ChromeViews::View* view, bool auto_expire) {
+void InfoBarView::AppendInfoBarItem(views::View* view, bool auto_expire) {
   // AddChildView adds an entry to expire_map_ for view.
   AddChildView(view);
   if (auto_expire)
@@ -54,20 +55,19 @@ void InfoBarView::AppendInfoBarItem(ChromeViews::View* view, bool auto_expire) {
 
 // Preferred size is equal to the max of the childrens horizontal sizes
 // and the sum of their vertical sizes.
-void InfoBarView::GetPreferredSize(CSize *out) {
-  out->cx = 0;
-  out->cy = 0;
+gfx::Size InfoBarView::GetPreferredSize() {
+  gfx::Size prefsize;
 
   // We count backwards so the most recently added view is on the top.
   for (int i = GetChildViewCount() - 1; i >= 0; i--) {
     View* v = GetChildViewAt(i);
     if (v->IsVisible()) {
-      CSize view_size;
-      v->GetPreferredSize(&view_size);
-      out->cx = std::max(static_cast<int>(out->cx), v->width());
-      out->cy += static_cast<int>(view_size.cy) + kSeparatorHeight;
+      prefsize.set_width(std::max(prefsize.width(), v->width()));
+      prefsize.Enlarge(0, v->GetPreferredSize().height() + kSeparatorHeight);
     }
   }
+  
+  return prefsize;
 }
 
 void InfoBarView::Layout() {
@@ -80,14 +80,10 @@ void InfoBarView::Layout() {
     if (!v->IsVisible())
       continue;
 
-    CSize view_size;
-    v->GetPreferredSize(&view_size);
-    int view_width = std::max(static_cast<int>(view_size.cx), width());
-    y = y - view_size.cy - kSeparatorHeight;
-    v->SetBounds(x,
-                 y,
-                 view_width,
-                 view_size.cy);
+    gfx::Size view_size = v->GetPreferredSize();
+    int view_width = std::max(view_size.width(), width());
+    y = y - view_size.height() - kSeparatorHeight;
+    v->SetBounds(x, y, view_width, view_size.height());
   }
 }
 
@@ -95,11 +91,6 @@ void InfoBarView::Paint(ChromeCanvas* canvas) {
   PaintBackground(canvas);
   PaintBorder(canvas);
   PaintSeparators(canvas);
-}
-
-void InfoBarView::DidChangeBounds(const CRect& previous,
-                                  const CRect& current) {
-  Layout();
 }
 
 void InfoBarView::ChildAnimationProgressed() {
@@ -128,17 +119,20 @@ void InfoBarView::ViewHierarchyChanged(bool is_add, View *parent,
       expire_map_[child] = GetActiveID();
     }
 
-    if (web_contents_->IsInfoBarVisible()) {
+    // TODO(brettw) clean up the ownership of this info bar. It should be owned
+    // by the web contents view instead. In the meantime, we assume we're owned
+    // by a WebContents.
+    if (web_contents_->AsWebContents()->view()->IsInfoBarVisible()) {
       web_contents_->ToolbarSizeChanged(false);
     } else {
-      web_contents_->SetInfoBarVisible(true);
+      web_contents_->view()->SetInfoBarVisible(true);
     }
   }
 }
 
 void InfoBarView::Init() {
   SetBackground(
-      ChromeViews::Background::CreateVerticalGradientBackground(
+      views::Background::CreateVerticalGradientBackground(
           kBackgroundColorTop, kBackgroundColorBottom));
 }
 
@@ -164,9 +158,9 @@ void InfoBarView::PaintBorder(ChromeCanvas* canvas) {
 }
 
 void InfoBarView::PaintSeparators(ChromeCanvas* canvas) {
-  ChromeViews::View* last_view = NULL;
+  views::View* last_view = NULL;
   for (int i = GetChildViewCount() - 1; i >= 0; i--) {
-    ChromeViews::View* view = GetChildViewAt(i);
+    views::View* view = GetChildViewAt(i);
     if (last_view != NULL) {
       if (view->IsVisible()) {
         PaintSeparator(canvas, last_view, view);
@@ -180,8 +174,8 @@ void InfoBarView::PaintSeparators(ChromeCanvas* canvas) {
 }
 
 void InfoBarView::PaintSeparator(ChromeCanvas* canvas,
-                                 ChromeViews::View* v1,
-                                 ChromeViews::View* v2) {
+                                 views::View* v1,
+                                 views::View* v2) {
   canvas->FillRectInt(kSeparatorColor,
                       0,
                       v2->y() - kSeparatorHeight,
@@ -207,7 +201,7 @@ void InfoBarView::Observe(NotificationType type,
     return;
 
   // Determine the views to remove first.
-  std::vector<ChromeViews::View*> to_remove;
+  std::vector<views::View*> to_remove;
   for (std::map<View*,int>::iterator i = expire_map_.begin();
        i != expire_map_.end(); ++i) {
     if (PageTransition::StripQualifier(details.entry->transition_type()) ==
@@ -220,7 +214,7 @@ void InfoBarView::Observe(NotificationType type,
     return;
 
   // Remove the views.
-  for (std::vector<ChromeViews::View*>::iterator i = to_remove.begin();
+  for (std::vector<views::View*>::iterator i = to_remove.begin();
        i != to_remove.end(); ++i) {
     // RemoveChildView takes care of removing from expire_map for us.
     RemoveChildView(*i);
@@ -231,7 +225,7 @@ void InfoBarView::Observe(NotificationType type,
 
   if (GetChildViewCount() == 0) {
     // All our views have been removed, no need to stay visible.
-    web_contents_->SetInfoBarVisible(false);
+    web_contents_->view()->SetInfoBarVisible(false);
   } else if (web_contents_) {
     // This triggers a layout.
     web_contents_->ToolbarSizeChanged(false);

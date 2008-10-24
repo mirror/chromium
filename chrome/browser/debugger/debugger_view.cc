@@ -38,25 +38,20 @@ DebuggerView::DebuggerView() : output_ready_(false) {
 DebuggerView::~DebuggerView() {
 }
 
-void DebuggerView::GetPreferredSize(CSize* out) {
-  out->cx = 700;
-  out->cy = 400;
+gfx::Size DebuggerView::GetPreferredSize() {
+  return gfx::Size(700, 400);
 }
 
 void DebuggerView::Layout() {
   web_container_->SetBounds(0, 0, width(), height());
 }
 
-void DebuggerView::DidChangeBounds(const CRect& previous,
-                                   const CRect& current) {
-  Layout();
-}
 
 void DebuggerView::ViewHierarchyChanged(bool is_add,
-                                        ChromeViews::View* parent,
-                                        ChromeViews::View* child) {
+                                        views::View* parent,
+                                        views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetViewContainer());
+    DCHECK(GetContainer());
     OnInit();
   }
 }
@@ -64,8 +59,7 @@ void DebuggerView::ViewHierarchyChanged(bool is_add,
 void DebuggerView::Paint(ChromeCanvas* canvas) {
 #ifndef NDEBUG
   SkPaint paint;
-  canvas->FillRectInt(SK_ColorCYAN, bounds_.left, bounds_.top,
-                      bounds_.Width(), bounds_.Height());
+  canvas->FillRectInt(SK_ColorCYAN, x(), y(), width(), height());
 #endif
 }
 

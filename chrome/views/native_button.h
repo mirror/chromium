@@ -11,8 +11,7 @@
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/views/native_control.h"
 
-namespace ChromeViews {
-
+namespace views {
 
 class HWNDView;
 
@@ -30,7 +29,7 @@ class NativeButton : public NativeControl {
   NativeButton(const std::wstring& label, bool is_default);
   virtual ~NativeButton();
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
   void SetLabel(const std::wstring& l);
   const std::wstring GetLabel() const;
@@ -80,6 +79,10 @@ class NativeButton : public NativeControl {
   // Assigns an accessible string name.
   void SetAccessibleName(const std::wstring& name);
 
+  // Sets whether the min size of this button should follow the Windows
+  // guidelines.  Default is true.  Set this to false if you want slim buttons.
+  void set_enforce_dlu_min_size(bool value) { enforce_dlu_min_size_ = value; }
+
  protected:
 
   virtual HWND CreateNativeControl(HWND parent_container);
@@ -106,6 +109,10 @@ class NativeButton : public NativeControl {
 
   void Clicked();
 
+  // Whether the button preferred size should follow the Microsoft layout
+  // guidelines.  Default is true.  
+  bool enforce_dlu_min_size_;
+
   std::wstring label_;
   ChromeFont font_;
   Listener* listener_;
@@ -126,7 +133,7 @@ class NativeButton : public NativeControl {
   DISALLOW_EVIL_CONSTRUCTORS(NativeButton);
 };
 
-}
+}  // namespace views
 
 #endif  // CHROME_VIEWS_NATIVE_BUTTON_H__
 

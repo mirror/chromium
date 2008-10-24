@@ -20,6 +20,8 @@
 #include "chrome/browser/views/tab_contents_container_view.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/browser/views/toolbar_view.h"
+#include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/l10n_util.h"
@@ -118,16 +120,13 @@ void BrowserView2::WindowMoved() {
 }
 
 gfx::Rect BrowserView2::GetToolbarBounds() const {
-  CRect bounds;
-  toolbar_->GetBounds(&bounds);
-  return gfx::Rect(bounds);
+  return toolbar_->bounds();
 }
 
 gfx::Rect BrowserView2::GetClientAreaBounds() const {
-  CRect bounds;
-  contents_container_->GetBounds(&bounds);
-  bounds.OffsetRect(x(), y());
-  return gfx::Rect(bounds);
+  gfx::Rect container_bounds = contents_container_->bounds();
+  container_bounds.Offset(x(), y());
+  return container_bounds;
 }
 
 int BrowserView2::GetTabStripHeight() const {
@@ -152,10 +151,9 @@ bool BrowserView2::ShouldShowOffTheRecordAvatar() const {
       browser_->GetType() == BrowserType::TABBED_BROWSER;
 }
 
-bool BrowserView2::AcceleratorPressed(
-    const ChromeViews::Accelerator& accelerator) {
+bool BrowserView2::AcceleratorPressed(const views::Accelerator& accelerator) {
   DCHECK(accelerator_table_.get());
-  std::map<ChromeViews::Accelerator, int>::const_iterator iter =
+  std::map<views::Accelerator, int>::const_iterator iter =
       accelerator_table_->find(accelerator);
   DCHECK(iter != accelerator_table_->end());
 
@@ -169,8 +167,8 @@ bool BrowserView2::AcceleratorPressed(
 }
 
 bool BrowserView2::GetAccelerator(int cmd_id,
-                                  ChromeViews::Accelerator* accelerator) {
-  std::map<ChromeViews::Accelerator, int>::iterator it =
+                                  views::Accelerator* accelerator) {
+  std::map<views::Accelerator, int>::iterator it =
       accelerator_table_->begin();
   for (; it != accelerator_table_->end(); ++it) {
     if (it->second == cmd_id) {
@@ -193,16 +191,17 @@ bool BrowserView2::SystemCommandReceived(UINT notification_code,
   return handled;
 }
 
-void BrowserView2::AddViewToDropList(ChromeViews::View* view) {
+void BrowserView2::AddViewToDropList(views::View* view) {
   dropable_views_.insert(view);
 }
 
 bool BrowserView2::ActivateAppModalDialog() const {
   // If another browser is app modal, flash and activate the modal browser.
   if (BrowserList::IsShowingAppModalDialog()) {
-    if (browser_ != BrowserList::GetLastActive()) {
-      BrowserList::GetLastActive()->window()->FlashFrame();
-      BrowserList::GetLastActive()->MoveToFront(true);
+    Browser* active_browser = BrowserList::GetLastActive();
+    if (active_browser && (browser_ != active_browser)) {
+      active_browser->window()->FlashFrame();
+      active_browser->MoveToFront(true);
     }
     AppModalDialogQueue::ActivateModalDialog();
     return true;
@@ -229,25 +228,15 @@ SkBitmap BrowserView2::GetOTRAvatarIcon() {
 }
 
 void BrowserView2::PrepareToRunSystemMenu(HMENU menu) {
-  system_menu_.reset(new Menu(menu));
-  int insertion_index = std::max(0, system_menu_->ItemCount() - 1);
-  // We add the menu items in reverse order so that insertion_index never needs
-  // to change.
-  if (browser_->GetType() == BrowserType::TABBED_BROWSER) {
-    system_menu_->AddSeparator(insertion_index);
-    system_menu_->AddMenuItemWithLabel(insertion_index, IDC_TASKMANAGER,
-                                       l10n_util::GetString(IDS_TASKMANAGER));
-    // If it's a regular browser window with tabs, we don't add any more items,
-    // since it already has menus (Page, Chrome).
-    return;
-  } else {
-    BuildMenuForTabStriplessWindow(system_menu_.get(), insertion_index);
+  for (int i = 0; i < arraysize(kMenuLayout); ++i) {
+    int command = kMenuLayout[i].command;
+    // |command| can be zero on submenu items (IDS_ENCODING,
+    // IDS_ZOOM) and on separators.
+    if (command != 0) {
+      system_menu_->EnableMenuItemByID(command,
+                                       browser_->IsCommandEnabled(command));
+    }
   }
-}
-
-void BrowserView2::SystemMenuEnded() {
-  system_menu_.reset();
-  encoding_menu_delegate_.reset();
 }
 
 bool BrowserView2::SupportsWindowFeature(WindowFeature feature) const {
@@ -272,7 +261,7 @@ unsigned int BrowserView2::FeaturesForBrowserType(BrowserType::Type type) {
 void BrowserView2::Init() {
   // Stow a pointer to this object onto the window handle so that we can get
   // at it later when all we have is a HWND.
-  SetProp(GetViewContainer()->GetHWND(), kBrowserWindowKey, this);
+  SetProp(GetContainer()->GetHWND(), kBrowserWindowKey, this);
 
   LoadAccelerators();
   SetAccessibleName(l10n_util::GetString(IDS_PRODUCT_NAME));
@@ -291,7 +280,7 @@ void BrowserView2::Init() {
   set_contents_view(contents_container_);
   AddChildView(contents_container_);
 
-  status_bubble_.reset(new StatusBubble(GetViewContainer()));
+  status_bubble_.reset(new StatusBubble(GetContainer()));
 
 #ifdef CHROME_PERSONALIZATION    
   EnablePersonalization(CommandLine().HasSwitch(switches::kEnableP13n));
@@ -300,10 +289,12 @@ void BrowserView2::Init() {
         browser_->profile(), this);
   }
 #endif
+
+  InitSystemMenu();
 }
 
 void BrowserView2::Show(int command, bool adjust_to_fit) {
-  frame_->GetWindow()->Show();
+  frame_->GetWindow()->Show(command);
 }
 
 void BrowserView2::Close() {
@@ -311,7 +302,7 @@ void BrowserView2::Close() {
 }
 
 void* BrowserView2::GetPlatformID() {
-  return GetViewContainer()->GetHWND();
+  return GetContainer()->GetHWND();
 }
 
 TabStrip* BrowserView2::GetTabStrip() const {
@@ -356,7 +347,7 @@ void BrowserView2::FlashFrame() {
 void BrowserView2::ContinueDetachConstrainedWindowDrag(
     const gfx::Point& mouse_point,
     int frame_component) {
-  HWND vc_hwnd = GetViewContainer()->GetHWND();
+  HWND vc_hwnd = GetContainer()->GetHWND();
   if (frame_component == HTCLIENT) {
     // If the user's mouse was over the content area of the popup when they
     // clicked down, we need to re-play the mouse down event so as to actually
@@ -392,13 +383,13 @@ void BrowserView2::SizeToContents(const gfx::Rect& contents_bounds) {
 }
 
 void BrowserView2::SetAcceleratorTable(
-    std::map<ChromeViews::Accelerator, int>* accelerator_table) {
+    std::map<views::Accelerator, int>* accelerator_table) {
   accelerator_table_.reset(accelerator_table);
 }
 
 void BrowserView2::ValidateThrobber() {
   if (ShouldShowWindowIcon())
-    frame_->GetWindow()->UpdateWindowIcon();
+    frame_->UpdateThrobber(browser_->GetSelectedTabContents()->is_loading());
 }
 
 gfx::Rect BrowserView2::GetNormalBounds() {
@@ -479,10 +470,8 @@ bool BrowserView2::IsBookmarkBarVisible() const {
   if (bookmark_bar_view_->IsNewTabPage() || bookmark_bar_view_->IsAnimating())
     return true;
 
-  CSize sz;
-  bookmark_bar_view_->GetPreferredSize(&sz);
   // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
+  return bookmark_bar_view_->GetPreferredSize().height() > 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -549,7 +538,7 @@ void BrowserView2::TabStripEmpty() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// BrowserView2, ChromeViews::WindowDelegate implementation:
+// BrowserView2, views::WindowDelegate implementation:
 
 bool BrowserView2::CanResize() const {
   return true;
@@ -567,7 +556,7 @@ std::wstring BrowserView2::GetWindowTitle() const {
   return browser_->GetCurrentPageTitle();
 }
 
-ChromeViews::View* BrowserView2::GetInitiallyFocusedView() const {
+views::View* BrowserView2::GetInitiallyFocusedView() const {
   return GetLocationBarView();
 }
 
@@ -625,9 +614,7 @@ bool BrowserView2::RestoreWindowPosition(CRect* bounds,
       // its desired height, since the toolbar is considered part of the
       // window's client area as far as GetWindowBoundsForClientBounds is
       // concerned...
-      CSize ps;
-      toolbar_->GetPreferredSize(&ps);
-      bounds->bottom += ps.cy;
+      bounds->bottom += toolbar_->GetPreferredSize().height();
     }
 
     gfx::Rect window_rect =
@@ -662,18 +649,17 @@ bool BrowserView2::RestoreWindowPosition(CRect* bounds,
 void BrowserView2::WindowClosing() {
 }
 
-ChromeViews::View* BrowserView2::GetContentsView() {
+views::View* BrowserView2::GetContentsView() {
   return contents_container_;
 }
 
-ChromeViews::ClientView* BrowserView2::CreateClientView(
-    ChromeViews::Window* window) {
+views::ClientView* BrowserView2::CreateClientView(views::Window* window) {
   set_window(window);
   return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// BrowserView2, ChromeViews::ClientView overrides:
+// BrowserView2, views::ClientView overrides:
 
 bool BrowserView2::CanClose() const {
   // You cannot close a frame for which there is an active originating drag
@@ -712,12 +698,12 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
   // might be a popup window without a TabStrip, or the TabStrip could be
   // animating.
   if (IsTabStripVisible() && tabstrip_->CanProcessInputEvents()) {
-    ChromeViews::Window* window = frame_->GetWindow();
-    CPoint point_in_view_coords(point.ToPOINT());
+    views::Window* window = frame_->GetWindow();
+    gfx::Point point_in_view_coords(point);
     View::ConvertPointToView(GetParent(), this, &point_in_view_coords);
 
     // See if the mouse pointer is within the bounds of the TabStrip.
-    CPoint point_in_tabstrip_coords(point.ToPOINT());
+    gfx::Point point_in_tabstrip_coords(point);
     View::ConvertPointToView(GetParent(), tabstrip_, &point_in_tabstrip_coords);
     if (tabstrip_->HitTest(point_in_tabstrip_coords)) {
       if (tabstrip_->PointIsWithinWindowCaption(point_in_tabstrip_coords))
@@ -729,7 +715,7 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
     // starved of dragable area, let's give it to window dragging (this also
     // makes sense visually).
     if (!window->IsMaximized() && 
-        (point_in_view_coords.y < tabstrip_->y() + kTabShadowSize)) {
+        (point_in_view_coords.y() < tabstrip_->y() + kTabShadowSize)) {
       // We return HTNOWHERE as this is a signal to our containing
       // NonClientView that it should figure out what the correct hit-test
       // code is given the mouse position...
@@ -740,10 +726,10 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
   // If the point's y coordinate is below the top of the toolbar and otherwise
   // within the bounds of this view, the point is considered to be within the
   // client area.
-  CRect bounds;
-  GetBounds(&bounds);
-  bounds.top += toolbar_->y();
-  if (gfx::Rect(bounds).Contains(point.x(), point.y()))
+  gfx::Rect bv_bounds = bounds();
+  bv_bounds.Offset(0, toolbar_->y());
+  bv_bounds.set_height(bv_bounds.height() - toolbar_->y());
+  if (bv_bounds.Contains(point))
     return HTCLIENT;
 
   // If the point's y coordinate is above the top of the toolbar, but not in
@@ -756,9 +742,9 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
   // window controls not to work. So we return HTNOWHERE so that the caller
   // will hit-test the window controls before finally falling back to
   // HTCAPTION.
-  GetBounds(&bounds);
-  bounds.bottom = y() + toolbar_->y();
-  if (gfx::Rect(bounds).Contains(point.x(), point.y()))
+  bv_bounds = bounds();
+  bv_bounds.set_height(toolbar_->y());
+  if (bv_bounds.Contains(point))
     return HTNOWHERE;
 
   // If the point is somewhere else, delegate to the default implementation.
@@ -766,7 +752,7 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// BrowserView2, ChromeViews::View overrides:
+// BrowserView2, views::View overrides:
 
 void BrowserView2::Layout() {
   int top = LayoutTabStrip();
@@ -786,15 +772,10 @@ void BrowserView2::Layout() {
   SchedulePaint();
 }
 
-void BrowserView2::DidChangeBounds(const CRect& previous,
-                                   const CRect& current) {
-  Layout();
-}
-
 void BrowserView2::ViewHierarchyChanged(bool is_add,
-                                        ChromeViews::View* parent,
-                                        ChromeViews::View* child) {
-  if (is_add && child == this && GetViewContainer() && !initialized_) {
+                                        views::View* parent,
+                                        views::View* child) {
+  if (is_add && child == this && GetContainer() && !initialized_) {
     Init();
     initialized_ = true;
   }
@@ -808,19 +789,19 @@ bool BrowserView2::CanDrop(const OSExchangeData& data) {
   return can_drop_;
 }
 
-void BrowserView2::OnDragEntered(const ChromeViews::DropTargetEvent& event) {
+void BrowserView2::OnDragEntered(const views::DropTargetEvent& event) {
   if (can_drop_ && ShouldForwardToTabStrip(event)) {
     forwarding_to_tab_strip_ = true;
-    scoped_ptr<ChromeViews::DropTargetEvent> mapped_event(
+    scoped_ptr<views::DropTargetEvent> mapped_event(
         MapEventToTabStrip(event));
     tabstrip_->OnDragEntered(*mapped_event.get());
   }
 }
 
-int BrowserView2::OnDragUpdated(const ChromeViews::DropTargetEvent& event) {
+int BrowserView2::OnDragUpdated(const views::DropTargetEvent& event) {
   if (can_drop_) {
     if (ShouldForwardToTabStrip(event)) {
-      scoped_ptr<ChromeViews::DropTargetEvent> mapped_event(
+      scoped_ptr<views::DropTargetEvent> mapped_event(
           MapEventToTabStrip(event));
       if (!forwarding_to_tab_strip_) {
         tabstrip_->OnDragEntered(*mapped_event.get());
@@ -842,10 +823,10 @@ void BrowserView2::OnDragExited() {
   }
 }
 
-int BrowserView2::OnPerformDrop(const ChromeViews::DropTargetEvent& event) {
+int BrowserView2::OnPerformDrop(const views::DropTargetEvent& event) {
   if (forwarding_to_tab_strip_) {
     forwarding_to_tab_strip_ = false;
-    scoped_ptr<ChromeViews::DropTargetEvent> mapped_event(
+    scoped_ptr<views::DropTargetEvent> mapped_event(
           MapEventToTabStrip(event));
     return tabstrip_->OnPerformDrop(*mapped_event.get());
   }
@@ -856,8 +837,25 @@ int BrowserView2::OnPerformDrop(const ChromeViews::DropTargetEvent& event) {
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView2, private:
 
+void BrowserView2::InitSystemMenu() {
+  HMENU system_menu = GetSystemMenu(frame_->GetWindow()->GetHWND(), FALSE);
+  system_menu_.reset(new Menu(system_menu));
+  int insertion_index = std::max(0, system_menu_->ItemCount() - 1);
+  // We add the menu items in reverse order so that insertion_index never needs
+  // to change.
+  if (browser_->GetType() == BrowserType::TABBED_BROWSER) {
+    system_menu_->AddSeparator(insertion_index);
+    system_menu_->AddMenuItemWithLabel(insertion_index, IDC_TASKMANAGER,
+                                       l10n_util::GetString(IDS_TASKMANAGER));
+    // If it's a regular browser window with tabs, we don't add any more items,
+    // since it already has menus (Page, Chrome).
+  } else {
+    BuildMenuForTabStriplessWindow(system_menu_.get(), insertion_index);
+  }
+}
+
 bool BrowserView2::ShouldForwardToTabStrip(
-    const ChromeViews::DropTargetEvent& event) {
+    const views::DropTargetEvent& event) {
   if (!tabstrip_->IsVisible())
     return false;
 
@@ -872,19 +870,18 @@ bool BrowserView2::ShouldForwardToTabStrip(
   // Mouse isn't over the tab strip. Only forward if the mouse isn't over
   // another view on the tab strip or is over a view we were told the user can
   // drop on.
-  ChromeViews::View* view_over_mouse =
-      GetViewForPoint(CPoint(event.x(), event.y()));
+  views::View* view_over_mouse = GetViewForPoint(event.location());
   return (view_over_mouse == this || view_over_mouse == tabstrip_ ||
           dropable_views_.find(view_over_mouse) != dropable_views_.end());
 }
 
-ChromeViews::DropTargetEvent* BrowserView2::MapEventToTabStrip(
-    const ChromeViews::DropTargetEvent& event) {
+views::DropTargetEvent* BrowserView2::MapEventToTabStrip(
+    const views::DropTargetEvent& event) {
   gfx::Point tab_strip_loc(event.location());
   ConvertPointToView(this, tabstrip_, &tab_strip_loc);
-  return new ChromeViews::DropTargetEvent(event.GetData(), tab_strip_loc.x(),
-                                          tab_strip_loc.y(),
-                                          event.GetSourceOperations());
+  return new views::DropTargetEvent(event.GetData(), tab_strip_loc.x(),
+                                    tab_strip_loc.y(),
+                                    event.GetSourceOperations());
 }
 
 int BrowserView2::LayoutTabStrip() {
@@ -899,21 +896,20 @@ int BrowserView2::LayoutTabStrip() {
 
 int BrowserView2::LayoutToolbar(int top) {
   if (IsToolbarVisible()) {
-    CSize ps;
-    toolbar_->GetPreferredSize(&ps);
+    gfx::Size ps = toolbar_->GetPreferredSize();
     int toolbar_y =
         top - (IsTabStripVisible() ? kToolbarTabStripVerticalOverlap : 0);
     // With detached popup windows with the aero glass frame, we need to offset
     // by a pixel to make things look good.
     if (!IsTabStripVisible() && win_util::ShouldUseVistaFrame())
-      ps.cy -= 1;
+      ps.Enlarge(0, -1);
     int browser_view_width = width();
 #ifdef CHROME_PERSONALIZATION
     if (IsPersonalizationEnabled())
       Personalization::AdjustBrowserView(personalization_, &browser_view_width);
 #endif
-    toolbar_->SetBounds(0, toolbar_y, browser_view_width, ps.cy);
-    return toolbar_y + ps.cy;
+    toolbar_->SetBounds(0, toolbar_y, browser_view_width, ps.height());
+    return toolbar_y + ps.height();
   }
   toolbar_->SetVisible(false);
   return top;
@@ -939,21 +935,19 @@ int BrowserView2::LayoutBookmarkAndInfoBars(int top) {
 
 int BrowserView2::LayoutBookmarkBar(int top) {
   if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && active_bookmark_bar_) {
-    CSize ps;
-    active_bookmark_bar_->GetPreferredSize(&ps);
+    gfx::Size ps = active_bookmark_bar_->GetPreferredSize();
     if (!active_info_bar_ || show_bookmark_bar_pref_.GetValue())
       top -= kSeparationLineHeight;
-    active_bookmark_bar_->SetBounds(0, top, width(), ps.cy);
-    top += ps.cy;
+    active_bookmark_bar_->SetBounds(0, top, width(), ps.height());
+    top += ps.height();
   }  
   return top;
 }
 int BrowserView2::LayoutInfoBar(int top) {
   if (SupportsWindowFeature(FEATURE_INFOBAR) && active_info_bar_) {
-    CSize ps;
-    active_info_bar_->GetPreferredSize(&ps);
-    active_info_bar_->SetBounds(0, top, width(), ps.cy);
-    top += ps.cy;
+    gfx::Size ps = active_info_bar_->GetPreferredSize();
+    active_info_bar_->SetBounds(0, top, width(), ps.height());
+    top += ps.height();
     if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && active_bookmark_bar_ &&
         !show_bookmark_bar_pref_.GetValue()) {
       top -= kSeparationLineHeight;
@@ -969,10 +963,11 @@ void BrowserView2::LayoutTabContents(int top, int bottom) {
 int BrowserView2::LayoutDownloadShelf() {
   int bottom = height();
   if (SupportsWindowFeature(FEATURE_DOWNLOADSHELF) && active_download_shelf_) {
-    CSize ps;
-    active_download_shelf_->GetPreferredSize(&ps);
-    active_download_shelf_->SetBounds(0, bottom - ps.cy, width(), ps.cy);
-    bottom -= ps.cy;
+    gfx::Size ps = active_download_shelf_->GetPreferredSize();
+    active_download_shelf_->SetBounds(0, bottom - ps.height(), width(),
+                                      ps.height());
+    active_download_shelf_->Layout();
+    bottom -= ps.height();
   }
   return bottom;
 }
@@ -985,27 +980,28 @@ void BrowserView2::LayoutStatusBubble(int top) {
 }
 
 bool BrowserView2::MaybeShowBookmarkBar(TabContents* contents) {
-  ChromeViews::View* new_bookmark_bar_view = NULL;
+  views::View* new_bookmark_bar_view = NULL;
   if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && contents) {
     new_bookmark_bar_view = GetBookmarkBarView();
-    CSize ps;
-    new_bookmark_bar_view->GetPreferredSize(&ps);
-    if (!show_bookmark_bar_pref_.GetValue() && ps.cy == 0)
+    if (!show_bookmark_bar_pref_.GetValue() &&
+        new_bookmark_bar_view->GetPreferredSize().height() == 0) {
       new_bookmark_bar_view = NULL;
+    }
   }
   return UpdateChildViewAndLayout(new_bookmark_bar_view,
                                   &active_bookmark_bar_);
 }
 
 bool BrowserView2::MaybeShowInfoBar(TabContents* contents) {
-  ChromeViews::View* new_info_bar = NULL;
-  if (contents && contents->IsInfoBarVisible())
-    new_info_bar = contents->GetInfoBarView();
+  views::View* new_info_bar = NULL;
+  if (contents && contents->AsWebContents() &&
+      contents->AsWebContents()->view()->IsInfoBarVisible())
+    new_info_bar = contents->AsWebContents()->view()->GetInfoBarView();
   return UpdateChildViewAndLayout(new_info_bar, &active_info_bar_);
 }
 
 bool BrowserView2::MaybeShowDownloadShelf(TabContents* contents) {
-  ChromeViews::View* new_shelf = NULL;
+  views::View* new_shelf = NULL;
   if (contents && contents->IsDownloadShelfVisible())
     new_shelf = contents->GetDownloadShelfView();
   return UpdateChildViewAndLayout(new_shelf, &active_download_shelf_);
@@ -1019,15 +1015,13 @@ void BrowserView2::UpdateUIForContents(TabContents* contents) {
     Layout();
 }
 
-bool BrowserView2::UpdateChildViewAndLayout(ChromeViews::View* new_view,
-                                            ChromeViews::View** old_view) {
+bool BrowserView2::UpdateChildViewAndLayout(views::View* new_view,
+                                            views::View** old_view) {
   DCHECK(old_view);
   if (*old_view == new_view) {
     // The views haven't changed, if the views pref changed schedule a layout.
     if (new_view) {
-      CSize pref_size;
-      new_view->GetPreferredSize(&pref_size);
-      if (pref_size.cy != new_view->height())
+      if (new_view->GetPreferredSize().height() != new_view->height())
         return true;
     }
     return false;
@@ -1046,9 +1040,7 @@ bool BrowserView2::UpdateChildViewAndLayout(ChromeViews::View* new_view,
 
   int new_height = 0;
   if (new_view) {
-    CSize preferred_size;
-    new_view->GetPreferredSize(&preferred_size);
-    new_height = preferred_size.cy;
+    new_height = new_view->GetPreferredSize().height();
     AddChildView(new_view);
   }
   bool changed = false;
@@ -1057,10 +1049,7 @@ bool BrowserView2::UpdateChildViewAndLayout(ChromeViews::View* new_view,
   } else if (new_view && *old_view) {
     // The view changed, but the new view wants the same size, give it the
     // bounds of the last view and have it repaint.
-    CRect last_bounds;
-    (*old_view)->GetBounds(&last_bounds);
-    new_view->SetBounds(last_bounds.left, last_bounds.top,
-                        last_bounds.Width(), last_bounds.Height());
+    new_view->SetBounds((*old_view)->bounds());
     new_view->SchedulePaint();
   } else if (new_view) {
     DCHECK(new_height == 0);
@@ -1086,18 +1075,18 @@ void BrowserView2::LoadAccelerators() {
   ACCEL* accelerators = static_cast<ACCEL*>(malloc(sizeof(ACCEL) * count));
   CopyAcceleratorTable(accelerator_table, accelerators, count);
 
-  ChromeViews::FocusManager* focus_manager =
-    ChromeViews::FocusManager::GetFocusManager(GetViewContainer()->GetHWND());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetContainer()->GetHWND());
   DCHECK(focus_manager);
 
   // Let's build our own accelerator table.
-  accelerator_table_.reset(new std::map<ChromeViews::Accelerator, int>);
+  accelerator_table_.reset(new std::map<views::Accelerator, int>);
   for (int i = 0; i < count; ++i) {
     bool alt_down = (accelerators[i].fVirt & FALT) == FALT;
     bool ctrl_down = (accelerators[i].fVirt & FCONTROL) == FCONTROL;
     bool shift_down = (accelerators[i].fVirt & FSHIFT) == FSHIFT;
-    ChromeViews::Accelerator accelerator(accelerators[i].key,
-      shift_down, ctrl_down, alt_down);
+    views::Accelerator accelerator(accelerators[i].key, shift_down, ctrl_down,
+                                   alt_down);
     (*accelerator_table_)[accelerator] = accelerators[i].cmd;
 
     // Also register with the focus manager.
@@ -1142,12 +1131,6 @@ void BrowserView2::BuildMenuForTabStriplessWindow(Menu* menu,
       } else {
         menu->AddMenuItemWithLabel(insertion_index, command,
                                    l10n_util::GetString(kMenuLayout[i].label));
-        // |command| can be zero on submenu items (IDS_ENCODING,
-        // IDS_ZOOM) and on separators.
-        if (command != 0) {
-          menu->EnableMenuItemAt(insertion_index,
-                                 browser_->IsCommandEnabled(command));
-        }
       }
     }
   }

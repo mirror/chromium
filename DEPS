@@ -3,31 +3,31 @@ deps = {
     "http://google-breakpad.googlecode.com/svn/trunk/src@285",
 
   "src/googleurl":
-    "http://google-url.googlecode.com/svn/trunk@93",
+    "http://google-url.googlecode.com/svn/trunk@94",
 
   "src/sdch/open-vcdiff":
-    "http://open-vcdiff.googlecode.com/svn/trunk@18",
+    "http://open-vcdiff.googlecode.com/svn/trunk@20",
 
   "src/testing/gtest":
     "http://googletest.googlecode.com/svn/trunk@63",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@2888",
+    "/trunk/deps/third_party/WebKit@3784",
 
   "src/third_party/cygwin":
-    "/trunk/deps/third_party/cygwin@1788",
+    "/trunk/deps/third_party/cygwin@3248",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@2676",
+    "/trunk/deps/third_party/icu38@3658",
 
   "src/third_party/python_24":
-    "/trunk/deps/third_party/python_24@1790",
+    "/trunk/deps/third_party/python_24@3247",
 
   "src/third_party/svn":
-    "/trunk/deps/third_party/svn@1791",
+    "/trunk/deps/third_party/svn@3230",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@439",
+    "http://v8.googlecode.com/svn/branches/bleeding_edge@557",
 
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@36102",

@@ -214,14 +214,12 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
       if (!parsed_ok) {
         SB_DLOG(INFO) << "SafeBrowsing request for: " << source->url()
                       << "failed parse.";
+        must_back_off = true;
+        chunk_request_urls_.clear();
       }
 
-      if (request_type_ == CHUNK_REQUEST) {
-        if (parsed_ok) {
-          chunk_request_urls_.pop_front();
-        } else {
-          chunk_request_urls_.clear();
-        }
+      if (request_type_ == CHUNK_REQUEST && parsed_ok) {
+        chunk_request_urls_.pop_front();
       } else if (request_type_ == GETKEY_REQUEST && initial_request_) {
         // This is the first request we've made this session. Now that we have
         // the keys, do the regular update request.
@@ -308,18 +306,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
       break;
     }
     case CHUNK_REQUEST: {
-      // Find list name from url.
-      std::string url_path = url.ExtractFileName();
-      if (url_path.empty())
-        return false;
-
-      std::string::size_type pos = url_path.find_first_of('_');
-      if (pos == std::string::npos)
-        return false;
-
       const ChunkUrl chunk_url = chunk_request_urls_.front();
-      DCHECK(url.spec().find(chunk_url.url) != std::string::npos);
-
       bool re_key = false;
       std::deque<SBChunk>* chunks = new std::deque<SBChunk>;
       if (!parser.ParseChunk(data, length,
@@ -349,8 +336,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
         delete chunks;
       } else {
         chunk_pending_to_write_ = true;
-        std::string list_name(url_path, 0, pos);
-        sb_service_->HandleChunk(list_name, chunks);
+        sb_service_->HandleChunk(chunk_url.list_name, chunks);
       }
 
       break;

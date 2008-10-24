@@ -12,7 +12,7 @@
 class BrowserView2;
 class AeroGlassWindowResources;
 
-class AeroGlassNonClientView : public ChromeViews::NonClientView {
+class AeroGlassNonClientView : public views::NonClientView {
  public:
   // Constructs a non-client view for an AeroGlassFrame.
   AeroGlassNonClientView(AeroGlassFrame* frame, BrowserView2* browser_view);
@@ -21,7 +21,7 @@ class AeroGlassNonClientView : public ChromeViews::NonClientView {
   gfx::Rect GetBoundsForTabStrip(TabStrip* tabstrip);
 
  protected:
-  // Overridden from ChromeViews::NonClientView:
+  // Overridden from views::NonClientView:
   virtual gfx::Rect CalculateClientAreaBounds(int width, int height) const;
   virtual gfx::Size CalculateWindowSizeForClientSize(int width,
                                                      int height) const;
@@ -29,15 +29,15 @@ class AeroGlassNonClientView : public ChromeViews::NonClientView {
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
+  virtual void ResetWindowControls();
 
-  // Overridden from ChromeViews::View:
+  // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add,
-                                    ChromeViews::View* parent,
-                                    ChromeViews::View* child);
+                                    views::View* parent,
+                                    views::View* child);
 
  private:
   // Returns the height of the non-client area at the top of the window (the
@@ -45,16 +45,21 @@ class AeroGlassNonClientView : public ChromeViews::NonClientView {
   int CalculateNonClientTopHeight() const;
 
   // Paint various sub-components of this view.
+  void PaintOTRAvatar(ChromeCanvas* canvas);
   void PaintDistributorLogo(ChromeCanvas* canvas);
   void PaintToolbarBackground(ChromeCanvas* canvas);
   void PaintClientEdge(ChromeCanvas* canvas);
 
   // Layout various sub-components of this view.
+  void LayoutOTRAvatar();
   void LayoutDistributorLogo();
   void LayoutClientView();
  
   // The layout rect of the distributor logo, if visible.
   gfx::Rect logo_bounds_;
+
+  // The layout rect of the OTR avatar.
+  gfx::Rect otr_avatar_bounds_;
 
   // The frame that hosts this view.
   AeroGlassFrame* frame_;

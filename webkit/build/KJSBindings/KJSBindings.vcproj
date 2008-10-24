@@ -125,36 +125,12 @@
 			Name="DerivedSources"
 			>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\ColorData.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\CSSGrammar.cpp"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\CSSGrammar.h"
 				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\HTMLEntityNames.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\HTMLNames.cpp"
@@ -197,6 +173,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSCanvasPixelArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSCanvasPixelArray.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSCanvasRenderingContext2D.cpp"
 				>
 			</File>
@@ -218,6 +202,14 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSCharacterData.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSClipboard.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSClipboard.h"
 				>
 			</File>
 			<File
@@ -349,6 +341,22 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSCSSVariablesDeclaration.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSCSSVariablesDeclaration.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSCSSVariablesRule.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSCSSVariablesRule.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSDocument.cpp"
 				>
 			</File>
@@ -370,6 +378,14 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSDocumentType.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSDOMApplicationCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSDOMApplicationCache.h"
 				>
 			</File>
 			<File
@@ -410,6 +426,10 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSDOMWindow.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSDOMWindowBase.lut.h"
 				>
 			</File>
 			<File
@@ -454,6 +474,22 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSEventTargetBase.lut.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSFile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSFile.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSFileList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSFileList.h"
 				>
 			</File>
 			<File
@@ -601,6 +637,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSHTMLElementWrapperFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSHTMLElementWrapperFactory.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSHTMLEmbedElement.cpp"
 				>
 			</File>
@@ -618,6 +662,10 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSHTMLFontElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSHTMLFontElement.h"
 				>
 			</File>
 			<File
@@ -973,6 +1021,22 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSImageData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSImageData.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSJavaScriptCallFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSJavaScriptCallFrame.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSKeyboardEvent.cpp"
 				>
 			</File>
@@ -981,7 +1045,19 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\JSLocation.lut.h"
+				RelativePath="$(IntDir)\DerivedSources\JSLocation.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSLocation.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSMediaError.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSMediaError.h"
 				>
 			</File>
 			<File
@@ -998,6 +1074,22 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSMessageEvent.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSMimeType.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSMimeType.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSMimeTypeArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSMimeTypeArray.h"
 				>
 			</File>
 			<File
@@ -1022,6 +1114,14 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSNamedNodeMap.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSNavigator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSNavigator.h"
 				>
 			</File>
 			<File
@@ -1073,6 +1173,22 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSPlugin.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSPlugin.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSPluginArray.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSPluginArray.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSProcessingInstruction.cpp"
 				>
 			</File>
@@ -1113,43 +1229,15 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSRGBColor.lut.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSScreen.cpp"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSScreen.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLError.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLError.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLResultSet.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLResultSet.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLResultSetRowList.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLResultSetRowList.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLTransaction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\JSSQLTransaction.h"
 				>
 			</File>
 			<File
@@ -1174,6 +1262,14 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSSVGAElement.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSSVGAltGlyphElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSSVGAltGlyphElement.h"
 				>
 			</File>
 			<File
@@ -1406,6 +1502,14 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSSVGElementInstanceList.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSSVGElementWrapperFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSSVGElementWrapperFactory.h"
 				>
 			</File>
 			<File
@@ -2233,6 +2337,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSTextMetrics.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSTextMetrics.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSTimeRanges.cpp"
 				>
 			</File>
@@ -2265,6 +2377,46 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitAnimationEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitAnimationEvent.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitCSSKeyframeRule.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitCSSKeyframeRule.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitCSSKeyframesRule.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitCSSKeyframesRule.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitCSSTransformValue.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitCSSTransformValue.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitTransitionEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSWebKitTransitionEvent.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSWheelEvent.cpp"
 				>
 			</File>
@@ -2273,11 +2425,35 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequest.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequest.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequestException.cpp"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequestException.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequestProgressEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequestProgressEvent.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequestUpload.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\JSXMLHttpRequestUpload.h"
 				>
 			</File>
 			<File
@@ -2329,27 +2505,15 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\JSXSLTProcessor.lut.h"
+				RelativePath="$(IntDir)\DerivedSources\JSXSLTProcessor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\kjs_css.lut.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\kjs_events.lut.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\kjs_html.lut.h"
+				RelativePath="$(IntDir)\DerivedSources\JSXSLTProcessor.h"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\kjs_navigator.lut.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\kjs_window.lut.h"
 				>
 			</File>
 			<File
@@ -2369,15 +2533,19 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\UserAgentStyleSheets.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\UserAgentStyleSheetsData.cpp"
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\UserAgentStyleSheets.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\XLinkNames.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\XLinkNames.h"
 				>
 			</File>
 			<File
@@ -2391,22 +2559,190 @@
 			<File
 				RelativePath="$(IntDir)\DerivedSources\XPathGrammar.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\XPathGrammar.h"
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="page"
+			>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\InspectorController.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptCallFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptCallFrame.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptDebugListener.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptDebugServer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptDebugServer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptProfile.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptProfile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptProfileNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\JavaScriptProfileNode.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="bridge"
+			>
+			<File
+				RelativePath="..\..\port\bridge\KJSBridge.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\NP_jsobject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\NP_jsobject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\npruntime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\npruntime.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\npruntime_impl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\npruntime_internal.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\npruntime_priv.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_array.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_array.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_method.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_method.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_object.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_object.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_root.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\runtime_root.h"
+				>
+			</File>
+			<Filter
+				Name="c"
+				>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_class.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_class.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_instance.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_instance.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_runtime.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_runtime.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_utility.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\bridge\c\c_utility.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\ExceptionContext.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\pending\ExceptionContext.h"
+			>
+		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\GCController.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\GCController.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\page\inspector\InspectorControllerKJS.cpp"
 			>
 		</File>
 		<File
@@ -2422,7 +2758,19 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSCanvasPixelArrayCustom.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSCanvasRenderingContext2DCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSClipboardCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSConsoleCustom.cpp"
 			>
 		</File>
 		<File
@@ -2431,10 +2779,6 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSCSSStyleDeclarationCustom.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSCSSValueCustom.cpp"
 			>
 		</File>
 		<File
@@ -2490,15 +2834,47 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDatabaseCustom.cpp"
-			>
-		</File>
-		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDocumentCustom.cpp"
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDocumentFragmentCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMApplicationCacheCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMBinding.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMBinding.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMWindowBase.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMWindowBase.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMWindowCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMWindowCustom.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMWindowShell.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSDOMWindowShell.h"
 			>
 		</File>
 		<File
@@ -2507,6 +2883,14 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSEventCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSEventListener.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSEventListener.h"
 			>
 		</File>
 		<File
@@ -2547,14 +2931,6 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSHTMLElementCustom.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSHTMLElementWrapperFactory.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSHTMLElementWrapperFactory.h"
 			>
 		</File>
 		<File
@@ -2610,11 +2986,39 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSLocation.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSImageConstructor.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSLocation.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSImageConstructor.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSInspectedObjectWrapper.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSInspectedObjectWrapper.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSInspectorCallbackWrapper.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSInspectorCallbackWrapper.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSJavaScriptCallFrameCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSLocationCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSMimeTypeArrayCustom.cpp"
 			>
 		</File>
 		<File
@@ -2627,6 +3031,10 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSNamedNodesCollection.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSNavigatorCustom.cpp"
 			>
 		</File>
 		<File
@@ -2654,11 +3062,43 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSQLResultSetRowListCustom.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSNSResolver.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSQLTransactionCustom.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSNSResolver.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSPluginArrayCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSPluginCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSPluginElementFunctions.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSPluginElementFunctions.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSQuarantinedObjectWrapper.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSQuarantinedObjectWrapper.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSRGBColor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSRGBColor.h"
 			>
 		</File>
 		<File
@@ -2670,19 +3110,15 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSVGElementWrapperFactory.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSVGElementWrapperFactory.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\pending\JSSVGLazyEventListener.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSVGLazyEventListener.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSVGLazyEventListener.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSSVGLengthCustom.cpp"
 			>
 		</File>
 		<File
@@ -2710,95 +3146,39 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSTextCustom.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSTreeWalkerCustom.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXMLHttpRequest.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXMLHttpRequestConstructor.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXMLHttpRequest.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXMLHttpRequestConstructor.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXSLTProcessor.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXMLHttpRequestCustom.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXSLTProcessor.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXMLHttpRequestUploadCustom.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_binding.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXSLTProcessorConstructor.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_binding.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXSLTProcessorConstructor.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_css.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_css.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_dom.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_dom.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_events.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_events.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_html.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_html.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_navigator.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_navigator.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_proxy.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_proxy.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_window.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\kjs_window.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bridge\KJSBridge.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bridge\KJSBridge.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSXSLTProcessorCustom.cpp"
 			>
 		</File>
 		<File
@@ -2839,6 +3219,26 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\ScheduledAction.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\ScriptCallContext.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\ScriptController.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\ScriptController.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\ScriptControllerWin.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\StringSourceProvider.h"
 			>
 		</File>
 	</Files>

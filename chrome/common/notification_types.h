@@ -134,15 +134,6 @@ enum NotificationType {
   NOTIFY_DOWNLOAD_START,
   NOTIFY_DOWNLOAD_STOP,
 
-  // This is sent when an interstitial page showing in a WebContents is closed
-  // (as the result of a navigation to another page).  The source is the
-  // WebContents the interstitial page is in.
-  // Note that you should not initiate a navigation as part of the processing of
-  // this notification, since this notification may be triggered as part of the
-  // destruction of the tab contents (the navigation controller would reuse
-  // the tab contents right before it would be destroyed).
-  NOTIFY_INTERSTITIAL_PAGE_CLOSED,
-
   // Views ---------------------------------------------------------------------
 
   // Notification that a view was removed from a view hierarchy.  The source is
@@ -406,6 +397,11 @@ enum NotificationType {
   // Profile, and the details aren't used.
   NOTIFY_BOOKMARK_MODEL_LOADED,
 
+  // Sent when the spellchecker object changes. Note that this is not sent the
+  // first time the spellchecker gets initialized. The source is the profile, 
+  // the details is SpellcheckerReinitializedDetails defined in profile.
+  NOTIFY_SPELLCHECKER_REINITIALIZED,
+
   // Sent when the bookmark bubble is shown for a particular URL. The source
   // is the profile, the details the URL.
   NOTIFY_BOOKMARK_BUBBLE_SHOWN,
@@ -432,6 +428,15 @@ enum NotificationType {
   NOTIFY_DEFAULT_REQUEST_CONTEXT_AVAILABLE,
 
   // Autocomplete --------------------------------------------------------------
+
+  // Sent by the autocomplete controller at least once per query, each time new
+  // matches are available, subject to rate-limiting/coalescing to reduce the
+  // number of updates.  There are no details.
+  NOTIFY_AUTOCOMPLETE_CONTROLLER_RESULT_UPDATED,
+
+  // Sent by the autocomplete controller once per query, immediately after
+  // synchronous matches become available.  There are no details.
+  NOTIFY_AUTOCOMPLETE_CONTROLLER_SYNCHRONOUS_MATCHES_AVAILABLE,
 
   // This is sent when an item of the Omnibox popup is selected. The source is
   // the profile.

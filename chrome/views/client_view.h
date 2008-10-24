@@ -7,7 +7,7 @@
 
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 class DialogClientView;
 class Window;
@@ -50,12 +50,11 @@ class ClientView : public View {
   virtual int NonClientHitTest(const gfx::Point& point);
 
   // Overridden from View:
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  protected:
   // Overridden from View:
   virtual void ViewHierarchyChanged(bool is_add, View* parent, View* child);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual void Layout();
 
   // Accessors for private data members.
@@ -74,6 +73,6 @@ class ClientView : public View {
   View* contents_view_;
 };
 
-}  // namespace ChromeViews
+}  // namespace views
 
 #endif  // #ifndef CHROME_VIEWS_CLIENT_VIEW_H_

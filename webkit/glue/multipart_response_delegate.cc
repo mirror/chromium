@@ -5,12 +5,14 @@
 #include "config.h"
 #include <string>
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "HTTPHeaderMap.h"
 #include "ResourceHandle.h"
 #include "ResourceHandleClient.h"
-#include "String.h"
-#pragma warning(pop)
+#include "PlatformString.h"
+MSVC_POP_WARNING();
 
 #undef LOG
 #include "base/logging.h"
@@ -87,7 +89,6 @@ void MultipartResponseDelegate::OnReceivedData(const char* data, int data_len) {
   }
   DCHECK(!processing_headers_);
 
-  int token_line_feed = 1;
   size_t boundary_pos;
   while ((boundary_pos = FindBoundary()) != std::string::npos) {
     if (boundary_pos > 0) {
@@ -200,7 +201,7 @@ bool MultipartResponseDelegate::ParseHeaders() {
     "Range",
     "Set-Cookie"
   };
-  for (int i = 0; i < arraysize(replace_headers); ++i) {
+  for (size_t i = 0; i < arraysize(replace_headers); ++i) {
     std::string name(replace_headers[i]);
     std::string value = net::GetSpecificHeader(headers, name);
     if (!value.empty()) {

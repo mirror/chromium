@@ -14,9 +14,8 @@
 #include "chrome/installer/setup/setup_constants.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/create_reg_key_work_item.h"
-#include "chrome/installer/util/l10n_string_util.h"
-#include "chrome/installer/util/logging_installer.h"
 #include "chrome/installer/util/helper.h"
+#include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/shell_util.h"
 #include "chrome/installer/util/util_constants.h"
 #include "chrome/installer/util/version.h"
@@ -130,6 +129,11 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
                             file_util::GetFilenameFromPath(exe_path));
     std::wstring arguments(L" --");
     arguments.append(installer_util::switches::kUninstall);
+    if (system_install) {
+      arguments.append(L" --");
+      arguments.append(installer_util::switches::kSystemLevel);
+    }
+
     LOG(INFO) << "Creating/updating uninstall link at " << uninstall_link;
     std::wstring target_folder = file_util::GetDirectoryFromPath(install_path);
     ret2 = file_util::CreateShortcutLink(setup_exe.c_str(),
@@ -166,6 +170,9 @@ installer_util::InstallStatus installer::InstallOrUpdateChrome(
   std::wstring install_path(GetChromeInstallPath(system_install));
   if (install_path.empty()) {
     LOG(ERROR) << "Could not get installation destination path.";
+    InstallUtil::SetInstallerError(system_install,
+                                   installer_util::INSTALL_FAILED,
+                                   IDS_INSTALL_FAILED_BASE);
     return installer_util::INSTALL_FAILED;
   } else {
     LOG(INFO) << "install destination path: " << install_path;
@@ -182,6 +189,9 @@ installer_util::InstallStatus installer::InstallOrUpdateChrome(
   installer_util::InstallStatus result;
   if (!install_success) {
     LOG(ERROR) << "Install failed.";
+    InstallUtil::SetInstallerError(system_install,
+                                   installer_util::INSTALL_FAILED,
+                                   IDS_INSTALL_FAILED_BASE);
     result = installer_util::INSTALL_FAILED;
   } else {
     if (!installed_version) {

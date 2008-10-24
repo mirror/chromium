@@ -23,12 +23,12 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
-using ChromeViews::ColumnSet;
-using ChromeViews::GridLayout;
-using ChromeViews::Label;
-using ChromeViews::NativeButton;
-using ChromeViews::TextField;
-using ChromeViews::TreeNode;
+using views::ColumnSet;
+using views::GridLayout;
+using views::Label;
+using views::NativeButton;
+using views::TextField;
+using views::TreeNode;
 
 // Background color of text field when URL is invalid.
 static const SkColor kErrorColor = SkColorSetRGB(0xFF, 0xBC, 0xBC);
@@ -98,7 +98,7 @@ bool BookmarkEditorView::AreAcceleratorsEnabled(DialogButton button) {
   return !tree_view_.GetEditingNode();
 }
 
-ChromeViews::View* BookmarkEditorView::GetContentsView() {
+views::View* BookmarkEditorView::GetContentsView() {
   return this;
 }
 
@@ -108,30 +108,22 @@ void BookmarkEditorView::Layout() {
 
   // Manually lay out the New Folder button in the same row as the OK/Cancel
   // buttons...
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
-  CSize prefsize;
-  new_group_button_.GetPreferredSize(&prefsize);
-  int button_y = parent_bounds.bottom - prefsize.cy - kButtonVEdgeMargin;
-  new_group_button_.SetBounds(kPanelHorizMargin, button_y, prefsize.cx,
-                              prefsize.cy);
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
+  gfx::Size prefsize = new_group_button_.GetPreferredSize();
+  int button_y = parent_bounds.bottom() - prefsize.height() - kButtonVEdgeMargin;
+  new_group_button_.SetBounds(kPanelHorizMargin, button_y, prefsize.width(),
+                              prefsize.height());
 }
 
-void BookmarkEditorView::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size BookmarkEditorView::GetPreferredSize() {
+  return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_EDITBOOKMARK_DIALOG_WIDTH_CHARS,
-      IDS_EDITBOOKMARK_DIALOG_HEIGHT_LINES).ToSIZE();
-}
-
-void BookmarkEditorView::DidChangeBounds(const CRect& previous,
-                                         const CRect& current) {
-  Layout();
+      IDS_EDITBOOKMARK_DIALOG_HEIGHT_LINES));
 }
 
 void BookmarkEditorView::ViewHierarchyChanged(bool is_add,
-                                              ChromeViews::View* parent,
-                                              ChromeViews::View* child) {
+                                              views::View* parent,
+                                              views::View* child) {
   if (child == this) {
     // Add and remove the New Folder button from the ClientView's hierarchy.
     if (is_add) {
@@ -143,11 +135,11 @@ void BookmarkEditorView::ViewHierarchyChanged(bool is_add,
 }
 
 void BookmarkEditorView::OnTreeViewSelectionChanged(
-    ChromeViews::TreeView* tree_view) {
+    views::TreeView* tree_view) {
 }
 
-bool BookmarkEditorView::CanEdit(ChromeViews::TreeView* tree_view,
-                                 ChromeViews::TreeModelNode* node) {
+bool BookmarkEditorView::CanEdit(views::TreeView* tree_view,
+                                 views::TreeModelNode* node) {
   // Only allow editting of children of the bookmark bar node and other node.
   EditorNode* bb_node = tree_model_->AsNode(node);
   return (bb_node->GetParent() && bb_node->GetParent()->GetParent());
@@ -185,7 +177,7 @@ bool BookmarkEditorView::IsCommandEnabled(int id) const {
 }
 
 void BookmarkEditorView::Show(HWND parent_hwnd) {
-  ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(), this);
+  views::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(), this);
   UserInputChanged();
   if (bb_model_->IsLoaded())
     ExpandAndSelect();
@@ -212,7 +204,7 @@ void BookmarkEditorView::ShowContextMenu(View* source,
       (tree_model_->GetParent(tree_view_.GetSelectedNode()) ==
        tree_model_->GetRoot());
   context_menu_.reset(new Menu(this, Menu::TOPLEFT,
-                               GetViewContainer()->GetHWND()));
+                               GetContainer()->GetHWND()));
   context_menu_->AppendMenuItemWithLabel(IDS_EDIT,
       l10n_util::GetString(IDS_EDIT));
   context_menu_->AppendMenuItemWithLabel(

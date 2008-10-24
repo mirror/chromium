@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "base/command_line.h"
-#include "base/gfx/bitmap_header.h"
+#include "base/gfx/gdi_util.h"
 #include "base/gfx/bitmap_platform_device_win.h"
 #include "base/gfx/image_operations.h"
 #include "base/gfx/native_theme.h"
@@ -24,13 +24,14 @@
 #include "chrome/common/gfx/color_utils.h"
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/page_zoom.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/common/text_zoom.h"
 #include "chrome/common/thumbnail_score.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/chrome_plugin_host.h"
 #include "chrome/renderer/debug_message_handler.h"
+#include "chrome/renderer/greasemonkey_slave.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/renderer_resources.h"
 #include "chrome/renderer/visitedlink_slave.h"
@@ -93,6 +94,9 @@ const TimeDelta kDelayForNavigationSync = TimeDelta::FromSeconds(5);
 // globally unique in the renderer.
 static int32 next_page_id_ = 1;
 
+// The maximum number of popups that can be spawned from one page.
+static const int kMaximumNumberOfUnacknowledgedPopups = 25;
+
 static const char* const kUnreachableWebDataURL =
     "chrome-resource://chromewebdata/";
 
@@ -150,7 +154,10 @@ RenderView::RenderView()
     history_back_list_count_(0),
     history_forward_list_count_(0),
     disable_popup_blocking_(false),
-    has_unload_listener_(false) {
+    has_unload_listener_(false),
+    decrement_shared_popup_at_destruction_(false),
+    greasemonkey_enabled_(false),
+    waiting_for_create_window_ack_(false) {
   resource_dispatcher_ = new ResourceDispatcher(this);
 #ifdef CHROME_PERSONALIZATION
   personalization_ = Personalization::CreateRendererPersonalization();
@@ -158,6 +165,9 @@ RenderView::RenderView()
 }
 
 RenderView::~RenderView() {
+  if (decrement_shared_popup_at_destruction_)
+    shared_popup_counter_->data--;
+
   resource_dispatcher_->ClearMessageSender();
   // Clear any back-pointers that might still be held by plugins.
   PluginDelegateList::iterator it = plugin_delegates_.begin();
@@ -175,17 +185,20 @@ RenderView::~RenderView() {
 }
 
 /*static*/
-RenderView* RenderView::Create(HWND parent_hwnd,
-                               HANDLE modal_dialog_event,
-                               int32 opener_id,
-                               const WebPreferences& webkit_prefs,
-                               int32 routing_id) {
+RenderView* RenderView::Create(
+    HWND parent_hwnd,
+    HANDLE modal_dialog_event,
+    int32 opener_id,
+    const WebPreferences& webkit_prefs,
+    SharedRenderViewCounter* counter,
+    int32 routing_id) {
   DCHECK(routing_id != MSG_ROUTING_NONE);
   scoped_refptr<RenderView> view = new RenderView();
   view->Init(parent_hwnd,
              modal_dialog_event,
              opener_id,
              webkit_prefs,
+             counter,
              routing_id);  // adds reference
   return view;
 }
@@ -225,11 +238,21 @@ void RenderView::Init(HWND parent_hwnd,
                       HANDLE modal_dialog_event,
                       int32 opener_id,
                       const WebPreferences& webkit_prefs,
+                      SharedRenderViewCounter* counter,
                       int32 routing_id) {
   DCHECK(!webview());
 
   if (opener_id != MSG_ROUTING_NONE)
     opener_id_ = opener_id;
+
+  if (counter) {
+    shared_popup_counter_ = counter;
+    shared_popup_counter_->data++;
+    decrement_shared_popup_at_destruction_ = true;
+  } else {
+    shared_popup_counter_ = new SharedRenderViewCounter(0);
+    decrement_shared_popup_at_destruction_ = false;
+  }
 
   // Avoid a leak here by not assigning, since WebView::Create addrefs for us.
   WebWidget* view = WebView::Create(this, webkit_prefs);
@@ -261,15 +284,30 @@ void RenderView::Init(HWND parent_hwnd,
       command_line.HasSwitch(switches::kDomAutomationController);
   disable_popup_blocking_ =
       command_line.HasSwitch(switches::kDisablePopupBlocking);
+  greasemonkey_enabled_ =
+      command_line.HasSwitch(switches::kEnableGreasemonkey);
 
   debug_message_handler_ = new DebugMessageHandler(this);
   RenderThread::current()->AddFilter(debug_message_handler_);
 }
 
 void RenderView::OnMessageReceived(const IPC::Message& message) {
+  // If the current RenderView instance represents a popup, then we
+  // need to wait for ViewMsg_CreatingNew_ACK to be sent by the browser.
+  // As part of this ack we also receive the browser window handle, which
+  // parents any plugins instantiated in this RenderView instance.
+  // Plugins can be instantiated only when we receive the parent window
+  // handle as they are child windows.
+  if (waiting_for_create_window_ack_ && 
+      resource_dispatcher_->IsResourceMessage(message)) {
+    queued_resource_messages_.push(new IPC::Message(message));
+    return;
+  }
+
   // Let the resource dispatcher intercept resource messages first.
   if (resource_dispatcher_->OnMessageReceived(message))
     return;
+
   IPC_BEGIN_MESSAGE_MAP(RenderView, message)
     IPC_MESSAGE_HANDLER(ViewMsg_CreatingNew_ACK, OnCreatingNewAck)
     IPC_MESSAGE_HANDLER(ViewMsg_CaptureThumbnail, SendThumbnail)
@@ -289,7 +327,7 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_SelectAll, OnSelectAll)
     IPC_MESSAGE_HANDLER(ViewMsg_CopyImageAt, OnCopyImageAt)
     IPC_MESSAGE_HANDLER(ViewMsg_Find, OnFind)
-    IPC_MESSAGE_HANDLER(ViewMsg_AlterTextSize, OnAlterTextSize)
+    IPC_MESSAGE_HANDLER(ViewMsg_Zoom, OnZoom)
     IPC_MESSAGE_HANDLER(ViewMsg_SetPageEncoding, OnSetPageEncoding)
     IPC_MESSAGE_HANDLER(ViewMsg_InspectElement, OnInspectElement)
     IPC_MESSAGE_HANDLER(ViewMsg_ShowJavaScriptConsole, OnShowJavaScriptConsole)
@@ -340,6 +378,8 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
 #endif
     IPC_MESSAGE_HANDLER(ViewMsg_HandleMessageFromExternalHost,
                         OnMessageFromExternalHost)
+    IPC_MESSAGE_HANDLER(ViewMsg_DisassociateFromPopupCount,
+                        OnDisassociateFromPopupCount)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidget::OnMessageReceived(message))
   IPC_END_MESSAGE_MAP()
@@ -349,6 +389,15 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
 // view.
 void RenderView::OnCreatingNewAck(HWND parent) {
   CompleteInit(parent);
+
+  waiting_for_create_window_ack_ = false;
+
+  while (!queued_resource_messages_.empty()) {
+    IPC::Message* queued_msg = queued_resource_messages_.front();
+    queued_resource_messages_.pop();
+    resource_dispatcher_->OnMessageReceived(*queued_msg);
+    delete queued_msg;
+  }
 }
 
 void RenderView::SendThumbnail() {
@@ -1232,18 +1281,30 @@ void RenderView::DidFailProvisionalLoadWithError(WebView* webview,
       static_cast<RenderViewExtraRequestData*>(failed_request.GetExtraData());
   bool replace = extra_data && !extra_data->is_new_navigation();
 
-  const GURL& failed_url = error.GetFailedURL();
-  const GURL& error_page_url = GetAlternateErrorPageURL(failed_url,
-      WebViewDelegate::DNS_ERROR);
-  if (error.GetErrorCode() == net::ERR_NAME_NOT_RESOLVED &&
-      error_page_url.is_valid()) {
-    // Ask the WebFrame to fetch the alternate error page for us.
-    frame->LoadAlternateHTMLErrorPage(&failed_request, error, error_page_url,
-        replace, GURL(kUnreachableWebDataURL));
-  } else {
-    LoadNavigationErrorPage(frame, &failed_request, error, std::string(),
-                            replace);
+  // Use the alternate error page service if this is a DNS failure or
+  // connection failure.  ERR_CONNECTION_FAILED can be dropped once we no longer
+  // use winhttp.
+  int ec = error.GetErrorCode();
+  if (ec == net::ERR_NAME_NOT_RESOLVED ||
+      ec == net::ERR_CONNECTION_FAILED ||
+      ec == net::ERR_CONNECTION_REFUSED ||
+      ec == net::ERR_ADDRESS_UNREACHABLE ||
+      ec == net::ERR_TIMED_OUT) {
+    const GURL& failed_url = error.GetFailedURL();
+    const GURL& error_page_url = GetAlternateErrorPageURL(failed_url,
+        ec == net::ERR_NAME_NOT_RESOLVED ? WebViewDelegate::DNS_ERROR
+                                         : WebViewDelegate::CONNECTION_ERROR);
+    if (error_page_url.is_valid()) {
+      // Ask the WebFrame to fetch the alternate error page for us.
+      frame->LoadAlternateHTMLErrorPage(&failed_request, error, error_page_url,
+          replace, GURL(kUnreachableWebDataURL));
+      return;
+    }
   }
+
+  // Fallback to a local error page.  
+  LoadNavigationErrorPage(frame, &failed_request, error, std::string(),
+                          replace);
 }
 
 void RenderView::LoadNavigationErrorPage(WebFrame* frame,
@@ -1357,6 +1418,17 @@ void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
                                                WebFrame* frame) {
   // Check whether we have new encoding name.
   UpdateEncoding(frame, webview->GetMainFrameEncodingName());
+
+  // Inject any Greasemonkey scripts. Do not inject into chrome UI pages, but
+  // do inject into any other document.
+  if (greasemonkey_enabled_) {
+    const GURL &gurl = frame->GetURL();
+    if (gurl.SchemeIs("file") ||
+        gurl.SchemeIs("http") ||
+        gurl.SchemeIs("https")) {
+      RenderThread::current()->greasemonkey_slave()->InjectScripts(frame);
+    }
+  }
 }
 
 void RenderView::DidHandleOnloadEventsForFrame(WebView* webview,
@@ -1646,11 +1718,15 @@ void RenderView::DebuggerOutput(const std::wstring& out) {
 }
 
 WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
+  // Check to make sure we aren't overloading on popups.
+  if (shared_popup_counter_->data > kMaximumNumberOfUnacknowledgedPopups)
+    return NULL;
+
   int32 routing_id = MSG_ROUTING_NONE;
   HANDLE modal_dialog_event = NULL;
   bool result = RenderThread::current()->Send(
-      new ViewHostMsg_CreateView(routing_id_, user_gesture, &routing_id,
-                                 &modal_dialog_event));
+      new ViewHostMsg_CreateWindow(routing_id_, user_gesture, &routing_id,
+                                   &modal_dialog_event));
   if (routing_id == MSG_ROUTING_NONE) {
     DCHECK(modal_dialog_event == NULL);
     return NULL;
@@ -1659,8 +1735,10 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
   // The WebView holds a reference to this new RenderView
   const WebPreferences& prefs = webview->GetPreferences();
   RenderView* view = RenderView::Create(NULL, modal_dialog_event, routing_id_,
-                                        prefs, routing_id);
+                                        prefs, shared_popup_counter_,
+                                        routing_id);
   view->set_opened_by_user_gesture(user_gesture);
+  view->set_waiting_for_create_window_ack(true);
 
   // Copy over the alternate error page URL so we can have alt error pages in
   // the new render view (we don't need the browser to send the URL back down).
@@ -1901,6 +1979,10 @@ GURL RenderView::GetAlternateErrorPageURL(const GURL& failedURL,
 
     case HTTP_404:
       params.append("http404");
+      break;
+
+    case CONNECTION_ERROR:
+      params.append("connectionerror");
       break;
 
     default:
@@ -2159,16 +2241,17 @@ void RenderView::DnsPrefetch(const std::vector<std::string>& host_names) {
   Send(new ViewHostMsg_DnsPrefetch(host_names));
 }
 
-void RenderView::OnAlterTextSize(int size) {
-  switch (size) {
-    case text_zoom::TEXT_SMALLER:
-      webview()->MakeTextSmaller();
+void RenderView::OnZoom(int function) {
+  static const bool kZoomIsTextOnly = false;
+  switch (function) {
+    case PageZoom::SMALLER:
+      webview()->ZoomOut(kZoomIsTextOnly);
       break;
-    case text_zoom::TEXT_STANDARD:
-      webview()->MakeTextStandardSize();
+    case PageZoom::STANDARD:
+      webview()->ResetZoom();
       break;
-    case text_zoom::TEXT_LARGER:
-      webview()->MakeTextLarger();
+    case PageZoom::LARGER:
+      webview()->ZoomIn(kZoomIsTextOnly);
       break;
     default:
       NOTREACHED();
@@ -2191,6 +2274,9 @@ WebHistoryItem* RenderView::GetHistoryEntryAtOffset(int offset) {
 }
 
 void RenderView::GoToEntryAtOffsetAsync(int offset) {
+  history_back_list_count_ += offset;
+  history_forward_list_count_ -= offset;
+
   Send(new ViewHostMsg_GoToEntryAtOffset(routing_id_, offset));
 }
 
@@ -2531,6 +2617,11 @@ void RenderView::TransitionToCommittedForNewPage() {
 #endif
 }
 
+void RenderView::DidAddHistoryItem() {
+  history_back_list_count_++;
+  history_forward_list_count_ = 0;
+}
+
 void RenderView::OnMessageFromExternalHost(
     const std::string& target, const std::string& message) {
   if (message.empty())
@@ -2555,6 +2646,13 @@ void RenderView::OnMessageFromExternalHost(
   main_frame->LoadRequest(request.get());
 }
 
+void RenderView::OnDisassociateFromPopupCount() {
+  if (decrement_shared_popup_at_destruction_)
+    shared_popup_counter_->data--;
+  shared_popup_counter_ = new SharedRenderViewCounter(0);
+  decrement_shared_popup_at_destruction_ = false;
+}
+
 std::string RenderView::GetAltHTMLForTemplate(
     const DictionaryValue& error_strings, int template_resource_id) const {
   const StringPiece template_html(
@@ -2569,4 +2667,3 @@ std::string RenderView::GetAltHTMLForTemplate(
   return jstemplate_builder::GetTemplateHtml(
       template_html, &error_strings, "t");
 }
-

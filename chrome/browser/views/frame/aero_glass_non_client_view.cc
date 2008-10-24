@@ -7,13 +7,13 @@
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/views/frame/browser_view2.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
-#include "chrome/browser/views/window_resources.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/client_view.h"
 #include "chrome/views/window_delegate.h"
+#include "chrome/views/window_resources.h"
 
 // An enumeration of bitmap resources used by this window.
 enum {
@@ -37,7 +37,7 @@ class AeroGlassWindowResources {
   AeroGlassWindowResources() { InitClass(); }
   virtual ~AeroGlassWindowResources() { }
 
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part) const {
     return standard_frame_bitmaps_[part];
   }
 
@@ -110,6 +110,17 @@ static const int kPixel = 1;
 static const int kWindowSizingBorderSize = 8;
 // The size (width/height) of the window icon.
 static const int kWindowIconSize = 16;
+// The distance from the left of the window of the OTR avatar icon.
+static const int kOTRAvatarIconMargin = 9;
+// The distance from the right edge of the OTR avatar icon to the left edge of
+// the TabStrip.
+static const int kOTRAvatarIconTabStripSpacing = 6;
+// The distance from the top of the window of the OTR avatar icon when the
+// window is maximized.
+static const int kNoTitleOTRTopSpacing = 23;
+// The distance from the top of the window of the OTR avatar icon when the
+// window is maximized.
+static const int kNoTitleOTRZoomedTopSpacing = 3;
 
 ///////////////////////////////////////////////////////////////////////////////
 // AeroGlassNonClientView, public:
@@ -127,7 +138,8 @@ AeroGlassNonClientView::~AeroGlassNonClientView() {
 gfx::Rect AeroGlassNonClientView::GetBoundsForTabStrip(TabStrip* tabstrip) {
   // If we are maximized, the tab strip will be in line with the window
   // controls, so we need to make sure they don't overlap.
-  int tabstrip_width = browser_view_->width();
+  int tabstrip_width = browser_view_->width() - otr_avatar_bounds_.width() -
+      kOTRAvatarIconTabStripSpacing;
   if(frame_->IsMaximized()) {
     TITLEBARINFOEX titlebar_info;
     titlebar_info.cbSize = sizeof(TITLEBARINFOEX);
@@ -138,12 +150,13 @@ gfx::Rect AeroGlassNonClientView::GetBoundsForTabStrip(TabStrip* tabstrip) {
     tabstrip_width -= (tabstrip_width - titlebar_info.rgrect[2].left);
   }
   int tabstrip_height = tabstrip->GetPreferredHeight();
+  int tabstrip_x = otr_avatar_bounds_.width() + kOTRAvatarIconTabStripSpacing;
   int tabstrip_y = frame_->IsMaximized() ? 0 : kTabStripY;
-  return gfx::Rect(0, tabstrip_y, tabstrip_width, tabstrip_height);
+  return gfx::Rect(tabstrip_x, tabstrip_y, tabstrip_width, tabstrip_height);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassNonClientView, ChromeViews::NonClientView implementation:
+// AeroGlassNonClientView, views::NonClientView implementation:
 
 gfx::Rect AeroGlassNonClientView::CalculateClientAreaBounds(int win_width,
                                                             int win_height) const {
@@ -168,7 +181,7 @@ gfx::Size AeroGlassNonClientView::CalculateWindowSizeForClientSize(
 
 CPoint AeroGlassNonClientView::GetSystemMenuPoint() const {
   CPoint offset(0, 0);
-  MapWindowPoints(GetViewContainer()->GetHWND(), HWND_DESKTOP, &offset, 1);
+  MapWindowPoints(GetContainer()->GetHWND(), HWND_DESKTOP, &offset, 1);
   return offset;
 }
 
@@ -195,7 +208,8 @@ int AeroGlassNonClientView::NonClientHitTest(const gfx::Point& point) {
         point.x() < client_view_right) {
       if (point.y() < kWindowSizingBorderSize)
         return HTTOP;
-      return HTCAPTION;
+      if (point.y() < (y() + height()))
+        return HTCAPTION;
     }
   }
 
@@ -205,15 +219,22 @@ int AeroGlassNonClientView::NonClientHitTest(const gfx::Point& point) {
 
 void AeroGlassNonClientView::GetWindowMask(const gfx::Size& size,
                                            gfx::Path* window_mask) {
+  // We use the native window region.
 }
 
 void AeroGlassNonClientView::EnableClose(bool enable) {
+  // This is handled exclusively by Window.
+}
+
+void AeroGlassNonClientView::ResetWindowControls() {
+  // Our window controls are rendered by the system and do not require reset.
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassNonClientView, ChromeViews::View overrides:
+// AeroGlassNonClientView, views::View overrides:
 
 void AeroGlassNonClientView::Paint(ChromeCanvas* canvas) {
+  PaintOTRAvatar(canvas);
   PaintDistributorLogo(canvas);
   if (browser_view_->IsToolbarVisible()) {
     PaintToolbarBackground(canvas);
@@ -222,27 +243,24 @@ void AeroGlassNonClientView::Paint(ChromeCanvas* canvas) {
 }
 
 void AeroGlassNonClientView::Layout() {
+  LayoutOTRAvatar();
   LayoutDistributorLogo();
   LayoutClientView();
 }
 
-void AeroGlassNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  frame_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalClientEdgeWidth;
-  out->cy += CalculateNonClientTopHeight() + kWindowBottomClientEdgeHeight;
-}
-
-void AeroGlassNonClientView::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
+gfx::Size AeroGlassNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = frame_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalClientEdgeWidth, 
+                   CalculateNonClientTopHeight() +
+                       kWindowBottomClientEdgeHeight);
+  return prefsize;
 }
 
 void AeroGlassNonClientView::ViewHierarchyChanged(bool is_add,
-                                               ChromeViews::View* parent,
-                                               ChromeViews::View* child) {
+                                                  views::View* parent,
+                                                  views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetViewContainer());
+    DCHECK(GetContainer());
     DCHECK(frame_->client_view()->GetParent() != this);
     AddChildView(frame_->client_view());
   }
@@ -253,8 +271,16 @@ void AeroGlassNonClientView::ViewHierarchyChanged(bool is_add,
 
 int AeroGlassNonClientView::CalculateNonClientTopHeight() const {
   if (frame_->window_delegate()->ShouldShowWindowTitle())
-    return browser_view_->IsToolbarVisible() ? 2 : 0;
+    return browser_view_->IsToolbarVisible() ? -1 : 0;
   return kNoTitleTopSpacing;
+}
+
+void AeroGlassNonClientView::PaintOTRAvatar(ChromeCanvas* canvas) {
+  if (browser_view_->ShouldShowOffTheRecordAvatar()) {
+    int icon_x = MirroredLeftPointForRect(otr_avatar_bounds_);
+    canvas->DrawBitmapInt(browser_view_->GetOTRAvatarIcon(), icon_x,
+                          otr_avatar_bounds_.y());
+  }
 }
 
 void AeroGlassNonClientView::PaintDistributorLogo(ChromeCanvas* canvas) {
@@ -355,6 +381,23 @@ void AeroGlassNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
                            kPixel - fudge);
 }
 
+void AeroGlassNonClientView::LayoutOTRAvatar() {
+  int otr_x = 0;
+  int top_spacing = frame_->IsMaximized() ? kNoTitleOTRZoomedTopSpacing
+                                          : kNoTitleOTRTopSpacing;
+  int otr_y = browser_view_->GetTabStripHeight() + top_spacing;
+  int otr_width = 0;
+  int otr_height = 0;
+  if (browser_view_->ShouldShowOffTheRecordAvatar()) {
+    SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
+    otr_width = otr_avatar_icon.width();
+    otr_height = otr_avatar_icon.height();
+    otr_x = kOTRAvatarIconMargin;
+    otr_y -= otr_avatar_icon.height() + 2;
+  }
+  otr_avatar_bounds_.SetRect(otr_x, otr_y, otr_width, otr_height);
+}
+
 void AeroGlassNonClientView::LayoutDistributorLogo() {
   if (distributor_logo_.empty())
     return;
@@ -371,9 +414,8 @@ void AeroGlassNonClientView::LayoutDistributorLogo() {
 }
 
 void AeroGlassNonClientView::LayoutClientView() {
-  gfx::Rect client_bounds(
-      CalculateClientAreaBounds(width(), height()));
-  frame_->client_view()->SetBounds(client_bounds.ToRECT());
+  gfx::Rect client_bounds = CalculateClientAreaBounds(width(), height());
+  frame_->client_view()->SetBounds(client_bounds);
 }
 
 // static

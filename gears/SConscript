@@ -6,6 +6,8 @@
 # This assumes you have a working gears checkout from p4 in the current dir.
 # Steps for this:
 # > echo %USER%-chromegears > p4config
+# or on linux/osx:
+# > echo $USER-chromegears > p4config
 # > set P4CONFIG=p4config
 # > g4 client -p //depot/googleclient/gears/p4_depot_paths
 # > g4 sync
@@ -18,17 +20,29 @@
 # Should we flatten the output directory into
 # Hammer/gears/platform/browser/*.obj like Gears does now?  If so, how?
 
+# Notes to self:
+# - os.path.abspath('.') (the CWD) is variant_dir if it exists, else it's the
+# toplevel_dir (which contains the SConstruct).
+# - env.Entry('.') is the entry representing the variant_dir.
+# - env.Entry('#') is the entry representing the toplevel_dir.
+# - str(entry) gives the path relative to variant_dir, or abspath if the entry
+# is outside the variant_dir.
+# - entry.path gives the path relative to toplevel_dir.
+# - entry.abspath gives the absolute path.
+
 import os
 
 Import('env')
 
 env = env.Clone(
-    GEARS_DIR = ".",
-    OPEN_DIR = "$GEARS_DIR/googleclient/gears/opensource/gears",
-    THIRD_PARTY_DIR = "$GEARS_DIR/googleclient/gears/opensource/third_party",
-    GENFILES_DIR = "$GEARS_DIR/genfiles",
-    PRIVATE_THIRD_PARTY_DIR = "$GEARS_DIR/googleclient/third_party",
+    OPEN_DIR = "googleclient/gears/opensource/gears",
+    THIRD_PARTY_DIR = "googleclient/gears/opensource/third_party",
+    PRIVATE_THIRD_PARTY_DIR = "googleclient/third_party",
 )
+
+if not os.path.exists(env.Dir('#/$OPEN_DIR').abspath):
+  print 'Skipping Gears build: no perforce tree checked out.'
+  Return()
 
 # Argument switches
 
@@ -39,20 +53,34 @@ if os_guess == 'posix':
 elif os_guess == 'darwin':
   os_guess = 'osx'
 
+# Map of OS -> valid browser targets for that OS.
+os_browsers_map = {
+    'win32': ['IE', 'FF2', 'FF3', 'NPAPI'],
+    'wince': ['IE'],
+    'linux': ['FF2', 'FF3'],
+    'osx': ['SF', 'FF2', 'FF3'],
+    'android': ['NPAPI'],
+}
+
 vars = Variables(None, ARGUMENTS)
 vars.AddVariables(
-  EnumVariable('OS',
-      'Which OS is the target',
-      os_guess, ['win32', 'wince', 'linux', 'osx', 'android']),
-  EnumVariable('BROWSER',
-      'Which browser we want to build the plugin for',
-      'NPAPI', ['IE', 'FF2', 'FF3', 'SF', 'NPAPI']),
-  EnumVariable('MODE',
-      'Type of binary to generate',
-      'dbg', ['dbg', 'opt']),
-  BoolVariable('OFFICIAL_BUILD',
-      'Create a binary suitable for public release', 0)
+    EnumVariable('OS',
+        'Which OS is the target', os_guess, os_browsers_map.keys()),
+    EnumVariable('MODE',
+        'Type of binary to generate', 'dbg', ['dbg', 'opt']),
+    BoolVariable('OFFICIAL_BUILD',
+        'Create a binary suitable for public release', 0)
 )
+vars.Update(env)
+
+env['VALID_BROWSERS'] = os_browsers_map[env['OS']]
+
+# Add BROWSER last, since its valid inputs depend on $OS.
+vars.Add(
+    EnumVariable('BROWSER',
+        'Which browser we want to build the plugin for.  "all" builds all '
+        'browsers for this OS.',
+        'all', env['VALID_BROWSERS'] + ['all']))
 vars.Update(env)
 
 env.Replace(
@@ -63,7 +91,7 @@ env.Replace(
 env.Replace(
     MAJOR = '0',
     MINOR = '4',
-    BUILD = '22',
+    BUILD = '24',
     PATCH = '0',
     VERSION = '${MAJOR}.${MINOR}.${BUILD}.${PATCH}',
 
@@ -72,15 +100,145 @@ env.Replace(
 )
 
 # Platform
-env.Replace(ARCH = 'i386')
+# TODO: Symbian builds will override this value.
+# For other platforms we set just one value.
+if env['OS'] in ['wince', 'android']:
+  env.Replace(ARCH = 'arm')
+elif env['OS'] == 'osx':
+  # On OSX we build a fat binary.
+  env.Replace(ARCH = 'i386+ppc')
+else:
+  env.Replace(ARCH = 'i386')
 
-# Add GNU tools to the PATH.  Note we have to strip off the build dir.
-env.PrependENVPath('PATH',
-    env.Dir('../../$PRIVATE_THIRD_PARTY_DIR/gnu/files').abspath)
-env.PrependENVPath('PATH',
-    env.Dir('../../$PRIVATE_THIRD_PARTY_DIR/python_24').abspath)
+# Output dirs
+env.Replace(
+    BASE_OUTDIR = '$GEARS_DIR/$OS-$ARCH-$MODE',
+    COMMON_OUTDIR = '$BASE_OUTDIR/common',
+    BROWSER_OUTDIR = '$BASE_OUTDIR/${BROWSER.lower()}',
+    IE_OUTDIR = '$BASE_OUTDIR/ie',
+    FF2_OUTDIR = '$BASE_OUTDIR/ff2',
+    FF3_OUTDIR = '$BASE_OUTDIR/ff3',
+    NPAPI_OUTDIR = '$BASE_OUTDIR/npapi',
+    SF_OUTDIR = '$BASE_OUTDIR/sf',
 
+    GENFILES_DIR = "$BROWSER_OUTDIR/genfiles",
+    COMMON_GENFILES_DIR = "$COMMON_OUTDIR/genfiles",
+)
+
+# Library flags
+env.Replace(
+    MOZJS_INCLUDE_PATHS = [
+        '$MOZJS_DIR',
+        '$THIRD_PARTY_DIR/spidermonkey/nspr/pr/include',
+        '$THIRD_PARTY_DIR/spidermonkey/nspr/pr/include/private',
+        '$THIRD_PARTY_DIR/spidermonkey/nspr/pr/include/obsolete',
+        '$OSX_SDK_ROOT/Developer/Headers/FlatCarbon/',
+    ],
+    MOZJS_DIR = '$THIRD_PARTY_DIR/spidermonkey',
+)
+
+# Add our tools to the PATH.
+if os.path.exists(env.Dir('#/$PRIVATE_THIRD_PARTY_DIR').abspath):
+  paths = []
+  if env['OS'] in ['win32', 'wince']:
+    # Clear out our environment so we don't accidentally use the system's libs.
+    env['ENV']['PATH'] = ''
+    env['ENV']['LIB'] = ''
+    env['ENV']['INCLUDE'] = ''
+
+    # Keep system32 for 'xcopy'.
+    paths += [env.subst('${ENV["SYSTEMROOT"]}/system32')]
+    if env['OS'] == 'win32':
+      env.Append(
+          VC80 = env.Dir('#/$PRIVATE_THIRD_PARTY_DIR/vc_80/files').abspath)
+      paths += [
+          env.subst('$VC80/common7/ide'),
+          env.subst('$VC80/vc/bin'),
+          env.subst('$VC80/common7/tools'),
+          env.subst('$VC80/common7/tools/bin'),
+          env.subst('$VC80/team_tools/performance_tools'),
+      ]
+    else:  # wince
+      env.Append(
+          VC80 = env.Dir('#/$PRIVATE_THIRD_PARTY_DIR/vc_80ce/files').abspath)
+      paths += [
+          env.subst('$VC80/bin/x86_arm'),
+          env.subst('$VC80/common7/ide'),
+          env.subst('$VC80/common7/tools'),
+          env.subst('$VC80/common7/tools/bin'),
+          env.subst('$VC80/vc/bin'),
+          env.subst('$VC80/smartdevices/sdktools'),
+      ]
+
+    paths += [env.Dir('#/$PRIVATE_THIRD_PARTY_DIR/wix/v3_0_2925/files').abspath]
+
+  paths += [env.Dir('#/$PRIVATE_THIRD_PARTY_DIR/gnu/files').abspath]
+  paths += [env.Dir('#/$PRIVATE_THIRD_PARTY_DIR/python_24').abspath]
+
+  # Prepend them so our tools come first.
+  for each in reversed(paths):
+    env.PrependENVPath('PATH', each)
+else:
+  # If we don't have a private third_party dir, we expect the system
+  # environment to be set up correctly to point to tool paths.
+  env['ENV']['PATH'] = os.environ['PATH']
+  env['ENV']['LIB'] = os.environ['LIB']
+  env['ENV']['INCLUDE'] = os.environ['INCLUDE']
+
+
+# Building M4 files
 env.Tool('m4')
+
+env.Append(
+    M4ARCH = (env['ARCH'] == 'i386' and 'x86' or '$ARCH'),
+    M4FLAGS = [
+        '--prefix-builtins',
+        '-DPRODUCT_VERSION=$VERSION',
+        '-DPRODUCT_VERSION_MAJOR=$MAJOR',
+        '-DPRODUCT_VERSION_MINOR=$MINOR',
+        '-DPRODUCT_VERSION_BUILD=$BUILD',
+        '-DPRODUCT_VERSION_PATCH=$PATCH',
+        '-DPRODUCT_OS=$OS',
+        '-DPRODUCT_ARCH="$M4ARCH"',
+        '-DPRODUCT_GCC_VERSION="gcc3"',
+        '-DPRODUCT_MAINTAINER="google"',
+        '-DPRODUCT_FRIENDLY_NAME_UQ="$FRIENDLY_NAME"',
+        '-DPRODUCT_SHORT_NAME_UQ="$SHORT_NAME"',
+        '-DI18N_LANGUAGES="(${",".join(I18N_LANGS)})"',
+    ],
+    M4PATH = [
+        '$OPEN_DIR',
+        '.',
+    ],
+)
+
+# SCons magic to make M4PATH work.
+env.Replace(
+    M4INCPREFIX = '-I',
+    M4INCSUFFIX = '',
+    _M4INCFLAGS = ('${_concat(M4INCPREFIX, M4PATH, M4INCSUFFIX, '
+                 '__env__, RDirs, TARGET, SOURCE)}'),
+    M4COM = '$M4 $M4FLAGS ${_M4INCFLAGS} $SOURCE > $TARGET',
+)
+
+# TODO: Dependency scanner for m4 files - doesn't work.  It can't detect files
+# that don't exist!
+#m4_include_re = re.compile(r'm4_include\((.*)\)', re.M)
+#def m4_scan(node, env, path):
+#  contents = node.get_contents()
+#  includes = m4_include_re.findall(contents)
+#  ret_includes = []
+#  for include in includes:
+#    for dir in path:
+#      file = os.path.join(dir, include)
+#      if os.path.exists(file):
+#        ret_includes.append(file)
+#        break
+#  return ret_includes
+#
+#m4_scanner = Scanner(function = m4_scan, skeys = ['.m4', '.html_m4'])
+#env.Append(SCANNERS = m4_scanner)
+
 
 # C++ build flags.
 
@@ -92,20 +250,30 @@ env.Replace(
         '$OPEN_DIR',
         '$OPEN_DIR/..',
         '$THIRD_PARTY_DIR',
-	'$THIRD_PARTY_DIR/breakpad/src',
         '$THIRD_PARTY_DIR/googleurl',
         '$THIRD_PARTY_DIR/npapi',
         '$THIRD_PARTY_DIR/zlib',
         '$THIRD_PARTY_DIR/v8/bindings_local',
-        '$GEARS_DIR',
+        '.',
+        '$COMMON_OUTDIR',
     ],
     LIBPATH = [
         '$LIBS_DIR',
     ],
+    CFLAGS = [],
     CCFLAGS = [],
-    CPPDEFINES = [],
+    CXXFLAGS = [],
+    CPPDEFINES = [
+    # SpiderMonkey (the Firefox JS engine)'s JS_GET_CLASS macro in jsapi.h needs
+    # this defined to work with the gecko SDK that we've built.
+    # The definition of JS_THREADSAFE must be kept in sync with MOZJS_CPPFLAGS.
+        'JS_THREADSAFE'
+    ],
+    FRAMEWORKPATH = [],
+    FRAMEWORKS = [],
     LIBS = [],
     LINKFLAGS = [],
+    SHLINKFLAGS = [],
 )
 
 if env['MODE'] == 'dbg':
@@ -141,10 +309,70 @@ env.Append(
         'NO_GZCOMPRESS',
     ]
 )
+if env['OS'] == 'wince':
+  env.Append(CPPDEFINES = 'NO_ERRNO_H')
+
+# Languages
+
+env['I18N_LANGS'] = [
+    'en-US',
+    'ar',
+    'bg',
+    'ca',
+    'cs',
+    'da',
+    'de',
+    'el',
+    'en-GB',
+    'es',
+    'et',
+    'fa',
+    'fi',
+    'fil',
+    'fr',
+    'he',
+    'hi',
+    'hr',
+    'hu',
+    'id',
+    'is',
+    'it',
+    'ja',
+    'ko',
+    'lt',
+    'lv',
+    'ms',
+    'nl',
+    'no',
+    'pl',
+    'pt-BR',
+    'pt-PT',
+    'ro',
+    'ru',
+    'sk',
+    'sl',
+    'sr',
+    'sv',
+    'th',
+    'tr',
+    'uk',
+    'ur',
+    'vi',
+    'zh-CN',
+    'zh-TW',
+    'ml',
+    'te',
+    'gu',
+    'kn',
+    'or',
+    'bn',
+    'ta',
+    'mr',
+]
 
 # Platform-specific flags follow.
 
-if env['OS'] == 'win32':
+if env['OS'] in ['win32', 'wince']:
   env.Append(
       CPPDEFINES = [
           'STRICT',
@@ -156,6 +384,53 @@ if env['OS'] == 'win32':
           '_CRT_SECURE_NO_DEPRECATE',
           'NOMINMAX',
 
+# In VC8, the way to disable exceptions is to remove all /EH* flags, and to
+# define _HAS_EXCEPTIONS=0 (for C++ headers) and _ATL_NO_EXCEPTIONS (for ATL).
+          '_HAS_EXCEPTIONS=0',
+          '_ATL_NO_EXCEPTIONS',
+# Do not export UTF functions.
+          'U_STATIC_IMPLEMENTATION',
+      ],
+# Static lib flags.
+      ARFLAGS = [
+          '/NOLOGO',
+      ],
+# Shared lib and exe flags.
+      LINKFLAGS = [
+          '/NOLOGO',
+          '/DEBUG',
+          '/RELEASE',
+          '/PDB:${TARGET.base}.pdb',
+# Set the preferred base address.  This value was chosen because (a) it's near
+# the top of the valid address range, and (b) it doesn't conflict with other
+# DLLs loaded by Chrome in either the browser or plugin process.
+          '/BASE:0x65000000',
+      ],
+      CPPFLAGS = [
+          '/nologo',
+          '/Zi',  # TODO: Chrome defines /Z7, no idea what these are.
+          '/Zc:wchar_t-',
+          '/c',
+          '/W3',
+          '/WX',
+          '/GR-',
+          '/Fd"${TARGET.base}.pdb"',
+      ],
+      CXXFLAGS = [
+          '/TP',
+          '/J',
+      ],
+      CPPPATH = [
+          '$VC80_CPPPATH',
+          '$THIRD_PARTY_DIR/breakpad/src',
+      ],
+      LIBPATH = [
+          '$VC80_LIBPATH',
+      ],
+  )
+  if env['OS'] == 'win32':
+    env.Append(
+        CPPDEFINES = [
 # We require APPVER=5.0 for things like HWND_MESSAGE.
 # When APPVER=5.0, win32.mak in the Platform SDK sets:
 #   C defines:  WINVER=0x0500
@@ -166,69 +441,82 @@ if env['OS'] == 'win32':
 #   MIDL flags: /target NT50
 # Note: _WIN32_WINDOWS was replaced by _WIN32_WINNT for post-Win95 builds.
 # Note: XP_WIN is only used by Firefox headers
-          '_WINDOWS',
-          'WINVER=0x0500',
-          '_WIN32_WINNT=0x0500',
-          '_WIN32_IE=0x0500',
-          '_RICHEDIT_VER=0x0010',
-          '_MERGE_PROXYSTUB',
-	  'BREAKPAD_AVOID_STREAMS',
-          'XP_WIN',
-
-# In VC8, the way to disable exceptions is to remove all /EH* flags, and to
-# define _HAS_EXCEPTIONS=0 (for C++ headers) and _ATL_NO_EXCEPTIONS (for ATL).
-          '_HAS_EXCEPTIONS=0',
-          '_ATL_NO_EXCEPTIONS',
-# Do not export UTF functions.
-          'U_STATIC_IMPLEMENTATION',
-      ],
-      LINKFLAGS = [
-          '/NOLOGO',
-          '/DEBUG',
-          '/RELEASE',
-
-          # win32-specific
-          '/MACHINE:X86',
-          '/NODEFAULTLIB:msvcrt',
+            '_WINDOWS',
+            'WINVER=0x0500',
+            '_WIN32_WINNT=0x0500',
+            '_WIN32_IE=0x0500',
+            '_RICHEDIT_VER=0x0010',
+            '_MERGE_PROXYSTUB',
+            'BREAKPAD_AVOID_STREAMS',
+            'XP_WIN',
+        ],
+        ARFLAGS = [
+            '/MACHINE:X86',
+        ],
+        LINKFLAGS = [
+            '/MACHINE:X86',
+            '/NODEFAULTLIB:msvcrt',
 # Flags for security hardening (only available for win32, not wince).
-          '/DYNAMICBASE',
-          '/SAFESEH',
+            '/DYNAMICBASE',
+            '/SAFESEH',
+
 # We only use /SUBSYSTEM on DLLs. For EXEs we omit the flag, and
 # the presence of main() or WinMain() determines the subsystem.
-          '/SUBSYSTEM:WINDOWS',
-
-# Set the preferred base address.  This value was chosen because (a) it's near
-# the top of the valid address range, and (b) it doesn't conflict with other
-# DLLs loaded by Chrome in either the browser or plugin process.
-          '/BASE:0x65000000',
-      ],
-      CPPFLAGS = [
-        '/nologo',
-        '/Zi',  # TODO: Chrome defines /Z7, no idea what these are.
-        '/Zc:wchar_t-',
-        '/c',
-        '/W3',
-        '/WX',
-        '/GR-',
-      ],
-      CXXFLAGS = [
-        '/TP',
-        '/J',
-      ],
-      CPPPATH = [
+            '/SUBSYSTEM:WINDOWS',
+        ],
+        VC80_CPPPATH = [
 # TODO: switch over to Chrome's SDK.
 # Note: these must come after $THIRD_PARTY_DIR/npapi because we want our own
 # npapi.h to take precedence.
-          '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80/files/include',
-          '$PRIVATE_THIRD_PARTY_DIR/platformsdk_vc80/files/include',
-          '$PRIVATE_THIRD_PARTY_DIR/vc_80/files/include',
-      ],
-      LIBPATH = [
-          '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80/files/lib',
-          '$PRIVATE_THIRD_PARTY_DIR/platformsdk_vc80/files/lib',
-          '$PRIVATE_THIRD_PARTY_DIR/vc_80/files/vc/lib',
-      ],
-  )
+            '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80/files/include',
+            '$PRIVATE_THIRD_PARTY_DIR/platformsdk_vc80/files/include',
+            '$PRIVATE_THIRD_PARTY_DIR/vc_80/files/vc/include',
+        ],
+        VC80_LIBPATH = [
+            '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80/files/lib',
+            '$PRIVATE_THIRD_PARTY_DIR/platformsdk_vc80/files/lib',
+            '$PRIVATE_THIRD_PARTY_DIR/vc_80/files/vc/lib',
+        ],
+    )
+  else:  # OS=wince
+    env.Append(
+        CPPDEFINES = [
+# For Windows Mobile we need:
+#   C defines:  _WIN32_WCE=0x0501
+#               _UNDER_CE=0x0501
+            '_WIN32_WCE=0x501',
+            'WINVER=_WIN32_WCE',
+            'UNDER_CE=0x501',
+            'WINCE',
+            'WIN32_PLATFORM_PSPC',
+            'ARM',
+            '_ARM_',
+            'POCKETPC2003_UI_MODEL',
+            '_CE_ALLOW_SINGLE_THREADED_OBJECTS_IN_MTA',
+            '_CE_CRT_ALLOW_WIN_MINMAX',
+        ],
+        ARFLAGS = [
+            '/MACHINE:THUMB',
+        ],
+        LINKFLAGS = [
+            '/MACHINE:THUMB',
+            '/NODEFAULTLIB:secchk.lib',
+            '/NODEFAULTLIB:oldnames.lib',
+            '/SUBSYSTEM:WINDOWSCE,5.01',
+        ],
+        VC80_CPPPATH = [
+            '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80ce/files/include',
+            '$PRIVATE_THIRD_PARTY_DIR/vc_80ce/files/include',
+# Visual Studio must be setup before the PocketPC SDK.
+            '$PRIVATE_THIRD_PARTY_DIR/pocketpc_sdk_ce_50/files/include/armv4i',
+        ],
+        VC80_LIBPATH = [
+            '$PRIVATE_THIRD_PARTY_DIR/atlmfc_vc80ce/files/lib/armv4i',
+            '$PRIVATE_THIRD_PARTY_DIR/vc_80ce/files/lib/armv4i',
+            '$PRIVATE_THIRD_PARTY_DIR/pocketpc_sdk_ce_50/files/lib/armv4i',
+        ],
+    )
+
   if env['MODE'] == 'dbg':
     env.Append(
         CPPFLAGS = [
@@ -247,6 +535,7 @@ if env['OS'] == 'win32':
           '/OPT:ICF',
         ],
     )
+#--------------------------- LINUX ---------------------------
 elif env['OS'] == 'linux':
   env.Append(
       CPPDEFINES = [
@@ -311,27 +600,135 @@ elif env['OS'] == 'linux':
           '-O2',
       ],
     )
+#--------------------------- OSX ---------------------------
+elif env['OS'] == 'osx':
+# Gears uses the 10.4 SDK, so we need to build with g++-4.0.
+# Chrome uses g++-4.2 so we override this here.
+  env['CC'] = 'gcc-4.0'
+  env['CXX'] = 'g++-4.0'
+# Compile assembly files with the same command line as C files.
+  env['ASCOM'] = '$CCCOM'
+  
+  env.Append(OSX_SDK_ROOT = '/Developer/SDKs/MacOSX10.4u.sdk')
 
-
+  env.Append(
+      CPPDEFINES = [
+          'OSX',
+          'OS_MACOSX',
+# for breakpad
+          'USE_PROTECTED_ALLOCATIONS=1',
+      ],
+      CPPPATH = [
+# Breakpad assumes it is in the include path
+          '$THIRD_PARTY_DIR/breakpad_osx/src',
+      ],
+      CCFLAGS = [
+          ('-arch', 'ppc'),
+          ('-arch', 'i386'),
+          '-fPIC',
+          '-fmessage-length=0',
+# TODO
+#          '-Wall',
+# NS_LITERAL_STRING does not work properly without this compiler option
+          '-fshort-wchar',
+          '-fvisibility=hidden',
+# Breakpad on OSX needs debug symbols to use the STABS format, rather than the
+# default DWARF debug symbols format. Note that we enable gstabs for debug &
+# opt; we strip them later in opt.
+          '-gstabs+',
+      ],
+      CXXFLAGS = [
+          '-fvisibility-inlines-hidden',
+          '-fno-exceptions',
+          '-fno-rtti',
+          ('-Wall',
+           '-Wno-non-virtual-dtor',
+           '-Wno-ctor-dtor-privacy',
+           '-Wno-char-subscripts',
+# When a function is deprecated in gcc, it stupidly warns about all functions
+# and member functions that have the same name, regardless of signature.
+# Example: Standard osx headers deprecate 'SetPort', which causes a warning for
+# url_canon::Replacements::SetPort().
+           '-Wno-deprecated-declarations',
+          ),
+          '-funsigned-char',
+          ('-include', env.File('#/$OPEN_DIR/base/safari/prefix_header.h').abspath),
+          ('-isysroot', '$OSX_SDK_ROOT')
+      ],
+      LINKFLAGS = [
+          '-fPIC',
+           '-Bsymbolic',
+           '-arch',
+           'ppc',
+           '-arch',
+           'i386',
+           '-isysroot',
+           '$OSX_SDK_ROOT',
+           '-Wl,-dead_strip'
+      ],
+  )
+  if env['MODE'] == 'dbg':
+    env.Append(
+        CPPFLAGS = [
+            '-g',
+            '-O0',
+        ],
+    )
+  else:  # MODE=opt
+    env.Append(
+        CPPFLAGS = [
+            '-O2',
+        ],
+    )
+    
 # Load all the components
 
 sconscripts = [
     'SConscript.googleurl',
-    'SConscript.libgd',
     'SConscript.libjpeg',
     'SConscript.libpng',
-    'SConscript.portaudio',
+    'SConscript.libmozjs',
     'SConscript.sqlite',
     'SConscript.zlib',
 ]
 
+if env['OS']  == 'osx':
+  sconscripts += [
+      'SConscript.libbreakpad_osx',
+  ]
+
+if env['OS']  != 'osx':
+  sconscripts += [
+      'SConscript.libgd',
+      'SConscript.portaudio',
+  ]
+
 for each in sconscripts:
   env.SConscript(each,
                  exports=['env'],
-                 variant_dir=env.subst('$MODE/common').lower(),
+                 variant_dir='$COMMON_OUTDIR',
                  duplicate=0)
 
-env.SConscript('SConscript.dll',
+# Must come before SConscript.dll because it Imports targets from this
+# SConscript.
+env.SConscript('SConscript.common',
+             exports=['env'],
+             variant_dir='$COMMON_OUTDIR',
+             duplicate=0)
+
+browsers = [env['BROWSER']]
+if browsers[0] == 'all':
+  browsers = env['VALID_BROWSERS']
+print 'Building:', browsers
+
+for each in browsers:
+  env.Replace(BROWSER = each)
+  env.SConscript('SConscript.dll',
+                 exports=['env'],
+                 variant_dir='$BROWSER_OUTDIR',
+                 duplicate=0)
+
+env.SConscript('SConscript.installers',
                exports=['env'],
-               variant_dir=env.subst('$MODE/$BROWSER').lower(),
+               variant_dir='$BASE_OUTDIR',
                duplicate=0)

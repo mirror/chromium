@@ -5,6 +5,7 @@
 #import <Cocoa/Cocoa.h>
 #include <sys/syslimits.h>
 #include <unistd.h>
+#import <mach/task.h>
 
 #include <string>
 
@@ -22,7 +23,7 @@
 #include "webkit/tools/test_shell/test_shell.h"
 #include "webkit/tools/test_shell/test_shell_switches.h"
 
-#include "webkit/tools/test_shell/mac/temp/WebSystemInterface.h"
+#include "WebSystemInterface.h"
 
 static char g_currentTestName[PATH_MAX];
 
@@ -44,7 +45,7 @@ void SetCurrentTestName(char* path) {
 
 int main(const int argc, const char *argv[]) {
   InitWebCoreSystemInterface();
-  
+
   // Some tests may use base::Singleton<>, thus we need to instantiate
   // the AtExitManager or else we will leak objects.
   base::AtExitManager at_exit_manager;  
@@ -80,11 +81,11 @@ int main(const int argc, const char *argv[]) {
   bool suppress_error_dialogs = (getenv("CHROME_HEADLESS") != NULL) ||
       parsed_command_line.HasSwitch(test_shell::kNoErrorDialogs) ||
       parsed_command_line.HasSwitch(test_shell::kLayoutTests);
-  TestShell::InitLogging(suppress_error_dialogs);
-		 
   bool layout_test_mode =
       parsed_command_line.HasSwitch(test_shell::kLayoutTests);
   bool interactive = !layout_test_mode;
+  
+  TestShell::InitLogging(suppress_error_dialogs, layout_test_mode);
   TestShell::InitializeTestShell(interactive);
 
   bool no_tree = parsed_command_line.HasSwitch(test_shell::kNoTree);
@@ -110,16 +111,19 @@ int main(const int argc, const char *argv[]) {
 
   std::wstring javascript_flags =
       parsed_command_line.GetSwitchValue(test_shell::kJavaScriptFlags);
+  // Test shell always exposes the GC.
+  CommandLine::AppendSwitch(&javascript_flags, L"expose-gc");
+  webkit_glue::SetJavaScriptFlags(javascript_flags);
 
+#if NOT_YET
   //TODO: record/playback modes
-  /*
   bool playback_mode = 
     parsed_command_line.HasSwitch(test_shell::kPlaybackMode);
   bool record_mode = 
     parsed_command_line.HasSwitch(test_shell::kRecordMode);
 
   bool no_events = parsed_command_line.HasSwitch(test_shell::kNoEvents);
-  */
+#endif
 
   bool dump_stats_table =
       parsed_command_line.HasSwitch(test_shell::kDumpStatsTable);
@@ -148,13 +152,11 @@ int main(const int argc, const char *argv[]) {
   // Config the network module so it has access to a limited set of resources.
   // NetModule::SetResourceProvider(NetResourceProvider);
   
-  // if we have loose arguments, interpret the next one as a URL
+  // Treat the first loose value as the initial URL to open.
   std::wstring uri;
-  if (parsed_command_line.GetLooseValueCount() > 0) {
-    CommandLine::LooseValueIterator iter =
-        parsed_command_line.GetLooseValuesBegin();
-    uri = *iter;
-  } else {
+
+  // Default to a homepage if we're interactive
+  if (interactive) {
     NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
     NSString *testShellPath =
         [resourcePath stringByAppendingPathComponent:@"test_shell/index.html"];
@@ -165,6 +167,12 @@ int main(const int argc, const char *argv[]) {
     uri = UTF8ToWide([testShellURL UTF8String]);
   }
 
+  if (parsed_command_line.GetLooseValueCount() > 0) {
+    CommandLine::LooseValueIterator iter =
+        parsed_command_line.GetLooseValuesBegin();
+    uri = *iter;
+  } 
+  
   TestShell* shell;
   if (TestShell::CreateNewWindow(uri, &shell)) {
 #ifdef NOTYET
@@ -204,6 +212,16 @@ int main(const int argc, const char *argv[]) {
     }
     
     if (layout_test_mode) {
+      // If we die during tests, we don't want to be spamming the user's crash
+      // reporter. Set our exception port to null.
+      if (task_set_exception_ports(mach_task_self(),
+                                   EXC_MASK_ALL,
+                                   MACH_PORT_NULL,
+                                   EXCEPTION_DEFAULT,
+                                   THREAD_STATE_NONE) != KERN_SUCCESS) {
+        return -1;
+      }
+      
       // Cocoa housekeeping
       [NSApp finishLaunching];
       webkit_glue::SetLayoutTestMode(true);
@@ -221,7 +239,6 @@ int main(const int argc, const char *argv[]) {
       }
       if (no_tree)
         params.dump_tree = false;
-      
       if (uri.length() == 0) {
         // Watch stdin for URLs.
         char filenameBuffer[2048];
@@ -233,7 +250,6 @@ int main(const int argc, const char *argv[]) {
             continue;
           
           SetCurrentTestName(filenameBuffer);
-          
           if (!TestShell::RunFileTest(filenameBuffer, params))
             break;
         }

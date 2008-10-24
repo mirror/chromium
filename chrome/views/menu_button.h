@@ -12,7 +12,7 @@
 #include "chrome/views/text_button.h"
 #include "base/time.h"
 
-namespace ChromeViews {
+namespace views {
 
 class MouseEvent;
 class ViewMenuDelegate;
@@ -38,13 +38,13 @@ class MenuButton : public TextButton {
   virtual bool Activate();
 
   // Overridden to take into account the potential use of a drop marker.
-  void GetPreferredSize(CSize* result);
+  virtual gfx::Size GetPreferredSize();
   virtual void Paint(ChromeCanvas* canvas, bool for_drag);
 
   // These methods are overriden to implement a simple push button
   // behavior
-  virtual bool OnMousePressed(const ChromeViews::MouseEvent& e);
-  void OnMouseReleased(const ChromeViews::MouseEvent& e, bool canceled);
+  virtual bool OnMousePressed(const MouseEvent& e);
+  void OnMouseReleased(const MouseEvent& e, bool canceled);
   virtual bool OnKeyReleased(const KeyEvent& e);
   virtual void OnMouseExited(const MouseEvent& event);
 
@@ -92,7 +92,7 @@ class MenuButton : public TextButton {
   friend class TextButtonBackground;
 };
 
-} // namespace
+}  // namespace views
 
 #endif  // CHROME_VIEWS_MENU_BUTTON_H__
 

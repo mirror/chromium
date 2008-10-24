@@ -34,13 +34,17 @@
 
 namespace WebCore {
 
-ExceptionContext::ExceptionContext()
-    : m_exceptionCatcher(0)
-    , m_exception()
+// Unlike JSC, which stores exceptions in ExecState that is accessible from
+// ScriptController that is retrievable from Node*, V8 uses static chain of
+// handlers (encapsulated as v8::TryCatch and here as ExceptionCatcher)
+// to track exceptions, so it has no need for Node*.
+ExceptionContext::ExceptionContext(Node* node)
 {
 }
 
-ExceptionContext::~ExceptionContext()
+ExceptionContext::ExceptionContext()
+    : m_exception()
+    , m_exceptionCatcher(0)
 {
 }
 
@@ -60,23 +64,19 @@ bool ExceptionContext::hadException()
     return !m_exception.IsEmpty();
 }
 
-ExceptionContext* ExceptionContext::createFromNode(Node*)
+JSException ExceptionContext::exception() const
 {
-    // Unlike JSC, which stores exceptions in ExecState that is accessible from
-    // ScriptController that is retrievable from Node*, V8 uses static chain of
-    // handlers (encapsulated as v8::TryCatch and here as ExceptionCatcher)
-    // to track exceptions, so it has no need for Node*.
-    return new ExceptionContext();
+    return m_exception;
 }
 
-JSException ExceptionContext::NoException()
+JSException ExceptionContext::noException()
 {
     return v8::Local<v8::Value>();
 }
 
 ExceptionCatcher::ExceptionCatcher(ExceptionContext* exceptionContext)
-    : m_catcher()
-    , m_context(exceptionContext)
+    : m_context(exceptionContext)
+    , m_catcher()
 {
     exceptionContext->setExceptionCatcher(this);
 }
@@ -93,7 +93,7 @@ void ExceptionCatcher::updateContext()
     if (m_catcher.HasCaught())
         m_context->setException(m_catcher.Exception());
     else
-        m_context->setException(ExceptionContext::NoException());
+        m_context->setException(ExceptionContext::noException());
 }
 
 ExceptionCatcher::~ExceptionCatcher()

@@ -195,7 +195,6 @@ DECLARE_CALLBACK(HTMLOptionsCollectionAdd)
 DECLARE_CALLBACK(HTMLDocumentWrite)
 DECLARE_CALLBACK(HTMLDocumentWriteln)
 DECLARE_CALLBACK(HTMLDocumentOpen)
-DECLARE_CALLBACK(HTMLDocumentClear)
 
 // Document customized functions
 DECLARE_CALLBACK(DocumentEvaluate)
@@ -260,10 +259,12 @@ DECLARE_CALLBACK(ConsoleProfileEnd)
 DECLARE_CALLBACK(ConsoleTimeEnd)
 DECLARE_CALLBACK(ConsoleWarn)
 
-// Implementation of Clipboard methods.
+// Implementation of Clipboard attributes and methods.
+DECLARE_PROPERTY_ACCESSOR_GETTER(ClipboardTypes)
 DECLARE_CALLBACK(ClipboardClearData)
 DECLARE_CALLBACK(ClipboardGetData)
 DECLARE_CALLBACK(ClipboardSetData)
+DECLARE_CALLBACK(ClipboardSetDragImage);
 
 // Implementation of Element methods.
 DECLARE_CALLBACK(ElementQuerySelector)
@@ -277,6 +278,12 @@ DECLARE_CALLBACK(ElementSetAttributeNodeNS)
 // and EventTarget::removeEventListener
 DECLARE_CALLBACK(EventTargetNodeAddEventListener)
 DECLARE_CALLBACK(EventTargetNodeRemoveEventListener)
+
+// Custom implementation is Navigator properties.
+// We actually only need this because WebKit has
+// navigator.appVersion as custom. Our version just
+// passes through.
+DECLARE_PROPERTY_ACCESSOR(NavigatorAppVersion)
 
 // Custom implementation of XMLHttpRequest properties
 DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnabort)
@@ -349,6 +356,9 @@ DECLARE_INDEXED_PROPERTY_GETTER(HTMLOptionsCollection)
 DECLARE_INDEXED_PROPERTY_SETTER(HTMLOptionsCollection)
 DECLARE_INDEXED_PROPERTY_SETTER(HTMLSelectElementCollection)
 DECLARE_NAMED_PROPERTY_GETTER(HTMLCollection)
+
+DECLARE_INDEXED_PROPERTY_GETTER(CanvasPixelArray)
+DECLARE_INDEXED_PROPERTY_SETTER(CanvasPixelArray)
 
 // NSResolver
 DECLARE_CALLBACK(NSResolverLookupNamespaceURI)

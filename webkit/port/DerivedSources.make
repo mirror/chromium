@@ -43,6 +43,7 @@ VPATH = \
     $(WebCore)/dom \
     $(WebCore)/html \
     $(WebCore)/page \
+    $(WebCore)/plugins \
     $(WebCore)/storage \
     $(WebCore)/xml \
     $(WebCore)/svg \
@@ -623,8 +624,8 @@ all : \
     CSSValueKeywords.h \
     ColorData.c \
     DocTypeStrings.cpp \
-    HTMLEntityNames.c \
     HTMLEntityCodes.c \
+    HTMLEntityNames.c \
     V8Attr.h \
     V8BarInfo.h \
     V8CDATASection.h \
@@ -750,6 +751,7 @@ all : \
     V8RangeException.h \
     V8Rect.h \
     V8SVGAElement.h \
+    V8SVGAltGlyphElement.h \
     V8SVGAngle.h \
     V8SVGAnimatedAngle.h \
     V8SVGAnimateColorElement.h \
@@ -891,10 +893,16 @@ all : \
     V8TreeWalker.h \
     V8UIEvent.h \
     V8VoidCallback.h \
+    V8WebKitAnimationEvent.h \
+    V8WebKitCSSKeyframeRule.h \
+    V8WebKitCSSKeyframesRule.h \
+    V8WebKitCSSTransformValue.h \
+    V8WebKitTransitionEvent.h \
     V8WheelEvent.h \
     V8XMLHttpRequest.h \
-    V8XMLHttpRequestUpload.h \
     V8XMLHttpRequestException.h \
+    V8XMLHttpRequestProgressEvent.h \
+    V8XMLHttpRequestUpload.h \
     V8XMLSerializer.h \
     V8XPathEvaluator.h \
     V8XPathException.h \
@@ -915,6 +923,10 @@ all : \
     V8InspectorController.h \
     V8Location.h \
     V8Navigator.h \
+    V8MimeType.h \
+    V8MimeTypeArray.h \
+    V8Plugin.h \
+    V8PluginArray.h \
     V8RGBColor.h \
     V8SVGAnimatedPoints.h \
     V8SVGURIReference.h \
@@ -957,11 +969,12 @@ DocTypeStrings.cpp : html/DocTypeStrings.gperf
 
 # HTML entity names
 
-HTMLEntityNames.c : html/HTMLEntityNames.gperf
-	gperf -a -L ANSI-C -C -G -c -o -t -k '*' -N findEntity -D -s 2 $< > $@
-
+# This Google addition generates a reverse-mapping of entity codes back to entity names, for the DOM serialization code used by the Save page feature.
 HTMLEntityCodes.c : html/HTMLEntityNames.gperf
 	perl $(WebCore)/../../../webkit/build/WebCore/generate_entitycodes.pl $< > $@
+
+HTMLEntityNames.c : html/HTMLEntityNames.gperf
+	gperf -a -L ANSI-C -C -G -c -o -t -k '*' -N findEntity -D -s 2 $< > $@
 
 # color names
 
@@ -1034,12 +1047,12 @@ endif
 ifdef HTML_FLAGS
 
 HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
-	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(PORTROOT)/../pending/HTMLAttributeNames.in --extraDefines "$(HTML_FLAGS)"
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --wrapperFactory --extraDefines "$(HTML_FLAGS)"
 
 else
 
 HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
-	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(PORTROOT)/../pending/HTMLAttributeNames.in
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --wrapperFactory
 
 endif
 
@@ -1084,11 +1097,11 @@ endif
 ifdef SVG_FLAGS
 
 SVGElementFactory.cpp SVGNames.cpp : dom/make_names.pl svg/svgtags.in svg/svgattrs.in
-	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --extraDefines "$(SVG_FLAGS)"
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --extraDefines "$(SVG_FLAGS)" --factory --wrapperFactory
 else
 
 SVGElementFactory.cpp SVGNames.cpp : dom/make_names.pl svg/svgtags.in svg/svgattrs.in
-	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --factory --wrapperFactory
 
 endif
 
@@ -1126,7 +1139,7 @@ OBJC_BINDINGS_SCRIPTS = \
 #
 
 DOM%.h : %.idl $(OBJC_BINDINGS_SCRIPTS) $(PUBLICDOMINTERFACES)
-	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_OBJECTIVE_C" --generator ObjC --include dom --include html --include css --include page --include xml --include svg --include bindings/js --outputdir . $<
+	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_OBJECTIVE_C" --generator ObjC --include dom --include html --include css --include page --include xml --include svg --include bindings/js  --include plugins --outputdir . $<
 
 # new-style JavaScript bindings
 
@@ -1139,7 +1152,7 @@ JS_BINDINGS_SCRIPTS = \
 #
 
 JS%.h : %.idl $(JS_BINDINGS_SCRIPTS)
-	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT" --generator JS --include dom --include html --include css --include page --include xml --include svg --include bindings/js --outputdir . $<
+	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT" --generator JS --include dom --include html --include css --include page --include xml --include svg --include bindings/js --include plugins --outputdir . $<
 
 # new-style V8 bindings
 
@@ -1157,5 +1170,5 @@ V8%.h : %.idl $(V8_SCRIPTS)
 	rm -f $@; \
 	for i in 1 2 3 4 5 6 7 8 9 10; do \
 	  if test -e $@; then break; fi; \
-	  perl -w -I $(PORTROOT)/bindings/scripts -I $(WebCore)/bindings/scripts $(PORTROOT)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT V8_BINDING" --generator V8 --include ../../../webkit/pending --include ../../../webkit/port/dom --include ../../../webkit/port/html --include ../../../webkit/port/page --include ../../../webkit/port/xml --include svg --include dom --include html --include css --include page --include xml --outputdir . $< ; \
+	  perl -w -I $(PORTROOT)/bindings/scripts -I $(WebCore)/bindings/scripts $(PORTROOT)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT V8_BINDING" --generator V8 --include ../../../webkit/pending --include ../../../webkit/port/dom --include ../../../webkit/port/html --include ../../../webkit/port/page --include ../../../webkit/port/xml --include svg --include dom --include html --include css --include page --include xml --include plugins --outputdir . $< ; \
 	done

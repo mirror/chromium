@@ -5,7 +5,7 @@
 #ifndef CHROME_VIEWS_WINDOW_H__
 #define CHROME_VIEWS_WINDOW_H__
 
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 
 namespace gfx {
 class Size;
@@ -15,22 +15,22 @@ class Point;
 
 class PrefService;
 
-namespace ChromeViews {
+namespace views {
 
 class ClientView;
 class Client;
 class NonClientView;
 class WindowDelegate;
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //
 // Window
 //
-//  A Window is a HWNDViewContainer that has a caption and a border. The frame
-//  is rendered by the operating system.
+//  A Window is a ContainerWin that has a caption and a border. The frame is
+//  rendered by the operating system.
 //
-////////////////////////////////////////////////////////////////////////////////
-class Window : public HWNDViewContainer {
+///////////////////////////////////////////////////////////////////////////////
+class Window : public ContainerWin {
  public:
   virtual ~Window();
 
@@ -51,7 +51,8 @@ class Window : public HWNDViewContainer {
   gfx::Size CalculateMaximumSize() const;
 
   // Show the window.
-  virtual void Show();
+  void Show();
+  void Show(int show_style);
 
   // Activate the window, assuming it already exists and is visible.
   void Activate();
@@ -156,13 +157,12 @@ class Window : public HWNDViewContainer {
   // Shows the system menu at the specified screen point.
   void RunSystemMenu(const CPoint& point);
 
-  // Overridden from HWNDViewContainer:
+  // Overridden from ContainerWin:
   virtual void OnActivate(UINT action, BOOL minimized, HWND window);
   virtual LRESULT OnAppCommand(HWND window, short app_command, WORD device,
                                int keystate);
   virtual void OnCommand(UINT notification_code, int command_id, HWND window);
   virtual void OnDestroy();
-  virtual LRESULT OnEraseBkgnd(HDC dc);
   virtual LRESULT OnNCActivate(BOOL active);
   virtual LRESULT OnNCHitTest(const CPoint& point);
   virtual void OnNCLButtonDown(UINT ht_component, const CPoint& point);
@@ -259,7 +259,7 @@ class Window : public HWNDViewContainer {
   DISALLOW_EVIL_CONSTRUCTORS(Window);
 };
 
-}
+}  // namespace views
 
 #endif  // CHROME_VIEWS_WINDOW_H__
 

@@ -6,18 +6,17 @@
 
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/scroll_view.h"
-#include "chrome/views/view_container.h"
 #include "base/logging.h"
 
-namespace ChromeViews {
+namespace views {
 
 static const char kViewClassName[] = "chrome/views/HWNDView";
 
 HWNDView::HWNDView() :
     hwnd_(0),
-    preferred_size_(0, 0),
     installed_clip_(false),
     fast_resize_(false),
     focus_view_(NULL) {
@@ -39,7 +38,7 @@ void HWNDView::Attach(HWND hwnd) {
   ShowWindow(hwnd_, SW_HIDE);
 
   // Need to set the HWND's parent before changing its size to avoid flashing.
-  ::SetParent(hwnd_, GetViewContainer()->GetHWND());
+  ::SetParent(hwnd_, GetContainer()->GetHWND());
   UpdateHWNDBounds();
 
   // Register with the focus manager so the associated view is focused when the
@@ -67,21 +66,18 @@ void HWNDView::UpdateHWNDBounds() {
   if (!hwnd_)
     return;
 
-  // Since HWNDs know nothing about the View hierarchy (they are direct children
-  // of the ViewContainer that hosts our View hierarchy) they need to be
-  // positioned in the coordinate system of the ViewContainer, not the current
+  // Since HWNDs know nothing about the View hierarchy (they are direct
+  // children of the Container that hosts our View hierarchy) they need to be
+  // positioned in the coordinate system of the Container, not the current
   // view.
-  CPoint top_left;
-
-  top_left.x = top_left.y = 0;
-  ConvertPointToViewContainer(this, &top_left);
+  gfx::Point top_left;
+  ConvertPointToContainer(this, &top_left);
 
   gfx::Rect vis_bounds = GetVisibleBounds();
   bool visible = !vis_bounds.IsEmpty();
 
   if (visible && !fast_resize_) {
-    if (vis_bounds.width() != bounds_.Width() ||
-        vis_bounds.height() != bounds_.Height()) {
+    if (vis_bounds.size() != size()) {
       // Only a portion of the HWND is really visible.
       int x = vis_bounds.x();
       int y = vis_bounds.y();
@@ -114,17 +110,15 @@ void HWNDView::UpdateHWNDBounds() {
       // In a fast resize, we move the window and clip it with SetWindowRgn.
       CRect rect;
       GetWindowRect(hwnd_, &rect);
-      ::SetWindowPos(hwnd_, 0, top_left.x, top_left.y, rect.Width(),
+      ::SetWindowPos(hwnd_, 0, top_left.x(), top_left.y(), rect.Width(),
                      rect.Height(), swp_flags);
 
-      HRGN clip_region = CreateRectRgn(0, 0,
-                                       bounds_.Width(),
-                                       bounds_.Height());
+      HRGN clip_region = CreateRectRgn(0, 0, width(), height());
       SetWindowRgn(hwnd_, clip_region, FALSE);
       installed_clip_ = true;
     } else {
-      ::SetWindowPos(hwnd_, 0, top_left.x, top_left.y, bounds_.Width(),
-                     bounds_.Height(), swp_flags);
+      ::SetWindowPos(hwnd_, 0, top_left.x(), top_left.y(), width(), height(),
+                     swp_flags);
     }
   } else if (::IsWindowVisible(hwnd_)) {
     // The window is currently visible, but its clipped by another view. Hide
@@ -135,7 +129,10 @@ void HWNDView::UpdateHWNDBounds() {
   }
 }
 
-void HWNDView::DidChangeBounds(const CRect& previous, const CRect& current) {
+void HWNDView::DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current) {
+  // TODO(beng): (Cleanup) Could UpdateHWNDBounds be replaced by a Layout
+  //             method and this function gotten rid of?
   UpdateHWNDBounds();
 }
 
@@ -147,18 +144,13 @@ void HWNDView::VisibilityChanged(View* starting_from, bool is_visible) {
     ::ShowWindow(hwnd_, SW_HIDE);
 }
 
-void HWNDView::GetPreferredSize(CSize *out) {
-  out->cx = preferred_size_.cx;
-  out->cy = preferred_size_.cy;
-}
-
-void HWNDView::SetPreferredSize(const CSize& size) {
-  preferred_size_ = size;
+gfx::Size HWNDView::GetPreferredSize() {
+  return preferred_size_;
 }
 
 void HWNDView::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
   if (hwnd_) {
-    ViewContainer* vc = GetViewContainer();
+    Container* vc = GetContainer();
     if (is_add && vc) {
       HWND parent = ::GetParent(hwnd_);
       HWND vc_hwnd = vc->GetHWND();
@@ -191,13 +183,12 @@ void HWNDView::Paint(ChromeCanvas* canvas) {
   // It would be nice if this used some approximation of the page's
   // current background color.
   if (installed_clip_ && win_util::ShouldUseVistaFrame())
-    canvas->FillRectInt(SkColorSetRGB(255, 255, 255), 0, 0,
-                        bounds_.Width(), bounds_.Height());
+    canvas->FillRectInt(SkColorSetRGB(255, 255, 255), 0, 0, width(), height());
 }
 
 std::string HWNDView::GetClassName() const {
   return kViewClassName;
 }
 
-}
+}  // namespace views
 

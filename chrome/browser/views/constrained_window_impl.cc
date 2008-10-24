@@ -10,12 +10,12 @@
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/views/constrained_window_animation.h"
 #include "chrome/browser/views/location_bar_view.h"
-#include "chrome/browser/views/window_resources.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/toolbar_model.h"
 #include "chrome/browser/web_app.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/browser/window_sizer.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -27,17 +27,18 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/client_view.h"
 #include "chrome/views/button.h"
+#include "chrome/views/client_view.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/non_client_view.h"
+#include "chrome/views/window_resources.h"
 #include "net/base/net_util.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 class ClientView;
 }
 
@@ -80,14 +81,14 @@ static const int kOTRFramePartIDs[] = {
     IDR_WINDOW_TOP_LEFT_CORNER_OTR, IDR_WINDOW_TOP_RIGHT_CORNER_OTR,
     IDR_CLOSE_SA, IDR_CLOSE_SA_H, IDR_CLOSE_SA_P, 0 };
 
-class XPWindowResources : public WindowResources {
+class XPWindowResources : public views::WindowResources {
  public:
   XPWindowResources() {
     InitClass();
   }
   virtual ~XPWindowResources() {}
 
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part_id) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part_id) const {
     return bitmaps_[part_id];
   }
 
@@ -110,14 +111,14 @@ class XPWindowResources : public WindowResources {
   DISALLOW_EVIL_CONSTRUCTORS(XPWindowResources);
 };
 
-class VistaWindowResources : public WindowResources {
+class VistaWindowResources : public views::WindowResources {
  public:
   VistaWindowResources() {
     InitClass();
   }
   virtual ~VistaWindowResources() {}
 
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part_id) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part_id) const {
     return bitmaps_[part_id];
   }
 
@@ -140,14 +141,14 @@ class VistaWindowResources : public WindowResources {
   DISALLOW_EVIL_CONSTRUCTORS(VistaWindowResources);
 };
 
-class OTRWindowResources : public WindowResources {
+class OTRWindowResources : public views::WindowResources {
  public:
   OTRWindowResources() {
     InitClass();
   }
   virtual ~OTRWindowResources() {}
 
-  virtual SkBitmap* GetPartBitmap(FramePartBitmap part_id) const {
+  virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part_id) const {
     return bitmaps_[part_id];
   }
 
@@ -178,8 +179,8 @@ SkBitmap* OTRWindowResources::bitmaps_[];
 // ConstrainedWindowNonClientView
 
 class ConstrainedWindowNonClientView
-    : public ChromeViews::NonClientView,
-      public ChromeViews::BaseButton::ButtonListener,
+    : public views::NonClientView,
+      public views::BaseButton::ButtonListener,
       public LocationBarView::Delegate {
  public:
   ConstrainedWindowNonClientView(ConstrainedWindowImpl* container,
@@ -197,7 +198,7 @@ class ConstrainedWindowNonClientView
       bool with_url_field) const;
   void UpdateWindowTitle();
 
-  void set_window_delegate(ChromeViews::WindowDelegate* window_delegate) {
+  void set_window_delegate(views::WindowDelegate* window_delegate) {
     window_delegate_ = window_delegate;
   }
 
@@ -205,7 +206,7 @@ class ConstrainedWindowNonClientView
   // forces a repaint of the titlebar.
   void SetShowThrobber(bool show_throbber);
 
-  // Overridden from ChromeViews::NonClientView:
+  // Overridden from views::NonClientView:
   virtual gfx::Rect CalculateClientAreaBounds(int width, int height) const;
   virtual gfx::Size CalculateWindowSizeForClientSize(int width,
                                                      int height) const;
@@ -213,15 +214,16 @@ class ConstrainedWindowNonClientView
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
+  virtual void ResetWindowControls();
 
-  // Overridden from ChromeViews::View:
+  // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add, View *parent, View *child);
 
-  // Overridden from ChromeViews::BaseButton::ButtonListener:
-  virtual void ButtonPressed(ChromeViews::BaseButton* sender);
+  // Overridden from views::BaseButton::ButtonListener:
+  virtual void ButtonPressed(views::BaseButton* sender);
 
   // Overridden from LocationBarView::Delegate:
   virtual TabContents* GetTabContents();
@@ -247,22 +249,22 @@ class ConstrainedWindowNonClientView
 
   SkColor GetTitleColor() const {
     if (container_->owner()->profile()->IsOffTheRecord() ||
-        win_util::ShouldUseVistaFrame()) {
+        !win_util::ShouldUseVistaFrame()) {
       return SK_ColorWHITE;
     }
     return SK_ColorBLACK;
   }
 
   ConstrainedWindowImpl* container_;
-  ChromeViews::WindowDelegate* window_delegate_;
+  views::WindowDelegate* window_delegate_;
 
-  scoped_ptr<WindowResources> resources_;
+  scoped_ptr<views::WindowResources> resources_;
 
   gfx::Rect title_bounds_;
   gfx::Rect icon_bounds_;
   gfx::Rect client_bounds_;
 
-  ChromeViews::Button* close_button_;
+  views::Button* close_button_;
 
   LocationBarView* location_bar_;
 
@@ -348,7 +350,7 @@ ConstrainedWindowNonClientView::ConstrainedWindowNonClientView(
         : NonClientView(),
           container_(container),
           window_delegate_(NULL),
-          close_button_(new ChromeViews::Button),
+          close_button_(new views::Button),
           location_bar_(NULL),
           show_throbber_(false),
           current_throbber_frame_(-1),
@@ -364,14 +366,14 @@ ConstrainedWindowNonClientView::ConstrainedWindowNonClientView(
     }
   }
 
-  close_button_->SetImage(ChromeViews::Button::BS_NORMAL,
+  close_button_->SetImage(views::Button::BS_NORMAL,
       resources_->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON));
-  close_button_->SetImage(ChromeViews::Button::BS_HOT,
+  close_button_->SetImage(views::Button::BS_HOT,
       resources_->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_H));
-  close_button_->SetImage(ChromeViews::Button::BS_PUSHED,
+  close_button_->SetImage(views::Button::BS_PUSHED,
       resources_->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_P));
-  close_button_->SetImageAlignment(ChromeViews::Button::ALIGN_CENTER,
-                                   ChromeViews::Button::ALIGN_MIDDLE);
+  close_button_->SetImageAlignment(views::Button::ALIGN_CENTER,
+                                   views::Button::ALIGN_MIDDLE);
   close_button_->SetListener(this, 0);
   AddChildView(close_button_);
 
@@ -425,12 +427,8 @@ int ConstrainedWindowNonClientView::CalculateTitlebarHeight() const {
 int ConstrainedWindowNonClientView::CalculateNonClientHeight(
     bool with_url_field) const {
   int r = CalculateTitlebarHeight();
-
-  if (with_url_field) {
-    CSize s;
-    location_bar_->GetPreferredSize(&s);
-    r += s.cy;
-  }
+  if (with_url_field)
+    r += location_bar_->GetPreferredSize().height();
   return r;
 }
 
@@ -450,7 +448,7 @@ gfx::Rect ConstrainedWindowNonClientView::CalculateWindowBoundsForClientBounds(
 }
 
 void ConstrainedWindowNonClientView::UpdateWindowTitle() {
-  SchedulePaint(title_bounds_.ToRECT(), false);
+  SchedulePaint(title_bounds_, false);
   UpdateLocationBar();
 }
 
@@ -473,7 +471,7 @@ void ConstrainedWindowNonClientView::SetShowThrobber(bool show_throbber) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ConstrainedWindowNonClientView, ChromeViews::NonClientView implementation:
+// ConstrainedWindowNonClientView, views::NonClientView implementation:
 
 gfx::Rect ConstrainedWindowNonClientView::CalculateClientAreaBounds(
     int width,
@@ -502,9 +500,6 @@ CPoint ConstrainedWindowNonClientView::GetSystemMenuPoint() const {
 }
 
 int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
-  CRect bounds;
-  CPoint test_point = point.ToPOINT();
-
   // First see if it's within the grow box area, since that overlaps the client
   // bounds.
   int component = container_->client_view()->NonClientHitTest(point);
@@ -512,11 +507,11 @@ int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
     return component;
 
   // Then see if the point is within any of the window controls.
-  close_button_->GetBounds(&bounds);
-  if (bounds.PtInRect(test_point))
+  gfx::Rect button_bounds =
+      close_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTCLOSE;
-  bounds = icon_bounds_.ToRECT();
-  if (bounds.PtInRect(test_point))
+  if (icon_bounds_.Contains(point))
     return HTSYSMENU;
 
   component = GetHTComponentForFrame(point, kResizeAreaSize,
@@ -525,8 +520,7 @@ int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
                                      window_delegate_->CanResize());
   if (component == HTNOWHERE) {
     // Finally fall back to the caption.
-    GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    if (bounds().Contains(point))
       component = HTCAPTION;
     // Otherwise, the point is outside the window's bounds.
   }
@@ -560,8 +554,12 @@ void ConstrainedWindowNonClientView::EnableClose(bool enable) {
   close_button_->SetEnabled(enable);
 }
 
+void ConstrainedWindowNonClientView::ResetWindowControls() {
+  // We have no window controls to reset.
+}
+
 ////////////////////////////////////////////////////////////////////////////////
-// ConstrainedWindowNonClientView, ChromeViews::View implementation:
+// ConstrainedWindowNonClientView, views::View implementation:
 
 void ConstrainedWindowNonClientView::Paint(ChromeCanvas* canvas) {
   PaintFrameBorder(canvas);
@@ -576,15 +574,15 @@ void ConstrainedWindowNonClientView::Layout() {
   }
 
   int location_bar_height = 0;
-  CSize ps;
+  gfx::Size ps;
   if (should_display_url_field) {
-    location_bar_->GetPreferredSize(&ps);
-    location_bar_height = ps.cy;
+    ps = location_bar_->GetPreferredSize();
+    location_bar_height = ps.height();
   }
 
-  close_button_->GetPreferredSize(&ps);
-  close_button_->SetBounds(width() - ps.cx - kWindowControlsRightOffset,
-                           kWindowControlsTopOffset, ps.cx, ps.cy);
+  ps = close_button_->GetPreferredSize();
+  close_button_->SetBounds(width() - ps.width() - kWindowControlsRightOffset,
+                           kWindowControlsTopOffset, ps.width(), ps.height());
 
   int titlebar_height = CalculateTitlebarHeight();
   if (window_delegate_) {
@@ -603,6 +601,12 @@ void ConstrainedWindowNonClientView::Layout() {
       int title_left = icon_bounds_.right() + spacing;
       title_bounds_.SetRect(title_left, kTitleTopOffset,
                             title_right - title_left, title_font_.height());
+
+      // Center the icon within the vertical bounds of the title if the title
+      // is taller.
+      int delta_y = title_bounds_.height() - icon_bounds_.height();
+      if (delta_y > 0)
+        icon_bounds_.set_y(title_bounds_.y() + static_cast<int>(delta_y / 2));
     }
   }
 
@@ -615,25 +619,24 @@ void ConstrainedWindowNonClientView::Layout() {
                              location_bar_height);
     location_bar_->Layout();
   }
-  container_->client_view()->SetBounds(client_bounds_.ToRECT());
+  container_->client_view()->SetBounds(client_bounds_);
 }
 
-void ConstrainedWindowNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  container_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalBorderSize;
-  out->cy += CalculateNonClientHeight(ShouldDisplayURLField()) +
-      kWindowVerticalBorderSize;
+gfx::Size ConstrainedWindowNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = container_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalBorderSize, 
+                   CalculateNonClientHeight(ShouldDisplayURLField()) +
+                       kWindowVerticalBorderSize);
+  return prefsize;
 }
 
 void ConstrainedWindowNonClientView::ViewHierarchyChanged(bool is_add,
                                                           View *parent,
                                                           View *child) {
-  if (is_add && GetViewContainer()) {
-    // Add our Client View as we are added to the ViewContainer so that if we
-    // are subsequently resized all the parent-child relationships are
-    // established.
-    if (is_add && GetViewContainer() && child == this)
+  if (is_add && GetContainer()) {
+    // Add our Client View as we are added to the Container so that if we are
+    // subsequently resized all the parent-child relationships are established.
+    if (is_add && GetContainer() && child == this)
       AddChildView(container_->client_view());
     if (location_bar_ && !location_bar_->IsInitialized())
       location_bar_->Init();
@@ -641,11 +644,10 @@ void ConstrainedWindowNonClientView::ViewHierarchyChanged(bool is_add,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ConstrainedWindowNonClientView, ChromeViews::BaseButton::Button
+// ConstrainedWindowNonClientView, views::BaseButton::Button
 //     implementation:
 
-void ConstrainedWindowNonClientView::ButtonPressed(
-    ChromeViews::BaseButton* sender) {
+void ConstrainedWindowNonClientView::ButtonPressed(views::BaseButton* sender) {
   if (sender == close_button_)
     container_->ExecuteSystemMenuCommand(SC_CLOSE);
 }
@@ -753,10 +755,10 @@ void ConstrainedWindowNonClientView::PaintThrobber(ChromeCanvas* canvas) {
 }
 
 void ConstrainedWindowNonClientView::PaintWindowTitle(ChromeCanvas* canvas) {
+  int title_x = MirroredLeftPointForRect(title_bounds_);
   canvas->DrawStringInt(container_->GetWindowTitle(), title_font_,
-                        GetTitleColor(), title_bounds_.x(),
-                        title_bounds_.y(), title_bounds_.width(),
-                        title_bounds_.height());
+                        GetTitleColor(), title_x, title_bounds_.y(),
+                        title_bounds_.width(), title_bounds_.height());
 }
 
 // static
@@ -770,6 +772,8 @@ void ConstrainedWindowNonClientView::InitClass() {
     throbber_frame_count_ =
         throbber_frames_.width() / throbber_frames_.height();
 
+    title_font_ = win_util::GetWindowTitleFont();
+
     initialized = true;
   }
 }
@@ -777,19 +781,18 @@ void ConstrainedWindowNonClientView::InitClass() {
 ////////////////////////////////////////////////////////////////////////////////
 // ConstrainedTabContentsWindowDelegate
 
-class ConstrainedTabContentsWindowDelegate
-    : public ChromeViews::WindowDelegate {
+class ConstrainedTabContentsWindowDelegate : public views::WindowDelegate {
  public:
   explicit ConstrainedTabContentsWindowDelegate(TabContents* contents)
       : contents_(contents),
         contents_view_(NULL) {
   }
 
-  void set_contents_view(ChromeViews::View* contents_view) {
+  void set_contents_view(views::View* contents_view) {
     contents_view_ = contents_view;
   }
 
-  // ChromeViews::WindowDelegate implementation:
+  // views::WindowDelegate implementation:
   virtual bool CanResize() const {
     return true;
   }
@@ -802,13 +805,13 @@ class ConstrainedTabContentsWindowDelegate
   virtual SkBitmap GetWindowIcon() {
     return contents_->GetFavIcon();
   }
-  virtual ChromeViews::View* GetContentsView() {
+  virtual views::View* GetContentsView() {
     return contents_view_;
   }
 
  private:
   TabContents* contents_;
-  ChromeViews::View* contents_view_;
+  views::View* contents_view_;
 
   DISALLOW_EVIL_CONSTRUCTORS(ConstrainedTabContentsWindowDelegate);
 };
@@ -845,8 +848,8 @@ void ConstrainedWindowImpl::ActivateConstrainedWindow() {
 
   // Store the focus of our parent focus manager so we can restore it when we
   // close.
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetHWND());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetHWND());
   DCHECK(focus_manager);
   focus_manager = focus_manager->GetParentFocusManager();
   if (focus_manager) {
@@ -1044,7 +1047,7 @@ void ConstrainedWindowImpl::ToolbarSizeChanged(TabContents* source,
 
 ConstrainedWindowImpl::ConstrainedWindowImpl(
     TabContents* owner,
-    ChromeViews::WindowDelegate* window_delegate,
+    views::WindowDelegate* window_delegate,
     TabContents* constrained_contents)
     : CustomFrameWindow(window_delegate,
                         new ConstrainedWindowNonClientView(this, owner)),
@@ -1056,7 +1059,7 @@ ConstrainedWindowImpl::ConstrainedWindowImpl(
 
 ConstrainedWindowImpl::ConstrainedWindowImpl(
     TabContents* owner,
-    ChromeViews::WindowDelegate* window_delegate) 
+    views::WindowDelegate* window_delegate) 
     : CustomFrameWindow(window_delegate,
                         new ConstrainedWindowNonClientView(this, owner)),
       constrained_contents_(NULL) {
@@ -1125,7 +1128,7 @@ void ConstrainedWindowImpl::InitWindowForContents(
     ConstrainedTabContentsWindowDelegate* delegate) {
   constrained_contents_ = constrained_contents;
   constrained_contents_->set_delegate(this);
-  contents_container_ = new ChromeViews::HWNDView;
+  contents_container_ = new views::HWNDView;
   delegate->set_contents_view(contents_container_);
   non_client_view()->set_window_delegate(contents_window_delegate_.get());
 }
@@ -1135,9 +1138,16 @@ void ConstrainedWindowImpl::InitSizeForContents(
   CustomFrameWindow::Init(owner_->GetContainerHWND(), initial_bounds);
   contents_container_->Attach(constrained_contents_->GetContainerHWND());
 
-  constrained_contents_->SizeContents(
+  // TODO(brettw) this should be done some other way, see
+  // WebContentsView::SizeContents.
+  if (constrained_contents_->AsWebContents()) {
+    // This should always be true, all constrained windows are WebContents.
+    constrained_contents_->AsWebContents()->view()->SizeContents(
       gfx::Size(contents_container_->width(),
                 contents_container_->height()));
+  } else {
+    NOTREACHED();
+  }
   current_bounds_ = initial_bounds;
 
   // Note that this is HWND_TOP, not HWND_TOPMOST... this is important
@@ -1183,15 +1193,24 @@ void ConstrainedWindowImpl::Detach() {
   CRect bounds;
   ::GetWindowRect(constrained_contents_->GetContainerHWND(), &bounds);
 
-  // ... but overwrite its screen position with the screen position of its
-  // containing ConstrainedWindowImpl. We do this because the code called by
-  // |DetachContents| assumes the bounds contains position and size information
-  // similar to what is sent when a popup is not suppressed and must be opened,
-  // i.e. the position is the screen position of the top left of the detached
-  // popup window, and the size is the size of the content area.
-  bounds.SetRect(constrained_window_bounds.left, constrained_window_bounds.top,
-                 constrained_window_bounds.left + bounds.Width(),
-                 constrained_window_bounds.top + bounds.Height());
+  // This block of code was added by Ben, and is simply false in any world with
+  // magic_browzr turned off. Eventually, the if block here should go away once
+  // we get rid of the old pre-magic_browzr window implementation, but for now
+  // (and at least the next beta release), it's here to stay and magic_browzr
+  // is off by default.
+  if (g_browser_process->IsUsingNewFrames()) {
+    // ... but overwrite its screen position with the screen position of its
+    // containing ConstrainedWindowImpl. We do this because the code called by
+    // |DetachContents| assumes the bounds contains position and size
+    // information similar to what is sent when a popup is not suppressed and
+    // must be opened, i.e. the position is the screen position of the top left
+    // of the detached popup window, and the size is the size of the content
+    // area.
+    bounds.SetRect(constrained_window_bounds.left,
+                   constrained_window_bounds.top,
+                   constrained_window_bounds.left + bounds.Width(),
+                   constrained_window_bounds.top + bounds.Height());
+  }
 
   // Save the cursor position so that we know where to send a mouse message
   // when the new detached window is created.
@@ -1232,7 +1251,7 @@ void ConstrainedWindowImpl::UpdateUI(unsigned int changed_flags) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ConstrainedWindowImpl, ChromeViews::HWNDViewContainer overrides:
+// ConstrainedWindowImpl, views::ContainerWin overrides:
 
 void ConstrainedWindowImpl::OnDestroy() {
   // We do this here, rather than |Close|, since the window may be destroyed in
@@ -1243,8 +1262,8 @@ void ConstrainedWindowImpl::OnDestroy() {
   // ConstrainedWindow has already been destroyed (by the processing of
   // WM_DESTROY in FocusManager).  So the FocusManager we retrieve here is the
   // parent one (the one from the top window).
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetHWND());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetHWND());
   if (focus_manager) {
     // We may not have a focus manager if:
     // - we are hidden when closed (the TabContent would be detached).
@@ -1282,7 +1301,7 @@ void ConstrainedWindowImpl::OnFinalMessage(HWND window) {
     constrained_contents_ = NULL;
   }
 
-  HWNDViewContainer::OnFinalMessage(window);
+  ContainerWin::OnFinalMessage(window);
 }
 
 void ConstrainedWindowImpl::OnGetMinMaxInfo(LPMINMAXINFO mm_info) {
@@ -1338,8 +1357,8 @@ void ConstrainedWindowImpl::OnWindowPosChanged(WINDOWPOS* window_pos) {
 ConstrainedWindow* ConstrainedWindow::CreateConstrainedDialog(
     TabContents* parent,
     const gfx::Rect& initial_bounds,
-    ChromeViews::View* contents_view,
-    ChromeViews::WindowDelegate* window_delegate) {
+    views::View* contents_view,
+    views::WindowDelegate* window_delegate) {
   ConstrainedWindowImpl* window = new ConstrainedWindowImpl(parent,
                                                             window_delegate);
   window->InitAsDialog(initial_bounds);

@@ -15,9 +15,9 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
-#include "chrome/views/view_container.h"
+#include "chrome/views/container.h"
 
-namespace ChromeViews {
+namespace views {
 
 const char Label::kViewClassName[] = "chrome/views/Label";
 
@@ -50,21 +50,21 @@ void Label::Init(const std::wstring& text, const ChromeFont& font) {
 Label::~Label() {
 }
 
-void Label::GetPreferredSize(CSize* out) {
-  DCHECK(out);
+gfx::Size Label::GetPreferredSize() {
+  gfx::Size prefsize;
   if (is_multi_line_) {
     ChromeCanvas cc(0, 0, true);
     int w = width(), h = 0;
     cc.SizeStringInt(text_, font_, &w, &h, ComputeMultiLineFlags());
-    out->cx = w;
-    out->cy = h;
+    prefsize.SetSize(w, h);
   } else {
-    GetTextSize(out);
+    prefsize = GetTextSize();
   }
 
   gfx::Insets insets = GetInsets();
-  out->cx += insets.left() + insets.right();
-  out->cy += insets.top() + insets.bottom();
+  prefsize.Enlarge(insets.left() + insets.right(),
+                   insets.top() + insets.bottom());
+  return prefsize;
 }
 
 int Label::ComputeMultiLineFlags() {
@@ -90,9 +90,7 @@ void Label::Paint(ChromeCanvas* canvas) {
   if (url_set_) {
     // TODO(jungshik) : Figure out how to get 'intl.accept_languages'
     // preference and use it when calling ElideUrl.
-    paint_text = gfx::ElideUrl(url_, font_, bounds_.right - bounds_.left,
-                               std::wstring());
-
+    paint_text = gfx::ElideUrl(url_, font_, width(), std::wstring());
 
     // An URLs is always treated as an LTR text and therefore we should
     // explicitly mark it as such if the locale is RTL so that URLs containing
@@ -179,18 +177,15 @@ const GURL Label::GetURL() const {
     return GURL(text_);
 }
 
-void Label::GetTextSize(CSize* out) {
+gfx::Size Label::GetTextSize() {
   if (!text_size_valid_) {
-    text_size_.cx = font_.GetStringWidth(text_);
-    text_size_.cy = font_.height();
+    text_size_.SetSize(font_.GetStringWidth(text_), font_.height());
     text_size_valid_ = true;
   }
 
-  if (text_size_valid_) {
-    *out = text_size_;
-  } else {
-    out->cx = out->cy = 0;
-  }
+  if (text_size_valid_)
+    return text_size_;
+  return gfx::Size();
 }
 
 int Label::GetHeightForWidth(int w) {
@@ -314,15 +309,14 @@ void Label::SetContainsMouse(bool contains_mouse) {
 }
 
 gfx::Rect Label::GetTextBounds() {
-  CSize text_size;
-  GetTextSize(&text_size);
+  gfx::Size text_size = GetTextSize();
   gfx::Insets insets = GetInsets();
   int avail_width = width() - insets.left() - insets.right();
   // Respect the size set by the owner view
-  text_size.cx = std::min(avail_width, static_cast<int>(text_size.cx));
+  text_size.set_width(std::min(avail_width, text_size.width()));
 
   int text_y = insets.top() +
-      (height() - text_size.cy - insets.top() - insets.bottom()) / 2;
+      (height() - text_size.height() - insets.top() - insets.bottom()) / 2;
   int text_x;
   switch (horiz_alignment_) {
     case ALIGN_LEFT:
@@ -331,13 +325,13 @@ gfx::Rect Label::GetTextBounds() {
     case ALIGN_CENTER:
       // We put any extra margin pixel on the left rather than the right, since
       // GetTextExtentPoint32() can report a value one too large on the right.
-      text_x = insets.left() + (avail_width + 1 - text_size.cx) / 2;
+      text_x = insets.left() + (avail_width + 1 - text_size.width()) / 2;
       break;
     case ALIGN_RIGHT:
-      text_x = width() - insets.right() - text_size.cx;
+      text_x = width() - insets.right() - text_size.width();
       break;
   }
-  return gfx::Rect(text_x, text_y, text_size.cx, text_size.cy);
+  return gfx::Rect(text_x, text_y, text_size.width(), text_size.height());
 }
 
 void Label::SizeToFit(int max_width) {
@@ -346,18 +340,16 @@ void Label::SizeToFit(int max_width) {
   std::vector<std::wstring> lines;
   SplitString(text_, L'\n', &lines);
 
-  int width = 0;
+  int label_width = 0;
   for (std::vector<std::wstring>::const_iterator iter = lines.begin();
        iter != lines.end(); ++iter) {
-    width = std::max(width, font_.GetStringWidth(*iter));
+    label_width = std::max(label_width, font_.GetStringWidth(*iter));
   }
 
   if (max_width > 0)
-    width = std::min(width, max_width);
+    label_width = std::min(label_width, max_width);
 
-  CRect out;
-  GetBounds(&out);
-  SetBounds(out.left, out.top, width, 0);
+  SetBounds(x(), y(), label_width, 0);
   SizeToPreferredSize();
 }
 
@@ -381,5 +373,5 @@ bool Label::GetAccessibleState(VARIANT* state) {
   return true;
 }
 
-}
+}  // namespace views
 

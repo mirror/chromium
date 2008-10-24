@@ -24,8 +24,9 @@ namespace base {
 class Timer;
 }
 
-class DownloadItemTabView : public ChromeViews::View,
-                            public ChromeViews::LinkController {
+class DownloadItemTabView : public views::View,
+                            public views::LinkController,
+                            public views::NativeButton::Listener {
  public:
   DownloadItemTabView();
   virtual ~DownloadItemTabView();
@@ -34,19 +35,22 @@ class DownloadItemTabView : public ChromeViews::View,
   virtual void Layout();
   virtual void Paint(ChromeCanvas* canvas);
   void PaintBackground(ChromeCanvas* canvas);
-  virtual void GetPreferredSize(CSize* out);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
-  virtual bool OnMousePressed(const ChromeViews::MouseEvent& event);
-  virtual bool OnMouseDragged(const ChromeViews::MouseEvent& event);
+  virtual gfx::Size GetPreferredSize();
+  virtual bool OnMousePressed(const views::MouseEvent& event);
+  virtual bool OnMouseDragged(const views::MouseEvent& event);
 
   // Mode specific layouts
   void LayoutDate();
   void LayoutComplete();
   void LayoutCancelled();
   void LayoutInProgress();
+  void LayoutPromptDangerousDownload();
 
   // LinkController overrides
-  virtual void LinkActivated(ChromeViews::Link* source, int event_flags);
+  virtual void LinkActivated(views::Link* source, int event_flags);
+
+  // NativeButton Listener overrides.
+  virtual void ButtonPressed(views::NativeButton* sender);
 
   // Used to set our model temporarily during layout and paint operations
   void SetModel(DownloadItem* model, DownloadTabView* parent);
@@ -58,24 +62,35 @@ private:
   // Containing view.
   DownloadTabView* parent_;
 
+  // Whether we are the renderer for floating views.
+  bool is_floating_view_renderer_;
+
   // Time display.
-  ChromeViews::Label* since_;
-  ChromeViews::Label* date_;
+  views::Label* since_;
+  views::Label* date_;
 
   // The name of the file. Clicking this link will open the download.
-  ChromeViews::Link* file_name_;
+  views::Link* file_name_;
 
   // The name of the downloaded URL.
-  ChromeViews::Label* download_url_;
+  views::Label* download_url_;
 
   // The current status of the download.
-  ChromeViews::Label* time_remaining_;
-  ChromeViews::Label* download_progress_;
+  views::Label* time_remaining_;
+  views::Label* download_progress_;
+
+  // The message warning of a dangerous download.
+  views::Label* dangerous_download_warning_;
 
   // Actions that can be initiated.
-  ChromeViews::Link* pause_;
-  ChromeViews::Link* cancel_;
-  ChromeViews::Link* show_;
+  views::Link* pause_;
+  views::Link* cancel_;
+  views::Link* show_;
+
+  // The buttons used to prompt the user when a dangerous download has been
+  // initiated.
+  views::NativeButton* save_button_;
+  views::NativeButton* discard_button_;
 
   DISALLOW_EVIL_CONSTRUCTORS(DownloadItemTabView);
 };
@@ -83,7 +98,7 @@ private:
 
 // A view that manages each of the individual download views
 // (DownloadItemTabView) in the destination tab.
-class DownloadTabView : public ChromeViews::View,
+class DownloadTabView : public views::View,
                         public DownloadItem::Observer,
                         public DownloadManager::Observer {
  public:
@@ -95,14 +110,13 @@ class DownloadTabView : public ChromeViews::View,
   DownloadManager* model() const { return model_; }
 
   // View overrides
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual void Layout();
   virtual void Paint(ChromeCanvas* canvas);
   virtual bool GetFloatingViewIDForPoint(int x, int y, int* id);
   virtual bool EnumerateFloatingViews(
-      ChromeViews::View::FloatingViewPosition position,
+      views::View::FloatingViewPosition position,
       int starting_id, int* id);
-  virtual ChromeViews::View* ValidateFloatingViewForID(int id);
+  virtual views::View* ValidateFloatingViewForID(int id);
 
   // DownloadItem::Observer interface
   virtual void OnDownloadUpdated(DownloadItem* download);
@@ -128,9 +142,9 @@ class DownloadTabView : public ChromeViews::View,
   // Determine if we should draw the date beside a particular download
   bool ShouldDrawDateForDownload(DownloadItem* download);
 
-  virtual int GetPageScrollIncrement(ChromeViews::ScrollView* scroll_view,
+  virtual int GetPageScrollIncrement(views::ScrollView* scroll_view,
                                      bool is_horizontal, bool is_positive);
-  virtual int GetLineScrollIncrement(ChromeViews::ScrollView* scroll_view,
+  virtual int GetLineScrollIncrement(views::ScrollView* scroll_view,
                                      bool is_horizontal, bool is_positive);
 
   int start_angle() const { return start_angle_; }
@@ -145,7 +159,7 @@ class DownloadTabView : public ChromeViews::View,
 
  private:
   // Creates and attaches to the view the floating view at |index|.
-  ChromeViews::View* CreateFloatingViewForIndex(int index);
+  views::View* CreateFloatingViewForIndex(int index);
 
   // Utility functions for operating on DownloadItemTabViews by index.
   void SchedulePaintForViewAtIndex(int index);
@@ -154,9 +168,13 @@ class DownloadTabView : public ChromeViews::View,
   // Initiates an asynchronous icon extraction.
   void LoadIcon(DownloadItem* download);
 
-  // Clears the list of "in progress" downloads and removes the this
-  // DownloadTabView from their observer list.
+  // Clears the list of "in progress" downloads and removes this DownloadTabView
+  // from their observer list.
   void ClearDownloadInProgress();
+
+  // Clears the list of dangerous downloads and removes this DownloadTabView
+  // from their observer list.
+  void ClearDangerousDownloads();
 
   // Our model
   DownloadManager* model_;
@@ -178,10 +196,14 @@ class DownloadTabView : public ChromeViews::View,
   // does not own the DownloadItems.
   base::hash_set<DownloadItem*> in_progress_;
 
+  // Keeps track of the downloads we are an observer for as a consequence of
+  // being a dangerous download.
+  base::hash_set<DownloadItem*> dangerous_downloads_;
+
   // Provide a start position for downloads with no known size.
   int start_angle_;
 
-  ChromeViews::FixedRowHeightScrollHelper scroll_helper_;
+  views::FixedRowHeightScrollHelper scroll_helper_;
 
   // Keep track of the currently selected view, so that we can inform it when
   // the user changes the selection.
@@ -212,7 +234,7 @@ class DownloadTabUI : public NativeUI,
   virtual const int GetFavIconID() const;
   virtual const int GetSectionIconID() const;
   virtual const std::wstring GetSearchButtonText() const;
-  virtual ChromeViews::View* GetView();
+  virtual views::View* GetView();
   virtual void WillBecomeVisible(NativeUIContents* parent);
   virtual void WillBecomeInvisible(NativeUIContents* parent);
   virtual void Navigate(const PageState& state);

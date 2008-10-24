@@ -5,7 +5,7 @@
 #include "base/logging.h"
 #include "chrome/views/client_view.h"
 
-namespace ChromeViews {
+namespace views {
 
 ///////////////////////////////////////////////////////////////////////////////
 // ClientView, public:
@@ -16,41 +16,33 @@ ClientView::ClientView(Window* window, View* contents_view)
 }
 
 int ClientView::NonClientHitTest(const gfx::Point& point) {
-  CRect bounds;
-  GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (gfx::Rect(bounds).Contains(point.x(), point.y()))
-    return HTCLIENT;
-  return HTNOWHERE;
+  return bounds().Contains(point) ? HTCLIENT : HTNOWHERE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // ClientView, View overrides:
 
-void ClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
+gfx::Size ClientView::GetPreferredSize() {
   // |contents_view_| is allowed to be NULL up until the point where this view
-  // is attached to a ViewContainer.
+  // is attached to a Container.
   if (contents_view_)
-    contents_view_->GetPreferredSize(out);
+    return contents_view_->GetPreferredSize();
+  return gfx::Size();
 }
 
 void ClientView::ViewHierarchyChanged(bool is_add, View* parent, View* child) {
   if (is_add && child == this) {
-    DCHECK(GetViewContainer());
+    DCHECK(GetContainer());
     DCHECK(contents_view_); // |contents_view_| must be valid now!
     AddChildView(contents_view_);
   }
 }
 
-void ClientView::DidChangeBounds(const CRect& previous, const CRect& current) {
-  Layout();
-}
-
 void ClientView::Layout() {
   // |contents_view_| is allowed to be NULL up until the point where this view
-  // is attached to a ViewContainer.
+  // is attached to a Container.
   if (contents_view_)
     contents_view_->SetBounds(0, 0, width(), height());
 }
 
-};  // namespace ChromeViews
+}  // namespace views

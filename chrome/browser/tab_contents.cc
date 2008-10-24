@@ -13,6 +13,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/views/container.h"
 #include "chrome/views/native_scroll_bar.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
@@ -20,13 +21,11 @@
 
 #include "generated_resources.h"
 
-static size_t kMaxNumberOfConstrainedPopups = 20;
-
 namespace {
 
 BOOL CALLBACK InvalidateWindow(HWND hwnd, LPARAM lparam) {
-  // Note: erase is required to properly paint some widgets borders. This can be
-  // seen with textfields.
+  // Note: erase is required to properly paint some widgets borders. This can
+  // be seen with textfields.
   InvalidateRect(hwnd, NULL, TRUE);
   return TRUE;
 }
@@ -46,7 +45,7 @@ TabContents::TabContents(TabContentsType type)
       max_page_id_(-1),
       capturing_contents_(false) {
   last_focused_view_storage_id_ =
-      ChromeViews::ViewStorage::GetSharedInstance()->CreateStorageID();
+      views::ViewStorage::GetSharedInstance()->CreateStorageID();
 }
 
 TabContents::~TabContents() {
@@ -54,8 +53,7 @@ TabContents::~TabContents() {
   //
   // It is possible the view went away before us, so we only do this if the
   // view is registered.
-  ChromeViews::ViewStorage* view_storage =
-      ChromeViews::ViewStorage::GetSharedInstance();
+  views::ViewStorage* view_storage = views::ViewStorage::GetSharedInstance();
   if (view_storage->RetrieveView(last_focused_view_storage_id_) != NULL)
     view_storage->RemoveView(last_focused_view_storage_id_);
 }
@@ -126,11 +124,17 @@ const GURL& TabContents::GetURL() const {
 }
 
 const std::wstring& TabContents::GetTitle() const {
-  // We always want to use the title for the last committed entry rather than
-  // a pending navigation entry. For example, when the user types in a URL, we
-  // want to keep the old page's title until the new load has committed and we
-  // get a new title.
-  NavigationEntry* entry = controller_->GetLastCommittedEntry();
+  // We use the title for the last committed entry rather than a pending
+  // navigation entry. For example, when the user types in a URL, we want to
+  // keep the old page's title until the new load has committed and we get a new
+  // title.
+  // The exception is with transient pages, for which we really want to use
+  // their title, as they are not committed.
+  NavigationEntry* entry = controller_->GetTransientEntry();
+  if (entry && !entry->title().empty())
+    return entry->title();
+  
+  entry = controller_->GetLastCommittedEntry();
   if (entry)
     return entry->title();
   else if (controller_->LoadingURLLazily())
@@ -165,7 +169,11 @@ const std::wstring TabContents::GetDefaultTitle() const {
 SkBitmap TabContents::GetFavIcon() const {
   // Like GetTitle(), we also want to use the favicon for the last committed
   // entry rather than a pending navigation entry.
-  NavigationEntry* entry = controller_->GetLastCommittedEntry();
+  NavigationEntry* entry = controller_->GetTransientEntry();
+  if (entry)
+    return entry->favicon().bitmap();
+
+  entry = controller_->GetLastCommittedEntry();
   if (entry)
     return entry->favicon().bitmap();
   else if (controller_->LoadingURLLazily())
@@ -249,8 +257,8 @@ bool TabContents::NavigateToPendingEntry(bool reload) {
 }
 
 ConstrainedWindow* TabContents::CreateConstrainedDialog(
-    ChromeViews::WindowDelegate* window_delegate,
-    ChromeViews::View* contents_view) {
+    views::WindowDelegate* window_delegate,
+    views::View* contents_view) {
   ConstrainedWindow* window =
       ConstrainedWindow::CreateConstrainedDialog(
           this, gfx::Rect(), contents_view, window_delegate);
@@ -265,14 +273,16 @@ void TabContents::AddNewContents(TabContents* new_contents,
   if (!delegate_)
     return;
 
-  if ((disposition == NEW_POPUP) && !delegate_->IsPopup(this)) {
-    if (user_gesture) {
-      delegate_->AddNewContents(this, new_contents, disposition, initial_pos,
-                                user_gesture);
-    } else {
-      AddConstrainedPopup(new_contents, initial_pos);
-    }
+  if ((disposition == NEW_POPUP) && !user_gesture) {
+    // Unrequested popups from normal pages are constrained.
+    TabContents* popup_owner = this;
+    TabContents* our_owner = delegate_->GetConstrainingContents(this);
+    if (our_owner)
+      popup_owner = our_owner;
+    popup_owner->AddConstrainedPopup(new_contents, initial_pos);
   } else {
+    new_contents->DisassociateFromPopupCount();
+
     delegate_->AddNewContents(this, new_contents, disposition, initial_pos,
                               user_gesture);
   }
@@ -280,11 +290,6 @@ void TabContents::AddNewContents(TabContents* new_contents,
 
 void TabContents::AddConstrainedPopup(TabContents* new_contents,
                                       const gfx::Rect& initial_pos) {
-  if (child_windows_.size() > kMaxNumberOfConstrainedPopups) {
-    new_contents->CloseContents();
-    return;
-  }
-
   ConstrainedWindow* window =
       ConstrainedWindow::CreateConstrainedPopup(
           this, initial_pos, new_contents);
@@ -306,25 +311,11 @@ void TabContents::CloseAllSuppressedPopups() {
   }
 }
 
-void TabContents::HideContents() {
-  // Hide the contents before adjusting its parent to avoid a full desktop
-  // flicker.
-  ShowWindow(GetContainerHWND(), SW_HIDE);
-
-  // Reset the parent to NULL to ensure hidden tabs don't receive messages.
-  SetParent(GetContainerHWND(), NULL);
-
-  // Remove any focus manager related information.
-  ChromeViews::FocusManager::UninstallFocusSubclass(GetContainerHWND());
-
-  WasHidden();
-}
-
 void TabContents::Focus() {
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetContainerHWND());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetContainerHWND());
   DCHECK(focus_manager);
-  ChromeViews::View* v =
+  views::View* v =
       focus_manager->GetViewForWindow(GetContainerHWND(), true);
   DCHECK(v);
   if (v)
@@ -332,28 +323,29 @@ void TabContents::Focus() {
 }
 
 void TabContents::StoreFocus() {
-  ChromeViews::ViewStorage* view_storage =
-      ChromeViews::ViewStorage::GetSharedInstance();
+  views::ViewStorage* view_storage =
+      views::ViewStorage::GetSharedInstance();
 
   if (view_storage->RetrieveView(last_focused_view_storage_id_) != NULL)
     view_storage->RemoveView(last_focused_view_storage_id_);
 
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetContainerHWND());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetContainerHWND());
   if (focus_manager) {
     // |focus_manager| can be NULL if the tab has been detached but still
     // exists.
-    ChromeViews::View* focused_view = focus_manager->GetFocusedView();
+    views::View* focused_view = focus_manager->GetFocusedView();
     if (focused_view)
       view_storage->StoreView(last_focused_view_storage_id_, focused_view);
 
     // If the focus was on the page, explicitly clear the focus so that we
     // don't end up with the focused HWND not part of the window hierarchy.
+    // TODO(brettw) this should move to the view somehow.
     HWND container_hwnd = GetContainerHWND();
     if (container_hwnd) {
-      ChromeViews::View* focused_view = focus_manager->GetFocusedView();
+      views::View* focused_view = focus_manager->GetFocusedView();
       if (focused_view) {
-        HWND hwnd = focused_view->GetRootView()->GetViewContainer()->GetHWND();
+        HWND hwnd = focused_view->GetRootView()->GetContainer()->GetHWND();
         if (container_hwnd == hwnd || ::IsChild(container_hwnd, hwnd))
           focus_manager->ClearFocus();
       }
@@ -362,16 +354,16 @@ void TabContents::StoreFocus() {
 }
 
 void TabContents::RestoreFocus() {
-  ChromeViews::ViewStorage* view_storage =
-      ChromeViews::ViewStorage::GetSharedInstance();
-  ChromeViews::View* last_focused_view =
+  views::ViewStorage* view_storage =
+      views::ViewStorage::GetSharedInstance();
+  views::View* last_focused_view =
       view_storage->RetrieveView(last_focused_view_storage_id_);
 
   if (!last_focused_view) {
     SetInitialFocus();
   } else {
-    ChromeViews::FocusManager* focus_manager =
-        ChromeViews::FocusManager::GetFocusManager(GetContainerHWND());
+    views::FocusManager* focus_manager =
+        views::FocusManager::GetFocusManager(GetContainerHWND());
 
     // If you hit this DCHECK, please report it to Jay (jcampan).
     DCHECK(focus_manager != NULL) << "No focus manager when restoring focus.";
@@ -488,6 +480,7 @@ void TabContents::DetachContents(ConstrainedWindow* window,
                                  int frame_component) {
   WillClose(window);
   if (delegate_) {
+    contents->DisassociateFromPopupCount();
     delegate_->StartDraggingDetachedContents(
         this, contents, contents_bounds, mouse_pt, frame_component);
   }
@@ -527,6 +520,7 @@ void TabContents::SetIsLoading(bool is_loading,
                         NotificationService::NoDetails());
 }
 
+// TODO(brettw) This should be on the WebContentsView.
 void TabContents::RepositionSupressedPopupsToFit(const gfx::Size& new_size) {
   // TODO(erg): There's no way to detect whether scroll bars are
   // visible, so for beta, we're just going to assume that the
@@ -535,7 +529,7 @@ void TabContents::RepositionSupressedPopupsToFit(const gfx::Size& new_size) {
   // http://b/1118139.
   gfx::Point anchor_position(
       new_size.width() -
-          ChromeViews::NativeScrollBar::GetVerticalScrollBarWidth(),
+          views::NativeScrollBar::GetVerticalScrollBarWidth(),
       new_size.height());
   int window_count = static_cast<int>(child_windows_.size());
   for (int i = window_count - 1; i >= 0; --i) {

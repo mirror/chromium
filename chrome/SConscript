@@ -11,6 +11,7 @@ env_test = env.Clone()
 env = env.Clone()
 
 install_targets = []
+grit_files = []
 
 
 env.Prepend(
@@ -29,7 +30,7 @@ if env_res['PLATFORM'] == 'win32':
       ],
       CPPPATH = [
           '.',
-          '#/..',
+          '$CHROME_SRC_DIR',
           # For app/chrome_dll.res to #include installer_util_strings.rc.
           '$CHROME_DIR/installer/util',
       ],
@@ -93,6 +94,7 @@ env_dll.Append(
         '$SKIA_DIR/include/corecg',
         '$SKIA_DIR/platform',
         '$LIBXSL_DIR',
+        '$LIBXML_DIR/DerivedSources/include',
         '$LIBXML_DIR/include',
         '$BREAKPAD_DIR/src',
     ],
@@ -207,44 +209,45 @@ if env_dll['PLATFORM'] == 'win32':
 else:
   targets = ['chrome']
 
+
+
+# TODO(sgk): make a pseudo-Builder for these
+import sys
+sys.path.append(env.Dir('$CHROME_SRC_DIR/tools/grit').abspath)
+
+env_grd = env.Clone()
+env_grd.Tool('scons', toolpath=[env_grd.Dir('$CHROME_SRC_DIR/tools/grit/grit')])
+
+# NOTE: fake target gets replaced with real targets from reading .grd
+generated = env_grd.GRIT('app/resources/fake_generated_target',
+                         '$CHROME_SRC_DIR/chrome/app/generated_resources.grd')
+grit_files.extend(generated)
+
+# NOTE: fake target gets replaced with real targets from reading .grd
+chromium = env_grd.GRIT('app/resources/fake_chromium_target',
+                         '$CHROME_SRC_DIR/chrome/app/chromium_strings.grd')
+grit_files.extend(chromium)
+
+# NOTE: fake target gets replaced with real targets from reading .grd
+google_chrome = env_grd.GRIT('app/resources/fake_google_chrome_target',
+                         '$CHROME_SRC_DIR/chrome/app/google_chrome_strings.grd')
+grit_files.extend(google_chrome)
+
+
+
 # TODO(port)
 if env_dll['PLATFORM'] == 'win32':
   dll_targets = env_dll.ChromeSharedLibrary(targets,
                                             dll_resources + input_files + libs)
   install_targets.extend(dll_targets)
 
-  # TODO(sgk): make a pseudo-Builder for these
-  import os
-  import sys
-  sys.path.append(Dir('#/../tools/grit').abspath)
-
-  env_grd = env.Clone()
-  env_grd.Tool('scons', toolpath=['#/../tools/grit/grit'])
-
-  # NOTE: fake target gets replaced with real targets from reading .grd
-  generated = env_grd.GRIT('app/resources/fake_generated_target',
-                           '#/../chrome/app/generated_resources.grd')
-  for g in [ g for g in generated if str(g).endswith('.rc') ]:
-      env_res.RES(g)
-
-  # NOTE: fake target gets replaced with real targets from reading .grd
-  chromium = env_grd.GRIT('app/resources/fake_chromium_target',
-                           '#/../chrome/app/chromium_strings.grd')
-  for g in [ g for g in chromium if str(g).endswith('.rc') ]:
-      env_res.RES(g)
-
-  # NOTE: fake target gets replaced with real targets from reading .grd
-  google_chrome = env_grd.GRIT('app/resources/fake_google_chrome_target',
-                           '#/../chrome/app/google_chrome_strings.grd')
-  for g in [ g for g in google_chrome if str(g).endswith('.rc') ]:
-      env_res.RES(g)
-
-
+  for g in [ g for g in grit_files if str(g).endswith('.rc') ]:
+    env_res.RES(g)
 
   def chrome_version_emitter(target, source, env):
-      source.append('$CHROME_SRC_DIR/VERSION')
+      source.append('$CHROME_SRC_DIR/chrome/VERSION')
       # TODO(sgk):  parameterize for chromium-vs.-google_chrome
-      source.append('$CHROME_SRC_DIR/app/theme/google_chrome/BRANDING')
+      source.append('$CHROME_SRC_DIR/chrome/app/theme/google_chrome/BRANDING')
       return target, source
 
   b = Builder(action = '$CHROME_VERSION_RC_COM',
@@ -254,9 +257,9 @@ if env_dll['PLATFORM'] == 'win32':
 
   env.Replace(
       CHROME_VERSION_RC_COM =
-          '$VERSION_BAT $SOURCE $CHROME_SRC_DIR $PWD $TARGET',
-      VERSION_BAT = File('#/../chrome/tools/build/win/version.bat'),
-      CHROME_SRC_DIR = Dir('#/../chrome'),
+          '$VERSION_BAT $SOURCE $CHROME_SRC_DIR/chrome $PWD $TARGET',
+      VERSION_BAT = env.File(
+          '$CHROME_SRC_DIR/chrome/tools/build/win/version.bat'),
       PWD = Dir('.'),
   )
 
@@ -362,32 +365,43 @@ if env['PLATFORM'] == 'win32':
 
 env_flat = env.Clone(
     BROWSER_RESOURCES = Dir('browser_resources'),
-    HTML_INLINE = File('#/../chrome/tools/build/win/html_inline.py'),
+    HTML_INLINE = env.File(
+        '$CHROME_SRC_DIR/chrome/tools/build/win/html_inline.py'),
     FLATTEN_HTML_COM = '$PYTHON $HTML_INLINE $SOURCE $TARGET',
 )
 
+def FlatHtmlEmitter(target, source, env):
+    # When we get the target, it will have the "_flat.html" suffix,
+    # but will be next to the sourcefile.  Replace it with a
+    # string that puts it in the $BROWSER_RESOURCES directory.
+    target = [env.File('$BROWSER_RESOURCES/' + target[0].name)]
+    return target, source
+
+env_flat['BUILDERS']['FlatHtml'] = Builder(action='$FLATTEN_HTML_COM',
+                                           suffix='_flat.html',
+                                           source_suffix='.html',
+                                           emitter=FlatHtmlEmitter)
+
 flats = [
-    'about_memory',
-    'about_version',
-    'incognito_tab',
-    'new_tab',
-    'safe_browsing_malware_block',
-    'safe_browsing_phishing_block',
-    'ssl_error',
+    'browser/resources/about_credits.html',
+    'browser/resources/about_memory.html',
+    'browser/resources/about_version.html',
+    'browser/resources/incognito_tab.html',
+    'browser/resources/new_tab.html',
+    'browser/resources/safe_browsing_malware_block.html',
+    'browser/resources/safe_browsing_phishing_block.html',
+    'browser/security/resources/ssl_error.html',
+    'browser/security/resources/ssl_roadblock.html',
 ]
 
 # TODO(port)
 if env_flat['PLATFORM'] == 'win32':
   flats_out = []
   for i in flats:
-    flats_out += env_flat.Command(
-        '$BROWSER_RESOURCES/' + i + '_flat.html',
-        'browser/resources/' + i + '.html', '$FLATTEN_HTML_COM')
+    flats_out.extend(env_flat.FlatHtml(i))
 
-  flats_out += env_flat.Command(
-      '$BROWSER_RESOURCES/ssl_roadblock_flat.html',
-      'browser/security/resources/ssl_roadblock.html', '$FLATTEN_HTML_COM')
-
+  # TODO(sgk):  Remove when we upgrade to SCons 1.1.0, which
+  # determines implicit dependencies from .rc files.
   env_flat.Depends(browser_res, flats_out)
 
 
@@ -412,6 +426,7 @@ sconscript_files = [
     'browser/SConscript',
     'common/SConscript',
     'plugin/SConscript',
+    'renderer/SConscript',
     'test/chrome_plugin/SConscript',
     'third_party/hunspell/SConscript',
     '$THIRD_PARTY_DIR/sqlite/SConscript',
@@ -426,7 +441,6 @@ if env['PLATFORM'] == 'win32':
       'installer/mini_installer/SConscript',
       'installer/setup/SConscript',
       'installer/util/SConscript',
-      'renderer/SConscript',
       'test/activex_test_control/SConscript',
       'test/automation/SConscript',
       'test/interactive_ui/SConscript',
@@ -468,7 +482,7 @@ if env['PLATFORM'] == 'win32':
 
 
 i = env.Command('$TARGET_ROOT/resources/inspector',
-            '#/../webkit/port/page/inspector',
+            '$CHROME_SRC_DIR/webkit/port/page/inspector',
             Copy('$TARGET', '$SOURCE'),
             source_scanner=DirScanner)
 env.Alias('chrome', i)

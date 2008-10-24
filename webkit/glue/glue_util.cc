@@ -6,12 +6,16 @@
 #include <string>
 
 #include "webkit/glue/glue_util.h"
+#include "base/compiler_specific.h"
+#include "base/gfx/rect.h"
 #include "base/string_util.h"
 
-#pragma warning(push, 0)
+MSVC_PUSH_WARNING_LEVEL(0);
+#undef LOG
 #include "CString.h"
+#include "IntRect.h"
 #include "PlatformString.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #include "KURL.h"
 
@@ -62,7 +66,8 @@ WebCore::String StdWStringToString(const std::wstring& str) {
 }
 
 WebCore::String StdStringToString(const std::string& str) {
-  return WebCore::String(str.data(), static_cast<unsigned>(str.length()));
+  return WebCore::String::fromUTF8(str.data(),
+                                   static_cast<unsigned>(str.length()));
 }
 
 // URL conversions -------------------------------------------------------------
@@ -88,6 +93,16 @@ WebCore::KURL GURLToKURL(const GURL& url) {
 #else
   return WebCore::KURL(StdWStringToString(UTF8ToWide(spec)));
 #endif
+}
+
+// Rect conversions ------------------------------------------------------------
+
+gfx::Rect FromIntRect(const WebCore::IntRect& r) {
+  return gfx::Rect(r.x(), r.y(), r.width(), r.height());
+}
+
+WebCore::IntRect ToIntRect(const gfx::Rect& r) {
+  return WebCore::IntRect(r.x(), r.y(), r.width(), r.height());
 }
 
 }  // namespace webkit_glue

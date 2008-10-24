@@ -6,8 +6,8 @@
 
 #include "base/gfx/point.h"
 #include "base/gfx/size.h"
+#include "base/win_util.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/views/window_resources.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
@@ -20,9 +20,50 @@
 #include "chrome/views/non_client_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/window_delegate.h"
+#include "chrome/views/window_resources.h"
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
+
+// A scoping class that prevents a window from being able to redraw in response
+// to invalidations that may occur within it for the lifetime of the object.
+//
+// Why would we want such a thing? Well, it turns out Windows has some
+// "unorthodox" behavior when it comes to painting its non-client areas.
+// Occasionally, Windows will paint portions of the default non-client area
+// right over the top of the custom frame. This is not simply fixed by handling
+// WM_NCPAINT/WM_PAINT, with some investigation it turns out that this
+// rendering is being done *inside* the default implementation of some message
+// handlers and functions:
+//  . WM_SETTEXT
+//  . WM_SETICON
+//  . WM_NCLBUTTONDOWN
+//  . EnableMenuItem, called from our WM_INITMENU handler
+// The solution is to handle these messages and call DefWindowProc ourselves,
+// but prevent the window from being able to update itself for the duration of
+// the call. We do this with this class, which automatically calls its
+// associated CustomFrameWindow's lock and unlock functions as it is created
+// and destroyed. See documentation in those methods for the technique used.
+//
+// IMPORTANT: Do not use this scoping object for large scopes or periods of
+//            time! IT WILL PREVENT THE WINDOW FROM BEING REDRAWN! (duh).
+//
+// I would love to hear Raymond Chen's explanation for all this. And maybe a
+// list of other messages that this applies to ;-)
+class CustomFrameWindow::ScopedRedrawLock {
+ public:
+  explicit ScopedRedrawLock(CustomFrameWindow* window) : window_(window) {
+    window_->LockUpdates();
+  }
+
+  ~ScopedRedrawLock() {
+    window_->UnlockUpdates();
+  }
+
+ private:
+  // The window having its style changed.
+  CustomFrameWindow* window_;
+};
 
 HCURSOR CustomFrameWindow::resize_cursors_[6];
 
@@ -198,11 +239,12 @@ class DefaultNonClientView : public NonClientView,
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
+  virtual void ResetWindowControls();
 
   // View overrides:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add, View* parent, View* child);
 
   // BaseButton::ButtonListener implementation:
@@ -383,9 +425,6 @@ CPoint DefaultNonClientView::GetSystemMenuPoint() const {
 // why this function passes APPLY_MIRRORING_TRANSFORMATION as the |settings|
 // whenever it calls GetBounds().
 int DefaultNonClientView::NonClientHitTest(const gfx::Point& point) {
-  CRect bounds;
-  CPoint test_point = point.ToPOINT();
-
   // First see if it's within the grow box area, since that overlaps the client
   // bounds.
   int component = container_->client_view()->NonClientHitTest(point);
@@ -393,20 +432,22 @@ int DefaultNonClientView::NonClientHitTest(const gfx::Point& point) {
     return component;
 
   // Then see if the point is within any of the window controls.
-  close_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  gfx::Rect button_bounds =
+      close_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTCLOSE;
-  restore_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = restore_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMAXBUTTON;
-  maximize_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = maximize_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMAXBUTTON;
-  minimize_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = minimize_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMINBUTTON;
-  system_menu_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds =
+      system_menu_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTSYSMENU;
 
   component = GetHTComponentForFrame(
@@ -417,8 +458,7 @@ int DefaultNonClientView::NonClientHitTest(const gfx::Point& point) {
       container_->window_delegate()->CanResize());
   if (component == HTNOWHERE) {
     // Finally fall back to the caption.
-    GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    if (bounds().Contains(point))
       component = HTCAPTION;
     // Otherwise, the point is outside the window's bounds.
   }
@@ -449,6 +489,13 @@ void DefaultNonClientView::EnableClose(bool enable) {
   close_button_->SetEnabled(enable);
 }
 
+void DefaultNonClientView::ResetWindowControls() {
+  restore_button_->SetState(Button::BS_NORMAL);
+  minimize_button_->SetState(Button::BS_NORMAL);
+  maximize_button_->SetState(Button::BS_NORMAL);
+  // The close button isn't affected by this constraint.
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // DefaultNonClientView, View overrides:
 
@@ -475,19 +522,19 @@ void DefaultNonClientView::Layout() {
   SchedulePaint();
 }
 
-void DefaultNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  container_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalBorderSize;
-  out->cy += CalculateContentsTop() + kWindowVerticalBorderSize;
+gfx::Size DefaultNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = container_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalBorderSize,
+                   CalculateContentsTop() + kWindowVerticalBorderSize);
+  return prefsize;
 }
 
 void DefaultNonClientView::ViewHierarchyChanged(bool is_add,
                                                 View* parent,
                                                 View* child) {
-  // Add our Client View as we are added to the ViewContainer so that if we are
+  // Add our Client View as we are added to the Container so that if we are
   // subsequently resized all the parent-child relationships are established.
-  if (is_add && GetViewContainer() && child == this)
+  if (is_add && GetContainer() && child == this)
     AddChildView(container_->client_view());
 }
 
@@ -591,88 +638,93 @@ void DefaultNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
       resources()->GetPartBitmap(FRAME_CLIENT_EDGE_BOTTOM_LEFT);
   SkBitmap* left = resources()->GetPartBitmap(FRAME_CLIENT_EDGE_LEFT);
 
-  CRect client_area_bounds;
-  container_->client_view()->GetBounds(&client_area_bounds);
+  gfx::Rect client_area_bounds = container_->client_view()->bounds();
 
-  canvas->DrawBitmapInt(*top_left, client_area_bounds.left - top_left->width(),
-                        client_area_bounds.top - top->height());
-  canvas->TileImageInt(*top, client_area_bounds.left,
-                       client_area_bounds.top - top->height(),
-                       client_area_bounds.Width(), top->height());
-  canvas->DrawBitmapInt(*top_right, client_area_bounds.right,
-                        client_area_bounds.top - top->height());
-  canvas->TileImageInt(*right, client_area_bounds.right,
-                       client_area_bounds.top - top->height() +
+  canvas->DrawBitmapInt(*top_left, client_area_bounds.x() - top_left->width(),
+                        client_area_bounds.y() - top->height());
+  canvas->TileImageInt(*top, client_area_bounds.x(),
+                       client_area_bounds.y() - top->height(),
+                       client_area_bounds.width(), top->height());
+  canvas->DrawBitmapInt(*top_right, client_area_bounds.right(),
+                        client_area_bounds.y() - top->height());
+  canvas->TileImageInt(*right, client_area_bounds.right(),
+                       client_area_bounds.y() - top->height() +
                            top_right->height(),
-                       right->width(), client_area_bounds.Height());
-  canvas->DrawBitmapInt(*bottom_right, client_area_bounds.right,
-                        client_area_bounds.bottom);
-  canvas->TileImageInt(*bottom, client_area_bounds.left,
-                       client_area_bounds.bottom,
-                       client_area_bounds.Width(), bottom_right->height());
+                       right->width(), client_area_bounds.height());
+  canvas->DrawBitmapInt(*bottom_right, client_area_bounds.right(),
+                        client_area_bounds.bottom());
+  canvas->TileImageInt(*bottom, client_area_bounds.x(),
+                       client_area_bounds.bottom(),
+                       client_area_bounds.width(), bottom_right->height());
   canvas->DrawBitmapInt(*bottom_left,
-                        client_area_bounds.left - bottom_left->width(),
-                        client_area_bounds.bottom);
-  canvas->TileImageInt(*left, client_area_bounds.left - left->width(),
-                       client_area_bounds.top - top->height() +
+                        client_area_bounds.x() - bottom_left->width(),
+                        client_area_bounds.bottom());
+  canvas->TileImageInt(*left, client_area_bounds.x() - left->width(),
+                       client_area_bounds.y() - top->height() +
                            top_left->height(),
-                       left->width(), client_area_bounds.Height());
+                       left->width(), client_area_bounds.height());
 }
 
 void DefaultNonClientView::LayoutWindowControls() {
-  CSize ps;
+  gfx::Size ps;
   if (container_->IsMaximized() || container_->IsMinimized()) {
     maximize_button_->SetVisible(false);
     restore_button_->SetVisible(true);
   }
 
   if (container_->IsMaximized()) {
-    close_button_->GetPreferredSize(&ps);
+    ps = close_button_->GetPreferredSize();
     close_button_->SetImageAlignment(Button::ALIGN_LEFT, Button::ALIGN_BOTTOM);
     close_button_->SetBounds(
-        width() - ps.cx - kWindowControlsRightZoomedOffset,
-        0, ps.cx + kWindowControlsRightZoomedOffset,
-        ps.cy + kWindowControlsTopZoomedOffset);
+        width() - ps.width() - kWindowControlsRightZoomedOffset,
+        0, ps.width() + kWindowControlsRightZoomedOffset,
+        ps.height() + kWindowControlsTopZoomedOffset);
 
     if (should_show_minmax_buttons_) {
-      restore_button_->GetPreferredSize(&ps);
+      ps = restore_button_->GetPreferredSize();
       restore_button_->SetImageAlignment(Button::ALIGN_LEFT,
                                          Button::ALIGN_BOTTOM);
-      restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
-                                 ps.cy + kWindowControlsTopZoomedOffset);
+      restore_button_->SetBounds(close_button_->x() - ps.width(), 0,
+                                 ps.width(),
+                                 ps.height() + kWindowControlsTopZoomedOffset);
 
-      minimize_button_->GetPreferredSize(&ps);
+      ps = minimize_button_->GetPreferredSize();
       minimize_button_->SetImageAlignment(Button::ALIGN_LEFT,
                                           Button::ALIGN_BOTTOM);
-      minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
-                                  ps.cy + kWindowControlsTopZoomedOffset);
+      minimize_button_->SetBounds(restore_button_->x() - ps.width(), 0,
+                                  ps.width(),
+                                  ps.height() + kWindowControlsTopZoomedOffset);
     }
   } else if (container_->IsMinimized()) {
-    close_button_->GetPreferredSize(&ps);
+    ps = close_button_->GetPreferredSize();
     close_button_->SetImageAlignment(Button::ALIGN_LEFT, Button::ALIGN_BOTTOM);
     close_button_->SetBounds(
-        width() - ps.cx - kWindowControlsRightZoomedOffset,
-        0, ps.cx + kWindowControlsRightZoomedOffset,
-        ps.cy + kWindowControlsTopZoomedOffset);
+        width() - ps.width() - kWindowControlsRightZoomedOffset,
+        0, ps.width() + kWindowControlsRightZoomedOffset,
+        ps.height() + kWindowControlsTopZoomedOffset);
 
     if (should_show_minmax_buttons_) {
-      restore_button_->GetPreferredSize(&ps);
+      ps = restore_button_->GetPreferredSize();
       restore_button_->SetImageAlignment(Button::ALIGN_LEFT,
                                          Button::ALIGN_BOTTOM);
-      restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
-                                 ps.cy + kWindowControlsTopZoomedOffset);
+      restore_button_->SetBounds(close_button_->x() - ps.width(), 0,
+                                 ps.width(),
+                                 ps.height() + kWindowControlsTopZoomedOffset);
 
-      minimize_button_->GetPreferredSize(&ps);
+      ps = minimize_button_->GetPreferredSize();
       minimize_button_->SetImageAlignment(Button::ALIGN_LEFT,
                                           Button::ALIGN_BOTTOM);
-      minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
-                                  ps.cy + kWindowControlsTopZoomedOffset);
+      minimize_button_->SetBounds(restore_button_->x() - ps.width(), 0,
+                                  ps.width(),
+                                  ps.height() +
+                                      kWindowControlsTopZoomedOffset);
     }
   } else {
-    close_button_->GetPreferredSize(&ps);
+    ps = close_button_->GetPreferredSize();
     close_button_->SetImageAlignment(Button::ALIGN_LEFT, Button::ALIGN_TOP);
-    close_button_->SetBounds(width() - kWindowControlsRightOffset - ps.cx,
-                             kWindowControlsTopOffset, ps.cx, ps.cy);
+    close_button_->SetBounds(width() - kWindowControlsRightOffset - ps.width(),
+                             kWindowControlsTopOffset, ps.width(),
+                             ps.height());
 
     if (should_show_minmax_buttons_) {
       close_button_->SetImage(
@@ -688,17 +740,19 @@ void DefaultNonClientView::LayoutWindowControls() {
       restore_button_->SetVisible(false);
 
       maximize_button_->SetVisible(true);
-      maximize_button_->GetPreferredSize(&ps);
+      ps = maximize_button_->GetPreferredSize();
       maximize_button_->SetImageAlignment(Button::ALIGN_LEFT,
                                           Button::ALIGN_TOP);
-      maximize_button_->SetBounds(close_button_->x() - ps.cx,
-                                  kWindowControlsTopOffset, ps.cx, ps.cy);
+      maximize_button_->SetBounds(close_button_->x() - ps.width(),
+                                  kWindowControlsTopOffset, ps.width(),
+                                  ps.height());
 
-      minimize_button_->GetPreferredSize(&ps);
+      ps = minimize_button_->GetPreferredSize();
       minimize_button_->SetImageAlignment(Button::ALIGN_LEFT,
                                           Button::ALIGN_TOP);
-      minimize_button_->SetBounds(maximize_button_->x() - ps.cx,
-                                  kWindowControlsTopOffset, ps.cx, ps.cy);
+      minimize_button_->SetBounds(maximize_button_->x() - ps.width(),
+                                  kWindowControlsTopOffset, ps.width(),
+                                  ps.height());
     }
   }
   if (!should_show_minmax_buttons_) {
@@ -725,10 +779,10 @@ void DefaultNonClientView::LayoutTitleBar() {
   // Size the window icon, if visible.
   if (d->ShouldShowWindowIcon()) {
     system_menu_button_->SetVisible(true);
-    CSize ps;
-    system_menu_button_->GetPreferredSize(&ps);
+    gfx::Size ps = system_menu_button_->GetPreferredSize();
     system_menu_button_->SetBounds(
-        kWindowIconLeftOffset, kWindowIconTopOffset + top_offset, ps.cx, ps.cy);
+        kWindowIconLeftOffset, kWindowIconTopOffset + top_offset, ps.width(),
+        ps.height());
   } else {
     // Put the menu in the right place at least even if it is hidden so we
     // can size the title based on its position.
@@ -738,18 +792,17 @@ void DefaultNonClientView::LayoutTitleBar() {
 
   // Size the title, if visible.
   if (d->ShouldShowWindowTitle()) {
-    CRect system_menu_bounds;
-    system_menu_button_->GetBounds(&system_menu_bounds);
+    gfx::Rect system_menu_bounds = system_menu_button_->bounds();
     int spacing = d->ShouldShowWindowIcon() ? kWindowIconTitleSpacing : 0;
     int title_right = should_show_minmax_buttons_ ?
         minimize_button_->x() : close_button_->x();
-    int title_left = system_menu_bounds.right + spacing;
+    int title_left = system_menu_bounds.right() + spacing;
     title_bounds_.SetRect(title_left, kTitleTopOffset + top_offset,
-        std::max(0, static_cast<int>(title_right - system_menu_bounds.right)),
+        std::max(0, static_cast<int>(title_right - system_menu_bounds.right())),
         title_font_.height());
 
     // We draw the custom frame window's title directly rather than using a
-    // ChromeViews::Label child view. Therefore, we have to mirror the title
+    // views::Label child view. Therefore, we have to mirror the title
     // position manually if the View's UI layout is right-to-left. Child Views
     // are automatically mirrored, which means that the parent view doesn't
     // need to manually modify their position depending on the View's UI
@@ -760,13 +813,21 @@ void DefaultNonClientView::LayoutTitleBar() {
     // DefaultNonClientView subclass to use a ChromeView::Label as a child View
     // instead of drawing the title's text directly on the canvas).
     title_bounds_.set_x(MirroredLeftPointForRect(title_bounds_));
+
+    // Center the icon within the height of the title if the title is taller.
+    int delta_y = title_bounds_.height() - system_menu_button_->height();
+    if (delta_y > 0) {
+      int new_y = title_bounds_.y() + static_cast<int>(delta_y / 2);
+      system_menu_button_->SetBounds(system_menu_button_->x(), new_y,
+                                     system_menu_button_->width(),
+                                     system_menu_button_->height());
+    }
   }
 }
 
 void DefaultNonClientView::LayoutClientView() {
-  gfx::Rect client_bounds(
-      CalculateClientAreaBounds(width(), height()));
-  container_->client_view()->SetBounds(client_bounds.ToRECT());
+  gfx::Rect client_bounds = CalculateClientAreaBounds(width(), height());
+  container_->client_view()->SetBounds(client_bounds);
 }
 
 // static
@@ -775,18 +836,57 @@ void DefaultNonClientView::InitClass() {
   if (!initialized) {
     active_resources_ = new ActiveWindowResources;
     inactive_resources_ = new InactiveWindowResources;
-    title_font_ = ResourceBundle::GetSharedInstance().GetFont(
-        ResourceBundle::BaseFont).DeriveFont(1, ChromeFont::BOLD);
+    title_font_ = win_util::GetWindowTitleFont();
     initialized = true;
   }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// NonClientViewLayout
+
+class NonClientViewLayout : public LayoutManager {
+ public:
+  // The size of the default window border and padding used by Windows Vista
+  // with DWM disabled when clipping the window for maximized display.
+  // TODO(beng): figure out how to get this programmatically, since it varies
+  //             with adjustments to the Windows Border/Padding setting.
+  static const int kBorderAndPadding = 8;
+
+  NonClientViewLayout(View* child, Window* window)
+      : child_(child),
+        window_(window) {
+  }
+  virtual ~NonClientViewLayout() {}
+
+  // Overridden from LayoutManager:
+  virtual void Layout(View* host) {
+    int horizontal_border_width =
+        window_->IsMaximized() ? kBorderAndPadding : 0;
+    int vertical_border_height =
+        window_->IsMaximized() ? kBorderAndPadding : 0;
+
+    child_->SetBounds(horizontal_border_width, vertical_border_height,
+                      host->width() - (2 * horizontal_border_width),
+                      host->height() - (2 * vertical_border_height));
+  }
+  virtual gfx::Size GetPreferredSize(View* host) {
+    return child_->GetPreferredSize();
+  }
+
+ private:
+  View* child_;
+  Window* window_;
+
+  DISALLOW_COPY_AND_ASSIGN(NonClientViewLayout);
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 // CustomFrameWindow, public:
 
 CustomFrameWindow::CustomFrameWindow(WindowDelegate* window_delegate)
     : Window(window_delegate),
-      is_active_(false) {
+      is_active_(false),
+      lock_updates_(false) {
   InitClass();
   non_client_view_ = new DefaultNonClientView(this);
 }
@@ -811,6 +911,14 @@ void CustomFrameWindow::Init(HWND parent, const gfx::Rect& bounds) {
   if (!non_client_view_)
     non_client_view_ = new DefaultNonClientView(this);
   Window::Init(parent, bounds);
+
+  // Windows Vista non-Aero-glass does wacky things with maximized windows that
+  // require a special layout manager to compensate for.
+  if (win_util::GetWinVersion() >= win_util::WINVERSION_VISTA) {
+    GetRootView()->SetLayoutManager(
+        new NonClientViewLayout(non_client_view_, this));
+  }
+
   ResetWindowRegion();
 }
 
@@ -818,7 +926,7 @@ void CustomFrameWindow::SetClientView(ClientView* cv) {
   DCHECK(cv && !client_view() && GetHWND());
   set_client_view(cv);
   // For a CustomFrameWindow, the non-client view is the root.
-  HWNDViewContainer::SetContentsView(non_client_view_);
+  ContainerWin::SetContentsView(non_client_view_);
   // When the non client view is added to the view hierarchy, it will cause the
   // client view to be added as well.
 }
@@ -858,17 +966,53 @@ void CustomFrameWindow::DisableInactiveRendering(bool disable) {
 }
 
 void CustomFrameWindow::SizeWindowToDefault() {
-  CSize pref(0, 0);
-  client_view()->GetPreferredSize(&pref);
-  DCHECK(pref.cx > 0 && pref.cy > 0);
+  gfx::Size pref = client_view()->GetPreferredSize();
+  DCHECK(pref.width() > 0 && pref.height() > 0);
   gfx::Size window_size =
-      non_client_view_->CalculateWindowSizeForClientSize(pref.cx, pref.cy);
+      non_client_view_->CalculateWindowSizeForClientSize(pref.width(),
+                                                         pref.height());
   win_util::CenterAndSizeWindow(owning_window(), GetHWND(),
                                 window_size.ToSIZE(), false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// CustomFrameWindow, HWNDViewContainer overrides:
+// CustomFrameWindow, ContainerWin overrides:
+
+void CustomFrameWindow::OnGetMinMaxInfo(MINMAXINFO* minmax_info) {
+  // We handle this message so that we can make sure we interact nicely with
+  // the taskbar on different edges of the screen and auto-hide taskbars.
+
+  HMONITOR primary_monitor = MonitorFromWindow(NULL, MONITOR_DEFAULTTOPRIMARY);
+  MONITORINFO primary_info;
+  primary_info.cbSize = sizeof(primary_info);
+  GetMonitorInfo(primary_monitor, &primary_info);
+
+  minmax_info->ptMaxSize.x =
+      primary_info.rcWork.right - primary_info.rcWork.left;
+  minmax_info->ptMaxSize.y =
+      primary_info.rcWork.bottom - primary_info.rcWork.top;
+
+  HMONITOR target_monitor =
+      MonitorFromWindow(GetHWND(), MONITOR_DEFAULTTONEAREST);
+  MONITORINFO target_info;
+  target_info.cbSize = sizeof(target_info);
+  GetMonitorInfo(target_monitor, &target_info);
+
+  minmax_info->ptMaxPosition.x =
+      abs(target_info.rcWork.left - target_info.rcMonitor.left);
+  minmax_info->ptMaxPosition.y =
+      abs(target_info.rcWork.top - target_info.rcMonitor.top);
+
+  // Work around task bar auto-hiding. By default the window is sized over the
+  // top of the un-hide strip, so we adjust the size by a single pixel to make
+  // it work. Because of the way Windows adjusts the target size rect for non
+  // primary screens (it's quite daft), we only do this for the primary screen,
+  // which I think should cover at least 95% of use cases.
+  if ((target_monitor == primary_monitor) &&
+      EqualRect(&target_info.rcWork, &target_info.rcMonitor)) {
+    --minmax_info->ptMaxSize.y;
+  }
+}
 
 static void EnableMenuItem(HMENU menu, UINT command, bool enabled) {
   UINT flags = MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_DISABLED | MF_GRAYED);
@@ -880,6 +1024,7 @@ void CustomFrameWindow::OnInitMenu(HMENU menu) {
   bool maximized = IsMaximized();
   bool minimized_or_maximized = minimized || maximized;
 
+  ScopedRedrawLock lock(this);
   EnableMenuItem(menu, SC_RESTORE,
                  window_delegate()->CanMaximize() && minimized_or_maximized);
   EnableMenuItem(menu, SC_MOVE, !minimized_or_maximized);
@@ -922,17 +1067,11 @@ LRESULT CustomFrameWindow::OnNCActivate(BOOL active) {
     // painting operations while the move is in progress.
     PaintNow(root_view_->GetScheduledPaintRect());
   }
+
   return TRUE;
 }
 
 LRESULT CustomFrameWindow::OnNCCalcSize(BOOL mode, LPARAM l_param) {
-  CRect client_bounds;
-  if (!mode) {
-    RECT* rect = reinterpret_cast<RECT*>(l_param);
-    *rect = non_client_view_->CalculateClientAreaBounds(
-        rect->right - rect->left, rect->bottom - rect->top).ToRECT();
-    return 0;
-  }
   // We need to repaint all when the window bounds change.
   return WVR_REDRAW;
 }
@@ -942,18 +1081,6 @@ LRESULT CustomFrameWindow::OnNCHitTest(const CPoint& point) {
   CPoint temp = point;
   MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
   return non_client_view_->NonClientHitTest(gfx::Point(temp.x, temp.y));
-}
-
-LRESULT CustomFrameWindow::OnNCMouseMove(UINT flags, const CPoint& point) {
-  // NC points are in screen coordinates.
-  CPoint temp = point;
-  MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
-  ProcessMouseMoved(temp, 0);
-
-  // We need to process this message to stop Windows from drawing the window
-  // controls as the mouse moves over the title bar area when the window is
-  // maximized.
-  return 0;
 }
 
 struct ClipState {
@@ -1039,7 +1166,7 @@ void CustomFrameWindow::OnNCPaint(HRGN rgn) {
     UnionRect(&dirty_region, &tmp, &old_paint_region);
   }
 
-  root_view->SchedulePaint(dirty_region, false);
+  root_view->SchedulePaint(gfx::Rect(dirty_region), false);
 
   // ChromeCanvasPaints destructor does the actual painting. As such, wrap the
   // following in a block to force paint to occur so that we can release the dc.
@@ -1071,22 +1198,40 @@ void CustomFrameWindow::OnNCLButtonDown(UINT ht_component,
       // view! Ick! By handling this message we prevent Windows from doing this
       // undesirable thing, but that means we need to roll the sys-command
       // handling ourselves.
-      CPoint temp = point;
-      MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
-      UINT flags = 0;
-      if ((GetKeyState(VK_CONTROL) & 0x80) == 0x80)
-        flags |= MK_CONTROL;
-      if ((GetKeyState(VK_SHIFT) & 0x80) == 0x80)
-        flags |= MK_SHIFT;
-      flags |= MK_LBUTTON;
-      ProcessMousePressed(temp, flags, false);
-      SetMsgHandled(TRUE);
+      ProcessNCMousePress(point, MK_LBUTTON);
       return;
     }
     default:
       Window::OnNCLButtonDown(ht_component, point);
+      /*
+      if (!IsMsgHandled()) {
+        // Window::OnNCLButtonDown set the message as unhandled. This normally
+        // means ContainerWin::ProcessWindowMessage will pass it to
+        // DefWindowProc. Sadly, DefWindowProc for WM_NCLBUTTONDOWN does weird
+        // non-client painting, so we need to call it directly here inside a
+        // scoped update lock.
+        ScopedRedrawLock lock(this);
+        DefWindowProc(GetHWND(), WM_NCLBUTTONDOWN, ht_component,
+                      MAKELPARAM(point.x, point.y));
+        SetMsgHandled(TRUE);
+      }
+      */
       break;
   }
+}
+
+void CustomFrameWindow::OnNCMButtonDown(UINT ht_component,
+                                        const CPoint& point) {
+  if (ht_component == HTCAPTION) {
+    // When there's only one window and only one tab, the tab area is reported
+    // to be part of the caption area of the window. However users should still
+    // be able to middle click that tab to close it so we need to make sure
+    // these messages reach the View system.
+    ProcessNCMousePress(point, MK_MBUTTON);
+    SetMsgHandled(FALSE);
+    return;
+  }
+  ContainerWin::OnNCMButtonDown(ht_component, point);
 }
 
 LRESULT CustomFrameWindow::OnNCUAHDrawCaption(UINT msg, WPARAM w_param,
@@ -1136,12 +1281,44 @@ LRESULT CustomFrameWindow::OnSetCursor(HWND window, UINT hittest_code,
   return 0;
 }
 
+LRESULT CustomFrameWindow::OnSetIcon(UINT size_type, HICON new_icon) {
+  ScopedRedrawLock lock(this);
+  return DefWindowProc(GetHWND(), WM_SETICON, size_type,
+                       reinterpret_cast<LPARAM>(new_icon));
+}
+
+LRESULT CustomFrameWindow::OnSetText(const wchar_t* text) {
+  ScopedRedrawLock lock(this);
+  return DefWindowProc(GetHWND(), WM_SETTEXT, NULL,
+                       reinterpret_cast<LPARAM>(text));
+}
+
 void CustomFrameWindow::OnSize(UINT param, const CSize& size) {
   Window::OnSize(param, size);
 
   // ResetWindowRegion is going to trigger WM_NCPAINT. By doing it after we've
   // invoked OnSize we ensure the RootView has been layed out.
   ResetWindowRegion();
+}
+
+void CustomFrameWindow::OnSysCommand(UINT notification_code, CPoint click) {
+  // Windows uses the 4 lower order bits of |notification_code| for type-
+  // specific information so we must exclude this when comparing.
+  static const int sc_mask = 0xFFF0;
+  if ((notification_code & sc_mask) == SC_MINIMIZE ||
+      (notification_code & sc_mask) == SC_MAXIMIZE ||
+      (notification_code & sc_mask) == SC_RESTORE) {
+    non_client_view_->ResetWindowControls();
+  } else if ((notification_code & sc_mask) == SC_MOVE ||
+             (notification_code & sc_mask) == SC_SIZE) {
+    if (lock_updates_) {
+      // We were locked, before entering a resize or move modal loop. Now that
+      // we've begun to move the window, we need to unlock updates so that the
+      // sizing/moving feedback can be continuous.
+      UnlockUpdates();
+    }
+  }
+  Window::OnSysCommand(notification_code, click);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1158,6 +1335,18 @@ void CustomFrameWindow::InitClass() {
     resize_cursors_[RC_NWSE] = LoadCursor(NULL, IDC_SIZENWSE);
     initialized = true;
   }
+}
+
+void CustomFrameWindow::LockUpdates() {
+  lock_updates_ = true;
+  // This message causes invalidations to be discarded until it is called again
+  // with WPARAM TRUE (see UnlockUpdates).
+  SendMessage(GetHWND(), WM_SETREDRAW, FALSE, 0);
+}
+
+void CustomFrameWindow::UnlockUpdates() {
+  SendMessage(GetHWND(), WM_SETREDRAW, TRUE, 0);
+  lock_updates_ = false;
 }
 
 void CustomFrameWindow::ResetWindowRegion() {
@@ -1188,5 +1377,17 @@ void CustomFrameWindow::ResetWindowRegion() {
   DeleteObject(current_rgn);
 }
 
-}  // namespace ChromeViews
+void CustomFrameWindow::ProcessNCMousePress(const CPoint& point, int flags) {
+  CPoint temp = point;
+  MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
+  UINT message_flags = 0;
+  if ((GetKeyState(VK_CONTROL) & 0x80) == 0x80)
+    message_flags |= MK_CONTROL;
+  if ((GetKeyState(VK_SHIFT) & 0x80) == 0x80)
+    message_flags |= MK_SHIFT;
+  message_flags |= flags;
+  ProcessMousePressed(temp, message_flags, false);
+}
+
+}  // namespace views
 
