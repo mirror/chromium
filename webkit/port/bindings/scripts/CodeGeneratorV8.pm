@@ -425,11 +425,12 @@ sub GenerateNormalAttrGetter
   my $isPodType = $codeGenerator->IsPodType($implClassName);
   my $skipContext = 0;
 
+
   if ($isPodType) {
     $implClassName = GetNativeType($implClassName);
     $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
   }
-  
+
   # Special case: SVGZoomEvent's attributes are all read-only
   if ($implClassName eq "SVGZoomEvent") {
     $attrIsPodType = 0;
@@ -866,13 +867,26 @@ sub GenerateImplementation
     my $hasConstructors = 0;
 
     # Generate property accessors for attributes.
-    foreach my $attribute (@{$dataNode->attributes}) {
+    for ($index = 0; $index < @{$dataNode->attributes}; $index++) {
+      $attribute = @{$dataNode->attributes}[$index];
       $attrName = $attribute->signature->name;
       $attrType = $attribute->signature->type;
 
       # Generate special code for the constructor attributes.
       if ($attrType =~ /Constructor$/) {
         $hasConstructors = 1;
+        next;
+      }
+
+      # Make EventListeners always custom.
+      # TODO(mbelshe): make the perl code capable of generating the 
+      #   event setters/getters.  For now, WebKit has started removing the
+      #   [Custom] attribute, so just automatically insert it to avoid forking
+      #   other files.  This should be okay because we can't generate stubs
+      #   for any event getter/setters anyway.
+      if ($attrType eq "EventListener") {
+        $attribute->signature->extendedAttributes->{"Custom"} = 1;
+        $implIncludes{"v8_custom.h"} = 1;
         next;
       }
       
@@ -883,7 +897,7 @@ sub GenerateImplementation
         $implIncludes{"v8_custom.h"} = 1;
         next;
       }
-      
+
       # Generate the accessor.
       if ($attribute->signature->extendedAttributes->{"CustomGetter"}) {
         $implIncludes{"v8_custom.h"} = 1;
