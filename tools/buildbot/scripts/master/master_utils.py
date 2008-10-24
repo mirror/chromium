@@ -219,8 +219,6 @@ class MasterFactory(object):
       A string defining the gclient solution.
     """
     name = svnurl.split('/')[-1]
-    if 'chrome_webkit_merge_branch' == name:
-      name = 'src'
     custom_deps = ''
     if custom_deps_list is not None:
       for dep in custom_deps_list:

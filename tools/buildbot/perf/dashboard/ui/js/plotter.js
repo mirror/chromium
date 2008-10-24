@@ -86,6 +86,19 @@ function Plotter(clNumbers, plotData, dataDescription, units, resultNode) {
   this.resultNode_ = resultNode;
   this.units_ = units;
   this.coordinates = new Coordinates(plotData);
+
+  // A color palette that's unambigous for normal and color-deficient viewers.
+  // Values are (red, green, blue) on a scale of 255.
+  // Taken from http://jfly.iam.u-tokyo.ac.jp/html/manuals/pdf/color_blind.pdf
+  this.colors = [[0, 114, 178],   // blue
+                 [230, 159, 0],   // orange
+                 [0, 158, 115],   // green
+                 [204, 121, 167], // purplish pink
+                 [86, 180, 233],  // sky blue
+                 [213, 94, 0],    // dark orange
+                 [0, 0, 0],       // black
+                 [240, 228, 66]   // yellow
+                ];
 }
 
 /**
@@ -140,19 +153,23 @@ Plotter.prototype.plotLine_ = function(ctx, strokeStyles, data) {
     var x = this.coordinates.xPoints(i);
     var value = data[i][0];
     var stdd = data[i][1];
-    var y = this.coordinates.yPoints(value);
-    // Re-set 'initial' if we're at a gap in the data.
-    if (value == 0)
+    var y = 0.0;
+    var err = 0.0;
+    if (isNaN(value)) {
+      // Re-set 'initial' if we're at a gap in the data.
       initial = true;
-    else if (initial)
-      initial = false;
-    else
-      ctx.lineTo(x, y);
+    } else {
+      y = this.coordinates.yPoints(value);
+      // We assume that the stdd will only be NaN (missing) when the value is.
+      if (parseFloat(value) != 0.0)
+        err = y * parseFloat(stdd) / parseFloat(value);
+      if (initial)
+        initial = false;
+      else
+        ctx.lineTo(x, y);
+    }
 
     ctx.moveTo(x, y);
-    var err = 0;
-    if (value != 0 && stdd != 0)
-      err = y / parseFloat(value / stdd);
     deviationData.push([x, y, err])
   }
   ctx.closePath();
@@ -303,11 +320,10 @@ Plotter.prototype.coordinates_ = function() {
 };
 
 Plotter.prototype.nextColor = function(i) {
-  var increment = (i * 50);
-  var red = (60 + increment) % 255;
-  var green = increment % 255;
-  var blue = (240 + increment) % 255;
-  return "rgb(" + red +"," + green + "," + blue + ")";
+  var index = i % this.colors.length;
+  return "rgb(" + this.colors[index][0] + "," +
+                  this.colors[index][1] + "," +
+                  this.colors[index][2] + ")";
 };
 
 Plotter.prototype.log = function(val) {

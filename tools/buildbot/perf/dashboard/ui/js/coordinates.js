@@ -29,9 +29,18 @@ Coordinates.prototype.processYValues_ = function () {
   for (var i = 0; i < this.plotData.length; i++)
     for (var j = 0; j < this.plotData[i].length; j++)
       merged.push(this.plotData[i][j][0]);
-    
   var max = Math.max.apply( Math, merged );
   var min = Math.min.apply( Math, merged );
+
+  // If we have a missing value, find the real max and min the hard way.
+  if (isNaN(min)) {
+    for (var i = 0; i < merged.length; ++i) {
+      if (isNaN(min) || merged[i] < min)
+        min = merged[i];
+      if (isNaN(max) || merged[i] > max)
+        max = merged[i];
+    }
+  }
   var yd = (max - min) / 10.0;
   if (yd == 0)
     yd = max / 10;

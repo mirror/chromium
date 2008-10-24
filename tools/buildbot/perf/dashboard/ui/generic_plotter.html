@@ -182,17 +182,18 @@ function received_summary(data) {
       continue;
     var row = jsonToJs(rows[i]);
     var traces = row['traces'];
-    graphData[row['rev']] = traces;
+    var revision = parseInt(row['rev']);
+    graphData[revision] = traces;
 
     // Collect unique trace names.
-    for (var trace in traces)
-      allTraces[trace] = 1;
+    for (var traceName in traces)
+      allTraces[traceName] = 1;
   }
 
   // Build and sort a list of all the trace names we've seen.
   var traceNames = [];
-  for (var name in allTraces)
-    traceNames.push(name);
+  for (var traceName in allTraces)
+    traceNames.push(traceName);
   traceNames.sort();
 
   // Build and sort a list of revision numbers.
@@ -202,24 +203,23 @@ function received_summary(data) {
   revisionNumbers.sort();
 
   // Build separate ordered lists of trace data.
-  var dataGrid = [];
   var traceData = {};
-  for (var revIndex in revisionNumbers) {
+  for (var revIndex = 0; revIndex < revisionNumbers.length; ++revIndex) {
     var rev = revisionNumbers[revIndex];
     var revisionData = graphData[rev];
-    for (var nameIndex in traceNames) {
+    for (var nameIndex = 0; nameIndex < traceNames.length; ++nameIndex) {
       var traceName = traceNames[nameIndex];
       if (!traceData[traceName])
         traceData[traceName] = [];
       if (!revisionData[traceName])
-        traceData[traceName].push([0.0, 0.0]);
+        traceData[traceName].push([NaN, NaN]);
       else
         traceData[traceName].push(revisionData[traceName]);
     }
   }
   var plotData = [];
-  for (var traceIndex in traceData)
-    plotData.push(traceData[traceIndex]);
+  for (var traceName in traceData)
+    plotData.push(traceData[traceName]);
 
   var plotter = new Plotter(revisionNumbers, plotData, traceNames, units,
     document.getElementById("output"), true);
