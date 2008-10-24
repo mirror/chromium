@@ -623,6 +623,10 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
     , m_showAfterVisible(ElementsPanel)
     , m_nextIdentifier(-2)
     , m_groupLevel(0)
+    , m_searchingForNode(false)
+    , m_currentUserInitiatedProfileNumber(-1)
+    , m_nextUserInitiatedProfileNumber(1)
+    , m_previousMessage(0)
 {
     ASSERT_ARG(page, page);
     ASSERT_ARG(client, client);
