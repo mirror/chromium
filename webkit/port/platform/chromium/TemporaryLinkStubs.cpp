@@ -42,6 +42,7 @@ Color WebCore::focusRingColor() { notImplemented(); return 0xFF7DADD9; }
 void WebCore::setFocusRingColorChangeFunction(void (*)()) { notImplemented(); }
 
 String WebCore::signedPublicKeyAndChallengeString(unsigned, const String&, const KURL&) { notImplemented(); return String(); }
+void WebCore::getSupportedKeySizes(Vector<String>&) { notImplemented(); }
 
 String KURL::fileSystemPath() const { notImplemented(); return String(); }
 
