@@ -12,8 +12,8 @@
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
-class HWNDViewContainer;
+namespace views {
+class ContainerWin;
 }
 class SlideAnimation;
 
@@ -25,7 +25,7 @@ class SlideAnimation;
 // item is dropped on this window, then it is started as a background task.
 //
 /////////////////////////////////////////////////////////////////////////////
-class BackgroundTaskDropView : public ChromeViews::View,
+class BackgroundTaskDropView : public views::View,
                                public AnimationDelegate {
  public:
   explicit BackgroundTaskDropView(const std::wstring& site);
@@ -35,8 +35,8 @@ class BackgroundTaskDropView : public ChromeViews::View,
   // Overridden from ChromeViews::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void GetPreferredSize(CSize* out);
-  virtual void OnMouseEntered(const ChromeViews::MouseEvent& event);
-  virtual void OnMouseExited(const ChromeViews::MouseEvent& event);
+  virtual void OnMouseEntered(const views::MouseEvent& event);
+  virtual void OnMouseExited(const views::MouseEvent& event);
 
   // Overridden from AnimationDelegate:
   virtual void AnimationProgressed(const Animation* animation);
@@ -44,7 +44,7 @@ class BackgroundTaskDropView : public ChromeViews::View,
   virtual void AnimationEnded(const Animation* animation);
 
   // The window that contains the BackgroundTaskDropView.
-  ChromeViews::HWNDViewContainer* container_;
+  views::ContainerWin* container_;
 
   // The dimensions of the drop window.
   gfx::Size contents_size_;

@@ -12,7 +12,7 @@
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/slide_animation.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/label.h"
 
 const int kTextMargin = 10;
@@ -81,7 +81,7 @@ BackgroundTaskDropView::BackgroundTaskDropView(const std::wstring& site)
   gfx::Rect systray = GetSysTrayLocation();
 
   // Set-up the drop box text.
-  ChromeViews::Label* drop_box_text = new ChromeViews::Label(text);
+  views::Label* drop_box_text = new views::Label(text);
   drop_box_text->SetMultiLine(true);
   drop_box_text->SetEnabled(false);
   drop_box_text->SetColor(SK_ColorWHITE);
@@ -94,7 +94,7 @@ BackgroundTaskDropView::BackgroundTaskDropView(const std::wstring& site)
   contents_size_.SetSize(width, height + 2 * kTextMargin);
 
   // Create the only real window to enable everything to be displayed.
-  container_ = new ChromeViews::HWNDViewContainer;
+  container_ = new views::ContainerWin();
   container_->set_window_style(WS_POPUP);
   container_->set_window_ex_style(
       WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW);
@@ -164,12 +164,12 @@ void BackgroundTaskDropView::GetPreferredSize(CSize* out) {
   *out = CSize(contents_size_.width(), contents_size_.height());
 }
 
-void BackgroundTaskDropView::OnMouseEntered(const ChromeViews::MouseEvent& e) {
+void BackgroundTaskDropView::OnMouseEntered(const views::MouseEvent& e) {
   hover_animation_->SetTweenType(SlideAnimation::EASE_IN);
   hover_animation_->Show();
 }
 
-void BackgroundTaskDropView::OnMouseExited(const ChromeViews::MouseEvent& e) {
+void BackgroundTaskDropView::OnMouseExited(const views::MouseEvent& e) {
   hover_animation_->SetTweenType(SlideAnimation::EASE_OUT);
   hover_animation_->Hide();
 }
