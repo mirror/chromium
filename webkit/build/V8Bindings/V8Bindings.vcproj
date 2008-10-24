@@ -1048,6 +1048,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\V8MessagePort.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8MessagePort.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\V8MimeType.cpp"
 				>
 			</File>
@@ -2386,6 +2394,10 @@
 		</File>
 		<File
 			RelativePath="..\..\port\bindings\v8\V8XMLHttpRequestCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\port\bindings\v8\V8MessagePortCustom.cpp"
 			>
 		</File>
 		<File

@@ -366,8 +366,12 @@ DECLARE_NAMED_PROPERTY_GETTER(HTMLCollection)
 DECLARE_INDEXED_PROPERTY_GETTER(CanvasPixelArray)
 DECLARE_INDEXED_PROPERTY_SETTER(CanvasPixelArray)
 
-// NSResolver
-DECLARE_CALLBACK(NSResolverLookupNamespaceURI)
+// MessagePort
+DECLARE_PROPERTY_ACCESSOR(MessagePortOnmessage)
+DECLARE_PROPERTY_ACCESSOR(MessagePortOnclose)
+DECLARE_CALLBACK(MessagePortStartConversation)
+DECLARE_CALLBACK(MessagePortAddEventListener)
+DECLARE_CALLBACK(MessagePortRemoveEventListener)
 
 // SVG custom properties and callbacks
 #if ENABLE(SVG)
