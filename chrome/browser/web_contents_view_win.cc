@@ -8,6 +8,7 @@
 
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/background_task/bb_drag_data.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/render_view_context_menu.h"
 #include "chrome/browser/render_view_context_menu_controller.h"
@@ -92,19 +93,29 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
 
   // TODO(tc): Generate an appropriate drag image.
 
-  // We set the file contents before the URL because the URL also sets file
-  // contents (to a .URL shortcut).  We want to prefer file content data over a
-  // shortcut.
-  if (!drop_data.file_contents.empty()) {
-    data->SetFileContents(drop_data.file_description_filename,
-                          drop_data.file_contents);
+#ifdef ENABLE_BACKGROUND_TASK
+  if (drop_data.is_bb_drag) {
+    BbDragData bb_data(drop_data);
+    bb_data.Write(data.get());
+  } else {
+#else
+  {
+#endif  // ENABLE_BACKGROUND_TASK
+
+    // We set the file contents before the URL because the URL also sets file
+    // contents (to a .URL shortcut).  We want to prefer file content data over
+    // a shortcut.
+    if (!drop_data.file_contents.empty()) {
+      data->SetFileContents(drop_data.file_description_filename,
+                            drop_data.file_contents);
+    }
+    if (!drop_data.cf_html.empty())
+      data->SetCFHtml(drop_data.cf_html);
+    if (drop_data.url.is_valid())
+      data->SetURL(drop_data.url, drop_data.url_title);
+    if (!drop_data.plain_text.empty())
+      data->SetString(drop_data.plain_text);
   }
-  if (!drop_data.cf_html.empty())
-    data->SetCFHtml(drop_data.cf_html);
-  if (drop_data.url.is_valid())
-    data->SetURL(drop_data.url, drop_data.url_title);
-  if (!drop_data.plain_text.empty())
-    data->SetString(drop_data.plain_text);
 
   scoped_refptr<WebDragSource> drag_source(
       new WebDragSource(GetHWND(), web_contents_->render_view_host()));
