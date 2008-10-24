@@ -29,7 +29,6 @@
 #define WIN32_COMPILE_HACK
 
 MSVC_PUSH_WARNING_LEVEL(0);
-#include "Color.h"
 #include "SSLKeyGenerator.h"
 #include "KURL.h"
 #include "NotImplemented.h"
@@ -37,9 +36,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 using namespace WebCore;
-
-Color WebCore::focusRingColor() { notImplemented(); return 0xFF7DADD9; }
-void WebCore::setFocusRingColorChangeFunction(void (*)()) { notImplemented(); }
 
 String WebCore::signedPublicKeyAndChallengeString(unsigned, const String&, const KURL&) { notImplemented(); return String(); }
 void WebCore::getSupportedKeySizes(Vector<String>&) { notImplemented(); }
@@ -62,7 +58,6 @@ void scheduleDispatchFunctionsOnMainThread() { notImplemented(); }
 #include "DatabaseAuthorizer.h"
 #include "Document.h"
 #include "DOMWindow.h"
-#include "EventLoop.h"
 #include "JSStorageCustom.h"
 #include "SQLResultSet.h"
 #include "SQLTransaction.h"
@@ -77,8 +72,6 @@ Database::~Database() { notImplemented(); }
 String Database::version() const { notImplemented(); return String(); }
 void Database::transaction(PassRefPtr<SQLTransactionCallback> callback, PassRefPtr<SQLTransactionErrorCallback> errorCallback, PassRefPtr<VoidCallback> successCallback) { notImplemented(); }
 void Database::changeVersion(const String& oldVersion, const String& newVersion, PassRefPtr<SQLTransactionCallback> callback, PassRefPtr<SQLTransactionErrorCallback> errorCallback, PassRefPtr<VoidCallback> successCallback) { notImplemented(); }
-
-void EventLoop::cycle() { notImplemented(); }
 
 bool JSStorage::canGetItemsForName(ExecState*, Storage* impl, const Identifier& propertyName) { notImplemented(); return false; }
 JSValue* JSStorage::nameGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot) { notImplemented(); return 0; }
