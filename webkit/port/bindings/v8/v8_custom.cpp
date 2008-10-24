@@ -3147,14 +3147,6 @@ CALLBACK_FUNC_DECL(NodeFilterAcceptNode) {
   return v8::Undefined();
 }
 
-// NSResolver
-CALLBACK_FUNC_DECL(NSResolverLookupNamespaceURI) {
-  INC_STATS(L"DOM.NSResolver.lookupNamespaceURI()");
-  V8Proxy::SetDOMException(NOT_SUPPORTED_ERR);
-  return v8::Undefined();
-}
-
-
 static String EventNameFromAttributeName(const String& name) {
   ASSERT(name.startsWith("on"));
   String event_type = name.substring(2);
