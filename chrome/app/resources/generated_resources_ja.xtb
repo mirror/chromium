@@ -24,7 +24,6 @@
 <translation id="7814458197256864873">コピー(&amp;C)</translation>
 <translation id="5076340679995252485">貼り付け(&amp;P)</translation>
 <translation id="5300471193642408424">ページの表示</translation>
-<translation id="3994878504415702912">ズーム(&amp;Z)</translation>
 <translation id="8434177709403049435">エンコード(&amp;E)</translation>
 <translation id="6040143037577758943">閉じる</translation>
 <translation id="9147392381910171771">オプション(&amp;O)</translation>
@@ -700,10 +699,10 @@
           <ph name="BEGIN_LIST_ITEM"/>背後にいる人<ph name="END_LIST_ITEM"/>
         <ph name="END_LIST"/>
         シークレット モードの詳細については<ph name="BEGIN_LINK"/>こちら<ph name="END_LINK"/>をご覧ください。</translation>
+<translation id="1604816462140255479">テキスト拡大(&amp;Z)</translation>
+<translation id="2897878306272793870"><ph name="TAB_COUNT"/> 個のタブが開きます。本当によろしいですか？</translation>
 <translation id="5256138355144269748">ポップアップをブロックしました</translation>
 <translation id="7052402604161570346">この種類のファイルはコンピュータに損害を与える可能性があります。本当に <ph name="FILE_NAME"/> をダウンロードしてもよろしいですか？</translation>
 <translation id="6434309073475700221">破棄</translation>
 <translation id="6069278982995177296">新しいウィンドウで開く</translation>
-<translation id="1134009406053225289">シークレット ウィンドウで開く</translation>
-<translation id="1273291576878293349">すべてのブックマークをシークレット ウィンドウで開く</translation>
 </translationbundle>

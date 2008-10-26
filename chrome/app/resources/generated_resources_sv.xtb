@@ -24,7 +24,6 @@
 <translation id="7814458197256864873">&amp;Kopiera</translation>
 <translation id="5076340679995252485">K&amp;listra in</translation>
 <translation id="5300471193642408424">Visa sidor</translation>
-<translation id="3994878504415702912">&amp;Zooma in</translation>
 <translation id="8434177709403049435">&amp;Kodning</translation>
 <translation id="6040143037577758943">Stäng</translation>
 <translation id="9147392381910171771">&amp;Alternativ</translation>
@@ -690,10 +689,10 @@
 <translation id="5291303148298143069">Meddela mig när popup-fönster blockeras</translation>
 <translation id="3383487468758466563">Teckensnitt och språk:</translation>
 <translation id="7762841930144642410"><ph name="BEGIN_BOLD"/>Du surfar inkognito<ph name="END_BOLD"/>. När du tittar på sidor i detta fönster visas det inte i webbläsarens historik eller sökhistoriken, och det lämnas inga spår på datorn, t.ex. kakor, när du stänger inkognitofönstret. Alla filer som du laddar ner eller bokmärken som du skapar sparas dock. <ph name="LINE_BREAK"/>        <ph name="BEGIN_BOLD"/>Att surfa inkognito påverkar inte hur andra människor, servrar eller program beter sig. Var uppmärksam på följande:<ph name="END_BOLD"/>        <ph name="BEGIN_LIST"/>          <ph name="BEGIN_LIST_ITEM"/>Webbplatser som samlar in eller delar information om dig<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Internet-tjänsteleverantörer eller anställda som spårar vilka sidor du besöker<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Fientliga program som spårar dina tangenttryckningar i utbyte mot gratis smilisar<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Övervakning av hemliga agenter<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Personer som står bakom dig<ph name="END_LIST_ITEM"/>        <ph name="END_LIST"/>        <ph name="BEGIN_LINK"/>Läs mer<ph name="END_LINK"/> om att surfa inkognito.</translation>
+<translation id="1604816462140255479">&amp;Zooma in text</translation>
+<translation id="2897878306272793870">Vill du verkligen öppna <ph name="TAB_COUNT"/> flikar?</translation>
 <translation id="5256138355144269748">Blockerat popup-fönster</translation>
 <translation id="7052402604161570346">Den här typen av fil kan skada datorn. Vill du verkligen hämta <ph name="FILE_NAME"/>?</translation>
 <translation id="6434309073475700221">Kasta</translation>
 <translation id="6069278982995177296">Dubblett</translation>
-<translation id="1134009406053225289">Öppna i inkognitofönster</translation>
-<translation id="1273291576878293349">Öppna alla bokmärken i ett inkognitofönster</translation>
 </translationbundle>

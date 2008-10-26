@@ -24,7 +24,6 @@
 <translation id="7814458197256864873">&amp;Copiar</translation>
 <translation id="5076340679995252485">&amp;Colar</translation>
 <translation id="5300471193642408424">Mostrar páginas</translation>
-<translation id="3994878504415702912">&amp;Zoom</translation>
 <translation id="8434177709403049435">&amp;Codificação</translation>
 <translation id="6040143037577758943">Fechar</translation>
 <translation id="9147392381910171771">&amp;Opções</translation>
@@ -690,10 +689,10 @@
 <translation id="5291303148298143069">Notificar quando um pop-up for bloqueado</translation>
 <translation id="3383487468758466563">Fontes e idiomas:</translation>
 <translation id="7762841930144642410"><ph name="BEGIN_BOLD"/>Você está navegando no modo anônimo.<ph name="END_BOLD"/>. As páginas visualizadas nesta janela não aparecerão nos históricos do navegador ou da pesquisa, nem deixarão outros rastros em seu computador (por exemplo, cookies) após você fechar a janela anônima. Porém, todos os arquivos que você baixar ou os favoritos que marcar serão preservados. <ph name="LINE_BREAK"/> <ph name="BEGIN_BOLD"/>A navegação no modo anônimo não afeta o comportamento de outras pessoas, servidores ou softwares. Tenha cuidado com:<ph name="END_BOLD"/> <ph name="BEGIN_LIST"/> <ph name="BEGIN_LIST_ITEM"/>Sites que coletam ou compartilham informações a seu respeito<ph name="END_LIST_ITEM"/> <ph name="BEGIN_LIST_ITEM"/>Provedores de internet ou empregadores que rastreiam as páginas visitadas por você<ph name="END_LIST_ITEM"/> <ph name="BEGIN_LIST_ITEM"/>Smileys gratuitos, pois eles podem ser iscas de softwares maliciosos<ph name="END_LIST_ITEM"/> <ph name="BEGIN_LIST_ITEM"/>Vigilância de agentes secretos<ph name="END_LIST_ITEM"/> <ph name="BEGIN_LIST_ITEM"/>Pessoas que ficam atrás de você quando você está navegando<ph name="END_LIST_ITEM"/> <ph name="END_LIST"/> <ph name="BEGIN_LINK"/>Saiba mais<ph name="END_LINK"/> sobre a navegação no modo anônimo.</translation>
+<translation id="1604816462140255479">&amp;Zoom de texto</translation>
+<translation id="2897878306272793870">Você tem certeza de que deseja abrir <ph name="TAB_COUNT"/> guias?</translation>
 <translation id="5256138355144269748">Pop-up bloqueado</translation>
 <translation id="7052402604161570346">Este tipo de arquivo pode danificar o seu computador. Tem certeza de que deseja fazer download de <ph name="FILE_NAME"/>?</translation>
 <translation id="6434309073475700221">Descartar</translation>
 <translation id="6069278982995177296">Duplicar</translation>
-<translation id="1134009406053225289">Abrir em uma janela anônima</translation>
-<translation id="1273291576878293349">Abrir todos os favoritos em uma janela anônima</translation>
 </translationbundle>

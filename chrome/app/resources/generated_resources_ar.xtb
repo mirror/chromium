@@ -24,7 +24,6 @@
 <translation id="7814458197256864873">&amp;نسخ</translation>
 <translation id="5076340679995252485">ل&amp;صق</translation>
 <translation id="5300471193642408424">عرض الصفحات</translation>
-<translation id="3994878504415702912">&amp;تكبير/تصغير</translation>
 <translation id="8434177709403049435">&amp;التشفير</translation>
 <translation id="6040143037577758943">إغلاق</translation>
 <translation id="9147392381910171771">&amp;الخيارات</translation>
@@ -700,10 +699,10 @@
           <ph name="BEGIN_LIST_ITEM"/>الأشخاص الواقفين خلفك<ph name="END_LIST_ITEM"/>
         <ph name="END_LIST"/>
         <ph name="BEGIN_LINK"/>مزيد من المعلومات<ph name="END_LINK"/> عن التصفّح المتخفّي.</translation>
+<translation id="1604816462140255479">ت&amp;كبير/تصغير النصّ</translation>
+<translation id="2897878306272793870">هل تريد بالتأكيد فتح هذا العدد من علامات التبويب<ph name="TAB_COUNT"/>؟</translation>
 <translation id="5256138355144269748">نافذة تطفّلية محجوبة</translation>
 <translation id="7052402604161570346">هذا النوع من الملفات قد يلحق الضرر بالكمبيوتر. هل تريد بالتأكيد تحميل <ph name="FILE_NAME"/>؟</translation>
 <translation id="6434309073475700221">إلغاء</translation>
 <translation id="6069278982995177296">تكرار</translation>
-<translation id="1134009406053225289">فتح في نافذة للتصفح المتخفي</translation>
-<translation id="1273291576878293349">فتح جميع الإشارات في نافذة للتصفح المتخفي</translation>
 </translationbundle>

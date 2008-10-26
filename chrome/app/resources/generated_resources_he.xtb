@@ -8,6 +8,7 @@
 <translation id="4195643157523330669">פתח בכרטיסייה חדשה</translation>
 <translation id="3786934874263773074">&amp;מצא בדף</translation>
 <translation id="3369624026883419694">פותר מארח...</translation>
+<translation id="1604816462140255479">גודל &amp;טקסט</translation>
 <translation id="4890855023395992542">כתובת אתר השירות:</translation>
 <translation id="4047345532928475040">לא זמין</translation>
 <translation id="7767960058630128695">סיסמאות:</translation>
@@ -239,7 +240,6 @@ Del</translation>
 <translation id="1644574205037202324">היסטוריה</translation>
 <translation id="8609465669617005112">הזז למעלה</translation>
 <translation id="2679629658858164554">כתובת האתר של הדף:</translation>
-<translation id="1134009406053225289">פתח בחלון נסתר</translation>
 <translation id="5626134646977739690">שם:</translation>
 <translation id="6391832066170725637">הקובץ או הספרייה לא נמצאו.</translation>
 <translation id="6021004449668343960">גופן Sans-Serif:</translation>
@@ -446,7 +446,6 @@ Del</translation>
 <translation id="1684861821302948641">מחק דפים</translation>
 <translation id="7073704676847768330">כנראה שזה לא האתר שאתה מחפש!</translation>
 <translation id="111844081046043029">האם אתה בטוח שברצונך לצאת מדף זה?</translation>
-<translation id="3994878504415702912">מרחק מתצוגה</translation>
 <translation id="4200983522494130825">&amp;כרטיסייה חדשה</translation>
 <translation id="1572103024875503863"><ph name="NUMBER_MANY"/> ימים</translation>
 <translation id="3009731429620355204">הפעלות</translation>
@@ -454,6 +453,7 @@ Del</translation>
 <translation id="5710435578057952990">הזהות של אתר זה לא אומתה.</translation>
 <translation id="2972581237482394796">&amp;בצע שנית</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
+<translation id="2897878306272793870">האם אתה בטוח שברצונך לפתוח כרטיסיות <ph name="TAB_COUNT"/>?</translation>
 <translation id="8571213806525832805">מארבעת השבועות האחרונים</translation>
 <translation id="3473105180351527598">הפעל הגנה נגד התחזות ותוכנות זדוניות</translation>
 <translation id="6746124502594467657">הזז למטה</translation>
@@ -531,7 +531,6 @@ Del</translation>
 <translation id="5329858601952122676">&amp;מחק</translation>
 <translation id="6710213216561001401">הקודם</translation>
 <translation id="5295309862264981122">אשר ניווט</translation>
-<translation id="1273291576878293349">פתח את כל הסימניות בחלון נסתר</translation>
 <translation id="1702534956030472451">מערב אירופאית</translation>
 <translation id="2175607476662778685">סרגל הפעלה מהירה</translation>
 <translation id="7511635910912978956">נותרו <ph name="NUMBER_FEW"/> שעות</translation>
