@@ -14,7 +14,9 @@
 
 namespace views {
 class ContainerWin;
+class DropTargetEvent;
 }
+class OSExchangeData;
 class SlideAnimation;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,8 +37,13 @@ class BackgroundTaskDropView : public views::View,
   // Overridden from ChromeViews::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void GetPreferredSize(CSize* out);
-  virtual void OnMouseEntered(const views::MouseEvent& event);
-  virtual void OnMouseExited(const views::MouseEvent& event);
+
+  // Drag & Drop
+  virtual bool CanDrop(const OSExchangeData& data);
+  virtual void OnDragEntered(const views::DropTargetEvent& event);
+  virtual int OnDragUpdated(const views::DropTargetEvent& event);
+  virtual void OnDragExited();
+  virtual int OnPerformDrop(const views::DropTargetEvent& event);
 
   // Overridden from AnimationDelegate:
   virtual void AnimationProgressed(const Animation* animation);

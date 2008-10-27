@@ -8,11 +8,14 @@
 #include "base/gfx/image_operations.h"
 #include "base/string_util.h"
 #include "chrome/app/theme/theme_resources.h"
+#include "chrome/browser/background_task/bb_drag_data.h"
+#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/slide_animation.h"
 #include "chrome/views/container_win.h"
+#include "chrome/views/event.h"
 #include "chrome/views/label.h"
 
 const int kTextMargin = 10;
@@ -164,14 +167,45 @@ void BackgroundTaskDropView::GetPreferredSize(CSize* out) {
   *out = CSize(contents_size_.width(), contents_size_.height());
 }
 
-void BackgroundTaskDropView::OnMouseEntered(const views::MouseEvent& e) {
+bool BackgroundTaskDropView::CanDrop(const OSExchangeData& data) {
+  BbDragData bb_data;
+  return bb_data.Read(data);
+}
+
+void BackgroundTaskDropView::OnDragEntered(const views::DropTargetEvent& event) {
   hover_animation_->SetTweenType(SlideAnimation::EASE_IN);
   hover_animation_->Show();
 }
 
-void BackgroundTaskDropView::OnMouseExited(const views::MouseEvent& e) {
+int BackgroundTaskDropView::OnDragUpdated(const views::DropTargetEvent& event) {
+  BbDragData bb_data;
+  if (!bb_data.Read(event.GetData()))
+    return DragDropTypes::DRAG_NONE;
+
+  return DragDropTypes::DRAG_LINK;
+}
+
+void BackgroundTaskDropView::OnDragExited() {
   hover_animation_->SetTweenType(SlideAnimation::EASE_OUT);
   hover_animation_->Hide();
+}
+
+int BackgroundTaskDropView::OnPerformDrop(const views::DropTargetEvent& event) {
+  BbDragData bb_data;
+  if (!bb_data.Read(event.GetData()))
+    return DragDropTypes::DRAG_NONE;
+
+  // TODO(dimich): Replace this MessageBox with a call into BT registration
+  // code.
+  std::wstring text = L"The site ";\
+  text += UTF8ToWide(bb_data.url().GetOrigin().spec());
+  text += L" tries to register Background Task:\n";
+  text += bb_data.title();
+  text += L"\nwith URL:\n";
+  text += UTF8ToWide(bb_data.url().spec());
+  ::MessageBox(NULL, text.c_str(), L"Background Task registration", MB_OK);
+
+  return DragDropTypes::DRAG_LINK;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

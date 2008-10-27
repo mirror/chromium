@@ -15,6 +15,9 @@
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/browser/tab_contents_delegate.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/views/background_task_drop_view.h"
+#endif
 #include "chrome/browser/views/find_bar_win.h"
 #include "chrome/browser/views/info_bar_message_view.h"
 #include "chrome/browser/views/info_bar_view.h"
@@ -94,9 +97,12 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
   // TODO(tc): Generate an appropriate drag image.
 
 #ifdef ENABLE_BACKGROUND_TASK
+  scoped_ptr<BackgroundTaskDropView> drop_target;
   if (drop_data.is_bb_drag) {
     BbDragData bb_data(drop_data);
     bb_data.Write(data.get());
+    drop_target.reset(new BackgroundTaskDropView(
+        UTF8ToWide(bb_data.url().GetOrigin().spec())));
   } else {
 #else
   {
