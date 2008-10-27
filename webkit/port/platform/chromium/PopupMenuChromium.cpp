@@ -41,6 +41,7 @@
 #include "FramelessScrollView.h"
 #include "GraphicsContext.h"
 #include "IntRect.h"
+#include "NotImplemented.h"
 #include "Page.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMouseEvent.h"
@@ -51,6 +52,11 @@
 #include "ScrollbarTheme.h"
 #include "SystemTime.h"
 #include "Widget.h"
+
+#if !PLATFORM(WIN_OS)
+#include "KeyboardCodes.h"
+#endif
+
 #pragma warning(pop)
 
 using namespace WTF;
@@ -183,11 +189,11 @@ private:
     PopupListBox(PopupMenuClient* client)
         : m_originalIndex(0)
         , m_selectedIndex(0)
+        , m_acceptOnAbandon(false)
         , m_visibleRows(0)
         , m_popupClient(client)
         , m_repeatingChar(0)
         , m_lastCharTime(0)
-        , m_acceptOnAbandon(false)
     {
         setScrollbarModes(ScrollbarAlwaysOff, ScrollbarAlwaysOff);
     }
@@ -551,8 +557,6 @@ bool PopupListBox::handleKeyEvent(const PlatformKeyboardEvent& event)
 
     if (numItems() == 0 && event.windowsVirtualKeyCode() != VK_ESCAPE)
         return true;
-
-    int oldIndex = m_selectedIndex;
 
     switch (event.windowsVirtualKeyCode()) {
     case VK_ESCAPE:

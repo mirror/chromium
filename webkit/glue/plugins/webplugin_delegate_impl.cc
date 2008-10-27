@@ -4,11 +4,15 @@
 
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 
+#include <string>
+#include <vector>
+
 #include "base/file_util.h"
 #include "base/message_loop.h"
 #include "base/gfx/gdi_util.h"
 #include "base/gfx/point.h"
 #include "base/stats_counters.h"
+#include "base/string_util.h"
 #include "webkit/default_plugin/plugin_impl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webplugin.h"
@@ -16,6 +20,7 @@
 #include "webkit/glue/plugins/plugin_lib.h"
 #include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/plugins/plugin_stream_url.h"
+#include "webkit/glue/webkit_glue.h"
 
 static StatsCounter windowless_queue(L"Plugin.ThrottleQueue");
 
@@ -132,9 +137,7 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
       handle_event_depth_(0),
       user_gesture_message_posted_(false),
 #pragma warning(suppress: 4355)  // can use this
-      user_gesture_msg_factory_(this),
-      load_manually_(false),
-      first_geometry_update_(true) {
+      user_gesture_msg_factory_(this) {
   memset(&window_, 0, sizeof(window_));
 
   const WebPluginInfo& plugin_info = instance_->plugin_lib()->plugin_info();
@@ -146,6 +149,16 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
     // agent.
     instance_->set_use_mozilla_user_agent();
     quirks_ |= PLUGIN_QUIRK_THROTTLE_WM_USER_PLUS_ONE;
+  } else if (filename == L"nppdf32.dll") {
+    // Check for the version number above or equal 9.
+    std::vector<std::wstring> version;
+    SplitString(plugin_info.version, L'.', &version);
+    if (version.size() > 0) {
+      int major = static_cast<int>(StringToInt64(version[0]));
+      if (major >= 9) {
+        quirks_ |= PLUGIN_QUIRK_DIE_AFTER_UNLOAD;
+      }
+    }
   } else if (plugin_info.name.find(L"Windows Media Player") !=
              std::wstring::npos) {
     // Windows Media Player needs two NPP_SetWindow calls.
@@ -201,6 +214,9 @@ bool WebPluginDelegateImpl::Initialize(const GURL& url,
     }
   }
 
+  if (quirks_ & PLUGIN_QUIRK_DIE_AFTER_UNLOAD)
+    webkit_glue::SetForcefullyTerminatePluginProcess(true);
+
   bool start_result = instance_->Start(url, argn, argv, argc, load_manually);
 
   NPAPI::PluginInstance::SetInitializingInstance(old_instance);
@@ -225,7 +241,6 @@ bool WebPluginDelegateImpl::Initialize(const GURL& url,
 
   plugin->SetWindow(windowed_handle_, handle_event_pump_messages_event_);
 
-  load_manually_ = load_manually;
   plugin_url_ = url.spec();
   return true;
 }
@@ -260,16 +275,6 @@ void WebPluginDelegateImpl::UpdateGeometry(
     WindowlessUpdateGeometry(window_rect, clip_rect);
   } else {
     WindowedUpdateGeometry(window_rect, clip_rect, cutout_rects, visible);
-  }
-
-  // Initiate a download on the plugin url. This should be done for the
-  // first update geometry sequence.
-  if (first_geometry_update_) {
-    first_geometry_update_ = false;
-    // An empty url corresponds to an EMBED tag with no src attribute.
-    if (!load_manually_ && !plugin_url_.empty()) {
-      instance_->SendStream(plugin_url_.c_str(), false, NULL);
-    }
   }
 }
 

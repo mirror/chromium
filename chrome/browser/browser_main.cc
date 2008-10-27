@@ -12,6 +12,7 @@
 #include "base/gfx/vector_canvas.h"
 #include "base/histogram.h"
 #include "base/path_service.h"
+#include "base/process_util.h"
 #include "base/registry.h"
 #include "base/string_util.h"
 #include "base/tracked_objects.h"
@@ -52,6 +53,7 @@
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/helper.h"
 #include "chrome/installer/util/install_util.h"
+#include "chrome/installer/util/shell_util.h"
 #include "chrome/installer/util/version.h"
 #include "chrome/views/accelerator_handler.h"
 #include "net/base/net_module.h"
@@ -166,9 +168,10 @@ int DoUninstallTasks() {
   ResultCodes::ExitCode ret = ResultCodes::NORMAL_EXIT;
   if (!FirstRun::RemoveSentinel())
     ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  if (!FirstRun::RemoveChromeDesktopShortcut())
+  // We only want to modify user level shortcuts so pass false for system_level.
+  if (!ShellUtil::RemoveChromeDesktopShortcut(ShellUtil::CURRENT_USER))
     ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  if (!FirstRun::RemoveChromeQuickLaunchShortcut())
+  if (!ShellUtil::RemoveChromeQuickLaunchShortcut(ShellUtil::CURRENT_USER))
     ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
   return ret;
 }
@@ -295,9 +298,8 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 #if defined(OS_WIN)
   // Make the selection of network stacks early on before any consumers try to
   // issue HTTP requests.
-  net::HttpNetworkLayer::UseWinHttp(true);
-  if (parsed_command_line.HasSwitch(switches::kUseNewHttp))
-    net::HttpNetworkLayer::UseWinHttp(false);
+  if (parsed_command_line.HasSwitch(switches::kUseWinHttp))
+    net::HttpNetworkLayer::UseWinHttp(true);
 #endif
 
   std::wstring user_data_dir;
@@ -533,12 +535,14 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   // Prepare for memory caching of SDCH dictionaries.
   SdchManager sdch_manager;  // Construct singleton database.
+  sdch_manager.set_sdch_fetcher(new SdchDictionaryFetcher);
+  // TODO(jar): Use default to "" so that all domains are supported.
+  std::string switch_domain(".google.com");  // Provide default test domain.
   if (parsed_command_line.HasSwitch(switches::kSdchFilter)) {
-    sdch_manager.set_sdch_fetcher(new SdchDictionaryFetcher);
-    std::wstring switch_domain =
-        parsed_command_line.GetSwitchValue(switches::kSdchFilter);
-    sdch_manager.EnableSdchSupport(WideToASCII(switch_domain));
+    switch_domain =
+        WideToASCII(parsed_command_line.GetSwitchValue(switches::kSdchFilter));
   }
+  sdch_manager.EnableSdchSupport(switch_domain);
 
   MetricsService* metrics = NULL;
   if (!parsed_command_line.HasSwitch(switches::kDisableMetrics)) {

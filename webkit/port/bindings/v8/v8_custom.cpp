@@ -515,7 +515,7 @@ ACCESSOR_SETTER(DOMWindowOpener) {
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, info.Holder());
 
-  if (!V8Proxy::IsFromSameOrigin(imp->frame(), true))
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return;
   
   // Opener can be shadowed if it is in the same domain.
@@ -788,11 +788,8 @@ CALLBACK_FUNC_DECL(DOMWindowAddEventListener) {
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (!imp->frame())
     return v8::Undefined();  // DOMWindow could be disconnected from the frame
@@ -824,11 +821,8 @@ CALLBACK_FUNC_DECL(DOMWindowRemoveEventListener) {
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (!imp->frame())
     return v8::Undefined();
@@ -1102,14 +1096,9 @@ CALLBACK_FUNC_DECL(DOMWindowOpen) {
   DOMWindow* parent = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
   Frame* frame = parent->frame();
-  if (!frame)
-    return v8::Undefined();
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(frame, true)) {
+  if (!V8Proxy::CanAccessFrame(frame, true))
     return v8::Undefined();
-  }
 
   Frame* active_frame = V8Proxy::retrieveActiveFrame();
   if (!active_frame)
@@ -2673,11 +2662,8 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   v8::Handle<v8::Value> function = args[0];
 
@@ -2882,11 +2868,8 @@ CALLBACK_FUNC_DECL(DOMWindowAtob) {
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (args.Length() < 1) {
     V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
@@ -2904,11 +2887,8 @@ CALLBACK_FUNC_DECL(DOMWindowBtoa) {
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (args.Length() < 1) {
     V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
@@ -3428,8 +3408,12 @@ CALLBACK_FUNC_DECL(SVGElementInstanceRemoveEventListener) {
 
 // --------------- Security Checks -------------------------
 NAMED_ACCESS_CHECK(DOMWindow) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::DOMWINDOW);
-  v8::Handle<v8::Value> window = host->GetPrototype();
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::DOMWINDOW);
+  v8::Handle<v8::Value> window =
+    V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, host);
+  if (window.IsEmpty())
+      return false;  // the frame is gone.
+
   DOMWindow* target_win =
     V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, window);
 
@@ -3449,13 +3433,17 @@ NAMED_ACCESS_CHECK(DOMWindow) {
     }
   }
 
-  return V8Proxy::CanAccess(target);
+  return V8Proxy::CanAccessFrame(target, false);
 }
 
 
 INDEXED_ACCESS_CHECK(DOMWindow) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::DOMWINDOW);
-  v8::Handle<v8::Value> window = host->GetPrototype();
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::DOMWINDOW);
+  v8::Handle<v8::Value> window =
+    V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, host);
+  if (window.IsEmpty())
+      return false;
+
   DOMWindow* target_win =
     V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, window);
 
@@ -3471,43 +3459,43 @@ INDEXED_ACCESS_CHECK(DOMWindow) {
     return true;
   }
 
-  return V8Proxy::CanAccess(target);
+  return V8Proxy::CanAccessFrame(target, false);
 }
 
 
 INDEXED_ACCESS_CHECK(History) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::HISTORY);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::HISTORY);
   // Only allow same origin access
   History* imp =
       V8Proxy::ToNativeObject<History>(V8ClassIndex::HISTORY, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 NAMED_ACCESS_CHECK(History) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::HISTORY);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::HISTORY);
   // Only allow same origin access
   History* imp =
       V8Proxy::ToNativeObject<History>(V8ClassIndex::HISTORY, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 INDEXED_ACCESS_CHECK(Location) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::LOCATION);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::LOCATION);
   // Only allow same origin access
   Location* imp =
       V8Proxy::ToNativeObject<Location>(V8ClassIndex::LOCATION, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 NAMED_ACCESS_CHECK(Location) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::LOCATION);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::LOCATION);
   // Only allow same origin access
   Location* imp =
       V8Proxy::ToNativeObject<Location>(V8ClassIndex::LOCATION, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
@@ -3523,9 +3511,13 @@ NAMED_ACCESS_CHECK(Location) {
 Frame* V8Custom::GetTargetFrame(v8::Local<v8::Object> host,
                                 v8::Local<v8::Value> data) {
   Frame* target = 0;
-  switch (V8ClassIndex::ToWrapperType(data)) {
+  switch (V8ClassIndex::FromInt(data->Int32Value())) {
     case V8ClassIndex::DOMWINDOW: {
-      v8::Handle<v8::Value> window = host->GetPrototype();
+      v8::Handle<v8::Value> window =
+          V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, host);
+      if (window.IsEmpty())
+          return target;
+
       DOMWindow* target_win =
         V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, window);
       target = target_win->frame();

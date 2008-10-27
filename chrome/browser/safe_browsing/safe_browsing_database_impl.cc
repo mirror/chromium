@@ -4,9 +4,11 @@
 
 #include "chrome/browser/safe_browsing/safe_browsing_database_impl.h"
 
+#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
+#include "base/platform_thread.h"
 #include "base/sha2.h"
 #include "base/string_util.h"
 #include "chrome/browser/safe_browsing/bloom_filter.h"
@@ -56,20 +58,15 @@ static const int kMaxStalenessMinutes = 45;
 
 SafeBrowsingDatabaseImpl::SafeBrowsingDatabaseImpl()
     : db_(NULL),
-      init_(false),
       transaction_count_(0),
+      init_(false),
       asynchronous_(true),
       chunk_inserted_callback_(NULL),
-#pragma warning(suppress: 4355)  // can use this
-      bloom_read_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      bloom_write_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      process_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      reset_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      resume_factory_(this),
+      ALLOW_THIS_IN_INITIALIZER_LIST(process_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(bloom_read_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(bloom_write_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(reset_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(resume_factory_(this)),
       disk_delay_(kMaxThreadHoldupMs) {
 }
 
@@ -104,8 +101,8 @@ bool SafeBrowsingDatabaseImpl::Init(const std::wstring& filename,
   if (load_filter) {
     LoadBloomFilter();
   } else {
-    bloom_filter_.reset(
-        new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio));
+    bloom_filter_ =
+        new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio);
   }
 
   init_ = true;
@@ -228,8 +225,8 @@ bool SafeBrowsingDatabaseImpl::ResetDatabase() {
     return false;
   }
 
-  bloom_filter_.reset(
-      new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio));
+  bloom_filter_ =
+      new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio);
   file_util::Delete(bloom_filter_filename_, false);
 
   if (!Open())
@@ -473,7 +470,7 @@ void SafeBrowsingDatabaseImpl::RunThrottledWork() {
               &SafeBrowsingDatabaseImpl::RunThrottledWork), disk_delay_);
       break;
     } else {
-      Sleep(kMaxThreadHoldupMs);
+      PlatformThread::Sleep(kMaxThreadHoldupMs);
     }
   }
 }
@@ -1014,7 +1011,7 @@ void SafeBrowsingDatabaseImpl::OnReadHostKeys(int start_id) {
       if (asynchronous_) {
         break;
       } else {
-        Sleep(kMaxThreadHoldupMs);
+        PlatformThread::Sleep(kMaxThreadHoldupMs);
       }
     }
   }
@@ -1047,7 +1044,7 @@ void SafeBrowsingDatabaseImpl::OnDoneReadingHostKeys() {
   for (size_t i = 0; i < bloom_filter_temp_hostkeys_.size(); ++i)
     filter->Insert(bloom_filter_temp_hostkeys_[i]);
 
-  bloom_filter_.reset(filter);
+  bloom_filter_ = filter;
 
   TimeDelta bloom_gen = Time::Now() - before;
   TimeDelta delta = Time::Now() - bloom_filter_rebuild_time_;
@@ -1180,7 +1177,7 @@ void SafeBrowsingDatabaseImpl::ClearCachedHashesForChunk(int list_id,
         ++eit;
     }
     if (entries.empty())
-      it = hash_cache_.erase(it);
+      hash_cache_.erase(it++);
     else
       ++it;
   }

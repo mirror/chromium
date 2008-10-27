@@ -240,6 +240,9 @@ each locale. -->
       <message name="IDS_CONTENT_CONTEXT_INSPECTELEMENT" desc="The name of the Inspect Element command in the content area context menu">
         I&amp;nspect element
       </message>
+      <message name="IDS_CONTENT_CONTEXT_RELOAD" desc="The name of the Reload command in the content area context menu">
+        Re&amp;load
+      </message>
 
       <message name="IDS_CONTENT_CONTEXT_OPENFRAMENEWWINDOW" desc="The name of the Open Frame in New Window command in the content area context menu">
         Open frame in new &amp;window
@@ -1938,7 +1941,10 @@ each locale. -->
         A new version of <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> is available
       </message>
       <message name="IDS_UPGRADE_SUCCESSFUL" desc="Status label: Successfully upgraded">
-        <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> has been updated <ph name="VERSION">$2<ex>(0.1.131)</ex></ph>
+        <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> has been updated to <ph name="VERSION">$2<ex>0.1.131</ex></ph>
+      </message>
+      <message name="IDS_UPGRADE_SUCCESSFUL_NOVERSION" desc="Status label: Successfully upgraded">
+        <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> has been updated
       </message>
       <message name="IDS_UPGRADE_ALREADY_UP_TO_DATE" desc="Status label: Already up to date">
         <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> is up to date (<ph name="VERSION">$2<ex>0.1.131</ex></ph>)
@@ -2163,9 +2169,6 @@ each locale. -->
 
       <message name="IDS_ERRORPAGES_SUGGESTION_RELOAD" desc="Suggest reloading to the user">
         &lt;a jsvalues="href:reloadUrl"&gt;Reload&lt;/a&gt; this web page later.
-      </message>
-      <message name="IDS_ERRORPAGES_SUGGESTION_CACHE" desc="String suggesting to try using the google cache.">
-        View a &lt;a jsvalues="href:cacheUrl"&gt;cached copy of the web page from Google&lt;/a&gt;
       </message>
       <message name="IDS_ERRORPAGES_SUGGESTION_HOMEPAGE" desc="String suggesting to try just the hostname of the site.">
         Go to the homepage of the site:
@@ -3134,6 +3137,7 @@ each locale. -->
       <message name="IDS_BLOCKED_POPUP" desc="Text on a blocked popup's window titlebar.">
         Blocked Pop-up
       </message>
+
       <!-- Multiple download warning-->
       <message name="IDS_MULTI_DOWNLOAD_WARNING" desc="Warning invoked if multiple downloads are attempted without user interaction.">
         This site is attempting to download multiple files. Do you want to allow this?
@@ -3144,6 +3148,40 @@ each locale. -->
       <message name="IDS_MULTI_DOWNLOAD_WARNING_DENY" desc="Text on the deny button in the IDS_MULTI_DOWNLOAD_WARNING dialog">
         Deny
       </message>
+
+      <!-- Bookmark table -->
+      <message name="IDS_BOOKMARK_TABLE_TITLE" desc="Title of the column in bookmark table showing the title of the bookmark.">
+        Title
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_URL" desc="Title of the column in bookmark table showing the url of the bookmark.">
+        URL
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_PATH" desc="Title of the column in bookmark table showing the path in the bookmark bar of the node.">
+        Folder
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_OTHER_BOOKMARKS_PATH" desc="Path used for bookmarks in the other bookmarks folder">
+        Other bookmarks
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_BOOKMARK_BAR_PATH" desc="Path used for bookmarks on the bookmark bar">
+        Bookmark bar
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_PATH_SEPARATOR" desc="Separator between path elements in the bookmarks table">
+        /
+      </message>
+
+      <!-- Bookmark tree -->
+      <message name="IDS_BOOKMARK_TREE_RECENTLY_BOOKMARKED_NODE_TITLE" desc="Title of the bookmark node in the bookmark manager showing the 'recently bookmarked' bookmarks">
+        Recently Added
+      </message>
+      <message name="IDS_BOOKMARK_TREE_SEARCH_NODE_TITLE" desc="Title of node under which search results are shown.">
+        Search
+      </message>
+
+      <!-- Bookmark manager -->
+      <message name="IDS_BOOKMARK_MANAGER_TITLE" desc="Title of the bookmark manager window.">
+        Bookmark Manager
+      </message>
+
     </messages>
   </release>
 </grit>

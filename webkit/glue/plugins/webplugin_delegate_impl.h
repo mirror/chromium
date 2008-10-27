@@ -88,6 +88,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
     PLUGIN_QUIRK_DONT_CALL_WND_PROC_RECURSIVELY = 4,
     PLUGIN_QUIRK_DONT_SET_NULL_WINDOW_HANDLE_ON_DESTROY = 8,
     PLUGIN_QUIRK_DONT_ALLOW_MULTIPLE_INSTANCES = 16,
+    PLUGIN_QUIRK_DIE_AFTER_UNLOAD = 32,
   };
 
   int quirks() { return quirks_; }
@@ -259,12 +260,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
 
   // The url with which the plugin was instantiated.
   std::string plugin_url_;
-
-  // Indicates if the download would be initiated by the plugin or us.
-  bool load_manually_;
-
-  // Indicates whether a geometry update sequence is the first.
-  bool first_geometry_update_;
 
   DISALLOW_EVIL_CONSTRUCTORS(WebPluginDelegateImpl);
 };

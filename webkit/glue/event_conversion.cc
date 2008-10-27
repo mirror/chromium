@@ -8,6 +8,9 @@
 
 #if defined(OS_WIN)
 #include <windows.h>
+#else
+// This file defines all the windows VK_ key codes in the WebCore namespace.
+#include "KeyboardCodes.h"
 #endif
 
 #include "StringImpl.h"  // This is so that the KJS build works
@@ -34,19 +37,10 @@ int MakePlatformMouseEvent::last_click_count_ = 0;
 uint32 MakePlatformMouseEvent::last_click_time_ = 0;
 
 MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
-                                               const WebMouseEvent& e)
-#if defined(OS_WIN)
-  {
-#elif defined(OS_MACOSX)
-    : PlatformMouseEvent(e.mac_event.get()) {
-#elif defined(OS_LINUX)
-    : PlatformMouseEvent() {
-#endif
-#if defined(OS_WIN) || defined(OS_LINUX)
+                                               const WebMouseEvent& e) {
   // TODO(mpcomplete): widget is always toplevel, unless it's a popup.  We
   // may be able to get rid of this once we abstract popups into a WebKit API.
   m_position = widget->convertFromContainingWindow(IntPoint(e.x, e.y));
-#endif
   m_globalPosition = IntPoint(e.global_x, e.global_y);
   m_button = static_cast<MouseButton>(e.button);
   m_shiftKey = (e.modifiers & WebInputEvent::SHIFT_KEY) != 0;
@@ -116,15 +110,8 @@ MakePlatformMouseEvent::MakePlatformMouseEvent(Widget* widget,
 // MakePlatformWheelEvent -----------------------------------------------------
 
 MakePlatformWheelEvent::MakePlatformWheelEvent(Widget* widget,
-                                               const WebMouseWheelEvent& e)
-#if defined(OS_WIN) || defined(OS_LINUX)
-  {
-#elif defined(OS_MACOSX)
-    : PlatformWheelEvent(e.mac_event.get()) {
-#endif
-#if defined(OS_WIN) || defined(OS_LINUX)
+                                               const WebMouseWheelEvent& e) {
   m_position = widget->convertFromContainingWindow(IntPoint(e.x, e.y));
-#endif
   m_globalPosition = IntPoint(e.global_x, e.global_y);
   m_deltaX = static_cast<float>(e.delta_x);
   m_deltaY = static_cast<float>(e.delta_y);
@@ -157,7 +144,6 @@ static inline String ToSingleCharacterString(UChar c) {
   return String(&c, 1);
 }
 
-#if defined(OS_WIN)
 static String GetKeyIdentifierForWindowsKeyCode(unsigned short keyCode) {
   switch (keyCode) {
     case VK_MENU:
@@ -260,19 +246,9 @@ static String GetKeyIdentifierForWindowsKeyCode(unsigned short keyCode) {
       return String::format("U+%04X", toupper(keyCode));
   }
 }
-#else
-static String GetKeyIdentifierForWindowsKeyCode(unsigned short keyCode) {
-  return String::format("U+%04X", toupper(keyCode));
-}
-#endif
 
 MakePlatformKeyboardEvent::MakePlatformKeyboardEvent(const WebKeyboardEvent& e)
-#if defined(OS_WIN) || defined(OS_LINUX)
   {
-#elif defined(OS_MACOSX)
-    : PlatformKeyboardEvent(e.mac_event.get()) {
-#endif
-#if defined(OS_WIN) || defined(OS_LINUX)
   m_type = ToPlatformKeyboardEventType(e.type);
   if (m_type == Char || m_type == KeyDown)
     m_text = m_unmodifiedText = ToSingleCharacterString(e.key_code);
@@ -284,7 +260,6 @@ MakePlatformKeyboardEvent::MakePlatformKeyboardEvent(const WebKeyboardEvent& e)
   } else {
     m_windowsVirtualKeyCode = 0;
   }
-#endif
   m_autoRepeat = (e.modifiers & WebInputEvent::IS_AUTO_REPEAT) != 0;
   m_isKeypad = (e.modifiers & WebInputEvent::IS_KEYPAD) != 0;
   m_shiftKey = (e.modifiers & WebInputEvent::SHIFT_KEY) != 0;
@@ -329,4 +304,3 @@ bool MakePlatformKeyboardEvent::IsCharacterKey() const {
   }
   return true;
 }
-

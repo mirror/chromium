@@ -38,6 +38,9 @@ NET_ERROR(UNEXPECTED, -9)
 // Permission to access a resource was denied.
 NET_ERROR(ACCESS_DENIED, -10)
 
+// The operation failed because of unimplemented functionality.
+NET_ERROR(NOT_IMPLEMENTED, -11)
+
 // A connection was closed (corresponding to a TCP FIN).
 NET_ERROR(CONNECTION_CLOSED, -100)
 
@@ -214,6 +217,9 @@ NET_ERROR(UNEXPECTED_PROXY_AUTH, -323)
 
 // The server closed the connection without sending any data.
 NET_ERROR(EMPTY_RESPONSE, -324)
+
+// The headers section of the response is too large.
+NET_ERROR(RESPONSE_HEADERS_TOO_BIG, -325)
 
 // The cache does not have the requested entry.
 NET_ERROR(CACHE_MISS, -400)

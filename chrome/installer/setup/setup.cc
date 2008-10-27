@@ -6,6 +6,7 @@
 
 #include "chrome/installer/setup/setup.h"
 
+#include "base/command_line.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "base/registry.h"
@@ -39,20 +40,33 @@ void AddChromeToMediaPlayerList() {
 
 }
 
-// Update shortcuts that are created by chrome.exe during first run, but
-// we take care of updating them in case the location of chrome.exe changes.
-void UpdateChromeExeShortcuts(const std::wstring& chrome_exe) {
-  std::wstring desktop_shortcut, ql_shortcut, shortcut_name;
-  if (!ShellUtil::GetQuickLaunchPath(&ql_shortcut) ||
-      !ShellUtil::GetDesktopPath(&desktop_shortcut) ||
-      !ShellUtil::GetChromeShortcutName(&shortcut_name))
-    return;
-  file_util::AppendToPath(&ql_shortcut, shortcut_name);
-  file_util::AppendToPath(&desktop_shortcut, shortcut_name);
+void DoFirstInstallTasks(std::wstring install_path, bool system_level) {
+  // Try to add Chrome to Media Player shim inclusion list. We don't do any
+  // error checking here because this operation will fail if user doesn't
+  // have admin rights and we want to ignore the error.
+  AddChromeToMediaPlayerList();
 
-  // Go ahead and update the shortcuts if they exist.
-  ShellUtil::UpdateChromeShortcut(chrome_exe, ql_shortcut, false);
-  ShellUtil::UpdateChromeShortcut(chrome_exe, desktop_shortcut, false);
+  // We try to register Chrome as a valid browser on local machine. This
+  // will work only if current user has admin rights.
+  std::wstring chrome_exe(install_path);
+  file_util::AppendToPath(&chrome_exe, installer_util::kChromeExe);
+  CommandLine cmd_line;
+  LOG(INFO) << "Registering Chrome as browser";
+  ShellUtil::RegisterStatus ret = ShellUtil::FAILURE;
+  if (cmd_line.HasSwitch(installer_util::switches::kMakeChromeDefault)) {
+    ret = ShellUtil::AddChromeToSetAccessDefaults(chrome_exe, false);
+    if (ret == ShellUtil::SUCCESS) {
+      if (system_level) {
+        ShellUtil::MakeChromeDefault(
+            ShellUtil::CURRENT_USER | ShellUtil::SYSTEM_LEVEL, chrome_exe);
+      } else {
+        ShellUtil::MakeChromeDefault(ShellUtil::CURRENT_USER, chrome_exe);
+      }
+    }
+  } else {
+    ret = ShellUtil::AddChromeToSetAccessDefaults(chrome_exe, true);
+  }
+  LOG(INFO) << "Return status of Chrome browser registration " << ret;
 }
 
 // This method creates Chrome shortcuts in Start->Programs for all users or
@@ -94,7 +108,7 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
   // - The shortcut already exists in case of updates (user may have deleted
   //   shortcuts since our install. So on updates we only update if shortcut
   //   already exists)
-  bool ret1 = true;
+  bool ret = true;
   std::wstring chrome_link(shortcut_path);  // Chrome link (launches Chrome)
   file_util::AppendToPath(&chrome_link, product_name + L".lnk");
   std::wstring chrome_exe(install_path);  // Chrome link target
@@ -106,15 +120,16 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
       file_util::CreateDirectoryW(shortcut_path);
 
     LOG(INFO) << "Creating shortcut to " << chrome_exe << " at " << chrome_link;
-    ShellUtil::UpdateChromeShortcut(chrome_exe, chrome_link, true);
+    ret = ret && ShellUtil::UpdateChromeShortcut(chrome_exe, chrome_link, true);
   } else if (file_util::PathExists(chrome_link)) {
     LOG(INFO) << "Updating shortcut at " << chrome_link
               << " to point to " << chrome_exe;
-    ShellUtil::UpdateChromeShortcut(chrome_exe, chrome_link, false);
+    ret = ret && ShellUtil::UpdateChromeShortcut(chrome_exe,
+                                                 chrome_link,
+                                                 false); // do not create new
   }
 
   // Create/update uninstall link
-  bool ret2 = true;
   std::wstring uninstall_link(shortcut_path);  // Uninstall Chrome link
   file_util::AppendToPath(&uninstall_link,
       dist->GetUninstallLinkName() + L".lnk");
@@ -136,19 +151,33 @@ bool CreateOrUpdateChromeShortcuts(const std::wstring& exe_path,
 
     LOG(INFO) << "Creating/updating uninstall link at " << uninstall_link;
     std::wstring target_folder = file_util::GetDirectoryFromPath(install_path);
-    ret2 = file_util::CreateShortcutLink(setup_exe.c_str(),
-                                         uninstall_link.c_str(),
-                                         target_folder.c_str(),
-                                         arguments.c_str(),
-                                         NULL,
-                                         setup_exe.c_str(),
-                                         0);
+    ret = ret && file_util::CreateShortcutLink(setup_exe.c_str(),
+                                               uninstall_link.c_str(),
+                                               target_folder.c_str(),
+                                               arguments.c_str(),
+                                               NULL, setup_exe.c_str(), 0);
   }
 
-  // Update Desktop and Quick Launch shortcuts (only if they already exist)
-  UpdateChromeExeShortcuts(chrome_exe);
+  // Update Desktop and Quick Launch shortcuts. If --create-new-shortcuts
+  // is specified we want to create them, otherwise we update them only if
+  // they exist.
+  bool create = false;  // Only update; do not create, if they do not exist
+  CommandLine cmd_line;
+  if (cmd_line.HasSwitch(installer_util::switches::kCreateAllShortcuts))
+    create = true;
+  if (system_install) {
+    ret = ret && ShellUtil::CreateChromeDesktopShortcut(chrome_exe,
+        ShellUtil::SYSTEM_LEVEL, create);
+    ret = ret && ShellUtil::CreateChromeQuickLaunchShortcut(chrome_exe,
+        ShellUtil::CURRENT_USER | ShellUtil::SYSTEM_LEVEL, create);
+  } else {
+    ret = ret && ShellUtil::CreateChromeDesktopShortcut(chrome_exe,
+        ShellUtil::CURRENT_USER, create);
+    ret = ret && ShellUtil::CreateChromeQuickLaunchShortcut(chrome_exe,
+        ShellUtil::CURRENT_USER, create);
+  }
 
-  return ret1 && ret2;
+  return ret;
 }
 }  // namespace
 
@@ -211,21 +240,9 @@ installer_util::InstallStatus installer::InstallOrUpdateChrome(
                                        install_path, new_version.GetString()))
       LOG(WARNING) << "Failed to create/update start menu shortcut.";
 
-    std::wstring chrome_exe(install_path);
-    file_util::AppendToPath(&chrome_exe, installer_util::kChromeExe);
     if (result == installer_util::FIRST_INSTALL_SUCCESS ||
         result == installer_util::INSTALL_REPAIRED) {
-      // Try to add Chrome to Media Player shim inclusion list. We don't do any
-      // error checking here because this operation will fail if user doesn't
-      // have admin rights and we want to ignore the error.
-      AddChromeToMediaPlayerList();
-
-      // We try to register Chrome as a valid browser on local machine. This
-      // will work only if current user has admin rights.
-      LOG(INFO) << "Registering Chrome as browser";
-      ShellUtil::RegisterStatus ret =
-          ShellUtil::AddChromeToSetAccessDefaults(chrome_exe, true);
-      LOG(INFO) << "Return status of Chrome browser registration " << ret;
+      DoFirstInstallTasks(install_path, system_install);
     } else {
       RemoveOldVersionDirs(install_path, new_version.GetString());
     }

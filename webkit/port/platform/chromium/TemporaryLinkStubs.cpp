@@ -36,7 +36,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 using namespace WebCore;
-
 String WebCore::signedPublicKeyAndChallengeString(unsigned, const String&, const KURL&) { notImplemented(); return String(); }
 void WebCore::getSupportedKeySizes(Vector<String>&) { notImplemented(); }
 
@@ -49,64 +48,7 @@ PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String& fi
 }
 
 namespace WTF {
+#if !defined(__linux__)
 void scheduleDispatchFunctionsOnMainThread() { notImplemented(); }
-}
-
-#if USE(JSC)
-#include "c_instance.h"
-#include "Database.h"
-#include "DatabaseAuthorizer.h"
-#include "Document.h"
-#include "DOMWindow.h"
-#include "JSStorageCustom.h"
-#include "SQLResultSet.h"
-#include "SQLTransaction.h"
-#include "SQLValue.h"
-#include "Storage.h"
-#include "StorageEvent.h"
-#include "TimeRanges.h"
-
-using namespace KJS;
-
-Database::~Database() { notImplemented(); }
-String Database::version() const { notImplemented(); return String(); }
-void Database::transaction(PassRefPtr<SQLTransactionCallback> callback, PassRefPtr<SQLTransactionErrorCallback> errorCallback, PassRefPtr<VoidCallback> successCallback) { notImplemented(); }
-void Database::changeVersion(const String& oldVersion, const String& newVersion, PassRefPtr<SQLTransactionCallback> callback, PassRefPtr<SQLTransactionErrorCallback> errorCallback, PassRefPtr<VoidCallback> successCallback) { notImplemented(); }
-
-bool JSStorage::canGetItemsForName(ExecState*, Storage* impl, const Identifier& propertyName) { notImplemented(); return false; }
-JSValue* JSStorage::nameGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot) { notImplemented(); return 0; }
-bool JSStorage::deleteProperty(ExecState* exec, const Identifier& propertyName) { notImplemented(); return false; }
-bool JSStorage::customPut(ExecState* exec, const Identifier& propertyName, JSValue* value, PutPropertySlot&) { notImplemented(); return false; }
-bool JSStorage::customGetPropertyNames(ExecState* exec, PropertyNameArray& propertyNames) { notImplemented(); return false; }
-
-PassRefPtr<KJS::Bindings::Instance> PluginView::bindingInstance() { notImplemented(); return PassRefPtr<KJS::Bindings::Instance>(0); }
-
-SQLiteDatabase::~SQLiteDatabase() { notImplemented(); }
-SQLiteTransaction::~SQLiteTransaction() { notImplemented(); }
-
-int64_t SQLResultSet::insertId(ExceptionCode&) const { notImplemented(); return 0; }
-int SQLResultSet::rowsAffected() const { notImplemented(); return 0; }
-SQLResultSetRowList* SQLResultSet::rows() const { notImplemented(); return 0; }
-
-unsigned int SQLResultSetRowList::length() const { notImplemented(); return 0; }
-
-SQLTransaction::~SQLTransaction() { notImplemented(); }
-void SQLTransaction::executeSQL(const String&, const Vector<SQLValue>&, PassRefPtr<SQLStatementCallback>, PassRefPtr<SQLStatementErrorCallback>, ExceptionCode&) { notImplemented(); }
-
-SQLValue::SQLValue(class WebCore::SQLValue const &) {}
-String SQLValue::string() const { return String(); }
-double SQLValue::number() const { return 0.0; }
-
-unsigned Storage::length() const { notImplemented(); return 0; }
-String Storage::key(unsigned index, ExceptionCode&) const { notImplemented(); return String(); }
-String Storage::getItem(const String&) const { notImplemented(); return String(); }
-void Storage::setItem(const String& key, const String& value, ExceptionCode&) { notImplemented(); }
-void Storage::removeItem(const String&) { notImplemented(); }
-void Storage::clear() { notImplemented(); }
-
-void StorageEvent::initStorageEvent(const AtomicString& type, bool canBubble, bool cancelable, const String& key, const String& oldValue, const String& newValue, const String& uri, PassRefPtr<DOMWindow> source) { notImplemented(); }
-
-float TimeRanges::start(unsigned int, int&) const { notImplemented(); return 0.0; }
-float TimeRanges::end(unsigned int, int&) const { notImplemented(); return 0.0; }
-
 #endif
+}

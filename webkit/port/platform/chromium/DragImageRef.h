@@ -30,11 +30,28 @@
 #ifndef DragImageRef_h__
 #define DragImageRef_h__
 
+#include "config.h"
+
+#if PLATFORM(WIN_OS)
 typedef struct HBITMAP__* HBITMAP;
+#elif PLATFORM(DARWIN)
+#if __OBJC__
+@class NSImage;
+#else
+class NSImage;
+#endif
+#endif
 
 namespace WebCore {
 
+#if PLATFORM(WIN_OS)
 typedef HBITMAP DragImageRef;
+#elif PLATFORM(DARWIN)
+typedef NSImage* DragImageRef;
+#else
+// TODO(port): remove null port.
+typedef void* DragImageRef;
+#endif
 
 }
 

@@ -6,7 +6,7 @@ deps = {
     "http://google-url.googlecode.com/svn/trunk@94",
 
   "src/sdch/open-vcdiff":
-    "http://open-vcdiff.googlecode.com/svn/trunk@20",
+    "http://open-vcdiff.googlecode.com/svn/trunk@22",
 
   "src/testing/gtest":
     "http://googletest.googlecode.com/svn/trunk@63",
@@ -27,7 +27,7 @@ deps = {
     "/trunk/deps/third_party/svn@3230",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/branches/bleeding_edge@539",
+    "http://v8.googlecode.com/svn/branches/bleeding_edge/@594",
 
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@36102",
@@ -46,6 +46,7 @@ include_rules = [
 # checkdeps.py shouldn't check include paths for files in these dirs:
 skip_child_includes = [
    "breakpad",
+   "gears",
    "sdch",
    "skia",
    "testing",

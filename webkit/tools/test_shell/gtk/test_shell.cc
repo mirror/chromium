@@ -9,7 +9,10 @@
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
+#include "net/base/mime_util.h"
 #include "webkit/glue/webpreferences.h"
+#include "webkit/glue/plugins/plugin_list.h"
+#include "webkit/glue/resource_loader_bridge.h"
 #include "webkit/tools/test_shell/test_navigation_controller.h"
 
 WebPreferences* TestShell::web_prefs_ = NULL;
@@ -19,7 +22,7 @@ WindowList* TestShell::window_list_;
 TestShell::TestShell() {
   // Uncomment this line to get a bunch of linker errors.  This is what we need
   // to fix.
-  //m_webViewHost.reset(WebViewHost::Create(NULL, NULL, *TestShell::web_prefs_));
+  m_webViewHost.reset(WebViewHost::Create(NULL, NULL, *TestShell::web_prefs_));
 }
 
 TestShell::~TestShell() {
@@ -102,3 +105,107 @@ bool TestShell::Navigate(const TestNavigationEntry& entry, bool reload) {
   NOTIMPLEMENTED();
   return true;
 }
+
+//-----------------------------------------------------------------------------
+
+namespace webkit_glue {
+
+void PrefetchDns(const std::string& hostname) {}
+
+void PrecacheUrl(const char16* url, int url_length) {}
+
+void AppendToLog(const char* file, int line, const char* msg) {
+  logging::LogMessage(file, line).stream() << msg;
+}
+
+bool GetMimeTypeFromExtension(const std::wstring &ext, std::string *mime_type) {
+  return net::GetMimeTypeFromExtension(ext, mime_type);
+}
+
+bool GetMimeTypeFromFile(const std::wstring &file_path,
+                         std::string *mime_type) {
+  return net::GetMimeTypeFromFile(file_path, mime_type);
+}
+
+bool GetPreferredExtensionForMimeType(const std::string& mime_type,
+                                      std::wstring* ext) {
+  return net::GetPreferredExtensionForMimeType(mime_type, ext);
+}
+
+std::wstring GetLocalizedString(int message_id) {
+  NOTREACHED();
+  return L"No string for this identifier!";
+}
+
+std::string GetDataResource(int resource_id) {
+  NOTREACHED();
+  return std::string();
+}
+
+SkBitmap* GetBitmapResource(int resource_id) {
+  return NULL;
+}
+
+bool GetApplicationDirectory(std::wstring *path) {
+  return PathService::Get(base::DIR_EXE, path);
+}
+
+GURL GetInspectorURL() {
+  return GURL("test-shell-resource://inspector/inspector.html");
+}
+
+std::string GetUIResourceProtocol() {
+  return "test-shell-resource";
+}
+
+bool GetExeDirectory(std::wstring *path) {
+  return PathService::Get(base::DIR_EXE, path);
+}
+
+bool SpellCheckWord(const wchar_t* word, int word_len,
+                    int* misspelling_start, int* misspelling_len) {
+  // Report all words being correctly spelled.
+  *misspelling_start = 0;
+  *misspelling_len = 0;
+  return true;
+}
+
+bool GetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins) {
+  //return NPAPI::PluginList::Singleton()->GetPlugins(refresh, plugins);
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool IsPluginRunningInRendererProcess() {
+  return true;
+}
+
+bool GetPluginFinderURL(std::string* plugin_finder_url) {
+  return false;
+}
+
+bool IsDefaultPluginEnabled() {
+  return false;
+}
+
+std::wstring GetWebKitLocale() {
+  return L"en-US";
+}
+
+// The following cookie functions shouldn't live here, but do for now in order
+// to get things linking
+
+std::string GetCookies(const GURL &url, const GURL &policy_url) {
+  return "";
+}
+
+void SetCookie(const GURL &url, const GURL &policy_url, const std::string &cookie) {
+}
+
+
+ResourceLoaderBridge *
+ResourceLoaderBridge::Create(WebFrame*, std::string const &, GURL const&, GURL const&, GURL const&, std::string const&, int, int, ResourceType::Type, bool) {
+  return NULL;
+}
+
+}  // namespace webkit_glue

@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/file_version_info.h"
+#include "base/process_util.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
@@ -684,6 +685,17 @@ void WebContents::DidNavigate(RenderViewHost* rvh,
       !render_manager_.showing_interstitial_page())
     GetSiteInstance()->SetSite(params.url);
 
+  // Need to update MIME type here because it's referred to in 
+  // UpdateNavigationCommands() called by RendererDidNavigate() to
+  // determine whether or not to enable the encoding menu. 
+  // It's updated only for the main frame. For a subframe, 
+  // RenderView::UpdateURL does not set params.contents_mime_type.
+  // (see http://code.google.com/p/chromium/issues/detail?id=2929 )
+  // TODO(jungshik): Add a test for the encoding menu to avoid 
+  // regressing it again. 
+  if (PageTransition::IsMainFrame(params.transition))
+    contents_mime_type_ = params.contents_mime_type;
+
   NavigationController::LoadCommittedDetails details;
   if (!controller()->RendererDidNavigate(
       params,
@@ -789,8 +801,8 @@ void WebContents::UpdateTitle(RenderViewHost* rvh,
 
 
 void WebContents::UpdateEncoding(RenderViewHost* render_view_host,
-                                 const std::wstring& encoding_name) {
-  set_encoding(encoding_name);
+                                 const std::wstring& encoding) {
+  set_encoding(encoding);
 }
 
 void WebContents::UpdateTargetURL(int32 page_id, const GURL& url) {
@@ -1157,6 +1169,10 @@ void WebContents::DidPrintPage(const ViewHostMsg_DidPrintPage_Params& params) {
 
 GURL WebContents::GetAlternateErrorPageURL() const {
   GURL url;
+  // Disable alternate error pages when in OffTheRecord/Incognito mode.
+  if (profile()->IsOffTheRecord())
+    return url;
+
   PrefService* prefs = profile()->GetPrefs();
   DCHECK(prefs);
   if (prefs->GetBoolean(prefs::kAlternateErrorPagesEnabled)) {
@@ -1435,9 +1451,6 @@ void WebContents::DidNavigateMainFramePostCommit(
 
   // Allow the new page to set the title again.
   received_page_title_ = false;
-
-  // Update contents MIME type of the main webframe.
-  contents_mime_type_ = params.contents_mime_type;
 
   // Get the favicon, either from history or request it from the net.
   fav_icon_helper_.FetchFavIcon(details.entry->url());

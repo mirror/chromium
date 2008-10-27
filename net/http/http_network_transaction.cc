@@ -10,6 +10,7 @@
 #include "base/trace_event.h"
 #include "build/build_config.h"
 #include "net/base/client_socket_factory.h"
+#include "net/base/dns_resolution_observer.h"
 #include "net/base/host_resolver.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_util.h"
@@ -421,7 +422,8 @@ int HttpNetworkTransaction::DoInitConnectionComplete(int result) {
   // Set the reused_socket_ flag to indicate that we are using a keep-alive
   // connection.  This flag is used to handle errors that occur while we are
   // trying to reuse a keep-alive connection.
-  if (reused_socket_ = (connection_.socket() != NULL)) {
+  reused_socket_ = (connection_.socket() != NULL);
+  if (reused_socket_) {
     next_state_ = STATE_WRITE_HEADERS;
   } else {
     next_state_ = STATE_RESOLVE_HOST;
@@ -451,11 +453,14 @@ int HttpNetworkTransaction::DoResolveHost() {
     port = request_->url.EffectiveIntPort();
   }
 
+  DidStartDnsResolution(host, this);
   return resolver_.Resolve(host, port, &addresses_, &io_callback_);
 }
 
 int HttpNetworkTransaction::DoResolveHostComplete(int result) {
-  if (result == OK) {
+  bool ok = (result == OK);
+  DidFinishDnsResolutionWithStatus(ok, this);
+  if (ok) {
     next_state_ = STATE_CONNECT;
   } else {
     result = ReconsiderProxyAfterError(result);
@@ -660,6 +665,10 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
       int eoh = HttpUtil::LocateEndOfHeaders(
           header_buf_.get(), header_buf_len_, header_buf_http_offset_);
       if (eoh == -1) {
+        // Prevent growing the headers buffer indefinitely.
+        if (header_buf_len_ >= kMaxHeaderBufSize)
+          return ERR_RESPONSE_HEADERS_TOO_BIG;
+
         // Haven't found the end of headers yet, keep reading.
         next_state_ = STATE_READ_HEADERS;
         return OK;

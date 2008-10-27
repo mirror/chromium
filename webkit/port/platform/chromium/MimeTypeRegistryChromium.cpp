@@ -36,6 +36,20 @@
 namespace WebCore 
 {
 
+// From MIMETypeRegistryMac.mm.
+#if PLATFORM(DARWIN) && PLATFORM(CG)
+String getMIMETypeForUTI(const String & uti)
+{
+    CFStringRef utiref = uti.createCFString();
+    CFStringRef mime = UTTypeCopyPreferredTagWithClass(utiref, kUTTagClassMIMEType);
+    String mimeType = mime;
+    if (mime)
+        CFRelease(mime);
+    CFRelease(utiref);
+    return mimeType;
+}
+#endif
+
 // Returns the file extension if one is found.  Does not include the dot in the
 // filename.  E.g., 'html'.
 // NOTE: This does not work in the sandbox because the renderer doesn't have

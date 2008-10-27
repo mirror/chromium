@@ -276,6 +276,8 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   [m_editWnd setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
   [m_editWnd setTarget:web_view];
   [m_editWnd setAction:@selector(takeURLStringValueFrom:)];
+  [[m_editWnd cell] setWraps:NO];
+  [[m_editWnd cell] setScrollable:YES];
 
   // show the window
   [m_mainWnd makeKeyAndOrderFront: nil];
@@ -818,8 +820,8 @@ void AppendToLog(const char* file, int line, const char* msg) {
   logging::LogMessage(file, line).stream() << msg;
 }
 
-bool GetMimeTypeFromExtension(std::string &ext, std::string* mime_type) {
-  return net::GetMimeTypeFromExtension(UTF8ToWide(ext), mime_type);
+bool GetMimeTypeFromExtension(const std::wstring &ext, std::string* mime_type) {
+  return net::GetMimeTypeFromExtension(ext, mime_type);
 }
 
 bool GetMimeTypeFromFile(const std::string &file_path,
@@ -828,12 +830,8 @@ bool GetMimeTypeFromFile(const std::string &file_path,
 }
 
 bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                      std::string* ext) {
-  std::wstring wide_ext;
-  bool result = net::GetPreferredExtensionForMimeType(mime_type, &wide_ext);
-  if (result)
-    *ext = WideToUTF8(wide_ext);
-  return result;
+                                      std::wstring* ext) {
+  return net::GetPreferredExtensionForMimeType(mime_type, ext);
 }
 
 std::wstring GetLocalizedString(int message_id) {
@@ -875,6 +873,10 @@ std::string GetDataResource(int resource_id) {
 NSCursor* LoadCursor(int cursor_id) {
   // TODO(port): add some more options here
   return [NSCursor arrowCursor];
+}
+
+CGImageRef GetBitmapResource(int resource_id) {
+  return NULL;
 }
 
 bool GetApplicationDirectory(std::string* path) {

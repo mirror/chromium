@@ -414,16 +414,22 @@ bool RenderThemeWin::supportsFocusRing(const RenderStyle* style) const
 unsigned RenderThemeWin::determineState(RenderObject* o)
 {
     unsigned result = TS_NORMAL;
-    if (!isEnabled(o))
+    if (!isEnabled(o)) {
         result = TS_DISABLED;
-    else if (isReadOnlyControl(o))
-        result = ETS_READONLY; // Readonly is supported on textfields.
-    else if (supportsFocus(o->style()->appearance()) && isFocused(o))
-        result = TS_CHECKED;
-    else if (isPressed(o)) // Active overrides hover.
+    } else if (isReadOnlyControl(o)) {
+        if (o->style()->appearance() == CheckboxAppearance ||
+            o->style()->appearance() == RadioAppearance) {
+            result = TS_DISABLED;
+        } else if (o->style()->appearance() == TextFieldAppearance) {
+            result = ETS_READONLY; // Readonly is supported on textfields.
+        }
+    } else if (isPressed(o)) { // Active overrides hover and focused.
         result = TS_PRESSED;
-    else if (isHovered(o))
+    } else if (supportsFocus(o->style()->appearance()) && isFocused(o)) {
+        result = ETS_FOCUSED;
+    } else if (isHovered(o)) {
         result = TS_HOT;
+    }
     if (isChecked(o))
         result += 4; // 4 unchecked states, 4 checked states.
     return result;

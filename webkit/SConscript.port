@@ -116,19 +116,18 @@ input_files = [
 if env['PLATFORM'] == 'posix':
   # Remove from the list files that haven't yet been made portable to Linux.
   remove_files = [
-    '$PORT_DIR/page/chromium/AXObjectCacheChromium.cpp',
-    '$PORT_DIR/platform/chromium/DragDataChromium.cpp',
-    '$PORT_DIR/platform/chromium/PlatformScrollBarChromium.cpp',
-    '$PORT_DIR/platform/chromium/PopupMenuChromium.cpp',
     '$PORT_DIR/platform/graphics/FontCustomPlatformData.cpp',
-    '$PORT_DIR/platform/graphics/ImageSkia.cpp',
   ]
   for remove in remove_files:
     input_files.remove(remove)
 
   # Linux specific implementations
   input_files.extend([
-    '$PORT_DIR/platform/chromium/ScreenLinux.cpp'
+    '$PORT_DIR/platform/chromium/ScreenLinux.cpp',
+    '$PORT_DIR/platform/chromium/EditorLinux.cpp',
+    '$PORT_DIR/platform/chromium/IconLinux.cpp',
+    '$PORT_DIR/platform/graphics/chromium/GlyphPageTreeNodeLinux.cpp',
+    '$PORT_DIR/platform/chromium/PasteboardLinux.cpp',
   ])
 
 if env['PLATFORM'] == 'darwin':
@@ -172,10 +171,13 @@ if env['PLATFORM'] == 'posix':
   input_files.extend([
     '$PORT_DIR/platform/chromium/FileSystemPosix.cpp',
     '$PORT_DIR/platform/chromium/SoundPosix.cpp',
+    '$PORT_DIR/platform/chromium/KeyCodeConversionGtk.cpp',
     '$PORT_DIR/platform/graphics/chromium/FontLinux.cpp',
     '$PORT_DIR/platform/graphics/chromium/FontCacheLinux.cpp',
     '$PORT_DIR/platform/graphics/chromium/FontPlatformDataLinux.cpp',
     '$PORT_DIR/platform/graphics/chromium/SimpleFontDataLinux.cpp',
+    '$PORT_DIR/platform/chromium/gtk2drawing.c',
+    '$PORT_DIR/platform/chromium/RenderThemeGtk.cpp'
   ])
 
 if env['PLATFORM'] == 'darwin':

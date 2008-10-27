@@ -1203,6 +1203,7 @@ void CustomFrameWindow::OnNCLButtonDown(UINT ht_component,
     }
     default:
       Window::OnNCLButtonDown(ht_component, point);
+      /*
       if (!IsMsgHandled()) {
         // Window::OnNCLButtonDown set the message as unhandled. This normally
         // means ContainerWin::ProcessWindowMessage will pass it to
@@ -1214,6 +1215,7 @@ void CustomFrameWindow::OnNCLButtonDown(UINT ht_component,
                       MAKELPARAM(point.x, point.y));
         SetMsgHandled(TRUE);
       }
+      */
       break;
   }
 }
@@ -1337,13 +1339,17 @@ void CustomFrameWindow::InitClass() {
 
 void CustomFrameWindow::LockUpdates() {
   lock_updates_ = true;
+  /*
   // This message causes invalidations to be discarded until it is called again
   // with WPARAM TRUE (see UnlockUpdates).
   SendMessage(GetHWND(), WM_SETREDRAW, FALSE, 0);
+  */
 }
 
 void CustomFrameWindow::UnlockUpdates() {
+  /*
   SendMessage(GetHWND(), WM_SETREDRAW, TRUE, 0);
+  */
   lock_updates_ = false;
 }
 
