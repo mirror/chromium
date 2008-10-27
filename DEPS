@@ -30,7 +30,7 @@ deps = {
     "http://v8.googlecode.com/svn/branches/bleeding_edge/@594",
 
   "src/webkit/data/layout_tests/LayoutTests":
-    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@36102",
+    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@37604",
 }
 
 include_rules = [
