@@ -473,9 +473,10 @@ class AddWordToCustomDictionaryTask : public Task {
     word_ += "\n";
     const char* file_name_char = file_name_.c_str();
     FILE* f = fopen(file_name_char, "a+");
-    if (f != NULL)
+    if (f != NULL) {
       fputs(word_.c_str(), f);
-    fclose(f);
+      fclose(f);
+    }
   }
 
   std::string file_name_;
