@@ -446,8 +446,8 @@ else:
 
   # The ICU library isn't useful without the data properly installed.
   if env['PLATFORM'] == 'win32':
-    icu_data = env.Install('$OBJ_ROOT', 'icudt38.dll')
+    icu_data = env.Install('$TARGET_ROOT', 'icudt38.dll')
   else:
-    icu_data = env.Install('$OBJ_ROOT', 'source/data/in/icudt38l.dat')
+    icu_data = env.Install('$TARGET_ROOT', 'source/data/in/icudt38l.dat')
 
   env.Requires(icu_lib, icu_data)
