@@ -23,17 +23,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef ScrollbarThemeWin_h
-#define ScrollbarThemeWin_h
+#ifndef ScrollbarThemeChromiumWin_h
+#define ScrollbarThemeChromiumWin_h
 
 #include "ScrollbarThemeComposite.h"
 
 namespace WebCore {
 
-class ScrollbarThemeWin : public ScrollbarThemeComposite {
+class ScrollbarThemeChromiumWin : public ScrollbarThemeComposite {
 public:
-    ScrollbarThemeWin();
-    virtual ~ScrollbarThemeWin();
+    ScrollbarThemeChromiumWin();
+    virtual ~ScrollbarThemeChromiumWin();
 
     virtual int scrollbarThickness(ScrollbarControlSize = RegularScrollbar);
 
@@ -55,6 +55,12 @@ protected:
     virtual void paintTrackPiece(GraphicsContext*, Scrollbar*, const IntRect&, ScrollbarPart);
     virtual void paintButton(GraphicsContext*, Scrollbar*, const IntRect&, ScrollbarPart);
     virtual void paintThumb(GraphicsContext*, Scrollbar*, const IntRect&);
+
+private:
+    IntSize buttonSize(Scrollbar*);
+    int getThemeState(Scrollbar*, ScrollbarPart) const;
+    int getThemeArrowState(Scrollbar*, ScrollbarPart) const;
+    int getClassicThemeState(Scrollbar*, ScrollbarPart) const;
 };
 
 }

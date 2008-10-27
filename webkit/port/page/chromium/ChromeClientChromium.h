@@ -10,7 +10,6 @@
 #include "ChromeClient.h"
 
 namespace WebCore {
-
     class Cursor;
     class FileChooser;
     class Frame;
@@ -27,6 +26,9 @@ namespace WebCore {
         // Notifies the client of a new popup widget.  The client should place
         // and size the widget with the given bounds, relative to the screen.
         virtual void popupOpened(Widget* widget, const IntRect& bounds) = 0;
+
+        // Set the current cursor.
+        virtual void setCursor(const Cursor& cursor) = 0;
     };
 }
 

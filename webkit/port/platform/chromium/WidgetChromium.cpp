@@ -27,8 +27,31 @@
 #include "Widget.h"
 
 #include "Assertions.h"
+#include "ChromeClientChromium.h"
+#include "Frame.h"
+#include "FrameView.h"
+#include "Page.h"
+#include "NotImplemented.h"
 
 namespace WebCore {
+
+ChromeClientChromium* chromeClientChromium(Widget* widget)
+{
+    FrameView* view;
+    if (widget->isFrameView()) {
+        view = static_cast<FrameView*>(widget);
+    } else if (widget->parent() && widget->parent()->isFrameView()) {
+        view = static_cast<FrameView*>(widget->parent());
+    } else {
+        return 0;
+    }
+
+    Page* page = view->frame() ? view->frame()->page() : 0;
+    if (!page)
+        return 0;
+
+    return static_cast<ChromeClientChromium*>(page->chrome()->client());
+}
 
 Widget::Widget(PlatformWidget widget)
 {
@@ -50,7 +73,9 @@ void Widget::hide()
 
 void Widget::setCursor(const Cursor& cursor)
 {
-    // TODO(darin): Figure out what to do here!
+    ChromeClientChromium* client = chromeClientChromium(this);
+    if (client)
+        client->setCursor(cursor);
 }
 
 void Widget::paint(GraphicsContext*, const IntRect&)
@@ -59,7 +84,9 @@ void Widget::paint(GraphicsContext*, const IntRect&)
 
 void Widget::setFocus()
 {
-    ASSERT_NOT_REACHED();
+    ChromeClientChromium* client = chromeClientChromium(this);
+    if (client)
+        client->focus();
 }
 
 void Widget::setIsSelected(bool)

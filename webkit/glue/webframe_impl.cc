@@ -1423,59 +1423,39 @@ void WebFrameImpl::CreateFrameView() {
 
   DCHECK(page->mainFrame() != NULL);
 
-  // TODO(darin): Not sure if we still need something like this...
-#if 0
-  // Detach the current view. This ensures that UI widgets like plugins,
-  // etc are detached(hidden)
-  if (frame_->view())
-    frame_->view()->detachFromWindow();
-#endif
+  bool is_main_frame = frame_ == page->mainFrame();
+  if (is_main_frame && frame_->view())
+    frame_->view()->setParentVisible(false);
 
   frame_->setView(0);
 
-  WebCore::FrameView* view = new FrameView(frame_.get());
+  WebCore::FrameView* view;
+  if (is_main_frame) {
+    IntSize initial_size(
+        webview_impl_->size().width(), webview_impl_->size().height());
+    view = new FrameView(frame_.get(), initial_size);
+  } else {
+    view = new FrameView(frame_.get());
+  }
 
   frame_->setView(view);
-
-  // TODO(darin): Not sure if we still need something like this...
-#if 0
-  // Attaching the view ensures that UI widgets like plugins, display/hide
-  // correctly.
-  frame_->view()->attachToWindow();
-#endif
-
-  if (margin_width_ >= 0)
-    view->setMarginWidth(margin_width_);
-  if (margin_height_ >= 0)
-    view->setMarginHeight(margin_height_);
-  if (!allows_scrolling_)
-    view->setScrollbarModes(WebCore::ScrollbarAlwaysOff,
-                            WebCore::ScrollbarAlwaysOff);
 
   // TODO(darin): The Mac code has a comment about this possibly being
   // unnecessary.  See installInFrame in WebCoreFrameBridge.mm
   if (frame_->ownerRenderer())
     frame_->ownerRenderer()->setWidget(view);
 
-  view->initScrollbars();
+  if (HTMLFrameOwnerElement* owner = frame_->ownerElement()) {
+    view->setCanHaveScrollbars(
+        owner->scrollingMode() != WebCore::ScrollbarAlwaysOff);
+  }
+
+  if (is_main_frame)
+    view->setParentVisible(true);
 
   // FrameViews are created with a refcount of 1 so it needs releasing after we
   // assign it to a RefPtr.
   view->deref();
-
-  WebFrameImpl* parent = static_cast<WebFrameImpl*>(GetParent());
-  if (parent) {
-    parent->frameview()->addChild(view);
-  } else {
-    // TODO(darin): Not sure if we still need something like this.
-#if 0
-    view->setClient(webview_impl_);
-#endif
-
-    IntRect rect(0, 0, webview_impl_->size().width(),
-                       webview_impl_->size().height());
-    view->setFrameRect(rect);
-  }
 }
 
 // static

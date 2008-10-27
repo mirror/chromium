@@ -131,7 +131,15 @@ void WebPluginContainer::paint(WebCore::GraphicsContext* gc,
 }
 
 void WebPluginContainer::invalidateRect(const WebCore::IntRect& rect) {
-  NOTIMPLEMENTED();
+  if (parent()) {
+    WebCore::IntRect damageRect = convertToContainingWindow(rect);
+
+    // Get our clip rect and intersect with it to ensure we don't invalidate too much.
+    WebCore::IntRect clipRect = parent()->windowClipRect();
+    damageRect.intersect(clipRect);
+
+    parent()->hostWindow()->repaint(damageRect, true);
+  }
 }
 
 void WebPluginContainer::setFocus() {
@@ -171,19 +179,6 @@ void WebPluginContainer::hide() {
 void WebPluginContainer::handleEvent(WebCore::Event* event) {
   impl_->handleEvent(event);
 }
-
-  // TODO(darin): Figure out if we need something like this now.
-#if 0
-void WebPluginContainer::attachToWindow() {
-  Widget::attachToWindow();
-  show();
-}
-
-void WebPluginContainer::detachFromWindow() {
-  Widget::detachFromWindow();
-  hide();
-}
-#endif
 
 void WebPluginContainer::windowCutoutRects(const WebCore::IntRect& bounds,
                                            WTF::Vector<WebCore::IntRect>*

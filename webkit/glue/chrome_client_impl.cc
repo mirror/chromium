@@ -7,6 +7,7 @@
 #include "base/compiler_specific.h"
 
 MSVC_PUSH_WARNING_LEVEL(0);
+#include "Cursor.h"
 #include "FloatRect.h"
 #include "FileChooser.h"
 #include "FrameLoadRequest.h"
@@ -396,7 +397,7 @@ WebCore::IntRect ChromeClientImpl::windowToScreen(
 }
 
 PlatformWidget ChromeClientImpl::platformWindow() const {
-  NOTIMPLEMENTED();
+  // We have no native widget.
   return NULL;
 }
 
@@ -447,4 +448,13 @@ void ChromeClientImpl::runFileChooser(const WebCore::String& default_path,
 void ChromeClientImpl::popupOpened(
     WebCore::Widget* widget, const WebCore::IntRect& bounds) {
   NOTIMPLEMENTED();
+}
+
+void ChromeClientImpl::setCursor(const WebCore::Cursor& cursor) {
+#if defined(OS_WIN)
+  // TODO(pinkerton): figure out the cursor delegate methods
+  WebViewDelegate* d = webview_->delegate();
+  if (d)
+    d->SetCursor(webview_, cursor.impl());
+#endif
 }

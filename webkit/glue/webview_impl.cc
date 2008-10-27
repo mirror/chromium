@@ -1123,6 +1123,9 @@ void WebViewImpl::SetPreferences(const WebPreferences& preferences) {
   settings->setFontRenderingMode(NormalRenderingMode);
   settings->setJavaEnabled(preferences.java_enabled);
 
+  // Turn this on to cause WebCore to paint the resize corner for us.
+  settings->setShouldPaintCustomScrollbars(true);
+
 #if defined(OS_WIN)
   // RenderTheme is a singleton that needs to know the default font size to
   // draw some form controls.  We let it know each time the size changes.
@@ -1411,14 +1414,6 @@ void WebViewImpl::popupOpened(WebCore::Widget* widget,
 
 void WebViewImpl::popupClosed(WebCore::Widget* widget) {
   NOTREACHED() << "popupClosed called on a non-popup";
-}
-
-void WebViewImpl::setCursor(const WebCore::Cursor& cursor) {
-#if defined(OS_WIN)
-  // TODO(pinkerton): figure out the cursor delegate methods
-  if (delegate_)
-    delegate_->SetCursor(this, cursor.impl());
-#endif
 }
 
 void WebViewImpl::setFocus() {

@@ -787,11 +787,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\chromium\ScrollbarThemeWin.cpp"
+					RelativePath="..\..\port\platform\chromium\ScrollbarThemeChromiumWin.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\chromium\ScrollbarThemeWin.h"
+					RelativePath="..\..\port\platform\chromium\ScrollbarThemeChromiumWin.h"
 					>
 				</File>
 				<File

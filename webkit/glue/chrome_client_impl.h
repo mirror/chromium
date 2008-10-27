@@ -104,6 +104,7 @@ public:
   virtual void runFileChooser(const WebCore::String&,
                               PassRefPtr<WebCore::FileChooser>);
   virtual void popupOpened(WebCore::Widget* widget, const WebCore::IntRect& bounds);
+  virtual void setCursor(const WebCore::Cursor&);
 
 private:
   WebViewImpl* webview_;  // weak pointer
