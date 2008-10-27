@@ -268,8 +268,12 @@ Plotter.prototype.onMouseClick_ = function(evt) {
     m.style.left = c.style.left;
     m.style.width = c.style.width;
     m.style.height = c.style.height;
-    if ("onclick" in this)
-      this.onclick(this.clNumbers_[index]);
+    if ("onclick" in this) {
+      var this_x = this.clNumbers_[index];
+      var prev_x = index > 0 ? (parseInt(this.clNumbers_[index-1]) + 1) :
+                                this_x;
+      this.onclick(prev_x, this_x);
+    }
   }
 };
 

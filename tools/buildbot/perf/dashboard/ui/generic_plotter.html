@@ -148,14 +148,14 @@ function get_url() {
   return new_url;
 }
 
-function on_clicked_plot(cl, value, fuzz, e) {
+function on_clicked_plot(prev_cl, cl) {
   if ('lookout' in params) {
     window.open(get_url());
     return;
   }
 
   document.getElementById('view-change').
-      setAttribute('src', Config.changeLinkPrefix + cl);
+      setAttribute('src', Config.changeLinkPrefix + prev_cl + ':' + cl);
 
   document.getElementById('view-pages').
       setAttribute('src', 'details.html?cl=' + cl);
