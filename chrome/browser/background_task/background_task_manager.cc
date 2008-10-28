@@ -128,7 +128,8 @@ void BackgroundTaskManager::LoadAndStartAllRegisteredTasks() {
       continue;
     }
 
-    BackgroundTask task(id, url, start_mode);
+    GURL parsed_url(url);
+    BackgroundTask task(id, parsed_url, start_mode);
     std::wstring map_id = ConstructMapID(task.url, task.id);
     tasks_[map_id] = task;
 
@@ -143,7 +144,7 @@ void BackgroundTaskManager::LoadAndStartAllRegisteredTasks() {
 
 bool BackgroundTaskManager::RegisterTask(WebContents* source,
                                          const std::wstring& id,
-                                         const std::wstring& url,
+                                         const GURL& url,
                                          BackgroundTaskStartMode start_mode) {
   DCHECK(source);
 
@@ -153,20 +154,19 @@ bool BackgroundTaskManager::RegisterTask(WebContents* source,
   }
 
   // Some sanity checks for arguments.
-  if (id.empty() || url.empty()) {
+  if (id.empty() || url.is_empty() || !url.is_valid()) {
     return false;
   }
 
   // Checks for cross-origin.
-  GURL parsed_url(url);
-  if (source->GetURL().GetOrigin() != parsed_url.GetOrigin()) {
+  if (source->GetURL().GetOrigin() != url.GetOrigin()) {
     DLOG(ERROR) << "Cross origin not allowed for background task "
                 << id.c_str() << std::endl;
     return false;
   }
 
   // Checks if the task has already been registered.
-  std::wstring map_id = ConstructMapID(parsed_url, id);
+  std::wstring map_id = ConstructMapID(url, id);
   if (tasks_.find(map_id) != tasks_.end()) {
     return false;
   }
@@ -178,7 +178,7 @@ bool BackgroundTaskManager::RegisterTask(WebContents* source,
   // Updates the prefs store.
   DictionaryValue* value = new DictionaryValue();
   value->Set(kIdKey, Value::CreateStringValue(id));
-  value->Set(kUrlKey, Value::CreateStringValue(url));
+  value->Set(kUrlKey, Value::CreateStringValue(UTF8ToWide(url.spec())));
   value->Set(kStartModeKey,
              Value::CreateIntegerValue(static_cast<int>(start_mode)));
   profile_->GetPrefs()->GetMutableList(prefs::kBackgroundTasks)->Append(value);

@@ -39,7 +39,7 @@ struct BackgroundTask {
   }
 
   BackgroundTask(const std::wstring& id,
-                 const std::wstring& url,
+                 const GURL& url,
                  BackgroundTaskStartMode start_mode)
       : id(id),
         url(url),
@@ -72,7 +72,7 @@ class BackgroundTaskManager {
   // Registers a background task.
   bool RegisterTask(WebContents* source,
                     const std::wstring& id,
-                    const std::wstring& url,
+                    const GURL& url,
                     BackgroundTaskStartMode start_type);
 
   // Unregisters a background task.

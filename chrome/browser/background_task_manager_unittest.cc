@@ -12,10 +12,9 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
-// TODO(jianli): remove DISABLED_ as a prefix.
-class DISABLED_BackgroundTaskManagerTest : public testing::Test {
+class BackgroundTaskManagerTest : public testing::Test {
  public:
-  DISABLED_BackgroundTaskManagerTest() : source_(NULL) {}
+  BackgroundTaskManagerTest() : source_(NULL) {}
 
   // testing::Test methods:
 
@@ -25,13 +24,9 @@ class DISABLED_BackgroundTaskManagerTest : public testing::Test {
                               MSG_ROUTING_NONE, NULL);
     source_->SetupController(profile_.get());
 
-    NavigationEntry entry(TAB_CONTENTS_WEB);
-    const GURL url("http://www.google.com");
-    entry.set_url(url);
-    // TODO(jianli): fix the following.
-    // See http://codereview.chromium.org/6311
-    // It may have been replaced by AddTransientEntry.
-    // source_->controller()->AddDummyEntryForInterstitial(entry);
+    NavigationEntry* entry = new NavigationEntry(TAB_CONTENTS_WEB);
+    entry->set_url(GURL("http://www.google.com"));
+    source_->controller()->AddTransientEntry(entry);
   }
 
   virtual void TearDown() {
@@ -45,26 +40,27 @@ class DISABLED_BackgroundTaskManagerTest : public testing::Test {
  private:
   MessageLoopForUI message_loop_;
 
-  DISALLOW_COPY_AND_ASSIGN(DISABLED_BackgroundTaskManagerTest);
+  DISALLOW_COPY_AND_ASSIGN(BackgroundTaskManagerTest);
 };
 }
 
-TEST_F(DISABLED_BackgroundTaskManagerTest, RegisterAndUnregister) {
+TEST_F(BackgroundTaskManagerTest, RegisterAndUnregister) {
   scoped_ptr<BackgroundTaskManager> background_task_manager(
       new BackgroundTaskManager(profile_.get()));
 
   // Cross origin is not allowed.
   EXPECT_FALSE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://foo.com", START_BACKGROUND_TASK_ON_DEMAND));
+      source_, L"Task1", GURL("http://foo.com"),
+      START_BACKGROUND_TASK_ON_DEMAND));
 
   // Registers a task.
   EXPECT_TRUE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask",
+      source_, L"Task1", GURL("http://www.google.com/test_bgtask"),
       START_BACKGROUND_TASK_ON_DEMAND));
 
   // Tries to register a task with the same ID.
   EXPECT_FALSE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask_again",
+      source_, L"Task1", GURL("http://www.google.com/test_bgtask_again"),
       START_BACKGROUND_TASK_ON_DEMAND));
 
   // Tries to unregisters a non-existent task.
@@ -77,7 +73,7 @@ TEST_F(DISABLED_BackgroundTaskManagerTest, RegisterAndUnregister) {
 
   // Registers a task with the same ID again.
   EXPECT_TRUE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask_again",
+      source_, L"Task1", GURL("http://www.google.com/test_bgtask_again"),
       START_BACKGROUND_TASK_ON_DEMAND));
 
   // Tests if the task is persisted and restored.
@@ -85,7 +81,7 @@ TEST_F(DISABLED_BackgroundTaskManagerTest, RegisterAndUnregister) {
       new BackgroundTaskManager(profile_.get()));
   background_task_manager->LoadAndStartAllRegisteredTasks();
   EXPECT_FALSE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask_again",
+      source_, L"Task1", GURL("http://www.google.com/test_bgtask_again"),
       START_BACKGROUND_TASK_ON_DEMAND));
 }
 

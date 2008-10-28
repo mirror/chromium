@@ -203,11 +203,10 @@ int BackgroundTaskDropView::OnPerformDrop(const views::DropTargetEvent& event) {
   BackgroundTaskManager* background_task_manager =
       source_->profile()->GetBackgroundTaskManager();
   if (background_task_manager) {
-    std::wstring url = UTF8ToWide(bb_data.url().spec());
     if (background_task_manager->RegisterTask(
             source_,
             bb_data.title(),
-            url,
+            bb_data.url(),
             START_BACKGROUND_TASK_ON_BROWSER_LAUNCH)) {
       background_task_manager->StartTask(source_, bb_data.title());
     }
