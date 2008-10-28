@@ -18,6 +18,7 @@ class DropTargetEvent;
 }
 class OSExchangeData;
 class SlideAnimation;
+class WebContents;
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -30,7 +31,7 @@ class SlideAnimation;
 class BackgroundTaskDropView : public views::View,
                                public AnimationDelegate {
  public:
-  explicit BackgroundTaskDropView(const std::wstring& site);
+  BackgroundTaskDropView(WebContents* source, const std::wstring& site);
   virtual ~BackgroundTaskDropView();
 
  private:
@@ -49,6 +50,9 @@ class BackgroundTaskDropView : public views::View,
   virtual void AnimationProgressed(const Animation* animation);
   virtual void AnimationCanceled(const Animation* animation);
   virtual void AnimationEnded(const Animation* animation);
+
+  // The web contents of the source.
+  WebContents* source_;
 
   // The window that contains the BackgroundTaskDropView.
   views::ContainerWin* container_;

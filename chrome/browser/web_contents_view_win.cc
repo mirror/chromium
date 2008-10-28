@@ -102,6 +102,7 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
     BbDragData bb_data(drop_data);
     bb_data.Write(data.get());
     drop_target.reset(new BackgroundTaskDropView(
+        web_contents_,
         UTF8ToWide(bb_data.url().GetOrigin().spec())));
   } else {
 #else

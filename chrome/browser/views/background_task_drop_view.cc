@@ -8,7 +8,10 @@
 #include "base/gfx/image_operations.h"
 #include "base/string_util.h"
 #include "chrome/app/theme/theme_resources.h"
+#include "chrome/browser/background_task_manager.h"
 #include "chrome/browser/background_task/bb_drag_data.h"
+#include "chrome/browser/profile.h"
+#include "chrome/browser/web_contents.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
@@ -59,8 +62,10 @@ gfx::Rect GetSysTrayLocation() {
 // the taskbar.  Also, this has to be tested on Vista to ensure that it works
 // on that platform as well.
 
-BackgroundTaskDropView::BackgroundTaskDropView(const std::wstring& site)
-    : container_(NULL) {
+BackgroundTaskDropView::BackgroundTaskDropView(WebContents* source,
+                                               const std::wstring& site)
+    : source_(source),
+      container_(NULL) {
   hover_animation_.reset(new SlideAnimation(this));
   SetParentOwned(false);
 
@@ -195,15 +200,18 @@ int BackgroundTaskDropView::OnPerformDrop(const views::DropTargetEvent& event) {
   if (!bb_data.Read(event.GetData()))
     return DragDropTypes::DRAG_NONE;
 
-  // TODO(dimich): Replace this MessageBox with a call into BT registration
-  // code.
-  std::wstring text = L"The site ";\
-  text += UTF8ToWide(bb_data.url().GetOrigin().spec());
-  text += L" tries to register Background Task:\n";
-  text += bb_data.title();
-  text += L"\nwith URL:\n";
-  text += UTF8ToWide(bb_data.url().spec());
-  ::MessageBox(NULL, text.c_str(), L"Background Task registration", MB_OK);
+  BackgroundTaskManager* background_task_manager =
+      source_->profile()->GetBackgroundTaskManager();
+  if (background_task_manager) {
+    std::wstring url = UTF8ToWide(bb_data.url().spec());
+    if (background_task_manager->RegisterTask(
+            source_,
+            bb_data.title(),
+            url,
+            START_BACKGROUND_TASK_ON_BROWSER_LAUNCH)) {
+      background_task_manager->StartTask(source_, bb_data.title());
+    }
+  }
 
   return DragDropTypes::DRAG_LINK;
 }
