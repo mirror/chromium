@@ -57,8 +57,9 @@ class MasterFactory(object):
        ('src/chrome/test/data/firefox2_searchplugins', None),
        ('src/chrome/test/data/firefox3_profile/searchplugins', None),
        ('src/chrome/test/data/firefox3_searchplugins', None),
-       ('src/chrome/test/data/plugin', None),
        ('src/chrome/test/data/ssl/certs', None)],
+    'plugin_tests':
+      [('src/chrome/test/data/plugin', None)]
     '^(unit|purify_chrome)$':
       [('src/chrome/test/data/osdd', None)],
     '^(webkit|test_shell)$':
