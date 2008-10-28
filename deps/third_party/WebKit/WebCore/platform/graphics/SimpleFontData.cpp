@@ -212,7 +212,7 @@ void ZeroWidthFontData::init(SimpleFontData* fontData)
 #if PLATFORM(WIN)
     m_scriptCache = 0;
     m_scriptFontProperties = 0;
-#elif PLATFORM(MACOS_X)
+#elif USE(ATSUI)
     m_styleGroup = 0;
     m_ATSUStyle = 0;
     m_ATSUStyleInitialized = false;
