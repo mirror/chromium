@@ -6,7 +6,7 @@
 
 #include "base/string_util.h"
 #ifdef ENABLE_BACKGROUND_TASK
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/history/history_backend.h"
 #include "chrome/common/chrome_constants.h"

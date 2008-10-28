@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "base/message_loop.h"
 #ifdef ENABLE_BACKGROUND_TASK
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_window.h"

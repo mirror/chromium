@@ -12,7 +12,7 @@
 #include "base/string_util.h"
 #include "base/values.h"
 #ifdef ENABLE_BACKGROUND_TASK
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"

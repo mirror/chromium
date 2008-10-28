@@ -8,7 +8,7 @@
 #include "base/gfx/image_operations.h"
 #include "base/string_util.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
 #include "chrome/browser/background_task/bb_drag_data.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/web_contents.h"

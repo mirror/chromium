@@ -5,7 +5,7 @@
 #include "chrome/browser/browser_prefs.h"
 
 #ifdef ENABLE_BACKGROUND_TASK
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_shutdown.h"

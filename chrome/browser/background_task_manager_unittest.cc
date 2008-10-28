@@ -4,7 +4,7 @@
 
 #ifdef ENABLE_BACKGROUND_TASK
 
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/web_contents.h"

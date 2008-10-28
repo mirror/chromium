@@ -11,7 +11,8 @@
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/app/theme/theme_resources.h"
 #ifdef ENABLE_BACKGROUND_TASK
-#include "chrome/browser/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_runner.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_list.h"

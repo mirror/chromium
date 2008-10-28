@@ -2118,11 +2118,19 @@
 			Name="Background Task"
 			>
 			<File
-				RelativePath=".\background_task_manager.cc"
+				RelativePath=".\background_task\background_task_manager.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\background_task_manager.h"
+				RelativePath=".\background_task\background_task_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\background_task\background_task_runner.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\background_task\background_task_runner.h"
 				>
 			</File>
 			<File
