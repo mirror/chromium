@@ -222,7 +222,7 @@ Plotter.prototype.onMouseMove_ = function(evt) {
   var yValue = this.coordinates.yValue(positionY);
 
   this.coordinates_td_.innerHTML =
-      "CL #" + this.clNumbers_[this.current_index_] + ": " +
+      "r" + this.clNumbers_[this.current_index_] + ": " +
       this.plotData_[0][this.current_index_][0].toFixed(2) + " " +
       this.units_ + " +/- " +
       this.plotData_[0][this.current_index_][1].toFixed(2) + " " +
