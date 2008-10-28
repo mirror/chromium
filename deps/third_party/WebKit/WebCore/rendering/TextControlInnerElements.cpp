@@ -42,12 +42,9 @@ using namespace EventNames;
 
 class RenderTextControlInnerBlock : public RenderBlock {
 public:
-    RenderTextControlInnerBlock(Node* node, bool isMultiLine) : RenderBlock(node), m_multiLine(isMultiLine) { }
+    RenderTextControlInnerBlock(Node* node) : RenderBlock(node) { }
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
-    virtual VisiblePosition positionForCoordinates(int x, int y);
-private:
-    bool m_multiLine;
 };
 
 bool RenderTextControlInnerBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int x, int y, int tx, int ty, HitTestAction hitTestAction)
@@ -55,22 +52,6 @@ bool RenderTextControlInnerBlock::nodeAtPoint(const HitTestRequest& request, Hit
     RenderTextControl* renderer = static_cast<RenderTextControl*>(node()->shadowAncestorNode()->renderer());
     
     return RenderBlock::nodeAtPoint(request, result, x, y, tx, ty, renderer->placeholderIsVisible() ? HitTestBlockBackground : hitTestAction);
-}
-
-VisiblePosition RenderTextControlInnerBlock::positionForCoordinates(int x, int y)
-{
-    int contentsX = x;
-    int contentsY = y;
-
-    // Multiline text controls have the scroll on shadowAncestorNode, so we need to take that
-    // into account here.
-    if (m_multiLine) {
-        RenderTextControl* renderer = static_cast<RenderTextControl*>(node()->shadowAncestorNode()->renderer());
-        if (renderer->hasOverflowClip())
-            renderer->layer()->scrollOffset(contentsX, contentsY);
-    }
-
-    return RenderBlock::positionForCoordinates(contentsX, contentsY);
 }
 
 TextControlInnerElement::TextControlInnerElement(Document* doc, Node* shadowParent)
@@ -128,13 +109,7 @@ void TextControlInnerTextElement::defaultEventHandler(Event* evt)
 
 RenderObject* TextControlInnerTextElement::createRenderer(RenderArena* arena, RenderStyle*)
 {
-    bool multiLine = false;
-    Node* shadowAncestor = shadowAncestorNode();
-    if (shadowAncestor && shadowAncestor->renderer()) {
-        ASSERT(shadowAncestor->renderer()->isTextField() || shadowAncestor->renderer()->isTextArea());
-        multiLine = shadowAncestor->renderer()->isTextArea();
-    }
-    return new (arena) RenderTextControlInnerBlock(this, multiLine);
+    return new (arena) RenderTextControlInnerBlock(this);
 }
 
 SearchFieldResultsButtonElement::SearchFieldResultsButtonElement(Document* doc)
