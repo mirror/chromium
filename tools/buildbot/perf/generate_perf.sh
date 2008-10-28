@@ -25,7 +25,7 @@ function WriteConfig()
 {
   echo "var Config = {" > $1/config.js
   echo "  title: '$2'," >>  $1/config.js
-  echo "  changeLinkPrefix: 'http://src.chromium.org/viewvc/chrome?view=rev&revision='" >> $1/config.js
+  echo "  changeLinkPrefix: 'http://build.chromium.org/buildbot/perf/dashboard/changelog.html?url=/trunk/src&mode=html&range='" >> $1/config.js
   echo "};" >> $1/config.js
 }
 
