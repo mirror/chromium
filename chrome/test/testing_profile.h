@@ -157,6 +157,11 @@ class TestingProfile : public Profile {
     return NULL;
   }
 #endif
+#ifdef ENABLE_BACKGROUND_TASK
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() const {
+    return background_task_manager_.get();
+  }
+#endif  // ENABLE_BACKGROUND_TASK
 
  protected:
   // The path of the profile; the various database and other files are relative
@@ -186,6 +191,11 @@ class TestingProfile : public Profile {
   std::wstring id_;
 
   bool off_the_record_;
+
+  // Background task manager.
+#ifdef ENABLE_BACKGROUND_TASK
+  scoped_ptr<BackgroundTaskManager> background_task_manager_;
+#endif  // ENABLE_BACKGROUND_TASK
 };
 
 #endif  // CHROME_TEST_TESTING_PROFILE_H__

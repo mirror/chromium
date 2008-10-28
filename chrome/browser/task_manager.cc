@@ -75,6 +75,12 @@ TaskManagerTableModel::TaskManagerTableModel(TaskManager* task_manager)
       new TaskManagerPluginProcessResourceProvider(task_manager);
   plugin_provider->AddRef();
   providers_.push_back(plugin_provider);
+#ifdef ENABLE_BACKGROUND_TASK
+  TaskManagerBackgroundTaskResourceProvider* bg_task_provider =
+      new TaskManagerBackgroundTaskResourceProvider(task_manager);
+  bg_task_provider->AddRef();
+  providers_.push_back(bg_task_provider);
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 TaskManagerTableModel::~TaskManagerTableModel() {

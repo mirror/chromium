@@ -477,6 +477,24 @@ enum NotificationType {
   // Personalization -----------------------------------------------------------
   NOTIFY_PERSONALIZATION,
 
+#ifdef ENABLE_BACKGROUND_TASK
+  // Background Task -----------------------------------------------------------
+
+  // This notification is sent when a background task is connected to a
+  // renderer process. The source is a Source<BackgroundTask> with a pointer to
+  // the BackgroundTask.  A NOTIFY_BACKGROUND_TASK_DISCONNECTED notification is
+  // guaranteed before the source pointer becomes junk.
+  // No details are expected.
+  NOTIFY_BACKGROUND_TASK_CONNECTED,
+
+  // This message is sent after a background task is disconnected from the
+  // renderer process.
+  // The source is a Source<BackgroundTask> with a pointer to the BackgroundTask
+  // (the pointer is usable).
+  // No details are expected.
+  NOTIFY_BACKGROUND_TASK_DISCONNECTED,
+#endif  // ENABLE_BACKGROUND_TASK
+
   // Count (must be last) ------------------------------------------------------
   // Used to determine the number of notification types.  Not valid as
   // a type parameter when registering for or posting notifications.

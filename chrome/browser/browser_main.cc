@@ -19,6 +19,9 @@
 #include "base/win_util.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/automation/automation_provider.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_init.h"
 #include "chrome/browser/browser_list.h"
@@ -578,6 +581,12 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   if (BrowserInit::ProcessCommandLine(parsed_command_line, L"", local_state,
                                       show_command, true, profile,
                                       &result_code)) {
+  // Loads and runs the previously registered background tasks.
+  // Note that this has to be done after an active browser is created.
+#ifdef ENABLE_BACKGROUND_TASK
+  profile->GetBackgroundTaskManager()->LoadAndStartAllRegisteredTasks();
+#endif  // ENABLE_BACKGROUND_TASK
+
     MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
   }
 

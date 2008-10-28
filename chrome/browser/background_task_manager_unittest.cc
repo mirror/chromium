@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 
 #include "chrome/browser/background_task_manager.h"
 #include "chrome/browser/navigation_entry.h"
@@ -51,19 +51,21 @@ class DISABLED_BackgroundTaskManagerTest : public testing::Test {
 
 TEST_F(DISABLED_BackgroundTaskManagerTest, RegisterAndUnregister) {
   scoped_ptr<BackgroundTaskManager> background_task_manager(
-      new BackgroundTaskManager(NULL, profile_.get()));
+      new BackgroundTaskManager(profile_.get()));
 
   // Cross origin is not allowed.
   EXPECT_FALSE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://foo.com"));
+      source_, L"Task1", L"http://foo.com", START_BACKGROUND_TASK_ON_DEMAND));
 
   // Registers a task.
   EXPECT_TRUE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask"));
+      source_, L"Task1", L"http://www.google.com/test_bgtask",
+      START_BACKGROUND_TASK_ON_DEMAND));
 
   // Tries to register a task with the same ID.
   EXPECT_FALSE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask_again"));
+      source_, L"Task1", L"http://www.google.com/test_bgtask_again",
+      START_BACKGROUND_TASK_ON_DEMAND));
 
   // Tries to unregisters a non-existent task.
   EXPECT_FALSE(background_task_manager->UnregisterTask(
@@ -75,13 +77,16 @@ TEST_F(DISABLED_BackgroundTaskManagerTest, RegisterAndUnregister) {
 
   // Registers a task with the same ID again.
   EXPECT_TRUE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask_again"));
+      source_, L"Task1", L"http://www.google.com/test_bgtask_again",
+      START_BACKGROUND_TASK_ON_DEMAND));
 
   // Tests if the task is persisted and restored.
   background_task_manager.reset(
-      new BackgroundTaskManager(NULL, profile_.get()));
+      new BackgroundTaskManager(profile_.get()));
+  background_task_manager->LoadAndStartAllRegisteredTasks();
   EXPECT_FALSE(background_task_manager->RegisterTask(
-      source_, L"Task1", L"http://www.google.com/test_bgtask_again"));
+      source_, L"Task1", L"http://www.google.com/test_bgtask_again",
+      START_BACKGROUND_TASK_ON_DEMAND));
 }
 
-#endif  // ENABLE_BACKGROUND_TASK == 1
+#endif  // ENABLE_BACKGROUND_TASK

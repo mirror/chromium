@@ -4,7 +4,7 @@
 
 #include "chrome/browser/browser_prefs.h"
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 #include "chrome/browser/background_task_manager.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser.h"
@@ -46,7 +46,7 @@ void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   browser_shutdown::RegisterPrefs(local_state);
 
   // User prefs
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
   BackgroundTaskManager::RegisterUserPrefs(user_prefs);
 #endif  // ENABLE_BACKGROUND_TASK
   BookmarkBarView::RegisterUserPrefs(user_prefs);

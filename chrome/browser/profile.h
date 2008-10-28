@@ -19,6 +19,9 @@
 #include "chrome/personalization/personalization.h"
 #endif
 
+#ifdef ENABLE_BACKGROUND_TASK
+class BackgroundTaskManager;
+#endif  // ENABLE_BACKGROUND_TASK
 class BookmarkModel;
 class DownloadManager;
 class HistoryService;
@@ -211,6 +214,11 @@ class Profile {
   // NOTE: this is invoked internally on a normal shutdown, but is public so
   // that it can be invoked when the user logs out/powers down (WM_ENDSESSION).
   virtual void MarkAsCleanShutdown() = 0;  
+#ifdef ENABLE_BACKGROUND_TASK
+  // Returns the BackgroundTaskManager associated with this profile.
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() const = 0;
+#endif  // ENABLE_BACKGROUND_TASK
+
 #ifdef UNIT_TEST
   // Use with caution.  GetDefaultRequestContext may be called on any thread!
   static void set_default_request_context(URLRequestContext* c) {
@@ -262,6 +270,11 @@ class ProfileImpl : public Profile {
 #ifdef CHROME_PERSONALIZATION
   virtual ProfilePersonalization* GetProfilePersonalization();
 #endif
+#ifdef ENABLE_BACKGROUND_TASK
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() const {
+    return background_task_manager_.get();
+  }
+#endif  // ENABLE_BACKGROUND_TASK
 
  private:
   class RequestContext;
@@ -319,6 +332,11 @@ class ProfileImpl : public Profile {
   // Set to true when ShutdownSessionService is invoked. If true
   // GetSessionService won't recreate the SessionService.
   bool shutdown_session_service_;
+
+  // Background task manager.
+#ifdef ENABLE_BACKGROUND_TASK
+  scoped_ptr<BackgroundTaskManager> background_task_manager_;
+#endif  // ENABLE_BACKGROUND_TASK
 
   DISALLOW_EVIL_CONSTRUCTORS(ProfileImpl);
 };

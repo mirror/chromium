@@ -11,6 +11,9 @@
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/values.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -514,6 +517,13 @@ class OffTheRecordProfileImpl : public Profile,
       ExitedOffTheRecordMode();
   }
 
+  // Background task is not supported in off the record mode.
+#ifdef ENABLE_BACKGROUND_TASK
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() const {
+    return NULL;
+  }
+#endif  // ENABLE_BACKGROUND_TASK
+
  private:
   // The real underlying profile.
   Profile* profile_;
@@ -548,6 +558,10 @@ ProfileImpl::ProfileImpl(const std::wstring& path)
   create_session_service_timer_.Start(
       TimeDelta::FromMilliseconds(kCreateSessionServiceDelayMS), this,
       &ProfileImpl::EnsureSessionServiceCreated);
+
+#ifdef ENABLE_BACKGROUND_TASK
+  background_task_manager_.reset(new BackgroundTaskManager(this));
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 ProfileImpl::~ProfileImpl() {

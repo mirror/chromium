@@ -8,6 +8,9 @@
 #include "base/win_util.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/app_modal_dialog_queue.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -162,6 +165,11 @@ void FrameUtil::EndSession() {
 
   // Write important data first.
   g_browser_process->EndSession();
+
+  // Close all running background tasks.
+#ifdef ENABLE_BACKGROUND_TASK
+  BackgroundTaskManager::CloseAllActiveTasks();
+#endif  // ENABLE_BACKGROUND_TASK
 
   // Close all the browsers.
   BrowserList::CloseAllBrowsers(false);

@@ -10,6 +10,9 @@
 #include "chrome/browser/task_manager.h"
 #include "chrome/common/notification_service.h"
 
+#ifdef ENABLE_BACKGROUND_TASK
+struct BackgroundTask;
+#endif  // ENABLE_BACKGROUND_TASK
 class PluginProcessHost;
 class WebContents;
 
@@ -219,6 +222,70 @@ class TaskManagerBrowserProcessResourceProvider
 
   DISALLOW_EVIL_CONSTRUCTORS(TaskManagerBrowserProcessResourceProvider);
 };
+
+#ifdef ENABLE_BACKGROUND_TASK
+
+class TaskManagerBackgroundTaskResource : public TaskManager::Resource {
+ public:
+  explicit TaskManagerBackgroundTaskResource(BackgroundTask* background_task);
+  ~TaskManagerBackgroundTaskResource();
+
+  // TaskManagerResource methods:
+  std::wstring GetTitle() const;
+  SkBitmap GetIcon() const;
+  HANDLE GetProcess() const;
+  BackgroundTask* GetBackgroundTask() const;
+
+  // BackgroundTask always provide the network usage.
+  bool SupportNetworkUsage() const { return true; }
+  void SetSupportNetworkUsage() { };
+
+ private:
+  BackgroundTask* background_task_;
+  HANDLE process_;
+  int pid_;
+
+  DISALLOW_COPY_AND_ASSIGN(TaskManagerBackgroundTaskResource);
+};
+
+class TaskManagerBackgroundTaskResourceProvider
+    : public TaskManager::ResourceProvider,
+      public NotificationObserver {
+ public:
+  explicit TaskManagerBackgroundTaskResourceProvider(TaskManager* task_manager);
+  virtual ~TaskManagerBackgroundTaskResourceProvider();
+
+  virtual TaskManager::Resource* GetResource(int origin_pid,
+                                             int render_process_host_id,
+                                             int routing_id);
+  virtual void StartUpdating();
+  virtual void StopUpdating();
+
+  // NotificationObserver method:
+  virtual void Observe(NotificationType type,
+                       const NotificationSource& source,
+                       const NotificationDetails& details);
+
+ private:
+  void Add(BackgroundTask* background_task);
+  void Remove(BackgroundTask* background_task);
+
+  void AddToTaskManager(BackgroundTask* background_task);
+
+  // Whether we are currently reporting to the task manager. Used to ignore
+  // notifications sent after StopUpdating().
+  bool updating_;
+
+  TaskManager* task_manager_;
+
+  // Maps the actual resources (the WebContents) to the Task Manager
+  // resources.
+  std::map<BackgroundTask*, TaskManagerBackgroundTaskResource*> resources_;
+
+  DISALLOW_COPY_AND_ASSIGN(TaskManagerBackgroundTaskResourceProvider);
+};
+
+#endif  // ENABLE_BACKGROUND_TASK
 
 #endif  // CHROME_BROWSER_TASK_MANAGER_RESOURCE_PROVIDERS_H__
 

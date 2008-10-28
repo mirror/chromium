@@ -1473,6 +1473,9 @@ each locale. -->
       <message name="IDS_TASK_MANAGER_UNKNOWN_PLUGIN_NAME" desc="The prefix for a Task Manager plugin row">
         Unknown plug-in
       </message>
+      <message name="IDS_TASK_MANAGER_BACKGROUND_TASK_PREFIX" desc="The prefix for a Task Manager Background Task row">
+        Background task: <ph name="BGTASK_NAME">$1<ex>Unknown Task</ex></ph>
+      </message>
 
       <!-- Session Crashed Info Bar-->
       <message name="IDS_SESSION_CRASHED_VIEW_RESTORE_BUTTON" desc="Title of the restore button in the session crashed view.">

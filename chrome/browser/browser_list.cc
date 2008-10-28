@@ -6,6 +6,9 @@
 
 #include "base/logging.h"
 #include "base/message_loop.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/profile.h"
@@ -62,6 +65,12 @@ void BrowserList::RemoveBrowser(Browser* browser) {
     CloseAllDependentWindows();
 
   g_browser_process->ReleaseModule();
+
+#ifdef ENABLE_BACKGROUND_TASK
+  if (g_browser_process->IsShuttingDown()) {
+    BackgroundTaskManager::CloseAllActiveTasks();
+  }
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 // static

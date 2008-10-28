@@ -150,9 +150,9 @@ extern const wchar_t kNumFoldersInOtherBookmarkFolder[];
 
 extern const wchar_t kNumKeywords[];
 
-#if ENABLE_BACKGROUND_TASK == 1
+#ifdef ENABLE_BACKGROUND_TASK
 extern const wchar_t kBackgroundTasks[];
-#endif  // ENABLE_BACKGROUND_TASK == 1
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 #endif  // CHROME_COMMON_PREF_NAMES_H_

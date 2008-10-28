@@ -5,6 +5,9 @@
 #include "chrome/test/testing_profile.h"
 
 #include "base/string_util.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/history/history_backend.h"
 #include "chrome/common/chrome_constants.h"
 
@@ -49,6 +52,10 @@ TestingProfile::TestingProfile()
   file_util::AppendToPath(&path_, L"TestingProfilePath");
   file_util::Delete(path_, true);
   file_util::CreateDirectory(path_);
+
+#ifdef ENABLE_BACKGROUND_TASK
+  background_task_manager_.reset(new BackgroundTaskManager(this));
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 TestingProfile::TestingProfile(int count)
@@ -58,6 +65,10 @@ TestingProfile::TestingProfile(int count)
   file_util::AppendToPath(&path_, L"TestingProfilePath" + IntToWString(count));
   file_util::Delete(path_, true);
   file_util::CreateDirectory(path_);
+
+#ifdef ENABLE_BACKGROUND_TASK
+  background_task_manager_.reset(new BackgroundTaskManager(this));
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 TestingProfile::~TestingProfile() {

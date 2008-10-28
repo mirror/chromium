@@ -10,6 +10,9 @@
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/app/theme/theme_resources.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/plugin_process_host.h"
@@ -508,4 +511,210 @@ void TaskManagerBrowserProcessResourceProvider::StartUpdating() {
 void TaskManagerBrowserProcessResourceProvider::StopUpdating() {
 }
 
+#ifdef ENABLE_BACKGROUND_TASK
 
+////////////////////////////////////////////////////////////////////////////////
+// TaskManagerBackgroundTaskResource class
+////////////////////////////////////////////////////////////////////////////////
+
+TaskManagerBackgroundTaskResource::TaskManagerBackgroundTaskResource(
+    BackgroundTask* background_task)
+    : background_task_(background_task) {
+  // We cache the process as when the background task is closed the process
+  // becomes NULL and the TaskManager still needs it.
+  process_ = background_task_->render_view_host()->process()->process();
+  pid_ = process_util::GetProcId(process_);
+}
+
+TaskManagerBackgroundTaskResource::~TaskManagerBackgroundTaskResource() {
+}
+
+std::wstring TaskManagerBackgroundTaskResource::GetTitle() const {
+  // Falls back on the URL if there's no title.
+  std::wstring title;
+  if (background_task_->runner) {
+    title = background_task_->runner->title();
+  }
+  if (title.empty()) {
+    title = UTF8ToWide(background_task_->url.spec());
+  }
+
+  return l10n_util::GetStringF(IDS_TASK_MANAGER_BACKGROUND_TASK_PREFIX, title);
+}
+
+SkBitmap TaskManagerBackgroundTaskResource::GetIcon() const {
+  // TODO (jianli): gets the icon.
+  return SkBitmap();
+}
+
+HANDLE TaskManagerBackgroundTaskResource::GetProcess() const {
+  return process_;
+}
+
+BackgroundTask* TaskManagerBackgroundTaskResource::GetBackgroundTask() const {
+  return dynamic_cast<BackgroundTask*>(background_task_);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// TaskManagerBackgroundTaskResourceProvider class
+////////////////////////////////////////////////////////////////////////////////
+
+TaskManagerBackgroundTaskResourceProvider::
+    TaskManagerBackgroundTaskResourceProvider(TaskManager* task_manager)
+    : task_manager_(task_manager),
+      updating_(false) {
+}
+
+TaskManagerBackgroundTaskResourceProvider::
+    ~TaskManagerBackgroundTaskResourceProvider() {
+}
+
+TaskManager::Resource* TaskManagerBackgroundTaskResourceProvider::GetResource(
+    int origin_pid,
+    int render_process_host_id,
+    int routing_id) {
+
+  BackgroundTask* background_task = BackgroundTaskRunner::GetBackgroundTaskByID(
+      render_process_host_id, routing_id);
+  if (!background_task) {
+    // Not one of our resource.
+    return NULL;
+  }
+
+  if (!background_task->render_view_host() ||
+      !background_task->render_view_host()->process()->process()) {
+    // We should not be holding on to a dead task (it should have been removed
+    // through the NOTIFY_BACKGROUND_TASK_DISCONNECTED notification.
+    NOTREACHED();
+    return NULL;
+  }
+
+  int pid = process_util::GetProcId(
+      background_task->render_view_host()->process()->process());
+  if (pid != origin_pid) {
+    return NULL;
+  }
+
+  std::map<BackgroundTask*, TaskManagerBackgroundTaskResource*>::iterator
+      res_iter = resources_.find(background_task);
+  if (res_iter == resources_.end()) {
+    // Can happen if the tab was closed while a network request was being
+    // performed.
+    return NULL;
+  }
+
+  return res_iter->second;
+}
+
+void TaskManagerBackgroundTaskResourceProvider::StartUpdating() {
+  DCHECK(!updating_);
+  updating_ = true;
+
+  // Adds all the existing background tasks.
+  std::vector<BackgroundTask*> tasks;
+  BackgroundTaskManager::GetAllBackgroundTasks(&tasks);
+  for (std::vector<BackgroundTask*>::const_iterator iter(tasks.begin());
+       iter != tasks.end();
+       ++iter) {
+    BackgroundTask* background_task = *iter;
+    if (background_task->render_view_host() &&
+        background_task->render_view_host()->process()->process()) {
+      AddToTaskManager(background_task);
+    }
+  }
+
+  // Registers notifications to get new background tasks.
+  NotificationService* service = NotificationService::current();
+  service->AddObserver(this, NOTIFY_BACKGROUND_TASK_CONNECTED,
+                       NotificationService::AllSources());
+  service->AddObserver(this, NOTIFY_BACKGROUND_TASK_DISCONNECTED,
+                       NotificationService::AllSources());
+}
+
+void TaskManagerBackgroundTaskResourceProvider::StopUpdating() {
+  DCHECK(updating_);
+  updating_ = false;
+
+  // Unregisters notifications used to get new background tasks.
+  NotificationService* service = NotificationService::current();
+  service->RemoveObserver(this, NOTIFY_BACKGROUND_TASK_CONNECTED,
+                          NotificationService::AllSources());
+  service->RemoveObserver(this, NOTIFY_BACKGROUND_TASK_DISCONNECTED,
+                          NotificationService::AllSources());
+
+  // Deletes all the resources.
+  STLDeleteContainerPairSecondPointers(resources_.begin(), resources_.end());
+
+  resources_.clear();
+}
+
+void TaskManagerBackgroundTaskResourceProvider::AddToTaskManager(
+    BackgroundTask* background_task) {
+  TaskManagerBackgroundTaskResource* resource =
+      new TaskManagerBackgroundTaskResource(background_task);
+  resources_[background_task] = resource;
+  task_manager_->AddResource(resource);
+}
+
+void TaskManagerBackgroundTaskResourceProvider::Add(
+    BackgroundTask* background_task) {
+  if (!updating_)
+    return;
+
+  if (!background_task->render_view_host() ||
+      !background_task->render_view_host()->process()->process()) {
+    // Don't add inactive background task.
+    return;
+  }
+
+  std::map<BackgroundTask*, TaskManagerBackgroundTaskResource*>::const_iterator
+      iter = resources_.find(background_task);
+  if (iter != resources_.end()) {
+    // The case may happen that we have added a background task as part of the
+    // iteration performed during StartUpdating() call but the notification that
+    // it has connected was not fired yet. So when the notification happens, we
+    // already know about this task and just ignore it.
+    return;
+  }
+  AddToTaskManager(background_task);
+}
+
+void TaskManagerBackgroundTaskResourceProvider::Remove(
+    BackgroundTask* background_task) {
+  if (!updating_) {
+    return;
+  }
+
+  std::map<BackgroundTask*, TaskManagerBackgroundTaskResource*>::iterator
+      iter = resources_.find(background_task);
+  if (iter == resources_.end()) {
+    // Since background tasks are destroyed asynchronously, we can be notified
+    // of a tab being removed that we don't know. This can happen if the user
+    // closes a tab and quickly opens the task manager, before the tab is 
+    // actually destroyed.
+    return;
+  }
+
+  TaskManagerBackgroundTaskResource* resource = iter->second;
+  task_manager_->RemoveResource(resource);
+  resources_.erase(iter);
+  delete resource;
+}
+
+void TaskManagerBackgroundTaskResourceProvider::Observe(NotificationType type,
+    const NotificationSource& source,
+    const NotificationDetails& details) {
+  switch (type) {
+    case NOTIFY_BACKGROUND_TASK_CONNECTED:
+      Add(Source<BackgroundTask>(source).ptr());
+      break;
+    case NOTIFY_BACKGROUND_TASK_DISCONNECTED:
+      Remove(Source<BackgroundTask>(source).ptr());
+      break;
+    default:
+      NOTREACHED() << "Unexpected notification.";
+      return;
+  }
+}
+
+#endif  // ENABLE_BACKGROUND_TASK

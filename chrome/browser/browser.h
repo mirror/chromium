@@ -17,9 +17,6 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_member.h"
 
-#if ENABLE_BACKGROUND_TASK == 1
-class BackgroundTaskManager;
-#endif  // ENABLE_BACKGROUND_TASK == 1
 class BrowserIdleTimer;
 class BrowserWindow;
 class DebuggerWindow;
@@ -615,11 +612,6 @@ class Browser : public TabStripModelDelegate,
 
   // Keep track of the encoding auto detect pref.
   BooleanPrefMember encoding_auto_detect_;
-
-  // Background task manager.
-#if ENABLE_BACKGROUND_TASK == 1
-  scoped_ptr<BackgroundTaskManager> background_task_manager_;
-#endif  // ENABLE_BACKGROUND_TASK == 1
 
   DISALLOW_COPY_AND_ASSIGN(Browser);
 };
