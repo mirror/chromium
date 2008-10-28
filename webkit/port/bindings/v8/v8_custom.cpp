@@ -867,7 +867,7 @@ CALLBACK_FUNC_DECL(DOMWindowPostMessage) {
   //   postMessage(message, port, domain);
   // or
   //   postMessage(message, domain);
-  if (args.Length() == 2) {
+  if (args.Length() > 2) {
     port = V8Proxy::ToNativeObject<MessagePort>(
         V8ClassIndex::MESSAGEPORT, args[1]);
     domain = valueToStringWithNullOrUndefinedCheck(args[2]);
