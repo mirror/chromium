@@ -7,6 +7,7 @@
 
 #include "base/gfx/rect.h"
 #include "chrome/browser/constrained_window.h"
+#include "chrome/browser/tab_contents_delegate.h"
 #include "chrome/common/pref_member.h"
 #include "chrome/views/container_win.h"
 
@@ -26,6 +27,7 @@ class TextButton;
 //  showing them again)
 //
 class BlockedPopupContainer : public ConstrainedWindow,
+                              public TabContentsDelegate,
                               public views::ContainerWin {
  public:
   virtual ~BlockedPopupContainer();
@@ -69,8 +71,33 @@ class BlockedPopupContainer : public ConstrainedWindow,
   virtual void UpdateWindowTitle();
   virtual const gfx::Rect& GetCurrentBounds() const;
 
+  // Override from TabContentsDelegate:
+  virtual void OpenURLFromTab(TabContents* source,
+                              const GURL& url, const GURL& referrer,
+                              WindowOpenDisposition disposition,
+                              PageTransition::Type transition);
+  virtual void NavigationStateChanged(const TabContents* source,
+                                      unsigned changed_flags) { }
+  virtual void ReplaceContents(TabContents* source,
+                               TabContents* new_contents);
+  virtual void AddNewContents(TabContents* source,
+                              TabContents* new_contents,
+                              WindowOpenDisposition disposition,
+                              const gfx::Rect& initial_pos,
+                              bool user_gesture);
+  virtual void ActivateContents(TabContents* contents) { }
+  virtual void LoadingStateChanged(TabContents* source) { }
+  virtual void CloseContents(TabContents* source);
+  virtual void MoveContents(TabContents* source, const gfx::Rect& pos);
+  virtual bool IsPopup(TabContents* source);
+  virtual TabContents* GetConstrainingContents(TabContents* source);
+  virtual void ToolbarSizeChanged(TabContents* source, bool is_animating) { }
+  virtual void URLStarredChanged(TabContents* source, bool starred) { }
+  virtual void UpdateTargetURL(TabContents* source, const GURL& url) { }
+
  protected:
-  // A bunch of windows messages I don't know about.
+  // Override from views::ContainerWin:
+  virtual void OnFinalMessage(HWND window);
 
  private:
   // 
@@ -85,6 +112,9 @@ class BlockedPopupContainer : public ConstrainedWindow,
 
   // Shows the UI portion of the container.
   void ShowSelf();
+
+  // Send a CloseContents() to each message in |blocked_popups_|.
+  void CloseEachTabContents();
 
   // The TabContents that owns and constrains this BlockedPopupContainer.
   TabContents* owner_;

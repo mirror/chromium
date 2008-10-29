@@ -218,6 +218,7 @@ void BlockedPopupContainer::AddTabContents(TabContents* blocked_contents,
     return;
   }
 
+  blocked_contents->set_delegate(this);
   blocked_popups_.push_back(std::make_pair(blocked_contents, bounds));
   container_view_->UpdatePopupCountLabel();
 
@@ -231,6 +232,7 @@ void BlockedPopupContainer::LaunchPopupIndex(int index) {
     blocked_popups_.erase(blocked_popups_.begin() + index);
     container_view_->UpdatePopupCountLabel();
 
+    contents->set_delegate(NULL);
     contents->DisassociateFromPopupCount();
 
     // Pass this TabContents back to our owner, forcing the window to be
@@ -259,26 +261,21 @@ std::wstring BlockedPopupContainer::GetDisplayStringForItem(int index) {
 }
 
 void BlockedPopupContainer::CloseAllPopups() {
-  for(std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
-          blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
-    it->first->CloseContents();
-  }
-  blocked_popups_.clear();
+  CloseEachTabContents();
 
   container_view_->UpdatePopupCountLabel();
 
   HideSelf();
 }
 
-// ConstrainedWindow interface. Needs work.
-void BlockedPopupContainer::ActivateConstrainedWindow() { }
+/////////////////////////////////////////////////////////////////////////////////
+// Override from ConstrainedWindow:
+
+void BlockedPopupContainer::ActivateConstrainedWindow() {
+}
+
 void BlockedPopupContainer::CloseConstrainedWindow() {
-  // Close everything we own.
-  for(std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
-          blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
-    it->first->CloseContents();
-  }
-  blocked_popups_.clear();
+  CloseEachTabContents();
 
   // Broadcast to all observers of NOTIFY_CWINDOW_CLOSED.
   // One example of such an observer is AutomationCWindowTracker in the
@@ -300,14 +297,102 @@ void BlockedPopupContainer::RepositionConstrainedWindowTo(
   SetWindowPos(HWND_TOP, x, y, size.width(), size.height(), 0);
 }
 
-void BlockedPopupContainer::WasHidden() { }
-void BlockedPopupContainer::DidBecomeSelected() { }
+void BlockedPopupContainer::WasHidden() {
+}
+
+void BlockedPopupContainer::DidBecomeSelected() {
+}
+
 std::wstring BlockedPopupContainer::GetWindowTitle() const {
+  // BPCs have no window title
   return std::wstring();
 }
-void BlockedPopupContainer::UpdateWindowTitle() { }
+
+void BlockedPopupContainer::UpdateWindowTitle() {
+  // Ignored since we don't have a window title
+}
+
 const gfx::Rect& BlockedPopupContainer::GetCurrentBounds() const {
   return bounds_;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Override from TabContentsDelegate:
+void BlockedPopupContainer::OpenURLFromTab(TabContents* source,
+                                           const GURL& url, const GURL& referrer,
+                                           WindowOpenDisposition disposition,
+                                           PageTransition::Type transition) {
+  owner_->OpenURL(url, referrer, disposition, transition);
+}
+
+void BlockedPopupContainer::ReplaceContents(TabContents* source,
+                                            TabContents* new_contents) {
+  // Walk the vector to find the correct TabContents and replace it.
+  bool found = false;
+  gfx::Rect rect;
+  for (std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
+           blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
+    if (it->first == source) {
+      rect = it->second;
+      found = true;
+      blocked_popups_.erase(it);
+      break;
+    }
+  }
+
+  if (found) {
+    blocked_popups_.push_back(std::make_pair(new_contents, rect));
+  }
+}
+
+void BlockedPopupContainer::AddNewContents(TabContents* source,
+                                           TabContents* new_contents,
+                                           WindowOpenDisposition disposition,
+                                           const gfx::Rect& initial_pos,
+                                           bool user_gesture) {
+  owner_->AddNewContents(new_contents, disposition, initial_pos,
+                         user_gesture);
+}
+
+void BlockedPopupContainer::CloseContents(TabContents* source) {
+  for (std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
+           blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
+    if (it->first == source) {
+      blocked_popups_.erase(it);
+      break;
+    }
+  }
+
+  if (blocked_popups_.size() == 0)
+    CloseAllPopups();
+}
+
+void BlockedPopupContainer::MoveContents(TabContents* source,
+                                         const gfx::Rect& pos) {
+  for (std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
+           blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
+    if (it->first == source) {
+      it->second = pos;
+      break;
+    }
+  }
+}
+
+bool BlockedPopupContainer::IsPopup(TabContents* source) {
+  return true;
+}
+
+TabContents* BlockedPopupContainer::GetConstrainingContents(
+    TabContents* source) {
+  return owner_;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+// Override from views::ContainerWin:
+void BlockedPopupContainer::OnFinalMessage(HWND window) {
+  owner_->WillClose(this);
+  CloseEachTabContents();
+  ContainerWin::OnFinalMessage(window);
 }
 
 // private:
@@ -332,4 +417,12 @@ void BlockedPopupContainer::HideSelf() {
 
 void BlockedPopupContainer::ShowSelf() {
   SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+}
+
+void BlockedPopupContainer::CloseEachTabContents() {
+  for(std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
+          blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
+    it->first->CloseContents();
+  }
+  blocked_popups_.clear();
 }

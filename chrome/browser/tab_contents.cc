@@ -446,27 +446,14 @@ void TabContents::MigrateShelfViewFrom(TabContents* tab_contents) {
   tab_contents->ReleaseDownloadShelfView();
 }
 
-void TabContents::AddNewContents(ConstrainedWindow* window,
-                                 TabContents* new_contents,
-                                 WindowOpenDisposition disposition,
-                                 const gfx::Rect& initial_pos,
-                                 bool user_gesture) {
-  AddNewContents(new_contents, disposition, initial_pos, user_gesture);
-}
-
-void TabContents::OpenURL(ConstrainedWindow* window,
-                          const GURL& url,
-                          const GURL& referrer,
-                          WindowOpenDisposition disposition,
-                          PageTransition::Type transition) {
-  OpenURL(url, referrer, disposition, transition);
-}
-
 void TabContents::WillClose(ConstrainedWindow* window) {
   ConstrainedWindowList::iterator it =
       find(child_windows_.begin(), child_windows_.end(), window);
   if (it != child_windows_.end())
     child_windows_.erase(it);
+
+  if (window == blocked_popups_)
+    blocked_popups_ = NULL;
 
   if (::IsWindow(GetContainerHWND())) {
     CRect client_rect;

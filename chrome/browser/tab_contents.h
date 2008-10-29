@@ -413,16 +413,6 @@ class TabContents : public PageNavigator {
 
   // ConstrainedTabContentsDelegate --------------------------------------------
   // TODO: Pull these out?
-  virtual void AddNewContents(ConstrainedWindow* window,
-                              TabContents* contents,
-                              WindowOpenDisposition disposition,
-                              const gfx::Rect& initial_pos,
-                              bool user_gesture);
-  virtual void OpenURL(ConstrainedWindow* window,
-                       const GURL& url,
-                       const GURL& referrer,
-                       WindowOpenDisposition disposition,
-                       PageTransition::Type transition);
   virtual void WillClose(ConstrainedWindow* window);
   virtual void DidMoveOrResize(ConstrainedWindow* window);
 
