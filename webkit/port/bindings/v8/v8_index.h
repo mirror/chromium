@@ -250,6 +250,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(KEYBOARDEVENT, KeyboardEvent)                                       \
   V(LOCATION, Location)                                                 \
   V(MEDIALIST, MediaList)                                               \
+  V(MESSAGECHANNEL, MessageChannel)                                     \
   V(MESSAGEEVENT, MessageEvent)                                         \
   V(MESSAGEPORT, MessagePort)                                           \
   V(MIMETYPE, MimeType)                                                 \

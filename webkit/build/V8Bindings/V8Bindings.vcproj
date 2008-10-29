@@ -1040,6 +1040,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\V8MessageChannel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8MessageChannel.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\V8MessageEvent.cpp"
 				>
 			</File>

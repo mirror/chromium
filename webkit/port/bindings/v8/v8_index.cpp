@@ -134,6 +134,7 @@
 #include "V8ImageData.h"
 #include "V8InspectorController.h"
 #include "V8MediaList.h"
+#include "V8MessageChannel.h"
 #include "V8MessageEvent.h"
 #include "V8MessagePort.h"
 #include "V8NamedNodeMap.h"

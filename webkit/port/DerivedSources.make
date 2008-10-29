@@ -734,6 +734,7 @@ all : \
     V8ImageData.h \
     V8KeyboardEvent.h \
     V8MediaList.h \
+    V8MessageChannel.h \
     V8MessageEvent.h \
     V8MessagePort.h \
     V8MouseEvent.h \

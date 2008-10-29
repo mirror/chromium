@@ -88,6 +88,7 @@
 #include "JSXPathNSResolver.h"
 #include "KURL.h"
 #include "Location.h"
+#include "MessageChannel.h"
 #include "MessagePort.h"
 #include "MouseEvent.h"
 #include "NodeIterator.h"
@@ -259,6 +260,33 @@ CALLBACK_FUNC_DECL(DOMParserConstructor) {
   INC_STATS(L"DOM.DOMParser.Contructor");
   return V8Proxy::ConstructDOMObject<V8ClassIndex::DOMPARSER,
                                      DOMParser>(args);
+}
+
+// TODO(mbelshe): merge this with the XHR Constructor.
+//   The only difference is that this one takes an argument to its
+//   create call, the XHR does not.
+CALLBACK_FUNC_DECL(MessageChannelConstructor) {
+  INC_STATS(L"DOM.MessageChannel.Constructor");
+  if (!args.IsConstructCall()) {
+    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
+        "DOM object constructor cannot be called as a function.");
+    return v8::Undefined();
+  }
+
+  // Get the document.
+  Frame* frame = V8Proxy::retrieveFrame();
+  if (!frame)
+    return v8::Undefined();
+  Document* document = frame->document();
+
+  // Note: it's OK to let this RefPtr go out of scope because we also call
+  // SetDOMWrapper(), which effectively holds a reference to obj.
+  RefPtr<MessageChannel> obj = MessageChannel::create(document);
+  V8Proxy::SetDOMWrapper(args.Holder(), V8ClassIndex::MESSAGECHANNEL,
+      obj.get());
+  V8Proxy::SetJSWrapperForDOMObject(
+      obj.get(), v8::Persistent<v8::Object>::New(args.Holder()));
+  return args.Holder();
 }
 
 
@@ -877,7 +905,7 @@ CALLBACK_FUNC_DECL(DOMWindowPostMessage) {
 
   if (try_catch.HasCaught()) return v8::Undefined();
 
-  ExceptionCode ec;
+  ExceptionCode ec = 0;
   window->postMessage(message, port, domain, source, ec);
   if (ec)
     V8Proxy::SetDOMException(ec);
@@ -2819,10 +2847,13 @@ CALLBACK_FUNC_DECL(DocumentEvaluate) {
     inResult = V8Proxy::ToNativeObject<XPathResult>(
         V8ClassIndex::XPATHRESULT, args[4]);
   }
+
+  v8::TryCatch try_catch;
   RefPtr<XPathResult> result =
       imp->evaluate(expression, contextNode, resolver, type, inResult, ec);
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
+  if (try_catch.HasCaught() || ec != 0) {
+    if (!try_catch.HasCaught())
+      V8Proxy::SetDOMException(ec);
     return v8::Handle<v8::Value>();
   }
   return V8Proxy::ToV8Object(V8ClassIndex::XPATHRESULT,

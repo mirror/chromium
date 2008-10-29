@@ -54,6 +54,11 @@ class V8Custom {
   static const int kXMLHttpRequestInternalFieldCount =
                       kDefaultWrapperInternalFieldCount + 1;
 
+  static const int kMessagePortRequestCacheIndex =
+                      kDefaultWrapperInternalFieldCount + 0;
+  static const int kMessagePortInternalFieldCount =
+                      kDefaultWrapperInternalFieldCount + 1;
+
   static const int kDOMWindowLocationIndex =
                       kDefaultWrapperInternalFieldCount + 0;
   static const int kDOMWindowNavigatorIndex =
@@ -221,6 +226,7 @@ DECLARE_CALLBACK(DOMWindowShowModalDialog)
 DECLARE_CALLBACK(DOMWindowOpen)
 
 DECLARE_CALLBACK(DOMParserConstructor)
+DECLARE_CALLBACK(MessageChannelConstructor)
 DECLARE_CALLBACK(XMLHttpRequestConstructor)
 DECLARE_CALLBACK(XMLSerializerConstructor)
 DECLARE_CALLBACK(XPathEvaluatorConstructor)
