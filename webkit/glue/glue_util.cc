@@ -98,7 +98,8 @@ WebCore::KURL GURLToKURL(const GURL& url) {
 // Rect conversions ------------------------------------------------------------
 
 gfx::Rect FromIntRect(const WebCore::IntRect& r) {
-  return gfx::Rect(r.x(), r.y(), r.width(), r.height());
+    return gfx::Rect(r.x(), r.y(), r.width() < 0 ? 0 : r.width(),
+        r.height() < 0 ? 0 : r.height());
 }
 
 WebCore::IntRect ToIntRect(const gfx::Rect& r) {
