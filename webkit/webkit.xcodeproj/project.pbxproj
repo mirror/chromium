@@ -9469,6 +9469,7 @@
 					"$(DIR_WEBCORE)/editing/mac",
 					"$(DIR_WEBCORE)/history",
 					"$(DIR_WEBCORE)/history/mac",
+					"$(DIR_WEBCORE)/inspector",
 					"$(DIR_WEBCORE)/html",
 					"$(DIR_WEBCORE)/loader",
 					"$(DIR_WEBCORE)/loader/appcache",
