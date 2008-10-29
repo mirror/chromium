@@ -763,6 +763,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\port\platform\chromium\FileSystemChromium.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\port\platform\chromium\FileSystemChromiumWin.cpp"
 					>
 				</File>
