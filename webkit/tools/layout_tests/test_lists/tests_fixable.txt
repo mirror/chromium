@@ -789,3 +789,11 @@ V8 # pending/http/tests/security/cross-frame-access-protocol.html = PASS | TIMEO
 // See bug # 2307
 V8 # LayoutTests/fast/js/date-DST-time-cusps.html = FAIL | PASS
 V8 # LayoutTests/fast/js/date-big-setdate.html = FAIL | PASS
+
+// Chrome's security policy does not allow XHR from a file url to send
+// requests to arbitrary urls. The test is failing because it constructs
+// XHR objects and send requests to some http URLs or 'about:blank' url.
+// A patch has been made to webkit.
+// See webkit bug https://bugs.webkit.org/show_bug.cgi?id=21948
+V8 | KJS # LayoutTests/fast/dom/xmlhttprequest-invalid-values.html = FAIL
+V8 | KJS # LayoutTests/fast/dom/null-document-xmlhttprequest-open.html = TIMEOUT

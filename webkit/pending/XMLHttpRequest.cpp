@@ -330,10 +330,6 @@ void XMLHttpRequest::callReadyStateChangeListener()
 
 bool XMLHttpRequest::urlMatchesDocumentDomain(const KURL& url) const
 {
-    // a local file can load anything
-    if (m_doc->isAllowedToLoadLocalResources())
-        return true;
-
     // but a remote document can only load from the same port on the server
     KURL documentURL = m_doc->url();
     if (documentURL.protocol().lower() == url.protocol().lower()
