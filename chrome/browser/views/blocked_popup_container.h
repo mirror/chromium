@@ -56,6 +56,9 @@ class BlockedPopupContainer : public ConstrainedWindow,
   // Deletes all popups and hides the interface parts.
   void CloseAllPopups();
 
+  // Called to force this container to never show itself again.
+  void set_dismissed() { has_been_dismissed_ = true; }
+
   // Override from ConstrainedWindow:
   virtual void ActivateConstrainedWindow();
   virtual void CloseConstrainedWindow();
@@ -77,6 +80,12 @@ class BlockedPopupContainer : public ConstrainedWindow,
   // browser window.
   void Init(const gfx::Point& initial_anchor);
 
+  // Hides the UI portion of the container.
+  void HideSelf();
+
+  // Shows the UI portion of the container.
+  void ShowSelf();
+
   // The TabContents that owns and constrains this BlockedPopupContainer.
   TabContents* owner_;
 
@@ -87,8 +96,11 @@ class BlockedPopupContainer : public ConstrainedWindow,
   BlockedPopupContainerView* container_view_;
 
   // Link to the show blocked popup preference. Used to both determine whether
-  // we should show ourself to the user and whether we 
-  BooleanPrefMember disable_popup_blocked_notification_pref_;
+  // we should show ourself to the user...
+  BooleanPrefMember block_popup_pref_;
+
+  // Once the container is hidden (either because of 
+  bool has_been_dismissed_;
 
   gfx::Rect bounds_;
 };

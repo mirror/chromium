@@ -152,6 +152,7 @@ void BlockedPopupContainerView::ButtonPressed(views::BaseButton* sender) {
     launch_menu_->RunMenuAt(cursor_pos.x, cursor_pos.y);
   } else if (sender == close_button_) {
     container_->CloseAllPopups();
+    container_->set_dismissed();
   }
 }
 
@@ -188,31 +189,28 @@ BlockedPopupContainer::~BlockedPopupContainer() {
 
 BlockedPopupContainer::BlockedPopupContainer(TabContents* owner,
                                              Profile* profile)
-    : owner_(owner), container_view_(NULL) {
-  disable_popup_blocked_notification_pref_.Init(
+    : owner_(owner), container_view_(NULL), has_been_dismissed_(false) {
+  block_popup_pref_.Init(
       prefs::kBlockPopups, profile->GetPrefs(), NULL);
 }
 
-void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
-  container_view_ = new BlockedPopupContainerView(this);
-  container_view_->SetVisible(true);
-
-  ContainerWin::Init(owner_->GetContainerHWND(), gfx::Rect(), false);
-  SetContentsView(container_view_);
-  RepositionConstrainedWindowTo(initial_anchor);
-}
-
 void BlockedPopupContainer::ToggleBlockedPopupNotification() {
-  bool current = disable_popup_blocked_notification_pref_.GetValue();
-  disable_popup_blocked_notification_pref_.SetValue(!current);
+  bool current = block_popup_pref_.GetValue();
+  block_popup_pref_.SetValue(!current);
 }
 
 bool BlockedPopupContainer::GetShowBlockedPopupNotification() {
-  return disable_popup_blocked_notification_pref_.GetValue();
+  return ! block_popup_pref_.GetValue();
 }
 
 void BlockedPopupContainer::AddTabContents(TabContents* blocked_contents,
                                            const gfx::Rect& bounds) {
+  if (has_been_dismissed_) {
+    // We simply bounce this popup without notice.
+    blocked_contents->CloseContents();
+    return;
+  }
+
   if (blocked_popups_.size() > kImpossibleNumberOfPopups) {
     blocked_contents->CloseContents();
     LOG(INFO) << "Warning: Renderer is sending more popups to us then should be"
@@ -223,8 +221,7 @@ void BlockedPopupContainer::AddTabContents(TabContents* blocked_contents,
   blocked_popups_.push_back(std::make_pair(blocked_contents, bounds));
   container_view_->UpdatePopupCountLabel();
 
-  // It is possible we were hidden and now we don't want to be.
-  SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+  ShowSelf();
 }
 
 void BlockedPopupContainer::LaunchPopupIndex(int index) {
@@ -239,13 +236,11 @@ void BlockedPopupContainer::LaunchPopupIndex(int index) {
     // Pass this TabContents back to our owner, forcing the window to be
     // displayed since user_gesture is true.
     owner_->AddNewContents(contents, NEW_POPUP, bounds, true);
-
-    // TODO: If the above works, try to rip out all the H4X code about
-    // transitioning from a constrained to a normal window.
   }
 
   if (blocked_popups_.size() == 0) {
     CloseAllPopups();
+    // Note: we don't set the |has_been_dismissed_| flag here
   }
 }
 
@@ -272,8 +267,7 @@ void BlockedPopupContainer::CloseAllPopups() {
 
   container_view_->UpdatePopupCountLabel();
 
-  // Size this window to the bottom left corner starting at the anchor point.
-  SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW);
+  HideSelf();
 }
 
 // ConstrainedWindow interface. Needs work.
@@ -303,7 +297,7 @@ void BlockedPopupContainer::RepositionConstrainedWindowTo(
   int y = anchor_point.y() - size.height();
 
   // Size this window to the bottom left corner starting at the anchor point.
-  SetWindowPos(HWND_TOP, x, y, size.width(), size.height(), SWP_SHOWWINDOW);
+  SetWindowPos(HWND_TOP, x, y, size.width(), size.height(), 0);
 }
 
 void BlockedPopupContainer::WasHidden() { }
@@ -314,4 +308,28 @@ std::wstring BlockedPopupContainer::GetWindowTitle() const {
 void BlockedPopupContainer::UpdateWindowTitle() { }
 const gfx::Rect& BlockedPopupContainer::GetCurrentBounds() const {
   return bounds_;
+}
+
+// private:
+
+void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
+  container_view_ = new BlockedPopupContainerView(this);
+  container_view_->SetVisible(true);
+
+  ContainerWin::Init(owner_->GetContainerHWND(), gfx::Rect(), false);
+  SetContentsView(container_view_);
+  RepositionConstrainedWindowTo(initial_anchor);
+
+  if (GetShowBlockedPopupNotification())
+    ShowSelf();
+  else
+    has_been_dismissed_ = true;
+}
+
+void BlockedPopupContainer::HideSelf() {
+  SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW);
+}
+
+void BlockedPopupContainer::ShowSelf() {
+  SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 }
