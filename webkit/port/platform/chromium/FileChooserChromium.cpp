@@ -24,15 +24,13 @@
  */
 
 #include "config.h"
-#if PLATFORM(WIN_OS)
-#include <shlwapi.h>
-#endif
 
 #pragma warning(push, 0)
 #include "ChromeClientChromium.h"
 #include "Document.h"
 #include "Frame.h"
 #include "FileChooser.h"
+#include "FileSystem.h"
 #include "LocalizedStrings.h"
 #include "NotImplemented.h"
 #include "Page.h"
@@ -62,17 +60,8 @@ String FileChooser::basenameForWidth(const Font& font, int width) const
     String string;
     if (m_filename.isEmpty())
         string = fileButtonNoFileSelectedLabel();
-    else {
-#if PLATFORM(WIN_OS)
-        String tmpFilename = m_filename;
-        // Apple's code has a LPTSTR here, which will compile and run, but is wrong.
-        wchar_t* basename = PathFindFileName(tmpFilename.charactersWithNullTermination());
-        string = String(basename);
-#else
-        notImplemented();
-        string = "fixme";
-#endif
-    }
+    else
+        string = pathGetFileName(m_filename);
 
     return StringTruncator::centerTruncate(string, static_cast<float>(width), font, false);
 }

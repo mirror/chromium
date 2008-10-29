@@ -250,11 +250,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\Console.h"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\Console.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\page\Console.cpp"
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\Console.h"
 				>
 			</File>
 			<File
@@ -1324,10 +1324,10 @@
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\Credential.h"
 					>
 				</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\DNS.h"
-				>
-			</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\DNS.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\network\FormData.cpp"
 					>
@@ -1404,12 +1404,8 @@
 			<Filter
 				Name="win"
 				>
- 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Arena.cpp"
-					>
-				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\win\FileSystemWin.cpp"
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Arena.cpp"
 					>
 				</File>
 			</Filter>
@@ -1510,14 +1506,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\StringTruncator.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.h"
 					>
 				</File>
 				<File
@@ -1622,6 +1610,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\text\UnicodeRange.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.h"
 					>
 				</File>
 			</Filter>
