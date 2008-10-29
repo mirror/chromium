@@ -24,19 +24,6 @@ class MasterFactory(object):
   CUSTOM_DEPS_V8_LATEST = ('src/v8',
     'http://v8.googlecode.com/svn/branches/bleeding_edge')
 
-  # Internal custom deps
-  # Used by 'node_leak' and 'playback' tests.
-  # TODO(not_me): Need to move this to new repository so we can access it from
-  # the new buildbots.
-  CUSTOM_DEPS_INTERNAL_DISABLE_SAVEDCACHE_DATA = (
-    'src/data/saved_caches', None)
-
-  # Memory tool.
-  CUSTOM_DEPS_INTERNAL_MEMORY_TOOL = ('src/chrome/tools/memory', None)
-  # Preinstalled on the trybot. Unnecessary on non-Windows platforms.
-  CUSTOM_DEPS_INTERNAL_DISABLE_PLATFORM_SDK = (
-    'src/third_party/platformsdk_vista_6_0', None)
-
   # A map used to skip dependencies when a test is not run.
   # The map key is the test name. The map value is an array containing the
   # dependencies that are not needed when this test is not run.
@@ -125,13 +112,6 @@ class MasterFactory(object):
     # Disable what is on the internal svn server.
     custom_deps_internal.append(
         self.CUSTOM_DEPS_INTERNAL_DISABLE_SAVEDCACHE_DATA)
-
-    if self._target_platform != 'win32':
-      # Non-Windows platforms don't need the Windows SDK nor the not-yet-ported
-      # memory tools.
-      custom_deps_internal.extend([
-        self.CUSTOM_DEPS_INTERNAL_DISABLE_PLATFORM_SDK,
-        self.CUSTOM_DEPS_INTERNAL_MEMORY_TOOL])
 
   def _ShouldRunTest(self, tests, name):
     for test in tests:
@@ -364,11 +344,6 @@ class MasterFactory(object):
       custom_deps_internal = gclient_custom_deps_internal
 
     self._FixDeps(custom_deps, custom_deps_internal, tests)
-    if slave_type == 'Trybot' and self._target_platform == 'win32':
-      # Trybot have the platform sdk preinstalled to speed up the checkout. So
-      # skip it even on Windows. It's already skipped on other platforms.
-      custom_deps_internal.append(
-        self.CUSTOM_DEPS_INTERNAL_DISABLE_PLATFORM_SDK)
     gclient_spec = self._BuildGClientSpec(svnurl, svnurl_internal, custom_deps,
                                           custom_deps_internal)
 
