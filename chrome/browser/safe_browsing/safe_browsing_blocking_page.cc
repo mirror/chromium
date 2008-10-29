@@ -185,7 +185,7 @@ void SafeBrowsingBlockingPage::Observe(NotificationType type,
                                        const NotificationDetails& details) {
   switch (type) {
     case NOTIFY_TAB_CLOSING:
-      HandleClose();
+      NotifyDone();
       break;
     case NOTIFY_DOM_OPERATION_RESPONSE:
       Continue(Details<DomOperationNotificationDetails>(details)->json());
@@ -196,7 +196,7 @@ void SafeBrowsingBlockingPage::Observe(NotificationType type,
 }
 
 void SafeBrowsingBlockingPage::InterstitialClosed() {
-  HandleClose();
+  NotifyDone();
 }
 
 bool SafeBrowsingBlockingPage::GoBack() {
@@ -242,7 +242,11 @@ bool SafeBrowsingBlockingPage::GoBack() {
 void SafeBrowsingBlockingPage::Continue(const std::string& user_action) {
   TabContents* tab = tab_util::GetTabContentsByID(render_process_host_id_,
                                                   render_view_id_);
-  DCHECK(tab);
+  if (!tab) {
+    NOTREACHED();
+    return;
+  }
+
   WebContents* web = tab->AsWebContents();
   if (user_action == "2") {
     // User pressed "Learn more".
@@ -298,18 +302,6 @@ void SafeBrowsingBlockingPage::Continue(const std::string& user_action) {
   NotifyDone();
 }
 
-void SafeBrowsingBlockingPage::HandleClose() {
-  NotificationService* ns = NotificationService::current();
-  DCHECK(ns);
-  ns->RemoveObserver(this, NOTIFY_TAB_CLOSING,
-                     Source<NavigationController>(controller_));
-  ns->RemoveObserver(this, NOTIFY_DOM_OPERATION_RESPONSE,
-                     Source<TabContents>(tab_));
-
-  NotifyDone();
-  Release();
-}
-
 void SafeBrowsingBlockingPage::NotifyDone() {
   if (delete_pending_)
     return;
@@ -325,8 +317,17 @@ void SafeBrowsingBlockingPage::NotifyDone() {
   if (!io_thread)
     return;
 
+  NotificationService* ns = NotificationService::current();
+  DCHECK(ns);
+  ns->RemoveObserver(this, NOTIFY_TAB_CLOSING,
+                     Source<NavigationController>(controller_));
+  ns->RemoveObserver(this, NOTIFY_DOM_OPERATION_RESPONSE,
+                     Source<TabContents>(tab_));
+
   io_thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
       sb_service_,
       &SafeBrowsingService::OnBlockingPageDone,
       this, client_, proceed_));
+
+  Release();
 }

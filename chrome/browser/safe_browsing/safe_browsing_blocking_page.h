@@ -68,7 +68,6 @@ class SafeBrowsingBlockingPage
   void Continue(const std::string& user_action);
 
   // Tell the SafeBrowsingService that the handling of the current page is done.
-  void HandleClose();
   void NotifyDone();
 
  private:
