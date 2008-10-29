@@ -40,6 +40,7 @@
 /* Begin PBXBuildFile section */
 		4D11C4E10E9ABEA900EF7617 /* ExceptionContextV8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D11C4D90E9ABE9200EF7617 /* ExceptionContextV8.cpp */; };
 		4D11C5520E9AC23100EF7617 /* RenderThemeMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = E49E50DE0E65E33200AD47F7 /* RenderThemeMac.mm */; };
+		4D329F8C0EB908A40041FB7E /* V8MessageChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D329F8A0EB908A40041FB7E /* V8MessageChannel.cpp */; };
 		4D7B071F0E9DAE56009A6919 /* GraphicsContextStub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D7B071E0E9DAE56009A6919 /* GraphicsContextStub.cpp */; };
 		4DB043A40EB1577900A5633C /* webcursor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 825405300D92E3DA0006B936 /* webcursor.cc */; };
 		4DB044230EB161D600A5633C /* IconMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DB044220EB161D600A5633C /* IconMac.cpp */; };
@@ -1390,6 +1391,8 @@
 /* Begin PBXFileReference section */
 		046192AA0EA5476500FB37B0 /* BitmapImageSingleFrameSkia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitmapImageSingleFrameSkia.h; sourceTree = "<group>"; };
 		4D11C4D90E9ABE9200EF7617 /* ExceptionContextV8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExceptionContextV8.cpp; sourceTree = "<group>"; };
+		4D329F8A0EB908A40041FB7E /* V8MessageChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = V8MessageChannel.cpp; sourceTree = "<group>"; };
+		4D329F8B0EB908A40041FB7E /* V8MessageChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V8MessageChannel.h; sourceTree = "<group>"; };
 		4D7B071E0E9DAE56009A6919 /* GraphicsContextStub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsContextStub.cpp; sourceTree = "<group>"; };
 		4DB044220EB161D600A5633C /* IconMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IconMac.cpp; sourceTree = "<group>"; };
 		4DB044420EB1639E00A5633C /* ImageMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageMac.cpp; sourceTree = "<group>"; };
@@ -6760,6 +6763,8 @@
 				7B0092160DAFEFE400F72082 /* V8Location.h */,
 				7B0092190DAFEFE400F72082 /* V8MediaList.cpp */,
 				7B00921A0DAFEFE400F72082 /* V8MediaList.h */,
+				4D329F8A0EB908A40041FB7E /* V8MessageChannel.cpp */,
+				4D329F8B0EB908A40041FB7E /* V8MessageChannel.h */,
 				7B00921B0DAFEFE400F72082 /* V8MessageEvent.cpp */,
 				7B00921C0DAFEFE400F72082 /* V8MessageEvent.h */,
 				ABBD24020EB7AE0700BEC658 /* V8MessagePort.cpp */,
@@ -8023,7 +8028,10 @@
 				7B0094550DAFEFE600F72082 /* V8KeyboardEvent.cpp in Sources */,
 				7B0094570DAFEFE600F72082 /* V8Location.cpp in Sources */,
 				7B00945B0DAFEFE600F72082 /* V8MediaList.cpp in Sources */,
+				4D329F8C0EB908A40041FB7E /* V8MessageChannel.cpp in Sources */,
 				7B00945D0DAFEFE600F72082 /* V8MessageEvent.cpp in Sources */,
+				ABBD24370EB7AE0700BEC658 /* V8MessagePort.cpp in Sources */,
+				ABBD24790EB7B31B00BEC658 /* V8MessagePortCustom.cpp in Sources */,
 				7B00945F0DAFEFE600F72082 /* V8MimeType.cpp in Sources */,
 				7B0094610DAFEFE600F72082 /* V8MimeTypeArray.cpp in Sources */,
 				7B0094630DAFEFE600F72082 /* V8MouseEvent.cpp in Sources */,
@@ -8184,8 +8192,6 @@
 				7B0095C90DAFF00200F72082 /* XLinkNames.cpp in Sources */,
 				7B0095CB0DAFF00200F72082 /* XMLNames.cpp in Sources */,
 				7B0095CD0DAFF00200F72082 /* XPathGrammar.cpp in Sources */,
-				ABBD24370EB7AE0700BEC658 /* V8MessagePort.cpp in Sources */,
-				ABBD24790EB7B31B00BEC658 /* V8MessagePortCustom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
