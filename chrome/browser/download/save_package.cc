@@ -37,6 +37,8 @@
 
 #include "generated_resources.h"
 
+using base::Time;
+
 // Default name which will be used when we can not get proper name from
 // resource URL.
 static const wchar_t kDefaultSaveName[] = L"saved_resource";
@@ -887,9 +889,9 @@ std::wstring SavePackage::GetSuggestNameForSaveAs(PrefService* prefs,
   // If not, initialize it with default directory.
   if (!prefs->IsPrefRegistered(prefs::kSaveFileDefaultDirectory)) {
     std::wstring default_save_path;
-    PathService::Get(chrome::DIR_USER_DOCUMENTS, &default_save_path);
-    file_util::AppendToPath(&default_save_path,
-    l10n_util::GetString(IDS_DOWNLOAD_DIRECTORY));
+    if (!PathService::Get(chrome::DIR_DEFAULT_DOWNLOADS,
+                          &default_save_path))
+      NOTREACHED();
     prefs->RegisterStringPref(prefs::kSaveFileDefaultDirectory,
                               default_save_path);
   }
@@ -1060,4 +1062,3 @@ bool SavePackage::GetSafePureFileName(const std::wstring& dir_path,
     return false;
   }
 }
-

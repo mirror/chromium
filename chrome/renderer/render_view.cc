@@ -61,6 +61,8 @@
 
 #include "generated_resources.h"
 
+using base::TimeDelta;
+
 //-----------------------------------------------------------------------------
 
 // define to write the time necessary for thumbnail/DOM text retrieval,
@@ -840,6 +842,11 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
   if (!is_reload)
     request->SetHistoryState(params.state);
 
+  if (params.referrer.is_valid()) {
+    request->SetHttpHeaderValue(L"Referer",
+                                UTF8ToWide(params.referrer.spec()));
+  }
+
   main_frame->LoadRequest(request.get());
 }
 
@@ -1521,7 +1528,7 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
       if (enable_dom_ui_bindings_ ||
           frame->GetInViewSourceMode() ||
           url.SchemeIs("view-source")) {
-        OpenURL(webview, url, disposition);
+        OpenURL(webview, url, GURL(), disposition);
         return IGNORE_ACTION;  // Suppress the load here.
       }
     }
@@ -1558,7 +1565,7 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
       type == WebNavigationTypeOther;
   if (is_fork) {
     // Open the URL via the browser, not via WebKit.
-    OpenURL(webview, url, disposition);
+    OpenURL(webview, url, GURL(), disposition);
     return IGNORE_ACTION;
   }
 
@@ -1823,8 +1830,9 @@ void RenderView::OnMissingPluginStatus(WebPluginDelegate* delegate,
 }
 
 void RenderView::OpenURL(WebView* webview, const GURL& url,
+                         const GURL& referrer,
                          WindowOpenDisposition disposition) {
-  Send(new ViewHostMsg_OpenURL(routing_id_, url, disposition));
+  Send(new ViewHostMsg_OpenURL(routing_id_, url, referrer, disposition));
 }
 
 // We are supposed to get a single call to Show for a newly created RenderView

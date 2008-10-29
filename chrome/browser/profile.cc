@@ -5,16 +5,19 @@
 #include "chrome/browser/profile.h"
 
 #include "base/command_line.h"
+#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/lock.h"
 #include "base/path_service.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/values.h"
+#include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/greasemonkey_master.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/profile_manager.h"
@@ -40,6 +43,9 @@
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/webkit_glue.h"
 
+using base::Time;
+using base::TimeDelta;
+
 // Delay, in milliseconds, before we explicitly create the SessionService.
 static const int kCreateSessionServiceDelayMS = 500;
 
@@ -49,8 +55,12 @@ URLRequestContext* Profile::default_request_context_;
 
 //static
 void Profile::RegisterUserPrefs(PrefService* prefs) {
+  prefs->RegisterBooleanPref(prefs::kSearchSuggestEnabled, true);
   prefs->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
   prefs->RegisterBooleanPref(prefs::kSafeBrowsingEnabled, true);
+  prefs->RegisterLocalizedStringPref(prefs::kSpellCheckDictionary,
+      IDS_SPELLCHECK_DICTIONARY);
+  prefs->RegisterBooleanPref(prefs::kEnableSpellCheck, true);
 }
 
 //static
@@ -374,6 +384,10 @@ class OffTheRecordProfileImpl : public Profile,
     return profile_->GetVisitedLinkMaster();
   }
 
+  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() {
+    return profile_->GetGreasemonkeyMaster();
+  }
+
   virtual HistoryService* GetHistoryService(ServiceAccessType sat) {
     if (sat == EXPLICIT_ACCESS) {
       return profile_->GetHistoryService(sat);
@@ -479,11 +493,11 @@ class OffTheRecordProfileImpl : public Profile,
     return NULL;
   }
 
-  virtual void InitializeSpellChecker() {
-    profile_->InitializeSpellChecker();
+  virtual void ResetTabRestoreService() {
   }
 
-  virtual void ResetTabRestoreService() {
+  virtual void ReinitializeSpellChecker() {
+    profile_->ReinitializeSpellChecker();
   }
 
   virtual SpellChecker* GetSpellChecker() {
@@ -548,6 +562,9 @@ ProfileImpl::ProfileImpl(const std::wstring& path)
   create_session_service_timer_.Start(
       TimeDelta::FromMilliseconds(kCreateSessionServiceDelayMS), this,
       &ProfileImpl::EnsureSessionServiceCreated);
+  PrefService* prefs = GetPrefs();
+  prefs->AddPrefObserver(prefs::kSpellCheckDictionary, this);
+  prefs->AddPrefObserver(prefs::kEnableSpellCheck, this);
 }
 
 ProfileImpl::~ProfileImpl() {
@@ -562,6 +579,11 @@ ProfileImpl::~ProfileImpl() {
   // The download manager queries the history system and should be deleted
   // before the history is shutdown so it can properly cancel all requests.
   download_manager_ = NULL;
+
+  // Remove pref observers.
+  PrefService* prefs = GetPrefs();
+  prefs->RemovePrefObserver(prefs::kSpellCheckDictionary, this);
+  prefs->RemovePrefObserver(prefs::kEnableSpellCheck, this);
 
 #ifdef CHROME_PERSONALIZATION
   personalization_.reset();
@@ -664,6 +686,19 @@ VisitedLinkMaster* ProfileImpl::GetVisitedLinkMaster() {
   }
 
   return visited_link_master_.get();
+}
+
+GreasemonkeyMaster* ProfileImpl::GetGreasemonkeyMaster() {
+  if (!greasemonkey_master_.get()) {
+    std::wstring script_dir_str;
+    PathService::Get(chrome::DIR_USER_SCRIPTS, &script_dir_str);
+    FilePath script_dir(script_dir_str);
+    greasemonkey_master_ =
+        new GreasemonkeyMaster(g_browser_process->file_thread()->message_loop(),
+                               script_dir);
+  }
+
+  return greasemonkey_master_.get();
 }
 
 PrefService* ProfileImpl::GetPrefs() {
@@ -846,7 +881,8 @@ void ProfileImpl::ResetTabRestoreService() {
 class NotifySpellcheckerChangeTask : public Task {
  public:
   NotifySpellcheckerChangeTask(
-      Profile* profile, const SpellcheckerReinitializedDetails& spellchecker)
+      Profile* profile,
+      const SpellcheckerReinitializedDetails& spellchecker)
       : profile_(profile),
         spellchecker_(spellchecker) {
   }
@@ -863,9 +899,7 @@ class NotifySpellcheckerChangeTask : public Task {
   SpellcheckerReinitializedDetails spellchecker_;
 };
 
-void ProfileImpl::InitializeSpellChecker() {
-  bool need_to_broadcast = false;
-
+void ProfileImpl::InitializeSpellChecker(bool need_to_broadcast) {
   // The I/O thread may be NULL during testing.
   base::Thread* io_thread = g_browser_process->io_thread();
   if (spellchecker_) {
@@ -877,31 +911,40 @@ void ProfileImpl::InitializeSpellChecker() {
       io_thread->message_loop()->ReleaseSoon(FROM_HERE, last_spellchecker);
     else  //  during testing, we don't have an I/O thread
       last_spellchecker->Release();
-
-    need_to_broadcast = true;
   }
-
-  std::wstring dict_dir;
-  PathService::Get(chrome::DIR_APP_DICTIONARIES, &dict_dir);
 
   // Retrieve the (perhaps updated recently) dictionary name from preferences.
   PrefService* prefs = GetPrefs();
-  std::wstring language = prefs->GetString(prefs::kSpellCheckDictionary);
+  bool enable_spellcheck = prefs->GetBoolean(prefs::kEnableSpellCheck);
 
-  // Note that, as the object pointed to by previously by spellchecker_ 
-  // is being deleted in the io thread, the spellchecker_ can be made to point
-  // to a new object (RE-initialized) in parallel in this UI thread.
-  spellchecker_ = new SpellChecker(dict_dir, language, GetRequestContext(), 
-                                   L"");
-  spellchecker_->AddRef();  // Manual refcounting.
+  if (enable_spellcheck) {
+    std::wstring dict_dir;
+    PathService::Get(chrome::DIR_APP_DICTIONARIES, &dict_dir);
+    std::wstring language = prefs->GetString(prefs::kSpellCheckDictionary);
+
+    // Note that, as the object pointed to by previously by spellchecker_ 
+    // is being deleted in the io thread, the spellchecker_ can be made to point
+    // to a new object (RE-initialized) in parallel in this UI thread.
+    spellchecker_ = new SpellChecker(dict_dir, language, GetRequestContext(), 
+                                     L"");
+    spellchecker_->AddRef();  // Manual refcounting.
+  } else {
+    spellchecker_ = NULL;
+  }
 
   if (need_to_broadcast && io_thread) {  // Notify resource message filters.
     SpellcheckerReinitializedDetails scoped_spellchecker;
     scoped_spellchecker.spellchecker = spellchecker_;
-    io_thread->message_loop()->PostTask(
-        FROM_HERE, 
-        new NotifySpellcheckerChangeTask(this, scoped_spellchecker));
+    if (io_thread) {
+      io_thread->message_loop()->PostTask(
+          FROM_HERE, 
+          new NotifySpellcheckerChangeTask(this, scoped_spellchecker));
+    }
   }
+}
+
+void ProfileImpl::ReinitializeSpellChecker() {
+  InitializeSpellChecker(true);
 }
 
 SpellChecker* ProfileImpl::GetSpellChecker() {
@@ -911,7 +954,7 @@ SpellChecker* ProfileImpl::GetSpellChecker() {
     // it is *used* in the io thread.
     // TODO (sidchat) One day, change everything so that spellchecker gets
     // initialized in the IO thread itself.
-    InitializeSpellChecker();
+    InitializeSpellChecker(false);
   }
 
   return spellchecker_;
@@ -925,6 +968,20 @@ void ProfileImpl::MarkAsCleanShutdown() {
     // NOTE: If you change what thread this writes on, be sure and update
     // ChromeFrame::EndSession().
     prefs_->SavePersistentPrefs(g_browser_process->file_thread());
+  }
+}
+
+void ProfileImpl::Observe(NotificationType type,
+                          const NotificationSource& source,
+                          const NotificationDetails& details) {
+  if (NOTIFY_PREF_CHANGED == type) {
+    std::wstring* pref_name_in = Details<std::wstring>(details).ptr();
+    PrefService* prefs = Source<PrefService>(source).ptr();
+    DCHECK(pref_name_in && prefs);
+    if (*pref_name_in == prefs::kSpellCheckDictionary ||
+        *pref_name_in == prefs::kEnableSpellCheck) {
+      InitializeSpellChecker(true);
+    }
   }
 }
 

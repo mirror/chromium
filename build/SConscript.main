@@ -26,13 +26,16 @@ else:
     load = []
 
 
-env = Environment(
+root_env = Environment(
     tools = ['component_setup'],
     CHROME_SRC_DIR = '$MAIN_DIR/..',
     DESTINATION_ROOT = '$MAIN_DIR/Hammer',
     TARGET_ROOT = '$DESTINATION_ROOT',
 
-    LIBS_DIR              = '$OBJ_ROOT/Libs',
+    LIBS_DIR              = '$COMPONENT_LIBRARY_DIR',
+
+    # Disable running of tests thru scons for now.
+    COMPONENT_TEST_CMDLINE = '',
 
     BASE_DIR              = '$OBJ_ROOT/base',
     BREAKPAD_DIR          = '$OBJ_ROOT/breakpad',
@@ -79,62 +82,187 @@ env = Environment(
                              '__env__, RDirs, TARGET, SOURCE)}'),
 )
 
-env.Append(LIBPATH = ['$LIBS_DIR'])
+root_env.Append(LIBPATH = ['$V8_DIR'])
+
 
 
 def ChromeProgram(env, *args, **kw):
   return env.ComponentProgram(*args, **kw)
-env.AddMethod(ChromeProgram)
+root_env.AddMethod(ChromeProgram)
 
 def ChromeTestProgram(env, *args, **kw):
   return env.ComponentTestProgram(*args, **kw)
-env.AddMethod(ChromeTestProgram)
+root_env.AddMethod(ChromeTestProgram)
 
 def ChromeStaticLibrary(env, *args, **kw):
   kw['COMPONENT_STATIC'] = True
   return env.ComponentLibrary(*args, **kw)
-env.AddMethod(ChromeStaticLibrary)
+root_env.AddMethod(ChromeStaticLibrary)
 
 def ChromeSharedLibrary(env, *args, **kw):
   kw['COMPONENT_STATIC'] = False
   return [env.ComponentLibrary(*args, **kw)[0]]
-env.AddMethod(ChromeSharedLibrary, "ChromeSharedLibrary")
+root_env.AddMethod(ChromeSharedLibrary, "ChromeSharedLibrary")
 
 def ChromeObject(env, *args, **kw):
   return env.ComponentObject(*args, **kw)
-env.AddMethod(ChromeObject)
+root_env.AddMethod(ChromeObject)
+
+
+# TODO(bradnelson): pull this functionality into hammer.
+# Auto select the number of processors
+if root_env['PLATFORM'] in ['win32', 'cygwin']:
+  cpus = int(os.environ.get('NUMBER_OF_PROCESSORS', 1))
+elif root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
+  # TODO(evanm): this is Linux-specific, not posix.
+  # Parse /proc/cpuinfo for processor count.
+  cpus = len([l for l in open('/proc/cpuinfo') if l.startswith('processor\t')])
+SetOption('num_jobs', cpus + 1)
+
+
+if ARGUMENTS.get('VERBOSE') in (None, '0'):
+  root_env['CCCOMSTR'] = 'Compiling $TARGET ...'
+  root_env['CXXCOMSTR'] = 'Compiling $TARGET ...'
+  root_env['SHCCCOMSTR'] = 'Compiling $TARGET ...'
+  root_env['SHCXXCOMSTR'] = 'Compiling $TARGET ...'
+  root_env['ARCOMSTR'] = 'Archiving $TARGET ...'
+  root_env['LINKCOMSTR'] = 'Linking $TARGET ...'
+  root_env['BINDINGSCOMSTR'] = 'Building bindings in $TARGET ...'
+
+# Use timestamps change, followed by MD5 for speed
+root_env.Decider('MD5-timestamp')
+
+
+# The list of all leaf (fully described) environments.
+environment_list = []
+
+
+# --------------------------------------------------------------------------
+# Decide which things to load.
+# Don't put anything platform depended here, this is just to gate things
+# in or out for speed.
+
+included = [c for c in load if not c.startswith('-')]
+excluded = [c[1:] for c in load if c.startswith('-')]
+if not included:
+  included = ['all']
+
+components = ['all']
+
+def LoadComponent(c):
+  components.append(c)
+  return (not GetOption('help') and
+          c in included or
+          ('all' in included and not c in excluded))
+
+sconscripts = []
+
+if LoadComponent('base'):
+  sconscripts.append('$BASE_DIR/base.scons')
+
+if LoadComponent('breakpad'):
+  sconscripts.append('$BREAKPAD_DIR/SConscript')
+
+if LoadComponent('chrome'):
+  sconscripts.append('$CHROME_DIR/SConscript')
+
+if LoadComponent('gears'):
+  sconscripts.append('$GEARS_DIR/SConscript')
+
+if LoadComponent('google_update'):
+  sconscripts.append('$GOOGLE_UPDATE_DIR/SConscript')
+
+if LoadComponent('googleurl'):
+  # googleurl comes from a different repository so we provide the SConscript
+  # file.
+  sconscripts.append('$GOOGLEURL_DIR/googleurl.scons')
+
+if LoadComponent('net'):
+  sconscripts.append('$NET_DIR/net.scons')
+
+if LoadComponent('rlz'):
+  sconscripts.append('$RLZ_DIR/SConscript')
+
+if LoadComponent('sandbox'):
+  sconscripts.append('$SANDBOX_DIR/sandbox.scons')
+
+if LoadComponent('sdch'):
+  sconscripts.append('$SDCH_DIR/SConscript')
+
+if LoadComponent('skia'):
+  sconscripts.append('$SKIA_DIR/SConscript')
+
+if LoadComponent('testing'):
+  sconscripts.append('$TESTING_DIR/SConscript.gtest')
+
+if LoadComponent('third_party'):
+  sconscripts.extend([
+      '$BSDIFF_DIR/SConscript',
+      '$BZIP2_DIR/bzip2.scons',
+      '$ICU38_DIR/icu38.scons',
+      '$LIBPNG_DIR/libpng.scons',
+      '$LZMA_SDK_DIR/SConscript',
+      '$MODP_B64_DIR/modp_b64.scons',
+      '$ZLIB_DIR/zlib.scons',
+      '$LIBJPEG_DIR/SConscript',
+      '$LIBXML_DIR/SConscript',
+      '$LIBXSLT_DIR/SConscript',
+      '$BSPATCH_DIR/SConscript',
+  ])
+
+if LoadComponent('v8') and root_env.Dir('$CHROME_SRC_DIR/v8').exists():
+  sconscripts.append('build/SConscript.v8')
+
+if LoadComponent('webkit'):
+  sconscripts.append('$WEBKIT_DIR/SConscript')
+
+
+# Add the final list into the root environment to be build in BuildComponents.
+root_env.Append(BUILD_SCONSCRIPTS = sconscripts)
 
 
 
-if env['PLATFORM'] == 'win32':
-  env.Tool('target_platform_windows')
-  env.Tool('target_debug')
-  env.Tool('midl')
+# --------------------------------------------------------------------------
+# Windows specific
 
-  # TODO(bradnelson): this is needed for now because target_platform_windows
-  # has OS_WINDOWS defined in a weird way.
-  env.FilterOut(CPPDEFINES = ['OS_WINDOWS=OS_WINDOWS'])
+windows_env = root_env.Clone()
+environment_list.append(windows_env)
+windows_env.Tool('target_platform_windows')
+windows_env.Tool('target_debug')
+windows_env.Tool('midl')
+windows_env.Replace(
+    BUILD_TYPE = 'debug-windows',
+    BUILD_TYPE_DESCRIPTION = 'Windows debug build',
+    BUILD_GROUPS = ['default'],
+)
 
-  env['PDB'] = '${TARGET.base}.pdb'
+# TODO(bradnelson): this is needed for now because target_platform_windows
+# has OS_WINDOWS defined in a weird way.
+windows_env.FilterOut(CPPDEFINES = ['OS_WINDOWS=OS_WINDOWS'])
 
-  processors = int(os.environ.get('NUMBER_OF_PROCESSORS', 1))
-  SetOption('num_jobs', processors + 1)
+windows_env['PDB'] = '${TARGET.base}.pdb'
 
+
+# TODO(bradnelson): this should not need to be gated on host platform.
+if root_env['PLATFORM'] in ['win32', 'cygwin']:
   msvs_env = Environment(tools=['msvc', 'mslink', 'msvs'])['ENV']
+  msvs_drive = msvs_env['PATH'][0]
+else:
+  msvs_env = {'PATH': '', 'INCLUDE': '', 'LIB': ''}
+  msvs_drive = 'C'
 
-  # Use the absolute path for MSVC because it might not be on the same drive
-  # as our source checkout.
-  visual_studio_path = (msvs_env['PATH'][0] +
-                        ':/Program Files/Microsoft Visual Studio 8')
+# Use the absolute path for MSVC because it might not be on the same drive
+# as our source checkout.
+visual_studio_path = msvs_drive + ':/Program Files/Microsoft Visual Studio 8'
 
-  env.Replace(
+windows_env.Replace(
     CSCRIPT = 'c:\\Windows\\System32\\cscript',
 
     PLATFORMSDK_VISTA_REL = '../third_party/platformsdk_vista_6_0',
     PLATFORMSDK_VISTA = '$CHROME_SRC_DIR/third_party/platformsdk_vista_6_0',
     VISUAL_STUDIO = visual_studio_path,
 
-    CYGWIN_DIR = env.Dir('$CHROME_SRC_DIR/third_party/cygwin'),
+    CYGWIN_DIR = windows_env.Dir('$CHROME_SRC_DIR/third_party/cygwin'),
     CYGWIN_BIN_DIR = '$CYGWIN_DIR/bin',
 
     PERL = '$CYGWIN_BIN_DIR/perl.exe',
@@ -142,9 +270,9 @@ if env['PLATFORM'] == 'win32':
     MSVS_ENV = msvs_env,
 
     YACC = '$CYGWIN_BIN_DIR/bison.exe',
-  )
+)
 
-  env.Append(
+windows_env.Append(
     ARFLAGS = [
         '/nologo',
     ],
@@ -226,90 +354,89 @@ if env['PLATFORM'] == 'win32':
     ],
 
     ICU_LIBS = ['icu'],
-  )
+)
 
-  env.Append(
+windows_env.Append(
     LIBPATH = [
         '$PLATFORMSDK_VISTA/files/Lib',
         '$PLATFORMSDK_VISTA/files/VC/LIB',
         '$VISUAL_STUDIO/VC/atlmfc/lib',
     ],
-  )
+)
 
-  # TODO(sgk): remove once we upgrade to SCons 0.98.4
-  for var in ['INCLUDE', 'LIB', 'PATH']:
-    msvs_env[var] = msvs_env[var].split('|', 1)[0]
-    env['ENV'][var] = env['ENV'][var].split('|', 1)[0]
+# TODO(sgk): remove once we upgrade to SCons 0.98.4
+for var in ['INCLUDE', 'LIB', 'PATH']:
+  msvs_env[var] = msvs_env[var].split('|', 1)[0]
+  windows_env['ENV'][var] = windows_env['ENV'][var].split('|', 1)[0]
 
-  # Force scons to handle long include lines correctly.
-  pchcom_fixed = env['PCHCOM']
-  pchcom_fixed = pchcom_fixed.replace('${TARGETS[0]}', '$TARGET')
-  pchcom_fixed = pchcom_fixed.replace('${TARGETS[1]}', '$TARGETS1')
+# Force scons to handle long include lines correctly.
+pchcom_fixed = windows_env['PCHCOM']
+pchcom_fixed = pchcom_fixed.replace('${TARGETS[0]}', '$TARGET')
+pchcom_fixed = pchcom_fixed.replace('${TARGETS[1]}', '$TARGETS1')
 
-  env.Replace(
-      CCCOM = "${TEMPFILE('%s')}" % env['CCCOM'],
-      CXXCOM = "${TEMPFILE('%s')}" % env['CXXCOM'],
-      SHCCCOM = "${TEMPFILE('%s')}" % env['SHCCCOM'],
-      SHCXXCOM = "${TEMPFILE('%s')}" % env['SHCXXCOM'],
-      PCHCOM = "${TEMPFILE('%s')}" % pchcom_fixed,
-      TARGETS1 = '${TARGETS[1]}',
-  )
+windows_env.Replace(
+    CCCOM = "${TEMPFILE('%s')}" % windows_env['CCCOM'],
+    CXXCOM = "${TEMPFILE('%s')}" % windows_env['CXXCOM'],
+    SHCCCOM = "${TEMPFILE('%s')}" % windows_env['SHCCCOM'],
+    SHCXXCOM = "${TEMPFILE('%s')}" % windows_env['SHCXXCOM'],
+    PCHCOM = "${TEMPFILE('%s')}" % pchcom_fixed,
+    TARGETS1 = '${TARGETS[1]}',
+)
 
-  env['ENV']['PROGRAMFILES'] = os.environ['PROGRAMFILES']
-  env['ENV']['SystemDrive'] = os.environ['SystemDrive']
-  env['ENV']['USERPROFILE'] = os.environ['USERPROFILE']
+windows_env['ENV']['PROGRAMFILES'] = os.environ.get('PROGRAMFILES', '')
+windows_env['ENV']['SystemDrive'] = os.environ.get('SystemDrive', '')
+windows_env['ENV']['USERPROFILE'] = os.environ.get('USERPROFILE', '')
 
-  env.AppendENVPath('PATH', ';C:\\WINDOWS\\system32')
+windows_env.AppendENVPath('PATH', ';C:\\WINDOWS\\system32')
 
-elif env['PLATFORM'] == 'posix':
-  env.Tool('target_platform_linux')
-  env.Tool('target_debug')
-  env.Tool('yacc')
 
-  # TODO(bradnelson): this is needed for now because target_platform_linux has
-  # OS_LINUX defined in a weird way.
-  env.FilterOut(CPPDEFINES = ['OS_LINUX=OS_LINUX'])
+# --------------------------------------------------------------------------
+# Linux specific
 
-  # Copy some environment variables from the outer environment if they exist.
-  for envvar in ['CC', 'CXX']:
-    if envvar in os.environ:
-      env[envvar] = os.environ[envvar]
-  # Provide $HOME when compiling so distcc can find its lock file.
-  env['ENV']['HOME'] = os.environ['HOME']
-  if 'DISTCC_HOSTS' in os.environ:
-    env['ENV']['DISTCC_HOSTS'] = os.environ['DISTCC_HOSTS']
+linux_env = root_env.Clone()
+environment_list.append(linux_env)
+linux_env.Tool('target_platform_linux')
+linux_env.Tool('target_debug')
+linux_env.Tool('yacc')
+linux_env.Replace(
+    BUILD_TYPE = 'debug-linux',
+    BUILD_TYPE_DESCRIPTION = 'Linux debug build',
+    BUILD_GROUPS = ['default'],
+)
 
-  # TODO(evanm): this is Linux-specific, not posix.
-  # Parse /proc/cpuinfo for processor count.
-  cpus = len([l for l in open('/proc/cpuinfo') if l.startswith('processor\t')])
-  SetOption('num_jobs', cpus + 1)
 
-  # For now, linux only loads the components we know work on Linux, by default.
-  load = [
-      'base',
-      'breakpad',
-      'chrome',
-      'googleurl',
-      'net',
-      'sdch',
-      'skia',
-      'testing',
-      'third_party',
-      'v8',
-      'webkit',
-  ]
+# TODO(bradnelson): this is needed for now because target_platform_linux has
+# OS_LINUX defined in a weird way.
+linux_env.FilterOut(CPPDEFINES = ['OS_LINUX=OS_LINUX'])
 
-  excluded_warnings = [
-    # TODO: Clean up uses of ext/hash_map and remove this.
-    # (see unordered_map and base/hash_tables.h)
-    '-Wno-deprecated',  # Needed for using ext/hash_map on GCC 4.3
-    '-Wno-unknown-pragmas',  # In wtf's ref counting system
-  ]
-  env.Replace(
-      CCFLAGS = ['-m32', '-g', '-pthread'],
-      CXXFLAGS = ['-Wall', '-Werror'] + excluded_warnings,
-      LINKFLAGS = ['-m32', '-pthread'],
+# Copy some environment variables from the outer environment to the
+# SCons.Environment if they exist.
+for envvar in ('CC', 'CXX'):
+  if envvar in os.environ:
+    linux_env[envvar] = os.environ[envvar]
+# Copy these environment variables from the outer environment to the
+# environment that the build commands run in.
+# $HOME is needed by distcc so it can find its lock file.
+for envvar in ('HOME', 'DISTCC_HOSTS', 'CCACHE_DIR'):
+  if envvar in os.environ:
+    linux_env['ENV'][envvar] = os.environ[envvar]
 
+excluded_warnings = [
+  # TODO: Clean up uses of ext/hash_map and remove this.
+  # (see unordered_map and base/hash_tables.h)
+  '-Wno-deprecated',  # Needed for using ext/hash_map on GCC 4.3
+  '-Wno-unknown-pragmas',  # In wtf's ref counting system
+]
+linux_env.Append(
+    BUILD_SCONSCRIPTS = [
+        '$LIBEVENT_DIR/libevent.scons',
+    ],
+    CCFLAGS = ['-m32', '-g', '-pthread'],
+    CXXFLAGS = ['-Wall', '-Werror'] + excluded_warnings,
+    LINKFLAGS = ['-m32', '-pthread'],
+)
+
+linux_env.Replace(
     # We have several cases where archives depend on each other in a cyclic
     # fashion. (V8Bindings, libport and WebCore being the most significant
     # example.) Since the GNU linker does only a single pass over the archives
@@ -325,109 +452,126 @@ elif env['PLATFORM'] == 'posix':
     LINKCOM = ('$LINK -o $TARGET $LINKFLAGS $SOURCES '
                '$_LIBDIRFLAGS '
                '-Wl,--start-group $_LIBFLAGS -Wl,--end-group'),
+)
 
-      PERL = '/usr/bin/perl',
-      PERL_INCLUDE_FLAG = '-I ',
-      PERL_INCLUDE_SUFFIX = '',
-      _PERL_INCLUDE_FLAGS = ('${_concat(PERL_INCLUDE_FLAG, '
-                             'PERL_INCLUDE_PATH, '
-                             'PERL_INCLUDE_SUFFIX,'
-                             '__env__, RDirs, TARGET, SOURCE)}'),
-  )
+linux_env.Replace(
+    PERL = '/usr/bin/perl',
+    PERL_INCLUDE_FLAG = '-I ',
+    PERL_INCLUDE_SUFFIX = '',
+    _PERL_INCLUDE_FLAGS = ('${_concat(PERL_INCLUDE_FLAG, '
+                           'PERL_INCLUDE_PATH, '
+                           'PERL_INCLUDE_SUFFIX,'
+                           '__env__, RDirs, TARGET, SOURCE)}'),
+)
 
-  env.Append(
-      # We need rt for clock_gettime.
-      LIBS = ['rt'],
+linux_env.FilterOut(
+    BUILD_SCONSCRIPTS = [
+        '$BSPATCH_DIR/SConscript',
+        '$BSDIFF_DIR/SConscript',
+        '$GEARS_DIR/SConscript',
+        '$GOOGLE_UPDATE_DIR/SConscript',
+        '$RLZ_DIR/SConscript',
+        '$SANDBOX_DIR/sandbox.scons',
+    ],
+)
 
-      ICU_LIBS = ['icu'],
-  )
-  # Build with support for gcov when COVERAGE=1.
-  if ARGUMENTS.get('COVERAGE') == '1':
-    env.Append(CCFLAGS=['-fprofile-arcs', '-ftest-coverage'])
-    env.Append(LINKFLAGS=['-fprofile-arcs'])
+linux_env.Append(
+    # We need rt for clock_gettime.
+    LIBS = ['rt'],
 
-  # Build with system-provided NSS and GTK.
-  env.ParseConfig('pkg-config --cflags --libs nss')
-  env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
+    ICU_LIBS = ['icu'],
+)
+# Build with support for gcov when COVERAGE=1.
+if ARGUMENTS.get('COVERAGE') == '1':
+  linux_env.Append(CCFLAGS=['-fprofile-arcs', '-ftest-coverage'])
+  linux_env.Append(LINKFLAGS=['-fprofile-arcs'])
 
-elif env['PLATFORM'] == 'darwin':
-  env.Tool('target_platform_mac')
-  env.Tool('target_debug')
-
-  # For now, mac only loads the components we know work on Mac, by default.
-  load = [
-      'base',
-      #'breakpad',
-      'googleurl',
-      'net',
-      'sdch',
-      'skia',
-      'testing',
-      'third_party',
-      #'webkit',
-  ]
-
-  env.Replace(
-      # Reproduce XCode's behavior of using gcc even to link C++,
-      # and distinguishing it the -x c++ option.
-      CC = 'gcc-4.2',
-      CXX = 'g++-4.2',
-      LINK = '$CXX',
-  )
-
-  env.Append(
-      CFLAGS = [
-          '-std=c99',
-      ],
-      CXXFLAGS = [
-          '-fvisibility-inlines-hidden',
-          '${str(SOURCE).endswith(".mm") and "-fobjc-gc" or ""}',
-      ],
-      CCFLAGS = [
-          '-fmessage-length=0',
-          '-pipe',
-          '-O0',
-          '-mdynamic-no-pic',
-          '-Werror',
-          '-Wnewline-eof',
-          '-fvisibility=hidden',
-          '-gdwarf-2',
-          '-Wall',
-          '-Wendif-labels',
-          '-fstack-protector',
-          '-fstack-protector-all',
-      ],
-      CPPDEFINES = [
-          'DEBUG',
-      ],
-
-      FRAMEWORKPATH = [
-          env.Dir('${TARGET_ROOT}'),
-          '/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks',
-      ],
-      FRAMEWORKS = [
-          'AppKit',
-          'ApplicationServices',
-          'Foundation',
-      ],
-
-      ICU_LIBS = ['icui18n', 'icuuc', 'icudata'],
-  )
-
-else:
-
-  print "Unsupported SCons $PLATFORM value %s" % repr(env['PLATFORM'])
-  Exit(1)
+# Build with system-provided NSS and GTK.
+if root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
+  linux_env.ParseConfig('pkg-config --cflags --libs nss')
+  linux_env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
 
 
-if ARGUMENTS.get('VERBOSE') in (None, '0'):
-  env['CCCOMSTR'] = 'Compiling $TARGET ...'
-  env['CXXCOMSTR'] = 'Compiling $TARGET ...'
-  env['SHCCCOMSTR'] = 'Compiling $TARGET ...'
-  env['SHCXXCOMSTR'] = 'Compiling $TARGET ...'
-  env['ARCOMSTR'] = 'Archiving $TARGET ...'
-  env['LINKCOMSTR'] = 'Linking $TARGET ...'
-  env['BINDINGSCOMSTR'] = 'Building bindings in $TARGET ...'
+# --------------------------------------------------------------------------
+# Mac specific
+
+mac_env = root_env.Clone()
+environment_list.append(mac_env)
+mac_env.Tool('target_platform_mac')
+mac_env.Tool('target_debug')
+mac_env.Replace(
+    BUILD_TYPE = 'debug-mac',
+    BUILD_TYPE_DESCRIPTION = 'Mac debug build',
+    BUILD_GROUPS = ['default'],
+)
+
+mac_env.Replace(
+    # Reproduce XCode's behavior of using gcc even to link C++,
+    # and distinguishing it the -x c++ option.
+    CC = 'gcc-4.2',
+    CXX = 'g++-4.2',
+    LINK = '$CXX',
+)
+
+mac_env.FilterOut(
+    BUILD_SCONSCRIPTS = [
+        '$BSPATCH_DIR/SConscript',
+        '$BSDIFF_DIR/SConscript',
+        '$LIBJPEG_DIR/SConscript',
+        '$LIBXML_DIR/SConscript',
+        '$LIBXSLT_DIR/SConscript',
+        '$BREAKPAD_DIR/SConscript',
+        '$CHROME_DIR/SConscript',
+        '$GEARS_DIR/SConscript',
+        '$GOOGLE_UPDATE_DIR/SConscript',
+        '$RLZ_DIR/SConscript',
+        '$SANDBOX_DIR/sandbox.scons',
+        'build/SConscript.v8',
+        '$WEBKIT_DIR/SConscript',
+    ],
+)
+
+mac_env.Append(
+    BUILD_SCONSCRIPTS = [
+        '$LIBEVENT_DIR/libevent.scons',
+    ],
+    CFLAGS = [
+        '-std=c99',
+    ],
+    CXXFLAGS = [
+        '-fvisibility-inlines-hidden',
+        '${str(SOURCE).endswith(".mm") and "-fobjc-gc" or ""}',
+    ],
+    CCFLAGS = [
+        '-fmessage-length=0',
+        '-pipe',
+        '-O0',
+        '-mdynamic-no-pic',
+        '-Werror',
+        '-Wnewline-eof',
+        '-fvisibility=hidden',
+        '-gdwarf-2',
+        '-Wall',
+        '-Wendif-labels',
+        '-fstack-protector',
+        '-fstack-protector-all',
+    ],
+    CPPDEFINES = [
+        'DEBUG',
+    ],
+
+    FRAMEWORKPATH = [
+        mac_env.Dir('${TARGET_ROOT}'),
+        '/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks',
+    ],
+    FRAMEWORKS = [
+        'AppKit',
+        'ApplicationServices',
+        'Foundation',
+    ],
+
+    ICU_LIBS = ['icui18n', 'icuuc', 'icudata'],
+)
 
 
 # Add --clobber (for the buildbot).
@@ -435,115 +579,35 @@ if ARGUMENTS.get('VERBOSE') in (None, '0'):
 AddOption('--clobber', action='store_true', dest='clobber', default=False,
           help='Delete build directory before building.')
 if GetOption('clobber'):
-  shutil.rmtree(env.Dir('$TARGET_ROOT').abspath, True)
+  shutil.rmtree(root_env.Dir('$DESTINATION_ROOT').abspath, True)
+  # sconsign file gets put here at the moment.
+  shutil.rmtree(root_env.Dir('$MAIN_DIR/scons-out').abspath, True)
 
 
 
-# Use timestamps change, followed by MD5 for speed
-env.Decider('MD5-timestamp')
+# -------------------------------------------------------------------------
 
 
 # Overlay things from a layer below.
-env.Dir('$OBJ_ROOT').addRepository(env.Dir('$CHROME_SRC_DIR'))
-env.Dir('$OBJ_ROOT/googleurl').addRepository(env.Dir('$CHROME_SRC_DIR/build'))
+for env in environment_list:
+  env.Dir('$OBJ_ROOT').addRepository(env.Dir('$CHROME_SRC_DIR'))
+  env.Dir('$OBJ_ROOT/googleurl').addRepository(env.Dir('$CHROME_SRC_DIR/build'))
 
-included = [c for c in load if not c.startswith('-')]
-excluded = [c[1:] for c in load if c.startswith('-')]
-if not included:
-  included = ['all']
-
-components = ['all']
-
-def LoadComponent(c):
-  components.append(c)
-  return (not GetOption('help') and
-          c in included or
-          ('all' in included and not c in excluded))
-
-sconscripts = []
-
-if LoadComponent('base'):
-  sconscripts.append('$BASE_DIR/base.scons')
-
-if LoadComponent('breakpad'):
-  sconscripts.append('$BREAKPAD_DIR/SConscript')
-
-if LoadComponent('chrome'):
-  sconscripts.append('$CHROME_DIR/SConscript')
-
-if LoadComponent('gears'):
-  sconscripts.append('$GEARS_DIR/SConscript')
-
-if LoadComponent('google_update'):
-  sconscripts.append('$GOOGLE_UPDATE_DIR/SConscript')
-
-if LoadComponent('googleurl'):
-  # googleurl comes from a different repository so we provide the SConscript
-  # file.
-  sconscripts.append('$GOOGLEURL_DIR/googleurl.scons')
-
-if LoadComponent('net'):
-  sconscripts.append('$NET_DIR/net.scons')
-
-if LoadComponent('rlz'):
-  sconscripts.append('$RLZ_DIR/SConscript')
-
-if LoadComponent('sandbox'):
-  sconscripts.append('$SANDBOX_DIR/sandbox.scons')
-
-if LoadComponent('sdch'):
-  sconscripts.append('$SDCH_DIR/SConscript')
-
-if LoadComponent('skia'):
-  sconscripts.append('$SKIA_DIR/SConscript')
-
-if LoadComponent('testing'):
-  sconscripts.append('$TESTING_DIR/SConscript.gtest')
-
-if LoadComponent('third_party'):
-  sconscripts.extend([
-      '$BSDIFF_DIR/SConscript',
-      '$BZIP2_DIR/bzip2.scons',
-      '$ICU38_DIR/icu38.scons',
-      '$LIBPNG_DIR/libpng.scons',
-      '$LZMA_SDK_DIR/SConscript',
-      '$MODP_B64_DIR/modp_b64.scons',
-      '$ZLIB_DIR/zlib.scons',
-  ])
-  # Temporary until we get these building on Mac.
-  if env['PLATFORM'] != 'darwin':
-    sconscripts.extend([
-      '$LIBJPEG_DIR/SConscript',
-      '$LIBXML_DIR/SConscript',
-      '$LIBXSLT_DIR/SConscript',
-    ])
-  if env['PLATFORM'] in ('posix', 'darwin'):
-    sconscripts.extend([
-      '$LIBEVENT_DIR/libevent.scons',
-    ])
-  # This is temporary until we get this lib to build on other platforms.
-  if env['PLATFORM'] == 'win32':
-    sconscripts.extend([
-        '$BSPATCH_DIR/SConscript',
-    ])
-
-if LoadComponent('v8') and env.Dir('$CHROME_SRC_DIR/v8').exists():
-  env.SConscript('SConscript.v8',
-                 exports=['env'])
-
-if LoadComponent('webkit'):
-  sconscripts.append('$WEBKIT_DIR/SConscript')
-
-env.SConscript(sconscripts, exports=['env'])
+  # We pre-resolve some common targets.  We end up spending lots of time
+  # resolving these over and over again.
+  env.Replace(
+      CHROME_SRC_DIR        = str(env.Dir('$CHROME_SRC_DIR')),
+      DESTINATION_ROOT      = str(env.Dir('$DESTINATION_ROOT')),
+      TARGET_ROOT           = str(env.Dir('$TARGET_ROOT')),
+      OBJ_ROOT              = str(env.Dir('$OBJ_ROOT')),
+      WEBKIT_DIR            = str(env.Dir('$WEBKIT_DIR')),
+  )
 
 
 help_fmt = """
 Usage: hammer [SCONS_OPTIONS] [VARIABLES] [TARGET] ...
 
 Supported build variables:
-
-  BUILD_TYPE=type           Build type.  Also used as the subdirectory name
-                              in which the build occurs.
   LOAD=[module,...]         Comma-separated list of components to load in the
                               dependency graph ('-' prefix excludes):
 %s
@@ -567,3 +631,11 @@ if GetOption('help'):
 
 Import('build_component')
 Default(build_component)
+
+# -------------------------------------------------------------------------
+
+# Invoke all the SConscripts in each of the environments that make sense on
+# this host-platform.
+BuildComponents(environment_list)
+
+# -------------------------------------------------------------------------

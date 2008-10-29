@@ -66,6 +66,9 @@ class TestingProfile : public Profile {
   virtual VisitedLinkMaster* GetVisitedLinkMaster() {
     return NULL;
   }
+  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() {
+    return NULL;
+  }
   virtual HistoryService* GetHistoryService(ServiceAccessType access) {
     return history_service_.get();
   }
@@ -136,7 +139,7 @@ class TestingProfile : public Profile {
   virtual bool Profile::IsSameProfile(Profile *p) {
     return this == p;
   }
-  virtual Time GetStartTime() const {
+  virtual base::Time GetStartTime() const {
     return start_time_;
   }
   virtual TabRestoreService* GetTabRestoreService() {
@@ -144,7 +147,7 @@ class TestingProfile : public Profile {
   }
   virtual void ResetTabRestoreService() {
   }
-  virtual void InitializeSpellChecker() {
+  virtual void ReinitializeSpellChecker() {
   }
   virtual SpellChecker* GetSpellChecker() {
     return NULL;
@@ -162,7 +165,7 @@ class TestingProfile : public Profile {
   // The path of the profile; the various database and other files are relative
   // to this.
   std::wstring path_;
-  Time start_time_;
+  base::Time start_time_;
   scoped_ptr<PrefService> prefs_;
 
  private:

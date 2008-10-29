@@ -32,6 +32,8 @@
 // an FTS table that is indexed like a normal table, and the index over it is
 // free since sqlite always indexes the internal rowid.
 
+using base::Time;
+
 namespace history {
 
 namespace {
@@ -226,7 +228,7 @@ bool TextDatabase::AddPageData(Time time,
 
   // Add to the pages table.
   SQLITE_UNIQUE_STATEMENT(add_to_pages, *statement_cache_,
-      "INSERT INTO pages(url,title,body)VALUES(?,?,?)");
+      "INSERT INTO pages (url, title, body) VALUES (?,?,?)");
   if (!add_to_pages.is_valid())
     return false;
   add_to_pages->bind_string(0, url);
@@ -241,7 +243,7 @@ bool TextDatabase::AddPageData(Time time,
 
   // Add to the info table with the same rowid.
   SQLITE_UNIQUE_STATEMENT(add_to_info, *statement_cache_,
-      "INSERT INTO info(rowid,time) VALUES(?,?)");
+      "INSERT INTO info (rowid, time) VALUES (?,?)");
   if (!add_to_info.is_valid())
     return false;
   add_to_info->bind_int64(0, rowid);

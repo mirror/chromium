@@ -47,10 +47,8 @@ void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   Browser::RegisterUserPrefs(user_prefs);
   chrome_browser_net::RegisterUserPrefs(user_prefs);
   DownloadManager::RegisterUserPrefs(user_prefs);
-  KeywordEditorView::RegisterUserPrefs(user_prefs);
   PasswordManager::RegisterUserPrefs(user_prefs);
   SessionStartupPref::RegisterUserPrefs(user_prefs);
-  SpellChecker::RegisterUserPrefs(user_prefs);
   SSLManager::RegisterUserPrefs(user_prefs);
   TabContents::RegisterUserPrefs(user_prefs);
   TemplateURLPrepopulateData::RegisterUserPrefs(user_prefs);

@@ -9,6 +9,8 @@
 #include "chrome/common/scoped_vector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::Time;
+
 void SessionServiceTestHelper::RestoreSessionFromCommands(
     const std::vector<SessionCommand*>& commands,
     std::vector<SessionWindow*>* valid_windows) {
@@ -59,6 +61,7 @@ void SessionServiceTestHelper::AssertNavigationEquals(
     const TabNavigation& expected,
     const TabNavigation& actual) {
   EXPECT_TRUE(expected.url == actual.url);
+  EXPECT_EQ(expected.referrer, actual.referrer);
   EXPECT_EQ(expected.title, actual.title);
   EXPECT_EQ(expected.state, actual.state);
   EXPECT_EQ(expected.transition, actual.transition);

@@ -86,6 +86,9 @@
 //   DidNavigate method.  This replaces the current RVH with the
 //   pending RVH and goes back to the NORMAL RendererState.
 
+using base::TimeDelta;
+using base::TimeTicks;
+
 namespace {
 
 // Amount of time we wait between when a key event is received and the renderer
@@ -980,9 +983,9 @@ void WebContents::DidDownloadImage(
     web_app_->SetImage(image_url, image);
 }
 
-void WebContents::RequestOpenURL(const GURL& url,
+void WebContents::RequestOpenURL(const GURL& url, const GURL& referrer,
                                  WindowOpenDisposition disposition) {
-  OpenURL(url, disposition, PageTransition::LINK);
+  OpenURL(url, referrer, disposition, PageTransition::LINK);
 }
 
 void WebContents::DomOperationResponse(const std::string& json_string,

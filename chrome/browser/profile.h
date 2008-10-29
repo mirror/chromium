@@ -18,9 +18,13 @@
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
 #endif
+#include "chrome/common/notification_service.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
 
 class BookmarkModel;
 class DownloadManager;
+class GreasemonkeyMaster;
 class HistoryService;
 class NavigationController;
 class PrefService;
@@ -97,6 +101,11 @@ class Profile {
   // profile.  The VisitedLinkMaster is lazily created the first time
   // that this method is called.
   virtual VisitedLinkMaster* GetVisitedLinkMaster() = 0;
+
+  // Retrieves a pointer to the GreasemonkeyMaster associated with this
+  // profile.  The GreasemonkeyMaster is lazily created the first time
+  // that this method is called.
+  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() = 0;
 
   // Retrieves a pointer to the HistoryService associated with this
   // profile.  The HistoryService is lazily created the first time
@@ -187,19 +196,16 @@ class Profile {
   // was created, rather it is the time the user started chrome and logged into
   // this profile. For the single profile case, this corresponds to the time
   // the user started chrome.
-  virtual Time GetStartTime() const = 0;
+  virtual base::Time GetStartTime() const = 0;
 
   // Returns the TabRestoreService. This returns NULL when off the record.
   virtual TabRestoreService* GetTabRestoreService() = 0;
 
   virtual void ResetTabRestoreService() = 0;
 
-  // Initializes the spellchecker. If the spellchecker already exsts, then
-  // it is released, and initialized again. This model makes sure that 
-  // spellchecker language can be changed without restarting the browser.
-  // NOTE: This is being currently called in the UI thread, which is OK as long
-  // as the spellchecker object is USED in the IO thread.
-  virtual void InitializeSpellChecker() = 0;
+  // This reinitializes the spellchecker according to the current dictionary 
+  // language, and enable spell check option, in the prefs.
+  virtual void ReinitializeSpellChecker() = 0;
 
   // Returns the spell checker object for this profile. THIS OBJECT MUST ONLY
   // BE USED ON THE I/O THREAD! This pointer is retrieved from the profile and
@@ -225,7 +231,8 @@ class Profile {
 class OffTheRecordProfileImpl;
 
 // The default profile implementation.
-class ProfileImpl : public Profile {
+class ProfileImpl : public Profile,
+                    public NotificationObserver {
  public:
   virtual ~ProfileImpl();
 
@@ -235,6 +242,7 @@ class ProfileImpl : public Profile {
   virtual Profile* GetOffTheRecordProfile();
   virtual Profile* GetOriginalProfile();
   virtual VisitedLinkMaster* GetVisitedLinkMaster();
+  virtual GreasemonkeyMaster* GetGreasemonkeyMaster();
   virtual HistoryService* GetHistoryService(ServiceAccessType sat);
   virtual WebDataService* GetWebDataService(ServiceAccessType sat);
   virtual PrefService* GetPrefs();
@@ -253,15 +261,19 @@ class ProfileImpl : public Profile {
   virtual bool DidLastSessionExitCleanly();
   virtual BookmarkModel* GetBookmarkModel();
   virtual bool IsSameProfile(Profile* profile);
-  virtual Time GetStartTime() const;
+  virtual base::Time GetStartTime() const;
   virtual TabRestoreService* GetTabRestoreService();
   virtual void ResetTabRestoreService();
-  virtual void InitializeSpellChecker();
+  virtual void ReinitializeSpellChecker();
   virtual SpellChecker* GetSpellChecker();
   virtual void MarkAsCleanShutdown();
 #ifdef CHROME_PERSONALIZATION
   virtual ProfilePersonalization* GetProfilePersonalization();
 #endif
+  // NotificationObserver implementation.
+  virtual void Observe(NotificationType type,
+                       const NotificationSource& source,
+                       const NotificationDetails& details);  
 
  private:
   class RequestContext;
@@ -279,9 +291,19 @@ class ProfileImpl : public Profile {
     GetSessionService();
   }
 
+  // Initializes the spellchecker. If the spellchecker already exsts, then
+  // it is released, and initialized again. This model makes sure that 
+  // spellchecker language can be changed without restarting the browser.
+  // NOTE: This is being currently called in the UI thread, which is OK as long
+  // as the spellchecker object is USED in the IO thread.
+  // The |need_to_broadcast| parameter tells it whether to broadcast the new
+  // spellchecker to the resource message filters.
+  void InitializeSpellChecker(bool need_to_broadcast);
+  
   std::wstring path_;
   bool off_the_record_;
   scoped_ptr<VisitedLinkMaster> visited_link_master_;
+  scoped_refptr<GreasemonkeyMaster> greasemonkey_master_;
   scoped_ptr<PrefService> prefs_;
   scoped_ptr<TemplateURLFetcher> template_url_fetcher_;
   scoped_ptr<TemplateURLModel> template_url_model_;
@@ -308,7 +330,7 @@ class ProfileImpl : public Profile {
   scoped_ptr<OffTheRecordProfileImpl> off_the_record_profile_;
 
   // See GetStartTime for details.
-  Time start_time_;
+  base::Time start_time_;
 
   scoped_ptr<TabRestoreService> tab_restore_service_;
 

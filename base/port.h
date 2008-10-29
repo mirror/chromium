@@ -54,9 +54,12 @@ inline void va_copy(va_list& a, va_list& b) {
 #if defined(OS_WIN)
 #define API_CALL __stdcall
 #define DYNAMIC_EXPORT __declspec(dllexport)
-#elif defined(OS_POSIX)
-#define API_CALL 
+#elif defined(OS_MACOSX)
+#define DYNAMIC_EXPORT __attribute__((visibility("default")))
+#define API_CALL
+#elif defined(OS_LINUX)
 #define DYNAMIC_EXPORT
+#define API_CALL
 #endif
 
 #endif  // BASE_PORT_H_

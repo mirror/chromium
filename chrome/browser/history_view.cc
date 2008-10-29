@@ -27,6 +27,9 @@
 
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+
 // The extra-wide space between groups of entries for each new day.
 static const int kDayHeadingHeight = 50;
 
@@ -585,7 +588,7 @@ void HistoryItemRenderer::LinkActivated(views::Link* link,
     if (navigator && !url.is_empty()) {
       UserMetrics::RecordAction(L"Destination_History_OpenURL",
                                 model_->profile());
-      navigator->OpenURL(url,
+      navigator->OpenURL(url, GURL(),
                          event_utils::DispositionFromEventFlags(event_flags),
                          PageTransition::AUTO_BOOKMARK);
       // WARNING: call to OpenURL likely deleted us.
@@ -1309,4 +1312,3 @@ gfx::Rect HistoryView::CalculateDeleteControlBounds(int base_y) {
                    delete_width,
                    kBrowseResultsHeight);
 }
-

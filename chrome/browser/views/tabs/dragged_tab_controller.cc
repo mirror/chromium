@@ -103,6 +103,11 @@ DraggedTabController::~DraggedTabController() {
   in_destructor_ = true;
   CleanUpSourceTab();
   MessageLoopForUI::current()->RemoveObserver(this);
+  // Need to delete the view here manually _before_ we reset the dragged
+  // contents to NULL, otherwise if the view is animating to its destination
+  // bounds, it won't be able to clean up properly since its cleanup routine
+  // uses GetIndexForDraggedContents, which will be invalid.
+  view_.reset(NULL);
   ChangeDraggedContents(NULL); // This removes our observer.
 }
 
@@ -143,13 +148,15 @@ bool DraggedTabController::IsDragSourceTab(Tab* tab) const {
 
 void DraggedTabController::OpenURLFromTab(TabContents* source,
                                           const GURL& url,
+                                          const GURL& referrer,
                                           WindowOpenDisposition disposition,
                                           PageTransition::Type transition) {
   if (original_delegate_) {
     if (disposition == CURRENT_TAB)
       disposition = NEW_WINDOW;
 
-    original_delegate_->OpenURLFromTab(source, url, disposition, transition);
+    original_delegate_->OpenURLFromTab(source, url, referrer,
+                                       disposition, transition);
   }
 }
 

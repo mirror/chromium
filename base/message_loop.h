@@ -97,10 +97,10 @@ class MessageLoop : public base::MessagePump::Delegate {
   //
   // NOTE: These methods may be called on any thread.  The Task will be invoked
   // on the thread that executes MessageLoop::Run().
-  
+
   void PostTask(
       const tracked_objects::Location& from_here, Task* task);
-  
+
   void PostDelayedTask(
       const tracked_objects::Location& from_here, Task* task, int delay_ms);
 
@@ -247,7 +247,7 @@ class MessageLoop : public base::MessagePump::Delegate {
 
   class AutoRunState : RunState {
    public:
-    AutoRunState(MessageLoop* loop);
+    explicit AutoRunState(MessageLoop* loop);
     ~AutoRunState();
    private:
     MessageLoop* loop_;
@@ -256,15 +256,15 @@ class MessageLoop : public base::MessagePump::Delegate {
 
   // This structure is copied around by value.
   struct PendingTask {
-    Task* task;              // The task to run.
-    Time  delayed_run_time;  // The time when the task should be run.
-    int   sequence_num;      // Used to facilitate sorting by run time.
-    bool  nestable;          // True if OK to dispatch from a nested loop.
+    Task* task;                   // The task to run.
+    base::Time delayed_run_time;  // The time when the task should be run.
+    int sequence_num;             // Used to facilitate sorting by run time.
+    bool nestable;                // True if OK to dispatch from a nested loop.
 
     PendingTask(Task* task, bool nestable)
         : task(task), sequence_num(0), nestable(nestable) {
     }
-    
+
     // Used to support sorting.
     bool operator<(const PendingTask& other) const;
   };
@@ -334,7 +334,7 @@ class MessageLoop : public base::MessagePump::Delegate {
 
   // base::MessagePump::Delegate methods:
   virtual bool DoWork();
-  virtual bool DoDelayedWork(Time* next_delayed_work_time);
+  virtual bool DoDelayedWork(base::Time* next_delayed_work_time);
   virtual bool DoIdleWork();
 
   // Start recording histogram info about events and action IF it was enabled
@@ -354,7 +354,7 @@ class MessageLoop : public base::MessagePump::Delegate {
   // A list of tasks that need to be processed by this instance.  Note that
   // this queue is only accessed (push/pop) by our current thread.
   TaskQueue work_queue_;
-  
+
   // Contains delayed tasks, sorted by their 'delayed_run_time' property.
   DelayedTaskQueue delayed_work_queue_;
 
@@ -476,7 +476,7 @@ class MessageLoopForIO : public MessageLoop {
   typedef base::MessagePumpLibevent::Watcher Watcher;
 
   // Please see MessagePumpLibevent for definitions of these methods.
-  void WatchSocket(int socket, short interest_mask, 
+  void WatchSocket(int socket, short interest_mask,
                    struct event* e, Watcher* watcher);
   void UnwatchSocket(struct event* e);
 #endif  // defined(OS_POSIX)

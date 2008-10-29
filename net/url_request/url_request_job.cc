@@ -13,6 +13,9 @@
 #include "net/url_request/url_request_job_metrics.h"
 #include "net/url_request/url_request_job_tracker.h"
 
+using base::Time;
+using base::TimeTicks;
+
 // Buffer size allocated when de-compressing data.
 static const int kFilterBufSize = 32 * 1024;
 
@@ -47,12 +50,12 @@ void URLRequestJob::DetachRequest() {
 }
 
 void URLRequestJob::SetupFilter() {
-  std::vector<std::string> encoding_types;
+  std::vector<Filter::FilterType> encoding_types;
   if (GetContentEncodings(&encoding_types)) {
-    std::string mime_type;
-    GetMimeType(&mime_type);
-    filter_.reset(Filter::Factory(encoding_types, mime_type, kFilterBufSize));
+    filter_.reset(Filter::Factory(encoding_types, kFilterBufSize));
     if (filter_.get()) {
+      std::string mime_type;
+      GetMimeType(&mime_type);
       filter_->SetURL(request_->url());
       filter_->SetMimeType(mime_type);
     }
@@ -498,4 +501,3 @@ void URLRequestJob::SetStatus(const URLRequestStatus &status) {
   if (request_)
     request_->set_status(status);
 }
-

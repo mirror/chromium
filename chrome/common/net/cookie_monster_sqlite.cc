@@ -14,6 +14,8 @@
 #include "chrome/common/sqlite_compiled_statement.h"
 #include "chrome/common/sqlite_utils.h"
 
+using base::Time;
+
 // This class is designed to be shared between any calling threads and the
 // database thread.  It batches operations and commits them on a timer.
 class SQLitePersistentCookieStore::Backend
@@ -147,7 +149,9 @@ void SQLitePersistentCookieStore::Backend::Commit() {
     return;
 
   SQLITE_UNIQUE_STATEMENT(add_smt, *cache_,
-                          "INSERT INTO cookies VALUES (?,?,?,?,?,?,?,?)");
+      "INSERT INTO cookies (creation_utc, host_key, name, value, path, "
+      "expires_utc, secure, httponly) "
+      "VALUES (?,?,?,?,?,?,?,?)");
   if (!add_smt.is_valid()) {
     NOTREACHED();
     return;
@@ -180,6 +184,7 @@ void SQLitePersistentCookieStore::Backend::Commit() {
           NOTREACHED() << "Could not add a cookie to the DB.";
         }
         break;
+
       case PendingOperation::COOKIE_DELETE:
         del_smt->reset();
         del_smt->bind_int64(0, po->cc().CreationDate().ToInternalValue());
@@ -187,6 +192,7 @@ void SQLitePersistentCookieStore::Backend::Commit() {
           NOTREACHED() << "Could not delete a cookie from the DB.";
         }
         break;
+
       default:
         NOTREACHED();
         break;
@@ -282,7 +288,9 @@ bool SQLitePersistentCookieStore::Load(
 
   // Slurp all the cookies into the out-vector.
   SQLStatement smt;
-  if (smt.prepare(db, "SELECT * FROM cookies") != SQLITE_OK) {
+  if (smt.prepare(db,
+      "SELECT creation_utc, host_key, name, value, path, expires_utc, secure, "
+      "httponly FROM cookies") != SQLITE_OK) {
     NOTREACHED() << "select statement prep failed";
     sqlite3_close(db);
     return false;
@@ -354,4 +362,3 @@ void SQLitePersistentCookieStore::DeleteCookie(
   if (backend_.get())
     backend_->DeleteCookie(cc);
 }
-

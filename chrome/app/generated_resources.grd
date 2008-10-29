@@ -1228,12 +1228,6 @@ each locale. -->
         &amp;Remove
       </message>
 
-      <!-- Download Preferences -->
-      <message name="IDS_DOWNLOAD_DIRECTORY"
-               desc="Directory under the profile for storing downloads">
-        Downloads
-      </message>
-
       <!-- Gears shortcut strings -->
       <message name="IDS_DEFAULT_INSTALL_SITE_LABEL" desc="Default installation menu label">
         Create application &amp;shortcuts...
@@ -2167,11 +2161,14 @@ each locale. -->
         Below is the original error message
       </message>
 
-      <message name="IDS_ERRORPAGES_SUGGESTION_RELOAD" desc="Suggest reloading to the user">
+      <message name="IDS_ERRORPAGES_SUGGESTION_RELOAD" desc="When a page fails to load, we provide a suggestion that the user try reloading the page later">
         &lt;a jsvalues="href:reloadUrl"&gt;Reload&lt;/a&gt; this web page later.
       </message>
-      <message name="IDS_ERRORPAGES_SUGGESTION_HOMEPAGE" desc="String suggesting to try just the hostname of the site.">
+      <message name="IDS_ERRORPAGES_SUGGESTION_HOMEPAGE" desc="When a page fails to load, sometimes we provide a suggesting of trying just the hostname of the site.">
         Go to the homepage of the site:
+      </message>
+      <message name="IDS_ERRORPAGES_SUGGESTION_LEARNMORE" desc="When a web page fails to load, we provide a link to the help center to learn more about the failure.">
+        <ph name="BEGIN_LINK">&lt;a jsvalues="href:learnMoreUrl"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;</ph> about this problem.
       </message>
 
       <message name="IDS_ERRORPAGES_TITLE_NOT_AVAILABLE" desc="Title of the error page when we can't connect to a site.">
@@ -3083,7 +3080,10 @@ each locale. -->
       <message name="IDS_OPTIONS_CHROME_DICTIONARY_LANGUAGE" desc="The documentation string of the 'Spell check dictionary language' preference">
         Spell-checker language:
       </message>
-
+      <message name="IDS_OPTIONS_ENABLE_SPELLCHECK" desc="The documentation string of the 'Enable spellcheck' option">
+        Enable spellcheck:
+      </message>
+      
       <message name="IDS_OPTIONS_RESET" desc="The label of the 'Reset all settings to defaults' button">
         Reset to defaults
       </message>
@@ -3103,8 +3103,8 @@ each locale. -->
       </message>
       
       <!-- Advanced Section Titles -->
-      <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_GENERAL">
-        General
+      <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY">
+        Privacy
       </message>
       <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_CONTENT">
         Web Content
@@ -3136,6 +3136,9 @@ each locale. -->
       <!-- Constrained Window -->
       <message name="IDS_BLOCKED_POPUP" desc="Text on a blocked popup's window titlebar.">
         Blocked Pop-up
+      </message>
+      <message name="IDS_POPUPS_BLOCKED_COUNT" desc="Message on the blocked popup window">
+        Pop-ups Blocked: <ph name="COUNT">$1<ex>2</ex></ph>
       </message>
 
       <!-- Multiple download warning-->
@@ -3180,6 +3183,24 @@ each locale. -->
       <!-- Bookmark manager -->
       <message name="IDS_BOOKMARK_MANAGER_TITLE" desc="Title of the bookmark manager window.">
         Bookmark Manager
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER" desc="The label of the menu item that shows the bookmark manager">
+        &amp;Bookmark manager
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_SHOW_IN_FOLDER" desc="The label of the menu item in the bookmark manager context menu that changes the selection in the tree to match the folder of the selected item in the table.">
+        Show in folder
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_ORGANIZE_MENU" desc="Title of the organize menu in the bookmark manager.">
+        Organize
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_TOOLS_MENU" desc="Title of the tools menu in the bookmark manager.">
+        Tools
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_IMPORT_MENU" desc="Title of the import menu item in the bookmark manager.">
+        Import bookmarks...
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_EXPORT_MENU" desc="Title of the export menu item in the bookmark manager.">
+        Export bookmarks...
       </message>
 
     </messages>

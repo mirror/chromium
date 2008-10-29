@@ -14,24 +14,30 @@ deps = {
   "src/third_party/WebKit":
     "/branches/chrome_webkit_merge_branch/deps/third_party/WebKit",
 
-  "src/third_party/cygwin":
-    "/trunk/deps/third_party/cygwin@3248",
-
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@3658",
-
-  "src/third_party/python_24":
-    "/trunk/deps/third_party/python_24@3247",
-
-  "src/third_party/svn":
-    "/trunk/deps/third_party/svn@3230",
+    "/trunk/deps/third_party/icu38@4040",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/branches/bleeding_edge/@594",
+    "http://v8.googlecode.com/svn/branches/bleeding_edge",
 
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@37604",
 }
+
+
+deps_os = {
+  "win": {
+    "src/third_party/cygwin":
+      "/trunk/deps/third_party/cygwin@3248",
+
+    "src/third_party/python_24":
+      "/trunk/deps/third_party/python_24@3247",
+
+    "src/third_party/svn":
+      "/trunk/deps/third_party/svn@3230",
+  },
+}
+
 
 include_rules = [
   # Everybody can use some things.
@@ -42,6 +48,7 @@ include_rules = [
   # this should probably change.
   "+unicode"
 ]
+
 
 # checkdeps.py shouldn't check include paths for files in these dirs:
 skip_child_includes = [

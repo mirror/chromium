@@ -20,9 +20,6 @@ WebPreferences* TestShell::web_prefs_ = NULL;
 WindowList* TestShell::window_list_;
 
 TestShell::TestShell() {
-  // Uncomment this line to get a bunch of linker errors.  This is what we need
-  // to fix.
-  m_webViewHost.reset(WebViewHost::Create(NULL, NULL, *TestShell::web_prefs_));
 }
 
 TestShell::~TestShell() {
@@ -79,17 +76,7 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
                      -1 /* append */);
 
   gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
-
-  // It's funny, ok?
-  std::wstring path;
-  PathService::Get(base::DIR_SOURCE_ROOT, &path);
-  file_util::AppendToPath(&path, L"webkit");
-  file_util::AppendToPath(&path, L"tools");
-  file_util::AppendToPath(&path, L"test_shell");
-  file_util::AppendToPath(&path, L"resources");
-  file_util::AppendToPath(&path, L"acid3.png");
-  GtkWidget* image = gtk_image_new_from_file(WideToUTF8(path).c_str());
-  gtk_box_pack_start(GTK_BOX(vbox), image, FALSE, FALSE, 0);
+  m_webViewHost.reset(WebViewHost::Create(vbox, NULL, *TestShell::web_prefs_));
 
   gtk_container_add(GTK_CONTAINER(m_mainWnd), vbox);
   gtk_widget_show_all(m_mainWnd);
@@ -190,22 +177,6 @@ bool IsDefaultPluginEnabled() {
 
 std::wstring GetWebKitLocale() {
   return L"en-US";
-}
-
-// The following cookie functions shouldn't live here, but do for now in order
-// to get things linking
-
-std::string GetCookies(const GURL &url, const GURL &policy_url) {
-  return "";
-}
-
-void SetCookie(const GURL &url, const GURL &policy_url, const std::string &cookie) {
-}
-
-
-ResourceLoaderBridge *
-ResourceLoaderBridge::Create(WebFrame*, std::string const &, GURL const&, GURL const&, GURL const&, std::string const&, int, int, ResourceType::Type, bool) {
-  return NULL;
 }
 
 }  // namespace webkit_glue

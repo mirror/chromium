@@ -27,6 +27,10 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
+
 // The URL scheme used for the new tab.
 static const char kNewTabUIScheme[] = "chrome-internal";
 
@@ -455,7 +459,7 @@ void TemplateURLHandler::HandleDoSearch(const Value* content) {
 
   // Load the URL.
   if (!url.empty()) {
-    dom_ui_host_->OpenURL(GURL(WideToUTF8(url)), CURRENT_TAB,
+    dom_ui_host_->OpenURL(GURL(WideToUTF8(url)), GURL(), CURRENT_TAB,
                           PageTransition::LINK);
   }
 }
@@ -669,7 +673,7 @@ HistoryHandler::HistoryHandler(DOMUIHost* dom_ui_host)
 void HistoryHandler::HandleShowHistoryPage(const Value*) {
   NavigationController* controller = dom_ui_host_->controller();
   if (controller)
-    controller->LoadURL(HistoryTabUI::GetURL(), PageTransition::LINK);
+    controller->LoadURL(HistoryTabUI::GetURL(), GURL(), PageTransition::LINK);
 }
 
 void HistoryHandler::HandleSearchHistoryPage(const Value* content) {
@@ -685,6 +689,7 @@ void HistoryHandler::HandleSearchHistoryPage(const Value* content) {
         NavigationController* controller = dom_ui_host_->controller();
         controller->LoadURL(
             HistoryTabUI::GetHistoryURLWithSearchText(wstring_value),
+            GURL(),
             PageTransition::LINK);
       }
     }
@@ -803,13 +808,14 @@ bool NewTabUIContents::SupportsURL(GURL* url) {
 }
 
 void NewTabUIContents::RequestOpenURL(const GURL& url,
+                                      const GURL& /*referrer*/,
                                       WindowOpenDisposition disposition) {
   // The user opened a URL on the page (including "open in new window").
   // We count all such clicks as AUTO_BOOKMARK, which increments the site's
   // visit count (which is used for ranking the most visited entries).
   // Note this means we're including clicks on not only most visited thumbnails,
   // but also clicks on recently bookmarked.
-  OpenURL(url, disposition, PageTransition::AUTO_BOOKMARK);
+  OpenURL(url, GURL(), disposition, PageTransition::AUTO_BOOKMARK);
 
   // Figure out if this was a click on a MostVisited entry, and log it if so.
   if (most_visited_handler_) {
@@ -823,4 +829,3 @@ void NewTabUIContents::RequestOpenURL(const GURL& url,
     }
   }
 }
-
