@@ -38,6 +38,9 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   // it depends on, from the .cc file; the benefit isn't worth it.
   ConstrainedWindowNonClientView* non_client_view();
 
+  // Overridden from views::CustomFrameWindow:
+  virtual void UpdateWindowTitle();
+
   // Overridden from ConstrainedWindow:
   virtual void CloseConstrainedWindow();
   virtual void ActivateConstrainedWindow();
@@ -45,7 +48,6 @@ class ConstrainedWindowImpl : public ConstrainedWindow,
   virtual void WasHidden();
   virtual void DidBecomeSelected();
   virtual std::wstring GetWindowTitle() const;
-  virtual void UpdateWindowTitle();
   virtual const gfx::Rect& GetCurrentBounds() const;
 
  protected:

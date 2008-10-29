@@ -62,13 +62,11 @@ class BlockedPopupContainer : public ConstrainedWindow,
   void set_dismissed() { has_been_dismissed_ = true; }
 
   // Override from ConstrainedWindow:
-  virtual void ActivateConstrainedWindow();
   virtual void CloseConstrainedWindow();
   virtual void RepositionConstrainedWindowTo(const gfx::Point& anchor_point);
   virtual void WasHidden();
   virtual void DidBecomeSelected();
   virtual std::wstring GetWindowTitle() const;
-  virtual void UpdateWindowTitle();
   virtual const gfx::Rect& GetCurrentBounds() const;
 
   // Override from TabContentsDelegate:

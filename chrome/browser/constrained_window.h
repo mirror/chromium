@@ -40,11 +40,6 @@ class ConstrainedWindow {
       views::View* contents_view,
       views::WindowDelegate* window_delegate);
 
-  // Activates the Constrained Window, which has the effect of detaching it if
-  // it contains a WebContents, otherwise just brings it to the front of the
-  // z-order.
-  virtual void ActivateConstrainedWindow() = 0;
-
   // Closes the Constrained Window.
   virtual void CloseConstrainedWindow() = 0;
 
@@ -63,9 +58,6 @@ class ConstrainedWindow {
 
   // Returns the title of the Constrained Window.
   virtual std::wstring GetWindowTitle() const = 0;
-
-  // Updates the Window's title and repaints the titlebar
-  virtual void UpdateWindowTitle() = 0;
 
   // Returns the current display rectangle (relative to its
   // parent). This method is only called from the unit tests to check

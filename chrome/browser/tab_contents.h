@@ -411,10 +411,11 @@ class TabContents : public PageNavigator {
   // want to generalize this if we need to migrate some other state.
   static void MigrateShelfView(TabContents* from, TabContents* to);
 
-  // ConstrainedTabContentsDelegate --------------------------------------------
-  // TODO: Pull these out?
-  virtual void WillClose(ConstrainedWindow* window);
-  virtual void DidMoveOrResize(ConstrainedWindow* window);
+  // Called when a ConstrainedWindow we own is about to be closed.
+  void WillClose(ConstrainedWindow* window);
+
+  // Called when a ConstrainedWindow we own is moved or resized.
+  void DidMoveOrResize(ConstrainedWindow* window);
 
  protected:
   friend class NavigationController;

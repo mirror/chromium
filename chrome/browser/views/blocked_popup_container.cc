@@ -271,9 +271,6 @@ void BlockedPopupContainer::CloseAllPopups() {
 /////////////////////////////////////////////////////////////////////////////////
 // Override from ConstrainedWindow:
 
-void BlockedPopupContainer::ActivateConstrainedWindow() {
-}
-
 void BlockedPopupContainer::CloseConstrainedWindow() {
   CloseEachTabContents();
 
@@ -295,6 +292,7 @@ void BlockedPopupContainer::RepositionConstrainedWindowTo(
 
   // Size this window to the bottom left corner starting at the anchor point.
   SetWindowPos(HWND_TOP, x, y, size.width(), size.height(), 0);
+  bounds_ = gfx::Rect(gfx::Point(x, y), size);
 }
 
 void BlockedPopupContainer::WasHidden() {
@@ -304,12 +302,7 @@ void BlockedPopupContainer::DidBecomeSelected() {
 }
 
 std::wstring BlockedPopupContainer::GetWindowTitle() const {
-  // BPCs have no window title
   return std::wstring();
-}
-
-void BlockedPopupContainer::UpdateWindowTitle() {
-  // Ignored since we don't have a window title
 }
 
 const gfx::Rect& BlockedPopupContainer::GetCurrentBounds() const {

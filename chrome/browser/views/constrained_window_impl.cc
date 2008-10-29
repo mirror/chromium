@@ -587,6 +587,10 @@ ConstrainedWindowNonClientView* ConstrainedWindowImpl::non_client_view() {
   return static_cast<ConstrainedWindowNonClientView*>(non_client_view_);
 }
 
+void ConstrainedWindowImpl::UpdateWindowTitle() {
+  UpdateUI(TabContents::INVALIDATE_TITLE);
+}
+
 void ConstrainedWindowImpl::ActivateConstrainedWindow() {
   // Other pop-ups are simply moved to the front of the z-order.
   SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
@@ -636,10 +640,6 @@ std::wstring ConstrainedWindowImpl::GetWindowTitle() const {
     display_title = L"Untitled";
 
   return display_title;
-}
-
-void ConstrainedWindowImpl::UpdateWindowTitle() {
-  UpdateUI(TabContents::INVALIDATE_TITLE);
 }
 
 const gfx::Rect& ConstrainedWindowImpl::GetCurrentBounds() const {
