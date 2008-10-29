@@ -131,15 +131,16 @@ IntRect ScrollbarThemeChromiumWin::forwardButtonRect(Scrollbar* scrollbar, Scrol
 
 IntRect ScrollbarThemeChromiumWin::trackRect(Scrollbar* scrollbar, bool)
 {
+    IntSize bs = buttonSize(scrollbar);
     int thickness = scrollbarThickness();
     if (scrollbar->orientation() == HorizontalScrollbar) {
         if (scrollbar->width() < 2 * thickness)
             return IntRect();
-        return IntRect(scrollbar->x() + thickness, scrollbar->y(), scrollbar->width() - 2 * thickness, thickness);
+        return IntRect(scrollbar->x() + bs.width(), scrollbar->y(), scrollbar->width() - 2 * bs.width(), thickness);
     }
     if (scrollbar->height() < 2 * thickness)
         return IntRect();
-    return IntRect(scrollbar->x(), scrollbar->y() + thickness, thickness, scrollbar->height() - 2 * thickness);
+    return IntRect(scrollbar->x(), scrollbar->y() + bs.height(), thickness, scrollbar->height() - 2 * bs.height());
 }
 
 void ScrollbarThemeChromiumWin::paintTrackBackground(GraphicsContext* context, Scrollbar* scrollbar, const IntRect& rect)
@@ -250,18 +251,27 @@ bool ScrollbarThemeChromiumWin::shouldCenterOnThumb(Scrollbar*, const PlatformMo
 
 IntSize ScrollbarThemeChromiumWin::buttonSize(Scrollbar* scrollbar)
 {
-    // Our desired rect is essentially 17x17.
+    // Our desired rect is essentially thickness by thickness.
     
-    // Our actual rect will shrink to half the available space when
-    // we have < 34 pixels left.  This allows the scrollbar
-    // to scale down and function even at tiny sizes.
+    // Our actual rect will shrink to half the available space when we have < 2
+    // times thickness pixels left.  This allows the scrollbar to scale down
+    // and function even at tiny sizes.
+ 
+    // In layout test mode, we force the button "girth" (i.e., the length of
+    // the button along the axis of the scrollbar) to be a fixed size.
+    // FIXME: This is retarded!  scrollbarThickness is already fixed in layout
+    // test mode so that should be enough to result in repeatable results, but
+    // preserving this hack avoids having to rebaseline pixel tests.
+    const int kLayoutTestModeGirth = 17;
+
     int thickness = scrollbarThickness();
+    int girth = webkit_glue::IsLayoutTestMode() ? kLayoutTestModeGirth : thickness;
     if (scrollbar->orientation() == HorizontalScrollbar) {
-        int width = scrollbar->width() < 2 * thickness ? scrollbar->width() / 2 : thickness;
+        int width = scrollbar->width() < 2 * girth ? scrollbar->width() / 2 : girth;
         return IntSize(width, thickness);
     }
     
-    int height = scrollbar->height() < 2 * thickness ? scrollbar->height() / 2 : thickness;
+    int height = scrollbar->height() < 2 * girth ? scrollbar->height() / 2 : girth;
     return IntSize(thickness, height);
 }
 
