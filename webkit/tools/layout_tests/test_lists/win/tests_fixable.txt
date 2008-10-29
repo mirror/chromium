@@ -1190,11 +1190,11 @@ V8 | KJS # LayoutTests/http/tests/security/frameNavigation/not-opener.html = TIM
 V8 | KJS # LayoutTests/http/tests/security/frameNavigation/opener.html = TIMEOUT
 V8 | KJS # LayoutTests/http/tests/security/MessagePort/event-listener-context.html = CRASH
 // missing expected results
-V8 | KJS # SKIP LayoutTests/fast/forms/search-placeholder-value-changed.html
-V8 | KJS # SKIP LayoutTests/fast/frames/frame-length-fractional.html
-V8 | KJS # SKIP LayoutTests/fast/table/floating-th.html
-V8 | KJS # SKIP LayoutTests/fast/table/table-display-types-strict.html
-V8 | KJS # SKIP LayoutTests/fast/table/table-display-types.html
+V8 | KJS # SKIP LayoutTests/fast/forms/search-placeholder-value-changed.html = FAIL
+V8 | KJS # SKIP LayoutTests/fast/frames/frame-length-fractional.html = FAIL
+V8 | KJS # SKIP LayoutTests/fast/table/floating-th.html = FAIL
+V8 | KJS # SKIP LayoutTests/fast/table/table-display-types-strict.html = FAIL
+V8 | KJS # SKIP LayoutTests/fast/table/table-display-types.html = FAIL
 
 // CHANGED OR REBASELINED IN WEBKIT 36102:37604
 V8 | KJS # LayoutTests/fast/css/variables/block-cycle-test.html = FAIL
