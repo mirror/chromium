@@ -669,6 +669,7 @@ def GetDefaultSolutionDeps(client, solution_name, platform=None,
   deps_os_key = {
       "win32": "win",
       "win": "win",
+      "cygwin": "win",
       "darwin": "mac",
       "mac": "mac",
       "unix": "unix",
