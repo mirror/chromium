@@ -270,11 +270,6 @@ class Browser : public TabStripModelDelegate,
                               WindowOpenDisposition disposition,
                               const gfx::Rect& initial_pos,
                               bool user_gesture);
-  virtual void StartDraggingDetachedContents(TabContents* source,
-                                             TabContents* new_contents,
-                                             const gfx::Rect& contents_bounds,
-                                             const gfx::Point& mouse_pt,
-                                             int frame_component);
   virtual void ActivateContents(TabContents* contents);
   virtual void LoadingStateChanged(TabContents* source);
   virtual void CloseContents(TabContents* source);
@@ -619,4 +614,3 @@ class Browser : public TabStripModelDelegate,
 };
 
 #endif  // CHROME_BROWSER_BROWSER_H_
-

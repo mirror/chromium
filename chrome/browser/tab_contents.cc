@@ -476,19 +476,6 @@ void TabContents::WillClose(ConstrainedWindow* window) {
   }
 }
 
-void TabContents::DetachContents(ConstrainedWindow* window,
-                                 TabContents* contents,
-                                 const gfx::Rect& contents_bounds,
-                                 const gfx::Point& mouse_pt,
-                                 int frame_component) {
-  WillClose(window);
-  if (delegate_) {
-    contents->DisassociateFromPopupCount();
-    delegate_->StartDraggingDetachedContents(
-        this, contents, contents_bounds, mouse_pt, frame_component);
-  }
-}
-
 void TabContents::DidMoveOrResize(ConstrainedWindow* window) {
   UpdateWindow(GetContainerHWND());
 }

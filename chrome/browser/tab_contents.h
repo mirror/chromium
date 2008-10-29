@@ -412,7 +412,7 @@ class TabContents : public PageNavigator {
   static void MigrateShelfView(TabContents* from, TabContents* to);
 
   // ConstrainedTabContentsDelegate --------------------------------------------
-
+  // TODO: Pull these out?
   virtual void AddNewContents(ConstrainedWindow* window,
                               TabContents* contents,
                               WindowOpenDisposition disposition,
@@ -424,11 +424,6 @@ class TabContents : public PageNavigator {
                        WindowOpenDisposition disposition,
                        PageTransition::Type transition);
   virtual void WillClose(ConstrainedWindow* window);
-  virtual void DetachContents(ConstrainedWindow* window,
-                              TabContents* contents,
-                              const gfx::Rect& contents_bounds,
-                              const gfx::Point& mouse_pt,
-                              int frame_component);
   virtual void DidMoveOrResize(ConstrainedWindow* window);
 
  protected:
