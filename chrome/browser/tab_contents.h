@@ -23,6 +23,7 @@ namespace views {
 class WindowDelegate;
 }
 
+class BlockedPopupContainer;
 class DOMUIHost;
 class DownloadItem;
 class DownloadShelfView;
@@ -52,8 +53,7 @@ class WebContents;
 // the NavigationController makes the active TabContents inactive, notifies the
 // TabContentsDelegate that the TabContents is being replaced, and then
 // activates the new TabContents.
-class TabContents : public PageNavigator,
-                    public ConstrainedTabContentsDelegate {
+class TabContents : public PageNavigator {
  public:
   // Flags passed to the TabContentsDelegate.NavigationStateChanged to tell it
   // what has changed. Combine them to update more than one thing.
@@ -516,6 +516,10 @@ class TabContents : public PageNavigator,
 
   // See capturing_contents() above.
   bool capturing_contents_;
+
+  // ConstrainedWindow with additional methods for managing blocked
+  // popups. Ownership goes in the |child_windows_| for normal 
+  BlockedPopupContainer* blocked_popups_;
 
   DISALLOW_COPY_AND_ASSIGN(TabContents);
 };
