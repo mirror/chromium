@@ -1378,26 +1378,6 @@ gfx::ViewHandle WebViewImpl::containingWindow() {
   return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
 }
 
-void WebViewImpl::popupOpened(WebCore::Widget* widget,
-                              const WebCore::IntRect& bounds) {
-  if (!delegate_)
-    return;
-
-  WebWidgetImpl* webwidget =
-      static_cast<WebWidgetImpl*>(delegate_->CreatePopupWidget(this));
-  webwidget->Init(widget, gfx::Rect(bounds.x(), bounds.y(),
-                                    bounds.width(), bounds.height()));
-}
-
-void WebViewImpl::popupClosed(WebCore::Widget* widget) {
-  NOTREACHED() << "popupClosed called on a non-popup";
-}
-
-void WebViewImpl::setFocus() {
-  if (delegate_)
-    delegate_->Focus(this);
-}
-
 const SkBitmap* WebViewImpl::getPreloadedResourceBitmap(int resource_id) {
   if (!delegate_)
     return NULL;

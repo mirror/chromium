@@ -497,7 +497,10 @@ WebView* TestShell::CreateWebView(WebView* webview) {
 
 WebWidget* TestShell::CreatePopupWidget(WebView* webview) {
     DCHECK(!m_popupHost);
+
+    delegate_->AddRef();  // Balanced in ClosePopup.
     m_popupHost = WebWidgetHost::Create(NULL, delegate_.get());
+
     ShowWindow(popupWnd(), SW_SHOW);
 
     return m_popupHost->webwidget();
@@ -505,7 +508,9 @@ WebWidget* TestShell::CreatePopupWidget(WebView* webview) {
 
 void TestShell::ClosePopup() {
     PostMessage(popupWnd(), WM_CLOSE, 0, 0);
+
     m_popupHost = NULL;
+    delegate_->Release();
 }
 
 void TestShell::SizeToDefault() {

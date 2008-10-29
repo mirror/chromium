@@ -30,6 +30,7 @@ MSVC_POP_WARNING();
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview_impl.h"
+#include "webkit/glue/webwidget_impl.h"
 
 struct IWebURLResponse;
 
@@ -446,8 +447,13 @@ void ChromeClientImpl::runFileChooser(const WebCore::String& default_path,
 }
 
 void ChromeClientImpl::popupOpened(
-    WebCore::Widget* widget, const WebCore::IntRect& bounds) {
-  NOTIMPLEMENTED();
+    WebCore::FramelessScrollView* popup_view, const WebCore::IntRect& bounds) {
+  WebViewDelegate* d = webview_->delegate();
+  if (d) {
+    WebWidgetImpl* webwidget =
+        static_cast<WebWidgetImpl*>(d->CreatePopupWidget(webview_));
+    webwidget->Init(popup_view, webkit_glue::FromIntRect(bounds));
+  }
 }
 
 void ChromeClientImpl::setCursor(const WebCore::Cursor& cursor) {

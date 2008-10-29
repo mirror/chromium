@@ -12,6 +12,8 @@
 #include "base/gfx/size.h"
 #include "webkit/glue/webwidget.h"
 
+#include "FramelessScrollViewClient.h"
+
 namespace WebCore {
   class Frame;
   class FramelessScrollView;
@@ -27,7 +29,8 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebWidgetDelegate;
 
-class WebWidgetImpl : public WebWidget {
+class WebWidgetImpl : public WebWidget,
+                      public WebCore::FramelessScrollViewClient {
  public:
   // WebWidget
   virtual void Close();
@@ -46,7 +49,7 @@ class WebWidgetImpl : public WebWidget {
                                int* x, int* y);
 
   // WebWidgetImpl
-  void Init(WebCore::Widget* widget, const gfx::Rect& bounds);
+  void Init(WebCore::FramelessScrollView* widget, const gfx::Rect& bounds);
 
   const gfx::Size& size() const { return size_; }
 
@@ -68,17 +71,25 @@ class WebWidgetImpl : public WebWidget {
   WebWidgetImpl(WebWidgetDelegate* delegate);
   ~WebWidgetImpl();
 
+  // WebCore::HostWindow methods:
+  virtual void repaint(const WebCore::IntRect&,
+                       bool content_changed,
+                       bool immediate = false,
+                       bool repaint_content_only = false);
+  virtual void scroll(const WebCore::IntSize& scroll_delta,
+                      const WebCore::IntRect& scroll_rect,
+                      const WebCore::IntRect& clip_rect);
+  virtual WebCore::IntPoint screenToWindow(const WebCore::IntPoint&) const;
+  virtual WebCore::IntRect windowToScreen(const WebCore::IntRect&) const;
+  virtual PlatformWidget platformWindow() const;
+
+  // WebCore::FramelessScrollViewClient methods:
+  virtual void popupClosed(WebCore::FramelessScrollView* popup_view);
+
   // TODO(darin): Figure out what happens to these methods.
 #if 0
   // WebCore::WidgetClientWin
   virtual gfx::ViewHandle containingWindow();
-  virtual void invalidateRect(const WebCore::IntRect& damaged_rect);
-  virtual void scrollRect(int dx, int dy, const WebCore::IntRect& clip_rect);
-  virtual void popupOpened(WebCore::Widget* widget,
-                           const WebCore::IntRect& bounds);
-  virtual void popupClosed(WebCore::Widget* widget);
-  virtual void setCursor(const WebCore::Cursor& cursor);
-  virtual void setFocus();
   virtual const SkBitmap* getPreloadedResourceBitmap(int resource_id);
   virtual void onScrollPositionChanged(WebCore::Widget* widget);
   virtual const WTF::Vector<RefPtr<WebCore::Range> >* getTickmarks(

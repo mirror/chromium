@@ -37,8 +37,10 @@
 #include "Document.h"
 #include "Font.h"
 #include "Frame.h"
+#include "FrameView.h"
 #include "FontSelector.h"
 #include "FramelessScrollView.h"
+#include "FramelessScrollViewClient.h"
 #include "GraphicsContext.h"
 #include "IntRect.h"
 #include "NotImplemented.h"
@@ -81,7 +83,7 @@ class PopupListBox;
 // This class holds a PopupListBox.  Its sole purpose is to be able to draw
 // a border around its child.  All its paint/event handling is just forwarded
 // to the child listBox (with the appropriate transforms).
-class PopupContainer : public FramelessScrollView {
+class PopupContainer : public FramelessScrollView, public RefCounted<PopupContainer> {
 public:
     static PassRefPtr<PopupContainer> create(PopupMenuClient* client);
 
@@ -108,6 +110,8 @@ public:
     PopupListBox* listBox() const { return m_listBox.get(); }
 
 private:
+    friend class RefCounted<PopupContainer>;
+
     PopupContainer(PopupMenuClient* client);
     ~PopupContainer();
 
@@ -119,7 +123,7 @@ private:
 
 // This class uses WebCore code to paint and handle events for a drop-down list
 // box ("combobox" on Windows).
-class PopupListBox : public FramelessScrollView {
+class PopupListBox : public FramelessScrollView, public RefCounted<PopupListBox> {
 public:
     // FramelessScrollView
     virtual void paint(GraphicsContext* gc, const IntRect& rect);
@@ -128,6 +132,9 @@ public:
     virtual bool handleMouseReleaseEvent(const PlatformMouseEvent& event);
     virtual bool handleWheelEvent(const PlatformWheelEvent& event);
     virtual bool handleKeyEvent(const PlatformKeyboardEvent& event);
+
+    // ScrollView
+    virtual HostWindow* hostWindow() const;
 
     // PopupListBox methods
 
@@ -169,6 +176,7 @@ public:
 
 private:
     friend class PopupContainer;
+    friend class RefCounted<PopupListBox>;
 
     // A type of List Item
     enum ListItemType {
@@ -290,8 +298,8 @@ private:
 };
 
 static PlatformMouseEvent constructRelativeMouseEvent(const PlatformMouseEvent& e,
-                                                      FrameView* parent,
-                                                      FrameView* child)
+                                                      FramelessScrollView* parent,
+                                                      FramelessScrollView* child)
 {
     IntPoint pos = parent->convertSelfToChild(child, e.pos());
 
@@ -305,8 +313,8 @@ static PlatformMouseEvent constructRelativeMouseEvent(const PlatformMouseEvent& 
 }
 
 static PlatformWheelEvent constructRelativeWheelEvent(const PlatformWheelEvent& e,
-                                                      FrameView* parent,
-                                                      FrameView* child)
+                                                      FramelessScrollView* parent,
+                                                      FramelessScrollView* child)
 {
     IntPoint pos = parent->convertSelfToChild(child, e.pos());
 
@@ -384,16 +392,10 @@ void PopupContainer::hidePopup()
 
     m_listBox->disconnectClient();
     removeChild(m_listBox.get());
-
-    // TODO(darin): frame() returns null here, so we cannot rely on communicating
-    // back to the WebWidget via the ChromeClient.  We probably want to use the
-    // HostWindow or PlatformWidget to communicate this.
-#if 0
-    ChromeClientChromium* chromeClient = static_cast<ChromeClientChromium*>(
-        frame()->page()->chrome()->client());
-    if (chromeClient)
-        chromeClient->popupClosed(this);
-#endif
+    m_listBox = 0;
+    
+    if (client())
+        client()->popupClosed(this);
 }
 
 void PopupContainer::layout()
@@ -602,6 +604,13 @@ bool PopupListBox::handleKeyEvent(const PlatformKeyboardEvent& event)
     }
 
     return true;
+}
+
+HostWindow* PopupListBox::hostWindow() const
+{
+    // Our parent is the root ScrollView, so it is the one that has a
+    // HostWindow.  FrameView::hostWindow() works similarly.
+    return parent() ? parent()->hostWindow() : 0;
 }
 
 // From HTMLSelectElement.cpp
@@ -991,7 +1000,10 @@ void PopupListBox::layout()
     }
 
     resize(windowWidth, windowHeight);
-    scrollToRevealSelection();
+    setContentsSize(IntSize(contentWidth, getRowBounds(numItems() - 1).bottom()));
+    
+    if (hostWindow())
+        scrollToRevealSelection();
 
     invalidate();
 }
