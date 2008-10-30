@@ -27,7 +27,7 @@ const int kNotifyMenuItem = -1;
 // infinite windows.
 const int kImpossibleNumberOfPopups = 30;
 
-const int kCloseButtonPadding = 5;
+const int kSmallPadding = 2;
 
 static const SkColor kBackgroundColor = SkColorSetRGB(222, 234, 248);
 // TODO(erg): Get a real standard color for kBorderColor.
@@ -162,23 +162,24 @@ void BlockedPopupContainerView::Layout() {
   gfx::Size panel_size = GetPreferredSize();
   gfx::Size button_size = close_button_->GetPreferredSize();
   gfx::Size sz = popup_count_->GetPreferredSize();
-  popup_count_->SetBounds(0, 0,
-                          width() - button_size.width() - kCloseButtonPadding,
-                          height());
 
-  close_button_->SetBounds(width() - button_size.width() - kCloseButtonPadding,
-                           kCloseButtonPadding,
-                           button_size.width(), button_size.height());
+  popup_count_->SetBounds(kSmallPadding, kSmallPadding,
+                          sz.width(),
+                          sz.height());
 
-  // TODO(erg): Unfinished?
+  double center = height() / 2;
+  double half_height = button_size.height() / 2;
+  close_button_->SetBounds(width() - button_size.width() - kSmallPadding,
+                           static_cast<int>(center - half_height),
+                           button_size.width(),
+                           button_size.height());
 }
 
 gfx::Size BlockedPopupContainerView::GetPreferredSize() {
-  gfx::Size prefsize = close_button_->GetPreferredSize();
-  prefsize.Enlarge(popup_count_->GetPreferredSize().width(), 0);
-
-  // Padding on all sides:
-  prefsize.Enlarge(2 * kCloseButtonPadding, 2 * kCloseButtonPadding);
+  gfx::Size prefsize = popup_count_->GetPreferredSize();
+  prefsize.Enlarge(close_button_->GetPreferredSize().width(), 0);
+  // Add padding to all sides of the |popup_count_| and |close_button_|.
+  prefsize.Enlarge(3 * kSmallPadding, 2 * kSmallPadding);
 
   return prefsize;
 }
