@@ -109,10 +109,6 @@ class MasterFactory(object):
     self._RemoveUnusedComponents(self.NEEDED_COMPONENTS_INTERNAL,
                                  custom_deps_internal, tests)
 
-    # Disable what is on the internal svn server.
-    custom_deps_internal.append(
-        self.CUSTOM_DEPS_INTERNAL_DISABLE_SAVEDCACHE_DATA)
-
   def _ShouldRunTest(self, tests, name):
     for test in tests:
       if re.match(name, test):
