@@ -214,6 +214,7 @@ void DownloadItem::Cancel(bool update_history) {
 void DownloadItem::Finished(int64 size) {
   state_ = COMPLETE;
   UpdateSize(size);
+  UpdateObservers();
   StopProgressTimer();
 }
 
@@ -974,6 +975,12 @@ int DownloadManager::RemoveDownloadsBetween(const Time remove_begin,
          state == DownloadItem::CANCELLED)) {
       // Remove from the map and move to the next in the list.
       it = downloads_.erase(it);
+
+      // Also remove it from any completed dangerous downloads.
+      DownloadMap::iterator dit = dangerous_finished_.find(download->id());
+      if (dit != dangerous_finished_.end())
+        dangerous_finished_.erase(dit);
+
       delete download;
 
       ++num_deleted;

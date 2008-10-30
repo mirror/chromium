@@ -25,6 +25,8 @@
 #include "chrome/browser/task_manager.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/about_chrome_view.h"
+#include "chrome/browser/views/bookmark_bar_view.h"
+#include "chrome/browser/views/bookmark_manager_view.h"
 #include "chrome/browser/views/bug_report_view.h"
 #include "chrome/browser/views/clear_browsing_data.h"
 #include "chrome/browser/views/importer_view.h"
@@ -104,6 +106,7 @@ void Browser::InitCommandState() {
   controller_.UpdateCommandEnabled(IDC_ABOUT, true);
   controller_.UpdateCommandEnabled(IDC_SHOW_HISTORY, true);
   controller_.UpdateCommandEnabled(IDC_SHOW_BOOKMARKS_BAR, true);
+  controller_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_MANAGER, true);
   controller_.UpdateCommandEnabled(IDC_SHOW_DOWNLOADS, true);
   controller_.UpdateCommandEnabled(IDC_ENCODING, true);
   controller_.UpdateCommandEnabled(IDC_ENCODING_AUTO_DETECT, true);
@@ -650,22 +653,15 @@ void Browser::ExecuteCommand(int id) {
       DuplicateContentsAt(selected_index());
       break;
 
-    case IDC_SHOW_BOOKMARKS_BAR: {
+    case IDC_SHOW_BOOKMARKS_BAR:
       UserMetrics::RecordAction(L"ShowBookmarksBar", profile_);
-
-      // Invert the current pref.
-      PrefService* prefs = profile_->GetPrefs();
-      prefs->SetBoolean(prefs::kShowBookmarkBar,
-          !prefs->GetBoolean(prefs::kShowBookmarkBar));
-      prefs->ScheduleSavePersistentPrefs(g_browser_process->file_thread());
-
-      // And notify the notification service.
-      Source<Profile> source(profile_);
-      NotificationService::current()->Notify(
-          NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED, source,
-          NotificationService::NoDetails());
+      BookmarkBarView::ToggleWhenVisible(profile_);
       break;
-    }
+
+    case IDC_SHOW_BOOKMARK_MANAGER:
+      UserMetrics::RecordAction(L"ShowBookmarkManager", profile_);
+      BookmarkManagerView::Show(profile_);
+      break;
 
     case IDC_SHOW_HISTORY:
       UserMetrics::RecordAction(L"ShowHistory", profile_);
@@ -703,7 +699,8 @@ void Browser::ExecuteCommand(int id) {
         break;
 
       const TabRestoreService::HistoricalTab& tab = tabs.front();
-      AddRestoredTab(tab.navigations, tab.current_navigation_index, true);
+      AddRestoredTab(tab.navigations, tab_count(), tab.current_navigation_index,
+                     true);
       service->RemoveHistoricalTabById(tab.id);
       break;
     }
@@ -774,7 +771,7 @@ void Browser::Reload() {
   if (current_tab) {
     // As this is caused by a user action, give the focus to the page.
     current_tab->Focus();
-    current_tab->controller()->Reload();
+    current_tab->controller()->Reload(true);
   }
 }
 
