@@ -26,6 +26,13 @@ const int kNotifyMenuItem = -1;
 // infinite windows.
 const int kImpossibleNumberOfPopups = 30;
 
+const int kCloseButtonPadding = 5;
+
+static const SkColor kBackgroundColor = SkColorSetRGB(222, 234, 248);
+static const SkColor kShadowColor = SkColorSetARGB(30, 0, 0, 0);
+static const int kShadowSize = 1;
+static const int kBackgroundCornerRadius = 4;
+
 ////////////////////////////////////////////////////////////////////////////////
 // BlockedPopupContainerView
 
@@ -72,11 +79,11 @@ BlockedPopupContainerView::BlockedPopupContainerView(
   // Create a button with a multidigit number to reserve space.
   popup_count_ = new views::TextButton(
       l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT,
-                            IntToWString(9001)));
+                            IntToWString(99)));
   popup_count_->SetListener(this, 1);
   AddChildView(popup_count_);
 
-  // For now, we steal the Find close button, since 
+  // For now, we steal the Find close button, since it looks OK.
   close_button_ = new views::Button();
   close_button_->SetFocusable(true);
   close_button_->SetImage(views::Button::BS_NORMAL,
@@ -85,8 +92,6 @@ BlockedPopupContainerView::BlockedPopupContainerView(
       rb.GetBitmapNamed(IDR_CLOSE_BAR_H));
   close_button_->SetImage(views::Button::BS_PUSHED,
       rb.GetBitmapNamed(IDR_CLOSE_BAR_P));
-  //  close_button_->SetTooltipText(
-  //      l10n_util::GetString(IDS_FIND_IN_PAGE_CLOSE_TOOLTIP));
   close_button_->SetListener(this, 0);
   AddChildView(close_button_);
 
@@ -97,27 +102,66 @@ BlockedPopupContainerView::~BlockedPopupContainerView() {
 }
 
 void BlockedPopupContainerView::UpdatePopupCountLabel() {
-  popup_count_->SetText(
-      l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT,
-                            IntToWString(container_->GetTabContentsCount())));
-
+  popup_count_->SetText(container_->GetWindowTitle());
   Layout();
   SchedulePaint();
 }
 
 void BlockedPopupContainerView::Paint(ChromeCanvas* canvas) {
-  canvas->FillRectInt(SK_ColorRED, 0, 0, width(), height());
+  SkPaint paint;
+  paint.setStyle(SkPaint::kFill_Style);
+  paint.setFlags(SkPaint::kAntiAlias_Flag);
+  paint.setColor(kBackgroundColor);
+
+  // Rounded corners
+  SkScalar rad[8];
+  // Top left corner
+  rad[0] = SkIntToScalar(kBackgroundCornerRadius);
+  rad[1] = SkIntToScalar(kBackgroundCornerRadius);
+  // Top right corner
+  rad[2] = SkIntToScalar(kBackgroundCornerRadius);
+  rad[3] = SkIntToScalar(kBackgroundCornerRadius);
+  // Bottom right corner
+  rad[4] = 0;
+  rad[5] = 0;
+  // Bottom left corner
+  rad[6] = 0;
+  rad[7] = 0;
+
+  SkRect rect;
+  rect.set(0, 0, SkIntToScalar(width()), SkIntToScalar(height()));
+
+  // Draw the shadow
+  SkPaint shadow_paint;
+  shadow_paint.setFlags(SkPaint::kAntiAlias_Flag);
+  // NEXTACTION: There is a problem with opacity; the backing needs to be
+  // opaque?
+  shadow_paint.setColor(kShadowColor);
+  SkPath shadow_path;
+  shadow_path.addRoundRect(rect, rad, SkPath::kCW_Direction);
+  canvas->drawPath(shadow_path, shadow_paint);
+
+  // Draw the bubble
+  SkPath path;
+  rect.set(SkIntToScalar(kShadowSize),
+           SkIntToScalar(kShadowSize),
+           SkIntToScalar(width() - kShadowSize),
+           SkIntToScalar(height() - kShadowSize));
+  path.addRoundRect(rect, rad, SkPath::kCW_Direction);
+  canvas->drawPath(path, paint);
 }
 
 void BlockedPopupContainerView::Layout() {
   gfx::Size panel_size = GetPreferredSize();
   gfx::Size button_size = close_button_->GetPreferredSize();
   gfx::Size sz = popup_count_->GetPreferredSize();
-  popup_count_->SetBounds(0, 0, width() - button_size.width(),
+  popup_count_->SetBounds(0, 0,
+                          width() - button_size.width() - kCloseButtonPadding,
                           height());
 
-  close_button_->SetBounds(width() - button_size.width(), 0,
-                           button_size.width(), height());
+  close_button_->SetBounds(width() - button_size.width() - kCloseButtonPadding,
+                           kCloseButtonPadding,
+                           button_size.width(), button_size.height());
 
   // TODO(erg): Unfinished?
 }
@@ -125,6 +169,10 @@ void BlockedPopupContainerView::Layout() {
 gfx::Size BlockedPopupContainerView::GetPreferredSize() {
   gfx::Size prefsize = close_button_->GetPreferredSize();
   prefsize.Enlarge(popup_count_->GetPreferredSize().width(), 0);
+
+  // Padding on all sides:
+  prefsize.Enlarge(2 * kCloseButtonPadding, 2 * kCloseButtonPadding);
+
   return prefsize;
 }
 
@@ -302,7 +350,8 @@ void BlockedPopupContainer::DidBecomeSelected() {
 }
 
 std::wstring BlockedPopupContainer::GetWindowTitle() const {
-  return std::wstring();
+  return l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT,
+                               IntToWString(GetTabContentsCount()));
 }
 
 const gfx::Rect& BlockedPopupContainer::GetCurrentBounds() const {
@@ -394,6 +443,10 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
   container_view_ = new BlockedPopupContainerView(this);
   container_view_->SetVisible(true);
 
+  // Set us up as a transparent thing
+  //  SetLayeredAlpha(static_cast<BYTE>(125));
+  //  set_window_ex_style(WS_EX_TRANSPARENT);
+
   ContainerWin::Init(owner_->GetContainerHWND(), gfx::Rect(), false);
   SetContentsView(container_view_);
   RepositionConstrainedWindowTo(initial_anchor);
@@ -413,9 +466,9 @@ void BlockedPopupContainer::ShowSelf() {
 }
 
 void BlockedPopupContainer::CloseEachTabContents() {
-  for(std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
-          blocked_popups_.begin(); it != blocked_popups_.end(); ++it) {
+  for (std::vector<std::pair<TabContents*, gfx::Rect> >::iterator it =
+          blocked_popups_.begin(); it != blocked_popups_.end(); ++it)
     it->first->CloseContents();
-  }
+
   blocked_popups_.clear();
 }
