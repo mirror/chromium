@@ -18,7 +18,7 @@ deps = {
     "/trunk/deps/third_party/icu38@4040",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/branches/bleeding_edge",
+    "http://v8.googlecode.com/svn/trunk@618",
 
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@37604",
