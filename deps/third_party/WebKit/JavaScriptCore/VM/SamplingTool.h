@@ -36,12 +36,17 @@
 #include <nodes.h>
 #include <Opcode.h>
 
-namespace KJS {
+namespace JSC {
 
     class ExecState;
     class ScopeNode;
     class CodeBlock;
     struct Instruction;
+
+#if ENABLE(SAMPLING_TOOL)
+    extern OpcodeID currentOpcodeID;
+    extern unsigned inCalledCode;
+#endif
 
     struct ScopeSampleRecord {
         RefPtr<ScopeNode> m_scope;
@@ -102,14 +107,20 @@ namespace KJS {
         {
             m_recordedCodeBlock = 0;
             m_recordedVPC = 0;
+#if ENABLE(SAMPLING_TOOL)
+            currentOpcodeID = static_cast<OpcodeID>(-1);
+#endif
         }
         
         void callingHostFunction()
         {
             m_recordedCodeBlock = 0;
             m_recordedVPC = 0;
+#if ENABLE(SAMPLING_TOOL)
+            currentOpcodeID = static_cast<OpcodeID>(-1);
+#endif
         }
-        
+
     private:
         static void* threadStartFunc(void*);
         void run();
@@ -134,13 +145,15 @@ namespace KJS {
 #define MACHINE_SAMPLING_sample(codeBlock, vPC) m_sampler->sample(codeBlock, vPC)
 #define MACHINE_SAMPLING_privateExecuteReturned() m_sampler->privateExecuteReturned()
 #define MACHINE_SAMPLING_callingHostFunction() m_sampler->callingHostFunction()
+#define CTI_MACHINE_SAMPLING_callingHostFunction() ARG_globalData->machine->m_sampler->callingHostFunction()
 #else
 #define SCOPENODE_SAMPLING_notifyOfScope(sampler)
 #define MACHINE_SAMPLING_sample(codeBlock, vPC)
 #define MACHINE_SAMPLING_privateExecuteReturned()
 #define MACHINE_SAMPLING_callingHostFunction()
+#define CTI_MACHINE_SAMPLING_callingHostFunction()
 #endif
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // SamplingTool_h

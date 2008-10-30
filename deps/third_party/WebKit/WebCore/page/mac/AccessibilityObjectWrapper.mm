@@ -31,6 +31,7 @@
 
 #import "AXObjectCache.h"
 #import "AccessibilityListBox.h"
+#import "AccessibilityList.h"
 #import "AccessibilityRenderObject.h"
 #import "AccessibilityTable.h"
 #import "AccessibilityTableCell.h"
@@ -58,8 +59,9 @@
 
 using namespace WebCore;
 using namespace HTMLNames;
+using namespace std;
 
-// this is SnowLeopard API
+// Cell Tables
 #ifndef NSAccessibilitySelectedCellsAttribute
 #define NSAccessibilitySelectedCellsAttribute @"AXSelectedCells"
 #endif
@@ -87,6 +89,27 @@ using namespace HTMLNames;
 #ifndef NSAccessibilityCellRole
 #define NSAccessibilityCellRole @"AXCell"
 #endif
+
+// Lists
+#ifndef NSAccessibilityContentListSubrole
+#define NSAccessibilityContentListSubrole @"AXContentList"
+#endif
+
+#ifndef NSAccessibilityDefinitionListSubrole
+#define NSAccessibilityDefinitionListSubrole @"AXDefinitionList"
+#endif
+
+#ifdef BUILDING_ON_TIGER
+typedef unsigned NSUInteger;
+#endif
+
+@interface NSObject (WebKitAccessibilityArrayCategory)
+
+- (NSUInteger)accessibilityIndexOfChild:(id)child;
+- (NSUInteger)accessibilityArrayAttributeCount:(NSString *)attribute;
+- (NSArray *)accessibilityArrayAttributeValues:(NSString *)attribute index:(NSUInteger)index maxCount:(NSUInteger)maxCount;
+
+@end
 
 @implementation AccessibilityObjectWrapper
 
@@ -131,7 +154,7 @@ using namespace HTMLNames;
     Widget* widget = m_object->widgetForAttachmentView();
     if (!widget)
         return nil;
-    return widget->getView();
+    return widget->platformWidget();
 }
 
 static WebCoreTextMarker* textMarkerForVisiblePosition(const VisiblePosition& visiblePos)
@@ -398,7 +421,7 @@ static AccessibilityObject* AXLinkElementForNode(Node* node)
         return 0;
 
     RefPtr<AccessibilityObject> axObj = obj->document()->axObjectCache()->get(obj);
-    HTMLAnchorElement* anchor = axObj->anchorElement();
+    Element* anchor = axObj->anchorElement();
     if (!anchor)
         return 0;
 
@@ -601,6 +624,7 @@ static WebCoreTextMarkerRange* textMarkerRangeFromVisiblePositions(VisiblePositi
                       NSAccessibilityLinkedUIElementsAttribute,
                       NSAccessibilitySelectedAttribute,
                       @"AXBlockQuoteLevel",
+                      NSAccessibilityTopLevelUIElementAttribute,
                       nil];
     }
     if (commonMenuAttrs == nil) {
@@ -764,7 +788,7 @@ static WebCoreTextMarkerRange* textMarkerRangeFromVisiblePositions(VisiblePositi
     if (m_object->isTableCell())
         return tableCellAttrs;
     
-    if (m_object->isListBox())
+    if (m_object->isListBox() || m_object->isList())
         return listBoxAttrs;
 
     if (m_object->isProgressIndicator() || m_object->isSlider())
@@ -911,13 +935,15 @@ static const AccessibilityRoleMap& createAccessibilityRoleMap()
         { HeadingRole, @"AXHeading" },
         { ListBoxRole, NSAccessibilityListRole },
         { ListBoxOptionRole, NSAccessibilityStaticTextRole },
-        // cells exist only in SnowLeopard
+        // cells don't exist on tiger or leopard
 #if defined(BUILDING_ON_TIGER) || defined(BUILDING_ON_LEOPARD)
         { CellRole, NSAccessibilityGroupRole },
 #else
         { CellRole, NSAccessibilityCellRole },
 #endif
-        { TableHeaderContainerRole, NSAccessibilityGroupRole }
+        { TableHeaderContainerRole, NSAccessibilityGroupRole },
+        { DefinitionListDefinitionRole, NSAccessibilityGroupRole },
+        { DefinitionListTermRole, NSAccessibilityGroupRole }
         
     };
     AccessibilityRoleMap& roleMap = *new AccessibilityRoleMap;
@@ -956,7 +982,15 @@ static NSString* roleValueToNSString(AccessibilityRole value)
             return [attachView accessibilityAttributeValue:NSAccessibilitySubroleAttribute];
         }
     }
-
+    
+    if (m_object->isList()) {
+        AccessibilityList* listObject = static_cast<AccessibilityList*>(m_object);
+        if (listObject->isUnorderedList() || listObject->isOrderedList())
+            return NSAccessibilityContentListSubrole;
+        if (listObject->isDefinitionList())
+            return NSAccessibilityDefinitionListSubrole;
+    }
+    
     return nil;
 }
 
@@ -1061,7 +1095,7 @@ static NSString* roleValueToNSString(AccessibilityRole value)
         if (m_object->isAccessibilityRenderObject()) {
             FrameView* fv = static_cast<AccessibilityRenderObject*>(m_object)->frameViewIfRenderView();
             if (fv)
-                return fv->getView();
+                return fv->platformWidget();
         }
         
         return m_object->parentObjectUnignored()->wrapper();
@@ -1076,23 +1110,32 @@ static NSString* roleValueToNSString(AccessibilityRole value)
         return convertToNSArray(m_object->children());
     }
     
-    if ([attributeName isEqualToString: NSAccessibilitySelectedChildrenAttribute] && m_object->isListBox()) {
-        AccessibilityObject::AccessibilityChildrenVector selectedChildrenCopy;
-        m_object->selectedChildren(selectedChildrenCopy);
-        return convertToNSArray(selectedChildrenCopy);
+    if ([attributeName isEqualToString: NSAccessibilitySelectedChildrenAttribute]) {
+        if (m_object->isListBox()) {
+            AccessibilityObject::AccessibilityChildrenVector selectedChildrenCopy;
+            m_object->selectedChildren(selectedChildrenCopy);
+            return convertToNSArray(selectedChildrenCopy);
+        }
+        return nil;
     }
     
-    if ([attributeName isEqualToString: NSAccessibilityVisibleChildrenAttribute] && m_object->isListBox()) {
-        AccessibilityObject::AccessibilityChildrenVector visibleChildrenCopy;
-        m_object->visibleChildren(visibleChildrenCopy);
-        return convertToNSArray(visibleChildrenCopy);
+    if ([attributeName isEqualToString: NSAccessibilityVisibleChildrenAttribute]) {
+        if (m_object->isListBox()) {
+            AccessibilityObject::AccessibilityChildrenVector visibleChildrenCopy;
+            m_object->visibleChildren(visibleChildrenCopy);
+            return convertToNSArray(visibleChildrenCopy);
+        }
+        else if (m_object->isList())
+            return [self accessibilityAttributeValue:NSAccessibilityChildrenAttribute];
+
+        return nil;
     }
     
     
     if (m_object->isWebArea()) {
         if ([attributeName isEqualToString: @"AXLinkUIElements"]) {
             AccessibilityObject::AccessibilityChildrenVector links;
-            m_object->getDocumentLinks(links);
+            static_cast<AccessibilityRenderObject*>(m_object)->getDocumentLinks(links);
             return convertToNSArray(links);
         }
         if ([attributeName isEqualToString: @"AXLoaded"])
@@ -1199,7 +1242,7 @@ static NSString* roleValueToNSString(AccessibilityRole value)
         [attributeName isEqualToString: NSAccessibilityTopLevelUIElementAttribute]) {
         FrameView* fv = m_object->documentFrameView();
         if (fv)
-            return [fv->getView() window];
+            return [fv->platformWidget() window];
         return nil;
     }
     
@@ -1282,7 +1325,7 @@ static NSString* roleValueToNSString(AccessibilityRole value)
         }  
     }
     
-    if (m_object->isListBox() && [attributeName isEqualToString:NSAccessibilityOrientationAttribute])
+    if ((m_object->isListBox() ||m_object->isList()) && [attributeName isEqualToString:NSAccessibilityOrientationAttribute])
         return NSAccessibilityVerticalOrientationValue;
 
     if ([attributeName isEqualToString: @"AXSelectedTextMarkerRange"])
@@ -1885,6 +1928,69 @@ static RenderObject* rendererForView(NSView* view)
 - (BOOL)accessibilityShouldUseUniqueId
 {
     return m_object->accessibilityShouldUseUniqueId();
+}
+
+// API that AppKit uses for faster access
+- (NSUInteger)accessibilityIndexOfChild:(id)child
+{
+    const AccessibilityObject::AccessibilityChildrenVector& children = m_object->children();
+       
+    if (children.isEmpty())
+        return [[self renderWidgetChildren] indexOfObject:child];
+    
+    unsigned count = children.size();
+    for (unsigned k = 0; k < count; ++k) {
+        if (children[k]->wrapper() == child)
+            return k;
+    }
+
+    return NSNotFound;
+}
+
+- (NSUInteger)accessibilityArrayAttributeCount:(NSString *)attribute
+{
+    if ([attribute isEqualToString:NSAccessibilityChildrenAttribute]) {
+        const AccessibilityObject::AccessibilityChildrenVector& children = m_object->children();
+        if (children.isEmpty())
+            return [[self renderWidgetChildren] count];
+        
+        return children.size();
+    }
+    
+    return [super accessibilityArrayAttributeCount:attribute];
+}
+
+- (NSArray *)accessibilityArrayAttributeValues:(NSString *)attribute index:(NSUInteger)index maxCount:(NSUInteger)maxCount 
+{
+    if ([attribute isEqualToString:NSAccessibilityChildrenAttribute]) {
+        if (m_object->children().isEmpty()) {
+            NSArray *children = [self renderWidgetChildren];
+            if (!children) 
+                return nil;
+            
+            NSUInteger childCount = [children count];
+            if (index >= childCount)
+                return nil;
+            
+            NSUInteger arrayLength = min(childCount - index, maxCount);
+            return [children subarrayWithRange:NSMakeRange(index, arrayLength)];
+        }
+        
+        const AccessibilityObject::AccessibilityChildrenVector& children = m_object->children();
+        unsigned childCount = children.size();
+        if (index >= childCount)
+            return nil;
+        
+        unsigned available = min(childCount - index, maxCount);
+        
+        NSMutableArray *subarray = [NSMutableArray arrayWithCapacity:available];
+        for (unsigned added = 0; added < available; ++index, ++added)
+            [subarray addObject:children[index]->wrapper()];
+        
+        return subarray;
+    }
+    
+    return [super accessibilityArrayAttributeValues:attribute index:index maxCount:maxCount];
 }
 
 @end

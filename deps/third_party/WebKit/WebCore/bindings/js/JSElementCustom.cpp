@@ -31,6 +31,7 @@
 #include "JSElement.h"
 
 #include "CSSHelper.h"
+#include "Document.h"
 #include "ExceptionCode.h"
 #include "ExceptionContext.h"
 #include "HTMLFrameElementBase.h"
@@ -39,14 +40,13 @@
 #include "JSHTMLElementWrapperFactory.h"
 #include "JSNodeList.h"
 #include "NodeList.h"
-#include "JSNSResolver.h"
 
 #if ENABLE(SVG)
 #include "JSSVGElementWrapperFactory.h"
 #include "SVGElement.h"
 #endif
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -129,60 +129,24 @@ JSValue* JSElement::setAttributeNodeNS(ExecState* exec, const ArgList& args)
     return result;
 }
 
-JSValue* JSElement::querySelector(ExecState* exec, const ArgList& args)
-{
-    Element* imp = impl();
-    ExceptionCode ec = 0;
-    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
-    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
-
-    ExceptionContext context(exec);
-    RefPtr<Element> element = imp->querySelector(selectors, resolver.get(), ec, &context);
-    if (exec->hadException())
-        return jsUndefined();
-    JSValue* result = toJS(exec, element.get());
-    setDOMException(exec, ec);
-    return result;
-}
-
-JSValue* JSElement::querySelectorAll(ExecState* exec, const ArgList& args)
-{
-    Element* imp = impl();
-    ExceptionCode ec = 0;
-    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
-    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
-
-    ExceptionContext context(exec);
-    RefPtr<NodeList> nodeList = imp->querySelectorAll(selectors, resolver.get(), ec, &context);
-    if (exec->hadException())
-        return jsUndefined();
-    JSValue* result = toJS(exec, nodeList.get());
-    setDOMException(exec, ec);
-    return result;
-}
-
 JSValue* toJSNewlyCreated(ExecState* exec, Element* element)
 {
     if (!element)
         return jsNull();
 
-    ASSERT(!ScriptInterpreter::getDOMNodeForDocument(element->document(), element));
-    
-    Document* doc = element->document();
-    JSNode* ret = 0;
-    
+    ASSERT(!getCachedDOMNodeWrapper(element->document(), element));
+
+    JSNode* wrapper;        
     if (element->isHTMLElement())
-        ret = createJSHTMLWrapper(exec, static_cast<HTMLElement*>(element));
+        wrapper = createJSHTMLWrapper(exec, static_cast<HTMLElement*>(element));
 #if ENABLE(SVG)
     else if (element->isSVGElement())
-        ret = createJSSVGWrapper(exec, static_cast<SVGElement*>(element));
+        wrapper = createJSSVGWrapper(exec, static_cast<SVGElement*>(element));
 #endif
     else
-        ret = new (exec) JSElement(JSElementPrototype::self(exec), element);
+        wrapper = CREATE_DOM_NODE_WRAPPER(exec, Element, element);
 
-    ScriptInterpreter::putDOMNodeForDocument(doc, element, ret);
-
-    return ret;    
+    return wrapper;    
 }
     
 } // namespace WebCore

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -26,7 +26,7 @@
 #include <qhash.h>
 #include <qset.h>
 
-namespace KJS {
+namespace JSC {
 
 namespace Bindings {
 
@@ -37,11 +37,6 @@ class QtRuntimeMetaMethod;
 class QtInstance : public Instance
 {
 public:
-    static PassRefPtr<QtInstance> create(QObject *instance, PassRefPtr<RootObject> rootObject) 
-    {
-        return adoptRef(new QtInstance(instance, rootObject));
-    }
-
     ~QtInstance ();
 
     virtual Class* getClass() const;
@@ -52,12 +47,9 @@ public:
     virtual JSValue* valueOf(ExecState* exec) const;
     virtual JSValue* defaultValue(ExecState*, PreferredPrimitiveType) const;
 
-    virtual CallType getCallData(CallData&);
-
     virtual void mark(); // This isn't inherited
 
     virtual JSValue* invokeMethod (ExecState *exec, const MethodList &method, const ArgList &args);
-    virtual JSValue* invokeDefaultMethod (ExecState *exec, const ArgList &args);
 
     virtual void getPropertyNames(ExecState*, PropertyNameArray&);
 
@@ -73,6 +65,11 @@ public:
     static RuntimeObjectImp* getRuntimeObject(ExecState* exec, PassRefPtr<QtInstance>);
 
 private:
+    static PassRefPtr<QtInstance> create(QObject *instance, PassRefPtr<RootObject> rootObject)
+    {
+        return adoptRef(new QtInstance(instance, rootObject));
+    }
+
     friend class QtClass;
     friend class QtField;
     QtInstance(QObject*, PassRefPtr<RootObject>); // Factory produced only..
@@ -83,11 +80,10 @@ private:
     mutable QHash<QString,QtField*> m_fields;
     mutable QSet<JSValue*> m_children;
     mutable QtRuntimeMetaMethod* m_defaultMethod;
-    mutable int m_defaultMethodIndex;
 };
 
 } // namespace Bindings
 
-} // namespace KJS
+} // namespace JSC
 
 #endif

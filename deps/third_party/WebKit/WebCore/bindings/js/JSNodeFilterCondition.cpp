@@ -28,7 +28,7 @@
 
 namespace WebCore {
 
-using namespace KJS;
+using namespace JSC;
 
 ASSERT_CLASS_FITS_IN_CELL(JSNodeFilterCondition)
 
@@ -52,7 +52,7 @@ short JSNodeFilterCondition::acceptNode(ExceptionContext* context, Node* filterN
     if (callType == CallTypeNone)
         return NodeFilter::FILTER_ACCEPT;
 
-    KJS::ExecState* exec = context->exec();
+    JSC::ExecState* exec = context->exec();
    // The exec argument here should only be null if this was called from a
    // non-JavaScript language, and this is a JavaScript filter, and the document
    // in question is not associated with the frame. In that case, we're going to

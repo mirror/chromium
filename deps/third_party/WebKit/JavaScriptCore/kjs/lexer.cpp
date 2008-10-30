@@ -38,7 +38,7 @@ using namespace WTF;
 using namespace Unicode;
 
 // we can't specify the namespace in yacc's C output, so do it here
-using namespace KJS;
+using namespace JSC;
 
 #ifndef KDE_USE_FINAL
 #include "grammar.h"
@@ -53,7 +53,7 @@ int kjsyylex(void* lvalp, void* llocp, void* globalData)
     return static_cast<JSGlobalData*>(globalData)->lexer->lex(lvalp, llocp);
 }
 
-namespace KJS {
+namespace JSC {
 
 static bool isDecimalDigit(int);
 
@@ -79,7 +79,7 @@ Lexer::Lexer(JSGlobalData* globalData)
     , m_nextOffset2(0)
     , m_nextOffset3(0)
     , m_globalData(globalData)
-    , m_mainTable(KJS::mainTable)
+    , m_mainTable(JSC::mainTable)
 {
     m_buffer8.reserveCapacity(initialReadBufferCapacity);
     m_buffer16.reserveCapacity(initialReadBufferCapacity);
@@ -92,9 +92,9 @@ Lexer::~Lexer()
     m_mainTable.deleteTable();
 }
 
-void Lexer::setCode(int startingLineNumber, PassRefPtr<SourceProvider> source)
+void Lexer::setCode(const SourceCode& source)
 {
-    yylineno = startingLineNumber;
+    yylineno = source.firstLine();
     m_restrKeyword = false;
     m_delimited = false;
     m_eatNextIdentifier = false;
@@ -102,9 +102,9 @@ void Lexer::setCode(int startingLineNumber, PassRefPtr<SourceProvider> source)
     m_lastToken = -1;
 
     m_position = 0;
-    m_source = source;
-    m_code = m_source->data();
-    m_length = m_source->length();
+    m_source = &source;
+    m_code = source.data();
+    m_length = source.length();
     m_skipLF = false;
     m_skipCR = false;
     m_error = false;
@@ -559,7 +559,7 @@ int Lexer::lex(void* p1, void* p2)
                 token = IDENT;
                 break;
             }
-            token = entry->integerValue;
+            token = entry->lexerValue();
             // Hack for "f = function somename() { ... }"; too hard to get into the grammar.
             m_eatNextIdentifier = token == FUNCTION && m_lastToken == '=';
             if (token == CONTINUE || token == BREAK || token == RETURN || token == THROW)
@@ -567,7 +567,8 @@ int Lexer::lex(void* p1, void* p2)
             break;
         }
         case String:
-            lvalp->string = makeUString(m_buffer16);
+            // Atomize constant strings in case they're later used in property lookup.
+            lvalp->ident = makeIdentifier(m_buffer16);
             token = STRING;
             break;
         case Number:
@@ -893,7 +894,7 @@ void Lexer::clear()
     m_strings.swap(newStrings);
 
     deleteAllValues(m_identifiers);
-    Vector<KJS::Identifier*> newIdentifiers;
+    Vector<JSC::Identifier*> newIdentifiers;
     newIdentifiers.reserveCapacity(initialStringTableCapacity);
     m_identifiers.swap(newIdentifiers);
 
@@ -911,16 +912,9 @@ void Lexer::clear()
 
 Identifier* Lexer::makeIdentifier(const Vector<UChar>& buffer)
 {
-    KJS::Identifier* identifier = new KJS::Identifier(m_globalData, buffer.data(), buffer.size());
+    JSC::Identifier* identifier = new JSC::Identifier(m_globalData, buffer.data(), buffer.size());
     m_identifiers.append(identifier);
     return identifier;
 }
 
-UString* Lexer::makeUString(const Vector<UChar>& buffer)
-{
-    UString* string = new UString(buffer);
-    m_strings.append(string);
-    return string;
-}
-
-} // namespace KJS
+} // namespace JSC

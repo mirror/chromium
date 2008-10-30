@@ -23,16 +23,13 @@
 
 #include "JSObject.h"
 
-namespace KJS {
-
-    class ErrorPrototype;
-    class UString;
+namespace JSC {
 
     class NativeErrorPrototype : public JSObject {
     public:
-        NativeErrorPrototype(ExecState*, ErrorPrototype*, const UString& name, const UString& message);
+        NativeErrorPrototype(ExecState*, PassRefPtr<StructureID>, const UString& name, const UString& message);
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // NativeErrorPrototype_h

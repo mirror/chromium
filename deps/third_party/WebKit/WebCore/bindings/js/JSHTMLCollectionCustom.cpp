@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,7 +31,7 @@
 #include "JSDOMBinding.h"
 #include <wtf/Vector.h>
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -46,7 +46,7 @@ static JSValue* getNamedItems(ExecState* exec, HTMLCollection* impl, const Ident
     if (namedItems.size() == 1)
         return toJS(exec, namedItems[0].get());
 
-    return new (exec) JSNamedNodesCollection(exec->lexicalGlobalObject()->objectPrototype(), namedItems);
+    return new (exec) JSNamedNodesCollection(exec, namedItems);
 }
 
 // HTMLCollections are strange objects, they support both get and call,
@@ -127,25 +127,25 @@ JSValue* toJS(ExecState* exec, HTMLCollection* collection)
     if (!collection)
         return jsNull();
 
-    DOMObject* ret = ScriptInterpreter::getDOMObject(collection);
+    DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), collection);
 
-    if (ret)
-        return ret;
+    if (wrapper)
+        return wrapper;
 
     switch (collection->type()) {
         case HTMLCollection::SelectOptions:
-            ret = new (exec) JSHTMLOptionsCollection(JSHTMLOptionsCollectionPrototype::self(exec), static_cast<HTMLOptionsCollection*>(collection));
+            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLOptionsCollection, collection);
             break;
         case HTMLCollection::DocAll:
-            ret = new (exec) JSHTMLAllCollection(JSHTMLCollectionPrototype::self(exec), static_cast<HTMLCollection*>(collection));
+            typedef HTMLCollection HTMLAllCollection;
+            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLAllCollection, collection);
             break;
         default:
-            ret = new (exec) JSHTMLCollection(JSHTMLCollectionPrototype::self(exec), static_cast<HTMLCollection*>(collection));
+            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLCollection, collection);
             break;
     }
 
-    ScriptInterpreter::putDOMObject(collection, ret);
-    return ret;
+    return wrapper;
 }
 
 } // namespace WebCore

@@ -164,19 +164,19 @@ void RenderSlider::calcPrefWidths()
     setPrefWidthsDirty(false); 
 }
 
-void RenderSlider::setStyle(RenderStyle* newStyle)
+void RenderSlider::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
 {
-    RenderBlock::setStyle(newStyle);
+    RenderBlock::styleDidChange(diff, oldStyle);
     
     if (m_thumb) {
-        RenderStyle* thumbStyle = createThumbStyle(newStyle, m_thumb->renderer()->style());
+        RenderStyle* thumbStyle = createThumbStyle(style(), m_thumb->renderer()->style());
         m_thumb->renderer()->setStyle(thumbStyle);
     }
         
     setReplaced(isInline());
 }
 
-RenderStyle* RenderSlider::createThumbStyle(RenderStyle* parentStyle, RenderStyle* oldStyle)
+RenderStyle* RenderSlider::createThumbStyle(const RenderStyle* parentStyle, const RenderStyle* oldStyle)
 {
     RenderStyle* style;
 
@@ -328,7 +328,7 @@ double RenderSlider::setPositionFromValue(bool inLayout)
 
     setCurrentPosition((int)(factor * trackSize()));
     
-    if (val != oldVal)
+    if (value.isNull() || val != oldVal)
         static_cast<HTMLInputElement*>(node())->setValueFromRenderer(String::number(val));
     
     return val;

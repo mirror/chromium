@@ -26,9 +26,10 @@
 #include "config.h"
 #include "SmallStrings.h"
 
+#include "JSGlobalObject.h"
 #include "JSString.h"
 
-namespace KJS {
+namespace JSC {
 
 class SmallStringsStorage {
 public:
@@ -87,18 +88,25 @@ void SmallStrings::mark()
     }
 }
     
-void SmallStrings::createEmptyString(ExecState* exec)
+void SmallStrings::createEmptyString(JSGlobalData* globalData)
 {
     ASSERT(!m_emptyString);
-    m_emptyString = new (exec) JSString("", JSString::HasOtherOwner);
+    m_emptyString = new (globalData) JSString(globalData, "", JSString::HasOtherOwner);
 }
 
-void SmallStrings::createSingleCharacterString(ExecState* exec, unsigned char character)
+void SmallStrings::createSingleCharacterString(JSGlobalData* globalData, unsigned char character)
 {
     if (!m_storage)
         m_storage.set(new SmallStringsStorage);
     ASSERT(!m_singleCharacterStrings[character]);
-    m_singleCharacterStrings[character] = new (exec) JSString(m_storage->rep(character), JSString::HasOtherOwner);
+    m_singleCharacterStrings[character] = new (globalData) JSString(globalData, m_storage->rep(character), JSString::HasOtherOwner);
+}
+
+UString::Rep* SmallStrings::singleCharacterStringRep(unsigned char character)
+{
+    if (!m_storage)
+        m_storage.set(new SmallStringsStorage);
+    return m_storage->rep(character);
 }
 
 }

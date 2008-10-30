@@ -3,7 +3,7 @@
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
  * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -43,9 +43,9 @@
 #include "Frame.h"
 #include "HTMLNames.h"
 #include "Logging.h"
-#include "NSResolver.h"
 #include "NameNodeList.h"
 #include "NamedAttrMap.h"
+#include "NodeRareData.h"
 #include "ProcessingInstruction.h"
 #include "RenderObject.h"
 #include "ScriptController.h"
@@ -65,27 +65,6 @@
 namespace WebCore {
 
 using namespace HTMLNames;
-
-struct NodeListsNodeData {
-    typedef HashSet<DynamicNodeList*> NodeListSet;
-    NodeListSet m_listsWithCaches;
-
-    DynamicNodeList::Caches m_childNodeListCaches;
-
-    typedef HashMap<String, DynamicNodeList::Caches*> CacheMap;
-    CacheMap m_classNodeListCaches;
-    CacheMap m_nameNodeListCaches;
-
-    ~NodeListsNodeData()
-    {
-        deleteAllValues(m_classNodeListCaches);
-        deleteAllValues(m_nameNodeListCaches);
-    }
-
-    void invalidateCaches();
-    void invalidateCachesThatDependOnAttributes();
-    bool isEmpty() const;
-};
 
 // --------
 
@@ -159,12 +138,11 @@ Node::StyleChange Node::diff( RenderStyle *s1, RenderStyle *s2 )
     return ch;
 }
 
-Node::Node(Document* doc, bool isElement)
+Node::Node(Document* doc, bool isElement, bool isContainer)
     : m_document(doc)
     , m_previous(0)
     , m_next(0)
     , m_renderer(0)
-    , m_tabIndex(0)
     , m_styleChange(NoStyleChange)
     , m_hasId(false)
     , m_hasClass(false)
@@ -172,14 +150,14 @@ Node::Node(Document* doc, bool isElement)
     , m_hasChangedChild(false)
     , m_inDocument(false)
     , m_isLink(false)
-    , m_focused(false)
     , m_active(false)
     , m_hovered(false)
     , m_inActiveChain(false)
     , m_inDetach(false)
     , m_inSubtreeMark(false)
-    , m_tabIndexSetExplicitly(false)
+    , m_hasRareData(false)
     , m_isElement(isElement)
+    , m_isContainer(isContainer)
 {
 #ifndef NDEBUG
     if (shouldIgnoreLeaks)
@@ -196,12 +174,10 @@ void Node::setDocument(Document* doc)
 
     willMoveToNewOwnerDocument();
 
-    {
 #if USE(JSC)
-        KJS::JSLock lock(false);
-        ScriptInterpreter::updateDOMNodeDocument(this, m_document.get(), doc);
+    updateDOMNodeDocument(this, m_document.get(), doc);
 #endif
-    }    
+
     m_document = doc;
 
     didMoveToNewOwnerDocument();
@@ -216,9 +192,19 @@ Node::~Node()
     else
         nodeCounter.decrement();
 #endif
-
-    if (m_nodeLists && m_document)
-        document()->removeNodeListCache();
+    
+    if (!hasRareData())
+        ASSERT(!NodeRareData::rareDataMap().contains(this));
+    else {
+        if (m_document && rareData()->nodeLists())
+            m_document->removeNodeListCache();
+        
+        NodeRareData::NodeRareDataMap& dataMap = NodeRareData::rareDataMap();
+        NodeRareData::NodeRareDataMap::iterator it = dataMap.find(this);
+        ASSERT(it != dataMap.end());
+        delete it->second;
+        dataMap.remove(it);
+    }
 
     if (renderer())
         detach();
@@ -227,6 +213,39 @@ Node::~Node()
         m_previous->setNextSibling(0);
     if (m_next)
         m_next->setPreviousSibling(0);
+}
+
+inline NodeRareData* Node::rareData() const
+{
+    ASSERT(hasRareData());
+    return NodeRareData::rareDataFromMap(this);
+}
+
+NodeRareData* Node::ensureRareData()
+{
+    if (hasRareData())
+        return rareData();
+    
+    ASSERT(!NodeRareData::rareDataMap().contains(this));
+    NodeRareData* data = createRareData();
+    NodeRareData::rareDataMap().set(this, data);
+    m_hasRareData = true;
+    return data;
+}
+    
+NodeRareData* Node::createRareData()
+{
+    return new NodeRareData;
+}
+    
+short Node::tabIndex() const
+{
+    return hasRareData() ? rareData()->tabIndex() : 0;
+}
+    
+void Node::setTabIndexExplicitly(short i)
+{
+    ensureRareData()->setTabIndexExplicitly(i);
 }
 
 String Node::nodeValue() const
@@ -247,27 +266,13 @@ void Node::setNodeValue(const String& /*nodeValue*/, ExceptionCode& ec)
 
 PassRefPtr<NodeList> Node::childNodes()
 {
-    if (!m_nodeLists) {
-        m_nodeLists.set(new NodeListsNodeData);
+    NodeRareData* data = ensureRareData();
+    if (!data->nodeLists()) {
+        data->setNodeLists(std::auto_ptr<NodeListsNodeData>(new NodeListsNodeData));
         document()->addNodeListCache();
     }
 
-    return ChildNodeList::create(this, &m_nodeLists->m_childNodeListCaches);
-}
-
-Node* Node::virtualFirstChild() const
-{
-    return 0;
-}
-
-Node* Node::virtualLastChild() const
-{
-    return 0;
-}
-
-bool Node::virtualHasTagName(const QualifiedName&) const
-{
-    return false;
+    return ChildNodeList::create(this, &data->nodeLists()->m_childNodeListCaches);
 }
 
 Node *Node::lastDescendant() const
@@ -363,7 +368,7 @@ void Node::normalize()
     }
 }
 
-const AtomicString& Node::prefix() const
+const AtomicString& Node::virtualPrefix() const
 {
     // For nodes other than elements and attributes, the prefix is always null
     return nullAtom;
@@ -377,12 +382,12 @@ void Node::setPrefix(const AtomicString& /*prefix*/, ExceptionCode& ec)
     ec = NAMESPACE_ERR;
 }
 
-const AtomicString& Node::localName() const
+const AtomicString& Node::virtualLocalName() const
 {
     return nullAtom;
 }
 
-const AtomicString& Node::namespaceURI() const
+const AtomicString& Node::virtualNamespaceURI() const
 {
     return nullAtom;
 }
@@ -470,15 +475,27 @@ bool Node::canLazyAttach()
 {
     return shadowAncestorNode() == this;
 }
+    
+void Node::setFocus(bool b)
+{ 
+    if (b || hasRareData())
+        ensureRareData()->m_focused = b;
+}
 
+bool Node::rareDataFocused() const
+{
+    ASSERT(hasRareData());
+    return rareData()->m_focused;
+}
+    
 bool Node::isFocusable() const
 {
-    return m_tabIndexSetExplicitly;
+    return hasRareData() && rareData()->tabIndexSetExplicitly();
 }
 
 bool Node::isKeyboardFocusable(KeyboardEvent*) const
 {
-    return isFocusable() && m_tabIndex >= 0;
+    return isFocusable() && tabIndex() >= 0;
 }
 
 bool Node::isMouseFocusable() const
@@ -497,25 +514,28 @@ unsigned Node::nodeIndex() const
 
 void Node::registerDynamicNodeList(DynamicNodeList* list)
 {
-    if (!m_nodeLists) {
-        m_nodeLists.set(new NodeListsNodeData);
+    NodeRareData* data = ensureRareData();
+    if (!data->nodeLists()) {
+        data->setNodeLists(std::auto_ptr<NodeListsNodeData>(new NodeListsNodeData));
         document()->addNodeListCache();
     } else if (!m_document->hasNodeListCaches()) {
         // We haven't been receiving notifications while there were no registered lists, so the cache is invalid now.
-        m_nodeLists->invalidateCaches();
+        data->nodeLists()->invalidateCaches();
     }
 
     if (list->hasOwnCaches())
-        m_nodeLists->m_listsWithCaches.add(list);
+        data->nodeLists()->m_listsWithCaches.add(list);
 }
 
 void Node::unregisterDynamicNodeList(DynamicNodeList* list)
 {
-    ASSERT(m_nodeLists);
+    ASSERT(rareData());
+    ASSERT(rareData()->nodeLists());
     if (list->hasOwnCaches()) {
-        m_nodeLists->m_listsWithCaches.remove(list);
-        if (m_nodeLists->isEmpty()) {
-            m_nodeLists.clear();
+        NodeRareData* data = rareData();
+        data->nodeLists()->m_listsWithCaches.remove(list);
+        if (data->nodeLists()->isEmpty()) {
+            data->clearNodeLists();
             document()->removeNodeListCache();
         }
     }
@@ -523,13 +543,16 @@ void Node::unregisterDynamicNodeList(DynamicNodeList* list)
 
 void Node::notifyLocalNodeListsAttributeChanged()
 {
-    if (!m_nodeLists)
+    if (!hasRareData())
+        return;
+    NodeRareData* data = rareData();
+    if (!data->nodeLists())
         return;
 
-    m_nodeLists->invalidateCachesThatDependOnAttributes();
+    data->nodeLists()->invalidateCachesThatDependOnAttributes();
 
-    if (m_nodeLists->isEmpty()) {
-        m_nodeLists.clear();
+    if (data->nodeLists()->isEmpty()) {
+        data->clearNodeLists();
         document()->removeNodeListCache();
     }
 }
@@ -542,17 +565,20 @@ void Node::notifyNodeListsAttributeChanged()
 
 void Node::notifyLocalNodeListsChildrenChanged()
 {
-    if (!m_nodeLists)
+    if (!hasRareData())
+        return;
+    NodeRareData* data = rareData();
+    if (!data->nodeLists())
         return;
 
-    m_nodeLists->invalidateCaches();
+    data->nodeLists()->invalidateCaches();
 
-    NodeListsNodeData::NodeListSet::iterator end = m_nodeLists->m_listsWithCaches.end();
-    for (NodeListsNodeData::NodeListSet::iterator i = m_nodeLists->m_listsWithCaches.begin(); i != end; ++i)
+    NodeListsNodeData::NodeListSet::iterator end = data->nodeLists()->m_listsWithCaches.end();
+    for (NodeListsNodeData::NodeListSet::iterator i = data->nodeLists()->m_listsWithCaches.begin(); i != end; ++i)
         (*i)->invalidateCache();
 
-    if (m_nodeLists->isEmpty()) {
-        m_nodeLists.clear();
+    if (data->nodeLists()->isEmpty()) {
+        data->clearNodeLists();
         document()->removeNodeListCache();
     }
 }
@@ -561,16 +587,6 @@ void Node::notifyNodeListsChildrenChanged()
 {
     for (Node* n = this; n; n = n->parentNode())
         n->notifyLocalNodeListsChildrenChanged();
-}
-
-unsigned Node::childNodeCount() const
-{
-    return 0;
-}
-
-Node *Node::childNode(unsigned /*index*/) const
-{
-    return 0;
 }
 
 Node *Node::traverseNextNode(const Node *stayWithin) const
@@ -1032,9 +1048,11 @@ void Node::createRendererIfNeeded()
     }
 }
 
-RenderStyle *Node::styleForRenderer(RenderObject *parent)
+RenderStyle* Node::styleForRenderer(RenderObject* parent)
 {
-    RenderStyle *style = parent->style();
+    if (isElementNode())
+        return document()->styleSelector()->styleForElement(static_cast<Element*>(this));
+    RenderStyle* style = parent->style();
     style->ref();
     return style;
 }
@@ -1049,11 +1067,11 @@ RenderObject *Node::createRenderer(RenderArena *arena, RenderStyle *style)
     ASSERT(false);
     return 0;
 }
-
-RenderStyle* Node::renderStyle() const
+    
+RenderStyle* Node::nonRendererRenderStyle() const
 { 
-    return m_renderer ? m_renderer->style() : 0; 
-}
+    return 0; 
+}   
 
 void Node::setRenderStyle(RenderStyle* s)
 {
@@ -1205,12 +1223,13 @@ PassRefPtr<NodeList> Node::getElementsByTagNameNS(const String& namespaceURI, co
 
 PassRefPtr<NodeList> Node::getElementsByName(const String& elementName)
 {
-    if (!m_nodeLists) {
-        m_nodeLists.set(new NodeListsNodeData);
+    NodeRareData* data = ensureRareData();
+    if (!data->nodeLists()) {
+        data->setNodeLists(std::auto_ptr<NodeListsNodeData>(new NodeListsNodeData));
         document()->addNodeListCache();
     }
 
-    pair<NodeListsNodeData::CacheMap::iterator, bool> result = m_nodeLists->m_nameNodeListCaches.add(elementName, 0);
+    pair<NodeListsNodeData::CacheMap::iterator, bool> result = data->nodeLists()->m_nameNodeListCaches.add(elementName, 0);
     if (result.second)
         result.first->second = new DynamicNodeList::Caches;
     
@@ -1219,12 +1238,13 @@ PassRefPtr<NodeList> Node::getElementsByName(const String& elementName)
 
 PassRefPtr<NodeList> Node::getElementsByClassName(const String& classNames)
 {
-    if (!m_nodeLists) {
-        m_nodeLists.set(new NodeListsNodeData);
+    NodeRareData* data = ensureRareData();
+    if (!data->nodeLists()) {
+        data->setNodeLists(std::auto_ptr<NodeListsNodeData>(new NodeListsNodeData));
         document()->addNodeListCache();
     }
 
-    pair<NodeListsNodeData::CacheMap::iterator, bool> result = m_nodeLists->m_classNodeListCaches.add(classNames, 0);
+    pair<NodeListsNodeData::CacheMap::iterator, bool> result = data->nodeLists()->m_classNodeListCaches.add(classNames, 0);
     if (result.second)
         result.first->second = new DynamicNodeList::Caches;
     
@@ -1271,74 +1291,12 @@ public:
     }
 };
 
-class ResolveNamespaceFunctor {
-public:
-    ResolveNamespaceFunctor(NSResolver* resolver, ExceptionCode& ec, ExceptionContext* exec)
-        : m_resolver(resolver)
-        , m_exceptionCode(ec)
-        , m_exec(exec)
-    {
-    }
-
-    bool operator()(CSSSelector* selector)
-    {
-        if (selector->hasTag() && selector->m_tag.prefix() != nullAtom && selector->m_tag.prefix() != starAtom) {
-            String resolvedNamespaceURI = m_resolver->lookupNamespaceURI(m_exec, selector->m_tag.prefix());
-            if (m_exec && m_exec->hadException())
-                return true;
-            if (resolvedNamespaceURI.isEmpty()) {
-                m_exceptionCode = NAMESPACE_ERR;
-                return true;
-            }
-            QualifiedName newQualifiedName(selector->m_tag.prefix(), selector->m_tag.localName(), resolvedNamespaceURI);
-            selector->m_tag = newQualifiedName;
-        }
-        if (selector->hasAttribute() && selector->m_attr.prefix() != nullAtom && selector->m_attr.prefix() != starAtom) {
-            String resolvedNamespaceURI = m_resolver->lookupNamespaceURI(m_exec, selector->m_attr.prefix());
-            if (m_exec && m_exec->hadException())
-                return true;
-            if (resolvedNamespaceURI.isEmpty()) {
-                m_exceptionCode = NAMESPACE_ERR;
-                return true;
-            }
-            QualifiedName newQualifiedName(selector->m_attr.prefix(), selector->m_attr.localName(), resolvedNamespaceURI);
-            selector->m_attr = newQualifiedName;
-        }
-
-        return false;
-    }
-
-private:
-    NSResolver* m_resolver;
-    ExceptionCode& m_exceptionCode;
-    ExceptionContext* m_exec;
-};
-
 static bool selectorNeedsNamespaceResolution(CSSSelector* currentSelector)
 {
     SelectorNeedsNamespaceResolutionFunctor functor;
     return forEachSelector(functor, currentSelector);
 }
-
-static bool resolveNamespacesForSelector(CSSSelector* currentSelector, NSResolver* resolver, ExceptionCode& ec, ExceptionContext* exec)
-{
-    ResolveNamespaceFunctor functor(resolver, ec, exec);
-    return forEachSelector(functor, currentSelector);
-}
-
 PassRefPtr<Element> Node::querySelector(const String& selectors, ExceptionCode& ec)
-{
-    ExceptionContext context(this);
-    return querySelector(selectors, 0, ec, &context);
-}
-
-PassRefPtr<NodeList> Node::querySelectorAll(const String& selectors, ExceptionCode& ec)
-{
-    ExceptionContext context(this);
-    return querySelectorAll(selectors, 0, ec, &context);
-}
-
-PassRefPtr<Element> Node::querySelector(const String& selectors, NSResolver* resolver, ExceptionCode& ec, ExceptionContext* exec)
 {
     if (selectors.isEmpty()) {
         ec = SYNTAX_ERR;
@@ -1346,43 +1304,29 @@ PassRefPtr<Element> Node::querySelector(const String& selectors, NSResolver* res
     }
     bool strictParsing = !document()->inCompatMode();
     CSSParser p(strictParsing);
-    if (resolver) {
-        String defaultNamespace = resolver->lookupNamespaceURI(exec, String());
-        if (exec && exec->hadException())
-            return 0;
-        if (!defaultNamespace.isEmpty())
-            p.m_defaultNamespace = defaultNamespace;
-    }
 
-    std::auto_ptr<CSSSelector> querySelector = p.parseSelector(selectors);
+    std::auto_ptr<CSSSelector> querySelector = p.parseSelector(selectors, document());
     if (!querySelector.get()) {
         ec = SYNTAX_ERR;
         return 0;
     }
 
-    if (resolver) {
-        if (resolveNamespacesForSelector(querySelector.get(), resolver, ec, exec))
-            return 0;
-    } else {
-        // No NSResolver was passed, so throw a NAMESPACE_ERR if the selector includes any 
-        // namespace prefixes.
-        if (selectorNeedsNamespaceResolution(querySelector.get())) {
-            ec = NAMESPACE_ERR;
-            return 0;
-        }
-    }
-
-    // FIXME: we could also optimize for the the [id="foo"] case
-    if (strictParsing && inDocument() && !querySelector->next() && querySelector->m_match == CSSSelector::Id
-            && !querySelector->hasTag() && !querySelector->m_tagHistory && !querySelector->m_simpleSelector) {
-        ASSERT(querySelector->m_attr == idAttr);
-        Element* element = document()->getElementById(querySelector->m_value);
-        if (element && (isDocumentNode() || element->isDescendantOf(this)))
-            return element;
+    // throw a NAMESPACE_ERR if the selector includes any namespace prefixes.
+    if (selectorNeedsNamespaceResolution(querySelector.get())) {
+        ec = NAMESPACE_ERR;
         return 0;
     }
 
     CSSStyleSelector::SelectorChecker selectorChecker(document(), strictParsing);
+
+    // FIXME: we could also optimize for the the [id="foo"] case
+    if (strictParsing && querySelector->m_match == CSSSelector::Id && inDocument() && !querySelector->next()) {
+        ASSERT(querySelector->m_attr == idAttr);
+        Element* element = document()->getElementById(querySelector->m_value);
+        if (element && (isDocumentNode() || element->isDescendantOf(this)) && selectorChecker.checkSelector(querySelector.get(), element))
+            return element;
+        return 0;
+    }
 
     // FIXME: We can speed this up by implementing caching similar to the one use by getElementById
     for (Node* n = firstChild(); n; n = n->traverseNextNode(this)) {
@@ -1398,7 +1342,7 @@ PassRefPtr<Element> Node::querySelector(const String& selectors, NSResolver* res
     return 0;
 }
 
-PassRefPtr<NodeList> Node::querySelectorAll(const String& selectors, NSResolver* resolver, ExceptionCode& ec, ExceptionContext* exec)
+PassRefPtr<NodeList> Node::querySelectorAll(const String& selectors, ExceptionCode& ec)
 {
     if (selectors.isEmpty()) {
         ec = SYNTAX_ERR;
@@ -1406,31 +1350,18 @@ PassRefPtr<NodeList> Node::querySelectorAll(const String& selectors, NSResolver*
     }
     bool strictParsing = !document()->inCompatMode();
     CSSParser p(strictParsing);
-    if (resolver) {
-        String defaultNamespace = resolver->lookupNamespaceURI(exec, String());
-        if (exec && exec->hadException())
-            return false;
-        if (!defaultNamespace.isEmpty())
-            p.m_defaultNamespace = defaultNamespace;
-    }
 
-    std::auto_ptr<CSSSelector> querySelector = p.parseSelector(selectors);
+    std::auto_ptr<CSSSelector> querySelector = p.parseSelector(selectors, document());
 
     if (!querySelector.get()) {
         ec = SYNTAX_ERR;
         return 0;
     }
 
-    if (resolver) {
-        if (resolveNamespacesForSelector(querySelector.get(), resolver, ec, exec))
-            return 0;
-    } else {
-        // No NSResolver was passed, so throw a NAMESPACE_ERR if the selector includes any 
-        // namespace prefixes.
-        if (selectorNeedsNamespaceResolution(querySelector.get())) {
-            ec = NAMESPACE_ERR;
-            return 0;
-        }
+    // Throw a NAMESPACE_ERR if the selector includes any namespace prefixes.
+    if (selectorNeedsNamespaceResolution(querySelector.get())) {
+        ec = NAMESPACE_ERR;
+        return 0;
     }
 
     return createSelectorNodeList(this, querySelector.get());
@@ -1440,16 +1371,6 @@ Document *Node::ownerDocument() const
 {
     Document *doc = document();
     return doc == this ? 0 : doc;
-}
-
-bool Node::hasAttributes() const
-{
-    return false;
-}
-
-NamedAttrMap* Node::attributes() const
-{
-    return 0;
 }
 
 KURL Node::baseURI() const

@@ -66,6 +66,7 @@
 #import <WebCore/LegacyWebArchive.h>
 #import <WebCore/Page.h>
 #import <WebCore/PluginData.h>
+#import <WebCore/RenderPart.h>
 #import <WebCore/RenderView.h>
 #import <WebCore/RenderLayer.h>
 #import <WebCore/ReplaceSelectionCommand.h>
@@ -83,9 +84,9 @@ using namespace std;
 using namespace WebCore;
 using namespace HTMLNames;
 
-using KJS::JSGlobalObject;
-using KJS::JSLock;
-using KJS::JSValue;
+using JSC::JSGlobalObject;
+using JSC::JSLock;
+using JSC::JSValue;
 
 /*
 Here is the current behavior matrix for four types of navigations:
@@ -552,13 +553,16 @@ static inline WebDataSource *dataSource(DocumentLoader* loader)
     return [[[NSString alloc] initWithCharactersNoCopy:buf length:length freeWhenDone:YES] autorelease];
 }
 
-- (void)_drawRect:(NSRect)rect
+- (void)_drawRect:(NSRect)rect contentsOnly:(BOOL)contentsOnly
 {
     PlatformGraphicsContext* platformContext = static_cast<PlatformGraphicsContext*>([[NSGraphicsContext currentContext] graphicsPort]);
     ASSERT([[NSGraphicsContext currentContext] isFlipped]);
     GraphicsContext context(platformContext);
     
-    _private->coreFrame->paint(&context, enclosingIntRect(rect));
+    if (contentsOnly)
+        _private->coreFrame->view()->paintContents(&context, enclosingIntRect(rect));
+    else
+        _private->coreFrame->view()->paint(&context, enclosingIntRect(rect));
 }
 
 // Used by pagination code called from AppKit when a standalone web page is printed.
@@ -604,6 +608,19 @@ static inline WebDataSource *dataSource(DocumentLoader* loader)
     }
     
     return pages;
+}
+
+- (BOOL)_getVisibleRect:(NSRect*)rect;
+{
+    ASSERT_ARG(rect, rect);
+    if (RenderPart* ownerRenderer = _private->coreFrame->ownerRenderer()) {
+        if (ownerRenderer->needsLayout())
+            return NO;
+        *rect = ownerRenderer->absoluteClippedOverflowRect();
+        return YES;
+    }
+
+    return NO;
 }
 
 - (NSString *)_stringByEvaluatingJavaScriptFromString:(NSString *)string
@@ -964,7 +981,7 @@ static inline WebDataSource *dataSource(DocumentLoader* loader)
     if (!view)
         return;
     // FIXME: These are fake modifier keys here, but they should be real ones instead.
-    PlatformMouseEvent event(IntPoint(windowLoc), globalPoint(windowLoc, [view->getView() window]),
+    PlatformMouseEvent event(IntPoint(windowLoc), globalPoint(windowLoc, [view->platformWidget() window]),
         LeftButton, MouseEventMoved, 0, false, false, false, false, currentTime());
     _private->coreFrame->eventHandler()->dragSourceMovedTo(event);
 }
@@ -977,7 +994,7 @@ static inline WebDataSource *dataSource(DocumentLoader* loader)
     if (!view)
         return;
     // FIXME: These are fake modifier keys here, but they should be real ones instead.
-    PlatformMouseEvent event(IntPoint(windowLoc), globalPoint(windowLoc, [view->getView() window]),
+    PlatformMouseEvent event(IntPoint(windowLoc), globalPoint(windowLoc, [view->platformWidget() window]),
         LeftButton, MouseEventMoved, 0, false, false, false, false, currentTime());
     _private->coreFrame->eventHandler()->dragSourceEndedAt(event, (DragOperation)operation);
 }

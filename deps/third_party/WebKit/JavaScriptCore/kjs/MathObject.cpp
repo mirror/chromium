@@ -27,7 +27,7 @@
 #include <wtf/Assertions.h>
 #include <wtf/MathExtras.h>
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(MathObject);
 
@@ -54,7 +54,7 @@ static JSValue* mathProtoFuncTan(ExecState*, JSObject*, JSValue*, const ArgList&
 
 #include "MathObject.lut.h"
 
-namespace KJS {
+namespace JSC {
 
 // ------------------------------ MathObject --------------------------------
 
@@ -83,8 +83,8 @@ const ClassInfo MathObject::info = { "Math", 0, 0, ExecState::mathTable };
 @end
 */
 
-MathObject::MathObject(ExecState* exec, ObjectPrototype* objectPrototype)
-    : JSObject(objectPrototype)
+MathObject::MathObject(ExecState* exec, PassRefPtr<StructureID> structure)
+    : JSObject(structure)
 {
     putDirect(Identifier(exec, "E"), jsNumber(exec, exp(1.0)), DontDelete | DontEnum | ReadOnly);
     putDirect(Identifier(exec, "LN2"), jsNumber(exec, log(2.0)), DontDelete | DontEnum | ReadOnly);
@@ -105,8 +105,8 @@ bool MathObject::getOwnPropertySlot(ExecState* exec, const Identifier& propertyN
     if (!entry)
         return JSObject::getOwnPropertySlot(exec, propertyName, slot);
 
-    ASSERT(entry->attributes & Function);
-    slot.setStaticEntry(this, entry, staticFunctionGetter);
+    ASSERT(entry->attributes() & Function);
+    setUpStaticFunctionSlot(exec, entry, this, propertyName, slot);
     return true;
 }
 
@@ -114,8 +114,7 @@ bool MathObject::getOwnPropertySlot(ExecState* exec, const Identifier& propertyN
 
 JSValue* mathProtoFuncAbs(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
 {
-    double arg = args.at(exec, 0)->toNumber(exec);
-    return signbit(arg) ? jsNumber(exec, -arg) : jsNumber(exec, arg);
+    return jsNumber(exec, fabs(args.at(exec, 0)->toNumber(exec)));
 }
 
 JSValue* mathProtoFuncACos(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
@@ -140,10 +139,7 @@ JSValue* mathProtoFuncATan2(ExecState* exec, JSObject*, JSValue*, const ArgList&
 
 JSValue* mathProtoFuncCeil(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
 {
-    double arg = args.at(exec, 0)->toNumber(exec);
-    if (signbit(arg) && arg > -1.0)
-        return jsNumber(exec, -0.0);
-    return jsNumber(exec, ceil(arg));
+    return jsNumber(exec, ceil(args.at(exec, 0)->toNumber(exec)));
 }
 
 JSValue* mathProtoFuncCos(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
@@ -158,10 +154,7 @@ JSValue* mathProtoFuncExp(ExecState* exec, JSObject*, JSValue*, const ArgList& a
 
 JSValue* mathProtoFuncFloor(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
 {
-    double arg = args.at(exec, 0)->toNumber(exec);
-    if (signbit(arg) && arg == 0.0)
-        return jsNumber(exec, -0.0);
-    return jsNumber(exec, floor(arg));
+    return jsNumber(exec, floor(args.at(exec, 0)->toNumber(exec)));
 }
 
 JSValue* mathProtoFuncLog(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
@@ -251,4 +244,4 @@ JSValue* mathProtoFuncTan(ExecState* exec, JSObject*, JSValue*, const ArgList& a
     return jsNumber(exec, tan(args.at(exec, 0)->toNumber(exec)));
 }
 
-} // namespace KJS
+} // namespace JSC

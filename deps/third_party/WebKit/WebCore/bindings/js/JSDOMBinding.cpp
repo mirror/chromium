@@ -40,8 +40,10 @@
 #include "JSRangeException.h"
 #include "JSXMLHttpRequestException.h"
 #include "KURL.h"
+#include "MessagePort.h"
 #include "RangeException.h"
 #include "ScriptController.h"
+#include "XMLHttpRequest.h"
 #include "XMLHttpRequestException.h"
 #include <kjs/PrototypeFunction.h>
 
@@ -55,13 +57,17 @@
 #include "XPathException.h"
 #endif
 
-using namespace KJS;
+#if ENABLE(WORKERS)
+#include <wtf/ThreadSpecific.h>
+using namespace WTF;
+#endif
+
+using namespace JSC;
 
 namespace WebCore {
 
 using namespace HTMLNames;
 
-typedef HashMap<void*, DOMObject*> DOMObjectMap;
 typedef Document::JSWrapperCache JSWrapperCache;
 
 // For debugging, keep a set of wrappers currently registered, and check that
@@ -90,8 +96,13 @@ static inline void removeWrappers(const JSWrapperCache&)
 
 static HashSet<DOMObject*>& wrapperSet()
 {
+#if ENABLE(WORKERS)
+    static ThreadSpecific<HashSet<DOMObject*> > staticWrapperSet;
+    return *staticWrapperSet;
+#else
     static HashSet<DOMObject*> staticWrapperSet;
     return staticWrapperSet;
+#endif
 }
 
 static void addWrapper(DOMObject* wrapper)
@@ -121,62 +132,86 @@ DOMObject::~DOMObject()
 
 #endif
 
-static DOMObjectMap& domObjects()
-{ 
-    // Don't use malloc here. Calling malloc from a mark function can deadlock.
-    static DOMObjectMap staticDOMObjects;
-    return staticDOMObjects;
-}
+class DOMObjectWrapperMap : public JSGlobalData::ClientData {
+public:
+    static DOMObjectWrapperMap& mapFor(JSGlobalData& globalData)
+    {
+        JSGlobalData::ClientData* clientData = globalData.clientData;
+        if (!clientData) {
+            clientData = new DOMObjectWrapperMap;
+            globalData.clientData = clientData;
+        }
+        return *static_cast<DOMObjectWrapperMap*>(clientData);
+    }
 
-DOMObject* ScriptInterpreter::getDOMObject(void* objectHandle) 
+    DOMObject* get(void* objectHandle)
+    {
+        return m_map.get(objectHandle);
+    }
+
+    void set(void* objectHandle, DOMObject* wrapper)
+    {
+        addWrapper(wrapper);
+        m_map.set(objectHandle, wrapper);
+    }
+
+    void remove(void* objectHandle)
+    {
+        removeWrapper(m_map.take(objectHandle));
+    }
+
+private:
+    HashMap<void*, DOMObject*> m_map;
+};
+
+DOMObject* getCachedDOMObjectWrapper(JSGlobalData& globalData, void* objectHandle) 
 {
-    return domObjects().get(objectHandle);
+    return DOMObjectWrapperMap::mapFor(globalData).get(objectHandle);
 }
 
-void ScriptInterpreter::putDOMObject(void* objectHandle, DOMObject* wrapper) 
+void cacheDOMObjectWrapper(JSGlobalData& globalData, void* objectHandle, DOMObject* wrapper) 
 {
-    addWrapper(wrapper);
-    domObjects().set(objectHandle, wrapper);
+    DOMObjectWrapperMap::mapFor(globalData).set(objectHandle, wrapper);
 }
 
-void ScriptInterpreter::forgetDOMObject(void* objectHandle)
+void forgetDOMObject(JSGlobalData& globalData, void* objectHandle)
 {
-    removeWrapper(domObjects().take(objectHandle));
+    DOMObjectWrapperMap::mapFor(globalData).remove(objectHandle);
 }
 
-JSNode* ScriptInterpreter::getDOMNodeForDocument(Document* document, WebCore::Node* node)
+JSNode* getCachedDOMNodeWrapper(Document* document, Node* node)
 {
     if (!document)
-        return static_cast<JSNode*>(domObjects().get(node));
+        return static_cast<JSNode*>(DOMObjectWrapperMap::mapFor(*JSDOMWindow::commonJSGlobalData()).get(node));
     return document->wrapperCache().get(node);
 }
 
-void ScriptInterpreter::forgetDOMNodeForDocument(Document* document, WebCore::Node* node)
+void forgetDOMNode(Document* document, Node* node)
 {
     if (!document) {
-        removeWrapper(domObjects().take(node));
+        DOMObjectWrapperMap::mapFor(*JSDOMWindow::commonJSGlobalData()).remove(node);
         return;
     }
     removeWrapper(document->wrapperCache().take(node));
 }
 
-void ScriptInterpreter::putDOMNodeForDocument(Document* document, WebCore::Node* node, JSNode* wrapper)
+void cacheDOMNodeWrapper(Document* document, Node* node, JSNode* wrapper)
 {
-    addWrapper(wrapper);
     if (!document) {
-        domObjects().set(node, wrapper);
+        DOMObjectWrapperMap::mapFor(*JSDOMWindow::commonJSGlobalData()).set(node, wrapper);
         return;
     }
+    addWrapper(wrapper);
     document->wrapperCache().set(node, wrapper);
 }
 
-void ScriptInterpreter::forgetAllDOMNodesForDocument(Document* document)
+void forgetAllDOMNodesForDocument(Document* document)
 {
     ASSERT(document);
     removeWrappers(document->wrapperCache());
 }
 
-void ScriptInterpreter::markDOMNodesForDocument(Document* doc)
+void markDOMNodesForDocument(Document* doc)
 {
     // If a node's JS wrapper holds custom properties, those properties must
     // persist every time the node is fetched from the DOM. So, we keep JS
@@ -186,34 +221,63 @@ void ScriptInterpreter::markDOMNodesForDocument(Document* doc)
     JSWrapperCache::iterator nodeEnd = nodeDict.end();
     for (JSWrapperCache::iterator nodeIt = nodeDict.begin(); nodeIt != nodeEnd; ++nodeIt) {
         JSNode* jsNode = nodeIt->second;
-        WebCore::Node* node = jsNode->impl();
+        Node* node = jsNode->impl();
 
         if (jsNode->marked())
             continue;
 
         // No need to preserve a wrapper that has no custom properties or is no
         // longer fetchable through the DOM.
-        if (!jsNode->hasCustomProperties() || !node->inDocument())
+        if (!jsNode->hasCustomProperties() || !node->inDocument()) {
             //... unless the wrapper wraps a loading image, since the "new Image"
             // syntax allows an orphan image wrapper to be the last reference
             // to a loading image, whose load event might have important side-effects.
             if (!node->hasTagName(imgTag) || static_cast<HTMLImageElement*>(node)->haveFiredLoadEvent())
                 continue;
+        }
 
         jsNode->mark();
     }
 }
 
-void ScriptInterpreter::updateDOMNodeDocument(WebCore::Node* node, Document* oldDoc, Document* newDoc)
+void markActiveObjectsForDocument(JSGlobalData& globalData, Document* doc)
 {
-    ASSERT(oldDoc != newDoc);
-    JSNode* wrapper = getDOMNodeForDocument(oldDoc, node);
-    if (wrapper) {
-        removeWrapper(wrapper);
-        putDOMNodeForDocument(newDoc, node, wrapper);
-        forgetDOMNodeForDocument(oldDoc, node);
-        addWrapper(wrapper);
+    // If an element has pending activity that may result in listeners being called
+    // (e.g. an XMLHttpRequest), we need to keep all JS wrappers alive.
+
+    const HashSet<XMLHttpRequest*>& xmlHttpRequests = doc->xmlHttpRequests();
+    HashSet<XMLHttpRequest*>::const_iterator requestsEnd = xmlHttpRequests.end();
+    for (HashSet<XMLHttpRequest*>::const_iterator iter = xmlHttpRequests.begin(); iter != requestsEnd; ++iter) {
+        if ((*iter)->hasPendingActivity()) {
+            DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, *iter);
+            // An object with pending activity must have a wrapper to mark its listeners, so no null check.
+            if (!wrapper->marked())
+                wrapper->mark();
+        }
     }
+
+    const HashSet<MessagePort*>& messagePorts = doc->messagePorts();
+    HashSet<MessagePort*>::const_iterator portsEnd = messagePorts.end();
+    for (HashSet<MessagePort*>::const_iterator iter = messagePorts.begin(); iter != portsEnd; ++iter) {
+        if ((*iter)->hasPendingActivity()) {
+            DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, *iter);
+            // An object with pending activity must have a wrapper to mark its listeners, so no null check.
+            if (!wrapper->marked())
+                wrapper->mark();
+        }
+    }
+}
+
+void updateDOMNodeDocument(Node* node, Document* oldDocument, Document* newDocument)
+{
+    ASSERT(oldDocument != newDocument);
+    JSNode* wrapper = getCachedDOMNodeWrapper(oldDocument, node);
+    if (!wrapper)
+        return;
+    removeWrapper(wrapper);
+    cacheDOMNodeWrapper(newDocument, node, wrapper);
+    forgetDOMNode(oldDocument, node);
+    addWrapper(wrapper);
 }
 
 JSValue* jsStringOrNull(ExecState* exec, const String& s)
@@ -223,7 +287,7 @@ JSValue* jsStringOrNull(ExecState* exec, const String& s)
     return jsString(exec, s);
 }
 
-JSValue* jsOwnedStringOrNull(ExecState* exec, const KJS::UString& s)
+JSValue* jsOwnedStringOrNull(ExecState* exec, const UString& s)
 {
     if (s.isNull())
         return jsNull();
@@ -346,12 +410,6 @@ void printErrorMessageForFrame(Frame* frame, const String& message)
         window->printErrorMessage(message);
 }
 
-JSValue* nonCachingStaticFunctionGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
-{
-    const HashEntry* entry = slot.staticEntry();
-    return new (exec) PrototypeFunction(exec, entry->length, propertyName, entry->functionValue);
-}
-
 JSValue* objectToStringFunctionGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot&)
 {
     return new (exec) PrototypeFunction(exec, 0, propertyName, objectProtoFuncToString);
@@ -370,6 +428,32 @@ ExecState* execStateFromNode(Node* node)
     if (!frame->script()->isEnabled())
         return 0;
     return frame->script()->globalObject()->globalExec();
+}
+
+StructureID* getCachedDOMStructure(ExecState* exec, const ClassInfo* classInfo)
+{
+    JSDOMStructureMap& structures = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->structures();
+    return structures.get(classInfo).get();
+}
+
+StructureID* cacheDOMStructure(ExecState* exec, PassRefPtr<StructureID> structureID, const ClassInfo* classInfo)
+{
+    JSDOMStructureMap& structures = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->structures();
+    ASSERT(!structures.contains(classInfo));
+    return structures.set(classInfo, structureID).first->second.get();
+}
+
+JSObject* getCachedDOMConstructor(ExecState* exec, const ClassInfo* classInfo)
+{
+    JSDOMConstructorMap& constructors = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->constructors();
+    return constructors.get(classInfo);
+}
+
+void cacheDOMConstructor(ExecState* exec, const ClassInfo* classInfo, JSObject* constructor)
+{
+    JSDOMConstructorMap& constructors = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->constructors();
+    ASSERT(!constructors.contains(classInfo));
+    constructors.set(classInfo, constructor);
 }
 
 } // namespace WebCore

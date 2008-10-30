@@ -33,7 +33,7 @@
 #include <kjs/identifier.h>
 #endif
 
-#if PLATFORM(CF)
+#if PLATFORM(CF) || (PLATFORM(QT) && PLATFORM(DARWIN))
 typedef const struct __CFString * CFStringRef;
 #endif
 
@@ -59,8 +59,8 @@ public:
     String(const UChar*, unsigned length);
     String(const UChar*); // Specifically for null terminated UTF-16
 #if USE(JSC)
-    String(const KJS::Identifier&);
-    String(const KJS::UString&);
+    String(const JSC::Identifier&);
+    String(const JSC::UString&);
 #endif
     String(const char*);
     String(const char*, unsigned length);
@@ -78,7 +78,7 @@ public:
     static String adopt(Vector<UChar>& vector) { return StringImpl::adopt(vector); }
 
 #if USE(JSC)
-    operator KJS::UString() const;
+    operator JSC::UString() const;
 #endif
 
     unsigned length() const;
@@ -164,8 +164,7 @@ public:
     uint64_t toUInt64(bool* ok = 0) const;
     double toDouble(bool* ok = 0) const;
     float toFloat(bool* ok = 0) const;
-    Length* toLengthArray(int& len) const;
-    Length* toCoordsArray(int& len) const;
+
     bool percentage(int& percentage) const;
 
     // Makes a deep copy. Helpful only if you need to use a String on another thread.
@@ -178,7 +177,7 @@ public:
 
     StringImpl* impl() const { return m_impl.get(); }
 
-#if PLATFORM(CF)
+#if PLATFORM(CF) || (PLATFORM(QT) && PLATFORM(DARWIN))
     String(CFStringRef);
     CFStringRef createCFString() const;
 #endif
@@ -267,8 +266,6 @@ float charactersToFloat(const UChar*, size_t, bool* ok = 0);
 int find(const UChar*, size_t, UChar, int startPosition = 0);
 int reverseFind(const UChar*, size_t, UChar, int startPosition = -1);
 
-void append(Vector<UChar>&, const String&);
-
 #ifdef __OBJC__
 // This is for situations in WebKit where the long standing behavior has been
 // "nil if empty", so we try to maintain longstanding behavior for the sake of
@@ -316,6 +313,28 @@ inline void append(Vector<UChar>& vector, const String& string)
 {
     vector.append(string.characters(), string.length());
 }
+
+inline void appendNumber(Vector<UChar>& vector, unsigned char number)
+{
+    int numberLength = number > 99 ? 3 : (number > 9 ? 2 : 1);
+    size_t vectorSize = vector.size();
+    vector.grow(vectorSize + numberLength);
+
+    switch (numberLength) {
+    case 3:
+        vector[vectorSize + 2] = number % 10 + '0';
+        number /= 10;
+
+    case 2:
+        vector[vectorSize + 1] = number % 10 + '0';
+        number /= 10;
+
+    case 1:
+        vector[vectorSize] = number % 10 + '0';
+    }
+}
+
+
 
 PassRefPtr<SharedBuffer> utf8Buffer(const String&);
 

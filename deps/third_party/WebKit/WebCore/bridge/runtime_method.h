@@ -28,14 +28,22 @@
 
 #include "runtime.h"
 #include <kjs/InternalFunction.h>
+#include <kjs/JSGlobalObject.h>
 #include <wtf/OwnPtr.h>
 
-namespace KJS {
+namespace JSC {
 
 class RuntimeMethod : public InternalFunction {
 public:
     RuntimeMethod(ExecState*, const Identifier& name, Bindings::MethodList&);
     Bindings::MethodList* methods() const { return _methodList.get(); }
+
+    static const ClassInfo s_info;
+
+    static FunctionPrototype* createPrototype(ExecState* exec)
+    {
+        return exec->lexicalGlobalObject()->functionPrototype();
+    }
 
 private:
     static JSValue* lengthGetter(ExecState*, const Identifier&, const PropertySlot&);
@@ -45,6 +53,6 @@ private:
     OwnPtr<Bindings::MethodList> _methodList;
 };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif

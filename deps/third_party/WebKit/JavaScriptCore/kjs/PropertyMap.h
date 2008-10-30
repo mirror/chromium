@@ -23,25 +23,32 @@
 
 #include "PropertySlot.h"
 #include "identifier.h"
+#include <wtf/OwnArrayPtr.h>
 #include <wtf/NotFound.h>
 
-namespace KJS {
+#ifndef NDEBUG
+#define DUMP_PROPERTYMAP_STATS 0
+#else
+#define DUMP_PROPERTYMAP_STATS 0
+#endif
+
+namespace JSC {
 
     class JSObject;
     class JSValue;
     class PropertyNameArray;
-    struct PropertyMapEntry;
-    struct PropertyMapHashTable;
+
+    typedef JSValue** PropertyStorage;
 
     struct PropertyMapEntry {
         UString::Rep* key;
-        JSValue* value;
+        unsigned offset;
         unsigned attributes;
         unsigned index;
 
-        PropertyMapEntry(UString::Rep* k, JSValue* v, int a)
+        PropertyMapEntry(UString::Rep* k, int a)
             : key(k)
-            , value(v)
+            , offset(0)
             , attributes(a)
             , index(0)
         {
@@ -80,78 +87,91 @@ namespace KJS {
         }
     };
 
-    class PropertyMap : Noncopyable {
+    class PropertyMap {
     public:
         PropertyMap();
         ~PropertyMap();
 
-        bool isEmpty() { return !m_usingTable & !m_singleEntryKey; }
+        PropertyMap& operator=(const PropertyMap&);
 
-        void put(const Identifier& propertyName, JSValue*, unsigned attributes, bool checkReadOnly, JSObject* slotBase, PutPropertySlot&);
-        void remove(const Identifier& propertyName);
-        JSValue* get(const Identifier& propertyName) const;
-        JSValue* get(const Identifier& propertyName, unsigned& attributes) const;
-        JSValue** getLocation(const Identifier& propertyName);
-        JSValue** getLocation(const Identifier& propertyName, bool& isWriteable);
-        
-        JSValue* getOffset(size_t offset)
-        {
-            ASSERT(m_usingTable);
-            return reinterpret_cast<JSValue**>(m_u.table->entryIndices)[offset];
-        }
-        void putOffset(size_t offset, JSValue* v)
-        {
-            ASSERT(m_usingTable);
-            reinterpret_cast<JSValue**>(m_u.table->entryIndices)[offset] = v;
-        }
+        size_t get(const Identifier& propertyName);
+        size_t get(const Identifier& propertyName, unsigned& attributes);
+        size_t put(const Identifier& propertyName, unsigned attributes);
+        size_t remove(const Identifier& propertyName);
 
-        size_t offsetForLocation(JSValue** location) { return m_usingTable ? offsetForTableLocation(location) : WTF::notFound; }
-
-        void mark() const;
         void getEnumerablePropertyNames(PropertyNameArray&) const;
 
-        bool hasGetterSetterProperties() const { return m_getterSetterFlag; }
-        void setHasGetterSetterProperties(bool f) { m_getterSetterFlag = f; }
+        bool isEmpty() { return !m_table; }
+        unsigned storageSize() const { return m_table ? m_table->keyCount + m_deletedOffsets.size() : 0; }
+
+        static const unsigned emptyEntryIndex = 0;
 
     private:
         typedef PropertyMapEntry Entry;
         typedef PropertyMapHashTable Table;
 
-        static bool keysMatch(const UString::Rep*, const UString::Rep*);
         void expand();
         void rehash();
         void rehash(unsigned newTableSize);
         void createTable();
-        
+
         void insert(const Entry&);
-        
-        size_t offsetForTableLocation(JSValue** location)
-        {
-            ASSERT(m_usingTable);
-            return location - reinterpret_cast<JSValue**>(m_u.table->entryIndices);
-        }
 
         void checkConsistency();
-        
-        UString::Rep* m_singleEntryKey;
-        union {
-            JSValue* singleEntryValue;
-            Table* table;
-        } m_u;
 
-        short m_singleEntryAttributes;
-        bool m_getterSetterFlag : 1;
-        bool m_usingTable : 1;
+        Table* m_table;
+        Vector<unsigned> m_deletedOffsets;
     };
 
     inline PropertyMap::PropertyMap() 
-        : m_singleEntryKey(0)
-        , m_getterSetterFlag(false)
-        , m_usingTable(false)
-
+        : m_table(0)
     {
     }
 
-} // namespace KJS
+    inline size_t PropertyMap::get(const Identifier& propertyName)
+    {
+        ASSERT(!propertyName.isNull());
+
+        if (!m_table)
+            return WTF::notFound;
+
+        UString::Rep* rep = propertyName._ustring.rep();
+
+        unsigned i = rep->computedHash();
+
+#if DUMP_PROPERTYMAP_STATS
+        ++numProbes;
+#endif
+
+        unsigned entryIndex = m_table->entryIndices[i & m_table->sizeMask];
+        if (entryIndex == emptyEntryIndex)
+            return WTF::notFound;
+
+        if (rep == m_table->entries()[entryIndex - 1].key)
+            return m_table->entries()[entryIndex - 1].offset;
+
+#if DUMP_PROPERTYMAP_STATS
+        ++numCollisions;
+#endif
+
+        unsigned k = 1 | WTF::doubleHash(rep->computedHash());
+
+        while (1) {
+            i += k;
+
+#if DUMP_PROPERTYMAP_STATS
+            ++numRehashes;
+#endif
+
+            entryIndex = m_table->entryIndices[i & m_table->sizeMask];
+            if (entryIndex == emptyEntryIndex)
+                return WTF::notFound;
+
+            if (rep == m_table->entries()[entryIndex - 1].key)
+                return m_table->entries()[entryIndex - 1].offset;
+        }
+    }
+
+} // namespace JSC
 
 #endif // PropertyMap_h

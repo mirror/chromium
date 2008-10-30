@@ -23,16 +23,16 @@
 
 #include "JSWrapperObject.h"
 
-namespace KJS {
+namespace JSC {
 
     class BooleanObject : public JSWrapperObject {
     public:
-        BooleanObject(JSObject* prototype);
+        explicit BooleanObject(PassRefPtr<StructureID>);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // BooleanObject_h

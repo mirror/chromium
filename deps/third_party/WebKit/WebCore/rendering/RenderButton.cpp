@@ -64,11 +64,24 @@ void RenderButton::removeChild(RenderObject* oldChild)
         m_inner->removeChild(oldChild);
 }
 
-void RenderButton::setStyle(RenderStyle* style)
+void RenderButton::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
 {
-    RenderBlock::setStyle(style);
+    if (m_inner) {
+        // RenderBlock::setStyle is going to apply a new style to the inner block, which
+        // will have the initial box flex value, 0. The current value is 1, because we set
+        // it right below. Here we change it back to 0 to avoid getting a spurious layout hint
+        // because of the difference.
+        m_inner->style()->setBoxFlex(0);
+    }
+    RenderBlock::styleWillChange(diff, newStyle);
+}
+
+void RenderButton::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+{
+    RenderBlock::styleDidChange(diff, oldStyle);
+
     if (m_buttonText)
-        m_buttonText->setStyle(style);
+        m_buttonText->setStyle(style());
     if (m_inner) {
         // RenderBlock handled updating the anonymous block's style.
         setupInnerStyle(m_inner->style());

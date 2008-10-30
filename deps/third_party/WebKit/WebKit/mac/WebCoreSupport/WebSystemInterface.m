@@ -41,8 +41,6 @@ void InitWebCoreSystemInterface(void)
 
     INIT(AdvanceDefaultButtonPulseAnimation);
     INIT(CGContextGetShouldSmoothFonts);
-    INIT(ClearGlyphVector);
-    INIT(ConvertCharToGlyphs);
     INIT(CreateCustomCFReadStream);
     INIT(CreateNSURLConnectionDelegateProxy);
     INIT(DrawCapsLockIndicator);
@@ -59,21 +57,15 @@ void InitWebCoreSystemInterface(void)
     INIT(DrawMediaSliderThumb);
     INIT(DrawMediaUnMuteButton);
     INIT(DrawTextFieldCellFocusRing);
-    INIT(GetATSStyleGroup);
     INIT(GetExtensionsForMIMEType);
     INIT(GetFontInLanguageForCharacter);
     INIT(GetFontInLanguageForRange);
     INIT(GetGlyphTransformedAdvances);
-    INIT(GetGlyphVectorFirstRecord);
-    INIT(GetGlyphVectorNumGlyphs);
-    INIT(GetGlyphVectorRecordSize);
     INIT(GetMIMETypeForExtension);
     INIT(GetNSURLResponseLastModifiedDate);
     INIT(GetPreferredExtensionForMIMEType);
     INIT(GetWheelEventDeltas);
-    INIT(InitializeGlyphVector);
     INIT(PopupMenu);
-    INIT(ReleaseStyleGroup);
     INIT(SetCGFontRenderingMode);
     INIT(SetDragImage);
     INIT(SetNSURLConnectionDefersCallbacks);
@@ -88,11 +80,21 @@ void InitWebCoreSystemInterface(void)
     INIT(QTMovieMaxTimeLoaded);
     INIT(QTMovieViewSetDrawSynchronously);
 
-#ifdef BUILDING_ON_TIGER
+#ifndef BUILDING_ON_TIGER
+    INIT(GetGlyphsForCharacters);
+#else
+    INIT(ClearGlyphVector);
+    INIT(ConvertCharToGlyphs);
+    INIT(CopyFullFontName);
+    INIT(GetATSStyleGroup);
     INIT(GetCGFontFromNSFont);
     INIT(GetFontMetrics);
+    INIT(GetGlyphVectorFirstRecord);
+    INIT(GetGlyphVectorNumGlyphs);
+    INIT(GetGlyphVectorRecordSize);
     INIT(GetNSFontATSUFontId);
-    INIT(CopyFullFontName);
+    INIT(InitializeGlyphVector);
+    INIT(ReleaseStyleGroup);
     INIT(SupportsMultipartXMixedReplace);
 #endif
 

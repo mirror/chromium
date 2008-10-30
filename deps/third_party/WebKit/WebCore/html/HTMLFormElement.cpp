@@ -30,6 +30,7 @@
 #include "Document.h"
 #include "Event.h"
 #include "EventNames.h"
+#include "FileList.h"
 #include "FileSystem.h"
 #include "FormData.h"
 #include "FormDataList.h"
@@ -82,7 +83,7 @@ HTMLFormElement::HTMLFormElement(Document* doc)
 HTMLFormElement::~HTMLFormElement()
 {
     if (!m_autocomplete)
-        document()->unregisterForCacheCallbacks(this);
+        document()->unregisterForDocumentActivationCallbacks(this);
 
     delete m_elementAliases;
     delete collectionInfo;
@@ -247,18 +248,18 @@ PassRefPtr<FormData> HTMLFormElement::formData(const char* boundary) const
         if (!control->disabled() && control->appendFormData(list, m_multipart)) {
             size_t ln = list.list().size();
             for (size_t j = 0; j < ln; ++j) {
-                const FormDataListItem& item = list.list()[j];
+                const FormDataList::Item& item = list.list()[j];
                 if (!m_multipart) {
                     // Omit the name "isindex" if it's the first form data element.
                     // FIXME: Why is this a good rule? Is this obsolete now?
-                    if (encodedData.isEmpty() && item.m_data == "isindex")
-                        appendEncodedString(encodedData, list.list()[++j].m_data);
+                    if (encodedData.isEmpty() && item.data() == "isindex")
+                        appendEncodedString(encodedData, list.list()[++j].data());
                     else {
                         if (!encodedData.isEmpty())
                             encodedData.append('&');
-                        appendEncodedString(encodedData, item.m_data);
+                        appendEncodedString(encodedData, item.data());
                         encodedData.append('=');
-                        appendEncodedString(encodedData, list.list()[++j].m_data);
+                        appendEncodedString(encodedData, list.list()[++j].data());
                     }
                 } else {
                     Vector<char> header;
@@ -266,25 +267,25 @@ PassRefPtr<FormData> HTMLFormElement::formData(const char* boundary) const
                     appendString(header, boundary);
                     appendString(header, "\r\n");
                     appendString(header, "Content-Disposition: form-data; name=\"");
-                    header.append(item.m_data.data(), item.m_data.length());
+                    header.append(item.data().data(), item.data().length());
                     header.append('"');
 
                     bool shouldGenerateFile = false;
                     // if the current type is FILE, then we also need to
                     // include the filename
-                    if (control->hasLocalName(inputTag)
-                            && static_cast<HTMLInputElement*>(control)->inputType() == HTMLInputElement::FILE) {
-                        String path = static_cast<HTMLInputElement*>(control)->value();
-                        String filename = pathGetFileName(path);
+                    if (item.file()) {
+                        const String& path = item.file()->path();
+                        String filename = item.file()->fileName();
 
-                        // Let the application specify a filename if its going to generate a replacement file for the upload
-                        if (Page* page = document()->page()) {
-                            String generatedFilename;
-                            shouldGenerateFile = page->chrome()->client()->shouldReplaceWithGeneratedFileForUpload(path, generatedFilename);
-                            if (shouldGenerateFile)
-                                filename = generatedFilename;
+                        // Let the application specify a filename if it's going to generate a replacement file for the upload.
+                        if (!path.isEmpty()) {
+                            if (Page* page = document()->page()) {
+                                String generatedFilename;
+                                shouldGenerateFile = page->chrome()->client()->shouldReplaceWithGeneratedFileForUpload(path, generatedFilename);
+                                if (shouldGenerateFile)
+                                    filename = generatedFilename;
+                            }
                         }
-                        
 
                         // FIXME: This won't work if the filename includes a " mark,
                         // or control characters like CR or LF. This also does strange
@@ -295,6 +296,10 @@ PassRefPtr<FormData> HTMLFormElement::formData(const char* boundary) const
                         header.append('"');
 
                         if (!filename.isEmpty()) {
+                            // FIXME: The MIMETypeRegistry function's name makes it sound like it takes a path,
+                            // not just a basename. But filename is not the path. But note that it's not safe to
+                            // just use path instead since in the generated-file case it will not reflect the
+                            // MIME type of the generated file.
                             String mimeType = MIMETypeRegistry::getMIMETypeForPath(filename);
                             if (!mimeType.isEmpty()) {
                                 appendString(header, "\r\nContent-Type: ");
@@ -307,11 +312,11 @@ PassRefPtr<FormData> HTMLFormElement::formData(const char* boundary) const
 
                     // append body
                     result->appendData(header.data(), header.size());
-                    const FormDataListItem& item = list.list()[j + 1];
-                    if (size_t dataSize = item.m_data.length())
-                        result->appendData(item.m_data.data(), dataSize);
-                    else if (!item.m_path.isEmpty())
-                        result->appendFile(item.m_path, shouldGenerateFile);
+                    const FormDataList::Item& item = list.list()[j + 1];
+                    if (size_t dataSize = item.data().length())
+                        result->appendData(item.data().data(), dataSize);
+                    else if (item.file() && !item.file()->path().isEmpty())
+                        result->appendFile(item.file()->path(), shouldGenerateFile);
                     result->appendData("\r\n", 2);
 
                     ++j;
@@ -359,7 +364,7 @@ bool HTMLFormElement::prepareSubmit(Event* event)
     m_insubmit = true;
     m_doingsubmit = false;
 
-    if (dispatchHTMLEvent(submitEvent, true, true) && !m_doingsubmit)
+    if (dispatchEventForType(submitEvent, true, true) && !m_doingsubmit)
         m_doingsubmit = true;
 
     m_insubmit = false;
@@ -514,7 +519,7 @@ void HTMLFormElement::reset()
 
     // ### DOM2 labels this event as not cancelable, however
     // common browsers( sick! ) allow it be cancelled.
-    if ( !dispatchHTMLEvent(resetEvent,true, true) ) {
+    if ( !dispatchEventForType(resetEvent,true, true) ) {
         m_inreset = false;
         return;
     }
@@ -547,13 +552,13 @@ void HTMLFormElement::parseMappedAttribute(MappedAttribute* attr)
     } else if (attr->name() == autocompleteAttr) {
         m_autocomplete = !equalIgnoringCase(attr->value(), "off");
         if (!m_autocomplete)
-            document()->registerForCacheCallbacks(this);    
+            document()->registerForDocumentActivationCallbacks(this);    
         else
-            document()->unregisterForCacheCallbacks(this);
+            document()->unregisterForDocumentActivationCallbacks(this);
     } else if (attr->name() == onsubmitAttr)
-        setHTMLEventListener(submitEvent, attr);
+        setEventListenerForTypeAndAttribute(submitEvent, attr);
     else if (attr->name() == onresetAttr)
-        setHTMLEventListener(resetEvent, attr);
+        setEventListenerForTypeAndAttribute(resetEvent, attr);
     else if (attr->name() == nameAttr) {
         const AtomicString& newName = attr->value();
         if (inDocument() && document()->isHTMLDocument()) {
@@ -723,7 +728,7 @@ void HTMLFormElement::getNamedElements(const AtomicString& name, Vector<RefPtr<N
         addElementAlias(static_cast<HTMLFormControlElement*>(namedItems.first().get()), name);        
 }
 
-void HTMLFormElement::didRestoreFromCache()
+void HTMLFormElement::documentDidBecomeActive()
 {
     ASSERT(!m_autocomplete);
     
@@ -734,13 +739,13 @@ void HTMLFormElement::didRestoreFromCache()
 void HTMLFormElement::willMoveToNewOwnerDocument()
 {
     if (!m_autocomplete)
-        document()->unregisterForCacheCallbacks(this);
+        document()->unregisterForDocumentActivationCallbacks(this);
 }
 
 void HTMLFormElement::didMoveToNewOwnerDocument()
 {
     if(m_autocomplete)
-        document()->registerForCacheCallbacks(this);
+        document()->registerForDocumentActivationCallbacks(this);
 }
 
 void HTMLFormElement::CheckedRadioButtons::addButton(HTMLFormControlElement* element)

@@ -24,14 +24,16 @@
 #define SVGElement_h
 
 #if ENABLE(SVG)
-#include "Document.h"
 #include "StyledElement.h"
 #include "SVGAnimatedProperty.h"
 #include "SVGNames.h"
 
 namespace WebCore {
 
-    class SVGPreserveAspectRatio;
+    class AffineTransform;
+    class Document;
+    class SVGElementInstance;
+    class SVGDocumentExtensions;
     class SVGSVGElement;
 
     class SVGElement : public StyledElement {
@@ -48,6 +50,7 @@ namespace WebCore {
 
         SVGSVGElement* ownerSVGElement() const;
         SVGElement* viewportElement() const;
+        SVGDocumentExtensions* accessDocumentSVGExtensions() const;
 
         virtual void parseMappedAttribute(MappedAttribute*);
 
@@ -80,11 +83,12 @@ namespace WebCore {
         void sendSVGLoadEventIfPossible(bool sendParentLoadEvents = false);
         
         virtual AffineTransform* supplementalTransform() { return 0; }
-        virtual bool dispatchEvent(PassRefPtr<Event> e, ExceptionCode& ec, bool tempEvent = false);
 
         virtual void updateAnimatedSVGAttribute(const String&) const;
         virtual void setSynchronizedSVGAttributes(bool) const;
 
+        HashSet<SVGElementInstance*> instancesForElement() const;
+ 
         // Inlined methods handling SVG property synchronization
         void invokeSVGPropertySynchronizer(const String& name) const
         {
@@ -114,11 +118,17 @@ namespace WebCore {
         }
 
     private:
-        void addSVGEventListener(const AtomicString& eventType, const Attribute*);
+        friend class SVGElementInstance;
+
+        void mapInstanceToElement(SVGElementInstance*);
+        void removeInstanceMapping(SVGElementInstance*);
+
         virtual bool haveLoadedRequiredResources();
 
         Node* m_shadowParent;
         mutable HashMap<String, const SVGAnimatedPropertyBase*> m_svgPropertyMap;
+
+        HashSet<SVGElementInstance*> m_elementInstances;
     };
 
 } // namespace WebCore 

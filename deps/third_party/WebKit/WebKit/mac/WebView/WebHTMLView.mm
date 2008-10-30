@@ -51,6 +51,7 @@
 #import "WebKitPluginContainerView.h"
 #import "WebKitVersionChecks.h"
 #import "WebLocalizableStrings.h"
+#import "WebNodeHighlight.h"
 #import "WebNSAttributedStringExtras.h"
 #import "WebNSEventExtras.h"
 #import "WebNSFileManagerExtras.h"
@@ -1796,38 +1797,7 @@ static void _updateMouseoverTimerCallback(CFRunLoopTimerRef timer, void *info)
 {
     [self _cancelUpdateFocusedAndActiveStateTimer];
 
-    // This method does the job of updating the view based on the view's firstResponder-ness and
-    // the window key-ness of the window containing this view. This involves four kinds of 
-    // drawing updates right now. 
-    // 
-    // The four display attributes are as follows:
-    // 
-    // 1. The background color used to draw behind selected content (active | inactive color)
-    // 2. Caret blinking (blinks | does not blink)
-    // 3. The drawing of a focus ring around links in web pages.
-    //
-    // Also, this is responsible for letting the bridge know if the window has gained or lost focus
-    // so we can send focus and blur events.
-
-    Frame* frame = core([self _frame]);
-    if (!frame)
-        return;
-    
-    Page* page = frame->page();
-    if (!page)
-        return;
-
-    NSWindow *window = [self window];
-    BOOL windowIsKey = [window isKeyWindow];
-    BOOL windowOrSheetIsKey = windowIsKey || [[window attachedSheet] isKeyWindow];
-
-    // FIXME: this can move to WebView since active state is Page level, not Frame level.
-    NSResponder *firstResponder = [window firstResponder];
-    if (firstResponder == self || firstResponder == [self _frameView])
-        page->focusController()->setActive(!_private->resigningFirstResponder && windowIsKey);
-
-    Frame* focusedFrame = page->focusController()->focusedOrMainFrame();
-    frame->selection()->setFocused(frame == focusedFrame && windowOrSheetIsKey);
+    [[self _webView] _updateFocusedAndActiveStateForFrame:[self _frame]];
 }
 
 - (void)_writeSelectionToPasteboard:(NSPasteboard *)pasteboard
@@ -2938,16 +2908,19 @@ static void _updateFocusedAndActiveStateTimerCallback(CFRunLoopTimerRef timer, v
             NSRectFill (rect);
         }
 
-        [[self _frame] _drawRect:rect];
+        [[self _frame] _drawRect:rect contentsOnly:YES];
+
+        WebView *webView = [self _webView];
 
         // This hack is needed for <rdar://problem/5023545>. We can hit a race condition where drawRect will be
         // called after the WebView has closed. If the client did not properly close the WebView and set the 
         // UIDelegate to nil, then the UIDelegate will be stale and this code will crash. 
         static BOOL version3OrLaterClient = WebKitLinkedOnOrAfter(WEBKIT_FIRST_VERSION_WITHOUT_QUICKBOOKS_QUIRK);
-        if (version3OrLaterClient) {
-            WebView *webView = [self _webView];
+        if (version3OrLaterClient)
             [[webView _UIDelegateForwarder] webView:webView didDrawRect:[webView convertRect:rect fromView:self]];
-        }
+
+        if (WebNodeHighlight *currentHighlight = [webView currentNodeHighlight])
+            [currentHighlight setNeedsUpdateInTargetViewRect:[self convertRect:rect toView:[currentHighlight targetView]]];
 
         [(WebClipView *)[self superview] resetAdditionalClip];
 
@@ -2977,27 +2950,7 @@ static void _updateFocusedAndActiveStateTimerCallback(CFRunLoopTimerRef timer, v
     double start = CFAbsoluteTimeGetCurrent();
 #endif
 
-    // If count == 0 here, use the rect passed in for drawing. This is a workaround for:
-    // <rdar://problem/3908282> REGRESSION (Mail): No drag image dragging selected text in Blot and Mail
-    // The reason for the workaround is that this method is called explicitly from the code
-    // to generate a drag image, and at that time, getRectsBeingDrawn:count: will return a zero count.
-    const int cRectThreshold = 10;
-    const float cWastedSpaceThreshold = 0.75f;
-    BOOL useUnionedRect = (count <= 1) || (count > cRectThreshold);
-    if (!useUnionedRect) {
-        // Attempt to guess whether or not we should use the unioned rect or the individual rects.
-        // We do this by computing the percentage of "wasted space" in the union.  If that wasted space
-        // is too large, then we will do individual rect painting instead.
-        float unionPixels = (rect.size.width * rect.size.height);
-        float singlePixels = 0;
-        for (int i = 0; i < count; ++i)
-            singlePixels += rects[i].size.width * rects[i].size.height;
-        float wastedSpace = 1 - (singlePixels / unionPixels);
-        if (wastedSpace <= cWastedSpaceThreshold)
-            useUnionedRect = YES;
-    }
-    
-    if (useUnionedRect)
+    if ([[self _webView] _mustDrawUnionedRect:rect singleRects:rects count:count])
         [self drawSingleRect:rect];
     else
         for (int i = 0; i < count; ++i)

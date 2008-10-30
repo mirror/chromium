@@ -27,7 +27,7 @@
 
 #include "ExceptionCode.h"
 #include "ExceptionContext.h"
-#include "Node.h"
+#include "ContainerNode.h"
 #include "NodeFilter.h"
 #include <wtf/PassRefPtr.h>
 

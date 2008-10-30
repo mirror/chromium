@@ -35,11 +35,16 @@
 
 #include <wtf/Assertions.h>
 
-namespace KJS {
+namespace JSC {
 
 #define DUMP_OPCODE_STATS 0
 
     #define FOR_EACH_OPCODE_ID(macro) \
+        macro(op_enter) \
+        macro(op_enter_with_activation) \
+        macro(op_create_arguments) \
+        macro(op_convert_this) \
+        \
         macro(op_unexpected_load) \
         macro(op_new_object) \
         macro(op_new_array) \
@@ -78,12 +83,21 @@ namespace KJS {
         \
         macro(op_instanceof) \
         macro(op_typeof) \
+        macro(op_is_undefined) \
+        macro(op_is_boolean) \
+        macro(op_is_number) \
+        macro(op_is_string) \
+        macro(op_is_object) \
+        macro(op_is_function) \
         macro(op_in) \
         \
         macro(op_resolve) \
         macro(op_resolve_skip) \
+        macro(op_resolve_global) \
         macro(op_get_scoped_var) \
         macro(op_put_scoped_var) \
+        macro(op_get_global_var) \
+        macro(op_put_global_var) \
         macro(op_resolve_base) \
         macro(op_resolve_with_base) \
         macro(op_resolve_func) \
@@ -95,6 +109,7 @@ namespace KJS {
         macro(op_get_array_length) \
         macro(op_get_string_length) \
         macro(op_put_by_id) \
+        macro(op_put_by_id_transition) \
         macro(op_put_by_id_replace) \
         macro(op_put_by_id_generic) \
         macro(op_del_by_id) \
@@ -113,6 +128,7 @@ namespace KJS {
         macro(op_loop) \
         macro(op_loop_if_true) \
         macro(op_loop_if_less) \
+        macro(op_loop_if_lesseq) \
         macro(op_switch_imm) \
         macro(op_switch_char) \
         macro(op_switch_string) \
@@ -121,9 +137,12 @@ namespace KJS {
         macro(op_new_func_exp) \
         macro(op_call) \
         macro(op_call_eval) \
+        macro(op_tear_off_activation) \
+        macro(op_tear_off_arguments) \
         macro(op_ret) \
         \
         macro(op_construct) \
+        macro(op_construct_verify) \
         \
         macro(op_get_pnames) \
         macro(op_next_pname) \
@@ -193,6 +212,6 @@ namespace KJS {
 
 #endif
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // Opcodes_h

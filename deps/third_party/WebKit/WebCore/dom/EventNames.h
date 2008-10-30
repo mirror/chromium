@@ -38,6 +38,7 @@ namespace WebCore { namespace EventNames {
     macro(change) \
     macro(checking) \
     macro(click) \
+    macro(close) \
     macro(contextmenu) \
     macro(copy) \
     macro(cut) \
@@ -115,7 +116,6 @@ namespace WebCore { namespace EventNames {
     macro(volumechange) \
     macro(waiting) \
     \
-    macro(begin) \
     macro(progress) \
     macro(stalled) \
     \

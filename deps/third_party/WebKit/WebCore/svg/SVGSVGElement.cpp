@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2004, 2005, 2006 Nikolas Zimmermann <zimmermann@kde.org>
-                  2004, 2005, 2006, 2007 Rob Buis <buis@kde.org>
+                  2004, 2005, 2006, 2007, 2008 Rob Buis <buis@kde.org>
                   2007 Apple Inc.  All rights reserved.
 
     This library is free software; you can redistribute it and/or
@@ -71,15 +71,21 @@ SVGSVGElement::SVGSVGElement(const QualifiedName& tagName, Document* doc)
     , m_containerSize(300, 150)
     , m_hasSetContainerSize(false)
 {
-    doc->registerForCacheCallbacks(this);
+    doc->registerForDocumentActivationCallbacks(this);
 }
 
 SVGSVGElement::~SVGSVGElement()
 {
-    document()->unregisterForCacheCallbacks(this);
+    document()->unregisterForDocumentActivationCallbacks(this);
     // There are cases where removedFromDocument() is not called.
-    // see ContainerNode::removeAllChildren, called by it's destructor.
+    // see ContainerNode::removeAllChildren, called by its destructor.
     document()->accessSVGExtensions()->removeTimeContainer(this);
+
+    // Call detach() here because if we wait until ~Node() calls it, we crash during
+    // RenderSVGViewportContainer destruction, as the renderer assumes that the element
+    // is still fully constructed. See <https://bugs.webkit.org/show_bug.cgi?id=21293>.
+    if (renderer())
+        detach();
 }
 
 const AtomicString& SVGSVGElement::contentScriptType() const
@@ -207,33 +213,32 @@ void SVGSVGElement::setCurrentTranslate(const FloatPoint &translation)
         document()->renderer()->repaint();
 }
 
-void SVGSVGElement::addSVGWindowEventListener(const AtomicString& eventType, const Attribute* attr)
-{
-    // FIXME: None of these should be window events long term.
-    // Once we propertly support SVGLoad, etc.
-    RefPtr<EventListener> listener = document()->accessSVGExtensions()->
-        createSVGEventListener(attr->localName().string(), attr->value(), this);
-    document()->setHTMLWindowEventListener(eventType, listener.release());
-}
-
 void SVGSVGElement::parseMappedAttribute(MappedAttribute* attr)
 {
     if (!nearestViewportElement()) {
+        bool setListener = true;
+
         // Only handle events if we're the outermost <svg> element
         if (attr->name() == onunloadAttr)
-            addSVGWindowEventListener(unloadEvent, attr);
-        else if (attr->name() == onabortAttr)
-            addSVGWindowEventListener(abortEvent, attr);
-        else if (attr->name() == onerrorAttr)
-            addSVGWindowEventListener(errorEvent, attr);
+            document()->setWindowEventListenerForTypeAndAttribute(unloadEvent, attr);
         else if (attr->name() == onresizeAttr)
-            addSVGWindowEventListener(resizeEvent, attr);
+            document()->setWindowEventListenerForTypeAndAttribute(resizeEvent, attr);
         else if (attr->name() == onscrollAttr)
-            addSVGWindowEventListener(scrollEvent, attr);
+            document()->setWindowEventListenerForTypeAndAttribute(scrollEvent, attr);
         else if (attr->name() == SVGNames::onzoomAttr)
-            addSVGWindowEventListener(zoomEvent, attr);
+            document()->setWindowEventListenerForTypeAndAttribute(zoomEvent, attr);
+        else
+            setListener = false;
+ 
+        if (setListener)
+            return;
     }
-    if (attr->name() == SVGNames::xAttr)
+
+    if (attr->name() == onabortAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(abortEvent, attr);
+    else if (attr->name() == onerrorAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(errorEvent, attr);
+    else if (attr->name() == SVGNames::xAttr)
         setXBaseValue(SVGLength(LengthModeWidth, attr->value()));
     else if (attr->name() == SVGNames::yAttr)
         setYBaseValue(SVGLength(LengthModeHeight, attr->value()));
@@ -397,11 +402,10 @@ AffineTransform SVGSVGElement::getScreenCTM() const
     float rootY = 0.0f;
     
     if (RenderObject* renderer = this->renderer()) {
-        renderer = renderer->parent();
         if (isOutermostSVG()) {
             int tx = 0;
             int ty = 0;
-            if (renderer)
+            if (renderer->parent())
                 renderer->absolutePosition(tx, ty, true);
             rootX += tx;
             rootY += ty;
@@ -521,12 +525,12 @@ void SVGSVGElement::inheritViewAttributes(SVGViewElement* viewElement)
     renderer()->setNeedsLayout(true);
 }
     
-void SVGSVGElement::willSaveToCache()
+void SVGSVGElement::documentWillBecomeInactive()
 {
     pauseAnimations();
 }
 
-void SVGSVGElement::willRestoreFromCache()
+void SVGSVGElement::documentDidBecomeActive()
 {
     unpauseAnimations();
 }

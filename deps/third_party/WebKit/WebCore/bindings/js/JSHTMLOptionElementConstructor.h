@@ -21,22 +21,24 @@
 #define JSHTMLOptionElementConstructor_h
 
 #include "JSDOMBinding.h"
+#include "JSDocument.h"
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
 
     class JSHTMLOptionElementConstructor : public DOMObject {
     public:
-        JSHTMLOptionElementConstructor(KJS::ExecState*, Document*);
-        Document* document() const { return m_document.get(); }
+        JSHTMLOptionElementConstructor(JSC::ExecState*, Document*);
+        Document* document() const { return m_document->impl(); }
 
-        static const KJS::ClassInfo s_info;
-
+        static const JSC::ClassInfo s_info;
+        
+        virtual void mark();
     private:
-        virtual KJS::ConstructType getConstructData(KJS::ConstructData&);
-        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+        virtual JSC::ConstructType getConstructData(JSC::ConstructData&);
+        virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
 
-        RefPtr<Document> m_document;
+        JSDocument* m_document;
     };
 
 } // namespace WebCore

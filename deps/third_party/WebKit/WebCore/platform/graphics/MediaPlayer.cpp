@@ -42,8 +42,6 @@
 #include "MediaPlayerPrivateGStreamer.h"
 #elif PLATFORM(QT)
 #include "MediaPlayerPrivatePhonon.h"
-#elif PLATFORM(CHROMIUM)
-#include "MediaPlayerPrivateChromium.h"
 #endif
 
 namespace WebCore {

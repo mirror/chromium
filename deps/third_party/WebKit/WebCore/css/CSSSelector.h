@@ -41,6 +41,7 @@ namespace WebCore {
             , m_relation(Descendant)
             , m_match(None)
             , m_pseudoType(PseudoNotParsed)
+            , m_parsedNth(false)
         {
         }
 
@@ -54,6 +55,7 @@ namespace WebCore {
             , m_relation(Descendant)
             , m_match(None)
             , m_pseudoType(PseudoNotParsed)
+            , m_parsedNth(false)
         {
         }
 
@@ -138,6 +140,7 @@ namespace WebCore {
             PseudoEnabled,
             PseudoFullPageMedia,
             PseudoDisabled,
+            PseudoInputPlaceholder,
             PseudoReadOnly,
             PseudoReadWrite,
             PseudoIndeterminate,
@@ -146,7 +149,27 @@ namespace WebCore {
             PseudoAfter,
             PseudoLang,
             PseudoNot,
+            PseudoResizer,
             PseudoRoot,
+            PseudoScrollbar,
+            PseudoScrollbarBack,
+            PseudoScrollbarButton,
+            PseudoScrollbarCorner,
+            PseudoScrollbarForward,
+            PseudoScrollbarThumb,
+            PseudoScrollbarTrack,
+            PseudoScrollbarTrackPiece,
+            PseudoWindowInactive,
+            PseudoCornerPresent,
+            PseudoDecrement,
+            PseudoIncrement,
+            PseudoHorizontal,
+            PseudoVertical,
+            PseudoStart,
+            PseudoEnd,
+            PseudoDoubleButton,
+            PseudoSingleButton,
+            PseudoNoButton,
             PseudoSelection,
             PseudoFileUploadButton,
             PseudoSliderThumb,
@@ -188,6 +211,9 @@ namespace WebCore {
         unsigned m_relation           : 3; // enum Relation
         mutable unsigned m_match      : 4; // enum Match
         mutable unsigned m_pseudoType : 8; // PseudoType
+        
+    protected:
+        bool m_parsedNth              : 1; // used in CSSNthSelector
 
     private:
         void extractPseudoType() const;

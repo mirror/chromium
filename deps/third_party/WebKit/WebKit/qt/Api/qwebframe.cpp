@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2007 Trolltech ASA
+    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
     Copyright (C) 2007 Staikos Computing Services Inc.
 
     This library is free software; you can redistribute it and/or
@@ -36,7 +36,7 @@
 #include "ResourceRequest.h"
 #include "RenderView.h"
 #include "SelectionController.h"
-#include "PlatformScrollBar.h"
+#include "Scrollbar.h"
 #include "PrintContext.h"
 #include "SubstituteData.h"
 
@@ -47,7 +47,6 @@
 #include "DragData.h"
 #include "RenderView.h"
 #include "GraphicsContext.h"
-#include "PlatformScrollBar.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
 #include "GraphicsContext.h"
@@ -103,18 +102,18 @@ void QWebFramePrivate::init(QWebFrame *qframe, WebCore::Page *webcorePage, QWebF
     frame->init();
 }
 
-WebCore::PlatformScrollbar *QWebFramePrivate::horizontalScrollBar() const
+WebCore::Scrollbar* QWebFramePrivate::horizontalScrollBar() const
 {
     if (!frame->view())
         return 0;
-    return frame->view()->horizontalScrollBar();
+    return frame->view()->horizontalScrollbar();
 }
 
-WebCore::PlatformScrollbar *QWebFramePrivate::verticalScrollBar() const
+WebCore::Scrollbar* QWebFramePrivate::verticalScrollBar() const
 {
     if (!frame->view())
         return 0;
-    return frame->view()->verticalScrollBar();
+    return frame->view()->verticalScrollbar();
 }
 
 void QWebFramePrivate::updateBackground()
@@ -177,7 +176,7 @@ QWebFrame::QWebFrame(QWebPage *parent, QWebFrameData *frameData)
     d->init(this, parent->d->page, frameData);
 
     if (!frameData->url.isEmpty()) {
-        ResourceRequest request(frameData->url, frameData->referrer);
+        WebCore::ResourceRequest request(frameData->url, frameData->referrer);
         d->frame->loader()->load(request, frameData->name);
     }
 }
@@ -212,21 +211,21 @@ QWebFrame::~QWebFrame()
 */
 void QWebFrame::addToJavaScriptWindowObject(const QString &name, QObject *object)
 {
-      KJS::JSLock lock(false);
+      JSC::JSLock lock(false);
       JSDOMWindow *window = toJSDOMWindow(d->frame);
-      KJS::Bindings::RootObject *root = d->frame->script()->bindingRootObject();
+      JSC::Bindings::RootObject *root = d->frame->script()->bindingRootObject();
       if (!window) {
           qDebug() << "Warning: couldn't get window object";
           return;
       }
 
-      KJS::ExecState* exec = window->globalExec();
+      JSC::ExecState* exec = window->globalExec();
 
-      KJS::JSObject *runtimeObject =
-        KJS::Bindings::Instance::createRuntimeObject(exec, KJS::Bindings::QtInstance::create(object, root));
+      JSC::JSObject *runtimeObject =
+        JSC::Bindings::Instance::createRuntimeObject(exec, JSC::Bindings::QtInstance::getQtInstance(object, root));
 
-      KJS::PutPropertySlot slot;
-      window->put(exec, KJS::Identifier(exec, (const UChar *) name.constData(), name.length()), runtimeObject, slot);
+      JSC::PutPropertySlot slot;
+      window->put(exec, JSC::Identifier(exec, (const UChar *) name.constData(), name.length()), runtimeObject, slot);
 }
 
 /*!
@@ -544,11 +543,11 @@ void QWebFrame::setScrollBarPolicy(Qt::Orientation orientation, Qt::ScrollBarPol
     if (orientation == Qt::Horizontal) {
         d->horizontalScrollBarPolicy = policy;
         if (d->frame->view())
-            d->frame->view()->setHScrollbarMode((ScrollbarMode)policy);
+            d->frame->view()->setHorizontalScrollbarMode((ScrollbarMode)policy);
     } else {
         d->verticalScrollBarPolicy = policy;
         if (d->frame->view())
-            d->frame->view()->setVScrollbarMode((ScrollbarMode)policy);
+            d->frame->view()->setVerticalScrollbarMode((ScrollbarMode)policy);
     }
 }
 
@@ -563,7 +562,7 @@ void QWebFrame::setScrollBarPolicy(Qt::Orientation orientation, Qt::ScrollBarPol
 */
 void QWebFrame::setScrollBarValue(Qt::Orientation orientation, int value)
 {
-    PlatformScrollbar *sb;
+    Scrollbar *sb;
     sb = (orientation == Qt::Horizontal) ? d->horizontalScrollBar() : d->verticalScrollBar();
     if (sb) {
         if (value < 0)
@@ -582,7 +581,7 @@ void QWebFrame::setScrollBarValue(Qt::Orientation orientation, int value)
 */
 int QWebFrame::scrollBarValue(Qt::Orientation orientation) const
 {
-    PlatformScrollbar *sb;
+    Scrollbar *sb;
     sb = (orientation == Qt::Horizontal) ? d->horizontalScrollBar() : d->verticalScrollBar();
     if (sb) {
         return sb->value();
@@ -598,7 +597,7 @@ int QWebFrame::scrollBarValue(Qt::Orientation orientation) const
 */
 int QWebFrame::scrollBarMaximum(Qt::Orientation orientation) const
 {
-    PlatformScrollbar *sb;
+    Scrollbar *sb;
     sb = (orientation == Qt::Horizontal) ? d->horizontalScrollBar() : d->verticalScrollBar();
     if (sb)
         return sb->maximum();
@@ -619,7 +618,8 @@ int QWebFrame::scrollBarMinimum(Qt::Orientation orientation) const
 
 /*!
   \since 4.5
-  Moves the current scroll offset.
+  Scrolls the frame \a dx pixels to the right and \a dy pixels downward. Both
+  \a dx and \a dy may be negative.
   
   \sa QWebFrame::scrollOffset
 */
@@ -629,7 +629,7 @@ void QWebFrame::scroll(int dx, int dy) const
     if (!d->frame->view())
         return;
     
-    d->frame->view()->scrollBy(dx, dy);
+    d->frame->view()->scrollBy(IntSize(dx, dy));
 }
 
 /*!
@@ -668,8 +668,17 @@ void QWebFrame::render(QPainter *painter, const QRegion &clip)
     GraphicsContext ctx(painter);
     QVector<QRect> vector = clip.rects();
     WebCore::FrameView* view = d->frame->view();
-    for (int i = 0; i < vector.size(); ++i)
+    for (int i = 0; i < vector.size(); ++i) {
+        if (i > 0) {
+            painter->save();
+            painter->setClipRect(vector.at(i), Qt::IntersectClip);
+        }
+
         view->paint(&ctx, vector.at(i));
+
+        if (i > 0)
+            painter->restore();
+    }
 }
 
 /*!
@@ -684,19 +693,19 @@ void QWebFrame::render(QPainter *painter)
 
     GraphicsContext ctx(painter);
     WebCore::FrameView* view = d->frame->view();
-    view->paint(&ctx, view->frameGeometry());
+    view->paint(&ctx, view->frameRect());
 }
 
 /*!
-  \property QWebFrame::textSizeMultiplier
-  \brief the scaling factor for all text in the frame
-  \obsolete
+    \property QWebFrame::textSizeMultiplier
+    \brief the scaling factor for all text in the frame
+    \obsolete
 
-  Use setZoomFactor instead, in combination with the
-  ZoomTextOnly attribute in QWebSettings.
+    Use setZoomFactor instead, in combination with the ZoomTextOnly attribute in
+    QWebSettings.
 
-  \note Setting this property also enables the
-  ZoomTextOnly attribute in QWebSettings.
+    \note Setting this property also enables the ZoomTextOnly attribute in
+    QWebSettings.
 */
 
 void QWebFrame::setTextSizeMultiplier(qreal factor)
@@ -733,7 +742,7 @@ QPoint QWebFrame::pos() const
     if (!d->frame->view())
         return QPoint();
 
-    return d->frame->view()->frameGeometry().topLeft();
+    return d->frame->view()->frameRect().topLeft();
 }
 
 /*!
@@ -743,7 +752,7 @@ QRect QWebFrame::geometry() const
 {
     if (!d->frame->view())
         return QRect();
-    return d->frame->view()->frameGeometry();
+    return d->frame->view()->frameRect();
 }
 
 /*!
@@ -877,10 +886,10 @@ QVariant QWebFrame::evaluateJavaScript(const QString& scriptSource)
     ScriptController *proxy = d->frame->script();
     QVariant rc;
     if (proxy) {
-        KJS::JSValue *v = proxy->evaluate(String(), 1, scriptSource);
+        JSC::JSValue *v = proxy->evaluate(String(), 1, scriptSource);
         if (v) {
             int distance = 0;
-            rc = KJS::Bindings::convertValueToQVariant(proxy->globalObject()->globalExec(), v, QMetaType::Void, &distance);
+            rc = JSC::Bindings::convertValueToQVariant(proxy->globalObject()->globalExec(), v, QMetaType::Void, &distance);
         }
     }
     return rc;

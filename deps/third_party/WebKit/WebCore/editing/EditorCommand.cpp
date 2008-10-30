@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -42,6 +42,7 @@
 #include "InsertListCommand.h"
 #include "Page.h"
 #include "ReplaceSelectionCommand.h"
+#include "Scrollbar.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "TypingCommand.h"
@@ -224,7 +225,7 @@ static int verticalScrollDistance(Frame* frame)
     if (!(style->overflowY() == OSCROLL || style->overflowY() == OAUTO || renderer->isTextArea()))
         return 0;
     int height = renderer->clientHeight();
-    return max((height + 1) / 2, height - PAGE_KEEP);
+    return max((height + 1) / 2, height - cAmountToKeepWhenPaging);
 }
 
 static RefPtr<Range> unionDOMRanges(Range* a, Range* b)

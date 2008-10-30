@@ -34,8 +34,9 @@ module events {
         readonly attribute DOMString origin;
         readonly attribute DOMString lastEventId;
         readonly attribute DOMWindow source;
+        readonly attribute MessagePort messagePort;
         
-        void initMessageEvent(in DOMString typeArg, in boolean canBubbleArg, in boolean cancelableArg, in DOMString dataArg, in DOMString originArg, in DOMString lastEventIdArg, in DOMWindow sourceArg);
+        void initMessageEvent(in DOMString typeArg, in boolean canBubbleArg, in boolean cancelableArg, in DOMString dataArg, in DOMString originArg, in DOMString lastEventIdArg, in DOMWindow sourceArg, in MessagePort messagePort);
 
     };
 

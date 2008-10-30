@@ -37,7 +37,7 @@
 #include "XMLHttpRequestUpload.h"
 #include <kjs/Error.h>
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -46,28 +46,28 @@ void JSXMLHttpRequestUpload::mark()
     Base::mark();
 
     if (XMLHttpRequest* xmlHttpRequest = m_impl->associatedXMLHttpRequest()) {
-        DOMObject* wrapper = ScriptInterpreter::getDOMObject(xmlHttpRequest);
+        DOMObject* wrapper = getCachedDOMObjectWrapper(*Heap::heap(this)->globalData(), xmlHttpRequest);
         if (wrapper && !wrapper->marked())
             wrapper->mark();
     }
 
-    if (JSUnprotectedEventListener* onAbortListener = static_cast<JSUnprotectedEventListener*>(m_impl->onAbortListener()))
+    if (JSUnprotectedEventListener* onAbortListener = static_cast<JSUnprotectedEventListener*>(m_impl->onabort()))
         onAbortListener->mark();
 
-    if (JSUnprotectedEventListener* onErrorListener = static_cast<JSUnprotectedEventListener*>(m_impl->onErrorListener()))
+    if (JSUnprotectedEventListener* onErrorListener = static_cast<JSUnprotectedEventListener*>(m_impl->onerror()))
         onErrorListener->mark();
 
-    if (JSUnprotectedEventListener* onLoadListener = static_cast<JSUnprotectedEventListener*>(m_impl->onLoadListener()))
+    if (JSUnprotectedEventListener* onLoadListener = static_cast<JSUnprotectedEventListener*>(m_impl->onload()))
         onLoadListener->mark();
 
-    if (JSUnprotectedEventListener* onLoadStartListener = static_cast<JSUnprotectedEventListener*>(m_impl->onLoadStartListener()))
+    if (JSUnprotectedEventListener* onLoadStartListener = static_cast<JSUnprotectedEventListener*>(m_impl->onloadstart()))
         onLoadStartListener->mark();
     
-    if (JSUnprotectedEventListener* onProgressListener = static_cast<JSUnprotectedEventListener*>(m_impl->onProgressListener()))
+    if (JSUnprotectedEventListener* onProgressListener = static_cast<JSUnprotectedEventListener*>(m_impl->onprogress()))
         onProgressListener->mark();
     
-    typedef XMLHttpRequest::EventListenersMap EventListenersMap;
-    typedef XMLHttpRequest::ListenerVector ListenerVector;
+    typedef XMLHttpRequestUpload::EventListenersMap EventListenersMap;
+    typedef XMLHttpRequestUpload::ListenerVector ListenerVector;
     EventListenersMap& eventListeners = m_impl->eventListeners();
     for (EventListenersMap::iterator mapIter = eventListeners.begin(); mapIter != eventListeners.end(); ++mapIter) {
         for (ListenerVector::iterator vecIter = mapIter->second.begin(); vecIter != mapIter->second.end(); ++vecIter) {
@@ -77,130 +77,9 @@ void JSXMLHttpRequestUpload::mark()
     }
 }
 
-JSValue* JSXMLHttpRequestUpload::onabort(ExecState*) const
-{
-    if (JSUnprotectedEventListener* listener = static_cast<JSUnprotectedEventListener*>(impl()->onAbortListener())) {
-        if (JSObject* listenerObj = listener->listenerObj())
-            return listenerObj;
-    }
-    return jsNull();
-}
-
-void JSXMLHttpRequestUpload::setOnabort(ExecState* exec, JSValue* value)
-{
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return;
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return;
-    Frame* frame = document->frame();
-    if (!frame)
-        return;
-    impl()->setOnAbortListener(toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, value, true));
-}
-
-JSValue* JSXMLHttpRequestUpload::onerror(ExecState*) const
-{
-    if (JSUnprotectedEventListener* listener = static_cast<JSUnprotectedEventListener*>(impl()->onErrorListener())) {
-        if (JSObject* listenerObj = listener->listenerObj())
-            return listenerObj;
-    }
-    return jsNull();
-}
-
-void JSXMLHttpRequestUpload::setOnerror(ExecState* exec, JSValue* value)
-{
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return;
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return;
-    Frame* frame = document->frame();
-    if (!frame)
-        return;
-    impl()->setOnErrorListener(toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, value, true));
-}
-
-JSValue* JSXMLHttpRequestUpload::onload(ExecState*) const
-{
-    if (JSUnprotectedEventListener* listener = static_cast<JSUnprotectedEventListener*>(impl()->onLoadListener())) {
-        if (JSObject* listenerObj = listener->listenerObj())
-            return listenerObj;
-    }
-    return jsNull();
-}
-
-void JSXMLHttpRequestUpload::setOnload(ExecState* exec, JSValue* value)
-{
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return;
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return;
-    Frame* frame = document->frame();
-    if (!frame)
-        return;
-    impl()->setOnLoadListener(toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, value, true));
-}
-
-JSValue* JSXMLHttpRequestUpload::onloadstart(ExecState*) const
-{
-    if (JSUnprotectedEventListener* listener = static_cast<JSUnprotectedEventListener*>(impl()->onLoadStartListener())) {
-        if (JSObject* listenerObj = listener->listenerObj())
-            return listenerObj;
-    }
-    return jsNull();
-}
-
-void JSXMLHttpRequestUpload::setOnloadstart(ExecState* exec, JSValue* value)
-{
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return;
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return;
-    Frame* frame = document->frame();
-    if (!frame)
-        return;
-    impl()->setOnLoadStartListener(toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, value, true));
-}
-
-JSValue* JSXMLHttpRequestUpload::onprogress(ExecState*) const
-{
-    if (JSUnprotectedEventListener* listener = static_cast<JSUnprotectedEventListener*>(impl()->onProgressListener())) {
-        if (JSObject* listenerObj = listener->listenerObj())
-            return listenerObj;
-    }
-    return jsNull();
-}
-
-void JSXMLHttpRequestUpload::setOnprogress(ExecState* exec, JSValue* value)
-{
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return;
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return;
-    Frame* frame = document->frame();
-    if (!frame)
-        return;
-    impl()->setOnProgressListener(toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, value, true));
-}
-
 JSValue* JSXMLHttpRequestUpload::addEventListener(ExecState* exec, const ArgList& args)
 {
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return jsUndefined();
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return jsUndefined();
-    Frame* frame = document->frame();
+    Frame* frame = impl()->associatedFrame();
     if (!frame)
         return jsUndefined();
     RefPtr<JSUnprotectedEventListener> listener = toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, args.at(exec, 1), true);
@@ -212,13 +91,7 @@ JSValue* JSXMLHttpRequestUpload::addEventListener(ExecState* exec, const ArgList
 
 JSValue* JSXMLHttpRequestUpload::removeEventListener(ExecState* exec, const ArgList& args)
 {
-    XMLHttpRequest* xmlHttpRequest = impl()->associatedXMLHttpRequest();
-    if (!xmlHttpRequest)
-        return jsUndefined();
-    Document* document = xmlHttpRequest->document();
-    if (!document)
-        return jsUndefined();
-    Frame* frame = document->frame();
+    Frame* frame = impl()->associatedFrame();
     if (!frame)
         return jsUndefined();
     JSUnprotectedEventListener* listener = toJSDOMWindow(frame)->findJSUnprotectedEventListener(exec, args.at(exec, 1), true);
@@ -226,14 +99,6 @@ JSValue* JSXMLHttpRequestUpload::removeEventListener(ExecState* exec, const ArgL
         return jsUndefined();
     impl()->removeEventListener(args.at(exec, 0)->toString(exec), listener, args.at(exec, 2)->toBoolean(exec));
     return jsUndefined();
-}
-
-JSValue* JSXMLHttpRequestUpload::dispatchEvent(ExecState* exec, const ArgList& args)
-{
-    ExceptionCode ec = 0;
-    bool result = impl()->dispatchEvent(toEvent(args.at(exec, 0)), ec);
-    setDOMException(exec, ec);
-    return jsBoolean(result);    
 }
 
 } // namespace WebCore

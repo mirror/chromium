@@ -27,14 +27,13 @@
 #include <wtf/Assertions.h>
 #include <wtf/NotFound.h>
 
-namespace KJS {
+namespace JSC {
 
     class ExecState;
     class JSObject;
-    struct HashEntry;
 
-#define KJS_VALUE_SLOT_MARKER 0
-#define KJS_REGISTER_SLOT_MARKER reinterpret_cast<GetValueFunc>(1)
+#define JSC_VALUE_SLOT_MARKER 0
+#define JSC_REGISTER_SLOT_MARKER reinterpret_cast<GetValueFunc>(1)
 
     class PropertySlot {
     public:
@@ -56,18 +55,18 @@ namespace KJS {
 
         JSValue* getValue(ExecState* exec, const Identifier& propertyName) const
         {
-            if (m_getValue == KJS_VALUE_SLOT_MARKER)
+            if (m_getValue == JSC_VALUE_SLOT_MARKER)
                 return *m_data.valueSlot;
-            if (m_getValue == KJS_REGISTER_SLOT_MARKER)
+            if (m_getValue == JSC_REGISTER_SLOT_MARKER)
                 return (*m_data.registerSlot).jsValue(exec);
             return m_getValue(exec, propertyName, *this);
         }
 
         JSValue* getValue(ExecState* exec, unsigned propertyName) const
         {
-            if (m_getValue == KJS_VALUE_SLOT_MARKER)
+            if (m_getValue == JSC_VALUE_SLOT_MARKER)
                 return *m_data.valueSlot;
-            if (m_getValue == KJS_REGISTER_SLOT_MARKER)
+            if (m_getValue == JSC_REGISTER_SLOT_MARKER)
                 return (*m_data.registerSlot).jsValue(exec);
             return m_getValue(exec, Identifier::from(exec, propertyName), *this);
         }
@@ -81,18 +80,18 @@ namespace KJS {
 
         void putValue(JSValue* value)
         { 
-            if (m_getValue == KJS_VALUE_SLOT_MARKER) {
+            if (m_getValue == JSC_VALUE_SLOT_MARKER) {
                 *m_data.valueSlot = value;
                 return;
             }
-            ASSERT(m_getValue == KJS_REGISTER_SLOT_MARKER);
+            ASSERT(m_getValue == JSC_REGISTER_SLOT_MARKER);
             *m_data.registerSlot = value;
         }
 
         void setValueSlot(JSValue** valueSlot) 
         {
             ASSERT(valueSlot);
-            m_getValue = KJS_VALUE_SLOT_MARKER;
+            m_getValue = JSC_VALUE_SLOT_MARKER;
             clearBase();
             m_data.valueSlot = valueSlot;
         }
@@ -100,7 +99,7 @@ namespace KJS {
         void setValueSlot(JSValue* slotBase, JSValue** valueSlot)
         {
             ASSERT(valueSlot);
-            m_getValue = KJS_VALUE_SLOT_MARKER;
+            m_getValue = JSC_VALUE_SLOT_MARKER;
             m_slotBase = slotBase;
             m_data.valueSlot = valueSlot;
         }
@@ -108,7 +107,7 @@ namespace KJS {
         void setValueSlot(JSValue* slotBase, JSValue** valueSlot, size_t offset)
         {
             ASSERT(valueSlot);
-            m_getValue = KJS_VALUE_SLOT_MARKER;
+            m_getValue = JSC_VALUE_SLOT_MARKER;
             m_slotBase = slotBase;
             m_data.valueSlot = valueSlot;
             m_offset = offset;
@@ -117,7 +116,7 @@ namespace KJS {
         void setValue(JSValue* value)
         {
             ASSERT(value);
-            m_getValue = KJS_VALUE_SLOT_MARKER;
+            m_getValue = JSC_VALUE_SLOT_MARKER;
             clearBase();
             m_value = value;
             m_data.valueSlot = &m_value;
@@ -126,19 +125,9 @@ namespace KJS {
         void setRegisterSlot(Register* registerSlot)
         {
             ASSERT(registerSlot);
-            m_getValue = KJS_REGISTER_SLOT_MARKER;
+            m_getValue = JSC_REGISTER_SLOT_MARKER;
             clearBase();
             m_data.registerSlot = registerSlot;
-        }
-
-        void setStaticEntry(JSValue* slotBase, const HashEntry* staticEntry, GetValueFunc getValue)
-        {
-            ASSERT(slotBase);
-            ASSERT(staticEntry);
-            ASSERT(getValue);
-            m_getValue = getValue;
-            m_slotBase = slotBase;
-            m_data.staticEntry = staticEntry;
         }
 
         void setCustom(JSValue* slotBase, GetValueFunc getValue)
@@ -198,7 +187,6 @@ namespace KJS {
 #endif
         }
 
-        const HashEntry* staticEntry() const { return m_data.staticEntry; }
         unsigned index() const { return m_data.index; }
 
     private:
@@ -211,7 +199,6 @@ namespace KJS {
             JSObject* getterFunc;
             JSValue** valueSlot;
             Register* registerSlot;
-            const HashEntry* staticEntry;
             unsigned index;
         } m_data;
 
@@ -220,6 +207,6 @@ namespace KJS {
         size_t m_offset;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // PropertySlot_h

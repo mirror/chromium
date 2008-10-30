@@ -23,17 +23,13 @@
 #define Debugger_h
 
 #include "protect.h"
-#include <wtf/HashSet.h>
 
-namespace KJS {
+namespace JSC {
 
-    class ArgList;
     class DebuggerCallFrame;
     class ExecState;
     class JSGlobalObject;
-    class JSObject;
-    class JSValue;
-    class SourceProvider;
+    class SourceCode;
     class UString;
 
     class Debugger {
@@ -44,21 +40,20 @@ namespace KJS {
         void attach(JSGlobalObject*);
         void detach(JSGlobalObject*);
 
-        virtual void sourceParsed(ExecState*, int sourceId, const UString& sourceURL,
-                                  const SourceProvider& source, int startingLineNumber, int errorLine, const UString& errorMsg) = 0;
-        virtual void exception(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
-        virtual void atStatement(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
-        virtual void callEvent(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
-        virtual void returnEvent(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void sourceParsed(ExecState*, const SourceCode&, int errorLine, const UString& errorMsg) = 0;
+        virtual void exception(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
+        virtual void atStatement(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
+        virtual void callEvent(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
+        virtual void returnEvent(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
 
-        virtual void willExecuteProgram(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
-        virtual void didExecuteProgram(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
-        virtual void didReachBreakpoint(const DebuggerCallFrame&, int sourceId, int lineno) = 0;
+        virtual void willExecuteProgram(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
+        virtual void didExecuteProgram(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
+        virtual void didReachBreakpoint(const DebuggerCallFrame&, intptr_t sourceID, int lineno) = 0;
 
     private:
         HashSet<JSGlobalObject*> m_globalObjects;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // Debugger_h

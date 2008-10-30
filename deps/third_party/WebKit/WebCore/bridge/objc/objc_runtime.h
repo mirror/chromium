@@ -28,11 +28,10 @@
 
 #include "objc_header.h"
 #include "runtime.h"
-#include <CoreFoundation/CoreFoundation.h>
-#include <kjs/JSObject.h>
+#include <kjs/JSGlobalObject.h>
 #include <wtf/RetainPtr.h>
 
-namespace KJS {
+namespace JSC {
 namespace Bindings {
 
 ClassStructPtr webScriptObjectClass();
@@ -94,11 +93,16 @@ private:
 
 class ObjcFallbackObjectImp : public JSObject {
 public:
-    ObjcFallbackObjectImp(ExecState* exec, ObjcInstance*, const Identifier& propertyName);
+    ObjcFallbackObjectImp(ExecState*, ObjcInstance*, const Identifier& propertyName);
 
-    static const ClassInfo info;
+    static const ClassInfo s_info;
 
     const Identifier& propertyName() const { return _item; }
+
+    static ObjectPrototype* createPrototype(ExecState* exec)
+    {
+        return exec->lexicalGlobalObject()->objectPrototype();
+    }
 
 private:
     virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
@@ -109,13 +113,13 @@ private:
 
     virtual bool toBoolean(ExecState*) const;
 
-    virtual const ClassInfo* classInfo() const { return &info; }
+    virtual const ClassInfo* classInfo() const { return &s_info; }
 
     RefPtr<ObjcInstance> _instance;
     Identifier _item;
 };
 
 } // namespace Bindings
-} // namespace KJS
+} // namespace JSC
 
 #endif

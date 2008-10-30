@@ -47,7 +47,7 @@
 #include "Page.h"
 #include "FocusController.h"
 #include "PlatformMouseEvent.h"
-#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+#if PLATFORM(WIN_OS) && !PLATFORM(WX) && ENABLE(NETSCAPE_PLUGIN_API)
 #include "PluginMessageThrottlerWin.h"
 #endif
 #include "PluginPackage.h"
@@ -57,6 +57,7 @@
 #include "PluginDebug.h"
 #include "PluginMainThreadScheduler.h"
 #include "PluginPackage.h"
+#include "RenderObject.h"
 #include "c_instance.h"
 #include "npruntime_impl.h"
 #include "runtime_root.h"
@@ -66,11 +67,11 @@
 #include <kjs/JSValue.h>
 #include <wtf/ASCIICType.h>
 
-using KJS::ExecState;
-using KJS::JSLock;
-using KJS::JSObject;
-using KJS::JSValue;
-using KJS::UString;
+using JSC::ExecState;
+using JSC::JSLock;
+using JSC::JSObject;
+using JSC::JSValue;
+using JSC::UString;
 
 using std::min;
 
@@ -112,15 +113,15 @@ IntRect PluginView::windowClipRect() const
     return clipRect;
 }
 
-void PluginView::setFrameGeometry(const IntRect& rect)
+void PluginView::setFrameRect(const IntRect& rect)
 {
     if (m_element->document()->printing())
         return;
 
-    if (rect != frameGeometry())
-        Widget::setFrameGeometry(rect);
+    if (rect != frameRect())
+        Widget::setFrameRect(rect);
 
-    updateWindow();
+    updatePluginWidget();
 
 #if PLATFORM(WIN_OS)
     // On Windows, always call plugin to change geometry.
@@ -132,9 +133,9 @@ void PluginView::setFrameGeometry(const IntRect& rect)
 #endif
 }
 
-void PluginView::geometryChanged() const
+void PluginView::frameRectsChanged() const
 {
-    updateWindow();
+    updatePluginWidget();
 }
 
 void PluginView::handleEvent(Event* event)
@@ -161,7 +162,7 @@ bool PluginView::start()
     NPError npErr;
     {
         PluginView::setCurrentPluginView(this);
-        KJS::JSLock::DropAllLocks dropAllLocks(false);
+        JSC::JSLock::DropAllLocks dropAllLocks(false);
         setCallingPlugin(true);
         npErr = m_plugin->pluginFuncs()->newp((NPMIMEType)m_mimeType.data(), m_instance, m_mode, m_paramCount, m_paramNames, m_paramValues, NULL);
         setCallingPlugin(false);
@@ -243,7 +244,7 @@ void PluginView::performRequest(PluginRequest* request)
             // FIXME: <rdar://problem/4807469> This should be sent when the document has finished loading
             if (request->sendNotification()) {
                 PluginView::setCurrentPluginView(this);
-                KJS::JSLock::DropAllLocks dropAllLocks(false);
+                JSC::JSLock::DropAllLocks dropAllLocks(false);
                 setCallingPlugin(true);
                 m_plugin->pluginFuncs()->urlnotify(m_instance, requestURL.string().utf8().data(), NPRES_DONE, request->notifyData());
                 setCallingPlugin(false);
@@ -326,6 +327,8 @@ NPError PluginView::load(const FrameLoadRequest& frameLoadRequest, bool sendNoti
         // For security reasons, only allow JS requests to be made on the frame that contains the plug-in.
         if (!targetFrameName.isNull() && m_parentFrame->tree()->find(targetFrameName) != m_parentFrame)
             return NPERR_INVALID_PARAM;
+    } else if (!FrameLoader::canLoad(url, String(), m_parentFrame->document())) {
+            return NPERR_GENERIC_ERROR;
     }
 
     PluginRequest* request = new PluginRequest(frameLoadRequest, sendNotification, notifyData, arePopupsAllowed());
@@ -429,7 +432,7 @@ void PluginView::invalidateTimerFired(Timer<PluginView>* timer)
     ASSERT(timer == &m_invalidateTimer);
 
     for (unsigned i = 0; i < m_invalidRects.size(); i++)
-        Widget::invalidateRect(m_invalidRects[i]);
+        invalidateRect(m_invalidRects[i]);
     m_invalidRects.clear();
 }
 
@@ -464,7 +467,7 @@ void PluginView::setJavaScriptPaused(bool paused)
         m_requestTimer.startOneShot(0);
 }
 
-PassRefPtr<KJS::Bindings::Instance> PluginView::bindingInstance()
+PassRefPtr<JSC::Bindings::Instance> PluginView::bindingInstance()
 {
 #if ENABLE(NETSCAPE_PLUGIN_API)
     NPObject* object = 0;
@@ -475,7 +478,7 @@ PassRefPtr<KJS::Bindings::Instance> PluginView::bindingInstance()
     NPError npErr;
     {
         PluginView::setCurrentPluginView(this);
-        KJS::JSLock::DropAllLocks dropAllLocks(false);
+        JSC::JSLock::DropAllLocks dropAllLocks(false);
         setCallingPlugin(true);
         npErr = m_plugin->pluginFuncs()->getvalue(m_instance, NPPVpluginScriptableNPObject, &object);
         setCallingPlugin(false);
@@ -485,8 +488,8 @@ PassRefPtr<KJS::Bindings::Instance> PluginView::bindingInstance()
     if (npErr != NPERR_NO_ERROR || !object)
         return 0;
 
-    RefPtr<KJS::Bindings::RootObject> root = m_parentFrame->script()->createRootObject(this);
-    RefPtr<KJS::Bindings::Instance> instance = KJS::Bindings::CInstance::create(object, root.release());
+    RefPtr<JSC::Bindings::RootObject> root = m_parentFrame->script()->createRootObject(this);
+    RefPtr<JSC::Bindings::Instance> instance = JSC::Bindings::CInstance::create(object, root.release());
 
     _NPN_ReleaseObject(object);
 
@@ -541,18 +544,21 @@ PluginView::PluginView(Frame* parentFrame, const IntSize& size, PluginPackage* p
     , m_paramValues(0)
     , m_isWindowed(true)
     , m_isTransparent(false)
-    , m_isVisible(false)
-    , m_attachedToWindow(false)
     , m_haveInitialized(false)
 #if PLATFORM(GTK) || defined(Q_WS_X11)
     , m_needsXEmbed(false)
 #endif
-#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+#if PLATFORM(QT)
+    , m_isNPAPIPlugin(false)
+#endif
+#if PLATFORM(WIN_OS) && !PLATFORM(WX) && ENABLE(NETSCAPE_PLUGIN_API)
     , m_pluginWndProc(0)
     , m_lastMessage(0)
     , m_isCallingPluginWndProc(false)
 #endif
+#if PLATFORM(WIN_OS) && PLATFORM(QT)
     , m_window(0)
+#endif
     , m_loadManually(loadManually)
     , m_manualStream(0)
     , m_isJavaScriptPaused(false)
@@ -871,6 +877,20 @@ NPError PluginView::handlePost(const char* url, const char* target, uint32 len, 
     frameLoadRequest.setFrameName(target);
 
     return load(frameLoadRequest, sendNotification, notifyData);
+}
+
+void PluginView::invalidateWindowlessPluginRect(const IntRect& rect)
+{
+    if (!isVisible())
+        return;
+    
+    RenderObject* renderer = m_element->renderer();
+    if (!renderer)
+        return;
+    
+    IntRect dirtyRect = rect;
+    dirtyRect.move(renderer->borderLeft() + renderer->paddingLeft(), renderer->borderTop() + renderer->paddingTop());
+    renderer->repaintRectangle(dirtyRect);
 }
 
 } // namespace WebCore

@@ -35,7 +35,7 @@
 #include "Profiler.h"
 #include "Tracing.h"
 
-namespace KJS {
+namespace JSC {
 
 static const char* NonJSExecution = "(idle)";
 
@@ -45,25 +45,24 @@ PassRefPtr<ProfileGenerator> ProfileGenerator::create(const UString& title, Exec
 }
 
 ProfileGenerator::ProfileGenerator(const UString& title, ExecState* originatingExec, unsigned uid)
-    : m_originatingGlobalExec(originatingExec->lexicalGlobalObject()->globalExec())
-    , m_profileGroup(originatingExec->lexicalGlobalObject()->profileGroup())
-
+    : m_originatingGlobalExec(originatingExec ? originatingExec->lexicalGlobalObject()->globalExec() : 0)
+    , m_profileGroup(originatingExec ? originatingExec->lexicalGlobalObject()->profileGroup() : 0)
 {
     m_profile = Profile::create(title, uid);
     m_currentNode = m_head = m_profile->head();
-
-    addParentForConsoleStart(originatingExec);
+    if (originatingExec)
+        addParentForConsoleStart(originatingExec);
 }
 
 void ProfileGenerator::addParentForConsoleStart(ExecState* exec)
 {
     int lineNumber;
-    int sourceID;
+    intptr_t sourceID;
     UString sourceURL;
     JSValue* function;
 
     exec->machine()->retrieveLastCaller(exec, lineNumber, sourceID, sourceURL, function);
-    m_currentNode = ProfileNode::create(Profiler::createCallIdentifier(exec, function ? function->toThisObject(exec) : 0, sourceURL, lineNumber), m_head.get(), m_head.get());
+    m_currentNode = ProfileNode::create(Profiler::createCallIdentifier(&exec->globalData(), function ? function->toThisObject(exec) : 0, sourceURL, lineNumber), m_head.get(), m_head.get());
     m_head->insertNode(m_currentNode.get());
 }
 
@@ -80,6 +79,9 @@ void ProfileGenerator::willExecute(const CallIdentifier& callIdentifier)
         JAVASCRIPTCORE_PROFILE_WILL_EXECUTE(m_profileGroup, const_cast<char*>(name.c_str()), const_cast<char*>(url.c_str()), callIdentifier.m_lineNumber);
     }
 
+    if (!m_originatingGlobalExec)
+        return;
+
     ASSERT_ARG(m_currentNode, m_currentNode);
     m_currentNode = m_currentNode->willExecute(callIdentifier);
 }
@@ -91,6 +93,9 @@ void ProfileGenerator::didExecute(const CallIdentifier& callIdentifier)
         CString url = callIdentifier.m_url.UTF8String();
         JAVASCRIPTCORE_PROFILE_DID_EXECUTE(m_profileGroup, const_cast<char*>(name.c_str()), const_cast<char*>(url.c_str()), callIdentifier.m_lineNumber);
     }
+
+    if (!m_originatingGlobalExec)
+        return;
 
     ASSERT_ARG(m_currentNode, m_currentNode);
     if (m_currentNode->callIdentifier() != callIdentifier) {
@@ -161,4 +166,4 @@ void ProfileGenerator::removeProfileEnd()
     currentNode->parent()->removeChild(currentNode);
 }
 
-} // namespace KJS
+} // namespace JSC

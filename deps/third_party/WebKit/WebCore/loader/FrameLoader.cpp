@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -333,6 +333,7 @@ Frame* FrameLoader::createWindow(FrameLoader* frameLoaderForFrameLookup, const F
     // FIXME: Setting the referrer should be the caller's responsibility.
     FrameLoadRequest requestWithReferrer = request;
     requestWithReferrer.resourceRequest().setHTTPReferrer(m_outgoingReferrer);
+    addHTTPOriginIfNeeded(requestWithReferrer.resourceRequest(), outgoingOrigin());
 
     Page* oldPage = m_frame->page();
     if (!oldPage)
@@ -395,6 +396,8 @@ void FrameLoader::changeLocation(const String& url, const String& referrer, bool
 
 void FrameLoader::changeLocation(const KURL& url, const String& referrer, bool lockHistory, bool userGesture)
 {
+    RefPtr<Frame> protect(m_frame);
+
     ResourceRequestCachePolicy policy = (m_cachePolicy == CachePolicyReload) || (m_cachePolicy == CachePolicyRefresh)
         ? ReloadIgnoringCacheData : UseProtocolCachePolicy;
     ResourceRequest request(url, referrer, policy);
@@ -410,6 +413,7 @@ void FrameLoader::urlSelected(const FrameLoadRequest& request, Event* event, boo
     FrameLoadRequest copy = request;
     if (copy.resourceRequest().httpReferrer().isEmpty())
         copy.resourceRequest().setHTTPReferrer(m_outgoingReferrer);
+    addHTTPOriginIfNeeded(copy.resourceRequest(), outgoingOrigin());
 
     loadFrameRequestWithFormAndValues(copy, lockHistory, event, 0, HashMap<String, String>());
 }
@@ -585,6 +589,7 @@ void FrameLoader::submitForm(const char* action, const String& url, PassRefPtr<F
     }
 
     frameRequest.resourceRequest().setURL(u);
+    addHTTPOriginIfNeeded(frameRequest.resourceRequest(), outgoingOrigin());
 
     submitForm(frameRequest, event);
 }
@@ -977,18 +982,13 @@ void FrameLoader::begin(const KURL& url, bool dispatch, SecurityOrigin* origin)
 
     updatePolicyBaseURL();
 
-#if USE(V8)
-    // Notify script controller that the new DOMWindow is ready
-    m_frame->script()->notifyDOMWindowReady();
-#endif
-
     Settings* settings = document->settings();
     document->docLoader()->setAutoLoadImages(settings && settings->loadsImagesAutomatically());
 
     if (m_documentLoader) {
         String dnsPrefetchControl = m_documentLoader->response().httpHeaderField("X-DNS-Prefetch-Control");
         if (!dnsPrefetchControl.isEmpty())
-            document->setDNSPrefetchControl(dnsPrefetchControl);
+            document->parseDNSPrefetchControlHeader(dnsPrefetchControl);
     }
 
 #if FRAME_LOADS_USER_STYLESHEET
@@ -1002,7 +1002,7 @@ void FrameLoader::begin(const KURL& url, bool dispatch, SecurityOrigin* origin)
     document->implicitOpen();
 
     if (m_frame->view())
-        m_frame->view()->resizeContents(0, 0);
+        m_frame->view()->setContentsSize(IntSize());
 
 #if USE(LOW_BANDWIDTH_DISPLAY)
     // Low bandwidth display is a first pass display without external resources
@@ -1840,6 +1840,14 @@ String FrameLoader::outgoingReferrer() const
     return m_outgoingReferrer;
 }
 
+String FrameLoader::outgoingOrigin() const
+{
+    if (m_frame->document())
+        return m_frame->document()->securityOrigin()->toString();
+
+    return SecurityOrigin::createEmpty()->toString();
+}
+
 Frame* FrameLoader::opener()
 {
     return m_opener;
@@ -2184,8 +2192,11 @@ void FrameLoader::loadURL(const KURL& newURL, const String& referrer, const Stri
     bool isFormSubmission = formState;
     
     ResourceRequest request(newURL);
-    if (!referrer.isEmpty())
+    if (!referrer.isEmpty()) {
         request.setHTTPReferrer(referrer);
+        RefPtr<SecurityOrigin> referrerOrigin = SecurityOrigin::createFromString(referrer);
+        addHTTPOriginIfNeeded(request, referrerOrigin->toString());
+    }
     addExtraFieldsToRequest(request, true, event || isFormSubmission);
     if (newLoadType == FrameLoadTypeReload)
         request.setCachePolicy(ReloadIgnoringCacheData);
@@ -2322,7 +2333,7 @@ void FrameLoader::loadWithDocumentLoader(DocumentLoader* loader, FrameLoadType t
     // Unfortunately the view must be non-nil, this is ultimately due
     // to parser requiring a FrameView.  We should fix this dependency.
 
-    ASSERT(m_client->hasFrameView());
+    ASSERT(m_frame->view());
 
     m_policyLoadType = type;
     RefPtr<FormState> formState = prpFormState;
@@ -2530,25 +2541,13 @@ void FrameLoader::reload()
     loadWithDocumentLoader(loader.get(), FrameLoadTypeReload, 0);
 }
 
-bool FrameLoader::shouldAllowNavigation(Frame* targetFrame) const
+static bool canAccessAncestor(const SecurityOrigin* activeSecurityOrigin, Frame* targetFrame)
 {
-    // The navigation change is safe if the active frame is:
-    //   - in the same security origin as the target or one of the target's ancestors
-    // Or the target frame is:
-    //   - a top-level frame in the frame hierarchy
-
+    // targetFrame can be NULL when we're trying to navigate a top-level frame
+    // that has a NULL opener.
     if (!targetFrame)
-        return true;
+        return false;
 
-    if (m_frame == targetFrame)
-        return true;
-
-    if (!targetFrame->tree()->parent())
-        return true;
-
-    Document* activeDocument = m_frame->document();
-    ASSERT(activeDocument);
-    const SecurityOrigin* activeSecurityOrigin = activeDocument->securityOrigin();
     for (Frame* ancestorFrame = targetFrame; ancestorFrame; ancestorFrame = ancestorFrame->tree()->parent()) {
         Document* ancestorDocument = ancestorFrame->document();
         if (!ancestorDocument)
@@ -2558,6 +2557,44 @@ bool FrameLoader::shouldAllowNavigation(Frame* targetFrame) const
         if (activeSecurityOrigin->canAccess(ancestorSecurityOrigin))
             return true;
     }
+
+    return false;
+}
+
+bool FrameLoader::shouldAllowNavigation(Frame* targetFrame) const
+{
+    // The navigation change is safe if the active frame is:
+    //   - in the same security origin as the target or one of the target's
+    //     ancestors.
+    //
+    // Or the target frame is:
+    //   - a top-level frame in the frame hierarchy and the active frame can
+    //     navigate the target frame's opener per above.
+
+    if (!targetFrame)
+        return true;
+
+    // Performance optimization.
+    if (m_frame == targetFrame)
+        return true;
+
+    // Let a frame navigate the top-level window that contains it.  This is
+    // important to allow because it lets a site "frame-bust" (escape from a
+    // frame created by another web site).
+    if (targetFrame == m_frame->tree()->top())
+        return true;
+
+    Document* activeDocument = m_frame->document();
+    ASSERT(activeDocument);
+    const SecurityOrigin* activeSecurityOrigin = activeDocument->securityOrigin();
+
+    // For top-level windows, check the opener.
+    if (!targetFrame->tree()->parent() && canAccessAncestor(activeSecurityOrigin, targetFrame->loader()->opener()))
+        return true;
+
+    // In general, check the frame's ancestors.
+    if (canAccessAncestor(activeSecurityOrigin, targetFrame))
+        return true;
 
     Settings* settings = targetFrame->settings();
     if (settings && !settings->privateBrowsingEnabled()) {
@@ -2680,11 +2717,6 @@ DocumentLoader* FrameLoader::provisionalDocumentLoader() const
     return m_provisionalDocumentLoader.get();
 }
 
-DocumentLoader* FrameLoader::policyDocumentLoader()
-{
-    return m_policyDocumentLoader.get();
-}
-
 void FrameLoader::setProvisionalDocumentLoader(DocumentLoader* loader)
 {
     ASSERT(!loader || !m_provisionalDocumentLoader);
@@ -2742,7 +2774,20 @@ void FrameLoader::commitProvisionalLoad(PassRefPtr<CachedPage> prpCachedPage)
     // We are doing this here because we know for sure that a new page is about to be loaded.
     if (canCachePage() && m_client->canCachePage() && !m_currentHistoryItem->isInPageCache())
         cachePageForHistoryItem(m_currentHistoryItem.get());
-
+    else if (m_frame->page() && m_frame == m_frame->page()->mainFrame()) {
+        // If the main frame installs a timeout late enough (for example in its onunload handler)
+        // it could sometimes fire when transitioning to a non-HTML document representation (such as the Mac bookmarks view).
+        // To avoid this, we clear all timeouts if the page is not to be cached in the back forward list.
+        // Cached pages have their timers paused so they are fine.
+#if USE(JSC)
+        ScriptController* proxy = m_frame->script();
+        if (proxy->haveWindowShell())
+            proxy->windowShell()->window()->clearAllTimeouts();
+#elif USE(V8)
+        // FIXME: Need to do something here.
+#endif
+    }
+    
     if (m_loadType != FrameLoadTypeReplace)
         closeOldDataSources();
     
@@ -2847,7 +2892,7 @@ void FrameLoader::transitionToCommitted(PassRefPtr<CachedPage> cachedPage)
             // This code was originally added for a Leopard performance imporvement. We decided to 
             // ifdef it to fix correctness issues on Tiger documented in <rdar://problem/5441823>.
             if (m_frame->view())
-                m_frame->view()->suppressScrollbars(true);
+                m_frame->view()->setScrollbarsSuppressed(true);
 #endif
             m_client->transitionToCommittedForNewPage();
             break;
@@ -2866,7 +2911,7 @@ void FrameLoader::transitionToCommitted(PassRefPtr<CachedPage> cachedPage)
     m_responseMIMEType = dl->responseMIMEType();
 
     // Tell the client we've committed this URL.
-    ASSERT(m_client->hasFrameView());
+    ASSERT(m_frame->view());
 
     if (m_creatingInitialEmptyDocument)
         return;
@@ -3472,6 +3517,35 @@ void FrameLoader::addExtraFieldsToRequest(ResourceRequest& request, bool mainRes
     
     if (mainResource)
         request.setHTTPAccept("application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5");
+
+    // Make sure we send the Origin header.
+    addHTTPOriginIfNeeded(request, String());
+}
+
+void FrameLoader::addHTTPOriginIfNeeded(ResourceRequest& request, String origin)
+{
+    if (!request.httpOrigin().isEmpty())
+        return;  // Request already has an Origin header.
+
+    // Don't send an Origin header for GET or HEAD to avoid privacy issues.
+    // For example, if an intranet page has a hyperlink to an external web
+    // site, we don't want to include the Origin of the request because it
+    // will leak the internal host name. Similar privacy concerns have lead
+    // to the widespread suppression of the Referer header at the network
+    // layer.
+    if (request.httpMethod() == "GET" || request.httpMethod() == "HEAD")
+        return;
+
+    // For non-GET and non-HEAD methods, always send an Origin header so the
+    // server knows we support this feature.
+
+    if (origin.isEmpty()) {
+        // If we don't know what origin header to attach, we attach the value
+        // for an empty origin.
+        origin = SecurityOrigin::createEmpty()->toString();
+    }
+
+    request.setHTTPOrigin(origin);
 }
 
 void FrameLoader::committedLoad(DocumentLoader* loader, const char* data, int length)
@@ -3499,15 +3573,17 @@ void FrameLoader::loadPostRequest(const ResourceRequest& inRequest, const String
     const KURL& url = inRequest.url();
     RefPtr<FormData> formData = inRequest.httpBody();
     const String& contentType = inRequest.httpContentType();
+    String origin = inRequest.httpOrigin();
 
     ResourceRequest workingResourceRequest(url);    
-    addExtraFieldsToRequest(workingResourceRequest, true, true);
 
     if (!referrer.isEmpty())
         workingResourceRequest.setHTTPReferrer(referrer);
+    workingResourceRequest.setHTTPOrigin(origin);
     workingResourceRequest.setHTTPMethod("POST");
     workingResourceRequest.setHTTPBody(formData);
     workingResourceRequest.setHTTPContentType(contentType);
+    addExtraFieldsToRequest(workingResourceRequest, true, true);
 
     NavigationAction action(url, FrameLoadTypeStandard, true, event);
 
@@ -3549,6 +3625,7 @@ unsigned long FrameLoader::loadResourceSynchronously(const ResourceRequest& requ
     
     if (!referrer.isEmpty())
         initialRequest.setHTTPReferrer(referrer);
+    addHTTPOriginIfNeeded(initialRequest, outgoingOrigin());
 
     if (Page* page = m_frame->page())
         initialRequest.setMainDocumentURL(page->mainFrame()->loader()->documentLoader()->request().url());
@@ -3729,7 +3806,7 @@ void FrameLoader::opened()
         updateHistoryForClientRedirect();
 
     if (m_documentLoader->isLoadingFromCachedPage()) {
-        m_frame->document()->didRestoreFromCache();
+        m_frame->document()->documentDidBecomeActive();
         
         // Force a layout to update view size and thereby update scrollbars.
         m_client->forceLayout();
@@ -3898,6 +3975,12 @@ void FrameLoader::continueLoadAfterNavigationPolicy(const ResourceRequest& reque
 
     FrameLoadType type = m_policyLoadType;
     stopAllLoaders();
+    
+    // <rdar://problem/6250856> - In certain circumstances on pages with multiple frames, stopAllLoaders()
+    // might detach the current FrameLoader, in which case we should bail on this newly defunct load. 
+    if (!m_frame->page())
+        return;
+        
     setProvisionalDocumentLoader(m_policyDocumentLoader.get());
     m_loadType = type;
     setState(FrameStateProvisional);
@@ -4210,7 +4293,7 @@ void FrameLoader::saveScrollPositionAndViewStateToItem(HistoryItem* item)
     if (!item || !m_frame->view())
         return;
         
-    item->setScrollPoint(IntPoint(m_frame->view()->contentsX(), m_frame->view()->contentsY()));
+    item->setScrollPoint(m_frame->view()->scrollPosition());
     // FIXME: It would be great to work out a way to put this code in WebCore instead of calling through to the client.
     m_client->saveViewStateToItem(item);
 }
@@ -4246,10 +4329,8 @@ void FrameLoader::restoreScrollPositionAndViewState()
     m_client->restoreViewState();
     
     if (FrameView* view = m_frame->view())
-        if (!view->wasScrolledByUser()) {
-            const IntPoint& scrollPoint = m_currentHistoryItem->scrollPoint();
-            view->setContentsPos(scrollPoint.x(), scrollPoint.y());
-        }
+        if (!view->wasScrolledByUser())
+            view->setScrollPosition(m_currentHistoryItem->scrollPoint());
 }
 
 void FrameLoader::invalidateCurrentItemCachedPage()
@@ -4372,8 +4453,6 @@ void FrameLoader::loadItem(HistoryItem* item, FrameLoadType loadType)
         if (!inPageCache) {
             ResourceRequest request(itemURL);
 
-            addExtraFieldsToRequest(request, true, formData);
-
             // If this was a repost that failed the page cache, we might try to repost the form.
             NavigationAction action;
             if (formData) {
@@ -4384,6 +4463,8 @@ void FrameLoader::loadItem(HistoryItem* item, FrameLoadType loadType)
                 request.setHTTPReferrer(item->formReferrer());
                 request.setHTTPBody(formData);
                 request.setHTTPContentType(item->formContentType());
+                RefPtr<SecurityOrigin> securityOrigin = SecurityOrigin::createFromString(item->formReferrer());
+                addHTTPOriginIfNeeded(request, securityOrigin->toString());
         
                 // FIXME: Slight hack to test if the NSURL cache contains the page we're going to.
                 // We want to know this before talking to the policy delegate, since it affects whether 
@@ -4424,6 +4505,7 @@ void FrameLoader::loadItem(HistoryItem* item, FrameLoadType loadType)
                 action = NavigationAction(itemOriginalURL, loadType, false);
             }
 
+            addExtraFieldsToRequest(request, true, formData);
             loadWithNavigationAction(request, action, loadType, 0);
         }
     }
@@ -4785,10 +4867,10 @@ ResourceError FrameLoader::blockedError(const ResourceRequest& request) const
     return m_client->blockedError(request);
 }
 
-ResourceError FrameLoader::cannotShowURLError(const ResourceRequest& request) const 
-{ 
-    return m_client->cannotShowURLError(request); 
-} 
+ResourceError FrameLoader::cannotShowURLError(const ResourceRequest& request) const
+{
+    return m_client->cannotShowURLError(request);
+}
 
 ResourceError FrameLoader::fileDoesNotExistError(const ResourceResponse& response) const
 {
@@ -4917,10 +4999,15 @@ String FrameLoader::referrer() const
 
 void FrameLoader::dispatchWindowObjectAvailable()
 {
+#if USE(JSC)
+    if (!m_frame->script()->isEnabled() || !m_frame->script()->haveWindowShell())
+        return;
+#else
     // TODO(tc): We should also return early if we have no window shell.
     // But we can't check that until we refactor ScriptController.
     if (!m_frame->script()->isEnabled())
         return;
+#endif
 
     m_client->windowObjectCleared();
 

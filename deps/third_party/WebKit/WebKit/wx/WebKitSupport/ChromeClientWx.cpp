@@ -283,9 +283,34 @@ IntRect ChromeClientWx::windowResizerRect() const
     return IntRect();
 }
 
-void ChromeClientWx::addToDirtyRegion(const IntRect&)
+void ChromeClientWx::repaint(const IntRect& rect, bool contentChanged, bool immediate, bool repaintContentOnly)
+{
+    if (!m_webView)
+        return;
+    
+    if (contentChanged)
+        m_webView->RefreshRect(rect);
+    
+    if (immediate) {
+        m_webView->Update();
+    }
+}
+
+IntRect ChromeClientWx::windowToScreen(const IntRect& rect) const
 {
     notImplemented();
+    return rect;
+}
+
+IntPoint ChromeClientWx::screenToWindow(const IntPoint& point) const
+{
+    notImplemented();
+    return point;
+}
+
+PlatformWidget ChromeClientWx::platformWindow() const
+{
+    return 0;
 }
 
 void ChromeClientWx::scrollBackingStore(int dx, int dy, 
@@ -318,6 +343,11 @@ void ChromeClientWx::print(Frame*)
 }
 
 void ChromeClientWx::exceededDatabaseQuota(Frame*, const String&)
+{
+    notImplemented();
+}
+
+void ChromeClientWx::scroll(const IntSize&, const IntRect&, const IntRect&)
 {
     notImplemented();
 }

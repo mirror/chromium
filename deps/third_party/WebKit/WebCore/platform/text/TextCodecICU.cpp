@@ -33,6 +33,7 @@
 #include <unicode/ucnv.h>
 #include <unicode/ucnv_cb.h>
 #include <wtf/Assertions.h>
+#include <wtf/StringExtras.h>
 
 using std::auto_ptr;
 using std::min;
@@ -59,8 +60,7 @@ void TextCodecICU::registerBaseCodecs(TextCodecRegistrar registrar)
 }
 
 // FIXME: Registering all the encodings we get from ucnv_getAvailableName
-// includes encodings we don't want or need. For example: UTF16_PlatformEndian,
-// UTF16_OppositeEndian, UTF32_PlatformEndian, UTF32_OppositeEndian, and all
+// includes encodings we don't want or need. For example, all
 // the encodings with commas and version numbers.
 
 void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar)
@@ -68,7 +68,7 @@ void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar
     // We register Hebrew with logical ordering using a separate name.
     // Otherwise, this would share the same canonical name as the
     // visual ordering case, and then TextEncoding could not tell them
-    // apart; ICU works with either name.
+    // apart; ICU treats these names as synonyms.
     registrar("ISO-8859-8-I", "ISO-8859-8-I");
 
     int32_t numEncodings = ucnv_countAvailable();
@@ -92,10 +92,10 @@ void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar
         // of ICU treats GB2312/GB2312-80 as synonyms of GBK so that we
         // don't need that any more.
         // Similarly, EUC-KR encodings all map to an extended version.
-        else if (strcmp(standardName, "KS_C_5601-1987") == 0 || strcmp(standardName, "EUC-KR") == 0)
+        if (strcmp(standardName, "KSC_5601") == 0 || strcmp(standardName, "EUC-KR") == 0 || strcmp(standardName, "cp1363") == 0)
             standardName = "windows-949-2000";
         // And so on.
-        else if (strcmp(standardName, "ISO_8859-9:1989") == 0)
+        else if (strcasecmp(standardName, "iso-8859-9") == 0) // This name is returned in different case by ICU 3.2 and 3.6.
             standardName = "windows-1254";
         else if (strcmp(standardName, "TIS-620") == 0)
             standardName = "windows-874-2000";
@@ -137,7 +137,6 @@ void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar
     registrar("winarabic", "windows-1256");
     registrar("winbaltic", "windows-1257");
     registrar("wincyrillic", "windows-1251");
-    registrar("windows874", "windows874-2000");
     registrar("iso885911", "windows874-2000");
     registrar("wingreek", "windows-1253");
     registrar("winhebrew", "windows-1255");
@@ -152,6 +151,15 @@ void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar
     registrar("xunicode20utf8", "UTF-8");
     registrar("xwindows949", "windows-949-2000");
     registrar("xxbig5", "Big5");
+
+    // This alias is present in modern versions of ICU, but it has no standard name,
+    // so we give one to it manually. It is not present in ICU 3.2.
+    registrar("windows874", "windows874-2000");
+
+    // These aliases are present in modern versions of ICU, but use different codecs, and have no standard names.
+    // They are not present in ICU 3.2.
+    registrar("dos720", "cp864");
+    registrar("jis7", "ISO-2022-JP");
 }
 
 void TextCodecICU::registerExtendedCodecs(TextCodecRegistrar registrar)
@@ -163,14 +171,9 @@ void TextCodecICU::registerExtendedCodecs(TextCodecRegistrar registrar)
     for (int32_t i = 0; i < numEncodings; ++i) {
         const char* name = ucnv_getAvailableName(i);
         UErrorCode error = U_ZERO_ERROR;
-        // Try MIME before trying IANA to pick up commonly used names like
-        // 'EUC-JP' instead of horrendeously long names like 
-        // 'Extended_UNIX_Code_Packed_Format_for_Japanese'. 
         const char* standardName = ucnv_getStandardName(name, "MIME", &error);
         if (!U_SUCCESS(error) || !standardName) {
             error = U_ZERO_ERROR;
-            // Try IANA to pick up 'windows-12xx' and other names
-            // which are not preferred MIME names but are widely used. 
             standardName = ucnv_getStandardName(name, "IANA", &error);
             if (!U_SUCCESS(error) || !standardName)
                 continue;

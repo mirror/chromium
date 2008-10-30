@@ -30,12 +30,14 @@
 #include "config.h"
 #include "PlatformScreen.h"
 
+#include "HostWindow.h"
 #include "NotImplemented.h"
+#include "ScrollView.h"
 #include "Widget.h"
 
 #include <gtk/gtk.h>
 
-#if defined(GDK_WINDOWING_X11)
+#if PLATFORM(X11)
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
 #endif
@@ -44,27 +46,27 @@ namespace WebCore {
 
 int screenDepth(Widget* widget)
 {
-    GtkWidget* container = GTK_WIDGET(widget->containingWindow());
+    GtkWidget* container = GTK_WIDGET(widget->root()->hostWindow()->platformWindow());
     if (!container)
         return 24;
 
-    GdkVisual* visual = gdk_drawable_get_visual(GDK_DRAWABLE(GTK_WIDGET(widget->containingWindow())->window));
+    GdkVisual* visual = gdk_drawable_get_visual(GDK_DRAWABLE(GTK_WIDGET(widget->root()->hostWindow()->platformWindow())->window));
     return visual->depth;
 }
 
 int screenDepthPerComponent(Widget* widget)
 {
-    GtkWidget* container = GTK_WIDGET(widget->containingWindow());
+    GtkWidget* container = GTK_WIDGET(widget->root()->hostWindow()->platformWindow());
     if (!container)
         return 8;
 
-    GdkVisual* visual = gdk_drawable_get_visual(GDK_DRAWABLE(GTK_WIDGET(widget->containingWindow())->window));
+    GdkVisual* visual = gdk_drawable_get_visual(GDK_DRAWABLE(GTK_WIDGET(widget->root()->hostWindow()->platformWindow())->window));
     return visual->bits_per_rgb;
 }
 
 bool screenIsMonochrome(Widget* widget)
 {
-    GtkWidget* container = GTK_WIDGET(widget->containingWindow());
+    GtkWidget* container = GTK_WIDGET(widget->root()->hostWindow()->platformWindow());
     if (!container)
         return false;
 
@@ -73,7 +75,7 @@ bool screenIsMonochrome(Widget* widget)
 
 FloatRect screenRect(Widget* widget)
 {
-    GtkWidget* container = GTK_WIDGET(widget->containingWindow());
+    GtkWidget* container = GTK_WIDGET(widget->root()->hostWindow()->platformWindow());
     if (!container)
         return FloatRect();
 
@@ -90,8 +92,8 @@ FloatRect screenRect(Widget* widget)
 
 FloatRect screenAvailableRect(Widget* widget)
 {
-#if defined(GDK_WINDOWING_X11)
-    GtkWidget* container = GTK_WIDGET(widget->containingWindow());
+#if PLATFORM(X11)
+    GtkWidget* container = GTK_WIDGET(widget->root()->hostWindow()->platformWindow());
     if (!container)
         return FloatRect();
 

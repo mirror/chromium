@@ -29,7 +29,6 @@
 #include "CString.h"
 #include "CharacterNames.h"
 #include "FloatConversion.h"
-#include "Length.h"
 #include "StringBuffer.h"
 #include "StringHash.h"
 #include "TextBreakIterator.h"
@@ -200,128 +199,6 @@ UChar32 StringImpl::characterStartingAt(unsigned i)
     return 0;
 }
 
-static Length parseLength(const UChar* data, unsigned length)
-{
-    if (length == 0)
-        return Length(1, Relative);
-
-    unsigned i = 0;
-    while (i < length && isSpaceOrNewline(data[i]))
-        ++i;
-    if (i < length && (data[i] == '+' || data[i] == '-'))
-        ++i;
-    while (i < length && Unicode::isDigit(data[i]))
-        ++i;
-
-    bool ok;
-    int r = charactersToIntStrict(data, i, &ok);
-
-    /* Skip over any remaining digits, we are not that accurate (5.5% => 5%) */
-    while (i < length && (Unicode::isDigit(data[i]) || data[i] == '.'))
-        ++i;
-
-    /* IE Quirk: Skip any whitespace (20 % => 20%) */
-    while (i < length && isSpaceOrNewline(data[i]))
-        ++i;
-
-    if (ok) {
-        if (i < length) {
-            UChar next = data[i];
-            if (next == '%')
-                return Length(static_cast<double>(r), Percent);
-            if (next == '*')
-                return Length(r, Relative);
-        }
-        return Length(r, Fixed);
-    } else {
-        if (i < length) {
-            UChar next = data[i];
-            if (next == '*')
-                return Length(1, Relative);
-            if (next == '%')
-                return Length(1, Relative);
-        }
-    }
-    return Length(0, Relative);
-}
-
-Length StringImpl::toLength()
-{
-    return parseLength(m_data, m_length);
-}
-
-static int countCharacter(StringImpl* string, UChar character)
-{
-    int count = 0;
-    int length = string->length();
-    for (int i = 0; i < length; ++i)
-            count += (*string)[i] == character;
-    return count;
-}
-
-Length* StringImpl::toCoordsArray(int& len)
-{
-    StringBuffer spacified(m_length);
-    for (unsigned i = 0; i < m_length; i++) {
-        UChar cc = m_data[i];
-        if (cc > '9' || (cc < '0' && cc != '-' && cc != '*' && cc != '.'))
-            spacified[i] = ' ';
-        else
-            spacified[i] = cc;
-    }
-    RefPtr<StringImpl> str = adopt(spacified);
-
-    str = str->simplifyWhiteSpace();
-
-    len = countCharacter(str.get(), ' ') + 1;
-    Length* r = new Length[len];
-
-    int i = 0;
-    int pos = 0;
-    int pos2;
-
-    while ((pos2 = str->find(' ', pos)) != -1) {
-        r[i++] = parseLength(str->characters() + pos, pos2 - pos);
-        pos = pos2+1;
-    }
-    r[i] = parseLength(str->characters() + pos, str->length() - pos);
-
-    ASSERT(i == len - 1);
-
-    return r;
-}
-
-Length* StringImpl::toLengthArray(int& len)
-{
-    RefPtr<StringImpl> str = simplifyWhiteSpace();
-    if (!str->length()) {
-        len = 1;
-        return 0;
-    }
-
-    len = countCharacter(str.get(), ',') + 1;
-    Length* r = new Length[len];
-
-    int i = 0;
-    int pos = 0;
-    int pos2;
-
-    while ((pos2 = str->find(',', pos)) != -1) {
-        r[i++] = parseLength(str->characters() + pos, pos2 - pos);
-        pos = pos2+1;
-    }
-
-    ASSERT(i == len - 1);
-
-    /* IE Quirk: If the last comma is the last char skip it and reduce len by one */
-    if (str->length()-pos > 0)
-        r[i] = parseLength(str->characters() + pos, str->length() - pos);
-    else
-        len--;
-
-    return r;
-}
-
 bool StringImpl::isLower()
 {
     // Do a faster loop for the case where all the characters are ASCII.
@@ -375,10 +252,26 @@ PassRefPtr<StringImpl> StringImpl::lower()
 
 PassRefPtr<StringImpl> StringImpl::upper()
 {
+    StringBuffer data(m_length);
+    int32_t length = m_length;
+
+    // Do a faster loop for the case where all the characters are ASCII.
+    UChar ored = 0;
+    for (int i = 0; i < length; i++) {
+        UChar c = m_data[i];
+        ored |= c;
+        data[i] = toASCIIUpper(c);
+    }
+    if (!(ored & ~0x7F))
+        return adopt(data);
+
+    // Do a slower implementation for cases that include non-ASCII characters.
     bool error;
-    int32_t length = Unicode::toUpper(0, 0, m_data, m_length, &error);
-    StringBuffer data(length);
-    Unicode::toUpper(data.characters(), length, m_data, m_length, &error);
+    int32_t realLength = Unicode::toUpper(data.characters(), length, m_data, m_length, &error);
+    if (!error && realLength == length)
+        return adopt(data);
+    data.resize(realLength);
+    Unicode::toUpper(data.characters(), realLength, m_data, m_length, &error);
     if (error)
         return this;
     return adopt(data);

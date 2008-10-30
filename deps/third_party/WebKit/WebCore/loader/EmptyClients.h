@@ -113,6 +113,12 @@ public:
     virtual void scrollBackingStore(int dx, int dy, const IntRect& scrollViewRect, const IntRect& clipRect) { }
     virtual void updateBackingStore() { }
 
+    virtual void repaint(const IntRect&, bool contentChanged, bool immediate = false, bool repaintContentOnly = false) { }
+    virtual void scroll(const IntSize& scrollDelta, const IntRect& rectToScroll, const IntRect& clipRect) { }
+    virtual IntPoint screenToWindow(const IntPoint& p) const { return p; }
+    virtual IntRect windowToScreen(const IntRect& r) const { return r; }
+    virtual PlatformWidget platformWindow() const { return 0; }
+
     virtual void mouseDidMoveOverElement(const HitTestResult&, unsigned modifierFlags) { }
 
     virtual void setToolTip(const String&) { }
@@ -128,7 +134,6 @@ public:
     virtual void frameLoaderDestroyed() { }
 
     virtual bool hasWebView() const { return true; } // mainly for assertions
-    virtual bool hasFrameView() const { return true; } // ditto
 
     virtual void makeRepresentation(DocumentLoader*) { }
     virtual void forceLayout() { }

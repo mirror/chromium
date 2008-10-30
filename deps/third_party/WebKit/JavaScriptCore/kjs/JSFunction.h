@@ -30,7 +30,7 @@
 #include "nodes.h"
 #include "JSObject.h"
 
-namespace KJS {
+namespace JSC {
 
     class FunctionBodyNode;
     class FunctionPrototype;
@@ -38,7 +38,11 @@ namespace KJS {
     class JSGlobalObject;
 
     class JSFunction : public InternalFunction {
+        friend class CTI;
+        friend class Machine;
+
         typedef InternalFunction Base;
+        JSFunction(PassRefPtr<JSC::StructureID> st) : InternalFunction(st), m_scopeChain(NoScopeChain()) {}
     public:
         JSFunction(ExecState*, const Identifier&, FunctionBodyNode*, ScopeChainNode*);
 

@@ -198,12 +198,14 @@ public:
 
     String constrainValue(const String& proposedValue) const;
 
-    virtual void didRestoreFromCache();
+    virtual void documentDidBecomeActive();
 
     virtual void getSubresourceAttributeStrings(Vector<String>&) const;
     
     virtual bool willValidate() const;
 
+    bool placeholderShouldBeVisible() const { return m_placeholderShouldBeVisible; }
+    
 protected:
     virtual void willMoveToNewOwnerDocument();
     virtual void didMoveToNewOwnerDocument();
@@ -216,10 +218,12 @@ private:
     String constrainValue(const String& proposedValue, int maxLen) const;
     void recheckValue();
     
-    bool needsCacheCallback();
-    void registerForCacheCallbackIfNeeded();
-    void unregisterForCacheCallbackIfNeeded();
+    bool needsActivationCallback();
+    void registerForActivationCallbackIfNeeded();
+    void unregisterForActivationCallbackIfNeeded();
 
+    void updatePlaceholderVisibility(bool placeholderValueChanged = false);
+    
     String m_value;
     String m_originalValue;
     int xPos;
@@ -243,6 +247,7 @@ private:
     AutoCompleteSetting m_autocomplete : 2;
     bool m_autofilled : 1;
     bool m_inited : 1;
+    bool m_placeholderShouldBeVisible : 1;
     
     int cachedSelStart;
     int cachedSelEnd;

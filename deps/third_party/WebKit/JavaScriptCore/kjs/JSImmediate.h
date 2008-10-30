@@ -31,7 +31,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-namespace KJS {
+namespace JSC {
 
     class ExecState;
     class JSObject;
@@ -82,6 +82,8 @@ namespace KJS {
 
     class JSImmediate {
     private:
+        friend class CTI; // Whooo!
+    
         static const uintptr_t TagMask           = 0x3u; // primary tag is 2 bits long
         static const uintptr_t TagBitTypeInteger = 0x1u; // bottom bit set indicates integer, this dominates the following bit
         static const uintptr_t TagBitTypeOther   = 0x2u; // second bit set indicates immediate other than an integer
@@ -150,6 +152,16 @@ namespace KJS {
         static ALWAYS_INLINE bool isEitherImmediate(const JSValue* v1, const JSValue* v2)
         {
             return (reinterpret_cast<uintptr_t>(v1) | reinterpret_cast<uintptr_t>(v2)) & TagMask;
+        }
+
+        static ALWAYS_INLINE bool isAnyImmediate(const JSValue* v1, const JSValue* v2, JSValue* v3)
+        {
+            return (reinterpret_cast<uintptr_t>(v1) | reinterpret_cast<uintptr_t>(v2) | reinterpret_cast<uintptr_t>(v3)) & TagMask;
+        }
+
+        static ALWAYS_INLINE bool areBothImmediate(const JSValue* v1, const JSValue* v2)
+        {
+            return isImmediate(v1) & isImmediate(v2);
         }
 
         static ALWAYS_INLINE bool areBothImmediateNumbers(const JSValue* v1, const JSValue* v2)
@@ -230,6 +242,8 @@ namespace KJS {
         static JSValue* falseImmediate();
         static JSValue* undefinedImmediate();
         static JSValue* nullImmediate();
+        static JSValue* zeroImmediate();
+        static JSValue* oneImmediate();
 
         static JSValue* impossibleValue();
         
@@ -279,12 +293,16 @@ namespace KJS {
         {
             return reinterpret_cast<uintptr_t>(v);
         }
+
+        static double nonInlineNaN();
     };
 
     ALWAYS_INLINE JSValue* JSImmediate::trueImmediate() { return makeBool(true); }
     ALWAYS_INLINE JSValue* JSImmediate::falseImmediate() { return makeBool(false); }
     ALWAYS_INLINE JSValue* JSImmediate::undefinedImmediate() { return makeUndefined(); }
     ALWAYS_INLINE JSValue* JSImmediate::nullImmediate() { return makeNull(); }
+    ALWAYS_INLINE JSValue* JSImmediate::zeroImmediate() { return makeInt(0); }
+    ALWAYS_INLINE JSValue* JSImmediate::oneImmediate() { return makeInt(1); }
 
     // This value is impossible because 0x4 is not a valid pointer but a tag of 0 would indicate non-immediate
     ALWAYS_INLINE JSValue* JSImmediate::impossibleValue() { return reinterpret_cast<JSValue*>(0x4); }
@@ -394,13 +412,14 @@ namespace KJS {
     ALWAYS_INLINE double JSImmediate::toDouble(const JSValue* v)
     {
         ASSERT(isImmediate(v));
+        int i;
         if (isNumber(v))
-            return intValue(v);
-        if (rawValue(v) == (FullTagTypeBool | ExtendedPayloadBitBoolValue))
-            return 1.0;
-        if (rawValue(v) != FullTagTypeUndefined)
-            return 0.0;
-        return std::numeric_limits<double>::quiet_NaN();
+            i = intValue(v);
+        else if (rawValue(v) == FullTagTypeUndefined)
+            return nonInlineNaN();
+        else
+            i = rawValue(v) >> ExtendedPayloadShift;
+        return i;
     }
 
     ALWAYS_INLINE bool JSImmediate::getUInt32(const JSValue* v, uint32_t& i)
@@ -435,6 +454,6 @@ namespace KJS {
         return b ? JSImmediate::trueImmediate() : JSImmediate::falseImmediate();
     }
 
-} // namespace KJS
+} // namespace JSC
 
 #endif

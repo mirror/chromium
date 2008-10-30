@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -29,7 +29,7 @@ class QObject;
 class QMetaObject;
 QT_END_NAMESPACE
 
-namespace KJS {
+namespace JSC {
 namespace Bindings {
 
 
@@ -55,6 +55,6 @@ private:
 };
 
 } // namespace Bindings
-} // namespace KJS
+} // namespace JSC
 
 #endif

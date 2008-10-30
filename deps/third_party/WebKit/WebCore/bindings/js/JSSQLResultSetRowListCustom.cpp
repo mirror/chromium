@@ -33,7 +33,7 @@
 #include "SQLValue.h"
 #include "SQLResultSetRowList.h"
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -50,7 +50,7 @@ JSValue* JSSQLResultSetRowList::item(ExecState* exec, const ArgList& args)
         return jsUndefined();
     }
 
-    JSObject* object = new (exec) JSObject(exec->lexicalGlobalObject()->objectPrototype());
+    JSObject* object = constructEmptyObject(exec);
 
     unsigned numColumns = m_impl->columnNames().size();
     unsigned valuesIndex = index * numColumns;

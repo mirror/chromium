@@ -37,7 +37,6 @@
 #import "WebKitVersionChecks.h"
 #import "WebNSDictionaryExtras.h"
 #import "WebNSURLExtras.h"
-#import <wtf/RefCountedLeakCounter.h>
 
 NSString *WebPreferencesChangedNotification = @"WebPreferencesChangedNotification";
 NSString *WebPreferencesRemovedNotification = @"WebPreferencesRemovedNotification";
@@ -770,7 +769,7 @@ static WebCacheModel cacheModelForMainBundle(void)
     return [self _boolValueForKey:WebKitApplicationChromeModeEnabledPreferenceKey];
 }
 
-- (void)setApplicationChromeModeEnabledEnabled:(BOOL)flag
+- (void)setApplicationChromeModeEnabled:(BOOL)flag
 {
     [self _setBoolValue:flag forKey:WebKitApplicationChromeModeEnabledPreferenceKey];
 }
@@ -1044,10 +1043,6 @@ static NSString *classIBCreatorID = nil;
 
 - (void)setFullDocumentTeardownEnabled:(BOOL)fullDocumentTeardownEnabled
 {
-#ifndef NDEBUG
-    WTF::setLogLeakMessages(fullDocumentTeardownEnabled);
-#endif
-    
     [self _setBoolValue:fullDocumentTeardownEnabled forKey:WebKitEnableFullDocumentTeardownPreferenceKey];
 }
 

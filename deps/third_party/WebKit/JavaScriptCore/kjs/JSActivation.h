@@ -29,58 +29,60 @@
 #ifndef JSActivation_h
 #define JSActivation_h
 
+#include "CodeBlock.h"
 #include "JSVariableObject.h"
+#include "RegisterFile.h"
 #include "SymbolTable.h"
 #include "nodes.h"
 
-namespace KJS {
+namespace JSC {
 
+    class Arguments;
     class Register;
     
     class JSActivation : public JSVariableObject {
         typedef JSVariableObject Base;
     public:
-        JSActivation(ExecState* exec, PassRefPtr<FunctionBodyNode>, Register*);
+        JSActivation(CallFrame*, PassRefPtr<FunctionBodyNode>);
         virtual ~JSActivation();
-        
-        virtual bool isActivationObject() const;
+
+        virtual void mark();
+
         virtual bool isDynamicScope() const;
 
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
 
         virtual void put(ExecState*, const Identifier&, JSValue*, PutPropertySlot&);
+
         virtual void putWithAttributes(ExecState*, const Identifier&, JSValue*, unsigned attributes);
         virtual bool deleteProperty(ExecState*, const Identifier& propertyName);
 
         virtual JSObject* toThisObject(ExecState*) const;
 
-        virtual void mark();
-        
-        void copyRegisters();
+        void copyRegisters(Arguments* arguments);
         
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
 
+        static PassRefPtr<StructureID> createStructureID(JSValue* proto) { return StructureID::create(proto, TypeInfo(ObjectType, NeedsThisConversion)); }
+
     private:
         struct JSActivationData : public JSVariableObjectData {
-            JSActivationData(PassRefPtr<FunctionBodyNode> functionBody_, Register* registers)
-                : JSVariableObjectData(&functionBody_->symbolTable(), registers)
-                , functionBody(functionBody_)
-                , argumentsObject(0)
+            JSActivationData(PassRefPtr<FunctionBodyNode> functionBody, Register* registers)
+                : JSVariableObjectData(&functionBody->symbolTable(), registers)
+                , functionBody(functionBody)
             {
             }
 
-            RefPtr<FunctionBodyNode> functionBody; // Owns the symbol table and code block
-            JSObject* argumentsObject;
+            RefPtr<FunctionBodyNode> functionBody;
         };
         
         static JSValue* argumentsGetter(ExecState*, const Identifier&, const PropertySlot&);
         NEVER_INLINE PropertySlot::GetValueFunc getArgumentsGetter();
-        NEVER_INLINE JSObject* createArgumentsObject(ExecState*);
 
         JSActivationData* d() const { return static_cast<JSActivationData*>(JSVariableObject::d); }
     };
     
-} // namespace KJS
+} // namespace JSC
 
 #endif // JSActivation_h

@@ -387,11 +387,12 @@ typedef enum {
 #endif
     , NPNVsupportsCoreGraphicsBool = 2001 /* TRUE if the browser supports the CoreGraphics drawing model */
     , NPNVsupportsOpenGLBool = 2002 /* TRUE if the browser supports the OpenGL drawing model (CGL on Mac) */
+    , NPNVsupportsCoreAnimationBool = 2003 /* TRUE if the browser supports the CoreAnimation drawing model */
 
 #ifndef NP_NO_CARBON
-    , NPNVsupportsCarbonBool = 2003 /* TRUE if the browser supports the Carbon event model */
+    , NPNVsupportsCarbonBool = 3000 /* TRUE if the browser supports the Carbon event model */
 #endif
-    , NPNVsupportsCocoaBool = 2004 /* TRUE if the browser supports the Cocoa event model */
+    , NPNVsupportsCocoaBool = 3001 /* TRUE if the browser supports the Cocoa event model */
     
     , NPNVbrowserTextInputFuncs = 1002 /* The browser text input vtable */
 #endif /* XP_MACOSX */
@@ -447,6 +448,7 @@ typedef enum {
     NPCocoaEventScrollWheel,
 } NPCocoaEventType;
 
+typedef struct _NPCALayer NPCALayer;
 typedef struct _NPNSString NPNSString;
 typedef struct _NPNSWindow NPNSWindow;
 typedef struct _NPNSMenu NPNSMenu;
@@ -605,6 +607,17 @@ typedef struct NP_GLContext
     void *window; // Can be either an NSWindow or a WindowRef depending on the event model
 #endif
 } NP_GLContext;
+
+/* 
+ * NP_CALayer is the type of the NPWindow's 'window' when the plugin specifies NPDrawingModelCoreAnimation as its
+ * drawing model.
+ */
+
+typedef struct NP_CALayer
+{
+    NPCALayer *layer;
+    NPNSWindow *window;
+} NP_CALayer;
 
 #endif /* XP_MACOSX */
 

@@ -210,9 +210,10 @@ void HTMLTokenizer::reset()
     ASSERT(m_executingScript == 0);
 
     while (!pendingScripts.isEmpty()) {
-      CachedScript *cs = pendingScripts.dequeue();
-      ASSERT(cache()->disabled() || cs->accessCount() > 0);
-      cs->removeClient(this);
+        CachedScript *cs = pendingScripts.first().get();
+        pendingScripts.removeFirst();
+        ASSERT(cache()->disabled() || cs->accessCount() > 0);
+        cs->removeClient(this);
     }
     
     fastFree(buffer);
@@ -316,7 +317,7 @@ HTMLTokenizer::State HTMLTokenizer::parseSpecial(SegmentedString &src, State sta
     ASSERT(state.inTextArea() || state.inTitle() || state.inIFrame() || !state.hasEntityState());
     ASSERT(!state.hasTagState());
     ASSERT(state.inXmp() + state.inTextArea() + state.inTitle() + state.inStyle() + state.inScript() + state.inIFrame() == 1 );
-    if (state.inScript())
+    if (state.inScript() && !scriptStartLineno)
         scriptStartLineno = m_lineNumber + 1; // Script line numbers are 1 based.
 
     if (state.inComment()) 
@@ -412,6 +413,10 @@ HTMLTokenizer::State HTMLTokenizer::scriptHandler(State state)
 {
     // We are inside a <script>
     bool doScriptExec = false;
+    int startLine = scriptStartLineno;
+
+    // Reset scriptStartLineno to indicate that we've finished parsing the current script element
+    scriptStartLineno = 0;
 
     // (Bugzilla 3837) Scripts following a frameset element should not execute or, 
     // in the case of extern scripts, even load.
@@ -430,7 +435,7 @@ HTMLTokenizer::State HTMLTokenizer::scriptHandler(State state)
                 // The parser might have been stopped by for example a window.close call in an earlier script.
                 // If so, we don't want to load scripts.
                 if (!m_parserStopped && (cs = m_doc->docLoader()->requestScript(scriptSrc, scriptSrcCharset)))
-                    pendingScripts.enqueue(cs);
+                    pendingScripts.append(cs);
                 else
                     scriptNode = 0;
             } else
@@ -495,7 +500,7 @@ HTMLTokenizer::State HTMLTokenizer::scriptHandler(State state)
             else
                 prependingSrc = src;
             setSrc(SegmentedString());
-            state = scriptExecution(scriptString, state, String(), scriptStartLineno);
+            state = scriptExecution(scriptString, state, String(), startLine);
         }
     }
 
@@ -521,7 +526,7 @@ HTMLTokenizer::State HTMLTokenizer::scriptHandler(State state)
             write(prependingSrc, false);
             state = m_state;
         }
-    } 
+    }
     
 #if PRELOAD_SCANNER_ENABLED
     if (!pendingScripts.isEmpty() && !m_executingScript) {
@@ -1980,8 +1985,9 @@ void HTMLTokenizer::notifyFinished(CachedResource*)
         return;
 
     bool finished = false;
-    while (!finished && pendingScripts.head()->isLoaded()) {
-        CachedScript* cs = pendingScripts.dequeue();
+    while (!finished && pendingScripts.first()->isLoaded()) {
+        CachedScript *cs = pendingScripts.first().get();
+        pendingScripts.removeFirst();
         ASSERT(cache()->disabled() || cs->accessCount() > 0);
 
         String scriptSource = cs->script();
@@ -2000,11 +2006,11 @@ void HTMLTokenizer::notifyFinished(CachedResource*)
 #endif
 
         if (errorOccurred)
-            EventTargetNodeCast(n.get())->dispatchHTMLEvent(errorEvent, true, false);
+            EventTargetNodeCast(n.get())->dispatchEventForType(errorEvent, true, false);
         else {
             if (static_cast<HTMLScriptElement*>(n.get())->shouldExecuteAsJavaScript())
                 m_state = scriptExecution(scriptSource, m_state, cachedScriptUrl);
-            EventTargetNodeCast(n.get())->dispatchHTMLEvent(loadEvent, false, false);
+            EventTargetNodeCast(n.get())->dispatchEventForType(loadEvent, false, false);
         }
 
         // The state of pendingScripts.isEmpty() can change inside the scriptExecution()

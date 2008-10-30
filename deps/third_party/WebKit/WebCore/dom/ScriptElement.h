@@ -22,6 +22,7 @@
 #define ScriptElement_h
 
 #include "CachedResourceClient.h"
+#include "CachedResourceHandle.h"
 
 namespace WebCore {
 
@@ -69,6 +70,8 @@ public:
     Element* element() const { return m_element; }
     bool createdByParser() const { return m_createdByParser; }
     void setCreatedByParser(bool value) { m_createdByParser = value; }
+    bool haveFiredLoadEvent() const { return m_firedLoad; }
+    void setHaveFiredLoadEvent(bool firedLoad) { m_firedLoad = firedLoad; }
 
     void requestScript(const String& sourceUrl);
     void evaluateScript(const String& sourceUrl, const String& content);
@@ -80,9 +83,10 @@ private:
 private:
     ScriptElement* m_scriptElement;
     Element* m_element;
-    CachedScript* m_cachedScript;
+    CachedResourceHandle<CachedScript> m_cachedScript;
     bool m_createdByParser;
     bool m_evaluated;
+    bool m_firedLoad;
 };
 
 }

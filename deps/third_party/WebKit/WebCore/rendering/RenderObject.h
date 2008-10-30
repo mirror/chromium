@@ -46,7 +46,6 @@ class HTMLAreaElement;
 class HitTestResult;
 class InlineBox;
 class InlineFlowBox;
-class PlatformScrollbar;
 class Position;
 class RenderArena;
 class RenderBlock;
@@ -264,6 +263,7 @@ public:
     virtual bool isBR() const { return false; }
     virtual bool isBlockFlow() const { return false; }
     virtual bool isCounter() const { return false; }
+    virtual bool isFieldset() const { return false; }
     virtual bool isFrame() const { return false; }
     virtual bool isFrameSet() const { return false; }
     virtual bool isImage() const { return false; }
@@ -376,7 +376,7 @@ private:
     bool includeHorizontalScrollbarSize() const { return hasOverflowClip() && (style()->overflowX() == OSCROLL || style()->overflowX() == OAUTO); }
 
 public:
-    RenderStyle* getPseudoStyle(RenderStyle::PseudoId, RenderStyle* parentStyle = 0) const;
+    RenderStyle* getPseudoStyle(RenderStyle::PseudoId, RenderStyle* parentStyle = 0, bool useCachedStyle = true) const;
 
     void updateDragState(bool dragOn);
 
@@ -527,19 +527,6 @@ public:
     void collectDashboardRegions(Vector<DashboardRegionValue>&);
 #endif
 
-    // Used to signal a specific subrect within an object that must be repainted after
-    // layout is complete.
-    struct RepaintInfo {
-        RepaintInfo(RenderObject* object = 0, const IntRect& repaintRect = IntRect())
-            : m_object(object)
-            , m_repaintRect(repaintRect)
-        {
-        }
-
-        RenderObject* m_object;
-        IntRect m_repaintRect;
-    };
-
     bool hitTest(const HitTestRequest&, HitTestResult&, const IntPoint&, int tx, int ty, HitTestFilter = HitTestAll);
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
     void updateHitTestResult(HitTestResult&, const IntPoint&);
@@ -555,7 +542,7 @@ public:
     void setAnimatableStyle(RenderStyle*);
 
     // Set the style of the object and update the state of the object accordingly.
-    virtual void setStyle(RenderStyle*);
+    virtual void setStyle(const RenderStyle*);
 
     // Updates only the local style ptr of the object.  Does not update the state of the object,
     // and so only should be called when the style is known not to have changed (or from setStyle).
@@ -585,6 +572,7 @@ public:
     virtual void setPos(int /*xPos*/, int /*yPos*/) { }
     virtual void setWidth(int /*width*/) { }
     virtual void setHeight(int /*height*/) { }
+    virtual void setRect(const IntRect& rect) { setPos(rect.x(), rect.y()); setWidth(rect.width()); setHeight(rect.height()); }
 
     virtual int xPos() const { return 0; }
     virtual int yPos() const { return 0; }
@@ -652,7 +640,6 @@ public:
 
     virtual bool scroll(ScrollDirection, ScrollGranularity, float multiplier = 1.0f);
     virtual bool canBeProgramaticallyScrolled(bool) const;
-    bool hasScrollableView() const;
     virtual void autoscroll();
     virtual void stopAutoscroll() { }
 
@@ -908,6 +895,11 @@ public:
     AnimationController* animation() const;
 
 protected:
+    // Overrides should call the superclass at the end
+    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
+    // Overrides should call the superclass at the start
+    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
+    
     virtual void printBoxDecorations(GraphicsContext*, int /*x*/, int /*y*/, int /*w*/, int /*h*/, int /*tx*/, int /*ty*/) { }
 
     virtual IntRect viewRect() const;
@@ -960,6 +952,10 @@ private:
 public:
     bool m_hasCounterNodeMap         : 1;
     bool m_everHadLayout             : 1;
+
+private:
+    // Store state between styleWillChange and styleDidChange
+    static bool s_affectsParentBlock;
 };
 
 } // namespace WebCore

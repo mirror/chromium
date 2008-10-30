@@ -111,14 +111,6 @@ bool FrameLoaderClientWx::hasWebView() const
     return true;
 }
 
-
-bool FrameLoaderClientWx::hasFrameView() const
-{
-    notImplemented();
-    return true;
-}
-
-
 bool FrameLoaderClientWx::hasBackForwardList() const
 {
     notImplemented();
@@ -820,6 +812,12 @@ void FrameLoaderClientWx::redirectDataToPlugin(Widget* pluginWidget)
     return;
 }
 
+ResourceError FrameLoaderClientWx::pluginWillHandleLoadError(const ResourceResponse&)
+{
+    notImplemented();
+    return ResourceError();
+}
+
 Widget* FrameLoaderClientWx::createJavaAppletWidget(const IntSize&, Element*, const KURL& baseURL,
                                                     const Vector<String>& paramNames, const Vector<String>& paramValues)
 {
@@ -880,13 +878,13 @@ void FrameLoaderClientWx::transitionToCommittedForNewPage()
     m_frame->setView(frameView);
     frameView->deref(); // FrameViews are created with a ref count of 1. Release this ref since we've assigned it to frame.
 
-    frameView->setNativeWindow(m_webView);
+    frameView->setPlatformWidget(m_webView);
 
     if (m_frame->ownerRenderer())
         m_frame->ownerRenderer()->setWidget(frameView);
 
     if (HTMLFrameOwnerElement* owner = m_frame->ownerElement())
-        m_frame->view()->setScrollbarsMode(owner->scrollingMode());
+        m_frame->view()->setScrollbarModes(owner->scrollingMode(), owner->scrollingMode());
 }
 
 }

@@ -81,11 +81,12 @@ namespace WebCore {
     class HTMLFormControlElementWithState;
     class HTMLFormElement;
     class HTMLHeadElement;
-    class HTMLImageLoader;
     class HTMLInputElement;
     class HTMLMapElement;
+    class ImageLoader;
     class IntPoint;
     class JSNode;
+    class MessagePort;
     class MouseEventWithHitTestResults;
     class NodeFilter;
     class NodeIterator;
@@ -103,6 +104,7 @@ namespace WebCore {
     class TextResourceDecoder;
     class Tokenizer;
     class TreeWalker;
+    class XMLHttpRequest;
 
 #if ENABLE(SVG)
     class SVGDocumentExtensions;
@@ -284,7 +286,6 @@ public:
     virtual NodeType nodeType() const;
 
     // Other methods (not part of DOM)
-    virtual bool isDocumentNode() const { return true; }
     virtual bool isHTMLDocument() const { return false; }
     virtual bool isImageDocument() const { return false; }
 #if ENABLE(SVG)
@@ -554,15 +555,16 @@ public:
 
     bool hasListenerType(ListenerType listenerType) const { return (m_listenerTypes & listenerType); }
     void addListenerType(ListenerType listenerType) { m_listenerTypes = m_listenerTypes | listenerType; }
+    void addListenerTypeIfNeeded(const AtomicString& eventType);
 
     CSSStyleDeclaration* getOverrideStyle(Element*, const String& pseudoElt);
 
     void handleWindowEvent(Event*, bool useCapture);
-    void setHTMLWindowEventListener(const AtomicString &eventType, PassRefPtr<EventListener>);
-    EventListener* getHTMLWindowEventListener(const AtomicString &eventType);
-    void removeHTMLWindowEventListener(const AtomicString &eventType);
+    void setWindowEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener>);
+    EventListener* windowEventListenerForType(const AtomicString& eventType);
+    void removeWindowEventListenerForType(const AtomicString& eventType);
 
-    void setHTMLWindowEventListener(const AtomicString& eventType, Attribute*);
+    void setWindowEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute*);
 
     void addWindowEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
     void removeWindowEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
@@ -573,8 +575,8 @@ public:
     void addPendingFrameBeforeUnloadEventCount();
     void removePendingFrameBeforeUnloadEventCount();
 
-    PassRefPtr<EventListener> createHTMLEventListener(const String& functionName, const String& code, Node*);
-    
+    PassRefPtr<EventListener> createEventListener(const String& functionName, const String& code, Node*);
+
     /**
      * Searches through the document, starting from fromNode, for the next selectable element that comes after fromNode.
      * The order followed is as specified in section 17.11.1 of the HTML4 spec, which is elements with tab indexes
@@ -615,9 +617,9 @@ public:
      */
     void processHttpEquiv(const String& equiv, const String& content);
     
-    void dispatchImageLoadEventSoon(HTMLImageLoader*);
+    void dispatchImageLoadEventSoon(ImageLoader*);
     void dispatchImageLoadEventsNow();
-    void removeImage(HTMLImageLoader*);
+    void removeImage(ImageLoader*);
     
     // Returns the owning element in the parent document.
     // Returns 0 if this is the top level document.
@@ -767,10 +769,20 @@ public:
     CanvasRenderingContext2D* getCSSCanvasContext(const String& type, const String& name, int width, int height);
     HTMLCanvasElement* getCSSCanvasElement(const String& name);
 
-     bool isDNSPrefetchEnabled() const { return m_isDNSPrefetchEnabled; }
-     void initDNSPrefetchEnabled();
-     void setDNSPrefetchControl(const WebCore::String&);
-    
+    void processMessagePortMessagesSoon();
+    void dispatchMessagePortEvents();
+    void createdMessagePort(MessagePort*);
+    void destroyedMessagePort(MessagePort*);
+    const HashSet<MessagePort*>& messagePorts() const { return m_messagePorts; }
+
+    void createdXMLHttpRequest(XMLHttpRequest*);
+    void destroyedXMLHttpRequest(XMLHttpRequest*);
+    const HashSet<XMLHttpRequest*>& xmlHttpRequests() const { return m_xmlHttpRequests; }
+
+    bool isDNSPrefetchEnabled() const { return m_isDNSPrefetchEnabled; }
+    void initDNSPrefetch();
+    void parseDNSPrefetchControlHeader(const String&);
+
 protected:
     Document(Frame*, bool isXHTML);
 
@@ -890,8 +902,8 @@ private:
 
     mutable AXObjectCache* m_axObjectCache;
     
-    DeprecatedPtrList<HTMLImageLoader> m_imageLoadEventDispatchSoonList;
-    DeprecatedPtrList<HTMLImageLoader> m_imageLoadEventDispatchingList;
+    DeprecatedPtrList<ImageLoader> m_imageLoadEventDispatchSoonList;
+    DeprecatedPtrList<ImageLoader> m_imageLoadEventDispatchingList;
     Timer<Document> m_imageLoadEventTimer;
 
     Timer<Document> m_updateFocusAppearanceTimer;
@@ -938,16 +950,21 @@ private:
     // Moreover, the value of m_contentLanguage should be utilized as well. 
     mutable UScriptCode m_dominantScript; 
 
+    bool m_firedMessagePortTimer;
+    HashSet<MessagePort*> m_messagePorts;
+
+    HashSet<XMLHttpRequest*> m_xmlHttpRequests;
+
 public:
     bool inPageCache();
     void setInPageCache(bool flag);
     
-    // Elements can register themselves for the "willSaveToCache()" and  
-    // "didRestoreFromCache()" callbacks
-    void registerForCacheCallbacks(Element*);
-    void unregisterForCacheCallbacks(Element*);
-    void willSaveToCache();
-    void didRestoreFromCache();
+    // Elements can register themselves for the "documentWillBecomeInactive()" and  
+    // "documentDidBecomeActive()" callbacks
+    void registerForDocumentActivationCallbacks(Element*);
+    void unregisterForDocumentActivationCallbacks(Element*);
+    void documentWillBecomeInactive();
+    void documentDidBecomeActive();
 
     void setShouldCreateRenderers(bool);
     bool shouldCreateRenderers();
@@ -1036,7 +1053,7 @@ private:
 #endif
     
 #if ENABLE(SVG)
-    SVGDocumentExtensions* m_svgExtensions;
+    OwnPtr<SVGDocumentExtensions> m_svgExtensions;
 #endif
     
 #if ENABLE(DASHBOARD_SUPPORT)
@@ -1052,7 +1069,7 @@ private:
     bool m_inPageCache;
     String m_iconURL;
     
-    HashSet<Element*> m_pageCacheCallbackElements;
+    HashSet<Element*> m_documentActivationCallbackElements;
 
     bool m_useSecureKeyboardEntryWhenActive;
 
@@ -1083,6 +1100,11 @@ inline bool Document::hasElementWithId(AtomicStringImpl* id) const
 {
     ASSERT(id);
     return m_elementsById.contains(id) || m_duplicateIds.contains(id);
+}
+    
+inline bool Node::isDocumentNode() const
+{
+    return this == m_document.get();
 }
 
 } // namespace WebCore

@@ -62,6 +62,9 @@
 #include <wtf/Assertions.h>
 #include <wtf/Locker.h>
 #include <wtf/Noncopyable.h>
+#if PLATFORM(GTK)
+#include <wtf/GOwnPtr.h>
+#endif
 
 #if PLATFORM(WIN_OS)
 #include <windows.h>
@@ -85,8 +88,11 @@ typedef struct _GCond GCond;
 #endif
 
 #if PLATFORM(QT)
+#include <qglobal.h>
+QT_BEGIN_NAMESPACE
 class QMutex;
 class QWaitCondition;
+QT_END_NAMESPACE
 #endif
 
 #include <stdint.h>
@@ -114,11 +120,11 @@ void detachThread(ThreadIdentifier);
 typedef pthread_mutex_t PlatformMutex;
 typedef pthread_cond_t PlatformCondition;
 #elif PLATFORM(GTK)
-typedef GMutex* PlatformMutex;
-typedef GCond* PlatformCondition;
+typedef GOwnPtr<GMutex> PlatformMutex;
+typedef GOwnPtr<GCond> PlatformCondition;
 #elif PLATFORM(QT)
-typedef QMutex* PlatformMutex;
-typedef QWaitCondition* PlatformCondition;
+typedef QT_PREPEND_NAMESPACE(QMutex)* PlatformMutex;
+typedef QT_PREPEND_NAMESPACE(QWaitCondition)* PlatformCondition;
 #elif PLATFORM(WIN_OS)
 struct PlatformMutex {
     CRITICAL_SECTION m_internalMutex;

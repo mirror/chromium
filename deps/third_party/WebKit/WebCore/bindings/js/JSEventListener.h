@@ -33,74 +33,82 @@ namespace WebCore {
     class JSAbstractEventListener : public EventListener {
     public:
         virtual void handleEvent(Event*, bool isWindowEvent);
-        virtual bool isHTMLEventListener() const;
-        virtual KJS::JSObject* listenerObj() const = 0;
+        virtual bool isAttachedToEventTargetNode() const;
+        virtual JSC::JSObject* listenerObj() const = 0;
         virtual JSDOMWindow* window() const = 0;
 
     protected:
-        JSAbstractEventListener(bool isHTML)
-            : m_isHTML(isHTML)
+        JSAbstractEventListener(bool isAttachedToEventTargetNode)
+            : m_isAttachedToEventTargetNode(isAttachedToEventTargetNode)
         {
         }
 
     private:
-        bool m_isHTML;
+        bool m_isAttachedToEventTargetNode;
     };
 
     class JSUnprotectedEventListener : public JSAbstractEventListener {
     public:
-        static PassRefPtr<JSUnprotectedEventListener> create(KJS::JSObject* listener, JSDOMWindow* window, bool isHTML)
+        static PassRefPtr<JSUnprotectedEventListener> create(JSC::JSObject* listener, JSDOMWindow* window, bool isAttachedToEventTargetNode)
         {
-            return adoptRef(new JSUnprotectedEventListener(listener, window, isHTML));
+            return adoptRef(new JSUnprotectedEventListener(listener, window, isAttachedToEventTargetNode));
         }
         virtual ~JSUnprotectedEventListener();
 
-        virtual KJS::JSObject* listenerObj() const;
+        virtual JSC::JSObject* listenerObj() const;
         virtual JSDOMWindow* window() const;
         void clearWindow();
         void mark();
 
     private:
-        JSUnprotectedEventListener(KJS::JSObject* listener, JSDOMWindow*, bool isHTML);
+        JSUnprotectedEventListener(JSC::JSObject* listener, JSDOMWindow*, bool isAttachedToEventTargetNode);
 
-        KJS::JSObject* m_listener;
+        JSC::JSObject* m_listener;
         JSDOMWindow* m_window;
     };
 
     class JSEventListener : public JSAbstractEventListener {
     public:
-        static PassRefPtr<JSEventListener> create(KJS::JSObject* listener, JSDOMWindow* window, bool isHTML)
+        static PassRefPtr<JSEventListener> create(JSC::JSObject* listener, JSDOMWindow* window, bool isAttachedToEventTargetNode)
         {
-            return adoptRef(new JSEventListener(listener, window, isHTML));
+            return adoptRef(new JSEventListener(listener, window, isAttachedToEventTargetNode));
         }
         virtual ~JSEventListener();
 
-        virtual KJS::JSObject* listenerObj() const;
+        virtual JSC::JSObject* listenerObj() const;
         virtual JSDOMWindow* window() const;
         void clearWindow();
 
     protected:
-        JSEventListener(KJS::JSObject* listener, JSDOMWindow*, bool isHTML);
+        JSEventListener(JSC::JSObject* listener, JSDOMWindow*, bool isAttachedToEventTargetNode);
 
-        mutable KJS::ProtectedPtr<KJS::JSObject> m_listener;
+        mutable JSC::ProtectedPtr<JSC::JSObject> m_listener;
 
     private:
-        KJS::ProtectedPtr<JSDOMWindow> m_window;
+        JSC::ProtectedPtr<JSDOMWindow> m_window;
     };
 
     class JSLazyEventListener : public JSEventListener {
     public:
-        static PassRefPtr<JSLazyEventListener> create(const String& functionName, const String& code, JSDOMWindow* window, Node* node, int lineNumber)
+        enum LazyEventListenerType {
+            HTMLLazyEventListener
+#if ENABLE(SVG)
+            , SVGLazyEventListener
+#endif
+        };
+
+        virtual bool wasCreatedFromMarkup() const { return true; }
+
+        static PassRefPtr<JSLazyEventListener> create(LazyEventListenerType type, const String& functionName, const String& code, JSDOMWindow* window, Node* node, int lineNumber)
         {
-            return adoptRef(new JSLazyEventListener(functionName, code, window, node, lineNumber));
+            return adoptRef(new JSLazyEventListener(type, functionName, code, window, node, lineNumber));
         }
-        virtual KJS::JSObject* listenerObj() const;
+        virtual JSC::JSObject* listenerObj() const;
 
     protected:
-        JSLazyEventListener(const String& functionName, const String& code, JSDOMWindow*, Node*, int lineNumber);
+        JSLazyEventListener(LazyEventListenerType type, const String& functionName, const String& code, JSDOMWindow*, Node*, int lineNumber);
 
     private:
-        virtual KJS::JSValue* eventParameterName() const;
         void parseCode() const;
 
         mutable String m_functionName;
@@ -108,9 +116,9 @@ namespace WebCore {
         mutable bool m_parsed;
         int m_lineNumber;
         Node* m_originalNode;
-    };
 
-    KJS::JSValue* getNodeEventListener(Node*, const AtomicString& eventType);
+        LazyEventListenerType m_type;
+    };
 
 } // namespace WebCore
 

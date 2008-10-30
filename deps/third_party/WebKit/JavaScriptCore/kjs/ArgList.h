@@ -29,7 +29,7 @@
 #include <wtf/Noncopyable.h>
 #include <wtf/Vector.h>
 
-namespace KJS {
+namespace JSC {
 
     class JSValue;
     
@@ -64,6 +64,18 @@ namespace KJS {
             , m_isReadOnly(true)
 #endif
         {
+        }
+
+        void initialize(Register* buffer, size_t size)
+        {
+            ASSERT(!m_markSet);
+            ASSERT(isEmpty());
+
+            m_buffer = buffer;
+            m_size = size;
+#ifndef NDEBUG
+            m_isReadOnly = true;
+#endif
         }
 
         ~ArgList()
@@ -146,6 +158,6 @@ namespace KJS {
         void operator delete(void*, size_t);
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // ArgList_h

@@ -37,6 +37,7 @@
 #include "WebBackForwardList.h"
 #include "WebChromeClient.h"
 #include "WebContextMenuClient.h"
+#include "WebCoreTextRenderer.h"
 #include "WebDragClient.h"
 #include "WebIconDatabase.h"
 #include "WebInspector.h"
@@ -88,8 +89,10 @@
 #include <WebCore/PluginInfoStore.h>
 #include <WebCore/PluginView.h>
 #include <WebCore/ProgressTracker.h>
+#include <WebCore/RenderTheme.h>
 #include <WebCore/ResourceHandle.h>
 #include <WebCore/ResourceHandleClient.h>
+#include <WebCore/ScrollbarTheme.h>
 #include <WebCore/SelectionController.h>
 #include <WebCore/Settings.h>
 #include <WebCore/SimpleFontData.h>
@@ -112,7 +115,7 @@
 
 using namespace WebCore;
 using namespace WebCore::EventNames;
-using KJS::JSLock;
+using JSC::JSLock;
 using std::min;
 using std::max;
 
@@ -279,7 +282,7 @@ WebView::WebView()
 , m_deleteBackingStoreTimerActive(false)
 , m_transparent(false)
 {
-    KJS::initializeThreading();
+    JSC::initializeThreading();
 
     m_backingStoreSize.cx = m_backingStoreSize.cy = 0;
 
@@ -609,16 +612,35 @@ void WebView::close()
     notifyCenter->removeObserver(this, WebPreferences::webPreferencesChangedNotification(), static_cast<IWebPreferences*>(m_preferences.get()));
 
     BSTR identifier = 0;
-    if (SUCCEEDED(m_preferences->identifier(&identifier)))
-        WebPreferences::removeReferenceForIdentifier(identifier);
-    if (identifier)
-        SysFreeString(identifier);
+    m_preferences->identifier(&identifier);
 
     COMPtr<WebPreferences> preferences = m_preferences;
     m_preferences = 0;
     preferences->didRemoveFromWebView();
+    // Make sure we release the reference, since WebPreferences::removeReferenceForIdentifier will check for last reference to WebPreferences
+    preferences = 0;
+    if (identifier) {
+        WebPreferences::removeReferenceForIdentifier(identifier);
+        SysFreeString(identifier);
+    }
 
     deleteBackingStore();
+}
+
+void WebView::repaint(const WebCore::IntRect& windowRect, bool contentChanged, bool immediate, bool repaintContentOnly)
+{
+    if (!repaintContentOnly) {
+        RECT rect = windowRect;
+        ::InvalidateRect(m_viewWindow, &rect, false);
+    }
+    if (contentChanged)
+        addToDirtyRegion(windowRect);
+    if (immediate) {
+        if (repaintContentOnly)
+            updateBackingStore(core(topLevelFrame())->view());
+        else
+            ::UpdateWindow(m_viewWindow);
+    }
 }
 
 void WebView::deleteBackingStore()
@@ -881,7 +903,7 @@ void WebView::paint(HDC dc, LPARAM options)
             RECT r;
             if (SUCCEEDED(uiPrivate->webViewResizerRect(this, &r))) {
                 LOCAL_GDI_COUNTER(2, __FUNCTION__" webViewDrawResizer delegate call");
-                uiPrivate->webViewDrawResizer(this, hdc, (frameView->resizerOverlapsContent() ? true : false), &r);
+                uiPrivate->webViewDrawResizer(this, hdc, (frameView->containsScrollbarsAvoidingResizer() ? true : false), &r);
             }
         }
     }
@@ -1087,7 +1109,7 @@ bool WebView::handleContextMenuEvent(WPARAM wParam, LPARAM lParam)
     POINT point(view->contentsToWindow(coreMenu->hitTestResult().point()));
 
     // Translate the point to screen coordinates
-    if (!::ClientToScreen(view->containingWindow(), &point))
+    if (!::ClientToScreen(m_viewWindow, &point))
         return false;
 
     BOOL hasCustomMenus = false;
@@ -1100,7 +1122,7 @@ bool WebView::handleContextMenuEvent(WPARAM wParam, LPARAM lParam)
         // Surprisingly, TPM_RIGHTBUTTON means that items are selectable with either the right OR left mouse button
         UINT flags = TPM_RIGHTBUTTON | TPM_TOPALIGN | TPM_VERPOSANIMATION | TPM_HORIZONTAL
             | TPM_LEFTALIGN | TPM_HORPOSANIMATION;
-        ::TrackPopupMenuEx(coreMenu->platformDescription(), flags, point.x, point.y, view->containingWindow(), 0);
+        ::TrackPopupMenuEx(coreMenu->platformDescription(), flags, point.x, point.y, m_viewWindow, 0);
     }
 
     return true;
@@ -1794,7 +1816,11 @@ static LRESULT CALLBACK WebViewWndProc(HWND hWnd, UINT message, WPARAM wParam, L
         case WM_XP_THEMECHANGED:
             if (Frame* coreFrame = core(mainFrameImpl)) {
                 webView->deleteBackingStore();
-                coreFrame->view()->themeChanged();
+                theme()->themeChanged();
+                ScrollbarTheme::nativeTheme()->themeChanged();
+                RECT windowRect;
+                ::GetClientRect(hWnd, &windowRect);
+                ::InvalidateRect(hWnd, &windowRect, false);
             }
             break;
         case WM_MOUSEACTIVATE:
@@ -2622,7 +2648,7 @@ HRESULT STDMETHODCALLTYPE WebView::stringByEvaluatingJavaScriptFromString(
     if (!coreFrame)
         return E_FAIL;
 
-    KJS::JSValue* scriptExecutionResult = coreFrame->loader()->executeScript(WebCore::String(script), true);
+    JSC::JSValue* scriptExecutionResult = coreFrame->loader()->executeScript(WebCore::String(script), true);
     if(!scriptExecutionResult)
         return E_FAIL;
     else if (scriptExecutionResult->isString()) {
@@ -2659,17 +2685,17 @@ HRESULT STDMETHODCALLTYPE WebView::setPreferences(
     IWebNotificationCenter* nc = WebNotificationCenter::defaultCenterInternal();
     nc->removeObserver(this, WebPreferences::webPreferencesChangedNotification(), static_cast<IWebPreferences*>(m_preferences.get()));
 
-    BSTR identifierBSTR = 0;
-    HRESULT hr = oldPrefs->identifier(&identifierBSTR);
+    BSTR identifier = 0;
+    oldPrefs->identifier(&identifier);
     oldPrefs->didRemoveFromWebView();
     oldPrefs = 0; // Make sure we release the reference, since WebPreferences::removeReferenceForIdentifier will check for last reference to WebPreferences
-    if (SUCCEEDED(hr)) {
-        BString identifier;
-        identifier.adoptBSTR(identifierBSTR);
-        WebPreferences::removeReferenceForIdentifier(identifier);
-    }
 
     m_preferences = webPrefs;
+
+    if (identifier) {
+        WebPreferences::removeReferenceForIdentifier(identifier);
+        SysFreeString(identifier);
+    }
 
     nc->addObserver(this, WebPreferences::webPreferencesChangedNotification(), static_cast<IWebPreferences*>(m_preferences.get()));
 
@@ -2835,6 +2861,13 @@ HRESULT STDMETHODCALLTYPE WebView::executeCoreCommandByName(BSTR bName, BSTR bVa
     return S_OK;
 }
 
+HRESULT STDMETHODCALLTYPE WebView::clearMainFrameName()
+{
+    m_page->mainFrame()->tree()->clearName();
+
+    return S_OK;
+}
+
 HRESULT STDMETHODCALLTYPE WebView::markAllMatchesForText(
     BSTR str, BOOL caseSensitive, BOOL highlight, UINT limit, UINT* matches)
 {
@@ -2867,7 +2900,7 @@ HRESULT STDMETHODCALLTYPE WebView::rectsForTextMatches(
     WebCore::Frame* frame = m_page->mainFrame();
     do {
         if (Document* document = frame->document()) {
-            IntRect visibleRect = enclosingIntRect(frame->view()->visibleContentRect());
+            IntRect visibleRect = frame->view()->visibleContentRect();
             Vector<IntRect> frameRects = document->renderedRectsForMarkers(DocumentMarker::TextMatch);
             IntPoint frameOffset(-frame->view()->scrollOffset().width(), -frame->view()->scrollOffset().height());
             frameOffset = frame->view()->convertToContainingWindow(frameOffset);
@@ -4103,6 +4136,11 @@ HRESULT WebView::notifyPreferencesChanged(IWebNotification* notification)
         return hr;
     settings->setOfflineWebApplicationCacheEnabled(enabled);
 
+    hr = prefsPrivate->shouldPaintNativeControls(&enabled);
+    if (FAILED(hr))
+        return hr;
+    settings->setShouldPaintNativeControls(!!enabled);
+
     if (!m_closeWindowTimer.isActive())
         m_mainFrame->invalidate(); // FIXME
 
@@ -4225,7 +4263,7 @@ HRESULT STDMETHODCALLTYPE WebView::scrollBy(
 {
     if (!offset)
         return E_POINTER;
-    m_page->mainFrame()->view()->scrollBy(offset->x, offset->y);
+    m_page->mainFrame()->view()->scrollBy(IntSize(offset->x, offset->y));
     return S_OK;
 }
 
@@ -4476,7 +4514,7 @@ HRESULT WebView::setProhibitsMainFrameScrolling(BOOL b)
     if (!m_page)
         return E_FAIL;
 
-    m_page->mainFrame()->setProhibitsScrolling(b);
+    m_page->mainFrame()->view()->setProhibitsScrolling(b);
     return S_OK;
 }
 
@@ -4885,6 +4923,22 @@ HRESULT STDMETHODCALLTYPE WebView::defersCallbacks(BOOL* defersCallbacks)
         return E_FAIL;
 
     *defersCallbacks = m_page->defersLoading();
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebView::setAlwaysUsesComplexTextCodePath(BOOL complex)
+{
+    WebCoreSetAlwaysUsesComplexTextCodePath(complex);
+
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebView::alwaysUsesComplexTextCodePath(BOOL* complex)
+{
+    if (!complex)
+        return E_POINTER;
+
+    *complex = WebCoreAlwaysUsesComplexTextCodePath();
     return S_OK;
 }
 

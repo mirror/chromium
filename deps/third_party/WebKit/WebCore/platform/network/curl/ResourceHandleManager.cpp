@@ -1,8 +1,10 @@
 /*
  * Copyright (C) 2004, 2006 Apple Computer, Inc.  All rights reserved.
  * Copyright (C) 2006 Michael Emmel mike.emmel@gmail.com
- * Copyright (C) 2007 Alp Toker <alp.toker@collabora.co.uk>
+ * Copyright (C) 2007 Alp Toker <alp@atoker.com>
  * Copyright (C) 2007 Holger Hans Peter Freyther
+ * Copyright (C) 2008 Collabora Ltd.
+ * Copyright (C) 2008 Nuanti Ltd.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,14 +32,15 @@
 #include "config.h"
 #include "ResourceHandleManager.h"
 
+#include "Base64.h"
 #include "CString.h"
+#include "HTTPParsers.h"
 #include "MIMETypeRegistry.h"
 #include "NotImplemented.h"
 #include "ResourceError.h"
 #include "ResourceHandle.h"
 #include "ResourceHandleInternal.h"
-#include "HTTPParsers.h"
-#include "Base64.h"
+#include "TextEncoding.h"
 
 #include <errno.h>
 #include <wtf/Vector.h>
@@ -97,6 +100,12 @@ static size_t writeCallback(void* ptr, size_t size, size_t nmemb, void* data)
     ResourceHandleInternal* d = job->getInternal();
     if (d->m_cancelled)
         return 0;
+
+#if LIBCURL_VERSION_NUM > 0x071200
+    // We should never be called when deferred loading is activated.
+    ASSERT(!d->m_defersLoading);
+#endif
+
     size_t totalSize = size * nmemb;
 
     // this shouldn't be necessary but apparently is. CURL writes the data
@@ -142,6 +151,12 @@ static size_t headerCallback(char* ptr, size_t size, size_t nmemb, void* data)
     ResourceHandleInternal* d = job->getInternal();
     if (d->m_cancelled)
         return 0;
+
+#if LIBCURL_VERSION_NUM > 0x071200
+    // We should never be called when deferred loading is activated.
+    ASSERT(!d->m_defersLoading);
+#endif
+
     size_t totalSize = size * nmemb;
     ResourceHandleClient* client = d->client();
 
@@ -214,6 +229,11 @@ size_t readCallback(void* ptr, size_t size, size_t nmemb, void* data)
     ResourceHandleInternal* d = job->getInternal();
     if (d->m_cancelled)
         return 0;
+
+#if LIBCURL_VERSION_NUM > 0x071200
+    // We should never be called when deferred loading is activated.
+    ASSERT(!d->m_defersLoading);
+#endif
 
     if (!size || !nmemb)
         return 0;
@@ -360,12 +380,24 @@ void ResourceHandleManager::setupPOST(ResourceHandle* job, struct curl_slist** h
     }
 
     // Obtain the total size of the POST
+    // The size of a curl_off_t could be different in WebKit and in cURL depending on
+    // compilation flags of both. For CURLOPT_POSTFIELDSIZE_LARGE we have to pass the
+    // right size or random data will be used as the size.
+    static int expectedSizeOfCurlOffT = 0;
+    if (!expectedSizeOfCurlOffT) {
+        curl_version_info_data *infoData = curl_version_info(CURLVERSION_NOW);
+        if (infoData->features & CURL_VERSION_LARGEFILE)
+            expectedSizeOfCurlOffT = sizeof(long long);
+        else
+            expectedSizeOfCurlOffT = sizeof(int);
+    }
+
 #if COMPILER(MSVC)
     // work around compiler error in Visual Studio 2005.  It can't properly
     // handle math with 64-bit constant declarations.
 #pragma warning(disable: 4307)
 #endif
-    static const long long maxCurlOffT = (1LL << (sizeof(curl_off_t) * 8 - 1)) - 1;
+    static const long long maxCurlOffT = (1LL << (expectedSizeOfCurlOffT * 8 - 1)) - 1;
     curl_off_t size = 0;
     bool chunkedTransfer = false;
     for (size_t i = 0; i < numElements; i++) {
@@ -392,8 +424,12 @@ void ResourceHandleManager::setupPOST(ResourceHandle* job, struct curl_slist** h
     // cURL guesses that we want chunked encoding as long as we specify the header
     if (chunkedTransfer)
         *headers = curl_slist_append(*headers, "Transfer-Encoding: chunked");
-    else
-        curl_easy_setopt(d->m_handle, CURLOPT_POSTFIELDSIZE_LARGE, size);
+    else {
+        if (sizeof(long long) == expectedSizeOfCurlOffT)
+          curl_easy_setopt(d->m_handle, CURLOPT_POSTFIELDSIZE_LARGE, (long long)size);
+        else
+          curl_easy_setopt(d->m_handle, CURLOPT_POSTFIELDSIZE_LARGE, (int)size);
+    }
 
     curl_easy_setopt(d->m_handle, CURLOPT_READFUNCTION, readCallback);
     curl_easy_setopt(d->m_handle, CURLOPT_READDATA, job);
@@ -434,68 +470,65 @@ bool ResourceHandleManager::startScheduledJobs()
     return started;
 }
 
-// FIXME: This function does not deal properly with text encodings.
 static void parseDataUrl(ResourceHandle* handle)
 {
-    String data = handle->request().url().string();
+    ResourceHandleClient* client = handle->client();
 
-    ASSERT(data.startsWith("data:", false));
+    ASSERT(client);
+    if (!client)
+        return;
 
-    String header;
-    bool base64 = false;
+    String url = handle->request().url().string();
+    ASSERT(url.startsWith("data:", false));
 
-    int index = data.find(',');
-    if (index != -1) {
-        header = data.substring(5, index - 5).lower();
-        data = data.substring(index + 1);
+    int index = url.find(',');
+    if (index == -1) {
+        client->cannotShowURL(handle);
+        return;
+    }
 
-        if (header.endsWith(";base64")) {
-            base64 = true;
-            header = header.left(header.length() - 7);
-        }
-    } else
-        data = String();
+    String mediaType = url.substring(5, index - 5);
+    String data = url.substring(index + 1);
 
-    data = decodeURLEscapeSequences(data);
+    bool base64 = mediaType.endsWith(";base64", false);
+    if (base64)
+        mediaType = mediaType.left(mediaType.length() - 7);
 
-    size_t outLength = 0;
-    char* outData = 0;
-    Vector<char> out;
-    if (base64 && !data.isEmpty()) {
+    if (mediaType.isEmpty())
+        mediaType = "text/plain;charset=US-ASCII";
+
+    String mimeType = extractMIMETypeFromMediaType(mediaType);
+    String charset = extractCharsetFromMediaType(mediaType);
+
+    ResourceResponse response;
+    response.setMimeType(mimeType);
+
+    if (base64) {
+        data = decodeURLEscapeSequences(data);
+        response.setTextEncodingName(charset);
+        client->didReceiveResponse(handle, response);
+
         // Use the GLib Base64 if available, since WebCore's decoder isn't
         // general-purpose and fails on Acid3 test 97 (whitespace).
 #ifdef USE_GLIB_BASE64
+        size_t outLength = 0;
+        char* outData = 0;
         outData = reinterpret_cast<char*>(g_base64_decode(data.utf8().data(), &outLength));
+        if (outData)
+            client->didReceiveData(handle, outData, outLength, 0);
+        g_free(outData);
 #else
-        base64Decode(data.latin1().data(), data.length(), out);
+        Vector<char> out;
+        if (base64Decode(data.latin1().data(), data.latin1().length(), out))
+            client->didReceiveData(handle, out.data(), out.size(), 0);
 #endif
+    } else {
+        // We have to convert to UTF-16 early due to limitations in KURL
+        data = decodeURLEscapeSequences(data, TextEncoding(charset));
+        response.setTextEncodingName("UTF-16");
+        client->didReceiveResponse(handle, response);
+        client->didReceiveData(handle, reinterpret_cast<const char*>(data.characters()), data.length() * sizeof(UChar), 0);
     }
-
-    if (header.isEmpty())
-        header = "text/plain;charset=US-ASCII";
-
-    ResourceHandleClient* client = handle->getInternal()->client();
-
-    ResourceResponse response;
-
-    response.setMimeType(extractMIMETypeFromMediaType(header));
-    response.setTextEncodingName(extractCharsetFromMediaType(header));
-    if (outData)
-        response.setExpectedContentLength(outLength);
-    else
-        response.setExpectedContentLength(data.length());
-    response.setHTTPStatusCode(200);
-
-    client->didReceiveResponse(handle, response);
-
-    if (outData)
-        client->didReceiveData(handle, outData, outLength, 0);
-    else
-        client->didReceiveData(handle, out.data(), out.size(), 0);
-
-#ifdef USE_GLIB_BASE64
-    g_free(outData);
-#endif
 
     client->didFinishLoading(handle);
 }
@@ -509,9 +542,16 @@ void ResourceHandleManager::dispatchSynchronousJob(ResourceHandle* job)
         return;
     }
 
-    initializeHandle(job);
-
     ResourceHandleInternal* handle = job->getInternal();
+
+#if LIBCURL_VERSION_NUM > 0x071200
+    // If defersLoading is true and we call curl_easy_perform
+    // on a paused handle, libcURL would do the transfert anyway
+    // and we would assert so force defersLoading to be false.
+    handle->m_defersLoading = false;
+#endif
+
+    initializeHandle(job);
 
     // curl_easy_perform blocks until the transfert is finished.
     CURLcode ret =  curl_easy_perform(handle->m_handle);
@@ -568,6 +608,15 @@ void ResourceHandleManager::initializeHandle(ResourceHandle* job)
     }
 
     d->m_handle = curl_easy_init();
+
+#if LIBCURL_VERSION_NUM > 0x071200
+    if (d->m_defersLoading) {
+        CURLcode error = curl_easy_pause(d->m_handle, CURLPAUSE_ALL);
+        // If we did not pause the handle, we would ASSERT in the
+        // header callback. So just assert here.
+        ASSERT(error == CURLE_OK);
+    }
+#endif
 #ifndef NDEBUG
     if (getenv("DEBUG_CURL"))
         curl_easy_setopt(d->m_handle, CURLOPT_VERBOSE, 1);

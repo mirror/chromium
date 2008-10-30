@@ -90,25 +90,10 @@ enum {
 @public
     WebFrame *webFrame;
     WebDynamicScrollBarsView *frameScrollView;
-    
-    // These margin values are used to temporarily hold the margins of a frame until
-    // we have the appropriate document view type.
-    int marginWidth;
-    int marginHeight;
 }
 @end
 
 @implementation WebFrameViewPrivate
-
-- init
-{
-    [super init];
-    
-    marginWidth = -1;
-    marginHeight = -1;
-    
-    return self;
-}
 
 - (void)dealloc
 {
@@ -139,26 +124,6 @@ enum {
 - (WebView *)_webView
 {
     return [_private->webFrame webView];
-}
-
-- (void)_setMarginWidth:(int)w
-{
-    _private->marginWidth = w;
-}
-
-- (int)_marginWidth
-{
-    return _private->marginWidth;
-}
-
-- (void)_setMarginHeight:(int)h
-{
-    _private->marginHeight = h;
-}
-
-- (int)_marginHeight
-{
-    return _private->marginHeight;
 }
 
 - (void)_setDocumentView:(NSView <WebDocumentView> *)view
@@ -301,7 +266,7 @@ static inline void addTypesFromClass(NSMutableDictionary *allTypes, Class objCCl
 
     FrameView* view = frame->view();
 
-    view->setView(_private->frameScrollView);
+    view->setPlatformWidget(_private->frameScrollView);
 
     // FIXME: Frame tries to do this too. Is this code needed?
     if (RenderPart* owner = frame->ownerRenderer()) {
@@ -400,18 +365,17 @@ static inline void addTypesFromClass(NSMutableDictionary *allTypes, Class objCCl
 
 - (void)setAllowsScrolling:(BOOL)flag
 {
-    WebDynamicScrollBarsView *scrollView = [self _scrollView];
-    [scrollView setAllowsScrolling:flag];
     WebCore::Frame *frame = core([self webFrame]);
-    if (WebCore::FrameView *view = frame? frame->view() : 0) {
-        view->setHScrollbarMode((WebCore::ScrollbarMode)[scrollView horizontalScrollingMode]);
-        view->setVScrollbarMode((WebCore::ScrollbarMode)[scrollView verticalScrollingMode]);
-    }
+    if (WebCore::FrameView *view = frame? frame->view() : 0)
+        view->setCanHaveScrollbars(flag);
 }
 
 - (BOOL)allowsScrolling
 {
-    return [[self _scrollView] allowsScrolling];
+    WebCore::Frame *frame = core([self webFrame]);
+    if (WebCore::FrameView *view = frame? frame->view() : 0)
+        return view->canHaveScrollbars();
+    return YES;
 }
 
 - (NSView <WebDocumentView> *)documentView
@@ -492,6 +456,37 @@ static inline void addTypesFromClass(NSMutableDictionary *allTypes, Class objCCl
         }
 #endif
     }
+}
+
+- (NSRect)visibleRect
+{
+    // This method can be called beneath -[NSView dealloc] after we have cleared _private.
+    if (!_private)
+        return [super visibleRect];
+
+    // FIXME: <rdar://problem/6213380> This method does not work correctly with transforms, for two reasons:
+    // 1) [super visibleRect] does not account for the transform, since it is not represented
+    //    in the NSView hierarchy.
+    // 2) -_getVisibleRect: does not correct for transforms.
+
+    NSRect rendererVisibleRect;
+    if (![[self webFrame] _getVisibleRect:&rendererVisibleRect])
+        return [super visibleRect];
+
+    if (NSIsEmptyRect(rendererVisibleRect))
+        return NSZeroRect;
+
+    NSRect viewVisibleRect = [super visibleRect];
+    if (NSIsEmptyRect(viewVisibleRect))
+        return NSZeroRect;
+
+    NSRect frame = [self frame];
+    // rendererVisibleRect is in the parent's coordinate space, and frame is in the superview's coordinate space.
+    // The return value from this method needs to be in this view's coordinate space. We get that right by subtracting
+    // the origins (and correcting for flipping), but when we support transforms, we will need to do better than this.
+    rendererVisibleRect.origin.x -= frame.origin.x;
+    rendererVisibleRect.origin.y = NSMaxY(frame) - NSMaxY(rendererVisibleRect);
+    return NSIntersectionRect(rendererVisibleRect, viewVisibleRect);
 }
 
 - (void)setFrameSize:(NSSize)size
@@ -672,7 +667,8 @@ static inline void addTypesFromClass(NSMutableDictionary *allTypes, Class objCCl
     NSString *characters = [event characters];
     int index, count;
     BOOL callSuper = YES;
-    BOOL maintainsBackForwardList = core([self webFrame])->page()->backForwardList()->enabled() ? YES : NO;
+    Frame* coreFrame = [self _web_frame];
+    BOOL maintainsBackForwardList = coreFrame && coreFrame->page()->backForwardList()->enabled() ? YES : NO;
     
     count = [characters length];
     for (index = 0; index < count; ++index) {

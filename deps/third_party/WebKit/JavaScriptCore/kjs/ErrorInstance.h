@@ -23,16 +23,16 @@
 
 #include "JSObject.h"
 
-namespace KJS {
+namespace JSC {
 
     class ErrorInstance : public JSObject {
     public:
-        ErrorInstance(JSObject* prototype);
+        explicit ErrorInstance(PassRefPtr<StructureID>);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // ErrorInstance_h

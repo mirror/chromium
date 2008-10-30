@@ -101,10 +101,10 @@ public:
     bool hasLocalName(const AtomicString& other) const { return m_tagName.localName() == other; }
     bool hasLocalName(const QualifiedName& other) const { return m_tagName.localName() == other.localName(); }
 
-    virtual const AtomicString& localName() const { return m_tagName.localName(); }
-    virtual const AtomicString& prefix() const { return m_tagName.prefix(); }
-    virtual void setPrefix(const AtomicString &_prefix, ExceptionCode&);
-    virtual const AtomicString& namespaceURI() const { return m_tagName.namespaceURI(); }
+    const AtomicString& localName() const { return m_tagName.localName(); }
+    const AtomicString& prefix() const { return m_tagName.prefix(); }
+    virtual void setPrefix(const AtomicString&, ExceptionCode&);
+    const AtomicString& namespaceURI() const { return m_tagName.namespaceURI(); }
 
     virtual KURL baseURI() const;
 
@@ -140,7 +140,7 @@ public:
 
     virtual void attach();
     virtual void detach();
-    virtual RenderStyle* styleForRenderer(RenderObject* parent);
+    RenderStyle* styleForRenderer(RenderObject* parent);
     virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
     virtual void recalcStyle(StyleChange = NoChange);
 
@@ -181,9 +181,9 @@ public:
     IntSize minimumSizeForResizing() const;
     void setMinimumSizeForResizing(const IntSize&);
 
-    // Use Document::registerForPageCacheCallbacks() to subscribe these
-    virtual void willSaveToCache() { }
-    virtual void didRestoreFromCache() { }
+    // Use Document::registerForDocumentActivationCallbacks() to subscribe these
+    virtual void documentWillBecomeInactive() { }
+    virtual void documentDidBecomeActive() { }
     
     bool isFinishedParsingChildren() const { return m_parsingChildrenFinished; }
     virtual void finishParsingChildren();
@@ -197,13 +197,6 @@ public:
     unsigned childElementCount() const;
 
 private:
-    bool hasRareData() const { return m_hasRareData; }
-    void setHasRareData(bool b = true) { m_hasRareData = b; }
-
-    ElementRareData* rareData();
-    const ElementRareData* rareData() const;
-    ElementRareData* createRareData();
-
     virtual void createAttributeMap() const;
 
     virtual void updateStyleAttribute() const {}
@@ -215,12 +208,17 @@ private:
     void updateFocusAppearanceSoonAfterAttach();
     void cancelFocusAppearanceUpdate();
 
-    virtual bool virtualHasTagName(const QualifiedName&) const;
-
-private:
+    virtual const AtomicString& virtualPrefix() const { return prefix(); }
+    virtual const AtomicString& virtualLocalName() const { return localName(); }
+    virtual const AtomicString& virtualNamespaceURI() const { return namespaceURI(); }
+    
     QualifiedName m_tagName;
+    virtual NodeRareData* createRareData();
 
 protected:
+    ElementRareData* rareData() const;
+    ElementRareData* ensureRareData();
+    
     mutable RefPtr<NamedAttrMap> namedAttrMap;
 
     // These two bits are really used by the StyledElement subclass, but they are pulled up here in order to be shared with other
@@ -236,8 +234,22 @@ protected:
 
 private:
     bool m_parsingChildrenFinished : 1;
-    bool m_hasRareData : 1;
 };
+    
+inline bool Node::hasTagName(const QualifiedName& name) const
+{
+    return isElementNode() && static_cast<const Element*>(this)->hasTagName(name);
+}
+
+inline bool Node::hasAttributes() const
+{
+    return isElementNode() && static_cast<const Element*>(this)->hasAttributes();
+}
+
+inline NamedAttrMap* Node::attributes() const
+{
+    return isElementNode() ? static_cast<const Element*>(this)->attributes() : 0;
+}
 
 } //namespace
 

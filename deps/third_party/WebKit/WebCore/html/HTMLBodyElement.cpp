@@ -130,25 +130,25 @@ void HTMLBodyElement::parseMappedAttribute(MappedAttribute *attr)
         
         if (attached())
             document()->recalcStyle(Force);
-    } else if (attr->name() == onloadAttr) {
-        document()->setHTMLWindowEventListener(loadEvent, attr);
-    } else if (attr->name() == onbeforeunloadAttr) {
-        document()->setHTMLWindowEventListener(beforeunloadEvent, attr);
-    } else if (attr->name() == onunloadAttr) {
-        document()->setHTMLWindowEventListener(unloadEvent, attr);
-    } else if (attr->name() == onblurAttr) {
-        document()->setHTMLWindowEventListener(blurEvent, attr);
-    } else if (attr->name() == onfocusAttr) {
-        document()->setHTMLWindowEventListener(focusEvent, attr);
-    } else if (attr->name() == onresizeAttr) {
-        document()->setHTMLWindowEventListener(resizeEvent, attr);
-    } else if (attr->name() == onscrollAttr) {
-        document()->setHTMLWindowEventListener(scrollEvent, attr);
-    } else if (attr->name() == onstorageAttr) {
+    } else if (attr->name() == onloadAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(loadEvent, attr);
+    else if (attr->name() == onbeforeunloadAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(beforeunloadEvent, attr);
+    else if (attr->name() == onunloadAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(unloadEvent, attr);
+    else if (attr->name() == onblurAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(blurEvent, attr);
+    else if (attr->name() == onfocusAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(focusEvent, attr);
+    else if (attr->name() == onresizeAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(resizeEvent, attr);
+    else if (attr->name() == onscrollAttr)
+        document()->setWindowEventListenerForTypeAndAttribute(scrollEvent, attr);
+    else if (attr->name() == onstorageAttr) {
         // The HTML5 spec currently specifies that storage events are fired only at the body element of
         // an HTMLDocument, which is why the onstorage attribute differs from the ones before it.
         // The spec might change on this, and then so should we!
-        setHTMLEventListener(storageEvent, attr);
+        setEventListenerForTypeAndAttribute(storageEvent, attr);
     } else
         HTMLElement::parseMappedAttribute(attr);
 }
@@ -246,7 +246,7 @@ int HTMLBodyElement::scrollLeft() const
     Document* doc = document();
     doc->updateLayoutIgnorePendingStylesheets();
     FrameView* view = doc->view();
-    return view ? view->contentsX() : 0;
+    return view ? view->scrollX() : 0;
 }
 
 void HTMLBodyElement::setScrollLeft(int scrollLeft)
@@ -255,7 +255,7 @@ void HTMLBodyElement::setScrollLeft(int scrollLeft)
     if (sview) {
         // Update the document's layout
         document()->updateLayoutIgnorePendingStylesheets();
-        sview->setContentsPos(scrollLeft, sview->contentsY());
+        sview->setScrollPosition(IntPoint(scrollLeft, sview->scrollY()));
     }    
 }
 
@@ -265,7 +265,7 @@ int HTMLBodyElement::scrollTop() const
     Document* doc = document();
     doc->updateLayoutIgnorePendingStylesheets();
     FrameView* view = doc->view();
-    return view ? view->contentsY() : 0;
+    return view ? view->scrollY() : 0;
 }
 
 void HTMLBodyElement::setScrollTop(int scrollTop)
@@ -274,7 +274,7 @@ void HTMLBodyElement::setScrollTop(int scrollTop)
     if (sview) {
         // Update the document's layout
         document()->updateLayoutIgnorePendingStylesheets();
-        sview->setContentsPos(sview->contentsX(), scrollTop);
+        sview->setScrollPosition(IntPoint(sview->scrollX(), scrollTop));
     }        
 }
 

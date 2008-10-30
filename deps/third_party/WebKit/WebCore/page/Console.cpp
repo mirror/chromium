@@ -51,7 +51,7 @@
 #endif
 #include <stdio.h>
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -247,6 +247,43 @@ void Console::dir(ScriptCallContext* context)
     page->inspectorController()->addMessageToConsole(JSMessageSource, ObjectMessageLevel, context);
 }
 
+void Console::dirxml(ExecState* exec, const ArgList& args)
+{
+    if (args.isEmpty())
+        return;
+
+    if (!m_frame)
+        return;
+
+    Page* page = m_frame->page();
+    if (!page)
+        return;
+
+    page->inspectorController()->addMessageToConsole(JSMessageSource, NodeMessageLevel, exec, args, 0, String());
+}
+
+void Console::trace(ExecState* exec)
+{
+    Page* page = this->page();
+    if (!page)
+        return;
+
+    int signedLineNumber;
+    intptr_t sourceID;
+    UString urlString;
+    JSValue* func;
+
+    exec->machine()->retrieveLastCaller(exec, signedLineNumber, sourceID, urlString, func);
+
+    ArgList args;
+    while (!func->isNull()) {
+        args.append(func);
+        func = exec->machine()->retrieveCaller(exec, static_cast<InternalFunction*>(func));
+    }
+    
+    page->inspectorController()->addMessageToConsole(JSMessageSource, TraceMessageLevel, exec, args, 0, String());
+}
+
 void Console::assertCondition(bool condition, ScriptCallContext* context)
 {
     if (condition)
@@ -297,6 +334,8 @@ void Console::profileEnd(ExecState* exec, const ArgList& args)
         title = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
 
     RefPtr<Profile> profile = Profiler::profiler()->stopProfiling(exec, title);
+    if (!profile)
+        return;
 
     if (Page* page = this->page()) {
         ScriptCallContext context(exec, args);
@@ -399,6 +438,8 @@ void Console::reportException(ExecState* exec, JSValue* exception)
     int lineNumber = exceptionObject->get(exec, Identifier(exec, "line"))->toInt32(exec);
     UString exceptionSourceURL = exceptionObject->get(exec, Identifier(exec, "sourceURL"))->toString(exec);
     addMessage(JSMessageSource, ErrorMessageLevel, errorMessage, lineNumber, exceptionSourceURL);
+    if (exec->hadException())
+        exec->clearException();
 }
 
 void Console::reportCurrentException(ExecState* exec)

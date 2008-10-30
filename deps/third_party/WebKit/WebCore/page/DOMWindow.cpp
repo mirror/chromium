@@ -36,6 +36,8 @@
 #include "DOMSelection.h"
 #include "Document.h"
 #include "Element.h"
+#include "EventListener.h"
+#include "EventNames.h"
 #include "ExceptionCode.h"
 #include "FloatRect.h"
 #include "Frame.h"
@@ -100,6 +102,8 @@ using std::max;
 
 
 namespace WebCore {
+
+using namespace EventNames;
 
 class PostMessageTimer : public TimerBase {
 public:
@@ -414,7 +418,7 @@ Storage* DOMWindow::localStorage() const
 }
 #endif
 
-void DOMWindow::postMessage(const String& message, const String& targetOrigin, DOMWindow* source, ExceptionCode& ec)
+void DOMWindow::postMessage(const String& message, MessagePort* messagePort, const String& targetOrigin, DOMWindow* source, ExceptionCode& ec)
 {
     if (!m_frame)
         return;
@@ -430,6 +434,12 @@ void DOMWindow::postMessage(const String& message, const String& targetOrigin, D
         }
     }
 
+    RefPtr<MessagePort> newMessagePort;
+    if (messagePort)
+        newMessagePort = messagePort->clone(document(), ec);
+    if (ec)
+        return;
+
     // Capture the source of the message.  We need to do this synchronously
     // in order to capture the source of the message correctly.
     Document* sourceDocument = source->document();
@@ -438,7 +448,7 @@ void DOMWindow::postMessage(const String& message, const String& targetOrigin, D
     String sourceOrigin = sourceDocument->securityOrigin()->toString();
 
     // Schedule the message.
-    PostMessageTimer* timer = new PostMessageTimer(this, MessageEvent::create(message, sourceOrigin, "", source), target.get());
+    PostMessageTimer* timer = new PostMessageTimer(this, MessageEvent::create(message, sourceOrigin, "", source, newMessagePort), target.get());
     timer->startOneShot(0);
 }
 
@@ -711,7 +721,7 @@ int DOMWindow::scrollX() const
     if (doc)
         doc->updateLayoutIgnorePendingStylesheets();
 
-    return static_cast<int>(view->contentsX() / m_frame->pageZoomFactor());
+    return static_cast<int>(view->scrollX() / m_frame->pageZoomFactor());
 }
 
 int DOMWindow::scrollY() const
@@ -728,7 +738,7 @@ int DOMWindow::scrollY() const
     if (doc)
         doc->updateLayoutIgnorePendingStylesheets();
 
-    return static_cast<int>(view->contentsY() / m_frame->pageZoomFactor());
+    return static_cast<int>(view->scrollY() / m_frame->pageZoomFactor());
 }
 
 bool DOMWindow::closed() const
@@ -1113,88 +1123,11 @@ void DOMWindow::resumeTimeouts(OwnPtr<PausedTimeouts>& timeouts) {
 
 #endif  // V8
 
-void DOMWindow::updateLayout() const {
-  WebCore::Document* docimpl = m_frame->document();
-  if (docimpl)
-    docimpl->updateLayoutIgnorePendingStylesheets();
-}
-
-void DOMWindow::moveTo(float x, float y) const {
-  if (!m_frame || !m_frame->page()) return;
-
-  Page* page = m_frame->page();
-  FloatRect fr = page->chrome()->windowRect();
-  FloatRect sr = screenAvailableRect(page->mainFrame()->view());
-  fr.setLocation(sr.location());
-  FloatRect update = fr;
-  update.move(x, y);
-  // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
-  adjustWindowRect(sr, fr, update);
-  page->chrome()->setWindowRect(fr);
-}
- 
-void DOMWindow::moveBy(float x, float y) const {
-  if (!m_frame || !m_frame->page()) return;
-  
-  Page* page = m_frame->page();
-  FloatRect fr = page->chrome()->windowRect();
-  FloatRect update = fr;
-  update.move(x, y);
-  // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
-  adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
-  page->chrome()->setWindowRect(fr);
-}
- 
-void DOMWindow::resizeTo(float x, float y) const {
-  if (!m_frame || !m_frame->page()) return;
-
-  Page* page = m_frame->page();
-  FloatRect fr = page->chrome()->windowRect();
-  FloatSize dest = FloatSize(x, y);
-  FloatRect update(fr.location(), dest);
-  adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
-  page->chrome()->setWindowRect(fr);
-}
- 
-void DOMWindow::resizeBy(float x, float y) const {
-  if (!m_frame || !m_frame->page()) return;
-
-  Page* page = m_frame->page();
-  FloatRect fr = page->chrome()->windowRect();
-  FloatSize dest = fr.size() + FloatSize(x, y);
-  FloatRect update(fr.location(), dest);
-  adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
-  page->chrome()->setWindowRect(fr);
-}
- 
-
-void DOMWindow::scrollTo(int x, int y) const {
-  if (!m_frame || !m_frame->view())
-        return;
-
-    if (m_frame->isDisconnected())
-        return;
-
-  updateLayout();
-  m_frame->view()->setContentsPos(x, y);
-}
-
-void DOMWindow::scrollBy(int x, int y) const {
-  if (!m_frame || !m_frame->view()) return;
-
-  updateLayout();
-  m_frame->view()->scrollBy(x, y);
-}
-
 #if ENABLE(DATABASE)
 PassRefPtr<Database> DOMWindow::openDatabase(const String& name, const String& version, const String& displayName, unsigned long estimatedSize, ExceptionCode& ec)
 {
     if (!m_frame)
         return 0;
-        return;
-
-    if (m_frame->isDisconnected())
-        return;
 
     Document* doc = m_frame->document();
     ASSERT(doc);
@@ -1205,5 +1138,426 @@ PassRefPtr<Database> DOMWindow::openDatabase(const String& name, const String& v
 }
 #endif
 
+void DOMWindow::scrollBy(int x, int y) const
+{
+    if (!m_frame)
+        return;
+
+    Document* doc = m_frame->document();
+    ASSERT(doc);
+    if (doc)
+        doc->updateLayoutIgnorePendingStylesheets();
+
+    FrameView* view = m_frame->view();
+    if (!view)
+        return;
+
+    view->scrollBy(IntSize(x, y));
+}
+
+void DOMWindow::scrollTo(int x, int y) const
+{
+    if (!m_frame)
+        return;
+
+    Document* doc = m_frame->document();
+    ASSERT(doc);
+    if (doc)
+        doc->updateLayoutIgnorePendingStylesheets();
+
+    FrameView* view = m_frame->view();
+    if (!view)
+        return;
+
+    int zoomedX = static_cast<int>(x * m_frame->pageZoomFactor());
+    int zoomedY = static_cast<int>(y * m_frame->pageZoomFactor());
+    view->setScrollPosition(IntPoint(zoomedX, zoomedY));
+}
+
+void DOMWindow::moveBy(float x, float y) const
+{
+    if (!m_frame)
+        return;
+
+    Page* page = m_frame->page();
+    if (!page)
+        return;
+
+    if (m_frame != page->mainFrame())
+        return;
+
+    FloatRect fr = page->chrome()->windowRect();
+    FloatRect update = fr;
+    update.move(x, y);
+    // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
+    adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
+    page->chrome()->setWindowRect(fr);
+}
+
+void DOMWindow::moveTo(float x, float y) const
+{
+    if (!m_frame)
+        return;
+
+    Page* page = m_frame->page();
+    if (!page)
+        return;
+
+    if (m_frame != page->mainFrame())
+        return;
+
+    FloatRect fr = page->chrome()->windowRect();
+    FloatRect sr = screenAvailableRect(page->mainFrame()->view());
+    fr.setLocation(sr.location());
+    FloatRect update = fr;
+    update.move(x, y);     
+    // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
+    adjustWindowRect(sr, fr, update);
+    page->chrome()->setWindowRect(fr);
+}
+
+void DOMWindow::resizeBy(float x, float y) const
+{
+    if (!m_frame)
+        return;
+
+    Page* page = m_frame->page();
+    if (!page)
+        return;
+
+    if (m_frame != page->mainFrame())
+        return;
+
+    FloatRect fr = page->chrome()->windowRect();
+    FloatSize dest = fr.size() + FloatSize(x, y);
+    FloatRect update(fr.location(), dest);
+    adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
+    page->chrome()->setWindowRect(fr);
+}
+
+void DOMWindow::resizeTo(float width, float height) const
+{
+    if (!m_frame)
+        return;
+
+    Page* page = m_frame->page();
+    if (!page)
+        return;
+
+    if (m_frame != page->mainFrame())
+        return;
+
+    FloatRect fr = page->chrome()->windowRect();
+    FloatSize dest = FloatSize(width, height);
+    FloatRect update(fr.location(), dest);
+    adjustWindowRect(screenAvailableRect(page->mainFrame()->view()), fr, update);
+    page->chrome()->setWindowRect(fr);
+}
+
+inline void DOMWindow::setEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener> eventListener)
+{
+    Document* document = this->document();
+    if (!document)
+        return;
+    document->setWindowEventListenerForType(eventType, eventListener);
+}
+
+inline EventListener* DOMWindow::eventListenerForType(const AtomicString& eventType) const
+{
+    Document* document = this->document();
+    if (!document)
+        return 0;
+    return document->windowEventListenerForType(eventType);
+}
+
+EventListener* DOMWindow::onabort() const
+{
+    return eventListenerForType(abortEvent);
+}
+
+void DOMWindow::setOnabort(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(abortEvent, eventListener);
+}
+
+EventListener* DOMWindow::onblur() const
+{
+    return eventListenerForType(blurEvent);
+}
+
+void DOMWindow::setOnblur(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(blurEvent, eventListener);
+}
+
+EventListener* DOMWindow::onchange() const
+{
+    return eventListenerForType(changeEvent);
+}
+
+void DOMWindow::setOnchange(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(changeEvent, eventListener);
+}
+
+EventListener* DOMWindow::onclick() const
+{
+    return eventListenerForType(clickEvent);
+}
+
+void DOMWindow::setOnclick(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(clickEvent, eventListener);
+}
+
+EventListener* DOMWindow::ondblclick() const
+{
+    return eventListenerForType(dblclickEvent);
+}
+
+void DOMWindow::setOndblclick(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(dblclickEvent, eventListener);
+}
+
+EventListener* DOMWindow::onerror() const
+{
+    return eventListenerForType(errorEvent);
+}
+
+void DOMWindow::setOnerror(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(errorEvent, eventListener);
+}
+
+EventListener* DOMWindow::onfocus() const
+{
+    return eventListenerForType(focusEvent);
+}
+
+void DOMWindow::setOnfocus(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(focusEvent, eventListener);
+}
+
+EventListener* DOMWindow::onkeydown() const
+{
+    return eventListenerForType(keydownEvent);
+}
+
+void DOMWindow::setOnkeydown(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(keydownEvent, eventListener);
+}
+
+EventListener* DOMWindow::onkeypress() const
+{
+    return eventListenerForType(keypressEvent);
+}
+
+void DOMWindow::setOnkeypress(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(keypressEvent, eventListener);
+}
+
+EventListener* DOMWindow::onkeyup() const
+{
+    return eventListenerForType(keyupEvent);
+}
+
+void DOMWindow::setOnkeyup(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(keyupEvent, eventListener);
+}
+
+EventListener* DOMWindow::onload() const
+{
+    return eventListenerForType(loadEvent);
+}
+
+void DOMWindow::setOnload(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(loadEvent, eventListener);
+}
+
+EventListener* DOMWindow::onmousedown() const
+{
+    return eventListenerForType(mousedownEvent);
+}
+
+void DOMWindow::setOnmousedown(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(mousedownEvent, eventListener);
+}
+
+EventListener* DOMWindow::onmousemove() const
+{
+    return eventListenerForType(mousemoveEvent);
+}
+
+void DOMWindow::setOnmousemove(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(mousemoveEvent, eventListener);
+}
+
+EventListener* DOMWindow::onmouseout() const
+{
+    return eventListenerForType(mouseoutEvent);
+}
+
+void DOMWindow::setOnmouseout(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(mouseoutEvent, eventListener);
+}
+
+EventListener* DOMWindow::onmouseover() const
+{
+    return eventListenerForType(mouseoverEvent);
+}
+
+void DOMWindow::setOnmouseover(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(mouseoverEvent, eventListener);
+}
+
+EventListener* DOMWindow::onmouseup() const
+{
+    return eventListenerForType(mouseupEvent);
+}
+
+void DOMWindow::setOnmouseup(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(mouseupEvent, eventListener);
+}
+
+EventListener* DOMWindow::onmousewheel() const
+{
+    return eventListenerForType(mousewheelEvent);
+}
+
+void DOMWindow::setOnmousewheel(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(mousewheelEvent, eventListener);
+}
+
+EventListener* DOMWindow::onreset() const
+{
+    return eventListenerForType(resetEvent);
+}
+
+void DOMWindow::setOnreset(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(resetEvent, eventListener);
+}
+
+EventListener* DOMWindow::onresize() const
+{
+    return eventListenerForType(resizeEvent);
+}
+
+void DOMWindow::setOnresize(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(resizeEvent, eventListener);
+}
+
+EventListener* DOMWindow::onscroll() const
+{
+    return eventListenerForType(scrollEvent);
+}
+
+void DOMWindow::setOnscroll(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(scrollEvent, eventListener);
+}
+
+EventListener* DOMWindow::onsearch() const
+{
+    return eventListenerForType(searchEvent);
+}
+
+void DOMWindow::setOnsearch(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(searchEvent, eventListener);
+}
+
+EventListener* DOMWindow::onselect() const
+{
+    return eventListenerForType(selectEvent);
+}
+
+void DOMWindow::setOnselect(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(selectEvent, eventListener);
+}
+
+EventListener* DOMWindow::onsubmit() const
+{
+    return eventListenerForType(submitEvent);
+}
+
+void DOMWindow::setOnsubmit(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(submitEvent, eventListener);
+}
+
+EventListener* DOMWindow::onunload() const
+{
+    return eventListenerForType(unloadEvent);
+}
+
+void DOMWindow::setOnunload(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(unloadEvent, eventListener);
+}
+
+EventListener* DOMWindow::onbeforeunload() const
+{
+    return eventListenerForType(beforeunloadEvent);
+}
+
+void DOMWindow::setOnbeforeunload(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(beforeunloadEvent, eventListener);
+}
+
+EventListener* DOMWindow::onwebkitanimationstart() const
+{
+    return eventListenerForType(webkitAnimationStartEvent);
+}
+
+void DOMWindow::setOnwebkitanimationstart(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(webkitAnimationStartEvent, eventListener);
+}
+
+EventListener* DOMWindow::onwebkitanimationiteration() const
+{
+    return eventListenerForType(webkitAnimationIterationEvent);
+}
+
+void DOMWindow::setOnwebkitanimationiteration(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(webkitAnimationIterationEvent, eventListener);
+}
+
+EventListener* DOMWindow::onwebkitanimationend() const
+{
+    return eventListenerForType(webkitAnimationEndEvent);
+}
+
+void DOMWindow::setOnwebkitanimationend(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(webkitAnimationEndEvent, eventListener);
+}
+
+EventListener* DOMWindow::onwebkittransitionend() const
+{
+    return eventListenerForType(webkitTransitionEndEvent);
+}
+
+void DOMWindow::setOnwebkittransitionend(PassRefPtr<EventListener> eventListener)
+{
+    setEventListenerForType(webkitTransitionEndEvent, eventListener);
+}
 
 } // namespace WebCore

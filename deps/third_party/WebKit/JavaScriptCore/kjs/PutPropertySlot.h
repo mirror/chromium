@@ -29,7 +29,7 @@
 
 #include <wtf/Assertions.h>
 
-namespace KJS {
+namespace JSC {
     
     class JSObject;
     
@@ -40,6 +40,7 @@ namespace KJS {
         PutPropertySlot()
             : m_type(Invalid)
             , m_base(0)
+            , m_wasTransition(false)
         {
         }
 
@@ -65,13 +66,16 @@ namespace KJS {
             ASSERT(isCacheable());
             return m_offset;
         }
-
+        
+        bool wasTransition() const { return m_wasTransition; }
+        void setWasTransition(bool wasTransition) { m_wasTransition = wasTransition; }
     private:
         Type m_type;
         JSObject* m_base;
+        bool m_wasTransition;
         size_t m_offset;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // PutPropertySlot_h

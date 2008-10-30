@@ -34,7 +34,7 @@
 #include <kjs/ObjectPrototype.h>
 #include <kjs/identifier.h>
 
-using namespace KJS;
+using namespace JSC;
 
 const JSClassDefinition kJSClassDefinitionEmpty = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -185,11 +185,10 @@ OpaqueJSClassContextData::~OpaqueJSClassContextData()
 
 OpaqueJSClassContextData& OpaqueJSClass::contextData(ExecState* exec)
 {
-    HashMap<OpaqueJSClass*, OpaqueJSClassContextData*>* contextDataMap = exec->globalData().opaqueJSClassData;
-    HashMap<OpaqueJSClass*, OpaqueJSClassContextData*>::iterator iter = contextDataMap->find(this);
-    if (iter != contextDataMap->end())
-        return *iter->second;
-    return *contextDataMap->add(this, new OpaqueJSClassContextData(this)).first->second;
+    OpaqueJSClassContextData*& contextData = exec->globalData().opaqueJSClassData.add(this, 0).first->second;
+    if (!contextData)
+        contextData = new OpaqueJSClassContextData(this);
+    return *contextData;
 }
 
 UString OpaqueJSClass::className()
@@ -198,13 +197,13 @@ UString OpaqueJSClass::className()
     return UString(m_className.data(), m_className.size());
 }
 
-OpaqueJSClassStaticValuesTable* OpaqueJSClass::staticValues(KJS::ExecState* exec)
+OpaqueJSClassStaticValuesTable* OpaqueJSClass::staticValues(JSC::ExecState* exec)
 {
     OpaqueJSClassContextData& jsClassData = contextData(exec);
     return jsClassData.staticValues;
 }
 
-OpaqueJSClassStaticFunctionsTable* OpaqueJSClass::staticFunctions(KJS::ExecState* exec)
+OpaqueJSClassStaticFunctionsTable* OpaqueJSClass::staticFunctions(JSC::ExecState* exec)
 {
     OpaqueJSClassContextData& jsClassData = contextData(exec);
     return jsClassData.staticFunctions;
@@ -235,12 +234,11 @@ JSObject* OpaqueJSClass::prototype(ExecState* exec)
 
     if (!jsClassData.cachedPrototype) {
         // Recursive, but should be good enough for our purposes
-        JSObject* parentPrototype = 0;
-        if (parentClass)
-            parentPrototype = parentClass->prototype(exec); // can be null
-        if (!parentPrototype)
-            parentPrototype = exec->dynamicGlobalObject()->objectPrototype();
-        jsClassData.cachedPrototype = new (exec) JSCallbackObject<JSObject>(exec, prototypeClass, parentPrototype, &jsClassData); // set jsClassData as the object's private data, so it can clear our reference on destruction
+        jsClassData.cachedPrototype = new (exec) JSCallbackObject<JSObject>(exec, exec->lexicalGlobalObject()->callbackObjectStructure(), prototypeClass, &jsClassData); // set jsClassData as the object's private data, so it can clear our reference on destruction
+        if (parentClass) {
+            if (JSObject* prototype = parentClass->prototype(exec))
+                jsClassData.cachedPrototype->setPrototype(prototype);
+        }
     }
     return jsClassData.cachedPrototype;
 }

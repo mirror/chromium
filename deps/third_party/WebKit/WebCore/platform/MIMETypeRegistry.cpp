@@ -147,6 +147,8 @@ static void initializeSupportedImageMIMETypesForEncoding()
         String mimeType = MIMETypeRegistry::getMIMETypeForExtension(formats.at(i).constData());
         supportedImageMIMETypesForEncoding->add(mimeType);
     }
+#elif PLATFORM(CAIRO)
+    supportedImageMIMETypesForEncoding->add("image/png");
 #endif
 }
 
@@ -189,10 +191,10 @@ static void initializeSupportedNonImageMimeTypes()
         "application/rss+xml",
         "application/atom+xml",
 #if ENABLE(SVG)
-      "image/svg+xml",
+        "image/svg+xml",
 #endif
 #if ENABLE(FTPDIR)
-      "application/x-ftp-directory",
+        "application/x-ftp-directory",
 #endif
         "multipart/x-mixed-replace"
     };
@@ -228,7 +230,9 @@ String MIMETypeRegistry::getMIMETypeForPath(const String& path)
     int pos = path.reverseFind('.');
     if (pos >= 0) {
         String extension = path.substring(pos + 1);
-        return getMIMETypeForExtension(extension);
+        String result = getMIMETypeForExtension(extension);
+        if (result.length())
+            return result;
     }
     return "application/octet-stream";
 }

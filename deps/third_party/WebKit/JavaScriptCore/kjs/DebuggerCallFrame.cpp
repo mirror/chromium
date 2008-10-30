@@ -34,27 +34,22 @@
 #include "Machine.h"
 #include "Parser.h"
 
-namespace KJS {
-
-Register* DebuggerCallFrame::callFrame() const
-{
-    return m_registers - m_codeBlock->numLocals - RegisterFile::CallFrameHeaderSize;
-}
+namespace JSC {
 
 const UString* DebuggerCallFrame::functionName() const
 {
-    if (!m_codeBlock)
+    if (!m_callFrame->codeBlock())
         return 0;
 
-    JSFunction* function = static_cast<JSFunction*>(callFrame()[RegisterFile::Callee].getJSValue());
+    JSFunction* function = static_cast<JSFunction*>(m_callFrame->callee());
     if (!function)
         return 0;
-    return &function->name(m_exec);
+    return &function->name(&m_callFrame->globalData());
 }
 
 DebuggerCallFrame::Type DebuggerCallFrame::type() const
 {
-    if (callFrame()[RegisterFile::Callee].getJSValue())
+    if (m_callFrame->callee())
         return FunctionType;
 
     return ProgramType;
@@ -62,30 +57,26 @@ DebuggerCallFrame::Type DebuggerCallFrame::type() const
 
 JSObject* DebuggerCallFrame::thisObject() const
 {
-    if (!m_codeBlock)
+    if (!m_callFrame->codeBlock())
         return 0;
 
-    return static_cast<JSObject*>(m_registers[m_codeBlock->thisRegister].getJSValue());
+    // FIXME: Why is it safe to cast this to JSObject?
+    return static_cast<JSObject*>(m_callFrame->thisValue());
 }
 
 JSValue* DebuggerCallFrame::evaluate(const UString& script, JSValue*& exception) const
 {
-    if (!m_codeBlock)
+    if (!m_callFrame->codeBlock())
         return 0;
 
-    JSObject* thisObject = this->thisObject();
-
-    ExecState newExec(m_scopeChain->globalObject(), thisObject, m_scopeChain);
-
-    int sourceId;
     int errLine;
     UString errMsg;
-    RefPtr<SourceProvider> sourceProvider = UStringSourceProvider::create(script);
-    RefPtr<EvalNode> evalNode = newExec.parser()->parse<EvalNode>(&newExec, UString(), 1, sourceProvider, &sourceId, &errLine, &errMsg);
+    SourceCode source = makeSource(script);
+    RefPtr<EvalNode> evalNode = m_callFrame->scopeChain()->globalData->parser->parse<EvalNode>(m_callFrame, source, &errLine, &errMsg);
     if (!evalNode)
-        return Error::create(&newExec, SyntaxError, errMsg, errLine, sourceId, 0);
+        return Error::create(m_callFrame, SyntaxError, errMsg, errLine, source.provider()->asID(), source.provider()->url());
 
-    return newExec.machine()->execute(evalNode.get(), &newExec, thisObject, m_scopeChain, &exception);
+    return m_callFrame->scopeChain()->globalData->machine->execute(evalNode.get(), m_callFrame, thisObject(), m_callFrame->scopeChain(), &exception);
 }
 
-} // namespace KJS
+} // namespace JSC

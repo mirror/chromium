@@ -28,14 +28,14 @@
 #include <wtf/Vector.h>
 #include "SourceRange.h"
 
-namespace KJS {
+namespace JSC {
 
     class Identifier;
     class RegExp;
 
     class Lexer : Noncopyable {
     public:
-        void setCode(int startingLineNumber, PassRefPtr<SourceProvider> source);
+        void setCode(const SourceCode&);
         int lex(void* lvalp, void* llocp);
 
         int lineNo() const { return yylineno; }
@@ -88,7 +88,7 @@ namespace KJS {
         bool sawError() const { return m_error; }
 
         void clear();
-        SourceRange sourceRange(int openBrace, int closeBrace) { return SourceRange(m_source, openBrace + 1, closeBrace); }
+        SourceCode sourceCode(int openBrace, int closeBrace, int firstLine) { return SourceCode(m_source->provider(), openBrace + 1, closeBrace, firstLine); }
 
     private:
         friend class JSGlobalData;
@@ -112,8 +112,7 @@ namespace KJS {
         void record16(int);
         void record16(UChar);
 
-        KJS::Identifier* makeIdentifier(const Vector<UChar>& buffer);
-        UString* makeUString(const Vector<UChar>& buffer);
+        JSC::Identifier* makeIdentifier(const Vector<UChar>& buffer);
 
         int yylineno;
         int yycolumn;
@@ -132,7 +131,7 @@ namespace KJS {
 
         State m_state;
         unsigned int m_position;
-        RefPtr<SourceProvider> m_source;
+        const SourceCode* m_source;
         const UChar* m_code;
         unsigned int m_length;
         int m_atLineStart;
@@ -150,7 +149,7 @@ namespace KJS {
         int m_nextOffset3;
         
         Vector<UString*> m_strings;
-        Vector<KJS::Identifier*> m_identifiers;
+        Vector<JSC::Identifier*> m_identifiers;
 
         JSGlobalData* m_globalData;
 
@@ -160,6 +159,6 @@ namespace KJS {
         const HashTable m_mainTable;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // Lexer_h

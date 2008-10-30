@@ -27,12 +27,13 @@
 #include "PropertyNameArray.h"
 #include "RegExpConstructor.h"
 #include "RegExpObject.h"
+#include <wtf/ASCIICType.h>
 #include <wtf/MathExtras.h>
 #include <wtf/unicode/Collator.h>
 
 using namespace WTF;
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(StringPrototype);
 
@@ -51,8 +52,6 @@ static JSValue* stringProtoFuncSubstr(ExecState*, JSObject*, JSValue*, const Arg
 static JSValue* stringProtoFuncSubstring(ExecState*, JSObject*, JSValue*, const ArgList&);
 static JSValue* stringProtoFuncToLowerCase(ExecState*, JSObject*, JSValue*, const ArgList&);
 static JSValue* stringProtoFuncToUpperCase(ExecState*, JSObject*, JSValue*, const ArgList&);
-static JSValue* stringProtoFuncToLocaleLowerCase(ExecState*, JSObject*, JSValue*, const ArgList&);
-static JSValue* stringProtoFuncToLocaleUpperCase(ExecState*, JSObject*, JSValue*, const ArgList&);
 static JSValue* stringProtoFuncLocaleCompare(ExecState*, JSObject*, JSValue*, const ArgList&);
 
 static JSValue* stringProtoFuncBig(ExecState*, JSObject*, JSValue*, const ArgList&);
@@ -73,7 +72,7 @@ static JSValue* stringProtoFuncLink(ExecState*, JSObject*, JSValue*, const ArgLi
 
 #include "StringPrototype.lut.h"
 
-namespace KJS {
+namespace JSC {
 
 const ClassInfo StringPrototype::info = { "String", &StringObject::info, 0, ExecState::stringTable };
 
@@ -95,9 +94,11 @@ const ClassInfo StringPrototype::info = { "String", &StringObject::info, 0, Exec
     substring             stringProtoFuncSubstring         DontEnum|Function       2
     toLowerCase           stringProtoFuncToLowerCase       DontEnum|Function       0
     toUpperCase           stringProtoFuncToUpperCase       DontEnum|Function       0
-    toLocaleLowerCase     stringProtoFuncToLocaleLowerCase DontEnum|Function       0
-    toLocaleUpperCase     stringProtoFuncToLocaleUpperCase DontEnum|Function       0
     localeCompare         stringProtoFuncLocaleCompare     DontEnum|Function       1
+
+    # toLocaleLowerCase and toLocaleUpperCase are currently identical to toLowerCase and toUpperCase
+    toLocaleLowerCase     stringProtoFuncToLowerCase       DontEnum|Function       0
+    toLocaleUpperCase     stringProtoFuncToUpperCase       DontEnum|Function       0
 
     big                   stringProtoFuncBig               DontEnum|Function       0
     small                 stringProtoFuncSmall             DontEnum|Function       0
@@ -116,8 +117,8 @@ const ClassInfo StringPrototype::info = { "String", &StringObject::info, 0, Exec
 */
 
 // ECMA 15.5.4
-StringPrototype::StringPrototype(ExecState* exec, ObjectPrototype* objectPrototype)
-    : StringObject(exec, objectPrototype)
+StringPrototype::StringPrototype(ExecState* exec, PassRefPtr<StructureID> structure)
+    : StringObject(exec, structure)
 {
     // The constructor will be added later, after StringConstructor has been built
     putDirect(exec->propertyNames().length, jsNumber(exec, 0), DontDelete | ReadOnly | DontEnum);
@@ -257,6 +258,8 @@ JSValue* stringProtoFuncReplace(ExecState* exec, JSObject*, JSValue* thisValue, 
                 args.append(sourceVal);
 
                 replacements.append(call(exec, replacement, callType, callData, exec->globalThisValue(), args)->toString(exec));
+                if (exec->hadException())
+                    break;
             } else
                 replacements.append(substituteBackreferences(replacementString, source, ovector, reg));
 
@@ -409,7 +412,7 @@ JSValue* stringProtoFuncMatch(ExecState* exec, JSObject*, JSValue* thisValue, co
          *  If regexp is not an object whose [[Class]] property is "RegExp", it is
          *  replaced with the result of the expression new RegExp(regexp).
          */
-        reg = RegExp::create(a0->toString(exec));
+        reg = RegExp::create(&exec->globalData(), a0->toString(exec));
     }
     RegExpConstructor* regExpObj = exec->lexicalGlobalObject()->regExpConstructor();
     int pos;
@@ -459,7 +462,7 @@ JSValue* stringProtoFuncSearch(ExecState* exec, JSObject*, JSValue* thisValue, c
          *  If regexp is not an object whose [[Class]] property is "RegExp", it is
          *  replaced with the result of the expression new RegExp(regexp).
          */
-        reg = RegExp::create(a0->toString(exec));
+        reg = RegExp::create(&exec->globalData(), a0->toString(exec));
     }
     RegExpConstructor* regExpObj = exec->lexicalGlobalObject()->regExpConstructor();
     int pos;
@@ -612,20 +615,32 @@ JSValue* stringProtoFuncToLowerCase(ExecState* exec, JSObject*, JSValue* thisVal
 {
     JSString* sVal = thisValue->toThisJSString(exec);
     const UString& s = sVal->value();
-    
-    int ssize = s.size();
-    if (!ssize)
+
+    int sSize = s.size();
+    if (!sSize)
         return sVal;
-    Vector<UChar> buffer(ssize);
+
+    const UChar* sData = s.data();
+    Vector<UChar> buffer(sSize);
+
+    UChar ored = 0;
+    for (int i = 0; i < sSize; i++) {
+        UChar c = sData[i];
+        ored |= c;
+        buffer[i] = toASCIILower(c);
+    }
+    if (!(ored & ~0x7f))
+        return jsString(exec, UString(buffer.releaseBuffer(), sSize, false));
+
     bool error;
-    int length = Unicode::toLower(buffer.data(), ssize, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
+    int length = Unicode::toLower(buffer.data(), sSize, sData, sSize, &error);
     if (error) {
         buffer.resize(length);
-        length = Unicode::toLower(buffer.data(), length, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
+        length = Unicode::toLower(buffer.data(), length, sData, sSize, &error);
         if (error)
             return sVal;
     }
-    if (length == ssize && memcmp(buffer.data(), s.data(), length * sizeof(UChar)) == 0)
+    if (length == sSize && memcmp(buffer.data(), sData, length * sizeof(UChar)) == 0)
         return sVal;
     return jsString(exec, UString(buffer.releaseBuffer(), length, false));
 }
@@ -634,66 +649,32 @@ JSValue* stringProtoFuncToUpperCase(ExecState* exec, JSObject*, JSValue* thisVal
 {
     JSString* sVal = thisValue->toThisJSString(exec);
     const UString& s = sVal->value();
-    
-    int ssize = s.size();
-    if (!ssize)
+
+    int sSize = s.size();
+    if (!sSize)
         return sVal;
-    Vector<UChar> buffer(ssize);
+
+    const UChar* sData = s.data();
+    Vector<UChar> buffer(sSize);
+
+    UChar ored = 0;
+    for (int i = 0; i < sSize; i++) {
+        UChar c = sData[i];
+        ored |= c;
+        buffer[i] = toASCIIUpper(c);
+    }
+    if (!(ored & ~0x7f))
+        return jsString(exec, UString(buffer.releaseBuffer(), sSize, false));
+
     bool error;
-    int length = Unicode::toUpper(buffer.data(), ssize, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
+    int length = Unicode::toUpper(buffer.data(), sSize, sData, sSize, &error);
     if (error) {
         buffer.resize(length);
-        length = Unicode::toUpper(buffer.data(), length, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
+        length = Unicode::toUpper(buffer.data(), length, sData, sSize, &error);
         if (error)
             return sVal;
     }
-    if (length == ssize && memcmp(buffer.data(), s.data(), length * sizeof(UChar)) == 0)
-        return sVal;
-    return jsString(exec, UString(buffer.releaseBuffer(), length, false));
-}
-
-JSValue* stringProtoFuncToLocaleLowerCase(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList&)
-{
-    // FIXME: See http://www.unicode.org/Public/UNIDATA/SpecialCasing.txt for locale-sensitive mappings that aren't implemented.
-
-    JSString* sVal = thisValue->toThisJSString(exec);
-    const UString& s = sVal->value();
-    
-    int ssize = s.size();
-    if (!ssize)
-        return sVal;
-    Vector<UChar> buffer(ssize);
-    bool error;
-    int length = Unicode::toLower(buffer.data(), ssize, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
-    if (error) {
-        buffer.resize(length);
-        length = Unicode::toLower(buffer.data(), length, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
-        if (error)
-            return sVal;
-    }
-    if (length == ssize && memcmp(buffer.data(), s.data(), length * sizeof(UChar)) == 0)
-        return sVal;
-    return jsString(exec, UString(buffer.releaseBuffer(), length, false));
-}
-
-JSValue* stringProtoFuncToLocaleUpperCase(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList&)
-{
-    JSString* sVal = thisValue->toThisJSString(exec);
-    const UString& s = sVal->value();
-    
-    int ssize = s.size();
-    if (!ssize)
-        return sVal;
-    Vector<UChar> buffer(ssize);
-    bool error;
-    int length = Unicode::toUpper(buffer.data(), ssize, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
-    if (error) {
-        buffer.resize(length);
-        length = Unicode::toUpper(buffer.data(), length, reinterpret_cast<const UChar*>(s.data()), ssize, &error);
-        if (error)
-            return sVal;
-    }
-    if (length == ssize && memcmp(buffer.data(), s.data(), length * sizeof(UChar)) == 0)
+    if (length == sSize && memcmp(buffer.data(), sData, length * sizeof(UChar)) == 0)
         return sVal;
     return jsString(exec, UString(buffer.releaseBuffer(), length, false));
 }
@@ -790,4 +771,4 @@ JSValue* stringProtoFuncLink(ExecState* exec, JSObject*, JSValue* thisValue, con
     return jsString(exec, "<a href=\"" + a0->toString(exec) + "\">" + s + "</a>");
 }
 
-} // namespace KJS
+} // namespace JSC

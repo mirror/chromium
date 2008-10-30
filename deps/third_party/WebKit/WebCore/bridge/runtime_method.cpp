@@ -26,18 +26,23 @@
 #include "config.h"
 #include "runtime_method.h"
 
+#include "JSDOMBinding.h"
 #include "runtime_object.h"
 #include <kjs/Error.h>
-#include <kjs/JSGlobalObject.h>
+#include <kjs/FunctionPrototype.h>
 
-namespace KJS {
+using namespace WebCore;
+
+namespace JSC {
 
 using namespace Bindings;
 
 ASSERT_CLASS_FITS_IN_CELL(RuntimeMethod);
 
-RuntimeMethod::RuntimeMethod(ExecState *exec, const Identifier &ident, Bindings::MethodList &m) 
-    : InternalFunction(exec, exec->lexicalGlobalObject()->functionPrototype(), ident)
+const ClassInfo RuntimeMethod::s_info = { "RuntimeMethod", 0, 0, 0 };
+
+RuntimeMethod::RuntimeMethod(ExecState* exec, const Identifier& ident, Bindings::MethodList& m) 
+    : InternalFunction(&exec->globalData(), getDOMStructure<RuntimeMethod>(exec), ident)
     , _methodList(new MethodList(m))
 {
 }

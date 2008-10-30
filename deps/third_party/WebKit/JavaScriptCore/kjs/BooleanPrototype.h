@@ -23,16 +23,13 @@
 
 #include "BooleanObject.h"
 
-namespace KJS {
-
-    class FunctionPrototype;
-    class ObjectPrototype;
+namespace JSC {
 
     class BooleanPrototype : public BooleanObject {
     public:
-        BooleanPrototype(ExecState*, ObjectPrototype*, FunctionPrototype*);
+        BooleanPrototype(ExecState*, PassRefPtr<StructureID>, StructureID* prototypeFunctionStructure);
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // BooleanPrototype_h

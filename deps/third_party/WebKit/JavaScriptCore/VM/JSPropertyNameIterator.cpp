@@ -29,38 +29,12 @@
 #include "config.h"
 #include "JSPropertyNameIterator.h"
 
-#include "JSObject.h"
-#include "JSString.h"
-#include "PropertyNameArray.h"
-#include "identifier.h"
-
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSPropertyNameIterator);
 
-JSPropertyNameIterator* JSPropertyNameIterator::create(ExecState* exec, JSValue* v)
-{
-    if (v->isUndefinedOrNull())
-        return new (exec) JSPropertyNameIterator(0, 0, 0);
-
-    JSObject* o = v->toObject(exec);
-    PropertyNameArray propertyNames(exec);
-    o->getPropertyNames(exec, propertyNames);
-    size_t numProperties = propertyNames.size();
-    return new (exec) JSPropertyNameIterator(o, propertyNames.releaseIdentifiers(), numProperties);
-}
-
-JSPropertyNameIterator::JSPropertyNameIterator(JSObject* object, Identifier* propertyNames, size_t numProperties)
-    : m_object(object)
-    , m_propertyNames(propertyNames)
-    , m_position(propertyNames)
-    , m_end(propertyNames + numProperties)
-{
-}
-
 JSPropertyNameIterator::~JSPropertyNameIterator()
 {
-    invalidate();
 }
 
 JSValue* JSPropertyNameIterator::toPrimitive(ExecState*, PreferredPrimitiveType) const
@@ -106,26 +80,11 @@ void JSPropertyNameIterator::mark()
         m_object->mark();
 }
 
-JSValue* JSPropertyNameIterator::next(ExecState* exec)
-{
-    while (m_position != m_end) {
-        if (m_object->hasProperty(exec, *m_position))
-            return jsOwnedString(exec, (*m_position++).ustring());;
-        m_position++;
-    }
-    invalidate();
-    return 0;
-}
-
 void JSPropertyNameIterator::invalidate()
 {
-    if (m_propertyNames) {
-        for (Identifier* p = m_propertyNames; p != m_end; ++p)
-            p->~Identifier();
-        fastFree(m_propertyNames);
-    }
+    ASSERT(m_position == m_end);
     m_object = 0;
-    m_propertyNames = 0;
+    m_data.clear();
 }
 
-} // namespace KJS
+} // namespace JSC

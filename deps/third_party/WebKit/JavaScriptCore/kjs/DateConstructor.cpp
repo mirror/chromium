@@ -41,7 +41,7 @@
 #include <sys/timeb.h>
 #endif
 
-namespace KJS {
+namespace JSC {
 
 // TODO: MakeTime (15.9.11.1) etc. ?
 
@@ -51,20 +51,20 @@ static JSValue* dateParse(ExecState*, JSObject*, JSValue*, const ArgList&);
 static JSValue* dateNow(ExecState*, JSObject*, JSValue*, const ArgList&);
 static JSValue* dateUTC(ExecState*, JSObject*, JSValue*, const ArgList&);
 
-DateConstructor::DateConstructor(ExecState* exec, FunctionPrototype* functionPrototype, DatePrototype* datePrototype)
-    : InternalFunction(exec, functionPrototype, Identifier(exec, datePrototype->classInfo()->className))
+DateConstructor::DateConstructor(ExecState* exec, PassRefPtr<StructureID> structure, StructureID* prototypeFunctionStructure, DatePrototype* datePrototype)
+    : InternalFunction(&exec->globalData(), structure, Identifier(exec, datePrototype->classInfo()->className))
 {
       putDirect(exec->propertyNames().prototype, datePrototype, DontEnum|DontDelete|ReadOnly);
 
-      putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 1, exec->propertyNames().parse, dateParse), DontEnum);
-      putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 7, exec->propertyNames().UTC, dateUTC), DontEnum);
-      putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().now, dateNow), DontEnum);
+      putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 1, exec->propertyNames().parse, dateParse), DontEnum);
+      putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 7, exec->propertyNames().UTC, dateUTC), DontEnum);
+      putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().now, dateNow), DontEnum);
 
       putDirect(exec->propertyNames().length, jsNumber(exec, 7), ReadOnly | DontEnum | DontDelete);
 }
 
 // ECMA 15.9.3
-static JSObject* constructDate(ExecState* exec, JSObject*, const ArgList& args)
+JSObject* constructDate(ExecState* exec, const ArgList& args)
 {
     int numArgs = args.size();
 
@@ -106,14 +106,19 @@ static JSObject* constructDate(ExecState* exec, JSObject*, const ArgList& args)
         }
     }
 
-    DateInstance* ret = new (exec) DateInstance(exec->lexicalGlobalObject()->datePrototype());
-    ret->setInternalValue(jsNumber(exec, timeClip(value)));
-    return ret;
+    DateInstance* result = new (exec) DateInstance(exec->lexicalGlobalObject()->dateStructure());
+    result->setInternalValue(jsNumber(exec, timeClip(value)));
+    return result;
+}
+    
+static JSObject* constructWithDateConstructor(ExecState* exec, JSObject*, const ArgList& args)
+{
+    return constructDate(exec, args);
 }
 
 ConstructType DateConstructor::getConstructData(ConstructData& constructData)
 {
-    constructData.native.function = constructDate;
+    constructData.native.function = constructWithDateConstructor;
     return ConstructTypeHost;
 }
 
@@ -167,4 +172,4 @@ static JSValue* dateUTC(ExecState* exec, JSObject*, JSValue*, const ArgList& arg
     return jsNumber(exec, gregorianDateTimeToMS(t, ms, true));
 }
 
-} // namespace KJS
+} // namespace JSC

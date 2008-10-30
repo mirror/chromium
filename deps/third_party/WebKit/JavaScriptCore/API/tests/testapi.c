@@ -24,6 +24,7 @@
  */
 
 #include "JavaScriptCore.h"
+#include "JSBasePrivate.h"
 #include <math.h>
 #include <wtf/Assertions.h>
 #include <wtf/UnusedParam.h>
@@ -583,6 +584,10 @@ int main(int argc, char* argv[])
 
     JSGlobalContextRetain(context);
     JSGlobalContextRelease(context);
+    
+    JSReportExtraMemoryCost(context, 0);
+    JSReportExtraMemoryCost(context, 1);
+    JSReportExtraMemoryCost(context, 1024);
 
     JSObjectRef globalObject = JSContextGetGlobalObject(context);
     ASSERT(JSValueIsObject(context, globalObject));
@@ -875,6 +880,39 @@ int main(int argc, char* argv[])
         JSPropertyNameArrayGetNameAtIndex(nameArray, count);
     JSPropertyNameArrayRelease(nameArray);
     ASSERT(count == 1); // jsCFString should not be enumerated
+
+    JSValueRef argumentsArrayValues[] = { JSValueMakeNumber(context, 10), JSValueMakeNumber(context, 20) };
+    o = JSObjectMakeArray(context, sizeof(argumentsArrayValues) / sizeof(JSValueRef), argumentsArrayValues, NULL);
+    string = JSStringCreateWithUTF8CString("length");
+    v = JSObjectGetProperty(context, o, string, NULL);
+    assertEqualsAsNumber(v, 2);
+    v = JSObjectGetPropertyAtIndex(context, o, 0, NULL);
+    assertEqualsAsNumber(v, 10);
+    v = JSObjectGetPropertyAtIndex(context, o, 1, NULL);
+    assertEqualsAsNumber(v, 20);
+
+    o = JSObjectMakeArray(context, 0, NULL, NULL);
+    v = JSObjectGetProperty(context, o, string, NULL);
+    assertEqualsAsNumber(v, 0);
+    JSStringRelease(string);
+
+    JSValueRef argumentsDateValues[] = { JSValueMakeNumber(context, 0) };
+    o = JSObjectMakeDate(context, 1, argumentsDateValues, NULL);
+    assertEqualsAsUTF8String(o, "Wed Dec 31 1969 16:00:00 GMT-0800 (PST)");
+
+    string = JSStringCreateWithUTF8CString("an error message");
+    JSValueRef argumentsErrorValues[] = { JSValueMakeString(context, string) };
+    o = JSObjectMakeError(context, 1, argumentsErrorValues, NULL);
+    assertEqualsAsUTF8String(o, "Error: an error message");
+    JSStringRelease(string);
+
+    string = JSStringCreateWithUTF8CString("foo");
+    JSStringRef string2 = JSStringCreateWithUTF8CString("gi");
+    JSValueRef argumentsRegExpValues[] = { JSValueMakeString(context, string), JSValueMakeString(context, string2) };
+    o = JSObjectMakeRegExp(context, 2, argumentsRegExpValues, NULL);
+    assertEqualsAsUTF8String(o, "/foo/gi");
+    JSStringRelease(string);
+    JSStringRelease(string2);
 
     JSClassDefinition nullDefinition = kJSClassDefinitionEmpty;
     nullDefinition.attributes = kJSClassAttributeNoAutomaticPrototype;

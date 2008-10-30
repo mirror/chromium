@@ -34,8 +34,8 @@
 #include "MouseEventWithHitTestResults.h"
 #include "Page.h"
 #include "PlatformKeyboardEvent.h"
-#include "PlatformScrollBar.h"
 #include "RenderWidget.h"
+#include "Scrollbar.h"
 
 namespace WebCore {
 
@@ -56,11 +56,6 @@ bool EventHandler::passMouseMoveEventToSubframe(MouseEventWithHitTestResults& me
 bool EventHandler::passMouseReleaseEventToSubframe(MouseEventWithHitTestResults& mev, Frame* subframe)
 {
     return passSubframeEventToSubframe(mev, subframe);
-}
-
-bool EventHandler::passMousePressEventToScrollbar(MouseEventWithHitTestResults& mouseEvent, PlatformScrollbar* scrollbar)
-{
-    return passMouseDownEventToWidget(scrollbar);
 }
 
 bool EventHandler::passWidgetMouseDownEventToWidget(const MouseEventWithHitTestResults& event)

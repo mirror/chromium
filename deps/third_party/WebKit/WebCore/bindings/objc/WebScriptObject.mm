@@ -33,11 +33,12 @@
 #import "JSDOMWindow.h"
 #import "JSDOMWindowCustom.h"
 #import "PlatformString.h"
+#import "StringSourceProvider.h"
 #import "WebCoreObjCExtras.h"
 #import "objc_instance.h"
-#import "runtime_root.h"
 #import "runtime.h"
 #import "runtime_object.h"
+#import "runtime_root.h"
 #import <JavaScriptCore/APICast.h>
 #import <kjs/ExecState.h>
 #import <kjs/JSGlobalObject.h>
@@ -49,8 +50,8 @@
 typedef unsigned NSUInteger;
 #endif
 
-using namespace KJS;
-using namespace KJS::Bindings;
+using namespace JSC;
+using namespace JSC::Bindings;
 using namespace WebCore;
 
 namespace WebCore {
@@ -79,7 +80,7 @@ void removeJSWrapper(JSObject* impl)
     JSWrapperCache->remove(impl);
 }
 
-id createJSWrapper(KJS::JSObject* object, PassRefPtr<KJS::Bindings::RootObject> origin, PassRefPtr<KJS::Bindings::RootObject> root)
+id createJSWrapper(JSC::JSObject* object, PassRefPtr<JSC::Bindings::RootObject> origin, PassRefPtr<JSC::Bindings::RootObject> root)
 {
     if (id wrapper = getJSWrapper(object))
         return [[wrapper retain] autorelease];
@@ -169,7 +170,7 @@ static void _didExecute(WebScriptObject *obj)
     _private->originRootObject = originRootObject.releaseRef();
 }
 
-- (id)_initWithJSObject:(KJS::JSObject*)imp originRootObject:(PassRefPtr<KJS::Bindings::RootObject>)originRootObject rootObject:(PassRefPtr<KJS::Bindings::RootObject>)rootObject
+- (id)_initWithJSObject:(JSC::JSObject*)imp originRootObject:(PassRefPtr<JSC::Bindings::RootObject>)originRootObject rootObject:(PassRefPtr<JSC::Bindings::RootObject>)rootObject
 {
     ASSERT(imp);
 
@@ -329,7 +330,7 @@ static void getListFromNSArray(ExecState *exec, NSArray *array, RootObject* root
     JSLock lock(false);
     
     [self _rootObject]->globalObject()->startTimeoutCheck();
-    Completion completion = Interpreter::evaluate([self _rootObject]->globalObject()->globalExec(), [self _rootObject]->globalObject()->globalScopeChain(), UString(), 1, String(script));
+    Completion completion = Interpreter::evaluate([self _rootObject]->globalObject()->globalExec(), [self _rootObject]->globalObject()->globalScopeChain(), makeSource(String(script)));
     [self _rootObject]->globalObject()->stopTimeoutCheck();
     ComplType type = completion.complType();
     
