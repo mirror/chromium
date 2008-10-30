@@ -33,6 +33,9 @@ static const SkColor kShadowColor = SkColorSetARGB(30, 0, 0, 0);
 static const int kShadowSize = 1;
 static const int kBackgroundCornerRadius = 4;
 
+static const int kShowAnimationDurationMS = 120;
+static const int kFramerate = 25;
+
 ////////////////////////////////////////////////////////////////////////////////
 // BlockedPopupContainerView
 
@@ -132,6 +135,7 @@ void BlockedPopupContainerView::Paint(ChromeCanvas* canvas) {
   rect.set(0, 0, SkIntToScalar(width()), SkIntToScalar(height()));
 
   // Draw the shadow
+  /*
   SkPaint shadow_paint;
   shadow_paint.setFlags(SkPaint::kAntiAlias_Flag);
   // NEXTACTION: There is a problem with opacity; the backing needs to be
@@ -140,6 +144,7 @@ void BlockedPopupContainerView::Paint(ChromeCanvas* canvas) {
   SkPath shadow_path;
   shadow_path.addRoundRect(rect, rad, SkPath::kCW_Direction);
   canvas->drawPath(shadow_path, shadow_paint);
+  */
 
   // Draw the bubble
   SkPath path;
@@ -237,7 +242,9 @@ BlockedPopupContainer::~BlockedPopupContainer() {
 
 BlockedPopupContainer::BlockedPopupContainer(TabContents* owner,
                                              Profile* profile)
-    : owner_(owner), container_view_(NULL), has_been_dismissed_(false) {
+    : Animation(kFramerate, NULL),
+      owner_(owner), container_view_(NULL), has_been_dismissed_(false),
+      visibility_percentage_(0) {
   block_popup_pref_.Init(
       prefs::kBlockPopups, profile->GetPrefs(), NULL);
 }
@@ -334,13 +341,8 @@ void BlockedPopupContainer::CloseConstrainedWindow() {
 
 void BlockedPopupContainer::RepositionConstrainedWindowTo(
     const gfx::Point& anchor_point) {
-  gfx::Size size = container_view_->GetPreferredSize();
-  int x = anchor_point.x() - size.width();
-  int y = anchor_point.y() - size.height();
-
-  // Size this window to the bottom left corner starting at the anchor point.
-  SetWindowPos(HWND_TOP, x, y, size.width(), size.height(), 0);
-  bounds_ = gfx::Rect(gfx::Point(x, y), size);
+  anchor_point_ = anchor_point;
+  SetPosition();
 }
 
 void BlockedPopupContainer::WasHidden() {
@@ -430,6 +432,13 @@ TabContents* BlockedPopupContainer::GetConstrainingContents(
 }
 
 /////////////////////////////////////////////////////////////////////////////////
+// Override from Animation:
+void BlockedPopupContainer::AnimateToState(double state) {
+  visibility_percentage_ = state;
+  SetPosition();
+}
+
+/////////////////////////////////////////////////////////////////////////////////
 // Override from views::ContainerWin:
 void BlockedPopupContainer::OnFinalMessage(HWND window) {
   owner_->WillClose(this);
@@ -446,15 +455,18 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
   // Set us up as a transparent thing
   //  SetLayeredAlpha(static_cast<BYTE>(125));
   //  set_window_ex_style(WS_EX_TRANSPARENT);
-
+  set_window_style(WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
   ContainerWin::Init(owner_->GetContainerHWND(), gfx::Rect(), false);
   SetContentsView(container_view_);
   RepositionConstrainedWindowTo(initial_anchor);
 
-  if (GetShowBlockedPopupNotification())
+  if (GetShowBlockedPopupNotification()) {
     ShowSelf();
-  else
+    SetDuration(kShowAnimationDurationMS);
+    Start();
+  } else {
     has_been_dismissed_ = true;
+  }
 }
 
 void BlockedPopupContainer::HideSelf() {
@@ -463,6 +475,21 @@ void BlockedPopupContainer::HideSelf() {
 
 void BlockedPopupContainer::ShowSelf() {
   SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+}
+
+void BlockedPopupContainer::SetPosition() {
+  gfx::Size size = container_view_->GetPreferredSize();
+  int base_x = anchor_point_.x() - size.width();
+  int base_y = anchor_point_.y() - size.height();
+  // The bounds we report through the automation system are the real bounds;
+  // the animation is short lived...
+  bounds_ = gfx::Rect(gfx::Point(base_x, base_y), size);
+
+  int real_height = static_cast<int>(size.height() * visibility_percentage_);
+  int real_y = anchor_point_.y() - real_height;
+
+  // Size this window to the bottom left corner starting at the anchor point.
+  SetWindowPos(HWND_TOP, base_x, real_y, size.width(), real_height, 0);
 }
 
 void BlockedPopupContainer::CloseEachTabContents() {

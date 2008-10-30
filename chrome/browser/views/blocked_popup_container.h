@@ -8,6 +8,7 @@
 #include "base/gfx/rect.h"
 #include "chrome/browser/constrained_window.h"
 #include "chrome/browser/tab_contents_delegate.h"
+#include "chrome/common/animation.h"
 #include "chrome/common/pref_member.h"
 #include "chrome/views/container_win.h"
 
@@ -28,7 +29,9 @@ class TextButton;
 //
 class BlockedPopupContainer : public ConstrainedWindow,
                               public TabContentsDelegate,
-                              public views::ContainerWin {
+                              public views::ContainerWin,
+                              public Animation
+{
  public:
   virtual ~BlockedPopupContainer();
 
@@ -93,12 +96,15 @@ class BlockedPopupContainer : public ConstrainedWindow,
   virtual void URLStarredChanged(TabContents* source, bool starred) { }
   virtual void UpdateTargetURL(TabContents* source, const GURL& url) { }
 
+  // Override from Animation:
+  virtual void AnimateToState(double state);
+
  protected:
   // Override from views::ContainerWin:
   virtual void OnFinalMessage(HWND window);
 
  private:
-  // 
+  // Create a container for a certain TabContents.
   BlockedPopupContainer(TabContents* owner, Profile* profile);
 
   // Initialize our Views and positions us to the lower right corner of the
@@ -110,6 +116,11 @@ class BlockedPopupContainer : public ConstrainedWindow,
 
   // Shows the UI portion of the container.
   void ShowSelf();
+
+  // Sets our position, based on our |anchor_point_| and on our
+  // |visibility_percentage_|. This method is called whenever either of those
+  // change.
+  void SetPosition();
 
   // Send a CloseContents() to each message in |blocked_popups_|.
   void CloseEachTabContents();
@@ -127,10 +138,18 @@ class BlockedPopupContainer : public ConstrainedWindow,
   // we should show ourself to the user...
   BooleanPrefMember block_popup_pref_;
 
-  // Once the container is hidden (either because of 
+  // Once the container is hidden, this is set to prevent it from reappearing.
   bool has_been_dismissed_;
 
+  // Percentage of the window to show; used to animate in the notification.
+  double visibility_percentage_;
+
+  // The bounds to report to the automation system (may not equal our actual
+  // bounds while animating in or out).
   gfx::Rect bounds_;
+
+  // The bottom right corner of where we should appear in our parent window.
+  gfx::Point anchor_point_;
 };
 
 #endif
