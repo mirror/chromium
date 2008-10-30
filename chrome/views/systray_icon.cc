@@ -12,7 +12,7 @@
 #include "base/string_util.h"
 #include "base/timer.h"
 
-namespace ChromeViews {
+namespace views {
 SystrayIcon::SystrayIcon(Listener* listener)
     : showing_(false),
       listener_(listener) {
@@ -215,5 +215,5 @@ LRESULT SystrayIcon::OnTaskbarCreated(UINT message,
   return 0;
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 #endif  // ENABLE_BACKGROUND_TASK

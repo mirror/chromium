@@ -312,4 +312,7 @@ IDR_DROP_BOX_INACTIVE_TOP_LEFT     BINDATA  "drop_box_inactive_top_left.png"
 IDR_DROP_BOX_INACTIVE_TOP_CENTER   BINDATA  "drop_box_inactive_top_center.png"
 IDR_DROP_BOX_INACTIVE_LEFT         BINDATA  "drop_box_inactive_left.png"
 IDR_DROP_BOX_INACTIVE_CENTER       BINDATA  "drop_box_inactive_center.png"
+IDR_DROP_BOX_GLOW_TOP_LEFT         BINDATA  "drop_box_glow_top_left.png"
+IDR_DROP_BOX_GLOW_LEFT             BINDATA  "drop_box_glow_left.png"
+IDR_DROP_BOX_GLOW_TOP              BINDATA  "drop_box_glow_top.png"
 #endif  // ENABLE_BACKGROUND_TASK == 1

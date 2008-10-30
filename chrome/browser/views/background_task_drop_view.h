@@ -18,6 +18,7 @@ class DropTargetEvent;
 }
 class OSExchangeData;
 class SlideAnimation;
+class ThrobAnimation;
 class WebContents;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -35,21 +36,24 @@ class BackgroundTaskDropView : public views::View,
   virtual ~BackgroundTaskDropView();
 
  private:
-  // Overridden from ChromeViews::View:
+  // Overridden from ChromeViews::View.
   virtual void Paint(ChromeCanvas* canvas);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
-  // Drag & Drop
+  // Drag & Drop.
   virtual bool CanDrop(const OSExchangeData& data);
   virtual void OnDragEntered(const views::DropTargetEvent& event);
   virtual int OnDragUpdated(const views::DropTargetEvent& event);
   virtual void OnDragExited();
   virtual int OnPerformDrop(const views::DropTargetEvent& event);
 
-  // Overridden from AnimationDelegate:
+  // Overridden from AnimationDelegate.
   virtual void AnimationProgressed(const Animation* animation);
   virtual void AnimationCanceled(const Animation* animation);
   virtual void AnimationEnded(const Animation* animation);
+
+  // Returns how much bigger the glow is than the normal border.
+  void GetGlowAdditions(int* x, int* y) const;
 
   // The web contents of the source.
   WebContents* source_;
@@ -63,6 +67,12 @@ class BackgroundTaskDropView : public views::View,
   // Hover animation.
   scoped_ptr<SlideAnimation> hover_animation_;
 
+  // Glow animation.
+  scoped_ptr<ThrobAnimation> glow_animation_;
+
+  // The logo
+  SkBitmap* product_logo_;
+
   // Bitmaps for the drop box in the hover state.
   SkBitmap* drop_box_hover_top_left_;
   SkBitmap* drop_box_hover_top_center_;
@@ -74,6 +84,11 @@ class BackgroundTaskDropView : public views::View,
   SkBitmap* drop_box_inactive_top_center_;
   SkBitmap* drop_box_inactive_left_;
   SkBitmap* drop_box_inactive_center_;
+
+  // Bitmaps for the drop box glow.
+  SkBitmap* glow_top_left_;
+  SkBitmap* glow_top_;
+  SkBitmap* glow_left_;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundTaskDropView);
 };

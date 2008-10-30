@@ -11,7 +11,7 @@
 #include "base/time.h"
 #include "base/timer.h"
 
-namespace ChromeViews {
+namespace views {
 
 class SystrayIcon : public CWindowImpl<SystrayIcon> {
  public:
@@ -73,7 +73,7 @@ class SystrayIcon : public CWindowImpl<SystrayIcon> {
   DISALLOW_COPY_AND_ASSIGN(SystrayIcon);
 };
 
-}  // namespace ChromeViews
+}  // namespace views
 
 #endif  // ENABLE_BACKGROUND_TASK
 #endif  // CHROME_VIEWS_SYSTRAY_ICON_H_

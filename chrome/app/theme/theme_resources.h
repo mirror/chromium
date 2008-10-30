@@ -326,4 +326,7 @@
 #define IDR_DROP_BOX_INACTIVE_TOP_CENTER                 9389
 #define IDR_DROP_BOX_INACTIVE_LEFT                       9390
 #define IDR_DROP_BOX_INACTIVE_CENTER                     9391
+#define IDR_DROP_BOX_GLOW_TOP_LEFT                       9392
+#define IDR_DROP_BOX_GLOW_LEFT                           9393
+#define IDR_DROP_BOX_GLOW_TOP                            9394
 #endif  // ENABLE_BACKGROUND_TASK
