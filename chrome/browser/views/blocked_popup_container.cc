@@ -35,7 +35,8 @@ static const SkColor kBorderColor = SkColorSetRGB(111, 117, 124);
 static const int kBorderSize = 1;
 static const int kBackgroundCornerRadius = 4;
 
-static const int kShowAnimationDurationMS = 120;
+static const int kShowAnimationDurationMS = 200;
+static const int kHideAnimationDurationMS = 120;
 static const int kFramerate = 25;
 
 // Rounded corner definition for the
@@ -243,7 +244,7 @@ BlockedPopupContainer::BlockedPopupContainer(TabContents* owner,
                                              Profile* profile)
     : Animation(kFramerate, NULL),
       owner_(owner), container_view_(NULL), has_been_dismissed_(false),
-      visibility_percentage_(0) {
+      in_show_animation_(false), visibility_percentage_(0) {
   block_popup_pref_.Init(
       prefs::kBlockPopups, profile->GetPrefs(), NULL);
 }
@@ -433,7 +434,11 @@ TabContents* BlockedPopupContainer::GetConstrainingContents(
 /////////////////////////////////////////////////////////////////////////////////
 // Override from Animation:
 void BlockedPopupContainer::AnimateToState(double state) {
-  visibility_percentage_ = state;
+  if (in_show_animation_)
+    visibility_percentage_ = state;
+  else
+    visibility_percentage_ = 1 - state;
+
   SetPosition();
 }
 
@@ -462,9 +467,6 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
   container_view_ = new BlockedPopupContainerView(this);
   container_view_->SetVisible(true);
 
-  // Set us up as a transparent thing
-  //  SetLayeredAlpha(static_cast<BYTE>(125));
-  //  set_window_ex_style(WS_EX_TRANSPARENT);
   set_window_style(WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
   ContainerWin::Init(owner_->GetContainerHWND(), gfx::Rect(), false);
   SetContentsView(container_view_);
@@ -472,19 +474,24 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
 
   if (GetShowBlockedPopupNotification()) {
     ShowSelf();
-    Animation::SetDuration(kShowAnimationDurationMS);
-    Animation::Start();
   } else {
     has_been_dismissed_ = true;
   }
 }
 
 void BlockedPopupContainer::HideSelf() {
-  SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW);
+  in_show_animation_ = false;
+  Animation::SetDuration(kHideAnimationDurationMS);
+  Animation::Start();
 }
 
 void BlockedPopupContainer::ShowSelf() {
   SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+  if (!Animation::IsAnimating() && visibility_percentage_ < 1.0) {
+    in_show_animation_ = true;
+    Animation::SetDuration(kShowAnimationDurationMS);
+    Animation::Start();
+  }
 }
 
 void BlockedPopupContainer::SetPosition() {
@@ -499,7 +506,11 @@ void BlockedPopupContainer::SetPosition() {
   int real_y = anchor_point_.y() - real_height;
 
   // Size this window to the bottom left corner starting at the anchor point.
-  SetWindowPos(HWND_TOP, base_x, real_y, size.width(), real_height, 0);
+  if (real_height > 0) {
+    SetWindowPos(HWND_TOP, base_x, real_y, size.width(), real_height, 0);
+  } else {
+    SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW);
+  }
 }
 
 void BlockedPopupContainer::CloseEachTabContents() {

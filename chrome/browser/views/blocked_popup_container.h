@@ -142,6 +142,9 @@ class BlockedPopupContainer : public ConstrainedWindow,
   // Once the container is hidden, this is set to prevent it from reappearing.
   bool has_been_dismissed_;
 
+  // True while animation in; false while animating out.
+  bool in_show_animation_;
+
   // Percentage of the window to show; used to animate in the notification.
   double visibility_percentage_;
 
