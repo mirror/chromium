@@ -16,6 +16,7 @@
 #include "chrome/views/text_button.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/gfx/path.h"
 
 #include "generated_resources.h"
 
@@ -29,12 +30,29 @@ const int kImpossibleNumberOfPopups = 30;
 const int kCloseButtonPadding = 5;
 
 static const SkColor kBackgroundColor = SkColorSetRGB(222, 234, 248);
-static const SkColor kShadowColor = SkColorSetARGB(30, 0, 0, 0);
-static const int kShadowSize = 1;
+// TODO(erg): Get a real standard color for kBorderColor.
+static const SkColor kBorderColor = SkColorSetRGB(111, 117, 124);
+static const int kBorderSize = 1;
 static const int kBackgroundCornerRadius = 4;
 
 static const int kShowAnimationDurationMS = 120;
 static const int kFramerate = 25;
+
+// Rounded corner definition for the
+static const SkScalar kRoundedCornerRad[8] = {
+  // Top left corner
+  SkIntToScalar(kBackgroundCornerRadius),
+  SkIntToScalar(kBackgroundCornerRadius),
+  // Top right corner
+  SkIntToScalar(kBackgroundCornerRadius),
+  SkIntToScalar(kBackgroundCornerRadius),
+  // Bottom right corner
+  0,
+  0,
+  // Bottom left corner
+  0,
+  0
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // BlockedPopupContainerView
@@ -116,43 +134,24 @@ void BlockedPopupContainerView::Paint(ChromeCanvas* canvas) {
   paint.setFlags(SkPaint::kAntiAlias_Flag);
   paint.setColor(kBackgroundColor);
 
-  // Rounded corners
-  SkScalar rad[8];
-  // Top left corner
-  rad[0] = SkIntToScalar(kBackgroundCornerRadius);
-  rad[1] = SkIntToScalar(kBackgroundCornerRadius);
-  // Top right corner
-  rad[2] = SkIntToScalar(kBackgroundCornerRadius);
-  rad[3] = SkIntToScalar(kBackgroundCornerRadius);
-  // Bottom right corner
-  rad[4] = 0;
-  rad[5] = 0;
-  // Bottom left corner
-  rad[6] = 0;
-  rad[7] = 0;
-
   SkRect rect;
   rect.set(0, 0, SkIntToScalar(width()), SkIntToScalar(height()));
 
-  // Draw the shadow
-  /*
-  SkPaint shadow_paint;
-  shadow_paint.setFlags(SkPaint::kAntiAlias_Flag);
-  // NEXTACTION: There is a problem with opacity; the backing needs to be
-  // opaque?
-  shadow_paint.setColor(kShadowColor);
-  SkPath shadow_path;
-  shadow_path.addRoundRect(rect, rad, SkPath::kCW_Direction);
-  canvas->drawPath(shadow_path, shadow_paint);
-  */
+  // Draw the border
+  SkPaint border_paint;
+  border_paint.setFlags(SkPaint::kAntiAlias_Flag);
+  border_paint.setColor(kBorderColor);
+  SkPath border_path;
+  border_path.addRoundRect(rect, kRoundedCornerRad, SkPath::kCW_Direction);
+  canvas->drawPath(border_path, border_paint);
 
   // Draw the bubble
   SkPath path;
-  rect.set(SkIntToScalar(kShadowSize),
-           SkIntToScalar(kShadowSize),
-           SkIntToScalar(width() - kShadowSize),
-           SkIntToScalar(height() - kShadowSize));
-  path.addRoundRect(rect, rad, SkPath::kCW_Direction);
+  rect.set(SkIntToScalar(kBorderSize),
+           SkIntToScalar(kBorderSize),
+           SkIntToScalar(width() - kBorderSize),
+           SkIntToScalar(height() - kBorderSize));
+  path.addRoundRect(rect, kRoundedCornerRad, SkPath::kCW_Direction);
   canvas->drawPath(path, paint);
 }
 
@@ -446,6 +445,17 @@ void BlockedPopupContainer::OnFinalMessage(HWND window) {
   ContainerWin::OnFinalMessage(window);
 }
 
+void BlockedPopupContainer::OnSize(UINT param, const CSize& size) {
+  // Make a mask for the rounded corners at the top.
+  SkRect rect;
+  rect.set(0, 0, SkIntToScalar(size.cx), SkIntToScalar(size.cy));
+  gfx::Path path;
+  path.addRoundRect(rect, kRoundedCornerRad, SkPath::kCW_Direction);
+  SetWindowRgn(path.CreateHRGN(), TRUE);
+
+  ChangeSize(param, size);
+}
+
 // private:
 
 void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
@@ -462,8 +472,8 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
 
   if (GetShowBlockedPopupNotification()) {
     ShowSelf();
-    SetDuration(kShowAnimationDurationMS);
-    Start();
+    Animation::SetDuration(kShowAnimationDurationMS);
+    Animation::Start();
   } else {
     has_been_dismissed_ = true;
   }

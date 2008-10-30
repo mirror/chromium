@@ -102,6 +102,7 @@ class BlockedPopupContainer : public ConstrainedWindow,
  protected:
   // Override from views::ContainerWin:
   virtual void OnFinalMessage(HWND window);
+  virtual void OnSize(UINT param, const CSize& size);
 
  private:
   // Create a container for a certain TabContents.
