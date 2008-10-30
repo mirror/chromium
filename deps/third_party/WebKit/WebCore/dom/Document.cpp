@@ -323,6 +323,7 @@ Document::Document(Frame* frame, bool isXHTML)
     , m_useSecureKeyboardEntryWhenActive(false)
     , m_isXHTML(isXHTML)
     , m_numNodeListCaches(0)
+    , m_dominantScript(USCRIPT_INVALID_CODE)
 #if ENABLE(DATABASE)
     , m_hasOpenDatabases(false)
 #endif
