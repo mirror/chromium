@@ -479,6 +479,8 @@
 		B5442A7B0E9BDCF30098766D /* PatternCG.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5442A7A0E9BDCF30098766D /* PatternCG.cpp */; };
 		B5442A880E9BDD600098766D /* RenderImageGeneratedContent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5442A860E9BDD600098766D /* RenderImageGeneratedContent.cpp */; };
 		B5442A900E9BDDF10098766D /* SharedBufferCF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5442A8F0E9BDDF10098766D /* SharedBufferCF.cpp */; };
+		B556C24F0EB8FCD800418C57 /* FileSystemChromiumMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = B556C24E0EB8FCD800418C57 /* FileSystemChromiumMac.mm */; };
+		B556C33D0EB9035B00418C57 /* FileSystemChromium.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B556C33C0EB9035B00418C57 /* FileSystemChromium.cpp */; };
 		B5599D130E95942900E2A85A /* SVGDocumentExtensions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599D120E95942900E2A85A /* SVGDocumentExtensions.cpp */; };
 		B5599D160E9594E800E2A85A /* SVGImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5599D140E9594E800E2A85A /* SVGImage.cpp */; };
 		B57635F80E96C13D008A7ABC /* ResourceResponseBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57635F70E96C13D008A7ABC /* ResourceResponseBase.cpp */; };
@@ -860,7 +862,6 @@
 		E45625230E268E87005E4685 /* ProtectionSpace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E913C0D7F3CC2001ECF42 /* ProtectionSpace.cpp */; };
 		E45625250E268E87005E4685 /* ResourceHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E91470D7F3CC2001ECF42 /* ResourceHandle.cpp */; };
 		E45625260E268E87005E4685 /* ResourceRequestBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E914B0D7F3CC2001ECF42 /* ResourceRequestBase.cpp */; };
-		E45625280E268E87005E4685 /* FileSystemPOSIX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E915D0D7F3CC2001ECF42 /* FileSystemPOSIX.cpp */; };
 		E456252A0E268E87005E4685 /* Scrollbar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E91870D7F3CC2001ECF42 /* Scrollbar.cpp */; };
 		E456252B0E268E87005E4685 /* SecurityOrigin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E918C0D7F3CC2001ECF42 /* SecurityOrigin.cpp */; };
 		E456252C0E268E87005E4685 /* SharedBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E91900D7F3CC2001ECF42 /* SharedBuffer.cpp */; };
@@ -3039,7 +3040,6 @@
 		7B5E91590D7F3CC2001ECF42 /* PlatformWheelEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformWheelEvent.h; sourceTree = "<group>"; };
 		7B5E915A0D7F3CC2001ECF42 /* PopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenu.h; sourceTree = "<group>"; };
 		7B5E915B0D7F3CC2001ECF42 /* PopupMenuClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenuClient.h; sourceTree = "<group>"; };
-		7B5E915D0D7F3CC2001ECF42 /* FileSystemPOSIX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemPOSIX.cpp; sourceTree = "<group>"; };
 		7B5E91870D7F3CC2001ECF42 /* Scrollbar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scrollbar.cpp; sourceTree = "<group>"; };
 		7B5E91880D7F3CC2001ECF42 /* Scrollbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scrollbar.h; sourceTree = "<group>"; };
 		7B5E91890D7F3CC2001ECF42 /* ScrollTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollTypes.h; sourceTree = "<group>"; };
@@ -4039,6 +4039,8 @@
 		B5442A860E9BDD600098766D /* RenderImageGeneratedContent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderImageGeneratedContent.cpp; sourceTree = "<group>"; };
 		B5442A870E9BDD600098766D /* RenderImageGeneratedContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderImageGeneratedContent.h; sourceTree = "<group>"; };
 		B5442A8F0E9BDDF10098766D /* SharedBufferCF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SharedBufferCF.cpp; sourceTree = "<group>"; };
+		B556C24E0EB8FCD800418C57 /* FileSystemChromiumMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FileSystemChromiumMac.mm; sourceTree = "<group>"; };
+		B556C33C0EB9035B00418C57 /* FileSystemChromium.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystemChromium.cpp; sourceTree = "<group>"; };
 		B5599D0D0E95929900E2A85A /* SVGFEColorMatrixElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVGFEColorMatrixElement.h; path = ../third_party/WebKit/WebCore/svg/SVGFEColorMatrixElement.h; sourceTree = SOURCE_ROOT; };
 		B5599D110E95942900E2A85A /* SVGDocumentExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGDocumentExtensions.h; sourceTree = "<group>"; };
 		B5599D120E95942900E2A85A /* SVGDocumentExtensions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SVGDocumentExtensions.cpp; sourceTree = "<group>"; };
@@ -5350,7 +5352,6 @@
 				7B5E8FA20D7F3CC1001ECF42 /* graphics */,
 				7B5E90D40D7F3CC2001ECF42 /* mac */,
 				7B5E91140D7F3CC2001ECF42 /* network */,
-				7B5E915C0D7F3CC2001ECF42 /* posix */,
 				7B5E91A90D7F3CC2001ECF42 /* text */,
 				7B5E8F7D0D7F3CC1001ECF42 /* Arena.cpp */,
 				7B5E8F7E0D7F3CC1001ECF42 /* Arena.h */,
@@ -5679,14 +5680,6 @@
 				820A61940DE7592C00871E2D /* WebCoreURLResponse.mm */,
 			);
 			path = mac;
-			sourceTree = "<group>";
-		};
-		7B5E915C0D7F3CC2001ECF42 /* posix */ = {
-			isa = PBXGroup;
-			children = (
-				7B5E915D0D7F3CC2001ECF42 /* FileSystemPOSIX.cpp */,
-			);
-			path = posix;
 			sourceTree = "<group>";
 		};
 		7B5E91A90D7F3CC2001ECF42 /* text */ = {
@@ -7563,6 +7556,8 @@
 				E473F63A0EADFF8E006C2098 /* DragDataRef.h */,
 				E473F63B0EADFF8E006C2098 /* DragImageChromium.cpp */,
 				E473F63E0EADFFB5006C2098 /* FileChooserChromium.cpp */,
+				B556C33C0EB9035B00418C57 /* FileSystemChromium.cpp */,
+				B556C24E0EB8FCD800418C57 /* FileSystemChromiumMac.mm */,
 				E473F6400EADFFC6006C2098 /* FileSystemPosix.cpp */,
 				E473F6410EADFFC6006C2098 /* FramelessScrollView.cpp */,
 				E473F6420EADFFC6006C2098 /* FramelessScrollView.h */,
@@ -8353,7 +8348,6 @@
 				E45624BF0E268E87005E4685 /* FileChooser.cpp in Sources */,
 				4DB7F05B0E9BA86A00C66CE0 /* FileList.cpp in Sources */,
 				E45624B50E268E87005E4685 /* FileSystemCF.cpp in Sources */,
-				E45625280E268E87005E4685 /* FileSystemPOSIX.cpp in Sources */,
 				E456254F0E268E87005E4685 /* FixedTableLayout.cpp in Sources */,
 				E45624C30E268E87005E4685 /* FloatPoint.cpp in Sources */,
 				E45624C40E268E87005E4685 /* FloatPoint3D.cpp in Sources */,
@@ -9074,6 +9068,8 @@
 				E473F6860EAE01F5006C2098 /* EventHandlerChromium.cpp in Sources */,
 				4D11C4E10E9ABEA900EF7617 /* ExceptionContextV8.cpp in Sources */,
 				E473F63F0EADFFB5006C2098 /* FileChooserChromium.cpp in Sources */,
+				B556C33D0EB9035B00418C57 /* FileSystemChromium.cpp in Sources */,
+				B556C24F0EB8FCD800418C57 /* FileSystemChromiumMac.mm in Sources */,
 				E473F6430EADFFC6006C2098 /* FileSystemPosix.cpp in Sources */,
 				4DB044260EB161E800A5633C /* FontCacheMacPending.cpp in Sources */,
 				E473F6880EAE021B006C2098 /* FrameChromium.cpp in Sources */,
