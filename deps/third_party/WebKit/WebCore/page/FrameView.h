@@ -25,8 +25,9 @@
 #ifndef FrameView_h
 #define FrameView_h
 
-#include "ScrollView.h"
 #include "IntSize.h"
+#include "RenderLayer.h"
+#include "ScrollView.h"
 #include <wtf/Forward.h>
 #include <wtf/OwnPtr.h>
 
@@ -49,15 +50,16 @@ template <typename T> class Timer;
 
 class FrameView : public ScrollView {
 public:
-    FrameView(Frame*);
+    friend class RenderView;
 
-    // On the Mac, FrameViews always get their size from the underlying NSView,
-    // so passing in a size is nonsensical.
-#if !PLATFORM(MAC)
+    FrameView(Frame*);
     FrameView(Frame*, const IntSize& initialSize);
-#endif
 
     virtual ~FrameView();
+
+    virtual HostWindow* hostWindow() const;
+    
+    virtual void invalidateRect(const IntRect&);
 
     Frame* frame() const { return m_frame.get(); }
     void clearFrame();
@@ -71,9 +73,7 @@ public:
     void setMarginWidth(int);
     void setMarginHeight(int);
 
-    virtual void setVScrollbarMode(ScrollbarMode);
-    virtual void setHScrollbarMode(ScrollbarMode);
-    virtual void setScrollbarsMode(ScrollbarMode);
+    virtual void setCanHaveScrollbars(bool);
 
     void layout(bool allowSubtree = true);
     bool didFirstLayout() const;
@@ -91,7 +91,6 @@ public:
     void setNeedsLayout();
 
     bool needsFullRepaint() const;
-    void repaintRectangle(const IntRect&, bool immediate);
 
     void resetScrollbars();
 
@@ -103,18 +102,23 @@ public:
     Color baseBackgroundColor() const;
     void setBaseBackgroundColor(Color);
 
-    virtual bool shouldUpdateWhileOffscreen() const;
+    bool shouldUpdateWhileOffscreen() const;
     void setShouldUpdateWhileOffscreen(bool);
 
     void adjustViewSize();
     void initScrollbars();
     
-    virtual IntRect windowClipRect() const;
-    IntRect windowClipRect(bool clipToContents) const;
+    virtual IntRect windowClipRect(bool clipToContents = true) const;
     IntRect windowClipRectForLayer(const RenderLayer*, bool clipToLayerContents) const;
 
+    virtual bool isActive() const;
+    virtual void invalidateScrollbarRect(Scrollbar*, const IntRect&);
+    virtual void valueChanged(Scrollbar*);
+    
+    virtual IntRect windowResizerRect() const;
+
     virtual void scrollRectIntoViewRecursively(const IntRect&);
-    virtual void setContentsPos(int x, int y);
+    virtual void setScrollPosition(const IntPoint&);
 
     String mediaType() const;
     void setMediaType(const String&);
@@ -145,18 +149,19 @@ public:
     void addWidgetToUpdate(RenderPartObject*);
     void removeWidgetToUpdate(RenderPartObject*);
 
-    // FIXME: This function should be used by all platforms, but currently depends on ScrollView::children,
-    // which not all platforms have. Once FrameView and ScrollView are merged, this #if should be removed.
-#if PLATFORM(WIN) || PLATFORM(GTK) || PLATFORM(QT) || PLATFORM(CHROMIUM)
+    virtual void paintContents(GraphicsContext*, const IntRect& damageRect);
+    void setPaintRestriction(PaintRestriction);
+    bool isPainting() const;
+    void setNodeToDraw(Node*);
+
+    static double currentPaintTimeStamp() { return sCurrentPaintTimeStamp; } // returns 0 if not painting
+    
     void layoutIfNeededRecursive();
-#endif
 
 private:
     void init();
 
     virtual bool isFrameView() const;
-
-    bool scrollTo(const IntRect&);
 
     bool useSlowRepaints() const;
 
@@ -166,6 +171,12 @@ private:
 
     void dispatchScheduledEvents();
     void performPostLayoutTasks();
+
+    virtual void repaintContentRectangle(const IntRect&, bool immediate);
+    virtual void contentsResized() { setNeedsLayout(); }
+    virtual void visibleContentsResized() { layout(); }
+
+    static double sCurrentPaintTimeStamp; // used for detecting decoded resource thrash in the cache
 
     unsigned m_refCount;
     IntSize m_size;

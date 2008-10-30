@@ -80,15 +80,15 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName, Document* doc)
     , m_loadNestingLevel(0)
     , m_terminateLoadBelowNestingLevel(0)
     , m_pausedInternal(false)
-    , m_inPageCache(false)
+    , m_inActiveDocument(true)
     , m_player(0)
 {
-    document()->registerForCacheCallbacks(this);
+    document()->registerForDocumentActivationCallbacks(this);
 }
 
 HTMLMediaElement::~HTMLMediaElement()
 {
-    document()->unregisterForCacheCallbacks(this);
+    document()->unregisterForDocumentActivationCallbacks(this);
 }
 
 bool HTMLMediaElement::checkDTD(const Node* newChild)
@@ -152,6 +152,14 @@ void HTMLMediaElement::attach()
         renderer()->updateFromElement();
 }
 
+void HTMLMediaElement::recalcStyle(StyleChange change)
+{
+    HTMLElement::recalcStyle(change);
+
+    if (renderer())
+        renderer()->updateFromElement();
+}
+
 void HTMLMediaElement::scheduleLoad()
 {
     m_loadTimer.startOneShot(0);
@@ -186,7 +194,7 @@ void HTMLMediaElement::asyncEventTimerFired(Timer<HTMLMediaElement>*)
     m_asyncEventsToDispatch.swap(asyncEventsToDispatch);
     unsigned count = asyncEventsToDispatch.size();
     for (unsigned n = 0; n < count; ++n)
-        dispatchHTMLEvent(asyncEventsToDispatch[n], false, true);
+        dispatchEventForType(asyncEventsToDispatch[n], false, true);
 }
 
 String serializeTimeOffset(float time)
@@ -302,7 +310,7 @@ void HTMLMediaElement::load(ExceptionCode& ec)
             m_player->seek(0);
         }
         m_currentLoop = 0;
-        dispatchHTMLEvent(emptiedEvent, false, true);
+        dispatchEventForType(emptiedEvent, false, true);
         if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
             goto end;
     }
@@ -322,7 +330,7 @@ void HTMLMediaElement::load(ExceptionCode& ec)
     
     // 9
     m_begun = true;        
-    dispatchProgressEvent(beginEvent, false, 0, 0); // progress event draft calls this loadstart
+    dispatchProgressEvent(loadstartEvent, false, 0, 0);
     if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
         goto end;
     
@@ -377,7 +385,7 @@ void HTMLMediaElement::mediaPlayerNetworkStateChanged(MediaPlayer*)
         if (isVideo())
             static_cast<HTMLVideoElement*>(this)->updatePosterImage();
 
-        dispatchHTMLEvent(emptiedEvent, false, true);
+        dispatchEventForType(emptiedEvent, false, true);
         return;
     }
     
@@ -388,11 +396,11 @@ void HTMLMediaElement::mediaPlayerNetworkStateChanged(MediaPlayer*)
         m_player->seek(effectiveStart());
         m_networkState = LOADED_METADATA;
         
-        dispatchHTMLEvent(durationchangeEvent, false, true);
+        dispatchEventForType(durationchangeEvent, false, true);
         if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
             return;
         
-        dispatchHTMLEvent(loadedmetadataEvent, false, true);
+        dispatchEventForType(loadedmetadataEvent, false, true);
         if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
             return;
     }
@@ -414,11 +422,11 @@ void HTMLMediaElement::mediaPlayerNetworkStateChanged(MediaPlayer*)
             static_cast<RenderVideo*>(renderer())->videoSizeChanged();
         }
         
-        dispatchHTMLEvent(loadedfirstframeEvent, false, true);
+        dispatchEventForType(loadedfirstframeEvent, false, true);
         if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
             return;
         
-        dispatchHTMLEvent(canshowcurrentframeEvent, false, true);
+        dispatchEventForType(canshowcurrentframeEvent, false, true);
         if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
             return;
     }
@@ -455,25 +463,25 @@ void HTMLMediaElement::setReadyState(ReadyState state)
         return;
     
     if (state == DATA_UNAVAILABLE) {
-        dispatchHTMLEvent(dataunavailableEvent, false, true);
+        dispatchEventForType(dataunavailableEvent, false, true);
         if (wasActivelyPlaying) {
-            dispatchHTMLEvent(timeupdateEvent, false, true);
-            dispatchHTMLEvent(waitingEvent, false, true);
+            dispatchEventForType(timeupdateEvent, false, true);
+            dispatchEventForType(waitingEvent, false, true);
         }
     } else if (state == CAN_SHOW_CURRENT_FRAME) {
         if (m_loadedFirstFrame)
-            dispatchHTMLEvent(canshowcurrentframeEvent, false, true);
+            dispatchEventForType(canshowcurrentframeEvent, false, true);
         if (wasActivelyPlaying) {
-            dispatchHTMLEvent(timeupdateEvent, false, true);
-            dispatchHTMLEvent(waitingEvent, false, true);
+            dispatchEventForType(timeupdateEvent, false, true);
+            dispatchEventForType(waitingEvent, false, true);
         }
     } else if (state == CAN_PLAY) {
-        dispatchHTMLEvent(canplayEvent, false, true);
+        dispatchEventForType(canplayEvent, false, true);
     } else if (state == CAN_PLAY_THROUGH) {
-        dispatchHTMLEvent(canplaythroughEvent, false, true);
+        dispatchEventForType(canplaythroughEvent, false, true);
         if (m_autoplaying && m_paused && autoplay()) {
             m_paused = false;
-            dispatchHTMLEvent(playEvent, false, true);
+            dispatchEventForType(playEvent, false, true);
         }
     }
     updatePlayState();
@@ -541,7 +549,7 @@ void HTMLMediaElement::seek(float time, ExceptionCode& ec)
     m_seeking = true;
     
     // 9
-    dispatchHTMLEvent(timeupdateEvent, false, true);
+    dispatchEventForType(timeupdateEvent, false, true);
     
     // 10
     // As soon as the user agent has established whether or not the media data for the new playback position is available, 
@@ -685,9 +693,9 @@ void HTMLMediaElement::pause(ExceptionCode& ec)
 
 unsigned HTMLMediaElement::playCount() const
 {
-    String val = getAttribute(playcountAttr);
-    int count = val.toInt();
-    return max(count, 1); 
+    bool ok;
+    unsigned count = getAttribute(playcountAttr).string().toUInt(&ok);
+    return (count > 0 && ok) ? count : 1; 
 }
 
 void HTMLMediaElement::setPlayCount(unsigned count, ExceptionCode& ec)
@@ -724,7 +732,7 @@ void HTMLMediaElement::setEnd(float time)
 
 float HTMLMediaElement::loopStart() const 
 { 
-    return getTimeOffsetAttribute(loopstartAttr, 0); 
+    return getTimeOffsetAttribute(loopstartAttr, start()); 
 }
 
 void HTMLMediaElement::setLoopStart(float time) 
@@ -735,7 +743,7 @@ void HTMLMediaElement::setLoopStart(float time)
 
 float HTMLMediaElement::loopEnd() const 
 { 
-    return getTimeOffsetAttribute(loopendAttr, std::numeric_limits<float>::infinity()); 
+    return getTimeOffsetAttribute(loopendAttr, end()); 
 }
 
 void HTMLMediaElement::setLoopEnd(float time) 
@@ -882,12 +890,12 @@ void HTMLMediaElement::mediaPlayerTimeChanged(MediaPlayer*)
         ExceptionCode ec;
         seek(effectiveLoopStart(), ec);
         m_currentLoop++;
-        dispatchHTMLEvent(timeupdateEvent, false, true);
+        dispatchEventForType(timeupdateEvent, false, true);
     }
     
     if (m_currentLoop == playCount() - 1 && currentTime() >= effectiveEnd()) {
-        dispatchHTMLEvent(timeupdateEvent, false, true);
-        dispatchHTMLEvent(endedEvent, false, true);
+        dispatchEventForType(timeupdateEvent, false, true);
+        dispatchEventForType(endedEvent, false, true);
     }
 
     updatePlayState();
@@ -998,8 +1006,8 @@ void HTMLMediaElement::setPausedInternal(bool b)
     m_pausedInternal = b;
     updatePlayState();
 }
-    
-void HTMLMediaElement::willSaveToCache()
+
+void HTMLMediaElement::documentWillBecomeInactive()
 {
     // 3.14.9.4. Loading the media resource
     // 14
@@ -1014,10 +1022,10 @@ void HTMLMediaElement::willSaveToCache()
         if (m_networkState >= LOADING) {
             m_networkState = EMPTY;
             m_readyState = DATA_UNAVAILABLE;
-            dispatchHTMLEvent(emptiedEvent, false, true);
+            dispatchEventForType(emptiedEvent, false, true);
         }
     }
-    m_inPageCache = true;
+    m_inActiveDocument = false;
     // Stop the playback without generating events
     setPausedInternal(true);
 
@@ -1025,9 +1033,9 @@ void HTMLMediaElement::willSaveToCache()
         renderer()->updateFromElement();
 }
 
-void HTMLMediaElement::didRestoreFromCache()
+void HTMLMediaElement::documentDidBecomeActive()
 {
-    m_inPageCache = false;
+    m_inActiveDocument = true;
     setPausedInternal(false);
 
     if (m_error && m_error->code() == MediaError::MEDIA_ERR_ABORTED) {

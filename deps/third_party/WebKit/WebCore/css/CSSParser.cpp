@@ -47,6 +47,7 @@
 #include "CSSReflectValue.h"
 #include "CSSRuleList.h"
 #include "CSSSelector.h"
+#include "CSSNthSelector.h"
 #include "CSSStyleRule.h"
 #include "CSSStyleSheet.h"
 #include "CSSUnicodeRangeValue.h"
@@ -304,9 +305,9 @@ bool CSSParser::parseColor(CSSMutableStyleDeclaration* declaration, const String
     return (m_numParsedProperties && m_parsedProperties[0]->m_id == CSSPropertyColor);
 }
 
-std::auto_ptr<CSSSelector> CSSParser::parseSelector(const String& string)
-{
-    RefPtr<CSSStyleSheet> dummyStyleSheet = CSSStyleSheet::create();
+std::auto_ptr<CSSSelector> CSSParser::parseSelector(const String& string, Document* doc)
+{    
+    RefPtr<CSSStyleSheet> dummyStyleSheet = CSSStyleSheet::create(doc);
 
     m_styleSheet = dummyStyleSheet.get();
 
@@ -2656,6 +2657,8 @@ PassRefPtr<CSSValue> CSSParser::parseCounterContent(CSSParserValueList* args, bo
         return 0;
     
     CSSParserValue* i = args->current();
+    if (i->unit != CSSPrimitiveValue::CSS_IDENT)
+        return 0;
     RefPtr<CSSPrimitiveValue> identifier = CSSPrimitiveValue::create(i->string, CSSPrimitiveValue::CSS_STRING);
 
     RefPtr<CSSPrimitiveValue> separator;
@@ -4380,6 +4383,13 @@ CSSSelector* CSSParser::createFloatingSelector()
     m_floatingSelectors.add(selector);
     return selector;
 }
+    
+CSSNthSelector* CSSParser::createFloatingNthSelector()
+{
+    CSSNthSelector* selector = new CSSNthSelector;
+    m_floatingSelectors.add(selector);
+    return selector;
+}
 
 CSSSelector* CSSParser::sinkFloatingSelector(CSSSelector* selector)
 {
@@ -4573,16 +4583,21 @@ CSSRule* CSSParser::createFontFaceRule()
 
 CSSRule* CSSParser::createVariablesRule(MediaList* mediaList, bool variablesKeyword)
 {
+#if ENABLE(CSS_VARIABLES)
     RefPtr<CSSVariablesRule> rule = CSSVariablesRule::create(m_styleSheet, mediaList, variablesKeyword);
     rule->setDeclaration(CSSVariablesDeclaration::create(rule.get(), m_variableNames, m_variableValues));
     clearVariables();    
     CSSRule* result = rule.get();
     m_parsedStyleObjects.append(rule.release());
     return result;
+#else
+    return 0;
+#endif
 }
 
 bool CSSParser::addVariable(const CSSParserString& name, CSSParserValueList* valueList)
 {
+#if ENABLE(CSS_VARIABLES)
     if (checkForVariables(valueList)) {
         delete valueList;
         return false;
@@ -4590,14 +4605,21 @@ bool CSSParser::addVariable(const CSSParserString& name, CSSParserValueList* val
     m_variableNames.append(String(name));
     m_variableValues.append(CSSValueList::createFromParserValueList(valueList));
     return true;
+#else
+    return false;
+#endif
 }
 
 bool CSSParser::addVariableDeclarationBlock(const CSSParserString& name)
 {
+#if ENABLE(CSS_VARIABLES)
     m_variableNames.append(String(name));
     m_variableValues.append(CSSMutableStyleDeclaration::create(0, m_parsedProperties, m_numParsedProperties));
     clearProperties();
     return true;
+#else
+    return false;
+#endif
 }
 
 void CSSParser::clearVariables()
@@ -4685,12 +4707,22 @@ void CSSParser::deleteFontFaceOnlyValues()
     m_numParsedProperties -= deletedProperties;
 }
 
-WebKitCSSKeyframeRule* CSSParser::createKeyframeRule(float key)
+WebKitCSSKeyframeRule* CSSParser::createKeyframeRule(CSSParserValueList* keys)
 {
+    // Create a key string from the passed keys
+    String keyString;
+    for (unsigned i = 0; i < keys->size(); ++i) {
+        float key = (float) keys->valueAt(i)->fValue;
+        if (i != 0)
+            keyString += ",";
+        keyString += String::number(key);
+        keyString += "%";
+    }
+    
     RefPtr<WebKitCSSKeyframeRule> keyframe = WebKitCSSKeyframeRule::create(m_styleSheet);
-
-    keyframe->setKey(key);
+    keyframe->setKeyText(keyString);
     keyframe->setDeclaration(CSSMutableStyleDeclaration::create(0, m_parsedProperties, m_numParsedProperties));
+    
     clearProperties();
 
     WebKitCSSKeyframeRule* keyframePtr = keyframe.get();

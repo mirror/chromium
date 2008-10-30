@@ -32,6 +32,7 @@
 #include "CSSFontFaceSource.h"
 #include "CSSImportRule.h"
 #include "CSSMediaRule.h"
+#include "CSSNthSelector.h"
 #include "CSSParser.h"
 #include "CSSPrimitiveValueMappings.h"
 #include "CSSProperty.h"
@@ -48,6 +49,8 @@
 #include "CSSVariablesRule.h"
 #include "CachedImage.h"
 #include "Counter.h"
+#include "CounterContent.h"
+#include "FocusController.h"
 #include "FontCache.h"
 #include "FontFamilyValue.h"
 #include "FontValue.h"
@@ -56,22 +59,30 @@
 #include "HTMLDocument.h"
 #include "HTMLElement.h"
 #include "HTMLInputElement.h"
-#include "HTMLTextAreaElement.h"
 #include "HTMLNames.h"
+#include "HTMLTextAreaElement.h"
+#include "MatrixTransformOperation.h"
 #include "MediaList.h"
 #include "MediaQueryEvaluator.h"
+#include "NodeRenderStyle.h"
 #include "Page.h"
 #include "PageGroup.h"
 #include "Pair.h"
 #include "Rect.h"
+#include "RenderScrollbar.h"
+#include "RenderScrollbarTheme.h"
 #include "RenderTheme.h"
+#include "RotateTransformOperation.h"
+#include "ScaleTransformOperation.h"
 #include "SelectionController.h"
 #include "Settings.h"
 #include "ShadowValue.h"
+#include "SkewTransformOperation.h"
 #include "StyleCachedImage.h"
 #include "StyleGeneratedImage.h"
 #include "StyleSheetList.h"
 #include "Text.h"
+#include "TranslateTransformOperation.h"
 #include "UserAgentStyleSheets.h"
 #include "WebKitCSSKeyframeRule.h"
 #include "WebKitCSSKeyframesRule.h"
@@ -192,22 +203,22 @@ if (isInherit) { \
     AnimationList* list = m_style->accessAnimations(); \
     const AnimationList* parentList = m_parentStyle->animations(); \
     size_t i = 0, parentSize = parentList ? parentList->size() : 0; \
-    for ( ; i < parentSize && (*parentList)[i]->is##Prop##Set(); ++i) { \
+    for ( ; i < parentSize && parentList->animation(i)->is##Prop##Set(); ++i) { \
         if (list->size() <= i) \
             list->append(Animation::create()); \
-        (*list)[i]->set##Prop((*parentList)[i]->prop()); \
+        list->animation(i)->set##Prop(parentList->animation(i)->prop()); \
     } \
     \
     /* Reset any remaining animations to not have the property set. */ \
     for ( ; i < list->size(); ++i) \
-        (*list)[i]->clear##Prop(); \
+        list->animation(i)->clear##Prop(); \
 } else if (isInitial) { \
     AnimationList* list = m_style->accessAnimations(); \
     if (list->isEmpty()) \
         list->append(Animation::create()); \
-    (*list)[0]->set##Prop(RenderStyle::initialAnimation##Prop()); \
+    list->animation(0)->set##Prop(RenderStyle::initialAnimation##Prop()); \
     for (size_t i = 1; i < list->size(); ++i) \
-        (*list)[0]->clear##Prop(); \
+        list->animation(0)->clear##Prop(); \
 }
 
 #define HANDLE_ANIMATION_VALUE(prop, Prop, value) { \
@@ -222,18 +233,18 @@ if (value->isValueList()) { \
     for (unsigned int i = 0; i < valueList->length(); i++) { \
         if (childIndex <= list->size()) \
             list->append(Animation::create()); \
-        mapAnimation##Prop((*list)[childIndex].get(), valueList->itemWithoutBoundsCheck(i)); \
+        mapAnimation##Prop(list->animation(childIndex), valueList->itemWithoutBoundsCheck(i)); \
         ++childIndex; \
     } \
 } else { \
     if (list->isEmpty()) \
         list->append(Animation::create()); \
-    mapAnimation##Prop((*list)[childIndex].get(), value); \
+    mapAnimation##Prop(list->animation(childIndex), value); \
     childIndex = 1; \
 } \
 for ( ; childIndex < list->size(); ++childIndex) { \
     /* Reset all remaining animations to not have the property set. */ \
-    (*list)[childIndex]->clear##Prop(); \
+    list->animation(childIndex)->clear##Prop(); \
 } \
 }
 
@@ -242,22 +253,22 @@ if (isInherit) { \
     AnimationList* list = m_style->accessTransitions(); \
     const AnimationList* parentList = m_parentStyle->transitions(); \
     size_t i = 0, parentSize = parentList ? parentList->size() : 0; \
-    for ( ; i < parentSize && (*parentList)[i]->is##Prop##Set(); ++i) { \
+    for ( ; i < parentSize && parentList->animation(i)->is##Prop##Set(); ++i) { \
         if (list->size() <= i) \
             list->append(Animation::create()); \
-        (*list)[i]->set##Prop((*parentList)[i]->prop()); \
+        list->animation(i)->set##Prop(parentList->animation(i)->prop()); \
     } \
     \
     /* Reset any remaining transitions to not have the property set. */ \
     for ( ; i < list->size(); ++i) \
-        (*list)[i]->clear##Prop(); \
+        list->animation(i)->clear##Prop(); \
 } else if (isInitial) { \
     AnimationList* list = m_style->accessTransitions(); \
     if (list->isEmpty()) \
         list->append(Animation::create()); \
-    (*list)[0]->set##Prop(RenderStyle::initialAnimation##Prop()); \
+    list->animation(0)->set##Prop(RenderStyle::initialAnimation##Prop()); \
     for (size_t i = 1; i < list->size(); ++i) \
-        (*list)[0]->clear##Prop(); \
+        list->animation(0)->clear##Prop(); \
 }
 
 #define HANDLE_TRANSITION_VALUE(prop, Prop, value) { \
@@ -272,18 +283,18 @@ if (value->isValueList()) { \
     for (unsigned int i = 0; i < valueList->length(); i++) { \
         if (childIndex <= list->size()) \
             list->append(Animation::create()); \
-        mapAnimation##Prop((*list)[childIndex].get(), valueList->itemWithoutBoundsCheck(i)); \
+        mapAnimation##Prop(list->animation(childIndex), valueList->itemWithoutBoundsCheck(i)); \
         ++childIndex; \
     } \
 } else { \
     if (list->isEmpty()) \
         list->append(Animation::create()); \
-    mapAnimation##Prop((*list)[childIndex].get(), value); \
+    mapAnimation##Prop(list->animation(childIndex), value); \
     childIndex = 1; \
 } \
 for ( ; childIndex < list->size(); ++childIndex) { \
     /* Reset all remaining transitions to not have the property set. */ \
-    (*list)[childIndex]->clear##Prop(); \
+    list->animation(childIndex)->clear##Prop(); \
 } \
 }
 
@@ -344,12 +355,21 @@ static CSSRuleSet* defaultStyle;
 static CSSRuleSet* defaultQuirksStyle;
 static CSSRuleSet* defaultPrintStyle;
 static CSSRuleSet* defaultViewSourceStyle;
+static CSSStyleSheet* simpleDefaultStyleSheet;
 
 RenderStyle* CSSStyleSelector::s_styleNotYetAvailable;
 
 static PseudoState pseudoState;
 
-static void loadDefaultStyle();
+static void loadFullDefaultStyle();
+static void loadSimpleDefaultStyle();
+// FIXME: It would be nice to use some mechanism that guarantees this is in sync with the real UA stylesheet.
+static const char* simpleUserAgentStyleSheet = "html,body,div{display:block}body{margin:8px}div:focus,span:focus{outline:auto 5px -webkit-focus-ring-color}";
+
+static bool elementCanUseSimpleDefaultStyle(Element* e)
+{
+    return e->hasTagName(htmlTag) || e->hasTagName(bodyTag) || e->hasTagName(divTag) || e->hasTagName(spanTag) || e->hasTagName(brTag);
+}
 
 static const MediaQueryEvaluator& screenEval()
 {
@@ -365,15 +385,21 @@ static const MediaQueryEvaluator& printEval()
 
 CSSStyleSelector::CSSStyleSelector(Document* doc, const String& userStyleSheet, StyleSheetList* styleSheets, CSSStyleSheet* mappedElementSheet, bool strictParsing, bool matchAuthorAndUserStyles)
     : m_backgroundData(BackgroundFillLayer)
-    , m_checker(doc, strictParsing, false)
+    , m_checker(doc, strictParsing)
     , m_fontSelector(CSSFontSelector::create(doc))
 {
     init();
 
     m_matchAuthorAndUserStyles = matchAuthorAndUserStyles;
+    
+    Element* root = doc->documentElement();
 
-    if (!defaultStyle)
-        loadDefaultStyle();
+    if (!defaultStyle) {
+        if (!root || elementCanUseSimpleDefaultStyle(root))
+            loadSimpleDefaultStyle();
+        else
+            loadFullDefaultStyle();
+    }
 
     m_userStyle = 0;
 
@@ -388,8 +414,6 @@ CSSStyleSelector::CSSStyleSelector(Document* doc, const String& userStyleSheet, 
         m_medium = new MediaQueryEvaluator(view->mediaType());
     else
         m_medium = new MediaQueryEvaluator("all");
-
-    Element* root = doc->documentElement();
 
     if (root)
         m_rootDefaultStyle = styleForElement(root, 0, false, true); // dont ref, because the RenderStyle is allocated from global heap
@@ -423,34 +447,11 @@ CSSStyleSelector::CSSStyleSelector(Document* doc, const String& userStyleSheet, 
     }
 }
 
-// this is a simplified style setting function for keyframe styles
-void CSSStyleSelector::addKeyframeStyle(Document* doc, const WebKitCSSKeyframesRule* rule)
+// This is a simplified style setting function for keyframe styles
+void CSSStyleSelector::addKeyframeStyle(PassRefPtr<WebKitCSSKeyframesRule> rule)
 {
     AtomicString s(rule->name());
-    RefPtr<KeyframeList> list;
-    if (m_keyframeRuleMap.contains(s.impl()))
-        list = m_keyframeRuleMap.get(s.impl()).get();
-    else {
-        list = KeyframeList::create(s);
-        m_keyframeRuleMap.add(s.impl(), list);
-    }
-    list->clear();
-                    
-    for (unsigned i = 0; i < rule->length(); ++i) {
-        const WebKitCSSKeyframeRule* kf = rule->item(i);
-        m_style = new (doc->renderArena()) RenderStyle();
-        m_style->ref();
-        CSSMutableStyleDeclaration* decl = kf->style();
-        DeprecatedValueListConstIterator<CSSProperty> end;
-        for (DeprecatedValueListConstIterator<CSSProperty> it = decl->valuesIterator(); it != end; ++it) {
-            const CSSProperty& current = *it;
-            applyProperty(current.id(), current.value());
-            list->addProperty(current.id());
-        }
-        list->insert(kf->key(), *m_style);
-        m_style->deref(doc->renderArena());
-        m_style = 0;
-    }
+    m_keyframesRuleMap.add(s.impl(), rule);
 }
 
 void CSSStyleSelector::init()
@@ -470,7 +471,7 @@ CSSStyleSelector::~CSSStyleSelector()
     delete m_authorStyle;
     delete m_userStyle;
     deleteAllValues(m_viewportDependentMediaQueryResults);
-    m_keyframeRuleMap.clear();
+    m_keyframesRuleMap.clear();
 }
 
 static CSSStyleSheet* parseUASheet(const char* characters, unsigned size)
@@ -480,14 +481,20 @@ static CSSStyleSheet* parseUASheet(const char* characters, unsigned size)
     return sheet;
 }
 
-static void loadDefaultStyle()
+static void loadFullDefaultStyle()
 {
-    ASSERT(!defaultStyle);
-
-    defaultStyle = new CSSRuleSet;
-    defaultPrintStyle = new CSSRuleSet;
-    defaultQuirksStyle = new CSSRuleSet;
-    defaultViewSourceStyle = new CSSRuleSet;
+    if (simpleDefaultStyleSheet) {
+        ASSERT(defaultStyle);
+        delete defaultStyle;
+        delete simpleDefaultStyleSheet;
+        defaultStyle = new CSSRuleSet;
+        simpleDefaultStyleSheet = 0;
+    } else {
+        ASSERT(!defaultStyle);
+        defaultStyle = new CSSRuleSet;
+        defaultPrintStyle = new CSSRuleSet;
+        defaultQuirksStyle = new CSSRuleSet;
+    }
 
     // Strict-mode rules.
     CSSStyleSheet* defaultSheet = parseUASheet(html4UserAgentStyleSheet, sizeof(html4UserAgentStyleSheet));
@@ -497,8 +504,28 @@ static void loadDefaultStyle()
 
     // Quirks-mode rules.
     defaultQuirksStyle->addRulesFromSheet(parseUASheet(quirksUserAgentStyleSheet, sizeof(quirksUserAgentStyleSheet)), screenEval());
+}
     
-    // View source rules.
+static void loadSimpleDefaultStyle()
+{
+    ASSERT(!defaultStyle);
+    ASSERT(!simpleDefaultStyleSheet);
+    
+    defaultStyle = new CSSRuleSet;
+    defaultPrintStyle = new CSSRuleSet;
+    defaultQuirksStyle = new CSSRuleSet;
+
+    simpleDefaultStyleSheet = parseUASheet(simpleUserAgentStyleSheet, strlen(simpleUserAgentStyleSheet));
+    RenderTheme::adjustDefaultStyleSheet(simpleDefaultStyleSheet);
+    defaultStyle->addRulesFromSheet(simpleDefaultStyleSheet, screenEval());
+    
+    // No need to initialize quirks sheet yet as there are no quirk rules for elements allowed in simple default style.
+}
+    
+static void loadViewSourceStyle()
+{
+    ASSERT(!defaultViewSourceStyle);
+    defaultViewSourceStyle = new CSSRuleSet;
     defaultViewSourceStyle->addRulesFromSheet(parseUASheet(sourceUserAgentStyleSheet, sizeof(sourceUserAgentStyleSheet)), screenEval());
 }
 
@@ -789,10 +816,10 @@ static inline const AtomicString* linkAttribute(Node* node)
     return 0;
 }
 
-CSSStyleSelector::SelectorChecker::SelectorChecker(Document* document, bool strictParsing, bool collectRulesOnly)
+CSSStyleSelector::SelectorChecker::SelectorChecker(Document* document, bool strictParsing)
     : m_document(document)
     , m_strictParsing(strictParsing)
-    , m_collectRulesOnly(collectRulesOnly)
+    , m_collectRulesOnly(false)
     , m_pseudoStyle(RenderStyle::NOPSEUDO)
     , m_documentIsHTML(document->isHTMLDocument())
 {
@@ -830,62 +857,6 @@ bool CSSStyleSelector::SelectorChecker::checkSelector(CSSSelector* sel, Element*
 
     return checkSelector(sel, element, 0, dynamicPseudo, true, false) == SelectorMatches;
 }
-
-// a helper function for parsing nth-arguments
-static bool parseNth(const String& nth, int &a, int &b)
-{
-    if (nth.isEmpty())
-        return false;
-    a = 0;
-    b = 0;
-    if (nth == "odd") {
-        a = 2;
-        b = 1;
-    } else if (nth == "even") {
-        a = 2;
-        b = 0;
-    } else {
-        int n = nth.find('n');
-        if (n != -1) {
-            if (nth[0] == '-') {
-                if (n == 1)
-                    a = -1; // -n == -1n
-                else
-                    a = nth.substring(0, n).toInt();
-            } else if (!n)
-                a = 1; // n == 1n
-            else
-                a = nth.substring(0, n).toInt();
-
-            int p = nth.find('+', n);
-            if (p != -1)
-                b = nth.substring(p + 1, nth.length() - p - 1).toInt();
-            else {
-                p = nth.find('-', n);
-                b = -nth.substring(p + 1, nth.length() - p - 1).toInt();
-            }
-        } else
-            b = nth.toInt();
-    }
-    return true;
-}
-
-// a helper function for checking nth-arguments
-static bool matchNth(int count, int a, int b)
-{
-    if (!a)
-        return count == b;
-    else if (a > 0) {
-        if (count < b)
-            return false;
-        return (count - b) % a == 0;
-    } else {
-        if (count > b)
-            return false;
-        return (b - count) % (-a) == 0;
-    }
-}
-
 
 #ifdef STYLE_SHARING_STATS
 static int fraction = 0;
@@ -1026,8 +997,11 @@ void CSSStyleSelector::matchUARules(int& firstUARule, int& lastUARule)
         matchRules(defaultQuirksStyle, firstUARule, lastUARule);
         
     // If we're in view source mode, then we match rules from the view source style sheet.
-    if (m_checker.m_document->frame() && m_checker.m_document->frame()->inViewSourceMode())
+    if (m_checker.m_document->frame() && m_checker.m_document->frame()->inViewSourceMode()) {
+        if (!defaultViewSourceStyle)
+            loadViewSourceStyle();
         matchRules(defaultViewSourceStyle, firstUARule, lastUARule);
+    }
 }
 
 // If resolveForRootDefault is true, style based on user agent style sheet only. This is used in media queries, where
@@ -1076,6 +1050,9 @@ RenderStyle* CSSStyleSelector::styleForElement(Element* e, RenderStyle* defaultP
     else
         m_parentStyle = m_style;
 
+    if (simpleDefaultStyleSheet && !elementCanUseSimpleDefaultStyle(e))
+        loadFullDefaultStyle();
+
 #if ENABLE(SVG)
     static bool loadedSVGUserAgentSheet;
     if (e->isSVGElement() && !loadedSVGUserAgentSheet) {
@@ -1105,12 +1082,15 @@ RenderStyle* CSSStyleSelector::styleForElement(Element* e, RenderStyle* defaultP
                 // Walk our attribute list and add in each decl.
                 const NamedMappedAttrMap* map = m_styledElement->mappedAttributes();
                 for (unsigned i = 0; i < map->length(); i++) {
-                    MappedAttribute* attr = map->attributeItem(i);
-                    if (attr->decl()) {
-                        lastAuthorRule = m_matchedDecls.size();
-                        if (firstAuthorRule == -1)
-                            firstAuthorRule = lastAuthorRule;
-                        addMatchedDeclaration(attr->decl());
+                    Attribute* attr = map->attributeItem(i);
+                    if (attr->isMappedAttribute()) {
+                        MappedAttribute* mappedAttr = static_cast<MappedAttribute*>(attr);
+                        if (mappedAttr->decl()) {
+                            lastAuthorRule = m_matchedDecls.size();
+                            if (firstAuthorRule == -1)
+                                firstAuthorRule = lastAuthorRule;
+                            addMatchedDeclaration(mappedAttr->decl());
+                        }
                     }
                 }
             }
@@ -1200,6 +1180,79 @@ RenderStyle* CSSStyleSelector::styleForElement(Element* e, RenderStyle* defaultP
 
     // Now return the style.
     return m_style;
+}
+
+void CSSStyleSelector::keyframeStylesForAnimation(Element* e, const RenderStyle* elementStyle, KeyframeList& list)
+{
+    list.clear();
+    
+    // Get the keyframesRule for this name
+    if (!e || list.animationName().isEmpty())
+        return;
+            
+    if (!m_keyframesRuleMap.contains(list.animationName().impl()))
+        return;
+        
+    const WebKitCSSKeyframesRule* rule = m_keyframesRuleMap.find(list.animationName().impl()).get()->second.get();
+    
+    // Construct and populate the style for each keyframe
+    for (unsigned i = 0; i < rule->length(); ++i) {
+        // Apply the declaration to the style. This is a simplified version of the logic in styleForElement
+        initElementAndPseudoState(e);
+        initForStyleResolve(e);
+        
+        const WebKitCSSKeyframeRule* kf = rule->item(i);
+        addMatchedDeclaration(kf->style());
+
+        ASSERT(!m_style);
+
+        // Create the style
+        m_style = new (e->document()->renderArena()) RenderStyle(*elementStyle);
+        m_style->ref();
+        
+        m_lineHeightValue = 0;
+        
+        // We don't need to bother with !important. Since there is only ever one
+        // decl, there's nothing to override. So just add the first properties.
+        applyDeclarations(true, false, 0, m_matchedDecls.size() - 1);
+        
+        // If our font got dirtied, go ahead and update it now.
+        if (m_fontDirty)
+            updateFont();
+
+        // Line-height is set when we are sure we decided on the font-size
+        if (m_lineHeightValue)
+            applyProperty(CSSPropertyLineHeight, m_lineHeightValue);
+        
+        // Now do rest of the properties.
+        applyDeclarations(false, false, 0, m_matchedDecls.size() - 1);
+        
+        // If our font got dirtied by one of the non-essential font props, 
+        // go ahead and update it a second time.
+        if (m_fontDirty)
+            updateFont();
+
+        // Add all the animating properties to the list
+        DeprecatedValueListConstIterator<CSSProperty> end;
+        for (DeprecatedValueListConstIterator<CSSProperty> it = kf->style()->valuesIterator(); it != end; ++it)
+            list.addProperty((*it).id());
+        
+        // Add this keyframe style to all the indicated key times
+        Vector<float> keys;
+        kf->getKeys(keys);
+        for (size_t keyIndex = 0; keyIndex < keys.size(); ++keyIndex) {
+            float key = keys[keyIndex];
+            list.insert(key, m_style);
+        }
+        m_style->deref(e->document()->renderArena());
+        m_style = 0;
+    }
+    
+    // Make sure there is a 0% and a 100% keyframe
+    float first = list.beginKeyframes()->key;
+    float last = (list.endKeyframes()-1)->key;
+    if (first != 0 || last != 1)
+        list.clear();
 }
 
 RenderStyle* CSSStyleSelector::pseudoStyleForElement(RenderStyle::PseudoId pseudo, Element* e, RenderStyle* parentStyle)
@@ -1311,6 +1364,18 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, Element *e)
                 style->setDisplay(style->isDisplayInlineType() ? INLINE_TABLE : TABLE);
         }
 
+        if (e && (e->hasTagName(tdTag) || e->hasTagName(thTag))) {
+            if (style->whiteSpace() == KHTML_NOWRAP) {
+                // Figure out if we are really nowrapping or if we should just
+                // use normal instead.  If the width of the cell is fixed, then
+                // we don't actually use NOWRAP.
+                if (style->width().isFixed())
+                    style->setWhiteSpace(NORMAL);
+                else
+                    style->setWhiteSpace(NOWRAP);
+            }
+        }
+
         // Tables never support the -webkit-* values for text-align and will reset back to the default.
         if (e && e->hasTagName(tableTag) && (style->textAlign() == WEBKIT_LEFT || style->textAlign() == WEBKIT_CENTER || style->textAlign() == WEBKIT_RIGHT))
             style->setTextAlign(TAAUTO);
@@ -1407,6 +1472,18 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, Element *e)
             style->setOverflowX(OVISIBLE);
         if (style->overflowY() != OVISIBLE && style->overflowY() != OHIDDEN) 
             style->setOverflowY(OVISIBLE);
+    }
+
+    // Menulists should have visible overflow
+    if (style->appearance() == MenulistAppearance) {
+        style->setOverflowX(OVISIBLE);
+        style->setOverflowY(OVISIBLE);
+    }
+
+    // Menulists should have visible overflow
+    if (style->appearance() == MenulistAppearance) {
+        style->setOverflowX(OVISIBLE);
+        style->setOverflowY(OVISIBLE);
     }
 
     // Cull out any useless layers and also repeat patterns into additional layers.
@@ -1609,7 +1686,10 @@ CSSStyleSelector::SelectorMatch CSSStyleSelector::SelectorChecker::checkSelector
             break;
         case CSSSelector::SubSelector:
             // a selector is invalid if something follows a pseudo-element
-            if (elementStyle && dynamicPseudo != RenderStyle::NOPSEUDO)
+            // We make an exception for scrollbar pseudo elements and allow a set of pseudo classes (but nothing else)
+            // to follow the pseudo elements.
+            if (elementStyle && dynamicPseudo != RenderStyle::NOPSEUDO && 
+                !((RenderScrollbar::scrollbarForStyleResolve() || dynamicPseudo == RenderStyle::SCROLLBAR_CORNER || dynamicPseudo == RenderStyle::RESIZER) && sel->m_match == CSSSelector::PseudoClass))
                 return SelectorFailsCompletely;
             return checkSelector(sel, e, selectorAttrs, dynamicPseudo, isAncestor, true, elementStyle, elementParentStyle);
     }
@@ -1772,9 +1852,30 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             break;
         }
     }
+    
     if (sel->m_match == CSSSelector::PseudoClass) {
+        // Handle :not up front.
+        if (sel->pseudoType() == CSSSelector::PseudoNot) {
+            // check the simple selector
+            for (CSSSelector* subSel = sel->m_simpleSelector; subSel; subSel = subSel->m_tagHistory) {
+                // :not cannot nest. I don't really know why this is a
+                // restriction in CSS3, but it is, so let's honor it.
+                if (subSel->m_simpleSelector)
+                    break;
+                if (!checkOneSelector(subSel, e, selectorAttrs, dynamicPseudo, isAncestor, true, elementStyle, elementParentStyle))
+                    return true;
+            }
+        } else if (dynamicPseudo != RenderStyle::NOPSEUDO && (RenderScrollbar::scrollbarForStyleResolve() || dynamicPseudo == RenderStyle::SCROLLBAR_CORNER || dynamicPseudo == RenderStyle::RESIZER)) {
+            // CSS scrollbars match a specific subset of pseudo classes, and they have specialized rules for each
+            // (since there are no elements involved).
+            return checkScrollbarPseudoClass(sel, dynamicPseudo);
+        }
+        
+        // Normal element pseudo class checking.
         switch (sel->pseudoType()) {
             // Pseudo classes:
+            case CSSSelector::PseudoNot:
+                break; // Already handled up above.
             case CSSSelector::PseudoEmpty: {
                 bool result = true;
                 for (Node* n = e->firstChild(); n; n = n->nextSibling()) {
@@ -1962,11 +2063,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                 break;
             }
             case CSSSelector::PseudoNthChild: {
-                int a, b;
-                // calculate a and b every time we run through checkOneSelector
-                // this should probably be saved after we calculate it once, but currently
-                // would require increasing the size of CSSSelector
-                if (!parseNth(sel->m_argument, a, b))
+                if (!static_cast<CSSNthSelector*>(sel)->parseNth())
                     break;
                 if (e->parentNode() && e->parentNode()->isElementNode()) {
                     int count = 1;
@@ -1993,16 +2090,13 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                             parentStyle->setChildrenAffectedByForwardPositionalRules();
                     }
                     
-                    if (matchNth(count, a, b))
+                    if (static_cast<CSSNthSelector*>(sel)->matchNth(count))
                         return true;
                 }
                 break;
             }
             case CSSSelector::PseudoNthOfType: {
-                // FIXME: This selector is very slow.
-                int a, b;
-                // calculate a and b every time we run through checkOneSelector (see above)
-                if (!parseNth(sel->m_argument, a, b))
+                if (!static_cast<CSSNthSelector*>(sel)->parseNth())
                     break;
                 if (e->parentNode() && e->parentNode()->isElementNode()) {
                     int count = 1;
@@ -2020,17 +2114,13 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                             parentStyle->setChildrenAffectedByForwardPositionalRules();
                     }
 
-                    if (matchNth(count, a, b))
+                    if (static_cast<CSSNthSelector*>(sel)->matchNth(count))
                         return true;
                 }
                 break;
             }
             case CSSSelector::PseudoNthLastChild: {
-                int a, b;
-                // calculate a and b every time we run through checkOneSelector
-                // this should probably be saved after we calculate it once, but currently
-                // would require increasing the size of CSSSelector
-                if (!parseNth(sel->m_argument, a, b))
+                if (!static_cast<CSSNthSelector*>(sel)->parseNth())
                     break;
                 if (e->parentNode() && e->parentNode()->isElementNode()) {
                     Element* parentNode = static_cast<Element*>(e->parentNode());
@@ -2048,16 +2138,13 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                             count++;
                         n = n->nextSibling();
                     }
-                    if (matchNth(count, a, b))
+                    if (static_cast<CSSNthSelector*>(sel)->matchNth(count))
                         return true;
                 }
                 break;
             }
             case CSSSelector::PseudoNthLastOfType: {
-                // FIXME: This selector is very slow.
-                int a, b;
-                // calculate a and b every time we run through checkOneSelector (see above)
-                if (!parseNth(sel->m_argument, a, b))
+                if (!static_cast<CSSNthSelector*>(sel)->parseNth())
                     break;
                 if (e->parentNode() && e->parentNode()->isElementNode()) {
                     Element* parentNode = static_cast<Element*>(e->parentNode());
@@ -2076,7 +2163,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                             count++;
                         n = n->nextSibling();
                     }
-                    if (matchNth(count, a, b))
+                    if (static_cast<CSSNthSelector*>(sel)->matchNth(count))
                         return true;
                 }
                 break;
@@ -2204,18 +2291,6 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                     break;
                 return true;
             }
-            case CSSSelector::PseudoNot: {
-                // check the simple selector
-                for (CSSSelector* subSel = sel->m_simpleSelector; subSel; subSel = subSel->m_tagHistory) {
-                    // :not cannot nest. I don't really know why this is a
-                    // restriction in CSS3, but it is, so let's honour it.
-                    if (subSel->m_simpleSelector)
-                        break;
-                    if (!checkOneSelector(subSel, e, selectorAttrs, dynamicPseudo, isAncestor, true, elementStyle, elementParentStyle))
-                        return true;
-                }
-                break;
-            }
             case CSSSelector::PseudoUnknown:
             case CSSSelector::PseudoNotParsed:
             default:
@@ -2249,6 +2324,9 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                 return true;
             case CSSSelector::PseudoFileUploadButton:
                 dynamicPseudo = RenderStyle::FILE_UPLOAD_BUTTON;
+                return true;
+            case CSSSelector::PseudoInputPlaceholder:
+                dynamicPseudo = RenderStyle::INPUT_PLACEHOLDER;
                 return true;
             case CSSSelector::PseudoSliderThumb:
                 dynamicPseudo = RenderStyle::SLIDER_THUMB;
@@ -2289,6 +2367,27 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             case CSSSelector::PseudoMediaControlsFullscreenButton:
                 dynamicPseudo = RenderStyle::MEDIA_CONTROLS_FULLSCREEN_BUTTON;
                 return true;
+            case CSSSelector::PseudoScrollbar:
+                dynamicPseudo = RenderStyle::SCROLLBAR;
+                return true;
+            case CSSSelector::PseudoScrollbarButton:
+                dynamicPseudo = RenderStyle::SCROLLBAR_BUTTON;
+                return true;
+            case CSSSelector::PseudoScrollbarCorner:
+                dynamicPseudo = RenderStyle::SCROLLBAR_CORNER;
+                return true;
+            case CSSSelector::PseudoScrollbarThumb:
+                dynamicPseudo = RenderStyle::SCROLLBAR_THUMB;
+                return true;
+            case CSSSelector::PseudoScrollbarTrack:
+                dynamicPseudo = RenderStyle::SCROLLBAR_TRACK;
+                return true;
+            case CSSSelector::PseudoScrollbarTrackPiece:
+                dynamicPseudo = RenderStyle::SCROLLBAR_TRACK_PIECE;
+                return true;
+            case CSSSelector::PseudoResizer:
+                dynamicPseudo = RenderStyle::RESIZER;
+                return true;
             case CSSSelector::PseudoUnknown:
             case CSSSelector::PseudoNotParsed:
             default:
@@ -2299,6 +2398,82 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
     }
     // ### add the rest of the checks...
     return true;
+}
+
+bool CSSStyleSelector::SelectorChecker::checkScrollbarPseudoClass(CSSSelector* sel, RenderStyle::PseudoId& dynamicPseudo) const
+{
+    RenderScrollbar* scrollbar = RenderScrollbar::scrollbarForStyleResolve();
+    ScrollbarPart part = RenderScrollbar::partForStyleResolve();
+
+    // FIXME: This is a temporary hack for resizers and scrollbar corners.  Eventually :window-inactive should become a real
+    // pseudo class and just apply to everything.
+    if (sel->pseudoType() == CSSSelector::PseudoWindowInactive)
+        return !m_document->page()->focusController()->isActive();
+    
+    if (!scrollbar)
+        return false;
+        
+    ASSERT(sel->m_match == CSSSelector::PseudoClass);
+    switch (sel->pseudoType()) {
+        case CSSSelector::PseudoEnabled:
+            return scrollbar->enabled();
+        case CSSSelector::PseudoDisabled:
+            return !scrollbar->enabled();
+        case CSSSelector::PseudoHover: {
+            ScrollbarPart hoveredPart = scrollbar->hoveredPart();
+            if (part == ScrollbarBGPart)
+                return hoveredPart != NoPart;
+            if (part == TrackBGPart)
+                return hoveredPart == BackTrackPart || hoveredPart == ForwardTrackPart || hoveredPart == ThumbPart;
+            return part == hoveredPart;
+        }
+        case CSSSelector::PseudoActive: {
+            ScrollbarPart pressedPart = scrollbar->pressedPart();
+            if (part == ScrollbarBGPart)
+                return pressedPart != NoPart;
+            if (part == TrackBGPart)
+                return pressedPart == BackTrackPart || pressedPart == ForwardTrackPart || pressedPart == ThumbPart;
+            return part == pressedPart;
+        }
+        case CSSSelector::PseudoHorizontal:
+            return scrollbar->orientation() == HorizontalScrollbar;
+        case CSSSelector::PseudoVertical:
+            return scrollbar->orientation() == VerticalScrollbar;
+        case CSSSelector::PseudoDecrement:
+            return part == BackButtonStartPart || part == BackButtonEndPart || part == BackTrackPart;
+        case CSSSelector::PseudoIncrement:
+            return part == ForwardButtonStartPart || part == ForwardButtonEndPart || part == ForwardTrackPart;
+        case CSSSelector::PseudoStart:
+            return part == BackButtonStartPart || part == ForwardButtonStartPart || part == BackTrackPart;
+        case CSSSelector::PseudoEnd:
+            return part == BackButtonEndPart || part == ForwardButtonEndPart || part == ForwardTrackPart;
+        case CSSSelector::PseudoDoubleButton: {
+            ScrollbarButtonsPlacement buttonsPlacement = scrollbar->theme()->buttonsPlacement();
+            if (part == BackButtonStartPart || part == ForwardButtonStartPart || part == BackTrackPart)
+                return buttonsPlacement == ScrollbarButtonsDoubleStart || buttonsPlacement == ScrollbarButtonsDoubleBoth;
+            if (part == BackButtonEndPart || part == ForwardButtonEndPart || part == ForwardTrackPart)
+                return buttonsPlacement == ScrollbarButtonsDoubleEnd || buttonsPlacement == ScrollbarButtonsDoubleBoth;
+            return false;
+        } 
+        case CSSSelector::PseudoSingleButton: {
+            ScrollbarButtonsPlacement buttonsPlacement = scrollbar->theme()->buttonsPlacement();
+            if (part == BackButtonStartPart || part == ForwardButtonEndPart || part == BackTrackPart || part == ForwardTrackPart)
+                return buttonsPlacement == ScrollbarButtonsSingle;
+            return false;
+        }
+        case CSSSelector::PseudoNoButton: {
+            ScrollbarButtonsPlacement buttonsPlacement = scrollbar->theme()->buttonsPlacement();
+            if (part == BackTrackPart)
+                return buttonsPlacement == ScrollbarButtonsNone || buttonsPlacement == ScrollbarButtonsDoubleEnd;
+            if (part == ForwardTrackPart)
+                return buttonsPlacement == ScrollbarButtonsNone || buttonsPlacement == ScrollbarButtonsDoubleStart;
+            return false;
+        }
+        case CSSSelector::PseudoCornerPresent:
+            return scrollbar->client()->scrollbarCornerPresent();
+        default:
+            return false;
+    }
 }
 
 void CSSStyleSelector::addVariables(CSSVariablesRule* variables)
@@ -2415,8 +2590,7 @@ void CSSRuleSet::addRulesFromSheet(CSSStyleSheet* sheet, const MediaQueryEvaluat
                         styleSelector->fontSelector()->addFontFaceRule(fontFaceRule);
                     } else if (childItem->isKeyframesRule() && styleSelector) {
                         // Add this keyframe rule to our set.
-                        const WebKitCSSKeyframesRule* keyframesRule = static_cast<WebKitCSSKeyframesRule*>(childItem);
-                        styleSelector->addKeyframeStyle(sheet->doc(), keyframesRule);
+                        styleSelector->addKeyframeStyle(static_cast<WebKitCSSKeyframesRule*>(childItem));
                     }
                 }   // for rules
             }   // if rules
@@ -2429,10 +2603,8 @@ void CSSRuleSet::addRulesFromSheet(CSSStyleSheet* sheet, const MediaQueryEvaluat
             CSSVariablesRule* variables = static_cast<CSSVariablesRule*>(item);
             if (!variables->media() || medium.eval(variables->media(), styleSelector))
                 styleSelector->addVariables(variables);
-        } else if (item->isKeyframesRule()) {
-            WebKitCSSKeyframesRule* r = static_cast<WebKitCSSKeyframesRule*>(item);
-            styleSelector->addKeyframeStyle(sheet->doc(), r);
-        }
+        } else if (item->isKeyframesRule())
+            styleSelector->addKeyframeStyle(static_cast<WebKitCSSKeyframesRule*>(item));
     }
 }
 
@@ -4158,10 +4330,17 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
         } else if (primitiveValue) {
             m_style->setLineHeight(RenderStyle::initialLineHeight());
             m_lineHeightValue = 0;
+            
             FontDescription fontDescription;
             theme()->systemFont(primitiveValue->getIdent(), m_checker.m_document, fontDescription);
+ 
             // Double-check and see if the theme did anything.  If not, don't bother updating the font.
             if (fontDescription.isAbsoluteSize()) {
+                // Make sure the rendering mode and printer font settings are updated.
+                Settings* settings = m_checker.m_document->settings();
+                fontDescription.setRenderingMode(settings->fontRenderingMode());
+                fontDescription.setUsePrinterFont(m_checker.m_document->printing());
+           
                 // Handle the zoom factor.
                 fontDescription.setComputedSize(getComputedSizeFromSpecifiedSize(fontDescription.isAbsoluteSize(), fontDescription.specifiedSize()));
                 if (m_style->setFontDescription(fontDescription))
@@ -4786,112 +4965,7 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
     case CSSPropertyWebkitTransform: {
         HANDLE_INHERIT_AND_INITIAL(transform, Transform);
         TransformOperations operations;
-        if (!value->isPrimitiveValue()) {
-            CSSValueList* list = static_cast<CSSValueList*>(value);
-            unsigned size = list->length();
-            for (unsigned i = 0; i < size; i++) {
-                WebKitCSSTransformValue* val = static_cast<WebKitCSSTransformValue*>(list->itemWithoutBoundsCheck(i));
-                
-                CSSPrimitiveValue* firstValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(0));
-                 
-                switch (val->operationType()) {
-                    case WebKitCSSTransformValue::ScaleTransformOperation:
-                    case WebKitCSSTransformValue::ScaleXTransformOperation:
-                    case WebKitCSSTransformValue::ScaleYTransformOperation: {
-                        double sx = 1.0;
-                        double sy = 1.0;
-                        if (val->operationType() == WebKitCSSTransformValue::ScaleYTransformOperation)
-                            sy = firstValue->getDoubleValue();
-                        else { 
-                            sx = firstValue->getDoubleValue();
-                            if (val->operationType() == WebKitCSSTransformValue::ScaleTransformOperation) {
-                                if (val->length() > 1) {
-                                    CSSPrimitiveValue* secondValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1));
-                                    sy = secondValue->getDoubleValue();
-                                } else 
-                                    sy = sx;
-                            }
-                        }
-                        operations.append(ScaleTransformOperation::create(sx, sy));
-                        break;
-                    }
-                    case WebKitCSSTransformValue::TranslateTransformOperation:
-                    case WebKitCSSTransformValue::TranslateXTransformOperation:
-                    case WebKitCSSTransformValue::TranslateYTransformOperation: {
-                        bool ok = true;
-                        Length tx = Length(0, Fixed);
-                        Length ty = Length(0, Fixed);
-                        if (val->operationType() == WebKitCSSTransformValue::TranslateYTransformOperation)
-                            ty = convertToLength(firstValue, m_style, &ok);
-                        else { 
-                            tx = convertToLength(firstValue, m_style, &ok);
-                            if (val->operationType() == WebKitCSSTransformValue::TranslateTransformOperation) {
-                                if (val->length() > 1) {
-                                    CSSPrimitiveValue* secondValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1));
-                                    ty = convertToLength(secondValue, m_style, &ok);
-                                }
-                            }
-                        }
-                        
-                        if (!ok)
-                            return;
-                        
-                        operations.append(TranslateTransformOperation::create(tx, ty));
-                        break;
-                    }
-                    case WebKitCSSTransformValue::RotateTransformOperation: {
-                        double angle = firstValue->getDoubleValue();
-                        if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_RAD)
-                            angle = rad2deg(angle);
-                        else if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_GRAD)
-                            angle = grad2deg(angle);
-                        operations.append(RotateTransformOperation::create(angle));
-                        break;
-                    }
-                    case WebKitCSSTransformValue::SkewTransformOperation:
-                    case WebKitCSSTransformValue::SkewXTransformOperation:
-                    case WebKitCSSTransformValue::SkewYTransformOperation: {
-                        double angleX = 0;
-                        double angleY = 0;
-                        double angle = firstValue->getDoubleValue();
-                        if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_RAD)
-                            angle = rad2deg(angle);
-                        else if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_GRAD)
-                            angle = grad2deg(angle);
-                        if (val->operationType() == WebKitCSSTransformValue::SkewYTransformOperation)
-                            angleY = angle;
-                        else {
-                            angleX = angle;
-                            if (val->operationType() == WebKitCSSTransformValue::SkewTransformOperation) {
-                                if (val->length() > 1) {
-                                    CSSPrimitiveValue* secondValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1));
-                                    angleY = secondValue->getDoubleValue();
-                                    if (secondValue->primitiveType() == CSSPrimitiveValue::CSS_RAD)
-                                        angleY = rad2deg(angle);
-                                    else if (secondValue->primitiveType() == CSSPrimitiveValue::CSS_GRAD)
-                                        angleY = grad2deg(angle);
-                                }
-                            }
-                        }
-                        operations.append(SkewTransformOperation::create(angleX, angleY));
-                        break;
-                    }
-                    case WebKitCSSTransformValue::MatrixTransformOperation: {
-                        double a = firstValue->getDoubleValue();
-                        double b = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1))->getDoubleValue();
-                        double c = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(2))->getDoubleValue();
-                        double d = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(3))->getDoubleValue();
-                        double e = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(4))->getDoubleValue();
-                        double f = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(5))->getDoubleValue();
-                        operations.append(MatrixTransformOperation::create(a, b, c, d, e, f));
-                        break;
-                    }   
-                    case WebKitCSSTransformValue::UnknownTransformOperation:
-                        ASSERT_NOT_REACHED();
-                        break;
-                }
-            }
-        }
+        createTransformOperations(value, m_style, operations);
         m_style->setTransform(operations);
         return;
     }
@@ -5284,15 +5358,10 @@ void CSSStyleSelector::mapAnimationName(Animation* layer, CSSValue* value)
 
     CSSPrimitiveValue* primitiveValue = static_cast<CSSPrimitiveValue*>(value);
     
-    if (primitiveValue->getIdent() == CSSValueNone) {
+    if (primitiveValue->getIdent() == CSSValueNone)
         layer->setIsNoneAnimation(true);
-    } else {
+    else
         layer->setName(primitiveValue->getStringValue());
-    
-        // resolve to the keyframes
-        RefPtr<KeyframeList> keyframe = findKeyframeRule(primitiveValue->getStringValue());
-        layer->setAnimationKeyframe(keyframe);
-    }
 }
 
 void CSSStyleSelector::mapAnimationPlayState(Animation* layer, CSSValue* value)
@@ -5702,6 +5771,139 @@ void CSSStyleSelector::SelectorChecker::visitedStateChanged(unsigned visitedHash
         if (attr && m_document->visitedLinkHash(*attr) == visitedHash)
             node->setChanged();
     }
+}
+
+TransformOperation::OperationType getTransformOperationType(WebKitCSSTransformValue::TransformOperationType type)
+{
+    switch (type) {
+        case WebKitCSSTransformValue::ScaleTransformOperation:          return TransformOperation::SCALE;
+        case WebKitCSSTransformValue::ScaleXTransformOperation:         return TransformOperation::SCALE_X;
+        case WebKitCSSTransformValue::ScaleYTransformOperation:         return TransformOperation::SCALE_Y;
+        case WebKitCSSTransformValue::TranslateTransformOperation:      return TransformOperation::TRANSLATE;
+        case WebKitCSSTransformValue::TranslateXTransformOperation:     return TransformOperation::TRANSLATE_X;
+        case WebKitCSSTransformValue::TranslateYTransformOperation:     return TransformOperation::TRANSLATE_Y;
+        case WebKitCSSTransformValue::RotateTransformOperation:         return TransformOperation::ROTATE;
+        case WebKitCSSTransformValue::SkewTransformOperation:           return TransformOperation::SKEW;
+        case WebKitCSSTransformValue::SkewXTransformOperation:          return TransformOperation::SKEW_X;
+        case WebKitCSSTransformValue::SkewYTransformOperation:          return TransformOperation::SKEW_Y;
+        case WebKitCSSTransformValue::MatrixTransformOperation:         return TransformOperation::MATRIX;
+        case WebKitCSSTransformValue::UnknownTransformOperation:        return TransformOperation::NONE;
+    }
+    return TransformOperation::NONE;
+}
+
+bool CSSStyleSelector::createTransformOperations(CSSValue* inValue, RenderStyle* inStyle, TransformOperations& outOperations)
+{
+    TransformOperations operations;
+    if (inValue && !inValue->isPrimitiveValue()) {
+        CSSValueList* list = static_cast<CSSValueList*>(inValue);
+        unsigned size = list->length();
+        for (unsigned i = 0; i < size; i++) {
+            WebKitCSSTransformValue* val = static_cast<WebKitCSSTransformValue*>(list->itemWithoutBoundsCheck(i));
+            
+            CSSPrimitiveValue* firstValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(0));
+             
+            switch (val->operationType()) {
+                case WebKitCSSTransformValue::ScaleTransformOperation:
+                case WebKitCSSTransformValue::ScaleXTransformOperation:
+                case WebKitCSSTransformValue::ScaleYTransformOperation: {
+                    double sx = 1.0;
+                    double sy = 1.0;
+                    if (val->operationType() == WebKitCSSTransformValue::ScaleYTransformOperation)
+                        sy = firstValue->getDoubleValue();
+                    else { 
+                        sx = firstValue->getDoubleValue();
+                        if (val->operationType() != WebKitCSSTransformValue::ScaleXTransformOperation) {
+                            if (val->length() > 1) {
+                                CSSPrimitiveValue* secondValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1));
+                                sy = secondValue->getDoubleValue();
+                            } else 
+                                sy = sx;
+                        }
+                    }
+                    operations.operations().append(ScaleTransformOperation::create(sx, sy, getTransformOperationType(val->operationType())));
+                    break;
+                }
+                case WebKitCSSTransformValue::TranslateTransformOperation:
+                case WebKitCSSTransformValue::TranslateXTransformOperation:
+                case WebKitCSSTransformValue::TranslateYTransformOperation: {
+                    bool ok = true;
+                    Length tx = Length(0, Fixed);
+                    Length ty = Length(0, Fixed);
+                    if (val->operationType() == WebKitCSSTransformValue::TranslateYTransformOperation)
+                        ty = convertToLength(firstValue, inStyle, &ok);
+                    else { 
+                        tx = convertToLength(firstValue, inStyle, &ok);
+                        if (val->operationType() != WebKitCSSTransformValue::TranslateXTransformOperation) {
+                            if (val->length() > 1) {
+                                CSSPrimitiveValue* secondValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1));
+                                ty = convertToLength(secondValue, inStyle, &ok);
+                            }
+                        }
+                    }
+
+                    if (!ok)
+                        return false;
+
+                    operations.operations().append(TranslateTransformOperation::create(tx, ty, getTransformOperationType(val->operationType())));
+                    break;
+                }
+                case WebKitCSSTransformValue::RotateTransformOperation: {
+                    double angle = firstValue->getDoubleValue();
+                    if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_RAD)
+                        angle = rad2deg(angle);
+                    else if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_GRAD)
+                        angle = grad2deg(angle);
+                    
+                    operations.operations().append(RotateTransformOperation::create(angle, getTransformOperationType(val->operationType())));
+                    break;
+                }
+                case WebKitCSSTransformValue::SkewTransformOperation:
+                case WebKitCSSTransformValue::SkewXTransformOperation:
+                case WebKitCSSTransformValue::SkewYTransformOperation: {
+                    double angleX = 0;
+                    double angleY = 0;
+                    double angle = firstValue->getDoubleValue();
+                    if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_RAD)
+                        angle = rad2deg(angle);
+                    else if (firstValue->primitiveType() == CSSPrimitiveValue::CSS_GRAD)
+                        angle = grad2deg(angle);
+                    if (val->operationType() == WebKitCSSTransformValue::SkewYTransformOperation)
+                        angleY = angle;
+                    else {
+                        angleX = angle;
+                        if (val->operationType() == WebKitCSSTransformValue::SkewTransformOperation) {
+                            if (val->length() > 1) {
+                                CSSPrimitiveValue* secondValue = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1));
+                                angleY = secondValue->getDoubleValue();
+                                if (secondValue->primitiveType() == CSSPrimitiveValue::CSS_RAD)
+                                    angleY = rad2deg(angleY);
+                                else if (secondValue->primitiveType() == CSSPrimitiveValue::CSS_GRAD)
+                                    angleY = grad2deg(angleY);
+                            }
+                        }
+                    }
+                    operations.operations().append(SkewTransformOperation::create(angleX, angleY, getTransformOperationType(val->operationType())));
+                    break;
+                }
+                case WebKitCSSTransformValue::MatrixTransformOperation: {
+                    float a = firstValue->getFloatValue();
+                    float b = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(1))->getFloatValue();
+                    float c = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(2))->getFloatValue();
+                    float d = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(3))->getFloatValue();
+                    float e = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(4))->getFloatValue();
+                    float f = static_cast<CSSPrimitiveValue*>(val->itemWithoutBoundsCheck(5))->getFloatValue();
+                    operations.operations().append(MatrixTransformOperation::create(a, b, c, d, e, f));
+                    break;
+                }
+                case WebKitCSSTransformValue::UnknownTransformOperation:
+                    ASSERT_NOT_REACHED();
+                    break;
+            }
+        }
+    }
+    outOperations = operations;
+    return true;
 }
 
 } // namespace WebCore

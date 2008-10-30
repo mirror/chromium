@@ -35,7 +35,7 @@
 #include "ScriptController.h"
 #include <kjs/JSObject.h>
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -43,16 +43,22 @@ ASSERT_CLASS_FITS_IN_CELL(JSDOMWindowShell)
 
 const ClassInfo JSDOMWindowShell::s_info = { "JSDOMWindowShell", 0, 0, 0 };
 
-JSDOMWindowShell::JSDOMWindowShell(DOMWindow* domWindow)
-    : Base(JSDOMWindow::commonJSGlobalData()->nullProtoStructureID)
+JSDOMWindowShell::JSDOMWindowShell(PassRefPtr<DOMWindow> window)
+    : Base(JSDOMWindowShell::createStructureID(jsNull()))
     , m_window(0)
 {
-    m_window = new (JSDOMWindow::commonJSGlobalData()) JSDOMWindow(domWindow, this);
-    setPrototype(m_window->prototype());
+    setWindow(window);
 }
 
 JSDOMWindowShell::~JSDOMWindowShell()
 {
+}
+
+void JSDOMWindowShell::setWindow(PassRefPtr<DOMWindow> window)
+{
+    RefPtr<StructureID> prototypeStructure = JSDOMWindowPrototype::createStructureID(jsNull());
+    RefPtr<StructureID> structure = JSDOMWindow::createStructureID(new JSDOMWindowPrototype(prototypeStructure.release()));
+    setWindow(new (JSDOMWindow::commonJSGlobalData()) JSDOMWindow(structure.release(), window, this));
 }
 
 // ----
@@ -96,7 +102,7 @@ void JSDOMWindowShell::getPropertyNames(ExecState* exec, PropertyNameArray& prop
     m_window->getPropertyNames(exec, propertyNames);
 }
 
-bool JSDOMWindowShell::getPropertyAttributes(KJS::ExecState* exec, const Identifier& propertyName, unsigned& attributes) const
+bool JSDOMWindowShell::getPropertyAttributes(JSC::ExecState* exec, const Identifier& propertyName, unsigned& attributes) const
 {
     return m_window->getPropertyAttributes(exec, propertyName, attributes);
 }
@@ -147,7 +153,7 @@ void JSDOMWindowShell::clear()
 
 void* JSDOMWindowShell::operator new(size_t size)
 {
-    return JSDOMWindow::commonJSGlobalData()->heap->allocate(size);
+    return JSDOMWindow::commonJSGlobalData()->heap.allocate(size);
 }
 
 // ----

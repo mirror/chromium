@@ -122,10 +122,14 @@ interface IWebViewPrivate : IUnknown
 
     // SPI for DumpRenderTree
     HRESULT executeCoreCommandByName([in] BSTR name, [in] BSTR value);
+    HRESULT clearMainFrameName();
 
     HRESULT windowAncestryDidChange();
 
     HRESULT paintDocumentRectToContext([in] RECT rect, [in] OLE_HANDLE dc);
+
+    HRESULT setDefersCallbacks([in] BOOL defersCallbacks);
+    HRESULT defersCallbacks([out, retval] BOOL* defersCallbacks);
 
     HRESULT setCustomHTMLTokenizerTimeDelay([in] double timeDelay);
     HRESULT setCustomHTMLTokenizerChunkSize([in] int chunkSize);
@@ -135,6 +139,6 @@ interface IWebViewPrivate : IUnknown
     HRESULT setTransparent([in] BOOL transparent);
     HRESULT transparent([out, retval] BOOL* transparent);
 
-    HRESULT setDefersCallbacks([in] BOOL defersCallbacks);
-    HRESULT defersCallbacks([out, retval] BOOL* defersCallbacks);
+    HRESULT setAlwaysUsesComplexTextCodePath([in] BOOL complex);
+    HRESULT alwaysUsesComplexTextCodePath([out, retval] BOOL* complex);
 }

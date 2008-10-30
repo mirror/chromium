@@ -31,6 +31,7 @@
 
 #include "AnimationBase.h"
 #include "Document.h"
+#include "KeyframeList.h"
 #include "RenderStyle.h"
 
 namespace WebCore {
@@ -39,52 +40,53 @@ namespace WebCore {
 // for a single RenderObject.
 class KeyframeAnimation : public AnimationBase {
 public:
-    KeyframeAnimation(const Animation* animation, RenderObject* renderer, int index, CompositeAnimation* compAnim)
-    : AnimationBase(animation, renderer, compAnim)
-    , m_keyframes(animation->keyframeList())
-    , m_name(animation->name())
-    , m_index(index)
+    static PassRefPtr<KeyframeAnimation> create(const Animation* animation, RenderObject* renderer, int index, CompositeAnimation* compositeAnimation, const RenderStyle* unanimatedStyle)
     {
-    }
+        return adoptRef(new KeyframeAnimation(animation, renderer, index, compositeAnimation, unanimatedStyle));
+    };
+    
+    virtual void animate(CompositeAnimation*, RenderObject*, const RenderStyle* currentStyle, const RenderStyle* targetStyle, RenderStyle*& animatedStyle);
 
-    virtual ~KeyframeAnimation()
-    {
-        // Do the cleanup here instead of in the base class so the specialized methods get called
-        if (!postActive())
-            updateStateMachine(STATE_INPUT_END_ANIMATION, -1);
-    }
-
-    virtual void animate(CompositeAnimation*, RenderObject*, const RenderStyle* currentStyle,
-                         const RenderStyle* targetStyle, RenderStyle*& animatedStyle);
-
-    void setName(const String& s) { m_name = s; }
-    const AtomicString& name() const { return m_name; }
+    const AtomicString& name() const { return m_keyframes.animationName(); }
     int index() const { return m_index; }
+    void setIndex(int i) { m_index = i; }
 
     virtual bool shouldFireEvents() const { return true; }
+    
+    bool hasAnimationForProperty(int property) const;
+    
+    const RenderStyle* unanimatedStyle() const { return m_unanimatedStyle; }
 
 protected:
-    virtual void onAnimationStart(double inElapsedTime);
-    virtual void onAnimationIteration(double inElapsedTime);
-    virtual void onAnimationEnd(double inElapsedTime);
+    virtual void onAnimationStart(double elapsedTime);
+    virtual void onAnimationIteration(double elapsedTime);
+    virtual void onAnimationEnd(double elapsedTime);
     virtual void endAnimation(bool reset);
 
     virtual void overrideAnimations();
     virtual void resumeOverriddenAnimations();
-    
+
     bool shouldSendEventForListener(Document::ListenerType inListenerType);    
-    bool sendAnimationEvent(const AtomicString& inEventType, double inElapsedTime);
-    
-    virtual bool affectsProperty(int property) const;
+    bool sendAnimationEvent(const AtomicString&, double elapsedTime);
+
+    virtual bool affectsProperty(int) const;
+
+    void validateTransformFunctionList();
 
 private:
+    KeyframeAnimation(const Animation* animation, RenderObject*, int index, CompositeAnimation*, const RenderStyle* unanimatedStyle);
+    virtual ~KeyframeAnimation();
+    
     // The keyframes that we are blending.
-    RefPtr<KeyframeList> m_keyframes;
-    AtomicString m_name;
+    KeyframeList m_keyframes;
+
     // The order in which this animation appears in the animation-name style.
     int m_index;
+
+    // The style just before we started animation
+    const RenderStyle* m_unanimatedStyle;
 };
 
-}
+} // namespace WebCore
 
-#endif
+#endif // KeyframeAnimation_h

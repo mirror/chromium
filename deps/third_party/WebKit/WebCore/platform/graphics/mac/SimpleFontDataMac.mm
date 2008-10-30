@@ -59,6 +59,7 @@ bool initFontData(SimpleFontData* fontData)
     if (!fontData->m_font.cgFont())
         return false;
 
+#ifdef BUILDING_ON_TIGER
     ATSUStyle fontStyle;
     if (ATSUCreateStyle(&fontStyle) != noErr)
         return false;
@@ -84,6 +85,7 @@ bool initFontData(SimpleFontData* fontData)
     }
 
     ATSUDisposeStyle(fontStyle);
+#endif
 
     return true;
 }
@@ -141,11 +143,15 @@ static NSString* pathFromFont(NSFont *font)
 
 void SimpleFontData::platformInit()
 {
+#ifdef BUILDING_ON_TIGER
     m_styleGroup = 0;
+#endif
+#if USE(ATSUI)
     m_ATSUStyleInitialized = false;
     m_ATSUMirrors = false;
     m_checkedShapesArabic = false;
     m_shapesArabic = false;
+#endif
 
     m_syntheticBoldOffset = m_font.m_syntheticBold ? 1.0f : 0.f;
 
@@ -270,11 +276,14 @@ void SimpleFontData::platformInit()
 
 void SimpleFontData::platformDestroy()
 {
+#ifdef BUILDING_ON_TIGER
     if (m_styleGroup)
         wkReleaseStyleGroup(m_styleGroup);
-
+#endif
+#if USE(ATSUI)
     if (m_ATSUStyleInitialized)
         ATSUDisposeStyle(m_ATSUStyle);
+#endif
 }
 
 SimpleFontData* SimpleFontData::smallCapsFontData(const FontDescription& fontDescription) const
@@ -358,6 +367,7 @@ float SimpleFontData::platformWidthForGlyph(Glyph glyph) const
     return advance.width + m_syntheticBoldOffset;
 }
 
+#if USE(ATSUI)
 void SimpleFontData::checkShapesArabic() const
 {
     ASSERT(!m_checkedShapesArabic);
@@ -386,5 +396,40 @@ void SimpleFontData::checkShapesArabic() const
             LOG_ERROR("ATSFontGetTable failed (%d)", status);
     }
 }
+#endif
 
+#if USE(CORE_TEXT)
+CTFontRef SimpleFontData::getCTFont() const
+{
+    if (getNSFont())
+        return toCTFontRef(getNSFont());
+    if (!m_CTFont)
+        m_CTFont.adoptCF(CTFontCreateWithGraphicsFont(m_font.cgFont(), m_font.size(), NULL, NULL));
+    return m_CTFont.get();
 }
+
+CFDictionaryRef SimpleFontData::getCFStringAttributes() const
+{
+    if (m_CFStringAttributes)
+        return m_CFStringAttributes.get();
+
+    static const float kerningAdjustmentValue = 0;
+    static CFNumberRef kerningAdjustment = CFNumberCreate(kCFAllocatorDefault, kCFNumberFloatType, &kerningAdjustmentValue);
+
+    static const int ligaturesNotAllowedValue = 0;
+    static CFNumberRef ligaturesNotAllowed = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &ligaturesNotAllowedValue);
+
+    static const int ligaturesAllowedValue = 1;
+    static CFNumberRef ligaturesAllowed = CFNumberCreate(kCFAllocatorDefault, kCFNumberIntType, &ligaturesAllowedValue);
+
+    static const void* attributeKeys[] = { kCTFontAttributeName, kCTKernAttributeName, kCTLigatureAttributeName };
+    const void* attributeValues[] = { getCTFont(), kerningAdjustment, platformData().allowsLigatures() ? ligaturesAllowed : ligaturesNotAllowed };
+
+    m_CFStringAttributes.adoptCF(CFDictionaryCreate(NULL, attributeKeys, attributeValues, sizeof(attributeKeys) / sizeof(*attributeKeys), &kCFCopyStringDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks));
+
+    return m_CFStringAttributes.get();
+}
+
+#endif
+
+} // namespace WebCore

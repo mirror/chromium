@@ -22,7 +22,6 @@
 #include "RegExpPrototype.h"
 
 #include "ArrayPrototype.h"
-#include "FunctionPrototype.h"
 #include "JSArray.h"
 #include "JSObject.h"
 #include "JSString.h"
@@ -32,7 +31,7 @@
 #include "RegExpObject.h"
 #include "regexp.h"
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(RegExpPrototype);
 
@@ -45,13 +44,13 @@ static JSValue* regExpProtoFuncToString(ExecState*, JSObject*, JSValue*, const A
 
 const ClassInfo RegExpPrototype::info = { "RegExpPrototype", 0, 0, 0 };
 
-RegExpPrototype::RegExpPrototype(ExecState* exec, ObjectPrototype* objectPrototype, FunctionPrototype* functionPrototype)
-    : JSObject(objectPrototype)
+RegExpPrototype::RegExpPrototype(ExecState* exec, PassRefPtr<StructureID> structure, StructureID* prototypeFunctionStructure)
+    : JSObject(structure)
 {
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().compile, regExpProtoFuncCompile), DontEnum);
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().exec, regExpProtoFuncExec), DontEnum);
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().test, regExpProtoFuncTest), DontEnum);
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().toString, regExpProtoFuncToString), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().compile, regExpProtoFuncCompile), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().exec, regExpProtoFuncExec), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().test, regExpProtoFuncTest), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().toString, regExpProtoFuncToString), DontEnum);
 }
 
 // ------------------------------ Functions ---------------------------
@@ -86,7 +85,7 @@ JSValue* regExpProtoFuncCompile(ExecState* exec, JSObject*, JSValue* thisValue, 
     } else {
         UString pattern = args.isEmpty() ? UString("") : arg0->toString(exec);
         UString flags = arg1->isUndefined() ? UString("") : arg1->toString(exec);
-        regExp = RegExp::create(pattern, flags);
+        regExp = RegExp::create(&exec->globalData(), pattern, flags);
     }
 
     if (!regExp->isValid())
@@ -116,4 +115,4 @@ JSValue* regExpProtoFuncToString(ExecState* exec, JSObject*, JSValue* thisValue,
     return jsNontrivialString(exec, result);
 }
 
-} // namespace KJS
+} // namespace JSC

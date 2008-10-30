@@ -86,6 +86,9 @@
 #import <WebCore/FrameTree.h>
 #import <WebCore/FrameView.h>
 #import <WebCore/HTMLFormElement.h>
+#import <WebCore/HTMLFrameElement.h>
+#import <WebCore/HTMLFrameOwnerElement.h>
+#import <WebCore/HTMLNames.h>
 #import <WebCore/HistoryItem.h>
 #import <WebCore/HitTestResult.h>
 #import <WebCore/IconDatabase.h>
@@ -111,6 +114,7 @@
 #endif
 
 using namespace WebCore;
+using namespace HTMLNames;
 
 #if ENABLE(MAC_JAVA_BRIDGE)
 @interface NSView (WebJavaPluginDetails)
@@ -156,11 +160,6 @@ bool WebFrameLoaderClient::hasWebView() const
     return [m_webFrame.get() webView] != nil;
 }
 
-bool WebFrameLoaderClient::hasFrameView() const
-{
-    return m_webFrame->_private->webFrameView != nil;
-}
-
 void WebFrameLoaderClient::makeRepresentation(DocumentLoader* loader)
 {
     [dataSource(loader) _makeRepresentation];
@@ -184,6 +183,8 @@ void WebFrameLoaderClient::forceLayout()
 void WebFrameLoaderClient::forceLayoutForNonHTML()
 {
     WebFrameView *thisView = m_webFrame->_private->webFrameView;
+    if (!thisView) // Viewless mode.
+        return;
     NSView <WebDocumentView> *thisDocumentView = [thisView documentView];
     ASSERT(thisDocumentView != nil);
     
@@ -494,7 +495,7 @@ void WebFrameLoaderClient::dispatchDidReceiveTitle(const String& title)
 void WebFrameLoaderClient::dispatchDidCommitLoad()
 {
     // Tell the client we've committed this URL.
-    ASSERT([m_webFrame->_private->webFrameView documentView] != nil);
+    ASSERT([m_webFrame->_private->webFrameView documentView] != nil || ![getWebView(m_webFrame.get()) _usesDocumentViews]);
     
     WebView *webView = getWebView(m_webFrame.get());   
     [webView _didCommitLoadForFrame:m_webFrame.get()];
@@ -779,7 +780,10 @@ bool WebFrameLoaderClient::shouldFallBack(const ResourceError& error)
 
 bool WebFrameLoaderClient::canHandleRequest(const ResourceRequest& request) const
 {
-    return [WebView _canHandleRequest:request.nsURLRequest()];
+    Frame* frame = core(m_webFrame.get());
+    Page* page = frame->page();
+    BOOL forMainFrame = page && page->mainFrame() == frame;
+    return [WebView _canHandleRequest:request.nsURLRequest() forMainFrame:forMainFrame];
 }
 
 bool WebFrameLoaderClient::canShowMIMEType(const String& MIMEType) const
@@ -947,32 +951,45 @@ void WebFrameLoaderClient::transitionToCommittedForNewPage()
     WebView *webView = getWebView(m_webFrame.get());
     [webView removePluginInstanceViewsFor:(m_webFrame.get())];
     
-    NSView <WebDocumentView> *documentView = [v _makeDocumentViewForDataSource:ds];
-    if (!documentView)
-        return;
+    BOOL useDocumentViews = [webView _usesDocumentViews];
+    NSView <WebDocumentView> *documentView = nil;
+    if (useDocumentViews) {
+        documentView = [v _makeDocumentViewForDataSource:ds];
+        if (!documentView)
+            return;
+    }
 
     // FIXME: Could we skip some of this work for a top-level view that is not a WebHTMLView?
 
     // If we own the view, delete the old one - otherwise the render m_frame will take care of deleting the view.
     Frame* coreFrame = core(m_webFrame.get());
+    Page* page = coreFrame->page();
+    bool isMainFrame = coreFrame == page->mainFrame();
+    if (isMainFrame && coreFrame->view())
+        coreFrame->view()->setParentVisible(false);
     coreFrame->setView(0);
-    FrameView* coreView = new FrameView(coreFrame);
+    FrameView* coreView;
+    if (useDocumentViews)
+        coreView = new FrameView(coreFrame);
+    else
+        coreView = new FrameView(coreFrame, IntSize([webView bounds].size));
     coreFrame->setView(coreView);
     coreView->deref(); // FIXME: Eliminate this crazy refcounting!
-    int marginWidth = [v _marginWidth];
-    if (marginWidth >= 0)
-        coreView->setMarginWidth(marginWidth);
-    int marginHeight = [v _marginHeight];
-    if (marginHeight >= 0)
-        coreView->setMarginHeight(marginHeight);
 
     [m_webFrame.get() _updateBackgroundAndUpdatesWhileOffscreen];
 
     [v _install];
 
+    if (isMainFrame)
+        coreView->setParentVisible(true);
+
     // Call setDataSource on the document view after it has been placed in the view hierarchy.
     // This what we for the top-level view, so should do this for views in subframes as well.
     [documentView setDataSource:ds];
+    
+    if (HTMLFrameOwnerElement* owner = coreFrame->ownerElement())
+        coreFrame->view()->setCanHaveScrollbars(owner->scrollingMode() != ScrollbarAlwaysOff);
+    
 }
 
 RetainPtr<WebFramePolicyListener> WebFrameLoaderClient::setUpPolicyListener(FramePolicyFunction function)
@@ -1079,31 +1096,27 @@ PassRefPtr<Frame> WebFrameLoaderClient::createFrame(const KURL& url, const Strin
     
     ASSERT(m_webFrame);
     
-    WebFrameView *childView = [[WebFrameView alloc] init];
-    [childView setAllowsScrolling:allowsScrolling];
-    [childView _setMarginWidth:marginWidth];
-    [childView _setMarginHeight:marginHeight];
-
-    RefPtr<Frame> newCoreFrame = [WebFrame _createSubframeWithOwnerElement:ownerElement frameName:name frameView:childView];
-
+    WebFrameView *childView = [getWebView(m_webFrame.get()) _usesDocumentViews] ? [[WebFrameView alloc] init] : nil;
+    
+    RefPtr<Frame> result = [WebFrame _createSubframeWithOwnerElement:ownerElement frameName:name frameView:childView];
     [childView release];
 
-    WebFrame *newFrame = kit(newCoreFrame.get());
+    WebFrame *newFrame = kit(result.get());
 
     if ([newFrame _dataSource])
         [[newFrame _dataSource] _documentLoader]->setOverrideEncoding([[m_webFrame.get() _dataSource] _documentLoader]->overrideEncoding());  
 
     // The creation of the frame may have run arbitrary JavaScript that removed it from the page already.
-    if (!newCoreFrame->page())
+    if (!result->page())
         return 0;
  
-    core(m_webFrame.get())->loader()->loadURLIntoChildFrame(url, referrer, newCoreFrame.get());
+    core(m_webFrame.get())->loader()->loadURLIntoChildFrame(url, referrer, result.get());
 
     // The frame's onload handler may have removed it from the document.
-    if (!newCoreFrame->tree()->parent())
+    if (!result->tree()->parent())
         return 0;
 
-    return newCoreFrame.release();
+    return result.release();
 
     END_BLOCK_OBJC_EXCEPTIONS;
 
@@ -1233,12 +1246,25 @@ static NSView *pluginView(WebFrame *frame, WebPluginPackage *pluginPackage,
     return view;
 }
 
+class PluginWidget : public Widget {
+public:
+    PluginWidget(NSView *view = 0)
+        : Widget(view)
+    {
+    }
+    
+    virtual void invalidateRect(const IntRect& rect)
+    {
+        [platformWidget() setNeedsDisplayInRect:rect];
+    }
+};
+
 #if ENABLE(NETSCAPE_PLUGIN_API)
 
-class NetscapePluginWidget : public Widget {
+class NetscapePluginWidget : public PluginWidget {
 public:
     NetscapePluginWidget(WebNetscapePluginEmbeddedView *view)
-    : Widget(view)
+        : PluginWidget(view)
     {
     }
     
@@ -1250,7 +1276,7 @@ public:
         
         NSEvent* event = frame->eventHandler()->currentNSEvent();
         if ([event type] == NSMouseMoved)
-            [(WebNetscapePluginEmbeddedView *)getView() handleMouseMoved:event];
+            [(WebNetscapePluginEmbeddedView *)platformWidget() handleMouseMoved:event];
     }
     
 };
@@ -1286,7 +1312,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, Element* element
         [arguments release];
 
         if (view)
-            return new Widget(view);
+            return new PluginWidget(view);
     }
 
     NSString *MIMEType;
@@ -1352,7 +1378,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, Element* element
     }
     
     ASSERT(view);
-    return new Widget(view);
+    return new PluginWidget(view);
 
     END_BLOCK_OBJC_EXCEPTIONS;
 
@@ -1365,7 +1391,7 @@ void WebFrameLoaderClient::redirectDataToPlugin(Widget* pluginWidget)
 
     WebHTMLRepresentation *representation = (WebHTMLRepresentation *)[[m_webFrame.get() _dataSource] representation];
 
-    NSView *pluginView = pluginWidget->getView();
+    NSView *pluginView = pluginWidget->platformWidget();
 
 #if ENABLE(NETSCAPE_PLUGIN_API)
     if ([pluginView isKindOfClass:[WebNetscapePluginEmbeddedView class]])
@@ -1439,11 +1465,11 @@ Widget* WebFrameLoaderClient::createJavaAppletWidget(const IntSize& size, Elemen
     }
 
     ASSERT(view);
-    return new Widget(view);
+    return new PluginWidget(view);
 
     END_BLOCK_OBJC_EXCEPTIONS;
     
-    return new Widget;
+    return new PluginWidget;
 }
 
 String WebFrameLoaderClient::overrideMediaType() const

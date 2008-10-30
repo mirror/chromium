@@ -31,9 +31,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/RefPtr.h>
 
-namespace KJS {
-
-    class ExecState;
+namespace JSC {
 
     class Profile : public RefCounted<Profile> {
     public:
@@ -80,6 +78,6 @@ namespace KJS {
         unsigned int m_uid;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // Profile_h

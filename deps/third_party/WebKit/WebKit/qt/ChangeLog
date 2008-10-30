@@ -1,3 +1,362 @@
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon.
+
+        Clip painter to dirty rect before passing on to WebKit
+        
+        This was previously done in ScrollViewQt, but after the
+        refactoring of ScrollView we need to do it in QWebFrame
+        instead, similar to Safari/Win.
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::render):
+
+2008-10-08  Matthias Ettrich <ettrich@nokia.com>
+
+        Reviewed by Simon.
+
+        Make QWebView ignore focus changes with PopupFocusReason to avoid
+        massive updates when menus open and close.
+
+        * Api/qwebview.cpp:
+        (QWebView::focusInEvent):
+        (QWebView::focusOutEvent):
+
+2008-10-08  Kavindra Palaraja  <kdpalara@trolltech.com>
+
+        Reviewed by Simon.
+
+        Fixed a qdoc warning and adjusted some spacing
+
+        * Api/qwebframe.cpp:
+
+2008-10-08  Rhys Weatherley  <rhys.weatherley@nokia.com>
+
+        Reviewed by Simon.
+
+        Compile for platforms without context menus.
+
+        * Api/qwebpage.cpp:
+        (QWebPage::createStandardContextMenu):
+
+2008-10-08  André Pönitz  <apoenitz@trolltech.com>
+
+        Reviewed by Simon.
+
+        Fix compilation with Qt namespaces.
+
+        * WebCoreSupport/EditCommandQt.h:
+
+2008-10-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        QtWebKit build fix after changes to FrameLoaderClient.h in r37371
+
+        * WebCoreSupport/FrameLoaderClientQt.h:
+
+2008-10-07  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        [qt] Build fix after Scrollbar.h and Widget.h changes.
+
+        * Api/qwebpage.cpp:
+        (QWebPage::swallowContextMenuEvent):
+
+2008-10-06  David Hyatt  <hyatt@apple.com>
+
+        Enable viewless Mac WebKit to paint some basic pages.
+        
+        Reviewed by Sam Weinig
+
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        (WebCore::FrameLoaderClientQt::transitionToCommittedForNewPage):
+
+2008-10-03  David Hyatt  <hyatt@apple.com>
+
+        Fix scroll method on Qt.  The delta was supposed to use .width()/.height() and not .x()/.y().
+
+        Fix the QtPluginWidget to do an invalidate properly.
+
+        Reviewed by ggaren
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::scroll):
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        (WebCore::):
+
+2008-10-03  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Build fix. Remove addToDirtyRegion from the header file.
+
+        * WebCoreSupport/ChromeClientQt.h:
+
+2008-10-03  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Build fix.
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::scroll):
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        (WebCore::):
+        (WebCore::FrameLoaderClientQt::createPlugin):
+
+2008-10-03  David Hyatt  <hyatt@apple.com>
+
+        Remove addToDirtyRegion.
+        
+        Reviewed by Oliver Hunt
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+
+2008-10-02  David Hyatt  <hyatt@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=21314
+        
+        Make scrollBackingStore cross-platform.
+
+        Reviewed by Sam Weinig
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::repaint):
+        (WebCore::ChromeClientQt::scroll):
+        * WebCoreSupport/ChromeClientQt.h:
+
+2008-10-01  David Hyatt  <hyatt@apple.com>
+        
+        https://bugs.webkit.org/show_bug.cgi?id=21282
+        
+        Make contentsToScreen/screenToContents cross-platform.  Only implemented by Mac/Win right now.
+        
+        Reviewed by Adam Roben
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::windowToScreen):
+        (WebCore::ChromeClientQt::screenToWindow):
+        * WebCoreSupport/ChromeClientQt.h:
+
+2008-09-30  Dave Hyatt  <hyatt@apple.com>
+
+        http://bugs.webkit.org/show_bug.cgi?id=21250
+        
+        Rename updateContents to repaintContentRectangle and make it cross-platform by always sending
+        repaints up through the ChromeClient.
+
+        Reviewed by Darin Adler
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::repaint):
+        * WebCoreSupport/ChromeClientQt.h:
+
+2008-09-29  Gunnar Sletta  <gunnar@trolltech.com>
+
+        Reviewed by Simon
+
+        Compile on windows using MSVC 2005
+
+        For the PCH We need to define _WIN32_WINNT and include windows.h early on,
+        otherwise we'll miss several functions.
+
+        * WebKit_pch.h:
+
+2008-09-29  Thiago Macieira  <thiago.macieira@nokia.com>
+
+        Reviewed by Simon.
+
+        Changed copyright from Trolltech ASA to Nokia.
+        
+        Nokia acquired Trolltech ASA, assets were transferred on September 26th 2008.
+        
+
+        * Api/qwebframe.cpp:
+        * Api/qwebframe.h:
+        * Api/qwebframe_p.h:
+        * Api/qwebhistory.cpp:
+        * Api/qwebhistory.h:
+        * Api/qwebhistory_p.h:
+        * Api/qwebkitglobal.h:
+        * Api/qwebnetworkinterface.cpp:
+        * Api/qwebnetworkinterface.h:
+        * Api/qwebnetworkinterface_p.h:
+        * Api/qwebpage.cpp:
+        * Api/qwebpage.h:
+        * Api/qwebpage_p.h:
+        * Api/qwebpluginfactory.cpp:
+        * Api/qwebpluginfactory.h:
+        * Api/qwebsettings.cpp:
+        * Api/qwebsettings.h:
+        * Api/qwebview.cpp:
+        * Api/qwebview.h:
+        * Plugins/ICOHandler.cpp:
+        * QtLauncher/main.cpp:
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        * WebCoreSupport/FrameLoaderClientQt.h:
+        * WebCoreSupport/InspectorClientQt.cpp:
+        * WebCoreSupport/InspectorClientQt.h:
+        * tests/qwebframe/tst_qwebframe.cpp:
+        * tests/qwebpage/tst_qwebpage.cpp:
+
+2008-09-28  Simon Hausmann  <hausmann@webkit.org>
+
+        Reviewed by David Hyatt.
+
+        Ensure the mainThreadIdentifier is set as well as other bits and pieces of
+        the threading machinery, by calling JSC::initializeThreading().
+
+        * Api/qwebpage.cpp:
+        (QWebPagePrivate::QWebPagePrivate):
+
+2008-09-27  David Hyatt  <hyatt@apple.com>
+
+        Forgot to land renaming changes in WebKit.
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::render):
+        (QWebFrame::pos):
+        (QWebFrame::geometry):
+        * Api/qwebpage.cpp:
+        (QWebPage::viewportSize):
+        (QWebPage::setViewportSize):
+
+2008-09-27  Simon Hausmann  <hausmann@webkit.org>
+
+        Qt build fix - use frameRect instead of frameGeometry, adapt
+        to renamed scrollbar frameview methods.
+
+        * Api/qwebpage.cpp:
+        (QWebPage::viewportSize):
+        (QWebPage::setViewportSize):
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        (WebCore::FrameLoaderClientQt::transitionToCommittedForNewPage):
+
+2008-09-27  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Qt build fix - rename frameGeometry to frameRect per r36995.
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::render):
+        (QWebFrame::pos):
+        (QWebFrame::geometry):
+
+2008-09-26  Ariya Hidayat  <ahidayat@trolltech.com>
+
+        Reviewed by Simon.
+
+        Fixed potential crash when deleting QWebView instance.
+
+        When deleting the view, sets the page's view to NULL.
+        The reason is that the page is smart and its destructor might lead to a call
+        that operates on a view (which is in the process of being deleted).
+
+        * Api/qwebpage.h:
+        * Api/qwebview.cpp:
+        (QWebView::~QWebView):
+
+2008-09-26  Ariya Hidayat  <ahidayat@trolltech.com>
+
+        Reviewed by Simon.
+
+        Fixed using modifiers to type special symbols (e.g '@','$') does not work on Mac OS X.
+
+        * WebCoreSupport/EditorClientQt.cpp:
+        (WebCore::EditorClientQt::handleKeyboardEvent):
+
+2008-09-26  Håvard Wall  <hwall@trolltech.com>
+
+        Reviewed by Simon.
+
+        Fix compilation with QT_NO_MESSAGEBOX
+
+        * Api/qwebpage.cpp:
+        (QWebPage::javaScriptAlert):
+        (QWebPage::javaScriptConfirm):
+
+2008-09-23  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon.
+
+        Remove deprecated JS Qt bindings object call/construct code and fix autotests
+
+        * tests/qwebframe/tst_qwebframe.cpp:
+
+2008-09-16  Alp Toker  <alp@nuanti.com>
+
+        Prospective Qt build fix. ScrollBar.h -> Scrollbar.h
+
+        * Api/qwebframe.cpp:
+        * Api/qwebpage.cpp:
+
+2008-09-15  Eli Fidler  <eli@staikos.net>
+
+        Reviewed by Simon.
+
+        Yahoo assumes non-RFC compliant HTTP redirect behaviour. QtWebKit is (more)
+        compliant, so broken. I think the Yahoo-assumed behaviour is real-world standard.
+
+        Basically, Yahoo's login procedure for flickr looks like this:
+        1. load flickr.com, click "sign in"
+        2. this is a Yahoo page with a form
+        (https://login.yahoo.com/config/login?.src=flickr...)
+        when you click the "Sign In" button, the form submits to a yahoo.com POST URL
+        3. The POST returns with a 302 (redirect) to another yahoo.com URL
+        4. If you POST the redirected Location:, it all breaks. Yahoo assumes you will
+        convert the method to GET, which works fine but is definitely not
+        RFC-compliant. It would be compliant for 303, and the RFC says that many
+        implementations treat 302 and 303 the same way (for HTTP/1.0 compliance), but
+        converting to GET is explicitly wrong for 302.
+
+        * Api/qwebnetworkinterface.cpp:
+        (QWebNetworkManager::started):
+
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon.
+
+        Make QtInstance::create() private and fix caching
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::addToJavaScriptWindowObject):
+
+2008-09-11  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Rubber-stamped by Simon.
+
+        Prevent leaking pages and frames in QWebKit autotest
+
+        * tests/qwebpage/tst_qwebpage.cpp:
+
+2008-09-11  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon
+
+        Fix QtWebKit autotest
+
+        * tests/qwebpage/tst_qwebpage.cpp:
+        (tst_QWebPage::userStyleSheet):
+
+2008-09-09  Joerg Bornemann  <joerg.bornemann@trolltech.com>
+
+        Reviewed by Simon.
+
+        Added missing WebCore prefix to ResourceRequest
+
+        This is needed for Windows/CE compilation where there is a conflict
+        with a global ResourceRequest type. Elsewhere in this file ResourceRequest
+        is also prefixed with WebCore::
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::QWebFrame):
+
+2008-09-07  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Maciej Stachowiak.
+
+        Bug 20704: Replace the KJS namespace
+        <https://bugs.webkit.org/show_bug.cgi?id=20704>
+
+        Rename the KJS namespace to JSC.
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::addToJavaScriptWindowObject):
+        (QWebFrame::evaluateJavaScript):
+
 2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon
@@ -590,7 +949,7 @@
 
 2008-07-01  Alexey Proskuryakov  <ap@webkit.org>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         Disable JSLock for per-thread contexts.
 
@@ -668,7 +1027,7 @@
 
 2008-06-18  Alexey Proskuryakov  <ap@webkit.org>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         Prepare JavaScript heap for being per-thread.
 
@@ -834,7 +1193,7 @@
 
 2008-06-03  Jonathon Jongsma  <jonathon.jongsma@collabora.co.uk>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         * Api/qwebhistoryinterface.cpp: Remove WebCore::historyContains().  This
         function is not used anywhere internally and is only a convenience
@@ -2883,7 +3242,7 @@
 
 2008-03-07  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         Done with Lars.
 
@@ -4260,7 +4619,7 @@
 
 2007-12-07  Alexey Proskuryakov  <ap@webkit.org>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         <rdar://problem/5535636>
         Have to press 4 times instead of 2 times to get the expected result of ^^ with german keyboard.
@@ -6835,7 +7194,7 @@
 
         Updated ChromeClientQt for ChromeClient changes.
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         * WebCoreSupport/ChromeClientQt.cpp:
         (WebCore::ChromeClientQt::print): Added a Frame* parameter.
@@ -8170,7 +8529,7 @@
 
 2007-03-07  Adele Peterson  <adele@apple.com>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         WebKitQT part of fix for:
         http://bugs.webkit.org/show_bug.cgi?id=10871
@@ -9445,7 +9804,7 @@
 
 2006-10-26  Nikolas Zimmermann  <zimmermann@kde.org>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         Fix Qt/Linux build.
 
@@ -9468,7 +9827,7 @@
 
 2006-10-24  Simon Hausmann  <hausmann@kde.org>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         * QtLauncher/CMakeLists.txt, WebKitPart/CMakeLists.txt: Added project name to
           kde4_automoc macro, as required by the latest KDE4 cmake module.
@@ -9527,7 +9886,7 @@
 
 2006-09-04  Nikolas Zimmermann  <zimmermann@kde.org>
 
-        Reviewed by Darin. Final polish by Sam.
+        Reviewed by Darin Adler. Final polish by Sam.
 
         Fixes parts of: http://bugs.webkit.org/show_bug.cgi?id=10644
         Add WebKitPart, an embeddable KPart for the KDE platform.

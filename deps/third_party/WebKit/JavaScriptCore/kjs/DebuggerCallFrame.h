@@ -29,54 +29,33 @@
 #ifndef DebuggerCallFrame_h
 #define DebuggerCallFrame_h
 
-namespace KJS {
-    
-    class CodeBlock;
-    class ExecState;
-    class JSGlobalObject;
-    class JSObject;
-    class JSValue;
-    class Machine;
-    class UString;
-    class Register;
-    class ScopeChainNode;
+#include "ExecState.h"
+
+namespace JSC {
     
     class DebuggerCallFrame {
     public:
-        enum Type {
-            ProgramType,
-            FunctionType
-        };
+        enum Type { ProgramType, FunctionType };
 
-        DebuggerCallFrame(ExecState* exec, JSGlobalObject* dynamicGlobalObject, const CodeBlock* codeBlock, ScopeChainNode* scopeChain, Register* r, JSValue* exception)
-            : m_exec(exec)
-            , m_dynamicGlobalObject(dynamicGlobalObject)
-            , m_codeBlock(codeBlock)
-            , m_scopeChain(scopeChain)
-            , m_registers(r)
+        DebuggerCallFrame(CallFrame* callFrame, JSValue* exception)
+            : m_callFrame(callFrame)
             , m_exception(exception)
         {
         }
 
-        JSGlobalObject* dynamicGlobalObject() const { return m_dynamicGlobalObject; }
-        const ScopeChainNode* scopeChain() const { return m_scopeChain; }
+        JSGlobalObject* dynamicGlobalObject() const { return m_callFrame->dynamicGlobalObject(); }
+        const ScopeChainNode* scopeChain() const { return m_callFrame->scopeChain(); }
         const UString* functionName() const;
-        DebuggerCallFrame::Type type() const;
+        Type type() const;
         JSObject* thisObject() const;
         JSValue* evaluate(const UString&, JSValue*& exception) const;
         JSValue* exception() const { return m_exception; }
 
     private:
-        Register* callFrame() const;
-
-        ExecState* m_exec;
-        JSGlobalObject* m_dynamicGlobalObject;
-        const CodeBlock* m_codeBlock;
-        ScopeChainNode* m_scopeChain;
-        Register* m_registers;
+        CallFrame* m_callFrame;
         JSValue* m_exception;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // DebuggerCallFrame_h

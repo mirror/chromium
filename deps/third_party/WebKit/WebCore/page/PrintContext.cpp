@@ -23,6 +23,7 @@
 
 #include "GraphicsContext.h"
 #include "Frame.h"
+#include "FrameView.h"
 #include "RenderView.h"
 
 using namespace WebCore;
@@ -124,7 +125,7 @@ void PrintContext::spoolPage(GraphicsContext& ctx, int pageNumber, float width)
     ctx.scale(FloatSize(scale, scale));
     ctx.translate(-pageRect.x(), -pageRect.y());
     ctx.clip(pageRect);
-    m_frame->paint(&ctx, pageRect);
+    m_frame->view()->paintContents(&ctx, pageRect);
     ctx.restore();
 }
 

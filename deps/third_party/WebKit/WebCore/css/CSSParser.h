@@ -37,6 +37,7 @@ namespace WebCore {
     class CSSRule;
     class CSSRuleList;
     class CSSSelector;
+    class CSSNthSelector;
     class CSSStyleSheet;
     class CSSValue;
     class CSSValueList;
@@ -116,7 +117,7 @@ namespace WebCore {
         bool parseHSLParameters(CSSParserValue*, double* colorValues, bool parseAlpha);
         PassRefPtr<CSSPrimitiveValue> parseColor(CSSParserValue* = 0);
         bool parseColorFromValue(CSSParserValue*, RGBA32&, bool = false);
-        std::auto_ptr<CSSSelector> parseSelector(const String&);
+        std::auto_ptr<CSSSelector> parseSelector(const String&, Document* doc = 0);
 
         static bool parseColor(const String&, RGBA32& rgb, bool strict);
 
@@ -152,6 +153,7 @@ namespace WebCore {
         int yyparse();
 
         CSSSelector* createFloatingSelector();
+        CSSNthSelector* createFloatingNthSelector();
         CSSSelector* sinkFloatingSelector(CSSSelector*);
 
         CSSParserValueList* createFloatingValueList();
@@ -165,7 +167,7 @@ namespace WebCore {
         MediaList* createMediaList();
         CSSRule* createCharsetRule(const CSSParserString&);
         CSSRule* createImportRule(const CSSParserString&, MediaList*);
-        WebKitCSSKeyframeRule* createKeyframeRule(float key);
+        WebKitCSSKeyframeRule* createKeyframeRule(CSSParserValueList*);
         WebKitCSSKeyframesRule* createKeyframesRule();
         CSSRule* createMediaRule(MediaList*, CSSRuleList*);
         CSSRuleList* createRuleList();

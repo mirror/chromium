@@ -28,73 +28,137 @@
 
 #include "config.h"
 #include "CompositeAnimation.h"
+
 #include "AnimationController.h"
+#include "CSSPropertyNames.h"
 #include "ImplicitAnimation.h"
 #include "KeyframeAnimation.h"
+#include "RenderObject.h"
 #include "RenderStyle.h"
-#include "CSSPropertyNames.h"
 
 namespace WebCore {
 
-CompositeAnimation::~CompositeAnimation()
+class CompositeAnimationPrivate {
+public:
+    CompositeAnimationPrivate(AnimationController* animationController, CompositeAnimation* compositeAnimation)
+        : m_isSuspended(false)
+        , m_animationController(animationController)
+        , m_compositeAnimation(compositeAnimation)
+        , m_numStyleAvailableWaiters(0)
+    {
+    }
+    
+    ~CompositeAnimationPrivate();
+
+    RenderStyle* animate(RenderObject*, const RenderStyle* currentStyle, RenderStyle* targetStyle);
+
+    void setAnimating(bool);
+    bool isAnimating() const;
+    
+    const KeyframeAnimation* getAnimationForProperty(int property) const;
+
+    void resetTransitions(RenderObject*);
+    void resetAnimations(RenderObject*);
+
+    void cleanupFinishedAnimations(RenderObject*);
+
+    void setAnimationStartTime(double t);
+    void setTransitionStartTime(int property, double t);
+
+    void suspendAnimations();
+    void resumeAnimations();
+    bool isSuspended() const { return m_isSuspended; }
+
+    void overrideImplicitAnimations(int property);
+    void resumeOverriddenImplicitAnimations(int property);
+
+    void styleAvailable();
+
+    bool isAnimatingProperty(int property, bool isRunningNow) const;
+
+    void setWaitingForStyleAvailable(bool);
+
+protected:
+    void updateTransitions(RenderObject*, const RenderStyle* currentStyle, RenderStyle* targetStyle);
+    void updateKeyframeAnimations(RenderObject*, const RenderStyle* currentStyle, RenderStyle* targetStyle);
+
+private:
+    typedef HashMap<int, RefPtr<ImplicitAnimation> > CSSPropertyTransitionsMap;
+    typedef HashMap<AtomicStringImpl*, RefPtr<KeyframeAnimation> >  AnimationNameMap;
+
+    CSSPropertyTransitionsMap m_transitions;
+    AnimationNameMap m_keyframeAnimations;
+    bool m_isSuspended;
+    AnimationController* m_animationController;
+    CompositeAnimation* m_compositeAnimation;
+    unsigned m_numStyleAvailableWaiters;
+};
+
+CompositeAnimationPrivate::~CompositeAnimationPrivate()
 {
-    deleteAllValues(m_transitions);
-    deleteAllValues(m_keyframeAnimations);
+    m_transitions.clear();
+    m_keyframeAnimations.clear();
 }
     
-void CompositeAnimation::updateTransitions(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
+void CompositeAnimationPrivate::updateTransitions(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
 {
     // If currentStyle is null, we don't do transitions
     if (!currentStyle || !targetStyle->transitions())
         return;
-        
+
     // Check to see if we need to update the active transitions
     for (size_t i = 0; i < targetStyle->transitions()->size(); ++i) {
-        const Animation* anim = (*targetStyle->transitions())[i].get();
-        double duration = anim->duration();
-        double delay = anim->delay();
+        const Animation* anim = targetStyle->transitions()->animation(i);
+        bool isActiveTransition = anim->duration() || anim->delay() > 0;
 
-        // If this is an empty transition, skip it
-        if (duration == 0 && delay <= 0)
-            continue;
-         
         int prop = anim->property();
+
+        if (prop == cAnimateNone)
+            continue;
+
         bool all = prop == cAnimateAll;
-        
+
         // Handle both the 'all' and single property cases. For the single prop case, we make only one pass
-        // through the loop
-        for (int propertyIndex = 0; ; ++propertyIndex) {
+        // through the loop.
+        for (int propertyIndex = 0; propertyIndex < AnimationBase::getNumProperties(); ++propertyIndex) {
             if (all) {
-                if (propertyIndex >= AnimationBase::getNumProperties())
-                    break;
-                // get the next prop
+                // Get the next property
                 prop = AnimationBase::getPropertyAtIndex(propertyIndex);
             }
 
             // ImplicitAnimations are always hashed by actual properties, never cAnimateAll
             ASSERT(prop > firstCSSProperty && prop < (firstCSSProperty + numCSSProperties));
 
+            // If there is a running animation for this property, the transition is overridden
+            // and we have to use the unanimatedStyle from the animation. We do the test
+            // against the unanimated style here, but we "override" the transition later.
+            const KeyframeAnimation* keyframeAnim = getAnimationForProperty(prop);
+            const RenderStyle* fromStyle = keyframeAnim ? keyframeAnim->unanimatedStyle() : currentStyle;
+
             // See if there is a current transition for this prop
-            ImplicitAnimation* implAnim = m_transitions.get(prop);
+            ImplicitAnimation* implAnim = m_transitions.get(prop).get();
             bool equal = true;
-            
+
             if (implAnim) {
-                // There is one, has our target changed?
-                if (!implAnim->isTargetPropertyEqual(prop, targetStyle)) {
-                    implAnim->reset(renderer);
-                    delete implAnim;
+               // This implAnim might not be an already running transition. It might be
+               // newly added to the list in a previous iteration. This would happen if
+               // you have both an explicit transition-property and 'all' in the same
+               // list. In this case, the latter one overrides the earlier one, so we
+               // behave as though this is a running animation being replaced.
+                if (!isActiveTransition)
+                    m_transitions.remove(prop);
+                else if (!implAnim->isTargetPropertyEqual(prop, targetStyle)) {
                     m_transitions.remove(prop);
                     equal = false;
                 }
             } else {
-                // See if we need to start a new transition
-                equal = AnimationBase::propertiesEqual(prop, currentStyle, targetStyle);
+                // We need to start a transition if it is active and the properties don't match
+                equal = !isActiveTransition || AnimationBase::propertiesEqual(prop, fromStyle, targetStyle);
             }
-            
+
             if (!equal) {
                 // Add the new transition
-                ImplicitAnimation* animation = new ImplicitAnimation(const_cast<Animation*>(anim), prop, renderer, this);
-                m_transitions.set(prop, animation);
+                m_transitions.set(prop, ImplicitAnimation::create(const_cast<Animation*>(anim), prop, renderer, m_compositeAnimation, fromStyle));
             }
             
             // We only need one pass for the single prop case
@@ -104,366 +168,341 @@ void CompositeAnimation::updateTransitions(RenderObject* renderer, const RenderS
     }
 }
 
-void CompositeAnimation::updateKeyframeAnimations(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
+void CompositeAnimationPrivate::updateKeyframeAnimations(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
 {
     // Nothing to do if we don't have any animations, and didn't have any before
     if (m_keyframeAnimations.isEmpty() && !targetStyle->hasAnimations())
         return;
-    
+
     // Nothing to do if the current and target animations are the same
     if (currentStyle && currentStyle->hasAnimations() && targetStyle->hasAnimations() && *(currentStyle->animations()) == *(targetStyle->animations()))
         return;
         
-    int numAnims = 0;
-    bool animsChanged = false;
+    // Mark all existing animations as no longer active
+    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it)
+        it->second->setIndex(-1);
     
-    // see if the lists match
+    // Now mark any still active animations as active and add any new animations
     if (targetStyle->animations()) {
-        for (size_t i = 0; i < targetStyle->animations()->size(); ++i) {
-            const Animation* anim = (*targetStyle->animations())[i].get();
-            
+        int numAnims = targetStyle->animations()->size();
+        for (int i = 0; i < numAnims; ++i) {
+            const Animation* anim = targetStyle->animations()->animation(i);
+            AtomicString animationName(anim->name());
+
             if (!anim->isValidAnimation())
-                animsChanged = true;
-            else {
-                AtomicString name(anim->name());
-                KeyframeAnimation* kfAnim = m_keyframeAnimations.get(name.impl());
-                if (!kfAnim || !kfAnim->animationsMatch(anim))
-                    animsChanged = true;
-                else
-                    if (anim) {
-                        // animations match, but play states may differ. update if needed
-                        kfAnim->updatePlayState(anim->playState() == AnimPlayStatePlaying);
-                        
-                        // set the saved animation to this new one, just in case the play state has changed
-                        kfAnim->setAnimation(anim);
-                    }
+                continue;
+            
+            // See if there is a current animation for this name
+            RefPtr<KeyframeAnimation> keyframeAnim = m_keyframeAnimations.get(animationName.impl());
+                
+            if (keyframeAnim) {
+                // There is one so it is still active
+
+                // Animations match, but play states may differ. update if needed
+                keyframeAnim->updatePlayState(anim->playState() == AnimPlayStatePlaying);
+                            
+                // Set the saved animation to this new one, just in case the play state has changed
+                keyframeAnim->setAnimation(anim);
+                keyframeAnim->setIndex(i);
+            } else if ((anim->duration() || anim->delay()) && anim->iterationCount()) {
+                keyframeAnim = KeyframeAnimation::create(const_cast<Animation*>(anim), renderer, i, m_compositeAnimation, currentStyle ? currentStyle : targetStyle);
+                m_keyframeAnimations.set(keyframeAnim->name().impl(), keyframeAnim);
             }
-            ++numAnims;
         }
+    }
+
+    // Make a list of animations to be removed
+    Vector<AtomicStringImpl*> animsToBeRemoved;
+    kfend = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
+        KeyframeAnimation* keyframeAnim = it->second.get();
+        if (keyframeAnim->index() < 0)
+            animsToBeRemoved.append(keyframeAnim->name().impl());
     }
     
-    if (!animsChanged && m_keyframeAnimations.size() != numAnims)
-        animsChanged = true;
-
-    if (!animsChanged)
-        return;
-
-    // animations have changed, update the list
-    resetAnimations(renderer);
-
-    if (!targetStyle->animations())
-        return;
-
-    // add all the new animations
-    int index = 0;
-    for (size_t i = 0; i < targetStyle->animations()->size(); ++i) {
-        const Animation* anim = (*targetStyle->animations())[i].get();
-
-        if (!anim->isValidAnimation())
-            continue;
-            
-        // don't bother adding the animation if it has no keyframes or won't animate
-        if ((anim->duration() || anim->delay()) && anim->iterationCount() &&
-                                            anim->keyframeList().get() && !anim->keyframeList()->isEmpty()) {
-            KeyframeAnimation* kfanim = new KeyframeAnimation(const_cast<Animation*>(anim), renderer, index++, this);
-            m_keyframeAnimations.set(kfanim->name().impl(), kfanim);
-        }
-    }
+    // Now remove the animations from the list
+    for (size_t j = 0; j < animsToBeRemoved.size(); ++j)
+        m_keyframeAnimations.remove(animsToBeRemoved[j]);
 }
 
-KeyframeAnimation* CompositeAnimation::findKeyframeAnimation(const AtomicString& name)
-{
-    return m_keyframeAnimations.get(name.impl());
-}
-
-RenderStyle* CompositeAnimation::animate(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
+RenderStyle* CompositeAnimationPrivate::animate(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
 {
     RenderStyle* resultStyle = 0;
-    
+
+    // Update animations first so we can see if any transitions are overridden
+    updateKeyframeAnimations(renderer, currentStyle, targetStyle);
+
     // We don't do any transitions if we don't have a currentStyle (on startup)
     updateTransitions(renderer, currentStyle, targetStyle);
-    
+
     if (currentStyle) {
         // Now that we have transition objects ready, let them know about the new goal state.  We want them
         // to fill in a RenderStyle*& only if needed.
         CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
         for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-            ImplicitAnimation*  anim = it->second;
-            if (anim) {
-                anim->animate(this, renderer, currentStyle, targetStyle, resultStyle);
-            }
+            if (ImplicitAnimation* anim = it->second.get())
+                anim->animate(m_compositeAnimation, renderer, currentStyle, targetStyle, resultStyle);
         }
     }
-
-    updateKeyframeAnimations(renderer, currentStyle, targetStyle);
 
     // Now that we have animation objects ready, let them know about the new goal state.  We want them
     // to fill in a RenderStyle*& only if needed.
     if (targetStyle->hasAnimations()) {
         for (size_t i = 0; i < targetStyle->animations()->size(); ++i) {
-            const Animation* anim = (*targetStyle->animations())[i].get();
+            const Animation* anim = targetStyle->animations()->animation(i);
 
             if (anim->isValidAnimation()) {
-                AtomicString name(anim->name());
-                KeyframeAnimation* keyframeAnim = m_keyframeAnimations.get(name.impl());
+                AtomicString animationName(anim->name());
+                RefPtr<KeyframeAnimation> keyframeAnim = m_keyframeAnimations.get(animationName.impl());
                 if (keyframeAnim)
-                    keyframeAnim->animate(this, renderer, currentStyle, targetStyle, resultStyle);
+                    keyframeAnim->animate(m_compositeAnimation, renderer, currentStyle, targetStyle, resultStyle);
             }
         }
     }
-    
+
     cleanupFinishedAnimations(renderer);
 
     return resultStyle ? resultStyle : targetStyle;
 }
 
 // "animating" means that something is running that requires the timer to keep firing
-// (e.g. a transition)
-void CompositeAnimation::setAnimating(bool inAnimating)
+void CompositeAnimationPrivate::setAnimating(bool animating)
 {
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation*  transition = it->second;
-        transition->setAnimating(inAnimating);
+    CSSPropertyTransitionsMap::const_iterator transitionsEnd = m_transitions.end();
+    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != transitionsEnd; ++it) {
+        ImplicitAnimation* transition = it->second.get();
+        transition->setAnimating(animating);
     }
 
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
-        anim->setAnimating(inAnimating);
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        KeyframeAnimation* anim = it->second.get();
+        anim->setAnimating(animating);
     }
 }
 
-bool CompositeAnimation::animating()
+bool CompositeAnimationPrivate::isAnimating() const
 {
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation*  transition = it->second;
-        if (transition && transition->animating() && transition->running())
+    CSSPropertyTransitionsMap::const_iterator transitionsEnd = m_transitions.end();
+    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != transitionsEnd; ++it) {
+        ImplicitAnimation* transition = it->second.get();
+        if (transition && transition->isAnimating() && transition->running())
             return true;
     }
-    
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
-        if (anim && !anim->paused() && anim->animating() && anim->active())
+
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        KeyframeAnimation* anim = it->second.get();
+        if (anim && !anim->paused() && anim->isAnimating() && anim->active())
             return true;
     }
 
     return false;
 }
 
-void CompositeAnimation::resetTransitions(RenderObject* renderer)
+const KeyframeAnimation* CompositeAnimationPrivate::getAnimationForProperty(int property) const
 {
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation*  transition = it->second;
-        transition->reset(renderer);
-        delete transition;
+    const KeyframeAnimation* retval = 0;
+    
+    // We want to send back the last animation with the property if there are multiples.
+    // So we need to iterate through all animations
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        const KeyframeAnimation* anim = it->second.get();
+        if (anim->hasAnimationForProperty(property))
+            retval = anim;
     }
+    
+    return retval;
+}
+
+void CompositeAnimationPrivate::resetTransitions(RenderObject* renderer)
+{
     m_transitions.clear();
 }
 
-void CompositeAnimation::resetAnimations(RenderObject* renderer)
+void CompositeAnimationPrivate::resetAnimations(RenderObject*)
 {
-    deleteAllValues(m_keyframeAnimations);
     m_keyframeAnimations.clear();
 }
 
-void CompositeAnimation::cleanupFinishedAnimations(RenderObject* renderer)
+void CompositeAnimationPrivate::cleanupFinishedAnimations(RenderObject* renderer)
 {
-    if (suspended())
+    if (isSuspended())
         return;
-    
+
     // Make a list of transitions to be deleted
     Vector<int> finishedTransitions;
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
+    CSSPropertyTransitionsMap::const_iterator transitionsEnd = m_transitions.end();
 
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != transitionsEnd; ++it) {
+        ImplicitAnimation* anim = it->second.get();
         if (!anim)
             continue;
-        if (anim->postActive() && !anim->waitingForEndEvent())
+        if (anim->postActive())
             finishedTransitions.append(anim->animatingProperty());
     }
-    
+
     // Delete them
-    for (Vector<int>::iterator it = finishedTransitions.begin(); it != finishedTransitions.end(); ++it) {
-        ImplicitAnimation* anim = m_transitions.get(*it);
-        if (anim) {
-            anim->reset(renderer);
-            delete anim;
-        }
-        m_transitions.remove(*it);
-    }
+    size_t finishedTransitionCount = finishedTransitions.size();
+    for (size_t i = 0; i < finishedTransitionCount; ++i)
+        m_transitions.remove(finishedTransitions[i]);
 
     // Make a list of animations to be deleted
     Vector<AtomicStringImpl*> finishedAnimations;
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
 
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        KeyframeAnimation* anim = it->second.get();
         if (!anim)
             continue;
-        if (anim->postActive() && !anim->waitingForEndEvent())
+        if (anim->postActive())
             finishedAnimations.append(anim->name().impl());
     }
-    
-    // delete them
-    for (Vector<AtomicStringImpl*>::iterator it = finishedAnimations.begin(); it != finishedAnimations.end(); ++it) {
-        KeyframeAnimation* kfanim = m_keyframeAnimations.get(*it);
-        if (kfanim) {
-            kfanim->reset(renderer);
-            delete kfanim;
-        }
-        m_keyframeAnimations.remove(*it);
-    }
+
+    // Delete them
+    size_t finishedAnimationCount = finishedAnimations.size();
+    for (size_t i = 0; i < finishedAnimationCount; ++i)
+        m_keyframeAnimations.remove(finishedAnimations[i]);
 }
 
-void CompositeAnimation::setAnimationStartTime(double t)
+void CompositeAnimationPrivate::setAnimationStartTime(double t)
 {
-    // set start time on all animations waiting for it
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
+    // Set start time on all animations waiting for it
+    AnimationNameMap::const_iterator end = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != end; ++it) {
+        KeyframeAnimation* anim = it->second.get();
         if (anim && anim->waitingForStartTime())
-            anim->updateStateMachine(AnimationBase::STATE_INPUT_START_TIME_SET, t);
+            anim->updateStateMachine(AnimationBase::AnimationStateInputStartTimeSet, t);
     }
 }
 
-void CompositeAnimation::setTransitionStartTime(int property, double t)
+void CompositeAnimationPrivate::setTransitionStartTime(int property, double t)
 {
     // Set the start time for given property transition
     CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
     for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->waitingForStartTime() && anim->animatingProperty() == property)
-            anim->updateStateMachine(AnimationBase::STATE_INPUT_START_TIME_SET, t);
+            anim->updateStateMachine(AnimationBase::AnimationStateInputStartTimeSet, t);
     }
 }
 
-void CompositeAnimation::suspendAnimations()
+void CompositeAnimationPrivate::suspendAnimations()
 {
-    if (m_suspended)
+    if (m_isSuspended)
         return;
-    
-    m_suspended = true;
 
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
-        if (anim)
+    m_isSuspended = true;
+
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        if (KeyframeAnimation* anim = it->second.get())
             anim->updatePlayState(false);
     }
 
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+    CSSPropertyTransitionsMap::const_iterator transitionsEnd = m_transitions.end();
+    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != transitionsEnd; ++it) {
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->hasStyle())
             anim->updatePlayState(false);
     }
 }
 
-void CompositeAnimation::resumeAnimations()
+void CompositeAnimationPrivate::resumeAnimations()
 {
-    if (!m_suspended)
+    if (!m_isSuspended)
         return;
-    
-    m_suspended = false;
-    
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
+
+    m_isSuspended = false;
+
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        KeyframeAnimation* anim = it->second.get();
         if (anim && anim->playStatePlaying())
             anim->updatePlayState(true);
     }
-    
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+
+    CSSPropertyTransitionsMap::const_iterator transitionsEnd = m_transitions.end();
+    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != transitionsEnd; ++it) {
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->hasStyle())
             anim->updatePlayState(true);
     }
 }
 
-void CompositeAnimation::overrideImplicitAnimations(int property)
+void CompositeAnimationPrivate::overrideImplicitAnimations(int property)
 {
     CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
     for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->animatingProperty() == property)
             anim->setOverridden(true);
     }
 }
 
-void CompositeAnimation::resumeOverriddenImplicitAnimations(int property)
+void CompositeAnimationPrivate::resumeOverriddenImplicitAnimations(int property)
 {
     CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
     for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->animatingProperty() == property)
             anim->setOverridden(false);
     }
 }
 
-static inline bool compareAnimationIndices(const KeyframeAnimation* a, const KeyframeAnimation* b)
+static inline bool compareAnimationIndices(RefPtr<KeyframeAnimation> a, const RefPtr<KeyframeAnimation> b)
 {
     return a->index() < b->index();
 }
 
-void CompositeAnimation::styleAvailable()
+void CompositeAnimationPrivate::styleAvailable()
 {
     if (m_numStyleAvailableWaiters == 0)
         return;
-    
+
     // We have to go through animations in the order in which they appear in
     // the style, because order matters for additivity.
-    Vector<KeyframeAnimation*> animations(m_keyframeAnimations.size());
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    size_t i = 0;
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
-        // We can't just insert based on anim->index() because invalid animations don't
-        // make it into the hash.
-        animations[i++] = anim;
-    }
+    Vector<RefPtr<KeyframeAnimation> > animations(m_keyframeAnimations.size());
+    copyValuesToVector(m_keyframeAnimations, animations);
 
     if (animations.size() > 1)
         std::stable_sort(animations.begin(), animations.end(), compareAnimationIndices);
-    
-    for (i = 0; i < animations.size(); ++i) {
-        KeyframeAnimation* anim = animations[i];
+
+    for (size_t i = 0; i < animations.size(); ++i) {
+        KeyframeAnimation* anim = animations[i].get();
         if (anim && anim->waitingForStyleAvailable())
-            anim->updateStateMachine(AnimationBase::STATE_INPUT_STYLE_AVAILABLE, -1);
+            anim->updateStateMachine(AnimationBase::AnimationStateInputStyleAvailable, -1);
     }
-    
+
     CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
     for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->waitingForStyleAvailable())
-            anim->updateStateMachine(AnimationBase::STATE_INPUT_STYLE_AVAILABLE, -1);
+            anim->updateStateMachine(AnimationBase::AnimationStateInputStyleAvailable, -1);
     }
 }
 
-bool CompositeAnimation::isAnimatingProperty(int property, bool isRunningNow) const
+bool CompositeAnimationPrivate::isAnimatingProperty(int property, bool isRunningNow) const
 {
-    AnimationNameMap::const_iterator kfend = m_keyframeAnimations.end();
-    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != kfend; ++it) {
-        KeyframeAnimation* anim = it->second;
+    AnimationNameMap::const_iterator animationsEnd = m_keyframeAnimations.end();
+    for (AnimationNameMap::const_iterator it = m_keyframeAnimations.begin(); it != animationsEnd; ++it) {
+        KeyframeAnimation* anim = it->second.get();
         if (anim && anim->isAnimatingProperty(property, isRunningNow))
             return true;
     }
-    
-    CSSPropertyTransitionsMap::const_iterator end = m_transitions.end();
-    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != end; ++it) {
-        ImplicitAnimation* anim = it->second;
+
+    CSSPropertyTransitionsMap::const_iterator transitionsEnd = m_transitions.end();
+    for (CSSPropertyTransitionsMap::const_iterator it = m_transitions.begin(); it != transitionsEnd; ++it) {
+        ImplicitAnimation* anim = it->second.get();
         if (anim && anim->isAnimatingProperty(property, isRunningNow))
             return true;
     }
     return false;
 }
-    
-void CompositeAnimation::setWaitingForStyleAvailable(bool waiting)
+
+void CompositeAnimationPrivate::setWaitingForStyleAvailable(bool waiting)
 {
     if (waiting)
         m_numStyleAvailableWaiters++;
@@ -471,5 +510,85 @@ void CompositeAnimation::setWaitingForStyleAvailable(bool waiting)
         m_numStyleAvailableWaiters--;
     m_animationController->setWaitingForStyleAvailable(waiting);
 }
-    
+
+CompositeAnimation::CompositeAnimation(AnimationController* animationController)
+    : m_data(new CompositeAnimationPrivate(animationController, this))
+{
 }
+
+CompositeAnimation::~CompositeAnimation()
+{
+    delete m_data;
+}
+
+RenderStyle* CompositeAnimation::animate(RenderObject* renderer, const RenderStyle* currentStyle, RenderStyle* targetStyle)
+{
+    return m_data->animate(renderer, currentStyle, targetStyle);
+}
+
+bool CompositeAnimation::isAnimating() const
+{
+    return m_data->isAnimating();
+}
+
+void CompositeAnimation::setWaitingForStyleAvailable(bool b)
+{
+    m_data->setWaitingForStyleAvailable(b);
+}
+
+void CompositeAnimation::resetTransitions(RenderObject* renderer)
+{
+    m_data->resetTransitions(renderer);
+}
+
+void CompositeAnimation::suspendAnimations()
+{
+    m_data->suspendAnimations();
+}
+
+void CompositeAnimation::resumeAnimations()
+{
+    m_data->resumeAnimations();
+}
+
+bool CompositeAnimation::isSuspended() const
+{
+    return m_data->isSuspended();
+}
+
+void CompositeAnimation::styleAvailable()
+{
+    m_data->styleAvailable();
+}
+
+void CompositeAnimation::setAnimating(bool b)
+{
+    m_data->setAnimating(b);
+}
+
+bool CompositeAnimation::isAnimatingProperty(int property, bool isRunningNow) const
+{
+    return m_data->isAnimatingProperty(property, isRunningNow);
+}
+
+void CompositeAnimation::setAnimationStartTime(double t)
+{
+    m_data->setAnimationStartTime(t);
+}
+
+void CompositeAnimation::setTransitionStartTime(int property, double t)
+{
+    m_data->setTransitionStartTime(property, t);
+}
+
+void CompositeAnimation::overrideImplicitAnimations(int property)
+{
+    m_data->overrideImplicitAnimations(property);
+}
+
+void CompositeAnimation::resumeOverriddenImplicitAnimations(int property)
+{
+    m_data->resumeOverriddenImplicitAnimations(property);
+}
+
+} // namespace WebCore

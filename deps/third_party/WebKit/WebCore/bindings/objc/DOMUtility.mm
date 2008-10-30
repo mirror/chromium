@@ -67,9 +67,9 @@
 // Some day if the compiler is fixed, or if all the JS wrappers are named with a "JS" prefix,
 // we could move the function into the WebCore namespace where it belongs.
 
-namespace KJS {
+namespace JSC {
 
-static inline id createDOMWrapper(KJS::JSObject* object)
+static inline id createDOMWrapper(JSC::JSObject* object)
 {
     #define WRAP(className) \
         if (object->inherits(&WebCore::JS##className::s_info)) \
@@ -85,14 +85,18 @@ static inline id createDOMWrapper(KJS::JSObject* object)
     WRAP(MediaList)
     WRAP(NamedNodeMap)
     WRAP(Node)
+    WRAP(NodeIterator)
     WRAP(NodeList)
     WRAP(RGBColor)
     WRAP(Range)
     WRAP(Rect)
     WRAP(StyleSheet)
     WRAP(StyleSheetList)
+    WRAP(TreeWalker)
+#if ENABLE(XPATH)
     WRAP(XPathExpression)
     WRAP(XPathResult)
+#endif
 
     // This must be after the HTMLOptionsCollection check, because it's a subclass in the JavaScript
     // binding, but not a subclass in the ObjC binding.
@@ -105,10 +109,6 @@ static inline id createDOMWrapper(KJS::JSObject* object)
 
     if (object->inherits(&WebCore::JSDOMImplementation::s_info))
         return [DOMImplementation _wrapDOMImplementation:implementationFront(static_cast<WebCore::JSDOMImplementation*>(object))];
-    if (object->inherits(&WebCore::JSNodeIterator::s_info))
-        return [DOMNodeIterator _wrapNodeIterator:static_cast<WebCore::JSNodeIterator*>(object)->impl() filter:nil];
-    if (object->inherits(&WebCore::JSTreeWalker::s_info))
-        return [DOMTreeWalker _wrapTreeWalker:static_cast<WebCore::JSTreeWalker*>(object)->impl() filter:nil];
 
     return nil;
 }
@@ -117,9 +117,9 @@ static inline id createDOMWrapper(KJS::JSObject* object)
 
 namespace WebCore {
 
-id createDOMWrapper(KJS::JSObject* object, PassRefPtr<KJS::Bindings::RootObject> origin, PassRefPtr<KJS::Bindings::RootObject> current)
+id createDOMWrapper(JSC::JSObject* object, PassRefPtr<JSC::Bindings::RootObject> origin, PassRefPtr<JSC::Bindings::RootObject> current)
 {
-    id wrapper = KJS::createDOMWrapper(object);
+    id wrapper = JSC::createDOMWrapper(object);
     if (![wrapper _hasImp]) // new wrapper, not from cache
         [wrapper _setImp:object originRootObject:origin rootObject:current];
     return wrapper;

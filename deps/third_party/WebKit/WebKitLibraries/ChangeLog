@@ -1,3 +1,29 @@
+2008-10-08  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Jon Honeycutt.
+
+        Remove restriction on version number ending in a 4.
+
+        * win/tools/scripts/auto-version.sh:
+
+2008-10-07  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Mitz Pettel.
+
+        Update WebKitSystemInterface.
+        
+        * libWebKitSystemInterfaceLeopard.a:
+        * libWebKitSystemInterfaceTiger.a:
+
+2008-09-09  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Darin Adler.
+
+        - WebKitLibraries part of <rdar://problem/6206244> Use alternate character-to-glyph interface on Leopard
+
+        * WebKitSystemInterface.h:
+        * libWebKitSystemInterfaceLeopard.a:
+
 2008-09-04  Adam Roben  <aroben@apple.com>
 
         Ignore warning LNK4221 on Windows
@@ -361,7 +387,7 @@
 
         Use shared vsprops for most vcproj properties.
         
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         * win/tools/vsprops/common.vsprops:
         * win/tools/vsprops/debug.vsprops:
@@ -515,7 +541,7 @@
 
 2007-11-02  Antti Koivisto  <antti@apple.com>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
         
         Update to add WKQTMovieViewSetDrawSynchronously
 
@@ -608,7 +634,7 @@
         <rdar://problem/5534421>
         Added wkGetDefaultHTTPCookieStorage().  Updated libraries.
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         * win/include/WebKitSystemInterface/WebKitSystemInterface.h:
         * win/lib/WebKitSystemInterface.lib:
@@ -716,7 +742,7 @@
 
 2007-03-27  Antti Koivisto  <antti@apple.com>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
         
         Added wkGetWheelEventDeltas
 
@@ -783,7 +809,7 @@
 
 2006-07-09  Anders Carlsson  <acarlsson@apple.com>
 
-        Reviewed by Darin.
+        Reviewed by Darin Adler.
 
         * WebKitSystemInterface.h:
         * libWebKitSystemInterface.a:

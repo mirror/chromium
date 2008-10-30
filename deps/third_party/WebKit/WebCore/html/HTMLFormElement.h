@@ -79,8 +79,9 @@ public:
     void submit(Event*, bool activateSubmitButton = false);
     void reset();
 
+    // Used to indicate a malformed state to keep from applying the bottom margin of the form.
     void setMalformed(bool malformed) { m_malformed = malformed; }
-    virtual bool isMalformed() { return m_malformed; }
+    bool isMalformed() const { return m_malformed; }
 
     virtual bool isURLAttribute(Attribute*) const;
     
@@ -121,7 +122,7 @@ public:
     
     CheckedRadioButtons& checkedRadioButtons() { return m_checkedRadioButtons; }
     
-    virtual void didRestoreFromCache();
+    virtual void documentDidBecomeActive();
 
 protected:
     virtual void willMoveToNewOwnerDocument();

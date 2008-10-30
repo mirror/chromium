@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,6 +22,8 @@
 #include "Chrome.h"
 
 #include "ChromeClient.h"
+#include "DNS.h"
+#include "Document.h"
 #include "FloatRect.h"
 #include "Frame.h"
 #include "FrameTree.h"
@@ -29,6 +31,7 @@
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
 #include "HitTestResult.h"
+#include "InspectorController.h"
 #include "Page.h"
 #include "PageGroup.h"
 #include "PausedTimeouts.h"
@@ -56,7 +59,6 @@ public:
     ~PageGroupLoadDeferrer();
 private:
     Vector<RefPtr<Frame>, 16> m_deferredFrames;
-    bool m_wasDeferringTimers;
 #if !PLATFORM(MAC)
     Vector<pair<RefPtr<Frame>, PausedTimeouts*>, 16> m_pausedTimeouts;
 #endif
@@ -72,6 +74,31 @@ Chrome::Chrome(Page* page, ChromeClient* client)
 Chrome::~Chrome()
 {
     m_client->chromeDestroyed();
+}
+
+void Chrome::repaint(const IntRect& windowRect, bool contentChanged, bool immediate, bool repaintContentOnly)
+{
+    m_client->repaint(windowRect, contentChanged, immediate, repaintContentOnly);
+}
+
+void Chrome::scroll(const IntSize& scrollDelta, const IntRect& rectToScroll, const IntRect& clipRect)
+{
+    m_client->scroll(scrollDelta, rectToScroll, clipRect);
+}
+
+IntPoint Chrome::screenToWindow(const IntPoint& point) const
+{
+    return m_client->screenToWindow(point);
+}
+
+IntRect Chrome::windowToScreen(const IntRect& rect) const
+{
+    return m_client->windowToScreen(rect);
+}
+
+PlatformWidget Chrome::platformWindow() const
+{
+    return m_client->platformWindow();
 }
 
 void Chrome::setWindowRect(const FloatRect& rect) const
@@ -292,24 +319,17 @@ IntRect Chrome::windowResizerRect() const
     return m_client->windowResizerRect();
 }
 
-void Chrome::addToDirtyRegion(const IntRect& rect)
-{
-    m_client->addToDirtyRegion(rect);
-}
-
-void Chrome::scrollBackingStore(int dx, int dy, const IntRect& scrollViewRect, const IntRect& clipRect)
-{
-    m_client->scrollBackingStore(dx, dy, scrollViewRect, clipRect);
-}
-
-void Chrome::updateBackingStore()
-{
-    m_client->updateBackingStore();
-}
-
 void Chrome::mouseDidMoveOverElement(const HitTestResult& result, unsigned modifierFlags)
 {
+    if (result.innerNode()) {
+        Document* document = result.innerNode()->document();
+        if (document && document->isDNSPrefetchEnabled())
+            prefetchDNS(result.absoluteLinkURL().host());
+    }
     m_client->mouseDidMoveOverElement(result, modifierFlags);
+
+    if (InspectorController* inspector = m_page->inspectorController())
+        inspector->mouseDidMoveOverElement(result, modifierFlags);
 }
 
 void Chrome::setToolTip(const HitTestResult& result)
@@ -412,11 +432,7 @@ bool ChromeClient::paintCustomScrollCorner(GraphicsContext*, const FloatRect&)
 // --------
 
 PageGroupLoadDeferrer::PageGroupLoadDeferrer(Page* page, bool deferSelf)
-    : m_wasDeferringTimers(isDeferringTimers())
 {
-    if (!m_wasDeferringTimers)
-        setDeferringTimers(true);
-    
     const HashSet<Page*>& pages = page->group().pages();
 
     HashSet<Page*>::const_iterator end = pages.end();
@@ -445,9 +461,6 @@ PageGroupLoadDeferrer::PageGroupLoadDeferrer(Page* page, bool deferSelf)
 
 PageGroupLoadDeferrer::~PageGroupLoadDeferrer()
 {
-    if (!m_wasDeferringTimers)
-        setDeferringTimers(false);
-
     for (size_t i = 0; i < m_deferredFrames.size(); ++i)
         if (Page* page = m_deferredFrames[i]->page())
             page->setDefersLoading(false);

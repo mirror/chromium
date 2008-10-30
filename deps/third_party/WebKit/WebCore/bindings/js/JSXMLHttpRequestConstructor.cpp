@@ -24,7 +24,7 @@
 #include "JSXMLHttpRequest.h"
 #include "XMLHttpRequest.h"
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -33,8 +33,8 @@ ASSERT_CLASS_FITS_IN_CELL(JSXMLHttpRequestConstructor)
 const ClassInfo JSXMLHttpRequestConstructor::s_info = { "XMLHttpRequestConstructor", 0, 0, 0 };
 
 JSXMLHttpRequestConstructor::JSXMLHttpRequestConstructor(ExecState* exec, Document* document)
-    : DOMObject(exec->lexicalGlobalObject()->objectPrototype())
-    , m_document(document)
+    : DOMObject(JSXMLHttpRequestConstructor::createStructureID(exec->lexicalGlobalObject()->objectPrototype()))
+    , m_document(static_cast<JSDocument*>(toJS(exec, document)))
 {
     putDirect(exec->propertyNames().prototype, JSXMLHttpRequestPrototype::self(exec), None);
 }
@@ -42,15 +42,20 @@ JSXMLHttpRequestConstructor::JSXMLHttpRequestConstructor(ExecState* exec, Docume
 static JSObject* constructXMLHttpRequest(ExecState* exec, JSObject* constructor, const ArgList&)
 {
     RefPtr<XMLHttpRequest> xmlHttpRequest = XMLHttpRequest::create(static_cast<JSXMLHttpRequestConstructor*>(constructor)->document());
-    JSXMLHttpRequest* result = new (exec) JSXMLHttpRequest(JSXMLHttpRequestPrototype::self(exec), xmlHttpRequest.get());
-    ScriptInterpreter::putDOMObject(xmlHttpRequest.get(), result);
-    return result;
+    return CREATE_DOM_OBJECT_WRAPPER(exec, XMLHttpRequest, xmlHttpRequest.get());
 }
 
 ConstructType JSXMLHttpRequestConstructor::getConstructData(ConstructData& constructData)
 {
     constructData.native.function = constructXMLHttpRequest;
     return ConstructTypeHost;
+}
+
+void JSXMLHttpRequestConstructor::mark()
+{
+    DOMObject::mark();
+    if (!m_document->marked())
+        m_document->mark();
 }
 
 } // namespace WebCore

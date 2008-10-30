@@ -110,7 +110,7 @@ StyleSheet* HTMLLinkElement::sheet() const
 void HTMLLinkElement::parseMappedAttribute(MappedAttribute *attr)
 {
     if (attr->name() == relAttr) {
-        tokenizeRelAttribute(attr->value(), m_isStyleSheet, m_alternate, m_isIcon);
+        tokenizeRelAttribute(attr->value(), m_isStyleSheet, m_alternate, m_isIcon, m_isDNSPrefetch);
         process();
     } else if (attr->name() == hrefAttr) {
         m_url = document()->completeURL(parseURL(attr->value())).string();
@@ -130,15 +130,18 @@ void HTMLLinkElement::parseMappedAttribute(MappedAttribute *attr)
     }
 }
 
-void HTMLLinkElement::tokenizeRelAttribute(const AtomicString& rel, bool& styleSheet, bool& alternate, bool& icon)
+void HTMLLinkElement::tokenizeRelAttribute(const AtomicString& rel, bool& styleSheet, bool& alternate, bool& icon, bool& dnsPrefetch)
 {
     styleSheet = false;
     icon = false; 
     alternate = false;
+    dnsPrefetch = false;
     if (equalIgnoringCase(rel, "stylesheet"))
         styleSheet = true;
     else if (equalIgnoringCase(rel, "icon") || equalIgnoringCase(rel, "shortcut icon"))
         icon = true;
+    else if (equalIgnoringCase(rel, "dns-prefetch"))
+        dnsPrefetch = true;
     else if (equalIgnoringCase(rel, "alternate stylesheet") || equalIgnoringCase(rel, "stylesheet alternate")) {
         styleSheet = true;
         alternate = true;

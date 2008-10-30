@@ -35,22 +35,22 @@ public:
     AtomicString(const UChar* s, int length) : m_string(add(s, length)) { }
     AtomicString(const UChar* s) : m_string(add(s)) { }
 #if USE(JSC)
-    AtomicString(const KJS::UString& s) : m_string(add(s)) { }
-    AtomicString(const KJS::Identifier& s) : m_string(add(s)) { }
+    AtomicString(const JSC::UString& s) : m_string(add(s)) { }
+    AtomicString(const JSC::Identifier& s) : m_string(add(s)) { }
 #endif
     AtomicString(StringImpl* imp) : m_string(add(imp)) { }
     AtomicString(AtomicStringImpl* imp) : m_string(imp) { }
     AtomicString(const String& s) : m_string(add(s.impl())) { }
 
 #if USE(JSC)
-    static AtomicStringImpl* find(const KJS::Identifier&);
+    static AtomicStringImpl* find(const JSC::Identifier&);
 #endif
 
     operator const String&() const { return m_string; }
     const String& string() const { return m_string; };
 
 #if USE(JSC)
-    operator KJS::UString() const;
+    operator JSC::UString() const;
 #endif
 
     AtomicStringImpl* impl() const { return static_cast<AtomicStringImpl *>(m_string.impl()); }
@@ -77,8 +77,6 @@ public:
     double toDouble(bool* ok = 0) const { return m_string.toDouble(ok); }
     float toFloat(bool* ok = 0) const { return m_string.toFloat(ok); }
     bool percentage(int& p) const { return m_string.percentage(p); }
-    Length* toLengthArray(int& len) const { return m_string.toLengthArray(len); }
-    Length* toCoordsArray(int& len) const { return m_string.toCoordsArray(len); }
 
     bool isNull() const { return m_string.isNull(); }
     bool isEmpty() const { return m_string.isEmpty(); }
@@ -106,8 +104,8 @@ private:
     static PassRefPtr<StringImpl> add(const UChar*);
     static PassRefPtr<StringImpl> add(StringImpl*);
 #if USE(JSC)
-    static PassRefPtr<StringImpl> add(const KJS::UString&);
-    static PassRefPtr<StringImpl> add(const KJS::Identifier&);
+    static PassRefPtr<StringImpl> add(const JSC::UString&);
+    static PassRefPtr<StringImpl> add(const JSC::Identifier&);
 #endif
 };
 

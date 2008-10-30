@@ -49,11 +49,7 @@
 #include "HTMLPlugInElement.h"
 #endif
 
-#if ENABLE(SVG)
-#include "JSSVGLazyEventListener.h"
-#endif
-
-using namespace KJS;
+using namespace JSC;
 using namespace WebCore::EventNames;
 
 namespace WebCore {
@@ -113,7 +109,7 @@ JSValue* ScriptController::evaluate(const String& sourceURL, int baseLine, const
     m_frame->keepAlive();
 
     m_windowShell->window()->startTimeoutCheck();
-    Completion comp = Interpreter::evaluate(exec, exec->dynamicGlobalObject()->globalScopeChain(), sourceURL, baseLine, StringSourceProvider::create(str), m_windowShell);
+    Completion comp = Interpreter::evaluate(exec, exec->dynamicGlobalObject()->globalScopeChain(), makeSource(str, sourceURL, baseLine), m_windowShell);
     m_windowShell->window()->stopTimeoutCheck();
 
     if (comp.complType() == Normal || comp.complType() == ReturnValue) {
@@ -136,7 +132,7 @@ void ScriptController::clearWindowShell()
     JSLock lock(false);
     m_windowShell->window()->clear();
     m_liveFormerWindows.add(m_windowShell->window());
-    m_windowShell->setWindow(new (JSDOMWindow::commonJSGlobalData()) JSDOMWindow(m_frame->domWindow(), m_windowShell));
+    m_windowShell->setWindow(m_frame->domWindow());
     if (Page* page = m_frame->page()) {
         attachDebugger(page->debugger());
         m_windowShell->window()->setProfileGroup(page->group().identifier());
@@ -150,7 +146,7 @@ PassRefPtr<EventListener> ScriptController::createHTMLEventHandler(const String&
 {
     initScriptIfNeeded();
     JSLock lock(false);
-    return JSLazyEventListener::create(functionName, code, m_windowShell->window(), node, m_handlerLineno);
+    return JSLazyEventListener::create(JSLazyEventListener::HTMLLazyEventListener, functionName, code, m_windowShell->window(), node, m_handlerLineno);
 }
 
 #if ENABLE(SVG)
@@ -158,17 +154,17 @@ PassRefPtr<EventListener> ScriptController::createSVGEventHandler(const String& 
 {
     initScriptIfNeeded();
     JSLock lock(false);
-    return JSSVGLazyEventListener::create(functionName, code, m_windowShell->window(), node, m_handlerLineno);
+    return JSLazyEventListener::create(JSLazyEventListener::SVGLazyEventListener, functionName, code, m_windowShell->window(), node, m_handlerLineno);
 }
 #endif
 
 void ScriptController::finishedWithEvent(Event* event)
 {
-  // This is called when the DOM implementation has finished with a particular event. This
-  // is the case in sitations where an event has been created just for temporary usage,
-  // e.g. an image load or mouse move. Once the event has been dispatched, it is forgotten
-  // by the DOM implementation and so does not need to be cached still by the interpreter
-  ScriptInterpreter::forgetDOMObject(event);
+    // This is called when the DOM implementation has finished with a particular event. This
+    // is the case in sitations where an event has been created just for temporary usage,
+    // e.g. an image load or mouse move. Once the event has been dispatched, it is forgotten
+    // by the DOM implementation and so does not need to be cached still by the interpreter
+    forgetDOMObject(*globalObject()->globalData(), event);
 }
 
 void ScriptController::initScript()
@@ -223,14 +219,14 @@ bool ScriptController::isEnabled()
     return (settings && settings->isJavaScriptEnabled());
 }
 
-void ScriptController::attachDebugger(KJS::Debugger* debugger)
+void ScriptController::attachDebugger(JSC::Debugger* debugger)
 {
     if (!m_windowShell)
         return;
 
     if (debugger)
         debugger->attach(m_windowShell->window());
-    else if (KJS::Debugger* currentDebugger = m_windowShell->window()->debugger())
+    else if (JSC::Debugger* currentDebugger = m_windowShell->window()->debugger())
         currentDebugger->detach(m_windowShell->window());
 }
 
@@ -279,7 +275,7 @@ NPObject* ScriptController::windowScriptNPObject()
         if (isEnabled()) {
             // JavaScript is enabled, so there is a JavaScript window object.
             // Return an NPObject bound to the window object.
-            KJS::JSLock lock(false);
+            JSC::JSLock lock(false);
             JSObject* win = windowShell()->window();
             ASSERT(win);
             Bindings::RootObject* root = bindingRootObject();

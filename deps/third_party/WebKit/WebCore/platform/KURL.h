@@ -193,7 +193,7 @@ public:
 #else  // !USE_GOOGLE_URL_LIBRARY
     operator const String&() const { return m_string; }
 #if USE(JSC)
-    operator KJS::UString() const { return m_string; }
+    operator JSC::UString() const { return m_string; }
 #endif
 
     unsigned hostStart() const { return (m_passwordEnd == m_userStart) ? m_passwordEnd : m_passwordEnd + 1; }

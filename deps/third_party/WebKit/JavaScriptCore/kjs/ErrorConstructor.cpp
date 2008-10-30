@@ -21,18 +21,16 @@
 #include "config.h"
 #include "ErrorConstructor.h"
 
-#include "ErrorInstance.h"
 #include "ErrorPrototype.h"
-#include "FunctionPrototype.h"
 #include "JSGlobalObject.h"
 #include "JSString.h"
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(ErrorConstructor);
 
-ErrorConstructor::ErrorConstructor(ExecState* exec, FunctionPrototype* functionPrototype, ErrorPrototype* errorPrototype)
-    : InternalFunction(exec, functionPrototype, Identifier(exec, errorPrototype->classInfo()->className))
+ErrorConstructor::ErrorConstructor(ExecState* exec, PassRefPtr<StructureID> structure, ErrorPrototype* errorPrototype)
+    : InternalFunction(&exec->globalData(), structure, Identifier(exec, errorPrototype->classInfo()->className))
 {
     // ECMA 15.11.3.1 Error.prototype
     putDirect(exec->propertyNames().prototype, errorPrototype, DontEnum | DontDelete | ReadOnly);
@@ -40,9 +38,9 @@ ErrorConstructor::ErrorConstructor(ExecState* exec, FunctionPrototype* functionP
 }
 
 // ECMA 15.9.3
-static ErrorInstance* constructError(ExecState* exec, const ArgList& args)
+ErrorInstance* constructError(ExecState* exec, const ArgList& args)
 {
-    ErrorInstance* obj = new (exec) ErrorInstance(exec->lexicalGlobalObject()->errorPrototype());
+    ErrorInstance* obj = new (exec) ErrorInstance(exec->lexicalGlobalObject()->errorStructure());
     if (!args.at(exec, 0)->isUndefined())
         obj->putDirect(exec->propertyNames().message, jsString(exec, args.at(exec, 0)->toString(exec)));
     return obj;
@@ -72,4 +70,4 @@ CallType ErrorConstructor::getCallData(CallData& callData)
     return CallTypeHost;
 }
 
-} // namespace KJS
+} // namespace JSC

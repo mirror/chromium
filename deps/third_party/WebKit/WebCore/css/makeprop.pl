@@ -4,7 +4,7 @@
 #
 #   Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
 #   Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
-#   Copyright (C) 2007 Trolltech ASA
+#   Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
 #
 #   This library is free software; you can redistribute it and/or
 #   modify it under the terms of the GNU Library General Public
@@ -93,7 +93,7 @@ EOF
 
 close HEADER;
 
-system("gperf -a -L ANSI-C -E -C -c -o -t --key-positions=\"*\" -NfindProp -Hhash_prop -Wwordlist_prop -D -s 2 CSSPropertyNames.gperf > CSSPropertyNames.cpp");
+system("gperf -a -L ANSI-C -E -C -c -o -t --key-positions=\"*\" -NfindProp -Hhash_prop -Wwordlist_prop -D -s 2 CSSPropertyNames.gperf > CSSPropertyNames.cpp") == 0 || die "calling gperf failed: $?";
 
 open C, ">>CSSPropertyNames.cpp" || die "Could not open CSSPropertyNames.cpp for writing";
 print C "static const char * const propertyNameStrings[$num] = {\n";

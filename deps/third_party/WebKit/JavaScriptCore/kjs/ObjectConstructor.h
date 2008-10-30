@@ -23,20 +23,19 @@
 
 #include "InternalFunction.h"
 
-namespace KJS {
+namespace JSC {
 
-    class FunctionPrototype;
     class ObjectPrototype;
 
     class ObjectConstructor : public InternalFunction {
     public:
-        ObjectConstructor(ExecState*, ObjectPrototype*, FunctionPrototype*);
+        ObjectConstructor(ExecState*, PassRefPtr<StructureID>, ObjectPrototype*);
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
         virtual CallType getCallData(CallData&);
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // ObjectConstructor_h

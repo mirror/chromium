@@ -35,7 +35,7 @@
 typedef struct HINSTANCE__* HINSTANCE;
 #endif
 
-namespace KJS {
+namespace JSC {
     class Debugger;
 }
 
@@ -63,7 +63,6 @@ namespace WebCore {
     class SessionStorage;
 #endif
     class Settings;
-    class KURL;
 
     enum TextCaseSensitivity { TextCaseSensitive, TextCaseInsensitive };
     enum FindDirection { FindDirectionForward, FindDirectionBackward };
@@ -148,9 +147,9 @@ namespace WebCore {
         void changePendingBeforeUnloadEventCount(int delta);
         unsigned pendingBeforeUnloadEventCount();
 
-        static void setDebuggerForAllPages(KJS::Debugger*);
-        void setDebugger(KJS::Debugger*);
-        KJS::Debugger* debugger() const { return m_debugger; }
+        static void setDebuggerForAllPages(JSC::Debugger*);
+        void setDebugger(JSC::Debugger*);
+        JSC::Debugger* debugger() const { return m_debugger; }
 
 #if PLATFORM(WIN) || (PLATFORM(WX) && PLATFORM(WIN_OS)) || (PLATFORM(QT) && defined(Q_WS_WIN))
         // The global DLL or application instance used for all windows.
@@ -218,7 +217,7 @@ namespace WebCore {
         OwnPtr<PageGroup> m_singlePageGroup;
         PageGroup* m_group;
 
-        KJS::Debugger* m_debugger;
+        JSC::Debugger* m_debugger;
         
         unsigned m_pendingUnloadEventCount;
         unsigned m_pendingBeforeUnloadEventCount;

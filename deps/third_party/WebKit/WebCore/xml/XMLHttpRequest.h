@@ -34,7 +34,7 @@ class File;
 class TextResourceDecoder;
 
 #if USE(JSC)
-typedef KJS::UString JSUString;
+typedef JSC::UString JSUString;
 #endif
 #if USE(V8)
 typedef String JSUString;
@@ -56,6 +56,9 @@ public:
 
     virtual XMLHttpRequest* toXMLHttpRequest() { return this; }
 
+    Frame* associatedFrame() const;
+
+    bool hasPendingActivity() { return m_pendingActivity; }
     static void detachRequests(Document*);
     static void cancelRequests(Document*);
 
@@ -76,33 +79,14 @@ public:
     String getResponseHeader(const String& name, ExceptionCode&) const;
     const JSUString& responseText() const;
     Document* responseXML() const;
+    void setLastSendLineNumber(unsigned lineNumber) { m_lastSendLineNumber = lineNumber; }
+    void setLastSendURL(JSUString url) { m_lastSendURL = url; }
 
     XMLHttpRequestUpload* upload();
     XMLHttpRequestUpload* optionalUpload() const { return m_upload.get(); }
 
-    void setOnReadyStateChangeListener(PassRefPtr<EventListener> eventListener) { m_onReadyStateChangeListener = eventListener; }
-    EventListener* onReadyStateChangeListener() const { return m_onReadyStateChangeListener.get(); }
-
-    void setOnAbortListener(PassRefPtr<EventListener> eventListener) { m_onAbortListener = eventListener; }
-    EventListener* onAbortListener() const { return m_onAbortListener.get(); }
-
-    void setOnErrorListener(PassRefPtr<EventListener> eventListener) { m_onErrorListener = eventListener; }
-    EventListener* onErrorListener() const { return m_onErrorListener.get(); }
-
-    void setOnLoadListener(PassRefPtr<EventListener> eventListener) { m_onLoadListener = eventListener; }
-    EventListener* onLoadListener() const { return m_onLoadListener.get(); }
-
-    void setOnLoadStartListener(PassRefPtr<EventListener> eventListener) { m_onLoadStartListener = eventListener; }
-    EventListener* onLoadStartListener() const { return m_onLoadStartListener.get(); }
-
-    void setOnProgressListener(PassRefPtr<EventListener> eventListener) { m_onProgressListener = eventListener; }
-    EventListener* onProgressListener() const { return m_onProgressListener.get(); }
-
-#if USE(V8)
-    // Sam Weinig says that upstream WebKit plans to rename the above methods
-    // to have these same names for the bindings as well.
-    void setOnreadystatechange(EventListener* listener) { setOnReadyStateChangeListener(listener); }
-    EventListener* onreadystatechange() const { return onReadyStateChangeListener(); }
+    void setOnreadystatechange(PassRefPtr<EventListener> eventListener) { m_onReadyStateChangeListener = eventListener; }
+    EventListener* onreadystatechange() const { return m_onReadyStateChangeListener.get(); }
 
     void setOnabort(PassRefPtr<EventListener> eventListener) { m_onAbortListener = eventListener; }
     EventListener* onabort() const { return m_onAbortListener.get(); }
@@ -110,15 +94,14 @@ public:
     void setOnerror(PassRefPtr<EventListener> eventListener) { m_onErrorListener = eventListener; }
     EventListener* onerror() const { return m_onErrorListener.get(); }
 
-    void setOnload(EventListener* listener) { setOnLoadListener(listener); }
-    EventListener* onload() const { return onLoadListener(); }
+    void setOnload(PassRefPtr<EventListener> eventListener) { m_onLoadListener = eventListener; }
+    EventListener* onload() const { return m_onLoadListener.get(); }
 
     void setOnloadstart(PassRefPtr<EventListener> eventListener) { m_onLoadStartListener = eventListener; }
     EventListener* onloadstart() const { return m_onLoadStartListener.get(); }
 
     void setOnprogress(PassRefPtr<EventListener> eventListener) { m_onProgressListener = eventListener; }
     EventListener* onprogress() const { return m_onProgressListener.get(); }
-#endif
 
     typedef Vector<RefPtr<EventListener> > ListenerVector;
     typedef HashMap<AtomicStringImpl*, ListenerVector> EventListenersMap;
@@ -200,6 +183,9 @@ private:
     void dispatchLoadStartEvent();
     void dispatchProgressEvent(long long expectedLength);
 
+    void setPendingActivity();
+    void unsetPendingActivity();
+
     Document* m_doc;
 
     RefPtr<EventListener> m_onReadyStateChangeListener;
@@ -229,7 +215,7 @@ private:
     RefPtr<TextResourceDecoder> m_decoder;
     unsigned long m_identifier;
 
-    // Unlike most strings in the DOM, we keep this as a KJS::UString, not a WebCore::String.
+    // Unlike most strings in the DOM, we keep this as a JSC::UString, not a WebCore::String.
     // That's because these strings can easily get huge (they are filled from the network with
     // no parsing) and because JS can easily observe many intermediate states, so it's very useful
     // to be able to share the buffer with JavaScript versions of the whole or partial string.
@@ -247,8 +233,13 @@ private:
     bool m_allowAccess;
     bool m_inPreflight;
 
+    unsigned m_pendingActivity;
+
     // Used for onprogress tracking
     long long m_receivedLength;
+    
+    unsigned m_lastSendLineNumber;
+    JSUString m_lastSendURL;
 };
 
 } // namespace WebCore

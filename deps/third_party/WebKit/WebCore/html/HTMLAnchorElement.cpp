@@ -90,7 +90,11 @@ bool HTMLAnchorElement::isFocusable() const
 
 bool HTMLAnchorElement::isMouseFocusable() const
 {
+#if PLATFORM(GTK)
+    return HTMLElement::isMouseFocusable();
+#else
     return false;
+#endif
 }
 
 bool HTMLAnchorElement::isKeyboardFocusable(KeyboardEvent* event) const
@@ -400,6 +404,7 @@ void HTMLAnchorElement::setShape(const String &value)
 
 short HTMLAnchorElement::tabIndex() const
 {
+    // Skip the supportsFocus check in HTMLElement.
     return Element::tabIndex();
 }
 

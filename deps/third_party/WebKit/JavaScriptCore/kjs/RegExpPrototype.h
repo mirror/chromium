@@ -23,19 +23,16 @@
 
 #include "JSObject.h"
 
-namespace KJS {
-
-    class FunctionPrototype;
-    class ObjectPrototype;
+namespace JSC {
 
     class RegExpPrototype : public JSObject {
     public:
-        RegExpPrototype(ExecState*, ObjectPrototype*, FunctionPrototype*);
+        RegExpPrototype(ExecState*, PassRefPtr<StructureID>, StructureID* prototypeFunctionStructure);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // RegExpPrototype_h

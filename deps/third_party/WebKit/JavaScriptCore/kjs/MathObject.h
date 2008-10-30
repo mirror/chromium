@@ -21,20 +21,19 @@
 #define MathObject_h
 
 #include "JSObject.h"
-#include "lookup.h"
 
-namespace KJS {
+namespace JSC {
 
     class MathObject : public JSObject {
     public:
-        MathObject(ExecState*, ObjectPrototype*);
+        MathObject(ExecState*, PassRefPtr<StructureID>);
 
-        bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
+        virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // MathObject_h

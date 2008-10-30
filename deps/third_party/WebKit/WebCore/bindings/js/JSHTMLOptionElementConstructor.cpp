@@ -25,7 +25,7 @@
 #include "JSHTMLOptionElement.h"
 #include "Text.h"
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 
@@ -34,8 +34,8 @@ ASSERT_CLASS_FITS_IN_CELL(JSHTMLOptionElementConstructor)
 const ClassInfo JSHTMLOptionElementConstructor::s_info = { "OptionConstructor", 0, 0, 0 };
 
 JSHTMLOptionElementConstructor::JSHTMLOptionElementConstructor(ExecState* exec, Document* document)
-    : DOMObject(exec->lexicalGlobalObject()->objectPrototype())
-    , m_document(document)
+    : DOMObject(JSHTMLOptionElementConstructor::createStructureID(exec->lexicalGlobalObject()->objectPrototype()))
+    , m_document(static_cast<JSDocument*>(toJS(exec, document)))
 {
     putDirect(exec->propertyNames().length, jsNumber(exec, 4), ReadOnly|DontDelete|DontEnum);
 }
@@ -73,6 +73,13 @@ ConstructType JSHTMLOptionElementConstructor::getConstructData(ConstructData& co
 {
     constructData.native.function = constructHTMLOptionElement;
     return ConstructTypeHost;
+}
+
+void JSHTMLOptionElementConstructor::mark()
+{
+    DOMObject::mark();
+    if (!m_document->marked())
+        m_document->mark();
 }
 
 } // namespace WebCore

@@ -38,14 +38,14 @@
 using namespace WTF;
 using namespace Unicode;
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSFunction);
 
 const ClassInfo JSFunction::info = { "Function", 0, 0, 0 };
 
 JSFunction::JSFunction(ExecState* exec, const Identifier& name, FunctionBodyNode* body, ScopeChainNode* scopeChainNode)
-    : Base(exec, exec->lexicalGlobalObject()->functionPrototype(), name)
+    : Base(&exec->globalData(), exec->lexicalGlobalObject()->functionStructure(), name)
     , m_body(body)
     , m_scopeChain(scopeChainNode)
 {
@@ -85,7 +85,7 @@ JSValue* JSFunction::callerGetter(ExecState* exec, const Identifier&, const Prop
 JSValue* JSFunction::lengthGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
     JSFunction* thisObj = static_cast<JSFunction*>(slot.slotBase());
-    return jsNumber(exec, thisObj->m_body->parameters().size());
+    return jsNumber(exec, thisObj->m_body->parameterCount());
 }
 
 bool JSFunction::getOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
@@ -131,15 +131,15 @@ bool JSFunction::deleteProperty(ExecState* exec, const Identifier& propertyName)
  */
 const Identifier& JSFunction::getParameterName(int index)
 {
-    Vector<Identifier>& parameters = m_body->parameters();
+    const Identifier* parameters = m_body->parameters();
 
-    if (static_cast<size_t>(index) >= m_body->parameters().size())
+    if (static_cast<size_t>(index) >= m_body->parameterCount())
         return m_scopeChain.globalObject()->globalData()->propertyNames->nullIdentifier;
   
     const Identifier& name = parameters[index];
 
     // Are there any subsequent parameters with the same name?
-    size_t size = parameters.size();
+    size_t size = m_body->parameterCount();
     for (size_t i = index + 1; i < size; ++i) {
         if (parameters[i] == name)
             return m_scopeChain.globalObject()->globalData()->propertyNames->nullIdentifier;
@@ -158,14 +158,13 @@ ConstructType JSFunction::getConstructData(ConstructData& constructData)
 
 JSObject* JSFunction::construct(ExecState* exec, const ArgList& args)
 {
-    JSObject* proto;
-    JSValue* p = get(exec, exec->propertyNames().prototype);
-    if (p->isObject())
-        proto = static_cast<JSObject*>(p);
+    StructureID* structure;
+    JSValue* prototype = get(exec, exec->propertyNames().prototype);
+    if (prototype->isObject())
+        structure = static_cast<JSObject*>(prototype)->inheritorID();
     else
-        proto = exec->lexicalGlobalObject()->objectPrototype();
-
-    JSObject* thisObj = new (exec) JSObject(proto);
+        structure = exec->lexicalGlobalObject()->emptyObjectStructure();
+    JSObject* thisObj = new (exec) JSObject(structure);
 
     JSValue* result = exec->machine()->execute(m_body.get(), exec, this, thisObj, args, m_scopeChain.node(), exec->exceptionSlot());
     if (exec->hadException() || !result->isObject())
@@ -173,4 +172,4 @@ JSObject* JSFunction::construct(ExecState* exec, const ArgList& args)
     return static_cast<JSObject*>(result);
 }
 
-} // namespace KJS
+} // namespace JSC

@@ -23,96 +23,126 @@
 #ifndef ExecState_h
 #define ExecState_h
 
+// FIXME: Rename this file to CallFrame.h.
+
 #include "JSGlobalData.h"
+#include "Machine.h"
 #include "ScopeChain.h"
 
-namespace KJS  {
+namespace JSC  {
 
-    class EvalNode;
-    class FunctionBodyNode;
-    class JSValue;
-    class GlobalFuncImp;
-    class Interpreter;
-    class JSGlobalObject;
-    class JSVariableObject;
-    class Machine;
-    class ProgramNode;
-    class Register;
-    class RegisterFile;
-    class ScopeNode;
+    class Arguments;
+    class JSActivation;
 
-    struct Instruction;
-    
     // Represents the current state of script execution.
     // Passed as the first argument to most functions.
-    class ExecState : Noncopyable {
-        friend class Machine;
-        friend class DebuggerCallFrame;
-
+    class ExecState : private Register {
     public:
-        ExecState(JSGlobalObject*, JSObject* globalThisValue, ScopeChainNode* globalScopeChain);
+        JSFunction* callee() const { return this[RegisterFile::Callee].function(); }
+        CodeBlock* codeBlock() const { return this[RegisterFile::CodeBlock].Register::codeBlock(); }
+        ScopeChainNode* scopeChain() const { return this[RegisterFile::ScopeChain].Register::scopeChain(); }
+
+        JSValue* thisValue();
 
         // Global object in which execution began.
-        JSGlobalObject* dynamicGlobalObject() const { return m_globalObject; }
-        
-        // Global object in which the current script was defined. (Can differ
-        // from dynamicGlobalObject() during function calls across frames.)
+        JSGlobalObject* dynamicGlobalObject();
+
+        // Global object in which the currently executing code was defined.
+        // Differs from dynamicGlobalObject() during function calls across web browser frames.
         JSGlobalObject* lexicalGlobalObject() const
         {
-            return m_scopeChain->globalObject();
+            return scopeChain()->globalObject();
         }
-        
-        JSObject* globalThisValue() const { return m_scopeChain->globalThisObject(); }
-                
-        // Exception propogation.
-        void setException(JSValue* exception) { m_exception = exception; }
-        void clearException() { m_exception = 0; }
-        JSValue* exception() const { return m_exception; }
-        JSValue** exceptionSlot() { return &m_exception; }
-        bool hadException() const { return !!m_exception; }
 
-        JSGlobalData& globalData() { return *m_globalData; }
+        // Differs from lexicalGlobalObject because this will have DOM window shell rather than
+        // the actual DOM window, which can't be "this" for security reasons.
+        JSObject* globalThisValue() const
+        {
+            return scopeChain()->globalThisObject();
+        }
 
-        IdentifierTable* identifierTable() { return m_globalData->identifierTable; }
-        const CommonIdentifiers& propertyNames() const { return *m_globalData->propertyNames; }
-        const ArgList& emptyList() const { return *m_globalData->emptyList; }
-        Lexer* lexer() { return m_globalData->lexer; }
-        Parser* parser() { return m_globalData->parser; }
-        Machine* machine() const { return m_globalData->machine; }
-        static const HashTable* arrayTable(ExecState* exec) { return exec->m_globalData->arrayTable; }
-        static const HashTable* dateTable(ExecState* exec) { return exec->m_globalData->dateTable; }
-        static const HashTable* mathTable(ExecState* exec) { return exec->m_globalData->mathTable; }
-        static const HashTable* numberTable(ExecState* exec) { return exec->m_globalData->numberTable; }
-        static const HashTable* regExpTable(ExecState* exec) { return exec->m_globalData->regExpTable; }
-        static const HashTable* regExpConstructorTable(ExecState* exec) { return exec->m_globalData->regExpConstructorTable; }
-        static const HashTable* stringTable(ExecState* exec) { return exec->m_globalData->stringTable; }
+        // FIXME: Elsewhere, we use JSGlobalData* rather than JSGlobalData&.
+        // We should make this more uniform and either use a reference everywhere
+        // or a pointer everywhere.
+        JSGlobalData& globalData() const
+        {
+            return *scopeChain()->globalData;
+        }
 
-        Heap* heap() const { return m_globalData->heap; }
+        // Convenience functions for access to global data.
+        // It takes a few memory references to get from a call frame to the global data
+        // pointer, so these are inefficient, and should be used sparingly in new code.
+        // But they're used in many places in legacy code, so they're not going away any time soon.
+
+        void setException(JSValue* exception) { globalData().exception = exception; }
+        void clearException() { globalData().exception = 0; }
+        JSValue* exception() const { return globalData().exception; }
+        JSValue** exceptionSlot() { return &globalData().exception; }
+        bool hadException() const { return !!globalData().exception; }
+
+        const CommonIdentifiers& propertyNames() const { return *globalData().propertyNames; }
+        const ArgList& emptyList() const { return *globalData().emptyList; }
+        Machine* machine() { return globalData().machine; }
+        Heap* heap() { return &globalData().heap; }
+
+        static const HashTable* arrayTable(CallFrame* callFrame) { return callFrame->globalData().arrayTable; }
+        static const HashTable* dateTable(CallFrame* callFrame) { return callFrame->globalData().dateTable; }
+        static const HashTable* mathTable(CallFrame* callFrame) { return callFrame->globalData().mathTable; }
+        static const HashTable* numberTable(CallFrame* callFrame) { return callFrame->globalData().numberTable; }
+        static const HashTable* regExpTable(CallFrame* callFrame) { return callFrame->globalData().regExpTable; }
+        static const HashTable* regExpConstructorTable(CallFrame* callFrame) { return callFrame->globalData().regExpConstructorTable; }
+        static const HashTable* stringTable(CallFrame* callFrame) { return callFrame->globalData().stringTable; }
 
     private:
-        // Default constructor required for gcc 3.
-        ExecState() { }
+        friend class Arguments;
+        friend class JSActivation;
+        friend class JSGlobalObject;
+        friend class Machine;
 
-        ExecState(ExecState*, RegisterFile*, ScopeChainNode*, Register* callFrame);
+        static CallFrame* create(Register* callFrameBase) { return static_cast<CallFrame*>(callFrameBase); }
+        Register* registers() { return this; }
 
-        bool isGlobalObject(JSObject*) const;
+        CallFrame& operator=(const Register& r) { *static_cast<Register*>(this) = r; return *this; }
 
-        JSGlobalObject* m_globalObject;
-        JSObject* m_globalThisValue;
+        int argumentCount() const { return this[RegisterFile::ArgumentCount].i(); }
+        CallFrame* callerFrame() const { return this[RegisterFile::CallerFrame].callFrame(); }
+        Arguments* optionalCalleeArguments() const { return this[RegisterFile::OptionalCalleeArguments].arguments(); }
+        Instruction* returnPC() const { return this[RegisterFile::ReturnPC].vPC(); }
+        int returnValueRegister() const { return this[RegisterFile::ReturnValueRegister].i(); }
 
-        JSValue* m_exception;
+        void setArgumentCount(int count) { this[RegisterFile::ArgumentCount] = count; }
+        void setCallee(JSFunction* callee) { this[RegisterFile::Callee] = callee; }
+        void setCalleeArguments(Arguments* arguments) { this[RegisterFile::OptionalCalleeArguments] = arguments; }
+        void setCallerFrame(CallFrame* callerFrame) { this[RegisterFile::CallerFrame] = callerFrame; }
+        void setCodeBlock(CodeBlock* codeBlock) { this[RegisterFile::CodeBlock] = codeBlock; }
+        void setScopeChain(ScopeChainNode* scopeChain) { this[RegisterFile::ScopeChain] = scopeChain; }
 
-        JSGlobalData* m_globalData;
+        ALWAYS_INLINE void init(CodeBlock* codeBlock, Instruction* vPC, ScopeChainNode* scopeChain,
+            CallFrame* callerFrame, int returnValueRegister, int argc, JSFunction* function)
+        {
+            ASSERT(callerFrame); // Use noCaller() rather than 0 for the outer host call frame caller.
 
-        // These values are controlled by the machine.
-        ExecState* m_prev;
-        RegisterFile* m_registerFile;
-        ScopeChainNode* m_scopeChain;
-        Register* m_callFrame; // The most recent call frame.
+            setCodeBlock(codeBlock);
+            setScopeChain(scopeChain);
+            setCallerFrame(callerFrame);
+            this[RegisterFile::ReturnPC] = vPC;
+            this[RegisterFile::ReturnValueRegister] = returnValueRegister;
+            setArgumentCount(argc); // original argument count (for the sake of the "arguments" object)
+            setCallee(function);
+            setCalleeArguments(0);
+        }
+
+        static const intptr_t HostCallFrameFlag = 1;
+
+        static CallFrame* noCaller() { return reinterpret_cast<CallFrame*>(HostCallFrameFlag); }
+        bool hasHostCallFrameFlag() const { return reinterpret_cast<intptr_t>(this) & HostCallFrameFlag; }
+        CallFrame* addHostCallFrameFlag() const { return reinterpret_cast<CallFrame*>(reinterpret_cast<intptr_t>(this) | HostCallFrameFlag); }
+        CallFrame* removeHostCallFrameFlag() { return reinterpret_cast<CallFrame*>(reinterpret_cast<intptr_t>(this) & ~HostCallFrameFlag); }
+
+        ExecState();
+        ~ExecState();
     };
 
-    enum CodeType { GlobalCode, EvalCode, FunctionCode };
-
-} // namespace KJS
+} // namespace JSC
 
 #endif // ExecState_h

@@ -5,7 +5,7 @@
  * Copyright (C) 2006 Simon Hausmann <hausmann@kde.org>
  * Copyright (C) 2006 Rob Buis <buis@kde.org>
  * Copyright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  * Copyright (C) 2008 Collabora Ltd.  All rights reserved.
  * Copyright (C) 2008 Eric Seidel <eric@webkit.org>
  *
@@ -46,17 +46,19 @@
 
 namespace WebCore {
 
-PassRefPtr<KJS::Bindings::Instance> ScriptController::createScriptInstanceForWidget(WebCore::Widget* widget)
+PassRefPtr<JSC::Bindings::Instance> ScriptController::createScriptInstanceForWidget(WebCore::Widget* widget)
 {
     if (!widget->isPluginView())
         return 0;
-    if (widget->isNPAPIPlugin())
-        return static_cast<PluginView*>(widget)->bindingInstance();
+        
+    PluginView* pluginView = static_cast<PluginView*>(widget);
+    if (pluginView->isNPAPIPlugin())
+        return pluginView->bindingInstance();
 
-    QWidget* nativeWidget = widget->nativeWidget();
-    if (!nativeWidget)
+    QWidget* platformWidget = widget->platformWidget();
+    if (!platformWidget)
         return 0;
-    return KJS::Bindings::QtInstance::create(nativeWidget, bindingRootObject());
+    return JSC::Bindings::QtInstance::getQtInstance(platformWidget, bindingRootObject());
 }
 
 }

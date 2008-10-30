@@ -37,11 +37,11 @@
 #include "PropertyNameArray.h"
 #include <wtf/Vector.h>
 
-namespace KJS {
+namespace JSC {
 
 template <class Base>
-JSCallbackObject<Base>::JSCallbackObject(ExecState* exec, JSClassRef jsClass, JSObject* prototype, void* data)
-    : Base(prototype)
+JSCallbackObject<Base>::JSCallbackObject(ExecState* exec, PassRefPtr<StructureID> structure, JSClassRef jsClass, void* data)
+    : Base(structure)
     , m_callbackObjectData(new JSCallbackObjectData(data, jsClass))
 {
     init(exec);
@@ -273,17 +273,7 @@ JSObject* JSCallbackObject<Base>::construct(ExecState* exec, JSObject* construct
 }
 
 template <class Base>
-bool JSCallbackObject<Base>::implementsHasInstance() const
-{
-    for (JSClassRef jsClass = classRef(); jsClass; jsClass = jsClass->parentClass)
-        if (jsClass->hasInstance)
-            return true;
-    
-    return false;
-}
-
-template <class Base>
-bool JSCallbackObject<Base>::hasInstance(ExecState *exec, JSValue *value)
+bool JSCallbackObject<Base>::hasInstance(ExecState* exec, JSValue* value, JSValue*)
 {
     JSContextRef execRef = toRef(exec);
     JSObjectRef thisRef = toRef(this);
@@ -294,8 +284,7 @@ bool JSCallbackObject<Base>::hasInstance(ExecState *exec, JSValue *value)
             return hasInstance(execRef, thisRef, toRef(value), toRef(exec->exceptionSlot()));
         }
     }
-    ASSERT_NOT_REACHED(); // implementsHasInstance should prevent us from reaching here
-    return 0;
+    return false;
 }
 
 template <class Base>
@@ -511,4 +500,4 @@ JSValue* JSCallbackObject<Base>::callbackGetter(ExecState* exec, const Identifie
     return throwError(exec, ReferenceError, "hasProperty callback returned true for a property that doesn't exist.");
 }
 
-} // namespace KJS
+} // namespace JSC

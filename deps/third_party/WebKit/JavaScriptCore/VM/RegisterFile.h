@@ -36,7 +36,7 @@
 #endif
 #include <wtf/Noncopyable.h>
 
-namespace KJS {
+namespace JSC {
 
 /*
     A register file is a stack of register frames. We represent a register
@@ -88,32 +88,33 @@ namespace KJS {
     class JSGlobalObject;
 
     class RegisterFile : Noncopyable {
+        friend class CTI;
     public:
-        enum {
-            CallerCodeBlock = 0,
-            ReturnVPC,
-            CallerScopeChain,
-            CallerRegisters,
-            ReturnValueRegister,
-            ArgumentStartRegister,
-            ArgumentCount,
-            CalledAsConstructor,
-            Callee,
-            OptionalCalleeActivation,
-            CallFrameHeaderSize
+        enum CallFrameHeaderEntry {
+            CallFrameHeaderSize = 8,
+
+            CodeBlock = -8,
+            ScopeChain = -7,
+            CallerFrame = -6,
+            ReturnPC = -5,
+            ReturnValueRegister = -4,
+            ArgumentCount = -3,
+            Callee = -2,
+            OptionalCalleeArguments = -1,
         };
 
-        enum { ProgramCodeThisRegister = - 1 };
+        enum { ProgramCodeThisRegister = -CallFrameHeaderSize - 1 };
+        enum { ArgumentsRegister = 0 };
 
-        enum { DefaultCapacity = 2 * 1024 * 1024 / sizeof(Register) };
-        enum { DefaultMaxGlobals = 8 * 1024 };
+        static const size_t defaultCapacity = 524288;
+        static const size_t defaultMaxGlobals = 8192;
 
-        RegisterFile(size_t capacity = DefaultCapacity, size_t maxGlobals = DefaultMaxGlobals)
-            : m_size(0)
-            , m_capacity(capacity)
-            , m_numGlobals(0)
+        RegisterFile(size_t capacity = defaultCapacity, size_t maxGlobals = defaultMaxGlobals)
+            : m_numGlobals(0)
             , m_maxGlobals(maxGlobals)
-            , m_base(0)
+            , m_start(0)
+            , m_end(0)
+            , m_max(0)
             , m_buffer(0)
             , m_globalObject(0)
         {
@@ -127,56 +128,58 @@ namespace KJS {
 #else
             #error "Don't know how to reserve virtual memory on this platform."
 #endif
-            m_base = m_buffer + maxGlobals;
+            m_start = m_buffer + maxGlobals;
+            m_end = m_start;
+            m_max = m_start + capacity;
         }
 
         ~RegisterFile();
 
-        Register* base() const { return m_base; }
-        
+        Register* start() const { return m_start; }
+        Register* end() const { return m_end; }
+        size_t size() const { return m_end - m_start; }
+
         void setGlobalObject(JSGlobalObject* globalObject) { m_globalObject = globalObject; }
         JSGlobalObject* globalObject() { return m_globalObject; }
 
-        void shrink(size_t size)
+        void shrink(Register* newEnd)
         {
-            if (size < m_size)
-                m_size = size;
+            if (newEnd < m_end)
+                m_end = newEnd;
         }
 
-        bool grow(size_t size)
+        bool grow(Register* newEnd)
         {
-            if (size > m_size) {
-                if (size > m_capacity)
+            if (newEnd > m_end) {
+                if (newEnd > m_max)
                     return false;
 #if !HAVE(MMAP) && HAVE(VIRTUALALLOC)
                 // FIXME: Use VirtualAlloc, and commit pages as we go.
 #endif
-                m_size = size;
+                m_end = newEnd;
             }
             return true;
         }
-
-        size_t size() { return m_size; }
         
         void setNumGlobals(size_t numGlobals) { m_numGlobals = numGlobals; }
-        int numGlobals() { return m_numGlobals; }
-        size_t maxGlobals() { return m_maxGlobals; }
+        int numGlobals() const { return m_numGlobals; }
+        size_t maxGlobals() const { return m_maxGlobals; }
 
-        Register* lastGlobal() { return m_base - m_numGlobals; }
+        Register* lastGlobal() const { return m_start - m_numGlobals; }
         
-        void markGlobals(Heap* heap) { heap->markConservatively(lastGlobal(), m_base); }
-        void markCallFrames(Heap* heap) { heap->markConservatively(m_base, m_base + m_size); }
+        void markGlobals(Heap* heap) { heap->markConservatively(lastGlobal(), m_start); }
+        void markCallFrames(Heap* heap) { heap->markConservatively(m_start, m_end); }
 
     private:
-        size_t m_size;
-        const size_t m_capacity;
         size_t m_numGlobals;
         const size_t m_maxGlobals;
-        Register* m_base;
+        Register* m_start;
+        Register* m_end;
+        Register* m_max;
         Register* m_buffer;
         JSGlobalObject* m_globalObject; // The global object whose vars are currently stored in the register file.
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // RegisterFile_h

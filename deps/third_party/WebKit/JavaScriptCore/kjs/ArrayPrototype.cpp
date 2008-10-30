@@ -32,7 +32,7 @@
 #include <wtf/Assertions.h>
 #include <wtf/HashSet.h>
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(ArrayPrototype);
 
@@ -60,7 +60,7 @@ static JSValue* arrayProtoFuncLastIndexOf(ExecState*, JSObject*, JSValue*, const
 
 #include "ArrayPrototype.lut.h"
 
-namespace KJS {
+namespace JSC {
 
 // ------------------------------ ArrayPrototype ----------------------------
 
@@ -91,8 +91,8 @@ const ClassInfo ArrayPrototype::info = {"Array", &JSArray::info, 0, ExecState::a
 */
 
 // ECMA 15.4.4
-ArrayPrototype::ArrayPrototype(ExecState*, ObjectPrototype* objectPrototype)
-    : JSArray(objectPrototype, 0)
+ArrayPrototype::ArrayPrototype(PassRefPtr<StructureID> structure)
+    : JSArray(structure)
 {
 }
 
@@ -125,15 +125,15 @@ JSValue* arrayProtoFuncToString(ExecState* exec, JSObject*, JSValue* thisValue, 
         return throwError(exec, TypeError);
     JSObject* thisObj = static_cast<JSArray*>(thisValue);
 
-    HashSet<JSObject*>& arrayVisitedElements = exec->dynamicGlobalObject()->arrayVisitedElements();
+    HashSet<JSObject*>& arrayVisitedElements = exec->globalData().arrayVisitedElements;
     if (arrayVisitedElements.size() > MaxReentryDepth)
         return throwError(exec, RangeError, "Maximum call stack size exceeded.");
 
     bool alreadyVisited = !arrayVisitedElements.add(thisObj).second;
-    Vector<UChar, 256> strBuffer;
     if (alreadyVisited)
         return jsEmptyString(exec); // return an empty string, avoiding infinite recursion.
 
+    Vector<UChar, 256> strBuffer;
     unsigned length = thisObj->get(exec, exec->propertyNames().length)->toUInt32(exec);
     for (unsigned k = 0; k < length; k++) {
         if (k >= 1)
@@ -159,7 +159,7 @@ JSValue* arrayProtoFuncToString(ExecState* exec, JSObject*, JSValue* thisValue, 
         if (exec->hadException())
             break;
     }
-    exec->dynamicGlobalObject()->arrayVisitedElements().remove(thisObj);
+    arrayVisitedElements.remove(thisObj);
     return jsString(exec, UString(strBuffer.data(), strBuffer.data() ? strBuffer.size() : 0));
 }
 
@@ -169,15 +169,15 @@ JSValue* arrayProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue* thisV
         return throwError(exec, TypeError);
     JSObject* thisObj = static_cast<JSArray*>(thisValue);
 
-    HashSet<JSObject*>& arrayVisitedElements = exec->dynamicGlobalObject()->arrayVisitedElements();
+    HashSet<JSObject*>& arrayVisitedElements = exec->globalData().arrayVisitedElements;
     if (arrayVisitedElements.size() > MaxReentryDepth)
         return throwError(exec, RangeError, "Maximum call stack size exceeded.");
 
     bool alreadyVisited = !arrayVisitedElements.add(thisObj).second;
-    Vector<UChar, 256> strBuffer;
     if (alreadyVisited)
         return jsEmptyString(exec); // return an empty string, avoding infinite recursion.
 
+    Vector<UChar, 256> strBuffer;
     unsigned length = thisObj->get(exec, exec->propertyNames().length)->toUInt32(exec);
     for (unsigned k = 0; k < length; k++) {
         if (k >= 1)
@@ -211,7 +211,7 @@ JSValue* arrayProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue* thisV
         if (exec->hadException())
             break;
     }
-    exec->dynamicGlobalObject()->arrayVisitedElements().remove(thisObj);
+    arrayVisitedElements.remove(thisObj);
     return jsString(exec, UString(strBuffer.data(), strBuffer.data() ? strBuffer.size() : 0));
 }
 
@@ -219,14 +219,15 @@ JSValue* arrayProtoFuncJoin(ExecState* exec, JSObject*, JSValue* thisValue, cons
 {
     JSObject* thisObj = thisValue->toThisObject(exec);
 
-    HashSet<JSObject*>& arrayVisitedElements = exec->dynamicGlobalObject()->arrayVisitedElements();
+    HashSet<JSObject*>& arrayVisitedElements = exec->globalData().arrayVisitedElements;
     if (arrayVisitedElements.size() > MaxReentryDepth)
         return throwError(exec, RangeError, "Maximum call stack size exceeded.");
 
     bool alreadyVisited = !arrayVisitedElements.add(thisObj).second;
-    Vector<UChar, 256> strBuffer;
     if (alreadyVisited)
         return jsEmptyString(exec); // return an empty string, avoding infinite recursion.
+
+    Vector<UChar, 256> strBuffer;
 
     UChar comma = ',';
     UString separator = args.at(exec, 0)->isUndefined() ? UString(&comma, 1) : args.at(exec, 0)->toString(exec);
@@ -256,7 +257,7 @@ JSValue* arrayProtoFuncJoin(ExecState* exec, JSObject*, JSValue* thisValue, cons
         if (exec->hadException())
             break;
     }
-    exec->dynamicGlobalObject()->arrayVisitedElements().remove(thisObj);
+    arrayVisitedElements.remove(thisObj);
     return jsString(exec, UString(strBuffer.data(), strBuffer.data() ? strBuffer.size() : 0));
 }
 
@@ -291,6 +292,9 @@ JSValue* arrayProtoFuncConcat(ExecState* exec, JSObject*, JSValue* thisValue, co
 
 JSValue* arrayProtoFuncPop(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList&)
 {
+    if (exec->machine()->isJSArray(thisValue))
+        return static_cast<JSArray*>(thisValue)->pop();
+
     JSObject* thisObj = thisValue->toThisObject(exec);
     JSValue* result = 0;
     unsigned length = thisObj->get(exec, exec->propertyNames().length)->toUInt32(exec);
@@ -307,6 +311,12 @@ JSValue* arrayProtoFuncPop(ExecState* exec, JSObject*, JSValue* thisValue, const
 
 JSValue* arrayProtoFuncPush(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList& args)
 {
+    if (exec->machine()->isJSArray(thisValue) && args.size() == 1) {
+        JSArray* array = static_cast<JSArray*>(thisValue);
+        array->push(exec, args.begin()->jsValue(exec));
+        return jsNumber(exec, array->length());
+    }
+
     JSObject* thisObj = thisValue->toThisObject(exec);
     unsigned length = thisObj->get(exec, exec->propertyNames().length)->toUInt32(exec);
     for (unsigned n = 0; n < args.size(); n++)
@@ -782,4 +792,4 @@ JSValue* arrayProtoFuncLastIndexOf(ExecState* exec, JSObject*, JSValue* thisValu
     return jsNumber(exec, -1);
 }
 
-} // namespace KJS
+} // namespace JSC

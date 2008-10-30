@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2003, 2008 Apple Computer, Inc.
+ *  Copyright (C) 2003, 2008 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -23,24 +23,28 @@
 
 #include <wtf/Assertions.h>
 
-namespace KJS {
+namespace JSC {
 
+    class JSGlobalData;
     class JSGlobalObject;
     class JSObject;
     class ScopeChainIterator;
     
     class ScopeChainNode {
     public:
-        ScopeChainNode(ScopeChainNode* n, JSObject* o, JSObject* gt)
-            : next(n)
-            , object(o)
-            , globalThis(gt)
+        ScopeChainNode(ScopeChainNode* next, JSObject* object, JSGlobalData* globalData, JSObject* globalThis)
+            : next(next)
+            , object(object)
+            , globalData(globalData)
+            , globalThis(globalThis)
             , refCount(1)
         {
+            ASSERT(globalData);
         }
 
         ScopeChainNode* next;
         JSObject* object;
+        JSGlobalData* globalData;
         JSObject* globalThis;
         int refCount;
 
@@ -78,7 +82,7 @@ namespace KJS {
     inline ScopeChainNode* ScopeChainNode::push(JSObject* o)
     {
         ASSERT(o);
-        return new ScopeChainNode(this, o, globalThis);
+        return new ScopeChainNode(this, o, globalData, globalThis);
     }
 
     inline ScopeChainNode* ScopeChainNode::pop()
@@ -146,10 +150,18 @@ namespace KJS {
         return ScopeChainIterator(0); 
     }
 
+    class NoScopeChain {};
+
     class ScopeChain {
+        friend class CTI;
     public:
-        ScopeChain(JSObject* o, JSObject* globalThis)
-            : m_node(new ScopeChainNode(0, o, globalThis))
+        ScopeChain(NoScopeChain)
+            : m_node(0)
+        {
+        }
+
+        ScopeChain(JSObject* o, JSGlobalData* globalData, JSObject* globalThis)
+            : m_node(new ScopeChainNode(0, o, globalData, globalThis))
         {
         }
 
@@ -164,8 +176,12 @@ namespace KJS {
             : m_node(node->copy())
         {
         }
-    
-        ~ScopeChain() { m_node->deref(); }
+
+        ~ScopeChain()
+        {
+            if (m_node)
+                m_node->deref();
+        }
 
         void swap(ScopeChain&);
 
@@ -208,6 +224,6 @@ namespace KJS {
         return *this;
     }
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // ScopeChain_h

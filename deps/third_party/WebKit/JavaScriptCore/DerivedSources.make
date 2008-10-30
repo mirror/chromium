@@ -70,4 +70,3 @@ chartables.c : dftables
 
 $(JavaScriptCore)/docs/bytecode.html: make-bytecode-docs.pl Machine.cpp 
 	perl $^ $@
-

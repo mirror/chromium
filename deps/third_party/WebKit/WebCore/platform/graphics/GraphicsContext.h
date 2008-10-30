@@ -26,6 +26,7 @@
 #ifndef GraphicsContext_h
 #define GraphicsContext_h
 
+#include "DashArray.h"
 #include "FloatRect.h"
 #include "Image.h"
 #include "IntRect.h"
@@ -231,6 +232,7 @@ namespace WebCore {
         IntRect focusRingBoundingRect();
 
         void setLineCap(LineCap);
+        void setLineDash(const DashArray&, float dashOffset);
         void setLineJoin(LineJoin);
         void setMiterLimit(float);
 
@@ -340,14 +342,10 @@ namespace WebCore {
         void setPlatformFont(const Font& font);
 
         void setPlatformStrokeColor(const Color&);
-        void setPlatformStrokePattern(Pattern*);
-        void setPlatformStrokeGradient(Gradient*);
         void setPlatformStrokeStyle(const StrokeStyle&);
         void setPlatformStrokeThickness(float);
 
         void setPlatformFillColor(const Color&);
-        void setPlatformFillPattern(Pattern*);
-        void setPlatformFillGradient(Gradient*);
 
         void setPlatformShadow(const IntSize&, int blur, const Color&);
         void clearPlatformShadow();

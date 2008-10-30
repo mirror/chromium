@@ -161,7 +161,7 @@ void HTMLFormControlElement::setName(const AtomicString &value)
 
 void HTMLFormControlElement::onChange()
 {
-    dispatchHTMLEvent(changeEvent, true, false);
+    dispatchEventForType(changeEvent, true, false);
 }
 
 bool HTMLFormControlElement::disabled() const
@@ -216,11 +216,16 @@ bool HTMLFormControlElement::isKeyboardFocusable(KeyboardEvent* event) const
 
 bool HTMLFormControlElement::isMouseFocusable() const
 {
+#if PLATFORM(GTK)
+    return HTMLElement::isMouseFocusable();
+#else
     return false;
+#endif
 }
 
 short HTMLFormControlElement::tabIndex() const
 {
+    // Skip the supportsFocus check in HTMLElement.
     return Element::tabIndex();
 }
 

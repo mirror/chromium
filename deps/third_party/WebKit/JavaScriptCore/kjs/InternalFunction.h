@@ -27,26 +27,31 @@
 #include "JSObject.h"
 #include "identifier.h"
 
-namespace KJS {
+namespace JSC {
 
     class FunctionPrototype;
 
     class InternalFunction : public JSObject {
     public:
-        virtual const ClassInfo* classInfo() const { return &info; }
+        virtual const ClassInfo* classInfo() const; 
         static const ClassInfo info;
-        
-        const UString& name(ExecState*);
+
+        const UString& name(JSGlobalData*);
+
+        static PassRefPtr<StructureID> createStructureID(JSValue* proto) 
+        { 
+            return StructureID::create(proto, TypeInfo(ObjectType, ImplementsHasInstance)); 
+        }
 
     protected:
-        InternalFunction(ExecState*);
-        InternalFunction(ExecState*, FunctionPrototype*, const Identifier&);
+        InternalFunction(PassRefPtr<StructureID> structure) : JSObject(structure) { }
+        InternalFunction(JSGlobalData*);
+        InternalFunction(JSGlobalData*, PassRefPtr<StructureID>, const Identifier&);
 
     private:
         virtual CallType getCallData(CallData&) = 0;
-        virtual bool implementsHasInstance() const;
     };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // InternalFunction_h

@@ -101,8 +101,14 @@ public:
 
     const GlyphData& missingGlyphData() const { return m_missingGlyphData; }
 
-#if USE(ATSUI)
+#if PLATFORM(MAC)
     NSFont* getNSFont() const { return m_font.font(); }
+#if USE(CORE_TEXT)
+    CTFontRef getCTFont() const;
+    CFDictionaryRef getCFStringAttributes() const;
+#endif
+#endif
+#if USE(ATSUI)
     void checkShapesArabic() const;
     bool shapesArabic() const
     {
@@ -179,13 +185,23 @@ public:
     float m_syntheticBoldOffset;
 #endif
 
-#if USE(ATSUI)
+#if PLATFORM(MAC)
+#ifdef BUILDING_ON_TIGER
     void* m_styleGroup;
+#endif
+#endif
+#if USE(ATSUI)
     mutable ATSUStyle m_ATSUStyle;
     mutable bool m_ATSUStyleInitialized;
     mutable bool m_ATSUMirrors;
     mutable bool m_checkedShapesArabic;
     mutable bool m_shapesArabic;
+#endif
+#if PLATFORM(MAC)
+#if USE(CORE_TEXT)
+    mutable RetainPtr<CTFontRef> m_CTFont;
+    mutable RetainPtr<CFDictionaryRef> m_CFStringAttributes;
+#endif
 #endif
 
 #if PLATFORM(WIN)

@@ -54,7 +54,7 @@
 
 using namespace WTF;
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(DatePrototype);
 
@@ -107,7 +107,7 @@ static JSValue* dateProtoFuncValueOf(ExecState*, JSObject*, JSValue*, const ArgL
 
 #include "DatePrototype.lut.h"
 
-namespace KJS {
+namespace JSC {
 
 #if PLATFORM(MAC)
 
@@ -345,8 +345,8 @@ const ClassInfo DatePrototype::info = {"Date", &DateInstance::info, 0, ExecState
 */
 // ECMA 15.9.4
 
-DatePrototype::DatePrototype(ExecState* exec, ObjectPrototype* objectPrototype)
-    : DateInstance(objectPrototype)
+DatePrototype::DatePrototype(ExecState* exec, PassRefPtr<StructureID> structure)
+    : DateInstance(structure)
 {
     setInternalValue(jsNaN(exec));
     // The constructor will be added later, after DateConstructor has been built.
@@ -1053,4 +1053,4 @@ JSValue* dateProtoFuncGetYear(ExecState* exec, JSObject*, JSValue* thisValue, co
     return jsNumber(exec, t.year);
 }
 
-} // namespace KJS
+} // namespace JSC

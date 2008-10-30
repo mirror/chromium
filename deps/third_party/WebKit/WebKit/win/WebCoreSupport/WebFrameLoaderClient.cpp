@@ -86,11 +86,6 @@ bool WebFrameLoaderClient::hasWebView() const
     return m_webFrame->webView();
 }
 
-bool WebFrameLoaderClient::hasFrameView() const
-{
-    return core(m_webFrame)->view();
-}
-
 void WebFrameLoaderClient::forceLayout()
 {
     core(m_webFrame)->forceLayout(true);
@@ -492,7 +487,7 @@ void WebFrameLoaderClient::transitionToCommittedForNewPage()
     bool isMainFrame = frame == page->mainFrame();
 
     if (isMainFrame && frame->view())
-        frame->view()->detachFromWindow();
+        frame->view()->setParentVisible(false);
 
     frame->setView(0);
 
@@ -511,18 +506,14 @@ void WebFrameLoaderClient::transitionToCommittedForNewPage()
 
     m_webFrame->updateBackground();
 
-    HWND viewWindow;
-    if (SUCCEEDED(webView->viewWindow(reinterpret_cast<OLE_HANDLE*>(&viewWindow))))
-        frameView->setContainingWindow(viewWindow);
-
     if (isMainFrame)
-        frameView->attachToWindow();
+        frameView->setParentVisible(true);
 
     if (frame->ownerRenderer())
         frame->ownerRenderer()->setWidget(frameView);
 
     if (HTMLFrameOwnerElement* owner = frame->ownerElement())
-        frame->view()->setScrollbarsMode(owner->scrollingMode());
+        frame->view()->setCanHaveScrollbars(owner->scrollingMode() != ScrollbarAlwaysOff);
 }
 
 bool WebFrameLoaderClient::canCachePage() const
@@ -536,20 +527,6 @@ PassRefPtr<Frame> WebFrameLoaderClient::createFrame(const KURL& url, const Strin
     RefPtr<Frame> result = createFrame(url, name, ownerElement, referrer);
     if (!result)
         return 0;
-
-    // Propagate the marginwidth/height and scrolling modes to the view.
-    if (ownerElement->hasTagName(frameTag) || ownerElement->hasTagName(iframeTag)) {
-        HTMLFrameElement* frameElt = static_cast<HTMLFrameElement*>(ownerElement);
-        if (frameElt->scrollingMode() == ScrollbarAlwaysOff)
-            result->view()->setScrollbarsMode(ScrollbarAlwaysOff);
-        int marginWidth = frameElt->getMarginWidth();
-        int marginHeight = frameElt->getMarginHeight();
-        if (marginWidth != -1)
-            result->view()->setMarginWidth(marginWidth);
-        if (marginHeight != -1)
-            result->view()->setMarginHeight(marginHeight);
-    }
-
     return result.release();
 }
 

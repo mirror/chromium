@@ -29,18 +29,22 @@
 #include "JSObjectRef.h"
 #include <kjs/JSObject.h>
 
-namespace KJS {
+namespace JSC {
 
 class JSCallbackConstructor : public JSObject {
 public:
-    JSCallbackConstructor(ExecState*, JSClassRef, JSObjectCallAsConstructorCallback);
+    JSCallbackConstructor(PassRefPtr<StructureID>, JSClassRef, JSObjectCallAsConstructorCallback);
     virtual ~JSCallbackConstructor();
     JSClassRef classRef() const { return m_class; }
     JSObjectCallAsConstructorCallback callback() const { return m_callback; }
     static const ClassInfo info;
     
+    static PassRefPtr<StructureID> createStructureID(JSValue* proto) 
+    { 
+        return StructureID::create(proto, TypeInfo(ObjectType, ImplementsHasInstance)); 
+    }
+
 private:
-    virtual bool implementsHasInstance() const;    
     virtual ConstructType getConstructData(ConstructData&);
     virtual const ClassInfo* classInfo() const { return &info; }
 
@@ -48,6 +52,6 @@ private:
     JSObjectCallAsConstructorCallback m_callback;
 };
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // JSCallbackConstructor_h

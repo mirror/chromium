@@ -5,7 +5,7 @@
  *                     2000-2001 Dirk Mueller <mueller@kde.org>
  *                     2000 Stefan Schimanski <1Stein@gmx.de>
  * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -81,16 +81,11 @@ namespace WebCore {
 
         Timer<Frame> m_lifeSupportTimer;
 
-        RefPtr<Node> m_elementToDraw;
-        PaintRestriction m_paintRestriction;
-        
         bool m_caretVisible;
         bool m_caretPaint;
-        bool m_isPainting;
-
+        
         bool m_highlightTextMatches;
         bool m_inViewSourceMode;
-        bool m_prohibitsScrolling;
         bool m_needsReapplyStyles;
         bool m_isDisconnected;
         bool m_excludeFromTextSearch;

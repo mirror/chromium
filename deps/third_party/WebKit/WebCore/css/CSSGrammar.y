@@ -29,6 +29,7 @@
 #include "CSSPropertyNames.h"
 #include "CSSRuleList.h"
 #include "CSSSelector.h"
+#include "CSSNthSelector.h"
 #include "CSSStyleSheet.h"
 #include "Document.h"
 #include "HTMLNames.h"
@@ -125,6 +126,7 @@ static int cssyylex(YYSTYPE* yylval, void* parser)
 %token NAMESPACE_SYM
 %token WEBKIT_RULE_SYM
 %token WEBKIT_DECLS_SYM
+%token WEBKIT_KEYFRAME_RULE_SYM
 %token WEBKIT_KEYFRAMES_SYM
 %token WEBKIT_VALUE_SYM
 %token WEBKIT_MEDIAQUERY_SYM
@@ -215,7 +217,8 @@ static int cssyylex(YYSTYPE* yylval, void* parser)
 %type <string> keyframe_name
 %type <keyframeRule> keyframe_rule
 %type <keyframesRule> keyframes_rule
-%type <val> key
+%type <valueList> key_list
+%type <value> key
 
 %type <integer> property
 
@@ -263,6 +266,7 @@ stylesheet:
   | webkit_mediaquery maybe_space
   | webkit_selector maybe_space
   | webkit_variables_decls maybe_space
+  | webkit_keyframe_rule maybe_space
   ;
 
 valid_rule_or_import:
@@ -273,6 +277,12 @@ valid_rule_or_import:
 webkit_rule:
     WEBKIT_RULE_SYM '{' maybe_space valid_rule_or_import maybe_space '}' {
         static_cast<CSSParser*>(parser)->m_rule = $4;
+    }
+;
+
+webkit_keyframe_rule:
+    WEBKIT_KEYFRAME_RULE_SYM '{' maybe_space keyframe_rule maybe_space '}' {
+        static_cast<CSSParser*>(parser)->m_keyframe = $4;
     }
 ;
 
@@ -416,6 +426,7 @@ block_valid_rule:
     ruleset
   | page
   | font_face
+  | keyframes
   ;
 
 block_rule:
@@ -688,25 +699,39 @@ keyframes_rule:
     | keyframes_rule keyframe_rule maybe_space {
         $$ = $1;
         if ($2)
-            $$->insert($2);
+            $$->append($2);
     }
     ;
 
 keyframe_rule:
-    key maybe_space '{' maybe_space declaration_list '}' {
+    key_list maybe_space '{' maybe_space declaration_list '}' {
         $$ = static_cast<CSSParser*>(parser)->createKeyframeRule($1);
     }
     ;
 
+key_list:
+    key {
+        CSSParser* p = static_cast<CSSParser*>(parser);
+        $$ = p->createFloatingValueList();
+        $$->addValue(p->sinkFloatingValue($1));
+    }
+    | key_list maybe_space ',' maybe_space key {
+        CSSParser* p = static_cast<CSSParser*>(parser);
+        $$ = $1;
+        if ($$)
+            $$->addValue(p->sinkFloatingValue($5));
+    }
+    ;
+
 key:
-    PERCENTAGE { $$ = (float) $1; }
+    PERCENTAGE { $$.id = 0; $$.isInt = false; $$.fValue = $1; $$.unit = CSSPrimitiveValue::CSS_NUMBER; }
     | IDENT {
-        $$ = -1;
+        $$.id = 0; $$.isInt = false; $$.unit = CSSPrimitiveValue::CSS_NUMBER;
         CSSParserString& str = $1;
         if (equalIgnoringCase(static_cast<const String&>(str), "from"))
-            $$ = 0;
+            $$.fValue = 0;
         else if (equalIgnoringCase(static_cast<const String&>(str), "to"))
-            $$ = 100;
+            $$.fValue = 100;
         else
             YYERROR;
     }
@@ -1082,7 +1107,7 @@ pseudo:
     // used by :nth-*(ax+b)
     | ':' FUNCTION NTH ')' {
         CSSParser *p = static_cast<CSSParser*>(parser);
-        $$ = p->createFloatingSelector();
+        $$ = static_cast<CSSSelector*>(p->createFloatingNthSelector());
         $$->m_match = CSSSelector::PseudoClass;
         $$->m_argument = $3;
         $$->m_value = $2;
@@ -1100,7 +1125,7 @@ pseudo:
     // used by :nth-*
     | ':' FUNCTION INTEGER ')' {
         CSSParser *p = static_cast<CSSParser*>(parser);
-        $$ = p->createFloatingSelector();
+        $$ = static_cast<CSSSelector*>(p->createFloatingNthSelector());
         $$->m_match = CSSSelector::PseudoClass;
         $$->m_argument = String::number($3);
         $$->m_value = $2;
@@ -1118,7 +1143,7 @@ pseudo:
     // used by :nth-*(odd/even) and :lang
     | ':' FUNCTION IDENT ')' {
         CSSParser *p = static_cast<CSSParser*>(parser);
-        $$ = p->createFloatingSelector();
+        $$ = static_cast<CSSSelector*>(p->createFloatingNthSelector());
         $$->m_match = CSSSelector::PseudoClass;
         $$->m_argument = $3;
         $2.lower();
@@ -1328,7 +1353,6 @@ term:
   | URI maybe_space { $$.id = 0; $$.string = $1; $$.unit = CSSPrimitiveValue::CSS_URI; }
   | UNICODERANGE maybe_space { $$.id = 0; $$.string = $1; $$.unit = CSSPrimitiveValue::CSS_UNICODE_RANGE }
   | hexcolor { $$.id = 0; $$.string = $1; $$.unit = CSSPrimitiveValue::CSS_PARSER_HEXCOLOR; }
-  | '#' IDENT maybe_space { $$.id = 0; $$.string = $2; $$.unit = CSSPrimitiveValue::CSS_STRING; } /* Handle error case: "color:#{predefined color name};" */
   | '#' maybe_space { $$.id = 0; $$.string = CSSParserString(); $$.unit = CSSPrimitiveValue::CSS_PARSER_HEXCOLOR; } /* Handle error case: "color: #;" */
   /* FIXME: according to the specs a function can have a unary_operator in front. I know no case where this makes sense */
   | function {
@@ -1368,16 +1392,6 @@ variable_reference:
       $$.string = $1;
       $$.unit = CSSPrimitiveValue::CSS_PARSER_VARIABLE_FUNCTION_SYNTAX;
   }
-  | '=' IDENT '=' {
-      $$.id = 0;
-      $$.string = $2;
-      $$.unit = CSSPrimitiveValue::CSS_PARSER_VARIABLE_EQUALS_SYNTAX;
-  }
-  | '$' IDENT {
-      $$.id = 0;
-      $$.string = $2;
-      $$.unit = CSSPrimitiveValue::CSS_PARSER_VARIABLE_DOLLAR_SYNTAX;
-  }
   ;
 
 function:
@@ -1407,7 +1421,9 @@ function:
  */
 hexcolor:
   HEX maybe_space { $$ = $1; }
+  | IDSEL maybe_space { $$ = $1; }
   ;
+
 
 /* error handling rules */
 

@@ -53,6 +53,7 @@ public:
     virtual void insertedIntoDocument();
     virtual void removedFromDocument();
     virtual void attach();
+    virtual void recalcStyle(StyleChange);
     
     MediaPlayer* player() const { return m_player.get(); }
     
@@ -65,7 +66,7 @@ public:
     // Pauses playback without changing any states or generating events
     void setPausedInternal(bool);
     
-    bool inPageCache() const { return m_inPageCache; }
+    bool inActiveDocument() const { return m_inActiveDocument; }
     
 // DOM API
 // error state
@@ -132,8 +133,8 @@ protected:
     float getTimeOffsetAttribute(const QualifiedName&, float valueOnError) const;
     void setTimeOffsetAttribute(const QualifiedName&, float value);
     
-    virtual void willSaveToCache();
-    virtual void didRestoreFromCache();
+    virtual void documentWillBecomeInactive();
+    virtual void documentDidBecomeActive();
     
     void initAndDispatchProgressEvent(const AtomicString& eventName);
     void dispatchEventAsync(const AtomicString& eventName);
@@ -199,7 +200,7 @@ protected:
     unsigned m_terminateLoadBelowNestingLevel;
     
     bool m_pausedInternal;
-    bool m_inPageCache;
+    bool m_inActiveDocument;
 
     OwnPtr<MediaPlayer> m_player;
 };

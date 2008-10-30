@@ -23,13 +23,14 @@
 #define CSSStyleSelector_h
 
 #include "CSSFontSelector.h"
+#include "KeyframeList.h"
 #include "MediaQueryExp.h"
 #include "RenderStyle.h"
 #include "StringHash.h"
-#include <wtf/HashSet.h>
 #include <wtf/HashMap.h>
-#include <wtf/Vector.h>
+#include <wtf/HashSet.h>
 #include <wtf/RefPtr.h>
+#include <wtf/Vector.h>
 
 namespace WebCore {
 
@@ -83,6 +84,7 @@ public:
         void initElementAndPseudoState(Element*);
         void initForStyleResolve(Element*, RenderStyle* parentStyle = 0, RenderStyle::PseudoId = RenderStyle::NOPSEUDO);
         RenderStyle* styleForElement(Element*, RenderStyle* parentStyle = 0, bool allowSharing = true, bool resolveForRootDefault = false);
+        void keyframeStylesForAnimation(Element*, const RenderStyle*, KeyframeList& list);
 
         RenderStyle* pseudoStyleForElement(RenderStyle::PseudoId, Element*, RenderStyle* parentStyle = 0);
 
@@ -138,18 +140,9 @@ public:
         CSSValue* resolveVariableDependentValue(CSSVariableDependentValue*);
         void resolveVariablesForDeclaration(CSSMutableStyleDeclaration* decl, CSSMutableStyleDeclaration* newDecl, HashSet<String>& usedBlockVariables);
 
-        KeyframeList* findKeyframeRule(const String& name) const
-        {
-            if (name.isEmpty())
-                return 0;
-            
-            AtomicString s(name);
-            if (!m_keyframeRuleMap.contains(s.impl()))
-                return 0;
-            return m_keyframeRuleMap.find(s.impl()).get()->second.get();
-        }
+        void addKeyframeStyle(PassRefPtr<WebKitCSSKeyframesRule> rule);
 
-        void addKeyframeStyle(Document* doc, const WebKitCSSKeyframesRule* rule);
+        static bool createTransformOperations(CSSValue* inValue, RenderStyle* inStyle, TransformOperations& outOperations);
 
     private:
         enum SelectorMatch { SelectorMatches, SelectorFailsLocally, SelectorFailsCompletely };
@@ -179,20 +172,21 @@ public:
         FillLayer m_backgroundData;
         Color m_backgroundColor;
 
-        typedef HashMap<AtomicStringImpl*, RefPtr<KeyframeList> > KeyframeRuleMap;
-        KeyframeRuleMap m_keyframeRuleMap;
+        typedef HashMap<AtomicStringImpl*, RefPtr<WebKitCSSKeyframesRule> > KeyframesRuleMap;
+        KeyframesRuleMap m_keyframesRuleMap;
 
     public:
         static RenderStyle* styleNotYetAvailable() { return s_styleNotYetAvailable; }
 
         class SelectorChecker : public Noncopyable {
         public:
-            SelectorChecker(Document*, bool strictParsing, bool collectRulesOnly = true);
+            SelectorChecker(Document*, bool strictParsing);
 
             bool checkSelector(CSSSelector*, Element*) const;
             SelectorMatch checkSelector(CSSSelector*, Element*, HashSet<AtomicStringImpl*>* selectorAttrs, RenderStyle::PseudoId& dynamicPseudo, bool isAncestor, bool isSubSelector, RenderStyle* = 0, RenderStyle* elementParentStyle = 0) const;
             bool checkOneSelector(CSSSelector*, Element*, HashSet<AtomicStringImpl*>* selectorAttrs, RenderStyle::PseudoId& dynamicPseudo, bool isAncestor, bool isSubSelector, RenderStyle*, RenderStyle* elementParentStyle) const;
             PseudoState checkPseudoState(Element*, bool checkVisited = true) const;
+            bool checkScrollbarPseudoClass(CSSSelector*, RenderStyle::PseudoId& dynamicPseudo) const;
 
             void allVisitedStateChanged();
             void visitedStateChanged(unsigned visitedHash);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@
 #include <qmetaobject.h>
 #include <qdebug.h>
 
-namespace KJS {
+namespace JSC {
 namespace Bindings {
 
 QtClass::QtClass(const QMetaObject* mo)

@@ -213,7 +213,6 @@ void ZeroWidthFontData::init(SimpleFontData* fontData)
     m_scriptCache = 0;
     m_scriptFontProperties = 0;
 #elif USE(ATSUI)
-    m_styleGroup = 0;
     m_ATSUStyle = 0;
     m_ATSUStyleInitialized = false;
     m_ATSUMirrors = false;

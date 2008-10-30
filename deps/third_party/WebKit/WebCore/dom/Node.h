@@ -57,8 +57,7 @@ class RenderObject;
 class RenderStyle;
 class StringBuilder;
 class ExceptionContext;
-
-struct NodeListsNodeData;
+class NodeRareData;
 
 typedef int ExceptionCode;
 
@@ -100,12 +99,12 @@ public:
     enum StyleChange { NoChange, NoInherit, Inherit, Detach, Force };    
     static StyleChange diff(RenderStyle*, RenderStyle*);
 
-    Node(Document*, bool isElement = false);
+    Node(Document*, bool isElement = false, bool isContainer = false);
     virtual ~Node();
 
     // DOM methods & attributes for Node
 
-    bool hasTagName(const QualifiedName& name) const { return virtualHasTagName(name); }
+    bool hasTagName(const QualifiedName&) const;
     virtual String nodeName() const = 0;
     virtual String nodeValue() const;
     virtual void setNodeValue(const String&, ExceptionCode&);
@@ -115,10 +114,10 @@ public:
     Node* previousSibling() const { return m_previous; }
     Node* nextSibling() const { return m_next; }
     virtual PassRefPtr<NodeList> childNodes();
-    Node* firstChild() const { return virtualFirstChild(); }
-    Node* lastChild() const { return virtualLastChild(); }
-    virtual bool hasAttributes() const;
-    virtual NamedAttrMap* attributes() const;
+    Node* firstChild() const { return isContainerNode() ? containerFirstChild() : 0; }
+    Node* lastChild() const { return isContainerNode() ? containerLastChild() : 0; }
+    bool hasAttributes() const;
+    NamedAttrMap* attributes() const;
 
     virtual KURL baseURI() const;
     
@@ -132,12 +131,12 @@ public:
     virtual bool removeChild(Node* child, ExceptionCode&);
     virtual bool appendChild(PassRefPtr<Node> newChild, ExceptionCode&, bool shouldLazyAttach = false);
 
-    virtual void remove(ExceptionCode&);
+    void remove(ExceptionCode&);
     bool hasChildNodes() const { return firstChild(); }
     virtual PassRefPtr<Node> cloneNode(bool deep) = 0;
-    virtual const AtomicString& localName() const;
-    virtual const AtomicString& namespaceURI() const;
-    virtual const AtomicString& prefix() const;
+    const AtomicString& localName() const { return virtualLocalName(); }
+    const AtomicString& namespaceURI() const { return virtualNamespaceURI(); }
+    const AtomicString& prefix() const { return virtualPrefix(); }
     virtual void setPrefix(const AtomicString&, ExceptionCode&);
     void normalize();
 
@@ -157,12 +156,14 @@ public:
     // Other methods (not part of DOM)
 
     bool isElementNode() const { return m_isElement; }
+    bool isContainerNode() const { return m_isContainer; }
     virtual bool isHTMLElement() const { return false; }
 
 #if ENABLE(SVG)
-    virtual
+    virtual bool isSVGElement() const { return false; }
+#else
+    static bool isSVGElement() { return false; }
 #endif
-        bool isSVGElement() const { return false; }
 
     virtual bool isStyledElement() const { return false; }
     virtual bool isFrameOwnerElement() const { return false; }
@@ -170,7 +171,7 @@ public:
     virtual bool isTextNode() const { return false; }
     virtual bool isCommentNode() const { return false; }
     virtual bool isCharacterDataNode() const { return false; }
-    virtual bool isDocumentNode() const { return false; }
+    bool isDocumentNode() const;
     virtual bool isEventTargetNode() const { return false; }
     virtual bool isShadowNode() const { return false; }
     virtual Node* shadowParentNode() { return 0; }
@@ -183,11 +184,6 @@ public:
 
     bool isBlockFlow() const;
     bool isBlockFlowOrBlockTable() const;
-    
-    // Used by <form> elements to indicate a malformed state of some kind, typically
-    // used to keep from applying the bottom margin of the form.
-    virtual bool isMalformed() { return false; }
-    virtual void setMalformed(bool malformed) { }
     
     // These low-level calls give the caller responsibility for maintaining the integrity of the tree.
     void setPreviousSibling(Node* previous) { m_previous = previous; }
@@ -251,7 +247,7 @@ public:
     bool inActiveChain() const { return m_inActiveChain; }
     bool inDetach() const { return m_inDetach; }
     bool hovered() const { return m_hovered; }
-    bool focused() const { return m_focused; }
+    bool focused() const { return hasRareData() ? rareDataFocused() : false; }
     bool attached() const { return m_attached; }
     void setAttached(bool b = true) { m_attached = b; }
     bool changed() const { return m_styleChange != NoStyleChange; }
@@ -272,11 +268,11 @@ public:
     void lazyAttach();
     virtual bool canLazyAttach();
 
-    virtual void setFocus(bool b = true) { m_focused = b; }
-    virtual void setActive(bool b = true, bool pause=false) { m_active = b; }
+    virtual void setFocus(bool b = true);
+    virtual void setActive(bool b = true, bool /*pause*/ = false) { m_active = b; }
     virtual void setHovered(bool b = true) { m_hovered = b; }
 
-    virtual short tabIndex() const { return m_tabIndex; }
+    virtual short tabIndex() const;
 
     /**
      * Whether this node can receive the keyboard focus.
@@ -310,9 +306,9 @@ public:
     // of a DocumentType node that is not used with any Document yet. A Document node returns itself.
     Document* document() const
     {
-      ASSERT(this);
-      ASSERT(m_document || nodeType() == DOCUMENT_TYPE_NODE && !inDocument());
-      return m_document.get();
+        ASSERT(this);
+        ASSERT(m_document || nodeType() == DOCUMENT_TYPE_NODE && !inDocument());
+        return m_document.get();
     }
     void setDocument(Document*);
 
@@ -320,14 +316,14 @@ public:
     // node tree, false otherwise.
     bool inDocument() const 
     { 
-      ASSERT(m_document || !m_inDocument);
-      return m_inDocument; 
+        ASSERT(m_document || !m_inDocument);
+        return m_inDocument; 
     }
-    
+
     bool isReadOnlyNode() const { return nodeType() == ENTITY_REFERENCE_NODE; }
     virtual bool childTypeAllowed(NodeType) { return false; }
-    virtual unsigned childNodeCount() const;
-    virtual Node* childNode(unsigned index) const;
+    unsigned childNodeCount() const { return isContainerNode() ? containerChildNodeCount() : 0; }
+    Node* childNode(unsigned index) const { return isContainerNode() ? containerChildNode(index) : 0; }
 
     /**
      * Does a pre-order traversal of the tree to find the node next node after this one. This uses the same order that
@@ -413,7 +409,7 @@ public:
 
     virtual void willRemove();
     void createRendererIfNeeded();
-    virtual RenderStyle* styleForRenderer(RenderObject* parent);
+    RenderStyle* styleForRenderer(RenderObject* parent);
     virtual bool rendererIsNeeded(RenderStyle*);
 #if ENABLE(SVG)
     virtual bool childShouldCreateRenderer(Node*) const { return true; }
@@ -421,7 +417,7 @@ public:
     virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
     
     // Wrapper for nodes that don't have a renderer, but still cache the style (like HTMLOptionElement).
-    virtual RenderStyle* renderStyle() const;
+    RenderStyle* renderStyle() const;
     virtual void setRenderStyle(RenderStyle*);
 
     virtual RenderStyle* computedStyle();
@@ -481,10 +477,6 @@ public:
     PassRefPtr<NodeList> getElementsByName(const String& elementName);
     PassRefPtr<NodeList> getElementsByClassName(const String& classNames);
 
-    PassRefPtr<Element> querySelector(const String& selectors, NSResolver*, ExceptionCode&, ExceptionContext*);
-    PassRefPtr<NodeList> querySelectorAll(const String& selectors, NSResolver*, ExceptionCode&, ExceptionContext*);
-    // For non-JS bindings. Silently ignores the JavaScript exception if any.
-    // FIXME: We should support the NSResolver interface for non-JS bindings.
     PassRefPtr<Element> querySelector(const String& selectors, ExceptionCode&);
     PassRefPtr<NodeList> querySelectorAll(const String& selectors, ExceptionCode&);
 
@@ -495,21 +487,31 @@ protected:
     virtual void didMoveToNewOwnerDocument() { }
     
     virtual void getSubresourceAttributeStrings(Vector<String>&) const { }
-    void setTabIndexExplicitly(short i)
-    { 
-        m_tabIndex = i; 
-        m_tabIndexSetExplicitly = true;
-    }
+    void setTabIndexExplicitly(short);
+    
+    bool hasRareData() const { return m_hasRareData; }
+    
+    NodeRareData* rareData() const;
+    NodeRareData* ensureRareData();
 
 private:
+    virtual NodeRareData* createRareData();
+    Node* containerChildNode(unsigned index) const;
+    unsigned containerChildNodeCount() const;
+    Node* containerFirstChild() const;
+    Node* containerLastChild() const;
+    bool rareDataFocused() const;
+
+    virtual RenderStyle* nonRendererRenderStyle() const;
+
+    virtual const AtomicString& virtualPrefix() const;
+    virtual const AtomicString& virtualLocalName() const;
+    virtual const AtomicString& virtualNamespaceURI() const;
+    
     DocPtr<Document> m_document;
     Node* m_previous;
     Node* m_next;
     RenderObject* m_renderer;
-
-    OwnPtr<NodeListsNodeData> m_nodeLists;
-
-    short m_tabIndex;
 
     // make sure we don't use more than 16 bits here -- adding more would increase the size of all Nodes
 
@@ -520,25 +522,20 @@ private:
     bool m_hasChangedChild : 1;
     bool m_inDocument : 1;
     bool m_isLink : 1;
-    bool m_focused : 1;
     bool m_active : 1;
     bool m_hovered : 1;
     bool m_inActiveChain : 1;
     bool m_inDetach : 1;
     bool m_inSubtreeMark : 1;
-    bool m_tabIndexSetExplicitly : 1;
+    bool m_hasRareData : 1;
     const bool m_isElement : 1;
-    // no bits left
+    const bool m_isContainer : 1;
+    // no bits left   
 
     Element* ancestorElement() const;
 
     void appendTextContent(bool convertBRsToNewlines, StringBuilder&) const;
-
-    virtual Node* virtualFirstChild() const;
-    virtual Node* virtualLastChild() const;
-    virtual bool virtualHasTagName(const QualifiedName&) const;
 };
-
 } //namespace
 
 #ifndef NDEBUG

@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2007 Trolltech ASA
+    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
     Copyright (C) 2008 Holger Hans Peter Freyther
 
     This library is free software; you can redistribute it and/or
@@ -176,6 +176,9 @@ QWebView::QWebView(QWidget *parent)
 */
 QWebView::~QWebView()
 {
+    if (d->page)
+        d->page->d->view = 0;
+
     if (d->page && d->page->parent() == this)
         delete d->page;
     delete d;
@@ -770,16 +773,18 @@ void QWebView::focusInEvent(QFocusEvent* ev)
 {
     if (d->page)
         d->page->event(ev);
-    QWidget::focusInEvent(ev);
+    else
+        QWidget::focusInEvent(ev);
 }
 
 /*! \reimp
 */
 void QWebView::focusOutEvent(QFocusEvent* ev)
 {
-    QWidget::focusOutEvent(ev);
     if (d->page)
         d->page->event(ev);
+    else
+        QWidget::focusOutEvent(ev);
 }
 
 /*! \reimp

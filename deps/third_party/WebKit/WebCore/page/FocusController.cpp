@@ -65,12 +65,12 @@ void FocusController::setFocusedFrame(PassRefPtr<Frame> frame)
     if (m_focusedFrame == frame)
         return;
 
-    if (m_focusedFrame)
+    if (m_focusedFrame && m_focusedFrame->view())
         m_focusedFrame->selection()->setFocused(false);
 
     m_focusedFrame = frame;
 
-    if (m_focusedFrame)
+    if (m_focusedFrame && m_focusedFrame->view())
         m_focusedFrame->selection()->setFocused(true);
 }
 
@@ -296,15 +296,12 @@ void FocusController::setActive(bool active)
 
     m_isActive = active;
 
-    // FIXME: It would be nice to make Mac use this implementation someday.
-    // Right now Mac calls updateControlTints from within WebKit, and moving
-    // the call to here is not simple.
-#if !PLATFORM(MAC) && !PLATFORM(WX)
     if (FrameView* view = m_page->mainFrame()->view()) {
-        view->layoutIfNeededRecursive();
-        view->updateControlTints();
+        if (!view->platformWidget()) {
+            view->layoutIfNeededRecursive();
+            view->updateControlTints();
+        }
     }
-#endif
 
     focusedOrMainFrame()->selection()->pageActivationChanged();
 }

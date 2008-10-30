@@ -51,7 +51,7 @@ typedef HWND PlatformPluginWidget;
 typedef PlatformWidget PlatformPluginWidget;
 #endif
 
-namespace KJS {
+namespace JSC {
     namespace Bindings {
         class Instance;
     }
@@ -63,7 +63,7 @@ namespace WebCore {
     class KeyboardEvent;
     class MouseEvent;
     class KURL;
-#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+#if PLATFORM(WIN_OS) && !PLATFORM(WX) && ENABLE(NETSCAPE_PLUGIN_API)
     class PluginMessageThrottlerWin;
 #endif
     class PluginPackage;
@@ -108,7 +108,7 @@ namespace WebCore {
         void setNPWindowRect(const IntRect&);
         static PluginView* currentPluginView();
 
-        PassRefPtr<KJS::Bindings::Instance> bindingInstance();
+        PassRefPtr<JSC::Bindings::Instance> bindingInstance();
 
         PluginStatus status() const { return m_status; }
 
@@ -136,6 +136,8 @@ namespace WebCore {
         void pushPopupsEnabledState(bool state);
         void popPopupsEnabledState();
 
+        virtual void invalidateRect(const IntRect&);
+
         bool arePopupsAllowed() const;
 
         void setJavaScriptPaused(bool);
@@ -144,22 +146,25 @@ namespace WebCore {
         void streamDidFinishLoading(PluginStream* stream) { disconnectStream(stream); }
 
         // Widget functions
-        virtual void setFrameGeometry(const IntRect&);
-        virtual void geometryChanged() const;
+        virtual void setFrameRect(const IntRect&);
+        virtual void frameRectsChanged() const;
         virtual void setFocus();
         virtual void show();
         virtual void hide();
         virtual void paint(GraphicsContext*, const IntRect&);
-        virtual IntRect windowClipRect() const;
+
+        // This method is used by plugins on all platforms to obtain a clip rect that includes clips set by WebCore,
+        // e.g., in overflow:auto sections.  The clip rects coordinates are in the containing window's coordinate space.
+        // This clip includes any clips that the widget itself sets up for its children.
+        IntRect windowClipRect() const;
+
         virtual void handleEvent(Event*);
         virtual void setParent(ScrollView*);
-
-        virtual void attachToWindow();
-        virtual void detachFromWindow();
+        virtual void setParentVisible(bool);
 
         virtual bool isPluginView() const { return true; }
 
-#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+#if PLATFORM(WIN_OS) && !PLATFORM(WX) && ENABLE(NETSCAPE_PLUGIN_API)
         static LRESULT CALLBACK PluginViewWndProc(HWND, UINT, WPARAM, LPARAM);
         LRESULT wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
         WNDPROC pluginWndProc() const { return m_pluginWndProc; }
@@ -172,6 +177,11 @@ namespace WebCore {
         void didFail(const ResourceError&);
 
         static bool isCallingPlugin();
+
+#if PLATFORM(QT)
+        bool isNPAPIPlugin() const { return m_isNPAPIPlugin; }
+        void setIsNPAPIPlugin(bool b) { m_isNPAPIPlugin = b; }
+#endif
 
     private:
         PluginView(Frame* parentFrame, const IntSize&, PluginPackage*, Element*, const KURL&, const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually);
@@ -187,6 +197,8 @@ namespace WebCore {
         static void freeStringArray(char** stringArray, int length);
         void setCallingPlugin(bool) const;
 
+        void invalidateWindowlessPluginRect(const IntRect&);
+        
         Frame* m_parentFrame;
         RefPtr<PluginPackage> m_plugin;
         Element* m_element;
@@ -209,7 +221,7 @@ namespace WebCore {
 #ifndef NP_NO_CARBON
         bool dispatchNPEvent(NPEvent&);
 #endif
-        void updateWindow() const;
+        void updatePluginWidget() const;
         void paintMissingPluginIcon(GraphicsContext*, const IntRect&);
 
         void handleKeyboardEvent(KeyboardEvent*);
@@ -234,22 +246,35 @@ namespace WebCore {
 
         bool m_isWindowed;
         bool m_isTransparent;
-        bool m_isVisible;
-        bool m_attachedToWindow;
         bool m_haveInitialized;
+
+#if PLATFORM(QT)
+        bool m_isNPAPIPlugin;
+#endif
 
 #if PLATFORM(GTK) || defined(Q_WS_X11)
         bool m_needsXEmbed;
 #endif
 
-#if PLATFORM(WIN_OS) && !PLATFORM(WX)
+#if PLATFORM(WIN_OS) && !PLATFORM(WX) && ENABLE(NETSCAPE_PLUGIN_API)
         OwnPtr<PluginMessageThrottlerWin> m_messageThrottler;
         WNDPROC m_pluginWndProc;
         unsigned m_lastMessage;
         bool m_isCallingPluginWndProc;
 #endif
 
+#if PLATFORM(WIN_OS) && PLATFORM(QT)
+        // Only under Qt on Windows, the plugin widget (HWND) does not match the native widget (QWidget).
         PlatformPluginWidget m_window; // for windowed plug-ins
+public:
+        PlatformPluginWidget platformPluginWidget() const { return m_window; }
+#else
+public:
+        PlatformPluginWidget platformPluginWidget() const { return platformWidget(); }
+#endif
+
+private:
+
         mutable IntRect m_clipRect; // The clip rect to apply to a windowed plug-in
         mutable IntRect m_windowRect; // Our window rect.
 

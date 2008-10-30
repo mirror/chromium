@@ -7,7 +7,7 @@
  *                     2001 George Staikos <staikos@kde.org>
  * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
  * Copyright (C) 2005 Alexey Proskuryakov <ap@nypop.com>
- * Copyright (C) 2007 Trolltech ASA
+ * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  * Copyright (C) 2008 Eric Seidel <eric@webkit.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -98,8 +98,6 @@ namespace WebCore {
 
 using namespace EventNames;
 using namespace HTMLNames;
-
-double Frame::s_currentPaintTimeStamp = 0.0;
 
 #ifndef NDEBUG    
 static WTF::RefCountedLeakCounter frameCounter("Frame");
@@ -752,9 +750,8 @@ void Frame::setNeedsReapplyStyles()
 
     // Invalidate the FrameView so that FrameView::layout will get called,
     // which calls reapplyStyles.
-    FrameView* curView = view();
-    if (curView)
-        curView->invalidate();
+    if (view())
+        view()->invalidate();
 }
 
 bool Frame::needsReapplyStyles() const
@@ -1251,68 +1248,6 @@ void Frame::revealCaret(const RenderLayer::ScrollAlignment& alignment) const
     }
 }
 
-// FIXME: why is this here instead of on the FrameView?
-void Frame::paint(GraphicsContext* p, const IntRect& rect)
-{
-#ifndef NDEBUG
-    bool fillWithRed;
-    if (!document() || document()->printing())
-        fillWithRed = false; // Printing, don't fill with red (can't remember why).
-    else if (document()->ownerElement())
-        fillWithRed = false; // Subframe, don't fill with red.
-    else if (view() && view()->isTransparent())
-        fillWithRed = false; // Transparent, don't fill with red.
-    else if (d->m_paintRestriction == PaintRestrictionSelectionOnly || d->m_paintRestriction == PaintRestrictionSelectionOnlyBlackText)
-        fillWithRed = false; // Selections are transparent, don't fill with red.
-    else if (d->m_elementToDraw)
-        fillWithRed = false; // Element images are transparent, don't fill with red.
-    else
-        fillWithRed = true;
-    
-    if (fillWithRed)
-        p->fillRect(rect, Color(0xFF, 0, 0));
-#endif
-
-    bool isTopLevelPainter = !s_currentPaintTimeStamp;
-    if (isTopLevelPainter)
-        s_currentPaintTimeStamp = currentTime();
-    
-    if (contentRenderer()) {
-        ASSERT(d->m_view && !d->m_view->needsLayout());
-        ASSERT(!d->m_isPainting);
-        
-        d->m_isPainting = true;
-        
-        // d->m_elementToDraw is used to draw only one element
-        RenderObject* eltRenderer = d->m_elementToDraw ? d->m_elementToDraw->renderer() : 0;
-        if (d->m_paintRestriction == PaintRestrictionNone)
-            document()->invalidateRenderedRectsForMarkersInRect(rect);
-        contentRenderer()->layer()->paint(p, rect, d->m_paintRestriction, eltRenderer);
-        
-        d->m_isPainting = false;
-
-#if ENABLE(DASHBOARD_SUPPORT)
-        // Regions may have changed as a result of the visibility/z-index of element changing.
-        if (document()->dashboardRegionsDirty())
-            view()->updateDashboardRegions();
-#endif
-    } else
-        LOG_ERROR("called Frame::paint with nil renderer");
-        
-    if (isTopLevelPainter)
-        s_currentPaintTimeStamp = 0;
-}
-
-void Frame::setPaintRestriction(PaintRestriction pr)
-{
-    d->m_paintRestriction = pr;
-}
-    
-bool Frame::isPainting() const
-{
-    return d->m_isPainting;
-}
-
 void Frame::adjustPageHeight(float *newBottom, float oldTop, float oldBottom, float bottomLimit)
 {
     RenderView* root = contentRenderer();
@@ -1401,7 +1336,7 @@ void Frame::sendScrollEvent()
     Document* doc = document();
     if (!doc)
         return;
-    doc->dispatchHTMLEvent(scrollEvent, true, false);
+    doc->dispatchEventForType(scrollEvent, true, false);
 }
 
 void Frame::clearTimers(FrameView *view, Document *document)
@@ -1630,11 +1565,11 @@ unsigned Frame::markAllMatchesForText(const String& target, bool caseFlag, unsig
     Document* doc = document();
     if (doc && d->m_view && contentRenderer()) {
         doc->updateLayout(); // Ensure layout is up to date.
-        IntRect visibleRect(enclosingIntRect(d->m_view->visibleContentRect()));
+        IntRect visibleRect = d->m_view->visibleContentRect();
         if (!visibleRect.isEmpty()) {
             GraphicsContext context((PlatformGraphicsContext*)0);
             context.setPaintingDisabled(true);
-            paint(&context, visibleRect);
+            d->m_view->paintContents(&context, visibleRect);
         }
     }
     
@@ -1668,12 +1603,10 @@ DOMWindow* Frame::domWindow() const
     return d->m_domWindow.get();
 }
 
-
 void Frame::clearFormerDOMWindow(DOMWindow* window)
 {
     d->m_liveFormerWindows.remove(window);    
 }
-
 
 Page* Frame::page() const
 {
@@ -1728,16 +1661,6 @@ String Frame::documentTypeString() const
     }
 
     return String();
-}
-
-bool Frame::prohibitsScrolling() const
-{
-    return d->m_prohibitsScrolling;
-}
-
-void Frame::setProhibitsScrolling(bool prohibit)
-{
-    d->m_prohibitsScrolling = prohibit;
 }
 
 void Frame::focusWindow()
@@ -1897,13 +1820,10 @@ FramePrivate::FramePrivate(Page* page, Frame* parent, Frame* thisFrame, HTMLFram
     , m_eventHandler(thisFrame)
     , m_animationController(thisFrame)
     , m_lifeSupportTimer(thisFrame, &Frame::lifeSupportTimerFired)
-    , m_paintRestriction(PaintRestrictionNone)
     , m_caretVisible(false)
     , m_caretPaint(true)
-    , m_isPainting(false)
     , m_highlightTextMatches(false)
     , m_inViewSourceMode(false)
-    , m_prohibitsScrolling(false)
     , m_needsReapplyStyles(false)
     , m_isDisconnected(false)
     , m_excludeFromTextSearch(false)

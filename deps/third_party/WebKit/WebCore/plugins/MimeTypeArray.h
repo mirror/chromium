@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Trolltech ASA
+    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -26,7 +26,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
 
-namespace KJS {
+namespace JSC {
     class ExecState;
     class JSValue;
 };
@@ -38,7 +38,7 @@ namespace WebCore {
     class PluginData;
 
     // FIXME: Generated JSMimeTypeArray.cpp doesn't include JSMimeType.h for toJS
-    KJS::JSValue* toJS(KJS::ExecState*, MimeType*);
+    JSC::JSValue* toJS(JSC::ExecState*, MimeType*);
 
     class MimeTypeArray : public RefCounted<MimeTypeArray> {
     public:

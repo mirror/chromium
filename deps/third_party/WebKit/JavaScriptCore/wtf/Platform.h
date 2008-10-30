@@ -49,6 +49,14 @@
 #define WTF_PLATFORM_WIN_OS 1
 #endif
 
+/* PLATFORM(WIN_CE) */
+/* Operating system level dependencies for Windows CE that should be used */
+/* regardless of operating environment */
+/* Note that for this platform PLATFORM(WIN_OS) is also defined. */
+#if defined(_WIN32_WCE)
+#define WTF_PLATFORM_WIN_CE 1
+#endif
+
 /* PLATFORM(FREEBSD) */
 /* Operating system level dependencies for FreeBSD-like systems that */
 /* should be used regardless of operating environment */
@@ -93,10 +101,7 @@
 #if defined(BUILDING_CHROMIUM__)
 #define WTF_PLATFORM_CHROMIUM 1
 
-// FIXME: we should not be defining WTF_PLATFORM_MAC here!!
 #if PLATFORM(DARWIN)
-//#define WTF_PLATFORM_MAC 1
-//XXXPINK -- need a better way to pick these up w/out PLATFORM(MAC)
 #define WTF_PLATFORM_CF 1
 #define WTF_USE_PTHREADS 1
 #define WTF_USE_ATSUI 1
@@ -256,7 +261,6 @@
 #if PLATFORM(MAC)
 #define WTF_PLATFORM_CF 1
 #define WTF_USE_PTHREADS 1
-#define WTF_USE_ATSUI 1
 #if !defined(ENABLE_MAC_JAVA_BRIDGE)
 #define ENABLE_MAC_JAVA_BRIDGE 1
 #endif
@@ -349,17 +353,42 @@
 #define ENABLE_NETSCAPE_PLUGIN_API 1
 #endif
 
-#if !defined(ENABLE_DASHBOARD_SUPPORT)
-#define ENABLE_DASHBOARD_SUPPORT 0
-#endif
-
 #if !defined(ENABLE_SAMPLING_TOOL)
 #define ENABLE_SAMPLING_TOOL 0
 #endif
 
-#if !defined(ENABLE_PAN_SCROLLING) && (PLATFORM(WIN) || PLATFORM(CHROMIUM) || (PLATFORM(WX) && PLATFORM(WIN_OS))) && !PLATFORM(MAC)
-// note the PLATFORM(MAC) part should not be up-streamed, it's a temporary fix.
+// CTI only supports x86 at the moment, and has only been tested on Mac and Windows.
+#if !defined(ENABLE_CTI) && PLATFORM(X86) && (PLATFORM(MAC) || PLATFORM(WIN))
+#define ENABLE_CTI 1
+#endif
+
+// WREC only supports x86 at the moment, and has only been tested on Mac and Windows.
+#if !defined(ENABLE_WREC) && PLATFORM(X86) && (PLATFORM(MAC) || PLATFORM(WIN))
+#define ENABLE_WREC 1
+#endif
+
+#if ENABLE(CTI) || ENABLE(WREC)
+#define ENABLE_MASM 1
+#endif
+
+#if !defined(ENABLE_PAN_SCROLLING) && (PLATFORM(WIN) || PLATFORM(CHROMIUM) || (PLATFORM(WX) && PLATFORM(WIN_OS)))
 #define ENABLE_PAN_SCROLLING 1
+#endif
+
+/* Use the QtXmlStreamReader implementation for XMLTokenizer */
+#if PLATFORM(QT)
+#if !ENABLE(XSLT)
+#define WTF_USE_QXMLSTREAM 1
+#endif
+#endif
+
+// Use "fastcall" calling convention on MSVC and GCC > 4.0
+#if COMPILER(MSVC) || (COMPILER(GCC) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ > 0)))
+#define WTF_USE_FAST_CALL_CTI_ARGUMENT 1
+#endif
+
+#if COMPILER(MSVC) || USE(FAST_CALL_CTI_ARGUMENT)
+#define WTF_USE_CTI_ARGUMENT 1
 #endif
 
 #endif /* WTF_Platform_h */

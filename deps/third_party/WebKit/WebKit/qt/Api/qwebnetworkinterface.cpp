@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2006 Enrico Ros <enrico.ros@m31engineering.it>
-    Copyright (C) 2007 Trolltech ASA
+    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
     Copyright (C) 2007 Staikos Computing Services Inc.  <info@staikos.net>
 
     This library is free software; you can redistribute it and/or
@@ -556,7 +556,17 @@ void QWebNetworkManager::started(QWebNetworkJob *job)
                     client->willSendRequest(job->d->resourceHandle, newRequest, response);
             }
 
-            job->d->request.httpHeader.setRequest(job->d->request.httpHeader.method(),
+            QString method;
+            if (statusCode == 302 || statusCode == 303) {
+                // this is standard-correct for 303 and practically-correct (no standard-correct) for 302
+                // also, it's required for Yahoo's login process for flickr.com which responds to a POST
+                // with a 302 which must be GET'ed
+                method = "GET";
+                job->d->request.httpHeader.setContentLength(0);
+            } else {
+                method = job->d->request.httpHeader.method();
+            }
+            job->d->request.httpHeader.setRequest(method,
                                                   newUrl.toString(QUrl::RemoveScheme|QUrl::RemoveAuthority));
             job->d->request.setURL(newUrl);
             job->d->redirected = true;

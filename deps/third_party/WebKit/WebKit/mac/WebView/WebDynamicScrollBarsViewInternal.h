@@ -32,12 +32,16 @@
 @interface WebDynamicScrollBarsView (WebInternal) <WebCoreFrameScrollView>
 
 - (BOOL)allowsHorizontalScrolling;
-- (void)setAllowsVerticalScrolling:(BOOL)flag;
 - (BOOL)allowsVerticalScrolling;
+
+- (void)setScrollingModes:(WebCore::ScrollbarMode)hMode vertical:(WebCore::ScrollbarMode)vMode andLock:(BOOL)lock;
+- (void)scrollingModes:(WebCore::ScrollbarMode*)hMode vertical:(WebCore::ScrollbarMode*)vMode;
+
+- (WebCore::ScrollbarMode)horizontalScrollingMode;
+- (WebCore::ScrollbarMode)verticalScrollingMode;
 
 - (void)setHorizontalScrollingMode:(WebCore::ScrollbarMode)mode andLock:(BOOL)lock;
 - (void)setVerticalScrollingMode:(WebCore::ScrollbarMode)mode andLock:(BOOL)lock;
-- (void)setScrollingMode:(WebCore::ScrollbarMode)mode andLock:(BOOL)lock;
 
 - (void)setHorizontalScrollingModeLocked:(BOOL)locked;
 - (void)setVerticalScrollingModeLocked:(BOOL)locked;
@@ -45,12 +49,6 @@
 
 - (BOOL)horizontalScrollingModeLocked;
 - (BOOL)verticalScrollingModeLocked;
-
-// Convenience method to affect both scrolling directions at once.
-- (void)setAllowsScrolling:(BOOL)flag;
-
-// Returns YES if either horizontal or vertical scrolling is allowed.
-- (BOOL)allowsScrolling;
 
 - (void)updateScrollers;
 - (void)setSuppressLayout:(BOOL)flag;

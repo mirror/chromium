@@ -25,9 +25,10 @@
 #include "JSArray.h"
 #include "JSFunction.h"
 #include "JSString.h"
+#include "Machine.h"
 #include "PrototypeFunction.h"
 
-namespace KJS {
+namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(FunctionPrototype);
 
@@ -36,13 +37,16 @@ static JSValue* functionProtoFuncApply(ExecState*, JSObject*, JSValue*, const Ar
 static JSValue* functionProtoFuncCall(ExecState*, JSObject*, JSValue*, const ArgList&);
 
 FunctionPrototype::FunctionPrototype(ExecState* exec)
-    : InternalFunction(exec)
+    : InternalFunction(&exec->globalData())
 {
     putDirect(exec->propertyNames().length, jsNumber(exec, 0), DontDelete | ReadOnly | DontEnum);
+}
 
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, this, 0, exec->propertyNames().toString, functionProtoFuncToString), DontEnum);
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, this, 2, exec->propertyNames().apply, functionProtoFuncApply), DontEnum);
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, this, 1, exec->propertyNames().call, functionProtoFuncCall), DontEnum);
+void FunctionPrototype::addFunctionProperties(ExecState* exec, StructureID* prototypeFunctionStructure)
+{
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().toString, functionProtoFuncToString), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 2, exec->propertyNames().apply, functionProtoFuncApply), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 1, exec->propertyNames().call, functionProtoFuncCall), DontEnum);
 }
 
 static JSValue* callFunctionPrototype(ExecState*, JSObject*, JSValue*, const ArgList&)
@@ -63,12 +67,12 @@ JSValue* functionProtoFuncToString(ExecState* exec, JSObject*, JSValue* thisValu
 {
     if (thisValue->isObject(&JSFunction::info)) {
         JSFunction* function = static_cast<JSFunction*>(thisValue);
-        return jsString(exec, "function " + function->name(exec) + "(" + function->m_body->paramString() + ") " + function->m_body->toSourceString());
+        return jsString(exec, "function " + function->name(&exec->globalData()) + "(" + function->m_body->paramString() + ") " + function->m_body->toSourceString());
     }
 
     if (thisValue->isObject(&InternalFunction::info)) {
         InternalFunction* function = static_cast<InternalFunction*>(thisValue);
-        return jsString(exec, "function " + function->name(exec) + "() {\n    [native code]\n}");
+        return jsString(exec, "function " + function->name(&exec->globalData()) + "() {\n    [native code]\n}");
     }
 
     return throwError(exec, TypeError);
@@ -92,14 +96,17 @@ JSValue* functionProtoFuncApply(ExecState* exec, JSObject*, JSValue* thisValue, 
 
     ArgList applyArgs;
     if (!argArray->isUndefinedOrNull()) {
-        if (argArray->isObject() &&
-            (static_cast<JSObject*>(argArray)->inherits(&JSArray::info) ||
-             static_cast<JSObject*>(argArray)->inherits(&Arguments::info))) {
-
-            JSObject* argArrayObj = static_cast<JSObject*>(argArray);
-            unsigned int length = argArrayObj->get(exec, exec->propertyNames().length)->toUInt32(exec);
-            for (unsigned int i = 0; i < length; i++)
-                applyArgs.append(argArrayObj->get(exec, i));
+        if (argArray->isObject()) {
+            if (static_cast<JSObject*>(argArray)->classInfo() == &Arguments::info)
+                static_cast<Arguments*>(argArray)->fillArgList(exec, applyArgs);
+            else if (exec->machine()->isJSArray(argArray))
+                static_cast<JSArray*>(argArray)->fillArgList(exec, applyArgs);
+            else if (static_cast<JSObject*>(argArray)->inherits(&JSArray::info)) {
+                unsigned length = static_cast<JSObject*>(argArray)->get(exec, exec->propertyNames().length)->toUInt32(exec);
+                for (unsigned i = 0; i < length; ++i)
+                    applyArgs.append(static_cast<JSObject*>(argArray)->get(exec, i));
+            } else
+                return throwError(exec, TypeError);
         } else
             return throwError(exec, TypeError);
     }
@@ -127,4 +134,4 @@ JSValue* functionProtoFuncCall(ExecState* exec, JSObject*, JSValue* thisValue, c
     return call(exec, thisValue, callType, callData, callThis, argsTail);
 }
 
-} // namespace KJS
+} // namespace JSC

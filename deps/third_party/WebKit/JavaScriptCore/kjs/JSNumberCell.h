@@ -30,7 +30,7 @@
 #include "ustring.h"
 #include <stddef.h> // for size_t
 
-namespace KJS {
+namespace JSC {
 
     class Identifier;
     class JSCell;
@@ -42,7 +42,11 @@ namespace KJS {
     struct Instruction;
 
     class JSNumberCell : public JSCell {
+        friend class CTI;
+        friend JSValue* jsNumberCell(JSGlobalData*, double);
+        friend JSValue* jsNaN(JSGlobalData*);
         friend JSValue* jsNumberCell(ExecState*, double);
+        friend JSValue* jsNaN(ExecState*);
     public:
         double value() const { return m_value; }
 
@@ -69,9 +73,27 @@ namespace KJS {
     #endif
         }
 
+        void* operator new(size_t size, JSGlobalData* globalData)
+        {
+    #ifdef JAVASCRIPTCORE_BUILDING_ALL_IN_ONE_FILE
+            return globalData->heap.inlineAllocateNumber(size);
+    #else
+            return globalData->heap.allocateNumber(size);
+    #endif
+        }
+
+        static PassRefPtr<StructureID> createStructureID(JSValue* proto) { return StructureID::create(proto, TypeInfo(NumberType, NeedsThisConversion)); }
+
     private:
-        JSNumberCell(double value)
-            : m_value(value)
+        JSNumberCell(JSGlobalData* globalData, double value)
+            : JSCell(globalData->numberStructureID.get())
+            , m_value(value)
+        {
+        }
+
+        JSNumberCell(ExecState* exec, double value)
+            : JSCell(exec->globalData().numberStructureID.get())
+            , m_value(value)
         {
         }
 
@@ -85,22 +107,27 @@ namespace KJS {
     extern const double NaN;
     extern const double Inf;
 
-    // Beware marking this function ALWAYS_INLINE: It takes a PIC branch, so
-    // inlining it may not always be a win.
-    inline JSValue* jsNumberCell(ExecState* exec, double d)
-    {
-        return new (exec) JSNumberCell(d);
-    }
-
-    inline JSValue* jsNaN(ExecState* exec)
-    {
-        return jsNumberCell(exec, NaN);
-    }
+    JSValue* jsNumberCell(JSGlobalData*, double);
+    JSValue* jsNaN(JSGlobalData*);
+    JSValue* jsNumberCell(ExecState*, double);
+    JSValue* jsNaN(ExecState*);
 
     ALWAYS_INLINE JSValue* jsNumber(ExecState* exec, double d)
     {
         JSValue* v = JSImmediate::from(d);
         return v ? v : jsNumberCell(exec, d);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(ExecState* exec, short i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(exec, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(ExecState* exec, unsigned short i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(exec, i);
     }
 
     ALWAYS_INLINE JSValue* jsNumber(ExecState* exec, int i)
@@ -139,6 +166,60 @@ namespace KJS {
         return v ? v : jsNumberCell(exec, static_cast<double>(i));
     }
 
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, double d)
+    {
+        JSValue* v = JSImmediate::from(d);
+        return v ? v : jsNumberCell(globalData, d);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, short i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, unsigned short i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, int i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, unsigned i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, long i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, unsigned long i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, i);
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, long long i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, static_cast<double>(i));
+    }
+
+    ALWAYS_INLINE JSValue* jsNumber(JSGlobalData* globalData, unsigned long long i)
+    {
+        JSValue* v = JSImmediate::from(i);
+        return v ? v : jsNumberCell(globalData, static_cast<double>(i));
+    }
+
     // --- JSValue inlines ----------------------------
 
     inline double JSValue::uncheckedGetNumber() const
@@ -168,6 +249,6 @@ namespace KJS {
         return JSImmediate::isNumber(this) ? const_cast<JSValue*>(this) : jsNumber(exec, this->toNumber(exec));
     }
 
-} // namespace KJS
+} // namespace JSC
 
 #endif // JSNumberCell_h

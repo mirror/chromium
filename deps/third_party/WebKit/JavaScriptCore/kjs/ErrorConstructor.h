@@ -21,22 +21,24 @@
 #ifndef ErrorConstructor_h
 #define ErrorConstructor_h
 
+#include "ErrorInstance.h"
 #include "InternalFunction.h"
 
-namespace KJS {
+namespace JSC {
 
     class ErrorPrototype;
-    class FunctionPrototype;
 
     class ErrorConstructor : public InternalFunction {
     public:
-        ErrorConstructor(ExecState*, FunctionPrototype*, ErrorPrototype*);
+        ErrorConstructor(ExecState*, PassRefPtr<StructureID>, ErrorPrototype*);
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
         virtual CallType getCallData(CallData&);
     };
 
-} // namespace KJS
+    ErrorInstance* constructError(ExecState*, const ArgList&);
+
+} // namespace JSC
 
 #endif // ErrorConstructor_h
