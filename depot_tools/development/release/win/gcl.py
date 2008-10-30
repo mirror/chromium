@@ -80,7 +80,8 @@ def GetCodeReviewSetting(key):
     read_gcl_info = True
     # First we check if we have a cached version.
     cached_settings_file = os.path.join(GetInfoDir(), CODEREVIEW_SETTINGS_FILE)
-    if not os.path.exists(cached_settings_file):
+    if (not os.path.exists(cached_settings_file) or
+        os.stat(cached_settings_file).st_mtime > 60*60*24*3):
       repo_root = GetSVNFileInfo(".", "Repository Root")
       svn_path = repo_root + "/" + CODEREVIEW_SETTINGS_FILE
       settings, rc = RunShellWithReturnCode(["svn", "cat", svn_path])
@@ -97,6 +98,15 @@ def GetCodeReviewSetting(key):
       k, v = line.split(": ", 1)
       CODEREVIEW_SETTINGS[k] = v
   return CODEREVIEW_SETTINGS.get(key, "")
+
+
+def IsTreeOpen():
+  """Fetches the tree status and returns either True or False."""
+  url = GetCodeReviewSetting('STATUS_URL')
+  status = ""
+  if url:
+    status = urllib2.urlopen(url).read()
+  return status.find('0') == -1
 
 
 def ErrorExit(msg):
@@ -398,7 +408,7 @@ def Help():
   print ("   gcl upload change_name [-r reviewer1@gmail.com,"
          "reviewer2@gmail.com,...] [--send_mail] [--no-try]")
   print "      Uploads the changelist to the server for review.\n"
-  print "   gcl commit change_name"
+  print "   gcl commit change_name [--force]"
   print "      Commits the changelist to the repository.\n"
   print "Advanced commands:"
   print "-----------------------------------------"
@@ -528,9 +538,15 @@ def TryChange(change_info, args, swallow_exception=False, patchset=None):
                       swallow_exception, patchset)
 
 
-def Commit(change_info):
+def Commit(change_info, args):
   if not change_info.FileList():
     print "Nothing to commit, changelist is empty."
+    return
+
+  no_tree_status_check = ("--force" in args or "-f" in args)
+  if not no_tree_status_check and not IsTreeOpen():
+    print ("Error: The tree is closed. Try again later or use --force to force"
+        " the commit. May the force be with you.")
     return
 
   commit_cmd = ["svn", "commit"]
@@ -694,7 +710,7 @@ def main(argv=None):
   elif command == "upload":
     UploadCL(change_info, argv[3:])
   elif command == "commit":
-    Commit(change_info)
+    Commit(change_info, argv[3:])
   elif command == "delete":
     change_info.Delete()
   elif command == "try":
