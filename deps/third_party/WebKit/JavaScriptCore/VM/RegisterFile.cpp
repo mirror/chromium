@@ -29,12 +29,12 @@
 #include "config.h"
 #include "RegisterFile.h"
 
-namespace JSC {
+namespace KJS {
 
 RegisterFile::~RegisterFile()
 {
 #if HAVE(MMAP)
-    munmap(m_buffer, ((m_max - m_start) + m_maxGlobals) * sizeof(Register));
+    munmap(m_buffer, (m_capacity + m_maxGlobals) * sizeof(Register));
 #elif HAVE(VIRTUALALLOC)
     // FIXME: Use VirtualFree.
     fastFree(m_buffer);
@@ -43,4 +43,4 @@ RegisterFile::~RegisterFile()
 #endif
 }
 
-} // namespace JSC
+} // namespace KJS

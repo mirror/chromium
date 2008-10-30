@@ -29,27 +29,24 @@
 #ifndef ExceptionHelpers_h
 #define ExceptionHelpers_h
 
-namespace JSC {
+#include "JSObject.h"
 
-    class CodeBlock;
-    class ExecState;
-    class Identifier;
-    class Instruction;
-    class JSGlobalData;
-    class JSNotAnObjectErrorStub;
-    class JSObject;
-    class JSValue;
+namespace KJS {
+
     class Node;
+    class CodeBlock;
+    class Instruction;
+    class JSNotAnObjectErrorStub;
 
-    JSValue* createInterruptedExecutionException(JSGlobalData*);
+    JSValue* createInterruptedExecutionException(ExecState* exec);
     JSValue* createStackOverflowError(ExecState*);
     JSValue* createUndefinedVariableError(ExecState*, const Identifier&, const Instruction*, CodeBlock*);
     JSNotAnObjectErrorStub* createNotAnObjectErrorStub(ExecState*, bool isNull);
-    JSObject* createInvalidParamError(ExecState*, const char* op, JSValue*, const Instruction*, CodeBlock*);
-    JSObject* createNotAConstructorError(ExecState*, JSValue*, const Instruction*, CodeBlock*);
+    JSValue* createInvalidParamError(ExecState*, const char* op, JSValue*, const Instruction*, CodeBlock*);
+    JSValue* createNotAConstructorError(ExecState*, JSValue*, const Instruction*, CodeBlock*);
     JSValue* createNotAFunctionError(ExecState*, JSValue*, const Instruction*, CodeBlock*);
     JSObject* createNotAnObjectError(ExecState*, JSNotAnObjectErrorStub*, const Instruction*, CodeBlock*);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ExceptionHelpers_h

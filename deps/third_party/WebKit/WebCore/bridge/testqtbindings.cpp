@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2006 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -74,8 +74,8 @@ public slots:
 
 // --------------------------------------------------------
 
-using namespace JSC;
-using namespace JSC::Bindings;
+using namespace KJS;
+using namespace KJS::Bindings;
 
 class Global : public JSObject {
 public:

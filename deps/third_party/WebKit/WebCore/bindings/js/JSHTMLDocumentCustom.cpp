@@ -39,7 +39,7 @@
 #include "JSHTMLCollection.h"
 #include <kjs/Error.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

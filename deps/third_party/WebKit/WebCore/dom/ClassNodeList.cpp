@@ -41,7 +41,7 @@ ClassNodeList::ClassNodeList(PassRefPtr<Node> rootNode, const String& classNames
 {
 }
 
-bool ClassNodeList::nodeMatches(Element* testNode) const
+bool ClassNodeList::nodeMatches(Node* testNode) const
 {
     if (!testNode->hasClass())
         return false;

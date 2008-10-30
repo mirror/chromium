@@ -33,21 +33,21 @@
 #include "Location.h"
 #include "NodeList.h"
 #include "ScriptController.h"
+#include "JSNSResolver.h"
 
 #if ENABLE(SVG)
 #include "JSSVGDocument.h"
 #include "SVGDocument.h"
 #endif
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
 void JSDocument::mark()
 {
     JSEventTargetNode::mark();
-    markDOMNodesForDocument(impl());
-    markActiveObjectsForDocument(*Heap::heap(this)->globalData(), impl());
+    ScriptInterpreter::markDOMNodesForDocument(static_cast<Document*>(impl()));
 }
 
 JSValue* JSDocument::location(ExecState* exec) const
@@ -77,35 +77,69 @@ void JSDocument::setLocation(ExecState* exec, JSValue* value)
     frame->loader()->scheduleLocationChange(str, activeFrame->loader()->outgoingReferrer(), false, userGesture);
 }
 
-JSValue* toJS(ExecState* exec, Document* document)
+JSValue* JSDocument::querySelector(ExecState* exec, const ArgList& args)
 {
-    if (!document)
+    Document* imp = impl();
+    ExceptionCode ec = 0;
+    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
+    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
+
+    ExceptionContext context(exec);
+    RefPtr<Element> element = imp->querySelector(selectors, resolver.get(), ec, &context);
+    if (exec->hadException())
+        return jsUndefined();
+    JSValue* result = toJS(exec, element.get());
+    setDOMException(exec, ec);
+    return result;
+}
+
+JSValue* JSDocument::querySelectorAll(ExecState* exec, const ArgList& args)
+{
+    Document* imp = impl();
+    ExceptionCode ec = 0;
+    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
+    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
+
+    ExceptionContext context(exec);
+    RefPtr<NodeList> nodeList = imp->querySelectorAll(selectors, resolver.get(), ec, &context);
+    if (exec->hadException())
+        return jsUndefined();
+    JSValue* result = toJS(exec, nodeList.get());
+    setDOMException(exec, ec);
+    return result;
+}
+
+JSValue* toJS(ExecState* exec, Document* doc)
+{
+    if (!doc)
         return jsNull();
 
-    DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), document);
-    if (wrapper)
-        return wrapper;
+    JSDocument* ret = static_cast<JSDocument*>(ScriptInterpreter::getDOMObject(doc));
+    if (ret)
+        return ret;
 
-    if (document->isHTMLDocument())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLDocument, document);
+    if (doc->isHTMLDocument())
+        ret = new (exec) JSHTMLDocument(JSHTMLDocumentPrototype::self(exec), static_cast<HTMLDocument*>(doc));
 #if ENABLE(SVG)
-    else if (document->isSVGDocument())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, SVGDocument, document);
+    else if (doc->isSVGDocument())
+        ret = new (exec) JSSVGDocument(JSSVGDocumentPrototype::self(exec), static_cast<SVGDocument*>(doc));
 #endif
     else
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, Document, document);
+        ret = new (exec) JSDocument(JSDocumentPrototype::self(exec), doc);
 
     // Make sure the document is kept around by the window object, and works right with the
     // back/forward cache.
-    if (!document->frame()) {
+    if (!doc->frame()) {
         size_t nodeCount = 0;
-        for (Node* n = document; n; n = n->traverseNextNode())
+        for (Node* n = doc; n; n = n->traverseNextNode())
             nodeCount++;
         
         exec->heap()->reportExtraMemoryCost(nodeCount * sizeof(Node));
     }
 
-    return wrapper;
+    ScriptInterpreter::putDOMObject(doc, ret);
+
+    return ret;
 }
 
 } // namespace WebCore

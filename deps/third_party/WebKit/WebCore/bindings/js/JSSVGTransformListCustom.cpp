@@ -26,7 +26,7 @@
 #include "JSSVGTransform.h"
 #include "SVGTransformList.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

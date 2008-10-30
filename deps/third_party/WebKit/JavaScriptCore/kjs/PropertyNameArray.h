@@ -22,57 +22,24 @@
 #define PropertyNameArray_h
 
 #include "ExecState.h"
-#include "StructureID.h"
 #include "identifier.h"
 #include <wtf/HashSet.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
-
-    class PropertyNameArrayData : public RefCounted<PropertyNameArrayData> {
-    public:
-        typedef Vector<Identifier, 20> PropertyNameVector;
-        typedef PropertyNameVector::const_iterator const_iterator;
-
-        static PassRefPtr<PropertyNameArrayData> create() { return adoptRef(new PropertyNameArrayData); }
-
-        const_iterator begin() const { return m_propertyNameVector.begin(); }
-        const_iterator end() const { return m_propertyNameVector.end(); }
-
-        PropertyNameVector& propertyNameVector() { return m_propertyNameVector; }
-
-        void setCachedStructureID(StructureID* structureID) { m_cachedStructureID = structureID; }
-        StructureID* cachedStructureID() const { return m_cachedStructureID; }
-
-        void setCachedPrototypeChain(PassRefPtr<StructureIDChain> cachedPrototypeChain) { m_cachedPrototypeChain = cachedPrototypeChain; }
-        StructureIDChain* cachedPrototypeChain() { return m_cachedPrototypeChain.get(); }
-
-    private:
-        PropertyNameArrayData()
-            : m_cachedStructureID(0)
-        {
-        }
-
-        PropertyNameVector m_propertyNameVector;
-        StructureID* m_cachedStructureID;
-        RefPtr<StructureIDChain> m_cachedPrototypeChain;
-    };
+namespace KJS {
 
     class PropertyNameArray {
     public:
-        typedef PropertyNameArrayData::const_iterator const_iterator;
+        typedef Identifier ValueType;
+        typedef Vector<Identifier>::const_iterator const_iterator;
 
         PropertyNameArray(JSGlobalData* globalData)
-            : m_data(PropertyNameArrayData::create())
-            , m_globalData(globalData)
-            , m_cacheable(true)
+            : m_globalData(globalData)
         {
         }
 
         PropertyNameArray(ExecState* exec)
-            : m_data(PropertyNameArrayData::create())
-            , m_globalData(&exec->globalData())
-            , m_cacheable(true)
+            : m_globalData(&exec->globalData())
         {
         }
 
@@ -80,33 +47,26 @@ namespace JSC {
 
         void add(const Identifier& identifier) { add(identifier.ustring().rep()); }
         void add(UString::Rep*);
-        void addKnownUnique(UString::Rep* identifier) { m_data->propertyNameVector().append(Identifier(m_globalData, identifier)); }
+        void addKnownUnique(UString::Rep* identifier) { m_vector.append(Identifier(m_globalData, identifier)); }
 
-        size_t size() const { return m_data->propertyNameVector().size(); }
+        const_iterator begin() const { return m_vector.begin(); }
+        const_iterator end() const { return m_vector.end(); }
 
-        Identifier& operator[](unsigned i) { return m_data->propertyNameVector()[i]; }
-        const Identifier& operator[](unsigned i) const { return m_data->propertyNameVector()[i]; }
+        size_t size() const { return m_vector.size(); }
 
-        const_iterator begin() const { return m_data->begin(); }
-        const_iterator end() const { return m_data->end(); }
+        Identifier& operator[](unsigned i) { return m_vector[i]; }
+        const Identifier& operator[](unsigned i) const { return m_vector[i]; }
 
-        void setData(PassRefPtr<PropertyNameArrayData> data) { m_data = data; }
-        PropertyNameArrayData* data() { return m_data.get(); }
-
-        PassRefPtr<PropertyNameArrayData> releaseData() { return m_data.release(); }
-
-        void setCacheable(bool cacheable) { m_cacheable = cacheable; }
-        bool cacheable() const { return m_cacheable; }
+        Identifier* releaseIdentifiers() { return size() ? m_vector.releaseBuffer() : 0; }
 
     private:
         typedef HashSet<UString::Rep*, PtrHash<UString::Rep*> > IdentifierSet;
 
-        RefPtr<PropertyNameArrayData> m_data;
+        Vector<Identifier, 20> m_vector;
         IdentifierSet m_set;
         JSGlobalData* m_globalData;
-        bool m_cacheable;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // PropertyNameArray_h

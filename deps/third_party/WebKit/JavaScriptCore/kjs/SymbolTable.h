@@ -33,94 +33,93 @@
 #include "ustring.h"
 #include <wtf/AlwaysInline.h>
 
-namespace JSC {
+namespace KJS {
 
     static ALWAYS_INLINE int missingSymbolMarker() { return std::numeric_limits<int>::max(); }
 
     // The bit twiddling in this class assumes that every register index is a
-    // reasonably small positive or negative number, and therefore has its high
-    // four bits all set or all unset.
+    // reasonably small negative number, and therefore has its high two bits set.
 
     struct SymbolTableEntry {
         SymbolTableEntry()
-            : m_bits(0)
+            : rawValue(0)
         {
-        }
-
-        SymbolTableEntry(int index)
-        {
-            ASSERT(isValidIndex(index));
-            pack(index, false, false);
-        }
-
-        SymbolTableEntry(int index, unsigned attributes)
-        {
-            ASSERT(isValidIndex(index));
-            pack(index, attributes & ReadOnly, attributes & DontEnum);
         }
         
+        SymbolTableEntry(int index)
+        {
+            ASSERT(index & 0x80000000);
+            ASSERT(index & 0x40000000);
+
+            rawValue = index & ~0x80000000 & ~0x40000000;
+        }
+        
+        SymbolTableEntry(int index, unsigned attributes)
+        {
+            ASSERT(index & 0x80000000);
+            ASSERT(index & 0x40000000);
+
+            rawValue = index;
+            
+            if (!(attributes & ReadOnly))
+                rawValue &= ~0x80000000;
+            
+            if (!(attributes & DontEnum))
+                rawValue &= ~0x40000000;
+        }
+
         bool isNull() const
         {
-            return !m_bits;
+            return !rawValue;
         }
 
         int getIndex() const
         {
-            return m_bits >> FlagBits;
+            ASSERT(!isNull());
+            return rawValue | 0x80000000 | 0x40000000;
         }
 
         unsigned getAttributes() const
         {
             unsigned attributes = 0;
-            if (m_bits & ReadOnlyFlag)
+            
+            if (rawValue & 0x80000000)
                 attributes |= ReadOnly;
-            if (m_bits & DontEnumFlag)
+            
+            if (rawValue & 0x40000000)
                 attributes |= DontEnum;
+            
             return attributes;
         }
 
         void setAttributes(unsigned attributes)
         {
-            pack(getIndex(), attributes & ReadOnly, attributes & DontEnum);
+            rawValue = getIndex();
+            
+            if (!(attributes & ReadOnly))
+                rawValue &= ~0x80000000;
+            
+            if (!(attributes & DontEnum))
+                rawValue &= ~0x40000000;
         }
 
         bool isReadOnly() const
         {
-            return m_bits & ReadOnlyFlag;
+            return rawValue & 0x80000000;
         }
 
-    private:
-        static const unsigned ReadOnlyFlag = 0x1;
-        static const unsigned DontEnumFlag = 0x2;
-        static const unsigned NotNullFlag = 0x4;
-        static const unsigned FlagBits = 3;
-
-        void pack(int index, bool readOnly, bool dontEnum)
-        {
-            m_bits = (index << FlagBits) | NotNullFlag;
-            if (readOnly)
-                m_bits |= ReadOnlyFlag;
-            if (dontEnum)
-                m_bits |= DontEnumFlag;
-        }
-        
-        bool isValidIndex(int index)
-        {
-            return ((index << FlagBits) >> FlagBits) == index;
-        }
-
-        int m_bits;
+        int rawValue;
     };
 
     struct SymbolTableIndexHashTraits {
         typedef SymbolTableEntry TraitType;
         static SymbolTableEntry emptyValue() { return SymbolTableEntry(); }
-        static const bool emptyValueIsZero = true;
+        static const bool emptyValueIsZero = false;
         static const bool needsDestruction = false;
     };
 
     typedef HashMap<RefPtr<UString::Rep>, SymbolTableEntry, IdentifierRepHash, HashTraits<RefPtr<UString::Rep> >, SymbolTableIndexHashTraits> SymbolTable;
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // SymbolTable_h

@@ -26,12 +26,15 @@
 #include <wtf/HashMap.h>
 #include <wtf/OwnPtr.h>
 
+namespace KJS {
+    class ExecState;
+}
+
 namespace WebCore {
 
     class AtomicString;
     class DOMWindow;
     class DOMWindowTimer;
-    class Event;
     class Frame;
     class JSDOMWindow;
     class JSDOMWindowShell;
@@ -44,16 +47,13 @@ namespace WebCore {
 
     class JSDOMWindowBasePrivate;
 
-    typedef HashMap<const JSC::ClassInfo*, RefPtr<JSC::StructureID> > JSDOMStructureMap;
-    typedef HashMap<const JSC::ClassInfo*, JSC::JSObject*> JSDOMConstructorMap;
-
     // This is the only WebCore JS binding which does not inherit from DOMObject
-    class JSDOMWindowBase : public JSC::JSGlobalObject {
-        typedef JSC::JSGlobalObject Base;
+    class JSDOMWindowBase : public KJS::JSGlobalObject {
+        typedef KJS::JSGlobalObject Base;
 
         friend class ScheduledAction;
     protected:
-        JSDOMWindowBase(PassRefPtr<JSC::StructureID>, PassRefPtr<DOMWindow>, JSDOMWindowShell*);
+        JSDOMWindowBase(KJS::JSObject* prototype, DOMWindow*, JSDOMWindowShell*);
 
     public:
         virtual ~JSDOMWindowBase();
@@ -64,12 +64,13 @@ namespace WebCore {
 
         void disconnectFrame();
 
-        virtual bool getOwnPropertySlot(JSC::ExecState*, const JSC::Identifier&, JSC::PropertySlot&);
-        virtual void put(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSValue*, JSC::PutPropertySlot&);
+        virtual bool getOwnPropertySlot(KJS::ExecState*, const KJS::Identifier&, KJS::PropertySlot&);
+        KJS::JSValue* getValueProperty(KJS::ExecState*, int token) const;
+        virtual void put(KJS::ExecState*, const KJS::Identifier& propertyName, KJS::JSValue*, KJS::PutPropertySlot&);
 
-        int installTimeout(const JSC::UString& handler, int t, bool singleShot);
-        int installTimeout(JSC::ExecState*, JSC::JSValue* function, const JSC::ArgList& args, int t, bool singleShot);
-        void removeTimeout(int timerId, bool delAction = true);
+        int installTimeout(const KJS::UString& handler, int t, bool singleShot);
+        int installTimeout(KJS::ExecState*, KJS::JSValue* function, const KJS::ArgList& args, int t, bool singleShot);
+        void clearTimeout(int timerId, bool delAction = true);
 
         void pauseTimeouts(OwnPtr<PausedTimeouts>&);
         void resumeTimeouts(OwnPtr<PausedTimeouts>&);
@@ -77,16 +78,16 @@ namespace WebCore {
         void timerFired(DOMWindowTimer*);
 
         // Finds a wrapper of a JS EventListener, returns 0 if no existing one.
-        JSEventListener* findJSEventListener(JSC::JSValue*, bool attachedToEventTargetNode = false);
+        JSEventListener* findJSEventListener(KJS::JSValue*, bool html = false);
 
         // Finds or creates a wrapper of a JS EventListener. JS EventListener object is GC-protected.
-        PassRefPtr<JSEventListener> findOrCreateJSEventListener(JSC::ExecState*, JSC::JSValue*, bool attachedToEventTargetNode = false);
+        PassRefPtr<JSEventListener> findOrCreateJSEventListener(KJS::ExecState*, KJS::JSValue*, bool html = false);
 
         // Finds a wrapper of a GC-unprotected JS EventListener, returns 0 if no existing one.
-        JSUnprotectedEventListener* findJSUnprotectedEventListener(JSC::ExecState*, JSC::JSValue*, bool attachedToEventTargetNode = false);
+        JSUnprotectedEventListener* findJSUnprotectedEventListener(KJS::ExecState*, KJS::JSValue*, bool html = false);
 
         // Finds or creates a wrapper of a JS EventListener. JS EventListener object is *NOT* GC-protected.
-        PassRefPtr<JSUnprotectedEventListener> findOrCreateJSUnprotectedEventListener(JSC::ExecState*, JSC::JSValue*, bool attachedToEventTargetNode = false);
+        PassRefPtr<JSUnprotectedEventListener> findOrCreateJSUnprotectedEventListener(KJS::ExecState*, KJS::JSValue*, bool html = false);
 
         void clear();
 
@@ -94,82 +95,98 @@ namespace WebCore {
         Event* currentEvent();
 
         // Set a place to put a dialog return value when the window is cleared.
-        void setReturnValueSlot(JSC::JSValue** slot);
+        void setReturnValueSlot(KJS::JSValue** slot);
 
-        typedef HashMap<JSC::JSObject*, JSEventListener*> ListenersMap;
-        typedef HashMap<JSC::JSObject*, JSUnprotectedEventListener*> UnprotectedListenersMap;
+        typedef HashMap<KJS::JSObject*, JSEventListener*> ListenersMap;
+        typedef HashMap<KJS::JSObject*, JSUnprotectedEventListener*> UnprotectedListenersMap;
 
         ListenersMap& jsEventListeners();
-        ListenersMap& jsEventListenersAttachedToEventTargetNodes();
+        ListenersMap& jsHTMLEventListeners();
         UnprotectedListenersMap& jsUnprotectedEventListeners();
-        UnprotectedListenersMap& jsUnprotectedEventListenersAttachedToEventTargetNodes();
+        UnprotectedListenersMap& jsUnprotectedHTMLEventListeners();
 
-        virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
-        static const JSC::ClassInfo s_info;
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+        static const KJS::ClassInfo s_info;
 
-        virtual JSC::ExecState* globalExec();
+        virtual KJS::ExecState* globalExec();
 
         virtual bool shouldInterruptScript() const;
 
-        bool allowsAccessFrom(JSC::ExecState*) const;
-        bool allowsAccessFromNoErrorMessage(JSC::ExecState*) const;
-        bool allowsAccessFrom(JSC::ExecState*, String& message) const;
+        bool allowsAccessFrom(KJS::ExecState*) const;
+        bool allowsAccessFromNoErrorMessage(KJS::ExecState*) const;
+        bool allowsAccessFrom(KJS::ExecState*, String& message) const;
 
         void printErrorMessage(const String&) const;
 
         // Don't call this version of allowsAccessFrom -- it's a slightly incorrect implementation used only by WebScriptObject
-        virtual bool allowsAccessFrom(const JSC::JSGlobalObject*) const;
+        virtual bool allowsAccessFrom(const KJS::JSGlobalObject*) const;
 
-        virtual JSC::JSObject* toThisObject(JSC::ExecState*) const;
+        virtual KJS::JSObject* toThisObject(KJS::ExecState*) const;
         JSDOMWindowShell* shell() const;
 
-        static JSC::JSGlobalData* commonJSGlobalData();
+        static KJS::JSGlobalData* commonJSGlobalData();
 
-        void clearAllTimeouts();
+        enum {
+            // Attributes
+            Crypto, Event_,
 
-        JSDOMStructureMap& structures() { return d()->structures; }
-        JSDOMConstructorMap& constructors() const { return d()->constructors; }
+            // Event Listeners
+            Onabort, Onblur, Onchange, Onclick,
+            Ondblclick, Onerror, Onfocus, Onkeydown,
+            Onkeypress, Onkeyup, Onload, Onmousedown,
+            Onmousemove, Onmouseout, Onmouseover, Onmouseup,
+            OnWindowMouseWheel, Onreset, Onresize, Onscroll,
+            Onsearch, Onselect, Onsubmit, Onunload,
+            Onbeforeunload,
+            OnWebKitAnimationStart, OnWebKitAnimationIteration, OnWebKitAnimationEnd,
+            OnWebKitTransitionEnd,
+
+            // Constructors
+            Audio, Image, Option, XMLHttpRequest,
+            XSLTProcessor
+        };
 
     private:
         struct JSDOMWindowBaseData : public JSGlobalObjectData {
-            JSDOMWindowBaseData(PassRefPtr<DOMWindow>, JSDOMWindowShell*);
+            JSDOMWindowBaseData(PassRefPtr<DOMWindow> window_, JSDOMWindowBase* jsWindow_, JSDOMWindowShell* shell_);
 
             RefPtr<DOMWindow> impl;
 
             JSDOMWindowBase::ListenersMap jsEventListeners;
-            JSDOMWindowBase::ListenersMap jsEventListenersAttachedToEventTargetNodes;
+            JSDOMWindowBase::ListenersMap jsHTMLEventListeners;
             JSDOMWindowBase::UnprotectedListenersMap jsUnprotectedEventListeners;
-            JSDOMWindowBase::UnprotectedListenersMap jsUnprotectedEventListenersAttachedToEventTargetNodes;
+            JSDOMWindowBase::UnprotectedListenersMap jsUnprotectedHTMLEventListeners;
             Event* evt;
-            JSC::JSValue** returnValueSlot;
+            KJS::JSValue** returnValueSlot;
             JSDOMWindowShell* shell;
 
             typedef HashMap<int, DOMWindowTimer*> TimeoutsMap;
             TimeoutsMap timeouts;
-
-            JSDOMStructureMap structures;
-            JSDOMConstructorMap constructors;
         };
+        
+        KJS::JSValue* getListener(KJS::ExecState*, const AtomicString& eventType) const;
+        void setListener(KJS::ExecState*, const AtomicString& eventType, KJS::JSValue* function);
 
-        static JSC::JSValue* childFrameGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);
-        static JSC::JSValue* indexGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);
-        static JSC::JSValue* namedItemGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);
+        static KJS::JSValue* childFrameGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
+        static KJS::JSValue* indexGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
+        static KJS::JSValue* namedItemGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
 
         void clearHelperObjectProperties();
+        void clearAllTimeouts();
         int installTimeout(ScheduledAction*, int interval, bool singleShot);
 
-        bool allowsAccessFromPrivate(const JSC::JSGlobalObject*) const;
-        String crossDomainAccessErrorMessage(const JSC::JSGlobalObject*) const;
+        bool allowsAccessFromPrivate(const KJS::JSGlobalObject*) const;
+        String crossDomainAccessErrorMessage(const KJS::JSGlobalObject*) const;
         
-        JSDOMWindowBaseData* d() const { return static_cast<JSDOMWindowBaseData*>(JSC::JSVariableObject::d); }
+        JSDOMWindowBaseData* d() const { return static_cast<JSDOMWindowBaseData*>(KJS::JSVariableObject::d); }
     };
 
     // Returns a JSDOMWindow or jsNull()
-    JSC::JSValue* toJS(JSC::ExecState*, DOMWindow*);
+    KJS::JSValue* toJS(KJS::ExecState*, DOMWindow*);
 
     // Returns JSDOMWindow or 0
     JSDOMWindow* toJSDOMWindow(Frame*);
-    JSDOMWindow* toJSDOMWindow(JSC::JSValue*);
+    JSDOMWindow* toJSDOMWindow(KJS::JSValue*);
 
 } // namespace WebCore
 

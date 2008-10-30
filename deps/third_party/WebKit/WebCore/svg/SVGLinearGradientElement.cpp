@@ -25,7 +25,6 @@
 #if ENABLE(SVG)
 #include "SVGLinearGradientElement.h"
 
-#include "Document.h"
 #include "FloatPoint.h"
 #include "LinearGradientAttributes.h"
 #include "SVGLength.h"

@@ -30,7 +30,7 @@
 #include "JSCSSStyleSheet.h"
 #include "JSNode.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -39,16 +39,17 @@ JSValue* toJS(ExecState* exec, StyleSheet* styleSheet)
     if (!styleSheet)
         return jsNull();
 
-    DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), styleSheet);
-    if (wrapper)
-        return wrapper;
+    DOMObject* ret = ScriptInterpreter::getDOMObject(styleSheet);
+    if (ret)
+        return ret;
 
     if (styleSheet->isCSSStyleSheet())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, CSSStyleSheet, styleSheet);
+        ret = new (exec) JSCSSStyleSheet(JSCSSStyleSheetPrototype::self(exec), static_cast<CSSStyleSheet*>(styleSheet));
     else
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, StyleSheet, styleSheet);
+        ret = new (exec) JSStyleSheet(JSStyleSheetPrototype::self(exec), styleSheet);
 
-    return wrapper;
+    ScriptInterpreter::putDOMObject(styleSheet, ret);
+    return ret;
 }
 
 void JSStyleSheet::mark()
@@ -61,7 +62,7 @@ void JSStyleSheet::mark()
     // be to make ref/deref on the style sheet ref/deref the node instead, but there's
     // a lot of disentangling of the CSS DOM objects that would need to happen first.
     if (Node* ownerNode = impl()->ownerNode()) {
-        if (JSNode* ownerNodeWrapper = getCachedDOMNodeWrapper(ownerNode->document(), ownerNode)) {
+        if (JSNode* ownerNodeWrapper = ScriptInterpreter::getDOMNodeForDocument(ownerNode->document(), ownerNode)) {
             if (!ownerNodeWrapper->marked())
                 ownerNodeWrapper->mark();
         }

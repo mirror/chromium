@@ -27,17 +27,9 @@
 
 #include "JSStaticScopeObject.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(JSStaticScopeObject);
-
-void JSStaticScopeObject::mark()
-{
-    JSVariableObject::mark();
-    
-    if (!d()->registerStore.marked())
-        d()->registerStore.mark();
-}
 
 JSObject* JSStaticScopeObject::toThisObject(ExecState* exec) const
 {
@@ -67,8 +59,8 @@ bool JSStaticScopeObject::isDynamicScope() const
 
 JSStaticScopeObject::~JSStaticScopeObject()
 {
-    ASSERT(d());
-    delete d();
+    ASSERT(d);
+    delete static_cast<JSStaticScopeObjectData*>(d);
 }
 
 inline bool JSStaticScopeObject::getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot& slot)

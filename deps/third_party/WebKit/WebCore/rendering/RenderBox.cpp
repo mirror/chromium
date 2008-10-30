@@ -50,13 +50,10 @@ using namespace std;
 namespace WebCore {
 
 using namespace HTMLNames;
-
+    
 // Used by flexible boxes when flexing this element.
 typedef WTF::HashMap<const RenderBox*, int> OverrideSizeMap;
 static OverrideSizeMap* gOverrideSizeMap = 0;
-
-bool RenderBox::s_wasFloating = false;
-bool RenderBox::s_hadOverflowClip = false;
 
 RenderBox::RenderBox(Node* node)
     : RenderObject(node)
@@ -75,50 +72,24 @@ RenderBox::RenderBox(Node* node)
 {
 }
 
-RenderBox::~RenderBox()
+void RenderBox::setStyle(RenderStyle* newStyle)
 {
-}
+    bool wasFloating = isFloating();
+    bool hadOverflowClip = hasOverflowClip();
 
-void RenderBox::destroy()
-{
-    // A lot of the code in this function is just pasted into
-    // RenderWidget::destroy. If anything in this function changes,
-    // be sure to fix RenderWidget::destroy() as well.
-    if (hasOverrideSize())
-        gOverrideSizeMap->remove(this);
+    RenderStyle* oldStyle = style();
+    if (oldStyle)
+        oldStyle->ref();
 
-    // This must be done before we destroy the RenderObject.
-    if (m_layer)
-        m_layer->clearClipRect();
-
-    if (style() && (style()->height().isPercent() || style()->minHeight().isPercent() || style()->maxHeight().isPercent()))
-        RenderBlock::removePercentHeightDescendant(this);
-
-    RenderObject::destroy();
-}
-
-void RenderBox::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
-{
-    s_wasFloating = isFloating();
-    s_hadOverflowClip = hasOverflowClip();
-
-    RenderObject::styleWillChange(diff, newStyle);
-}
-
-void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
-{
-    RenderObject::styleDidChange(diff, oldStyle);
-
-    if (needsLayout() && oldStyle && (oldStyle->height().isPercent() || oldStyle->minHeight().isPercent() || oldStyle->maxHeight().isPercent()))
-        RenderBlock::removePercentHeightDescendant(this);
+    RenderObject::setStyle(newStyle);
 
     // The root and the RenderView always paint their backgrounds/borders.
     if (isRoot() || isRenderView())
         setHasBoxDecorations(true);
 
-    setInline(style()->isDisplayInlineType());
+    setInline(newStyle->isDisplayInlineType());
 
-    switch (style()->position()) {
+    switch (newStyle->position()) {
         case AbsolutePosition:
         case FixedPosition:
             setPositioned(true);
@@ -126,44 +97,31 @@ void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldSty
         default:
             setPositioned(false);
 
-            if (style()->isFloating())
+            if (newStyle->isFloating())
                 setFloating(true);
 
-            if (style()->position() == RelativePosition)
+            if (newStyle->position() == RelativePosition)
                 setRelPositioned(true);
-            break;
     }
 
     // We also handle <body> and <html>, whose overflow applies to the viewport.
-    if (!isRoot() && (isRenderBlock() || isTableRow() || isTableSection()) && style()->overflowX() != OVISIBLE) {
-        bool boxHasOverflowClip = true;
-        if (isBody()) {
-            // Overflow on the body can propagate to the viewport under the following conditions.
-            // (1) The root element is <html>.
-            // (2) We are the primary <body> (can be checked by looking at document.body).
-            // (3) The root element has visible overflow.
-            if (document()->documentElement()->hasTagName(htmlTag) &&
-                document()->body() == element() &&
-                document()->documentElement()->renderer()->style()->overflowX() == OVISIBLE)
-                boxHasOverflowClip = false;
-        }
-        
+    if (!isRoot() && (!isBody() || !document()->isHTMLDocument()) && (isRenderBlock() || isTableRow() || isTableSection())) {
         // Check for overflow clip.
         // It's sufficient to just check one direction, since it's illegal to have visible on only one overflow value.
-        if (boxHasOverflowClip) {
-            if (!s_hadOverflowClip)
+        if (newStyle->overflowX() != OVISIBLE) {
+            if (!hadOverflowClip)
                 // Erase the overflow
                 repaint();
             setHasOverflowClip();
         }
     }
 
-    setHasTransform(style()->hasTransform());
-    setHasReflection(style()->boxReflect());
+    setHasTransform(newStyle->hasTransform());
+    setHasReflection(newStyle->boxReflect());
 
     if (requiresLayer()) {
         if (!m_layer) {
-            if (s_wasFloating && isFloating())
+            if (wasFloating && isFloating())
                 setChildNeedsLayout(true);
             m_layer = new (renderArena()) RenderLayer(this);
             setHasLayer(true);
@@ -179,7 +137,7 @@ void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldSty
         setHasTransform(false); // Either a transform wasn't specified or the object doesn't support transforms, so just null out the bit.
         setHasReflection(false);
         layer->removeOnlyThisLayer();
-        if (s_wasFloating && isFloating())
+        if (wasFloating && isFloating())
             setChildNeedsLayout(true);
     }
 
@@ -199,14 +157,36 @@ void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldSty
     }
 
     if (m_layer)
-        m_layer->styleChanged(diff, oldStyle);
+        m_layer->styleChanged(oldStyle);
 
     // Set the text color if we're the body.
     if (isBody())
-        document()->setTextColor(style()->color());
+        document()->setTextColor(newStyle->color());
 
     if (style()->outlineWidth() > 0 && style()->outlineSize() > maximalOutlineSize(PaintPhaseOutline))
         static_cast<RenderView*>(document()->renderer())->setMaximalOutlineSize(style()->outlineSize());
+
+    if (oldStyle)
+        oldStyle->deref(renderArena());
+}
+
+RenderBox::~RenderBox()
+{
+}
+
+void RenderBox::destroy()
+{
+    // A lot of the code in this function is just pasted into
+    // RenderWidget::destroy. If anything in this function changes,
+    // be sure to fix RenderWidget::destroy() as well.
+    if (hasOverrideSize())
+        gOverrideSizeMap->remove(this);
+
+    // This must be done before we destroy the RenderObject.
+    if (m_layer)
+        m_layer->clearClipRect();
+
+    RenderObject::destroy();
 }
 
 int RenderBox::minPrefWidth() const
@@ -343,7 +323,7 @@ void RenderBox::paintRootBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
 {
     const FillLayer* bgLayer = style()->backgroundLayers();
     Color bgColor = style()->backgroundColor();
-    if (!style()->hasBackground() && element() && element()->hasTagName(HTMLNames::htmlTag)) {
+    if (document()->isHTMLDocument() && !style()->hasBackground()) {
         // Locate the <body> element using the DOM.  This is easier than trying
         // to crawl around a render tree with potential :before/:after content and
         // anonymous blocks created by inline <body> tags etc.  We can locate the <body>
@@ -421,7 +401,7 @@ void RenderBox::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
         // The <body> only paints its background if the root element has defined a background
         // independent of the body.  Go through the DOM to get to the root element's render object,
         // since the root could be inline and wrapped in an anonymous block.
-        if (!isBody() || document()->documentElement()->renderer()->style()->hasBackground())
+        if (!isBody() || !document()->isHTMLDocument() || document()->documentElement()->renderer()->style()->hasBackground())
             paintFillLayers(paintInfo, style()->backgroundColor(), style()->backgroundLayers(), my, mh, tx, ty, w, h);
         if (style()->hasAppearance())
             theme()->paintDecorations(this, paintInfo, IntRect(tx, ty, w, h));
@@ -581,7 +561,7 @@ bool RenderBox::repaintLayerRectsForImage(WrappedImagePtr image, const FillLayer
             // Now that we know this image is being used, compute the renderer and the rect
             // if we haven't already
             if (!layerRenderer) {
-                bool drawingRootBackground = drawingBackground && (isRoot() || (isBody() && !document()->documentElement()->renderer()->style()->hasBackground()));
+                bool drawingRootBackground = drawingBackground && (isRoot() || (isBody() && document()->isHTMLDocument() && !document()->documentElement()->renderer()->style()->hasBackground()));
                 if (drawingRootBackground) {
                     layerRenderer = view();
 
@@ -823,7 +803,6 @@ void RenderBox::paintFillLayerExtended(const PaintInfo& paintInfo, const Color& 
         } else
             isTransparent = view()->frameView()->isTransparent();
 
-        // FIXME: This needs to be dynamic.  We should be able to go back to blitting if we ever stop being transparent.
         if (isTransparent)
             view()->frameView()->setUseSlowRepaints(); // The parent must show behind the child.
     }
@@ -1537,10 +1516,8 @@ int RenderBox::calcPercentageHeight(const Length& height)
         // block that may have a specified height and then use it.  In strict mode, this violates the
         // specification, which states that percentage heights just revert to auto if the containing
         // block has an auto height.
-        while (!cb->isRenderView() && !cb->isBody() && !cb->isTableCell() && !cb->isPositioned() && cb->style()->height().isAuto()) {
+        while (!cb->isRenderView() && !cb->isBody() && !cb->isTableCell() && !cb->isPositioned() && cb->style()->height().isAuto())
             cb = cb->containingBlock();
-            cb->addPercentHeightDescendant(this);
-        }
     }
 
     // A positioned element that specified both top/bottom or that specifies height should be treated as though it has a height
@@ -1643,11 +1620,6 @@ int RenderBox::calcReplacedHeightUsing(Length height) const
         case Percent:
         {
             RenderObject* cb = isPositioned() ? container() : containingBlock();
-            while (cb->isAnonymous()) {
-                cb = cb->containingBlock();
-                static_cast<RenderBlock*>(cb)->addPercentHeightDescendant(const_cast<RenderBox*>(this));
-            }
-
             if (cb->isPositioned() && cb->style()->height().isAuto() && !(cb->style()->top().isAuto() || cb->style()->bottom().isAuto())) {
                 ASSERT(cb->isRenderBlock());
                 RenderBlock* block = static_cast<RenderBlock*>(cb);
@@ -1699,15 +1671,6 @@ int RenderBox::availableHeightUsing(const Length& h) const
 
     if (h.isPercent())
        return calcContentBoxHeight(h.calcValue(containingBlock()->availableHeight()));
-
-    if (isRenderBlock() && isPositioned() && style()->height().isAuto() && !(style()->top().isAuto() || style()->bottom().isAuto())) {
-        RenderBlock* block = const_cast<RenderBlock*>(static_cast<const RenderBlock*>(this));
-        int oldHeight = block->height();
-        block->calcHeight();
-        int newHeight = block->calcContentBoxHeight(block->contentHeight());
-        block->setHeight(oldHeight);
-        return calcContentBoxHeight(newHeight);
-    }
 
     return containingBlock()->availableHeight();
 }

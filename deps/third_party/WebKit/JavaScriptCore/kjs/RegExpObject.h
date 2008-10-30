@@ -24,47 +24,52 @@
 #include "JSObject.h"
 #include "regexp.h"
 
-namespace JSC {
+namespace KJS {
+
+    class RegExpPrototype;
 
     class RegExpObject : public JSObject {
     public:
-        RegExpObject(PassRefPtr<StructureID>, PassRefPtr<RegExp>);
+        enum { Global, IgnoreCase, Multiline, Source, LastIndex };
+
+        RegExpObject(RegExpPrototype*, PassRefPtr<RegExp>);
         virtual ~RegExpObject();
 
         void setRegExp(PassRefPtr<RegExp> r) { d->regExp = r; }
         RegExp* regExp() const { return d->regExp.get(); }
 
-        void setLastIndex(double lastIndex) { d->lastIndex = lastIndex; }
-        double lastIndex() const { return d->lastIndex; }
-
         JSValue* test(ExecState*, const ArgList&);
         JSValue* exec(ExecState*, const ArgList&);
 
-        virtual bool getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
-        virtual void put(ExecState*, const Identifier& propertyName, JSValue*, PutPropertySlot&);
+        bool getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
+        JSValue* getValueProperty(ExecState*, int token) const;
+        void put(ExecState*, const Identifier& propertyName, JSValue*, PutPropertySlot&);
+        void putValueProperty(ExecState*, int token, JSValue*);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
+
+        void setLastIndex(double lastIndex) { d->lastIndex = lastIndex; }
 
     private:
         bool match(ExecState*, const ArgList&);
 
         virtual CallType getCallData(CallData&);
-
+        
         struct RegExpObjectData {
-            RegExpObjectData(PassRefPtr<RegExp> regExp, double lastIndex)
-                : regExp(regExp)
-                , lastIndex(lastIndex)
+            RegExpObjectData(PassRefPtr<RegExp> regExp_, double lastIndex_)
+                : regExp(regExp_)
+                , lastIndex(lastIndex_)
             {
             }
 
             RefPtr<RegExp> regExp;
             double lastIndex;
         };
-
+        
         OwnPtr<RegExpObjectData> d;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // RegExpObject_h

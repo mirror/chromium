@@ -30,7 +30,7 @@
 #include "NumberConstructor.h"
 #include "NumberPrototype.h"
 
-namespace JSC {
+namespace KJS {
 
 JSObject* JSImmediate::toObject(const JSValue* v, ExecState* exec)
 {
@@ -73,9 +73,4 @@ UString JSImmediate::toString(const JSValue* v)
     return "undefined";
 }
 
-NEVER_INLINE double JSImmediate::nonInlineNaN()
-{
-    return std::numeric_limits<double>::quiet_NaN();
-}
-
-} // namespace JSC
+} // namespace KJS

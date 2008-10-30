@@ -31,7 +31,7 @@
 #include <jni_runtime.h>
 #include <wtf/HashMap.h>
 
-namespace JSC {
+namespace KJS {
 
 namespace Bindings {
 
@@ -59,7 +59,7 @@ private:
 
 } // namespace Bindings
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ENABLE(MAC_JAVA_BRIDGE)
 

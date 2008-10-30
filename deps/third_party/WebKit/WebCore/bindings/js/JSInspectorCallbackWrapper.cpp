@@ -28,7 +28,7 @@
 
 #include "JSInspectedObjectWrapper.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -62,7 +62,14 @@ JSValue* JSInspectorCallbackWrapper::wrap(ExecState* unwrappedExec, JSValue* unw
 
     if (prototype->isNull())
         return new (unwrappedExec) JSInspectorCallbackWrapper(unwrappedExec, unwrappedObject, unwrappedExec->globalData().nullProtoStructureID);
-    return new (unwrappedExec) JSInspectorCallbackWrapper(unwrappedExec, unwrappedObject, static_cast<JSObject*>(wrap(unwrappedExec, prototype))->inheritorID());
+    return new (unwrappedExec) JSInspectorCallbackWrapper(unwrappedExec, unwrappedObject, static_cast<JSObject*>(wrap(unwrappedExec, prototype)));
+}
+
+JSInspectorCallbackWrapper::JSInspectorCallbackWrapper(ExecState* unwrappedExec, JSObject* unwrappedObject, JSObject* wrappedPrototype)
+    : JSQuarantinedObjectWrapper(unwrappedExec, unwrappedObject, wrappedPrototype)
+{
+    ASSERT(!wrappers().contains(unwrappedObject));
+    wrappers().set(unwrappedObject, this);
 }
 
 JSInspectorCallbackWrapper::JSInspectorCallbackWrapper(ExecState* unwrappedExec, JSObject* unwrappedObject, PassRefPtr<StructureID> structureID)

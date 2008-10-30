@@ -42,7 +42,7 @@ namespace WebCore {
     private:
         NameNodeList(PassRefPtr<Node> rootNode, const String& name, Caches*);
 
-        virtual bool nodeMatches(Element*) const;
+        virtual bool nodeMatches(Node*) const;
 
         AtomicString m_nodeName;
     };

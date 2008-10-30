@@ -84,7 +84,6 @@ public:
     virtual bool isMenuButton() const;
     virtual bool isMenuItem() const;
     virtual bool isControl() const;
-    virtual bool isFieldset() const;
 
     virtual bool isEnabled() const;
     virtual bool isSelected() const;
@@ -135,7 +134,7 @@ public:
     virtual Element* actionElement() const;
     Element* mouseButtonListener() const;
     FrameView* frameViewIfRenderView() const;
-    virtual Element* anchorElement() const;
+    virtual HTMLAnchorElement* anchorElement() const;
     AccessibilityObject* menuForMenuButton() const;
     AccessibilityObject* menuButtonForMenu() const;
     
@@ -170,7 +169,7 @@ public:
     virtual const String& actionVerb() const;
     virtual Widget* widget() const;
     virtual Widget* widgetForAttachmentView() const;
-    virtual void getDocumentLinks(AccessibilityChildrenVector&);
+    virtual void getDocumentLinks(AccessibilityChildrenVector&) const;
     virtual FrameView* documentFrameView() const;
     
     virtual const AccessibilityChildrenVector& children();
@@ -182,7 +181,6 @@ public:
     virtual void detach();
     virtual void childrenChanged();
     virtual void addChildren();
-    virtual bool canHaveChildren() const;
     virtual void selectedChildren(AccessibilityChildrenVector&);
     virtual void visibleChildren(AccessibilityChildrenVector&);
     virtual bool shouldFocusActiveDescendant() const;
@@ -227,8 +225,6 @@ private:
     IntRect checkboxOrRadioRect() const;
     void addRadioButtonGroupMembers(AccessibilityChildrenVector& linkedUIElements) const;
     AccessibilityObject* internalLinkElement() const;
-    AccessibilityObject* accessibilityParentForImageMap(HTMLMapElement* map) const;
-
 };
     
 } // namespace WebCore

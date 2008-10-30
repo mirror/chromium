@@ -45,6 +45,7 @@ public:
     virtual void removeLeftoverAnonymousBlock(RenderBlock*) { }
     virtual bool createsAnonymousWrapper() const { return true; }
 
+    virtual void setStyle(RenderStyle*);
     void setupInnerStyle(RenderStyle*);
     virtual void updateFromElement();
 
@@ -58,9 +59,6 @@ public:
     virtual bool canHaveChildren() const;
 
 protected:
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
-
     virtual bool hasLineIfEmpty() const { return true; }
 
     void timerFired(Timer<RenderButton>*);

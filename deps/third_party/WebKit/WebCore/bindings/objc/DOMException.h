@@ -24,15 +24,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#import <JavaScriptCore/WebKitAvailability.h>
-
-#if WEBKIT_VERSION_MAX_ALLOWED >= WEBKIT_VERSION_1_3
-
 @class NSString;
 
 extern NSString * const DOMException;
 
-enum DOMExceptionCode {
+// DOM exception codes
+enum {
     DOM_INDEX_SIZE_ERR                = 1,
     DOM_DOMSTRING_SIZE_ERR            = 2,
     DOM_HIERARCHY_REQUEST_ERR         = 3,
@@ -49,5 +46,3 @@ enum DOMExceptionCode {
     DOM_NAMESPACE_ERR                 = 14,
     DOM_INVALID_ACCESS_ERR            = 15
 };
-
-#endif

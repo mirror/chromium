@@ -70,11 +70,10 @@ RenderTable::~RenderTable()
     delete m_tableLayout;
 }
 
-void RenderTable::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderTable::setStyle(RenderStyle* newStyle)
 {
-    RenderBlock::styleDidChange(diff, oldStyle);
-
-    ETableLayout oldTableLayout = oldStyle ? oldStyle->tableLayout() : TAUTO;
+    ETableLayout oldTableLayout = style() ? style()->tableLayout() : TAUTO;
+    RenderBlock::setStyle(newStyle);
 
     // In the collapsed border model, there is no cell spacing.
     m_hSpacing = collapseBorders() ? 0 : style()->horizontalBorderSpacing();

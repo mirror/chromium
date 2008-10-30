@@ -60,6 +60,7 @@ public:
 
 private:
     virtual bool hasWebView() const; // mainly for assertions
+    virtual bool hasFrameView() const; // ditto
 
     virtual void makeRepresentation(WebCore::DocumentLoader*);
     virtual bool hasHTMLView() const;

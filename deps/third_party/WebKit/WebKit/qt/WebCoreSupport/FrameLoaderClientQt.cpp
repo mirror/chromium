@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2006 Zack Rusin <zack@kde.org>
  * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007-2008 Trolltech ASA
  * Copyright (C) 2008 Collabora Ltd. All rights reserved.
  *
  * All rights reserved.
@@ -196,6 +196,13 @@ bool FrameLoaderClientQt::hasWebView() const
     return true;
 }
 
+
+bool FrameLoaderClientQt::hasFrameView() const
+{
+    //notImplemented();
+    return true;
+}
+
 void FrameLoaderClientQt::savePlatformDataToCachedPage(CachedPage*) 
 {
     notImplemented();
@@ -222,6 +229,17 @@ void FrameLoaderClientQt::transitionToCommittedForNewPage()
         frameView = new FrameView(m_frame, m_webFrame->page()->viewportSize());
     else
         frameView = new FrameView(m_frame);
+
+    if (!m_webFrame->d->allowsScrolling)
+        frameView->setScrollbarsMode(ScrollbarAlwaysOff);
+    if (m_webFrame->d->marginWidth != -1)
+        frameView->setMarginWidth(m_webFrame->d->marginWidth);
+    if (m_webFrame->d->marginHeight != -1)
+        frameView->setMarginHeight(m_webFrame->d->marginHeight);
+    if (m_webFrame->d->horizontalScrollBarPolicy != Qt::ScrollBarAsNeeded)
+        frameView->setHScrollbarMode((ScrollbarMode)m_webFrame->d->horizontalScrollBarPolicy);
+    if (m_webFrame->d->verticalScrollBarPolicy != Qt::ScrollBarAsNeeded)
+        frameView->setVScrollbarMode((ScrollbarMode)m_webFrame->d->verticalScrollBarPolicy);
 
     m_frame->setView(frameView);
     // FrameViews are created with a ref count of 1. Release this ref since we've assigned it to frame.
@@ -1009,17 +1027,6 @@ static const CSSPropertyID qstyleSheetProperties[] = {
 
 const unsigned numqStyleSheetProperties = sizeof(qstyleSheetProperties) / sizeof(qstyleSheetProperties[0]);
 
-class QtPluginWidget: public Widget
-{
-public:
-    QtPluginWidget(QWidget* w = 0): Widget(w) {}
-    virtual void invalidateRect(const IntRect& r)
-    { 
-        if (platformWidget())
-            platformWidget()->update(r);
-    }
-};
-
 Widget* FrameLoaderClientQt::createPlugin(const IntSize& pluginSize, Element* element, const KURL& url, const Vector<String>& paramNames,
                                           const Vector<String>& paramValues, const String& mimeType, bool loadManually)
 {
@@ -1083,8 +1090,8 @@ Widget* FrameLoaderClientQt::createPlugin(const IntSize& pluginSize, Element* el
             QWidget *view = m_webFrame->page()->view();
             if (widget && view) {
                 widget->setParent(view);
-                QtPluginWidget* w= new QtPluginWidget();
-                w->setPlatformWidget(widget);
+                Widget* w= new Widget();
+                w->setNativeWidget(widget);
                 return w;
             }
             // FIXME: make things work for widgetless plugins as well

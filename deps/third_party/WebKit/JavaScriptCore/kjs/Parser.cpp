@@ -30,15 +30,26 @@
 
 extern int kjsyyparse(void*);
 
-namespace JSC {
+namespace KJS {
 
-void Parser::parse(ExecState* exec, int* errLine, UString* errMsg)
+Parser::Parser()
+    : m_sourceId(0)
+{
+}
+
+void Parser::parse(ExecState* exec, const UString& sourceURL, int startingLineNumber, PassRefPtr<SourceProvider> prpSource,
+                   int* sourceId, int* errLine, UString* errMsg)
 {
     ASSERT(!m_sourceElements);
 
+    int defaultSourceId;
     int defaultErrLine;
     UString defaultErrMsg;
 
+    RefPtr<SourceProvider> source = prpSource;
+
+    if (!sourceId)
+        sourceId = &defaultSourceId;
     if (!errLine)
         errLine = &defaultErrLine;
     if (!errMsg)
@@ -47,8 +58,13 @@ void Parser::parse(ExecState* exec, int* errLine, UString* errMsg)
     *errLine = -1;
     *errMsg = 0;
 
-    Lexer& lexer = *exec->globalData().lexer;
-    lexer.setCode(*m_source);
+    Lexer& lexer = *exec->lexer();
+
+    if (startingLineNumber <= 0)
+        startingLineNumber = 1;
+
+    lexer.setCode(startingLineNumber, source);
+    *sourceId = ++m_sourceId;
 
     int parseError = kjsyyparse(&exec->globalData());
     bool lexError = lexer.sawError();
@@ -63,18 +79,19 @@ void Parser::parse(ExecState* exec, int* errLine, UString* errMsg)
     }
 
     if (Debugger* debugger = exec->dynamicGlobalObject()->debugger())
-        debugger->sourceParsed(exec, *m_source, *errLine, *errMsg);
+        debugger->sourceParsed(exec, *sourceId, sourceURL, *source, startingLineNumber, *errLine, *errMsg);
 }
 
 void Parser::didFinishParsing(SourceElements* sourceElements, ParserRefCountedData<DeclarationStacks::VarStack>* varStack, 
-                              ParserRefCountedData<DeclarationStacks::FunctionStack>* funcStack, CodeFeatures features, int lastLine, int numConstants)
+                              ParserRefCountedData<DeclarationStacks::FunctionStack>* funcStack, bool usesEval, bool needsClosure, int lastLine, int numConstants)
 {
     m_sourceElements = sourceElements;
     m_varDeclarations = varStack;
     m_funcDeclarations = funcStack;
-    m_features = features;
+    m_usesEval = usesEval;
+    m_needsClosure = needsClosure;
     m_lastLine = lastLine;
     m_numConstants = numConstants;
 }
 
-} // namespace JSC
+} // namespace KJS

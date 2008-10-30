@@ -29,7 +29,7 @@
 #include "objc_class.h"
 #include "objc_utility.h"
 
-namespace JSC {
+namespace KJS {
 
 namespace Bindings {
 
@@ -85,6 +85,6 @@ private:
 
 } // namespace Bindings
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // BINDINGS_OBJC_INSTANCE_H_

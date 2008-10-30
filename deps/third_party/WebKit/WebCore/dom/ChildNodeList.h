@@ -42,7 +42,7 @@ namespace WebCore {
     protected:
         ChildNodeList(PassRefPtr<Node> rootNode, Caches*);
 
-        virtual bool nodeMatches(Element*) const;
+        virtual bool nodeMatches(Node*) const;
     };
 
 } // namespace WebCore

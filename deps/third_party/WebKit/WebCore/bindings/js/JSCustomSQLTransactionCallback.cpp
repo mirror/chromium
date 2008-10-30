@@ -43,7 +43,7 @@
 
 namespace WebCore {
     
-using namespace JSC;
+using namespace KJS;
     
 #ifndef NDEBUG
 static WTF::RefCountedLeakCounter counter("JSCustomSQLTransactionCallback");
@@ -100,7 +100,7 @@ void JSCustomSQLTransactionCallback::handleEvent(SQLTransaction* transaction, bo
     JSGlobalObject* globalObject = m_data->frame()->script()->globalObject();
     ExecState* exec = globalObject->globalExec();
         
-    JSC::JSLock lock(false);
+    KJS::JSLock lock(false);
         
     JSValue* handleEventFunction = m_data->callback()->get(exec, Identifier(exec, "handleEvent"));
     CallData handleEventCallData;

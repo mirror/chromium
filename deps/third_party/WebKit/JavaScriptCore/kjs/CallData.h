@@ -29,7 +29,7 @@
 #ifndef CallData_h
 #define CallData_h
 
-namespace JSC {
+namespace KJS {
 
     class ArgList;
     class ExecState;
@@ -58,6 +58,6 @@ namespace JSC {
 
     JSValue* call(ExecState*, JSValue* functionObject, CallType, const CallData&, JSValue* thisValue, const ArgList&);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // CallData_h

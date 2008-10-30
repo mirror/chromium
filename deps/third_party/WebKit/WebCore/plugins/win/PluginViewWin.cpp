@@ -81,11 +81,11 @@ static inline HWND windowHandleForPlatformWidget(PlatformWidget widget)
 #endif
 }
 
-using JSC::ExecState;
-using JSC::JSLock;
-using JSC::JSObject;
-using JSC::JSValue;
-using JSC::UString;
+using KJS::ExecState;
+using KJS::JSLock;
+using KJS::JSObject;
+using KJS::JSValue;
+using KJS::UString;
 
 using std::min;
 
@@ -211,7 +211,7 @@ PluginView::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return result;
 }
 
-void PluginView::updatePluginWidget() const
+void PluginView::updateWindow() const
 {
     if (!parent())
         return;
@@ -222,11 +222,11 @@ void PluginView::updatePluginWidget() const
     IntRect oldWindowRect = m_windowRect;
     IntRect oldClipRect = m_clipRect;
 
-    m_windowRect = IntRect(frameView->contentsToWindow(frameRect().location()), frameRect().size());
+    m_windowRect = IntRect(frameView->contentsToWindow(frameGeometry().location()), frameGeometry().size());
     m_clipRect = windowClipRect();
     m_clipRect.move(-m_windowRect.x(), -m_windowRect.y());
 
-    if (platformPluginWidget() && (m_windowRect != oldWindowRect || m_clipRect != oldClipRect)) {
+    if (m_window && (m_windowRect != oldWindowRect || m_clipRect != oldClipRect)) {
         HRGN rgn;
 
         setCallingPlugin(true);
@@ -238,18 +238,18 @@ void PluginView::updatePluginWidget() const
 
         if (clipToZeroRect) {
             rgn = ::CreateRectRgn(0, 0, 0, 0);
-            ::SetWindowRgn(platformPluginWidget(), rgn, FALSE);
+            ::SetWindowRgn(m_window, rgn, FALSE);
         } else {
             rgn = ::CreateRectRgn(m_clipRect.x(), m_clipRect.y(), m_clipRect.right(), m_clipRect.bottom());
-            ::SetWindowRgn(platformPluginWidget(), rgn, TRUE);
+            ::SetWindowRgn(m_window, rgn, TRUE);
         }
 
         if (m_windowRect != oldWindowRect)
-            ::MoveWindow(platformPluginWidget(), m_windowRect.x(), m_windowRect.y(), m_windowRect.width(), m_windowRect.height(), TRUE);
+            ::MoveWindow(m_window, m_windowRect.x(), m_windowRect.y(), m_windowRect.width(), m_windowRect.height(), TRUE);
 
         if (clipToZeroRect) {
             rgn = ::CreateRectRgn(m_clipRect.x(), m_clipRect.y(), m_clipRect.right(), m_clipRect.bottom());
-            ::SetWindowRgn(platformPluginWidget(), rgn, TRUE);
+            ::SetWindowRgn(m_window, rgn, TRUE);
         }
 
         setCallingPlugin(false);
@@ -258,28 +258,28 @@ void PluginView::updatePluginWidget() const
 
 void PluginView::setFocus()
 {
-    if (platformPluginWidget())
-        SetFocus(platformPluginWidget());
+    if (m_window)
+        SetFocus(m_window);
 
     Widget::setFocus();
 }
 
 void PluginView::show()
 {
-    setSelfVisible(true);
+    m_isVisible = true;
 
-    if (isParentVisible() && platformPluginWidget())
-        ShowWindow(platformPluginWidget(), SW_SHOWNA);
+    if (m_attachedToWindow && m_window)
+        ShowWindow(m_window, SW_SHOWNA);
 
     Widget::show();
 }
 
 void PluginView::hide()
 {
-    setSelfVisible(false);
+    m_isVisible = false;
 
-    if (isParentVisible() && platformPluginWidget())
-        ShowWindow(platformPluginWidget(), SW_HIDE);
+    if (m_attachedToWindow && m_window)
+        ShowWindow(m_window, SW_HIDE);
 
     Widget::hide();
 }
@@ -290,10 +290,10 @@ void PluginView::paintMissingPluginIcon(GraphicsContext* context, const IntRect&
     if (!nullPluginImage)
         nullPluginImage = Image::loadPlatformResource("nullPlugin");
 
-    IntRect imageRect(frameRect().x(), frameRect().y(), nullPluginImage->width(), nullPluginImage->height());
+    IntRect imageRect(frameGeometry().x(), frameGeometry().y(), nullPluginImage->width(), nullPluginImage->height());
 
-    int xOffset = (frameRect().width() - imageRect.width()) / 2;
-    int yOffset = (frameRect().height() - imageRect.height()) / 2;
+    int xOffset = (frameGeometry().width() - imageRect.width()) / 2;
+    int yOffset = (frameGeometry().height() - imageRect.height()) / 2;
 
     imageRect.move(xOffset, yOffset);
 
@@ -318,7 +318,7 @@ bool PluginView::dispatchNPEvent(NPEvent& npEvent)
         shouldPop = true;
     }
 
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
     setCallingPlugin(true);
     bool result = m_plugin->pluginFuncs()->event(m_instance, &npEvent);
     setCallingPlugin(false);
@@ -341,7 +341,7 @@ void PluginView::paint(GraphicsContext* context, const IntRect& rect)
         return;
 
     ASSERT(parent()->isFrameView());
-    IntRect rectInWindow = static_cast<FrameView*>(parent())->contentsToWindow(frameRect());
+    IntRect rectInWindow = static_cast<FrameView*>(parent())->contentsToWindow(frameGeometry());
     HDC hdc = context->getWindowsContext(rectInWindow, m_isTransparent);
     NPEvent npEvent;
 
@@ -362,15 +362,15 @@ void PluginView::paint(GraphicsContext* context, const IntRect& rect)
     m_npWindow.type = NPWindowTypeDrawable;
     m_npWindow.window = hdc;
 
-    IntPoint p = static_cast<FrameView*>(parent())->contentsToWindow(frameRect().location());
+    IntPoint p = static_cast<FrameView*>(parent())->contentsToWindow(frameGeometry().location());
     
     WINDOWPOS windowpos;
     memset(&windowpos, 0, sizeof(windowpos));
 
     windowpos.x = p.x();
     windowpos.y = p.y();
-    windowpos.cx = frameRect().width();
-    windowpos.cy = frameRect().height();
+    windowpos.cx = frameGeometry().width();
+    windowpos.cy = frameGeometry().height();
 
     npEvent.event = WM_WINDOWPOSCHANGED;
     npEvent.lParam = reinterpret_cast<uint32>(&windowpos);
@@ -378,7 +378,7 @@ void PluginView::paint(GraphicsContext* context, const IntRect& rect)
 
     dispatchNPEvent(npEvent);
 
-    setNPWindowRect(frameRect());
+    setNPWindowRect(frameGeometry());
 
     npEvent.event = WM_PAINT;
     npEvent.wParam = reinterpret_cast<uint32>(hdc);
@@ -389,7 +389,7 @@ void PluginView::paint(GraphicsContext* context, const IntRect& rect)
 
     dispatchNPEvent(npEvent);
 
-    context->releaseWindowsContext(hdc, frameRect(), m_isTransparent);
+    context->releaseWindowsContext(hdc, frameGeometry(), m_isTransparent);
 }
 
 void PluginView::handleKeyboardEvent(KeyboardEvent* event)
@@ -406,7 +406,7 @@ void PluginView::handleKeyboardEvent(KeyboardEvent* event)
         npEvent.lParam = 0x8000;
     }
 
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
     if (!dispatchNPEvent(npEvent))
         event->setDefaultHandled();
 }
@@ -478,7 +478,7 @@ void PluginView::handleMouseEvent(MouseEvent* event)
 
     HCURSOR currentCursor = ::GetCursor();
 
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
     if (!dispatchNPEvent(npEvent))
         event->setDefaultHandled();
 
@@ -497,32 +497,37 @@ void PluginView::setParent(ScrollView* parent)
     if (parent)
         init();
     else {
-        if (!platformPluginWidget())
+        if (!m_window)
             return;
 
         // If the plug-in window or one of its children have the focus, we need to 
         // clear it to prevent the web view window from being focused because that can
         // trigger a layout while the plugin element is being detached.
         HWND focusedWindow = ::GetFocus();
-        if (platformPluginWidget() == focusedWindow || ::IsChild(platformPluginWidget(), focusedWindow))
+        if (m_window == focusedWindow || ::IsChild(m_window, focusedWindow))
             ::SetFocus(0);
     }
 
 }
 
-void PluginView::setParentVisible(bool visible)
+void PluginView::attachToWindow()
 {
-    if (isParentVisible() == visible)
+    if (m_attachedToWindow)
         return;
 
-    Widget::setParentVisible(visible);
+    m_attachedToWindow = true;
+    if (m_isVisible && m_window)
+        ShowWindow(m_window, SW_SHOWNA);
+}
 
-    if (isSelfVisible() && platformPluginWidget()) {
-        if (visible)
-            ShowWindow(platformPluginWidget(), SW_SHOWNA);
-        else
-            ShowWindow(platformPluginWidget(), SW_HIDE);
-    }
+void PluginView::detachFromWindow()
+{
+    if (!m_attachedToWindow)
+        return;
+
+    if (m_isVisible && m_window)
+        ShowWindow(m_window, SW_HIDE);
+    m_attachedToWindow = false;
 }
 
 void PluginView::setNPWindowRect(const IntRect& rect)
@@ -543,7 +548,7 @@ void PluginView::setNPWindowRect(const IntRect& rect)
     m_npWindow.clipRect.bottom = rect.height();
 
     if (m_plugin->pluginFuncs()->setwindow) {
-        JSC::JSLock::DropAllLocks dropAllLocks(false);
+        KJS::JSLock::DropAllLocks dropAllLocks(false);
         setCallingPlugin(true);
         m_plugin->pluginFuncs()->setwindow(m_instance, &m_npWindow);
         setCallingPlugin(false);
@@ -551,11 +556,11 @@ void PluginView::setNPWindowRect(const IntRect& rect)
         if (!m_isWindowed)
             return;
 
-        ASSERT(platformPluginWidget());
+        ASSERT(m_window);
 
-        WNDPROC currentWndProc = (WNDPROC)GetWindowLongPtr(platformPluginWidget(), GWLP_WNDPROC);
+        WNDPROC currentWndProc = (WNDPROC)GetWindowLongPtr(m_window, GWLP_WNDPROC);
         if (currentWndProc != PluginViewWndProc)
-            m_pluginWndProc = (WNDPROC)SetWindowLongPtr(platformPluginWidget(), GWLP_WNDPROC, (LONG)PluginViewWndProc);
+            m_pluginWndProc = (WNDPROC)SetWindowLongPtr(m_window, GWLP_WNDPROC, (LONG)PluginViewWndProc);
     }
 }
 
@@ -577,13 +582,13 @@ void PluginView::stop()
 
     // Unsubclass the window
     if (m_isWindowed) {
-        WNDPROC currentWndProc = (WNDPROC)GetWindowLongPtr(platformPluginWidget(), GWLP_WNDPROC);
+        WNDPROC currentWndProc = (WNDPROC)GetWindowLongPtr(m_window, GWLP_WNDPROC);
         
         if (currentWndProc == PluginViewWndProc)
-            SetWindowLongPtr(platformPluginWidget(), GWLP_WNDPROC, (LONG)m_pluginWndProc);
+            SetWindowLongPtr(m_window, GWLP_WNDPROC, (LONG)m_pluginWndProc);
     }
 
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
 
     // Clear the window
     m_npWindow.window = 0;
@@ -707,7 +712,7 @@ NPError PluginView::getValue(NPNVariable variable, void* value)
         case NPNVnetscapeWindow: {
             HWND* w = reinterpret_cast<HWND*>(value);
 
-            *w = windowHandleForPlatformWidget(parent() ? parent()->hostWindow()->platformWindow() : 0);
+            *w = windowHandleForPlatformWidget(containingWindow());
 
             return NPERR_NO_ERROR;
         }
@@ -725,17 +730,6 @@ NPError PluginView::getValue(NPNVariable variable, void* value)
     }
 }
 
-void PluginView::invalidateRect(const IntRect& rect)
-{
-    if (m_isWindowed) {
-        RECT invalidRect = { rect.x(), rect.y(), rect.right(), rect.bottom() };
-        ::InvalidateRect(platformPluginWidget(), &invalidRect, false);
-        return;
-    }
-
-    invalidateWindowlessPluginRect(rect);
-}
-
 void PluginView::invalidateRect(NPRect* rect)
 {
     if (!rect) {
@@ -747,14 +741,14 @@ void PluginView::invalidateRect(NPRect* rect)
 
     if (m_isWindowed) {
         RECT invalidRect = { r.x(), r.y(), r.right(), r.bottom() };
-        InvalidateRect(platformPluginWidget(), &invalidRect, FALSE);
+        InvalidateRect(m_window, &invalidRect, FALSE);
     } else {
         if (m_plugin->quirks().contains(PluginQuirkThrottleInvalidate)) {
             m_invalidRects.append(r);
             if (!m_invalidateTimer.isActive())
                 m_invalidateTimer.startOneShot(0.001);
         } else
-            invalidateRect(r);
+            Widget::invalidateRect(r);
     }
 }
 
@@ -771,15 +765,15 @@ void PluginView::invalidateRegion(NPRegion region)
     }
 
     IntRect rect(IntPoint(r.left, r.top), IntSize(r.right-r.left, r.bottom-r.top));
-    invalidateRect(rect);
+    Widget::invalidateRect(rect);
 }
 
 void PluginView::forceRedraw()
 {
     if (m_isWindowed)
-        ::UpdateWindow(platformPluginWidget());
+        ::UpdateWindow(m_window);
     else
-        ::UpdateWindow(windowHandleForPlatformWidget(parent() ? parent()->hostWindow()->platformWindow() : 0));
+        ::UpdateWindow(windowHandleForPlatformWidget(containingWindow()));
 }
 
 PluginView::~PluginView()
@@ -791,8 +785,8 @@ PluginView::~PluginView()
     freeStringArray(m_paramNames, m_paramCount);
     freeStringArray(m_paramValues, m_paramCount);
 
-    if (platformPluginWidget())
-        DestroyWindow(platformPluginWidget());
+    if (m_window)
+        DestroyWindow(m_window);
 
     m_parentFrame->script()->cleanupScriptObjectsForPlugin(this);
 
@@ -826,36 +820,28 @@ void PluginView::init()
         registerPluginView();
 
         DWORD flags = WS_CHILD;
-        if (isSelfVisible())
+        if (m_isVisible)
             flags |= WS_VISIBLE;
 
-        HWND parentWindowHandle = windowHandleForPlatformWidget(m_parentFrame->view()->hostWindow()->platformWindow());
-        HWND window = ::CreateWindowEx(0, kWebPluginViewdowClassName, 0, flags,
-                                       0, 0, 0, 0, parentWindowHandle, 0, Page::instanceHandle(), 0);
-#if PLATFORM(WIN_OS) && PLATFORM(QT)
-        m_window = window;
-#else
-        setPlatformWidget(window);
-#endif
+        HWND parentWindowHandle = windowHandleForPlatformWidget(m_parentFrame->view()->containingWindow());
+        m_window = ::CreateWindowEx(0, kWebPluginViewdowClassName, 0, flags,
+                                    0, 0, 0, 0, parentWindowHandle, 0, Page::instanceHandle(), 0);
 
         // Calling SetWindowLongPtrA here makes the window proc ASCII, which is required by at least
         // the Shockwave Director plug-in.
-#if PLATFORM(WIN_OS) && PLATFORM(X86_64) && COMPILER(MSVC)
-        ::SetWindowLongPtrA(platformPluginWidget(), GWLP_WNDPROC, (LONG_PTR)DefWindowProcA);
-#else
-        ::SetWindowLongPtrA(platformPluginWidget(), GWL_WNDPROC, (LONG)DefWindowProcA);
-#endif
-        SetProp(platformPluginWidget(), kWebPluginViewProperty, this);
+        ::SetWindowLongPtrA(m_window, GWL_WNDPROC, (LONG)DefWindowProcA);
+
+        SetProp(m_window, kWebPluginViewProperty, this);
 
         m_npWindow.type = NPWindowTypeWindow;
-        m_npWindow.window = platformPluginWidget();
+        m_npWindow.window = m_window;
     } else {
         m_npWindow.type = NPWindowTypeDrawable;
         m_npWindow.window = 0;
     }
 
     if (!m_plugin->quirks().contains(PluginQuirkDeferFirstSetWindowCall))
-        setNPWindowRect(frameRect());
+        setNPWindowRect(frameGeometry());
 
     m_status = PluginStatusLoadedSuccessfully;
 }

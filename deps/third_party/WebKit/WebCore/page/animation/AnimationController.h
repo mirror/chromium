@@ -29,6 +29,8 @@
 #ifndef AnimationController_h
 #define AnimationController_h
 
+#include <stdint.h>
+
 namespace WebCore {
 
 class AnimationControllerPrivate;
@@ -37,40 +39,35 @@ class Frame;
 class RenderObject;
 class RenderStyle;
 
-class AnimationController {
+class AnimationController
+{
 public:
     AnimationController(Frame*);
     ~AnimationController();
-
+    
     void cancelAnimations(RenderObject*);
     RenderStyle* updateAnimations(RenderObject*, RenderStyle* newStyle);
-
-    void setAnimationStartTime(RenderObject*, double t);
-    void setTransitionStartTime(RenderObject*, int property, double t);
-
-    bool isAnimatingPropertyOnRenderer(RenderObject*, int property, bool isRunningNow) const;
-
-    void suspendAnimations(Document*);
-    void resumeAnimations(Document*);
+    
+    void setAnimationStartTime(RenderObject* obj, double t);
+    void setTransitionStartTime(RenderObject* obj, int property, double t);
+    
+    bool isAnimatingPropertyOnRenderer(RenderObject* obj, int property, bool isRunningNow) const;
+    
+    void suspendAnimations(Document* document);
+    void resumeAnimations(Document* document);
     void updateAnimationTimer();
-
+    
     void startUpdateRenderingDispatcher();
-
+    
     void styleAvailable();
-
-    void setWaitingForStyleAvailable(bool waiting)
-    {
-        if (waiting)
-            m_numStyleAvailableWaiters++;
-        else
-            m_numStyleAvailableWaiters--;
-    }
-
+    
+    void setWaitingForStyleAvailable(bool waiting) { if (waiting) m_numStyleAvailableWaiters++; else m_numStyleAvailableWaiters--; }
+    
 private:
     AnimationControllerPrivate* m_data;
-    unsigned m_numStyleAvailableWaiters;    
+    uint32_t m_numStyleAvailableWaiters;    
 };
 
-} // namespace WebCore
+}
 
-#endif // AnimationController_h
+#endif

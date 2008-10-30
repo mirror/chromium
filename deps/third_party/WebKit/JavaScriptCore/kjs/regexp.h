@@ -27,14 +27,12 @@
 
 struct JSRegExp;
 
-namespace JSC {
-
-    class JSGlobalData;
+namespace KJS {
 
     class RegExp : public RefCounted<RegExp> {
     public:
-        static PassRefPtr<RegExp> create(JSGlobalData*, const UString& pattern);
-        static PassRefPtr<RegExp> create(JSGlobalData*, const UString& pattern, const UString& flags);
+        static PassRefPtr<RegExp> create(const UString& pattern);
+        static PassRefPtr<RegExp> create(const UString& pattern, const UString& flags);
         ~RegExp();
 
         bool global() const { return m_flagBits & Global; }
@@ -51,8 +49,8 @@ namespace JSC {
         unsigned numSubpatterns() const { return m_numSubpatterns; }
 
     private:
-        RegExp(JSGlobalData*, const UString& pattern);
-        RegExp(JSGlobalData*, const UString& pattern, const UString& flags);
+        RegExp(const UString& pattern);
+        RegExp(const UString& pattern, const UString& flags);
 
         void compile();
 
@@ -64,13 +62,8 @@ namespace JSC {
         JSRegExp* m_regExp;
         const char* m_constructionError;
         unsigned m_numSubpatterns;
-
-#if ENABLE(WREC)
-        // Called as a WRECFunction
-        void* m_wrecFunction;
-#endif
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // KJS_REGEXP_H

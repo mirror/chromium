@@ -31,10 +31,8 @@
 
 #include "ArgList.h"
 #include "CommonIdentifiers.h"
-#include "JSActivation.h"
 #include "JSClassRef.h"
 #include "JSLock.h"
-#include "JSStaticScopeObject.h"
 #include "Machine.h"
 #include "Parser.h"
 #include "collector.h"
@@ -48,7 +46,7 @@
 
 using namespace WTF;
 
-namespace JSC {
+namespace KJS {
 
 extern const HashTable arrayTable;
 extern const HashTable dateTable;
@@ -60,44 +58,49 @@ extern const HashTable stringTable;
 
 JSGlobalData::JSGlobalData(bool isShared)
     : machine(new Machine)
-    , exception(0)
-    , arrayTable(new HashTable(JSC::arrayTable))
-    , dateTable(new HashTable(JSC::dateTable))
-    , mathTable(new HashTable(JSC::mathTable))
-    , numberTable(new HashTable(JSC::numberTable))
-    , regExpTable(new HashTable(JSC::regExpTable))
-    , regExpConstructorTable(new HashTable(JSC::regExpConstructorTable))
-    , stringTable(new HashTable(JSC::stringTable))
-    , nullProtoStructureID(JSObject::createStructureID(jsNull()))
-    , activationStructureID(JSActivation::createStructureID(jsNull()))
-    , staticScopeStructureID(JSStaticScopeObject::createStructureID(jsNull()))
-    , stringStructureID(JSString::createStructureID(jsNull()))
-    , numberStructureID(JSNumberCell::createStructureID(jsNull()))
+    , heap(new Heap(this))
+#if ENABLE(JSC_MULTIPLE_THREADS)
+    , arrayTable(new HashTable(KJS::arrayTable))
+    , dateTable(new HashTable(KJS::dateTable))
+    , mathTable(new HashTable(KJS::mathTable))
+    , numberTable(new HashTable(KJS::numberTable))
+    , regExpTable(new HashTable(KJS::regExpTable))
+    , regExpConstructorTable(new HashTable(KJS::regExpConstructorTable))
+    , stringTable(new HashTable(KJS::stringTable))
+#else
+    , arrayTable(&KJS::arrayTable)
+    , dateTable(&KJS::dateTable)
+    , mathTable(&KJS::mathTable)
+    , numberTable(&KJS::numberTable)
+    , regExpTable(&KJS::regExpTable)
+    , regExpConstructorTable(&KJS::regExpConstructorTable)
+    , stringTable(&KJS::stringTable)
+#endif
+    , nullProtoStructureID(StructureID::create(jsNull()))
     , identifierTable(createIdentifierTable())
     , propertyNames(new CommonIdentifiers(this))
     , emptyList(new ArgList)
+    , opaqueJSClassData(new HashMap<OpaqueJSClass*, OpaqueJSClassContextData*>)
     , newParserObjects(0)
     , parserObjectExtraRefCounts(0)
     , lexer(new Lexer(this))
     , parser(new Parser)
     , head(0)
-    , dynamicGlobalObject(0)
     , isSharedInstance(isShared)
-    , clientData(0)
-    , heap(this)
 {
 }
 
 JSGlobalData::~JSGlobalData()
 {
-    // By the time this is destroyed, heap.destroy() must already have been called.
-
+    delete heap;
     delete machine;
 #ifndef NDEBUG
     // Zeroing out to make the behavior more predictable when someone attempts to use a deleted instance.
+    heap = 0;
     machine = 0;
 #endif
 
+#if ENABLE(JSC_MULTIPLE_THREADS)
     arrayTable->deleteTable();
     dateTable->deleteTable();
     mathTable->deleteTable();
@@ -112,11 +115,13 @@ JSGlobalData::~JSGlobalData()
     delete regExpTable;
     delete regExpConstructorTable;
     delete stringTable;
+#endif
 
     delete parser;
     delete lexer;
 
-    deleteAllValues(opaqueJSClassData);
+    deleteAllValues(*opaqueJSClassData);
+    delete opaqueJSClassData;
 
     delete emptyList;
 
@@ -125,25 +130,11 @@ JSGlobalData::~JSGlobalData()
 
     delete newParserObjects;
     delete parserObjectExtraRefCounts;
-    
-    delete clientData;
 }
 
 PassRefPtr<JSGlobalData> JSGlobalData::create()
 {
     return adoptRef(new JSGlobalData);
-}
-
-PassRefPtr<JSGlobalData> JSGlobalData::createLeaked()
-{
-#ifndef NDEBUG
-    StructureID::startIgnoringLeaks();
-    RefPtr<JSGlobalData> data = create();
-    StructureID::stopIgnoringLeaks();
-    return data.release();
-#else
-    return create();
-#endif
 }
 
 bool JSGlobalData::sharedInstanceExists()
@@ -164,10 +155,6 @@ JSGlobalData*& JSGlobalData::sharedInstanceInternal()
     ASSERT(JSLock::currentThreadIsHoldingLock());
     static JSGlobalData* sharedInstance;
     return sharedInstance;
-}
-
-JSGlobalData::ClientData::~ClientData()
-{
 }
 
 }

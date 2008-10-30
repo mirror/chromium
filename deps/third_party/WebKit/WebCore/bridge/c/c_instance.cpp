@@ -43,7 +43,7 @@
 #include <wtf/StringExtras.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
+namespace KJS {
 namespace Bindings {
 
 CInstance::CInstance(NPObject* o, PassRefPtr<RootObject> rootObject)

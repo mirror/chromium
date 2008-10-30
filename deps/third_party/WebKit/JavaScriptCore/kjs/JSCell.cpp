@@ -28,7 +28,7 @@
 #include "JSObject.h"
 #include <wtf/MathExtras.h>
 
-namespace JSC {
+namespace KJS {
 
 #if defined NAN && defined INFINITY
 
@@ -215,9 +215,19 @@ JSValue* JSCell::getJSNumber()
     return 0;
 }
 
+bool JSCell::isString() const
+{
+    return false;
+}
+
 bool JSCell::isGetterSetter() const
 {
     return false;
 }
 
-} // namespace JSC
+bool JSCell::isObject() const
+{
+    return false;
+}
+
+} // namespace KJS

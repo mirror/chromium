@@ -259,42 +259,19 @@ IntRect ChromeClient::windowResizerRect() const
     return IntRect();
 }
 
-void ChromeClient::repaint(const IntRect& windowRect, bool, bool immediate, bool repaintContentOnly)
-{
-    if (!m_webView || repaintContentOnly)
-        return;
-
-    GdkRectangle rect = windowRect;
-    GdkWindow* window = GTK_WIDGET(m_webView)->window;
-
-    if (window) {
-        // No double buffer.  Just always assume we need to invalidate.
-        gdk_window_invalidate_rect(window, &rect, true);
-        if (immediate)
-            gdk_window_process_updates(window, true);
-    }
-}
-
-void ChromeClient::scroll(const IntSize& delta, const IntRect& scrollViewRect, const IntRect& clipRect)
+void ChromeClient::addToDirtyRegion(const IntRect&)
 {
     notImplemented();
 }
 
-IntRect ChromeClient::windowToScreen(const IntRect& rect) const
+void ChromeClient::scrollBackingStore(int dx, int dy, const IntRect& scrollViewRect, const IntRect& clipRect)
 {
     notImplemented();
-    return rect;
 }
 
-IntPoint ChromeClient::screenToWindow(const IntPoint& point) const
+void ChromeClient::updateBackingStore()
 {
     notImplemented();
-    return point;
-}
-
-PlatformWidget ChromeClient::platformWindow() const
-{
-    return m_webView ? GTK_WIDGET(m_webView) : 0;
 }
 
 void ChromeClient::mouseDidMoveOverElement(const HitTestResult& hit, unsigned modifierFlags)

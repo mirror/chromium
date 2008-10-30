@@ -49,9 +49,10 @@ void SelectionController::notifyAccessibilityForSelectionChange()
             IntRect selectionRect = caretRect();
             IntRect viewRect = renderView->viewRect();
             FrameView* frameView = renderView->view()->frameView(); 
-            if (frameView) {
-                selectionRect = frameView->contentsToScreen(selectionRect);
-                viewRect = frameView->contentsToScreen(viewRect);
+            NSView *view = frameView->documentView();
+            if (view) {
+                selectionRect.setLocation(frameView->convertToScreenCoordinate(view, selectionRect.location()));
+                viewRect.setLocation(frameView->convertToScreenCoordinate(view, viewRect.location()));
                 CGRect cgCaretRect = CGRectMake(selectionRect.x(), selectionRect.y(), selectionRect.width(), selectionRect.height());
                 CGRect cgViewRect = CGRectMake(viewRect.x(), viewRect.y(), viewRect.width(), viewRect.height());
                 (void)UAZoomChangeFocus(&cgViewRect, &cgCaretRect, kUAZoomFocusTypeInsertionPoint);

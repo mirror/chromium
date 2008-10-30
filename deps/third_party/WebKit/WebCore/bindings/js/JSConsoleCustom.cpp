@@ -29,7 +29,7 @@
 #include "Console.h"
 #include "ScriptCallContext.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -72,18 +72,6 @@ JSValue* JSConsole::dir(ExecState* exec, const ArgList& arguments)
 {
     ScriptCallContext context(exec, arguments);
     impl()->dir(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::dirxml(ExecState* exec, const ArgList& arguments)
-{
-    impl()->dirxml(exec, arguments);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::trace(ExecState* exec, const ArgList&)
-{
-    impl()->trace(exec);
     return jsUndefined();
 }
 

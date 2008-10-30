@@ -34,11 +34,10 @@
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
+namespace KJS {
 
     class CallIdentifier;
     class ExecState;
-    class JSGlobalData;
     class JSObject;
     class ProfileGenerator;
     class UString;
@@ -51,7 +50,7 @@ namespace JSC {
         }
 
         static Profiler* profiler(); 
-        static CallIdentifier createCallIdentifier(JSGlobalData*, JSObject*, const UString& sourceURL, int lineNumber);
+        static CallIdentifier createCallIdentifier(ExecState*, JSObject*, const UString& sourceURL, int lineNumber);
 
         void startProfiling(ExecState*, const UString& title);
         PassRefPtr<Profile> stopProfiling(ExecState*, const UString& title);
@@ -69,6 +68,6 @@ namespace JSC {
         static Profiler* s_sharedEnabledProfilerReference;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // Profiler_h

@@ -88,14 +88,15 @@ if ($printWrapperFactory) {
 
 sub initializeTagPropertyHash
 {
-    return ('interfaceName' => upperCaseName($_[0])."Element",
+    return ('upperCase' => upperCaseName($_[0]),
             'applyAudioHack' => 0,
             'exportString' => 0);
 }
 
 sub initializeAttrPropertyHash
 {
-    return ('exportString' => 0);
+    return ('upperCase' => upperCaseName($_[0]),
+            'exportString' => 0);
 }
 
 sub initializeParametersHash
@@ -210,11 +211,11 @@ sub printConstructors
 
     print F "#if $parameters{'guardFactoryWith'}\n" if $parameters{'guardFactoryWith'};
     for my $name (sort keys %names) {
-        my $ucName = $names{$name}{"interfaceName"};
+        my $ucName = $names{$name}{"upperCase"};
 
         print F "$parameters{'namespace'}Element* ${name}Constructor(Document* doc, bool createdByParser)\n";
         print F "{\n";
-        print F "    return new $parameters{'namespace'}${ucName}($parameters{'namespace'}Names::${name}Tag, doc);\n";
+        print F "    return new $parameters{'namespace'}${ucName}Element($parameters{'namespace'}Names::${name}Tag, doc);\n";
         print F "}\n\n";
     }
     print F "#endif\n" if $parameters{'guardFactoryWith'};
@@ -430,8 +431,8 @@ sub printJSElementIncludes
     for my $name (sort keys %names) {
         next if (hasCustomMapping($name));
 
-        my $ucName = $names{$name}{"interfaceName"};
-        print F "#include \"JS$parameters{'namespace'}${ucName}.h\"\n";
+        my $ucName = $names{$name}{"upperCase"};
+        print F "#include \"JS$parameters{'namespace'}${ucName}Element.h\"\n";
     }
 }
 
@@ -442,8 +443,8 @@ sub printElementIncludes
     for my $name (sort keys %names) {
         next if ($shouldSkipCustomMappings && hasCustomMapping($name));
 
-        my $ucName = $names{$name}{"interfaceName"};
-        print F "#include \"$parameters{'namespace'}${ucName}.h\"\n";
+        my $ucName = $names{$name}{"upperCase"};
+        print F "#include \"$parameters{'namespace'}${ucName}Element.h\"\n";
     }
 }
 
@@ -505,13 +506,9 @@ printLicenseHeader($F);
 print F <<END
 #include "config.h"
 #include "$parameters{'namespace'}ElementFactory.h"
-
 #include "$parameters{'namespace'}Names.h"
-#if ENABLE(DASHBOARD_SUPPORT)
-#include "Document.h"
+#include "Page.h"
 #include "Settings.h"
-#endif
-
 END
 ;
 
@@ -722,15 +719,15 @@ sub printWrapperFunctions
         # Custom mapping do not need a JS wrapper
         next if (hasCustomMapping($name));
 
-        my $ucName = $names{$name}{"interfaceName"};
+        my $ucName = $names{$name}{"upperCase"};
         # Hack for the media tags
         if ($names{$name}{"applyAudioHack"}) {
             print F <<END
 static JSNode* create${ucName}Wrapper(ExecState* exec, PassRefPtr<$parameters{'namespace'}Element> element)
 {
     if (!MediaPlayer::isAvailable())
-        return CREATE_DOM_NODE_WRAPPER(exec, $parameters{'namespace'}Element, element.get());
-    return CREATE_DOM_NODE_WRAPPER(exec, $parameters{'namespace'}${ucName}, element.get());
+        return new (exec) JS$parameters{'namespace'}Element(JS$parameters{'namespace'}ElementPrototype::self(exec), element.get());
+    return new (exec) JS$parameters{'namespace'}${ucName}Element(JS$parameters{'namespace'}${ucName}ElementPrototype::self(exec), static_cast<$parameters{'namespace'}${ucName}Element*>(element.get()));
 }
 
 END
@@ -738,8 +735,8 @@ END
         } else {
             print F <<END
 static JSNode* create${ucName}Wrapper(ExecState* exec, PassRefPtr<$parameters{'namespace'}Element> element)
-{
-    return CREATE_DOM_NODE_WRAPPER(exec, $parameters{'namespace'}${ucName}, element.get());
+{   
+    return new (exec) JS$parameters{'namespace'}${ucName}Element(JS$parameters{'namespace'}${ucName}ElementPrototype::self(exec), static_cast<$parameters{'namespace'}${ucName}Element*>(element.get()));
 }
 
 END
@@ -769,7 +766,7 @@ sub printWrapperFactoryCppFile
     printElementIncludes($F, \%tags, 1);
 
     print F <<END
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -793,7 +790,7 @@ END
     for my $tag (sort keys %tags) {
         next if (hasCustomMapping($tag));
 
-        my $ucTag = $tags{$tag}{"interfaceName"};
+        my $ucTag = $tags{$tag}{"upperCase"};
         print F "       map.set(${tag}Tag.localName().impl(), create${ucTag}Wrapper);\n";
     }
 
@@ -801,7 +798,7 @@ END
         for my $tag (sort keys %htmlCustomMappings) {
             next if !$htmlCustomMappings{$tag};
 
-            my $ucCustomTag = $tags{$htmlCustomMappings{$tag}}{"interfaceName"};
+            my $ucCustomTag = $tags{$htmlCustomMappings{$tag}}{"upperCase"};
             print F "       map.set(${tag}Tag.localName().impl(), create${ucCustomTag}Wrapper);\n";
         }
     }
@@ -813,7 +810,7 @@ END
     Create$parameters{'namespace'}ElementWrapperFunction createWrapperFunction = map.get(element->localName().impl());
     if (createWrapperFunction)
         return createWrapperFunction(exec, element);
-    return CREATE_DOM_NODE_WRAPPER(exec, $parameters{'namespace'}Element, element.get());
+    return new (exec) JS$parameters{'namespace'}Element(JS$parameters{'namespace'}ElementPrototype::self(exec), element.get());
 }
 
 }
@@ -842,7 +839,7 @@ sub printWrapperFactoryHeaderFile
     print F <<END
 #include <wtf/Forward.h>
 
-namespace JSC {
+namespace KJS {
     class ExecState;
 }                                            
                                              
@@ -851,7 +848,7 @@ namespace WebCore {
     class JSNode;
     class $parameters{'namespace'}Element;
 
-    JSNode* createJS$parameters{'namespace'}Wrapper(JSC::ExecState*, PassRefPtr<$parameters{'namespace'}Element>);
+    JSNode* createJS$parameters{'namespace'}Wrapper(KJS::ExecState*, PassRefPtr<$parameters{'namespace'}Element>);
 
 }
  

@@ -1,5 +1,11 @@
 /*
- * Copyright (C) 2005, 2006, 2008 Apple Inc. All rights reserved.
+ * This file is part of the DOM implementation for KDE.
+ *
+ * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
+ *           (C) 1999 Antti Koivisto (koivisto@kde.org)
+ *           (C) 2001 Dirk Mueller (mueller@kde.org)
+ * Copyright (C) 2004, 2005, 2006 Apple Computer, Inc.
+ *           (C) 2006 Alexey Proskuryakov (ap@nypop.com)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -22,10 +28,20 @@
 #define FormDataList_h
 
 #include "CString.h"
-#include "File.h"
+#include "PlatformString.h"
 #include "TextEncoding.h"
+#include <wtf/Vector.h>
 
 namespace WebCore {
+
+struct FormDataListItem {
+    FormDataListItem() { }
+    FormDataListItem(const CString& data) : m_data(data) { }
+    FormDataListItem(const String& path) : m_path(path) { }
+
+    String m_path;
+    CString m_data;
+};
 
 class FormDataList {
 public:
@@ -37,31 +53,16 @@ public:
         { appendString(key); appendString(value); }
     void appendData(const String& key, int value)
         { appendString(key); appendString(String::number(value)); }
-    void appendFile(const String& key, PassRefPtr<File> file)
-        { appendString(key); m_list.append(file); }
+    void appendFile(const String& key, const String& filename);
 
-    class Item {
-    public:
-        Item() { }
-        Item(const CString& data) : m_data(data) { }
-        Item(PassRefPtr<File> file) : m_file(file) { }
-
-        const CString& data() const { return m_data; }
-        File* file() const { return m_file.get(); }
-
-    private:
-        CString m_data;
-        RefPtr<File> m_file;
-    };
-
-    const Vector<Item>& list() const { return m_list; }
+    const Vector<FormDataListItem>& list() const { return m_list; }
 
 private:
     void appendString(const CString&);
     void appendString(const String&);
 
     TextEncoding m_encoding;
-    Vector<Item> m_list;
+    Vector<FormDataListItem> m_list;
 };
 
 } // namespace WebCore

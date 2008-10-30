@@ -57,7 +57,7 @@ namespace WebCore {
 
         // "base class" methods for all the elements which render as paths
         virtual Path toPathData() const { return Path(); }
-        virtual Path toClipPath() const;
+        virtual Path toClipPath() const { return toPathData(); }
         virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
 
     protected:

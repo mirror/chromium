@@ -34,16 +34,23 @@
 #include <kjs/JSLock.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(JSCallbackFunction);
 
 const ClassInfo JSCallbackFunction::info = { "CallbackFunction", &InternalFunction::info, 0, 0 };
 
 JSCallbackFunction::JSCallbackFunction(ExecState* exec, JSObjectCallAsFunctionCallback callback, const Identifier& name)
-    : InternalFunction(&exec->globalData(), exec->lexicalGlobalObject()->callbackFunctionStructure(), name)
+    : InternalFunction(exec, exec->lexicalGlobalObject()->functionPrototype(), name)
     , m_callback(callback)
 {
+}
+
+// InternalFunction mish-mashes constructor and function behavior -- we should 
+// refactor the code so this override isn't necessary
+bool JSCallbackFunction::implementsHasInstance() const
+{ 
+    return false; 
 }
 
 JSValue* JSCallbackFunction::call(ExecState* exec, JSObject* functionObject, JSValue* thisValue, const ArgList& args)
@@ -67,4 +74,4 @@ CallType JSCallbackFunction::getCallData(CallData& callData)
     return CallTypeHost;
 }
 
-} // namespace JSC
+} // namespace KJS

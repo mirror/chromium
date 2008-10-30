@@ -1,6 +1,7 @@
 /*
+ *  This file is part of the KDE libraries
  *  Copyright (C) 1999-2000 Harri Porten (porten@kde.org)
- *  Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
+ *  Copyright (C) 2006 Apple Computer, Inc.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -23,13 +24,13 @@
 
 #include "InternalFunction.h"
 
-namespace JSC {
+namespace KJS {
 
     class FunctionPrototype;
 
     class FunctionConstructor : public InternalFunction {
     public:
-        FunctionConstructor(ExecState*, PassRefPtr<StructureID>, FunctionPrototype*);
+        FunctionConstructor(ExecState*, FunctionPrototype*);
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
@@ -39,6 +40,6 @@ namespace JSC {
     JSObject* constructFunction(ExecState*, const ArgList&, const Identifier& functionName, const UString& sourceURL, int lineNumber);
     JSObject* constructFunction(ExecState*, const ArgList&);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // FunctionConstructor_h

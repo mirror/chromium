@@ -196,7 +196,7 @@ void RenderImage::setCachedImage(CachedImage* newImage)
     if (m_cachedImage) {
         m_cachedImage->addClient(this);
         if (m_cachedImage->errorOccurred())
-            imageChanged(m_cachedImage.get());
+            imageChanged(m_cachedImage);
     }
 }
 
@@ -259,7 +259,7 @@ void RenderImage::imageChanged(WrappedImagePtr newImage)
 
     // Set image dimensions, taking into account the size of the alt text.
     if (errorOccurred())
-        imageSizeChanged = setImageSizeForAltText(m_cachedImage.get());
+        imageSizeChanged = setImageSizeForAltText(m_cachedImage);
     
     bool shouldRepaint = true;
 

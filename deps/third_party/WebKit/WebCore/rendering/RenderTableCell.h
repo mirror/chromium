@@ -64,6 +64,7 @@ public:
     virtual void calcPrefWidths();
     virtual void calcWidth();
     virtual void setWidth(int);
+    virtual void setStyle(RenderStyle*);
 
     virtual bool expandsToEncloseOverhangingFloats() const { return true; }
 
@@ -110,10 +111,6 @@ public:
 
     virtual int borderTopExtra() const { return m_topExtra; }
     virtual int borderBottomExtra() const { return m_bottomExtra; }
-
-protected:
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
 
 private:
     int m_row;

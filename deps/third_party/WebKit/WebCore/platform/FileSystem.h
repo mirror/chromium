@@ -41,10 +41,6 @@
 #endif
 #endif
 
-#if PLATFORM(DARWIN)
-#include <CoreFoundation/CFBundle.h>
-#endif
-
 #include <time.h>
 
 #include <wtf/Platform.h>
@@ -69,9 +65,9 @@ class CString;
 #if PLATFORM(WIN)
 typedef HANDLE PlatformFileHandle;
 typedef HMODULE PlatformModule;
-// FIXME: -1 is INVALID_HANDLE_VALUE, defined in <winbase.h>. Chromium tries to
+// HACK: -1 is INVALID_HANDLE_VALUE, defined in <winbase.h>. Chromium tries to
 // avoid using Windows headers in headers.  We'd rather move this into the .cpp.
-const PlatformFileHandle invalidPlatformFileHandle = reinterpret_cast<HANDLE>(-1);
+const PlatformFileHandle invalidPlatformFileHandle = (HANDLE)-1;
 
 struct PlatformModuleVersion {
     unsigned leastSig;
@@ -94,10 +90,7 @@ struct PlatformModuleVersion {
 
 typedef QFile* PlatformFileHandle;
 const PlatformFileHandle invalidPlatformFileHandle = 0;
-#if defined(Q_WS_MAC)
-typedef CFBundleRef PlatformModule;
-typedef unsigned PlatformModuleVersion;
-#elif defined(Q_WS_X11) || defined(Q_WS_QWS)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_QWS)
 typedef QLibrary* PlatformModule;
 typedef unsigned PlatformModuleVersion;
 #elif defined(Q_OS_WIN32)

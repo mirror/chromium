@@ -33,7 +33,7 @@ class Image;
 class KURL;
 class IntRect;
 class Node;
-class Scrollbar;
+class PlatformScrollbar;
 class String;
 
 class HitTestResult {
@@ -48,8 +48,7 @@ public:
     IntPoint point() const { return m_point; }
     IntPoint localPoint() const { return m_localPoint; }
     Element* URLElement() const { return m_innerURLElement.get(); }
-    Scrollbar* scrollbar() const { return m_scrollbar.get(); }
-    bool isOverWidget() const { return m_isOverWidget; }
+    PlatformScrollbar* scrollbar() const { return m_scrollbar.get(); }
 
     void setToNonShadowAncestor();
 
@@ -58,8 +57,7 @@ public:
     void setPoint(const IntPoint& p) { m_point = p; }
     void setLocalPoint(const IntPoint& p) { m_localPoint = p; }
     void setURLElement(Element*);
-    void setScrollbar(Scrollbar*);
-    void setIsOverWidget(bool b) { m_isOverWidget = b; }
+    void setScrollbar(PlatformScrollbar*);
 
     Frame* targetFrame() const;
     IntRect boundingBox() const;
@@ -83,8 +81,7 @@ private:
     IntPoint m_localPoint; // A point in the local coordinate space of m_innerNonSharedNode's renderer.  Allows us to efficiently
                            // determine where inside the renderer we hit on subsequent operations.
     RefPtr<Element> m_innerURLElement;
-    RefPtr<Scrollbar> m_scrollbar;
-    bool m_isOverWidget; // Returns true if we are over a widget (and not in the border/padding area of a RenderWidget for example).
+    RefPtr<PlatformScrollbar> m_scrollbar;
 };
 
 String displayString(const String&, const Node*);

@@ -37,7 +37,7 @@
 #include <unistd.h>
 #endif
 
-namespace JSC {
+namespace KJS {
 
 void ScopeSampleRecord::sample(CodeBlock* codeBlock, Instruction* vPC)
 {
@@ -79,27 +79,13 @@ static inline unsigned hertz2us(unsigned hertz)
     return 1000000 / hertz;
 }
 
-#if ENABLE(SAMPLING_TOOL)
-unsigned totalOpcodeIDCount = 0;
-unsigned opcodeIDCountInCalledCode[numOpcodeIDs] = {0};
-unsigned opcodeIDCountInJITCode[numOpcodeIDs] = {0};
-#endif
-
 void SamplingTool::run()
 {
     while (m_running) {
         sleepForMicroseconds(hertz2us(m_hertz));
 
         m_totalSamples++;
-#if ENABLE(SAMPLING_TOOL)
-        if (currentOpcodeID != static_cast<OpcodeID>(-1)) {
-            ++totalOpcodeIDCount;
-            if (inCalledCode)
-                opcodeIDCountInCalledCode[currentOpcodeID]++;
-            else
-                opcodeIDCountInJITCode[currentOpcodeID]++;
-        }
-#endif        
+
         CodeBlock* codeBlock = m_recordedCodeBlock;
         Instruction* vPC = m_recordedVPC;
 
@@ -139,13 +125,14 @@ void SamplingTool::stop()
 
 #if ENABLE(SAMPLING_TOOL)
 
-struct OpcodeSampleInfo {
+struct OpcodeSampleInfo
+{
     OpcodeID opcode;
     long long count;
-    long long countInCalledCode;
 };
 
-struct LineCountInfo {
+struct LineCountInfo
+{
     unsigned line;
     unsigned count;
 };
@@ -190,8 +177,11 @@ void SamplingTool::dump(ExecState* exec)
         codeBlockSamples[i] = iter->second;
         totalCodeBlockSamples += codeBlockSamples[i]->m_totalCount;
     }
-
+#if HAVE(MERGESORT)
+    mergesort(codeBlockSamples.begin(), scopeCount, sizeof(ScopeSampleRecord*), compareScopeSampleRecords);
+#else
     qsort(codeBlockSamples.begin(), scopeCount, sizeof(ScopeSampleRecord*), compareScopeSampleRecords);
+#endif
 
     // (2) Print data from 'codeBlockSamples' array, calculate 'totalOpcodeSamples', populate 'opcodeSampleCounts' array.
 
@@ -201,7 +191,7 @@ void SamplingTool::dump(ExecState* exec)
     printf("\nBlock sampling results\n\n"); 
     printf("Total blocks sampled (total samples): %lld (%lld)\n\n", totalCodeBlockSamples, m_totalSamples);
 
-    for (int i = 0; i < scopeCount; ++i) {
+    for (int i=0; i < scopeCount; i++) {
         ScopeSampleRecord* record = codeBlockSamples[i];
         CodeBlock* codeBlock = record->m_codeBlock;
 
@@ -230,9 +220,11 @@ void SamplingTool::dump(ExecState* exec)
                     lineCountInfo[lineno].line = iter->first;
                     lineCountInfo[lineno].count = iter->second;
                 }
-
+#if HAVE(MERGESORT)
+                mergesort(lineCountInfo.begin(), linesCount, sizeof(LineCountInfo), compareLineCountInfoSampling);
+#else
                 qsort(lineCountInfo.begin(), linesCount, sizeof(LineCountInfo), compareLineCountInfoSampling);
-
+#endif
                 for (lineno = 0; lineno < linesCount; ++lineno) {
                     printf("    Line #%d has sample count %d.\n", lineCountInfo[lineno].line, lineCountInfo[lineno].count);
                 }
@@ -257,22 +249,31 @@ void SamplingTool::dump(ExecState* exec)
 
     OpcodeSampleInfo opcodeSampleInfo[numOpcodeIDs];
     for (int i = 0; i < numOpcodeIDs; ++i) {
-        opcodeSampleInfo[i].opcode = static_cast<OpcodeID>(i);
-        opcodeSampleInfo[i].count = opcodeIDCountInJITCode[i] + opcodeIDCountInCalledCode[i];
-        opcodeSampleInfo[i].countInCalledCode = opcodeIDCountInCalledCode[i];
+        opcodeSampleInfo[i].opcode = (OpcodeID)i;
+        opcodeSampleInfo[i].count = opcodeSampleCounts[i];
     }
-
+#if HAVE(MERGESORT)
+    mergesort(opcodeSampleInfo, numOpcodeIDs, sizeof(OpcodeSampleInfo), compareOpcodeIndicesSampling);
+#else
     qsort(opcodeSampleInfo, numOpcodeIDs, sizeof(OpcodeSampleInfo), compareOpcodeIndicesSampling);
+#endif
 
     // (4) Print Opcode sampling results.
-
+    
     printf("\nOpcode sampling results\n\n"); 
-
+    
+    printf("Total opcodes sampled (total samples): %lld (%lld)\n\n", totalOpcodeSamples, m_totalSamples);
+    printf("Opcodes in order:\n\n");
+    for (int i = 0; i < numOpcodeIDs; ++i) {
+        long long count = opcodeSampleCounts[i];
+        printf("%s:%s%6lld\t%.3f%%\t(%.3f%%)\n", opcodeNames[i], padOpcodeName(static_cast<OpcodeID>(i), 20), count, (static_cast<double>(count) * 100) / totalOpcodeSamples, (static_cast<double>(count) * 100) / m_totalSamples);    
+    }
+    printf("\n");
+    printf("Opcodes by sample count:\n\n");
     for (int i = 0; i < numOpcodeIDs; ++i) {
         OpcodeID opcode = opcodeSampleInfo[i].opcode;
         long long count = opcodeSampleInfo[i].count;
-        long long countInCalledCode = opcodeSampleInfo[i].countInCalledCode;
-        fprintf(stdout, "%s:%s%6lld\t%6lld\t%.3f%%\t%.3f%%\t(%.3f%%)\n", opcodeNames[opcode], padOpcodeName(opcode, 20), count, countInCalledCode, (static_cast<double>(count) * 100) / totalOpcodeIDCount, (static_cast<double>(count) * 100) / m_totalSamples, (static_cast<double>(countInCalledCode) * 100) / m_totalSamples);    
+        printf("%s:%s%6lld\t%.3f%%\t(%.3f%%)\n", opcodeNames[opcode], padOpcodeName(opcode, 20), count, (static_cast<double>(count) * 100) / totalOpcodeSamples, (static_cast<double>(count) * 100) / m_totalSamples);    
     }
     printf("\n");
 }
@@ -285,4 +286,4 @@ void SamplingTool::dump(ExecState*)
 
 #endif
 
-} // namespace JSC
+} // namespace KJS

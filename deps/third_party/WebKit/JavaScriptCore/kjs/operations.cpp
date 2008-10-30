@@ -33,43 +33,106 @@
 #include <float.h>
 #endif
 
-namespace JSC {
+namespace KJS {
 
 // ECMA 11.9.3
 bool equal(ExecState* exec, JSValue* v1, JSValue* v2)
 {
+startOver:
     if (JSImmediate::areBothImmediateNumbers(v1, v2))
         return v1 == v2;
 
-    return equalSlowCaseInline(exec, v1, v2);
-}
+    if (v1->isNumber() && v2->isNumber())
+        return v1->uncheckedGetNumber() == v2->uncheckedGetNumber();
 
-bool equalSlowCase(ExecState* exec, JSValue* v1, JSValue* v2)
-{
-    return equalSlowCaseInline(exec, v1, v2);
+    bool s1 = v1->isString();
+    bool s2 = v2->isString();
+    if (s1 && s2)
+        return static_cast<JSString*>(v1)->value() == static_cast<JSString*>(v2)->value();
+
+    if (v1->isUndefinedOrNull()) {
+        if (v2->isUndefinedOrNull())
+            return true;
+        if (!v2->isObject())
+            return false;
+        return static_cast<JSObject*>(v2)->masqueradeAsUndefined();
+    }
+
+    if (v2->isUndefinedOrNull()) {
+        if (!v1->isObject())
+            return false;
+        return static_cast<JSObject*>(v1)->masqueradeAsUndefined();
+    }
+
+    if (v1->isObject()) {
+        if (v2->isObject())
+            return v1 == v2;
+        JSValue* p1 = v1->toPrimitive(exec);
+        if (exec->hadException())
+            return false;
+        v1 = p1;
+        goto startOver;
+    }
+
+    if (v2->isObject()) {
+        JSValue* p2 = v2->toPrimitive(exec);
+        if (exec->hadException())
+            return false;
+        v2 = p2;
+        goto startOver;
+    }
+
+    if (s1 || s2) {
+        double d1 = v1->toNumber(exec);
+        double d2 = v2->toNumber(exec);
+        return d1 == d2;
+    }
+
+    if (v1->isBoolean()) {
+        if (v2->isNumber())
+            return static_cast<double>(v1->getBoolean()) == v2->uncheckedGetNumber();
+    } else if (v2->isBoolean()) {
+        if (v1->isNumber())
+            return v1->uncheckedGetNumber() == static_cast<double>(v2->getBoolean());
+    }
+
+    return v1 == v2;
 }
 
 bool strictEqual(JSValue* v1, JSValue* v2)
 {
-    if (JSImmediate::areBothImmediate(v1, v2))
-        return v1 == v2;
+    if (JSImmediate::isEitherImmediate(v1, v2)) {
+        if (v1 == v2)
+            return true;
 
-    if (JSImmediate::isEitherImmediate(v1, v2) & (v1 != JSImmediate::from(0)) & (v2 != JSImmediate::from(0)))
-        return false;
+        // The reason we can't just return false here is that 0 === -0,
+        // and while the former is an immediate number, the latter is not.
+        if (v1 == JSImmediate::from(0))
+            return !JSImmediate::isImmediate(v2)
+                && static_cast<JSCell*>(v2)->isNumber()
+                && static_cast<JSNumberCell*>(v2)->value() == 0;
+        return v2 == JSImmediate::from(0)
+            && !JSImmediate::isImmediate(v1)
+            && static_cast<JSCell*>(v1)->isNumber()
+            && static_cast<JSNumberCell*>(v1)->value() == 0;
+    }
 
-    return strictEqualSlowCaseInline(v1, v2);
+    if (static_cast<JSCell*>(v1)->isNumber())
+        return static_cast<JSCell*>(v2)->isNumber()
+            && static_cast<JSNumberCell*>(v1)->value() == static_cast<JSNumberCell*>(v2)->value();
+
+    if (static_cast<JSCell*>(v1)->isString())
+        return static_cast<JSCell*>(v2)->isString()
+            && static_cast<JSString*>(v1)->value() == static_cast<JSString*>(v2)->value();
+
+    return v1 == v2;
 }
 
-bool strictEqualSlowCase(JSValue* v1, JSValue* v2)
-{
-    return strictEqualSlowCaseInline(v1, v2);
-}
-
-NEVER_INLINE JSValue* throwOutOfMemoryError(ExecState* exec)
+JSValue* throwOutOfMemoryError(ExecState* exec)
 {
     JSObject* error = Error::create(exec, GeneralError, "Out of memory");
     exec->setException(error);
     return error;
 }
 
-} // namespace JSC
+} // namespace KJS

@@ -77,14 +77,9 @@ bool WebCoreShouldUseFontSmoothing()
     return gShouldUseFontSmoothing;
 }
 
-void WebCoreSetAlwaysUsesComplexTextCodePath(bool complex)
+void WebCoreSetAlwaysUseATSU(bool useATSU)
 {
-    Font::setCodePath(complex ? Font::Complex : Font::Auto);
-}
-
-bool WebCoreAlwaysUsesComplexTextCodePath()
-{
-    return Font::codePath() == Font::Complex;
+    Font::setCodePath(useATSU ? Font::Complex : Font::Auto);
 }
 
 NSFont* WebCoreFindFont(NSString* familyName, NSFontTraitMask traits, int weight, int size)

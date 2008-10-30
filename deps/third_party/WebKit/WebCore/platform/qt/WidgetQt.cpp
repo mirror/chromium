@@ -33,11 +33,14 @@
 
 #include "Cursor.h"
 #include "Font.h"
+#include "FrameView.h"
 #include "GraphicsContext.h"
-#include "HostWindow.h"
 #include "IntRect.h"
+#include "RenderObject.h"
 #include "ScrollView.h"
 #include "Widget.h"
+#include "WidgetClient.h"
+#include "PlatformScrollBar.h"
 #include "NotImplemented.h"
 
 #include "qwebframe.h"
@@ -52,26 +55,59 @@
 
 namespace WebCore {
 
-Widget::Widget(QWidget* widget)
+struct WidgetPrivate
 {
-    init(widget);
+    WidgetPrivate()
+        : m_client(0)
+        , enabled(true)
+        , suppressInvalidation(false)
+        , m_widget(0)
+        , isNPAPIPlugin(0)
+        , m_parentScrollView(0) { }
+    ~WidgetPrivate() {}
+
+    WidgetClient* m_client;
+
+    bool enabled;
+    bool suppressInvalidation;
+    bool isNPAPIPlugin;
+    IntRect m_geometry;
+    QWidget *m_widget; //for plugins
+    ScrollView *m_parentScrollView;
+};
+
+Widget::Widget()
+    : data(new WidgetPrivate())
+{
 }
 
 Widget::~Widget()
 {
     Q_ASSERT(!parent());
+    delete data;
+    data = 0;
 }
 
-IntRect Widget::frameRect() const
+void Widget::setClient(WidgetClient* c)
 {
-    return m_frame;
+    data->m_client = c;
 }
 
-void Widget::setFrameRect(const IntRect& rect)
+WidgetClient* Widget::client() const
 {
-    if (platformWidget())
-        platformWidget()->setGeometry(convertToContainingWindow(IntRect(0, 0, rect.width(), rect.height())));
-    m_frame = rect;
+    return data->m_client;
+}
+
+IntRect Widget::frameGeometry() const
+{
+    return data->m_geometry;
+}
+
+void Widget::setFrameGeometry(const IntRect& r)
+{
+    data->m_geometry = r;
+    if (data->m_widget)
+        data->m_widget->setGeometry(convertToContainingWindow(IntRect(0, 0, r.width(), r.height())));
 }
 
 void Widget::setFocus()
@@ -81,30 +117,200 @@ void Widget::setFocus()
 void Widget::setCursor(const Cursor& cursor)
 {
 #ifndef QT_NO_CURSOR
-    if (QWidget* widget = root()->hostWindow()->platformWindow())
+    if (QWidget* widget = containingWindow())
         QCoreApplication::postEvent(widget, new SetCursorEvent(cursor.impl()));
 #endif
 }
 
 void Widget::show()
 {
-    if (platformWidget())
-        platformWidget()->show();
+    if (data->m_widget)
+        data->m_widget->show();
 }
 
 void Widget::hide()
 {
-    if (platformWidget())
-        platformWidget()->hide();
+    if (data->m_widget)
+        data->m_widget->hide();
+}
+
+QWidget* Widget::nativeWidget() const
+{
+    return data->m_widget;
+}
+
+void Widget::setNativeWidget(QWidget *widget)
+{
+    data->m_widget = widget;
+}
+
+bool Widget::isNPAPIPlugin() const
+{
+    return data->isNPAPIPlugin;
+}
+
+void Widget::setIsNPAPIPlugin(bool is)
+{
+    data->isNPAPIPlugin = is;
 }
 
 void Widget::paint(GraphicsContext *, const IntRect &rect)
 {
 }
 
+bool Widget::isEnabled() const
+{
+    if (data->m_widget)
+        return data->m_widget->isEnabled();
+    return data->enabled;
+}
+
+void Widget::setEnabled(bool e)
+{
+    if (data->m_widget)
+        data->m_widget->setEnabled(e);
+
+    if (e != data->enabled) {
+        data->enabled = e;
+        invalidate();
+    }
+}
+
 void Widget::setIsSelected(bool)
 {
     notImplemented();
+}
+
+bool Widget::suppressInvalidation() const
+{
+    return data->suppressInvalidation;
+}
+
+void Widget::setSuppressInvalidation(bool suppress)
+{
+    data->suppressInvalidation = suppress;
+}
+
+void Widget::invalidate()
+{
+    invalidateRect(IntRect(0, 0, width(), height()));
+}
+
+void Widget::invalidateRect(const IntRect& r)
+{
+    if (data->suppressInvalidation)
+        return;
+
+    if (data->m_widget) { //plugins
+        data->m_widget->update(r);
+        return;
+    }
+
+    if (!parent()) {
+        if (isFrameView())
+            static_cast<FrameView*>(this)->addToDirtyRegion(r);
+        return;
+    }
+
+    // Get the root widget.
+    ScrollView* outermostView = topLevel();
+    if (!outermostView)
+        return;
+
+    IntRect windowRect = convertToContainingWindow(r);
+
+    // Get our clip rect and intersect with it to ensure we don't invalidate too much.
+    IntRect clipRect = windowClipRect();
+    windowRect.intersect(clipRect);
+
+    outermostView->addToDirtyRegion(windowRect);
+}
+
+void Widget::removeFromParent()
+{
+    if (parent())
+        parent()->removeChild(this);
+}
+
+void Widget::setParent(ScrollView* sv)
+{
+    data->m_parentScrollView = sv;
+}
+
+ScrollView* Widget::parent() const
+{
+    return data->m_parentScrollView;
+}
+
+ScrollView* Widget::topLevel() const
+{
+    if (!data->m_parentScrollView)
+        return isFrameView() ? const_cast<ScrollView*>(static_cast<const ScrollView*>(this)) : 0;
+    ScrollView* topLevel = data->m_parentScrollView;
+    while (topLevel->data->m_parentScrollView)
+        topLevel = topLevel->data->m_parentScrollView;
+    return topLevel;
+}
+
+QWidget *Widget::containingWindow() const
+{
+    ScrollView *topLevel = this->topLevel();
+    if (!topLevel)
+        return 0;
+
+    if (!topLevel->isFrameView())
+        return data->m_widget;
+
+    QWebFrame* frame = QWebFramePrivate::kit(static_cast<FrameView*>(topLevel)->frame());
+    QWidget* view = frame->page()->view();
+
+    return view ? view : data->m_widget;
+}
+
+
+void Widget::geometryChanged() const
+{
+}
+
+IntPoint Widget::convertToContainingWindow(const IntPoint& point) const
+{
+    IntPoint windowPoint = point;
+    for (const Widget *parentWidget = parent(), *childWidget = this;
+         parentWidget;
+         childWidget = parentWidget, parentWidget = parentWidget->parent()) {
+        IntPoint oldPoint = windowPoint;
+        windowPoint = parentWidget->convertChildToSelf(childWidget, oldPoint);
+    }
+    return windowPoint;
+}
+
+IntPoint Widget::convertFromContainingWindow(const IntPoint& point) const
+{
+    IntPoint widgetPoint = point;
+    for (const Widget *parentWidget = parent(), *childWidget = this;
+         parentWidget;
+         childWidget = parentWidget, parentWidget = parentWidget->parent()) {
+        IntPoint oldPoint = widgetPoint;
+        widgetPoint = parentWidget->convertSelfToChild(childWidget, oldPoint);
+    }
+    return widgetPoint;
+}
+
+IntRect Widget::convertToContainingWindow(const IntRect& rect) const
+{
+    IntRect convertedRect = rect;
+    convertedRect.setLocation(convertToContainingWindow(convertedRect.location()));
+    return convertedRect;
+}
+
+IntPoint Widget::convertChildToSelf(const Widget* child, const IntPoint& point) const
+{
+    return IntPoint(point.x() + child->x(), point.y() + child->y());
+}
+
+IntPoint Widget::convertSelfToChild(const Widget* child, const IntPoint& point) const
+{
+    return IntPoint(point.x() - child->x(), point.y() - child->y());
 }
 
 }

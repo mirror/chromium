@@ -43,6 +43,7 @@ class WebFrame;
 class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
 public:
     virtual bool hasWebView() const;
+    virtual bool hasFrameView() const;
 
     virtual void forceLayout();
 

@@ -61,20 +61,13 @@ public:
 
     void setMatrix(double a, double b, double c, double d, double e, double f);
     void map(double x, double y, double *x2, double *y2) const;
-
-    // Rounds the mapped point to the nearest integer value.
     IntPoint mapPoint(const IntPoint&) const;
-
     FloatPoint mapPoint(const FloatPoint&) const;
-
-    // Rounds the resulting mapped rectangle out. This is helpful for bounding
-    // box computations but may not be what is wanted in other contexts.
     IntRect mapRect(const IntRect&) const;
-
     FloatRect mapRect(const FloatRect&) const;
-
+    
     bool isIdentity() const;
-
+    
     double a() const;
     void setA(double a);
 
@@ -113,8 +106,6 @@ public:
     bool isInvertible() const;
     AffineTransform inverse() const;
 
-    void blend(const AffineTransform& from, double progress);
-
 #if !PLATFORM(WX) || USE(WXGC)
     operator PlatformAffineTransform() const;
 #endif
@@ -129,8 +120,6 @@ private:
     PlatformAffineTransform m_transform;
 #endif
 };
-
-AffineTransform makeMapBetweenRects(const FloatRect& source, const FloatRect& dest);
 
 } // namespace WebCore
 

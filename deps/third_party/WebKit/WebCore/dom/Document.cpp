@@ -61,6 +61,7 @@
 #include "HTMLElementFactory.h"
 #include "HTMLFrameOwnerElement.h"
 #include "HTMLHeadElement.h"
+#include "HTMLImageLoader.h"
 #include "HTMLInputElement.h"
 #include "HTMLLinkElement.h"
 #include "HTMLMapElement.h"
@@ -72,11 +73,9 @@
 #include "HistoryItem.h"
 #include "HitTestRequest.h"
 #include "HitTestResult.h"
-#include "ImageLoader.h"
 #include "KeyboardEvent.h"
 #include "Logging.h"
 #include "MessageEvent.h"
-#include "MessagePort.h"
 #include "MouseEvent.h"
 #include "MouseEventWithHitTestResults.h"
 #include "MutationEvent.h"
@@ -106,8 +105,6 @@
 #include "TextResourceDecoder.h"
 #include "TreeWalker.h"
 #include "UIEvent.h"
-#include "WebKitAnimationEvent.h"
-#include "WebKitTransitionEvent.h"
 #include "WheelEvent.h"
 #include "XMLHttpRequest.h"
 #include "XMLNames.h"
@@ -272,23 +269,6 @@ static bool acceptsEditingFocus(Node *node)
 
 static HashSet<Document*>* changedDocuments = 0;
 
-class MessagePortTimer : public TimerBase {
-public:
-    MessagePortTimer(PassRefPtr<Document> document)
-        : m_document(document)
-    {
-    }
-
-private:
-    virtual void fired()
-    {
-        m_document->dispatchMessagePortEvents();
-        delete this;
-    }
-
-    RefPtr<Document> m_document;
-};
-
 Document::Document(Frame* frame, bool isXHTML)
     : ContainerNode(0)
     , m_domtree_version(0)
@@ -302,7 +282,7 @@ Document::Document(Frame* frame, bool isXHTML)
 #endif
     , m_xmlVersion("1.0")
     , m_xmlStandalone(false)
-    , m_firedMessagePortTimer(false)
+    , m_dominantScript(USCRIPT_INVALID_CODE)
 #if ENABLE(XBL)
     , m_bindingManager(new XBLBindingManager(this))
 #endif
@@ -380,7 +360,7 @@ Document::Document(Frame* frame, bool isXHTML)
     m_overMinimumLayoutThreshold = false;
     
     initSecurityContext();
-    initDNSPrefetch();
+    initDNSPrefetchEnabled();
 
     static int docID = 0;
     m_docID = docID++;
@@ -414,8 +394,6 @@ void Document::removedLastRef()
         delete m_tokenizer;
         m_tokenizer = 0;
 
-        m_cssCanvasElements.clear();
-
 #ifndef NDEBUG
         m_inRemovedLastRefFunction = false;
 #endif
@@ -436,10 +414,16 @@ Document::~Document()
 
     removeAllEventListeners();
 
-    XMLHttpRequest::detachRequests(this);
+#if ENABLE(SVG)
+    delete m_svgExtensions;
+#endif
 
+    XMLHttpRequest::detachRequests(this);
 #if USE(JSC)
-    forgetAllDOMNodesForDocument(this);
+    {
+        KJS::JSLock lock(false);
+        ScriptInterpreter::forgetAllDOMNodesForDocument(this);
+    }
 #endif
 
     if (m_docChanged && changedDocuments)
@@ -481,18 +465,6 @@ Document::~Document()
 
     if (m_styleSheets)
         m_styleSheets->documentDestroyed();
-
-    HashSet<MessagePort*>::iterator messagePortsEnd = m_messagePorts.end();
-    for (HashSet<MessagePort*>::iterator iter = m_messagePorts.begin(); iter != m_messagePorts.end(); ++iter) {
-        ASSERT((*iter)->document() == this);
-        (*iter)->contextDestroyed();
-        if ((*iter)->entangledPort()) {
-            RefPtr<MessagePort> survivingPort = (*iter)->entangledPort();
-            (*iter)->unentangle();
-            if (survivingPort->document() != this) // Otherwise, survivingPort won't really survive.
-                survivingPort->queueCloseEvent();
-        }
-    }
 
     m_document = 0;
 }
@@ -1193,8 +1165,8 @@ void Document::setDocumentChanged(bool b)
 void Document::recalcStyle(StyleChange change)
 {
     // we should not enter style recalc while painting
-    if (frame() && frame()->view() && frame()->view()->isPainting()) {
-        ASSERT(!frame()->view()->isPainting());
+    if (frame() && frame()->isPainting()) {
+        ASSERT(!frame()->isPainting());
         return;
     }
     
@@ -1601,7 +1573,7 @@ HTMLElement* Document::body()
         if (i->hasTagName(framesetTag))
             return static_cast<HTMLElement*>(i);
         
-        if (i->hasTagName(bodyTag) && !body)
+        if (i->hasTagName(bodyTag))
             body = i;
     }
     return static_cast<HTMLElement*>(body);
@@ -1739,17 +1711,17 @@ void Document::implicitClose()
             
         // Paint immediately after the document is ready.  We do this to ensure that any timers set by the
         // onload don't have a chance to fire before we would have painted.  To avoid over-flushing we only
-        // worry about this for the top-level document.  For platforms that use native widgets for ScrollViews, this
-        // call does nothing (Mac, wx).
-        // FIXME: This causes a timing issue with the dispatchDidFinishLoad delegate callback on Mac, so think
-        // before enabling it, even if Mac becomes viewless later.
+        // worry about this for the top-level document.
+#if !PLATFORM(MAC)
+        // FIXME: This causes a timing issue with the dispatchDidFinishLoad delegate callback.
         // See <rdar://problem/5092361>
         if (view() && !ownerElement())
-            view()->hostWindow()->paint();
+            view()->update();
+#endif
     }
 
 #if PLATFORM(MAC)
-    if (f && renderer() && this == topDocument() && AXObjectCache::accessibilityEnabled())
+    if (renderer() && AXObjectCache::accessibilityEnabled())
         axObjectCache()->postNotificationToElement(renderer(), "AXLoadComplete");
 #endif
 
@@ -2094,7 +2066,7 @@ void Document::processHttpEquiv(const String &equiv, const String &content)
     } else if (equalIgnoringCase(equiv, "content-language"))
         setContentLanguage(content);
     else if (equalIgnoringCase(equiv, "x-dns-prefetch-control"))
-        parseDNSPrefetchControlHeader(content);
+        setDNSPrefetchControl(content);
 }
 
 MouseEventWithHitTestResults Document::prepareMouseEvent(const HitTestRequest& request, const IntPoint& documentPoint, const PlatformMouseEvent& event)
@@ -2562,9 +2534,9 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
         oldFocusedNode->setFocus(false);
                 
         // Dispatch a change event for text fields or textareas that have been edited
-        RenderObject* r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer());
+        RenderObject *r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer());
         if (r && (r->isTextArea() || r->isTextField()) && r->isEdited()) {
-            EventTargetNodeCast(oldFocusedNode.get())->dispatchEventForType(changeEvent, true, false);
+            EventTargetNodeCast(oldFocusedNode.get())->dispatchHTMLEvent(changeEvent, true, false);
             if ((r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer())))
                 r->setEdited(false);
         }
@@ -2782,40 +2754,8 @@ PassRefPtr<Event> Document::createEvent(const String& eventType, ExceptionCode& 
 #endif
     if (eventType == "MessageEvent")
         return MessageEvent::create();
-    if (eventType == "WebKitAnimationEvent")
-        return WebKitAnimationEvent::create();
-    if (eventType == "WebKitTransitionEvent")
-        return WebKitTransitionEvent::create();
     ec = NOT_SUPPORTED_ERR;
     return 0;
-}
-
-void Document::addListenerTypeIfNeeded(const AtomicString& eventType)
-{
-    if (eventType == DOMSubtreeModifiedEvent)
-        addListenerType(DOMSUBTREEMODIFIED_LISTENER);
-    else if (eventType == DOMNodeInsertedEvent)
-        addListenerType(DOMNODEINSERTED_LISTENER);
-    else if (eventType == DOMNodeRemovedEvent)
-        addListenerType(DOMNODEREMOVED_LISTENER);
-    else if (eventType == DOMNodeRemovedFromDocumentEvent)
-        addListenerType(DOMNODEREMOVEDFROMDOCUMENT_LISTENER);
-    else if (eventType == DOMNodeInsertedIntoDocumentEvent)
-        addListenerType(DOMNODEINSERTEDINTODOCUMENT_LISTENER);
-    else if (eventType == DOMAttrModifiedEvent)
-        addListenerType(DOMATTRMODIFIED_LISTENER);
-    else if (eventType == DOMCharacterDataModifiedEvent)
-        addListenerType(DOMCHARACTERDATAMODIFIED_LISTENER);
-    else if (eventType == overflowchangedEvent)
-        addListenerType(OVERFLOWCHANGED_LISTENER);
-    else if (eventType == webkitAnimationStartEvent)
-        addListenerType(ANIMATIONSTART_LISTENER);
-    else if (eventType == webkitAnimationEndEvent)
-        addListenerType(ANIMATIONEND_LISTENER);
-    else if (eventType == webkitAnimationIterationEvent)
-        addListenerType(ANIMATIONITERATION_LISTENER);
-    else if (eventType == webkitTransitionEndEvent)
-        addListenerType(TRANSITIONEND_LISTENER);
 }
 
 CSSStyleDeclaration* Document::getOverrideStyle(Element*, const String&)
@@ -2823,7 +2763,7 @@ CSSStyleDeclaration* Document::getOverrideStyle(Element*, const String&)
     return 0;
 }
 
-void Document::handleWindowEvent(Event* evt, bool useCapture)
+void Document::handleWindowEvent(Event *evt, bool useCapture)
 {
     if (m_windowEventListeners.isEmpty())
         return;
@@ -2837,29 +2777,29 @@ void Document::handleWindowEvent(Event* evt, bool useCapture)
             (*it)->listener()->handleEvent(evt, true);
 }
 
-void Document::setWindowEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener> listener)
+void Document::setHTMLWindowEventListener(const AtomicString &eventType, PassRefPtr<EventListener> listener)
 {
     // If we already have it we don't want removeWindowEventListener to delete it
-    removeWindowEventListenerForType(eventType);
+    removeHTMLWindowEventListener(eventType);
     if (listener)
         addWindowEventListener(eventType, listener, false);
 }
 
-EventListener* Document::windowEventListenerForType(const AtomicString& eventType)
+EventListener *Document::getHTMLWindowEventListener(const AtomicString& eventType)
 {
     RegisteredEventListenerList::iterator it = m_windowEventListeners.begin();
     for (; it != m_windowEventListeners.end(); ++it) {
-        if ((*it)->eventType() == eventType && (*it)->listener()->isAttachedToEventTargetNode())
+        if ((*it)->eventType() == eventType && (*it)->listener()->isHTMLEventListener())
             return (*it)->listener();
     }
     return 0;
 }
 
-void Document::removeWindowEventListenerForType(const AtomicString& eventType)
+void Document::removeHTMLWindowEventListener(const AtomicString& eventType)
 {
     RegisteredEventListenerList::iterator it = m_windowEventListeners.begin();
     for (; it != m_windowEventListeners.end(); ++it) {
-        if ((*it)->eventType() == eventType && (*it)->listener()->isAttachedToEventTargetNode()) {
+        if ((*it)->eventType() == eventType && (*it)->listener()->isHTMLEventListener()) {
             if (eventType == unloadEvent)
                 removePendingFrameUnloadEventCount();
             else if (eventType == beforeunloadEvent)
@@ -2870,7 +2810,7 @@ void Document::removeWindowEventListenerForType(const AtomicString& eventType)
     }
 }
 
-void Document::addWindowEventListener(const AtomicString& eventType, PassRefPtr<EventListener> listener, bool useCapture)
+void Document::addWindowEventListener(const AtomicString &eventType, PassRefPtr<EventListener> listener, bool useCapture)
 {
     if (eventType == unloadEvent)
         addPendingFrameUnloadEventCount();
@@ -2898,12 +2838,13 @@ void Document::removeWindowEventListener(const AtomicString& eventType, EventLis
     }
 }
 
-bool Document::hasWindowEventListener(const AtomicString& eventType)
+bool Document::hasWindowEventListener(const AtomicString &eventType)
 {
     RegisteredEventListenerList::iterator it = m_windowEventListeners.begin();
     for (; it != m_windowEventListeners.end(); ++it)
-        if ((*it)->eventType() == eventType)
+        if ((*it)->eventType() == eventType) {
             return true;
+        }
     return false;
 }
 
@@ -2925,7 +2866,7 @@ void Document::addPendingFrameBeforeUnloadEventCount()
          m_frame->eventHandler()->addPendingFrameBeforeUnloadEventCount();
 }
 
-void Document::removePendingFrameBeforeUnloadEventCount() 
+    void Document::removePendingFrameBeforeUnloadEventCount() 
 {
     if (m_frame)
         m_frame->eventHandler()->removePendingFrameBeforeUnloadEventCount();
@@ -2937,34 +2878,28 @@ bool Document::hasUnloadEventListener()
           hasWindowEventListener(beforeunloadEvent));
 }
 
-PassRefPtr<EventListener> Document::createEventListener(const String& functionName, const String& code, Node* node)
+PassRefPtr<EventListener> Document::createHTMLEventListener(const String& functionName, const String& code, Node *node)
 {
-    Frame* frm = frame();
-    if (!frm || !frm->script()->isEnabled())
-        return 0;
-
-#if ENABLE(SVG)
-    if (node ? node->isSVGElement() : isSVGDocument())
-        return frm->script()->createSVGEventHandler(functionName, code, node);
-#endif
-
-    // We may want to treat compound document event handlers in a different way, in future.
-    return frm->script()->createHTMLEventHandler(functionName, code, node);
+    if (Frame* frm = frame())
+        if (frm->script()->isEnabled())
+            return frm->script()->createHTMLEventHandler(functionName, code, node);
+    return 0;
 }
 
-void Document::setWindowEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute* attr)
+void Document::setHTMLWindowEventListener(const AtomicString& eventType, Attribute* attr)
 {
-    setWindowEventListenerForType(eventType, createEventListener(attr->localName().string(), attr->value(), 0));
+    setHTMLWindowEventListener(eventType,
+        createHTMLEventListener(attr->localName().string(), attr->value(), 0));
 }
 
-void Document::dispatchImageLoadEventSoon(ImageLoader* image)
+void Document::dispatchImageLoadEventSoon(HTMLImageLoader *image)
 {
     m_imageLoadEventDispatchSoonList.append(image);
     if (!m_imageLoadEventTimer.isActive())
         m_imageLoadEventTimer.startOneShot(0);
 }
 
-void Document::removeImage(ImageLoader* image)
+void Document::removeImage(HTMLImageLoader* image)
 {
     // Remove instances of this image from both lists.
     // Use loops because we allow multiple instances to get into the lists.
@@ -2979,18 +2914,19 @@ void Document::dispatchImageLoadEventsNow()
     // need to avoid re-entering this function; if new dispatches are
     // scheduled before the parent finishes processing the list, they
     // will set a timer and eventually be processed
-    if (!m_imageLoadEventDispatchingList.isEmpty())
+    if (!m_imageLoadEventDispatchingList.isEmpty()) {
         return;
+    }
 
     m_imageLoadEventTimer.stop();
     
     m_imageLoadEventDispatchingList = m_imageLoadEventDispatchSoonList;
     m_imageLoadEventDispatchSoonList.clear();
-    for (DeprecatedPtrListIterator<ImageLoader> it(m_imageLoadEventDispatchingList); it.current();) {
-        ImageLoader* image = it.current();
+    for (DeprecatedPtrListIterator<HTMLImageLoader> it(m_imageLoadEventDispatchingList); it.current();) {
+        HTMLImageLoader* image = it.current();
         // Must advance iterator *before* dispatching call.
         // Otherwise, it might be advanced automatically if dispatching the call had a side effect
-        // of destroying the current ImageLoader, and then we would advance past the *next* item,
+        // of destroying the current HTMLImageLoader, and then we would advance past the *next* item,
         // missing one altogether.
         ++it;
         image->dispatchLoadEvent();
@@ -3266,28 +3202,28 @@ void Document::setInPageCache(bool flag)
     }
 }
 
-void Document::documentWillBecomeInactive() 
+void Document::willSaveToCache() 
 {
-    HashSet<Element*>::iterator end = m_documentActivationCallbackElements.end();
-    for (HashSet<Element*>::iterator i = m_documentActivationCallbackElements.begin(); i != end; ++i)
-        (*i)->documentWillBecomeInactive();
+    HashSet<Element*>::iterator end = m_pageCacheCallbackElements.end();
+    for (HashSet<Element*>::iterator i = m_pageCacheCallbackElements.begin(); i != end; ++i)
+        (*i)->willSaveToCache();
 }
 
-void Document::documentDidBecomeActive() 
+void Document::didRestoreFromCache() 
 {
-    HashSet<Element*>::iterator end = m_documentActivationCallbackElements.end();
-    for (HashSet<Element*>::iterator i = m_documentActivationCallbackElements.begin(); i != end; ++i)
-        (*i)->documentDidBecomeActive();
+    HashSet<Element*>::iterator end = m_pageCacheCallbackElements.end();
+    for (HashSet<Element*>::iterator i = m_pageCacheCallbackElements.begin(); i != end; ++i)
+        (*i)->didRestoreFromCache();
 }
 
-void Document::registerForDocumentActivationCallbacks(Element* e)
+void Document::registerForCacheCallbacks(Element* e)
 {
-    m_documentActivationCallbackElements.add(e);
+    m_pageCacheCallbackElements.add(e);
 }
 
-void Document::unregisterForDocumentActivationCallbacks(Element* e)
+void Document::unregisterForCacheCallbacks(Element* e)
 {
-    m_documentActivationCallbackElements.remove(e);
+    m_pageCacheCallbackElements.remove(e);
 }
 
 void Document::setShouldCreateRenderers(bool f)
@@ -3869,14 +3805,14 @@ PassRefPtr<Attr> Document::createAttributeNS(const String& namespaceURI, const S
 #if ENABLE(SVG)
 const SVGDocumentExtensions* Document::svgExtensions()
 {
-    return m_svgExtensions.get();
+    return m_svgExtensions;
 }
 
 SVGDocumentExtensions* Document::accessSVGExtensions()
 {
     if (!m_svgExtensions)
-        m_svgExtensions.set(new SVGDocumentExtensions(this));
-    return m_svgExtensions.get();
+        m_svgExtensions = new SVGDocumentExtensions(this);
+    return m_svgExtensions;
 }
 #endif
 
@@ -4206,7 +4142,7 @@ void Document::initSecurityContext()
 void Document::setSecurityOrigin(SecurityOrigin* securityOrigin)
 {
     m_securityOrigin = securityOrigin;
-    initDNSPrefetch();
+    initDNSPrefetchEnabled();
 }
 
 void Document::updateFocusAppearanceSoon()
@@ -4493,72 +4429,18 @@ HTMLCanvasElement* Document::getCSSCanvasElement(const String& name)
     return result.get();
 }
 
-void Document::processMessagePortMessagesSoon()
-{
-    if (m_firedMessagePortTimer)
-        return;
-
-    MessagePortTimer* timer = new MessagePortTimer(this);
-    timer->startOneShot(0);
-
-    m_firedMessagePortTimer = true;
-}
-
-void Document::dispatchMessagePortEvents()
-{
-    RefPtr<Document> protect(this);
-
-    // Make a frozen copy.
-    Vector<MessagePort*> ports;
-    copyToVector(m_messagePorts, ports);
-
-    m_firedMessagePortTimer = false;
-
-    unsigned portCount = ports.size();
-    for (unsigned i = 0; i < portCount; ++i) {
-        MessagePort* port = ports[i];
-        if (m_messagePorts.contains(port) && port->queueIsOpen())
-            port->dispatchMessages();
-    }
-}
-
-void Document::createdMessagePort(MessagePort* port)
-{
-    ASSERT(port);
-    m_messagePorts.add(port);
-}
-
-void Document::destroyedMessagePort(MessagePort* port)
-{
-    ASSERT(port);
-    m_messagePorts.remove(port);
-}
-
-void Document::createdXMLHttpRequest(XMLHttpRequest* request)
-{
-    ASSERT(request);
-    m_xmlHttpRequests.add(request);
-}
-
-void Document::destroyedXMLHttpRequest(XMLHttpRequest* request)
-{
-    ASSERT(request);
-    m_xmlHttpRequests.remove(request);
-}
-
-void Document::initDNSPrefetch()
+void Document::initDNSPrefetchEnabled()
 {
     m_haveExplicitlyDisabledDNSPrefetch = false;
-    m_isDNSPrefetchEnabled = securityOrigin()->protocol() == "http";
+    m_isDNSPrefetchEnabled = (securityOrigin()->protocol() == "http");
 
     // Inherit DNS prefetch opt-out from parent frame    
-    if (Document* parent = parentDocument()) {
+    if (Document* parent = parentDocument())
         if (!parent->isDNSPrefetchEnabled())
             m_isDNSPrefetchEnabled = false;
-    }
 }
 
-void Document::parseDNSPrefetchControlHeader(const String& dnsPrefetchControl)
+void Document::setDNSPrefetchControl(const String& dnsPrefetchControl)
 {
     if (equalIgnoringCase(dnsPrefetchControl, "on") && 
         !m_haveExplicitlyDisabledDNSPrefetch) {

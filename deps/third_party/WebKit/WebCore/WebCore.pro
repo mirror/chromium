@@ -11,7 +11,6 @@ contains(QT_CONFIG, embedded):CONFIG += embedded
 CONFIG(QTDIR_build) {
     GENERATED_SOURCES_DIR = $$PWD/generated
     include($$QT_SOURCE_TREE/src/qbase.pri)
-    !win32-msvc*: CONFIG -= create_prl
     PRECOMPILED_HEADER = $$PWD/../WebKit/qt/WebKit_pch.h
     DEFINES *= NDEBUG
 }
@@ -49,7 +48,6 @@ freebsd-*: DEFINES += HAVE_PTHREAD_NP_H
 DEFINES += BUILD_WEBKIT
 
 !CONFIG(QTDIR_build):win32-*: DEFINES += ENABLE_ICONDATABASE=0 ENABLE_DATABASE=0
-win32-*: DEFINES += _HAS_TR1=0
 
 # Pick up 3rdparty libraries from INCLUDE/LIB just like with MSVC
 win32-g++ {
@@ -60,6 +58,7 @@ win32-g++ {
 }
 
 # Optional components (look for defs in config.h and included files!)
+!contains(DEFINES, ENABLE_CROSS_DOCUMENT_MESSAGING=.): DEFINES += ENABLE_CROSS_DOCUMENT_MESSAGING=1
 !contains(DEFINES, ENABLE_DASHBOARD_SUPPORT=.): DEFINES += ENABLE_DASHBOARD_SUPPORT=0
 !contains(DEFINES, ENABLE_DATABASE=.): DEFINES += ENABLE_DATABASE=1
 !contains(DEFINES, ENABLE_ICONDATABASE=.): DEFINES += ENABLE_ICONDATABASE=1
@@ -74,17 +73,13 @@ win32-g++ {
 !contains(DEFINES, ENABLE_SVG_USE=.): DEFINES += ENABLE_SVG_USE=1
 contains(QT_CONFIG, phonon):DEFINES += ENABLE_VIDEO=1
 else:DEFINES += ENABLE_VIDEO=0
+unix:!mac:!embedded: DEFINES += XP_UNIX ENABLE_NETSCAPE_PLUGIN_API=1
+win32: DEFINES += ENABLE_NETSCAPE_PLUGIN_API=1
+DEFINES += WTF_USE_JAVASCRIPTCORE_BINDINGS=1
 
-unix|win32-*:!mac:!embedded:!wince* {
-    DEFINES += ENABLE_NETSCAPE_PLUGIN_API=1
-    unix: DEFINES += XP_UNIX
-} else {
-    DEFINES += ENABLE_NETSCAPE_PLUGIN_API=0
-}
+DEFINES += WTF_CHANGES=1
 
-DEFINES += WTF_USE_JAVASCRIPTCORE_BINDINGS=1 WTF_CHANGES=1
-
-INCLUDEPATH += $$PWD $$PWD/../JavaScriptCore $$PWD/../JavaScriptCore/ForwardingHeaders \
+INCLUDEPATH += $$PWD/../JavaScriptCore $$PWD/../JavaScriptCore/ForwardingHeaders \
                $$PWD/../JavaScriptCore/VM \
                $$PWD/../JavaScriptCore/kjs \
                $$PWD/../JavaScriptCore/bindings \
@@ -102,7 +97,7 @@ contains(CONFIG, debug_and_release_target) {
 
 unset(JSCORE_LINKAGE)
 CONFIG(QTDIR_build) {
-    if(!debug_and_release|build_pass):CONFIG(debug, debug|release) {
+    CONFIG(debug, debug|release) {
         win32:JSCORE_LINKAGE = -lJavaScriptCored
         mac:JSCORE_LINKAGE = -lJavaScriptCore_debug
     }
@@ -111,7 +106,7 @@ isEmpty(JSCORE_LINKAGE):JSCORE_LINKAGE += -lJavaScriptCore
 LIBS += $$JSCORE_LINKAGE
 
 RESOURCES += \
-    $$PWD/../WebCore/inspector/front-end/WebKit.qrc \
+    $$PWD/../WebCore/page/inspector/WebKit.qrc \
     $$PWD/../WebCore/Resources/WebKitResources.qrc \
     $$PWD/../WebCore/platform/qt/WebCoreResources.qrc
 INCLUDEPATH += \
@@ -155,7 +150,6 @@ INCLUDEPATH +=  $$PWD \
                 $$PWD/rendering \
                 $$PWD/rendering/style \
                 $$PWD/history \
-                $$PWD/inspector \
                 $$PWD/xml \
                 $$PWD/html \
                 $$PWD/bindings/js \
@@ -202,7 +196,11 @@ STYLESHEETS_EMBED = $$PWD/css/html4.css
 
 LUT_FILES += \
     bindings/js/JSDOMWindowBase.cpp \
+    bindings/js/JSEventTargetBase.cpp \
     bindings/js/JSRGBColor.cpp
+
+LUT_TABLE_FILES += \
+    bindings/js/JSHTMLInputElementBase.cpp
 
 IDL_BINDINGS += \
     css/Counter.idl \
@@ -245,12 +243,8 @@ IDL_BINDINGS += \
     dom/EventException.idl \
 #    dom/EventListener.idl \
 #    dom/EventTarget.idl \
-    dom/EventTargetNode.idl \
     dom/KeyboardEvent.idl \
     dom/MouseEvent.idl \
-    dom/MessageChannel.idl \
-    dom/MessageEvent.idl \
-    dom/MessagePort.idl \
     dom/MutationEvent.idl \
     dom/NamedNodeMap.idl \
     dom/Node.idl \
@@ -338,12 +332,12 @@ IDL_BINDINGS += \
     html/HTMLUListElement.idl \
     html/ImageData.idl \
     html/TextMetrics.idl \
-    inspector/JavaScriptCallFrame.idl \
     page/BarInfo.idl \
     page/Console.idl \
     page/DOMSelection.idl \
     page/DOMWindow.idl \
     page/History.idl \
+    page/JavaScriptCallFrame.idl \
     page/Location.idl \
     page/Screen.idl \
     page/Navigator.idl \
@@ -363,6 +357,7 @@ IDL_BINDINGS += \
 SOURCES += \
     bindings/js/GCController.cpp \
     bindings/js/JSAttrCustom.cpp \
+    bindings/js/JSCanvasPixelArrayCustom.cpp \
     bindings/js/JSCanvasRenderingContext2DCustom.cpp \
     bindings/js/JSClipboardCustom.cpp \
     bindings/js/JSConsoleCustom.cpp \
@@ -378,9 +373,8 @@ SOURCES += \
     bindings/js/JSDOMWindowShell.cpp \
     bindings/js/JSElementCustom.cpp \
     bindings/js/JSEventCustom.cpp \
-    bindings/js/JSEventTarget.cpp \
-    bindings/js/JSEventTargetNodeCustom.cpp \
-    bindings/js/JSHTMLAllCollection.cpp \
+    bindings/js/JSEventTargetBase.cpp \
+    bindings/js/JSEventTargetNode.cpp \
     bindings/js/JSHistoryCustom.cpp \
     bindings/js/JSJavaScriptCallFrameCustom.cpp \
     bindings/js/JSHTMLAppletElementCustom.cpp \
@@ -392,13 +386,12 @@ SOURCES += \
     bindings/js/JSHTMLFrameElementCustom.cpp \
     bindings/js/JSHTMLFrameSetElementCustom.cpp \
     bindings/js/JSHTMLIFrameElementCustom.cpp \
-    bindings/js/JSHTMLInputElementCustom.cpp \
+    bindings/js/JSHTMLInputElementBase.cpp \
     bindings/js/JSHTMLObjectElementCustom.cpp \
     bindings/js/JSHTMLOptionElementConstructor.cpp \
     bindings/js/JSHTMLOptionsCollectionCustom.cpp \
     bindings/js/JSHTMLSelectElementCustom.cpp \
     bindings/js/JSImageConstructor.cpp \
-    bindings/js/JSImageDataCustom.cpp \
     bindings/js/JSInspectedObjectWrapper.cpp \
     bindings/js/JSInspectorCallbackWrapper.cpp \
     bindings/js/JSLocationCustom.cpp \
@@ -410,6 +403,7 @@ SOURCES += \
     bindings/js/JSNodeFilterCustom.cpp \
     bindings/js/JSNodeIteratorCustom.cpp \
     bindings/js/JSNodeListCustom.cpp \
+    bindings/js/JSNSResolver.cpp \
     bindings/js/JSQuarantinedObjectWrapper.cpp \
     bindings/js/JSRGBColor.cpp \
     bindings/js/JSStyleSheetCustom.cpp \
@@ -422,9 +416,6 @@ SOURCES += \
     bindings/js/JSXSLTProcessorCustom.cpp \
     bindings/js/JSPluginCustom.cpp \
     bindings/js/JSPluginArrayCustom.cpp \
-    bindings/js/JSMessageChannelConstructor.cpp \
-    bindings/js/JSMessageChannelCustom.cpp \
-    bindings/js/JSMessagePortCustom.cpp \
     bindings/js/JSMimeTypeArrayCustom.cpp \
     bindings/js/JSDOMBinding.cpp \
     bindings/js/JSEventListener.cpp \
@@ -463,7 +454,6 @@ SOURCES += \
     css/CSSInitialValue.cpp \
     css/CSSMediaRule.cpp \
     css/CSSMutableStyleDeclaration.cpp \
-    css/CSSNthSelector.cpp \
     css/CSSPageRule.cpp \
     css/CSSParser.cpp \
     css/CSSParserValues.cpp \
@@ -530,9 +520,6 @@ SOURCES += \
     dom/ExceptionCode.cpp \
     dom/KeyboardEvent.cpp \
     dom/MappedAttribute.cpp \
-    dom/MessageChannel.cpp \
-    dom/MessageEvent.cpp \
-    dom/MessagePort.cpp \
     dom/MouseEvent.cpp \
     dom/MouseRelatedEvent.cpp \
     dom/MutationEvent.cpp \
@@ -568,7 +555,6 @@ SOURCES += \
     dom/WebKitTransitionEvent.cpp \
     dom/WheelEvent.cpp \
     dom/XMLTokenizer.cpp \
-    dom/XMLTokenizerQt.cpp \
     editing/AppendNodeCommand.cpp \
     editing/ApplyStyleCommand.cpp \
     editing/BreakBlockquoteCommand.cpp \
@@ -706,11 +692,6 @@ SOURCES += \
     html/HTMLViewSourceDocument.cpp \
     html/ImageData.cpp \
     html/PreloadScanner.cpp \
-    inspector/InspectorController.cpp \
-    inspector/JavaScriptCallFrame.cpp \
-    inspector/JavaScriptDebugServer.cpp \
-    inspector/JavaScriptProfile.cpp \
-    inspector/JavaScriptProfileNode.cpp \
     loader/archive/ArchiveFactory.cpp \
     loader/archive/ArchiveResource.cpp \
     loader/archive/ArchiveResourceCollection.cpp \
@@ -720,7 +701,6 @@ SOURCES += \
     loader/CachedFont.cpp \
     loader/CachedImage.cpp \
     loader/CachedResourceClientWalker.cpp \
-    loader/CachedResourceHandle.cpp \
     loader/CachedResource.cpp \
     loader/CachedScript.cpp \
     loader/CachedXSLStyleSheet.cpp \
@@ -732,7 +712,6 @@ SOURCES += \
     loader/FTPDirectoryParser.cpp \
     loader/icon/IconLoader.cpp \
     loader/ImageDocument.cpp \
-    loader/ImageLoader.cpp \
     loader/loader.cpp \
     loader/MainResourceLoader.cpp \
     loader/MediaDocument.cpp \
@@ -747,7 +726,6 @@ SOURCES += \
     loader/TextResourceDecoder.cpp \
     page/AccessibilityImageMapLink.cpp \
     page/AccessibilityObject.cpp \    
-    page/AccessibilityList.cpp \    
     page/AccessibilityListBox.cpp \    
     page/AccessibilityListBoxOption.cpp \    
     page/AccessibilityRenderObject.cpp \    
@@ -776,12 +754,16 @@ SOURCES += \
     page/FrameTree.cpp \
     page/FrameView.cpp \
     page/History.cpp \
+    page/InspectorController.cpp \
+    page/JavaScriptCallFrame.cpp \
+    page/JavaScriptDebugServer.cpp \
+    page/JavaScriptProfile.cpp \
+    page/JavaScriptProfileNode.cpp \
     page/Location.cpp \
     page/MouseEventWithHitTestResults.cpp \
     page/Page.cpp \
     page/PageGroup.cpp \
     page/PrintContext.cpp \
-    page/SecurityOrigin.cpp \
     page/Screen.cpp \
     page/Settings.cpp \
     page/WindowFeatures.cpp \
@@ -837,10 +819,9 @@ SOURCES += \
     platform/network/ResourceRequestBase.cpp \
     platform/network/ResourceResponseBase.cpp \
     platform/text/RegularExpression.cpp \
-    platform/Scrollbar.cpp \
-    platform/ScrollbarThemeComposite.cpp \
-    platform/ScrollView.cpp \
+    platform/ScrollBar.cpp \
 #    platform/SearchPopupMenu.cpp \
+    platform/SecurityOrigin.cpp \
     platform/text/SegmentedString.cpp \
     platform/SharedBuffer.cpp \
     platform/text/String.cpp \
@@ -873,7 +854,6 @@ SOURCES += \
     rendering/InlineFlowBox.cpp \
     rendering/InlineTextBox.cpp \
     rendering/LayoutState.cpp \
-    rendering/Length.cpp \
     rendering/ListMarkerBox.cpp \
     rendering/RenderApplet.cpp \
     rendering/RenderArena.cpp \
@@ -905,9 +885,6 @@ SOURCES += \
     rendering/RenderPartObject.cpp \
     rendering/RenderReplaced.cpp \
     rendering/RenderReplica.cpp \
-    rendering/RenderScrollbar.cpp \
-    rendering/RenderScrollbarPart.cpp \
-    rendering/RenderScrollbarTheme.cpp \
     rendering/RenderSlider.cpp \
     rendering/RenderTableCell.cpp \
     rendering/RenderTableCol.cpp \
@@ -925,41 +902,10 @@ SOURCES += \
     rendering/RootInlineBox.cpp \
     rendering/SVGRenderTreeAsText.cpp \
     rendering/TextControlInnerElements.cpp \
-    rendering/style/Animation.cpp \
-    rendering/style/AnimationList.cpp \
-    rendering/style/BindingURI.cpp \
-    rendering/style/ContentData.cpp \
-    rendering/style/CounterDirectives.cpp \
-    rendering/style/CursorData.h \
-    rendering/style/CursorList.h \
-    rendering/style/FillLayer.cpp \
-    rendering/style/KeyframeList.cpp \
-    rendering/style/MatrixTransformOperation.cpp \
-    rendering/style/NinePieceImage.cpp \
     rendering/style/RenderStyle.cpp \
-    rendering/style/RotateTransformOperation.cpp \
-    rendering/style/ScaleTransformOperation.cpp \
-    rendering/style/ShadowData.cpp \
-    rendering/style/SkewTransformOperation.cpp \
-    rendering/style/StyleBackgroundData.cpp \
-    rendering/style/StyleBoxData.cpp \
     rendering/style/StyleCachedImage.cpp \
-    rendering/style/StyleFlexibleBoxData.cpp \
     rendering/style/StyleGeneratedImage.cpp \
-    rendering/style/StyleInheritedData.cpp \
-    rendering/style/StyleInheritedData.h \
-    rendering/style/StyleMarqueeData.cpp \
-    rendering/style/StyleMultiColData.cpp \
-    rendering/style/StyleRareInheritedData.cpp \
-    rendering/style/StyleRareInheritedData.h \
-    rendering/style/StyleRareNonInheritedData.cpp \
-    rendering/style/StyleRareNonInheritedData.h \
-    rendering/style/StyleReflection.h \
-    rendering/style/StyleSurroundData.cpp \
-    rendering/style/StyleTransformData.cpp \
-    rendering/style/StyleVisualData.cpp \
-    rendering/style/TransformOperations.cpp \
-    rendering/style/TranslateTransformOperation.cpp \
+    rendering/style/NinePieceImage.cpp \
     xml/DOMParser.cpp \
     xml/NativeXPathNSResolver.cpp \
     xml/XMLHttpRequest.cpp \
@@ -1039,7 +985,6 @@ SOURCES += \
     platform/qt/EventLoopQt.cpp \
     platform/qt/FileChooserQt.cpp \
     platform/qt/FileSystemQt.cpp \
-    platform/qt/SharedBufferQt.cpp \
     platform/graphics/qt/FontCacheQt.cpp \
     platform/graphics/qt/FontCustomPlatformData.cpp \
     platform/graphics/qt/FontQt.cpp \
@@ -1052,11 +997,10 @@ SOURCES += \
     platform/qt/PlatformKeyboardEventQt.cpp \
     platform/qt/PlatformMouseEventQt.cpp \
     platform/qt/PlatformScreenQt.cpp \
+    platform/qt/PlatformScrollBarQt.cpp \
     platform/qt/PopupMenuQt.cpp \
     platform/qt/QWebPopup.cpp \
     platform/qt/RenderThemeQt.cpp \
-    platform/qt/ScrollbarQt.cpp \
-    platform/qt/ScrollbarThemeQt.cpp \
     platform/qt/ScrollViewQt.cpp \
     platform/qt/SearchPopupMenuQt.cpp \
     platform/qt/SharedTimerQt.cpp \
@@ -1091,7 +1035,6 @@ SOURCES += \
     win32-* {
         LIBS += -lgdi32
         LIBS += -luser32
-        LIBS += -lwinmm
     }
 
     # Files belonging to the Qt 4.3 build
@@ -1136,6 +1079,16 @@ contains(DEFINES, ENABLE_NETSCAPE_PLUGIN_API=1) {
                 -lversion
         }
 
+}
+
+contains(DEFINES, ENABLE_CROSS_DOCUMENT_MESSAGING=1) {
+    FEATURE_DEFINES_JAVASCRIPT += ENABLE_CROSS_DOCUMENT_MESSAGING=1
+
+    SOURCES += \
+        dom/MessageEvent.cpp
+
+    IDL_BINDINGS += \
+        dom/MessageEvent.idl
 }
 
 contains(DEFINES, ENABLE_DASHBOARD_SUPPORT=0) {
@@ -1457,7 +1410,6 @@ contains(DEFINES, ENABLE_SVG=1) {
 
     SOURCES += \
 # TODO: this-one-is-not-auto-added! FIXME! tmp/SVGElementFactory.cpp \
-        bindings/js/JSSVGElementInstanceCustom.cpp \
         bindings/js/JSSVGLengthCustom.cpp \
         bindings/js/JSSVGMatrixCustom.cpp \
         bindings/js/JSSVGPathSegCustom.cpp \
@@ -1467,8 +1419,9 @@ contains(DEFINES, ENABLE_SVG=1) {
         css/SVGCSSComputedStyleDeclaration.cpp \
         css/SVGCSSParser.cpp \
         css/SVGCSSStyleSelector.cpp \
-        rendering/style/SVGRenderStyle.cpp \
-        rendering/style/SVGRenderStyleDefs.cpp \
+        rendering/SVGRenderStyle.cpp \
+        rendering/SVGRenderStyleDefs.cpp \
+        bindings/js/JSSVGLazyEventListener.cpp \
         svg/SVGZoomEvent.cpp \
         rendering/PointerEventsHitRules.cpp \
         svg/FilterEffect.cpp \
@@ -1751,7 +1704,7 @@ addExtraCompilerWithHeader(idl)
 
 # GENERATOR 2-A: LUT creator
 lut.output = $$GENERATED_SOURCES_DIR/${QMAKE_FILE_BASE}.lut.h
-lut.commands = perl $$PWD/../JavaScriptCore/kjs/create_hash_table ${QMAKE_FILE_NAME} -n WebCore > ${QMAKE_FILE_OUT}
+lut.commands = perl $$PWD/../JavaScriptCore/kjs/create_hash_table ${QMAKE_FILE_NAME} -i > ${QMAKE_FILE_OUT}
 lut.depend = ${QMAKE_FILE_NAME}
 lut.input = LUT_FILES
 lut.CONFIG += no_link
@@ -1759,7 +1712,7 @@ addExtraCompiler(lut)
 
 # GENERATOR 2-B: like JavaScriptCore/LUT Generator, but rename output
 luttable.output = $$GENERATED_SOURCES_DIR/${QMAKE_FILE_BASE}Table.cpp
-luttable.commands = perl $$PWD/../JavaScriptCore/kjs/create_hash_table ${QMAKE_FILE_NAME} -n WebCore > ${QMAKE_FILE_OUT}
+luttable.commands = perl $$PWD/../JavaScriptCore/kjs/create_hash_table ${QMAKE_FILE_NAME} -i > ${QMAKE_FILE_OUT}
 luttable.depend = ${QMAKE_FILE_NAME}
 luttable.input = LUT_TABLE_FILES
 luttable.CONFIG += no_link

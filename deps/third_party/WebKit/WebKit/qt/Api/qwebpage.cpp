@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2007 Trolltech ASA
     Copyright (C) 2007 Staikos Computing Services Inc.
     Copyright (C) 2007 Apple Inc.
 
@@ -54,7 +54,7 @@
 #include "InspectorController.h"
 #include "FocusController.h"
 #include "Editor.h"
-#include "Scrollbar.h"
+#include "PlatformScrollBar.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformWheelEvent.h"
 #include "ProgressTracker.h"
@@ -63,7 +63,6 @@
 #include "HitTestResult.h"
 #include "WindowFeatures.h"
 #include "LocalizedStrings.h"
-#include "kjs/InitializeThreading.h"
 
 #include <QApplication>
 #include <QBasicTimer>
@@ -76,7 +75,6 @@
 #include <QFileDialog>
 #include <QHttpRequestHeader>
 #include <QInputDialog>
-#include <QLocale>
 #include <QMessageBox>
 #include <QNetworkProxy>
 #include <QUndoStack>
@@ -84,7 +82,6 @@
 #include <QPainter>
 #include <QClipboard>
 #include <QSslSocket>
-#include <QStyle>
 #include <QSysInfo>
 #if QT_VERSION >= 0x040400
 #include <QNetworkAccessManager>
@@ -219,7 +216,6 @@ QWebPagePrivate::QWebPagePrivate(QWebPage *qq)
 {
     WebCore::InitializeLoggingChannelsIfNecessary();
     WebCore::PageGroup::setShouldTrackVisitedLinks(true);
-    JSC::initializeThreading();
 
     chromeClient = new ChromeClientQt(q);
     contextMenuClient = new ContextMenuClientQt();
@@ -593,13 +589,9 @@ void QWebPagePrivate::contextMenuEvent(QContextMenuEvent *ev)
  */
 QMenu *QWebPage::createStandardContextMenu()
 {
-#ifndef QT_NO_CONTEXTMENU
     QMenu *menu = d->currentContextMenu;
     d->currentContextMenu = 0;
     return menu;
-#else
-    return 0;
-#endif
 }
 
 #ifndef QT_NO_WHEELEVENT
@@ -1251,9 +1243,7 @@ void QWebPage::javaScriptConsoleMessage(const QString& message, int lineNumber, 
 */
 void QWebPage::javaScriptAlert(QWebFrame *frame, const QString& msg)
 {
-#ifndef QT_NO_MESSAGEBOX
     QMessageBox::information(d->view, mainFrame()->title(), msg, QMessageBox::Ok);
-#endif
 }
 
 /*!
@@ -1264,11 +1254,7 @@ void QWebPage::javaScriptAlert(QWebFrame *frame, const QString& msg)
 */
 bool QWebPage::javaScriptConfirm(QWebFrame *frame, const QString& msg)
 {
-#ifdef QT_NO_MESSAGEBOX
-    return true;
-#else
     return QMessageBox::Yes == QMessageBox::information(d->view, mainFrame()->title(), msg, QMessageBox::Yes, QMessageBox::No);
-#endif
 }
 
 /*!
@@ -1436,7 +1422,7 @@ void QWebPage::triggerAction(WebAction action, bool checked)
 QSize QWebPage::viewportSize() const
 {
     if (d->mainFrame && d->mainFrame->d->frame->view())
-        return d->mainFrame->d->frame->view()->frameRect().size();
+        return d->mainFrame->d->frame->view()->frameGeometry().size();
 
     return d->viewportSize;
 }
@@ -1458,7 +1444,7 @@ void QWebPage::setViewportSize(const QSize &size) const
     QWebFrame *frame = mainFrame();
     if (frame->d->frame && frame->d->frame->view()) {
         WebCore::FrameView* view = frame->d->frame->view();
-        view->setFrameRect(QRect(QPoint(0, 0), size));
+        view->setFrameGeometry(QRect(QPoint(0, 0), size));
         frame->d->frame->forceLayout();
         view->adjustViewSize();
     }
@@ -1900,8 +1886,8 @@ bool QWebPage::swallowContextMenuEvent(QContextMenuEvent *event)
 
     if (QWebFrame* webFrame = d->frameAt(event->pos())) {
         Frame* frame = QWebFramePrivate::core(webFrame);
-        if (Scrollbar* scrollbar = frame->view()->scrollbarUnderMouse(PlatformMouseEvent(event, 1))) {
-            return scrollbar->contextMenu(PlatformMouseEvent(event, 1));
+        if (PlatformScrollbar* scrollbar = frame->view()->scrollbarUnderMouse(PlatformMouseEvent(event, 1))) {
+            return scrollbar->handleContextMenuEvent(PlatformMouseEvent(event, 1));
         }
     }
 

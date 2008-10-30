@@ -32,7 +32,6 @@
 #include "EventNames.h"
 #include "HTMLNames.h"
 #include "Length.h"
-#include "Length.h"
 #include "MouseEvent.h"
 #include "RenderFrameSet.h"
 #include "Text.h"
@@ -89,13 +88,13 @@ void HTMLFrameSetElement::parseMappedAttribute(MappedAttribute *attr)
     if (attr->name() == rowsAttr) {
         if (!attr->isNull()) {
             if (m_rows) delete [] m_rows;
-            m_rows = newLengthArray(attr->value().string(), m_totalRows);
+            m_rows = attr->value().toLengthArray(m_totalRows);
             setChanged();
         }
     } else if (attr->name() == colsAttr) {
         if (!attr->isNull()) {
             delete [] m_cols;
-            m_cols = newLengthArray(attr->value().string(), m_totalCols);
+            m_cols = attr->value().toLengthArray(m_totalCols);
             setChanged();
         }
     } else if (attr->name() == frameborderAttr) {
@@ -127,11 +126,11 @@ void HTMLFrameSetElement::parseMappedAttribute(MappedAttribute *attr)
             m_borderColorSet = true;
         }
     } else if (attr->name() == onloadAttr) {
-        document()->setWindowEventListenerForTypeAndAttribute(loadEvent, attr);
+        document()->setHTMLWindowEventListener(loadEvent, attr);
     } else if (attr->name() == onbeforeunloadAttr) {
-        document()->setWindowEventListenerForTypeAndAttribute(beforeunloadEvent, attr);
+        document()->setHTMLWindowEventListener(beforeunloadEvent, attr);
     } else if (attr->name() == onunloadAttr) {
-        document()->setWindowEventListenerForTypeAndAttribute(unloadEvent, attr);
+        document()->setHTMLWindowEventListener(unloadEvent, attr);
     } else
         HTMLElement::parseMappedAttribute(attr);
 }

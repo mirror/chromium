@@ -26,12 +26,11 @@
 #ifndef SmallStrings_h
 #define SmallStrings_h
 
-#include "ustring.h"
 #include <wtf/OwnPtr.h>
 
-namespace JSC {
+namespace KJS {
 
-    class JSGlobalData;
+    class ExecState;
     class JSString;
 
     class SmallStringsStorage;
@@ -41,26 +40,24 @@ namespace JSC {
         SmallStrings();
         ~SmallStrings();
 
-        JSString* emptyString(JSGlobalData* globalData)
+        JSString* emptyString(ExecState* exec)
         {
             if (!m_emptyString)
-                createEmptyString(globalData);
+                createEmptyString(exec);
             return m_emptyString;
         }
-        JSString* singleCharacterString(JSGlobalData* globalData, unsigned char character)
+        JSString* singleCharacterString(ExecState* exec, unsigned char character)
         {
             if (!m_singleCharacterStrings[character])
-                createSingleCharacterString(globalData, character);
+                createSingleCharacterString(exec, character);
             return m_singleCharacterStrings[character];
         }
-
-        UString::Rep* singleCharacterStringRep(unsigned char character);
         
         void mark();
         
     private:
-        void createEmptyString(JSGlobalData*);
-        void createSingleCharacterString(JSGlobalData*, unsigned char);
+        void createEmptyString(ExecState*);
+        void createSingleCharacterString(ExecState*, unsigned char);
 
         JSString* m_emptyString;
         JSString* m_singleCharacterStrings[0x100];

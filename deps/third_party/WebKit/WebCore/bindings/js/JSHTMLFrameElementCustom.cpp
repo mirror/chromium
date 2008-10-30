@@ -30,11 +30,10 @@
 #include "JSHTMLFrameElement.h"
 
 #include "CSSHelper.h"
-#include "Document.h"
 #include "HTMLFrameElement.h"
 #include "JSDOMBinding.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

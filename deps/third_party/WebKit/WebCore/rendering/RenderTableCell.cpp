@@ -220,19 +220,24 @@ int RenderTableCell::baselinePosition(bool /*firstLine*/, bool /*isRootLineBox*/
     return paddingTop() + borderTop() + contentHeight();
 }
 
-void RenderTableCell::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
+void RenderTableCell::setStyle(RenderStyle* newStyle)
 {
     if (parent() && section() && style() && style()->height() != newStyle->height())
         section()->setNeedsCellRecalc();
 
-    ASSERT(newStyle->display() == TABLE_CELL);
+    newStyle->setDisplay(TABLE_CELL);
 
-    RenderBlock::styleWillChange(diff, newStyle);
-}
+    if (newStyle->whiteSpace() == KHTML_NOWRAP) {
+        // Figure out if we are really nowrapping or if we should just
+        // use normal instead.  If the width of the cell is fixed, then
+        // we don't actually use NOWRAP.
+        if (newStyle->width().isFixed())
+            newStyle->setWhiteSpace(NORMAL);
+        else
+            newStyle->setWhiteSpace(NOWRAP);
+    }
 
-void RenderTableCell::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
-{
-    RenderBlock::styleDidChange(diff, oldStyle);
+    RenderBlock::setStyle(newStyle);
     setHasBoxDecorations(true);
 }
 

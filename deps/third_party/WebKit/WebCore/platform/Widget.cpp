@@ -27,95 +27,67 @@
 #include "Widget.h"
 
 #include "IntRect.h"
-#include "ScrollView.h"
-
-#include <wtf/Assertions.h>
 
 namespace WebCore {
 
-void Widget::init(PlatformWidget widget)
+void Widget::resize(int w, int h) 
 {
-    m_parent = 0;
-    m_selfVisible = false;
-    m_parentVisible = false;
-    m_widget = widget;
-    if (m_widget)
-        retainPlatformWidget();
+    setFrameGeometry(IntRect(x(), y(), w, h));
 }
 
-void Widget::setParent(ScrollView* view)
+int Widget::x() const
 {
-    ASSERT(!view || !m_parent);
-    if (!view || !view->isVisible())
-        setParentVisible(false);
-    m_parent = view;
-    if (view && view->isVisible())
-        setParentVisible(true);
+    return frameGeometry().x();
 }
 
-ScrollView* Widget::root() const
+int Widget::y() const 
 {
-    const Widget* top = this;
-    while (top->parent())
-        top = top->parent();
-    if (top->isFrameView())
-        return const_cast<ScrollView*>(static_cast<const ScrollView*>(top));
-    return 0;
-}
-    
-void Widget::removeFromParent()
-{
-    if (parent())
-        parent()->removeChild(this);
+    return frameGeometry().y();
 }
 
-#if !PLATFORM(MAC)
-
-IntRect Widget::convertToContainingWindow(const IntRect& rect) const
-{
-    IntRect convertedRect = rect;
-    convertedRect.setLocation(convertToContainingWindow(convertedRect.location()));
-    return convertedRect;
+int Widget::width() const 
+{ 
+    return frameGeometry().width();
 }
 
-IntPoint Widget::convertToContainingWindow(const IntPoint& point) const
+int Widget::height() const 
 {
-    IntPoint windowPoint = point;
-    const Widget* childWidget = this;
-    for (const ScrollView* parentScrollView = parent();
-         parentScrollView;
-         childWidget = parentScrollView, parentScrollView = parentScrollView->parent())
-        windowPoint = parentScrollView->convertChildToSelf(childWidget, windowPoint);
-    return windowPoint;
+    return frameGeometry().height();
 }
 
-IntPoint Widget::convertFromContainingWindow(const IntPoint& point) const
+IntSize Widget::size() const 
 {
-    IntPoint widgetPoint = point;
-    const Widget* childWidget = this;
-    for (const ScrollView* parentScrollView = parent();
-         parentScrollView;
-         childWidget = parentScrollView, parentScrollView = parentScrollView->parent())
-        widgetPoint = parentScrollView->convertSelfToChild(childWidget, widgetPoint);
-    return widgetPoint;
+    return frameGeometry().size();
 }
 
-IntRect Widget::convertFromContainingWindow(const IntRect& rect) const
+void Widget::resize(const IntSize &s) 
 {
-    IntRect result = rect;
-    result.setLocation(convertFromContainingWindow(rect.location()));
-    return result;
-}
-#endif
-
-#if !PLATFORM(MAC) && !PLATFORM(GTK)
-void Widget::releasePlatformWidget()
-{
+    resize(s.width(), s.height());
 }
 
-void Widget::retainPlatformWidget()
+IntPoint Widget::pos() const 
 {
+    return frameGeometry().location();
 }
-#endif
+
+void Widget::move(int x, int y) 
+{
+    setFrameGeometry(IntRect(x, y, width(), height()));
+}
+
+void Widget::move(const IntPoint &p) 
+{
+    move(p.x(), p.y());
+}
+
+bool Widget::isFrameView() const
+{
+    return false;
+}
+
+IntRect Widget::windowClipRect() const
+{
+    return IntRect();
+}
 
 }

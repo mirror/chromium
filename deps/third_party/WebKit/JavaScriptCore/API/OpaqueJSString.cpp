@@ -27,10 +27,9 @@
 #include "OpaqueJSString.h"
 
 #include <kjs/ExecState.h>
-#include <kjs/JSGlobalObject.h>
 #include <kjs/identifier.h>
 
-using namespace JSC;
+using namespace KJS;
 
 PassRefPtr<OpaqueJSString> OpaqueJSString::create(const UString& ustring)
 {
@@ -44,6 +43,11 @@ UString OpaqueJSString::ustring() const
     if (this && m_characters)
         return UString(m_characters, m_length, true);
     return UString::null();
+}
+
+Identifier OpaqueJSString::identifier(ExecState* exec) const
+{
+    return identifier(&exec->globalData());
 }
 
 Identifier OpaqueJSString::identifier(JSGlobalData* globalData) const

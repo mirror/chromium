@@ -26,34 +26,34 @@
 #include "FunctionPrototype.h"
 #include "JSString.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(InternalFunction);
 
 const ClassInfo InternalFunction::info = { "Function", 0, 0, 0 };
 
-const ClassInfo* InternalFunction::classInfo() const
+InternalFunction::InternalFunction(ExecState* exec)
+    : JSObject(exec->globalData().nullProtoStructureID)
 {
-    return &info;
+    putDirect(exec->propertyNames().name, jsString(exec, exec->propertyNames().nullIdentifier.ustring()), DontDelete | ReadOnly | DontEnum);
 }
 
-InternalFunction::InternalFunction(JSGlobalData* globalData)
-    : JSObject(globalData->nullProtoStructureID)
+InternalFunction::InternalFunction(ExecState* exec, FunctionPrototype* prototype, const Identifier& name)
+    : JSObject(prototype)
 {
-    putDirect(globalData->propertyNames->name, jsString(globalData, globalData->propertyNames->nullIdentifier.ustring()), DontDelete | ReadOnly | DontEnum);
+    putDirect(exec->propertyNames().name, jsString(exec, name.ustring()), DontDelete | ReadOnly | DontEnum);
 }
 
-InternalFunction::InternalFunction(JSGlobalData* globalData, PassRefPtr<StructureID> structure, const Identifier& name)
-    : JSObject(structure)
+const UString& InternalFunction::name(ExecState* exec)
 {
-    putDirect(globalData->propertyNames->name, jsString(globalData, name.ustring()), DontDelete | ReadOnly | DontEnum);
-}
-
-const UString& InternalFunction::name(JSGlobalData* globalData)
-{
-    JSValue* v = getDirect(globalData->propertyNames->name);
+    JSValue* v = getDirect(exec->propertyNames().name);
     ASSERT(v->isString());
     return static_cast<JSString*>(v)->value();
 }
 
-} // namespace JSC
+bool InternalFunction::implementsHasInstance() const
+{
+    return true;
+}
+
+} // namespace KJS

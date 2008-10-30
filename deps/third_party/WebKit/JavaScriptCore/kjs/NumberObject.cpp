@@ -25,14 +25,14 @@
 #include "JSGlobalObject.h"
 #include "NumberPrototype.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(NumberObject);
 
 const ClassInfo NumberObject::info = { "Number", 0, 0, 0 };
 
-NumberObject::NumberObject(PassRefPtr<StructureID> structure)
-    : JSWrapperObject(structure)
+NumberObject::NumberObject(JSObject* prototype)
+    : JSWrapperObject(prototype)
 {
 }
 
@@ -43,16 +43,16 @@ JSValue* NumberObject::getJSNumber()
 
 NumberObject* constructNumber(ExecState* exec, JSNumberCell* number)
 {
-    NumberObject* object = new (exec) NumberObject(exec->lexicalGlobalObject()->numberObjectStructure());
-    object->setInternalValue(number);
-    return object;
+    NumberObject* obj = new (exec) NumberObject(exec->lexicalGlobalObject()->numberPrototype());
+    obj->setInternalValue(number);
+    return obj;
 }
 
 NumberObject* constructNumberFromImmediateNumber(ExecState* exec, JSValue* value)
 {
-    NumberObject* object = new (exec) NumberObject(exec->lexicalGlobalObject()->numberObjectStructure());
-    object->setInternalValue(value);
-    return object;
+    NumberObject* obj = new (exec) NumberObject(exec->lexicalGlobalObject()->numberPrototype());
+    obj->setInternalValue(value);
+    return obj;
 }
 
-} // namespace JSC
+} // namespace KJS

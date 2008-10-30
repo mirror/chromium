@@ -51,7 +51,7 @@ extern NSString *WebPreferencesRemovedNotification;
 - (void)setAuthorAndUserStylesEnabled:(BOOL)flag;
 
 - (BOOL)applicationChromeModeEnabled;
-- (void)setApplicationChromeModeEnabled:(BOOL)flag;
+- (void)setApplicationChromeModeEnabledEnabled:(BOOL)flag;
 
 - (BOOL)respectStandardStyleKeyEquivalents;
 - (void)setRespectStandardStyleKeyEquivalents:(BOOL)flag;

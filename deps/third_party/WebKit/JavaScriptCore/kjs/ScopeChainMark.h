@@ -23,7 +23,7 @@
 
 #include "ScopeChain.h"
 
-namespace JSC {
+namespace KJS {
 
     inline void ScopeChain::mark() const
     {
@@ -34,6 +34,6 @@ namespace JSC {
         }
     }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ScopeChainMark_h

@@ -33,6 +33,11 @@ using namespace WTF;
 
 namespace WebCore {
 
+void PluginView::updateWindow() const
+{
+    notImplemented();
+}
+
 void PluginView::setFocus()
 {
     notImplemented();
@@ -73,6 +78,16 @@ void PluginView::setNPWindowRect(const IntRect& rect)
     notImplemented();
 }
 
+void PluginView::attachToWindow()
+{
+    notImplemented();
+}
+
+void PluginView::detachFromWindow()
+{
+    notImplemented();
+}
+
 void PluginView::stop()
 {
     notImplemented();
@@ -102,11 +117,6 @@ void PluginView::invalidateRect(NPRect* rect)
     notImplemented();
 }
 
-void PluginView::invalidateRect(const IntRect&)
-{
-    notImplemented();
-}
-
 void PluginView::invalidateRegion(NPRegion region)
 {
     notImplemented();
@@ -123,16 +133,6 @@ PluginView::~PluginView()
 }
 
 void PluginView::init()
-{
-    notImplemented();
-}
-
-void PluginView::setParentVisible(bool)
-{
-    notImplemented();
-}
-
-void PluginView::updatePluginWidget() const
 {
     notImplemented();
 }

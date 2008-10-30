@@ -106,6 +106,8 @@ public:
 
     virtual void repaintOverhangingFloats(bool paintAllDescendants);
 
+    virtual void setStyle(RenderStyle*);
+
     virtual void layout();
     virtual void layoutBlock(bool relayoutChildren);
     void layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom);
@@ -115,9 +117,6 @@ public:
     void insertPositionedObject(RenderObject*);
     void removePositionedObject(RenderObject*);
     virtual void removePositionedObjects(RenderBlock*);
-
-    void addPercentHeightDescendant(RenderBox*);
-    static void removePercentHeightDescendant(RenderBox*);
 
     virtual void positionListMarker() { }
 
@@ -311,9 +310,6 @@ private:
     void markLinesDirtyInVerticalRange(int top, int bottom);
 
 protected:
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
-
     void newLine(EClear);
     virtual bool hasLineIfEmpty() const;
     bool layoutOnlyPositionedObjects();

@@ -24,15 +24,14 @@
 #ifndef HTMLTokenizer_h
 #define HTMLTokenizer_h
 
-#include "CachedResourceClient.h"
-#include "CachedResourceHandle.h"
+#include "DeprecatedPtrQueue.h"
 #include "NamedMappedAttrMap.h"
 #include "SegmentedString.h"
 #include "Timer.h"
 #include "Tokenizer.h"
-#include <wtf/Deque.h>
-#include <wtf/OwnPtr.h>
+#include "CachedResourceClient.h"
 #include <wtf/Vector.h>
+#include <wtf/OwnPtr.h>
 
 namespace WebCore {
 
@@ -374,7 +373,7 @@ private:
     // true if we are executing a script while parsing a document. This causes the parsing of
     // the output of the script to be postponed until after the script has finished executing
     int m_executingScript;
-    Deque<CachedResourceHandle<CachedScript> > pendingScripts;
+    DeprecatedPtrQueue<CachedScript> pendingScripts;
     RefPtr<Node> scriptNode;
 
     bool m_requestingScript;

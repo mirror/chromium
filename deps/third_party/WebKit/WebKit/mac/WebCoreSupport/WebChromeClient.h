@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -88,13 +88,10 @@ public:
     virtual bool tabsToLinks() const;
     
     virtual WebCore::IntRect windowResizerRect() const;
-
-    virtual void repaint(const WebCore::IntRect&, bool contentChanged, bool immediate = false, bool repaintContentOnly = false);
-    virtual void scroll(const WebCore::IntSize& scrollDelta, const WebCore::IntRect& rectToScroll, const WebCore::IntRect& clipRect);
-    virtual WebCore::IntPoint screenToWindow(const WebCore::IntPoint&) const;
-    virtual WebCore::IntRect windowToScreen(const WebCore::IntRect&) const;
-    virtual PlatformWidget platformWindow() const;
-
+    virtual void addToDirtyRegion(const WebCore::IntRect&);
+    virtual void scrollBackingStore(int dx, int dy, const WebCore::IntRect& scrollViewRect, const WebCore::IntRect& clipRect);
+    virtual void updateBackingStore();
+    
     virtual void setStatusbarText(const WebCore::String&);
 
     virtual void mouseDidMoveOverElement(const WebCore::HitTestResult&, unsigned modifierFlags);

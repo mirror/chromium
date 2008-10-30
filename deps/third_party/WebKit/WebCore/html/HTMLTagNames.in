@@ -2,7 +2,7 @@ namespace="HTML"
 namespacePrefix="xhtml"
 namespaceURI="http://www.w3.org/1999/xhtml"
 
-a interfaceName=AnchorElement
+a upperCase=Anchor
 abbr
 acronym
 address
@@ -13,56 +13,56 @@ audio applyAudioHack=1
 #endif
 b
 base
-basefont interfaceName=BaseFontElement
+basefont upperCase=BaseFont
 bdo
 big
 blockquote
 body
-br interfaceName=BRElement
+br upperCase=BR
 button
 canvas
-caption interfaceName=TableCaptionElement
+caption upperCase=TableCaption
 center
 cite
 code
-col interfaceName=TableColElement
+col upperCase=TableCol
 colgroup
 dd
-del interfaceName=ModElement
+del upperCase=Mod
 dfn
-dir interfaceName=DirectoryElement
+dir upperCase=Directory
 div
-dl interfaceName=DListElement
+dl upperCase=DList
 dt
 em
 embed
-fieldset interfaceName=FieldSetElement
+fieldset upperCase=FieldSet
 font
 form
 frame
-frameset interfaceName=FrameSetElement
+frameset upperCase=FrameSet
 head
-h1 interfaceName=HeadingElement
+h1 upperCase=Heading
 h2
 h3
 h4
 h5
 h6
-hr interfaceName=HRElement
+hr upperCase=HR
 html
 i
-iframe interfaceName=IFrameElement
+iframe upperCase=IFrame
 image
-img interfaceName=ImageElement
+img upperCase=Image
 input
 ins
-isindex interfaceName=IsIndexElement
+isindex upperCase=IsIndex
 kbd
 keygen
 label
 layer
 legend
-li interfaceName=LIElement
+li upperCase=LI
 link
 listing
 map
@@ -75,14 +75,14 @@ noframes
 nolayer
 noscript
 object
-ol interfaceName=OListElement
-optgroup interfaceName=OptGroupElement
+ol upperCase=OList
+optgroup upperCase=OptGroup
 option
-p interfaceName=ParagraphElement
+p upperCase=Paragraph
 param
 plaintext
 pre
-q interfaceName=QuoteElement
+q upperCase=Quote
 s
 samp
 script
@@ -98,17 +98,17 @@ style
 sub
 sup
 table
-tbody interfaceName=TableSectionElement
-td interfaceName=TableCellElement
-textarea interfaceName=TextAreaElement
+tbody upperCase=TableSection
+td upperCase=TableCell
+textarea upperCase=TextArea
 tfoot
 th
 thead
 title
-tr interfaceName=TableRowElement
+tr upperCase=TableRow
 tt
 u
-ul interfaceName=UListElement
+ul upperCase=UList
 var
 #if ENABLE_VIDEO
 video applyAudioHack=1

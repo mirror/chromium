@@ -50,13 +50,13 @@ public:
     virtual bool isURLAttribute(Attribute*) const;
     virtual const QualifiedName& imageSourceAttributeName() const;
 
-    unsigned width() const;
-    void setWidth(unsigned);
-    unsigned height() const;
-    void setHeight(unsigned);
+    int width() const;
+    void setWidth(int);
+    int height() const;
+    void setHeight(int);
     
-    unsigned videoWidth() const;
-    unsigned videoHeight() const;
+    int videoWidth() const;
+    int videoHeight() const;
     
     KURL poster() const;
     void setPoster(const String&);

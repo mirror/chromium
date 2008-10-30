@@ -60,21 +60,20 @@
 #include <gdkconfig.h>
 #include <gtk/gtk.h>
 
-#if PLATFORM(X11)
+#if defined(GDK_WINDOWING_X11)
 #include "gtk2xtbin.h"
 #include <gdk/gdkx.h>
 #endif
 #ifdef GDK_WINDOWING_WIN32
-#include "PluginMessageThrottlerWin.h"
 #include <gdk/gdkwin32.h>
 #endif
 
-using JSC::ExecState;
-using JSC::Interpreter;
-using JSC::JSLock;
-using JSC::JSObject;
-using JSC::JSValue;
-using JSC::UString;
+using KJS::ExecState;
+using KJS::Interpreter;
+using KJS::JSLock;
+using KJS::JSObject;
+using KJS::JSValue;
+using KJS::UString;
 
 using std::min;
 
@@ -85,7 +84,7 @@ namespace WebCore {
 using namespace EventNames;
 using namespace HTMLNames;
 
-void PluginView::updatePluginWidget() const
+void PluginView::updateWindow() const
 {
     if (!parent() || !m_isWindowed)
         return;
@@ -96,17 +95,17 @@ void PluginView::updatePluginWidget() const
     IntRect oldWindowRect = m_windowRect;
     IntRect oldClipRect = m_clipRect;
 
-    m_windowRect = IntRect(frameView->contentsToWindow(frameRect().location()), frameRect().size());
+    m_windowRect = IntRect(frameView->contentsToWindow(frameGeometry().location()), frameGeometry().size());
     m_clipRect = windowClipRect();
     m_clipRect.move(-m_windowRect.x(), -m_windowRect.y());
 
     GtkAllocation allocation = { m_windowRect.x(), m_windowRect.y(), m_windowRect.width(), m_windowRect.height() };
-    if (platformPluginWidget()) {
-        gtk_widget_size_allocate(platformPluginWidget(), &allocation);
-#if PLATFORM(X11)
+    if (m_window) {
+        gtk_widget_size_allocate(m_window, &allocation);
+#if defined(GDK_WINDOWING_X11)
         if (!m_needsXEmbed) {
-            gtk_xtbin_set_position(GTK_XTBIN(platformPluginWidget()), m_windowRect.x(), m_windowRect.y());
-            gtk_xtbin_resize(platformPluginWidget(), m_windowRect.width(), m_windowRect.height());
+            gtk_xtbin_set_position(GTK_XTBIN(m_window), m_windowRect.x(), m_windowRect.y());
+            gtk_xtbin_resize(m_window, m_windowRect.width(), m_windowRect.height());
         }
 #endif
     }
@@ -114,28 +113,28 @@ void PluginView::updatePluginWidget() const
 
 void PluginView::setFocus()
 {
-    if (platformPluginWidget())
-        gtk_widget_grab_focus(platformPluginWidget());
+    if (m_window)
+        gtk_widget_grab_focus(m_window);
 
     Widget::setFocus();
 }
 
 void PluginView::show()
 {
-    setSelfVisible(true);
+    m_isVisible = true;
 
-    if (isParentVisible() && platformPluginWidget())
-        gtk_widget_show(platformPluginWidget());
+    if (m_attachedToWindow && m_window)
+        gtk_widget_show(m_window);
 
     Widget::show();
 }
 
 void PluginView::hide()
 {
-    setSelfVisible(false);
+    m_isVisible = false;
 
-    if (isParentVisible() && platformPluginWidget())
-        gtk_widget_hide(platformPluginWidget());
+    if (m_attachedToWindow && m_window)
+        gtk_widget_hide(m_window);
 
     Widget::hide();
 }
@@ -159,11 +158,11 @@ void PluginView::paint(GraphicsContext* context, const IntRect& rect)
     ASSERT(parent()->isFrameView());
 
     if (m_plugin->pluginFuncs()->event) {
-        JSC::JSLock::DropAllLocks dropAllLocks(false);
+        KJS::JSLock::DropAllLocks dropAllLocks(false);
         m_plugin->pluginFuncs()->event(m_instance, &npEvent);
     }
 
-    setNPWindowRect(frameRect());
+    setNPWindowRect(frameGeometry());
 }
 
 void PluginView::handleKeyboardEvent(KeyboardEvent* event)
@@ -172,7 +171,7 @@ void PluginView::handleKeyboardEvent(KeyboardEvent* event)
     
     /* FIXME: Synthesize an XEvent to pass through */
 
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
     if (!m_plugin->pluginFuncs()->event(m_instance, &npEvent))
         event->setDefaultHandled();
 }
@@ -187,7 +186,7 @@ void PluginView::handleMouseEvent(MouseEvent* event)
     /* FIXME: Synthesize an XEvent to pass through */
     IntPoint p = static_cast<FrameView*>(parent())->contentsToWindow(IntPoint(event->pageX(), event->pageY()));
 
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
     if (!m_plugin->pluginFuncs()->event(m_instance, &npEvent))
         event->setDefaultHandled();
 }
@@ -199,7 +198,7 @@ void PluginView::setParent(ScrollView* parent)
     if (parent)
         init();
     else {
-        if (!platformPluginWidget())
+        if (!m_window)
             return;
     }
 }
@@ -227,7 +226,7 @@ void PluginView::setNPWindowRect(const IntRect& rect)
 
     if (m_plugin->pluginFuncs()->setwindow) {
         PluginView::setCurrentPluginView(this);
-        JSC::JSLock::DropAllLocks dropAllLocks(false);
+        KJS::JSLock::DropAllLocks dropAllLocks(false);
         setCallingPlugin(true);
         m_plugin->pluginFuncs()->setwindow(m_instance, &m_npWindow);
         setCallingPlugin(false);
@@ -236,23 +235,28 @@ void PluginView::setNPWindowRect(const IntRect& rect)
         if (!m_isWindowed)
             return;
 
-        ASSERT(platformPluginWidget());
+        ASSERT(m_window);
     }
 }
 
-void PluginView::setParentVisible(bool visible)
+void PluginView::attachToWindow()
 {
-    if (isParentVisible() == visible)
+    if (m_attachedToWindow)
         return;
 
-    Widget::setParentVisible(visible);
+    m_attachedToWindow = true;
+    if (m_isVisible && m_window)
+        gtk_widget_show(m_window);
+}
 
-    if (isSelfVisible() && platformPluginWidget()) {
-        if (visible)
-            gtk_widget_show(platformPluginWidget());
-        else
-            gtk_widget_hide(platformPluginWidget());
-    }
+void PluginView::detachFromWindow()
+{
+    if (!m_attachedToWindow)
+        return;
+
+    if (m_isVisible && m_window)
+        gtk_widget_hide(m_window);
+    m_attachedToWindow = false;
 }
 
 void PluginView::stop()
@@ -270,7 +274,7 @@ void PluginView::stop()
     ASSERT(m_streams.isEmpty());
 
     m_isStarted = false;
-    JSC::JSLock::DropAllLocks dropAllLocks(false);
+    KJS::JSLock::DropAllLocks dropAllLocks(false);
 
     // Clear the window
     m_npWindow.window = 0;
@@ -359,7 +363,7 @@ NPError PluginView::getValueStatic(NPNVariable variable, void* value)
         return NPERR_NO_ERROR;
 
     case NPNVSupportsXEmbedBool:
-#if PLATFORM(X11)
+#if defined(GDK_WINDOWING_X11)
         *((uint32 *)value) = true;
 #else
         *((uint32 *)value) = false;
@@ -379,20 +383,20 @@ NPError PluginView::getValue(NPNVariable variable, void* value)
 {
     switch (variable) {
     case NPNVxDisplay:
-#if PLATFORM(X11)
+#if defined(GDK_WINDOWING_X11)
         if (m_needsXEmbed)
             *(void **)value = (void *)GDK_DISPLAY();
         else
-            *(void **)value = (void *)GTK_XTBIN(platformPluginWidget())->xtclient.xtdisplay;
+            *(void **)value = (void *)GTK_XTBIN(m_window)->xtclient.xtdisplay;
         return NPERR_NO_ERROR;
 #else
         return NPERR_GENERIC_ERROR;
 #endif
 
-#if PLATFORM(X11)
+#if defined(GDK_WINDOWING_X11)
     case NPNVxtAppContext:
         if (!m_needsXEmbed) {
-            *(void **)value = XtDisplayToApplicationContext (GTK_XTBIN(platformPluginWidget())->xtclient.xtdisplay);
+            *(void **)value = XtDisplayToApplicationContext (GTK_XTBIN(m_window)->xtclient.xtdisplay);
 
             return NPERR_NO_ERROR;
         } else
@@ -437,13 +441,13 @@ NPError PluginView::getValue(NPNVariable variable, void* value)
 #endif
 
         case NPNVnetscapeWindow: {
-#if PLATFORM(X11)
             void* w = reinterpret_cast<void*>(value);
-            *((XID *)w) = GDK_WINDOW_XWINDOW(m_parentFrame->view()->hostWindow()->platformWindow()->window);
+
+#ifdef GDK_WINDOWING_X11
+            *((XID *)w) = GDK_WINDOW_XWINDOW(containingWindow()->window);
 #endif
 #ifdef GDK_WINDOWING_WIN32
-            HGDIOBJ* w = reinterpret_cast<HGDIOBJ*>(value);
-            *w = GDK_WINDOW_HWND(m_parentFrame->view()->hostWindow()->platformWindow()->window);
+            *((HWND *)w) = GDK_WINDOWING_HWND(containingWindow()->window);
 #endif
             return NPERR_NO_ERROR;
         }
@@ -451,16 +455,6 @@ NPError PluginView::getValue(NPNVariable variable, void* value)
         default:
             return getValueStatic(variable, value);
     }
-}
-
-void PluginView::invalidateRect(const IntRect& rect)
-{
-    if (m_isWindowed) {
-        gtk_widget_queue_draw_area(GTK_WIDGET(platformPluginWidget()), rect.x(), rect.y(), rect.width(), rect.height());
-        return;
-    }
-
-    invalidateWindowlessPluginRect(rect);
 }
 
 void PluginView::invalidateRect(NPRect* rect)
@@ -471,15 +465,15 @@ void PluginView::invalidateRect(NPRect* rect)
     }
 
     IntRect r(rect->left, rect->top, rect->right - rect->left, rect->bottom - rect->top);
-    invalidateRect(r);
+    Widget::invalidateRect(r);
 }
 
 void PluginView::forceRedraw()
 {
     if (m_isWindowed)
-        gtk_widget_queue_draw(platformPluginWidget());
+        gtk_widget_queue_draw(m_window);
     else
-        gtk_widget_queue_draw(m_parentFrame->view()->hostWindow()->platformWindow());
+        gtk_widget_queue_draw(containingWindow());
 }
 
 PluginView::~PluginView()
@@ -527,52 +521,56 @@ void PluginView::init()
 
     if (m_plugin->pluginFuncs()->getvalue) {
         PluginView::setCurrentPluginView(this);
-        JSC::JSLock::DropAllLocks dropAllLocks(false);
+        KJS::JSLock::DropAllLocks dropAllLocks(false);
         setCallingPlugin(true);
         m_plugin->pluginFuncs()->getvalue(m_instance, NPPVpluginNeedsXEmbed, &m_needsXEmbed);
         setCallingPlugin(false);
         PluginView::setCurrentPluginView(0);
     }
 
-#if PLATFORM(X11)
+#if defined(GDK_WINDOWING_X11)
     if (m_needsXEmbed) {
-        setPlatformWidget(gtk_socket_new());
-        gtk_container_add(GTK_CONTAINER(m_parentFrame->view()->hostWindow()->platformWindow()), platformPluginWidget());
-        g_signal_connect(platformPluginWidget(), "plug_removed", G_CALLBACK(plug_removed_cb), NULL);
-    } else if (m_isWindowed)
-        setPlatformWidget(gtk_xtbin_new(m_parentFrame->view()->hostWindow()->platformWindow()->window, 0));
+        m_window = gtk_socket_new();
+        gtk_container_add(GTK_CONTAINER(containingWindow()), m_window);
+        g_signal_connect(m_window, "plug_removed", G_CALLBACK(plug_removed_cb), NULL);
+        setGtkWidget(m_window);
+    } else if (m_isWindowed) {
+        m_window = gtk_xtbin_new(m_parentFrame->view()->containingWindow()->window, 0);
+        setGtkWidget(m_window);
+    }
 #else
-    setPlatformWidget(gtk_socket_new());
-    gtk_container_add(GTK_CONTAINER(m_parentFrame->view()->hostWindow()->platformWindow()), platformPluginWidget());
+    m_window = gtk_socket_new();
+    gtk_container_add(GTK_CONTAINER(m_parentFrame->view()->containingWindow()), m_window);
+    setGtkWidget(m_window);
 #endif
-    show();
+    show ();
 
     if (m_isWindowed) {
         m_npWindow.type = NPWindowTypeWindow;
-#if PLATFORM(X11)
+#if defined(GDK_WINDOWING_X11)
         NPSetWindowCallbackStruct *ws = new NPSetWindowCallbackStruct();
 
         ws->type = 0;
 
         if (m_needsXEmbed) {
-            gtk_widget_realize(platformPluginWidget());
-            m_npWindow.window = (void*)gtk_socket_get_id(GTK_SOCKET(platformPluginWidget()));
-            ws->display = GDK_WINDOW_XDISPLAY(platformPluginWidget()->window);
-            ws->visual = GDK_VISUAL_XVISUAL(gdk_drawable_get_visual(GDK_DRAWABLE(platformPluginWidget()->window)));
-            ws->depth = gdk_drawable_get_visual(GDK_DRAWABLE(platformPluginWidget()->window))->depth;
-            ws->colormap = GDK_COLORMAP_XCOLORMAP(gdk_drawable_get_colormap(GDK_DRAWABLE(platformPluginWidget()->window)));
+            gtk_widget_realize(m_window);
+            m_npWindow.window = (void*)gtk_socket_get_id(GTK_SOCKET(m_window));
+            ws->display = GDK_WINDOW_XDISPLAY(m_window->window);
+            ws->visual = GDK_VISUAL_XVISUAL(gdk_drawable_get_visual(GDK_DRAWABLE(m_window->window)));
+            ws->depth = gdk_drawable_get_visual(GDK_DRAWABLE(m_window->window))->depth;
+            ws->colormap = GDK_COLORMAP_XCOLORMAP(gdk_drawable_get_colormap(GDK_DRAWABLE(m_window->window)));
         } else {
-            m_npWindow.window = (void*)GTK_XTBIN(platformPluginWidget())->xtwindow;
-            ws->display = GTK_XTBIN(platformPluginWidget())->xtdisplay;
-            ws->visual = GTK_XTBIN(platformPluginWidget())->xtclient.xtvisual;
-            ws->depth = GTK_XTBIN(platformPluginWidget())->xtclient.xtdepth;
-            ws->colormap = GTK_XTBIN(platformPluginWidget())->xtclient.xtcolormap;
+            m_npWindow.window = (void*)GTK_XTBIN(m_window)->xtwindow;
+            ws->display = GTK_XTBIN(m_window)->xtdisplay;
+            ws->visual = GTK_XTBIN(m_window)->xtclient.xtvisual;
+            ws->depth = GTK_XTBIN(m_window)->xtclient.xtdepth;
+            ws->colormap = GTK_XTBIN(m_window)->xtclient.xtcolormap;
         }
         XFlush (ws->display);
 
         m_npWindow.ws_info = ws;
 #elif defined(GDK_WINDOWING_WIN32)
-        m_npWindow.window = (void*)GDK_WINDOW_HWND(platformPluginWidget()->window);
+        m_npWindow.window = (void*)GDK_WINDOW_HWND(m_window->window);
 #endif
     } else {
         m_npWindow.type = NPWindowTypeDrawable;
@@ -580,7 +578,7 @@ void PluginView::init()
     }
 
     if (!(m_plugin->quirks().contains(PluginQuirkDeferFirstSetWindowCall)))
-        setNPWindowRect(frameRect());
+        setNPWindowRect(frameGeometry());
 
     m_status = PluginStatusLoadedSuccessfully;
 }

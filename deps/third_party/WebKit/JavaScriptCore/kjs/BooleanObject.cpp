@@ -21,15 +21,15 @@
 #include "config.h"
 #include "BooleanObject.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(BooleanObject);
 
 const ClassInfo BooleanObject::info = { "Boolean", 0, 0, 0 };
 
-BooleanObject::BooleanObject(PassRefPtr<StructureID> structure)
-    : JSWrapperObject(structure)
+BooleanObject::BooleanObject(JSObject* prototype)
+    : JSWrapperObject(prototype)
 {
 }
 
-} // namespace JSC
+} // namespace KJS

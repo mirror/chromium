@@ -31,7 +31,8 @@ namespace WebCore {
 class CSSValue;
 class CSSImageGeneratorValue;
 
-class StyleGeneratedImage : public StyleImage {
+class StyleGeneratedImage : public StyleImage
+{
 public:
     static PassRefPtr<StyleGeneratedImage> create(CSSImageGeneratorValue* val, bool fixedSize)
     {

@@ -32,6 +32,7 @@ namespace WebCore {
     class AffineTransform;
     class FloatRect;
     class SVGElement;
+    class SVGStyledElement;
 
     class SVGLocatable {
     public:
@@ -47,11 +48,11 @@ namespace WebCore {
         virtual AffineTransform getScreenCTM() const = 0;
         AffineTransform getTransformToElement(SVGElement*, ExceptionCode&) const;
 
-        static SVGElement* nearestViewportElement(const SVGElement*);
-        static SVGElement* farthestViewportElement(const SVGElement*);
+        static SVGElement* nearestViewportElement(const SVGStyledElement*);
+        static SVGElement* farthestViewportElement(const SVGStyledElement*);
 
     protected:
-        static FloatRect getBBox(const SVGElement*);
+        static FloatRect getBBox(const SVGStyledElement*);
         static AffineTransform getCTM(const SVGElement*);
         static AffineTransform getScreenCTM(const SVGElement*);
     };

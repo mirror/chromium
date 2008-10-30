@@ -2,7 +2,6 @@ javascriptcore_cppflags += \
 	-I$(srcdir)/JavaScriptCore/API \
 	-I$(srcdir)/JavaScriptCore/ForwardingHeaders \
 	-I$(srcdir)/JavaScriptCore/VM \
-	-I$(srcdir)/JavaScriptCore/pcre \
 	-I$(srcdir)/JavaScriptCore/profiler \
 	-I$(srcdir)/JavaScriptCore/wtf/unicode \
 	-I$(top_builddir)/JavaScriptCore/pcre \
@@ -34,7 +33,6 @@ javascriptcore_built_nosources += \
 javascriptcore_sources += \
 	JavaScriptCore/API/APICast.h \
 	JavaScriptCore/API/JSBase.cpp \
-	JavaScriptCore/API/JSBasePrivate.h \
 	JavaScriptCore/API/JSCallbackConstructor.cpp \
 	JavaScriptCore/API/JSCallbackConstructor.h \
 	JavaScriptCore/API/JSCallbackFunction.cpp \
@@ -64,8 +62,6 @@ javascriptcore_sources += \
 	JavaScriptCore/ForwardingHeaders/JavaScriptCore/OpaqueJSString.h \
 	JavaScriptCore/ForwardingHeaders/JavaScriptCore/WebKitAvailability.h \
 	JavaScriptCore/JavaScriptCorePrefix.h \
-	JavaScriptCore/VM/CTI.cpp \
-	JavaScriptCore/VM/CTI.h \
 	JavaScriptCore/VM/CodeBlock.cpp \
 	JavaScriptCore/VM/CodeBlock.h \
 	JavaScriptCore/VM/CodeGenerator.h \
@@ -111,7 +107,6 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/Arguments.h \
 	JavaScriptCore/kjs/ArrayConstructor.h \
 	JavaScriptCore/kjs/ArrayPrototype.h \
-	JavaScriptCore/kjs/BatchedTransitionOptimizer.h \
 	JavaScriptCore/kjs/BooleanConstructor.h \
 	JavaScriptCore/kjs/BooleanObject.h \
 	JavaScriptCore/kjs/BooleanPrototype.h \
@@ -135,6 +130,7 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/FunctionPrototype.h \
 	JavaScriptCore/kjs/GetterSetter.h \
 	JavaScriptCore/kjs/GlobalEvalFunction.h \
+	JavaScriptCore/kjs/IndexToNameMap.h \
 	JavaScriptCore/kjs/InitializeThreading.cpp \
 	JavaScriptCore/kjs/InitializeThreading.h \
 	JavaScriptCore/kjs/InternalFunction.h \
@@ -173,12 +169,9 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/PropertyNameArray.h \
 	JavaScriptCore/kjs/PropertySlot.h \
 	JavaScriptCore/kjs/PrototypeFunction.h \
-	JavaScriptCore/kjs/PutPropertySlot.h \
 	JavaScriptCore/kjs/RegExpConstructor.h \
-	JavaScriptCore/kjs/RegExpMatchesArray.h \
 	JavaScriptCore/kjs/RegExpObject.h \
 	JavaScriptCore/kjs/RegExpPrototype.h \
-	JavaScriptCore/kjs/ResultType.h \
 	JavaScriptCore/kjs/ScopeChain.h \
 	JavaScriptCore/kjs/ScopeChainMark.h \
 	JavaScriptCore/kjs/SmallStrings.cpp \
@@ -193,7 +186,6 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/StructureID.h \
 	JavaScriptCore/kjs/SymbolTable.h \
 	JavaScriptCore/kjs/Tracing.h \
-	JavaScriptCore/kjs/TypeInfo.h \
 	JavaScriptCore/kjs/collector.h \
 	JavaScriptCore/kjs/completion.h \
 	JavaScriptCore/kjs/config.h \
@@ -208,7 +200,6 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/protect.h \
 	JavaScriptCore/kjs/regexp.h \
 	JavaScriptCore/kjs/ustring.h \
-	JavaScriptCore/masm/X86Assembler.h \
 	JavaScriptCore/os-win32/stdbool.h \
 	JavaScriptCore/os-win32/stdint.h \
 	JavaScriptCore/pcre/pcre.h \
@@ -232,10 +223,6 @@ javascriptcore_sources += \
 	JavaScriptCore/profiler/Profiler.h \
 	JavaScriptCore/profiler/TreeProfile.cpp \
 	JavaScriptCore/profiler/TreeProfile.h \
-	JavaScriptCore/wrec/CharacterClassConstructor.cpp \
-	JavaScriptCore/wrec/CharacterClassConstructor.h \
-	JavaScriptCore/wrec/WREC.cpp \
-	JavaScriptCore/wrec/WREC.h \
 	JavaScriptCore/wtf/ASCIICType.h \
 	JavaScriptCore/wtf/AVLTree.h \
 	JavaScriptCore/wtf/AlwaysInline.h \
@@ -245,8 +232,6 @@ javascriptcore_sources += \
 	JavaScriptCore/wtf/DisallowCType.h \
 	JavaScriptCore/wtf/FastMalloc.h \
 	JavaScriptCore/wtf/Forward.h \
-	JavaScriptCore/wtf/GOwnPtr.cpp \
-	JavaScriptCore/wtf/GOwnPtr.h \
 	JavaScriptCore/wtf/GetPtr.h \
 	JavaScriptCore/wtf/HashCountedSet.h \
 	JavaScriptCore/wtf/HashFunctions.h \
@@ -327,6 +312,7 @@ javascriptcore_sources += \
 	JavaScriptCore/kjs/FunctionPrototype.cpp \
 	JavaScriptCore/kjs/GetterSetter.cpp \
 	JavaScriptCore/kjs/GlobalEvalFunction.cpp \
+	JavaScriptCore/kjs/IndexToNameMap.cpp \
 	JavaScriptCore/kjs/InternalFunction.cpp \
 	JavaScriptCore/kjs/JSArray.cpp \
 	JavaScriptCore/kjs/JSCell.cpp \
@@ -399,7 +385,7 @@ DerivedSources/grammar.cpp: $(srcdir)/JavaScriptCore/kjs/grammar.y
 DerivedSources/lexer.lut.h: $(CREATE_HASH_TABLE) $(srcdir)/JavaScriptCore/kjs/keywords.table
 	$(PERL) $^ > $@
 
-JavaScriptCore/kjs/%.lut.h: $(CREATE_HASH_TABLE) $(srcdir)/JavaScriptCore/kjs/%.cpp
+%.lut.h: $(CREATE_HASH_TABLE) %.cpp
 	$^ -i > $@
 
 JavaScriptCore/pcre/chartables.c: $(srcdir)/JavaScriptCore/pcre/dftables
@@ -433,9 +419,15 @@ Programs_minidom_CFLAGS = \
 	$(global_cflags) \
 	$(GLOBALDEPS_CFLAGS)
 
+Programs_minidom_CXXFLAGS = \
+	-fno-strict-aliasing \
+	-O2 \
+	$(global_cxxflags) \
+	$(global_cflags) \
+	$(GLOBALDEPS_CFLAGS)
+
 Programs_minidom_LDADD = \
 	 libJavaScriptCore.la \
-	 -lm \
 	 -lstdc++
 
 # jsc

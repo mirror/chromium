@@ -24,34 +24,45 @@
 #include "InternalFunction.h"
 #include <wtf/OwnPtr.h>
 
-namespace JSC {
+namespace KJS {
 
+    class FunctionPrototype;
     class RegExp;
     class RegExpPrototype;
     struct RegExpConstructorPrivate;
 
     class RegExpConstructor : public InternalFunction {
     public:
-        RegExpConstructor(ExecState*, PassRefPtr<StructureID>, RegExpPrototype*);
+        enum {
+            Dollar1,
+            Dollar2,
+            Dollar3,
+            Dollar4,
+            Dollar5,
+            Dollar6,
+            Dollar7,
+            Dollar8,
+            Dollar9,
+            Input,
+            Multiline,
+            LastMatch,
+            LastParen,
+            LeftContext,
+            RightContext
+        };
+
+        RegExpConstructor(ExecState*, FunctionPrototype*, RegExpPrototype*);
 
         virtual void put(ExecState*, const Identifier& propertyName, JSValue*, PutPropertySlot&);
+        void putValueProperty(ExecState*, int token, JSValue*);
         virtual bool getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
+        JSValue* getValueProperty(ExecState*, int token) const;
 
         static const ClassInfo info;
 
         void performMatch(RegExp*, const UString&, int startOffset, int& position, int& length, int** ovector = 0);
         JSObject* arrayOfMatches(ExecState*) const;
-
-        void setInput(const UString&);
         const UString& input() const;
-
-        void setMultiline(bool);
-        bool multiline() const;
-
-        JSValue* getBackref(ExecState*, unsigned) const;
-        JSValue* getLastParen(ExecState*) const;
-        JSValue* getLeftContext(ExecState*) const;
-        JSValue* getRightContext(ExecState*) const;
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
@@ -59,11 +70,14 @@ namespace JSC {
 
         virtual const ClassInfo* classInfo() const { return &info; }
 
+        JSValue* getBackref(ExecState*, unsigned) const;
+        JSValue* getLastParen(ExecState*) const;
+        JSValue* getLeftContext(ExecState*) const;
+        JSValue* getRightContext(ExecState*) const;
+
         OwnPtr<RegExpConstructorPrivate> d;
     };
 
-    JSObject* constructRegExp(ExecState*, const ArgList&);
-
-} // namespace JSC
+} // namespace KJS
 
 #endif // RegExpConstructor_h

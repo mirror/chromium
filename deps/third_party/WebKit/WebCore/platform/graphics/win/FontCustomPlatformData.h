@@ -22,7 +22,6 @@
 #define FontCustomPlatformData_h
 
 #include "FontRenderingMode.h"
-#include "PlatformString.h"
 #include <wtf/Noncopyable.h>
 
 typedef struct CGFont* CGFontRef;
@@ -33,10 +32,9 @@ class FontPlatformData;
 class SharedBuffer;
 
 struct FontCustomPlatformData : Noncopyable {
-    FontCustomPlatformData(CGFontRef cgFont, HANDLE fontReference, const String& name)
+    FontCustomPlatformData(CGFontRef cgFont, HANDLE fontReference = 0)
         : m_cgFont(cgFont)
         , m_fontReference(fontReference)
-        , m_name(name)
     {
     }
 
@@ -46,7 +44,6 @@ struct FontCustomPlatformData : Noncopyable {
 
     CGFontRef m_cgFont;
     HANDLE m_fontReference;
-    String m_name;
 };
 
 FontCustomPlatformData* createFontCustomPlatformData(SharedBuffer*);

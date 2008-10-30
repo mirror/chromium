@@ -71,11 +71,17 @@ RenderFileUploadControl::~RenderFileUploadControl()
     m_fileChooser->disconnectClient();
 }
 
-void RenderFileUploadControl::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderFileUploadControl::setStyle(RenderStyle* newStyle)
 {
-    RenderBlock::styleDidChange(diff, oldStyle);
+    // Force text-align to match the direction
+    if (newStyle->direction() == LTR)
+        newStyle->setTextAlign(LEFT);
+    else
+        newStyle->setTextAlign(RIGHT);
+
+    RenderBlock::setStyle(newStyle);
     if (m_button)
-        m_button->renderer()->setStyle(createButtonStyle(style()));
+        m_button->renderer()->setStyle(createButtonStyle(newStyle));
 
     setReplaced(isInline());
 }
@@ -134,7 +140,7 @@ int RenderFileUploadControl::maxFilenameWidth() const
         - (m_fileChooser->icon() ? iconWidth + iconFilenameSpacing : 0));
 }
 
-RenderStyle* RenderFileUploadControl::createButtonStyle(const RenderStyle* parentStyle) const
+RenderStyle* RenderFileUploadControl::createButtonStyle(RenderStyle* parentStyle) const
 {
     RenderStyle* style = getPseudoStyle(RenderStyle::FILE_UPLOAD_BUTTON);
     if (!style) {

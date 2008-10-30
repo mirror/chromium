@@ -43,7 +43,7 @@
 
 namespace WebCore {
 
-using namespace JSC;
+using namespace KJS;
 
 JSValue* JSDatabase::changeVersion(ExecState* exec, const ArgList& args)
 {

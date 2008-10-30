@@ -43,8 +43,7 @@ using namespace HTMLNames;
 HTMLKeygenElement::HTMLKeygenElement(Document* doc, HTMLFormElement* f)
     : HTMLSelectElement(keygenTag, doc, f)
 {
-    Vector<String> keys;
-    getSupportedKeySizes(keys);
+    Vector<String> keys = supportedKeySizes();
         
     Vector<String>::const_iterator end = keys.end();
     for (Vector<String>::const_iterator it = keys.begin(); it != end; ++it) {

@@ -40,8 +40,9 @@ print STDERR "Creating hashtable for $file\n";
 open(IN, $file) or die "No such file $file";
 
 my @keys = ();
-my @attrs = ();
 my @values = ();
+my @attrs = ();
+my @params = ();
 my @hashes = ();
 
 my $inside = 0;
@@ -50,7 +51,6 @@ my $size;
 my $banner = 0;
 sub calcSize();
 sub output();
-sub jsc_ucfirst($);
 sub hashValue($);
 
 while (<IN>) {
@@ -69,8 +69,9 @@ while (<IN>) {
         output();
 
         @keys = ();
-        @attrs = ();
         @values = ();
+        @attrs = ();
+        @params = ();
         @hashes = ();
 
         $inside = 0;
@@ -79,40 +80,18 @@ while (<IN>) {
         my $val = $2;
         my $att = $3;
         my $param = $4;
-
         push(@keys, $key);
-        push(@attrs, length($att) > 0 ? $att : "0");
-
-        if ($att =~ m/Function/) {
-            push(@values, { "type" => "Function", "function" => $val, "params" => (length($param) ? $param : "") });
-            #printf STDERR "WARNING: Number of arguments missing for $key/$val\n" if (length($param) == 0);
-        } elsif (length($att)) {
-            my $get = $val;
-            my $put = !($att =~ m/ReadOnly/) ? "set" . jsc_ucfirst($val) : "0";
-            push(@values, { "type" => "Property", "get" => $get, "put" => $put });
-        } else {
-            push(@values, { "type" => "Lexer", "value" => $val });        
-        }
+        push(@values, $val);
         push(@hashes, hashValue($key));
+        printf STDERR "WARNING: Number of arguments missing for $key/$val\n" if ($att =~ m/Function/ && length($param) == 0);
+        push(@attrs, length($att) > 0 ? $att : "0");
+        push(@params, length($param) > 0 ? $param : "0");
     } elsif ($inside) {
         die "invalid data {" . $_ . "}";
     }
 }
 
 die "missing closing \@end" if ($inside);
-
-sub jsc_ucfirst($)
-{
-    my ($value) = @_;
-
-    if ($value =~ /js/) {
-        $value =~ s/js/JS/;
-        return $value;
-    }
-
-    return ucfirst($value);
-}
-
 
 sub ceilingToPowerOf2
 {
@@ -209,29 +188,16 @@ sub output() {
 
     print "\n#include \"lookup.h\"\n" if ($includelookup);
     if ($useNameSpace) {
-        print "\nnamespace ${useNameSpace} {\n";
-        print "\nusing namespace JSC;\n";
+        print "\nnamespace ${useNameSpace}\n{\n";
+        print "\nusing namespace KJS;";
     } else {
-        print "\nnamespace JSC {\n";
+        print "\nnamespace KJS {\n";
     }
     my $count = scalar @keys + 1;
     print "\nstatic const struct HashTableValue ${nameEntries}[$count] = {\n";
     my $i = 0;
     foreach my $key (@keys) {
-        my $firstValue = "";
-        my $secondValue = "";
-
-        if ($values[$i]{"type"} eq "Function") {
-            $firstValue = $values[$i]{"function"};
-            $secondValue = $values[$i]{"params"};
-        } elsif ($values[$i]{"type"} eq "Property") {
-            $firstValue = $values[$i]{"get"};
-            $secondValue = $values[$i]{"put"};
-        } elsif ($values[$i]{"type"} eq "Lexer") {
-            $firstValue = $values[$i]{"value"};
-            $secondValue = "0";
-        }
-        print "   { \"$key\", $attrs[$i], (intptr_t)$firstValue, (intptr_t)$secondValue },\n";
+        print "   { \"$key\", (intptr_t)$values[$i], $attrs[$i], $params[$i] },\n";
         $i++;
     }
     print "   { 0, 0, 0, 0 }\n";

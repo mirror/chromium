@@ -109,7 +109,6 @@ private:
     double m_opacityAnimationStartTime;
     float m_opacityAnimationFrom;
     float m_opacityAnimationTo;
-    EVisibility m_previousVisible;
 };
 
 } // namespace WebCore

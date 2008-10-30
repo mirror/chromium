@@ -92,7 +92,7 @@ void webkit_init()
         return;
     isInitialized = true;
 
-    JSC::initializeThreading();
+    KJS::initializeThreading();
     WebCore::InitializeLoggingChannelsIfNecessary();
 
     // Page cache capacity (in pages). Comment from Mac port:

@@ -54,10 +54,8 @@ public:
     // Inherited from CSSRule
     virtual unsigned short type() const { return WEBKIT_KEYFRAME_RULE; }
 
-    String keyText() const              { return m_key; }
-    void setKeyText(const String& s)    { m_key = s; }
-    
-    void getKeys(Vector<float>& keys) const   { parseKeyString(m_key, keys); }
+    String keyText() const;
+    void setKeyText(const String& s);
 
     CSSMutableStyleDeclaration* style() const { return m_style.get(); }
 
@@ -66,18 +64,22 @@ public:
     // Not part of the CSSOM
     virtual bool parseString(const String&, bool = false);
     
+    float key() const { return m_key/100; }
+    float keyAsPercent() const { return m_key; }
+
+    void setKey(float k) { m_key = k; }
     void setDeclaration(PassRefPtr<CSSMutableStyleDeclaration>);
 
     CSSMutableStyleDeclaration*         declaration()       { return m_style.get(); }
     const CSSMutableStyleDeclaration*   declaration() const { return m_style.get(); }
     
+    static float keyStringToFloat(const String& s);
+ 
 private:
-    static void parseKeyString(const String& s, Vector<float>& keys);
-    
     WebKitCSSKeyframeRule(CSSStyleSheet* parent);
 
     RefPtr<CSSMutableStyleDeclaration> m_style;
-    String m_key;        // comma separated list of keys
+    float m_key;        // 0 to 100
 };
 
 } // namespace WebCore

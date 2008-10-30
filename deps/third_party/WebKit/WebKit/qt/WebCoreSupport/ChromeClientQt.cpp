@@ -33,6 +33,7 @@
 #include "FrameLoader.h"
 #include "FrameLoaderClientQt.h"
 #include "FrameView.h"
+#include "PlatformScrollBar.h"
 #include "HitTestResult.h"
 #include "NotImplemented.h"
 #include "WindowFeatures.h"
@@ -296,48 +297,29 @@ IntRect ChromeClientQt::windowResizerRect() const
     return IntRect();
 }
 
-void ChromeClientQt::repaint(const IntRect& windowRect, bool contentChanged, bool immediate, bool repaintContentOnly)
+void ChromeClientQt::addToDirtyRegion(const IntRect& r)
 {
-    // No double buffer, so only update the QWidget if content changed.
-    if (contentChanged) {
-        QWidget* view = m_webPage->view();
-        if (view) {
-            QRect rect(windowRect);
-            rect = rect.intersected(QRect(QPoint(0, 0), m_webPage->viewportSize()));
-            if (!windowRect.isEmpty())
-                view->update(windowRect);
-        } else
-            emit m_webPage->repaintRequested(windowRect);
-    }
-
-    // FIXME: There is no "immediate" support for window painting.  This should be done always whenever the flag
-    // is set.
+    QWidget* view = m_webPage->view();
+    if (view) {
+        QRect rect(r);
+        rect = rect.intersected(QRect(QPoint(0, 0), m_webPage->viewportSize()));
+        if (!r.isEmpty())
+            view->update(r);
+    } else
+        emit m_webPage->repaintRequested(r);
 }
 
-void ChromeClientQt::scroll(const IntSize& delta, const IntRect& scrollViewRect, const IntRect&)
+void ChromeClientQt::scrollBackingStore(int dx, int dy, const IntRect& scrollViewRect, const IntRect& clipRect)
 {
     QWidget* view = m_webPage->view();
     if (view)
-        view->scroll(delta.width(), delta.height(), scrollViewRect);
+        view->scroll(dx, dy, scrollViewRect);
     else
-        emit m_webPage->scrollRequested(delta.width(), delta.height(), scrollViewRect);
+        emit m_webPage->scrollRequested(dx, dy, scrollViewRect);
 }
 
-IntRect ChromeClientQt::windowToScreen(const IntRect& rect) const
+void ChromeClientQt::updateBackingStore()
 {
-    notImplemented();
-    return rect;
-}
-
-IntPoint ChromeClientQt::screenToWindow(const IntPoint& point) const
-{
-    notImplemented();
-    return point;
-}
-
-PlatformWidget ChromeClientQt::platformWindow() const
-{
-    return m_webPage->view();
 }
 
 void ChromeClientQt::mouseDidMoveOverElement(const HitTestResult& result, unsigned modifierFlags)

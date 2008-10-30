@@ -23,29 +23,35 @@
 #include "nodes.h"
 #include "Parser.h"
 
-namespace JSC {
+namespace KJS {
 
-    template <typename T> struct NodeInfo {
+    typedef unsigned int FeatureInfo;
+
+    const FeatureInfo NoFeatures = 0;
+    const FeatureInfo EvalFeature = 1 << 0;
+    const FeatureInfo ClosureFeature = 1 << 1;
+    const FeatureInfo AssignFeature = 1 << 2;
+
+    template <typename T> struct NodeFeatureInfo {
         T m_node;
-        CodeFeatures m_features;
+        FeatureInfo m_featureInfo;
         int m_numConstants;
     };
-
-    typedef NodeInfo<FuncDeclNode*> FuncDeclNodeInfo;    
-    typedef NodeInfo<FuncExprNode*> FuncExprNodeInfo;
-    typedef NodeInfo<ExpressionNode*> ExpressionNodeInfo;
-    typedef NodeInfo<ArgumentsNode*> ArgumentsNodeInfo;
-    typedef NodeInfo<ConstDeclNode*> ConstDeclNodeInfo;
-    typedef NodeInfo<PropertyNode*> PropertyNodeInfo;
-    typedef NodeInfo<PropertyList> PropertyListInfo;
-    typedef NodeInfo<ElementList> ElementListInfo;
-    typedef NodeInfo<ArgumentList> ArgumentListInfo;
+    
+    typedef NodeFeatureInfo<FuncExprNode*> FuncExprNodeInfo;
+    typedef NodeFeatureInfo<ExpressionNode*> ExpressionNodeInfo;
+    typedef NodeFeatureInfo<ArgumentsNode*> ArgumentsNodeInfo;
+    typedef NodeFeatureInfo<ConstDeclNode*> ConstDeclNodeInfo;
+    typedef NodeFeatureInfo<PropertyNode*> PropertyNodeInfo;
+    typedef NodeFeatureInfo<PropertyList> PropertyListInfo;
+    typedef NodeFeatureInfo<ElementList> ElementListInfo;
+    typedef NodeFeatureInfo<ArgumentList> ArgumentListInfo;
     
     template <typename T> struct NodeDeclarationInfo {
         T m_node;
         ParserRefCountedData<DeclarationStacks::VarStack>* m_varDeclarations;
         ParserRefCountedData<DeclarationStacks::FunctionStack>* m_funcDeclarations;
-        CodeFeatures m_features;
+        FeatureInfo m_featureInfo;
         int m_numConstants;
     };
     
@@ -56,8 +62,7 @@ namespace JSC {
     typedef NodeDeclarationInfo<ClauseList> ClauseListInfo;
     typedef NodeDeclarationInfo<ExpressionNode*> VarDeclListInfo;
     typedef NodeDeclarationInfo<ConstDeclList> ConstDeclListInfo;
-    typedef NodeDeclarationInfo<ParameterList> ParameterListInfo;
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // NodeInfo_h

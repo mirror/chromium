@@ -31,8 +31,7 @@
 #pragma warning(push, 0)
 #include <WebCore/GraphicsContext.h>
 #include <WebCore/PlatformMouseEvent.h>
-#include <WebCore/Scrollbar.h>
-#include <WebCore/ScrollbarTheme.h>
+#include <WebCore/PlatformScrollBar.h>
 #pragma warning(pop)
 
 using namespace WebCore;
@@ -41,7 +40,6 @@ using namespace WebCore;
 
 WebScrollBar::WebScrollBar()
     : m_refCount(0)
-    , m_containingWindow(0)
 {
     gClassCount++;
     gClassNameCount.add("WebScrollBar");
@@ -102,10 +100,10 @@ HRESULT STDMETHODCALLTYPE WebScrollBar::init(
     ScrollbarOrientation webCoreOrientation = (ScrollbarOrientation) orientation;
     ScrollbarControlSize webCoreControlSize = (ScrollbarControlSize) controlSize;
     m_delegate = delegate;
-    m_scrollBar = Scrollbar::createNativeScrollbar(this, webCoreOrientation, webCoreControlSize);
+    m_scrollBar = PlatformScrollbar::create(this, webCoreOrientation, webCoreControlSize);
     if (!m_scrollBar)
         return E_FAIL;
-    m_containingWindow = (HWND)(ULONG64)containingWindow;
+    m_scrollBar->setContainingWindow((HWND)(ULONG64)containingWindow);
     return S_OK;
 }
 
@@ -136,7 +134,7 @@ HRESULT STDMETHODCALLTYPE WebScrollBar::setRect(
     /* [in] */ RECT bounds)
 {
     IntRect rect(bounds.left, bounds.top, bounds.right-bounds.left, bounds.bottom-bounds.top);
-    m_scrollBar->setFrameRect(rect);
+    m_scrollBar->setRect(rect);
     return S_OK;
 }
 
@@ -166,12 +164,12 @@ HRESULT STDMETHODCALLTYPE WebScrollBar::paint(
     return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE WebScrollBar::frameRect( 
+HRESULT STDMETHODCALLTYPE WebScrollBar::frameGeometry( 
     /* [retval][out] */ RECT* bounds)
 {
     if (!bounds)
         return E_POINTER;
-    IntRect rect = m_scrollBar->frameRect();
+    IntRect rect = m_scrollBar->frameGeometry();
     bounds->left = rect.x();
     bounds->right = rect.right();
     bounds->top = rect.y();
@@ -203,7 +201,7 @@ HRESULT STDMETHODCALLTYPE WebScrollBar::requestedWidth(
     if (!w)
         return E_POINTER;
 
-    *w = m_scrollBar->orientation() == VerticalScrollbar ? ScrollbarTheme::nativeTheme()->scrollbarThickness(m_scrollBar->controlSize()) : -1;
+    *w = m_scrollBar->orientation() == VerticalScrollbar ? PlatformScrollbar::verticalScrollbarWidth(m_scrollBar->controlSize()) : -1;
     return S_OK;
 }
 
@@ -213,7 +211,7 @@ HRESULT STDMETHODCALLTYPE WebScrollBar::requestedHeight(
     if (!h)
         return E_POINTER;
 
-    *h = m_scrollBar->orientation() == HorizontalScrollbar ? ScrollbarTheme::nativeTheme()->scrollbarThickness(m_scrollBar->controlSize()) : -1;
+    *h = m_scrollBar->orientation() == HorizontalScrollbar ? PlatformScrollbar::horizontalScrollbarHeight(m_scrollBar->controlSize()) : -1;
     return S_OK;
 }
 
@@ -227,13 +225,13 @@ HRESULT STDMETHODCALLTYPE WebScrollBar::handleMouseEvent(
     PlatformMouseEvent mouseEvent((HWND)(ULONG64)window, msg, wParam, lParam);
     switch (msg) {
         case WM_LBUTTONDOWN:
-            m_scrollBar->mouseDown(mouseEvent);
+            m_scrollBar->handleMousePressEvent(mouseEvent);
             break;
         case WM_LBUTTONUP:
-            m_scrollBar->mouseUp();
+            m_scrollBar->handleMouseReleaseEvent(mouseEvent);
             break;
         case WM_MOUSEMOVE:
-            m_scrollBar->mouseMoved(mouseEvent);
+            m_scrollBar->handleMouseMoveEvent(mouseEvent);
             break;
     }
 
@@ -261,8 +259,10 @@ void WebScrollBar::valueChanged(Scrollbar* scrollBar)
     m_delegate->valueChanged(this);
 }
 
-void WebScrollBar::invalidateScrollbarRect(Scrollbar*, const IntRect& rect)
+IntRect WebScrollBar::windowClipRect() const
 {
-    RECT r = rect;
-    ::InvalidateRect(m_containingWindow, &r, false);
+    HWND sbContainingWindow = m_scrollBar->containingWindow();
+    RECT clientRect;
+    ::GetClientRect(sbContainingWindow, &clientRect);
+    return IntRect(clientRect.left, clientRect.top, clientRect.right-clientRect.left, clientRect.bottom-clientRect.top);
 }

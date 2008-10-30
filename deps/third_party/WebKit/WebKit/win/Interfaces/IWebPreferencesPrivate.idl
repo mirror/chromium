@@ -57,7 +57,4 @@ interface IWebPreferencesPrivate : IUnknown
 
     HRESULT localStorageDatabasePath([out, retval] BSTR* location);
     HRESULT setLocalStorageDatabasePath([in] BSTR location);
-
-    HRESULT setShouldPaintNativeControls([in] BOOL shouldPaint);
-    HRESULT shouldPaintNativeControls([out, retval] BOOL* enabled);
 }

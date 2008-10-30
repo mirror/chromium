@@ -25,9 +25,6 @@
 
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JSBase.h>
-#import <JavaScriptCore/WebKitAvailability.h>
-
-#if WEBKIT_VERSION_MAX_ALLOWED >= WEBKIT_VERSION_1_3
 
 // NSObject (WebScripting) -----------------------------------------------------
 
@@ -234,7 +231,7 @@
     @discussion Use this method to bridge between the WebScriptObject and 
     JavaScriptCore APIs.
 */
-- (JSObjectRef)JSObject WEBKIT_OBJC_METHOD_ANNOTATION(AVAILABLE_WEBKIT_VERSION_3_0_AND_LATER);
+- (JSObjectRef)JSObject;
 
 /*!
     @method callWebScriptMethod:withArguments:
@@ -314,5 +311,3 @@
 + (WebUndefined *)undefined;
 
 @end
-
-#endif

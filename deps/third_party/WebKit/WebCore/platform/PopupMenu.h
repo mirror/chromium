@@ -34,8 +34,7 @@
 class NSPopUpButtonCell;
 #endif
 #elif PLATFORM(WIN)
-#include "Scrollbar.h"
-#include "ScrollbarClient.h"
+#include "ScrollBar.h"
 #include <wtf/RefPtr.h>
 typedef struct HWND__* HWND;
 typedef struct HDC__* HDC;
@@ -64,7 +63,7 @@ class wxMenu;
 namespace WebCore {
 
 class FrameView;
-class Scrollbar;
+class PlatformScrollbar;
 
 class PopupMenu : public RefCounted<PopupMenu>
 #if PLATFORM(WIN)
@@ -90,7 +89,7 @@ public:
     static bool itemWritingDirectionIsNatural();
 
 #if PLATFORM(WIN)
-    Scrollbar* scrollbar() const { return m_scrollbar.get(); }
+    PlatformScrollbar* scrollBar() const { return m_scrollBar.get(); }
 
     bool up(unsigned lines = 1);
     bool down(unsigned lines = 1);
@@ -146,14 +145,13 @@ private:
 #elif PLATFORM(WIN)
     // ScrollBarClient
     virtual void valueChanged(Scrollbar*);
-    virtual void invalidateScrollbarRect(Scrollbar*, const IntRect&);
+    virtual IntRect windowClipRect() const;
     virtual bool isActive() const { return true; }
-    virtual bool scrollbarCornerPresent() const { return false; }
 
     void calculatePositionAndSize(const IntRect&, FrameView*);
     void invalidateItem(int index);
 
-    RefPtr<Scrollbar> m_scrollbar;
+    RefPtr<PlatformScrollbar> m_scrollBar;
     HWND m_popup;
     HDC m_DC;
     HBITMAP m_bmp;

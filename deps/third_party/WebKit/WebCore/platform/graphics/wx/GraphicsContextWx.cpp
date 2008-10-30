@@ -252,6 +252,16 @@ void GraphicsContext::drawConvexPolygon(size_t npoints, const FloatPoint* points
     delete [] polygon;
 }
 
+void GraphicsContext::fillRect(const IntRect& rect, const Color& color)
+{
+    if (paintingDisabled())
+        return;
+
+    m_data->context->SetPen(*wxTRANSPARENT_PEN);
+    m_data->context->SetBrush(wxBrush(color));
+    m_data->context->DrawRectangle(rect.x(), rect.y(), rect.width(), rect.height());
+}
+
 void GraphicsContext::fillRect(const FloatRect& rect, const Color& color)
 {
     if (paintingDisabled())
@@ -498,6 +508,22 @@ void GraphicsContext::fillRect(const FloatRect& rect)
 {
     if (paintingDisabled())
         return;
+}
+
+void GraphicsContext::setPlatformFillPattern(Pattern* pattern)
+{
+}
+
+void GraphicsContext::setPlatformStrokePattern(Pattern* pattern)
+{
+}
+
+void GraphicsContext::setPlatformFillGradient(Gradient* gradient)
+{
+}
+
+void GraphicsContext::setPlatformStrokeGradient(Gradient* gradient)
+{
 }
 
 }

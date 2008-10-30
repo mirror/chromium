@@ -29,7 +29,7 @@
 #ifndef ConstructData_h
 #define ConstructData_h
 
-namespace JSC {
+namespace KJS {
 
     class ArgList;
     class ExecState;
@@ -58,6 +58,6 @@ namespace JSC {
 
     JSObject* construct(ExecState*, JSValue* constructor, ConstructType, const ConstructData&, const ArgList&);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ConstructData_h

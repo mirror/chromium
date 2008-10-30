@@ -1,7 +1,7 @@
 /*
  * This file is part of the WebKit project.
  *
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2008 Trolltech ASA
  *
  * Copyright (C) 2006 Zack Rusin <zack@kde.org>
  *               2006 Dirk Mueller <mueller@kde.org>
@@ -58,20 +58,9 @@ namespace WebCore {
 
 using namespace HTMLNames;
 
-
 StylePainter::StylePainter(const RenderObject::PaintInfo& paintInfo)
 {
-    init(paintInfo.context ? paintInfo.context : 0);
-}
-
-StylePainter::StylePainter(GraphicsContext* context)
-{
-    init(context);
-}
-
-void StylePainter::init(GraphicsContext* context)
-{
-    painter = static_cast<QPainter*>(context->platformContext());
+    painter = (paintInfo.context ? static_cast<QPainter*>(paintInfo.context->platformContext()) : 0);
     widget = 0;
     QPaintDevice* dev = 0;
     if (painter)
@@ -831,8 +820,6 @@ bool RenderThemeQt::paintMediaMuteButton(RenderObject* o, const RenderObject::Pa
     if (!p.isValid())
         return true;
 
-    p.painter->setRenderHint(QPainter::Antialiasing, true);
-
     paintMediaBackground(p.painter, r);
 
     WorldMatrixTransformer transformer(p.painter, o, r);
@@ -859,8 +846,6 @@ bool RenderThemeQt::paintMediaPlayButton(RenderObject* o, const RenderObject::Pa
     StylePainter p(paintInfo);
     if (!p.isValid())
         return true;
-
-    p.painter->setRenderHint(QPainter::Antialiasing, true);
 
     paintMediaBackground(p.painter, r);
 
@@ -899,8 +884,6 @@ bool RenderThemeQt::paintMediaSliderTrack(RenderObject* o, const RenderObject::P
     if (!p.isValid())
         return true;
 
-    p.painter->setRenderHint(QPainter::Antialiasing, true);
-
     paintMediaBackground(p.painter, r);
 
     if (MediaPlayer* player = mediaElement->player()) {
@@ -925,8 +908,6 @@ bool RenderThemeQt::paintMediaSliderThumb(RenderObject* o, const RenderObject::P
     StylePainter p(paintInfo);
     if (!p.isValid())
         return true;
-
-    p.painter->setRenderHint(QPainter::Antialiasing, true);
 
     p.painter->setPen(Qt::NoPen);
     p.painter->setBrush(getMediaControlForegroundColor(o));

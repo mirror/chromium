@@ -28,7 +28,7 @@
 
 #include "JSVariableObject.h"
 
-namespace JSC{
+namespace KJS{
     
     class JSStaticScopeObject : public JSVariableObject {
     protected:
@@ -37,6 +37,7 @@ namespace JSC{
             JSStaticScopeObjectData()
                 : JSVariableObjectData(&symbolTable, &registerStore + 1)
             {
+                registerArraySize = 1;
             }
             SymbolTable symbolTable;
             Register registerStore;
@@ -44,24 +45,19 @@ namespace JSC{
         
     public:
         JSStaticScopeObject(ExecState* exec, const Identifier& ident, JSValue* value, unsigned attributes)
-            : JSVariableObject(exec->globalData().staticScopeStructureID, new JSStaticScopeObjectData())
+            : JSVariableObject(exec->globalData().nullProtoStructureID, new JSStaticScopeObjectData())
         {
-            d()->registerStore = value;
+            JSStaticScopeObjectData* data = static_cast<JSStaticScopeObjectData*>(d);
+            data->registerStore = value;
             symbolTable().add(ident.ustring().rep(), SymbolTableEntry(-1, attributes));
         }
         virtual ~JSStaticScopeObject();
-        virtual void mark();
         bool isDynamicScope() const;
         virtual JSObject* toThisObject(ExecState*) const;
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&, bool& slotIsWriteable);
         virtual void put(ExecState*, const Identifier&, JSValue*, PutPropertySlot&);
         void putWithAttributes(ExecState*, const Identifier&, JSValue*, unsigned attributes);
-
-        static PassRefPtr<StructureID> createStructureID(JSValue* proto) { return StructureID::create(proto, TypeInfo(ObjectType, NeedsThisConversion)); }
-
-    private:
-        JSStaticScopeObjectData* d() { return static_cast<JSStaticScopeObjectData*>(JSVariableObject::d); }
     };
 
 }

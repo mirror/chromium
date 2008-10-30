@@ -35,8 +35,8 @@
 #include <wtf/unicode/UTF8.h>
 
 #if USE(JSC)
-using JSC::Identifier;
-using JSC::UString;
+using KJS::Identifier;
+using KJS::UString;
 #endif
 
 using namespace WTF;
@@ -519,6 +519,16 @@ bool String::isEmpty() const
     return !m_impl || !m_impl->length();
 }
 
+Length* String::toCoordsArray(int& len) const 
+{
+    return m_impl ? m_impl->toCoordsArray(len) : 0;
+}
+
+Length* String::toLengthArray(int& len) const 
+{
+    return m_impl ? m_impl->toLengthArray(len) : 0;
+}
+
 void String::split(const String& separator, bool allowEmptyEntries, Vector<String>& result) const
 {
     result.clear();
@@ -731,7 +741,7 @@ static unsigned lengthOfCharactersAsInteger(const UChar* data, size_t length)
     
     // Allow digits.
     for (; i != length; ++i) {
-        if (!isASCIIDigit(data[i]))
+        if (!Unicode::isDigit(data[i]))
             break;
     }
 
@@ -792,7 +802,7 @@ double charactersToDouble(const UChar* data, size_t length, bool* ok)
     bytes[length] = '\0';
     char* end;
 #if USE(JSC)
-    double val = JSC::strtod(bytes.data(), &end);
+    double val = KJS::strtod(bytes.data(), &end);
 #elif USE(V8)
     double val = strtod(bytes.data(), &end);
 #endif

@@ -27,12 +27,12 @@
 #include "InternalFunction.h"
 #include "CallData.h"
 
-namespace JSC {
+namespace KJS {
 
     class PrototypeFunction : public InternalFunction {
     public:
         PrototypeFunction(ExecState*, int length, const Identifier&, NativeFunction);
-        PrototypeFunction(ExecState*, PassRefPtr<StructureID>, int length, const Identifier&, NativeFunction);
+        PrototypeFunction(ExecState*, FunctionPrototype*, int length, const Identifier&, NativeFunction);
 
     private:
         virtual CallType getCallData(CallData&);
@@ -40,6 +40,6 @@ namespace JSC {
         const NativeFunction m_function;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // PrototypeFunction_h

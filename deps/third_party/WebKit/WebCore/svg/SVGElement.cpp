@@ -2,7 +2,6 @@
     Copyright (C) 2004, 2005, 2006, 2007, 2008 Nikolas Zimmermann <zimmermann@kde.org>
                   2004, 2005, 2006, 2008 Rob Buis <buis@kde.org>
     Copyright (C) 2008 Apple Inc. All rights reserved.
-    Copyright (C) 2008 Alp Toker <alp@atoker.com>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -112,56 +111,35 @@ SVGElement* SVGElement::viewportElement() const
     return 0;
 }
 
-SVGDocumentExtensions* SVGElement::accessDocumentSVGExtensions() const
+void SVGElement::addSVGEventListener(const AtomicString& eventType, const Attribute* attr)
 {
-
-    // This function is provided for use by SVGAnimatedProperty to avoid
-    // global inclusion of Document.h in SVG code.
-    return document() ? document()->accessSVGExtensions() : 0;
-}
- 
-void SVGElement::mapInstanceToElement(SVGElementInstance* instance)
-{
-    ASSERT(instance);
-    ASSERT(!m_elementInstances.contains(instance));
-    m_elementInstances.add(instance);
-}
- 
-void SVGElement::removeInstanceMapping(SVGElementInstance* instance)
-{
-    ASSERT(instance);
-    ASSERT(m_elementInstances.contains(instance));
-    m_elementInstances.remove(instance);
-}
-
-HashSet<SVGElementInstance*> SVGElement::instancesForElement() const
-{
-    return m_elementInstances;
+    Element::setHTMLEventListener(eventType, document()->accessSVGExtensions()->
+        createSVGEventListener(attr->localName().string(), attr->value(), this));
 }
 
 void SVGElement::parseMappedAttribute(MappedAttribute* attr)
 {
     // standard events
     if (attr->name() == onloadAttr)
-        setEventListenerForTypeAndAttribute(loadEvent, attr);
+        addSVGEventListener(loadEvent, attr);
     else if (attr->name() == onclickAttr)
-        setEventListenerForTypeAndAttribute(clickEvent, attr);
+        addSVGEventListener(clickEvent, attr);
     else if (attr->name() == onmousedownAttr)
-        setEventListenerForTypeAndAttribute(mousedownEvent, attr);
+        addSVGEventListener(mousedownEvent, attr);
     else if (attr->name() == onmousemoveAttr)
-        setEventListenerForTypeAndAttribute(mousemoveEvent, attr);
+        addSVGEventListener(mousemoveEvent, attr);
     else if (attr->name() == onmouseoutAttr)
-        setEventListenerForTypeAndAttribute(mouseoutEvent, attr);
+        addSVGEventListener(mouseoutEvent, attr);
     else if (attr->name() == onmouseoverAttr)
-        setEventListenerForTypeAndAttribute(mouseoverEvent, attr);
+        addSVGEventListener(mouseoverEvent, attr);
     else if (attr->name() == onmouseupAttr)
-        setEventListenerForTypeAndAttribute(mouseupEvent, attr);
+        addSVGEventListener(mouseupEvent, attr);
     else if (attr->name() == SVGNames::onfocusinAttr)
-        setEventListenerForTypeAndAttribute(DOMFocusInEvent, attr);
+        addSVGEventListener(DOMFocusInEvent, attr);
     else if (attr->name() == SVGNames::onfocusoutAttr)
-        setEventListenerForTypeAndAttribute(DOMFocusOutEvent, attr);
+        addSVGEventListener(DOMFocusOutEvent, attr);
     else if (attr->name() == SVGNames::onactivateAttr)
-        setEventListenerForTypeAndAttribute(DOMActivateEvent, attr);
+        addSVGEventListener(DOMActivateEvent, attr);
     else
         StyledElement::parseMappedAttribute(attr);
 }
@@ -206,7 +184,7 @@ void SVGElement::sendSVGLoadEventIfPossible(bool sendParentLoadEvents)
             RefPtr<Event> event = Event::create(loadEvent, false, false);
             event->setTarget(currentTarget);
             ExceptionCode ignored = 0;
-            currentTarget->dispatchGenericEvent(event.release(), ignored, false);
+            dispatchGenericEvent(currentTarget.get(), event.release(), ignored, false);
         }
         currentTarget = (parent && parent->isSVGElement()) ? static_pointer_cast<SVGElement>(parent) : 0;
     }
@@ -214,8 +192,6 @@ void SVGElement::sendSVGLoadEventIfPossible(bool sendParentLoadEvents)
 
 void SVGElement::finishParsingChildren()
 {
-    StyledElement::finishParsingChildren();
-
     // finishParsingChildren() is called when the close tag is reached for an element (e.g. </svg>)
     // we send SVGLoad events here if we can, otherwise they'll be sent when any required loads finish
     sendSVGLoadEventIfPossible();
@@ -247,6 +223,41 @@ void SVGElement::insertedIntoDocument()
 
         SVGResource::invalidateClients(*clients);
     }
+}
+
+static Node* shadowTreeParentElementForShadowTreeElement(Node* node)
+{
+    for (Node* n = node; n; n = n->parentNode()) {
+        if (n->isShadowNode())
+            return n->shadowParentNode();
+    }
+
+    return 0;
+}
+
+bool SVGElement::dispatchEvent(PassRefPtr<Event> e, ExceptionCode& ec, bool tempEvent)
+{
+    // TODO: This function will be removed in a follow-up patch!
+
+    EventTarget* target = this;
+    Node* useNode = shadowTreeParentElementForShadowTreeElement(this);
+
+    // If we are a hidden shadow tree element, the target must
+    // point to our corresponding SVGElementInstance object
+    if (useNode) {
+        ASSERT(useNode->hasTagName(SVGNames::useTag));
+        SVGUseElement* use = static_cast<SVGUseElement*>(useNode);
+
+        SVGElementInstance* instance = use->instanceForShadowTreeElement(this);
+
+        if (instance)
+            target = instance;
+    }
+
+    e->setTarget(target);
+
+    RefPtr<FrameView> view = document()->view();
+    return EventTargetNode::dispatchGenericEvent(this, e, ec, tempEvent);
 }
 
 void SVGElement::attributeChanged(Attribute* attr, bool preserveDecls)

@@ -28,7 +28,7 @@
 
 #include "HeavyProfile.h"
 
-namespace JSC {
+namespace KJS {
 
 PassRefPtr<TreeProfile> TreeProfile::create(const UString& title, unsigned uid)
 {
@@ -48,4 +48,4 @@ Profile* TreeProfile::heavyProfile()
     return m_heavyProfile.get();
 }
 
-} // namespace JSC
+} // namespace KJS

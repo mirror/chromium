@@ -23,21 +23,20 @@
 
 #include "InternalFunction.h"
 
-namespace JSC {
+namespace KJS {
 
     class DatePrototype;
+    class FunctionPrototype;
 
     class DateConstructor : public InternalFunction {
     public:
-        DateConstructor(ExecState*, PassRefPtr<StructureID>, StructureID* prototypeFunctionStructure, DatePrototype*);
+        DateConstructor(ExecState*, FunctionPrototype*, DatePrototype*);
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
         virtual CallType getCallData(CallData&);
     };
 
-    JSObject* constructDate(ExecState*, const ArgList&);
-
-} // namespace JSC
+} // namespace KJS
 
 #endif // DateConstructor_h

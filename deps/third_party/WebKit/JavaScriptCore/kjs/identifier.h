@@ -24,7 +24,7 @@
 #include "JSGlobalData.h"
 #include "ustring.h"
 
-namespace JSC {
+namespace KJS {
 
     class ExecState;
 
@@ -73,7 +73,7 @@ namespace JSC {
 
         static bool equal(const UString::Rep*, const char*);
         static bool equal(const UString::Rep*, const UChar*, int length);
-        static bool equal(const UString::Rep* a, const UString::Rep* b) { return JSC::equal(a, b); }
+        static bool equal(const UString::Rep* a, const UString::Rep* b) { return KJS::equal(a, b); }
 
         static PassRefPtr<UString::Rep> add(ExecState*, const char*); // Only to be used with string literals.
         static PassRefPtr<UString::Rep> add(JSGlobalData*, const char*); // Only to be used with string literals.
@@ -135,6 +135,6 @@ namespace JSC {
     IdentifierTable* createIdentifierTable();
     void deleteIdentifierTable(IdentifierTable*);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // KJS_IDENTIFIER_H

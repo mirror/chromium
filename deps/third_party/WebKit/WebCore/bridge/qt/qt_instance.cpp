@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2006 Trolltech ASA
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,6 @@
 #include "qt_instance.h"
 
 #include "ArgList.h"
-#include "JSDOMBinding.h"
 #include "JSGlobalObject.h"
 #include "JSLock.h"
 #include "qt_class.h"
@@ -36,7 +35,7 @@
 #include <qmetatype.h>
 #include <qhash.h>
 
-namespace JSC {
+namespace KJS {
 namespace Bindings {
 
 // Cache QtInstances
@@ -50,7 +49,7 @@ static InstanceJSObjectMap cachedObjects;
 // Derived RuntimeObject
 class QtRuntimeObjectImp : public RuntimeObjectImp {
     public:
-        QtRuntimeObjectImp(ExecState*, PassRefPtr<Instance>);
+        QtRuntimeObjectImp(ExecState* exec, PassRefPtr<Instance>);
         ~QtRuntimeObjectImp();
         virtual void invalidate();
 
@@ -61,12 +60,15 @@ class QtRuntimeObjectImp : public RuntimeObjectImp {
             RuntimeObjectImp::mark();
         }
 
+        // Additions
+        virtual ConstructType getConstructData(ConstructData&);
+        virtual JSObject* construct(ExecState* exec, const ArgList& args);
     protected:
         void removeFromCache();
 };
 
 QtRuntimeObjectImp::QtRuntimeObjectImp(ExecState* exec, PassRefPtr<Instance> instance)
-    : RuntimeObjectImp(exec, WebCore::getDOMStructure<QtRuntimeObjectImp>(exec), instance)
+    : RuntimeObjectImp(exec, instance)
 {
 }
 
@@ -89,6 +91,38 @@ void QtRuntimeObjectImp::removeFromCache()
         cachedObjects.remove(key);
 }
 
+ConstructType QtRuntimeObjectImp::getConstructData(ConstructData& constructData)
+{
+    CallData callData;
+    ConstructType type = ConstructTypeNone;
+    switch (getCallData(callData)) {
+    case CallTypeNone:
+        break;
+    case CallTypeHost:
+        type = ConstructTypeHost;
+        break;
+    case CallTypeJS:
+        type = ConstructTypeJS;
+        constructData.js.functionBody = callData.js.functionBody;
+        constructData.js.scopeChain = callData.js.scopeChain;
+        break;
+    }
+    return type;
+}
+
+JSObject* QtRuntimeObjectImp::construct(ExecState* exec, const ArgList& args)
+{
+    // ECMA 15.2.2.1 (?)
+    CallData callData;
+    CallType callType = getCallData(callData);
+    JSValue* val = call(exec, this, callType, callData, this, args);
+
+    if (!val || val->isUndefinedOrNull())
+        return new (exec) JSObject(exec->lexicalGlobalObject()->objectPrototype());
+    else
+        return val->toObject(exec);
+}
+
 // QtInstance
 QtInstance::QtInstance(QObject* o, PassRefPtr<RootObject> rootObject)
     : Instance(rootObject)
@@ -96,6 +130,7 @@ QtInstance::QtInstance(QObject* o, PassRefPtr<RootObject> rootObject)
     , m_object(o)
     , m_hashkey(o)
     , m_defaultMethod(0)
+    , m_defaultMethodIndex(-2)
 {
 }
 
@@ -124,7 +159,7 @@ PassRefPtr<QtInstance> QtInstance::getQtInstance(QObject* o, PassRefPtr<RootObje
             return instance;
     }
 
-    RefPtr<QtInstance> ret = QtInstance::create(o, rootObject);
+    RefPtr<QtInstance> ret = adoptRef(new QtInstance(o, rootObject));
     cachedInstances.insert(o, ret.get());
 
     return ret.release();
@@ -133,12 +168,10 @@ PassRefPtr<QtInstance> QtInstance::getQtInstance(QObject* o, PassRefPtr<RootObje
 RuntimeObjectImp* QtInstance::getRuntimeObject(ExecState* exec, PassRefPtr<QtInstance> instance)
 {
     JSLock lock(false);
-    QtInstance* qtInstance = instance.get();
-    RuntimeObjectImp* ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(qtInstance));
+    RuntimeObjectImp* ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(instance.get()));
     if (!ret) {
         ret = new (exec) QtRuntimeObjectImp(exec, instance);
-        cachedObjects.insert(qtInstance, ret);
-        ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(qtInstance));
+        cachedObjects.insert(instance.get(), ret);
     }
     return ret;
 }
@@ -212,6 +245,52 @@ JSValue* QtInstance::invokeMethod(ExecState*, const MethodList&, const ArgList&)
     return jsUndefined();
 }
 
+CallType QtInstance::getCallData(CallData&)
+{
+    // See if we have qscript_call
+    if (m_defaultMethodIndex == -2) {
+        if (m_object) {
+            const QMetaObject* meta = m_object->metaObject();
+            int count = meta->methodCount();
+            const QByteArray defsig("qscript_call");
+            for (int index = count - 1; index >= 0; --index) {
+                const QMetaMethod m = meta->method(index);
+
+                QByteArray signature = m.signature();
+                signature.truncate(signature.indexOf('('));
+
+                if (defsig == signature) {
+                    m_defaultMethodIndex = index;
+                    break;
+                }
+            }
+        }
+
+        if (m_defaultMethodIndex == -2) // Not checked
+            m_defaultMethodIndex = -1; // No qscript_call
+    }
+
+    // typeof object that implements call == function
+    return (m_defaultMethodIndex >= 0 ? CallTypeHost : CallTypeNone);
+}
+
+JSValue* QtInstance::invokeDefaultMethod(ExecState* exec, const ArgList& args)
+{
+    // QtScript tries to invoke a meta method qscript_call
+    if (!getObject())
+        return throwError(exec, GeneralError, "cannot call function of deleted QObject");
+
+    // implementsCall will update our default method cache, if possible
+    CallData callData;
+    CallType callType = getCallData(callData);
+    if (callType != CallTypeNone) {
+        if (!m_defaultMethod)
+            m_defaultMethod = new (exec) QtRuntimeMetaMethod(exec, Identifier(exec, "[[Call]]"),this, m_defaultMethodIndex, QByteArray("qscript_call"), true);
+
+        return call(exec, m_defaultMethod, callType, callData, 0, args); // Luckily QtRuntimeMetaMethod ignores the obj parameter
+    } else
+        return throwError(exec, TypeError, "not a function");
+}
 
 JSValue* QtInstance::defaultValue(ExecState* exec, PreferredPrimitiveType hint) const
 {

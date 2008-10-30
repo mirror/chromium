@@ -45,7 +45,7 @@ namespace WebCore {
     private:
         ClassNodeList(PassRefPtr<Node> rootNode, const String& classNames, Caches*);
 
-        virtual bool nodeMatches(Element*) const;
+        virtual bool nodeMatches(Node*) const;
 
         ClassNames m_classNames;
     };

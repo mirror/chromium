@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2007 Trolltech ASA
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -35,12 +35,12 @@ PlatformWheelEvent::PlatformWheelEvent(QWheelEvent* e)
 #else
     : m_position(e->pos())
     , m_globalPosition(e->globalPos())
-    , m_granularity(ScrollByLineWheelEvent)
     , m_isAccepted(false)
     , m_shiftKey(e->modifiers() & Qt::ShiftModifier)
     , m_ctrlKey(e->modifiers() & Qt::ControlModifier)
     , m_altKey(e->modifiers() & Qt::AltModifier)
     , m_metaKey(e->modifiers() & Qt::MetaModifier)
+    , m_isContinuous(false)
 {
     if (e->orientation() == Qt::Horizontal) {
         m_deltaX = (e->delta() / 120);
@@ -51,8 +51,10 @@ PlatformWheelEvent::PlatformWheelEvent(QWheelEvent* e)
     }
 
     // FIXME: retrieve the user setting for the number of lines to scroll on each wheel event
-    m_deltaX *= horizontalLineMultiplier();
-    m_deltaY *= verticalLineMultiplier();
+    m_charsToScrollPerDelta = 1;
+    m_linesToScrollPerDelta = 1;
+    m_pageXScrollMode = false;
+    m_pageYScrollMode = false;
 }
 #endif // QT_NO_WHEELEVENT
 

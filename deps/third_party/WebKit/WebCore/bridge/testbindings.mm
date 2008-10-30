@@ -199,8 +199,8 @@
 @end
 
 
-using namespace JSC;
-using namespace JSC::Bindings;
+using namespace KJS;
+using namespace KJS::Bindings;
 
 class GlobalImp : public ObjectImp {
 public:

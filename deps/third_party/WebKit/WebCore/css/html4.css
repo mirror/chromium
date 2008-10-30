@@ -361,10 +361,6 @@ textarea {
     cursor: auto;
 }
 
-input::-webkit-input-placeholder {
-    color: darkGray;
-}
-
 input[type="password"] {
     -webkit-text-security: disc !important;
 }
@@ -378,7 +374,6 @@ input[type="hidden"], input[type="image"], input[type="file"] {
 
 input[type="file"] {
     -webkit-box-align: baseline;
-    text-align: start !important;
 }
 
 input:-webkit-autofill {

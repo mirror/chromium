@@ -31,11 +31,44 @@
 #include "ExceptionCode.h"
 #include "ExceptionContext.h"
 #include "JSElement.h"
+#include "JSNSResolver.h"
 #include "JSNodeList.h"
 #include "NodeList.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
+
+JSValue* JSDocumentFragment::querySelector(ExecState* exec, const ArgList& args)
+{
+    DocumentFragment* imp = static_cast<DocumentFragment*>(impl());
+    ExceptionCode ec = 0;
+    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
+    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
+
+    ExceptionContext context(exec);
+    RefPtr<Element> element = imp->querySelector(selectors, resolver.get(), ec, &context);
+    if (exec->hadException())
+        return jsUndefined();
+    JSValue* result = toJS(exec, element.get());
+    setDOMException(exec, ec);
+    return result;
+}
+
+JSValue* JSDocumentFragment::querySelectorAll(ExecState* exec, const ArgList& args)
+{
+    DocumentFragment* imp = static_cast<DocumentFragment*>(impl());
+    ExceptionCode ec = 0;
+    const UString& selectors = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
+    RefPtr<NSResolver> resolver = args.at(exec, 1)->isUndefinedOrNull() ? 0 : toNSResolver(args.at(exec, 1));
+
+    ExceptionContext context(exec);
+    RefPtr<NodeList> nodeList = imp->querySelectorAll(selectors, resolver.get(), ec, &context);
+    if (exec->hadException())
+        return jsUndefined();
+    JSValue* result = toJS(exec, nodeList.get());
+    setDOMException(exec, ec);
+    return result;
+}
 
 } // namespace WebCore

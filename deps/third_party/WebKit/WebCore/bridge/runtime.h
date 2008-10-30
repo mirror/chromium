@@ -31,7 +31,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
 
-namespace JSC  {
+namespace KJS  {
 
 class ArgList;
 class Identifier;
@@ -159,6 +159,6 @@ typedef HashMap<RefPtr<UString::Rep>, Field*> FieldMap;
     
 } // namespace Bindings
 
-} // namespace JSC
+} // namespace KJS
 
 #endif

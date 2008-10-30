@@ -26,7 +26,7 @@
 #include "NodeFilter.h"
 #include "NodeIterator.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

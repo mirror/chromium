@@ -39,7 +39,6 @@ namespace WebCore {
 
         const AtomicString& name() const { return m_name; }
         void setName(const AtomicString&);
-        void clearName();
         Frame* parent(bool checkForDisconnectedFrame = false) const;
         void setParent(Frame* parent) { m_parent = parent; }
         

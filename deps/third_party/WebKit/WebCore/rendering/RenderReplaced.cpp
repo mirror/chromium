@@ -61,13 +61,12 @@ RenderReplaced::~RenderReplaced()
         gOverflowRectMap->remove(this);
 }
 
-void RenderReplaced::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderReplaced::setStyle(RenderStyle* newStyle)
 {
-    RenderBox::styleDidChange(diff, oldStyle);
-
-    bool hadStyle = (oldStyle != 0);
-    float oldZoom = hadStyle ? oldStyle->effectiveZoom() : RenderStyle::initialZoom();
-    if (hadStyle && style() && style()->effectiveZoom() != oldZoom)
+    bool hadStyle = style();
+    float oldZoom = hadStyle ? style()->effectiveZoom() : RenderStyle::initialZoom();
+    RenderBox::setStyle(newStyle);
+    if (hadStyle && newStyle && newStyle->effectiveZoom() != oldZoom)
         intrinsicSizeChanged();
 }
 

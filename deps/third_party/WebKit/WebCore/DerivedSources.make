@@ -32,7 +32,6 @@ VPATH = \
     $(WebCore)/css \
     $(WebCore)/dom \
     $(WebCore)/html \
-    $(WebCore)/inspector \
     $(WebCore)/loader/appcache \
     $(WebCore)/page \
     $(WebCore)/plugins \
@@ -89,7 +88,6 @@ DOM_CLASSES = \
     EventException \
     EventListener \
     EventTarget \
-    EventTargetNode \
     File \
     FileList \
     HTMLAnchorElement \
@@ -162,9 +160,7 @@ DOM_CLASSES = \
     Location \
     MediaError \
     MediaList \
-    MessageChannel \
     MessageEvent \
-    MessagePort \
     MimeType \
     MimeTypeArray \
     MouseEvent \
@@ -371,9 +367,12 @@ all : \
     $(filter-out JSEventListener.h JSRGBColor.h,$(DOM_CLASSES:%=JS%.h)) \
     \
     JSDOMWindowBase.lut.h \
+    JSEventTargetBase.lut.h \
     JSRGBColor.lut.h \
     \
     JSJavaScriptCallFrame.h \
+    \
+    JSHTMLInputElementBaseTable.cpp \
     \
     CSSGrammar.cpp \
     CSSPropertyNames.h \
@@ -513,9 +512,9 @@ UserAgentStyleSheets.h : css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS) 
 # lookup tables for old-style JavaScript bindings
 
 %.lut.h: %.cpp $(CREATE_HASH_TABLE)
-	$(CREATE_HASH_TABLE) $< -n WebCore > $@
+	$(CREATE_HASH_TABLE) $< > $@
 %Table.cpp: %.cpp $(CREATE_HASH_TABLE)
-	$(CREATE_HASH_TABLE) $< -n WebCore > $@
+	$(CREATE_HASH_TABLE) $< > $@
 
 # --------
 

@@ -47,6 +47,7 @@ public:
     virtual bool rendererIsNeeded(RenderStyle*) { return false; }
     virtual void attach();
     virtual void detach();
+    virtual RenderStyle* renderStyle() const { return m_style; }
     virtual void setRenderStyle(RenderStyle*);
     
     virtual const AtomicString& type() const;
@@ -82,8 +83,6 @@ public:
     virtual void accessKeyAction(bool);
     
 private:
-    virtual RenderStyle* nonRendererRenderStyle() const;
-    
     String m_value;
     bool m_selected;
     RenderStyle* m_style;

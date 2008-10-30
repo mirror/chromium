@@ -21,7 +21,6 @@
 #ifndef Icon_h
 #define Icon_h
 
-#include <wtf/PassRefPtr.h>
 #include <wtf/RefCounted.h>
 #include <wtf/Forward.h>
 
@@ -37,7 +36,7 @@ typedef struct HICON__* HICON;
 #elif PLATFORM(QT)
 #include <QIcon>
 #elif PLATFORM(GTK)
-typedef struct _GdkPixbuf GdkPixbuf;
+#include <gdk/gdk.h>
 #elif PLATFORM(CHROMIUM)
 #include "PlatformIcon.h"
 #endif
@@ -54,10 +53,6 @@ public:
     ~Icon();
 
     void paint(GraphicsContext*, const IntRect&);
-
-#if PLATFORM(WIN)
-    static PassRefPtr<Icon> create(HICON hIcon) { return adoptRef(new Icon(hIcon)); }
-#endif
 
 private:
 #if PLATFORM(MAC)

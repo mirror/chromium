@@ -28,7 +28,6 @@
 
 #include "Document.h"
 #include "FrameView.h"
-#include "HostWindow.h"
 #include "Icon.h"
 #include "LocalizedStrings.h"
 #include "RenderObject.h"
@@ -56,7 +55,7 @@ void FileChooser::openFileChooser(Document* document)
     fileBuf[0] = '\0';
 
     ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = view->hostWindow()->platformWindow();
+    ofn.hwndOwner = view->containingWindow();
     String allFiles = allFilesText();
     allFiles.append(TEXT("\0*.*\0\0"), 6);
     ofn.lpstrFilter = allFiles.charactersWithNullTermination();

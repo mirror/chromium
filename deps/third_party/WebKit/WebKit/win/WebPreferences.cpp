@@ -27,8 +27,8 @@
 #include "WebKit.h"
 #include "WebKitDLL.h"
 #include "WebPreferences.h"
+#include "WebKit.h"
 
-#include "COMPtr.h"
 #include "WebNotificationCenter.h"
 #include "WebPreferenceKeysPrivate.h"
 
@@ -99,7 +99,7 @@ static bool booleanValueForPreferencesValue(CFPropertyListRef value)
 
 static CFDictionaryRef defaultSettings;
 
-static HashMap<WebCore::String, COMPtr<WebPreferences> > webPreferencesInstances;
+static HashMap<WebCore::String, WebPreferences*> webPreferencesInstances;
 
 WebPreferences* WebPreferences::sharedStandardPreferences()
 {
@@ -152,7 +152,7 @@ WebPreferences* WebPreferences::getInstanceForIdentifier(BSTR identifier)
         return sharedStandardPreferences();
 
     WebCore::String identifierString(identifier, SysStringLen(identifier));
-    return webPreferencesInstances.get(identifierString).get();
+    return webPreferencesInstances.get(identifierString);
 }
 
 void WebPreferences::setInstance(WebPreferences* instance, BSTR identifier)
@@ -169,7 +169,7 @@ void WebPreferences::removeReferenceForIdentifier(BSTR identifier)
         return;
 
     WebCore::String identifierString(identifier, SysStringLen(identifier));
-    WebPreferences* webPreference = webPreferencesInstances.get(identifierString).get();
+    WebPreferences* webPreference = webPreferencesInstances.get(identifierString);
     if (webPreference && webPreference->m_refCount == 1)
         webPreferencesInstances.remove(identifierString);
 }
@@ -235,8 +235,6 @@ void WebPreferences::initializeDefaultSettings()
     CFDictionaryAddValue(defaults, CFSTR(WebKitApplicationChromeModePreferenceKey), kCFBooleanFalse);
 
     CFDictionaryAddValue(defaults, CFSTR(WebKitOfflineWebApplicationCacheEnabledPreferenceKey), kCFBooleanFalse);
-
-    CFDictionaryAddValue(defaults, CFSTR(WebKitPaintNativeControlsPreferenceKey), kCFBooleanFalse);
 
     defaultSettings = defaults;
 }
@@ -1084,18 +1082,6 @@ HRESULT WebPreferences::setShouldPaintCustomScrollbars(BOOL shouldPaint)
 HRESULT WebPreferences::shouldPaintCustomScrollbars(BOOL* shouldPaint)
 {
     *shouldPaint = boolValueForKey(CFSTR(WebKitPaintCustomScrollbarsPreferenceKey));
-    return S_OK;
-}
-
-HRESULT WebPreferences::shouldPaintNativeControls(BOOL* shouldPaint)
-{
-    *shouldPaint = boolValueForKey(CFSTR(WebKitPaintNativeControlsPreferenceKey));
-    return S_OK;
-}
-
-HRESULT WebPreferences::setShouldPaintNativeControls(BOOL shouldPaint)
-{
-    setBoolValue(CFSTR(WebKitPaintNativeControlsPreferenceKey), shouldPaint);
     return S_OK;
 }
 

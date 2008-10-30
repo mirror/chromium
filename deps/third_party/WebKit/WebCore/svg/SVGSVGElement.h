@@ -145,13 +145,15 @@ namespace WebCore
         bool isOutermostSVG() const;
 
     private:
+        void addSVGWindowEventListener(const AtomicString& eventType, const Attribute* attr);   
+
         ANIMATED_PROPERTY_DECLARATIONS(SVGSVGElement, SVGNames::svgTagString, SVGNames::xAttrString, SVGLength, X, x)
         ANIMATED_PROPERTY_DECLARATIONS(SVGSVGElement, SVGNames::svgTagString, SVGNames::yAttrString, SVGLength, Y, y)
         ANIMATED_PROPERTY_DECLARATIONS(SVGSVGElement, SVGNames::svgTagString, SVGNames::widthAttrString, SVGLength, Width, width)
         ANIMATED_PROPERTY_DECLARATIONS(SVGSVGElement, SVGNames::svgTagString, SVGNames::heightAttrString, SVGLength, Height, height)
 
-        virtual void documentWillBecomeInactive();
-        virtual void documentDidBecomeActive();
+        virtual void willSaveToCache();
+        virtual void willRestoreFromCache();
 
         bool m_useCurrentView;
         RefPtr<SMILTimeContainer> m_timeContainer;

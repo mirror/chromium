@@ -30,7 +30,7 @@
 #include "TreeProfile.h"
 #include <stdio.h>
 
-namespace JSC {
+namespace KJS {
 
 PassRefPtr<Profile> Profile::create(const UString& title, unsigned uid)
 {
@@ -134,4 +134,4 @@ void Profile::debugPrintDataSampleStyle() const
 }
 #endif
 
-} // namespace JSC
+} // namespace KJS

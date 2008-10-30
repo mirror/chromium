@@ -38,6 +38,7 @@ module window {
         CustomMarkFunction,
         CustomNativeConverter,
         CustomPutFunction,
+        DoNotCache,
         GenerateNativeConverter,
         LegacyParent=JSDOMWindowBase
     ] DOMWindow {
@@ -136,14 +137,14 @@ module window {
                                        in [Optional] boolean authorOnly);
         attribute [Replaceable] double devicePixelRatio;
 
-#if ENABLE_OFFLINE_WEB_APPLICATIONS
+#if defined(ENABLE_OFFLINE_WEB_APPLICATIONS)
         readonly attribute DOMApplicationCache applicationCache;
 #endif    
-#if ENABLE_DATABASE
+#if defined(ENABLE_DATABASE)
         Database openDatabase(in DOMString name, in DOMString version, in DOMString displayName, in unsigned long estimatedSize)
             raises(DOMException);
 #endif
-#if ENABLE_DOM_STORAGE
+#if defined(ENABLE_DOM_STORAGE)
         readonly attribute Storage sessionStorage;
         readonly attribute Storage localStorage;
 #endif
@@ -151,63 +152,8 @@ module window {
                  attribute [Replaceable] Console console;
 
         // cross-document messaging
-        [DoNotCheckDomainSecurity, Custom] void postMessage(in DOMString message, in [Optional] MessagePort messagePort, in DOMString targetOrigin)
+        [DoNotCheckDomainSecurity, Custom] void postMessage(in DOMString message, in DOMString targetOrigin)
             raises(DOMException);
-
-        // Timers
-        [Custom] long setTimeout(in TimeoutHandler handler, in long timeout);
-        // [Custom] long setTimeout(in DOMString code, in long timeout);
-        [Custom] void clearTimeout(in long handle);
-
-        [Custom] long setInterval(in TimeoutHandler handler, in long timeout);
-        // [Custom] long setInterval(in DOMString code, in long timeout);
-        [Custom] void clearInterval(in long handle);
-
-        // Base64
-        [Custom] DOMString atob(in DOMString string)
-            raises(DOMException);
-        [Custom] DOMString btoa(in DOMString string)
-            raises(DOMException);
-
-        // Events
-        attribute [ProtectedListener] EventListener onabort;
-        attribute [ProtectedListener] EventListener onblur;
-        attribute [ProtectedListener] EventListener onchange;
-        attribute [ProtectedListener] EventListener onclick;
-        attribute [ProtectedListener] EventListener ondblclick;
-        attribute [ProtectedListener] EventListener onerror;
-        attribute [ProtectedListener] EventListener onfocus;
-        attribute [ProtectedListener] EventListener onkeydown;
-        attribute [ProtectedListener] EventListener onkeypress;
-        attribute [ProtectedListener] EventListener onkeyup;
-        attribute [ProtectedListener] EventListener onload;
-        attribute [ProtectedListener] EventListener onmousedown;
-        attribute [ProtectedListener] EventListener onmousemove;
-        attribute [ProtectedListener] EventListener onmouseout;
-        attribute [ProtectedListener] EventListener onmouseover;
-        attribute [ProtectedListener] EventListener onmouseup;
-        attribute [ProtectedListener] EventListener onmousewheel;
-        attribute [ProtectedListener] EventListener onreset;
-        attribute [ProtectedListener] EventListener onresize;
-        attribute [ProtectedListener] EventListener onscroll;
-        attribute [ProtectedListener] EventListener onsearch;
-        attribute [ProtectedListener] EventListener onselect;
-        attribute [ProtectedListener] EventListener onsubmit;
-        attribute [ProtectedListener] EventListener onunload;
-        attribute [ProtectedListener] EventListener onbeforeunload;
-        attribute [ProtectedListener] EventListener onwebkitanimationstart;
-        attribute [ProtectedListener] EventListener onwebkitanimationiteration;
-        attribute [ProtectedListener] EventListener onwebkitanimationend;
-        attribute [ProtectedListener] EventListener onwebkittransitionend;
-
-        // EventTarget interface
-        [Custom] void addEventListener(in DOMString type, 
-                                      in EventListener listener, 
-                                      in boolean useCapture);
-        [Custom] void removeEventListener(in DOMString type, 
-                                          in EventListener listener, 
-                                          in boolean useCapture);
-        // FIXME: Implement dispatchEvent
 
 #if defined(LANGUAGE_JAVASCRIPT)
         // Global constructors
@@ -362,25 +308,25 @@ module window {
         attribute XMLHttpRequestUploadConstructor XMLHttpRequestUpload;
         attribute XMLHttpRequestExceptionConstructor XMLHttpRequestException;
 
-#if ENABLE_DOM_STORAGE
+#if defined(ENABLE_DOM_STORAGE)
         attribute StorageConstructor Storage;
         attribute StorageEventConstructor StorageEvent;
 #endif
 
-#if ENABLE_VIDEO
+#if defined(ENABLE_VIDEO)
         attribute HTMLAudioElementConstructor HTMLAudioElement;
         attribute HTMLMediaElementConstructor HTMLMediaElement;
         attribute HTMLVideoElementConstructor HTMLVideoElement;
         attribute MediaErrorConstructor MediaError;
 #endif
 
-#if ENABLE_XPATH
+#if defined(ENABLE_XPATH)
         attribute XPathEvaluatorConstructor XPathEvaluator;
         attribute XPathResultConstructor XPathResult;
         attribute XPathExceptionConstructor XPathException;
 #endif
 
-#if ENABLE_SVG
+#if defined(ENABLE_SVG)
         attribute SVGAngleConstructor SVGAngle;
         attribute SVGColorConstructor SVGColor;
 //      attribute SVGCSSRuleConstructor SVGCSSRule;
@@ -399,7 +345,7 @@ module window {
 //      attribute SVGZoomAndPanConstructor SVGZoomAndPan;
 #endif
 
-#if ENABLE_SVG_FILTERS
+#if defined(ENABLED_SVG_FILTERS)
         attribute SVGComponentTransferFunctionElementConstructor SVGComponentTransferFunctionElement;
         attribute SVGFEBlendElementConstructor SVGFEBlendElement;
         attribute SVGFEColorMatrixElementConstructor SVGFEColorMatrixElement;

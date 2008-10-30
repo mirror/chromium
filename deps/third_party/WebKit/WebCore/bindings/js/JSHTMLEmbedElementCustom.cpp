@@ -31,7 +31,7 @@
 
 namespace WebCore {
 
-using namespace JSC;
+using namespace KJS;
 
 bool JSHTMLEmbedElement::customGetOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
 {

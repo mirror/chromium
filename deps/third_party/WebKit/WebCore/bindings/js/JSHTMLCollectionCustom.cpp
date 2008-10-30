@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2007 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -31,7 +31,7 @@
 #include "JSDOMBinding.h"
 #include <wtf/Vector.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -46,7 +46,7 @@ static JSValue* getNamedItems(ExecState* exec, HTMLCollection* impl, const Ident
     if (namedItems.size() == 1)
         return toJS(exec, namedItems[0].get());
 
-    return new (exec) JSNamedNodesCollection(exec, namedItems);
+    return new (exec) JSNamedNodesCollection(exec->lexicalGlobalObject()->objectPrototype(), namedItems);
 }
 
 // HTMLCollections are strange objects, they support both get and call,
@@ -127,25 +127,25 @@ JSValue* toJS(ExecState* exec, HTMLCollection* collection)
     if (!collection)
         return jsNull();
 
-    DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), collection);
+    DOMObject* ret = ScriptInterpreter::getDOMObject(collection);
 
-    if (wrapper)
-        return wrapper;
+    if (ret)
+        return ret;
 
     switch (collection->type()) {
         case HTMLCollection::SelectOptions:
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLOptionsCollection, collection);
+            ret = new (exec) JSHTMLOptionsCollection(JSHTMLOptionsCollectionPrototype::self(exec), static_cast<HTMLOptionsCollection*>(collection));
             break;
         case HTMLCollection::DocAll:
-            typedef HTMLCollection HTMLAllCollection;
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLAllCollection, collection);
+            ret = new (exec) JSHTMLAllCollection(JSHTMLCollectionPrototype::self(exec), static_cast<HTMLCollection*>(collection));
             break;
         default:
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, HTMLCollection, collection);
+            ret = new (exec) JSHTMLCollection(JSHTMLCollectionPrototype::self(exec), static_cast<HTMLCollection*>(collection));
             break;
     }
 
-    return wrapper;
+    ScriptInterpreter::putDOMObject(collection, ret);
+    return ret;
 }
 
 } // namespace WebCore

@@ -30,7 +30,6 @@
 #include "FloatConversion.h"
 #include "IntRect.h"
 #include <algorithm>
-#include <math.h>
 
 using std::max;
 using std::min;
@@ -112,10 +111,14 @@ void FloatRect::scale(float s)
 
 IntRect enclosingIntRect(const FloatRect& rect)
 {
-    int l = static_cast<int>(floorf(rect.x()));
-    int t = static_cast<int>(floorf(rect.y()));
-    int r = static_cast<int>(ceilf(rect.right()));
-    int b = static_cast<int>(ceilf(rect.bottom()));
+    int l = static_cast<int>(rect.x());
+    int t = static_cast<int>(rect.y());
+    // FIXME: These two need to be a "ceiling" operation, not rounding.
+    // We changed them to do "+ 0.5f" to compile on Win32 where there's
+    // no ceilf, but they should be changed back to "ceiling" at some point
+    // and we should provide an implementation of ceilf for Win32.
+    int r = static_cast<int>(rect.right() + 0.5f);
+    int b = static_cast<int>(rect.bottom() + 0.5f);
     return IntRect(l, t, r - l, b - t);
 }
 

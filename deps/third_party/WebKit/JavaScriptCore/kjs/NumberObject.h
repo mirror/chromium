@@ -23,13 +23,13 @@
 
 #include "JSWrapperObject.h"
 
-namespace JSC {
+namespace KJS {
 
     class JSNumberCell;
 
     class NumberObject : public JSWrapperObject {
     public:
-        explicit NumberObject(PassRefPtr<StructureID>);
+        NumberObject(JSObject* prototype);
 
         static const ClassInfo info;
 
@@ -42,6 +42,6 @@ namespace JSC {
     NumberObject* constructNumber(ExecState*, JSNumberCell*);
     NumberObject* constructNumberFromImmediateNumber(ExecState*, JSValue*);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // NumberObject_h

@@ -32,7 +32,7 @@
 #include "PropertyNameArray.h"
 #include "PropertyMap.h"
 
-namespace JSC {
+namespace KJS {
 
 bool JSVariableObject::deleteProperty(ExecState* exec, const Identifier& propertyName)
 {
@@ -63,9 +63,40 @@ bool JSVariableObject::getPropertyAttributes(ExecState* exec, const Identifier& 
     return JSObject::getPropertyAttributes(exec, propertyName, attributes);
 }
 
+void JSVariableObject::mark()
+{
+    JSObject::mark();
+
+    if (!d->registerArray)
+        return;
+    
+    Register* end = d->registerArray.get() + d->registerArraySize;
+    for (Register* it = d->registerArray.get(); it != end; ++it)
+        if (!(*it).marked())
+            (*it).mark();
+}
+
 bool JSVariableObject::isVariableObject() const
 {
     return true;
 }
 
-} // namespace JSC
+void JSVariableObject::copyRegisterArray(Register* src, size_t count)
+{
+    ASSERT(!d->registerArray);
+
+    Register* registerArray = new Register[count];
+    memcpy(registerArray, src, count * sizeof(Register));
+
+    setRegisterArray(registerArray, count);
+}
+
+void JSVariableObject::setRegisterArray(Register* registerArray, size_t count)
+{
+    if (registerArray != d->registerArray.get())
+        d->registerArray.set(registerArray);
+    d->registerArraySize = count;
+    d->registers = registerArray + count;
+}
+
+} // namespace KJS

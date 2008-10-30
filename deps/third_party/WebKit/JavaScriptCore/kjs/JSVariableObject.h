@@ -36,7 +36,7 @@
 #include <wtf/OwnArrayPtr.h>
 #include <wtf/UnusedParam.h>
 
-namespace JSC {
+namespace KJS {
 
     class Register;
 
@@ -48,6 +48,7 @@ namespace JSC {
 
         virtual bool deleteProperty(ExecState*, const Identifier&);
         virtual void getPropertyNames(ExecState*, PropertyNameArray&);
+        virtual void mark();
         
         virtual bool isVariableObject() const;
         virtual bool isDynamicScope() const = 0;
@@ -61,21 +62,18 @@ namespace JSC {
         // without increasing their own size (since there's a hard limit on the
         // size of a JSCell).
         struct JSVariableObjectData {
-            JSVariableObjectData(SymbolTable* symbolTable, Register* registers)
-                : symbolTable(symbolTable)
-                , registers(registers)
+            JSVariableObjectData(SymbolTable* symbolTable_, Register* registers_)
+                : symbolTable(symbolTable_)
+                , registers(registers_)
+                , registerArraySize(0)
             {
-                ASSERT(symbolTable);
+                ASSERT(symbolTable_);
             }
 
             SymbolTable* symbolTable; // Maps name -> offset from "r" in register file.
-            Register* registers; // "r" in the register file.
+            Register* registers; // Pointers to the register past the end of local storage. (Local storage indexes are negative.)
             OwnArrayPtr<Register> registerArray; // Independent copy of registers, used when a variable object copies its registers out of the register file.
-
-            static inline ptrdiff_t offsetOf_registers()
-            {
-                return OBJECT_OFFSET(JSVariableObjectData, registers);
-            }
+            size_t registerArraySize;
 
         private:
             JSVariableObjectData(const JSVariableObjectData&);
@@ -88,8 +86,14 @@ namespace JSC {
         {
         }
 
-        Register* copyRegisterArray(Register* src, size_t count);
-        void setRegisters(Register* r, Register* registerArray);
+        JSVariableObject(JSObject* prototype, JSVariableObjectData* data)
+            : JSObject(prototype)
+            , d(data) // Subclass owns this pointer.
+        {
+        }
+
+        void copyRegisterArray(Register* src, size_t count);
+        void setRegisterArray(Register* registerArray, size_t count);
 
         bool symbolTableGet(const Identifier&, PropertySlot&);
         bool symbolTableGet(const Identifier&, PropertySlot&, bool& slotIsWriteable);
@@ -97,17 +101,6 @@ namespace JSC {
         bool symbolTablePutWithAttributes(const Identifier&, JSValue*, unsigned attributes);
 
         JSVariableObjectData* d;
-
-    public:
-        static inline ptrdiff_t offsetOf_d()
-        {
-            return OBJECT_OFFSET(JSVariableObject, d);
-        }
-
-        static inline ptrdiff_t offsetOf_Data_registers()
-        {
-            return JSVariableObjectData::offsetOf_registers();
-        }
     };
 
     inline bool JSVariableObject::symbolTableGet(const Identifier& propertyName, PropertySlot& slot)
@@ -158,21 +151,6 @@ namespace JSC {
         return true;
     }
 
-    inline Register* JSVariableObject::copyRegisterArray(Register* src, size_t count)
-    {
-        Register* registerArray = new Register[count];
-        memcpy(registerArray, src, count * sizeof(Register));
-
-        return registerArray;
-    }
-
-    inline void JSVariableObject::setRegisters(Register* registers, Register* registerArray)
-    {
-        ASSERT(registerArray != d->registerArray.get());
-        d->registerArray.set(registerArray);
-        d->registers = registers;
-    }
-
-} // namespace JSC
+} // namespace KJS
 
 #endif // JSVariableObject_h

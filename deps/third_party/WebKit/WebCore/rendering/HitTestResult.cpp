@@ -27,8 +27,8 @@
 #include "HTMLImageElement.h"
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
+#include "PlatformScrollBar.h"
 #include "RenderImage.h"
-#include "Scrollbar.h"
 #include "SelectionController.h"
 
 #if ENABLE(SVG)
@@ -42,7 +42,6 @@ using namespace HTMLNames;
 
 HitTestResult::HitTestResult(const IntPoint& point)
     : m_point(point)
-    , m_isOverWidget(false)
 {
 }
 
@@ -53,7 +52,6 @@ HitTestResult::HitTestResult(const HitTestResult& other)
     , m_localPoint(other.localPoint())
     , m_innerURLElement(other.URLElement())
     , m_scrollbar(other.scrollbar())
-    , m_isOverWidget(other.isOverWidget())
 {
 }
 
@@ -69,7 +67,6 @@ HitTestResult& HitTestResult::operator=(const HitTestResult& other)
     m_localPoint = other.localPoint();
     m_innerURLElement = other.URLElement();
     m_scrollbar = other.scrollbar();
-    m_isOverWidget = other.isOverWidget();
     return *this;
 }
 
@@ -100,7 +97,7 @@ void HitTestResult::setURLElement(Element* n)
     m_innerURLElement = n; 
 }
 
-void HitTestResult::setScrollbar(Scrollbar* s)
+void HitTestResult::setScrollbar(PlatformScrollbar* s)
 {
     m_scrollbar = s;
 }

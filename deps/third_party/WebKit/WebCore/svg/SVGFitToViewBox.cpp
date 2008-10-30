@@ -26,7 +26,6 @@
 #include "SVGFitToViewBox.h"
 
 #include "AffineTransform.h"
-#include "Document.h"
 #include "FloatRect.h"
 #include "SVGNames.h"
 #include "SVGParserUtilities.h"

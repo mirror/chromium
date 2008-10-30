@@ -34,7 +34,7 @@
 #include "npruntime_impl.h"
 #include <kjs/JSLock.h>
 
-namespace JSC {
+namespace KJS {
 namespace Bindings {
 
 // ---------------------- CMethod ----------------------

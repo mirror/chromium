@@ -21,7 +21,6 @@
 #define JSImageConstructor_h
 
 #include "JSDOMBinding.h"
-#include "JSDocument.h"
 
 namespace WebCore {
 
@@ -29,17 +28,16 @@ namespace WebCore {
 
     class JSImageConstructor : public DOMObject {
     public:
-        JSImageConstructor(JSC::ExecState*, Document*);
-        Document* document() const { return m_document->impl(); }
+        JSImageConstructor(KJS::ExecState*, Document*);
+        Document* document() const { return m_document.get(); }
 
-        static const JSC::ClassInfo s_info;
-        
-        virtual void mark();
+        static const KJS::ClassInfo s_info;
+
     private:
-        virtual JSC::ConstructType getConstructData(JSC::ConstructData&);
-        virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
+        virtual KJS::ConstructType getConstructData(KJS::ConstructData&);
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
 
-        JSDocument* m_document;
+        RefPtr<Document> m_document;
     };
 
 } // namespace WebCore

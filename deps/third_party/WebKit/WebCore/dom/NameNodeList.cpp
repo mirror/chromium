@@ -37,9 +37,10 @@ NameNodeList::NameNodeList(PassRefPtr<Node> rootNode, const String& name, Dynami
 {
 }
 
-bool NameNodeList::nodeMatches(Element* testNode) const
+bool NameNodeList::nodeMatches(Node* testNode) const
 {
-    return testNode->getAttribute(nameAttr) == m_nodeName;
+    ASSERT(testNode->isElementNode());
+    return static_cast<Element*>(testNode)->getAttribute(nameAttr) == m_nodeName;
 }
 
 } // namespace WebCore

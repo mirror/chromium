@@ -2,7 +2,7 @@
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
  *           (C) 1999 Antti Koivisto (koivisto@kde.org)
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
  *           (C) 2006 Alexey Proskuryakov (ap@nypop.com)
  * Copyright (C) 2007 Samuel Weinig (sam@webkit.org)
  *
@@ -127,8 +127,7 @@ void HTMLInputElement::init()
     m_autocomplete = Uninitialized;
     m_inited = false;
     m_autofilled = false;
-    m_placeholderShouldBeVisible = false;
-    
+
     xPos = 0;
     yPos = 0;
     
@@ -140,8 +139,8 @@ void HTMLInputElement::init()
 
 HTMLInputElement::~HTMLInputElement()
 {
-    if (needsActivationCallback())
-        document()->unregisterForDocumentActivationCallbacks(this);
+    if (needsCacheCallback())
+        document()->unregisterForCacheCallbacks(this);
 
     document()->checkedRadioButtons().removeButton(this);
 
@@ -246,7 +245,6 @@ void HTMLInputElement::dispatchFocusEvent()
 {
     if (isTextField()) {
         setAutofilled(false);
-        updatePlaceholderVisibility();
         if (inputType() == PASSWORD && document()->frame())
             document()->setUseSecureKeyboardEntryWhenActive(true);
     }
@@ -256,7 +254,6 @@ void HTMLInputElement::dispatchFocusEvent()
 void HTMLInputElement::dispatchBlurEvent()
 {
     if (isTextField() && document()->frame()) {
-        updatePlaceholderVisibility();
         if (inputType() == PASSWORD)
             document()->setUseSecureKeyboardEntryWhenActive(false);
         document()->frame()->textFieldDidEndEditing(this);
@@ -340,17 +337,17 @@ void HTMLInputElement::setInputType(const String& t)
                 recheckValue();
 
             if (wasPasswordField && !isPasswordField)
-                unregisterForActivationCallbackIfNeeded();
+                unregisterForCacheCallbackIfNeeded();
             else if (!wasPasswordField && isPasswordField)
-                registerForActivationCallbackIfNeeded();
+                registerForCacheCallbackIfNeeded();
 
             if (didRespectHeightAndWidth != willRespectHeightAndWidth) {
                 NamedMappedAttrMap* map = mappedAttributes();
-                if (Attribute* height = map->getAttributeItem(heightAttr))
+                if (MappedAttribute* height = map->getAttributeItem(heightAttr))
                     attributeChanged(height, false);
-                if (Attribute* width = map->getAttributeItem(widthAttr))
+                if (MappedAttribute* width = map->getAttributeItem(widthAttr))
                     attributeChanged(width, false);
-                if (Attribute* align = map->getAttributeItem(alignAttr))
+                if (MappedAttribute* align = map->getAttributeItem(alignAttr))
                     attributeChanged(align, false);
             }
 
@@ -608,10 +605,10 @@ void HTMLInputElement::parseMappedAttribute(MappedAttribute *attr)
     } else if (attr->name() == autocompleteAttr) {
         if (equalIgnoringCase(attr->value(), "off")) {
             m_autocomplete = Off;
-            registerForActivationCallbackIfNeeded();
+            registerForCacheCallbackIfNeeded();
         } else {
             if (m_autocomplete == Off)
-                unregisterForActivationCallbackIfNeeded();
+                unregisterForCacheCallbackIfNeeded();
             if (attr->isEmpty())
                 m_autocomplete = Uninitialized;
             else
@@ -668,20 +665,20 @@ void HTMLInputElement::parseMappedAttribute(MappedAttribute *attr)
         if (respectHeightAndWidthAttrs())
             addCSSLength(attr, CSSPropertyHeight, attr->value());
     } else if (attr->name() == onfocusAttr) {
-        setEventListenerForTypeAndAttribute(focusEvent, attr);
+        setHTMLEventListener(focusEvent, attr);
     } else if (attr->name() == onblurAttr) {
-        setEventListenerForTypeAndAttribute(blurEvent, attr);
+        setHTMLEventListener(blurEvent, attr);
     } else if (attr->name() == onselectAttr) {
-        setEventListenerForTypeAndAttribute(selectEvent, attr);
+        setHTMLEventListener(selectEvent, attr);
     } else if (attr->name() == onchangeAttr) {
-        setEventListenerForTypeAndAttribute(changeEvent, attr);
+        setHTMLEventListener(changeEvent, attr);
     } else if (attr->name() == oninputAttr) {
-        setEventListenerForTypeAndAttribute(inputEvent, attr);
+        setHTMLEventListener(inputEvent, attr);
     }
     // Search field and slider attributes all just cause updateFromElement to be called through style
     // recalcing.
     else if (attr->name() == onsearchAttr) {
-        setEventListenerForTypeAndAttribute(searchEvent, attr);
+        setHTMLEventListener(searchEvent, attr);
     } else if (attr->name() == resultsAttr) {
         int oldResults = m_maxResults;
         m_maxResults = !attr->isNull() ? min(attr->value().toInt(), maxSavedResults) : -1;
@@ -692,10 +689,9 @@ void HTMLInputElement::parseMappedAttribute(MappedAttribute *attr)
             attach();
         }
         setChanged();
-    } else if (attr->name() == placeholderAttr)
-        updatePlaceholderVisibility(true);
-    else if (attr->name() == autosaveAttr ||
+    } else if (attr->name() == autosaveAttr ||
                attr->name() == incrementalAttr ||
+               attr->name() == placeholderAttr ||
                attr->name() == minAttr ||
                attr->name() == maxAttr ||
                attr->name() == precisionAttr) {
@@ -868,23 +864,20 @@ bool HTMLInputElement::appendFormData(FormDataList& encoding, bool multipart)
             }
             break;
 
-        case FILE: {
+        case FILE:
             // Can't submit file on GET.
             if (!multipart)
                 return false;
 
             // If no filename at all is entered, return successful but empty.
             // Null would be more logical, but Netscape posts an empty file. Argh.
-            unsigned numFiles = m_fileList->length();
-            if (!numFiles) {
-                encoding.appendFile(name(), File::create(""));
+            if (m_fileList->isEmpty()) {
+                encoding.appendData(name(), String(""));
                 return true;
             }
 
-            for (unsigned i = 0; i < numFiles; ++i)
-                encoding.appendFile(name(), m_fileList->item(i));
+            encoding.appendFile(name(), m_fileList->item(0)->path());
             return true;
-        }
     }
     return false;
 }
@@ -1002,9 +995,6 @@ void HTMLInputElement::setValue(const String& value)
     if (inputType() == FILE && !value.isEmpty())
         return;
 
-    if (isTextField())
-        updatePlaceholderVisibility();
-    
     setValueMatchesRenderer(false);
     if (storesValueSeparateFromAttribute()) {
         if (inputType() == FILE)
@@ -1036,9 +1026,6 @@ void HTMLInputElement::setValueFromRenderer(const String& value)
     // Renderer and our event handler are responsible for constraining values.
     ASSERT(value == constrainValue(value) || constrainValue(value).isEmpty());
 
-    if (isTextField())
-        updatePlaceholderVisibility();
-    
     if (inputType() == FILE) {
         m_fileList->clear();
         m_fileList->append(File::create(value));
@@ -1055,7 +1042,7 @@ void HTMLInputElement::setValueFromRenderer(const String& value)
     setValueMatchesRenderer();
 
     // Fire the "input" DOM event.
-    dispatchEventForType(inputEvent, true, false);
+    dispatchHTMLEvent(inputEvent, true, false);
 }
 
 bool HTMLInputElement::storesValueSeparateFromAttribute() const
@@ -1546,45 +1533,27 @@ void HTMLInputElement::recheckValue()
         setValue(newValue);
 }
 
-bool HTMLInputElement::needsActivationCallback()
+bool HTMLInputElement::needsCacheCallback()
 {
     return inputType() == PASSWORD || m_autocomplete == Off;
 }
 
-void HTMLInputElement::registerForActivationCallbackIfNeeded()
+void HTMLInputElement::registerForCacheCallbackIfNeeded()
 {
-    if (needsActivationCallback())
-        document()->registerForDocumentActivationCallbacks(this);
+    if (needsCacheCallback())
+        document()->registerForCacheCallbacks(this);
 }
 
-void HTMLInputElement::unregisterForActivationCallbackIfNeeded()
+void HTMLInputElement::unregisterForCacheCallbackIfNeeded()
 {
-    if (!needsActivationCallback())
-        document()->unregisterForDocumentActivationCallbacks(this);
-}
-
-void HTMLInputElement::updatePlaceholderVisibility(bool placeholderValueChanged)
-{
-    ASSERT(isTextField());
-
-    bool oldPlaceholderShouldBeVisible = m_placeholderShouldBeVisible;
-
-    m_placeholderShouldBeVisible = value().isEmpty() 
-        && document()->focusedNode() != this
-        && !getAttribute(placeholderAttr).isEmpty();
-
-    if ((oldPlaceholderShouldBeVisible != m_placeholderShouldBeVisible || placeholderValueChanged) && renderer())
-        static_cast<RenderTextControl*>(renderer())->updatePlaceholderVisibility();
+    if (!needsCacheCallback())
+        document()->unregisterForCacheCallbacks(this);
 }
 
 String HTMLInputElement::constrainValue(const String& proposedValue, int maxLen) const
 {
-    String string = proposedValue;
     if (isTextField()) {
-        string.replace("\r\n", " ");
-        string.replace('\r', ' ');
-        string.replace('\n', ' ');
-        StringImpl* s = string.impl();
+        StringImpl* s = proposedValue.impl();
         int newLen = numCharactersInGraphemeClusters(s, maxLen);
         for (int i = 0; i < newLen; ++i) {
             const UChar current = (*s)[i];
@@ -1593,10 +1562,10 @@ String HTMLInputElement::constrainValue(const String& proposedValue, int maxLen)
                 break;
             }
         }
-        if (newLen < static_cast<int>(string.length()))
-            return string.substring(0, newLen);
+        if (newLen < static_cast<int>(proposedValue.length()))
+            return proposedValue.substring(0, newLen);
     }
-    return string;
+    return proposedValue;
 }
 
 void HTMLInputElement::addSearchResult()
@@ -1611,7 +1580,7 @@ void HTMLInputElement::onSearch()
     ASSERT(isSearchField());
     if (renderer())
         static_cast<RenderTextControl*>(renderer())->stopSearchEventTimer();
-    dispatchEventForType(searchEvent, true, false);
+    dispatchHTMLEvent(searchEvent, true, false);
 }
 
 Selection HTMLInputElement::selection() const
@@ -1621,17 +1590,17 @@ Selection HTMLInputElement::selection() const
    return static_cast<RenderTextControl*>(renderer())->selection(cachedSelStart, cachedSelEnd);
 }
 
-void HTMLInputElement::documentDidBecomeActive()
+void HTMLInputElement::didRestoreFromCache()
 {
-    ASSERT(needsActivationCallback());
+    ASSERT(needsCacheCallback());
     reset();
 }
 
 void HTMLInputElement::willMoveToNewOwnerDocument()
 {
     // Always unregister for cache callbacks when leaving a document, even if we would otherwise like to be registered
-    if (needsActivationCallback())
-        document()->unregisterForDocumentActivationCallbacks(this);
+    if (needsCacheCallback())
+        document()->unregisterForCacheCallbacks(this);
         
     document()->checkedRadioButtons().removeButton(this);
     
@@ -1640,7 +1609,7 @@ void HTMLInputElement::willMoveToNewOwnerDocument()
 
 void HTMLInputElement::didMoveToNewOwnerDocument()
 {
-    registerForActivationCallbackIfNeeded();
+    registerForCacheCallbackIfNeeded();
         
     HTMLFormControlElementWithState::didMoveToNewOwnerDocument();
 }

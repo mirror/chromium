@@ -32,7 +32,7 @@
 
 #include <wtf/UnusedParam.h>
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(JSNotAnObject);
 
@@ -134,4 +134,4 @@ void JSNotAnObject::getPropertyNames(ExecState* exec, PropertyNameArray&)
     ASSERT(exec->hadException() && exec->exception() == m_exception);
 }
 
-} // namespace JSC
+} // namespace KJS

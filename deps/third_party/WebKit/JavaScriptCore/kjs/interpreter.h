@@ -26,13 +26,13 @@
 #include <wtf/PassRefPtr.h>
 #include <wtf/unicode/Unicode.h>
 
-namespace JSC {
+namespace KJS {
 
   class Completion;
   class ExecState;
   class JSValue;
   class ScopeChain;
-  class SourceCode;
+  class SourceProvider;
   class UString;
   
   class Interpreter {
@@ -44,7 +44,8 @@ namespace JSC {
      * @return A normal completion if there were no syntax errors in the code, 
      * otherwise a throw completion with the syntax error as its value.
      */
-    static Completion checkSyntax(ExecState*, const SourceCode&);
+    static Completion checkSyntax(ExecState*, const UString& sourceURL, int startingLineNumber, const UString& code);
+    static Completion checkSyntax(ExecState*, const UString& sourceURL, int startingLineNumber, PassRefPtr<SourceProvider> source);
 
     /**
      * Evaluates the supplied ECMAScript code.
@@ -61,12 +62,13 @@ namespace JSC {
      * execution. This should either be jsNull() or an Object.
      * @return A completion object representing the result of the execution.
      */
-    static Completion evaluate(ExecState*, ScopeChain&, const SourceCode&, JSValue* thisV = 0);
+    static Completion evaluate(ExecState*, ScopeChain&, const UString& sourceURL, int startingLineNumber, const UString& code, JSValue* thisV = 0);
+    static Completion evaluate(ExecState*, ScopeChain&, const UString& sourceURL, int startingLineNumber, PassRefPtr<SourceProvider>, JSValue* thisV = 0);
     
     static bool shouldPrintExceptions();
     static void setShouldPrintExceptions(bool);
   };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // KJS_Interpreter_h

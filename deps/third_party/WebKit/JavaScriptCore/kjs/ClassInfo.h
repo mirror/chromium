@@ -25,7 +25,7 @@
 
 #include "ExecState.h"
 
-namespace JSC {
+namespace KJS {
 
     struct HashEntry;
     struct HashTable;
@@ -57,6 +57,6 @@ namespace JSC {
         const ClassPropHashTableGetterFunction classPropHashTableGetterFunction;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ClassInfo_h

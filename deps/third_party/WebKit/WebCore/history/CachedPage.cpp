@@ -52,7 +52,7 @@
 #include "SVGDocumentExtensions.h"
 #endif
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -76,7 +76,7 @@ CachedPage::CachedPage(Page* page)
     cachedPageCounter.increment();
 #endif
     
-    m_document->documentWillBecomeInactive(); 
+    m_document->willSaveToCache(); 
     
     Frame* mainFrame = page->mainFrame();
     mainFrame->clearTimers();
@@ -116,7 +116,7 @@ void CachedPage::restore(Page* page)
             windowShell->setWindow(m_window.get());
             windowShell->window()->resumeTimeouts(m_pausedTimeouts);
         } else {
-            windowShell->setWindow(mainFrame->domWindow());
+            windowShell->setWindow(new (JSDOMWindow::commonJSGlobalData()) JSDOMWindow(mainFrame->domWindow(), windowShell));
             proxy->attachDebugger(page->debugger());
             windowShell->window()->setProfileGroup(page->group().identifier());
         }

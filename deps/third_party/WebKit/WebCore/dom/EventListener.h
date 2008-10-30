@@ -31,8 +31,7 @@ namespace WebCore {
     public:
         virtual ~EventListener() { }
         virtual void handleEvent(Event*, bool isWindowEvent = false) = 0;
-        virtual bool isAttachedToEventTargetNode() const { return false; }
-        virtual bool wasCreatedFromMarkup() const { return false; }
+        virtual bool isHTMLEventListener() const { return false; }
     };
 
 }

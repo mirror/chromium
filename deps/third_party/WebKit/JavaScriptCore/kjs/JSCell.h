@@ -27,7 +27,7 @@
 #include "JSValue.h"
 #include "collector.h"
 
-namespace JSC {
+namespace KJS {
 
     class JSCell : public JSValue {
         friend class Heap;
@@ -38,17 +38,17 @@ namespace JSC {
         friend class JSNumberCell;
         friend class JSString;
         friend class Machine;
-        friend class CTI;
     private:
-        explicit JSCell(StructureID*);
+        JSCell();
+        JSCell(StructureID*);
         virtual ~JSCell();
 
     public:
         // Querying the type.
         bool isNumber() const;
-        bool isString() const;
-        bool isObject() const;
+        virtual bool isString() const;
         virtual bool isGetterSetter() const;
+        virtual bool isObject() const;
         virtual bool isObject(const ClassInfo*) const;
 
         StructureID* structureID() const;
@@ -77,9 +77,11 @@ namespace JSC {
         virtual UString toString(ExecState*) const = 0;
         virtual JSObject* toObject(ExecState*) const = 0;
 
+        // WebCore uses this to make document.all and style.filter undetectable
+        virtual bool masqueradeAsUndefined() const { return false; }
+
         // Garbage collection.
         void* operator new(size_t, ExecState*);
-        void* operator new(size_t, JSGlobalData*);
         void* operator new(size_t, void* placementNewDestination) { return placementNewDestination; }
         virtual void mark();
         bool marked() const;
@@ -105,6 +107,11 @@ namespace JSC {
         StructureID* m_structureID;
     };
 
+    inline JSCell::JSCell()
+        : m_structureID(0)
+    {
+    }
+
     inline JSCell::JSCell(StructureID* structureID)
         : m_structureID(structureID)
     {
@@ -117,16 +124,6 @@ namespace JSC {
     inline bool JSCell::isNumber() const
     {
         return Heap::isNumber(const_cast<JSCell*>(this));
-    }
-
-    inline bool JSCell::isObject() const
-    {
-        return m_structureID->typeInfo().type() == ObjectType;
-    }
-
-    inline bool JSCell::isString() const
-    {
-        return m_structureID->typeInfo().type() == StringType;
     }
 
     inline StructureID* JSCell::structureID() const
@@ -156,14 +153,6 @@ namespace JSC {
         return static_cast<const JSCell*>(this);
     }
 
-    inline void* JSCell::operator new(size_t size, JSGlobalData* globalData)
-    {
-#ifdef JAVASCRIPTCORE_BUILDING_ALL_IN_ONE_FILE
-        return globalData->heap.inlineAllocate(size);
-#else
-        return globalData->heap.allocate(size);
-#endif
-    }
 
     // --- JSValue inlines ----------------------------
 
@@ -299,14 +288,6 @@ namespace JSC {
         return asCell()->toThisObject(exec);
     }
 
-    inline bool JSValue::needsThisConversion() const
-    {
-        if (UNLIKELY(JSImmediate::isImmediate(this)))
-            return true;
-
-        return asCell()->structureID()->typeInfo().needsThisConversion();
-    }
-
     inline UString JSValue::toThisString(ExecState* exec) const
     {
         return JSImmediate::isImmediate(this) ? JSImmediate::toString(this) : asCell()->toThisString(exec);
@@ -318,6 +299,6 @@ namespace JSC {
         return JSImmediate::isNumber(this) ? this : (JSImmediate::isImmediate(this) ? 0 : asCell()->getJSNumber());
     }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // JSCell_h

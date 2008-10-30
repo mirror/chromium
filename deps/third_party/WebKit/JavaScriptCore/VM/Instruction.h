@@ -30,9 +30,8 @@
 #define Instruction_h
 
 #include "Opcode.h"
-#include <wtf/VectorTraits.h>
 
-namespace JSC {
+namespace KJS {
 
     class JSCell;
     class StructureID;
@@ -40,14 +39,7 @@ namespace JSC {
 
     struct Instruction {
         Instruction(Opcode opcode) { u.opcode = opcode; }
-        Instruction(int operand)
-        {
-            // We have to initialize one of the pointer members to ensure that
-            // the entire struct is initialised in 64-bit.
-            u.jsCell = 0;
-            u.operand = operand;
-        }
-
+        Instruction(int operand) { u.operand = operand; }
         Instruction(StructureID* structureID) { u.structureID = structureID; }
         Instruction(StructureIDChain* structureIDChain) { u.structureIDChain = structureIDChain; }
         Instruction(JSCell* jsCell) { u.jsCell = jsCell; }
@@ -61,12 +53,6 @@ namespace JSC {
         } u;
     };
 
-} // namespace JSC
-
-namespace WTF {
-
-    template<> struct VectorTraits<JSC::Instruction> : VectorTraitsBase<true, JSC::Instruction> { };
-
-} // namespace WTF
+} // namespace KJS
 
 #endif // Instruction_h

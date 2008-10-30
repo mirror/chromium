@@ -41,12 +41,11 @@
 #include <kjs/completion.h>
 #include <kjs/interpreter.h>
 #include <wtf/Assertions.h>
-#include <kjs/SourceProvider.h>
 
 using WebCore::Frame;
 
-using namespace JSC::Bindings;
-using namespace JSC;
+using namespace KJS::Bindings;
+using namespace KJS;
 
 #ifdef NDEBUG
 #define JS_LOG(formatAndArgs...) ((void)0)
@@ -292,7 +291,7 @@ jobject JavaJSObject::call(jstring methodName, jobjectArray args) const
     ExecState* exec = rootObject->globalObject()->globalExec();
     JSLock lock(false);
     
-    Identifier identifier(exec, JavaString(methodName));
+    Identifier identifier(exec, JavaString(methodName).ustring());
     JSValue* function = _imp->get(exec, identifier);
     CallData callData;
     CallType callType = function->getCallData(callData);
@@ -303,7 +302,7 @@ jobject JavaJSObject::call(jstring methodName, jobjectArray args) const
     ArgList argList;
     getListFromJArray(exec, args, argList);
     rootObject->globalObject()->startTimeoutCheck();
-    JSValue* result = JSC::call(exec, function, callType, callData, _imp, argList);
+    JSValue* result = KJS::call(exec, function, callType, callData, _imp, argList);
     rootObject->globalObject()->stopTimeoutCheck();
 
     return convertValueToJObject(result);
@@ -322,7 +321,7 @@ jobject JavaJSObject::eval(jstring script) const
         return 0;
 
     rootObject->globalObject()->startTimeoutCheck();
-    Completion completion = Interpreter::evaluate(rootObject->globalObject()->globalExec(), rootObject->globalObject()->globalScopeChain(), makeSource(JavaString(script)));
+    Completion completion = Interpreter::evaluate(rootObject->globalObject()->globalExec(), rootObject->globalObject()->globalScopeChain(), UString(), 1, JavaString(script).ustring());
     rootObject->globalObject()->stopTimeoutCheck();
     ComplType type = completion.complType();
     
@@ -347,7 +346,7 @@ jobject JavaJSObject::getMember(jstring memberName) const
     ExecState* exec = rootObject->globalObject()->globalExec();
     
     JSLock lock(false);
-    JSValue* result = _imp->get(exec, Identifier(exec, JavaString(memberName)));
+    JSValue* result = _imp->get(exec, Identifier(exec, JavaString(memberName).ustring()));
 
     return convertValueToJObject(result);
 }
@@ -364,7 +363,7 @@ void JavaJSObject::setMember(jstring memberName, jobject value) const
 
     JSLock lock(false);
     PutPropertySlot slot;
-    _imp->put(exec, Identifier(exec, JavaString(memberName)), convertJObjectToValue(exec, value), slot);
+    _imp->put(exec, Identifier(exec, JavaString(memberName).ustring()), convertJObjectToValue(exec, value), slot);
 }
 
 
@@ -378,7 +377,7 @@ void JavaJSObject::removeMember(jstring memberName) const
 
     ExecState* exec = rootObject->globalObject()->globalExec();
     JSLock lock(false);
-    _imp->deleteProperty(exec, Identifier(exec, JavaString(memberName)));
+    _imp->deleteProperty(exec, Identifier(exec, JavaString(memberName).ustring()));
 }
 
 
@@ -602,7 +601,7 @@ JSValue* JavaJSObject::convertJObjectToValue(ExecState* exec, jobject theObject)
 
     JSLock lock(false);
 
-    return JSC::Bindings::Instance::createRuntimeObject(exec, JavaInstance::create(theObject, _rootObject));
+    return KJS::Bindings::Instance::createRuntimeObject(exec, JavaInstance::create(theObject, _rootObject));
 }
 
 void JavaJSObject::getListFromJArray(ExecState* exec, jobjectArray jArray, ArgList& list) const

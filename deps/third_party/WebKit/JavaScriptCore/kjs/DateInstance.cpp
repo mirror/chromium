@@ -26,7 +26,7 @@
 #include <math.h>
 #include <wtf/MathExtras.h>
 
-namespace JSC {
+namespace KJS {
 
 struct DateInstance::Cache {
     double m_gregorianDateTimeCachedForMS;
@@ -37,8 +37,8 @@ struct DateInstance::Cache {
 
 const ClassInfo DateInstance::info = {"Date", 0, 0, 0};
 
-DateInstance::DateInstance(PassRefPtr<StructureID> structure)
-    : JSWrapperObject(structure)
+DateInstance::DateInstance(JSObject* prototype)
+    : JSWrapperObject(prototype)
     , m_cache(0)
 {
 }
@@ -58,13 +58,13 @@ void DateInstance::msToGregorianDateTime(double milli, bool outputIsUTC, Gregori
 
     if (outputIsUTC) {
         if (m_cache->m_gregorianDateTimeUTCCachedForMS != milli) {
-            JSC::msToGregorianDateTime(milli, true, m_cache->m_cachedGregorianDateTimeUTC);
+            KJS::msToGregorianDateTime(milli, true, m_cache->m_cachedGregorianDateTimeUTC);
             m_cache->m_gregorianDateTimeUTCCachedForMS = milli;
         }
         t.copyFrom(m_cache->m_cachedGregorianDateTimeUTC);
     } else {
         if (m_cache->m_gregorianDateTimeCachedForMS != milli) {
-            JSC::msToGregorianDateTime(milli, false, m_cache->m_cachedGregorianDateTime);
+            KJS::msToGregorianDateTime(milli, false, m_cache->m_cachedGregorianDateTime);
             m_cache->m_gregorianDateTimeCachedForMS = milli;
         }
         t.copyFrom(m_cache->m_cachedGregorianDateTime);
@@ -113,4 +113,4 @@ bool DateInstance::getUTCTime(double& milli) const
     return true;
 }
 
-} // namespace JSC
+} // namespace KJS

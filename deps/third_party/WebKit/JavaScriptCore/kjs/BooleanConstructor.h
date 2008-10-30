@@ -23,13 +23,14 @@
 
 #include "InternalFunction.h"
 
-namespace JSC {
+namespace KJS {
 
     class BooleanPrototype;
+    class FunctionPrototype;
 
     class BooleanConstructor : public InternalFunction {
     public:
-        BooleanConstructor(ExecState*, PassRefPtr<StructureID>, BooleanPrototype*);
+        BooleanConstructor(ExecState*, FunctionPrototype*, BooleanPrototype*);
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
@@ -39,6 +40,6 @@ namespace JSC {
     JSObject* constructBooleanFromImmediateBoolean(ExecState*, JSValue*);
     JSObject* constructBoolean(ExecState*, const ArgList&);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // BooleanConstructor_h

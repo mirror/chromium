@@ -32,7 +32,6 @@
 namespace WebCore {
 
     class AtomicString;
-    class Element;
     class Node;
 
     class DynamicNodeList : public NodeList {
@@ -65,7 +64,7 @@ namespace WebCore {
         DynamicNodeList(PassRefPtr<Node> rootNode);
         DynamicNodeList(PassRefPtr<Node> rootNode, Caches*);
 
-        virtual bool nodeMatches(Element*) const = 0;
+        virtual bool nodeMatches(Node*) const = 0;
 
         RefPtr<Node> m_rootNode;
         mutable Caches* m_caches;

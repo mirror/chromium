@@ -32,7 +32,7 @@
 #define RenderListBox_h
 
 #include "RenderBlock.h"
-#include "ScrollbarClient.h"
+#include "ScrollBar.h"
 
 namespace WebCore {
 
@@ -47,6 +47,7 @@ public:
 
     virtual bool isListBox() const { return true; }
 
+    virtual void setStyle(RenderStyle*);
     virtual void updateFromElement();
 
     virtual bool canHaveChildren() const { return false; }
@@ -83,7 +84,7 @@ public:
     virtual bool shouldPanScroll() const { return true; }
     virtual void panScroll(const IntPoint&);
 
-    int scrollToward(const IntPoint&); // Returns the new index or -1 if no scroll occurred
+    int scrollToward(const IntPoint&); // Returns the new index or -1 if no scroll occured
 
     virtual int verticalScrollbarWidth() const;
     virtual int scrollLeft() const;
@@ -93,27 +94,19 @@ public:
     virtual void setScrollLeft(int);
     virtual void setScrollTop(int);
 
-protected:
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
-
 private:
     // ScrollbarClient interface.
     virtual void valueChanged(Scrollbar*);
-    virtual void invalidateScrollbarRect(Scrollbar*, const IntRect&);
+    virtual IntRect windowClipRect() const;
     virtual bool isActive() const;
-    virtual bool scrollbarCornerPresent() const { return false; } // We don't support resize on list boxes yet.  If we did this would have to change.
 
-    void setHasVerticalScrollbar(bool hasScrollbar);
-    PassRefPtr<Scrollbar> createScrollbar();
-    void destroyScrollbar();
-    
     int itemHeight() const;
     void valueChanged(unsigned listIndex);
     int size() const;
     int numVisibleItems() const;
     int numItems() const;
     int listHeight() const;
-    void paintScrollbar(PaintInfo&, int tx, int ty);
+    void paintScrollbar(PaintInfo&);
     void paintItemForeground(PaintInfo&, int tx, int ty, int listIndex);
     void paintItemBackground(PaintInfo&, int tx, int ty, int listIndex);
     void scrollToRevealSelection();

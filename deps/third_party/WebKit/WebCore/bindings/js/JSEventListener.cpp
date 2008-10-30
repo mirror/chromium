@@ -30,14 +30,13 @@
 #include "FrameLoader.h"
 #include "JSDOMWindow.h"
 #include "JSEvent.h"
-#include "JSEventTarget.h"
 #include "JSEventTargetNode.h"
 #include "ScriptController.h"
 #include <kjs/FunctionConstructor.h>
 #include <kjs/JSLock.h>
 #include <wtf/RefCountedLeakCounter.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -106,7 +105,7 @@ void JSAbstractEventListener::handleEvent(Event* event, bool isWindowEvent)
         else {
             if (!retval->isUndefinedOrNull() && event->storesResultAsString())
                 event->storeResult(retval->toString(exec));
-            if (m_isAttachedToEventTargetNode) {
+            if (m_isHTML) {
                 bool retvalbool;
                 if (retval->getBoolean(retvalbool) && !retvalbool)
                     event->preventDefault();
@@ -118,21 +117,21 @@ void JSAbstractEventListener::handleEvent(Event* event, bool isWindowEvent)
     }
 }
 
-bool JSAbstractEventListener::isAttachedToEventTargetNode() const
+bool JSAbstractEventListener::isHTMLEventListener() const
 {
-    return m_isAttachedToEventTargetNode;
+    return m_isHTML;
 }
 
 // -------------------------------------------------------------------------
 
-JSUnprotectedEventListener::JSUnprotectedEventListener(JSObject* listener, JSDOMWindow* window, bool isAttachedToEventTargetNode)
-    : JSAbstractEventListener(isAttachedToEventTargetNode)
+JSUnprotectedEventListener::JSUnprotectedEventListener(JSObject* listener, JSDOMWindow* window, bool isHTML)
+    : JSAbstractEventListener(isHTML)
     , m_listener(listener)
     , m_window(window)
 {
     if (m_listener) {
-        JSDOMWindow::UnprotectedListenersMap& listeners = isAttachedToEventTargetNode
-            ? window->jsUnprotectedEventListenersAttachedToEventTargetNodes() : window->jsUnprotectedEventListeners();
+        JSDOMWindow::UnprotectedListenersMap& listeners = isHTML
+            ? window->jsUnprotectedHTMLEventListeners() : window->jsUnprotectedEventListeners();
         listeners.set(m_listener, this);
     }
 }
@@ -140,8 +139,8 @@ JSUnprotectedEventListener::JSUnprotectedEventListener(JSObject* listener, JSDOM
 JSUnprotectedEventListener::~JSUnprotectedEventListener()
 {
     if (m_listener && m_window) {
-        JSDOMWindow::UnprotectedListenersMap& listeners = isAttachedToEventTargetNode()
-            ? m_window->jsUnprotectedEventListenersAttachedToEventTargetNodes() : m_window->jsUnprotectedEventListeners();
+        JSDOMWindow::UnprotectedListenersMap& listeners = isHTMLEventListener()
+            ? m_window->jsUnprotectedHTMLEventListeners() : m_window->jsUnprotectedEventListeners();
         listeners.remove(m_listener);
     }
 }
@@ -173,14 +172,14 @@ static WTF::RefCountedLeakCounter eventListenerCounter("EventListener");
 
 // -------------------------------------------------------------------------
 
-JSEventListener::JSEventListener(JSObject* listener, JSDOMWindow* window, bool isAttachedToEventTargetNode)
-    : JSAbstractEventListener(isAttachedToEventTargetNode)
+JSEventListener::JSEventListener(JSObject* listener, JSDOMWindow* window, bool isHTML)
+    : JSAbstractEventListener(isHTML)
     , m_listener(listener)
     , m_window(window)
 {
     if (m_listener) {
-        JSDOMWindow::ListenersMap& listeners = isAttachedToEventTargetNode
-            ? m_window->jsEventListenersAttachedToEventTargetNodes() : m_window->jsEventListeners();
+        JSDOMWindow::ListenersMap& listeners = isHTML
+            ? m_window->jsHTMLEventListeners() : m_window->jsEventListeners();
         listeners.set(m_listener, this);
     }
 #ifndef NDEBUG
@@ -191,8 +190,8 @@ JSEventListener::JSEventListener(JSObject* listener, JSDOMWindow* window, bool i
 JSEventListener::~JSEventListener()
 {
     if (m_listener && m_window) {
-        JSDOMWindow::ListenersMap& listeners = isAttachedToEventTargetNode()
-            ? m_window->jsEventListenersAttachedToEventTargetNodes() : m_window->jsEventListeners();
+        JSDOMWindow::ListenersMap& listeners = isHTMLEventListener()
+            ? m_window->jsHTMLEventListeners() : m_window->jsEventListeners();
         listeners.remove(m_listener);
     }
 #ifndef NDEBUG
@@ -217,14 +216,13 @@ void JSEventListener::clearWindow()
 
 // -------------------------------------------------------------------------
 
-JSLazyEventListener::JSLazyEventListener(LazyEventListenerType type, const String& functionName, const String& code, JSDOMWindow* window, Node* node, int lineNumber)
+JSLazyEventListener::JSLazyEventListener(const String& functionName, const String& code, JSDOMWindow* window, Node* node, int lineNumber)
     : JSEventListener(0, window, true)
     , m_functionName(functionName)
     , m_code(code)
     , m_parsed(false)
     , m_lineNumber(lineNumber)
     , m_originalNode(node)
-    , m_type(type)
 {
     // We don't retain the original node because we assume it
     // will stay alive as long as this handler object is around
@@ -244,20 +242,10 @@ JSObject* JSLazyEventListener::listenerObj() const
     return m_listener;
 }
 
-// Helper function
-inline JSValue* eventParameterName(JSLazyEventListener::LazyEventListenerType type, ExecState* exec)
+JSValue* JSLazyEventListener::eventParameterName() const
 {
-    switch (type) {
-    case JSLazyEventListener::HTMLLazyEventListener:
-        return jsNontrivialString(exec, "event");
-#if ENABLE(SVG)
-    case JSLazyEventListener::SVGLazyEventListener:
-        return jsNontrivialString(exec, "evt");
-#endif
-    default:
-        ASSERT_NOT_REACHED();
-        return jsUndefined();
-    }
+    static ProtectedPtr<JSValue> eventString = jsNontrivialString(window()->globalExec(), "event");
+    return eventString.get();
 }
 
 void JSLazyEventListener::parseCode() const
@@ -278,7 +266,7 @@ void JSLazyEventListener::parseCode() const
 
     ArgList args;
     UString sourceURL(frame->loader()->url().string());
-    args.append(eventParameterName(m_type, exec));
+    args.append(eventParameterName());
     args.append(jsString(exec, m_code));
 
     // FIXME: Passing the document's URL to construct is not always correct, since this event listener might
@@ -309,10 +297,19 @@ void JSLazyEventListener::parseCode() const
     m_code = String();
 
     if (m_listener) {
-        JSDOMWindow::ListenersMap& listeners = isAttachedToEventTargetNode()
-            ? window()->jsEventListenersAttachedToEventTargetNodes() : window()->jsEventListeners();
+        JSDOMWindow::ListenersMap& listeners = isHTMLEventListener()
+            ? window()->jsHTMLEventListeners() : window()->jsEventListeners();
         listeners.set(m_listener, const_cast<JSLazyEventListener*>(this));
     }
+}
+
+JSValue* getNodeEventListener(EventTargetNode* n, const AtomicString& eventType)
+{
+    if (JSAbstractEventListener* listener = static_cast<JSAbstractEventListener*>(n->getHTMLEventListener(eventType))) {
+        if (JSValue* obj = listener->listenerObj())
+            return obj;
+    }
+    return jsNull();
 }
 
 } // namespace WebCore

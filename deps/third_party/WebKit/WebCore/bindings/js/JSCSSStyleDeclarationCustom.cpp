@@ -35,7 +35,7 @@
 #include <kjs/StringPrototype.h>
 #include <wtf/ASCIICType.h>
 
-using namespace JSC;
+using namespace KJS;
 using namespace WTF;
 
 namespace WebCore {
@@ -150,7 +150,8 @@ JSValue* JSCSSStyleDeclaration::nameGetter(ExecState* exec, const Identifier& pr
 
     // Make the SVG 'filter' attribute undetectable, to avoid confusion with the IE 'filter' attribute.
     if (propertyName == "filter")
-        return StringObjectThatMasqueradesAsUndefined::create(exec, thisObj->impl()->getPropertyValue(prop));
+        return new (exec) StringObjectThatMasqueradesAsUndefined(exec, exec->lexicalGlobalObject()->stringPrototype(),
+            thisObj->impl()->getPropertyValue(prop));
 
     return jsString(exec, thisObj->impl()->getPropertyValue(prop));
 }
@@ -161,14 +162,13 @@ bool JSCSSStyleDeclaration::customPut(ExecState* exec, const Identifier& propert
     if (!isCSSPropertyName(propertyName))
         return false;
 
+    DOMExceptionTranslator exception(exec);
     bool pixelOrPos;
     String prop = cssPropertyName(propertyName, &pixelOrPos);
     String propValue = valueToStringWithNullCheck(exec, value);
     if (pixelOrPos)
         propValue += "px";
-    ExceptionCode ec = 0;
-    impl()->setProperty(prop, propValue, ec);
-    setDOMException(exec, ec);
+    impl()->setProperty(prop, propValue, exception);
     return true;
 }
 

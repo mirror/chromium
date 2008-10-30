@@ -26,8 +26,6 @@
 #ifndef ShapeArabic_h
 #define ShapeArabic_h
 
-#if USE(ATSUI)
-
 #include <unicode/ushape.h>
 
 #ifdef __cplusplus
@@ -40,5 +38,4 @@ int32_t shapeArabic(const UChar *source, int32_t sourceLength, UChar *dest, int3
 }
 #endif
 
-#endif // USE(ATSUI)
 #endif // ShapeArabic_h

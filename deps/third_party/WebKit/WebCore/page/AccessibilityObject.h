@@ -147,9 +147,7 @@ enum AccessibilityRole {
     HeadingRole,
     ListBoxRole,
     ListBoxOptionRole,
-    TableHeaderContainerRole,
-    DefinitionListTermRole,
-    DefinitionListDefinitionRole
+    TableHeaderContainerRole
 };
 
 struct VisiblePositionRange {
@@ -216,12 +214,10 @@ public:
     virtual bool isProgressIndicator() const { return false; };
     virtual bool isSlider() const { return false; };
     virtual bool isControl() const { return false; };
-    virtual bool isList() const { return false; };
     virtual bool isDataTable() const { return false; };
     virtual bool isTableRow() const { return false; };
     virtual bool isTableColumn() const { return false; };
     virtual bool isTableCell() const { return false; };
-    virtual bool isFieldset() const { return false; };
     
     virtual bool isChecked() const { return false; };
     virtual bool isEnabled() const { return false; };
@@ -274,7 +270,7 @@ public:
     virtual AccessibilityRole roleValue() const;
     virtual AXObjectCache* axObjectCache() const;
     
-    virtual Element* anchorElement() const;
+    virtual HTMLAnchorElement* anchorElement() const;
     virtual Element* actionElement() const;
     virtual IntRect boundingBoxRect() const;
     virtual IntRect elementRect() const;
@@ -302,6 +298,7 @@ public:
     const String& actionVerb() const;
     virtual Widget* widget() const;
     virtual Widget* widgetForAttachmentView() const;
+    virtual void getDocumentLinks(Vector< RefPtr<AccessibilityObject> >&) const;
     virtual Document* document() const { return 0; }
     virtual FrameView* topDocumentFrameView() const { return 0; }
     virtual FrameView* documentFrameView() const;
@@ -321,7 +318,6 @@ public:
     virtual void childrenChanged();
     virtual const AccessibilityChildrenVector& children() { return m_children; }
     virtual void addChildren();
-    virtual bool canHaveChildren() const { return true; }
     virtual bool hasChildren() const { return m_haveChildren; };
     virtual void selectedChildren(AccessibilityChildrenVector&);
     virtual void visibleChildren(AccessibilityChildrenVector&);

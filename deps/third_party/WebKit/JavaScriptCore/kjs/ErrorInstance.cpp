@@ -21,13 +21,13 @@
 #include "config.h"
 #include "ErrorInstance.h"
 
-namespace JSC {
+namespace KJS {
 
 const ClassInfo ErrorInstance::info = { "Error", 0, 0, 0 };
 
-ErrorInstance::ErrorInstance(PassRefPtr<StructureID> structure)
-    : JSObject(structure)
+ErrorInstance::ErrorInstance(JSObject* prototype)
+    : JSObject(prototype)
 {
 }
 
-} // namespace JSC
+} // namespace KJS

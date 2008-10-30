@@ -29,7 +29,7 @@
 #include <wtf/Vector.h>
 #include <wtf/unicode/Unicode.h>
 
-#if PLATFORM(CF) || (PLATFORM(QT) && PLATFORM(DARWIN))
+#if PLATFORM(CF)
 typedef const struct __CFString * CFStringRef;
 #endif
 
@@ -44,6 +44,7 @@ class StringBuffer;
 
 struct CStringTranslator;
 struct HashAndCharactersTranslator;
+struct Length;
 struct StringHash;
 struct UCharBufferTranslator;
 
@@ -98,6 +99,8 @@ public:
     UChar operator[](unsigned i) { ASSERT(i < m_length); return m_data[i]; }
     UChar32 characterStartingAt(unsigned);
 
+    Length toLength();
+
     bool containsOnlyWhitespace();
 
     int toIntStrict(bool* ok = 0, int base = 10);
@@ -113,6 +116,8 @@ public:
     double toDouble(bool* ok = 0);
     float toFloat(bool* ok = 0);
 
+    Length* toCoordsArray(int& len);
+    Length* toLengthArray(int& len);
     bool isLower();
     PassRefPtr<StringImpl> lower();
     PassRefPtr<StringImpl> upper();
@@ -144,7 +149,7 @@ public:
 
     WTF::Unicode::Direction defaultWritingDirection();
 
-#if PLATFORM(CF) || (PLATFORM(QT) && PLATFORM(DARWIN))
+#if PLATFORM(CF)
     CFStringRef createCFString();
 #endif
 #ifdef __OBJC__

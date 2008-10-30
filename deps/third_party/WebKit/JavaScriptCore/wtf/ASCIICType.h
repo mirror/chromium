@@ -72,13 +72,6 @@ namespace WTF {
 #endif
     inline bool isASCIIHexDigit(int c) { return c >= '0' && c <= '9' || (c | 0x20) >= 'a' && (c | 0x20) <= 'f'; }
 
-    inline bool isASCIIOctalDigit(char c) { return (c >= '0') & (c <= '7'); }
-    inline bool isASCIIOctalDigit(unsigned short c) { return (c >= '0') & (c <= '7'); }
-#if !COMPILER(MSVC) || defined(_NATIVE_WCHAR_T_DEFINED)
-    inline bool isASCIIOctalDigit(wchar_t c) { return (c >= '0') & (c <= '7'); }
-#endif
-    inline bool isASCIIOctalDigit(int c) { return (c >= '0') & (c <= '7'); }
-
     inline bool isASCIILower(char c) { return c >= 'a' && c <= 'z'; }
     inline bool isASCIILower(unsigned short c) { return c >= 'a' && c <= 'z'; }
 #if !COMPILER(MSVC) || defined(_NATIVE_WCHAR_T_DEFINED)
@@ -134,12 +127,6 @@ namespace WTF {
 #endif
     inline int toASCIIHexValue(int c) { ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
 
-    inline bool isASCIIPrintable(char c) { return c >= ' ' && c <= '~'; }
-    inline bool isASCIIPrintable(unsigned short c) { return c >= ' ' && c <= '~'; }
-#if !COMPILER(MSVC) || defined(_NATIVE_WCHAR_T_DEFINED)
-    inline bool isASCIIPrintable(wchar_t c) { return c >= ' ' && c <= '~'; }
-#endif
-    inline bool isASCIIPrintable(int c) { return c >= ' ' && c <= '~'; }
 }
 
 #endif

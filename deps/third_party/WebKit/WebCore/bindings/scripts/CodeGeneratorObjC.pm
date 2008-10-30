@@ -30,7 +30,6 @@ my $module = "";
 my $outputDir = "";
 my %publicInterfaces = ();
 my $newPublicClass = 0;
-my $interfaceAvailabilityVersion = "";
 my $isProtocol = 0;
 my $noImpl = 0;
 my @ivars = ();
@@ -133,7 +132,7 @@ my $fatalError = 0;
 # Default Licence Templates
 my $headerLicenceTemplate = << "EOF";
 /*
- * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
  * Copyright (C) 2006 Samuel Weinig <sam.weinig\@gmail.com>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -223,17 +222,15 @@ sub ReadPublicInterfaces
     close FILE;
 
     foreach $line (@documentContent) {
-        if (!$isProtocol && $line =~ /^\s*\@interface\s*$class\s*:\s*(\w+)\s*([A-Z0-9_]*)/) {
+        if (!$isProtocol && $line =~ /^\s*\@interface\s*$class\s*:\s*(\w+)\s*/) {
             if ($superClass ne $1) {
                 warn "Public API change. Superclass for \"$class\" differs ($1 != $superClass)";
                 $fatalError = 1;
             }
 
-            $interfaceAvailabilityVersion = $2 if defined $2;
             $found = 1;
             next;
-        } elsif ($isProtocol && $line =~ /^\s*\@protocol $class\s*<[^>]+>\s*([A-Z0-9_]*)/) {
-            $interfaceAvailabilityVersion = $1 if defined $1;
+        } elsif ($isProtocol && $line =~ /^\s*\@protocol $class\s*/) {
             $found = 1;
             next;
         }
@@ -244,18 +241,12 @@ sub ReadPublicInterfaces
             # trim whitspace
             $line =~ s/^\s+//;
             $line =~ s/\s+$//;
-
-            my $availabilityMacro = "";
-            $line =~ s/\s([A-Z0-9_]+)\s*;$/;/;
-            $availabilityMacro = $1 if defined $1;
-
-            $publicInterfaces{$line} = $availabilityMacro if length $line;
+            $publicInterfaces{$line} = 1 if length($line);
         }
     }
 
     # If this class was not found in PublicDOMInterfaces.h then it should be considered as an entirely new public class.
-    $newPublicClass = !$found;
-    $interfaceAvailabilityVersion = "WEBKIT_VERSION_LATEST" if $newPublicClass;
+    $newPublicClass = ! $found;
 }
 
 # Params: 'domClass' struct
@@ -513,9 +504,7 @@ sub GetObjCTypeGetter
 
     my $typeGetterMethodName = GetObjCTypeGetterName($type);
 
-    return "WTF::getPtr(nativeEventListener)" if $type eq "EventListener";
-    return "WTF::getPtr(nativeNodeFilter)" if $type eq "NodeFilter";
-    return "WTF::getPtr(nativeResolver)" if $type eq "XPathNSResolver";
+    return "nativeResolver" if $type eq "XPathNSResolver";
     return "[$argName $typeGetterMethodName]";
 }
 
@@ -664,9 +653,9 @@ sub AddIncludesForType
         return;
     }
 
-    $implIncludes{"ObjCEventListener.h"} = 1 if $type eq "EventListener";
-    $implIncludes{"ObjCNodeFilterCondition.h"} = 1 if $type eq "NodeFilter";
-    $implIncludes{"DOMCustomXPathNSResolver.h"} = 1 if $type eq "XPathNSResolver";
+    if ($type eq "XPathNSResolver") {
+        $implIncludes{"DOMCustomXPathNSResolver.h"} = 1;
+    }
 
     # FIXME: won't compile without these
     $implIncludes{"CSSMutableStyleDeclaration.h"} = 1 if $type eq "CSSStyleDeclaration";
@@ -682,6 +671,11 @@ sub GenerateHeader
 {
     my $object = shift;
     my $dataNode = shift;
+
+    # We only support multiple parents with SVG (for now).
+    if (@{$dataNode->parents} > 1) {
+        die "A class can't have more than one parent" unless $module eq "svg";
+    }
 
     my $interfaceName = $dataNode->name;
     my $className = GetClassName($interfaceName);
@@ -699,18 +693,14 @@ sub GenerateHeader
     push(@headerContentHeader, "\n");
 
     # - INCLUDES -
-    my $includedWebKitAvailabilityHeader = 0;
     unless ($isProtocol) {
         my $parentHeaderName = GetClassHeaderName($parentName);
         push(@headerContentHeader, "#import <WebCore/$parentHeaderName.h>\n");
-        $includedWebKitAvailabilityHeader = 1;
     }
-
     foreach my $parentProtocol (@protocolsToImplement) {
         next if $parentProtocol =~ /^NS/; 
         $parentProtocol = GetClassHeaderName($parentProtocol);
         push(@headerContentHeader, "#import <WebCore/$parentProtocol.h>\n");
-        $includedWebKitAvailabilityHeader = 1;
     }
 
     # Special case needed for legacy support of DOMRange
@@ -718,15 +708,9 @@ sub GenerateHeader
         push(@headerContentHeader, "#import <WebCore/DOMCore.h>\n");
         push(@headerContentHeader, "#import <WebCore/DOMDocument.h>\n");
         push(@headerContentHeader, "#import <WebCore/DOMRangeException.h>\n");
-        $includedWebKitAvailabilityHeader = 1;
     }
 
-    push(@headerContentHeader, "#import <JavaScriptCore/WebKitAvailability.h>\n") unless $includedWebKitAvailabilityHeader;
-
-    my $interfaceAvailabilityVersionCheck = "#if WEBKIT_VERSION_MAX_ALLOWED >= $interfaceAvailabilityVersion\n\n";
-
     push(@headerContentHeader, "\n");
-    push(@headerContentHeader, $interfaceAvailabilityVersionCheck) if length $interfaceAvailabilityVersion;
 
     # - Add constants.
     if ($numConstants > 0) {
@@ -751,11 +735,17 @@ sub GenerateHeader
     }
 
     # - Begin @interface or @protocol
-    my $interfaceDeclaration = ($isProtocol ? "\@protocol $className" : "\@interface $className : $parentName");
-    $interfaceDeclaration .= " <" . join(", ", @protocolsToImplement) . ">" if @protocolsToImplement > 0;
-    $interfaceDeclaration .= "\n";
-
-    push(@headerContent, $interfaceDeclaration);
+    if ($isProtocol) {
+        my $parentProtocols = join(", ", @protocolsToImplement);
+        push(@headerContent, "\@protocol $className <$parentProtocols>\n");
+    } else {
+        if (@protocolsToImplement eq 0) {
+            push(@headerContent, "\@interface $className : $parentName\n");
+        } else {
+             my $parentProtocols = join(", ", @protocolsToImplement);
+             push(@headerContent, "\@interface $className : $parentName <$parentProtocols>\n");
+        }
+    }
 
     my @headerAttributes = ();
     my @privateHeaderAttributes = ();
@@ -771,7 +761,7 @@ sub GenerateHeader
         if (@ivars > 0) {
             push(@headerContent, "{\n");
             foreach my $attribute (@ivars) {
-                my $type = GetObjCType($attribute->signature->type);
+                my $type = GetObjCType($attribute->signature->type);;
                 my $name = "m_" . $attribute->signature->name;
                 my $ivarDeclaration = "$type $name";
                 push(@headerContent, "    $ivarDeclaration;\n");
@@ -794,22 +784,10 @@ sub GenerateHeader
             my $attributeIsReadonly = ($attribute->type =~ /^readonly/);
 
             my $property = "\@property" . GetPropertyAttributes($attribute->signature->type, $attributeIsReadonly);
-            $property .= " " . $attributeType . ($attributeType =~ /\*$/ ? "" : " ") . $attributeName;
+            $property .= " " . $attributeType . ($attributeType =~ /\*$/ ? "" : " ") . $attributeName . ";";
 
-            my $publicInterfaceKey = $property . ";";
-
-            my $availabilityMacro = "";
-            if (defined $publicInterfaces{$publicInterfaceKey} and length $publicInterfaces{$publicInterfaceKey}) {
-                $availabilityMacro = $publicInterfaces{$publicInterfaceKey};
-            }
-
-            $availabilityMacro = "WEBKIT_OBJC_METHOD_ANNOTATION($availabilityMacro)" if length $availabilityMacro and $buildingForTigerOrEarlier;
-
-            my $declarationSuffix = ";\n";
-            $declarationSuffix = " $availabilityMacro;\n" if length $availabilityMacro;
-
-            my $public = (defined $publicInterfaces{$publicInterfaceKey} or $newPublicClass);
-            delete $publicInterfaces{$publicInterfaceKey};
+            my $public = ($publicInterfaces{$property} or $newPublicClass);
+            delete $publicInterfaces{$property};
 
             AddForwardDeclarationsForType($attribute->signature->type, $public);
 
@@ -828,18 +806,18 @@ sub GenerateHeader
             }
 
             if ($buildingForLeopardOrLater) {
-                $property .= $declarationSuffix;
+                $property .= "\n";
                 push(@headerAttributes, $property) if $public;
                 push(@privateHeaderAttributes, $property) unless $public;
             } else {
                 # - GETTER
-                my $getter = "- (" . $attributeType . ")" . $attributeName . $declarationSuffix;
+                my $getter = "- (" . $attributeType . ")" . $attributeName . ";\n";
                 push(@headerAttributes, $getter) if $public;
                 push(@privateHeaderAttributes, $getter) unless $public;
 
                 # - SETTER
                 if (!$attributeIsReadonly) {
-                    my $setter = "- (void)$setterName(" . $attributeType . ")new" . ucfirst($attributeName) . $declarationSuffix;
+                    my $setter = "- (void)$setterName(" . $attributeType . ")new" . ucfirst($attributeName) . ";\n";
                     push(@headerAttributes, $setter) if $public;
                     push(@privateHeaderAttributes, $setter) unless $public;
                 }
@@ -885,7 +863,7 @@ sub GenerateHeader
                 $parameterIndex++;
             }
 
-            my $publicInterfaceKey = $functionSig . ";";
+            $functionSig .= ";";
 
             my $conflict = $conflictMethod{$methodName};
             if ($conflict) {
@@ -893,24 +871,15 @@ sub GenerateHeader
                 $fatalError = 1;
             }
 
-            if ($isProtocol && !$newPublicClass && !defined $publicInterfaces{$publicInterfaceKey}) {
-                warn "Protocol method $publicInterfaceKey is not in PublicDOMInterfaces.h. Protocols require all methods to be public";
+            if ($isProtocol && !$newPublicClass && !defined $publicInterfaces{$functionSig}) {
+                warn "Protocol method $functionSig is not in PublicDOMInterfaces.h. Protocols require all methods to be public";
                 $fatalError = 1;
             }
 
-            my $availabilityMacro = "";
-            if (defined $publicInterfaces{$publicInterfaceKey} and length $publicInterfaces{$publicInterfaceKey}) {
-                $availabilityMacro = $publicInterfaces{$publicInterfaceKey};
-            }
+            my $public = ($publicInterfaces{$functionSig} or $newPublicClass);
+            delete $publicInterfaces{$functionSig};
 
-            $availabilityMacro = "WEBKIT_OBJC_METHOD_ANNOTATION($availabilityMacro)" if length $availabilityMacro and $buildingForTigerOrEarlier;
-
-            my $functionDeclaration = $functionSig;
-            $functionDeclaration .= " " . $availabilityMacro if length $availabilityMacro;
-            $functionDeclaration .= ";\n";
-
-            my $public = (defined $publicInterfaces{$publicInterfaceKey} or $newPublicClass);
-            delete $publicInterfaces{$publicInterfaceKey};
+            $functionSig .= "\n";
 
             foreach my $type (keys %typesToForwardDeclare) {
                 # add any forward declarations to the public header if a deprecated version will be generated
@@ -918,33 +887,26 @@ sub GenerateHeader
                 AddForwardDeclarationsForType($type, $public) unless $public and $needsDeprecatedVersion;
             }
 
-            push(@headerFunctions, $functionDeclaration) if $public;
-            push(@privateHeaderFunctions, $functionDeclaration) unless $public;
+            push(@headerFunctions, $functionSig) if $public;
+            push(@privateHeaderFunctions, $functionSig) unless $public;
 
             # generate the old style method names with un-named parameters, these methods are deprecated
             if ($needsDeprecatedVersion) {
                 my $deprecatedFunctionSig = $functionSig;
                 $deprecatedFunctionSig =~ s/\s\w+:/ :/g; # remove parameter names
+                my $deprecatedFunctionKey = $deprecatedFunctionSig;
 
-                $publicInterfaceKey = $deprecatedFunctionSig . ";";
+                $deprecatedFunctionSig =~ s/;\n$/ DEPRECATED_IN_MAC_OS_X_VERSION_10_5_AND_LATER;\n/ if $buildingForLeopardOrLater;
+                push(@deprecatedHeaderFunctions, $deprecatedFunctionSig);
 
-                my $availabilityMacro = "AVAILABLE_WEBKIT_VERSION_1_3_AND_LATER_BUT_DEPRECATED_IN_WEBKIT_VERSION_3_0";
-                if (defined $publicInterfaces{$publicInterfaceKey} and length $publicInterfaces{$publicInterfaceKey}) {
-                    $availabilityMacro = $publicInterfaces{$publicInterfaceKey};
-                }
+                $deprecatedFunctionKey =~ s/\n$//; # remove the newline
 
-                $availabilityMacro = "WEBKIT_OBJC_METHOD_ANNOTATION($availabilityMacro)" if $buildingForTigerOrEarlier;
-
-                $functionDeclaration = "$deprecatedFunctionSig $availabilityMacro;\n";
-
-                push(@deprecatedHeaderFunctions, $functionDeclaration);
-
-                unless (defined $publicInterfaces{$publicInterfaceKey}) {
-                    warn "Deprecated method $publicInterfaceKey is not in PublicDOMInterfaces.h. All deprecated methods need to be public, or should have the OldStyleObjC IDL attribute removed";
+                unless (defined $publicInterfaces{$deprecatedFunctionKey}) {
+                    warn "Deprecated method $deprecatedFunctionKey is not in PublicDOMInterfaces.h. All deprecated methods need to be public, or should have the OldStyleObjC IDL attribute removed";
                     $fatalError = 1;
                 }
 
-                delete $publicInterfaces{$publicInterfaceKey};
+                delete $publicInterfaces{$deprecatedFunctionKey};
             }
         }
 
@@ -968,18 +930,16 @@ sub GenerateHeader
         push(@headerContent, "\@end\n");
     }
 
-    push(@headerContent, "\n#endif\n") if length $interfaceAvailabilityVersion;
-
     my %alwaysGenerateForNoSVGBuild = map { $_ => 1 } qw(DOMHTMLEmbedElement DOMHTMLObjectElement);
 
-    if (@privateHeaderAttributes > 0 or @privateHeaderFunctions > 0 or exists $alwaysGenerateForNoSVGBuild{$className}) {
+    if (@privateHeaderAttributes > 0 or @privateHeaderFunctions > 0
+            or exists $alwaysGenerateForNoSVGBuild{$className}) {
         # - Private category @interface
         @privateHeaderContentHeader = split("\r", $headerLicenceTemplate);
-        push(@privateHeaderContentHeader, "\n");
+        push(@headerContentHeader, "\n");
 
         my $classHeaderName = GetClassHeaderName($className);
         push(@privateHeaderContentHeader, "#import <WebCore/$classHeaderName.h>\n\n");
-        push(@privateHeaderContentHeader, $interfaceAvailabilityVersionCheck) if length $interfaceAvailabilityVersion;
 
         @privateHeaderContent = ();
         push(@privateHeaderContent, "\@interface $className (" . $className . "Private)\n");
@@ -987,8 +947,6 @@ sub GenerateHeader
         push(@privateHeaderContent, "\n") if $buildingForLeopardOrLater and @privateHeaderAttributes > 0 and @privateHeaderFunctions > 0;
         push(@privateHeaderContent, @privateHeaderFunctions) if @privateHeaderFunctions > 0;
         push(@privateHeaderContent, "\@end\n");
-
-        push(@privateHeaderContent, "\n#endif\n") if length $interfaceAvailabilityVersion;
     }
 
     unless ($isProtocol) {
@@ -999,41 +957,32 @@ sub GenerateHeader
 
         # Generate interface definitions. 
         @internalHeaderContent = split("\r", $implementationLicenceTemplate);
-
-        push(@internalHeaderContent, "\n#import <WebCore/$className.h>\n\n");
-        push(@internalHeaderContent, $interfaceAvailabilityVersionCheck) if length $interfaceAvailabilityVersion;
-
-        if ($interfaceName eq "Node" or $interfaceName eq "SVGElementInstance") {
-            push(@internalHeaderContent, "\@protocol DOMEventTarget;\n\n");
+        push(@internalHeaderContent, "\n#import <WebCore/$className.h>\n");
+        if ($interfaceName eq "Node") {
+            push(@internalHeaderContent, "\n\@protocol DOMEventTarget;\n");
         }
-
         if ($codeGenerator->IsSVGAnimatedType($interfaceName)) {
             push(@internalHeaderContent, "#import <WebCore/SVGAnimatedTemplate.h>\n\n");
         } elsif ($interfaceName eq "RGBColor") {
             push(@internalHeaderContent, "#import <WebCore/Color.h>\n\n");
         } else {
             if ($podType and $podType ne "float") {
-                push(@internalHeaderContent, "namespace WebCore { class $podType; }\n\n");
+                push(@internalHeaderContent, "\nnamespace WebCore { class $podType; }\n\n");
             } elsif ($interfaceName eq "Node") {
-                push(@internalHeaderContent, "namespace WebCore { class Node; class EventTarget; }\n\n");
-            } elsif ($interfaceName eq "SVGElementInstance") {
-                push(@internalHeaderContent, "namespace WebCore { class SVGElementInstance; class EventTarget; }\n\n");
+                push(@internalHeaderContent, "\nnamespace WebCore { class Node; class EventTarget; }\n\n");
             } else {
                 my $implClassName = GetImplClassName($interfaceName);
-                push(@internalHeaderContent, "namespace WebCore { class $implClassName; }\n\n");
+                push(@internalHeaderContent, "\nnamespace WebCore { class $implClassName; }\n\n");
             }
         }
 
         push(@internalHeaderContent, "\@interface $className (WebCoreInternal)\n");
         push(@internalHeaderContent, $typeGetterSig . ";\n");
         push(@internalHeaderContent, $typeMakerSig . ";\n");
-
-        if ($interfaceName eq "Node" or $interfaceName eq "SVGElementInstance") {
+        if ($interfaceName eq "Node") {
             push(@internalHeaderContent, "+ (id <DOMEventTarget>)_wrapEventTarget:(WebCore::EventTarget *)eventTarget;\n");
         }
-
         push(@internalHeaderContent, "\@end\n");
-        push(@internalHeaderContent, "\n#endif\n") if length $interfaceAvailabilityVersion;
     }
 }
 
@@ -1042,7 +991,9 @@ sub GenerateImplementation
     my $object = shift;
     my $dataNode = shift;
 
+    # We only support multiple parents with SVG (for now).
     if (@{$dataNode->parents} > 1) {
+        die "A class can't have more than one parent" unless $module eq "svg";
         $codeGenerator->AddMethodsConstantsAndAttributesFromParentClasses($dataNode);
     }
 
@@ -1242,6 +1193,13 @@ sub GenerateImplementation
                     }
                 }
                 $implIncludes{"DOMPrivate.h"} = 1;
+            } elsif ($idlType eq "NodeFilter") {
+                push(@customGetterContent, "    if (m_filter)\n");
+                push(@customGetterContent, "        // This node iterator was created from the Objective-C side.\n");
+                push(@customGetterContent, "        return [[m_filter retain] autorelease];\n\n");
+                push(@customGetterContent, "    // This node iterator was created from the C++ side.\n");
+                $getterContentHead = "[$attributeClassName $typeMaker:WTF::getPtr(" . $getterContentHead;
+                $getterContentTail .= ")]";
             } elsif ($attribute->signature->extendedAttributes->{"ConvertToString"}) {
                 $getterContentHead = "WebCore::String::number(" . $getterContentHead;
                 $getterContentTail .= ")";
@@ -1250,9 +1208,6 @@ sub GenerateImplementation
             } elsif ($codeGenerator->IsPodType($idlType)) {
                 $getterContentHead = "[$attributeTypeSansPtr $typeMaker:" . $getterContentHead;
                 $getterContentTail .= "]";
-            } elsif (IsProtocolType($idlType) and $idlType ne "EventTarget") {
-                $getterContentHead = "[$attributeClassName $typeMaker:WTF::getPtr(" . $getterContentHead;
-                $getterContentTail .= ")]";
             } elsif ($typeMaker ne "") {
                 # Surround getter with TypeMaker
                 $getterContentHead = "[$attributeTypeSansPtr $typeMaker:WTF::getPtr(" . $getterContentHead;
@@ -1333,6 +1288,8 @@ sub GenerateImplementation
         }
     }
 
+    my @deprecatedFunctions = ();
+
     # - Functions
     if ($numFunctions > 0) {
         foreach my $function (@{$dataNode->functions}) {
@@ -1363,8 +1320,6 @@ sub GenerateImplementation
 
                 push(@parameterNames, $implGetter);
                 $needsCustom{"XPathNSResolver"} = $paramName if $idlType eq "XPathNSResolver";
-                $needsCustom{"NodeFilter"} = $paramName if $idlType eq "NodeFilter";
-                $needsCustom{"EventListener"} = $paramName if $idlType eq "EventListener";
                 $needsCustom{"EventTarget"} = $paramName if $idlType eq "EventTarget";
                 $needsCustom{"NodeToReturn"} = $paramName if $param->extendedAttributes->{"Return"};
 
@@ -1396,7 +1351,7 @@ sub GenerateImplementation
                 push(@functionContent, "            nativeResolver = [(DOMNativeXPathNSResolver *)$paramName _xpathNSResolver];\n");
                 push(@functionContent, "        else {\n");
                 push(@functionContent, "            customResolver = WebCore::DOMCustomXPathNSResolver::create($paramName);\n");
-                push(@functionContent, "            nativeResolver = WTF::getPtr(customResolver);\n");
+                push(@functionContent, "            nativeResolver = customResolver.get();\n");
                 push(@functionContent, "        }\n");
                 push(@functionContent, "    }\n");
             }
@@ -1417,30 +1372,6 @@ sub GenerateImplementation
                 push(@functionContent, "        return nil;\n");
                 $implIncludes{"DOMWindow.h"} = 1;
                 $caller = "dv";
-            }
-
-            if ($function->signature->extendedAttributes->{"EventTargetNodeCast"}) {
-                if ($dataNode->name =~ /^SVG/) {
-                    $caller = "static_cast<WebCore::SVGElementInstance*>($caller)";
-                } else {
-                    push(@functionContent, "    if (!$caller->isEventTargetNode())\n");
-                    $caller = "WebCore::EventTargetNodeCast($caller)";
-                    push(@functionContent, "        WebCore::raiseDOMException(DOM_NOT_SUPPORTED_ERR);\n");
-                }
-            }
-
-            # special case the EventListener
-            if (defined $needsCustom{"EventListener"}) {
-                my $paramName = $needsCustom{"EventListener"};
-                push(@functionContent, "    RefPtr<WebCore::EventListener> nativeEventListener = WebCore::ObjCEventListener::wrap($paramName);\n");
-            }
-
-            # special case the NodeFilter
-            if (defined $needsCustom{"NodeFilter"}) {
-                my $paramName = $needsCustom{"NodeFilter"};
-                push(@functionContent, "    RefPtr<WebCore::NodeFilter> nativeNodeFilter;\n");
-                push(@functionContent, "    if ($paramName)\n");
-                push(@functionContent, "        nativeNodeFilter = WebCore::NodeFilter::create(WebCore::ObjCNodeFilterCondition::create($paramName));\n");
             }
 
             # FIXME! We need [Custom] support for ObjC, to move these hacks into DOMSVGLength/MatrixCustom.mm
@@ -1543,10 +1474,10 @@ sub GenerateImplementation
                 my $deprecatedFunctionSig = $functionSig;
                 $deprecatedFunctionSig =~ s/\s\w+:/ :/g; # remove parameter names
 
-                push(@implContent, "$deprecatedFunctionSig\n");
-                push(@implContent, "{\n");
-                push(@implContent, @functionContent);
-                push(@implContent, "}\n\n");
+                push(@deprecatedFunctions, "$deprecatedFunctionSig\n");
+                push(@deprecatedFunctions, "{\n");
+                push(@deprecatedFunctions, @functionContent);
+                push(@deprecatedFunctions, "}\n\n");
             }
 
             # Clear the hash
@@ -1556,6 +1487,14 @@ sub GenerateImplementation
 
     # END implementation
     push(@implContent, "\@end\n");
+
+    if (@deprecatedFunctions > 0) {
+        # - Deprecated category @implementation
+        push(@implContent, "\n\@implementation $className (" . $className . "Deprecated)\n\n");
+        push(@implContent, @deprecatedFunctions);
+        push(@implContent, "\@end\n");
+    }
+
 
     # Generate internal interfaces
     unless ($dataNode->extendedAttributes->{ObjCCustomInternalImpl}) {

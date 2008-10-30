@@ -26,7 +26,6 @@
 #include "config.h"
 #include "objc_runtime.h"
 
-#include "JSDOMBinding.h"
 #include "WebScriptObject.h"
 #include "objc_instance.h"
 #include "runtime_array.h"
@@ -37,18 +36,16 @@
 #include <kjs/ObjectPrototype.h>
 #include <wtf/RetainPtr.h>
 
-using namespace WebCore;
+using namespace KJS;
+using namespace KJS::Bindings;
 
-namespace JSC {
-namespace Bindings {
-
-ClassStructPtr webScriptObjectClass()
+extern ClassStructPtr Bindings::webScriptObjectClass()
 {
     static ClassStructPtr<WebScriptObject> webScriptObjectClass = NSClassFromString(@"WebScriptObject");
     return webScriptObjectClass;
 }
 
-ClassStructPtr webUndefinedClass()
+extern ClassStructPtr Bindings::webUndefinedClass()
 {
     static ClassStructPtr<WebUndefined> webUndefinedClass = NSClassFromString(@"WebUndefined");
     return webUndefinedClass;
@@ -204,10 +201,10 @@ unsigned int ObjcArray::getLength() const
     return [_array.get() count];
 }
 
-const ClassInfo ObjcFallbackObjectImp::s_info = { "ObjcFallbackObject", 0, 0, 0 };
+const ClassInfo ObjcFallbackObjectImp::info = { "ObjcFallbackObject", 0, 0, 0 };
 
 ObjcFallbackObjectImp::ObjcFallbackObjectImp(ExecState* exec, ObjcInstance* i, const Identifier& propertyName)
-    : JSObject(getDOMStructure<ObjcFallbackObjectImp>(exec))
+    : JSObject(exec->lexicalGlobalObject()->objectPrototype())
     , _instance(i)
     , _item(propertyName)
 {
@@ -285,7 +282,4 @@ bool ObjcFallbackObjectImp::toBoolean(ExecState *) const
         return true;
     
     return false;
-}
-
-}
 }

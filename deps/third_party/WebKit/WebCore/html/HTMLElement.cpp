@@ -158,75 +158,75 @@ void HTMLElement::parseMappedAttribute(MappedAttribute *attr)
     }
 // standard events
     else if (attr->name() == onclickAttr) {
-        setEventListenerForTypeAndAttribute(clickEvent, attr);
+        setHTMLEventListener(clickEvent, attr);
     } else if (attr->name() == oncontextmenuAttr) {
-        setEventListenerForTypeAndAttribute(contextmenuEvent, attr);
+        setHTMLEventListener(contextmenuEvent, attr);
     } else if (attr->name() == ondblclickAttr) {
-        setEventListenerForTypeAndAttribute(dblclickEvent, attr);
+        setHTMLEventListener(dblclickEvent, attr);
     } else if (attr->name() == onmousedownAttr) {
-        setEventListenerForTypeAndAttribute(mousedownEvent, attr);
+        setHTMLEventListener(mousedownEvent, attr);
     } else if (attr->name() == onmousemoveAttr) {
-        setEventListenerForTypeAndAttribute(mousemoveEvent, attr);
+        setHTMLEventListener(mousemoveEvent, attr);
     } else if (attr->name() == onmouseoutAttr) {
-        setEventListenerForTypeAndAttribute(mouseoutEvent, attr);
+        setHTMLEventListener(mouseoutEvent, attr);
     } else if (attr->name() == onmouseoverAttr) {
-        setEventListenerForTypeAndAttribute(mouseoverEvent, attr);
+        setHTMLEventListener(mouseoverEvent, attr);
     } else if (attr->name() == onmouseupAttr) {
-        setEventListenerForTypeAndAttribute(mouseupEvent, attr);
+        setHTMLEventListener(mouseupEvent, attr);
     } else if (attr->name() == onmousewheelAttr) {
-        setEventListenerForTypeAndAttribute(mousewheelEvent, attr);
+        setHTMLEventListener(mousewheelEvent, attr);
     } else if (attr->name() == onfocusAttr) {
-        setEventListenerForTypeAndAttribute(focusEvent, attr);
+        setHTMLEventListener(focusEvent, attr);
     } else if (attr->name() == onblurAttr) {
-        setEventListenerForTypeAndAttribute(blurEvent, attr);
+        setHTMLEventListener(blurEvent, attr);
     } else if (attr->name() == onkeydownAttr) {
-        setEventListenerForTypeAndAttribute(keydownEvent, attr);
+        setHTMLEventListener(keydownEvent, attr);
     } else if (attr->name() == onkeypressAttr) {
-        setEventListenerForTypeAndAttribute(keypressEvent, attr);
+        setHTMLEventListener(keypressEvent, attr);
     } else if (attr->name() == onkeyupAttr) {
-        setEventListenerForTypeAndAttribute(keyupEvent, attr);
+        setHTMLEventListener(keyupEvent, attr);
     } else if (attr->name() == onscrollAttr) {
-        setEventListenerForTypeAndAttribute(scrollEvent, attr);
+        setHTMLEventListener(scrollEvent, attr);
     } else if (attr->name() == onbeforecutAttr) {
-        setEventListenerForTypeAndAttribute(beforecutEvent, attr);
+        setHTMLEventListener(beforecutEvent, attr);
     } else if (attr->name() == oncutAttr) {
-        setEventListenerForTypeAndAttribute(cutEvent, attr);
+        setHTMLEventListener(cutEvent, attr);
     } else if (attr->name() == onbeforecopyAttr) {
-        setEventListenerForTypeAndAttribute(beforecopyEvent, attr);
+        setHTMLEventListener(beforecopyEvent, attr);
     } else if (attr->name() == oncopyAttr) {
-        setEventListenerForTypeAndAttribute(copyEvent, attr);
+        setHTMLEventListener(copyEvent, attr);
     } else if (attr->name() == onbeforepasteAttr) {
-        setEventListenerForTypeAndAttribute(beforepasteEvent, attr);
+        setHTMLEventListener(beforepasteEvent, attr);
     } else if (attr->name() == onpasteAttr) {
-        setEventListenerForTypeAndAttribute(pasteEvent, attr);
+        setHTMLEventListener(pasteEvent, attr);
     } else if (attr->name() == ondragenterAttr) {
-        setEventListenerForTypeAndAttribute(dragenterEvent, attr);
+        setHTMLEventListener(dragenterEvent, attr);
     } else if (attr->name() == ondragoverAttr) {
-        setEventListenerForTypeAndAttribute(dragoverEvent, attr);
+        setHTMLEventListener(dragoverEvent, attr);
     } else if (attr->name() == ondragleaveAttr) {
-        setEventListenerForTypeAndAttribute(dragleaveEvent, attr);
+        setHTMLEventListener(dragleaveEvent, attr);
     } else if (attr->name() == ondropAttr) {
-        setEventListenerForTypeAndAttribute(dropEvent, attr);
+        setHTMLEventListener(dropEvent, attr);
     } else if (attr->name() == ondragstartAttr) {
-        setEventListenerForTypeAndAttribute(dragstartEvent, attr);
+        setHTMLEventListener(dragstartEvent, attr);
     } else if (attr->name() == ondragAttr) {
-        setEventListenerForTypeAndAttribute(dragEvent, attr);
+        setHTMLEventListener(dragEvent, attr);
     } else if (attr->name() == ondragendAttr) {
-        setEventListenerForTypeAndAttribute(dragendEvent, attr);
+        setHTMLEventListener(dragendEvent, attr);
     } else if (attr->name() == onselectstartAttr) {
-        setEventListenerForTypeAndAttribute(selectstartEvent, attr);
+        setHTMLEventListener(selectstartEvent, attr);
     } else if (attr->name() == onsubmitAttr) {
-        setEventListenerForTypeAndAttribute(submitEvent, attr);
+        setHTMLEventListener(submitEvent, attr);
     } else if (attr->name() == onerrorAttr) {
-        setEventListenerForTypeAndAttribute(errorEvent, attr);
+        setHTMLEventListener(errorEvent, attr);
     } else if (attr->name() == onwebkitanimationstartAttr) {
-        setEventListenerForTypeAndAttribute(webkitAnimationStartEvent, attr);
+        setHTMLEventListener(webkitAnimationStartEvent, attr);
     } else if (attr->name() == onwebkitanimationiterationAttr) {
-        setEventListenerForTypeAndAttribute(webkitAnimationIterationEvent, attr);
+        setHTMLEventListener(webkitAnimationIterationEvent, attr);
     } else if (attr->name() == onwebkitanimationendAttr) {
-        setEventListenerForTypeAndAttribute(webkitAnimationEndEvent, attr);
+        setHTMLEventListener(webkitAnimationEndEvent, attr);
     } else if (attr->name() == onwebkittransitionendAttr) {
-        setEventListenerForTypeAndAttribute(webkitTransitionEndEvent, attr);
+        setHTMLEventListener(webkitTransitionEndEvent, attr);
     }
 }
 
@@ -972,6 +972,12 @@ bool HTMLElement::checkDTD(const Node* newChild)
     if (hasLocalName(addressTag) && newChild->hasTagName(pTag))
         return true;
     return inEitherTagList(newChild);
+}
+
+void HTMLElement::setHTMLEventListener(const AtomicString& eventType, Attribute* attr)
+{
+    Element::setHTMLEventListener(eventType,
+        document()->createHTMLEventListener(attr->localName().string(), attr->value(), this));
 }
     
 bool HTMLElement::rendererIsNeeded(RenderStyle *style)

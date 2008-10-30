@@ -28,7 +28,7 @@
 #include "StringObject.h"
 #include "StringPrototype.h"
 
-namespace JSC {
+namespace KJS {
 
 JSValue* JSString::toPrimitive(ExecState*, PreferredPrimitiveType) const
 {
@@ -69,7 +69,7 @@ JSString* JSString::toThisJSString(ExecState*)
 
 inline StringObject* StringObject::create(ExecState* exec, JSString* string)
 {
-    return new (exec) StringObject(exec->lexicalGlobalObject()->stringObjectStructure(), string);
+    return new (exec) StringObject(exec->lexicalGlobalObject()->stringPrototype(), string);
 }
 
 JSObject* JSString::toObject(ExecState* exec) const
@@ -109,45 +109,51 @@ bool JSString::getOwnPropertySlot(ExecState* exec, unsigned propertyName, Proper
     return JSString::getOwnPropertySlot(exec, Identifier::from(exec, propertyName), slot);
 }
 
-JSString* jsString(JSGlobalData* globalData, const UString& s)
+bool JSString::isString() const
+{
+    // FIXME: Change JSCell::isString to a non-virtual implementation like the one in Machine::isJSString.
+    return true;
+}
+
+JSString* jsString(ExecState* exec, const UString& s)
 {
     int size = s.size();
     if (!size)
-        return globalData->smallStrings.emptyString(globalData);
+        return exec->globalData().smallStrings.emptyString(exec);
     if (size == 1) {
         UChar c = s.data()[0];
         if (c <= 0xFF)
-            return globalData->smallStrings.singleCharacterString(globalData, c);
+            return exec->globalData().smallStrings.singleCharacterString(exec, c);
     }
-    return new (globalData) JSString(globalData, s);
+    return new (exec) JSString(s);
 }
     
-JSString* jsSubstring(JSGlobalData* globalData, const UString& s, unsigned offset, unsigned length)
+JSString* jsSubstring(ExecState* exec, const UString& s, unsigned offset, unsigned length)
 {
     ASSERT(offset <= static_cast<unsigned>(s.size()));
     ASSERT(length <= static_cast<unsigned>(s.size()));
     ASSERT(offset + length <= static_cast<unsigned>(s.size()));
     if (!length)
-        return globalData->smallStrings.emptyString(globalData);
+        return exec->globalData().smallStrings.emptyString(exec);
     if (length == 1) {
         UChar c = s.data()[offset];
         if (c <= 0xFF)
-            return globalData->smallStrings.singleCharacterString(globalData, c);
+            return exec->globalData().smallStrings.singleCharacterString(exec, c);
     }
-    return new (globalData) JSString(globalData, UString::Rep::create(s.rep(), offset, length));
+    return new (exec) JSString(UString::Rep::create(s.rep(), offset, length));
 }
 
-JSString* jsOwnedString(JSGlobalData* globalData, const UString& s)
+JSString* jsOwnedString(ExecState* exec, const UString& s)
 {
     int size = s.size();
     if (!size)
-        return globalData->smallStrings.emptyString(globalData);
+        return exec->globalData().smallStrings.emptyString(exec);
     if (size == 1) {
         UChar c = s.data()[0];
         if (c <= 0xFF)
-            return globalData->smallStrings.singleCharacterString(globalData, c);
+            return exec->globalData().smallStrings.singleCharacterString(exec, c);
     }
-    return new (globalData) JSString(globalData, s, JSString::HasOtherOwner);
+    return new (exec) JSString(s, JSString::HasOtherOwner);
 }
 
-} // namespace JSC
+} // namespace KJS

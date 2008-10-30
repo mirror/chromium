@@ -30,22 +30,22 @@
 #define JSGlobalData_h
 
 #include <wtf/Forward.h>
+#include <wtf/HashCountedSet.h>
 #include <wtf/HashMap.h>
+#include <wtf/HashSet.h>
 #include <wtf/RefCounted.h>
-#include "collector.h"
 #include "SmallStrings.h"
 
 struct OpaqueJSClass;
 struct OpaqueJSClassContextData;
 
-namespace JSC {
+namespace KJS {
 
     class ArgList;
     class CommonIdentifiers;
     class Heap;
     class IdentifierTable;
     class JSGlobalObject;
-    class JSObject;
     class Lexer;
     class Machine;
     class Parser;
@@ -60,15 +60,10 @@ namespace JSC {
         static JSGlobalData& sharedInstance();
 
         static PassRefPtr<JSGlobalData> create();
-        static PassRefPtr<JSGlobalData> createLeaked();
         ~JSGlobalData();
 
         Machine* machine;
-
-        JSValue* exception;
-#if ENABLE(CTI)
-        void* throwReturnAddress;
-#endif
+        Heap* heap;
 
         const HashTable* arrayTable;
         const HashTable* dateTable;
@@ -79,10 +74,6 @@ namespace JSC {
         const HashTable* stringTable;
         
         RefPtr<StructureID> nullProtoStructureID;
-        RefPtr<StructureID> activationStructureID;
-        RefPtr<StructureID> staticScopeStructureID;
-        RefPtr<StructureID> stringStructureID;
-        RefPtr<StructureID> numberStructureID;
 
         IdentifierTable* identifierTable;
         CommonIdentifiers* propertyNames;
@@ -90,7 +81,7 @@ namespace JSC {
 
         SmallStrings smallStrings;
         
-        HashMap<OpaqueJSClass*, OpaqueJSClassContextData*> opaqueJSClassData;
+        HashMap<OpaqueJSClass*, OpaqueJSClassContextData*>* opaqueJSClassData;
 
         HashSet<ParserRefCounted*>* newParserObjects;
         HashCountedSet<ParserRefCounted*>* parserObjectExtraRefCounts;
@@ -99,19 +90,8 @@ namespace JSC {
         Parser* parser;
 
         JSGlobalObject* head;
-        JSGlobalObject* dynamicGlobalObject;
 
         bool isSharedInstance;
-
-        struct ClientData {
-            virtual ~ClientData() = 0;
-        };
-
-        ClientData* clientData;
-
-        HashSet<JSObject*> arrayVisitedElements;
-
-        Heap heap;
 
     private:
         JSGlobalData(bool isShared = false);

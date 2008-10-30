@@ -45,7 +45,7 @@
 #include <string.h>
 #include <wtf/Noncopyable.h>
 
-namespace JSC {
+namespace KJS {
 
 class UString;
 struct GregorianDateTime;
@@ -186,6 +186,6 @@ static inline int gmtoffset(const GregorianDateTime& t)
     return t.utcOffset;
 }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // DateMath_h

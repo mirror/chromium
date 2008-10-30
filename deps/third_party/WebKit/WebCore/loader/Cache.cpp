@@ -30,8 +30,8 @@
 #include "CachedXSLStyleSheet.h"
 #include "DocLoader.h"
 #include "Document.h"
+#include "Frame.h"
 #include "FrameLoader.h"
-#include "FrameView.h"
 #include "Image.h"
 #include "ResourceHandle.h"
 #include "SystemTime.h"
@@ -52,14 +52,13 @@ Cache* cache()
 }
 
 Cache::Cache()
-    : m_disabled(false)
-    , m_pruneEnabled(true)
-    , m_inPruneDeadResources(false)
-    , m_capacity(cDefaultCacheCapacity)
-    , m_minDeadCapacity(0)
-    , m_maxDeadCapacity(cDefaultCacheCapacity)
-    , m_liveSize(0)
-    , m_deadSize(0)
+: m_disabled(false)
+, m_pruneEnabled(true)
+, m_capacity(cDefaultCacheCapacity)
+, m_minDeadCapacity(0)
+, m_maxDeadCapacity(cDefaultCacheCapacity)
+, m_liveSize(0)
+, m_deadSize(0)
 {
 }
 
@@ -188,57 +187,6 @@ CachedCSSStyleSheet* Cache::requestUserCSSStyleSheet(DocLoader* docLoader, const
 
     return userSheet;
 }
-    
-void Cache::revalidateResource(CachedResource* resource, DocLoader* docLoader)
-{
-    ASSERT(resource);
-    ASSERT(!disabled());
-    if (resource->resourceToRevalidate())
-        return;
-    if (!resource->canUseCacheValidator()) {
-        evict(resource);
-        return;
-    }
-    const String& url = resource->url();
-    CachedResource* newResource = createResource(resource->type(), KURL(url), resource->encoding());
-    newResource->setResourceToRevalidate(resource);
-    evict(resource);
-    m_resources.set(url, newResource);
-    newResource->setInCache(true);
-    resourceAccessed(newResource);
-    newResource->load(docLoader);
-}
-    
-void Cache::revalidationSucceeded(CachedResource* revalidatingResource, const ResourceResponse& response)
-{
-    CachedResource* resource = revalidatingResource->resourceToRevalidate();
-    ASSERT(resource);
-    ASSERT(!resource->inCache());
-    ASSERT(resource->isLoaded());
-    
-    evict(revalidatingResource);
-
-    ASSERT(!m_resources.get(resource->url()));
-    m_resources.set(resource->url(), resource);
-    resource->setInCache(true);
-    resource->setExpirationDate(response.expirationDate());
-    insertInLRUList(resource);
-    int delta = resource->size();
-    if (resource->decodedSize() && resource->hasClients())
-        insertInLiveDecodedResourcesList(resource);
-    if (delta)
-        adjustSize(resource->hasClients(), delta);
-    
-    revalidatingResource->switchClientsToRevalidatedResource();
-    // this deletes the revalidating resource
-    revalidatingResource->clearResourceToRevalidate();
-}
-
-void Cache::revalidationFailed(CachedResource* revalidatingResource)
-{
-    ASSERT(revalidatingResource->resourceToRevalidate());
-    revalidatingResource->clearResourceToRevalidate();
-}
 
 CachedResource* Cache::resourceForURL(const String& url)
 {
@@ -266,11 +214,11 @@ void Cache::pruneLiveResources()
         return;
 
     unsigned capacity = liveCapacity();
-    if (capacity && m_liveSize <= capacity)
+    if (m_liveSize <= capacity)
         return;
 
     unsigned targetSize = static_cast<unsigned>(capacity * cTargetPrunePercentage); // Cut by a percentage to avoid immediately pruning again.
-    double currentTime = FrameView::currentPaintTimeStamp();
+    double currentTime = Frame::currentPaintTimeStamp();
     if (!currentTime) // In case prune is called directly, outside of a Frame paint.
         currentTime = WebCore::currentTime();
     
@@ -291,7 +239,7 @@ void Cache::pruneLiveResources()
             // list in m_allResources.
             current->destroyDecodedData();
 
-            if (targetSize && m_liveSize <= targetSize)
+            if (m_liveSize <= targetSize)
                 return;
         }
         current = prev;
@@ -304,13 +252,12 @@ void Cache::pruneDeadResources()
         return;
 
     unsigned capacity = deadCapacity();
-    if (capacity && m_deadSize <= capacity)
+    if (m_deadSize <= capacity)
         return;
 
     unsigned targetSize = static_cast<unsigned>(capacity * cTargetPrunePercentage); // Cut by a percentage to avoid immediately pruning again.
     int size = m_allResources.size();
     bool canShrinkLRULists = true;
-    m_inPruneDeadResources = true;
     for (int i = size - 1; i >= 0; i--) {
         // Remove from the tail, since this is the least frequently accessed of the objects.
         CachedResource* current = m_allResources[i].m_tail;
@@ -324,10 +271,8 @@ void Cache::pruneDeadResources()
                 // LRU list in m_allResources.
                 current->destroyDecodedData();
                 
-                if (targetSize && m_deadSize <= targetSize) {
-                    m_inPruneDeadResources = false;
+                if (m_deadSize <= targetSize)
                     return;
-                }
             }
             current = prev;
         }
@@ -337,16 +282,10 @@ void Cache::pruneDeadResources()
         while (current) {
             CachedResource* prev = current->m_prevInAllResourcesList;
             if (!current->hasClients() && !current->isPreloaded()) {
-                evict(current);
-                // If evict() caused pruneDeadResources() to be re-entered, bail out. This can happen when removing an
-                // SVG CachedImage that has subresources.
-                if (!m_inPruneDeadResources)
-                    return;
+                remove(current);
 
-                if (targetSize && m_deadSize <= targetSize) {
-                    m_inPruneDeadResources = false;
+                if (m_deadSize <= targetSize)
                     return;
-                }
             }
             current = prev;
         }
@@ -358,7 +297,6 @@ void Cache::pruneDeadResources()
         else if (canShrinkLRULists)
             m_allResources.resize(i);
     }
-    m_inPruneDeadResources = false;
 }
 
 void Cache::setCapacities(unsigned minDeadBytes, unsigned maxDeadBytes, unsigned totalBytes)
@@ -371,7 +309,7 @@ void Cache::setCapacities(unsigned minDeadBytes, unsigned maxDeadBytes, unsigned
     prune();
 }
 
-void Cache::evict(CachedResource* resource)
+void Cache::remove(CachedResource* resource)
 {
     // The resource may have already been removed by someone other than our caller,
     // who needed a fresh copy for a reload. See <http://bugs.webkit.org/show_bug.cgi?id=12479#c6>.
@@ -692,7 +630,7 @@ void Cache::setDisabled(bool disabled)
         CachedResourceMap::iterator i = m_resources.begin();
         if (i == m_resources.end())
             break;
-        evict(i->second);
+        remove(i->second);
     }
 }
 

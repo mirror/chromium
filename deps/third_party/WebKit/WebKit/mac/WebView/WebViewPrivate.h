@@ -224,8 +224,6 @@ Could be worth adding to the API.
 */
 + (NSString *)suggestedFileExtensionForMIMEType: (NSString *)MIMEType;
 
-+ (NSString *)_standardUserAgentWithApplicationName:(NSString *)applicationName andWebKitVersion:(NSString *)version;
-
 // May well become public
 - (void)_setFormDelegate:(id<WebFormDelegate>)delegate;
 - (id<WebFormDelegate>)_formDelegate;
@@ -265,8 +263,6 @@ Could be worth adding to the API.
 
 + (NSString *)_decodeData:(NSData *)data;
 
-+ (void)_setAlwaysUsesComplexTextCodePath:(BOOL)f;
-// This is the old name of the above method. Needed for Safari versions that call it.
 + (void)_setAlwaysUseATSU:(BOOL)f;
 
 - (NSCachedURLResponse *)_cachedResponseForURL:(NSURL *)URL;
@@ -375,13 +371,9 @@ Could be worth adding to the API.
 
 // SPI for DumpRenderTree
 - (void)_executeCoreCommandByName:(NSString *)name value:(NSString *)value;
-- (void)_clearMainFrameName;
 
 - (void)_setCustomHTMLTokenizerTimeDelay:(double)timeDelay;
 - (void)_setCustomHTMLTokenizerChunkSize:(int)chunkSize;
-
-- (id)_initWithFrame:(NSRect)f frameName:(NSString *)frameName groupName:(NSString *)groupName usesDocumentViews:(BOOL)usesDocumentViews;
-- (BOOL)_usesDocumentViews;
 
 @end
 

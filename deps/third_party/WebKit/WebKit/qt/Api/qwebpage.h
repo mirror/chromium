@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2007 Trolltech ASA
     Copyright (C) 2007 Staikos Computing Services Inc.
 
     This library is free software; you can redistribute it and/or
@@ -299,7 +299,6 @@ private:
 
     friend class QWebFrame;
     friend class QWebPagePrivate;
-    friend class QWebView;
     friend class WebCore::ChromeClientQt;
     friend class WebCore::EditorClientQt;
     friend class WebCore::FrameLoaderClientQt;

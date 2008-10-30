@@ -105,6 +105,8 @@ SVGResource* SVGClipPathElement::canvasResource()
             RenderStyle* pathStyle = document()->styleSelector()->styleForElement(styled, clipPathStyle);
             if (pathStyle->display() != NONE) {
                 Path pathData = styled->toClipPath();
+                // FIXME: How do we know the element has done a layout?
+                pathData.transform(styled->animatedLocalTransform());
                 if (!pathData.isEmpty())
                     m_clipper->addClipData(pathData, pathStyle->svgStyle()->clipRule(), bbox);
             }

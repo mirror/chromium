@@ -24,25 +24,43 @@
 
 #include "JSGlobalData.h"
 #include "JSVariableObject.h"
-#include "NumberPrototype.h"
-#include "StringPrototype.h"
 #include <wtf/HashSet.h>
 #include <wtf/OwnPtr.h>
 
-namespace JSC {
+namespace KJS {
 
     class ArrayPrototype;
     class BooleanPrototype;
     class DatePrototype;
     class Debugger;
     class ErrorConstructor;
+    class ErrorPrototype;
+    class EvalError;
+    class EvalErrorPrototype;
     class FunctionPrototype;
     class GlobalEvalFunction;
+    class JSGlobalObject;
     class NativeErrorConstructor;
+    class NativeErrorPrototype;
+    class NumberPrototype;
+    class ObjectPrototype;
     class ProgramCodeBlock;
+    class RangeError;
+    class RangeErrorPrototype;
+    class ReferenceError;
+    class ReferenceError;
+    class ReferenceErrorPrototype;
     class RegExpConstructor;
     class RegExpPrototype;
     class RegisterFile;
+    class RuntimeMethod;
+    class ScopeChain;
+    class StringPrototype;
+    class SyntaxErrorPrototype;
+    class TypeError;
+    class TypeErrorPrototype;
+    class UriError;
+    class UriErrorPrototype;
 
     struct ActivationStackNode;
     struct HashTable;
@@ -54,27 +72,9 @@ namespace JSC {
         using JSVariableObject::JSVariableObjectData;
 
         struct JSGlobalObjectData : public JSVariableObjectData {
-            JSGlobalObjectData()
+            JSGlobalObjectData(JSGlobalObject* globalObject, JSObject* thisValue)
                 : JSVariableObjectData(&symbolTable, 0)
-                , registerArraySize(0)
-                , globalScopeChain(NoScopeChain())
-                , regExpConstructor(0)
-                , errorConstructor(0)
-                , evalErrorConstructor(0)
-                , rangeErrorConstructor(0)
-                , referenceErrorConstructor(0)
-                , syntaxErrorConstructor(0)
-                , typeErrorConstructor(0)
-                , URIErrorConstructor(0)
-                , evalFunction(0)
-                , objectPrototype(0)
-                , functionPrototype(0)
-                , arrayPrototype(0)
-                , booleanPrototype(0)
-                , stringPrototype(0)
-                , numberPrototype(0)
-                , datePrototype(0)
-                , regExpPrototype(0)
+                , globalScopeChain(globalObject, thisValue)
             {
             }
             
@@ -82,15 +82,13 @@ namespace JSC {
             {
             }
 
-            size_t registerArraySize;
-
             JSGlobalObject* next;
             JSGlobalObject* prev;
 
             Debugger* debugger;
             
             ScopeChain globalScopeChain;
-            Register globalCallFrame[RegisterFile::CallFrameHeaderSize];
+            OwnPtr<ExecState> globalExec;
 
             int recursion;
 
@@ -113,51 +111,42 @@ namespace JSC {
             NumberPrototype* numberPrototype;
             DatePrototype* datePrototype;
             RegExpPrototype* regExpPrototype;
-
-            RefPtr<StructureID> argumentsStructure;
-            RefPtr<StructureID> arrayStructure;
-            RefPtr<StructureID> booleanObjectStructure;
-            RefPtr<StructureID> callbackConstructorStructure;
-            RefPtr<StructureID> callbackFunctionStructure;
-            RefPtr<StructureID> callbackObjectStructure;
-            RefPtr<StructureID> dateStructure;
-            RefPtr<StructureID> emptyObjectStructure;
-            RefPtr<StructureID> errorStructure;
-            RefPtr<StructureID> functionStructure;
-            RefPtr<StructureID> numberObjectStructure;
-            RefPtr<StructureID> prototypeFunctionStructure;
-            RefPtr<StructureID> regExpMatchesArrayStructure;
-            RefPtr<StructureID> regExpStructure;
-            RefPtr<StructureID> stringObjectStructure;
-
+            ErrorPrototype* errorPrototype;
+            NativeErrorPrototype* evalErrorPrototype;
+            NativeErrorPrototype* rangeErrorPrototype;
+            NativeErrorPrototype* referenceErrorPrototype;
+            NativeErrorPrototype* syntaxErrorPrototype;
+            NativeErrorPrototype* typeErrorPrototype;
+            NativeErrorPrototype* URIErrorPrototype;
+            
             SymbolTable symbolTable;
             unsigned profileGroup;
 
             RefPtr<JSGlobalData> globalData;
 
             HashSet<ProgramCodeBlock*> codeBlocks;
+
+            OwnPtr<HashSet<JSObject*> > arrayVisitedElements; // Global data shared by array prototype functions.
         };
 
     public:
         void* operator new(size_t, JSGlobalData*);
 
-        explicit JSGlobalObject(JSGlobalData* globalData)
-            : JSVariableObject(globalData->nullProtoStructureID, new JSGlobalObjectData)
+        JSGlobalObject(JSGlobalData* globalData)
+            : JSVariableObject(globalData->nullProtoStructureID, new JSGlobalObjectData(this, this))
         {
             init(this);
         }
 
     protected:
-        JSGlobalObject(PassRefPtr<StructureID> structure, JSGlobalObjectData* data, JSObject* thisValue)
-            : JSVariableObject(structure, data)
+        JSGlobalObject(JSObject* prototype, JSGlobalObjectData* d, JSObject* globalThisValue)
+            : JSVariableObject(prototype, d)
         {
-            init(thisValue);
+            init(globalThisValue);
         }
 
     public:
         virtual ~JSGlobalObject();
-
-        virtual void mark();
 
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&, bool& slotIsWriteable);
@@ -194,22 +183,13 @@ namespace JSC {
         NumberPrototype* numberPrototype() const { return d()->numberPrototype; }
         DatePrototype* datePrototype() const { return d()->datePrototype; }
         RegExpPrototype* regExpPrototype() const { return d()->regExpPrototype; }
-
-        StructureID* argumentsStructure() const { return d()->argumentsStructure.get(); }
-        StructureID* arrayStructure() const { return d()->arrayStructure.get(); }
-        StructureID* booleanObjectStructure() const { return d()->booleanObjectStructure.get(); }
-        StructureID* callbackConstructorStructure() const { return d()->callbackConstructorStructure.get(); }
-        StructureID* callbackFunctionStructure() const { return d()->callbackFunctionStructure.get(); }
-        StructureID* callbackObjectStructure() const { return d()->callbackObjectStructure.get(); }
-        StructureID* dateStructure() const { return d()->dateStructure.get(); }
-        StructureID* emptyObjectStructure() const { return d()->emptyObjectStructure.get(); }
-        StructureID* errorStructure() const { return d()->errorStructure.get(); }
-        StructureID* functionStructure() const { return d()->functionStructure.get(); }
-        StructureID* numberObjectStructure() const { return d()->numberObjectStructure.get(); }
-        StructureID* prototypeFunctionStructure() const { return d()->prototypeFunctionStructure.get(); }
-        StructureID* regExpMatchesArrayStructure() const { return d()->regExpMatchesArrayStructure.get(); }
-        StructureID* regExpStructure() const { return d()->regExpStructure.get(); }
-        StructureID* stringObjectStructure() const { return d()->stringObjectStructure.get(); }
+        ErrorPrototype* errorPrototype() const { return d()->errorPrototype; }
+        NativeErrorPrototype* evalErrorPrototype() const { return d()->evalErrorPrototype; }
+        NativeErrorPrototype* rangeErrorPrototype() const { return d()->rangeErrorPrototype; }
+        NativeErrorPrototype* referenceErrorPrototype() const { return d()->referenceErrorPrototype; }
+        NativeErrorPrototype* syntaxErrorPrototype() const { return d()->syntaxErrorPrototype; }
+        NativeErrorPrototype* typeErrorPrototype() const { return d()->typeErrorPrototype; }
+        NativeErrorPrototype* URIErrorPrototype() const { return d()->URIErrorPrototype; }
 
         void setProfileGroup(unsigned value) { d()->profileGroup = value; }
         unsigned profileGroup() const { return d()->profileGroup; }
@@ -227,6 +207,8 @@ namespace JSC {
         
         ScopeChain& globalScopeChain() { return d()->globalScopeChain; }
 
+        virtual void mark();
+
         virtual bool isGlobalObject() const { return true; }
         virtual JSGlobalObject* toGlobalObject(ExecState*) const;
 
@@ -237,6 +219,8 @@ namespace JSC {
         virtual bool allowsAccessFrom(const JSGlobalObject*) const { return true; }
 
         virtual bool isDynamicScope() const;
+
+        HashSet<JSObject*>& arrayVisitedElements() { if (!d()->arrayVisitedElements) d()->arrayVisitedElements.set(new HashSet<JSObject*>); return *d()->arrayVisitedElements; }
 
         HashSet<ProgramCodeBlock*>& codeBlocks() { return d()->codeBlocks; }
 
@@ -264,31 +248,22 @@ namespace JSC {
         void addStaticGlobals(GlobalPropertyInfo*, int count);
 
     private:
-        // FIXME: Fold reset into init.
+        // FIXME: Fold these functions into the constructor.
         void init(JSObject* thisValue);
         void reset(JSValue* prototype);
-
-        void setRegisters(Register* registers, Register* registerArray, size_t count);
 
         void* operator new(size_t); // can only be allocated with JSGlobalData
     };
 
-    inline void JSGlobalObject::setRegisters(Register* registers, Register* registerArray, size_t count)
-    {
-        JSVariableObject::setRegisters(registers, registerArray);
-        d()->registerArraySize = count;
-    }
-
     inline void JSGlobalObject::addStaticGlobals(GlobalPropertyInfo* globals, int count)
     {
-        size_t oldSize = d()->registerArraySize;
-        size_t newSize = oldSize + count;
-        Register* registerArray = new Register[newSize];
+        size_t registerArraySize = d()->registerArraySize;
+        Register* registerArray = new Register[registerArraySize + count];
         if (d()->registerArray)
-            memcpy(registerArray + count, d()->registerArray.get(), oldSize * sizeof(Register));
-        setRegisters(registerArray + newSize, registerArray, newSize);
+            memcpy(registerArray + count, d()->registerArray.get(), registerArraySize * sizeof(Register));
+        setRegisterArray(registerArray, registerArraySize + count);
 
-        for (int i = 0, index = -static_cast<int>(oldSize) - 1; i < count; ++i, --index) {
+        for (int i = 0, index = -static_cast<int>(registerArraySize) - 1; i < count; ++i, --index) {
             GlobalPropertyInfo& global = globals[i];
             ASSERT(global.attributes & DontDelete);
             SymbolTableEntry newEntry(index, global.attributes);
@@ -318,29 +293,6 @@ namespace JSC {
         return globalObject;
     }
 
-    inline JSValue* StructureID::prototypeForLookup(ExecState* exec)
-    {
-        if (typeInfo().type() == ObjectType)
-            return m_prototype;
-
-        if (typeInfo().type() == StringType)
-            return exec->lexicalGlobalObject()->stringPrototype();
-
-        ASSERT(typeInfo().type() == NumberType);
-        return exec->lexicalGlobalObject()->numberPrototype();
-    }
-
-    inline JSGlobalObject* ExecState::dynamicGlobalObject()
-    {
-        if (this == lexicalGlobalObject()->globalExec())
-            return lexicalGlobalObject();
-
-        // For any ExecState that's not a globalExec, the 
-        // dynamic global object must be set since code is running
-        ASSERT(globalData().dynamicGlobalObject);
-        return globalData().dynamicGlobalObject;
-    }
-    
-} // namespace JSC
+} // namespace KJS
 
 #endif // JSGlobalObject_h

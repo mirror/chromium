@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
  * Copyright (C) 2006 Alexey Proskuryakov (ap@nypop.com)
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -49,10 +49,10 @@
 #import "MouseEventWithHitTestResults.h"
 #import "Page.h"
 #import "PlatformKeyboardEvent.h"
+#import "PlatformScrollBar.h"
 #import "PlatformWheelEvent.h"
 #import "RegularExpression.h"
 #import "RenderTableCell.h"
-#import "Scrollbar.h"
 #import "SimpleFontData.h"
 #import "UserStyleSheetLoader.h"
 #import "WebCoreViewFactory.h"
@@ -71,7 +71,7 @@
  
 using namespace std;
 
-using JSC::JSLock;
+using KJS::JSLock;
 
 namespace WebCore {
 
@@ -316,10 +316,10 @@ NSImage* Frame::imageFromRect(NSRect rect) const
 
 NSImage* Frame::selectionImage(bool forceBlackText) const
 {
-    d->m_view->setPaintRestriction(forceBlackText ? PaintRestrictionSelectionOnlyBlackText : PaintRestrictionSelectionOnly);
+    d->m_paintRestriction = forceBlackText ? PaintRestrictionSelectionOnlyBlackText : PaintRestrictionSelectionOnly;
     d->m_doc->updateLayout();
     NSImage* result = imageFromRect(selectionRect());
-    d->m_view->setPaintRestriction(PaintRestrictionNone);
+    d->m_paintRestriction = PaintRestrictionNone;
     return result;
 }
 
@@ -335,34 +335,16 @@ NSImage* Frame::snapshotDragImage(Node* node, NSRect* imageRect, NSRect* element
     IntRect topLevelRect;
     NSRect paintingRect = renderer->paintingRootRect(topLevelRect);
 
-    d->m_view->setNodeToDraw(node);              // invoke special sub-tree drawing mode
+    d->m_elementToDraw = node;              // invoke special sub-tree drawing mode
     NSImage* result = imageFromRect(paintingRect);
     renderer->updateDragState(false);
     d->m_doc->updateLayout();
-    d->m_view->setNodeToDraw(0);
+    d->m_elementToDraw = 0;
 
     if (elementRect)
         *elementRect = topLevelRect;
     if (imageRect)
         *imageRect = paintingRect;
-    return result;
-}
-
-NSImage* Frame::nodeImage(Node* node) const
-{
-    RenderObject* renderer = node->renderer();
-    if (!renderer)
-        return nil;
-
-    d->m_doc->updateLayout(); // forces style recalc
-
-    IntRect topLevelRect;
-    NSRect paintingRect = renderer->paintingRootRect(topLevelRect);
-
-    d->m_view->setNodeToDraw(node); // invoke special sub-tree drawing mode
-    NSImage* result = imageFromRect(paintingRect);
-    d->m_view->setNodeToDraw(0);
-
     return result;
 }
 
@@ -436,20 +418,9 @@ NSWritingDirection Frame::baseWritingDirectionForSelectionStart() const
 
     Position pos = selection()->selection().visibleStart().deepEquivalent();
     Node* node = pos.node();
-    if (!node)
+    if (!node || !node->renderer() || !node->renderer()->containingBlock())
         return result;
-
-    RenderObject* renderer = node->renderer();
-    if (!renderer)
-        return result;
-
-    if (!renderer->isBlockFlow()) {
-        renderer = renderer->containingBlock();
-        if (!renderer)
-            return result;
-    }
-
-    RenderStyle* style = renderer->style();
+    RenderStyle* style = node->renderer()->containingBlock()->style();
     if (!style)
         return result;
         

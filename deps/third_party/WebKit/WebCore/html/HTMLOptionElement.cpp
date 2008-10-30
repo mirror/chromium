@@ -35,7 +35,6 @@
 #include "HTMLSelectElement.h"
 #include "RenderMenuList.h"
 #include "Text.h"
-#include "NodeRenderStyle.h"
 #include <wtf/Vector.h>
 
 namespace WebCore {
@@ -243,11 +242,6 @@ void HTMLOptionElement::setRenderStyle(RenderStyle* newStyle)
         newStyle->ref();
     if (oldStyle)
         oldStyle->deref(document()->renderArena());
-}
-
-RenderStyle* HTMLOptionElement::nonRendererRenderStyle() const 
-{ 
-    return m_style; 
 }
 
 String HTMLOptionElement::optionText()

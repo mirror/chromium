@@ -24,15 +24,19 @@
 
 #include "JSObject.h"
 
-namespace JSC {
+namespace KJS {
     
-    // This class is used as a base for classes such as String,
-    // Number, Boolean and Date which are wrappers for primitive types.
+    /** 
+       This class is used as a base for classes such as String,
+       Number, Boolean and Date which which are wrappers for primitive
+       types. These classes stores the internal value, which is the
+       actual value represented by the wrapper objects.
+    */ 
     class JSWrapperObject : public JSObject {
     public:
-        explicit JSWrapperObject(PassRefPtr<StructureID>);
+        JSWrapperObject(JSObject* prototype);
         
-        JSValue* internalValue() const { return m_internalValue; }
+        JSValue* internalValue() const;
         void setInternalValue(JSValue*);
         
         virtual void mark();
@@ -41,19 +45,23 @@ namespace JSC {
         JSValue* m_internalValue;
     };
     
-    inline JSWrapperObject::JSWrapperObject(PassRefPtr<StructureID> structure)
-        : JSObject(structure)
+    inline JSWrapperObject::JSWrapperObject(JSObject* prototype)
+        : JSObject(prototype)
         , m_internalValue(0)
     {
+    }
+    
+    inline JSValue* JSWrapperObject::internalValue() const
+    {
+        return m_internalValue;
     }
     
     inline void JSWrapperObject::setInternalValue(JSValue* value)
     {
         ASSERT(value);
-        ASSERT(!value->isObject());
         m_internalValue = value;
     }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // KJS_JSWrapperObject_h

@@ -799,10 +799,8 @@ bool SelectionController::recomputeCaretRect()
     if (oldRect == newRect)
         return false;
 
-    if (RenderView* view = static_cast<RenderView*>(m_frame->document()->renderer())) {
-        view->repaintViewRectangle(repaintRectForCaret(oldRect), false);
-        view->repaintViewRectangle(repaintRectForCaret(newRect), false);
-    }
+    v->updateContents(repaintRectForCaret(oldRect), false);
+    v->updateContents(repaintRectForCaret(newRect), false);
     return true;
 }
 
@@ -811,7 +809,9 @@ void SelectionController::invalidateCaretRect()
     if (!isCaret())
         return;
 
-    Document* d = m_sel.start().node()->document();
+    FrameView* v = m_sel.start().node()->document()->view();
+    if (!v)
+        return;
 
     bool caretRectChanged = recomputeCaretRect();
 
@@ -828,10 +828,8 @@ void SelectionController::invalidateCaretRect()
     // away after clicking.
     m_needsLayout = true;
 
-    if (!caretRectChanged) {
-        if (RenderView* view = static_cast<RenderView*>(d->renderer()))
-            view->repaintViewRectangle(caretRepaintRect(), false);
-    }
+    if (!caretRectChanged)
+        v->updateContents(caretRepaintRect(), false);
 }
 
 void SelectionController::paintCaret(GraphicsContext *p, const IntRect &rect)
@@ -1108,8 +1106,8 @@ void SelectionController::focusedOrActiveStateChanged()
     // Because RenderObject::selectionBackgroundColor() and
     // RenderObject::selectionForegroundColor() check if the frame is active,
     // we have to update places those colors were painted.
-    if (RenderView* view = static_cast<RenderView*>(m_frame->document()->renderer()))
-        view->repaintViewRectangle(enclosingIntRect(m_frame->selectionRect()));
+    if (m_frame->view())
+        m_frame->view()->updateContents(enclosingIntRect(m_frame->selectionRect()));
 
     // Caret appears in the active frame.
     if (activeAndFocused)

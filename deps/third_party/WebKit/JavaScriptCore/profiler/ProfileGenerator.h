@@ -30,7 +30,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/RefPtr.h>
 
-namespace JSC {
+namespace KJS {
 
     class CallIdentifier;
     class ExecState;
@@ -71,6 +71,6 @@ namespace JSC {
         RefPtr<ProfileNode> m_currentNode;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ProfileGenerator_h

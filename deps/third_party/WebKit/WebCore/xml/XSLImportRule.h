@@ -26,7 +26,6 @@
 #if ENABLE(XSLT)
 
 #include "CachedResourceClient.h"
-#include "CachedResourceHandle.h"
 #include "StyleBase.h"
 #include "XSLStyleSheet.h"
 
@@ -61,7 +60,7 @@ private:
     
     String m_strHref;
     RefPtr<XSLStyleSheet> m_styleSheet;
-    CachedResourceHandle<CachedXSLStyleSheet> m_cachedSheet;
+    CachedXSLStyleSheet* m_cachedSheet;
     bool m_loading;
 };
 

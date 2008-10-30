@@ -1,7 +1,7 @@
 /*
  * QtWebKit specific style sheet.
  *
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2008 Trolltech ASA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -43,13 +43,6 @@ audio::-webkit-media-controls-play-button, video::-webkit-media-controls-play-bu
 }
 
 audio::-webkit-media-controls-time-display, video::-webkit-media-controls-time-display {
-    /* Since MediaControlElements are always created with a renderer we have to hide
-       the controls we don't use, so they don't mess up activation and event handling */
-    left: 0px;
-    top: 0px;
-    width: 0px;
-    height: 0px;
-
     display: none;
 }
 
@@ -62,35 +55,14 @@ audio::-webkit-media-controls-timeline, video::-webkit-media-controls-timeline {
 }
 
 audio::-webkit-media-controls-seek-back-button, video::-webkit-media-controls-seek-back-button {
-    /* Since MediaControlElements are always created with a renderer we have to hide
-       the controls we don't use, so they don't mess up activation and event handling */
-    left: 0px;
-    top: 0px;
-    width: 0px;
-    height: 0px;
-
-    display: none;
+     display: none;
 }
 
 audio::-webkit-media-controls-seek-forward-button, video::-webkit-media-controls-seek-forward-button {
-    /* Since MediaControlElements are always created with a renderer we have to hide
-       the controls we don't use, so they don't mess up activation and event handling */
-    left: 0px;
-    top: 0px;
-    width: 0px;
-    height: 0px;
-
-    display: none;
+     display: none;
 }
 
 audio::-webkit-media-controls-fullscreen-button, video::-webkit-media-controls-fullscreen-button {
-    /* Since MediaControlElements are always created with a renderer we have to hide
-       the controls we don't use, so they don't mess up activation and event handling */
-    left: 0px;
-    top: 0px;
-    width: 0px;
-    height: 0px;
-
     display: none;
 }
 

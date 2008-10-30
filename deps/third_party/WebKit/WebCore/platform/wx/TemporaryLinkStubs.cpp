@@ -39,7 +39,6 @@
 #include "ContextMenuItem.h"
 #include "CookieJar.h"
 #include "Cursor.h"
-#include "DNS.h"
 #include "DocumentFragment.h"
 #include "DocumentLoader.h"
 #include "DragController.h"
@@ -66,15 +65,15 @@
 #include "Path.h"
 #include "PlatformMenuDescription.h"
 #include "PlatformMouseEvent.h"
+#include "PlatformScrollBar.h"
 #include "PopupMenu.h"
 #include "RenderTheme.h"
 #include "ResourceHandle.h"
 #include "ResourceHandleInternal.h"
 #include "ResourceLoader.h"
 #include "Screen.h"
-#include "ScrollbarTheme.h"
 #include "SearchPopupMenu.h"
-#include "Scrollbar.h"
+#include "ScrollBar.h"
 #include "SharedBuffer.h"
 #include "SharedTimer.h"
 #include "TextBoundaries.h"
@@ -87,6 +86,9 @@ Vector<char> loadResourceIntoArray(const char* resourceName)
     Vector<char> resource;
     return resource;
 }
+
+void Widget::removeFromParent() { notImplemented(); }
+
 
 int findNextSentenceFromIndex(UChar const*,int,int,bool) { notImplemented(); return 0; }
 void findSentenceBoundary(UChar const*,int,int,int*,int*) { notImplemented(); }
@@ -128,7 +130,15 @@ void WebCore::setFocusRingColorChangeFunction(void (*)()) { }
 
 void Image::drawPattern(GraphicsContext*, const FloatRect& srcRect, const AffineTransform& patternTransform, const FloatPoint& phase, CompositeOperator, const FloatRect& destRect) { notImplemented(); } 
 
-ScrollbarTheme* ScrollbarTheme::nativeTheme() { notImplemented(); static ScrollbarTheme theme; return &theme; }
+PlatformScrollbar::PlatformScrollbar(ScrollbarClient* client, ScrollbarOrientation orientation, ScrollbarControlSize controlSize) : Scrollbar(client, orientation, controlSize) { notImplemented(); }
+PlatformScrollbar::~PlatformScrollbar() { notImplemented(); }
+int PlatformScrollbar::width() const { notImplemented(); return 0; }
+int PlatformScrollbar::height() const { notImplemented(); return 0; }
+void PlatformScrollbar::setEnabled(bool) { notImplemented(); }
+void PlatformScrollbar::paint(GraphicsContext*, const IntRect& damageRect) { notImplemented(); }
+void PlatformScrollbar::updateThumbPosition() { notImplemented(); }
+void PlatformScrollbar::updateThumbProportion() { notImplemented(); }
+void PlatformScrollbar::setRect(const IntRect&) { notImplemented(); }
 
 void FileChooser::openFileChooser(Document*) { notImplemented(); }
 String FileChooser::basenameForWidth(const Font&, int width) const { notImplemented(); return String(); }
@@ -174,14 +184,11 @@ bool SearchPopupMenu::enabled() { return true; }
 
 namespace WebCore {
 float userIdleTime() { notImplemented(); return FLT_MAX; } // return an arbitrarily high userIdleTime so that releasing pages from the page cache isn't postponed
-void getSupportedKeySizes(Vector<String>&) { notImplemented(); }
+Vector<String> supportedKeySizes() { notImplemented(); return Vector<String>(); }
 String signedPublicKeyAndChallengeString(unsigned keySizeIndex, const String &challengeString, const KURL &url) { return String(); }
 const char* currentTextBreakLocaleID() { notImplemented(); return "en_us"; }
 
 String KURL::fileSystemPath() const { notImplemented(); return String(); }
 
 PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) { notImplemented(); return 0; }
-
-void prefetchDNS(const String& hostname) { notImplemented(); }
-
 }

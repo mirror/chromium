@@ -68,7 +68,7 @@
 #include "SVGZoomEvent.h"
 #endif
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -84,49 +84,50 @@ JSValue* toJS(ExecState* exec, Event* event)
     if (!event)
         return jsNull();
 
-    DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), event);
-    if (wrapper)
-        return wrapper;
+    DOMObject* ret = ScriptInterpreter::getDOMObject(event);
+    if (ret)
+        return ret;
 
     if (event->isUIEvent()) {
         if (event->isKeyboardEvent())
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, KeyboardEvent, event);
+            ret = new (exec) JSKeyboardEvent(JSKeyboardEventPrototype::self(exec), static_cast<KeyboardEvent*>(event));
         else if (event->isTextEvent())
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, TextEvent, event);
+            ret = new (exec) JSTextEvent(JSTextEventPrototype::self(exec), static_cast<TextEvent*>(event));
         else if (event->isMouseEvent())
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, MouseEvent, event);
+            ret = new (exec) JSMouseEvent(JSMouseEventPrototype::self(exec), static_cast<MouseEvent*>(event));
         else if (event->isWheelEvent())
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, WheelEvent, event);
+            ret = new (exec) JSWheelEvent(JSWheelEventPrototype::self(exec), static_cast<WheelEvent*>(event));
 #if ENABLE(SVG)
         else if (event->isSVGZoomEvent())
-            wrapper = CREATE_SVG_OBJECT_WRAPPER(exec, SVGZoomEvent, event, 0);
+            ret = new (exec) JSSVGZoomEvent(JSSVGZoomEventPrototype::self(exec), static_cast<SVGZoomEvent*>(event), 0);
 #endif
         else
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, UIEvent, event);
+            ret = new (exec) JSUIEvent(JSUIEventPrototype::self(exec), static_cast<UIEvent*>(event));
     } else if (event->isMutationEvent())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, MutationEvent, event);
+        ret = new (exec) JSMutationEvent(JSMutationEventPrototype::self(exec), static_cast<MutationEvent*>(event));
     else if (event->isOverflowEvent())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, OverflowEvent, event);
+        ret = new (exec) JSOverflowEvent(JSOverflowEventPrototype::self(exec), static_cast<OverflowEvent*>(event));
     else if (event->isMessageEvent())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, MessageEvent, event);
+        ret = new (exec) JSMessageEvent(JSMessageEventPrototype::self(exec), static_cast<MessageEvent*>(event));
     else if (event->isProgressEvent()) {
         if (event->isXMLHttpRequestProgressEvent())
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, XMLHttpRequestProgressEvent, event);
+            ret = new (exec) JSXMLHttpRequestProgressEvent(JSXMLHttpRequestProgressEventPrototype::self(exec), static_cast<XMLHttpRequestProgressEvent*>(event));
         else
-            wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, ProgressEvent, event);
+            ret = new (exec) JSProgressEvent(JSProgressEventPrototype::self(exec), static_cast<ProgressEvent*>(event));
     }
 #if ENABLE(DOM_STORAGE)
     else if (event->isStorageEvent())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, StorageEvent, event);
+        ret = new (exec) JSStorageEvent(JSStorageEventPrototype::self(exec), static_cast<StorageEvent*>(event));
 #endif
     else if (event->isWebKitAnimationEvent())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, WebKitAnimationEvent, event);
+        ret = new (exec) JSWebKitAnimationEvent(JSWebKitAnimationEventPrototype::self(exec), static_cast<WebKitAnimationEvent*>(event));
     else if (event->isWebKitTransitionEvent())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, WebKitTransitionEvent, event);
+        ret = new (exec) JSWebKitTransitionEvent(JSWebKitTransitionEventPrototype::self(exec), static_cast<WebKitTransitionEvent*>(event));
     else
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, Event, event);
+        ret = new (exec) JSEvent(JSEventPrototype::self(exec), event);
 
-    return wrapper;
+    ScriptInterpreter::putDOMObject(event, ret);
+    return ret;
 }
 
 } // namespace WebCore

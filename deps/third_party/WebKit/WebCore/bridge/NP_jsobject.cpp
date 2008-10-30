@@ -30,7 +30,6 @@
 #include "NP_jsobject.h"
 
 #include "PlatformString.h"
-#include "StringSourceProvider.h"
 #include "c_utility.h"
 #include "npruntime_impl.h"
 #include "npruntime_priv.h"
@@ -39,14 +38,12 @@
 #include <kjs/JSGlobalObject.h>
 #include <kjs/JSLock.h>
 #include <kjs/PropertyNameArray.h>
-#include <kjs/SourceRange.h>
 #include <kjs/completion.h>
 #include <kjs/interpreter.h>
 
 using WebCore::String;
-using WebCore::StringSourceProvider;
-using namespace JSC;
-using namespace JSC::Bindings;
+using namespace KJS;
+using namespace KJS::Bindings;
 
 static void getListFromVariantArgs(ExecState* exec, const NPVariant* args, unsigned argCount, RootObject* rootObject, ArgList& aList)
 {
@@ -200,7 +197,7 @@ bool _NPN_Evaluate(NPP, NPObject* o, NPString* s, NPVariant* variant)
         JSLock lock(false);
         String scriptString = convertNPStringToUTF16(s);
         rootObject->globalObject()->startTimeoutCheck();
-        Completion completion = Interpreter::evaluate(rootObject->globalObject()->globalExec(), rootObject->globalObject()->globalScopeChain(), makeSource(scriptString));
+        Completion completion = Interpreter::evaluate(rootObject->globalObject()->globalExec(), rootObject->globalObject()->globalScopeChain(), UString(), 1, scriptString);
         rootObject->globalObject()->stopTimeoutCheck();
         ComplType type = completion.complType();
         

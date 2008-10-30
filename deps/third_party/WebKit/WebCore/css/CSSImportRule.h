@@ -24,7 +24,6 @@
 
 #include "CSSRule.h"
 #include "CachedResourceClient.h"
-#include "CachedResourceHandle.h"
 #include "MediaList.h"
 #include "PlatformString.h"
 
@@ -66,7 +65,7 @@ private:
     String m_strHref;
     RefPtr<MediaList> m_lstMedia;
     RefPtr<CSSStyleSheet> m_styleSheet;
-    CachedResourceHandle<CachedCSSStyleSheet> m_cachedSheet;
+    CachedCSSStyleSheet* m_cachedSheet;
     bool m_loading;
 };
 

@@ -33,7 +33,7 @@
 #include <kjs/JSLock.h>
 
 
-namespace JSC
+namespace KJS
 {
 
 namespace Bindings
@@ -84,7 +84,7 @@ public:
     }
     const jchar *uchars() const { return (const jchar *)_rep->data(); }
     int length() const { return _rep->size(); }
-    operator UString() const { return UString(_rep); }
+    UString ustring() const { return UString(_rep); }
 
 private:
     RefPtr<UString::Rep> _rep;
@@ -184,7 +184,7 @@ private:
 
 } // namespace Bindings
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ENABLE(MAC_JAVA_BRIDGE)
 

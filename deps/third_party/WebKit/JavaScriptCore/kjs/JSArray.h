@@ -23,7 +23,7 @@
 
 #include "JSObject.h"
 
-namespace JSC {
+namespace KJS {
 
     typedef HashMap<unsigned, JSValue*> SparseArrayValueMap;
 
@@ -37,12 +37,10 @@ namespace JSC {
     };
 
     class JSArray : public JSObject {
-        friend class CTI;
-
     public:
-        explicit JSArray(PassRefPtr<StructureID>);
-        JSArray(PassRefPtr<StructureID>, unsigned initialLength);
-        JSArray(ExecState*, PassRefPtr<StructureID>, const ArgList& initialValues);
+        JSArray(PassRefPtr<StructureID>);
+        JSArray(JSObject* prototype, unsigned initialLength);
+        JSArray(ExecState* exec, JSObject* prototype, const ArgList& initialValues);
         virtual ~JSArray();
 
         virtual bool getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
@@ -57,9 +55,6 @@ namespace JSC {
         void sort(ExecState*);
         void sort(ExecState*, JSValue* compareFunction, CallType, const CallData&);
 
-        void push(ExecState*, JSValue*);
-        JSValue* pop();
-
         bool canGetIndex(unsigned i) { return i < m_fastAccessCutoff; }
         JSValue* getIndex(unsigned i)
         {
@@ -73,8 +68,6 @@ namespace JSC {
             ASSERT(canSetIndex(i));
             return m_storage->m_vector[i] = v;
         }
-
-        void fillArgList(ExecState*, ArgList&);
 
     protected:
         virtual void put(ExecState*, const Identifier& propertyName, JSValue*, PutPropertySlot&);
@@ -108,6 +101,6 @@ namespace JSC {
     JSArray* constructArray(ExecState*, JSValue* singleItemValue);
     JSArray* constructArray(ExecState*, const ArgList& values);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // JSArray_h

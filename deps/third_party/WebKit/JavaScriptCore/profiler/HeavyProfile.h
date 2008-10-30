@@ -30,8 +30,9 @@
 #include "ProfileNode.h"
 #include "TreeProfile.h"
 
-namespace JSC {
+namespace KJS {
 
+    class ExecState;
     class UString;
 
     class HeavyProfile : public Profile {
@@ -58,6 +59,6 @@ namespace JSC {
         TreeProfile* m_treeProfile;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // HeavyProfile_h

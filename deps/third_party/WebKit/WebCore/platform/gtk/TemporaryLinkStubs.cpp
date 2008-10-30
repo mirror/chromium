@@ -28,12 +28,13 @@
 #include "config.h"
 
 #include "AXObjectCache.h"
-#include "DNS.h"
 #include "Editor.h"
 #include "FrameView.h"
 #include "FTPDirectoryDocument.h"
+#include "KURL.h"
 #include "NotImplemented.h"
 #include "PluginView.h"
+#include "SharedBuffer.h"
 #include <float.h>
 
 using namespace WebCore;
@@ -58,15 +59,17 @@ Vector<char> loadResourceIntoArray(const char* resourceName)
 
 void PluginView::invalidateRegion(NPRegion) { notImplemented(); }
 
-Color WebCore::focusRingColor() { return Color(); }
+Color WebCore::focusRingColor() { return 0xFF0000FF; }
 void WebCore::setFocusRingColorChangeFunction(void (*)()) { }
 
 namespace WebCore {
-void getSupportedKeySizes(Vector<String>&) { notImplemented(); }
+Vector<String> supportedKeySizes() { notImplemented(); return Vector<String>(); }
 String signedPublicKeyAndChallengeString(unsigned keySizeIndex, const String &challengeString, const KURL &url) { return String(); }
 float userIdleTime() { notImplemented(); return FLT_MAX; } // return an arbitrarily high userIdleTime so that releasing pages from the page cache isn't postponed
 
-void prefetchDNS(const String& hostname) { notImplemented(); }
+String KURL::fileSystemPath() const { notImplemented(); return String(); }
+
+PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) { notImplemented(); return 0; }
 
 }
 

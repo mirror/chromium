@@ -22,17 +22,29 @@
 
 #include "config.h"
 
+#include "ObjectPrototype.h"
+#include "ObjectConstructor.h"
+
 #include "CodeGenerator.h"
 #include "InitializeThreading.h"
 #include "JSArray.h"
+#include "JSFunction.h"
+#include "JSGlobalObject.h"
 #include "JSLock.h"
+#include "JSObject.h"
+#include "Parser.h"
 #include "PrototypeFunction.h"
 #include "SamplingTool.h"
+#include "collector.h"
 #include "completion.h"
 #include "interpreter.h"
+#include "nodes.h"
+#include "protect.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+#include <wtf/Assertions.h>
+#include <wtf/HashTraits.h>
 
 #if !PLATFORM(WIN_OS)
 #include <unistd.h>
@@ -57,11 +69,10 @@
 #endif
 
 #if PLATFORM(QT)
-#include <QCoreApplication>
 #include <QDateTime>
 #endif
 
-using namespace JSC;
+using namespace KJS;
 using namespace WTF;
 
 static bool fillBufferWithContentsOfFile(const UString& fileName, Vector<char>& buffer);
@@ -160,14 +171,14 @@ ASSERT_CLASS_FITS_IN_CELL(GlobalObject);
 GlobalObject::GlobalObject(JSGlobalData* globalData, const Vector<UString>& arguments)
     : JSGlobalObject(globalData)
 {
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "debug"), functionDebug));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "print"), functionPrint));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 0, Identifier(globalExec(), "quit"), functionQuit));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 0, Identifier(globalExec(), "gc"), functionGC));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "version"), functionVersion));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "run"), functionRun));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "load"), functionLoad));
-    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 0, Identifier(globalExec(), "readline"), functionReadline));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 1, Identifier(globalExec(), "debug"), functionDebug));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 1, Identifier(globalExec(), "print"), functionPrint));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 0, Identifier(globalExec(), "quit"), functionQuit));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 0, Identifier(globalExec(), "gc"), functionGC));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 1, Identifier(globalExec(), "version"), functionVersion));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 1, Identifier(globalExec(), "run"), functionRun));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 1, Identifier(globalExec(), "load"), functionLoad));
+    putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), functionPrototype(), 0, Identifier(globalExec(), "readline"), functionReadline));
 
     JSObject* array = constructEmptyArray(globalExec());
     for (size_t i = 0; i < arguments.size(); ++i)
@@ -219,10 +230,10 @@ JSValue* functionRun(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
     if (!fillBufferWithContentsOfFile(fileName, script))
         return throwError(exec, GeneralError, "Could not open file.");
 
-    JSGlobalObject* globalObject = exec->lexicalGlobalObject();
+    JSGlobalObject* globalObject = exec->dynamicGlobalObject();
 
     stopWatch.start();
-    Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
+    Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), fileName, 1, script.data());
     stopWatch.stop();
 
     return jsNumber(globalObject->globalExec(), stopWatch.getElapsedMS());
@@ -235,8 +246,8 @@ JSValue* functionLoad(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
     if (!fillBufferWithContentsOfFile(fileName, script))
         return throwError(exec, GeneralError, "Could not open file.");
 
-    JSGlobalObject* globalObject = exec->lexicalGlobalObject();
-    Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
+    JSGlobalObject* globalObject = exec->dynamicGlobalObject();
+    Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), fileName, 1, script.data());
 
     return jsUndefined();
 }
@@ -290,13 +301,11 @@ int main(int argc, char** argv)
     _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
 #endif
 
-#if PLATFORM(QT)
-    QCoreApplication app(argc, argv);
-#endif
-
     int res = 0;
     TRY
-        res = jscmain(argc, argv, JSGlobalData::create().releaseRef());
+        JSGlobalData* globalData = JSGlobalData::create().releaseRef();
+        res = jscmain(argc, argv, globalData);
+        delete globalData;
     EXCEPT(res = 3)
     return res;
 }
@@ -305,7 +314,8 @@ static bool prettyPrintScript(ExecState* exec, const UString& fileName, const Ve
 {
     int errLine = 0;
     UString errMsg;
-    RefPtr<ProgramNode> programNode = exec->globalData().parser->parse<ProgramNode>(exec, makeSource(script.data(), fileName), &errLine, &errMsg);
+    UString scriptUString(script.data());
+    RefPtr<ProgramNode> programNode = exec->parser()->parse<ProgramNode>(exec, fileName, 1, UStringSourceProvider::create(scriptUString), 0, &errLine, &errMsg);
     if (!programNode) {
         fprintf(stderr, "%s:%d: %s.\n", fileName.UTF8String().c_str(), errLine, errMsg.UTF8String().c_str());
         return false;
@@ -338,7 +348,7 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
         if (prettyPrint)
             prettyPrintScript(globalObject->globalExec(), fileName, script);
         else {
-            Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
+            Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), fileName, 1, script.data());
             success = success && completion.complType() != Throw;
             if (dump) {
                 if (completion.complType() == Throw)
@@ -352,9 +362,9 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
     }
 
 #if ENABLE(SAMPLING_TOOL)
-    machine->m_sampler->stop();
-    machine->m_sampler->dump(globalObject->globalExec());
-    delete machine->m_sampler;
+            machine->m_sampler->stop();
+            machine->m_sampler->dump(globalObject->globalExec());
+            delete machine->m_sampler;
 #endif
     return success;
 }
@@ -368,7 +378,7 @@ static void runInteractive(GlobalObject* globalObject)
             break;
         if (line[0])
             add_history(line);
-        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(line, interpreterName));
+        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), interpreterName, 1, line);
         free(line);
 #else
         puts(interactivePrompt);
@@ -381,7 +391,7 @@ static void runInteractive(GlobalObject* globalObject)
             line.append(c);
         }
         line.append('\0');
-        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(line.data(), interpreterName));
+        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), interpreterName, 1, line.data());
 #endif
         if (completion.complType() == Throw)
             printf("Exception: %s\n", completion.value()->toString(globalObject->globalExec()).ascii());
@@ -456,7 +466,7 @@ static void parseArguments(int argc, char** argv, Options& options)
 
 int jscmain(int argc, char** argv, JSGlobalData* globalData)
 {
-    JSC::initializeThreading();
+    KJS::initializeThreading();
 
     JSLock lock(false);
 

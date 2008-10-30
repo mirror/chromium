@@ -237,8 +237,13 @@ bool WebChromeClient::statusbarVisible()
 void WebChromeClient::setScrollbarsVisible(bool b)
 {
     WebFrame* webFrame = m_webView->topLevelFrame();
-    if (webFrame)
+    if (webFrame) {
         webFrame->setAllowsScrolling(b);
+        FrameView* frameView = core(webFrame)->view();
+        frameView->setHScrollbarMode(frameView->hScrollbarMode());  // I know this looks weird but the call to v/hScrollbarMode goes to ScrollView
+        frameView->setVScrollbarMode(frameView->vScrollbarMode());  // and the call to setV/hScrollbarMode goes to FrameView.
+                                                                    // This oddity is a result of matching a design in the mac code.
+    }
 }
 
 bool WebChromeClient::scrollbarsVisible()
@@ -417,54 +422,23 @@ IntRect WebChromeClient::windowResizerRect() const
     return intRect;
 }
 
-void WebChromeClient::repaint(const IntRect& windowRect, bool contentChanged, bool immediate, bool repaintContentOnly)
+void WebChromeClient::addToDirtyRegion(const IntRect& dirtyRect)
+{
+    m_webView->addToDirtyRegion(dirtyRect);
+}
+
+void WebChromeClient::scrollBackingStore(int dx, int dy, const IntRect& scrollViewRect, const IntRect& clipRect)
 {
     ASSERT(core(m_webView->topLevelFrame()));
-    m_webView->repaint(windowRect, contentChanged, immediate, repaintContentOnly);
+
+    m_webView->scrollBackingStore(core(m_webView->topLevelFrame())->view(), dx, dy, scrollViewRect, clipRect);
 }
 
-void WebChromeClient::scroll(const IntSize& delta, const IntRect& scrollViewRect, const IntRect& clipRect)
+void WebChromeClient::updateBackingStore()
 {
     ASSERT(core(m_webView->topLevelFrame()));
 
-    m_webView->scrollBackingStore(core(m_webView->topLevelFrame())->view(), delta.width(), delta.height(), scrollViewRect, clipRect);
-}
-
-IntRect WebChromeClient::windowToScreen(const IntRect& rect) const
-{
-    HWND viewWindow;
-    if (FAILED(m_webView->viewWindow(reinterpret_cast<OLE_HANDLE*>(&viewWindow))))
-        return rect;
-
-    // Find the top left corner of the Widget's containing window in screen coords,
-    // and adjust the result rect's position by this amount.
-    POINT topLeft = {0, 0};
-    IntRect result = rect;
-    ::ClientToScreen(viewWindow, &topLeft);
-    result.move(topLeft.x, topLeft.y);
-
-    return result;
-}
-
-IntPoint WebChromeClient::screenToWindow(const IntPoint& point) const
-{
-    POINT result = point;
-
-    HWND viewWindow;
-    if (FAILED(m_webView->viewWindow(reinterpret_cast<OLE_HANDLE*>(&viewWindow))))
-        return point;
-
-    ::ScreenToClient(viewWindow, &result);
-
-    return result;
-}
-
-PlatformWidget WebChromeClient::platformWindow() const
-{
-    HWND viewWindow;
-    if (FAILED(m_webView->viewWindow(reinterpret_cast<OLE_HANDLE*>(&viewWindow))))
-        return 0;
-    return viewWindow;
+    m_webView->updateBackingStore(core(m_webView->topLevelFrame())->view(), 0, false);
 }
 
 void WebChromeClient::mouseDidMoveOverElement(const HitTestResult& result, unsigned modifierFlags)
@@ -548,7 +522,7 @@ bool WebChromeClient::paintCustomScrollbar(GraphicsContext* context, const Float
         return false;
 
     WebScrollbarControlPartMask webParts = WebNoScrollPart;
-    if (parts & BackButtonStartPart) // FIXME: Hyatt, what about BackButtonEndPart?
+    if (parts & BackButtonPart)
         webParts |= WebBackButtonPart;
     if (parts & BackTrackPart)
         webParts |= WebBackTrackPart;
@@ -556,12 +530,12 @@ bool WebChromeClient::paintCustomScrollbar(GraphicsContext* context, const Float
         webParts |= WebThumbPart;
     if (parts & ForwardTrackPart)
         webParts |= WebForwardTrackPart;
-    if (parts & ForwardButtonStartPart) // FIXME: Hyatt, what about ForwardButtonEndPart?
+    if (parts & ForwardButtonPart)
         webParts |= WebForwardButtonPart;
 
     WebScrollbarControlPart webPressedPart = WebNoScrollPart;
-    switch (pressedPart) {
-        case BackButtonStartPart: // FIXME: Hyatt, what about BackButtonEndPart?
+    switch(pressedPart) {
+        case BackButtonPart:
             webPressedPart = WebBackButtonPart;
             break;
         case BackTrackPart:
@@ -573,7 +547,7 @@ bool WebChromeClient::paintCustomScrollbar(GraphicsContext* context, const Float
         case ForwardTrackPart:
             webPressedPart = WebForwardTrackPart;
             break;
-        case ForwardButtonStartPart: // FIXME: Hyatt, what about ForwardButtonEndPart?
+        case ForwardButtonPart:
             webPressedPart = WebForwardButtonPart;
             break;
         default:
@@ -582,6 +556,9 @@ bool WebChromeClient::paintCustomScrollbar(GraphicsContext* context, const Float
 
     WebScrollBarControlSize webSize;
     switch (size) {
+        case MiniScrollbar:
+            webSize = WebMiniScrollbar;
+            break;
         case SmallScrollbar:
             webSize = WebSmallScrollbar;
             break;

@@ -34,7 +34,7 @@
 
 typedef struct NPObject NPObject;
 
-namespace JSC {
+namespace KJS {
 
 namespace Bindings {
 
@@ -75,7 +75,7 @@ private:
 
 } // namespace Bindings
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ENABLE(NETSCAPE_PLUGIN_API)
 

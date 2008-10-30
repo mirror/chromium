@@ -29,7 +29,7 @@
 #include "objc_instance.h"
 #include "WebScriptObject.h"
 
-namespace JSC {
+namespace KJS {
 namespace Bindings {
     
 static void deleteMethod(CFAllocatorRef, const void* value)

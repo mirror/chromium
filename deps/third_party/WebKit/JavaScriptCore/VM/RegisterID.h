@@ -33,13 +33,13 @@
 #include <wtf/Noncopyable.h>
 #include <wtf/VectorTraits.h>
 
-namespace JSC {
+namespace KJS {
 
     class RegisterID : Noncopyable {
     public:
         RegisterID()
             : m_refCount(0)
-            , m_isTemporary(false)
+            , m_isConstant(false)
 #ifndef NDEBUG
             , m_didSetIndex(false)
 #endif
@@ -49,7 +49,7 @@ namespace JSC {
         explicit RegisterID(int index)
             : m_refCount(0)
             , m_index(index)
-            , m_isTemporary(false)
+            , m_isConstant(false)
 #ifndef NDEBUG
             , m_didSetIndex(true)
 #endif
@@ -65,9 +65,9 @@ namespace JSC {
             m_index = index;
         }
 
-        void setTemporary()
+        void makeConstant()
         {
-            m_isTemporary = true;
+            m_isConstant = true;
         }
 
         int index() const
@@ -78,7 +78,7 @@ namespace JSC {
 
         bool isTemporary()
         {
-            return m_isTemporary;
+            return m_index >= 0 && !m_isConstant;
         }
 
         void ref()
@@ -101,7 +101,7 @@ namespace JSC {
 
         int m_refCount;
         int m_index;
-        bool m_isTemporary;
+        bool m_isConstant;
 #ifndef NDEBUG
         bool m_didSetIndex;
 #endif
@@ -109,11 +109,11 @@ namespace JSC {
 
     inline RegisterID* ignoredResult() { return reinterpret_cast<RegisterID*>(1); }
 
-} // namespace JSC
+} // namespace KJS
 
 namespace WTF {
 
-    template<> struct VectorTraits<JSC::RegisterID> : VectorTraitsBase<true, JSC::RegisterID> {
+    template<> struct VectorTraits<KJS::RegisterID> : VectorTraitsBase<true, KJS::RegisterID> {
         static const bool needsInitialization = true;
         static const bool canInitializeWithMemset = true; // Default initialization just sets everything to 0 or false, so this is safe.
     };

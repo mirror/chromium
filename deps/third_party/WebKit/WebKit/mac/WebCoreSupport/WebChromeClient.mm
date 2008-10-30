@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -66,10 +66,6 @@
 // For compatibility with old SPI.
 @interface NSView (WebOldWebKitPlugInDetails)
 - (void)setIsSelected:(BOOL)isSelected;
-@end
-
-@interface NSWindow (AppKitSecretsIKnowAbout)
-- (NSRect)_growBoxRect;
 @end
 
 using namespace WebCore;
@@ -400,55 +396,20 @@ bool WebChromeClient::tabsToLinks() const
 
 IntRect WebChromeClient::windowResizerRect() const
 {
-    NSRect rect = [[m_webView window] _growBoxRect];
-    if ([m_webView _usesDocumentViews])
-        return enclosingIntRect(rect);
-    return enclosingIntRect([m_webView convertRect:rect fromView:nil]);
+    return IntRect();
 }
 
-void WebChromeClient::repaint(const IntRect& rect, bool contentChanged, bool immediate, bool repaintContentOnly)
-{
-    if ([m_webView _usesDocumentViews])
-        return;
-    
-    if (contentChanged)
-        [m_webView setNeedsDisplayInRect:rect];
-    
-    if (immediate) {
-        [[m_webView window] displayIfNeeded];
-        [[m_webView window] flushWindowIfNeeded];
-    }
-}
-
-void WebChromeClient::scroll(const IntSize&, const IntRect&, const IntRect&)
+void WebChromeClient::addToDirtyRegion(const IntRect&)
 {
 }
 
-IntPoint WebChromeClient::screenToWindow(const IntPoint& p) const
+void WebChromeClient::scrollBackingStore(int, int, const IntRect&, const IntRect&)
 {
-    if ([m_webView _usesDocumentViews])
-        return p;
-    NSPoint windowCoord = [[m_webView window] convertScreenToBase:p];
-    return IntPoint([m_webView convertPoint:windowCoord fromView:nil]);
 }
 
-IntRect WebChromeClient::windowToScreen(const IntRect& r) const
+void WebChromeClient::updateBackingStore()
 {
-    if ([m_webView _usesDocumentViews])
-        return r;
-    NSRect tempRect = r;
-    tempRect = [m_webView convertRect:tempRect toView:nil];
-    tempRect.origin = [[m_webView window] convertBaseToScreen:tempRect.origin];
-    return enclosingIntRect(tempRect);
 }
-
-PlatformWidget WebChromeClient::platformWindow() const
-{
-    if ([m_webView _usesDocumentViews])
-        return 0;
-    return m_webView;
-}
-// End host window methods.
 
 void WebChromeClient::mouseDidMoveOverElement(const HitTestResult& result, unsigned modifierFlags)
 {

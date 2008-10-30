@@ -120,7 +120,7 @@ void RenderVideo::updatePlayer()
     MediaPlayer* mediaPlayer = player();
     if (!mediaPlayer)
         return;
-    if (!mediaElement()->inActiveDocument()) {
+    if (mediaElement()->inPageCache()) {
         mediaPlayer->setVisible(false);
         return;
     }

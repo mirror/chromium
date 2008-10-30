@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2005 Apple Computer, Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,16 +26,18 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "WebDefaultPolicyDelegate.h"
+#import <WebKit/WebDataSource.h>
+#import <WebKit/WebDefaultPolicyDelegate.h>
+#import <WebKit/WebFrame.h>
+#import <WebKit/WebPolicyDelegatePrivate.h>
+#import <WebKit/WebView.h>
+#import <WebKit/WebViewPrivate.h>
 
-#import "WebDataSource.h"
-#import "WebFrame.h"
-#import "WebPolicyDelegatePrivate.h"
-#import "WebViewInternal.h"
 #import <Foundation/NSURLConnection.h>
 #import <Foundation/NSURLRequest.h>
 #import <Foundation/NSURLResponse.h>
 #import <wtf/Assertions.h>
+
 
 @implementation WebDefaultPolicyDelegate
 
@@ -83,7 +85,7 @@ static WebDefaultPolicyDelegate *sharedDelegate = nil;
 {
     WebNavigationType navType = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
 
-    if ([WebView _canHandleRequest:request forMainFrame:frame == [wv mainFrame]]) {
+    if ([WebView _canHandleRequest:request]) {
         [listener use];
     } else if (navType == WebNavigationTypePlugInRequest) {
         [listener use];

@@ -217,6 +217,8 @@ void CSSPrimitiveValue::cleanup()
         case CSS_URI:
         case CSS_ATTR:
         case CSS_PARSER_VARIABLE_FUNCTION_SYNTAX:
+        case CSS_PARSER_VARIABLE_EQUALS_SYNTAX:
+        case CSS_PARSER_VARIABLE_DOLLAR_SYNTAX:
         case CSS_PARSER_HEXCOLOR:
             if (m_value.string)
                 m_value.string->deref();
@@ -513,6 +515,8 @@ String CSSPrimitiveValue::getStringValue(ExceptionCode& ec) const
         case CSS_ATTR:
         case CSS_URI:
         case CSS_PARSER_VARIABLE_FUNCTION_SYNTAX:
+        case CSS_PARSER_VARIABLE_EQUALS_SYNTAX:
+        case CSS_PARSER_VARIABLE_DOLLAR_SYNTAX:
             return m_value.string;
         case CSS_IDENT:
             return valueOrPropertyName(m_value.ident);
@@ -531,7 +535,9 @@ String CSSPrimitiveValue::getStringValue() const
         case CSS_ATTR:
         case CSS_URI:
         case CSS_PARSER_VARIABLE_FUNCTION_SYNTAX:
-             return m_value.string;
+        case CSS_PARSER_VARIABLE_EQUALS_SYNTAX:
+        case CSS_PARSER_VARIABLE_DOLLAR_SYNTAX:
+            return m_value.string;
         case CSS_IDENT:
             return valueOrPropertyName(m_value.ident);
         default:
@@ -686,59 +692,28 @@ String CSSPrimitiveValue::cssText() const
             // FIXME: Add list-style and separator
             break;
         case CSS_RECT: {
-            static const String rectParen("rect(");
-
             Rect* rectVal = getRectValue();
-            Vector<UChar> result;
-            result.reserveCapacity(32);
-            append(result, rectParen);
-
-            append(result, rectVal->top()->cssText());
-            result.append(' ');
-
-            append(result, rectVal->right()->cssText());
-            result.append(' ');
-
-            append(result, rectVal->bottom()->cssText());
-            result.append(' ');
-
-            append(result, rectVal->left()->cssText());
-            result.append(')');
-
-            return String::adopt(result);
+            text = "rect(";
+            text += rectVal->top()->cssText() + " ";
+            text += rectVal->right()->cssText() + " ";
+            text += rectVal->bottom()->cssText() + " ";
+            text += rectVal->left()->cssText() + ")";
+            break;
         }
         case CSS_RGBCOLOR:
         case CSS_PARSER_HEXCOLOR: {
-            static const String commaSpace(", ");
-            static const String rgbParen("rgb(");
-            static const String rgbaParen("rgba(");
-
             RGBA32 rgbColor = m_value.rgbcolor;
             if (m_type == CSS_PARSER_HEXCOLOR)
                 Color::parseHexColor(m_value.string, rgbColor);
             Color color(rgbColor);
-
-            Vector<UChar> result;
-            result.reserveCapacity(32);
-            if (color.hasAlpha())
-                append(result, rgbaParen);
-            else
-                append(result, rgbParen);
-
-            appendNumber(result, static_cast<unsigned char>(color.red()));
-            append(result, commaSpace);
-
-            appendNumber(result, static_cast<unsigned char>(color.green()));
-            append(result, commaSpace);
-
-            appendNumber(result, static_cast<unsigned char>(color.blue()));
-            if (color.hasAlpha()) {
-                append(result, commaSpace);
-                append(result, String::number(static_cast<float>(color.alpha()) / 256.0f));
-            }
-
-            result.append(')');
-            return String::adopt(result);
+            text = (color.alpha() < 0xFF) ? "rgba(" : "rgb(";
+            text += String::number(color.red()) + ", ";
+            text += String::number(color.green()) + ", ";
+            text += String::number(color.blue());
+            if (color.alpha() < 0xFF)
+                text += ", " + String::number(static_cast<float>(color.alpha()) / 0xFF);
+            text += ")";
+            break;
         }
         case CSS_PAIR:
             text = m_value.pair->first()->cssText();
@@ -781,13 +756,18 @@ String CSSPrimitiveValue::cssText() const
             text += m_value.string;
             text += ")";
             break;
-        case CSS_PARSER_OPERATOR: {
+        case CSS_PARSER_VARIABLE_EQUALS_SYNTAX:
+            text = "=";
+            text += m_value.string;
+            text += "=";
+            break;
+        case CSS_PARSER_VARIABLE_DOLLAR_SYNTAX:
+            text = "$";
+            text += m_value.string;
+            break;
+        case CSS_PARSER_OPERATOR:
             char c = static_cast<char>(m_value.ident);
             text = String(&c, 1U);
-            break;
-        }
-        case CSS_PARSER_IDENTIFIER:
-            text = quoteStringIfNeeded(m_value.string);
             break;
     }
     return text;
@@ -825,6 +805,8 @@ CSSParserValue CSSPrimitiveValue::parserValue() const
         case CSS_STRING:
         case CSS_URI:
         case CSS_PARSER_VARIABLE_FUNCTION_SYNTAX:
+        case CSS_PARSER_VARIABLE_EQUALS_SYNTAX:
+        case CSS_PARSER_VARIABLE_DOLLAR_SYNTAX:
         case CSS_PARSER_HEXCOLOR:
             value.string.characters = const_cast<UChar*>(m_value.string->characters());
             value.string.length = m_value.string->length();
@@ -845,11 +827,6 @@ CSSParserValue CSSPrimitiveValue::parserValue() const
             value.fValue = m_value.num;
             value.unit = CSSPrimitiveValue::CSS_NUMBER;
             value.isInt = true;
-            break;
-        case CSS_PARSER_IDENTIFIER:
-            value.string.characters = const_cast<UChar*>(m_value.string->characters());
-            value.string.length = m_value.string->length();
-            value.unit = CSSPrimitiveValue::CSS_IDENT;
             break;
         case CSS_UNKNOWN:
         case CSS_ATTR:

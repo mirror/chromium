@@ -37,7 +37,7 @@
 #include "ustring.h"
 #include <wtf/Threading.h>
 
-namespace JSC {
+namespace KJS {
 
 #if PLATFORM(DARWIN)
 static pthread_once_t initializeThreadingKeyOnce = PTHREAD_ONCE_INIT;
@@ -66,4 +66,4 @@ void initializeThreading()
 #endif
 }
 
-} // namespace JSC
+} // namespace KJS

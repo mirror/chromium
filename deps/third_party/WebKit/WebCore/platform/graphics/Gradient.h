@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Computer, Inc.  All rights reserved.
  * Copyright (C) 2007 Alp Toker <alp@atoker.com>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,8 +27,9 @@
 #ifndef Gradient_h
 #define Gradient_h
 
-#include "FloatPoint.h"
 #include "Generator.h"
+
+#include "FloatPoint.h"
 #include <wtf/PassRefPtr.h>
 #include <wtf/Vector.h>
 
@@ -54,6 +55,7 @@ typedef void* PlatformGradient;
 namespace WebCore {
 
     class Color;
+    class String;
 
     class Gradient : public Generator {
     public:
@@ -67,6 +69,7 @@ namespace WebCore {
         }
         virtual ~Gradient();
 
+        void addColorStop(float, const String&);
         void addColorStop(float, const Color&);
 
         void getColor(float value, float* r, float* g, float* b, float* a) const;
@@ -98,10 +101,8 @@ namespace WebCore {
         int findStop(float value) const;
 
         bool m_radial;
-        FloatPoint m_p0;
-        FloatPoint m_p1;
-        float m_r0;
-        float m_r1;
+        FloatPoint m_p0, m_p1;
+        float m_r0, m_r1;
         mutable Vector<ColorStop> m_stops;
         mutable bool m_stopsSorted;
         mutable int m_lastStop;

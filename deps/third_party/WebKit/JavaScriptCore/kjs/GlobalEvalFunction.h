@@ -26,13 +26,15 @@
 
 #include "PrototypeFunction.h"
 
-namespace JSC {
+namespace KJS {
 
+    class ExecState;
+    class FunctionPrototype;
     class JSGlobalObject;
 
     class GlobalEvalFunction : public PrototypeFunction {
     public:
-        GlobalEvalFunction(ExecState*, PassRefPtr<StructureID>, int len, const Identifier&, NativeFunction, JSGlobalObject* expectedThisObject);
+        GlobalEvalFunction(ExecState*, FunctionPrototype*, int len, const Identifier&, NativeFunction, JSGlobalObject* expectedThisObject);
         JSGlobalObject* cachedGlobalObject() const { return m_cachedGlobalObject; }
 
     private:
@@ -41,6 +43,6 @@ namespace JSC {
         JSGlobalObject* m_cachedGlobalObject;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // GlobalEvalFunction_h

@@ -41,8 +41,8 @@
 }
 #endif
 
-using namespace JSC::Bindings;
-using namespace JSC;
+using namespace KJS::Bindings;
+using namespace KJS;
 
 static NSString* s_exception;
 static JSGlobalObject* s_exceptionEnvironment; // No need to protect this value, since we just use it for a pointer comparison.

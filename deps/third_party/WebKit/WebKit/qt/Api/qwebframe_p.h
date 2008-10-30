@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2007 Trolltech ASA
     Copyright (C) 2007 Staikos Computing Services Inc.
 
     This library is free software; you can redistribute it and/or
@@ -35,7 +35,7 @@ namespace WebCore
     class FrameLoaderClientQt;
     class FrameView;
     class HTMLFrameOwnerElement;
-    class Scrollbar;
+    class PlatformScrollbar;
 }
 class QWebPage;
 
@@ -72,8 +72,8 @@ public:
 
     inline QWebFrame *parentFrame() { return qobject_cast<QWebFrame*>(q->parent()); }
 
-    WebCore::Scrollbar* horizontalScrollBar() const;
-    WebCore::Scrollbar* verticalScrollBar() const;
+    WebCore::PlatformScrollbar *horizontalScrollBar() const;
+    WebCore::PlatformScrollbar *verticalScrollBar() const;
 
     Qt::ScrollBarPolicy horizontalScrollBarPolicy;
     Qt::ScrollBarPolicy verticalScrollBarPolicy; 

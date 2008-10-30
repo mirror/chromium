@@ -31,7 +31,7 @@
 #include "Node.h"
 #include "NodeList.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

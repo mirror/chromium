@@ -42,7 +42,7 @@
 #include <kjs/Error.h>
 #include <wtf/HashSet.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

@@ -301,6 +301,10 @@ AXObjectCache* AccessibilityObject::axObjectCache() const
     return 0;
 }
 
+void AccessibilityObject::getDocumentLinks(AccessibilityChildrenVector& result) const
+{
+}
+
 Widget* AccessibilityObject::widget() const
 {
     return 0;
@@ -311,7 +315,7 @@ Widget* AccessibilityObject::widgetForAttachmentView() const
     return 0;
 }
 
-Element* AccessibilityObject::anchorElement() const
+HTMLAnchorElement* AccessibilityObject::anchorElement() const
 {
     return 0;   
 }

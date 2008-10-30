@@ -23,7 +23,6 @@
 #if ENABLE(SVG)
 #include "SVGViewSpec.h"
 
-#include "Document.h"
 #include "PlatformString.h"
 #include "SVGParserUtilities.h"
 #include "SVGPreserveAspectRatio.h"

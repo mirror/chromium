@@ -23,15 +23,23 @@
 
 #include "JSObject.h"
 
-namespace JSC {
+namespace KJS {
 
+    class FunctionPrototype;
+
+    /**
+     * @internal
+     *
+     * The initial value of Object.prototype (and thus all objects created
+     * with the Object constructor
+     */
     class ObjectPrototype : public JSObject {
     public:
-        ObjectPrototype(ExecState*, StructureID* prototypeFunctionStructure);
+        ObjectPrototype(ExecState*, FunctionPrototype*);
     };
 
     JSValue* objectProtoFuncToString(ExecState*, JSObject*, JSValue*, const ArgList&);
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ObjectPrototype_h

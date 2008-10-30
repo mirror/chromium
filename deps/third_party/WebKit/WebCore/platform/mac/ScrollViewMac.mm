@@ -30,142 +30,221 @@
 #import "FloatRect.h"
 #import "IntRect.h"
 #import "Logging.h"
-#import "NotImplemented.h"
 #import "WebCoreFrameView.h"
 
 using namespace std;
 
-@interface NSWindow (WebWindowDetails)
-- (BOOL)_needsToResetDragMargins;
-- (void)_setNeedsToResetDragMargins:(BOOL)needs;
-@end
-
 namespace WebCore {
+
+ScrollView::ScrollView()
+{
+}
+
+ScrollView::~ScrollView()
+{
+}
 
 inline NSScrollView<WebCoreFrameScrollView> *ScrollView::scrollView() const
 {
-    ASSERT(!platformWidget() || [platformWidget() isKindOfClass:[NSScrollView class]]);
-    ASSERT(!platformWidget() || [platformWidget() conformsToProtocol:@protocol(WebCoreFrameScrollView)]);
-    return static_cast<NSScrollView<WebCoreFrameScrollView> *>(platformWidget());
+    ASSERT(!getView() || [getView() isKindOfClass:[NSScrollView class]]);
+    ASSERT(!getView() || [getView() conformsToProtocol:@protocol(WebCoreFrameScrollView)]);
+    return static_cast<NSScrollView<WebCoreFrameScrollView> *>(getView());
 }
 
-NSView *ScrollView::documentView() const
+int ScrollView::visibleWidth() const
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    return [scrollView() documentView];
+    return [scrollView() documentVisibleRect].size.width;
     END_BLOCK_OBJC_EXCEPTIONS;
-    return nil;
+    return 0;
 }
 
-void ScrollView::platformAddChild(Widget* child)
+int ScrollView::visibleHeight() const
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    NSView *parentView = documentView();
-    NSView *childView = child->getOuterView();
-    ASSERT(![parentView isDescendantOf:childView]);
-    
-    // Suppress the resetting of drag margins since we know we can't affect them.
-    NSWindow *window = [parentView window];
-    BOOL resetDragMargins = [window _needsToResetDragMargins];
-    [window _setNeedsToResetDragMargins:NO];
-    if ([childView superview] != parentView)
-        [parentView addSubview:childView];
-    [window _setNeedsToResetDragMargins:resetDragMargins];
+    return [scrollView() documentVisibleRect].size.height;
     END_BLOCK_OBJC_EXCEPTIONS;
+    return 0;
 }
 
-void ScrollView::platformRemoveChild(Widget* child)
-{
-    child->removeFromSuperview();
-}
-
-void ScrollView::platformSetScrollbarModes()
-{
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    [scrollView() setScrollingModes:m_horizontalScrollbarMode vertical:m_verticalScrollbarMode andLock:NO];
-    END_BLOCK_OBJC_EXCEPTIONS;
-}
-
-void ScrollView::platformScrollbarModes(ScrollbarMode& horizontal, ScrollbarMode& vertical) const
-{
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    [scrollView() scrollingModes:&horizontal vertical:&vertical];
-    END_BLOCK_OBJC_EXCEPTIONS;
-}
-    
-void ScrollView::platformSetCanBlitOnScroll()
-{
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    [[scrollView() contentView] setCopiesOnScroll:canBlitOnScroll()];
-    END_BLOCK_OBJC_EXCEPTIONS;
-}
-
-IntRect ScrollView::platformVisibleContentRect(bool includeScrollbars) const
+FloatRect ScrollView::visibleContentRect() const
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS; 
-    if (includeScrollbars) {
-        if (NSView* documentView = this->documentView())
-            return enclosingIntRect([documentView visibleRect]);
-    }
-    return enclosingIntRect([scrollView() documentVisibleRect]); 
+    return [scrollView() documentVisibleRect]; 
     END_BLOCK_OBJC_EXCEPTIONS; 
-    return IntRect();
+    return FloatRect();
 }
 
-IntSize ScrollView::platformContentsSize() const
+FloatRect ScrollView::visibleContentRectConsideringExternalScrollers() const
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     if (NSView* documentView = this->documentView())
-        return enclosingIntRect([documentView bounds]).size();
+        return [documentView visibleRect];
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return FloatRect();
+}
+
+int ScrollView::contentsWidth() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if (NSView* documentView = this->documentView())
+        return [documentView bounds].size.width;
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return 0;
+}
+
+int ScrollView::contentsHeight() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if (NSView* documentView = this->documentView())
+        return [documentView bounds].size.height;
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return 0;
+}
+
+int ScrollView::contentsX() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return [scrollView() documentVisibleRect].origin.x;
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return 0;
+}
+
+int ScrollView::contentsY() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return [scrollView() documentVisibleRect].origin.y;
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return 0;
+}
+
+IntSize ScrollView::scrollOffset() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return IntPoint([[scrollView() contentView] visibleRect].origin) - IntPoint();
     END_BLOCK_OBJC_EXCEPTIONS;
     return IntSize();
 }
 
-void ScrollView::platformSetContentsSize()
+void ScrollView::scrollBy(int dx, int dy)
+{
+    setContentsPos(contentsX() + dx, contentsY() + dy);
+}
+
+void ScrollView::scrollRectIntoViewRecursively(const IntRect& r)
+{ 
+    NSRect rect = r;
+
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    NSView *originalView = documentView();
+    for (NSView *view = originalView; view; view = [view superview]) {
+        if ([view isKindOfClass:[NSClipView class]]) {
+            NSClipView *clipView = (NSClipView *)view;
+            NSView *documentView = [clipView documentView];
+            [documentView scrollRectToVisible:[documentView convertRect:rect fromView:originalView]];
+        }
+    }
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+bool ScrollView::isScrollable() 
+{ 
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return [scrollView() hasHorizontalScroller] || [scrollView() hasVerticalScroller];
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return true;
+}
+
+void ScrollView::setContentsPos(int x, int y)
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    int w = m_contentsSize.width();
-    int h = m_contentsSize.height();
+    NSPoint tempPoint = { max(0, x), max(0, y) }; // Don't use NSMakePoint to work around 4213314.
+    [documentView() scrollPoint:tempPoint];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+void ScrollView::setVScrollbarMode(ScrollbarMode vMode)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [scrollView() setVerticalScrollingMode:vMode];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+void ScrollView::setHScrollbarMode(ScrollbarMode hMode)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [scrollView() setHorizontalScrollingMode:hMode];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+void ScrollView::setScrollbarsMode(ScrollbarMode mode)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [scrollView() setScrollingMode:mode];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+ScrollbarMode ScrollView::vScrollbarMode() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return [scrollView() verticalScrollingMode];
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return ScrollbarAuto;
+}
+
+ScrollbarMode ScrollView::hScrollbarMode() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return [scrollView() horizontalScrollingMode];
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return ScrollbarAuto;
+}
+
+void ScrollView::suppressScrollbars(bool suppressed, bool repaintOnUnsuppress)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [scrollView() setScrollBarsSuppressed:suppressed
+                      repaintOnUnsuppress:repaintOnUnsuppress];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+void ScrollView::addChild(Widget* child)
+{
+    ASSERT(child != this);
+
+#ifndef NDEBUG
+    NSView *subview = child->getOuterView();    
+    LOG(Frames, "Adding %p %@ with size w %d h %d\n", subview,
+        [(id)[subview class] className], (int)[subview frame].size.width, (int)[subview frame].size.height);
+#endif
+
+    child->addToSuperview(documentView());
+}
+
+void ScrollView::removeChild(Widget* child)
+{
+    child->removeFromSuperview();
+}
+
+void ScrollView::resizeContents(int w, int h)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
     LOG(Frames, "%p %@ at w %d h %d\n", documentView(), [(id)[documentView() class] className], w, h);            
     NSSize tempSize = { max(0, w), max(0, h) }; // workaround for 4213314
     [documentView() setFrameSize:tempSize];
     END_BLOCK_OBJC_EXCEPTIONS;
 }
 
-void ScrollView::platformSetScrollbarsSuppressed(bool repaintOnUnsuppress)
-{
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    [scrollView() setScrollBarsSuppressed:m_scrollbarsSuppressed
-                      repaintOnUnsuppress:repaintOnUnsuppress];
-    END_BLOCK_OBJC_EXCEPTIONS;
-}
-
-void ScrollView::platformSetScrollPosition(const IntPoint& scrollPoint)
-{
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    NSPoint tempPoint = { max(0, scrollPoint.x()), max(0, scrollPoint.y()) }; // Don't use NSMakePoint to work around 4213314.
-    [documentView() scrollPoint:tempPoint];
-    END_BLOCK_OBJC_EXCEPTIONS;
-}
-
-bool ScrollView::platformScroll(ScrollDirection, ScrollGranularity)
-{
-    // FIXME: It would be nice to implement this so that all of the code in WebFrameView could go away.
-    notImplemented();
-    return true;
-}
-
-void ScrollView::platformRepaintContentRectangle(const IntRect& rect, bool now)
+void ScrollView::updateContents(const IntRect& rect, bool now)
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
 
     NSView *view = documentView();
+    if (!now && ![[view window] isVisible] && !shouldUpdateWhileOffscreen())
+        return;
+
     NSRect visibleRect = visibleContentRect();
 
-    // FIXME: I don't think this intersection is necessary any more now that
-    // selection doesn't call this method directly (but has to go through FrameView's
-    // repaintContentRectangle, which does the intersection test also).  Leaving it in
-    // for now until I'm sure.
     // Checking for rect visibility is an important optimization for the case of
     // Select All of a large document. AppKit does not do this check, and so ends
     // up building a large complicated NSRegion if we don't perform the check.
@@ -181,9 +260,60 @@ void ScrollView::platformRepaintContentRectangle(const IntRect& rect, bool now)
     END_BLOCK_OBJC_EXCEPTIONS;
 }
 
+void ScrollView::update()
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+
+    NSView *view = getView();
+    [[view window] displayIfNeeded];
+    [[view window] flushWindowIfNeeded];
+
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
 // "Containing Window" means the NSWindow's coord system, which is origin lower left
 
-IntRect ScrollView::platformContentsToScreen(const IntRect& rect) const
+IntPoint ScrollView::contentsToWindow(const IntPoint& contentsPoint) const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if (NSView* documentView = this->documentView()) {
+        NSPoint tempPoint = { contentsPoint.x(), contentsPoint.y() }; // Don't use NSMakePoint to work around 4213314.
+        return IntPoint([documentView convertPoint:tempPoint toView:nil]);
+    }
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return IntPoint();
+}
+
+IntPoint ScrollView::windowToContents(const IntPoint& point) const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if (NSView* documentView = this->documentView()) {
+        NSPoint tempPoint = { point.x(), point.y() }; // Don't use NSMakePoint to work around 4213314.
+        return IntPoint([documentView convertPoint:tempPoint fromView:nil]);
+    }
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return IntPoint();
+}
+
+IntRect ScrollView::contentsToWindow(const IntRect& contentsRect) const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if (NSView* documentView = this->documentView())
+        return IntRect([documentView convertRect:contentsRect toView:nil]);
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return IntRect();
+}
+
+IntRect ScrollView::windowToContents(const IntRect& rect) const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if (NSView* documentView = this->documentView())
+        return IntRect([documentView convertRect:rect fromView:nil]);
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return IntRect();
+}
+
+IntRect ScrollView::contentsToScreen(const IntRect& rect) const
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     if (NSView* documentView = this->documentView()) {
@@ -196,7 +326,7 @@ IntRect ScrollView::platformContentsToScreen(const IntRect& rect) const
     return IntRect();
 }
 
-IntPoint ScrollView::platformScreenToContents(const IntPoint& point) const
+IntPoint ScrollView::screenToContents(const IntPoint& point) const
 {
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     if (NSView* documentView = this->documentView()) {
@@ -207,9 +337,34 @@ IntPoint ScrollView::platformScreenToContents(const IntPoint& point) const
     return IntPoint();
 }
 
-bool ScrollView::platformIsOffscreen() const
+void ScrollView::setStaticBackground(bool staticBackground)
 {
-    return ![platformWidget() window] || ![[platformWidget() window] isVisible];
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [[scrollView() contentView] setCopiesOnScroll:!staticBackground];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+NSView *ScrollView::documentView() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return [scrollView() documentView];
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return nil;
+}
+
+PlatformScrollbar* ScrollView::scrollbarUnderMouse(const PlatformMouseEvent&)
+{
+    return 0;
+}
+
+bool ScrollView::inWindow() const
+{
+    return [getView() window];
+}
+
+void ScrollView::wheelEvent(PlatformWheelEvent&)
+{
+    // Do nothing. NSScrollView handles doing the scroll for us.
 }
 
 }

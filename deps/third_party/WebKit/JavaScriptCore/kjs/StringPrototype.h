@@ -23,13 +23,13 @@
 
 #include "StringObject.h"
 
-namespace JSC {
+namespace KJS {
 
     class ObjectPrototype;
 
     class StringPrototype : public StringObject {
     public:
-        StringPrototype(ExecState*, PassRefPtr<StructureID>);
+        StringPrototype(ExecState*, ObjectPrototype*);
 
         virtual bool getOwnPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
 
@@ -37,6 +37,6 @@ namespace JSC {
         static const ClassInfo info;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // StringPrototype_h

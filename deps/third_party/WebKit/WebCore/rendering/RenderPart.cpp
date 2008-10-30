@@ -95,12 +95,12 @@ void RenderPart::updateWidgetPosition()
     width = m_width - borderLeft() - borderRight() - paddingLeft() - paddingRight();
     height = m_height - borderTop() - borderBottom() - paddingTop() - paddingBottom();
     IntRect newBounds(x,y,width,height);
-    bool boundsChanged = newBounds != m_widget->frameRect();
+    bool boundsChanged = newBounds != m_widget->frameGeometry();
     if (boundsChanged) {
         // The widget changed positions.  Update the frame geometry.
         RenderArena *arena = ref();
         element()->ref();
-        m_widget->setFrameRect(newBounds);
+        m_widget->setFrameGeometry(newBounds);
         element()->deref();
         deref(arena);
     }

@@ -20,10 +20,7 @@
 #ifndef EDITCOMMANDQT_H
 #define EDITCOMMANDQT_H
 
-#include <qglobal.h>
-QT_BEGIN_NAMESPACE
 class QUndoCommand;
-QT_END_NAMESPACE
 
 #include <QUndoCommand>
 #include <EditCommand.h>

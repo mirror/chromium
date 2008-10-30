@@ -24,11 +24,11 @@
 #include "JSArray.h"
 #include "lookup.h"
 
-namespace JSC {
+namespace KJS {
 
     class ArrayPrototype : public JSArray {
     public:
-        explicit ArrayPrototype(PassRefPtr<StructureID>);
+        ArrayPrototype(ExecState*, ObjectPrototype*);
 
         bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
 
@@ -36,6 +36,6 @@ namespace JSC {
         static const ClassInfo info;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ArrayPrototype_h

@@ -32,7 +32,7 @@
 #import "objc_utility.h"
 #include <kjs/JSLock.h>
 
-using namespace JSC::Bindings;
+using namespace KJS::Bindings;
 
 @interface NSObject (WebScriptingPrivate)
 - (jvalue)webPlugInCallJava:(jobject)object method:(jmethodID)method returnType:(JNIType)returnType arguments:(jvalue*)args;
@@ -45,7 +45,7 @@ using namespace JSC::Bindings;
        exceptionDescription:(NSString **)exceptionString;
 @end
 
-bool JSC::Bindings::dispatchJNICall(ExecState* exec, const void* targetAppletView, jobject obj, bool isStatic, JNIType returnType, jmethodID methodID, jvalue* args, jvalue &result, const char*, JSValue*& exceptionDescription)
+bool KJS::Bindings::dispatchJNICall(ExecState* exec, const void* targetAppletView, jobject obj, bool isStatic, JNIType returnType, jmethodID methodID, jvalue* args, jvalue &result, const char*, JSValue*& exceptionDescription)
 {
     id view = (id)targetAppletView;
     

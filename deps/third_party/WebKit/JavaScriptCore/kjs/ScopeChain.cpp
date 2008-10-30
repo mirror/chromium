@@ -26,7 +26,7 @@
 #include "PropertyNameArray.h"
 #include <stdio.h>
 
-namespace JSC {
+namespace KJS {
 
 #ifndef NDEBUG
 
@@ -50,4 +50,4 @@ void ScopeChainNode::print() const
 
 #endif
 
-} // namespace JSC
+} // namespace KJS

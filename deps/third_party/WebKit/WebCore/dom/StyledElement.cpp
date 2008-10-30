@@ -148,11 +148,6 @@ void StyledElement::destroyInlineStyleDecl()
 
 void StyledElement::attributeChanged(Attribute* attr, bool preserveDecls)
 {
-    if (!attr->isMappedAttribute()) {
-        Element::attributeChanged(attr, preserveDecls);
-        return;
-    }
- 
     MappedAttribute* mappedAttr = static_cast<MappedAttribute*>(attr);
     if (mappedAttr->decl() && !preserveDecls) {
         mappedAttr->setDecl(0);
@@ -210,25 +205,6 @@ bool StyledElement::mapToEntry(const QualifiedName& attrName, MappedAttributeEnt
     return true;
 }
 
-void StyledElement::classAttributeChanged(const AtomicString& newClassString)
-{
-    const UChar* characters = newClassString.characters();
-    unsigned length = newClassString.length();
-    unsigned i;
-    for (i = 0; i < length; ++i) {
-        if (!isClassWhitespace(characters[i]))
-            break;
-    }
-    setHasClass(i < length);
-    if (namedAttrMap) {
-        if (i < length)
-            mappedAttributes()->setClass(newClassString);
-        else
-            mappedAttributes()->clearClass();
-    }
-    setChanged();
-}
-
 void StyledElement::parseMappedAttribute(MappedAttribute *attr)
 {
     if (attr->name() == idAttr) {
@@ -243,9 +219,25 @@ void StyledElement::parseMappedAttribute(MappedAttribute *attr)
                 namedAttrMap->setID(attr->value());
         }
         setChanged();
-    } else if (attr->name() == classAttr)
-        classAttributeChanged(attr->value());
-    else if (attr->name() == styleAttr) {
+    } else if (attr->name() == classAttr) {
+        // class
+        const AtomicString& value = attr->value();
+        const UChar* characters = value.characters();
+        unsigned length = value.length();
+        unsigned i;
+        for (i = 0; i < length; ++i) {
+            if (!isClassWhitespace(characters[i]))
+                break;
+        }
+        setHasClass(i < length);
+        if (namedAttrMap) {
+            if (i < length)
+                mappedAttributes()->setClass(value);
+            else
+                mappedAttributes()->clearClass();
+        }
+        setChanged();
+    } else if (attr->name() == styleAttr) {
         if (attr->isNull())
             destroyInlineStyleDecl();
         else

@@ -80,7 +80,7 @@ public:
 
 #else
 
-using namespace JSC;
+using namespace KJS;
 
 class Histogram {
 public:

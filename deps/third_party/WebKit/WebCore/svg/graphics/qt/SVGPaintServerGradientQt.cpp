@@ -62,8 +62,7 @@ bool SVGPaintServerGradient::setup(GraphicsContext*& context, const RenderObject
     QPainterPath* path(context ? context->currentPath() : 0);
     Q_ASSERT(path);
 
-    const SVGRenderStyle* svgStyle = object->style()->svgStyle();
-    RenderStyle* style = object->style();
+    RenderStyle* renderStyle = object->style();
 
     QGradient gradient = setupGradient(context, object);
 
@@ -78,26 +77,27 @@ bool SVGPaintServerGradient::setup(GraphicsContext*& context, const RenderObject
         gradient.setSpread(QGradient::PadSpread);    
     double opacity = 1.0;
 
-    if ((type & ApplyToFillTargetType) && svgStyle->hasFill()) {
+    if ((type & ApplyToFillTargetType) && renderStyle->svgStyle()->hasFill()) {
         fillColorArray(gradient, gradientStops(), opacity);
 
         QBrush brush(gradient);
         brush.setMatrix(gradientTransform());
 
         painter->setBrush(brush);
-        context->setFillRule(svgStyle->fillRule());
+        context->setFillRule(renderStyle->svgStyle()->fillRule());
     }
 
-    if ((type & ApplyToStrokeTargetType) && svgStyle->hasStroke()) {
+    if ((type & ApplyToStrokeTargetType) && renderStyle->svgStyle()->hasStroke()) {
         fillColorArray(gradient, gradientStops(), opacity);
 
         QPen pen;
         QBrush brush(gradient);
         brush.setMatrix(gradientTransform());
-        pen.setBrush(brush);
-        painter->setPen(pen);
 
-        applyStrokeStyleToContext(context, style, object);
+        setPenProperties(object, renderStyle, pen);
+        pen.setBrush(brush);
+
+        painter->setPen(pen);
     }
 
     return true;

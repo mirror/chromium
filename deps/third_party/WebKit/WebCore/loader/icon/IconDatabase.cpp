@@ -107,7 +107,7 @@ static IconDatabaseClient* defaultClient()
 IconDatabase* iconDatabase()
 {
     if (!sharedIconDatabase) {
-        JSC::initializeThreading();
+        KJS::initializeThreading();
         sharedIconDatabase = new IconDatabase;
     }
     return sharedIconDatabase;
@@ -1564,8 +1564,7 @@ bool IconDatabase::writeToDatabase()
     syncTransaction.commit();
     
     // Check to make sure there are no dangling PageURLs - If there are, we want to output one log message but not spam the console potentially every few seconds
-    if (didAnyWork)
-        checkForDanglingPageURLs(false);
+    checkForDanglingPageURLs(false);
 
     LOG(IconDatabase, "Updating the database took %.4f seconds", currentTime() - timeStamp);
 
@@ -1652,21 +1651,19 @@ void IconDatabase::pruneUnretainedIcons()
 void IconDatabase::checkForDanglingPageURLs(bool pruneIfFound)
 {
     ASSERT_ICON_SYNC_THREAD();
-
-    // This check can be relatively expensive so we don't do it in a release build unless the caller has asked us to prune any dangling
-    // entries.  We also don't want to keep performing this check and reporting this error if it has already found danglers before so we
-    // keep track of whether we've found any.  We skip the check in the release build pretending to have already found danglers already.
-#ifndef NDEBUG
-    static bool danglersFound = true;
-#else
+    
+    // We don't want to keep performing this check and reporting this error if it has already found danglers so we keep track
     static bool danglersFound = false;
-#endif
-
-    if ((pruneIfFound || !danglersFound) && SQLiteStatement(m_syncDB, "SELECT url FROM PageURL WHERE PageURL.iconID NOT IN (SELECT iconID FROM IconInfo) LIMIT 1;").returnsAtLeastOneResult()) {
+    
+    // However, if the caller wants us to prune the danglers, we will reset this flag and prune every time
+    if (pruneIfFound)
+        danglersFound = false;
+        
+    if (!danglersFound && SQLiteStatement(m_syncDB, "SELECT url FROM PageURL WHERE PageURL.iconID NOT IN (SELECT iconID FROM IconInfo) LIMIT 1;").returnsAtLeastOneResult()) {
         danglersFound = true;
-        LOG(IconDatabase, "Dangling PageURL entries found");
+        LOG_ERROR("Dangling PageURL entries found");
         if (pruneIfFound && !m_syncDB.executeCommand("DELETE FROM PageURL WHERE iconID NOT IN (SELECT iconID FROM IconInfo);"))
-            LOG(IconDatabase, "Unable to prune dangling PageURLs");
+            LOG_ERROR("Unable to prune dangling PageURLs");
     }
 }
 

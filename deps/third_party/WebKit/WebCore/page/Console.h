@@ -33,7 +33,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/PassRefPtr.h>
 
-namespace JSC {
+namespace KJS {
     class ExecState;
     class ArgList;
     class Profile;
@@ -61,8 +61,6 @@ namespace WebCore {
         WarningMessageLevel,
         ErrorMessageLevel,
         ObjectMessageLevel,
-        NodeMessageLevel,
-        TraceMessageLevel,
         StartGroupMessageLevel,
         EndGroupMessageLevel
     };
@@ -81,26 +79,22 @@ namespace WebCore {
         void log(ScriptCallContext*);
         void warn(ScriptCallContext*);
         void dir(ScriptCallContext*);
-#if USE(JSC)
-        void dirxml(JSC::ExecState*, const JSC::ArgList& arguments);
-        void trace(JSC::ExecState*);
-#endif
         void assertCondition(bool condition, ScriptCallContext*);
         void count(ScriptCallContext*);
 
 #if USE(JSC)
-        void profile(JSC::ExecState*, const JSC::ArgList&);
-        void profileEnd(JSC::ExecState*, const JSC::ArgList&);
-        void time(const JSC::UString& title);
-        void timeEnd(JSC::ExecState*, const JSC::ArgList&);
+        void profile(KJS::ExecState*, const KJS::ArgList&);
+        void profileEnd(KJS::ExecState*, const KJS::ArgList&);
+        void time(const KJS::UString& title);
+        void timeEnd(KJS::ExecState*, const KJS::ArgList&);
 #endif
 
         void group(ScriptCallContext*);
         void groupEnd();
 
 #if USE(JSC)
-        void reportException(JSC::ExecState*, JSC::JSValue*);
-        void reportCurrentException(JSC::ExecState*);
+        void reportException(KJS::ExecState*,  KJS::JSValue*);
+        void reportCurrentException(KJS::ExecState*);
 #endif
 
 #if USE(V8)

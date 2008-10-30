@@ -24,12 +24,12 @@
 #include "JSWrapperObject.h"
 #include "JSString.h"
 
-namespace JSC {
+namespace KJS {
 
     class StringObject : public JSWrapperObject {
     public:
-        StringObject(ExecState*, PassRefPtr<StructureID>);
-        StringObject(ExecState*, PassRefPtr<StructureID>, const UString&);
+        StringObject(ExecState*, JSObject* prototype);
+        StringObject(ExecState*, JSObject* prototype, const UString&);
 
         static StringObject* create(ExecState*, JSString*);
 
@@ -46,7 +46,7 @@ namespace JSC {
         JSString* internalValue() const { return static_cast<JSString*>(JSWrapperObject::internalValue());}
 
     protected:
-        StringObject(PassRefPtr<StructureID>, JSString*);
+        StringObject(JSObject* prototype, JSString*);
 
     private:
         virtual UString toString(ExecState*) const;
@@ -54,6 +54,6 @@ namespace JSC {
         virtual JSString* toThisJSString(ExecState*);
   };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // StringObject_h

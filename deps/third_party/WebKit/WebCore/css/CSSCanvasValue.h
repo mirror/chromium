@@ -47,10 +47,7 @@ public:
     void setName(const String& name) { m_name = name; }
 
 private:
-    CSSCanvasValue()
-        : m_element(0)
-    {
-    }
+    CSSCanvasValue() { }
 
     virtual void canvasChanged(HTMLCanvasElement* element, const FloatRect& changedRect);
     virtual void canvasResized(HTMLCanvasElement* element);
@@ -59,8 +56,7 @@ private:
      
     // The name of the canvas.
     String m_name;
-    // The document supplies the element and owns it.
-    HTMLCanvasElement* m_element;
+    RefPtr<HTMLCanvasElement> m_element;
 };
 
 } // namespace WebCore

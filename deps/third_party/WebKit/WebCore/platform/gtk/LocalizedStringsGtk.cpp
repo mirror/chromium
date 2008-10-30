@@ -286,16 +286,6 @@ String searchMenuClearRecentSearchesText()
     return String::fromUTF8(_("_Clear recent searches"));
 }
 
-String AXDefinitionListTermText()
-{
-    return String::fromUTF8(_("term"));
-}
-
-String AXDefinitionListDefinitionText()
-{
-    return String::fromUTF8(_("definition"));
-}
-
 String AXButtonActionVerb()
 {
     return String::fromUTF8(_("press"));

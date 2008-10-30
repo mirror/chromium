@@ -26,7 +26,7 @@
 #include "identifier.h"
 #include <wtf/Noncopyable.h>
 
-namespace JSC {
+namespace KJS {
 
     class LabelStack : Noncopyable {
     public:
@@ -66,6 +66,6 @@ namespace JSC {
         }
     }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // LabelStack_h

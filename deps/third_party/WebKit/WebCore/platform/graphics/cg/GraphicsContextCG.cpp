@@ -383,40 +383,6 @@ void GraphicsContext::drawConvexPolygon(size_t npoints, const FloatPoint* points
     CGContextRestoreGState(context);
 }
 
-static void applyStrokePattern(GraphicsContext* context, Pattern* pattern)
-{
-    CGContextRef cgContext = context->platformContext();
-    
-    CGPatternRef platformPattern = pattern->createPlatformPattern(context->getCTM());
-    if (!platformPattern)
-        return;
-
-    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(0);
-    CGContextSetStrokeColorSpace(cgContext, patternSpace);
-    CGColorSpaceRelease(patternSpace);
-
-    const CGFloat patternAlpha = 1;
-    CGContextSetStrokePattern(cgContext, platformPattern, &patternAlpha);
-    CGPatternRelease(platformPattern);
-}
-
-static void applyFillPattern(GraphicsContext* context, Pattern* pattern)
-{
-    CGContextRef cgContext = context->platformContext();
-
-    CGPatternRef platformPattern = pattern->createPlatformPattern(context->getCTM());
-    if (!platformPattern)
-        return;
-
-    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(0);
-    CGContextSetFillColorSpace(cgContext, patternSpace);
-    CGColorSpaceRelease(patternSpace);
-
-    const CGFloat patternAlpha = 1;
-    CGContextSetFillPattern(cgContext, platformPattern, &patternAlpha);
-    CGPatternRelease(platformPattern);
-}
-
 static inline bool calculateDrawingMode(const GraphicsContextState& state, CGPathDrawingMode& mode)
 {
     bool shouldFill = state.fillColorSpace == PatternColorSpace || state.fillColor.alpha();
@@ -458,11 +424,6 @@ void GraphicsContext::drawPath()
         strokePath();
         return;
     }
-    
-    if (state.fillColorSpace == PatternColorSpace)
-        applyFillPattern(this, m_common->state.fillPattern.get());
-    if (state.strokeColorSpace == PatternColorSpace)
-        applyStrokePattern(this, m_common->state.strokePattern.get());
 
     CGPathDrawingMode drawingMode;
     if (calculateDrawingMode(state, drawingMode))
@@ -485,21 +446,18 @@ void GraphicsContext::fillPath()
     CGContextRef context = platformContext();
     switch (m_common->state.fillColorSpace) {
     case SolidColorSpace:
-        if (fillColor().alpha())
-            fillPathWithFillRule(context, fillRule());
-        break;
+        if (!fillColor().alpha())
+            return;
+        // fall through
     case PatternColorSpace:
-        applyFillPattern(this, m_common->state.fillPattern.get());
         fillPathWithFillRule(context, fillRule());
         break;
     case GradientColorSpace:
-        CGContextSaveGState(context);
         if (fillRule() == RULE_EVENODD)
             CGContextEOClip(context);
         else
             CGContextClip(context);
         CGContextDrawShading(context, m_common->state.fillGradient->platformGradient());
-        CGContextRestoreGState(context);
         break;
     }
 }
@@ -512,19 +470,16 @@ void GraphicsContext::strokePath()
     CGContextRef context = platformContext();
     switch (m_common->state.strokeColorSpace) {
     case SolidColorSpace:
-        if (fillColor().alpha())
-            CGContextStrokePath(context);
-        break;
+        if (!fillColor().alpha())
+            return;
+        // fall through
     case PatternColorSpace:
-        applyStrokePattern(this, m_common->state.strokePattern.get());
         CGContextStrokePath(context);
         break;
     case GradientColorSpace:
-        CGContextSaveGState(context);
         CGContextReplacePathWithStrokedPath(context);
         CGContextClip(context);
         CGContextDrawShading(context, m_common->state.strokeGradient->platformGradient());
-        CGContextRestoreGState(context);
         break;
     }
 }
@@ -533,21 +488,17 @@ void GraphicsContext::fillRect(const FloatRect& rect)
 {
     if (paintingDisabled())
         return;
-    CGContextRef context = platformContext();
     switch (m_common->state.fillColorSpace) {
     case SolidColorSpace:
         if (fillColor().alpha())
-            CGContextFillRect(context, rect);
+            CGContextFillRect(platformContext(), rect);
         break;
     case PatternColorSpace:
-        applyFillPattern(this, m_common->state.fillPattern.get());
-        CGContextFillRect(context, rect);
+        CGContextFillRect(platformContext(), rect);
         break;
     case GradientColorSpace:
-        CGContextSaveGState(context);
-        CGContextClipToRect(context, rect);
-        CGContextDrawShading(context, m_common->state.fillGradient->platformGradient());
-        CGContextRestoreGState(context);
+        clip(rect);
+        CGContextDrawShading(platformContext(), m_common->state.fillGradient->platformGradient());
         break;
     }
 }
@@ -767,11 +718,6 @@ void GraphicsContext::setLineCap(LineCap cap)
     }
 }
 
-void GraphicsContext::setLineDash(const DashArray& dashes, float dashOffset)
-{
-    CGContextSetLineDash(platformContext(), dashOffset, dashes.data(), dashes.size());
-}
-
 void GraphicsContext::setLineJoin(LineJoin join)
 {
     if (paintingDisabled())
@@ -788,7 +734,7 @@ void GraphicsContext::setLineJoin(LineJoin join)
             break;
     }
 }
-
+ 
 void GraphicsContext::beginPath()
 {
     CGContextBeginPath(platformContext());
@@ -1057,6 +1003,57 @@ void GraphicsContext::setPlatformTextDrawingMode(int mode)
         default:
             break;
     }
+}
+
+// FIXME: It is unclear if setting patterns on the CGContext at
+// setStrokePattern/setFillPattern time is safe.  Our Pattern object currently
+// depends on the CTM for CGShading creation, thus setting a pattern and then
+// transforming the GraphicsContext may cause the pattern to draw incorrectly.
+// I believe we can fix our Pattern object to not depend on the CTM.
+void GraphicsContext::setPlatformStrokePattern(Pattern* pattern)
+{
+    if (paintingDisabled())
+        return;
+    CGPatternRef platformPattern = pattern->createPlatformPattern(getCTM());
+    if (!platformPattern)
+        return;
+
+    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(0);
+    CGContextSetStrokeColorSpace(platformContext(), patternSpace);
+    CGColorSpaceRelease(patternSpace);
+
+    const CGFloat patternAlpha = 1;
+    CGContextSetStrokePattern(platformContext(), platformPattern, &patternAlpha);
+    CGPatternRelease(platformPattern);
+}
+
+void GraphicsContext::setPlatformFillPattern(Pattern* pattern)
+{
+    if (paintingDisabled())
+        return;
+    CGPatternRef platformPattern = pattern->createPlatformPattern(getCTM());
+    if (!platformPattern)
+        return;
+
+    CGColorSpaceRef patternSpace = CGColorSpaceCreatePattern(0);
+    CGContextSetFillColorSpace(platformContext(), patternSpace);
+    CGColorSpaceRelease(patternSpace);
+
+    const CGFloat patternAlpha = 1;
+    CGContextSetFillPattern(platformContext(), platformPattern, &patternAlpha);
+    CGPatternRelease(platformPattern);
+}
+
+void GraphicsContext::setPlatformStrokeGradient(Gradient*)
+{
+    // CoreGraphics does not support setting a "stroke gradient", only
+    // filling a clip region with a gradient, which we do at draw time
+}
+
+void GraphicsContext::setPlatformFillGradient(Gradient*)
+{
+    // CoreGraphics does not support setting a "fill gradient", only
+    // filling a clip region with a gradient, which we do at draw time
 }
 
 void GraphicsContext::setPlatformStrokeColor(const Color& color)

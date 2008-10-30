@@ -293,16 +293,6 @@ String AXHeadingText()
     return String();
 }
 
-String AXDefinitionListTermText()
-{
-    return String();
-}
-
-String AXDefinitionListDefinitionText()
-{
-    return String();
-}
-
 String AXButtonActionVerb()
 {
     return String();

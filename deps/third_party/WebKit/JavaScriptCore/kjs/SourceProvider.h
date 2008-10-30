@@ -32,32 +32,21 @@
 #include "ustring.h"
 #include <wtf/RefCounted.h>
 
-namespace JSC {
+namespace KJS {
 
     class SourceProvider : public RefCounted<SourceProvider> {
     public:
-        SourceProvider(const UString& url)
-            : m_url(url)
-        {
-        }
         virtual ~SourceProvider() { }
-
         virtual UString getRange(int start, int end) const = 0;
         virtual const UChar* data() const = 0;
         virtual int length() const = 0;
-        
-        const UString& url() { return m_url; }
-        intptr_t asID() { return reinterpret_cast<intptr_t>(this); }
-
-    private:
-        UString m_url;
     };
 
     class UStringSourceProvider : public SourceProvider {
     public:
-        static PassRefPtr<UStringSourceProvider> create(const UString& source, const UString& url)
+        static PassRefPtr<UStringSourceProvider> create(const UString& source)
         {
-            return adoptRef(new UStringSourceProvider(source, url));
+            return adoptRef(new UStringSourceProvider(source));
         }
 
         UString getRange(int start, int end) const { return m_source.substr(start, end - start); }
@@ -65,15 +54,14 @@ namespace JSC {
         int length() const { return m_source.size(); }
 
     private:
-        UStringSourceProvider(const UString& source, const UString& url)
-            : SourceProvider(url)
-            , m_source(source)
+        UStringSourceProvider(const UString& source)
+            : m_source(source)
         {
         }
 
         UString m_source;
     };
-    
-} // namespace JSC
+
+} // namespace KJS
 
 #endif // SourceProvider_h

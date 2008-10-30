@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2006 Zack Rusin <zack@kde.org>
  * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -45,9 +45,9 @@
 #include "MouseEventWithHitTestResults.h"
 #include "Page.h"
 #include "PlatformKeyboardEvent.h"
+#include "PlatformScrollBar.h"
 #include "PlatformWheelEvent.h"
 #include "RenderWidget.h"
-#include "Scrollbar.h"
 #include "NotImplemented.h"
 
 QT_BEGIN_NAMESPACE
@@ -132,6 +132,13 @@ bool EventHandler::passMouseReleaseEventToSubframe(MouseEventWithHitTestResults&
 {
     subframe->eventHandler()->handleMouseReleaseEvent(mev.event());
     return true;
+}
+
+bool EventHandler::passMousePressEventToScrollbar(MouseEventWithHitTestResults& mev, PlatformScrollbar* scrollbar)
+{
+    if (!scrollbar || !scrollbar->isEnabled())
+        return false;
+    return scrollbar->handleMousePressEvent(mev.event());
 }
 
 }

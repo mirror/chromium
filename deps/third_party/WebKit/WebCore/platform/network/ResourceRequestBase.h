@@ -40,8 +40,6 @@ namespace WebCore {
         ReturnCacheDataDontLoad, // results of a post - allow stale data and only use cache
     };
 
-    const int unspecifiedTimeoutInterval = INT_MAX;
-
     class ResourceRequest;
 
     // Do not use this type directly.  Use ResourceRequest instead.
@@ -78,10 +76,6 @@ namespace WebCore {
         void setHTTPReferrer(const String& httpReferrer) { setHTTPHeaderField("Referer", httpReferrer); }
         void clearHTTPReferrer() { m_httpHeaderFields.remove("Referer"); }
         
-        String httpOrigin() const { return httpHeaderField("Origin"); }
-        void setHTTPOrigin(const String& httpOrigin) { setHTTPHeaderField("Origin", httpOrigin); }
-        void clearHTTPOrigin() { m_httpHeaderFields.remove("Origin"); }
-
         String httpUserAgent() const { return httpHeaderField("User-Agent"); }
         void setHTTPUserAgent(const String& httpUserAgent) { setHTTPHeaderField("User-Agent", httpUserAgent); }
 
@@ -107,7 +101,7 @@ namespace WebCore {
         ResourceRequestBase(const KURL& url, ResourceRequestCachePolicy policy)
             : m_url(url)
             , m_cachePolicy(policy)
-            , m_timeoutInterval(unspecifiedTimeoutInterval)
+            , m_timeoutInterval(defaultTimeoutInterval)
             , m_httpMethod("GET")
             , m_allowHTTPCookies(true)
             , m_resourceRequestUpdated(true)
@@ -117,6 +111,8 @@ namespace WebCore {
 
         void updatePlatformRequest() const; 
         void updateResourceRequest() const; 
+
+        static const int defaultTimeoutInterval = 60;
 
         KURL m_url;
 

@@ -32,7 +32,7 @@ typedef const struct __CFString * CFStringRef;
 
 typedef wchar_t* BSTR;
 
-namespace JSC {
+namespace KJS {
     class UString;
 }
 
@@ -50,7 +50,7 @@ namespace WebCore {
         BString(const String&);
         BString(const AtomicString&);
         BString(const KURL&);
-        BString(const JSC::UString&);
+        BString(const KJS::UString&);
 #if PLATFORM(CF)
         BString(CFStringRef);
 #endif

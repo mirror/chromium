@@ -28,6 +28,7 @@
 #define RenderThemeGdk_h
 
 #include "RenderTheme.h"
+#include "GraphicsContext.h"
 
 #include <gtk/gtk.h>
 

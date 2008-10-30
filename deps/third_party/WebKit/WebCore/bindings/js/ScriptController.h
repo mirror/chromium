@@ -39,7 +39,7 @@ class WebScriptObject;
 
 struct NPObject;
 
-namespace JSC {
+namespace KJS {
     class JSGlobalObject;
     class JSValue;
 
@@ -59,7 +59,7 @@ class Node;
 class String;
 class Widget;
 
-typedef HashMap<void*, RefPtr<JSC::Bindings::RootObject> > RootObjectMap;
+typedef HashMap<void*, RefPtr<KJS::Bindings::RootObject> > RootObjectMap;
 
 typedef KJS::Bindings::Instance* JSInstance;
 typedef PassRefPtr<KJS::Bindings::Instance> JSInstanceHandle;
@@ -85,7 +85,7 @@ public:
         return m_windowShell->window();
     }
 
-    JSC::JSValue* evaluate(const String& sourceURL, int baseLine, const String& code);
+    KJS::JSValue* evaluate(const String& sourceURL, int baseLine, const String& code);
 
     PassRefPtr<EventListener> createHTMLEventHandler(const String& functionName, const String& code, Node*);
 #if ENABLE(SVG)
@@ -99,7 +99,7 @@ public:
 
     bool isEnabled();
 
-    void attachDebugger(JSC::Debugger*);
+    void attachDebugger(KJS::Debugger*);
 
     void setPaused(bool b) { m_paused = b; }
     bool isPaused() const { return m_paused; }
@@ -116,10 +116,10 @@ public:
     void clearScriptObjects();
     void cleanupScriptObjectsForPlugin(void*);
 
-    PassRefPtr<JSC::Bindings::Instance> createScriptInstanceForWidget(Widget*);
-    JSC::Bindings::RootObject* bindingRootObject();
+    PassRefPtr<KJS::Bindings::Instance> createScriptInstanceForWidget(Widget*);
+    KJS::Bindings::RootObject* bindingRootObject();
 
-    PassRefPtr<JSC::Bindings::RootObject> createRootObject(void* nativeHandle);
+    PassRefPtr<KJS::Bindings::RootObject> createRootObject(void* nativeHandle);
 
 #if PLATFORM(MAC)
 #if ENABLE(MAC_JAVA_BRIDGE)
@@ -144,7 +144,7 @@ private:
     void clearPlatformScriptObjects();
     void disconnectPlatformScriptObjects();
 
-    JSC::ProtectedPtr<JSDOMWindowShell> m_windowShell;
+    KJS::ProtectedPtr<JSDOMWindowShell> m_windowShell;
     HashSet<JSDOMWindow*> m_liveFormerWindows;
     Frame* m_frame;
     int m_handlerLineno;
@@ -154,7 +154,7 @@ private:
     bool m_paused;
 
     // The root object used for objects bound outside the context of a plugin.
-    RefPtr<JSC::Bindings::RootObject> m_bindingRootObject;
+    RefPtr<KJS::Bindings::RootObject> m_bindingRootObject;
     RootObjectMap m_rootObjects;
 #if ENABLE(NETSCAPE_PLUGIN_API)
     NPObject* m_windowScriptNPObject;

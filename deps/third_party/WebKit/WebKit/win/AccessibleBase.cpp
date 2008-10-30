@@ -34,7 +34,6 @@
 #include <WebCore/Element.h>
 #include <WebCore/EventHandler.h>
 #include <WebCore/FrameView.h>
-#include <WebCore/HostWindow.h>
 #include <WebCore/HTMLNames.h>
 #include <WebCore/HTMLFrameElementBase.h>
 #include <WebCore/HTMLInputElement.h>
@@ -105,7 +104,7 @@ HRESULT STDMETHODCALLTYPE AccessibleBase::get_accParent(IDispatch** parent)
     if (!m_object)
         return E_FAIL;
 
-    return WebView::AccessibleObjectFromWindow(m_object->topDocumentFrameView()->hostWindow()->platformWindow(),
+    return WebView::AccessibleObjectFromWindow(m_object->topDocumentFrameView()->containingWindow(),
         OBJID_WINDOW, __uuidof(IAccessible), reinterpret_cast<void**>(parent));
 }
 

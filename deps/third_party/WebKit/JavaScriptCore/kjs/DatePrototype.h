@@ -23,13 +23,13 @@
 
 #include "DateInstance.h"
 
-namespace JSC {
+namespace KJS {
 
     class ObjectPrototype;
 
     class DatePrototype : public DateInstance {
     public:
-        DatePrototype(ExecState*, PassRefPtr<StructureID>);
+        DatePrototype(ExecState*, ObjectPrototype*);
 
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
 
@@ -37,6 +37,6 @@ namespace JSC {
         static const ClassInfo info;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // DatePrototype_h

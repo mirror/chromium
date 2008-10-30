@@ -29,8 +29,6 @@
 #include "WebKit.h"
 #include "WebKitDLL.h"
 
-#include "WebPreferences.h"
-
 #pragma warning(push, 0)
 #include <WebCore/CharacterNames.h>
 #include <WebCore/Font.h>
@@ -65,10 +63,6 @@ static Font makeFont(const WebFontDescription& description)
     f.setItalic(description.italic);
     f.setWeight(description.bold ? FontWeightBold : FontWeightNormal);
     f.setIsAbsoluteSize(true);
-
-    FontSmoothingType smoothingType;
-    if (SUCCEEDED(WebPreferences::sharedStandardPreferences()->fontSmoothing(&smoothingType)))
-        f.setRenderingMode(smoothingType == FontSmoothingTypeWindows ? AlternateRenderingMode : NormalRenderingMode);
 
     Font font(f, 0, 0);
     font.update(0);

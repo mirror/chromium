@@ -28,7 +28,9 @@ namespace WebCore {
 
 bool CSSParserValue::isVariable() const
 {
-    return unit == CSSPrimitiveValue::CSS_PARSER_VARIABLE_FUNCTION_SYNTAX;
+    return unit == CSSPrimitiveValue::CSS_PARSER_VARIABLE_FUNCTION_SYNTAX || 
+           unit == CSSPrimitiveValue::CSS_PARSER_VARIABLE_EQUALS_SYNTAX ||
+           unit == CSSPrimitiveValue::CSS_PARSER_VARIABLE_EQUALS_SYNTAX;
 }
 
 CSSParserValueList::~CSSParserValueList()
@@ -59,8 +61,6 @@ PassRefPtr<CSSValue> CSSParserValue::createCSSValue()
     RefPtr<CSSValue> parsedValue;
     if (id)
         parsedValue = CSSPrimitiveValue::createIdentifier(id);
-    else if (unit == CSSPrimitiveValue::CSS_IDENT)
-        parsedValue = CSSPrimitiveValue::create(string, CSSPrimitiveValue::CSS_PARSER_IDENTIFIER);
     else if (unit == CSSPrimitiveValue::CSS_NUMBER && isInt)
         parsedValue = CSSPrimitiveValue::create(fValue, CSSPrimitiveValue::CSS_PARSER_INTEGER);
     else if (unit == CSSParserValue::Operator) {

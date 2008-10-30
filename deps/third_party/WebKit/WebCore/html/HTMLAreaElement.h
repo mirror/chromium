@@ -65,7 +65,8 @@ public:
     String shape() const;
     void setShape(const String&);
 
-    virtual bool isFocusable() const;
+    void setTabIndex(int);
+    bool isFocusable() const;
 
     virtual String target() const;
     void setTarget(const String&);

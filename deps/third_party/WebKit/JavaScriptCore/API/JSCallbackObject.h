@@ -31,12 +31,12 @@
 #include "JSValueRef.h"
 #include "JSObject.h"
 
-namespace JSC {
+namespace KJS {
 
 template <class Base>
 class JSCallbackObject : public Base {
 public:
-    JSCallbackObject(ExecState*, PassRefPtr<StructureID>, JSClassRef, void* data);
+    JSCallbackObject(ExecState*, JSClassRef, JSObject* prototype, void* data);
     JSCallbackObject(JSGlobalData*, JSClassRef);
     virtual ~JSCallbackObject();
 
@@ -47,11 +47,6 @@ public:
 
     JSClassRef classRef() const { return m_callbackObjectData->jsClass; }
     bool inherits(JSClassRef) const;
-
-    static PassRefPtr<StructureID> createStructureID(JSValue* proto) 
-    { 
-        return StructureID::create(proto, TypeInfo(ObjectType, ImplementsHasInstance | OverridesHasInstance)); 
-    }
 
 private:
     virtual UString className() const;
@@ -64,7 +59,8 @@ private:
     virtual bool deleteProperty(ExecState*, const Identifier&);
     virtual bool deleteProperty(ExecState*, unsigned);
 
-    virtual bool hasInstance(ExecState* exec, JSValue* value, JSValue* proto);
+    virtual bool implementsHasInstance() const;
+    virtual bool hasInstance(ExecState *exec, JSValue *value);
 
     virtual void getPropertyNames(ExecState*, PropertyNameArray&);
 
@@ -105,7 +101,7 @@ private:
     OwnPtr<JSCallbackObjectData> m_callbackObjectData;
 };
 
-} // namespace JSC
+} // namespace KJS
 
 // include the actual template class implementation
 #include "JSCallbackObjectFunctions.h"

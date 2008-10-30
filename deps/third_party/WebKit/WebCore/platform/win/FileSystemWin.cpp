@@ -28,103 +28,20 @@
  */
 
 #include "config.h"
+#include <windows.h>
 #include "FileSystem.h"
 
 #include "CString.h"
 #include "NotImplemented.h"
 #include "PlatformString.h"
 
-#include <windows.h>
-#include <winbase.h>
-#include <shlobj.h>
 #include <shlwapi.h>
 
 namespace WebCore {
 
-static bool statFile(String path, struct _stat64& st)
-{
-    ASSERT_ARG(path, !path.isNull());
-    return !_wstat64(path.charactersWithNullTermination(), &st) && (st.st_mode & _S_IFMT) == _S_IFREG;
-}
-
-bool getFileSize(const String& path, long long& result)
-{
-    struct _stat64 sb;
-    if (!statFile(path, sb))
-        return false;
-    result = sb.st_size;
-    return true;
-}
-
-bool getFileModificationTime(const String& path, time_t& result)
-{
-    struct _stat64 st;
-    if (!statFile(path, st))
-        return false;
-    result = st.st_mtime;
-    return true;
-}
-
-bool fileExists(const String& path) 
-{
-    struct _stat64 st;
-    return statFile(path, st);
-}
-
-bool deleteFile(const String& path)
-{
-    String filename = path;
-    return !!DeleteFileW(filename.charactersWithNullTermination());
-}
-
-bool deleteEmptyDirectory(const String& path)
-{
-    String filename = path;
-    return !!RemoveDirectoryW(filename.charactersWithNullTermination());
-}
-
-String pathByAppendingComponent(const String& path, const String& component)
-{
-    Vector<UChar> buffer(MAX_PATH);
-
-    if (path.length() + 1 > buffer.size())
-        return String();
-
-    memcpy(buffer.data(), path.characters(), path.length() * sizeof(UChar));
-    buffer[path.length()] = '\0';
-
-    String componentCopy = component;
-    if (!PathAppendW(buffer.data(), componentCopy.charactersWithNullTermination()))
-        return String();
-
-    buffer.resize(wcslen(buffer.data()));
-
-    return String::adopt(buffer);
-}
-
-CString fileSystemRepresentation(const String&)
-{
-    return "";
-}
-
-bool makeAllDirectories(const String& path)
-{
-    String fullPath = path;
-    if (SHCreateDirectoryEx(0, fullPath.charactersWithNullTermination(), 0) != ERROR_SUCCESS) {
-        DWORD error = GetLastError();
-        if (error != ERROR_FILE_EXISTS && error != ERROR_ALREADY_EXISTS) {
-            LOG_ERROR("Failed to create path %s", path.ascii().data());
-            return false;
-        }
-    }
-    return true;
-}
-
-String homeDirectoryPath()
-{
-    notImplemented();
-    return "";
-}
+// Don't include any of the file system code, since the renderer can't do
+// file system operations from sandbox.
+// These methods are hot referenced, so no definition is needed.
 
 String pathGetFileName(const String& path)
 {
@@ -137,171 +54,49 @@ String directoryName(const String& path)
     return String();
 }
 
-static String bundleName()
+// Used by Page::userStyleSheet().
+// The custom user stylesheets should be implemented more generically, in
+// order to support other protocols, like http: and data:
+bool getFileModificationTime(const String& /*path*/, time_t& /*result*/)
 {
-    static bool initialized;
-    static String name = "WebKit";
-
-    if (!initialized) {
-        initialized = true;
-
-        if (CFBundleRef bundle = CFBundleGetMainBundle())
-            if (CFTypeRef bundleExecutable = CFBundleGetValueForInfoDictionaryKey(bundle, kCFBundleExecutableKey))
-                if (CFGetTypeID(bundleExecutable) == CFStringGetTypeID())
-                    name = reinterpret_cast<CFStringRef>(bundleExecutable);
-    }
-
-    return name;
+    notImplemented();
+    return false;
 }
 
-static String storageDirectory(DWORD pathIdentifier)
+bool fileExists(const String& path) 
 {
-    Vector<UChar> buffer(MAX_PATH);
-    if (FAILED(SHGetFolderPathW(0, pathIdentifier | CSIDL_FLAG_CREATE, 0, 0, buffer.data())))
-        return String();
-    buffer.resize(wcslen(buffer.data()));
-    String directory = String::adopt(buffer);
-
-    static const String companyNameDirectory = "Apple Computer\\";
-    directory = pathByAppendingComponent(directory, companyNameDirectory + bundleName());
-    if (!makeAllDirectories(directory))
-        return String();
-
-    return directory;
+    notImplemented();
+    return false;
 }
 
-static String cachedStorageDirectory(DWORD pathIdentifier)
+bool getFileSize(const String&, long long& result)
 {
-    static HashMap<DWORD, String> directories;
-
-    HashMap<DWORD, String>::iterator it = directories.find(pathIdentifier);
-    if (it != directories.end())
-        return it->second;
-
-    String directory = storageDirectory(pathIdentifier);
-    directories.add(pathIdentifier, directory);
-
-    return directory;
+    notImplemented();
+    return false;
 }
 
-CString openTemporaryFile(const char*, PlatformFileHandle& handle)
+// delteFile() and deleteEmptyDirectory() are used by
+// FormData::removeGeneratedFilesIfNeeded() for uploading bundles:
+// http://trac.webkit.org/changeset/32666
+// This approach will need refactoring to isolate file system operations
+// between browser/renderer
+
+bool deleteFile(const String& /*path*/)
 {
-    handle = INVALID_HANDLE_VALUE;
-
-    char tempPath[MAX_PATH];
-    int tempPathLength = ::GetTempPathA(_countof(tempPath), tempPath);
-    if (tempPathLength <= 0 || tempPathLength > _countof(tempPath))
-        return 0;
-
-    HCRYPTPROV hCryptProv = 0;
-    if (!CryptAcquireContext(&hCryptProv, 0, 0, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))
-        return 0;
-
-    char proposedPath[MAX_PATH];
-    while (1) {
-        char tempFile[] = "XXXXXXXX.tmp"; // Use 8.3 style name (more characters aren't helpful due to 8.3 short file names)
-        const int randomPartLength = 8;
-        if (!CryptGenRandom(hCryptProv, randomPartLength, reinterpret_cast<BYTE*>(tempFile)))
-            break;
-
-        // Limit to valid filesystem characters, also excluding others that could be problematic, like punctuation.
-        // don't include both upper and lowercase since Windows file systems are typically not case sensitive.
-        const char validChars[] = "0123456789abcdefghijklmnopqrstuvwxyz";
-        for (int i = 0; i < randomPartLength; ++i)
-            tempFile[i] = validChars[tempFile[i] % (sizeof(validChars) - 1)];
-
-        ASSERT(strlen(tempFile) == sizeof(tempFile) - 1);
-
-        if (!PathCombineA(proposedPath, tempPath, tempFile))
-            break;
- 
-        // use CREATE_NEW to avoid overwriting an existing file with the same name
-        handle = CreateFileA(proposedPath, GENERIC_READ | GENERIC_WRITE, 0, 0, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, 0);
-        if (!isHandleValid(handle) && GetLastError() == ERROR_ALREADY_EXISTS)
-            continue;
-
-        break;
-    }
-
-    CryptReleaseContext(hCryptProv, 0);
-
-    if (!isHandleValid(handle))
-        return 0;
-
-    return proposedPath;
+    notImplemented();
+    return false;
 }
 
-void closeFile(PlatformFileHandle& handle)
+bool deleteEmptyDirectory(const String& /*path*/)
 {
-    if (isHandleValid(handle)) {
-        ::CloseHandle(handle);
-        handle = invalidPlatformFileHandle;
-    }
-}
-
-int writeToFile(PlatformFileHandle handle, const char* data, int length)
-{
-    if (!isHandleValid(handle))
-        return -1;
-
-    DWORD bytesWritten;
-    bool success = WriteFile(handle, data, length, &bytesWritten, 0);
-
-    if (!success)
-        return -1;
-    return static_cast<int>(bytesWritten);
+    notImplemented();
+    return false;
 }
 
 bool unloadModule(PlatformModule module)
 {
-    return ::FreeLibrary(module);
-}
-
-String localUserSpecificStorageDirectory()
-{
-    return cachedStorageDirectory(CSIDL_LOCAL_APPDATA);
-}
-
-String roamingUserSpecificStorageDirectory()
-{
-    return cachedStorageDirectory(CSIDL_APPDATA);
-}
-
-bool safeCreateFile(const String& path, CFDataRef data)
-{
-    // Create a temporary file.
-    WCHAR tempDirPath[MAX_PATH];
-    if (!GetTempPathW(ARRAYSIZE(tempDirPath), tempDirPath))
-        return false;
-
-    WCHAR tempPath[MAX_PATH];
-    if (!GetTempFileNameW(tempDirPath, L"WEBKIT", 0, tempPath))
-        return false;
-
-    HANDLE tempFileHandle = CreateFileW(tempPath, GENERIC_READ | GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
-    if (tempFileHandle == INVALID_HANDLE_VALUE)
-        return false;
-
-    // Write the data to this temp file.
-    DWORD written;
-    if (!WriteFile(tempFileHandle, CFDataGetBytePtr(data), static_cast<DWORD>(CFDataGetLength(data)), &written, 0))
-        return false;
-
-    CloseHandle(tempFileHandle);
-
-    // Copy the temp file to the destination file.
-    String destination = path;
-    if (!MoveFileExW(tempPath, destination.charactersWithNullTermination(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_COPY_ALLOWED))
-        return false;
-
-    return true;
-}
-
-Vector<String> listDirectory(const String& path, const String& filter)
-{
-    Vector<String> entries;
     notImplemented();
-    return entries;
+    return false;
 }
 
 } // namespace WebCore

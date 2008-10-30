@@ -21,8 +21,8 @@
 #define Chrome_h
 
 #include "FocusDirection.h"
-#include "HostWindow.h"
 #include <wtf/Forward.h>
+#include <wtf/Noncopyable.h>
 #include <wtf/RefPtr.h>
 
 #if PLATFORM(MAC)
@@ -45,19 +45,12 @@ namespace WebCore {
     struct FrameLoadRequest;
     struct WindowFeatures;
     
-    class Chrome : public HostWindow {
+    class Chrome : Noncopyable {
     public:
         Chrome(Page*, ChromeClient*);
         ~Chrome();
 
         ChromeClient* client() { return m_client; }
-
-        // HostWindow methods.
-        virtual void repaint(const IntRect&, bool contentChanged, bool immediate = false, bool repaintContentOnly = false);
-        virtual void scroll(const IntSize& scrollDelta, const IntRect& rectToScroll, const IntRect& clipRect);
-        virtual IntPoint screenToWindow(const IntPoint&) const;
-        virtual IntRect windowToScreen(const IntRect&) const;
-        virtual PlatformWidget platformWindow() const;
 
         void setWindowRect(const FloatRect&) const;
         FloatRect windowRect() const;
@@ -105,6 +98,9 @@ namespace WebCore {
         bool shouldInterruptJavaScript();
 
         IntRect windowResizerRect() const;
+        void addToDirtyRegion(const IntRect&);
+        void scrollBackingStore(int dx, int dy, const IntRect& scrollViewRect, const IntRect& clipRect);
+        void updateBackingStore();
 
         void mouseDidMoveOverElement(const HitTestResult&, unsigned modifierFlags);
 

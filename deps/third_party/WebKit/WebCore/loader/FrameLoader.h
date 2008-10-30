@@ -189,13 +189,13 @@ namespace WebCore {
         bool isReloading() const;
         String referrer() const;
         String outgoingReferrer() const;
-        String outgoingOrigin() const;
         void loadEmptyDocumentSynchronously();
 
         DocumentLoader* activeDocumentLoader() const;
         DocumentLoader* documentLoader() const;
         DocumentLoader* policyDocumentLoader() const;
         DocumentLoader* provisionalDocumentLoader() const;
+        DocumentLoader* policyDocumentLoader();
         FrameState state() const;
         static double timeOfLastCompletedLoad();
         
@@ -221,7 +221,7 @@ namespace WebCore {
         ResourceError cancelledError(const ResourceRequest&) const;
         ResourceError fileDoesNotExistError(const ResourceResponse&) const;
         ResourceError blockedError(const ResourceRequest&) const;
-        ResourceError cannotShowURLError(const ResourceRequest&) const;
+        ResourceError cannotShowURLError(const ResourceRequest&) const; 
 
         void cannotShowMIMEType(const ResourceResponse&);
         ResourceError interruptionForPolicyChangeError(const ResourceRequest&);
@@ -275,7 +275,6 @@ namespace WebCore {
         void detachChildren();
 
         void addExtraFieldsToRequest(ResourceRequest&, bool isMainResource, bool alwaysFromRequest);
-        static void addHTTPOriginIfNeeded(ResourceRequest&, String origin);
 
         FrameLoaderClient* client() const;
 

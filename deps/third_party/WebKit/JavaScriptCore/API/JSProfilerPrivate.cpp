@@ -30,7 +30,7 @@
 #include "OpaqueJSString.h"
 #include "Profiler.h"
 
-using namespace JSC;
+using namespace KJS;
 
 void JSStartProfiling(JSContextRef ctx, JSStringRef title)
 {

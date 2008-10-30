@@ -23,7 +23,7 @@
 
 #include "InternalFunction.h"
 
-namespace JSC {
+namespace KJS {
 
     class ErrorInstance;
     class FunctionPrototype;
@@ -31,7 +31,9 @@ namespace JSC {
 
     class NativeErrorConstructor : public InternalFunction {
     public:
-        NativeErrorConstructor(ExecState*, PassRefPtr<StructureID>, NativeErrorPrototype*);
+        NativeErrorConstructor(ExecState*, FunctionPrototype*, NativeErrorPrototype*);
+
+        virtual void mark();
 
         static const ClassInfo info;
 
@@ -43,9 +45,9 @@ namespace JSC {
 
         virtual const ClassInfo* classInfo() const { return &info; }
 
-        RefPtr<StructureID> m_errorStructure;
+        NativeErrorPrototype* m_proto;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // NativeErrorConstructor_h

@@ -25,12 +25,10 @@
 
 #include "config.h"
 #include "JSBase.h"
-#include "JSBasePrivate.h"
 
 #include "APICast.h"
 #include "completion.h"
 #include "OpaqueJSString.h"
-#include "SourceRange.h"
 #include <kjs/ExecState.h>
 #include <kjs/InitializeThreading.h>
 #include <kjs/interpreter.h>
@@ -38,20 +36,19 @@
 #include <kjs/JSLock.h>
 #include <kjs/JSObject.h>
 
-using namespace JSC;
+using namespace KJS;
 
 JSValueRef JSEvaluateScript(JSContextRef ctx, JSStringRef script, JSObjectRef thisObject, JSStringRef sourceURL, int startingLineNumber, JSValueRef* exception)
 {
     ExecState* exec = toJS(ctx);
-    exec->globalData().heap.registerThread();
+    exec->globalData().heap->registerThread();
     JSLock lock(exec);
 
     JSObject* jsThisObject = toJS(thisObject);
 
     // Interpreter::evaluate sets "this" to the global object if it is NULL
     JSGlobalObject* globalObject = exec->dynamicGlobalObject();
-    SourceCode source = makeSource(script->ustring(), sourceURL->ustring(), startingLineNumber);
-    Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), source, jsThisObject);
+    Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), sourceURL->ustring(), startingLineNumber, script->ustring(), jsThisObject);
 
     if (completion.complType() == Throw) {
         if (exception)
@@ -69,11 +66,10 @@ JSValueRef JSEvaluateScript(JSContextRef ctx, JSStringRef script, JSObjectRef th
 bool JSCheckScriptSyntax(JSContextRef ctx, JSStringRef script, JSStringRef sourceURL, int startingLineNumber, JSValueRef* exception)
 {
     ExecState* exec = toJS(ctx);
-    exec->globalData().heap.registerThread();
+    exec->globalData().heap->registerThread();
     JSLock lock(exec);
 
-    SourceCode source = makeSource(script->ustring(), sourceURL->ustring(), startingLineNumber);
-    Completion completion = Interpreter::checkSyntax(exec->dynamicGlobalObject()->globalExec(), source);
+    Completion completion = Interpreter::checkSyntax(exec->dynamicGlobalObject()->globalExec(), sourceURL->ustring(), startingLineNumber, script->ustring());
     if (completion.complType() == Throw) {
         if (exception)
             *exception = toRef(completion.value());
@@ -95,22 +91,14 @@ void JSGarbageCollect(JSContextRef ctx)
 
     ExecState* exec = toJS(ctx);
     JSGlobalData& globalData = exec->globalData();
+    Heap* heap = globalData.heap;
 
     JSLock lock(globalData.isSharedInstance);
 
-    if (!globalData.heap.isBusy())
-        globalData.heap.collect();
+    if (!heap->isBusy())
+        heap->collect();
 
     // FIXME: Perhaps we should trigger a second mark and sweep
     // once the garbage collector is done if this is called when
     // the collector is busy.
-}
-
-void JSReportExtraMemoryCost(JSContextRef ctx, size_t size)
-{
-    ExecState* exec = toJS(ctx);
-    exec->globalData().heap.registerThread();
-    JSLock lock(exec);
-
-    exec->globalData().heap.reportExtraMemoryCost(size);
 }

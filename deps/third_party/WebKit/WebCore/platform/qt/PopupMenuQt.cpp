@@ -1,7 +1,7 @@
 /*
  * This file is part of the popup menu implementation for <select> elements in WebCore.
  *
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  * Copyright (C) 2006 Apple Computer, Inc.
  * Copyright (C) 2006 Michael Emmel mike.emmel@gmail.com 
  * Coypright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
@@ -28,7 +28,6 @@
 
 #include "Frame.h"
 #include "FrameView.h"
-#include "HostWindow.h"
 #include "PopupMenuClient.h"
 #include "NotImplemented.h"
 #include "QWebPopup.h"
@@ -71,7 +70,7 @@ void PopupMenu::populate(const IntRect& r)
             m_popup->insertItem(i, QString::fromLatin1("---"));
         }
         else {
-            //PopupMenuStyle style = client()->itemStyle(i);
+            //RenderStyle* style = client()->itemStyle(i);
             m_popup->insertItem(i, client()->itemText(i));
 #if 0
             item = new QListWidgetItem(client()->itemText(i));
@@ -90,7 +89,7 @@ void PopupMenu::populate(const IntRect& r)
 
 void PopupMenu::show(const IntRect& r, FrameView* v, int index)
 {
-    QWidget* window = v->hostWindow()->platformWindow();
+    QWidget* window = v->containingWindow();
     populate(r);
     QRect rect = r;
     rect.moveTopLeft(v->contentsToWindow(r.topLeft()));

@@ -139,8 +139,7 @@ WebView *getWebView(WebFrame *webFrame);
 - (WebDataSource *)_dataSource;
 
 - (BOOL)_needsLayout;
-- (void)_drawRect:(NSRect)rect contentsOnly:(BOOL)contentsOnly;
-- (BOOL)_getVisibleRect:(NSRect*)rect;
+- (void)_drawRect:(NSRect)rect;
 - (NSArray*)_computePageRectsWithPrintWidthScaleFactor:(float)printWidthScaleFactor printHeight:(float)printHeight;
 
 - (NSString *)_stringByEvaluatingJavaScriptFromString:(NSString *)string;

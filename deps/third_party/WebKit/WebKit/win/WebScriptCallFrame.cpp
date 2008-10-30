@@ -47,9 +47,9 @@
 
 #include <wtf/Assertions.h>
 
-using namespace JSC;
+using namespace KJS;
 
-UString WebScriptCallFrame::jsValueToString(JSC::ExecState* state, JSValue* jsvalue)
+UString WebScriptCallFrame::jsValueToString(KJS::ExecState* state, JSValue* jsvalue)
 {
     if (!jsvalue)
         return "undefined";

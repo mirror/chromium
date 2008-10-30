@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2006 Trolltech ASA
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -19,42 +19,38 @@
 
 #include "config.h"
 #include "qt_runtime.h"
-
-#include "DateInstance.h"
-#include "DateMath.h"
-#include "DatePrototype.h"
-#include "FunctionPrototype.h"
-#include "JSArray.h"
-#include "JSDOMBinding.h"
+#include "qt_instance.h"
 #include "JSGlobalObject.h"
 #include "JSLock.h"
 #include "JSObject.h"
+#include "JSArray.h"
+#include "DateInstance.h"
+#include "DatePrototype.h"
+#include "DateMath.h"
 #include "ObjectPrototype.h"
-#include "PropertyNameArray.h"
 #include "RegExpConstructor.h"
 #include "RegExpObject.h"
-#include "qdatetime.h"
-#include "qdebug.h"
-#include "qmetaobject.h"
+#include <runtime.h>
+#include <runtime_object.h>
+#include <runtime_array.h>
+#include <JSFunction.h>
+#include "PropertyNameArray.h"
 #include "qmetatype.h"
+#include "qmetaobject.h"
 #include "qobject.h"
 #include "qstringlist.h"
-#include "qt_instance.h"
+#include "qdebug.h"
 #include "qvarlengtharray.h"
-#include <JSFunction.h>
+#include "qdatetime.h"
 #include <limits.h>
-#include <runtime.h>
-#include <runtime_array.h>
-#include <runtime_object.h>
 
 // QtScript has these
 Q_DECLARE_METATYPE(QObjectList);
 Q_DECLARE_METATYPE(QList<int>);
 Q_DECLARE_METATYPE(QVariant);
 
-using namespace WebCore;
 
-namespace JSC {
+namespace KJS {
 namespace Bindings {
 
 // Debugging
@@ -743,15 +739,17 @@ JSValue* convertQVariantToValue(ExecState* exec, PassRefPtr<RootObject> root, co
         QRegExp re = variant.value<QRegExp>();
 
         if (re.isValid()) {
+            RegExpConstructor* regExpObj = static_cast<RegExpConstructor*>(exec->lexicalGlobalObject()->regExpConstructor());
+
             UString uflags;
             if (re.caseSensitivity() == Qt::CaseInsensitive)
                 uflags = "i"; // ### Can't do g or m
 
             UString pattern((UChar*)re.pattern().utf16(), re.pattern().length());
 
-            RefPtr<JSC::RegExp> regExp = JSC::RegExp::create(&exec->globalData(), pattern, uflags);
+            RefPtr<KJS::RegExp> regExp = KJS::RegExp::create(pattern, uflags);
             if (regExp->isValid())
-                return new (exec) RegExpObject(exec->lexicalGlobalObject()->regExpStructure(), regExp.release());
+                return new (exec) RegExpObject(exec->lexicalGlobalObject()->regExpPrototype(), regExp.release());
             else
                 return jsNull();
         }
@@ -783,9 +781,9 @@ JSValue* convertQVariantToValue(ExecState* exec, PassRefPtr<RootObject> root, co
         dt.minute = time.minute();
         dt.second = time.second();
         dt.isDST = -1;
-        double ms = JSC::gregorianDateTimeToMS(dt, time.msec(), /*inputIsUTC*/ false);
+        double ms = KJS::gregorianDateTimeToMS(dt, time.msec(), /*inputIsUTC*/ false);
 
-        DateInstance* instance = new (exec) DateInstance(exec->lexicalGlobalObject()->dateStructure());
+        DateInstance* instance = new (exec) DateInstance(exec->lexicalGlobalObject()->datePrototype());
         instance->setInternalValue(jsNumber(exec, trunc(ms)));
         return instance;
     }
@@ -798,12 +796,12 @@ JSValue* convertQVariantToValue(ExecState* exec, PassRefPtr<RootObject> root, co
 
     if (type == QMetaType::QObjectStar || type == QMetaType::QWidgetStar) {
         QObject* obj = variant.value<QObject*>();
-        return Instance::createRuntimeObject(exec, QtInstance::getQtInstance(obj, root));
+        return Instance::createRuntimeObject(exec, QtInstance::create(obj, root));
     }
 
     if (type == QMetaType::QVariantMap) {
         // create a new object, and stuff properties into it
-        JSObject* ret = constructEmptyObject(exec);
+        JSObject* ret = new (exec) JSObject(exec->lexicalGlobalObject()->objectPrototype());
         QVariantMap map = variant.value<QVariantMap>();
         QVariantMap::const_iterator i = map.constBegin();
         while (i != map.constEnd()) {
@@ -855,10 +853,8 @@ JSValue* convertQVariantToValue(ExecState* exec, PassRefPtr<RootObject> root, co
 #define QW_D(Class) Class##Data* d = d_func()
 #define QW_DS(Class,Instance) Class##Data* d = Instance->d_func()
 
-const ClassInfo QtRuntimeMethod::s_info = { "QtRuntimeMethod", 0, 0, 0 };
-
-QtRuntimeMethod::QtRuntimeMethod(QtRuntimeMethodData* dd, ExecState* exec, const Identifier& ident, PassRefPtr<QtInstance> inst)
-    : InternalFunction(&exec->globalData(), getDOMStructure<QtRuntimeMethod>(exec), ident)
+QtRuntimeMethod::QtRuntimeMethod(QtRuntimeMethodData* dd, ExecState *exec, const Identifier &ident, PassRefPtr<QtInstance> inst)
+    : InternalFunction (exec, static_cast<FunctionPrototype*>(exec->lexicalGlobalObject()->functionPrototype()), ident)
     , d_ptr(dd)
 {
     QW_D(QtRuntimeMethod);
@@ -868,6 +864,16 @@ QtRuntimeMethod::QtRuntimeMethod(QtRuntimeMethodData* dd, ExecState* exec, const
 QtRuntimeMethod::~QtRuntimeMethod()
 {
     delete d_ptr;
+}
+
+CodeType QtRuntimeMethod::codeType() const
+{
+    return FunctionCode;
+}
+
+Completion QtRuntimeMethod::execute(ExecState*)
+{
+    return Completion(Normal, jsUndefined());
 }
 
 // ===============
@@ -1568,7 +1574,7 @@ static const uint qt_meta_data_QtConnectionObject[] = {
 };
 
 static const char qt_meta_stringdata_QtConnectionObject[] = {
-    "JSC::Bindings::QtConnectionObject\0\0execute()\0"
+    "KJS::Bindings::QtConnectionObject\0\0execute()\0"
 };
 
 const QMetaObject QtConnectionObject::staticMetaObject = {
@@ -1642,7 +1648,7 @@ void QtConnectionObject::execute(void **argv)
                     if (m_funcObject->inherits(&JSFunction::info)) {
                         JSFunction* fimp = static_cast<JSFunction*>(m_funcObject.get());
 
-                        JSObject* qt_sender = Instance::createRuntimeObject(exec, QtInstance::getQtInstance(sender(), ro));
+                        JSObject* qt_sender = Instance::createRuntimeObject(exec, QtInstance::create(sender(), ro));
                         JSObject* wrapper = new (exec) JSObject(exec->globalData().nullProtoStructureID);
                         PutPropertySlot slot;
                         wrapper->put(exec, Identifier(exec, "__qt_sender__"), qt_sender, slot);

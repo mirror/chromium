@@ -22,7 +22,7 @@
 #if ENABLE(SVG)
 #include "JSSVGLength.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

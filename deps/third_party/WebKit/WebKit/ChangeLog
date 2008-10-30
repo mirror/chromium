@@ -1,31 +1,3 @@
-2008-10-04  Mark Rowe  <mrowe@apple.com>
-
-        Reviewed by Tim Hatcher.
-
-        Add a 'Check For Weak VTables' build phase to catch weak vtables as early as possible.
-
-        * WebKit.xcodeproj/project.pbxproj:
-
-2008-09-24  Darin Adler  <darin@apple.com>
-
-        * StringsNotToBeLocalized.txt: Updated for recent changes.
-
-2008-09-15  Chris Fleizach  <cfleizach@apple.com>
-
-        Reviewed by Darin Adler, Beth Dakin
-
-        Support strings for AXLists
-
-        * English.lproj/Localizable.strings:
-
-2008-09-15  Anders Carlsson  <andersca@apple.com>
-
-        Reviewed by Mitz.
-
-        Merge WebNetscapePluginStream into WebBaseNetscapePluginStream.
-        
-        * WebKit.xcodeproj/project.pbxproj:
-
 2008-09-02  Mark Rowe  <mrowe@apple.com>
 
         Reviewed by Tim Hatcher.
@@ -52,7 +24,7 @@
 
 2008-08-05  Anders Carlsson  <andersca@apple.com>
 
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         Remove MainThreadObjectDeallocator.{h|mm}.
         
@@ -71,7 +43,7 @@
 
         Fix layout test results for webarchive/test-xml-stylesheet.xml
 
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         * WebKit.xcodeproj/project.pbxproj: Added WebHTMLRepresentationInternal.h.
         Changed WebHTMLRepresentationInternal.h and WebHTMLRepresentationPrivate.h
@@ -102,7 +74,7 @@
 
 2008-06-26  Anders Carlsson  <andersca@apple.com>
 
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         Add MainThreadObjectDeallocator to sources.
         
@@ -339,7 +311,7 @@
 
         Move WebCoreScriptDebugger to WebKit
 
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         * WebKit.xcodeproj/project.pbxproj: Added WebCoreScriptDebugger.{h,mm}
         to the project.
@@ -348,7 +320,7 @@
 
         <rdar://problem/5708388> WebDashboardRegion.h duplicated between WebCore / WebKit
 
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         * WebKit.xcodeproj/project.pbxproj: Removed WebDashboardRegion.h.
 
@@ -356,7 +328,7 @@
 
         Update localization exceptions.
         
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         * English.lproj/Localizable.strings:
         * StringsNotToBeLocalized.txt:
@@ -379,7 +351,7 @@
 
 2008-01-02  Alexey Proskuryakov  <ap@webkit.org>
 
-        Reviewed by Darin Adler.
+        Reviewed by Darin.
 
         Removed "BackwardDelete", which is no longer present in source code.
 

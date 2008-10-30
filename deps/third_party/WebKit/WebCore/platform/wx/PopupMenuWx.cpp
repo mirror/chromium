@@ -59,7 +59,7 @@ void PopupMenu::show(const IntRect& r, FrameView* v, int index)
     delete m_menu;
     ASSERT(client());
 
-    wxWindow* nativeWin = v->platformWidget();
+    wxWindow* nativeWin = v->nativeWindow();
 
     if (nativeWin) {
         // construct the menu
@@ -80,7 +80,7 @@ void PopupMenu::show(const IntRect& r, FrameView* v, int index)
             }
         }
         nativeWin->Connect(s_menuStartId, s_menuStartId + (size-1), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PopupMenu::OnMenuItemSelected), NULL, this);
-        nativeWin->PopupMenu(m_menu, r.x() - v->scrollX(), r.y() - v->scrollY());
+        nativeWin->PopupMenu(m_menu, r.x() - v->contentsX(), r.y() - v->contentsY());
         nativeWin->Disconnect(s_menuStartId, s_menuStartId + (size-1), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(PopupMenu::OnMenuItemSelected), NULL, this);
     }
 }

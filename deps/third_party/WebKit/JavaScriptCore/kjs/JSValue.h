@@ -29,11 +29,7 @@
 #include "ustring.h"
 #include <stddef.h> // for size_t
 
-// The magic number 0x4000 is not important here, it is being subtracted back out (avoiding using zero since this
-// can have unexpected effects in this type of macro, particularly where multiple-inheritance is involved).
-#define OBJECT_OFFSET(class, member) (reinterpret_cast<ptrdiff_t>(&(reinterpret_cast<class*>(0x4000)->member)) - 0x4000)
-
-namespace JSC {
+namespace KJS {
 
     class ExecState;
     class Identifier;
@@ -56,6 +52,8 @@ namespace JSC {
      */
     class JSValue : Noncopyable {
         friend class JSCell; // so it can derive from this class
+        friend class Heap; // so it can call asCell()
+        friend class Machine; // so it can call asCell()
     private:
         JSValue();
         virtual ~JSValue();
@@ -137,21 +135,21 @@ namespace JSC {
         bool deleteProperty(ExecState*, const Identifier& propertyName);
         bool deleteProperty(ExecState*, unsigned propertyName);
 
-        bool needsThisConversion() const;
         JSObject* toThisObject(ExecState*) const;
         UString toThisString(ExecState*) const;
         JSString* toThisJSString(ExecState*);
 
         JSValue* getJSNumber(); // 0 if this is not a JSNumber or number object
 
-        JSCell* asCell();
-        const JSCell* asCell() const;
-
     private:
         bool getPropertySlot(ExecState*, const Identifier& propertyName, PropertySlot&);
         bool getPropertySlot(ExecState*, unsigned propertyName, PropertySlot&);
         int32_t toInt32SlowCase(ExecState*, bool& ok) const;
         uint32_t toUInt32SlowCase(ExecState*, bool& ok) const;
+
+        // Implementation details.
+        JSCell* asCell();
+        const JSCell* asCell() const;
     };
 
     inline JSValue::JSValue()
@@ -253,6 +251,6 @@ namespace JSC {
         return toUInt32SlowCase(exec, ok);
     }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // JSValue_h

@@ -31,9 +31,6 @@
 */
 
 #include "config.h"
-
-#if USE(ATSUI)
-
 #include "ShapeArabic.h"
 
 #include <unicode/utypes.h>
@@ -551,5 +548,3 @@ int32_t shapeArabic(const UChar *source, int32_t sourceLength, UChar *dest, int3
 
     return sourceLength;
 }
-
-#endif // USE(ATSUI)

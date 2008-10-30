@@ -32,12 +32,12 @@
 #include <kjs/ObjectPrototype.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
+namespace KJS {
 
 const ClassInfo JSCallbackConstructor::info = { "CallbackConstructor", 0, 0, 0 };
 
-JSCallbackConstructor::JSCallbackConstructor(PassRefPtr<StructureID> structure, JSClassRef jsClass, JSObjectCallAsConstructorCallback callback)
-    : JSObject(structure)
+JSCallbackConstructor::JSCallbackConstructor(ExecState* exec, JSClassRef jsClass, JSObjectCallAsConstructorCallback callback)
+    : JSObject(exec->lexicalGlobalObject()->objectPrototype())
     , m_class(jsClass)
     , m_callback(callback)
 {
@@ -49,6 +49,11 @@ JSCallbackConstructor::~JSCallbackConstructor()
 {
     if (m_class)
         JSClassRelease(m_class);
+}
+
+bool JSCallbackConstructor::implementsHasInstance() const
+{
+    return true;
 }
 
 static JSObject* constructJSCallback(ExecState* exec, JSObject* constructor, const ArgList& args)
@@ -76,4 +81,4 @@ ConstructType JSCallbackConstructor::getConstructData(ConstructData& constructDa
     return ConstructTypeHost;
 }
 
-} // namespace JSC
+} // namespace KJS

@@ -72,12 +72,12 @@ public:
     unsigned length() const;
     WebKitCSSKeyframeRule*        item(unsigned index);
     const WebKitCSSKeyframeRule*  item(unsigned index) const;
-    void append(WebKitCSSKeyframeRule* rule);
+    void insert(WebKitCSSKeyframeRule* rule);
 
 private:
     WebKitCSSKeyframesRule(CSSStyleSheet* parent);
 
-    int findRuleIndex(const String& key) const;
+    int findRuleIndex(float key) const;
     
     RefPtr<CSSRuleList> m_lstCSSRules;
     String m_name;

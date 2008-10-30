@@ -22,7 +22,7 @@
 #ifndef KJS_JSTYPE_H
 #define KJS_JSTYPE_H
 
-namespace JSC {
+namespace KJS {
 
     /**
      * Primitive types
@@ -38,6 +38,6 @@ namespace JSC {
         GetterSetterType  = 7
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif

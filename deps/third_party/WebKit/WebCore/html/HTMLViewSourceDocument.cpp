@@ -46,9 +46,6 @@ using namespace HTMLNames;
 HTMLViewSourceDocument::HTMLViewSourceDocument(Frame* frame, const String& mimeType)
     : HTMLDocument(frame)
     , m_type(mimeType)
-    , m_current(0)
-    , m_tbody(0)
-    , m_td(0)
 {
 }
 
@@ -185,20 +182,20 @@ void HTMLViewSourceDocument::addViewSourceDoctypeToken(DoctypeToken* doctypeToke
     addText(text, "webkit-html-doctype");
 }
 
-Element* HTMLViewSourceDocument::addSpanWithClassName(const String& className)
+PassRefPtr<Element> HTMLViewSourceDocument::addSpanWithClassName(const String& className)
 {
     if (m_current == m_tbody) {
         addLine(className);
         return m_current;
     }
 
-    Element* span = new HTMLElement(spanTag, this);
+    RefPtr<Element> span = new HTMLElement(spanTag, this);
     RefPtr<NamedMappedAttrMap> attrs = NamedMappedAttrMap::create();
     attrs->insertAttribute(MappedAttribute::create(classAttr, className), true);
     span->setAttributeMap(attrs.release());
     m_current->addChild(span);
     span->attach();
-    return span;
+    return span.release();
 }
 
 void HTMLViewSourceDocument::addLine(const String& className)
@@ -209,7 +206,7 @@ void HTMLViewSourceDocument::addLine(const String& className)
     trow->attach();
     
     // Create a cell that will hold the line number (it is generated in the stylesheet using counters).
-    Element* td = new HTMLTableCellElement(tdTag, this);
+    RefPtr<Element> td = new HTMLTableCellElement(tdTag, this);
     RefPtr<NamedMappedAttrMap> attrs = NamedMappedAttrMap::create();
     attrs->insertAttribute(MappedAttribute::create(classAttr, "webkit-line-number"), true);
     td->setAttributeMap(attrs.release());
@@ -269,13 +266,13 @@ void HTMLViewSourceDocument::addText(const String& text, const String& className
         m_current = m_tbody;
 }
 
-Element* HTMLViewSourceDocument::addLink(const String& url, bool isAnchor)
+PassRefPtr<Element> HTMLViewSourceDocument::addLink(const String& url, bool isAnchor)
 {
     if (m_current == m_tbody)
         addLine("webkit-html-tag");
     
     // Now create a link for the attribute value instead of a span.
-    Element* anchor = new HTMLAnchorElement(aTag, this);
+    RefPtr<Element> anchor = new HTMLAnchorElement(aTag, this);
     RefPtr<NamedMappedAttrMap> attrs = NamedMappedAttrMap::create();
     const char* classValue;
     if (isAnchor)
@@ -288,7 +285,7 @@ Element* HTMLViewSourceDocument::addLink(const String& url, bool isAnchor)
     anchor->setAttributeMap(attrs.release());
     m_current->addChild(anchor);
     anchor->attach();
-    return anchor;
+    return anchor.release();
 }
 
 }

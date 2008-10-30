@@ -40,7 +40,9 @@ namespace WTF {
 
 Mutex* atomicallyInitializedStaticMutex;
 
+#if !PLATFORM(DARWIN)
 static ThreadIdentifier mainThreadIdentifier;
+#endif
 
 static Mutex& threadMapMutex()
 {
@@ -58,7 +60,9 @@ void initializeThreading()
         atomicallyInitializedStaticMutex = new Mutex;
         threadMapMutex();
         wtf_random_init();
+#if !PLATFORM(DARWIN)
         mainThreadIdentifier = currentThread();
+#endif
         initializeMainThread();
     }
 }
@@ -157,21 +161,22 @@ Mutex::Mutex()
 
 Mutex::~Mutex()
 {
+    g_mutex_free(m_mutex);
 }
 
 void Mutex::lock()
 {
-    g_mutex_lock(m_mutex.get());
+    g_mutex_lock(m_mutex);
 }
 
 bool Mutex::tryLock()
 {
-    return g_mutex_trylock(m_mutex.get());
+    return g_mutex_trylock(m_mutex);
 }
 
 void Mutex::unlock()
 {
-    g_mutex_unlock(m_mutex.get());
+    g_mutex_unlock(m_mutex);
 }
 
 ThreadCondition::ThreadCondition()
@@ -181,11 +186,12 @@ ThreadCondition::ThreadCondition()
 
 ThreadCondition::~ThreadCondition()
 {
+    g_cond_free(m_condition);
 }
 
 void ThreadCondition::wait(Mutex& mutex)
 {
-    g_cond_wait(m_condition.get(), mutex.impl().get());
+    g_cond_wait(m_condition, mutex.impl());
 }
 
 bool ThreadCondition::timedWait(Mutex& mutex, double interval)
@@ -208,17 +214,17 @@ bool ThreadCondition::timedWait(Mutex& mutex, double interval)
         targetTime.tv_sec++;
     }
 
-    return g_cond_timed_wait(m_condition.get(), mutex.impl().get(), &targetTime);
+    return g_cond_timed_wait(m_condition, mutex.impl(), &targetTime);
 }
 
 void ThreadCondition::signal()
 {
-    g_cond_signal(m_condition.get());
+    g_cond_signal(m_condition);
 }
 
 void ThreadCondition::broadcast()
 {
-    g_cond_broadcast(m_condition.get());
+    g_cond_broadcast(m_condition);
 }
 
 

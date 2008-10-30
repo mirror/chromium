@@ -38,7 +38,4 @@ namespace WebCore {
     void WebCoreSetShouldUseFontSmoothing(bool);
     bool WebCoreShouldUseFontSmoothing();
 
-    void WebCoreSetAlwaysUsesComplexTextCodePath(bool);
-    bool WebCoreAlwaysUsesComplexTextCodePath();
-
 } // namespace WebCore

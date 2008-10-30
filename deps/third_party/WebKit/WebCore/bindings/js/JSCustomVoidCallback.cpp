@@ -40,7 +40,7 @@
 
 namespace WebCore {
     
-using namespace JSC;
+using namespace KJS;
     
 JSCustomVoidCallback::JSCustomVoidCallback(JSObject* callback, Frame* frame)
     : m_callback(callback)
@@ -59,7 +59,7 @@ void JSCustomVoidCallback::handleEvent()
     JSGlobalObject* globalObject = m_frame->script()->globalObject();
     ExecState* exec = globalObject->globalExec();
         
-    JSC::JSLock lock(false);
+    KJS::JSLock lock(false);
         
     JSValue* function = m_callback->get(exec, Identifier(exec, "handleEvent"));
     CallData callData;

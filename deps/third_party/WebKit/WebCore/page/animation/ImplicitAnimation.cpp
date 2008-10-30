@@ -27,141 +27,112 @@
  */
 
 #include "config.h"
-#include "CSSPropertyNames.h"
-#include "EventNames.h"
 #include "ImplicitAnimation.h"
 #include "RenderObject.h"
+#include "EventNames.h"
+#include "CSSPropertyNames.h"
 
 namespace WebCore {
 
-ImplicitAnimation::ImplicitAnimation(const Animation* transition, int animatingProperty, RenderObject* renderer, CompositeAnimation* compAnim, const RenderStyle* fromStyle)
-    : AnimationBase(transition, renderer, compAnim)
-    , m_transitionProperty(transition->property())
-    , m_animatingProperty(animatingProperty)
-    , m_overridden(false)
-    , m_fromStyle(0)
-    , m_toStyle(0)
+ImplicitAnimation::ImplicitAnimation(const Animation* transition, int animatingProperty, RenderObject* renderer, CompositeAnimation* compAnim)
+: AnimationBase(transition, renderer, compAnim)
+, m_transitionProperty(transition->property())
+, m_animatingProperty(animatingProperty)
+, m_overridden(false)
+, m_fromStyle(0)
+, m_toStyle(0)
 {
     ASSERT(animatingProperty != cAnimateAll);
-    if (fromStyle) {
-        m_fromStyle = fromStyle;
-        const_cast<RenderStyle*>(m_fromStyle)->ref();
-    }
 }
-
-ImplicitAnimation::~ImplicitAnimation()
-{
-    // Get rid of style refs
-    if (m_fromStyle)
-        const_cast<RenderStyle*>(m_fromStyle)->deref(renderer()->renderArena());
-    if (m_toStyle)
-        const_cast<RenderStyle*>(m_toStyle)->deref(renderer()->renderArena());
-
-    // Do the cleanup here instead of in the base class so the specialized methods get called
-    if (!postActive())
-        updateStateMachine(AnimationStateInputEndAnimation, -1);
-}
-
+    
 bool ImplicitAnimation::shouldSendEventForListener(Document::ListenerType inListenerType)
 {
     return m_object->document()->hasListenerType(inListenerType);
 }
 
-void ImplicitAnimation::animate(CompositeAnimation* animation, RenderObject* renderer, const RenderStyle* currentStyle,
+void ImplicitAnimation::animate(CompositeAnimation* animation, RenderObject* renderer, const RenderStyle* currentStyle, 
                                 const RenderStyle* targetStyle, RenderStyle*& animatedStyle)
 {
     if (paused())
         return;
-
+    
     // If we get this far and the animation is done, it means we are cleaning up a just finished animation.
-    // So just return. Everything is already all cleaned up.
+    // So just return. Everything is already all cleaned up
     if (postActive())
         return;
 
     // Reset to start the transition if we are new
     if (isNew())
-        reset(targetStyle);
-
+        reset(renderer, currentStyle, targetStyle);
+    
     // Run a cycle of animation.
     // We know we will need a new render style, so make one if needed
     if (!animatedStyle)
         animatedStyle = new (renderer->renderArena()) RenderStyle(*targetStyle);
-
-    if (blendProperties(this, m_animatingProperty, animatedStyle, m_fromStyle, m_toStyle, progress(1, 0, 0)))
+    
+    double prog = progress(1, 0);
+    bool needsAnim = blendProperties(m_animatingProperty, animatedStyle, m_fromStyle, m_toStyle, prog);
+    if (needsAnim)
         setAnimating();
 }
 
-void ImplicitAnimation::onAnimationEnd(double elapsedTime)
+void ImplicitAnimation::onAnimationEnd(double inElapsedTime)
 {
-    if (!sendTransitionEvent(EventNames::webkitTransitionEndEvent, elapsedTime)) {
+    if (!sendTransitionEvent(EventNames::webkitTransitionEndEvent, inElapsedTime)) {
         // We didn't dispatch an event, which would call endAnimation(), so we'll just call it here.
         endAnimation(true);
     }
 }
 
-bool ImplicitAnimation::sendTransitionEvent(const AtomicString& eventType, double elapsedTime)
+bool ImplicitAnimation::sendTransitionEvent(const AtomicString& inEventType, double inElapsedTime)
 {
-    if (eventType == EventNames::webkitTransitionEndEvent) {
+    if (inEventType == EventNames::webkitTransitionEndEvent) {
         Document::ListenerType listenerType = Document::TRANSITIONEND_LISTENER;
-
+        
         if (shouldSendEventForListener(listenerType)) {
-            String propertyName;
-            if (m_animatingProperty != cAnimateAll)
-                propertyName = getPropertyName(static_cast<CSSPropertyID>(m_animatingProperty));
-                
-            // Dispatch the event
-            RefPtr<Element> element = 0;
-            if (m_object->node() && m_object->node()->isElementNode())
-                element = static_cast<Element*>(m_object->node());
-
-            ASSERT(!element || element->document() && !element->document()->inPageCache());
-            if (!element)
-                return false;
-
-            // Keep a reference to this ImplicitAnimation so it doesn't go away in the handler
-            RefPtr<ImplicitAnimation> retainer(this);
-            
-            // Call the event handler
-            element->dispatchWebKitTransitionEvent(eventType, propertyName, elapsedTime);
-
-            // Restore the original (unanimated) style
-            if (eventType == EventNames::webkitAnimationEndEvent && element->renderer())
-                setChanged(element.get());
-
-            return true; // Did dispatch an event
+            Element* element = elementForEventDispatch();
+            if (element) {
+                String propertyName;
+                if (m_transitionProperty != cAnimateAll)
+                    propertyName = String(getPropertyName((CSSPropertyID)m_transitionProperty));
+                m_waitingForEndEvent = true;
+                m_animationEventDispatcher.startTimer(element, propertyName, m_transitionProperty, true, inEventType, inElapsedTime);
+                return true; // Did dispatch an event
+            }
         }
     }
-
+    
     return false; // Didn't dispatch an event
 }
 
-void ImplicitAnimation::reset(const RenderStyle* to)
+void ImplicitAnimation::reset(RenderObject* renderer, const RenderStyle* from /* = 0 */, const RenderStyle* to /* = 0 */)
 {
-    ASSERT(to);
-    ASSERT(m_fromStyle);
+    ASSERT((!m_toStyle && !to) || m_toStyle != to);
+    ASSERT((!m_fromStyle && !from) || m_fromStyle != from);
+    if (m_fromStyle)
+        m_fromStyle->deref(renderer->renderArena());
+    if (m_toStyle)
+        m_toStyle->deref(renderer->renderArena());
     
+    m_fromStyle = const_cast<RenderStyle*>(from);   // it is read-only, other than the ref
+    if (m_fromStyle)
+        m_fromStyle->ref();
+    
+    m_toStyle = const_cast<RenderStyle*>(to);       // it is read-only, other than the ref
     if (m_toStyle)
-        const_cast<RenderStyle*>(m_toStyle)->deref(renderer()->renderArena());
-
-    m_toStyle = to;       // It is read-only, other than the ref
-    if (m_toStyle)
-        const_cast<RenderStyle*>(m_toStyle)->ref();
-
-    // Restart the transition
-    if (m_fromStyle && m_toStyle)
-        updateStateMachine(AnimationStateInputRestartAnimation, -1);
-        
-    // set the transform animation list
-    validateTransformFunctionList();
+        m_toStyle->ref();
+    
+    // restart the transition
+    if (from && to)
+        updateStateMachine(STATE_INPUT_RESTART_ANIMATION, -1);
 }
 
 void ImplicitAnimation::setOverridden(bool b)
 {
-    if (b == m_overridden)
-        return;
-
-    m_overridden = b;
-    updateStateMachine(m_overridden ? AnimationStateInputPauseOverride : AnimationStateInputResumeOverride, -1);
+    if (b != m_overridden) {
+        m_overridden = b;
+        updateStateMachine(m_overridden ? STATE_INPUT_PAUSE_OVERRIDE : STATE_INPUT_RESUME_OVERRIDE, -1);
+    }
 }
 
 bool ImplicitAnimation::affectsProperty(int property) const
@@ -176,43 +147,8 @@ bool ImplicitAnimation::isTargetPropertyEqual(int prop, const RenderStyle* targe
 
 void ImplicitAnimation::blendPropertyValueInStyle(int prop, RenderStyle* currentStyle)
 {
-    blendProperties(this, prop, currentStyle, m_fromStyle, m_toStyle, progress(1, 0, 0));
-}
-
-void ImplicitAnimation::validateTransformFunctionList()
-{
-    m_transformFunctionListValid = false;
+    double prog = progress(1, 0);
+    blendProperties(prop, currentStyle, m_fromStyle, m_toStyle, prog);
+}    
     
-    if (!m_fromStyle || !m_toStyle)
-        return;
-        
-    const TransformOperations* val = &m_fromStyle->transform();
-    const TransformOperations* toVal = &m_toStyle->transform();
-
-    if (val->operations().isEmpty())
-        val = toVal;
-
-    if (val->operations().isEmpty())
-        return;
-        
-    // See if the keyframes are valid
-    if (val != toVal) {
-        // A list of length 0 matches anything
-        if (!toVal->operations().isEmpty()) {
-            // If the sizes of the function lists don't match, the lists don't match
-            if (val->operations().size() != toVal->operations().size())
-                return;
-        
-            // If the types of each function are not the same, the lists don't match
-            for (size_t j = 0; j < val->operations().size(); ++j) {
-                if (!val->operations()[j]->isSameType(*toVal->operations()[j]))
-                    return;
-            }
-        }
-    }
-
-    // Keyframes are valid
-    m_transformFunctionListValid = true;
 }
-
-} // namespace WebCore

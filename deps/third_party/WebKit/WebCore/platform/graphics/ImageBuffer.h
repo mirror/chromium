@@ -43,6 +43,7 @@ namespace WebCore {
     class ImageData;
     class IntPoint;
     class IntRect;
+    class RenderObject;
     class String;
 
     class ImageBuffer : Noncopyable {

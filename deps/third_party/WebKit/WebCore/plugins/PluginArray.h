@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2008 Trolltech ASA
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -26,7 +26,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
+namespace KJS {
     class JSValue;
     class ExecState;
 };
@@ -38,7 +38,7 @@ namespace WebCore {
     class PluginData;
 
     // FIXME: Generated JSPluginArray.cpp doesn't include JSPlugin.h for toJS
-    JSC::JSValue* toJS(JSC::ExecState*, Plugin*);
+    KJS::JSValue* toJS(KJS::ExecState*, Plugin*);
 
     class PluginArray : public RefCounted<PluginArray> {
     public:

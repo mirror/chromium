@@ -26,13 +26,11 @@
 #include <kjs/lookup.h>
 #include <wtf/Noncopyable.h>
 
-namespace JSC {
-    class JSGlobalData;
-}
-
 namespace WebCore {
 
+    class AtomicString;
     class Document;
+    class Event;
     class Frame;
     class KURL;
     class Node;
@@ -46,10 +44,15 @@ namespace WebCore {
 #endif
 
     // Base class for all objects in this binding except Window.
-    class DOMObject : public JSC::JSObject {
+    class DOMObject : public KJS::JSObject {
     protected:
-        explicit DOMObject(PassRefPtr<JSC::StructureID> structureID) 
+        explicit DOMObject(PassRefPtr<KJS::StructureID> structureID) 
             : JSObject(structureID)
+        {
+        }
+
+        explicit DOMObject(KJS::JSObject* prototype)
+            : JSObject(prototype)
         {
         }
 
@@ -58,131 +61,90 @@ namespace WebCore {
 #endif
     };
 
-    DOMObject* getCachedDOMObjectWrapper(JSC::JSGlobalData&, void* objectHandle);
-    void cacheDOMObjectWrapper(JSC::JSGlobalData&, void* objectHandle, DOMObject* wrapper);
-    void forgetDOMObject(JSC::JSGlobalData&, void* objectHandle);
+    class ScriptInterpreter : public KJS::Interpreter {
+    public:
+        static DOMObject* getDOMObject(void* objectHandle);
+        static void putDOMObject(void* objectHandle, DOMObject*);
+        static void forgetDOMObject(void* objectHandle);
 
-    JSNode* getCachedDOMNodeWrapper(Document*, Node*);
-    void cacheDOMNodeWrapper(Document*, Node*, JSNode* wrapper);
-    void forgetDOMNode(Document*, Node*);
-    void forgetAllDOMNodesForDocument(Document*);
-    void updateDOMNodeDocument(Node*, Document* oldDocument, Document* newDocument);
-    void markDOMNodesForDocument(Document*);
-    void markActiveObjectsForDocument(JSC::JSGlobalData&, Document*);
+        static JSNode* getDOMNodeForDocument(Document*, Node*);
+        static void putDOMNodeForDocument(Document*, Node*, JSNode* nodeWrapper);
+        static void forgetDOMNodeForDocument(Document*, Node*);
+        static void forgetAllDOMNodesForDocument(Document*);
+        static void updateDOMNodeDocument(Node*, Document* oldDoc, Document* newDoc);
+        static void markDOMNodesForDocument(Document*);
+    };
 
-    JSC::StructureID* getCachedDOMStructure(JSC::ExecState*, const JSC::ClassInfo*);
-    JSC::StructureID* cacheDOMStructure(JSC::ExecState*, PassRefPtr<JSC::StructureID>, const JSC::ClassInfo*);
-
-    JSC::JSObject* getCachedDOMConstructor(JSC::ExecState*, const JSC::ClassInfo*);
-    void cacheDOMConstructor(JSC::ExecState*, const JSC::ClassInfo*, JSC::JSObject* constructor);
-
-    template<class WrapperClass> inline JSC::StructureID* getDOMStructure(JSC::ExecState* exec)
+    // Retrieve from cache, or create, a JS wrapper for a DOM object.
+    template<class DOMObj, class JSDOMObj, class JSDOMObjPrototype> inline KJS::JSValue* cacheDOMObject(KJS::ExecState* exec, DOMObj* domObj)
     {
-        if (JSC::StructureID* structure = getCachedDOMStructure(exec, &WrapperClass::s_info))
-            return structure;
-        return cacheDOMStructure(exec, WrapperClass::createStructureID(WrapperClass::createPrototype(exec)), &WrapperClass::s_info);
-    }
-    template<class WrapperClass> inline JSC::JSObject* getDOMPrototype(JSC::ExecState* exec)
-    {
-        return static_cast<JSC::JSObject*>(getDOMStructure<WrapperClass>(exec)->storedPrototype());
-    }
-    template<class ConstructorClass> inline JSC::JSObject* getDOMConstructor(JSC::ExecState* exec)
-    {
-        if (JSC::JSObject* constructor = getCachedDOMConstructor(exec, &ConstructorClass::s_info))
-            return constructor;
-        JSC::JSObject* constructor = new (exec) ConstructorClass(exec);
-        cacheDOMConstructor(exec, &ConstructorClass::s_info, constructor);
-        return constructor;
-    }
-
-    #define CREATE_DOM_OBJECT_WRAPPER(exec, className, object) createDOMObjectWrapper<JS##className>(exec, static_cast<className*>(object))
-    template<class WrapperClass, class DOMClass> inline DOMObject* createDOMObjectWrapper(JSC::ExecState* exec, DOMClass* object)
-    {
-        ASSERT(object);
-        ASSERT(!getCachedDOMObjectWrapper(exec->globalData(), object));
-        WrapperClass* wrapper = new (exec) WrapperClass(getDOMStructure<WrapperClass>(exec), object);
-        cacheDOMObjectWrapper(exec->globalData(), object, wrapper);
-        return wrapper;
-    }
-    template<class WrapperClass, class DOMClass> inline JSC::JSValue* getDOMObjectWrapper(JSC::ExecState* exec, DOMClass* object)
-    {
-        if (!object)
-            return JSC::jsNull();
-        if (DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), object))
-            return wrapper;
-        return createDOMObjectWrapper<WrapperClass>(exec, object);
+        if (!domObj)
+            return KJS::jsNull();
+        if (DOMObject* ret = ScriptInterpreter::getDOMObject(domObj))
+            return ret;
+        DOMObject* ret = new (exec) JSDOMObj(JSDOMObjPrototype::self(exec), domObj);
+        ScriptInterpreter::putDOMObject(domObj, ret);
+        return ret;
     }
 
 #if ENABLE(SVG)
-    #define CREATE_SVG_OBJECT_WRAPPER(exec, className, object, context) createDOMObjectWrapper<JS##className>(exec, static_cast<className*>(object), context)
-    template<class WrapperClass, class DOMClass> inline DOMObject* createDOMObjectWrapper(JSC::ExecState* exec, DOMClass* object, SVGElement* context)
+    // Retrieve from cache, or create, a JS wrapper for an SVG DOM object.
+    template<class DOMObj, class JSDOMObj, class JSDOMObjPrototype> inline KJS::JSValue* cacheSVGDOMObject(KJS::ExecState* exec, DOMObj* domObj, SVGElement* context)
     {
-        ASSERT(object);
-        ASSERT(!getCachedDOMObjectWrapper(exec->globalData(), object));
-        WrapperClass* wrapper = new (exec) WrapperClass(getDOMStructure<WrapperClass>(exec), object, context);
-        cacheDOMObjectWrapper(exec->globalData(), object, wrapper);
-        return wrapper;
-    }
-    template<class WrapperClass, class DOMClass> inline JSC::JSValue* getDOMObjectWrapper(JSC::ExecState* exec, DOMClass* object, SVGElement* context)
-    {
-        if (!object)
-            return JSC::jsNull();
-        if (DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), object))
-            return wrapper;
-        return createDOMObjectWrapper<WrapperClass>(exec, object, context);
+        if (!domObj)
+            return KJS::jsNull();
+        if (DOMObject* ret = ScriptInterpreter::getDOMObject(domObj))
+            return ret;
+        DOMObject* ret = new (exec) JSDOMObj(JSDOMObjPrototype::self(exec), domObj, context);
+        ScriptInterpreter::putDOMObject(domObj, ret);
+        return ret;
     }
 #endif
 
-    #define CREATE_DOM_NODE_WRAPPER(exec, className, object) createDOMNodeWrapper<JS##className>(exec, static_cast<className*>(object))
-    template<class WrapperClass, class DOMClass> inline JSNode* createDOMNodeWrapper(JSC::ExecState* exec, DOMClass* node)
-    {
-        ASSERT(node);
-        ASSERT(!getCachedDOMNodeWrapper(node->document(), node));
-        WrapperClass* wrapper = new (exec) WrapperClass(getDOMStructure<WrapperClass>(exec), node);
-        cacheDOMNodeWrapper(node->document(), node, wrapper);
-        return wrapper;
-    }
-    template<class WrapperClass, class DOMClass> inline JSC::JSValue* getDOMNodeWrapper(JSC::ExecState* exec, DOMClass* node)
-    {
-        if (!node)
-            return JSC::jsNull();
-        if (JSNode* wrapper = getCachedDOMNodeWrapper(node->document(), node))
-            return wrapper;
-        return createDOMNodeWrapper<WrapperClass>(exec, node);
-    }
-
     // Convert a DOM implementation exception code into a JavaScript exception in the execution state.
-    void setDOMException(JSC::ExecState*, ExceptionCode);
+    void setDOMException(KJS::ExecState*, ExceptionCode);
 
-    JSC::JSValue* jsStringOrNull(JSC::ExecState*, const String&); // null if the string is null
-    JSC::JSValue* jsStringOrNull(JSC::ExecState*, const KURL&); // null if the URL is null
+    // Helper class to call setDOMException on exit without adding lots of separate calls to that function.
+    class DOMExceptionTranslator : Noncopyable {
+    public:
+        explicit DOMExceptionTranslator(KJS::ExecState* exec) : m_exec(exec), m_code(0) { }
+        ~DOMExceptionTranslator() { setDOMException(m_exec, m_code); }
+        operator ExceptionCode&() { return m_code; }
+    private:
+        KJS::ExecState* m_exec;
+        ExceptionCode m_code;
+    };
 
-    JSC::JSValue* jsStringOrUndefined(JSC::ExecState*, const String&); // undefined if the string is null
-    JSC::JSValue* jsStringOrUndefined(JSC::ExecState*, const KURL&); // undefined if the URL is null
+    KJS::JSValue* jsStringOrNull(KJS::ExecState*, const String&); // null if the string is null
+    KJS::JSValue* jsStringOrNull(KJS::ExecState*, const KURL&); // null if the URL is null
 
-    JSC::JSValue* jsStringOrFalse(JSC::ExecState*, const String&); // boolean false if the string is null
-    JSC::JSValue* jsStringOrFalse(JSC::ExecState*, const KURL&); // boolean false if the URL is null
+    KJS::JSValue* jsStringOrUndefined(KJS::ExecState*, const String&); // undefined if the string is null
+    KJS::JSValue* jsStringOrUndefined(KJS::ExecState*, const KURL&); // undefined if the URL is null
+
+    KJS::JSValue* jsStringOrFalse(KJS::ExecState*, const String&); // boolean false if the string is null
+    KJS::JSValue* jsStringOrFalse(KJS::ExecState*, const KURL&); // boolean false if the URL is null
 
     // See JavaScriptCore for explanation: Should be used for any UString that is already owned by another
     // object, to let the engine know that collecting the JSString wrapper is unlikely to save memory.
-    JSC::JSValue* jsOwnedStringOrNull(JSC::ExecState*, const JSC::UString&); 
+    KJS::JSValue* jsOwnedStringOrNull(KJS::ExecState*, const KJS::UString&); 
 
-    JSC::UString valueToStringWithNullCheck(JSC::ExecState*, JSC::JSValue*); // null if the value is null
-    JSC::UString valueToStringWithUndefinedOrNullCheck(JSC::ExecState*, JSC::JSValue*); // null if the value is null or undefined
+    KJS::UString valueToStringWithNullCheck(KJS::ExecState*, KJS::JSValue*); // null if the value is null
+    KJS::UString valueToStringWithUndefinedOrNullCheck(KJS::ExecState*, KJS::JSValue*); // null if the value is null or undefined
 
-    template <typename T> inline JSC::JSValue* toJS(JSC::ExecState* exec, PassRefPtr<T> ptr) { return toJS(exec, ptr.get()); }
+    template <typename T> inline KJS::JSValue* toJS(KJS::ExecState* exec, PassRefPtr<T> ptr) { return toJS(exec, ptr.get()); }
 
-    bool checkNodeSecurity(JSC::ExecState*, Node*);
+    bool checkNodeSecurity(KJS::ExecState*, Node*);
 
     // Helpers for Window, History, and Location classes to implement cross-domain policy.
     // Besides the cross-domain check, they need non-caching versions of staticFunctionGetter for
     // because we do not want current property values involved at all.
-    bool allowsAccessFromFrame(JSC::ExecState*, Frame*);
-    bool allowsAccessFromFrame(JSC::ExecState*, Frame*, String& message);
+    bool allowsAccessFromFrame(KJS::ExecState*, Frame*);
+    bool allowsAccessFromFrame(KJS::ExecState*, Frame*, String& message);
     void printErrorMessageForFrame(Frame*, const String& message);
-    JSC::JSValue* objectToStringFunctionGetter(JSC::ExecState*, const JSC::Identifier& propertyName, const JSC::PropertySlot&);
+    KJS::JSValue* nonCachingStaticFunctionGetter(KJS::ExecState*, const KJS::Identifier& propertyName, const KJS::PropertySlot&);
+    KJS::JSValue* objectToStringFunctionGetter(KJS::ExecState*, const KJS::Identifier& propertyName, const KJS::PropertySlot&);
 
-    JSC::ExecState* execStateFromNode(Node*);
+    KJS::ExecState* execStateFromNode(Node*);
 
 } // namespace WebCore
 

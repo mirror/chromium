@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2007 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +26,6 @@
 #ifndef JSHTMLAllCollection_h
 #define JSHTMLAllCollection_h
 
-#include "HTMLCollection.h"
 #include "JSHTMLCollection.h"
 
 namespace WebCore {
@@ -35,20 +34,13 @@ namespace WebCore {
 
     class JSHTMLAllCollection : public JSHTMLCollection {
     public:
-        JSHTMLAllCollection(PassRefPtr<JSC::StructureID> structure, PassRefPtr<HTMLCollection> collection)
-            : JSHTMLCollection(structure, collection)
+        JSHTMLAllCollection(KJS::JSObject* prototype, HTMLCollection* collection)
+            : JSHTMLCollection(prototype, collection)
         {
         }
 
-        static PassRefPtr<JSC::StructureID> createStructureID(JSC::JSValue* proto) 
-        { 
-            return JSC::StructureID::create(proto, JSC::TypeInfo(JSC::ObjectType, JSC::MasqueradesAsUndefined)); 
-        }
-
-        static const JSC::ClassInfo s_info;
-
-    private:
-        virtual bool toBoolean(JSC::ExecState*) const { return false; }
+        virtual bool toBoolean(KJS::ExecState*) const { return false; }
+        virtual bool masqueradeAsUndefined() const { return true; }
     };
 
 } // namespace WebCore

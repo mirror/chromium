@@ -21,7 +21,6 @@
 #include "JSDOMWindowCustom.h"
 
 #include "AtomicString.h"
-#include "Base64.h"
 #include "DOMWindow.h"
 #include "Document.h"
 #include "ExceptionCode.h"
@@ -29,23 +28,19 @@
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "JSDOMWindowShell.h"
-#include "JSEventListener.h"
-#include "JSMessagePort.h"
-#include "MessagePort.h"
-#include "ScriptController.h"
 #include "Settings.h"
+#include "ScriptController.h"
 #include <kjs/JSObject.h>
-#include <kjs/PrototypeFunction.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
-static void markDOMObjectWrapper(JSGlobalData& globalData, void* object)
+static void markDOMObjectWrapper(void* object)
 {
     if (!object)
         return;
-    DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, object);
+    DOMObject* wrapper = ScriptInterpreter::getDOMObject(object);
     if (!wrapper || wrapper->marked())
         return;
     wrapper->mark();
@@ -54,38 +49,25 @@ static void markDOMObjectWrapper(JSGlobalData& globalData, void* object)
 void JSDOMWindow::mark()
 {
     Base::mark();
-
-    JSGlobalData& globalData = *Heap::heap(this)->globalData();
-
-    markDOMObjectWrapper(globalData, impl()->optionalConsole());
-    markDOMObjectWrapper(globalData, impl()->optionalHistory());
-    markDOMObjectWrapper(globalData, impl()->optionalLocationbar());
-    markDOMObjectWrapper(globalData, impl()->optionalMenubar());
-    markDOMObjectWrapper(globalData, impl()->optionalNavigator());
-    markDOMObjectWrapper(globalData, impl()->optionalPersonalbar());
-    markDOMObjectWrapper(globalData, impl()->optionalScreen());
-    markDOMObjectWrapper(globalData, impl()->optionalScrollbars());
-    markDOMObjectWrapper(globalData, impl()->optionalSelection());
-    markDOMObjectWrapper(globalData, impl()->optionalStatusbar());
-    markDOMObjectWrapper(globalData, impl()->optionalToolbar());
-    markDOMObjectWrapper(globalData, impl()->optionalLocation());
+    markDOMObjectWrapper(impl()->optionalConsole());
+    markDOMObjectWrapper(impl()->optionalHistory());
+    markDOMObjectWrapper(impl()->optionalLocationbar());
+    markDOMObjectWrapper(impl()->optionalMenubar());
+    markDOMObjectWrapper(impl()->optionalNavigator());
+    markDOMObjectWrapper(impl()->optionalPersonalbar());
+    markDOMObjectWrapper(impl()->optionalScreen());
+    markDOMObjectWrapper(impl()->optionalScrollbars());
+    markDOMObjectWrapper(impl()->optionalSelection());
+    markDOMObjectWrapper(impl()->optionalStatusbar());
+    markDOMObjectWrapper(impl()->optionalToolbar());
+    markDOMObjectWrapper(impl()->optionalLocation());
 #if ENABLE(DOM_STORAGE)
-    markDOMObjectWrapper(globalData, impl()->optionalSessionStorage());
-    markDOMObjectWrapper(globalData, impl()->optionalLocalStorage());
+    markDOMObjectWrapper(impl()->optionalSessionStorage());
+    markDOMObjectWrapper(impl()->optionalLocalStorage());
 #endif
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
-    markDOMObjectWrapper(globalData, impl()->optionalApplicationCache());
+    markDOMObjectWrapper(impl()->optionalApplicationCache());
 #endif
-
-    JSDOMStructureMap::iterator end = structures().end();
-    for (JSDOMStructureMap::iterator it = structures().begin(); it != end; ++it)
-        it->second->mark();
-
-    JSDOMConstructorMap::iterator end2 = constructors().end();
-    for (JSDOMConstructorMap::iterator it2 = constructors().begin(); it2 != end2; ++it2) {
-        if (!it2->second->marked())
-            it2->second->mark();
-    }
 }
 
 bool JSDOMWindow::deleteProperty(ExecState* exec, const Identifier& propertyName)
@@ -104,7 +86,7 @@ bool JSDOMWindow::customGetPropertyNames(ExecState* exec, PropertyNameArray&)
     return false;
 }
 
-bool JSDOMWindow::getPropertyAttributes(JSC::ExecState* exec, const Identifier& propertyName, unsigned& attributes) const
+bool JSDOMWindow::getPropertyAttributes(KJS::ExecState* exec, const Identifier& propertyName, unsigned& attributes) const
 {
     // Only allow getting property attributes properties by frames in the same origin.
     if (!allowsAccessFrom(exec))
@@ -182,130 +164,13 @@ JSValue* JSDOMWindow::postMessage(ExecState* exec, const ArgList& args)
     if (exec->hadException())
         return jsUndefined();
 
-    MessagePort* messagePort = (args.size() == 2) ? 0 : toMessagePort(args.at(exec, 1));
-
-    String targetOrigin = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, (args.size() == 2) ? 1 : 2));
+    String targetOrigin = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 1));
     if (exec->hadException())
         return jsUndefined();
 
     ExceptionCode ec = 0;
-    window->postMessage(message, messagePort, targetOrigin, source, ec);
+    window->postMessage(message, targetOrigin, source, ec);
     setDOMException(exec, ec);
-
-    return jsUndefined();
-}
-
-static JSValue* setTimeoutOrInterval(ExecState* exec, JSDOMWindow* window, const ArgList& args, bool timeout)
-{
-    JSValue* v = args.at(exec, 0);
-    int delay = args.at(exec, 1)->toInt32(exec);
-    if (v->isString())
-        return jsNumber(exec, window->installTimeout(static_cast<JSString*>(v)->value(), delay, timeout));
-    CallData callData;
-    if (v->getCallData(callData) == CallTypeNone)
-        return jsUndefined();
-    ArgList argsTail;
-    args.getSlice(2, argsTail);
-    return jsNumber(exec, window->installTimeout(exec, v, argsTail, delay, timeout));
-}
-
-JSValue* JSDOMWindow::setTimeout(ExecState* exec, const ArgList& args)
-{
-    return setTimeoutOrInterval(exec, this, args, true);
-}
-
-JSValue* JSDOMWindow::clearTimeout(ExecState* exec, const ArgList& args)
-{
-    removeTimeout(args.at(exec, 0)->toInt32(exec));
-    return jsUndefined();
-}
-
-JSValue* JSDOMWindow::setInterval(ExecState* exec, const ArgList& args)
-{
-    return setTimeoutOrInterval(exec, this, args, false);
-}
-
-JSValue* JSDOMWindow::clearInterval(ExecState* exec, const ArgList& args)
-{
-    removeTimeout(args.at(exec, 0)->toInt32(exec));
-    return jsUndefined();
-}
-
-JSValue* JSDOMWindow::atob(ExecState* exec, const ArgList& args)
-{
-    if (args.size() < 1)
-        return throwError(exec, SyntaxError, "Not enough arguments");
-
-    JSValue* v = args.at(exec, 0);
-    if (v->isNull())
-        return jsEmptyString(exec);
-
-    UString s = v->toString(exec);
-    if (!s.is8Bit()) {
-        setDOMException(exec, INVALID_CHARACTER_ERR);
-        return jsUndefined();
-    }
-
-    Vector<char> in(s.size());
-    for (int i = 0; i < s.size(); ++i)
-        in[i] = static_cast<char>(s.data()[i]);
-    Vector<char> out;
-
-    if (!base64Decode(in, out))
-        return throwError(exec, GeneralError, "Cannot decode base64");
-
-    return jsString(exec, String(out.data(), out.size()));
-}
-
-JSValue* JSDOMWindow::btoa(ExecState* exec, const ArgList& args)
-{
-    if (args.size() < 1)
-        return throwError(exec, SyntaxError, "Not enough arguments");
-
-    JSValue* v = args.at(exec, 0);
-    if (v->isNull())
-        return jsEmptyString(exec);
-
-    UString s = v->toString(exec);
-    if (!s.is8Bit()) {
-        setDOMException(exec, INVALID_CHARACTER_ERR);
-        return jsUndefined();
-    }
-
-    Vector<char> in(s.size());
-    for (int i = 0; i < s.size(); ++i)
-        in[i] = static_cast<char>(s.data()[i]);
-    Vector<char> out;
-
-    base64Encode(in, out);
-
-    return jsString(exec, String(out.data(), out.size()));
-}
-
-JSValue* JSDOMWindow::addEventListener(ExecState* exec, const ArgList& args)
-{
-    Frame* frame = impl()->frame();
-    if (!frame)
-        return jsUndefined();
-
-    if (RefPtr<JSEventListener> listener = findOrCreateJSEventListener(exec, args.at(exec, 1))) {
-        if (Document* doc = frame->document())
-            doc->addWindowEventListener(AtomicString(args.at(exec, 0)->toString(exec)), listener.release(), args.at(exec, 2)->toBoolean(exec));
-    }
-
-    return jsUndefined();
-}
-
-JSValue* JSDOMWindow::removeEventListener(ExecState* exec, const ArgList& args)
-{
-    Frame* frame = impl()->frame();
-    if (!frame)
-        return jsUndefined();
-
-    if (JSEventListener* listener = findJSEventListener(args.at(exec, 1))) {
-        if (Document* doc = frame->document())
-            doc->removeWindowEventListener(AtomicString(args.at(exec, 0)->toString(exec)), listener, args.at(exec, 2)->toBoolean(exec));
-    }
 
     return jsUndefined();
 }
@@ -317,26 +182,6 @@ DOMWindow* toDOMWindow(JSValue* val)
     if (val->isObject(&JSDOMWindowShell::s_info))
         return static_cast<JSDOMWindowShell*>(val)->impl();
     return 0;
-}
-
-JSValue* nonCachingStaticCloseFunctionGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
-{
-    return new (exec) PrototypeFunction(exec, 0, propertyName, jsDOMWindowPrototypeFunctionClose);
-}
-
-JSValue* nonCachingStaticBlurFunctionGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
-{
-    return new (exec) PrototypeFunction(exec, 0, propertyName, jsDOMWindowPrototypeFunctionBlur);
-}
-
-JSValue* nonCachingStaticFocusFunctionGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
-{
-    return new (exec) PrototypeFunction(exec, 0, propertyName, jsDOMWindowPrototypeFunctionFocus);
-}
-
-JSValue* nonCachingStaticPostMessageFunctionGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
-{
-    return new (exec) PrototypeFunction(exec, 2, propertyName, jsDOMWindowPrototypeFunctionPostMessage);
 }
 
 } // namespace WebCore

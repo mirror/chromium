@@ -55,7 +55,6 @@
 #include "NodeList.h"
 #include "NotImplemented.h"
 #include "Page.h"
-#include "RenderFieldset.h"
 #include "RenderFileUploadControl.h"
 #include "RenderImage.h"
 #include "RenderListBox.h"
@@ -419,14 +418,6 @@ bool AccessibilityRenderObject::isControl() const
     return node && (node->isControl() || AccessibilityObject::isARIAControl(ariaRoleAttribute()));
 }
 
-bool AccessibilityRenderObject::isFieldset() const
-{
-    if (!m_renderer)
-        return false;
-    
-    return m_renderer->isFieldset();
-}
-    
 const AtomicString& AccessibilityRenderObject::getAttribute(const QualifiedName& attribute) const
 {
     Node* node = m_renderer->element();
@@ -440,18 +431,16 @@ const AtomicString& AccessibilityRenderObject::getAttribute(const QualifiedName&
     return element->getAttribute(attribute);
 }
 
-Element* AccessibilityRenderObject::anchorElement() const
+HTMLAnchorElement* AccessibilityRenderObject::anchorElement() const
 {
-    if (!m_renderer)
-        return 0;
-    
-    AXObjectCache* cache = axObjectCache();
-    RenderObject* currRenderer;
-    
+    // FIXME: In XHTML 2.0, any HTML element can have an href attribute. We will need to implement this to fully
+    // support ARIA links.
+
     // Search up the render tree for a RenderObject with a DOM node.  Defer to an earlier continuation, though.
+    RenderObject* currRenderer;
     for (currRenderer = m_renderer; currRenderer && !currRenderer->element(); currRenderer = currRenderer->parent()) {
         if (currRenderer->continuation())
-            return cache->get(currRenderer->continuation())->anchorElement();
+            return currRenderer->document()->axObjectCache()->get(currRenderer->continuation())->anchorElement();
     }
     
     // bail if none found
@@ -462,8 +451,8 @@ Element* AccessibilityRenderObject::anchorElement() const
     // NOTE: this assumes that any non-image with an anchor is an HTMLAnchorElement
     Node* node = currRenderer->node();
     for ( ; node; node = node->parentNode()) {
-        if (node->hasTagName(aTag) || (node->renderer() && cache->get(node->renderer())->isAnchor()))
-            return static_cast<Element*>(node);
+        if (node->hasTagName(aTag))
+            return static_cast<HTMLAnchorElement*>(node);
     }
     
     return 0;
@@ -505,7 +494,7 @@ Element* AccessibilityRenderObject::mouseButtonListener() const
     
     // FIXME: Do the continuation search like anchorElement does
     for (EventTargetNode* elt = static_cast<EventTargetNode*>(node); elt; elt = static_cast<EventTargetNode*>(elt->parentNode())) {
-        if (elt->eventListenerForType(clickEvent) || elt->eventListenerForType(mousedownEvent) || elt->eventListenerForType(mouseupEvent))
+        if (elt->getHTMLEventListener(clickEvent) || elt->getHTMLEventListener(mousedownEvent) || elt->getHTMLEventListener(mouseupEvent))
             return static_cast<Element*>(elt);
     }
     
@@ -886,12 +875,8 @@ String AccessibilityRenderObject::accessibilityDescription() const
         Document *document = m_renderer->document();
         Node* owner = document->ownerElement();
         if (owner) {
-            if (owner->hasTagName(frameTag) || owner->hasTagName(iframeTag)) {
-                const AtomicString& title = static_cast<HTMLFrameElementBase*>(owner)->getAttribute(titleAttr);
-                if (!title.isEmpty())
-                    return title;
+            if (owner->hasTagName(frameTag) || owner->hasTagName(iframeTag))
                 return static_cast<HTMLFrameElementBase*>(owner)->name();
-            }
             if (owner->isHTMLElement())
                 return static_cast<HTMLElement*>(owner)->getAttribute(nameAttr);
         }
@@ -899,11 +884,6 @@ String AccessibilityRenderObject::accessibilityDescription() const
         if (owner && owner->isHTMLElement())
             return static_cast<HTMLElement*>(owner)->getAttribute(nameAttr);
     }
-    
-    if (roleValue() == DefinitionListTermRole)
-        return AXDefinitionListTermText();
-    if (roleValue() == DefinitionListDefinitionRole)
-        return AXDefinitionListDefinitionText();
     
     return String();
 }
@@ -967,14 +947,9 @@ IntSize AccessibilityRenderObject::size() const
 
 AccessibilityObject* AccessibilityRenderObject::internalLinkElement() const
 {
-    Element* element = anchorElement();
-    if (!element)
+    HTMLAnchorElement* anchor = anchorElement();
+    if (!anchor)
         return 0;
-    
-    // Right now, we do not support ARIA links as internal link elements
-    if (!element->hasTagName(aTag))
-        return 0;
-    HTMLAnchorElement* anchor = static_cast<HTMLAnchorElement*>(element);
     
     KURL linkURL = anchor->href();
     String ref = linkURL.ref();
@@ -1063,10 +1038,6 @@ AccessibilityObject* AccessibilityRenderObject::titleUIElement() const
 {
     if (!m_renderer)
         return 0;
-    
-    // if isFieldset is true, the renderer is guaranteed to be a RenderFieldset
-    if (isFieldset())
-        return axObjectCache()->get(static_cast<RenderFieldset*>(m_renderer)->findLegend());
     
     // checkbox and radio hide their labels. Only controls get titleUIElements for now
     if (isCheckboxOrRadio() || !isControl())
@@ -1311,7 +1282,6 @@ void AccessibilityRenderObject::setSelectedTextRange(const PlainTextRange& range
     if (isNativeTextControl()) {
         RenderTextControl* textControl = static_cast<RenderTextControl*>(m_renderer);
         textControl->setSelectionRange(range.start, range.start + range.length);
-        return;
     }
     
     Document* document = m_renderer->document();
@@ -1327,8 +1297,8 @@ void AccessibilityRenderObject::setSelectedTextRange(const PlainTextRange& range
 
 KURL AccessibilityRenderObject::url() const
 {
-    if (isAnchor() && m_renderer->element()->hasTagName(aTag)) {
-        if (HTMLAnchorElement* anchor = static_cast<HTMLAnchorElement*>(anchorElement()))
+    if (isAnchor()) {
+        if (HTMLAnchorElement* anchor = anchorElement())
             return anchor->href();
     }
     
@@ -1440,28 +1410,7 @@ AXObjectCache* AccessibilityRenderObject::axObjectCache() const
     return m_renderer->document()->axObjectCache();
 }
 
-AccessibilityObject* AccessibilityRenderObject::accessibilityParentForImageMap(HTMLMapElement* map) const
-{
-    // find an image that is using this map
-    if (!m_renderer || !map)
-        return 0;
-
-    RefPtr<HTMLCollection> coll = m_renderer->document()->images();
-    for (Node* curr = coll->firstItem(); curr; curr = coll->nextItem()) {
-        RenderObject* obj = curr->renderer();
-        if (!obj || !curr->hasTagName(imgTag))
-            continue;
-        
-        // The HTMLImageElement's useMap() value includes the '#' symbol at the beginning,
-        // which has to be stripped off
-        if (static_cast<HTMLImageElement*>(curr)->useMap().substring(1) == map->getName())
-            return axObjectCache()->get(obj);
-    }
-    
-    return 0;
-}
-    
-void AccessibilityRenderObject::getDocumentLinks(AccessibilityChildrenVector& result)
+void AccessibilityRenderObject::getDocumentLinks(AccessibilityChildrenVector& result) const
 {
     Document* document = m_renderer->document();
     RefPtr<HTMLCollection> coll = document->links();
@@ -1474,16 +1423,6 @@ void AccessibilityRenderObject::getDocumentLinks(AccessibilityChildrenVector& re
             ASSERT(axobj->roleValue() == WebCoreLinkRole);
             if (!axobj->accessibilityIsIgnored())
                 result.append(axobj);
-        } else {
-            Node* parent = curr->parent();
-            if (parent && curr->hasTagName(areaTag) && parent->hasTagName(mapTag)) {
-                AccessibilityImageMapLink* areaObject = static_cast<AccessibilityImageMapLink*>(axObjectCache()->get(ImageMapLinkRole));
-                areaObject->setHTMLAreaElement(static_cast<HTMLAreaElement*>(curr));
-                areaObject->setHTMLMapElement(static_cast<HTMLMapElement*>(parent));
-                areaObject->setParent(accessibilityParentForImageMap(static_cast<HTMLMapElement*>(parent)));
-
-                result.append(areaObject);
-            }
         }
         curr = coll->nextItem();
     }
@@ -2113,12 +2052,6 @@ AccessibilityRole AccessibilityRenderObject::roleValue() const
     if (headingLevel(m_renderer->element()) != 0)
         return HeadingRole;
     
-    if (node && node->hasTagName(ddTag))
-        return DefinitionListDefinitionRole;
-    
-    if (node && node->hasTagName(dtTag))
-        return DefinitionListTermRole;
-
     if (m_renderer->isBlockFlow() || (node && node->hasTagName(labelTag)))
         return GroupRole;
     
@@ -2194,24 +2127,6 @@ void AccessibilityRenderObject::childrenChanged()
             parent->childrenChanged();
     }
 }
-    
-bool AccessibilityRenderObject::canHaveChildren() const
-{
-    if (!m_renderer)
-        return false;
-    
-    // Elements that should not have children
-    switch (roleValue()) {
-        case ImageRole:
-        case ButtonRole:
-        case PopUpButtonRole:
-        case CheckBoxRole:
-        case RadioButtonRole:
-            return false;
-        default:
-            return true;
-    }
-}
 
 const AccessibilityObject::AccessibilityChildrenVector& AccessibilityRenderObject::children()
 {
@@ -2231,9 +2146,6 @@ void AccessibilityRenderObject::addChildren()
         return;
     
     m_haveChildren = true;
-    
-    if (!canHaveChildren())
-        return;
     
     // add all unignored acc children
     for (RefPtr<AccessibilityObject> obj = firstChild(); obj; obj = obj->nextSibling()) {
@@ -2256,10 +2168,9 @@ void AccessibilityRenderObject::addChildren()
 
                 // add an <area> element for this child if it has a link
                 if (current->isLink()) {
-                    AccessibilityImageMapLink* areaObject = static_cast<AccessibilityImageMapLink*>(m_renderer->document()->axObjectCache()->get(ImageMapLinkRole));
-                    areaObject->setHTMLAreaElement(static_cast<HTMLAreaElement*>(current));
-                    areaObject->setHTMLMapElement(map);
-                    areaObject->setParent(this);
+                    AccessibilityObject* areaObject = m_renderer->document()->axObjectCache()->get(ImageMapLinkRole);
+                    static_cast<AccessibilityImageMapLink*>(areaObject)->setHTMLAreaElement(static_cast<HTMLAreaElement*>(current));
+                    static_cast<AccessibilityImageMapLink*>(areaObject)->setHTMLMapElement(map);
 
                     m_children.append(areaObject);
                 }

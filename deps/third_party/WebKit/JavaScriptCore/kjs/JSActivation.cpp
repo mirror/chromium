@@ -30,17 +30,19 @@
 #include "JSActivation.h"
 
 #include "Arguments.h"
+#include "CodeBlock.h"
 #include "Machine.h"
+#include "Register.h"
 #include "JSFunction.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(JSActivation);
 
 const ClassInfo JSActivation::info = { "JSActivation", 0, 0, 0 };
 
-JSActivation::JSActivation(CallFrame* callFrame, PassRefPtr<FunctionBodyNode> functionBody)
-    : Base(callFrame->globalData().activationStructureID, new JSActivationData(functionBody, callFrame))
+JSActivation::JSActivation(ExecState* exec, PassRefPtr<FunctionBodyNode> functionBody, Register* registers)
+    : Base(exec->globalData().nullProtoStructureID, new JSActivationData(functionBody, registers))
 {
 }
 
@@ -49,35 +51,13 @@ JSActivation::~JSActivation()
     delete d();
 }
 
-void JSActivation::mark()
+void JSActivation::copyRegisters()
 {
-    Base::mark();
-
-    Register* registerArray = d()->registerArray.get();
-    if (!registerArray)
+    int numLocals = d()->functionBody->generatedByteCode().numLocals;
+    if (!numLocals)
         return;
 
-    size_t numParametersMinusThis = d()->functionBody->generatedByteCode().numParameters - 1;
-
-    size_t i = 0;
-    size_t count = numParametersMinusThis; 
-    for ( ; i < count; ++i) {
-        Register& r = registerArray[i];
-        if (!r.marked())
-            r.mark();
-    }
-
-    size_t numVars = d()->functionBody->generatedByteCode().numVars;
-
-    // Skip the call frame, which sits between the parameters and vars.
-    i += RegisterFile::CallFrameHeaderSize;
-    count += RegisterFile::CallFrameHeaderSize + numVars;
-
-    for ( ; i < count; ++i) {
-        Register& r = registerArray[i];
-        if (!r.marked())
-            r.mark();
-    }
+    copyRegisterArray(d()->registers - numLocals, numLocals);
 }
 
 bool JSActivation::getOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
@@ -146,6 +126,19 @@ JSObject* JSActivation::toThisObject(ExecState* exec) const
     return exec->globalThisValue();
 }
 
+void JSActivation::mark()
+{
+    Base::mark();
+    
+    if (d()->argumentsObject)
+        d()->argumentsObject->mark();
+}
+
+bool JSActivation::isActivationObject() const
+{
+    return true;
+}
+
 bool JSActivation::isDynamicScope() const
 {
     return d()->functionBody->usesEval();
@@ -153,24 +146,11 @@ bool JSActivation::isDynamicScope() const
 
 JSValue* JSActivation::argumentsGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
-    JSActivation* activation = static_cast<JSActivation*>(slot.slotBase());
+    JSActivation* thisObj = static_cast<JSActivation*>(slot.slotBase());
+    if (!thisObj->d()->argumentsObject)
+        thisObj->d()->argumentsObject = thisObj->createArgumentsObject(exec);
 
-    if (activation->d()->functionBody->usesArguments()) {
-        PropertySlot slot;
-        activation->symbolTableGet(exec->propertyNames().arguments, slot);
-        return slot.getValue(exec, exec->propertyNames().arguments);
-    }
-
-    CallFrame* callFrame = CallFrame::create(activation->d()->registers);
-    Arguments* arguments = callFrame->optionalCalleeArguments();
-    if (!arguments) {
-        arguments = new (callFrame) Arguments(callFrame);
-        arguments->copyRegisters();
-        callFrame->setCalleeArguments(arguments);
-    }
-    ASSERT(arguments->isObject(&Arguments::info));
-
-    return arguments;
+    return thisObj->d()->argumentsObject;
 }
 
 // These two functions serve the purpose of isolating the common case from a
@@ -181,4 +161,17 @@ PropertySlot::GetValueFunc JSActivation::getArgumentsGetter()
     return argumentsGetter;
 }
 
-} // namespace JSC
+JSObject* JSActivation::createArgumentsObject(ExecState* exec)
+{
+    Register* callFrame = d()->registers - d()->functionBody->generatedByteCode().numLocals - RegisterFile::CallFrameHeaderSize;
+
+    JSFunction* function;
+    Register* argv;
+    int argc;
+    exec->machine()->getArgumentsData(callFrame, function, argv, argc);
+
+    ArgList args(argv, argc);
+    return new (exec) Arguments(exec, function, args, this);
+}
+
+} // namespace KJS

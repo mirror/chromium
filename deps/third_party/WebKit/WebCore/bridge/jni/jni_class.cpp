@@ -34,7 +34,7 @@
 #include "jni_utility.h"
 #include "jni_runtime.h"
 
-using namespace JSC::Bindings;
+using namespace KJS::Bindings;
 
 JavaClass::JavaClass(jobject anInstance)
 {

@@ -23,7 +23,7 @@
 #ifndef KJS_COMPLETION_H
 #define KJS_COMPLETION_H
 
-namespace JSC {
+namespace KJS {
 
     class JSValue;
 
@@ -51,6 +51,6 @@ namespace JSC {
         JSValue* m_value;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // KJS_COMPLETION_H

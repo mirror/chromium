@@ -28,205 +28,72 @@
 #include "JSActivation.h"
 #include "JSFunction.h"
 #include "JSGlobalObject.h"
+#include "ObjectPrototype.h"
 
-using namespace std;
-
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(Arguments);
 
 const ClassInfo Arguments::info = { "Arguments", 0, 0, 0 };
 
-Arguments::~Arguments()
+// ECMA 10.1.8
+Arguments::Arguments(ExecState* exec, JSFunction* function, const ArgList& args, JSActivation* activation)
+    : JSObject(exec->lexicalGlobalObject()->objectPrototype())
+    , d(new ArgumentsData(activation, function, args))
 {
-    if (d->extraArguments != d->extraArgumentsFixedBuffer)
-        delete [] d->extraArguments;
+    ASSERT(activation);
+
+    putDirect(exec->propertyNames().callee, function, DontEnum);
+    putDirect(exec->propertyNames().length, jsNumber(exec, args.size()), DontEnum);
+  
+    int i = 0;
+    ArgList::const_iterator end = args.end();
+    for (ArgList::const_iterator it = args.begin(); it != end; ++it, ++i) {
+        Identifier name = Identifier::from(exec, i);
+        if (!d->indexToNameMap.isMapped(name))
+            putDirect(name, (*it).jsValue(exec), DontEnum);
+    }
 }
 
-void Arguments::mark()
+void Arguments::mark() 
 {
     JSObject::mark();
-
-    if (d->registerArray) {
-        for (unsigned i = 0; i < d->numParameters; ++i) {
-            if (!d->registerArray[i].marked())
-                d->registerArray[i].mark();
-        }
-    }
-
-    if (d->extraArguments) {
-        unsigned numExtraArguments = d->numArguments - d->numParameters;
-        for (unsigned i = 0; i < numExtraArguments; ++i) {
-            if (!d->extraArguments[i].marked())
-                d->extraArguments[i].mark();
-        }
-    }
-
-    if (!d->callee->marked())
-        d->callee->mark();
-
-    if (d->activation && !d->activation->marked())
+    if (!d->activation->marked())
         d->activation->mark();
 }
 
-void Arguments::fillArgList(ExecState* exec, ArgList& args)
+JSValue* Arguments::mappedIndexGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    if (LIKELY(!d->deletedArguments)) {
-        if (LIKELY(!d->numParameters)) {
-            args.initialize(d->extraArguments, d->numArguments);
-            return;
-        }
-
-        if (d->numParameters == d->numArguments) {
-            args.initialize(&d->registers[d->firstParameterIndex], d->numArguments);
-            return;
-        }
-
-        unsigned parametersLength = min(d->numParameters, d->numArguments);
-        unsigned i = 0;
-        for (; i < parametersLength; ++i)
-            args.append(d->registers[d->firstParameterIndex + i].jsValue(exec));
-        for (; i < d->numArguments; ++i)
-            args.append(d->extraArguments[i - d->numParameters].jsValue(exec));
-        return;
-    }
-
-    unsigned parametersLength = min(d->numParameters, d->numArguments);
-    unsigned i = 0;
-    for (; i < parametersLength; ++i) {
-        if (!d->deletedArguments[i])
-            args.append(d->registers[d->firstParameterIndex + i].jsValue(exec));
-        else
-            args.append(get(exec, i));
-    }
-    for (; i < d->numArguments; ++i) {
-        if (!d->deletedArguments[i])
-            args.append(d->extraArguments[i - d->numParameters].jsValue(exec));
-        else
-            args.append(get(exec, i));
-    }
-}
-
-bool Arguments::getOwnPropertySlot(ExecState* exec, unsigned i, PropertySlot& slot)
-{
-    if (i < d->numArguments && (!d->deletedArguments || !d->deletedArguments[i])) {
-        if (i < d->numParameters) {
-            slot.setRegisterSlot(&d->registers[d->firstParameterIndex + i]);
-        } else
-            slot.setValue(d->extraArguments[i - d->numParameters].jsValue(exec));
-        return true;
-    }
-
-    return JSObject::getOwnPropertySlot(exec, Identifier(exec, UString::from(i)), slot);
+      Arguments* thisObj = static_cast<Arguments*>(slot.slotBase());
+      return thisObj->d->activation->get(exec, thisObj->d->indexToNameMap[propertyName]);
 }
 
 bool Arguments::getOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
 {
-    bool isArrayIndex;
-    unsigned i = propertyName.toArrayIndex(&isArrayIndex);
-    if (isArrayIndex && i < d->numArguments && (!d->deletedArguments || !d->deletedArguments[i])) {
-        if (i < d->numParameters) {
-            slot.setRegisterSlot(&d->registers[d->firstParameterIndex + i]);
-        } else
-            slot.setValue(d->extraArguments[i - d->numParameters].jsValue(exec));
-        return true;
-    }
-
-    if (propertyName == exec->propertyNames().length && LIKELY(!d->overrodeLength)) {
-        slot.setValue(jsNumber(exec, d->numArguments));
-        return true;
-    }
-
-    if (propertyName == exec->propertyNames().callee && LIKELY(!d->overrodeCallee)) {
-        slot.setValue(d->callee);
+    if (d->indexToNameMap.isMapped(propertyName)) {
+        slot.setCustom(this, mappedIndexGetter);
         return true;
     }
 
     return JSObject::getOwnPropertySlot(exec, propertyName, slot);
 }
 
-void Arguments::put(ExecState* exec, unsigned i, JSValue* value, PutPropertySlot& slot)
-{
-    if (i < d->numArguments && (!d->deletedArguments || !d->deletedArguments[i])) {
-        if (i < d->numParameters)
-            d->registers[d->firstParameterIndex + i] = value;
-        else
-            d->extraArguments[i - d->numParameters] = value;
-        return;
-    }
-
-    JSObject::put(exec, Identifier(exec, UString::from(i)), value, slot);
-}
-
 void Arguments::put(ExecState* exec, const Identifier& propertyName, JSValue* value, PutPropertySlot& slot)
 {
-    bool isArrayIndex;
-    unsigned i = propertyName.toArrayIndex(&isArrayIndex);
-    if (isArrayIndex && i < d->numArguments && (!d->deletedArguments || !d->deletedArguments[i])) {
-        if (i < d->numParameters)
-            d->registers[d->firstParameterIndex + i] = value;
-        else
-            d->extraArguments[i - d->numParameters] = value;
-        return;
-    }
-
-    if (propertyName == exec->propertyNames().length && !d->overrodeLength) {
-        d->overrodeLength = true;
-        putDirect(propertyName, value, DontEnum);
-        return;
-    }
-
-    if (propertyName == exec->propertyNames().callee && !d->overrodeCallee) {
-        d->overrodeCallee = true;
-        putDirect(propertyName, value, DontEnum);
-        return;
-    }
-
-    JSObject::put(exec, propertyName, value, slot);
-}
-
-bool Arguments::deleteProperty(ExecState* exec, unsigned i) 
-{
-    if (i < d->numArguments) {
-        if (!d->deletedArguments) {
-            d->deletedArguments.set(new bool[d->numArguments]);
-            memset(d->deletedArguments.get(), 0, sizeof(bool) * d->numArguments);
-        }
-        if (!d->deletedArguments[i]) {
-            d->deletedArguments[i] = true;
-            return true;
-        }
-    }
-
-    return JSObject::deleteProperty(exec, Identifier(exec, UString::from(i)));
+    if (d->indexToNameMap.isMapped(propertyName))
+        d->activation->put(exec, d->indexToNameMap[propertyName], value, slot);
+    else
+        JSObject::put(exec, propertyName, value, slot);
 }
 
 bool Arguments::deleteProperty(ExecState* exec, const Identifier& propertyName) 
 {
-    bool isArrayIndex;
-    unsigned i = propertyName.toArrayIndex(&isArrayIndex);
-    if (isArrayIndex && i < d->numArguments) {
-        if (!d->deletedArguments) {
-            d->deletedArguments.set(new bool[d->numArguments]);
-            memset(d->deletedArguments.get(), 0, sizeof(bool) * d->numArguments);
-        }
-        if (!d->deletedArguments[i]) {
-            d->deletedArguments[i] = true;
-            return true;
-        }
-    }
-
-    if (propertyName == exec->propertyNames().length && !d->overrodeLength) {
-        d->overrodeLength = true;
-        return true;
-    }
-
-    if (propertyName == exec->propertyNames().callee && !d->overrodeCallee) {
-        d->overrodeCallee = true;
+    if (d->indexToNameMap.isMapped(propertyName)) {
+        d->indexToNameMap.unMap(exec, propertyName);
         return true;
     }
 
     return JSObject::deleteProperty(exec, propertyName);
 }
 
-} // namespace JSC
+} // namespace KJS

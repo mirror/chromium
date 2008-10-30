@@ -24,7 +24,6 @@
 #ifndef Clipboard_h
 #define Clipboard_h
 
-#include "CachedResourceHandle.h"
 #include "ClipboardAccessPolicy.h"
 #include "DragActions.h"
 #include "DragImage.h"
@@ -55,7 +54,7 @@ namespace WebCore {
         virtual HashSet<String> types() const = 0;
     
         IntPoint dragLocation() const { return m_dragLoc; }
-        CachedImage* dragImage() const { return m_dragImage.get(); }
+        CachedImage* dragImage() const { return m_dragImage; }
         virtual void setDragImage(CachedImage*, const IntPoint&) = 0;
         Node* dragImageElement() { return m_dragImageElement.get(); }
         virtual void setDragImageElement(Node*, const IntPoint&) = 0;
@@ -91,7 +90,7 @@ namespace WebCore {
     protected:
         bool m_forDragging;
         IntPoint m_dragLoc;
-        CachedResourceHandle<CachedImage> m_dragImage;
+        CachedImage* m_dragImage;
         RefPtr<Node> m_dragImageElement;
     };
 

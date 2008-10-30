@@ -28,7 +28,7 @@
 
 #include "Text.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -37,7 +37,10 @@ JSValue* toJSNewlyCreated(ExecState* exec, Text* text)
     if (!text)
         return jsNull();
     
-    return CREATE_DOM_NODE_WRAPPER(exec, Text, text);
+    JSNode* ret = new (exec) JSText(JSTextPrototype::self(exec), text);
+    ScriptInterpreter::putDOMNodeForDocument(text->document(), text, ret);
+
+    return ret;
 }
 
 } // namespace WebCore

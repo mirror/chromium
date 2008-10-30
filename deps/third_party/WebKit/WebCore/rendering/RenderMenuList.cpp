@@ -34,10 +34,8 @@
 #include "HTMLSelectElement.h"
 #include "PopupMenu.h"
 #include "RenderBR.h"
-#include "RenderScrollbar.h"
 #include "RenderText.h"
 #include "RenderTheme.h"
-#include "NodeRenderStyle.h"
 #include <math.h>
 
 using namespace std;
@@ -118,18 +116,21 @@ void RenderMenuList::removeChild(RenderObject* oldChild)
         m_innerBlock->removeChild(oldChild);
 }
 
-void RenderMenuList::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderMenuList::setStyle(RenderStyle* newStyle)
 {
-    RenderBlock::styleDidChange(diff, oldStyle);
+    bool fontChanged = !style() || style()->font() != newStyle->font();
+    
+    // Don't allow overflow on menu lists.
+    newStyle->setOverflowX(OVISIBLE);
+    newStyle->setOverflowY(OVISIBLE);
+    
+    RenderBlock::setStyle(newStyle);
 
     if (m_buttonText)
-        m_buttonText->setStyle(style());
+        m_buttonText->setStyle(newStyle);
     if (m_innerBlock) // RenderBlock handled updating the anonymous block's style.
         adjustInnerStyle();
-
     setReplaced(isInline());
-
-    bool fontChanged = !oldStyle || oldStyle->font() != style()->font();
     if (fontChanged)
         updateOptionsWidth();
 }
@@ -315,13 +316,13 @@ bool RenderMenuList::itemIsEnabled(unsigned listIndex) const
     return element->isEnabled() && groupEnabled;
 }
 
-PopupMenuStyle RenderMenuList::itemStyle(unsigned listIndex) const
+RenderStyle* RenderMenuList::itemStyle(unsigned listIndex) const
 {
     HTMLSelectElement* select = static_cast<HTMLSelectElement*>(node());
     HTMLElement* element = select->listItems()[listIndex];
     
     RenderStyle* style = element->renderStyle() ? element->renderStyle() : element->computedStyle();
-    return style ? PopupMenuStyle(style->color(), itemBackgroundColor(listIndex), style->font(), style->visibility() == VISIBLE) : menuStyle();
+    return style ? style : clientStyle();
 }
 
 Color RenderMenuList::itemBackgroundColor(unsigned listIndex) const
@@ -345,27 +346,14 @@ Color RenderMenuList::itemBackgroundColor(unsigned listIndex) const
     return Color(Color::white).blend(backgroundColor);
 }
 
-PopupMenuStyle RenderMenuList::menuStyle() const
+RenderStyle* RenderMenuList::clientStyle() const
 {
-
-    RenderStyle* s = m_innerBlock ? m_innerBlock->style() : style();
-    return PopupMenuStyle(s->color(), s->backgroundColor(), s->font(), s->visibility() == VISIBLE);
+    return m_innerBlock ? m_innerBlock->style() : style();
 }
 
-HostWindow* RenderMenuList::hostWindow() const
+Document* RenderMenuList::clientDocument() const
 {
-    return document()->view()->hostWindow();
-}
-
-PassRefPtr<Scrollbar> RenderMenuList::createScrollbar(ScrollbarClient* client, ScrollbarOrientation orientation, ScrollbarControlSize controlSize)
-{
-    RefPtr<Scrollbar> widget;
-    bool hasCustomScrollbarStyle = style()->hasPseudoStyle(RenderStyle::SCROLLBAR);
-    if (hasCustomScrollbarStyle)
-        widget = RenderScrollbar::createCustomScrollbar(client, orientation, this);
-    else
-        widget = Scrollbar::createNativeScrollbar(client, orientation, controlSize);
-    return widget.release();
+    return document();
 }
 
 int RenderMenuList::clientInsetLeft() const

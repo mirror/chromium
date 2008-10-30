@@ -50,6 +50,8 @@ public:
     void splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox,
                    RenderObject* newChild, RenderFlow* oldCont);
 
+    virtual void setStyle(RenderStyle*);
+
     virtual void layout() { } // Do nothing for layout()
 
     virtual void paint(PaintInfo&, int tx, int ty);
@@ -72,8 +74,6 @@ public:
     virtual VisiblePosition positionForCoordinates(int x, int y);
 
 protected:
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
-
     static RenderInline* cloneInline(RenderFlow* src);
 
 };

@@ -33,7 +33,7 @@
 
 using namespace std;
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(JSArray);
 
@@ -138,8 +138,8 @@ JSArray::JSArray(PassRefPtr<StructureID> structureID)
     checkConsistency();
 }
 
-JSArray::JSArray(PassRefPtr<StructureID> structure, unsigned initialLength)
-    : JSObject(structure)
+JSArray::JSArray(JSObject* prototype, unsigned initialLength)
+    : JSObject(prototype)
 {
     unsigned initialCapacity = min(initialLength, MIN_SPARSE_ARRAY_INDEX);
 
@@ -153,8 +153,8 @@ JSArray::JSArray(PassRefPtr<StructureID> structure, unsigned initialLength)
     checkConsistency();
 }
 
-JSArray::JSArray(ExecState* exec, PassRefPtr<StructureID> structure, const ArgList& list)
-    : JSObject(structure)
+JSArray::JSArray(ExecState* exec, JSObject* prototype, const ArgList& list)
+    : JSObject(prototype)
 {
     unsigned length = list.size();
 
@@ -311,9 +311,8 @@ NEVER_INLINE void JSArray::putSlowCase(ExecState* exec, unsigned i, JSValue* val
     if (!map || map->isEmpty()) {
         if (increaseVectorLength(i + 1)) {
             storage = m_storage;
+            ++storage->m_numValuesInVector;
             storage->m_vector[i] = value;
-            if (++storage->m_numValuesInVector == storage->m_length)
-                m_fastAccessCutoff = storage->m_length;
             checkConsistency();
         } else
             throwOutOfMemoryError(exec);
@@ -507,87 +506,6 @@ void JSArray::setLength(unsigned newLength)
     m_storage->m_length = newLength;
 
     checkConsistency();
-}
-
-JSValue* JSArray::pop()
-{
-    checkConsistency();
-
-    unsigned length = m_storage->m_length;
-    if (!length)
-        return jsUndefined();
-
-    --length;
-
-    JSValue* result;
-
-    if (m_fastAccessCutoff > length) {
-        JSValue*& valueSlot = m_storage->m_vector[length];
-        result = valueSlot;
-        ASSERT(result);
-        valueSlot = 0;
-        --m_storage->m_numValuesInVector;
-        m_fastAccessCutoff = length;
-    } else if (length < m_storage->m_vectorLength) {
-        JSValue*& valueSlot = m_storage->m_vector[length];
-        result = valueSlot;
-        valueSlot = 0;
-        if (result)
-            --m_storage->m_numValuesInVector;
-        else
-            result = jsUndefined();
-    } else {
-        result = jsUndefined();
-        if (SparseArrayValueMap* map = m_storage->m_sparseValueMap) {
-            SparseArrayValueMap::iterator it = map->find(length);
-            if (it != map->end()) {
-                result = it->second;
-                map->remove(it);
-                if (map->isEmpty()) {
-                    delete map;
-                    m_storage->m_sparseValueMap = 0;
-                }
-            }
-        }
-    }
-
-    m_storage->m_length = length;
-
-    checkConsistency();
-
-    return result;
-}
-
-void JSArray::push(ExecState* exec, JSValue* value)
-{
-    checkConsistency();
-
-    if (m_storage->m_length < m_storage->m_vectorLength) {
-        ASSERT(!m_storage->m_vector[m_storage->m_length]);
-        m_storage->m_vector[m_storage->m_length] = value;
-        if (++m_storage->m_numValuesInVector == ++m_storage->m_length)
-            m_fastAccessCutoff = m_storage->m_length;
-        checkConsistency();
-        return;
-    }
-
-    if (m_storage->m_length < MIN_SPARSE_ARRAY_INDEX) {
-        SparseArrayValueMap* map = m_storage->m_sparseValueMap;
-        if (!map || map->isEmpty()) {
-            if (increaseVectorLength(m_storage->m_length + 1)) {
-                m_storage->m_vector[m_storage->m_length] = value;
-                if (++m_storage->m_numValuesInVector == ++m_storage->m_length)
-                    m_fastAccessCutoff = m_storage->m_length;
-                checkConsistency();
-                return;
-            }
-            checkConsistency();
-            throwOutOfMemoryError(exec);
-            return;
-        }
-    }
-
-    putSlowCase(exec, m_storage->m_length++, value);
 }
 
 void JSArray::mark()
@@ -857,16 +775,6 @@ void JSArray::sort(ExecState* exec, JSValue* compareFunction, CallType callType,
     checkConsistency(SortConsistencyCheck);
 }
 
-void JSArray::fillArgList(ExecState* exec, ArgList& args)
-{
-    unsigned fastAccessLength = min(m_storage->m_length, m_fastAccessCutoff);
-    unsigned i = 0;
-    for (; i < fastAccessLength; ++i)
-        args.append(getIndex(i));
-    for (; i < m_storage->m_length; ++i)
-        args.append(get(exec, i));
-}
-
 unsigned JSArray::compactForSorting()
 {
     checkConsistency();
@@ -979,24 +887,24 @@ void JSArray::checkConsistency(ConsistencyCheckType type)
 
 JSArray* constructEmptyArray(ExecState* exec)
 {
-    return new (exec) JSArray(exec->lexicalGlobalObject()->arrayStructure());
+    return new (exec) JSArray(exec->lexicalGlobalObject()->arrayPrototype(), 0);
 }
 
 JSArray* constructEmptyArray(ExecState* exec, unsigned initialLength)
 {
-    return new (exec) JSArray(exec->lexicalGlobalObject()->arrayStructure(), initialLength);
+    return new (exec) JSArray(exec->lexicalGlobalObject()->arrayPrototype(), initialLength);
 }
 
 JSArray* constructArray(ExecState* exec, JSValue* singleItemValue)
 {
     ArgList values;
     values.append(singleItemValue);
-    return new (exec) JSArray(exec, exec->lexicalGlobalObject()->arrayStructure(), values);
+    return new (exec) JSArray(exec, exec->lexicalGlobalObject()->arrayPrototype(), values);
 }
 
 JSArray* constructArray(ExecState* exec, const ArgList& values)
 {
-    return new (exec) JSArray(exec, exec->lexicalGlobalObject()->arrayStructure(), values);
+    return new (exec) JSArray(exec, exec->lexicalGlobalObject()->arrayPrototype(), values);
 }
 
-} // namespace JSC
+} // namespace KJS

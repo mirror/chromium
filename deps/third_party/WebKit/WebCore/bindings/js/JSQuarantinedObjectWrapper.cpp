@@ -28,7 +28,7 @@
 
 #include <kjs/JSGlobalObject.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -56,6 +56,17 @@ JSValue* JSQuarantinedObjectWrapper::cachedValueGetter(ExecState*, const Identif
     return v;
 }
 
+JSQuarantinedObjectWrapper::JSQuarantinedObjectWrapper(ExecState* unwrappedExec, JSObject* unwrappedObject, JSObject* wrappedPrototype)
+    : JSObject(wrappedPrototype)
+    , m_unwrappedGlobalObject(unwrappedExec->dynamicGlobalObject())
+    , m_unwrappedObject(unwrappedObject)
+{
+    ASSERT_ARG(unwrappedExec, unwrappedExec);
+    ASSERT_ARG(unwrappedObject, unwrappedObject);
+    ASSERT_ARG(wrappedPrototype, wrappedPrototype);
+    ASSERT_ARG(wrappedPrototype, asWrapper(wrappedPrototype));
+}
+
 JSQuarantinedObjectWrapper::JSQuarantinedObjectWrapper(ExecState* unwrappedExec, JSObject* unwrappedObject, PassRefPtr<StructureID> structureID)
     : JSObject(structureID)
     , m_unwrappedGlobalObject(unwrappedExec->dynamicGlobalObject())
@@ -70,7 +81,7 @@ JSQuarantinedObjectWrapper::~JSQuarantinedObjectWrapper()
 {
 }
 
-bool JSQuarantinedObjectWrapper::allowsUnwrappedAccessFrom(ExecState* exec) const
+bool JSQuarantinedObjectWrapper::allowsUnwrappedAccessFrom(const ExecState* exec) const
 {
     return m_unwrappedGlobalObject->profileGroup() == exec->dynamicGlobalObject()->profileGroup();
 }
@@ -197,7 +208,7 @@ JSObject* JSQuarantinedObjectWrapper::construct(ExecState* exec, JSObject* const
     ConstructType unwrappedConstructType = wrapper->m_unwrappedObject->getConstructData(unwrappedConstructData);
     ASSERT(unwrappedConstructType != ConstructTypeNone);
 
-    JSValue* unwrappedResult = JSC::construct(wrapper->unwrappedExecState(), wrapper->m_unwrappedObject, unwrappedConstructType, unwrappedConstructData, preparedArgs);
+    JSValue* unwrappedResult = KJS::construct(wrapper->unwrappedExecState(), wrapper->m_unwrappedObject, unwrappedConstructType, unwrappedConstructData, preparedArgs);
 
     JSValue* resultValue = wrapper->wrapOutgoingValue(wrapper->unwrappedExecState(), unwrappedResult);
     ASSERT(resultValue->isObject());
@@ -219,12 +230,17 @@ ConstructType JSQuarantinedObjectWrapper::getConstructData(ConstructData& constr
     return ConstructTypeHost;
 }
 
-bool JSQuarantinedObjectWrapper::hasInstance(ExecState* exec, JSValue* value, JSValue* proto)
+bool JSQuarantinedObjectWrapper::implementsHasInstance() const
+{
+    return m_unwrappedObject->implementsHasInstance();
+}
+
+bool JSQuarantinedObjectWrapper::hasInstance(ExecState* exec, JSValue* value)
 {
     if (!allowsHasInstance())
         return false;
 
-    bool result = m_unwrappedObject->hasInstance(unwrappedExecState(), prepareIncomingValue(exec, value), prepareIncomingValue(exec, proto));
+    bool result = m_unwrappedObject->hasInstance(unwrappedExecState(), prepareIncomingValue(exec, value));
 
     transferExceptionToExecState(exec);
 
@@ -247,7 +263,7 @@ JSValue* JSQuarantinedObjectWrapper::call(ExecState* exec, JSObject* function, J
     CallType unwrappedCallType = wrapper->m_unwrappedObject->getCallData(unwrappedCallData);
     ASSERT(unwrappedCallType != CallTypeNone);
 
-    JSValue* unwrappedResult = JSC::call(wrapper->unwrappedExecState(), wrapper->m_unwrappedObject, unwrappedCallType, unwrappedCallData, preparedThisValue, preparedArgs);
+    JSValue* unwrappedResult = KJS::call(wrapper->unwrappedExecState(), wrapper->m_unwrappedObject, unwrappedCallType, unwrappedCallData, preparedThisValue, preparedArgs);
 
     JSValue* result = wrapper->wrapOutgoingValue(wrapper->unwrappedExecState(), unwrappedResult);
 

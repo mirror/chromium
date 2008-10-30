@@ -23,26 +23,26 @@
 
 #include "PropertyNameArray.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(StringObject);
 
 const ClassInfo StringObject::info = { "String", 0, 0, 0 };
 
-StringObject::StringObject(ExecState* exec, PassRefPtr<StructureID> structure)
-    : JSWrapperObject(structure)
+StringObject::StringObject(ExecState* exec, JSObject* prototype)
+    : JSWrapperObject(prototype)
 {
     setInternalValue(jsEmptyString(exec));
 }
 
-StringObject::StringObject(PassRefPtr<StructureID> structure, JSString* string)
-    : JSWrapperObject(structure)
+StringObject::StringObject(JSObject* prototype, JSString* string)
+    : JSWrapperObject(prototype)
 {
     setInternalValue(string);
 }
 
-StringObject::StringObject(ExecState* exec, PassRefPtr<StructureID> structure, const UString& string)
-    : JSWrapperObject(structure)
+StringObject::StringObject(ExecState* exec, JSObject* prototype, const UString& string)
+    : JSWrapperObject(prototype)
 {
     setInternalValue(jsString(exec, string));
 }
@@ -98,4 +98,4 @@ JSString* StringObject::toThisJSString(ExecState*)
     return internalValue();
 }
 
-} // namespace JSC
+} // namespace KJS

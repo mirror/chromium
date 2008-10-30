@@ -46,7 +46,7 @@
 using namespace WTF;
 using namespace Unicode;
 
-namespace JSC {
+namespace KJS {
 
 static JSValue* encode(ExecState* exec, const ArgList& args, const char* doNotEscape)
 {
@@ -195,27 +195,26 @@ double parseIntOverflow(const char* s, int length, int radix)
 static double parseInt(const UString& s, int radix)
 {
     int length = s.size();
-    const UChar* data = s.data();
     int p = 0;
 
-    while (p < length && isStrWhiteSpace(data[p]))
+    while (p < length && isStrWhiteSpace(s[p]))
         ++p;
 
     double sign = 1;
     if (p < length) {
-        if (data[p] == '+')
+        if (s[p] == '+')
             ++p;
-        else if (data[p] == '-') {
+        else if (s[p] == '-') {
             sign = -1;
             ++p;
         }
     }
 
-    if ((radix == 0 || radix == 16) && length - p >= 2 && data[p] == '0' && (data[p + 1] == 'x' || data[p + 1] == 'X')) {
+    if ((radix == 0 || radix == 16) && length - p >= 2 && s[p] == '0' && (s[p + 1] == 'x' || s[p + 1] == 'X')) {
         radix = 16;
         p += 2;
     } else if (radix == 0) {
-        if (p < length && data[p] == '0')
+        if (p < length && s[p] == '0')
             radix = 8;
         else
             radix = 10;
@@ -228,7 +227,7 @@ static double parseInt(const UString& s, int radix)
     bool sawDigit = false;
     double number = 0;
     while (p < length) {
-        int digit = parseDigit(data[p], radix);
+        int digit = parseDigit(s[p], radix);
         if (digit == -1)
             break;
         sawDigit = true;
@@ -255,15 +254,14 @@ static double parseFloat(const UString& s)
     // Check for 0x prefix here, because toDouble allows it, but we must treat it as 0.
     // Need to skip any whitespace and then one + or - sign.
     int length = s.size();
-    const UChar* data = s.data();
     int p = 0;
-    while (p < length && isStrWhiteSpace(data[p]))
+    while (p < length && isStrWhiteSpace(s[p]))
         ++p;
 
-    if (p < length && (data[p] == '+' || data[p] == '-'))
+    if (p < length && (s[p] == '+' || s[p] == '-'))
         ++p;
 
-    if (length - p >= 2 && data[p] == '0' && (data[p + 1] == 'x' || data[p + 1] == 'X'))
+    if (length - p >= 2 && s[p] == '0' && (s[p + 1] == 'x' || s[p + 1] == 'X'))
         return 0;
 
     return s.toDouble(true /*tolerant*/, false /* NaN for empty string */);
@@ -282,33 +280,21 @@ JSValue* globalFuncEval(ExecState* exec, JSObject* function, JSValue* thisValue,
 
     UString s = x->toString(exec);
 
+    int sourceId;
     int errLine;
     UString errMsg;
 
-    SourceCode source = makeSource(s);
-    RefPtr<EvalNode> evalNode = exec->globalData().parser->parse<EvalNode>(exec, source, &errLine, &errMsg);
+    RefPtr<EvalNode> evalNode = exec->parser()->parse<EvalNode>(exec, UString(), 1, UStringSourceProvider::create(s), &sourceId, &errLine, &errMsg);
 
     if (!evalNode)
-        return throwError(exec, SyntaxError, errMsg, errLine, source.provider()->asID(), NULL);
+        return throwError(exec, SyntaxError, errMsg, errLine, sourceId, NULL);
 
     return exec->machine()->execute(evalNode.get(), exec, thisObject, globalObject->globalScopeChain().node(), exec->exceptionSlot());
 }
 
 JSValue* globalFuncParseInt(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
 {
-    JSValue* value = args.at(exec, 0);
-    int32_t radix = args.at(exec, 1)->toInt32(exec);
-
-    if (value->isNumber() && (radix == 0 || radix == 10)) {
-        if (JSImmediate::isImmediate(value))
-            return value;
-        double d = value->uncheckedGetNumber();
-        if (!isfinite(d))
-            return JSImmediate::zeroImmediate();
-        return jsNumber(exec, floor(d));
-    }
-
-    return jsNumber(exec, parseInt(value->toString(exec), radix));
+    return jsNumber(exec, parseInt(args.at(exec, 0)->toString(exec), args.at(exec, 1)->toInt32(exec)));
 }
 
 JSValue* globalFuncParseFloat(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
@@ -430,4 +416,4 @@ JSValue* globalFuncKJSPrint(ExecState* exec, JSObject*, JSValue*, const ArgList&
 }
 #endif
 
-} // namespace JSC
+} // namespace KJS

@@ -29,26 +29,24 @@
 #if ENABLE(VIDEO)
 
 #include "JSDOMBinding.h"
-#include "JSDocument.h"
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
 
     class JSAudioConstructor : public DOMObject {
     public:
-        JSAudioConstructor(JSC::ExecState*, Document*);
+        JSAudioConstructor(KJS::ExecState*, Document*);
 
-        Document* document() const { return m_document->impl(); }
+        Document* document() const { return m_document.get(); }
 
-        static const JSC::ClassInfo s_info;
+        static const KJS::ClassInfo s_info;
 
-        virtual void mark();
     private:
-        virtual JSC::ConstructType getConstructData(JSC::ConstructData&);
+        virtual KJS::ConstructType getConstructData(KJS::ConstructData&);
 
-        virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
 
-        JSDocument* m_document;
+        RefPtr<Document> m_document;
     };
 
 } // namespace WebCore

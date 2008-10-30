@@ -91,7 +91,7 @@ public:
     virtual bool isActivatedSubmit() const { return false; }
     virtual void setActivatedSubmit(bool flag) { }
 
-    virtual short tabIndex() const;
+    short tabIndex() const;
 
     virtual bool willValidate() const;
 

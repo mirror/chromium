@@ -23,13 +23,15 @@
 
 #include "JSWrapperObject.h"
 
-namespace JSC {
+namespace KJS {
 
+    class FunctionPrototype;
+    class ObjectPrototype;
     struct GregorianDateTime;
 
     class DateInstance : public JSWrapperObject {
     public:
-        explicit DateInstance(PassRefPtr<StructureID>);
+        DateInstance(JSObject* prototype);
         virtual ~DateInstance();
 
         double internalNumber() const { return internalValue()->uncheckedGetNumber(); }
@@ -52,6 +54,6 @@ namespace JSC {
         mutable Cache* m_cache;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // DateInstance_h

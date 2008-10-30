@@ -32,7 +32,7 @@
 #include <wtf/Forward.h>
 #include <wtf/RefPtr.h>
 
-namespace JSC {
+namespace KJS {
     class ExecState;
     class JSObject;
     class JSValue;
@@ -44,16 +44,16 @@ namespace WebCore {
 
     class JSCustomXPathNSResolver : public XPathNSResolver {
     public:
-        static PassRefPtr<JSCustomXPathNSResolver> create(JSC::ExecState*, JSC::JSValue*);
+        static PassRefPtr<JSCustomXPathNSResolver> create(KJS::ExecState*, KJS::JSValue*);
         
         virtual ~JSCustomXPathNSResolver();
 
         virtual String lookupNamespaceURI(const String& prefix);
 
     private:
-        JSCustomXPathNSResolver(JSC::JSObject*, Frame*);
+        JSCustomXPathNSResolver(KJS::JSObject*, Frame*);
 
-        JSC::JSObject* m_customResolver; // JSCustomXPathNSResolvers are always temporary, thus no need to GC protect the object.
+        KJS::JSObject* m_customResolver; // JSCustomXPathNSResolvers are always temporary, thus no need to GC protect the object.
         RefPtr<Frame> m_frame;
     };
 

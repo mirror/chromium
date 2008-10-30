@@ -76,8 +76,6 @@ using namespace HTMLNames;
 static void* baseOfRenderObjectBeingDeleted;
 #endif
 
-bool RenderObject::s_affectsParentBlock = false;
-
 void* RenderObject::operator new(size_t sz, RenderArena* renderArena) throw()
 {
     return renderArena->allocate(sz);
@@ -643,7 +641,12 @@ bool RenderObject::canBeProgramaticallyScrolled(bool scrollToAnchor) const
     if (!layer())
         return false;
 
-    return (hasOverflowClip() && (scrollsOverflow() || (node() && node()->isContentEditable()))) || (node() && node()->isDocumentNode());
+    return (hasOverflowClip() && (scrollsOverflow() || (node() && node()->isContentEditable()))) || ((node() && node()->isDocumentNode()) && (hasScrollableView() || scrollToAnchor));
+}
+    
+bool RenderObject::hasScrollableView() const
+{
+    return (view() && view()->frameView()->isScrollable());
 }
 
 void RenderObject::autoscroll()
@@ -1962,9 +1965,6 @@ void RenderObject::repaintOverhangingFloats(bool paintAllDescendants)
 
 bool RenderObject::checkForRepaintDuringLayout() const
 {
-    // FIXME: <https://bugs.webkit.org/show_bug.cgi?id=20885> It is probably safe to also require
-    // m_everHadLayout. Currently, only RenderBlock::layoutBlock() adds this condition. See also
-    // <https://bugs.webkit.org/show_bug.cgi?id=15129>.
     return !document()->view()->needsFullRepaint() && !hasLayer();
 }
 
@@ -2162,122 +2162,89 @@ void RenderObject::setAnimatableStyle(RenderStyle* style)
     setStyle(style);
 }
 
-void RenderObject::setStyle(const RenderStyle* style)
+void RenderObject::setStyle(RenderStyle* style)
 {
     if (m_style == style)
         return;
 
-    RenderStyle::Diff diff = RenderStyle::Equal;
-    if (m_style)
-        diff = m_style->diff(style);
-
-    // If we have no layer(), just treat a RepaintLayer hint as a normal Repaint.
-    if (diff == RenderStyle::RepaintLayer && !hasLayer())
-        diff = RenderStyle::Repaint;
-
-    styleWillChange(diff, style);
-    
-    RenderStyle* oldStyle = m_style;
-    m_style = const_cast<RenderStyle*>(style);
-    if (m_style)
-        m_style->ref();
-
-    updateFillImages(oldStyle ? oldStyle->backgroundLayers() : 0, m_style ? m_style->backgroundLayers() : 0);
-    updateFillImages(oldStyle ? oldStyle->maskLayers() : 0, m_style ? m_style->maskLayers() : 0);
-
-    updateImage(oldStyle ? oldStyle->borderImage().image() : 0, m_style ? m_style->borderImage().image() : 0);
-    updateImage(oldStyle ? oldStyle->maskBoxImage().image() : 0, m_style ? m_style->maskBoxImage().image() : 0);
-
-    styleDidChange(diff, oldStyle);
-
-    if (oldStyle) {
-        oldStyle->deref(renderArena());
-    }
-}
-
-void RenderObject::setStyleInternal(RenderStyle* style)
-{
-    if (m_style == style)
-        return;
-    if (m_style)
-        m_style->deref(renderArena());
-    m_style = style;
-    if (m_style)
-        m_style->ref();
-}
-
-void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
-{
+    bool affectsParentBlock = false;
+    RenderStyle::Diff d = RenderStyle::Equal;
     if (m_style) {
+        d = m_style->diff(style);
+
         // If our z-index changes value or our visibility changes,
         // we need to dirty our stacking context's z-order list.
-        if (newStyle) {
+        if (style) {
 #if ENABLE(DASHBOARD_SUPPORT)
-            if (m_style->visibility() != newStyle->visibility() ||
-                    m_style->zIndex() != newStyle->zIndex() ||
-                    m_style->hasAutoZIndex() != newStyle->hasAutoZIndex())
+            if (m_style->visibility() != style->visibility() ||
+                    m_style->zIndex() != style->zIndex() ||
+                    m_style->hasAutoZIndex() != style->hasAutoZIndex())
                 document()->setDashboardRegionsDirty(true);
 #endif
 
-            if ((m_style->hasAutoZIndex() != newStyle->hasAutoZIndex() ||
-                    m_style->zIndex() != newStyle->zIndex() ||
-                    m_style->visibility() != newStyle->visibility()) && hasLayer()) {
-                layer()->dirtyStackingContextZOrderLists();
-                if (m_style->hasAutoZIndex() != newStyle->hasAutoZIndex() ||
-                        m_style->visibility() != newStyle->visibility())
+            if ((m_style->hasAutoZIndex() != style->hasAutoZIndex() ||
+                    m_style->zIndex() != style->zIndex() ||
+                    m_style->visibility() != style->visibility()) && hasLayer()) {
+                layer()->stackingContext()->dirtyZOrderLists();
+                if (m_style->hasAutoZIndex() != style->hasAutoZIndex() ||
+                        m_style->visibility() != style->visibility())
                     layer()->dirtyZOrderLists();
             }
             // keep layer hierarchy visibility bits up to date if visibility changes
-            if (m_style->visibility() != newStyle->visibility()) {
+            if (m_style->visibility() != style->visibility()) {
                 if (RenderLayer* l = enclosingLayer()) {
-                    if (newStyle->visibility() == VISIBLE)
+                    if (style->visibility() == VISIBLE)
                         l->setHasVisibleContent(true);
                     else if (l->hasVisibleContent() && (this == l->renderer() || l->renderer()->style()->visibility() != VISIBLE)) {
                         l->dirtyVisibleContentStatus();
-                        if (diff > RenderStyle::RepaintLayer)
+                        if (d > RenderStyle::RepaintLayer)
                             repaint();
                     }
                 }
             }
         }
 
+        // If we have no layer(), just treat a RepaintLayer hint as a normal Repaint.
+        if (d == RenderStyle::RepaintLayer && !hasLayer())
+            d = RenderStyle::Repaint;
+
         // The background of the root element or the body element could propagate up to
         // the canvas.  Just dirty the entire canvas when our style changes substantially.
-        if (diff >= RenderStyle::Repaint && element() &&
+        if (d >= RenderStyle::Repaint && element() &&
                 (element()->hasTagName(htmlTag) || element()->hasTagName(bodyTag)))
             view()->repaint();
         else if (m_parent && !isText()) {
             // Do a repaint with the old style first, e.g., for example if we go from
             // having an outline to not having an outline.
-            if (diff == RenderStyle::RepaintLayer) {
+            if (d == RenderStyle::RepaintLayer) {
                 layer()->repaintIncludingDescendants();
-                if (!(m_style->clip() == newStyle->clip()))
+                if (!(m_style->clip() == style->clip()))
                     layer()->clearClipRects();
-            } else if (diff == RenderStyle::Repaint || newStyle->outlineSize() < m_style->outlineSize())
+            } else if (d == RenderStyle::Repaint || style->outlineSize() < m_style->outlineSize())
                 repaint();
         }
 
         // When a layout hint happens, we go ahead and do a repaint of the layer, since the layer could
         // end up being destroyed.
-        if (diff == RenderStyle::Layout && hasLayer() &&
-                (m_style->position() != newStyle->position() ||
-                 m_style->zIndex() != newStyle->zIndex() ||
-                 m_style->hasAutoZIndex() != newStyle->hasAutoZIndex() ||
-                 !(m_style->clip() == newStyle->clip()) ||
-                 m_style->hasClip() != newStyle->hasClip() ||
-                 m_style->opacity() != newStyle->opacity()))
+        if (d == RenderStyle::Layout && hasLayer() &&
+                (m_style->position() != style->position() ||
+                 m_style->zIndex() != style->zIndex() ||
+                 m_style->hasAutoZIndex() != style->hasAutoZIndex() ||
+                 !(m_style->clip() == style->clip()) ||
+                 m_style->hasClip() != style->hasClip() ||
+                 m_style->opacity() != style->opacity()))
             layer()->repaintIncludingDescendants();
 
         // When a layout hint happens and an object's position style changes, we have to do a layout
         // to dirty the render tree using the old position value now.
-        if (diff == RenderStyle::Layout && m_parent && m_style->position() != newStyle->position()) {
+        if (d == RenderStyle::Layout && m_parent && m_style->position() != style->position()) {
             markContainingBlocksForLayout();
             if (m_style->position() == StaticPosition)
                 repaint();
-            if (isFloating() && !isPositioned() && (newStyle->position() == AbsolutePosition || newStyle->position() == FixedPosition))
+            if (isFloating() && !isPositioned() && (style->position() == AbsolutePosition || style->position() == FixedPosition))
                 removeFromObjectLists();
             if (isRenderBlock()) {
-                if (newStyle->position() == StaticPosition)
+                if (style->position() == StaticPosition)
                     // Clear our positioned objects list. Our absolutely positioned descendants will be
                     // inserted into our containing block's positioned objects list during layout.
                     removePositionedObjects(0);
@@ -2297,21 +2264,21 @@ void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* ne
             }
         }
 
-        if (isFloating() && (m_style->floating() != newStyle->floating()))
+        if (isFloating() && (m_style->floating() != style->floating()))
             // For changes in float styles, we need to conceivably remove ourselves
             // from the floating objects list.
             removeFromObjectLists();
-        else if (isPositioned() && (newStyle->position() != AbsolutePosition && newStyle->position() != FixedPosition))
+        else if (isPositioned() && (style->position() != AbsolutePosition && style->position() != FixedPosition))
             // For changes in positioning styles, we need to conceivably remove ourselves
             // from the positioned objects list.
             removeFromObjectLists();
 
-        s_affectsParentBlock = isFloatingOrPositioned() &&
-            (!newStyle->isFloating() && newStyle->position() != AbsolutePosition && newStyle->position() != FixedPosition)
+        affectsParentBlock = m_style && isFloatingOrPositioned() &&
+            (!style->isFloating() && style->position() != AbsolutePosition && style->position() != FixedPosition)
             && parent() && (parent()->isBlockFlow() || parent()->isInlineFlow());
 
         // reset style flags
-        if (diff == RenderStyle::Layout || diff == RenderStyle::LayoutPositionedMovementOnly) {
+        if (d == RenderStyle::Layout || d == RenderStyle::LayoutPositionedMovementOnly) {
             m_floating = false;
             m_positioned = false;
             m_relPositioned = false;
@@ -2320,13 +2287,12 @@ void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* ne
         m_hasOverflowClip = false;
         m_hasTransform = false;
         m_hasReflection = false;
-    } else
-        s_affectsParentBlock = false;
+    }
 
     if (view()->frameView()) {
         // FIXME: A better solution would be to only invalidate the fixed regions when scrolling.  It's overkill to
         // prevent the entire view from blitting on a scroll.
-        bool newStyleSlowScroll = newStyle && (newStyle->position() == FixedPosition || newStyle->hasFixedBackgroundImage());
+        bool newStyleSlowScroll = style && (style->position() == FixedPosition || style->hasFixedBackgroundImage());
         bool oldStyleSlowScroll = m_style && (m_style->position() == FixedPosition || m_style->hasFixedBackgroundImage());
         if (oldStyleSlowScroll != newStyleSlowScroll) {
             if (oldStyleSlowScroll)
@@ -2335,27 +2301,50 @@ void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* ne
                 view()->frameView()->addSlowRepaintObject();
         }
     }
-}
 
-void RenderObject::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
-{
+    RenderStyle* oldStyle = m_style;
+    m_style = style;
+
+    updateFillImages(oldStyle ? oldStyle->backgroundLayers() : 0, m_style ? m_style->backgroundLayers() : 0);
+    updateFillImages(oldStyle ? oldStyle->maskLayers() : 0, m_style ? m_style->maskLayers() : 0);
+
+    updateImage(oldStyle ? oldStyle->borderImage().image() : 0, m_style ? m_style->borderImage().image() : 0);
+    updateImage(oldStyle ? oldStyle->maskBoxImage().image() : 0, m_style ? m_style->maskBoxImage().image() : 0);
+
+    if (m_style)
+        m_style->ref();
+
+    if (oldStyle)
+        oldStyle->deref(renderArena());
+
     setHasBoxDecorations(m_style->hasBorder() || m_style->hasBackground() || m_style->hasAppearance() || m_style->boxShadow());
 
-    if (s_affectsParentBlock)
+    if (affectsParentBlock)
         handleDynamicFloatPositionChange();
 
     // No need to ever schedule repaints from a style change of a text run, since
     // we already did this for the parent of the text run.
     // We do have to schedule layouts, though, since a style change can force us to
     // need to relayout.
-    if (diff == RenderStyle::Layout && m_parent)
+    if (d == RenderStyle::Layout && m_parent)
         setNeedsLayoutAndPrefWidthsRecalc();
-    else if (diff == RenderStyle::LayoutPositionedMovementOnly && m_parent && !isText())
+    else if (d == RenderStyle::LayoutPositionedMovementOnly && m_parent && !isText())
         setNeedsPositionedMovementLayout();
-    else if (m_parent && !isText() && (diff == RenderStyle::RepaintLayer || diff == RenderStyle::Repaint))
+    else if (m_parent && !isText() && (d == RenderStyle::RepaintLayer || d == RenderStyle::Repaint))
         // Do a repaint with the new style now, e.g., for example if we go from
         // not having an outline to having an outline.
         repaint();
+}
+
+void RenderObject::setStyleInternal(RenderStyle* style)
+{
+    if (m_style == style)
+        return;
+    if (m_style)
+        m_style->deref(renderArena());
+    m_style = style;
+    if (m_style)
+        m_style->ref();
 }
 
 void RenderObject::updateFillImages(const FillLayer* oldLayers, const FillLayer* newLayers)
@@ -2569,11 +2558,6 @@ void RenderObject::arenaDelete(RenderArena* arena, void* base)
         for (const FillLayer* bgLayer = m_style->backgroundLayers(); bgLayer; bgLayer = bgLayer->next()) {
             if (StyleImage* backgroundImage = bgLayer->image())
                 backgroundImage->removeClient(this);
-        }
-
-        for (const FillLayer* maskLayer = m_style->maskLayers(); maskLayer; maskLayer = maskLayer->next()) {
-            if (StyleImage* maskImage = maskLayer->image())
-                maskImage->removeClient(this);
         }
 
         if (StyleImage* borderImage = m_style->borderImage().image())
@@ -2822,7 +2806,7 @@ RenderStyle* RenderObject::firstLineStyle() const
     return s;
 }
 
-RenderStyle* RenderObject::getPseudoStyle(RenderStyle::PseudoId pseudo, RenderStyle* parentStyle, bool useCachedStyle) const
+RenderStyle* RenderObject::getPseudoStyle(RenderStyle::PseudoId pseudo, RenderStyle* parentStyle) const
 {
     if (pseudo < RenderStyle::FIRST_INTERNAL_PSEUDOID && !style()->hasPseudoStyle(pseudo))
         return 0;
@@ -2830,12 +2814,12 @@ RenderStyle* RenderObject::getPseudoStyle(RenderStyle::PseudoId pseudo, RenderSt
     if (!parentStyle)
         parentStyle = style();
 
-    RenderStyle* result = useCachedStyle ? style()->getPseudoStyle(pseudo) : 0;
+    RenderStyle* result = style()->getPseudoStyle(pseudo);
     if (result)
         return result;
 
     Node* node = element();
-    while (node && !node->isElementNode())
+    if (node && isText())
         node = node->parentNode();
     if (!node)
         return 0;
@@ -2845,7 +2829,7 @@ RenderStyle* RenderObject::getPseudoStyle(RenderStyle::PseudoId pseudo, RenderSt
         result->setStyleType(RenderStyle::FIRST_LINE_INHERITED);
     } else
         result = document()->styleSelector()->pseudoStyleForElement(pseudo, static_cast<Element*>(node), parentStyle);
-    if (result && useCachedStyle) {
+    if (result) {
         style()->addPseudoStyle(result);
         result->deref(document()->renderArena());
     }
@@ -3005,7 +2989,7 @@ bool RenderObject::willRenderImage(CachedImage*)
 
     // If we're not in a window (i.e., we're dormant from being put in the b/f cache or in a background tab)
     // then we don't want to render either.
-    return !document()->inPageCache() && !document()->view()->isOffscreen();
+    return !document()->inPageCache() && document()->view()->inWindow();
 }
 
 int RenderObject::maximalOutlineSize(PaintPhase p) const

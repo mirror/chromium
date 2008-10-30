@@ -44,8 +44,8 @@
 #ifndef RenderLayer_h
 #define RenderLayer_h
 
-#include "ScrollbarClient.h"
 #include "RenderObject.h"
+#include "ScrollBar.h"
 #include "Timer.h"
 #include <wtf/OwnPtr.h>
 
@@ -54,11 +54,11 @@ namespace WebCore {
 class AffineTransform;
 class CachedResource;
 class HitTestResult;
+class PlatformScrollbar;
 class RenderFrameSet;
 class RenderMarquee;
 class RenderObject;
 class RenderReplica;
-class RenderScrollbarPart;
 class RenderStyle;
 class RenderTable;
 class RenderText;
@@ -163,14 +163,12 @@ public:
 
     void repaintIncludingDescendants();
 
-    void styleChanged(RenderStyle::Diff, const RenderStyle*);
+    void styleChanged(RenderStyle*);
 
     RenderMarquee* marquee() const { return m_marquee; }
     void suspendMarquees();
 
     bool isOverflowOnly() const { return m_isOverflowOnly; }
-
-    bool requiresSlowRepaints() const;
 
     bool isTransparent() const;
     RenderLayer* transparentAncestor();
@@ -225,20 +223,21 @@ public:
     PassRefPtr<Scrollbar> createScrollbar(ScrollbarOrientation);
     void destroyScrollbar(ScrollbarOrientation);
 
-    Scrollbar* horizontalScrollbar() const { return m_hBar.get(); }
-    Scrollbar* verticalScrollbar() const { return m_vBar.get(); }
+    Scrollbar* horizontalScrollbar() { return m_hBar.get(); }
+    Scrollbar* verticalScrollbar() { return m_vBar.get(); }
+
+    PlatformScrollbar* horizontalScrollbarWidget() const;
+    PlatformScrollbar* verticalScrollbarWidget() const;
 
     int verticalScrollbarWidth() const;
     int horizontalScrollbarHeight() const;
 
-    void positionOverflowControls(int tx, int ty);
+    void positionOverflowControls();
     bool isPointInResizeControl(const IntPoint&);
     bool hitTestOverflowControls(HitTestResult&);
     IntSize offsetFromResizeCorner(const IntPoint&) const;
 
     void paintOverflowControls(GraphicsContext*, int tx, int ty, const IntRect& damageRect);
-    void paintScrollCorner(GraphicsContext*, int tx, int ty, const IntRect& damageRect);
-    void paintResizer(GraphicsContext*, int tx, int ty, const IntRect& damageRect);
 
     void updateScrollInfoAfterLayout();
 
@@ -265,7 +264,6 @@ public:
     bool isStackingContext() const { return !hasAutoZIndex() || renderer()->isRenderView(); }
 
     void dirtyZOrderLists();
-    void dirtyStackingContextZOrderLists();
     void updateZOrderLists();
     Vector<RenderLayer*>* posZOrderList() const { return m_posZOrderList; }
     Vector<RenderLayer*>* negZOrderList() const { return m_negZOrderList; }
@@ -319,7 +317,6 @@ public:
     void setStaticX(int staticX) { m_staticX = staticX; }
     void setStaticY(int staticY) { m_staticY = staticY; }
 
-    bool hasTransform() const { return m_object->hasTransform(); }
     AffineTransform* transform() const { return m_transform.get(); }
 
     void destroy(RenderArena*);
@@ -352,9 +349,8 @@ private:
     bool shouldBeOverflowOnly() const;
 
     virtual void valueChanged(Scrollbar*);
-    virtual void invalidateScrollbarRect(Scrollbar*, const IntRect&);
+    virtual IntRect windowClipRect() const;
     virtual bool isActive() const;
-    virtual bool scrollbarCornerPresent() const;
 
     void updateOverflowStatus(bool horizontalOverflow, bool verticalOverflow);
 
@@ -369,9 +365,6 @@ private:
     bool paintingInsideReflection() const { return m_paintingInsideReflection; }
 
     RenderLayer* enclosingTransformedAncestor() const;
-
-    void updateScrollCornerStyle();
-    void updateResizerStyle();
 
 protected:   
     RenderObject* m_object;
@@ -457,10 +450,6 @@ protected:
     
     // May ultimately be extended to many replicas (with their own paint order).
     RenderReplica* m_reflection;
-    
-    // Renderers to hold our custom scroll corner and resizer.
-    RenderScrollbarPart* m_scrollCorner;
-    RenderScrollbarPart* m_resizer;
 };
 
 } // namespace WebCore

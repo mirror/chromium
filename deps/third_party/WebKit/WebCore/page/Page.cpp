@@ -98,7 +98,7 @@ static void networkStateChanged()
         if (!eventTarget)
             eventTarget = document;
         
-        eventTarget->dispatchEventForType(eventName, false, false);
+        eventTarget->dispatchHTMLEvent(eventName, false, false);
     }
 }
     
@@ -151,11 +151,8 @@ Page::~Page()
     setGroupName(String());
     allPages->remove(this);
     
-    for (Frame* frame = mainFrame(); frame; frame = frame->tree()->traverseNext()) {
-        if (frame->document())
-            frame->document()->documentWillBecomeInactive();
+    for (Frame* frame = mainFrame(); frame; frame = frame->tree()->traverseNext())
         frame->pageDestroyed();
-    }
     m_editorClient->pageDestroyed();
     if (m_parentInspectorController)
         m_parentInspectorController->pageDestroyed();
@@ -485,7 +482,7 @@ void Page::visitedStateChanged(PageGroup* group, unsigned visitedLinkHash)
     }
 }
 
-void Page::setDebuggerForAllPages(JSC::Debugger* debugger)
+void Page::setDebuggerForAllPages(KJS::Debugger* debugger)
 {
     ASSERT(allPages);
 
@@ -494,7 +491,7 @@ void Page::setDebuggerForAllPages(JSC::Debugger* debugger)
         (*it)->setDebugger(debugger);
 }
 
-void Page::setDebugger(JSC::Debugger* debugger)
+void Page::setDebugger(KJS::Debugger* debugger)
 {
     if (m_debugger == debugger)
         return;

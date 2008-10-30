@@ -598,8 +598,6 @@ public:
 
     virtual HRESULT STDMETHODCALLTYPE executeCoreCommandByName(BSTR name, BSTR value);
 
-    virtual HRESULT STDMETHODCALLTYPE clearMainFrameName();
-
     virtual HRESULT STDMETHODCALLTYPE markAllMatchesForText(
         BSTR search, BOOL caseSensitive, BOOL highlight, UINT limit, UINT* matches);
 
@@ -686,12 +684,6 @@ public:
     virtual HRESULT STDMETHODCALLTYPE defersCallbacks(
         /* [out, retval] */ BOOL* defersCallbacks);
 
-    virtual HRESULT STDMETHODCALLTYPE setAlwaysUsesComplexTextCodePath(
-        /* [in] */ BOOL complex);
-
-    virtual HRESULT STDMETHODCALLTYPE alwaysUsesComplexTextCodePath(
-        /* [out, retval] */ BOOL* complex);
-
     // WebView
     WebCore::Page* page();
     bool handleMouseEvent(UINT, WPARAM, LPARAM);
@@ -715,9 +707,8 @@ public:
     void addToDirtyRegion(const WebCore::IntRect&);
     void addToDirtyRegion(HRGN);
     void scrollBackingStore(WebCore::FrameView*, int dx, int dy, const WebCore::IntRect& scrollViewRect, const WebCore::IntRect& clipRect);
-    void updateBackingStore(WebCore::FrameView*, HDC = 0, bool backingStoreCompletelyDirty = false);
+    void updateBackingStore(WebCore::FrameView*, HDC, bool backingStoreCompletelyDirty);
     void deleteBackingStore();
-    void repaint(const WebCore::IntRect&, bool contentChanged, bool immediate = false, bool repaintContentOnly = false);
     void frameRect(RECT* rect);
     void closeWindow();
     void closeWindowSoon();

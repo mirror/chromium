@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2005, 2006, 2007 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -52,7 +52,6 @@ typedef WebCore::Page WebCorePage;
 
 @class WebBasePluginPackage;
 @class WebDownload;
-@class WebNodeHighlight;
 
 @interface WebView (WebViewEditingExtras)
 - (BOOL)_interceptEditingKeyEvent:(WebCoreKeyboardEvent *)event shouldSaveCommand:(BOOL)shouldSave;
@@ -114,9 +113,6 @@ typedef WebCore::Page WebCorePage;
 - (WebBasePluginPackage *)_pluginForExtension:(NSString *)extension;
 - (BOOL)_isMIMETypeRegisteredAsPlugin:(NSString *)MIMEType;
 
-- (void)setCurrentNodeHighlight:(WebNodeHighlight *)nodeHighlight;
-- (WebNodeHighlight *)currentNodeHighlight;
-
 - (void)addPluginInstanceView:(NSView *)view;
 - (void)removePluginInstanceView:(NSView *)view;
 - (void)removePluginInstanceViewsFor:(WebFrame*)webFrame;
@@ -139,11 +135,6 @@ typedef WebCore::Page WebCorePage;
 - (IBAction)_zoomIn:(id)sender isTextOnly:(BOOL)isTextOnly;
 - (BOOL)_canResetZoom:(BOOL)isTextOnly;
 - (IBAction)_resetZoom:(id)sender isTextOnly:(BOOL)isTextOnly;
-
-- (BOOL)_mustDrawUnionedRect:(NSRect)rect singleRects:(const NSRect *)rects count:(NSInteger)count;
-- (void)_updateFocusedAndActiveStateForFrame:(WebFrame *)webFrame;
-
-+ (BOOL)_canHandleRequest:(NSURLRequest *)request forMainFrame:(BOOL)forMainFrame;
 
 @end
 

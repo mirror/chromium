@@ -159,25 +159,17 @@ bool SVGStyledElement::mapToEntry(const QualifiedName& attrName, MappedAttribute
 
 void SVGStyledElement::parseMappedAttribute(MappedAttribute* attr)
 {
-    const QualifiedName& attrName = attr->name();
     // NOTE: Any subclass which overrides parseMappedAttribute for a property handled by
     // cssPropertyIdForSVGAttributeName will also have to override mapToEntry to disable the default eSVG mapping
-    int propId = SVGStyledElement::cssPropertyIdForSVGAttributeName(attrName);
+    int propId = SVGStyledElement::cssPropertyIdForSVGAttributeName(attr->name());
     if (propId > 0) {
         addCSSProperty(attr, propId, attr->value());
         setChanged();
         return;
     }
     
-    // SVG animation has currently requires special storage of values so we set
-    // the className here.  svgAttributeChanged actually causes the resulting
-    // style updates (instead of StyledElement::parseMappedAttribute). We don't
-    // tell StyledElement about the change to avoid parsing the class list twice
-    if (attrName.matches(HTMLNames::classAttr))
-        setClassName(attr->value());
-    else
-        // id is handled by StyledElement which SVGElement inherits from
-        SVGElement::parseMappedAttribute(attr);
+    // id and class are handled by StyledElement
+    SVGElement::parseMappedAttribute(attr);
 }
 
 bool SVGStyledElement::isKnownAttribute(const QualifiedName& attrName)
@@ -194,14 +186,19 @@ void SVGStyledElement::svgAttributeChanged(const QualifiedName& attrName)
 {
     SVGElement::svgAttributeChanged(attrName);
 
-    if (attrName.matches(HTMLNames::classAttr))
-        classAttributeChanged(className());
-
     // If we're the child of a resource element, be sure to invalidate it.
     invalidateResourcesInAncestorChain();
 
-    // Invalidate all SVGElementInstances associated with us
-    SVGElementInstance::invalidateAllInstancesOfElement(this);
+    SVGDocumentExtensions* extensions = document()->accessSVGExtensions();
+    if (!extensions)
+        return;
+
+    // TODO: Fix bug http://bugs.webkit.org/show_bug.cgi?id=15430 (SVGElementInstances should rebuild themselves lazily)
+
+    // In case we're referenced by a <use> element, we have element instances registered
+    // to us in the SVGDocumentExtensions. If notifyAttributeChange() is called, we need
+    // to recursively update all children including ourselves.
+    updateElementInstance(extensions);
 }
 
 void SVGStyledElement::invalidateResourcesInAncestorChain() const
@@ -227,8 +224,45 @@ void SVGStyledElement::childrenChanged(bool changedByParser, Node* beforeChange,
     if (document()->parsing())
         return;
 
-    // Invalidate all SVGElementInstances associated with us
-    SVGElementInstance::invalidateAllInstancesOfElement(this);
+    SVGDocumentExtensions* extensions = document()->accessSVGExtensions();
+    if (!extensions)
+        return;
+
+    // TODO: Fix bug http://bugs.webkit.org/show_bug.cgi?id=15430 (SVGElementInstances should rebuild themselves lazily)
+
+    // In case we're referenced by a <use> element, we have element instances registered
+    // to us in the SVGDocumentExtensions. If childrenChanged() is called, we need
+    // to recursively update all children including ourselves.
+    updateElementInstance(extensions);
+}
+
+void SVGStyledElement::updateElementInstance(SVGDocumentExtensions* extensions) const
+{
+    if (gElementsWithInstanceUpdatesBlocked && gElementsWithInstanceUpdatesBlocked->contains(this))
+        return;
+
+    SVGStyledElement* nonConstThis = const_cast<SVGStyledElement*>(this);
+    HashSet<SVGElementInstance*>* set = extensions->instancesForElement(nonConstThis);
+    if (!set || set->isEmpty())
+        return;
+
+    // We need to be careful here, as the instancesForElement
+    // hash set may be modified after we call updateInstance! 
+    HashSet<SVGElementInstance*> localCopy;
+
+    // First create a local copy of the hashset
+    HashSet<SVGElementInstance*>::const_iterator it1 = set->begin();
+    const HashSet<SVGElementInstance*>::const_iterator end1 = set->end();
+
+    for (; it1 != end1; ++it1)
+        localCopy.add(*it1);
+
+    // Actually nofify instances to update
+    HashSet<SVGElementInstance*>::const_iterator it2 = localCopy.begin();
+    const HashSet<SVGElementInstance*>::const_iterator end2 = localCopy.end();
+
+    for (; it2 != end2; ++it2)
+        (*it2)->updateInstance(nonConstThis);
 }
 
 RenderStyle* SVGStyledElement::resolveStyle(RenderStyle* parentStyle)
@@ -244,11 +278,9 @@ RenderStyle* SVGStyledElement::resolveStyle(RenderStyle* parentStyle)
 
 PassRefPtr<CSSValue> SVGStyledElement::getPresentationAttribute(const String& name)
 {
-    Attribute* attr = mappedAttributes()->getAttributeItem(name, false);
-    if (!attr || !attr->isMappedAttribute() || !attr->style())
+    MappedAttribute* cssSVGAttr = mappedAttributes()->getAttributeItem(name);
+    if (!cssSVGAttr || !cssSVGAttr->style())
         return 0;
-
-    MappedAttribute* cssSVGAttr = static_cast<MappedAttribute*>(attr);
 
     // FIXME: Is it possible that the style will not be shared at the time this
     // is called, but a later addition to the DOM will make it shared?

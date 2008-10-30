@@ -82,9 +82,9 @@ int RenderBR::lineHeight(bool firstLine, bool isRootLineBox) const
     return m_lineHeight;
 }
 
-void RenderBR::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderBR::setStyle(RenderStyle* newStyle)
 {
-    RenderText::styleDidChange(diff, oldStyle);
+    RenderText::setStyle(newStyle);
     m_lineHeight = -1;
 }
 

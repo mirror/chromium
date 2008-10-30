@@ -33,7 +33,7 @@
 #include "ScriptController.h"
 #include <kjs/JSLock.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

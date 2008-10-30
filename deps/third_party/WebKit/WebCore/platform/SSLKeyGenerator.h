@@ -33,9 +33,9 @@ namespace WebCore {
 
     class KURL;
 
-    void getSupportedKeySizes(Vector<String>&);
+    Vector<String> supportedKeySizes();
     String signedPublicKeyAndChallengeString(unsigned keySizeIndex, const String& challengeString, const KURL&);
 
-} // namespace WebCore
+}
 
-#endif // SSLKeyGenerator_h
+#endif

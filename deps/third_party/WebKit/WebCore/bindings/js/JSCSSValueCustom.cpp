@@ -40,7 +40,7 @@
 #include "SVGPaint.h"
 #endif
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -49,27 +49,28 @@ JSValue* toJS(ExecState* exec, CSSValue* value)
     if (!value)
         return jsNull();
 
-    DOMObject* wrapper = getCachedDOMObjectWrapper(exec->globalData(), value);
+    DOMObject* ret = ScriptInterpreter::getDOMObject(value);
 
-    if (wrapper)
-        return wrapper;
+    if (ret)
+        return ret;
 
     if (value->isWebKitCSSTransformValue())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, WebKitCSSTransformValue, value);
+        ret = new (exec) JSWebKitCSSTransformValue(JSWebKitCSSTransformValuePrototype::self(exec), static_cast<WebKitCSSTransformValue*>(value));
     else if (value->isValueList())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, CSSValueList, value);
+        ret = new (exec) JSCSSValueList(JSCSSValueListPrototype::self(exec), static_cast<CSSValueList*>(value));
 #if ENABLE(SVG)
     else if (value->isSVGPaint())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, SVGPaint, value);
+        ret = new (exec) JSSVGPaint(JSSVGPaintPrototype::self(exec), static_cast<SVGPaint*>(value));
     else if (value->isSVGColor())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, SVGColor, value);
+        ret = new (exec) JSSVGColor(JSSVGColorPrototype::self(exec), static_cast<SVGColor*>(value));
 #endif
     else if (value->isPrimitiveValue())
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, CSSPrimitiveValue, value);
+        ret = new (exec) JSCSSPrimitiveValue(JSCSSPrimitiveValuePrototype::self(exec), static_cast<CSSPrimitiveValue*>(value));
     else
-        wrapper = CREATE_DOM_OBJECT_WRAPPER(exec, CSSValue, value);
+        ret = new (exec) JSCSSValue(JSCSSValuePrototype::self(exec), value);
 
-    return wrapper;
+    ScriptInterpreter::putDOMObject(value, ret);
+    return ret;
 }
 
 } // namespace WebCore

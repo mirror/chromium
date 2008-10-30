@@ -58,9 +58,9 @@ namespace WebKit {
 
 FrameLoaderClient::FrameLoaderClient(WebKitWebFrame* frame)
     : m_frame(frame)
-    , m_userAgent("")
     , m_pluginView(0)
     , m_hasSentResponseToPlugin(false)
+    , m_userAgent("")
 {
     ASSERT(m_frame);
 }
@@ -164,6 +164,8 @@ void FrameLoaderClient::dispatchWillSubmitForm(FramePolicyFunction policyFunctio
 
 void FrameLoaderClient::committedLoad(DocumentLoader* loader, const char* data, int length)
 {
+    const String& textEncoding = loader->response().textEncodingName();
+
     if (!m_pluginView) {
         ASSERT(loader->frame());
         // Setting the encoding on the frame loader is our way to get work done that is normally done
@@ -395,6 +397,12 @@ void FrameLoaderClient::setMainFrameDocumentReady(bool)
 }
 
 bool FrameLoaderClient::hasWebView() const
+{
+    notImplemented();
+    return true;
+}
+
+bool FrameLoaderClient::hasFrameView() const
 {
     notImplemented();
     return true;
@@ -787,12 +795,26 @@ void FrameLoaderClient::transitionToCommittedForNewPage()
     frame->setView(frameView);
     // FrameViews are created with a ref count of 1. Release this ref since we've assigned it to frame.
     frameView->deref();
+    frameView->setContainingWindow(GTK_WIDGET(containingWindow));
 
     if (frame->ownerRenderer())
         frame->ownerRenderer()->setWidget(frameView);
 
     if (!frame->ownerElement())
         return;
+
+    HTMLFrameOwnerElement* ownerElement = frame->ownerElement();
+    if (ownerElement->hasTagName(HTMLNames::frameTag) || ownerElement->hasTagName(HTMLNames::iframeTag)) {
+        HTMLFrameElement* frameElt = static_cast<HTMLFrameElement*>(ownerElement);
+        if (frameElt->scrollingMode() == ScrollbarAlwaysOff)
+            frameView->setScrollbarsMode(ScrollbarAlwaysOff);
+        int marginWidth = frameElt->getMarginWidth();
+        int marginHeight = frameElt->getMarginHeight();
+        if (marginWidth != -1)
+            frameView->setMarginWidth(marginWidth);
+        if (marginHeight != -1)
+            frameView->setMarginHeight(marginHeight);
+    }
 }
 
 }

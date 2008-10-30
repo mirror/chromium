@@ -36,7 +36,7 @@
 
 #define ASSERT_CLASS_FITS_IN_CELL(class) COMPILE_ASSERT(sizeof(class) <= CELL_SIZE, class_fits_in_cell)
 
-namespace JSC {
+namespace KJS {
 
     class ArgList;
     class CollectorBlock;
@@ -64,8 +64,6 @@ namespace JSC {
         class Thread;
         enum HeapType { PrimaryHeap, NumberHeap };
 
-        void destroy();
-
 #ifdef JAVASCRIPTCORE_BUILDING_ALL_IN_ONE_FILE
         // We can inline these functions because everything is compiled as
         // one file, so the heapAllocate template definitions are available.
@@ -79,6 +77,8 @@ namespace JSC {
 
         bool collect();
         bool isBusy(); // true if an allocation or collection is in progress
+
+        ~Heap();
 
         static const size_t minExtraCostSize = 256;
 
@@ -118,7 +118,6 @@ namespace JSC {
 
         friend class JSGlobalData;
         Heap(JSGlobalData*);
-        ~Heap();
 
         void recordExtraCost(size_t);
         void markProtectedObjects();
@@ -256,6 +255,6 @@ namespace JSC {
             recordExtraCost(cost / (CELL_SIZE * 2)); 
     }
 
-} // namespace JSC
+} // namespace KJS
 
 #endif /* KJSCOLLECTOR_H_ */

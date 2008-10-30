@@ -11,7 +11,7 @@ altGlyph
 altGlyphDef
 altGlyphItem
 #endif
-#if ENABLE_SVG_ANIMATION
+#ifdef ENABLE_SVG_ANIMATION
 animate
 animateColor
 animateMotion
@@ -30,7 +30,7 @@ definition_src
 defs
 desc
 ellipse
-#if ENABLE_SVG_FILTERS
+#ifdef ENABLE_SVG_FILTERS
 feBlend
 feColorMatrix
 feComponentTransfer
@@ -61,7 +61,7 @@ feTile
 feTurbulence
 filter
 #endif
-#if ENABLE_SVG_FONTS
+#ifdef ENABLE_SVG_FONTS
 font
 font_face
 font_face_format
@@ -69,18 +69,18 @@ font_face_name
 font_face_src
 font_face_uri
 #endif
-#if ENABLE_SVG_FOREIGN_OBJECT
+#ifdef ENABLE_SVG_FOREIGN_OBJECT
 foreignObject
 #endif
 g
-#if ENABLE_SVG_FONTS
+#ifdef ENABLE_SVG_FONTS
 glyph
 #endif
 #if 0
 glyphRef
 #endif
-#if ENABLE_SVG_FONTS
-hkern interfaceName=HKernElement
+#ifdef ENABLE_SVG_FONTS
+hkern upperCase="HKern"
 #endif
 image
 line
@@ -88,10 +88,10 @@ linearGradient
 marker
 mask
 metadata
-#if ENABLE_SVG_FONTS
+#ifdef ENABLE_SVG_FONTS
 missing_glyph
 #endif
-mpath interfaceName=MPathElement
+mpath upperCase="MPath"
 path
 pattern
 polygon
@@ -101,16 +101,16 @@ rect
 script
 stop
 style
-svg interfaceName=SVGElement
+svg upperCase="SVG"
 switch
 symbol
 text
 textPath
 title
-tref interfaceName=TRefElement
-tspan interfaceName=TSpanElement
+tref upperCase="TRef"
+tspan upperCase="TSpan"
 use
 view
 #if 0
-vkern interfaceName=VKernElement
+vkern upperCase="VKern"
 #endif

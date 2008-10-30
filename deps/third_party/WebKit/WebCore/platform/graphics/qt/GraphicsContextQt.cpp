@@ -6,7 +6,7 @@
  * Copyright (C) 2006 Allan Sandfeld Jensen <sandfeld@kde.org>
  * Copyright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
  * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies).
+ * Copyright (C) 2008 Trolltech ASA.
  *
  * All rights reserved.
  *
@@ -39,26 +39,24 @@
 #endif
 
 #include "AffineTransform.h"
+#include "Path.h"
+#include "Pattern.h"
 #include "Color.h"
-#include "FloatConversion.h"
-#include "Font.h"
 #include "GraphicsContext.h"
 #include "GraphicsContextPrivate.h"
 #include "ImageBuffer.h"
-#include "Path.h"
-#include "Pattern.h"
+#include "Font.h"
 #include "Pen.h"
 #include "NotImplemented.h"
 
-#include <QDebug>
-#include <QPainter>
-#include <QPaintDevice>
-#include <QPaintEngine>
-#include <QPainterPath>
-#include <QPixmap>
-#include <QPolygonF>
 #include <QStack>
-#include <QVector>
+#include <QPainter>
+#include <QPolygonF>
+#include <QPainterPath>
+#include <QPaintDevice>
+#include <QPixmap>
+#include <QPaintEngine>
+#include <QDebug>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -205,8 +203,6 @@ public:
     QStack<TransparencyLayer *> layers;
     QPainter* redirect;
 
-    QBrush solidColor;
-
     // Only used by SVG for now.
     QPainterPath currentPath;
 
@@ -219,8 +215,6 @@ GraphicsContextPlatformPrivate::GraphicsContextPlatformPrivate(QPainter* p)
 {
     painter = p;
     redirect = 0;
-
-    solidColor = QBrush(Qt::black);
 
     if (painter) {
         // use the default the QPainter was constructed with
@@ -530,26 +524,21 @@ void GraphicsContext::strokePath()
         return;
 
     QPainter *p = m_data->p();
-    QPen pen = p->pen();
     QPainterPath path = m_data->currentPath;
 
     switch (m_common->state.strokeColorSpace) {
     case SolidColorSpace:
         if (strokeColor().alpha())
-            p->strokePath(path, pen);
+            p->strokePath(path, p->pen());
         break;
-    case PatternColorSpace: {
-        pen.setBrush(QBrush(m_common->state.strokePattern.get()->createPlatformPattern(getCTM())));
-        p->setPen(pen);
-        p->strokePath(path, pen);
+    case PatternColorSpace:
+        p->setBrush(m_common->state.strokePattern.get()->createPlatformPattern(getCTM()));
+        p->strokePath(path, p->pen());
         break;
-    }
-    case GradientColorSpace: {
-        pen.setBrush(QBrush(*(m_common->state.strokeGradient.get()->platformGradient())));
-        p->setPen(pen);
-        p->strokePath(path, pen);
+    case GradientColorSpace:
+        p->setBrush(*(m_common->state.strokeGradient.get()->platformGradient()));
+        p->strokePath(path, p->pen());
         break;
-    }
     }
 }
 
@@ -579,8 +568,7 @@ void GraphicsContext::fillRect(const FloatRect& rect, const Color& c)
     if (paintingDisabled())
         return;
 
-    m_data->solidColor.setColor(QColor(c));
-    m_data->p()->fillRect(rect, m_data->solidColor);
+    m_data->p()->fillRect(rect, QColor(c));
 }
 
 void GraphicsContext::fillRoundedRect(const IntRect& rect, const IntSize& topLeft, const IntSize& topRight, const IntSize& bottomLeft, const IntSize& bottomRight, const Color& color)
@@ -773,8 +761,8 @@ void GraphicsContext::strokeRect(const FloatRect& rect, float width)
 
     QPainterPath path;
     path.addRect(rect);
-    setStrokeThickness(width);
-    m_data->currentPath = path;
+    QPen nPen = m_data->p()->pen();
+    nPen.setWidthF(width);
 
     strokePath();
 }
@@ -788,26 +776,6 @@ void GraphicsContext::setLineCap(LineCap lc)
     QPen nPen = p->pen();
     nPen.setCapStyle(toQtLineCap(lc));
     p->setPen(nPen);
-}
-
-void GraphicsContext::setLineDash(const DashArray& dashes, float dashOffset)
-{
-    QPainter* p = m_data->p();
-    QPen pen = p->pen();
-    unsigned dashLength = dashes.size();
-    if (dashLength) {
-        QVector<qreal> pattern;
-        unsigned count = dashLength;
-        if (dashLength % 2)
-            count *= 2;
-
-        for (unsigned i = 0; i < count; i++)
-            pattern.append(dashes[i % dashLength] / narrowPrecisionToFloat(pen.widthF()));
-
-        pen.setDashPattern(pattern);
-        pen.setDashOffset(dashOffset);
-    }
-    p->setPen(pen);
 }
 
 void GraphicsContext::setLineJoin(LineJoin lj)
@@ -998,6 +966,22 @@ void GraphicsContext::setPlatformStrokeStyle(const StrokeStyle& strokeStyle)
     QPen newPen(p->pen());
     newPen.setStyle(toQPenStyle(strokeStyle));
     p->setPen(newPen);
+}
+
+void GraphicsContext::setPlatformFillPattern(Pattern* pattern)
+{
+}
+
+void GraphicsContext::setPlatformStrokePattern(Pattern* pattern)
+{
+}
+
+void GraphicsContext::setPlatformFillGradient(Gradient* gradient)
+{
+}
+
+void GraphicsContext::setPlatformStrokeGradient(Gradient* gradient)
+{
 }
 
 void GraphicsContext::setPlatformStrokeThickness(float thickness)

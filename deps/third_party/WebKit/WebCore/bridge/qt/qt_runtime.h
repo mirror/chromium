@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2006 Trolltech ASA
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -30,7 +30,7 @@
 #include <qpointer.h>
 #include <qvariant.h>
 
-namespace JSC {
+namespace KJS {
 namespace Bindings {
 
 class QtInstance;
@@ -143,12 +143,8 @@ class QtRuntimeMethod : public InternalFunction
 public:
     virtual ~QtRuntimeMethod();
 
-    static const ClassInfo s_info;
-
-    static FunctionPrototype* createPrototype(ExecState* exec)
-    {
-        return exec->lexicalGlobalObject()->functionPrototype();
-    }
+    virtual CodeType codeType() const;
+    virtual Completion execute(ExecState *exec);
 
 protected:
     QtRuntimeMethodData *d_func() const {return d_ptr;}
@@ -222,6 +218,6 @@ private:
 QVariant convertValueToQVariant(ExecState* exec, JSValue* value, QMetaType::Type hint, int *distance);
 
 } // namespace Bindings
-} // namespace JSC
+} // namespace KJS
 
 #endif

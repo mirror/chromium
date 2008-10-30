@@ -26,7 +26,7 @@
 #include "JSSVGPoint.h"
 #include "SVGPointList.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

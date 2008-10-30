@@ -27,9 +27,8 @@
 #include "JSInspectedObjectWrapper.h"
 
 #include "JSInspectorCallbackWrapper.h"
-#include <kjs/JSGlobalObject.h>
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 
@@ -64,8 +63,21 @@ JSValue* JSInspectedObjectWrapper::wrap(ExecState* unwrappedExec, JSValue* unwra
     ASSERT(prototype->isNull() || prototype->isObject());
 
     if (prototype->isNull())
-        return new (unwrappedExec) JSInspectedObjectWrapper(unwrappedExec, unwrappedObject, JSQuarantinedObjectWrapper::createStructureID(jsNull()));
-    return new (unwrappedExec) JSInspectedObjectWrapper(unwrappedExec, unwrappedObject, JSQuarantinedObjectWrapper::createStructureID(static_cast<JSObject*>(wrap(unwrappedExec, prototype))));
+        return new (unwrappedExec) JSInspectedObjectWrapper(unwrappedExec, unwrappedObject, unwrappedExec->globalData().nullProtoStructureID);
+    return new (unwrappedExec) JSInspectedObjectWrapper(unwrappedExec, unwrappedObject, static_cast<JSObject*>(wrap(unwrappedExec, prototype)));
+}
+
+JSInspectedObjectWrapper::JSInspectedObjectWrapper(ExecState* unwrappedExec, JSObject* unwrappedObject, JSObject* wrappedPrototype)
+    : JSQuarantinedObjectWrapper(unwrappedExec, unwrappedObject, wrappedPrototype)
+{
+    WrapperMap* wrapperMap = wrappers().get(unwrappedGlobalObject());
+    if (!wrapperMap) {
+        wrapperMap = new WrapperMap;
+        wrappers().set(unwrappedGlobalObject(), wrapperMap);
+    }
+
+    ASSERT(!wrapperMap->contains(unwrappedObject));
+    wrapperMap->set(unwrappedObject, this);
 }
 
 JSInspectedObjectWrapper::JSInspectedObjectWrapper(ExecState* unwrappedExec, JSObject* unwrappedObject, PassRefPtr<StructureID> structureID)

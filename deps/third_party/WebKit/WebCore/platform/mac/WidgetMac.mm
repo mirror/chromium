@@ -30,14 +30,13 @@
 #import "Cursor.h"
 #import "Document.h"
 #import "Font.h"
-#import "FoundationExtras.h"
 #import "Frame.h"
 #import "GraphicsContext.h"
 #import "Page.h"
 #import "PlatformMouseEvent.h"
-#import "ScrollView.h"
 #import "WebCoreFrameView.h"
 #import "WebCoreView.h"
+#import "WidgetClient.h"
 
 #import <wtf/RetainPtr.h>
 
@@ -55,6 +54,9 @@ namespace WebCore {
 
 class WidgetPrivate {
 public:
+    RetainPtr<NSView> view;
+    WidgetClient* client;
+    bool visible;
     bool mustStayInWindow;
     bool removeFromSuperviewSoon;
 };
@@ -75,18 +77,58 @@ static void safeRemoveFromSuperview(NSView *view)
     [window _setNeedsToResetDragMargins:resetDragMargins];
 }
 
-Widget::Widget(NSView* view)
-    : m_data(new WidgetPrivate)
+Widget::Widget() : data(new WidgetPrivate)
 {
-    init(view);
-    m_data->mustStayInWindow = false;
-    m_data->removeFromSuperviewSoon = false;
+    data->view = nil;
+    data->client = 0;
+    data->visible = true;
+    data->mustStayInWindow = false;
+    data->removeFromSuperviewSoon = false;
 }
 
-Widget::~Widget()
+Widget::Widget(NSView* view) : data(new WidgetPrivate)
 {
-    releasePlatformWidget();
-    delete m_data;
+    data->view = view;
+    data->client = 0;
+    data->visible = true;
+    data->mustStayInWindow = false;
+    data->removeFromSuperviewSoon = false;
+}
+
+Widget::~Widget() 
+{
+    delete data;
+}
+
+void Widget::setEnabled(bool enabled)
+{
+    id view = data->view.get();
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if ([view respondsToSelector:@selector(setEnabled:)]) {
+        [view setEnabled:enabled];
+    }
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+bool Widget::isEnabled() const
+{
+    id view = data->view.get();
+
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    if ([view respondsToSelector:@selector(isEnabled)]) {
+        return [view isEnabled];
+    }
+    END_BLOCK_OBJC_EXCEPTIONS;
+
+    return true;
+}
+
+IntRect Widget::frameGeometry() const
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    return enclosingIntRect([getOuterView() frame]);
+    END_BLOCK_OBJC_EXCEPTIONS;
+    return IntRect();
 }
 
 // FIXME: Should move this to Chrome; bad layering that this knows about Frame.
@@ -98,7 +140,7 @@ void Widget::setFocus()
 
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
  
-    NSView *view = [platformWidget() _webcore_effectiveFirstResponder];
+    NSView *view = [getView() _webcore_effectiveFirstResponder];
     if (Page* page = frame->page())
         page->chrome()->focusNSView(view);
     
@@ -114,10 +156,10 @@ void Widget::setFocus()
 
 void Widget::show()
 {
-    if (isSelfVisible())
+    if (!data || data->visible)
         return;
 
-    setSelfVisible(true);
+    data->visible = true;
 
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     [getOuterView() setHidden:NO];
@@ -126,32 +168,18 @@ void Widget::show()
 
 void Widget::hide()
 {
-    if (!isSelfVisible())
+    if (!data || !data->visible)
         return;
 
-    setSelfVisible(false);
+    data->visible = false;
 
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     [getOuterView() setHidden:YES];
     END_BLOCK_OBJC_EXCEPTIONS;
 }
 
-IntRect Widget::frameRect() const
+void Widget::setFrameGeometry(const IntRect &rect)
 {
-    if (!platformWidget())
-        return m_frame;
-
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    return enclosingIntRect([getOuterView() frame]);
-    END_BLOCK_OBJC_EXCEPTIONS;
-    
-    return m_frame;
-}
-
-void Widget::setFrameRect(const IntRect& rect)
-{
-    m_frame = rect;
-
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     NSView *v = getOuterView();
     NSRect f = rect;
@@ -162,9 +190,21 @@ void Widget::setFrameRect(const IntRect& rect)
     END_BLOCK_OBJC_EXCEPTIONS;
 }
 
+NSView* Widget::getView() const
+{
+    return data->view.get();
+}
+
+void Widget::setView(NSView* view)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    data->view = view;
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
 NSView* Widget::getOuterView() const
 {
-    NSView* view = platformWidget();
+    NSView* view = data->view.get();
 
     // If this widget's view is a WebCoreFrameScrollView then we
     // resize its containing view, a WebFrameView.
@@ -194,7 +234,7 @@ void Widget::paint(GraphicsContext* p, const IntRect& r)
         // Transparent subframes are in fact implemented with scroll views that return YES from -drawsBackground (whenever the WebView
         // itself is in drawsBackground mode). In the normal drawing code path, the scroll views are never asked to draw the background,
         // so this is not an issue, but in this code path they are, so the following code temporarily turns background drwaing off.
-        NSView *innerView = platformWidget();
+        NSView *innerView = getView();
         NSScrollView *scrollView = 0;
         if ([innerView conformsToProtocol:@protocol(WebCoreFrameScrollView)]) {
             ASSERT([innerView isKindOfClass:[NSScrollView class]]);
@@ -229,9 +269,23 @@ void Widget::paint(GraphicsContext* p, const IntRect& r)
     }
 }
 
+void Widget::invalidate()
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [getView() setNeedsDisplay: YES];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
+void Widget::invalidateRect(const IntRect& r)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+    [getView() setNeedsDisplayInRect: r];
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
 void Widget::setIsSelected(bool isSelected)
 {
-    NSView *view = platformWidget();
+    NSView *view = getView();
     BEGIN_BLOCK_OBJC_EXCEPTIONS;
     if ([view respondsToSelector:@selector(webPlugInSetIsSelected:)])
         [view webPlugInSetIsSelected:isSelected];
@@ -240,12 +294,32 @@ void Widget::setIsSelected(bool isSelected)
     END_BLOCK_OBJC_EXCEPTIONS;
 }
 
+void Widget::addToSuperview(NSView *view)
+{
+    BEGIN_BLOCK_OBJC_EXCEPTIONS;
+
+    ASSERT(view);
+    NSView *subview = getOuterView();
+    ASSERT(![view isDescendantOf:subview]);
+    
+    // Suppress the resetting of drag margins since we know we can't affect them.
+    NSWindow* window = [view window];
+    BOOL resetDragMargins = [window _needsToResetDragMargins];
+    [window _setNeedsToResetDragMargins:NO];
+    if ([subview superview] != view)
+        [view addSubview:subview];
+    data->removeFromSuperviewSoon = false;
+    [window _setNeedsToResetDragMargins:resetDragMargins];
+
+    END_BLOCK_OBJC_EXCEPTIONS;
+}
+
 void Widget::removeFromSuperview()
 {
-    if (m_data->mustStayInWindow)
-        m_data->removeFromSuperviewSoon = true;
+    if (data->mustStayInWindow)
+        data->removeFromSuperviewSoon = true;
     else {
-        m_data->removeFromSuperviewSoon = false;
+        data->removeFromSuperviewSoon = false;
         BEGIN_BLOCK_OBJC_EXCEPTIONS;
         safeRemoveFromSuperview(getOuterView());
         END_BLOCK_OBJC_EXCEPTIONS;
@@ -256,8 +330,8 @@ void Widget::beforeMouseDown(NSView *view, Widget* widget)
 {
     if (widget) {
         ASSERT(view == widget->getOuterView());
-        ASSERT(!widget->m_data->mustStayInWindow);
-        widget->m_data->mustStayInWindow = true;
+        ASSERT(!widget->data->mustStayInWindow);
+        widget->data->mustStayInWindow = true;
     }
 }
 
@@ -268,86 +342,32 @@ void Widget::afterMouseDown(NSView *view, Widget* widget)
         safeRemoveFromSuperview(view);
         END_BLOCK_OBJC_EXCEPTIONS;
     } else {
-        ASSERT(widget->m_data->mustStayInWindow);
-        widget->m_data->mustStayInWindow = false;
-        if (widget->m_data->removeFromSuperviewSoon)
+        ASSERT(widget->data->mustStayInWindow);
+        widget->data->mustStayInWindow = false;
+        if (widget->data->removeFromSuperviewSoon)
             widget->removeFromSuperview();
     }
 }
 
-IntPoint Widget::convertFromContainingWindow(const IntPoint& point) const
+void Widget::setClient(WidgetClient* c)
 {
-    if (!platformWidget() && parent()) {
-        IntPoint result = parent()->convertFromContainingWindow(point);
-        result.move(parent()->scrollX() - x(), parent()->scrollY() - y());
-        return result;
-    }
-    
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    return IntPoint([platformWidget() convertPoint:point fromView:nil]);
-    END_BLOCK_OBJC_EXCEPTIONS;
-    
-    return point;
+    data->client = c;
 }
 
-IntRect Widget::convertFromContainingWindow(const IntRect& rect) const
+WidgetClient* Widget::client() const
 {
-    if (!platformWidget() && parent()) {
-        IntRect result = parent()->convertFromContainingWindow(rect);
-        result.move(parent()->scrollX() - x(), parent()->scrollY() - y());
-        return result;
-    }
-    
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    return enclosingIntRect([platformWidget() convertRect:rect fromView:nil]);
-    END_BLOCK_OBJC_EXCEPTIONS;
-    
-    return rect;
+    return data->client;
 }
 
-IntRect Widget::convertToContainingWindow(const IntRect& r) const
+void Widget::removeFromParent()
 {
-    if (!platformWidget()) {
-        if (!parent())
-            return r;
-        IntRect result = r;
-        result.move(parent()->scrollX() - x(), parent()->scrollY() - y());
-        return parent()->convertToContainingWindow(result);
-    }
-    
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    return IntRect([platformWidget() convertRect:r toView:nil]);
-    END_BLOCK_OBJC_EXCEPTIONS;
-
-    return r;
 }
- 
-IntPoint Widget::convertToContainingWindow(const IntPoint& p) const
+
+IntPoint Widget::convertToScreenCoordinate(NSView *view, const IntPoint& point)
 {
-    if (!platformWidget()) {
-        if (!parent())
-            return p;
-        IntPoint result = p;
-        result.move(parent()->scrollX() - x(), parent()->scrollY() - y());
-        return parent()->convertToContainingWindow(result);
-    }
-    
-    BEGIN_BLOCK_OBJC_EXCEPTIONS;
-    return IntPoint([platformWidget() convertPoint:p toView:nil]);
-    END_BLOCK_OBJC_EXCEPTIONS;
-
-    return p;
-}
-
-void Widget::releasePlatformWidget()
-{
-    HardRelease(m_widget);
-}
-
-void Widget::retainPlatformWidget()
-{
-    HardRetain(m_widget);
+    NSPoint conversionPoint = { point.x(), point.y() };
+    conversionPoint = [view convertPoint:conversionPoint toView:nil];
+    return globalPoint(conversionPoint, [view window]);
 }
 
 }
-

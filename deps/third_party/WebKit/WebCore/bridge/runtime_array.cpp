@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003 Apple Computer, Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,16 +28,13 @@
 
 #include <kjs/ArrayPrototype.h>
 #include <kjs/Error.h>
-#include "JSDOMBinding.h"
 
-using namespace WebCore;
-
-namespace JSC {
+using namespace KJS;
 
 const ClassInfo RuntimeArray::s_info = { "RuntimeArray", &JSArray::info, 0, 0 };
 
-RuntimeArray::RuntimeArray(ExecState* exec, Bindings::Array* a)
-    : JSObject(getDOMStructure<RuntimeArray>(exec))
+RuntimeArray::RuntimeArray(ExecState *exec, Bindings::Array *a)
+    : JSObject(exec->lexicalGlobalObject()->arrayPrototype())
     , _array(a)
 {
 }
@@ -118,6 +115,4 @@ bool RuntimeArray::deleteProperty(ExecState*, const Identifier&)
 bool RuntimeArray::deleteProperty(ExecState*, unsigned)
 {
     return false;
-}
-
 }

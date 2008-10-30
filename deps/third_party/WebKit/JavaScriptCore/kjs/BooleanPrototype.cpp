@@ -22,11 +22,12 @@
 #include "BooleanPrototype.h"
 
 #include "Error.h"
+#include "FunctionPrototype.h"
 #include "JSString.h"
 #include "ObjectPrototype.h"
 #include "PrototypeFunction.h"
 
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(BooleanPrototype);
 
@@ -36,13 +37,13 @@ static JSValue* booleanProtoFuncValueOf(ExecState*, JSObject*, JSValue*, const A
 
 // ECMA 15.6.4
 
-BooleanPrototype::BooleanPrototype(ExecState* exec, PassRefPtr<StructureID> structure, StructureID* prototypeFunctionStructure)
-    : BooleanObject(structure)
+BooleanPrototype::BooleanPrototype(ExecState* exec, ObjectPrototype* objectPrototype, FunctionPrototype* functionPrototype)
+    : BooleanObject(objectPrototype)
 {
     setInternalValue(jsBoolean(false));
 
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().toString, booleanProtoFuncToString), DontEnum);
-    putDirectFunction(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().valueOf, booleanProtoFuncValueOf), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().toString, booleanProtoFuncToString), DontEnum);
+    putDirectFunction(exec, new (exec) PrototypeFunction(exec, functionPrototype, 0, exec->propertyNames().valueOf, booleanProtoFuncValueOf), DontEnum);
 }
 
 
@@ -79,4 +80,4 @@ JSValue* booleanProtoFuncValueOf(ExecState* exec, JSObject*, JSValue* thisValue,
     return static_cast<BooleanObject*>(thisValue)->internalValue();
 }
 
-} // namespace JSC
+} // namespace KJS

@@ -57,13 +57,13 @@ bool screenIsMonochrome(Widget*)
 
 FloatRect screenRect(Widget* widget)
 {
-    NSWindow *window = widget ? [widget->platformWidget() window] : nil;
+    NSWindow *window = widget ? [widget->getView() window] : nil;
     return toUserSpace([screenForWindow(window) frame], window);
 }
 
 FloatRect screenAvailableRect(Widget* widget)
 {
-    NSWindow *window = widget ? [widget->platformWidget() window] : nil;
+    NSWindow *window = widget ? [widget->getView() window] : nil;
     return toUserSpace([screenForWindow(window) visibleFrame], window);
 }
 

@@ -35,7 +35,7 @@
 #include <wtf/Vector.h>
 #include <limits.h>
 
-namespace JSC {
+namespace KJS {
 
     class LabelID {
     public:
@@ -70,8 +70,6 @@ namespace JSC {
                 unsigned j = m_unresolvedJumps[i];
                 m_codeBlock->instructions[j].u.operand = m_location - j;
             }
-
-            m_codeBlock->labels.add(location);
         }
 
         int offsetFrom(int location) const
@@ -113,6 +111,6 @@ namespace JSC {
         mutable JumpVector m_unresolvedJumps;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // LabelID_h

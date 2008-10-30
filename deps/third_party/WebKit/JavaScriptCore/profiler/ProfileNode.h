@@ -34,7 +34,7 @@
 #include <wtf/RefCounted.h>
 #include <wtf/RefPtr.h>
 
-namespace JSC {
+namespace KJS {
 
     class ProfileNode;
 
@@ -173,6 +173,6 @@ namespace JSC {
         Vector<RefPtr<ProfileNode> > m_children;
     };
 
-} // namespace JSC
+} // namespace KJS
 
 #endif // ProfileNode_h

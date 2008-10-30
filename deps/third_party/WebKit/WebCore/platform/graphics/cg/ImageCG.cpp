@@ -129,6 +129,8 @@ CGImageRef BitmapImage::getCGImageRef()
 
 void BitmapImage::draw(GraphicsContext* ctxt, const FloatRect& destRect, const FloatRect& srcRect, CompositeOperator compositeOp)
 {
+    startAnimation();
+
     CGImageRef image = frameAtIndex(m_currentFrame);
     if (!image) // If it's too early we won't have an image yet.
         return;
@@ -161,8 +163,8 @@ void BitmapImage::draw(GraphicsContext* ctxt, const FloatRect& destRect, const F
         if (shouldUseSubimage) {
             image = CGImageCreateWithImageInRect(image, srcRect);
             if (currHeight < srcRect.bottom()) {
-                ASSERT(CGImageGetHeight(image) == currHeight - CGRectIntegral(srcRect).origin.y);
-                adjustedDestRect.setHeight(destRect.height() / srcRect.height() * CGImageGetHeight(image));
+                ASSERT(CGImageGetHeight(image) == currHeight - srcRect.y());
+                adjustedDestRect.setHeight(destRect.height() / srcRect.height() * (currHeight - srcRect.y()));
             }
         } else {
             float xScale = srcRect.width() / destRect.width();
@@ -192,8 +194,6 @@ void BitmapImage::draw(GraphicsContext* ctxt, const FloatRect& destRect, const F
         CGImageRelease(image);
 
     ctxt->restore();
-
-    startAnimation();
 
     if (imageObserver())
         imageObserver()->didDraw(this);

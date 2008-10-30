@@ -56,7 +56,6 @@
 #include "PasteboardHelper.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformWheelEvent.h"
-#include "Scrollbar.h"
 #include "SubstituteData.h"
 
 #include <gdk/gdkkeysyms.h>
@@ -209,7 +208,7 @@ static gboolean webkit_web_view_popup_menu_handler(GtkWidget* widget)
     }
 
     int x, y;
-    gdk_window_get_origin(GTK_WIDGET(view->hostWindow()->platformWindow())->window, &x, &y);
+    gdk_window_get_origin(GTK_WIDGET(view->containingWindow())->window, &x, &y);
 
     // FIXME: The IntSize(0, -1) is a hack to get the hit-testing to result in the selected element.
     // Ideally we'd have the position of a context menu event be separate from its target node.
@@ -328,16 +327,16 @@ static gboolean webkit_web_view_key_press_event(GtkWidget* widget, GdkEventKey* 
     // approach more like the Win and Mac ports for key handling.
     switch (event->keyval) {
     case GDK_Down:
-        view->scrollBy(IntSize(0, cScrollbarPixelsPerLineStep));
+        view->scrollBy(0, LINE_STEP);
         return TRUE;
     case GDK_Up:
-        view->scrollBy(IntSize(0, -cScrollbarPixelsPerLineStep));
+        view->scrollBy(0, -LINE_STEP);
         return TRUE;
     case GDK_Right:
-        view->scrollBy(IntSize(cScrollbarPixelsPerLineStep, 0));
+        view->scrollBy(LINE_STEP, 0);
         return TRUE;
     case GDK_Left:
-        view->scrollBy(IntSize(-cScrollbarPixelsPerLineStep, 0));
+        view->scrollBy(-LINE_STEP, 0);
         return TRUE;
     case GDK_Home:
         frame->selection()->modify(alteration, SelectionController::BACKWARD, DocumentBoundary, true);

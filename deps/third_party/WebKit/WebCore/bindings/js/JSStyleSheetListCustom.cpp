@@ -31,7 +31,7 @@
 #include "StyleSheet.h"
 #include "StyleSheetList.h"
 
-using namespace JSC;
+using namespace KJS;
 
 namespace WebCore {
 

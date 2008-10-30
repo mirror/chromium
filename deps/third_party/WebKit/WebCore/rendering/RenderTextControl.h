@@ -47,6 +47,7 @@ public:
     virtual void calcHeight();
     virtual void calcPrefWidths();
     virtual void removeLeftoverAnonymousBlock(RenderBlock*) { }
+    virtual void setStyle(RenderStyle*);
     virtual void updateFromElement();
     virtual bool canHaveChildren() const { return false; }
     virtual int baselinePosition(bool firstLine, bool isRootLineBox) const;
@@ -102,20 +103,18 @@ public:
     void stopSearchEventTimer();
     
     bool placeholderIsVisible() const { return m_placeholderVisible; }
-    void updatePlaceholderVisibility();
 
     virtual void capsLockStateMayHaveChanged();
-
-protected:
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
 
 private:
     // PopupMenuClient methods
     virtual void valueChanged(unsigned listIndex, bool fireEvents = true);
     virtual String itemText(unsigned listIndex) const;
     virtual bool itemIsEnabled(unsigned listIndex) const;
-    virtual PopupMenuStyle itemStyle(unsigned listIndex) const;
-    virtual PopupMenuStyle menuStyle() const;
+    virtual Color itemBackgroundColor(unsigned listIndex) const;
+    virtual RenderStyle* itemStyle(unsigned listIndex) const;
+    virtual RenderStyle* clientStyle() const;
+    virtual Document* clientDocument() const;
     virtual int clientInsetLeft() const;
     virtual int clientInsetRight() const;
     virtual int clientPaddingLeft() const;
@@ -129,14 +128,13 @@ private:
     virtual bool shouldPopOver() const { return false; }
     virtual bool valueShouldChangeOnHotTrack() const { return false; }
     virtual FontSelector* fontSelector() const;
-    virtual HostWindow* hostWindow() const;
-    virtual PassRefPtr<Scrollbar> createScrollbar(ScrollbarClient*, ScrollbarOrientation, ScrollbarControlSize);
 
-    RenderStyle* createInnerBlockStyle(const RenderStyle* startStyle);
-    RenderStyle* createInnerTextStyle(const RenderStyle* startStyle);
-    RenderStyle* createCancelButtonStyle(const RenderStyle* startStyle);
-    RenderStyle* createResultsButtonStyle(const RenderStyle* startStyle);
+    RenderStyle* createInnerBlockStyle(RenderStyle* startStyle);
+    RenderStyle* createInnerTextStyle(RenderStyle* startStyle);
+    RenderStyle* createCancelButtonStyle(RenderStyle* startStyle);
+    RenderStyle* createResultsButtonStyle(RenderStyle* startStyle);
 
+    void updatePlaceholder();
     void createSubtreeIfNeeded();
     void updateCancelButtonVisibility(RenderStyle*);
     const AtomicString& autosaveName() const;

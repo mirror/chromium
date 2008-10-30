@@ -6,7 +6,7 @@
  *                     2000-2001 Dirk Mueller <mueller@kde.org>
  *                     2000 Stefan Schimanski <1Stein@gmx.de>
  * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  * Copyright (C) 2008 Eric Seidel <eric@webkit.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -163,7 +163,13 @@ public:
 
 // === to be moved into FrameView
 
-public: 
+public:
+    void paint(GraphicsContext*, const IntRect&);
+    void setPaintRestriction(PaintRestriction);
+    bool isPainting() const;
+
+    static double currentPaintTimeStamp() { return s_currentPaintTimeStamp; } // returns 0 if not painting
+    
     void forceLayout(bool allowSubtree = false);
     void forceLayoutWithPageWidthRange(float minPageWidth, float maxPageWidth, bool adjustViewSize);
 
@@ -176,6 +182,12 @@ public:
     bool shouldApplyPageZoom() const;
     float pageZoomFactor() const { return shouldApplyPageZoom() ? zoomFactor() : 1.0f; }
     float textZoomFactor() const { return shouldApplyTextZoom() ? zoomFactor() : 1.0f; }
+
+    bool prohibitsScrolling() const;
+    void setProhibitsScrolling(const bool);
+
+private:
+    static double s_currentPaintTimeStamp; // used for detecting decoded resource thrash in the cache
 
 // === to be moved into Chrome
 
@@ -294,7 +306,6 @@ public:
 
     NSImage* selectionImage(bool forceBlackText = false) const;
     NSImage* snapshotDragImage(Node*, NSRect* imageRect, NSRect* elementRect) const;
-    NSImage* nodeImage(Node*) const;
 
 private:    
     NSImage* imageFromRect(NSRect) const;

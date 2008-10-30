@@ -133,8 +133,8 @@ void RenderView::layout()
 bool RenderView::absolutePosition(int& xPos, int& yPos, bool fixed) const
 {
     if (fixed && m_frameView) {
-        xPos = m_frameView->scrollX();
-        yPos = m_frameView->scrollY();
+        xPos = m_frameView->contentsX();
+        yPos = m_frameView->contentsY();
     } else
         xPos = yPos = 0;
     return true;
@@ -155,15 +155,12 @@ void RenderView::paint(PaintInfo& paintInfo, int tx, int ty)
 
 void RenderView::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
 {
-    // Check to see if we are enclosed by a layer that requires complex painting rules.  If so, we cannot blit
-    // when scrolling, and we need to use slow repaints.  Examples of layers that require this are transparent layers,
-    // layers with reflections, or transformed layers.
-    // FIXME: This needs to be dynamic.  We should be able to go back to blitting if we ever stop being inside
-    // a transform, transparency layer, etc.
+    // Check to see if we are enclosed by a transparent layer.  If so, we cannot blit
+    // when scrolling, and we need to use slow repaints.
     Element* elt;
     for (elt = document()->ownerElement(); view() && elt && elt->renderer(); elt = elt->document()->ownerElement()) {
         RenderLayer* layer = elt->renderer()->enclosingLayer();
-        if (layer->requiresSlowRepaints()) {
+        if (layer->isTransparent() || layer->transparentAncestor()) {
             frameView()->setUseSlowRepaints();
             break;
         }
@@ -175,7 +172,7 @@ void RenderView::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
     // This code typically only executes if the root element's visibility has been set to hidden.
     // Only fill with the base background color (typically white) if we're the root document, 
     // since iframes/frames with no background in the child document should show the parent's background.
-    if (view()->isTransparent()) // FIXME: This needs to be dynamic.  We should be able to go back to blitting if we ever stop being transparent.
+    if (view()->isTransparent())
         frameView()->setUseSlowRepaints(); // The parent must show behind the child.
     else {
         Color baseColor = frameView()->baseBackgroundColor();
@@ -201,7 +198,7 @@ void RenderView::repaintViewRectangle(const IntRect& ur, bool immediate)
     // or even invisible.
     Element* elt = document()->ownerElement();
     if (!elt)
-        m_frameView->repaintContentRectangle(ur, immediate);
+        m_frameView->repaintRectangle(ur, immediate);
     else if (RenderObject* obj = elt->renderer()) {
         IntRect vr = viewRect();
         IntRect r = intersection(ur, vr);
@@ -223,7 +220,7 @@ void RenderView::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
         return;
 
     if (fixed && m_frameView)
-        rect.move(m_frameView->scrollX(), m_frameView->scrollY());
+        rect.move(m_frameView->contentsX(), m_frameView->contentsY());
         
     // Apply our transform if we have one (because of full page zooming).
     if (m_layer && m_layer->transform())
@@ -396,9 +393,9 @@ void RenderView::setSelection(RenderObject* start, int startPos, RenderObject* e
         if (!newInfo || oldInfo->rect() != newInfo->rect() || oldInfo->state() != newInfo->state() ||
             (m_selectionStart == obj && oldStartPos != m_selectionStartPos) ||
             (m_selectionEnd == obj && oldEndPos != m_selectionEndPos)) {
-            repaintViewRectangle(oldInfo->rect());
+            m_frameView->updateContents(oldInfo->rect());
             if (newInfo) {
-                repaintViewRectangle(newInfo->rect());
+                m_frameView->updateContents(newInfo->rect());
                 newSelectedObjects.remove(obj);
                 delete newInfo;
             }
@@ -410,7 +407,7 @@ void RenderView::setSelection(RenderObject* start, int startPos, RenderObject* e
     SelectedObjectMap::iterator newObjectsEnd = newSelectedObjects.end();
     for (SelectedObjectMap::iterator i = newSelectedObjects.begin(); i != newObjectsEnd; ++i) {
         SelectionInfo* newInfo = i->second;
-        repaintViewRectangle(newInfo->rect());
+        m_frameView->updateContents(newInfo->rect());
         delete newInfo;
     }
 
@@ -421,9 +418,9 @@ void RenderView::setSelection(RenderObject* start, int startPos, RenderObject* e
         BlockSelectionInfo* newInfo = newSelectedBlocks.get(block);
         BlockSelectionInfo* oldInfo = i->second;
         if (!newInfo || oldInfo->rects() != newInfo->rects() || oldInfo->state() != newInfo->state()) {
-            repaintViewRectangle(oldInfo->rects());
+            m_frameView->updateContents(oldInfo->rects());
             if (newInfo) {
-                repaintViewRectangle(newInfo->rects());
+                m_frameView->updateContents(newInfo->rects());
                 newSelectedBlocks.remove(block);
                 delete newInfo;
             }
@@ -435,7 +432,7 @@ void RenderView::setSelection(RenderObject* start, int startPos, RenderObject* e
     SelectedBlockMap::iterator newBlocksEnd = newSelectedBlocks.end();
     for (SelectedBlockMap::iterator i = newSelectedBlocks.begin(); i != newBlocksEnd; ++i) {
         BlockSelectionInfo* newInfo = i->second;
-        repaintViewRectangle(newInfo->rects());
+        m_frameView->updateContents(newInfo->rects());
         delete newInfo;
     }
 }
@@ -478,7 +475,7 @@ IntRect RenderView::viewRect() const
     if (printing())
         return IntRect(0, 0, m_width, m_height);
     if (m_frameView)
-        return m_frameView->visibleContentRect();
+        return enclosingIntRect(m_frameView->visibleContentRect());
     return IntRect();
 }
 

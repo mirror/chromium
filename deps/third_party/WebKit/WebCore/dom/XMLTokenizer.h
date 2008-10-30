@@ -2,7 +2,7 @@
  * Copyright (C) 2000 Peter Kelly (pmk@post.com)
  * Copyright (C) 2005, 2006, 2007 Apple Inc. All rights reserved.
  * Copyright (C) 2007 Samuel Weinig (sam@webkit.org)
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,18 +25,23 @@
 #define XMLTokenizer_h
 
 #include "CachedResourceClient.h"
-#include "CachedResourceHandle.h"
 #include "SegmentedString.h"
 #include "StringHash.h"
 #include "Tokenizer.h"
 #include <wtf/HashMap.h>
 #include <wtf/OwnPtr.h>
 
-#if USE(QXMLSTREAM)
-#include <QtXml/qxmlstream.h>
-#else
+#if PLATFORM(QT)
+#if !ENABLE(XSLT)
+#define USE_QXMLSTREAM
+#endif
+#endif
+
+#ifndef USE_QXMLSTREAM
 #include <libxml/tree.h>
 #include <libxml/xmlstring.h>
+#else
+#include <QtXml/qxmlstream.h>
 #endif
 
 namespace WebCore {
@@ -49,7 +54,6 @@ namespace WebCore {
     class Element;
     class FrameView;
     class PendingCallbacks;
-    class ScriptElement;
 
     class XMLTokenizer : public Tokenizer, public CachedResourceClient {
     public:
@@ -76,29 +80,10 @@ namespace WebCore {
         // from CachedResourceClient
         virtual void notifyFinished(CachedResource* finishedObj);
 
+#ifndef USE_QXMLSTREAM
 
-        void handleError(ErrorType type, const char* m, int lineNumber, int columnNumber);
+        friend bool parseXMLDocumentFragment(const String& chunk, DocumentFragment* fragment, Element* parent);
 
-        virtual bool wellFormed() const { return !m_sawError; }
-
-        int lineNumber() const;
-        int columnNumber() const;
-
-#if USE(QXMLSTREAM)
-private:
-        void parse();
-        void startDocument();
-        void parseStartElement();
-        void parseEndElement();
-        void parseCharacters();
-        void parseProcessingInstruction();
-        void parseCdata();
-        void parseComment();
-        void endDocument();
-        void parseDtd();
-        bool hasError() const;
-#else
-public:
         // callbacks from parser SAX
         void error(ErrorType, const char* message, va_list args) WTF_ATTRIBUTE_PRINTF(3, 0); 
         void startElementNs(const xmlChar* xmlLocalName, const xmlChar* xmlPrefix, const xmlChar* xmlURI, int nb_namespaces,
@@ -111,11 +96,28 @@ public:
         void startDocument(const xmlChar* version, const xmlChar* encoding, int standalone);
         void internalSubset(const xmlChar* name, const xmlChar* externalID, const xmlChar* systemID);
         void endDocument();
+#else
+        void parse();
+        void startDocument();
+        void parseStartElement();
+        void parseEndElement();
+        void parseCharacters();
+        void parseProcessingInstruction();
+        void parseCdata();
+        void parseComment();
+        void endDocument();
+        void parseDtd();
+        bool hasError() const;
 #endif
-    private:
-        friend bool parseXMLDocumentFragment(const String& chunk, DocumentFragment* fragment, Element* parent);
 
-        static void eventuallyMarkAsParserCreated(Element* element);
+        void handleError(ErrorType type, const char* m, int lineNumber, int columnNumber);
+
+        virtual bool wellFormed() const { return !m_sawError; }
+
+        int lineNumber() const;
+        int columnNumber() const;
+
+    private:
         void initializeParserContext(const char* chunk = 0);
         void setCurrentNode(Node*);
 
@@ -124,21 +126,16 @@ public:
         bool enterText();
         void exitText();
 
-        void doWrite(const String&);
-        void doEnd();
-
         Document* m_doc;
         FrameView* m_view;
 
         String m_originalSourceForTransform;
 
-#if USE(QXMLSTREAM)
+#ifdef USE_QXMLSTREAM
         QXmlStreamReader m_stream;
         bool m_wroteText;
 #else
         xmlParserCtxtPtr m_context;
-        OwnPtr<PendingCallbacks> m_pendingCallbacks;
-        Vector<xmlChar> m_bufferedText;
 #endif
         Node* m_currentNode;
         bool m_currentNodeIsReferenced;
@@ -157,7 +154,7 @@ public:
         int m_lastErrorColumn;
         String m_errorMessages;
 
-        CachedResourceHandle<CachedScript> m_pendingScript;
+        CachedScript* m_pendingScript;
         RefPtr<Element> m_scriptElement;
         int m_scriptStartLine;
 
@@ -166,6 +163,10 @@ public:
 
         typedef HashMap<String, String> PrefixForNamespaceMap;
         PrefixForNamespaceMap m_prefixToNamespaceMap;
+#ifndef USE_QXMLSTREAM
+        OwnPtr<PendingCallbacks> m_pendingCallbacks;
+        Vector<xmlChar> m_bufferedText;
+#endif
         SegmentedString m_pendingSrc;
     };
 
@@ -176,9 +177,6 @@ void setLoaderForLibXMLCallbacks(DocLoader*);
 
 HashMap<String, String> parseAttributes(const String&, bool& attrsOK);
 bool parseXMLDocumentFragment(const String&, DocumentFragment*, Element* parent = 0);
-
-bool isScriptElement(Element*);
-ScriptElement* castToScriptElement(Element*);
 
 } // namespace WebCore
 

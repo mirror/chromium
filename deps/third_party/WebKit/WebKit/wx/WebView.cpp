@@ -432,9 +432,8 @@ void wxWebView::OnPaint(wxPaintEvent& event)
                 if (frame->view()->needsLayout())
                     frame->view()->layout();
 
-                frame->view()->paint(gc, paintRect);
+                frame->paint(gc, paintRect);
             }
-            delete gc;
         }
     }
 }

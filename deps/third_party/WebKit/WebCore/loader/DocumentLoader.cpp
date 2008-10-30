@@ -530,11 +530,7 @@ SharedBuffer* DocumentLoader::parsedArchiveData() const
 PassRefPtr<ArchiveResource> DocumentLoader::mainResource() const
 {
     const ResourceResponse& r = response();
-    RefPtr<SharedBuffer> mainResourceBuffer = mainResourceData();
-    if (!mainResourceBuffer)
-        mainResourceBuffer = SharedBuffer::create();
-        
-    return ArchiveResource::create(mainResourceBuffer, r.url(), r.mimeType(), r.textEncodingName(), frame()->tree()->name());
+    return ArchiveResource::create(mainResourceData(), r.url(), r.mimeType(), r.textEncodingName(), frame()->tree()->name());
 }
 
 PassRefPtr<ArchiveResource> DocumentLoader::subresource(const KURL& url) const

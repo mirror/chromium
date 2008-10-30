@@ -9,7 +9,6 @@ DEFINES += BUILDING_QT__
 isEmpty(GENERATED_SOURCES_DIR):GENERATED_SOURCES_DIR = tmp
 GENERATED_SOURCES_DIR_SLASH = $$GENERATED_SOURCES_DIR/
 win32-*: GENERATED_SOURCES_DIR_SLASH ~= s|/|\|
-win32-g++: LIBS += -lwinmm
 
 
 include(pcre/pcre.pri)
@@ -94,6 +93,7 @@ SOURCES += \
     kjs/GetterSetter.cpp \
     kjs/GlobalEvalFunction.cpp \
     kjs/identifier.cpp \
+    kjs/IndexToNameMap.cpp \
     kjs/InternalFunction.cpp \
     kjs/interpreter.cpp \
     kjs/JSArray.cpp \

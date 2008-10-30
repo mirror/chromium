@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2008 Trolltech ASA
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -25,7 +25,7 @@
 #include <wtf/RefPtr.h>
 #include <wtf/RefCounted.h>
 
-namespace JSC {
+namespace KJS {
     class ExecState;
     class JSValue;
 };
@@ -37,7 +37,7 @@ namespace WebCore {
     class String;
 
     // FIXME: Generated JSPlugin.cpp doesn't include JSMimeType.h for toJS
-    JSC::JSValue* toJS(JSC::ExecState*, MimeType*);
+    KJS::JSValue* toJS(KJS::ExecState*, MimeType*);
 
     class PluginData;
 

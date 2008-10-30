@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2007 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -37,21 +37,16 @@ namespace WebCore {
     // when multiple nodes have the same name.
     class JSNamedNodesCollection : public DOMObject {
     public:
-        JSNamedNodesCollection(JSC::ExecState*, const Vector<RefPtr<Node> >&);
+        JSNamedNodesCollection(KJS::JSObject* prototype, const Vector<RefPtr<Node> >&);
 
-        virtual bool getOwnPropertySlot(JSC::ExecState*, const JSC::Identifier&, JSC::PropertySlot&);
+        virtual bool getOwnPropertySlot(KJS::ExecState*, const KJS::Identifier&, KJS::PropertySlot&);
 
-        virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
-        static const JSC::ClassInfo s_info;
-
-        static JSC::ObjectPrototype* createPrototype(JSC::ExecState* exec)
-        {
-            return exec->lexicalGlobalObject()->objectPrototype();
-        }
+        virtual const KJS::ClassInfo* classInfo() const { return &s_info; }
+        static const KJS::ClassInfo s_info;
 
     private:
-        static JSC::JSValue* lengthGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);
-        static JSC::JSValue* indexGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);
+        static KJS::JSValue* lengthGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
+        static KJS::JSValue* indexGetter(KJS::ExecState*, const KJS::Identifier&, const KJS::PropertySlot&);
 
         OwnPtr<Vector<RefPtr<Node> > > m_nodes;
     };

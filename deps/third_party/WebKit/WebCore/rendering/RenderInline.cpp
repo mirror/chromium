@@ -41,10 +41,9 @@ RenderInline::~RenderInline()
 {
 }
 
-void RenderInline::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderInline::setStyle(RenderStyle* newStyle)
 {
-    RenderFlow::styleDidChange(diff, oldStyle);
-
+    RenderFlow::setStyle(newStyle);
     setInline(true);
     setHasReflection(false);
 

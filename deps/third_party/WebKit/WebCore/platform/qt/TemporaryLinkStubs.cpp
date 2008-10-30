@@ -33,7 +33,6 @@
 #include "config.h"
 
 #include "AXObjectCache.h"
-#include "DNS.h"
 #include "CString.h"
 #include "CachedResource.h"
 #include "CookieJar.h"
@@ -91,8 +90,9 @@ void PluginView::show() { Widget::show(); }
 void PluginView::hide() { Widget::hide(); }
 void PluginView::paint(GraphicsContext*, const IntRect&) { notImplemented(); }
 void PluginView::setParent(ScrollView* view) { Widget::setParent(view); }
-void PluginView::setParentVisible(bool) { notImplemented(); }
-void PluginView::updatePluginWidget() const { notImplemented(); }
+void PluginView::attachToWindow() { notImplemented(); }
+void PluginView::detachFromWindow() { notImplemented(); }
+void PluginView::updateWindow() const { notImplemented(); }
 void PluginView::handleKeyboardEvent(KeyboardEvent*) { notImplemented(); }
 void PluginView::handleMouseEvent(MouseEvent*) { notImplemented(); }
 NPError PluginView::handlePostReadFile(Vector<char>&, uint32, const char*) { notImplemented(); return NPERR_GENERIC_ERROR; }
@@ -102,7 +102,7 @@ PluginView::~PluginView() {}
 
 namespace WebCore {
 
-void getSupportedKeySizes(Vector<String>&) { notImplemented(); }
+Vector<String> supportedKeySizes() { notImplemented(); return Vector<String>(); }
 String signedPublicKeyAndChallengeString(unsigned keySizeIndex, const String &challengeString, const KURL &url) { return String(); }
 
 #if !defined(Q_OS_WIN)
@@ -110,7 +110,7 @@ String signedPublicKeyAndChallengeString(unsigned keySizeIndex, const String &ch
 float userIdleTime() { notImplemented(); return FLT_MAX; } // return an arbitrarily high userIdleTime so that releasing pages from the page cache isn't postponed
 #endif
 
-void prefetchDNS(const String& hostname) { notImplemented(); }
+PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) { notImplemented(); return 0; }
 
 }
 

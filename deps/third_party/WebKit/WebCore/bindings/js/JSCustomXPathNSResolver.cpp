@@ -41,9 +41,9 @@
 
 namespace WebCore {
 
-using namespace JSC;
+using namespace KJS;
 
-PassRefPtr<JSCustomXPathNSResolver> JSCustomXPathNSResolver::create(JSC::ExecState* exec, JSC::JSValue* value)
+PassRefPtr<JSCustomXPathNSResolver> JSCustomXPathNSResolver::create(KJS::ExecState* exec, KJS::JSValue* value)
 {
     if (value->isUndefinedOrNull())
         return 0;

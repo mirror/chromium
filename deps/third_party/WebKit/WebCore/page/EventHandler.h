@@ -60,13 +60,12 @@ class KeyboardEvent;
 class MouseEventWithHitTestResults;
 class Node;
 class PlatformKeyboardEvent;
+class PlatformScrollbar;
 class PlatformWheelEvent;
 class RenderLayer;
 class RenderObject;
 class RenderWidget;
-class Scrollbar;
 class String;
-class SVGElementInstance;
 class TextEvent;
 class VisiblePosition;
 class Widget;
@@ -215,7 +214,7 @@ private:
 
     void handleKeyboardSelectionMovement(KeyboardEvent*);
     
-    Cursor selectCursor(const MouseEventWithHitTestResults&, Scrollbar*);
+    Cursor selectCursor(const MouseEventWithHitTestResults&, PlatformScrollbar*);
     void setPanScrollCursor();
 
     void hoverTimerFired(Timer<EventHandler>*);
@@ -257,7 +256,7 @@ private:
 
     bool passSubframeEventToSubframe(MouseEventWithHitTestResults&, Frame* subframe, HitTestResult* hoveredNode = 0);
 
-    bool passMousePressEventToScrollbar(MouseEventWithHitTestResults&, Scrollbar*);
+    bool passMousePressEventToScrollbar(MouseEventWithHitTestResults&, PlatformScrollbar*);
 
     bool passWidgetMouseDownEventToWidget(const MouseEventWithHitTestResults&);
     bool passWidgetMouseDownEventToWidget(RenderWidget*);
@@ -308,8 +307,6 @@ private:
     bool m_mouseDownWasInSubframe;
 #if ENABLE(SVG)
     bool m_svgPan;
-    RefPtr<SVGElementInstance> m_instanceUnderMouse;
-    RefPtr<SVGElementInstance> m_lastInstanceUnderMouse;
 #endif
 
     RenderLayer* m_resizeLayer;
@@ -319,7 +316,7 @@ private:
     RefPtr<Node> m_nodeUnderMouse;
     RefPtr<Node> m_lastNodeUnderMouse;
     RefPtr<Frame> m_lastMouseMoveEventSubframe;
-    RefPtr<Scrollbar> m_lastScrollbarUnderMouse;
+    RefPtr<PlatformScrollbar> m_lastScrollbarUnderMouse;
 
     int m_clickCount;
     RefPtr<Node> m_clickNode;

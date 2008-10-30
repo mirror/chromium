@@ -30,7 +30,7 @@
 using namespace WTF;
 using namespace Unicode;
 
-namespace JSC {
+namespace KJS {
 
 // A simple text streaming class that helps with code indentation.
 
@@ -309,12 +309,12 @@ void NumberNode::streamTo(SourceStream& s) const
 
 void StringNode::streamTo(SourceStream& s) const
 {
-    s << '"' << escapeStringForPrettyPrinting(m_value.ustring()) << '"';
+    s << '"' << escapeStringForPrettyPrinting(m_value) << '"';
 }
 
 void RegExpNode::streamTo(SourceStream& s) const
 {
-    s << '/' <<  m_pattern << '/' << m_flags;
+    s << '/' <<  m_regExp->pattern() << '/' << m_regExp->flags();
 }
 
 void ThisNode::streamTo(SourceStream& s) const
@@ -933,4 +933,4 @@ void FuncExprNode::streamTo(SourceStream& s) const
     s << "function " << m_ident << '(' << m_parameter << ')' << m_body;
 }
 
-} // namespace JSC
+} // namespace KJS

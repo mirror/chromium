@@ -37,7 +37,8 @@ class RenderObject;
 
 typedef void* WrappedImagePtr;
 
-class StyleImage : public RefCounted<StyleImage> {
+class StyleImage : public RefCounted<StyleImage>
+{
 public:
     virtual ~StyleImage() { }
 

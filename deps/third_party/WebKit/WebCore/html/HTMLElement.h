@@ -59,7 +59,7 @@ public:
     void setDir(const String&);
     String className() const;
     void setClassName(const String&);
-    virtual short tabIndex() const;
+    short tabIndex() const;
     void setTabIndex(int);
 
     String innerHTML() const;
@@ -97,6 +97,8 @@ public:
     static bool inInlineTagList(const Node*);
     static bool inBlockTagList(const Node*);
     static bool isRecognizedTagName(const QualifiedName&);
+
+    void setHTMLEventListener(const AtomicString& eventType, Attribute*);
 
     virtual bool rendererIsNeeded(RenderStyle*);
     virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);

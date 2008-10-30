@@ -21,7 +21,7 @@
 #include "Platform.h"
 
 #ifndef ALWAYS_INLINE
-#if COMPILER(GCC) && defined(NDEBUG) && !COMPILER(MINGW)
+#if COMPILER(GCC) && defined(NDEBUG)
 #define ALWAYS_INLINE inline __attribute__ ((__always_inline__))
 #elif COMPILER(MSVC) && defined(NDEBUG)
 #define ALWAYS_INLINE __forceinline

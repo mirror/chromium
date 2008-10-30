@@ -61,7 +61,7 @@ const IntPoint MouseEventWithHitTestResults::localPoint() const
     return m_hitTestResult.localPoint();
 }
 
-Scrollbar* MouseEventWithHitTestResults::scrollbar() const
+PlatformScrollbar* MouseEventWithHitTestResults::scrollbar() const
 {
     return m_hitTestResult.scrollbar();
 }

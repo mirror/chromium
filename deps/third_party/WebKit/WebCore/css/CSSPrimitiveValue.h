@@ -73,10 +73,9 @@ public:
         CSS_PARSER_OPERATOR = 103,
         CSS_PARSER_INTEGER = 104,
         CSS_PARSER_VARIABLE_FUNCTION_SYNTAX = 105,
-        CSS_PARSER_HEXCOLOR = 106,
-        
-        // This is used internally for unknown identifiers 
-        CSS_PARSER_IDENTIFIER = 107
+        CSS_PARSER_VARIABLE_EQUALS_SYNTAX = 106,
+        CSS_PARSER_VARIABLE_DOLLAR_SYNTAX = 107,
+        CSS_PARSER_HEXCOLOR = 108
     };
 
     static PassRefPtr<CSSPrimitiveValue> createIdentifier(int ident)
@@ -106,7 +105,7 @@ public:
 
     unsigned short primitiveType() const { return m_type; }
 
-    bool isVariable() const { return m_type == CSS_PARSER_VARIABLE_FUNCTION_SYNTAX; }
+    bool isVariable() const { return m_type == CSS_PARSER_VARIABLE_FUNCTION_SYNTAX || m_type == CSS_PARSER_VARIABLE_EQUALS_SYNTAX || m_type == CSS_PARSER_VARIABLE_DOLLAR_SYNTAX; }
 
     /*
      * computes a length in pixels out of the given CSSValue. Need the RenderStyle to get

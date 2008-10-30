@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2008 Trolltech ASA
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -39,31 +39,31 @@
 
 using namespace Phonon;
 
-#define LOG_MEDIAOBJECT() (LOG(Media,"%s", debugMediaObject(this, *m_mediaObject).constData()))
+#define LOG_MEDIAOBJECT() (LOG(Media,"%s", debugMediaObject(*m_mediaObject).constData()))
 
-static QByteArray debugMediaObject(WebCore::MediaPlayerPrivate* mediaPlayer, const MediaObject& mediaObject)
+static QByteArray debugMediaObject(const MediaObject& mediaObject)
 {
     QByteArray byteArray;
     QTextStream stream(&byteArray);
+    
+    const QMetaObject* metaObject = mediaObject.metaObject();
+    QMetaEnum phononStates = metaObject->enumerator(metaObject->indexOfEnumerator("PhononState"));
 
-    const QMetaObject* metaObj = mediaPlayer->metaObject();
-    QMetaEnum phononStates = metaObj->enumerator(metaObj->indexOfEnumerator("PhononState"));
-
-    stream << "debugMediaObject -> Phonon::MediaObject(";
-    stream << "State: " << phononStates.valueToKey(mediaObject.state());
-    stream << " | Current time: " << mediaObject.currentTime();
-    stream << " | Remaining time: " << mediaObject.remainingTime();
-    stream << " | Total time: " << mediaObject.totalTime();
-    stream << " | Meta-data: ";
+    stream << "Phonon::MediaObject(";
+    stream << "State:" << phononStates.valueToKey(mediaObject.state());
+    stream << "| Current time:" << mediaObject.currentTime();
+    stream << "| Remaining time:" << mediaObject.remainingTime();
+    stream << "| Total time:" << mediaObject.totalTime();
+    stream << "| Meta-data:";
     QMultiMap<QString, QString> map = mediaObject.metaData();
     for (QMap<QString, QString>::const_iterator it = map.constBegin();
         it != map.constEnd(); ++it) {
         stream << "(" << it.key() << ", " << it.value() << ")";
     }
-    stream << " | Has video: " << mediaObject.hasVideo();
-    stream << " | Is seekable: " << mediaObject.isSeekable();
+    stream << "| Has video:" << mediaObject.hasVideo();
+    stream << "| Is seekable:" << mediaObject.isSeekable();
     stream << ")";
-
+    
     stream.flush();
 
     return byteArray;
@@ -166,12 +166,16 @@ void MediaPlayerPrivate::cancelLoad()
 
 void MediaPlayerPrivate::play()
 {
+    Q_ASSERT(m_mediaObject);
+
     LOG(Media, "MediaPlayerPrivatePhonon::play()");
     m_mediaObject->play();
 }
 
 void MediaPlayerPrivate::pause()
 {
+    Q_ASSERT(m_mediaObject);
+
     LOG(Media, "MediaPlayerPrivatePhonon::pause()");
     m_mediaObject->pause();
 }
@@ -179,31 +183,28 @@ void MediaPlayerPrivate::pause()
 
 bool MediaPlayerPrivate::paused() const
 {
+    Q_ASSERT(m_mediaObject);
+
     bool paused = m_mediaObject->state() == Phonon::PausedState;
     LOG(Media, "MediaPlayerPrivatePhonon::paused() --> %s", paused ? "true" : "false");
     return paused;
 }
 
-void MediaPlayerPrivate::seek(float position)
+void MediaPlayerPrivate::seek(float)
 {
-    LOG(Media, "MediaPlayerPrivatePhonon::seek(%f)", position);
-
-    if (!m_mediaObject->isSeekable())
-        return;
-
-    if (position > duration())
-        position = duration();
-
-    m_mediaObject->seek(position * 1000.0f);
+    notImplemented();
 }
 
 bool MediaPlayerPrivate::seeking() const
 {
+    notImplemented();
     return false;
 }
 
 float MediaPlayerPrivate::duration() const
 {
+    Q_ASSERT(m_mediaObject);
+
     if (m_networkState < MediaPlayer::LoadedMetaData)
         return 0.0f;
 
@@ -218,6 +219,8 @@ float MediaPlayerPrivate::duration() const
 
 float MediaPlayerPrivate::currentTime() const
 {
+    Q_ASSERT(m_mediaObject);
+
     float currentTime = m_mediaObject->currentTime() / 1000.0f;
 
     LOG(Media, "MediaPlayerPrivatePhonon::currentTime() --> %f", currentTime);
@@ -266,20 +269,22 @@ void MediaPlayerPrivate::setRate(float)
 
 void MediaPlayerPrivate::setVolume(float volume)
 {
-    LOG(Media, "MediaPlayerPrivatePhonon::setVolume()");
+    Q_ASSERT(m_audioOutput);
+
     m_audioOutput->setVolume(volume);
 }
 
 void MediaPlayerPrivate::setMuted(bool muted)
 {
-    LOG(Media, "MediaPlayerPrivatePhonon::setMuted()");
+    Q_ASSERT(m_audioOutput);
+
     m_audioOutput->setMuted(muted);
 }
 
 
 int MediaPlayerPrivate::dataRate() const
 {
-    // This is not used at the moment
+    notImplemented();
     return 0;
 }
 
@@ -302,28 +307,22 @@ MediaPlayer::ReadyState MediaPlayerPrivate::readyState() const
 
 void MediaPlayerPrivate::updateStates()
 {
+    Q_ASSERT(m_mediaObject);
+
     MediaPlayer::NetworkState oldNetworkState = m_networkState;
     MediaPlayer::ReadyState oldReadyState = m_readyState;
 
-    Phonon::State phononState = m_mediaObject->state();
+    Phonon::State state = m_mediaObject ? m_mediaObject->state() : Phonon::ErrorState;
 
-    if (phononState == Phonon::StoppedState) {
+    if (state == Phonon::StoppedState) {
         if (oldNetworkState < MediaPlayer::LoadedMetaData) {
             m_networkState = MediaPlayer::LoadedMetaData;
             m_readyState = MediaPlayer::DataUnavailable;
             m_mediaObject->pause();
         }
-    } else if (phononState == Phonon::PausedState) {
+    } else if (state == Phonon::PausedState) {
         m_networkState = MediaPlayer::LoadedFirstFrame;
         m_readyState = MediaPlayer::CanPlayThrough;
-    } else if (phononState == Phonon::ErrorState) {
-         if (!m_mediaObject || m_mediaObject->errorType() == Phonon::FatalError) {
-             m_networkState = MediaPlayer::LoadFailed;
-             m_readyState = MediaPlayer::DataUnavailable;
-             cancelLoad();
-         } else {
-             m_mediaObject->pause();
-         }
     }
 
     if (seeking())
@@ -372,7 +371,7 @@ void MediaPlayerPrivate::setRect(const IntRect& newRect)
 }
 
 
-void MediaPlayerPrivate::loadStateChanged()
+void MediaPlayerPrivate::loadStateChanged() 
 {
     notImplemented();
 }
@@ -409,17 +408,13 @@ void MediaPlayerPrivate::loadingFailed()
 
 IntSize MediaPlayerPrivate::naturalSize() const
 {
-    if (!hasVideo()) {
-        LOG(Media, "MediaPlayerPrivatePhonon::naturalSize() -> %dx%d",
-                    0, 0);
-        return IntSize();
-    }
+    Q_ASSERT(m_videoWidget);
 
-    if (m_networkState < MediaPlayer::LoadedMetaData) {
-        LOG(Media, "MediaPlayerPrivatePhonon::naturalSize() -> %dx%d",
-                           0, 0);
-        return IntSize();
-    }
+    if (!hasVideo())
+         return IntSize();
+
+    if (m_networkState < MediaPlayer::LoadedMetaData)
+           return IntSize();
 
     QSize videoSize = m_videoWidget->sizeHint();
     IntSize naturalSize(videoSize.width(), videoSize.height());
@@ -443,12 +438,15 @@ void MediaPlayerPrivate::repaint()
 
 void MediaPlayerPrivate::paint(GraphicsContext* graphicsContect, const IntRect& rect)
 {
+    Q_ASSERT(m_videoWidget);
+
     if (graphicsContect->paintingDisabled())
         return;
 
     if (!m_isVisible)
         return;
 
+    //QPainter* painter = static_cast<QPainter*>(graphicsContect->platformContext());
     QPainter* painter = graphicsContect->platformContext();
 
     painter->fillRect(rect, Qt::black);
@@ -459,20 +457,16 @@ void MediaPlayerPrivate::paint(GraphicsContext* graphicsContect, const IntRect& 
 
 // ====================== Phonon::MediaObject signals ======================
 
-void MediaPlayerPrivate::stateChanged(Phonon::State newState, Phonon::State oldState)
+void MediaPlayerPrivate::stateChanged(Phonon::State, Phonon::State)
 {
-    const QMetaObject* metaObj = this->metaObject();
-    QMetaEnum phononStates = metaObj->enumerator(metaObj->indexOfEnumerator("PhononState"));
-    LOG(Media, "MediaPlayerPrivatePhonon::stateChanged(newState=%s, oldState=%s)",
-            phononStates.valueToKey(newState), phononStates.valueToKey(oldState));
-
+    notImplemented();
+    LOG_MEDIAOBJECT();
     updateStates();
 }
 
 void MediaPlayerPrivate::tick(qint64)
 {
-    updateStates();
-    m_player->timeChanged();
+    notImplemented();
 }
 
 void MediaPlayerPrivate::metaDataChanged()
@@ -487,9 +481,10 @@ void MediaPlayerPrivate::seekableChanged(bool)
     LOG_MEDIAOBJECT();
 }
 
-void MediaPlayerPrivate::hasVideoChanged(bool hasVideo)
+void MediaPlayerPrivate::hasVideoChanged(bool)
 {
-    LOG(Media, "MediaPlayerPrivatePhonon::hasVideoChanged(%s)", hasVideo ? "true" : "false");
+    notImplemented();
+    LOG_MEDIAOBJECT();
 }
 
 void MediaPlayerPrivate::bufferStatus(int)

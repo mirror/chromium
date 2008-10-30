@@ -429,7 +429,7 @@ void ThreadCondition::broadcast()
 {
     unsigned signals = 0;
 
-    DWORD res = ::WaitForSingleObject(m_condition.m_mutex, INFINITE);
+    WORD res = ::WaitForSingleObject(m_condition.m_mutex, INFINITE);
     ASSERT(res == WAIT_OBJECT_0);
 
     if (m_condition.m_waitingForRemoval != 0) { // the m_gate is already closed

@@ -43,7 +43,7 @@
 #include <wtf/PassRefPtr.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
+namespace KJS {
 
     class Identifier;
     class ScopeChain;
@@ -79,19 +79,20 @@ namespace JSC {
         CodeGenerator(FunctionBodyNode*, const Debugger*, const ScopeChain&, SymbolTable*, CodeBlock*);
         CodeGenerator(EvalNode*, const Debugger*, const ScopeChain&, SymbolTable*, EvalCodeBlock*);
 
+        ~CodeGenerator();
+
         JSGlobalData* globalData() const { return m_globalData; }
         const CommonIdentifiers& propertyNames() const { return *m_globalData->propertyNames; }
 
         void generate();
 
         // Returns the register corresponding to a local variable, or 0 if no
-        // such register exists. Registers returned by registerFor do not
+        // such register exists. Registers returned by registerForLocal do not
         // require explicit reference counting.
-        RegisterID* registerFor(const Identifier&);
-
-        // Behaves as registerFor does, but ignores dynamic scope as
+        RegisterID* registerForLocal(const Identifier&);
+        // Behaves as registerForLocal does, but ignores dynamic scope as
         // dynamic scope should not interfere with const initialisation
-        RegisterID* constRegisterFor(const Identifier&);
+        RegisterID* registerForLocalConstInit(const Identifier&);
 
         // Searches the scope chain in an attempt to  statically locate the requested
         // property.  Returns false if for any reason the property cannot be safely
@@ -102,7 +103,7 @@ namespace JSC {
         //
         // NB: depth does _not_ include the local scope.  eg. a depth of 0 refers
         // to the scope containing this codeblock.
-        bool findScopedProperty(const Identifier&, int& index, size_t& depth, bool forWriting, JSValue*& globalObject);
+        bool findScopedProperty(const Identifier&, int& index, size_t& depth, bool forWriting);
 
         // Returns the register storing "this"
         RegisterID* thisRegister() { return &m_thisRegister; }
@@ -227,14 +228,12 @@ namespace JSC {
 
         RegisterID* emitLoad(RegisterID* dst, bool);
         RegisterID* emitLoad(RegisterID* dst, double);
-        RegisterID* emitLoad(RegisterID* dst, const Identifier&);
         RegisterID* emitLoad(RegisterID* dst, JSValue*);
         RegisterID* emitUnexpectedLoad(RegisterID* dst, bool);
         RegisterID* emitUnexpectedLoad(RegisterID* dst, double);
 
         RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src);
-        RegisterID* emitBinaryOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2, OperandTypes);
-        RegisterID* emitEqualityOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2);
+        RegisterID* emitBinaryOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2);
         RegisterID* emitUnaryNoDstOp(OpcodeID, RegisterID* src);
 
         RegisterID* emitNewObject(RegisterID* dst);
@@ -252,13 +251,13 @@ namespace JSC {
         RegisterID* emitPostInc(RegisterID* dst, RegisterID* srcDst);
         RegisterID* emitPostDec(RegisterID* dst, RegisterID* srcDst);
 
-        RegisterID* emitInstanceOf(RegisterID* dst, RegisterID* value, RegisterID* base, RegisterID* basePrototype);
+        RegisterID* emitInstanceOf(RegisterID* dst, RegisterID* value, RegisterID* base) { return emitBinaryOp(op_instanceof, dst, value, base); }
         RegisterID* emitTypeOf(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_typeof, dst, src); }
-        RegisterID* emitIn(RegisterID* dst, RegisterID* property, RegisterID* base) { return emitBinaryOp(op_in, dst, property, base, OperandTypes()); }
+        RegisterID* emitIn(RegisterID* dst, RegisterID* property, RegisterID* base) { return emitBinaryOp(op_in, dst, property, base); }
 
         RegisterID* emitResolve(RegisterID* dst, const Identifier& property);
-        RegisterID* emitGetScopedVar(RegisterID* dst, size_t skip, int index, JSValue* globalObject);
-        RegisterID* emitPutScopedVar(size_t skip, int index, RegisterID* value, JSValue* globalObject);
+        RegisterID* emitGetScopedVar(RegisterID* dst, size_t skip, int index);
+        RegisterID* emitPutScopedVar(size_t skip, int index, RegisterID* value);
 
         RegisterID* emitResolveBase(RegisterID* dst, const Identifier& property);
         RegisterID* emitResolveWithBase(RegisterID* baseDst, RegisterID* propDst, const Identifier& property);
@@ -277,10 +276,10 @@ namespace JSC {
         RegisterID* emitCall(RegisterID* dst, RegisterID* func, RegisterID* base, ArgumentsNode*, unsigned divot, unsigned startOffset, unsigned endOffset);
         RegisterID* emitCallEval(RegisterID* dst, RegisterID* func, RegisterID* base, ArgumentsNode*, unsigned divot, unsigned startOffset, unsigned endOffset);
 
-        RegisterID* emitReturn(RegisterID* src);
+        RegisterID* emitReturn(RegisterID* src) { return emitUnaryNoDstOp(op_ret, src); } 
         RegisterID* emitEnd(RegisterID* src) { return emitUnaryNoDstOp(op_end, src); }
 
-        RegisterID* emitConstruct(RegisterID* dst, RegisterID* func, ArgumentsNode*, unsigned divot, unsigned startOffset, unsigned endOffset);
+        RegisterID* emitConstruct(RegisterID* dst, RegisterID* func, ArgumentsNode*);
 
         PassRefPtr<LabelID> emitLabel(LabelID*);
         PassRefPtr<LabelID> emitJump(LabelID* target);
@@ -320,6 +319,8 @@ namespace JSC {
 
         CodeType codeType() const { return m_codeType; }
 
+        ExecState* globalExec() { return m_scopeChain->globalObject()->globalExec(); }
+
     private:
         void emitOpcode(OpcodeID);
         void retrieveLastBinaryOp(int& dstIndex, int& src1Index, int& src2Index);
@@ -345,12 +346,11 @@ namespace JSC {
         };
 
         typedef HashMap<RefPtr<UString::Rep>, int, IdentifierRepHash, HashTraits<RefPtr<UString::Rep> >, IdentifierMapIndexHashTraits> IdentifierMap;
-        typedef HashMap<double, JSValue*> NumberMap;
-        typedef HashMap<UString::Rep*, JSString*, IdentifierRepHash> IdentifierStringMap;
 
         RegisterID* emitCall(OpcodeID, RegisterID*, RegisterID*, RegisterID*, ArgumentsNode*, unsigned divot, unsigned startOffset, unsigned endOffset);
-        
-        RegisterID* newRegister();
+
+        // Maps a register index in the symbol table to a RegisterID index in m_locals.
+        int localsIndex(int registerIndex) { return -registerIndex - 1; }
 
         // Returns the RegisterID corresponding to ident.
         RegisterID* addVar(const Identifier& ident, bool isConstant)
@@ -373,24 +373,6 @@ namespace JSC {
         bool addGlobalVar(const Identifier&, bool isConstant, RegisterID*&);
 
         RegisterID* addParameter(const Identifier&);
-        
-        void allocateConstants(size_t);
-
-        RegisterID& registerFor(int index)
-        {
-            if (index >= 0)
-                return m_calleeRegisters[index];
-
-            if (index == RegisterFile::OptionalCalleeArguments)
-                return m_argumentsRegister;
-
-            if (m_parameters.size()) {
-                ASSERT(!m_globals.size());
-                return m_parameters[index + m_parameters.size() + RegisterFile::CallFrameHeaderSize];
-            }
-
-            return m_globals[-index - 1];
-        }
 
         unsigned addConstant(FuncDeclNode*);
         unsigned addConstant(FuncExprNode*);
@@ -417,13 +399,10 @@ namespace JSC {
 
         HashSet<RefPtr<UString::Rep>, IdentifierRepHash> m_functions;
         RegisterID m_thisRegister;
-        RegisterID m_argumentsRegister;
-        int m_activationRegisterIndex;
-        SegmentedVector<RegisterID, 512> m_calleeRegisters;
-        SegmentedVector<RegisterID, 512> m_parameters;
-        SegmentedVector<RegisterID, 512> m_globals;
+        SegmentedVector<RegisterID, 512> m_locals;
+        SegmentedVector<RegisterID, 512> m_constants;
+        SegmentedVector<RegisterID, 512> m_temporaries;
         SegmentedVector<LabelID, 512> m_labels;
-        RefPtr<RegisterID> m_lastConstant;
         int m_finallyDepth;
         int m_dynamicScopeDepth;
         CodeType m_codeType;
@@ -433,17 +412,14 @@ namespace JSC {
         Vector<ControlFlowContext> m_scopeContextStack;
         Vector<SwitchInfo> m_switchContextStack;
 
-        int m_nextGlobal;
+        int m_nextVar;
         int m_nextParameter;
-        int m_nextConstant;
 
         int m_globalVarStorageOffset;
 
         // Constant pool
         IdentifierMap m_identifierMap;
         JSValueMap m_jsValueMap;
-        NumberMap m_numberMap;
-        IdentifierStringMap m_stringMap;
 
         JSGlobalData* m_globalData;
 

@@ -258,7 +258,7 @@ HRESULT STDMETHODCALLTYPE WebFrame::setAllowsScrolling(
 {
     if (Frame* frame = core(this))
         if (FrameView* view = frame->view())
-            view->setCanHaveScrollbars(!!flag);
+            view->setAllowsScrolling(!!flag);
 
     return S_OK;
 }
@@ -269,7 +269,7 @@ HRESULT STDMETHODCALLTYPE WebFrame::allowsScrolling(
     if (flag)
         if (Frame* frame = core(this))
             if (FrameView* view = frame->view())
-                *flag = view->canHaveScrollbars();
+                *flag = view->allowsScrolling();
 
     return S_OK;
 }
@@ -321,7 +321,7 @@ HRESULT STDMETHODCALLTYPE WebFrame::paintDocumentRectToContext(
     dirtyRect.setHeight(height);
     gc.clip(dirtyRect);
     gc.translate(-rect.left, -rect.top);
-    view->paintContents(&gc, rect);
+    coreFrame->paint(&gc, rect);
     gc.restore();
 
     return S_OK;
@@ -1839,7 +1839,7 @@ HRESULT STDMETHODCALLTYPE WebFrame::spoolPages(
         CGContextTranslateCTM(pctx, CGFloat(-pageRect.x()), CGFloat(-pageRect.y()+headerHeight));   // reserves space for header
         CGContextSetBaseCTM(pctx, ctm);
 
-        coreFrame->view()->paintContents(&spoolCtx, pageRect);
+        coreFrame->paint(&spoolCtx, pageRect);
 
         if (ui2) {
             CGContextTranslateCTM(pctx, CGFloat(pageRect.x()), CGFloat(pageRect.y())-headerHeight);
@@ -1926,7 +1926,8 @@ HRESULT STDMETHODCALLTYPE WebFrame::hasScrollBars(
     if (!view)
         return E_FAIL;
 
-    if (view->horizontalScrollbar() || view->verticalScrollbar())
+    if (view->vScrollbarMode() == ScrollbarAlwaysOn || view->visibleHeight() < view->contentsHeight() ||
+            view->hScrollbarMode() == ScrollbarAlwaysOn || view->visibleWidth() < view->contentsWidth())
         *result = TRUE;
 
     return S_OK;
@@ -1967,7 +1968,7 @@ HRESULT STDMETHODCALLTYPE WebFrame::frameBounds(
     if (!view)
         return E_FAIL;
 
-    FloatRect bounds = view->visibleContentRect(true);
+    FloatRect bounds = view->visibleContentRectConsideringExternalScrollers();
     result->bottom = (LONG) bounds.height();
     result->right = (LONG) bounds.width();
     return S_OK;

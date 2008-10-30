@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2007 Apple Inc.  All rights reserved.
- * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+ * Copyright (C) 2007 Trolltech ASA
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,7 +33,6 @@
 #include "FloatRect.h"
 #include "Frame.h"
 #include "FrameView.h"
-#include "HostWindow.h"
 #include "Widget.h"
 #include <QApplication>
 #include <QDesktopWidget>
@@ -43,34 +42,34 @@ namespace WebCore {
 int screenDepth(Widget* w)
 {
     QDesktopWidget* d = QApplication::desktop();
-    QWidget *view = w->root()->hostWindow()->platformWindow();
+    QWidget *view = w->containingWindow();
     int screenNumber = view ? d->screenNumber(view) : 0;
     return d->screen(screenNumber)->depth();
 }
 
 int screenDepthPerComponent(Widget* w)
 {
-    QWidget *view = w->root()->hostWindow()->platformWindow();
+    QWidget *view = w->containingWindow();
     return view ? view->depth() : QApplication::desktop()->screen(0)->depth();
 }
 
 bool screenIsMonochrome(Widget* w)
 {
     QDesktopWidget* d = QApplication::desktop();
-    QWidget *view = w->root()->hostWindow()->platformWindow();
+    QWidget *view = w->containingWindow();
     int screenNumber = view ? d->screenNumber(view) : 0;
     return d->screen(screenNumber)->numColors() < 2;
 }
 
 FloatRect screenRect(Widget* w)
 {
-    QRect r = QApplication::desktop()->screenGeometry(w->root()->hostWindow()->platformWindow());
+    QRect r = QApplication::desktop()->screenGeometry(w->containingWindow());
     return FloatRect(r.x(), r.y(), r.width(), r.height());
 }
 
 FloatRect screenAvailableRect(Widget* w)
 {
-    QRect r = QApplication::desktop()->availableGeometry(w->root()->hostWindow()->platformWindow());
+    QRect r = QApplication::desktop()->availableGeometry(w->containingWindow());
     return FloatRect(r.x(), r.y(), r.width(), r.height());
 }
 

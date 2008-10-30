@@ -35,7 +35,7 @@ typedef HICON HCURSOR;
 #include <wtf/RefCounted.h>
 #include <wtf/RefPtr.h>
 #elif PLATFORM(GTK)
-typedef struct _GdkCursor GdkCursor;
+#include <gdk/gdk.h>
 #elif PLATFORM(QT)
 #include <QCursor>
 #elif PLATFORM(CHROMIUM)

@@ -20,6 +20,7 @@
 
 #include "config.h"
 #include "RegExpObject.h"
+#include "RegExpObject.lut.h"
 
 #include "JSArray.h"
 #include "JSGlobalObject.h"
@@ -27,20 +28,7 @@
 #include "RegExpConstructor.h"
 #include "RegExpPrototype.h"
 
-namespace JSC {
-
-static JSValue* regExpObjectGlobal(ExecState*, const Identifier&, const PropertySlot&);
-static JSValue* regExpObjectIgnoreCase(ExecState*, const Identifier&, const PropertySlot&);
-static JSValue* regExpObjectMultiline(ExecState*, const Identifier&, const PropertySlot&);
-static JSValue* regExpObjectSource(ExecState*, const Identifier&, const PropertySlot&);
-static JSValue* regExpObjectLastIndex(ExecState*, const Identifier&, const PropertySlot&);
-static void setRegExpObjectLastIndex(ExecState*, JSObject*, JSValue*);
-
-} // namespace JSC
-
-#include "RegExpObject.lut.h"
-
-namespace JSC {
+namespace KJS {
 
 ASSERT_CLASS_FITS_IN_CELL(RegExpObject);
 
@@ -48,16 +36,16 @@ const ClassInfo RegExpObject::info = { "RegExp", 0, 0, ExecState::regExpTable };
 
 /* Source for RegExpObject.lut.h
 @begin regExpTable
-    global        regExpObjectGlobal       DontDelete|ReadOnly|DontEnum
-    ignoreCase    regExpObjectIgnoreCase   DontDelete|ReadOnly|DontEnum
-    multiline     regExpObjectMultiline    DontDelete|ReadOnly|DontEnum
-    source        regExpObjectSource       DontDelete|ReadOnly|DontEnum
-    lastIndex     regExpObjectLastIndex    DontDelete|DontEnum
+    global        RegExpObject::Global       DontDelete|ReadOnly|DontEnum
+    ignoreCase    RegExpObject::IgnoreCase   DontDelete|ReadOnly|DontEnum
+    multiline     RegExpObject::Multiline    DontDelete|ReadOnly|DontEnum
+    source        RegExpObject::Source       DontDelete|ReadOnly|DontEnum
+    lastIndex     RegExpObject::LastIndex    DontDelete|DontEnum
 @end
 */
 
-RegExpObject::RegExpObject(PassRefPtr<StructureID> structure, PassRefPtr<RegExp> regExp)
-    : JSObject(structure)
+RegExpObject::RegExpObject(RegExpPrototype* regExpPrototype, PassRefPtr<RegExp> regExp)
+    : JSObject(regExpPrototype)
     , d(new RegExpObjectData(regExp, 0))
 {
 }
@@ -71,29 +59,23 @@ bool RegExpObject::getOwnPropertySlot(ExecState* exec, const Identifier& propert
     return getStaticValueSlot<RegExpObject, JSObject>(exec, ExecState::regExpTable(exec), this, propertyName, slot);
 }
 
-JSValue* regExpObjectGlobal(ExecState*, const Identifier&, const PropertySlot& slot)
+JSValue* RegExpObject::getValueProperty(ExecState* exec, int token) const
 {
-    return jsBoolean(static_cast<RegExpObject*>(slot.slotBase())->regExp()->global());
-}
-
-JSValue* regExpObjectIgnoreCase(ExecState*, const Identifier&, const PropertySlot& slot)
-{
-    return jsBoolean(static_cast<RegExpObject*>(slot.slotBase())->regExp()->ignoreCase());
-}
- 
-JSValue* regExpObjectMultiline(ExecState*, const Identifier&, const PropertySlot& slot)
-{            
-    return jsBoolean(static_cast<RegExpObject*>(slot.slotBase())->regExp()->multiline());
-}
-
-JSValue* regExpObjectSource(ExecState* exec, const Identifier&, const PropertySlot& slot)
-{
-    return jsString(exec, static_cast<RegExpObject*>(slot.slotBase())->regExp()->pattern());
-}
-
-JSValue* regExpObjectLastIndex(ExecState* exec, const Identifier&, const PropertySlot& slot)
-{
-    return jsNumber(exec, static_cast<RegExpObject*>(slot.slotBase())->lastIndex());
+    switch (token) {
+        case Global:
+            return jsBoolean(d->regExp->global());
+        case IgnoreCase:
+            return jsBoolean(d->regExp->ignoreCase());
+        case Multiline:
+            return jsBoolean(d->regExp->multiline());
+        case Source:
+            return jsString(exec, d->regExp->pattern());
+        case LastIndex:
+            return jsNumber(exec, d->lastIndex);
+    }
+    
+    ASSERT_NOT_REACHED();
+    return 0;
 }
 
 void RegExpObject::put(ExecState* exec, const Identifier& propertyName, JSValue* value, PutPropertySlot& slot)
@@ -101,9 +83,11 @@ void RegExpObject::put(ExecState* exec, const Identifier& propertyName, JSValue*
     lookupPut<RegExpObject, JSObject>(exec, propertyName, value, ExecState::regExpTable(exec), this, slot);
 }
 
-void setRegExpObjectLastIndex(ExecState* exec, JSObject* baseObject, JSValue* value)
+void RegExpObject::putValueProperty(ExecState* exec, int token, JSValue* value)
 {
-    static_cast<RegExpObject*>(baseObject)->setLastIndex(value->toInteger(exec));
+    UNUSED_PARAM(token);
+    ASSERT(token == LastIndex);
+    d->lastIndex = value->toInteger(exec);
 }
 
 bool RegExpObject::match(ExecState* exec, const ArgList& args)
@@ -166,4 +150,4 @@ CallType RegExpObject::getCallData(CallData& callData)
     return CallTypeHost;
 }
 
-} // namespace JSC
+} // namespace KJS

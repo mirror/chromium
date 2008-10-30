@@ -29,11 +29,9 @@
 #ifndef JSPropertyNameIterator_h
 #define JSPropertyNameIterator_h
 
-#include "JSObject.h"
-#include "JSString.h"
-#include "PropertyNameArray.h"
+#include "JSCell.h"
 
-namespace JSC {
+namespace KJS {
 
     class Identifier;
     class JSObject;
@@ -57,60 +55,14 @@ namespace JSC {
         void invalidate();
 
     private:
-        JSPropertyNameIterator();
-        JSPropertyNameIterator(JSObject*, PassRefPtr<PropertyNameArrayData> propertyNameArrayData);
+        JSPropertyNameIterator(JSObject*, Identifier* propertyNames, size_t numProperties);
 
         JSObject* m_object;
-        RefPtr<PropertyNameArrayData> m_data;
-        PropertyNameArrayData::const_iterator m_position;
-        PropertyNameArrayData::const_iterator m_end;
+        Identifier* m_propertyNames;
+        Identifier* m_position;
+        Identifier* m_end;
     };
 
-inline JSPropertyNameIterator::JSPropertyNameIterator()
-    : JSCell(0)
-    , m_object(0)
-    , m_position(0)
-    , m_end(0)
-{
-}
-
-inline JSPropertyNameIterator::JSPropertyNameIterator(JSObject* object, PassRefPtr<PropertyNameArrayData> propertyNameArrayData)
-    : JSCell(0)
-    , m_object(object)
-    , m_data(propertyNameArrayData)
-    , m_position(m_data->begin())
-    , m_end(m_data->end())
-{
-}
-
-inline JSPropertyNameIterator* JSPropertyNameIterator::create(ExecState* exec, JSValue* v)
-{
-    if (v->isUndefinedOrNull())
-        return new (exec) JSPropertyNameIterator;
-
-    JSObject* o = v->toObject(exec);
-    PropertyNameArray propertyNames(exec);
-    o->getPropertyNames(exec, propertyNames);
-    return new (exec) JSPropertyNameIterator(o, propertyNames.releaseData());
-}
-
-inline JSValue* JSPropertyNameIterator::next(ExecState* exec)
-{
-    if (m_position == m_end)
-        return 0;
-
-    if (m_data->cachedStructureID() == m_object->structureID() && structureIDChainsAreEqual(m_data->cachedPrototypeChain(), m_object->structureID()->cachedPrototypeChain()))
-        return jsOwnedString(exec, (*m_position++).ustring());
-
-    do {
-        if (m_object->hasProperty(exec, *m_position))
-            return jsOwnedString(exec, (*m_position++).ustring());
-        m_position++;
-    } while (m_position != m_end);
-
-    return 0;
-}
-
-} // namespace JSC
+} // namespace KJS
 
 #endif // JSPropertyNameIterator_h
