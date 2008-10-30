@@ -10,10 +10,10 @@
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/button.h"
+#include "chrome/views/menu_button.h"
 #include "chrome/views/label.h"
 #include "chrome/views/view.h"
 #include "chrome/views/menu.h"
-#include "chrome/views/text_button.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/gfx/path.h"
@@ -99,10 +99,11 @@ BlockedPopupContainerView::BlockedPopupContainerView(
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
 
   // Create a button with a multidigit number to reserve space.
-  popup_count_ = new views::TextButton(
+  popup_count_ = new views::MenuButton(
       l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT,
-                            IntToWString(99)));
-  popup_count_->SetIcon(*rb.GetBitmapNamed(IDR_MENU_DROPARROW));
+                            IntToWString(99)),
+      NULL, true);
+  popup_count_->SetTextAlignment(views::TextButton::ALIGN_CENTER);
   popup_count_->SetListener(this, 1);
   AddChildView(popup_count_);
 
