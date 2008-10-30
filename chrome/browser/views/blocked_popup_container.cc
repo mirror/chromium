@@ -102,6 +102,7 @@ BlockedPopupContainerView::BlockedPopupContainerView(
   popup_count_ = new views::TextButton(
       l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT,
                             IntToWString(99)));
+  popup_count_->SetIcon(*rb.GetBitmapNamed(IDR_MENU_MARKER));
   popup_count_->SetListener(this, 1);
   AddChildView(popup_count_);
 
@@ -508,6 +509,7 @@ void BlockedPopupContainer::SetPosition() {
   // Size this window to the bottom left corner starting at the anchor point.
   if (real_height > 0) {
     SetWindowPos(HWND_TOP, base_x, real_y, size.width(), real_height, 0);
+    container_view_->SchedulePaint();
   } else {
     SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_HIDEWINDOW);
   }
