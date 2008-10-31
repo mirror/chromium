@@ -314,7 +314,6 @@ namespace WebCore {
 
         bool canGoBackOrForward(int distance) const;
         void goBackOrForward(int distance);
-        void goToHistoryItem(HistoryItem* item);
         int getHistoryLength();
         KURL historyURL(int distance);
 

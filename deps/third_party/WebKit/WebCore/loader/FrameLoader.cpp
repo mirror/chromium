@@ -145,19 +145,20 @@ struct FormSubmission {
 };
 
 struct ScheduledRedirection {
-    enum Type { redirection, locationChange, historyNavigation, locationChangeDuringLoad, reload };
+    enum Type { redirection, locationChange, historyNavigation, locationChangeDuringLoad };
     Type type;
     double delay;
     String url;
     String referrer;
+    int historySteps;
     bool lockHistory;
     bool wasUserGesture;
-    RefPtr<HistoryItem> historyItem;
 
     ScheduledRedirection(double redirectDelay, const String& redirectURL, bool redirectLockHistory, bool userGesture)
         : type(redirection)
         , delay(redirectDelay)
         , url(redirectURL)
+        , historySteps(0)
         , lockHistory(redirectLockHistory)
         , wasUserGesture(userGesture)
     {
@@ -170,17 +171,18 @@ struct ScheduledRedirection {
         , delay(0)
         , url(locationChangeURL)
         , referrer(locationChangeReferrer)
+        , historySteps(0)
         , lockHistory(locationChangeLockHistory)
         , wasUserGesture(locationChangeWasUserGesture)
     {
     }
 
-    explicit ScheduledRedirection(HistoryItem* item)
+    explicit ScheduledRedirection(int historyNavigationSteps)
         : type(historyNavigation)
         , delay(0)
+        , historySteps(historyNavigationSteps)
         , lockHistory(false)
         , wasUserGesture(false)
-        , historyItem(item)
     {
     }
 };
@@ -1483,7 +1485,6 @@ bool FrameLoader::isLocationChange(const ScheduledRedirection& redirection)
     switch (redirection.type) {
         case ScheduledRedirection::redirection:
             return false;
-        case ScheduledRedirection::reload:
         case ScheduledRedirection::historyNavigation:
         case ScheduledRedirection::locationChange:
         case ScheduledRedirection::locationChangeDuringLoad:
@@ -1504,28 +1505,21 @@ void FrameLoader::scheduleHistoryNavigation(int steps)
         return;
     }
 
-    if (steps == 0) {
-        // Special case for go(0) from a frame -> reload only the frame
-        scheduleRedirection(new ScheduledRedirection(ScheduledRedirection::reload, String(), String(), false, false));
-        return;
+    // If the steps to navigate is not zero (which needs to force a reload), and if we think the navigation is going to be a fragment load
+    // (when the URL we're going to navigate to is the same as the current one, except for the fragment part - but not exactly the same because that's a reload),
+    // then we don't need to schedule the navigation.
+    if (steps != 0) {
+        KURL destination = historyURL(steps);
+        // FIXME: This doesn't seem like a reliable way to tell whether or not the load will be a fragment load.
+        if (equalIgnoringRef(m_URL, destination) && m_URL != destination) {
+            goBackOrForward(steps);
+            return;
+        }
     }
-
-    Page* page = m_frame->page();
-    if (!page)
-        return;
-    BackForwardList* list = page->backForwardList();
-    if (!list)
-        return;
-
-    // Asynchronously loads the item at the given offset in the history.
-    list->goToItemAtIndexAsync(steps);
-
-    // The redirection will be handled elsewhere.
-    cancelRedirection();
+    
+    scheduleRedirection(new ScheduledRedirection(steps));
 }
 
-// This is called by ContextMenuController, which is only used in test shell
-// and not Chrome.
 void FrameLoader::goBackOrForward(int distance)
 {
     if (distance == 0)
@@ -1556,15 +1550,6 @@ void FrameLoader::goBackOrForward(int distance)
         page->goToItem(item, FrameLoadTypeIndexedBackForward);
 }
 
-void FrameLoader::goToHistoryItem(HistoryItem* item)
-{
-    Page* page = m_frame->page();
-    if (!page)
-        return;
-
-    page->goToItem(item, FrameLoadTypeIndexedBackForward);
-}
-
 void FrameLoader::redirectionTimerFired(Timer<FrameLoader>*)
 {
     ASSERT(m_frame->page());
@@ -1578,11 +1563,15 @@ void FrameLoader::redirectionTimerFired(Timer<FrameLoader>*)
             changeLocation(redirection->url, redirection->referrer,
                 redirection->lockHistory, redirection->wasUserGesture);
             return;
-        case ScheduledRedirection::reload:
-            urlSelected(m_URL, "", 0, false, false);
-            return;
         case ScheduledRedirection::historyNavigation:
-            goToHistoryItem(redirection->historyItem.get());
+            if (redirection->historySteps == 0) {
+                // Special case for go(0) from a frame -> reload only the frame
+                urlSelected(m_URL, "", 0, redirection->lockHistory, redirection->wasUserGesture);
+                return;
+            }
+            // go(i!=0) from a frame navigates into the history of the frame only,
+            // in both IE and NS (but not in Mozilla). We can't easily do that.
+            goBackOrForward(redirection->historySteps);
             return;
     }
 
@@ -2057,7 +2046,6 @@ void FrameLoader::startRedirectionTimer()
                 m_scheduledRedirection->lockHistory,
                 m_isExecutingJavaScriptFormAction);
             return;
-        case ScheduledRedirection::reload:
         case ScheduledRedirection::historyNavigation:
             // Don't report history navigations.
             return;
@@ -2079,7 +2067,6 @@ void FrameLoader::stopRedirectionTimer()
             case ScheduledRedirection::locationChangeDuringLoad:
                 clientRedirectCancelledOrFinished(m_cancellingWithLoadInProgress);
                 return;
-            case ScheduledRedirection::reload:
             case ScheduledRedirection::historyNavigation:
                 // Don't report history navigations.
                 return;
