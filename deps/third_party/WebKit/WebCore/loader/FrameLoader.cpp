@@ -90,9 +90,9 @@
 #include "JSDOMBinding.h"
 #include <kjs/JSLock.h>
 #include <kjs/JSObject.h>
-using KJS::UString;
-using KJS::JSLock;
-using KJS::JSValue;
+using JSC::UString;
+using JSC::JSLock;
+using JSC::JSValue;
 #endif
 
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)

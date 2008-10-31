@@ -82,8 +82,8 @@ namespace WebCore {
         void warn(ScriptCallContext*);
         void dir(ScriptCallContext*);
 #if USE(JSC)
-        void dirxml(JSC::ExecState*, const JSC::ArgList& arguments);
-        void trace(JSC::ExecState*);
+        void dirxml(ScriptCallContext*);
+        void trace(ScriptCallContext*);
 #endif
         void assertCondition(bool condition, ScriptCallContext*);
         void count(ScriptCallContext*);

@@ -77,13 +77,15 @@ JSValue* JSConsole::dir(ExecState* exec, const ArgList& arguments)
 
 JSValue* JSConsole::dirxml(ExecState* exec, const ArgList& arguments)
 {
-    impl()->dirxml(exec, arguments);
+    ScriptCallContext context(exec, arguments);
+    impl()->dirxml(&context);
     return jsUndefined();
 }
 
-JSValue* JSConsole::trace(ExecState* exec, const ArgList&)
+JSValue* JSConsole::trace(ExecState* exec, const ArgList& arguments)
 {
-    impl()->trace(exec);
+    ScriptCallContext context(exec, arguments);
+    impl()->trace(&context);
     return jsUndefined();
 }
 

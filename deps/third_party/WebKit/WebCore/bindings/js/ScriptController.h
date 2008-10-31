@@ -61,11 +61,11 @@ class Widget;
 
 typedef HashMap<void*, RefPtr<JSC::Bindings::RootObject> > RootObjectMap;
 
-typedef KJS::Bindings::Instance* JSInstance;
-typedef PassRefPtr<KJS::Bindings::Instance> JSInstanceHandle;
-typedef RefPtr<KJS::Bindings::Instance> JSPersistentInstance;
-typedef KJS::JSValue* JSException;
-typedef KJS::JSValue* JSResult;
+typedef JSC::Bindings::Instance* JSInstance;
+typedef PassRefPtr<JSC::Bindings::Instance> JSInstanceHandle;
+typedef RefPtr<JSC::Bindings::Instance> JSPersistentInstance;
+typedef JSC::JSValue* JSException;
+typedef JSC::JSValue* JSResult;
 
 class ScriptController {
 public:

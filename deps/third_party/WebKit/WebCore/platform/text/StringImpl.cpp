@@ -42,8 +42,8 @@ using namespace WTF;
 using namespace Unicode;
 
 #if USE(JSC)
-using KJS::Identifier;
-using KJS::UString;
+using JSC::Identifier;
+using JSC::UString;
 #endif
 
 namespace WebCore {

@@ -180,7 +180,7 @@ public:
 #ifdef USE_GOOGLE_URL_LIBRARY
     operator const String&() const { return m_url.string(); }
 #if USE(JSC)
-    operator KJS::UString() const { return m_url.string(); }
+    operator JSC::UString() const { return m_url.string(); }
 #endif
 
     unsigned hostStart() const;

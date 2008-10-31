@@ -136,7 +136,7 @@ public:
     void addProfile(PassRefPtr<JSC::Profile>, unsigned lineNumber, const JSC::UString& sourceURL);
     void addProfileMessageToConsole(PassRefPtr<JSC::Profile> prpProfile, unsigned lineNumber, const JSC::UString& sourceURL);
     void addScriptProfile(JSC::Profile* profile);
-    const ProfilesArray& profiles() const { return m_profiles; }
+    const Vector<RefPtr<JSC::Profile> >& profiles() const { return m_profiles; }
 #endif
 
     void attachWindow();
@@ -245,7 +245,7 @@ private:
 
     // TODO(dglazkov): Implement argument array comparison in ScriptCallContext
     // and return method signature back to WebKit's original
-    void addConsoleMessage(ConsoleMessage*);
+    void addConsoleMessage(ScriptCallContext*, ConsoleMessage*);
     void addScriptConsoleMessage(const ConsoleMessage*);
 
     void addResource(InspectorResource*);
@@ -320,7 +320,7 @@ private:
     FrameResourcesMap m_frameResources;
     Vector<ConsoleMessage*> m_consoleMessages;
 #if USE(JSC)
-    ProfilesArray m_profiles;
+    Vector<RefPtr<JSC::Profile> > m_profiles;
 #endif
     HashMap<String, double> m_times;
     HashMap<String, unsigned> m_counts;

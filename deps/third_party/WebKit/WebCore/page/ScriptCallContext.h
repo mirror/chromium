@@ -38,7 +38,7 @@
 #include <kjs/ArgList.h>
 #include "KURL.h"
 
-namespace KJS {
+namespace JSC {
 class ExecState;
 }
 #elif USE(V8)
@@ -61,8 +61,8 @@ public:
 #if USE(V8)
     ScriptCallContext(const v8::Arguments& args);
 #elif USE(JSC)
-    ScriptCallContext(KJS::ExecState*,
-                      const KJS::ArgList&,
+    ScriptCallContext(JSC::ExecState*,
+                      const JSC::ArgList&,
                       unsigned sliceFrom = 0);
 #endif
     ~ScriptCallContext() {}
@@ -71,8 +71,8 @@ public:
 #if USE(JSC)
     // TODO(dglazkov): Ideally, public interface should be VM-agnostic. We
     // should work to remove this ifdef.
-    KJS::JSValue* argumentAt(unsigned);
-    KJS::ExecState* exec() const { return m_exec; }
+    JSC::JSValue* argumentAt(unsigned);
+    JSC::ExecState* exec() const { return m_exec; }
 #endif
     unsigned argumentCount() const;
     bool hasArguments() const { return argumentCount() > 0; }
@@ -81,8 +81,8 @@ public:
     KURL sourceURL() const;
 private:
 #if USE(JSC)
-    KJS::ExecState* m_exec;
-    KJS::ArgList m_args;
+    JSC::ExecState* m_exec;
+    JSC::ArgList m_args;
     unsigned m_lineNumber;
     KURL m_sourceURL;
 #elif USE(V8)

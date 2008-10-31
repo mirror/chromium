@@ -59,6 +59,7 @@
 #include "ResourceRequest.h"
 #include "ResourceResponse.h"
 #include "Settings.h"
+#include "ScriptCallContext.h"
 #include "SharedBuffer.h"
 #include "SystemTime.h"
 #include "TextEncoding.h"
@@ -168,18 +169,18 @@ struct ConsoleMessage {
     {
     }
 
-    ConsoleMessage(MessageSource s, MessageLevel l, ExecState* exec, const ArgList& args, unsigned li, const String& u, unsigned g)
+    ConsoleMessage(MessageSource s, MessageLevel l, ScriptCallContext* c, unsigned g)
         : source(s)
         , level(l)
-        , wrappedArguments(args.size())
-        , line(li)
-        , url(u)
+        , wrappedArguments(c->argumentCount())
+        , line(c->lineNumber())
+        , url(c->sourceURL())
         , groupLevel(g)
         , repeatCount(1)
     {
         JSLock lock(false);
-        for (unsigned i = 0; i < args.size(); ++i)
-            wrappedArguments[i] = JSInspectedObjectWrapper::wrap(exec, args.at(exec, i));
+        for (unsigned i = 0; i < c->argumentCount(); ++i)
+            wrappedArguments[i] = JSInspectedObjectWrapper::wrap(c->exec(), c->argumentAt(i));
     }
     
     bool isEqual(ExecState* exec, ConsoleMessage* msg) const
@@ -1140,12 +1141,12 @@ void InspectorController::setWindowVisible(bool visible, bool attached)
     m_showAfterVisible = CurrentPanel;
 }
 
-void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, ExecState* exec, const ArgList& arguments, unsigned lineNumber, const String& sourceURL)
+void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, ScriptCallContext* context)
 {
     if (!enabled())
         return;
 
-    addConsoleMessage(exec, new ConsoleMessage(source, level, exec, arguments, lineNumber, sourceURL, m_groupLevel));
+    addConsoleMessage(context, new ConsoleMessage(source, level, context, m_groupLevel));
 }
 
 void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceID)
@@ -1156,12 +1157,12 @@ void InspectorController::addMessageToConsole(MessageSource source, MessageLevel
     addConsoleMessage(0, new ConsoleMessage(source, level, message, lineNumber, sourceID, m_groupLevel));
 }
 
-void InspectorController::addConsoleMessage(ExecState* exec, ConsoleMessage* consoleMessage)
+void InspectorController::addConsoleMessage(ScriptCallContext* context, ConsoleMessage* consoleMessage)
 {
     ASSERT(enabled());
     ASSERT_ARG(consoleMessage, consoleMessage);
 
-    if (m_previousMessage && m_previousMessage->isEqual(exec, consoleMessage)) {
+    if (m_previousMessage && m_previousMessage->isEqual(context->exec(), consoleMessage)) {
         ++m_previousMessage->repeatCount;
         delete consoleMessage;
     } else {
@@ -1191,11 +1192,11 @@ void InspectorController::toggleRecordButton(bool isProfiling)
     callFunction(m_scriptContext, m_scriptObject, "setRecordingProfile", 1, &isProvingValue, exception);
 }
 
-void InspectorController::startGroup(MessageSource source, ExecState* exec, const ArgList& arguments, unsigned lineNumber, const String& sourceURL)
+void InspectorController::startGroup(MessageSource source, ScriptCallContext* context)
 {    
     ++m_groupLevel;
 
-    addConsoleMessage(exec, new ConsoleMessage(source, StartGroupMessageLevel, exec, arguments, lineNumber, sourceURL, m_groupLevel));
+    addConsoleMessage(context, new ConsoleMessage(source, StartGroupMessageLevel, context, m_groupLevel));
 }
 
 void InspectorController::endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL)

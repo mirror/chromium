@@ -38,7 +38,7 @@
 #include <kjs/ustring.h>
 #include <VM/Machine.h>
 
-using namespace KJS;
+using namespace JSC;
 
 namespace WebCore {
 

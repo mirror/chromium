@@ -247,9 +247,9 @@ void Console::dir(ScriptCallContext* context)
     page->inspectorController()->addMessageToConsole(JSMessageSource, ObjectMessageLevel, context);
 }
 
-void Console::dirxml(ExecState* exec, const ArgList& args)
+void Console::dirxml(ScriptCallContext* context)
 {
-    if (args.isEmpty())
+    if (!context->hasArguments())
         return;
 
     if (!m_frame)
@@ -259,10 +259,10 @@ void Console::dirxml(ExecState* exec, const ArgList& args)
     if (!page)
         return;
 
-    page->inspectorController()->addMessageToConsole(JSMessageSource, NodeMessageLevel, exec, args, 0, String());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, NodeMessageLevel, context);
 }
 
-void Console::trace(ExecState* exec)
+void Console::trace(ScriptCallContext* context)
 {
     Page* page = this->page();
     if (!page)
@@ -273,15 +273,15 @@ void Console::trace(ExecState* exec)
     UString urlString;
     JSValue* func;
 
-    exec->machine()->retrieveLastCaller(exec, signedLineNumber, sourceID, urlString, func);
+    context->exec()->machine()->retrieveLastCaller(context->exec(), signedLineNumber, sourceID, urlString, func);
 
     ArgList args;
     while (!func->isNull()) {
         args.append(func);
-        func = exec->machine()->retrieveCaller(exec, static_cast<InternalFunction*>(func));
+        func = context->exec()->machine()->retrieveCaller(context->exec(), static_cast<InternalFunction*>(func));
     }
     
-    page->inspectorController()->addMessageToConsole(JSMessageSource, TraceMessageLevel, exec, args, 0, String());
+    page->inspectorController()->addMessageToConsole(JSMessageSource, TraceMessageLevel, context);
 }
 
 void Console::assertCondition(bool condition, ScriptCallContext* context)
