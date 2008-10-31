@@ -186,9 +186,8 @@ class GClient(commands.SourceBase):
       # 'update'.
       d.addCallback(self.doClobber, self.srcdir)
     elif self.sourcedirIsPatched():
-      # The directory is just patched. Revert the sources.
+      # The directory is patched. Revert the sources.
       d.addCallback(self.doRevert)
-      # TODO(maruel): Remove unversioned files.
 
     d.addCallback(self.doVC)
 
@@ -350,6 +349,29 @@ class GClient(commands.SourceBase):
     d = c.start()
     d.addCallback(self._abandonOnFailure)
     return d
+
+  def doPatch(self, res):
+    patchlevel, diff = self.patch
+    command = [commands.getCommand("patch"), '-p%d' % patchlevel]
+    dir = os.path.join(self.builder.basedir, self.workdir)
+    # Mark the directory so we don't try to update it later.
+    open(os.path.join(dir, ".buildbot-patched"), "w").write("patched\n")
+    # Now apply the patch.
+    c = commands.ShellCommand(self.builder, command, dir,
+                              sendRC=False, timeout=self.timeout,
+                              initialStdin=diff)
+    self.command = c
+    d = c.start()
+    d.addCallback(self._abandonOnFailure)
+    if diff.find('DEPS') != -1:
+      d.addCallback(self.doVCUpdateOnPatch)
+      d.addCallback(self._abandonOnFailure)
+    return d
+
+  def doVCUpdateOnPatch(self, res):
+    if self.revision and not self.branch:
+      self.branch = 'src'
+    return self.doVCUpdate()
 
   def writeSourcedata(self, res):
     """Write the sourcedata file and remove any dead source directory."""
