@@ -42,7 +42,6 @@ public:
     RenderMenuList(HTMLSelectElement*);
     ~RenderMenuList();
     
-
     HTMLSelectElement* selectElement();
 
     virtual bool isMenuList() const { return true; }
