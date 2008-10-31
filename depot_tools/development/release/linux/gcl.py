@@ -102,7 +102,7 @@ def GetCodeReviewSetting(key):
 
 def IsTreeOpen():
   """Fetches the tree status and returns either True or False."""
-  url = GetCodeReviewSetting('STATUS_URL')
+  url = GetCodeReviewSetting('STATUS')
   status = ""
   if url:
     status = urllib2.urlopen(url).read()
@@ -546,7 +546,7 @@ def Commit(change_info, args):
   no_tree_status_check = ("--force" in args or "-f" in args)
   if not no_tree_status_check and not IsTreeOpen():
     print ("Error: The tree is closed. Try again later or use --force to force"
-        " the commit. May the force be with you.")
+           " the commit. May the --force be with you.")
     return
 
   commit_cmd = ["svn", "commit"]

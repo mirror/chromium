@@ -102,7 +102,7 @@ def GetCodeReviewSetting(key):
 
 def IsTreeOpen():
   """Fetches the tree status and returns either True or False."""
-  url = GetCodeReviewSetting('STATUS_URL')
+  url = GetCodeReviewSetting('STATUS')
   status = ""
   if url:
     status = urllib2.urlopen(url).read()
