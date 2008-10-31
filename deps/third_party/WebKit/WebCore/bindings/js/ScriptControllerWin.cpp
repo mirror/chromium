@@ -34,7 +34,7 @@ using namespace JSC::Bindings;
 
 namespace WebCore {
 
-JSInstanceHandle ScriptController::createScriptInstanceForWidget(Widget* widget)
+PassRefPtr<JSC::Bindings::Instance> ScriptController::createScriptInstanceForWidget(Widget* widget)
 {
     if (!widget->isPluginView())
         return 0;
