@@ -77,10 +77,8 @@ void CachedScript::data(PassRefPtr<SharedBuffer> data, bool allDataReceived)
 
     m_data = data;
     setEncodedSize(m_data.get() ? m_data->size() : 0);
-    if (m_data.get()) {
+    if (m_data.get())
         m_script = m_encoding.decode(m_data->data(), encodedSize());
-        m_data = 0;  // We no longer need the raw buffer.
-    }
     m_loading = false;
     checkNotify();
 }
