@@ -67,8 +67,8 @@ class BlockedPopupContainer : public ConstrainedWindow,
   // Override from ConstrainedWindow:
   virtual void CloseConstrainedWindow();
   virtual void RepositionConstrainedWindowTo(const gfx::Point& anchor_point);
-  virtual void WasHidden();
-  virtual void DidBecomeSelected();
+  virtual void WasHidden() { }
+  virtual void DidBecomeSelected() { }
   virtual std::wstring GetWindowTitle() const;
   virtual const gfx::Rect& GetCurrentBounds() const;
 

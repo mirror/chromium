@@ -11,8 +11,6 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/button.h"
 #include "chrome/views/menu_button.h"
-#include "chrome/views/label.h"
-#include "chrome/views/view.h"
 #include "chrome/views/menu.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
@@ -27,17 +25,25 @@ const int kNotifyMenuItem = -1;
 // infinite windows.
 const int kImpossibleNumberOfPopups = 30;
 
+// A small border around all widgets
 const int kSmallPadding = 2;
 
+// The background color of the blocked popup notification
 static const SkColor kBackgroundColor = SkColorSetRGB(222, 234, 248);
+
+// The border color of the blocked popup notification.
 // TODO(erg): Get a real standard color for kBorderColor.
 static const SkColor kBorderColor = SkColorSetRGB(111, 117, 124);
+// Thickness of the border.
 static const int kBorderSize = 1;
-static const int kBackgroundCornerRadius = 4;
 
+// Duration of the showing/hiding animations.
 static const int kShowAnimationDurationMS = 200;
 static const int kHideAnimationDurationMS = 120;
 static const int kFramerate = 25;
+
+// Rounded corner radius (in pixels)
+static const int kBackgroundCornerRadius = 4;
 
 // Rounded corner definition for the
 static const SkScalar kRoundedCornerRad[8] = {
@@ -57,24 +63,24 @@ static const SkScalar kRoundedCornerRad[8] = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // BlockedPopupContainerView
-
+//
+// The view presented to the user notifying them of the number of popups
+// blocked.
+//
 class BlockedPopupContainerView : public views::View,
                                   public views::BaseButton::ButtonListener,
                                   public Menu::Delegate {
  public:
-  BlockedPopupContainerView(BlockedPopupContainer* container);
+  explicit BlockedPopupContainerView(BlockedPopupContainer* container);
   ~BlockedPopupContainerView();
 
-  // 
+  // Sets the label on the menu button
   void UpdatePopupCountLabel(); // Do I need to do anything?
 
   // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
   virtual gfx::Size GetPreferredSize();
-  virtual void ViewHierarchyChanged(bool is_add, View* parent, View* child) {
-    View::ViewHierarchyChanged(is_add, parent, child);
-  }
 
   // Overridden from views::ButtonListener::ButtonPressed:
   virtual void ButtonPressed(views::BaseButton* sender);
@@ -84,12 +90,16 @@ class BlockedPopupContainerView : public views::View,
   virtual void ExecuteCommand(int id);
 
  private:
+  // Our owner and HWND parent.
   BlockedPopupContainer* container_;
 
-  views::TextButton* popup_count_;
+  // The button which brings up the popup menu.
+  views::MenuButton* popup_count_;
+
+  // Our "X" button.
   views::Button* close_button_;
 
-  /// Popup menu shown to user
+  /// Popup menu shown to user.
   scoped_ptr<Menu> launch_menu_;
 };
 
@@ -100,8 +110,7 @@ BlockedPopupContainerView::BlockedPopupContainerView(
 
   // Create a button with a multidigit number to reserve space.
   popup_count_ = new views::MenuButton(
-      l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT,
-                            IntToWString(99)),
+      l10n_util::GetStringF(IDS_POPUPS_BLOCKED_COUNT, IntToWString(99)),
       NULL, true);
   popup_count_->SetTextAlignment(views::TextButton::ALIGN_CENTER);
   popup_count_->SetListener(this, 1);
@@ -298,10 +307,8 @@ void BlockedPopupContainer::LaunchPopupIndex(int index) {
     owner_->AddNewContents(contents, NEW_POPUP, bounds, true);
   }
 
-  if (blocked_popups_.size() == 0) {
+  if (blocked_popups_.size() == 0)
     CloseAllPopups();
-    // Note: we don't set the |has_been_dismissed_| flag here
-  }
 }
 
 int BlockedPopupContainer::GetTabContentsCount() const {
@@ -320,9 +327,7 @@ std::wstring BlockedPopupContainer::GetDisplayStringForItem(int index) {
 
 void BlockedPopupContainer::CloseAllPopups() {
   CloseEachTabContents();
-
   container_view_->UpdatePopupCountLabel();
-
   HideSelf();
 }
 
@@ -346,12 +351,6 @@ void BlockedPopupContainer::RepositionConstrainedWindowTo(
     const gfx::Point& anchor_point) {
   anchor_point_ = anchor_point;
   SetPosition();
-}
-
-void BlockedPopupContainer::WasHidden() {
-}
-
-void BlockedPopupContainer::DidBecomeSelected() {
 }
 
 std::wstring BlockedPopupContainer::GetWindowTitle() const {
@@ -454,7 +453,7 @@ void BlockedPopupContainer::OnFinalMessage(HWND window) {
 }
 
 void BlockedPopupContainer::OnSize(UINT param, const CSize& size) {
-  // Make a mask for the rounded corners at the top.
+  // Set the window region so we have rounded corners on the top.
   SkRect rect;
   rect.set(0, 0, SkIntToScalar(size.cx), SkIntToScalar(size.cy));
   gfx::Path path;
@@ -475,11 +474,10 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
   SetContentsView(container_view_);
   RepositionConstrainedWindowTo(initial_anchor);
 
-  if (GetShowBlockedPopupNotification()) {
+  if (GetShowBlockedPopupNotification())
     ShowSelf();
-  } else {
+  else
     has_been_dismissed_ = true;
-  }
 }
 
 void BlockedPopupContainer::HideSelf() {
