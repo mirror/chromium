@@ -54,6 +54,21 @@ def main_scons(options, args):
   else:
     command = ['hammer']
 
+  # Add ccache and distcc if they exist on linux builders.
+  if 'linux2' == sys.platform:
+    cc = 'cc'
+    cpp = 'g++'
+    distcc_hosts_file = os.path.join(os.path.expanduser('~'), '.distcc/hosts')
+    if os.path.exists('/usr/bin/distcc') and os.path.exists(distcc_hosts_file):
+      cc = 'distcc ' + cc
+      cpp = 'distcc ' + cpp
+      command.append('-j4')
+    if os.path.exists('/usr/bin/ccache'):
+      cc = 'ccache ' + cc
+      cpp = 'ccache ' + cpp
+    os.environ['CC'] = cc
+    os.environ['CXX'] = cpp
+
   if options.clobber:
     command.append('--clobber')
 
