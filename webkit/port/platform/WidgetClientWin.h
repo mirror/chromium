@@ -35,7 +35,10 @@ public:
 
     // Notifies the client of a new popup widget.  The client should place
     // and size the widget with the given bounds, relative to the screen.
-    virtual void popupOpened(Widget* widget, const IntRect& bounds) = 0;
+    // If |focus_on_show| is true, the popup should also get the focus.
+    virtual void popupOpened(Widget* widget,
+                             const IntRect& bounds,
+                             bool focus_on_show) = 0;
 
     // Notifies the client that the given popup widget has closed.
     virtual void popupClosed(Widget* widget) = 0;

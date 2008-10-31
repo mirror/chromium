@@ -227,7 +227,8 @@ void WebWidgetImpl::scrollRect(int dx, int dy, const IntRect& clip_rect) {
 }
 
 void WebWidgetImpl::popupOpened(WebCore::Widget* widget,
-                                const WebCore::IntRect& bounds) {
+                                const WebCore::IntRect& bounds,
+                                bool focus_on_show) {
   NOTREACHED() << "popupOpened called on a popup";
 }
 

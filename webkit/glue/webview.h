@@ -187,6 +187,12 @@ class WebView : public WebWidget {
   virtual void DragTargetDrop(
       int client_x, int client_y, int screen_x, int screen_y) = 0;
 
+  // Notifies the webview that autofill suggestions are available for a node.
+  virtual void AutofillSuggestionsForNode(
+      int64 node_id,
+      const std::vector<std::wstring>& suggestions,
+      int default_suggestion_index) = 0;
+
  private:
   DISALLOW_EVIL_CONSTRUCTORS(WebView);
 };

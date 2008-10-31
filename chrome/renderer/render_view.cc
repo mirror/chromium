@@ -134,7 +134,7 @@ class RenderViewExtraRequestData : public WebRequest::ExtraData {
 ///////////////////////////////////////////////////////////////////////////////
 
 RenderView::RenderView()
-  : RenderWidget(RenderThread::current()),
+  : RenderWidget(RenderThread::current(), true),
     is_loading_(false),
     page_id_(-1),
     last_page_id_sent_to_browser_(-1),
@@ -150,7 +150,8 @@ RenderView::RenderView()
     history_back_list_count_(0),
     history_forward_list_count_(0),
     disable_popup_blocking_(false),
-    has_unload_listener_(false) {
+    has_unload_listener_(false),
+    form_field_autofill_request_id_(0) {
   resource_dispatcher_ = new ResourceDispatcher(this);
 #ifdef CHROME_PERSONALIZATION
   personalization_ = Personalization::CreateRendererPersonalization();
@@ -336,6 +337,8 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
 #endif
     IPC_MESSAGE_HANDLER(ViewMsg_HandleMessageFromExternalHost,
                         OnMessageFromExternalHost)
+    IPC_MESSAGE_HANDLER(ViewMsg_AutofillSuggestions,
+                        OnReceivedAutofillSuggestions)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidget::OnMessageReceived(message))
   IPC_END_MESSAGE_MAP()
@@ -1565,6 +1568,29 @@ void RenderView::OnUnloadListenerChanged(WebView* webview, WebFrame* webframe) {
   }
 }
 
+void RenderView::QueryFormFieldAutofill(const std::wstring& field_name,
+                                        const std::wstring& text,
+                                        int64 node_id) {
+  static int message_id_counter = 0;
+  form_field_autofill_request_id_ = message_id_counter++;
+  Send(new ViewHostMsg_QueryFormFieldAutofill(routing_id_,
+                                              field_name, text,
+                                              node_id,
+                                              form_field_autofill_request_id_));
+}
+
+void RenderView::OnReceivedAutofillSuggestions(
+    int64 node_id,
+    int request_id,
+    const std::vector<std::wstring> suggestions,
+    int default_suggestion_index) {
+  if (!webview() || request_id != form_field_autofill_request_id_)
+    return;
+
+  webview()->AutofillSuggestionsForNode(node_id, suggestions,
+                                        default_suggestion_index);
+}
+
 void RenderView::ShowModalHTMLDialog(const GURL& url, int width, int height,
                                      const std::string& json_arguments,
                                      std::string* json_retval) {
@@ -1657,9 +1683,11 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
   return view->webview();
 }
 
-WebWidget* RenderView::CreatePopupWidget(WebView* webview) {
+WebWidget* RenderView::CreatePopupWidget(WebView* webview,
+                                         bool focus_on_show) {
   RenderWidget* widget = RenderWidget::Create(routing_id_,
-                                              RenderThread::current());
+                                              RenderThread::current(),
+                                              focus_on_show);
   return widget->webwidget();
 }
 

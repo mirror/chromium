@@ -281,8 +281,10 @@ void ResourceMessageFilter::OnMsgCreateView(int opener_id,
                                     modal_dialog_event, render_handle_);
 }
 
-void ResourceMessageFilter::OnMsgCreateWidget(int opener_id, int* route_id) {
-  render_widget_helper_->CreateWidget(opener_id, route_id);
+void ResourceMessageFilter::OnMsgCreateWidget(int opener_id,
+                                              bool focus_on_show,
+                                              int* route_id) {
+  render_widget_helper_->CreateWidget(opener_id, focus_on_show, route_id);
 }
 
 void ResourceMessageFilter::OnRequestResource(

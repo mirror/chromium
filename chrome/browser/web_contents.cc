@@ -767,7 +767,7 @@ void WebContents::CreateView(int route_id, HANDLE modal_dialog_event) {
   pending_views_[route_id] = new_view;
 }
 
-void WebContents::CreateWidget(int route_id) {
+void WebContents::CreateWidget(int route_id, bool focus_on_show) {
   RenderWidgetHost* widget_host = new RenderWidgetHost(process(), route_id);
   RenderWidgetHostHWND* widget_view = new RenderWidgetHostHWND(widget_host);
   widget_host->set_view(widget_view);
@@ -776,6 +776,7 @@ void WebContents::CreateWidget(int route_id) {
   // call.
   widget_view->set_parent_hwnd(view()->GetPluginHWND());
   widget_view->set_close_on_deactivate(true);
+  widget_view->set_focus_on_show(focus_on_show);
 
   // Don't show the widget until we get its position in ShowWidget.
   pending_widgets_[route_id] = widget_host;
@@ -828,7 +829,8 @@ void WebContents::ShowWidget(int route_id, const gfx::Rect& initial_pos) {
   widget_view->Create(GetHWND(), NULL, NULL, WS_POPUP, WS_EX_TOOLWINDOW);
   widget_view->MoveWindow(initial_pos.x(), initial_pos.y(), initial_pos.width(),
                           initial_pos.height(), TRUE);
-  widget_view->ShowWindow(SW_SHOW);
+  widget_view->ShowWindow(widget_view->focus_on_show() ? SW_SHOW :
+                                                         SW_SHOWNOACTIVATE);
   widget_host->Init();
 }
 

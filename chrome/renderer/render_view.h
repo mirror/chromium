@@ -108,6 +108,9 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   virtual bool RunBeforeUnloadConfirm(WebView* webview,
                                       const std::wstring& message);
   virtual void OnUnloadListenerChanged(WebView* webview, WebFrame* webframe);
+  virtual void QueryFormFieldAutofill(const std::wstring& field_name,
+                                      const std::wstring& text,
+                                      int64 node_id);
   virtual void UpdateTargetURL(WebView* webview,
                                const GURL& url);
   virtual void RunFileChooser(const std::wstring& default_filename,
@@ -178,7 +181,8 @@ class RenderView : public RenderWidget, public WebViewDelegate,
       bool is_redirect);
 
   virtual WebView* CreateWebView(WebView* webview, bool user_gesture);
-  virtual WebWidget* CreatePopupWidget(WebView* webview);
+  virtual WebWidget* CreatePopupWidget(WebView* webview,
+                                       bool focus_on_show);
   virtual WebPluginDelegate* CreatePluginDelegate(
       WebView* webview,
       const GURL& url,
@@ -430,6 +434,13 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // Notification about ui theme changes.
   void OnThemeChanged();
 
+  // Notification that we have received autofill suggestion.
+  void OnReceivedAutofillSuggestions(
+      int64 node_id,
+      int request_id,
+      const std::vector<std::wstring> suggestions,
+      int default_suggestion_index);
+
 #ifdef CHROME_PERSONALIZATION
   void OnPersonalizationEvent(std::string event_name, std::string event_args);
 #endif
@@ -611,6 +622,10 @@ class RenderView : public RenderWidget, public WebViewDelegate,
 
   // True if the page has any frame-level unload or beforeunload listeners.
   bool has_unload_listener_;
+
+  // The id of the last request sent for form field autofill.  Used to ignore
+  // out of date responses.
+  int form_field_autofill_request_id_;
 
   DISALLOW_EVIL_CONSTRUCTORS(RenderView);
 };

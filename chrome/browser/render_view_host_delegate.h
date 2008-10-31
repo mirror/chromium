@@ -91,7 +91,7 @@ class RenderViewHostDelegate {
   virtual void CreateView(int route_id, HANDLE modal_dialog_event) { }
 
   // The page is trying to open a new widget (e.g. a select popup).
-  virtual void CreateWidget(int route_id) { }
+  virtual void CreateWidget(int route_id, bool focus_on_show) { }
 
   // Show the newly created page with the specified disposition and bounds.
   virtual void ShowView(int route_id,

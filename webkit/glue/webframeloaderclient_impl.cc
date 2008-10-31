@@ -14,6 +14,8 @@
 #include "Element.h"
 #include "HistoryItem.h"
 #include "HTMLFormElement.h"  // needed by FormState.h
+#include "HTMLInputElement.h"
+#include "HTMLNames.h"
 #include "FormState.h"
 #include "FrameLoader.h"
 #include "FrameLoadRequest.h"
@@ -37,8 +39,9 @@
 #if defined(OS_WIN)
 #include "webkit/activex_shim/activex_shared.h"
 #endif
-#include "webkit/glue/webframeloaderclient_impl.h"
 #include "webkit/glue/alt_404_page_resource_fetcher.h"
+#include "webkit/glue/autocomplete_input_listener.h"
+#include "webkit/glue/form_autocomplete_listener.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/plugins/plugin_list.h"
@@ -46,6 +49,7 @@
 #include "webkit/glue/webdatasource_impl.h"
 #include "webkit/glue/webdocumentloader_impl.h"
 #include "webkit/glue/weberror_impl.h"
+#include "webkit/glue/webframeloaderclient_impl.h"
 #include "webkit/glue/webhistoryitem_impl.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webplugin_impl.h"
@@ -371,12 +375,28 @@ void WebFrameLoaderClient::dispatchDidFinishDocumentLoad() {
       if (!form->autoComplete())
         continue;
 
+      std::set<std::wstring> password_related_fields;
       scoped_ptr<PasswordForm> data(
           PasswordFormDomManager::CreatePasswordForm(form));
-      if (data.get())
+      if (data.get()) {
         actions.push_back(*data);
+        // Let's remember the names of password related fields so we do not
+        // autofill them with the regular form autofill.
+        DCHECK(!data->username_element.empty());
+        DCHECK(!data->password_element.empty());
+        password_related_fields.insert(data->username_element);
+        password_related_fields.insert(data->password_element);
+        if (!data->old_password_element.empty())
+          password_related_fields.insert(data->old_password_element);
+      }
+
+      // Now let's register for any text input.
+      // TODO(jcampan): bug #3847 merge password and form autofill so we
+      // traverse the form elements only once.
+      ResgiterAutofillListeners(form, password_related_fields);
     }
   }
+
   if (d && (actions.size() > 0)) 
     d->OnPasswordFormsSeen(webview, actions);
   if (d)
@@ -698,6 +718,38 @@ NavigationGesture WebFrameLoaderClient::NavigationGestureForLastLoad() {
   return webframe_->frame()->loader()->userGestureHint() ? 
       NavigationGestureUnknown : 
       NavigationGestureAuto;
+}
+
+void WebFrameLoaderClient::ResgiterAutofillListeners(
+    WebCore::HTMLFormElement* form,
+    const std::set<std::wstring>& excluded_fields) {
+
+  WebViewDelegate* webview_delegate = webframe_->webview_impl()->delegate();
+  if (!webview_delegate)
+    return;
+
+  for (size_t i = 0; i < form->formElements.size(); i++) {
+    WebCore::HTMLGenericFormElement* form_element = form->formElements[i];
+    if (!form_element->hasLocalName(WebCore::HTMLNames::inputTag))
+      continue;
+
+    WebCore::HTMLInputElement* input_element =
+        static_cast<WebCore::HTMLInputElement*>(form_element);
+    if (!input_element->isEnabled() || !input_element->isTextField() ||
+        input_element->inputType() ==  HTMLInputElement::PASSWORD ||
+        !input_element->autoComplete()) {
+      continue;
+    }
+
+    std::wstring name = webkit_glue::StringToStdWString(input_element->name());
+    if (excluded_fields.find(name) != excluded_fields.end())
+      continue;
+
+    webkit_glue::FormAutocompleteListener* listener =
+        new webkit_glue::FormAutocompleteListener(webview_delegate,
+                                                  input_element);
+    webkit_glue::AttachForInlineAutocomplete(input_element, listener);
+  }
 }
 
 void WebFrameLoaderClient::dispatchDidReceiveTitle(const String& title) {

@@ -252,7 +252,7 @@ class WebContents : public TabContents,
   virtual RenderViewHostDelegate::Save* GetSaveDelegate() const;
   virtual Profile* GetProfile() const;
   virtual void CreateView(int route_id, HANDLE modal_dialog_event);
-  virtual void CreateWidget(int route_id);
+  virtual void CreateWidget(int route_id, bool focus_on_show);
   virtual void ShowView(int route_id,
                         WindowOpenDisposition disposition,
                         const gfx::Rect& initial_pos,
