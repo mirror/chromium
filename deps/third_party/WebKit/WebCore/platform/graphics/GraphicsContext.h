@@ -306,32 +306,11 @@ namespace WebCore {
 #endif
 
 #if PLATFORM(SKIA)
-        /** platform-specific factory method to return a bitmap graphicscontext,
-            called by <canvas> when we need to draw offscreen. The caller is
-            responsible for deleting the pointer.
-        */
-        static GraphicsContext* createOffscreenContext(int width, int height);
-
-        /** Called with a context returned by createOffscreenContext. Draw the underlying
-            bitmap to the current context. Similar to drawImage(), but this hides how
-            to extract the bitmap from ctx from the portable code.
-            If srcRect is NULL, it is assumed that we want to draw the entire bitmap represented
-            by the GraphicsContext.
-        */
-        void drawOffscreenContext(GraphicsContext* ctx, const WebCore::FloatRect*, const WebCore::FloatRect&);
-
-        /** Return the clip bounds in local coordinates. It can be an approximation, as long as
-            the returned bounds completely enclose the actual clip.
-        */
-        FloatRect getClipLocalBounds() const;
         FloatRect getBoundingBoxForCurrentPath(bool includStroke = false) const;
 
         /** Determines if a given point is contained in a path stroked with the current style
         */
         bool strokeContains(const Path&, const FloatPoint&) const;
-
-        // FIXME: This hack should be removed.
-        void setShouldDelete(bool should_delete);
 #endif
 
     private:
