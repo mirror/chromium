@@ -635,10 +635,6 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // out of date responses.
   int form_field_autofill_request_id_;
 
-  // The id of the last request sent for form field autofill.  Used to ignore
-  // out of date responses.
-  int form_field_autofill_request_id_;
-
   DISALLOW_EVIL_CONSTRUCTORS(RenderView);
 };
 
