@@ -2259,6 +2259,9 @@ WebHistoryItem* RenderView::GetHistoryEntryAtOffset(int offset) {
 }
 
 void RenderView::GoToEntryAtOffsetAsync(int offset) {
+  history_back_list_count_ += offset;
+  history_forward_list_count_ -= offset;
+
   Send(new ViewHostMsg_GoToEntryAtOffset(routing_id_, offset));
 }
 
@@ -2597,6 +2600,11 @@ void RenderView::TransitionToCommittedForNewPage() {
 #ifdef CHROME_PERSONALIZATION
   Personalization::HandleTransitionToCommittedForNewPage(personalization_);
 #endif
+}
+
+void RenderView::DidAddHistoryItem() {
+  history_back_list_count_++;
+  history_forward_list_count_ = 0;
 }
 
 void RenderView::OnMessageFromExternalHost(
