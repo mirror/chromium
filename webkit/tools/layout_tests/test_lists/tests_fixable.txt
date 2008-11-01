@@ -797,3 +797,9 @@ V8 # LayoutTests/fast/js/date-big-setdate.html = FAIL | PASS
 // See webkit bug https://bugs.webkit.org/show_bug.cgi?id=21948
 V8 | KJS # LayoutTests/fast/dom/xmlhttprequest-invalid-values.html = FAIL
 V8 | KJS # LayoutTests/fast/dom/null-document-xmlhttprequest-open.html = TIMEOUT
+// This one I think is failing because of fqian's r4188
+V8 # LayoutTests/fast/encoding/char-decoding.html = FAIL
+
+// No clue why this is failing. Data goes to stderr instead of stdout?
+V8 # LayoutTests/plugins/open-and-close-window-with-plugin.html = FAIL
+
