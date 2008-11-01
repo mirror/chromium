@@ -171,8 +171,9 @@ TEST_F(InteractiveConstrainedWindowTest, DontSpawnEndlessPopups) {
   // true; if we don't, the resulting popup will be constrained, which
   // isn't what we want to test.
   POINT link_point(tab_view_bounds.CenterPoint().ToPOINT());
-  ASSERT_TRUE(window->SimulateOSClick(link_point,
-                                      views::Event::EF_LEFT_BUTTON_DOWN));
+  // Commented out on the release branch: views:: not ported.
+  // ASSERT_TRUE(window->SimulateOSClick(link_point,
+  //                                    views::Event::EF_LEFT_BUTTON_DOWN));
 
   ASSERT_TRUE(automation()->WaitForWindowCountToBecome(2, 1000));
 
