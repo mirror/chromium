@@ -385,6 +385,10 @@ class RenderViewHost : public RenderWidgetHost {
   void ForwardMessageFromExternalHost(const std::string& target,
                                       const std::string& message);
 
+  // Message the renderer that we should be counted as a new document and not
+  // as a popup.
+  void DisassociateFromPopupCount();
+
  protected:
   // Overridden from RenderWidgetHost:
   virtual void UnhandledInputEvent(const WebInputEvent& event);
@@ -584,4 +588,3 @@ class RenderViewHostFactory {
 };
 
 #endif  // CHROME_BROWSER_RENDER_VIEW_HOST_H__
-
