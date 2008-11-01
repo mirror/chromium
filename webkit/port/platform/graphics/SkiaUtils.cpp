@@ -36,6 +36,10 @@
 #include "SkMatrix.h"
 #include "SkRegion.h"
 
+#include "base/basictypes.h"
+#if defined(OS_WIN)
+#include "base/gfx/gdi_util.h"
+#endif
 void WebCorePointToSkiaPoint(const WebCore::IntPoint& src, SkPoint* dst)
 {
     dst->set(SkIntToScalar(src.x()), SkIntToScalar(src.y()));

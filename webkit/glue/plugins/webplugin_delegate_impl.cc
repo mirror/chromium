@@ -9,6 +9,7 @@
 
 #include "base/file_util.h"
 #include "base/message_loop.h"
+#include "base/gfx/gdi_util.h"
 #include "base/gfx/point.h"
 #include "base/stats_counters.h"
 #include "base/string_util.h"
@@ -268,13 +269,15 @@ void WebPluginDelegateImpl::DestroyInstance() {
   }
 }
 
-void WebPluginDelegateImpl::UpdateGeometry(const gfx::Rect& window_rect,
-                                           const gfx::Rect& clip_rect,
-                                           bool visible) {
+void WebPluginDelegateImpl::UpdateGeometry(
+    const gfx::Rect& window_rect,
+    const gfx::Rect& clip_rect,
+    const std::vector<gfx::Rect>& cutout_rects,
+    bool visible) {
   if (windowless_) {
     WindowlessUpdateGeometry(window_rect, clip_rect);
   } else {
-    WindowedUpdateGeometry(window_rect, clip_rect, visible);
+    WindowedUpdateGeometry(window_rect, clip_rect, cutout_rects, visible);
   }
 
   // Initiate a download on the plugin url. This should be done for the
@@ -362,10 +365,12 @@ void WebPluginDelegateImpl::InstallMissingPlugin() {
   instance()->NPP_HandleEvent(&evt);
 }
 
-void WebPluginDelegateImpl::WindowedUpdateGeometry(const gfx::Rect& window_rect,
-                                                   const gfx::Rect& clip_rect,
-                                                   bool visible) {
-  if (WindowedReposition(window_rect, clip_rect, visible) ||
+void WebPluginDelegateImpl::WindowedUpdateGeometry(
+    const gfx::Rect& window_rect,
+    const gfx::Rect& clip_rect,
+    const std::vector<gfx::Rect>& cutout_rects,
+    bool visible) {
+  if (WindowedReposition(window_rect, clip_rect, cutout_rects, visible) ||
       !windowed_did_set_window_) {
     // Let the plugin know that it has been moved
     WindowedSetWindow();
@@ -617,14 +622,17 @@ bool WebPluginDelegateImpl::CreateDummyWindowForActivation() {
   return true;
 }
 
-void WebPluginDelegateImpl::MoveWindow(HWND window,
-                                       const gfx::Rect& window_rect,
-                                       const gfx::Rect& clip_rect,
-                                       bool visible) {
+void WebPluginDelegateImpl::MoveWindow(
+    HWND window,
+    const gfx::Rect& window_rect,
+    const gfx::Rect& clip_rect,
+    const std::vector<gfx::Rect>& cutout_rects,
+    bool visible) {
   HRGN hrgn = ::CreateRectRgn(clip_rect.x(),
                               clip_rect.y(),
                               clip_rect.right(),
                               clip_rect.bottom());
+  gfx::SubtractRectanglesFromRegion(hrgn, cutout_rects);
 
   // Note: System will own the hrgn after we call SetWindowRgn,
   // so we don't need to call DeleteObject(hrgn)
@@ -645,20 +653,24 @@ void WebPluginDelegateImpl::MoveWindow(HWND window,
                  flags);
 }
 
-bool WebPluginDelegateImpl::WindowedReposition(const gfx::Rect& window_rect,
-                                               const gfx::Rect& clip_rect,
-                                               bool visible) {
+bool WebPluginDelegateImpl::WindowedReposition(
+    const gfx::Rect& window_rect,
+    const gfx::Rect& clip_rect,
+    const std::vector<gfx::Rect>& cutout_rects,
+    bool visible) {
   if (!windowed_handle_) {
     NOTREACHED();
     return false;
   }
 
   if (window_rect_ == window_rect && clip_rect_ == clip_rect &&
+      cutout_rects == cutout_rects_ &&
       initial_plugin_resize_done_)
     return false;
 
   window_rect_ = window_rect;
   clip_rect_ = clip_rect;
+  cutout_rects_ = cutout_rects;
 
   if (!initial_plugin_resize_done_) {
     // We need to ensure that the plugin process continues to reposition
@@ -669,7 +681,7 @@ bool WebPluginDelegateImpl::WindowedReposition(const gfx::Rect& window_rect,
     // We created the window with 0 width and height since we didn't know it
     // at the time.  Now that we know the geometry, we we can update its size
     // since the browser only calls SetWindowPos when scrolling occurs.
-    MoveWindow(windowed_handle_, window_rect, clip_rect, visible);
+    MoveWindow(windowed_handle_, window_rect, clip_rect, cutout_rects, visible);
     // Ensure that the entire window gets repainted.
     ::InvalidateRect(windowed_handle_, NULL, FALSE);
   }
@@ -835,6 +847,7 @@ void WebPluginDelegateImpl::WindowlessUpdateGeometry(
 
   // We will inform the instance of this change when we call NPP_SetWindow.
   clip_rect_ = clip_rect;
+  cutout_rects_.clear();
 
   if (window_rect_ != window_rect) {
     window_rect_ = window_rect;
