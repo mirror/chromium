@@ -5,6 +5,7 @@
 #include <string>
 #include <windows.h>
 #include <msi.h>
+#include <shlobj.h>
 
 #include "base/at_exit.h"
 #include "base/basictypes.h"
@@ -13,6 +14,7 @@
 #include "base/path_service.h"
 #include "base/registry.h"
 #include "base/string_util.h"
+#include "base/win_util.h"
 #include "chrome/installer/setup/setup.h"
 #include "chrome/installer/setup/setup_constants.h"
 #include "chrome/installer/setup/uninstall.h"
@@ -253,17 +255,17 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
 installer_util::InstallStatus UninstallChrome(const CommandLine& cmd_line,
                                               const installer::Version* version,
                                               bool system_install) {
-  bool remove_all = true;
-  if (cmd_line.HasSwitch(installer_util::switches::kDoNotRemoveSharedItems))
-    remove_all = false;
   LOG(INFO) << "Uninstalling Chome";
   if (!version) {
     LOG(ERROR) << "No Chrome installation found for uninstall.";
     return installer_util::CHROME_NOT_INSTALLED;
-  } else {
-    return installer_setup::UninstallChrome(cmd_line.program(), system_install,
-                                            *version, remove_all);
   }
+
+  bool remove_all = !cmd_line.HasSwitch(
+      installer_util::switches::kDoNotRemoveSharedItems);
+  bool force = cmd_line.HasSwitch(installer_util::switches::kForceUninstall);
+  return installer_setup::UninstallChrome(cmd_line.program(), system_install,
+                                          *version, remove_all, force);
 }
 }  // namespace
 
@@ -272,9 +274,6 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                     wchar_t* command_line, int show_command) {
   // The exit manager is in charge of calling the dtors of singletons.
   base::AtExitManager exit_manager;
-
-  CommandLine parsed_command_line;
-  installer::InitInstallerLogging(parsed_command_line);
 
   // Check to make sure current system is WinXP or later. If not, log
   // error message and get out.
@@ -289,8 +288,10 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
     return installer_util::OS_ERROR;
   }
 
+  CommandLine parsed_command_line;
+  installer::InitInstallerLogging(parsed_command_line);
   bool system_install =
-      parsed_command_line.HasSwitch(installer_util::switches::kSystemInstall);
+      parsed_command_line.HasSwitch(installer_util::switches::kSystemLevel);
   LOG(INFO) << "system install is " << system_install;
 
   // Check to avoid simultaneous per-user and per-machine installs.
@@ -302,14 +303,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
     return system_install ? installer_util::USER_LEVEL_INSTALL_EXISTS :
                             installer_util::MACHINE_LEVEL_INSTALL_EXISTS;
   }
-
-  // Check the existing version installed.
-  scoped_ptr<installer::Version>
-      installed_version(InstallUtil::GetChromeVersion(system_install));
-  if (installed_version.get()) {
-    LOG(INFO) << "version on the system: " << installed_version->GetString();
-  }
-
+  
   // If --register-chrome-browser option is specified, register all
   // Chrome protocol/file associations as well as register it as a valid
   // browser for StarMenu->Internet shortcut. This option should only
@@ -320,6 +314,23 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
     std::wstring chrome_exe(parsed_command_line.GetSwitchValue(
         installer_util::switches::kRegisterChromeBrowser));
     return ShellUtil::AddChromeToSetAccessDefaults(chrome_exe, true);
+  }
+
+  if (system_install &&
+      win_util::GetWinVersion() == win_util::WINVERSION_VISTA &&
+      !IsUserAnAdmin()) {
+    std::wstring exe = parsed_command_line.program();
+    std::wstring params(command_line);
+    DWORD exit_code = installer_util::UNKNOWN_STATUS;
+    InstallUtil::ExecuteExeAsAdmin(exe, params, &exit_code);
+    return exit_code;
+  }
+
+  // Check the existing version installed.
+  scoped_ptr<installer::Version>
+      installed_version(InstallUtil::GetChromeVersion(system_install));
+  if (installed_version.get()) {
+    LOG(INFO) << "version on the system: " << installed_version->GetString();
   }
 
   installer_util::InstallStatus install_status = installer_util::UNKNOWN_STATUS;
