@@ -26,6 +26,7 @@
 #include "chrome/renderer/render_widget.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/dom_serializer_delegate.h"
+#include "webkit/glue/glue_accessibility.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview.h"
 
@@ -422,6 +423,9 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   void OnEnableViewSourceMode();
   void OnUpdateBackForwardListCount(int back_list_count,
                                     int forward_list_count);
+  void OnGetAccessibilityInfo(const ViewMsg_Accessibility_In_Params& in_params,
+                              ViewHostMsg_Accessibility_Out_Params* out_params);
+  void OnClearAccessibilityInfo(int iaccessible_id, bool clear_all);
 
   // Checks if the RenderView should close, runs the beforeunload handler and
   // sends ViewMsg_ShouldClose to the browser.
@@ -622,6 +626,14 @@ class RenderView : public RenderWidget, public WebViewDelegate,
 
   // True if the page has any frame-level unload or beforeunload listeners.
   bool has_unload_listener_;
+
+  // Handles accessibility requests into the renderer side, as well as
+  // maintains the cache and other features of the accessibility tree.
+  scoped_ptr<GlueAccessibility> glue_accessibility_;
+
+  // The id of the last request sent for form field autofill.  Used to ignore
+  // out of date responses.
+  int form_field_autofill_request_id_;
 
   // The id of the last request sent for form field autofill.  Used to ignore
   // out of date responses.
