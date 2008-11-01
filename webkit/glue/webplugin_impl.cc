@@ -180,9 +180,10 @@ void WebPluginContainer::detachFromWindow() {
   hide();
 }
 
-void WebPluginContainer::windowCutoutRects(WTF::Vector<WebCore::IntRect>*
+void WebPluginContainer::windowCutoutRects(const WebCore::IntRect& bounds,
+                                           WTF::Vector<WebCore::IntRect>*
                                            cutouts) const {
-  impl_->windowCutoutRects(cutouts);
+  impl_->windowCutoutRects(bounds, cutouts);
 }
 
 void WebPluginContainer::didReceiveResponse(
@@ -537,6 +538,7 @@ WebCore::IntRect WebPluginImpl::windowClipRect() const {
 }
 
 void WebPluginImpl::windowCutoutRects(
+    const WebCore::IntRect& bounds,
     WTF::Vector<WebCore::IntRect>* cutouts) const {
   WebCore::RenderObject* plugin_node = element_->renderer();
   ASSERT(plugin_node);
@@ -546,7 +548,7 @@ void WebPluginImpl::windowCutoutRects(
   StackingOrderIterator iterator;
   WebCore::RenderLayer* root = element_->document()->renderer()->
                                enclosingLayer();
-  iterator.Reset(root);
+  iterator.Reset(bounds, root);
 
   while (WebCore::RenderObject* ro = iterator.Next()) {
     if (ro == plugin_node) {
@@ -1051,7 +1053,7 @@ void WebPluginImpl::CalculateBounds(const WebCore::IntRect& frame_rect,
 
   cutout_rects->clear();
   WTF::Vector<WebCore::IntRect> rects;
-  widget_->windowCutoutRects(&rects);
+  widget_->windowCutoutRects(frame_rect, &rects);
   // Convert to gfx::Rect and subtract out the plugin position.
   for (size_t i = 0; i < rects.size(); i++) {
     gfx::Rect r(rects[i]);
