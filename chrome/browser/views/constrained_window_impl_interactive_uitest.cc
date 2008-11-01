@@ -170,8 +170,8 @@ TEST_F(InteractiveConstrainedWindowTest, DontSpawnEndlessPopups) {
   // Simulate a click of the actual link to force user_gesture to be
   // true; if we don't, the resulting popup will be constrained, which
   // isn't what we want to test.
-  POINT link_point(tab_view_bounds.CenterPoint().ToPOINT());
   // Commented out on the release branch: views:: not ported.
+  // POINT link_point(tab_view_bounds.CenterPoint().ToPOINT());
   // ASSERT_TRUE(window->SimulateOSClick(link_point,
   //                                    views::Event::EF_LEFT_BUTTON_DOWN));
 
