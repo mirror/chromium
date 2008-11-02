@@ -288,7 +288,7 @@ void DownloadItemTabView::LayoutComplete() {
 
   // File name and URL
   CSize file_name_size;
-  file_name_->SetText(model_->file_name());
+  file_name_->SetText(model_->GetFileName());
   file_name_->GetPreferredSize(&file_name_size);
   file_name_->SetBounds(dx, download_util::kBigProgressIconOffset,
                         std::min(kFilenameSize,
@@ -341,7 +341,7 @@ void DownloadItemTabView::LayoutCancelled() {
 
   // File name and URL, truncated to show cancelled status
   CSize file_name_size;
-  file_name_->SetText(model_->file_name());
+  file_name_->SetText(model_->GetFileName());
   file_name_->GetPreferredSize(&file_name_size);
   file_name_->SetBounds(dx, download_util::kBigProgressIconOffset,
                         kFilenameSize - kProgressSize - kSpacer,
