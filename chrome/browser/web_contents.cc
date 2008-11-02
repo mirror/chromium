@@ -1535,6 +1535,10 @@ void WebContents::HandleKeyboardEvent(const WebKeyboardEvent& event) {
 
 GURL WebContents::GetAlternateErrorPageURL() const {
   GURL url;
+  // Disable alternate error pages when in OffTheRecord/Incognito mode.
+  if (profile()->IsOffTheRecord())
+    return url;
+
   PrefService* prefs = profile()->GetPrefs();
   DCHECK(prefs);
   if (prefs->GetBoolean(prefs::kAlternateErrorPagesEnabled)) {
