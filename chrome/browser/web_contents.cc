@@ -14,6 +14,7 @@
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/dom_operation_notification_details.h"
 #include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/find_in_page_controller.h"
 #include "chrome/browser/find_notification_details.h"
 #include "chrome/browser/google_util.h"
@@ -1699,6 +1700,18 @@ void WebContents::OnDidGetApplicationInfo(
       info, pending_install_.title, pending_install_.url, pending_install_.icon,
       NewCallback(pending_install_.callback_functor,
                   &GearsCreateShortcutCallbackFunctor::Run));
+}
+
+void WebContents::OnEnterOrSpace() {
+  // See comment in RenderViewHostDelegate::OnEnterOrSpace as to why we do this.
+  DownloadRequestManager* drm = g_browser_process->download_request_manager();
+  if (drm)
+    drm->OnUserGesture(this);
+}
+
+// Stupid pass-through for RenderViewHostDelegate.
+void WebContents::HandleKeyboardEvent(const WebKeyboardEvent& event) {
+  view_->HandleKeyboardEvent(event);
 }
 
 void WebContents::FileSelected(const std::wstring& path, void* params) {

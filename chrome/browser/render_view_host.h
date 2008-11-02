@@ -392,6 +392,7 @@ class RenderViewHost : public RenderWidgetHost {
  protected:
   // Overridden from RenderWidgetHost:
   virtual void UnhandledInputEvent(const WebInputEvent& event);
+  virtual void ForwardKeyboardEvent(const WebKeyboardEvent& key_event);
 
   // IPC message handlers:
   void OnMsgCreateView(int route_id, HANDLE modal_dialog_event);

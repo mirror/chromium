@@ -355,6 +355,7 @@ class WebContents : public TabContents,
   virtual void OnDidGetApplicationInfo(
       int32 page_id,
       const webkit_glue::WebApplicationInfo& info);
+  virtual void OnEnterOrSpace();
 
   // SelectFileDialog::Listener ------------------------------------------------
 
