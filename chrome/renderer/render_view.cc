@@ -156,7 +156,6 @@ RenderView::RenderView()
     disable_popup_blocking_(false),
     has_unload_listener_(false),
     greasemonkey_enabled_(false),
-    has_unload_listener_(false),
     decrement_shared_popup_at_destruction_(false),
     form_field_autofill_request_id_(0) {
   resource_dispatcher_ = new ResourceDispatcher(this);

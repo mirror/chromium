@@ -2136,10 +2136,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\interstitial_page.cc"
-			>
-		</File>
-		<File
 			RelativePath=".\modal_html_dialog_delegate.cc"
 			>
 		</File>
