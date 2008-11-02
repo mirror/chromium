@@ -665,6 +665,9 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // maintains the cache and other features of the accessibility tree.
   scoped_ptr<GlueAccessibility> glue_accessibility_;
 
+  // True if Greasemonkey is enabled in this process.
+  bool greasemonkey_enabled_;
+
   // The id of the last request sent for form field autofill.  Used to ignore
   // out of date responses.
   int form_field_autofill_request_id_;

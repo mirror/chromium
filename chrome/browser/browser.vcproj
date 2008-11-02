@@ -2124,6 +2124,19 @@
 		</File>
 		<File
 			RelativePath=".\interstitial_page_delegate.h"
+
+			>
+		</File>
+		<File
+			RelativePath=".\greasemonkey_master.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\greasemonkey_master.h"
+			>
+		</File>
+		<File
+			RelativePath=".\interstitial_page.cc"
 			>
 		</File>
 		<File
