@@ -1283,65 +1283,6 @@ TEST_F(NavigationControllerTest, Interstitial) {
             contents->controller()->GetLastCommittedEntry()->page_type());
 }
 
-TEST_F(NavigationControllerTest, RemoveEntry) {
-  const GURL url1(scheme1() + ":foo1");
-  const GURL url2(scheme1() + ":foo2");
-  const GURL url3(scheme1() + ":foo3");
-  const GURL url4(scheme1() + ":foo4");
-  const GURL url5(scheme1() + ":foo5");
-  const GURL pending_url(scheme1() + ":pending");
-  const GURL default_url(scheme1() + ":default");
-
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
-  contents->CompleteNavigationAsRenderer(0, url1);
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
-  contents->CompleteNavigationAsRenderer(1, url2);
-  contents->controller()->LoadURL(url3, PageTransition::TYPED);
-  contents->CompleteNavigationAsRenderer(2, url3);
-  contents->controller()->LoadURL(url4, PageTransition::TYPED);
-  contents->CompleteNavigationAsRenderer(3, url4);
-  contents->controller()->LoadURL(url5, PageTransition::TYPED);
-  contents->CompleteNavigationAsRenderer(4, url5);
-
-  // Remove the last entry.
-  contents->controller()->RemoveEntryAtIndex(
-      contents->controller()->GetEntryCount() - 1, default_url);
-  EXPECT_EQ(4, contents->controller()->GetEntryCount());
-  EXPECT_EQ(3, contents->controller()->GetLastCommittedEntryIndex());
-  NavigationEntry* pending_entry = contents->controller()->GetPendingEntry();
-  EXPECT_TRUE(pending_entry && pending_entry->url() == url4);
-
-  // Add a pending entry.
-  contents->controller()->LoadURL(pending_url, PageTransition::TYPED);
-  // Now remove the last entry.
-  contents->controller()->RemoveEntryAtIndex(
-      contents->controller()->GetEntryCount() - 1, default_url);
-  // The pending entry should have been discarded and the last committed entry
-  // removed.
-  EXPECT_EQ(3, contents->controller()->GetEntryCount());
-  EXPECT_EQ(2, contents->controller()->GetLastCommittedEntryIndex());
-  pending_entry = contents->controller()->GetPendingEntry();
-  EXPECT_TRUE(pending_entry && pending_entry->url() == url3);
-
-  // Remove an entry which is not the last committed one.
-  contents->controller()->RemoveEntryAtIndex(0, default_url);
-  EXPECT_EQ(2, contents->controller()->GetEntryCount());
-  EXPECT_EQ(1, contents->controller()->GetLastCommittedEntryIndex());
-  // No navigation should have been initiated since we did not remove the
-  // current entry.
-  EXPECT_FALSE(contents->controller()->GetPendingEntry());
-
-  // Remove the 2 remaining entries.
-  contents->controller()->RemoveEntryAtIndex(1, default_url);
-  contents->controller()->RemoveEntryAtIndex(0, default_url);
-
-  // This should have created a pending default entry.
-  EXPECT_EQ(0, contents->controller()->GetEntryCount());
-  EXPECT_EQ(-1, contents->controller()->GetLastCommittedEntryIndex());
-  pending_entry = contents->controller()->GetPendingEntry();
-  EXPECT_TRUE(pending_entry && pending_entry->url() == default_url);
-}
-
 // Tests that IsInPageNavigation returns appropriate results.  Prevents
 // regression for bug 1126349.
 TEST_F(NavigationControllerTest, IsInPageNavigation) {
