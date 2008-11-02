@@ -539,7 +539,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   MetricsService* metrics = NULL;
   if (!parsed_command_line.HasSwitch(switches::kDisableMetrics)) {
-    if (parsed_command_line.HasSwitch(switches::kDisableMetricsReporting)) {
+    if (parsed_command_line.HasSwitch(switches::kMetricsRecordingOnly)) {
       local_state->transient()->SetBoolean(prefs::kMetricsReportingEnabled,
                                            false);
     }
@@ -579,7 +579,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   }
 
   if (metrics)
-    metrics->SetRecording(false);  // Force persistent save.
+    metrics->Stop();
 
   // browser_shutdown takes care of deleting browser_process, so we need to
   // release it.
