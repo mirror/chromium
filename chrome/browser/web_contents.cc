@@ -1709,11 +1709,6 @@ void WebContents::OnEnterOrSpace() {
     drm->OnUserGesture(this);
 }
 
-// Stupid pass-through for RenderViewHostDelegate.
-void WebContents::HandleKeyboardEvent(const WebKeyboardEvent& event) {
-  view_->HandleKeyboardEvent(event);
-}
-
 void WebContents::FileSelected(const std::wstring& path, void* params) {
   render_view_host()->FileSelected(path);
 }
