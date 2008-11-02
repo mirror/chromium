@@ -278,6 +278,22 @@
 			>
 		</File>
 		<File
+			RelativePath="..\field_trial.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\field_trial.h"
+			>
+		</File>
+		<File
+			RelativePath="..\file_path.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\file_path.h"
+			>
+		</File>
+		<File
 			RelativePath="..\file_util.cc"
 			>
 		</File>
@@ -535,6 +551,10 @@
 		</File>
 		<File
 			RelativePath="..\process_util_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\process_win.cc"
 			>
 		</File>
 		<File

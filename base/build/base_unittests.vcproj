@@ -184,6 +184,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\directory_watcher_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\field_trial_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\file_path_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\file_util_unittest.cc"
 				>
 			</File>

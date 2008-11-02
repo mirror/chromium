@@ -24,6 +24,7 @@
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
+#include "chrome/browser/browser_trial.h"
 #include "chrome/browser/cert_store.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/first_run.h"
@@ -238,7 +239,7 @@ bool CheckMachineLevelInstall() {
     std::transform(user_exe_path.begin(), user_exe_path.end(),
                    user_exe_path.begin(), tolower);
     if (exe == user_exe_path) {
-      const std::wstring text = 
+      const std::wstring text =
           l10n_util::GetString(IDS_MACHINE_LEVEL_INSTALL_CONFLICT);
       const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
       const UINT flags = MB_OK | MB_ICONERROR | MB_TOPMOST;
@@ -280,6 +281,9 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   MessageLoop main_message_loop(MessageLoop::TYPE_UI);
 
+  // Initialize statistical testing infrastructure.
+  FieldTrialList field_trial;
+
   std::wstring app_name = chrome::kBrowserAppName;
   std::string thread_name_string = WideToASCII(app_name + L"_BrowserMain");
 
@@ -317,7 +321,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   bool is_first_run = FirstRun::IsChromeFirstRun() ||
       parsed_command_line.HasSwitch(switches::kFirstRun);
-  bool first_run_ui_bypass = false; 
+  bool first_run_ui_bypass = false;
 
   // Initialize ResourceBundle which handles files loaded from external
   // sources. This has to be done before uninstall code path and before prefs
@@ -336,7 +340,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
       local_state->SetBoolean(prefs::kMetricsReportingEnabled, true);
     // On first run, we  need to process the master preferences before the
     // browser's profile_manager object is created.
-    FirstRun::MasterPrefResult master_pref_res = 
+    FirstRun::MasterPrefResult master_pref_res =
         FirstRun::ProcessMasterPreferences(user_data_dir, std::wstring());
     first_run_ui_bypass =
         (master_pref_res == FirstRun::MASTER_PROFILE_NO_FIRST_RUN_UI);
@@ -502,7 +506,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   ShellIntegration::VerifyInstallation();
 
   browser_process->InitBrokerServices(broker_services);
-  
+
   // In unittest mode, this will do nothing.  In normal mode, this will create
   // the global GoogleURLTracker instance, which will promptly go to sleep for
   // five seconds (to avoid slowing startup), and wake up afterwards to see if
@@ -541,8 +545,20 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
     }
     metrics = browser_process->metrics_service();
     DCHECK(metrics);
-    // Start user experience metrics recording, if enabled.
-    metrics->SetRecording(local_state->GetBoolean(prefs::kMetricsIsRecording));
+
+    // If we're testing then we don't care what the user preference is, we turn
+    // on recording, but not reporting, otherwise tests fail.
+    if (parsed_command_line.HasSwitch(switches::kMetricsRecordingOnly)) {
+      metrics->StartRecordingOnly();
+    } else {
+      // If the user permits metrics reporting with the checkbox in the
+      // prefs, we turn on recording.
+      bool enabled = local_state->GetBoolean(prefs::kMetricsReportingEnabled);
+
+      metrics->SetUserPermitsUpload(enabled);
+      if (enabled)
+        metrics->Start();
+    }
   }
   InstallJankometer(parsed_command_line);
 
