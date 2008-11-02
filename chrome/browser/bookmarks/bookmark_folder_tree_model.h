@@ -9,12 +9,12 @@
 #include "chrome/views/tree_node_model.h"
 
 // The type of nodes created by BookmarkFolderTreeModel.
-typedef views::TreeNodeWithValue<BookmarkNode*> FolderNode;
+typedef ChromeViews::TreeNodeWithValue<BookmarkNode*> FolderNode;
 
 // TreeModel implementation that shows the folders from the BookmarkModel.
 // The root node contains the following nodes:
 // bookmark bar, other folders, recently bookmarked and search.
-class BookmarkFolderTreeModel : public views::TreeNodeModel<FolderNode>,
+class BookmarkFolderTreeModel : public ChromeViews::TreeNodeModel<FolderNode>,
                                 public BookmarkModelObserver {
  public:
   // Type of the node.
@@ -30,19 +30,19 @@ class BookmarkFolderTreeModel : public views::TreeNodeModel<FolderNode>,
   ~BookmarkFolderTreeModel();
 
   // The tree is not editable.
-  virtual void SetTitle(views::TreeModelNode* node, const std::wstring& title) {
+  virtual void SetTitle(ChromeViews::TreeModelNode* node, const std::wstring& title) {
     NOTREACHED();
   }
 
   // Returns the type of the specified node.
-  NodeType GetNodeType(views::TreeModelNode* node);
+  NodeType GetNodeType(ChromeViews::TreeModelNode* node);
 
   // Returns the FolderNode for the specified BookmarkNode.
   FolderNode* GetFolderNodeForBookmarkNode(BookmarkNode* node);
 
   // Converts the tree node into a BookmarkNode. Returns NULL if |node| is NULL
   // or not of NodeType::BOOKMARK.
-  BookmarkNode* TreeNodeAsBookmarkNode(views::TreeModelNode* node);
+  BookmarkNode* TreeNodeAsBookmarkNode(ChromeViews::TreeModelNode* node);
 
   // Returns the search node.
   FolderNode* search_node() const { return search_node_; }

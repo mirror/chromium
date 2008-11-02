@@ -9,7 +9,7 @@
 #include "generated_resources.h"
 
 BookmarkFolderTreeModel::BookmarkFolderTreeModel(BookmarkModel* model)
-    : views::TreeNodeModel<FolderNode>(new FolderNode(NULL)),
+    : ChromeViews::TreeNodeModel<FolderNode>(new FolderNode(NULL)),
       model_(model),
       recently_bookmarked_node_(new FolderNode(NULL)),
       search_node_(new FolderNode(NULL)){
@@ -28,7 +28,7 @@ BookmarkFolderTreeModel::~BookmarkFolderTreeModel() {
 }
 
 BookmarkFolderTreeModel::NodeType BookmarkFolderTreeModel::GetNodeType(
-    views::TreeModelNode* node) {
+    ChromeViews::TreeModelNode* node) {
   if (node == recently_bookmarked_node_)
     return RECENTLY_BOOKMARKED;
   if (node == search_node_)
@@ -45,7 +45,7 @@ FolderNode* BookmarkFolderTreeModel::GetFolderNodeForBookmarkNode(
 }
 
 BookmarkNode* BookmarkFolderTreeModel::TreeNodeAsBookmarkNode(
-    views::TreeModelNode* node) {
+    ChromeViews::TreeModelNode* node) {
   if (GetNodeType(node) != BOOKMARK)
     return NULL;
   return AsNode(node)->value;
