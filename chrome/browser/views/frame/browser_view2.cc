@@ -972,6 +972,7 @@ int BrowserView2::LayoutDownloadShelf() {
     CSize ps;
     active_download_shelf_->GetPreferredSize(&ps);
     active_download_shelf_->SetBounds(0, bottom - ps.cy, width(), ps.cy);
+		active_download_shelf_->Layout();
     bottom -= ps.cy;
   }
   return bottom;
