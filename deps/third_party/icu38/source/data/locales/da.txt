@@ -1321,7 +1321,7 @@ da{
         bua{"buriatisk"}
         bug{"buginesisk"}
         byn{"blin"}
-        ca{"katalansk"}
+        ca{"catalansk"}
         cad{"caddo"}
         cai{"mellemamerikansk indiansk sprog"}
         car{"caribisk"}

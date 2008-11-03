@@ -54,13 +54,13 @@
 #
 
 $AI = [:LineBreak =  Ambiguous:];
-$AL = [:LineBreak =  Alphabetic:];
+$AL = [[:LineBreak =  Alphabetic:] - [\u23b5]];
 $BA = [:LineBreak =  Break_After:];
 $BB = [:LineBreak =  Break_Before:];
 $BK = [:LineBreak =  Mandatory_Break:];
 $B2 = [:LineBreak =  Break_Both:];
 $CB = [:LineBreak =  Contingent_Break:];
-$CL = [[:LineBreak =  Close_Punctuation:] - [\u3001\u3002]];
+$CL = [[:LineBreak =  Close_Punctuation:] - [\u3001\u3002\uff0c\uff0e\ufe11\ufe12\ufe50\ufe52\ufe48]];
 $CM = [:LineBreak =  Combining_Mark:];
 $CR = [:LineBreak =  Carriage_Return:];
 $EX = [:LineBreak =  Exclamation:];
@@ -68,7 +68,7 @@ $GL = [:LineBreak =  Glue:];
 $HY = [:LineBreak =  Hyphen:];
 $H2 = [:LineBreak =  H2:];
 $H3 = [:LineBreak =  H3:];
-$ID = [:LineBreak =  Ideographic:];
+$ID = [[:LineBreak =  Ideographic:] - [\ufe45\ufe51]];
 $IN = [:LineBreak =  Inseperable:];
 $IS = [:LineBreak =  Infix_Numeric:];
 $JL = [:LineBreak =  JL:];
@@ -76,7 +76,7 @@ $JV = [:LineBreak =  JV:];
 $JT = [:LineBreak =  JT:];
 $LF = [:LineBreak =  Line_Feed:];
 $NL = [:LineBreak =  Next_Line:];
-$NS = [[:LineBreak =  Nonstarter:] \u3001\u3002];
+$NS = [[:LineBreak =  Nonstarter:] \u3001\u3002\uff0c\uff0e\ufe11\ufe12\ufe50\ufe52\ufe48\u23b5\ufe51\ufe45];
 $NU = [:LineBreak =  Numeric:];
 $OP = [:LineBreak =  Open_Punctuation:];
 $PO = [:LineBreak =  Postfix_Numeric:];

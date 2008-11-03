@@ -7,10 +7,12 @@ A. This directory contains the source code of ICU 3.8 for C/C++ with CJK
 
        $ svn export --native-eol LF -r 22777 http://source.icu-project.org/repos/icu/icu/trunk icu38
 
-    2. Apply the following 7 patches :
+    2. Apply the following 8 patches :
         
        * segmentation.patch.txt  (CJ segmentation patch : code change + data)
        * data.patch.txt (ICU data customization patch)
+       * data.patch2.txt (ICU data customization patch set 2 : to be applied on top of
+         data.patch.txt)
        * windows.patch (Windows-specific patch)
        * uconv.patch (thread-safety patch for uconv. Ported from the ICU trunk)
        * wpo.patch (see section E).
