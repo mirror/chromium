@@ -9,6 +9,7 @@
 import os
 import random
 import stat
+import urllib
 
 from buildbot import buildset
 from buildbot.changes.maildir import MaildirService, NoSuchMaildir
@@ -17,6 +18,7 @@ from buildbot.sourcestamp import SourceStamp
 from twisted.application import service, internet
 from twisted.python import log, runtime
 
+import chromium_config as config
 
 class TryJob(Try_Jobdir):
   """Simple Try_Jobdir overload that executes the patch files in the pending
@@ -120,10 +122,18 @@ class TryJob(Try_Jobdir):
 
     print 'Choose %s for job %s' % (",".join(builderNames), file_name)
 
-    # Always use the trunk.
     branch = None
-    # Always use the latest revision, HEAD.
+    # If None, always use the latest revision, HEAD
     baserev = None
+    # Hack to be able to quickly enable or disable this feature.
+    if os.path.exists('use_good_rev'):
+      last_good_known_config_url = (
+          config.Master.archive_url + '/continuous/LATEST/REVISION')
+      last_good_known_config = urllib.urlopen(last_good_known_config_url).read(
+          ).strip()
+      baserev = last_good_known_config
+      branch = 'src'
+
     # The diff is the file's content.
     diff = f.read()
     # -pN argument to patch.
