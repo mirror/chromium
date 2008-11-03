@@ -195,7 +195,7 @@ BackgroundTaskDropView::BackgroundTaskDropView(WebContents* source,
   int text_width = std::max<int>(systray.width(), text_width_required);
 
   int text_height_required = drop_box_text->GetPreferredSize().height();
-  int text_height = std::max<int>(product_logo_->height() + kBitmapMargin * 2,
+  int text_height = std::max<int>(product_logo_->height(),
                                   text_height_required);
 
   int text_left_edge =
@@ -242,7 +242,7 @@ void BackgroundTaskDropView::Paint(ChromeCanvas* canvas) {
   DCHECK(canvas);
 
   // Is the glow animation running?
-  if (glow_animation_.get()) {
+  if (glow_animation_.get() && glow_animation_->IsAnimating()) {
     double glow_opacity = glow_animation_->GetCurrentValue();
     // Draw the glow bitmap with a varying alpha level.
     canvas->saveLayerAlpha(
@@ -389,13 +389,6 @@ void BackgroundTaskDropView::AnimationCanceled(const Animation* animation) {
 }
 
 void BackgroundTaskDropView::AnimationEnded(const Animation* animation) {
-  if (animation == glow_animation_.get()) {
-    glow_animation_->Run();
-    // If the throbbing is done, then throw away the animation object.
-    if (!glow_animation_->IsAnimating()) {
-      glow_animation_.reset();
-    }
-  }
   SchedulePaint();
 }
 

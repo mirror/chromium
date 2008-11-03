@@ -186,6 +186,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\test_tab_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\test_tab_contents.h"
+				>
+			</File>
+			<File
 				RelativePath="..\testing_browser_process.h"
 				>
 			</File>
@@ -198,14 +206,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\test_tab_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\test_tab_contents.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\net\url_request\url_request_test_job.cc"
 				>
 			</File>
@@ -215,10 +215,10 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="TestBookmarkBarContextMenuController"
+			Name="TestBookmarkContextMenu"
 			>
 			<File
-				RelativePath="..\..\browser\bookmark_bar_context_menu_controller_test.cc"
+				RelativePath="..\..\browser\bookmarks\bookmark_context_menu_test.cc"
 				>
 			</File>
 		</Filter>
@@ -343,6 +343,10 @@
 			</File>
 			<File
 				RelativePath="..\..\views\grid_layout_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\views\label_unittest.cc"
 				>
 			</File>
 			<File
@@ -595,6 +599,22 @@
 			</File>
 		</Filter>
 		<Filter
+			Name="TestBookmarkFolderTreeModel"
+			>
+			<File
+				RelativePath="..\..\browser\bookmarks\bookmark_folder_tree_model_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestBookmarkTableModel"
+			>
+			<File
+				RelativePath="..\..\browser\bookmarks\bookmark_table_model_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="TestMetricsResponse"
 			>
 			<File
@@ -702,7 +722,7 @@
 			Name="TestSpellCheck"
 			>
 			<File
-				RelativePath="..\..\renderer\spellcheck_unittest.cc"
+				RelativePath="..\..\browser\spellcheck_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -1011,6 +1031,14 @@
 			>
 			<File
 				RelativePath="..\..\browser\background_task\bb_drag_data_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestGreasemonkeyMaster"
+			>
+			<File
+				RelativePath="..\..\browser\greasemonkey_master_unittest.cc"
 				>
 			</File>
 		</Filter>

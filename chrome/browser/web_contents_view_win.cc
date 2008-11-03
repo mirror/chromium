@@ -6,6 +6,7 @@
 
 #include <windows.h>
 
+#include "chrome/browser/bookmarks/bookmark_drag_data.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/background_task/bb_drag_data.h"
@@ -32,7 +33,7 @@
 namespace {
 
 // Windows callback for OnDestroy to detach the plugin windows.
-BOOL CALLBACK EnumPluginWindowsCallback(HWND window, LPARAM param) {
+BOOL CALLBACK DetachPluginWindowsCallback(HWND window, LPARAM param) {
   if (WebPluginDelegateImpl::IsPluginDelegateWindow(window)) {
     ::ShowWindow(window, SW_HIDE);
     SetParent(window, NULL);
@@ -110,20 +111,36 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
 #endif  // ENABLE_BACKGROUND_TASK
 
     // We set the file contents before the URL because the URL also sets file
-    // contents (to a .URL shortcut).  We want to prefer file content data over
-    // a shortcut.
+    // contents (to a .URL shortcut).  We want to prefer file content data over a
+    // shortcut so we add it first.
     if (!drop_data.file_contents.empty()) {
       data->SetFileContents(drop_data.file_description_filename,
                             drop_data.file_contents);
     }
     if (!drop_data.cf_html.empty())
       data->SetCFHtml(drop_data.cf_html);
-    if (drop_data.url.is_valid())
-      data->SetURL(drop_data.url, drop_data.url_title);
+    if (drop_data.url.is_valid()) {
+      if (drop_data.url.SchemeIs("javascript")) {
+        // We don't want to allow javascript URLs to be dragged to the desktop,
+        // but we do want to allow them to be added to the bookmarks bar
+        // (bookmarklets).
+        BookmarkDragData::Element bm_elt;
+        bm_elt.is_url = true;
+        bm_elt.url = drop_data.url;
+        bm_elt.title = drop_data.url_title;
+
+        BookmarkDragData bm_drag_data;
+        bm_drag_data.elements.push_back(bm_elt);
+
+        bm_drag_data.Write(web_contents_->profile(), data);
+      } else {
+        data->SetURL(drop_data.url, drop_data.url_title);
+      }
+    }
     if (!drop_data.plain_text.empty())
       data->SetString(drop_data.plain_text);
   }
-
+  
   scoped_refptr<WebDragSource> drag_source(
       new WebDragSource(GetHWND(), web_contents_->render_view_host()));
 
@@ -146,9 +163,20 @@ void WebContentsViewWin::OnContentsDestroy() {
   // can be moved into OnDestroy which is a Windows message handler as the
   // window is being torn down.
 
-  // First detach all plugin windows so that they are not destroyed
-  // automatically. They will be cleaned up properly in plugin process.
-  EnumChildWindows(GetHWND(), EnumPluginWindowsCallback, NULL);
+  // When a tab is closed all its child plugin windows are destroyed
+  // automatically. This happens before plugins get any notification that its
+  // instances are tearing down.
+  //
+  // Plugins like Quicktime assume that their windows will remain valid as long
+  // as they have plugin instances active. Quicktime crashes in this case
+  // because its windowing code cleans up an internal data structure that the
+  // handler for NPP_DestroyStream relies on.
+  //
+  // The fix is to detach plugin windows from web contents when it is going
+  // away. This will prevent the plugin windows from getting destroyed
+  // automatically. The detached plugin windows will get cleaned up in proper
+  // sequence as part of the usual cleanup when the plugin instance goes away.
+  EnumChildWindows(GetHWND(), DetachPluginWindowsCallback, NULL);
 
   // Close the find bar if any.
   if (find_bar_.get())

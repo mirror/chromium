@@ -30,7 +30,11 @@ class BackgroundTaskManagerTest : public testing::Test {
   }
 
   virtual void TearDown() {
-    source_->CloseContents();
+    source_->Destroy();
+
+    // Make sure that we flush any messages related to WebContents destruction
+    // before we finish.
+    MessageLoop::current()->RunAllPending();
   }
 
  protected:

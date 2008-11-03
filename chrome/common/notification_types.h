@@ -495,6 +495,12 @@ enum NotificationType {
   NOTIFY_BACKGROUND_TASK_DISCONNECTED,
 #endif  // ENABLE_BACKGROUND_TASK
 
+  // Greasemonkey user scripts -------------------------------------------------
+
+  // Sent when there are new user scripts available.
+  // The details are a pointer to SharedMemory containing the new scripts.
+  NOTIFY_NEW_USER_SCRIPTS,
+
   // Count (must be last) ------------------------------------------------------
   // Used to determine the number of notification types.  Not valid as
   // a type parameter when registering for or posting notifications.

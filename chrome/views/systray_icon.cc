@@ -83,7 +83,7 @@ bool SystrayIcon::SetIcon(HICON icon) {
 
 bool SystrayIcon::StartAnimation(HICON* animation_icons,
                                  int animation_icon_count,
-                                 const TimeDelta& frame_time,
+                                 const base::TimeDelta& frame_time,
                                  int repetitions) {
   DCHECK(animation_icons);
   DCHECK(animation_icon_count > 0);
@@ -103,7 +103,7 @@ bool SystrayIcon::StartAnimation(HICON* animation_icons,
   }
 
   frame_time_ = frame_time;
-  animation_start_ = TimeTicks::Now();
+  animation_start_ = base::TimeTicks::Now();
   animation_end_ = animation_start_ +
       frame_time_ * animation_icons_.size() * repetitions;
   UpdateSystray(NIM_MODIFY, NIF_ICON);
@@ -152,7 +152,7 @@ bool SystrayIcon::UpdateSystray(DWORD message, DWORD flags) {
   nid.hIcon = icon_;
   nid.uCallbackMessage = kWmSystrayNotify;
 
-  TimeTicks now = TimeTicks::Now();
+  base::TimeTicks now = base::TimeTicks::Now();
   if (animation_icons_.size() > 0) {
     if (now >= animation_end_) {
       StopAnimation();

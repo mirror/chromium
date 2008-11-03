@@ -281,8 +281,8 @@ class DOMPeerableWrapperMap : public DOMWrapperMap<T> {
 };
 
 
-static void WeakPeerableCallback(v8::Persistent<v8::Object> obj, void* para);
-static void WeakNodeCallback(v8::Persistent<v8::Object> obj, void* para);
+static void WeakPeerableCallback(v8::Persistent<v8::Value> obj, void* para);
+static void WeakNodeCallback(v8::Persistent<v8::Value> obj, void* para);
 // A map from DOM node to its JS wrapper.
 static DOMWrapperMap<Node>& dom_node_map()
 {
@@ -300,7 +300,7 @@ static DOMWrapperMap<Peerable>& dom_object_map()
 }
 
 #if ENABLE(SVG)
-static void WeakSVGElementInstanceCallback(v8::Persistent<v8::Object> obj,
+static void WeakSVGElementInstanceCallback(v8::Persistent<v8::Value> obj,
                                            void* param);
 
 // A map for SVGElementInstances, which are not peerable
@@ -311,7 +311,7 @@ static DOMWrapperMap<SVGElementInstance>& dom_svg_element_instance_map()
   return static_dom_svg_element_instance_map;
 }
 
-static void WeakSVGElementInstanceCallback(v8::Persistent<v8::Object> obj,
+static void WeakSVGElementInstanceCallback(v8::Persistent<v8::Value> obj,
                                            void* param)
 {
   SVGElementInstance* instance = static_cast<SVGElementInstance*>(param);
@@ -348,7 +348,7 @@ v8::Handle<v8::Value> V8Proxy::SVGElementInstanceToV8Object(
 
 // SVG non-node elements may have a reference to a context node which
 // should be notified when the element is change
-static void WeakSVGObjectWithContext(v8::Persistent<v8::Object> obj,
+static void WeakSVGObjectWithContext(v8::Persistent<v8::Value> obj,
                                      void* param);
 
 // Map of SVG objects with contexts to V8 objects
@@ -389,7 +389,7 @@ v8::Handle<v8::Value> V8Proxy::SVGObjectWithContextToV8Object(
   return result;
 }
 
-static void WeakSVGObjectWithContext(v8::Persistent<v8::Object> obj,
+static void WeakSVGObjectWithContext(v8::Persistent<v8::Value> obj,
                                      void* param)
 {
   Peerable* dom_obj = static_cast<Peerable*>(param);
@@ -433,7 +433,7 @@ SVGElement* V8Proxy::GetSVGContext(void* obj)
 // Called when obj is near death (not reachable from JS roots)
 // It is time to remove the entry from the table and dispose
 // the handle.
-static void WeakPeerableCallback(v8::Persistent<v8::Object> obj, void* para)
+static void WeakPeerableCallback(v8::Persistent<v8::Value> obj, void* para)
 {
   Peerable* dom_obj = static_cast<Peerable*>(para);
   ASSERT(dom_object_map().contains(dom_obj));
@@ -443,7 +443,7 @@ static void WeakPeerableCallback(v8::Persistent<v8::Object> obj, void* para)
   dom_object_map().forget(dom_obj);
 }
 
-static void WeakNodeCallback(v8::Persistent<v8::Object> obj, void* param)
+static void WeakNodeCallback(v8::Persistent<v8::Value> obj, void* param)
 {
   Node* node = static_cast<Node*>(param);
   ASSERT(dom_node_map().contains(node));
@@ -716,12 +716,13 @@ static void HandleConsoleMessage(v8::Handle<v8::Message> message,
   ASSERT(!errorMessageString.IsEmpty());
   String errorMessage = ToWebCoreString(errorMessageString);
 
-  v8::Handle<v8::String> resourceNameString = message->GetScriptResourceName();
-  String resourceName = (resourceNameString.IsEmpty())
-    ? frame->document()->url()
-    : ToWebCoreString(resourceNameString);
+  v8::Handle<v8::Value> resourceName = message->GetScriptResourceName();
+  bool useURL = (resourceName.IsEmpty() || !resourceName->IsString());
+  String resourceNameString = (useURL)
+      ? frame->document()->url()
+      : ToWebCoreString(resourceName);
   JavaScriptConsoleMessage consoleMessage(errorMessage,
-                                          resourceName,
+                                          resourceNameString,
                                           message->GetLineNumber());
   ConsoleMessageManager::AddMessage(page, consoleMessage);
 }
@@ -787,14 +788,6 @@ static void ReportUnsafeJavaScriptAccess(v8::Local<v8::Object> host,
         ReportUnsafeAccessTo(target, REPORT_LATER);
 }
 
-static void ReportFatalErrorInV8(const char* location, const char* message)
-{
-    // V8 is shutdown, we cannot use V8 api.
-    // The only thing we can do is to disable JavaScript.
-    // TODO: clean up V8Proxy and disable JavaScript.
-    printf("V8 error: %s (%s)\n", message, location);
-}
-
 static void HandleFatalErrorInV8()
 {
     // TODO: We temporarily deal with V8 internal error situations
@@ -802,6 +795,14 @@ static void HandleFatalErrorInV8()
     CRASH();
 }
 
+static void ReportFatalErrorInV8(const char* location, const char* message)
+{
+    // V8 is shutdown, we cannot use V8 api.
+    // The only thing we can do is to disable JavaScript.
+    // TODO: clean up V8Proxy and disable JavaScript.
+    printf("V8 error: %s (%s)\n", message, location);
+    HandleFatalErrorInV8();
+}
 
 V8Proxy::~V8Proxy()
 {
@@ -902,44 +903,48 @@ PassRefPtr<V8EventListener> V8Proxy::FindOrCreateV8EventListener(v8::Local<v8::V
 }
 
 
-// XMLHttpRequest(XHR) event listeners are different from listeners
-// on DOM nodes. A XHR event listener wrapper only hold a weak reference
-// to the JS function. A strong reference can create a cycle.
+// Object event listeners (such as XmlHttpRequest and MessagePort) are
+// different from listeners on DOM nodes. An object event listener wrapper
+// only holds a weak reference to the JS function. A strong reference can
+// create a cycle.
 //
-// The lifetime of a XHR object is bounded by the life time of its JS_XHR
-// object. So we can create a hidden reference from JS_XHR to JS function.
+// The lifetime of these objects is bounded by the life time of its JS
+// wrapper. So we can create a hidden reference from the JS wrapper to
+// to its JS function.
 //
 //                         (peer)
-//              XHR      <----------  JS_XHR
+//              XHR      <----------  JS_wrapper
 //               |             (hidden) :  ^
 //               V                      V  : (may reachable by closure)
 //           V8_listener  --------> JS_function
 //                         (weak)  <-- may create a cycle if it is strong
 //
 // The persistent reference is made weak in the constructor
-// of V8XHREventListener.
+// of V8ObjectEventListener.
 
-PassRefPtr<V8EventListener> V8Proxy::FindXHREventListener(
+PassRefPtr<V8EventListener> V8Proxy::FindObjectEventListener(
     v8::Local<v8::Value> listener, bool html)
 {
   return FindEventListenerInList(m_xhr_listeners, listener, html);
 }
 
 
-PassRefPtr<V8EventListener> V8Proxy::FindOrCreateXHREventListener(
+PassRefPtr<V8EventListener> V8Proxy::FindOrCreateObjectEventListener(
     v8::Local<v8::Value> obj, bool html)
 {
   ASSERT(v8::Context::InContext());
 
-  if (!obj->IsObject()) return 0;
+  if (!obj->IsObject())
+    return 0;
 
   V8EventListener* wrapper =
       FindEventListenerInList(m_xhr_listeners, obj, html);
-  if (wrapper) return wrapper;
+  if (wrapper)
+    return wrapper;
 
   // Create a new one, and add to cache.
   RefPtr<V8EventListener> new_listener =
-    V8XHREventListener::create(m_frame, v8::Local<v8::Object>::Cast(obj), html);
+    V8ObjectEventListener::create(m_frame, v8::Local<v8::Object>::Cast(obj), html);
   m_xhr_listeners.push_back(new_listener.get());
 
   return new_listener.release();
@@ -966,7 +971,7 @@ void V8Proxy::RemoveV8EventListener(V8EventListener* listener)
 }
 
 
-void V8Proxy::RemoveXHREventListener(V8XHREventListener* listener)
+void V8Proxy::RemoveObjectEventListener(V8ObjectEventListener* listener)
 {
   RemoveEventListenerFromList(m_xhr_listeners, listener);
 }
@@ -1119,7 +1124,8 @@ v8::Local<v8::Value> V8Proxy::CallFunction(v8::Handle<v8::Function> function,
   // of recursion that stems from calling functions. This is in
   // contrast to the script evaluations.
   v8::Local<v8::Value> result;
-  { ConsoleMessageScope scope;
+  { 
+    ConsoleMessageScope scope;
 
     // Evaluating the JavaScript could cause the frame to be deallocated,
     // so we start the keep alive timer here.
@@ -1144,7 +1150,8 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
 {
   v8::Persistent<v8::FunctionTemplate>* cache_cell =
       V8ClassIndex::GetCache(type);
-  if (!(*cache_cell).IsEmpty()) return *cache_cell;
+  if (!(*cache_cell).IsEmpty())
+    return *cache_cell;
 
   // not found
   FunctionTemplateFactory factory = V8ClassIndex::GetFactory(type);
@@ -1376,6 +1383,18 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
       break;
     }
 
+    case V8ClassIndex::MESSAGECHANNEL:
+      desc->SetCallHandler(USE_CALLBACK(MessageChannelConstructor));
+      break;
+    case V8ClassIndex::MESSAGEPORT: {
+      // Reserve one more internal field for keeping event listeners.
+        v8::Local<v8::ObjectTemplate> instance_template =
+            desc->InstanceTemplate();
+        instance_template->SetInternalFieldCount(
+            V8Custom::kMessagePortInternalFieldCount);
+        break;
+    }
+
     // DOMParser, XMLSerializer, and XMLHttpRequest objects are created from
     // JS world, but we setup the constructor function lazily in
     // WindowNamedPropertyHandler::get.
@@ -1387,12 +1406,12 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
       break;
     case V8ClassIndex::XMLHTTPREQUEST: {
       // Reserve one more internal field for keeping event listeners.
-      v8::Local<v8::ObjectTemplate> instance_template =
-          desc->InstanceTemplate();
-      instance_template->SetInternalFieldCount(
-          V8Custom::kXMLHttpRequestInternalFieldCount);
-      desc->SetCallHandler(USE_CALLBACK(XMLHttpRequestConstructor));
-      break;
+        v8::Local<v8::ObjectTemplate> instance_template =
+            desc->InstanceTemplate();
+        instance_template->SetInternalFieldCount(
+            V8Custom::kXMLHttpRequestInternalFieldCount);
+        desc->SetCallHandler(USE_CALLBACK(XMLHttpRequestConstructor));
+        break;
     }
     case V8ClassIndex::XMLHTTPREQUESTUPLOAD: {
       // Reserve one more internal field for keeping event listeners.
@@ -1701,7 +1720,11 @@ static void GenerateSecurityToken(v8::Local<v8::Context> context)
   // Ask the document's SecurityOrigin to generate a security token.
   // If two tokens are equal, then the SecurityOrigins canAccess each other.
   // If two tokens are not equal, then we have to call canAccess.
-  String token = document->securityOrigin()->securityToken();
+  // Note: we can't use the HTTPOrigin if it was set from the DOM.
+  SecurityOrigin* origin = document->securityOrigin();
+  String token;
+  if (!origin->domainWasSetInDOM())
+    token = document->securityOrigin()->toString();
 
   // An empty token means we always have to call canAccess.  In this case, we
   // use the global object as the security token to avoid calling canAccess
@@ -2119,13 +2142,6 @@ v8::Local<v8::Object> V8Proxy::InstantiateV8Object(
     desc_type = V8ClassIndex::UNDETECTABLEHTMLCOLLECTION;
   }
 
-  // Special case for HTMLInputElements that support selection.
-  if (desc_type == V8ClassIndex::HTMLINPUTELEMENT) {
-    HTMLInputElement* element = static_cast<HTMLInputElement*>(imp);
-    if (element->canHaveSelection())
-      desc_type = V8ClassIndex::HTMLSELECTIONINPUTELEMENT;
-  }
-
   v8::Persistent<v8::FunctionTemplate> desc = GetTemplate(desc_type);
   v8::Local<v8::Function> function = desc->GetFunction();
   v8::Local<v8::Object> instance = SafeAllocation::NewInstance(function);
@@ -2216,6 +2232,15 @@ bool V8Proxy::IsWrapperOfType(v8::Handle<v8::Value> value,
 #define FOR_EACH_BACKGROUND_TASK_TAG(macro)
 #endif
 
+#if ENABLE(VIDEO)
+#define FOR_EACH_VIDEO_TAG(macro)                \
+  macro(audio, AUDIO)                            \
+  macro(source, SOURCE)                          \
+  macro(video, VIDEO)
+#else
+#define FOR_EACH_VIDEO_TAG(macro)
+#endif
+
 #define FOR_EACH_TAG(macro)                      \
   FOR_EACH_BACKGROUND_TASK_TAG(macro)            \
   macro(a, ANCHOR)                               \
@@ -2287,7 +2312,8 @@ bool V8Proxy::IsWrapperOfType(v8::Handle<v8::Value> value,
   macro(textarea, TEXTAREA)                      \
   macro(title, TITLE)                            \
   macro(ul, ULIST)                               \
-  macro(xmp, PRE)
+  macro(xmp, PRE)                                \
+  FOR_EACH_VIDEO_TAG(macro)
 
 V8ClassIndex::V8WrapperType V8Proxy::GetHTMLElementType(HTMLElement* element)
 {

@@ -38,7 +38,7 @@ class SystrayIcon : public CWindowImpl<SystrayIcon> {
   // All passed in icons are copied.
   bool StartAnimation(HICON* animation_icons,
                       int animation_icon_count,
-                      const TimeDelta& frame_time,
+                      const base::TimeDelta& frame_time,
                       int repetitions);
   bool StopAnimation();
 
@@ -64,9 +64,9 @@ class SystrayIcon : public CWindowImpl<SystrayIcon> {
   std::wstring tip_;
   bool showing_;
   base::RepeatingTimer<SystrayIcon> animation_timer_;
-  TimeTicks animation_start_;
-  TimeTicks animation_end_;
-  TimeDelta frame_time_;
+  base::TimeTicks animation_start_;
+  base::TimeTicks animation_end_;
+  base::TimeDelta frame_time_;
   std::vector<HICON> animation_icons_;
   uint32 taskbar_created_msg_;
   Listener* listener_;
