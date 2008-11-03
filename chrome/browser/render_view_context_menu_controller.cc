@@ -47,7 +47,7 @@ void RenderViewContextMenuController::OpenURL(
     const GURL& url,
     WindowOpenDisposition disposition,
     PageTransition::Type transition) {
-  source_web_contents_->OpenURL(url, disposition, transition);
+  source_web_contents_->OpenURL(url, GURL(), disposition, transition);
 }
 
 void RenderViewContextMenuController::CopyImageAt(int x, int y) {
@@ -276,7 +276,7 @@ void RenderViewContextMenuController::ExecuteCommand(int id) {
       break;
 
     case IDS_CONTENT_CONTEXT_RELOAD:
-      source_web_contents_->controller()->Reload();
+      source_web_contents_->controller()->Reload(true);
       break;
 
     case IDS_CONTENT_CONTEXT_PRINT:

@@ -131,12 +131,12 @@ const std::wstring& TabContents::GetTitle() const {
   // The exception is with transient pages, for which we really want to use
   // their title, as they are not committed.
   NavigationEntry* entry = controller_->GetTransientEntry();
-  if (entry && !entry->title().empty())
-    return entry->title();
+  if (entry)
+    return entry->GetTitleForDisplay();
   
   entry = controller_->GetLastCommittedEntry();
   if (entry)
-    return entry->title();
+    return entry->GetTitleForDisplay();
   else if (controller_->LoadingURLLazily())
     return controller_->GetLazyTitle();
   return EmptyWString();
@@ -242,11 +242,11 @@ void TabContents::Activate() {
     delegate_->ActivateContents(this);
 }
 
-void TabContents::OpenURL(const GURL& url,
+void TabContents::OpenURL(const GURL& url, const GURL& referrer,
                           WindowOpenDisposition disposition,
                           PageTransition::Type transition) {
   if (delegate_)
-    delegate_->OpenURLFromTab(this, url, disposition, transition);
+    delegate_->OpenURLFromTab(this, url, referrer, disposition, transition);
 }
 
 bool TabContents::NavigateToPendingEntry(bool reload) {
@@ -454,9 +454,10 @@ void TabContents::AddNewContents(ConstrainedWindow* window,
 
 void TabContents::OpenURL(ConstrainedWindow* window,
                           const GURL& url,
+                          const GURL& referrer,
                           WindowOpenDisposition disposition,
                           PageTransition::Type transition) {
-  OpenURL(url, disposition, transition);
+  OpenURL(url, referrer, disposition, transition);
 }
 
 void TabContents::WillClose(ConstrainedWindow* window) {

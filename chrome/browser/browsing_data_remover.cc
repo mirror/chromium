@@ -20,6 +20,8 @@
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/password_form.h"
 
+using base::Time;
+
 // Done so that we can use invokeLater on BrowsingDataRemovers and not have
 // BrowsingDataRemover implement RefCounted.
 void RunnableMethodTraits<BrowsingDataRemover>::RetainCallee(
@@ -103,6 +105,11 @@ void BrowsingDataRemover::Remove(int remove_mask) {
         profile_->GetWebDataService(Profile::EXPLICIT_ACCESS);
 
     web_data_service->RemoveLoginsCreatedBetween(delete_begin_, delete_end_);
+  }
+
+  if (remove_mask & REMOVE_FORM_DATA) {
+    // TODO(jcampan): bug #3870 hook-up Peterson's code here.
+    NOTREACHED() << "to be implemented";
   }
 
   if (remove_mask & REMOVE_CACHE) {
@@ -200,4 +207,3 @@ void BrowsingDataRemover::ClearCacheOnIOThread(Time delete_begin,
   ui_loop->PostTask(FROM_HERE, NewRunnableMethod(
       this, &BrowsingDataRemover::ClearedCache));
 }
-

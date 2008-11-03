@@ -34,6 +34,7 @@ class ClearBrowsingDataView : public views::View,
                               public views::DialogDelegate,
                               public views::ComboBox::Model,
                               public views::NativeButton::Listener,
+                              public views::ComboBox::Listener,
                               public BrowsingDataRemover::Observer {
  public:
   explicit ClearBrowsingDataView(Profile* profile);
@@ -68,6 +69,10 @@ class ClearBrowsingDataView : public views::View,
   // Overridden from views::NativeButton::Listener:
   virtual void ButtonPressed(views::NativeButton* sender);
 
+   // Overridden from views::ComboBox::Listener:
+  virtual void ItemChanged(views::ComboBox* sender, int prev_index,
+                           int new_index);
+
  private:
   // Adds a new check-box as a child to the view.
   views::CheckBox* AddCheckbox(const std::wstring& text, bool checked);
@@ -93,6 +98,7 @@ class ClearBrowsingDataView : public views::View,
   views::CheckBox* del_cache_checkbox_;
   views::CheckBox* del_cookies_checkbox_;
   views::CheckBox* del_passwords_checkbox_;
+  views::CheckBox* del_form_data_checkbox_;
   views::Label* time_period_label_;
   views::ComboBox* time_period_combobox_;
 

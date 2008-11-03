@@ -256,11 +256,13 @@ class NavigationController {
   // New navigations -----------------------------------------------------------
 
   // Loads the specified URL.
-  void LoadURL(const GURL& url, PageTransition::Type type);
+  void LoadURL(const GURL& url, const GURL& referrer,
+               PageTransition::Type type);
 
   // Load the specified URL the next time it becomes active.
-  void LoadURLLazily(const GURL& url, PageTransition::Type type,
-                     const std::wstring& title, SkBitmap* icon);
+  void LoadURLLazily(const GURL& url, const GURL& referrer,
+                     PageTransition::Type type, const std::wstring& title,
+                     SkBitmap* icon);
 
   // Loads the current page if this NavigationController was restored from
   // history and the current page has not loaded yet.
@@ -281,12 +283,10 @@ class NavigationController {
   // the offset is out of bounds.
   void GoToOffset(int offset);
 
-  // Reloads the current entry. The user will be prompted if the URL has POST
-  // data and the active WebContents isn't showing the POST interstitial page.
-  void Reload();
-
-  // Same as Reload, but doesn't check if current entry has POST data.
-  void ReloadDontCheckForRepost();
+  // Reloads the current entry. If |check_for_repost| is true and the current
+  // entry has POST data the user is prompted to see if they really want to
+  // reload the page. In nearly all cases pass in true.
+  void Reload(bool check_for_repost);
 
   // Removing of entries -------------------------------------------------------
 
@@ -445,7 +445,7 @@ class NavigationController {
   // was restored from a previous session.
   void set_max_restored_page_id(int max_id) { max_restored_page_id_ = max_id; }
 
-  NavigationEntry* CreateNavigationEntry(const GURL& url,
+  NavigationEntry* CreateNavigationEntry(const GURL& url, const GURL& referrer,
                                          PageTransition::Type transition);
 
   // Invokes ScheduleTabContentsCollection for all TabContents but the active

@@ -48,7 +48,9 @@ static const int kTabShadowSize = 2;
 // The height of the status bubble.
 static const int kStatusBubbleHeight = 20;
 // The distance of the status bubble from the left edge of the window.
-static const int kStatusBubbleOffset = 2;
+static const int kStatusBubbleHorizontalOffset = 3;
+// The distance of the status bubble from the bottom edge of the window.
+static const int kStatusBubbleVerticalOffset = 2;
 // An offset distance between certain toolbars and the toolbar that preceded
 // them in layout.
 static const int kSeparationLineHeight = 1;
@@ -112,6 +114,10 @@ BrowserView2::~BrowserView2() {
 }
 
 void BrowserView2::WindowMoved() {
+  // Cancel any tabstrip animations, some of them may be invalidated by the
+  // window being repositioned.
+  tabstrip_->DestroyDragController();
+
   status_bubble_->Reposition();
 
   // Close the omnibox popup, if any.
@@ -282,7 +288,7 @@ void BrowserView2::Init() {
 
   status_bubble_.reset(new StatusBubble(GetContainer()));
 
-#ifdef CHROME_PERSONALIZATION    
+#ifdef CHROME_PERSONALIZATION
   EnablePersonalization(CommandLine().HasSwitch(switches::kEnableP13n));
   if (IsPersonalizationEnabled()) {
     personalization_ = Personalization::CreateFramePersonalization(
@@ -388,8 +394,10 @@ void BrowserView2::SetAcceleratorTable(
 }
 
 void BrowserView2::ValidateThrobber() {
-  if (ShouldShowWindowIcon())
-    frame_->UpdateThrobber(browser_->GetSelectedTabContents()->is_loading());
+  if (ShouldShowWindowIcon()) {
+    TabContents* tab_contents = browser_->GetSelectedTabContents();
+    frame_->UpdateThrobber(tab_contents ? tab_contents->is_loading() : false);
+  }
 }
 
 gfx::Rect BrowserView2::GetNormalBounds() {
@@ -714,7 +722,7 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
     // The top few pixels of the TabStrip are a drop-shadow - as we're pretty
     // starved of dragable area, let's give it to window dragging (this also
     // makes sense visually).
-    if (!window->IsMaximized() && 
+    if (!window->IsMaximized() &&
         (point_in_view_coords.y() < tabstrip_->y() + kTabShadowSize)) {
       // We return HTNOWHERE as this is a signal to our containing
       // NonClientView that it should figure out what the correct hit-test
@@ -940,7 +948,7 @@ int BrowserView2::LayoutBookmarkBar(int top) {
       top -= kSeparationLineHeight;
     active_bookmark_bar_->SetBounds(0, top, width(), ps.height());
     top += ps.height();
-  }  
+  }
   return top;
 }
 int BrowserView2::LayoutInfoBar(int top) {
@@ -974,8 +982,8 @@ int BrowserView2::LayoutDownloadShelf() {
 
 void BrowserView2::LayoutStatusBubble(int top) {
   int status_bubble_y =
-      top - kStatusBubbleHeight + kStatusBubbleOffset + y();
-  status_bubble_->SetBounds(kStatusBubbleOffset, status_bubble_y,
+      top - kStatusBubbleHeight + kStatusBubbleVerticalOffset + y();
+  status_bubble_->SetBounds(kStatusBubbleHorizontalOffset, status_bubble_y,
                             width() / 3, kStatusBubbleHeight);
 }
 

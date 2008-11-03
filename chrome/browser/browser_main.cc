@@ -56,6 +56,7 @@
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/helper.h"
 #include "chrome/installer/util/install_util.h"
+#include "chrome/installer/util/shell_util.h"
 #include "chrome/installer/util/version.h"
 #include "chrome/views/accelerator_handler.h"
 #include "net/base/net_module.h"
@@ -170,9 +171,10 @@ int DoUninstallTasks() {
   ResultCodes::ExitCode ret = ResultCodes::NORMAL_EXIT;
   if (!FirstRun::RemoveSentinel())
     ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  if (!FirstRun::RemoveChromeDesktopShortcut())
+  // We only want to modify user level shortcuts so pass false for system_level.
+  if (!ShellUtil::RemoveChromeDesktopShortcut(ShellUtil::CURRENT_USER))
     ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  if (!FirstRun::RemoveChromeQuickLaunchShortcut())
+  if (!ShellUtil::RemoveChromeQuickLaunchShortcut(ShellUtil::CURRENT_USER))
     ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
   return ret;
 }
@@ -434,7 +436,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   // Importing other browser settings is done in a browser-like process
   // that exits when this task has finished.
   if (parsed_command_line.HasSwitch(switches::kImport))
-    return FirstRun::ImportWithUI(profile, parsed_command_line);
+    return FirstRun::ImportNow(profile, parsed_command_line);
 
   // When another process is running, use it instead of starting us.
   if (message_window.NotifyOtherProcess(show_command))
@@ -485,7 +487,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   // Initialize the DNS prefetch system
   chrome_browser_net::DnsPrefetcherInit dns_prefetch_init(user_prefs);
-  chrome_browser_net::DnsPretchHostNamesAtStartup(user_prefs, local_state);
+  chrome_browser_net::DnsPrefetchHostNamesAtStartup(user_prefs, local_state);
 
   // Init common control sex.
   INITCOMMONCONTROLSEX config;
@@ -536,12 +538,14 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   // Prepare for memory caching of SDCH dictionaries.
   SdchManager sdch_manager;  // Construct singleton database.
+  sdch_manager.set_sdch_fetcher(new SdchDictionaryFetcher);
+  // TODO(jar): Use default to "" so that all domains are supported.
+  std::string switch_domain(".google.com");  // Provide default test domain.
   if (parsed_command_line.HasSwitch(switches::kSdchFilter)) {
-    sdch_manager.set_sdch_fetcher(new SdchDictionaryFetcher);
-    std::wstring switch_domain =
-        parsed_command_line.GetSwitchValue(switches::kSdchFilter);
-    sdch_manager.EnableSdchSupport(WideToASCII(switch_domain));
+    switch_domain =
+        WideToASCII(parsed_command_line.GetSwitchValue(switches::kSdchFilter));
   }
+  sdch_manager.EnableSdchSupport(switch_domain);
 
   MetricsService* metrics = NULL;
   if (!parsed_command_line.HasSwitch(switches::kDisableMetrics)) {

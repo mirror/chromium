@@ -477,6 +477,13 @@ void View::SetContextMenuController(ContextMenuController* menu_controller) {
   context_menu_controller_ = menu_controller;
 }
 
+void View::ShowContextMenu(int x, int y, bool is_mouse_gesture) {
+  if (!context_menu_controller_)
+    return;
+
+  context_menu_controller_->ShowContextMenu(this, x, y, is_mouse_gesture); 
+}
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // View - tree
@@ -543,7 +550,7 @@ void View::DoDrag(const MouseEvent& e, int press_x, int press_y) {
   WriteDragData(press_x, press_y, data.get());
 
   // Message the RootView to do the drag and drop. That way if we're removed
-  // the RootView can detect it and avoid callins us back.
+  // the RootView can detect it and avoid calling us back.
   RootView* root_view = GetRootView();
   root_view->StartDragForViewFromMouseEvent(
       this, data, GetDragOperations(press_x, press_y));

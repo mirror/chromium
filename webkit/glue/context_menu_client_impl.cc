@@ -11,6 +11,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "Document.h"
 #include "DocumentLoader.h"
 #include "Editor.h"
+#include "EventHandler.h"
 #include "FrameLoader.h"
 #include "FrameView.h"
 #include "HitTestResult.h"
@@ -29,8 +30,10 @@ MSVC_POP_WARNING();
 
 #include "base/word_iterator.h"
 
+namespace {
+
 // Helper function to determine whether text is a single word or a sentence.
-static bool IsASingleWord(const std::wstring& text) {
+bool IsASingleWord(const std::wstring& text) {
   WordIterator iter(text, WordIterator::BREAK_WORD);
   int word_count = 0;
   if (!iter.Init()) return false;
@@ -53,8 +56,8 @@ static bool IsASingleWord(const std::wstring& text) {
 // Helper function to get misspelled word on which context menu 
 // is to be evolked. This function also sets the word on which context menu
 // has been evoked to be the selected word, as required.
-static std::wstring GetMisspelledWord(WebCore::ContextMenu* default_menu,
-                                      WebCore::Frame* selected_frame) {
+std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
+                               WebCore::Frame* selected_frame) {
   std::wstring misspelled_word_string;
 
   // First select from selectedText to check for multiple word selection.
@@ -67,12 +70,13 @@ static std::wstring GetMisspelledWord(WebCore::ContextMenu* default_menu,
       !IsASingleWord(misspelled_word_string))
     return L"";
 
-  // Expand around the click to see if we clicked a word.
-  WebCore::Selection selection;
-  WebCore::VisiblePosition pos(default_menu->hitTestResult().innerNode()->
-      renderer()->positionForPoint(default_menu->hitTestResult().
-                                   localPoint()));
+  WebCore::HitTestResult hit_test_result = selected_frame->eventHandler()->
+      hitTestResultAtPoint(default_menu->hitTestResult().point(), true);
+  WebCore::Node* inner_node = hit_test_result.innerNode();
+  WebCore::VisiblePosition pos(inner_node->renderer()->positionForPoint(
+      hit_test_result.localPoint()));
 
+  WebCore::Selection selection;
   if (pos.isNotNull()) {
     selection = WebCore::Selection(pos);
     selection.expandUsingGranularity(WebCore::WordGranularity);
@@ -91,6 +95,8 @@ static std::wstring GetMisspelledWord(WebCore::ContextMenu* default_menu,
   
   return misspelled_word_string;
 }
+
+}  // namespace
 
 ContextMenuClientImpl::~ContextMenuClientImpl() {
 }
@@ -179,7 +185,7 @@ WebCore::PlatformMenuDescription
     if (r.isContentEditable()) {
       type = ContextNode::EDITABLE;
       if (webview_->FocusedFrameNeedsSpellchecking()) {
-        misspelled_word_string = GetMisspelledWord(default_menu, 
+        misspelled_word_string = GetMisspelledWord(default_menu,
                                                    selected_frame);
       }
     } else if (r.isSelected()) {

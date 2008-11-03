@@ -13,6 +13,7 @@
 #include "chrome/views/view.h"
 
 namespace views {
+class CheckBox;
 class Label;
 class TableModel;
 class TableView;
@@ -76,6 +77,7 @@ class LanguagesPageView : public OptionsPageView,
   views::Label* ui_language_label_;
   views::ComboBox* change_ui_language_combobox_;
   views::ComboBox* change_dictionary_language_combobox_;
+  views::CheckBox* enable_spellchecking_checkbox_;
   views::Label* dictionary_language_label_;
 
   scoped_ptr<LanguageOrderTableModel> language_order_table_model_;
@@ -90,11 +92,15 @@ class LanguagesPageView : public OptionsPageView,
   scoped_ptr<LanguageComboboxModel> dictionary_language_model_;
   StringPrefMember dictionary_language_;
   
+  // SpellChecker enable pref.
+  BooleanPrefMember enable_spellcheck_;
+  
   // This is assigned the new index of spellcheck language if the language
   // is changed. Otherwise, it remains -1, and pref members are not updated.
   int spellcheck_language_index_selected_;
 
   bool language_table_edited_;
+  bool language_warning_shown_;
 
   DISALLOW_EVIL_CONSTRUCTORS(LanguagesPageView);
 };

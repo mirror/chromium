@@ -12,6 +12,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/printing/print_job_manager.h"
 
+using base::Time;
+
 namespace {
 
 // Retrieves the content of a GetPrinter call.
@@ -187,8 +189,6 @@ PrintingContext::Result PrintingContext::AskUserForSettings(HWND window,
   }
 
   {
-    CallbackHandler handler(*this, window);
-    dialog_options.lpCallback = handler.ToIUnknown();
     if (PrintDlgEx(&dialog_options) != S_OK) {
       ResetSettings();
       return FAILED;

@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html id="t" jsvalues="dir:textdirection;firstview:firstview">
 <!--
  This page is optimized for perceived performance. Our enemies are the time
@@ -124,6 +125,7 @@ function handleDOMContentLoaded() {
 logEvent('log start');
 </script>
 <head>
+<meta charset="utf-8">
 <title jscontent="title"></title>
 <style type="text/css">
 body {
@@ -144,9 +146,6 @@ html[firstview='true'] #main.visible {
   margin-left:auto;
   margin-right:auto;
   margin-top:10px;
-}
-td {
-  font-size:84%;
 }
 form {
   padding: 0;
@@ -250,7 +249,6 @@ a.manage {
   color:#77c;
   margin-left: 5px;
   margin-right: 5px;
-  font-size:84%;
   line-height:19pt;
   text-decoration:underline;
 }
@@ -268,14 +266,14 @@ html[dir='rtl'] #managesearcheslink {
 }
 #recentlyBookmarked {
   background-color:#e1ecfe;
-} 
+}
 #searches input {
   border:1px solid #7f9db9;
   background-repeat: no-repeat;
   background-position:4px center;
   padding-left: 23px;
   min-height:24px;
-  width:206px;
+  width:182px;
   margin-bottom:8px;
   display:block;
 }
@@ -352,7 +350,7 @@ document.addEventListener('DOMContentLoaded', handleDOMContentLoaded);
   </td>
   <td valign="top" width="230">
     <div align="right">
-        <img src="../../app/theme/%DISTRIBUTION%/product_logo.png" 
+        <img src="../../app/theme/%DISTRIBUTION%/product_logo.png"
              width="145" height="52" style="padding-bottom:8px;" />
     </div>
     <div id="searches" class="sidebar">
@@ -395,7 +393,7 @@ function DOM(elem, attrs) {
 
 /* Return the DOM element for a "most visited" entry.
    |page| should be an object with "title" and "url" fields. */
-function makeMostVisitedDOM(page) {
+function makeMostVisitedDOM(page, number) {
   /* The HTML we want looks like this:
     <a class="most-visited-item" href="URL" title="gmail.com">
       <div class="thumbnail-title" style="background-image:url(faviconurl);">gmail.com</div>
@@ -404,12 +402,15 @@ function makeMostVisitedDOM(page) {
   */
   var root;
   if (page.url) {
-    root = DOM('a', {href:page.url, title:page.title});
+    root = DOM('a', {href:page.url, 
+                     title:page.title});
+    root.addEventListener("mousedown", function(event) {
+        chrome.send("metrics", ["NTP_MostVisited" + number])
+        }, false);
   } else {
     // Something went wrong; don't make it clickable.
     root = DOM('span');
   }
-  
 
   /* Create the thumbnail */
   var img_thumbnail = DOM('img', {className:'thumbnail'});
@@ -460,7 +461,7 @@ function renderMostVisitedPages(pages) {
       rows[rowNum] = DOM('tr', {});
     }
 
-    var dom = makeMostVisitedDOM(page);
+    var dom = makeMostVisitedDOM(page, i);
 
     var cell = DOM('td');
     cell.appendChild(dom);
@@ -546,7 +547,12 @@ function renderRecentlyBookmarked(entries) {
   if (entries.length > 0) {
     section.style.display = 'block';
     for (var i = 0, entry = entries[0]; entry = entries[i]; ++i) {
-      var link = DOM('a', {href: entry.url, className:'recent-bookmark', title:entry.title});
+      var link = DOM('a', {href: entry.url, 
+                           className:'recent-bookmark', 
+                           title:entry.title});
+      link.addEventListener("mousedown", function(event) {
+          chrome.send("metrics", ["NTP_Bookmark" + i])
+          }, false);
       link.style.backgroundImage =
           'url("chrome-resource://favicon/' + entry.url + '")';
       link.appendChild(document.createTextNode(entry.title));

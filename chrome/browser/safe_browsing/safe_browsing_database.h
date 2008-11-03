@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "base/time.h"
@@ -51,7 +52,7 @@ class SafeBrowsingDatabase {
                            std::string* matching_list,
                            std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           Time last_update) = 0;
+                           base::Time last_update) = 0;
 
   // Processes add/sub commands.  Database will free the chunks when it's done.
   virtual void InsertChunks(const std::string& list_name,
@@ -79,7 +80,7 @@ class SafeBrowsingDatabase {
   // Called when the user's machine has resumed from a lower power state.
   virtual void HandleResume() = 0;
 
-  virtual void UpdateFinished() { }
+  virtual void UpdateFinished(bool update_succeeded) { }
 
  protected:
   static std::wstring BloomFilterFilename(const std::wstring& db_filename);
@@ -100,7 +101,7 @@ class SafeBrowsingDatabase {
   virtual void IncrementBloomFilterReadCount() {};
 
   std::wstring bloom_filter_filename_;
-  scoped_ptr<BloomFilter> bloom_filter_;
+  scoped_refptr<BloomFilter> bloom_filter_;
 };
 
 #endif  // CHROME_BROWSER_SAFE_BROWSING_SAFE_BROWSING_DATABASE_H_

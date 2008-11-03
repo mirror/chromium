@@ -55,16 +55,17 @@ class WebPluginContainer : public WebCore::Widget {
   WebPluginContainer(WebPluginImpl* impl);
   virtual ~WebPluginContainer();
   NPObject* GetPluginScriptableObject();
-  virtual WebCore::IntRect windowClipRect() const;
-  virtual void geometryChanged() const;
-  virtual void setFrameGeometry(const WebCore::IntRect& rect);
+  
+  // Widget methods:
+  virtual void setFrameRect(const WebCore::IntRect& rect);
   virtual void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
+  virtual void invalidateRect(const WebCore::IntRect&);
   virtual void setFocus();
   virtual void show();
   virtual void hide();
   virtual void handleEvent(WebCore::Event* event);
-  virtual void attachToWindow();
-  virtual void detachFromWindow();
+  virtual void frameRectsChanged() const;
+  virtual void setParentVisible(bool visible);
 
 #if USE(JSC)
   virtual bool isPluginView() const;
@@ -131,7 +132,8 @@ class WebPluginImpl : public WebPlugin,
   friend class WebPluginContainer;
 
   WebPluginImpl(WebCore::Element *element, WebFrameImpl *frame,
-                WebPluginDelegate* delegate, const GURL& plugin_url);
+                WebPluginDelegate* delegate, const GURL& plugin_url,
+                bool load_manually);
 
   // WebPlugin implementation:
   void SetWindow(HWND window, HANDLE pump_messages_event);
@@ -165,8 +167,8 @@ class WebPluginImpl : public WebPlugin,
   // Returns true on success.
   bool InitiateHTTPRequest(int resource_id, WebPluginResourceClient* client,
                            const char* method, const char* buf, int buf_len,
-                           const GURL& url,
-                           const char* range_info);
+                           const GURL& url, const char* range_info,
+                           bool use_plugin_src_as_referer);
 
   gfx::Rect GetWindowClipRect(const gfx::Rect& rect);
 
@@ -189,7 +191,6 @@ class WebPluginImpl : public WebPlugin,
 
   // Widget implementation:
   virtual WebCore::IntRect windowClipRect() const;
-  virtual void geometryChanged() const;
 
   // Returns window-relative rectangles that should clip this widget.
   // Only rects that intersect the given bounds are relevant.
@@ -202,7 +203,7 @@ class WebPluginImpl : public WebPlugin,
 
   // Override for when our window changes size or position.
   // Used to notify the plugin when the size or position changes.
-  virtual void setFrameGeometry(const WebCore::IntRect& rect);
+  virtual void setFrameRect(const WebCore::IntRect& rect);
 
   // Overrides paint so we can notify the underlying widget to repaint.
   virtual void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
@@ -280,6 +281,13 @@ class WebPluginImpl : public WebPlugin,
   void HandleHttpMultipartResponse(const WebCore::ResourceResponse& response,
                                    WebPluginResourceClient* client);
 
+  void HandleURLRequestInternal(const char *method, bool is_javascript_url,
+                                const char* target, unsigned int len,
+                                const char* buf, bool is_file_data,
+                                bool notify, const char* url,
+                                void* notify_data, bool popups_allowed,
+                                bool use_plugin_src_as_referrer);
+
   struct ClientInfo {
     int id;
     WebPluginResourceClient* client;
@@ -310,6 +318,12 @@ class WebPluginImpl : public WebPlugin,
 
   // The plugin source URL.
   GURL plugin_url_;
+
+  // Indicates if the download would be initiated by the plugin or us.
+  bool load_manually_;
+
+  // Indicates if this is the first geometry update received by the plugin.
+  bool first_geometry_update_;
 
   DISALLOW_COPY_AND_ASSIGN(WebPluginImpl);
 };

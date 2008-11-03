@@ -32,11 +32,14 @@
 // an FTS table that is indexed like a normal table, and the index over it is
 // free since sqlite always indexes the internal rowid.
 
+using base::Time;
+
 namespace history {
 
 namespace {
 
-const int kCurrentVersionNumber = 1;
+static const int kCurrentVersionNumber = 1;
+static const int kCompatibleVersionNumber = 1;
 
 // Snippet computation relies on the index of the columns in the original
 // create statement. These are the 0-based indices (as strings) of the
@@ -159,7 +162,8 @@ bool TextDatabase::Init() {
   sqlite3_exec(db_, "PRAGMA locking_mode=EXCLUSIVE", NULL, NULL, NULL);
 
   // Meta table tracking version information.
-  if (!meta_table_.Init(std::string(), kCurrentVersionNumber, db_))
+  if (!meta_table_.Init(std::string(), kCurrentVersionNumber,
+                        kCompatibleVersionNumber, db_))
     return false;
   if (meta_table_.GetCompatibleVersionNumber() > kCurrentVersionNumber) {
     // This version is too new. We don't bother notifying the user on this
@@ -168,6 +172,7 @@ bool TextDatabase::Init() {
     // here. If that's not the case, since this is only indexed data, it's
     // probably better to just not give FTS results than strange errors when
     // everything else is working OK.
+    LOG(WARNING) << "Text database is too new.";
     return false;
   }
 
@@ -226,7 +231,7 @@ bool TextDatabase::AddPageData(Time time,
 
   // Add to the pages table.
   SQLITE_UNIQUE_STATEMENT(add_to_pages, *statement_cache_,
-      "INSERT INTO pages(url,title,body)VALUES(?,?,?)");
+      "INSERT INTO pages (url, title, body) VALUES (?,?,?)");
   if (!add_to_pages.is_valid())
     return false;
   add_to_pages->bind_string(0, url);
@@ -241,7 +246,7 @@ bool TextDatabase::AddPageData(Time time,
 
   // Add to the info table with the same rowid.
   SQLITE_UNIQUE_STATEMENT(add_to_info, *statement_cache_,
-      "INSERT INTO info(rowid,time) VALUES(?,?)");
+      "INSERT INTO info (rowid, time) VALUES (?,?)");
   if (!add_to_info.is_valid())
     return false;
   add_to_info->bind_int64(0, rowid);

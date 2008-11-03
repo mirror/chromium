@@ -98,7 +98,6 @@ TableView::TableView(TableModel* model,
       table_view_wrapper_(this),
       custom_cell_font_(NULL),
       content_offset_(0) {
-  DCHECK(model);
   for (std::vector<TableColumn>::const_iterator i = columns.begin();
       i != columns.end(); ++i) {
     AddColumn(*i);
@@ -116,8 +115,15 @@ TableView::~TableView() {
 }
 
 void TableView::SetModel(TableModel* model) {
+  if (model == model_)
+    return;
+
+  if (list_view_ && model_)
+    model_->SetObserver(NULL);
   model_ = model;
-  if (model_)
+  if (list_view_ && model_)
+    model_->SetObserver(this);
+  if (list_view_)
     OnModelChanged();
 }
 
@@ -303,7 +309,7 @@ void TableView::OnModelChanged() {
   int current_row_count = ListView_GetItemCount(list_view_);
   if (current_row_count > 0)
     OnItemsRemoved(0, current_row_count);
-  if (model_->RowCount())
+  if (model_ && model_->RowCount())
     OnItemsAdded(0, model_->RowCount());
 }
 
@@ -377,8 +383,14 @@ void TableView::OnItemsRemoved(int start, int length) {
 
   SendMessage(list_view_, WM_SETREDRAW, static_cast<WPARAM>(TRUE), 0);
 
-  // We don't seem to get notification in this case.
-  if (table_view_observer_ && had_selection && RowCount() == 0)
+  // If the row count goes to zero and we had a selection LVN_ITEMCHANGED isn't
+  // invoked, so we handle it here.
+  //
+  // When the model is set to NULL all the rows are removed. We don't notify
+  // the delegate in this case as setting the model to NULL is usually done as
+  // the last step before being deleted and callers shouldn't have to deal with
+  // getting a selection change when the model is being reset.
+  if (model_ && table_view_observer_ && had_selection && RowCount() == 0)
     table_view_observer_->OnSelectionChanged();
 }
 
@@ -388,7 +400,11 @@ void TableView::AddColumn(const TableColumn& col) {
 }
 
 void TableView::SetColumns(const std::vector<TableColumn>& columns) {
-  all_columns_.empty();
+  // Remove the currently visible columns.
+  while (!visible_columns_.empty())
+    SetColumnVisibility(visible_columns_.front(), false);
+
+  all_columns_.clear();
   for (std::vector<TableColumn>::const_iterator i = columns.begin();
        i != columns.end(); ++i) {
     AddColumn(*i);
@@ -500,6 +516,7 @@ bool TableView::GetCellColors(int model_row,
   return false;
 }
 
+// static
 LRESULT CALLBACK TableView::TableWndProc(HWND window,
                                          UINT message,
                                          WPARAM w_param,
@@ -513,6 +530,29 @@ LRESULT CALLBACK TableView::TableWndProc(HWND window,
       // the request). We do this so that the table view doesn't flicker during
       // resizing.
       return 1;
+
+    case WM_PAINT: {
+      LRESULT result = CallWindowProc(table_view->original_handler_, window,
+                                      message, w_param, l_param);
+      table_view->PostPaint();
+      return result;
+    }
+
+    case WM_KEYDOWN: {
+      if (!table_view->single_selection_ && w_param == 'A' &&
+          GetKeyState(VK_CONTROL) < 0 && table_view->RowCount() > 0) {
+        // Select everything.
+        ListView_SetItemState(window, -1, LVIS_SELECTED, LVIS_SELECTED);
+        // And make the first row focused.
+        ListView_SetItemState(window, 0, LVIS_FOCUSED, LVIS_FOCUSED);
+        return 0;
+      } else if (w_param == VK_DELETE && table_view->table_view_observer_) {
+        table_view->table_view_observer_->OnTableViewDelete(table_view);
+        return 0;
+      }
+      // else case: fall through to default processing.
+      break;
+    }
 
     default:
       break;
@@ -565,7 +605,6 @@ HWND TableView::CreateNativeControl(HWND parent_container) {
                                 style,
                                 0, 0, width(), height(),
                                 parent_container, NULL, NULL, NULL);
-  model_->SetObserver(this);
 
   // Make the selection extend across the row.
   // Reduce overdraw/flicker artifacts by double buffering.
@@ -584,8 +623,11 @@ HWND TableView::CreateNativeControl(HWND parent_container) {
                  static_cast<int>(i - visible_columns_.begin()));
   }
 
+  if (model_)
+    model_->SetObserver(this);
+
   // Add the groups.
-  if (model_->HasGroups() &&
+  if (model_ && model_->HasGroups() &&
       win_util::GetWinVersion() > win_util::WINVERSION_2000) {
     ListView_EnableGroupView(list_view_, true);
 
@@ -602,7 +644,8 @@ HWND TableView::CreateNativeControl(HWND parent_container) {
   }
 
   // Set the # of rows.
-  UpdateListViewCache(0, model_->RowCount(), true);
+  if (model_)
+    UpdateListViewCache(0, model_->RowCount(), true);
 
   if (table_type_ == ICON_AND_TEXT) {
     HIMAGELIST image_list =
@@ -791,7 +834,10 @@ void TableView::InsertColumn(const TableColumn& tc, int index) {
   }
 }
 
-LRESULT TableView::OnNotify(int w_param, NMHDR* hdr) {
+LRESULT TableView::OnNotify(int w_param, LPNMHDR hdr) {
+  if (!model_)
+    return 0;
+
   switch (hdr->code) {
     case NM_CUSTOMDRAW: {
       // Draw notification. dwDragState indicates the current stage of drawing.
@@ -898,6 +944,19 @@ int TableView::CompareRows(int model_row1, int model_row2) {
   return SwapCompareResult(sort_result, sort_descriptors_[0].ascending);
 }
 
+int TableView::GetColumnWidth(int column_id) {
+  if (!list_view_)
+    return -1;
+
+  std::vector<int>::const_iterator i =
+      std::find(visible_columns_.begin(), visible_columns_.end(), column_id);
+  if (i == visible_columns_.end())
+    return -1;
+
+  return ListView_GetColumnWidth(
+      list_view_, static_cast<int>(i - visible_columns_.begin()));
+}
+
 LRESULT TableView::OnCustomDraw(NMLVCUSTOMDRAW* draw_info) {
   switch (draw_info->nmcd.dwDrawStage) {
     case CDDS_PREPAINT: {
@@ -975,11 +1034,14 @@ LRESULT TableView::OnCustomDraw(NMLVCUSTOMDRAW* draw_info) {
 
               // It seems the state in nmcd.uItemState is not correct.
               // We'll retrieve it explicitly.
-              int selected = ListView_GetItemState(list_view_, view_index,
-                                                   LVIS_SELECTED);
+              int selected = ListView_GetItemState(
+                  list_view_, view_index, LVIS_SELECTED | LVIS_DROPHILITED);
+              bool drop_highlight = ((selected & LVIS_DROPHILITED) != 0);
               int bg_color_index;
               if (!IsEnabled())
                 bg_color_index = COLOR_3DFACE;
+              else if (drop_highlight)
+                bg_color_index = COLOR_HIGHLIGHT;
               else if (selected)
                 bg_color_index = HasFocus() ? COLOR_HIGHLIGHT : COLOR_3DFACE;
               else

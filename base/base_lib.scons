@@ -39,6 +39,7 @@ input_files = [
     'command_line.cc',
     'debug_util.cc',
     'event_recorder.cc',
+    'field_trial.cc',
     'file_path.cc',
     'file_util.cc',
     'file_version_info.cc',
@@ -175,7 +176,9 @@ if env['PLATFORM'] == 'posix':
   input_files.extend([
       'atomicops_internals_x86_gcc.cc',
       'base_paths_linux.cc',
+      'clipboard_linux.cc',
       'file_util_linux.cc',
+      'file_version_info_linux.cc',
       'hmac_nss.cc',
       'message_pump_glib.cc',
       'nss_init.cc',

@@ -28,6 +28,8 @@
 #include "chrome/browser/task_manager.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/about_chrome_view.h"
+#include "chrome/browser/views/bookmark_bar_view.h"
+#include "chrome/browser/views/bookmark_manager_view.h"
 #include "chrome/browser/views/bug_report_view.h"
 #include "chrome/browser/views/clear_browsing_data.h"
 #include "chrome/browser/views/importer_view.h"
@@ -107,6 +109,7 @@ void Browser::InitCommandState() {
   controller_.UpdateCommandEnabled(IDC_ABOUT, true);
   controller_.UpdateCommandEnabled(IDC_SHOW_HISTORY, true);
   controller_.UpdateCommandEnabled(IDC_SHOW_BOOKMARKS_BAR, true);
+  controller_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_MANAGER, true);
   controller_.UpdateCommandEnabled(IDC_SHOW_DOWNLOADS, true);
   controller_.UpdateCommandEnabled(IDC_ENCODING, true);
   controller_.UpdateCommandEnabled(IDC_ENCODING_AUTO_DETECT, true);
@@ -361,10 +364,10 @@ void Browser::ExecuteCommand(int id) {
       {
         LocationBarView* lbv = GetLocationBarView();
         if (lbv) {
-          OpenURL(GURL(lbv->location_input()), lbv->disposition(),
+          OpenURL(GURL(lbv->location_input()), GURL(), lbv->disposition(),
                   lbv->transition());
         } else {
-          OpenURL(GURL(), CURRENT_TAB, PageTransition::TYPED);
+          OpenURL(GURL(), GURL(), CURRENT_TAB, PageTransition::TYPED);
         }
       }
       break;
@@ -450,7 +453,7 @@ void Browser::ExecuteCommand(int id) {
           current_tab->controller()->GetLastCommittedEntry();
       if (entry) {
         GURL url("view-source:" + entry->url().spec());
-        AddTabWithURL(url, PageTransition::LINK, true, NULL);
+        AddTabWithURL(url, GURL(), PageTransition::LINK, true, NULL);
       }
       break;
     }
@@ -653,22 +656,15 @@ void Browser::ExecuteCommand(int id) {
       DuplicateContentsAt(selected_index());
       break;
 
-    case IDC_SHOW_BOOKMARKS_BAR: {
+    case IDC_SHOW_BOOKMARKS_BAR:
       UserMetrics::RecordAction(L"ShowBookmarksBar", profile_);
-
-      // Invert the current pref.
-      PrefService* prefs = profile_->GetPrefs();
-      prefs->SetBoolean(prefs::kShowBookmarkBar,
-          !prefs->GetBoolean(prefs::kShowBookmarkBar));
-      prefs->ScheduleSavePersistentPrefs(g_browser_process->file_thread());
-
-      // And notify the notification service.
-      Source<Profile> source(profile_);
-      NotificationService::current()->Notify(
-          NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED, source,
-          NotificationService::NoDetails());
+      BookmarkBarView::ToggleWhenVisible(profile_);
       break;
-    }
+
+    case IDC_SHOW_BOOKMARK_MANAGER:
+      UserMetrics::RecordAction(L"ShowBookmarkManager", profile_);
+      BookmarkManagerView::Show(profile_);
+      break;
 
     case IDC_SHOW_HISTORY:
       UserMetrics::RecordAction(L"ShowHistory", profile_);
@@ -706,7 +702,8 @@ void Browser::ExecuteCommand(int id) {
         break;
 
       const TabRestoreService::HistoricalTab& tab = tabs.front();
-      AddRestoredTab(tab.navigations, tab.current_navigation_index, true);
+      AddRestoredTab(tab.navigations, tab_count(), tab.current_navigation_index,
+                     true);
       service->RemoveHistoricalTabById(tab.id);
       break;
     }
@@ -720,7 +717,8 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_HELPMENU: {
       GURL help_url(l10n_util::GetString(IDS_HELP_CONTENT_URL));
-      AddTabWithURL(help_url, PageTransition::AUTO_BOOKMARK, true, NULL);
+      AddTabWithURL(help_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
+                    NULL);
       break;
     }
 
@@ -771,7 +769,7 @@ void Browser::Reload() {
     if (web_contents && web_contents->showing_interstitial_page()) {
       NavigationEntry* entry = current_tab->controller()->GetActiveEntry();
       DCHECK(entry);  // Should exist if interstitial is showing.
-      OpenURL(entry->url(), CURRENT_TAB, PageTransition::RELOAD);
+      OpenURL(entry->url(), GURL(), CURRENT_TAB, PageTransition::RELOAD);
       return;
     }
   }
@@ -779,14 +777,14 @@ void Browser::Reload() {
   if (current_tab) {
     // As this is caused by a user action, give the focus to the page.
     current_tab->Focus();
-    current_tab->controller()->Reload();
+    current_tab->controller()->Reload(true);
   }
 }
 
 void Browser::Home() {
   GURL homepage_url = GetHomePage();
   GetSelectedTabContents()->controller()->LoadURL(
-      homepage_url, PageTransition::AUTO_BOOKMARK);
+      homepage_url, GURL(), PageTransition::AUTO_BOOKMARK);
 }
 
 void Browser::StarCurrentTabContents() {
@@ -1053,6 +1051,6 @@ void Browser::DuplicateContentsAt(int index) {
 void Browser::FileSelected(const std::wstring& path, void* params) {
   GURL file_url = net::FilePathToFileURL(path);
   if (!file_url.is_empty())
-    OpenURL(file_url, CURRENT_TAB, PageTransition::TYPED);
+    OpenURL(file_url, GURL(), CURRENT_TAB, PageTransition::TYPED);
 }
 

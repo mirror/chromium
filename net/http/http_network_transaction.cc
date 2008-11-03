@@ -10,6 +10,7 @@
 #include "base/trace_event.h"
 #include "build/build_config.h"
 #include "net/base/client_socket_factory.h"
+#include "net/base/dns_resolution_observer.h"
 #include "net/base/host_resolver.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_util.h"
@@ -26,6 +27,8 @@
 //  - authentication
 //    + pre-emptive authorization
 //    + use the username/password encoded in the URL.
+
+using base::Time;
 
 namespace net {
 
@@ -421,7 +424,8 @@ int HttpNetworkTransaction::DoInitConnectionComplete(int result) {
   // Set the reused_socket_ flag to indicate that we are using a keep-alive
   // connection.  This flag is used to handle errors that occur while we are
   // trying to reuse a keep-alive connection.
-  if (reused_socket_ = (connection_.socket() != NULL)) {
+  reused_socket_ = (connection_.socket() != NULL);
+  if (reused_socket_) {
     next_state_ = STATE_WRITE_HEADERS;
   } else {
     next_state_ = STATE_RESOLVE_HOST;
@@ -451,11 +455,14 @@ int HttpNetworkTransaction::DoResolveHost() {
     port = request_->url.EffectiveIntPort();
   }
 
+  DidStartDnsResolution(host, this);
   return resolver_.Resolve(host, port, &addresses_, &io_callback_);
 }
 
 int HttpNetworkTransaction::DoResolveHostComplete(int result) {
-  if (result == OK) {
+  bool ok = (result == OK);
+  DidFinishDnsResolutionWithStatus(ok, this);
+  if (ok) {
     next_state_ = STATE_CONNECT;
   } else {
     result = ReconsiderProxyAfterError(result);
@@ -486,9 +493,12 @@ int HttpNetworkTransaction::DoConnectComplete(int result) {
 
   if (result == OK) {
     next_state_ = STATE_WRITE_HEADERS;
-    if (using_tunnel_)
+    if (using_tunnel_) {
       establishing_tunnel_ = true;
+      bug_3772_.true_count++;
+    }
   } else {
+    bug_3772_.connect_result = result;
     result = HandleSSLHandshakeError(result);
     if (result != OK)
       result = ReconsiderProxyAfterError(result);
@@ -660,6 +670,10 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
       int eoh = HttpUtil::LocateEndOfHeaders(
           header_buf_.get(), header_buf_len_, header_buf_http_offset_);
       if (eoh == -1) {
+        // Prevent growing the headers buffer indefinitely.
+        if (header_buf_len_ >= kMaxHeaderBufSize)
+          return ERR_RESPONSE_HEADERS_TOO_BIG;
+
         // Haven't found the end of headers yet, keep reading.
         next_state_ = STATE_READ_HEADERS;
         return OK;
@@ -675,9 +689,13 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
       header_buf_body_offset_ = 0;
     }
   }
+  
+  // TODO(eroman): temp instrumentation for bug hunting.
+  Bug3772 bug_3772 = this->bug_3772_;
+  bug_3772.reused_socket = reused_socket_;
 
   // And, we are done with the Start or the SSL tunnel CONNECT sequence.
-  return DidReadResponseHeaders();
+  return DidReadResponseHeaders(&bug_3772);
 }
 
 int HttpNetworkTransaction::DoReadBody() {
@@ -758,7 +776,11 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
   return result;
 }
 
-int HttpNetworkTransaction::DidReadResponseHeaders() {
+int HttpNetworkTransaction::DidReadResponseHeaders(Bug3772* bug_3772) {
+  // Make sure compiler doesn't optimize away the variable.
+  if (bug_3772 == reinterpret_cast<Bug3772*>(11))
+    *reinterpret_cast<int*>(bug_3772) += 11;
+
   scoped_refptr<HttpResponseHeaders> headers;
   if (has_found_status_line_start()) {
     headers = new HttpResponseHeaders(
@@ -809,6 +831,7 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     request_headers_bytes_sent_ = 0;
     header_buf_len_ = 0;
     header_buf_body_offset_ = 0;
+    bug_3772_.false_count++;
     establishing_tunnel_ = false;
     return OK;
   }

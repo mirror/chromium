@@ -166,6 +166,10 @@ RenderProcessHost::RenderProcessHost(Profile* profile)
   widget_helper_->set_block_popups(
       profile->GetPrefs()->GetBoolean(prefs::kBlockPopups));
 
+  NotificationService::current()->AddObserver(this,
+      NOTIFY_NEW_USER_SCRIPTS,
+      NotificationService::AllSources());
+
   // Note: When we create the RenderProcessHost, it's technically backgrounded,
   //       because it has no visible listeners.  But the process doesn't
   //       actually exist yet, so we'll Background it later, after creation.
@@ -185,6 +189,10 @@ RenderProcessHost::~RenderProcessHost() {
   }
 
   profile_->GetPrefs()->RemovePrefObserver(prefs::kBlockPopups, this);
+
+  NotificationService::current()->RemoveObserver(this,
+      NOTIFY_NEW_USER_SCRIPTS,
+      NotificationService::AllSources());
 }
 
 void RenderProcessHost::Unregister() {
@@ -426,16 +434,8 @@ bool RenderProcessHost::Init() {
   // Now that the process is created, set it's backgrounding accordingly.
   SetBackgrounded(backgrounded_);
 
-  // Send the process its initial VisitedLink and Greasemonkey data.
-  HANDLE target_process = process_.handle();
-  if (!target_process) {
-    // Target process can be null if it's started with the --single-process
-    // flag.
-    target_process = GetCurrentProcess();
-  }
-
-  InitVisitedLinks(target_process);
-  InitGreasemonkeyScripts(target_process);
+  InitVisitedLinks();
+  InitGreasemonkeyScripts();
 
   if (max_page_id_ != -1)
     channel_->Send(new ViewMsg_SetNextPageID(max_page_id_ + 1));
@@ -443,21 +443,32 @@ bool RenderProcessHost::Init() {
   return true;
 }
 
-void RenderProcessHost::InitVisitedLinks(HANDLE target_process) {
+HANDLE RenderProcessHost::GetRendererProcessHandle() {
+  HANDLE result = process_.handle();
+  if (!result) {
+    // Renderer process can be null if it's started with the --single-process
+    // flag.
+    result = GetCurrentProcess();
+  }
+  return result;
+}
+
+void RenderProcessHost::InitVisitedLinks() {
   VisitedLinkMaster* visitedlink_master = profile_->GetVisitedLinkMaster();
   if (!visitedlink_master) {
     return;
   }
 
   SharedMemoryHandle handle_for_process = NULL;
-  visitedlink_master->ShareToProcess(target_process, &handle_for_process);
+  visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
+                                     &handle_for_process);
   DCHECK(handle_for_process);
   if (handle_for_process) {
     channel_->Send(new ViewMsg_VisitedLink_NewTable(handle_for_process));
   }
 }
 
-void RenderProcessHost::InitGreasemonkeyScripts(HANDLE target_process) {
+void RenderProcessHost::InitGreasemonkeyScripts() {
   CommandLine command_line;
   if (!command_line.HasSwitch(switches::kEnableGreasemonkey)) {
     return;
@@ -469,17 +480,25 @@ void RenderProcessHost::InitGreasemonkeyScripts(HANDLE target_process) {
   // - File IO should be asynchronous (see VisitedLinkMaster), but how do we
   //   get scripts to the first renderer without blocking startup? Should we
   //   cache some information across restarts?
-  GreasemonkeyMaster* greasemonkey_master =
-      Singleton<GreasemonkeyMaster>::get();
+  GreasemonkeyMaster* greasemonkey_master = profile_->GetGreasemonkeyMaster();
   if (!greasemonkey_master) {
     return;
   }
 
-  // TODO(aa): This does blocking IO. Move to background thread.
-  greasemonkey_master->UpdateScripts();
+  if (!greasemonkey_master->ScriptsReady()) {
+    // No scripts ready.  :(
+    return;
+  }
 
+  // Update the renderer process with the current scripts.
+  SendGreasemonkeyScriptsUpdate(greasemonkey_master->GetSharedMemory());
+}
+
+void RenderProcessHost::SendGreasemonkeyScriptsUpdate(
+    SharedMemory *shared_memory) {
   SharedMemoryHandle handle_for_process = NULL;
-  greasemonkey_master->ShareToProcess(target_process, &handle_for_process);
+  shared_memory->ShareToProcess(GetRendererProcessHandle(),
+                                &handle_for_process);
   DCHECK(handle_for_process);
   if (handle_for_process) {
     channel_->Send(new ViewMsg_Greasemonkey_NewScripts(handle_for_process));
@@ -779,8 +798,10 @@ void RenderProcessHost::WidgetHidden() {
 
 void RenderProcessHost::AddWord(const std::wstring& word) {
   base::Thread* io_thread = g_browser_process->io_thread();
-  io_thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
-      profile_->GetSpellChecker(), &SpellChecker::AddWord, word));
+  if (profile_->GetSpellChecker()) {
+    io_thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
+        profile_->GetSpellChecker(), &SpellChecker::AddWord, word));
+  }
 }
 
 // NotificationObserver implementation.
@@ -796,6 +817,14 @@ void RenderProcessHost::Observe(NotificationType type,
             profile()->GetPrefs()->GetBoolean(prefs::kBlockPopups));
       } else {
         NOTREACHED() << "unexpected pref change notification" << *pref_name_in;
+      }
+      break;
+    }
+    case NOTIFY_NEW_USER_SCRIPTS: {
+      SharedMemory* shared_memory = Details<SharedMemory>(details).ptr();
+      DCHECK(shared_memory);
+      if (shared_memory) {
+        SendGreasemonkeyScriptsUpdate(shared_memory);
       }
       break;
     }

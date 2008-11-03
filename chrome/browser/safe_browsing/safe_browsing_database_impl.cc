@@ -4,9 +4,11 @@
 
 #include "chrome/browser/safe_browsing/safe_browsing_database_impl.h"
 
+#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
+#include "base/platform_thread.h"
 #include "base/sha2.h"
 #include "base/string_util.h"
 #include "chrome/browser/safe_browsing/bloom_filter.h"
@@ -14,6 +16,9 @@
 #include "chrome/common/sqlite_compiled_statement.h"
 #include "chrome/common/sqlite_utils.h"
 #include "googleurl/src/gurl.h"
+
+using base::Time;
+using base::TimeDelta;
 
 // Database version.  If this is different than what's stored on disk, the
 // database is reset.
@@ -56,20 +61,14 @@ static const int kMaxStalenessMinutes = 45;
 
 SafeBrowsingDatabaseImpl::SafeBrowsingDatabaseImpl()
     : db_(NULL),
-      init_(false),
       transaction_count_(0),
+      init_(false),
       asynchronous_(true),
-      chunk_inserted_callback_(NULL),
-#pragma warning(suppress: 4355)  // can use this
-      bloom_read_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      bloom_write_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      process_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      reset_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      resume_factory_(this),
+      ALLOW_THIS_IN_INITIALIZER_LIST(process_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(bloom_read_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(bloom_write_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(reset_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(resume_factory_(this)),
       disk_delay_(kMaxThreadHoldupMs) {
 }
 
@@ -104,12 +103,12 @@ bool SafeBrowsingDatabaseImpl::Init(const std::wstring& filename,
   if (load_filter) {
     LoadBloomFilter();
   } else {
-    bloom_filter_.reset(
-        new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio));
+    bloom_filter_ =
+        new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio);
   }
 
   init_ = true;
-  chunk_inserted_callback_ = chunk_inserted_callback;
+  chunk_inserted_callback_.reset(chunk_inserted_callback);
   return true;
 }
 
@@ -228,8 +227,8 @@ bool SafeBrowsingDatabaseImpl::ResetDatabase() {
     return false;
   }
 
-  bloom_filter_.reset(
-      new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio));
+  bloom_filter_ =
+      new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio);
   file_util::Delete(bloom_filter_filename_, false);
 
   if (!Open())
@@ -397,12 +396,12 @@ void SafeBrowsingDatabaseImpl::WriteInfo(int host_key,
                                          int id) {
   SQLITE_UNIQUE_STATEMENT(statement1, *statement_cache_,
       "INSERT OR REPLACE INTO hosts"
-      "(host,entries)"
+      "(host, entries)"
       "VALUES (?,?)");
 
   SQLITE_UNIQUE_STATEMENT(statement2, *statement_cache_,
       "INSERT OR REPLACE INTO hosts"
-      "(id,host,entries)"
+      "(id, host, entries)"
       "VALUES (?,?,?)");
 
   SqliteCompiledStatement& statement = id == 0 ? statement1 : statement2;
@@ -473,7 +472,7 @@ void SafeBrowsingDatabaseImpl::RunThrottledWork() {
               &SafeBrowsingDatabaseImpl::RunThrottledWork), disk_delay_);
       break;
     } else {
-      Sleep(kMaxThreadHoldupMs);
+      PlatformThread::Sleep(kMaxThreadHoldupMs);
     }
   }
 }
@@ -543,7 +542,7 @@ bool SafeBrowsingDatabaseImpl::ProcessChunks() {
     }
   }
 
-  if (chunk_inserted_callback_)
+  if (chunk_inserted_callback_.get())
     chunk_inserted_callback_->Run();
 
   return true;
@@ -767,8 +766,7 @@ void SafeBrowsingDatabaseImpl::AddChunkInformation(
     int list_id, ChunkType type, int chunk_id, const std::string& hostkeys) {
   STATS_COUNTER(L"SB.ChunkInsert", 1);
   SQLITE_UNIQUE_STATEMENT(statement, *statement_cache_,
-      "INSERT INTO chunks"
-      "(list_id,chunk_type,chunk_id,hostkeys)"
+      "INSERT INTO chunks (list_id, chunk_type, chunk_id, hostkeys) "
       "VALUES (?,?,?,?)");
   if (!statement.is_valid()) {
     NOTREACHED();
@@ -893,8 +891,7 @@ void SafeBrowsingDatabaseImpl::RemoveChunkId(int list_id,
 
 int SafeBrowsingDatabaseImpl::AddList(const std::string& name) {
   SQLITE_UNIQUE_STATEMENT(statement, *statement_cache_,
-      "INSERT INTO list_names"
-      "(id,name)"
+      "INSERT INTO list_names (id, name) "
       "VALUES (NULL,?)");
   if (!statement.is_valid()) {
     NOTREACHED();
@@ -1014,7 +1011,7 @@ void SafeBrowsingDatabaseImpl::OnReadHostKeys(int start_id) {
       if (asynchronous_) {
         break;
       } else {
-        Sleep(kMaxThreadHoldupMs);
+        PlatformThread::Sleep(kMaxThreadHoldupMs);
       }
     }
   }
@@ -1047,7 +1044,7 @@ void SafeBrowsingDatabaseImpl::OnDoneReadingHostKeys() {
   for (size_t i = 0; i < bloom_filter_temp_hostkeys_.size(); ++i)
     filter->Insert(bloom_filter_temp_hostkeys_[i]);
 
-  bloom_filter_.reset(filter);
+  bloom_filter_ = filter;
 
   TimeDelta bloom_gen = Time::Now() - before;
   TimeDelta delta = Time::Now() - bloom_filter_rebuild_time_;
@@ -1180,7 +1177,7 @@ void SafeBrowsingDatabaseImpl::ClearCachedHashesForChunk(int list_id,
         ++eit;
     }
     if (entries.empty())
-      it = hash_cache_.erase(it);
+      hash_cache_.erase(it++);
     else
       ++it;
   }

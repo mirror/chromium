@@ -11,7 +11,7 @@ env.Prepend(
     CPPPATH = [
         '$CHROME_DIR/app/resources',
         #'$OBJ_ROOT/google_update',
-        '/chrome/tools/build/win',
+        '$OBJ_ROOT/chrome/tools/build/win',
         '$CHROME_SRC_DIR',
     ],
     CPPDEFINES = [
@@ -35,7 +35,7 @@ env.Append(
         '$CHROME_DIR/third_party/hunspell/src/hunspell',
         '$CHROME_DIR/third_party/wtl/include',
         '$NPAPI_DIR',
-        '$LIBXML_DIR/scons/include',
+        '$LIBXML_DIR/DerivedSources/include',
         '$LIBXML_DIR/include',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
@@ -55,6 +55,9 @@ input_files = [
     'bookmark_bar_view.cc',
     'bookmark_bubble_view.cc',
     'bookmark_editor_view.cc',
+    'bookmark_folder_tree_view.cc',
+    'bookmark_manager_view.cc',
+    'bookmark_table_view.cc',
     'bug_report_view.cc',
     'clear_browsing_data.cc',
     'constrained_window_animation.cc',
@@ -68,6 +71,7 @@ input_files = [
     'edit_keyword_controller.cc',
     'event_utils.cc',
     'external_protocol_dialog.cc',
+    'find_bar_view.cc',
     'first_run_bubble.cc',
     'first_run_customize_view.cc',
     'first_run_view.cc',
@@ -136,8 +140,9 @@ input_files = [
     'user_data_dir_dialog.cc',
 ]
 
+if env['PLATFORM'] == 'win32':
+  input_files.extend([
+      'find_bar_win.cc',
+  ])
+
 env.ChromeStaticLibrary('browser_views', input_files)
-
-
-SConscript('debugger/SConscript', exports=['env'])
-

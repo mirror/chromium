@@ -167,6 +167,7 @@ class NavigationEntry {
                   SiteInstance* instance,
                   int page_id,
                   const GURL& url,
+                  const GURL& referrer,
                   const std::wstring& title,
                   PageTransition::Type transition_type);
   ~NavigationEntry() {
@@ -219,9 +220,18 @@ class NavigationEntry {
   // the user.
   void set_url(const GURL& url) {
     url_ = url;
+    url_as_string_ = UTF8ToWide(url_.spec());
   }
   const GURL& url() const {
     return url_;
+  }
+
+  // The referring URL. Can be empty.
+  void set_referrer(const GURL& referrer) {
+    referrer_ = referrer;
+  }
+  const GURL& referrer() const {
+    return referrer_;
   }
 
   // The display URL, when nonempty, will override the actual URL of the page
@@ -344,6 +354,10 @@ class NavigationEntry {
     return restored_;
   }
 
+  // Returns the title to be displayed on the tab. This could be the title of
+  // the page if it is available or the URL.
+  const std::wstring& GetTitleForDisplay();
+
  private:
   // WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
   // Session/Tab restore save portions of this class so that it can be recreated
@@ -357,6 +371,9 @@ class NavigationEntry {
   scoped_refptr<SiteInstance> site_instance_;
   PageType page_type_;
   GURL url_;
+  GURL referrer_;
+
+  std::wstring url_as_string_;
   GURL display_url_;
   std::wstring title_;
   FaviconStatus favicon_;

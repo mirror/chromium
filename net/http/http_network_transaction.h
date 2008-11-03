@@ -77,8 +77,19 @@ class HttpNetworkTransaction : public HttpTransaction {
   int DoReadBody();
   int DoReadBodyComplete(int result);
 
+  // TODO(eroman): temp instrumentation to track down a bug.
+  struct Bug3772 {
+    unsigned char true_count;
+    unsigned char false_count;
+    int connect_result;
+    bool reused_socket;
+    Bug3772() : true_count(0), false_count(0), connect_result(0),
+        reused_socket(false) { }
+  };
+  Bug3772 bug_3772_;
+
   // Called when header_buf_ contains the complete response headers.
-  int DidReadResponseHeaders();
+  int DidReadResponseHeaders(Bug3772* /*temp hack*/);
 
   // Called to handle a certificate error.  Returns OK if the error should be
   // ignored.  Otherwise, stores the certificate in response_.ssl_info and
@@ -206,7 +217,17 @@ class HttpNetworkTransaction : public HttpTransaction {
   int header_buf_capacity_;
   int header_buf_len_;
   int header_buf_body_offset_;
+
+  // The number of bytes by which the header buffer is grown when it reaches
+  // capacity.
   enum { kHeaderBufInitialSize = 4096 };
+
+  // |kMaxHeaderBufSize| is the number of bytes that the response headers can
+  // grow to. If the body start is not found within this range of the
+  // response, the transaction will fail with ERR_RESPONSE_HEADERS_TOO_BIG.
+  // Note: |kMaxHeaderBufSize| should be a multiple of |kHeaderBufInitialSize|.
+  enum { kMaxHeaderBufSize = 32768 };  // 32 kilobytes.
+
   // The position where status line starts; -1 if not found yet.
   int header_buf_http_offset_;
 

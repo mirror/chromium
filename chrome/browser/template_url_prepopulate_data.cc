@@ -11,6 +11,8 @@
 #include "chrome/common/pref_service.h"
 #undef IN  // On Windows, windef.h defines this, which screws up "India" cases.
 
+using base::Time;
+
 namespace {
 
 // NOTE: See comments in GetDataVersion() below!  You should probably not change
@@ -45,7 +47,7 @@ struct PrepopulatedEngine {
   // to appear for one country (e.g. Live Search U.S. English and Spanish), we
   // must use two different unique IDs (and different keywords).
   //
-  // The following unique IDs are available: 92, 93, 103+
+  // The following unique IDs are available: 66, 93, 103+
   // NOTE: CHANGE THE ABOVE NUMBERS IF YOU ADD A NEW ENGINE; ID conflicts = bad!
   const int id;
 };
@@ -360,7 +362,7 @@ const PrepopulatedEngine delfi_lv = {
   L"delfi.lv",
   L"http://smart.delfi.lv/img/smart_search.png",
   L"http://smart.delfi.lv/i.php?enc={inputEncoding}&q={searchTerms}",
-  "windows-1257",
+  "UTF-8",
   NULL,
   45,
 };
@@ -469,6 +471,16 @@ const PrepopulatedEngine go = {
   40,
 };
 
+const PrepopulatedEngine goo = {
+  L"goo",
+  L"goo.ne.jp",
+  L"http://goo.ne.jp/gooicon.ico",
+  L"http://search.goo.ne.jp/web.jsp?MT={searchTerms}&IE={inputEncoding}",
+  "UTF-8",
+  NULL,
+  92,
+};
+
 const PrepopulatedEngine google = {
   L"Google",
   NULL,
@@ -520,16 +532,6 @@ const PrepopulatedEngine in = {
   "ISO-8859-7",
   NULL,
   54,
-};
-
-const PrepopulatedEngine infoseek = {
-  L"Infoseek",
-  L"infoseek.co.jp",
-  L"http://search.www.infoseek.co.jp/favicon.ico",
-  L"http://search.www.infoseek.co.jp/Web?qt={searchTerms}&enc={inputEncoding}",
-  "EUC-JP",
-  NULL,
-  66,
 };
 
 const PrepopulatedEngine jabse = {
@@ -1400,8 +1402,8 @@ const PrepopulatedEngine ok = {
 const PrepopulatedEngine onet = {
   L"Onet.pl",
   L"onet.pl",
-  L"http://szukaj.beta.onet.pl/favicon.ico",
-  L"http://szukaj.beta.onet.pl/query.html?qt={searchTerms}",
+  L"http://szukaj.onet.pl/favicon.ico",
+  L"http://szukaj.onet.pl/query.html?qt={searchTerms}",
   "ISO-8859-2",
   NULL,
   75,
@@ -1483,7 +1485,7 @@ const PrepopulatedEngine rediff = {
   L"rediff.com",
   L"http://search1.rediff.com/favicon.ico",
   L"http://search1.rediff.com/dirsrch/default.asp?MT={searchTerms}",
-  "ISO-8859-1",
+  "UTF-8",
   NULL,
   37,
 };
@@ -1603,7 +1605,7 @@ const PrepopulatedEngine t_online = {
   L"T-Online",
   L"suche.t-online.de",
   L"http://suche.t-online.de/favicon.ico",
-  L"http://suche.t-online.de/fast-cgi/tsc?q={searchTerms}",
+  L"http://suche.t-online.de/fast-cgi/tsc?sr=chrome&q={searchTerms}",
   "UTF-8",
   NULL,
   49,
@@ -2425,7 +2427,7 @@ const PrepopulatedEngine* engines_JO[] =
 
 // Japan
 const PrepopulatedEngine* engines_JP[] =
-    { &google, &yahoo_jp, &msn_ja_JP, &biglobe, &nifty, &infoseek, };
+    { &google, &yahoo_jp, &msn_ja_JP, &biglobe, &goo, &nifty, };
 
 // Kenya
 const PrepopulatedEngine* engines_KE[] = { &google, &yahoo, &msn, };
@@ -3006,7 +3008,7 @@ void RegisterUserPrefs(PrefService* prefs) {
 }
 
 int GetDataVersion() {
-  return 16;  // Increment this if you change the above data in ways that mean
+  return 18;  // Increment this if you change the above data in ways that mean
               // users with existing data should get a new version.
 }
 

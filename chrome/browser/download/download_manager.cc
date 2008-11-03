@@ -41,6 +41,9 @@
 
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+
 // Periodically update our observers.
 class DownloadItemUpdateTask : public Task {
  public:
@@ -211,6 +214,7 @@ void DownloadItem::Cancel(bool update_history) {
 void DownloadItem::Finished(int64 size) {
   state_ = COMPLETE;
   UpdateSize(size);
+  UpdateObservers();
   StopProgressTimer();
 }
 
@@ -291,11 +295,10 @@ void DownloadManager::RegisterUserPrefs(PrefService* prefs) {
 
   // The default download path is userprofile\download.
   std::wstring default_download_path;
-  if (!PathService::Get(chrome::DIR_USER_DOCUMENTS, &default_download_path)) {
+  if (!PathService::Get(chrome::DIR_DEFAULT_DOWNLOADS,
+                        &default_download_path)) {
     NOTREACHED();
   }
-  file_util::AppendToPath(&default_download_path,
-                          l10n_util::GetString(IDS_DOWNLOAD_DIRECTORY));
   prefs->RegisterStringPref(prefs::kDownloadDefaultDirectory,
                             default_download_path);
 
@@ -972,6 +975,12 @@ int DownloadManager::RemoveDownloadsBetween(const Time remove_begin,
          state == DownloadItem::CANCELLED)) {
       // Remove from the map and move to the next in the list.
       it = downloads_.erase(it);
+
+      // Also remove it from any completed dangerous downloads.
+      DownloadMap::iterator dit = dangerous_finished_.find(download->id());
+      if (dit != dangerous_finished_.end())
+        dangerous_finished_.erase(dit);
+
       delete download;
 
       ++num_deleted;
@@ -1323,4 +1332,3 @@ void DownloadManager::OnSearchComplete(HistoryService::Handle handle,
 
   requestor->SetDownloads(searched_downloads);
 }
-

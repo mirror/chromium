@@ -224,7 +224,6 @@ sub GetImplementationFileName
 {
     my $iface = shift;
     return "HTMLCollection.h" if $iface eq "UndetectableHTMLCollection";
-    return "HTMLInputElement.h" if $iface eq "HTMLSelectionInputElement";
     return "Event.h" if $iface eq "DOMTimeStamp";
     return "NamedAttrMap.h" if $iface eq "NamedNodeMap";
     return "NameNodeList.h" if $iface eq "NodeList";
@@ -240,7 +239,7 @@ sub GenerateHeader
 
     my $interfaceName = $dataNode->name;
     my $className = "V8$interfaceName";
-    my $implClassName = GetImplementationClassName($interfaceName);
+    my $implClassName = $interfaceName;
 
     # Copy contents of parent classes except the first parent or if it is
     # EventTarget.
@@ -255,6 +254,8 @@ sub GenerateHeader
     # - Add header protection
     if ($className =~ /^V8SVG/) {
         push(@headerContent, "\n#if ENABLE(SVG)\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@headerContent, "\n#if ENABLE(VIDEO)\n");
     }
     
     push(@headerContent, "\n#ifndef $className" . "_H");
@@ -291,6 +292,8 @@ END
 
     if ($className =~ /^V8SVG/) {
         push(@headerContent, "\n#endif // ENABLE(SVG)\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@headerContent, "\n#endif // ENABLE(VIDEO)\n");
     }
 }
 
@@ -426,11 +429,12 @@ sub GenerateNormalAttrGetter
   my $isPodType = $codeGenerator->IsPodType($implClassName);
   my $skipContext = 0;
 
+
   if ($isPodType) {
     $implClassName = GetNativeType($implClassName);
     $implIncludes{"V8SVGPODTypeWrapper.h"} = 1;
   }
-  
+
   # Special case: SVGZoomEvent's attributes are all read-only
   if ($implClassName eq "SVGZoomEvent") {
     $attrIsPodType = 0;
@@ -830,7 +834,7 @@ sub GenerateImplementation
     my $dataNode = shift;
     my $interfaceName = $dataNode->name;
     my $className = "V8$interfaceName";
-    my $implClassName = GetImplementationClassName($interfaceName);
+    my $implClassName = $interfaceName;
     my $classIndex = uc($codeGenerator->StripModule($interfaceName));
 
     my $hasLegacyParent = $dataNode->extendedAttributes->{"LegacyParent"};
@@ -849,6 +853,8 @@ sub GenerateImplementation
  
     if ($className =~ /^V8SVG/) {
         push(@implFixedHeader, "#if ENABLE(SVG)\n\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@implFixedHeader, "#if ENABLE(VIDEO)\n\n");
     }
     
     if ($className =~ /^V8SVGAnimated/) {
@@ -867,13 +873,26 @@ sub GenerateImplementation
     my $hasConstructors = 0;
 
     # Generate property accessors for attributes.
-    foreach my $attribute (@{$dataNode->attributes}) {
+    for ($index = 0; $index < @{$dataNode->attributes}; $index++) {
+      $attribute = @{$dataNode->attributes}[$index];
       $attrName = $attribute->signature->name;
       $attrType = $attribute->signature->type;
 
       # Generate special code for the constructor attributes.
       if ($attrType =~ /Constructor$/) {
         $hasConstructors = 1;
+        next;
+      }
+
+      # Make EventListeners always custom.
+      # TODO(mbelshe): make the perl code capable of generating the 
+      #   event setters/getters.  For now, WebKit has started removing the
+      #   [Custom] attribute, so just automatically insert it to avoid forking
+      #   other files.  This should be okay because we can't generate stubs
+      #   for any event getter/setters anyway.
+      if ($attrType eq "EventListener") {
+        $attribute->signature->extendedAttributes->{"Custom"} = 1;
+        $implIncludes{"v8_custom.h"} = 1;
         next;
       }
       
@@ -884,7 +903,7 @@ sub GenerateImplementation
         $implIncludes{"v8_custom.h"} = 1;
         next;
       }
-      
+
       # Generate the accessor.
       if ($attribute->signature->extendedAttributes->{"CustomGetter"}) {
         $implIncludes{"v8_custom.h"} = 1;
@@ -1198,6 +1217,8 @@ END
 
     if ($className =~ /^V8SVG/) {
         push(@implContent, "\n#endif // ENABLE(SVG)\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@implContent, "\n#endif // ENABLE(VIDEO)\n");
     }
 }
 
@@ -1374,18 +1395,7 @@ sub GetClassName
 {
   my $type = shift;
   return "HTMLCollection" if $type eq "UndetectableHTMLCollection";
-  return "HTMLInputElement" if $type eq "HTMLSelectionInputElement";
   return $type;
-}
-
-
-sub GetImplementationClassName
-{
-    my $type = shift;
-
-    return "HTMLInputElement" if $type eq "HTMLSelectionInputElement";
-
-    return $type;
 }
 
 
@@ -1429,6 +1439,7 @@ sub IsRefPtrType
     return 1 if $type eq "HTMLElement";
     return 1 if $type eq "HTMLOptionsCollection";
     return 1 if $type eq "ImageData";
+    return 1 if $type eq "MediaError";
     return 1 if $type eq "MimeType";
     return 1 if $type eq "Node";
     return 1 if $type eq "NodeList";
@@ -1440,6 +1451,7 @@ sub IsRefPtrType
     return 1 if $type eq "Range";
     return 1 if $type eq "Text";
     return 1 if $type eq "TextMetrics";
+    return 1 if $type eq "TimeRanges";
     return 1 if $type eq "TreeWalker";
     return 1 if $type eq "XPathExpression";
     return 1 if $type eq "XPathNSResolver";
@@ -1451,6 +1463,19 @@ sub IsRefPtrType
     return 1 if $type =~ /^SVGPathSeg/;
     
     return 1 if $type =~ /^SVGAnimated/;
+
+    return 0;
+}
+
+sub IsVideoClassName
+{
+    my $class = shift;
+    return 1 if $class eq "V8HTMLAudioElement";
+    return 1 if $class eq "V8HTMLMediaElement";
+    return 1 if $class eq "V8HTMLSourceElement";
+    return 1 if $class eq "V8HTMLVideoElement";
+    return 1 if $class eq "V8MediaError";
+    return 1 if $class eq "V8TimeRanges";
 
     return 0;
 }
@@ -1484,9 +1509,6 @@ sub GetNativeType
     return "String" if $type eq "DOMUserData";  # temporary hack, TODO
 
     # temporary hack
-    $type = GetImplementationClassName($type);
-
-    # temporary hack
     return "RefPtr<NodeFilter>" if $type eq "NodeFilter";
 
     return "RefPtr<${type}>" if IsRefPtrType($type) and not $isParameter;
@@ -1511,6 +1533,7 @@ my %typeCanFailConversion = (
     "HTMLOptionElement" => 0,
     "Node" => 0,
     "NodeFilter" => 0,
+    "MessagePort" => 0,
     "NSResolver" => 0,
     "Range" => 0,
     "SQLResultSet" => 0,
@@ -1615,7 +1638,7 @@ sub JSValueToNative
     } else {
       # TODO: Temporary to avoid Window name conflict.
       my $classIndex = uc($type);
-      my $implClassName = GetImplementationClassName(${type});
+      my $implClassName = ${type};
 
       $implIncludes{"V8$type.h"} = 1;
       
@@ -1777,7 +1800,7 @@ sub NativeToJSValue
     }
 
     # V8 specific.
-    my $implClassName = GetImplementationClassName($type);
+    my $implClassName = $type;
     AddIncludesForType($type);
     # $implIncludes{GetImplementationFileName($type)} = 1 unless AvoidInclusionOfType($type);
 

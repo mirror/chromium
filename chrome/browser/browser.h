@@ -193,7 +193,8 @@ class Browser : public TabStripModelDelegate,
   // Add a new tab with the specified URL. If instance is not null, its process
   // will be used to render the tab.
   TabContents* AddTabWithURL(
-      const GURL& url, PageTransition::Type transition, bool foreground,
+      const GURL& url, const GURL& referrer,
+      PageTransition::Type transition, bool foreground,
       SiteInstance* instance);
 
   // Add a new application tab for the specified URL. If lazy is true, the tab
@@ -210,9 +211,12 @@ class Browser : public TabStripModelDelegate,
 
   // Add a tab with its session history restored from the SessionRestore
   // system. If select is true, the tab is selected. Returns the created
-  // NavigationController.
+  // NavigationController. |tab_index| gives the index to insert the tab at.
+  // |selected_navigation| is the index of the TabNavigation in |navigations| to
+  // select.
   NavigationController* AddRestoredTab(
       const std::vector<TabNavigation>& navigations,
+      int tab_index,
       int selected_navigation,
       bool select);
 
@@ -230,6 +234,7 @@ class Browser : public TabStripModelDelegate,
   // If instance is not null, its process will be used to render the tab.
   virtual TabContents* CreateTabContentsForURL(
       const GURL& url,
+      const GURL& referrer,
       Profile* profile,
       PageTransition::Type transition,
       bool defer_load,
@@ -257,7 +262,7 @@ class Browser : public TabStripModelDelegate,
 
   // Overridden from TabContentsDelegate:
   virtual void OpenURLFromTab(TabContents* source,
-                             const GURL& url,
+                             const GURL& url, const GURL& referrer,
                              WindowOpenDisposition disposition,
                              PageTransition::Type transition);
   virtual void NavigationStateChanged(const TabContents* source,

@@ -27,6 +27,8 @@
 #include "net/base/net_util.h"
 #include "skia/include/SkBitmap.h"
 
+using base::TimeDelta;
+
 namespace {
 
 void FilterURL(RendererSecurityPolicy* policy, int renderer_id, GURL* url) {
@@ -178,8 +180,6 @@ void RenderViewHost::NavigateToEntry(const NavigationEntry& entry,
       process()->host_id(), params.url);
 
   DoNavigate(new ViewMsg_Navigate(routing_id_, params));
-
-  UpdateBackForwardListCount();
 }
 
 void RenderViewHost::NavigateToURL(const GURL& url) {
@@ -551,6 +551,7 @@ void RenderViewHost::MakeNavigateParams(const NavigationEntry& entry,
                                         ViewMsg_Navigate_Params* params) {
   params->page_id = entry.page_id();
   params->url = entry.url();
+  params->referrer = entry.referrer();
   params->transition = entry.transition_type();
   params->state = entry.content_state();
   params->reload = reload;
@@ -972,12 +973,13 @@ void RenderViewHost::OnMsgContextMenu(
 }
 
 void RenderViewHost::OnMsgOpenURL(const GURL& url,
+                                  const GURL& referrer,
                                   WindowOpenDisposition disposition) {
   GURL validated_url(url);
   FilterURL(RendererSecurityPolicy::GetInstance(),
             process()->host_id(), &validated_url);
 
-  delegate_->RequestOpenURL(validated_url, disposition);
+  delegate_->RequestOpenURL(validated_url, referrer, disposition);
 }
 
 void RenderViewHost::OnMsgDomOperationResponse(
@@ -1202,7 +1204,9 @@ void RenderViewHost::OnUnloadListenerChanged(bool has_listener) {
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {
-  if (is_waiting_for_unload_ack_) {
+  if (is_waiting_for_unload_ack_ &&
+      !Singleton<CrossSiteRequestManager>()->HasPendingCrossSiteRequest(
+          process()->host_id(), routing_id_)) {
     // If the tab hangs in the beforeunload/unload handler there's really
     // nothing we can do to recover. Pretend the unload listeners have
     // all fired and close the tab. If the hang is in the beforeunload handler

@@ -15,6 +15,10 @@
 #include "base/logging.h"
 #include "base/string_util.h"
 
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
+
 namespace chrome_browser_net {
 
 static bool detailed_logging_enabled = false;
@@ -246,7 +250,7 @@ class MinMaxAverage {
   int64 minimum_;
   int64 maximum_;
 
-  // DISALLOW_EVIL_CONSTRUCTORS(MinMaxAverage);
+  // DISALLOW_COPY_AND_ASSIGN(MinMaxAverage);
 };
 
 static std::string HoursMinutesSeconds(int seconds) {

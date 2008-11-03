@@ -21,6 +21,7 @@
 #endif
 #include <queue>
 
+#include "base/logging.h"
 #include "base/ref_counted.h"
 #include "base/string_util.h"
 #include "base/time.h"
@@ -29,6 +30,9 @@
 
 // TODO(mpcomplete): layout before each event?
 // TODO(mpcomplete): do we need modifiers for mouse events?
+
+using base::Time;
+using base::TimeTicks;
 
 TestShell* EventSendingController::shell_ = NULL;
 gfx::Point EventSendingController::last_mouse_pos_;
@@ -91,23 +95,31 @@ void InitMouseEvent(WebInputEvent::Type t, WebMouseEvent::Button b,
   e->layout_test_click_count = click_count;
 }
 
-void ApplyKeyModifiers(const CppVariant* arg, WebKeyboardEvent* event) {
-  std::vector<std::wstring> args = arg->ToStringVector();
-  for (std::vector<std::wstring>::iterator i = args.begin();
-       i != args.end(); ++i) {
-    const wchar_t* arg_string = (*i).c_str();
-    if (!wcscmp(arg_string, L"ctrlKey")) {
-      event->modifiers |= WebInputEvent::CTRL_KEY;
-    } else if (!wcscmp(arg_string, L"shiftKey")) {
-      event->modifiers |= WebInputEvent::SHIFT_KEY;
-    } else if (!wcscmp(arg_string, L"altKey")) {
-      event->modifiers |= WebInputEvent::ALT_KEY;
+void ApplyKeyModifier(const std::wstring& arg, WebKeyboardEvent* event) {
+  const wchar_t* arg_string = arg.c_str();
+  if (!wcscmp(arg_string, L"ctrlKey")) {
+    event->modifiers |= WebInputEvent::CTRL_KEY;
+  } else if (!wcscmp(arg_string, L"shiftKey")) {
+    event->modifiers |= WebInputEvent::SHIFT_KEY;
+  } else if (!wcscmp(arg_string, L"altKey")) {
+    event->modifiers |= WebInputEvent::ALT_KEY;
 #if defined(OS_WIN)
-      event->system_key = true;
+    event->system_key = true;
 #endif
-    } else if (!wcscmp(arg_string, L"metaKey")) {
-      event->modifiers |= WebInputEvent::META_KEY;
+  } else if (!wcscmp(arg_string, L"metaKey")) {
+    event->modifiers |= WebInputEvent::META_KEY;
+  }
+}
+
+void ApplyKeyModifiers(const CppVariant* arg, WebKeyboardEvent* event) {
+  if (arg->isObject()) {
+    std::vector<std::wstring> args = arg->ToStringVector();
+    for (std::vector<std::wstring>::const_iterator i = args.begin();
+         i != args.end(); ++i) {
+      ApplyKeyModifier(*i, event);
     }
+  } else if (arg->isString()) {
+    ApplyKeyModifier(UTF8ToWide(arg->ToString()), event);
   }
 }
 
@@ -389,6 +401,11 @@ int EventSendingController::GetButtonNumberFromSingleArg(
     } else if (L"delete" == code_str) {
       code = 0x33;
     }
+#elif defined(OS_LINUX)
+    // TODO(agl): We obviously need to do something about keycodes here
+    if (true) {
+      NOTIMPLEMENTED();
+    }
 #endif
     else {
       DCHECK(code_str.length() == 1);
@@ -406,7 +423,7 @@ int EventSendingController::GetButtonNumberFromSingleArg(
     event_down.modifiers = 0;
     event_down.key_code = code;
 
-    if (args.size() >= 2 && args[1].isObject())
+    if (args.size() >= 2 && (args[1].isObject() || args[1].isString()))
       ApplyKeyModifiers(&(args[1]), &event_down);
 
     if (needs_shift_key_modifier)

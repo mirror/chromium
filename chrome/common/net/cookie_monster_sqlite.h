@@ -28,6 +28,8 @@ class SQLitePersistentCookieStore
 
   virtual void AddCookie(const std::string&,
                          const net::CookieMonster::CanonicalCookie&);
+  virtual void UpdateCookieAccessTime(
+      const net::CookieMonster::CanonicalCookie&);
   virtual void DeleteCookie(const net::CookieMonster::CanonicalCookie&);
 
  private:
@@ -35,7 +37,6 @@ class SQLitePersistentCookieStore
 
   // Database upgrade statements.
   bool EnsureDatabaseVersion(sqlite3* db);
-  bool UpdateSchemaToVersion2(sqlite3* db);
 
   std::wstring path_;
   scoped_refptr<Backend> backend_;

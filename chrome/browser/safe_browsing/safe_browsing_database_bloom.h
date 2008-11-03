@@ -44,7 +44,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
                            std::string* matching_list,
                            std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           Time last_update);
+                           base::Time last_update);
 
   // Processes add/sub commands.  Database will free the chunks when it's done.
   virtual void InsertChunks(const std::string& list_name,
@@ -64,13 +64,14 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Store the results of a GetHash response. In the case of empty results, we
   // cache the prefixes until the next update so that we don't have to issue
   // further GetHash requests we know will be empty.
-  virtual void CacheHashResults(const std::vector<SBPrefix>& prefixes,
-                        const std::vector<SBFullHashResult>& full_hits);
+  virtual void CacheHashResults(
+      const std::vector<SBPrefix>& prefixes,
+      const std::vector<SBFullHashResult>& full_hits);
 
   // Called when the user's machine has resumed from a lower power state.
   virtual void HandleResume();
 
-  virtual void UpdateFinished();
+  virtual void UpdateFinished(bool update_succeeded);
   virtual bool NeedToCheckUrl(const GURL& url);
 
  private:
@@ -102,10 +103,6 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Checks if a chunk is in the database.
   bool ChunkExists(int list_id, ChunkType type, int chunk_id);
 
-  // Note the existence of a chunk in the database.  This is used as a faster
-  // cache of all of the chunks we have.
-  void InsertChunk(int list_id, ChunkType type, int chunk_id);
-
   // Return a comma separated list of chunk ids that are in the database for
   // the given list and chunk type.
   void GetChunkIds(int list_id, ChunkType type, std::string* list);
@@ -123,34 +120,24 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Generate a bloom filter.
   virtual void BuildBloomFilter();
 
-  // Used when generating the bloom filter.  Reads a small number of hostkeys
-  // starting at the given row id.
-  void OnReadHostKeys(int start_id);
+  // Helpers for building the bloom filter.
+  typedef struct {
+    int chunk_id;
+    SBPrefix prefix;
+  } SBPair;
 
-  // Synchronous methods to process the currently queued up chunks or add-dels
-  void ProcessPendingWork();
-  void ProcessChunks();
-  void ProcessAddDel();
-  void ProcessAddChunks(std::deque<SBChunk>* chunks);
-  void ProcessSubChunks(std::deque<SBChunk>* chunks);
+  static int PairCompare(const void* arg1, const void* arg2);
 
-  void BeginTransaction();
-  void EndTransaction();
-
-  // Processes an add-del command, which deletes all the prefixes that came
-  // from that add chunk id.
-  void AddDel(const std::string& list_name, int add_chunk_id);
-  void AddDel(int list_id, int add_chunk_id);
-
-  // Processes a sub-del command, which just removes the sub chunk id from
-  // our list.
-  void SubDel(const std::string& list_name, int sub_chunk_id);
-  void SubDel(int list_id, int sub_chunk_id);
+  bool BuildAddList(SBPair* adds);
+  bool RemoveSubs(SBPair* adds, std::vector<bool>* adds_removed);
+  bool UpdateTables();
+  bool WritePrefixes(SBPair* adds, const std::vector<bool>& adds_removed,
+                     int* new_add_count, BloomFilter** filter);
 
   // Looks up any cached full hashes we may have.
   void GetCachedFullHashes(const std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           Time last_update);
+                           base::Time last_update);
 
   // Remove cached entries that have prefixes contained in the entry.
   void ClearCachedHashes(const SBEntry* entry);
@@ -164,6 +151,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Clears the did_resume_ flag.  This is called by HandleResume after a delay
   // to handle the case where we weren't in the middle of any work.
   void OnResumeDone();
+
   // If the did_resume_ flag is set, sleep for a period and then clear the
   // flag.  This method should be called periodically inside of busy disk loops.
   void WaitAfterResume();
@@ -172,9 +160,21 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   void AddPrefix(SBPrefix prefix, int encoded_chunk);
   void AddSub(int chunk, SBPrefix host, SBEntry* entry);
   void AddSubPrefix(SBPrefix prefix, int encoded_chunk, int encoded_add_chunk);
-  void ProcessPendingSubs();
-  void CreateChunkCaches();
   int GetAddPrefixCount();
+  void AddFullPrefix(SBPrefix prefix,
+                     int encoded_chunk,
+                     SBFullHash full_prefix);
+  void SubFullPrefix(SBPrefix prefix,
+                     int encoded_chunk,
+                     int encoded_add_chunk,
+                     SBFullHash full_prefix);
+
+  // Reads and writes chunk numbers to and from persistent store.
+  void ReadChunkNumbers();
+  bool WriteChunkNumbers();
+
+  // Flush in memory temporary caches.
+  void ClearUpdateCaches();
 
   // Encode the list id in the lower bit of the chunk.
   static inline int EncodeChunkId(int chunk, int list_id) {
@@ -197,27 +197,13 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Cache of compiled statements for our database.
   scoped_ptr<SqliteStatementCache> statement_cache_;
 
-  int transaction_count_;
-  scoped_ptr<SQLTransaction> transaction_;
-
   // True iff the database has been opened successfully.
   bool init_;
 
   std::wstring filename_;
 
-  // Used to store throttled work for commands that write to the database.
-  std::queue<std::deque<SBChunk>*> pending_chunks_;
-
-  struct AddDelWork {
-    int list_id;
-    int add_chunk_id;
-    std::vector<std::string> hostkeys;
-  };
-
-  std::queue<AddDelWork> pending_add_del_;
-
   // Called after an add/sub chunk is processed.
-  Callback0::Type* chunk_inserted_callback_;
+  scoped_ptr<Callback0::Type> chunk_inserted_callback_;
 
   // Used to schedule resetting the database because of corruption.
   ScopedRunnableMethodFactory<SafeBrowsingDatabaseBloom> reset_factory_;
@@ -230,7 +216,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
     SBFullHash full_hash;
     int list_id;
     int add_chunk_id;
-    Time received;
+    base::Time received;
   } HashCacheEntry;
 
   typedef std::list<HashCacheEntry> HashList;
@@ -240,9 +226,13 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Cache of prefixes that returned empty results (no full hash match).
   std::set<SBPrefix> prefix_miss_cache_;
 
-  // a cache of all of the existing add and sub chunks
+  // Caches for all of the existing add and sub chunks.
   std::set<int> add_chunk_cache_;
   std::set<int> sub_chunk_cache_;
+
+  // Caches for the AddDel and SubDel commands.
+  base::hash_set<int> add_del_cache_;
+  base::hash_set<int> sub_del_cache_;
 
   // The number of entries in the add_prefix table. Used to pick the correct
   // size for the bloom filter.

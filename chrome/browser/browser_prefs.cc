@@ -24,6 +24,8 @@
 #include "chrome/browser/task_manager.h"
 #include "chrome/browser/template_url_prepopulate_data.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
+#include "chrome/browser/views/bookmark_manager_view.h"
+#include "chrome/browser/views/bookmark_table_view.h"
 #include "chrome/browser/views/keyword_editor_view.h"
 #include "chrome/browser/views/page_info_window.h"
 #include "chrome/browser/web_contents.h"
@@ -32,6 +34,7 @@ namespace browser {
 
 void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   // Prefs in Local State
+  BookmarkManagerView::RegisterPrefs(local_state);
   Browser::RegisterPrefs(local_state);
   CacheManagerHost::RegisterPrefs(local_state);
   chrome_browser_net::RegisterPrefs(local_state);
@@ -50,13 +53,12 @@ void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   BackgroundTaskManager::RegisterUserPrefs(user_prefs);
 #endif  // ENABLE_BACKGROUND_TASK
   BookmarkBarView::RegisterUserPrefs(user_prefs);
+  BookmarkTableView::RegisterUserPrefs(user_prefs);
   Browser::RegisterUserPrefs(user_prefs);
   chrome_browser_net::RegisterUserPrefs(user_prefs);
   DownloadManager::RegisterUserPrefs(user_prefs);
-  KeywordEditorView::RegisterUserPrefs(user_prefs);
   PasswordManager::RegisterUserPrefs(user_prefs);
   SessionStartupPref::RegisterUserPrefs(user_prefs);
-  SpellChecker::RegisterUserPrefs(user_prefs);
   SSLManager::RegisterUserPrefs(user_prefs);
   TabContents::RegisterUserPrefs(user_prefs);
   TemplateURLPrepopulateData::RegisterUserPrefs(user_prefs);

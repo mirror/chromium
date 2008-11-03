@@ -32,12 +32,6 @@ class FirstRun {
   static bool CreateChromeQuickLaunchShortcut();
   // Creates the sentinel file that signals that chrome has been configured.
   static bool CreateSentinel();
-  // Removes the desktop shortcut to chrome. Returns false if it could not
-  // be removed.
-  static bool RemoveChromeDesktopShortcut();
-  // Removes the quick launch shortcut to chrome. Returns false if it could not
-  // be removed.
-  static bool RemoveChromeQuickLaunchShortcut();
   // Removes the sentinel file created in ConfigDone(). Returns false if the
   // sentinel file could not be removed.
   static bool RemoveSentinel();
@@ -45,17 +39,20 @@ class FirstRun {
   // browser process that just does the import with the import progress UI.
   static bool ImportSettings(Profile* profile, int browser,
                              int items_to_import, HWND parent_window);
-  // Import browser items with a progress UI. The browser and the items to
+  // Import browser items in this process. The browser and the items to
   // import are encoded int the command line. This function is paired with
-  // FirstRun::ImportSettings().
-  static int ImportWithUI(Profile* profile, const CommandLine& cmdline);
+  // FirstRun::ImportSettings(). This function might or might not show
+  // a visible UI depending on the cmdline parameters.
+  static int ImportNow(Profile* profile, const CommandLine& cmdline);
 
   // These are the possible results of calling ProcessMasterPreferences.
+  // Some of the results can be combined, so they are bit flags.
   enum MasterPrefResult {
     MASTER_PROFILE_NOT_FOUND          = 0,
     MASTER_PROFILE_ERROR              = 1,
     MASTER_PROFILE_SHOW_EULA          = 2,
-    MASTER_PROFILE_NO_FIRST_RUN_UI    = 4
+    MASTER_PROFILE_NO_FIRST_RUN_UI    = 4,
+    MASTER_PROFILE_DO_FIRST_RUN_UI    = 8
   };
 
   // The master preferences is a JSON file with the same entries as the

@@ -89,7 +89,6 @@ input_files = [
     'http/http_vary_data.cc',
     'http/winhttp_request_throttle.cc',
     'proxy/proxy_resolver_fixed.cc',
-    'proxy/proxy_resolver_winhttp.cc',
     'proxy/proxy_service.cc',
     'url_request/mime_sniffer_proxy.cc',
     'url_request/url_request.cc',
@@ -115,26 +114,17 @@ if env['PLATFORM'] in ('posix', 'darwin'):
   # TODO(port): delete files from this list as they get ported.
   to_be_ported_files = [
       'base/directory_lister.cc',
-      'base/dns_resolution_observer.cc',
       'base/listen_socket.cc',
       'base/ssl_config_service.cc',
       'base/tcp_client_socket.cc',
       'base/telnet_server.cc',
-      'base/upload_data_stream.cc',
       'base/wininet_util.cc',
       'base/winsock_init.cc',
-      'http/http_network_layer.cc',
-      'http/http_network_transaction.cc',
       'http/http_transaction_winhttp.cc',
       'http/winhttp_request_throttle.cc',
-      'proxy/proxy_resolver_fixed.cc',
-      'proxy/proxy_resolver_winhttp.cc',
-      'proxy/proxy_service.cc',
       'url_request/url_request_file_dir_job.cc',
-      'url_request/url_request_filter.cc',
       'url_request/url_request_ftp_job.cc',
       'url_request/url_request_inet_job.cc',
-      'url_request/url_request_job_manager.cc',
   ]
   for remove in to_be_ported_files:
       input_files.remove(remove)
@@ -150,12 +140,15 @@ if env['PLATFORM'] == 'win32':
       'disk_cache/file_win.cc',
       'disk_cache/mapped_file_win.cc',
       'disk_cache/os_file_win.cc',
+      'proxy/proxy_resolver_winhttp.cc',
   ])
 
 if env['PLATFORM'] == 'darwin':
   input_files.extend([
-      'base/platform_mime_util_mac.mm',
+      'base/platform_mime_util_mac.cc',
+      'base/ssl_client_socket_mac.cc',
       'base/x509_certificate_mac.cc',
+      'proxy/proxy_resolver_mac.cc',
   ])
 
 if env['PLATFORM'] == 'posix':

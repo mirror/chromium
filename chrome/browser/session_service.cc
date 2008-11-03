@@ -10,6 +10,7 @@
 #include "base/message_loop.h"
 #include "base/pickle.h"
 #include "base/thread.h"
+#include "chrome/browser/browser_init.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_window.h"
@@ -17,12 +18,16 @@
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/session_backend.h"
+#include "chrome/browser/session_restore.h"
+#include "chrome/browser/session_startup_pref.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/common/notification_details.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_types.h"
 #include "chrome/common/scoped_vector.h"
 #include "chrome/common/win_util.h"
+
+using base::Time;
 
 // Identifier for commands written to file.
 static const SessionCommand::id_type kCommandSetTabWindow = 0;
@@ -86,6 +91,32 @@ typedef IDAndIndexPayload WindowTypePayload;
 
 typedef IDAndIndexPayload TabNavigationPathPrunedFromFrontPayload;
 
+// Helper used by CreateUpdateTabNavigationCommand(). It writes |str| to
+// |pickle|, if and only if |str| fits within (|max_bytes| - |*bytes_written|).
+// |bytes_written| is incremented to reflect the data written.
+void WriteStringToPickle(Pickle& pickle, int* bytes_written, int max_bytes,
+                         const std::string& str) {
+  int num_bytes = str.size() * sizeof(char);
+  if (*bytes_written + num_bytes < max_bytes) {
+    *bytes_written += num_bytes;
+    pickle.WriteString(str);
+  } else {
+    pickle.WriteString(std::string());
+  }
+}
+
+// Wide version of WriteStringToPickle.
+void WriteWStringToPickle(Pickle& pickle, int* bytes_written, int max_bytes,
+                          const std::wstring& str) {
+  int num_bytes = str.size() * sizeof(wchar_t);
+  if (*bytes_written + num_bytes < max_bytes) {
+    *bytes_written += num_bytes;
+    pickle.WriteWString(str);
+  } else {
+    pickle.WriteWString(std::wstring());
+  }
+}
+
 }  // namespace
 
 // SessionID ------------------------------------------------------------------
@@ -104,7 +135,7 @@ SessionService::SessionService(Profile* profile)
       save_factory_(this),
       pending_reset_(false),
       has_open_tabbed_browsers_(false),
-      tabbed_browser_created_(false) {
+      move_on_new_browser_(false) {
   DCHECK(profile);
   // We should never be created when off the record.
   DCHECK(!profile->IsOffTheRecord());
@@ -117,7 +148,7 @@ SessionService::SessionService(const std::wstring& save_path)
       save_factory_(this),
       pending_reset_(false),
       has_open_tabbed_browsers_(false),
-      tabbed_browser_created_(false) {
+      move_on_new_browser_(false) {
   Init(save_path);
 }
 
@@ -141,6 +172,8 @@ SessionService::~SessionService() {
       this, NOTIFY_NAV_ENTRY_CHANGED, NotificationService::AllSources());
   NotificationService::current()->RemoveObserver(
       this, NOTIFY_NAV_ENTRY_COMMITTED, NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_BROWSER_OPENED, NotificationService::AllSources());
 }
 
 void SessionService::ResetFromCurrentBrowsers() {
@@ -271,7 +304,7 @@ void SessionService::SetWindowType(const SessionID& window_id,
   CommitPendingCloses();
 
   has_open_tabbed_browsers_ = true;
-  tabbed_browser_created_ = true;
+  move_on_new_browser_ = true;
 
   ScheduleCommand(CreateSetWindowTypeCommand(window_id, type));
 }
@@ -423,6 +456,8 @@ void SessionService::Init(const std::wstring& path) {
       this, NOTIFY_NAV_ENTRY_CHANGED, NotificationService::AllSources());
   NotificationService::current()->AddObserver(
       this, NOTIFY_NAV_ENTRY_COMMITTED, NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_BROWSER_OPENED, NotificationService::AllSources());
 
   DCHECK(!path.empty());
   commands_since_reset_ = 0;
@@ -437,15 +472,49 @@ void SessionService::Observe(NotificationType type,
                              const NotificationSource& source,
                              const NotificationDetails& details) {
   // All of our messages have the NavigationController as the source.
-  NavigationController* controller = Source<NavigationController>(source).ptr();
   switch (type) {
-    case NOTIFY_TAB_PARENTED:
+    case NOTIFY_BROWSER_OPENED: {
+      Browser* browser = Source<Browser>(source).ptr();
+      if (browser->profile() != profile_ ||
+          !should_track_changes_for_browser_type(browser->GetType())) {
+        return;
+      }
+
+      if (!has_open_tabbed_browsers_ && !BrowserInit::InProcessStartup()) {
+        // We're going from no tabbed browsers to a tabbed browser (and not in
+        // process startup), restore the last session.
+        if (move_on_new_browser_) {
+          // Make the current session the last.
+          MoveCurrentSessionToLastSession();
+          move_on_new_browser_ = false;
+        }
+        SessionStartupPref pref = SessionStartupPref::GetStartupPref(profile_);
+        if (pref.type == SessionStartupPref::LAST) {
+          SessionRestore::RestoreSession(
+              profile_, browser, false, false, false, std::vector<GURL>());
+        }
+      }
+      SetWindowType(browser->session_id(), browser->GetType());
+      break;
+    }
+
+    case NOTIFY_TAB_PARENTED: {
+      NavigationController* controller =
+          Source<NavigationController>(source).ptr();
       SetTabWindow(controller->window_id(), controller->session_id());
       break;
-    case NOTIFY_TAB_CLOSED:
+    }
+
+    case NOTIFY_TAB_CLOSED: {
+      NavigationController* controller =
+          Source<NavigationController>(source).ptr();
       TabClosed(controller->window_id(), controller->session_id());
       break;
+    }
+
     case NOTIFY_NAV_LIST_PRUNED: {
+      NavigationController* controller =
+          Source<NavigationController>(source).ptr();
       Details<NavigationController::PrunedDetails> pruned_details(details);
       if (pruned_details->from_front) {
         TabNavigationPathPrunedFromFront(controller->window_id(),
@@ -458,13 +527,19 @@ void SessionService::Observe(NotificationType type,
       }
       break;
     }
+
     case NOTIFY_NAV_ENTRY_CHANGED: {
+      NavigationController* controller =
+          Source<NavigationController>(source).ptr();
       Details<NavigationController::EntryChangedDetails> changed(details);
       UpdateTabNavigation(controller->window_id(), controller->session_id(),
                           changed->index, *changed->changed_entry);
       break;
     }
+
     case NOTIFY_NAV_ENTRY_COMMITTED: {
+      NavigationController* controller =
+          Source<NavigationController>(source).ptr();
       int current_entry_index = controller->GetCurrentEntryIndex();
       SetSelectedNavigationIndex(controller->window_id(),
                                  controller->session_id(),
@@ -474,6 +549,7 @@ void SessionService::Observe(NotificationType type,
                           *controller->GetEntryAtIndex(current_entry_index));
       break;
     }
+
     default:
       NOTREACHED();
   }
@@ -581,31 +657,34 @@ SessionCommand* SessionService::CreateUpdateTabNavigationCommand(
   Pickle pickle;
   pickle.WriteInt(tab_id.id());
   pickle.WriteInt(index);
+
+  // We only allow navigations up to 63k (which should be completely
+  // reasonable). On the off chance we get one that is too big, try to
+  // keep the url.
+
+  // Bound the string data (which is variable length) to
+  // |max_state_size bytes| bytes.
   static const SessionCommand::size_type max_state_size =
       std::numeric_limits<SessionCommand::size_type>::max() - 1024;
-  if (entry.display_url().spec().size() +
-      entry.title().size() +
-      entry.content_state().size() >= max_state_size) {
-    // We only allow navigations up to 63k (which should be completely
-    // reasonable). On the off chance we get one that is too big, try to
-    // keep the url.
-    if (entry.display_url().spec().size() < max_state_size) {
-      pickle.WriteString(entry.display_url().spec());
-      pickle.WriteWString(std::wstring());
-      pickle.WriteString(std::string());
-    } else {
-      pickle.WriteString(std::string());
-      pickle.WriteWString(std::wstring());
-      pickle.WriteString(std::string());
-    }
-  } else {
-    pickle.WriteString(entry.display_url().spec());
-    pickle.WriteWString(entry.title());
-    pickle.WriteString(entry.content_state());
-  }
+
+  int bytes_written = 0;
+  
+  WriteStringToPickle(pickle, &bytes_written, max_state_size,
+                      entry.display_url().spec());
+
+  WriteWStringToPickle(pickle, &bytes_written, max_state_size,
+                       entry.title());
+
+  WriteStringToPickle(pickle, &bytes_written, max_state_size,
+                      entry.content_state());
+
   pickle.WriteInt(entry.transition_type());
   int type_mask = entry.has_post_data() ? TabNavigation::HAS_POST_DATA : 0;
   pickle.WriteInt(type_mask);
+
+  WriteStringToPickle(pickle, &bytes_written, max_state_size,
+      entry.referrer().is_valid() ? entry.referrer().spec() : std::string());
+
   // Adding more data? Be sure and update TabRestoreService too.
   return new SessionCommand(kCommandUpdateTabNavigation, pickle);
 }
@@ -900,7 +979,19 @@ bool SessionService::CreateTabsAndWindows(
           return true;
         // type_mask did not always exist in the written stream. As such, we
         // don't fail if it can't be read.
-        pickle->ReadInt(&iterator, &(navigation.type_mask));
+        bool has_type_mask =
+            pickle->ReadInt(&iterator, &(navigation.type_mask));
+
+        if (has_type_mask) {
+          // the "referrer" property was added after type_mask to the written
+          // stream. As such, we don't fail if it can't be read.
+          std::string referrer_spec;
+          pickle->ReadString(&iterator, &referrer_spec);
+          if (!referrer_spec.empty()) {
+            navigation.referrer = GURL(referrer_spec);
+          }
+        }
+
         navigation.url = GURL(url_spec);
         SessionTab* tab = GetTab(tab_id, tabs);
         std::vector<TabNavigation>::iterator i =
@@ -1046,7 +1137,7 @@ void SessionService::ScheduleReset() {
     // We're lazily created on startup and won't get an initial batch of
     // SetWindowType messages. Set these here to make sure our state is correct.
     has_open_tabbed_browsers_ = true;
-    tabbed_browser_created_ = true;
+    move_on_new_browser_ = true;
   }
   StartSaveTimer();
 }

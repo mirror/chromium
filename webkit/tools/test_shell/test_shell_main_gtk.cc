@@ -10,6 +10,7 @@
 #include "base/icu_util.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
+#include "base/message_loop.h"
 #include "webkit/tools/test_shell/test_shell.h"
 #include "webkit/tools/test_shell/test_shell_switches.h"
 
@@ -45,6 +46,9 @@ int main(int argc, char* argv[]) {
     file_util::AppendToPath(&uri, L"data");
     file_util::AppendToPath(&uri, L"test_shell");
     file_util::AppendToPath(&uri, L"index.html");
+    // For now, loading from disk doesn't work so we set the URI to the
+    // homepage.
+    uri = L"http://www.google.com";
   }
 
   if (parsed_command_line.GetLooseValueCount() > 0) {
@@ -53,13 +57,14 @@ int main(int argc, char* argv[]) {
     uri = *iter;
   }
 
+  MessageLoopForUI main_message_loop;
+
   TestShell* shell;
   if (TestShell::CreateNewWindow(uri, &shell)) {
     // TODO(port): the rest of this.  :)
   }
 
-  // TODO(port): use MessageLoop instead.
-  gtk_main();
+  main_message_loop.Run();
 
   return 0;
 }

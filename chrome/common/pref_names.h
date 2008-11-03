@@ -47,6 +47,7 @@ extern const wchar_t kWebKitTextAreasAreResizable[];
 extern const wchar_t kWebKitJavaEnabled[];
 extern const wchar_t kAlwaysCreateDestinationsTab[];
 extern const wchar_t kPasswordManagerEnabled[];
+extern const wchar_t kFormAutofillEnabled[];
 extern const wchar_t kSafeBrowsingEnabled[];
 extern const wchar_t kSearchSuggestEnabled[];
 extern const wchar_t kCookieBehavior[];
@@ -68,6 +69,15 @@ extern const wchar_t kDeleteDownloadHistory[];
 extern const wchar_t kDeleteCache[];
 extern const wchar_t kDeleteCookies[];
 extern const wchar_t kDeletePasswords[];
+extern const wchar_t kDeleteFormData[];
+extern const wchar_t kBookmarkTableNameWidth1[];
+extern const wchar_t kBookmarkTableURLWidth1[];
+extern const wchar_t kBookmarkTableNameWidth2[];
+extern const wchar_t kBookmarkTableURLWidth2[];
+extern const wchar_t kBookmarkTablePathWidth[];
+extern const wchar_t kBookmarkManagerPlacement[];
+extern const wchar_t kEnableSpellCheck[];
+extern const wchar_t kDeleteTimePeriod[];
 
 // Local state
 extern const wchar_t kAvailableProfiles[];
@@ -156,4 +166,3 @@ extern const wchar_t kBackgroundTasks[];
 }
 
 #endif  // CHROME_COMMON_PREF_NAMES_H_
-

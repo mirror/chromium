@@ -10,13 +10,21 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #elif defined(OS_MACOSX)
+#include <vector>
 #include <wtf/RetainPtr.h>
 #ifdef __OBJC__
 @class NSEvent;
+@class NSView;
 #else
 class NSEvent;
+class NSView;
 #endif  // __OBJC__
-#endif  // OS_MACOSX
+#elif defined(OS_LINUX)
+typedef struct _GdkEventButton GdkEventButton;
+typedef struct _GdkEventMotion GdkEventMotion;
+typedef struct _GdkEventScroll GdkEventScroll;
+typedef struct _GdkEventKey GdkEventKey;
+#endif
 
 // The classes defined in this file are intended to be used with WebView's
 // HandleInputEvent method.  These event types are cross-platform; however,
@@ -91,7 +99,10 @@ class WebMouseEvent : public WebInputEvent {
 #if defined(OS_WIN)
   WebMouseEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 #elif defined(OS_MACOSX)
-  WebMouseEvent(NSEvent *event);
+  WebMouseEvent(NSEvent *event, NSView* view);
+#elif defined(OS_LINUX)
+  explicit WebMouseEvent(const GdkEventButton* event);
+  explicit WebMouseEvent(const GdkEventMotion* event);
 #endif
 };
 
@@ -106,7 +117,9 @@ class WebMouseWheelEvent : public WebMouseEvent {
 #if defined(OS_WIN)
   WebMouseWheelEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 #elif defined(OS_MACOSX)
-  WebMouseWheelEvent(NSEvent *event);
+  WebMouseWheelEvent(NSEvent *event, NSView* view);
+#elif defined(OS_LINUX)
+  explicit WebMouseWheelEvent(const GdkEventScroll* event);
 #endif
 };
 
@@ -115,7 +128,13 @@ class WebMouseWheelEvent : public WebMouseEvent {
 class WebKeyboardEvent : public WebInputEvent {
  public:
   int key_code;
-#if defined(OS_WIN)
+#if defined(OS_MACOSX)
+  // text arrays extracted from the native event. On Mac, there may be
+  // multiple keys sent as a single event if the flags don't change.
+  std::vector<unsigned short> text;
+  std::vector<unsigned short> unmodified_text;
+  std::vector<unsigned short> key_identifier;
+#elif defined(OS_WIN)
   bool system_key;  // Set if we receive a SYSKEYDOWN/WM_SYSKEYUP message.
   MSG actual_message; // Set to the current keyboard message.
 #endif
@@ -134,6 +153,8 @@ class WebKeyboardEvent : public WebInputEvent {
   WebKeyboardEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 #elif defined(OS_MACOSX)
   WebKeyboardEvent(NSEvent *event);
+#elif defined(OS_LINUX)
+  explicit WebKeyboardEvent(const GdkEventKey* event);
 #endif
 };
 

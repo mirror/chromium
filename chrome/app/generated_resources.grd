@@ -321,6 +321,18 @@ each locale. -->
       <message name="IDS_CONTENT_CONTEXT_ADD_TO_DICTIONARY" desc="The name of the Add to dictionary command in the content area context menu">
         &amp;Add to dictionary
       </message>
+      <message name="IDS_CONTENT_CONTEXT_NO_SPELLING_SUGGESTIONS" desc="The name of the No Spelling Suggestions display in the content area context menu">
+        &amp;No spelling suggestions
+      </message>
+      <message name="IDS_CONTENT_CONTEXT_SPELLCHECK_OPTIONS" desc="The name of the Spellcheck Options display in the content area context menu">
+        &amp;Spell-checker options
+      </message>
+      <message name="IDS_CONTENT_CONTEXT_LANGUAGE_SETTINGS" desc="The name of the Language Settings command in the content area context menu">
+        &amp;Language settings...
+      </message>
+      <message name="IDS_CONTENT_CONTEXT_CHECK_SPELLING_OF_THIS_FIELD" desc="The name of the Check the spelling of this field command in the content area context menu">
+        &amp;Check the spelling of this field
+      </message>
       <message name="IDS_CONTENT_CONTEXT_SELECTALL" desc="The name of the Select All command in the content area context menu">
         Select &amp;all
       </message>
@@ -1228,12 +1240,6 @@ each locale. -->
         &amp;Remove
       </message>
 
-      <!-- Download Preferences -->
-      <message name="IDS_DOWNLOAD_DIRECTORY"
-               desc="Directory under the profile for storing downloads">
-        Downloads
-      </message>
-
       <!-- Gears shortcut strings -->
       <message name="IDS_DEFAULT_INSTALL_SITE_LABEL" desc="Default installation menu label">
         Create application &amp;shortcuts...
@@ -1908,6 +1914,9 @@ each locale. -->
       <message name="IDS_DEL_PASSWORDS_CHKBOX" desc="Checkbox for deleting Passwords">
         Clear saved passwords
       </message>
+      <message name="IDS_DEL_FORM_DATA_CHKBOX" desc="Checkbox for deleting form data saved for autofill">
+        Clear saved form data
+      </message>
       <message name="IDS_CLEAR_BROWSING_DATA_COMMIT" desc="Text for OK button on dialog">
         Clear Browsing Data
       </message>
@@ -1944,7 +1953,10 @@ each locale. -->
         A new version of <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> is available
       </message>
       <message name="IDS_UPGRADE_SUCCESSFUL" desc="Status label: Successfully upgraded">
-        <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> has been updated <ph name="VERSION">$2<ex>(0.1.131)</ex></ph>
+        <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> has been updated to <ph name="VERSION">$2<ex>0.1.131</ex></ph>
+      </message>
+      <message name="IDS_UPGRADE_SUCCESSFUL_NOVERSION" desc="Status label: Successfully upgraded">
+        <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> has been updated
       </message>
       <message name="IDS_UPGRADE_ALREADY_UP_TO_DATE" desc="Status label: Already up to date">
         <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> is up to date (<ph name="VERSION">$2<ex>0.1.131</ex></ph>)
@@ -2031,7 +2043,10 @@ each locale. -->
       <message name="IDS_BOOKMARK_GROUP_FROM_FIREFOX" desc="The group name of bookmarks from Firefox">
         Imported From Firefox
       </message>
-       
+      <message name="IDS_BOOKMARK_GROUP" desc="The group name of bookmarks imported from a file">
+        Imported
+      </message>
+
       <!-- bookmark editor messages-->
       <message name="IDS_BOOMARK_EDITOR_NAME_LABEL" desc="Label shown before the title/name of the URL.">
         Name:
@@ -2167,14 +2182,14 @@ each locale. -->
         Below is the original error message
       </message>
 
-      <message name="IDS_ERRORPAGES_SUGGESTION_RELOAD" desc="Suggest reloading to the user">
+      <message name="IDS_ERRORPAGES_SUGGESTION_RELOAD" desc="When a page fails to load, we provide a suggestion that the user try reloading the page later">
         &lt;a jsvalues="href:reloadUrl"&gt;Reload&lt;/a&gt; this web page later.
       </message>
-      <message name="IDS_ERRORPAGES_SUGGESTION_CACHE" desc="String suggesting to try using the google cache.">
-        View a &lt;a jsvalues="href:cacheUrl"&gt;cached copy of the web page from Google&lt;/a&gt;
-      </message>
-      <message name="IDS_ERRORPAGES_SUGGESTION_HOMEPAGE" desc="String suggesting to try just the hostname of the site.">
+      <message name="IDS_ERRORPAGES_SUGGESTION_HOMEPAGE" desc="When a page fails to load, sometimes we provide a suggesting of trying just the hostname of the site.">
         Go to the homepage of the site:
+      </message>
+      <message name="IDS_ERRORPAGES_SUGGESTION_LEARNMORE" desc="When a web page fails to load, we provide a link to the help center to learn more about the failure.">
+        <ph name="BEGIN_LINK">&lt;a jsvalues="href:learnMoreUrl"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;</ph> about this problem.
       </message>
 
       <message name="IDS_ERRORPAGES_TITLE_NOT_AVAILABLE" desc="Title of the error page when we can't connect to a site.">
@@ -2659,7 +2674,14 @@ each locale. -->
       <message name="IDS_OPTIONS_PASSWORDS_SHOWPASSWORDS" desc="The label of the 'Show passwords' button">
         Show saved passwords
       </message>
-      
+
+      <message name="IDS_AUTOFILL_SETTING_WINDOWS_GROUP_NAME" desc="The title of the form autofill group">
+        Form autofill:
+      </message>
+      <message name="IDS_AUTOFILL_SAVEFORMS" desc="The autofill checkbox label">
+        Save and show text typed in similar fields
+      </message>
+
       <message name="IDS_OPTIONS_FONTSANDLANGUAGES_GROUP_NAME" desc="The label of the 'Fonts and Languages' group">
         Fonts and Languages:
       </message>
@@ -3086,7 +3108,10 @@ each locale. -->
       <message name="IDS_OPTIONS_CHROME_DICTIONARY_LANGUAGE" desc="The documentation string of the 'Spell check dictionary language' preference">
         Spell-checker language:
       </message>
-
+      <message name="IDS_OPTIONS_ENABLE_SPELLCHECK" desc="The documentation string of the 'Enable spellcheck' option">
+        Check spelling:
+      </message>
+      
       <message name="IDS_OPTIONS_RESET" desc="The label of the 'Reset all settings to defaults' button">
         Reset to defaults
       </message>
@@ -3106,8 +3131,8 @@ each locale. -->
       </message>
       
       <!-- Advanced Section Titles -->
-      <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_GENERAL">
-        General
+      <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY">
+        Privacy
       </message>
       <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_CONTENT">
         Web Content
@@ -3140,6 +3165,10 @@ each locale. -->
       <message name="IDS_BLOCKED_POPUP" desc="Text on a blocked popup's window titlebar.">
         Blocked Pop-up
       </message>
+      <message name="IDS_POPUPS_BLOCKED_COUNT" desc="Message on the blocked popup window">
+        Pop-ups Blocked: <ph name="COUNT">$1<ex>2</ex></ph>
+      </message>
+
       <!-- Multiple download warning-->
       <message name="IDS_MULTI_DOWNLOAD_WARNING" desc="Warning invoked if multiple downloads are attempted without user interaction.">
         This site is attempting to download multiple files. Do you want to allow this?
@@ -3150,6 +3179,58 @@ each locale. -->
       <message name="IDS_MULTI_DOWNLOAD_WARNING_DENY" desc="Text on the deny button in the IDS_MULTI_DOWNLOAD_WARNING dialog">
         Deny
       </message>
+
+      <!-- Bookmark table -->
+      <message name="IDS_BOOKMARK_TABLE_TITLE" desc="Title of the column in bookmark table showing the title of the bookmark.">
+        Title
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_URL" desc="Title of the column in bookmark table showing the url of the bookmark.">
+        URL
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_PATH" desc="Title of the column in bookmark table showing the path in the bookmark bar of the node.">
+        Folder
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_OTHER_BOOKMARKS_PATH" desc="Path used for bookmarks in the other bookmarks folder">
+        Other bookmarks
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_BOOKMARK_BAR_PATH" desc="Path used for bookmarks on the bookmark bar">
+        Bookmark bar
+      </message>
+      <message name="IDS_BOOKMARK_TABLE_PATH_SEPARATOR" desc="Separator between path elements in the bookmarks table">
+        /
+      </message>
+
+      <!-- Bookmark tree -->
+      <message name="IDS_BOOKMARK_TREE_RECENTLY_BOOKMARKED_NODE_TITLE" desc="Title of the bookmark node in the bookmark manager showing the 'recently bookmarked' bookmarks">
+        Recently Added
+      </message>
+      <message name="IDS_BOOKMARK_TREE_SEARCH_NODE_TITLE" desc="Title of node under which search results are shown.">
+        Search
+      </message>
+
+      <!-- Bookmark manager -->
+      <message name="IDS_BOOKMARK_MANAGER_TITLE" desc="Title of the bookmark manager window.">
+        Bookmark Manager
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER" desc="The label of the menu item that shows the bookmark manager">
+        &amp;Bookmark manager
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_SHOW_IN_FOLDER" desc="The label of the menu item in the bookmark manager context menu that changes the selection in the tree to match the folder of the selected item in the table.">
+        Show in folder
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_ORGANIZE_MENU" desc="Title of the organize menu in the bookmark manager.">
+        Organize
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_TOOLS_MENU" desc="Title of the tools menu in the bookmark manager.">
+        Tools
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_IMPORT_MENU" desc="Title of the import menu item in the bookmark manager.">
+        Import bookmarks...
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_EXPORT_MENU" desc="Title of the export menu item in the bookmark manager.">
+        Export bookmarks...
+      </message>
+
     </messages>
   </release>
 </grit>

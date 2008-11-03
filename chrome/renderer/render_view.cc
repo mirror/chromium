@@ -57,9 +57,11 @@
 #include "webkit/glue/weburlrequest.h"
 #include "webkit/glue/webview.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
-#include "webkit/port/platform/graphics/PlatformContextSkia.h"
+//#include "webkit/port/platform/graphics/PlatformContextSkia.h"
 
 #include "generated_resources.h"
+
+using base::TimeDelta;
 
 //-----------------------------------------------------------------------------
 
@@ -99,6 +101,8 @@ static const int kMaximumNumberOfUnacknowledgedPopups = 25;
 
 static const char* const kUnreachableWebDataURL =
     "chrome-resource://chromewebdata/";
+
+static const char* const kBackForwardNavigationScheme = "history";
 
 namespace {
 
@@ -548,12 +552,11 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
 #else
   // 100% GDI based.
   gfx::VectorCanvas canvas(hdc, src_size_x, src_size_y);
-  PlatformContextSkia context(&canvas);
   // Set the clipping region to be sure to not overflow.
   SkRect clip_rect;
   clip_rect.set(0, 0, SkIntToScalar(src_size_x), SkIntToScalar(src_size_y));
   canvas.clipRect(clip_rect);
-  if (!frame->SpoolPage(params.page_number, &context)) {
+  if (!frame->SpoolPage(params.page_number, &canvas)) {
     NOTREACHED() << "Printing page " << params.page_number << " failed.";
     return;
   }
@@ -839,6 +842,11 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
   // Otherwise, we give it the state to navigate to.
   if (!is_reload)
     request->SetHistoryState(params.state);
+
+  if (params.referrer.is_valid()) {
+    request->SetHttpHeaderValue(L"Referer",
+                                UTF8ToWide(params.referrer.spec()));
+  }
 
   main_frame->LoadRequest(request.get());
 }
@@ -1521,8 +1529,15 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
       if (enable_dom_ui_bindings_ ||
           frame->GetInViewSourceMode() ||
           url.SchemeIs("view-source")) {
-        OpenURL(webview, url, disposition);
+        OpenURL(webview, url, GURL(), disposition);
         return IGNORE_ACTION;  // Suppress the load here.
+      } else if (url.SchemeIs(kBackForwardNavigationScheme)) {
+        std::string offset_str = url.ExtractFileName();
+        int offset;
+        if (StringToInt(offset_str, &offset)) {
+          GoToEntryAtOffsetAsync(offset);
+          return IGNORE_ACTION;  // The browser process handles this one.
+        }
       }
     }
   }
@@ -1558,7 +1573,7 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
       type == WebNavigationTypeOther;
   if (is_fork) {
     // Open the URL via the browser, not via WebKit.
-    OpenURL(webview, url, disposition);
+    OpenURL(webview, url, GURL(), disposition);
     return IGNORE_ACTION;
   }
 
@@ -1823,8 +1838,9 @@ void RenderView::OnMissingPluginStatus(WebPluginDelegate* delegate,
 }
 
 void RenderView::OpenURL(WebView* webview, const GURL& url,
+                         const GURL& referrer,
                          WindowOpenDisposition disposition) {
-  Send(new ViewHostMsg_OpenURL(routing_id_, url, disposition));
+  Send(new ViewHostMsg_OpenURL(routing_id_, url, referrer, disposition));
 }
 
 // We are supposed to get a single call to Show for a newly created RenderView
@@ -2268,9 +2284,16 @@ void RenderView::OnPasswordFormsSeen(WebView* webview,
 }
 
 WebHistoryItem* RenderView::GetHistoryEntryAtOffset(int offset) {
-  // This doesn't work in the multi-process case because we don't want to
-  // hang, as it might lead to deadlocks.  Use GoToEntryAtOffsetAsync.
-  return NULL;
+  // Our history list is kept in the browser process on the UI thread.  Since
+  // we can't make a sync IPC call to that thread without risking deadlock,
+  // we use a trick: construct a fake history item of the form:
+  //   history://go/OFFSET
+  // When WebCore tells us to navigate to it, we tell the browser process to
+  // do a back/forward navigation instead.
+
+  GURL url(StringPrintf("%s://go/%d", kBackForwardNavigationScheme, offset));
+  history_navigation_item_ = WebHistoryItem::Create(url, L"", "", NULL);
+  return history_navigation_item_.get();
 }
 
 void RenderView::GoToEntryAtOffsetAsync(int offset) {
@@ -2618,6 +2641,21 @@ void RenderView::TransitionToCommittedForNewPage() {
 }
 
 void RenderView::DidAddHistoryItem() {
+  // We don't want to update the history length for the start page
+  // navigation.
+  WebFrame* main_frame = webview()->GetMainFrame();
+  DCHECK(main_frame != NULL);
+
+  WebDataSource* ds = main_frame->GetDataSource();
+  DCHECK(ds != NULL);
+
+  const WebRequest& request = ds->GetRequest();
+  RenderViewExtraRequestData* extra_data =
+      static_cast<RenderViewExtraRequestData*>(request.GetExtraData());
+
+  if (extra_data && extra_data->transition_type == PageTransition::START_PAGE)
+    return;
+
   history_back_list_count_++;
   history_forward_list_count_ = 0;
 }

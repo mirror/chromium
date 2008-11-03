@@ -47,12 +47,16 @@ class ProxyConfig {
   std::string pac_url;
 
   // If non-empty, indicates the proxy server to use (of the form host:port).
+  // If proxies depend on the scheme, a string of the format
+  // "scheme1=url[:port];scheme2=url[:port]" may be provided here.
   std::string proxy_server;
 
-  // If non-empty, indicates a comma-delimited list of hosts that should bypass
-  // any proxy configuration.  For these hosts, a direct connection should
-  // always be used.
-  std::string proxy_bypass;
+  // Indicates a list of hosts that should bypass any proxy configuration.  For
+  // these hosts, a direct connection should always be used.
+  std::vector<std::string> proxy_bypass;
+  
+  // Indicates whether local names (no dots) bypass proxies.
+  bool proxy_bypass_local_names;
 
   // Returns true if the given config is equivalent to this config.
   bool Equals(const ProxyConfig& other) const;
@@ -65,11 +69,11 @@ class ProxyConfig {
 // Contains the information about when to retry a proxy server.
 struct ProxyRetryInfo {
   // We should not retry until this time.
-  TimeTicks bad_until;
+  base::TimeTicks bad_until;
 
   // This is the current delay. If the proxy is still bad, we need to increase
   // this delay.
-  TimeDelta current_delay;
+  base::TimeDelta current_delay;
 };
 
 // Map of proxy servers with the associated RetryInfo structures.
@@ -161,7 +165,7 @@ class ProxyService {
   bool config_is_bad_;
 
   // The time when the proxy configuration was last read from the system.
-  TimeTicks config_last_update_time_;
+  base::TimeTicks config_last_update_time_;
 
   // Map of the known bad proxies and the information about the retry time.
   ProxyRetryInfoMap proxy_retry_info_;

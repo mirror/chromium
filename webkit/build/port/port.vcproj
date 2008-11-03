@@ -719,10 +719,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\win\ScreenWin.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\port\platform\win\SoundWin.cpp"
 					>
 				</File>
@@ -738,6 +734,10 @@
 			<Filter
 				Name="chromium"
 				>
+				<File
+					RelativePath="..\..\port\platform\chromium\ChromiumBridge.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\port\platform\chromium\ContextMenuChromium.cpp"
 					>
@@ -763,6 +763,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\port\platform\chromium\FileSystemChromium.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\port\platform\chromium\FileSystemChromiumWin.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\port\platform\chromium\FramelessScrollView.cpp"
 					>
 				</File>
@@ -783,11 +791,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\chromium\PlatformScrollBar.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\port\platform\chromium\PlatformScrollBarChromium.cpp"
+					RelativePath="..\..\port\platform\chromium\PlatformScreenChromium.cpp"
 					>
 				</File>
 				<File
@@ -795,7 +799,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\chromium\ScrollViewChromium.cpp"
+					RelativePath="..\..\port\platform\chromium\ScrollbarThemeChromiumWin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\port\platform\chromium\ScrollbarThemeChromiumWin.h"
 					>
 				</File>
 				<File
@@ -891,10 +899,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\graphics\GraphicsContextPlatformPrivate.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\port\platform\graphics\GraphicsContextPlatformPrivate.h"
 					>
 				</File>
@@ -959,27 +963,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\port\platform\graphics\SkGraphicsContext.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\port\platform\graphics\SkGraphicsContext.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\port\platform\graphics\SkiaUtils.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\port\platform\graphics\SkiaUtils.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\port\platform\graphics\SkPaintContext.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\port\platform\graphics\SkPaintContext.h"
 					>
 				</File>
 				<Filter
@@ -1029,6 +1017,18 @@
 				<Filter
 					Name="chromium"
 					>
+					<File
+						RelativePath="..\..\port\platform\graphics\chromium\ImageBufferData.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\port\platform\graphics\chromium\MediaPlayerPrivateChromium.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\port\platform\graphics\chromium\MediaPlayerPrivateChromium.h"
+						>
+					</File>
 					<File
 						RelativePath="..\..\port\platform\graphics\chromium\PlatformIcon.h"
 						>

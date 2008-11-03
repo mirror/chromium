@@ -9,19 +9,24 @@
 #include "base/gfx/platform_canvas.h"
 #include "base/gfx/rect.h"
 #include "base/gfx/size.h"
+#include "base/logging.h"
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webview.h"
 
 /*static*/
-WebViewHost* WebViewHost::Create(GtkWidget* parent_window,
+WebViewHost* WebViewHost::Create(GtkWidget* box,
                                  WebViewDelegate* delegate,
                                  const WebPreferences& prefs) {
   WebViewHost* host = new WebViewHost();
 
-  // TODO(erg):
-  // - Set "host->view_"
-  // - Call "host->webwidget_->Resize"
+  LOG(INFO) << "In WebViewHost::Create";
+
+  host->view_ = WebWidgetHost::CreateWindow(box, host);
+  g_object_set_data(G_OBJECT(host->view_), "webwidgethost", host);
+
   host->webwidget_ = WebView::Create(delegate, prefs);
+  host->webwidget_->Resize(gfx::Size(640, 480));
+  host->webwidget_->Layout();
 
   return host;
 }

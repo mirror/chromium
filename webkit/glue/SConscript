@@ -23,6 +23,7 @@ input_files = [
   'autocomplete_input_listener.cc',
   'cache_manager.cc',
   'chrome_client_impl.cc',
+  'chromium_bridge_impl.cc',
   'context_menu_client_impl.cc',
   'cpp_binding_example.cc',
   'cpp_bound_class.cc',
@@ -69,10 +70,23 @@ input_files = [
   'webview_impl.cc',
 ]
 
+if env['PLATFORM'] == 'posix':
+  # TODO(port): until we have plugin support for Linux, these files aren't
+  # built.
+  remove_files = [
+    'plugins/plugin_host.cc',
+    'plugins/plugin_instance.cc',
+    'plugins/plugin_string_stream.cc',
+    'plugins/plugin_stream_url.cc',
+  ]
+
+  for file in remove_files:
+    input_files.remove(file)
+
 if env['PLATFORM'] == 'win32':
   # TODO(port): These extra files aren't win32-specific, they've just not been
   # tested on other platforms yet.
-  input_files.append([
+  input_files.extend([
     '$PENDING_DIR/AccessibleBase.cpp',
     '$PENDING_DIR/AccessibleDocument.cpp',
     'glue_accessibility.cc',
@@ -82,7 +96,14 @@ if env['PLATFORM'] == 'win32':
     'plugins/plugin_stream.cc',
     'plugins/webplugin_delegate_impl.cc',
     'webdropdata.cc',
-    'webinputevent_win.cc',
   ])
+
+if env['PLATFORM'] == 'win32':
+  input_files.extend([
+    'webinputevent_win.cc',
+    'webkit_glue_win.cc',
+  ])
+elif env['PLATFORM'] == 'posix':
+  input_files.append('webinputevent_linux.cc')
 
 env.ChromeStaticLibrary('glue', input_files)

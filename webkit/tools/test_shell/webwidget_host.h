@@ -42,6 +42,7 @@ class WebWidgetHost {
 #endif
 
   void DiscardBackingStore();
+  void Paint();
 
  protected:
   WebWidgetHost();
@@ -51,7 +52,6 @@ class WebWidgetHost {
   // Per-class wndproc.  Returns true if the event should be swallowed.
   virtual bool WndProc(UINT message, WPARAM wparam, LPARAM lparam);
 
-  void Paint();
   void Resize(LPARAM lparam);
   void MouseEvent(UINT message, WPARAM wparam, LPARAM lparam);
   void WheelEvent(WPARAM wparam, LPARAM lparam);
@@ -63,13 +63,26 @@ class WebWidgetHost {
 #elif defined(OS_MACOSX)
   // These need to be called from a non-subclass, so they need to be public.
  public:
-  void Paint();
   void Resize(const gfx::Rect& rect);
   void MouseEvent(NSEvent *);
   void WheelEvent(NSEvent *);
   void KeyEvent(NSEvent *);
   void SetFocus(bool enable);
  protected:
+#elif defined(OS_LINUX)
+ public:
+  // ---------------------------------------------------------------------------
+  // This is needed on Linux because the GtkWidget creation is the same between
+  // both web view hosts and web widget hosts. The Windows code manages this by
+  // reusing the WndProc function (static, above). However, GTK doesn't use a
+  // single big callback function like that so we have a static function that
+  // sets up a GtkWidget correctly.
+  //   parent: a GtkBox to pack the new widget at the end of
+  //   host: a pointer to a WebWidgetHost (or subclass thereof)
+  // ---------------------------------------------------------------------------
+  static gfx::WindowHandle CreateWindow(gfx::WindowHandle parent, void* host);
+  void WindowDestroyed();
+  void Resize(const gfx::Size& size);
 #endif
 
   void TrackMouseLeave(bool enable);

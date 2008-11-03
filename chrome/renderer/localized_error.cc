@@ -12,24 +12,20 @@
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
 #include "webkit/glue/weberror.h"
+#include "webkit/glue/webkit_glue.h"
 
 #include "generated_resources.h"
 
 namespace {
 
-// Helper method for generating the google cache lookup url.
-const std::wstring ConstructGoogleCacheUrl(const std::wstring& url) {
-  // TODO(tc): use locale based google domain
-  std::wstring cache_url(L"http://www.google.com/search?q=cache:");
-  cache_url.append(EscapeQueryParamValueUTF8(url));
-  return cache_url;
-}
+static const char* kRedirectLoopLearnMoreUrl =
+    "http://www.google.com/support/chrome/bin/answer.py?answer=95626";
 
 enum NAV_SUGGESTIONS {
   SUGGEST_NONE     = 0,
   SUGGEST_RELOAD   = 1 << 0,
-  SUGGEST_CACHE    = 1 << 1,
-  SUGGEST_HOSTNAME = 1 << 2,
+  SUGGEST_HOSTNAME = 1 << 1,
+  SUGGEST_LEARNMORE = 1 << 2,
 };
 
 struct WebErrorNetErrorMap {
@@ -47,21 +43,21 @@ WebErrorNetErrorMap net_error_options[] = {
    IDS_ERRORPAGES_HEADING_NOT_AVAILABLE,
    IDS_ERRORPAGES_SUMMARY_NOT_AVAILABLE,
    IDS_ERRORPAGES_DETAILS_TIMED_OUT,
-   SUGGEST_RELOAD | SUGGEST_CACHE,
+   SUGGEST_RELOAD,
   },
   {net::ERR_CONNECTION_FAILED,
    IDS_ERRORPAGES_TITLE_NOT_AVAILABLE,
    IDS_ERRORPAGES_HEADING_NOT_AVAILABLE,
    IDS_ERRORPAGES_SUMMARY_NOT_AVAILABLE,
    IDS_ERRORPAGES_DETAILS_CONNECT_FAILED,
-   SUGGEST_RELOAD | SUGGEST_CACHE,
+   SUGGEST_RELOAD,
   },
   {net::ERR_NAME_NOT_RESOLVED,
    IDS_ERRORPAGES_TITLE_NOT_AVAILABLE,
    IDS_ERRORPAGES_HEADING_NOT_AVAILABLE,
    IDS_ERRORPAGES_SUMMARY_NOT_AVAILABLE,
    IDS_ERRORPAGES_DETAILS_NAME_NOT_RESOLVED,
-   SUGGEST_RELOAD | SUGGEST_CACHE,
+   SUGGEST_RELOAD,
   },
   {net::ERR_INTERNET_DISCONNECTED,
    IDS_ERRORPAGES_TITLE_NOT_AVAILABLE,
@@ -82,7 +78,7 @@ WebErrorNetErrorMap net_error_options[] = {
    IDS_ERRORPAGES_HEADING_TOO_MANY_REDIRECTS,
    IDS_ERRORPAGES_SUMMARY_TOO_MANY_REDIRECTS,
    IDS_ERRORPAGES_DETAILS_TOO_MANY_REDIRECTS,
-   SUGGEST_RELOAD,
+   SUGGEST_RELOAD | SUGGEST_LEARNMORE,
   },
 };
 
@@ -121,13 +117,13 @@ void GetLocalizedErrorValues(const WebError& error,
   }
   error_strings->SetString(L"suggestionsHeading", suggestions_heading);
 
-  std::wstring failed_url(UTF8ToWide(error.GetFailedURL().spec()));
+  std::wstring failed_url(ASCIIToWide(error.GetFailedURL().spec()));
   // URLs are always LTR.
   if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT)
     l10n_util::WrapStringWithLTRFormatting(&failed_url);
   error_strings->SetString(L"title",
                            l10n_util::GetStringF(options.title_resource_id,
-                                                 failed_url.c_str()));
+                                                 failed_url));
   error_strings->SetString(L"heading",
                            l10n_util::GetString(options.heading_resource_id));
 
@@ -135,7 +131,7 @@ void GetLocalizedErrorValues(const WebError& error,
   summary->SetString(L"msg",
       l10n_util::GetString(options.summary_resource_id));
   // TODO(tc): we want the unicode url here since it's being displayed
-  summary->SetString(L"failedUrl", failed_url.c_str());
+  summary->SetString(L"failedUrl", failed_url);
   error_strings->Set(L"summary", summary);
 
   // Error codes are expected to be negative
@@ -151,17 +147,8 @@ void GetLocalizedErrorValues(const WebError& error,
     DictionaryValue* suggest_reload = new DictionaryValue;
     suggest_reload->SetString(L"msg",
         l10n_util::GetString(IDS_ERRORPAGES_SUGGESTION_RELOAD));
-    suggest_reload->SetString(L"reloadUrl", failed_url.c_str());
+    suggest_reload->SetString(L"reloadUrl", failed_url);
     error_strings->Set(L"suggestionsReload", suggest_reload);
-  }
-
-  if (options.suggestions & SUGGEST_CACHE) {
-    DictionaryValue* suggest_cache = new DictionaryValue;
-    suggest_cache->SetString(L"msg",
-        l10n_util::GetString(IDS_ERRORPAGES_SUGGESTION_CACHE));
-    suggest_cache->SetString(L"cacheUrl",
-        ConstructGoogleCacheUrl(failed_url).c_str());
-    error_strings->Set(L"suggestionsCache", suggest_cache);
   }
 
   if (options.suggestions & SUGGEST_HOSTNAME) {
@@ -171,22 +158,49 @@ void GetLocalizedErrorValues(const WebError& error,
       DictionaryValue* suggest_home_page = new DictionaryValue;
       suggest_home_page->SetString(L"suggestionsHomepageMsg",
           l10n_util::GetString(IDS_ERRORPAGES_SUGGESTION_HOMEPAGE));
-      std::wstring homepage(UTF8ToWide(failed_url.GetWithEmptyPath().spec()));
+      std::wstring homepage(ASCIIToWide(failed_url.GetWithEmptyPath().spec()));
       // URLs are always LTR.
       if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT)
         l10n_util::WrapStringWithLTRFormatting(&homepage);
       suggest_home_page->SetString(L"homePage", homepage);
       // TODO(tc): we actually want the unicode hostname
       suggest_home_page->SetString(L"hostName",
-          UTF8ToWide(failed_url.host()));
+          ASCIIToWide(failed_url.host()));
       error_strings->Set(L"suggestionsHomepage", suggest_home_page);
+    }
+  }
+
+  if (options.suggestions & SUGGEST_LEARNMORE) {
+    GURL learn_more_url;
+    switch (options.error_code) {
+      case net::ERR_TOO_MANY_REDIRECTS:
+        learn_more_url = GURL(kRedirectLoopLearnMoreUrl);
+        break;
+      default:
+        break;
+    }
+
+    if (learn_more_url.is_valid()) {
+      // Add the language parameter to the URL.
+      std::string query = learn_more_url.query() + "&hl=" +
+          WideToASCII(webkit_glue::GetWebKitLocale());
+      GURL::Replacements repl;
+      repl.SetQueryStr(query);
+      learn_more_url = learn_more_url.ReplaceComponents(repl);
+
+      DictionaryValue* suggest_learn_more = new DictionaryValue;
+      suggest_learn_more->SetString(L"msg",
+          l10n_util::GetString(IDS_ERRORPAGES_SUGGESTION_LEARNMORE));
+      suggest_learn_more->SetString(L"learnMoreUrl",
+                                    ASCIIToWide(learn_more_url.spec()));
+      error_strings->Set(L"suggestionsLearnMore", suggest_learn_more);
     }
   }
 }
 
 void GetFormRepostErrorValues(const GURL& display_url,
                               DictionaryValue* error_strings) {
-  std::wstring failed_url(UTF8ToWide(display_url.spec()));
+  std::wstring failed_url(ASCIIToWide(display_url.spec()));
   // URLs are always LTR.
   if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT)
     l10n_util::WrapStringWithLTRFormatting(&failed_url);
@@ -201,5 +215,3 @@ void GetFormRepostErrorValues(const GURL& display_url,
                      l10n_util::GetString(IDS_ERRORPAGES_HTTP_POST_WARNING));
   error_strings->Set(L"summary", summary);
 }
-
-

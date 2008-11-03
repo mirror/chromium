@@ -103,6 +103,11 @@ DraggedTabController::~DraggedTabController() {
   in_destructor_ = true;
   CleanUpSourceTab();
   MessageLoopForUI::current()->RemoveObserver(this);
+  // Need to delete the view here manually _before_ we reset the dragged
+  // contents to NULL, otherwise if the view is animating to its destination
+  // bounds, it won't be able to clean up properly since its cleanup routine
+  // uses GetIndexForDraggedContents, which will be invalid.
+  view_.reset(NULL);
   ChangeDraggedContents(NULL); // This removes our observer.
 }
 
@@ -143,13 +148,15 @@ bool DraggedTabController::IsDragSourceTab(Tab* tab) const {
 
 void DraggedTabController::OpenURLFromTab(TabContents* source,
                                           const GURL& url,
+                                          const GURL& referrer,
                                           WindowOpenDisposition disposition,
                                           PageTransition::Type transition) {
   if (original_delegate_) {
     if (disposition == CURRENT_TAB)
       disposition = NEW_WINDOW;
 
-    original_delegate_->OpenURLFromTab(source, url, disposition, transition);
+    original_delegate_->OpenURLFromTab(source, url, referrer,
+                                       disposition, transition);
   }
 }
 
@@ -498,8 +505,11 @@ void DraggedTabController::Detach() {
   TabStripModel* attached_model = attached_tabstrip_->model();
   int index = attached_model->GetIndexOfTabContents(dragged_contents_);
   if (index >= 0 && index < attached_model->count()) {
+    // Sometimes, DetachTabContentsAt has consequences that result in
+    // attached_tabstrip_ being set to NULL, so we need to save it first.
+    TabStrip* attached_tabstrip = attached_tabstrip_;
     attached_model->DetachTabContentsAt(index);
-    attached_tabstrip_->SchedulePaint();
+    attached_tabstrip->SchedulePaint();
   }
 
   // If we've removed the last Tab from the TabStrip, hide the frame now.
@@ -511,8 +521,11 @@ void DraggedTabController::Detach() {
   if (!photobooth_.get())
     photobooth_.reset(new HWNDPhotobooth(dragged_contents_->GetContainerHWND()));
 
-  // Update the View.
-  view_->Detach(photobooth_.get());
+  // Update the View. This NULL check is necessary apparently in some
+  // conditions during automation where the view_ is destroyed inside a
+  // function call preceding this point but after it is created.
+  if (view_.get())
+    view_->Detach(photobooth_.get());
 
   // We need to be the delegate so we receive messages about stuff,
   // otherwise our dragged_contents() may be replaced and subsequently

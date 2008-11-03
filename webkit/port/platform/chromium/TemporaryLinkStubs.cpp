@@ -29,7 +29,6 @@
 #define WIN32_COMPILE_HACK
 
 MSVC_PUSH_WARNING_LEVEL(0);
-#include "Color.h"
 #include "SSLKeyGenerator.h"
 #include "KURL.h"
 #include "NotImplemented.h"
@@ -37,11 +36,8 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 using namespace WebCore;
-
-Color WebCore::focusRingColor() { notImplemented(); return 0xFF7DADD9; }
-void WebCore::setFocusRingColorChangeFunction(void (*)()) { notImplemented(); }
-
 String WebCore::signedPublicKeyAndChallengeString(unsigned, const String&, const KURL&) { notImplemented(); return String(); }
+void WebCore::getSupportedKeySizes(Vector<String>&) { notImplemented(); }
 
 String KURL::fileSystemPath() const { notImplemented(); return String(); }
 
@@ -52,14 +48,7 @@ PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String& fi
 }
 
 namespace WTF {
+#if !defined(__linux__)
 void scheduleDispatchFunctionsOnMainThread() { notImplemented(); }
-}
-
-#if USE(JSC)
-#include "EventLoop.h"
-#include "PluginView.h"
-
-void EventLoop::cycle() { notImplemented(); }
-
-void PluginView::setJavaScriptPaused(bool) { notImplemented(); }
 #endif
+}

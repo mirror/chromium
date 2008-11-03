@@ -7,15 +7,15 @@ import re
 
 Import('env')
 
-webcore = env.Dir('#../third_party/WebKit/WebCore')
+webcore = env.Dir('$CHROME_SRC_DIR/third_party/WebKit/WebCore')
 webcore_posix = webcore.abspath.replace('\\', '/')
 
 cygwin = env.Dir('$CYGWIN_DIR/bin')
 cygwin_posix = cygwin.abspath.replace('\\', '/')
 
-pending = env.Dir('#../webkit/pending')
-portroot = env.Dir('#../webkit/port')
-webkit_build = env.Dir('#../webkit/build')
+pending = env.Dir('$CHROME_SRC_DIR/webkit/pending')
+portroot = env.Dir('$CHROME_SRC_DIR/webkit/port')
+webkit_build = env.Dir('$CHROME_SRC_DIR/webkit/build')
 
 
 def PosixIncludes(env, prefix, files, suffix):
@@ -195,7 +195,9 @@ idl_files = [
     'dom/EventTarget.idl',
     'dom/EventTargetNode.idl',
     'dom/KeyboardEvent.idl',
+    'dom/MessageChannel.idl',
     'dom/MessageEvent.idl',
+    'dom/MessagePort.idl',
     'dom/MouseEvent.idl',
     'dom/MutationEvent.idl',
     'dom/NamedNodeMap.idl',
@@ -204,7 +206,6 @@ idl_files = [
     'dom/NodeIterator.idl',
     'dom/NodeList.idl',
     'dom/Notation.idl',
-    'dom/NSResolver.idl',
     'dom/OverflowEvent.idl',
     'dom/ProcessingInstruction.idl',
     'dom/ProgressEvent.idl',
@@ -276,7 +277,6 @@ idl_files = [
     'html/HTMLQuoteElement.idl',
     'html/HTMLScriptElement.idl',
     'html/HTMLSelectElement.idl',
-    'html/HTMLSelectionInputElement.idl',
     'html/HTMLSourceElement.idl',
     'html/HTMLStyleElement.idl',
     'html/HTMLTableCaptionElement.idl',
@@ -304,7 +304,6 @@ idl_files = [
     'page/DOMSelection.idl',
     'page/DOMWindow.idl',
     'page/History.idl',
-    'page/JavaScriptCallFrame.idl',
     'page/Location.idl',
     'page/Navigator.idl',
     'page/Screen.idl',

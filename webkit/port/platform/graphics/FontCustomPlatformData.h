@@ -21,8 +21,18 @@
 #ifndef FontCustomPlatformData_h
 #define FontCustomPlatformData_h
 
+#if PLATFORM(DARWIN)
+// TODO(port): This #include isn't strictly kosher, but we're currently using
+// the Mac font code from upstream WebKit, and we need to pick up their header.
+#undef FontCustomPlatformData_h
+#include "third_party/WebKit/WebCore/platform/graphics/mac/FontCustomPlatformData.h"
+#else
+
 #include <wtf/Noncopyable.h>
+
+#if PLATFORM(WIN_OS)
 #include <windows.h>
+#endif
 
 namespace WebCore {
 
@@ -30,18 +40,24 @@ class FontPlatformData;
 class SharedBuffer;
 
 struct FontCustomPlatformData : Noncopyable {
+#if PLATFORM(WIN_OS)
     FontCustomPlatformData(HFONT font)
         : m_font(font)
     {}
+#endif
+
     ~FontCustomPlatformData();
 
     FontPlatformData fontPlatformData(int size, bool bold, bool italic);
 
+#if PLATFORM(WIN_OS)
     HFONT m_font;
+#endif
 };
 
 FontCustomPlatformData* createFontCustomPlatformData(SharedBuffer*);
 
 }
 
+#endif
 #endif

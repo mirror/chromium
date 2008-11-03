@@ -24,6 +24,7 @@
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/resource_loader_bridge.h"
+#include "webkit/glue/screen_info.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webpreferences.h"
@@ -40,6 +41,10 @@ struct ViewMsg_Navigate_Params {
 
   // The URL to load.
   GURL url;
+
+  // The URL to send in the "Referer" header field. Can be empty if there is
+  // no referrer.
+  GURL referrer;
 
   // The type of transition.
   PageTransition::Type transition;
@@ -749,6 +754,7 @@ struct ParamTraits<ViewMsg_Navigate_Params> {
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, p.page_id);
     WriteParam(m, p.url);
+    WriteParam(m, p.referrer);
     WriteParam(m, p.transition);
     WriteParam(m, p.state);
     WriteParam(m, p.reload);
@@ -757,6 +763,7 @@ struct ParamTraits<ViewMsg_Navigate_Params> {
     return
       ReadParam(m, iter, &p->page_id) &&
       ReadParam(m, iter, &p->url) &&
+      ReadParam(m, iter, &p->referrer) &&
       ReadParam(m, iter, &p->transition) &&
       ReadParam(m, iter, &p->state) &&
       ReadParam(m, iter, &p->reload);
@@ -1576,7 +1583,6 @@ struct ParamTraits<WebPreferences> {
     WriteParam(m, p.shrinks_standalone_images_to_fit);
     WriteParam(m, p.uses_universal_detector);
     WriteParam(m, p.text_areas_are_resizable);
-    WriteParam(m, p.dashboard_compatibility_mode);
     WriteParam(m, p.java_enabled);
     WriteParam(m, p.user_style_sheet_enabled);
     WriteParam(m, p.user_style_sheet_location);
@@ -1604,7 +1610,6 @@ struct ParamTraits<WebPreferences> {
         ReadParam(m, iter, &p->shrinks_standalone_images_to_fit) &&
         ReadParam(m, iter, &p->uses_universal_detector) &&
         ReadParam(m, iter, &p->text_areas_are_resizable) &&
-        ReadParam(m, iter, &p->dashboard_compatibility_mode) &&
         ReadParam(m, iter, &p->java_enabled) &&
         ReadParam(m, iter, &p->user_style_sheet_enabled) &&
         ReadParam(m, iter, &p->user_style_sheet_location) &&
@@ -1650,6 +1655,30 @@ struct ParamTraits<WebDropData> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"<WebDropData>");
+  }
+};
+
+// Traits for ScreenInfo
+template <>
+struct ParamTraits<webkit_glue::ScreenInfo> {
+  typedef webkit_glue::ScreenInfo param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.depth);
+    WriteParam(m, p.depth_per_component);
+    WriteParam(m, p.is_monochrome);
+    WriteParam(m, p.rect);
+    WriteParam(m, p.available_rect);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    return
+      ReadParam(m, iter, &p->depth) &&
+      ReadParam(m, iter, &p->depth_per_component) &&
+      ReadParam(m, iter, &p->is_monochrome) &&
+      ReadParam(m, iter, &p->rect) &&
+      ReadParam(m, iter, &p->available_rect);
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<webkit_glue::ScreenInfo>");
   }
 };
 

@@ -13,6 +13,8 @@
 
 #include "generated_resources.h"
 
+using base::Time;
+
 namespace {
 
 // Functions used for sorting.
@@ -75,6 +77,7 @@ BookmarkModel::BookmarkModel(Profile* profile)
       root_(this, GURL()),
       bookmark_bar_node_(NULL),
       other_node_(NULL),
+      observers_(ObserverList<BookmarkModelObserver>::NOTIFY_EXISTING_ONLY),
       waiting_for_history_load_(false),
       loaded_signal_(CreateEvent(NULL, TRUE, FALSE, NULL)) {
   // Create the bookmark bar and other bookmarks folders. These always exist.
@@ -199,6 +202,22 @@ void BookmarkModel::GetBookmarksMatchingText(
         break;
     }
   }
+}
+
+bool BookmarkModel::DoesBookmarkMatchText(const std::wstring& text,
+                                          BookmarkNode* node) {
+  if (!node->is_url())
+    return false;
+
+  QueryParser parser;
+  ScopedVector<QueryNode> query_nodes;
+  parser.ParseQuery(text, &query_nodes.get());
+  if (query_nodes.empty())
+    return false;
+
+  Snippet::MatchPositions match_position;
+  return parser.DoesQueryMatch(node->GetTitle(), query_nodes.get(),
+                               &match_position);
 }
 
 void BookmarkModel::Remove(BookmarkNode* parent, int index) {
@@ -355,8 +374,11 @@ BookmarkNode* BookmarkModel::AddURLWithCreationTime(
   new_node->date_added_ = creation_time;
   new_node->type_ = history::StarredEntry::URL;
 
-  AutoLock url_lock(url_lock_);
-  nodes_ordered_by_url_set_.insert(new_node);
+  {
+    // Only hold the lock for the duration of the insert.
+    AutoLock url_lock(url_lock_);
+    nodes_ordered_by_url_set_.insert(new_node);
+  }
 
   return AddNode(parent, index, new_node, was_bookmarked);
 }
@@ -535,7 +557,7 @@ void BookmarkModel::RemoveAndDeleteNode(BookmarkNode* delete_me) {
     store_->ScheduleSave();
 
   FOR_EACH_OBSERVER(BookmarkModelObserver, observers_,
-                    BookmarkNodeRemoved(this, parent, index));
+                    BookmarkNodeRemoved(this, parent, index, node.get()));
 
   if (details.changed_urls.empty()) {
     // No point in sending out notification if the starred state didn't change.
@@ -596,7 +618,7 @@ BookmarkNode* BookmarkModel::GetNodeByID(BookmarkNode* node, int id) {
 bool BookmarkModel::IsValidIndex(BookmarkNode* parent,
                                  int index,
                                  bool allow_end) {
-  return (parent &&
+  return (parent && parent->is_folder() &&
           (index >= 0 && (index < parent->GetChildCount() ||
                           (allow_end && index == parent->GetChildCount()))));
   }

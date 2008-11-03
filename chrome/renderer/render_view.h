@@ -206,6 +206,7 @@ class RenderView : public RenderWidget, public WebViewDelegate,
       std::string* actual_mime_type);
   virtual void OnMissingPluginStatus(WebPluginDelegate* delegate, int status);
   virtual void OpenURL(WebView* webview, const GURL& url,
+                       const GURL& referrer,
                        WindowOpenDisposition disposition);
   virtual void DidDownloadImage(int id,
                                 const GURL& image_url,
@@ -669,6 +670,11 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // Set if we are waiting for an ack for ViewHostMsg_CreateWindow
   bool waiting_for_create_window_ack_;
 
+  // A cached WebHistoryItem used for back/forward navigations initiated by
+  // WebCore (via the window.history.go API).  We only have one such navigation
+  // pending at a time.
+  scoped_refptr<WebHistoryItem> history_navigation_item_;
+  
   DISALLOW_COPY_AND_ASSIGN(RenderView);
 };
 

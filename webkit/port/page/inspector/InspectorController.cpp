@@ -54,14 +54,11 @@
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "GraphicsContext.h"
+#include "HitTestResult.h"
 #include "HTMLFrameOwnerElement.h"
 #include "InspectorClient.h"
 #include "v8_proxy.h"
 #include "v8_binding.h"
-// TODO(ojan): Import this and enable the JavaScriptDebugServer in the code below.
-// We need to do this once we start adding debugger hooks or when we do the next
-// full webkit merge, whichever comes first.
-// #include "JavaScriptDebugServer.h"
 #include "Page.h"
 #include "Range.h"
 #include "ResourceRequest.h"
@@ -78,6 +75,10 @@
 #if ENABLE(DATABASE)
 #include "Database.h"
 #include "JSDatabase.h"
+#endif
+
+#if ENABLE(JAVASCRIPT_DEBUGGER)
+#include "JavaScriptDebugServer.h"
 #endif
 
 namespace WebCore {
@@ -614,12 +615,18 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
     , m_client(client)
     , m_page(0)
     , m_windowVisible(false)
+#if ENABLE(JAVASCRIPT_DEBUGGER)
     , m_debuggerAttached(false)
     , m_attachDebuggerWhenShown(false)
+#endif
     , m_recordingUserInitiatedProfile(false)
     , m_showAfterVisible(ElementsPanel)
     , m_nextIdentifier(-2)
     , m_groupLevel(0)
+    , m_searchingForNode(false)
+    , m_currentUserInitiatedProfileNumber(-1)
+    , m_nextUserInitiatedProfileNumber(1)
+    , m_previousMessage(0)
 {
     ASSERT_ARG(page, page);
     ASSERT_ARG(client, client);
@@ -757,12 +764,16 @@ void InspectorController::setWindowVisible(bool visible, bool attached)
         populateScriptObjects();
         if (m_nodeToFocus)
             focusNode();
+#if ENABLE(JAVASCRIPT_DEBUGGER)
         if (m_attachDebuggerWhenShown) 
-            startDebuggingAndReloadInspectedPage(); 
+            startDebuggingAndReloadInspectedPage();
+#endif
         if (m_showAfterVisible != CurrentPanel) 
             showPanel(m_showAfterVisible); 
     } else { 
-        stopDebugging(); 
+#if ENABLE(JAVASCRIPT_DEBUGGER)
+        stopDebugging();
+#endif
         resetScriptObjects();
     }
 
@@ -788,7 +799,7 @@ void InspectorController::addMessageToConsole(MessageSource source, MessageLevel
     if (!enabled())
         return;
 
-    addConsoleMessage(new ConsoleMessage(source, level, context, m_groupLevel));
+    addConsoleMessage(context, new ConsoleMessage(source, level, context, m_groupLevel));
 }
 
 void InspectorController::addMessageToConsole(MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceID)
@@ -796,10 +807,10 @@ void InspectorController::addMessageToConsole(MessageSource source, MessageLevel
     if (!enabled())
         return;
 
-    addConsoleMessage(new ConsoleMessage(source, level, message, lineNumber, sourceID, m_groupLevel));
+    addConsoleMessage(0, new ConsoleMessage(source, level, message, lineNumber, sourceID, m_groupLevel));
 }
 
-void InspectorController::addConsoleMessage(ConsoleMessage* consoleMessage)
+void InspectorController::addConsoleMessage(ScriptCallContext* context, ConsoleMessage* consoleMessage)
 {
     ASSERT(enabled());
     ASSERT_ARG(consoleMessage, consoleMessage);
@@ -832,7 +843,7 @@ void InspectorController::startGroup(MessageSource source, ScriptCallContext* co
 {    
     ++m_groupLevel;
 
-    addConsoleMessage(new ConsoleMessage(source, StartGroupMessageLevel, context, m_groupLevel));
+    addConsoleMessage(context, new ConsoleMessage(source, StartGroupMessageLevel, context, m_groupLevel));
 }
 
 void InspectorController::endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL)
@@ -842,7 +853,7 @@ void InspectorController::endGroup(MessageSource source, unsigned lineNumber, co
 
     --m_groupLevel;
 
-    addConsoleMessage(new ConsoleMessage(source, EndGroupMessageLevel, String(), lineNumber, sourceURL, m_groupLevel));
+    addConsoleMessage(0, new ConsoleMessage(source, EndGroupMessageLevel, String(), lineNumber, sourceURL, m_groupLevel));
 }
 
 void InspectorController::attachWindow()
@@ -886,6 +897,41 @@ void InspectorController::setAttachedWindowHeight(unsigned height)
 {
     notImplemented();
 }
+
+void InspectorController::toggleSearchForNodeInPage()
+{
+    if (!enabled())
+        return;
+
+    m_searchingForNode = !m_searchingForNode;
+    if (!m_searchingForNode)
+        hideHighlight();
+}
+
+void InspectorController::mouseDidMoveOverElement(const HitTestResult& result, unsigned modifierFlags)
+{
+    if (!enabled() || !m_searchingForNode)
+        return;
+
+    Node* node = result.innerNode();
+    if (node)
+        highlight(node);
+}
+
+void InspectorController::handleMousePressOnNode(Node* node)
+{
+    if (!enabled())
+        return;
+
+    ASSERT(m_searchingForNode);
+    ASSERT(node);
+    if (!node)
+        return;
+
+    // inspect() will implicitly call ElementsPanel's focusedNodeChanged() and the hover feedback will be stopped there.
+    inspect(node);
+}
+
 
 void InspectorController::windowScriptObjectAvailable()
 {
@@ -1003,7 +1049,9 @@ void InspectorController::close()
 
     ++bug1228513::g_totalNumClose;
 
-    stopDebugging(); 
+#if ENABLE(JAVASCRIPT_DEBUGGER)
+    stopDebugging();
+#endif
     closeWindow();
     if (m_page) {
         v8::HandleScope handle_scope;
@@ -1615,16 +1663,6 @@ void InspectorController::moveWindowBy(float x, float y) const
     FloatRect frameRect = m_page->chrome()->windowRect();
     frameRect.move(x, y);
     m_page->chrome()->setWindowRect(frameRect);
-}
-
-void InspectorController::startDebuggingAndReloadInspectedPage()
-{
-    notImplemented();
-}
-
-void InspectorController::stopDebugging()
-{
-    notImplemented();
 }
 
 static void drawOutlinedRect(GraphicsContext& context, const IntRect& rect, const Color& fillColor)

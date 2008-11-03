@@ -33,6 +33,7 @@
 #include "UniscribeStateTextRun.h"
 
 #include "base/gfx/platform_canvas_win.h"
+#include "base/gfx/skia_utils.h"
 #include "graphics/SkiaUtils.h"
 #include "webkit/glue/webkit_glue.h"
 
@@ -53,58 +54,77 @@ void Font::drawGlyphs(GraphicsContext* graphicsContext,
     // Default size for the buffer. It should be enough for most of cases.
     const int kDefaultBufferLength = 256;
 
+    SkColor color = context->fillColor();
+    unsigned char alpha = SkColorGetA(color);
+    // Skip 100% transparent text; no need to draw anything.
+    if (!alpha)
+        return;
+
+    // Set up our graphics context.
+    HDC hdc = context->canvas()->beginPlatformPaint();
+    HGDIOBJ oldFont = SelectObject(hdc, font->platformData().hfont());
+
+    // TODO(maruel): http://b/700464 SetTextColor doesn't support transparency.
+    // Enforce non-transparent color.
+    color = SkColorSetRGB(SkColorGetR(color),
+                          SkColorGetG(color),
+                          SkColorGetB(color));
+    SetTextColor(hdc, gfx::SkColorToCOLORREF(color));
+    SetBkMode(hdc, TRANSPARENT);
+
     // Windows needs the characters and the advances in nice contiguous
     // buffers, which we build here.
     Vector<WORD, kDefaultBufferLength> glyphs;
     Vector<int, kDefaultBufferLength> advances;
+
+    // Compute the coordinate. The 'origin' represents the baseline, so we need
+    // to move it up to the top of the bounding square.
+    int x = static_cast<int>(point.x());
+    int lineTop = static_cast<int>(point.y()) - font->ascent();
 
     // We draw the glyphs in chunks to avoid having to do a heap allocation for
     // the arrays of characters and advances. Since ExtTextOut is the
     // lowest-level text output function on Windows, there should be little
     // penalty for splitting up the text. On the other hand, the buffer cannot
     // be bigger than 4094 or the function will fail.
-    int glyph_index = 0;
-    int chunk_x = 0;  // x offset of this span from the point
-    while (glyph_index < numGlyphs) {
-      // how many chars will be in this chunk?
-      int cur_len = std::min(kMaxBufferLength, numGlyphs - glyph_index);
+    int glyphIndex = 0;
+    while (glyphIndex < numGlyphs) {
+        // how many chars will be in this chunk?
+        int curLen = std::min(kMaxBufferLength, numGlyphs - glyphIndex);
 
-      glyphs.resize(cur_len);
-      advances.resize(cur_len);
+        glyphs.resize(curLen);
+        advances.resize(curLen);
 
-      int cur_width = 0;
-      for (int i = 0; i < cur_len; ++i, ++glyph_index) {
-        glyphs[i] = glyphBuffer.glyphAt(from + glyph_index);
-        advances[i] = static_cast<int>(glyphBuffer.advanceAt(from +
-                                                             glyph_index));
-        cur_width += advances[i];
-      }
-
-      // the 'point' represents the baseline, so we need to move it up to the
-      // top of the bounding square by subtracting the ascent
-      SkPoint origin2 = point;
-      origin2.fY -= font->ascent();
-      origin2.fX += chunk_x;
-
-      bool success = false;
-      for (int executions = 0; executions < 2; ++executions) {
-        success = context->paintText(font->platformData().hfont(),
-                                     cur_len,
-                                     &glyphs[0],
-                                     &advances[0],
-                                     origin2);
-        if (!success && executions == 0) {
-          // Ask the browser to load the font for us and retry.
-          webkit_glue::EnsureFontLoaded(font->platformData().hfont());
-          continue;
+        int curWidth = 0;
+        for (int i = 0; i < curLen; ++i, ++glyphIndex) {
+            glyphs[i] = glyphBuffer.glyphAt(from + glyphIndex);
+            advances[i] =
+                static_cast<int>(glyphBuffer.advanceAt(from + glyphIndex));
+            curWidth += advances[i];
         }
-        break;
-      }
 
-      ASSERT(success);
+        bool success = false;
+        for (int executions = 0; executions < 2; ++executions) {
+            success = !!ExtTextOut(hdc, x, lineTop, ETO_GLYPH_INDEX, NULL,
+                                   reinterpret_cast<const wchar_t*>(&glyphs[0]),
+                                   curLen,
+                                   &advances[0]);
 
-      chunk_x += cur_width;
+            if (!success && executions == 0) {
+                // Ask the browser to load the font for us and retry.
+                webkit_glue::EnsureFontLoaded(font->platformData().hfont());
+                continue;
+            }
+            break;
+        }
+
+        ASSERT(success);
+
+        x += curWidth;
     }
+
+    SelectObject(hdc, oldFont);
+    context->canvas()->endPlatformPaint();
 }
 
 FloatRect Font::selectionRectForComplexText(const TextRun& run,
@@ -126,14 +146,39 @@ FloatRect Font::selectionRectForComplexText(const TextRun& run,
                      left - right, static_cast<float>(h));
 }
 
-void Font::drawComplexText(GraphicsContext* context,
+void Font::drawComplexText(GraphicsContext* graphicsContext,
                            const TextRun& run,
                            const FloatPoint& point,
                            int from,
                            int to) const
 {
+    PlatformGraphicsContext* context = graphicsContext->platformContext();
     UniscribeStateTextRun state(run, *this);
-    context->platformContext()->paintComplexText(state, point, from, to, ascent());
+
+    SkColor color = context->fillColor();
+    uint8 alpha = SkColorGetA(color);
+    // Skip 100% transparent text; no need to draw anything.
+    if (!alpha)
+        return;
+
+    HDC hdc = context->canvas()->beginPlatformPaint();
+
+    // TODO(maruel): http://b/700464 SetTextColor doesn't support transparency.
+    // Enforce non-transparent color.
+    color = SkColorSetRGB(SkColorGetR(color),
+                          SkColorGetG(color),
+                          SkColorGetB(color));
+    SetTextColor(hdc, gfx::SkColorToCOLORREF(color));
+    SetBkMode(hdc, TRANSPARENT);
+
+    // Uniscribe counts the coordinates from the upper left, while WebKit uses
+    // the baseline, so we have to subtract off the ascent.
+    state.Draw(hdc,
+               static_cast<int>(point.x()),
+               static_cast<int>(point.y() - ascent()),
+               from,
+               to);
+    context->canvas()->endPlatformPaint();
 }
 
 float Font::floatWidthForComplexText(const TextRun& run) const

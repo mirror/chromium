@@ -38,6 +38,8 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
+using base::TimeDelta;
+
 namespace views {
 class ClientView;
 }
@@ -866,8 +868,13 @@ void ConstrainedWindowImpl::ActivateConstrainedWindow() {
       // better find whether the inner window should get focus.
       ::SetFocus(constrained_contents_->GetContainerHWND());
     } else {
-      // Give our window the focus so we get keyboard messages.
-      ::SetFocus(GetHWND());
+      views::View* view_to_focus = NULL;
+      if (window_delegate()) 
+        view_to_focus = window_delegate()->GetInitiallyFocusedView();
+      if (view_to_focus)
+        view_to_focus->RequestFocus();
+      else  // Give our window the focus so we get keyboard messages.
+        ::SetFocus(GetHWND());
     }
   }
 }
@@ -978,10 +985,11 @@ void ConstrainedWindowImpl::ActivateContents(TabContents* contents) {
 
 void ConstrainedWindowImpl::OpenURLFromTab(TabContents* source,
                                            const GURL& url,
+                                           const GURL& referrer,
                                            WindowOpenDisposition disposition,
                                            PageTransition::Type transition) {
   // We ignore source right now.
-  owner_->OpenURL(this, url, disposition, transition);
+  owner_->OpenURL(this, url, referrer, disposition, transition);
 }
 
 void ConstrainedWindowImpl::LoadingStateChanged(TabContents* source) {

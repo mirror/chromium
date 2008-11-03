@@ -41,6 +41,7 @@ NavigationEntry::NavigationEntry(TabContentsType type,
                                  SiteInstance* instance,
                                  int page_id,
                                  const GURL& url,
+                                 const GURL& referrer,
                                  const std::wstring& title,
                                  PageTransition::Type transition_type)
     : unique_id_(GetUniqueID()),
@@ -48,9 +49,16 @@ NavigationEntry::NavigationEntry(TabContentsType type,
       site_instance_(instance),
       page_type_(NORMAL_PAGE),
       url_(url),
+      referrer_(referrer),
       title_(title),
       page_id_(page_id),
       transition_type_(transition_type),
       has_post_data_(false),
       restored_(false) {
+}
+
+const std::wstring& NavigationEntry::GetTitleForDisplay() {
+  if (title_.empty())
+    return url_as_string_;
+  return title_;
 }

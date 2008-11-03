@@ -847,7 +847,7 @@ void TextField::Layout() {
 gfx::Size TextField::GetPreferredSize() {
   gfx::Insets insets;
   CalculateInsets(&insets);
-  return gfx::Size(default_width_in_chars_ * font_.ave_char_width() +
+  return gfx::Size(font_.GetExpectedTextWidth(default_width_in_chars_) +
                        insets.width(),
                    num_lines_ * font_.height() + insets.height());
 }
@@ -975,7 +975,7 @@ void TextField::RemoveBorder() {
 
 void TextField::SetEnabled(bool enabled) {
   View::SetEnabled(enabled);
-  SetReadOnly(enabled);
+  SetReadOnly(!enabled);
   edit_->SetEnabled(enabled);
 }
 

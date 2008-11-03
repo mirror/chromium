@@ -125,6 +125,10 @@
 			Name="API"
 			>
 			<File
+				RelativePath="..\..\glue\autofill_form.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\glue\cache_manager.h"
 				>
 			</File>
@@ -158,6 +162,10 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\resource_type.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\screen_info.h"
 				>
 			</File>
 			<File
@@ -278,6 +286,10 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\chrome_client_impl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\chromium_bridge_impl.cc"
 				>
 			</File>
 			<File
@@ -562,6 +574,10 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\webkit_glue.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webkit_glue_win.cc"
 				>
 			</File>
 			<File

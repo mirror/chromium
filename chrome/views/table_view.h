@@ -279,6 +279,9 @@ class TableViewObserver {
 
   // Optional method invoked when the user hits a key with the table in focus.
   virtual void OnKeyDown(unsigned short virtual_keycode) {}
+
+  // Invoked when the user presses the delete key.
+  virtual void OnTableViewDelete(TableView* table_view) {}
 };
 
 class TableView : public NativeControl,
@@ -333,6 +336,7 @@ class TableView : public NativeControl,
   // should be called in the containing view's destructor to avoid destruction
   // issues when the model needs to be deleted before the table.
   void SetModel(TableModel* model);
+  TableModel* model() const { return model_; }
 
   // Resorts the contents.
   void SetSortDescriptors(const SortDescriptors& sort_descriptors);
@@ -386,6 +390,7 @@ class TableView : public NativeControl,
   void SetObserver(TableViewObserver* observer) {
     table_view_observer_ = observer;
   }
+  TableViewObserver* observer() const { return table_view_observer_; }
 
   // Replaces the set of known columns without changing the current visible
   // columns.
@@ -455,6 +460,7 @@ class TableView : public NativeControl,
   // Subclasses can implement in this method extra-painting for cells.
   virtual void PostPaint(int model_row, int column, bool selected,
                          const CRect& bounds, HDC device_context) { }
+  virtual void PostPaint() {}
 
   virtual HWND CreateNativeControl(HWND parent_container);
 
@@ -471,6 +477,14 @@ class TableView : public NativeControl,
   // Called before sorting. This does nothing and is intended for subclasses
   // that need to cache state used during sorting.
   virtual void PrepareForSort() {}
+
+  // Returns the width of the specified column by id, or -1 if the column isn't
+  // visible.
+  int GetColumnWidth(int column_id);
+
+  // Returns the offset from the top of the client area to the start of the
+  // content.
+  int content_offset() const { return content_offset_; }
 
  private:
   // Direction of a sort.
@@ -630,7 +644,6 @@ class TableView : public NativeControl,
   // The preferred size of the table view.
   gfx::Size preferred_size_;
 
-  // The offset from the top of the client area to the start of the content.
   int content_offset_;
 
   // Current sort.

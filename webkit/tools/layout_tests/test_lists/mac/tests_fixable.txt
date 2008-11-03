@@ -947,7 +947,6 @@ V8 | KJS # LayoutTests/fast/css/background-shorthand-invalid-url.html = FAIL
 V8 | KJS # LayoutTests/fast/dom/resource-locations-in-created-html-document.html = FAIL
 V8 | KJS # LayoutTests/fast/forms/form-hides-table.html = FAIL
 V8 | KJS # LayoutTests/fast/forms/input-readonly-autoscroll.html = FAIL
-V8 | KJS # LayoutTests/fast/forms/legend-access-key.html = FAIL
 V8 | KJS # LayoutTests/fast/loader/url-parse-1.html = FAIL
 V8 | KJS # LayoutTests/fast/replaced/replaced-breaking.html = FAIL
 V8 | KJS # LayoutTests/fast/table/text-field-baseline.html = FAIL
@@ -1160,11 +1159,6 @@ V8 | KJS # LayoutTests/http/tests/navigation/relativeanchor-basic.html = FAIL | 
 // Override everything above to make our lives a little easier while
 // we're still getting our bearings.
 // -----------------------------------------------------------------
-
-// Skip all the svg tests until we're rendering correctly. We can't correctly
-// process the events sent by the test to drive the test forward because the
-// objects are in the wrong place (ie, the click "misses" every time).
-V8 # SKIP : LayoutTests/svg/ = TIMEOUT
 
 // These tests hang for an unknown reason. Need to debug why the watchdog
 // thread doesn't kill the app correctly.

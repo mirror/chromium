@@ -130,6 +130,11 @@ const wchar_t kAlwaysCreateDestinationsTab[] =
 // passwords and fill in known passwords).
 const wchar_t kPasswordManagerEnabled[] = L"profile.password_manager_enabled";
 
+// Boolean that is true if the form autofill is on (will record values entered
+// in text inputs in forms and shows them in a popup when user type in a text
+// input with the same name later on).
+const wchar_t kFormAutofillEnabled[] = L"profile.form_autofill_enabled";
+
 // Boolean that is true when SafeBrowsing is enabled.
 const wchar_t kSafeBrowsingEnabled[] = L"safebrowsing.enabled";
 
@@ -193,14 +198,30 @@ const wchar_t kShowHomeButton[] = L"browser.show_home_button";
 const wchar_t kRecentlySelectedEncoding[] =
     L"profile.recently_selected_encodings";
 
-// Boolean prefs that define the default values for the check boxes in the Clear
-// Browsing Data dialog.
+// Clear Browsing Data dialog preferences.
 const wchar_t kDeleteBrowsingHistory[] = L"browser.clear_data.browsing_history";
 const wchar_t kDeleteDownloadHistory[] =
     L"browser.clear_data.download_history";
 const wchar_t kDeleteCache[] = L"browser.clear_data.cache";
 const wchar_t kDeleteCookies[] = L"browser.clear_data.cookies";
 const wchar_t kDeletePasswords[] = L"browser.clear_data.passwords";
+const wchar_t kDeleteFormData[] = L"browser.clear_data.form_data";
+const wchar_t kDeleteTimePeriod[] = L"browser.clear_data.time_period";
+
+// Integer prefs giving the widths of the columns in the bookmark table. Two
+// configs are saved, one with the path column and one without.
+const wchar_t kBookmarkTableNameWidth1[] = L"bookmark_table.name_width_1";
+const wchar_t kBookmarkTableURLWidth1[] = L"bookmark_table.url_width_1";
+const wchar_t kBookmarkTableNameWidth2[] = L"bookmark_table.name_width_2";
+const wchar_t kBookmarkTableURLWidth2[] = L"bookmark_table.url_width_2";
+const wchar_t kBookmarkTablePathWidth[] = L"bookmark_table.path_width";
+
+// Boolean pref to define the default values for using spellchecker.
+const wchar_t kEnableSpellCheck[] = L"browser.enable_spellchecking";
+
+// Bounds of the bookmark manager.
+const wchar_t kBookmarkManagerPlacement[] =
+    L"bookmark_manager.window_placement";
 
 
 // *************** LOCAL STATE ***************
@@ -435,4 +456,3 @@ const wchar_t kBackgroundTasks[] = L"background_tasks";
 #endif  // ENABLE_BACKGROUND_TASK
 
 }  // namespace prefs
-

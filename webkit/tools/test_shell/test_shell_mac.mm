@@ -41,7 +41,7 @@
 #define MAX_LOADSTRING 100
 
 #define BUTTON_WIDTH 72
-#define URLBAR_HEIGHT  24
+#define URLBAR_HEIGHT  32
 
 // Global Variables:
 
@@ -189,7 +189,6 @@ void TestShell::ResetWebPreferences() {
     web_prefs_->shrinks_standalone_images_to_fit = false;
     web_prefs_->uses_universal_detector = false;
     web_prefs_->text_areas_are_resizable = false;
-    web_prefs_->dashboard_compatibility_mode = false;
     web_prefs_->java_enabled = true;
   }
 }
@@ -276,6 +275,8 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   [m_editWnd setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
   [m_editWnd setTarget:web_view];
   [m_editWnd setAction:@selector(takeURLStringValueFrom:)];
+  [[m_editWnd cell] setWraps:NO];
+  [[m_editWnd cell] setScrollable:YES];
 
   // show the window
   [m_mainWnd makeKeyAndOrderFront: nil];
@@ -482,9 +483,12 @@ void TestShell::SizeToDefault() {
 }
 
 void TestShell::SizeTo(int width, int height) {
+  // WebViewHost::Create() sets the HTML content rect to start 32 pixels below
+  // the top of the window to account for the "toolbar". We need to match that
+  // here otherwise the HTML content area will be too short.
   NSRect r = [m_mainWnd contentRectForFrameRect:[m_mainWnd frame]];
   r.size.width = width;
-  r.size.height = height;
+  r.size.height = height + URLBAR_HEIGHT;
   [m_mainWnd setFrame:[m_mainWnd frameRectForContentRect:r] display:YES];
 }
 
@@ -818,8 +822,8 @@ void AppendToLog(const char* file, int line, const char* msg) {
   logging::LogMessage(file, line).stream() << msg;
 }
 
-bool GetMimeTypeFromExtension(std::string &ext, std::string* mime_type) {
-  return net::GetMimeTypeFromExtension(UTF8ToWide(ext), mime_type);
+bool GetMimeTypeFromExtension(const std::wstring &ext, std::string* mime_type) {
+  return net::GetMimeTypeFromExtension(ext, mime_type);
 }
 
 bool GetMimeTypeFromFile(const std::string &file_path,
@@ -828,12 +832,8 @@ bool GetMimeTypeFromFile(const std::string &file_path,
 }
 
 bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                      std::string* ext) {
-  std::wstring wide_ext;
-  bool result = net::GetPreferredExtensionForMimeType(mime_type, &wide_ext);
-  if (result)
-    *ext = WideToUTF8(wide_ext);
-  return result;
+                                      std::wstring* ext) {
+  return net::GetPreferredExtensionForMimeType(mime_type, ext);
 }
 
 std::wstring GetLocalizedString(int message_id) {
@@ -875,6 +875,10 @@ std::string GetDataResource(int resource_id) {
 NSCursor* LoadCursor(int cursor_id) {
   // TODO(port): add some more options here
   return [NSCursor arrowCursor];
+}
+
+CGImageRef GetBitmapResource(int resource_id) {
+  return NULL;
 }
 
 bool GetApplicationDirectory(std::string* path) {
