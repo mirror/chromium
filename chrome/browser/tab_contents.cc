@@ -129,7 +129,7 @@ const std::wstring& TabContents::GetTitle() const {
   // get a new title.
   NavigationEntry* entry = controller_->GetLastCommittedEntry();
   if (entry)
-    return entry->title();
+    return entry->GetTitleForDisplay();
   else if (controller_->LoadingURLLazily())
     return controller_->GetLazyTitle();
   return EmptyWString();

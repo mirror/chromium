@@ -474,7 +474,7 @@ bool NavigationController::LoadingURLLazily() {
 
 const std::wstring& NavigationController::GetLazyTitle() const {
   if (pending_entry_)
-    return pending_entry_->title();
+    return pending_entry_->GetTitleForDisplay();
   else
     return EmptyWString();
 }
