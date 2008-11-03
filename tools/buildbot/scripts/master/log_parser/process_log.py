@@ -104,9 +104,9 @@ class PerformanceLogProcessor(object):
   def _ShouldWriteResults(self):
     """Tells whether the results should be persisted.
 
-    Write results if revision number is available for the current
-    build and the report link was specified."""
-    return self._revision > 0 and self.ReportLink()
+    Write results if revision number is available for the current build.
+    """
+    return self._revision > 0
 
   def _JoinWithSpaces(self, array):
     return ' '.join([str(x) for x in array])
@@ -118,246 +118,6 @@ class PerformanceLogProcessor(object):
     if self._output_dir and not os.path.exists(self._output_dir):
       os.makedirs(self._output_dir)
 
-
-class PageCyclerLogProcessor(PerformanceLogProcessor):
-
-  RESULTS_TYPE_REGEX = re.compile(r'^(__pc.*) = .*')
-
-  RESULTS_REGEX = \
-    re.compile(r'^__pc_.* = ((?P<NUM>\d+)|\[(?P<PAGES_OR_TIMING>.*)\]).*$')
-
-  def Process(self, revision, data):
-    # Revision may be -1, for a forced build.
-    self._revision = revision
-
-    # The text summary wil be built by other methods as we go.
-    self._text_summary = []
-
-    self._MakeOutputDirectory()
-
-    for log_line in data.splitlines():
-     self._ProcessLine(log_line)
-
-    if '__pc_pages' in self._matches:
-      self.__CreateAllPageCyclerTimingData()
-      self.__CreateSummaryPageCyclerTimingData()
-
-    if '__pc_browser_vm_peak' in self._matches:
-      self.__CreateMemoryPeakData('browser', 'vm')
-
-    if '__pc_render_vm_peak' in self._matches:
-      self.__CreateMemoryPeakData('render', 'vm', 'renderer')
-
-    if '__pc_browser_ws_peak' in self._matches:
-      self.__CreateMemoryPeakData('browser', 'ws')
-
-    if '__pc_render_ws_peak' in self._matches:
-      self.__CreateMemoryPeakData('render', 'ws', 'renderer')
-
-    if '__pc_browser_read_op' in self._matches:
-      self.__CreateIoSummaryData('op')
-      self.__CreateIoSummaryData('byte')
-      self.__CreateIoDetailsData('browser')
-
-    if '__pc_render_read_op' in self._matches:
-      self.__CreateIoDetailsData('render', 'renderer')
-
-    return self._text_summary
-
-  def _ProcessLine(self, log_line):
-    type_match = PageCyclerLogProcessor.RESULTS_TYPE_REGEX.match(log_line)
-    if type_match:
-      pattern = type_match.group(1)
-      results_match = PageCyclerLogProcessor.RESULTS_REGEX.match(log_line)
-      if results_match.groupdict()['NUM'] != None:
-        if not pattern in self._matches:
-          self._matches[pattern] = int(results_match.group(2))
-      elif results_match.groupdict()['PAGES_OR_TIMING'] != None:
-        if not pattern in self._matches:
-          self._matches[pattern] = results_match.group(3)
-
-  def __CreateAllPageCyclerTimingData(self):
-    # If we're not writing a file, don't bother with any parsing; the text
-    # summary will be handled by CreateSummaryPageCyclerTimingData.
-    if not self._ShouldWriteResults():
-      return
-    filename = os.path.join(self._output_dir,
-                            '%s.dat' % self._revision)
-    file = open(filename, 'w')
-
-    page_index = 0
-    page_names = self._matches['__pc_pages'].split(',')
-    all_pages_timings = self._matches['__pc_timings'].split(',')
-    for page_name in page_names:
-      page_timings = []
-      for run_index in range(self.__PageCyclerIterations()):
-        index = run_index * self.__NumberOfPageCyclerPages() + page_index
-        page_timings.append(int(all_pages_timings[index]))
-
-      mean_stdd = chromium_utils.FilteredMeanAndStandardDeviation(page_timings)
-      results = [page_name] + [FormatFloat(x) for x in mean_stdd]
-      results.extend(page_timings)
-      file.write(self._JoinWithSpacesAndNewLine(results))
-      os.chmod(filename, READABLE_FILE_PERMISSIONS)
-      page_index += 1
-
-  def __CreateSummaryPageCyclerTimingData(self):
-    all_pages_timing = self._matches['__pc_timings'].split(',')
-    timings_by_iterations = self.__TimingsByIterations(all_pages_timing)
-    std_dev = chromium_utils.FilteredMeanAndStandardDeviation(
-        timings_by_iterations)
-
-    if '__pc_reference_timings' in self._matches:
-      all_ref_pages_timing = self._matches['__pc_reference_timings'].split(',')
-      timings_by_iterations = self.__TimingsByIterations(all_ref_pages_timing)
-      std_dev_ref = chromium_utils.FilteredMeanAndStandardDeviation(
-          timings_by_iterations)
-
-    else:
-      std_dev_ref = [0, 0]
-
-    std_dev = [FormatFloat(x) for x in std_dev]
-    std_dev_ref = [FormatFloat(x) for x in std_dev_ref]
-
-    if self._ShouldWriteResults():
-      results = [self._revision]
-      results.extend(std_dev)
-      results.extend(std_dev_ref)
-      results = self._JoinWithSpacesAndNewLine(results)
-      filename = os.path.join(self._output_dir, 'summary.dat')
-      Prepend(filename, results)
-
-    # Show means.
-    self._text_summary.append('t: %s (%s)' %
-        (FormatHumanReadable(std_dev[0]), FormatHumanReadable(std_dev_ref[0])))
-
-
-  def __CreateMemoryPeakData(self, process, memory_type, file_name=None):
-    """ Writes peak memory data for a given process.
-    Args:
-      process: process ("browser" or "render" [sic]) for which memory data
-          is to be written
-      memory_type: type of memory measurement ('vm' or 'ws' (working set))
-      file_name: use only if file name uses different pattern from type
-          E.g. For type 'render', pass 'renderer' so the filename used is
-          'summary-vm-peak-renderer.dat'.
-    """
-    if not file_name:
-      file_name = process
-
-    memory = self._matches['__pc_%s_%s_peak' % (process, memory_type)]
-    memory_ref =  self._matches['__pc_reference_%s_%s_peak' % (process,
-                                                               memory_type)]
-
-    # Write the summary data file, for graphing.
-    if self._ShouldWriteResults():
-      results = self._JoinWithSpacesAndNewLine(
-          [self._revision, memory, memory_ref])
-      filename = os.path.join(self._output_dir,
-                              'summary-%s-peak-%s.dat' % (memory_type,
-                                                          file_name))
-      Prepend(filename, results)
-
-    # Add info to the waterfall display.
-    self._text_summary.append('%s-%s: %s (%s)' %
-        (memory_type, process[0],
-         FormatHumanReadable(memory), FormatHumanReadable(memory_ref)))
-
-  def __CreateIoSummaryData(self, type):
-    """ Writes IO Summary data of type "byte" or "op"
-    Args:
-      type: IO data for specific type ("byte" or "op").
-    """
-    read = self._matches['__pc_browser_read_%s' % type]
-    write = self._matches['__pc_browser_write_%s' % type]
-    other = self._matches['__pc_browser_other_%s' % type]
-    total = read + write + other
-    read_reference = self._matches['__pc_reference_browser_read_%s'
-                                   % type]
-    write_reference = self._matches['__pc_reference_browser_write_%s'
-                                    % type]
-    other_reference = self._matches['__pc_reference_browser_other_%s'
-                                    % type]
-    total_reference = read_reference + \
-                      write_reference + other_reference
-    if self._ShouldWriteResults():
-      results = self._JoinWithSpacesAndNewLine(
-          [self._revision, total, total_reference])
-      filename = os.path.join(self._output_dir,
-                              'summary-io-%s-browser.dat' % type)
-      Prepend(filename, results)
-    self._text_summary.append('io-%s: %s (%s)' % (type[:4],
-                                       FormatHumanReadable(total),
-                                       FormatHumanReadable(total_reference)))
-
-  def __CreateIoDetailsData(self, type, file_type=None):
-    """ Writes IO details of type "browser" or "render"
-    Args:
-      type: IO data for specific type ("browser" or "render")
-      file_type: use only if file name uses different pattern than type
-        E.g. For type 'render', pass 'renderer' so the filename used is
-        'detail-io-renderer.dat'.
-    """
-    # If we're not writing a file, don't bother with any parsing.
-    if not self._ShouldWriteResults():
-      return
-    if not file_type:
-      file_type = type
-
-    data = [self._revision]
-    detail_keys = (
-        '__pc_%s_read_op' % type,
-        '__pc_%s_write_op' % type,
-        '__pc_%s_other_op' % type,
-        '__pc_%s_read_byte' % type,
-        '__pc_%s_write_byte' % type,
-        '__pc_%s_other_byte' % type,
-        '__pc_reference_%s_read_op' % type,
-        '__pc_reference_%s_write_op' % type,
-        '__pc_reference_%s_other_op' % type,
-        '__pc_reference_%s_read_byte' % type,
-        '__pc_reference_%s_write_byte' % type,
-        '__pc_reference_%s_other_byte' % type)
-
-    data.extend(self.__DetailsByKeys(detail_keys))
-    results = self._JoinWithSpacesAndNewLine(data)
-    filename = os.path.join(self._output_dir,
-                            'detail-io-%s.dat' % file_type)
-    Prepend(filename, results)
-
-  def __PageCyclerIterations(self):
-    if not hasattr(self, '__iterations'):
-      self.__iterations = (len(self._matches['__pc_timings'].split(',')) /
-                          self.__NumberOfPageCyclerPages())
-    return self.__iterations
-
-  def __NumberOfPageCyclerPages(self):
-    if not hasattr(self, '__page_cycler_pages_count'):
-      self.__page_cycler_pages_count = len(self._matches['__pc_pages'].
-                                           split(','))
-    return self.__page_cycler_pages_count
-
-  def __TimingsByIterations(self, all_pages_timing):
-    all_iterations_timings = []
-    for iteration_index in range(self.__PageCyclerIterations()):
-      timings_by_iteration = []
-      for page_index in range(self.__NumberOfPageCyclerPages()):
-        index = self.__NumberOfPageCyclerPages() * iteration_index + page_index
-        timing = int(all_pages_timing[index])
-        timings_by_iteration.append(timing)
-      all_iterations_timings.append(sum(timings_by_iteration))
-
-    return all_iterations_timings
-
-  def __DetailsByKeys(self, detail_keys):
-    """Looks up data for each key in the details and if found
-    adds it to the array that will be returned. Otherwise it
-    ignores the key."""
-    data = []
-    for key in detail_keys:
-      if key in self._matches:
-        data.append(self._matches[key])
-    return data
 
 class BenchpressLogProcessor(PerformanceLogProcessor):
 
@@ -504,154 +264,6 @@ class PlaybackLogProcessor(PerformanceLogProcessor):
     return []
 
 
-class BasicTestLogProcessor(PerformanceLogProcessor):
-  """Base class for simple log processors such as the ones for Startup,
-  NewTabUIStartup, and TabSwitching tests.
-  """
-
-  __timings = []
-  __reference_timings = []
-
-  def _GetTimings(self):
-    return self.__timings
-
-  def _GetReferenceTimings(self):
-    return self.__reference_timings
-
-  def _GetMeanAndStandardDeviation(self, timings):
-    return chromium_utils.FilteredMeanAndStandardDeviation(timings)
-
-  def Process(self, revision, data):
-    """Does the actual log data processing.
-
-    Prepends a line to summary.dat with revision number, timing, sample
-    standard deviation, reference timing, and reference sample standard
-    deviation.
-    """
-    # Revision may be -1, for a forced build.
-    self._revision = revision
-
-    # The text summary wil be built by other methods as we go.
-    self._text_summary = []
-
-    self._MakeOutputDirectory()
-
-    self._ProcessLines(self._GetLineRegExp(), self._GetResultsRegExp(), data)
-
-    if len(self.__timings) > 0:
-      self.__timings = [float(x) for x in self.__timings]
-      self.__reference_timings = [float(x) for x in self.__reference_timings]
-
-      self._WriteSummary()
-      self._WriteEverythingElse()
-
-    return self._text_summary
-
-  def _ProcessLines(self, line_regexp, regexp, data):
-    """Processes each line in a list of data, storing the results.
-    """
-    for line in data.splitlines():
-      if line_regexp.match(line):
-        self._StoreTimings(regexp, line)
-
-  def _StoreTimings(self, regexp, line):
-    """Store the data we are interested in, that is timing and reference
-    timing."""
-    match = regexp.match(line)
-    # we are ignoring 'pages' values: it is always 'about:blank'
-    if match.group(1) == 'timings':
-      self.__timings = match.group(2).split(',')
-    elif match.group(1) == 'reference_timings':
-      self.__reference_timings = match.group(2).split(',')
-
-  def _GetLineRegExp(self):
-    """Get the regular expression that matches a line of potential results.
-    Should be overridden by derived classes.
-
-    See StartupTestLogProcessor and TabSwitchingTestLogProcessor for examples.
-    """
-    raise NotImplementedError()
-
-  def _GetResultsRegExp(self):
-    """Get the regular expression that matches the timing results of a test.
-    Should be overridden by derived classes.
-
-    See StartupTestLogProcessor and TabSwitchingTestLogProcessor for examples.
-    """
-    raise NotImplementedError()
-
-  def _WriteSummary(self):
-    """Writes mean and sample standard deviation for timings and reference
-    timings to summary.dat file."""
-    std_dev = self._GetMeanAndStandardDeviation(self.__timings)
-    if len(self.__reference_timings) > 0:
-      std_dev_ref = self._GetMeanAndStandardDeviation(self.__reference_timings)
-    else:
-      std_dev_ref = [0, 0]
-
-    if self._ShouldWriteResults():
-      results = [self._revision]
-      results.extend([FormatFloat(x) for x in std_dev])
-      results.extend([FormatFloat(x) for x in std_dev_ref])
-      results = self._JoinWithSpacesAndNewLine(results)
-      filename = os.path.join(self._output_dir, 'summary.dat')
-      Prepend(filename, results)
-
-    # Show means.
-    self._text_summary.append('t: %s (%s)' %
-        (FormatHumanReadable(std_dev[0]), FormatHumanReadable(std_dev_ref[0])))
-
-  def _WriteEverythingElse(self):
-    """Writes everything other than the summary (e.g. any detailed
-    statistics).  By default nothing is written, by derived classes may
-    override this function to their liking.
-    """
-    pass
-
-
-class StartupTestLogProcessor(BasicTestLogProcessor):
-  """Log processor for Startup and NewTabUIStartup tests."""
-
-  RESULTS_LINE_REGEX = re.compile(r'^__ts.*')
-  RESULTS_REGEX = re.compile(r'^__ts_(.*) = \[(.*)\]')
-
-  def _GetLineRegExp(self):
-    return StartupTestLogProcessor.RESULTS_LINE_REGEX
-
-  def _GetResultsRegExp(self):
-    return StartupTestLogProcessor.RESULTS_REGEX
-
-  def _WriteEverythingElse(self):
-    self._WritePageTimings()
-
-  def _WritePageTimings(self):
-    """Writes details of timings to revision file."""
-    if not self._ShouldWriteResults():
-      return
-    filename = os.path.join(self._output_dir, '%s.dat' % self._revision)
-    data = ['about:blank']
-    data.extend(self._GetTimings())
-    results = self._JoinWithSpacesAndNewLine(data)
-    Prepend(filename, results)
-
-
-class TabSwitchingTestLogProcessor(BasicTestLogProcessor):
-  """Log processor for TabSwitching test."""
-
-  RESULTS_LINE_REGEX = re.compile(r'^__tsw.*')
-  RESULTS_REGEX = re.compile(r'^__tsw_(.*) = \[(.*)\]')
-
-  def _GetLineRegExp(self):
-    return TabSwitchingTestLogProcessor.RESULTS_LINE_REGEX
-
-  def _GetResultsRegExp(self):
-    return TabSwitchingTestLogProcessor.RESULTS_REGEX
-
-  def _GetMeanAndStandardDeviation(self, timings):
-    # The output of this test is the mean and standard deviation.
-    return timings
-
-
 class Trace(object):
   """Encapsulates the data needed for one trace on a performance graph."""
   def __init__(self):
@@ -755,7 +367,8 @@ class GraphingLogProcessor(PerformanceLogProcessor):
       # or the numerical value of a single-valued item.
       if trace.value.startswith('['):
         value_list = [float(x) for x in trace.value.strip('[],').split(',')]
-        trace.value, trace.stddev = self._CalculateStatistics(value_list)
+        trace.value, trace.stddev = self._CalculateStatistics(value_list,
+                                                              trace_name)
       elif trace.value.startswith('{'):
         stripped = trace.value.strip('{},')
         trace.value, trace.stddev = [float(x) for x in stripped.split(',')]
@@ -765,11 +378,16 @@ class GraphingLogProcessor(PerformanceLogProcessor):
       graph.traces[trace_name] = trace
       self._graphs[graph_name] = graph
 
-  def _CalculateStatistics(self, value_list):
+  def _CalculateStatistics(self, value_list, trace_name):
     """Returns a tuple (mean, standard deviation) from a list of values.
 
     This method may be overridden by subclasses wanting a different standard
     deviation calcuation (or some other sort of error value entirely).
+
+    Args:
+      value_list: the list of values to use in the calculation
+      trace_name: the trace that produced the data (not used in the base
+          implementation, but subclasses may use it)
     """
     return chromium_utils.FilteredMeanAndStandardDeviation(value_list)
 
@@ -846,26 +464,63 @@ class GraphingLogProcessor(PerformanceLogProcessor):
 class GraphingPageCyclerLogProcessor(GraphingLogProcessor):
   """Handles additional processing for page-cycler timing data."""
 
-  _page_count = 1
+  _page_list = ['(unknown)']
   PAGES_REGEXP = re.compile(r'^Pages: \[(?P<LIST>.*)\]')
 
   def _ProcessLine(self, line):
     """Also looks for the Pages: line to find the page count."""
     line_match = self.PAGES_REGEXP.match(line)
     if line_match:
-      page_list = line_match.groupdict()['LIST'].strip()
-      self._page_count = max(1, len(page_list.split(',')))
+      self._page_list = line_match.groupdict()['LIST'].strip().split(',')
+      if len(self._page_list) < 1:
+        self._page_list = ['(unknown)']
     else:
       GraphingLogProcessor._ProcessLine(self, line)
 
-  def _CalculateStatistics(self, value_list):
-    """Sums the timings over all pages for each iteration and returns a tuple
-    (mean, standard deviation) of those sums.
+  def _CalculateStatistics(self, value_list, trace_name):
+    """Handles statistics generation and recording for page-cycler data.
+
+    Sums the timings over all pages for each iteration and returns a tuple
+    (mean, standard deviation) of those sums.  Also saves a data file
+    <revision>_<tracename>.dat holding a line of times for each URL loaded,
+    for use by humans when debugging a regression.
     """
     sums = []
-    iteration_count = len(value_list) / self._page_count
+    page_times = {}
+    page_count = len(self._page_list)
+
+    iteration_count = len(value_list) / page_count
     for iteration in range(iteration_count):
-      start = self._page_count * iteration
-      end = start + self._page_count
-      sums += [sum(value_list[start:end])]
+      start = page_count * iteration
+      end = start + page_count
+      iteration_times = value_list[start:end]
+      sums += [sum(iteration_times)]
+      for page_index in range(page_count):
+        page = self._page_list[page_index]
+        if page not in page_times:
+          page_times[page] = []
+        page_times[page].append(iteration_times[page_index])
+    self.__SavePageData(page_times, trace_name)
     return chromium_utils.FilteredMeanAndStandardDeviation(sums)
+
+  def __SavePageData(self, page_times, trace_name):
+    """Save a file holding the timing data for each page loaded.
+
+    Args:
+      page_times: a dict mapping a page URL to a list of its times
+      trace_name: the trace that produced this set of times
+    """
+    file_data = []
+    for page in self._page_list:
+      times = page_times[page]
+      mean, stddev = chromium_utils.FilteredMeanAndStandardDeviation(times)
+      file_data.append("%s (%s+/-%s): %s" % (page,
+           FormatFloat(mean),
+           FormatFloat(stddev),
+           self._JoinWithSpacesAndNewLine(times)))
+
+    filename = os.path.join(self._output_dir,
+                            '%s_%s.dat' % (self._revision, trace_name))
+    file = open(filename, 'w')
+    file.write(''.join(file_data))
+    file.close()
