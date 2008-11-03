@@ -40,7 +40,11 @@
 #include "FileSystem.h"
 #include "Frame.h"
 #include "InspectorController.h"
+#if USE(JSC)
 #include "JSDOMWindow.h"
+#elif USE(V8)
+// TODO(aa): Need to abstract these glue dependencies out.
+#endif
 #include "Logging.h"
 #include "NotImplemented.h"
 #include "Page.h"
@@ -126,9 +130,13 @@ Database::Database(Document* document, const String& name, const String& expecte
     if (m_name.isNull())
         m_name = "";
 
+#if USE(JSC)
     JSC::initializeThreading();
     // Database code violates the normal JSCore contract by calling jsUnprotect from a secondary thread, and thus needs additional locking.
     JSDOMWindow::commonJSGlobalData()->heap.setGCProtectNeedsLocking();
+#elif USE(V8)
+    // TODO(aa): Need to abstract these glue dependencies out.
+#endif
 
     m_guid = guidForOriginAndName(m_securityOrigin->toString(), name);
 

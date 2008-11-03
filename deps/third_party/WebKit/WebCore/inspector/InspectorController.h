@@ -291,7 +291,11 @@ private:
 #endif
 
 #if ENABLE(DATABASE)
+#if USE(JSC)
     JSObjectRef addDatabaseScriptResource(InspectorDatabaseResource*);
+#elif USE(V8)
+    void addDatabaseScriptResource(InspectorDatabaseResource*);
+#endif
     void removeDatabaseScriptResource(InspectorDatabaseResource*);
 #endif
 
