@@ -827,8 +827,7 @@ void Browser::ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                              HWND parent_hwnd) {
   parent_hwnd = parent_hwnd ? parent_hwnd : GetTopLevelHWND();
   HtmlDialogView* html_view = new HtmlDialogView(this, profile_, delegate);
-  ChromeViews::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(),
-                                          html_view);
+  views::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(), html_view);
   html_view->InitDialog();
   html_view->window()->Show();
 }
@@ -1534,11 +1533,12 @@ void Browser::TabStripEmpty() {
 void Browser::RemoveShelvesForTabContents(TabContents* contents) {
   DCHECK(!g_browser_process->IsUsingNewFrames());
 
-  ChromeViews::View* shelf = contents->GetDownloadShelfView();
+  views::View* shelf = contents->GetDownloadShelfView();
   if (shelf && shelf->GetParent() != NULL)
     shelf->GetParent()->RemoveChildView(shelf);
 
-  ChromeViews::View* info_bar = contents->GetInfoBarView();
+  views::View* info_bar =
+      contents->GetInfoBarView();
   if (info_bar && info_bar->GetParent() != NULL)
     info_bar->GetParent()->RemoveChildView(info_bar);
 }

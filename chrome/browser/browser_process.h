@@ -40,11 +40,11 @@ class Thread;
 namespace sandbox {
 class BrokerServices;
 }
-namespace ChromeViews {
-class AcceleratorHandler;
-}
 namespace printing {
 class PrintJobManager;
+}
+namespace views {
+class AcceleratorHandler;
 }
 
 // NOT THREAD SAFE, call only from the main thread.
@@ -112,7 +112,7 @@ class BrowserProcess {
 
   virtual bool IsShuttingDown() = 0;
 
-  virtual ChromeViews::AcceleratorHandler* accelerator_handler() = 0;
+  virtual views::AcceleratorHandler* accelerator_handler() = 0;
 
   virtual printing::PrintJobManager* print_job_manager() = 0;
 

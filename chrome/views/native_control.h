@@ -7,7 +7,7 @@
 
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 class HWNDView;
 class NativeControlContainer;
@@ -121,7 +121,7 @@ class NativeControl : public View {
   DISALLOW_EVIL_CONSTRUCTORS(NativeControl);
 };
 
-}
+}  // namespace views
 
 #endif  // CHROME_VIEWS_NATIVE_CONTROL_H__
 

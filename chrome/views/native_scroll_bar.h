@@ -7,7 +7,7 @@
 
 #include "chrome/views/scroll_bar.h"
 
-namespace ChromeViews {
+namespace views {
 
 class HWNDView;
 class ScrollBarContainer;
@@ -59,6 +59,7 @@ class NativeScrollBar : public ScrollBar {
   ScrollBarContainer* sb_container_;
 };
 
-}
+}  // namespace views
+
 #endif
 

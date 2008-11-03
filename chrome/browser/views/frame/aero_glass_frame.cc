@@ -86,12 +86,12 @@ void AeroGlassFrame::UpdateThrobber(bool running) {
   }
 }
 
-ChromeViews::Window* AeroGlassFrame::GetWindow() {
+views::Window* AeroGlassFrame::GetWindow() {
   return this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, ChromeViews::HWNDViewContainer implementation:
+// AeroGlassFrame, views::ContainerWin implementation:
 
 void AeroGlassFrame::OnInitMenuPopup(HMENU menu, UINT position,
                                      BOOL is_system_menu) {
@@ -183,15 +183,14 @@ LRESULT AeroGlassFrame::OnNCHitTest(const CPoint& pt) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, ChromeViews::HWNDViewContainer overrides:
+// AeroGlassFrame, views::ContainerWin overrides:
 
-bool AeroGlassFrame::AcceleratorPressed(
-    ChromeViews::Accelerator* accelerator) {
+bool AeroGlassFrame::AcceleratorPressed(views::Accelerator* accelerator) {
   return browser_view_->AcceleratorPressed(*accelerator);
 }
 
 bool AeroGlassFrame::GetAccelerator(int cmd_id,
-                                    ChromeViews::Accelerator* accelerator) {
+                                    views::Accelerator* accelerator) {
   return browser_view_->GetAccelerator(cmd_id, accelerator);
 }
 

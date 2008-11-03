@@ -53,8 +53,8 @@ FirstRunView::~FirstRunView() {
 }
 
 void FirstRunView::SetupControls() {
-  using ChromeViews::Label;
-  using ChromeViews::Link;
+  using views::Label;
+  using views::Link;
 
   default_browser_->SetIsSelected(true);
 
@@ -94,9 +94,8 @@ void FirstRunView::SetupControls() {
   AddChildView(customize_link_);
 }
 
-void FirstRunView::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size FirstRunView::GetPreferredSize() {
+  return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_FIRSTRUN_DIALOG_WIDTH_CHARS,
       IDS_FIRSTRUN_DIALOG_HEIGHT_LINES).ToSIZE();
 }
@@ -152,7 +151,7 @@ void FirstRunView::Layout() {
 
 void FirstRunView::OpenCustomizeDialog() {
   // The customize dialog now owns the importer host object.
-  ChromeViews::Window::CreateChromeWindow(
+  views::Window::CreateChromeWindow(
       window()->GetHWND(),
       gfx::Rect(),
       new FirstRunCustomizeView(profile_,
@@ -161,7 +160,7 @@ void FirstRunView::OpenCustomizeDialog() {
                                 default_browser_->IsSelected()))->Show();
 }
 
-void FirstRunView::LinkActivated(ChromeViews::Link* source, int event_flags) {
+void FirstRunView::LinkActivated(views::Link* source, int event_flags) {
   OpenCustomizeDialog();
 }
 
@@ -169,7 +168,7 @@ std::wstring FirstRunView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_FIRSTRUN_DLG_TITLE);
 }
 
-ChromeViews::View* FirstRunView::GetContentsView() {
+views::View* FirstRunView::GetContentsView() {
   return this;
 }
 

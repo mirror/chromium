@@ -174,7 +174,7 @@ void AutocompletePopupView::UpdatePopupAppearance() {
   // Subtract the top left corner to make the coordinates relative to the
   // location bar view itself, and convert to screen coordinates.
   CPoint top_left(-rc.TopLeft());
-  ChromeViews::View::ConvertPointToScreen(edit_view_->parent_view(), &top_left);
+  views::View::ConvertPointToScreen(edit_view_->parent_view(), &top_left);
   rc.OffsetRect(top_left);
   // Expand by one pixel on each side since that's the amount the location bar
   // view is inset from the divider line that edges the adjacent buttons.

@@ -6,7 +6,7 @@
 
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 int LayoutManager::GetPreferredHeightForWidth(View* host, int width) {
   CSize pref;
@@ -14,5 +14,5 @@ int LayoutManager::GetPreferredHeightForWidth(View* host, int width) {
   return pref.cy;
 }
 
-}  // namespace
+}  // namespace views
 

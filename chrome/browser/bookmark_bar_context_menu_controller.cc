@@ -171,7 +171,7 @@ class EditFolderController : public InputWindowDelegate,
         l10n_util::GetString(IDS_BOOMARK_FOLDER_EDITOR_WINDOW_TITLE);
   }
 
-  virtual ChromeViews::View* GetContentsView() {
+  virtual views::View* GetContentsView() {
     return view_;
   }
 
@@ -183,7 +183,7 @@ class EditFolderController : public InputWindowDelegate,
 
   int visual_order_;
   bool is_new_;
-  ChromeViews::Window* window_;
+  views::Window* window_;
 
   DISALLOW_EVIL_CONSTRUCTORS(EditFolderController);
 };
@@ -253,7 +253,7 @@ BookmarkBarContextMenuController::BookmarkBarContextMenuController(
   menu_.AppendSeparator();
   menu_.AppendMenuItem(IDS_BOOMARK_BAR_ALWAYS_SHOW,
                        l10n_util::GetString(IDS_BOOMARK_BAR_ALWAYS_SHOW),
-                       ChromeViews::MenuItemView::CHECKBOX);
+                       views::MenuItemView::CHECKBOX);
 }
 
 void BookmarkBarContextMenuController::RunMenuAt(int x, int y) {
@@ -265,7 +265,7 @@ void BookmarkBarContextMenuController::RunMenuAt(int x, int y) {
 
   // width/height don't matter here.
   menu_.RunMenuAt(view_->GetViewContainer()->GetHWND(), gfx::Rect(x, y, 0, 0),
-                  ChromeViews::MenuItemView::TOPLEFT, true);
+                  views::MenuItemView::TOPLEFT, true);
 
   if (view_->GetModelChangedListener() == this)
     view_->SetModelChangedListener(last_listener);

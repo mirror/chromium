@@ -10,7 +10,7 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
 
-namespace ChromeViews {
+namespace views {
 
 NativeButton::NativeButton(const std::wstring& label) 
     : enforce_dlu_min_size_(true) {
@@ -191,4 +191,4 @@ bool NativeButton::OnKeyDown(int virtual_key_code) {
   return false;
 }
 
-}
+}  // namespace views

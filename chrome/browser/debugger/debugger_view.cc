@@ -53,8 +53,8 @@ void DebuggerView::DidChangeBounds(const CRect& previous,
 }
 
 void DebuggerView::ViewHierarchyChanged(bool is_add,
-                                        ChromeViews::View* parent,
-                                        ChromeViews::View* child) {
+                                        views::View* parent,
+                                        views::View* child) {
   if (is_add && child == this) {
     DCHECK(GetViewContainer());
     OnInit();

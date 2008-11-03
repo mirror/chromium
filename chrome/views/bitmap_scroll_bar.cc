@@ -14,7 +14,7 @@
 
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 
 namespace {
 
@@ -722,5 +722,5 @@ void BitmapScrollBar::SetThumbTrackState(BaseButton::ButtonState state) {
   SchedulePaint();
 }
 
-}
+}  // namespace views
 

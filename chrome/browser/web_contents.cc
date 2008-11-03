@@ -1408,8 +1408,8 @@ void WebContents::PasswordFormsSeen(
 }
 
 void WebContents::TakeFocus(bool reverse) {
-  ChromeViews::FocusManager* focus_manager =
-      ChromeViews::FocusManager::GetFocusManager(GetHWND());
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(view_->GetContainerHWND());
 
   // We may not have a focus manager if the tab has been switched before this
   // message arrived.

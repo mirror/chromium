@@ -28,7 +28,7 @@
 #include "chrome/views/view_container.h"
 #include "SkShader.h"
 
-namespace ChromeViews {
+namespace views {
 
 // static
 char View::kViewClassName[] = "chrome/views/View";
@@ -331,7 +331,7 @@ FocusManager* View::GetFocusManager() {
   if (!hwnd)
     return NULL;
 
-  return ChromeViews::FocusManager::GetFocusManager(hwnd);
+  return FocusManager::GetFocusManager(hwnd);
 }
 
 bool View::HasFocus() {

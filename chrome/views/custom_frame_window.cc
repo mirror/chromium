@@ -23,7 +23,7 @@
 #include "chrome/views/window_resources.h"
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 
 // A scoping class that removes the WS_VISIBLE style of a window.
 //
@@ -791,7 +791,7 @@ void DefaultNonClientView::LayoutTitleBar() {
         title_font_.height());
 
     // We draw the custom frame window's title directly rather than using a
-    // ChromeViews::Label child view. Therefore, we have to mirror the title
+    // views::Label child view. Therefore, we have to mirror the title
     // position manually if the View's UI layout is right-to-left. Child Views
     // are automatically mirrored, which means that the parent view doesn't
     // need to manually modify their position depending on the View's UI
@@ -834,7 +834,7 @@ void DefaultNonClientView::InitClass() {
 ///////////////////////////////////////////////////////////////////////////////
 // NonClientViewLayout
 
-class NonClientViewLayout : public ChromeViews::LayoutManager {
+class NonClientViewLayout : public LayoutManager {
  public:
   // The size of the default window border and padding used by Windows Vista
   // with DWM disabled when clipping the window for maximized display.
@@ -842,15 +842,14 @@ class NonClientViewLayout : public ChromeViews::LayoutManager {
   //             with adjustments to the Windows Border/Padding setting.
   static const int kBorderAndPadding = 8;
 
-  NonClientViewLayout(ChromeViews::View* child,
-                      ChromeViews::Window* window)
+  NonClientViewLayout(View* child, Window* window)
       : child_(child),
         window_(window) {
   }
   virtual ~NonClientViewLayout() {}
 
-  // Overridden from ChromeViews::LayoutManager:
-  virtual void Layout(ChromeViews::View* host) {
+  // Overridden from LayoutManager:
+  virtual void Layout(View* host) {
     int horizontal_border_width =
         window_->IsMaximized() ? kBorderAndPadding : 0;
     int vertical_border_height =
@@ -860,13 +859,13 @@ class NonClientViewLayout : public ChromeViews::LayoutManager {
                       host->width() - (2 * horizontal_border_width),
                       host->height() - (2 * vertical_border_height));
   }
-  virtual void GetPreferredSize(ChromeViews::View* host, CSize* out) {
-    child_->GetPreferredSize(out);
+  virtual gfx::Size GetPreferredSize(View* host) {
+    return child_->GetPreferredSize();
   }
 
  private:
-  ChromeViews::View* child_;
-  ChromeViews::Window* window_;
+  View* child_;
+  Window* window_;
 
   DISALLOW_COPY_AND_ASSIGN(NonClientViewLayout);
 };
@@ -1316,5 +1315,5 @@ void CustomFrameWindow::ResetWindowRegion() {
   DeleteObject(current_rgn);
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 

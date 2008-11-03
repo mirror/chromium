@@ -104,7 +104,7 @@ void AboutChromeView::Init() {
 
   // Views we will add to the *parent* of this dialog, since it will display
   // next to the buttons which we don't draw ourselves.
-  throbber_.reset(new ChromeViews::Throbber(50, true));
+  throbber_.reset(new views::Throbber(50, true));
   throbber_->SetParentOwned(false);
   throbber_->SetVisible(false);
 
@@ -127,7 +127,7 @@ void AboutChromeView::Init() {
   // image for the dialog. We have two different background bitmaps, one for
   // LTR UIs and one for RTL UIs. We load the correct bitmap based on the UI
   // layout of the view.
-  about_dlg_background_ = new ChromeViews::ImageView();
+  about_dlg_background_ = new views::ImageView();
   SkBitmap* about_background;
   if (UILayoutIsRightToLeft())
     about_background = rb.GetBitmapNamed(IDR_ABOUT_BACKGROUND_RTL);
@@ -138,14 +138,14 @@ void AboutChromeView::Init() {
   AddChildView(about_dlg_background_);
 
   // Add the dialog labels.
-  about_title_label_ = new ChromeViews::Label(
+  about_title_label_ = new views::Label(
       l10n_util::GetString(IDS_PRODUCT_NAME));
   about_title_label_->SetFont(ResourceBundle::GetSharedInstance().GetFont(
       ResourceBundle::BaseFont).DeriveFont(18, BOLD_FONTTYPE));
   AddChildView(about_title_label_);
 
   // This is a text field so people can copy the version number from the dialog.
-  version_label_ = new ChromeViews::TextField();
+  version_label_ = new views::TextField();
   version_label_->SetText(current_version_);
   version_label_->SetReadOnly(true);
   version_label_->RemoveBorder();
@@ -154,12 +154,12 @@ void AboutChromeView::Init() {
   AddChildView(version_label_);
 
   // The copyright URL portion of the main label.
-  copyright_label_ = new ChromeViews::Label(
+  copyright_label_ = new views::Label(
       l10n_util::GetString(IDS_ABOUT_VERSION_COPYRIGHT));
-  copyright_label_->SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  copyright_label_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   AddChildView(copyright_label_);
 
-  main_text_label_ = new ChromeViews::Label(L"");
+  main_text_label_ = new views::Label(L"");
 
   // Figure out what to write in the main label of the About box.
   std::wstring text = l10n_util::GetString(IDS_ABOUT_VERSION_LICENSE);
@@ -182,14 +182,14 @@ void AboutChromeView::Init() {
   main_label_chunk3_ = text.substr(link2_end + wcslen(kEndLinkOss));
 
   // The Chromium link within the main text of the dialog.
-  chromium_url_ = new ChromeViews::Link(
+  chromium_url_ = new views::Link(
       StringSubRange(text, text.find(kBeginLinkChr) + wcslen(kBeginLinkChr),
                      text.find(kEndLinkChr)));
   AddChildView(chromium_url_);
   chromium_url_->SetController(this);
 
   // The Open Source link within the main text of the dialog.
-  open_source_url_ = new ChromeViews::Link(
+  open_source_url_ = new views::Link(
       StringSubRange(text, text.find(kBeginLinkOss) + wcslen(kBeginLinkOss),
                      text.find(kEndLinkOss)));
   AddChildView(open_source_url_);
@@ -207,18 +207,17 @@ void AboutChromeView::Init() {
 
   // The Terms of Service URL at the bottom.
   terms_of_service_url_ =
-      new ChromeViews::Link(l10n_util::GetString(IDS_TERMS_OF_SERVICE));
+      new views::Link(l10n_util::GetString(IDS_TERMS_OF_SERVICE));
   AddChildView(terms_of_service_url_);
   terms_of_service_url_->SetController(this);
 #endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// AboutChromeView, ChromeViews::View implementation:
+// AboutChromeView, views::View implementation:
 
-void AboutChromeView::GetPreferredSize(CSize *out) {
-  DCHECK(out);
-  *out = ChromeViews::Window::GetLocalizedContentsSize(
+gfx::Size AboutChromeView::GetPreferredSize() {
+  gfx::Size prefsize(views::Window::GetLocalizedContentsSize(
       IDS_ABOUT_DIALOG_WIDTH_CHARS,
       IDS_ABOUT_DIALOG_HEIGHT_LINES).ToSIZE();
   // We compute the height of the dialog based on the size of the image (it
@@ -306,7 +305,7 @@ void AboutChromeView::Layout() {
   update_label_.GetPreferredSize(&sz);
   int update_label_x = throbber_->x() + throbber_->width() +
                        kRelatedControlHorizontalSpacing;
-  update_label_.SetHorizontalAlignment(ChromeViews::Label::ALIGN_LEFT);
+  update_label_.SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   update_label_.SetBounds(update_label_x,
                           throbber_topleft_y + 1,
                           parent_bounds.Width() - update_label_x,
@@ -315,7 +314,7 @@ void AboutChromeView::Layout() {
 
 
 void AboutChromeView::Paint(ChromeCanvas* canvas) {
-  ChromeViews::View::Paint(canvas);
+  views::View::Paint(canvas);
 
   ChromeFont font =
     ResourceBundle::GetSharedInstance().GetFont(ResourceBundle::BaseFont);
@@ -323,9 +322,9 @@ void AboutChromeView::Paint(ChromeCanvas* canvas) {
   CRect bounds;
   main_text_label_->GetBounds(&bounds);
 
-  ChromeViews::Link* link1 =
+  views::Link* link1 =
       chromium_url_appears_first_ ? chromium_url_ : open_source_url_;
-  ChromeViews::Link* link2 =
+  views::Link* link2 =
       chromium_url_appears_first_ ? open_source_url_ : chromium_url_;
   gfx::Rect* rect1 = chromium_url_appears_first_ ?
       &chromium_url_rect_ : &open_source_url_rect_;
@@ -381,7 +380,7 @@ void AboutChromeView::Paint(ChromeCanvas* canvas) {
 
 void AboutChromeView::DrawTextAndPositionUrl(ChromeCanvas* canvas,
                                              const std::wstring& text,
-                                             ChromeViews::Link* link,
+                                             views::Link* link,
                                              gfx::Rect* rect,
                                              CSize* position,
                                              const CRect& bounds,
@@ -459,8 +458,8 @@ void AboutChromeView::WrapIfWordDoesntFit(int word_width,
 }
 
 void AboutChromeView::ViewHierarchyChanged(bool is_add,
-                                           ChromeViews::View* parent,
-                                           ChromeViews::View* child) {
+                                           views::View* parent,
+                                           views::View* child) {
   // Since we want the some of the controls to show up in the same visual row
   // as the buttons, which are provided by the framework, we must add the
   // buttons to the non-client view, which is the parent of this view.
@@ -502,7 +501,7 @@ void AboutChromeView::ViewHierarchyChanged(bool is_add,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// AboutChromeView, ChromeViews::DialogDelegate implementation:
+// AboutChromeView, views::DialogDelegate implementation:
 
 int AboutChromeView::GetDialogButtons() const {
   return DIALOGBUTTON_OK | DIALOGBUTTON_CANCEL;
@@ -575,14 +574,14 @@ bool AboutChromeView::Accept() {
   return false;  // We never allow this button to close the window.
 }
 
-ChromeViews::View* AboutChromeView::GetContentsView() {
+views::View* AboutChromeView::GetContentsView() {
   return this;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// AboutChromeView, ChromeViews::LinkController implementation:
+// AboutChromeView, views::LinkController implementation:
 
-void AboutChromeView::LinkActivated(ChromeViews::Link* source,
+void AboutChromeView::LinkActivated(views::Link* source,
                                     int event_flags) {
   GURL url;
   if (source == terms_of_service_url_)

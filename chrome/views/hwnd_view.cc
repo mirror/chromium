@@ -11,7 +11,7 @@
 #include "chrome/views/view_container.h"
 #include "base/logging.h"
 
-namespace ChromeViews {
+namespace views {
 
 static const char kViewClassName[] = "chrome/views/HWNDView";
 
@@ -199,5 +199,5 @@ std::string HWNDView::GetClassName() const {
   return kViewClassName;
 }
 
-}
+}  // namespace views
 

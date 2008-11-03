@@ -15,7 +15,7 @@
 #include "chrome/views/view.h"
 #include "chrome/views/view_container.h"
 
-namespace ChromeViews {
+namespace views {
 
 //static
 int TooltipManager::tooltip_height_ = 0;
@@ -437,4 +437,4 @@ void TooltipManager::DestroyKeyboardTooltipWindow(HWND window_to_destroy) {
     HideKeyboardTooltip();
 }
 
-} // namespace ChromeViews
+}  // namespace views

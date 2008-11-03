@@ -12,7 +12,7 @@
 #include "base/base_drop_target.h"
 #include "chrome/common/os_exchange_data.h"
 
-namespace ChromeViews {
+namespace views {
 
 class RootView;
 class View;
@@ -66,7 +66,7 @@ class RootViewDropTarget : public BaseDropTarget {
   DISALLOW_EVIL_CONSTRUCTORS(RootViewDropTarget);
 };
 
-}  // namespace
+}  // namespace views
 
 #endif  // CHROME_VIEWS_ROOT_VIEW_DROP_TARGET_H__
 

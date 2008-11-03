@@ -17,7 +17,7 @@
 #include "chrome/views/background.h"
 #include "chrome/views/view_container.h"
 
-namespace ChromeViews {
+namespace views {
 
 const char Label::kViewClassName[] = "chrome/views/Label";
 
@@ -379,5 +379,5 @@ bool Label::GetAccessibleState(VARIANT* state) {
   return true;
 }
 
-}
+}  // namespace views
 

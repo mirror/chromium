@@ -189,11 +189,11 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
     drop_down_state_ = DANGEROUS;
 
     warning_icon_ = rb.GetBitmapNamed(IDR_WARNING);
-    save_button_ = new ChromeViews::NativeButton(
+    save_button_ = new views::NativeButton(
         l10n_util::GetString(IDS_SAVE_DOWNLOAD));
     save_button_->set_enforce_dlu_min_size(false);
     save_button_->SetListener(this);
-    discard_button_ = new ChromeViews::NativeButton(
+    discard_button_ = new views::NativeButton(
         l10n_util::GetString(IDS_DISCARD_DOWNLOAD));
     discard_button_->SetListener(this);
     discard_button_->set_enforce_dlu_min_size(false);
@@ -202,11 +202,11 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
     std::wstring file_name = download->original_name();
     // Ensure the file name is not too long.
     ElideString(file_name, kFileNameMaxLength, &file_name);
-    dangerous_download_label_ = new ChromeViews::Label(
+    dangerous_download_label_ = new views::Label(
         l10n_util::GetStringF(IDS_PROMPT_DANGEROUS_DOWNLOAD, file_name));
     dangerous_download_label_->SetMultiLine(true);
     dangerous_download_label_->SetHorizontalAlignment(
-        ChromeViews::Label::ALIGN_LEFT);
+        views::Label::ALIGN_LEFT);
     dangerous_download_label_->SetColor(kFileNameColor);
     AddChildView(dangerous_download_label_);
     SizeLabelToMinWidth();
@@ -316,8 +316,7 @@ void DownloadItemView::DidChangeBounds(const CRect& previous,
                                        const CRect& current) {
   Layout();
 }
-
-void DownloadItemView::ButtonPressed(ChromeViews::NativeButton* sender) {
+void DownloadItemView::ButtonPressed(views::NativeButton* sender) {
   if (sender == discard_button_) {
     if (download_->state() == DownloadItem::IN_PROGRESS)
       download_->Cancel(true);
@@ -582,7 +581,7 @@ void DownloadItemView::GetPreferredSize(CSize* out) {
   out->cy = height;
 }
 
-void DownloadItemView::OnMouseExited(const ChromeViews::MouseEvent& event) {
+void DownloadItemView::OnMouseExited(const views::MouseEvent& event) {
   // Mouse should not activate us in dangerous mode.
   if (IsDangerousMode())
     return;
@@ -593,7 +592,7 @@ void DownloadItemView::OnMouseExited(const ChromeViews::MouseEvent& event) {
 }
 
 // Display the context menu for this item.
-bool DownloadItemView::OnMousePressed(const ChromeViews::MouseEvent& event) {
+bool DownloadItemView::OnMousePressed(const views::MouseEvent& event) {
   // Mouse should not activate us in dangerous mode.
   if (IsDangerousMode())
     return true;
@@ -635,7 +634,7 @@ bool DownloadItemView::OnMousePressed(const ChromeViews::MouseEvent& event) {
       point.x = drop_down_x_;
     }
 
-    ChromeViews::View::ConvertPointToScreen(this, &point);
+    views::View::ConvertPointToScreen(this, &point);
     download_util::DownloadShelfContextMenu menu(download_,
                                                  GetViewContainer()->GetHWND(),
                                                  model_.get(),
@@ -647,7 +646,7 @@ bool DownloadItemView::OnMousePressed(const ChromeViews::MouseEvent& event) {
   return true;
 }
 
-void DownloadItemView::OnMouseMoved(const ChromeViews::MouseEvent& event) {
+void DownloadItemView::OnMouseMoved(const views::MouseEvent& event) {
   // Mouse should not activate us in dangerous mode.
   if (IsDangerousMode())
     return;
@@ -663,7 +662,7 @@ void DownloadItemView::OnMouseMoved(const ChromeViews::MouseEvent& event) {
   }
 }
 
-void DownloadItemView::OnMouseReleased(const ChromeViews::MouseEvent& event,
+void DownloadItemView::OnMouseReleased(const views::MouseEvent& event,
                                        bool canceled) {
   // Mouse should not activate us in dangerous mode.
   if (IsDangerousMode())
@@ -682,7 +681,7 @@ void DownloadItemView::OnMouseReleased(const ChromeViews::MouseEvent& event,
 }
 
 // Handle drag (file copy) operations.
-bool DownloadItemView::OnMouseDragged(const ChromeViews::MouseEvent& event) {
+bool DownloadItemView::OnMouseDragged(const views::MouseEvent& event) {
   // Mouse should not activate us in dangerous mode.
   if (IsDangerousMode())
     return true;

@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "chrome/views/hwnd_view.h"
 
-namespace ChromeViews {
+namespace views {
 
 static const int kSeparatorSize = 2;
 
@@ -37,5 +37,5 @@ void Separator::GetPreferredSize(CSize* out) {
   out->cy = fixed_height_;
 }
 
-}
+}  // namespace views
 

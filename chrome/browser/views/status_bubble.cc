@@ -65,7 +65,7 @@ static const int kFramerate = 25;
 // View -----------------------------------------------------------------------
 // StatusView manages the display of the bubble, applying text changes and
 // fading in or out the bubble as required.
-class StatusBubble::StatusView : public ChromeViews::Label,
+class StatusBubble::StatusView : public views::Label,
                                  public Animation,
                                  public AnimationDelegate {
  public:
@@ -415,7 +415,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
   int text_width = std::min(static_cast<int>(parent_rect.right -
                                 parent_rect.left - kTextPositionX -
                                 kTextPadding),
-                            static_cast<int>(ChromeViews::Label::GetFont()
+                            static_cast<int>(views::Label::GetFont()
                                 .GetStringWidth(text_)));
 
   // Draw highlight text and then the text body. In order to make sure the text
@@ -427,7 +427,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
                         parent_rect.bottom - parent_rect.top);
   body_bounds.set_x(MirroredLeftPointForRect(body_bounds));
   canvas->DrawStringInt(text_,
-                        ChromeViews::Label::GetFont(),
+                        views::Label::GetFont(),
                         kTextHighlightColor,
                         body_bounds.x() + 1,
                         body_bounds.y() + 1,
@@ -435,7 +435,7 @@ void StatusBubble::StatusView::Paint(ChromeCanvas* canvas) {
                         body_bounds.height());
 
   canvas->DrawStringInt(text_,
-                        ChromeViews::Label::GetFont(),
+                        views::Label::GetFont(),
                         kTextColor,
                         body_bounds.x(),
                         body_bounds.y(),
@@ -568,7 +568,7 @@ void StatusBubble::AvoidMouse() {
 
   // Get the position of the frame.
   CPoint top_left(0, 0);
-  ChromeViews::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
+  views::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
 
   // Get the cursor position relative to the popup.
   cursor_location.x -= (top_left.x + position_.x);
@@ -622,7 +622,7 @@ void StatusBubble::AvoidMouse() {
 void StatusBubble::Reposition() {
   if (popup_) {
     CPoint top_left(0, 0);
-    ChromeViews::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
+    views::View::ConvertPointToScreen(frame_->GetRootView(), &top_left);
 
     popup_->MoveWindow(top_left.x + position_.x,
                        top_left.y + position_.y,

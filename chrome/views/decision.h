@@ -11,7 +11,7 @@
 #include "chrome/views/native_button.h"
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 class Label;
 class Option;
@@ -60,7 +60,7 @@ class Decision : public View {
   std::vector<Option*> options_;
 };
 
-} // namespace ChromeViews
+}  // namespace views
 
 #endif // CHROME_VIEWS_DECISION_H__
 

@@ -21,7 +21,7 @@
 
 #include "generated_resources.h"
 
-namespace ChromeViews {
+namespace views {
 
 // The amount of time, in milliseconds, we wait before allowing another mouse
 // pressed event to show the menu.
@@ -79,10 +79,10 @@ void MenuButton::Paint(ChromeCanvas* canvas, bool for_drag) {
   if (show_menu_marker_) {
     gfx::Insets insets = GetInsets();
 
-    // We can not use the ChromeViews' mirroring infrastructure for mirroring
-    // a MenuButton control (see TextButton::Paint() for a detailed
-    // explanation regarding why we can not flip the canvas). Therefore, we
-    // need to manually mirror the position of the down arrow.
+    // We can not use the views' mirroring infrastructure for mirroring a
+    // MenuButton control (see TextButton::Paint() for a detailed explanation
+    // regarding why we can not flip the canvas). Therefore, we need to
+    // manually mirror the position of the down arrow.
     gfx::Rect arrow_bounds(width() - insets.right() -
                            kMenuMarker->width() - kMenuMarkerPaddingRight,
                            height() / 2,
@@ -175,8 +175,7 @@ bool MenuButton::Activate() {
   return true;
 }
 
-bool MenuButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
-  using namespace ChromeViews;
+bool MenuButton::OnMousePressed(const MouseEvent& e) {
   if (IsFocusable())
     RequestFocus();
   if (GetState() != BS_DISABLED) {
@@ -194,7 +193,7 @@ bool MenuButton::OnMousePressed(const ChromeViews::MouseEvent& e) {
   return true;
 }
 
-void MenuButton::OnMouseReleased(const ChromeViews::MouseEvent& e,
+void MenuButton::OnMouseReleased(const MouseEvent& e,
                                  bool canceled) {
   if (GetDragOperations(e.x(), e.y()) != DragDropTypes::DRAG_NONE &&
       GetState() != BS_DISABLED && !canceled && !InDrag() &&
@@ -247,11 +246,10 @@ bool MenuButton::GetAccessibleState(VARIANT* state) {
 // to BS_NORMAL instead of keeping the state BM_PUSHED. This, in turn, will
 // cause the button to appear depressed while the menu is displayed.
 void MenuButton::OnMouseExited(const MouseEvent& event) {
-  using namespace ChromeViews;
   if ((state_ != BS_DISABLED) && (!menu_visible_) && (!InDrag())) {
     SetState(BS_NORMAL);
   }
 }
 
-}  // namespace ChromeViews
+}  // namespace views
 
