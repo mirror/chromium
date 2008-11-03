@@ -4994,6 +4994,9 @@ void FrameLoader::dispatchWindowObjectAvailable()
     // But we can't check that until we refactor ScriptController.
     if (!m_frame->script()->isEnabled())
         return;
+
+    // Notify ScriptController that a new DOMWindow object is available.
+    m_frame->script()->windowObjectAvailable();
 #endif
 
     m_client->windowObjectCleared();
