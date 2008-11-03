@@ -499,7 +499,7 @@ HWND WebContents::GetContentHWND() {
 void WebContents::CreateView(HWND parent_hwnd,
                              const gfx::Rect& initial_bounds) {
   set_delete_on_destroy(false);
-  HWNDViewContainer::Init(parent_hwnd, initial_bounds, false);
+  ContainerWin::Init(parent_hwnd, initial_bounds, false);
 
   // Remove the root view drop target so we can register our own.
   RevokeDragDrop(GetHWND());
@@ -1409,7 +1409,7 @@ void WebContents::PasswordFormsSeen(
 
 void WebContents::TakeFocus(bool reverse) {
   views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(view_->GetContainerHWND());
+      views::FocusManager::GetFocusManager(GetHWND());
 
   // We may not have a focus manager if the tab has been switched before this
   // message arrived.
@@ -1508,12 +1508,12 @@ void WebContents::HandleKeyboardEvent(const WebKeyboardEvent& event) {
   // The renderer returned a keyboard event it did not process. This may be
   // a keyboard shortcut that we have to process.
   if (event.type == WebInputEvent::KEY_DOWN) {
-    ChromeViews::FocusManager* focus_manager =
-        ChromeViews::FocusManager::GetFocusManager(GetHWND());
+    views::FocusManager* focus_manager =
+        views::FocusManager::GetFocusManager(GetHWND());
     // We may not have a focus_manager at this point (if the tab has been
     // switched by the time this message returned).
     if (focus_manager) {
-      ChromeViews::Accelerator accelerator(event.key_code,
+      views::Accelerator accelerator(event.key_code,
           (event.modifiers & WebInputEvent::SHIFT_KEY) ==
               WebInputEvent::SHIFT_KEY,
           (event.modifiers & WebInputEvent::CTRL_KEY) ==
@@ -1835,7 +1835,7 @@ void WebContents::OnPaint(HDC junk_dc) {
       sad_tab_.reset(new SadTabView);
     CRect cr;
     GetClientRect(&cr);
-    sad_tab_->SetBounds(cr);
+    sad_tab_->SetBounds(gfx::Rect(cr));
     ChromeCanvasPaint canvas(GetHWND(), true);
     sad_tab_->ProcessPaint(&canvas);
     return;
@@ -1913,7 +1913,7 @@ void WebContents::OnWindowPosChanged(WINDOWPOS* window_pos) {
 }
 
 void WebContents::OnSize(UINT param, const CSize& size) {
-  HWNDViewContainer::OnSize(param, size);
+  ContainerWin::OnSize(param, size);
 
   // Hack for thinkpad touchpad driver.
   // Set fake scrollbars so that we can get scroll messages,

@@ -29,7 +29,7 @@ class FirstRunView : public FirstRunViewBase,
   virtual ~FirstRunView();
 
   // Overridden from views::View:
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
 
   // Overridden from views::DialogDelegate:

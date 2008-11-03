@@ -16,8 +16,8 @@
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/views/old_frames/frame_view.h"
 #include "chrome/browser/views/status_bubble.h"
-#include "chrome/views/view_container.h"
 #include "chrome/views/button.h"
+#include "chrome/views/container.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/image_view.h"
@@ -156,11 +156,11 @@ class XPFrame : public BrowserWindow,
   void ButtonPressed(views::BaseButton *sender);
 
   //
-  // ViewContainer
+  // Container
   virtual void GetBounds(CRect *out, bool including_frame) const;
   virtual void MoveToFront(bool should_activate);
   virtual HWND GetHWND() const;
-  virtual void PaintNow(const CRect& update_rect);
+  virtual void PaintNow(const gfx::Rect& update_rect);
   virtual views::RootView* GetRootView();
   virtual bool IsVisible();
   virtual bool IsActive();

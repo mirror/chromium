@@ -47,7 +47,7 @@ class BugReportView : public views::View,
   };
 
   // Overridden from views::View:
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
   // views::TextField::Controller implementation:
   virtual void ContentsChanged(views::TextField* sender,

@@ -36,15 +36,13 @@ class DownloadShelfView : public views::View,
   // A new download has started, so add it to our shelf.
   void AddDownload(DownloadItem* download);
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
   virtual void Layout();
 
   // Invokes the following methods to do painting:
   //   PaintBackground, PaintBorder and PaintSeparators.
   virtual void Paint(ChromeCanvas* canvas);
-
-  void DidChangeBounds(const CRect& previous, const CRect& current);
 
   // AnimationDelegate implementations
   virtual void AnimationProgressed(const Animation* animation);

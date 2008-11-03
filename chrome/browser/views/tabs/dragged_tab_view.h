@@ -13,7 +13,7 @@
 #include "skia/include/SkBitmap.h"
 
 namespace views {
-class HWNDViewContainer;
+class ContainerWin;
 }
 namespace gfx {
 class Point;
@@ -61,7 +61,7 @@ class DraggedTabView : public views::View,
   // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // Paint the view, when it's attached to a TabStrip.
   void PaintAttachedTab(ChromeCanvas* canvas);

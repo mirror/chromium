@@ -7,10 +7,10 @@
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/views/container.h"
 #include "chrome/views/external_focus_tracker.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/view_container.h"
 
 #include "generated_resources.h"
 
@@ -20,9 +20,8 @@ class HorizontalSpacer : public views::View {
  public:
   explicit HorizontalSpacer(int width) : width_(width) {}
 
-  void GetPreferredSize(CSize* out) {
-    out->cx = width_;
-    out->cy = 0;
+  gfx::Size GetPreferredSize() {
+    return gfx::Size(width_, 0);
   }
 
  private:
@@ -50,9 +49,10 @@ int InfoBarItemView::CenterPosition(int size, int target_size) {
   return (target_size - size) / 2;
 }
 
-void InfoBarItemView::GetPreferredSize(CSize* out) {
-  out->cx = GetParent()->width();
-  out->cy = static_cast<int>(kInfoBarHeight * animation_->GetCurrentValue());
+gfx::Size InfoBarItemView::GetPreferredSize() {
+  return gfx::Size(
+      GetParent()->width(),
+      static_cast<int>(kInfoBarHeight * animation_->GetCurrentValue()));
 }
 
 // The following is an overall note on the underlying implementation. You don't
@@ -99,14 +99,13 @@ void InfoBarItemView::Layout() {
   for (int i = child_count - 1; i >= insert_index_ ; i--) {
     View* v = GetChildViewAt(i);
     if (v->IsVisible()) {
-      CSize view_size;
-      v->GetPreferredSize(&view_size);
-      next_x = next_x - view_size.cx;
+      gfx::Size view_size = v->GetPreferredSize();
+      next_x = next_x - view_size.width();
       v->SetBounds(next_x,
-                   CenterPosition(view_size.cy,
+                   CenterPosition(view_size.height(),
                        static_cast<int>(kInfoBarHeight)) - height_diff,
-                   view_size.cx,
-                   view_size.cy);
+                   view_size.width(),
+                   view_size.height());
     }
   }
   int left_most_x = next_x;
@@ -118,24 +117,23 @@ void InfoBarItemView::Layout() {
   for (int i = 0; i < insert_index_ ; i++) {
     View* v = GetChildViewAt(i);
     if (v->IsVisible()) {
-      CSize view_size;
-      v->GetPreferredSize(&view_size);
+      gfx::Size view_size = v->GetPreferredSize();
       int remaining_space = std::max(0, left_most_x - next_x);
-      if (view_size.cx > remaining_space) {
-        view_size.cx = remaining_space;
+      if (view_size.width() > remaining_space) {
+        view_size.set_width(remaining_space);
       }
       v->SetBounds(next_x,
-                   CenterPosition(view_size.cy,
+                   CenterPosition(view_size.height(),
                        static_cast<int>(kInfoBarHeight)) - height_diff,
-                   view_size.cx,
-                   view_size.cy);
-      next_x = next_x + view_size.cx;
+                   view_size.width(),
+                   view_size.height());
+      next_x = next_x + view_size.width();
     }
   }
 }
 
-void InfoBarItemView::DidChangeBounds(const CRect& previous,
-                                      const CRect& current) {
+void InfoBarItemView::DidChangeBounds(const gfx::Rect& previous,
+                                      const gfx::Rect& current) {
   if (GetParent() != NULL)
     Layout();
 }
@@ -205,7 +203,7 @@ void InfoBarItemView::ViewHierarchyChanged(bool is_add,
       View* root_view = GetRootView();
       HWND root_hwnd = NULL;
       if (root_view)
-        root_hwnd = root_view->GetViewContainer()->GetHWND();
+        root_hwnd = root_view->GetContainer()->GetHWND();
 
       if (root_hwnd) {
         focus_tracker_.reset(new views::ExternalFocusTracker(

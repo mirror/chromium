@@ -41,7 +41,7 @@ class StarToggle : public views::View {
 
   // Overriden from view.
   void Paint(ChromeCanvas* canvas);
-  void GetPreferredSize(CSize* out);
+  gfx::Size GetPreferredSize();
   virtual bool OnMousePressed(const views::MouseEvent& e);
   virtual bool OnMouseDragged(const views::MouseEvent& event);
   virtual void OnMouseReleased(const views::MouseEvent& e, bool canceled);

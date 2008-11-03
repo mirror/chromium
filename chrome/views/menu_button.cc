@@ -14,10 +14,10 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/button.h"
+#include "chrome/views/container.h"
 #include "chrome/views/event.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view_menu_delegate.h"
-#include "chrome/views/view_container.h"
 
 #include "generated_resources.h"
 
@@ -65,12 +65,14 @@ MenuButton::~MenuButton() {
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-void MenuButton::GetPreferredSize(CSize* result) {
-  TextButton::GetPreferredSize(result);
+gfx::Size MenuButton::GetPreferredSize() {
+  gfx::Size prefsize = TextButton::GetPreferredSize();
   if (show_menu_marker_) {
-    result->cx += kMenuMarker->width() + kMenuMarkerPaddingLeft +
-        kMenuMarkerPaddingRight;
+    prefsize.Enlarge(kMenuMarker->width() + kMenuMarkerPaddingLeft +
+                         kMenuMarkerPaddingRight,
+                     0);
   }
+  return prefsize;
 }
 
 void MenuButton::Paint(ChromeCanvas* canvas, bool for_drag) {
@@ -100,7 +102,7 @@ void MenuButton::Paint(ChromeCanvas* canvas, bool for_drag) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int MenuButton::GetMaximumScreenXCoordinate() {
-  ViewContainer* vc = GetViewContainer();
+  Container* vc = GetContainer();
 
   if (!vc) {
     NOTREACHED();
@@ -124,14 +126,13 @@ bool MenuButton::Activate() {
   // after the menu closes.
   PaintNow();
   if (menu_delegate_) {
-    CRect lb;
-    GetLocalBounds(&lb, true);
+    gfx::Rect lb = GetLocalBounds(true);
 
     // The position of the menu depends on whether or not the locale is
     // right-to-left.
-    CPoint menu_position = lb.BottomRight();
+    gfx::Point menu_position(lb.right(), lb.bottom());
     if (UILayoutIsRightToLeft())
-      menu_position.x = lb.left;
+      menu_position.set_x(lb.x());
 
     View::ConvertPointToScreen(this, &menu_position);
     if (UILayoutIsRightToLeft())
@@ -140,8 +141,8 @@ bool MenuButton::Activate() {
       menu_position.Offset(-2, -4);
 
     int max_x_coordinate = GetMaximumScreenXCoordinate();
-    if (max_x_coordinate && max_x_coordinate <= menu_position.x)
-      menu_position.x = max_x_coordinate - 1;
+    if (max_x_coordinate && max_x_coordinate <= menu_position.x())
+      menu_position.set_x(max_x_coordinate - 1);
 
     // We're about to show the menu from a mouse press. By showing from the
     // mouse press event we block RootView in mouse dispatching. This also
@@ -153,7 +154,8 @@ bool MenuButton::Activate() {
     GetRootView()->SetMouseHandler(NULL);
 
     menu_visible_ = true;
-    menu_delegate_->RunMenu(this, menu_position, GetViewContainer()->GetHWND());
+    menu_delegate_->RunMenu(this, menu_position.ToPOINT(),
+                            GetContainer()->GetHWND());
     menu_visible_ = false;
     menu_closed_time_ = Time::Now();
 
@@ -181,7 +183,7 @@ bool MenuButton::OnMousePressed(const MouseEvent& e) {
   if (GetState() != BS_DISABLED) {
     // If we're draggable (GetDragOperations returns a non-zero value), then
     // don't pop on press, instead wait for release.
-    if (e.IsOnlyLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y())) &&
+    if (e.IsOnlyLeftMouseButton() && HitTest(e.location()) &&
         GetDragOperations(e.x(), e.y()) == DragDropTypes::DRAG_NONE) {
       TimeDelta delta = Time::Now() - menu_closed_time_;
       int64 delta_in_milliseconds = delta.InMilliseconds();
@@ -197,7 +199,7 @@ void MenuButton::OnMouseReleased(const MouseEvent& e,
                                  bool canceled) {
   if (GetDragOperations(e.x(), e.y()) != DragDropTypes::DRAG_NONE &&
       GetState() != BS_DISABLED && !canceled && !InDrag() &&
-      e.IsOnlyLeftMouseButton() && HitTest(WTL::CPoint(e.x(), e.y()))) {
+      e.IsOnlyLeftMouseButton() && HitTest(e.location())) {
     Activate();
   } else {
     TextButton::OnMouseReleased(e, canceled);

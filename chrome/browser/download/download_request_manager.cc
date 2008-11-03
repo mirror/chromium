@@ -33,7 +33,7 @@ namespace {
 // split into DialogDelegateImpl as TabDownloadState may be deleted before
 // the dialog.
 
-class DialogDelegateImpl : public ChromeViews::DialogDelegate {
+class DialogDelegateImpl : public views::DialogDelegate {
  public:
   DialogDelegateImpl(TabContents* tab,
                      DownloadRequestManager::TabDownloadState* host);
@@ -49,7 +49,7 @@ class DialogDelegateImpl : public ChromeViews::DialogDelegate {
   // DialogDelegate methods;
   virtual bool Cancel();
   virtual bool Accept();
-  virtual ChromeViews::View* GetContentsView() { return message_view_; }
+  virtual views::View* GetContentsView() { return message_view_; }
   virtual std::wstring GetDialogButtonLabel(DialogButton button) const;
   virtual int GetDefaultDialogButton() const {
     return DIALOGBUTTON_CANCEL;

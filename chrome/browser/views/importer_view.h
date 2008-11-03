@@ -32,7 +32,7 @@ class ImporterView : public views::View,
   virtual ~ImporterView();
 
   // Overridden from views::View.
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
 
   // Overridden from views::DialogDelegate:

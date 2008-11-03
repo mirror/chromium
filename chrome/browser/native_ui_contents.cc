@@ -16,8 +16,8 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
 #include "chrome/views/checkbox.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/scroll_view.h"
@@ -151,7 +151,7 @@ NativeUIContents::~NativeUIContents() {
 void NativeUIContents::CreateView(HWND parent_hwnd,
                                   const gfx::Rect& initial_bounds) {
   set_delete_on_destroy(false);
-  HWNDViewContainer::Init(parent_hwnd, initial_bounds, false);
+  ContainerWin::Init(parent_hwnd, initial_bounds, false);
 }
 
 LRESULT NativeUIContents::OnCreate(LPCREATESTRUCT create_struct) {
@@ -593,23 +593,21 @@ views::View* SearchableUIContainer::GetContents() {
 void SearchableUIContainer::Layout() {
   View::Layout();
 
-  CSize search_button_size;
-  search_button_->GetPreferredSize(&search_button_size);
-
-  CSize product_logo_size;
-  product_logo_->GetPreferredSize(&product_logo_size);
+  gfx::Size search_button_size = search_button_->GetPreferredSize();
+  gfx::Size product_logo_size = product_logo_->GetPreferredSize();
 
   int field_width = kDestinationSearchOffset + 
     kDestinationSearchWidth +
     kDestinationSmallerMargin +
-    static_cast<int>(search_button_size.cx) +
+    static_cast<int>(search_button_size.width()) +
     kDestinationSmallerMargin;
 
   product_logo_->SetBounds(std::max(width() - kProductLogo->width() - 
                                kProductLogoPadding,
                                field_width), 
                            kProductLogoPadding, 
-                           product_logo_size.cx, product_logo_size.cy);
+                           product_logo_size.width(),
+                           product_logo_size.height());
 }
 
 void SearchableUIContainer::Paint(ChromeCanvas* canvas) {

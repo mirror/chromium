@@ -9,7 +9,7 @@
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/views/tabs/tab.h"
 #include "chrome/views/button.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/menu.h"
 #include "chrome/views/view.h"
 
@@ -66,7 +66,7 @@ class TabStrip : public views::View,
   // portion of the TabStrip that should be treated as the containing Window's
   // titlebar for dragging purposes.
   // TODO(beng): (Cleanup) should be const, but GetViewForPoint isn't, so fie!
-  bool PointIsWithinWindowCaption(const CPoint& point);
+  bool PointIsWithinWindowCaption(const gfx::Point& point);
 
   // Return true if this tab strip is compatible with the provided tab strip.
   // Compatible tab strips can transfer tabs during drag and drop.
@@ -98,10 +98,9 @@ class TabStrip : public views::View,
 
   // views::View overrides:
   virtual void PaintChildren(ChromeCanvas* canvas);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual views::View* GetViewByID(int id) const;
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* preferred_size);
+  virtual gfx::Size GetPreferredSize();
   // NOTE: the drag and drop methods are invoked from FrameView. This is done to
   // allow for a drop region that extends outside the bounds of the TabStrip.
   virtual void OnDragEntered(const views::DropTargetEvent& event);
@@ -276,7 +275,7 @@ class TabStrip : public views::View,
 
   // Returns true if the specified point in TabStrip coords is within the
   // hit-test region of the specified Tab.
-  bool IsPointInTab(Tab* tab, const CPoint& point_in_tabstrip_coords);
+  bool IsPointInTab(Tab* tab, const gfx::Point& point_in_tabstrip_coords);
 
   // -- Member Variables ------------------------------------------------------
 

@@ -37,7 +37,7 @@ ImporterLockView::~ImporterLockView() {
 gfx::Size ImporterLockView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_IMPORTLOCK_DIALOG_WIDTH_CHARS,
-      IDS_IMPORTLOCK_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_IMPORTLOCK_DIALOG_HEIGHT_LINES));
 }
 
 void ImporterLockView::Layout() {

@@ -109,9 +109,9 @@ STDMETHODIMP ViewAccessibility::get_accParent(IDispatch** disp_parent) {
   views::View* parent = view_->GetParent();
 
   if (!parent) {
-    // This function can get called during teardown of HWNDViewContainer so
-    // we should bail out if we fail to get the HWND.
-    if (!view_->GetViewContainer() || !view_->GetViewContainer()->GetHWND()) {
+    // This function can get called during teardown of ContainerWin so we
+    // should bail out if we fail to get the HWND.
+    if (!view_->GetContainer() || !view_->GetContainer()->GetHWND()) {
       *disp_parent = NULL;
       return S_FALSE;
     }
@@ -120,7 +120,7 @@ STDMETHODIMP ViewAccessibility::get_accParent(IDispatch** disp_parent) {
     // the default implementation, to interface with Windows' hierarchy and to
     // support calls from e.g. WindowFromAccessibleObject.
     HRESULT hr =
-        ::AccessibleObjectFromWindow(view_->GetViewContainer()->GetHWND(),
+        ::AccessibleObjectFromWindow(view_->GetContainer()->GetHWND(),
                                      OBJID_WINDOW, IID_IAccessible,
                                      reinterpret_cast<void**>(disp_parent));
 
@@ -446,7 +446,7 @@ STDMETHODIMP ViewAccessibility::accLocation(LONG* x_left, LONG* y_top,
     return E_INVALIDARG;
   }
 
-  CRect view_bounds(0, 0, 0, 0);
+  gfx::Rect view_bounds;
   // Retrieving the parent View to be used for converting from view-to-screen
   // coordinates.
   views::View* parent = view_->GetParent();
@@ -458,21 +458,21 @@ STDMETHODIMP ViewAccessibility::accLocation(LONG* x_left, LONG* y_top,
 
   if (var_id.lVal == CHILDID_SELF) {
     // Retrieve active View's bounds.
-    view_->GetBounds(&view_bounds);
+    view_bounds = view_->bounds();
   } else {
     // Check to see if child is out-of-bounds.
     if (!IsValidChild((var_id.lVal - 1), view_)) {
       return E_INVALIDARG;
     }
     // Retrieve child bounds.
-    view_->GetChildViewAt(var_id.lVal - 1)->GetBounds(&view_bounds);
+    view_bounds = view_->GetChildViewAt(var_id.lVal - 1)->bounds();
     // Parent View is current View.
     parent = view_;
   }
 
-  if (!view_bounds.IsRectNull()) {
-    *width  = view_bounds.Width();
-    *height = view_bounds.Height();
+  if (!view_bounds.IsEmpty()) {
+    *width  = view_bounds.width();
+    *height = view_bounds.height();
 
     gfx::Point topleft(view_bounds.origin());
     views::View::ConvertPointToScreen(parent, &topleft);
@@ -492,7 +492,7 @@ STDMETHODIMP ViewAccessibility::accHitTest(LONG x_left, LONG y_top,
     return E_INVALIDARG;
   }
 
-  CPoint pt(x_left, y_top);
+  gfx::Point pt(x_left, y_top);
   views::View::ConvertPointToView(NULL, view_, &pt);
 
   if (!view_->HitTest(pt)) {

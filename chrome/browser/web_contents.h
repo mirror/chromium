@@ -14,7 +14,7 @@
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/web_app.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 
 class FindInPageController;
 class InterstitialPageDelegate;
@@ -33,7 +33,7 @@ class WebDropTarget;
 class WebContents : public TabContents,
                     public RenderViewHostDelegate,
                     public RenderViewHostManager::Delegate,
-                    public ChromeViews::HWNDViewContainer,
+                    public views::ContainerWin,
                     public SelectFileDialog::Listener,
                     public NotificationObserver,
                     public WebApp::Observer {

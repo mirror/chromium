@@ -43,12 +43,13 @@ class InfoBarItemView : public views::View,
 
   // The preferred height is equal to the maximum height of all views
   // in the info bar. Preferred width is equal to the parents width.
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // Lays out all child views of the info bar from trailing to leading.
   virtual void Layout();
 
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual void DidChangeBounds(const gfx::Rect& previous,
+                               const gfx::Rect& current);
 
   // Starts the close animation, which will end in the bar closing itself.
   void BeginClose();

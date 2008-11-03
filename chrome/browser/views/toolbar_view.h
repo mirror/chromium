@@ -47,12 +47,11 @@ class BrowserToolbarView : public views::View,
 
   // views::View
   virtual void Layout();
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual void DidGainFocus();
   virtual void WillLoseFocus();
   virtual bool OnKeyPressed(const views::KeyEvent& e);
   virtual bool OnKeyReleased(const views::KeyEvent& e);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // Overridden from EncodingMenuControllerDelegate:
   virtual bool IsItemChecked(int id) const;

@@ -47,10 +47,9 @@ class DebuggerView : public views::View,
   virtual std::string GetClassName() const {
     return "DebuggerView";
   }
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
   virtual void Paint(ChromeCanvas* canvas);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual void ViewHierarchyChanged(bool is_add,
                                     views::View* parent,
                                     views::View* child);

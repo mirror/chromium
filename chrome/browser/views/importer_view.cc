@@ -91,7 +91,7 @@ void ImporterView::SetupControl() {
 gfx::Size ImporterView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_IMPORT_DIALOG_WIDTH_CHARS,
-      IDS_IMPORT_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_IMPORT_DIALOG_HEIGHT_LINES));
 }
 
 void ImporterView::Layout() {

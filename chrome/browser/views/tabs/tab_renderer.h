@@ -54,7 +54,7 @@ class TabRenderer : public views::View,
   void StopPulse();
 
   // Returns the minimum possible size of a single unselected Tab.
-  static gfx::Size GetMinimumSize();
+  static gfx::Size GetMinimumUnselectedSize();
   // Returns the minimum possible size of a selected Tab. Selected tabs must
   // always show a close button and have a larger minimum size than unselected
   // tabs.
@@ -74,7 +74,6 @@ class TabRenderer : public views::View,
   // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual void OnMouseEntered(const views::MouseEvent& event);
   virtual void OnMouseExited(const views::MouseEvent& event);
 

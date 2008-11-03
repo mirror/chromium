@@ -71,10 +71,10 @@ class WindowFinder {
 
 gfx::Point ConvertScreenPointToTabStripPoint(TabStrip* tabstrip,
                                              const gfx::Point& screen_point) {
-  CPoint tabstrip_topleft(0, 0);
+  gfx::Point tabstrip_topleft;
   views::View::ConvertPointToScreen(tabstrip, &tabstrip_topleft);
-  return gfx::Point(screen_point.x() - tabstrip_topleft.x,
-                    screen_point.y() - tabstrip_topleft.y);
+  return gfx::Point(screen_point.x() - tabstrip_topleft.x(),
+                    screen_point.y() - tabstrip_topleft.y());
 }
 
 }
@@ -271,7 +271,7 @@ void DraggedTabController::DidProcessMessage(const MSG& msg) {
 // DraggedTabController, private:
 
 void DraggedTabController::InitWindowCreatePoint() {
-  CPoint mouse_offset_cpoint(mouse_offset_.x(), mouse_offset_.y());
+  window_create_point_.SetPoint(mouse_offset_.x(), mouse_offset_.y());
   Tab* first_tab = attached_tabstrip_->GetTabAt(0);
   views::View::ConvertPointToContainer(first_tab, &window_create_point_);
 }
@@ -385,7 +385,7 @@ void DraggedTabController::MoveTab(const gfx::Point& screen_point) {
 
 TabStrip* DraggedTabController::GetTabStripForPoint(
     const gfx::Point& screen_point) const {
-  HWND dragged_hwnd = view_->GetViewContainer()->GetHWND();
+  HWND dragged_hwnd = view_->GetContainer()->GetHWND();
   HWND other_hwnd = WindowFinder::WindowForPoint(screen_point, dragged_hwnd);
   if (!other_hwnd)
     return NULL;
@@ -486,7 +486,7 @@ void DraggedTabController::Attach(TabStrip* attached_tabstrip,
   tab->SetVisible(false);
 
   // Move the corresponding window to the front.
-  attached_tabstrip_->GetViewContainer()->MoveToFront(true);
+  attached_tabstrip_->GetContainer()->MoveToFront(true);
 }
 
 void DraggedTabController::Detach() {
@@ -681,7 +681,7 @@ void DraggedTabController::RevertDrag() {
   // it has been hidden.
   if (restore_frame) {
     if (!restore_bounds_.IsEmpty()) {
-      HWND frame_hwnd = source_tabstrip_->GetViewContainer()->GetHWND();
+      HWND frame_hwnd = source_tabstrip_->GetContainer()->GetHWND();
       MoveWindow(frame_hwnd, restore_bounds_.x(), restore_bounds_.y(),
                  restore_bounds_.width(), restore_bounds_.height(), TRUE);
     }
@@ -727,12 +727,11 @@ gfx::Point DraggedTabController::GetCursorScreenPoint() const {
 }
 
 gfx::Rect DraggedTabController::GetViewScreenBounds(views::View* view) const {
-  CPoint view_topleft(0, 0);
+  gfx::Point view_topleft;
   views::View::ConvertPointToScreen(view, &view_topleft);
-  CRect view_screen_bounds;
-  view->GetLocalBounds(&view_screen_bounds, true);
-  view_screen_bounds.OffsetRect(view_topleft);
-  return gfx::Rect(view_screen_bounds);
+  gfx::Rect view_screen_bounds = view->GetLocalBounds(true);
+  view_screen_bounds.Offset(view_topleft.x(), view_topleft.y());
+  return view_screen_bounds;
 }
 
 int DraggedTabController::NormalizeIndexToAttachedTabStrip(int index) const {
@@ -748,7 +747,7 @@ int DraggedTabController::NormalizeIndexToAttachedTabStrip(int index) const {
 void DraggedTabController::HideFrame() {
   // We don't actually hide the window, rather we just move it way off-screen.
   // If we actually hide it, we stop receiving drag events.
-  HWND frame_hwnd = source_tabstrip_->GetViewContainer()->GetHWND();
+  HWND frame_hwnd = source_tabstrip_->GetContainer()->GetHWND();
   RECT wr;
   GetWindowRect(frame_hwnd, &wr);
   MoveWindow(frame_hwnd, 0xFFFF, 0xFFFF, wr.right - wr.left,

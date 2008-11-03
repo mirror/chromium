@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_VIEWS_HWND_VIEW_CONTAINER_H_
-#define CHROME_VIEWS_HWND_VIEW_CONTAINER_H_
+#ifndef CHROME_VIEWS_CONTAINER_WIN_H_
+#define CHROME_VIEWS_CONTAINER_WIN_H_
 
 #include <atlbase.h>
 #include <atlcrack.h>
@@ -11,7 +11,7 @@
 #include "base/message_loop.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/layout_manager.h"
-#include "chrome/views/view_container.h"
+#include "chrome/views/container.h"
 
 class ChromeCanvas;
 
@@ -19,7 +19,7 @@ namespace gfx {
 class Rect;
 }
 
-namespace ChromeViews {
+namespace views {
 
 class RootView;
 class TooltipManager;
@@ -60,7 +60,7 @@ class FillLayout : public LayoutManager {
 
   // Overridden from LayoutManager:
   virtual void Layout(View* host);
-  virtual void GetPreferredSize(View* host, CSize* out);
+  virtual gfx::Size GetPreferredSize(View* host);
 
  private:
   DISALLOW_EVIL_CONSTRUCTORS(FillLayout);
@@ -68,15 +68,15 @@ class FillLayout : public LayoutManager {
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-// HWNDViewContainer
+// ContainerWin
 //  A container for a ChromeViews hierarchy used to represent anything that can
 //  be contained within an HWND, e.g. a control, a window, etc. Specializations
 //  suitable for specific tasks, e.g. top level window, are derived from this.
 //
-//  This ViewContainer contains a RootView which owns the hierarchy of
-//  ChromeViews within it. As long as ChromeViews are part of this tree, they
-//  will be deleted automatically when the RootView is destroyed. If you remove
-//  a view from the tree, you are then responsible for cleaning up after it.
+//  This Container contains a RootView which owns the hierarchy of ChromeViews
+//  within it. As long as ChromeViews are part of this tree, they will be
+//  deleted automatically when the RootView is destroyed. If you remove a view
+//  from the tree, you are then responsible for cleaning up after it.
 //
 //  Note: We try and keep this API platform-neutral, since to some extent we
 //        consider this the boundary between the platform and potentially cross
@@ -85,31 +85,31 @@ class FillLayout : public LayoutManager {
 //        this <controller>-<view>-<platform-specific-view> separation.
 //
 ///////////////////////////////////////////////////////////////////////////////
-class HWNDViewContainer : public ViewContainer,
-                          public MessageLoopForUI::Observer,
-                          public FocusTraversable,
-                          public AcceleratorTarget {
+class ContainerWin : public Container,
+                     public MessageLoopForUI::Observer,
+                     public FocusTraversable,
+                     public AcceleratorTarget {
  public:
-  HWNDViewContainer();
-  virtual ~HWNDViewContainer();
+  ContainerWin();
+  virtual ~ContainerWin();
 
   // Initialize the container with a parent and an initial desired size.
   // |contents_view| is the view that will be the single child of RootView
-  // within this ViewContainer. As contents_view is inserted into RootView's
-  // tree, RootView assumes ownership of this view and cleaning it up. If you
-  // remove this view, you are responsible for its destruction. If this value
-  // is NULL, the caller is responsible for populating the RootView, and sizing
-  // its contents as the window is sized.
+  // within this Container. As contents_view is inserted into RootView's tree,
+  // RootView assumes ownership of this view and cleaning it up. If you remove
+  // this view, you are responsible for its destruction. If this value is NULL,
+  // the caller is responsible for populating the RootView, and sizing its
+  // contents as the window is sized.
   // If |has_own_focus_manager| is true, the focus traversal stay confined to
   // the window.
   void Init(HWND parent,
             const gfx::Rect& bounds,
             bool has_own_focus_manager);
 
-  // Sets the specified view as the contents of this HWNDViewContainer. There
-  // can only be one contnets view child of this ViewContainer's RootView. This
-  // view is sized to fit the entire size of the RootView. The RootView takes
-  // ownership of this View, unless it is set as not being parent-owned.
+  // Sets the specified view as the contents of this Container. There can only
+  // be one contnets view child of this Container's RootView. This view is
+  // sized to fit the entire size of the RootView. The RootView takes ownership
+  // of this View, unless it is set as not being parent-owned.
   virtual void SetContentsView(View* view);
 
   // Sets the window styles. This is ONLY used when the window is created.
@@ -155,11 +155,11 @@ class HWNDViewContainer : public ViewContainer,
   virtual void Hide();
 
   // Closes the window synchronously.  Note that this should not be called from
-  // an ATL message callback as it deletes the HWNDDViewContainer and ATL will
+  // an ATL message callback as it deletes the ContainerWin and ATL will
   // dereference it after the callback is processed.
   void CloseNow();
 
-  // All classes registered by HWNDViewContainer start with this name.
+  // All classes registered by ContainerWin start with this name.
   static const wchar_t* const kBaseClassName;
 
   BEGIN_MSG_MAP_EX(0)
@@ -175,10 +175,10 @@ class HWNDViewContainer : public ViewContainer,
     MESSAGE_HANDLER_EX(WM_NCUAHDRAWCAPTION, OnNCUAHDrawCaption)
     MESSAGE_HANDLER_EX(WM_NCUAHDRAWFRAME, OnNCUAHDrawFrame)
 
-    
     // Non-atlcrack.h handlers
     MESSAGE_HANDLER_EX(WM_GETOBJECT, OnGetObject)
     MESSAGE_HANDLER_EX(WM_NCMOUSELEAVE, OnNCMouseLeave)
+    MESSAGE_HANDLER_EX(WM_MOUSELEAVE, OnMouseLeave)
 
     // This list is in _ALPHABETICAL_ order! OR I WILL HURT YOU.
     MSG_WM_ACTIVATE(OnActivate)
@@ -205,7 +205,6 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_MBUTTONUP(OnMButtonUp)
     MSG_WM_MBUTTONDBLCLK(OnMButtonDblClk)
     MSG_WM_MOUSEACTIVATE(OnMouseActivate)
-    MSG_WM_MOUSELEAVE(OnMouseLeave)
     MSG_WM_MOUSEMOVE(OnMouseMove)
     MSG_WM_MOUSEWHEEL(OnMouseWheel)
     MSG_WM_MOVE(OnMove)
@@ -229,6 +228,7 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_RBUTTONUP(OnRButtonUp)
     MSG_WM_SETCURSOR(OnSetCursor)
     MSG_WM_SETFOCUS(OnSetFocus)
+    MSG_WM_SETICON(OnSetIcon)
     MSG_WM_SETTEXT(OnSetText)
     MSG_WM_SIZE(OnSize)
     MSG_WM_SYSCOMMAND(OnSysCommand)
@@ -237,11 +237,11 @@ class HWNDViewContainer : public ViewContainer,
     MSG_WM_WINDOWPOSCHANGED(OnWindowPosChanged)
   END_MSG_MAP()
 
-  // Overridden from ViewContainer:
+  // Overridden from Container:
   virtual void GetBounds(CRect *out, bool including_frame) const;
   virtual void MoveToFront(bool should_activate);
   virtual HWND GetHWND() const;
-  virtual void PaintNow(const CRect& update_rect);
+  virtual void PaintNow(const gfx::Rect& update_rect);
   virtual RootView* GetRootView();
   virtual bool IsVisible();
   virtual bool IsActive();
@@ -270,7 +270,7 @@ class HWNDViewContainer : public ViewContainer,
   void SetFocusTraversableParentView(View* parent_view);
 
   virtual bool GetAccelerator(int cmd_id,
-                              ChromeViews::Accelerator* accelerator) {
+                              views::Accelerator* accelerator) {
     return false;
   }
 
@@ -379,7 +379,7 @@ class HWNDViewContainer : public ViewContainer,
   virtual void OnMButtonUp(UINT flags, const CPoint& point);
   virtual LRESULT OnMouseActivate(HWND window, UINT hittest_code, UINT message);
   virtual void OnMouseMove(UINT flags, const CPoint& point);
-  virtual void OnMouseLeave();
+  virtual LRESULT OnMouseLeave(UINT uMsg, WPARAM w_param, LPARAM l_param);
   virtual void OnMove(const CPoint& point) { SetMsgHandled(FALSE); }
   virtual void OnMoving(UINT param, const LPRECT new_bounds) { }
   virtual LRESULT OnMouseWheel(UINT flags, short distance, const CPoint& point);
@@ -425,6 +425,10 @@ class HWNDViewContainer : public ViewContainer,
   }
   virtual void OnSetFocus(HWND focused_window) {
     SetMsgHandled(FALSE);
+  }
+  virtual LRESULT OnSetIcon(UINT size_type, HICON new_icon) {
+    SetMsgHandled(FALSE);
+    return 0;
   }
   virtual LRESULT OnSetText(const wchar_t* text) {
     SetMsgHandled(FALSE);
@@ -474,7 +478,7 @@ class HWNDViewContainer : public ViewContainer,
 
   virtual RootView* CreateRootView();
 
-  // Returns true if this HWNDViewContainer is opaque.
+  // Returns true if this ContainerWin is opaque.
   bool opaque() const { return opaque_; }
 
   // The root of the View hierarchy attached to this window.
@@ -507,7 +511,7 @@ class HWNDViewContainer : public ViewContainer,
   // so that subclasses can do any cleanup they need to.
   void OnDestroyImpl();
 
-  // The windows procedure used by all HWNDViewContainers.
+  // The windows procedure used by all ContainerWins.
   static LRESULT CALLBACK WndProc(HWND window,
                                   UINT message,
                                   WPARAM w_param,
@@ -517,9 +521,9 @@ class HWNDViewContainer : public ViewContainer,
   // If necessary, this registers the window class.
   std::wstring GetWindowClassName();
 
-  // The following factory is used for calls to close the HWNDViewContainer
+  // The following factory is used for calls to close the ContainerWin
   // instance.
-  ScopedRunnableMethodFactory<HWNDViewContainer> close_container_factory_;
+  ScopedRunnableMethodFactory<ContainerWin> close_container_factory_;
 
   // The flags currently being used with TrackMouseEvent to track mouse
   // messages. 0 if there is no active tracking. The value of this member is
@@ -578,5 +582,5 @@ class HWNDViewContainer : public ViewContainer,
 
 }  // namespace ChromeViews
 
-#endif  // #ifndef CHROME_VIEWS_HWND_VIEW_CONTAINER_H_
+#endif  // #ifndef CHROME_VIEWS_CONTAINER_WIN_H_
 

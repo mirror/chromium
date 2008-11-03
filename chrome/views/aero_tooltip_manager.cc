@@ -18,7 +18,7 @@ namespace views {
 ///////////////////////////////////////////////////////////////////////////////
 // AeroTooltipManager, public:
 
-AeroTooltipManager::AeroTooltipManager(ViewContainer* container, HWND parent)
+AeroTooltipManager::AeroTooltipManager(Container* container, HWND parent)
     : TooltipManager(container, parent),
       initial_delay_(0) {
 }

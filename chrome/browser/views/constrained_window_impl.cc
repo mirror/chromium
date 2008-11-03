@@ -217,7 +217,7 @@ class ConstrainedWindowNonClientView
   // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add, View *parent, View *child);
 
   // Overridden from views::BaseButton::ButtonListener:
@@ -425,12 +425,8 @@ int ConstrainedWindowNonClientView::CalculateTitlebarHeight() const {
 int ConstrainedWindowNonClientView::CalculateNonClientHeight(
     bool with_url_field) const {
   int r = CalculateTitlebarHeight();
-
-  if (with_url_field) {
-    CSize s;
-    location_bar_->GetPreferredSize(&s);
-    r += s.cy;
-  }
+  if (with_url_field)
+    r += location_bar_->GetPreferredSize().height();
   return r;
 }
 
@@ -450,7 +446,7 @@ gfx::Rect ConstrainedWindowNonClientView::CalculateWindowBoundsForClientBounds(
 }
 
 void ConstrainedWindowNonClientView::UpdateWindowTitle() {
-  SchedulePaint(title_bounds_.ToRECT(), false);
+  SchedulePaint(title_bounds_, false);
   UpdateLocationBar();
 }
 
@@ -502,9 +498,6 @@ CPoint ConstrainedWindowNonClientView::GetSystemMenuPoint() const {
 }
 
 int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
-  CRect bounds;
-  CPoint test_point = point.ToPOINT();
-
   // First see if it's within the grow box area, since that overlaps the client
   // bounds.
   int component = container_->client_view()->NonClientHitTest(point);
@@ -512,11 +505,11 @@ int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
     return component;
 
   // Then see if the point is within any of the window controls.
-  close_button_->GetBounds(&bounds);
-  if (bounds.PtInRect(test_point))
+  gfx::Rect button_bounds =
+      close_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTCLOSE;
-  bounds = icon_bounds_.ToRECT();
-  if (bounds.PtInRect(test_point))
+  if (icon_bounds_.Contains(point))
     return HTSYSMENU;
 
   component = GetHTComponentForFrame(point, kResizeAreaSize,
@@ -525,8 +518,7 @@ int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
                                      window_delegate_->CanResize());
   if (component == HTNOWHERE) {
     // Finally fall back to the caption.
-    GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    if (bounds().Contains(point))
       component = HTCAPTION;
     // Otherwise, the point is outside the window's bounds.
   }
@@ -576,15 +568,15 @@ void ConstrainedWindowNonClientView::Layout() {
   }
 
   int location_bar_height = 0;
-  CSize ps;
+  gfx::Size ps;
   if (should_display_url_field) {
-    location_bar_->GetPreferredSize(&ps);
-    location_bar_height = ps.cy;
+    ps = location_bar_->GetPreferredSize();
+    location_bar_height = ps.height();
   }
 
-  close_button_->GetPreferredSize(&ps);
-  close_button_->SetBounds(width() - ps.cx - kWindowControlsRightOffset,
-                           kWindowControlsTopOffset, ps.cx, ps.cy);
+  ps = close_button_->GetPreferredSize();
+  close_button_->SetBounds(width() - ps.width() - kWindowControlsRightOffset,
+                           kWindowControlsTopOffset, ps.width(), ps.height());
 
   int titlebar_height = CalculateTitlebarHeight();
   if (window_delegate_) {
@@ -621,25 +613,24 @@ void ConstrainedWindowNonClientView::Layout() {
                              location_bar_height);
     location_bar_->Layout();
   }
-  container_->client_view()->SetBounds(client_bounds_.ToRECT());
+  container_->client_view()->SetBounds(client_bounds_);
 }
 
-void ConstrainedWindowNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  container_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalBorderSize;
-  out->cy += CalculateNonClientHeight(ShouldDisplayURLField()) +
-      kWindowVerticalBorderSize;
+gfx::Size ConstrainedWindowNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = container_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalBorderSize, 
+                   CalculateNonClientHeight(ShouldDisplayURLField()) +
+                       kWindowVerticalBorderSize);
+  return prefsize;
 }
 
 void ConstrainedWindowNonClientView::ViewHierarchyChanged(bool is_add,
                                                           View *parent,
                                                           View *child) {
-  if (is_add && GetViewContainer()) {
-    // Add our Client View as we are added to the ViewContainer so that if we
-    // are subsequently resized all the parent-child relationships are
-    // established.
-    if (is_add && GetViewContainer() && child == this)
+  if (is_add && GetContainer()) {
+    // Add our Client View as we are added to the Container so that if we are
+    // subsequently resized all the parent-child relationships are established.
+    if (is_add && GetContainer() && child == this)
       AddChildView(container_->client_view());
     if (location_bar_ && !location_bar_->IsInitialized())
       location_bar_->Init();
@@ -1297,7 +1288,7 @@ void ConstrainedWindowImpl::OnFinalMessage(HWND window) {
     constrained_contents_ = NULL;
   }
 
-  HWNDViewContainer::OnFinalMessage(window);
+  ContainerWin::OnFinalMessage(window);
 }
 
 void ConstrainedWindowImpl::OnGetMinMaxInfo(LPMINMAXINFO mm_info) {

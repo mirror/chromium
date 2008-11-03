@@ -11,8 +11,8 @@
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/external_focus_tracker.h"
-#include "chrome/views/hwnd_view_container.h"
 #include "chrome/views/native_scroll_bar.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view_storage.h"
@@ -41,9 +41,9 @@ FindInPageController::FindInPageController(TabContents* parent_tab,
   // own handler for Escape.
   SetFocusChangeListener(parent_hwnd);
 
-  // Don't let HWNDViewContainer manage our lifetime. We want our lifetime to
+  // Don't let ContainerWin manage our lifetime. We want our lifetime to
   // coincide with WebContents.
-  HWNDViewContainer::set_delete_on_destroy(false);
+  ContainerWin::set_delete_on_destroy(false);
 
   view_ = new FindInPageView(this);
 
@@ -60,7 +60,7 @@ FindInPageController::FindInPageController(TabContents* parent_tab,
   gfx::Rect find_dlg_rect = GetDialogPosition(gfx::Rect());
   set_window_style(WS_CHILD | WS_CLIPCHILDREN);
   set_window_ex_style(WS_EX_TOPMOST);
-  HWNDViewContainer::Init(parent_hwnd, find_dlg_rect, false);
+  ContainerWin::Init(parent_hwnd, find_dlg_rect, false);
   SetContentsView(view_);
 
   // Start the process of animating the opening of the window.
@@ -326,7 +326,7 @@ void FindInPageController::SetParent(HWND new_parent) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// FindInPageController, ChromeViews::HWNDViewContainer implementation:
+// FindInPageController, views::ContainerWin implementation:
 
 void FindInPageController::OnFinalMessage(HWND window) {
   // We are exiting, so we no longer need to monitor focus changes.
@@ -478,19 +478,20 @@ void FindInPageController::GetDialogBounds(gfx::Rect* bounds) {
   *bounds = gfx::Rect(browser_client_rect);
 
   // Find the dimensions of the toolbar and the BookmarkBar.
-  CRect toolbar_bounds, bookmark_bar_bounds;
+  gfx::Rect toolbar_bounds, bookmark_bar_bounds;
   if (toolbar) {
-    if (!g_browser_process->IsUsingNewFrames())
-      toolbar->GetBounds(&toolbar_bounds);
-    else
-      toolbar->GetLocalBounds(&toolbar_bounds, false);
-    // Need to convert toolbar bounds into ViewContainer coords because the
-    // toolbar is the child of another view that isn't the top level view.
-    // This is required to ensure correct positioning relative to the top,left
-    // of the window.
-    CPoint topleft(0, 0);
-    ChromeViews::View::ConvertPointToViewContainer(toolbar, &topleft);
-    toolbar_bounds.OffsetRect(topleft);
+    if (!g_browser_process->IsUsingNewFrames()) {
+      toolbar_bounds = toolbar->bounds();
+    } else {
+      toolbar_bounds = toolbar->GetLocalBounds(false);
+    }
+    // Need to convert toolbar bounds into Container coords because the toolbar
+    // is the child of another view that isn't the top level view. This is
+    // required to ensure correct positioning relative to the top,left of the
+    // window.
+    gfx::Point topleft;
+    views::View::ConvertPointToContainer(toolbar, &topleft);
+    toolbar_bounds.Offset(topleft.x(), topleft.y());
   }
 
   // If the bookmarks bar is available, we need to update our
@@ -509,7 +510,7 @@ void FindInPageController::GetDialogBounds(gfx::Rect* bounds) {
     // the bookmarks bar (this works even if the bar is hidden).
     if (!bookmark_bar->IsNewTabPage() ||
         bookmark_bar->IsAlwaysShown()) {
-      bookmark_bar->GetBounds(&bookmark_bar_bounds);
+      bookmark_bar_bounds = bookmark_bar->bounds();
     }
   } else {
     view_->SetToolbarBlend(true);
@@ -522,13 +523,13 @@ void FindInPageController::GetDialogBounds(gfx::Rect* bounds) {
   // window or a Chrome application so we want to draw at the top of the page
   // content (right beneath the title bar).
   int y_pos_offset = 0;
-  if (!toolbar_bounds.IsRectEmpty()) {
+  if (!toolbar_bounds.IsEmpty()) {
     // We have a toolbar (chrome), so overlap it by one pixel.
-    y_pos_offset = toolbar_bounds.BottomRight().y - 1;
+    y_pos_offset = toolbar_bounds.bottom() - 1;
     // If there is a bookmark bar attached to the toolbar we should appear
     // attached to it instead of the toolbar.
-    if (!bookmark_bar_bounds.IsRectEmpty())
-      y_pos_offset += bookmark_bar_bounds.Height() - 1;
+    if (!bookmark_bar_bounds.IsEmpty())
+      y_pos_offset += bookmark_bar_bounds.height() - 1;
   } else {
     // There is no toolbar, so this is probably a constrained window or a Chrome
     // Application. This means we draw the Find window at the top of the page
@@ -559,21 +560,20 @@ gfx::Rect FindInPageController::GetDialogPosition(
     return gfx::Rect();
 
   // Ask the view how large an area it needs to draw on.
-  CSize prefsize;
-  view_->GetPreferredSize(&prefsize);
+  gfx::Size prefsize = view_->GetPreferredSize();
 
   // Place the view in the top right corner of the dialog boundaries (top left
   // for RTL languages).
   gfx::Rect view_location;
   int x = view_->UILayoutIsRightToLeft() ?
-              dialog_bounds.x() : dialog_bounds.width() - prefsize.cx;
+              dialog_bounds.x() : dialog_bounds.width() - prefsize.width();
   int y = dialog_bounds.y();
-  view_location.SetRect(x, y, prefsize.cx, prefsize.cy);
+  view_location.SetRect(x, y, prefsize.width(), prefsize.height());
 
   // Make sure we don't go out of bounds to the left (right in RTL) if the
   // window is too small to fit our dialog.
   if (view_->UILayoutIsRightToLeft()) {
-    int boundary = dialog_bounds.width() - prefsize.cx;
+    int boundary = dialog_bounds.width() - prefsize.width();
     view_location.set_x(std::min(view_location.x(), boundary));
   } else {
     view_location.set_x(std::max(view_location.x(), dialog_bounds.x()));

@@ -66,8 +66,14 @@ class Rect {
   // Shrink the rectangle by a horizontal and vertical distance on all sides.
   void Inset(int horizontal, int vertical);
 
+  // Shrink the rectangle by the specified amount on each side.
+  void Inset(int left, int top, int right, int bottom);
+
   // Move the rectangle by a horizontal and vertical distance.
   void Offset(int horizontal, int vertical);
+  void Offset(const gfx::Point& point) {
+    Offset(point.x(), point.y());
+  }
 
   // Returns true if the area of the rectangle is zero.
   bool IsEmpty() const;
@@ -90,6 +96,11 @@ class Rect {
   // this rectangle.  The point (x, y) is inside the rectangle, but the
   // point (x + width, y + height) is not.
   bool Contains(int point_x, int point_y) const;
+
+  // Returns true if the specified point is contained by this rectangle.
+  bool Contains(const gfx::Point& point) const {
+    return Contains(point.x(), point.y());
+  }
 
   // Returns true if this rectangle contains the specified rectangle.
   bool Contains(const Rect& rect) const;

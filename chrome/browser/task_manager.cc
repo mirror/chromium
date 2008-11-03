@@ -665,8 +665,7 @@ class TaskManagerContents : public views::View,
 
   void Init(TaskManagerTableModel* table_model);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
                                     views::View* child);
   void GetSelection(std::vector<int>* selection);
@@ -792,11 +791,6 @@ void TaskManagerContents::UpdateStatsCounters() {
   }
 }
 
-void TaskManagerContents::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
-}
-
 void TaskManagerContents::ViewHierarchyChanged(bool is_add,
                                                views::View* parent,
                                                views::View* child) {
@@ -822,49 +816,40 @@ void TaskManagerContents::ViewHierarchyChanged(bool is_add,
 void TaskManagerContents::Layout() {
   // kPanelHorizMargin is too big.
   const int kTableButtonSpacing = 12;
-  CRect bounds;
-  GetLocalBounds(&bounds, true);
-  int x = bounds.left;
-  int y = bounds.top;
 
-  CSize size;
-  kill_button_->GetPreferredSize(&size);
-  int prefered_width = size.cx;
-  int prefered_height = size.cy;
+  gfx::Size size = kill_button_->GetPreferredSize();
+  int prefered_width = size.width();
+  int prefered_height = size.height();
 
-  tab_table_->SetBounds(
-      x + kPanelHorizMargin,
-      y + kPanelVertMargin,
-      bounds.Width() - 2 * kPanelHorizMargin,
-      bounds.Height() - 2 * kPanelVertMargin - prefered_height);
-
+  tab_table_->SetBounds(x() + kPanelHorizMargin,
+                        y() + kPanelVertMargin,
+                        width() - 2 * kPanelHorizMargin,
+                        height() - 2 * kPanelVertMargin - prefered_height);
+  
   // y-coordinate of button top left.
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
-  int y_buttons = parent_bounds.bottom - prefered_height - kButtonVEdgeMargin;
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
+  int y_buttons = parent_bounds.bottom() - prefered_height - kButtonVEdgeMargin;
 
-  kill_button_->SetBounds(
-      x + bounds.Width() - prefered_width - kPanelHorizMargin,
-      y_buttons,
-      prefered_width,
-      prefered_height);
+  kill_button_->SetBounds(x() + width() - prefered_width - kPanelHorizMargin,
+                          y_buttons,
+                          prefered_width,
+                          prefered_height);
 
-  about_memory_link_->GetPreferredSize(&size);
-  int link_prefered_width = size.cx;
-  int link_prefered_height = size.cy;
+  size = about_memory_link_->GetPreferredSize();
+  int link_prefered_width = size.width();
+  int link_prefered_height = size.height();
   // center between the two buttons horizontally, and line up with
   // bottom of buttons vertically.
   int link_y_offset = std::max(0, prefered_height - link_prefered_height) / 2;
   about_memory_link_->SetBounds(
-      x + kPanelHorizMargin,
+      x() + kPanelHorizMargin,
       y_buttons + prefered_height - link_prefered_height - link_y_offset,
       link_prefered_width,
       link_prefered_height);
 }
 
-void TaskManagerContents::GetPreferredSize(CSize* out) {
-  out->cx = kDefaultWidth;
-  out->cy = kDefaultHeight;
+gfx::Size TaskManagerContents::GetPreferredSize() {
+  return gfx::Size(kDefaultWidth, kDefaultHeight);
 }
 
 void TaskManagerContents::GetSelection(std::vector<int>* selection) {
@@ -922,7 +907,7 @@ void TaskManagerContents::ShowContextMenu(views::View* source,
                                           int y,
                                           bool is_mouse_gesture) {
   UpdateStatsCounters();
-  Menu menu(this, Menu::TOPLEFT, source->GetViewContainer()->GetHWND());
+  Menu menu(this, Menu::TOPLEFT, source->GetContainer()->GetHWND());
   for (std::vector<views::TableColumn>::iterator i =
        columns_.begin(); i != columns_.end(); ++i) {
     menu.AppendMenuItem(i->id, i->title, Menu::CHECKBOX);

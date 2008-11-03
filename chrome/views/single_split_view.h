@@ -7,11 +7,11 @@
 
 #include "chrome/views/view.h"
 
-namespace ChromeViews {
+namespace views {
 
 // SingleSplitView lays out two views horizontally. A splitter exists between
 // the two views that the user can drag around to resize the views.
-class SingleSplitView : public ChromeViews::View {
+class SingleSplitView : public views::View {
  public:
   SingleSplitView(View* leading, View* trailing);
 

@@ -648,18 +648,18 @@ views::View* CookiesView::GetContentsView() {
 
 void CookiesView::Layout() {
   // Lay out the Remove/Remove All buttons in the parent view.
-  CSize ps;
-  remove_button_->GetPreferredSize(&ps);
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
-  int y_buttons = parent_bounds.bottom - ps.cy - kButtonVEdgeMargin;
+  gfx::Size ps = remove_button_->GetPreferredSize();
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
+  int y_buttons = parent_bounds.bottom() - ps.height() - kButtonVEdgeMargin;
 
-  remove_button_->SetBounds(kPanelHorizMargin, y_buttons, ps.cx, ps.cy);
+  remove_button_->SetBounds(kPanelHorizMargin, y_buttons, ps.width(),
+                            ps.height());
 
-  remove_all_button_->GetPreferredSize(&ps);
+  ps = remove_all_button_->GetPreferredSize();
   int remove_all_x = remove_button_->x() + remove_button_->width() +
       kRelatedControlHorizontalSpacing;
-  remove_all_button_->SetBounds(remove_all_x, y_buttons, ps.cx, ps.cy);
+  remove_all_button_->SetBounds(remove_all_x, y_buttons, ps.width(),
+                                ps.height());
 
   // Lay out this View
   View::Layout();
@@ -668,7 +668,7 @@ void CookiesView::Layout() {
 gfx::Size CookiesView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_COOKIES_DIALOG_WIDTH_CHARS,
-      IDS_COOKIES_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_COOKIES_DIALOG_HEIGHT_LINES));
 }
 
 void CookiesView::ViewHierarchyChanged(bool is_add,

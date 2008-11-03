@@ -117,7 +117,7 @@ void Window::Close() {
   if (client_view_->CanClose()) {
     SaveWindowPosition();
     RestoreEnabledIfNecessary();
-    HWNDViewContainer::Close();
+    ContainerWin::Close();
     // If the user activates another app after opening us, then comes back and
     // closes us, we want our owner to gain activation.  But only if the owner
     // is visible. If we don't manually force that here, the other app will
@@ -259,7 +259,7 @@ gfx::Size Window::GetLocalizedContentsSize(int col_resource_id,
 // Window, protected:
 
 Window::Window(WindowDelegate* window_delegate)
-    : HWNDViewContainer(),
+    : ContainerWin(),
       focus_on_creation_(true),
       window_delegate_(window_delegate),
       non_client_view_(NULL),
@@ -286,7 +286,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   // return NULL.
   owning_hwnd_ = parent;
   // We call this after initializing our members since our implementations of
-  // assorted HWNDViewContainer functions may be called during initialization.
+  // assorted ContainerWin functions may be called during initialization.
   is_modal_ = window_delegate_->IsModal();
   if (is_modal_)
     BecomeModal();
@@ -297,7 +297,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   if (window_ex_style() == 0)
     set_window_ex_style(CalculateWindowExStyle());
 
-  HWNDViewContainer::Init(parent, bounds, true);
+  ContainerWin::Init(parent, bounds, true);
   win_util::SetWindowUserData(GetHWND(), this);
   
   std::wstring window_title = window_delegate_->GetWindowTitle();
@@ -318,23 +318,24 @@ void Window::SetClientView(ClientView* client_view) {
   client_view_ = client_view;
   if (non_client_view_) {
     // This will trigger the ClientView to be added by the non-client view.
-    HWNDViewContainer::SetContentsView(non_client_view_);
+    ContainerWin::SetContentsView(non_client_view_);
   } else {
-    HWNDViewContainer::SetContentsView(client_view_);
+    ContainerWin::SetContentsView(client_view_);
   }
 }
 
 void Window::SizeWindowToDefault() {
-  CSize pref(0, 0);
+  gfx::Size pref;
   if (non_client_view_) {
-    non_client_view_->GetPreferredSize(&pref);
+    pref = non_client_view_->GetPreferredSize();
   } else {
-    client_view_->GetPreferredSize(&pref);
+    pref = client_view_->GetPreferredSize();
   }
-  DCHECK(pref.cx > 0 && pref.cy > 0);
+  DCHECK(pref.width() > 0 && pref.height() > 0);
   // CenterAndSizeWindow adjusts the window size to accommodate the non-client
   // area.
-  win_util::CenterAndSizeWindow(owning_window(), GetHWND(), pref, true);
+  win_util::CenterAndSizeWindow(owning_window(), GetHWND(), pref.ToSIZE(),
+                                true);
 }
 
 void Window::RunSystemMenu(const CPoint& point) {
@@ -351,7 +352,7 @@ void Window::RunSystemMenu(const CPoint& point) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Window, HWNDViewContainer overrides:
+// Window, ContainerWin overrides:
 
 void Window::OnActivate(UINT action, BOOL minimized, HWND window) {
   if (action == WA_INACTIVE)
@@ -362,17 +363,15 @@ LRESULT Window::OnAppCommand(HWND window, short app_command, WORD device,
                              int keystate) {
   // We treat APPCOMMAND ids as an extension of our command namespace, and just
   // let the delegate figure out what to do...
-  if (!window_delegate_->ExecuteWindowsCommand(app_command)) {
-    return HWNDViewContainer::OnAppCommand(window, app_command, device,
-                                           keystate);
-  }
+  if (!window_delegate_->ExecuteWindowsCommand(app_command))
+    return ContainerWin::OnAppCommand(window, app_command, device, keystate);
   return 0;
 }
 
 
 void Window::OnCommand(UINT notification_code, int command_id, HWND window) {
   if (!window_delegate_->ExecuteWindowsCommand(command_id))
-    HWNDViewContainer::OnCommand(notification_code, command_id, window);
+    ContainerWin::OnCommand(notification_code, command_id, window);
 }
 
 void Window::OnDestroy() {
@@ -381,7 +380,7 @@ void Window::OnDestroy() {
     window_delegate_ = NULL;
   }
   RestoreEnabledIfNecessary();
-  HWNDViewContainer::OnDestroy();
+  ContainerWin::OnDestroy();
 }
 
 LRESULT Window::OnEraseBkgnd(HDC dc) {
@@ -395,7 +394,7 @@ LRESULT Window::OnNCActivate(BOOL active) {
     return DefWindowProc(GetHWND(), WM_NCACTIVATE, TRUE, 0);
   }
   // Otherwise just do the default thing.
-  return HWNDViewContainer::OnNCActivate(active);
+  return ContainerWin::OnNCActivate(active);
 }
 
 LRESULT Window::OnNCHitTest(const CPoint& point) {
@@ -421,14 +420,14 @@ LRESULT Window::OnNCHitTest(const CPoint& point) {
 void Window::OnNCLButtonDown(UINT ht_component, const CPoint& point) {
   if (non_client_view_ && ht_component == HTSYSMENU)
     RunSystemMenu(non_client_view_->GetSystemMenuPoint());
-  HWNDViewContainer::OnNCLButtonDown(ht_component, point);
+  ContainerWin::OnNCLButtonDown(ht_component, point);
 }
 
 void Window::OnNCRButtonDown(UINT ht_component, const CPoint& point) {
   if (ht_component == HTCAPTION || ht_component == HTSYSMENU) {
     RunSystemMenu(point);
   } else {
-    HWNDViewContainer::OnNCRButtonDown(ht_component, point);
+    ContainerWin::OnNCRButtonDown(ht_component, point);
   }
 }
 

@@ -7,7 +7,7 @@
 #include "base/gfx/skia_utils.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 
-namespace ChromeViews {
+namespace views {
 
 // Size of the divider in pixels.
 static const int kDividerSize = 6;
@@ -48,10 +48,9 @@ gfx::Size SingleSplitView::GetPreferredSize() {
   int height = 0;
   for (int i = 0; i < 2 && i < GetChildViewCount(); ++i) {
     View* view = GetChildViewAt(i);
-    CSize pref ;
-    view->GetPreferredSize(&pref);
-    width += pref.cx;
-    height = std::max(height, pref.cy);
+    gfx::Size pref = view->GetPreferredSize();
+    width += pref.width();
+    height = std::max(height, pref.height());
   }
   width += kDividerSize;
   return gfx::Size(width, height);

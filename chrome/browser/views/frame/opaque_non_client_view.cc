@@ -527,9 +527,6 @@ CPoint OpaqueNonClientView::GetSystemMenuPoint() const {
 }
 
 int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
-  CRect bounds;
-  CPoint test_point = point.ToPOINT();
-
   // First see if it's within the grow box area, since that overlaps the client
   // bounds.
   int component = frame_->client_view()->NonClientHitTest(point);
@@ -537,21 +534,22 @@ int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
     return component;
 
   // Then see if the point is within any of the window controls.
-  close_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  gfx::Rect button_bounds =
+      close_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTCLOSE;
-  restore_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = restore_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMAXBUTTON;
-  maximize_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = maximize_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMAXBUTTON;
-  minimize_button_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-  if (bounds.PtInRect(test_point))
+  button_bounds = minimize_button_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+  if (button_bounds.Contains(point))
     return HTMINBUTTON;
   if (window_icon_) {
-    window_icon_->GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    button_bounds = window_icon_->GetBounds(APPLY_MIRRORING_TRANSFORMATION);
+    if (button_bounds.Contains(point))
       return HTSYSMENU;
   }
 
@@ -563,8 +561,7 @@ int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
       frame_->window_delegate()->CanResize());
   if (component == HTNOWHERE) {
     // Finally fall back to the caption.
-    GetBounds(&bounds, APPLY_MIRRORING_TRANSFORMATION);
-    if (bounds.PtInRect(test_point))
+    if (bounds().Contains(point))
       component = HTCAPTION;
     // Otherwise, the point is outside the window's bounds.
   }
@@ -629,11 +626,12 @@ void OpaqueNonClientView::Layout() {
   LayoutClientView();
 }
 
-void OpaqueNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  frame_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalBorderSize;
-  out->cy += CalculateNonClientTopHeight() + kWindowVerticalBorderBottomSize;
+gfx::Size OpaqueNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = frame_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalBorderSize,
+                   CalculateNonClientTopHeight() +
+                       kWindowVerticalBorderBottomSize);
+  return prefsize;
 }
 
 views::View* OpaqueNonClientView::GetViewForPoint(const gfx::Point& point,
@@ -646,24 +644,17 @@ views::View* OpaqueNonClientView::GetViewForPoint(const gfx::Point& point,
   for (int i = 0; i < arraysize(views); ++i) {
     if (!views[i]->IsVisible())
       continue;
-    CRect bounds;
-    views[i]->GetBounds(&bounds);
-    if (bounds.PtInRect(point))
+    if (views[i]->bounds().Contains(point))
       return views[i];
   }
   return View::GetViewForPoint(point, can_create_floating);
-}
-
-void OpaqueNonClientView::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
 }
 
 void OpaqueNonClientView::ViewHierarchyChanged(bool is_add,
                                                views::View* parent,
                                                views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetViewContainer());
+    DCHECK(GetContainer());
     DCHECK(frame_->client_view()->GetParent() != this);
     AddChildView(frame_->client_view());
 
@@ -879,73 +870,78 @@ void OpaqueNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
 }
 
 void OpaqueNonClientView::LayoutWindowControls() {
-  CSize ps;
+  gfx::Size ps;
   if (frame_->IsMaximized() || frame_->IsMinimized()) {
     maximize_button_->SetVisible(false);
     restore_button_->SetVisible(true);
   }
 
   if (frame_->IsMaximized()) {
-    close_button_->GetPreferredSize(&ps);
+    ps = close_button_->GetPreferredSize();
     close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                      views::Button::ALIGN_TOP);
     close_button_->SetBounds(
-        width() - ps.cx - kWindowControlsRightZoomedOffset,
-        0, ps.cx + kWindowControlsRightZoomedOffset,
-        ps.cy + kWindowControlsTopZoomedOffset);
+        width() - ps.width() - kWindowControlsRightZoomedOffset,
+        0, ps.width() + kWindowControlsRightZoomedOffset,
+        ps.height() + kWindowControlsTopZoomedOffset);
 
-    restore_button_->GetPreferredSize(&ps);
+    ps = restore_button_->GetPreferredSize();
     restore_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                        views::Button::ALIGN_TOP);
-    restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
-                               ps.cy + kWindowControlsTopZoomedOffset);
+    restore_button_->SetBounds(close_button_->x() - ps.width(), 0, ps.width(),
+                               ps.height() + kWindowControlsTopZoomedOffset);
 
-    minimize_button_->GetPreferredSize(&ps);
+    ps = minimize_button_->GetPreferredSize();
     minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                         views::Button::ALIGN_TOP);
-    minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
-                                ps.cy + kWindowControlsTopZoomedOffset);
+    minimize_button_->SetBounds(restore_button_->x() - ps.width(), 0,
+                                ps.width(),
+                                ps.height() + kWindowControlsTopZoomedOffset);
   } else if (frame_->IsMinimized()) {
-    close_button_->GetPreferredSize(&ps);
+    ps = close_button_->GetPreferredSize();
     close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                      views::Button::ALIGN_BOTTOM);
     close_button_->SetBounds(
-        width() - ps.cx - kWindowControlsRightZoomedOffset,
-        0, ps.cx + kWindowControlsRightZoomedOffset,
-        ps.cy + kWindowControlsTopZoomedOffset);
+        width() - ps.width() - kWindowControlsRightZoomedOffset,
+        0, ps.width() + kWindowControlsRightZoomedOffset,
+        ps.height() + kWindowControlsTopZoomedOffset);
 
-    restore_button_->GetPreferredSize(&ps);
+    ps = restore_button_->GetPreferredSize();
     restore_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                        views::Button::ALIGN_BOTTOM);
-    restore_button_->SetBounds(close_button_->x() - ps.cx, 0, ps.cx,
-                               ps.cy + kWindowControlsTopZoomedOffset);
+    restore_button_->SetBounds(close_button_->x() - ps.width(), 0, ps.width(),
+                               ps.height() + kWindowControlsTopZoomedOffset);
 
-    minimize_button_->GetPreferredSize(&ps);
+    ps = minimize_button_->GetPreferredSize();
     minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                         views::Button::ALIGN_BOTTOM);
-    minimize_button_->SetBounds(restore_button_->x() - ps.cx, 0, ps.cx,
-                                ps.cy + kWindowControlsTopZoomedOffset);
+    minimize_button_->SetBounds(restore_button_->x() - ps.width(), 0,
+                                ps.width(),
+                                ps.height() + kWindowControlsTopZoomedOffset);
   } else {
-    close_button_->GetPreferredSize(&ps);
+    ps = close_button_->GetPreferredSize();
     close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                      views::Button::ALIGN_TOP);
-    close_button_->SetBounds(width() - kWindowControlsRightOffset - ps.cx,
-                             kWindowControlsTopOffset, ps.cx, ps.cy);
+    close_button_->SetBounds(width() - kWindowControlsRightOffset - ps.width(),
+                             kWindowControlsTopOffset, ps.width(),
+                             ps.height());
 
     restore_button_->SetVisible(false);
 
     maximize_button_->SetVisible(true);
-    maximize_button_->GetPreferredSize(&ps);
+    ps = maximize_button_->GetPreferredSize();
     maximize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                         views::Button::ALIGN_TOP);
-    maximize_button_->SetBounds(close_button_->x() - ps.cx,
-                                kWindowControlsTopOffset, ps.cx, ps.cy);
+    maximize_button_->SetBounds(close_button_->x() - ps.width(),
+                                kWindowControlsTopOffset, ps.width(),
+                                ps.height());
 
-    minimize_button_->GetPreferredSize(&ps);
+    ps = minimize_button_->GetPreferredSize();
     minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                         views::Button::ALIGN_TOP);
-    minimize_button_->SetBounds(maximize_button_->x() - ps.cx,
-                                kWindowControlsTopOffset, ps.cx, ps.cy);
+    minimize_button_->SetBounds(maximize_button_->x() - ps.width(),
+                                kWindowControlsTopOffset, ps.width(),
+                                ps.height());
   }
 }
 
@@ -1005,13 +1001,12 @@ void OpaqueNonClientView::LayoutTitleBar() {
 
   // Do this last, after the icon has been moved.
   if (window_icon_)
-    window_icon_->SetBounds(icon_bounds_.ToRECT());
+    window_icon_->SetBounds(icon_bounds_);
 }
 
 void OpaqueNonClientView::LayoutClientView() {
-  gfx::Rect client_bounds(
-      CalculateClientAreaBounds(width(), height()));
-  frame_->client_view()->SetBounds(client_bounds.ToRECT());
+  gfx::Rect client_bounds = CalculateClientAreaBounds(width(), height());
+  frame_->client_view()->SetBounds(client_bounds);
 }
 
 // static

@@ -30,7 +30,7 @@ class InfoBarView : public views::View,
   // add an infobar that should not expire.
   void AppendInfoBarItem(views::View* view, bool auto_expire);
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
   virtual void Layout();
 
@@ -41,8 +41,6 @@ class InfoBarView : public views::View,
   // Invokes the following methods to do painting:
   // PaintBackground, PaintBorder and PaintSeparators.
   virtual void Paint(ChromeCanvas* canvas);
-
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
 
   WebContents* web_contents() { return web_contents_; }
 

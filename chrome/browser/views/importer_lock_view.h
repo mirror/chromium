@@ -24,7 +24,7 @@ class ImporterLockView : public views::View,
   virtual ~ImporterLockView();
 
   // Overridden from views::View.
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
 
   // Overridden from views::DialogDelegate:

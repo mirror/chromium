@@ -43,7 +43,7 @@ class ClearBrowsingDataView : public views::View,
   void Init();
 
   // Overridden from views::View:
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
   void ViewHierarchyChanged(bool is_add,
                             views::View* parent,

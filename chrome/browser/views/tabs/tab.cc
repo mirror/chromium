@@ -5,11 +5,11 @@
 #include "chrome/browser/views/tabs/tab.h"
 
 #include "base/gfx/size.h"
-#include "chrome/views/view_container.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/chrome_menu.h"
+#include "chrome/views/container.h"
 #include "chrome/views/tooltip_manager.h"
 #include "generated_resources.h"
 

@@ -939,7 +939,7 @@ void Browser::OpenClearBrowsingDataDialog() {
         new ClearBrowsingDataView(profile_))->Show();
 }
 
-void Browser::RunSimpleFrameMenu(const CPoint& pt, HWND hwnd) {
+void Browser::RunSimpleFrameMenu(const gfx::Point& pt, HWND hwnd) {
   bool for_popup = !IsApplication();
   EncodingMenuControllerDelegate d(this, &controller_);
 
@@ -994,7 +994,7 @@ void Browser::RunSimpleFrameMenu(const CPoint& pt, HWND hwnd) {
 
   m.AppendSeparator();
   m.AppendMenuItemWithLabel(IDC_CLOSE_WEB_APP, l10n_util::GetString(IDS_CLOSE));
-  m.RunMenuAt(pt.x, pt.y);
+  m.RunMenuAt(pt.x(), pt.y());
 }
 
 void Browser::CopyCurrentURLToClipBoard() {
@@ -1053,8 +1053,8 @@ void Browser::DuplicateContentsAt(int index) {
     Browser* new_browser = new Browser(gfx::Rect(), SW_SHOWNORMAL, profile(),
                                        BrowserType::APPLICATION, app_name_);
 
-    // We need to show the browser now. Otherwise HWNDViewContainer assumes
-    // the tab contents is invisible and won't size it.
+    // We need to show the browser now. Otherwise ContainerWin assumes the
+    // TabContents is invisible and won't size it.
     new_browser->Show();
 
     // The page transition below is only for the purpose of inserting the tab.

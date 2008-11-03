@@ -25,11 +25,11 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/checkbox.h"
+#include "chrome/views/container.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/radio_button.h"
 #include "chrome/views/text_field.h"
-#include "chrome/views/view_container.h"
 #include "generated_resources.h"
 #include "skia/include/SkBitmap.h"
 
@@ -56,7 +56,7 @@ class FileDisplayArea : public views::View {
   // views::View overrides:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  protected:
   // views::View overrides:
@@ -111,25 +111,23 @@ void FileDisplayArea::Paint(ChromeCanvas* canvas) {
 void FileDisplayArea::Layout() {
   icon_bounds_.SetRect(kFileIconHorizontalSpacing, kFileIconVerticalSpacing,
                        kFileIconSize, kFileIconSize);
-  CSize ps;
-  text_field_->GetPreferredSize(&ps);
+  gfx::Size ps = text_field_->GetPreferredSize();
   text_field_->SetBounds(icon_bounds_.right() + kFileIconTextFieldSpacing,
-                         (height() - ps.cy) / 2,
+                         (height() - ps.height()) / 2,
                          width() - icon_bounds_.right() -
                              kFileIconHorizontalSpacing -
-                             kFileIconTextFieldSpacing, ps.cy);
+                             kFileIconTextFieldSpacing, ps.height());
 }
 
-void FileDisplayArea::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  out->cx = kFileIconSize + 2 * kFileIconVerticalSpacing;
-  out->cy = kFileIconSize + 2 * kFileIconHorizontalSpacing;
+gfx::Size FileDisplayArea::GetPreferredSize() {
+  return gfx::Size(kFileIconSize + 2 * kFileIconVerticalSpacing,
+                   kFileIconSize + 2 * kFileIconHorizontalSpacing);
 }
 
 void FileDisplayArea::ViewHierarchyChanged(bool is_add,
                                            views::View* parent,
                                            views::View* child) {
-  if (!initialized_ && is_add && GetViewContainer())
+  if (!initialized_ && is_add && GetContainer())
     Init();
 }
 

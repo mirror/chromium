@@ -89,12 +89,12 @@ class MultiLabelButtons : public views::NativeButton {
  public:
   MultiLabelButtons(const std::wstring& label, const std::wstring& alt_label);
 
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
  private:
   std::wstring label_;
   std::wstring alt_label_;
-  CSize pref_size_;
+  gfx::Size pref_size_;
 
   DISALLOW_EVIL_CONSTRUCTORS(MultiLabelButtons);
 };
@@ -112,7 +112,7 @@ class PasswordManagerView : public views::View,
 
   // View methods.
   virtual void Layout();
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
                                     views::View* child);
 

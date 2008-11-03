@@ -39,7 +39,7 @@ class AboutChromeView : public views::View,
   void Init();
 
   // Overridden from views::View:
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void Layout();
   virtual void Paint(ChromeCanvas* canvas);
   virtual void ViewHierarchyChanged(bool is_add,
@@ -95,8 +95,8 @@ class AboutChromeView : public views::View,
                               const std::wstring& text,
                               views::Link* link,
                               gfx::Rect* rect,
-                              CSize* position,
-                              const CRect& bounds,
+                              gfx::Size* position,
+                              const gfx::Rect& bounds,
                               const ChromeFont& font);
 
   // A helper function for DrawTextAndPositionUrl, which simply draws the text
@@ -104,8 +104,8 @@ class AboutChromeView : public views::View,
   // details on the parameters, see DrawTextAndPositionUrl.
   void DrawTextStartingFrom(ChromeCanvas* canvas,
                             const std::wstring& text,
-                            CSize* position,
-                            const CRect& bounds,
+                            gfx::Size* position,
+                            const gfx::Rect& bounds,
                             const ChromeFont& font);
 
   // A simply utility function that calculates whether a word of width
@@ -113,8 +113,8 @@ class AboutChromeView : public views::View,
   // not, |position| is updated to wrap to the beginning of the next line.
   void WrapIfWordDoesntFit(int word_width,
                            int font_height,
-                           CSize* position,
-                           const CRect& bounds);
+                           gfx::Size* position,
+                           const gfx::Rect& bounds);
 
   Profile* profile_;
 

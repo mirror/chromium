@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VIEWS_INFO_BUBBLE_H_
 
 #include "chrome/common/slide_animation.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/view.h"
 
 // InfoBubble is used to display an arbitrary view above all other windows.
@@ -107,14 +107,10 @@ class InfoBubble : public views::ContainerWin,
 
     // Returns the preferred size, which is the sum of the preferred size of
     // the content and the border/arrow.
-    virtual void GetPreferredSize(CSize* pref);
+    virtual gfx::Size GetPreferredSize();
 
     // Positions the content relative to the border.
     virtual void Layout();
-
-    virtual void DidChangeBounds(const CRect& previous, const CRect& current) {
-      Layout();
-    }
 
     // Return the mask for the content view.
     HRGN GetMask(const CSize& size);

@@ -21,7 +21,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "webkit/glue/webcursor.h"
 
 // Tooltips will wrap after this width. Yes, wrap. Imagine that!
@@ -142,8 +142,8 @@ void RenderWidgetHostHWND::Focus() {
 }
 
 void RenderWidgetHostHWND::Blur() {
-  ChromeViews::FocusManager* focus_manager =
-    ChromeViews::FocusManager::GetFocusManager(GetParent());
+  views::FocusManager* focus_manager =
+    views::FocusManager::GetFocusManager(GetParent());
   // We don't have a FocusManager if we are hidden.
   if (focus_manager && render_widget_host_->CanBlur())
     focus_manager->ClearFocus();
@@ -714,7 +714,7 @@ LRESULT RenderWidgetHostHWND::OnWheelEvent(UINT message, WPARAM wparam,
     new_message.lParam = lparam;
 
     handled_by_webcontents =
-        !!::SendMessage(GetParent(), ChromeViews::kReflectedMessage, 0,
+        !!::SendMessage(GetParent(), views::kReflectedMessage, 0,
                         reinterpret_cast<LPARAM>(&new_message));
   }
 

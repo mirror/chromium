@@ -340,7 +340,8 @@ class TableView : public NativeControl,
   // Current sort.
   const SortDescriptors& sort_descriptors() const { return sort_descriptors_; }
 
-  void DidChangeBounds(const CRect& previous, const CRect& current);
+  void DidChangeBounds(const gfx::Rect& previous,
+                       const gfx::Rect& current);
 
   // Returns the number of rows in the TableView.
   int RowCount();
@@ -405,8 +406,8 @@ class TableView : public NativeControl,
 
   // Sometimes we may want to size the TableView to a specific width and
   // height.
-  void SetPreferredSize(const CSize& preferred_size);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
+  void set_preferred_size(const gfx::Size& size) { preferred_size_ = size; }
 
   // Is the table sorted?
   bool is_sorted() const { return !sort_descriptors_.empty(); }
@@ -627,7 +628,7 @@ class TableView : public NativeControl,
   HFONT custom_cell_font_;
 
   // The preferred size of the table view.
-  CSize preferred_size_;
+  gfx::Size preferred_size_;
 
   // The offset from the top of the client area to the start of the content.
   int content_offset_;

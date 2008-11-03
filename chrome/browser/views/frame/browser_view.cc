@@ -61,7 +61,7 @@ void BrowserView::Init() {
   toolbar_->Init(browser_->profile());
   toolbar_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TOOLBAR));
 
-  status_bubble_.reset(new StatusBubble(GetViewContainer()));
+  status_bubble_.reset(new StatusBubble(GetContainer()));
 }
 
 void BrowserView::Show(int command, bool adjust_to_fit) {
@@ -196,10 +196,8 @@ bool BrowserView::IsBookmarkBarVisible() const {
   if (bookmark_bar_view->IsNewTabPage() || bookmark_bar_view->IsAnimating())
     return true;
 
-  CSize sz;
-  bookmark_bar_view->GetPreferredSize(&sz);
   // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
+  return bookmark_bar_view->GetPreferredSize().height() > 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -222,18 +220,13 @@ void BrowserView::Layout() {
   toolbar_->SetBounds(0, 0, width(), height());
 }
 
-void BrowserView::DidChangeBounds(const CRect& previous,
-                                  const CRect& current) {
-  Layout();
-}
-
 void BrowserView::ViewHierarchyChanged(bool is_add,
                                        views::View* parent,
                                        views::View* child) {
-  if (is_add && child == this && GetViewContainer() && !initialized_) {
+  if (is_add && child == this && GetContainer() && !initialized_) {
     Init();
     // Make sure not to call Init() twice if we get inserted into a different
-    // ViewContainer.
+    // Container.
     initialized_ = true;
   }
 }

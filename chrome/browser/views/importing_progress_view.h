@@ -42,7 +42,7 @@ class ImportingProgressView : public views::View,
   virtual views::View* GetContentsView();
 
   // Overridden from views::View:
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add,
                                     views::View* parent,
                                     views::View* child);

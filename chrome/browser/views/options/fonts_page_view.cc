@@ -26,11 +26,11 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/checkbox.h"
+#include "chrome/views/container.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/radio_button.h"
 #include "chrome/views/text_field.h"
-#include "chrome/views/view_container.h"
 #include "generated_resources.h"
 #include "skia/include/SkBitmap.h"
 
@@ -97,7 +97,7 @@ class FontDisplayView : public views::View {
   // views::View overrides:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  private:
   views::Label* font_text_label_;
@@ -169,13 +169,12 @@ void FontDisplayView::Layout() {
   font_text_label_->SetBounds(0, 0, width(), height());
 }
 
-void FontDisplayView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
+gfx::Size FontDisplayView::GetPreferredSize() {
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   ChromeFont font = rb.GetFont(ResourceBundle::BaseFont);
-  out->cx = font.ave_char_width() * kFontDisplayMaxWidthChars;
-  out->cy = font.height() * kFontDisplayMaxHeightChars
-      + 2 * kFontDisplayLabelPadding;
+  return gfx::Size(font.ave_char_width() * kFontDisplayMaxWidthChars,
+                   font.height() * kFontDisplayMaxHeightChars
+                       + 2 * kFontDisplayLabelPadding);
 }
 
 void EmbellishTitle(views::Label* title_label) {
@@ -229,7 +228,7 @@ FontsPageView::~FontsPageView() {
 }
 
 void FontsPageView::ButtonPressed(views::NativeButton* sender) {
-  HWND owning_hwnd = GetAncestor(GetViewContainer()->GetHWND(), GA_ROOT);
+  HWND owning_hwnd = GetAncestor(GetContainer()->GetHWND(), GA_ROOT);
   std::wstring font_name;
   int font_size = 0;
   if (sender == serif_font_change_page_button_) {

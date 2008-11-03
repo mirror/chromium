@@ -13,7 +13,8 @@
 #include "chrome/browser/web_contents.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/hwnd_view_container.h"
+// Included for SetRootViewForHWND.
+#include "chrome/views/container_win.h"
 #include "chrome/test/automation/automation_messages.h"
 
 static const wchar_t kWindowObjectKey[] = L"ChromeWindowObject";
@@ -252,8 +253,9 @@ HWND ExternalTabContainer::GetHWND() const {
   return m_hWnd;
 }
 
-void ExternalTabContainer::PaintNow(const CRect& update_rect) {
-  RedrawWindow(update_rect,
+void ExternalTabContainer::PaintNow(const gfx::Rect& update_rect) {
+  RECT native_update_rect = update_rect.ToRECT();
+  RedrawWindow(&native_update_rect,
                NULL,
                RDW_INVALIDATE | RDW_ALLCHILDREN | RDW_NOERASE);
 }

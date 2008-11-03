@@ -15,9 +15,9 @@
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/view_container.h"
 
 #include "generated_resources.h"
 
@@ -72,8 +72,7 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
     save_button_(NULL),
     discard_button_(NULL),
     dangerous_download_label_(NULL),
-    dangerous_download_label_sized_(false),
-    cached_button_size_(0, 0) {
+    dangerous_download_label_sized_(false) {
   // TODO(idana) Bug# 1163334
   //
   // We currently do not mirror each download item on the download shelf (even
@@ -177,9 +176,8 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
   else
     box_y_ = kVerticalPadding;
 
-  CSize size;
-  GetPreferredSize(&size);
-  drop_down_x_ = size.cx - normal_drop_down_image_set_.top->width();
+  gfx::Size size = GetPreferredSize();
+  drop_down_x_ = size.width() - normal_drop_down_image_set_.top->width();
 
   body_hover_animation_.reset(new SlideAnimation(this));
   drop_hover_animation_.reset(new SlideAnimation(this));
@@ -302,20 +300,16 @@ void DownloadItemView::Layout() {
     dangerous_download_label_->SetBounds(x, y,
                                          dangerous_download_label_->width(),
                                          dangerous_download_label_->height());
-    CSize button_size;
-    GetButtonSize(&button_size);
+    gfx::Size button_size = GetButtonSize();
     x += dangerous_download_label_->width() + kLabelPadding;
-    y = (height() - button_size.cy) / 2;
-    save_button_->SetBounds(x, y, button_size.cx, button_size.cy);
-    x += button_size.cx + kButtonPadding;
-    discard_button_->SetBounds(x, y, button_size.cx, button_size.cy);
+    y = (height() - button_size.height()) / 2;
+    save_button_->SetBounds(x, y, button_size.width(), button_size.height());
+    x += button_size.width() + kButtonPadding;
+    discard_button_->SetBounds(x, y, button_size.width(),
+                               button_size.height());
   }
 }
 
-void DownloadItemView::DidChangeBounds(const CRect& previous,
-                                       const CRect& current) {
-  Layout();
-}
 void DownloadItemView::ButtonPressed(views::NativeButton* sender) {
   if (sender == discard_button_) {
     if (download_->state() == DownloadItem::IN_PROGRESS)
@@ -548,7 +542,7 @@ void DownloadItemView::ClearDangerousMode() {
   parent_->SchedulePaint();
 }
 
-void DownloadItemView::GetPreferredSize(CSize* out) {
+gfx::Size DownloadItemView::GetPreferredSize() {
   int width, height;
 
   // First, we set the height to the height of two rows or text plus margins.
@@ -560,15 +554,14 @@ void DownloadItemView::GetPreferredSize(CSize* out) {
     width = kLeftPadding + dangerous_mode_body_image_set_.top_left->width();
     width += warning_icon_->width() + kLabelPadding;
     width += dangerous_download_label_->width() + kLabelPadding;
-    CSize button_size;
-    GetButtonSize(&button_size);
+    gfx::Size button_size = GetButtonSize();
 
     // Make sure the button fits.
-    height = std::max<int>(height, 2 * kVerticalPadding + button_size.cy);
+    height = std::max<int>(height, 2 * kVerticalPadding + button_size.height());
     // Then we make sure the warning icon fits.
     height = std::max<int>(height, 2 * kVerticalPadding +
                                    warning_icon_->height());
-    width += button_size.cx * 2 + kButtonPadding;
+    width += button_size.width() * 2 + kButtonPadding;
     width += dangerous_mode_body_image_set_.top_right->width();
   } else {
     width = kLeftPadding + normal_body_image_set_.top_left->width();
@@ -577,8 +570,7 @@ void DownloadItemView::GetPreferredSize(CSize* out) {
     width += normal_body_image_set_.top_right->width();
     width += normal_drop_down_image_set_.top->width();
   }
-  out->cx = width;
-  out->cy = height;
+  return gfx::Size(width, height);
 }
 
 void DownloadItemView::OnMouseExited(const views::MouseEvent& event) {
@@ -602,7 +594,7 @@ bool DownloadItemView::OnMousePressed(const views::MouseEvent& event) {
     complete_animation_->End();
 
   if (event.IsOnlyLeftMouseButton()) {
-    WTL::CPoint point(event.x(), event.y());
+    gfx::Point point(event.location());
     if (event.x() < drop_down_x_) {
       SetState(PUSHED, NORMAL);
       return true;
@@ -627,18 +619,18 @@ bool DownloadItemView::OnMousePressed(const views::MouseEvent& event) {
     //
     // TODO(idana): when bug# 1163334 is fixed the following check should be
     // replaced with UILayoutIsRightToLeft().
-    point.y = height();
+    point.set_y(height());
     if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT) {
-      point.x = width();
+      point.set_x(width());
     } else {
-      point.x = drop_down_x_;
+      point.set_x(drop_down_x_);
     }
 
     views::View::ConvertPointToScreen(this, &point);
     download_util::DownloadShelfContextMenu menu(download_,
-                                                 GetViewContainer()->GetHWND(),
+                                                 GetContainer()->GetHWND(),
                                                  model_.get(),
-                                                 point);
+                                                 point.ToPOINT());
     drop_down_pressed_ = false;
     // Showing the menu blocks. Here we revert the state.
     SetState(NORMAL, NORMAL);
@@ -731,27 +723,27 @@ void DownloadItemView::LoadIcon() {
                NewCallback(this, &DownloadItemView::OnExtractIconComplete));
 }
 
-void DownloadItemView::GetButtonSize(CSize* size) {
+gfx::Size DownloadItemView::GetButtonSize() {
   DCHECK(save_button_ && discard_button_);
+  gfx::Size size;
+
   // We cache the size when successfully retrieved, not for performance reasons
   // but because if this DownloadItemView is being animated while the tab is
   // not showing, the native buttons are not parented and their preferred size
   // is 0, messing-up the layout.
-  if (cached_button_size_.cx != 0) {
-    *size = cached_button_size_;
-  }
+  if (cached_button_size_.width() != 0)
+    size = cached_button_size_;
 
-  CSize tmp_size;
-  save_button_->GetMinimumSize(size);
-  discard_button_->GetMinimumSize(&tmp_size);
+  size = save_button_->GetMinimumSize();
+  gfx::Size discard_size = discard_button_->GetMinimumSize();
 
-  size->cx = std::max(size->cx, tmp_size.cx);
-  size->cy = std::max(size->cy, tmp_size.cy);
+  size.SetSize(std::max(size.width(), discard_size.width()),
+               std::max(size.height(), discard_size.height()));
 
-  if (size->cx != 0) {
-    cached_button_size_.cx = size->cx;
-    cached_button_size_.cy = size->cy;
-  }
+  if (size.width() != 0)
+    cached_button_size_ = size;
+
+  return size;
 }
 
 // This method computes the minimum width of the label for displaying its text
@@ -769,22 +761,22 @@ void DownloadItemView::SizeLabelToMinWidth() {
   // current width.
   dangerous_download_label_->SetBounds(0, 0, 1000, 1000);
 
-  CSize size(0, 0);
+  gfx::Size size;
   int min_width = -1;
   int sp_index = text.find(L" ");
   while (sp_index != std::wstring::npos) {
     text.replace(sp_index, 1, L"\n");
     dangerous_download_label_->SetText(text);
-    dangerous_download_label_->GetPreferredSize(&size);
+    size = dangerous_download_label_->GetPreferredSize();
 
     if (min_width == -1)
-      min_width = size.cx;
+      min_width = size.width();
 
-    // If thw width is growing again, it means we passed the optimal width spot.
-    if (size.cx > min_width)
+    // If the width is growing again, it means we passed the optimal width spot.
+    if (size.width() > min_width)
       break;
     else
-      min_width = size.cx;
+      min_width = size.width();
 
     // Restore the string.
     text.replace(sp_index, 1, L" ");
@@ -794,8 +786,8 @@ void DownloadItemView::SizeLabelToMinWidth() {
 
   // If we have a line with no space, we won't cut it.
   if (min_width == -1)
-    dangerous_download_label_->GetPreferredSize(&size);
+    size = dangerous_download_label_->GetPreferredSize();
 
-  dangerous_download_label_->SetBounds(0, 0, size.cx, size.cy);
+  dangerous_download_label_->SetBounds(0, 0, size.width(), size.height());
   dangerous_download_label_sized_ = true;
 }

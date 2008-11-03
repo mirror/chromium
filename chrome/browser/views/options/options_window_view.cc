@@ -53,7 +53,7 @@ class OptionsWindowView : public views::View,
 
   // views::View overrides:
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  protected:
   // views::View overrides:
@@ -166,14 +166,14 @@ void OptionsWindowView::Layout() {
 gfx::Size OptionsWindowView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_OPTIONS_DIALOG_WIDTH_CHARS,
-      IDS_OPTIONS_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_OPTIONS_DIALOG_HEIGHT_LINES));
 }
 
 void OptionsWindowView::ViewHierarchyChanged(bool is_add,
                                              views::View* parent,
                                              views::View* child) {
-  // Can't init before we're inserted into a ViewContainer, because we require
-  // a HWND to parent native child controls to.
+  // Can't init before we're inserted into a Container, because we require a
+  // HWND to parent native child controls to.
   if (is_add && child == this)
     Init();
 }

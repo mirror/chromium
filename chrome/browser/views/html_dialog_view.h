@@ -38,7 +38,7 @@ class HtmlDialogView
   void InitDialog();
 
   // Overridden from views::View:
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
   // Overridden from views::WindowDelegate:
   virtual bool CanResize() const;

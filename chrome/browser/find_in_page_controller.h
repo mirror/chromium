@@ -8,7 +8,7 @@
 #include "base/gfx/rect.h"
 #include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/common/animation.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 
 class FindInPageView;
 class SlideAnimation;

@@ -108,24 +108,17 @@ void BookmarkEditorView::Layout() {
 
   // Manually lay out the New Folder button in the same row as the OK/Cancel
   // buttons...
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
-  CSize prefsize;
-  new_group_button_.GetPreferredSize(&prefsize);
-  int button_y = parent_bounds.bottom - prefsize.cy - kButtonVEdgeMargin;
-  new_group_button_.SetBounds(kPanelHorizMargin, button_y, prefsize.cx,
-                              prefsize.cy);
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
+  gfx::Size prefsize = new_group_button_.GetPreferredSize();
+  int button_y = parent_bounds.bottom() - prefsize.height() - kButtonVEdgeMargin;
+  new_group_button_.SetBounds(kPanelHorizMargin, button_y, prefsize.width(),
+                              prefsize.height());
 }
 
 gfx::Size BookmarkEditorView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_EDITBOOKMARK_DIALOG_WIDTH_CHARS,
-      IDS_EDITBOOKMARK_DIALOG_HEIGHT_LINES).ToSIZE();
-}
-
-void BookmarkEditorView::DidChangeBounds(const CRect& previous,
-                                         const CRect& current) {
-  Layout();
+      IDS_EDITBOOKMARK_DIALOG_HEIGHT_LINES));
 }
 
 void BookmarkEditorView::ViewHierarchyChanged(bool is_add,
@@ -211,7 +204,7 @@ void BookmarkEditorView::ShowContextMenu(View* source,
       (tree_model_->GetParent(tree_view_.GetSelectedNode()) ==
        tree_model_->GetRoot());
   context_menu_.reset(new Menu(this, Menu::TOPLEFT,
-                               GetViewContainer()->GetHWND()));
+                               GetContainer()->GetHWND()));
   context_menu_->AppendMenuItemWithLabel(IDS_EDIT,
       l10n_util::GetString(IDS_EDIT));
   context_menu_->AppendMenuItemWithLabel(

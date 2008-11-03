@@ -146,8 +146,7 @@ class KeywordEditorView : public views::View,
                          const std::wstring& url);
 
   // Overriden to invoke Layout.
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
   // DialogDelegate methods:
   virtual bool CanResize() const;

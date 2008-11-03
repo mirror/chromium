@@ -13,7 +13,7 @@
 // . Recently created bookmarks.
 // . The children of a particular folder.
 // . All bookmarks matching the specified text.
-class BookmarkTableModel : public ChromeViews::TableModel,
+class BookmarkTableModel : public views::TableModel,
                            public BookmarkModelObserver {
  public:
   // Methods for creating the various BookmarkTableModels. Ownership passes
@@ -32,7 +32,7 @@ class BookmarkTableModel : public ChromeViews::TableModel,
   // TableModel methods.
   virtual std::wstring GetText(int row, int column_id);
   virtual SkBitmap GetIcon(int row);
-  virtual void SetObserver(ChromeViews::TableModelObserver* observer) {
+  virtual void SetObserver(views::TableModelObserver* observer) {
     observer_ = observer;
   }
 
@@ -51,14 +51,14 @@ class BookmarkTableModel : public ChromeViews::TableModel,
   BookmarkModel* model() const { return model_; }
 
  protected:
-  ChromeViews::TableModelObserver* observer() const { return observer_; }
+  views::TableModelObserver* observer() const { return observer_; }
 
  private:
   // Builds the path shown in the path column for the specified node.
   void BuildPath(BookmarkNode* node, std::wstring* path);
 
   BookmarkModel* model_;
-  ChromeViews::TableModelObserver* observer_;
+  views::TableModelObserver* observer_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkTableModel);
 };

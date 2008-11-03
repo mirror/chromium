@@ -181,7 +181,7 @@ gfx::Size AeroGlassNonClientView::CalculateWindowSizeForClientSize(
 
 CPoint AeroGlassNonClientView::GetSystemMenuPoint() const {
   CPoint offset(0, 0);
-  MapWindowPoints(GetViewContainer()->GetHWND(), HWND_DESKTOP, &offset, 1);
+  MapWindowPoints(GetContainer()->GetHWND(), HWND_DESKTOP, &offset, 1);
   return offset;
 }
 
@@ -242,23 +242,19 @@ void AeroGlassNonClientView::Layout() {
   LayoutClientView();
 }
 
-void AeroGlassNonClientView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
-  frame_->client_view()->GetPreferredSize(out);
-  out->cx += 2 * kWindowHorizontalClientEdgeWidth;
-  out->cy += CalculateNonClientTopHeight() + kWindowBottomClientEdgeHeight;
-}
-
-void AeroGlassNonClientView::DidChangeBounds(const CRect& previous,
-                                          const CRect& current) {
-  Layout();
+gfx::Size AeroGlassNonClientView::GetPreferredSize() {
+  gfx::Size prefsize = frame_->client_view()->GetPreferredSize();
+  prefsize.Enlarge(2 * kWindowHorizontalClientEdgeWidth, 
+                   CalculateNonClientTopHeight() +
+                       kWindowBottomClientEdgeHeight);
+  return prefsize;
 }
 
 void AeroGlassNonClientView::ViewHierarchyChanged(bool is_add,
                                                   views::View* parent,
                                                   views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetViewContainer());
+    DCHECK(GetContainer());
     DCHECK(frame_->client_view()->GetParent() != this);
     AddChildView(frame_->client_view());
   }
@@ -412,9 +408,8 @@ void AeroGlassNonClientView::LayoutDistributorLogo() {
 }
 
 void AeroGlassNonClientView::LayoutClientView() {
-  gfx::Rect client_bounds(
-      CalculateClientAreaBounds(width(), height()));
-  frame_->client_view()->SetBounds(client_bounds.ToRECT());
+  gfx::Rect client_bounds = CalculateClientAreaBounds(width(), height());
+  frame_->client_view()->SetBounds(client_bounds);
 }
 
 // static

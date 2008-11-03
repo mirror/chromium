@@ -73,8 +73,7 @@ class ShelfItemDialog : public views::View,
                                UINT flags) {}
 
   // Overridden from View.
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual bool AcceleratorPressed(const views::Accelerator& accelerator);
 
   // TableViewObserver.

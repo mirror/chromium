@@ -159,10 +159,6 @@ class HungRendererWarningView : public views::View,
    public:
     ButtonContainer() {}
     virtual ~ButtonContainer() {}
-
-    virtual void DidChangeBounds(const CRect& previous, const CRect& current) {
-      Layout();
-    }
    private:
     DISALLOW_EVIL_CONSTRUCTORS(ButtonContainer);
   };
@@ -318,7 +314,7 @@ void HungRendererWarningView::ButtonPressed(views::NativeButton* sender) {
 void HungRendererWarningView::ViewHierarchyChanged(bool is_add,
                                                    views::View* parent,
                                                    views::View* child) {
-  if (!initialized_ && is_add && child == this && GetViewContainer())
+  if (!initialized_ && is_add && child == this && GetContainer())
     Init();
 }
 
@@ -340,8 +336,8 @@ void HungRendererWarningView::Init() {
   hung_pages_table_ = new views::GroupTableView(
       hung_pages_table_model_.get(), columns, views::ICON_AND_TEXT, true,
       false, true);
-  hung_pages_table_->SetPreferredSize(
-      CSize(kTableViewWidth, kTableViewHeight));
+  hung_pages_table_->set_preferred_size(
+    gfx::Size(kTableViewWidth, kTableViewHeight));
 
   CreateKillButtonView();
 

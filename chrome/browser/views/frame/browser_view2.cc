@@ -118,16 +118,13 @@ void BrowserView2::WindowMoved() {
 }
 
 gfx::Rect BrowserView2::GetToolbarBounds() const {
-  CRect bounds;
-  toolbar_->GetBounds(&bounds);
-  return gfx::Rect(bounds);
+  return toolbar_->bounds();
 }
 
 gfx::Rect BrowserView2::GetClientAreaBounds() const {
-  CRect bounds;
-  contents_container_->GetBounds(&bounds);
-  bounds.OffsetRect(x(), y());
-  return gfx::Rect(bounds);
+  gfx::Rect container_bounds = contents_container_->bounds();
+  container_bounds.Offset(x(), y());
+  return container_bounds;
 }
 
 int BrowserView2::GetTabStripHeight() const {
@@ -271,7 +268,7 @@ unsigned int BrowserView2::FeaturesForBrowserType(BrowserType::Type type) {
 void BrowserView2::Init() {
   // Stow a pointer to this object onto the window handle so that we can get
   // at it later when all we have is a HWND.
-  SetProp(GetViewContainer()->GetHWND(), kBrowserWindowKey, this);
+  SetProp(GetContainer()->GetHWND(), kBrowserWindowKey, this);
 
   LoadAccelerators();
   SetAccessibleName(l10n_util::GetString(IDS_PRODUCT_NAME));
@@ -290,7 +287,7 @@ void BrowserView2::Init() {
   set_contents_view(contents_container_);
   AddChildView(contents_container_);
 
-  status_bubble_.reset(new StatusBubble(GetViewContainer()));
+  status_bubble_.reset(new StatusBubble(GetContainer()));
 
 #ifdef CHROME_PERSONALIZATION    
   EnablePersonalization(CommandLine().HasSwitch(switches::kEnableP13n));
@@ -310,7 +307,7 @@ void BrowserView2::Close() {
 }
 
 void* BrowserView2::GetPlatformID() {
-  return GetViewContainer()->GetHWND();
+  return GetContainer()->GetHWND();
 }
 
 TabStrip* BrowserView2::GetTabStrip() const {
@@ -355,7 +352,7 @@ void BrowserView2::FlashFrame() {
 void BrowserView2::ContinueDetachConstrainedWindowDrag(
     const gfx::Point& mouse_point,
     int frame_component) {
-  HWND vc_hwnd = GetViewContainer()->GetHWND();
+  HWND vc_hwnd = GetContainer()->GetHWND();
   if (frame_component == HTCLIENT) {
     // If the user's mouse was over the content area of the popup when they
     // clicked down, we need to re-play the mouse down event so as to actually
@@ -478,10 +475,8 @@ bool BrowserView2::IsBookmarkBarVisible() const {
   if (bookmark_bar_view_->IsNewTabPage() || bookmark_bar_view_->IsAnimating())
     return true;
 
-  CSize sz;
-  bookmark_bar_view_->GetPreferredSize(&sz);
   // 1 is the minimum in GetPreferredSize for the bookmark bar.
-  return sz.cy > 1;
+  return bookmark_bar_view_->GetPreferredSize().height() > 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -624,9 +619,7 @@ bool BrowserView2::RestoreWindowPosition(CRect* bounds,
       // its desired height, since the toolbar is considered part of the
       // window's client area as far as GetWindowBoundsForClientBounds is
       // concerned...
-      CSize ps;
-      toolbar_->GetPreferredSize(&ps);
-      bounds->bottom += ps.cy;
+      bounds->bottom += toolbar_->GetPreferredSize().height();
     }
 
     gfx::Rect window_rect =
@@ -711,11 +704,11 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
   // animating.
   if (IsTabStripVisible() && tabstrip_->CanProcessInputEvents()) {
     views::Window* window = frame_->GetWindow();
-    CPoint point_in_view_coords(point.ToPOINT());
+    gfx::Point point_in_view_coords(point);
     View::ConvertPointToView(GetParent(), this, &point_in_view_coords);
 
     // See if the mouse pointer is within the bounds of the TabStrip.
-    CPoint point_in_tabstrip_coords(point.ToPOINT());
+    gfx::Point point_in_tabstrip_coords(point);
     View::ConvertPointToView(GetParent(), tabstrip_, &point_in_tabstrip_coords);
     if (tabstrip_->HitTest(point_in_tabstrip_coords)) {
       if (tabstrip_->PointIsWithinWindowCaption(point_in_tabstrip_coords))
@@ -727,7 +720,7 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
     // starved of dragable area, let's give it to window dragging (this also
     // makes sense visually).
     if (!window->IsMaximized() && 
-        (point_in_view_coords.y < tabstrip_->y() + kTabShadowSize)) {
+        (point_in_view_coords.y() < tabstrip_->y() + kTabShadowSize)) {
       // We return HTNOWHERE as this is a signal to our containing
       // NonClientView that it should figure out what the correct hit-test
       // code is given the mouse position...
@@ -738,10 +731,9 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
   // If the point's y coordinate is below the top of the toolbar and otherwise
   // within the bounds of this view, the point is considered to be within the
   // client area.
-  CRect bounds;
-  GetBounds(&bounds);
-  bounds.top += toolbar_->y();
-  if (gfx::Rect(bounds).Contains(point.x(), point.y()))
+  gfx::Rect bv_bounds = bounds();
+  bv_bounds.Offset(0, toolbar_->y());
+  if (bv_bounds.Contains(point))
     return HTCLIENT;
 
   // If the point's y coordinate is above the top of the toolbar, but not in
@@ -754,9 +746,9 @@ int BrowserView2::NonClientHitTest(const gfx::Point& point) {
   // window controls not to work. So we return HTNOWHERE so that the caller
   // will hit-test the window controls before finally falling back to
   // HTCAPTION.
-  GetBounds(&bounds);
-  bounds.bottom = y() + toolbar_->y();
-  if (gfx::Rect(bounds).Contains(point.x(), point.y()))
+  bv_bounds = bounds();
+  bv_bounds.set_height(toolbar_->y());
+  if (bv_bounds.Contains(point))
     return HTNOWHERE;
 
   // If the point is somewhere else, delegate to the default implementation.
@@ -784,15 +776,10 @@ void BrowserView2::Layout() {
   SchedulePaint();
 }
 
-void BrowserView2::DidChangeBounds(const CRect& previous,
-                                   const CRect& current) {
-  Layout();
-}
-
 void BrowserView2::ViewHierarchyChanged(bool is_add,
                                         views::View* parent,
                                         views::View* child) {
-  if (is_add && child == this && GetViewContainer() && !initialized_) {
+  if (is_add && child == this && GetContainer() && !initialized_) {
     Init();
     initialized_ = true;
   }
@@ -896,21 +883,20 @@ int BrowserView2::LayoutTabStrip() {
 
 int BrowserView2::LayoutToolbar(int top) {
   if (IsToolbarVisible()) {
-    CSize ps;
-    toolbar_->GetPreferredSize(&ps);
+    gfx::Size ps = toolbar_->GetPreferredSize();
     int toolbar_y =
         top - (IsTabStripVisible() ? kToolbarTabStripVerticalOverlap : 0);
     // With detached popup windows with the aero glass frame, we need to offset
     // by a pixel to make things look good.
     if (!IsTabStripVisible() && win_util::ShouldUseVistaFrame())
-      ps.cy -= 1;
+      ps.Enlarge(0, -1);
     int browser_view_width = width();
 #ifdef CHROME_PERSONALIZATION
     if (IsPersonalizationEnabled())
       Personalization::AdjustBrowserView(personalization_, &browser_view_width);
 #endif
-    toolbar_->SetBounds(0, toolbar_y, browser_view_width, ps.cy);
-    return toolbar_y + ps.cy;
+    toolbar_->SetBounds(0, toolbar_y, browser_view_width, ps.height());
+    return toolbar_y + ps.height();
   }
   toolbar_->SetVisible(false);
   return top;
@@ -936,21 +922,19 @@ int BrowserView2::LayoutBookmarkAndInfoBars(int top) {
 
 int BrowserView2::LayoutBookmarkBar(int top) {
   if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && active_bookmark_bar_) {
-    CSize ps;
-    active_bookmark_bar_->GetPreferredSize(&ps);
+    gfx::Size ps = active_bookmark_bar_->GetPreferredSize();
     if (!active_info_bar_ || show_bookmark_bar_pref_.GetValue())
       top -= kSeparationLineHeight;
-    active_bookmark_bar_->SetBounds(0, top, width(), ps.cy);
-    top += ps.cy;
+    active_bookmark_bar_->SetBounds(0, top, width(), ps.height());
+    top += ps.height();
   }  
   return top;
 }
 int BrowserView2::LayoutInfoBar(int top) {
   if (SupportsWindowFeature(FEATURE_INFOBAR) && active_info_bar_) {
-    CSize ps;
-    active_info_bar_->GetPreferredSize(&ps);
-    active_info_bar_->SetBounds(0, top, width(), ps.cy);
-    top += ps.cy;
+    gfx::Size ps = active_info_bar_->GetPreferredSize();
+    active_info_bar_->SetBounds(0, top, width(), ps.height());
+    top += ps.height();
     if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && active_bookmark_bar_ &&
         !show_bookmark_bar_pref_.GetValue()) {
       top -= kSeparationLineHeight;
@@ -966,11 +950,10 @@ void BrowserView2::LayoutTabContents(int top, int bottom) {
 int BrowserView2::LayoutDownloadShelf() {
   int bottom = height();
   if (SupportsWindowFeature(FEATURE_DOWNLOADSHELF) && active_download_shelf_) {
-    CSize ps;
-    active_download_shelf_->GetPreferredSize(&ps);
-    active_download_shelf_->SetBounds(0, bottom - ps.cy, width(), ps.cy);
-		active_download_shelf_->Layout();
-    bottom -= ps.cy;
+    gfx::Size ps = active_download_shelf_->GetPreferredSize();
+    active_download_shelf_->SetBounds(0, bottom - ps.height(), width(),
+                                      ps.height());
+    bottom -= ps.height();
   }
   return bottom;
 }
@@ -986,10 +969,10 @@ bool BrowserView2::MaybeShowBookmarkBar(TabContents* contents) {
   views::View* new_bookmark_bar_view = NULL;
   if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && contents) {
     new_bookmark_bar_view = GetBookmarkBarView();
-    CSize ps;
-    new_bookmark_bar_view->GetPreferredSize(&ps);
-    if (!show_bookmark_bar_pref_.GetValue() && ps.cy == 0)
+    if (!show_bookmark_bar_pref_.GetValue() &&
+        new_bookmark_bar_view->GetPreferredSize().height() == 0) {
       new_bookmark_bar_view = NULL;
+  }
   }
   return UpdateChildViewAndLayout(new_bookmark_bar_view,
                                   &active_bookmark_bar_);
@@ -1023,9 +1006,7 @@ bool BrowserView2::UpdateChildViewAndLayout(views::View* new_view,
   if (*old_view == new_view) {
     // The views haven't changed, if the views pref changed schedule a layout.
     if (new_view) {
-      CSize pref_size;
-      new_view->GetPreferredSize(&pref_size);
-      if (pref_size.cy != new_view->height())
+      if (new_view->GetPreferredSize().height() != new_view->height())
         return true;
     }
     return false;
@@ -1044,9 +1025,7 @@ bool BrowserView2::UpdateChildViewAndLayout(views::View* new_view,
 
   int new_height = 0;
   if (new_view) {
-    CSize preferred_size;
-    new_view->GetPreferredSize(&preferred_size);
-    new_height = preferred_size.cy;
+    new_height = new_view->GetPreferredSize().height();
     AddChildView(new_view);
   }
   bool changed = false;
@@ -1055,10 +1034,7 @@ bool BrowserView2::UpdateChildViewAndLayout(views::View* new_view,
   } else if (new_view && *old_view) {
     // The view changed, but the new view wants the same size, give it the
     // bounds of the last view and have it repaint.
-    CRect last_bounds;
-    (*old_view)->GetBounds(&last_bounds);
-    new_view->SetBounds(last_bounds.left, last_bounds.top,
-                        last_bounds.Width(), last_bounds.Height());
+    new_view->SetBounds((*old_view)->bounds());
     new_view->SchedulePaint();
   } else if (new_view) {
     DCHECK(new_height == 0);

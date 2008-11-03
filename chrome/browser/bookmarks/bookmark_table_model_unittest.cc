@@ -20,7 +20,7 @@
 //   f2
 //   url3 (t0 + 1)
 class BookmarkTableModelTest : public testing::Test,
-                               public ChromeViews::TableModelObserver {
+                               public views::TableModelObserver {
  public:
   BookmarkTableModelTest()
       : url1_("http://1"),

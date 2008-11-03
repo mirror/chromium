@@ -35,7 +35,7 @@ class FontsLanguagesWindowView : public views::View,
 
   // views::View overrides:
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* out);
+  virtual gfx::Size GetPreferredSize();
 
  protected:
   // views::View overrides:

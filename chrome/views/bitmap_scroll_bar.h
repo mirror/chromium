@@ -87,10 +87,9 @@ class BitmapScrollBar : public ScrollBar,
   void ScrollByContentsOffset(int contents_offset);
 
   // View overrides:
-  virtual void GetPreferredSize(CSize* preferred_size);
+  virtual gfx::Size GetPreferredSize();
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
   virtual bool OnMousePressed(const MouseEvent& event);
   virtual void OnMouseReleased(const MouseEvent& event, bool canceled);
   virtual bool OnMouseWheel(const MouseWheelEvent& event);

@@ -21,6 +21,7 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/time_format.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/link.h"
 
 #include "generated_resources.h"
@@ -393,13 +394,10 @@ void HistoryItemRenderer::Paint(ChromeCanvas* canvas) {
   if (favicon) {
     // WARNING: if you change these values, update the code that determines
     // whether we should allow a drag (GetDragRegion).
-    CRect title_bounds;
-    title_link_->GetBounds(&title_bounds);
 
     // We need to tweak the favicon position if the UI layout is RTL.
     gfx::Rect favicon_bounds;
-    favicon_bounds.set_x(
-        title_bounds.left - kIconPadding - kFavIconSize);
+    favicon_bounds.set_x(title_link_->x() - kIconPadding - kFavIconSize);
     favicon_bounds.set_y(kEntryPadding);
     favicon_bounds.set_width(favicon->width());
     favicon_bounds.set_height(favicon->height());
@@ -437,12 +435,10 @@ void HistoryItemRenderer::Layout() {
   int title_x = kPageTitleOffset;
 
   // We calculate the size of the star.
-  CSize star_size;
-  star_toggle_->GetPreferredSize(&star_size);
+  gfx::Size star_size = star_toggle_->GetPreferredSize();
 
   // Measure and lay out the time label, and potentially move
   // our title to suit.
-  CSize time_size;
   Time visit_time = model_->GetVisitTime(model_index_);
   int time_x = kTimeOffset;
   if (visit_time.is_null()) {
@@ -455,10 +451,10 @@ void HistoryItemRenderer::Layout() {
   } else {
     time_label_->SetText(base::TimeFormatTimeOfDay(visit_time));
   }
-  time_label_->GetPreferredSize(&time_size);
+  gfx::Size time_size = time_label_->GetPreferredSize();
 
   time_label_->SetBounds(time_x, kEntryPadding,
-                         time_size.cx, time_size.cy);
+                         time_size.width(), time_size.height());
 
   // Calculate the position of the favicon.
   int favicon_x = title_x - kFavIconSize - kIconPadding;
@@ -466,7 +462,7 @@ void HistoryItemRenderer::Layout() {
   // Now we look to see if the favicon overlaps the time label,
   // and if so, we push the title to the right. If we're not
   // showing the time label, then ignore this step.
-  int overlap = favicon_x - (time_x + time_size.cx + kIconPadding);
+  int overlap = favicon_x - (time_x + time_size.width() + kIconPadding);
   if (overlap < 0) {
     title_x -= overlap;
   }
@@ -477,25 +473,25 @@ void HistoryItemRenderer::Layout() {
     title_link_->SetText(title);
   else
     title_link_->SetText(l10n_util::GetString(IDS_HISTORY_UNTITLED_TITLE));
-  CSize title_size;
-  title_link_->GetPreferredSize(&title_size);
+  gfx::Size title_size = title_link_->GetPreferredSize();
 
   // Lay out the title label.
   int max_title_x;
 
   max_title_x = std::max(0, max_x - title_x);
 
-  if (title_size.cx + kEntryPadding > max_title_x) {
+  if (title_size.width() + kEntryPadding > max_title_x) {
     // We need to shrink the title to make everything fit.
-    title_size.cx = max_title_x - kEntryPadding;
+    title_size.set_width(max_title_x - kEntryPadding);
   }
   title_link_->SetBounds(title_x, kEntryPadding,
-                         title_size.cx, title_size.cy);
+                         title_size.width(), title_size.height());
 
   // Lay out the star.
   if (model_->IsStarred(model_index_)) {
-    star_toggle_->SetBounds(title_x + title_size.cx + kIconPadding,
-                            kEntryPadding, star_size.cx, star_size.cy);
+    star_toggle_->SetBounds(title_x + title_size.width() + kIconPadding,
+                            kEntryPadding, star_size.width(),
+                            star_size.height());
     star_toggle_->SetState(true);
     star_toggle_->SetVisible(true);
   } else {
@@ -559,14 +555,14 @@ void HistoryItemRenderer::SetDisplayStyle(bool show_full) {
 
 void HistoryItemRenderer::StarStateChanged(bool state) {
   // Show the user a tip that can be used to edit the bookmark/star.
-  CPoint star_location(0, 0);
+  gfx::Point star_location;
   views::View::ConvertPointToScreen(star_toggle_, &star_location);
   // Shift the location to make the bubble appear at a visually pleasing
   // location.
-  gfx::Rect star_bounds(star_location.x, star_location.y + 4,
+  gfx::Rect star_bounds(star_location.x(), star_location.y() + 4,
                         star_toggle_->width(),
                         star_toggle_->height());
-  HWND parent = GetViewContainer()->GetHWND();
+  HWND parent = GetContainer()->GetHWND();
   Profile* profile = model_->profile();
   GURL url = model_->GetURL(model_index_);
 
@@ -601,14 +597,11 @@ HistoryItemRenderer::DragRegion HistoryItemRenderer::GetDragRegion(int x,
                                                                    int y) {
   // Is the location over the favicon?
   SkBitmap* favicon = model_->GetFavicon(model_index_);
-  CRect title_bounds;
-  title_link_->GetBounds(&title_bounds);
   if (favicon) {
     // If the UI layout is right-to-left, we must make sure we mirror the
     // favicon position before doing any hit testing.
     gfx::Rect favicon_bounds;
-    favicon_bounds.set_x(
-        title_bounds.left - kIconPadding - kFavIconSize);
+    favicon_bounds.set_x(title_link_->x() - kIconPadding - kFavIconSize);
     favicon_bounds.set_y(kEntryPadding);
     favicon_bounds.set_width(favicon->width());
     favicon_bounds.set_height(favicon->height());
@@ -846,7 +839,8 @@ bool HistoryView::IsVisible() {
   return vc && vc->IsVisible();
 }
 
-void HistoryView::DidChangeBounds(const CRect& previous, const CRect& current) {
+void HistoryView::DidChangeBounds(const gfx::Rect& previous,
+                                  const gfx::Rect& current) {
   SchedulePaint();
 }
 
@@ -857,14 +851,13 @@ void HistoryView::Layout() {
   if (!parent)
     return;
 
-  CRect bounds;
-  parent->GetLocalBounds(&bounds, true);
+  gfx::Rect bounds = parent->GetLocalBounds(true);
 
   // If not visible, have zero size so we don't compute anything.
   int width = 0;
   int height = 0;
   if (IsVisible()) {
-    width = bounds.Width();
+    width = bounds.width();
     height = std::max(GetLastEntryMaxY(),
                       kEntryPadding + kNoResultTextHeight);
   }
@@ -1249,7 +1242,7 @@ void HistoryView::DeleteDayAtModelIndex(int index) {
       IDS_HISTORY_DELETE_PRIOR_VISITS_WARNING_TITLE);
   UINT flags = MB_OKCANCEL | MB_ICONWARNING | MB_TOPMOST | MB_SETFOREGROUND;
 
-  if (win_util::MessageBox(GetViewContainer()->GetHWND(),
+  if (win_util::MessageBox(GetContainer()->GetHWND(),
                            text, caption, flags) !=  IDOK) {
     return;
   }
@@ -1298,10 +1291,9 @@ int HistoryView::CalculateDeleteOffset(
 int HistoryView::GetDeleteControlWidth() {
   if (delete_control_width_)
     return delete_control_width_;
-  CSize pref;
   EnsureRenderer();
-  delete_renderer_->GetPreferredSize(&pref);
-  delete_control_width_ = pref.cx;
+  gfx::Size pref = delete_renderer_->GetPreferredSize();
+  delete_control_width_ = pref.width();
   return delete_control_width_;
 }
 

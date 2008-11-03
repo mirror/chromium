@@ -28,12 +28,12 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/checkbox.h"
 #include "chrome/views/combo_box.h"
+#include "chrome/views/container.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/radio_button.h"
 #include "chrome/views/tabbed_pane.h"
 #include "chrome/views/text_field.h"
-#include "chrome/views/view_container.h"
 #include "skia/include/SkBitmap.h"
 #include "unicode/uloc.h"
 
@@ -229,7 +229,7 @@ class AddLanguageWindowView : public views::View,
 
   // views::View overrides.
   virtual void Layout();
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
 
  protected:
   virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
@@ -290,24 +290,23 @@ void AddLanguageWindowView::ItemChanged(views::ComboBox* combo_box,
 }
 
 void AddLanguageWindowView::Layout() {
-  CSize sz;
-  accept_language_combobox_->GetPreferredSize(&sz);
+  gfx::Size sz = accept_language_combobox_->GetPreferredSize();
   accept_language_combobox_->SetBounds(kDialogPadding, kDialogPadding,
-                                       width() - 2*kDialogPadding, sz.cy);
+                                       width() - 2*kDialogPadding,
+                                       sz.height());
 }
 
-void AddLanguageWindowView::GetPreferredSize(CSize* out) {
-  DCHECK(out);
+gfx::Size AddLanguageWindowView::GetPreferredSize() {
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   ChromeFont font = rb.GetFont(ResourceBundle::BaseFont);
-  out->cx = font.ave_char_width() * kDefaultWindowWidthChars;
-  out->cy = font.height() * kDefaultWindowHeightLines;
+  return gfx::Size(font.ave_char_width() * kDefaultWindowWidthChars,
+                   font.height() * kDefaultWindowHeightLines);
 }
 
 void AddLanguageWindowView::ViewHierarchyChanged(bool is_add,
                                                  views::View* parent,
                                                  views::View* child) {
-  // Can't init before we're inserted into a ViewContainer, because we require
+  // Can't init before we're inserted into a Container, because we require
   // a HWND to parent native child controls to.
   if (is_add && child == this)
     Init();
@@ -506,7 +505,7 @@ void LanguagesPageView::ButtonPressed(views::NativeButton* sender) {
     language_table_edited_ = true;
   } else if (sender == add_button_) {
     views::Window::CreateChromeWindow(
-        GetViewContainer()->GetHWND(),
+        GetContainer()->GetHWND(),
         gfx::Rect(),
         new AddLanguageWindowView(this, profile()))->Show();
     language_table_edited_ = true;

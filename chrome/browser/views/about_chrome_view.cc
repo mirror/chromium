@@ -219,97 +219,96 @@ void AboutChromeView::Init() {
 gfx::Size AboutChromeView::GetPreferredSize() {
   gfx::Size prefsize(views::Window::GetLocalizedContentsSize(
       IDS_ABOUT_DIALOG_WIDTH_CHARS,
-      IDS_ABOUT_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_ABOUT_DIALOG_HEIGHT_LINES));
   // We compute the height of the dialog based on the size of the image (it
   // would be nice to not hard code this), the text in the about dialog and the
   // margins around the text.
-  out->cy += 145 + (kPanelVertMargin * 2);
+  prefsize.Enlarge(0, 145 + (kPanelVertMargin * 2));
   // TODO(beng): Eventually the image should be positioned such that hard-
   //             coding the width isn't necessary.  This breaks with fonts
   //             that are large and cause wrapping.
-  out->cx = 422;
+  prefsize.set_width(422);
+  return prefsize;
 }
 
 void AboutChromeView::Layout() {
-  CSize panel_size;
-  GetPreferredSize(&panel_size);
-
-  CSize sz;
+  gfx::Size panel_size = GetPreferredSize();
 
   // Background image for the dialog.
-  about_dlg_background_->GetPreferredSize(&sz);
-  int background_image_height = sz.cy;  // used to position main text below.
-  about_dlg_background_->SetBounds(0, 0, sz.cx, sz.cy);
+  gfx::Size sz = about_dlg_background_->GetPreferredSize();
+  // used to position main text below.
+  int background_image_height = sz.height();
+  about_dlg_background_->SetBounds(0, 0, sz.width(), sz.height());
 
   // First label goes to the top left corner.
-  about_title_label_->GetPreferredSize(&sz);
+  sz = about_title_label_->GetPreferredSize();
   about_title_label_->SetBounds(kPanelHorizMargin, kPanelVertMargin,
-                                sz.cx, sz.cy);
+                                sz.width(), sz.height());
 
   // Then we have the version number right below it.
-  version_label_->GetPreferredSize(&sz);
+  sz = version_label_->GetPreferredSize();
   version_label_->SetBounds(kPanelHorizMargin,
                             about_title_label_->y() +
                                 about_title_label_->height() +
                                 kRelatedControlVerticalSpacing,
                             kVersionFieldWidth,
-                            sz.cy);
+                            sz.height());
 
   // For the width of the main text label we want to use up the whole panel
   // width and remaining height, minus a little margin on each side.
   int y_pos = background_image_height + kRelatedControlVerticalSpacing;
-  sz.cx = panel_size.cx - 2 * kPanelHorizMargin;
+  sz.set_width(panel_size.width() - 2 * kPanelHorizMargin);
 
   // Draw the text right below the background image.
   copyright_label_->SetBounds(kPanelHorizMargin,
                               y_pos,
-                              sz.cx,
-                              sz.cy);
+                              sz.width(),
+                              sz.height());
 
   // Then the main_text_label.
   main_text_label_->SetBounds(kPanelHorizMargin,
                               copyright_label_->y() +
                                   copyright_label_->height(),
-                              sz.cx,
+                              sz.width(),
                               main_text_label_height_);
 
   // Get the y-coordinate of our parent so we can position the text left of the
   // buttons at the bottom.
-  CRect parent_bounds;
-  GetParent()->GetLocalBounds(&parent_bounds, false);
+  gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
 
-  throbber_->GetPreferredSize(&sz);
+  sz = throbber_->GetPreferredSize();
   int throbber_topleft_x = kPanelHorizMargin;
-  int throbber_topleft_y = parent_bounds.bottom - sz.cy -
+  int throbber_topleft_y = parent_bounds.bottom() - sz.height() -
                            kButtonVEdgeMargin - 3;
-  throbber_->SetBounds(throbber_topleft_x, throbber_topleft_y, sz.cx, sz.cy);
+  throbber_->SetBounds(throbber_topleft_x, throbber_topleft_y,
+                       sz.width(), sz.height());
 
   // This image is hidden (see ViewHierarchyChanged) and displayed on demand.
-  success_indicator_.GetPreferredSize(&sz);
+  sz = success_indicator_.GetPreferredSize();
   success_indicator_.SetBounds(throbber_topleft_x, throbber_topleft_y,
-                               sz.cx, sz.cy);
+                               sz.width(), sz.height());
 
   // This image is hidden (see ViewHierarchyChanged) and displayed on demand.
-  update_available_indicator_.GetPreferredSize(&sz);
+  sz = update_available_indicator_.GetPreferredSize();
   update_available_indicator_.SetBounds(throbber_topleft_x, throbber_topleft_y,
-                                        sz.cx, sz.cy);
+                                        sz.width(), sz.height());
 
   // This image is hidden (see ViewHierarchyChanged) and displayed on demand.
-  timeout_indicator_.GetPreferredSize(&sz);
+  sz = timeout_indicator_.GetPreferredSize();
   timeout_indicator_.SetBounds(throbber_topleft_x, throbber_topleft_y,
-                                sz.cx, sz.cy);
+                               sz.width(), sz.height());
 
   // The update label should be at the bottom of the screen, to the right of
   // the throbber. We specify width to the end of the dialog because it contains
   // variable length messages.
-  update_label_.GetPreferredSize(&sz);
+  sz = update_label_.GetPreferredSize();
   int update_label_x = throbber_->x() + throbber_->width() +
                        kRelatedControlHorizontalSpacing;
   update_label_.SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   update_label_.SetBounds(update_label_x,
                           throbber_topleft_y + 1,
-                          parent_bounds.Width() - update_label_x,
-                          sz.cy);
+                          parent_bounds.width() - update_label_x,
+                          sz.height());
 }
 
 
@@ -319,8 +318,7 @@ void AboutChromeView::Paint(ChromeCanvas* canvas) {
   ChromeFont font =
     ResourceBundle::GetSharedInstance().GetFont(ResourceBundle::BaseFont);
 
-  CRect bounds;
-  main_text_label_->GetBounds(&bounds);
+  const gfx::Rect label_bounds = main_text_label_->bounds();
 
   views::Link* link1 =
       chromium_url_appears_first_ ? chromium_url_ : open_source_url_;
@@ -334,26 +332,29 @@ void AboutChromeView::Paint(ChromeCanvas* canvas) {
   // This struct keeps track of where to write the next word (which x,y
   // pixel coordinate). This struct is updated after drawing text and checking
   // if we need to wrap.
-  CSize position;
+  gfx::Size position;
   // Draw the first text chunk and position the Chromium url.
   DrawTextAndPositionUrl(canvas, main_label_chunk1_, link1,
-                         rect1, &position, bounds, font);
+                         rect1, &position, label_bounds, font);
   // Draw the second text chunk and position the Open Source url.
   DrawTextAndPositionUrl(canvas, main_label_chunk2_, link2,
-                         rect2, &position, bounds, font);
+                         rect2, &position, label_bounds, font);
   // Draw the third text chunk.
-  DrawTextStartingFrom(canvas, main_label_chunk3_, &position, bounds, font);
+  DrawTextStartingFrom(canvas, main_label_chunk3_, &position, label_bounds,
+                       font);
 
 #if defined(GOOGLE_CHROME_BUILD)
   // Insert a line break and some whitespace.
-  position.cx = 0;
-  position.cy += font.height() + kRelatedControlVerticalSpacing;
+  position.set_width(0);
+  position.Enlarge(0, font.height() + kRelatedControlVerticalSpacing);
 
   // And now the Terms of Service and position the TOS url.
   DrawTextAndPositionUrl(canvas, main_label_chunk4_, terms_of_service_url_,
-                         &terms_of_service_url_rect_, &position, bounds, font);
+                         &terms_of_service_url_rect_, &position, label_bounds,
+                         font);
   // The last text chunk doesn't have a URL associated with it.
-  DrawTextStartingFrom(canvas, main_label_chunk5_, &position, bounds, font);
+  DrawTextStartingFrom(canvas, main_label_chunk5_, &position, label_bounds,
+                       font);
 
   // Position the TOS URL within the main label.
   terms_of_service_url_->SetBounds(terms_of_service_url_rect_.x(),
@@ -375,36 +376,36 @@ void AboutChromeView::Paint(ChromeCanvas* canvas) {
                               open_source_url_rect_.height());
 
   // Save the height so we can set the bounds correctly.
-  main_text_label_height_ = position.cy + font.height();
+  main_text_label_height_ = position.height() + font.height();
 }
 
 void AboutChromeView::DrawTextAndPositionUrl(ChromeCanvas* canvas,
                                              const std::wstring& text,
                                              views::Link* link,
                                              gfx::Rect* rect,
-                                             CSize* position,
-                                             const CRect& bounds,
+                                             gfx::Size* position,
+                                             const gfx::Rect& bounds,
                                              const ChromeFont& font) {
   DCHECK(canvas && link && rect && position);
   // Draw the text chunk.
   DrawTextStartingFrom(canvas, text, position, bounds, font);
 
   // And then position the link after it.
-  CSize sz;
-  link->GetPreferredSize(&sz);
-  WrapIfWordDoesntFit(sz.cx, font.height(), position, bounds);
-  *rect = gfx::Rect(position->cx, position->cy, sz.cx, sz.cy);
+  gfx::Size sz = link->GetPreferredSize();
+  WrapIfWordDoesntFit(sz.width(), font.height(), position, bounds);
+  *rect = gfx::Rect(position->width(), position->height(), sz.width(),
+                    sz.height());
 
   // Going from relative to absolute pixel coordinates again.
-  rect->Offset(bounds.TopLeft().x, bounds.TopLeft().y);
+  rect->Offset(bounds.x(), bounds.y());
   // And leave some space to draw the link in.
-  position->cx += sz.cx;
+  position->Enlarge(sz.width(), 0);
 }
 
 void AboutChromeView::DrawTextStartingFrom(ChromeCanvas* canvas,
                                            const std::wstring& text,
-                                           CSize* position,
-                                           const CRect& bounds,
+                                           gfx::Size* position,
+                                           const gfx::Rect& bounds,
                                            const ChromeFont& font) {
   // Iterate through line breaking opportunities (which in English would be
   // spaces and such. This tells us where to wrap.
@@ -432,28 +433,28 @@ void AboutChromeView::DrawTextStartingFrom(ChromeCanvas* canvas,
     // Draw the word on the screen (mirrored if RTL locale).
     canvas->DrawStringInt(word, font, SK_ColorBLACK,
         main_text_label_->MirroredXCoordinateInsideView(
-            position->cx + bounds.TopLeft().x),
-            position->cy + bounds.TopLeft().y,
+            position->width() + bounds.x()),
+            position->height() + bounds.y(),
             w, h, flags);
 
     if (word.size() > 0 && word[word.size() - 1] == L'\x0a') {
       // When we come across '\n', we move to the beginning of the next line.
-      position->cx = 0;
-      position->cy += font.height();
+      position->set_width(0);
+      position->Enlarge(0, font.height());
     } else {
       // Otherwise, we advance position to the next word.
-      position->cx += w;
+      position->Enlarge(w, 0);
     }
   }
 }
 
 void AboutChromeView::WrapIfWordDoesntFit(int word_width,
                                           int font_height,
-                                          CSize* position,
-                                          const CRect& bounds) {
-  if (position->cx + word_width > bounds.right) {
-    position->cx = 0;
-    position->cy += font_height;
+                                          gfx::Size* position,
+                                          const gfx::Rect& bounds) {
+  if (position->width() + word_width > bounds.right()) {
+    position->set_width(0);
+    position->Enlarge(0, font_height);
   }
 }
 

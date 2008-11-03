@@ -420,15 +420,10 @@ void KeywordEditorView::ModifyTemplateURL(const TemplateURL* template_url,
   UserMetrics::RecordAction(L"KeywordEditor_ModifiedKeyword", profile_);
 }
 
-void KeywordEditorView::DidChangeBounds(const CRect& previous,
-                                        const CRect& current) {
-  Layout();
-}
-
 gfx::Size KeywordEditorView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_SEARCHENGINES_DIALOG_WIDTH_CHARS,
-      IDS_SEARCHENGINES_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_SEARCHENGINES_DIALOG_HEIGHT_LINES));
 }
 
 bool KeywordEditorView::CanResize() const {
@@ -480,7 +475,7 @@ void KeywordEditorView::Init() {
   // Make the table initially sorted by name.
   views::TableView::SortDescriptors sort;
   sort.push_back(views::TableView::SortDescriptor(
-      IDS_SEARCH_ENGINES_EDITOR_DESCRIPTION_COLUMN, true));
+          IDS_SEARCH_ENGINES_EDITOR_DESCRIPTION_COLUMN, true));
   table_view_->SetSortDescriptors(sort);
 
   add_button_ = new views::NativeButton(
@@ -583,7 +578,7 @@ void KeywordEditorView::OnDoubleClick() {
 void KeywordEditorView::ButtonPressed(views::NativeButton* sender) {
   if (sender == add_button_) {
     EditKeywordController* controller =
-        new EditKeywordController(GetViewContainer()->GetHWND(), NULL, this,
+        new EditKeywordController(GetContainer()->GetHWND(), NULL, this,
                                   profile_);
     controller->Show();
   } else if (sender == remove_button_) {
@@ -623,7 +618,7 @@ void KeywordEditorView::ButtonPressed(views::NativeButton* sender) {
     const TemplateURL* template_url =
         &table_model_->GetTemplateURL(selected_row);
     EditKeywordController* controller =
-        new EditKeywordController(GetViewContainer()->GetHWND(), template_url,
+        new EditKeywordController(GetContainer()->GetHWND(), template_url,
                                   this, profile_);
     controller->Show();
   } else if (sender == enable_suggest_checkbox_) {

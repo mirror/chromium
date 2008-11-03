@@ -62,13 +62,12 @@ class DownloadItemView : public views::NativeButton::Listener,
   // View overrides
   virtual void Layout();
   virtual void Paint(ChromeCanvas* canvas);
-  virtual void GetPreferredSize(CSize *out);
+  virtual gfx::Size GetPreferredSize();
   virtual void OnMouseExited(const views::MouseEvent& event);
   virtual void OnMouseMoved(const views::MouseEvent& event);
   virtual bool OnMousePressed(const views::MouseEvent& event);
   virtual void OnMouseReleased(const views::MouseEvent& event, bool canceled);
   virtual bool OnMouseDragged(const views::MouseEvent& event);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
 
   // NativeButton::Listener implementation.
   virtual void ButtonPressed(views::NativeButton* sender);
@@ -138,7 +137,7 @@ class DownloadItemView : public views::NativeButton::Listener,
 
   // Sets |size| with the size of the Save and Discard buttons (they have the
   // same size).
-  void GetButtonSize(CSize* size);
+  gfx::Size GetButtonSize();
 
   // Sizes the dangerous download label to a minimum width available using 2
   // lines.  The size is computed only the first time this method is invoked
@@ -227,7 +226,7 @@ class DownloadItemView : public views::NativeButton::Listener,
   bool dangerous_download_label_sized_;
 
   // The size of the buttons.  Cached so animation works when hidden.
-  CSize cached_button_size_;
+  gfx::Size cached_button_size_;
 
   DISALLOW_EVIL_CONSTRUCTORS(DownloadItemView);
 };

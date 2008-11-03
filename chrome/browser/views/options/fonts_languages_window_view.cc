@@ -70,12 +70,12 @@ void FontsLanguagesWindowView::Layout() {
 gfx::Size FontsLanguagesWindowView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_FONTSLANG_DIALOG_WIDTH_CHARS,
-      IDS_FONTSLANG_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_FONTSLANG_DIALOG_HEIGHT_LINES));
 }
 
 void FontsLanguagesWindowView::ViewHierarchyChanged(
     bool is_add, views::View* parent, views::View* child) {
-  // Can't init before we're inserted into a ViewContainer, because we require
+  // Can't init before we're inserted into a Container, because we require
   // a HWND to parent native child controls to.
   if (is_add && child == this)
     Init();

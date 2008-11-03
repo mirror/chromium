@@ -34,10 +34,10 @@ void PaintRootView(views::RootView* root, bool empty_paint) {
   } else {
     // User isn't logged in, so that PaintNow will generate an empty rectangle.
     // Invoke paint directly.
-    CRect paint_rect = root->GetScheduledPaintRect();
-    ChromeCanvas canvas(paint_rect.Width(), paint_rect.Height(), true);
-    canvas.TranslateInt(-paint_rect.left, -paint_rect.top);
-    canvas.ClipRectInt(0, 0, paint_rect.Width(), paint_rect.Height());
+    gfx::Rect paint_rect = root->GetScheduledPaintRect();
+    ChromeCanvas canvas(paint_rect.width(), paint_rect.height(), true);
+    canvas.TranslateInt(-paint_rect.x(), -paint_rect.y());
+    canvas.ClipRectInt(0, 0, paint_rect.width(), paint_rect.height());
     root->ProcessPaint(&canvas);
   }
 }
@@ -124,8 +124,8 @@ class TestView : public View {
 
   // DidChangeBounds test
   bool did_change_bounds_;
-  CRect previous_bounds_;
-  CRect new_bounds_;
+  gfx::Rect previous_bounds_;
+  gfx::Rect new_bounds_;
 
   // AddRemoveNotifications test
   bool child_added_;
@@ -154,8 +154,8 @@ void TestView::DidChangeBounds(const CRect& previous, const CRect& current) {
 TEST_F(ViewTest, DidChangeBounds) {
   TestView* v = new TestView();
 
-  CRect prev_rect(0, 0, 200, 200);
-  CRect new_rect(100, 100, 250, 250);
+  gfx::Rect prev_rect(0, 0, 200, 200);
+  gfx::Rect new_rect(100, 100, 250, 250);
 
   v->SetBounds(prev_rect);
   v->Reset();
@@ -165,9 +165,7 @@ TEST_F(ViewTest, DidChangeBounds) {
   EXPECT_EQ(v->previous_bounds_, prev_rect);
   EXPECT_EQ(v->new_bounds_, new_rect);
 
-  CRect r;
-  v->GetBounds(&r);
-  EXPECT_EQ(r, new_rect);
+  EXPECT_EQ(v->bounds(), gfx::Rect(new_rect));
   delete v;
 }
 
@@ -554,18 +552,18 @@ TEST_F(ViewTest, HitTestMasks) {
 
   gfx::Rect v1_bounds = gfx::Rect(0, 0, 100, 100);
   HitTestView* v1 = new HitTestView(false);
-  v1->SetBounds(v1_bounds.ToRECT());
+  v1->SetBounds(v1_bounds);
   root_view->AddChildView(v1);
 
   gfx::Rect v2_bounds = gfx::Rect(105, 0, 100, 100);
   HitTestView* v2 = new HitTestView(true);
-  v2->SetBounds(v2_bounds.ToRECT());
+  v2->SetBounds(v2_bounds);
   root_view->AddChildView(v2);
 
-  POINT v1_centerpoint = v1_bounds.CenterPoint().ToPOINT();
-  POINT v2_centerpoint = v2_bounds.CenterPoint().ToPOINT();
-  POINT v1_origin = v1_bounds.origin().ToPOINT();
-  POINT v2_origin = v2_bounds.origin().ToPOINT();
+  gfx::Point v1_centerpoint = v1_bounds.CenterPoint();
+  gfx::Point v2_centerpoint = v2_bounds.CenterPoint();
+  gfx::Point v1_origin = v1_bounds.origin();
+  gfx::Point v2_origin = v2_bounds.origin();
 
   // Test HitTest
   EXPECT_EQ(true, v1->HitTest(ConvertPointToView(v1, v1_centerpoint)));

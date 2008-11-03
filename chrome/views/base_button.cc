@@ -144,7 +144,7 @@ void BaseButton::SetTooltipText(const std::wstring& tooltip) {
 
 bool BaseButton::OnMousePressed(const MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (IsTriggerableEvent(e) && HitTest(WTL::CPoint(e.x(), e.y()))) {
+    if (IsTriggerableEvent(e) && HitTest(e.location())) {
       SetState(BS_PUSHED);
     }
     if (IsFocusable())
@@ -155,7 +155,7 @@ bool BaseButton::OnMousePressed(const MouseEvent& e) {
 
 bool BaseButton::OnMouseDragged(const MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (!HitTest(WTL::CPoint(e.x(), e.y())))
+    if (!HitTest(e.location()))
       SetState(BS_NORMAL);
     else if (IsTriggerableEvent(e))
       SetState(BS_PUSHED);
@@ -172,7 +172,7 @@ void BaseButton::OnMouseReleased(const MouseEvent& e, bool canceled) {
   }
 
   if (state_ != BS_DISABLED) {
-    if (canceled || !HitTest(WTL::CPoint(e.x(), e.y()))) {
+    if (canceled || !HitTest(e.location())) {
       SetState(BS_NORMAL);
     } else {
       SetState(BS_HOT);
@@ -193,7 +193,7 @@ void BaseButton::OnMouseEntered(const MouseEvent& e) {
 
 void BaseButton::OnMouseMoved(const MouseEvent& e) {
   if (state_ != BS_DISABLED) {
-    if (HitTest(WTL::CPoint(e.x(), e.y()))) {
+    if (HitTest(e.location())) {
       SetState(BS_HOT);
     } else {
       SetState(BS_NORMAL);

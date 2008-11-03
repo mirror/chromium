@@ -30,8 +30,7 @@ class NativeScrollBar : public ScrollBar {
 
   // Overridden for layout purpose
   virtual void Layout();
-  virtual void GetPreferredSize(CSize* sz);
-  virtual void DidChangeBounds(const CRect& previous, const CRect& current);
+  virtual gfx::Size GetPreferredSize();
 
   // Overridden for keyboard UI purpose
   virtual bool OnKeyPressed(const KeyEvent& event);

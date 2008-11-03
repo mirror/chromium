@@ -14,7 +14,7 @@
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
 #include "chrome/views/checkbox.h"
-#include "chrome/views/hwnd_view_container.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/label.h"
 #include "chrome/views/link.h"
 #include "chrome/views/native_button.h"
@@ -239,7 +239,7 @@ void TestViewWindow::Init() {
   contents_->SetBackground(
       views::Background::CreateSolidBackground(255, 255, 255));
 
-  HWNDViewContainer::Init(NULL, bounds, true);
+  ContainerWin::Init(NULL, bounds, true);
   SetContentsView(contents_);
 
   views::CheckBox* cb =

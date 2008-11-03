@@ -11,7 +11,7 @@
 #include "chrome/views/image_view.h"
 
 namespace views {
-  class HWNDViewContainer;
+class ContainerWin;
 };
 class TabContents;
 

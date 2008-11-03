@@ -1119,8 +1119,7 @@ void AutomationProvider::WindowGetViewBounds(const IPC::Message& message,
                                              int view_id,
                                              bool screen_coordinates) {
   bool succeeded = false;
-  CRect bounds;
-  bounds.SetRect(0, 0, 0, 0);
+  gfx::Rect bounds;
 
   void* iter = NULL;
   if (window_tracker_->ContainsHandle(handle)) {
@@ -1130,19 +1129,19 @@ void AutomationProvider::WindowGetViewBounds(const IPC::Message& message,
       views::View* view = root_view->GetViewByID(view_id);
       if (view) {
         succeeded = true;
-        CPoint point(0, 0);
+        gfx::Point point;
         if (screen_coordinates)
           views::View::ConvertPointToScreen(view, &point);
         else
           views::View::ConvertPointToView(view, root_view, &point);
-        view->GetLocalBounds(&bounds, false);
-        bounds.MoveToXY(point.x, point.y);
+        bounds = view->GetLocalBounds(false);
+        bounds.set_origin(point);
       }
     }
   }
 
-  Send(new AutomationMsg_WindowViewBoundsResponse(
-           message.routing_id(), succeeded, gfx::Rect(bounds)));
+  Send(new AutomationMsg_WindowViewBoundsResponse(message.routing_id(),
+                                                  succeeded, bounds));
 }
 
 // This task enqueues a mouse event on the event loop, so that the view
@@ -1164,9 +1163,9 @@ class MouseEventTask : public Task {
     // the drag code moved away from using mouse event locations was because
     // our conversion to screen location doesn't work well with multiple
     // monitors, so this only works reliably in a single monitor setup.
-    CPoint screen_location = CPoint(point_.x, point_.y);
+    gfx::Point screen_location(point_.x, point_.y);
     view_->ConvertPointToScreen(view_, &screen_location);
-    ::SetCursorPos(screen_location.x, screen_location.y);
+    ::SetCursorPos(screen_location.x(), screen_location.y());
     switch (type_) {
       case views::Event::ET_MOUSE_PRESSED:
         view_->OnMousePressed(event);

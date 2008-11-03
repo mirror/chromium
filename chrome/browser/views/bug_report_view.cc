@@ -228,7 +228,7 @@ void BugReportView::SetupControl() {
 gfx::Size BugReportView::GetPreferredSize() {
   return gfx::Size(views::Window::GetLocalizedContentsSize(
       IDS_BUGREPORT_DIALOG_WIDTH_CHARS,
-      IDS_BUGREPORT_DIALOG_HEIGHT_LINES).ToSIZE();
+      IDS_BUGREPORT_DIALOG_HEIGHT_LINES));
 }
 
 void BugReportView::ItemChanged(views::ComboBox* combo_box,
