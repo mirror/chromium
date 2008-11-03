@@ -29,7 +29,7 @@ void CloneDragDataImpl(BookmarkModel* model,
 
 namespace bookmark_drag_utils {
 
-int PreferredDropOperation(const views::DropTargetEvent& event,
+int PreferredDropOperation(const ChromeViews::DropTargetEvent& event,
                            int operation) {
   int common_ops = (event.GetSourceOperations() & operation);
   if (!common_ops)
