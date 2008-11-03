@@ -523,7 +523,7 @@ void RenderText::calcPrefWidths(int leadWidth)
     const Font& f = style()->font(); // FIXME: This ignores first-line.
     int wordSpacing = style()->wordSpacing();
     int len = textLength();
-    //const UChar* txt = characters();
+    const UChar* txt = characters();
     bool needsWordSpacing = false;
     bool ignoringSpaces = false;
     bool isSpace = false;
@@ -536,7 +536,7 @@ void RenderText::calcPrefWidths(int leadWidth)
     bool breakAll = (style()->wordBreak() == BreakAllWordBreak || style()->wordBreak() == BreakWordBreak) && style()->autoWrap();
 
     for (int i = 0; i < len; i++) {
-        UChar c = (*m_text)[i];
+        UChar c = txt[i];
 
         bool previousCharacterIsSpace = isSpace;
 
@@ -579,15 +579,15 @@ void RenderText::calcPrefWidths(int leadWidth)
             continue;
         }
 
-        bool hasBreak = breakAll || isBreakable(m_text->characters(), i, len, nextBreakable, breakNBSP);
+        bool hasBreak = breakAll || isBreakable(txt, i, len, nextBreakable, breakNBSP);
         bool betweenWords = true;
         int j = i;
         while (c != '\n' && !isSpaceAccordingToStyle(c, style()) && c != '\t' && c != softHyphen) {
             j++;
             if (j == len)
                 break;
-            c = (*m_text)[j];
-            if (isBreakable(m_text->characters(), j, len, nextBreakable, breakNBSP))
+            c = txt[j];
+            if (isBreakable(txt, j, len, nextBreakable, breakNBSP))
                 break;
             if (breakAll) {
                 betweenWords = false;
@@ -655,7 +655,7 @@ void RenderText::calcPrefWidths(int leadWidth)
                     m_maxWidth = currMaxWidth;
                 currMaxWidth = 0;
             } else {
-                currMaxWidth += f.width(TextRun(m_text->characters() + i, 1, allowTabs(), leadWidth + currMaxWidth));
+                currMaxWidth += f.width(TextRun(txt + i, 1, allowTabs(), leadWidth + currMaxWidth));
                 needsWordSpacing = isSpace && !previousCharacterIsSpace && i == len - 1;
             }
             ASSERT(lastWordBoundary == i);
