@@ -50,7 +50,7 @@ struct BackgroundTask {
   RenderViewHost* render_view_host() const;
 };
 
-// Background task manager.
+// Manages a set of background tasks for a profile.
 class BackgroundTaskManager {
  public:
   BackgroundTaskManager(Profile* profile);
@@ -60,14 +60,15 @@ class BackgroundTaskManager {
   static void RegisterUserPrefs(PrefService* prefs);
 
   // Returns all background tasks.
-  static void GetAllBackgroundTasks(std::vector<BackgroundTask*>* tasks);
+  static void GetAllTasks(std::vector<BackgroundTask*>* tasks);
 
   // Closes all running background tasks.
   static void CloseAllActiveTasks();
 
   // Loads and runs the previously registered background tasks.
   // This is done at the browser boot up time.
-  void LoadAndStartAllRegisteredTasks();
+  // Returns true if there is at least one task being started.
+  bool LoadAndStartAllTasks(bool start_only_tasks_on_login);
 
   // Registers a background task.
   bool RegisterTask(WebContents* source,
@@ -99,7 +100,14 @@ class BackgroundTaskManager {
   static std::wstring ConstructMapID(const GURL& url,
                                      const std::wstring& id);
 
+  // Helper function to enable Chrome to auto-start on login.
+  static bool EnableChromeStartup();
+
+  // Helper function to disable Chrome to auto-start on login.
+  static bool DisableChromeStartup();
+
   // Stores all the background tasks being registered.
+  // The map key is the combination of the security origin and the task ID.
   typedef std::map<std::wstring, BackgroundTask> BackgroundTaskMap;
   BackgroundTaskMap tasks_;
 

@@ -222,7 +222,7 @@ class Profile {
   virtual void MarkAsCleanShutdown() = 0;  
 #ifdef ENABLE_BACKGROUND_TASK
   // Returns the BackgroundTaskManager associated with this profile.
-  virtual BackgroundTaskManager* GetBackgroundTaskManager() const = 0;
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() = 0;
 #endif  // ENABLE_BACKGROUND_TASK
 
 #ifdef UNIT_TEST
@@ -279,9 +279,7 @@ class ProfileImpl : public Profile,
   virtual ProfilePersonalization* GetProfilePersonalization();
 #endif
 #ifdef ENABLE_BACKGROUND_TASK
-  virtual BackgroundTaskManager* GetBackgroundTaskManager() const {
-    return background_task_manager_.get();
-  }
+  virtual BackgroundTaskManager* GetBackgroundTaskManager();
 #endif  // ENABLE_BACKGROUND_TASK
   // NotificationObserver implementation.
   virtual void Observe(NotificationType type,

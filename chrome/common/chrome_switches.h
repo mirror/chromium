@@ -135,6 +135,10 @@ extern const wchar_t kUseNewSafeBrowsing[];
 
 extern const wchar_t kEnableRendererAccessibility[];
 
+#ifdef ENABLE_BACKGROUND_TASK
+extern const wchar_t kStartup[];
+#endif  // ENABLE_BACKGROUND_TASK
+
 }  // namespace switches
 
 #endif  // CHROME_COMMON_CHROME_SWITCHES_H__

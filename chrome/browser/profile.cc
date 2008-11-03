@@ -533,7 +533,7 @@ class OffTheRecordProfileImpl : public Profile,
 
   // Background task is not supported in off the record mode.
 #ifdef ENABLE_BACKGROUND_TASK
-  virtual BackgroundTaskManager* GetBackgroundTaskManager() const {
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() {
     return NULL;
   }
 #endif  // ENABLE_BACKGROUND_TASK
@@ -572,10 +572,6 @@ ProfileImpl::ProfileImpl(const std::wstring& path)
   create_session_service_timer_.Start(
       TimeDelta::FromMilliseconds(kCreateSessionServiceDelayMS), this,
       &ProfileImpl::EnsureSessionServiceCreated);
-
-#ifdef ENABLE_BACKGROUND_TASK
-  background_task_manager_.reset(new BackgroundTaskManager(this));
-#endif  // ENABLE_BACKGROUND_TASK
 
   PrefService* prefs = GetPrefs();
   prefs->AddPrefObserver(prefs::kSpellCheckDictionary, this);
@@ -1012,3 +1008,12 @@ ProfilePersonalization* ProfileImpl::GetProfilePersonalization() {
   return personalization_.get();
 }
 #endif
+
+#ifdef ENABLE_BACKGROUND_TASK
+BackgroundTaskManager* ProfileImpl::GetBackgroundTaskManager() {
+  if (!background_task_manager_.get()) {
+    background_task_manager_.reset(new BackgroundTaskManager(this));
+  }
+  return background_task_manager_.get();
+}
+#endif  // ENABLE_BACKGROUND_TASK

@@ -67,7 +67,7 @@ class BackgroundTaskRunner : public RenderViewHostDelegate {
   // a connection notification has happened and that they happen only once.
   bool notify_disconnection_;
 
-  // The title.
+  // The title from the task page. This is used in the task manager display.
   std::wstring title_;
 
   // The following factory is used to call methods at a later time.

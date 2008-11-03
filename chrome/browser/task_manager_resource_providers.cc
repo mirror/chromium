@@ -613,7 +613,7 @@ void TaskManagerBackgroundTaskResourceProvider::StartUpdating() {
 
   // Adds all the existing background tasks.
   std::vector<BackgroundTask*> tasks;
-  BackgroundTaskManager::GetAllBackgroundTasks(&tasks);
+  BackgroundTaskManager::GetAllTasks(&tasks);
   for (std::vector<BackgroundTask*>::const_iterator iter(tasks.begin());
        iter != tasks.end();
        ++iter) {

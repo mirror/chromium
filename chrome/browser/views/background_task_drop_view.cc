@@ -365,7 +365,7 @@ int BackgroundTaskDropView::OnPerformDrop(const views::DropTargetEvent& event) {
             source_,
             bb_data.title(),
             bb_data.url(),
-            START_BACKGROUND_TASK_ON_BROWSER_LAUNCH)) {
+            START_BACKGROUND_TASK_ON_LOGIN)) {
       background_task_manager->StartTask(source_, bb_data.title());
     }
   }

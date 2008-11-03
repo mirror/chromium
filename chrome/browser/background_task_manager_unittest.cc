@@ -83,7 +83,7 @@ TEST_F(BackgroundTaskManagerTest, RegisterAndUnregister) {
   // Tests if the task is persisted and restored.
   background_task_manager.reset(
       new BackgroundTaskManager(profile_.get()));
-  background_task_manager->LoadAndStartAllRegisteredTasks();
+  background_task_manager->LoadAndStartAllTasks(false);
   EXPECT_FALSE(background_task_manager->RegisterTask(
       source_, L"Task1", GURL("http://www.google.com/test_bgtask_again"),
       START_BACKGROUND_TASK_ON_DEMAND));

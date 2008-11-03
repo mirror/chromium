@@ -244,6 +244,19 @@ installer_util::InstallStatus installer_setup::UninstallChrome(
     hklm_key.Close();
   }
 
+  // Delete the registry key used to auto-start Chrome.
+#ifdef ENABLE_BACKGROUND_TASK
+  RegKey startup_key(HKEY_CURRENT_USER,
+                     chrome::kChromeStartupKey,
+                     KEY_ALL_ACCESS);
+  if (startup_key.ValueExists(chrome::kChromeStartupValue)) {
+    DeleteRegistryValue(HKEY_CURRENT_USER,
+                        chrome::kChromeStartupKey,
+                        chrome::kChromeStartupValue);
+  }
+  startup_key.Close();
+#endif  // ENABLE_BACKGROUND_TASK
+
   // Finally delete all the files from Chrome folder after moving setup.exe
   // to a temp location.
   if (!DeleteFilesAndFolders(exe_path, system_uninstall, installed_version))

@@ -53,5 +53,14 @@ const bool kRecordModeEnabled = true;
 #else
 const bool kRecordModeEnabled = false;
 #endif
+
+// Registry to set in order to start Chrome on login.
+#ifdef ENABLE_BACKGROUND_TASK
+#ifdef WIN32
+const wchar_t kChromeStartupKey[] =
+    L"Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+const wchar_t kChromeStartupValue[] = L"Google Chrome";
+#endif  // WIN32
+#endif  // ENABLE_BACKGROUND_TASK
 }
 

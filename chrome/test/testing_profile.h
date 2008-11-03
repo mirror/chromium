@@ -161,7 +161,7 @@ class TestingProfile : public Profile {
   }
 #endif
 #ifdef ENABLE_BACKGROUND_TASK
-  virtual BackgroundTaskManager* GetBackgroundTaskManager() const {
+  virtual BackgroundTaskManager* GetBackgroundTaskManager() {
     return background_task_manager_.get();
   }
 #endif  // ENABLE_BACKGROUND_TASK

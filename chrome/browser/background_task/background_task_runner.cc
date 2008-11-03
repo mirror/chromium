@@ -73,8 +73,10 @@ bool BackgroundTaskRunner::Start() {
       new RenderWidgetHostViewWin(render_view_host_);
   render_view_host_->set_view(view);
   HWND root_hwnd = NULL;
-  if (BrowserList::GetLastActive()) {
-    root_hwnd = BrowserList::GetLastActive()->GetTopLevelHWND();
+  Browser* browser = BrowserList::FindBrowserWithType(
+      background_task_manager_->profile(), BrowserType::TABBED_BROWSER);
+  if (browser) {
+    root_hwnd = browser->GetTopLevelHWND();
   }
   if (!root_hwnd) {
     NOTREACHED();

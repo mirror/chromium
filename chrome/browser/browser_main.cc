@@ -585,13 +585,19 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   if (BrowserInit::ProcessCommandLine(parsed_command_line, L"", local_state,
                                       show_command, true, profile,
                                       &result_code)) {
-  // Loads and runs the previously registered background tasks.
-  // Note that this has to be done after an active browser is created.
+    // Loads and runs the previously registered background tasks.
+    // Note that this has to be done after an active browser is created.
 #ifdef ENABLE_BACKGROUND_TASK
-  profile->GetBackgroundTaskManager()->LoadAndStartAllRegisteredTasks();
+    bool startup = parsed_command_line.HasSwitch(switches::kStartup);
+    bool task_started =
+        profile->GetBackgroundTaskManager()->LoadAndStartAllTasks(startup);
+    if (!startup || task_started) {
 #endif  // ENABLE_BACKGROUND_TASK
 
-    MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
+      MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
+#ifdef ENABLE_BACKGROUND_TASK
+    }
+#endif  // ENABLE_BACKGROUND_TASK
   }
 
   if (metrics)

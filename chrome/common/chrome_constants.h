@@ -41,6 +41,14 @@ extern const int kStatsMaxThreads;
 extern const int kStatsMaxCounters;
 
 extern const bool kRecordModeEnabled;
+
+// registries
+#ifdef ENABLE_BACKGROUND_TASK
+#ifdef WIN32
+extern const wchar_t kChromeStartupKey[];
+extern const wchar_t kChromeStartupValue[];
+#endif  // WIN32
+#endif  // ENABLE_BACKGROUND_TASK
 }
 
 #endif  // CHROME_COMMON_CHROME_CONSTANTS_H__

@@ -441,6 +441,14 @@ bool BrowserInit::LaunchWithProfile::Launch(Profile* profile,
 
   Browser* browser = NULL;
 
+  // If auto-started on login, create the browser only.
+#ifdef ENABLE_BACKGROUND_TASK
+  if (parsed_command_line.HasSwitch(switches::kStartup)) {
+    browser = CreateTabbedBrowser();
+    return true;
+  }
+#endif  // ENABLE_BACKGROUND_TASK
+
   // Always attempt to restore the last session. OpenStartupURLs only opens the
   // home pages if no additional URLs were passed on the command line.
   bool opened_startup_urls =

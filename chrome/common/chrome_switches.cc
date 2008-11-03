@@ -345,5 +345,9 @@ const wchar_t kUseNewSafeBrowsing[] = L"new-safe-browsing";
 // http://b/issue?id=1432077 is fixed.
 const wchar_t kEnableRendererAccessibility[] = L"enable-renderer-accessibility";
 
+// Indicates the browser is started up automatically when the user logs in.
+#ifdef ENABLE_BACKGROUND_TASK
+const wchar_t kStartup[] = L"startup";
+#endif  // ENABLE_BACKGROUND_TASK
 }  // namespace switches
 

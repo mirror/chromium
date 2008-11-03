@@ -7,11 +7,16 @@
 #include "chrome/browser/background_task/background_task_manager.h"
 
 #include "base/logging.h"
+#include "base/path_service.h"
+#include "base/registry.h"
 #include "base/string_util.h"
 #include "chrome/browser/background_task/background_task_runner.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_paths.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/browser/render_view_host.h"
@@ -31,8 +36,7 @@ void BackgroundTaskManager::RegisterUserPrefs(PrefService* prefs) {
 }
 
 // static
-void BackgroundTaskManager::GetAllBackgroundTasks(
-    std::vector<BackgroundTask*>* tasks) {
+void BackgroundTaskManager::GetAllTasks(std::vector<BackgroundTask*>* tasks) {
   DCHECK(tasks);
 
   tasks->clear();
@@ -61,7 +65,7 @@ void BackgroundTaskManager::GetAllBackgroundTasks(
 // static
 void BackgroundTaskManager::CloseAllActiveTasks() {
   std::vector<BackgroundTask*> tasks;
-  GetAllBackgroundTasks(&tasks);
+  GetAllTasks(&tasks);
 
   for (std::vector<BackgroundTask*>::iterator iter(tasks.begin());
        iter != tasks.end();
@@ -102,13 +106,15 @@ std::wstring BackgroundTaskManager::ConstructMapID(const GURL& url,
   return map_id;
 }
 
-void BackgroundTaskManager::LoadAndStartAllRegisteredTasks() {
+bool BackgroundTaskManager::LoadAndStartAllTasks(
+    bool start_only_tasks_on_login) {
   const ListValue* task_list =
       profile_->GetPrefs()->GetList(prefs::kBackgroundTasks);
   if (!task_list) {
-    return;
+    return false;
   }
 
+  bool task_started = false;
   tasks_.clear();
   for (ListValue::const_iterator iter = task_list->begin();
        iter != task_list->end();
@@ -133,13 +139,64 @@ void BackgroundTaskManager::LoadAndStartAllRegisteredTasks() {
     std::wstring map_id = ConstructMapID(task.url, task.id);
     tasks_[map_id] = task;
 
-    // Starts the task if not configured as start on demand.
-    if (task.start_mode != START_BACKGROUND_TASK_ON_DEMAND) {
+    bool to_start = start_only_tasks_on_login ?
+      (start_mode == START_BACKGROUND_TASK_ON_LOGIN) :
+      (start_mode != START_BACKGROUND_TASK_ON_DEMAND);
+    if (to_start) {
+      task_started = true;
       BackgroundTaskRunner* runner =
           new BackgroundTaskRunner(this, &(tasks_.find(map_id)->second));
       runner->Start();
     }
   }
+
+  return task_started;
+}
+
+bool BackgroundTaskManager::EnableChromeStartup() {
+  RegKey key(HKEY_CURRENT_USER,
+             chrome::kChromeStartupKey,
+             KEY_READ | KEY_WRITE);
+  if (!key.Valid()) {
+    return false;
+  }
+
+  if (key.ValueExists(chrome::kChromeStartupValue)) {
+    return true;
+  }
+
+  std::wstring app_path;
+  if (!PathService::Get(base::FILE_EXE, &app_path)) {
+    return false;
+  }
+
+  std::wstring cmd_line(L"\"");
+  cmd_line.append(app_path);
+  cmd_line.append(L"\"");
+
+  std::wstring user_data_dir;
+  if (PathService::Get(chrome::DIR_USER_DATA, &user_data_dir)) {
+    cmd_line.append(L" --");
+    cmd_line.append(switches::kUserDataDir);
+    cmd_line.append(L"=\"");
+    cmd_line.append(user_data_dir);
+    cmd_line.append(L"\"");
+  }
+
+  cmd_line.append(L" --");
+  cmd_line.append(switches::kStartup);
+
+  // TODO(jianli): support multiple profiles.
+  return key.WriteValue(chrome::kChromeStartupValue, cmd_line.c_str());
+}
+
+bool BackgroundTaskManager::DisableChromeStartup() {
+  RegKey key(HKEY_CURRENT_USER, chrome::kChromeStartupKey, KEY_WRITE);
+  if (!key.Valid()) {
+    return false;
+  }
+
+  return key.DeleteValue(chrome::kChromeStartupValue);
 }
 
 bool BackgroundTaskManager::RegisterTask(WebContents* source,
@@ -185,6 +242,11 @@ bool BackgroundTaskManager::RegisterTask(WebContents* source,
   profile_->GetPrefs()->ScheduleSavePersistentPrefs(
       g_browser_process->file_thread());
 
+  // Enables Chrome to auto-start if this task is set to start on login.
+  if (start_mode == START_BACKGROUND_TASK_ON_LOGIN) {
+    EnableChromeStartup();
+  }
+
   return true;
 }
 
@@ -208,6 +270,7 @@ bool BackgroundTaskManager::UnregisterTask(WebContents* source,
   if (iter == tasks_.end()) {
     return false;
   }
+  BackgroundTaskStartMode start_mode = iter->second.start_mode;
   tasks_.erase(iter);
 
   // Updates the prefs store.
@@ -237,6 +300,23 @@ bool BackgroundTaskManager::UnregisterTask(WebContents* source,
       profile_->GetPrefs()->ScheduleSavePersistentPrefs(
           g_browser_process->file_thread());
       return true;
+    }
+  }
+
+  // Stops Chrome from being auto-started if no task is set to start on
+  // login.
+  if (start_mode == START_BACKGROUND_TASK_ON_LOGIN) {
+    bool disable_chrome_startup = true;
+    for (BackgroundTaskMap::const_iterator iter(tasks_.begin());
+         iter != tasks_.end();
+         ++iter) {
+      if (iter->second.start_mode == START_BACKGROUND_TASK_ON_LOGIN) {
+        disable_chrome_startup = false;
+        break;
+      }
+    }
+    if (disable_chrome_startup) {
+      DisableChromeStartup();
     }
   }
 
