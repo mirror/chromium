@@ -3,13 +3,13 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/web_contents.h"
-
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/file_version_info.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/dom_operation_notification_details.h"
@@ -1811,11 +1811,16 @@ LRESULT WebContents::OnMouseRange(UINT msg, WPARAM w_param, LPARAM l_param) {
   switch (msg) {
     case WM_LBUTTONDOWN:
     case WM_MBUTTONDOWN:
-    case WM_RBUTTONDOWN:
+    case WM_RBUTTONDOWN: {
       // Make sure this TabContents is activated when it is clicked on.
       if (delegate())
         delegate()->ActivateContents(this);
+      DownloadRequestManager* drm =
+          g_browser_process->download_request_manager();
+      if (drm)
+        drm->OnUserGesture(this);
       break;
+    }
     case WM_MOUSEMOVE:
       // Let our delegate know that the mouse moved (useful for resetting status
       // bubble state).
