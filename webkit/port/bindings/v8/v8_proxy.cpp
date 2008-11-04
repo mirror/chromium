@@ -85,6 +85,7 @@
 #include "PluginArray.h"
 #include "RangeException.h"
 #include "ScriptController.h"
+#include "ScriptExecutionContext.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
 #include "StyleSheet.h"
@@ -1494,6 +1495,15 @@ V8Proxy* V8Proxy::retrieve(Frame* frame)
         return 0;
     return frame->script()->isEnabled() ? frame->script()->proxy() : 0;
 }
+
+
+V8Proxy* V8Proxy::retrieve(ScriptExecutionContext* context)
+{
+    if (!context->isDocument())
+        return 0;
+    return retrieve(static_cast<Document*>(context)->frame());
+}
+
 
 void V8Proxy::disconnectFrame()
 {

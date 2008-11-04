@@ -64,6 +64,7 @@ class CSSRule;
 class CSSRuleList;
 class CSSValueList;
 class NodeFilter;
+class ScriptExecutionContext;
 
 #if ENABLE(SVG)
 class SVGElementInstance;
@@ -245,6 +246,9 @@ class V8Proxy {
   static V8Proxy* retrieve();
   // Returns V8Proxy object associated with a frame.
   static V8Proxy* retrieve(Frame* frame);
+  // Returns V8Proxy object associated with a script execution context.
+  static V8Proxy* retrieve(ScriptExecutionContext* context);
+
   // Returns the frame object of the window object associated
   // with the currently executing context.
   static Frame* retrieveFrame();
