@@ -245,12 +245,6 @@ Browser::Browser(const gfx::Rect& initial_bounds,
   NotificationService::current()->AddObserver(
       this, NOTIFY_SSL_STATE_CHANGED, NotificationService::AllSources());
 
-  if (profile->HasSessionService()) {
-    SessionService* session_service = profile->GetSessionService();
-    if (session_service)
-      session_service->SetWindowType(session_id_, type_);
-  }
-
   InitCommandState();
   BrowserList::AddBrowser(this);
 
@@ -1263,13 +1257,14 @@ TabContents* Browser::AddTabWithNavigationController(
 
 NavigationController* Browser::AddRestoredTab(
     const std::vector<TabNavigation>& navigations,
+    int tab_index,
     int selected_navigation,
     bool select) {
   NavigationController* restored_controller =
       BuildRestoredNavigationController(navigations, selected_navigation);
 
   tabstrip_model_.InsertTabContentsAt(
-      tabstrip_model_.count(),
+      tab_index,
       restored_controller->active_contents(),
       select, false);
   if (profile_->HasSessionService()) {

@@ -699,7 +699,8 @@ void Browser::ExecuteCommand(int id) {
         break;
 
       const TabRestoreService::HistoricalTab& tab = tabs.front();
-      AddRestoredTab(tab.navigations, tab.current_navigation_index, true);
+      AddRestoredTab(tab.navigations, tab_count(), tab.current_navigation_index,
+                     true);
       service->RemoveHistoricalTabById(tab.id);
       break;
     }
@@ -795,7 +796,7 @@ void Browser::Reload() {
   if (current_tab) {
     // As this is caused by a user action, give the focus to the page.
     current_tab->Focus();
-    current_tab->controller()->Reload();
+    current_tab->controller()->Reload(true);
   }
 }
 
