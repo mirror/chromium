@@ -73,6 +73,7 @@ class NavigationControllerTest : public testing::Test,
   // TabContentsDelegate methods (only care about ReplaceContents):
   virtual void OpenURLFromTab(TabContents*,
                               const GURL&,
+                              const GURL&,
                               WindowOpenDisposition,
                               PageTransition::Type) {}
   virtual void NavigationStateChanged(const TabContents*,
@@ -255,7 +256,7 @@ TEST_F(NavigationControllerTest, LoadURL) {
   const GURL url1(scheme1() + ":foo1");
   const GURL url2(scheme1() + ":foo2");
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   // Creating a pending notification should not have issued any of the
   // notifications we're listening for.
   EXPECT_EQ(0, notifications.size());
@@ -287,7 +288,7 @@ TEST_F(NavigationControllerTest, LoadURL) {
   EXPECT_EQ(contents->GetMaxPageID(), 0);
 
   // Load another...
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
 
   // The load should now be pending.
   EXPECT_EQ(contents->controller()->GetEntryCount(), 1);
@@ -324,12 +325,12 @@ TEST_F(NavigationControllerTest, LoadURL_SamePage) {
 
   const GURL url1(scheme1() + ":foo1");
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   EXPECT_EQ(0, notifications.size());
   contents->CompleteNavigationAsRenderer(0, url1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   EXPECT_EQ(0, notifications.size());
   contents->CompleteNavigationAsRenderer(0, url1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
@@ -352,12 +353,12 @@ TEST_F(NavigationControllerTest, LoadURL_Discarded) {
   const GURL url1(scheme1() + ":foo1");
   const GURL url2(scheme1() + ":foo2");
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   EXPECT_EQ(0, notifications.size());
   contents->CompleteNavigationAsRenderer(0, url1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
   contents->controller()->DiscardPendingEntry();
   EXPECT_EQ(0, notifications.size());
 
@@ -379,7 +380,8 @@ TEST_F(NavigationControllerTest, LoadURL_NoPending) {
 
   // First make an existing committed entry.
   const GURL kExistingURL1(scheme1() + ":eh");
-  contents->controller()->LoadURL(kExistingURL1, PageTransition::TYPED);
+  contents->controller()->LoadURL(kExistingURL1, GURL(),
+                                  PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, kExistingURL1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 	
@@ -405,13 +407,15 @@ TEST_F(NavigationControllerTest, LoadURL_NewPending) {
 
   // First make an existing committed entry.
   const GURL kExistingURL1(scheme1() + ":eh");
-  contents->controller()->LoadURL(kExistingURL1, PageTransition::TYPED);
+  contents->controller()->LoadURL(kExistingURL1, GURL(),
+                                  PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, kExistingURL1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
   // Make a pending entry to somewhere new.
   const GURL kExistingURL2(scheme1() + ":bee");
-  contents->controller()->LoadURL(kExistingURL2, PageTransition::TYPED);
+  contents->controller()->LoadURL(kExistingURL2, GURL(),
+                                  PageTransition::TYPED);
   EXPECT_EQ(0, notifications.size());
 
   // Before that commits, do a new navigation.
@@ -435,12 +439,14 @@ TEST_F(NavigationControllerTest, LoadURL_ExistingPending) {
 
   // First make some history.
   const GURL kExistingURL1(scheme1() + ":eh");
-  contents->controller()->LoadURL(kExistingURL1, PageTransition::TYPED);
+  contents->controller()->LoadURL(kExistingURL1, GURL(),
+                                  PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, kExistingURL1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
   const GURL kExistingURL2(scheme1() + ":bee");
-  contents->controller()->LoadURL(kExistingURL2, PageTransition::TYPED);
+  contents->controller()->LoadURL(kExistingURL2, GURL(),
+                                  PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(1, kExistingURL2);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
@@ -470,7 +476,7 @@ TEST_F(NavigationControllerTest, Reload) {
 
   const GURL url1(scheme1() + ":foo1");
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   EXPECT_EQ(0, notifications.size());
   contents->CompleteNavigationAsRenderer(0, url1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
@@ -508,7 +514,7 @@ TEST_F(NavigationControllerTest, Reload_GeneratesNewPage) {
   const GURL url1(scheme1() + ":foo1");
   const GURL url2(scheme1() + ":foo2");
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, url1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
@@ -575,11 +581,11 @@ TEST_F(NavigationControllerTest, Back_GeneratesNewPage) {
   const GURL url2(scheme1() + ":foo2");
   const GURL url3(scheme1() + ":foo3");
 
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, url1);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(1, url2);
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
@@ -627,7 +633,7 @@ TEST_F(NavigationControllerTest, Back_NewPending) {
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
   // Now start a new pending navigation and go back before it commits.
-  contents->controller()->LoadURL(kUrl3, PageTransition::TYPED);
+  contents->controller()->LoadURL(kUrl3, GURL(), PageTransition::TYPED);
   EXPECT_EQ(-1, contents->controller()->GetPendingEntryIndex());
   EXPECT_EQ(kUrl3, contents->controller()->GetPendingEntry()->url());
   contents->controller()->GoBack();
@@ -1013,7 +1019,7 @@ TEST_F(NavigationControllerTest, SwitchTypes) {
   EXPECT_TRUE(notifications.Check1AndReset(NOTIFY_NAV_ENTRY_COMMITTED));
 
   TestTabContents* initial_contents = contents;
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
 
   // The tab contents should have been replaced
   ASSERT_TRUE(initial_contents != contents);
@@ -1063,7 +1069,7 @@ TEST_F(NavigationControllerTest, SwitchTypes_Discard) {
 
   TestTabContents* initial_contents = contents;
 
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
   EXPECT_EQ(0, notifications.size());
 
   // The tab contents should have been replaced
@@ -1097,11 +1103,11 @@ TEST_F(NavigationControllerTest, SwitchTypesCleanup) {
   // Note that we need the LoadURL calls so that pending entries and the
   // different tab contents types are created. "Renderer" navigations won't
   // actually cross tab contents boundaries without these.
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, url1);
-  contents->controller()->LoadURL(url2, PageTransition::TYPED);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(1, url2);
-  contents->controller()->LoadURL(url3, PageTransition::TYPED);
+  contents->controller()->LoadURL(url3, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(2, url3);
 
   // Navigate back to the start.
@@ -1170,7 +1176,7 @@ TEST_F(NavigationControllerTest, EnforceMaxNavigationCount) {
   for (url_index = 0; url_index < kMaxEntryCount; url_index++) {
     SNPrintF(buffer, 128, (scheme1() + "://www.a.com/%d").c_str(), url_index);
     GURL url(buffer);
-    contents->controller()->LoadURL(url, PageTransition::TYPED);
+    contents->controller()->LoadURL(url, GURL(), PageTransition::TYPED);
     contents->CompleteNavigationAsRenderer(url_index, url);
   }
 
@@ -1182,7 +1188,7 @@ TEST_F(NavigationControllerTest, EnforceMaxNavigationCount) {
   // Navigate some more.
   SNPrintF(buffer, 128, (scheme1() + "://www.a.com/%d").c_str(), url_index);
   GURL url(buffer);
-  contents->controller()->LoadURL(url, PageTransition::TYPED);
+  contents->controller()->LoadURL(url, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(url_index, url);
   url_index++;
 
@@ -1200,7 +1206,7 @@ TEST_F(NavigationControllerTest, EnforceMaxNavigationCount) {
   for (int i = 0; i < 3; i++) {
     SNPrintF(buffer, 128, (scheme1() + "://www.a.com/%d").c_str(), url_index);
     url = GURL(buffer);
-    contents->controller()->LoadURL(url, PageTransition::TYPED);
+    contents->controller()->LoadURL(url, GURL(), PageTransition::TYPED);
       contents->CompleteNavigationAsRenderer(url_index, url);
     url_index++;
   }
@@ -1264,12 +1270,12 @@ TEST_F(NavigationControllerTest, RestoreNavigate) {
 TEST_F(NavigationControllerTest, Interstitial) {
   // First navigate somewhere normal.
   const GURL url1(scheme1() + ":foo");
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   contents->CompleteNavigationAsRenderer(0, url1);
 
   // Now navigate somewhere with an interstitial.
   const GURL url2(scheme1() + ":bar");
-  contents->controller()->LoadURL(url1, PageTransition::TYPED);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
   contents->controller()->GetPendingEntry()->set_page_type(
       NavigationEntry::INTERSTITIAL_PAGE);
 
@@ -1281,6 +1287,186 @@ TEST_F(NavigationControllerTest, Interstitial) {
   EXPECT_EQ(url2, contents->controller()->GetLastCommittedEntry()->url());
   EXPECT_EQ(NavigationEntry::NORMAL_PAGE,
             contents->controller()->GetLastCommittedEntry()->page_type());
+}
+
+TEST_F(NavigationControllerTest, RemoveEntry) {
+  const GURL url1(scheme1() + ":foo1");
+  const GURL url2(scheme1() + ":foo2");
+  const GURL url3(scheme1() + ":foo3");
+  const GURL url4(scheme1() + ":foo4");
+  const GURL url5(scheme1() + ":foo5");
+  const GURL pending_url(scheme1() + ":pending");
+  const GURL default_url(scheme1() + ":default");
+
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(0, url1);
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(1, url2);
+  contents->controller()->LoadURL(url3, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(2, url3);
+  contents->controller()->LoadURL(url4, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(3, url4);
+  contents->controller()->LoadURL(url5, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(4, url5);
+
+  // Remove the last entry.
+  contents->controller()->RemoveEntryAtIndex(
+      contents->controller()->GetEntryCount() - 1, default_url);
+  EXPECT_EQ(4, contents->controller()->GetEntryCount());
+  EXPECT_EQ(3, contents->controller()->GetLastCommittedEntryIndex());
+  NavigationEntry* pending_entry = contents->controller()->GetPendingEntry();
+  EXPECT_TRUE(pending_entry && pending_entry->url() == url4);
+
+  // Add a pending entry.
+  contents->controller()->LoadURL(pending_url, GURL(), PageTransition::TYPED);
+  // Now remove the last entry.
+  contents->controller()->RemoveEntryAtIndex(
+      contents->controller()->GetEntryCount() - 1, default_url);
+  // The pending entry should have been discarded and the last committed entry
+  // removed.
+  EXPECT_EQ(3, contents->controller()->GetEntryCount());
+  EXPECT_EQ(2, contents->controller()->GetLastCommittedEntryIndex());
+  pending_entry = contents->controller()->GetPendingEntry();
+  EXPECT_TRUE(pending_entry && pending_entry->url() == url3);
+
+  // Remove an entry which is not the last committed one.
+  contents->controller()->RemoveEntryAtIndex(0, default_url);
+  EXPECT_EQ(2, contents->controller()->GetEntryCount());
+  EXPECT_EQ(1, contents->controller()->GetLastCommittedEntryIndex());
+  // No navigation should have been initiated since we did not remove the
+  // current entry.
+  EXPECT_FALSE(contents->controller()->GetPendingEntry());
+
+  // Remove the 2 remaining entries.
+  contents->controller()->RemoveEntryAtIndex(1, default_url);
+  contents->controller()->RemoveEntryAtIndex(0, default_url);
+
+  // This should have created a pending default entry.
+  EXPECT_EQ(0, contents->controller()->GetEntryCount());
+  EXPECT_EQ(-1, contents->controller()->GetLastCommittedEntryIndex());
+  pending_entry = contents->controller()->GetPendingEntry();
+  EXPECT_TRUE(pending_entry && pending_entry->url() == default_url);
+}
+
+// Tests the transient entry, making sure it goes away with all navigations.
+TEST_F(NavigationControllerTest, TransientEntry) {
+  TestNotificationTracker notifications;
+  RegisterForAllNavNotifications(&notifications, contents->controller());
+
+  const GURL url0(scheme1() + ":foo0");
+  const GURL url1(scheme1() + ":foo1");
+  const GURL url2(scheme1() + ":foo2");
+  const GURL url3(scheme1() + ":foo3");
+  const GURL url4(scheme1() + ":foo4");
+  const GURL transient_url(scheme1() + ":transient");
+
+  contents->controller()->LoadURL(url0, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(0, url0);
+  contents->controller()->LoadURL(url1, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(1, url1);
+
+  notifications.Reset();
+
+  // Adding a transient with no pending entry.
+  NavigationEntry* transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+
+  // We should not have received any notifications.
+  EXPECT_EQ(0, notifications.size());
+
+  // Check our state.
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  EXPECT_EQ(contents->controller()->GetEntryCount(), 3);
+  EXPECT_EQ(contents->controller()->GetLastCommittedEntryIndex(), 1);
+  EXPECT_EQ(contents->controller()->GetPendingEntryIndex(), -1);
+  EXPECT_TRUE(contents->controller()->GetLastCommittedEntry());
+  EXPECT_FALSE(contents->controller()->GetPendingEntry());
+  EXPECT_TRUE(contents->controller()->CanGoBack());
+  EXPECT_FALSE(contents->controller()->CanGoForward());
+  EXPECT_EQ(contents->GetMaxPageID(), 1);
+
+  // Navigate.
+  contents->controller()->LoadURL(url2, GURL(), PageTransition::TYPED);
+  contents->CompleteNavigationAsRenderer(2, url2);
+
+  // We should have navigated, transient entry should be gone.
+  EXPECT_EQ(url2, contents->controller()->GetActiveEntry()->url());
+  EXPECT_EQ(contents->controller()->GetEntryCount(), 3);
+  
+  // Add a transient again, then navigate with no pending entry this time.
+  transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  contents->CompleteNavigationAsRenderer(3, url3);
+  // Transient entry should be gone.
+  EXPECT_EQ(url3, contents->controller()->GetActiveEntry()->url());
+  EXPECT_EQ(contents->controller()->GetEntryCount(), 4);
+
+  // Initiate a navigation, add a transient then commit navigation.
+  contents->controller()->LoadURL(url4, GURL(), PageTransition::TYPED);
+  transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  contents->CompleteNavigationAsRenderer(4, url4);
+  EXPECT_EQ(url4, contents->controller()->GetActiveEntry()->url());
+  EXPECT_EQ(contents->controller()->GetEntryCount(), 5);
+
+  // Add a transient and go back.  This should simply remove the transient.
+  transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  EXPECT_TRUE(contents->controller()->CanGoBack());
+  EXPECT_FALSE(contents->controller()->CanGoForward());
+  contents->controller()->GoBack();
+  // Transient entry should be gone.
+  EXPECT_EQ(url4, contents->controller()->GetActiveEntry()->url());
+  EXPECT_EQ(contents->controller()->GetEntryCount(), 5);
+  contents->CompleteNavigationAsRenderer(3, url3);
+  
+  // Add a transient and go to an entry before the current one.
+  transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  contents->controller()->GoToIndex(1);
+  // The navigation should have been initiated, transient entry should be gone.
+  EXPECT_EQ(url1, contents->controller()->GetActiveEntry()->url());
+  contents->CompleteNavigationAsRenderer(1, url1);
+
+  // Add a transient and go to an entry after the current one.
+  transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  contents->controller()->GoToIndex(3);
+  // The navigation should have been initiated, transient entry should be gone.
+  // Because of the transient entry that is removed, going to index 3 makes us
+  // land on url2.
+  EXPECT_EQ(url2, contents->controller()->GetActiveEntry()->url());
+  contents->CompleteNavigationAsRenderer(2, url2);
+
+  // Add a transient and go forward.
+  transient_entry = new NavigationEntry(TAB_CONTENTS_WEB);
+  transient_entry->set_url(transient_url);
+  contents->controller()->AddTransientEntry(transient_entry);
+  EXPECT_EQ(transient_url, contents->controller()->GetActiveEntry()->url());
+  EXPECT_TRUE(contents->controller()->CanGoForward());
+  contents->controller()->GoForward();
+  // We should have navigated, transient entry should be gone.
+  EXPECT_EQ(url3, contents->controller()->GetActiveEntry()->url());
+  contents->CompleteNavigationAsRenderer(3, url3);
+
+  // Ensure the URLS are correct.
+  EXPECT_EQ(contents->controller()->GetEntryCount(), 5);
+  EXPECT_EQ(contents->controller()->GetEntryAtIndex(0)->url(), url0);
+  EXPECT_EQ(contents->controller()->GetEntryAtIndex(1)->url(), url1);
+  EXPECT_EQ(contents->controller()->GetEntryAtIndex(2)->url(), url2);
+  EXPECT_EQ(contents->controller()->GetEntryAtIndex(3)->url(), url3);
+  EXPECT_EQ(contents->controller()->GetEntryAtIndex(4)->url(), url4);
 }
 
 // Tests that IsInPageNavigation returns appropriate results.  Prevents
@@ -1312,7 +1498,7 @@ TEST_F(NavigationControllerTest, IsInPageNavigation) {
 // A basic test case. Navigates to a single url, and make sure the history
 // db matches.
 TEST_F(NavigationControllerHistoryTest, Basic) {
-  contents->controller()->LoadURL(url0, PageTransition::LINK);
+  contents->controller()->LoadURL(url0, GURL(), PageTransition::LINK);
   contents->CompleteNavigationAsRenderer(0, url0);
 
   GetLastSession();

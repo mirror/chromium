@@ -359,10 +359,10 @@ void Browser::ExecuteCommand(int id) {
       {
         LocationBarView* lbv = GetLocationBarView();
         if (lbv) {
-          OpenURL(GURL(lbv->location_input()), lbv->disposition(),
+          OpenURL(GURL(lbv->location_input()), GURL(), lbv->disposition(),
                   lbv->transition());
         } else {
-          OpenURL(GURL(), CURRENT_TAB, PageTransition::TYPED);
+          OpenURL(GURL(), GURL(), CURRENT_TAB, PageTransition::TYPED);
         }
       }
       break;
@@ -450,7 +450,7 @@ void Browser::ExecuteCommand(int id) {
           current_tab->controller()->GetLastCommittedEntry();
       if (entry) {
         GURL url("view-source:" + entry->url().spec());
-        AddTabWithURL(url, PageTransition::LINK, true, NULL);
+        AddTabWithURL(url, GURL(), PageTransition::LINK, true, NULL);
       }
       break;
     }
@@ -710,7 +710,8 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_HELPMENU: {
       GURL help_url(l10n_util::GetString(IDS_HELP_CONTENT_URL));
-      AddTabWithURL(help_url, PageTransition::AUTO_BOOKMARK, true, NULL);
+      AddTabWithURL(help_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
+                    NULL);
       break;
     }
 
@@ -786,7 +787,7 @@ void Browser::Reload() {
     if (web_contents && web_contents->showing_interstitial_page()) {
       NavigationEntry* entry = current_tab->controller()->GetActiveEntry();
       DCHECK(entry);  // Should exist if interstitial is showing.
-      OpenURL(entry->url(), CURRENT_TAB, PageTransition::RELOAD);
+      OpenURL(entry->url(), GURL(), CURRENT_TAB, PageTransition::RELOAD);
       return;
     }
   }
@@ -801,7 +802,7 @@ void Browser::Reload() {
 void Browser::Home() {
   GURL homepage_url = GetHomePage();
   GetSelectedTabContents()->controller()->LoadURL(
-      homepage_url, PageTransition::AUTO_BOOKMARK);
+      homepage_url, GURL(), PageTransition::AUTO_BOOKMARK);
 }
 
 void Browser::StarCurrentTabContents() {
@@ -1074,6 +1075,6 @@ void Browser::DuplicateContentsAt(int index) {
 void Browser::FileSelected(const std::wstring& path, void* params) {
   GURL file_url = net::FilePathToFileURL(path);
   if (!file_url.is_empty())
-    OpenURL(file_url, CURRENT_TAB, PageTransition::TYPED);
+    OpenURL(file_url, GURL(), CURRENT_TAB, PageTransition::TYPED);
 }
 

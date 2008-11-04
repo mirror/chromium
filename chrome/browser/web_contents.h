@@ -302,10 +302,10 @@ class WebContents : public TabContents,
                                 const GURL& image_url,
                                 bool errored,
                                 const SkBitmap& image);
-  virtual void ShowContextMenu(const ViewHostMsg_ContextMenu_Params& params);
+  virtual void ShowContextMenu(const ViewHostMsg_ContextMenu_Params& params);                                
   virtual void StartDragging(const WebDropData& drop_data);
   virtual void UpdateDragCursor(bool is_drop_target);
-  virtual void RequestOpenURL(const GURL& url,
+  virtual void RequestOpenURL(const GURL& url, const GURL& referrer,
                               WindowOpenDisposition disposition);
   virtual void DomOperationResponse(const std::string& json_string,
                                     int automation_id);

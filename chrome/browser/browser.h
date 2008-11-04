@@ -199,7 +199,8 @@ class Browser : public TabStripModelDelegate,
   // Add a new tab with the specified URL. If instance is not null, its process
   // will be used to render the tab.
   TabContents* AddTabWithURL(
-      const GURL& url, PageTransition::Type transition, bool foreground,
+      const GURL& url, const GURL& referrer,
+      PageTransition::Type transition, bool foreground,
       SiteInstance* instance);
 
   // Add a new application tab for the specified URL. If lazy is true, the tab
@@ -236,6 +237,7 @@ class Browser : public TabStripModelDelegate,
   // If instance is not null, its process will be used to render the tab.
   virtual TabContents* CreateTabContentsForURL(
       const GURL& url,
+      const GURL& referrer,
       Profile* profile,
       PageTransition::Type transition,
       bool defer_load,
@@ -263,7 +265,7 @@ class Browser : public TabStripModelDelegate,
 
   // Overridden from TabContentsDelegate:
   virtual void OpenURLFromTab(TabContents* source,
-                             const GURL& url,
+                             const GURL& url, const GURL& referrer,
                              WindowOpenDisposition disposition,
                              PageTransition::Type transition);
   virtual void NavigationStateChanged(const TabContents* source,

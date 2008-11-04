@@ -805,7 +805,7 @@ void AutomationProvider::AppendTab(const IPC::Message& message,
     Browser* browser = browser_tracker_->GetResource(handle);
     observer = AddTabStripObserver(browser, message.routing_id());
     TabContents* tab_contents =
-        browser->AddTabWithURL(url, PageTransition::TYPED, true, NULL);
+        browser->AddTabWithURL(url, GURL(), PageTransition::TYPED, true, NULL);
     if (tab_contents) {
       append_tab_response =
           GetIndexForNavigationController(tab_contents->controller(), browser);
@@ -845,7 +845,7 @@ void AutomationProvider::NavigateToURL(const IPC::Message& message,
         new AutomationMsg_NavigateToURLResponse(
             message.routing_id(), AUTOMATION_MSG_NAVIGATION_AUTH_NEEDED));
       // TODO(darin): avoid conversion to GURL
-      browser->OpenURL(url, CURRENT_TAB, PageTransition::TYPED);
+      browser->OpenURL(url, GURL(), CURRENT_TAB, PageTransition::TYPED);
       return;
     }
   }
@@ -867,7 +867,7 @@ void AutomationProvider::NavigationAsync(const IPC::Message& message,
     if (browser) {
       // Don't add any listener unless a callback mechanism is desired.
       // TODO(vibhor): Do this if such a requirement arises in future.
-      browser->OpenURL(url, CURRENT_TAB, PageTransition::TYPED);
+      browser->OpenURL(url, GURL(), CURRENT_TAB, PageTransition::TYPED);
       status = true;
     }
   }
@@ -1975,7 +1975,7 @@ void AutomationProvider::NavigateInExternalTab(const IPC::Message& message,
 
   if (tab_tracker_->ContainsHandle(handle)) {
     NavigationController* tab = tab_tracker_->GetResource(handle);
-    tab->LoadURL(url, PageTransition::TYPED);
+    tab->LoadURL(url, GURL(), PageTransition::TYPED);
     status = true;
   }
 

@@ -101,8 +101,7 @@ GURL KURLToGURL(const WebCore::KURL& url) {
     return GURL();
   return GURL(spec.data(), spec.length(), url.parsed(), url.isValid());
 #else
-  const WebCore::DeprecatedString& spec = url.deprecatedString();
-  return GURL(WideToUTF8(DeprecatedStringToStdWString(spec))); 
+  return StringToGURL(url.string());
 #endif
 }
 
@@ -115,6 +114,10 @@ WebCore::KURL GURLToKURL(const GURL& url) {
 #else
   return WebCore::KURL(StdWStringToDeprecatedString(UTF8ToWide(spec)));
 #endif
+}
+
+GURL StringToGURL(const WebCore::String& spec) {
+  return GURL(WideToUTF8(StringToStdWString(spec)));
 }
 
 }  // namespace webkit_glue

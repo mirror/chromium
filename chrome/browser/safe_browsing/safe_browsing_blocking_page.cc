@@ -207,7 +207,7 @@ bool SafeBrowsingBlockingPage::GoBack() {
   if (!prev_entry) {
     // Nothing to go to, default to about:blank.  Navigating will cause the
     // interstitial to hide which will trigger "this" to be deleted.
-    tab_->controller()->LoadURL(GURL("about:blank"),
+    tab_->controller()->LoadURL(GURL("about:blank"), GURL(),
                                 PageTransition::AUTO_BOOKMARK);
   } else if (prev_entry->tab_type() != TAB_CONTENTS_WEB ||
              prev_entry->restored() ||
@@ -258,7 +258,7 @@ void SafeBrowsingBlockingPage::Continue(const std::string& user_action) {
     } else {
       NOTREACHED();
     }
-    web->OpenURL(url, CURRENT_TAB, PageTransition::LINK);
+    web->OpenURL(url, GURL(), CURRENT_TAB, PageTransition::LINK);
     return;
   }
   if (user_action == "3") {
@@ -269,7 +269,7 @@ void SafeBrowsingBlockingPage::Continue(const std::string& user_action) {
     GURL report_url =
         safe_browsing_util::GeneratePhishingReportUrl(kSbReportPhishingUrl,
                                                       url_.spec());
-    web->OpenURL(report_url, CURRENT_TAB, PageTransition::LINK);
+    web->OpenURL(report_url, GURL(), CURRENT_TAB, PageTransition::LINK);
     return;
   }
   if (user_action == "4") {
@@ -280,7 +280,7 @@ void SafeBrowsingBlockingPage::Continue(const std::string& user_action) {
     GURL diagnostic_url(diagnostic);
     diagnostic_url = google_util::AppendGoogleLocaleParam(diagnostic_url);
     DCHECK(result_ == SafeBrowsingService::URL_MALWARE);
-    web->OpenURL(diagnostic_url, CURRENT_TAB, PageTransition::LINK);
+    web->OpenURL(diagnostic_url, GURL(), CURRENT_TAB, PageTransition::LINK);
     return;
   }
 

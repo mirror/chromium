@@ -1331,9 +1331,9 @@ void WebContents::UpdateDragCursor(bool is_drop_target) {
   drop_target_->set_is_drop_target(is_drop_target);
 }
 
-void WebContents::RequestOpenURL(const GURL& url,
+void WebContents::RequestOpenURL(const GURL& url, const GURL& referrer,
                                  WindowOpenDisposition disposition) {
-  OpenURL(url, disposition, PageTransition::LINK);
+  OpenURL(url, referrer, disposition, PageTransition::LINK);
 }
 
 void WebContents::DomOperationResponse(const std::string& json_string,

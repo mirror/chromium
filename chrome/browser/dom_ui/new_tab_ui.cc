@@ -483,7 +483,7 @@ void TemplateURLHandler::HandleDoSearch(const Value* content) {
 
   if (!url.empty()) {
   // Load the URL.
-    dom_ui_host_->OpenURL(GURL(WideToUTF8(url)), CURRENT_TAB,
+    dom_ui_host_->OpenURL(GURL(WideToUTF8(url)), GURL(), CURRENT_TAB,
                           PageTransition::LINK);
 
     // Record the user action
@@ -725,7 +725,7 @@ HistoryHandler::HistoryHandler(DOMUIHost* dom_ui_host)
 void HistoryHandler::HandleShowHistoryPage(const Value*) {
   NavigationController* controller = dom_ui_host_->controller();
   if (controller) {
-    controller->LoadURL(HistoryTabUI::GetURL(), PageTransition::LINK);
+    controller->LoadURL(HistoryTabUI::GetURL(), GURL(), PageTransition::LINK);
     UserMetrics::RecordAction(L"NTP_ShowHistory",
         dom_ui_host_->profile());
   }
@@ -747,6 +747,7 @@ void HistoryHandler::HandleSearchHistoryPage(const Value* content) {
         NavigationController* controller = dom_ui_host_->controller();
         controller->LoadURL(
             HistoryTabUI::GetHistoryURLWithSearchText(wstring_value),
+            GURL(),
             PageTransition::LINK);
       }
     }
@@ -894,12 +895,13 @@ bool NewTabUIContents::SupportsURL(GURL* url) {
 }
 
 void NewTabUIContents::RequestOpenURL(const GURL& url,
+                                      const GURL& /*referrer*/,
                                       WindowOpenDisposition disposition) {
   // The user opened a URL on the page (including "open in new window").
   // We count all such clicks as AUTO_BOOKMARK, which increments the site's
   // visit count (which is used for ranking the most visited entries).
   // Note this means we're including clicks on not only most visited thumbnails,
   // but also clicks on recently bookmarked.
-  OpenURL(url, disposition, PageTransition::AUTO_BOOKMARK);
+  OpenURL(url, GURL(), disposition, PageTransition::AUTO_BOOKMARK);
 }
 

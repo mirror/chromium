@@ -226,7 +226,7 @@ void SSLBlockingPage::DontProceed() {
   if (!entry) {
     // Nothing to go to, default to about:blank.  Navigating will cause the
     // interstitial to hide which will trigger "this" to be deleted.
-    tab_->controller()->LoadURL(GURL("about:blank"),
+    tab_->controller()->LoadURL(GURL("about:blank"), GURL(),
                                 PageTransition::AUTO_BOOKMARK);
   } else if (entry->tab_type() != TAB_CONTENTS_WEB) {
     // Not a WebContent, reload it so to recreate the TabContents for it.

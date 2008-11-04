@@ -33,6 +33,7 @@ std::wstring DeprecatedStringToStdWString(const WebCore::DeprecatedString& dep);
 
 GURL KURLToGURL(const WebCore::KURL& url);
 WebCore::KURL GURLToKURL(const GURL& url);
+GURL StringToGURL(const WebCore::String& spec);
 
 }  // namespace webkit_glue
 
