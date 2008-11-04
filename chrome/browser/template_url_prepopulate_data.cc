@@ -360,7 +360,7 @@ const PrepopulatedEngine delfi_lv = {
   L"delfi.lv",
   L"http://smart.delfi.lv/img/smart_search.png",
   L"http://smart.delfi.lv/i.php?enc={inputEncoding}&q={searchTerms}",
-  "windows-1257",
+  "UTF-8",
   NULL,
   45,
 };
@@ -1400,8 +1400,8 @@ const PrepopulatedEngine ok = {
 const PrepopulatedEngine onet = {
   L"Onet.pl",
   L"onet.pl",
-  L"http://szukaj.beta.onet.pl/favicon.ico",
-  L"http://szukaj.beta.onet.pl/query.html?qt={searchTerms}",
+  L"http://szukaj.onet.pl/favicon.ico",
+  L"http://szukaj.onet.pl/query.html?qt={searchTerms}",
   "ISO-8859-2",
   NULL,
   75,
@@ -1483,7 +1483,7 @@ const PrepopulatedEngine rediff = {
   L"rediff.com",
   L"http://search1.rediff.com/favicon.ico",
   L"http://search1.rediff.com/dirsrch/default.asp?MT={searchTerms}",
-  "ISO-8859-1",
+  "UTF-8",
   NULL,
   37,
 };
@@ -3006,7 +3006,7 @@ void RegisterUserPrefs(PrefService* prefs) {
 }
 
 int GetDataVersion() {
-  return 17;  // Increment this if you change the above data in ways that mean
+  return 18;  // Increment this if you change the above data in ways that mean
               // users with existing data should get a new version.
 }
 
