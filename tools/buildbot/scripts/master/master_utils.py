@@ -260,9 +260,12 @@ class MasterFactory(object):
     if self._target_platform == 'win32':
       factory_cmd_obj.AddSvnKillStep()
     factory_cmd_obj.AddUpdateScriptStep()
-    factory_cmd_obj.AddUpdateStep(gclient_spec)
+    # Once the script is updated, the zombie processes left by the previous
+    # run can be killed.
     if self._target_platform == 'win32':
       factory_cmd_obj.AddTaskkillStep()
+    # We safely update the tree only after killing the residual tasks.
+    factory_cmd_obj.AddUpdateStep(gclient_spec)
     return factory
 
   def NewBuildFactory(self, identifier, target='Release', build_dir=None,
