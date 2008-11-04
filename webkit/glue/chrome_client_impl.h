@@ -106,10 +106,10 @@ public:
   virtual void print(WebCore::Frame*);
 
   virtual void exceededDatabaseQuota(WebCore::Frame*,
-                                          const WebCore::String& databaseName);
+                                     const WebCore::String& databaseName);
 
-  virtual void runFileChooser(const WebCore::String&,
-                              PassRefPtr<WebCore::FileChooser>);
+  virtual void runOpenPanel(WebCore::Frame*,
+                            PassRefPtr<WebCore::FileChooser>);
   virtual void popupOpened(WebCore::FramelessScrollView* popup_view,
                            const WebCore::IntRect& bounds);
   virtual void setCursor(const WebCore::Cursor&);
