@@ -5,6 +5,7 @@
 #ifndef WEBKIT_GLUE_WEBURLREQUEST_H__
 #define WEBKIT_GLUE_WEBURLREQUEST_H__
 
+#include <map>
 #include <string>
 
 #include "base/basictypes.h"
@@ -17,10 +18,16 @@ enum WebRequestCachePolicy {
   WebRequestReturnCacheDataDontLoad
 };
 
+namespace net {
+class UploadData;
+}
+
 class GURL;
 
 class WebRequest {
  public:
+  typedef std::map<std::string, std::string> HeaderMap;
+
   // Extra information that is associated with a request. The embedder derives
   // from this REFERENCE COUNTED class to associated data with a request and
   // get it back when the page loads.
@@ -70,6 +77,19 @@ class WebRequest {
   // Returns the string corresponding to a header set in the request. If the
   // given header was not set in the request, the empty string is returned.
   virtual std::wstring GetHttpHeaderValue(const std::wstring& field) const = 0;
+
+  // Set a value for a header in the request.
+  virtual void SetHttpHeaderValue(const std::wstring& field,
+      const std::wstring& value) = 0;
+
+  // Fills a map with all header name/value pairs set in the request.
+  virtual void GetHttpHeaders(HeaderMap* headers) const = 0;
+
+  // Sets the header name/value pairs for the request from a map. Values set
+  // using this method replace any pre-existing values with the same name.
+  // Passing in a blank value will result in a header with a blank value being
+  // sent as part of the request.
+  virtual void SetHttpHeaders(const HeaderMap& headers) = 0;
 
   // Helper function for GetHeaderValue to retrieve the referrer. This
   // referrer is generated automatically by WebKit when navigation events

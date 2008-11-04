@@ -3,12 +3,21 @@
 // found in the LICENSE file.
 
 #include "config.h"
+
+#pragma warning(push, 0)
+#include "FormData.h"
+#include "HTTPHeaderMap.h"
+#include "ResourceRequest.h"
+#pragma warning(pop)
+
+#undef LOG
+#include "base/logging.h"
+#include "net/base/upload_data.h"
 #include "webkit/glue/weburlrequest_impl.h"
 #include "webkit/glue/glue_serialize.h"
 #include "webkit/glue/glue_util.h"
 
 using WebCore::FrameLoadRequest;
-using WebCore::ResourceRequest;
 using WebCore::ResourceRequestCachePolicy;
 using WebCore::String;
 
@@ -83,6 +92,40 @@ std::wstring WebRequestImpl::GetHttpHeaderValue(const std::wstring& field) const
   return webkit_glue::StringToStdWString(
       request_.resourceRequest().httpHeaderField(
           webkit_glue::StdWStringToString(field)));
+}
+
+void WebRequestImpl::SetHttpHeaderValue(const std::wstring& field,
+                                        const std::wstring& value) {
+  request_.resourceRequest().setHTTPHeaderField(
+      webkit_glue::StdWStringToString(field),
+      webkit_glue::StdWStringToString(value));
+}
+
+void WebRequestImpl::GetHttpHeaders(HeaderMap* headers) const {
+  headers->clear();
+
+  const WebCore::HTTPHeaderMap& map =
+      request_.resourceRequest().httpHeaderFields();
+  WebCore::HTTPHeaderMap::const_iterator end = map.end();
+  WebCore::HTTPHeaderMap::const_iterator it = map.begin();
+  for (; it != end; ++it) {
+    headers->insert(
+        std::make_pair(
+            webkit_glue::StringToStdString(it->first),
+            webkit_glue::StringToStdString(it->second)));
+  }
+}
+
+void WebRequestImpl::SetHttpHeaders(const HeaderMap& headers) {
+  WebCore::ResourceRequest& request = request_.resourceRequest();
+
+  HeaderMap::const_iterator end = headers.end();
+  HeaderMap::const_iterator it = headers.begin();
+  for (; it != end; ++it) {
+    request.setHTTPHeaderField(
+        webkit_glue::StdStringToString(it->first),
+        webkit_glue::StdStringToString(it->second));
+  }
 }
 
 std::wstring WebRequestImpl::GetHttpReferrer() const {
