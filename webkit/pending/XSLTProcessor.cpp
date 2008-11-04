@@ -143,6 +143,9 @@ static xmlDocPtr docLoaderFunc(const xmlChar* uri,
             if (globalDocLoader->frame() && urlMatchesDocumentDomain(globalDocLoader->doc(), url))
                 globalDocLoader->frame()->loader()->loadResourceSynchronously(url, error, response, data);
 
+            if (!urlMatchesDocumentDomain(globalDocLoader->doc(), response.url()))
+                data.clear();
+
             Chrome* chrome = 0;
             if (Page* page = globalProcessor->xslStylesheet()->ownerDocument()->page())
                 chrome = page->chrome();
