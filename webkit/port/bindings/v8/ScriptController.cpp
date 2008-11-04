@@ -299,10 +299,10 @@ void ScriptController::disposeJSResult(v8::Persistent<v8::Value> result)
     result.Clear();
 }
 
-PassRefPtr<EventListener> ScriptController::createHTMLEventHandler(
+PassRefPtr<EventListener> ScriptController::createInlineEventListener(
     const String& functionName, const String& code, Node* node)
 {
-    return m_proxy->createHTMLEventHandler(functionName, code, node);
+    return m_proxy->createInlineEventListener(functionName, code, node);
 }
 
 #if ENABLE(SVG)

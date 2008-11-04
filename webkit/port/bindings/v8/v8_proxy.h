@@ -210,11 +210,11 @@ class V8Proxy {
   static void GCUnprotect(Peerable* dom_object);
 
   // Create a lazy event listener.
-  PassRefPtr<EventListener> createHTMLEventHandler(const String& functionName,
-                                        const String& code, Node* node);
+  PassRefPtr<EventListener> createInlineEventListener(
+      const String& functionName, const String& code, Node* node);
 #if ENABLE(SVG)
-  PassRefPtr<EventListener> createSVGEventHandler(const String& functionName,
-                                        const String& code, Node* node);
+  PassRefPtr<EventListener> createSVGEventHandler(
+      const String& functionName, const String& code, Node* node);
 
   static void SetSVGContext(void* object, SVGElement* context);
   static SVGElement* GetSVGContext(void* object);

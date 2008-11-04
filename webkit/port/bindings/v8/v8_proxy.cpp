@@ -831,7 +831,7 @@ void V8Proxy::SetJSWrapperForDOMNode(Node* node, v8::Persistent<v8::Object> wrap
     dom_node_map().set(node, wrapper);
 }
 
-PassRefPtr<EventListener> V8Proxy::createHTMLEventHandler(
+PassRefPtr<EventListener> V8Proxy::createInlineEventListener(
                                                const String& functionName,
                                                const String& code, Node* node)
 {
