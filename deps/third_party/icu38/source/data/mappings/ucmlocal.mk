@@ -46,7 +46,7 @@ ibm-5349_P100-1998.ucm ibm-5350_P100-1998.ucm ibm-9447_P100-2002.ucm\
 ibm-9448_X100-2005.ucm ibm-9449_P100-2002.ucm ibm-5354_P100-1998.ucm\
 windows-936-2000.ucm gb18030.ucm\
 windows-950-2000.ucm ibm-1375_P100-2007.ucm\
-ibm-943_P15A-2003.ucm ibm-954_P101-2007.ucm\
+ibm-943_P15A-2003.ucm google-euc_jp_mod.ucm\
 windows-949-2000.ucm\
 windows-874-2000.ucm ibm-874_P100-1995.ucm\
 macos-0_2-10.2.ucm\

@@ -531,15 +531,17 @@ ibm-33722_P120-1999 { UTR22* }  # Japan EUC with \ <-> Yen mapping
 # ibm-954 seems to be almost a superset of ibm-33722 and ibm-1350
 # ibm-1350 seems to be almost a superset of ibm-33722
 # ibm-954 contains more PUA characters than the others.
-# CHROME : Instead of ibm-33722_P*, we use ibm-954 for EUC-JP.
-ibm-954_P101-2007 { UTR22* }
-                        ibm-954 { IBM* }
-                        EUC-JP { IANA MIME* JAVA* WINDOWS* } # Matches more closely with ibm-1350
+# CHROME : Instead of ibm-33722_P*, we use our own EUC-JP converter
+# to match IE7 and Mozilla more closely.
+google-euc_jp_mod { UTR22* } # a modified version of EUC-JP that prefers 2-byte code points when converting from Unicode while recognizing both 2-byte and 3-byte code points when converting to Unicode.
+                        EUC-JP { MIME* IANA JAVA* WINDOWS* }
                         Extended_UNIX_Code_Packed_Format_for_Japanese { IANA* JAVA WINDOWS }
                         csEUCPkdFmtJapanese { IANA JAVA WINDOWS }
-                        X-EUC-JP { JAVA WINDOWS }   # Japan EUC. x-euc-jp is a MIME name
-                        eucjis { JAVA }
+                        X-EUC-JP { MIME JAVA WINDOWS }   # Japan EUC. x-euc-jp is a MIME name
+                        eucjis {JAVA}
                         ujis # Linux sometimes uses this name. This is an unfortunate generic and rarely used name. Its use is discouraged.
+ibm-954_P101-2007 { UTR22* }
+                        ibm-954 { IBM* }
                         # eucJP # This is closest to Solaris EUC-JP.
 
 # Here are various interpretations and extentions of Big5
