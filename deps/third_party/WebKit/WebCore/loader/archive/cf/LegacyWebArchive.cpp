@@ -386,13 +386,7 @@ RetainPtr<CFDataRef> LegacyWebArchive::rawDataRepresentation()
     return plistData;
 }
 
-// The next line was originally #if !PLATFORM(MAC) but was locally changed in
-// Chromium's copy of WebKit.  Chromium wishes to build the enclosed code even
-// on the Mac, but (for now) builds with PLATFORM(MAC) true.  This change
-// should not be upstreamed and will eventually be removed.
-// TODO(port): Get rid of this local change when the Mac version no longer
-// builds with PLATFORM(MAC).
-#if !PLATFORM(MAC) || PLATFORM(CHROMIUM)
+#if !PLATFORM(MAC)
 // FIXME: Is it possible to parse in a Cocoa-style resource response manually, 
 // without NSKeyed(Un)Archiver, manipulating plists directly?
 // If so, the code that does it will go here.  
