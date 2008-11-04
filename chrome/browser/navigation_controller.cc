@@ -221,10 +221,10 @@ TabContents* NavigationController::GetTabContents(TabContentsType t) {
   return tab_contents_map_[t];
 }
 
-void NavigationController::Reload() {
+void NavigationController::Reload(bool check_for_repost) {
   DiscardPendingEntryInternal();
   int current_index = GetCurrentEntryIndex();
-  if (check_for_repost_ && current_index != -1 &&
+  if (check_for_repost_ && check_for_repost && current_index != -1 &&
       GetEntryAtIndex(current_index)->has_post_data() &&
       active_contents_->AsWebContents() &&
       !active_contents_->AsWebContents()->showing_repost_interstitial()) {
@@ -354,10 +354,6 @@ void NavigationController::GoToOffset(int offset) {
     return;
 
   GoToIndex(index);
-}
-
-void NavigationController::ReloadDontCheckForRepost() {
-  Reload();
 }
 
 void NavigationController::Destroy() {
