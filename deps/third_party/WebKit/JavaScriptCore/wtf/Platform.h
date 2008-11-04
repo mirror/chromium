@@ -100,15 +100,6 @@
 /* PLATFORM(WIN) */
 #if defined(BUILDING_CHROMIUM__)
 #define WTF_PLATFORM_CHROMIUM 1
-
-#if PLATFORM(DARWIN)
-#define WTF_PLATFORM_CF 1
-#define WTF_USE_PTHREADS 1
-#define WTF_USE_ATSUI 1
-#define WTF_PLATFORM_CG 1
-#define WTF_PLATFORM_CI 1
-#endif
-
 #elif defined(BUILDING_QT__)
 #define WTF_PLATFORM_QT 1
 
@@ -135,9 +126,15 @@
 #define WTF_PLATFORM_CI 1
 #endif
 
-/* PLATFORM(SKIA) */
+/* PLATFORM(SKIA) for Win/Linux, CG/CI for Mac */
 #if PLATFORM(CHROMIUM)
+#if PLATFORM(DARWIN)
+#define WTF_PLATFORM_CG 1
+#define WTF_PLATFORM_CI 1
+#define WTF_USE_ATSUI 1
+#else
 #define WTF_PLATFORM_SKIA 1
+#endif
 #endif
 
 /* Makes PLATFORM(WIN) default to PLATFORM(CAIRO) */
@@ -271,6 +268,11 @@
 #if !defined(BUILDING_ON_TIGER) && !defined(BUILDING_ON_LEOPARD)
 #define HAVE_DTRACE 1
 #endif
+#endif
+
+#if PLATFORM(CHROMIUM) && PLATFORM(DARWIN)
+#define WTF_PLATFORM_CF 1
+#define WTF_USE_PTHREADS 1
 #endif
 
 #if PLATFORM(WIN)
