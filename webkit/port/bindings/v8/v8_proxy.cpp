@@ -726,18 +726,19 @@ static void ReportUnsafeJavaScriptAccess(v8::Local<v8::Object> host,
 }
 
 
+static void HandleFatalErrorInV8() {
+  // TODO: We temporarily deal with V8 internal error situations
+  // such as out-of-memory by crashing the renderer.
+  CRASH();
+}
+
+
 static void ReportFatalErrorInV8(const char* location, const char* message) {
   // V8 is shutdown, we cannot use V8 api.
   // The only thing we can do is to disable JavaScript.
   // TODO: clean up V8Proxy and disable JavaScript.
   printf("V8 error: %s (%s)\n", message, location);
-}
-
-
-static void HandleFatalErrorInV8() {
-  // TODO: We temporarily deal with V8 internal error situations
-  // such as out-of-memory by crashing the renderer.
-  CRASH();
+  HandleFatalErrorInV8();
 }
 
 
