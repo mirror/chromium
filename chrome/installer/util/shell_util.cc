@@ -556,6 +556,10 @@ bool ShellUtil::GetChromeIcon(std::wstring& chrome_icon) {
   return true;
 }
 
+std::wstring ShellUtil::GetChromeShellOpenCmd(const std::wstring& chrome_exe) {
+  return L"\"" + chrome_exe + L"\" -- \"%1\"";
+}
+
 bool ShellUtil::GetChromeShortcutName(std::wstring* shortcut) {
   BrowserDistribution* dist = BrowserDistribution::GetDistribution();
   shortcut->assign(dist->GetApplicationName());
