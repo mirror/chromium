@@ -1635,6 +1635,7 @@ struct ParamTraits<WebDropData> {
     WriteParam(m, p.file_contents);
 #ifdef ENABLE_BACKGROUND_TASK
     WriteParam(m, p.is_bb_drag);
+    WriteParam(m, p.drag_cursor);
 #endif  // ENABLE_BACKGROUND_TASK
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
@@ -1648,7 +1649,8 @@ struct ParamTraits<WebDropData> {
       ReadParam(m, iter, &p->file_description_filename) &&
 #ifdef ENABLE_BACKGROUND_TASK
       ReadParam(m, iter, &p->file_contents) &&
-      ReadParam(m, iter, &p->is_bb_drag);
+      ReadParam(m, iter, &p->is_bb_drag) &&
+      ReadParam(m, iter, &p->drag_cursor);
 #else
       ReadParam(m, iter, &p->file_contents);
 #endif  // ENABLE_BACKGROUND_TASK

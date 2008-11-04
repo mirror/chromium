@@ -13,6 +13,10 @@
 #include <vector>
 #include "googleurl/src/gurl.h"
 
+#ifdef ENABLE_BACKGROUND_TASK
+#include "webkit/glue/webcursor.h"
+#endif  // ENABLE_BACKGROUND_TASK
+
 struct IDataObject;
 
 struct WebDropData {
@@ -48,6 +52,8 @@ struct WebDropData {
   // the drag operation. The WebDropData for such operation has
   // is_bb_drag == true.
   bool is_bb_drag;
+  // Contains a picture of the dragged bb element.
+  WebCursor drag_cursor;
 #endif  // ENABLE_BACKGROUND_TASK
 
   // A reference to the underlying IDataObject.  This is a Windows drag and

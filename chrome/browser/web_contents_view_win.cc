@@ -17,6 +17,7 @@
 #include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/browser/tab_contents_delegate.h"
 #ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/drag_utils.h"
 #include "chrome/browser/views/background_task_drop_view.h"
 #endif
 #include "chrome/browser/views/find_bar_win.h"
@@ -105,6 +106,20 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
     drop_target.reset(new BackgroundTaskDropView(
         web_contents_,
         UTF8ToWide(bb_data.url().GetOrigin().spec())));
+
+    // Pick up the drag image.
+    const WebCursor& drag_cursor = drop_data.drag_cursor;
+    const SkBitmap& bitmap = drag_cursor.bitmap();
+    if (!bitmap.empty()) {
+      ChromeCanvas canvas(bitmap.width(), bitmap.height(), false);
+      canvas.DrawBitmapInt(bitmap, 0, 0);
+      drag_utils::SetDragImageOnDataObject(canvas, 
+                                           bitmap.width(), 
+                                           bitmap.height(), 
+                                           drag_cursor.hotspot_x(), 
+                                           drag_cursor.hotspot_y(), 
+                                           data);
+    }
   } else {
 #else
   {
