@@ -242,11 +242,8 @@ function fetch_graph_list() {
 function initPlotSwitcher(tabs) {
   var switcher = document.getElementById("switcher");
   for(var i = 0; i < tabs.length; i++) {
-    // Break rows every 10 tabs.
-    if (i > 0 && !(i % 10))
-      switcher.appendChild(document.createElement('br'));
     var anchor = document.createElement("a");
-    anchor.appendChild(document.createTextNode(tabs[i]));
+    anchor.appendChild(document.createTextNode(tabs[i] + " "));
     anchor.addEventListener("click", goToClosure(tabs[i]), false);
     switcher.appendChild(anchor);
   }
