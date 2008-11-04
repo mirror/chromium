@@ -205,20 +205,20 @@ bool ScriptController::processingUserGesture() const
         const AtomicString& type = event->type();
         bool event_ok =
           // mouse events
-          type == EventNames::clickEvent ||
-          type == EventNames::mousedownEvent ||
-          type == EventNames::mouseupEvent ||
-          type == EventNames::dblclickEvent ||
+          type == eventNames().clickEvent ||
+          type == eventNames().mousedownEvent ||
+          type == eventNames().mouseupEvent ||
+          type == eventNames().dblclickEvent ||
           // keyboard events
-          type == EventNames::keydownEvent ||
-          type == EventNames::keypressEvent ||
-          type == EventNames::keyupEvent ||
+          type == eventNames().keydownEvent ||
+          type == eventNames().keypressEvent ||
+          type == eventNames().keyupEvent ||
           // other accepted events
-          type == EventNames::selectEvent ||
-          type == EventNames::changeEvent ||
-          type == EventNames::focusEvent ||
-          type == EventNames::blurEvent ||
-          type == EventNames::submitEvent;
+          type == eventNames().selectEvent ||
+          type == eventNames().changeEvent ||
+          type == eventNames().focusEvent ||
+          type == eventNames().blurEvent ||
+          type == eventNames().submitEvent;
 
         if (event_ok)
           return true;
