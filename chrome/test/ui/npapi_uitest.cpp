@@ -242,4 +242,3 @@ TEST_F(NPAPIVisiblePluginTester, OpenPopupWindowWithPlugin) {
                 kTestCompleteCookie, kTestCompleteSuccess,
                 kShortWaitTimeout);
 }
-}
