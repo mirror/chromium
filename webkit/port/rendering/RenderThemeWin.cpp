@@ -100,9 +100,9 @@ namespace {
     // form control fonts.
     float DefaultFontSize = 16.0;
 
-    WebCore::FontDescription SmallSystemFont;
-    WebCore::FontDescription MenuFont;
-    WebCore::FontDescription LabelFont;
+    WebCore::FontDescription smallSystemFont;
+    WebCore::FontDescription menuFont;
+    WebCore::FontDescription labelFont;
 }
 
 namespace WebCore {
@@ -295,8 +295,8 @@ void RenderThemeWin::systemFont(int propId, Document* document, FontDescription&
     float fontSize = 0;
     switch (propId) {
         case CSSValueSmallCaption:
-            cachedDesc = &SmallSystemFont;
-            if (!SmallSystemFont.isAbsoluteSize()) {
+            cachedDesc = &smallSystemFont;
+            if (!smallSystemFont.isAbsoluteSize()) {
                 if (webkit_glue::IsLayoutTestMode()) {
                     fontSize = systemFontSizeForControlSize(SmallControlSize);
                 } else {
@@ -308,8 +308,8 @@ void RenderThemeWin::systemFont(int propId, Document* document, FontDescription&
             }
             break;
         case CSSValueMenu:
-            cachedDesc = &MenuFont;
-            if (!MenuFont.isAbsoluteSize()) {
+            cachedDesc = &menuFont;
+            if (!menuFont.isAbsoluteSize()) {
                 if (webkit_glue::IsLayoutTestMode()) {
                     fontSize = systemFontSizeForControlSize(RegularControlSize);
                 } else {
@@ -321,8 +321,8 @@ void RenderThemeWin::systemFont(int propId, Document* document, FontDescription&
             }
             break;
         case CSSValueStatusBar:
-            cachedDesc = &LabelFont;
-            if (!LabelFont.isAbsoluteSize()) {
+            cachedDesc = &labelFont;
+            if (!labelFont.isAbsoluteSize()) {
                 if (webkit_glue::IsLayoutTestMode()) {
                     fontSize = kLayoutTestStatusBarFontSize;
                 } else {
@@ -388,13 +388,14 @@ void RenderThemeWin::systemFont(int propId, Document* document, FontDescription&
     fontDescription = *cachedDesc;
 }
 
-bool RenderThemeWin::supportsFocus(EAppearance appearance)
+bool RenderThemeWin::supportsFocus(ControlPart appearance)
 {
     switch (appearance) {
-        case PushButtonAppearance:
-        case ButtonAppearance:
-        case TextFieldAppearance:
-        case TextAreaAppearance:
+        case PushButtonPart:
+        case ButtonPart:
+        case DefaultButtonPart:
+        case TextFieldPart:
+        case TextAreaPart:
             return true;
         default:
             return false;
@@ -408,17 +409,17 @@ bool RenderThemeWin::supportsFocusRing(const RenderStyle* style) const
    // Let webkit draw one of its halo rings around any focused element,
    // except push buttons. For buttons we use the windows PBS_DEFAULTED
    // styling to give it a blue border.
-   return style->appearance() == ButtonAppearance ||
-          style->appearance() == PushButtonAppearance;
+   return style->appearance() == ButtonPart ||
+          style->appearance() == PushButtonPart;
 }
 
 unsigned RenderThemeWin::determineState(RenderObject* o)
 {
     unsigned result = TS_NORMAL;
-    EAppearance appearance = o->style()->appearance();
+    ControlPart appearance = o->style()->appearance();
     if (!isEnabled(o))
         result = TS_DISABLED;
-    else if (isReadOnlyControl(o) && (TextFieldAppearance == appearance || TextAreaAppearance == appearance))
+    else if (isReadOnlyControl(o) && (TextFieldPart == appearance || TextAreaPart == appearance))
         result = ETS_READONLY; // Readonly is supported on textfields.
     else if (isPressed(o)) // Active overrides hover and focused.
         result = TS_PRESSED;
@@ -449,23 +450,23 @@ ThemeData RenderThemeWin::getThemeData(RenderObject* o)
 {
     ThemeData result;
     switch (o->style()->appearance()) {
-        case PushButtonAppearance:
-        case ButtonAppearance:
+        case PushButtonPart:
+        case ButtonPart:
             result.m_part = BP_PUSHBUTTON;
             result.m_classicState = DFCS_BUTTONPUSH;
             break;
-        case CheckboxAppearance:
+        case CheckboxPart:
             result.m_part = BP_CHECKBOX;
             result.m_classicState = DFCS_BUTTONCHECK;
             break;
-        case RadioAppearance:
+        case RadioPart:
             result.m_part = BP_RADIOBUTTON;
             result.m_classicState = DFCS_BUTTONRADIO;
             break;
-        case ListboxAppearance:
-        case MenulistAppearance:
-        case TextFieldAppearance:
-        case TextAreaAppearance:
+        case ListboxPart:
+        case MenulistPart:
+        case TextFieldPart:
+        case TextAreaPart:
             result.m_part = ETS_NORMAL;
             break;
     }
@@ -709,10 +710,10 @@ int RenderThemeWin::popupInternalPaddingBottom(RenderStyle* style) const
 // Hacks for using Mac menu list metrics when in layout test mode.
 static int layoutTestMenuListInternalPadding(RenderStyle* style, int paddingType)
 {
-    if (style->appearance() == MenulistAppearance) {
+    if (style->appearance() == MenulistPart) {
         return kLayoutTestMenuListInternalPadding[controlSizeForFont(style)][paddingType];
     }
-    if (style->appearance() == MenulistButtonAppearance) {
+    if (style->appearance() == MenulistButtonPart) {
         if (paddingType == RightPadding) {
             const float baseArrowWidth = 5.0f;
             float fontScale = style->fontSize() / kLayoutTestBaseFontSize;
@@ -747,7 +748,7 @@ int RenderThemeWin::menuListInternalPadding(RenderStyle* style, int paddingType)
     // If the MenuList actually has appearance "NoAppearance", then that means
     // we don't draw a button, so don't reserve space for it.
     const int bar_type = style->direction() == LTR ? RightPadding : LeftPadding;
-    if (paddingType == bar_type && style->appearance() != NoAppearance)
+    if (paddingType == bar_type && style->appearance() != NoPart)
         padding += ScrollbarTheme::nativeTheme()->scrollbarThickness();
 
     return padding;
@@ -797,8 +798,8 @@ void RenderThemeWin::setButtonPadding(RenderStyle* style) const
 void RenderThemeWin::adjustSliderThumbSize(RenderObject* o) const
 {
     if (webkit_glue::IsLayoutTestMode()) {
-        if (o->style()->appearance() == SliderThumbHorizontalAppearance ||
-            o->style()->appearance() == SliderThumbVerticalAppearance) {
+        if (o->style()->appearance() == SliderThumbHorizontalPart ||
+            o->style()->appearance() == SliderThumbVerticalPart) {
             o->style()->setWidth(Length(kLayoutTestSliderThumbWidth, Fixed));
             o->style()->setHeight(Length(kLayoutTestSliderThumbHeight, Fixed));
         }
@@ -901,7 +902,7 @@ void RenderThemeWin::setDefaultFontSize(int fontSize) {
     DefaultFontSize = static_cast<float>(fontSize);
 
     // Reset cached fonts.
-    SmallSystemFont = MenuFont = LabelFont = FontDescription();
+    smallSystemFont = menuFont = labelFont = FontDescription();
 }
 
 }
