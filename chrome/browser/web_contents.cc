@@ -1303,8 +1303,6 @@ void WebContents::StartDragging(const WebDropData& drop_data) {
       data->SetURL(drop_data.url, drop_data.url_title);
     }
   }    
-  if (drop_data.url.is_valid())
-    data->SetURL(drop_data.url, drop_data.url_title);
   if (!drop_data.plain_text.empty())
     data->SetString(drop_data.plain_text);
 
