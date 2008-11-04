@@ -42,7 +42,7 @@ Icon::~Icon()
         DestroyIcon(m_icon);
 }
 
-PassRefPtr<Icon> Icon::newIconForFile(const String& filename)
+PassRefPtr<Icon> Icon::createIconForFile(const String& filename)
 {
     SHFILEINFO sfi;
     memset(&sfi, 0, sizeof(sfi));
