@@ -31,8 +31,14 @@ TabContents* tab_util::GetTabContentsByID(int render_process_id,
                                           int render_view_id) {
   RenderViewHost* render_view_host =
       RenderViewHost::FromID(render_process_id, render_view_id);
-  if (!render_view_host)
+  if (!render_view_host || !render_view_host->delegate())
     return NULL;
+#ifdef ENABLE_BACKGROUND_TASK
+  if (render_view_host->delegate()->GetDelegateType() !=
+      RenderViewHostDelegate::WEB_CONTENTS_DELEGATE) {
+    return NULL;
+  }
+#endif  // ENABLE_BACKGROUND_TASK
 
   return static_cast<WebContents*>(render_view_host->delegate());
 }

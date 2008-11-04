@@ -76,8 +76,32 @@ void BackgroundTaskManager::CloseAllActiveTasks() {
   }
 }
 
+// static
+bool BackgroundTaskManager::HasActiveTask() {
+  ProfileManager* profile_manager = g_browser_process->profile_manager();
+  if (!profile_manager) {
+    return false;
+  }
+
+  for (ProfileManager::const_iterator profile_iter(profile_manager->begin());
+       profile_iter != profile_manager->end();
+       ++profile_iter) {  
+    BackgroundTaskManager* bgtask_manager =
+        (*profile_iter)->GetBackgroundTaskManager();
+    if (!bgtask_manager) {
+      continue;
+    }
+    if (bgtask_manager->active_task_count_ > 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 BackgroundTaskManager::BackgroundTaskManager(Profile* profile)
-    : profile_(profile) {
+    : profile_(profile),
+      active_task_count_(0) {
 }
 
 BackgroundTaskManager::~BackgroundTaskManager() {

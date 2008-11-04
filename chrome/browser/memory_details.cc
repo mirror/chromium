@@ -199,6 +199,14 @@ void MemoryDetails::CollectRenderHostInformation() {
             continue;
 
           RenderViewHost* host = static_cast<RenderViewHost*>(widget);
+#ifdef ENABLE_BACKGROUND_TASK
+          if (host->delegate() && host->delegate()->GetDelegateType() ==
+              RenderViewHostDelegate::BACKGROUND_TASK_DELEGATE) {
+            process_data_[CHROME_BROWSER].processes[index].is_background_task =
+                true;
+            continue;
+          }
+#endif  // ENABLE_BACKGROUND_TASK
           TabContents* contents =
               static_cast<WebContents*>(host->delegate());
           DCHECK(contents);

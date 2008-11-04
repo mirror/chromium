@@ -65,12 +65,6 @@ void BrowserList::RemoveBrowser(Browser* browser) {
     CloseAllDependentWindows();
 
   g_browser_process->ReleaseModule();
-
-#ifdef ENABLE_BACKGROUND_TASK
-  if (g_browser_process->IsShuttingDown()) {
-    BackgroundTaskManager::CloseAllActiveTasks();
-  }
-#endif  // ENABLE_BACKGROUND_TASK
 }
 
 // static

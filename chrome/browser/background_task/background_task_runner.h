@@ -33,6 +33,9 @@ class BackgroundTaskRunner : public RenderViewHostDelegate {
   void Shutdown();
 
   // RenderViewHostDelegate implementations.
+  virtual RenderViewHostDelegateType GetDelegateType() const {
+    return RenderViewHostDelegate::BACKGROUND_TASK_DELEGATE;
+  }
   virtual WebPreferences GetWebkitPrefs();
   virtual Profile* GetProfile() const;
   virtual void RendererReady(RenderViewHost* render_view_host);

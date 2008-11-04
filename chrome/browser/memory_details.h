@@ -37,6 +37,10 @@ struct ProcessMemoryInformation {
   // A process is a diagnostics process if it is rendering
   // about:xxx information.
   bool is_diagnostics;
+  // Is this process for a background task?
+#ifdef ENABLE_BACKGROUND_TASK
+  bool is_background_task;
+#endif  // ENABLE_BACKGROUND_TASK
 };
 
 typedef std::vector<ProcessMemoryInformation> ProcessMemoryInformationList;

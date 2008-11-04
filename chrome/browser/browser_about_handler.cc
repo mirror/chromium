@@ -16,6 +16,10 @@
 #include "base/string_util.h"
 #include "base/tracked_objects.h"
 #include "chrome/app/locales/locale_settings.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task/background_task_manager.h"
+#include "chrome/browser/background_task/background_task_runner.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -507,12 +511,29 @@ void AboutMemoryHandler::GetTabContentsTitles(RenderProcessHost* rph,
       continue;
 
     RenderViewHost* host = static_cast<RenderViewHost*>(widget);
+#ifdef ENABLE_BACKGROUND_TASK
+    std::wstring title;
+    if (host->delegate()) {
+      switch (host->delegate()->GetDelegateType()) {
+        case RenderViewHostDelegate::WEB_CONTENTS_DELEGATE:
+          title = static_cast<WebContents*>(host->delegate())->GetTitle();
+          break;
+        case RenderViewHostDelegate::BACKGROUND_TASK_DELEGATE:
+          title = static_cast<BackgroundTaskRunner*>(host->delegate())->title();
+          break;
+        default:
+          NOTREACHED();
+          break;
+      }
+    }
+#else
     TabContents* contents = static_cast<WebContents*>(host->delegate());
     DCHECK(contents);
     if (!contents)
       continue;
 
     std::wstring title = contents->GetTitle();
+#endif  // ENABLE_BACKGROUND_TASK
     StringValue* val = NULL;
     if (!title.length())
       title = L"Untitled";
@@ -542,7 +563,12 @@ void AboutMemoryHandler::AppendProcess(ListValue* renderers,
       break;
   }
   if (renderer_iter != RenderProcessHost::end()) {
+#ifdef ENABLE_BACKGROUND_TASK
+    std::wstring renderer_label =
+        info->is_background_task ? L"Background task " : L"Tab ";
+#else
     std::wstring renderer_label(L"Tab ");
+#endif  // ENABLE_BACKGROUND_TASK
     renderer_label.append(FormatNumber(renderer_iter->second->host_id()));
     if (info->is_diagnostics)
       renderer_label.append(L" (diagnostics)");

@@ -8,6 +8,7 @@
 
 #include "chrome/browser/background_task/background_task_manager.h"
 #include "chrome/browser/browser_list.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/browser/site_instance.h"
@@ -18,7 +19,11 @@ BackgroundTask* BackgroundTaskRunner::GetBackgroundTaskByID(
     int render_process_id, int render_view_id) {
   RenderViewHost* render_view_host =
       RenderViewHost::FromID(render_process_id, render_view_id);
-  if (!render_view_host) {
+  if (!render_view_host || !render_view_host->delegate()) {
+    return NULL;
+  }
+  if (render_view_host->delegate()->GetDelegateType() !=
+      RenderViewHostDelegate::BACKGROUND_TASK_DELEGATE) {
     return NULL;
   }
 
@@ -55,6 +60,14 @@ void BackgroundTaskRunner::DelayedShutdown() {
   }
 
   background_task_->runner = NULL;
+
+  // Removes the reference count to g_browser_process when there is no task
+  // running.
+  background_task_manager_->decrease_active_task_count();
+  if (background_task_manager_->active_task_count() == 0) {
+    g_browser_process->ReleaseModule();
+  }
+
   delete this;
 }
 
@@ -86,6 +99,13 @@ bool BackgroundTaskRunner::Start() {
 
   render_view_host_->CreateRenderView();
   render_view_host_->NavigateToURL(background_task_->url);
+
+  // Adds the reference count to g_browser_process so that it will not be
+  // disposed when there is still a task running.
+  background_task_manager_->increase_active_task_count();
+  if (background_task_manager_->active_task_count() == 1) {
+    g_browser_process->AddRefModule();
+  }
 
   return true;
 }

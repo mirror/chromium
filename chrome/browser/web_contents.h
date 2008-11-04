@@ -218,6 +218,11 @@ class WebContents : public TabContents,
 
   // RenderViewHostDelegate ----------------------------------------------------
 
+#ifdef ENABLE_BACKGROUND_TASK
+  virtual RenderViewHostDelegateType GetDelegateType() const {
+    return RenderViewHostDelegate::WEB_CONTENTS_DELEGATE;
+  }
+#endif  // ENABLE_BACKGROUND_TASK
   virtual RenderViewHostDelegate::View* GetViewDelegate() const;
   virtual RenderViewHostDelegate::Save* GetSaveDelegate() const;
   virtual Profile* GetProfile() const;

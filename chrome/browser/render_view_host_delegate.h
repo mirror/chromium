@@ -47,6 +47,13 @@ enum LoadState;
 //
 class RenderViewHostDelegate {
  public:
+#ifdef ENABLE_BACKGROUND_TASK
+  enum RenderViewHostDelegateType {
+    WEB_CONTENTS_DELEGATE,
+    BACKGROUND_TASK_DELEGATE
+  };
+#endif  // ENABLE_BACKGROUND_TASK
+
   class View {
    public:
     // The page is trying to open a new page (e.g. a popup window). The
@@ -130,6 +137,12 @@ class RenderViewHostDelegate {
                                               const std::string& data,
                                               int32 status) = 0;
   };
+
+  // Returns the type of the delegate. This is useful when doing the cast to
+  // get the underlying type.
+#ifdef ENABLE_BACKGROUND_TASK
+  virtual RenderViewHostDelegateType GetDelegateType() const = 0;
+#endif  // ENABLE_BACKGROUND_TASK
 
   // Returns the current delegate associated with a feature. May be NULL.
   virtual View* GetViewDelegate() const { return NULL; }

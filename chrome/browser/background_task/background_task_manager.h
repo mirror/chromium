@@ -59,11 +59,14 @@ class BackgroundTaskManager {
   // Registers the prefs for the background tasks.
   static void RegisterUserPrefs(PrefService* prefs);
 
-  // Returns all background tasks.
+  // Returns all background tasks from all profiles.
   static void GetAllTasks(std::vector<BackgroundTask*>* tasks);
 
-  // Closes all running background tasks.
+  // Closes all running background tasks in all profiles.
   static void CloseAllActiveTasks();
+
+  // Returns true if there is at least one task running in all profiles.
+  static bool HasActiveTask();
 
   // Loads and runs the previously registered background tasks.
   // This is done at the browser boot up time.
@@ -95,6 +98,10 @@ class BackgroundTaskManager {
   // Accessors.
   Profile* profile() const { return profile_; }
 
+  int active_task_count() const { return active_task_count_; }
+  void increase_active_task_count() { active_task_count_++; }
+  void decrease_active_task_count() { active_task_count_--; }
+
  private:
   // Helper function to get the ID used in the map.
   static std::wstring ConstructMapID(const GURL& url,
@@ -113,6 +120,9 @@ class BackgroundTaskManager {
 
   // Associated profile.
   Profile* profile_;
+
+  // Count of active background tasks.
+  int active_task_count_;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundTaskManager);
 };

@@ -12,6 +12,9 @@
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#ifdef ENABLE_BACKGROUND_TASK
+#include "chrome/browser/background_task/background_task_manager.h"
+#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
@@ -1199,6 +1202,9 @@ void Browser::OnWindowClosing() {
     return;
 
   if (BrowserList::size() == 1)
+#ifdef ENABLE_BACKGROUND_TASK
+    if (!BackgroundTaskManager::HasActiveTask())
+#endif  // ENABLE_BACKGROUND_TASK
     browser_shutdown::OnShutdownStarting(browser_shutdown::WINDOW_CLOSE);
 
   // Don't use HasSessionService here, we want to force creation of the
