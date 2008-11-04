@@ -89,21 +89,21 @@ class TryJob(Try_Jobdir):
   def messageReceived(self, filename):
     """Called when a new file has been detected so it can be parsed."""
     md = os.path.join(self.parent.basedir, self.jobdir)
+    file_from = os.path.join(md, "new", filename)
+    file_to = os.path.join(md, "cur", filename)
     if runtime.platformType == "posix":
       # open the file before moving it, because I'm afraid that once
       # it's in cur/, someone might delete it at any moment
-      path = os.path.join(md, "new", filename)
-      f = open(path, "r")
-      os.rename(os.path.join(md, "new", filename),
-                os.path.join(md, "cur", filename))
+      f = open(file_from, "r")
+      os.rename(file_from, file_to)
     else:
       # do this backwards under windows, because you can't move a file
       # that somebody is holding open. This was causing a Permission
       # Denied error on bear's win32-twisted1.3 buildslave.
-      os.rename(os.path.join(md, "new", filename),
-                os.path.join(md, "cur", filename))
-      path = os.path.join(md, "cur", filename)
-      f = open(path, "r")
+      # Also, remove the destination file first.
+      os.remove(file_to)
+      os.rename(file_from, file_to)
+      f = open(file_to, "r")
 
     try:
       builderNames, ss, buildsetID = self.parseJob(f)

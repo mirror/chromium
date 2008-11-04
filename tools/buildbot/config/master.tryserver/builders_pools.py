@@ -5,6 +5,7 @@
 
 """Implement builder selection algorithm."""
 
+from buildbot.scheduler import BadJobfile
 import random
 
 class BuildersPools:
