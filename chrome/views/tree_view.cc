@@ -610,7 +610,7 @@ LRESULT CALLBACK TreeView::TreeWndProc(HWND window,
       
       SendMessage(window, WM_PRINTCLIENT,
                   reinterpret_cast<WPARAM>(canvas.beginPlatformPaint()), 0);
-      canvas,endPlatformPaint();
+      canvas.endPlatformPaint();
       return 0;
     }
     
