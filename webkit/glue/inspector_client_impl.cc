@@ -126,14 +126,17 @@ bool WebInspectorClient::windowVisible() {
 
 void WebInspectorClient::attachWindow() {
   // TODO(jackson): Implement this
+  NOTIMPLEMENTED();
 }
 
 void WebInspectorClient::detachWindow() {
   // TODO(jackson): Implement this
+  NOTIMPLEMENTED();
 }
 
 void WebInspectorClient::setAttachedWindowHeight(unsigned int height) {
   // TODO(dglazkov): Implement this
+  NOTIMPLEMENTED();
 }
 
 static void invalidateNodeBoundingRect(WebViewImpl* web_view) {
@@ -166,10 +169,24 @@ void WebInspectorClient::hideHighlight() {
 
 void WebInspectorClient::inspectedURLChanged(const String& newURL) {
   // TODO(jackson): Implement this
+  NOTIMPLEMENTED();
 }
 
 String WebInspectorClient::localizedStringsURL() {
-  notImplemented();
+  NOTIMPLEMENTED();
   return String();
 }
 
+void WebInspectorClient::populateSetting(
+    const String& key, InspectorController::Setting&) {
+  NOTIMPLEMENTED();
+}
+
+void WebInspectorClient::storeSetting(
+    const String& key, const InspectorController::Setting&) {
+  NOTIMPLEMENTED();
+}
+
+void WebInspectorClient::removeSetting(const String& key) {
+  NOTIMPLEMENTED();
+}
