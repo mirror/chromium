@@ -54,6 +54,16 @@ PassRefPtr<Icon> Icon::createIconForFile(const String& filename)
     return adoptRef(new Icon(sfi.hIcon));
 }
 
+PassRefPtr<Icon> Icon::createIconForFiles(const Vector<String>& filenames)
+{
+    // TODO: support multiple files.
+    // http://code.google.com/p/chromium/issues/detail?id=4092
+    if (!filenames.size())
+        return 0;
+
+    return createIconForFile(filenames[0]);
+}
+
 void Icon::paint(GraphicsContext* context, const IntRect& rect)
 {
     if (context->paintingDisabled())
