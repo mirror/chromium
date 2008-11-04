@@ -230,7 +230,7 @@ void SSLBlockingPage::DontProceed() {
                                 PageTransition::AUTO_BOOKMARK);
   } else if (entry->tab_type() != TAB_CONTENTS_WEB) {
     // Not a WebContent, reload it so to recreate the TabContents for it.
-    tab_->controller()->Reload();
+    tab_->controller()->Reload(true);
   } else {
     DCHECK(tab_->type() == TAB_CONTENTS_WEB);
     if (entry->restored()) {

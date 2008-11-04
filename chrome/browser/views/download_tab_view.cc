@@ -28,9 +28,6 @@
 #include "googleurl/src/gurl.h"
 #include "generated_resources.h"
 
-using base::Time;
-using base::TimeDelta;
-
 // Approximate spacing, in pixels, taken from initial UI mock up screens
 static const int kVerticalPadding = 5;
 static const int kHorizontalLinkPadding = 15;
