@@ -370,9 +370,7 @@ bool ShellUtil::GetChromeIcon(std::wstring& chrome_icon) {
 
 std::wstring ShellUtil::GetChromeShellOpenCmd(const std::wstring& chrome_exe) {
   return L"\"" + chrome_exe + L"\" -- \"%1\"";
->>>>>>> .merge-right.r4154
 }
-<<<<<<< .working
 
 bool CreateChromeRegKeysForXP(HKEY root_key, const std::wstring& chrome_exe) {
   // Create a list of registry entries to create so that we can rollback
