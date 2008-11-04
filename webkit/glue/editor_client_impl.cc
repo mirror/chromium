@@ -558,7 +558,7 @@ const char* EditorClientImpl::interpretKeyEvent(
   if (keyEvent->metaKey())
     modifiers |= MetaKey;
 
-  if (evt->type() == WebCore::EventNames::keydownEvent) {
+  if (evt->type() == WebCore::eventNames().keydownEvent) {
     int mapKey = modifiers << 16 | evt->keyCode();
     return mapKey ? keyDownCommandsMap->get(mapKey) : 0;
   }
