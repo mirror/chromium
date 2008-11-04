@@ -65,3 +65,4 @@ const wchar_t kSetupExe[] = L"setup.exe";
 const wchar_t kUninstallStringField[] = L"UninstallString";
 const wchar_t kUninstallDisplayNameField[] = L"DisplayName";
 }  // namespace installer_util
+

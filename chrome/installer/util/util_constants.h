@@ -59,3 +59,4 @@ extern const wchar_t kUninstallDisplayNameField[];
 }  // namespace installer_util
 
 #endif  // CHROME_INSTALLER_UTIL_UTIL_CONSTANTS_H__
+

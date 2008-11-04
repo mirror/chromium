@@ -250,3 +250,4 @@ installer_util::InstallStatus installer::InstallOrUpdateChrome(
 
   return result;
 }
+
