@@ -232,10 +232,13 @@ int ChromeCanvas::ComputeFormatFlags(int flags) {
   else if ((flags & SHOW_PREFIX) == 0)
     f |= DT_NOPREFIX;
 
-  if (flags & MULTI_LINE)
+  if (flags & MULTI_LINE) {
     f |= DT_WORDBREAK;
-  else
-    f |= DT_SINGLELINE | DT_END_ELLIPSIS | DT_VCENTER;
+  } else {
+    f |= DT_SINGLELINE | DT_VCENTER;
+    if (!(flags & NO_ELLIPSIS))
+      f |= DT_END_ELLIPSIS;
+  }
 
   // vertical alignment
   if (flags & TEXT_VALIGN_TOP)
@@ -279,6 +282,10 @@ void ChromeCanvas::SizeStringInt(const std::wstring& text,
   b.left = 0;
   b.top = 0;
   b.right = *width;
+  if (b.right == 0 && !text.empty()) {
+    // Width needs to be at least 1 or else DoDrawText will not resize it.
+    b.right = 1;
+  }
   b.bottom = *height;
   DoDrawText(dc, text, &b, ComputeFormatFlags(flags) | DT_CALCRECT);
   endPlatformPaint();
@@ -388,4 +395,3 @@ SkBitmap ChromeCanvas::ExtractBitmap() {
   device_bitmap.copyTo(&result, SkBitmap::kARGB_8888_Config);
   return result;
 }
-

@@ -8,6 +8,7 @@
 
 #include <fstream>
 
+#include "base/file_path.h"
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "unicode/uniset.h"
@@ -89,13 +90,21 @@ std::wstring GetFilenameFromPath(const std::wstring& path) {
   // TODO(erikkay): fix this - it's not using kPathSeparator, but win unit test
   // are exercising '/' as a path separator as well.
   std::wstring::size_type pos = path.find_last_of(L"\\/");
-  return std::wstring(path, pos == std::wstring::npos ? 0 : pos+1);
+  return std::wstring(path, pos == std::wstring::npos ? 0 : pos + 1);
 }
 
 std::wstring GetFileExtensionFromPath(const std::wstring& path) {
   std::wstring file_name = GetFilenameFromPath(path);
   std::wstring::size_type last_dot = file_name.rfind(L'.');
-  return std::wstring(last_dot == std::wstring::npos? L"" : file_name, last_dot+1);
+  return std::wstring(last_dot == std::wstring::npos ? 
+      L"" : 
+      file_name, last_dot+1);
+}
+
+std::wstring GetFilenameWithoutExtensionFromPath(const std::wstring& path) {
+  std::wstring file_name = GetFilenameFromPath(path);
+  std::wstring::size_type last_dot = file_name.rfind(L'.');
+  return file_name.substr(0, last_dot);
 }
 
 void AppendToPath(std::wstring* path, const std::wstring& new_ending) {
@@ -229,20 +238,14 @@ void ReplaceExtension(std::wstring* file_name, const std::wstring& extension) {
   file_name->swap(result);
 }
 
-bool ContentsEqual(const std::wstring& filename1,
-                   const std::wstring& filename2) {
+bool ContentsEqual(const FilePath& filename1, const FilePath& filename2) {
   // We open the file in binary format even if they are text files because
   // we are just comparing that bytes are exactly same in both files and not
   // doing anything smart with text formatting.
-#if defined(OS_WIN)
-  std::ifstream file1(filename1.c_str(), std::ios::in | std::ios::binary);
-  std::ifstream file2(filename2.c_str(), std::ios::in | std::ios::binary);
-#elif defined(OS_POSIX)
-  std::ifstream file1(WideToUTF8(filename1).c_str(),
+  std::ifstream file1(filename1.value().c_str(),
                       std::ios::in | std::ios::binary);
-  std::ifstream file2(WideToUTF8(filename2).c_str(),
+  std::ifstream file2(filename2.value().c_str(),
                       std::ios::in | std::ios::binary);
-#endif
   
   // Even if both files aren't openable (and thus, in some sense, "equal"),
   // any unusable file yields a result of "false".
@@ -298,6 +301,61 @@ bool CloseFile(FILE* file) {
   if (file == NULL)
     return true;
   return fclose(file) == 0;
+}
+
+// Deprecated functions ----------------------------------------------------
+
+bool AbsolutePath(std::wstring* path_str) {
+  FilePath path(FilePath::FromWStringHack(*path_str));
+  if (!AbsolutePath(&path))
+    return false;
+  *path_str = path.ToWStringHack();
+  return true;
+}
+bool Delete(const std::wstring& path, bool recursive) {
+  return Delete(FilePath::FromWStringHack(path), recursive);
+}
+bool Move(const std::wstring& from_path, const std::wstring& to_path) {
+  return Move(FilePath::FromWStringHack(from_path),
+              FilePath::FromWStringHack(to_path));
+}
+bool CopyFile(const std::wstring& from_path, const std::wstring& to_path) {
+  return CopyFile(FilePath::FromWStringHack(from_path),
+                  FilePath::FromWStringHack(to_path));
+}
+bool CopyDirectory(const std::wstring& from_path, const std::wstring& to_path,
+                   bool recursive) {
+  return CopyDirectory(FilePath::FromWStringHack(from_path),
+                       FilePath::FromWStringHack(to_path),
+                       recursive);
+}
+bool PathExists(const std::wstring& path) {
+  return PathExists(FilePath::FromWStringHack(path));
+}
+bool DirectoryExists(const std::wstring& path) {
+  return DirectoryExists(FilePath::FromWStringHack(path));
+}
+bool ContentsEqual(const std::wstring& filename1,
+                   const std::wstring& filename2) {
+  return ContentsEqual(FilePath::FromWStringHack(filename1),
+                       FilePath::FromWStringHack(filename2));
+}
+bool CreateDirectory(const std::wstring& full_path) {
+  return CreateDirectory(FilePath::FromWStringHack(full_path));
+}
+bool GetCurrentDirectory(std::wstring* path_str) {
+  FilePath path;
+  if (!GetCurrentDirectory(&path))
+    return false;
+  *path_str = path.ToWStringHack();
+  return true;
+}
+bool GetTempDir(std::wstring* path_str) {
+  FilePath path;
+  if (!GetTempDir(&path))
+    return false;
+  *path_str = path.ToWStringHack();
+  return true;
 }
 
 }  // namespace

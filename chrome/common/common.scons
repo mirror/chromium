@@ -1,0 +1,117 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.SConscript([
+    '$BREAKPAD_DIR/using_breakpad.scons',
+    '$CHROME_DIR/third_party/wtl/using_wtl.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$LIBJPEG_DIR/using_libjpeg.scons',
+    '$LIBPNG_DIR/using_libpng.scons',
+    '$LIBXML_DIR/using_libxml.scons',
+    '$NPAPI_DIR/using_npapi.scons',
+    '$SKIA_DIR/using_skia.scons',
+    '$ZLIB_DIR/using_zlib.scons',
+], {'env':env})
+
+env.Prepend(
+    CPPPATH = [
+        '$CHROME_DIR/app/resources',
+        '$CHROME_DIR/app',
+        '$CHROME_SRC_DIR',
+    ],
+)
+
+env.Append(
+    CPPPATH = [
+        '$WEBKIT_DIR/build/localized_strings',
+    ],
+)
+
+if env['PLATFORM'] == 'win32':
+  env.Prepend(
+      CPPPATH = [
+          '$CHROME_DIR/tools/build/win',
+      ],
+  )
+
+input_files = []
+
+if env['PLATFORM'] in ('posix', 'win32'):
+  # TODO(port): Port to Mac.
+  input_files.extend([
+      'animation.cc',
+      'chrome_constants.cc',
+      'chrome_counters.cc',
+      'chrome_switches.cc',
+      'debug_flags.cc',
+      'env_vars.cc',
+      'gfx/color_utils.cc',
+      'ipc_message.cc',
+      'jpeg_codec.cc',
+      'json_value_serializer.cc',
+      'libxml_utils.cc',
+      'net/cookie_monster_sqlite.cc',
+      'notification_service.cc',
+      'pref_member.cc',
+      'pref_names.cc',
+      'slide_animation.cc',
+      'sqlite_compiled_statement.cc',
+      'sqlite_utils.cc',
+      'task_queue.cc',
+      'throb_animation.cc',
+      'thumbnail_score.cc',
+      'visitedlink_common.cc',
+  ])
+
+if env['PLATFORM'] == 'win32':
+  # TODO(port): Port these.
+  input_files.extend([
+      'child_process.cc',
+      'chrome_paths.cc',
+      'chrome_plugin_lib.cc',
+      'chrome_plugin_util.cc',
+      'chrome_process_filter.cc',
+      'classfactory.cc',
+      'clipboard_service.cc',
+      'common_glue.cc',
+      'drag_drop_types.cc',
+      'gfx/chrome_canvas.cc',
+      'gfx/chrome_font.cc',
+      'gfx/emf.cc',
+      'gfx/icon_util.cc',
+      'gfx/path.cc',
+      'gfx/url_elider.cc',
+      'ipc_channel.cc',
+      'ipc_channel_proxy.cc',
+      'ipc_logging.cc',
+      'ipc_message_utils.cc',
+      'ipc_sync_channel.cc',
+      'ipc_sync_message.cc',
+      'jstemplate_builder.cc',
+      'l10n_util.cc',
+      'logging_chrome.cc',
+      'message_router.cc',
+      'net/url_request_intercept_job.cc',
+      'notification_registrar.cc',
+      'os_exchange_data.cc',
+      'plugin_messages.cc',
+      'pref_service.cc',
+      'process_watcher.cc',
+      'render_messages.cc',
+      'resource_bundle.cc',
+      'resource_dispatcher.cc',
+      'security_filter_peer.cc',
+      'time_format.cc',
+      'win_safe_util.cc',
+      'win_util.cc',
+      'worker_thread_ticker.cc',
+  ])
+
+if env['PLATFORM'] in ('posix', 'win32'):
+  # TODO(port): This should be enabled for all platforms.
+  env.ChromeStaticLibrary('common', input_files)

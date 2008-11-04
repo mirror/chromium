@@ -182,11 +182,15 @@ void Browser::RegisterUserPrefs(PrefService* prefs) {
       net::CookiePolicy::ALLOW_ALL_COOKIES);
   prefs->RegisterBooleanPref(prefs::kShowHomeButton, false);
   prefs->RegisterStringPref(prefs::kRecentlySelectedEncoding, L"");
+  // TODO(peterson): bug #3870 move this to the AutofillManager once it is
+  //                 checked-in.
+  prefs->RegisterBooleanPref(prefs::kFormAutofillEnabled, true);
   prefs->RegisterBooleanPref(prefs::kDeleteBrowsingHistory, true);
   prefs->RegisterBooleanPref(prefs::kDeleteDownloadHistory, true);
   prefs->RegisterBooleanPref(prefs::kDeleteCache, true);
   prefs->RegisterBooleanPref(prefs::kDeleteCookies, true);
   prefs->RegisterBooleanPref(prefs::kDeletePasswords, false);
+  prefs->RegisterBooleanPref(prefs::kDeleteFormData, true);
   prefs->RegisterIntegerPref(prefs::kDeleteTimePeriod, 0);
 }
 
@@ -940,7 +944,8 @@ void Browser::WindowMoved() {
   DCHECK(!g_browser_process->IsUsingNewFrames());
   // Cancel any tabstrip animations, some of them may be invalidated by the
   // window being repositioned.
-  window_->GetTabStrip()->DestroyDragController();  
+  // Comment out for one cycle to see if this fixes dist tests.
+  //window_->GetTabStrip()->DestroyDragController();  
 
   GetStatusBubble()->Reposition();
 

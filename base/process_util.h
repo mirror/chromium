@@ -10,9 +10,13 @@
 
 #include "base/basictypes.h"
 
-#ifdef OS_WIN
+#if defined(OS_WIN)
 #include <windows.h>
 #include <tlhelp32.h>
+#elif defined(OS_LINUX)
+#include <dirent.h>
+#include <limits.h>
+#include <sys/types.h>
 #endif
 
 #include <string>
@@ -24,7 +28,12 @@
 typedef PROCESSENTRY32 ProcessEntry;
 typedef IO_COUNTERS IoCounters;
 #elif defined(OS_POSIX)
-typedef int ProcessEntry;
+struct ProcessEntry {
+  int pid;
+  int ppid;
+  char szExeFile[NAME_MAX+1];
+};
+
 struct IoCounters {
   unsigned long long ReadOperationCount;
   unsigned long long WriteOperationCount;
@@ -37,13 +46,22 @@ struct IoCounters {
 
 namespace process_util {
 
+// A minimalistic but hopefully cross-platform set of exit codes.
+// Do not change the enumeration values or you will break third-party
+// installers.
+enum {
+  PROCESS_END_NORMAL_TERMINATON = 0,
+  PROCESS_END_KILLED_BY_USER    = 1,
+  PROCESS_END_PROCESS_WAS_HUNG  = 2
+};
+
 // Returns the id of the current process.
 int GetCurrentProcId();
 
 // Returns the ProcessHandle of the current process.
 ProcessHandle GetCurrentProcessHandle();
 
-// Returns the unique ID for the specified process.  This is functionally the
+// Returns the unique ID for the specified process. This is functionally the
 // same as Windows' GetProcessId(), but works on versions of Windows before
 // Win XP SP1 as well.
 int GetProcId(ProcessHandle process);
@@ -172,10 +190,16 @@ class NamedProcessIterator {
   void InitProcessEntry(ProcessEntry* entry);
 
   std::wstring executable_name_;
-#ifdef OS_WIN
+
+#if defined(OS_WIN)
   HANDLE snapshot_;
-#endif
   bool started_iteration_;
+#elif defined(OS_LINUX)
+  DIR *procfs_dir_;
+#elif defined(OS_MACOSX)
+  // probably kvm_t *kvmd_;
+#endif
+
   ProcessEntry entry_;
   const ProcessFilter* filter_;
 

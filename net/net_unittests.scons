@@ -70,7 +70,7 @@ input_files = [
     'base/cookie_policy_unittest.cc',
     'base/data_url_unittest.cc',
     'base/escape_unittest.cc',
-    'base/file_input_stream_unittest.cc',
+    'base/file_stream_unittest.cc',
     'base/gzip_filter_unittest.cc',
     'base/host_resolver_unittest.cc',
     'base/mime_sniffer_unittest.cc',
@@ -117,6 +117,11 @@ if env['PLATFORM'] == 'win32':
 if env['PLATFORM'] == 'darwin':
   input_files.extend([
       '../base/platform_test_mac$OBJSUFFIX',
+  ])
+
+if env['PLATFORM'] == 'posix':
+  input_files.extend([
+      'url_request/url_request_unittest.cc',
   ])
 
 if env['PLATFORM'] in ('darwin', 'posix'):

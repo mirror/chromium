@@ -173,11 +173,11 @@ env.Append(
       'U_STATIC_IMPLEMENTATION',
       '_SCL_SECURE_NO_DEPRECATE',
       '_SCL_SECURE_NO_WARNINGS',
-      ['ENABLE_DATABASE', '0'],
       ['ENABLE_DASHBOARD_SUPPORT', '0'],
       ['ENABLE_JAVASCRIPT_DEBUGGER', '0'],
       ['ENABLE_JSC_MULTIPLE_THREADS', '0'],
       ['ENABLE_ICONDATABASE', '0'],
+      ['ENABLE_DATABASE', '1'],
       ['ENABLE_XSLT', '1'],
       ['ENABLE_XPATH', '1'],
       ['ENABLE_SVG', '1'],
@@ -210,6 +210,7 @@ sconscript_dirs = [
   'SConscript.javascriptcore_pcre',
   'build/JSConfig/SConscript',
   'build/JavaScriptCore/SConscript',
+  'build/localized_strings/SConscript',
   'build/port/SConscript',
   'build/V8Bindings/SConscript',
   'build/WebCore/SConscript',
@@ -225,7 +226,6 @@ if env['PLATFORM'] == 'win32':
   sconscript_dirs.extend([
     'activex_shim/SConscript',
     'activex_shim_dll/SConscript',
-    'build/localized_strings/SConscript',
   ])
 
   env.Append(
@@ -259,9 +259,9 @@ env.SConscript(sconscript_dirs, exports=['env', 'env_res'])
 # directory tree as a huge content-signature string.
 # Instead we're going to let all the subsidiary SConscript files
 # add their own individual targets to the 'webkit' Alias.
-#env.Alias('webkit', ['.', '$OBJ_ROOT/icudt38.dll'])
+#env.Alias('webkit', ['.', '$TARGET_ROOT/icudt38.dll'])
 if env['PLATFORM'] == 'win32':
-  env.Alias('webkit', ['$OBJ_ROOT/icudt38.dll'])
+  env.Alias('webkit', ['$TARGET_ROOT/icudt38.dll'])
 
 version = env.Command('$WEBKIT_DIR/build/WebCore/webkit_version.h',
                       ['$WEBCORE_DIR/Configurations/Version.xcconfig',

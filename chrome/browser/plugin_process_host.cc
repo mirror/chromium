@@ -39,7 +39,7 @@
 #include "sandbox/src/sandbox.h"
 
 static const char kDefaultPluginFinderURL[] =
-    "http://dl.google.com/chrome/plugins/plugins.xml";
+    "http://dl.google.com/chrome/plugins/plugins2.xml";
 
 // The NotificationTask is used to notify about plugin process connection/
 // disconnection. It is needed because the notifications in the
@@ -441,10 +441,15 @@ bool PluginProcessHost::Init(const std::wstring& dll,
   watcher_.StartWatching(process_.handle(), this);
 
   std::wstring gears_path;
-  if (PathService::Get(chrome::FILE_GEARS_PLUGIN, &gears_path) &&
-      dll == gears_path) {
-    // Give Gears plugins "background" priority.  See http://b/issue?id=1280317.
-    process_.SetProcessBackgrounded(true);
+  std::wstring dll_lc = dll;
+  if (PathService::Get(chrome::FILE_GEARS_PLUGIN, &gears_path)) {
+    StringToLowerASCII(&gears_path);
+    StringToLowerASCII(&dll_lc);
+    if (dll_lc == gears_path) {
+      // Give Gears plugins "background" priority.  See
+      // http://b/issue?id=1280317.
+      process_.SetProcessBackgrounded(true);
+    }
   }
 
   opening_channel_ = true;

@@ -12,13 +12,13 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@63",
 
   "src/third_party/WebKit":
-    "/branches/chrome_webkit_merge_branch/deps/third_party/WebKit",
+    "/trunk/deps/third_party/WebKit@4485",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@4040",
+    "/trunk/deps/third_party/icu38@4437",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@618",
+    "http://v8.googlecode.com/svn/trunk@687",
 
   "src/webkit/data/layout_tests/LayoutTests":
     "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@37604",
@@ -46,7 +46,8 @@ include_rules = [
 
   # For now, we allow ICU to be included by specifying "unicode/...", although
   # this should probably change.
-  "+unicode"
+  "+unicode",
+  '+testing'
 ]
 
 

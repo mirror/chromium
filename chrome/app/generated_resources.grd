@@ -325,7 +325,7 @@ each locale. -->
         &amp;No spelling suggestions
       </message>
       <message name="IDS_CONTENT_CONTEXT_SPELLCHECK_OPTIONS" desc="The name of the Spellcheck Options display in the content area context menu">
-        &amp;Spellcheck options
+        &amp;Spell-checker options
       </message>
       <message name="IDS_CONTENT_CONTEXT_LANGUAGE_SETTINGS" desc="The name of the Language Settings command in the content area context menu">
         &amp;Language settings...
@@ -2040,7 +2040,10 @@ each locale. -->
       <message name="IDS_BOOKMARK_GROUP_FROM_FIREFOX" desc="The group name of bookmarks from Firefox">
         Imported From Firefox
       </message>
-       
+      <message name="IDS_BOOKMARK_GROUP" desc="The group name of bookmarks imported from a file">
+        Imported
+      </message>
+
       <!-- bookmark editor messages-->
       <message name="IDS_BOOMARK_EDITOR_NAME_LABEL" desc="Label shown before the title/name of the URL.">
         Name:
@@ -2409,14 +2412,6 @@ each locale. -->
         Add
       </message>
 
-      <!-- Advanced autofill settings -->
-      <message name="IDS_AUTOFILL_SETTING_WINDOWS_TITLE" desc="Title that appears in the dialogue title bar for advanced autofill settings">
-        Form autofill
-      </message>
-      <message name="IDS_AUTOFILL_SAVEFORMS" desc="The autofill checkbox label">
-        Save and show text typed in similar fields
-      </message>
-
       <!-- HTTP POST Warning -->
       <message name="IDS_HTTP_POST_WARNING_TITLE" desc="Title for dialog that warns users about a navigation that results in a repost">
         Confirm Form Resubmission
@@ -2676,7 +2671,14 @@ each locale. -->
       <message name="IDS_OPTIONS_PASSWORDS_SHOWPASSWORDS" desc="The label of the 'Show passwords' button">
         Show saved passwords
       </message>
-      
+
+      <message name="IDS_AUTOFILL_SETTING_WINDOWS_GROUP_NAME" desc="The title of the form autofill group">
+        Form autofill:
+      </message>
+      <message name="IDS_AUTOFILL_SAVEFORMS" desc="The autofill checkbox label">
+        Save and show text typed in similar fields
+      </message>
+
       <message name="IDS_OPTIONS_FONTSANDLANGUAGES_GROUP_NAME" desc="The label of the 'Fonts and Languages' group">
         Fonts and Languages:
       </message>
@@ -3104,7 +3106,7 @@ each locale. -->
         Spell-checker language:
       </message>
       <message name="IDS_OPTIONS_ENABLE_SPELLCHECK" desc="The documentation string of the 'Enable spellcheck' option">
-        Enable spellcheck:
+        Check spelling:
       </message>
       
       <message name="IDS_OPTIONS_RESET" desc="The label of the 'Reset all settings to defaults' button">

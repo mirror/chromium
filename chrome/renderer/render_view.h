@@ -234,7 +234,6 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   virtual void JSOutOfMemory();
 
   virtual WebHistoryItem* GetHistoryEntryAtOffset(int offset);
-  virtual void GoToEntryAtOffsetAsync(int offset);
   virtual int GetHistoryBackListCount();
   virtual int GetHistoryForwardListCount();
   virtual void OnNavStateChanged(WebView* webview);
@@ -289,9 +288,9 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // periodic timer so we don't send too many messages.
   void SyncNavigationState();
 
-  // Evaluates a javascript: URL
-  void EvaluateScriptUrl(const std::wstring& frame_xpath,
-                         const std::wstring& jscript);
+  // Evaluates a string of JavaScript in a particular frame.
+  void EvaluateScript(const std::wstring& frame_xpath,
+                      const std::wstring& jscript);
 
   // Called when the Javascript debugger is no longer attached.
   // This is called from within the renderer, not via an IPC message.
@@ -363,6 +362,10 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // Adds search provider from the given OpenSearch description URL as a
   // keyword search.
   void AddGURLSearchProvider(const GURL& osd_url, bool autodetected);
+
+  // Tells the browser process to navigate to a back/forward entry at the given
+  // offset from current.
+  void GoToEntryAtOffset(int offset);
 
   // RenderView IPC message handlers
   void OnCreatingNewAck(HWND parent);
@@ -670,6 +673,11 @@ class RenderView : public RenderWidget, public WebViewDelegate,
   // Set if we are waiting for an ack for ViewHostMsg_CreateWindow
   bool waiting_for_create_window_ack_;
 
+  // A cached WebHistoryItem used for back/forward navigations initiated by
+  // WebCore (via the window.history.go API).  We only have one such navigation
+  // pending at a time.
+  scoped_refptr<WebHistoryItem> history_navigation_item_;
+  
   DISALLOW_COPY_AND_ASSIGN(RenderView);
 };
 

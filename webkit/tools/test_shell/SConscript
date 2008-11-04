@@ -48,6 +48,7 @@ env.Append(
         'libxslt',
         'modp_b64',
         'zlib',
+        'sqlite',
         'v8',
         'JavaScriptCore_pcre',
         'default_plugin',
@@ -93,30 +94,31 @@ elif env['PLATFORM'] in ('posix', 'darwin'):
   )
 
 input_files = [
+    'event_sending_controller.cc',
+    'layout_test_controller.cc',
     'simple_resource_loader_bridge.cc',
     'test_navigation_controller.cc',
     'test_shell_request_context.cc',
     'test_shell_switches.cc',
+    'test_shell.cc',
+    'text_input_controller.cc',
 ]
 if env['PLATFORM'] == 'win32':
   # TODO(port): put portable files in above test_files declaration.
   input_files.extend([
       'drag_delegate.cc',
       'drop_delegate.cc',
-      'event_sending_controller.cc',
-      'layout_test_controller.cc',
-      'test_shell.cc',
       'test_shell_win.cc',
       'test_webview_delegate.cc',
-      'text_input_controller.cc',
       'webview_host.cc',
       'webwidget_host.cc',
   ])
 elif env['PLATFORM'] == 'posix':
   input_files.extend([
-      'gtk/test_shell.cc',
       'gtk/webwidget_host.cc',
       'gtk/webview_host.cc',
+      'gtk/test_webview_delegate.cc',
+      'test_shell_gtk.cc',
   ])
 
 lib = env.ChromeStaticLibrary('test_shell', input_files)
@@ -152,7 +154,9 @@ if env['PLATFORM'] == 'win32':
 
 test_files = [
     'image_decoder_unittest.cc',
+    'keyboard_unittest.cc',
     'run_all_tests.cc',
+    'layout_test_controller_unittest.cc',
     '$WEBKIT_DIR/glue/autocomplete_input_listener_unittest.cc',
     '$WEBKIT_DIR/glue/cpp_variant_unittest.cc',
     '$WEBKIT_DIR/glue/glue_serialize_unittest.cc',
@@ -166,11 +170,8 @@ test_files = [
 if env['PLATFORM'] == 'win32':
   # TODO(port): put portable files in above test_files declaration.
   test_files.extend([
-      'keyboard_unittest.cc',
-      'layout_test_controller_unittest.cc',
       'node_leak_test.cc',
       'plugin_tests.cc',
-      'run_all_tests.cc',
       'test_shell_test.cc',
       'text_input_controller_unittest.cc',
       '$WEBKIT_DIR/glue/bookmarklet_unittest.cc',

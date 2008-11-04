@@ -42,9 +42,27 @@ using namespace std;
 
 namespace WebCore {
 
-auto_ptr<ImageBuffer> ImageBuffer::create(const IntSize& size, bool)
+ImageBufferData::ImageBufferData(const IntSize& size)
+    : m_canvas(size.width(), size.height(), false)
+    , m_platformContext(&m_canvas)
 {
-    return auto_ptr<ImageBuffer>(new ImageBuffer(size));
+}
+
+ImageBuffer::ImageBuffer(const IntSize& size, bool grayScale, bool& success)
+    : m_data(size)
+    , m_size(size)
+{
+    m_context.set(new GraphicsContext(&m_data.m_platformContext));
+
+    // Make the background transparent. It would be nice if this wasn't
+    // required, but the canvas is currently filled with the magic transparency
+    // color. Can we have another way to manage this?
+    m_data.m_canvas.drawARGB(0, 0, 0, 0, SkPorterDuff::kClear_Mode);
+    success = true;
+}
+
+ImageBuffer::~ImageBuffer()
+{
 }
 
 GraphicsContext* ImageBuffer::context() const
@@ -55,11 +73,8 @@ GraphicsContext* ImageBuffer::context() const
 Image* ImageBuffer::image() const
 {
     if (!m_image) {
-      // It's assumed that if image() is called, the actual rendering to
-      // the GraphicsContext must be done.
-      ASSERT(context());
-      const SkBitmap* bitmap = context()->platformContext()->bitmap();
-      m_image = BitmapImageSingleFrameSkia::create(*bitmap);
+        m_image = BitmapImageSingleFrameSkia::create(
+            *m_data.m_platformContext.bitmap());
     }
     return m_image.get();
 }
@@ -113,7 +128,7 @@ PassRefPtr<ImageData> ImageBuffer::getImageData(const IntRect& rect) const
             destPixel[0] = SkColorGetR(color);
             destPixel[1] = SkColorGetG(color);
             destPixel[2] = SkColorGetB(color);
-            destPixel[3] = SkColorGetA(color);            
+            destPixel[3] = SkColorGetA(color);
         }
         destRow += destBytesPerRow;
     }
@@ -174,17 +189,6 @@ String ImageBuffer::toDataURL(const String&) const
 {
     notImplemented();
     return String();
-}
-
-ImageBuffer::ImageBuffer(const IntSize& size) :
-    m_data(0),
-    m_size(size),
-    m_context(GraphicsContext::createOffscreenContext(size.width(), size.height()))
-{
-}
-
-ImageBuffer::~ImageBuffer()
-{
 }
 
 } // namespace WebCore

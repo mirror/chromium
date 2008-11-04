@@ -15,6 +15,19 @@ class XMLHttpRequest;
 
 typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 
+#if ENABLE(VIDEO)
+#define VIDEO_HTMLELEMENT_TYPES(V)                                      \
+  V(HTMLAUDIOELEMENT, HTMLAudioElement)                                 \
+  V(HTMLMEDIAELEMENT, HTMLMediaElement)                                 \
+  V(HTMLSOURCEELEMENT, HTMLSourceElement)                               \
+  V(HTMLVIDEOELEMENT, HTMLVideoElement)
+#define VIDEO_NONNODE_WRAPPER_TYPES(V)                                  \
+  V(MEDIAERROR, MediaError)                                             \
+  V(TIMERANGES, TimeRanges)
+#else
+#define VIDEO_HTMLELEMENT_TYPES(V)
+#define VIDEO_NONNODE_WRAPPER_TYPES(V)
+#endif
 
 #define NODE_WRAPPER_TYPES(V)                                           \
   V(ATTR, Attr)                                                         \
@@ -91,7 +104,8 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(HTMLTEXTAREAELEMENT, HTMLTextAreaElement)                           \
   V(HTMLTITLEELEMENT, HTMLTitleElement)                                 \
   V(HTMLULISTELEMENT, HTMLUListElement)                                 \
-  V(HTMLELEMENT, HTMLElement)
+  V(HTMLELEMENT, HTMLElement)                                           \
+  VIDEO_HTMLELEMENT_TYPES(V)
 
 #if ENABLE(SVG_ANIMATION)
 #define SVG_ANIMATION_ELEMENT_TYPES(V)                                  \
@@ -207,7 +221,9 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGELEMENT, SVGElement)
 #endif
 
-
+// NOTE: NONNODE_WRAPPER_TYPES is split into two halves because 
+//       Visual Studio's Intellinonsense crashes when macros get 
+//       too large.  10-29-08
 #define NONNODE_WRAPPER_TYPES(V)                                        \
   V(BARINFO, BarInfo)                                                   \
   V(CANVASGRADIENT, CanvasGradient)                                     \
@@ -249,7 +265,9 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(INSPECTORCONTROLLER, InspectorController)                           \
   V(KEYBOARDEVENT, KeyboardEvent)                                       \
   V(LOCATION, Location)                                                 \
-  V(MEDIALIST, MediaList)                                               \
+  V(MEDIALIST, MediaList)
+
+#define NONNODE_WRAPPER_TYPES_2(V)                                      \
   V(MESSAGECHANNEL, MessageChannel)                                     \
   V(MESSAGEEVENT, MessageEvent)                                         \
   V(MESSAGEPORT, MessagePort)                                           \
@@ -293,7 +311,8 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(XPATHEXPRESSION, XPathExpression)                                   \
   V(XPATHNSRESOLVER, XPathNSResolver)                                   \
   V(XPATHRESULT, XPathResult)                                           \
-  V(XSLTPROCESSOR, XSLTProcessor)
+  V(XSLTPROCESSOR, XSLTProcessor)                                       \
+  VIDEO_NONNODE_WRAPPER_TYPES(V)
 
 #if ENABLE(SVG)
 #define SVGNODE_WRAPPER_TYPES(V)                                        \
@@ -369,6 +388,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
     NODE_WRAPPER_TYPES(V)                               \
     HTMLELEMENT_TYPES(V)                                \
     NONNODE_WRAPPER_TYPES(V)                            \
+    NONNODE_WRAPPER_TYPES_2(V)                          \
     SVGNODE_WRAPPER_TYPES(V)                            \
     SVGELEMENT_TYPES(V)                                 \
     SVGNONNODE_WRAPPER_TYPES(V)
@@ -376,7 +396,8 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #define WRAPPER_TYPES(V)                                \
     NODE_WRAPPER_TYPES(V)                               \
     HTMLELEMENT_TYPES(V)                                \
-    NONNODE_WRAPPER_TYPES(V)
+    NONNODE_WRAPPER_TYPES(V)                            \
+    NONNODE_WRAPPER_TYPES_2(V)
 #endif
 
 #define ALL_WRAPPER_TYPES(V)                            \

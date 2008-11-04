@@ -64,6 +64,11 @@ class ObserverListThreadSafe :
   void AddObserver(ObserverType* obs) {
     ObserverList<ObserverType>* list = NULL;
     MessageLoop* loop = MessageLoop::current();
+    // TODO(mbelshe): Get rid of this check.  Its needed right now because
+    //                Time currently triggers usage of the ObserverList.
+    //                And unittests use time without a MessageLoop.
+    if (!loop)
+      return;  // Some unittests may access this without a message loop.
     {
       AutoLock lock(list_lock_);
       if (observer_lists_.find(loop) == observer_lists_.end())
@@ -81,11 +86,15 @@ class ObserverListThreadSafe :
   void RemoveObserver(ObserverType* obs) {
     ObserverList<ObserverType>* list = NULL;
     MessageLoop* loop = MessageLoop::current();
+    if (!loop)
+      return;  // On shutdown, it is possible that current() is already null.
     {
       AutoLock lock(list_lock_);
-      DCHECK(observer_lists_.find(loop) != observer_lists_.end()) <<
-          "RemoveObserver called on for unknown thread";
       list = observer_lists_[loop];
+      if (!list) {
+        NOTREACHED() << "RemoveObserver called on for unknown thread";
+        return;
+      }
 
       // If we're about to remove the last observer from the list,
       // then we can remove this observer_list entirely.

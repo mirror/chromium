@@ -25,16 +25,16 @@ if env['PLATFORM'] == 'win32':
   )
 
 if env['PLATFORM'] in ('darwin', 'posix'):
-  env.Append(
-    # HTMLInputElement.cpp has a dependency on glue (see bug 1076026)
-    CPPDEFINES = [
-      'GOOGLE_WEBKIT_WITHOUT_GLUE_DEPENDENCY',
-    ]
-  )
   if '-Wall' in env['CXXFLAGS'] and '-Werror' in env['CXXFLAGS']:
     # It'd be nice to fix these warnings upstream, but we're not going to
     # block on it.
     env['CXXFLAGS'].remove('-Werror')
+
+env.Append(
+    CPPPATH = [
+        '$THIRD_PARTY_DIR/sqlite'
+    ]
+)
 
 input_files = [
     '$WEBCORE_DIR/css/CSSBorderImageValue.cpp',
@@ -291,6 +291,7 @@ input_files = [
     '$WEBCORE_DIR/html/HTMLQuoteElement.cpp',
     '$WEBCORE_DIR/html/HTMLScriptElement.cpp',
     '$WEBCORE_DIR/html/HTMLSelectElement.cpp',
+    '$WEBCORE_DIR/html/HTMLSourceElement.cpp',    
     '$WEBCORE_DIR/html/HTMLStyleElement.cpp',
     '$WEBCORE_DIR/html/HTMLTableCaptionElement.cpp',
     '$WEBCORE_DIR/html/HTMLTableCellElement.cpp',
@@ -330,6 +331,7 @@ input_files = [
     '$WEBCORE_DIR/loader/ImageLoader.cpp',
     '$WEBCORE_DIR/loader/loader.cpp',
     '$WEBCORE_DIR/loader/MainResourceLoader.cpp',
+    '$WEBCORE_DIR/loader/MediaDocument.cpp',    
     '$WEBCORE_DIR/loader/NavigationAction.cpp',
     '$WEBCORE_DIR/loader/NetscapePlugInStreamLoader.cpp',
     '$WEBCORE_DIR/loader/PluginDocument.cpp',
@@ -345,6 +347,7 @@ input_files = [
     '$WEBCORE_DIR/loader/archive/ArchiveResourceCollection.cpp',
 
     '$WEBCORE_DIR/page/AccessibilityImageMapLink.cpp',
+    '$WEBCORE_DIR/page/AccessibilityList.cpp',
     '$WEBCORE_DIR/page/AccessibilityListBox.cpp',
     '$WEBCORE_DIR/page/AccessibilityListBoxOption.cpp',
     '$WEBCORE_DIR/page/AccessibilityObject.cpp',
@@ -400,7 +403,6 @@ input_files = [
     '$WEBCORE_DIR/platform/Timer.cpp',
     '$WEBCORE_DIR/platform/Widget.cpp',
 
-
     '$WEBCORE_DIR/platform/graphics/AffineTransform.cpp',
     '$WEBCORE_DIR/platform/graphics/BitmapImage.cpp',
     '$WEBCORE_DIR/platform/graphics/Color.cpp',
@@ -422,6 +424,8 @@ input_files = [
     '$WEBCORE_DIR/platform/graphics/GraphicsTypes.cpp',
     '$WEBCORE_DIR/platform/graphics/Image.cpp',
     '$WEBCORE_DIR/platform/graphics/IntRect.cpp',
+    '$WEBCORE_DIR/platform/graphics/MediaPlayer.cpp',
+    '$PORT_DIR/platform/graphics/chromium/MediaPlayerPrivateChromium.cpp',
     '$WEBCORE_DIR/platform/graphics/Path.cpp',
     '$WEBCORE_DIR/platform/graphics/PathTraversalState.cpp',
     '$WEBCORE_DIR/platform/graphics/Pattern.cpp',
@@ -441,6 +445,12 @@ input_files = [
     #'$WEBCORE_DIR/platform/network/ResourceHandle.cpp',
     '$WEBCORE_DIR/platform/network/ResourceRequestBase.cpp',
     '$WEBCORE_DIR/platform/network/ResourceResponseBase.cpp',
+
+    '$WEBCORE_DIR/platform/sql/SQLiteAuthorizer.cpp',
+    '$WEBCORE_DIR/platform/sql/SQLiteDatabase.cpp',
+    '$WEBCORE_DIR/platform/sql/SQLiteStatement.cpp',
+    '$WEBCORE_DIR/platform/sql/SQLiteTransaction.cpp',
+    '$WEBCORE_DIR/platform/sql/SQLValue.cpp',
 
     '$WEBCORE_DIR/platform/text/AtomicString.cpp',
     '$WEBCORE_DIR/platform/text/Base64.cpp',
@@ -481,6 +491,7 @@ input_files = [
     '$WEBCORE_DIR/rendering/InlineFlowBox.cpp',
     '$WEBCORE_DIR/rendering/InlineTextBox.cpp',
     '$WEBCORE_DIR/rendering/LayoutState.cpp',
+    '$WEBCORE_DIR/rendering/Length.cpp',
     '$WEBCORE_DIR/rendering/ListMarkerBox.cpp',
     '$WEBCORE_DIR/rendering/MediaControlElements.cpp',
     '$WEBCORE_DIR/rendering/PointerEventsHitRules.cpp',
@@ -509,6 +520,7 @@ input_files = [
     '$WEBCORE_DIR/rendering/RenderListItem.cpp',
     '$WEBCORE_DIR/rendering/RenderListMarker.cpp',
     '$WEBCORE_DIR/rendering/RenderMarquee.cpp',
+    '$WEBCORE_DIR/rendering/RenderMedia.cpp',    
     '$WEBCORE_DIR/rendering/RenderMenuList.cpp',
     '$WEBCORE_DIR/rendering/RenderObject.cpp',
     '$WEBCORE_DIR/rendering/RenderPart.cpp',
@@ -556,7 +568,6 @@ input_files = [
     '$WEBCORE_DIR/rendering/SVGRootInlineBox.cpp',
     '$WEBCORE_DIR/rendering/TextControlInnerElements.cpp',
 
-
     '$WEBCORE_DIR/rendering/style/Animation.cpp',
     '$WEBCORE_DIR/rendering/style/AnimationList.cpp',
     '$WEBCORE_DIR/rendering/style/BindingURI.cpp',
@@ -588,6 +599,19 @@ input_files = [
     '$WEBCORE_DIR/rendering/style/SVGRenderStyleDefs.cpp',
     '$WEBCORE_DIR/rendering/style/TransformOperations.cpp',
     '$WEBCORE_DIR/rendering/style/TranslateTransformOperation.cpp',
+
+    '$WEBCORE_DIR/storage/ChangeVersionWrapper.cpp',
+    '$WEBCORE_DIR/storage/Database.cpp',
+    '$WEBCORE_DIR/storage/DatabaseAuthorizer.cpp',
+    '$WEBCORE_DIR/storage/DatabaseTask.cpp',
+    '$WEBCORE_DIR/storage/DatabaseThread.cpp',
+    '$WEBCORE_DIR/storage/DatabaseTracker.cpp',
+    '$WEBCORE_DIR/storage/OriginQuotaManager.cpp',
+    '$WEBCORE_DIR/storage/OriginUsageRecord.cpp',
+    '$WEBCORE_DIR/storage/SQLResultSet.cpp',
+    '$WEBCORE_DIR/storage/SQLResultSetRowList.cpp',
+    '$WEBCORE_DIR/storage/SQLStatement.cpp',
+    '$WEBCORE_DIR/storage/SQLTransaction.cpp',
 
     '$WEBCORE_DIR/svg/ColorDistance.cpp',
     '$WEBCORE_DIR/svg/Filter.cpp',
@@ -789,12 +813,7 @@ if env['PLATFORM'] in ('darwin'):
 if env['PLATFORM'] == 'posix':
   input_files.extend([
     '$WEBCORE_DIR/platform/posix/FileSystemPOSIX.cpp',
-  ])
-
-# Windows specific files.
-if env['PLATFORM'] == 'win32':
-  input_files.extend([
-    '$WEBCORE_DIR/platform/win/FileSystemWin.cpp',
+    '$WEBCORE_DIR/platform/gtk/ScrollbarThemeGtk.cpp',
   ])
 
 # Precompiled headers only work under MSVC in scons.

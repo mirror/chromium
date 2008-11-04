@@ -189,7 +189,6 @@ class WebViewImpl : public WebView, public WebCore::BackForwardListClient {
   // TODO(darin): Figure out what happens to these methods.
 #if 0
   // WebCore::WidgetClientWin
-  virtual gfx::ViewHandle containingWindow();
   virtual const SkBitmap* getPreloadedResourceBitmap(int resource_id);
   virtual void onScrollPositionChanged(WebCore::Widget* widget);
   virtual const WTF::Vector<RefPtr<WebCore::Range> >* getTickmarks(
@@ -202,7 +201,6 @@ class WebViewImpl : public WebView, public WebCore::BackForwardListClient {
   virtual void didAddHistoryItem(WebCore::HistoryItem* item);
   virtual void willGoToHistoryItem(WebCore::HistoryItem* item);
   virtual WebCore::HistoryItem* itemAtIndex(int index);
-  virtual void goToItemAtIndexAsync(int index);
   virtual int backListCount();
   virtual int forwardListCount();
 

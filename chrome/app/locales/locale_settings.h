@@ -156,9 +156,8 @@
 // The URL for the the Learn More page shown on incognito new tab.
 #define IDS_LEARN_MORE_INCOGNITO_URL 1058
 
-// The URL for the "Learn more" page for the Report user metrics and crash data
-// checkbox in Options.
-#define IDS_LEARN_MORE_HELPMAKECHROMEBETTER_URL 1059
+// The URL for the "Learn more" page for the Privacy section under Options.
+#define IDS_LEARN_MORE_PRIVACY_URL 1059
 
 // The URL for more info on how we are affected by 3rd party licenses.
 #define IDS_ABOUT_VERSION_LICENSE_URL 1060
@@ -170,3 +169,6 @@
 // (See above).
 #define IDS_BOOKMARK_MANAGER_DIALOG_WIDTH_CHARS 1062
 #define IDS_BOOKMARK_MANAGER_DIALOG_HEIGHT_LINES 1063
+
+// The language dependent download view size.
+#define IDS_DOWNLOAD_BIG_PROGRESS_SIZE 1064

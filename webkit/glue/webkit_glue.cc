@@ -75,14 +75,6 @@ bool IsLayoutTestMode() {
 }
 
 #if defined(OS_WIN)
-MONITORINFOEX GetMonitorInfoForWindowHelper(HWND window) {
-  HMONITOR monitor = MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY);
-  MONITORINFOEX monitorInfo;
-  monitorInfo.cbSize = sizeof(MONITORINFOEX);
-  GetMonitorInfo(monitor, &monitorInfo);
-  return monitorInfo;
-}
-
 IMLangFontLink2* GetLangFontLinkHelper() {
   // TODO(hbono): http://b/1072298 Experimentally disabled this code to
   // prevent registry leaks caused by this IMLangFontLink2 interface.
@@ -403,6 +395,15 @@ void SetUserAgentToDefault() {
       WEBKIT_VERSION_MAJOR,
       WEBKIT_VERSION_MINOR
       );
+#elif defined(OS_LINUX)
+  // TODO(agl): We don't have version information embedded in files under Linux
+  // so we use the following string which is based off the UA string for
+  // Windows. Some solution for embedding the Chrome version number needs to be
+  // found here.
+  StringAppendF(
+      &default_user_agent,
+      "Mozilla/5.0 (Linux; U; en-US) AppleWebKit/525.13 "
+      "(KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13");
 #else
   // TODO(port): we need something like FileVersionInfo for our UA string.
   NOTIMPLEMENTED();

@@ -41,6 +41,7 @@ if env_res['PLATFORM'] == 'win32':
 
   browser_res = env_res.RES('browser/browser_resources.rc')
   chrome_dll_res = env_res.RES('app/chrome_dll.rc')
+  env_res.Depends(chrome_dll_res, 'installer/util/installer_util_strings.rc')
   common_res = env_res.RES('common/common_resources.rc')
   debugger_res = env_res.RES('browser/debugger/resources/debugger_resources.rc')
   renderer_res = env_res.RES('renderer/renderer_resources.rc')
@@ -58,9 +59,6 @@ if env_res['PLATFORM'] == 'win32':
       renderer_res,
       webkit_res,
   ]
-
-  env_test['BROWSER_RES'] = browser_res[0]
-  env_test['TEST_DATA_RES'] = test_data_res[0]
 
 env_dll = env.Clone()
 
@@ -122,6 +120,21 @@ env_dll.Append(
         'glue',
         'JavaScriptCore_pcre',
         'port',
+
+        'browser',
+        'browser_views',
+        'debugger',
+        'common',
+        'util',
+        'jscre',
+        'plugin',
+        'renderer',
+        'hunspell',
+        # TODO(sgk):  Windows doesn't use libevent, revisit when Linux gets here
+        #'libevent',
+        'sqlite',
+        'views',
+        'v8',
     ],
 )
 
@@ -170,7 +183,6 @@ if env_dll['PLATFORM'] == 'win32':
           '/nxcompat',
 
           '/PDB:${TARGETS[1]}',
-          '/IMPLIB:${TARGETS[2]}',
       ],
   )
 
@@ -181,23 +193,6 @@ if env_dll['PLATFORM'] == 'win32':
       'app/chrome_dll_main.cc',
       '$V8_DIR/snapshot-empty$OBJSUFFIX',
   ])
-
-libs = [
-    'browser/browser.lib',
-    'browser/views/browser_views.lib',
-    'browser/debugger/debugger.lib',
-    'common/common.lib',
-    'installer/util/util.lib',
-    'libjscre.lib',
-    'plugin/plugin.lib',
-    'renderer/renderer.lib',
-    'third_party/hunspell/hunspell.lib',
-    # TODO(sgk):  libevent isn't used on Windows, revisit when Linux gets here
-    #'third_party/libevent/libevent.lib',
-    'third_party/sqlite/sqlite.lib',
-    'views/views.lib',
-    '$V8_DIR/v8.lib',
-]
 
 
 
@@ -228,7 +223,7 @@ grit_files.extend(google_chrome)
 # TODO(port)
 if env_dll['PLATFORM'] == 'win32':
   dll_targets = env_dll.ChromeSharedLibrary('chrome.dll',
-                                            dll_resources + input_files + libs,
+                                            dll_resources + input_files,
                                             PDB='chrome_dll.pdb')
   install_targets.extend(dll_targets)
 
@@ -247,8 +242,10 @@ if env_dll['PLATFORM'] == 'win32':
   env['BUILDERS']['ChromeVersionRC'] = b
 
   env.Replace(
+      # NOTE: the / after $CHROME_SRC_DIR/chrome/ is required because
+      # version.bat assumes a path with a trailing slash.
       CHROME_VERSION_RC_COM =
-          '$VERSION_BAT $SOURCE $CHROME_SRC_DIR/chrome $PWD $TARGET',
+          '$VERSION_BAT $SOURCE $CHROME_SRC_DIR/chrome/ $PWD $TARGET',
       VERSION_BAT = env.File(
           '$CHROME_SRC_DIR/chrome/tools/build/win/version.bat'),
       PWD = Dir('.'),
@@ -310,7 +307,7 @@ env_exe.Append(
         '/nxcompat',
 
         '/PDB:${TARGETS[1]}',
-        '/IMPLIB:${TARGETS[2]}',
+        #'/IMPLIB:${TARGETS[2]}',
     ],
 )
 
@@ -326,7 +323,8 @@ if env['PLATFORM'] == 'win32':
           'app/google_update_client.cc',
 
           'common/common.lib',
-          '$CHROME_DIR/chrome_dll.lib',
+          #'$CHROME_DIR/chrome_dll.lib',
+          'chrome.lib',
       ]
   )
 
@@ -392,7 +390,6 @@ if env_flat['PLATFORM'] == 'win32':
                   CPPPATH=['..'] + env['CPPPATH'])
 
 test_sconscript_files = [
-    'SConscript.unit_tests',
 ]
 
 # TODO(port)
@@ -405,10 +402,6 @@ if env['PLATFORM'] == 'win32':
 env.SConscript(test_sconscript_files, exports=['env_test'])
 
 sconscript_files = [
-    'browser/SConscript',
-    'common/SConscript',
-    'plugin/SConscript',
-    'renderer/SConscript',
     'test/chrome_plugin/SConscript',
     'third_party/hunspell/SConscript',
     '$THIRD_PARTY_DIR/sqlite/SConscript',
@@ -419,6 +412,7 @@ if env['PLATFORM'] == 'win32':
   sconscript_files.extend([
       'app/resources/SConscript',
       'app/theme/SConscript',
+      'browser/debugger/SConscript',
       'browser/views/SConscript',
       'installer/mini_installer/SConscript',
       'installer/setup/SConscript',
@@ -445,7 +439,8 @@ env.SConscript(sconscript_files, exports=['env', 'env_res', 'env_test'])
 
 # TODO(port)
 if env['PLATFORM'] == 'win32':
-  env.InstallAs('libjscre.lib', '$WEBKIT_DIR/JavaScriptCore_pcre.lib')
+  env.InstallAs('$LIBS_DIR/${LIBPREFIX}jscre${LIBSUFFIX}',
+                '$WEBKIT_DIR/JavaScriptCore_pcre.lib')
 
 
 i = env.Install('$TARGET_ROOT', install_targets)

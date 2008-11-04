@@ -254,6 +254,8 @@ sub GenerateHeader
     # - Add header protection
     if ($className =~ /^V8SVG/) {
         push(@headerContent, "\n#if ENABLE(SVG)\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@headerContent, "\n#if ENABLE(VIDEO)\n");
     }
     
     push(@headerContent, "\n#ifndef $className" . "_H");
@@ -290,6 +292,8 @@ END
 
     if ($className =~ /^V8SVG/) {
         push(@headerContent, "\n#endif // ENABLE(SVG)\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@headerContent, "\n#endif // ENABLE(VIDEO)\n");
     }
 }
 
@@ -849,6 +853,8 @@ sub GenerateImplementation
  
     if ($className =~ /^V8SVG/) {
         push(@implFixedHeader, "#if ENABLE(SVG)\n\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@implFixedHeader, "#if ENABLE(VIDEO)\n\n");
     }
     
     if ($className =~ /^V8SVGAnimated/) {
@@ -952,15 +958,20 @@ sub GenerateImplementation
 
       my $accessControl = "v8::DEFAULT";
       if ($attrExt->{"DoNotCheckDomainSecurityOnGet"}) {
-         $accessControl = "v8::ALL_CAN_READ";
+        $accessControl = "v8::ALL_CAN_READ";
       } elsif ($attrExt->{"DoNotCheckDomainSecurityOnSet"}) {
-         $accessControl = "v8::ALL_CAN_WRITE";
+        $accessControl = "v8::ALL_CAN_WRITE";
       } elsif ($attrExt->{"DoNotCheckDomainSecurity"}) {
-         $accessControl = "v8::ALL_CAN_READ";
+        $accessControl = "v8::ALL_CAN_READ";
          if (!($attribute->type =~ /^readonly/)) {
-           $accessControl = "(v8::AccessControl)(v8::ALL_CAN_READ | v8::ALL_CAN_WRITE)";
+           $accessControl .= "|v8::ALL_CAN_WRITE";
          }
       }
+      if ($attrExt->{"v8ProhibitsOverwriting"}) {
+        $accessControl .= "|v8::PROHIBITS_OVERWRITING";
+      }
+      $accessControl = "static_cast<v8::AccessControl>(" . $accessControl . ")";
+
 
       my $customAccessor = $attrExt->{"Custom"} || $attrExt->{"CustomSetter"} || $attrExt->{"CustomGetter"} || "";
       if ($customAccessor eq 1) {
@@ -1102,9 +1113,17 @@ END
       if ($attrExt->{"DontEnum"}) {
         $property_attributes .= "|v8::DontEnum";
       }
+      if ($attrExt->{"ReadOnly"}) {
+        $property_attributes .= "|v8::ReadOnly";
+      }
 
       my $commentInfo = "Function '$name' (ExtAttr: '" . join(' ', keys(%{$attrExt})) . "')";
  
+      my $template = "proto";
+      if ($attrExt->{"v8OnInstance"}) {
+        $template = "instance";
+      }
+
       if ($attrExt->{"DoNotCheckDomainSecurity"} &&
           ($dataNode->extendedAttributes->{"CheckDomainSecurity"} || $interfaceName eq "DOMWindow")) {
         # Mark the accessor as ReadOnly and set it on the proto object so
@@ -1120,13 +1139,13 @@ END
         #   accessing '__proto__'
         #
         # The solution is very hacky and fragile, it really needs to be replaced
-        # by a better solution.        
+        # by a better solution.
 
         $property_attributes .= "|v8::ReadOnly";
         push(@implContent, <<END);
 
   // $commentInfo
-  proto->SetAccessor(
+  $template->SetAccessor(
       v8::String::New("$name"),
       ${interfaceName}Internal::${name}AttrGetter,
       0,
@@ -1137,7 +1156,6 @@ END
         next;
       }
 
-      my $template = "proto";
       my $signature = "default_signature";
       if ($attrExt->{"v8DoNotCheckSignature"}){
         $signature = "v8::Local<v8::Signature>()";
@@ -1211,6 +1229,8 @@ END
 
     if ($className =~ /^V8SVG/) {
         push(@implContent, "\n#endif // ENABLE(SVG)\n");
+    } elsif (IsVideoClassName($className)) {
+        push(@implContent, "\n#endif // ENABLE(VIDEO)\n");
     }
 }
 
@@ -1431,6 +1451,7 @@ sub IsRefPtrType
     return 1 if $type eq "HTMLElement";
     return 1 if $type eq "HTMLOptionsCollection";
     return 1 if $type eq "ImageData";
+    return 1 if $type eq "MediaError";
     return 1 if $type eq "MimeType";
     return 1 if $type eq "Node";
     return 1 if $type eq "NodeList";
@@ -1442,6 +1463,7 @@ sub IsRefPtrType
     return 1 if $type eq "Range";
     return 1 if $type eq "Text";
     return 1 if $type eq "TextMetrics";
+    return 1 if $type eq "TimeRanges";
     return 1 if $type eq "TreeWalker";
     return 1 if $type eq "XPathExpression";
     return 1 if $type eq "XPathNSResolver";
@@ -1453,6 +1475,19 @@ sub IsRefPtrType
     return 1 if $type =~ /^SVGPathSeg/;
     
     return 1 if $type =~ /^SVGAnimated/;
+
+    return 0;
+}
+
+sub IsVideoClassName
+{
+    my $class = shift;
+    return 1 if $class eq "V8HTMLAudioElement";
+    return 1 if $class eq "V8HTMLMediaElement";
+    return 1 if $class eq "V8HTMLSourceElement";
+    return 1 if $class eq "V8HTMLVideoElement";
+    return 1 if $class eq "V8MediaError";
+    return 1 if $class eq "V8TimeRanges";
 
     return 0;
 }

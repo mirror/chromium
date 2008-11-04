@@ -1377,10 +1377,6 @@ void WebViewImpl::ImageResourceDownloadDone(ImageResourceFetcher* fetcher,
 
 // TODO(darin): Figure out what to do with these methods.
 #if 0
-gfx::ViewHandle WebViewImpl::containingWindow() {
-  return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
-}
-
 const SkBitmap* WebViewImpl::getPreloadedResourceBitmap(int resource_id) {
   if (!delegate_)
     return NULL;
@@ -1461,11 +1457,6 @@ WebCore::HistoryItem* WebViewImpl::itemAtIndex(int index) {
   // it soon.  Keep track of it until willGoToHistoryItem is called.
   pending_history_item_ = static_cast<WebHistoryItemImpl*>(item);
   return pending_history_item_->GetHistoryItem();
-}
-
-void WebViewImpl::goToItemAtIndexAsync(int index) {
-  if (delegate_)
-    delegate_->GoToEntryAtOffsetAsync(index);
 }
 
 int WebViewImpl::backListCount() {

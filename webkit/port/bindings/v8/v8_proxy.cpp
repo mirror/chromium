@@ -851,7 +851,7 @@ PassRefPtr<EventListener> V8Proxy::createSVGEventHandler(const String& functionN
 
 static V8EventListener* FindEventListenerInList(V8EventListenerList& list,
                                                 v8::Local<v8::Value> listener,
-                                                bool html)
+                                                bool isInline)
 {
   ASSERT(v8::Context::InContext());
 
@@ -868,7 +868,7 @@ static V8EventListener* FindEventListenerInList(V8EventListenerList& list,
     // check using the == operator on the handles. This is much,
     // much faster than calling StrictEquals through the API in 
     // the negative case.
-    if (el->isHTMLEventListener() == html && listener == wrapper)
+    if (el->isAttachedToEventTargetNode() == isInline && listener == wrapper)
         return el;
     ++p;
   }
@@ -877,12 +877,12 @@ static V8EventListener* FindEventListenerInList(V8EventListenerList& list,
 
 // Find an existing wrapper for a JS event listener in the map.
 PassRefPtr<V8EventListener> V8Proxy::FindV8EventListener(v8::Local<v8::Value> listener,
-                                              bool html)
+                                              bool isInline)
 {
-    return FindEventListenerInList(m_event_listeners, listener, html);
+    return FindEventListenerInList(m_event_listeners, listener, isInline);
 }
 
-PassRefPtr<V8EventListener> V8Proxy::FindOrCreateV8EventListener(v8::Local<v8::Value> obj, bool html)
+PassRefPtr<V8EventListener> V8Proxy::FindOrCreateV8EventListener(v8::Local<v8::Value> obj, bool isInline)
 {
   ASSERT(v8::Context::InContext());
 
@@ -890,13 +890,13 @@ PassRefPtr<V8EventListener> V8Proxy::FindOrCreateV8EventListener(v8::Local<v8::V
       return 0;
 
   V8EventListener* wrapper =
-      FindEventListenerInList(m_event_listeners, obj, html);
+      FindEventListenerInList(m_event_listeners, obj, isInline);
   if (wrapper)
       return wrapper;
 
   // Create a new one, and add to cache.
   RefPtr<V8EventListener> new_listener =
-    V8EventListener::create(m_frame, v8::Local<v8::Object>::Cast(obj), html);
+    V8EventListener::create(m_frame, v8::Local<v8::Object>::Cast(obj), isInline);
   m_event_listeners.push_back(new_listener.get());
 
   return new_listener;
@@ -923,14 +923,14 @@ PassRefPtr<V8EventListener> V8Proxy::FindOrCreateV8EventListener(v8::Local<v8::V
 // of V8ObjectEventListener.
 
 PassRefPtr<V8EventListener> V8Proxy::FindObjectEventListener(
-    v8::Local<v8::Value> listener, bool html)
+    v8::Local<v8::Value> listener, bool isInline)
 {
-  return FindEventListenerInList(m_xhr_listeners, listener, html);
+  return FindEventListenerInList(m_xhr_listeners, listener, isInline);
 }
 
 
 PassRefPtr<V8EventListener> V8Proxy::FindOrCreateObjectEventListener(
-    v8::Local<v8::Value> obj, bool html)
+    v8::Local<v8::Value> obj, bool isInline)
 {
   ASSERT(v8::Context::InContext());
 
@@ -938,13 +938,13 @@ PassRefPtr<V8EventListener> V8Proxy::FindOrCreateObjectEventListener(
     return 0;
 
   V8EventListener* wrapper =
-      FindEventListenerInList(m_xhr_listeners, obj, html);
+      FindEventListenerInList(m_xhr_listeners, obj, isInline);
   if (wrapper)
     return wrapper;
 
   // Create a new one, and add to cache.
   RefPtr<V8EventListener> new_listener =
-    V8ObjectEventListener::create(m_frame, v8::Local<v8::Object>::Cast(obj), html);
+    V8ObjectEventListener::create(m_frame, v8::Local<v8::Object>::Cast(obj), isInline);
   m_xhr_listeners.push_back(new_listener.get());
 
   return new_listener.release();
@@ -1863,7 +1863,7 @@ void V8Proxy::initContextIfNeeded()
   // Setup security origin and security token
   GenerateSecurityToken(context);
 
-  V8Proxy::retrieveFrame(context)->loader()->dispatchWindowObjectAvailable();
+  m_frame->loader()->dispatchWindowObjectAvailable();
 
   if (ScriptController::RecordPlaybackMode()) {
     // Inject code which overrides a few common JS functions for implementing
@@ -2225,6 +2225,14 @@ bool V8Proxy::IsWrapperOfType(v8::Handle<v8::Value> value,
   return V8ClassIndex::FromInt(type->Int32Value()) == classType;
 }
 
+#if ENABLE(VIDEO)
+#define FOR_EACH_VIDEO_TAG(macro)                \
+  macro(audio, AUDIO)                            \
+  macro(source, SOURCE)                          \
+  macro(video, VIDEO)
+#else
+#define FOR_EACH_VIDEO_TAG(macro)
+#endif
 
 #define FOR_EACH_TAG(macro)                      \
   macro(a, ANCHOR)                               \
@@ -2296,7 +2304,8 @@ bool V8Proxy::IsWrapperOfType(v8::Handle<v8::Value> value,
   macro(textarea, TEXTAREA)                      \
   macro(title, TITLE)                            \
   macro(ul, ULIST)                               \
-  macro(xmp, PRE)
+  macro(xmp, PRE)                                \
+  FOR_EACH_VIDEO_TAG(macro)
 
 V8ClassIndex::V8WrapperType V8Proxy::GetHTMLElementType(HTMLElement* element)
 {

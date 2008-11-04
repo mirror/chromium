@@ -77,8 +77,11 @@ class HttpNetworkTransaction : public HttpTransaction {
   int DoReadBody();
   int DoReadBodyComplete(int result);
 
+  // TODO(eroman): Temporary for 3772 bug investigation.
+  void CrashFor3772();
+
   // Called when header_buf_ contains the complete response headers.
-  int DidReadResponseHeaders(int* /*temp hack*/);
+  int DidReadResponseHeaders();
 
   // Called to handle a certificate error.  Returns OK if the error should be
   // ignored.  Otherwise, stores the certificate in response_.ssl_info and
@@ -250,7 +253,6 @@ class HttpNetworkTransaction : public HttpTransaction {
     STATE_WRITE_BODY,
     STATE_WRITE_BODY_COMPLETE,
     STATE_READ_HEADERS,
-    STATE_UNUSED,  // TODO(wtc): temporary, for debugging issue 3772.
     STATE_READ_HEADERS_COMPLETE,
     STATE_READ_BODY,
     STATE_READ_BODY_COMPLETE,

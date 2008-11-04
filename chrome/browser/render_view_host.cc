@@ -180,8 +180,6 @@ void RenderViewHost::NavigateToEntry(const NavigationEntry& entry,
       process()->host_id(), params.url);
 
   DoNavigate(new ViewMsg_Navigate(routing_id_, params));
-
-  UpdateBackForwardListCount();
 }
 
 void RenderViewHost::NavigateToURL(const GURL& url) {
@@ -1206,7 +1204,9 @@ void RenderViewHost::OnUnloadListenerChanged(bool has_listener) {
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {
-  if (is_waiting_for_unload_ack_) {
+  if (is_waiting_for_unload_ack_ &&
+      !Singleton<CrossSiteRequestManager>()->HasPendingCrossSiteRequest(
+          process()->host_id(), routing_id_)) {
     // If the tab hangs in the beforeunload/unload handler there's really
     // nothing we can do to recover. Pretend the unload listeners have
     // all fired and close the tab. If the hang is in the beforeunload handler
