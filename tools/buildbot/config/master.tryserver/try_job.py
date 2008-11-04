@@ -21,21 +21,15 @@ from twisted.python import log, runtime
 import chromium_config as config
 
 class TryJob(Try_Jobdir):
-  """Simple Try_Jobdir overload that executes the patch files in the pending
-  directory.
+  """Try_Jobdir overload that executes the patch files in the pending directory.
 
   groups is the groups of default builders used for round robin. The other
   builders can still be used."""
-  def __init__(self, name, pools, jobdir):
+  def __init__(self, name, pools, jobdir, properties={}):
     """Skip over Try_Jobdir.__init__ to change watcher."""
-    builderNames = []
     self.pools = pools
-    # Flatten and remove duplicates.
-    for pool in pools:
-      for builder in pool:
-        if not builder in builderNames:
-          builderNames.append(builder)
-    TryBase.__init__(self, name, builderNames)
+    self.pools.setParent(self)
+    TryBase.__init__(self, name, pools.listBuilderNames(), properties)
     if not os.path.exists(jobdir):
       os.mkdir(jobdir)
       os.mkdir(os.path.join(jobdir, 'new'))
@@ -68,58 +62,7 @@ class TryJob(Try_Jobdir):
         builderNames = items[2].split(",")
         print 'Choose %s for job %s' % (",".join(builderNames), file_name)
 
-    # The user hasn't requested a specific bot. We'll choose one.
-    if not builderNames:
-      # First, collect the list of idle and disconnected bots.
-      idle_bots = []
-      disconnected_bots = []
-      # self.listBuilderNames() is the merged list of 'groups'.
-      for name in self.listBuilderNames():
-        # parent is of type buildbot.master.BuildMaster.
-        # botmaster is of type buildbot.master.BotMaster.
-        # builders is a dictionary of
-        #     string : buildbot.process.builder.Builder.
-        if not name in self.parent.botmaster.builders:
-          # The bot is non-existent.
-          disconnected_bots.append(name)
-        else:
-          # slave is of type buildbot.process.builder.Builder
-          slave = self.parent.botmaster.builders[name]
-          # Get the status of the builder.
-          # slave.slaves is a list of buildbot.process.builder.SlaveBuilder and
-          # not a buildbot.buildslave.BuildSlave as written in the doc(nor
-          # buildbot.slave.bot.BuildSlave)
-          # slave.slaves[0].slave is of type buildbot.buildslave.BuildSlave
-          # TODO(maruel): Support shared slave.
-          if len(slave.slaves) == 1 and slave.slaves[0].slave:
-            if slave.slaves[0].isAvailable():
-              idle_bots.append(name)
-          else:
-            disconnected_bots.append(name)
-
-      # Now for each pool, we select one bot that is idle.
-      for pool in self.pools:
-        prospects = []
-        found_idler = False
-        for builder in pool:
-          if builder in idle_bots:
-            # Found one bot, go for next pool.
-            builderNames.append(builder)
-            found_idler = True
-            break
-          if not builder in disconnected_bots:
-            prospects.append(builder)
-        if found_idler:
-          continue
-        # All bots are either busy or disconnected..
-        if prospects:
-          builderNames.append(random.choice(prospects))
-
-      if not builderNames:
-        # If no builder are available, throw a BadJobfile exception since we
-        # can't select a group.
-        raise BadJobfile
-
+    builderNames = self.pools.Select(builderNames)
     print 'Choose %s for job %s' % (",".join(builderNames), file_name)
 
     branch = None
@@ -144,8 +87,7 @@ class TryJob(Try_Jobdir):
     return builderNames, ss, buildsetID
 
   def messageReceived(self, filename):
-    """Same as Try_Jobdir.messageReceived except 'reason' which is modified and
-    the builderNames restriction lifted."""
+    """Called when a new file has been detected so it can be parsed."""
     md = os.path.join(self.parent.basedir, self.jobdir)
     if runtime.platformType == "posix":
       # open the file before moving it, because I'm afraid that once
@@ -164,13 +106,13 @@ class TryJob(Try_Jobdir):
       f = open(path, "r")
 
     try:
-      builderNames, ss, bsid = self.parseJob(f)
+      builderNames, ss, buildsetID = self.parseJob(f)
     except BadJobfile:
       log.msg("%s reports a bad jobfile in %s" % (self, filename))
       log.err()
       return
-    reason = "'%s' try job" % bsid
-    bs = buildset.BuildSet(builderNames, ss, reason=reason, bsid=bsid)
+    reason = "'%s' try job" % buildsetID
+    bs = buildset.BuildSet(builderNames, ss, reason=reason, bsid=buildsetID)
     self.parent.submitBuildSet(bs)
 
 
