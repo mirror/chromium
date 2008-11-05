@@ -23,6 +23,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "EventNames.h"
 #include "Event.h"
 #include "EventListener.h"
+#include "wtf/Threading.h"
 MSVC_POP_WARNING();
 
 #undef LOG
@@ -107,6 +108,7 @@ namespace {
 class DomAutocompleteTests : public testing::Test {
  public:
   void SetUp() {
+    WTF::initializeThreading();
     WebCore::EventNames::init();
   }
 
