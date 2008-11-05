@@ -162,6 +162,11 @@ class Balloon {
     virtual Profile* GetProfile() const;
     virtual void RendererReady(RenderViewHost* render_view_host);
     virtual void RendererGone(RenderViewHost* render_view_host);
+    virtual RenderViewHostDelegateType GetDelegateType() const {
+      // TODO(jianli): fix this.
+      return static_cast<RenderViewHostDelegateType >(0);
+    }
+
    private:
     Balloon* balloon_;
     DISALLOW_COPY_AND_ASSIGN(BalloonRenderViewHostDelegate);
