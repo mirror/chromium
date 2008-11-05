@@ -14,6 +14,7 @@ A typical use of this module would be
 
 import errno
 import os
+import sys
 
 
 class Master(object):
@@ -24,8 +25,10 @@ class Master(object):
   slave_port_submodules = 8013
 
   # Used by the SVNPoller.
-  svn_binary_path = 'svn'
-  svn_binary_path_experimental = '../depot_tools/bin/svn'
+  if sys.platform == 'win32':
+    svn_binary_path = '../depot_tools/release/svn/svn.exe'
+  else:
+    svn_binary_path = 'svn'
 
   # Repository URLs used by the SVNPoller and 'gclient config'.
   server_url = 'http://src.chromium.org'
