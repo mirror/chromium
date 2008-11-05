@@ -654,7 +654,7 @@ V8 # LayoutTests/fast/canvas/gradient-empty-path.html = FAIL
 
 // Bug: 1166644
 // Fails on webkit windows as well. 
-V8 | KJS # LayoutTests/fast/events/attempt-scroll-with-no-scrollbars.html = FAIL
+V8 | KJS # LayoutTests/fast/events/attempt-scroll-with-no-scrollbars.html = FAIL | TIMEOUT
 
 // Bug 1226853: Fails on v8-latest after const changes (r123300). Test
 // has been rebaselined (don't declare const x twice).
@@ -1340,3 +1340,34 @@ V8 | KJS # LayoutTests/fast/css-generated-content/013.html = FAIL | PASS
 V8 | KJS # LayoutTests/fast/css-generated-content/014.html = FAIL | PASS
 V8 | KJS # LayoutTests/fast/css-generated-content/015.html = FAIL | PASS
 V8 | KJS # LayoutTests/fast/css-generated-content/016.html = FAIL | PASS
+
+// NEW FOR MERGE 37604:38097
+V8 | KJS # LayoutTests/animations/keyframes-rule.html = FAIL
+V8 | KJS # LayoutTests/editing/deleting/smart-editing-disabled.html = FAIL
+V8 | KJS # LayoutTests/fast/css/border-height.html = FAIL
+V8 | KJS # LayoutTests/fast/events/destroyed-atomic-string.html = FAIL
+V8 | KJS # LayoutTests/fast/events/message-channel-gc-3.htm = FAIL
+V8 | KJS # LayoutTests/fast/forms/image-border.html = FAIL
+V8 | KJS # LayoutTests/fast/forms/input-field-text-truncated.html = FAIL
+V8 | KJS # LayoutTests/fast/forms/input-type-text-min-width.html = FAIL
+V8 | KJS # LayoutTests/fast/forms/textarea-scrollbar-height.html = FAIL
+V8 | KJS # LayoutTests/fast/forms/textarea-width.html = FAIL
+V8 | KJS # LayoutTests/fast/js/exception-thrown-from-new.html = FAIL
+V8 | KJS # LayoutTests/fast/js/global-constructors.html = FAIL
+V8 | KJS # LayoutTests/fast/layers/opacity-transforms.html = FAIL
+V8 | KJS # LayoutTests/fast/overflow/overflow_hidden.html = FAIL
+V8 | KJS # LayoutTests/fast/profiler = FAIL
+V8 | KJS # LayoutTests/fast/replaced/percent-height-in-anonymous-block-widget.html = FAIL
+V8 | KJS # LayoutTests/fast/text/bidi-embedding-pop-and-push-same.html = FAIL
+V8 | KJS # LayoutTests/fast/text/international/hindi-spacing.html = FAIL
+V8 | KJS # LayoutTests/plugins/netscape-construct.html = FAIL
+V8 | KJS # LayoutTests/transforms/transform-value-types.html = FAIL
+
+// CHANGED OR REBASELINED IN WEBKIT 37604:38097
+
+// MERGE 37604:38097 REGRESSIONS
+V8 | KJS # LayoutTests/fast/events/message-channel-gc.html = FAIL
+V8 | KJS # LayoutTests/fast/frames/crash-removed-iframe.html = FAIL
+V8 | KJS # LayoutTests/fast/loader/cancel-load-during-port-block-timer.html = FAIL
+V8 | KJS # LayoutTests/http/tests/loading/gmail-assert-on-load.html = FAIL
+V8 | KJS # LayoutTests/svg/carto.net/combobox.svg = FAIL
