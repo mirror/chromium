@@ -349,6 +349,7 @@ class GraphingLogProcessor(PerformanceLogProcessor):
 
     self.__CreateSummaryOutput()
     self.__SaveGraphInfo()
+    return self._text_summary
 
   def _ProcessLine(self, line):
     line_match = self.RESULTS_REGEX.match(line)
@@ -413,8 +414,8 @@ class GraphingLogProcessor(PerformanceLogProcessor):
         if trace.important:
           display = "%s: %s" % (trace_name, FormatHumanReadable(trace.value))
           if graph.traces.get(trace_name + '_ref'):
-            display += "(%s)" % FormatHumanReadable(
-                                graph.traces[trace_name + '_ref'].value)
+            display += " (%s)" % FormatHumanReadable(
+                                 graph.traces[trace_name + '_ref'].value)
           self._text_summary.append(display)
 
     self._text_summary.sort()
