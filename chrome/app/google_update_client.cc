@@ -9,6 +9,7 @@
 
 #include "chrome/app/client_util.h"
 #include "chrome/installer/util/google_update_constants.h"
+#include "chrome/installer/util/install_util.h"
 
 namespace {
 const wchar_t kEnvProductVersionKey[] = L"CHROME_VERSION";
@@ -107,6 +108,8 @@ bool GoogleUpdateClient::Launch(HINSTANCE instance,
 bool GoogleUpdateClient::Init(const wchar_t* client_guid,
                               const wchar_t* client_dll) {
   client_util::GetExecutablePath(dll_path_);
+  user_mode_ = client_util::IsPerUserInstall(dll_path_);
+
   guid_.assign(client_guid);
   dll_.assign(client_dll);
   bool ret = false;
