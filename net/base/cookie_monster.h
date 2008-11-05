@@ -166,7 +166,7 @@ class CookieMonster {
   // at the top of the function body.
   //
   // Returns the number of cookies deleted (useful for debugging).
-  int GarbageCollect(const base::Time& current, const std::string& key);
+  int GarbageCollect(const Time& current, const std::string& key);
 
   // Deletes all expired cookies in |itpair|;
   // then, if the number of remaining cookies is greater than |num_max|,
@@ -174,7 +174,7 @@ class CookieMonster {
   // (|num_max| - |num_purge|) cookies remain.
   //
   // Returns the number of cookies deleted.
-  int GarbageCollectRange(const base::Time& current,
+  int GarbageCollectRange(const Time& current,
                           const CookieMapItPair& itpair,
                           size_t num_max,
                           size_t num_purge);
@@ -184,7 +184,7 @@ class CookieMonster {
   // populated with all the non-expired cookies from |itpair|.
   //
   // Returns the number of cookies deleted.
-  int GarbageCollectExpired(const base::Time& current,
+  int GarbageCollectExpired(const Time& current,
                             const CookieMapItPair& itpair,
                             std::vector<CookieMap::iterator>* cookie_its);
 
@@ -203,7 +203,7 @@ class CookieMonster {
 
   // Minimum delay after updating a cookie's LastAccessDate before we will
   // update it again.
-  const base::TimeDelta last_access_threshold_;
+  const TimeDelta last_access_threshold_;
 
   // Lock for thread-safety
   Lock lock_;
@@ -274,10 +274,10 @@ class CookieMonster::CanonicalCookie {
                   const std::string& path,
                   bool secure,
                   bool httponly,
-                  const base::Time& creation,
-                  const base::Time& last_access,
+                  const Time& creation,
+                  const Time& last_access,
                   bool has_expires,
-                  const base::Time& expires)
+                  const Time& expires)
       : name_(name),
         value_(value),
         path_(path),
@@ -304,7 +304,7 @@ class CookieMonster::CanonicalCookie {
   const std::string& Value() const { return value_; }
   const std::string& Path() const { return path_; }
   const Time& CreationDate() const { return creation_date_; }
-  const base::Time& LastAccessDate() const { return last_access_date_; }
+  const Time& LastAccessDate() const { return last_access_date_; }
   bool DoesExpire() const { return has_expires_; }
   bool IsPersistent() const { return DoesExpire(); }
   const Time& ExpiryDate() const { return expiry_date_; }
@@ -323,7 +323,7 @@ class CookieMonster::CanonicalCookie {
     return name_ == ecc.Name() && path_ == ecc.Path();
   }
 
-  void SetLastAccessDate(const base::Time& date) {
+  void SetLastAccessDate(const Time& date) {
     last_access_date_ = date;
   }
 
