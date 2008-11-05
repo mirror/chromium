@@ -265,6 +265,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
                               &next_update_sec, &re_key,
                               &reset, chunk_deletes, &chunk_urls)) {
         delete chunk_deletes;
+        sb_service_->UpdateFinished(false);
         return false;
       }
 
@@ -306,18 +307,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
       break;
     }
     case CHUNK_REQUEST: {
-      // Find list name from url.
-      std::string url_path = url.ExtractFileName();
-      if (url_path.empty())
-        return false;
-
-      std::string::size_type pos = url_path.find_first_of('_');
-      if (pos == std::string::npos)
-        return false;
-
       const ChunkUrl chunk_url = chunk_request_urls_.front();
-      DCHECK(url.spec().find(chunk_url.url) != std::string::npos);
-
       bool re_key = false;
       std::deque<SBChunk>* chunks = new std::deque<SBChunk>;
       if (!parser.ParseChunk(data, length,
@@ -347,8 +337,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
         delete chunks;
       } else {
         chunk_pending_to_write_ = true;
-        std::string list_name(url_path, 0, pos);
-        sb_service_->HandleChunk(list_name, chunks);
+        sb_service_->HandleChunk(chunk_url.list_name, chunks);
       }
 
       break;
@@ -524,6 +513,7 @@ void SafeBrowsingProtocolManager::OnChunkInserted() {
 
   if (chunk_request_urls_.empty()) {
     UMA_HISTOGRAM_LONG_TIMES(L"SB.Update", Time::Now() - last_update_);
+    sb_service_->UpdateFinished(true);
   } else {
     IssueChunkRequest();
   }

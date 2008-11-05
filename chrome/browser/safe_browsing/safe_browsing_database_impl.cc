@@ -59,7 +59,6 @@ SafeBrowsingDatabaseImpl::SafeBrowsingDatabaseImpl()
       init_(false),
       transaction_count_(0),
       asynchronous_(true),
-      chunk_inserted_callback_(NULL),
 #pragma warning(suppress: 4355)  // can use this
       bloom_read_factory_(this),
 #pragma warning(suppress: 4355)  // can use this
@@ -104,12 +103,12 @@ bool SafeBrowsingDatabaseImpl::Init(const std::wstring& filename,
   if (load_filter) {
     LoadBloomFilter();
   } else {
-    bloom_filter_.reset(
-        new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio));
+    bloom_filter_ =
+        new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio);
   }
 
   init_ = true;
-  chunk_inserted_callback_ = chunk_inserted_callback;
+  chunk_inserted_callback_.reset(chunk_inserted_callback);
   return true;
 }
 
@@ -228,8 +227,8 @@ bool SafeBrowsingDatabaseImpl::ResetDatabase() {
     return false;
   }
 
-  bloom_filter_.reset(
-      new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio));
+  bloom_filter_ =
+      new BloomFilter(kBloomFilterMinSize * kBloomFilterSizeRatio);
   file_util::Delete(bloom_filter_filename_, false);
 
   if (!Open())
@@ -543,7 +542,7 @@ bool SafeBrowsingDatabaseImpl::ProcessChunks() {
     }
   }
 
-  if (chunk_inserted_callback_)
+  if (chunk_inserted_callback_.get())
     chunk_inserted_callback_->Run();
 
   return true;
@@ -1045,7 +1044,7 @@ void SafeBrowsingDatabaseImpl::OnDoneReadingHostKeys() {
   for (size_t i = 0; i < bloom_filter_temp_hostkeys_.size(); ++i)
     filter->Insert(bloom_filter_temp_hostkeys_[i]);
 
-  bloom_filter_.reset(filter);
+  bloom_filter_ = filter;
 
   TimeDelta bloom_gen = Time::Now() - before;
   TimeDelta delta = Time::Now() - bloom_filter_rebuild_time_;
