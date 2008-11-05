@@ -19,7 +19,7 @@ class BalloonCollectionMock : public BalloonCollectionInterface {
   BalloonCollectionMock();
   virtual ~BalloonCollectionMock();
 
-  virtual void Add(const Notification& notification);
+  virtual void Add(const Notification& notification, Profile* profile);
   virtual void ShowAll();
   virtual void HideAll();
 

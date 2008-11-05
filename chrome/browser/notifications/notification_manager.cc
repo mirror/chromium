@@ -10,13 +10,31 @@
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/user_activity.h"
 
-typedef std::deque<Notification*> QueuedNotifications;
+class QueuedNotification {
+ public:
+  QueuedNotification(const Notification& notification, Profile* profile)
+      : notification_(notification),
+        profile_(profile) {
+  }
+
+  const Notification& notification() const {
+    return notification_;
+  }
+
+  Profile* profile() const {
+    return profile_;
+  }
+ private:
+  Notification notification_;
+  Profile* profile_;
+  DISALLOW_COPY_AND_ASSIGN(QueuedNotification);
+};
 
 void Clear(QueuedNotifications* notifications) {
   while (!notifications->empty()) {
     QueuedNotifications::reverse_iterator it =
         notifications->rbegin();
-    Notification* removed = *it;
+    QueuedNotification* removed = *it;
     notifications->pop_back();
     delete removed;
   }
@@ -37,10 +55,11 @@ NotificationManager::~NotificationManager() {
   Clear(&show_queue_);
 }
 
-void NotificationManager::Add(const Notification& notification) {
+void NotificationManager::Add(const Notification& notification,
+                              Profile* profile) {
   LOG(INFO) << "Added notification. url: "
 	        << notification.url().spec().c_str();
-  show_queue_.push_back(new Notification(notification));
+  show_queue_.push_back(new QueuedNotification(notification, profile));
   CheckAndShowNotifications();
 }
 
@@ -56,10 +75,11 @@ void NotificationManager::CheckAndShowNotifications() {
 
 void NotificationManager::ShowNotifications() {
   while (!show_queue_.empty() && balloon_collection_->HasSpace()) {
-    Notification* notification = show_queue_.front();
+    QueuedNotification* queued_notification = show_queue_.front();
     show_queue_.pop_front();
-    balloon_collection_->Add(*notification);
-    delete notification;
+    balloon_collection_->Add(queued_notification->notification(),
+                             queued_notification->profile());
+    delete queued_notification;
   }
 }
 

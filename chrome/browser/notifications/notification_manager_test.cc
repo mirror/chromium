@@ -30,7 +30,8 @@ BalloonCollectionMock::~BalloonCollectionMock() {
   EXPECT_EQ(0, show_call_count_) << "Not enough show calls done.";
 }
 
-void BalloonCollectionMock::Add(const Notification &notification) {
+void BalloonCollectionMock::Add(const Notification &notification,
+                                Profile* profile) {
   EXPECT_GT(show_call_count_, 0) << "Unexpected show call.";
   show_call_count_--;
   count_++;
@@ -102,7 +103,7 @@ TEST(NotificationManagerTest, BasicFunctionality) {
   Notification notification1(
       GURL("http://gears.google.com/MyService"),
       GURL("http://gears.google.com/MyService/notification1"));
-  manager.Add(notification1);
+  manager.Add(notification1, NULL);
 
   // Make space available and expect the balloon to be shown.
   balloon_collection->set_capacity(1);
@@ -117,7 +118,7 @@ TEST(NotificationManagerTest, BasicFunctionality) {
   Notification notification2(
       GURL("http://gears.google.com/MyService"),
       GURL("http://gears.google.com/MyService/notification2"));
-  manager.Add(notification2);
+  manager.Add(notification2, NULL);
 
   // Go through all of the modes and ensure that the
   // notification doesn't get displayed.

@@ -18,6 +18,9 @@ class BalloonCollectionMock;
 #endif  // UNIT_TEST
 class Notification;
 
+class QueuedNotification;
+typedef std::deque<QueuedNotification*> QueuedNotifications;
+
 // Handles all aspects of the notifications to be displayed.
 class NotificationManager : public BalloonCollectionObserver,
                             public UserActivityObserver {
@@ -27,7 +30,7 @@ class NotificationManager : public BalloonCollectionObserver,
   ~NotificationManager();
 
   // Adds a notification to be displayed.
-  void Add(const Notification& notification);
+  void Add(const Notification& notification, Profile* profile);
 
   // BalloonCollectionObserver implementation.
   virtual void OnBalloonSpaceChanged();
@@ -56,7 +59,7 @@ class NotificationManager : public BalloonCollectionObserver,
   UserActivityInterface* activity_;
   BalloonCollectionObserver* balloons_observer_;
   scoped_ptr<BalloonCollectionInterface> balloon_collection_;
-  std::deque<Notification*> show_queue_;
+  QueuedNotifications show_queue_;
   bool in_presentation_;
   DISALLOW_COPY_AND_ASSIGN(NotificationManager);
 };
