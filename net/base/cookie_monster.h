@@ -70,7 +70,7 @@ class CookieMonster {
       : initialized_(false),
         store_(NULL),
         last_access_threshold_(
-            base::TimeDelta::FromSeconds(last_access_threshold_seconds)) {
+            TimeDelta::FromSeconds(last_access_threshold_seconds)) {
   }
 #endif
 
