@@ -63,6 +63,8 @@ class WebPluginContainer : public WebCore::Widget {
   virtual void show();
   virtual void hide();
   virtual void handleEvent(WebCore::Event* event);
+  virtual void frameRectsChanged() const;
+  virtual void setParentVisible(bool visible);
   virtual void attachToWindow();
   virtual void detachFromWindow();
 
@@ -186,7 +188,6 @@ class WebPluginImpl : public WebPlugin,
 
   // Widget implementation:
   virtual WebCore::IntRect windowClipRect() const;
-  virtual void geometryChanged() const;
 
   // Returns window-relative rectangles that should clip this widget.
   // Only rects that intersect the given bounds are relevant.
