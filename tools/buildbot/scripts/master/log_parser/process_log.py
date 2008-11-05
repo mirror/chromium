@@ -11,6 +11,7 @@ method upon completion with full data from process stdio.
 """
 
 import errno
+import logging
 import os
 import re
 import simplejson
@@ -367,14 +368,29 @@ class GraphingLogProcessor(PerformanceLogProcessor):
       # Compute the mean and standard deviation for a multiple-valued item,
       # or the numerical value of a single-valued item.
       if trace.value.startswith('['):
-        value_list = [float(x) for x in trace.value.strip('[],').split(',')]
+        try:
+          value_list = [float(x) for x in trace.value.strip('[],').split(',')]
+        except ValueError:
+          # Report, but ignore, corrupted data lines. (Lines that are so badly
+          # broken that they don't even match the RESULTS_REGEX won't be
+          # detected.)
+          logging.warning("Bad test output: '%s'" % trace.value.strip())
+          return
         trace.value, trace.stddev = self._CalculateStatistics(value_list,
                                                               trace_name)
       elif trace.value.startswith('{'):
         stripped = trace.value.strip('{},')
-        trace.value, trace.stddev = [float(x) for x in stripped.split(',')]
+        try:
+          trace.value, trace.stddev = [float(x) for x in stripped.split(',')]
+        except ValueError:
+          logging.warning("Bad test output: '%s'" % trace.value.strip())
+          return
       else:
-        trace.value = float(trace.value)
+        try:
+          trace.value = float(trace.value)
+        except ValueError:
+          logging.warning("Bad test output: '%s'" % trace.value.strip())
+          return
 
       graph.traces[trace_name] = trace
       self._graphs[graph_name] = graph
@@ -434,12 +450,19 @@ class GraphingLogProcessor(PerformanceLogProcessor):
     """
     try:
       graph_file = open(os.path.join(self._output_dir, GRAPH_LIST))
-      graph_list = simplejson.load(graph_file)
     except IOError, e:
       if e.errno != errno.ENOENT:
         raise
       graph_file = None
       graph_list = []
+    if graph_file:
+      try:
+        graph_list = simplejson.load(graph_file)
+      except ValueError:
+        graph_list = []
+        graph_file.seek(0)
+        logging.error("Error parsing %s: '%s'" % (GRAPH_LIST,
+                      graph_file.read().strip()))
     if graph_file:
       graph_file.close()
 
