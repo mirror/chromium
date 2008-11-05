@@ -171,7 +171,7 @@ V8 | KJS # LayoutTests/fast/history/history_reload.html = PASS | FAIL
 V8 | KJS # LayoutTests/fast/repaint/bugzilla-6473.html = PASS | FAIL
 
 // Bug 982608: test had a wrong result for one condition
-V8 | KJS # LayoutTests/plugins/destroy-stream-twice.html = FAIL | TIMEOUT
+V8 | KJS # LayoutTests/plugins/destroy-stream-twice.html = FAIL | TIMEOUT | CRASH
 
 // This test has been modified and placed in pending, so we ignore the original
 // until we get our modification into WebKit.
@@ -1036,7 +1036,7 @@ V8 | KJS # LayoutTests/svg/dynamic-updates/SVGEllipseElement-svgdom-cy-prop.html
 V8 | KJS # LayoutTests/http/tests/navigation/redirect302-goback.html = FAIL | PASS
 
 // Got flakey (both debug and release) around r3581 (ananta).
-V8 | KJS # LayoutTests/http/tests/plugins/geturlnotify-from-npp-destroystream.html = FAIL | PASS
+V8 | KJS # LayoutTests/http/tests/plugins/geturlnotify-from-npp-destroystream.html = FAIL | PASS | CRASH
 
 // Crash in DEBUG only
 V8 | KJS # LayoutTests/svg/W3C-SVG-1.1/interact-dom-01-b.svg = CRASH | PASS
@@ -1135,7 +1135,7 @@ V8 | KJS # LayoutTests/scrollbars/scrollbar-orientation.html = FAIL
 V8 | KJS # LayoutTests/transforms/2d/compound-transforms-vs-containers.html = FAIL
 V8 | KJS # LayoutTests/transforms/2d/transform-borderbox.html = FAIL
 V8 | KJS # LayoutTests/transforms/2d/transform-origin-borderbox.html = FAIL
-V8 | KJS # LayoutTests/fast/events/message-port-inactive-document.html = TIMEOUT
+V8 | KJS # LayoutTests/fast/events/message-port-inactive-document.html = TIMEOUT | CRASH
 V8 | KJS # LayoutTests/http/tests/security/MessagePort/event-listener-context.html = FAIL
 // missing expected results
 V8 | KJS # SKIP LayoutTests/fast/forms/search-placeholder-value-changed.html = FAIL
@@ -1356,7 +1356,7 @@ V8 | KJS # LayoutTests/fast/js/exception-thrown-from-new.html = FAIL
 V8 | KJS # LayoutTests/fast/js/global-constructors.html = FAIL
 V8 | KJS # LayoutTests/fast/layers/opacity-transforms.html = FAIL
 V8 | KJS # LayoutTests/fast/overflow/overflow_hidden.html = FAIL
-V8 | KJS # LayoutTests/fast/profiler = FAIL
+V8 | KJS # LayoutTests/fast/profiler = FAIL | TIMEOUT
 V8 | KJS # LayoutTests/fast/replaced/percent-height-in-anonymous-block-widget.html = FAIL
 V8 | KJS # LayoutTests/fast/text/bidi-embedding-pop-and-push-same.html = FAIL
 V8 | KJS # LayoutTests/fast/text/international/hindi-spacing.html = FAIL
@@ -1364,6 +1364,7 @@ V8 | KJS # LayoutTests/plugins/netscape-construct.html = FAIL
 V8 | KJS # LayoutTests/transforms/transform-value-types.html = FAIL
 
 // CHANGED OR REBASELINED IN WEBKIT 37604:38097
+V8 | KJS # LayoutTests/fast/events/message-port.html = CRASH
 
 // MERGE 37604:38097 REGRESSIONS
 V8 | KJS # LayoutTests/fast/events/message-channel-gc.html = FAIL
@@ -1371,3 +1372,10 @@ V8 | KJS # LayoutTests/fast/frames/crash-removed-iframe.html = FAIL
 V8 | KJS # LayoutTests/fast/loader/cancel-load-during-port-block-timer.html = FAIL
 V8 | KJS # LayoutTests/http/tests/loading/gmail-assert-on-load.html = FAIL
 V8 | KJS # LayoutTests/svg/carto.net/combobox.svg = FAIL
+V8 | KJS # LayoutTests/fast/events/tabindex-focus-blur-all.html = CRASH
+V8 | KJS # LayoutTests/fast/events/message-channel-gc-2.html = TIMEOUT
+V8 | KJS # LayoutTests/http/tests/security/frameNavigation/xss-DENIED-targeted-link-navigation.html = CRASH
+V8 | KJS # LayoutTests/plugins/open-and-close-window-with-plugin.html = CRASH
+V8 | KJS # LayoutTests/plugins/plugin-remove-subframe.html = CRASH
+V8 | KJS # LayoutTests/plugins/return-error-from-new-stream-doesnt-invoke-destroy-stream.html = CRASH
+V8 | KJS # pending/fast/events/tabindex-focus-blur-all.html = CRASH
