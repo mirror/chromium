@@ -144,10 +144,9 @@ void WebFrameLoaderClient::detachedFromParent2() {
   // FIXME
 }
 void WebFrameLoaderClient::detachedFromParent3() {
-  // FIXME
-}
-
-void WebFrameLoaderClient::detachedFromParent4() {
+  // TODO: Clean up code here.
+  // See http://code.google.com/p/chromium/issues/detail?id=4124
+  //
   // Called during the last part of frame detaching, to indicate that we should
   // destroy various objects (including the FrameWin).
   webframe_->Closing();

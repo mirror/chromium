@@ -64,7 +64,7 @@
 // When frame content is replaced, all subframes are destroyed. This happens
 // in FrameLoader::detachFromParent for each suframe. Here, we first clear
 // the view in the Frame, breaking the circular cycle between Frame and
-// FrameView. Then it calls detachedFromParent4 on the FrameLoaderClient.
+// FrameView. Then it calls detachedFromParent3 on the FrameLoaderClient.
 //
 // The FrameLoaderClient is implemented by WebFrameLoaderClient, which is
 // an object owned by WebFrame. It calls WebFrame::Closing which causes
