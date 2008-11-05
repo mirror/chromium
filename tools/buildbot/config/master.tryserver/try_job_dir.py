@@ -20,7 +20,7 @@ from twisted.python import log, runtime
 
 import chromium_config as config
 
-class TryJob(Try_Jobdir):
+class TryJobDir(Try_Jobdir):
   """Try_Jobdir overload that executes the patch files in the pending directory.
 
   groups is the groups of default builders used for round robin. The other
