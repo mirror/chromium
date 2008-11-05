@@ -861,12 +861,19 @@ void NavigationController::RemoveLastEntryForInterstitial() {
         // Broadcast the notification of the navigation. This is kind of a hack,
         // since the navigation wasn't actually committed. But this function is
         // used for interstital pages, and the UI needs to get updated when the
-        // interstitial page
+        // interstitial page. Since we want to preserve the SSL state, we
+        // recreate the serialized security info so the SSL manager doesn't
+        // clear out the state (thinking it just got a commit from the renderer
+        // with no security state).
         LoadCommittedDetails details;
         details.entry = GetActiveEntry();
         details.is_auto = false;
         details.is_in_page = false;
         details.is_main_frame = true;
+        details.serialized_security_info = SSLManager::SerializeSecurityInfo(
+            details.entry->ssl().cert_id(),
+            details.entry->ssl().cert_status(),
+            details.entry->ssl().security_bits());
         NotifyNavigationEntryCommitted(&details);
       }
     }
