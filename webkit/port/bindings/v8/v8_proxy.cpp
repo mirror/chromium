@@ -869,7 +869,7 @@ static V8EventListener* FindEventListenerInList(V8EventListenerList& list,
     // check using the == operator on the handles. This is much,
     // much faster than calling StrictEquals through the API in 
     // the negative case.
-    if (el->isAttachedToEventTargetNode() == isInline && listener == wrapper)
+    if (el->isInline() == isInline && listener == wrapper)
         return el;
     ++p;
   }
