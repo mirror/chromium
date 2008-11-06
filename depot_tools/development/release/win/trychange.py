@@ -9,7 +9,10 @@ import gcl
 import getpass
 import optparse
 import os
+import socket
+import sys
 import traceback
+import upload
 
 # Constants
 HELP_STRING = ("Sorry, I couldn't retrieve or execute the tryserver script. "
@@ -34,6 +37,45 @@ class InvalidScript(Exception):
 class NoTryServerAccess(Exception):
   def __str__(self):
     return self.args[0] + ' is unaccessible.\n' + HELP_STRING
+
+
+class SocketFile(socket.socket):
+  """Add read() and write() support to a socket."""
+  def read(self, size=16):
+    return self.recv(size)
+  def write(self, data):
+    return self.sendall(data)
+
+
+class DictNetstringProtocol:
+  """Minimal utility class to send dgk's netstrings."""
+  def __init__(self, transport):
+    self.transport = transport
+
+  def SendString(self, data):
+    data_as_string = '%d:%s,' % (len(data), data)
+    self.transport.write(data_as_string)
+
+  def SendDict(self, dict):
+    for key,value in dict.items():
+      self.SendString("%s=%s" % (key, value))
+
+  def ReadString(self):
+    """Very very dumb and very very slow implementation."""
+    data = ""
+    while data.find(':') == -1:
+      data += self.transport.read(2)
+    expected_length = int(data[:data.find(':')])
+    data = data[data.find(':')+1:]
+    remaining = expected_length - len(data) + 1
+    while remaining:
+      remaining = expected_length - len(data) + 1
+      data += self.transport.read(remaining)
+      remaining = expected_length - len(data) + 1
+    # Strip the comma.
+    if data[-1:] != ',':
+      raise Exception("invalid string")
+    return data[:-1]
 
 
 def GetCheckoutRoot():
@@ -79,19 +121,38 @@ def EscapeDot(name):
   return name.replace('.', '-')
 
 
-def _SendChangeNFS(try_name, diff, bot):
+def _SendChangeNFS(options):
   """Send a change to the try server."""
   script_locals = ExecuteTryServerScript()
-  patch_name = EscapeDot(getpass.getuser()) + '.' + EscapeDot(try_name)
+  patch_name = EscapeDot(options.user) + '.' + EscapeDot(options.name)
   if bot:
-    patch_name += '.' + EscapeDot(bot)
+    patch_name += '.' + EscapeDot(options.bot)
   patch_name += '.diff'
   patch_path = os.path.join(script_locals['try_server'], patch_name)
   try:
-    gcl.WriteFile(patch_path, diff)
+    gcl.WriteFile(patch_path, options.diff)
   except IOError, e:
     raise NoTryServerAccess(script_locals['try_server'])
   return patch_name
+
+
+def _SendChangeNetstring(options):
+  """Send a change to the try server using the netscript protocol."""
+  values = {}
+  if options.email:
+    values['email'] = options.email
+  values['user'] = options.user
+  values['name'] = options.name
+  if options.bot:
+    values['bot'] = options.bot
+  values['patch'] = options.diff
+  connection = SocketFile(socket.AF_INET, socket.SOCK_STREAM)
+  connection.connect((options.host, options.port))
+  proto = DictNetstringProtocol(connection)
+  proto.SendDict(values)
+  values = proto.ReadString()
+  connection.shutdown(socket.SHUT_RDWR)
+  return options.name
 
 
 def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
@@ -100,29 +161,51 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   parser = optparse.OptionParser(usage="%prog [options]")
   parser.add_option("-n", "--name", default=name,
                     help="Name of the try change.")
-  parser.add_option("-f", "--file_list", default=file_list,
+  parser.add_option("-f", "--file_list", default=file_list, action="append",
                     help="List of files to include in the try.")
   parser.add_option("-b", "--bot", default=None,
                     help="Force a specific build bot.")
+  parser.add_option("--use_nfs", action="store_true",
+                    help="Use NFS to talk to the try server.")
+  parser.add_option("--use_tcp", action="store_true",
+                    help="Use TCP (netstrings) to talk to the try server.")
+  parser.add_option("--nfs", default=None,
+                    help="NFS path to use to talk to the try server.")
+  parser.add_option("--host", default=None,
+                    help="Host address to use to talk to the try server.")
+  parser.add_option("--port", default=8018,
+                    help="Port to use to talk to the try server.")
   parser.add_option("-p", "--patchset", default=patchset,
                     help="Define the Rietveld's patchset id.")
+  parser.add_option("--diff", default=None,
+                    help="Define the Rietveld's patchset id.")
+  parser.add_option("--root", default=None,
+                    help="Root to use for the patch.")
+  parser.add_option("-u", "--user", default=getpass.getuser(),
+                    help="User name to be used.")
+  parser.add_option("-e", "--email", default=None,
+                    help="Email address where to send the results.")
   options, args = parser.parse_args(argv)
   if not options.file_list:
     print "Nothing to try, changelist is empty."
     return
 
   try:
-    # Change the current working directory before generating the diff so that it
-    # shows the correct base.
-    os.chdir(gcl.GetRepositoryRoot())
-
-    # Generate the diff and write it to the submit queue path. Fix the file list
-    # according to the new path.
-    subpath = PathDifference(GetCheckoutRoot(), os.getcwd())
-    os.chdir(GetCheckoutRoot())
-    diff = gcl.GenerateDiff([os.path.join(subpath, x)
-                             for x in options.file_list])
-    patch_name = _SendChangeNFS(options.name, diff, options.bot)
+    if not options.diff:
+      # Change the current working directory before generating the diff so that it
+      # shows the correct base.
+      os.chdir(gcl.GetRepositoryRoot())
+      # Generate the diff and write it to the submit queue path. Fix the file list
+      # according to the new path.
+      subpath = PathDifference(GetCheckoutRoot(), os.getcwd())
+      os.chdir(GetCheckoutRoot())
+      options.diff = gcl.GenerateDiff([os.path.join(subpath, x)
+                                      for x in options.file_list])
+    # Defaults to NFS for now.
+    if not options.use_tcp:
+      patch_name = _SendChangeNFS(options)
+    else:
+      patch_name = _SendChangeNetstring(options)
     print 'Patch \'%s\' sent to try server.' % patch_name
   except ScriptNotFound, e:
     if swallow_exception:
@@ -136,3 +219,7 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
     if swallow_exception:
       return
     print e
+
+if __name__ == "__main__":
+  TryChange(sys.argv)
+ 
