@@ -38,7 +38,7 @@ Icon::~Icon()
 {
 }
 
-PassRefPtr<Icon> Icon::newIconForFile(const String& filename)
+PassRefPtr<Icon> Icon::createIconForFile(const String& filename)
 {
   notImplemented();
   return NULL;
