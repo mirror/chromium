@@ -15,6 +15,7 @@
 #include "chrome/personalization/personalization.h"
 #endif
 #include "webkit/glue/password_form_dom_manager.h"
+#include "webkit/glue/autofill_form.h"
 
 enum ConsoleMessageLevel;
 class NavigationEntry;
@@ -465,6 +466,7 @@ class RenderViewHost : public RenderWidgetHost {
                                 const std::string& json_arguments,
                                 IPC::Message* reply_msg);
   void OnMsgPasswordFormsSeen(const std::vector<PasswordForm>& forms);
+  void OnMsgAutofillFormSubmitted(const AutofillForm& forms);
   void OnMsgStartDragging(const WebDropData& drop_data);
   void OnUpdateDragCursor(bool is_drop_target);
   void OnTakeFocus(bool reverse);

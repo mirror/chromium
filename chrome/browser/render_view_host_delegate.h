@@ -257,6 +257,9 @@ class RenderViewHostDelegate {
 
   // Password forms have been detected in the page.
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms) { }
+  
+  // Forms fillable by autofill have been detected in the page.
+  virtual void AutofillFormSubmitted(const AutofillForm& form) { }
 
   // Callback to inform the browser it should take back focus. If reverse is
   // true, it means the focus was retrieved by doing a Shift-Tab.
