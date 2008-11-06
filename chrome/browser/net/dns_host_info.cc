@@ -73,7 +73,7 @@ void DnsHostInfo::SetAssignedState() {
   state_ = ASSIGNED;
   queue_duration_ = GetDuration();
   DLogResultsStats("DNS Prefetch assigned");
-  DHISTOGRAM_TIMES(L"DNS.PrefetchQueue", queue_duration_);
+  UMA_HISTOGRAM_TIMES(L"DNS.PrefetchQueue", queue_duration_);
 }
 
 void DnsHostInfo::SetPendingDeleteState() {
@@ -165,7 +165,7 @@ DnsBenefit DnsHostInfo::AcruePrefetchBenefits(DnsHostInfo* later_host_info) {
 
   if (later_host_info->resolve_duration_ > kMaxNonNetworkDnsLookupDuration) {
     // Our precache effort didn't help since HTTP stack hit the network.
-    DHISTOGRAM_TIMES(L"DNS.PrefetchCacheEviction", resolve_duration_);
+    UMA_HISTOGRAM_TIMES(L"DNS.PrefetchCacheEviction", resolve_duration_);
     DLogResultsStats("DNS PrefetchCacheEviction");
     return PREFETCH_CACHE_EVICTION;
   }
