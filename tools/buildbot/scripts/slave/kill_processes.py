@@ -4,12 +4,23 @@
 # found in the LICENSE file.
 
 """A tool to kill any leftover test processes, executed by buildbot.
-"""
+
+Only works on Windows."""
 
 import os
+import subprocess
 import sys
 
-import google.process_utils
+
+def KillAll(process_names):
+  """Tries to kill all copies of each process in the processes list."""
+  for process_name in process_names:
+    Kill(process_name)
+
+def Kill(process_name):
+  command = ['taskkill.exe', '/f', '/im', '/t']
+  subprocess.call(command + [process_name])
+
 
 # rdpclip.exe is part of Remote Desktop.  It has a bug that sometimes causes
 # it to keep the clipboard open forever, denying other processes access to it.
@@ -64,4 +75,4 @@ processes=[
 ]
 
 if '__main__' == __name__:
-  sys.exit(google.process_utils.KillAll(processes))
+  sys.exit(KillAll(processes))

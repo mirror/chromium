@@ -101,7 +101,8 @@ class TryJobDir(Try_Jobdir):
       # that somebody is holding open. This was causing a Permission
       # Denied error on bear's win32-twisted1.3 buildslave.
       # Also, remove the destination file first.
-      os.remove(file_to)
+      if os.path.exists(file_to):
+        os.remove(file_to)
       os.rename(file_from, file_to)
       f = open(file_to, "r")
 

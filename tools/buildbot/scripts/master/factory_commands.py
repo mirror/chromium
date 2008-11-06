@@ -129,6 +129,11 @@ class FactoryCommands(object):
     self._build_dir = build_dir
     self._target_platform = target_platform
 
+    # Starting from e.g. C:\b\slave\build_slave_path\build, find
+    # C:\b\scripts\slave. If you change this, you need to change
+    # _taskkill_python too.
+    self._script_dir = os.path.join('..', '..', '..', 'scripts', 'slave')
+
     if self._target_platform == 'win32':
       self._perl = 'perl.exe'
       # Steps run using a separate copy of python.exe, so it can be killed at
@@ -139,7 +144,10 @@ class FactoryCommands(object):
       # os.path.join() doesn't work here because cmd.exe needs '\'.
       python_path = '\\'.join(['src', 'third_party', 'python_24'])
       self._python = '\\'.join([python_path, 'python_slave.exe'])
-      self._taskkill_python = '\\'.join([python_path, 'python.exe'])
+      # This should fit with the self._script_dir definition.
+      self._taskkill_python = '\\'.join(['..', '..', '..',
+                                         'depot_tools', 'release',
+                                         'python_24', 'python.exe'])
     else:
       self._perl = 'perl'
       self._python = 'python'
@@ -161,10 +169,6 @@ class FactoryCommands(object):
                                          'checkdeps.py')
     self._debugger_test_tool = os.path.join('test', 'debugger',
                                             'debugger_unittests.py')
-
-    # Starting from e.g. C:\b\slave\chrome-release\build, find
-    # C:\b\scripts\slave.
-    self._script_dir = os.path.join('..', '..', '..', 'scripts', 'slave')
 
     self._kill_tool = os.path.join(self._script_dir, 'kill_processes.py')
     self._differential_installer_tool = os.path.join(
