@@ -305,14 +305,6 @@ namespace WebCore {
         GdkEventExpose* gdkExposeEvent() const;
 #endif
 
-#if PLATFORM(SKIA)
-        FloatRect getBoundingBoxForCurrentPath(bool includStroke = false) const;
-
-        /** Determines if a given point is contained in a path stroked with the current style
-        */
-        bool strokeContains(const Path&, const FloatPoint&) const;
-#endif
-
     private:
         void savePlatformState();
         void restorePlatformState();
