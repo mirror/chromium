@@ -780,10 +780,6 @@ static void ReportUnsafeJavaScriptAccess(v8::Local<v8::Object> host,
                                          v8::AccessType type,
                                          v8::Local<v8::Value> data)
 {
-    // Do not report error if the access type is HAS.
-    if (type == v8::ACCESS_HAS)
-        return;
-
     Frame* target = V8Custom::GetTargetFrame(host, data);
     if (target)
         ReportUnsafeAccessTo(target, REPORT_LATER);
