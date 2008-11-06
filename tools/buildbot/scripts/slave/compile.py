@@ -72,10 +72,18 @@ def main_scons(options, args):
   if options.clobber:
     command.append('--clobber')
 
-  # Add --debug=explain (SCons option) so it will tell us why it's
-  # rebuilding things, and VERBOSE=1 (local setting) so the logs
-  # contain the exact command line(s) that fail.
-  command.extend(['--debug=explain', 'VERBOSE=1'])
+  # Here's what you can uncomment if you need to see more info
+  # about what the build is doing on a slave:
+  #
+  #   VERBOSE=1 (a setting in our local SCons config) replaces
+  #   the "Compiling ..." and "Linking ..." lines with the
+  #   actual executed command line(s)
+  #
+  #   --debug=explain (a SCons option) will tell you why SCons
+  #   is deciding to rebuild thing (the target doesn't exist,
+  #   which .h file(s) changed, etc.)
+  # 
+  #command.extend(['--debug=explain', 'VERBOSE=1'])
   command.extend(args)
   result = chromium_utils.RunCommand(command)
   return result
