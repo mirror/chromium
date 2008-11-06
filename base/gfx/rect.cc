@@ -42,6 +42,10 @@ Rect::Rect(int x, int y, int width, int height)
   set_height(height);
 }
 
+Rect::Rect(const gfx::Point& origin, const gfx::Size& size)
+    : origin_(origin), size_(size) {
+}
+
 #if defined(OS_WIN)
 Rect::Rect(const RECT& r)
     : origin_(r.left, r.top) {
