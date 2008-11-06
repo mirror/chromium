@@ -148,7 +148,7 @@ class WebDatabase {
   bool InsertFormElement(const AutofillForm::Element& element, int64* pair_id);
 
   // Adds a new row to the autofill_dates table.
-  bool InsertPairIDAndDate(int64 pair_id, const base::Time& date_created);
+  bool InsertPairIDAndDate(int64 pair_id, const Time& date_created);
 
   //////////////////////////////////////////////////////////////////////////////
   //
