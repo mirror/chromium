@@ -44,6 +44,12 @@ PassRefPtr<Icon> Icon::createIconForFile(const String& filename)
   return NULL;
 }
 
+PassRefPtr<Icon> Icon::createIconForFiles(const Vector<String>& filenames)
+{
+  notImplemented();
+  return NULL;
+}
+
 void Icon::paint(GraphicsContext* context, const IntRect& r)
 {
   notImplemented();
