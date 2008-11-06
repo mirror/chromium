@@ -105,9 +105,10 @@ class PerformanceLogProcessor(object):
   def _ShouldWriteResults(self):
     """Tells whether the results should be persisted.
 
-    Write results if revision number is available for the current build.
+    Write results if revision number is available for the current build
+    and the report link was specified.
     """
-    return self._revision > 0
+    return self._revision > 0 and self.ReportLink()
 
   def _JoinWithSpaces(self, array):
     return ' '.join([str(x) for x in array])
@@ -349,7 +350,8 @@ class GraphingLogProcessor(PerformanceLogProcessor):
       self._ProcessLine(log_line)
 
     self.__CreateSummaryOutput()
-    self.__SaveGraphInfo()
+    if self._ShouldWriteResults():
+      self.__SaveGraphInfo()
     return self._text_summary
 
   def _ProcessLine(self, line):
@@ -418,13 +420,15 @@ class GraphingLogProcessor(PerformanceLogProcessor):
     """
     for graph_name, graph in self._graphs.iteritems():
       # Write a line in the applicable summary file for each graph.
-      filename = os.path.join(self._output_dir, "%s-summary.dat" % graph_name)
-      json = simplejson.dumps({'rev': self._revision,
-                               'traces': graph.traces}, cls=JSONGraphEncoder)
-      Prepend(filename, json + "\n")
+      if  self._ShouldWriteResults():
+        filename = os.path.join(self._output_dir,
+                                "%s-summary.dat" % graph_name)
+        json = simplejson.dumps({'rev': self._revision,
+                                 'traces': graph.traces}, cls=JSONGraphEncoder)
+        Prepend(filename, json + "\n")
 
+      # Add a line to the waterfall for each important trace.
       for trace_name, trace in graph.traces.iteritems():
-        # Add a line to the waterfall for each important trace.
         if trace_name.endswith("_ref"):
           continue
         if trace.important:
@@ -524,7 +528,8 @@ class GraphingPageCyclerLogProcessor(GraphingLogProcessor):
         if page not in page_times:
           page_times[page] = []
         page_times[page].append(iteration_times[page_index])
-    self.__SavePageData(page_times, trace_name)
+    if self._ShouldWriteResults():
+      self.__SavePageData(page_times, trace_name)
     return chromium_utils.FilteredMeanAndStandardDeviation(sums)
 
   def __SavePageData(self, page_times, trace_name):
