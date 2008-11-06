@@ -241,9 +241,6 @@ void RenderViewHost::FirePageBeforeUnload() {
 }
 
 void RenderViewHost::FirePageUnload() {
-  // Start the hang monitor in case the renderer hangs in the unload handler.
-  is_waiting_for_unload_ack_ = true;
-  StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
   ClosePage(site_instance()->process_host_id(),
             routing_id());
 }
@@ -265,6 +262,10 @@ void RenderViewHost::ClosePageIgnoringUnloadEvents(int render_process_host_id,
 
 void RenderViewHost::ClosePage(int new_render_process_host_id,
                                int new_request_id) {
+  // Start the hang monitor in case the renderer hangs in the unload handler.
+  is_waiting_for_unload_ack_ = true;
+  StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
+
   if (IsRenderViewLive()) {
     Send(new ViewMsg_ClosePage(routing_id_,
                                new_render_process_host_id,
@@ -278,9 +279,15 @@ void RenderViewHost::ClosePage(int new_render_process_host_id,
   }
 }
 
-void RenderViewHost::SetHasPendingCrossSiteRequest(bool has_pending_request) {
+void RenderViewHost::SetHasPendingCrossSiteRequest(bool has_pending_request, 
+                                                   int request_id) {
   Singleton<CrossSiteRequestManager>()->SetHasPendingCrossSiteRequest(
       process()->host_id(), routing_id_, has_pending_request);
+  pending_request_id_ = request_id;
+}
+
+int RenderViewHost::GetPendingRequestId() {
+  return pending_request_id_;
 }
 
 void RenderViewHost::OnCrossSiteResponse(int new_render_process_host_id,
@@ -1026,6 +1033,7 @@ void RenderViewHost::OnMsgRunJavaScriptMessage(
   StopHangMonitorTimeout();
   if (modal_dialog_count_++ == 0)
     SetEvent(modal_dialog_event_.Get());
+  bool did_suppress_message = false;
   delegate_->RunJavaScriptMessage(message, default_prompt, flags, reply_msg);
 }
 
@@ -1223,20 +1231,11 @@ void RenderViewHost::OnQueryFormFieldAutofill(const std::wstring& field_name,
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {
-  if (is_waiting_for_unload_ack_) {
-    // If the tab hangs in the beforeunload/unload handler there's really
-    // nothing we can do to recover. Pretend the unload listeners have
-    // all fired and close the tab. If the hang is in the beforeunload handler
-    // then the user will not have the option of cancelling the close.
-    UnloadListenerHasFired();
-    delegate_->Close(this);
-    return;
-  }
-
   // If the debugger is attached, we're going to be unresponsive anytime it's
   // stopped at a breakpoint.
-  if (!debugger_attached_)
-    delegate_->RendererUnresponsive(this);
+  if (!debugger_attached_) {
+    delegate_->RendererUnresponsive(this, is_waiting_for_unload_ack_);
+  }
 }
 
 void RenderViewHost::NotifyRendererResponsive() {
