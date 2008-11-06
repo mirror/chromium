@@ -1002,9 +1002,6 @@ V8 | KJS # LayoutTests/fast/css/font-face-multiple-faces.html = FAIL
 // TODO(eroman): passed for me locally, need to see why failed on buildbot...
 V8 | KJS # LayoutTests/fast/backgrounds/svg-as-background-6.html = PASS | FAIL
 
-// Post-merge Timeouts: Definitely need to be fixed one day
-V8 | KJS # LayoutTests/http/tests/security/cross-frame-access-call.html = TIMEOUT
- 
 // Post-merge Debug only Crashes
 V8 | KJS # LayoutTests/http/tests/misc/onload-remove-iframe-crash-2.html = CRASH | PASS
 // One of these svg tests sometimes crash in debug mode.  It seems to only

@@ -1035,7 +1035,7 @@ CALLBACK_FUNC_DECL(DOMWindowShowModalDialog) {
       V8ClassIndex::DOMWINDOW, args.Holder());
   Frame* frame = window->frame();
 
-  if (!frame)
+  if (!frame || !V8Proxy::CanAccessFrame(frame, true)) 
     return v8::Undefined();
 
   if (!canShowModalDialogNow(frame) || !allowPopUp())
