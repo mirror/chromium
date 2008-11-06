@@ -18,7 +18,7 @@ def KillAll(process_names):
     Kill(process_name)
 
 def Kill(process_name):
-  command = ['taskkill.exe', '/f', '/im', '/t']
+  command = ['taskkill.exe', '/f', '/t', '/im']
   subprocess.call(command + [process_name])
 
 
