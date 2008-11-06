@@ -108,8 +108,6 @@ bool GoogleUpdateClient::Launch(HINSTANCE instance,
 bool GoogleUpdateClient::Init(const wchar_t* client_guid,
                               const wchar_t* client_dll) {
   client_util::GetExecutablePath(dll_path_);
-  user_mode_ = client_util::IsPerUserInstall(dll_path_);
-
   guid_.assign(client_guid);
   dll_.assign(client_dll);
   bool ret = false;
