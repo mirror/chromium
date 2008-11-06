@@ -79,6 +79,7 @@
 #include "CSSVariablesDeclaration.h"
 #include "FrameLoader.h"
 #include "FrameTree.h"
+#include "MessagePort.h"
 #include "MimeTypeArray.h"
 #include "NodeFilter.h"
 #include "Plugin.h"
@@ -92,6 +93,7 @@
 #include "StyleSheetList.h"
 #include "WebKitCSSTransformValue.h"
 #include "XMLHttpRequest.h"
+#include "XMLHttpRequestUpload.h"
 #include "XMLHttpRequestException.h"
 #include "XPathException.h"
 
@@ -1611,6 +1613,9 @@ void V8Proxy::clearForNavigation()
             ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, wrapper);
         domWindow->clearAllTimeouts();
 
+        // disconnect all event listeners
+        DisconnectEventListeners();
+
         // Separate the context from its global object.
         m_context->DetachGlobal();
     }
@@ -2659,8 +2664,11 @@ void V8Proxy::UpdateDocumentHandle(v8::Local<v8::Object> handle)
 }
 
 
-// A JS object of type EventTarget can only be two possible types:
-// 1) EventTargetNode; 2) XMLHttpRequest;
+// A JS object of type EventTarget can only be five possible types:
+// 1) EventTargetNode; 2) XMLHttpRequest; 3) MessagePort; 4) SVGElementInstance;
+// 5) XMLHttpRequestUpload
+// check EventTarget.h for new type conversion methods
+// also make sure to sync with V8EventListener::GetThisObject (v8_events.cpp)
 v8::Handle<v8::Value> V8Proxy::EventTargetToV8Object(EventTarget* target)
 {
   if (!target)
@@ -2680,6 +2688,21 @@ v8::Handle<v8::Value> V8Proxy::EventTargetToV8Object(EventTarget* target)
   XMLHttpRequest* xhr = target->toXMLHttpRequest();
   if (xhr) {
     v8::Handle<v8::Object> peer = dom_object_map().get(xhr);
+    ASSERT(!peer.IsEmpty());
+    return peer;
+  }
+
+  // MessagePort is created within its JS counterpart
+  MessagePort* port = target->toMessagePort();
+  if (port) {
+    v8::Handle<v8::Object> peer = dom_object_map().get(port);
+    ASSERT(!peer.IsEmpty());
+    return peer;
+  }
+
+  XMLHttpRequestUpload* upload = target->toXMLHttpRequestUpload();
+  if (upload) {
+    v8::Handle<v8::Object> peer = dom_object_map().get(upload);
     ASSERT(!peer.IsEmpty());
     return peer;
   }
