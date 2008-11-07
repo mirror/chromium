@@ -451,12 +451,14 @@ void ChromeClientImpl::runOpenPanel(WebCore::Frame* frame,
   delegate->RunFileChooser(suggestion, chooser);
 }
 
-void ChromeClientImpl::popupOpened(
-    WebCore::FramelessScrollView* popup_view, const WebCore::IntRect& bounds) {
+void ChromeClientImpl::popupOpened(WebCore::FramelessScrollView* popup_view,
+                                   const WebCore::IntRect& bounds,
+                                   bool focus_on_show) {
   WebViewDelegate* d = webview_->delegate();
   if (d) {
     WebWidgetImpl* webwidget =
-        static_cast<WebWidgetImpl*>(d->CreatePopupWidget(webview_));
+        static_cast<WebWidgetImpl*>(d->CreatePopupWidget(webview_,
+                                                         focus_on_show));
     webwidget->Init(popup_view, webkit_glue::FromIntRect(bounds));
   }
 }
