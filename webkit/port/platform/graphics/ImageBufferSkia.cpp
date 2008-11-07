@@ -44,7 +44,10 @@ namespace WebCore {
 
 auto_ptr<ImageBuffer> ImageBuffer::create(const IntSize& size, bool)
 {
-  return auto_ptr<ImageBuffer>(new ImageBuffer(size));
+    auto_ptr<ImageBuffer> newBuffer(new ImageBuffer(size));
+    if (!newBuffer->context())
+        return auto_ptr<ImageBuffer>();
+    return newBuffer;
 }
 
 const SkBitmap* ImageBuffer::image() const

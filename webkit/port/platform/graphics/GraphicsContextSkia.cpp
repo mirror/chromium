@@ -703,7 +703,12 @@ void GraphicsContext::freePlatformPattern(PlatformPattern* shader)
 
 GraphicsContext* GraphicsContext::createOffscreenContext(int width, int height)
 {
-    gfx::PlatformCanvasWin* canvas = new gfx::PlatformCanvasWin(width, height, false);
+    gfx::PlatformCanvasWin* canvas = new gfx::PlatformCanvasWin();
+    if (!canvas->initialize(width, height, false, NULL)) {
+        // Bitmap allocation failure.
+        delete canvas;
+        return 0;
+    }
     PlatformContextSkia* pgc = new PlatformContextSkia(canvas);
     canvas->drawARGB(0, 0, 0, 0, SkPorterDuff::kClear_Mode);
 
