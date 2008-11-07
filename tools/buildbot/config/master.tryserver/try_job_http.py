@@ -10,47 +10,37 @@ from buildbot.scheduler import BadJobfile
 from buildbot.scheduler import TryBase
 from buildbot.sourcestamp import SourceStamp
 from twisted.application import strports
-from twisted.internet import error
-from twisted.internet import protocol
-from twisted.python import failure
 from twisted.python import log
-from twisted.protocols.basic import NetstringReceiver
-from twisted.internet.error import ConnectionDone
+from twisted.web import http
 
 
-class SimpleDictServer(NetstringReceiver):
-  """Sends dictionaries across a netstring communication channel."""
-  MAX_LENGTH = 20*1024*1024
+class TryJobHTTPRequest(http.Request):
+  def __init__(self, channel, queued):
+    http.Request.__init__(self, channel, queued)
 
-  def connectionMade(self):
-    self.sendString("version=1.0")
-    self._accumulated_data = {}
-
-  def connectionLost(self, reason):
-    if isinstance(reason.value, ConnectionDone) and len(self._accumulated_data):
-      self.parseData(self._accumulated_data)
+  def process(self):
+    # Support only one URI for now.
+    if self.uri != '/send_try_patch':
+      log.msg("Received invalid URI: %s" % self.uri)
+      self.code = http.NOT_FOUND
     else:
-      log.msg("Connection failed.")
-
-  def stringReceived(self, line):
-    # Expect "key=value" where value can be empty. Split this in a list of 2
-    # items.
-    data = line.split('=', 1)
-    if len(data) != 2:
-      log.msg("Got malformed data: %s" % line)
-      self.transport.loseConnection(failure.Failure(error.MessageLengthError()))
-      self.brokenPeer = 1
-    else:
-      # Remember the key,value pair.
-      self._accumulated_data[data[0]] = data[1]
-
-  def parseData(self, data):
-    self.factory.parent.messageReceived(data)
+      try:
+        # The arguments values are embedded in a list.
+        tmp_args = {}
+        for (key,value) in self.args.items():
+          tmp_args[key] = value[0]
+        self.channel.factory.parent.messageReceived(tmp_args)
+      except:
+        self.code = http.INTERNAL_SERVER_ERROR
+        raise
+    self.code_message = http.RESPONSES[self.code]
+    self.write('OK')
+    self.finish()
 
 
-class TryJobPort(TryBase):
-  """Opens a TCP (netstrings) port to accept patch files and to execute these on
-  the try server."""
+class TryJobHTTP(TryBase):
+  """Opens a HTTP port to accept patch files and to execute these on the try
+  server."""
 
   def __init__(self, name, pools, port, userpass=None, properties={}):
     self.pools = pools
@@ -59,8 +49,8 @@ class TryJobPort(TryBase):
     if type(port) is int:
       port = "tcp:%d" % port
     self.port = port
-    f = protocol.ServerFactory()
-    f.protocol = SimpleDictServer
+    f = http.HTTPFactory()
+    f.protocol.requestFactory = TryJobHTTPRequest
     f.parent = self
     s = strports.service(port, f)
     s.setServiceParent(self)
