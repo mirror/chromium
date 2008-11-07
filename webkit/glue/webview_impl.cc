@@ -1311,8 +1311,6 @@ SearchableFormData* WebViewImpl::CreateSearchableFormDataForFocusedNode() {
   if (!page_.get())
     return NULL;
 
-  Frame* frame = page_->mainFrame();
-
   if (RefPtr<Frame> focused = page_->focusController()->focusedFrame()) {
     RefPtr<Document> document = focused->document();
     if (document.get()) {
