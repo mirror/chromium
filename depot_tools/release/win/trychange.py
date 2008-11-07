@@ -9,10 +9,10 @@ import gcl
 import getpass
 import optparse
 import os
-import socket
 import sys
 import traceback
-import upload
+import urllib
+
 
 # Constants
 HELP_STRING = ("Sorry, I couldn't retrieve or execute the tryserver script. "
@@ -37,45 +37,6 @@ class InvalidScript(Exception):
 class NoTryServerAccess(Exception):
   def __str__(self):
     return self.args[0] + ' is unaccessible.\n' + HELP_STRING
-
-
-class SocketFile(socket.socket):
-  """Add read() and write() support to a socket."""
-  def read(self, size=16):
-    return self.recv(size)
-  def write(self, data):
-    return self.sendall(data)
-
-
-class DictNetstringProtocol:
-  """Minimal utility class to send dgk's netstrings."""
-  def __init__(self, transport):
-    self.transport = transport
-
-  def SendString(self, data):
-    data_as_string = '%d:%s,' % (len(data), data)
-    self.transport.write(data_as_string)
-
-  def SendDict(self, dict):
-    for key,value in dict.items():
-      self.SendString("%s=%s" % (key, value))
-
-  def ReadString(self):
-    """Very very dumb and very very slow implementation."""
-    data = ""
-    while data.find(':') == -1:
-      data += self.transport.read(2)
-    expected_length = int(data[:data.find(':')])
-    data = data[data.find(':')+1:]
-    remaining = expected_length - len(data) + 1
-    while remaining:
-      remaining = expected_length - len(data) + 1
-      data += self.transport.read(remaining)
-      remaining = expected_length - len(data) + 1
-    # Strip the comma.
-    if data[-1:] != ',':
-      raise Exception("invalid string")
-    return data[:-1]
 
 
 def GetCheckoutRoot():
@@ -136,8 +97,8 @@ def _SendChangeNFS(options):
   return patch_name
 
 
-def _SendChangeNetstring(options):
-  """Send a change to the try server using the netscript protocol."""
+def _SendChangeHTTP(options):
+  """Send a change to the try server using the HTTP protocol."""
   values = {}
   if options.email:
     values['email'] = options.email
@@ -146,12 +107,12 @@ def _SendChangeNetstring(options):
   if options.bot:
     values['bot'] = options.bot
   values['patch'] = options.diff
-  connection = SocketFile(socket.AF_INET, socket.SOCK_STREAM)
-  connection.connect((options.host, options.port))
-  proto = DictNetstringProtocol(connection)
-  proto.SendDict(values)
-  values = proto.ReadString()
-  connection.shutdown(socket.SHUT_RDWR)
+  url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
+  connection = urllib.urlopen(url, urllib.urlencode(values))
+  if not connection:
+    raise NoTryServerAccess(url)
+  if connection.read() != 'OK':
+    raise NoTryServerAccess(url)
   return options.name
 
 
@@ -167,8 +128,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                     help="Force a specific build bot.")
   parser.add_option("--use_nfs", action="store_true",
                     help="Use NFS to talk to the try server.")
-  parser.add_option("--use_tcp", action="store_true",
-                    help="Use TCP (netstrings) to talk to the try server.")
+  parser.add_option("--use_http", action="store_true",
+                    help="Use HTTP to talk to the try server.")
   parser.add_option("--nfs", default=None,
                     help="NFS path to use to talk to the try server.")
   parser.add_option("--host", default=None,
@@ -202,10 +163,10 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
       options.diff = gcl.GenerateDiff([os.path.join(subpath, x)
                                       for x in options.file_list])
     # Defaults to NFS for now.
-    if not options.use_tcp:
-      patch_name = _SendChangeNFS(options)
+    if options.use_http:
+      patch_name = _SendChangeHTTP(options)
     else:
-      patch_name = _SendChangeNetstring(options)
+      patch_name = _SendChangeNFS(options)
     print 'Patch \'%s\' sent to try server.' % patch_name
   except ScriptNotFound, e:
     if swallow_exception:
