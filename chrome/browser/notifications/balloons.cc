@@ -7,6 +7,7 @@
 
 #include "base/logging.h"
 #include "base/gfx/rect.h"
+#include "chrome/browser/notifications/balloon_contents.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/browser/site_instance.h"
@@ -66,8 +67,11 @@ bool BalloonCollection::HasSpace() const {
 }
 
 void BalloonCollection::Add(const Notification& notification,
-                            Profile* profile) {
-  Balloon* new_balloon = new Balloon(notification, profile);
+                            Profile* profile,
+                            SiteInstance* site_instance) {
+  Balloon* new_balloon = new Balloon(notification, profile, site_instance);
+  gfx::Size size(layout_.min_balloon_width(), layout_.min_balloon_height());
+  new_balloon->SetSize(size);
   balloons_.push_back(new_balloon);
   gfx::Point origin = layout_.GetOrigin();
   for (Balloons::iterator it = balloons_.begin(); it != balloons_.end(); ++it) {
@@ -84,40 +88,39 @@ void BalloonCollection::ShowAll() {
 void BalloonCollection::HideAll() {
 }
 
-Balloon::Balloon(const Notification& notification, Profile* profile)
+Balloon::Balloon(const Notification& notification,
+                 Profile* profile,
+                 SiteInstance* site_instance)
     : profile_(profile),
+      site_instance_(site_instance),
       notification_(notification),
-      state_(OPENING_BALLOON),
-      host_delegate_(this) {
+      state_(OPENING_BALLOON) {
 }
 
 Balloon::~Balloon() {
 }
 
 void Balloon::Show() {
+  if (!contents_.get()) {
+    contents_.reset(new BalloonContents(this));
+    contents_->Start();
+  }
 }
 
 void Balloon::SetPosition(const gfx::Point& upper_left) {
+  position_ = upper_left;
+}
+
+void Balloon::SetSize(const gfx::Size& size) {
+  size_ = size;
+}
+
+const gfx::Point& Balloon::position() const {
+  return position_;
 }
 
 const gfx::Size& Balloon::size() const {
   return size_;
-}
-
-WebPreferences Balloon::BalloonRenderViewHostDelegate::GetWebkitPrefs() {
-  return WebPreferences();
-}
-
-Profile* Balloon::BalloonRenderViewHostDelegate::GetProfile() const {
-  return balloon_->profile();
-}
-
-void Balloon::BalloonRenderViewHostDelegate::RendererReady(
-    RenderViewHost* render_view_host) {
-}
-
-void Balloon::BalloonRenderViewHostDelegate::RendererGone(
-    RenderViewHost* render_view_host) {
 }
 
 BalloonCollection::Layout::Placement BalloonCollection::Layout::placement_ =

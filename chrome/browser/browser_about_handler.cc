@@ -19,6 +19,7 @@
 #ifdef ENABLE_BACKGROUND_TASK
 #include "chrome/browser/background_task/background_task_manager.h"
 #include "chrome/browser/background_task/background_task_runner.h"
+#include "chrome/browser/notifications/balloon_contents.h"
 #endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
@@ -520,6 +521,9 @@ void AboutMemoryHandler::GetTabContentsTitles(RenderProcessHost* rph,
           break;
         case RenderViewHostDelegate::BACKGROUND_TASK_DELEGATE:
           title = static_cast<BackgroundTaskRunner*>(host->delegate())->title();
+          break;
+        case RenderViewHostDelegate::BALLOON_CONTENTS_DELEGATE:
+          title = static_cast<BalloonContents*>(host->delegate())->title();
           break;
         default:
           NOTREACHED();

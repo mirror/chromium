@@ -11,9 +11,6 @@
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/automation/ui_controls.h"
-#ifdef ENABLE_BACKGROUND_TASK
-#include "chrome/browser/background_task/background_task_manager.h"
-#endif  // ENABLE_BACKGROUND_TASK
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_window.h"
@@ -710,9 +707,6 @@ void Browser::ExecuteCommand(int id) {
 
     case IDC_EXIT:
       BrowserList::CloseAllBrowsers(true);
-#ifdef ENABLE_BACKGROUND_TASK
-      BackgroundTaskManager::CloseAllActiveTasks();
-#endif  // ENABLE_BACKGROUND_TASK
       break;
 
     case IDC_HELPMENU: {

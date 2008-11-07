@@ -7,6 +7,10 @@
 
 #ifdef ENABLE_BACKGROUND_TASK
 
+#include <vector>
+#include "base/basictypes.h"
+#include "base/timer.h"
+
 // Categorization of the user mode
 enum UserMode {
   // User is away
@@ -55,6 +59,59 @@ class UserActivityInterface {
 
   // Returns the number of milliseconds the system has had no user input.
   virtual uint32 QueryUserIdleTimeMs() = 0;
+};
+
+class UserActivityMonitor : public UserActivityInterface {
+ public:
+  // Creator.
+  static UserActivityMonitor* Create();
+
+  UserActivityMonitor();
+  virtual ~UserActivityMonitor();
+
+  // UserActivityInterface implementations.
+  virtual void AddObserver(UserActivityObserver* observer);
+  virtual void CheckNow();
+  virtual UserMode user_mode() const { return user_mode_; }
+  virtual uint32 QueryUserIdleTimeMs() { return GetUserIdleTimeMs(); }
+
+ protected:
+  // Gets the user mode by using platform-specific function if possible.
+  virtual UserMode PlatformDetectUserMode() = 0;
+
+  // Returns the number of seconds for the monitor power off.
+  virtual uint32 GetMonitorPowerOffTimeSec() = 0;
+
+  // Returns the number of milliseconds the system has had no user input.
+  virtual uint32 GetUserIdleTimeMs() = 0;
+
+  // Returns true if screen saver is running.
+  virtual bool IsScreensaverRunning() = 0;
+
+  // Returns true if workstation is locked.
+  virtual bool IsWorkstationLocked() = 0;
+
+  // Returns true if in full screen mode.
+  virtual bool IsFullScreenMode() = 0;
+
+ private:
+  // Get the current user activity mode.
+  UserMode GetUserActivity();
+
+  // Returns true if the user is idle.
+  bool IsUserIdle();
+
+  // Returns true if the user is busy.
+  bool IsUserBusy();
+
+  // Returns true if the user is away.
+  bool IsUserAway();
+
+  std::vector<UserActivityObserver*> observers_;
+  UserMode user_mode_;
+  base::RepeatingTimer<UserActivityMonitor> timer_;
+
+  DISALLOW_COPY_AND_ASSIGN(UserActivityMonitor);
 };
 
 // Is user active?

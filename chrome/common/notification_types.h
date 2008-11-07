@@ -493,6 +493,20 @@ enum NotificationType {
   // (the pointer is usable).
   // No details are expected.
   NOTIFY_BACKGROUND_TASK_DISCONNECTED,
+
+  // This notification is sent when a balloon is connected to a renderer
+  // process. The source is a Source<Balloon> with a pointer to the
+  // the balloon.  A NOTIFY_BALLOON_DISCONNECTED notification is
+  // guaranteed before the source pointer becomes junk.
+  // No details are expected.
+  NOTIFY_BALLOON_CONNECTED,
+
+  // This message is sent after a balloon is disconnected from the renderer
+  // process.
+  // The source is a Source<Balloon> with a pointer to the balloon (the pointer
+  // is usable).
+  // No details are expected.
+  NOTIFY_BALLOON_DISCONNECTED,
 #endif  // ENABLE_BACKGROUND_TASK
 
   // Greasemonkey user scripts -------------------------------------------------

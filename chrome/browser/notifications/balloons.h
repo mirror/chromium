@@ -13,11 +13,15 @@
 
 #include "base/basictypes.h"
 #include "base/gfx/point.h"
+#include "base/gfx/rect.h"
 #include "base/gfx/size.h"
+#include "base/scoped_ptr.h"
 #include "chrome/browser/notifications/notification.h"
-#include "chrome/browser/render_view_host_delegate.h"
 
 class Balloon;
+class BalloonContents;
+class Profile;
+class SiteInstance;
 
 class BalloonCollectionObserver {
  public:
@@ -31,7 +35,9 @@ class BalloonCollectionInterface {
   virtual ~BalloonCollectionInterface() {}
 
   // Adds a new balloon for the specified notification.
-  virtual void Add(const Notification &notification, Profile* profile) = 0;
+  virtual void Add(const Notification& notification,
+                   Profile* profile,
+                   SiteInstance* site_instance) = 0;
 
   // Show all balloons.
   virtual void ShowAll() = 0;
@@ -53,7 +59,9 @@ class BalloonCollection : public BalloonCollectionInterface {
   explicit BalloonCollection(BalloonCollectionObserver* observer);
 
   // BalloonCollectionInterface overrides
-  virtual void Add(const Notification& notification, Profile* profile);
+  virtual void Add(const Notification& notification,
+                   Profile* profile,
+                   SiteInstance* site_instance);
   virtual void ShowAll();
   virtual void HideAll();
   virtual bool HasSpace() const;
@@ -131,15 +139,27 @@ class BalloonCollection : public BalloonCollectionInterface {
 // Represents a Notification on the screen.
 class Balloon {
  public:
-  Balloon(const Notification& notification, Profile* profile);
+  Balloon(const Notification& notification,
+          Profile* profile,
+          SiteInstance* site_instance);
   ~Balloon();
 
   const Notification& notification() const {
     return notification_;
   }
 
+  Profile* profile() const {
+    return profile_;
+  }
+
+  SiteInstance* site_instance() const {
+    return site_instance_;
+  }
+
   void SetPosition(const gfx::Point& upper_left);
+  void SetSize(const gfx::Size& size);
   void Show();
+  const gfx::Point& position() const;
   const gfx::Size& size() const;
 
  private:
@@ -151,35 +171,12 @@ class Balloon {
     RESTORING_BALLOON,
   };
 
-  class BalloonRenderViewHostDelegate : public RenderViewHostDelegate {
-   public:
-    explicit BalloonRenderViewHostDelegate(Balloon* balloon)
-        : balloon_(balloon) {
-    }
-
-    // RenderViewHostDelegate implementations.
-    virtual WebPreferences GetWebkitPrefs();
-    virtual Profile* GetProfile() const;
-    virtual void RendererReady(RenderViewHost* render_view_host);
-    virtual void RendererGone(RenderViewHost* render_view_host);
-    virtual RenderViewHostDelegateType GetDelegateType() const {
-      // TODO(jianli): fix this.
-      return static_cast<RenderViewHostDelegateType >(0);
-    }
-
-   private:
-    Balloon* balloon_;
-    DISALLOW_COPY_AND_ASSIGN(BalloonRenderViewHostDelegate);
-  };
-
-  Profile* profile() const {
-    return profile_;
-  }
-
   Profile* profile_;
+  SiteInstance* site_instance_;
   Notification notification_;
   BalloonState state_;
-  BalloonRenderViewHostDelegate host_delegate_;
+  scoped_ptr<BalloonContents> contents_;
+  gfx::Point position_;
   gfx::Size size_;
   DISALLOW_COPY_AND_ASSIGN(Balloon);
 };

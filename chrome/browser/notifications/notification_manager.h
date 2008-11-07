@@ -17,20 +17,29 @@
 class BalloonCollectionMock;
 #endif  // UNIT_TEST
 class Notification;
+struct NotificationManagerSingletonTraits;
+class Profile;
 
 class QueuedNotification;
 typedef std::deque<QueuedNotification*> QueuedNotifications;
+
+class SiteInstance;
 
 // Handles all aspects of the notifications to be displayed.
 class NotificationManager : public BalloonCollectionObserver,
                             public UserActivityObserver {
  public:
+  // Gets the singleton NotificationManager object.
+  static NotificationManager* GetInstance();
+
   NotificationManager(UserActivityInterface* activity,
                       BalloonCollectionObserver* balloons_observer);
   ~NotificationManager();
 
   // Adds a notification to be displayed.
-  void Add(const Notification& notification, Profile* profile);
+  void Add(const Notification& notification,
+           Profile* profile,
+           SiteInstance* site_instance);
 
   // BalloonCollectionObserver implementation.
   virtual void OnBalloonSpaceChanged();
@@ -49,6 +58,8 @@ class NotificationManager : public BalloonCollectionObserver,
 #endif  // UNIT_TEST
 
  private:
+  friend struct NotificationManagerSingletonTraits;
+
   // Attempts to display notifications from the show_queue if the user
   // is active.
   void CheckAndShowNotifications();

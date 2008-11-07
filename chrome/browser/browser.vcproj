@@ -722,19 +722,19 @@
 			Name="Bookmarks"
 			>
 			<File
-				RelativePath=".\bookmarks\bookmark_context_menu.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\bookmarks\bookmark_context_menu.h"
-				>
-			</File>
-			<File
 				RelativePath=".\bookmarks\bookmark_codec.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\bookmarks\bookmark_codec.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_context_menu.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_context_menu.h"
 				>
 			</File>
 			<File
@@ -1514,6 +1514,14 @@
 			Name="Notifications"
 			>
 			<File
+				RelativePath=".\notifications\balloon_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\balloon_contents.h"
+				>
+			</File>
+			<File
 				RelativePath=".\notifications\balloons.cc"
 				>
 			</File>
@@ -1531,6 +1539,10 @@
 			</File>
 			<File
 				RelativePath=".\notifications\notification_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\user_activity.cc"
 				>
 			</File>
 			<File

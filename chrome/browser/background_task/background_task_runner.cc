@@ -36,6 +36,7 @@ BackgroundTaskRunner::BackgroundTaskRunner(
     BackgroundTask* background_task)
     : background_task_manager_(background_task_manager),
       background_task_(background_task),
+      task_instance_(NULL),
       render_view_host_(NULL),
       notify_disconnection_(false),
       method_factory_(this) {
@@ -72,11 +73,11 @@ void BackgroundTaskRunner::DelayedShutdown() {
 }
 
 bool BackgroundTaskRunner::Start() {
-  SiteInstance* task_instance =
+  task_instance_ =
       SiteInstance::CreateSiteInstance(background_task_manager_->profile());
-  task_instance->SetSite(background_task_->url.GetOrigin());
+  task_instance_->SetSite(background_task_->url.GetOrigin());
   
-  render_view_host_ = new RenderViewHost(task_instance,
+  render_view_host_ = new RenderViewHost(task_instance_,
                                          this,
                                          MSG_ROUTING_NONE,
                                          NULL);
@@ -130,6 +131,15 @@ void BackgroundTaskRunner::UpdateTitle(RenderViewHost* render_view_host,
                                        int32 page_id,
                                        const std::wstring& title) {
   title_ = title;
+}
+
+void BackgroundTaskRunner::RunJavaScriptMessage(const std::wstring& message,
+                                                const std::wstring& prompt,
+                                                const int flags,
+                                                IPC::Message* reply_msg) {
+  // Suppresses the message.
+  ViewHostMsg_RunJavaScriptMessage::WriteReplyParams(reply_msg, false, prompt);
+  render_view_host_->Send(reply_msg);
 }
 
 void BackgroundTaskRunner::NotifyConnected() {

@@ -6,15 +6,24 @@
 #include "chrome/browser/notifications/notification_manager.h"
 
 #include "base/logging.h"
+#include "base/scoped_ptr.h"
+#include "base/singleton.h"
 #include "chrome/browser/notifications/balloons.h"
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/user_activity.h"
+#include "chrome/browser/site_instance.h"
+
+// static
+static scoped_ptr<UserActivityMonitor> g_user_activity_monitor;
 
 class QueuedNotification {
  public:
-  QueuedNotification(const Notification& notification, Profile* profile)
+  QueuedNotification(const Notification& notification,
+                     Profile* profile,
+                     SiteInstance* site_instance)
       : notification_(notification),
-        profile_(profile) {
+        profile_(profile),
+        site_instance_(site_instance) {
   }
 
   const Notification& notification() const {
@@ -24,9 +33,15 @@ class QueuedNotification {
   Profile* profile() const {
     return profile_;
   }
+
+  SiteInstance* site_instance() const {
+    return site_instance_;
+  }
+
  private:
   Notification notification_;
   Profile* profile_;
+  SiteInstance* site_instance_;
   DISALLOW_COPY_AND_ASSIGN(QueuedNotification);
 };
 
@@ -38,6 +53,27 @@ void Clear(QueuedNotifications* notifications) {
     notifications->pop_back();
     delete removed;
   }
+}
+
+struct NotificationManagerSingletonTraits :
+    public DefaultSingletonTraits<NotificationManager> {
+  static NotificationManager* New() {
+    g_user_activity_monitor.reset(UserActivityMonitor::Create());
+    NotificationManager* instance = new NotificationManager(
+        g_user_activity_monitor.get(), NULL);
+    return instance;
+  }
+
+  static void Delete(NotificationManager* instance) {
+    g_user_activity_monitor.reset();
+    delete instance;
+  }
+};
+
+// static
+NotificationManager* NotificationManager::GetInstance() {
+  return Singleton<NotificationManager,
+                   NotificationManagerSingletonTraits>::get();
 }
 
 NotificationManager::NotificationManager(
@@ -56,10 +92,12 @@ NotificationManager::~NotificationManager() {
 }
 
 void NotificationManager::Add(const Notification& notification,
-                              Profile* profile) {
+                              Profile* profile,
+                              SiteInstance* site_instance) {
   LOG(INFO) << "Added notification. url: "
 	        << notification.url().spec().c_str();
-  show_queue_.push_back(new QueuedNotification(notification, profile));
+  show_queue_.push_back(
+      new QueuedNotification(notification, profile, site_instance));
   CheckAndShowNotifications();
 }
 
@@ -78,7 +116,8 @@ void NotificationManager::ShowNotifications() {
     QueuedNotification* queued_notification = show_queue_.front();
     show_queue_.pop_front();
     balloon_collection_->Add(queued_notification->notification(),
-                             queued_notification->profile());
+                             queued_notification->profile(),
+                             queued_notification->site_instance());
     delete queued_notification;
   }
 }

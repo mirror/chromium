@@ -13,6 +13,7 @@
 
 struct BackgroundTask;
 class BackgroundTaskManager;
+class SiteInstance;
 
 // Defines a light-weight wrapper around a RenderViewHost responsible for
 // running HTML and JS of a background task.
@@ -43,8 +44,13 @@ class BackgroundTaskRunner : public RenderViewHostDelegate {
   virtual void UpdateTitle(RenderViewHost* render_view_host,
                            int32 page_id,
                            const std::wstring& title);
+  virtual void RunJavaScriptMessage(const std::wstring& message,
+                                    const std::wstring& prompt,
+                                    const int flags,
+                                    IPC::Message* reply_msg);
 
   // Accessors.
+  SiteInstance* task_instance() const { return task_instance_; }
   RenderViewHost* render_view_host() const { return render_view_host_; }
   const std::wstring& title() const { return title_; }
 
@@ -61,6 +67,9 @@ class BackgroundTaskRunner : public RenderViewHostDelegate {
 
   // The background task.
   BackgroundTask* background_task_;
+
+  // The site instance.
+  SiteInstance* task_instance_;
 
   // The host HTML runner.
   RenderViewHost* render_view_host_;

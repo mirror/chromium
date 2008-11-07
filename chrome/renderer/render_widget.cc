@@ -141,7 +141,6 @@ void RenderWidget::Init(int32 opener_id) {
 // indicates we do not need to reparent or anything.
 void RenderWidget::CompleteInit(HWND parent_hwnd) {
   DCHECK(routing_id_ != MSG_ROUTING_NONE);
-  DCHECK(parent_hwnd);
 
   host_window_ = parent_hwnd;
 
