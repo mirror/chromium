@@ -407,6 +407,7 @@ void BookmarkContextMenu::ExecuteCommand(int id) {
       break;
 
     case IDS_BOOKMARK_MANAGER:
+      UserMetrics::RecordAction(L"ShowBookmarkManager", profile_);
       BookmarkManagerView::Show(profile_);
       break;
 

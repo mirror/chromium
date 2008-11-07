@@ -189,7 +189,9 @@ class TestObserver : public ProfileWriter,
         ++history_count_;
   }
 
-  virtual void AddBookmarkEntry(const std::vector<BookmarkEntry>& bookmark) {
+  virtual void AddBookmarkEntry(const std::vector<BookmarkEntry>& bookmark,
+                                const std::wstring& first_folder_name,
+                                int options) {
     // Importer should import the IE Favorites folder the same as the list.
     for (size_t i = 0; i < bookmark.size(); ++i) {
       if (FindBookmarkEntry(bookmark[i], kIEBookmarks,
@@ -542,7 +544,9 @@ class FirefoxObserver : public ProfileWriter,
     ++history_count_;
   }
 
-  virtual void AddBookmarkEntry(const std::vector<BookmarkEntry>& bookmark) {
+  virtual void AddBookmarkEntry(const std::vector<BookmarkEntry>& bookmark,
+                                const std::wstring& first_folder_name,
+                                int options) {
     for (size_t i = 0; i < bookmark.size(); ++i) {
       if (FindBookmarkEntry(bookmark[i], kFirefox2Bookmarks,
                             arraysize(kFirefox2Bookmarks)))
@@ -737,7 +741,9 @@ class Firefox3Observer : public ProfileWriter,
     ++history_count_;
   }
 
-  virtual void AddBookmarkEntry(const std::vector<BookmarkEntry>& bookmark) {
+  virtual void AddBookmarkEntry(const std::vector<BookmarkEntry>& bookmark,
+                                const std::wstring& first_folder_name,
+                                int options) {
     for (size_t i = 0; i < bookmark.size(); ++i) {
       if (FindBookmarkEntry(bookmark[i], kFirefox3Bookmarks,
                             arraysize(kFirefox3Bookmarks)))
@@ -817,4 +823,3 @@ TEST_F(ImporterTest, Firefox3Importer) {
       HISTORY | PASSWORDS | FAVORITES | SEARCH_ENGINES, observer, true));
   loop->Run();
 }
-
