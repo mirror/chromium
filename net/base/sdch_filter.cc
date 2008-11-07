@@ -38,8 +38,8 @@ SdchFilter::~SdchFilter() {
       decoding_status_ = DECODING_ERROR;
   }
 
-  if (base::Time() != connect_time() && base::Time() != time_of_last_read_) {
-    base::TimeDelta duration = time_of_last_read_ - connect_time();
+  if (Time() != connect_time() && Time() != time_of_last_read_) {
+    TimeDelta duration = time_of_last_read_ - connect_time();
     // Note: connect_time may be somewhat incorrect if this is cached data, as
     // it will reflect the time the connect was done for the original read :-(.
     // To avoid any chances of overflow (and since SDCH is meant to primarilly
@@ -90,7 +90,7 @@ Filter::FilterStatus SdchFilter::ReadFilteredData(char* dest_buffer,
   if (!dest_buffer || available_space <= 0)
     return FILTER_ERROR;
 
-  time_of_last_read_ = base::Time::Now();
+  time_of_last_read_ = Time::Now();
 
   if (WAITING_FOR_DICTIONARY_SELECTION == decoding_status_) {
     FilterStatus status = InitializeDictionary();
