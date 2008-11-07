@@ -3002,7 +3002,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\bindings\js\JSGeolocationCustom.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\js\JSGeolocationCustom.cpp"
 		>
 		</File>
 		<File
