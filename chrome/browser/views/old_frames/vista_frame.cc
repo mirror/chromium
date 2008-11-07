@@ -172,6 +172,7 @@ void VistaFrame::Layout() {
   GetClientRect(&client_rect);
   int width = client_rect.Width();
   int height = client_rect.Height();
+  bool is_zoomed = !!IsZoomed();
 
   root_view_.SetBounds(0, 0, width, height);
   frame_view_->SetBounds(0, 0, width, height);
@@ -184,7 +185,7 @@ void VistaFrame::Layout() {
       gfx::Size otr_image_size = off_the_record_image_->GetPreferredSize();
       tabstrip_x += otr_image_size.width() + (2 * kOTRImageHorizMargin);
       gfx::Rect off_the_record_bounds;
-      if (IsZoomed()) {
+      if (is_zoomed) {
         off_the_record_bounds.SetRect(g_bitmaps[CT_LEFT_SIDE]->width(),
                                       kResizeBorder,
                                       otr_image_size.width(),
@@ -207,7 +208,6 @@ void VistaFrame::Layout() {
                                        off_the_record_bounds.y(),
                                        off_the_record_bounds.width(),
                                        off_the_record_bounds.height());
-
     }
 
     // Figure out where the minimize button is for layout purposes.
@@ -224,11 +224,10 @@ void VistaFrame::Layout() {
 
     // If we are maxmized, the tab strip will be in line with the window
     // controls, so we need to make sure they don't overlap.
-    int zoomed_offset = 0;
+    int zoomed_offset =
+      is_zoomed ? std::max(min_offset, kWindowControlsMinOffset) : 0;
     if (distributor_logo_) {
-      if(IsZoomed()) {
-        zoomed_offset = std::max(min_offset, kWindowControlsMinOffset);
-
+      if(is_zoomed) {
         // Hide the distributor logo if we're zoomed.
         distributor_logo_->SetVisible(false);
       } else {
@@ -251,14 +250,16 @@ void VistaFrame::Layout() {
       }
     }
 
+    int tabstrip_y = kResizeBorder;
+    tabstrip_y += is_zoomed ? kDwmBorderSize : kTitlebarHeight;
+
     gfx::Rect tabstrip_bounds(tabstrip_x,
-                              kResizeBorder + (IsZoomed() ?
-                                  kDwmBorderSize : kTitlebarHeight),
+                              tabstrip_y,
                               width - tabstrip_x - kTabStripRightHorizOffset -
                               zoomed_offset,
                               tabstrip_->GetPreferredHeight());
     if (frame_view_->UILayoutIsRightToLeft() &&
-        (IsZoomed() || is_off_the_record_))
+        (is_zoomed || is_off_the_record_))
       tabstrip_bounds.set_x(
           frame_view_->MirroredLeftPointForRect(tabstrip_bounds));
     tabstrip_->SetBounds(tabstrip_bounds.x(),
@@ -915,7 +916,16 @@ void VistaFrame::OnFinalMessage(HWND hwnd) {
 }
 
 void VistaFrame::OnNCLButtonDown(UINT flags, const CPoint& pt) {
-  SetMsgHandled(false);
+  // DefWindowProc implementation for WM_NCLBUTTONDOWN will allow a
+  // maximized window to move if the window size is less than screen
+  // size. We have to handle this message to suppress this behavior.
+  if ((HTCAPTION == flags) && IsZoomed()) {
+    if (GetForegroundWindow() != m_hWnd) {
+      SetForegroundWindow(m_hWnd);
+    }
+  } else {
+    SetMsgHandled(FALSE);
+  }
 }
 
 LRESULT VistaFrame::OnNCCalcSize(BOOL w_param, LPARAM l_param) {
@@ -1086,6 +1096,51 @@ void VistaFrame::OnPaint(HDC dc) {
 LRESULT VistaFrame::OnEraseBkgnd(HDC dc) {
   SetMsgHandled(TRUE);
   return 0;
+}
+
+void VistaFrame::OnMinMaxInfo(LPMINMAXINFO mm_info) {
+  // Most likely we will choose the default processing.
+  SetMsgHandled(FALSE);
+
+  HMONITOR primary_monitor = ::MonitorFromWindow(NULL,
+                                                 MONITOR_DEFAULTTOPRIMARY);
+  HMONITOR destination_monitor = ::MonitorFromWindow(m_hWnd,
+                                                     MONITOR_DEFAULTTONEAREST);
+  if (primary_monitor == destination_monitor) {
+    MONITORINFO primary_info, destination_info;
+
+    destination_info.cbSize = sizeof(destination_info);
+    primary_info.cbSize = sizeof(primary_info);
+    GetMonitorInfo(primary_monitor, &primary_info);
+    GetMonitorInfo(destination_monitor, &destination_info);
+
+    if (EqualRect(&destination_info.rcWork, &destination_info.rcMonitor)) {
+      // Take in account the destination monitor taskbar location but the
+      // primary monitor size.
+      const int primary_monitor_width =
+          primary_info.rcMonitor.right - primary_info.rcMonitor.left;
+      const int primary_monitor_height =
+          primary_info.rcMonitor.bottom - primary_info.rcMonitor.top;
+
+      mm_info->ptMaxSize.x =
+          primary_monitor_width -
+          (destination_info.rcMonitor.right - destination_info.rcWork.right) -
+          (destination_info.rcWork.left - destination_info.rcMonitor.left) +
+          2*kResizeBorder;
+      // Make y shorter so that the client rect is less than monitor size
+      // and the task bar doesn't detect it as a 'full screen' application
+      mm_info->ptMaxSize.y =
+          primary_monitor_height -
+          (destination_info.rcMonitor.bottom - destination_info.rcWork.bottom) -
+          (destination_info.rcWork.top - destination_info.rcMonitor.top) - 1;
+
+      mm_info->ptMaxPosition.x = destination_info.rcWork.left -
+          destination_info.rcMonitor.left - kResizeBorder;
+      mm_info->ptMaxPosition.y = destination_info.rcWork.top -
+          destination_info.rcMonitor.top - kResizeBorder;
+      SetMsgHandled(TRUE);
+    }
+  }
 }
 
 void VistaFrame::ArmOnMouseLeave() {
@@ -1514,28 +1569,6 @@ void VistaFrame::ShowTabContents(TabContents* selected_contents) {
 
 TabStrip* VistaFrame::GetTabStrip() const {
   return tabstrip_;
-}
-
-void VistaFrame::ContinueDetachConstrainedWindowDrag(const gfx::Point& mouse_pt,
-                                                     int frame_component) {
-  // Need to force a paint at this point so that the newly created window looks
-  // correct. (Otherwise parts of the tabstrip are clipped).
-  CRect cr;
-  GetClientRect(&cr);
-  PaintNow(gfx::Rect(cr));
-
-  // The user's mouse is already moving, and the left button is down, but we
-  // need to start moving this frame, so we _post_ it a NCLBUTTONDOWN message
-  // with the HTCAPTION flag to trick windows into believing the user just
-  // started dragging on the title bar. All the frame moving is then handled
-  // automatically by windows. Note that we use PostMessage here since we need
-  // to return to the message loop first otherwise Windows' built in move code
-  // will not be able to be triggered.
-  POINTS pts;
-  pts.x = mouse_pt.x();
-  pts.y = mouse_pt.y();
-  PostMessage(WM_NCLBUTTONDOWN, frame_component,
-              reinterpret_cast<LPARAM>(&pts));
 }
 
 void VistaFrame::SizeToContents(const gfx::Rect& contents_bounds) {

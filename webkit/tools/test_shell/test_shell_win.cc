@@ -27,7 +27,6 @@
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/webview.h"
 #include "webkit/glue/plugins/plugin_list.h"
-#include "webkit/tools/test_shell/simple_resource_loader_bridge.h"
 #include "webkit/tools/test_shell/test_navigation_controller.h"
 
 #define MAX_LOADSTRING 100
@@ -75,13 +74,6 @@ void TestShell::InitializeTestShell(bool interactive) {
   ResetWebPreferences();
 }
 
-void TestShell::ShutdownTestShell() {
-  delete window_list_;
-  SimpleResourceLoaderBridge::Shutdown();
-  delete TestShell::web_prefs_;
-  OleUninitialize();
-}
-
 bool TestShell::CreateNewWindow(const std::wstring& startingURL,
                                 TestShell** result) {
   TestShell* shell = new TestShell();
@@ -96,6 +88,7 @@ bool TestShell::CreateNewWindow(const std::wstring& startingURL,
 
 void TestShell::DestroyWindow(gfx::WindowHandle windowHandle) {
   // Do we want to tear down some of the machinery behind the scenes too?
+  RemoveWindowFromList(windowHandle);
   ::DestroyWindow(windowHandle);
 }
 
@@ -435,29 +428,11 @@ void TestShell::WaitTestFinished() {
   WaitForSingleObject(thread_handle, 1000);  
 }
 
-void TestShell::SetFocus(WebWidgetHost* host, bool enable) {
-  if (interactive_) {
-    if (enable) {
-      ::SetFocus(host->window_handle());
-    } else {
-      if (GetFocus() == host->window_handle())
-        ::SetFocus(NULL);
-    }
-  } else {
-    if (enable) {
-      if (m_focusedWidgetHost != host) {
-        if (m_focusedWidgetHost)
-            m_focusedWidgetHost->webwidget()->SetFocus(false);
-         host->webwidget()->SetFocus(enable);
-         m_focusedWidgetHost = host;
-      }
-    } else {
-      if (m_focusedWidgetHost == host) {
-        host->webwidget()->SetFocus(enable);
-        m_focusedWidgetHost = NULL;
-      }
-    }
-  }
+void TestShell::InteractiveSetFocus(WebWidgetHost* host, bool enable) {
+  if (enable)
+    ::SetFocus(host->window_handle());
+  else if (::GetFocus() == host->window_handle())
+    ::SetFocus(NULL);
 }
 
 WebWidget* TestShell::CreatePopupWidget(WebView* webview) {
@@ -587,11 +562,7 @@ LRESULT CALLBACK TestShell::WndProc(HWND hwnd, UINT message, WPARAM wParam,
       // debugging has been enabled.
       base::MemoryDebug::DumpAllMemoryInUse();
 
-      WindowList::iterator entry =
-          std::find(TestShell::windowList()->begin(),
-                    TestShell::windowList()->end(), hwnd);
-      if (entry != TestShell::windowList()->end())
-        TestShell::windowList()->erase(entry);
+      RemoveWindowFromList(hwnd);
 
       if (TestShell::windowList()->empty() || shell->is_modal()) {
         MessageLoop::current()->PostTask(FROM_HERE,

@@ -5,18 +5,23 @@
 #include "chrome/browser/importer/importer.h"
 
 #include <map>
+#include <set>
 
 #include "base/file_util.h"
 #include "base/gfx/image_operations.h"
 #include "base/gfx/png_encoder.h"
 #include "base/string_util.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/browser.h"
+#include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/first_run.h"
 #include "chrome/browser/importer/firefox2_importer.h"
 #include "chrome/browser/importer/firefox3_importer.h"
 #include "chrome/browser/importer/firefox_importer_utils.h"
 #include "chrome/browser/importer/firefox_profile_lock.h"
 #include "chrome/browser/importer/ie_importer.h"
+#include "chrome/browser/importer/toolbar_importer.h"
 #include "chrome/browser/template_url_model.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/webdata/web_data_service.h"
@@ -24,6 +29,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/win_util.h"
 #include "chrome/views/window.h"
 #include "webkit/glue/image_decoder.h"
 
@@ -75,9 +81,15 @@ void ProfileWriter::AddHomepage(const GURL& home_page) {
 }
 
 void ProfileWriter::AddBookmarkEntry(
-    const std::vector<BookmarkEntry>& bookmark) {
+    const std::vector<BookmarkEntry>& bookmark,
+    const std::wstring& first_folder_name,
+    int options) {
   BookmarkModel* model = profile_->GetBookmarkModel();
   DCHECK(model->IsLoaded());
+
+  bool first_run = (options & FIRST_RUN) != 0;
+  std::wstring real_first_folder = first_run ? first_folder_name :
+      GenerateUniqueFolderName(model, first_folder_name);
 
   bool show_bookmark_toolbar = false;
   std::set<BookmarkNode*> groups_added_to;
@@ -86,6 +98,14 @@ void ProfileWriter::AddBookmarkEntry(
     // Don't insert this url if it isn't valid.
     if (!it->url.is_valid())
       continue;
+
+    // We suppose that bookmarks are unique by Title, URL, and Folder.  Since
+    // checking for uniqueness may not be always the user's intention we have
+    // this as an option.
+    if (options & ADD_IF_UNIQUE &&
+        DoesBookmarkExist(model, *it, real_first_folder, first_run)) {
+      continue;
+    }
 
     // Set up groups in BookmarkModel in such a way that path[i] is
     // the subgroup of path[i-1]. Finally they construct a path in the
@@ -96,17 +116,21 @@ void ProfileWriter::AddBookmarkEntry(
     for (std::vector<std::wstring>::const_iterator i = it->path.begin();
          i != it->path.end(); ++i) {
       BookmarkNode* child = NULL;
+      const std::wstring& folder_name =
+          (!first_run && !it->in_toolbar && (i == it->path.begin())) ?
+          real_first_folder : *i;
+
       for (int index = 0; index < parent->GetChildCount(); ++index) {
         BookmarkNode* node = parent->GetChild(index);
         if ((node->GetType() == history::StarredEntry::BOOKMARK_BAR ||
              node->GetType() == history::StarredEntry::USER_GROUP) &&
-            node->GetTitle() == *i) {
+            node->GetTitle() == folder_name) {
           child = node;
           break;
         }
       }
       if (child == NULL)
-        child = model->AddGroup(parent, parent->GetChildCount(), *i);
+        child = model->AddGroup(parent, parent->GetChildCount(), folder_name);
       parent = child;
     }
     groups_added_to.insert(parent);
@@ -245,7 +269,8 @@ void ProfileWriter::AddKeywords(const std::vector<TemplateURL*>& template_urls,
     }
     if (t_url->url() && t_url->url()->IsValid()) {
       model->Add(t_url);
-      if (default_keyword && t_url->url() && t_url->url()->SupportsReplacement())
+      if (default_keyword && t_url->url() && 
+          t_url->url()->SupportsReplacement())
         model->SetDefaultSearchProvider(t_url);
     } else {
       // Don't add invalid TemplateURLs to the model.
@@ -268,6 +293,79 @@ void ProfileWriter::ShowBookmarkBar() {
         NOTIFY_BOOKMARK_BAR_VISIBILITY_PREF_CHANGED, source,
         NotificationService::NoDetails());
   }
+}
+
+std::wstring ProfileWriter::GenerateUniqueFolderName(
+    BookmarkModel* model,
+    const std::wstring& folder_name) {
+  // Build a set containing the folder names of the other folder.
+  std::set<std::wstring> other_folder_names;
+  BookmarkNode* other = model->other_node();
+  for (int i = 0; i < other->GetChildCount(); ++i) {
+    BookmarkNode* node = other->GetChild(i);
+    if (node->is_folder())
+      other_folder_names.insert(node->GetTitle());
+  }
+
+  if (other_folder_names.find(folder_name) == other_folder_names.end())
+    return folder_name;  // Name is unique, use it.
+
+  // Otherwise iterate until we find a unique name.
+  for (int i = 1; i < 100; ++i) {
+    std::wstring name = folder_name + StringPrintf(L" (%d)", i);
+    if (other_folder_names.find(name) == other_folder_names.end())
+      return name;
+  }
+
+  return folder_name;
+}
+
+bool ProfileWriter::DoesBookmarkExist(
+    BookmarkModel* model,
+    const BookmarkEntry& entry,
+    const std::wstring& first_folder_name,
+    bool first_run) {
+  std::vector<BookmarkNode*> nodes_with_same_url;
+  model->GetNodesByURL(entry.url, &nodes_with_same_url);
+  if (nodes_with_same_url.empty())
+    return false;
+  
+  for (size_t i = 0; i < nodes_with_same_url.size(); ++i) {
+    BookmarkNode* node = nodes_with_same_url[i];
+    if (entry.title != node->GetTitle())
+      continue;
+
+    // Does the path match?
+    bool found_match = true;
+    BookmarkNode* parent = node->GetParent();
+    for (std::vector<std::wstring>::const_reverse_iterator path_it =
+             entry.path.rbegin();
+         (path_it != entry.path.rend()) && found_match; ++path_it) {
+      const std::wstring& folder_name =
+          (!first_run && path_it + 1 == entry.path.rend()) ?
+          first_folder_name : *path_it;
+      if (NULL == parent || *path_it != folder_name)
+        found_match = false;
+      else
+        parent = parent->GetParent();
+    }
+
+    // We need a post test to differentiate checks such as
+    // /home/hello and /hello. The parent should either by the other folder
+    // node, or the bookmarks bar, depending upon first_run and
+    // entry.in_toolbar.
+    if (found_match &&
+        ((first_run && entry.in_toolbar && parent !=
+          model->GetBookmarkBarNode()) ||
+         ((!first_run || !entry.in_toolbar) &&
+           parent != model->other_node()))) {
+      found_match = false;
+    }
+
+    if (found_match)
+      return true;  // Found a match with the same url path and title.
+  }
+  return false;
 }
 
 // Importer.
@@ -327,6 +425,7 @@ ImporterHost::ImporterHost(MessageLoop* file_loop)
 
 ImporterHost::~ImporterHost() {
   STLDeleteContainerPointers(source_profiles_.begin(), source_profiles_.end());
+  if (NULL != importer_)  importer_->Release();
 }
 
 void ImporterHost::Loaded(BookmarkModel* model) {
@@ -386,9 +485,10 @@ void ImporterHost::StartImportSettings(const ProfileInfo& profile_info,
   // will be notified.
   writer_ = writer;
   importer_ = CreateImporterByType(profile_info.browser_type);
+  importer_->AddRef();
   importer_->set_first_run(first_run);
   task_ = NewRunnableMethod(importer_, &Importer::StartImport,
-      profile_info, items, writer_.get(), this);
+      profile_info, items, writer_.get(), file_loop_, this);
 
   // We should lock the Firefox profile directory to prevent corruption.
   if (profile_info.browser_type == FIREFOX2 ||
@@ -399,6 +499,27 @@ void ImporterHost::StartImportSettings(const ProfileInfo& profile_info,
       // show a warning dialog.
       is_source_readable_ = false;
       ShowWarningDialog();
+    }
+  }
+
+  if (profile_info.browser_type == GOOGLE_TOOLBAR5) {
+    if (!ToolbarImporterUtils::IsGoogleGAIACookieInstalled()) {
+      win_util::MessageBox(
+          NULL,
+          l10n_util::GetString(IDS_IMPORTER_GOOGLE_LOGIN_TEXT).c_str(),
+          L"",
+          MB_OK | MB_TOPMOST);
+
+      GURL url("https://www.google.com/accounts/ServiceLogin");
+      BrowsingInstance* instance = new BrowsingInstance(writer_->GetProfile());
+      SiteInstance* site = instance->GetSiteInstanceForURL(url);
+      Browser* browser = BrowserList::GetLastActive();
+      browser->AddTabWithURL(url, GURL(), PageTransition::TYPED, true, site);
+
+      MessageLoop::current()->PostTask(FROM_HERE, NewRunnableMethod(
+        this, &ImporterHost::OnLockViewEnd, false));
+
+      is_source_readable_ = false;
     }
   }
 
@@ -465,10 +586,13 @@ Importer* ImporterHost::CreateImporterByType(ProfileType type) {
   switch (type) {
     case MS_IE:
       return new IEImporter();
+    case BOOKMARKS_HTML:
     case FIREFOX2:
       return new Firefox2Importer();
     case FIREFOX3:
       return new Firefox3Importer();
+    case GOOGLE_TOOLBAR5:
+      return new Toolbar5Importer();
   }
   NOTREACHED();
   return NULL;
@@ -489,6 +613,8 @@ const ProfileInfo& ImporterHost::GetSourceProfileInfoAt(int index) const {
 }
 
 void ImporterHost::DetectSourceProfiles() {
+  // The order in which detect is called determines the order
+  // in which the options appear in the dropdown combo-box
   if (ShellIntegration::IsFirefoxDefaultBrowser()) {
     DetectFirefoxProfiles();
     DetectIEProfiles();
@@ -496,6 +622,8 @@ void ImporterHost::DetectSourceProfiles() {
     DetectIEProfiles();
     DetectFirefoxProfiles();
   }
+
+  if (!FirstRun::IsChromeFirstRun()) DetectGoogleToolbarProfiles();
 }
 
 void ImporterHost::DetectIEProfiles() {
@@ -505,6 +633,8 @@ void ImporterHost::DetectIEProfiles() {
   ie->browser_type = MS_IE;
   ie->source_path.clear();
   ie->app_path.clear();
+  ie->services_supported = HISTORY | FAVORITES | COOKIES | PASSWORDS |
+      SEARCH_ENGINES;
   source_profiles_.push_back(ie);
 }
 
@@ -568,7 +698,21 @@ void ImporterHost::DetectFirefoxProfiles() {
     firefox->browser_type = firefox_type;
     firefox->source_path = source_path;
     firefox->app_path = GetFirefoxInstallPath();
+    firefox->services_supported = HISTORY | FAVORITES | COOKIES | PASSWORDS |
+        SEARCH_ENGINES;
     source_profiles_.push_back(firefox);
   }
 }
 
+void ImporterHost::DetectGoogleToolbarProfiles() {
+  if (!FirstRun::IsChromeFirstRun()) {
+    ProfileInfo* google_toolbar = new ProfileInfo();
+    google_toolbar->browser_type = GOOGLE_TOOLBAR5;
+    google_toolbar->description = l10n_util::GetString(
+                                  IDS_IMPORT_FROM_GOOGLE_TOOLBAR);
+    google_toolbar->source_path.clear();
+    google_toolbar->app_path.clear();
+    google_toolbar->services_supported = FAVORITES;
+    source_profiles_.push_back(google_toolbar);
+  }
+}

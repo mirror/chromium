@@ -722,14 +722,6 @@
 			Name="Bookmarks"
 			>
 			<File
-				RelativePath=".\bookmarks\bookmark_context_menu.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\bookmarks\bookmark_context_menu.h"
-				>
-			</File>
-			<File
 				RelativePath=".\bookmarks\bookmark_codec.cc"
 				>
 			</File>
@@ -738,11 +730,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\bookmarks\bookmark_context_menu.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_context_menu.h"
+				>
+			</File>
+			<File
 				RelativePath=".\bookmarks\bookmark_drag_data.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\bookmarks\bookmark_drag_data.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_drop_info.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_drop_info.h"
 				>
 			</File>
 			<File
@@ -755,6 +763,14 @@
 			</File>
 			<File
 				RelativePath=".\bookmarks\bookmark_model.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_html_writer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_html_writer.cc"
 				>
 			</File>
 			<File
@@ -1569,6 +1585,14 @@
 				RelativePath=".\importer\mork_reader.h"
 				>
 			</File>
+			<File
+				RelativePath=".\importer\toolbar_importer.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\importer\toolbar_importer.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Drag &amp; Drop"
@@ -1886,6 +1910,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\net\referrer.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\referrer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\net\sdch_dictionary_fetcher.cc"
 				>
 			</File>
@@ -2107,6 +2139,18 @@
 			</File>
 			<File
 				RelativePath=".\download\save_types.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Autofill"
+			>
+			<File
+				RelativePath=".\autofill_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\autofill_manager.h"
 				>
 			</File>
 		</Filter>

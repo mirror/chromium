@@ -265,7 +265,8 @@ class RenderViewHostDelegate {
   virtual void RunJavaScriptMessage(const std::wstring& message,
                                     const std::wstring& default_prompt,
                                     const int flags,
-                                    IPC::Message* reply_msg) { }
+                                    IPC::Message* reply_msg,
+                                    bool* did_suppress_message) { }
 
   virtual void RunBeforeUnloadConfirm(const std::wstring& message,
                                       IPC::Message* reply_msg) { }
@@ -279,6 +280,9 @@ class RenderViewHostDelegate {
 
   // Password forms have been detected in the page.
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms) { }
+  
+  // Forms fillable by autofill have been detected in the page.
+  virtual void AutofillFormSubmitted(const AutofillForm& form) { }
 
   // Notification that the page has an OpenSearch description document.
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
@@ -342,7 +346,8 @@ class RenderViewHostDelegate {
 
   // Notification that the renderer has become unresponsive. The
   // delegate can use this notification to show a warning to the user.
-  virtual void RendererUnresponsive(RenderViewHost* render_view_host) { }
+  virtual void RendererUnresponsive(RenderViewHost* render_view_host, 
+                                    bool is_during_unload) { }
 
   // Notification that a previously unresponsive renderer has become
   // responsive again. The delegate can use this notification to end the

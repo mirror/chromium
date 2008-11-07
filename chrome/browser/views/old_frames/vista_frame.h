@@ -28,9 +28,12 @@ class BookmarkBarView;
 class Browser;
 class BrowserView;
 class TabContentsContainerView;
-class views::FocusManager;
 class SkBitmap;
 class TabStrip;
+
+namespace views {
+  class FocusManager;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -105,6 +108,7 @@ class VistaFrame : public BrowserWindow,
     MSG_WM_ACTIVATE(OnActivate)
     MSG_WM_PAINT(OnPaint)
     MSG_WM_ERASEBKGND(OnEraseBkgnd)
+    MSG_WM_GETMINMAXINFO(OnMinMaxInfo)
     MSG_WM_NCHITTEST(OnNCHitTest)
     MSG_WM_NCCALCSIZE(OnNCCalcSize)
     MSG_WM_CAPTURECHANGED(OnCaptureChanged)
@@ -143,6 +147,7 @@ class VistaFrame : public BrowserWindow,
   void OnFinalMessage(HWND hwnd);
   void OnPaint(HDC dc);
   LRESULT OnEraseBkgnd(HDC dc);
+  void OnMinMaxInfo(LPMINMAXINFO mm_info);
 
   void ArmOnMouseLeave();
   void OnCaptureChanged(HWND hwnd);
@@ -165,9 +170,6 @@ class VistaFrame : public BrowserWindow,
   virtual void* GetPlatformID();
   virtual void ShowTabContents(TabContents* contents);
   virtual TabStrip* GetTabStrip() const;
-  virtual void ContinueDetachConstrainedWindowDrag(
-      const gfx::Point& mouse_pt,
-      int frame_component);
   virtual void SizeToContents(const gfx::Rect& contents_bounds);
   virtual void SetAcceleratorTable(
       std::map<views::Accelerator, int>* accelerator_table);
@@ -411,4 +413,3 @@ class VistaFrame : public BrowserWindow,
   DISALLOW_EVIL_CONSTRUCTORS(VistaFrame);
 };
 #endif  // CHROME_BROWSER_VIEWS_OLD_FRAMES_VISTA_FRAME_H__
-

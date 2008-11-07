@@ -32,6 +32,9 @@ const wchar_t kForceUninstall[] = L"force-uninstall";
 // Specify the file path of Chrome archive for install.
 const wchar_t kInstallArchive[] = L"install-archive";
 
+// Specify the file path of Chrome master preference file.
+const wchar_t kInstallerData[] = L"installerdata";
+
 // If present, specify file path to write logging info.
 const wchar_t kLogFile[] = L"log-file";
 
@@ -46,6 +49,10 @@ const wchar_t kMakeChromeDefault[] = L"make-chrome-default";
 // options kInstallArchive and kUninstall are ignored.
 const wchar_t kRegisterChromeBrowser[] = L"register-chrome-browser";
 
+// Renames chrome.exe to old_chrome.exe and renames new_chrome.exe to chrome.exe
+// to support in-use updates. Also deletes opv key.
+const wchar_t kRenameChromeExe[] = L"rename-chrome-exe";
+
 // Install Chrome to system wise location. The default is per user install.
 const wchar_t kSystemLevel[] = L"system-level";
 
@@ -59,10 +66,11 @@ const wchar_t kVerboseLogging[] = L"verbose-logging";
 
 const wchar_t kInstallBinaryDir[] = L"Application";
 const wchar_t kChromeExe[] = L"chrome.exe";
+const wchar_t kChromeOldExe[] = L"old_chrome.exe";
+const wchar_t kChromeNewExe[] = L"new_chrome.exe";
 const wchar_t kChromeDll[] = L"chrome.dll";
 const wchar_t kSetupExe[] = L"setup.exe";
 
 const wchar_t kUninstallStringField[] = L"UninstallString";
 const wchar_t kUninstallDisplayNameField[] = L"DisplayName";
 }  // namespace installer_util
-

@@ -28,11 +28,24 @@ else:
 
 root_env = Environment(
     tools = ['component_setup'],
+
     CHROME_SRC_DIR = '$MAIN_DIR/..',
     DESTINATION_ROOT = '$MAIN_DIR/Hammer',
     TARGET_ROOT = '$DESTINATION_ROOT',
 
+    # Where ComponentTestProgram() will build test executables.
+    TESTS_DIR = '$TARGET_ROOT',
+
+    # Where ComponentProgram() will build program executables.
+    STAGING_DIR = '$TARGET_ROOT',
+
+    # Where ComponentLibrary() will build libraries.
     LIBS_DIR              = '$COMPONENT_LIBRARY_DIR',
+
+    # TODO(hammer):  when Hammer supports this...
+    # Have Hammer prefix all Library aliases with lib_ (to avoid
+    # collisions with the component names themselves).
+    #COMPONENT_LIBRARY_ALIAS = 'lib_$LIBNAME',
 
     # Disable running of tests thru scons for now.
     COMPONENT_TEST_CMDLINE = '',
@@ -237,6 +250,7 @@ windows_env = root_env.Clone()
 environment_list.append(windows_env)
 windows_env.Tool('target_platform_windows')
 windows_env.Tool('target_debug')
+windows_env.Tool('component_targets_msvs')  # Per target project support.
 windows_env.Tool('midl')
 windows_env.Replace(
     BUILD_TYPE = 'debug-windows',
@@ -496,9 +510,18 @@ if ARGUMENTS.get('COVERAGE') == '1':
 
 # Build with system-provided NSS and GTK.
 if root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
-  linux_env.ParseConfig('pkg-config --cflags --libs nss')
-  linux_env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
-  linux_env.ParseConfig('pkg-config --cflags --libs pangoft2')
+  try:
+    linux_env.ParseConfig('pkg-config --cflags --libs nss')
+    linux_env.ParseConfig('pkg-config --cflags --libs gtk+-2.0')
+    linux_env.ParseConfig('pkg-config --cflags --libs pangoft2')
+  except OSError, e:
+    print ('\n'
+        'Failed to find a package dependency.  Please install all the\n'
+        'packages listed at\n'
+        'http://code.google.com/p/chromium/wiki/LinuxBuildInstructions'
+        '#Software_Requirements')
+
+    sys.exit(1)
 
 
 # --------------------------------------------------------------------------
@@ -639,7 +662,8 @@ if GetOption('help'):
 
 
 Import('build_component')
-Default(Alias(build_component))
+Default(None)  # Reset default target to empty.
+Default(Alias(build_component))  # Set default target based on where built.
 
 # -------------------------------------------------------------------------
 
@@ -653,11 +677,25 @@ BuildComponents(environment_list)
 # will be populated.
 if root_env.Bit('solution'):
   solution_env = root_env.Clone(tools = ['visual_studio_solution'])
-  solution = solution_env.Solution(
-      '$MAIN_DIR/chrome_scons', [windows_env],
+  src_solution = solution_env.Solution(
+      '$MAIN_DIR/chrome_scons_src', [windows_env],
       exclude_pattern = '.*(Program Files|platformsdk_vista_6_0|cygwin).*',
   )
+
+  solution = windows_env.ComponentVSSolution('chrome_scons',
+      [
+           'all_libraries',
+           'all_programs',
+           'all_test_programs',
+      ],
+      projects = [windows_env.File('$MAIN_DIR/chrome_scons_src.vcproj')],
+      COMPONENT_VS_SOLUTION_DIR='$MAIN_DIR',
+      COMPONENT_VS_PROJECT_DIR='$MAIN_DIR/projects',
+      COMPONENT_VS_PROJECT_SCRIPT_PATH=(
+        'cd $$(ProjectDir)/$VS_PROJECT_TO_MAIN_DIR && hammer.bat'),
+  )
+
   Default(None)  # Delete all other default targets.
-  Default(solution)  # Build just the solution.
+  Default([src_solution, solution])  # Build just the solution.
 
 # -------------------------------------------------------------------------

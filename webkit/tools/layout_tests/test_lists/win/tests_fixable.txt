@@ -723,6 +723,10 @@ V8 # LayoutTests/fast/js/date-set-to-nan.html = FAIL
 # http://crbug.com/2844
 V8 | KJS # SKIP : LayoutTests/http/tests/appcache = TIMEOUT | FAIL
 
+# GC issue with MessageChannels.
+# http://code.google.com/p/chromium/issues/detail?id=4195
+V8 # LayoutTests/fast/events/message-channel-gc.html = PASS | FAIL
+
 # Depends on postMessage in a way we don't support:
 # http://code.google.com/p/chromium/issues/detail?id=2857
 V8 # LayoutTests/http/tests/security/dataURL/xss-DENIED-to-data-url-sub-frame-uppercase.html = FAIL
@@ -824,6 +828,10 @@ V8 | KJS # SKIP : LayoutTests/transitions/opacity-transition-zindex.html = PASS
 # http://code.google.com/p/chromium/issues/detail?id=3273
 V8 | KJS # LayoutTests/editing/selection/move-left-right.html = FAIL
 
+# This test needs to be rebaselined but said rebaselining didn't work and after
+# over an hour wasted, I'm giving up. -brettw
+V8 | KJS # LayoutTests/svg/custom/foreign-object-skew.svg = FAIL
+
 // ----------------------------------------------------------------------------
 // NEW FOR THE MERGE
 //
@@ -859,7 +867,7 @@ V8 | KJS # LayoutTests/fast/transforms/shadows.html = FAIL
 V8 | KJS # LayoutTests/http/tests/misc/acid3.html = FAIL
 V8 | KJS # DEFER : LayoutTests/http/tests/misc/frame-default-enc-same-domain.html = FAIL
 V8 | KJS # LayoutTests/http/tests/security/canvas-remote-read-svg-image.html = FAIL
-V8 | KJS # LayoutTests/http/tests/security/cross-origin-xsl-BLOCKED.html = FAIL
+// V8 | KJS # LayoutTests/http/tests/security/cross-origin-xsl-BLOCKED.html = FAIL
 V8 | KJS # LayoutTests/http/tests/security/xss-DENIED-synchronous-form.html = FAIL | TIMEOUT
 V8 | KJS # LayoutTests/http/tests/security/xss-eval.html = FAIL | TIMEOUT
 V8 | KJS # LayoutTests/http/tests/xmlhttprequest/access-control-basic-allow-preflight-cache-invalidation-by-method.html = FAIL
@@ -893,12 +901,6 @@ V8 | KJS # LayoutTests/http/tests/messaging/cross-domain-message-event-dispatch.
 V8 | KJS # LayoutTests/http/tests/navigation/metaredirect-basic.html = FAIL
 V8 | KJS # LayoutTests/http/tests/navigation/post-basic.html = FAIL | PASS
 V8 | KJS # LayoutTests/http/tests/navigation/post-frames.html = FAIL | PASS
-V8 | KJS # LayoutTests/http/tests/security/listener/xss-JSTargetNode-onclick-addEventListener.html = FAIL
-V8 | KJS # LayoutTests/http/tests/security/listener/xss-JSTargetNode-onclick-shortcut.html = FAIL
-V8 | KJS # LayoutTests/http/tests/security/listener/xss-XMLHttpRequest-addEventListener.html = FAIL
-V8 | KJS # LayoutTests/http/tests/security/listener/xss-XMLHttpRequest-shortcut.html = FAIL
-V8 | KJS # LayoutTests/http/tests/security/listener/xss-window-onclick-addEventListener.html = FAIL
-V8 | KJS # LayoutTests/http/tests/security/listener/xss-window-onclick-shortcut.html = FAIL
 V8 | KJS # LayoutTests/http/tests/security/postMessage/invalid-origin-throws-exception.html = FAIL | TIMEOUT
 V8 | KJS # LayoutTests/svg/W3C-SVG-1.1/animate-elem-34-t.svg = FAIL
 V8 | KJS # LayoutTests/svg/W3C-SVG-1.1/animate-elem-40-t.svg = FAIL

@@ -131,7 +131,8 @@ class RenderWidgetHostViewWin :
   virtual void UpdateCursor(const WebCursor& cursor);
   virtual void UpdateCursorIfOverSelf();
   virtual void SetIsLoading(bool is_loading);
-  virtual void IMEUpdateStatus(ViewHostMsg_ImeControl control, int x, int y);
+  virtual void IMEUpdateStatus(ViewHostMsg_ImeControl control,
+                               const gfx::Rect& caret_rect);
   virtual void DidPaintRect(const gfx::Rect& rect);
   virtual void DidScrollRect(const gfx::Rect& rect, int dx, int dy);
   virtual void RendererGone();
@@ -205,11 +206,11 @@ class RenderWidgetHostViewWin :
   // The associated Model.
   RenderWidgetHost* render_widget_host_;
 
-  // The real cursor type for the page.
-  WebCursor::Type real_cursor_type_;
+  // The cursor for the page.  This is passed up from the renderer.
+  HCURSOR cursor_;
 
-  // The real cursor for the page. This is passed down from the renderer
-  HCURSOR real_cursor_;
+  // True if cursor_ is a custom cursor that needs to be destroyed later.
+  bool cursor_is_custom_;
 
   // Indicates if the page is loading.
   bool is_loading_;

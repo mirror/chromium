@@ -13,7 +13,9 @@
 #include "base/logging.h"
 #include "base/object_watcher.h"
 #include "base/path_service.h"
+#include "base/process.h"
 #include "base/process_util.h"
+#include "base/registry.h"
 #include "base/string_util.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/common/chrome_constants.h"
@@ -26,9 +28,13 @@
 #include "chrome/browser/views/first_run_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
-#include "chrome/common/json_value_serializer.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/installer/util/browser_distribution.h"
+#include "chrome/installer/util/google_update_constants.h"
+#include "chrome/installer/util/install_util.h"
+#include "chrome/installer/util/master_preferences.h"
 #include "chrome/installer/util/shell_util.h"
+#include "chrome/installer/util/util_constants.h"
 #include "chrome/views/accelerator_handler.h"
 #include "chrome/views/window.h"
 
@@ -36,23 +42,6 @@ namespace {
 
 // The kSentinelFile file absence will tell us it is a first run.
 const wchar_t kSentinelFile[] = L"First Run";
-
-// These two names are used for upgrades in-place of the chrome exe.
-const wchar_t kChromeUpgradeExe[] = L"new_chrome.exe";
-const wchar_t kChromeBackupExe[] = L"old_chrome.exe";
-
-// This is the default name for the master preferences file used to pre-set
-// values in the user profile at first run.
-const wchar_t kDefaultMasterPrefs[] = L"master_preferences";
-
-// Boolean pref that triggers skipping the first run dialogs.
-const wchar_t kDistroSkipFirstRunPref[] = L"distribution.skip_first_run_ui";
-// Boolean pref that triggers silent import of the default search engine.
-const wchar_t kDistroImportSearchPref[] = L"distribution.import_search_engine";
-// Boolean pref that triggers silent import of the browse history.
-const wchar_t kDistroImportHistoryPref[] = L"distribution.import_history";
-// Boolean pref that triggers loading the welcome page.
-const wchar_t kDistroShowWelcomePage[] = L"distribution.show_welcome_page";
 
 // Gives the full path to the sentinel file. The file might not exist.
 bool GetFirstRunSentinelFilePath(std::wstring* path) {
@@ -67,14 +56,14 @@ bool GetFirstRunSentinelFilePath(std::wstring* path) {
 bool GetNewerChromeFile(std::wstring* path) {
   if (!PathService::Get(base::DIR_EXE, path))
     return false;
-  file_util::AppendToPath(path, kChromeUpgradeExe);
+  file_util::AppendToPath(path, installer_util::kChromeNewExe);
   return true;
 }
 
 bool GetBackupChromeFile(std::wstring* path) {
   if (!PathService::Get(base::DIR_EXE, path))
     return false;
-  file_util::AppendToPath(path, kChromeBackupExe);
+  file_util::AppendToPath(path, installer_util::kChromeOldExe);
   return true;
 }
 
@@ -89,24 +78,6 @@ std::wstring GetDefaultPrefFilePath(bool create_profile_dir,
     }
   }
   return ProfileManager::GetDefaultProfilePath(default_pref_dir);
-}
-
-DictionaryValue* ReadJSONPrefs(const std::string& data) {
-  JSONStringValueSerializer json(data);
-  Value* root;
-  if (!json.Deserialize(&root))
-    return NULL;
-  if (!root->IsType(Value::TYPE_DICTIONARY)) {
-    delete root;
-    return NULL;
-  }
-  return static_cast<DictionaryValue*>(root);
-}
-
-bool GetBooleanPref(const DictionaryValue* prefs, const std::wstring& name) {
-  bool value = false;
-  prefs->GetBoolean(name, &value);
-  return value;
 }
 
 }  // namespace
@@ -159,53 +130,54 @@ bool FirstRun::CreateSentinel() {
   return true;
 }
 
-FirstRun::MasterPrefResult FirstRun::ProcessMasterPreferences(
-      const std::wstring& user_data_dir,
-      const std::wstring& master_prefs_path) {
+bool FirstRun::ProcessMasterPreferences(
+    const std::wstring& user_data_dir,
+    const std::wstring& master_prefs_path,
+    int* preference_details) {
   DCHECK(!user_data_dir.empty());
+  if (preference_details)
+    *preference_details = 0;
+
   std::wstring master_prefs;
   if (master_prefs_path.empty()) {
     // The default location of the master prefs is next to the chrome exe.
     std::wstring master_path;
     if (!PathService::Get(base::DIR_EXE, &master_path))
-      return MASTER_PROFILE_ERROR;
-    file_util::AppendToPath(&master_path, kDefaultMasterPrefs);
+      return true;
+    file_util::AppendToPath(&master_path, installer_util::kDefaultMasterPrefs);
     master_prefs = master_path;
   } else {
     master_prefs = master_prefs_path;
   }
 
-  std::string json_data;
-  if (!file_util::ReadFileToString(master_prefs, &json_data))
-    return MASTER_PROFILE_NOT_FOUND;
+  int parse_result = installer_util::ParseDistributionPreferences(master_prefs);
+  if (preference_details)
+    *preference_details = parse_result;
 
-  LOG(INFO) << "master profile found"; 
+  if (parse_result & installer_util::MASTER_PROFILE_ERROR)
+    return true;
 
   std::wstring user_prefs = GetDefaultPrefFilePath(true, user_data_dir);
   if (user_prefs.empty())
-    return MASTER_PROFILE_ERROR;
-
-  scoped_ptr<DictionaryValue> json_root(ReadJSONPrefs(json_data));
-  if (!json_root.get())
-    return MASTER_PROFILE_ERROR;
+    return true;
 
   // The master prefs are regular prefs so we can just copy the file
   // to the default place and they just work.
   if (!file_util::CopyFile(master_prefs, user_prefs))
-    return MASTER_PROFILE_ERROR;
+    return true;
 
-  if (!GetBooleanPref(json_root.get(), kDistroSkipFirstRunPref))
-    return MASTER_PROFILE_DO_FIRST_RUN_UI;
+  if (!(parse_result & installer_util::MASTER_PROFILE_NO_FIRST_RUN_UI))
+    return true;
 
   FirstRun::SetShowFirstRunBubblePref();
 
-  if (GetBooleanPref(json_root.get(), kDistroShowWelcomePage))
+  if (parse_result & installer_util::MASTER_PROFILE_SHOW_WELCOME)
     FirstRun::SetShowWelcomePagePref();
 
   int import_items = 0;
-  if (GetBooleanPref(json_root.get(), kDistroImportSearchPref))
+  if (parse_result & installer_util::MASTER_PROFILE_IMPORT_SEARCH_ENGINE)
     import_items += SEARCH_ENGINES;
-  if (GetBooleanPref(json_root.get(), kDistroImportHistoryPref))
+  if (parse_result & installer_util::MASTER_PROFILE_IMPORT_HISTORY)
     import_items += HISTORY;
 
   if (import_items) {
@@ -215,7 +187,7 @@ FirstRun::MasterPrefResult FirstRun::ProcessMasterPreferences(
       LOG(WARNING) << "silent import failed";
     }
   }
-  return MASTER_PROFILE_NO_FIRST_RUN_UI;
+  return false;
 }
 
 bool Upgrade::SwapNewChromeExeIfPresent() {
@@ -227,6 +199,22 @@ bool Upgrade::SwapNewChromeExeIfPresent() {
   std::wstring old_chrome_exe;
   if (!PathService::Get(base::FILE_EXE, &old_chrome_exe))
     return false;
+  RegKey key;
+  HKEY reg_root = InstallUtil::IsPerUserInstall(old_chrome_exe.c_str()) ?
+      HKEY_CURRENT_USER : HKEY_LOCAL_MACHINE;
+  BrowserDistribution *dist = BrowserDistribution::GetDistribution();
+  std::wstring rename_cmd;
+  if (key.Open(reg_root, dist->GetVersionKey().c_str(), KEY_READ) &&
+      key.ReadValue(google_update::kRegRenameCmdField, &rename_cmd)) {
+    ProcessHandle handle;
+    if (process_util::LaunchApp(rename_cmd, true, true, &handle)) {
+      DWORD exit_code;
+      ::GetExitCodeProcess(handle, &exit_code);
+      ::CloseHandle(handle);
+      if (exit_code == installer_util::RENAME_SUCCESSFUL)
+        return true;
+    }
+  }
   std::wstring backup_exe;
   if (!GetBackupChromeFile(&backup_exe))
     return false;
@@ -493,5 +481,3 @@ bool FirstRun::SetShowWelcomePagePref() {
   }
   return true;
 }
-
-

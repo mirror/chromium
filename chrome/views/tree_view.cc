@@ -157,6 +157,18 @@ void TreeView::ExpandAll() {
   ExpandAll(model_->GetRoot());
 }
 
+void TreeView::ExpandAll(TreeModelNode* node) {
+  DCHECK(node);
+  // Expand the node.
+  if (node != model_->GetRoot() || root_shown_)
+    TreeView_Expand(tree_view_, GetNodeDetails(node)->tree_item, TVE_EXPAND);
+  // And recursively expand all the children.
+  for (int i = model_->GetChildCount(node) - 1; i >= 0; --i) {
+    TreeModelNode* child = model_->GetChild(node, i);
+    ExpandAll(child);
+  }
+}
+
 bool TreeView::IsExpanded(TreeModelNode* node) {
   TreeModelNode* parent = model_->GetParent(node);
   if (!parent)
@@ -383,6 +395,14 @@ LRESULT TreeView::OnNotify(int w_param, LPNMHDR l_param) {
       return 0;
     }
 
+    case TVN_KEYDOWN:
+      if (controller_) {
+        NMTVKEYDOWN* key_down_message =
+            reinterpret_cast<NMTVKEYDOWN*>(l_param);
+        controller_->OnTreeViewKeyDown(key_down_message->wVKey);
+      }
+      break;
+
     default:
       break;
   }
@@ -468,18 +488,6 @@ TreeModelNode* TreeView::GetNodeForTreeItem(HTREEITEM tree_item) {
 HTREEITEM TreeView::GetTreeItemForNode(TreeModelNode* node) {
   NodeDetails* details = GetNodeDetails(node);
   return details ? details->tree_item : NULL;
-}
-
-void TreeView::ExpandAll(TreeModelNode* node) {
-  DCHECK(node);
-  // Expand the node.
-  if (node != model_->GetRoot() || root_shown_)
-    TreeView_Expand(tree_view_, GetNodeDetails(node)->tree_item, TVE_EXPAND);
-  // And recursively expand all the children.
-  for (int i = model_->GetChildCount(node) - 1; i >= 0; --i) {
-    TreeModelNode* child = model_->GetChild(node, i);
-    ExpandAll(child);
-  }
 }
 
 void TreeView::DeleteRootItems() {
@@ -619,11 +627,27 @@ LRESULT CALLBACK TreeView::TreeWndProc(HWND window,
       GetWindowLongPtr(window, GWLP_USERDATA));
   DCHECK(wrapper);
   TreeView* tree = wrapper->tree_view;
+
+  // We handle the messages WM_ERASEBKGND and WM_PAINT such that we paint into
+  // a DIB first and then perform a BitBlt from the DIB into the underlying
+  // window's DC. This double buffering code prevents the tree view from
+  // flickering during resize. This double buffering code doesn't work for RTL
+  // locales because the DIB created by ChromeCanvasPaint is not flipped and
+  // that's causing the text to be incorrectly mirrored after the BitBlt call.
+  // Thus, we disable the double buffering for RTL locales until this problem is
+  // fixed.
   switch (message) {
     case WM_ERASEBKGND:
+      if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT) {
+        break;
+      }
       return 1;
 
     case WM_PAINT: {
+      if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT) {
+        break;
+      }
+
       ChromeCanvasPaint canvas(window);
       if (canvas.isEmpty())
         return 0;

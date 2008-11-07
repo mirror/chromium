@@ -481,6 +481,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\glue\scoped_clipboard_writer_glue.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\glue\searchable_form_data.cc"
 				>
 			</File>
@@ -506,6 +510,10 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\webcursor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webcursor_win.cc"
 				>
 			</File>
 			<File

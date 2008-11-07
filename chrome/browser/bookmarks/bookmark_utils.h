@@ -14,18 +14,14 @@ class BookmarkNode;
 class PageNavigator;
 class Profile;
 
-namespace views {
-class DropTargetEvent;
-}
-
 // A collection of bookmark utility functions used by various parts of the UI
 // that show bookmarks: bookmark manager, bookmark bar view ...
 namespace bookmark_utils {
 
-// Calculates the drop operation given the event and supported set of
-// operations. This prefers the following ordering: COPY, LINK then MOVE.
-int PreferredDropOperation(const views::DropTargetEvent& event,
-                           int operation);
+// Calculates the drop operation given |source_operations| and the ideal
+// set of drop operations (|operations|). This prefers the following ordering:
+// COPY, LINK then MOVE.
+int PreferredDropOperation(int source_operations, int operations);
 
 // Returns true if the bookmark data can be dropped on |drop_parent| at
 // |index|. A drop from a separate profile is always allowed, where as
@@ -61,6 +57,23 @@ void OpenAll(HWND parent,
              PageNavigator* navigator,
              BookmarkNode* node,
              WindowOpenDisposition initial_disposition);
+
+// Copies nodes onto the clipboard. If |remove_nodes| is true the nodes are
+// removed after copied to the clipboard. The nodes are copied in such a way
+// that if pasted again copies are made.
+void CopyToClipboard(BookmarkModel* model,
+                     const std::vector<BookmarkNode*>& nodes,
+                     bool remove_nodes);
+
+// Pastes from the clipboard. The new nodes are added to |parent|, unless
+// |parent| is null in which case this does nothing. The nodes are inserted
+// at |index|. If |index| is -1 the nodes are added to the end.
+void PasteFromClipboard(BookmarkModel* model,
+                        BookmarkNode* parent,
+                        int index);
+
+// Returns true if the user can copy from the pasteboard.
+bool CanPasteFromClipboard(BookmarkNode* node);
 
 }  // namespace bookmark_utils
 

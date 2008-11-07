@@ -61,6 +61,7 @@ if env['PLATFORM'] == 'win32':
 
 if env['PLATFORM'] == 'posix':
   env.Append(
+      # We need 'Xss' (X Screen Saver) in LIBS if we want idletimer_unittest
       LIBS = [
           'event',
       ],
@@ -133,7 +134,10 @@ if env['PLATFORM'] in ('posix', 'darwin'):
   # Remove files that still need to be ported from the input_files list.
   # TODO(port): delete files from this list as they get ported.
   to_be_ported_files = [
+      # We have an implementation of idle_timer, but it's unclear if we want it
+      # yet, so it's commented out for now.  Leave this 'unported'.
       'idletimer_unittest.cc',
+
       'watchdog_unittest.cc',
       'gfx/native_theme_unittest.cc',
       'gfx/uniscribe_unittest.cc',
@@ -172,12 +176,7 @@ if env['PLATFORM'] == 'darwin':
       'platform_test_mac.mm',
   ])
 
-base_unittests = env.ChromeTestProgram('base_unittests', input_files)
-
-# Install up a level to allow unit test path assumptions to be valid.
-installed_base_unittests = env.Install('$TARGET_ROOT', base_unittests)
-
-env.Alias('base', installed_base_unittests)
+env.ChromeTestProgram('base_unittests', input_files)
 
 # TODO(sgk) should this be moved into base.lib like everything else?  This will
 # require updating a bunch of other SConscripts which link directly against

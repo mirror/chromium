@@ -81,6 +81,14 @@
 			>
 		</File>
 		<File
+			RelativePath="delete_reg_value_work_item.cc"
+			>
+		</File>
+		<File
+			RelativePath="delete_reg_value_work_item.h"
+			>
+		</File>
+		<File
 			RelativePath="google_chrome_distribution.cc"
 			>
 		</File>
@@ -142,6 +150,14 @@
 		</File>
 		<File
 			RelativePath=".\google_update_constants.h"
+			>
+		</File>
+		<File
+			RelativePath=".\master_preferences.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\master_preferences.h"
 			>
 		</File>
 		<File

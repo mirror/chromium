@@ -389,20 +389,9 @@ if env_flat['PLATFORM'] == 'win32':
   env_test.Object('test/test_file_util.cc',
                   CPPPATH=['..'] + env['CPPPATH'])
 
-test_sconscript_files = [
-]
-
-# TODO(port)
-if env['PLATFORM'] == 'win32':
-  test_sconscript_files.extend([
-      'SConscript.automated_ui_tests',
-      'SConscript.ui_tests',
-  ])
-
-env.SConscript(test_sconscript_files, exports=['env_test'])
-
 sconscript_files = [
     'test/chrome_plugin/SConscript',
+    'tools/test/image_diff/SConscript',
     'third_party/hunspell/SConscript',
     '$THIRD_PARTY_DIR/sqlite/SConscript',
 ]
@@ -412,14 +401,12 @@ if env['PLATFORM'] == 'win32':
   sconscript_files.extend([
       'app/resources/SConscript',
       'app/theme/SConscript',
-      'browser/debugger/SConscript',
       'browser/views/SConscript',
       'installer/mini_installer/SConscript',
       'installer/setup/SConscript',
       'installer/util/SConscript',
       'test/activex_test_control/SConscript',
       'test/automation/SConscript',
-      'test/interactive_ui/SConscript',
       'test/memory_test/SConscript',
       'test/mini_installer_test/SConscript',
       'test/page_cycler/SConscript',
@@ -431,7 +418,6 @@ if env['PLATFORM'] == 'win32':
       'test/tab_switching/SConscript',
       'tools/crash_service/SConscript',
       'tools/perf/flush_cache/SConscript',
-      'tools/test/image_diff/SConscript',
       'views/SConscript',
   ])
 

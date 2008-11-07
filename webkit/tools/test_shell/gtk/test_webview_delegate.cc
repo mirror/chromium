@@ -6,6 +6,8 @@
 
 #include "webkit/tools/test_shell/test_webview_delegate.h"
 
+#include <gtk/gtk.h>
+
 #include "base/gfx/point.h"
 #include "base/string_util.h"
 #include "net/base/net_errors.h"
@@ -241,7 +243,7 @@ void TestWebViewDelegate::DidReceiveTitle(WebView* webview,
   if (shell_->ShouldDumpTitleChanges()) {
     printf("TITLE CHANGED: %S\n", title.c_str());
   }
-  NOTIMPLEMENTED();
+  gtk_window_set_title(GTK_WINDOW(shell_->mainWnd()), WideToUTF8(title).c_str()); 
 }
 
 void TestWebViewDelegate::DidFinishLoadForFrame(WebView* webview,
@@ -667,7 +669,8 @@ void TestWebViewDelegate::UpdateAddressBar(WebView* webView) {
 
   std::string frameURL = dataSource->GetRequest().GetMainDocumentURL().spec();
   LOG(INFO) << "  -- Address bar " << frameURL;
-  NOTIMPLEMENTED();
+
+  gtk_entry_set_text(GTK_ENTRY(shell_->editWnd()), frameURL.c_str());
 }
 
 void TestWebViewDelegate::LocationChangeDone(WebDataSource* data_source) {

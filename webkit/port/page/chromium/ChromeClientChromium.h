@@ -17,15 +17,12 @@ namespace WebCore {
     class IntRect;
     class String;
     class Widget;
-    
+
     class ChromeClientChromium : public ChromeClient {
     public:
         // Notifies the client of a new popup widget.  The client should place
         // and size the widget with the given bounds, relative to the screen.
         virtual void popupOpened(FramelessScrollView* popupView, const IntRect& bounds) = 0;
-
-        // Set the current cursor.
-        virtual void setCursor(const Cursor& cursor) = 0;
     };
 }
 

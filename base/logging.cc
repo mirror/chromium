@@ -8,13 +8,14 @@
 #include <windows.h>
 typedef HANDLE FileHandle;
 typedef HANDLE MutexHandle;
-#endif
-
-#if defined(OS_MACOSX)
+#elif defined(OS_MACOSX)
 #include <CoreFoundation/CoreFoundation.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <mach-o/dyld.h>
+#elif defined(OS_LINUX)
+#include <sys/syscall.h>
+#include <time.h>
 #endif
 
 #if defined(OS_POSIX)
@@ -119,9 +120,8 @@ int32 CurrentThreadId() {
   return GetCurrentThreadId();
 #elif defined(OS_MACOSX)
   return mach_thread_self();
-#else
-  NOTIMPLEMENTED();
-  return 0;
+#elif defined(OS_LINUX)
+  return syscall(__NR_gettid);
 #endif
 }
 
@@ -130,9 +130,15 @@ uint64 TickCount() {
   return GetTickCount();
 #elif defined(OS_MACOSX)
   return mach_absolute_time();
-#else
-  NOTIMPLEMENTED();
-  return 0;
+#elif defined(OS_LINUX)
+  struct timespec ts;
+  clock_gettime(CLOCK_MONOTONIC, &ts);
+
+  uint64 absolute_micro =
+    static_cast<int64>(ts.tv_sec) * 1000000 +
+    static_cast<int64>(ts.tv_nsec) / 1000;
+
+  return absolute_micro;
 #endif
 }
 
@@ -490,9 +496,14 @@ LogMessage::~LogMessage() {
         // make a copy of the string for the handler out of paranoia
         log_assert_handler(std::string(stream_.str()));
       } else {
-        // don't use the string with the newline, get a fresh version to send to
-        // the debug message process
+        // Don't use the string with the newline, get a fresh version to send to
+        // the debug message process. We also don't display assertions to the
+        // user in release mode. The enduser can't do anything with this
+        // information, and displaying message boxes when the application is
+        // hosed can cause additional problems.
+#ifndef NDEBUG
         DisplayDebugMessage(stream_.str());
+#endif
         // Crash the process to generate a dump.
         DebugUtil::BreakDebugger();
         // TODO(mmentovai): when we have breakpad support, generate a breakpad
@@ -515,4 +526,3 @@ void CloseLogFile() {
 std::ostream& operator<<(std::ostream& out, const wchar_t* wstr) {
   return out << base::SysWideToUTF8(std::wstring(wstr));
 }
-

@@ -7,7 +7,7 @@ module core {
     attribute DOMString hash;
     attribute DOMString host;
     attribute DOMString hostname;
-    attribute [DoNotCheckDomainSecurityOnSet] DOMString href;
+    attribute [DoNotCheckDomainSecurityOnSet, DontDelete, v8DisallowShadowing] DOMString href;
     attribute DOMString pathname;
     attribute DOMString port;
     attribute DOMString protocol;
@@ -20,5 +20,6 @@ module core {
     [DoNotCheckDomainSecurity, v8OnInstance] void replace(in DOMString url);
     [DoNotCheckDomainSecurity, v8OnInstance] void assign(in DOMString url);
     [ReadOnly, DontEnum, v8OnInstance] DOMString toString();
+    [Custom, ReadOnly, DontEnum, v8OnInstance] DOMObject valueOf();
   };
 }

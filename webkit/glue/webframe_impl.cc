@@ -92,7 +92,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "GraphicsContext.h"
 #include "HTMLHeadElement.h"
 #include "HTMLLinkElement.h"
-#include "HTMLNames.h"
 #include "HistoryItem.h"
 #include "markup.h"
 #include "Page.h"
@@ -114,6 +113,8 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 #undef LOG
+
+#include "base/basictypes.h"
 #include "base/gfx/bitmap_platform_device.h"
 #include "base/gfx/platform_canvas.h"
 #include "base/gfx/rect.h"
@@ -123,9 +124,9 @@ MSVC_POP_WARNING();
 #include "base/string_util.h"
 #include "base/time.h"
 #include "net/base/net_errors.h"
+#include "webkit/glue/alt_error_page_resource_fetcher.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/glue_serialize.h"
-#include "webkit/glue/alt_error_page_resource_fetcher.h"
 #include "webkit/glue/webdocumentloader_impl.h"
 #include "webkit/glue/weberror_impl.h"
 #include "webkit/glue/webframe_impl.h"
@@ -212,7 +213,7 @@ static void FrameContentAsPlainText(int max_chars, Frame* frame,
     // size and also copy the results directly into a wstring, avoiding the
     // string conversion.
     for (TextIterator it(range.get()); !it.atEnd(); it.advance()) {
-      const wchar_t* chars = reinterpret_cast<const wchar_t*>(it.characters());
+      const uint16* chars = reinterpret_cast<const uint16*>(it.characters());
       if (!chars) {
         if (it.length() != 0) {
           // It appears from crash reports that an iterator can get into a state
@@ -235,7 +236,9 @@ static void FrameContentAsPlainText(int max_chars, Frame* frame,
       }
       int to_append = std::min(it.length(),
                                max_chars - static_cast<int>(output->size()));
-      output->append(chars, to_append);
+      std::wstring wstr;
+      UTF16ToWide(reinterpret_cast<const char16*>(chars), to_append, &wstr);
+      output->append(wstr.c_str(), to_append);
       if (output->size() >= static_cast<size_t>(max_chars))
         return;  // Filled up the buffer.
     }
@@ -458,8 +461,7 @@ GURL WebFrameImpl::GetOSDDURL() const {
       for (Node* child = children->firstItem(); child != NULL;
            child = children->nextItem()) {
         WebCore::HTMLLinkElement* link_element =
-            webkit_glue::CastHTMLElement<WebCore::HTMLLinkElement>(
-                child, WebCore::HTMLNames::linkTag);
+            webkit_glue::CastToHTMLLinkElement(child);
         if (link_element && link_element->type() == kOSDType &&
             link_element->rel() == kOSDRel && !link_element->href().isEmpty()) {
           return webkit_glue::KURLToGURL(link_element->href());

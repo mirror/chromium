@@ -185,14 +185,17 @@ void WebWidgetImpl::MouseCaptureLost() {
 void WebWidgetImpl::SetFocus(bool enable) {
 }
 
-void WebWidgetImpl::ImeSetComposition(int string_type, int cursor_position,
-                                      int target_start, int target_end,
-                                      int string_length,
-                                      const wchar_t *string_data) {
+bool WebWidgetImpl::ImeSetComposition(int string_type,
+                                      int cursor_position,
+                                      int target_start,
+                                      int target_end,
+                                      const std::wstring& ime_string) {
+  return false;
 }
 
-bool WebWidgetImpl::ImeUpdateStatus(bool* enable_ime, const void** id,
-                                    int* x, int* y) {
+bool WebWidgetImpl::ImeUpdateStatus(bool* enable_ime,
+                                    const void** node,
+                                    gfx::Rect* caret_rect) {
   return false;
 }
 
@@ -203,6 +206,9 @@ void WebWidgetImpl::repaint(const WebCore::IntRect& paint_rect,
                             bool content_changed,
                             bool immediate,
                             bool repaint_content_only) {
+  // Ignore spurious calls.
+  if (!content_changed || paint_rect.isEmpty())
+    return;
   if (delegate_)
     delegate_->DidInvalidateRect(this, webkit_glue::FromIntRect(paint_rect));
 }

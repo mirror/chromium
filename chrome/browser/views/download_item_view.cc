@@ -13,6 +13,7 @@
 #include "chrome/browser/download/download_util.h"
 #include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
+#include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
@@ -455,47 +456,19 @@ void DownloadItemView::Paint(ChromeCanvas* canvas) {
   // Last value of x was the end of the right image, just before the button.
   // Note that in dangerous mode we use a label (as the text is multi-line).
   if (!IsDangerousMode()) {
-    // Because just drawing the filename using DrawStringInt results in 
-    // Windows eliding the text and potentially chopping off the file 
-    // extension, we need to draw the file's name and extension separately.
-
-    // Extract the file extension (if any).
-    std::wstring extension = L"." +
-        file_util::GetFileExtensionFromPath(download_->GetFileName());
-    std::wstring rootname = file_util::GetFilenameWithoutExtensionFromPath(
-        download_->GetFileName());
-
-    // Figure out the width of the extension.
-    int ext_width = 0;
-    int file_width = 0;
-    int h = 0;
-    canvas->SizeStringInt(extension, font_, &ext_width, &h, 
-                          ChromeCanvas::NO_ELLIPSIS);
-    canvas->SizeStringInt(rootname, font_, &file_width, &h, 
-                          ChromeCanvas::NO_ELLIPSIS);
-
-    // If the extension is ridiculously long, truncate it.
-    if (ext_width > kTextWidth / 2)
-      ext_width = kTextWidth / 2;
-
-    // Expand the extension width to fill any spare space so that
-    // it is aligned to the right edge of the file.
-    if (file_width < kTextWidth - ext_width)
-      ext_width = kTextWidth - file_width;
+    std::wstring filename = 
+        gfx::ElideFilename(download_->GetFileName(),
+                           font_,
+                           kTextWidth);
 
     if (show_status_text_) {
       int y = box_y_ + kVerticalPadding;
 
       // Draw the file's name.
-      canvas->DrawStringInt(rootname, font_, kFileNameColor,
+      canvas->DrawStringInt(filename, font_, kFileNameColor,
                             download_util::kSmallProgressIconSize, y,
-                            kTextWidth - ext_width, font_.height());
+                            kTextWidth, font_.height());
 
-      // Draw the file's extension.
-      canvas->DrawStringInt(extension, font_, kFileNameColor,
-                            download_util::kSmallProgressIconSize + 
-                            kTextWidth - ext_width, y,
-                            ext_width, font_.height());
       y += font_.height() + kVerticalTextPadding;
 
       canvas->DrawStringInt(status_text_, font_, kStatusColor,
@@ -505,15 +478,9 @@ void DownloadItemView::Paint(ChromeCanvas* canvas) {
       int y = box_y_ + (box_height_ - font_.height()) / 2;
 
       // Draw the file's name.
-      canvas->DrawStringInt(rootname, font_, kFileNameColor,
+      canvas->DrawStringInt(filename, font_, kFileNameColor,
                             download_util::kSmallProgressIconSize, y,
-                            kTextWidth - ext_width, font_.height());
-
-      // Draw the file's extension.
-      canvas->DrawStringInt(extension, font_, kFileNameColor,
-                            download_util::kSmallProgressIconSize + 
-                            kTextWidth - ext_width, y,
-                            ext_width, font_.height());
+                            kTextWidth, font_.height());
     }
   }
 
@@ -522,6 +489,11 @@ void DownloadItemView::Paint(ChromeCanvas* canvas) {
   SkBitmap* icon = IsDangerousMode() ? warning_icon_ :
       im->LookupIcon(download_->full_path(), IconLoader::SMALL);
 
+  // We count on the fact that the icon manager will cache the icons and if one
+  // is available, it will be cached here. We *don't* want to request the icon
+  // to be loaded here, since this will also get called if the icon can't be
+  // loaded, in which case LookupIcon will always be NULL. The loading will be
+  // triggered only when we think the status might change.
   if (icon) {
     if (!IsDangerousMode()) {
       if (download_->state() == DownloadItem::IN_PROGRESS) {
@@ -772,7 +744,8 @@ void DownloadItemView::OpenDownload() {
 
 void DownloadItemView::OnExtractIconComplete(IconManager::Handle handle,
                                              SkBitmap* icon_bitmap) {
-  GetParent()->SchedulePaint();
+  if (icon_bitmap)
+    GetParent()->SchedulePaint();
 }
 
 void DownloadItemView::LoadIcon() {

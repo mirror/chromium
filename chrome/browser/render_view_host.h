@@ -16,6 +16,7 @@
 #include "chrome/personalization/personalization.h"
 #endif
 #include "webkit/glue/password_form_dom_manager.h"
+#include "webkit/glue/autofill_form.h"
 
 enum ConsoleMessageLevel;
 class NavigationEntry;
@@ -154,7 +155,12 @@ class RenderViewHost : public RenderWidgetHost {
   // for which another renderer will need to run an onunload event handler.
   // This is called before the first navigation event for this RenderViewHost,
   // and again after the corresponding OnCrossSiteResponse.
-  void SetHasPendingCrossSiteRequest(bool has_pending_request);
+  void SetHasPendingCrossSiteRequest(bool has_pending_request, int request_id);
+
+  // Returns the request_id for the pending cross-site request.
+  // This is just needed in case the unload of the current page
+  // hangs, in which case we need to swap to the pending RenderViewHost.
+  int GetPendingRequestId();
 
   // Called by ResourceDispatcherHost when a response for a pending cross-site
   // request is received.  The ResourceDispatcherHost will pause the response
@@ -462,6 +468,7 @@ class RenderViewHost : public RenderWidgetHost {
                                 const std::string& json_arguments,
                                 IPC::Message* reply_msg);
   void OnMsgPasswordFormsSeen(const std::vector<PasswordForm>& forms);
+  void OnMsgAutofillFormSubmitted(const AutofillForm& forms);
   void OnMsgStartDragging(const WebDropData& drop_data);
   void OnUpdateDragCursor(bool is_drop_target);
   void OnTakeFocus(bool reverse);
@@ -535,6 +542,13 @@ class RenderViewHost : public RenderWidgetHost {
   // sending messages back to the browser.
   bool enable_dom_ui_bindings_;
 
+  // The request_id for the pending cross-site request. Set to -1 if
+  // there is a pending request, but we have not yet started the unload
+  // for the current page. Set to the request_id value of the pending
+  // request once we have gotten the some data for the pending page
+  // and thus started the unload process.
+  int pending_request_id_;
+
   // True if javascript access to the external host (through
   // automation) is allowed.
   bool enable_external_host_bindings_;
@@ -567,6 +581,8 @@ class RenderViewHost : public RenderWidgetHost {
   bool has_unload_listener_;
 
   bool is_waiting_for_unload_ack_;
+
+  bool are_javascript_messages_suppressed_;
 
   DISALLOW_EVIL_CONSTRUCTORS(RenderViewHost);
 };

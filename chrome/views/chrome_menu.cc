@@ -23,6 +23,7 @@
 #include "chrome/views/border.h"
 #include "chrome/views/container_win.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/view_constants.h"
 #include "generated_resources.h"
 
 #undef min
@@ -1035,9 +1036,6 @@ gfx::Rect SubmenuView::CalculateDropIndicatorBounds(
 //  static
 const int MenuItemView::kMenuItemViewID = 1001;
 
-//  static
-const int MenuItemView::kDropBetweenPixels = 5;
-
 // static
 bool MenuItemView::allow_task_nesting_during_run_ = false;
 
@@ -1072,6 +1070,13 @@ void MenuItemView::RunMenuAt(HWND parent,
   int mouse_event_flags;
 
   MenuController* controller = MenuController::GetActiveInstance();
+  if (controller && !controller->IsBlockingRun()) {
+    // A menu is already showing, but it isn't a blocking menu. Cancel it.
+    // We can get here during drag and drop if the user right clicks on the
+    // menu quickly after the drop.
+    controller->Cancel(true);
+    controller = NULL;
+  }
   bool owns_controller = false;
   if (!controller) {
     // No menus are showing, show one.
@@ -1891,9 +1896,8 @@ int MenuController::OnDragUpdated(SubmenuView* source,
     if (!over_empty_menu) {
       int menu_item_height = menu_item->height();
       if (menu_item->HasSubmenu() &&
-          (menu_item_loc.y() > MenuItemView::kDropBetweenPixels &&
-           menu_item_loc.y() < (menu_item_height -
-                                MenuItemView::kDropBetweenPixels))) {
+          (menu_item_loc.y() > kDropBetweenPixels &&
+           menu_item_loc.y() < (menu_item_height - kDropBetweenPixels))) {
         drop_position = MenuDelegate::DROP_ON;
       } else if (menu_item_loc.y() < menu_item_height / 2) {
         drop_position = MenuDelegate::DROP_BEFORE;

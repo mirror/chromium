@@ -15,6 +15,7 @@
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "net/base/mime_util.h"
+#include "net/base/net_util.h"
 #include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/resource_loader_bridge.h"
 #include "webkit/glue/webdatasource.h"
@@ -52,14 +53,7 @@ namespace {
 
 // Callback for when the main window is destroyed.
 void MainWindowDestroyed(GtkWindow* window, TestShell* shell) {
-  // TODO(evanm): make WindowList a list of GtkWindow*, so this
-  // reinterpret_cast isn't necessary.
-  WindowList::iterator entry =
-      std::find(TestShell::windowList()->begin(),
-                TestShell::windowList()->end(),
-                GTK_WIDGET(window));
-  if (entry != TestShell::windowList()->end())
-    TestShell::windowList()->erase(entry);
+  TestShell::RemoveWindowFromList(GTK_WIDGET(window));
 
   if (TestShell::windowList()->empty() || shell->is_modal()) {
     MessageLoop::current()->PostTask(FROM_HERE,
@@ -67,6 +61,26 @@ void MainWindowDestroyed(GtkWindow* window, TestShell* shell) {
   }
 
   delete shell;
+}
+
+// Callback for when you click the back button.
+void BackButtonClicked(GtkButton* button, TestShell* shell) {
+  shell->GoBackOrForward(-1);
+}
+
+// Callback for when you click the forward button.
+void ForwardButtonClicked(GtkButton* button, TestShell* shell) {
+  shell->GoBackOrForward(1);
+}
+
+// Callback for when you click the stop button.
+void StopButtonClicked(GtkButton* button, TestShell* shell) {
+  shell->webView()->StopLoading();
+}
+
+// Callback for when you click the reload button.
+void ReloadButtonClicked(GtkButton* button, TestShell* shell) {
+  shell->Reload();
 }
 
 // Callback for when you press enter in the URL box.
@@ -87,18 +101,26 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
 
   GtkWidget* toolbar = gtk_toolbar_new();
-  gtk_toolbar_insert(GTK_TOOLBAR(toolbar),
-                     gtk_tool_button_new_from_stock(GTK_STOCK_GO_BACK),
-                     -1 /* append */);
-  gtk_toolbar_insert(GTK_TOOLBAR(toolbar),
-                     gtk_tool_button_new_from_stock(GTK_STOCK_GO_FORWARD),
-                     -1 /* append */);
-  gtk_toolbar_insert(GTK_TOOLBAR(toolbar),
-                     gtk_tool_button_new_from_stock(GTK_STOCK_REFRESH),
-                     -1 /* append */);
-  gtk_toolbar_insert(GTK_TOOLBAR(toolbar),
-                     gtk_tool_button_new_from_stock(GTK_STOCK_STOP),
-                     -1 /* append */);
+
+  GtkToolItem* back = gtk_tool_button_new_from_stock(GTK_STOCK_GO_BACK);
+  g_signal_connect(G_OBJECT(back), "clicked",
+                   G_CALLBACK(BackButtonClicked), this);
+  gtk_toolbar_insert(GTK_TOOLBAR(toolbar), back, -1 /* append */);
+
+  GtkToolItem* forward = gtk_tool_button_new_from_stock(GTK_STOCK_GO_FORWARD);
+  g_signal_connect(G_OBJECT(forward), "clicked",
+                   G_CALLBACK(ForwardButtonClicked), this);
+  gtk_toolbar_insert(GTK_TOOLBAR(toolbar), forward, -1 /* append */);
+
+  GtkToolItem* reload = gtk_tool_button_new_from_stock(GTK_STOCK_REFRESH);
+  g_signal_connect(G_OBJECT(reload), "clicked",
+                   G_CALLBACK(ReloadButtonClicked), this);
+  gtk_toolbar_insert(GTK_TOOLBAR(toolbar), reload, -1 /* append */);
+
+  GtkToolItem* stop = gtk_tool_button_new_from_stock(GTK_STOCK_STOP);
+  g_signal_connect(G_OBJECT(stop), "clicked",
+                   G_CALLBACK(StopButtonClicked), this);
+  gtk_toolbar_insert(GTK_TOOLBAR(toolbar), stop, -1 /* append */);
 
   m_editWnd = gtk_entry_new();
   g_signal_connect(G_OBJECT(m_editWnd), "activate",
@@ -108,9 +130,7 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   GtkToolItem* tool_item = gtk_tool_item_new();
   gtk_container_add(GTK_CONTAINER(tool_item), m_editWnd);
   gtk_tool_item_set_expand(tool_item, TRUE);
-  gtk_toolbar_insert(GTK_TOOLBAR(toolbar),
-                     tool_item,
-                     -1 /* append */);
+  gtk_toolbar_insert(GTK_TOOLBAR(toolbar), tool_item, -1 /* append */);
 
   gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
   m_webViewHost.reset(WebViewHost::Create(vbox, delegate_, *TestShell::web_prefs_));
@@ -120,16 +140,22 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
 
   gtk_container_add(GTK_CONTAINER(m_mainWnd), vbox);
   gtk_widget_show_all(m_mainWnd);
+  toolbar_height_ = toolbar->allocation.height +
+      gtk_box_get_spacing(GTK_BOX(vbox));
 
   return true;
 }
 
 void TestShell::TestFinished() {
-  NOTIMPLEMENTED();
+  if(!test_is_pending_)
+    return;
+
+  test_is_pending_ = false;
+  MessageLoop::current()->Quit();
 }
 
 void TestShell::SizeTo(int width, int height) {
-  NOTIMPLEMENTED();
+  gtk_window_resize(GTK_WINDOW(m_mainWnd), width, height + toolbar_height_);
 }
 
 void TestShell::WaitTestFinished() {
@@ -147,13 +173,21 @@ void TestShell::WaitTestFinished() {
     MessageLoop::current()->Run();
 }
 
-void TestShell::SetFocus(WebWidgetHost* host, bool enable) {
-  // TODO(agl): port the body of this function
-  NOTIMPLEMENTED();
+void TestShell::InteractiveSetFocus(WebWidgetHost* host, bool enable) {
+  GtkWidget* widget = GTK_WIDGET(host->window_handle());
+
+  if (enable) {
+    gtk_widget_grab_focus(widget);
+  } else if (gtk_widget_is_focus(widget)) {
+    GtkWidget *toplevel = gtk_widget_get_toplevel(widget);
+    if (GTK_WIDGET_TOPLEVEL(toplevel))
+      gtk_window_set_focus(GTK_WINDOW(toplevel), NULL);
+  }
 }
 
 void TestShell::DestroyWindow(gfx::WindowHandle windowHandle) {
-  NOTIMPLEMENTED();
+  RemoveWindowFromList(windowHandle);
+  gtk_widget_destroy(windowHandle);
 }
 
 WebWidget* TestShell::CreatePopupWidget(WebView* webview) {
@@ -296,18 +330,26 @@ void TestShell::ResizeSubViews() {
 
 void TestShell::LoadURLForFrame(const wchar_t* url,
                                 const wchar_t* frame_name) {
-    if (!url)
-        return;
+  if (!url)
+    return;
 
-    std::wstring frame_string;
-    if (frame_name)
-        frame_string = frame_name;
+  std::wstring frame_string;
+  if (frame_name)
+    frame_string = frame_name;
 
-    LOG(INFO) << "Loading " << WideToUTF8(url) << " in frame '"
-              << WideToUTF8(frame_string) << "'";
+  LOG(INFO) << "Loading " << WideToUTF8(url) << " in frame '"
+          << WideToUTF8(frame_string) << "'";
 
-    navigation_controller_->LoadEntry(new TestNavigationEntry(
-        -1, GURL(WideToUTF8(url)), std::wstring(), frame_string));
+  GURL gurl;
+  // PathExists will reject any string with no leading '/'
+  // as well as empty strings.
+  if (file_util::PathExists(url))
+    gurl = net::FilePathToFileURL(url);
+  else
+    gurl = GURL(WideToUTF8(url));
+
+  navigation_controller_->LoadEntry(new TestNavigationEntry(
+    -1, gurl, std::wstring(), frame_string));
 }
 
 static void WriteTextToFile(const std::wstring& data,
@@ -391,7 +433,7 @@ std::string TestShell::RewriteLocalUrl(const std::string& url) {
 namespace webkit_glue {
 
 std::wstring GetLocalizedString(int message_id) {
-  NOTREACHED();
+  NOTIMPLEMENTED();
   return L"No string for this identifier!";
 }
 
@@ -401,6 +443,8 @@ bool GetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins) {
 }
 
 ScreenInfo GetScreenInfo(gfx::ViewHandle window) {
+  // This should call GetScreenInfoHelper, which should be implemented in
+  // webkit_glue_gtk.cc
   NOTIMPLEMENTED();
   return ScreenInfo();
 }

@@ -9,6 +9,7 @@
 #include "base/file_version_info.h"
 #include "base/process_util.h"
 #include "chrome/app/locales/locale_settings.h"
+#include "chrome/browser/autofill_manager.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/cache_manager_host.h"
@@ -268,6 +269,12 @@ void WebContents::RegisterUserPrefs(PrefService* prefs) {
                                       IDS_USES_UNIVERSAL_DETECTOR);
   prefs->RegisterLocalizedStringPref(prefs::kStaticEncodings,
                                      IDS_STATIC_ENCODING_LIST);
+}
+
+AutofillManager* WebContents::GetAutofillManager() {
+  if (autofill_manager_.get() == NULL)
+    autofill_manager_.reset(new AutofillManager(this));
+  return autofill_manager_.get();
 }
 
 PasswordManager* WebContents::GetPasswordManager() {
@@ -830,8 +837,11 @@ void WebContents::UpdateThumbnail(const GURL& url,
 }
 
 void WebContents::Close(RenderViewHost* rvh) {
-  // Ignore this if it comes from a RenderViewHost that we aren't showing.
-  if (delegate() && rvh == render_view_host())
+  // Ignore this if it comes from a RenderViewHost that we aren't showing, and
+  // refuse to allow javascript to close this window if we have a blocked popup
+  // notification.
+  if (delegate() && rvh == render_view_host() &&
+      !ShowingBlockedPopupNotification())
     delegate()->CloseContents(this);
 }
 
@@ -937,6 +947,29 @@ void WebContents::DidFailProvisionalLoadWithError(
     return;
 
   if (net::ERR_ABORTED == error_code) {
+    // EVIL HACK ALERT! Ignore failed loads when we're showing interstitials.
+    // This means that the interstitial won't be torn down properly, which is
+    // bad. But if we have an interstitial, go back to another tab type, and
+    // then load the same interstitial again, we could end up getting the first
+    // interstitial's "failed" message (as a result of the cancel) when we're on
+    // the second one.
+    //
+    // We can't tell this apart, so we think we're tearing down the current page
+    // which will cause a crash later one. There is also some code in
+    // RenderViewHostManager::RendererAbortedProvisionalLoad that is commented
+    // out because of this problem.
+    //
+    // http://code.google.com/p/chromium/issues/detail?id=2855
+    // Because this will not tear down the interstitial properly, if "back" is
+    // back to another tab type, the interstitial will still be somewhat alive
+    // in the previous tab type. If you navigate somewhere that activates the
+    // tab with the interstitial again, you'll see a flash before the new load
+    // commits of the interstitial page.
+    if (render_manager_.showing_interstitial_page()) {
+      LOG(WARNING) << "Discarding message during interstitial.";
+      return;
+    }
+
     // This will discard our pending entry if we cancelled the load (e.g., if we
     // decided to download the file instead of load it). Only discard the
     // pending entry if the URLs match, otherwise the user initiated a navigate
@@ -1037,13 +1070,16 @@ void WebContents::RunJavaScriptMessage(
     const std::wstring& message,
     const std::wstring& default_prompt,
     const int flags,
-    IPC::Message* reply_msg) {
+    IPC::Message* reply_msg,
+    bool* did_suppress_message) {
   // Suppress javascript messages when requested and when inside a constrained
   // popup window (because that activates them and breaks them out of the
   // constrained window jail).
   bool suppress_this_message = suppress_javascript_messages_;
   if (delegate())
     suppress_this_message |= delegate()->IsPopup(this);
+
+  *did_suppress_message = suppress_this_message;
 
   if (!suppress_this_message) {
     TimeDelta time_since_last_message(
@@ -1088,6 +1124,11 @@ void WebContents::ShowModalHTMLDialog(const GURL& url, int width, int height,
 void WebContents::PasswordFormsSeen(
     const std::vector<PasswordForm>& forms) {
   GetPasswordManager()->PasswordFormsSeen(forms);
+}
+
+void WebContents::AutofillFormSubmitted(
+    const AutofillForm& form) {
+  GetAutofillManager()->AutofillFormSubmitted(form);
 }
 
 // Checks to see if we should generate a keyword based on the OSDD, and if
@@ -1298,7 +1339,25 @@ bool WebContents::CanBlur() const {
   return delegate() ? delegate()->CanBlur() : true;
 }
 
-void WebContents::RendererUnresponsive(RenderViewHost* rvh) {
+void WebContents::RendererUnresponsive(RenderViewHost* rvh, 
+                                       bool is_during_unload) {
+  if (is_during_unload) {
+    // Hang occurred while firing the beforeunload/unload handler.
+    // Pretend the handler fired so tab closing continues as if it had.
+    rvh->UnloadListenerHasFired();
+
+    if (!render_manager_.ShouldCloseTabOnUnresponsiveRenderer()) {
+      return;
+    }
+
+    // If the tab hangs in the beforeunload/unload handler there's really
+    // nothing we can do to recover. Pretend the unload listeners have
+    // all fired and close the tab. If the hang is in the beforeunload handler
+    // then the user will not have the option of cancelling the close.
+    Close(rvh);
+    return;
+  }
+
   if (render_view_host() && render_view_host()->IsRenderViewLive())
     HungRendererWarning::ShowForWebContents(this);
 }

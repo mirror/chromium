@@ -30,7 +30,7 @@
 #include "chrome/browser/views/input_window.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/favicon_size.h"
-#include "chrome/common/gfx/url_elider.h"
+#include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_types.h"
@@ -44,6 +44,7 @@
 #include "chrome/views/container.h"
 #include "chrome/views/menu_button.h"
 #include "chrome/views/tooltip_manager.h"
+#include "chrome/views/view_constants.h"
 #include "chrome/views/window.h"
 #include "generated_resources.h"
 
@@ -1669,7 +1670,9 @@ int BookmarkBarView::CalculateDropOperation(const DropTargetEvent& event,
     int ops = data.GetFirstNode(profile_)
         ? DragDropTypes::DRAG_MOVE
         : DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_LINK;
-    return bookmark_utils::PreferredDropOperation(event, ops);
+    return
+        bookmark_utils::PreferredDropOperation(event.GetSourceOperations(),
+                                               ops);
   }
 
   for (int i = 0; i < GetBookmarkButtonCount() &&
@@ -1681,9 +1684,9 @@ int BookmarkBarView::CalculateDropOperation(const DropTargetEvent& event,
       found = true;
       BookmarkNode* node = model_->GetBookmarkBarNode()->GetChild(i);
       if (node->GetType() != history::StarredEntry::URL) {
-        if (button_x <= MenuItemView::kDropBetweenPixels) {
+        if (button_x <= views::kDropBetweenPixels) {
           *index = i;
-        } else if (button_x < button_w - MenuItemView::kDropBetweenPixels) {
+        } else if (button_x < button_w - views::kDropBetweenPixels) {
           *index = i;
           *drop_on = true;
         } else {
@@ -1759,7 +1762,8 @@ int BookmarkBarView::CalculateDropOperation(const DropTargetEvent& event,
   } else {
     // User is dragging from another app, copy.
     return bookmark_utils::PreferredDropOperation(
-        event, DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_LINK);
+        event.GetSourceOperations(),
+        DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_LINK);
   }
 }
 

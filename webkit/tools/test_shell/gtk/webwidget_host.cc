@@ -4,6 +4,7 @@
 
 #include "webkit/tools/test_shell/webwidget_host.h"
 
+#include <cairo/cairo.h>
 #include <gtk/gtk.h>
 
 #include "base/logging.h"
@@ -19,46 +20,75 @@ namespace {
 // Callback functions to proxy to host...
 
 gboolean ConfigureEvent(GtkWidget* widget, GdkEventConfigure* config,
-                        gpointer userdata) {
-  WebWidgetHost* host = (WebWidgetHost* ) userdata;
+                        WebWidgetHost* host) {
   DLOG(INFO) << "  -- Resize " << config->width << " " << config->height;
   host->Resize(gfx::Size(config->width, config->height));
   return FALSE;
 }
 
 gboolean ExposeEvent(GtkWidget* widget, GdkEventExpose* expose,
-                     gpointer userdata) {
-  WebWidgetHost* host = (WebWidgetHost* ) userdata;
-  DLOG(INFO) << "  -- Expose";
+                     WebWidgetHost* host) {
   host->Paint();
   return FALSE;
 }
 
-gboolean DestroyEvent(GtkWidget* widget, GdkEvent* event, gpointer userdata) {
-  WebWidgetHost* host = (WebWidgetHost* ) userdata;
+gboolean DestroyEvent(GtkWidget* widget, GdkEvent* event,
+                      WebWidgetHost* host) {
   DLOG(INFO) << "  -- Destroy";
   host->WindowDestroyed();
   return FALSE;
 }
 
-gboolean KeyPressEvent(GtkWidget* widget, GdkEventKey* event,
-                       gpointer userdata) {
-  WebWidgetHost* host = (WebWidgetHost* ) userdata;
-  DLOG(INFO) << "  -- Key press";
+gboolean KeyPressReleaseEvent(GtkWidget* widget, GdkEventKey* event,
+                              WebWidgetHost* host) {
+  DLOG(INFO) << "  -- Key press or release";
   WebKeyboardEvent wke(event);
   host->webwidget()->HandleInputEvent(&wke);
+
+  // The WebKeyboardEvent model, when holding down a key, is:
+  //   KEY_DOWN, CHAR, (repeated CHAR as key repeats,) KEY_UP
+  // The GDK model for the same sequence is just:
+  //   KEY_PRESS, (repeated KEY_PRESS as key repeats,) KEY_RELEASE
+  // So we must simulate a CHAR event for every key press.
+  if (event->type == GDK_KEY_PRESS) {
+    wke.type = WebKeyboardEvent::CHAR;
+    host->webwidget()->HandleInputEvent(&wke);
+  }
+
   return FALSE;
 }
 
-gboolean FocusIn(GtkWidget* widget, GdkEventFocus* focus, gpointer userdata) {
-  WebWidgetHost* host = (WebWidgetHost* ) userdata;
+gboolean FocusIn(GtkWidget* widget, GdkEventFocus* focus,
+                 WebWidgetHost* host) {
   host->webwidget()->SetFocus(true);
   return FALSE;
 }
 
-gboolean FocusOut(GtkWidget* widget, GdkEventFocus* focus, gpointer userdata) {
-  WebWidgetHost* host = (WebWidgetHost* ) userdata;
+gboolean FocusOut(GtkWidget* widget, GdkEventFocus* focus,
+                  WebWidgetHost* host) {
   host->webwidget()->SetFocus(false);
+  return FALSE;
+}
+
+gboolean ButtonPressReleaseEvent(GtkWidget* widget, GdkEventButton* event,
+                                 WebWidgetHost* host) {
+  DLOG(INFO) << "  -- mouse button press or release";
+  WebMouseEvent wme(event);
+  host->webwidget()->HandleInputEvent(&wme);
+  return FALSE;
+}
+
+gboolean MouseMoveEvent(GtkWidget* widget, GdkEventMotion* event,
+                        WebWidgetHost* host) {
+  WebMouseEvent wme(event);
+  host->webwidget()->HandleInputEvent(&wme);
+  return FALSE;
+}
+
+gboolean MouseScrollEvent(GtkWidget* widget, GdkEventScroll* event,
+                          WebWidgetHost* host) {
+  WebMouseWheelEvent wmwe(event);
+  host->webwidget()->HandleInputEvent(&wmwe);
   return FALSE;
 }
 
@@ -77,13 +107,24 @@ gfx::WindowHandle WebWidgetHost::CreateWindow(gfx::WindowHandle box,
                                 GDK_BUTTON_RELEASE_MASK |
                                 GDK_KEY_PRESS_MASK |
                                 GDK_KEY_RELEASE_MASK);
-  // TODO(agl): set GTK_CAN_FOCUS flag
+  GTK_WIDGET_SET_FLAGS(widget, GTK_CAN_FOCUS);
   g_signal_connect(widget, "configure-event", G_CALLBACK(ConfigureEvent), host);
   g_signal_connect(widget, "expose-event", G_CALLBACK(ExposeEvent), host);
   g_signal_connect(widget, "destroy-event", G_CALLBACK(DestroyEvent), host);
-  g_signal_connect(widget, "key-press-event", G_CALLBACK(KeyPressEvent), host);
+  g_signal_connect(widget, "key-press-event", G_CALLBACK(KeyPressReleaseEvent),
+                   host);
+  g_signal_connect(widget, "key-release-event",
+                   G_CALLBACK(KeyPressReleaseEvent), host);
   g_signal_connect(widget, "focus-in-event", G_CALLBACK(FocusIn), host);
   g_signal_connect(widget, "focus-out-event", G_CALLBACK(FocusOut), host);
+  g_signal_connect(widget, "button-press-event",
+                   G_CALLBACK(ButtonPressReleaseEvent), host);
+  g_signal_connect(widget, "button-release-event",
+                   G_CALLBACK(ButtonPressReleaseEvent), host);
+  g_signal_connect(widget, "motion-notify-event", G_CALLBACK(MouseMoveEvent),
+                   host);
+  g_signal_connect(widget, "scroll-event", G_CALLBACK(MouseScrollEvent),
+                   host);
 
   return widget;
 }
@@ -99,18 +140,39 @@ WebWidgetHost* WebWidgetHost::Create(gfx::WindowHandle box,
   return host;
 }
 
-void WebWidgetHost::DidInvalidateRect(const gfx::Rect& rect) {
-  LOG(INFO) << "  -- Invalidate " << rect.x() << " "
-            << rect.y() << " "
-            << rect.width() << " "
-            << rect.height() << " ";
+void WebWidgetHost::DidInvalidateRect(const gfx::Rect& damaged_rect) {
+  DLOG_IF(WARNING, painting_) << "unexpected invalidation while painting";
 
-  gtk_widget_queue_draw_area(GTK_WIDGET(view_), rect.x(), rect.y(), rect.width(),
-                             rect.height());
+  // If this invalidate overlaps with a pending scroll, then we have to
+  // downgrade to invalidating the scroll rect.
+  if (damaged_rect.Intersects(scroll_rect_)) {
+    paint_rect_ = paint_rect_.Union(scroll_rect_);
+    ResetScrollRect();
+  }
+  paint_rect_ = paint_rect_.Union(damaged_rect);
+
+  gtk_widget_queue_draw_area(GTK_WIDGET(view_), damaged_rect.x(),
+      damaged_rect.y(), damaged_rect.width(), damaged_rect.height());
 }
 
 void WebWidgetHost::DidScrollRect(int dx, int dy, const gfx::Rect& clip_rect) {
-  NOTIMPLEMENTED();
+  DCHECK(dx || dy);
+
+  // If we already have a pending scroll operation or if this scroll operation
+  // intersects the existing paint region, then just failover to invalidating.
+  if (!scroll_rect_.IsEmpty() || paint_rect_.Intersects(clip_rect)) {
+    paint_rect_ = paint_rect_.Union(scroll_rect_);
+    ResetScrollRect();
+    paint_rect_ = paint_rect_.Union(clip_rect);
+  }
+
+  // We will perform scrolling lazily, when requested to actually paint.
+  scroll_rect_ = clip_rect;
+  scroll_dx_ = dx;
+  scroll_dy_ = dy;
+
+  gtk_widget_queue_draw_area(GTK_WIDGET(view_), clip_rect.x(), clip_rect.y(),
+                             clip_rect.width(), clip_rect.height());
 }
 
 WebWidgetHost* FromWindow(gfx::WindowHandle view) {
@@ -143,10 +205,11 @@ void WebWidgetHost::Resize(const gfx::Size &newsize) {
 void WebWidgetHost::Paint() {
   gint width, height;
   gtk_widget_get_size_request(GTK_WIDGET(view_), &width, &height);
-
   gfx::Rect client_rect(width, height);
 
+  // Allocate a canvas if necessary
   if (!canvas_.get()) {
+    ResetScrollRect();
     paint_rect_ = client_rect;
     canvas_.reset(new gfx::PlatformCanvas(width, height, true));
     if (!canvas_.get()) {
@@ -159,12 +222,12 @@ void WebWidgetHost::Paint() {
   // This may result in more invalidation
   webwidget_->Layout();
 
-  // TODO(agl): scrolling code
+  // TODO(agl): Optimized scrolling code would go here.
+  ResetScrollRect();
 
   // Paint the canvas if necessary.  Allow painting to generate extra rects the
   // first time we call it.  This is necessary because some WebCore rendering
   // objects update their layout only when painted.
-  
   for (int i = 0; i < 2; ++i) {
     paint_rect_ = client_rect.Intersect(paint_rect_);
     if (!paint_rect_.IsEmpty()) {
@@ -181,9 +244,17 @@ void WebWidgetHost::Paint() {
   gfx::PlatformDeviceLinux &platdev = canvas_->getTopPlatformDevice();
   gfx::BitmapPlatformDeviceLinux* const bitdev =
     static_cast<gfx::BitmapPlatformDeviceLinux* >(&platdev);
-  LOG(INFO) << "Using pixel data at " << (void *) gdk_pixbuf_get_pixels(bitdev->pixbuf());
-  gdk_draw_pixbuf(view_->window, NULL, bitdev->pixbuf(),
-                  0, 0, 0, 0, width, height, GDK_RGB_DITHER_NONE, 0, 0);
+  
+  cairo_t* cairo_drawable = gdk_cairo_create(view_->window);
+  cairo_set_source_surface(cairo_drawable, bitdev->surface(), 0, 0);
+  cairo_paint(cairo_drawable);
+  cairo_destroy(cairo_drawable);
+}
+
+void WebWidgetHost::ResetScrollRect() {
+  scroll_rect_ = gfx::Rect();
+  scroll_dx_ = 0;
+  scroll_dy_ = 0;
 }
 
 void WebWidgetHost::PaintRect(const gfx::Rect& rect) {

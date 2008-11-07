@@ -9,16 +9,18 @@
 #include <string>
 #include <vector>
 
+#include "base/clipboard.h"
 #include "base/gfx/rect.h"
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_message_macros.h"
-#include "webkit/glue/dom_operations.h"
+#include "skia/include/SkBitmap.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/context_node_types.h"
+#include "webkit/glue/dom_operations.h"
 #include "webkit/glue/screen_info.h"
 #include "webkit/glue/webcursor.h"
-#include "webkit/glue/webplugin.h"
 #include "webkit/glue/webinputevent.h"
+#include "webkit/glue/webplugin.h"
 
 void RenderMessagesInit();
 
@@ -783,21 +785,15 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                               std::wstring /* plugin_path */)
 
   // Clipboard IPC messages
-  IPC_MESSAGE_CONTROL0(ViewHostMsg_ClipboardClear)
-  IPC_MESSAGE_CONTROL1(ViewHostMsg_ClipboardWriteText,
-                       std::wstring /* text */)
-  IPC_MESSAGE_CONTROL2(ViewHostMsg_ClipboardWriteHTML,
-                       std::wstring /* html */,
-                       GURL /* url */)
-  IPC_MESSAGE_CONTROL2(ViewHostMsg_ClipboardWriteBookmark,
-                       std::wstring /* title */,
-                       GURL /* url */)
-  // This message is synchronized so that the renderer known when it is safe to
+
+  // This message is used when the object list does not contain a bitmap.
+  IPC_MESSAGE_CONTROL1(ViewHostMsg_ClipboardWriteObjectsAsync,
+      Clipboard::ObjectMap /* objects */)
+  // This message is used when the object list contains a bitmap.
+  // It is synchronized so that the renderer knows when it is safe to
   // free the shared memory used to transfer the bitmap.
-  IPC_SYNC_MESSAGE_CONTROL2_0(ViewHostMsg_ClipboardWriteBitmap,
-                              SharedMemoryHandle /* bitmap */,
-                              gfx::Size /* size */)
-  IPC_MESSAGE_CONTROL0(ViewHostMsg_ClipboardWriteWebSmartPaste)
+  IPC_SYNC_MESSAGE_CONTROL1_0(ViewHostMsg_ClipboardWriteObjectsSync,
+      Clipboard::ObjectMap /* objects */)
   IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_ClipboardIsFormatAvailable,
                               int /* format */,
                               bool /* result */)
@@ -832,6 +828,10 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // filling/submitting by the password manager
   IPC_MESSAGE_ROUTED1(ViewHostMsg_PasswordFormsSeen,
                       std::vector<PasswordForm> /* forms */)
+
+  // Notification that a form has been submitted.  The user hit the button.
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_AutofillFormSubmitted,
+                      AutofillForm /* form */)
 
   // Used to tell the parent the user started dragging in the content area. The
   // WebDropData struct contains contextual information about the pieces of the
@@ -880,8 +880,8 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   //         - Notifying a renderer process moves its input focus from a
   //           password input to an editable control which is NOT a password
   //           input.
-  //           A renderer process also has to set caret_x and caret_y and
-  //           specify the new caret position.
+  //           A renderer process also has to set caret_rect and
+  //           specify the new caret rectangle.
   //     + IME_COMPLETE_COMPOSITION
   //       Finish the current composition.
   //       This code is used for notifying a renderer process moves its
@@ -889,13 +889,11 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   //       which is NOT a password input. A browser process closes its IME
   //       windows without changing the activation status of its IME, i.e. it
   //       keeps activating its IME.
-  // * caret_x (int)
-  // * caret_y (int)
-  //   They specify the position of the input caret.
-  IPC_MESSAGE_ROUTED3(ViewHostMsg_ImeUpdateStatus,
+  // * caret_rect (gfx::Rect)
+  //   They specify the rectangle of the input caret.
+  IPC_MESSAGE_ROUTED2(ViewHostMsg_ImeUpdateStatus,
                       ViewHostMsg_ImeControl, /* control */
-                      int, /* caret_x */
-                      int  /* caret_y */)
+                      gfx::Rect /* caret_rect */)
 
   // Response for InspectElement request. Returns the number of resources
   // identified by InspectorController.
