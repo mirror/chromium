@@ -86,7 +86,8 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
       suspended_nav_message_(NULL),
       run_modal_reply_msg_(NULL),
       has_unload_listener_(false),
-      is_waiting_for_unload_ack_(false) {
+      is_waiting_for_unload_ack_(false),
+      are_javascript_messages_suppressed_(false) {
   DCHECK(instance_);
   DCHECK(delegate_);
   if (modal_dialog_event == NULL)
@@ -475,8 +476,14 @@ void RenderViewHost::CaptureThumbnail() {
 void RenderViewHost::JavaScriptMessageBoxClosed(IPC::Message* reply_msg,
                                                 bool success,
                                                 const std::wstring& prompt) {
-  if (is_waiting_for_unload_ack_)
+  if (is_waiting_for_unload_ack_) {
+    if (are_javascript_messages_suppressed_) {
+      delegate_->RendererUnresponsive(this, is_waiting_for_unload_ack_);
+      return;
+    }
+
     StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
+  }
 
   if (--modal_dialog_count_ == 0)
     ResetEvent(modal_dialog_event_.Get());
@@ -1034,7 +1041,8 @@ void RenderViewHost::OnMsgRunJavaScriptMessage(
   if (modal_dialog_count_++ == 0)
     SetEvent(modal_dialog_event_.Get());
   bool did_suppress_message = false;
-  delegate_->RunJavaScriptMessage(message, default_prompt, flags, reply_msg);
+  delegate_->RunJavaScriptMessage(message, default_prompt, flags, reply_msg,
+                                  &are_javascript_messages_suppressed_);
 }
 
 void RenderViewHost::OnMsgRunBeforeUnloadConfirm(const std::wstring& message,
