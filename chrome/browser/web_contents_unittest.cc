@@ -39,7 +39,8 @@ class TestRenderWidgetHostView : public RenderWidgetHostView {
   void UpdateCursorIfOverSelf() {}
   // Indicates if the page has finished loading.
   virtual void SetIsLoading(bool is_loading) {}
-  void IMEUpdateStatus(ViewHostMsg_ImeControl control, int x, int y) {}
+  void IMEUpdateStatus(ViewHostMsg_ImeControl control,
+                               const gfx::Rect& caret_rect) {}
   void DidPaintRect(const gfx::Rect& rect) {}
   void DidScrollRect(const gfx::Rect& rect, int dx, int dy) {}
   void RendererGone() {}
