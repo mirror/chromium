@@ -61,9 +61,11 @@
 		4D16381F0EBFA4FB008F024E /* StorageArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1638060EBFA4FB008F024E /* StorageArea.cpp */; };
 		4D1638200EBFA4FC008F024E /* StorageEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1638080EBFA4FB008F024E /* StorageEvent.cpp */; };
 		4D1638210EBFA4FC008F024E /* StorageMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D16380A0EBFA4FB008F024E /* StorageMap.cpp */; };
+		4D163E990EC23D9D008F024E /* form_autocomplete_listener.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4D163E970EC23D9D008F024E /* form_autocomplete_listener.cc */; };
 		4D1640E50EC29BB4008F024E /* Geolocation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1640D80EC29BB4008F024E /* Geolocation.cpp */; };
 		4D1640E60EC29BB4008F024E /* Geoposition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1640DA0EC29BB4008F024E /* Geoposition.cpp */; };
 		4D1641090EC29C84008F024E /* Location.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B0096150DAFF19C00F72082 /* Location.cpp */; };
+		4D16411F0EC29D01008F024E /* GeolocationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1641140EC29D01008F024E /* GeolocationService.cpp */; };
 		4D1641310EC29E80008F024E /* ActiveDOMObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D1641280EC29E80008F024E /* ActiveDOMObject.cpp */; };
 		4D1641330EC29E80008F024E /* ScriptExecutionContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D16412F0EC29E80008F024E /* ScriptExecutionContext.cpp */; };
 		4D2A63EB0EBBBEDF00B55603 /* MediaPlayerPrivateChromium.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4D2A63E90EBBBEDF00B55603 /* MediaPlayerPrivateChromium.cpp */; };
@@ -1487,6 +1489,7 @@
 		4D16380B0EBFA4FB008F024E /* StorageMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageMap.h; sourceTree = "<group>"; };
 		4D163E970EC23D9D008F024E /* form_autocomplete_listener.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = form_autocomplete_listener.cc; sourceTree = "<group>"; };
 		4D163E980EC23D9D008F024E /* form_autocomplete_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = form_autocomplete_listener.h; sourceTree = "<group>"; };
+		4D163E9D0EC23DC6008F024E /* PopupMenuChromium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenuChromium.h; sourceTree = "<group>"; };
 		4D1640D80EC29BB4008F024E /* Geolocation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geolocation.cpp; sourceTree = "<group>"; };
 		4D1640D90EC29BB4008F024E /* Geolocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geolocation.h; sourceTree = "<group>"; };
 		4D1640DA0EC29BB4008F024E /* Geoposition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geoposition.cpp; sourceTree = "<group>"; };
@@ -1498,7 +1501,6 @@
 		4D1640E00EC29BB4008F024E /* PositionErrorCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionErrorCallback.h; sourceTree = "<group>"; };
 		4D1640E10EC29BB4008F024E /* PositionOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionOptions.h; sourceTree = "<group>"; };
 		4D1640E20EC29BB4008F024E /* PrintContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrintContext.cpp; sourceTree = "<group>"; };
-		4D163E9D0EC23DC6008F024E /* PopupMenuChromium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupMenuChromium.h; sourceTree = "<group>"; };
 		4D1640E30EC29BB4008F024E /* PrintContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintContext.h; sourceTree = "<group>"; };
 		4D1640E40EC29BB4008F024E /* ScriptCallContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCallContext.h; sourceTree = "<group>"; };
 		4D1641140EC29D01008F024E /* GeolocationService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GeolocationService.cpp; sourceTree = "<group>"; };
