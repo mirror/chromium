@@ -242,6 +242,8 @@ class V8Proxy {
 
   // Returns the window object of the currently executing context.
   static DOMWindow* retrieveWindow();
+  // Returns the window object associated with a context.
+  static DOMWindow* retrieveWindow(v8::Handle<v8::Context> context);
   // Returns V8Proxy object of the currently executing context.
   static V8Proxy* retrieve();
   // Returns V8Proxy object associated with a frame.
@@ -253,7 +255,7 @@ class V8Proxy {
   // with the currently executing context.
   static Frame* retrieveFrame();
   // Returns the frame object of the window object associated with
-  // an context.
+  // a context.
   static Frame* retrieveFrame(v8::Handle<v8::Context> context);
   // Returns the frame that started JS execution.
   // NOTE: cannot declare retrieveActiveFrame as inline function,

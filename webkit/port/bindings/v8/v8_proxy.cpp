@@ -1446,7 +1446,13 @@ DOMWindow* V8Proxy::retrieveWindow()
     // TODO: This seems very fragile. How do we know that the global object
     // from the current context is something sensible? Do we need to use the
     // last entered here? Who calls this?
-    v8::Handle<v8::Object> global = v8::Context::GetCurrent()->Global();
+    return retrieveWindow(v8::Context::GetCurrent());
+}
+
+
+DOMWindow* V8Proxy::retrieveWindow(v8::Handle<v8::Context> context)
+{
+    v8::Handle<v8::Object> global = context->Global();
     ASSERT(!global.IsEmpty());
     global = LookupDOMWrapper(V8ClassIndex::DOMWINDOW, global);
     ASSERT(!global.IsEmpty());
@@ -1456,11 +1462,7 @@ DOMWindow* V8Proxy::retrieveWindow()
 
 Frame* V8Proxy::retrieveFrame(v8::Handle<v8::Context> context)
 {
-    v8::Handle<v8::Object> global = context->Global();
-    global = LookupDOMWrapper(V8ClassIndex::DOMWINDOW, global);
-    ASSERT(!global.IsEmpty());
-    DOMWindow* window = ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, global);
-    return window->frame();
+    return retrieveWindow(context)->frame();
 }
 
 
