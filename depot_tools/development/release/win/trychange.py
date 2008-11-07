@@ -86,7 +86,7 @@ def _SendChangeNFS(options):
   """Send a change to the try server."""
   script_locals = ExecuteTryServerScript()
   patch_name = EscapeDot(options.user) + '.' + EscapeDot(options.name)
-  if bot:
+  if options.bot:
     patch_name += '.' + EscapeDot(options.bot)
   patch_name += '.diff'
   patch_path = os.path.join(script_locals['try_server'], patch_name)
