@@ -126,12 +126,10 @@ bool WebInspectorClient::windowVisible() {
 
 void WebInspectorClient::attachWindow() {
   // TODO(jackson): Implement this
-  NOTIMPLEMENTED();
 }
 
 void WebInspectorClient::detachWindow() {
   // TODO(jackson): Implement this
-  NOTIMPLEMENTED();
 }
 
 void WebInspectorClient::setAttachedWindowHeight(unsigned int height) {
