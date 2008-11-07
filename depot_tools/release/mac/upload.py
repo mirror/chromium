@@ -910,7 +910,7 @@ class SubversionVCS(VersionControlSystem):
             else:
               url = "%s/%s@%s" % (self.svn_base, filename, self.rev_end)
               new_content = RunShell(["svn", "cat", url],
-                                     universal_newlines=True)
+                                     universal_newlines=True, silent_ok=True)
         else:
           base_content = ""
       else:
@@ -926,10 +926,12 @@ class SubversionVCS(VersionControlSystem):
           # the full URL with "@REV" appended instead of using "-r" option.
           url = "%s/%s@%s" % (self.svn_base, filename, self.rev_start)
           base_content = RunShell(["svn", "cat", url],
-                                  universal_newlines=universal_newlines)
+                                  universal_newlines=universal_newlines,
+                                  silent_ok=True)
         else:
           base_content = RunShell(["svn", "cat", filename],
-                                  universal_newlines=universal_newlines)
+                                  universal_newlines=universal_newlines,
+                                  silent_ok=True)
         if not is_binary:
           args = []
           if self.rev_start:
