@@ -16,7 +16,6 @@
 #include "chrome/browser/web_app.h"
 #include "chrome/views/container_win.h"
 
-class AutofillManager;
 class FindInPageController;
 class InterstitialPageDelegate;
 class PasswordManager;
@@ -53,9 +52,6 @@ class WebContents : public TabContents,
   static void RegisterUserPrefs(PrefService* prefs);
 
   // Getters -------------------------------------------------------------------
-
-  // Returns the AutofillManager, creating it if necessary.
-  AutofillManager* GetAutofillManager();
 
   // Returns the PasswordManager, creating it if necessary.
   PasswordManager* GetPasswordManager();
@@ -257,7 +253,7 @@ class WebContents : public TabContents,
   virtual RenderViewHostDelegate::Save* GetSaveDelegate() const;
   virtual Profile* GetProfile() const;
   virtual void CreateView(int route_id, HANDLE modal_dialog_event);
-  virtual void CreateWidget(int route_id, bool focus_on_show);
+  virtual void CreateWidget(int route_id);
   virtual void ShowView(int route_id,
                         WindowOpenDisposition disposition,
                         const gfx::Rect& initial_pos,
@@ -330,7 +326,6 @@ class WebContents : public TabContents,
                                    const std::string& json_arguments,
                                    IPC::Message* reply_msg);
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms);
-  virtual void AutofillFormSubmitted(const AutofillForm& form);
   virtual void TakeFocus(bool reverse);
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
                            int32 page_id, const GURL& url, bool autodetected);
@@ -591,9 +586,6 @@ class WebContents : public TabContents,
   // equivalent constrained window).  Plugin processes check this to know if
   // they should pump messages then.
   ScopedHandle message_box_active_;
-
-  // AutofillManager, lazily created.
-  scoped_ptr<AutofillManager> autofill_manager_;
 
   // PasswordManager, lazily created.
   scoped_ptr<PasswordManager> password_manager_;

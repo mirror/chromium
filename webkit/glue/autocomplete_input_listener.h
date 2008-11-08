@@ -14,6 +14,7 @@
 #pragma warning(push, 0)
 #include "EventListener.h"
 #pragma warning(pop)
+#undef LOG
 
 #include "base/basictypes.h"
 #include "base/scoped_ptr.h"

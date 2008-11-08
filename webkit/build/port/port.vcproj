@@ -772,10 +772,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\port\platform\PopupMenuWin.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\port\platform\ScreenWin.cpp"
 				>
 			</File>

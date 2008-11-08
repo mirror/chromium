@@ -663,8 +663,6 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_ShowModalHTMLDialog,
                                     OnMsgShowModalHTMLDialog)
     IPC_MESSAGE_HANDLER(ViewHostMsg_PasswordFormsSeen, OnMsgPasswordFormsSeen)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_AutofillFormSubmitted,
-                        OnMsgAutofillFormSubmitted)
     IPC_MESSAGE_HANDLER(ViewHostMsg_StartDragging, OnMsgStartDragging)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateDragCursor, OnUpdateDragCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_TakeFocus, OnTakeFocus)
@@ -694,8 +692,6 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShouldClose_ACK, OnMsgShouldCloseACK);
     IPC_MESSAGE_HANDLER(ViewHostMsg_UnloadListenerChanged,
                         OnUnloadListenerChanged);
-    IPC_MESSAGE_HANDLER(ViewHostMsg_QueryFormFieldAutofill,
-                        OnQueryFormFieldAutofill)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidgetHost::OnMessageReceived(msg))
   IPC_END_MESSAGE_MAP_EX()
@@ -722,8 +718,8 @@ void RenderViewHost::OnMsgCreateView(int route_id, HANDLE modal_dialog_event) {
   delegate_->CreateView(route_id, modal_dialog_event);
 }
 
-void RenderViewHost::OnMsgCreateWidget(int route_id, bool focus_on_show) {
-  delegate_->CreateWidget(route_id, focus_on_show);
+void RenderViewHost::OnMsgCreateWidget(int route_id) {
+  delegate_->CreateWidget(route_id);
 }
 
 void RenderViewHost::OnMsgShowView(int route_id,
@@ -1067,11 +1063,6 @@ void RenderViewHost::OnMsgPasswordFormsSeen(
   delegate_->PasswordFormsSeen(forms);
 }
 
-void RenderViewHost::OnMsgAutofillFormSubmitted(
-    const AutofillForm& form) {
-  delegate_->AutofillFormSubmitted(form);
-}
-
 void RenderViewHost::OnMsgStartDragging(
     const WebDropData& drop_data) {
   delegate_->StartDragging(drop_data);
@@ -1199,43 +1190,6 @@ void RenderViewHost::OnMsgShouldCloseACK(bool proceed) {
 
 void RenderViewHost::OnUnloadListenerChanged(bool has_listener) {
   has_unload_listener_ = has_listener;
-}
-
-void RenderViewHost::OnQueryFormFieldAutofill(const std::wstring& field_name,
-                                              const std::wstring& user_text,
-                                              int64 node_id,
-                                              int request_id) {
-  //  TODO(jcampan): this is where the suggestions should be queried from the
-  // database.  The sample code commented below is left here in the meantime for
-  // testing purpose.
-#ifdef TEST_AUTOFILL
-  static std::vector<std::wstring>* suggestions = NULL;
-  if (!suggestions) {
-    suggestions = new std::vector<std::wstring>();
-    suggestions->push_back(L"Alice");
-    suggestions->push_back(L"Jay");
-    suggestions->push_back(L"Jason");
-    suggestions->push_back(L"Jasmine");
-    suggestions->push_back(L"Jamel");
-    suggestions->push_back(L"Jamelo");
-    suggestions->push_back(L"Volvo");
-    suggestions->push_back(L"Volswagen");
-  }
-
-
-  std::vector<std::wstring> result;
-  for (std::vector<std::wstring>::iterator iter = suggestions->begin();
-       iter != suggestions->end(); ++iter) {
-    if (StartsWith(*iter, user_text, false))
-      result.push_back(*iter);
-  }
-  Send(new ViewMsg_AutofillSuggestions(routing_id_,
-                                       node_id, request_id, result, -1));
-#else
-  Send(new ViewMsg_AutofillSuggestions(routing_id_,
-                                       node_id, request_id,
-                                       std::vector<std::wstring>(), 0));
-#endif
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {

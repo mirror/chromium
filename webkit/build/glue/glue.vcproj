@@ -125,10 +125,6 @@
 			Name="API"
 			>
 			<File
-				RelativePath="..\..\glue\autofill_form.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\glue\cache_manager.h"
 				>
 			</File>
@@ -378,14 +374,6 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\glue_accessibility.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\glue\form_autocomplete_listener.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\glue\form_autocomplete_listener.h"
 				>
 			</File>
 			<File

@@ -91,7 +91,7 @@ class RenderViewHostDelegate {
   virtual void CreateView(int route_id, HANDLE modal_dialog_event) { }
 
   // The page is trying to open a new widget (e.g. a select popup).
-  virtual void CreateWidget(int route_id, bool focus_on_show) { }
+  virtual void CreateWidget(int route_id) { }
 
   // Show the newly created page with the specified disposition and bounds.
   virtual void ShowView(int route_id,
@@ -258,9 +258,6 @@ class RenderViewHostDelegate {
 
   // Password forms have been detected in the page.
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms) { }
-  
-  // Forms fillable by autofill have been detected in the page.
-  virtual void AutofillFormSubmitted(const AutofillForm& form) { }
 
   // Callback to inform the browser it should take back focus. If reverse is
   // true, it means the focus was retrieved by doing a Shift-Tab.

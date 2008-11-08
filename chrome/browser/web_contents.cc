@@ -7,7 +7,6 @@
 #include "base/compiler_specific.h"
 #include "base/file_version_info.h"
 #include "chrome/app/locales/locale_settings.h"
-#include "chrome/browser/autofill_manager.h"
 #include "chrome/browser/bookmarks/bookmark_drag_data.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
@@ -272,12 +271,6 @@ void WebContents::RegisterUserPrefs(PrefService* prefs) {
                                       IDS_USES_UNIVERSAL_DETECTOR);
   prefs->RegisterLocalizedStringPref(prefs::kStaticEncodings,
                                      IDS_STATIC_ENCODING_LIST);
-}
-
-AutofillManager* WebContents::GetAutofillManager() {
-  if (autofill_manager_.get() == NULL)
-    autofill_manager_.reset(new AutofillManager(this));
-  return autofill_manager_.get();
 }
 
 PasswordManager* WebContents::GetPasswordManager() {
@@ -785,7 +778,7 @@ void WebContents::CreateView(int route_id, HANDLE modal_dialog_event) {
   pending_views_[route_id] = new_view;
 }
 
-void WebContents::CreateWidget(int route_id, bool focus_on_show) {
+void WebContents::CreateWidget(int route_id) {
   RenderWidgetHost* widget_host = new RenderWidgetHost(process(), route_id);
   RenderWidgetHostHWND* widget_view = new RenderWidgetHostHWND(widget_host);
   widget_host->set_view(widget_view);
@@ -794,7 +787,6 @@ void WebContents::CreateWidget(int route_id, bool focus_on_show) {
   // call.
   widget_view->set_parent_hwnd(view()->GetPluginHWND());
   widget_view->set_close_on_deactivate(true);
-  widget_view->set_focus_on_show(focus_on_show);
 
   // Don't show the widget until we get its position in ShowWidget.
   pending_widgets_[route_id] = widget_host;
@@ -847,8 +839,7 @@ void WebContents::ShowWidget(int route_id, const gfx::Rect& initial_pos) {
   widget_view->Create(GetHWND(), NULL, NULL, WS_POPUP, WS_EX_TOOLWINDOW);
   widget_view->MoveWindow(initial_pos.x(), initial_pos.y(), initial_pos.width(),
                           initial_pos.height(), TRUE);
-  widget_view->ShowWindow(widget_view->focus_on_show() ? SW_SHOW :
-                                                         SW_SHOWNOACTIVATE);
+  widget_view->ShowWindow(SW_SHOW);
   widget_host->Init();
 }
 
@@ -1467,11 +1458,6 @@ void WebContents::ShowModalHTMLDialog(const GURL& url, int width, int height,
 void WebContents::PasswordFormsSeen(
     const std::vector<PasswordForm>& forms) {
   GetPasswordManager()->PasswordFormsSeen(forms);
-}
-
-void WebContents::AutofillFormSubmitted(
-    const AutofillForm& form) {
-  GetAutofillManager()->AutofillFormSubmitted(form);
 }
 
 void WebContents::TakeFocus(bool reverse) {

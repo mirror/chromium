@@ -45,7 +45,6 @@ if env['PLATFORM'] == 'win32':
     'entity_map.cc',
     'event_conversion.cc',
     'feed_preview.cc',
-    'form_autocomplete_listener.cc',
     'glue_serialize.cc',
     'glue_util.cc',
     'image_decoder.cc',

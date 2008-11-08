@@ -78,8 +78,7 @@ class WebWidgetImpl : public WebWidget, public WebCore::WidgetClientWin {
   virtual void invalidateRect(const WebCore::IntRect& damaged_rect);
   virtual void scrollRect(int dx, int dy, const WebCore::IntRect& clip_rect);
   virtual void popupOpened(WebCore::Widget* widget,
-                           const WebCore::IntRect& bounds,
-                           bool focus_on_show);
+                           const WebCore::IntRect& bounds);
   virtual void popupClosed(WebCore::Widget* widget);
   virtual void setCursor(const WebCore::Cursor& cursor);
   virtual void setFocus();

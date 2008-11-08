@@ -15,7 +15,6 @@
 #include "chrome/personalization/personalization.h"
 #endif
 #include "webkit/glue/password_form_dom_manager.h"
-#include "webkit/glue/autofill_form.h"
 
 enum ConsoleMessageLevel;
 class NavigationEntry;
@@ -402,7 +401,7 @@ class RenderViewHost : public RenderWidgetHost {
 
   // IPC message handlers:
   void OnMsgCreateView(int route_id, HANDLE modal_dialog_event);
-  void OnMsgCreateWidget(int route_id, bool focus_on_show);
+  void OnMsgCreateWidget(int route_id);
   void OnMsgShowView(int route_id,
                      WindowOpenDisposition disposition,
                      const gfx::Rect& initial_pos,
@@ -471,7 +470,6 @@ class RenderViewHost : public RenderWidgetHost {
                                 const std::string& json_arguments,
                                 IPC::Message* reply_msg);
   void OnMsgPasswordFormsSeen(const std::vector<PasswordForm>& forms);
-  void OnMsgAutofillFormSubmitted(const AutofillForm& forms);
   void OnMsgStartDragging(const WebDropData& drop_data);
   void OnUpdateDragCursor(bool is_drop_target);
   void OnTakeFocus(bool reverse);
@@ -501,10 +499,7 @@ class RenderViewHost : public RenderWidgetHost {
                                const webkit_glue::WebApplicationInfo& info);
   void OnMsgShouldCloseACK(bool proceed);
   void OnUnloadListenerChanged(bool has_handler);
-  void OnQueryFormFieldAutofill(const std::wstring& field_name,
-                                const std::wstring& user_text,
-                                int64 node_id,
-                                int request_id);
+
   virtual void NotifyRendererUnresponsive();
   virtual void NotifyRendererResponsive();
 

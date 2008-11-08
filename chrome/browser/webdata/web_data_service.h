@@ -14,11 +14,9 @@
 #include "chrome/common/scoped_vector.h"
 #include <map>
 
-struct AutofillForm::Element;
-struct IE7PasswordInfo;
-struct PasswordForm;
-class AutofillForm;
 class GURL;
+struct PasswordForm;
+struct IE7PasswordInfo;
 class ShutdownTask;
 class TemplateURL;
 
@@ -48,7 +46,6 @@ typedef enum {
   PASSWORD_RESULT,       // WDResult<std::vector<PasswordForm*>>
   PASSWORD_IE7_RESULT,   // WDResult<IE7PasswordInfo>
   WEB_APP_IMAGES,        // WDResult<WDAppImagesResult>
-  AUTOFILL_VALUE_RESULT, // WDResult<std::vector<std::wstring>>
 } WDResultType;
 
 // Result from GetWebAppImages.
@@ -353,25 +350,6 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   // WebDataServiceConsumer is about to be deleted.
   void CancelRequest(Handle h);
 
-  //////////////////////////////////////////////////////////////////////////////
-  //
-  // Autofill.
-  //
-  //////////////////////////////////////////////////////////////////////////////
-
-  // Schedules a task to add form elements to the web database.
-  void AddAutofillFormElements(
-      const std::vector<AutofillForm::Element>& elements);
-
-  // Initiates the request for a vector of values which have been entered in
-  // form input fields named |name|.  The method OnWebDataServiceRequestDone of
-  // |consumer| gets called back when the request is finished, with the vector
-  // included in the argument |result|.
-  Handle GetFormValuesForElementName(const std::wstring& name,
-                                     const std::wstring& prefix,
-                                     int limit,
-                                     WebDataServiceConsumer* consumer);
-
  protected:
   friend class TemplateURLModelTest;
   friend class TemplateURLModelTestingProfile;
@@ -434,16 +412,6 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   void GetIE7LoginImpl(GenericRequest<IE7PasswordInfo>* request);
   void GetAllAutofillableLoginsImpl(WebDataRequest* request);
   void GetAllLoginsImpl(WebDataRequest* request);
-
-  //////////////////////////////////////////////////////////////////////////////
-  //
-  // Autofill.
-  //
-  //////////////////////////////////////////////////////////////////////////////
-  void AddAutofillFormElementsImpl(
-      GenericRequest<std::vector<AutofillForm::Element> >* request);
-  void GetFormValuesForElementNameImpl(WebDataRequest* request,
-      const std::wstring& name, const std::wstring& prefix, int limit);
 
   //////////////////////////////////////////////////////////////////////////////
   //
