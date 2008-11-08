@@ -235,6 +235,7 @@ size_t MultipartResponseDelegate::FindBoundary() {
 bool MultipartResponseDelegate::ReadMultipartBoundary(
     const WebCore::ResourceResponse& response,
     std::string* multipart_boundary) {
+  static const char kMultipartBoundaryCharactersToTrim[] = {'"'};
 
   WebCore::String content_type = response.httpHeaderField("Content-Type");
   std::string content_type_as_string =
@@ -257,6 +258,8 @@ bool MultipartResponseDelegate::ReadMultipartBoundary(
 
   *multipart_boundary = 
       content_type_as_string.substr(boundary_start_offset, boundary_length);
+  TrimString(*multipart_boundary, kMultipartBoundaryCharactersToTrim,
+             multipart_boundary);
   return true;
 }
 
