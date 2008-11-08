@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
+#include "chrome/browser/history/history_publisher.h"
 #include "chrome/common/mru_cache.h"
 
 namespace history {
@@ -74,6 +75,7 @@ TextDatabaseManager::TextDatabaseManager(const std::wstring& dir,
       present_databases_loaded_(false),
 #pragma warning(suppress: 4355)  // Okay to pass "this" here.
       factory_(this) {
+      history_publisher_(NULL) {
 }
 
 TextDatabaseManager::~TextDatabaseManager() {
@@ -100,7 +102,9 @@ Time TextDatabaseManager::IDToTime(TextDatabase::DBIdent id) {
   return Time::FromUTCExploded(exploded);
 }
 
-bool TextDatabaseManager::Init() {
+bool TextDatabaseManager::Init(const HistoryPublisher* history_publisher) {
+  history_publisher_ = history_publisher;
+
   // Start checking recent changes and committing them.
   ScheduleFlushOldChanges();
   return true;
@@ -302,6 +306,10 @@ bool TextDatabaseManager::AddPageData(const GURL& url,
 
   HISTOGRAM_TIMES(L"History.AddFTSData",
                   TimeTicks::Now() - beginning_time);
+
+  if (history_publisher_)
+    history_publisher_->PublishPageContent(visit_time, url, title, body);
+
   return success;
 }
 
