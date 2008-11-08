@@ -772,7 +772,7 @@ V8 # LayoutTests/editing/selection/move-left-right.html = FAIL
 
 # This test needs to be rebaselined but said rebaselining didn't work and after
 # over an hour wasted, I'm giving up. -brettw
-V8 | KJS # LayoutTests/svg/custom/foreign-object-skew.svg = FAIL
+V8 # LayoutTests/svg/custom/foreign-object-skew.svg = FAIL
 
 // ----------------------------------------------------------------------------
 // NEW FOR THE MERGE
@@ -1260,33 +1260,37 @@ V8 # LayoutTests/fast/css-generated-content/015.html = FAIL | PASS
 V8 # LayoutTests/fast/css-generated-content/016.html = FAIL | PASS
 
 // NEW FOR MERGE 37604:38097
-V8 | KJS # LayoutTests/animations/keyframes-rule.html = FAIL
-V8 | KJS # LayoutTests/editing/deleting/smart-editing-disabled.html = FAIL
-V8 | KJS # LayoutTests/fast/css/border-height.html = FAIL
-V8 | KJS # LayoutTests/fast/events/destroyed-atomic-string.html = FAIL
-V8 | KJS # LayoutTests/fast/forms/image-border.html = FAIL
-V8 | KJS # LayoutTests/fast/forms/input-field-text-truncated.html = FAIL
-V8 | KJS # LayoutTests/fast/forms/input-type-text-min-width.html = FAIL
-V8 | KJS # LayoutTests/fast/forms/textarea-scrollbar-height.html = FAIL
-V8 | KJS # LayoutTests/fast/forms/textarea-width.html = FAIL
-V8 | KJS # LayoutTests/fast/js/exception-thrown-from-new.html = FAIL
-V8 | KJS # LayoutTests/fast/js/global-constructors.html = FAIL
-V8 | KJS # LayoutTests/fast/layers/opacity-transforms.html = FAIL
-V8 | KJS # LayoutTests/fast/overflow/overflow_hidden.html = FAIL
-V8 | KJS # LayoutTests/fast/profiler = FAIL | TIMEOUT
-V8 | KJS # LayoutTests/fast/replaced/percent-height-in-anonymous-block-widget.html = FAIL
-V8 | KJS # LayoutTests/fast/text/bidi-embedding-pop-and-push-same.html = FAIL
-V8 | KJS # LayoutTests/fast/text/international/hindi-spacing.html = FAIL
-V8 | KJS # LayoutTests/plugins/netscape-construct.html = FAIL
-V8 | KJS # LayoutTests/transforms/transform-value-types.html = FAIL
+V8 # LayoutTests/animations/keyframes-rule.html = FAIL
+V8 # LayoutTests/editing/deleting/smart-editing-disabled.html = FAIL
+V8 # LayoutTests/fast/css/border-height.html = FAIL
+V8 # LayoutTests/fast/events/destroyed-atomic-string.html = FAIL
+V8 # LayoutTests/fast/forms/image-border.html = FAIL
+V8 # LayoutTests/fast/forms/input-field-text-truncated.html = FAIL
+V8 # LayoutTests/fast/forms/input-type-text-min-width.html = FAIL
+V8 # LayoutTests/fast/forms/textarea-scrollbar-height.html = FAIL
+V8 # LayoutTests/fast/forms/textarea-width.html = FAIL
+V8 # LayoutTests/fast/js/exception-thrown-from-new.html = FAIL
+V8 # LayoutTests/fast/js/global-constructors.html = FAIL
+V8 # LayoutTests/fast/layers/opacity-transforms.html = FAIL
+V8 # LayoutTests/fast/overflow/overflow_hidden.html = FAIL
+V8 # LayoutTests/fast/profiler = FAIL | TIMEOUT
+V8 # LayoutTests/fast/replaced/percent-height-in-anonymous-block-widget.html = FAIL
+V8 # LayoutTests/fast/text/bidi-embedding-pop-and-push-same.html = FAIL
+V8 # LayoutTests/fast/text/international/hindi-spacing.html = FAIL
+V8 # LayoutTests/plugins/netscape-construct.html = FAIL
+V8 # LayoutTests/transforms/transform-value-types.html = FAIL
 
 // MERGE 37604:38097 REGRESSIONS
-V8 | KJS # LayoutTests/svg/carto.net/combobox.svg = FAIL
-V8 | KJS # LayoutTests/fast/events/tabindex-focus-blur-all.html = CRASH
-V8 | KJS # LayoutTests/fast/events/message-channel-gc-2.html = TIMEOUT
-V8 | KJS # LayoutTests/http/tests/security/frameNavigation/xss-DENIED-targeted-link-navigation.html = CRASH
-V8 | KJS # LayoutTests/plugins/open-and-close-window-with-plugin.html = CRASH
-V8 | KJS # LayoutTests/plugins/plugin-remove-subframe.html = CRASH
-V8 | KJS # LayoutTests/plugins/return-error-from-new-stream-doesnt-invoke-destroy-stream.html = CRASH
-V8 | KJS # pending/fast/events/tabindex-focus-blur-all.html = CRASH
-V8 | KJS # LayoutTests/fast/loader/onunload-form-submit-crash-2.html = FAIL
+V8 # LayoutTests/svg/carto.net/combobox.svg = FAIL
+V8 # LayoutTests/fast/events/tabindex-focus-blur-all.html = CRASH
+V8 # LayoutTests/fast/events/message-channel-gc-2.html = TIMEOUT
+V8 # LayoutTests/http/tests/security/frameNavigation/xss-DENIED-targeted-link-navigation.html = CRASH
+V8 # LayoutTests/plugins/open-and-close-window-with-plugin.html = CRASH
+V8 # LayoutTests/plugins/plugin-remove-subframe.html = CRASH
+V8 # LayoutTests/plugins/return-error-from-new-stream-doesnt-invoke-destroy-stream.html = CRASH
+V8 # pending/fast/events/tabindex-focus-blur-all.html = CRASH
+V8 # LayoutTests/fast/loader/onunload-form-submit-crash-2.html = FAIL
+V8 # LayoutTests/fast/dom/Window/get-set-properties.html = PASS | FAIL
+V8 # LayoutTests/fast/dom/Window/new-window-opener.html = PASS | FAIL
+V8 # LayoutTests/fast/forms/access-key.html = PASS | FAIL
+V8 # LayoutTests/http/tests/loading/gmail-assert-on-load.html = PASS | FAIL
