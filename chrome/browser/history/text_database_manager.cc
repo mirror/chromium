@@ -74,7 +74,7 @@ TextDatabaseManager::TextDatabaseManager(const std::wstring& dir,
       db_cache_(DBCache::NO_AUTO_EVICT),
       present_databases_loaded_(false),
 #pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      factory_(this) {
+      factory_(this),
       history_publisher_(NULL) {
 }
 

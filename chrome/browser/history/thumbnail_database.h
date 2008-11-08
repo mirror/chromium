@@ -58,7 +58,7 @@ class ThumbnailDatabase {
                         URLID id,
                         const SkBitmap& thumbnail,
                         const ThumbnailScore& score,
-                        const base::Time& time);
+                        const Time& time);
 
   // Retrieves thumbnail data for the given URL, returning true on success,
   // false if there is no such thumbnail or there was some other error.
