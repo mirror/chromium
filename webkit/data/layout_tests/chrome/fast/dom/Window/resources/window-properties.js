@@ -169,7 +169,6 @@ var properties = [
   "SVGUnitTypes",
   "navigator",
   "clientInformation",
-  "location",
   "onabort",
   "onblur",
   "onchange",
