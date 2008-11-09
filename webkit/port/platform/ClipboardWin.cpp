@@ -160,42 +160,6 @@ static String filesystemPathFromUrlOrTitle(const String& url, const String& titl
     return result.length() >= MAX_PATH ? result.substring(0, MAX_PATH - 1) : result;
 }
 
-static HGLOBAL createGlobalURLContent(const String& url, int estimatedFileSize)
-{
-    HRESULT hr = S_OK;
-    HGLOBAL memObj = 0;
-
-    char* fileContents;
-    char ansiUrl[INTERNET_MAX_URL_LENGTH + 1];
-    // Used to generate the buffer. This is null terminated whereas the fileContents won't be.
-    char contentGenerationBuffer[INTERNET_MAX_URL_LENGTH + ARRAYSIZE(szShellDotUrlTemplate) + 1];
-    
-    if (estimatedFileSize > 0 && estimatedFileSize > ARRAYSIZE(contentGenerationBuffer))
-        return 0;
-
-    int ansiUrlSize = ::WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)url.characters(), url.length(), ansiUrl, ARRAYSIZE(ansiUrl) - 1, 0, 0);
-    if (!ansiUrlSize)
-        return 0;
-
-    ansiUrl[ansiUrlSize] = 0;
-    
-    int fileSize = (int) (ansiUrlSize+strlen(szShellDotUrlTemplate)-2); // -2 to remove the %s
-    ASSERT(estimatedFileSize < 0 || fileSize == estimatedFileSize);
-
-    memObj = GlobalAlloc(GPTR, fileSize);
-    if (!memObj) 
-        return 0;
-
-    fileContents = (PSTR)GlobalLock(memObj);
-
-    sprintf_s(contentGenerationBuffer, ARRAYSIZE(contentGenerationBuffer), szShellDotUrlTemplate, ansiUrl);
-    CopyMemory(fileContents, contentGenerationBuffer, fileSize);
-    
-    GlobalUnlock(memObj);
-    
-    return memObj;
-}
-
 static HGLOBAL createGlobalImageFileContent(SharedBuffer* data)
 {
     HGLOBAL memObj = GlobalAlloc(GPTR, data->size());
@@ -733,12 +697,6 @@ void ClipboardWin::writeURL(const KURL& kurl, const String& titleStr, Frame*)
     HGLOBAL urlFileDescriptor = createGlobalUrlFileDescriptor(url, titleStr, estimatedSize);
     if (!urlFileDescriptor)
         return;
-    HGLOBAL urlFileContent = createGlobalURLContent(url, estimatedSize);
-    if (!urlFileContent) {
-        GlobalFree(urlFileDescriptor);
-        return;
-    }
-    writeFileToDataObject(m_writableDataObject.get(), urlFileDescriptor, urlFileContent, 0);
 }
 
 void ClipboardWin::writeRange(Range* selectedRange, Frame* frame)
