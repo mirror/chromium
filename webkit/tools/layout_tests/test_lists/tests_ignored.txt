@@ -183,4 +183,4 @@ V8 # LayoutTests/editing/selection/click-before-and-after-table.html = FAIL
 
 // This one fails because of changes to window.location. No idea why it 
 // was passing before.
-V8 # LayoutTests/fast/dom/Window/window-special-properties.html
+V8 # LayoutTests/fast/dom/Window/window-special-properties.html = FAIL
