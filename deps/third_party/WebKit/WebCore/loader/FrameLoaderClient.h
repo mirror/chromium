@@ -199,8 +199,6 @@ namespace WebCore {
         
         virtual void registerForIconNotification(bool listen = true) = 0;
 
-        virtual void unloadListenerChanged() = 0;
-        
 #if PLATFORM(MAC)
 #if ENABLE(MAC_JAVA_BRIDGE)
         virtual jobject javaApplet(NSView*) { return 0; }

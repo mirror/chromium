@@ -2897,12 +2897,6 @@ void Document::removePendingFrameBeforeUnloadEventCount()
         m_frame->eventHandler()->removePendingFrameBeforeUnloadEventCount();
 }
 
-bool Document::hasUnloadEventListener()
-{
-  return (hasWindowEventListener(eventNames().unloadEvent) || 
-          hasWindowEventListener(eventNames().beforeunloadEvent));
-}
-
 PassRefPtr<EventListener> Document::createEventListener(const String& functionName, const String& code, Node* node)
 {
     Frame* frm = frame();

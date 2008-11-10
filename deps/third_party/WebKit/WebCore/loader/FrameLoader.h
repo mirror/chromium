@@ -466,8 +466,6 @@ namespace WebCore {
         bool firingUnloadEvents() { return m_firingUnloadEvents; }
         void setFiringUnloadEvents(bool value) { m_firingUnloadEvents = value; }
 
-        void unloadListenerChanged();
-
     private:
         PassRefPtr<HistoryItem> createHistoryItem(bool useOriginal);
         PassRefPtr<HistoryItem> createHistoryItemTree(Frame* targetFrame, bool clipAtTarget);

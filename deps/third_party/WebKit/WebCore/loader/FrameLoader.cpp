@@ -5285,8 +5285,4 @@ void FrameLoader::switchOutLowBandwidthDisplayIfReady()
 
 #endif
 
-void FrameLoader::unloadListenerChanged() {
-  m_client->unloadListenerChanged();
-}
-
 } // namespace WebCore
