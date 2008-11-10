@@ -15,8 +15,7 @@ import urllib
 
 
 # Constants
-HELP_STRING = ("Sorry, I couldn't retrieve or execute the tryserver script. "
-               "Tryserver is not available.")
+HELP_STRING = "Sorry, Tryserver is not available."
 SCRIPT_PATH = os.path.join('src', 'tools', 'tryserver', 'tryserver.py')
 
 
@@ -36,7 +35,7 @@ class InvalidScript(Exception):
 
 class NoTryServerAccess(Exception):
   def __str__(self):
-    return self.args[0] + ' is unaccessible.\n' + HELP_STRING
+    return self.args[0] + '\n' + HELP_STRING
 
 
 def GetCheckoutRoot():
@@ -73,8 +72,6 @@ def ExecuteTryServerScript():
   except Exception, e:
     traceback.print_exc()
     raise InvalidScript(script_path + ' is invalid.')
-  if not 'try_server' in script_locals or not script_locals['try_server']:
-    raise InvalidScript(script_path + ": 'try_server' variable was not found.")
   return script_locals
 
 
@@ -85,21 +82,39 @@ def EscapeDot(name):
 def _SendChangeNFS(options):
   """Send a change to the try server."""
   script_locals = ExecuteTryServerScript()
+  if not options.nfs_path:
+    # TODO(maruel): Use try_server_nfs instead.
+    options.nfs_path = script_locals.get('try_server', None)
+    if not options.nfs_path:
+      raise NoTryServerAccess('Please use the --nfs_path option to specify the '
+          'try server path to write into.')
   patch_name = EscapeDot(options.user) + '.' + EscapeDot(options.name)
   if options.bot:
     patch_name += '.' + EscapeDot(options.bot)
   patch_name += '.diff'
-  patch_path = os.path.join(script_locals['try_server'], patch_name)
+  patch_path = os.path.join(options.nfs_path, patch_name)
   try:
     gcl.WriteFile(patch_path, options.diff)
   except IOError, e:
-    raise NoTryServerAccess(script_locals['try_server'])
+    raise NoTryServerAccess('%s is unwritable.' % patch_path)
   return patch_name
 
 
 def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
+  script_locals = ExecuteTryServerScript()
   values = {}
+  if not options.host:
+    options.host = script_locals.get('try_server_http_host', None)
+    if not options.host:
+      raise NoTryServerAccess('Please use the --host option to specify the try '
+          'server host to connect to.')
+  if not options.port:
+    options.port = script_locals.get('try_server_http_port', None)
+    if not options.port:
+      raise NoTryServerAccess('Please use the --port option to specify the try '
+          'server port to connect to.')
+
   if options.email:
     values['email'] = options.email
   values['user'] = options.user
@@ -110,9 +125,9 @@ def _SendChangeHTTP(options):
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
   connection = urllib.urlopen(url, urllib.urlencode(values))
   if not connection:
-    raise NoTryServerAccess(url)
+    raise NoTryServerAccess('%s is unaccessible.' % url)
   if connection.read() != 'OK':
-    raise NoTryServerAccess(url)
+    raise NoTryServerAccess('%s is unaccessible.' % url)
   return options.name
 
 
@@ -130,11 +145,13 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                     help="Use NFS to talk to the try server.")
   parser.add_option("--use_http", action="store_true",
                     help="Use HTTP to talk to the try server.")
-  parser.add_option("--nfs", default=None,
+  parser.add_option("--nfs_path", default=None,
                     help="NFS path to use to talk to the try server.")
+  # TODO(maruel): Don't hardcode this value.
   parser.add_option("--host", default=None,
                     help="Host address to use to talk to the try server.")
-  parser.add_option("--port", default=8018,
+  # TODO(maruel): Don't hardcode this value.
+  parser.add_option("--port", default=None,
                     help="Port to use to talk to the try server.")
   parser.add_option("-p", "--patchset", default=patchset,
                     help="Define the Rietveld's patchset id.")
@@ -162,8 +179,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
       os.chdir(GetCheckoutRoot())
       options.diff = gcl.GenerateDiff([os.path.join(subpath, x)
                                       for x in options.file_list])
-    # Defaults to NFS for now.
-    if options.use_http:
+    # Defaults to HTTP.
+    if not options.use_nfs or options.use_http:
       patch_name = _SendChangeHTTP(options)
     else:
       patch_name = _SendChangeNFS(options)
