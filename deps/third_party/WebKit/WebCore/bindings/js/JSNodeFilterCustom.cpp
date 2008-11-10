@@ -26,7 +26,6 @@
 #include "config.h"
 #include "JSNodeFilter.h"
 
-#include "ExceptionContext.h"
 #include "JSNode.h"
 #include "JSNodeFilterCondition.h"
 #include "NodeFilter.h"
@@ -44,8 +43,7 @@ void JSNodeFilter::mark()
 
 JSValue* JSNodeFilter::acceptNode(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    return jsNumber(exec, impl()->acceptNode(&context, toNode(args.at(exec, 0))));
+    return jsNumber(exec, impl()->acceptNode(exec, toNode(args.at(exec, 0))));
 }
 
 PassRefPtr<NodeFilter> toNodeFilter(JSValue* value)

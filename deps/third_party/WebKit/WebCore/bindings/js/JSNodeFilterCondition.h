@@ -27,7 +27,6 @@
 namespace WebCore {
 
     class Node;
-    class ExceptionContext;
 
     class JSNodeFilterCondition : public NodeFilterCondition {
     public:
@@ -39,7 +38,7 @@ namespace WebCore {
     private:
         JSNodeFilterCondition(JSC::JSValue* filter);
 
-        virtual short acceptNode(ExceptionContext*, Node*) const;
+        virtual short acceptNode(JSC::ExecState*, Node*) const;
         virtual void mark();
 
         JSC::JSValue* m_filter;

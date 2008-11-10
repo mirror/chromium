@@ -25,21 +25,17 @@
 #include "config.h"
 #include "NodeFilter.h"
 
-#include "ExceptionContext.h"
 #include "Node.h"
+#include <runtime/ExecState.h>
+
+using namespace JSC;
 
 namespace WebCore {
 
-short NodeFilter::acceptNode(ExceptionContext* exec, Node* node) const
+short NodeFilter::acceptNode(ExecState* exec, Node* node) const
 {
     // cast to short silences "enumeral and non-enumeral types in return" warning
     return m_condition ? m_condition->acceptNode(exec, node) : static_cast<short>(FILTER_ACCEPT);
-}
-
-short NodeFilter::acceptNode(Node* node) const
-{
-    ExceptionContext context(node);
-    return acceptNode(&context, node);
 }
 
 } // namespace WebCore

@@ -56,7 +56,6 @@ class RenderArena;
 class RenderObject;
 class RenderStyle;
 class StringBuilder;
-class ExceptionContext;
 class NodeRareData;
 
 typedef int ExceptionCode;

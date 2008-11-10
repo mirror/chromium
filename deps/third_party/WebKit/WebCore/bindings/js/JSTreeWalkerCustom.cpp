@@ -20,7 +20,6 @@
 #include "config.h"
 #include "JSTreeWalker.h"
 
-#include "ExceptionContext.h"
 #include "JSNode.h"
 #include "Node.h"
 #include "NodeFilter.h"
@@ -40,8 +39,7 @@ void JSTreeWalker::mark()
     
 JSValue* JSTreeWalker::parentNode(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->parentNode(&context);
+    Node* node = impl()->parentNode(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);
@@ -49,8 +47,7 @@ JSValue* JSTreeWalker::parentNode(ExecState* exec, const ArgList& args)
     
 JSValue* JSTreeWalker::firstChild(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->firstChild(&context);
+    Node* node = impl()->firstChild(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);
@@ -58,8 +55,7 @@ JSValue* JSTreeWalker::firstChild(ExecState* exec, const ArgList& args)
     
 JSValue* JSTreeWalker::lastChild(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->lastChild(&context);
+    Node* node = impl()->lastChild(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);
@@ -67,8 +63,7 @@ JSValue* JSTreeWalker::lastChild(ExecState* exec, const ArgList& args)
     
 JSValue* JSTreeWalker::nextSibling(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->nextSibling(&context);
+    Node* node = impl()->nextSibling(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);
@@ -76,8 +71,7 @@ JSValue* JSTreeWalker::nextSibling(ExecState* exec, const ArgList& args)
     
 JSValue* JSTreeWalker::previousSibling(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->previousSibling(&context);
+    Node* node = impl()->previousSibling(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);
@@ -85,8 +79,7 @@ JSValue* JSTreeWalker::previousSibling(ExecState* exec, const ArgList& args)
     
 JSValue* JSTreeWalker::previousNode(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->previousNode(&context);
+    Node* node = impl()->previousNode(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);
@@ -94,8 +87,7 @@ JSValue* JSTreeWalker::previousNode(ExecState* exec, const ArgList& args)
     
 JSValue* JSTreeWalker::nextNode(ExecState* exec, const ArgList& args)
 {
-    ExceptionContext context(exec);
-    Node* node = impl()->nextNode(&context);
+    Node* node = impl()->nextNode(exec);
     if (exec->hadException())
         return jsUndefined();
     return toJS(exec, node);

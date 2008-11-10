@@ -39,9 +39,9 @@
 #include "DynamicNodeList.h"
 #include "Element.h"
 #include "ExceptionCode.h"
-#include "ExceptionContext.h"
 #include "Frame.h"
 #include "HTMLNames.h"
+#include "JSDOMBinding.h"
 #include "Logging.h"
 #include "NameNodeList.h"
 #include "NamedAttrMap.h"
@@ -55,12 +55,9 @@
 #include "Text.h"
 #include "XMLNames.h"
 #include "htmlediting.h"
-#include <wtf/RefCountedLeakCounter.h>
-
-#if USE(JSC)
-#include "JSDOMBinding.h"
+#include <runtime/ExecState.h>
 #include <runtime/JSLock.h>
-#endif
+#include <wtf/RefCountedLeakCounter.h>
 
 namespace WebCore {
 
@@ -174,9 +171,7 @@ void Node::setDocument(Document* doc)
 
     willMoveToNewOwnerDocument();
 
-#if USE(JSC)
     updateDOMNodeDocument(this, m_document.get(), doc);
-#endif
 
     m_document = doc;
 
@@ -1293,6 +1288,7 @@ static bool selectorNeedsNamespaceResolution(CSSSelector* currentSelector)
     SelectorNeedsNamespaceResolutionFunctor functor;
     return forEachSelector(functor, currentSelector);
 }
+
 PassRefPtr<Element> Node::querySelector(const String& selectors, ExceptionCode& ec)
 {
     if (selectors.isEmpty()) {

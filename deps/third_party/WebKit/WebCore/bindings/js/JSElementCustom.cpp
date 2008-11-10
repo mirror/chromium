@@ -33,7 +33,6 @@
 #include "CSSHelper.h"
 #include "Document.h"
 #include "ExceptionCode.h"
-#include "ExceptionContext.h"
 #include "HTMLFrameElementBase.h"
 #include "HTMLNames.h"
 #include "JSAttr.h"

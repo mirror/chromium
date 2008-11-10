@@ -25,13 +25,12 @@
 #ifndef NodeFilter_h
 #define NodeFilter_h
 
+#include "JSDOMBinding.h"
 #include "NodeFilterCondition.h"
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
-
-    class ExceptionContext;
 
     class NodeFilter : public RefCounted<NodeFilter> {
     public:
@@ -72,11 +71,11 @@ namespace WebCore {
             return adoptRef(new NodeFilter(condition));
         }
 
-        short acceptNode(ExceptionContext*, Node*) const;
+        short acceptNode(JSC::ExecState*, Node*) const;
         void mark() { m_condition->mark(); };
 
         // For non-JS bindings. Silently ignores the JavaScript exception if any.
-        short acceptNode(Node* node) const;
+        short acceptNode(Node* node) const { return acceptNode(execStateFromNode(node), node); }
 
     private:
         NodeFilter(PassRefPtr<NodeFilterCondition> condition) : m_condition(condition) { }

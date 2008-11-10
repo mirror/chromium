@@ -25,11 +25,13 @@
 #include "config.h"
 #include "TreeWalker.h"
 
+#include <runtime/ExecState.h>
 #include "ExceptionCode.h"
-#include "ExceptionContext.h"
 #include "ContainerNode.h"
 #include "NodeFilter.h"
 #include <wtf/PassRefPtr.h>
+
+using namespace JSC;
 
 namespace WebCore {
 
@@ -54,7 +56,7 @@ inline Node* TreeWalker::setCurrent(PassRefPtr<Node> node)
     return m_current.get();
 }
 
-Node* TreeWalker::parentNode(ExceptionContext* exec)
+Node* TreeWalker::parentNode(ExecState* exec)
 {
     RefPtr<Node> node = m_current;
     while (node != root()) {
@@ -70,7 +72,7 @@ Node* TreeWalker::parentNode(ExceptionContext* exec)
     return 0;
 }
 
-Node* TreeWalker::firstChild(ExceptionContext* exec)
+Node* TreeWalker::firstChild(ExecState* exec)
 {
     for (RefPtr<Node> node = m_current->firstChild(); node; ) {
         short acceptNodeResult = acceptNode(exec, node.get());
@@ -103,7 +105,7 @@ Node* TreeWalker::firstChild(ExceptionContext* exec)
     return 0;
 }
 
-Node* TreeWalker::lastChild(ExceptionContext* exec)
+Node* TreeWalker::lastChild(ExecState* exec)
 {
     for (RefPtr<Node> node = m_current->lastChild(); node; ) {
         short acceptNodeResult = acceptNode(exec, node.get());
@@ -136,7 +138,7 @@ Node* TreeWalker::lastChild(ExceptionContext* exec)
     return 0;
 }
 
-Node* TreeWalker::previousSibling(ExceptionContext* exec)
+Node* TreeWalker::previousSibling(ExecState* exec)
 {
     RefPtr<Node> node = m_current;
     if (node == root())
@@ -172,7 +174,7 @@ Node* TreeWalker::previousSibling(ExceptionContext* exec)
     }
 }
 
-Node* TreeWalker::nextSibling(ExceptionContext* exec)
+Node* TreeWalker::nextSibling(ExecState* exec)
 {
     RefPtr<Node> node = m_current;
     if (node == root())
@@ -208,7 +210,7 @@ Node* TreeWalker::nextSibling(ExceptionContext* exec)
     }
 }
 
-Node* TreeWalker::previousNode(ExceptionContext* exec)
+Node* TreeWalker::previousNode(ExecState* exec)
 {
     RefPtr<Node> node = m_current;
     while (node != root()) {
@@ -247,7 +249,7 @@ Node* TreeWalker::previousNode(ExceptionContext* exec)
     return 0;
 }
 
-Node* TreeWalker::nextNode(ExceptionContext* exec)
+Node* TreeWalker::nextNode(ExecState* exec)
 {
     RefPtr<Node> node = m_current;
 Children:
@@ -272,48 +274,6 @@ Children:
             goto Children;
     }
     return 0;
-}
-
-Node* TreeWalker::parentNode()
-{
-    ExceptionContext context(m_current.get());
-    return parentNode(&context);
-}
-
-Node* TreeWalker::firstChild()
-{
-    ExceptionContext context(m_current.get());
-    return firstChild(&context);
-}
-
-Node* TreeWalker::lastChild()
-{
-    ExceptionContext context(m_current.get());
-    return lastChild(&context);
-}
-
-Node* TreeWalker::previousSibling()
-{
-    ExceptionContext context(m_current.get());
-    return previousSibling(&context);
-}
-
-Node* TreeWalker::nextSibling()
-{
-    ExceptionContext context(m_current.get());
-    return nextSibling(&context);
-}
-
-Node* TreeWalker::previousNode()
-{
-    ExceptionContext context(m_current.get());
-    return previousNode(&context);
-}
-
-Node* TreeWalker::nextNode()
-{
-    ExceptionContext context(m_current.get());
-    return nextNode(&context);
 }
 
 } // namespace WebCore

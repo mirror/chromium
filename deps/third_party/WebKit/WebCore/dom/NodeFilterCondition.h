@@ -27,15 +27,18 @@
 
 #include <wtf/RefCounted.h>
 
+namespace JSC {
+    class ExecState;
+}
+
 namespace WebCore {
 
-    class ExceptionContext;
     class Node;
 
     class NodeFilterCondition : public RefCounted<NodeFilterCondition> {
     public:
         virtual ~NodeFilterCondition() { }
-        virtual short acceptNode(ExceptionContext*, Node*) const = 0;
+        virtual short acceptNode(JSC::ExecState*, Node*) const = 0;
         virtual void mark() { }
     };
 

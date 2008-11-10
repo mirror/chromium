@@ -22,7 +22,6 @@
 
 #include "DOMWindow.h"
 #include "ExceptionCode.h"
-#include "ExceptionContext.h"
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "HTMLDocument.h"

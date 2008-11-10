@@ -27,11 +27,11 @@
 
 #include "NodeFilter.h"
 
+using namespace JSC;
+
 namespace WebCore {
 
-class ExceptionContext;
-
-short NodeFilterCondition::acceptNode(ExceptionContext*, Node*) const
+short NodeFilterCondition::acceptNode(ExecState*, Node*) const
 {
     return NodeFilter::FILTER_ACCEPT;
 }

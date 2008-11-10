@@ -29,7 +29,6 @@
 #include "DocumentFragment.h"
 #include "Element.h"
 #include "ExceptionCode.h"
-#include "ExceptionContext.h"
 #include "JSElement.h"
 #include "JSNodeList.h"
 #include "NodeList.h"

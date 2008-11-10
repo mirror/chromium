@@ -25,7 +25,7 @@
 #ifndef TreeWalker_h
 #define TreeWalker_h
 
-#include "ExceptionContext.h"
+#include "JSDOMBinding.h"
 #include "NodeFilter.h"
 #include "Traversal.h"
 #include <wtf/PassRefPtr.h>
@@ -45,22 +45,22 @@ namespace WebCore {
         Node* currentNode() const { return m_current.get(); }
         void setCurrentNode(PassRefPtr<Node>, ExceptionCode&);
 
-        Node* parentNode(ExceptionContext*);
-        Node* firstChild(ExceptionContext*);
-        Node* lastChild(ExceptionContext*);
-        Node* previousSibling(ExceptionContext*);
-        Node* nextSibling(ExceptionContext*);
-        Node* previousNode(ExceptionContext*);
-        Node* nextNode(ExceptionContext*);
+        Node* parentNode(JSC::ExecState*);
+        Node* firstChild(JSC::ExecState*);
+        Node* lastChild(JSC::ExecState*);
+        Node* previousSibling(JSC::ExecState*);
+        Node* nextSibling(JSC::ExecState*);
+        Node* previousNode(JSC::ExecState*);
+        Node* nextNode(JSC::ExecState*);
 
         // For non-JS bindings. Silently ignores the JavaScript exception if any.
-        Node* parentNode();
-        Node* firstChild();
-        Node* lastChild();
-        Node* previousSibling();
-        Node* nextSibling();
-        Node* previousNode();
-        Node* nextNode();
+        Node* parentNode() { return parentNode(execStateFromNode(m_current.get())); }
+        Node* firstChild() { return firstChild(execStateFromNode(m_current.get())); }
+        Node* lastChild() { return lastChild(execStateFromNode(m_current.get())); }
+        Node* previousSibling() { return previousSibling(execStateFromNode(m_current.get())); }
+        Node* nextSibling() { return nextSibling(execStateFromNode(m_current.get())); }
+        Node* previousNode() { return previousNode(execStateFromNode(m_current.get())); }
+        Node* nextNode() { return nextNode(execStateFromNode(m_current.get())); }
 
     private:
         TreeWalker(PassRefPtr<Node>, unsigned whatToShow, PassRefPtr<NodeFilter>, bool expandEntityReferences);

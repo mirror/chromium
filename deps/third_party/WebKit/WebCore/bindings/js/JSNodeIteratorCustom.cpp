@@ -20,7 +20,6 @@
 #include "config.h"
 #include "JSNodeIterator.h"
 
-#include "ExceptionContext.h"
 #include "JSNode.h"
 #include "Node.h"
 #include "NodeFilter.h"
@@ -41,8 +40,7 @@ void JSNodeIterator::mark()
 JSValue* JSNodeIterator::nextNode(ExecState* exec, const ArgList& args)
 {
     ExceptionCode ec = 0;
-    ExceptionContext context(exec);
-    RefPtr<Node> node = impl()->nextNode(&context, ec);
+    RefPtr<Node> node = impl()->nextNode(exec, ec);
     if (ec) {
         setDOMException(exec, ec);
         return jsUndefined();
@@ -57,8 +55,7 @@ JSValue* JSNodeIterator::nextNode(ExecState* exec, const ArgList& args)
 JSValue* JSNodeIterator::previousNode(ExecState* exec, const ArgList& args)
 {
     ExceptionCode ec = 0;
-    ExceptionContext context(exec);
-    RefPtr<Node> node = impl()->previousNode(&context, ec);
+    RefPtr<Node> node = impl()->previousNode(exec, ec);
     if (ec) {
         setDOMException(exec, ec);
         return jsUndefined();

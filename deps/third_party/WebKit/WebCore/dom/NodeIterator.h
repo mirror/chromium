@@ -25,14 +25,13 @@
 #ifndef NodeIterator_h
 #define NodeIterator_h
 
+#include "JSDOMBinding.h"
 #include "NodeFilter.h"
 #include "Traversal.h"
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefCounted.h>
 
 namespace WebCore {
-
-    class ExceptionContext;
 
     typedef int ExceptionCode;
 
@@ -44,8 +43,8 @@ namespace WebCore {
         }
         ~NodeIterator();
 
-        PassRefPtr<Node> nextNode(ExceptionContext*, ExceptionCode&);
-        PassRefPtr<Node> previousNode(ExceptionContext*, ExceptionCode&);
+        PassRefPtr<Node> nextNode(JSC::ExecState*, ExceptionCode&);
+        PassRefPtr<Node> previousNode(JSC::ExecState*, ExceptionCode&);
         void detach();
 
         Node* referenceNode() const { return m_referenceNode.node.get(); }
@@ -55,8 +54,8 @@ namespace WebCore {
         void nodeWillBeRemoved(Node*);
 
         // For non-JS bindings. Silently ignores the JavaScript exception if any.
-        PassRefPtr<Node> nextNode(ExceptionCode& ec);
-        PassRefPtr<Node> previousNode(ExceptionCode& ec);
+        PassRefPtr<Node> nextNode(ExceptionCode& ec) { return nextNode(execStateFromNode(referenceNode()), ec); }
+        PassRefPtr<Node> previousNode(ExceptionCode& ec) { return previousNode(execStateFromNode(referenceNode()), ec); }
 
     private:
         NodeIterator(PassRefPtr<Node>, unsigned whatToShow, PassRefPtr<NodeFilter>, bool expandEntityReferences);

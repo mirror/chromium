@@ -28,10 +28,12 @@
 #include <wtf/Forward.h>
 #include <wtf/RefPtr.h>
 
+namespace JSC {
+    class ExecState;
+}
 
 namespace WebCore {
 
-    class ExceptionContext;
     class Node;
     class NodeFilter;
 
@@ -44,7 +46,7 @@ namespace WebCore {
 
     protected:
         Traversal(PassRefPtr<Node>, unsigned whatToShow, PassRefPtr<NodeFilter>, bool expandEntityReferences);
-        short acceptNode(ExceptionContext*, Node*) const;
+        short acceptNode(JSC::ExecState*, Node*) const;
 
     private:
         RefPtr<Node> m_root;
