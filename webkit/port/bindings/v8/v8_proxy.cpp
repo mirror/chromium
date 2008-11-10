@@ -40,7 +40,6 @@
 #include "v8_collection.h"
 #include "v8_nodefilter.h"
 #include "V8Bridge.h"
-#include "V8DOMWindow.h"
 
 #include "RefCounted.h"  // for Peerable
 
@@ -1616,8 +1615,7 @@ void V8Proxy::initContextIfNeeded() {
 
   // Create a new environment using an empty template for the shadow
   // object.  Reuse the global object if one has been created earlier.
-  v8::Persistent<v8::ObjectTemplate> global_template =
-    V8DOMWindow::GetShadowObjectTemplate();
+  v8::Local<v8::ObjectTemplate> global_template = v8::ObjectTemplate::New();
   if (global_template.IsEmpty())
     return;
 
