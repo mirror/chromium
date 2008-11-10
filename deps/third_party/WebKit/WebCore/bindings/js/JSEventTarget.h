@@ -26,8 +26,9 @@
 #ifndef JSEventTarget_h
 #define JSEventTarget_h
 
+#include <runtime/JSValue.h>
+
 namespace JSC {
-    class JSValue;
     class ExecState;
 }
 

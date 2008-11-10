@@ -32,11 +32,11 @@
 #import "WebFrameInternal.h"
 #import "WebScriptDebugDelegate.h"
 #import "WebViewInternal.h"
-#import <kjs/DebuggerCallFrame.h>
-#import <kjs/ExecState.h>
-#import <kjs/JSGlobalObject.h>
-#import <kjs/JSFunction.h>
-#import <kjs/JSLock.h>
+#import <debugger/DebuggerCallFrame.h>
+#import <runtime/ExecState.h>
+#import <runtime/JSGlobalObject.h>
+#import <runtime/JSFunction.h>
+#import <runtime/JSLock.h>
 #import <kjs/interpreter.h>
 #import <WebCore/Frame.h>
 #import <WebCore/WebScriptObjectPrivate.h>
@@ -53,7 +53,7 @@ NSString * const WebScriptErrorLineNumberKey = @"WebScriptErrorLineNumber";
 
 @interface WebScriptCallFrame (WebScriptDebugDelegateInternal)
 
-- (id)_convertValueToObjcValue:(JSValue *)value;
+- (id)_convertValueToObjcValue:(JSValue*)value;
 
 @end
 
@@ -109,7 +109,7 @@ NSString * const WebScriptErrorLineNumberKey = @"WebScriptErrorLineNumber";
     _private->debuggerCallFrame = 0;
 }
 
-- (id)_convertValueToObjcValue:(JSValue *)value
+- (id)_convertValueToObjcValue:(JSValue*)value
 {
     if (!value)
         return nil;
@@ -221,7 +221,7 @@ NSString * const WebScriptErrorLineNumberKey = @"WebScriptErrorLineNumber";
 
     JSLock lock(false);
 
-    JSValue* exception = 0;
+    JSValue* exception = noValue();
     JSValue* result = _private->debuggerCallFrame->evaluate(String(script), exception);
     if (exception)
         return [self _convertValueToObjcValue:exception];

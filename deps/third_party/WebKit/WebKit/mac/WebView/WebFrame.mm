@@ -78,7 +78,7 @@
 #import <WebCore/ScriptController.h>
 #import <WebCore/markup.h>
 #import <WebCore/visible_units.h>
-#import <kjs/JSLock.h>
+#import <runtime/JSLock.h>
 
 using namespace std;
 using namespace WebCore;
@@ -311,7 +311,14 @@ WebView *getWebView(WebFrame *webFrame)
 
 - (void)_attachScriptDebugger
 {
-    JSGlobalObject* globalObject = _private->coreFrame->script()->globalObject();
+    ScriptController* scriptController = _private->coreFrame->script();
+
+    // Calling ScriptController::globalObject() would create a window shell, and dispatch corresponding callbacks, which may be premature
+    //  if the script debugger is attached before a document is created.
+    if (!scriptController->haveWindowShell())
+        return;
+
+    JSGlobalObject* globalObject = scriptController->globalObject();
     if (!globalObject)
         return;
 

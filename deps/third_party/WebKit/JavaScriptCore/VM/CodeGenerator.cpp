@@ -195,6 +195,7 @@ void CodeGenerator::allocateConstants(size_t count)
 
 CodeGenerator::CodeGenerator(ProgramNode* programNode, const Debugger* debugger, const ScopeChain& scopeChain, SymbolTable* symbolTable, CodeBlock* codeBlock, VarStack& varStack, FunctionStack& functionStack)
     : m_shouldEmitDebugHooks(!!debugger)
+    , m_shouldEmitProfileHooks(scopeChain.globalObject()->supportsProfiling())
     , m_scopeChain(&scopeChain)
     , m_symbolTable(symbolTable)
     , m_scopeNode(programNode)
@@ -203,7 +204,6 @@ CodeGenerator::CodeGenerator(ProgramNode* programNode, const Debugger* debugger,
     , m_finallyDepth(0)
     , m_dynamicScopeDepth(0)
     , m_codeType(GlobalCode)
-    , m_continueDepth(0)
     , m_nextGlobal(-1)
     , m_globalData(&scopeChain.globalObject()->globalExec()->globalData())
     , m_lastOpcodeID(op_end)
@@ -273,6 +273,7 @@ CodeGenerator::CodeGenerator(ProgramNode* programNode, const Debugger* debugger,
 
 CodeGenerator::CodeGenerator(FunctionBodyNode* functionBody, const Debugger* debugger, const ScopeChain& scopeChain, SymbolTable* symbolTable, CodeBlock* codeBlock)
     : m_shouldEmitDebugHooks(!!debugger)
+    , m_shouldEmitProfileHooks(scopeChain.globalObject()->supportsProfiling())
     , m_scopeChain(&scopeChain)
     , m_symbolTable(symbolTable)
     , m_scopeNode(functionBody)
@@ -280,7 +281,6 @@ CodeGenerator::CodeGenerator(FunctionBodyNode* functionBody, const Debugger* deb
     , m_finallyDepth(0)
     , m_dynamicScopeDepth(0)
     , m_codeType(FunctionCode)
-    , m_continueDepth(0)
     , m_globalData(&scopeChain.globalObject()->globalExec()->globalData())
     , m_lastOpcodeID(op_end)
 {
@@ -342,6 +342,7 @@ CodeGenerator::CodeGenerator(FunctionBodyNode* functionBody, const Debugger* deb
 
 CodeGenerator::CodeGenerator(EvalNode* evalNode, const Debugger* debugger, const ScopeChain& scopeChain, SymbolTable* symbolTable, EvalCodeBlock* codeBlock)
     : m_shouldEmitDebugHooks(!!debugger)
+    , m_shouldEmitProfileHooks(scopeChain.globalObject()->supportsProfiling())
     , m_scopeChain(&scopeChain)
     , m_symbolTable(symbolTable)
     , m_scopeNode(evalNode)
@@ -350,7 +351,6 @@ CodeGenerator::CodeGenerator(EvalNode* evalNode, const Debugger* debugger, const
     , m_finallyDepth(0)
     , m_dynamicScopeDepth(0)
     , m_codeType(EvalCode)
-    , m_continueDepth(0)
     , m_globalData(&scopeChain.globalObject()->globalExec()->globalData())
     , m_lastOpcodeID(op_end)
 {
@@ -448,6 +448,18 @@ RegisterID* CodeGenerator::highestUsedRegister()
     return &m_calleeRegisters.last();
 }
 
+PassRefPtr<LabelScope> CodeGenerator::newLabelScope(LabelScope::Type type, const Identifier* name)
+{
+    // Reclaim free label scopes.
+    while (m_labelScopes.size() && !m_labelScopes.last().refCount())
+        m_labelScopes.removeLast();
+
+    // Allocate new label scope.
+    LabelScope scope(type, name, scopeDepth(), newLabel(), type == LabelScope::Loop ? newLabel() : 0); // Only loops have continue targets.
+    m_labelScopes.append(scope);
+    return &m_labelScopes.last();
+}
+
 PassRefPtr<LabelID> CodeGenerator::newLabel()
 {
     // Reclaim free label IDs.
@@ -543,6 +555,32 @@ PassRefPtr<LabelID> CodeGenerator::emitJumpIfTrue(RegisterID* cond, LabelID* tar
             instructions().append(target->offsetFrom(instructions().size()));
             return target;
         }
+    } else if (m_lastOpcodeID == op_eq_null && target->isForwardLabel()) {
+        int dstIndex;
+        int srcIndex;
+
+        retrieveLastUnaryOp(dstIndex, srcIndex);
+
+        if (cond->index() == dstIndex && cond->isTemporary() && !cond->refCount()) {
+            rewindUnaryOp();
+            emitOpcode(op_jeq_null);
+            instructions().append(srcIndex);
+            instructions().append(target->offsetFrom(instructions().size()));
+            return target;
+        }
+    } else if (m_lastOpcodeID == op_neq_null && target->isForwardLabel()) {
+        int dstIndex;
+        int srcIndex;
+
+        retrieveLastUnaryOp(dstIndex, srcIndex);
+
+        if (cond->index() == dstIndex && cond->isTemporary() && !cond->refCount()) {
+            rewindUnaryOp();
+            emitOpcode(op_jneq_null);
+            instructions().append(srcIndex);
+            instructions().append(target->offsetFrom(instructions().size()));
+            return target;
+        }
     }
 
     emitOpcode(target->isForwardLabel() ? op_jtrue : op_loop_if_true);
@@ -578,11 +616,37 @@ PassRefPtr<LabelID> CodeGenerator::emitJumpIfFalse(RegisterID* cond, LabelID* ta
 
         if (cond->index() == dstIndex && cond->isTemporary() && !cond->refCount()) {
             rewindUnaryOp();
-            emitOpcode(target->isForwardLabel() ? op_jtrue : op_loop_if_true);
+            emitOpcode(op_jtrue);
             instructions().append(srcIndex);
             instructions().append(target->offsetFrom(instructions().size()));
             return target;
-        }        
+        }
+    } else if (m_lastOpcodeID == op_eq_null) {
+        int dstIndex;
+        int srcIndex;
+
+        retrieveLastUnaryOp(dstIndex, srcIndex);
+
+        if (cond->index() == dstIndex && cond->isTemporary() && !cond->refCount()) {
+            rewindUnaryOp();
+            emitOpcode(op_jneq_null);
+            instructions().append(srcIndex);
+            instructions().append(target->offsetFrom(instructions().size()));
+            return target;
+        }
+    } else if (m_lastOpcodeID == op_neq_null) {
+        int dstIndex;
+        int srcIndex;
+
+        retrieveLastUnaryOp(dstIndex, srcIndex);
+
+        if (cond->index() == dstIndex && cond->isTemporary() && !cond->refCount()) {
+            rewindUnaryOp();
+            emitOpcode(op_jeq_null);
+            instructions().append(srcIndex);
+            instructions().append(target->offsetFrom(instructions().size()));
+            return target;
+        }
     }
 
     emitOpcode(op_jfalse);
@@ -654,11 +718,13 @@ RegisterID* CodeGenerator::emitMove(RegisterID* dst, RegisterID* src)
     return dst;
 }
 
-RegisterID* CodeGenerator::emitUnaryOp(OpcodeID opcode, RegisterID* dst, RegisterID* src)
+RegisterID* CodeGenerator::emitUnaryOp(OpcodeID opcode, RegisterID* dst, RegisterID* src, ResultType type)
 {
     emitOpcode(opcode);
     instructions().append(dst->index());
     instructions().append(src->index());
+    if (opcode == op_negate)
+        instructions().append(type.toInt());
     return dst;
 }
 
@@ -719,7 +785,7 @@ RegisterID* CodeGenerator::emitEqualityOp(OpcodeID opcode, RegisterID* dst, Regi
             && src1->isTemporary()
             && static_cast<unsigned>(src2->index()) < m_codeBlock->constantRegisters.size()
             && m_codeBlock->constantRegisters[src2->index()].jsValue(m_scopeChain->globalObject()->globalExec())->isString()) {
-            const UString& value = static_cast<JSString*>(m_codeBlock->constantRegisters[src2->index()].jsValue(m_scopeChain->globalObject()->globalExec()))->value();
+            const UString& value = asString(m_codeBlock->constantRegisters[src2->index()].jsValue(m_scopeChain->globalObject()->globalExec()))->value();
             if (value == "undefined") {
                 rewindUnaryOp();
                 emitOpcode(op_is_undefined);
@@ -783,7 +849,7 @@ RegisterID* CodeGenerator::emitLoad(RegisterID* dst, double number)
     // Later we can do the extra work to handle that like the other cases.
     if (number == HashTraits<double>::emptyValue() || HashTraits<double>::isDeletedValue(number))
         return emitLoad(dst, jsNumber(globalData(), number));
-    JSValue*& valueInMap = m_numberMap.add(number, 0).first->second;
+    JSValue*& valueInMap = m_numberMap.add(number, noValue()).first->second;
     if (!valueInMap)
         valueInMap = jsNumber(globalData(), number);
     return emitLoad(dst, valueInMap);
@@ -805,6 +871,12 @@ RegisterID* CodeGenerator::emitLoad(RegisterID* dst, JSValue* v)
     return constantID;
 }
 
+RegisterID* CodeGenerator::emitLoad(RegisterID* dst, JSCell* cell)
+{
+    JSValue* value = cell;
+    return emitLoad(dst, value);
+}
+
 RegisterID* CodeGenerator::emitUnexpectedLoad(RegisterID* dst, bool b)
 {
     emitOpcode(op_unexpected_load);
@@ -821,9 +893,9 @@ RegisterID* CodeGenerator::emitUnexpectedLoad(RegisterID* dst, double d)
     return dst;
 }
 
-bool CodeGenerator::findScopedProperty(const Identifier& property, int& index, size_t& stackDepth, bool forWriting, JSValue*& globalObject)
+bool CodeGenerator::findScopedProperty(const Identifier& property, int& index, size_t& stackDepth, bool forWriting, JSObject*& globalObject)
 {
-    // Cases where we cannot statically optimise the lookup
+    // Cases where we cannot statically optimize the lookup.
     if (property == propertyNames().arguments || !canOptimizeNonLocals()) {
         stackDepth = 0;
         index = missingSymbolMarker();
@@ -866,7 +938,7 @@ bool CodeGenerator::findScopedProperty(const Identifier& property, int& index, s
             break;
     }
 
-    // Can't locate the property but we're able to avoid a few lookups
+    // Can't locate the property but we're able to avoid a few lookups.
     stackDepth = depth;
     index = missingSymbolMarker();
     JSObject* scope = *iter;
@@ -889,7 +961,7 @@ RegisterID* CodeGenerator::emitResolve(RegisterID* dst, const Identifier& proper
 {
     size_t depth = 0;
     int index = 0;
-    JSValue* globalObject = 0;
+    JSObject* globalObject = 0;
     if (!findScopedProperty(property, index, depth, false, globalObject) && !globalObject) {
         // We can't optimise at all :-(
         emitOpcode(op_resolve);
@@ -904,10 +976,10 @@ RegisterID* CodeGenerator::emitResolve(RegisterID* dst, const Identifier& proper
     }
 
     if (globalObject) {
-        m_codeBlock->structureIDInstructions.append(instructions().size());
+        m_codeBlock->globalResolveInstructions.append(instructions().size());
         emitOpcode(op_resolve_global);
         instructions().append(dst->index());
-        instructions().append(static_cast<JSCell*>(globalObject));
+        instructions().append(globalObject);
         instructions().append(addConstant(property));
         instructions().append(0);
         instructions().append(0);
@@ -928,7 +1000,7 @@ RegisterID* CodeGenerator::emitGetScopedVar(RegisterID* dst, size_t depth, int i
     if (globalObject) {
         emitOpcode(op_get_global_var);
         instructions().append(dst->index());
-        instructions().append(static_cast<JSCell*>(globalObject));
+        instructions().append(asCell(globalObject));
         instructions().append(index);
         return dst;
     }
@@ -944,7 +1016,7 @@ RegisterID* CodeGenerator::emitPutScopedVar(size_t depth, int index, RegisterID*
 {
     if (globalObject) {
         emitOpcode(op_put_global_var);
-        instructions().append(static_cast<JSCell*>(globalObject));
+        instructions().append(asCell(globalObject));
         instructions().append(index);
         instructions().append(value->index());
         return value;
@@ -984,7 +1056,7 @@ RegisterID* CodeGenerator::emitResolveFunction(RegisterID* baseDst, RegisterID* 
 
 RegisterID* CodeGenerator::emitGetById(RegisterID* dst, RegisterID* base, const Identifier& property)
 {
-    m_codeBlock->structureIDInstructions.append(instructions().size());
+    m_codeBlock->propertyAccessInstructions.append(instructions().size());
 
     emitOpcode(op_get_by_id);
     instructions().append(dst->index());
@@ -999,7 +1071,7 @@ RegisterID* CodeGenerator::emitGetById(RegisterID* dst, RegisterID* base, const 
 
 RegisterID* CodeGenerator::emitPutById(RegisterID* base, const Identifier& property, RegisterID* value)
 {
-    m_codeBlock->structureIDInstructions.append(instructions().size());
+    m_codeBlock->propertyAccessInstructions.append(instructions().size());
 
     emitOpcode(op_put_by_id);
     instructions().append(base->index());
@@ -1152,7 +1224,13 @@ RegisterID* CodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, Register
     for (int i = 0; i < RegisterFile::CallFrameHeaderSize; ++i)
         callFrame.append(newTemporary());
 
+    if (m_shouldEmitProfileHooks) {
+        emitOpcode(op_profile_will_call);
+        instructions().append(func->index());
+    }
+
     emitExpressionInfo(divot, startOffset, endOffset);
+    m_codeBlock->callLinkInfos.append(CallLinkInfo());
     emitOpcode(opcodeID);
     instructions().append(dst->index());
     instructions().append(func->index());
@@ -1160,6 +1238,12 @@ RegisterID* CodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, Register
     instructions().append(argv[0]->index()); // argv
     instructions().append(argv.size()); // argc
     instructions().append(argv[0]->index() + argv.size() + RegisterFile::CallFrameHeaderSize); // registerOffset
+
+    if (m_shouldEmitProfileHooks) {
+        emitOpcode(op_profile_did_call);
+        instructions().append(func->index());
+    }
+
     return dst;
 }
 
@@ -1168,7 +1252,7 @@ RegisterID* CodeGenerator::emitReturn(RegisterID* src)
     if (m_codeBlock->needsFullScopeChain) {
         emitOpcode(op_tear_off_activation);
         instructions().append(m_activationRegisterIndex);
-    } else if (m_codeBlock->usesArguments)
+    } else if (m_codeBlock->usesArguments && m_codeBlock->numParameters > 1)
         emitOpcode(op_tear_off_arguments);
 
     return emitUnaryNoDstOp(op_ret, src);
@@ -1185,10 +1269,7 @@ RegisterID* CodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, Argu
 {
     ASSERT(func->refCount());
 
-    // Load prototype.
-    emitExpressionInfo(divot, startOffset, endOffset);
     RefPtr<RegisterID> funcProto = newTemporary();
-    emitGetById(funcProto.get(), func, globalData()->propertyNames->prototype);
 
     // Generate code for arguments.
     Vector<RefPtr<RegisterID>, 16> argv;
@@ -1198,12 +1279,22 @@ RegisterID* CodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, Argu
         emitNode(argv.last().get(), n);
     }
 
+    if (m_shouldEmitProfileHooks) {
+        emitOpcode(op_profile_will_call);
+        instructions().append(func->index());
+    }
+
+    // Load prototype.
+    emitExpressionInfo(divot, startOffset, endOffset);
+    emitGetById(funcProto.get(), func, globalData()->propertyNames->prototype);
+
     // Reserve space for call frame.
     Vector<RefPtr<RegisterID>, RegisterFile::CallFrameHeaderSize> callFrame;
     for (int i = 0; i < RegisterFile::CallFrameHeaderSize; ++i)
         callFrame.append(newTemporary());
 
     emitExpressionInfo(divot, startOffset, endOffset);
+    m_codeBlock->callLinkInfos.append(CallLinkInfo());
     emitOpcode(op_construct);
     instructions().append(dst->index());
     instructions().append(func->index());
@@ -1215,6 +1306,11 @@ RegisterID* CodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, Argu
     emitOpcode(op_construct_verify);
     instructions().append(dst->index());
     instructions().append(argv[0]->index());
+
+    if (m_shouldEmitProfileHooks) {
+        emitOpcode(op_profile_did_call);
+        instructions().append(func->index());
+    }
 
     return dst;
 }
@@ -1269,62 +1365,70 @@ void CodeGenerator::popFinallyContext()
     m_finallyDepth--;
 }
 
-void CodeGenerator::pushJumpContext(LabelStack* labels, LabelID* continueTarget, LabelID* breakTarget, bool isValidUnlabeledBreakTarget)
+LabelScope* CodeGenerator::breakTarget(const Identifier& name)
 {
-    JumpContext context = { labels, continueTarget, breakTarget, scopeDepth(), isValidUnlabeledBreakTarget };
-    m_jumpContextStack.append(context);
-    if (continueTarget)
-        m_continueDepth++;
-}
+    // Reclaim free label scopes.
+    while (m_labelScopes.size() && !m_labelScopes.last().refCount())
+        m_labelScopes.removeLast();
 
-void CodeGenerator::popJumpContext()
-{
-    ASSERT(m_jumpContextStack.size());
-    if (m_jumpContextStack.last().continueTarget)
-        m_continueDepth--;
-    m_jumpContextStack.removeLast();
-}
-
-JumpContext* CodeGenerator::jumpContextForContinue(const Identifier& label)
-{
-    if(!m_jumpContextStack.size())
+    if (!m_labelScopes.size())
         return 0;
 
-    if (label.isEmpty()) {
-        for (int i = m_jumpContextStack.size() - 1; i >= 0; i--) {
-            JumpContext* scope = &m_jumpContextStack[i];
-            if (scope->continueTarget)
+    // We special-case the following, which is a syntax error in Firefox:
+    // label:
+    //     break;
+    if (name.isEmpty()) {
+        for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
+            LabelScope* scope = &m_labelScopes[i];
+            if (scope->type() != LabelScope::NamedLabel) {
+                ASSERT(scope->breakTarget());
                 return scope;
+            }
         }
         return 0;
     }
 
-    for (int i = m_jumpContextStack.size() - 1; i >= 0; i--) {
-        JumpContext* scope = &m_jumpContextStack[i];
-        if (scope->labels->contains(label))
+    for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
+        LabelScope* scope = &m_labelScopes[i];
+        if (scope->name() && *scope->name() == name) {
+            ASSERT(scope->breakTarget());
             return scope;
+        }
     }
     return 0;
 }
 
-JumpContext* CodeGenerator::jumpContextForBreak(const Identifier& label)
+LabelScope* CodeGenerator::continueTarget(const Identifier& name)
 {
-    if(!m_jumpContextStack.size())
+    // Reclaim free label scopes.
+    while (m_labelScopes.size() && !m_labelScopes.last().refCount())
+        m_labelScopes.removeLast();
+
+    if (!m_labelScopes.size())
         return 0;
 
-    if (label.isEmpty()) {
-        for (int i = m_jumpContextStack.size() - 1; i >= 0; i--) {
-            JumpContext* scope = &m_jumpContextStack[i];
-            if (scope->isValidUnlabeledBreakTarget)
+    if (name.isEmpty()) {
+        for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
+            LabelScope* scope = &m_labelScopes[i];
+            if (scope->type() == LabelScope::Loop) {
+                ASSERT(scope->continueTarget());
                 return scope;
+            }
         }
         return 0;
     }
 
-    for (int i = m_jumpContextStack.size() - 1; i >= 0; i--) {
-        JumpContext* scope = &m_jumpContextStack[i];
-        if (scope->labels->contains(label))
-            return scope;
+    // Continue to the loop nested nearest to the label scope that matches
+    // 'name'.
+    LabelScope* result = 0;
+    for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
+        LabelScope* scope = &m_labelScopes[i];
+        if (scope->type() == LabelScope::Loop) {
+            ASSERT(scope->continueTarget());
+            result = scope;
+        }
+        if (scope->name() && *scope->name() == name)
+            return result; // may be 0
     }
     return 0;
 }

@@ -34,7 +34,7 @@
 #include "JSGlobalObject.h"
 #include "nodes.h"
 #include "Parser.h"
-#include "SourceRange.h"
+#include "SourceCode.h"
 #include "ustring.h"
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
@@ -92,6 +92,69 @@ namespace JSC {
         void* callReturnLocation;
         void* hotPathBegin;
     };
+
+    struct CallLinkInfo {
+        CallLinkInfo()
+            : callReturnLocation(0)
+            , hotPathBegin(0)
+            , hotPathOther(0)
+            , coldPathOther(0)
+            , callee(0)
+        {
+        }
+    
+        unsigned opcodeIndex;
+        void* callReturnLocation;
+        void* hotPathBegin;
+        void* hotPathOther;
+        void* coldPathOther;
+        CodeBlock* callee;
+        unsigned position;
+        
+        void setUnlinked() { callee = 0; }
+        bool isLinked() { return callee; }
+    };
+
+    inline void* getStructureStubInfoReturnLocation(StructureStubInfo* structureStubInfo)
+    {
+        return structureStubInfo->callReturnLocation;
+    }
+
+    // Binary chop algorithm, calls valueAtPosition on pre-sorted elements in array,
+    // compares result with key (KeyTypes should be comparable with '--', '<', '>').
+    // Optimized for cases where the array contains the key, checked by assertions.
+    template<typename ArrayType, typename KeyType, KeyType(*valueAtPosition)(ArrayType*)>
+    inline ArrayType* binaryChop(ArrayType* array, size_t size, KeyType key)
+    {
+        // The array must contain at least one element (pre-condition, array does conatin key).
+        // If the array only contains one element, no need to do the comparison.
+        while (size > 1) {
+            // Pick an element to check, half way through the array, and read the value.
+            int pos = (size - 1) >> 1;
+            KeyType val = valueAtPosition(&array[pos]);
+            
+            // If the key matches, success!
+            if (val == key)
+                return &array[pos];
+            // The item we are looking for is smaller than the item being check; reduce the value of 'size',
+            // chopping off the right hand half of the array.
+            else if (key < val)
+                size = pos;
+            // Discard all values in the left hand half of the array, up to and including the item at pos.
+            else {
+                size -= (pos + 1);
+                array += (pos + 1);
+            }
+
+            // 'size' should never reach zero.
+            ASSERT(size);
+        }
+        
+        // If we reach this point we've chopped down to one element, no need to check it matches
+        ASSERT(size == 1);
+        ASSERT(key == valueAtPosition(&array[0]));
+        return &array[0];
+    }
 
     struct StringJumpTable {
         typedef HashMap<RefPtr<UString::Rep>, OffsetLocation> StringOffsetTable;
@@ -161,7 +224,7 @@ namespace JSC {
                 UString errMsg;
                 
                 SourceCode source = makeSource(evalSource);
-                evalNode = exec->globalData().parser->parse<EvalNode>(exec, source, &errLine, &errMsg);
+                evalNode = exec->globalData().parser->parse<EvalNode>(exec, exec->dynamicGlobalObject()->debugger(), source, &errLine, &errMsg);
                 if (evalNode) {
                     if (evalSource.size() < maxCacheableSourceLength && (*scopeChain->begin())->isVariableObject() && cacheMap.size() < maxCacheEntries)
                         cacheMap.set(evalSource.rep(), evalNode);
@@ -182,8 +245,8 @@ namespace JSC {
     };
 
     struct CodeBlock {
-        CodeBlock(ScopeNode* ownerNode_, CodeType codeType_, PassRefPtr<SourceProvider> source_, unsigned sourceOffset_)
-            : ownerNode(ownerNode_)
+        CodeBlock(ScopeNode* ownerNode, CodeType codeType, PassRefPtr<SourceProvider> sourceProvider, unsigned sourceOffset)
+            : ownerNode(ownerNode)
             , globalData(0)
 #if ENABLE(CTI)
             , ctiCode(0)
@@ -192,18 +255,41 @@ namespace JSC {
             , numConstants(0)
             , numVars(0)
             , numParameters(0)
-            , needsFullScopeChain(ownerNode_->needsActivation())
-            , usesEval(ownerNode_->usesEval())
-            , codeType(codeType_)
-            , source(source_)
-            , sourceOffset(sourceOffset_)
+            , needsFullScopeChain(ownerNode->needsActivation())
+            , usesEval(ownerNode->usesEval())
+            , codeType(codeType)
+            , source(sourceProvider)
+            , sourceOffset(sourceOffset)
         {
             ASSERT(source);
         }
 
         ~CodeBlock();
 
-#if !defined(NDEBUG) || ENABLE_SAMPLING_TOOL
+#if ENABLE(CTI) 
+        void unlinkCallers();
+#endif
+
+        void addCaller(CallLinkInfo* caller)
+        {
+            caller->callee = this;
+            caller->position = linkedCallerList.size();
+            linkedCallerList.append(caller);
+        }
+
+        void removeCaller(CallLinkInfo* caller)
+        {
+            unsigned pos = caller->position;
+            unsigned lastPos = linkedCallerList.size() - 1;
+
+            if (pos != lastPos) {
+                linkedCallerList[pos] = linkedCallerList[lastPos];
+                linkedCallerList[pos]->position = pos;
+            }
+            linkedCallerList.shrink(lastPos);
+        }
+
+#if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
         void dump(ExecState*) const;
         void printStructureIDs(const Instruction*) const;
         void printStructureID(const char* name, const Instruction*, int operand) const;
@@ -219,11 +305,7 @@ namespace JSC {
 
         StructureStubInfo& getStubInfo(void* returnAddress)
         {
-            // FIXME: would a binary chop be faster here?
-            for (unsigned i = 0; ; ++i) {
-                if (structureIDInstructions[i].callReturnLocation == returnAddress)
-                    return structureIDInstructions[i];
-            }
+            return *(binaryChop<StructureStubInfo, void*, getStructureStubInfoReturnLocation>(propertyAccessInstructions.begin(), propertyAccessInstructions.size(), returnAddress));
         }
 
         ScopeNode* ownerNode;
@@ -250,7 +332,10 @@ namespace JSC {
         unsigned sourceOffset;
 
         Vector<Instruction> instructions;
-        Vector<StructureStubInfo> structureIDInstructions;
+        Vector<unsigned> globalResolveInstructions;
+        Vector<StructureStubInfo> propertyAccessInstructions;
+        Vector<CallLinkInfo> callLinkInfos;
+        Vector<CallLinkInfo*> linkedCallerList;
 
         // Constant pool
         Vector<Identifier> identifiers;
@@ -276,7 +361,7 @@ namespace JSC {
         EvalCodeCache evalCodeCache;
 
     private:
-#if !defined(NDEBUG) || ENABLE(SAMPLING_TOOL)
+#if !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
         void dump(ExecState*, const Vector<Instruction>::const_iterator& begin, Vector<Instruction>::const_iterator&) const;
 #endif
 
@@ -286,9 +371,9 @@ namespace JSC {
     // responsible for marking it.
 
     struct ProgramCodeBlock : public CodeBlock {
-        ProgramCodeBlock(ScopeNode* ownerNode_, CodeType codeType_, JSGlobalObject* globalObject_, PassRefPtr<SourceProvider> source_)
-            : CodeBlock(ownerNode_, codeType_, source_, 0)
-            , globalObject(globalObject_)
+        ProgramCodeBlock(ScopeNode* ownerNode, CodeType codeType, JSGlobalObject* globalObject, PassRefPtr<SourceProvider> sourceProvider)
+            : CodeBlock(ownerNode, codeType, sourceProvider, 0)
+            , globalObject(globalObject)
         {
             globalObject->codeBlocks().add(this);
         }
@@ -303,8 +388,8 @@ namespace JSC {
     };
 
     struct EvalCodeBlock : public ProgramCodeBlock {
-        EvalCodeBlock(ScopeNode* ownerNode_, JSGlobalObject* globalObject_, PassRefPtr<SourceProvider> source_)
-            : ProgramCodeBlock(ownerNode_, EvalCode, globalObject_, source_)
+        EvalCodeBlock(ScopeNode* ownerNode, JSGlobalObject* globalObject, PassRefPtr<SourceProvider> sourceProvider)
+            : ProgramCodeBlock(ownerNode, EvalCode, globalObject, sourceProvider)
         {
         }
     };

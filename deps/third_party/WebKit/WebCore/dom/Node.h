@@ -409,7 +409,7 @@ public:
 
     virtual void willRemove();
     void createRendererIfNeeded();
-    RenderStyle* styleForRenderer(RenderObject* parent);
+    PassRefPtr<RenderStyle> styleForRenderer();
     virtual bool rendererIsNeeded(RenderStyle*);
 #if ENABLE(SVG)
     virtual bool childShouldCreateRenderer(Node*) const { return true; }
@@ -418,7 +418,7 @@ public:
     
     // Wrapper for nodes that don't have a renderer, but still cache the style (like HTMLOptionElement).
     RenderStyle* renderStyle() const;
-    virtual void setRenderStyle(RenderStyle*);
+    virtual void setRenderStyle(PassRefPtr<RenderStyle>);
 
     virtual RenderStyle* computedStyle();
 

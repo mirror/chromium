@@ -27,9 +27,11 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
+#include "Geolocation.h"
 #include "Language.h"
 #include "MimeTypeArray.h"
 #include "NetworkStateNotifier.h"
+#include "Page.h"
 #include "PlatformString.h"
 #include "PluginArray.h"
 #include "PluginData.h"
@@ -86,6 +88,10 @@ void Navigator::disconnectFrame()
     if (m_mimeTypes) {
         m_mimeTypes->disconnectFrame();
         m_mimeTypes = 0;
+    }
+    if (m_geolocation) {
+        m_geolocation->disconnectFrame();
+        m_geolocation = 0;
     }
     m_frame = 0;
 }
@@ -189,8 +195,9 @@ String Navigator::vendorSub() const
 bool Navigator::cookieEnabled() const
 {
     // TODO(fqian): Upstream null-check added at r34474 in old repo.
-    if (!m_frame)
+    if (!m_frame || (m_frame->page() && !m_frame->page()->cookieEnabled()))
         return false;
+
     return cookiesEnabled(m_frame->document());
 }
 
@@ -206,4 +213,11 @@ bool Navigator::onLine() const
     return networkStateNotifier().onLine();
 }
 
+Geolocation* Navigator::geolocation() const
+{
+    if (!m_geolocation)
+        m_geolocation = Geolocation::create(m_frame);
+    return m_geolocation.get();
+}
+    
 } // namespace WebCore

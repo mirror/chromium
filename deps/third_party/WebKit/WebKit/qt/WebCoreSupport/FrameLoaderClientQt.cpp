@@ -66,6 +66,7 @@
 #else
 #include "qwebnetworkinterface_p.h"
 #endif
+#include "qwebhistory_p.h"
 
 static bool dumpFrameLoaderCallbacks = false;
 static bool dumpResourceLoadCallbacks = false;
@@ -264,11 +265,6 @@ void FrameLoaderClientQt::detachedFromParent2()
 
 
 void FrameLoaderClientQt::detachedFromParent3()
-{
-}
-
-
-void FrameLoaderClientQt::detachedFromParent4()
 {
 }
 
@@ -637,8 +633,10 @@ bool FrameLoaderClientQt::shouldGoToHistoryItem(WebCore::HistoryItem *item) cons
     return true;
 }
 
-void FrameLoaderClientQt::saveViewStateToItem(WebCore::HistoryItem*)
+void FrameLoaderClientQt::saveViewStateToItem(WebCore::HistoryItem* item)
 {
+    QWebHistoryItem historyItem(new QWebHistoryItemPrivate(item));
+    emit m_webFrame->aboutToUpdateHistory(&historyItem);
 }
 
 bool FrameLoaderClientQt::canCachePage() const

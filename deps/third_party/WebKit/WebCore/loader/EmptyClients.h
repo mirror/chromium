@@ -126,6 +126,8 @@ public:
     virtual void print(Frame*) { }
 
     virtual void exceededDatabaseQuota(Frame*, const String&) { }
+
+    virtual void runOpenPanel(Frame*, PassRefPtr<FileChooser>) { }
 };
 
 class EmptyFrameLoaderClient : public FrameLoaderClient {
@@ -152,7 +154,6 @@ public:
 
     virtual void detachedFromParent2() { }
     virtual void detachedFromParent3() { }
-    virtual void detachedFromParent4() { }
 
     virtual void download(ResourceHandle*, const ResourceRequest&, const ResourceRequest&, const ResourceResponse&) { }
 
@@ -389,25 +390,29 @@ public:
 
 class EmptyInspectorClient : public InspectorClient {
 public:
-    virtual ~EmptyInspectorClient() {}
+    virtual ~EmptyInspectorClient() { }
 
-    virtual void inspectorDestroyed() {};
+    virtual void inspectorDestroyed() { }
 
     virtual Page* createPage() { return 0; };
 
-    virtual String localizedStringsURL() { return String(); };
+    virtual String localizedStringsURL() { return String(); }
 
-    virtual void showWindow() {};
-    virtual void closeWindow() {};
+    virtual void showWindow() { }
+    virtual void closeWindow() { }
 
-    virtual void attachWindow() {};
-    virtual void detachWindow() {};
+    virtual void attachWindow() { }
+    virtual void detachWindow() { }
 
-    virtual void setAttachedWindowHeight(unsigned) {};
+    virtual void setAttachedWindowHeight(unsigned) { }
 
-    virtual void highlight(Node*) {};
-    virtual void hideHighlight() {};
-    virtual void inspectedURLChanged(const String& newURL) {};
+    virtual void highlight(Node*) { }
+    virtual void hideHighlight() { }
+    virtual void inspectedURLChanged(const String& newURL) { }
+
+    virtual void populateSetting(const String& key, InspectorController::Setting&) { }
+    virtual void storeSetting(const String& key, const InspectorController::Setting&) { }
+    virtual void removeSetting(const String& key) { }
 };
 
 }

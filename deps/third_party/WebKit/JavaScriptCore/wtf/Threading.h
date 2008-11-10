@@ -62,8 +62,9 @@
 #include <wtf/Assertions.h>
 #include <wtf/Locker.h>
 #include <wtf/Noncopyable.h>
-#if PLATFORM(GTK)
-#include <wtf/GOwnPtr.h>
+
+#if USE(V8_BINDING)
+#include "RefCounted.h"
 #endif
 
 #if PLATFORM(WIN_OS)
@@ -80,9 +81,8 @@
 
 #if USE(PTHREADS)
 #include <pthread.h>
-#endif
-
-#if PLATFORM(GTK)
+#elif PLATFORM(GTK)
+#include <wtf/GOwnPtr.h>
 typedef struct _GMutex GMutex;
 typedef struct _GCond GCond;
 #endif
@@ -99,9 +99,9 @@ QT_END_NAMESPACE
 
 // For portability, we do not use thread-safe statics natively supported by some compilers (e.g. gcc).
 #define AtomicallyInitializedStatic(T, name) \
-    WTF::atomicallyInitializedStaticMutex->lock(); \
+    WTF::lockAtomicallyInitializedStaticMutex(); \
     static T name; \
-    WTF::atomicallyInitializedStaticMutex->unlock();
+    WTF::unlockAtomicallyInitializedStaticMutex();
 
 namespace WTF {
 
@@ -200,6 +200,22 @@ inline int atomicDecrement(int volatile* addend) { return __gnu_cxx::__exchange_
 
 #endif
 
+
+#if USE(V8_BINDING)
+
+// TODO(dglazkov): Because of Peerable, ThreadSafeShared has to be like
+// RefCounted. Also, we don't use any of the threading stuff. Still, it would
+// be great to unfork this once Peerable is gone.
+template<class T> class ThreadSafeShared : public RefCounted<T> {
+public:
+    ThreadSafeShared(int initialRefCount = 1)
+        : RefCounted<T>(initialRefCount)
+    {
+    }
+};
+
+#else
+
 template<class T> class ThreadSafeShared : Noncopyable {
 public:
     ThreadSafeShared(int initialRefCount = 1)
@@ -251,11 +267,20 @@ private:
 #endif
 };
 
+#endif
+
 // This function must be called from the main thread. It is safe to call it repeatedly.
 // Darwin is an exception to this rule: it is OK to call it from any thread, the only requirement is that the calls are not reentrant.
 void initializeThreading();
 
+#if !PLATFORM(WIN_OS) || PLATFORM(WX)
 extern Mutex* atomicallyInitializedStaticMutex;
+inline void lockAtomicallyInitializedStaticMutex() { atomicallyInitializedStaticMutex->lock(); }
+inline void unlockAtomicallyInitializedStaticMutex() { atomicallyInitializedStaticMutex->unlock(); }
+#else
+void lockAtomicallyInitializedStaticMutex();
+void unlockAtomicallyInitializedStaticMutex();
+#endif
 
 } // namespace WTF
 

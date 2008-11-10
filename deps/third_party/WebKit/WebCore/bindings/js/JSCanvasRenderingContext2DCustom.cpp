@@ -34,7 +34,7 @@
 #include "JSHTMLCanvasElement.h"
 #include "JSHTMLImageElement.h"
 #include "JSImageData.h"
-#include <kjs/Error.h>
+#include <runtime/Error.h>
 
 using namespace JSC;
 
@@ -52,10 +52,10 @@ static JSValue* toJS(ExecState* exec, CanvasStyle* style)
 static PassRefPtr<CanvasStyle> toHTMLCanvasStyle(ExecState* exec, JSValue* value)
 {
     if (value->isString())
-        return CanvasStyle::create(static_cast<JSString*>(value)->value());
+        return CanvasStyle::create(asString(value)->value());
     if (!value->isObject())
         return 0;
-    JSObject* object = static_cast<JSObject*>(value);
+    JSObject* object = asObject(value);
     if (object->inherits(&JSCanvasGradient::s_info))
         return CanvasStyle::create(static_cast<JSCanvasGradient*>(object)->impl());
     if (object->inherits(&JSCanvasPattern::s_info))
@@ -96,13 +96,13 @@ JSValue* JSCanvasRenderingContext2D::setFillColor(ExecState* exec, const ArgList
     switch (args.size()) {
         case 1:
             if (args.at(exec, 0)->isString())
-                context->setFillColor(static_cast<JSString*>(args.at(exec, 0))->value());
+                context->setFillColor(asString(args.at(exec, 0))->value());
             else
                 context->setFillColor(args.at(exec, 0)->toFloat(exec));
             break;
         case 2:
             if (args.at(exec, 0)->isString())
-                context->setFillColor(static_cast<JSString*>(args.at(exec, 0))->value(), args.at(exec, 1)->toFloat(exec));
+                context->setFillColor(asString(args.at(exec, 0))->value(), args.at(exec, 1)->toFloat(exec));
             else
                 context->setFillColor(args.at(exec, 0)->toFloat(exec), args.at(exec, 1)->toFloat(exec));
             break;
@@ -133,13 +133,13 @@ JSValue* JSCanvasRenderingContext2D::setStrokeColor(ExecState* exec, const ArgLi
     switch (args.size()) {
         case 1:
             if (args.at(exec, 0)->isString())
-                context->setStrokeColor(static_cast<JSString*>(args.at(exec, 0))->value());
+                context->setStrokeColor(asString(args.at(exec, 0))->value());
             else
                 context->setStrokeColor(args.at(exec, 0)->toFloat(exec));
             break;
         case 2:
             if (args.at(exec, 0)->isString())
-                context->setStrokeColor(static_cast<JSString*>(args.at(exec, 0))->value(), args.at(exec, 1)->toFloat(exec));
+                context->setStrokeColor(asString(args.at(exec, 0))->value(), args.at(exec, 1)->toFloat(exec));
             else
                 context->setStrokeColor(args.at(exec, 0)->toFloat(exec), args.at(exec, 1)->toFloat(exec));
             break;
@@ -185,11 +185,11 @@ JSValue* JSCanvasRenderingContext2D::drawImage(ExecState* exec, const ArgList& a
     JSValue* value = args.at(exec, 0);
     if (!value->isObject())
         return throwError(exec, TypeError);
-    JSObject* o = static_cast<JSObject*>(value);
+    JSObject* o = asObject(value);
     
     ExceptionCode ec = 0;
     if (o->inherits(&JSHTMLImageElement::s_info)) {
-        HTMLImageElement* imgElt = static_cast<HTMLImageElement*>(static_cast<JSHTMLElement*>(args.at(exec, 0))->impl());
+        HTMLImageElement* imgElt = static_cast<HTMLImageElement*>(static_cast<JSHTMLElement*>(o)->impl());
         switch (args.size()) {
             case 3:
                 context->drawImage(imgElt, args.at(exec, 1)->toFloat(exec), args.at(exec, 2)->toFloat(exec));
@@ -210,7 +210,7 @@ JSValue* JSCanvasRenderingContext2D::drawImage(ExecState* exec, const ArgList& a
                 return throwError(exec, SyntaxError);
         }
     } else if (o->inherits(&JSHTMLCanvasElement::s_info)) {
-        HTMLCanvasElement* canvas = static_cast<HTMLCanvasElement*>(static_cast<JSHTMLElement*>(args.at(exec, 0))->impl());
+        HTMLCanvasElement* canvas = static_cast<HTMLCanvasElement*>(static_cast<JSHTMLElement*>(o)->impl());
         switch (args.size()) {
             case 3:
                 context->drawImage(canvas, args.at(exec, 1)->toFloat(exec), args.at(exec, 2)->toFloat(exec));
@@ -232,7 +232,6 @@ JSValue* JSCanvasRenderingContext2D::drawImage(ExecState* exec, const ArgList& a
         }
     } else {
         setDOMException(exec, TYPE_MISMATCH_ERR);
-        return 0;
     }
     
     return jsUndefined();    
@@ -245,11 +244,11 @@ JSValue* JSCanvasRenderingContext2D::drawImageFromRect(ExecState* exec, const Ar
     JSValue* value = args.at(exec, 0);
     if (!value->isObject())
         return throwError(exec, TypeError);
-    JSObject* o = static_cast<JSObject*>(value);
+    JSObject* o = asObject(value);
     
     if (!o->inherits(&JSHTMLImageElement::s_info))
         return throwError(exec, TypeError);
-    context->drawImageFromRect(static_cast<HTMLImageElement*>(static_cast<JSHTMLElement*>(args.at(exec, 0))->impl()),
+    context->drawImageFromRect(static_cast<HTMLImageElement*>(static_cast<JSHTMLElement*>(o)->impl()),
                                args.at(exec, 1)->toFloat(exec), args.at(exec, 2)->toFloat(exec),
                                args.at(exec, 3)->toFloat(exec), args.at(exec, 4)->toFloat(exec),
                                args.at(exec, 5)->toFloat(exec), args.at(exec, 6)->toFloat(exec),
@@ -270,7 +269,7 @@ JSValue* JSCanvasRenderingContext2D::setShadow(ExecState* exec, const ArgList& a
         case 4:
             if (args.at(exec, 3)->isString())
                 context->setShadow(args.at(exec, 0)->toFloat(exec), args.at(exec, 1)->toFloat(exec),
-                                   args.at(exec, 2)->toFloat(exec), static_cast<JSString*>(args.at(exec, 3))->value());
+                                   args.at(exec, 2)->toFloat(exec), asString(args.at(exec, 3))->value());
             else
                 context->setShadow(args.at(exec, 0)->toFloat(exec), args.at(exec, 1)->toFloat(exec),
                                    args.at(exec, 2)->toFloat(exec), args.at(exec, 3)->toFloat(exec));
@@ -278,7 +277,7 @@ JSValue* JSCanvasRenderingContext2D::setShadow(ExecState* exec, const ArgList& a
         case 5:
             if (args.at(exec, 3)->isString())
                 context->setShadow(args.at(exec, 0)->toFloat(exec), args.at(exec, 1)->toFloat(exec),
-                                   args.at(exec, 2)->toFloat(exec), static_cast<JSString*>(args.at(exec, 3))->value(),
+                                   args.at(exec, 2)->toFloat(exec), asString(args.at(exec, 3))->value(),
                                    args.at(exec, 4)->toFloat(exec));
             else
                 context->setShadow(args.at(exec, 0)->toFloat(exec), args.at(exec, 1)->toFloat(exec),
@@ -311,12 +310,12 @@ JSValue* JSCanvasRenderingContext2D::createPattern(ExecState* exec, const ArgLis
     JSValue* value = args.at(exec, 0);
     if (!value->isObject())
         return throwError(exec, TypeError);
-    JSObject* o = static_cast<JSObject*>(value);
+    JSObject* o = asObject(value);
 
     if (o->inherits(&JSHTMLImageElement::s_info)) {
         ExceptionCode ec;
         JSValue* pattern = toJS(exec,
-            context->createPattern(static_cast<HTMLImageElement*>(static_cast<JSHTMLElement*>(args.at(exec, 0))->impl()),
+            context->createPattern(static_cast<HTMLImageElement*>(static_cast<JSHTMLElement*>(o)->impl()),
                                    valueToStringWithNullCheck(exec, args.at(exec, 1)), ec).get());
         setDOMException(exec, ec);
         return pattern;
@@ -324,13 +323,13 @@ JSValue* JSCanvasRenderingContext2D::createPattern(ExecState* exec, const ArgLis
     if (o->inherits(&JSHTMLCanvasElement::s_info)) {
         ExceptionCode ec;
         JSValue* pattern = toJS(exec,
-            context->createPattern(static_cast<HTMLCanvasElement*>(static_cast<JSHTMLElement*>(args.at(exec, 0))->impl()),
+            context->createPattern(static_cast<HTMLCanvasElement*>(static_cast<JSHTMLElement*>(o)->impl()),
                 valueToStringWithNullCheck(exec, args.at(exec, 1)), ec).get());
         setDOMException(exec, ec);
         return pattern;
     }
     setDOMException(exec, TYPE_MISMATCH_ERR);
-    return 0;
+    return jsUndefined();
 }
 
 JSValue* JSCanvasRenderingContext2D::putImageData(ExecState* exec, const ArgList& args)

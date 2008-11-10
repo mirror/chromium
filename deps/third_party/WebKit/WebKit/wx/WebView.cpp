@@ -56,7 +56,7 @@
 
 #include "ScriptController.h"
 #include "JSDOMBinding.h"
-#include <kjs/JSValue.h>
+#include <runtime/JSValue.h>
 #include <kjs/ustring.h>
 
 #include "wx/wxprec.h"
@@ -432,7 +432,7 @@ void wxWebView::OnPaint(wxPaintEvent& event)
                 if (frame->view()->needsLayout())
                     frame->view()->layout();
 
-                frame->view()->paint(gc, paintRect);
+                frame->view()->paintContents(gc, paintRect);
             }
             delete gc;
         }
@@ -445,6 +445,7 @@ void wxWebView::OnSize(wxSizeEvent& event)
         WebCore::Frame* frame = m_mainFrame->GetFrame();
         frame->sendResizeEvent();
         frame->view()->layout();
+        frame->view()->adjustScrollbars();
     }
       
     event.Skip();
@@ -563,8 +564,10 @@ void wxWebView::OnSetFocus(wxFocusEvent& event)
     if (m_mainFrame)
         frame = m_mainFrame->GetFrame();
         
-    if (frame)
+    if (frame) {
+        m_impl->page->focusController()->setActive(true);
         frame->selection()->setFocused(true);
+    }
 
     event.Skip();
 }
@@ -575,9 +578,10 @@ void wxWebView::OnKillFocus(wxFocusEvent& event)
     if (m_mainFrame)
         frame = m_mainFrame->GetFrame();
         
-    if (frame)
+    if (frame) {
+        m_impl->page->focusController()->setActive(false);
         frame->selection()->setFocused(false);
-
+    }
     event.Skip();
 }
 

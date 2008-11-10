@@ -21,11 +21,8 @@
 #define JSNodeFilterCondition_h
 
 #include "NodeFilterCondition.h"
+#include <runtime/JSValue.h>
 #include <wtf/PassRefPtr.h>
-
-namespace JSC {
-    class JSValue;
-}
 
 namespace WebCore {
 

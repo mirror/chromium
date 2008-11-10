@@ -27,12 +27,12 @@
 #include "JavaScriptCallFrame.h"
 
 #include "PlatformString.h"
-#include <kjs/DebuggerCallFrame.h>
-#include <kjs/JSGlobalObject.h>
+#include <debugger/DebuggerCallFrame.h>
+#include <runtime/JSGlobalObject.h>
 #include <kjs/interpreter.h>
-#include <kjs/JSLock.h>
-#include <kjs/JSObject.h>
-#include <kjs/JSValue.h>
+#include <runtime/JSLock.h>
+#include <runtime/JSObject.h>
+#include <runtime/JSValue.h>
 
 using namespace JSC;
 

@@ -47,7 +47,6 @@ using std::min;
 
 namespace WebCore {
 
-using namespace EventNames;
 using namespace HTMLNames;
 
 class ImageEventListener : public EventListener {
@@ -120,8 +119,14 @@ void ImageTokenizer::finish()
         cachedImage->setResponse(m_doc->frame()->loader()->documentLoader()->response());
 
         IntSize size = cachedImage->imageSize(m_doc->frame()->pageZoomFactor());
-        if (size.width())
-            m_doc->setTitle(imageTitle(cachedImage->response().suggestedFilename(), size));
+        if (size.width()) {
+            // Compute the title, we use the filename of the resource, falling
+            // back on the hostname if there is no path.
+            String fileName = m_doc->url().lastPathComponent();
+            if (fileName.isEmpty())
+                fileName = m_doc->url().host();
+            m_doc->setTitle(imageTitle(fileName, size));
+        }
 
         m_doc->imageChanged();
     }
@@ -333,9 +338,9 @@ bool ImageDocument::shouldShrinkToFit() const
 
 void ImageEventListener::handleEvent(Event* event, bool isWindowEvent)
 {
-    if (event->type() == resizeEvent)
+    if (event->type() == eventNames().resizeEvent)
         m_doc->windowSizeChanged();
-    else if (event->type() == clickEvent) {
+    else if (event->type() == eventNames().clickEvent) {
         MouseEvent* mouseEvent = static_cast<MouseEvent*>(event);
         m_doc->imageClicked(mouseEvent->x(), mouseEvent->y());
     }

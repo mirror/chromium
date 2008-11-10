@@ -32,7 +32,7 @@
 #import "DOMNodeInternal.h"
 #import "DOMRangeInternal.h"
 #import "WebArchive.h"
-#import "WebBaseNetscapePluginViewInternal.h"
+#import "WebBaseNetscapePluginView.h"
 #import "WebClipView.h"
 #import "WebDOMOperationsPrivate.h"
 #import "WebDataSourceInternal.h"
@@ -61,7 +61,6 @@
 #import "WebNSPrintOperationExtras.h"
 #import "WebNSURLExtras.h"
 #import "WebNSViewExtras.h"
-#import "WebNetscapePluginEmbeddedView.h"
 #import "WebPluginController.h"
 #import "WebPreferences.h"
 #import "WebPreferencesPrivate.h"
@@ -84,7 +83,6 @@
 #import <WebCore/EditorDeleteAction.h>
 #import <WebCore/Element.h>
 #import <WebCore/EventHandler.h>
-#import <WebCore/EventNames.h>
 #import <WebCore/ExceptionHandlers.h>
 #import <WebCore/DragController.h>
 #import <WebCore/FloatRect.h>
@@ -2212,6 +2210,7 @@ WEBCORE_COMMAND(deleteToEndOfParagraph)
 WEBCORE_COMMAND(deleteToMark)
 WEBCORE_COMMAND(deleteWordBackward)
 WEBCORE_COMMAND(deleteWordForward)
+WEBCORE_COMMAND(ignoreSpelling)
 WEBCORE_COMMAND(indent)
 WEBCORE_COMMAND(insertBacktab)
 WEBCORE_COMMAND(insertLineBreak)
@@ -4299,24 +4298,6 @@ NSStrokeColorAttributeName        /* NSColor, default nil: same as foreground co
     [self _changeSpellingToWord:[[sender selectedCell] stringValue]];
 }
 
-- (void)ignoreSpelling:(id)sender
-{
-    COMMAND_PROLOGUE
-
-    NSSpellChecker *checker = [NSSpellChecker sharedSpellChecker];
-    if (!checker) {
-        LOG_ERROR("No NSSpellChecker");
-        return;
-    }
-    
-    NSString *stringToIgnore = [sender stringValue];
-    unsigned int length = [stringToIgnore length];
-    if (stringToIgnore && length > 0) {
-        [checker ignoreWord:stringToIgnore inSpellDocumentWithTag:[[self _webView] spellCheckerDocumentTag]];
-        // FIXME: Need to clear misspelling marker if the currently selected word is the one we are to ignore?
-    }
-}
-
 - (void)performFindPanelAction:(id)sender
 {
     COMMAND_PROLOGUE
@@ -4560,9 +4541,9 @@ static BOOL writingDirectionKeyBindingsEnabled()
 {
 #if ENABLE(NETSCAPE_PLUGIN_API)
     NSEnumerator *enumerator = [self objectEnumerator];
-    WebNetscapePluginEmbeddedView *view;
+    WebBaseNetscapePluginView *view;
     while ((view = [enumerator nextObject]) != nil)
-        if ([view isKindOfClass:[WebNetscapePluginEmbeddedView class]])
+        if ([view isKindOfClass:[WebBaseNetscapePluginView class]])
             [view performSelector:selector withObject:object];
 #endif
 }

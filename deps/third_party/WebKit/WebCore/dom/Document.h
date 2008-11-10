@@ -32,6 +32,7 @@
 #include "HTMLCollection.h"
 #include "HTMLFormElement.h"
 #include "KURL.h"
+#include "ScriptExecutionContext.h"
 #include "StringHash.h"
 #include "Timer.h"
 #include "unicode/uscript.h"
@@ -86,7 +87,6 @@ namespace WebCore {
     class ImageLoader;
     class IntPoint;
     class JSNode;
-    class MessagePort;
     class MouseEventWithHitTestResults;
     class NodeFilter;
     class NodeIterator;
@@ -168,7 +168,7 @@ struct FormElementKeyHashTraits : WTF::GenericHashTraits<FormElementKey> {
     static bool isDeletedValue(const FormElementKey& value) { return value.isHashTableDeletedValue(); }
 };
 
-class Document : public ContainerNode {
+class Document : public ContainerNode, public ScriptExecutionContext {
 public:
     static PassRefPtr<Document> create(Frame* frame)
     {
@@ -180,6 +180,10 @@ public:
     }
     virtual ~Document();
 
+    virtual bool isDocument() const { return true; }
+
+    using ContainerNode::ref;
+    using ContainerNode::deref;
     virtual void removedLastRef();
 
     // Nodes belonging to this document hold "self-only" references -
@@ -560,11 +564,11 @@ public:
     CSSStyleDeclaration* getOverrideStyle(Element*, const String& pseudoElt);
 
     void handleWindowEvent(Event*, bool useCapture);
-    void setWindowEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener>);
-    EventListener* windowEventListenerForType(const AtomicString& eventType);
-    void removeWindowEventListenerForType(const AtomicString& eventType);
+    void setWindowInlineEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener>);
+    EventListener* windowInlineEventListenerForType(const AtomicString& eventType);
+    void removeWindowInlineEventListenerForType(const AtomicString& eventType);
 
-    void setWindowEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute*);
+    void setWindowInlineEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute*);
 
     void addWindowEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
     void removeWindowEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
@@ -769,16 +773,6 @@ public:
     CanvasRenderingContext2D* getCSSCanvasContext(const String& type, const String& name, int width, int height);
     HTMLCanvasElement* getCSSCanvasElement(const String& name);
 
-    void processMessagePortMessagesSoon();
-    void dispatchMessagePortEvents();
-    void createdMessagePort(MessagePort*);
-    void destroyedMessagePort(MessagePort*);
-    const HashSet<MessagePort*>& messagePorts() const { return m_messagePorts; }
-
-    void createdXMLHttpRequest(XMLHttpRequest*);
-    void destroyedXMLHttpRequest(XMLHttpRequest*);
-    const HashSet<XMLHttpRequest*>& xmlHttpRequests() const { return m_xmlHttpRequests; }
-
     bool isDNSPrefetchEnabled() const { return m_isDNSPrefetchEnabled; }
     void initDNSPrefetch();
     void parseDNSPrefetchControlHeader(const String&);
@@ -787,6 +781,11 @@ protected:
     Document(Frame*, bool isXHTML);
 
 private:
+    virtual void refScriptExecutionContext() { ref(); }
+    virtual void derefScriptExecutionContext() { deref(); }
+
+    virtual const KURL& virtualURL() const; // Same as url(), but needed for ScriptExecutionContext to implement it without a performance loss for direct calls.
+
     CSSStyleSelector* m_styleSelector;
     bool m_didCalculateStyleSelector;
 
@@ -950,11 +949,6 @@ private:
     // Moreover, the value of m_contentLanguage should be utilized as well. 
     mutable UScriptCode m_dominantScript; 
 
-    bool m_firedMessagePortTimer;
-    HashSet<MessagePort*> m_messagePorts;
-
-    HashSet<XMLHttpRequest*> m_xmlHttpRequests;
-
 public:
     bool inPageCache();
     void setInPageCache(bool flag);
@@ -1013,6 +1007,10 @@ public:
     bool hasOpenDatabases() { return m_hasOpenDatabases; }
     void stopDatabases();
 #endif
+    
+    void setUsingGeolocation(bool f) { m_usingGeolocation = f; }
+    bool usingGeolocation() const { return m_usingGeolocation; };
+    
 protected:
     void clearXMLVersion() { m_xmlVersion = String(); }
 
@@ -1089,11 +1087,12 @@ private:
     typedef HashSet<Database*> DatabaseSet;
     OwnPtr<DatabaseSet> m_openDatabaseSet;
 #endif
+    
+    bool m_usingGeolocation;
 
 #if USE(LOW_BANDWIDTH_DISPLAY)
     bool m_inLowBandwidthDisplay;
 #endif
-
 };
 
 inline bool Document::hasElementWithId(AtomicStringImpl* id) const

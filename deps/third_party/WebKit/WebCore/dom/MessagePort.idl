@@ -26,7 +26,11 @@
 
 module events {
 
-    interface [CustomMarkFunction] MessagePort {
+    interface [
+        CustomMarkFunction,
+        GenerateConstructor,
+        NoStaticTables
+    ] MessagePort {
 // We need to have something as an ObjC binding, because MessagePort is used in MessageEvent, which already has one,
 // but we don't want to actually expose the API while it is in flux.
 #if defined(LANGUAGE_JAVASCRIPT)
@@ -38,8 +42,8 @@ module events {
         void close();
 
         // event handler attributes
-        attribute [Custom] EventListener onmessage;
-        attribute [Custom] EventListener onclose;
+        attribute EventListener onmessage;
+        attribute EventListener onclose;
 
         // EventTarget interface
         [Custom] void addEventListener(in DOMString type, 

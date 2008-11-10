@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -61,7 +61,7 @@ UString WebScriptCallFrame::jsValueToString(JSC::ExecState* state, JSValue* jsva
     else if (jsvalue->isBoolean())
         return jsvalue->getBoolean() ? "True" : "False";
     else if (jsvalue->isObject()) {
-        jsvalue = jsvalue->getObject()->defaultValue(state, JSValue::PreferString);
+        jsvalue = jsvalue->getObject()->defaultValue(state, PreferString);
         return jsvalue->getString();
     }
 
@@ -220,8 +220,8 @@ HRESULT STDMETHODCALLTYPE WebScriptCallFrame::valueForVariable(
 
     Identifier identKey(m_state, reinterpret_cast<UChar*>(key), SysStringLen(key));
 
-    JSValue* jsvalue = 0;
 #if 0
+    JSValue* jsvalue = noValue();
     ScopeChain scopeChain = m_state->scopeChain();
     for (ScopeChainIterator it = scopeChain.begin(); it != scopeChain.end() && !jsvalue; ++it)
         jsvalue = (*it)->get(m_state, identKey);
@@ -241,8 +241,8 @@ JSValue* WebScriptCallFrame::valueByEvaluatingJavaScriptFromString(BSTR script)
     JSObject* eval = 0;
     if (state->scopeNode()) {  // "eval" won't work without context (i.e. at global scope)
         JSValue* v = globObj->get(state, "eval");
-        if (v->isObject() && static_cast<JSObject*>(v)->implementsCall())
-            eval = static_cast<JSObject*>(v);
+        if (v->isObject() && asObject(v)->implementsCall())
+            eval = asObject(v);
         else
             // no "eval" - fallback operates on global exec state
             state = globObj->globalExec();

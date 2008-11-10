@@ -284,8 +284,17 @@
 #define WTF_USE_PTHREADS 1
 #endif
 
+#if PLATFORM(GTK)
+#if HAVE(PTHREAD_H)
+#define WTF_USE_PTHREADS 1
+#endif
+#endif
+
+// allow build settings to override HAVE_ACCESSIBILITY
+#if !defined(HAVE_ACCESSIBILITY)
 #if PLATFORM(MAC) || PLATFORM(WIN) || PLATFORM(GTK) || PLATFORM(CHROMIUM)
 #define HAVE_ACCESSIBILITY 1
+#endif
 #endif
 
 #if COMPILER(GCC)
@@ -336,6 +345,10 @@
 #define ENABLE_JAVASCRIPT_DEBUGGER 1
 #endif
 
+#if !defined(ENABLE_JAVASCRIPT_DEBUGGER)
+#define ENABLE_JAVASCRIPT_DEBUGGER 1
+#endif
+
 #if !defined(ENABLE_FTPDIR)
 #define ENABLE_FTPDIR 1
 #endif
@@ -352,8 +365,24 @@
 #define ENABLE_NETSCAPE_PLUGIN_API 1
 #endif
 
-#if !defined(ENABLE_SAMPLING_TOOL)
-#define ENABLE_SAMPLING_TOOL 0
+#if !defined(ENABLE_OPCODE_STATS)
+#define ENABLE_OPCODE_STATS 0
+#endif
+
+#if !defined(ENABLE_CODEBLOCK_SAMPLING)
+#define ENABLE_CODEBLOCK_SAMPLING 0
+#endif
+
+#if ENABLE(CODEBLOCK_SAMPLING) && !defined(ENABLE_OPCODE_SAMPLING)
+#define ENABLE_OPCODE_SAMPLING 1
+#endif
+
+#if !defined(ENABLE_OPCODE_SAMPLING)
+#define ENABLE_OPCODE_SAMPLING 0
+#endif
+
+#if !defined(ENABLE_GEOLOCATION)
+#define ENABLE_GEOLOCATION 0
 #endif
 
 // CTI only supports x86 at the moment, and has only been tested on Mac and Windows.
@@ -362,7 +391,7 @@
 #endif
 
 // WREC only supports x86 at the moment, and has only been tested on Mac and Windows.
-#if !defined(ENABLE_WREC) && PLATFORM(X86) && (PLATFORM(MAC) || PLATFORM(WIN))
+#if !defined(ENABLE_WREC) && ENABLE(CTI) && PLATFORM(X86) && (PLATFORM(MAC) || PLATFORM(WIN))
 #define ENABLE_WREC 1
 #endif
 

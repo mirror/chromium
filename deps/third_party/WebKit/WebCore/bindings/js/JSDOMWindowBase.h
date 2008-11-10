@@ -44,12 +44,9 @@ namespace WebCore {
 
     class JSDOMWindowBasePrivate;
 
-    typedef HashMap<const JSC::ClassInfo*, RefPtr<JSC::StructureID> > JSDOMStructureMap;
-    typedef HashMap<const JSC::ClassInfo*, JSC::JSObject*> JSDOMConstructorMap;
-
     // This is the only WebCore JS binding which does not inherit from DOMObject
-    class JSDOMWindowBase : public JSC::JSGlobalObject {
-        typedef JSC::JSGlobalObject Base;
+    class JSDOMWindowBase : public JSDOMGlobalObject {
+        typedef JSDOMGlobalObject Base;
 
         friend class ScheduledAction;
     protected:
@@ -61,8 +58,11 @@ namespace WebCore {
         void updateDocument();
 
         DOMWindow* impl() const { return d()->impl.get(); }
+        virtual ScriptExecutionContext* scriptExecutionContext() const;
 
         void disconnectFrame();
+
+        virtual void markCrossHeapDependentObjects();
 
         virtual bool getOwnPropertySlot(JSC::ExecState*, const JSC::Identifier&, JSC::PropertySlot&);
         virtual void put(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSValue*, JSC::PutPropertySlot&);
@@ -76,38 +76,17 @@ namespace WebCore {
 
         void timerFired(DOMWindowTimer*);
 
-        // Finds a wrapper of a JS EventListener, returns 0 if no existing one.
-        JSEventListener* findJSEventListener(JSC::JSValue*, bool attachedToEventTargetNode = false);
-
-        // Finds or creates a wrapper of a JS EventListener. JS EventListener object is GC-protected.
-        PassRefPtr<JSEventListener> findOrCreateJSEventListener(JSC::ExecState*, JSC::JSValue*, bool attachedToEventTargetNode = false);
-
-        // Finds a wrapper of a GC-unprotected JS EventListener, returns 0 if no existing one.
-        JSUnprotectedEventListener* findJSUnprotectedEventListener(JSC::ExecState*, JSC::JSValue*, bool attachedToEventTargetNode = false);
-
-        // Finds or creates a wrapper of a JS EventListener. JS EventListener object is *NOT* GC-protected.
-        PassRefPtr<JSUnprotectedEventListener> findOrCreateJSUnprotectedEventListener(JSC::ExecState*, JSC::JSValue*, bool attachedToEventTargetNode = false);
-
         void clear();
-
-        void setCurrentEvent(Event*);
-        Event* currentEvent();
 
         // Set a place to put a dialog return value when the window is cleared.
         void setReturnValueSlot(JSC::JSValue** slot);
-
-        typedef HashMap<JSC::JSObject*, JSEventListener*> ListenersMap;
-        typedef HashMap<JSC::JSObject*, JSUnprotectedEventListener*> UnprotectedListenersMap;
-
-        ListenersMap& jsEventListeners();
-        ListenersMap& jsEventListenersAttachedToEventTargetNodes();
-        UnprotectedListenersMap& jsUnprotectedEventListeners();
-        UnprotectedListenersMap& jsUnprotectedEventListenersAttachedToEventTargetNodes();
 
         virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
         static const JSC::ClassInfo s_info;
 
         virtual JSC::ExecState* globalExec();
+        
+        virtual bool supportsProfiling() const;
 
         virtual bool shouldInterruptScript() const;
 
@@ -127,28 +106,17 @@ namespace WebCore {
 
         void clearAllTimeouts();
 
-        JSDOMStructureMap& structures() { return d()->structures; }
-        JSDOMConstructorMap& constructors() const { return d()->constructors; }
-
     private:
-        struct JSDOMWindowBaseData : public JSGlobalObjectData {
+        struct JSDOMWindowBaseData : public JSDOMGlobalObjectData {
             JSDOMWindowBaseData(PassRefPtr<DOMWindow>, JSDOMWindowShell*);
 
             RefPtr<DOMWindow> impl;
 
-            JSDOMWindowBase::ListenersMap jsEventListeners;
-            JSDOMWindowBase::ListenersMap jsEventListenersAttachedToEventTargetNodes;
-            JSDOMWindowBase::UnprotectedListenersMap jsUnprotectedEventListeners;
-            JSDOMWindowBase::UnprotectedListenersMap jsUnprotectedEventListenersAttachedToEventTargetNodes;
-            Event* evt;
             JSC::JSValue** returnValueSlot;
             JSDOMWindowShell* shell;
 
             typedef HashMap<int, DOMWindowTimer*> TimeoutsMap;
             TimeoutsMap timeouts;
-
-            JSDOMStructureMap structures;
-            JSDOMConstructorMap constructors;
         };
 
         static JSC::JSValue* childFrameGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);

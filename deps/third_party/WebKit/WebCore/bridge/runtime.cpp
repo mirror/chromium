@@ -28,7 +28,7 @@
 
 #include "runtime_object.h"
 #include "runtime_root.h"
-#include <kjs/JSLock.h>
+#include <runtime/JSLock.h>
 
 #if PLATFORM(QT)
 #include "qt_instance.h"
@@ -78,12 +78,12 @@ void Instance::end()
     virtualEnd();
 }
 
-JSValue *Instance::getValueOfField(ExecState *exec, const Field *aField) const
+JSValue* Instance::getValueOfField(ExecState* exec, const Field* aField) const
 {
     return aField->valueFromInstance(exec, this);
 }
 
-void Instance::setValueOfField(ExecState *exec, const Field *aField, JSValue *aValue) const
+void Instance::setValueOfField(ExecState* exec, const Field* aField, JSValue* aValue) const
 {
     aField->setValueToInstance(exec, this, aValue);
 }

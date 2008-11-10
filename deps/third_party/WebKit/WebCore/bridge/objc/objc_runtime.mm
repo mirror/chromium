@@ -31,10 +31,10 @@
 #include "objc_instance.h"
 #include "runtime_array.h"
 #include "runtime_object.h"
-#include <kjs/Error.h>
-#include <kjs/JSGlobalObject.h>
-#include <kjs/JSLock.h>
-#include <kjs/ObjectPrototype.h>
+#include <runtime/Error.h>
+#include <runtime/JSGlobalObject.h>
+#include <runtime/JSLock.h>
+#include <runtime/ObjectPrototype.h>
 #include <wtf/RetainPtr.h>
 
 using namespace WebCore;
@@ -126,7 +126,9 @@ JSValue* ObjcField::valueFromInstance(ExecState* exec, const Instance* instance)
         JSLock::unlock(false);
     }
 
-    return result;
+    // Work around problem in some versions of GCC where result gets marked volatile and
+    // it can't handle copying from a volatile to non-volatile.
+    return const_cast<JSValue*&>(result);
 }
 
 static id convertValueToObjcObject(ExecState* exec, JSValue* value)
@@ -231,7 +233,7 @@ static JSValue* callObjCFallbackObject(ExecState* exec, JSObject* function, JSVa
 
     JSValue* result = jsUndefined();
 
-    RuntimeObjectImp* imp = static_cast<RuntimeObjectImp*>(thisValue);
+    RuntimeObjectImp* imp = static_cast<RuntimeObjectImp*>(asObject(thisValue));
     Instance* instance = imp->getInternalInstance();
 
     if (!instance)

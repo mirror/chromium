@@ -31,8 +31,8 @@
 #import "WebFrameInternal.h"
 #import "WebViewInternal.h"
 #import "WebScriptDebugDelegate.h"
-#import <kjs/JSGlobalObject.h>
-#import <kjs/DebuggerCallFrame.h>
+#import <runtime/JSGlobalObject.h>
+#import <debugger/DebuggerCallFrame.h>
 #import <WebCore/DOMWindow.h>
 #import <WebCore/Frame.h>
 #import <WebCore/JSDOMWindow.h>
@@ -80,8 +80,7 @@ WebScriptDebugger::WebScriptDebugger(JSGlobalObject* globalObject)
     : m_callingDelegate(false)
 {
     attach(globalObject);
-    DebuggerCallFrame globalCallFrame(globalObject->globalExec(), 0);
-    callEvent(globalCallFrame, 0, -1);
+    callEvent(globalObject->globalExec(), 0, -1);
 }
 
 // callbacks - relay to delegate

@@ -113,16 +113,21 @@ EXPORTS
         ?createThread@WTF@@YAIP6APAXPAX@Z0PBD@Z
         ?currentThread@WTF@@YAIXZ
         ?detachThread@WTF@@YAXI@Z
+        ?initializeMainThread@WTF@@YAXXZ
         ?initializeThreading@WTF@@YAXXZ
         ?isMainThread@WTF@@YA_NXZ
         ?lock@Mutex@WTF@@QAEXXZ
+        ?lockAtomicallyInitializedStaticMutex@WTF@@YAXXZ        
         ?signal@ThreadCondition@WTF@@QAEXXZ
+        ?tryLock@Mutex@WTF@@QAE_NXZ
         ?unlock@Mutex@WTF@@QAEXXZ
+        ?unlockAtomicallyInitializedStaticMutex@WTF@@YAXXZ
         ?wait@ThreadCondition@WTF@@QAEXAAVMutex@2@@Z
         ?waitForThreadCompletion@WTF@@YAHIPAPAX@Z
         WTFLog
         WTFReportArgumentAssertionFailure
         WTFReportAssertionFailure
+        WTFReportAssertionFailureWithMessage
         WTFReportError
 
         ; These functions are deprecated

@@ -29,8 +29,8 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 #include "objc_header.h"
-#include <kjs/Error.h>
-#include <kjs/JSObject.h>
+#include <runtime/Error.h>
+#include <runtime/JSObject.h>
 
 #ifdef __OBJC__
 @class NSString;
@@ -73,9 +73,9 @@ typedef enum {
 
 class RootObject;
 
-ObjcValue convertValueToObjcValue(ExecState *exec, JSValue *value, ObjcValueType type);
+ObjcValue convertValueToObjcValue(ExecState*, JSValue*, ObjcValueType);
 JSValue* convertNSStringToString(ExecState* exec, NSString *nsstring);
-JSValue *convertObjcValueToValue(ExecState *exec, void *buffer, ObjcValueType type, RootObject*);
+JSValue* convertObjcValueToValue(ExecState*, void* buffer, ObjcValueType, RootObject*);
 ObjcValueType objcValueTypeForType(const char *type);
 
 bool convertJSMethodNameToObjc(const char *JSName, char *buffer, size_t bufferSize);

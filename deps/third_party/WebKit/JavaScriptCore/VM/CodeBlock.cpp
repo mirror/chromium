@@ -30,15 +30,16 @@
 #include "config.h"
 #include "CodeBlock.h"
 
+#include "CTI.h"
 #include "JSValue.h"
 #include "Machine.h"
-#include "debugger.h"
+#include "Debugger.h"
 #include <stdio.h>
 #include <wtf/StringExtras.h>
 
 namespace JSC {
 
-#if !defined(NDEBUG) || ENABLE(SAMPLING_TOOL)
+#if !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
 
 static UString escapeQuotes(const UString& str)
 {
@@ -217,7 +218,7 @@ void CodeBlock::printStructureIDs(const Instruction* vPC) const
     }
 
     // These instructions doesn't ref StructureIDs.
-    ASSERT(vPC[0].u.opcode == machine->getOpcode(op_get_by_id_generic) || vPC[0].u.opcode == machine->getOpcode(op_put_by_id_generic));
+    ASSERT(vPC[0].u.opcode == machine->getOpcode(op_get_by_id_generic) || vPC[0].u.opcode == machine->getOpcode(op_put_by_id_generic) || vPC[0].u.opcode == machine->getOpcode(op_call) || vPC[0].u.opcode == machine->getOpcode(op_call_eval) || vPC[0].u.opcode == machine->getOpcode(op_construct));
 }
 
 void CodeBlock::dump(ExecState* exec) const
@@ -249,10 +250,12 @@ void CodeBlock::dump(ExecState* exec) const
 
     if (constantRegisters.size()) {
         printf("\nConstants:\n");
+        unsigned registerIndex = numVars;
         size_t i = 0;
         do {
-            printf("   r%u = %s\n", static_cast<unsigned>(i), valueToSourceString(exec, constantRegisters[i].jsValue(exec)).ascii());
+            printf("   r%u = %s\n", registerIndex, valueToSourceString(exec, constantRegisters[i].jsValue(exec)).ascii());
             ++i;
+            ++registerIndex;
         } while (i < constantRegisters.size());
     }
 
@@ -274,13 +277,22 @@ void CodeBlock::dump(ExecState* exec) const
         } while (i < regexps.size());
     }
 
-    if (structureIDInstructions.size()) {
+    if (globalResolveInstructions.size() || propertyAccessInstructions.size())
         printf("\nStructureIDs:\n");
+
+    if (globalResolveInstructions.size()) {
         size_t i = 0;
         do {
-             printStructureIDs(&instructions[structureIDInstructions[i].opcodeIndex]);
+             printStructureIDs(&instructions[globalResolveInstructions[i]]);
              ++i;
-        } while (i < structureIDInstructions.size());
+        } while (i < globalResolveInstructions.size());
+    }
+    if (propertyAccessInstructions.size()) {
+        size_t i = 0;
+        do {
+             printStructureIDs(&instructions[propertyAccessInstructions[i].opcodeIndex]);
+             ++i;
+        } while (i < propertyAccessInstructions.size());
     }
  
     if (exceptionHandlers.size()) {
@@ -456,6 +468,7 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
         }
         case op_negate: {
             printUnaryOp(location, it, "negate");
+            ++it;
             break;
         }
         case op_add: {
@@ -736,6 +749,14 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
             printConditionalJump(begin, it, location, "jfalse");
             break;
         }
+        case op_jeq_null: {
+            printConditionalJump(begin, it, location, "jeq_null");
+            break;
+        }
+        case op_jneq_null: {
+            printConditionalJump(begin, it, location, "jneq_null");
+            break;
+        }
         case op_jnless: {
             int r0 = (++it)->u.operand;
             int r1 = (++it)->u.operand;
@@ -910,33 +931,64 @@ void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator&
             printf("[%4d] debug\t\t %s, %d, %d\n", location, debugHookName(debugHookID), firstLine, lastLine);
             break;
         }
+        case op_profile_will_call: {
+            int function = (++it)->u.operand;
+            printf("[%4d] profile_will_call %s\n", location, registerName(function).c_str());
+            break;
+        }
+        case op_profile_did_call: {
+            int function = (++it)->u.operand;
+            printf("[%4d] profile_did_call\t %s\n", location, registerName(function).c_str());
+            break;
+        }
         case op_end: {
             int r0 = (++it)->u.operand;
             printf("[%4d] end\t\t %s\n", location, registerName(r0).c_str());
             break;
         }
-        default: {
-            ASSERT_NOT_REACHED();
-            break;
-        }
     }
 }
 
-#endif // !defined(NDEBUG) || ENABLE(SAMPLING_TOOL)
+#endif // !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
 
 CodeBlock::~CodeBlock()
 {
-    size_t size = structureIDInstructions.size();
-    for (size_t i = 0; i < size; ++i) {
-        derefStructureIDs(&instructions[structureIDInstructions[i].opcodeIndex]);
-        if (structureIDInstructions[i].stubRoutine)
-            fastFree(structureIDInstructions[i].stubRoutine);
+    for (size_t size = globalResolveInstructions.size(), i = 0; i < size; ++i) {
+        derefStructureIDs(&instructions[globalResolveInstructions[i]]);
     }
-#if ENABLE(CTI)
+
+    for (size_t size = propertyAccessInstructions.size(), i = 0; i < size; ++i) {
+        derefStructureIDs(&instructions[propertyAccessInstructions[i].opcodeIndex]);
+        if (propertyAccessInstructions[i].stubRoutine)
+            WTF::fastFreeExecutable(propertyAccessInstructions[i].stubRoutine);
+    }
+
+    for (size_t size = callLinkInfos.size(), i = 0; i < size; ++i) {
+        CallLinkInfo* callLinkInfo = &callLinkInfos[i];
+        if (callLinkInfo->isLinked())
+            callLinkInfo->callee->removeCaller(callLinkInfo);
+    }
+
+#if ENABLE(CTI) 
+    unlinkCallers();
+
     if (ctiCode)
-        fastFree(ctiCode);
+        WTF::fastFreeExecutable(ctiCode);
 #endif
 }
+
+#if ENABLE(CTI) 
+void CodeBlock::unlinkCallers()
+{
+    size_t size = linkedCallerList.size();
+    for (size_t i = 0; i < size; ++i) {
+        CallLinkInfo* currentCaller = linkedCallerList[i];
+        CTI::unlinkCall(currentCaller);
+        currentCaller->setUnlinked();
+    }
+    linkedCallerList.clear();
+}
+#endif
 
 void CodeBlock::derefStructureIDs(Instruction* vPC) const
 {
@@ -1061,12 +1113,11 @@ void* CodeBlock::nativeExceptionCodeForHandlerVPC(const Instruction* handlerVPC)
 
 int CodeBlock::lineNumberForVPC(const Instruction* vPC)
 {
-    ASSERT(lineInfo.size());    
     unsigned instructionOffset = vPC - instructions.begin();
     ASSERT(instructionOffset < instructions.size());
 
     if (!lineInfo.size())
-        return 1; // Empty function
+        return ownerNode->source().firstLine(); // Empty function
 
     int low = 0;
     int high = lineInfo.size();
@@ -1077,6 +1128,9 @@ int CodeBlock::lineNumberForVPC(const Instruction* vPC)
         else
             high = mid;
     }
+    
+    if (!low)
+        return ownerNode->source().firstLine();
     return lineInfo[low - 1].lineNumber;
 }
 

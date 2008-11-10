@@ -49,8 +49,10 @@
 #include "TextResourceDecoder.h"
 #include "Widget.h"
 #include "ScriptController.h"
+#if USE(JSC)
 #include <kjs/collector.h>
-#include <kjs/JSLock.h>
+#include <runtime/JSLock.h>
+#endif
 #include <wtf/HashMap.h>
 #include <wtf/RefCountedLeakCounter.h>
 
@@ -65,8 +67,6 @@
 #endif
 
 namespace WebCore {
-
-using namespace EventNames;
 
 static HashSet<Page*>* allPages;
 
@@ -85,7 +85,7 @@ static void networkStateChanged()
             frames.append(frame);
     }
 
-    AtomicString eventName = networkStateNotifier().onLine() ? onlineEvent : offlineEvent;
+    AtomicString eventName = networkStateNotifier().onLine() ? eventNames().onlineEvent : eventNames().offlineEvent;
     
     for (unsigned i = 0; i < frames.size(); i++) {
         Document* document = frames[i]->document();
@@ -117,6 +117,7 @@ Page::Page(ChromeClient* chromeClient, ContextMenuClient* contextMenuClient, Edi
     , m_tabKeyCyclesThroughElements(true)
     , m_defersLoading(false)
     , m_inLowQualityInterpolationMode(false)
+    , m_cookieEnabled(true)
     , m_parentInspectorController(0)
     , m_didLoadUserStyleSheet(false)
     , m_userStyleSheetModificationTime(0)

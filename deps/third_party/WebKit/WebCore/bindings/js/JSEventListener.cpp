@@ -25,7 +25,6 @@
 #include "DOMWindow.h"
 #include "Document.h"
 #include "Event.h"
-#include "EventNames.h"
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "JSDOMWindow.h"
@@ -33,15 +32,13 @@
 #include "JSEventTarget.h"
 #include "JSEventTargetNode.h"
 #include "ScriptController.h"
-#include <kjs/FunctionConstructor.h>
-#include <kjs/JSLock.h>
+#include <runtime/FunctionConstructor.h>
+#include <runtime/JSLock.h>
 #include <wtf/RefCountedLeakCounter.h>
 
 using namespace JSC;
 
 namespace WebCore {
-
-using namespace EventNames;
 
 ASSERT_CLASS_FITS_IN_CELL(JSAbstractEventListener)
 
@@ -53,25 +50,40 @@ void JSAbstractEventListener::handleEvent(Event* event, bool isWindowEvent)
     if (!listener)
         return;
 
-    JSDOMWindow* window = this->window();
-    // Null check as clearWindow() can clear this and we still get called back by
+    JSDOMGlobalObject* globalObject = this->globalObject();
+    // Null check as clearGlobalObject() can clear this and we still get called back by
     // xmlhttprequest objects. See http://bugs.webkit.org/show_bug.cgi?id=13275
-    if (!window)
-        return;
-    Frame* frame = window->impl()->frame();
-    if (!frame)
-        return;
-    ScriptController* script = frame->script();
-    if (!script->isEnabled() || script->isPaused())
+    // FIXME: Is this check still necessary? Requests are supposed to be stopped before clearGlobalObject() is called.
+    if (!globalObject)
         return;
 
-    ExecState* exec = window->globalExec();
+    ScriptExecutionContext* scriptExecutionContext = globalObject->scriptExecutionContext();
+    if (!scriptExecutionContext)
+        return;
+
+    Frame* frame = 0;
+    if (scriptExecutionContext->isDocument()) {
+        JSDOMWindow* window = static_cast<JSDOMWindow*>(globalObject);
+        frame = window->impl()->frame();
+        if (!frame)
+            return;
+        // The window must still be active in its frame. See <https://bugs.webkit.org/show_bug.cgi?id=21921>.
+        // FIXME: A better fix for this may be to change DOMWindow::frame() to not return a frame the detached window used to be in.
+        if (frame->domWindow() != window->impl())
+            return;
+        // FIXME: Is this check needed for other contexts?
+        ScriptController* script = frame->script();
+        if (!script->isEnabled() || script->isPaused())
+            return;
+    }
+
+    ExecState* exec = globalObject->globalExec();
 
     JSValue* handleEventFunction = listener->get(exec, Identifier(exec, "handleEvent"));
     CallData callData;
     CallType callType = handleEventFunction->getCallData(callData);
     if (callType == CallTypeNone) {
-        handleEventFunction = 0;
+        handleEventFunction = noValue();
         callType = listener->getCallData(callData);
     }
 
@@ -81,32 +93,34 @@ void JSAbstractEventListener::handleEvent(Event* event, bool isWindowEvent)
         ArgList args;
         args.append(toJS(exec, event));
 
-        Event* savedEvent = window->currentEvent();
-        window->setCurrentEvent(event);
+        Event* savedEvent = globalObject->currentEvent();
+        globalObject->setCurrentEvent(event);
 
         JSValue* retval;
         if (handleEventFunction) {
-            window->startTimeoutCheck();
+            globalObject->startTimeoutCheck();
             retval = call(exec, handleEventFunction, callType, callData, listener, args);
         } else {
             JSValue* thisValue;
             if (isWindowEvent)
-                thisValue = window->shell();
+                thisValue = globalObject->toThisObject(exec);
             else
                 thisValue = toJS(exec, event->currentTarget());
-            window->startTimeoutCheck();
+            globalObject->startTimeoutCheck();
             retval = call(exec, listener, callType, callData, thisValue, args);
         }
-        window->stopTimeoutCheck();
+        globalObject->stopTimeoutCheck();
 
-        window->setCurrentEvent(savedEvent);
+        globalObject->setCurrentEvent(savedEvent);
 
-        if (exec->hadException())
-            frame->domWindow()->console()->reportCurrentException(exec);
-        else {
+        if (exec->hadException()) {
+            // FIXME: Report exceptions in non-Document contexts.
+            if (frame)
+                frame->domWindow()->console()->reportCurrentException(exec);
+        } else {
             if (!retval->isUndefinedOrNull() && event->storesResultAsString())
                 event->storeResult(retval->toString(exec));
-            if (m_isAttachedToEventTargetNode) {
+            if (m_isInline) {
                 bool retvalbool;
                 if (retval->getBoolean(retvalbool) && !retvalbool)
                     event->preventDefault();
@@ -118,30 +132,30 @@ void JSAbstractEventListener::handleEvent(Event* event, bool isWindowEvent)
     }
 }
 
-bool JSAbstractEventListener::isAttachedToEventTargetNode() const
+bool JSAbstractEventListener::isInline() const
 {
-    return m_isAttachedToEventTargetNode;
+    return m_isInline;
 }
 
 // -------------------------------------------------------------------------
 
-JSUnprotectedEventListener::JSUnprotectedEventListener(JSObject* listener, JSDOMWindow* window, bool isAttachedToEventTargetNode)
-    : JSAbstractEventListener(isAttachedToEventTargetNode)
+JSUnprotectedEventListener::JSUnprotectedEventListener(JSObject* listener, JSDOMGlobalObject* globalObject, bool isInline)
+    : JSAbstractEventListener(isInline)
     , m_listener(listener)
-    , m_window(window)
+    , m_globalObject(globalObject)
 {
     if (m_listener) {
-        JSDOMWindow::UnprotectedListenersMap& listeners = isAttachedToEventTargetNode
-            ? window->jsUnprotectedEventListenersAttachedToEventTargetNodes() : window->jsUnprotectedEventListeners();
+        JSDOMWindow::UnprotectedListenersMap& listeners = isInline
+            ? globalObject->jsUnprotectedInlineEventListeners() : globalObject->jsUnprotectedEventListeners();
         listeners.set(m_listener, this);
     }
 }
 
 JSUnprotectedEventListener::~JSUnprotectedEventListener()
 {
-    if (m_listener && m_window) {
-        JSDOMWindow::UnprotectedListenersMap& listeners = isAttachedToEventTargetNode()
-            ? m_window->jsUnprotectedEventListenersAttachedToEventTargetNodes() : m_window->jsUnprotectedEventListeners();
+    if (m_listener && m_globalObject) {
+        JSDOMWindow::UnprotectedListenersMap& listeners = isInline()
+            ? m_globalObject->jsUnprotectedInlineEventListeners() : m_globalObject->jsUnprotectedEventListeners();
         listeners.remove(m_listener);
     }
 }
@@ -151,14 +165,14 @@ JSObject* JSUnprotectedEventListener::listenerObj() const
     return m_listener;
 }
 
-JSDOMWindow* JSUnprotectedEventListener::window() const
+JSDOMGlobalObject* JSUnprotectedEventListener::globalObject() const
 {
-    return m_window;
+    return m_globalObject;
 }
 
-void JSUnprotectedEventListener::clearWindow()
+void JSUnprotectedEventListener::clearGlobalObject()
 {
-    m_window = 0;
+    m_globalObject = 0;
 }
 
 void JSUnprotectedEventListener::mark()
@@ -173,14 +187,14 @@ static WTF::RefCountedLeakCounter eventListenerCounter("EventListener");
 
 // -------------------------------------------------------------------------
 
-JSEventListener::JSEventListener(JSObject* listener, JSDOMWindow* window, bool isAttachedToEventTargetNode)
-    : JSAbstractEventListener(isAttachedToEventTargetNode)
+JSEventListener::JSEventListener(JSObject* listener, JSDOMGlobalObject* globalObject, bool isInline)
+    : JSAbstractEventListener(isInline)
     , m_listener(listener)
-    , m_window(window)
+    , m_globalObject(globalObject)
 {
     if (m_listener) {
-        JSDOMWindow::ListenersMap& listeners = isAttachedToEventTargetNode
-            ? m_window->jsEventListenersAttachedToEventTargetNodes() : m_window->jsEventListeners();
+        JSDOMWindow::ListenersMap& listeners = isInline
+            ? m_globalObject->jsInlineEventListeners() : m_globalObject->jsEventListeners();
         listeners.set(m_listener, this);
     }
 #ifndef NDEBUG
@@ -190,9 +204,9 @@ JSEventListener::JSEventListener(JSObject* listener, JSDOMWindow* window, bool i
 
 JSEventListener::~JSEventListener()
 {
-    if (m_listener && m_window) {
-        JSDOMWindow::ListenersMap& listeners = isAttachedToEventTargetNode()
-            ? m_window->jsEventListenersAttachedToEventTargetNodes() : m_window->jsEventListeners();
+    if (m_listener && m_globalObject) {
+        JSDOMWindow::ListenersMap& listeners = isInline()
+            ? m_globalObject->jsInlineEventListeners() : m_globalObject->jsEventListeners();
         listeners.remove(m_listener);
     }
 #ifndef NDEBUG
@@ -205,20 +219,20 @@ JSObject* JSEventListener::listenerObj() const
     return m_listener;
 }
 
-JSDOMWindow* JSEventListener::window() const
+JSDOMGlobalObject* JSEventListener::globalObject() const
 {
-    return m_window;
+    return m_globalObject;
 }
 
-void JSEventListener::clearWindow()
+void JSEventListener::clearGlobalObject()
 {
-    m_window = 0;
+    m_globalObject = 0;
 }
 
 // -------------------------------------------------------------------------
 
-JSLazyEventListener::JSLazyEventListener(LazyEventListenerType type, const String& functionName, const String& code, JSDOMWindow* window, Node* node, int lineNumber)
-    : JSEventListener(0, window, true)
+JSLazyEventListener::JSLazyEventListener(LazyEventListenerType type, const String& functionName, const String& code, JSDOMGlobalObject* globalObject, Node* node, int lineNumber)
+    : JSEventListener(0, globalObject, true)
     , m_functionName(functionName)
     , m_code(code)
     , m_parsed(false)
@@ -265,19 +279,24 @@ void JSLazyEventListener::parseCode() const
     if (m_parsed)
         return;
 
-    Frame* frame = window()->impl()->frame();
-    if (!frame)
-        return;
-    ScriptController* script = frame->script();
-    if (!script->isEnabled() || script->isPaused())
-        return;
+    Frame* frame = 0;
+    if (globalObject()->scriptExecutionContext()->isDocument()) {
+        JSDOMWindow* window = static_cast<JSDOMWindow*>(globalObject());
+        frame = window->impl()->frame();
+        if (!frame)
+            return;
+        // FIXME: Is this check needed for non-Document contexts?
+        ScriptController* script = frame->script();
+        if (!script->isEnabled() || script->isPaused())
+            return;
+    }
 
     m_parsed = true;
 
-    ExecState* exec = window()->globalExec();
+    ExecState* exec = globalObject()->globalExec();
 
     ArgList args;
-    UString sourceURL(frame->loader()->url().string());
+    UString sourceURL(globalObject()->scriptExecutionContext()->url().string());
     args.append(eventParameterName(m_type, exec));
     args.append(jsString(exec, m_code));
 
@@ -299,7 +318,7 @@ void JSLazyEventListener::parseCode() const
 
         JSValue* thisObj = toJS(exec, m_originalNode);
         if (thisObj->isObject()) {
-            static_cast<JSEventTargetNode*>(thisObj)->pushEventHandlerScope(exec, scope);
+            static_cast<JSEventTargetNode*>(asObject(thisObj))->pushEventHandlerScope(exec, scope);
             listenerAsFunction->setScope(scope);
         }
     }
@@ -309,8 +328,8 @@ void JSLazyEventListener::parseCode() const
     m_code = String();
 
     if (m_listener) {
-        JSDOMWindow::ListenersMap& listeners = isAttachedToEventTargetNode()
-            ? window()->jsEventListenersAttachedToEventTargetNodes() : window()->jsEventListeners();
+        ASSERT(isInline());
+        JSDOMWindow::ListenersMap& listeners = globalObject()->jsInlineEventListeners();
         listeners.set(m_listener, const_cast<JSLazyEventListener*>(this));
     }
 }

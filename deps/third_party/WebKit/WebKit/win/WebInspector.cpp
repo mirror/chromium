@@ -159,7 +159,7 @@ HRESULT STDMETHODCALLTYPE WebInspector::isDebuggingJavaScript(BOOL* isDebugging)
     if (!page)
         return S_OK;
 
-    *isDebugging = page->inspectorController()->debuggerAttached();
+    *isDebugging = page->inspectorController()->debuggerEnabled();
     return S_OK;
 }
 
@@ -174,11 +174,11 @@ HRESULT STDMETHODCALLTYPE WebInspector::toggleDebuggingJavaScript()
 
     InspectorController* inspector = page->inspectorController();
 
-    if (inspector->debuggerAttached())
-        inspector->stopDebugging();
+    if (inspector->debuggerEnabled())
+        inspector->disableDebugger();
     else {
         inspector->showPanel(InspectorController::ScriptsPanel);
-        inspector->startDebuggingAndReloadInspectedPage();
+        inspector->enableDebugger();
     }
 
     return S_OK;
@@ -218,6 +218,41 @@ HRESULT STDMETHODCALLTYPE WebInspector::toggleProfilingJavaScript()
         inspector->showPanel(InspectorController::ProfilesPanel);
     } else
         inspector->startUserInitiatedProfiling();
+
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebInspector::isJavaScriptProfilingEnabled(BOOL* isProfilingEnabled)
+{
+    if (!isProfilingEnabled)
+        return E_POINTER;
+
+    *isProfilingEnabled = FALSE;
+
+    if (!m_webView)
+        return S_OK;
+
+    Page* page = m_webView->page();
+    if (!page)
+        return S_OK;
+
+    *isProfilingEnabled = page->inspectorController()->profilerEnabled();
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebInspector::setJavaScriptProfilingEnabled(BOOL enabled)
+{
+    if (!m_webView)
+        return S_OK;
+
+    Page* page = m_webView->page();
+    if (!page)
+        return S_OK;
+
+    if (enabled)
+        page->inspectorController()->enableProfiler();
+    else
+        page->inspectorController()->disableProfiler();
 
     return S_OK;
 }

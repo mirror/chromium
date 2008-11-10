@@ -27,9 +27,8 @@
 #include <wtf/Vector.h>
 
 namespace JSC {
-    class JSValue;
     class ExecState;
-};
+}
 
 namespace WebCore {
 
@@ -37,8 +36,10 @@ namespace WebCore {
     class Frame;
     class PluginData;
 
+#if USE(JSC)
     // FIXME: Generated JSPluginArray.cpp doesn't include JSPlugin.h for toJS
     JSC::JSValue* toJS(JSC::ExecState*, Plugin*);
+#endif
 
     class PluginArray : public RefCounted<PluginArray> {
     public:

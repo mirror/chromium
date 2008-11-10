@@ -44,47 +44,57 @@
 #define CTI_ARGS_exception 0x0F
 #define CTI_ARGS_profilerReference 0x10
 #define CTI_ARGS_globalData 0x11
-#define ARG_registerFile ((RegisterFile*)(ARGS)[CTI_ARGS_registerFile])
-#define ARG_callFrame ((CallFrame*)(ARGS)[CTI_ARGS_callFrame])
-#define ARG_exception ((JSValue**)(ARGS)[CTI_ARGS_exception])
-#define ARG_profilerReference ((Profiler**)(ARGS)[CTI_ARGS_profilerReference])
-#define ARG_globalData ((JSGlobalData*)(ARGS)[CTI_ARGS_globalData])
 
-#define ARG_setCallFrame(newCallFrame) (*(CallFrame**)&(ARGS)[CTI_ARGS_callFrame] = (newCallFrame))
+#define ARG_callFrame static_cast<CallFrame*>(ARGS[CTI_ARGS_callFrame])
+#define ARG_registerFile static_cast<RegisterFile*>(ARGS[CTI_ARGS_registerFile])
+#define ARG_exception static_cast<JSValue**>(ARGS[CTI_ARGS_exception])
+#define ARG_profilerReference static_cast<Profiler**>(ARGS[CTI_ARGS_profilerReference])
+#define ARG_globalData static_cast<JSGlobalData*>(ARGS[CTI_ARGS_globalData])
 
-#define ARG_src1 ((JSValue*)((ARGS)[1]))
-#define ARG_src2 ((JSValue*)((ARGS)[2]))
-#define ARG_src3 ((JSValue*)((ARGS)[3]))
-#define ARG_src4 ((JSValue*)((ARGS)[4]))
-#define ARG_src5 ((JSValue*)((ARGS)[5]))
-#define ARG_id1 ((Identifier*)((ARGS)[1]))
-#define ARG_id2 ((Identifier*)((ARGS)[2]))
-#define ARG_id3 ((Identifier*)((ARGS)[3]))
-#define ARG_id4 ((Identifier*)((ARGS)[4]))
-#define ARG_int1 ((int)((ARGS)[1]))
-#define ARG_int2 ((int)((ARGS)[2]))
-#define ARG_int3 ((int)((ARGS)[3]))
-#define ARG_int4 ((int)((ARGS)[4]))
-#define ARG_int5 ((int)((ARGS)[5]))
-#define ARG_func1 ((FuncDeclNode*)((ARGS)[1]))
-#define ARG_funcexp1 ((FuncExprNode*)((ARGS)[1]))
-#define ARG_registers1 ((Register*)((ARGS)[1]))
-#define ARG_regexp1 ((RegExp*)((ARGS)[1]))
-#define ARG_pni1 ((JSPropertyNameIterator*)((ARGS)[1]))
-#define ARG_instr1 ((Instruction*)((ARGS)[1]))
-#define ARG_instr2 ((Instruction*)((ARGS)[2]))
-#define ARG_instr3 ((Instruction*)((ARGS)[3]))
-#define ARG_instr4 ((Instruction*)((ARGS)[4]))
-#define ARG_instr5 ((Instruction*)((ARGS)[5]))
-#define ARG_instr6 ((Instruction*)((ARGS)[6]))
+#define ARG_setCallFrame(newCallFrame) (ARGS[CTI_ARGS_callFrame] = (newCallFrame))
 
-#define CTI_RETURN_ADDRESS ((ARGS)[-1])
+#define ARG_src1 static_cast<JSValue*>(ARGS[1])
+#define ARG_src2 static_cast<JSValue*>(ARGS[2])
+#define ARG_src3 static_cast<JSValue*>(ARGS[3])
+#define ARG_src4 static_cast<JSValue*>(ARGS[4])
+#define ARG_src5 static_cast<JSValue*>(ARGS[5])
+#define ARG_id1 static_cast<Identifier*>(ARGS[1])
+#define ARG_id2 static_cast<Identifier*>(ARGS[2])
+#define ARG_id3 static_cast<Identifier*>(ARGS[3])
+#define ARG_id4 static_cast<Identifier*>(ARGS[4])
+#define ARG_int1 reinterpret_cast<intptr_t>(ARGS[1])
+#define ARG_int2 reinterpret_cast<intptr_t>(ARGS[2])
+#define ARG_int3 reinterpret_cast<intptr_t>(ARGS[3])
+#define ARG_int4 reinterpret_cast<intptr_t>(ARGS[4])
+#define ARG_int5 reinterpret_cast<intptr_t>(ARGS[5])
+#define ARG_int6 reinterpret_cast<intptr_t>(ARGS[6])
+#define ARG_func1 static_cast<FuncDeclNode*>(ARGS[1])
+#define ARG_funcexp1 static_cast<FuncExprNode*>(ARGS[1])
+#define ARG_registers1 static_cast<Register*>(ARGS[1])
+#define ARG_regexp1 static_cast<RegExp*>(ARGS[1])
+#define ARG_pni1 static_cast<JSPropertyNameIterator*>(ARGS[1])
+#define ARG_instr1 static_cast<Instruction*>(ARGS[1])
+#define ARG_instr2 static_cast<Instruction*>(ARGS[2])
+#define ARG_instr3 static_cast<Instruction*>(ARGS[3])
+#define ARG_instr4 static_cast<Instruction*>(ARGS[4])
+#define ARG_instr5 static_cast<Instruction*>(ARGS[5])
+#define ARG_instr6 static_cast<Instruction*>(ARGS[6])
+#define ARG_linkInfo2 static_cast<CallLinkInfo*>(ARGS[2])
+
+#define CTI_RETURN_ADDRESS_SLOT (ARGS[-1])
+
+#if COMPILER(MSVC)
+#define FASTCALL __fastcall
+#elif COMPILER(GCC)
+#define FASTCALL  __attribute__ ((fastcall))
+#else
+#error Need to support fastcall calling convention in this compiler
+#endif
 
 namespace JSC {
 
     class CodeBlock;
     class JSPropertyNameIterator;
-    class JSValue;
     class Machine;
     class Register;
     class RegisterFile;
@@ -92,10 +102,13 @@ namespace JSC {
     class SimpleJumpTable;
     class StringJumpTable;
     class StructureIDChain;
+
+    struct CallLinkInfo;
     struct Instruction;
     struct OperandTypes;
 
     typedef JSValue* (SFX_CALL *CTIHelper_j)(CTI_ARGS);
+    typedef JSObject* (SFX_CALL *CTIHelper_o)(CTI_ARGS);
     typedef JSPropertyNameIterator* (SFX_CALL *CTIHelper_p)(CTI_ARGS);
     typedef void (SFX_CALL *CTIHelper_v)(CTI_ARGS);
     typedef void* (SFX_CALL *CTIHelper_s)(CTI_ARGS);
@@ -113,42 +126,49 @@ namespace JSC {
 
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_j t, unsigned i)
             : from(f)
-            , to((void*)t)
+            , to(reinterpret_cast<void*>(t))
+            , opcodeIndex(i)
+        {
+        }
+
+        CallRecord(X86Assembler::JmpSrc f, CTIHelper_o t, unsigned i)
+            : from(f)
+            , to(reinterpret_cast<void*>(t))
             , opcodeIndex(i)
         {
         }
 
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_p t, unsigned i)
             : from(f)
-            , to((void*)t)
+            , to(reinterpret_cast<void*>(t))
             , opcodeIndex(i)
         {
         }
         
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_v t, unsigned i)
             : from(f)
-            , to((void*)t)
+            , to(reinterpret_cast<void*>(t))
             , opcodeIndex(i)
         {
         }
         
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_s t, unsigned i)
             : from(f)
-            , to((void*)t)
+            , to(reinterpret_cast<void*>(t))
             , opcodeIndex(i)
         {
         }
         
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_b t, unsigned i)
             : from(f)
-            , to((void*)t)
+            , to(reinterpret_cast<void*>(t))
             , opcodeIndex(i)
         {
         }
 
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_2 t, unsigned i)
             : from(f)
-            , to((void*)t)
+            , to(reinterpret_cast<void*>(t))
             , opcodeIndex(i)
         {
         }
@@ -222,6 +242,8 @@ namespace JSC {
     struct StructureStubCompilationInfo {
         X86Assembler::JmpSrc callReturnLocation;
         X86Assembler::JmpDst hotPathBegin;
+        X86Assembler::JmpSrc hotPathOther;
+        X86Assembler::JmpDst coldPathOther;
     };
 
     extern "C" {
@@ -252,11 +274,12 @@ namespace JSC {
         static const int repatchOffsetGetByIdStructureID = 19;
         static const int repatchOffsetGetByIdBranchToSlowCase = 25;
         static const int repatchOffsetGetByIdPropertyMapOffset = 34;
-#if ENABLE(SAMPLING_TOOL)
-        static const int repatchOffsetGetByIdSlowCaseCall = 27 + ctiArgumentInitSize;
+#if ENABLE(OPCODE_SAMPLING)
+        static const int repatchOffsetGetByIdSlowCaseCall = 27 + 4 + ctiArgumentInitSize;
 #else
-        static const int repatchOffsetGetByIdSlowCaseCall = 17 + ctiArgumentInitSize;
+        static const int repatchOffsetGetByIdSlowCaseCall = 17 + 4 + ctiArgumentInitSize;
 #endif
+        static const int repatchOffsetOpCallCall = 6;
 
     public:
         static void compile(Machine* machine, CallFrame* callFrame, CodeBlock* codeBlock)
@@ -320,6 +343,9 @@ namespace JSC {
             return cti.privateCompilePatchGetArrayLength(returnAddress);
         }
 
+        static void linkCall(JSFunction* callee, CodeBlock* calleeCodeBlock, void* ctiCode, CallLinkInfo* callLinkInfo, int callerArgCount);
+        static void unlinkCall(CallLinkInfo*);
+
         inline static JSValue* execute(void* code, RegisterFile* registerFile, CallFrame* callFrame, JSGlobalData* globalData, JSValue** exception)
         {
             return ctiTrampoline(code, registerFile, callFrame, exception, Profiler::enabledProfilerReference(), globalData);
@@ -327,7 +353,9 @@ namespace JSC {
 
     private:
         CTI(Machine*, CallFrame*, CodeBlock*);
-        
+
+        static uintptr_t asInteger(JSValue*);
+
         bool isConstant(int src);
         JSValue* getConstant(CallFrame*, int src);
 
@@ -345,14 +373,14 @@ namespace JSC {
         void* privateCompileStringLengthTrampoline();
         void privateCompilePatchGetArrayLength(void* returnAddress);
 
-        enum CompileOpCallType { OpCallNormal, OpCallEval, OpConstruct };
-        void compileOpCall(Instruction* instruction, unsigned i, CompileOpCallType type = OpCallNormal);
+        void compileOpCall(OpcodeID, Instruction* instruction, unsigned i, unsigned callLinkInfoIndex);
         void compileOpCallInitializeCallFrame(unsigned callee, unsigned argCount);
+        void compileOpCallSetupArgs(Instruction* instruction, bool isConstruct, bool isEval);
         enum CompileOpStrictEqType { OpStrictEq, OpNStrictEq };
         void compileOpStrictEq(Instruction* instruction, unsigned i, CompileOpStrictEqType type);
         void putDoubleResultToJSNumberCellOrJSImmediate(X86::XMMRegisterID xmmSource, X86::RegisterID jsNumberCell, unsigned dst, X86Assembler::JmpSrc* wroteJSNumberCell,  X86::XMMRegisterID tempXmm, X86::RegisterID tempReg1, X86::RegisterID tempReg2);
         void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
-        void compileBinaryArithOpSlowCase(OpcodeID, Vector<SlowCaseEntry>::iterator& iter, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
+        void compileBinaryArithOpSlowCase(Instruction*, OpcodeID, Vector<SlowCaseEntry>::iterator& iter, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
 
         void emitGetArg(int src, X86Assembler::RegisterID dst);
         void emitGetPutArg(unsigned src, unsigned offset, X86Assembler::RegisterID scratch);
@@ -385,21 +413,27 @@ namespace JSC {
         void emitFastArithImmToInt(X86Assembler::RegisterID);
         void emitFastArithIntToImmOrSlowCase(X86Assembler::RegisterID, unsigned opcodeIndex);
         void emitFastArithIntToImmNoCheck(X86Assembler::RegisterID);
+        X86Assembler::JmpSrc emitArithIntToImmWithJump(X86Assembler::RegisterID reg);
 
         void emitTagAsBoolImmediate(X86Assembler::RegisterID reg);
 
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, X86::RegisterID);
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, CTIHelper_j);
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, CTIHelper_p);
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, CTIHelper_v);
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, CTIHelper_s);
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, CTIHelper_b);
-        X86Assembler::JmpSrc emitCall(unsigned opcodeIndex, CTIHelper_2);
+        void emitAllocateNumber(JSGlobalData*, unsigned);
+
+        X86Assembler::JmpSrc emitNakedCall(unsigned opcodeIndex, X86::RegisterID);
+        X86Assembler::JmpSrc emitNakedCall(unsigned opcodeIndex, void(*function)());
+        X86Assembler::JmpSrc emitNakedFastCall(unsigned opcodeIndex, void*);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_j);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_o);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_p);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_v);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_s);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_b);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_2);
 
         void emitGetVariableObjectRegister(X86Assembler::RegisterID variableObject, int index, X86Assembler::RegisterID dst);
         void emitPutVariableObjectRegister(X86Assembler::RegisterID src, X86Assembler::RegisterID variableObject, int index);
         
-        void emitSlowScriptCheck(unsigned opcodeIndex);
+        void emitSlowScriptCheck(Instruction*, unsigned opcodeIndex);
 #ifndef NDEBUG
         void printOpcodeOperandTypes(unsigned src1, unsigned src2);
 #endif
@@ -411,7 +445,8 @@ namespace JSC {
 
         Vector<CallRecord> m_calls;
         Vector<X86Assembler::JmpDst> m_labels;
-        Vector<StructureStubCompilationInfo> m_structureStubCompilationInfo;
+        Vector<StructureStubCompilationInfo> m_propertyAccessCompilationInfo;
+        Vector<StructureStubCompilationInfo> m_callStructureStubCompilationInfo;
         Vector<JmpTable> m_jmpTable;
 
         struct JSRInfo {

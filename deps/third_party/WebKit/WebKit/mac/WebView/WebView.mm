@@ -84,6 +84,7 @@
 #import "WebPolicyDelegate.h"
 #import "WebPreferenceKeysPrivate.h"
 #import "WebPreferencesPrivate.h"
+#import "WebTextIterator.h"
 #import "WebUIDelegate.h"
 #import "WebUIDelegatePrivate.h"
 #import <CoreFoundation/CFSet.h>
@@ -124,10 +125,10 @@
 #import <WebKit/DOMExtensions.h>
 #import <WebKit/DOMPrivate.h>
 #import <WebKitSystemInterface.h>
-#import <kjs/ArrayPrototype.h>
-#import <kjs/DateInstance.h>
-#import <kjs/InitializeThreading.h>
-#import <kjs/JSLock.h>
+#import <runtime/ArrayPrototype.h>
+#import <runtime/DateInstance.h>
+#import <runtime/InitializeThreading.h>
+#import <runtime/JSLock.h>
 #import <mach-o/dyld.h>
 #import <objc/objc-auto.h>
 #import <objc/objc-runtime.h>
@@ -613,17 +614,20 @@ static NSString *createUserVisibleWebKitVersionString()
     return [fullVersion copy];
 }
 
-+ (NSString *)_standardUserAgentWithApplicationName:(NSString *)applicationName andWebKitVersion:(NSString *)version
++ (NSString *)_standardUserAgentWithApplicationName:(NSString *)applicationName
 {
-    // Note: Do *not* move the initialization of osVersion into the declaration.
+    // Note: Do *not* move the initialization of osVersion nor webKitVersion into the declaration.
     // Garbage collection won't correctly mark the global variable in that case <rdar://problem/5733674>.
     static NSString *osVersion;
+    static NSString *webKitVersion;
     if (!osVersion)
         osVersion = createMacOSXVersionString();
+    if (!webKitVersion)
+        webKitVersion = createUserVisibleWebKitVersionString();
     NSString *language = [NSUserDefaults _webkit_preferredLanguageCode];
     if ([applicationName length])
-        return [NSString stringWithFormat:@"Mozilla/5.0 (Macintosh; U; " PROCESSOR " Mac OS X %@; %@) AppleWebKit/%@ (KHTML, like Gecko) %@", osVersion, language, version, applicationName];
-    return [NSString stringWithFormat:@"Mozilla/5.0 (Macintosh; U; " PROCESSOR " Mac OS X %@; %@) AppleWebKit/%@ (KHTML, like Gecko)", osVersion, language, version];
+        return [NSString stringWithFormat:@"Mozilla/5.0 (Macintosh; U; " PROCESSOR " Mac OS X %@; %@) AppleWebKit/%@ (KHTML, like Gecko) %@", osVersion, language, webKitVersion, applicationName];
+    return [NSString stringWithFormat:@"Mozilla/5.0 (Macintosh; U; " PROCESSOR " Mac OS X %@; %@) AppleWebKit/%@ (KHTML, like Gecko)", osVersion, language, webKitVersion];
 }
 
 static void WebKitInitializeApplicationCachePathIfNecessary()
@@ -1863,6 +1867,19 @@ WebFrameLoadDelegateImplementationCache* WebViewGetFrameLoadDelegateImplementati
     return NO;
 }
 
+- (BOOL)_cookieEnabled
+{
+    if (_private->page)
+        return _private->page->cookieEnabled();
+    return YES;
+}
+
+- (void)_setCookieEnabled:(BOOL)enable
+{
+    if (_private->page)
+        _private->page->setCookieEnabled(enable);
+}
+
 - (void)_setAdditionalWebPlugInPaths:(NSArray *)newPaths
 {
     if (!_private->pluginDatabase)
@@ -1929,6 +1946,20 @@ WebFrameLoadDelegateImplementationCache* WebViewGetFrameLoadDelegateImplementati
 
     // Post a notification so the WebCore settings update.
     [[self preferences] _postPreferencesChangesNotification];
+}
+
+- (WebTextIterator *)textIteratorForRect:(NSRect)rect
+{
+    IntPoint rectStart(rect.origin.x, rect.origin.y);
+    IntPoint rectEnd(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
+    
+    Frame* coreFrame = core([self mainFrame]);
+    if (!coreFrame)
+        return nil;
+    
+    Selection selectionInsideRect(coreFrame->visiblePositionForPoint(rectStart), coreFrame->visiblePositionForPoint(rectEnd));
+    
+    return [[[WebTextIterator alloc] initWithRange:[DOMRange _wrapRange:selectionInsideRect.toRange().get()]] autorelease];
 }
 
 - (void)handleAuthenticationForResource:(id)identifier challenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource 
@@ -4253,6 +4284,7 @@ static WebFrameView *containingFrameView(NSView *view)
     unsigned cacheTotalCapacity = 0;
     unsigned cacheMinDeadCapacity = 0;
     unsigned cacheMaxDeadCapacity = 0;
+    double deadDecodedDataDeletionInterval = 0;
 
     unsigned pageCacheCapacity = 0;
 
@@ -4371,6 +4403,8 @@ static WebFrameView *containingFrameView(NSView *view)
         // can prove that the overall system gain would justify the regression.
         cacheMaxDeadCapacity = max(24u, cacheMaxDeadCapacity);
 
+        deadDecodedDataDeletionInterval = 60;
+
         // Foundation memory cache capacity (in bytes)
         // (These values are small because WebCore does most caching itself.)
         if (memSize >= 1024)
@@ -4412,6 +4446,7 @@ static WebFrameView *containingFrameView(NSView *view)
     nsurlCacheDiskCapacity = max(nsurlCacheDiskCapacity, [nsurlCache diskCapacity]);
 
     cache()->setCapacities(cacheMinDeadCapacity, cacheMaxDeadCapacity, cacheTotalCapacity);
+    cache()->setDeadDecodedDataDeletionInterval(deadDecodedDataDeletionInterval);
     pageCache()->setCapacity(pageCacheCapacity);
     [nsurlCache setMemoryCapacity:nsurlCacheMemoryCapacity];
     [nsurlCache setDiskCapacity:nsurlCacheDiskCapacity];
@@ -4653,14 +4688,8 @@ static WebFrameView *containingFrameView(NSView *view)
         // No current site-specific spoofs.
     }
 
-    if (_private->userAgent.isNull()) {
-        // Note: Do *not* move the initialization of webKitVersion into the declaration.
-        // Garbage collection won't correctly mark the global variable in that case <rdar://problem/5733674>.
-        static NSString *webKitVersion;
-        if (!webKitVersion)
-            webKitVersion = createUserVisibleWebKitVersionString();
-        _private->userAgent = [[self class] _standardUserAgentWithApplicationName:_private->applicationNameForUserAgent andWebKitVersion:webKitVersion];
-    }
+    if (_private->userAgent.isNull())
+        _private->userAgent = [[self class] _standardUserAgentWithApplicationName:_private->applicationNameForUserAgent];
 
     return _private->userAgent;
 }

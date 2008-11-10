@@ -30,13 +30,14 @@
 #include "ExecState.h"
 #include "JSGlobalObject.h"
 #include "JSStaticScopeObject.h"
+#include "LabelScope.h"
 #include "Parser.h"
 #include "PropertyNameArray.h"
 #include "RegExpObject.h"
-#include "debugger.h"
+#include "SamplingTool.h"
+#include "Debugger.h"
 #include "lexer.h"
 #include "operations.h"
-#include "SamplingTool.h"
 #include <math.h>
 #include <wtf/Assertions.h>
 #include <wtf/HashCountedSet.h>
@@ -407,7 +408,7 @@ RegisterID* FunctionCallResolveNode::emitCode(CodeGenerator& generator, Register
 
     int index = 0;
     size_t depth = 0;
-    JSValue* globalObject = 0;
+    JSObject* globalObject = 0;
     if (generator.findScopedProperty(m_ident, index, depth, false, globalObject) && index != missingSymbolMarker()) {
         RefPtr<RegisterID> func = generator.emitGetScopedVar(generator.newTemporary(), depth, index, globalObject);
         return generator.emitCall(generator.finalDestination(dst), func.get(), 0, m_args.get(), m_divot, m_startOffset, m_endOffset);
@@ -466,7 +467,7 @@ RegisterID* PostfixResolveNode::emitCode(CodeGenerator& generator, RegisterID* d
 
     int index = 0;
     size_t depth = 0;
-    JSValue* globalObject = 0;
+    JSObject* globalObject = 0;
     if (generator.findScopedProperty(m_ident, index, depth, true, globalObject) && index != missingSymbolMarker()) {
         RefPtr<RegisterID> value = generator.emitGetScopedVar(generator.newTemporary(), depth, index, globalObject);
         RegisterID* oldValue;
@@ -650,7 +651,7 @@ RegisterID* PrefixResolveNode::emitCode(CodeGenerator& generator, RegisterID* ds
 
     int index = 0;
     size_t depth = 0;
-    JSValue* globalObject = 0;
+    JSObject* globalObject = 0;
     if (generator.findScopedProperty(m_ident, index, depth, false, globalObject) && index != missingSymbolMarker()) {
         RefPtr<RegisterID> propDst = generator.emitGetScopedVar(generator.tempDestination(dst), depth, index, globalObject);
         emitPreIncOrDec(generator, propDst.get(), m_operator);
@@ -715,7 +716,7 @@ RegisterID* PrefixErrorNode::emitCode(CodeGenerator& generator, RegisterID*)
 RegisterID* UnaryOpNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
     RegisterID* src = generator.emitNode(m_expr.get());
-    return generator.emitUnaryOp(opcode(), generator.finalDestination(dst), src);
+    return generator.emitUnaryOp(opcode(), generator.finalDestination(dst), src, m_expr->resultDescriptor());
 }
 
 // ------------------------------ Binary Operation Nodes -----------------------------------
@@ -726,7 +727,7 @@ RegisterID* BinaryOpNode::emitCode(CodeGenerator& generator, RegisterID* dst)
     if (opcode == op_neq) {
         if (m_expr1->isNull() || m_expr2->isNull()) {
             RefPtr<RegisterID> src = generator.emitNode(dst, m_expr1->isNull() ? m_expr2.get() : m_expr1.get());
-            return generator.emitUnaryOp(op_neq_null, generator.finalDestination(dst, src.get()), src.get());
+            return generator.emitUnaryOp(op_neq_null, generator.finalDestination(dst, src.get()), src.get(), ResultType::unknown());
         }
     }
 
@@ -739,7 +740,7 @@ RegisterID* EqualNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
     if (m_expr1->isNull() || m_expr2->isNull()) {
         RefPtr<RegisterID> src = generator.emitNode(dst, m_expr1->isNull() ? m_expr2.get() : m_expr1.get());
-        return generator.emitUnaryOp(op_eq_null, generator.finalDestination(dst, src.get()), src.get());
+        return generator.emitUnaryOp(op_eq_null, generator.finalDestination(dst, src.get()), src.get(), ResultType::unknown());
     }
 
     RefPtr<RegisterID> src1 = generator.emitNodeForLeftHandSide(m_expr1.get(), m_rightHasAssignments, m_expr2->isPure(generator));
@@ -893,7 +894,7 @@ RegisterID* ReadModifyResolveNode::emitCode(CodeGenerator& generator, RegisterID
 
     int index = 0;
     size_t depth = 0;
-    JSValue* globalObject = 0;
+    JSObject* globalObject = 0;
     if (generator.findScopedProperty(m_ident, index, depth, true, globalObject) && index != missingSymbolMarker()) {
         RefPtr<RegisterID> src1 = generator.emitGetScopedVar(generator.tempDestination(dst), depth, index, globalObject);
         RegisterID* src2 = generator.emitNode(m_right.get());
@@ -925,7 +926,7 @@ RegisterID* AssignResolveNode::emitCode(CodeGenerator& generator, RegisterID* ds
 
     int index = 0;
     size_t depth = 0;
-    JSValue* globalObject = 0;
+    JSObject* globalObject = 0;
     if (generator.findScopedProperty(m_ident, index, depth, true, globalObject) && index != missingSymbolMarker()) {
         if (dst == ignoredResult())
             dst = 0;
@@ -1057,7 +1058,7 @@ RegisterID* ConstStatementNode::emitCode(CodeGenerator& generator, RegisterID*)
 
 // ------------------------------ Helper functions for handling Vectors of StatementNode -------------------------------
 
-static inline RegisterID* statementListEmitCode(StatementVector& statements, CodeGenerator& generator, RegisterID* dst = 0)
+static inline RegisterID* statementListEmitCode(StatementVector& statements, CodeGenerator& generator, RegisterID* dst)
 {
     StatementVector::iterator end = statements.end();
     for (StatementVector::iterator it = statements.begin(); it != end; ++it) {
@@ -1158,6 +1159,10 @@ RegisterID* IfElseNode::emitCode(CodeGenerator& generator, RegisterID* dst)
     generator.emitJump(afterElse.get());
 
     generator.emitLabel(beforeElse.get());
+
+    if (!m_elseBlock->isBlock())
+        generator.emitDebugHook(WillExecuteStatement, m_elseBlock->firstLine(), m_elseBlock->lastLine());
+
     generator.emitNode(dst, m_elseBlock.get());
 
     generator.emitLabel(afterElse.get());
@@ -1170,6 +1175,8 @@ RegisterID* IfElseNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 
 RegisterID* DoWhileNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
+    RefPtr<LabelScope> scope = generator.newLabelScope(LabelScope::Loop);
+
     RefPtr<LabelID> topOfLoop = generator.newLabel();
     generator.emitLabel(topOfLoop.get());
 
@@ -1177,20 +1184,15 @@ RegisterID* DoWhileNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 
     if (!m_statement->isBlock())
         generator.emitDebugHook(WillExecuteStatement, m_statement->firstLine(), m_statement->lastLine());
-
-    RefPtr<LabelID> continueTarget = generator.newLabel();
-    RefPtr<LabelID> breakTarget = generator.newLabel();
-
-    generator.pushJumpContext(&m_labelStack, continueTarget.get(), breakTarget.get(), true);
+        
     RefPtr<RegisterID> result = generator.emitNode(dst, m_statement.get());
-    generator.popJumpContext();
 
-    generator.emitLabel(continueTarget.get());
+    generator.emitLabel(scope->continueTarget());
     generator.emitDebugHook(WillExecuteStatement, m_expr->lineNo(), m_expr->lineNo());
     RegisterID* cond = generator.emitNode(m_expr.get());
     generator.emitJumpIfTrue(cond, topOfLoop.get());
 
-    generator.emitLabel(breakTarget.get());
+    generator.emitLabel(scope->breakTarget());
     return result.get();
 }
 
@@ -1198,26 +1200,24 @@ RegisterID* DoWhileNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 
 RegisterID* WhileNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
-    RefPtr<LabelID> topOfLoop = generator.newLabel();
-    RefPtr<LabelID> continueTarget = generator.newLabel();
-    RefPtr<LabelID> breakTarget = generator.newLabel();
+    RefPtr<LabelScope> scope = generator.newLabelScope(LabelScope::Loop);
 
-    generator.emitJump(continueTarget.get());
+    generator.emitJump(scope->continueTarget());
+
+    RefPtr<LabelID> topOfLoop = generator.newLabel();
     generator.emitLabel(topOfLoop.get());
 
     if (!m_statement->isBlock())
         generator.emitDebugHook(WillExecuteStatement, m_statement->firstLine(), m_statement->lastLine());
  
-    generator.pushJumpContext(&m_labelStack, continueTarget.get(), breakTarget.get(), true);
     generator.emitNode(dst, m_statement.get());
-    generator.popJumpContext();
 
-    generator.emitLabel(continueTarget.get());
+    generator.emitLabel(scope->continueTarget());
     generator.emitDebugHook(WillExecuteStatement, m_expr->lineNo(), m_expr->lineNo());
     RegisterID* cond = generator.emitNode(m_expr.get());
     generator.emitJumpIfTrue(cond, topOfLoop.get());
 
-    generator.emitLabel(breakTarget.get());
+    generator.emitLabel(scope->breakTarget());
     
     // FIXME: This should return the last statement executed so that it can be returned as a Completion
     return 0;
@@ -1227,38 +1227,38 @@ RegisterID* WhileNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 
 RegisterID* ForNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
+    if (dst == ignoredResult())
+        dst = 0;
+
+    RefPtr<LabelScope> scope = generator.newLabelScope(LabelScope::Loop);
+
     generator.emitDebugHook(WillExecuteStatement, firstLine(), lastLine());
 
     if (m_expr1)
         generator.emitNode(ignoredResult(), m_expr1.get());
 
+    RefPtr<LabelID> condition = generator.newLabel();
+    generator.emitJump(condition.get());
+
     RefPtr<LabelID> topOfLoop = generator.newLabel();
-    RefPtr<LabelID> beforeCondition = generator.newLabel();
-    RefPtr<LabelID> continueTarget = generator.newLabel(); 
-    RefPtr<LabelID> breakTarget = generator.newLabel(); 
-    generator.emitJump(beforeCondition.get());
-
     generator.emitLabel(topOfLoop.get());
-    generator.pushJumpContext(&m_labelStack, continueTarget.get(), breakTarget.get(), true);
-    RefPtr<RegisterID> result = generator.emitNode(dst, m_statement.get());
-    generator.popJumpContext();
-    generator.emitLabel(continueTarget.get());
-    if (m_expr3)
-        generator.emitNode(ignoredResult(), m_expr3.get());
-
-    generator.emitLabel(beforeCondition.get());
-    if (m_expr2) {
-        RegisterID* cond = generator.emitNode(m_expr2.get());
-        generator.emitJumpIfTrue(cond, topOfLoop.get());
-    } else {
-        generator.emitJump(topOfLoop.get());
-    }
 
     if (!m_statement->isBlock())
         generator.emitDebugHook(WillExecuteStatement, m_statement->firstLine(), m_statement->lastLine());
+    RefPtr<RegisterID> result = generator.emitNode(dst, m_statement.get());
 
-    generator.emitLabel(breakTarget.get());
-    
+    generator.emitLabel(scope->continueTarget());
+    if (m_expr3)
+        generator.emitNode(ignoredResult(), m_expr3.get());
+
+    generator.emitLabel(condition.get());
+    if (m_expr2) {
+        RegisterID* cond = generator.emitNode(m_expr2.get());
+        generator.emitJumpIfTrue(cond, topOfLoop.get());
+    } else
+        generator.emitJump(topOfLoop.get());
+
+    generator.emitLabel(scope->breakTarget());
     return result.get();
 }
 
@@ -1284,7 +1284,7 @@ ForInNode::ForInNode(JSGlobalData* globalData, const Identifier& ident, Expressi
 {
     if (in) {
         AssignResolveNode* node = new AssignResolveNode(globalData, ident, in, true);
-        node->setExceptionSourceRange(divot, divot - startOffset, endOffset - divot);
+        node->setExceptionSourceCode(divot, divot - startOffset, endOffset - divot);
         m_init = node;
     }
     // for( var foo = bar in baz )
@@ -1292,18 +1292,24 @@ ForInNode::ForInNode(JSGlobalData* globalData, const Identifier& ident, Expressi
 
 RegisterID* ForInNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
+    RefPtr<LabelScope> scope = generator.newLabelScope(LabelScope::Loop);
+
     if (!m_lexpr->isLocation())
         return emitThrowError(generator, ReferenceError, "Left side of for-in statement is not a reference.");
-    RefPtr<LabelID> loopStart = generator.newLabel();
+
     RefPtr<LabelID> continueTarget = generator.newLabel(); 
-    RefPtr<LabelID> breakTarget = generator.newLabel(); 
+
+    generator.emitDebugHook(WillExecuteStatement, firstLine(), lastLine());
 
     if (m_init)
         generator.emitNode(ignoredResult(), m_init.get());
     RegisterID* forInBase = generator.emitNode(m_expr.get());
     RefPtr<RegisterID> iter = generator.emitGetPropertyNames(generator.newTemporary(), forInBase);
-    generator.emitJump(continueTarget.get());
+    generator.emitJump(scope->continueTarget());
+
+    RefPtr<LabelID> loopStart = generator.newLabel();
     generator.emitLabel(loopStart.get());
+
     RegisterID* propertyName;
     if (m_lexpr->isResolveNode()) {
         const Identifier& ident = static_cast<ResolveNode*>(m_lexpr.get())->identifier();
@@ -1336,19 +1342,14 @@ RegisterID* ForInNode::emitCode(CodeGenerator& generator, RegisterID* dst)
         generator.emitExpressionInfo(assignNode->divot(), assignNode->startOffset(), assignNode->endOffset());
         generator.emitPutByVal(base.get(), subscript, propertyName);
     }   
-    
-    generator.pushJumpContext(&m_labelStack, continueTarget.get(), breakTarget.get(), true);
-    generator.emitNode(dst, m_statement.get());
-    generator.popJumpContext();
-
-    generator.emitDebugHook(WillExecuteStatement, firstLine(), lastLine());
 
     if (!m_statement->isBlock())
         generator.emitDebugHook(WillExecuteStatement, m_statement->firstLine(), m_statement->lastLine());
+    generator.emitNode(dst, m_statement.get());
 
-    generator.emitLabel(continueTarget.get());
+    generator.emitLabel(scope->continueTarget());
     generator.emitNextPropertyName(propertyName, iter.get(), loopStart.get());
-    generator.emitLabel(breakTarget.get());
+    generator.emitLabel(scope->breakTarget());
     return dst;
 }
 
@@ -1357,23 +1358,14 @@ RegisterID* ForInNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 // ECMA 12.7
 RegisterID* ContinueNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
-    if (!generator.inContinueContext())
-        return emitThrowError(generator, SyntaxError, "Invalid continue statement.");
+    LabelScope* scope = generator.continueTarget(m_ident);
 
-    JumpContext* targetContext = generator.jumpContextForContinue(m_ident);
+    if (!scope)
+        return m_ident.isEmpty()
+            ? emitThrowError(generator, SyntaxError, "Invalid continue statement.")
+            : emitThrowError(generator, SyntaxError, "Undefined label: '%s'.", m_ident);
 
-    if (!targetContext) {
-        if (m_ident.isEmpty())
-            return emitThrowError(generator, SyntaxError, "Invalid continue statement.");
-        else
-            return emitThrowError(generator, SyntaxError, "Label %s not found.", m_ident);
-    }
-
-    if (!targetContext->continueTarget)
-        return emitThrowError(generator, SyntaxError, "Invalid continue statement.");        
-
-    generator.emitJumpScopes(targetContext->continueTarget, targetContext->scopeDepth);
-    
+    generator.emitJumpScopes(scope->continueTarget(), scope->scopeDepth());
     return dst;
 }
 
@@ -1382,22 +1374,14 @@ RegisterID* ContinueNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 // ECMA 12.8
 RegisterID* BreakNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
-    if (!generator.inJumpContext())
-        return emitThrowError(generator, SyntaxError, "Invalid break statement.");
+    LabelScope* scope = generator.breakTarget(m_ident);
     
-    JumpContext* targetContext = generator.jumpContextForBreak(m_ident);
-    
-    if (!targetContext) {
-        if (m_ident.isEmpty())
-            return emitThrowError(generator, SyntaxError, "Invalid break statement.");
-        else
-            return emitThrowError(generator, SyntaxError, "Label %s not found.", m_ident);
-    }
+    if (!scope)
+        return m_ident.isEmpty()
+            ? emitThrowError(generator, SyntaxError, "Invalid break statement.")
+            : emitThrowError(generator, SyntaxError, "Undefined label: '%s'.", m_ident);
 
-    ASSERT(targetContext->breakTarget);
-
-    generator.emitJumpScopes(targetContext->breakTarget, targetContext->scopeDepth);
-
+    generator.emitJumpScopes(scope->breakTarget(), scope->scopeDepth());
     return dst;
 }
 
@@ -1407,7 +1391,9 @@ RegisterID* ReturnNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
     if (generator.codeType() != FunctionCode)
         return emitThrowError(generator, SyntaxError, "Invalid return statement.");
-        
+
+    if (dst == ignoredResult())
+        dst = 0;
     RegisterID* r0 = m_value ? generator.emitNode(dst, m_value.get()) : generator.emitLoad(dst, jsUndefined());
     if (generator.scopeDepth()) {
         RefPtr<LabelID> l0 = generator.newLabel();
@@ -1576,15 +1562,12 @@ RegisterID* CaseBlockNode::emitCodeForBlock(CodeGenerator& generator, RegisterID
 
 RegisterID* SwitchNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
-    RefPtr<LabelID> breakTarget = generator.newLabel();
+    RefPtr<LabelScope> scope = generator.newLabelScope(LabelScope::Switch);
 
     RefPtr<RegisterID> r0 = generator.emitNode(m_expr.get());
-    generator.pushJumpContext(&m_labelStack, 0, breakTarget.get(), true);
     RegisterID* r1 = m_block->emitCodeForBlock(generator, r0.get(), dst);
-    generator.popJumpContext();
 
-    generator.emitLabel(breakTarget.get());
-
+    generator.emitLabel(scope->breakTarget());
     return r1;
 }
 
@@ -1592,19 +1575,13 @@ RegisterID* SwitchNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 
 RegisterID* LabelNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
-    if (generator.jumpContextForBreak(m_label))
-        return emitThrowError(generator, SyntaxError, "Duplicated label %s found.", m_label);
+    if (generator.breakTarget(m_name))
+        return emitThrowError(generator, SyntaxError, "Duplicate label: %s.", m_name);
 
-    RefPtr<LabelID> l0 = generator.newLabel();
-    m_labelStack.push(m_label);
-    generator.pushJumpContext(&m_labelStack, 0, l0.get(), false);
-    
+    RefPtr<LabelScope> scope = generator.newLabelScope(LabelScope::NamedLabel, &m_name);
     RegisterID* r0 = generator.emitNode(dst, m_statement.get());
-    
-    generator.popJumpContext();
-    m_labelStack.pop();
-    
-    generator.emitLabel(l0.get());
+
+    generator.emitLabel(scope->breakTarget());
     return r0;
 }
 
@@ -1612,6 +1589,8 @@ RegisterID* LabelNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 
 RegisterID* ThrowNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 {
+    if (dst == ignoredResult())
+        dst = 0;
     RefPtr<RegisterID> expr = generator.emitNode(dst, m_expr.get());
     generator.emitExpressionInfo(m_divot, m_startOffset, m_endOffset);
     generator.emitThrow(expr.get());
@@ -1691,8 +1670,9 @@ ScopeNode::ScopeNode(JSGlobalData* globalData, const SourceCode& source, SourceE
         m_varStack = *varStack;
     if (funcStack)
         m_functionStack = *funcStack;
-
-    SCOPENODE_SAMPLING_notifyOfScope(globalData->machine->m_sampler);
+#if ENABLE(OPCODE_SAMPLING)
+    globalData->machine->sampler()->notifyOfScope(this);
+#endif
 }
 
 // ------------------------------ ProgramNode -----------------------------
@@ -1746,9 +1726,10 @@ EvalNode* EvalNode::create(JSGlobalData* globalData, SourceElements* children, V
 
 // ------------------------------ FunctionBodyNode -----------------------------
 
-FunctionBodyNode::FunctionBodyNode(JSGlobalData* globalData, SourceElements* children, VarStack* varStack, FunctionStack* funcStack, CodeFeatures features, int numConstants)
-    : ScopeNode(globalData, SourceCode(), children, varStack, funcStack, features, numConstants)
+FunctionBodyNode::FunctionBodyNode(JSGlobalData* globalData, SourceElements* children, VarStack* varStack, FunctionStack* funcStack, const SourceCode& sourceCode, CodeFeatures features, int numConstants)
+    : ScopeNode(globalData, sourceCode, children, varStack, funcStack, features, numConstants)
     , m_parameters(0)
+    , m_parameterCount(0)
     , m_refCount(0)
 {
 }
@@ -1765,12 +1746,14 @@ void FunctionBodyNode::finishParsing(const SourceCode& source, ParameterNode* fi
     for (ParameterNode* parameter = firstParameter; parameter; parameter = parameter->nextParam())
         parameters.append(parameter->ident());
     size_t count = parameters.size();
-    finishParsing(source, parameters.releaseBuffer(), count);
+
+    setSource(source);
+    finishParsing(parameters.releaseBuffer(), count);
 }
 
-void FunctionBodyNode::finishParsing(const SourceCode& source, Identifier* parameters, size_t parameterCount)
+void FunctionBodyNode::finishParsing(Identifier* parameters, size_t parameterCount)
 {
-    setSource(source);
+    ASSERT(!source().isNull());
     m_parameters = parameters;
     m_parameterCount = parameterCount;
 }
@@ -1783,12 +1766,12 @@ void FunctionBodyNode::mark()
 
 FunctionBodyNode* FunctionBodyNode::create(JSGlobalData* globalData, SourceElements* children, VarStack* varStack, FunctionStack* funcStack, CodeFeatures features, int numConstants)
 {
-    return new FunctionBodyNode(globalData, children, varStack, funcStack, features, numConstants);
+    return new FunctionBodyNode(globalData, children, varStack, funcStack, SourceCode(), features, numConstants);
 }
 
-FunctionBodyNode* FunctionBodyNode::create(JSGlobalData* globalData, SourceElements* children, VarStack* varStack, FunctionStack* funcStack, const SourceCode&, CodeFeatures features, int numConstants)
+FunctionBodyNode* FunctionBodyNode::create(JSGlobalData* globalData, SourceElements* children, VarStack* varStack, FunctionStack* funcStack, const SourceCode& sourceCode, CodeFeatures features, int numConstants)
 {
-    return new FunctionBodyNode(globalData, children, varStack, funcStack, features, numConstants);
+    return new FunctionBodyNode(globalData, children, varStack, funcStack, sourceCode, features, numConstants);
 }
 
 void FunctionBodyNode::generateCode(ScopeChainNode* scopeChainNode)
@@ -1805,7 +1788,7 @@ void FunctionBodyNode::generateCode(ScopeChainNode* scopeChainNode)
 RegisterID* FunctionBodyNode::emitCode(CodeGenerator& generator, RegisterID*)
 {
     generator.emitDebugHook(DidEnterCallFrame, firstLine(), lastLine());
-    statementListEmitCode(m_children, generator);
+    statementListEmitCode(m_children, generator, ignoredResult());
     if (!m_children.size() || !m_children.last()->isReturnNode()) {
         RegisterID* r0 = generator.emitLoad(0, jsUndefined());
         generator.emitDebugHook(WillLeaveCallFrame, firstLine(), lastLine());
@@ -1850,16 +1833,18 @@ UString FunctionBodyNode::paramString() const
     return s;
 }
 
+Identifier* FunctionBodyNode::copyParameters()
+{
+    Identifier* parameters = static_cast<Identifier*>(fastMalloc(m_parameterCount * sizeof(Identifier)));
+    VectorCopier<false, Identifier>::uninitializedCopy(m_parameters, m_parameters + m_parameterCount, parameters);
+    return parameters;
+}
+
 // ------------------------------ FuncDeclNode ---------------------------------
 
 JSFunction* FuncDeclNode::makeFunction(ExecState* exec, ScopeChainNode* scopeChain)
 {
-    JSFunction* func = new (exec) JSFunction(exec, m_ident, m_body.get(), scopeChain);
-
-    JSObject* proto = constructEmptyObject(exec);
-    proto->putDirect(exec->propertyNames().constructor, func, DontEnum);
-    func->putDirect(exec->propertyNames().prototype, proto, DontDelete);
-    return func;
+    return new (exec) JSFunction(exec, m_ident, m_body.get(), scopeChain);
 }
 
 RegisterID* FuncDeclNode::emitCode(CodeGenerator&, RegisterID* dst)
@@ -1877,9 +1862,6 @@ RegisterID* FuncExprNode::emitCode(CodeGenerator& generator, RegisterID* dst)
 JSFunction* FuncExprNode::makeFunction(ExecState* exec, ScopeChainNode* scopeChain)
 {
     JSFunction* func = new (exec) JSFunction(exec, m_ident, m_body.get(), scopeChain);
-    JSObject* proto = constructEmptyObject(exec);
-    proto->putDirect(exec->propertyNames().constructor, func, DontEnum);
-    func->putDirect(exec->propertyNames().prototype, proto, DontDelete);
 
     /* 
         The Identifier in a FunctionExpression can be referenced from inside

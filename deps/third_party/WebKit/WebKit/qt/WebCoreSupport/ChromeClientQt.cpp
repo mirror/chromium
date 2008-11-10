@@ -28,6 +28,7 @@
 #include "config.h"
 #include "ChromeClientQt.h"
 
+#include "FileChooser.h"
 #include "Frame.h"
 #include "FrameLoadRequest.h"
 #include "FrameLoader.h"
@@ -306,8 +307,8 @@ void ChromeClientQt::repaint(const IntRect& windowRect, bool contentChanged, boo
             rect = rect.intersected(QRect(QPoint(0, 0), m_webPage->viewportSize()));
             if (!windowRect.isEmpty())
                 view->update(windowRect);
-        } else
-            emit m_webPage->repaintRequested(windowRect);
+        }
+        emit m_webPage->repaintRequested(windowRect);
     }
 
     // FIXME: There is no "immediate" support for window painting.  This should be done always whenever the flag
@@ -319,8 +320,7 @@ void ChromeClientQt::scroll(const IntSize& delta, const IntRect& scrollViewRect,
     QWidget* view = m_webPage->view();
     if (view)
         view->scroll(delta.width(), delta.height(), scrollViewRect);
-    else
-        emit m_webPage->scrollRequested(delta.width(), delta.height(), scrollViewRect);
+    emit m_webPage->scrollRequested(delta.width(), delta.height(), scrollViewRect);
 }
 
 IntRect ChromeClientQt::windowToScreen(const IntRect& rect) const
@@ -382,6 +382,15 @@ void ChromeClientQt::exceededDatabaseQuota(Frame*, const String&)
     notImplemented();
 }
 
+void ChromeClientQt::runOpenPanel(Frame* frame, PassRefPtr<FileChooser> prpFileChooser)
+{
+    // FIXME: Support multiple files.
+
+    RefPtr<FileChooser> fileChooser = prpFileChooser;
+    QString suggestedFile = fileChooser->filenames()[0];
+    QString file = m_webPage->chooseFile(QWebFramePrivate::kit(frame), suggestedFile);
+    if (!file.isEmpty())
+        fileChooser->chooseFile(file);
 }
 
-
+}

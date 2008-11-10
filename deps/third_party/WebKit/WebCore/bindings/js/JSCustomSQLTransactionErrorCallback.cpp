@@ -35,7 +35,7 @@
 #include "Frame.h"
 #include "ScriptController.h"
 #include "JSSQLError.h"
-#include <kjs/JSLock.h>
+#include <runtime/JSLock.h>
 
 namespace WebCore {
     
@@ -77,7 +77,7 @@ bool JSCustomSQLTransactionErrorCallback::handleEvent(SQLError* error)
     ArgList args;
     args.append(toJS(exec, error));
 
-    JSValue *result;
+    JSValue* result;
     globalObject->startTimeoutCheck();
     result = call(exec, function, callType, callData, m_callback, args);
     globalObject->stopTimeoutCheck();

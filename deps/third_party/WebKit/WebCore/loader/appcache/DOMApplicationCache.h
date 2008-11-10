@@ -28,12 +28,12 @@
 
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
 
-#include <wtf/RefCounted.h>
+#include "AtomicStringHash.h"
 #include "EventTarget.h"
-
 #include "EventListener.h"
 #include <wtf/HashMap.h>
 #include <wtf/PassRefPtr.h>
+#include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
 
 namespace WebCore {
@@ -69,10 +69,10 @@ public:
 
     virtual void addEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
     virtual void removeEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
-    virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent = false);
+    virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&);
     
     typedef Vector<RefPtr<EventListener> > ListenerVector;
-    typedef HashMap<AtomicStringImpl*, ListenerVector> EventListenersMap;
+    typedef HashMap<AtomicString, ListenerVector> EventListenersMap;
     EventListenersMap& eventListeners() { return m_eventListeners; }
 
     using RefCounted<DOMApplicationCache>::ref;
@@ -99,7 +99,7 @@ public:
     void setOncached(PassRefPtr<EventListener> eventListener) { m_onCachedListener = eventListener; }
     EventListener* oncached() const { return m_onCachedListener.get(); }
 
-    Frame* associatedFrame() const { return m_frame; }
+    virtual ScriptExecutionContext* scriptExecutionContext() const;
     DOMApplicationCache* toDOMApplicationCache() { return this; }
 
     void callCheckingListener();

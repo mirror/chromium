@@ -1029,7 +1029,7 @@ HRESULT WebFrame::formForElement(IDOMElement* element, IDOMElement** form)
     return S_OK;
 }
 
-HRESULT WebFrame::elementDoesAutoComplete(IDOMElement *element, bool *result)
+HRESULT WebFrame::elementDoesAutoComplete(IDOMElement *element, BOOL *result)
 {
     *result = false;
     if (!element)
@@ -1199,11 +1199,6 @@ void WebFrame::detachedFromParent2()
 }
 
 void WebFrame::detachedFromParent3()
-{
-    notImplemented();
-}
-
-void WebFrame::detachedFromParent4()
 {
     notImplemented();
 }

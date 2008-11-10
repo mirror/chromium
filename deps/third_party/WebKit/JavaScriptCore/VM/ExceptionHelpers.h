@@ -29,6 +29,8 @@
 #ifndef ExceptionHelpers_h
 #define ExceptionHelpers_h
 
+#include "JSImmediate.h"
+
 namespace JSC {
 
     class CodeBlock;
@@ -38,7 +40,6 @@ namespace JSC {
     class JSGlobalData;
     class JSNotAnObjectErrorStub;
     class JSObject;
-    class JSValue;
     class Node;
 
     JSValue* createInterruptedExecutionException(JSGlobalData*);

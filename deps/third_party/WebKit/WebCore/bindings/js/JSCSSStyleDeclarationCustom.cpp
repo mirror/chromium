@@ -31,8 +31,8 @@
 #include "CSSStyleDeclaration.h"
 #include "CSSValue.h"
 #include "PlatformString.h"
-#include <kjs/StringObjectThatMasqueradesAsUndefined.h>
-#include <kjs/StringPrototype.h>
+#include <runtime/StringObjectThatMasqueradesAsUndefined.h>
+#include <runtime/StringPrototype.h>
 #include <wtf/ASCIICType.h>
 
 using namespace JSC;
@@ -129,7 +129,7 @@ bool JSCSSStyleDeclaration::canGetItemsForName(ExecState*, CSSStyleDeclaration*,
 // but you should also be able to enumerate them.
 JSValue* JSCSSStyleDeclaration::nameGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    JSCSSStyleDeclaration* thisObj = static_cast<JSCSSStyleDeclaration*>(slot.slotBase());
+    JSCSSStyleDeclaration* thisObj = static_cast<JSCSSStyleDeclaration*>(asObject(slot.slotBase()));
 
     // Set up pixelOrPos boolean to handle the fact that
     // pixelTop returns "CSS Top" as number value in unit pixels

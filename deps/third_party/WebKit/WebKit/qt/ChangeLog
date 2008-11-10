@@ -1,3 +1,198 @@
+2008-10-24  Yael Aharon <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Add userData() and setUserData() to QWebHistoryItem.
+        Add setMaximumItemCount() and maximumItemCount() to QWebHistory.
+        Add currentItemIndex() to QWebHistory.
+
+        See also https://bugs.webkit.org/show_bug.cgi?id=21864
+
+        Small cleanup by Simon (docs and forward declaration of QWebHistoryItem in qwebframe.h)
+
+        * Api/qwebframe.h:
+        * Api/qwebhistory.cpp:
+        (QWebHistoryItem::userData):
+        (QWebHistoryItem::setUserData):
+        (QWebHistory::currentItemIndex):
+        (QWebHistory::maximumItemCount):
+        (QWebHistory::setMaximumItemCount):
+        * Api/qwebhistory.h:
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        (WebCore::FrameLoaderClientQt::saveViewStateToItem):
+        * tests/qwebpage/tst_qwebpage.cpp:
+        (tst_QWebPage::modified):
+
+2008-11-03  Cameron Zwarich  <zwarich@apple.com>
+
+        Rubber-stamped by Maciej Stachowiak.
+
+        Move more files into the runtime subdirectory of JavaScriptCore.
+
+        * Api/qwebpage.cpp:
+
+2008-10-25  Jade Han  <jade.han@nokia.com>
+
+        Reviewed by Anders. 
+
+        Enable custom properties for Qt runtime objects in QtWebKit
+
+        https://bugs.webkit.org/show_bug.cgi?id=21813
+
+        * tests/qwebframe/tst_qwebframe.cpp:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Another Qt build fix.
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=21759
+        Layering violation: FileChooser should not depend on Document/Frame/Page
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::runOpenPanel):
+        * WebCoreSupport/ChromeClientQt.h:
+
+2008-10-24  Timothy Hatcher  <timothy@apple.com>
+
+        Stub out new InspectorClient methods.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21856
+
+        Reviewed by Darin Adler.
+
+        * WebCoreSupport/InspectorClientQt.cpp:
+        (WebCore::InspectorClientQt::populateSetting): Not implemented.
+        (WebCore::InspectorClientQt::storeSetting): Ditto.
+        (WebCore::InspectorClientQt::removeSetting): Ditto.
+        * WebCoreSupport/InspectorClientQt.h:
+
+2008-10-24  Darin Adler  <darin@apple.com>
+
+        - finish rolling out https://bugs.webkit.org/show_bug.cgi?id=21732
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::evaluateJavaScript): Use JSValue* instead of JSValuePtr.
+
+2008-10-23  Yael Aharon <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Invalid history entries could cause a crash in QT Webkit
+
+        * Api/qwebhistory.cpp:
+        (QWebHistoryItem::originalUrl):
+        (QWebHistoryItem::url):
+        (QWebHistoryItem::title):
+        (QWebHistoryItem::lastVisited):
+        (QWebHistoryItem::icon):
+        (QWebHistoryItem::isValid):
+        * Api/qwebhistory.h:
+        * Api/qwebhistory_p.h:
+        (QWebHistoryItemPrivate::QWebHistoryItemPrivate):
+        (QWebHistoryItemPrivate::~QWebHistoryItemPrivate):
+        * tests/qwebpage/tst_qwebpage.cpp:
+        (tst_QWebPage::modified):
+
+2008-10-22  Yael Aharon <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        emit scrollRequested unconditionally when scrolling.
+
+        See https://bugs.webkit.org/show_bug.cgi?id=21790
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::scroll):
+
+2008-10-23  Simon Hausmann  <hausmann@webkit.org>
+
+        Reviewed by Tor Arne.
+
+        Fix handling of mouse events when embedding QWebView into the
+        QGraphicsView.
+
+        QWebPage accepts or ignores events to indicate whether the web page
+        handled the event. However for QWebView to behave like a good widget
+        it should always accept the mouse events to indicate that it handled
+        them and that they should not be subject to event propagation.
+
+        The graphics view relies on acceptance of the initial mouse click to
+        make the embedded widget the focus item.
+
+        * Api/qwebview.cpp:
+        (QWebView::mouseMoveEvent):
+        (QWebView::mousePressEvent):
+        (QWebView::mouseDoubleClickEvent):
+        (QWebView::mouseReleaseEvent):
+        (QWebView::contextMenuEvent):
+        (QWebView::wheelEvent):
+
+2008-10-22  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        For public API, use the term boundingRect instead of boundingBox.
+
+        * Api/qwebframe.cpp:
+        (QWebHitTestResultPrivate::QWebHitTestResultPrivate):
+        (QWebHitTestResult::boundingRect):
+        * Api/qwebframe.h:
+        * Api/qwebframe_p.h:
+
+2008-06-03  Siraj Razick  <siraj.razick@collabora.co.uk>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19374
+
+        Expose boundingBox value in QWebHitTestResult
+
+        Add API function QRect QWebHitResult::boundingBox() const
+
+        API docs by Ariya.
+
+        * Api/qwebframe.cpp:
+        (QWebHitTestResultPrivate::QWebHitTestResultPrivate):
+        (QWebHitTestResult::boundingBox):
+        * Api/qwebframe.h:
+        * Api/qwebframe_p.h:
+
+2008-10-21  Yael Aharon <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        emit repaintRequested unconditionally when repaint is requested.
+
+        * WebCoreSupport/ChromeClientQt.cpp:
+        (WebCore::ChromeClientQt::repaint):
+
+2008-10-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Remove FrameLoaderClient::detachedFromParent4.  It is no longer used by any port.
+
+        * WebCoreSupport/FrameLoaderClientQt.cpp:
+        * WebCoreSupport/FrameLoaderClientQt.h:
+
+2008-10-19  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - next step of https://bugs.webkit.org/show_bug.cgi?id=21732
+          improve performance by eliminating JSValue as a base class for JSCell
+
+        Remove most uses of JSValue, which will be removed in a future patch.
+
+        * Api/qwebframe.cpp:
+        (QWebFrame::evaluateJavaScript): Use JSValuePtr.
+
 2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.

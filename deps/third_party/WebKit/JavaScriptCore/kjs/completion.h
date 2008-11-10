@@ -23,9 +23,9 @@
 #ifndef KJS_COMPLETION_H
 #define KJS_COMPLETION_H
 
-namespace JSC {
+#include "JSValue.h"
 
-    class JSValue;
+namespace JSC {
 
     enum ComplType { Normal, Break, Continue, ReturnValue, Throw, Interrupted };
 
@@ -35,7 +35,7 @@ namespace JSC {
      */
     class Completion {
     public:
-        Completion(ComplType type = Normal, JSValue* value = 0)
+        Completion(ComplType type = Normal, JSValue* value = noValue())
             : m_type(type)
             , m_value(value)
         {

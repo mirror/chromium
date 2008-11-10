@@ -42,6 +42,10 @@
 #import "SubresourceLoader.h"
 #import "WebCoreSystemInterface.h"
 
+#ifdef BUILDING_ON_TIGER
+typedef int NSInteger;
+#endif
+
 using namespace WebCore;
 
 @interface WebCoreResourceHandleAsDelegate : NSObject <NSURLAuthenticationChallengeSender>
@@ -109,6 +113,17 @@ ResourceHandle::~ResourceHandle()
     releaseDelegate();
 }
 
+static const double MaxFoundationVersionWithoutdidSendBodyDataDelegate = 677.21;
+bool ResourceHandle::didSendBodyDataDelegateExists()
+{
+// FIXME: Refine this check as the delegate becomes more widely available.
+#ifdef BUILDING_ON_LEOPARD
+    return NSFoundationVersionNumber > MaxFoundationVersionWithoutdidSendBodyDataDelegate;
+#else
+    return false;
+#endif
+}
+
 bool ResourceHandle::start(Frame* frame)
 {
     if (!frame)
@@ -136,8 +151,9 @@ bool ResourceHandle::start(Frame* frame)
         delegate = d->m_proxy.get();
     } else 
         delegate = ResourceHandle::delegate();
-    
-    associateStreamWithResourceHandle([d->m_request.nsURLRequest() HTTPBodyStream], this);
+
+    if (!ResourceHandle::didSendBodyDataDelegateExists())
+        associateStreamWithResourceHandle([d->m_request.nsURLRequest() HTTPBodyStream], this);
 
     NSURLConnection *connection;
     
@@ -181,13 +197,17 @@ bool ResourceHandle::start(Frame* frame)
 #ifndef NDEBUG
     isInitializingConnection = NO;
 #endif
+    
     d->m_connection = connection;
-    [connection release];
-    if (d->m_defersLoading)
-        wkSetNSURLConnectionDefersCallbacks(d->m_connection.get(), YES);
 
-    if (d->m_connection)
+    if (d->m_connection) {
+        [connection release];
+
+        if (d->m_defersLoading)
+            wkSetNSURLConnectionDefersCallbacks(d->m_connection.get(), YES);
+
         return true;
+    }
 
     END_BLOCK_OBJC_EXCEPTIONS;
 
@@ -196,14 +216,16 @@ bool ResourceHandle::start(Frame* frame)
 
 void ResourceHandle::cancel()
 {
-    disassociateStreamWithResourceHandle([d->m_request.nsURLRequest() HTTPBodyStream]);
+    if (!ResourceHandle::didSendBodyDataDelegateExists())
+        disassociateStreamWithResourceHandle([d->m_request.nsURLRequest() HTTPBodyStream]);
     [d->m_connection.get() cancel];
 }
 
 void ResourceHandle::setDefersLoading(bool defers)
 {
     d->m_defersLoading = defers;
-    wkSetNSURLConnectionDefersCallbacks(d->m_connection.get(), defers);
+    if (d->m_connection)
+        wkSetNSURLConnectionDefersCallbacks(d->m_connection.get(), defers);
 }
 
 void ResourceHandle::schedule(SchedulePair* pair)
@@ -447,13 +469,15 @@ void ResourceHandle::receivedCancellation(const AuthenticationChallenge& challen
     m_url = copy;
 #endif
 
-    // The client may change the request's body stream, in which case we have to re-associate
-    // the handle with the new stream so upload progress callbacks continue to work correctly.
-    NSInputStream* oldBodyStream = [newRequest HTTPBodyStream];
-    NSInputStream* newBodyStream = [request.nsURLRequest() HTTPBodyStream];
-    if (oldBodyStream != newBodyStream) {
-        disassociateStreamWithResourceHandle(oldBodyStream);
-        associateStreamWithResourceHandle(newBodyStream, m_handle);
+    if (!ResourceHandle::didSendBodyDataDelegateExists()) {
+        // The client may change the request's body stream, in which case we have to re-associate
+        // the handle with the new stream so upload progress callbacks continue to work correctly.
+        NSInputStream* oldBodyStream = [newRequest HTTPBodyStream];
+        NSInputStream* newBodyStream = [request.nsURLRequest() HTTPBodyStream];
+        if (oldBodyStream != newBodyStream) {
+            disassociateStreamWithResourceHandle(oldBodyStream);
+            associateStreamWithResourceHandle(newBodyStream, m_handle);
+        }
     }
 
     return request.nsURLRequest();
@@ -521,12 +545,23 @@ void ResourceHandle::receivedCancellation(const AuthenticationChallenge& challen
     m_handle->client()->willStopBufferingData(m_handle, (const char*)[data bytes], static_cast<int>([data length]));
 }
 
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
+{
+    if (!m_handle || !m_handle->client())
+        return;
+    CallbackGuard guard;
+    m_handle->client()->didSendData(m_handle, totalBytesWritten, totalBytesExpectedToWrite);
+}
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)con
 {
     if (!m_handle || !m_handle->client())
         return;
     CallbackGuard guard;
-    disassociateStreamWithResourceHandle([m_handle->request().nsURLRequest() HTTPBodyStream]);
+
+    if (!ResourceHandle::didSendBodyDataDelegateExists())
+        disassociateStreamWithResourceHandle([m_handle->request().nsURLRequest() HTTPBodyStream]);
+
     m_handle->client()->didFinishLoading(m_handle);
 }
 
@@ -535,7 +570,10 @@ void ResourceHandle::receivedCancellation(const AuthenticationChallenge& challen
     if (!m_handle || !m_handle->client())
         return;
     CallbackGuard guard;
-    disassociateStreamWithResourceHandle([m_handle->request().nsURLRequest() HTTPBodyStream]);
+
+    if (!ResourceHandle::didSendBodyDataDelegateExists())
+        disassociateStreamWithResourceHandle([m_handle->request().nsURLRequest() HTTPBodyStream]);
+
     m_handle->client()->didFail(m_handle, error);
 }
 

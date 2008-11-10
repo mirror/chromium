@@ -26,7 +26,7 @@
 #ifndef JAVASCRIPTCORE_BINDINGS_RUNTIME_H
 #define JAVASCRIPTCORE_BINDINGS_RUNTIME_H
 
-#include <kjs/JSString.h>
+#include <runtime/JSString.h>
 #include <wtf/HashMap.h>
 #include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
@@ -118,10 +118,12 @@ public:
     virtual bool supportsInvokeDefaultMethod() const { return false; }
     virtual JSValue* invokeDefaultMethod(ExecState*, const ArgList&) { return jsUndefined(); }
     
+    virtual bool supportsConstruct() const { return false; }
+    virtual JSValue* invokeConstruct(ExecState*, const ArgList&) { return 0; }
+    
     virtual void getPropertyNames(ExecState*, PropertyNameArray&) { }
 
-    typedef JSValue::PreferredPrimitiveType PreferredPrimitiveType;
-    virtual JSValue* defaultValue(ExecState*, JSValue::PreferredPrimitiveType) const = 0;
+    virtual JSValue* defaultValue(ExecState*, PreferredPrimitiveType) const = 0;
     
     virtual JSValue* valueOf(ExecState* exec) const { return jsString(exec, getClass()->name()); }
     

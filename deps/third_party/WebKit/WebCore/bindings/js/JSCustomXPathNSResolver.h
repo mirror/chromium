@@ -29,13 +29,13 @@
 #if ENABLE(XPATH)
 
 #include "XPathNSResolver.h"
+#include <runtime/JSValue.h>
 #include <wtf/Forward.h>
 #include <wtf/RefPtr.h>
 
 namespace JSC {
     class ExecState;
     class JSObject;
-    class JSValue;
 }
 
 namespace WebCore {

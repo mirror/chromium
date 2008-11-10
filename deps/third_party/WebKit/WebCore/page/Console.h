@@ -30,17 +30,22 @@
 #define Console_h
 
 #include "PlatformString.h"
+#if USE(JSC)
+#include <profiler/Profile.h>
+#endif
 #include <wtf/RefCounted.h>
 #include <wtf/PassRefPtr.h>
 
 namespace JSC {
     class ExecState;
     class ArgList;
-    class Profile;
-    class JSValue;
 }
 
 namespace WebCore {
+
+#if USE(JSC)
+    typedef Vector<RefPtr<JSC::Profile> > ProfilesArray;
+#endif
 
     class Frame;
     class Page;
@@ -103,16 +108,26 @@ namespace WebCore {
         void reportCurrentException(JSC::ExecState*);
 #endif
 
+        static bool shouldPrintExceptions();
+        static void setShouldPrintExceptions(bool);
+
+#if USE(JSC)
+        const ProfilesArray& profiles() const { return m_profiles; }
+#endif
+
 #if USE(V8)
         void time(const String& title);
 #endif
 
     private:
         inline Page* page() const;
-    
+
         Console(Frame*);
-        
+
         Frame* m_frame;
+#if USE(JSC)
+        ProfilesArray m_profiles;
+#endif
     };
 
 } // namespace WebCore

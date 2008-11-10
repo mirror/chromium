@@ -1,3 +1,240 @@
+2008-11-03  Cameron Zwarich  <zwarich@apple.com>
+
+        Rubber-stamped by Maciej Stachowiak.
+
+        Move more files into the runtime subdirectory of JavaScriptCore.
+
+        * webkit/webkitprivate.cpp:
+
+2008-11-03  Alp Toker  <alp@nuanti.com>
+
+        Reviewed by Holger Freyther.
+
+        Deprecate flawed webkit_web_frame_new() function. This would never
+        have worked properly when used outside WebCore since Frame::create()
+        can only be called without an owner element once in the lifetime of a
+        Page and would result in assertions, leaks and an unusable WebView
+        instance.
+
+        Frame creation may be exposed in API some time later via the DOM
+        binding but probably not in the WebKit GTK+ core API.
+
+        * webkit/webkitwebframe.cpp:
+        * webkit/webkitwebframe.h:
+
+2008-11-03  Alp Toker  <alp@nuanti.com>
+
+        Reviewed by Holger Freyther.
+
+        Redundant scrollbars appear in frames where they shouldn't be visible
+        eg. embedded Google adverts.
+
+        Call setCanHaveScrollbars() when necessary. The Mac and Win ports
+        already have this but it was missing in FrameLoaderClientGtk.
+
+        * WebCoreSupport/FrameLoaderClientGtk.cpp:
+        (WebKit::FrameLoaderClient::transitionToCommittedForNewPage):
+
+2008-11-03  Alp Toker  <alp@nuanti.com>
+
+        Rubber-stamped by Holger Freyther.
+
+        Sync WebKit GTK+ default UA version string to 528.5+. (We're still
+        doing this manually!)
+
+        * WebCoreSupport/FrameLoaderClientGtk.cpp:
+        (WebKit::composeUserAgent):
+
+2008-10-31  Christian Dywan  <christian@twotoasts.de>
+
+        Reviewed by Mark Rowe.
+
+        http://bugs.webkit.org/show_bug.cgi?id=22018
+        enable-developer-extras doesn't toggle WebInspector
+
+        * webkit/webkitwebview.cpp:
+        Add missing 'if' in notification for 'enable-developer-extras'.
+
+2008-10-30  Alp Toker  <alp@nuanti.com>
+
+        Reviewed by Dave Hyatt.
+
+        Fix GIF animations. WebCore will not update animated GIFs if
+        the WebView is marked offscreen so we need to call
+        frameView->setParentVisible() when necessary like the Mac and Win
+        ports do. Regression was introduced around r37155 during the
+        HostWindow refactor.
+
+        * WebCoreSupport/FrameLoaderClientGtk.cpp:
+        (WebKit::FrameLoaderClient::transitionToCommittedForNewPage):
+
+2008-10-30  Alp Toker  <alp@nuanti.com>
+
+        Rubber-stamped by Holger Freyther.
+
+        Fix typo in recently added web inspector signal. dettach -> detach.
+
+        * WebCoreSupport/InspectorClientGtk.cpp:
+        (WebKit::InspectorClient::detachWindow):
+        * webkit/webkitwebinspector.cpp:
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_class_init):
+
+2008-10-30  Alp Toker  <alp@nuanti.com>
+
+        Fix version comments for the web inspector added in r37982. Available
+        since 1.0.3, not 1.0.2.
+
+        * webkit/webkitwebinspector.cpp:
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_class_init):
+        * webkit/webkitwebsettings.cpp:
+        (_WebKitWebSettingsPrivate::webkit_web_settings_class_init):
+        * webkit/webkitwebview.cpp:
+
+2008-10-29  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed and slightly changed by Holger Freyther.
+
+        Implemented a new WebKitWebInspector class to provide a GObject
+        API for the Web Inspector. Also implemented InspectorClient.
+
+        * WebCoreSupport/InspectorClientGtk.cpp:
+        (WebKit::notifyWebViewDestroyed):
+        (WebKit::InspectorClient::InspectorClient):
+        (WebKit::InspectorClient::inspectorDestroyed):
+        (WebKit::InspectorClient::webViewDestroyed):
+        (WebKit::InspectorClient::createPage):
+        (WebKit::InspectorClient::showWindow):
+        (WebKit::InspectorClient::closeWindow):
+        (WebKit::InspectorClient::attachWindow):
+        (WebKit::InspectorClient::detachWindow):
+        (WebKit::InspectorClient::inspectedURLChanged):
+        * WebCoreSupport/InspectorClientGtk.h:
+        * webkit/webkit.h:
+        * webkit/webkit-marshal.list:
+        * webkit/webkitdefines.h:
+        * webkit/webkitprivate.h:
+        * webkit/webkitwebinspector.cpp: Added.
+        (_WebKitWebInspectorPrivate::webkit_inspect_web_view_request_handled):
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_class_init):
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_init):
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_finalize):
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_set_property):
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_get_property):
+        (_WebKitWebInspectorPrivate::webkit_web_inspector_set_web_view):
+        * webkit/webkitwebinspector.h: Added.
+        * webkit/webkitwebsettings.cpp:
+        (_WebKitWebSettingsPrivate::):
+        (_WebKitWebSettingsPrivate::webkit_web_settings_class_init):
+        (_WebKitWebSettingsPrivate::webkit_web_settings_set_property):
+        (_WebKitWebSettingsPrivate::webkit_web_settings_get_property):
+        (_WebKitWebSettingsPrivate::webkit_web_settings_copy):
+        * webkit/webkitwebview.cpp:
+        * webkit/webkitwebview.h:
+
+2008-10-27  Michael Tross  <michael@tross.org>
+
+        Reviewed by Alp Toker. Landed by Jan Alonzo.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21827
+        [GTK] Fix memory leak in webkit_web_view_load_string
+
+        * webkit/webkitwebview.cpp:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Fix the Gtk build.
+
+        * WebCoreSupport/ChromeClientGtk.cpp:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=21759
+        Layering violation: FileChooser should not depend on Document/Frame/Page
+
+        * WebCoreSupport/ChromeClientGtk.cpp:
+        (WebKit::ChromeClient::runOpenPanel):
+        * WebCoreSupport/ChromeClientGtk.h:
+
+2008-10-24  Timothy Hatcher  <timothy@apple.com>
+
+        Stub out new InspectorClient methods.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21856
+
+        Reviewed by Darin Adler.
+
+        * WebCoreSupport/InspectorClientGtk.cpp:
+        (WebKit::InspectorClient::populateSetting): Not implemented.
+        (WebKit::InspectorClient::storeSetting): Ditto.
+        (WebKit::InspectorClient::removeSetting): Ditto.
+        * WebCoreSupport/InspectorClientGtk.h:
+
+2008-10-22  Alp Toker  <alp@nuanti.com>
+
+        Build fix for older GTK+ versions where GTK_TYPE_TARGET_LIST isn't
+        defined.
+
+        * webkit/webkitwebview.cpp:
+
+2008-10-22  Alp Toker  <alp@nuanti.com>
+
+        Reviewed by Adam Roben.
+
+        Avoid critical warnings on older GTK+ versions (2.8) by not checking
+        for GTK+ setting properties when we know they don't exist.
+
+        * WebCoreSupport/ContextMenuClientGtk.cpp:
+        (WebKit::inputMethodsMenuItem):
+        (WebKit::unicodeMenuItem):
+
+2008-10-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Remove FrameLoaderClient::detachedFromParent4.  It is no longer used by any port.
+
+        * WebCoreSupport/FrameLoaderClientGtk.cpp:
+        * WebCoreSupport/FrameLoaderClientGtk.h:
+
+2008-10-20  Alp Toker  <alp@nuanti.com>
+
+        Reviewed by Dave Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21303
+        [GTK] Scrolling glitches
+
+        Implement a buffering scheme to avoid full repaints when scrolling
+        views or subframes significantly improving scrolling performance.
+
+        Improve rendering performance by coalescing large numbers of small
+        repaints.
+
+        Also fixes long-running issues with scrollbar positioning and frame
+        invalidation.
+
+        Rendering in the GTK+ port should be more similar to other ports after
+        these changes.
+
+        * WebCoreSupport/ChromeClientGtk.cpp:
+        (WebKit::ChromeClient::repaint):
+        (WebKit::ChromeClient::scroll):
+        * WebCoreSupport/FrameLoaderClientGtk.cpp:
+        (WebKit::FrameLoaderClient::forceLayout):
+        * webkit/webkitwebview.cpp:
+
+2008-10-17  Luke Kenneth Casson Leighton  <lkcl@lkcl.net>
+
+        Reviewed by Mark Rowe. Landed by Jan Alonzo.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20403
+        [Gtk] Segfault after a table with an iframe is attempted to be added twice to DOM model with javascript
+
+        * WebCoreSupport/FrameLoaderClientGtk.cpp:
+        (WebKit::FrameLoaderClient::frameLoaderDestroyed):
+        (WebKit::FrameLoaderClient::detachedFromParent4):
+
 2008-10-06  David Hyatt  <hyatt@apple.com>
 
         Enable viewless Mac WebKit to paint some basic pages.

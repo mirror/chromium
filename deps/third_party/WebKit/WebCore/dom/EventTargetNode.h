@@ -41,18 +41,18 @@ public:
     virtual bool isEventTargetNode() const { return true; }
     virtual EventTargetNode* toNode() { return this; }
 
-    Frame* associatedFrame() const;
+    virtual ScriptExecutionContext* scriptExecutionContext() const;
 
     virtual void addEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
     virtual void removeEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
-    virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent = false);
+    virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&);
     void removeAllEventListeners();
 
-    void setEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener>);
-    void setEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute*);
-    void removeEventListenerForType(const AtomicString& eventType);
+    void setInlineEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener>);
+    void setInlineEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute*);
+    void removeInlineEventListenerForType(const AtomicString& eventType);
     bool dispatchEventForType(const AtomicString& eventType, bool canBubble, bool cancelable);
-    EventListener* eventListenerForType(const AtomicString& eventType) const;
+    EventListener* inlineEventListenerForType(const AtomicString& eventType) const;
 
     bool dispatchSubtreeModifiedEvent();
     void dispatchWindowEvent(PassRefPtr<Event>);
@@ -72,7 +72,7 @@ public:
     void dispatchStorageEvent(const AtomicString &eventType, const String& key, const String& oldValue, const String& newValue, Frame* source);
     bool dispatchWebKitAnimationEvent(const AtomicString& eventType, const String& animationName, double elapsedTime);
     bool dispatchWebKitTransitionEvent(const AtomicString& eventType, const String& propertyName, double elapsedTime);
-    bool dispatchGenericEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent);
+    bool dispatchGenericEvent(PassRefPtr<Event>, ExceptionCode&);
 
     virtual void handleLocalEvents(Event*, bool useCapture);
 

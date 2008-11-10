@@ -34,11 +34,12 @@
 #include "HashTraits.h"
 #include "Instruction.h"
 #include "LabelID.h"
+#include "LabelScope.h"
 #include "Machine.h"
 #include "RegisterID.h"
 #include "SegmentedVector.h"
 #include "SymbolTable.h"
-#include "debugger.h"
+#include "Debugger.h"
 #include "nodes.h"
 #include <wtf/PassRefPtr.h>
 #include <wtf/Vector.h>
@@ -48,15 +49,6 @@ namespace JSC {
     class Identifier;
     class ScopeChain;
     class ScopeNode;
-
-    // JumpContexts are used to track entry and exit points for javascript loops and switch statements
-    struct JumpContext {
-        LabelStack* labels;
-        LabelID* continueTarget;
-        LabelID* breakTarget;
-        int scopeDepth;
-        bool isValidUnlabeledBreakTarget;
-    };
 
     struct FinallyContext {
         LabelID* finallyAddr;
@@ -102,7 +94,7 @@ namespace JSC {
         //
         // NB: depth does _not_ include the local scope.  eg. a depth of 0 refers
         // to the scope containing this codeblock.
-        bool findScopedProperty(const Identifier&, int& index, size_t& depth, bool forWriting, JSValue*& globalObject);
+        bool findScopedProperty(const Identifier&, int& index, size_t& depth, bool forWriting, JSObject*& globalObject);
 
         // Returns the register storing "this"
         RegisterID* thisRegister() { return &m_thisRegister; }
@@ -157,6 +149,7 @@ namespace JSC {
             return dst == ignoredResult() ? 0 : (dst && dst != src) ? emitMove(dst, src) : src;
         }
 
+        PassRefPtr<LabelScope> newLabelScope(LabelScope::Type, const Identifier* = 0);
         PassRefPtr<LabelID> newLabel();
 
         // The emitNode functions are just syntactic sugar for calling
@@ -229,10 +222,11 @@ namespace JSC {
         RegisterID* emitLoad(RegisterID* dst, double);
         RegisterID* emitLoad(RegisterID* dst, const Identifier&);
         RegisterID* emitLoad(RegisterID* dst, JSValue*);
+        RegisterID* emitLoad(RegisterID* dst, JSCell*);
         RegisterID* emitUnexpectedLoad(RegisterID* dst, bool);
         RegisterID* emitUnexpectedLoad(RegisterID* dst, double);
 
-        RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src);
+        RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src, ResultType);
         RegisterID* emitBinaryOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2, OperandTypes);
         RegisterID* emitEqualityOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2);
         RegisterID* emitUnaryNoDstOp(OpcodeID, RegisterID* src);
@@ -246,14 +240,14 @@ namespace JSC {
 
         RegisterID* emitMove(RegisterID* dst, RegisterID* src);
 
-        RegisterID* emitToJSNumber(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_to_jsnumber, dst, src); }
+        RegisterID* emitToJSNumber(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_to_jsnumber, dst, src, ResultType::unknown()); }
         RegisterID* emitPreInc(RegisterID* srcDst);
         RegisterID* emitPreDec(RegisterID* srcDst);
         RegisterID* emitPostInc(RegisterID* dst, RegisterID* srcDst);
         RegisterID* emitPostDec(RegisterID* dst, RegisterID* srcDst);
 
         RegisterID* emitInstanceOf(RegisterID* dst, RegisterID* value, RegisterID* base, RegisterID* basePrototype);
-        RegisterID* emitTypeOf(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_typeof, dst, src); }
+        RegisterID* emitTypeOf(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_typeof, dst, src, ResultType::unknown()); }
         RegisterID* emitIn(RegisterID* dst, RegisterID* property, RegisterID* base) { return emitBinaryOp(op_in, dst, property, base, OperandTypes()); }
 
         RegisterID* emitResolve(RegisterID* dst, const Identifier& property);
@@ -291,7 +285,7 @@ namespace JSC {
         PassRefPtr<LabelID> emitJumpSubroutine(RegisterID* retAddrDst, LabelID*);
         void emitSubroutineReturn(RegisterID* retAddrSrc);
 
-        RegisterID* emitGetPropertyNames(RegisterID* dst, RegisterID* base) { return emitUnaryOp(op_get_pnames, dst, base); }
+        RegisterID* emitGetPropertyNames(RegisterID* dst, RegisterID* base) { return emitUnaryOp(op_get_pnames, dst, base, ResultType::unknown()); }
         RegisterID* emitNextPropertyName(RegisterID* dst, RegisterID* iter, LabelID* target);
 
         RegisterID* emitCatch(RegisterID*, LabelID* start, LabelID* end);
@@ -308,12 +302,9 @@ namespace JSC {
 
         void pushFinallyContext(LabelID* target, RegisterID* returnAddrDst);
         void popFinallyContext();
-        bool inContinueContext() { return m_continueDepth > 0; };
-        bool inJumpContext() { return m_jumpContextStack.size() > 0; };
-        void pushJumpContext(LabelStack*, LabelID* continueTarget, LabelID* breakTarget, bool isValidUnlabeledBreakTarget);
-        void popJumpContext();
-        JumpContext* jumpContextForContinue(const Identifier&);
-        JumpContext* jumpContextForBreak(const Identifier&);
+
+        LabelScope* breakTarget(const Identifier&);
+        LabelScope* continueTarget(const Identifier&);
 
         void beginSwitch(RegisterID*, SwitchInfo::SwitchType);
         void endSwitch(uint32_t clauseCount, RefPtr<LabelID>*, ExpressionNode**, LabelID* defaultLabel, int32_t min, int32_t range);
@@ -328,12 +319,13 @@ namespace JSC {
         void rewindUnaryOp();
 
         PassRefPtr<LabelID> emitComplexJumpScopes(LabelID* target, ControlFlowContext* topScope, ControlFlowContext* bottomScope);
+
         struct JSValueHashTraits : HashTraits<JSValue*> {
             static void constructDeletedValue(JSValue*& slot) { slot = JSImmediate::impossibleValue(); }
             static bool isDeletedValue(JSValue* value) { return value == JSImmediate::impossibleValue(); }
         };
 
-        typedef HashMap<JSValue*, unsigned, DefaultHash<JSValue*>::Hash, JSValueHashTraits> JSValueMap;
+        typedef HashMap<JSValue*, unsigned, PtrHash<JSValue*>, JSValueHashTraits> JSValueMap;
 
         struct IdentifierMapIndexHashTraits {
             typedef int TraitType;
@@ -397,7 +389,7 @@ namespace JSC {
         unsigned addConstant(const Identifier&);
         RegisterID* addConstant(JSValue*);
         unsigned addUnexpectedConstant(JSValue*);
-        unsigned addRegExp(RegExp* r);
+        unsigned addRegExp(RegExp*);
         StructureID* addStructureID();
 
         Vector<Instruction>& instructions() { return m_codeBlock->instructions; }
@@ -408,6 +400,7 @@ namespace JSC {
         bool canOptimizeNonLocals() { return (m_codeType == FunctionCode) && !m_dynamicScopeDepth && !m_codeBlock->usesEval; }
 
         bool m_shouldEmitDebugHooks;
+        bool m_shouldEmitProfileHooks;
 
         const ScopeChain* m_scopeChain;
         SymbolTable* m_symbolTable;
@@ -422,14 +415,13 @@ namespace JSC {
         SegmentedVector<RegisterID, 512> m_calleeRegisters;
         SegmentedVector<RegisterID, 512> m_parameters;
         SegmentedVector<RegisterID, 512> m_globals;
-        SegmentedVector<LabelID, 512> m_labels;
+        SegmentedVector<LabelScope, 256> m_labelScopes;
+        SegmentedVector<LabelID, 256> m_labels;
         RefPtr<RegisterID> m_lastConstant;
         int m_finallyDepth;
         int m_dynamicScopeDepth;
         CodeType m_codeType;
 
-        Vector<JumpContext> m_jumpContextStack;
-        int m_continueDepth;
         Vector<ControlFlowContext> m_scopeContextStack;
         Vector<SwitchInfo> m_switchContextStack;
 

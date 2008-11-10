@@ -26,12 +26,12 @@
 #ifndef JavaScriptProfileNode_h
 #define JavaScriptProfileNode_h
 
+#include <runtime/JSValue.h>
 #include <JavaScriptCore/JSBase.h>
 
 namespace JSC {
     class ExecState;
     class ProfileNode;
-    class JSValue;
 }
 
 namespace WebCore {

@@ -40,8 +40,6 @@
 
 namespace WebCore {
 
-using namespace EventNames;
-
 DOMApplicationCache::DOMApplicationCache(Frame* frame)
     : m_frame(frame)
 {
@@ -175,14 +173,19 @@ void DOMApplicationCache::remove(const KURL& url, ExceptionCode& ec)
     
     cache->removeDynamicEntry(url);
 }
-    
+
+ScriptExecutionContext* DOMApplicationCache::scriptExecutionContext() const
+{
+    return m_frame->document();
+}
+
 void DOMApplicationCache::addEventListener(const AtomicString& eventType, PassRefPtr<EventListener> eventListener, bool)
 {
-    EventListenersMap::iterator iter = m_eventListeners.find(eventType.impl());
+    EventListenersMap::iterator iter = m_eventListeners.find(eventType);
     if (iter == m_eventListeners.end()) {
         ListenerVector listeners;
         listeners.append(eventListener);
-        m_eventListeners.add(eventType.impl(), listeners);
+        m_eventListeners.add(eventType, listeners);
     } else {
         ListenerVector& listeners = iter->second;
         for (ListenerVector::iterator listenerIter = listeners.begin(); listenerIter != listeners.end(); ++listenerIter) {
@@ -191,13 +194,13 @@ void DOMApplicationCache::addEventListener(const AtomicString& eventType, PassRe
         }
         
         listeners.append(eventListener);
-        m_eventListeners.add(eventType.impl(), listeners);
+        m_eventListeners.add(eventType, listeners);
     }    
 }
 
 void DOMApplicationCache::removeEventListener(const AtomicString& eventType, EventListener* eventListener, bool useCapture)
 {
-    EventListenersMap::iterator iter = m_eventListeners.find(eventType.impl());
+    EventListenersMap::iterator iter = m_eventListeners.find(eventType);
     if (iter == m_eventListeners.end())
         return;
     
@@ -210,14 +213,14 @@ void DOMApplicationCache::removeEventListener(const AtomicString& eventType, Eve
     }
 }
 
-bool DOMApplicationCache::dispatchEvent(PassRefPtr<Event> event, ExceptionCode& ec, bool tempEvent)
+bool DOMApplicationCache::dispatchEvent(PassRefPtr<Event> event, ExceptionCode& ec)
 {
     if (event->type().isEmpty()) {
         ec = EventException::UNSPECIFIED_EVENT_TYPE_ERR;
         return true;
     }
     
-    ListenerVector listenersCopy = m_eventListeners.get(event->type().impl());
+    ListenerVector listenersCopy = m_eventListeners.get(event->type());
     for (ListenerVector::const_iterator listenerIter = listenersCopy.begin(); listenerIter != listenersCopy.end(); ++listenerIter) {
         event->setTarget(this);
         event->setCurrentTarget(this);
@@ -239,43 +242,43 @@ void DOMApplicationCache::callListener(const AtomicString& eventType, EventListe
     }
     
     ExceptionCode ec = 0;
-    dispatchEvent(event.release(), ec, false);
+    dispatchEvent(event.release(), ec);
     ASSERT(!ec);    
 }
 
 void DOMApplicationCache::callCheckingListener()
 {
-    callListener(checkingEvent, m_onCheckingListener.get());
+    callListener(eventNames().checkingEvent, m_onCheckingListener.get());
 }
 
 void DOMApplicationCache::callErrorListener()
 {
-    callListener(errorEvent, m_onErrorListener.get());
+    callListener(eventNames().errorEvent, m_onErrorListener.get());
 }
 
 void DOMApplicationCache::callNoUpdateListener()
 {
-    callListener(noupdateEvent, m_onNoUpdateListener.get());
+    callListener(eventNames().noupdateEvent, m_onNoUpdateListener.get());
 }
 
 void DOMApplicationCache::callDownloadingListener()
 {
-    callListener(downloadingEvent, m_onDownloadingListener.get());
+    callListener(eventNames().downloadingEvent, m_onDownloadingListener.get());
 }
 
 void DOMApplicationCache::callProgressListener()
 {
-    callListener(progressEvent, m_onProgressListener.get());
+    callListener(eventNames().progressEvent, m_onProgressListener.get());
 }
 
 void DOMApplicationCache::callUpdateReadyListener()
 {
-    callListener(updatereadyEvent, m_onUpdateReadyListener.get());
+    callListener(eventNames().updatereadyEvent, m_onUpdateReadyListener.get());
 }
 
 void DOMApplicationCache::callCachedListener()
 {
-    callListener(cachedEvent, m_onCachedListener.get());
+    callListener(eventNames().cachedEvent, m_onCachedListener.get());
 }
 
 } // namespace WebCore

@@ -37,28 +37,26 @@
 
 namespace WebCore {
 
-using namespace EventNames;
-
 XMLHttpRequestUpload::XMLHttpRequestUpload(XMLHttpRequest* xmlHttpRequest)
     : m_xmlHttpRequest(xmlHttpRequest)
 {
 }
 
-Frame* XMLHttpRequestUpload::associatedFrame() const
+ScriptExecutionContext* XMLHttpRequestUpload::scriptExecutionContext() const
 {
     XMLHttpRequest* xmlHttpRequest = associatedXMLHttpRequest();
     if (!xmlHttpRequest)
         return 0;
-    return xmlHttpRequest->associatedFrame();
+    return xmlHttpRequest->scriptExecutionContext();
 }
 
 void XMLHttpRequestUpload::addEventListener(const AtomicString& eventType, PassRefPtr<EventListener> eventListener, bool)
 {
-    EventListenersMap::iterator iter = m_eventListeners.find(eventType.impl());
+    EventListenersMap::iterator iter = m_eventListeners.find(eventType);
     if (iter == m_eventListeners.end()) {
         ListenerVector listeners;
         listeners.append(eventListener);
-        m_eventListeners.add(eventType.impl(), listeners);
+        m_eventListeners.add(eventType, listeners);
     } else {
         ListenerVector& listeners = iter->second;
         for (ListenerVector::iterator listenerIter = listeners.begin(); listenerIter != listeners.end(); ++listenerIter) {
@@ -67,13 +65,13 @@ void XMLHttpRequestUpload::addEventListener(const AtomicString& eventType, PassR
         }
         
         listeners.append(eventListener);
-        m_eventListeners.add(eventType.impl(), listeners);
+        m_eventListeners.add(eventType, listeners);
     }
 }
 
 void XMLHttpRequestUpload::removeEventListener(const AtomicString& eventType, EventListener* eventListener, bool)
 {
-    EventListenersMap::iterator iter = m_eventListeners.find(eventType.impl());
+    EventListenersMap::iterator iter = m_eventListeners.find(eventType);
     if (iter == m_eventListeners.end())
         return;
 
@@ -86,7 +84,7 @@ void XMLHttpRequestUpload::removeEventListener(const AtomicString& eventType, Ev
     }
 }
 
-bool XMLHttpRequestUpload::dispatchEvent(PassRefPtr<Event> evt, ExceptionCode& ec, bool /*tempEvent*/)
+bool XMLHttpRequestUpload::dispatchEvent(PassRefPtr<Event> evt, ExceptionCode& ec)
 {
     // FIXME: check for other error conditions enumerated in the spec.
     if (evt->type().isEmpty()) {
@@ -94,7 +92,7 @@ bool XMLHttpRequestUpload::dispatchEvent(PassRefPtr<Event> evt, ExceptionCode& e
         return true;
     }
 
-    ListenerVector listenersCopy = m_eventListeners.get(evt->type().impl());
+    ListenerVector listenersCopy = m_eventListeners.get(evt->type());
     for (ListenerVector::const_iterator listenerIter = listenersCopy.begin(); listenerIter != listenersCopy.end(); ++listenerIter) {
         evt->setTarget(this);
         evt->setCurrentTarget(this);
@@ -114,33 +112,33 @@ void XMLHttpRequestUpload::dispatchXMLHttpRequestProgressEvent(EventListener* li
     }
 
     ExceptionCode ec = 0;
-    dispatchEvent(evt.release(), ec, false);
+    dispatchEvent(evt.release(), ec);
     ASSERT(!ec);
 }
 
 void XMLHttpRequestUpload::dispatchAbortEvent()
 {
-    dispatchXMLHttpRequestProgressEvent(m_onAbortListener.get(), abortEvent, false, 0, 0);
+    dispatchXMLHttpRequestProgressEvent(m_onAbortListener.get(), eventNames().abortEvent, false, 0, 0);
 }
 
 void XMLHttpRequestUpload::dispatchErrorEvent()
 {
-    dispatchXMLHttpRequestProgressEvent(m_onErrorListener.get(), errorEvent, false, 0, 0);
+    dispatchXMLHttpRequestProgressEvent(m_onErrorListener.get(), eventNames().errorEvent, false, 0, 0);
 }
 
 void XMLHttpRequestUpload::dispatchLoadEvent()
 {
-    dispatchXMLHttpRequestProgressEvent(m_onLoadListener.get(), loadEvent, false, 0, 0);
+    dispatchXMLHttpRequestProgressEvent(m_onLoadListener.get(), eventNames().loadEvent, false, 0, 0);
 }
 
 void XMLHttpRequestUpload::dispatchLoadStartEvent()
 {
-    dispatchXMLHttpRequestProgressEvent(m_onLoadStartListener.get(), loadstartEvent, false, 0, 0);
+    dispatchXMLHttpRequestProgressEvent(m_onLoadStartListener.get(), eventNames().loadstartEvent, false, 0, 0);
 }
 
 void XMLHttpRequestUpload::dispatchProgressEvent(long long bytesSent, long long totalBytesToBeSent)
 {
-    dispatchXMLHttpRequestProgressEvent(m_onProgressListener.get(), progressEvent, true, static_cast<unsigned>(bytesSent), static_cast<unsigned>(totalBytesToBeSent));
+    dispatchXMLHttpRequestProgressEvent(m_onProgressListener.get(), eventNames().progressEvent, true, static_cast<unsigned>(bytesSent), static_cast<unsigned>(totalBytesToBeSent));
 }
 
 } // namespace WebCore

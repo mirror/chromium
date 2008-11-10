@@ -26,11 +26,10 @@
 #ifndef JavaScriptProfile_h
 #define JavaScriptProfile_h
 
-#include <JavaScriptCore/JSBase.h>
+#include <runtime/JSValue.h>
 
 namespace JSC {
     class ExecState;
-    class JSValue;
     class Profile;
 }
 

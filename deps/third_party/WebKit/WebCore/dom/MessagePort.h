@@ -27,35 +27,37 @@
 #ifndef MessagePort_h
 #define MessagePort_h
 
+#include "AtomicStringHash.h"
 #include "EventListener.h"
 #include "EventTarget.h"
 
 #include <wtf/HashMap.h>
 #include <wtf/MessageQueue.h>
 #include <wtf/PassRefPtr.h>
-#include <wtf/RefCounted.h>
 #include <wtf/RefPtr.h>
+#include <wtf/Threading.h>
 #include <wtf/Vector.h>
 
 namespace WebCore {
 
     class AtomicStringImpl;
-    class Document;
     class Event;
     class Frame;
+    class ScriptExecutionContext;
     class String;
+    class WorkerContext;
 
-    class MessagePort : public RefCounted<MessagePort>, public EventTarget {
+    class MessagePort : public ThreadSafeShared<MessagePort>, public EventTarget {
     public:
-        static PassRefPtr<MessagePort> create(Document* document) { return adoptRef(new MessagePort(document)); }
+        static PassRefPtr<MessagePort> create(ScriptExecutionContext* scriptExecutionContext) { return adoptRef(new MessagePort(scriptExecutionContext)); }
         ~MessagePort();
 
-        PassRefPtr<MessagePort> clone(Document*, ExceptionCode&);
+        PassRefPtr<MessagePort> clone(ScriptExecutionContext*, ExceptionCode&);
 
         bool active() const { return m_entangledPort; }
         void postMessage(const String& message, ExceptionCode&);
         void postMessage(const String& message, MessagePort*, ExceptionCode&);
-        PassRefPtr<MessagePort> startConversation(Document*, const String& message);
+        PassRefPtr<MessagePort> startConversation(ScriptExecutionContext*, const String& message);
         void start();
         void close();
 
@@ -65,28 +67,26 @@ namespace WebCore {
         static void entangle(MessagePort*, MessagePort*);
         void unentangle();
 
-        void contextDestroyed() { m_document = 0; } 
-        Document* document() { return m_document; }
+        void contextDestroyed();
+        virtual ScriptExecutionContext* scriptExecutionContext() const { return m_scriptExecutionContext; }
 
         virtual MessagePort* toMessagePort() { return this; }
-
-        virtual Frame* associatedFrame() const;
 
         void queueCloseEvent();
         void dispatchMessages();
 
         virtual void addEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
         virtual void removeEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
-        virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent = false);
+        virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&);
 
         typedef Vector<RefPtr<EventListener> > ListenerVector;
-        typedef HashMap<AtomicStringImpl*, ListenerVector> EventListenersMap;
+        typedef HashMap<AtomicString, ListenerVector> EventListenersMap;
         EventListenersMap& eventListeners() { return m_eventListeners; }
 
-        using RefCounted<MessagePort>::ref;
-        using RefCounted<MessagePort>::deref;
+        using ThreadSafeShared<MessagePort>::ref;
+        using ThreadSafeShared<MessagePort>::deref;
 
-        bool hasPendingActivity() { return m_pendingActivity; }
+        bool hasPendingActivity();
 
         void setOnmessage(PassRefPtr<EventListener> eventListener) { m_onMessageListener = eventListener; }
         EventListener* onmessage() const { return m_onMessageListener.get(); }
@@ -94,31 +94,32 @@ namespace WebCore {
         void setOnclose(PassRefPtr<EventListener> eventListener) { m_onCloseListener = eventListener; }
         EventListener* onclose() const { return m_onCloseListener.get(); }
 
+        void setJSWrapperIsInaccessible() { m_jsWrapperIsInaccessible = true; }
+        bool jsWrapperIsInaccessible() const { return m_jsWrapperIsInaccessible; }
+
     private:
         friend class CloseMessagePortTimer;
 
-        MessagePort(Document*);
+        MessagePort(ScriptExecutionContext*);
 
         virtual void refEventTarget() { ref(); }
         virtual void derefEventTarget() { deref(); }
 
         void dispatchCloseEvent();
 
-        void setPendingActivity();
-        void unsetPendingActivity();
-
         MessagePort* m_entangledPort;
         MessageQueue<RefPtr<Event> > m_messageQueue;
         bool m_queueIsOpen;
 
-        Document* m_document; // Will be 0 if the context does not contain a document (e.g. if it's a worker thread).
+        ScriptExecutionContext* m_scriptExecutionContext;
 
         RefPtr<EventListener> m_onMessageListener;
         RefPtr<EventListener> m_onCloseListener;
 
         EventListenersMap m_eventListeners;
 
-        unsigned m_pendingActivity;
+        bool m_pendingCloseEvent;
+        bool m_jsWrapperIsInaccessible;
     };
 
 } // namespace WebCore

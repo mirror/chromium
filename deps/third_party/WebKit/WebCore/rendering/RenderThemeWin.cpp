@@ -84,6 +84,8 @@
 // This is the fixed width IE and Firefox use for buttons on dropdown menus
 static const int dropDownButtonWidth = 17;
 
+static const int shell32MagnifierIconIndex = 22;
+
 SOFT_LINK_LIBRARY(uxtheme)
 SOFT_LINK(uxtheme, OpenThemeData, HANDLE, WINAPI, (HWND hwnd, LPCWSTR pszClassList), (hwnd, pszClassList))
 SOFT_LINK(uxtheme, CloseThemeData, HRESULT, WINAPI, (HANDLE hTheme), (hTheme))
@@ -286,16 +288,16 @@ void RenderThemeWin::systemFont(int propId, FontDescription& fontDescription) co
     }
 }
 
-bool RenderThemeWin::supportsFocus(EAppearance appearance)
+bool RenderThemeWin::supportsFocus(ControlPart appearance)
 {
     switch (appearance) {
-        case PushButtonAppearance:
-        case ButtonAppearance:
-        case DefaultButtonAppearance:
-        case TextFieldAppearance:
-        case TextAreaAppearance:
+        case PushButtonPart:
+        case ButtonPart:
+        case DefaultButtonPart:
+        case TextFieldPart:
+        case TextAreaPart:
             return true;
-        case MenulistAppearance:
+        case MenulistPart:
             return false;
         default:
             return false;
@@ -306,18 +308,18 @@ unsigned RenderThemeWin::determineClassicState(RenderObject* o)
 {
     unsigned state = 0;
     switch (o->style()->appearance()) {
-        case PushButtonAppearance:
-        case ButtonAppearance:
-        case DefaultButtonAppearance:
+        case PushButtonPart:
+        case ButtonPart:
+        case DefaultButtonPart:
             state = DFCS_BUTTONPUSH;
             if (!isEnabled(o))
                 state |= DFCS_INACTIVE;
             else if (isPressed(o))
                 state |= DFCS_PUSHED;
             break;
-        case RadioAppearance:
-        case CheckboxAppearance:
-            state = (o->style()->appearance() == RadioAppearance) ? DFCS_BUTTONRADIO : DFCS_BUTTONCHECK;
+        case RadioPart:
+        case CheckboxPart:
+            state = (o->style()->appearance() == RadioPart) ? DFCS_BUTTONRADIO : DFCS_BUTTONCHECK;
             if (isChecked(o))
                 state |= DFCS_CHECKED;
             if (!isEnabled(o))
@@ -325,7 +327,7 @@ unsigned RenderThemeWin::determineClassicState(RenderObject* o)
             else if (isPressed(o))
                 state |= DFCS_PUSHED;
             break;
-        case MenulistAppearance:
+        case MenulistPart:
             state = DFCS_SCROLLCOMBOBOX;
             if (!isEnabled(o))
                 state |= DFCS_INACTIVE;
@@ -340,14 +342,15 @@ unsigned RenderThemeWin::determineClassicState(RenderObject* o)
 unsigned RenderThemeWin::determineState(RenderObject* o)
 {
     unsigned result = TS_NORMAL;
+    ControlPart appearance = o->style()->appearance();
     if (!isEnabled(o))
         result = TS_DISABLED;
-    else if (isReadOnlyControl(o))
+    else if (isReadOnlyControl(o) && (TextFieldPart == appearance || TextAreaPart == appearance))
         result = TFS_READONLY; // Readonly is supported on textfields.
-    else if (supportsFocus(o->style()->appearance()) && isFocused(o))
-        result = TS_FOCUSED;
-    else if (isPressed(o))
+    else if (isPressed(o)) // Active overrides hover and focused.
         result = TS_ACTIVE;
+    else if (supportsFocus(appearance) && isFocused(o))
+        result = TS_FOCUSED;
     else if (isHovered(o))
         result = TS_HOVER;
     if (isChecked(o))
@@ -374,10 +377,10 @@ unsigned RenderThemeWin::determineButtonState(RenderObject* o)
     unsigned result = PBS_NORMAL;
     if (!isEnabled(o))
         result = PBS_DISABLED;
-    else if (supportsFocus(o->style()->appearance()) && isFocused(o))
-        result = PBS_DEFAULTED;
     else if (isPressed(o))
         result = PBS_PRESSED;
+    else if (supportsFocus(o->style()->appearance()) && isFocused(o))
+        result = PBS_DEFAULTED;
     else if (isHovered(o))
         result = PBS_HOT;
     else if (isDefault(o))
@@ -389,36 +392,36 @@ ThemeData RenderThemeWin::getClassicThemeData(RenderObject* o)
 {
     ThemeData result;
     switch (o->style()->appearance()) {
-        case PushButtonAppearance:
-        case ButtonAppearance:
-        case DefaultButtonAppearance:
-        case CheckboxAppearance:
-        case RadioAppearance:
+        case PushButtonPart:
+        case ButtonPart:
+        case DefaultButtonPart:
+        case CheckboxPart:
+        case RadioPart:
             result.m_part = DFC_BUTTON;
             result.m_state = determineClassicState(o);
             break;
-        case MenulistAppearance:
+        case MenulistPart:
             result.m_part = DFC_SCROLL;
             result.m_state = determineClassicState(o);
             break;
-        case TextFieldAppearance:
-        case TextAreaAppearance:
+        case TextFieldPart:
+        case TextAreaPart:
             result.m_part = TFP_TEXTFIELD;
             result.m_state = determineState(o);
             break;
-        case SliderHorizontalAppearance:
+        case SliderHorizontalPart:
             result.m_part = TKP_TRACK;
             result.m_state = TS_NORMAL;
             break;
-        case SliderVerticalAppearance:
+        case SliderVerticalPart:
             result.m_part = TKP_TRACKVERT;
             result.m_state = TS_NORMAL;
             break;
-        case SliderThumbHorizontalAppearance:
+        case SliderThumbHorizontalPart:
             result.m_part = TKP_THUMBBOTTOM;
             result.m_state = determineSliderThumbState(o);
             break;
-        case SliderThumbVerticalAppearance:
+        case SliderThumbVerticalPart:
             result.m_part = TKP_THUMBRIGHT;
             result.m_state = determineSliderThumbState(o);
             break;
@@ -435,43 +438,43 @@ ThemeData RenderThemeWin::getThemeData(RenderObject* o)
 
     ThemeData result;
     switch (o->style()->appearance()) {
-        case PushButtonAppearance:
-        case ButtonAppearance:
-        case DefaultButtonAppearance:
+        case PushButtonPart:
+        case ButtonPart:
+        case DefaultButtonPart:
             result.m_part = BP_BUTTON;
             result.m_state = determineButtonState(o);
             break;
-        case CheckboxAppearance:
+        case CheckboxPart:
             result.m_part = BP_CHECKBOX;
             result.m_state = determineState(o);
             break;
-        case MenulistAppearance:
-        case MenulistButtonAppearance:
+        case MenulistPart:
+        case MenulistButtonPart:
             result.m_part = CP_DROPDOWNBUTTON;
             result.m_state = determineState(o);
             break;
-        case RadioAppearance:
+        case RadioPart:
             result.m_part = BP_RADIO;
             result.m_state = determineState(o);
             break;
-        case TextFieldAppearance:
-        case TextAreaAppearance:
+        case TextFieldPart:
+        case TextAreaPart:
             result.m_part = TFP_TEXTFIELD;
             result.m_state = determineState(o);
             break;
-        case SliderHorizontalAppearance:
+        case SliderHorizontalPart:
             result.m_part = TKP_TRACK;
             result.m_state = TS_NORMAL;
             break;
-        case SliderVerticalAppearance:
+        case SliderVerticalPart:
             result.m_part = TKP_TRACKVERT;
             result.m_state = TS_NORMAL;
             break;
-        case SliderThumbHorizontalAppearance:
+        case SliderThumbHorizontalPart:
             result.m_part = TKP_THUMBBOTTOM;
             result.m_state = determineSliderThumbState(o);
             break;
-        case SliderThumbVerticalAppearance:
+        case SliderThumbVerticalPart:
             result.m_part = TKP_THUMBRIGHT;
             result.m_state = determineSliderThumbState(o);
             break;
@@ -499,8 +502,8 @@ static void drawControl(GraphicsContext* context, RenderObject* o, HANDLE theme,
         } else if (themeData.m_part == TKP_TRACK || themeData.m_part == TKP_TRACKVERT) {
             ::DrawEdge(hdc, &widgetRect, EDGE_SUNKEN, BF_RECT | BF_ADJUST);
             ::FillRect(hdc, &widgetRect, (HBRUSH)GetStockObject(GRAY_BRUSH));
-        } else if ((o->style()->appearance() == SliderThumbHorizontalAppearance ||
-                    o->style()->appearance() == SliderThumbVerticalAppearance) && 
+        } else if ((o->style()->appearance() == SliderThumbHorizontalPart ||
+                    o->style()->appearance() == SliderThumbVerticalPart) && 
                    (themeData.m_part == TKP_THUMBBOTTOM || themeData.m_part == TKP_THUMBTOP || 
                     themeData.m_part == TKP_THUMBLEFT || themeData.m_part == TKP_THUMBRIGHT)) {
             ::DrawEdge(hdc, &widgetRect, EDGE_RAISED, BF_RECT | BF_SOFT | BF_MIDDLE | BF_ADJUST);
@@ -526,7 +529,7 @@ static void drawControl(GraphicsContext* context, RenderObject* o, HANDLE theme,
             }
         } else {
             // Push buttons, buttons, checkboxes and radios, and the dropdown arrow in menulists.
-            if (o->style()->appearance() == DefaultButtonAppearance) {
+            if (o->style()->appearance() == DefaultButtonPart) {
                 HBRUSH brush = ::GetSysColorBrush(COLOR_3DDKSHADOW);
                 ::FrameRect(hdc, &widgetRect, brush);
                 ::InflateRect(&widgetRect, -1, -1);
@@ -633,10 +636,10 @@ bool RenderThemeWin::paintSliderTrack(RenderObject* o, const RenderObject::Paint
 {
     IntRect bounds = r;
     
-    if (o->style()->appearance() ==  SliderHorizontalAppearance) {
+    if (o->style()->appearance() ==  SliderHorizontalPart) {
         bounds.setHeight(trackWidth);
         bounds.setY(r.y() + r.height() / 2 - trackWidth / 2);
-    } else if (o->style()->appearance() == SliderVerticalAppearance) {
+    } else if (o->style()->appearance() == SliderVerticalPart) {
         bounds.setWidth(trackWidth);
         bounds.setX(r.x() + r.width() / 2 - trackWidth / 2);
     }
@@ -656,10 +659,10 @@ const int sliderThumbHeight = 15;
 
 void RenderThemeWin::adjustSliderThumbSize(RenderObject* o) const
 {
-    if (o->style()->appearance() == SliderThumbVerticalAppearance) {
+    if (o->style()->appearance() == SliderThumbVerticalPart) {
         o->style()->setWidth(Length(sliderThumbHeight, Fixed));
         o->style()->setHeight(Length(sliderThumbWidth, Fixed));
-    } else if (o->style()->appearance() == SliderThumbHorizontalAppearance) {
+    } else if (o->style()->appearance() == SliderThumbHorizontalPart) {
         o->style()->setWidth(Length(sliderThumbWidth, Fixed));
         o->style()->setHeight(Length(sliderThumbHeight, Fixed));
     }
@@ -729,18 +732,19 @@ bool RenderThemeWin::paintSearchFieldResultsDecoration(RenderObject* o, const Re
 {
     IntRect bounds = r;
     bounds.setWidth(bounds.height());
-    LPCTSTR shell32 = _T("\\shell32.dll");
-    int shell32Length = _tcslen(shell32);
+
     TCHAR buffer[MAX_PATH];
-    UINT length = ::GetSystemDirectory(buffer, MAX_PATH);
+    UINT length = ::GetSystemDirectory(buffer, ARRAYSIZE(buffer));
     if (!length)
-        return false;
-    _tcsncpy_s(buffer + length, MAX_PATH - length, shell32, shell32Length);
-    buffer[length + shell32Length] = 0;
+        return 0;
+    
+    if (_tcscat_s(buffer, TEXT("\\shell32.dll")))
+        return 0;
+
     HICON hIcon;
-    const int shell32MagnifierIndex = 22;
-    if (!::ExtractIconEx(buffer, shell32MagnifierIndex, 0, &hIcon, 1))
-        return false;
+    if (!::ExtractIconEx(buffer, shell32MagnifierIconIndex, 0, &hIcon, 1))
+        return 0;
+
     RefPtr<Icon> icon = Icon::create(hIcon);
     icon->paint(paintInfo.context, bounds);
     return false;

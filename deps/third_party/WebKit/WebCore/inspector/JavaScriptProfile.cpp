@@ -32,8 +32,8 @@
 #include <JavaScriptCore/JSObjectRef.h>
 #include <JavaScriptCore/JSStringRef.h>
 #include <JavaScriptCore/OpaqueJSString.h>
-#include <kjs/JSObject.h>
-#include <kjs/JSValue.h>
+#include <runtime/JSObject.h>
+#include <runtime/JSValue.h>
 
 using namespace JSC;
 
@@ -41,7 +41,7 @@ namespace WebCore {
 
 // Cache
 
-typedef HashMap<Profile*, JSValue*> ProfileMap;
+typedef HashMap<Profile*, JSObject*> ProfileMap;
 
 static ProfileMap& profileCache()
 { 
@@ -280,7 +280,7 @@ JSValue* toJS(ExecState* exec, Profile* profile)
     if (!profile)
         return jsNull();
 
-    JSValue* profileWrapper = profileCache().get(profile);
+    JSObject* profileWrapper = profileCache().get(profile);
     if (profileWrapper)
         return profileWrapper;
 
@@ -289,6 +289,5 @@ JSValue* toJS(ExecState* exec, Profile* profile)
     profileCache().set(profile, profileWrapper);
     return profileWrapper;
 }
-
 
 } // namespace WebCore

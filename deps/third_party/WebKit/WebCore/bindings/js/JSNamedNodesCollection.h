@@ -49,6 +49,11 @@ namespace WebCore {
             return exec->lexicalGlobalObject()->objectPrototype();
         }
 
+        static PassRefPtr<JSC::StructureID> createStructureID(JSC::JSValue* prototype)
+        {
+            return JSC::StructureID::create(prototype, JSC::TypeInfo(JSC::ObjectType));
+        }
+
     private:
         static JSC::JSValue* lengthGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);
         static JSC::JSValue* indexGetter(JSC::ExecState*, const JSC::Identifier&, const JSC::PropertySlot&);

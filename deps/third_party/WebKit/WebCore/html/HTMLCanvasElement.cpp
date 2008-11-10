@@ -42,7 +42,9 @@
 #include "Page.h"
 #include "RenderHTMLCanvas.h"
 #include "Settings.h"
+#if USE(JSC)
 #include <kjs/interpreter.h>
+#endif
 #include <math.h>
 #include <stdio.h>
 

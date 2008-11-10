@@ -28,9 +28,10 @@
 
 #include "Frame.h"
 #include "FrameTree.h"
+#include "HistoryItem.h"
 #include "Page.h"
 #include "PageCache.h"
-#include "HistoryItem.h"
+#include <limits>
 
 #if ENABLE(DATABASE)
 #include "DatabaseTracker.h"
@@ -84,6 +85,7 @@ Settings::Settings(Page* page)
     , m_shouldPaintCustomScrollbars(false)
     , m_zoomsTextOnly(false)
     , m_enforceCSSMIMETypeInStrictMode(true)
+    , m_maximumDecodedImageSize(std::numeric_limits<size_t>::max())
 	, m_usesEncodingDetector(false)
     , m_allow_scripts_to_close_windows(false)
 {

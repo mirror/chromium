@@ -1,3 +1,323 @@
+2008-11-01  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22030
+        Make EventNames usable from multiple threads
+
+        * WebView.cpp: (WebView::interpretKeyEvent): Access event names via eventNames() function.
+
+2008-11-03  Cameron Zwarich  <zwarich@apple.com>
+
+        Rubber-stamped by Maciej Stachowiak.
+
+        Move more files into the runtime subdirectory of JavaScriptCore.
+
+        * WebJavaScriptCollector.cpp:
+
+2008-11-03  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Steve Falkenburg.
+
+        - implement WebMutableURLRequest::setHTTPShouldHandleCookies()
+        - add and implement WebMutableURLRequest::mutableCopy()
+
+        * Interfaces/IWebURLRequest.idl:
+        * WebMutableURLRequest.cpp:
+        (WebMutableURLRequest::setHTTPShouldHandleCookies):
+        (WebMutableURLRequest::mutableCopy):
+        * WebMutableURLRequest.h:
+
+2008-10-31  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by John Sullivan.
+
+        - WebKit/win part of <rdar://problem/6334641> Add WebView SPI for disabling document.cookie
+
+        * Interfaces/IWebViewPrivate.idl:
+        * WebView.cpp:
+        (WebView::setCookieEnabled):
+        (WebView::cookieEnabled):
+        * WebView.h:
+
+2008-10-31  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Darin Adler.
+
+        WebKit Windows part of fix for <rdar://problem/5839256> FILE CONTROL: multi-file upload.
+        https://bugs.webkit.org/show_bug.cgi?id=22008
+        
+        * WebCoreSupport/WebChromeClient.cpp: (WebChromeClient::runOpenPanel): 
+        Add support for mulitple file selection.
+
+2008-10-31  Darin Adler  <darin@apple.com>
+
+        - try to fix build
+
+        * WebView.cpp:
+        (WebView::setCacheModel): Roll out the part of my last change
+        that involved no longer using wkCopyFoundationCacheDirectory.
+
+2008-10-30  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - https://bugs.webkit.org/show_bug.cgi?id=21986
+          <rdar://problem/6294285> adopt CFURLCopySharedURLCache
+
+        * WebView.cpp:
+        (WebView::setCacheModel): Use CFURLCopySharedURLCache if present.
+
+2008-10-30  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - export WTFReportAssertionFailureWithMessage()
+
+        * WebKit.vcproj/WebKit_debug.def:
+
+2008-10-29  Steve Falkenburg  <sfalken@apple.com>
+
+        <rdar://problem/6326563> Crash on launch
+        
+        For Windows, export explicit functions rather than exporting data for atomicallyInitializedStaticMutex.
+        
+        Exporting data from a DLL on Windows requires specifying __declspec(dllimport) in the header used by
+        callers, but __declspec(dllexport) when defined in the DLL implementation. By instead exporting
+        the explicit lock/unlock functions, we can avoid this.
+        
+        Fixes a crash on launch, since we were previously erroneously exporting atomicallyInitializedStaticMutex as a function.
+        
+        Reviewed by Darin Adler.
+
+        * WebKit.vcproj/WebKit.def:
+        * WebKit.vcproj/WebKit_debug.def:
+
+2008-10-29  Jon Honeycutt  <jhoneycutt@apple.com>
+
+        Export atomicallyInitializedStaticMutex.
+
+        Rubber-stamped by Steve Falkenburg.
+
+        * WebKit.vcproj/WebKit.def:
+        * WebKit.vcproj/WebKit_debug.def:
+
+2008-10-28  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Move ForwardingHeaders to their correct location after the creation of
+        the runtime directory in JavaScriptCore.
+
+        * WebScriptCallFrame.h:
+
+2008-10-28  Adele Peterson  <adele@apple.com>
+
+        Reviewed by John Sullivan.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=21880
+        "files" string for multifile uploads needs to be localized
+
+        * WebCoreLocalizedStrings.cpp: (multipleFileUploadText):
+
+2008-10-28  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Sam Weinig. 
+
+        * English.lproj: Removed.
+        * English.lproj/Localizable.strings: Removed.
+        * WebKit.vcproj/WebKit.vcproj: Updated to use Localizable.strings in the top directory, to share with the Mac.
+
+2008-10-28  Timothy Hatcher  <timothy@apple.com>
+
+        Add IWebInspector methods to enable the profiler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21927
+
+        <rdar://problem/6211578> Make the JavaScript profiler opt-in, so it does
+        not slow down JavaScript all the time
+
+        Reviewed by Darin Adler and Kevin McCullough.
+
+        * WebInspector.cpp:
+        (WebInspector::isJavaScriptProfilingEnabled): Added. Calls InspectorController::profilerEnabled.
+        (WebInspector::setJavaScriptProfilingEnabled): Added. Call InspectorController's disableProfiler
+        or enableProfiler methods.
+        * WebInspector.h:
+
+2008-10-27  Timothy Hatcher  <timothy@apple.com>
+
+        Rename a few methods related to attaching and detaching the debugger.
+
+        * Rename attachDebugger to enableDebugger.
+        * Rename detachDebugger to disableDebugger.
+        * Rename the debuggerAttached getter to debuggerEnabled.
+
+        Reviewed by Darin Adler.
+
+        * WebInspector.cpp:
+        (WebInspector::isDebuggingJavaScript):
+        (WebInspector::toggleDebuggingJavaScript):
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Yet another windows build fix.
+
+        * WebCoreSupport/WebChromeClient.cpp:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Another windows build fix.
+
+        * WebCoreSupport/WebChromeClient.cpp:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=21759
+        Layering violation: FileChooser should not depend on Document/Frame/Page
+
+        * WebCoreSupport/WebChromeClient.cpp:
+        (WebChromeClient::runOpenPanel):
+        * WebCoreSupport/WebChromeClient.h:
+
+2008-10-24  Timothy Hatcher  <timothy@apple.com>
+
+        Implement new InspectorClient methods to work with Settings.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21856
+
+        Reviewed by Adam Roben.
+
+        * WebKit.vcproj/WebKit.vcproj: Add the new InspectorClientCF.cpp file.
+        * WebCoreSupport/WebInspectorClient.h: Add the new methods.
+
+2008-10-24  Darin Adler  <darin@apple.com>
+
+        - finish rolling out https://bugs.webkit.org/show_bug.cgi?id=21732
+
+        * WebScriptCallFrame.cpp:
+        (WebScriptCallFrame::jsValueToString):
+        (WebScriptCallFrame::stringByEvaluatingJavaScriptFromString):
+        (WebScriptCallFrame::valueForVariable):
+        (WebScriptCallFrame::valueByEvaluatingJavaScriptFromString):
+        * WebScriptCallFrame.h:
+        * WebView.cpp:
+        (WebView::stringByEvaluatingJavaScriptFromString):
+        Use JSValue* instead of JSValuePtr.
+
+2008-10-22  Brent Fulgham  <bfulgham@gmail.com>
+
+        Correct build regressions in Cairo port for Windows.
+        http://bugs.webkit.org/show_bug.cgi?id=21724
+
+        Reviewed by Adam Roben.
+
+        * WebView.cpp:
+        (WebView::notifyPreferencesChanged): Don't try to call
+        setShouldPaintNativeControls when SafariTheme support is disabled, as
+        that function doesn't exist in that case.
+
+2008-10-22  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Adam Roben
+        
+        Move elementDoesAutoComplete() to IWebFramePrivate so it is exposed for DRT to use
+
+        * Interfaces/IWebFramePrivate.idl:
+        
+        * WebFrame.cpp:
+        (WebFrame::elementDoesAutoComplete):
+        * WebFrame.h:
+        
+        * WebHTMLRepresentation.cpp:
+        (WebHTMLRepresentation::elementDoesAutoComplete):
+
+2008-10-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Remove FrameLoaderClient::detachedFromParent4.  It is no longer used by any port.
+
+        * WebFrame.cpp:
+        * WebFrame.h:
+
+2008-10-19  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - next step of https://bugs.webkit.org/show_bug.cgi?id=21732
+          improve performance by eliminating JSValue as a base class for JSCell
+
+        Remove most uses of JSValue, which will be removed in a future patch.
+
+        * WebScriptCallFrame.cpp:
+        (WebScriptCallFrame::jsValueToString): Use JSValuePtr.
+        (WebScriptCallFrame::stringByEvaluatingJavaScriptFromString): Ditto.
+        (WebScriptCallFrame::valueForVariable): Put more code inside and ifdef.
+        (WebScriptCallFrame::valueByEvaluatingJavaScriptFromString): Ditto.
+        * WebScriptCallFrame.h: Use JSValuePtr.
+
+        * WebView.cpp:
+        (WebView::stringByEvaluatingJavaScriptFromString): Use JSValuePtr.
+
+2008-10-18  Dan Bernstein  <mitz@apple.com>
+
+        - build fix
+
+        * WebScriptCallFrame.cpp:
+        (WebScriptCallFrame::jsValueToString):
+
+2008-10-18  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - WebKit/win part of https://bugs.webkit.org/show_bug.cgi?id=21736
+          Long-dead decoded image data make up for most of the object cache's memory use over time
+
+        * WebView.cpp:
+        (WebView::setCacheModel): In the primary web browser model,
+        set the cache's dead decoded data deletion interval to 60 seconds.
+
+2008-10-16  Kevin McCullough  <kmccullough@apple.com>
+
+        Reviewed by Steve Falkenburg.
+
+        <rdar://problem/6292718>
+        Implement a standard way to get the UA given an application name.
+
+        * Interfaces/IWebViewPrivate.idl:
+        * WebView.cpp:
+        (WebView::standardUserAgentWithApplicationName):
+        * WebView.h:
+
+2008-10-17  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - export WTF::initializeOnMainThread()
+
+        * WebKit.vcproj/WebKit.def:
+        * WebKit.vcproj/WebKit_debug.def:
+
+2008-10-15  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Fixed https://bugs.webkit.org/show_bug.cgi?id=21345
+        Start the debugger without reloading the inspected page
+
+        * WebInspector.cpp:
+        (WebInspector::toggleDebuggingJavaScript): Updated for rename.
+
+2008-10-15  Adam Roben  <aroben@apple.com>
+
+        Export WTF::Mutex::tryLock
+
+        * WebKit.vcproj/WebKit.def:
+        * WebKit.vcproj/WebKit_debug.def:
+
 2008-10-14  Jon Honeycutt  <jhoneycutt@apple.com>
 
         Export currentThread.

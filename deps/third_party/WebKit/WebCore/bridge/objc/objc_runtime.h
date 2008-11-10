@@ -28,7 +28,7 @@
 
 #include "objc_header.h"
 #include "runtime.h"
-#include <kjs/JSGlobalObject.h>
+#include <runtime/JSGlobalObject.h>
 #include <wtf/RetainPtr.h>
 
 namespace JSC {
@@ -44,8 +44,8 @@ public:
     ObjcField(IvarStructPtr);
     ObjcField(CFStringRef name);
     
-    virtual JSValue *valueFromInstance(ExecState *exec, const Instance *instance) const;
-    virtual void setValueToInstance(ExecState *exec, const Instance *instance, JSValue *aValue) const;
+    virtual JSValue* valueFromInstance(ExecState*, const Instance*) const;
+    virtual void setValueToInstance(ExecState*, const Instance*, JSValue*) const;
     
     virtual const char *name() const;
         
@@ -79,13 +79,13 @@ class ObjcArray : public Array {
 public:
     ObjcArray(ObjectStructPtr, PassRefPtr<RootObject>);
 
-    virtual void setValueAt(ExecState *exec, unsigned int index, JSValue *aValue) const;
-    virtual JSValue *valueAt(ExecState *exec, unsigned int index) const;
+    virtual void setValueAt(ExecState *exec, unsigned int index, JSValue* aValue) const;
+    virtual JSValue* valueAt(ExecState *exec, unsigned int index) const;
     virtual unsigned int getLength() const;
     
     ObjectStructPtr getObjcArray() const { return _array.get(); }
 
-    static JSValue *convertObjcArrayToArray(ExecState *exec, ObjectStructPtr anObject);
+    static JSValue* convertObjcArrayToArray(ExecState *exec, ObjectStructPtr anObject);
 
 private:
     RetainPtr<ObjectStructPtr> _array;
@@ -102,6 +102,11 @@ public:
     static ObjectPrototype* createPrototype(ExecState* exec)
     {
         return exec->lexicalGlobalObject()->objectPrototype();
+    }
+
+    static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+    {
+        return StructureID::create(prototype, TypeInfo(ObjectType));
     }
 
 private:

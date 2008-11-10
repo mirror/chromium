@@ -27,7 +27,7 @@
 #define KJS_RUNTIME_OBJECT_H
 
 #include "runtime.h"
-#include <kjs/JSGlobalObject.h>
+#include <runtime/JSGlobalObject.h>
 
 namespace JSC {
 
@@ -40,6 +40,8 @@ public:
     virtual bool deleteProperty(ExecState* , const Identifier& propertyName);
     virtual JSValue* defaultValue(ExecState*, PreferredPrimitiveType) const;
     virtual CallType getCallData(CallData&);
+    virtual ConstructType getConstructData(ConstructData&);
+    
     virtual void getPropertyNames(ExecState*, PropertyNameArray&);
 
     virtual void invalidate();
@@ -52,6 +54,11 @@ public:
     static ObjectPrototype* createPrototype(ExecState* exec)
     {
         return exec->lexicalGlobalObject()->objectPrototype();
+    }
+
+    static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+    {
+        return StructureID::create(prototype, TypeInfo(ObjectType));
     }
 
 protected:

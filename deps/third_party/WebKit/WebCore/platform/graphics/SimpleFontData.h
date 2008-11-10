@@ -1,7 +1,7 @@
 /*
  * This file is part of the internal font implementation.
  *
- * Copyright (C) 2006, 2008 Apple Computer, Inc.
+ * Copyright (C) 2006, 2008 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -103,11 +103,13 @@ public:
 
 #if PLATFORM(MAC)
     NSFont* getNSFont() const { return m_font.font(); }
+#endif
+
 #if USE(CORE_TEXT)
     CTFontRef getCTFont() const;
     CFDictionaryRef getCFStringAttributes() const;
 #endif
-#endif
+
 #if USE(ATSUI)
     void checkShapesArabic() const;
     bool shapesArabic() const
@@ -190,6 +192,7 @@ public:
     void* m_styleGroup;
 #endif
 #endif
+
 #if USE(ATSUI)
     mutable ATSUStyle m_ATSUStyle;
     mutable bool m_ATSUStyleInitialized;
@@ -197,11 +200,10 @@ public:
     mutable bool m_checkedShapesArabic;
     mutable bool m_shapesArabic;
 #endif
-#if PLATFORM(MAC)
+
 #if USE(CORE_TEXT)
     mutable RetainPtr<CTFontRef> m_CTFont;
     mutable RetainPtr<CFDictionaryRef> m_CFStringAttributes;
-#endif
 #endif
 
 #if PLATFORM(WIN)

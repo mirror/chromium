@@ -41,7 +41,6 @@ struct NPObject;
 
 namespace JSC {
     class JSGlobalObject;
-    class JSValue;
 
     namespace Bindings {
         class Instance;
@@ -87,11 +86,10 @@ public:
 
     JSC::JSValue* evaluate(const String& sourceURL, int baseLine, const String& code);
 
-    PassRefPtr<EventListener> createHTMLEventHandler(const String& functionName, const String& code, Node*);
+    PassRefPtr<EventListener> createInlineEventListener(const String& functionName, const String& code, Node*);
 #if ENABLE(SVG)
     PassRefPtr<EventListener> createSVGEventHandler(const String& functionName, const String& code, Node*);
 #endif
-    void finishedWithEvent(Event*);
     void setEventHandlerLineno(int lineno) { m_handlerLineno = lineno; }
 
     void setProcessingTimerCallback(bool b) { m_processingTimerCallback = b; }

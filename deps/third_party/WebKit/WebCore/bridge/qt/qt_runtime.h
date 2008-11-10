@@ -98,8 +98,8 @@ public:
 
     RootObject* rootObject() const;
 
-    virtual void setValueAt(ExecState *exec, unsigned int index, JSValue *aValue) const;
-    virtual JSValue *valueAt(ExecState *exec, unsigned int index) const;
+    virtual void setValueAt(ExecState*, unsigned index, JSValue*) const;
+    virtual JSValue* valueAt(ExecState*, unsigned index) const;
     virtual unsigned int getLength() const {return m_length;}
 
 private:
@@ -138,8 +138,7 @@ class QtRuntimeConnectionMethodData : public QtRuntimeMethodData {
 };
 
 // Common base class (doesn't really do anything interesting)
-class QtRuntimeMethod : public InternalFunction
-{
+class QtRuntimeMethod : public InternalFunction {
 public:
     virtual ~QtRuntimeMethod();
 
@@ -148,6 +147,11 @@ public:
     static FunctionPrototype* createPrototype(ExecState* exec)
     {
         return exec->lexicalGlobalObject()->functionPrototype();
+    }
+
+    static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+    {
+        return StructureID::create(prototype, TypeInfo(ObjectType));
     }
 
 protected:

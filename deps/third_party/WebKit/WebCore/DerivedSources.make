@@ -77,6 +77,7 @@ DOM_CLASSES = \
     DOMParser \
     DOMSelection \
     DOMWindow \
+    DedicatedWorker \
     Database \
     Document \
     DocumentFragment \
@@ -92,6 +93,8 @@ DOM_CLASSES = \
     EventTargetNode \
     File \
     FileList \
+    Geolocation \
+    Geoposition \
     HTMLAnchorElement \
     HTMLAppletElement \
     HTMLAreaElement \
@@ -179,6 +182,10 @@ DOM_CLASSES = \
     OverflowEvent \
     Plugin \
     PluginArray \
+    PositionCallback \
+    PositionError \
+    PositionErrorCallback \
+    PositionOptions \
     ProcessingInstruction \
     ProgressEvent \
     RGBColor \

@@ -69,8 +69,9 @@
 #include <JavaScriptCore/JSRetainPtr.h>
 #include <JavaScriptCore/JSStringRef.h>
 #include <JavaScriptCore/OpaqueJSString.h>
-#include <kjs/JSLock.h>
+#include <runtime/JSLock.h>
 #include <kjs/ustring.h>
+#include <runtime/CollectorHeapIterator.h>
 #include <profiler/Profile.h>
 #include <profiler/Profiler.h>
 #include <wtf/RefCounted.h>
@@ -435,8 +436,8 @@ SIMPLE_INSPECTOR_CALLBACK(unloading, close);
 SIMPLE_INSPECTOR_CALLBACK(attach, attachWindow);
 SIMPLE_INSPECTOR_CALLBACK(detach, detachWindow);
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-SIMPLE_INSPECTOR_CALLBACK(startDebuggingAndReloadInspectedPage, startDebuggingAndReloadInspectedPage);
-SIMPLE_INSPECTOR_CALLBACK(stopDebugging, stopDebugging);
+SIMPLE_INSPECTOR_CALLBACK(enableDebugger, enableDebugger);
+SIMPLE_INSPECTOR_CALLBACK(disableDebugger, disableDebugger);
 SIMPLE_INSPECTOR_CALLBACK(pauseInDebugger, pauseInDebugger);
 SIMPLE_INSPECTOR_CALLBACK(resumeDebugger, resumeDebugger);
 SIMPLE_INSPECTOR_CALLBACK(stepOverStatementInDebugger, stepOverStatementInDebugger);
@@ -445,8 +446,10 @@ SIMPLE_INSPECTOR_CALLBACK(stepOutOfFunctionInDebugger, stepOutOfFunctionInDebugg
 #endif
 SIMPLE_INSPECTOR_CALLBACK(closeWindow, closeWindow);
 SIMPLE_INSPECTOR_CALLBACK(clearMessages, clearConsoleMessages);
-SIMPLE_INSPECTOR_CALLBACK(startProfiling, startUserInitiatedProfiling);
+SIMPLE_INSPECTOR_CALLBACK(startProfiling, startUserInitiatedProfilingSoon);
 SIMPLE_INSPECTOR_CALLBACK(stopProfiling, stopUserInitiatedProfiling);
+SIMPLE_INSPECTOR_CALLBACK(enableProfiler, enableProfiler);
+SIMPLE_INSPECTOR_CALLBACK(disableProfiler, disableProfiler);
 SIMPLE_INSPECTOR_CALLBACK(toggleNodeSearch, toggleSearchForNodeInPage);
 
 #define BOOL_INSPECTOR_CALLBACK(jsFunction, inspectorControllerMethod) \
@@ -458,9 +461,10 @@ static JSValueRef jsFunction(JSContextRef ctx, JSObjectRef, JSObjectRef thisObje
 }
 
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-BOOL_INSPECTOR_CALLBACK(debuggerAttached, debuggerAttached);
+BOOL_INSPECTOR_CALLBACK(debuggerEnabled, debuggerEnabled);
 BOOL_INSPECTOR_CALLBACK(pauseOnExceptions, pauseOnExceptions);
 #endif
+BOOL_INSPECTOR_CALLBACK(profilerEnabled, profilerEnabled);
 BOOL_INSPECTOR_CALLBACK(isWindowVisible, windowVisible);
 BOOL_INSPECTOR_CALLBACK(searchingForNode, searchingForNodeInPage);
 
@@ -744,6 +748,104 @@ static JSValueRef inspectedWindow(JSContextRef ctx, JSObjectRef /*function*/, JS
     return toRef(JSInspectedObjectWrapper::wrap(inspectedWindow->globalExec(), inspectedWindow));
 }
 
+static JSValueRef setting(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef arguments[], JSValueRef* exception)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    JSValueRef keyValue = arguments[0];
+    if (!JSValueIsString(ctx, keyValue))
+        return JSValueMakeUndefined(ctx);
+
+    const InspectorController::Setting& setting = controller->setting(toString(ctx, keyValue, exception));
+
+    switch (setting.type()) {
+        default:
+        case InspectorController::Setting::NoType:
+            return JSValueMakeUndefined(ctx);
+        case InspectorController::Setting::StringType:
+            return JSValueMakeString(ctx, jsStringRef(setting.string()).get());
+        case InspectorController::Setting::DoubleType:
+            return JSValueMakeNumber(ctx, setting.doubleValue());
+        case InspectorController::Setting::IntegerType:
+            return JSValueMakeNumber(ctx, setting.integerValue());
+        case InspectorController::Setting::BooleanType:
+            return JSValueMakeBoolean(ctx, setting.booleanValue());
+        case InspectorController::Setting::StringVectorType: {
+            Vector<JSValueRef> stringValues;
+            const Vector<String>& strings = setting.stringVector();
+            const unsigned length = strings.size();
+            for (unsigned i = 0; i < length; ++i)
+                stringValues.append(JSValueMakeString(ctx, jsStringRef(strings[i]).get()));
+
+            JSObjectRef stringsArray = JSObjectMakeArray(ctx, stringValues.size(), stringValues.data(), exception);
+            if (exception && *exception)
+                return JSValueMakeUndefined(ctx);
+            return stringsArray;
+        }
+    }
+}
+
+static JSValueRef setSetting(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef arguments[], JSValueRef* exception)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    JSValueRef keyValue = arguments[0];
+    if (!JSValueIsString(ctx, keyValue))
+        return JSValueMakeUndefined(ctx);
+
+    InspectorController::Setting setting;
+
+    JSValueRef value = arguments[1];
+    switch (JSValueGetType(ctx, value)) {
+        default:
+        case kJSTypeUndefined:
+        case kJSTypeNull:
+            // Do nothing. The setting is already NoType.
+            ASSERT(setting.type() == InspectorController::Setting::NoType);
+            break;
+        case kJSTypeString:
+            setting.set(toString(ctx, value, exception));
+            break;
+        case kJSTypeNumber:
+            setting.set(JSValueToNumber(ctx, value, exception));
+            break;
+        case kJSTypeBoolean:
+            setting.set(JSValueToBoolean(ctx, value));
+            break;
+        case kJSTypeObject: {
+            JSObjectRef object = JSValueToObject(ctx, value, 0);
+            JSValueRef lengthValue = JSObjectGetProperty(ctx, object, jsStringRef("length").get(), exception);
+            if (exception && *exception)
+                return JSValueMakeUndefined(ctx);
+
+            Vector<String> strings;
+            const unsigned length = static_cast<unsigned>(JSValueToNumber(ctx, lengthValue, 0));
+            for (unsigned i = 0; i < length; ++i) {
+                JSValueRef itemValue = JSObjectGetPropertyAtIndex(ctx, object, i, exception);
+                if (exception && *exception)
+                    return JSValueMakeUndefined(ctx);
+                strings.append(toString(ctx, itemValue, exception));
+                if (exception && *exception)
+                    return JSValueMakeUndefined(ctx);
+            }
+
+            setting.set(strings);
+            break;
+        }
+    }
+
+    if (exception && *exception)
+        return JSValueMakeUndefined(ctx);
+
+    controller->setSetting(toString(ctx, keyValue, exception), setting);
+
+    return JSValueMakeUndefined(ctx);
+}
+
 static JSValueRef localizedStrings(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments[]*/, JSValueRef* /*exception*/)
 {
     InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
@@ -955,6 +1057,9 @@ static JSValueRef profiles(JSContextRef ctx, JSObjectRef /*function*/, JSObjectR
 
 // InspectorController Class
 
+static unsigned s_inspectorControllerCount;
+static HashMap<String, InspectorController::Setting*>* s_settingCache;
+
 InspectorController::InspectorController(Page* page, InspectorClient* client)
     : m_inspectedPage(page)
     , m_client(client)
@@ -964,9 +1069,10 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
     , m_scriptContext(0)
     , m_windowVisible(false)
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-    , m_debuggerAttached(false)
+    , m_debuggerEnabled(false)
     , m_attachDebuggerWhenShown(false)
 #endif
+    , m_profilerEnabled(false)
     , m_recordingUserInitiatedProfile(false)
     , m_showAfterVisible(ElementsPanel)
     , m_nextIdentifier(-2)
@@ -975,9 +1081,11 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
     , m_currentUserInitiatedProfileNumber(-1)
     , m_nextUserInitiatedProfileNumber(1)
     , m_previousMessage(0)
+    , m_startProfiling(this, &InspectorController::startUserInitiatedProfiling)
 {
     ASSERT_ARG(page, page);
     ASSERT_ARG(client, client);
+    ++s_inspectorControllerCount;
 }
 
 InspectorController::~InspectorController()
@@ -1005,6 +1113,15 @@ InspectorController::~InspectorController()
 
     deleteAllValues(m_frameResources);
     deleteAllValues(m_consoleMessages);
+
+    ASSERT(s_inspectorControllerCount);
+    --s_inspectorControllerCount;
+
+    if (!s_inspectorControllerCount && s_settingCache) {
+        deleteAllValues(*s_settingCache);
+        delete s_settingCache;
+        s_settingCache = 0;
+    }
 }
 
 void InspectorController::inspectedPageDestroyed()
@@ -1019,8 +1136,49 @@ bool InspectorController::enabled() const
 {
     if (!m_inspectedPage)
         return false;
-
     return m_inspectedPage->settings()->developerExtrasEnabled();
+}
+
+const InspectorController::Setting& InspectorController::setting(const String& key) const
+{
+    if (!s_settingCache)
+        s_settingCache = new HashMap<String, Setting*>;
+
+    if (Setting* cachedSetting = s_settingCache->get(key))
+        return *cachedSetting;
+
+    Setting* newSetting = new Setting;
+    s_settingCache->set(key, newSetting);
+
+    m_client->populateSetting(key, *newSetting);
+
+    return *newSetting;
+}
+
+void InspectorController::setSetting(const String& key, const Setting& setting)
+{
+    if (setting.type() == Setting::NoType) {
+        if (s_settingCache) {
+            Setting* cachedSetting = s_settingCache->get(key);
+            if (cachedSetting) {
+                s_settingCache->remove(key);
+                delete cachedSetting;
+            }
+        }
+
+        m_client->removeSetting(key);
+        return;
+    }
+
+    if (!s_settingCache)
+        s_settingCache = new HashMap<String, Setting*>;
+
+    if (Setting* cachedSetting = s_settingCache->get(key))
+        *cachedSetting = setting;
+    else
+        s_settingCache->set(key, new Setting(setting));
+
+    m_client->storeSetting(key, setting);
 }
 
 String InspectorController::localizedStringsURL()
@@ -1127,13 +1285,13 @@ void InspectorController::setWindowVisible(bool visible, bool attached)
             focusNode();
 #if ENABLE(JAVASCRIPT_DEBUGGER)
         if (m_attachDebuggerWhenShown)
-            startDebuggingAndReloadInspectedPage();
+            enableDebugger();
 #endif
         if (m_showAfterVisible != CurrentPanel)
             showPanel(m_showAfterVisible);
     } else {
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-        stopDebugging();
+        disableDebugger();
 #endif
         resetScriptObjects();
     }
@@ -1338,8 +1496,8 @@ void InspectorController::windowScriptObjectAvailable()
         { "attach", WebCore::attach, kJSPropertyAttributeNone },
         { "detach", WebCore::detach, kJSPropertyAttributeNone },
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-        { "startDebuggingAndReloadInspectedPage", WebCore::startDebuggingAndReloadInspectedPage, kJSPropertyAttributeNone },
-        { "stopDebugging", WebCore::stopDebugging, kJSPropertyAttributeNone },
+        { "enableDebugger", WebCore::enableDebugger, kJSPropertyAttributeNone },
+        { "disableDebugger", WebCore::disableDebugger, kJSPropertyAttributeNone },
         { "pauseInDebugger", WebCore::pauseInDebugger, kJSPropertyAttributeNone },
         { "resumeDebugger", WebCore::resumeDebugger, kJSPropertyAttributeNone },
         { "stepOverStatementInDebugger", WebCore::stepOverStatementInDebugger, kJSPropertyAttributeNone },
@@ -1350,13 +1508,16 @@ void InspectorController::windowScriptObjectAvailable()
         { "clearMessages", WebCore::clearMessages, kJSPropertyAttributeNone },
         { "startProfiling", WebCore::startProfiling, kJSPropertyAttributeNone },
         { "stopProfiling", WebCore::stopProfiling, kJSPropertyAttributeNone },
+        { "enableProfiler", WebCore::enableProfiler, kJSPropertyAttributeNone },
+        { "disableProfiler", WebCore::disableProfiler, kJSPropertyAttributeNone },
         { "toggleNodeSearch", WebCore::toggleNodeSearch, kJSPropertyAttributeNone },
 
         // BOOL_INSPECTOR_CALLBACK
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-        { "debuggerAttached", WebCore::debuggerAttached, kJSPropertyAttributeNone },
+        { "debuggerEnabled", WebCore::debuggerEnabled, kJSPropertyAttributeNone },
         { "pauseOnExceptions", WebCore::pauseOnExceptions, kJSPropertyAttributeNone },
 #endif
+        { "profilerEnabled", WebCore::profilerEnabled, kJSPropertyAttributeNone },
         { "isWindowVisible", WebCore::isWindowVisible, kJSPropertyAttributeNone },
         { "searchingForNode", WebCore::searchingForNode, kJSPropertyAttributeNone },
 
@@ -1369,6 +1530,8 @@ void InspectorController::windowScriptObjectAvailable()
 #if ENABLE(DATABASE)
         { "databaseTableNames", WebCore::databaseTableNames, kJSPropertyAttributeNone },
 #endif
+        { "setting", WebCore::setting, kJSPropertyAttributeNone },
+        { "setSetting", WebCore::setSetting, kJSPropertyAttributeNone },
         { "inspectedWindow", WebCore::inspectedWindow, kJSPropertyAttributeNone },
         { "localizedStringsURL", WebCore::localizedStrings, kJSPropertyAttributeNone },
         { "platform", WebCore::platform, kJSPropertyAttributeNone },
@@ -1499,7 +1662,7 @@ void InspectorController::close()
 
     stopUserInitiatedProfiling();
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-    stopDebugging();
+    disableDebugger();
 #endif
     closeWindow();
 
@@ -1521,19 +1684,33 @@ void InspectorController::closeWindow()
     m_client->closeWindow();
 }
 
-void InspectorController::startUserInitiatedProfiling()
+void InspectorController::startUserInitiatedProfilingSoon()
+{
+    m_startProfiling.startOneShot(0);
+}
+
+void InspectorController::startUserInitiatedProfiling(Timer<InspectorController>*)
 {
     if (!enabled())
         return;
 
-    m_recordingUserInitiatedProfile = true;
+    if (!profilerEnabled()) {
+        enableProfiler(true);
+#if ENABLE(JAVASCRIPT_DEBUGGER)
+        JavaScriptDebugServer::shared().recompileAllJSFunctions();
+#endif
+    }
 
-    ExecState* exec = toJSDOMWindow(m_inspectedPage->mainFrame())->globalExec();
+    m_recordingUserInitiatedProfile = true;
     m_currentUserInitiatedProfileNumber = m_nextUserInitiatedProfileNumber++;
+
     UString title = UserInitiatedProfileName;
     title += ".";
     title += UString::from(m_currentUserInitiatedProfileNumber);
+
+    ExecState* exec = toJSDOMWindow(m_inspectedPage->mainFrame())->globalExec();
     Profiler::profiler()->startProfiling(exec, title);
+
     toggleRecordButton(true);
 }
 
@@ -1544,16 +1721,49 @@ void InspectorController::stopUserInitiatedProfiling()
 
     m_recordingUserInitiatedProfile = false;
 
-    ExecState* exec = toJSDOMWindow(m_inspectedPage->mainFrame())->globalExec();
     UString title =  UserInitiatedProfileName;
     title += ".";
     title += UString::from(m_currentUserInitiatedProfileNumber);
+
+    ExecState* exec = toJSDOMWindow(m_inspectedPage->mainFrame())->globalExec();
     RefPtr<Profile> profile = Profiler::profiler()->stopProfiling(exec, title);
     if (profile)
         addProfile(profile, 0, UString());
+
     toggleRecordButton(false);
 }
 
+void InspectorController::enableProfiler(bool skipRecompile)
+{
+    if (m_profilerEnabled)
+        return;
+
+    m_profilerEnabled = true;
+
+
+#if ENABLE(JAVASCRIPT_DEBUGGER)
+    if (!skipRecompile)
+        JavaScriptDebugServer::shared().recompileAllJSFunctionsSoon();
+#endif
+
+    if (m_scriptContext && m_scriptObject)
+        callSimpleFunction(m_scriptContext, m_scriptObject, "profilerWasEnabled");
+}
+
+void InspectorController::disableProfiler()
+{
+    if (!m_profilerEnabled)
+        return;
+
+    m_profilerEnabled = false;
+
+#if ENABLE(JAVASCRIPT_DEBUGGER)
+    JavaScriptDebugServer::shared().recompileAllJSFunctionsSoon();
+#endif
+
+    if (m_scriptContext && m_scriptObject)
+        callSimpleFunction(m_scriptContext, m_scriptObject, "profilerWasDisabled");
+}
 
 static void addHeaders(JSContextRef context, JSObjectRef object, const HTTPHeaderMap& headers, JSValueRef* exception)
 {
@@ -2337,7 +2547,7 @@ void InspectorController::moveWindowBy(float x, float y) const
 }
 
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-void InspectorController::startDebuggingAndReloadInspectedPage()
+void InspectorController::enableDebugger()
 {
     if (!enabled())
         return;
@@ -2352,15 +2562,13 @@ void InspectorController::startDebuggingAndReloadInspectedPage()
     JavaScriptDebugServer::shared().addListener(this, m_inspectedPage);
     JavaScriptDebugServer::shared().clearBreakpoints();
 
-    m_debuggerAttached = true;
+    m_debuggerEnabled = true;
     m_attachDebuggerWhenShown = false;
 
-    callSimpleFunction(m_scriptContext, m_scriptObject, "debuggerAttached");
-
-    m_inspectedPage->mainFrame()->loader()->reload();
+    callSimpleFunction(m_scriptContext, m_scriptObject, "debuggerWasEnabled");
 }
 
-void InspectorController::stopDebugging()
+void InspectorController::disableDebugger()
 {
     if (!enabled())
         return;
@@ -2368,10 +2576,12 @@ void InspectorController::stopDebugging()
     ASSERT(m_inspectedPage);
 
     JavaScriptDebugServer::shared().removeListener(this, m_inspectedPage);
-    m_debuggerAttached = false;
+
+    m_debuggerEnabled = false;
+    m_attachDebuggerWhenShown = false;
 
     if (m_scriptContext && m_scriptObject)
-        callSimpleFunction(m_scriptContext, m_scriptObject, "debuggerDetached");
+        callSimpleFunction(m_scriptContext, m_scriptObject, "debuggerWasDisabled");
 }
 
 JavaScriptCallFrame* InspectorController::currentCallFrame() const
@@ -2391,35 +2601,35 @@ void InspectorController::setPauseOnExceptions(bool pause)
 
 void InspectorController::pauseInDebugger()
 {
-    if (!m_debuggerAttached)
+    if (!m_debuggerEnabled)
         return;
     JavaScriptDebugServer::shared().pauseProgram();
 }
 
 void InspectorController::resumeDebugger()
 {
-    if (!m_debuggerAttached)
+    if (!m_debuggerEnabled)
         return;
     JavaScriptDebugServer::shared().continueProgram();
 }
 
 void InspectorController::stepOverStatementInDebugger()
 {
-    if (!m_debuggerAttached)
+    if (!m_debuggerEnabled)
         return;
     JavaScriptDebugServer::shared().stepOverStatement();
 }
 
 void InspectorController::stepIntoStatementInDebugger()
 {
-    if (!m_debuggerAttached)
+    if (!m_debuggerEnabled)
         return;
     JavaScriptDebugServer::shared().stepIntoStatement();
 }
 
 void InspectorController::stepOutOfFunctionInDebugger()
 {
-    if (!m_debuggerAttached)
+    if (!m_debuggerEnabled)
         return;
     JavaScriptDebugServer::shared().stepOutOfFunction();
 }

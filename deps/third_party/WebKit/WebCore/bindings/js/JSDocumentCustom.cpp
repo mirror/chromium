@@ -47,7 +47,7 @@ void JSDocument::mark()
 {
     JSEventTargetNode::mark();
     markDOMNodesForDocument(impl());
-    markActiveObjectsForDocument(*Heap::heap(this)->globalData(), impl());
+    markActiveObjectsForContext(*Heap::heap(this)->globalData(), impl());
 }
 
 JSValue* JSDocument::location(ExecState* exec) const

@@ -27,8 +27,7 @@
 
 namespace JSC {
     class ExecState;
-    class JSValue;
-};
+}
 
 namespace WebCore {
 
@@ -36,8 +35,10 @@ namespace WebCore {
     class Plugin;
     class String;
 
+#if USE(JSC)
     // FIXME: Generated JSPlugin.cpp doesn't include JSMimeType.h for toJS
     JSC::JSValue* toJS(JSC::ExecState*, MimeType*);
+#endif
 
     class PluginData;
 

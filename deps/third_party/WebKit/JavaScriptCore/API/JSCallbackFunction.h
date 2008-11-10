@@ -41,7 +41,7 @@ public:
     // refactor the code so this override isn't necessary
     static PassRefPtr<StructureID> createStructureID(JSValue* proto) 
     { 
-        return StructureID::create(proto, TypeInfo(ObjectType)); 
+        return StructureID::create(proto, TypeInfo(ObjectType, HasStandardGetOwnPropertySlot)); 
     }
 
 private:

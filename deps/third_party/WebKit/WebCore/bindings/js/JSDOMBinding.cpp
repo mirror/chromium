@@ -26,6 +26,7 @@
 #include "config.h"
 #include "JSDOMBinding.h"
 
+#include "ActiveDOMObject.h"
 #include "DOMCoreException.h"
 #include "Document.h"
 #include "EventException.h"
@@ -43,9 +44,8 @@
 #include "MessagePort.h"
 #include "RangeException.h"
 #include "ScriptController.h"
-#include "XMLHttpRequest.h"
 #include "XMLHttpRequestException.h"
-#include <kjs/PrototypeFunction.h>
+#include <runtime/PrototypeFunction.h>
 
 #if ENABLE(SVG)
 #include "JSSVGException.h"
@@ -132,17 +132,9 @@ DOMObject::~DOMObject()
 
 #endif
 
-class DOMObjectWrapperMap : public JSGlobalData::ClientData {
+class DOMObjectWrapperMap {
 public:
-    static DOMObjectWrapperMap& mapFor(JSGlobalData& globalData)
-    {
-        JSGlobalData::ClientData* clientData = globalData.clientData;
-        if (!clientData) {
-            clientData = new DOMObjectWrapperMap;
-            globalData.clientData = clientData;
-        }
-        return *static_cast<DOMObjectWrapperMap*>(clientData);
-    }
+    static DOMObjectWrapperMap& mapFor(JSGlobalData&);
 
     DOMObject* get(void* objectHandle)
     {
@@ -163,6 +155,61 @@ public:
 private:
     HashMap<void*, DOMObject*> m_map;
 };
+
+// Map from static HashTable instances to per-GlobalData ones.
+class DOMObjectHashTableMap {
+public:
+    static DOMObjectHashTableMap& mapFor(JSGlobalData&);
+
+    ~DOMObjectHashTableMap()
+    {
+        HashMap<const JSC::HashTable*, JSC::HashTable>::iterator mapEnd = m_map.end();
+        for (HashMap<const JSC::HashTable*, JSC::HashTable>::iterator iter = m_map.begin(); iter != m_map.end(); ++iter)
+            iter->second.deleteTable();
+    }
+
+    const JSC::HashTable* get(const JSC::HashTable* staticTable)
+    {
+        HashMap<const JSC::HashTable*, JSC::HashTable>::iterator iter = m_map.find(staticTable);
+        if (iter != m_map.end())
+            return &iter->second;
+        return &m_map.set(staticTable, JSC::HashTable(*staticTable)).first->second;
+    }
+
+private:
+    HashMap<const JSC::HashTable*, JSC::HashTable> m_map;
+};
+
+class WebCoreJSClientData : public JSGlobalData::ClientData {
+public:
+    DOMObjectHashTableMap hashTableMap;
+    DOMObjectWrapperMap wrapperMap;
+};
+
+DOMObjectHashTableMap& DOMObjectHashTableMap::mapFor(JSGlobalData& globalData)
+{
+    JSGlobalData::ClientData* clientData = globalData.clientData;
+    if (!clientData) {
+        clientData = new WebCoreJSClientData;
+        globalData.clientData = clientData;
+    }
+    return static_cast<WebCoreJSClientData*>(clientData)->hashTableMap;
+}
+
+const JSC::HashTable* getHashTableForGlobalData(JSGlobalData& globalData, const JSC::HashTable* staticTable)
+{
+    return DOMObjectHashTableMap::mapFor(globalData).get(staticTable);
+}
+
+inline DOMObjectWrapperMap& DOMObjectWrapperMap::mapFor(JSGlobalData& globalData)
+{
+    JSGlobalData::ClientData* clientData = globalData.clientData;
+    if (!clientData) {
+        clientData = new WebCoreJSClientData;
+        globalData.clientData = clientData;
+    }
+    return static_cast<WebCoreJSClientData*>(clientData)->wrapperMap;
+}
 
 DOMObject* getCachedDOMObjectWrapper(JSGlobalData& globalData, void* objectHandle) 
 {
@@ -240,14 +287,25 @@ void markDOMNodesForDocument(Document* doc)
     }
 }
 
-void markActiveObjectsForDocument(JSGlobalData& globalData, Document* doc)
+void markActiveObjectsForContext(JSGlobalData& globalData, ScriptExecutionContext* scriptExecutionContext)
 {
     // If an element has pending activity that may result in listeners being called
     // (e.g. an XMLHttpRequest), we need to keep all JS wrappers alive.
 
-    const HashSet<XMLHttpRequest*>& xmlHttpRequests = doc->xmlHttpRequests();
-    HashSet<XMLHttpRequest*>::const_iterator requestsEnd = xmlHttpRequests.end();
-    for (HashSet<XMLHttpRequest*>::const_iterator iter = xmlHttpRequests.begin(); iter != requestsEnd; ++iter) {
+    const HashMap<ActiveDOMObject*, void*>& activeObjects = scriptExecutionContext->activeDOMObjects();
+    HashMap<ActiveDOMObject*, void*>::const_iterator activeObjectsEnd = activeObjects.end();
+    for (HashMap<ActiveDOMObject*, void*>::const_iterator iter = activeObjects.begin(); iter != activeObjectsEnd; ++iter) {
+        if (iter->first->hasPendingActivity()) {
+            DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, iter->second);
+            // An object with pending activity must have a wrapper to mark its listeners, so no null check.
+            if (!wrapper->marked())
+                wrapper->mark();
+        }
+    }
+
+    const HashSet<MessagePort*>& messagePorts = scriptExecutionContext->messagePorts();
+    HashSet<MessagePort*>::const_iterator portsEnd = messagePorts.end();
+    for (HashSet<MessagePort*>::const_iterator iter = messagePorts.begin(); iter != portsEnd; ++iter) {
         if ((*iter)->hasPendingActivity()) {
             DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, *iter);
             // An object with pending activity must have a wrapper to mark its listeners, so no null check.
@@ -255,14 +313,35 @@ void markActiveObjectsForDocument(JSGlobalData& globalData, Document* doc)
                 wrapper->mark();
         }
     }
+}
 
-    const HashSet<MessagePort*>& messagePorts = doc->messagePorts();
+void markCrossHeapDependentObjectsForContext(JSGlobalData& globalData, ScriptExecutionContext* scriptExecutionContext)
+{
+    const HashSet<MessagePort*>& messagePorts = scriptExecutionContext->messagePorts();
     HashSet<MessagePort*>::const_iterator portsEnd = messagePorts.end();
     for (HashSet<MessagePort*>::const_iterator iter = messagePorts.begin(); iter != portsEnd; ++iter) {
-        if ((*iter)->hasPendingActivity()) {
-            DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, *iter);
-            // An object with pending activity must have a wrapper to mark its listeners, so no null check.
-            if (!wrapper->marked())
+        MessagePort* port = *iter;
+        RefPtr<MessagePort> entangledPort = port->entangledPort();
+        if (entangledPort) {
+            // No wrapper, or wrapper is already marked - no need to examine cross-heap dependencies.
+            DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, port);
+            if (!wrapper || wrapper->marked())
+                continue;
+
+            // Don't use cross-heap model of marking on same-heap pairs. Otherwise, they will never be destroyed, because a port will mark its entangled one,
+            // and it will never get a chance to be marked as inaccessible. So, the port will keep getting marked in this function.
+            if ((port->scriptExecutionContext() == entangledPort->scriptExecutionContext()) || (port->scriptExecutionContext()->isDocument() && entangledPort->scriptExecutionContext()->isDocument()))
+                continue;
+
+            // If the wrapper hasn't been marked during the mark phase of GC, then the port shouldn't protect its entangled one.
+            // It's important not to call this when there is no wrapper. E.g., if GC is triggered after a MessageChannel is created, but before its ports are used from JS,
+            // irreversibly telling the object that its (not yet existing) wrapper is inaccessible would be wrong. Similarly, ports posted via postMessage() may not
+            // have wrappers until delivered.
+            port->setJSWrapperIsInaccessible();
+
+            // If the port is protected by its entangled one, mark it.
+            // This is an atomic read of a boolean value, no synchronization between threads is required (at least on platforms that guarantee cache coherency).
+            if (!entangledPort->jsWrapperIsInaccessible())
                 wrapper->mark();
         }
     }
@@ -278,6 +357,16 @@ void updateDOMNodeDocument(Node* node, Document* oldDocument, Document* newDocum
     cacheDOMNodeWrapper(newDocument, node, wrapper);
     forgetDOMNode(oldDocument, node);
     addWrapper(wrapper);
+}
+
+void markDOMObjectWrapper(JSGlobalData& globalData, void* object)
+{
+    if (!object)
+        return;
+    DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, object);
+    if (!wrapper || wrapper->marked())
+        return;
+    wrapper->mark();
 }
 
 JSValue* jsStringOrNull(ExecState* exec, const String& s)
@@ -351,7 +440,7 @@ void setDOMException(ExecState* exec, ExceptionCode ec)
     ExceptionCodeDescription description;
     getExceptionCodeDescription(ec, description);
 
-    JSValue* errorObject = 0;
+    JSValue* errorObject = noValue();
     switch (description.type) {
         case DOMExceptionType:
             errorObject = toJS(exec, DOMCoreException::create(description));
@@ -432,26 +521,26 @@ ExecState* execStateFromNode(Node* node)
 
 StructureID* getCachedDOMStructure(ExecState* exec, const ClassInfo* classInfo)
 {
-    JSDOMStructureMap& structures = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->structures();
+    JSDOMStructureMap& structures = static_cast<JSDOMGlobalObject*>(exec->lexicalGlobalObject())->structures();
     return structures.get(classInfo).get();
 }
 
 StructureID* cacheDOMStructure(ExecState* exec, PassRefPtr<StructureID> structureID, const ClassInfo* classInfo)
 {
-    JSDOMStructureMap& structures = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->structures();
+    JSDOMStructureMap& structures = static_cast<JSDOMGlobalObject*>(exec->lexicalGlobalObject())->structures();
     ASSERT(!structures.contains(classInfo));
     return structures.set(classInfo, structureID).first->second.get();
 }
 
 JSObject* getCachedDOMConstructor(ExecState* exec, const ClassInfo* classInfo)
 {
-    JSDOMConstructorMap& constructors = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->constructors();
+    JSDOMConstructorMap& constructors = static_cast<JSDOMGlobalObject*>(exec->lexicalGlobalObject())->constructors();
     return constructors.get(classInfo);
 }
 
 void cacheDOMConstructor(ExecState* exec, const ClassInfo* classInfo, JSObject* constructor)
 {
-    JSDOMConstructorMap& constructors = static_cast<JSDOMWindow*>(exec->lexicalGlobalObject())->constructors();
+    JSDOMConstructorMap& constructors = static_cast<JSDOMGlobalObject*>(exec->lexicalGlobalObject())->constructors();
     ASSERT(!constructors.contains(classInfo));
     constructors.set(classInfo, constructor);
 }

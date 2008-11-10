@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2007 Alp Toker <alp@atoker.com>
+ *  Copyright (C) 2007, 2008 Alp Toker <alp@atoker.com>
  *  Copyright (C) 2007, 2008 Holger Hans Peter Freyther
  *  Copyright (C) 2007 Christian Dywan <christian@twotoasts.de>
  *  Copyright (C) 2008 Collabora Ltd.  All rights reserved.
@@ -125,7 +125,7 @@ static String composeUserAgent()
 
     // WebKit Product
     // FIXME: The WebKit version is hardcoded
-    static const String webKitVersion = "525.1+";
+    static const String webKitVersion = "528.5+";
     ua += "AppleWebKit/" + webKitVersion;
     ua += " (KHTML, like Gecko, ";
     // We mention Safari since many broken sites check for it (OmniWeb does this too)
@@ -231,6 +231,7 @@ void FrameLoaderClient::postProgressFinishedNotification()
 
 void FrameLoaderClient::frameLoaderDestroyed()
 {
+    g_object_unref(m_frame);
     m_frame = 0;
     delete this;
 }
@@ -435,7 +436,7 @@ void FrameLoaderClient::makeRepresentation(DocumentLoader*)
 
 void FrameLoaderClient::forceLayout()
 {
-    notImplemented();
+    core(m_frame)->forceLayout(true);
 }
 
 void FrameLoaderClient::forceLayoutForNonHTML()
@@ -448,11 +449,6 @@ void FrameLoaderClient::setCopiesOnScroll()
     notImplemented();
 }
 
-void FrameLoaderClient::detachedFromParent1()
-{
-    notImplemented();
-}
-
 void FrameLoaderClient::detachedFromParent2()
 {
     notImplemented();
@@ -461,13 +457,6 @@ void FrameLoaderClient::detachedFromParent2()
 void FrameLoaderClient::detachedFromParent3()
 {
     notImplemented();
-}
-
-void FrameLoaderClient::detachedFromParent4()
-{
-    ASSERT(m_frame);
-    g_object_unref(m_frame);
-    m_frame = 0;
 }
 
 void FrameLoaderClient::loadedFromCachedPage()
@@ -772,6 +761,10 @@ void FrameLoaderClient::transitionToCommittedForNewPage()
 
     WebKitWebView* containingWindow = getViewFromFrame(m_frame);
     bool isMainFrame = frame == page->mainFrame();
+
+    if (isMainFrame && frame->view())
+        frame->view()->setParentVisible(false);
+
     frame->setView(0);
 
     FrameView* frameView;
@@ -788,11 +781,14 @@ void FrameLoaderClient::transitionToCommittedForNewPage()
     // FrameViews are created with a ref count of 1. Release this ref since we've assigned it to frame.
     frameView->deref();
 
+    if (isMainFrame)
+        frameView->setParentVisible(true);
+
     if (frame->ownerRenderer())
         frame->ownerRenderer()->setWidget(frameView);
 
-    if (!frame->ownerElement())
-        return;
+    if (HTMLFrameOwnerElement* owner = frame->ownerElement())
+        frame->view()->setCanHaveScrollbars(owner->scrollingMode() != ScrollbarAlwaysOff);
 }
 
 }

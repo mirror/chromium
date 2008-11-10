@@ -220,6 +220,10 @@ public:
         /* [in] */ RECT rect,
         /* [in] */ OLE_HANDLE deviceContext);
 
+    virtual HRESULT STDMETHODCALLTYPE elementDoesAutoComplete(
+        /* [in] */ IDOMElement* element, 
+        /* [retval][out] */ BOOL* result);
+    
     // IWebDocumentText
     virtual HRESULT STDMETHODCALLTYPE supportsTextEncoding( 
         /* [retval][out] */ BOOL* result);
@@ -238,7 +242,6 @@ public:
     virtual void setCopiesOnScroll();
     virtual void detachedFromParent2();
     virtual void detachedFromParent3();
-    virtual void detachedFromParent4();
     virtual void cancelPolicyCheck();
     virtual void dispatchWillSubmitForm(WebCore::FramePolicyFunction, PassRefPtr<WebCore::FormState>);
     virtual void revertToProvisionalState(WebCore::DocumentLoader*);
@@ -303,7 +306,6 @@ public:
     HRESULT setInViewSourceMode(BOOL flag);
     HRESULT elementWithName(BSTR name, IDOMElement* form, IDOMElement** element);
     HRESULT formForElement(IDOMElement* element, IDOMElement** form);
-    HRESULT elementDoesAutoComplete(IDOMElement* element, bool* result);
     HRESULT controlsInForm(IDOMElement* form, IDOMElement** controls, int* cControls);
     HRESULT elementIsPassword(IDOMElement* element, bool* result);
     HRESULT searchForLabelsBeforeElement(const BSTR* labels, int cLabels, IDOMElement* beforeElement, BSTR* result);

@@ -117,11 +117,11 @@ ScrollbarPart RenderScrollbar::partForStyleResolve()
     return s_styleResolvePart;
 }
 
-RenderStyle* RenderScrollbar::getScrollbarPseudoStyle(ScrollbarPart partType, RenderStyle::PseudoId pseudoId)
+PassRefPtr<RenderStyle> RenderScrollbar::getScrollbarPseudoStyle(ScrollbarPart partType, RenderStyle::PseudoId pseudoId)
 {
     s_styleResolvePart = partType;
     s_styleResolveScrollbar = this;
-    RenderStyle* result = m_owner->getPseudoStyle(pseudoId, m_owner->style(), false);
+    RefPtr<RenderStyle> result = m_owner->getUncachedPseudoStyle(pseudoId, m_owner->style());
     s_styleResolvePart = NoPart;
     s_styleResolveScrollbar = 0;
     return result;
@@ -183,7 +183,7 @@ void RenderScrollbar::updateScrollbarPart(ScrollbarPart partType, bool destroy)
     if (partType == NoPart)
         return;
 
-    RenderStyle* partStyle = !destroy ? getScrollbarPseudoStyle(partType,  pseudoForScrollbarPart(partType)) : 0;
+    RefPtr<RenderStyle> partStyle = !destroy ? getScrollbarPseudoStyle(partType,  pseudoForScrollbarPart(partType)) : 0;
     
     bool needRenderer = !destroy && partStyle && partStyle->display() != NONE && partStyle->visibility() == VISIBLE;
     
@@ -221,7 +221,7 @@ void RenderScrollbar::updateScrollbarPart(ScrollbarPart partType, bool destroy)
     }
     
     if (partRenderer)
-        partRenderer->setStyle(partStyle);
+        partRenderer->setStyle(partStyle.release());
 }
 
 void RenderScrollbar::paintPart(GraphicsContext* graphicsContext, ScrollbarPart partType, const IntRect& rect)

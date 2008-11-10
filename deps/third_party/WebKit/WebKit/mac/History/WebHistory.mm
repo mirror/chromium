@@ -76,12 +76,10 @@ NSString *DatesArrayKey = @"WebHistoryDates";
 - (BOOL)removeItem:(WebHistoryItem *)entry;
 - (BOOL)removeItems:(NSArray *)entries;
 - (BOOL)removeAllItems;
-- (void)setLastVisitedTimeInterval:(NSTimeInterval)time forItem:(WebHistoryItem *)item;
 
 - (NSArray *)orderedLastVisitedDays;
 - (NSArray *)orderedItemsLastVisitedOnDay:(NSCalendarDate *)calendarDate;
 - (BOOL)containsURL:(NSURL *)URL;
-- (BOOL)containsItemForURLString:(NSString *)URLString;
 - (WebHistoryItem *)itemForURL:(NSURL *)URL;
 - (WebHistoryItem *)itemForURLString:(NSString *)URLString;
 
@@ -284,24 +282,6 @@ WebHistoryDateKey timeIntervalForBeginningOfDay(NSTimeInterval interval)
     [_entriesByURL setObject:entry forKey:URLString];
 }
 
-- (void)setLastVisitedTimeInterval:(NSTimeInterval)time forItem:(WebHistoryItem *)entry
-{
-#if ASSERT_DISABLED
-    [self removeItemFromDateCaches:entry];
-#else
-    BOOL entryWasPresent = [self removeItemFromDateCaches:entry];
-    ASSERT(entryWasPresent);
-#endif
-    
-    [entry _setLastVisitedTimeInterval:time];
-    [self addItemToDateCaches:entry];
-
-    // Don't send notification until entry is back in the right place in the date caches,
-    // since observers might fetch history by date when they receive the notification.
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:WebHistoryItemChangedNotification object:entry userInfo:nil];
-}
-
 - (BOOL)removeItem:(WebHistoryItem *)entry
 {
     NSString *URLString = [entry URLString];
@@ -396,11 +376,6 @@ WebHistoryDateKey timeIntervalForBeginningOfDay(NSTimeInterval interval)
 - (WebHistoryItem *)itemForURLString:(NSString *)URLString
 {
     return [_entriesByURL objectForKey:URLString];
-}
-
-- (BOOL)containsItemForURLString:(NSString *)URLString
-{
-    return [self itemForURLString:URLString] != nil;
 }
 
 - (BOOL)containsURL:(NSURL *)URL
@@ -779,46 +754,6 @@ WebHistoryDateKey timeIntervalForBeginningOfDay(NSTimeInterval interval)
 
 @implementation WebHistory (WebPrivate)
 
-- (void)addItem:(WebHistoryItem *)entry
-{
-    LOG(History, "adding %@", entry);
-    [_historyPrivate addItem:entry];
-    [self _sendNotification:WebHistoryItemsAddedNotification
-                    entries:[NSArray arrayWithObject:entry]];
-}
-
-- (WebHistoryItem *)addItemForURL:(NSURL *)URL
-{
-    WebHistoryItem *entry = [[WebHistoryItem alloc] initWithURL:URL title:nil];
-    [entry _setLastVisitedTimeInterval:[NSDate timeIntervalSinceReferenceDate]];
-    [self addItem:entry];
-    [entry release];
-    return entry;
-}
-
-- (NSCalendarDate *)ageLimitDate
-{
-    return [_historyPrivate ageLimitDate];
-}
-
-- (BOOL)containsItemForURLString:(NSString *)URLString
-{
-    return [_historyPrivate containsItemForURLString:URLString];
-}
-
-- (void)removeItem:(WebHistoryItem *)entry
-{
-    if ([_historyPrivate removeItem:entry]) {
-        [self _sendNotification:WebHistoryItemsRemovedNotification
-                        entries:[NSArray arrayWithObject:entry]];
-    }
-}
-
-- (void)setLastVisitedTimeInterval:(NSTimeInterval)time forItem:(WebHistoryItem *)entry
-{
-    [_historyPrivate setLastVisitedTimeInterval:time forItem:entry];
-}
-
 - (WebHistoryItem *)_itemForURLString:(NSString *)URLString
 {
     return [_historyPrivate itemForURLString:URLString];
@@ -832,7 +767,12 @@ WebHistoryDateKey timeIntervalForBeginningOfDay(NSTimeInterval interval)
 {
     WebHistoryItem *entry = [[WebHistoryItem alloc] initWithURL:URL title:title];
     [entry _setLastVisitedTimeInterval:[NSDate timeIntervalSinceReferenceDate]];
-    [self addItem:entry];
+
+    LOG(History, "adding %@", entry);
+    [_historyPrivate addItem:entry];
+    [self _sendNotification:WebHistoryItemsAddedNotification
+                    entries:[NSArray arrayWithObject:entry]];
+                    
     [entry release];
 }
 

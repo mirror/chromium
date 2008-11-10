@@ -30,10 +30,10 @@
 #define WebScriptCallFrame_h
 
 #include "WebKit.h"
+#include <runtime/JSValue.h>
 
 namespace JSC {
     class ExecState;
-    class JSValue;
     class UString;
 }
 

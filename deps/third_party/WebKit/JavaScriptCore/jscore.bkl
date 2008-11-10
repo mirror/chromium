@@ -38,9 +38,11 @@ JavaScriptCore Bakefile project file.
     <template id="jscore_base" template="icu,pthreads,wxwk_build_settings">
         <sources>
             $(JSCORE_SOURCES_API)
+            $(JSCORE_DEBUGGER_SOURCES)
             $(JSCORE_SOURCES_KJS)
             $(JSCORE_SOURCES_PCRE)
             $(JSCORE_PROFILER_SOURCES)
+            $(JSCORE_RUNTIME_SOURCES)
             $(JSCORE_VM_SOURCES)
             $(JSCORE_WTF_SOURCES)
         </sources>
@@ -53,9 +55,11 @@ JavaScriptCore Bakefile project file.
         <include>$(SRCDIR)/API</include>
         <include>$(SRCDIR)/DerivedSources/JavaScriptCore</include>
         <include>$(SRCDIR)/ForwardingHeaders</include>
+        <include>$(SRCDIR)/debugger</include>
         <include>$(SRCDIR)/kjs</include>
         <include>$(SRCDIR)/pcre</include>
         <include>$(SRCDIR)/profiler</include>
+        <include>$(SRCDIR)/runtime</include>
         <include>$(SRCDIR)/VM</include>
         <include>$(SRCDIR)/wtf</include>
         <include>$(SRCDIR)/wtf/unicode</include>
@@ -85,9 +89,11 @@ JavaScriptCore Bakefile project file.
         <depends>jscore</depends>
         <include>$(SRCDIR)</include>
         <include>$(WK_ROOT)/JavaScriptCore</include>
+        <include>$(WK_ROOT)/JavaScriptCore/debugger</include>
         <include>$(WK_ROOT)/JavaScriptCore/kjs</include>
         <include>$(WK_ROOT)/JavaScriptCore/pcre</include>
         <include>$(WK_ROOT)/JavaScriptCore/profiler</include>
+        <include>$(WK_ROOT)/JavaScriptCore/runtime</include>
         <include>$(WK_ROOT)/JavaScriptCore/VM</include>
         <include>$(WK_ROOT)/JavaScriptCore/wtf</include>
         <dirname>$(WKOUTPUTDIR)</dirname>

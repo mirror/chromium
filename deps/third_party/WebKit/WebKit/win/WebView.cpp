@@ -105,7 +105,7 @@
 #include <CFNetwork/CFURLCachePriv.h>
 #include <CFNetwork/CFURLProtocolPriv.h>
 #include <CoreFoundation/CoreFoundation.h>
-#include <WebKitSystemInterface/WebKitSystemInterface.h>
+#include <WebKitSystemInterface/WebKitSystemInterface.h> 
 #include <wtf/HashSet.h>
 #include <dimm.h>
 #include <oleacc.h>
@@ -114,13 +114,15 @@
 #include <windowsx.h>
 
 using namespace WebCore;
-using namespace WebCore::EventNames;
 using JSC::JSLock;
 using std::min;
 using std::max;
 
 static HMODULE accessibilityLib;
 static HashSet<WebView*> pendingDeleteBackingStoreSet;
+
+static String osVersion();
+static String webKitVersion();
 
 WebView* kit(Page* page)
 {
@@ -364,12 +366,15 @@ void WebView::setCacheModel(WebCacheModel cacheModel)
     if (s_didSetCacheModel && cacheModel == s_cacheModel)
         return;
 
+#ifdef CFURLCacheCopySharedURLCachePresent
+    RetainPtr<CFURLCacheRef> cfurlCache(AdoptCF, CFURLCacheCopySharedURLCache());
+#else
+    RetainPtr<CFURLCacheRef> cfurlCache = CFURLCacheSharedURLCache();
+#endif
+
     RetainPtr<CFStringRef> cfurlCacheDirectory(AdoptCF, wkCopyFoundationCacheDirectory());
     if (!cfurlCacheDirectory)
         cfurlCacheDirectory.adoptCF(WebCore::localUserSpecificStorageDirectory().createCFString());
-
-
-    CFURLCacheRef cfurlSharedCache = CFURLCacheSharedURLCache();
 
     // As a fudge factor, use 1000 instead of 1024, in case the reported byte 
     // count doesn't align exactly to a megabyte boundary.
@@ -379,6 +384,7 @@ void WebView::setCacheModel(WebCacheModel cacheModel)
     unsigned cacheTotalCapacity = 0;
     unsigned cacheMinDeadCapacity = 0;
     unsigned cacheMaxDeadCapacity = 0;
+    double deadDecodedDataDeletionInterval = 0;
 
     unsigned pageCacheCapacity = 0;
 
@@ -409,7 +415,7 @@ void WebView::setCacheModel(WebCacheModel cacheModel)
         cfurlCacheMemoryCapacity = 0;
 
         // Foundation disk cache capacity (in bytes)
-        cfurlCacheDiskCapacity = CFURLCacheDiskCapacity(cfurlSharedCache);
+        cfurlCacheDiskCapacity = CFURLCacheDiskCapacity(cfurlCache.get());
 
         break;
     }
@@ -497,6 +503,8 @@ void WebView::setCacheModel(WebCacheModel cacheModel)
         // can prove that the overall system gain would justify the regression.
         cacheMaxDeadCapacity = max(24u, cacheMaxDeadCapacity);
 
+        deadDecodedDataDeletionInterval = 60;
+
         // Foundation memory cache capacity (in bytes)
         // (These values are small because WebCore does most caching itself.)
         if (memSize >= 1024)
@@ -526,16 +534,17 @@ void WebView::setCacheModel(WebCacheModel cacheModel)
     }
     default:
         ASSERT_NOT_REACHED();
-    };
+    }
 
     // Don't shrink a big disk cache, since that would cause churn.
-    cfurlCacheDiskCapacity = max(cfurlCacheDiskCapacity, CFURLCacheDiskCapacity(cfurlSharedCache));
+    cfurlCacheDiskCapacity = max(cfurlCacheDiskCapacity, CFURLCacheDiskCapacity(cfurlCache.get()));
 
     cache()->setCapacities(cacheMinDeadCapacity, cacheMaxDeadCapacity, cacheTotalCapacity);
+    cache()->setDeadDecodedDataDeletionInterval(deadDecodedDataDeletionInterval);
     pageCache()->setCapacity(pageCacheCapacity);
 
-    CFURLCacheSetMemoryCapacity(cfurlSharedCache, cfurlCacheMemoryCapacity);
-    CFURLCacheSetDiskCapacity(cfurlSharedCache, cfurlCacheDiskCapacity);
+    CFURLCacheSetMemoryCapacity(cfurlCache.get(), cfurlCacheMemoryCapacity);
+    CFURLCacheSetDiskCapacity(cfurlCache.get(), cfurlCacheDiskCapacity);
 
     s_didSetCacheModel = true;
     s_cacheModel = cacheModel;
@@ -1009,6 +1018,11 @@ bool WebView::canHandleRequest(const WebCore::ResourceRequest& request)
 #endif
 }
 
+String WebView::standardUserAgentWithApplicationName(const String& applicationName)
+{
+    return String::format("Mozilla/5.0 (Windows; U; %s; %s) AppleWebKit/%s (KHTML, like Gecko)%s%s", osVersion().latin1().data(), defaultLanguage().latin1().data(), webKitVersion().latin1().data(), (applicationName.length() ? " " : ""), applicationName.latin1().data());
+}
+
 Page* WebView::page()
 {
     return m_page;
@@ -1421,7 +1435,7 @@ static const KeyPressEntry keyPressEntries[] = {
 
 const char* WebView::interpretKeyEvent(const KeyboardEvent* evt)
 {
-    ASSERT(evt->type() == keydownEvent || evt->type() == keypressEvent);
+    ASSERT(evt->type() == eventNames().keydownEvent || evt->type() == eventNames().keypressEvent);
 
     static HashMap<int, const char*>* keyDownCommandsMap = 0;
     static HashMap<int, const char*>* keyPressCommandsMap = 0;
@@ -1445,7 +1459,7 @@ const char* WebView::interpretKeyEvent(const KeyboardEvent* evt)
     if (evt->ctrlKey())
         modifiers |= CtrlKey;
 
-    if (evt->type() == keydownEvent) {
+    if (evt->type() == eventNames().keydownEvent) {
         int mapKey = modifiers << 16 | evt->keyCode();
         return mapKey ? keyDownCommandsMap->get(mapKey) : 0;
     }
@@ -1981,7 +1995,7 @@ const String& WebView::userAgentForKURL(const KURL&)
         return m_userAgentCustom;
 
     if (!m_userAgentStandard.length())
-        m_userAgentStandard = String::format("Mozilla/5.0 (Windows; U; %s; %s) AppleWebKit/%s (KHTML, like Gecko)%s%s", osVersion().latin1().data(), defaultLanguage().latin1().data(), webKitVersion().latin1().data(), (m_applicationName.length() ? " " : ""), m_applicationName.latin1().data());
+        m_userAgentStandard = WebView::standardUserAgentWithApplicationName(m_applicationName);
     return m_userAgentStandard;
 }
 
@@ -4136,10 +4150,12 @@ HRESULT WebView::notifyPreferencesChanged(IWebNotification* notification)
         return hr;
     settings->setOfflineWebApplicationCacheEnabled(enabled);
 
+#if USE(SAFARI_THEME)
     hr = prefsPrivate->shouldPaintNativeControls(&enabled);
     if (FAILED(hr))
         return hr;
     settings->setShouldPaintNativeControls(!!enabled);
+#endif
 
     if (!m_closeWindowTimer.isActive())
         m_mainFrame->invalidate(); // FIXME
@@ -4378,6 +4394,27 @@ HRESULT STDMETHODCALLTYPE WebView::canHandleRequest(
         return hr;
 
     *result = !!canHandleRequest(requestImpl->resourceRequest());
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebView::standardUserAgentWithApplicationName( 
+    BSTR applicationName,
+    BSTR* groupName)
+{
+    if (!groupName) {
+        ASSERT_NOT_REACHED();
+        return E_POINTER;
+    }
+
+    *groupName;
+
+    if (!applicationName) {
+        ASSERT_NOT_REACHED();
+        return E_POINTER;
+    }
+
+    BString applicationNameBString(applicationName);
+    *groupName = BString(standardUserAgentWithApplicationName(String(applicationNameBString, SysStringLen(applicationNameBString)))).release();
     return S_OK;
 }
 
@@ -4902,6 +4939,27 @@ HRESULT STDMETHODCALLTYPE WebView::transparent(BOOL* transparent)
         return E_POINTER;
 
     *transparent = this->transparent() ? TRUE : FALSE;
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebView::setCookieEnabled(BOOL enable)
+{
+    if (!m_page)
+        return E_FAIL;
+
+    m_page->setCookieEnabled(enable);
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebView::cookieEnabled(BOOL* enabled)
+{
+    if (!enabled)
+        return E_POINTER;
+
+    if (!m_page)
+        return E_FAIL;
+
+    *enabled = m_page->cookieEnabled();
     return S_OK;
 }
 

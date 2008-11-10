@@ -42,15 +42,14 @@
 #include "StringSourceProvider.h"
 
 #include <kjs/completion.h>
-#include <kjs/debugger.h>
-#include <kjs/JSLock.h>
+#include <debugger/Debugger.h>
+#include <runtime/JSLock.h>
 
 #if ENABLE(NETSCAPE_PLUGIN_API)
 #include "HTMLPlugInElement.h"
 #endif
 
 using namespace JSC;
-using namespace WebCore::EventNames;
 
 namespace WebCore {
 
@@ -121,7 +120,7 @@ JSValue* ScriptController::evaluate(const String& sourceURL, int baseLine, const
         m_frame->domWindow()->console()->reportException(exec, comp.value());
 
     m_sourceURL = savedSourceURL;
-    return 0;
+    return noValue();
 }
 
 void ScriptController::clearWindowShell()
@@ -142,7 +141,7 @@ void ScriptController::clearWindowShell()
     gcController().garbageCollectSoon();
 }
 
-PassRefPtr<EventListener> ScriptController::createHTMLEventHandler(const String& functionName, const String& code, Node* node)
+PassRefPtr<EventListener> ScriptController::createInlineEventListener(const String& functionName, const String& code, Node* node)
 {
     initScriptIfNeeded();
     JSLock lock(false);
@@ -157,15 +156,6 @@ PassRefPtr<EventListener> ScriptController::createSVGEventHandler(const String& 
     return JSLazyEventListener::create(JSLazyEventListener::SVGLazyEventListener, functionName, code, m_windowShell->window(), node, m_handlerLineno);
 }
 #endif
-
-void ScriptController::finishedWithEvent(Event* event)
-{
-    // This is called when the DOM implementation has finished with a particular event. This
-    // is the case in sitations where an event has been created just for temporary usage,
-    // e.g. an image load or mouse move. Once the event has been dispatched, it is forgotten
-    // by the DOM implementation and so does not need to be cached still by the interpreter
-    forgetDOMObject(*globalObject()->globalData(), event);
-}
 
 void ScriptController::initScript()
 {
@@ -193,15 +183,15 @@ bool ScriptController::processingUserGesture() const
     if (Event* event = m_windowShell->window()->currentEvent()) {
         const AtomicString& type = event->type();
         if ( // mouse events
-            type == clickEvent || type == mousedownEvent ||
-            type == mouseupEvent || type == dblclickEvent ||
+            type == eventNames().clickEvent || type == eventNames().mousedownEvent ||
+            type == eventNames().mouseupEvent || type == eventNames().dblclickEvent ||
             // keyboard events
-            type == keydownEvent || type == keypressEvent ||
-            type == keyupEvent ||
+            type == eventNames().keydownEvent || type == eventNames().keypressEvent ||
+            type == eventNames().keyupEvent ||
             // other accepted events
-            type == selectEvent || type == changeEvent ||
-            type == focusEvent || type == blurEvent ||
-            type == submitEvent)
+            type == eventNames().selectEvent || type == eventNames().changeEvent ||
+            type == eventNames().focusEvent || type == eventNames().blurEvent ||
+            type == eventNames().submitEvent)
             return true;
     } else { // no event
         if (m_sourceURL && m_sourceURL->isNull() && !m_processingTimerCallback) {

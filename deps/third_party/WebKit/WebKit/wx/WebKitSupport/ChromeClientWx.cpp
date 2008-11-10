@@ -27,6 +27,7 @@
 
 #include "config.h"
 #include "ChromeClientWx.h"
+#include "FileChooser.h"
 #include "FloatRect.h"
 #include "FrameLoadRequest.h"
 #include "NotImplemented.h"
@@ -348,6 +349,11 @@ void ChromeClientWx::exceededDatabaseQuota(Frame*, const String&)
 }
 
 void ChromeClientWx::scroll(const IntSize&, const IntRect&, const IntRect&)
+{
+    notImplemented();
+}
+
+void ChromeClientWx::runOpenPanel(Frame*, PassRefPtr<FileChooser>)
 {
     notImplemented();
 }

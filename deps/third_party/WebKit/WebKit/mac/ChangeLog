@@ -1,3 +1,649 @@
+2008-11-01  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22030
+        Make EventNames usable from multiple threads
+
+        * WebView/WebHTMLView.mm:
+        * WebView/WebPDFView.mm:
+        (-[WebPDFView PDFViewWillClickOnLink:withURL:]):
+        Access event names via eventNames() function.
+
+2008-11-04  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Delete a forwarding header for a file that no longer exists.
+
+        * ForwardingHeaders/kjs/string_object.h: Removed.
+
+2008-11-03  Cameron Zwarich  <zwarich@apple.com>
+
+        Rubber-stamped by Maciej Stachowiak.
+
+        Move more files into the runtime subdirectory of JavaScriptCore.
+
+        * ForwardingHeaders/kjs/JSLock.h: Removed.
+        * ForwardingHeaders/kjs/SymbolTable.h: Removed.
+        * ForwardingHeaders/runtime/JSLock.h: Copied from ForwardingHeaders/kjs/JSLock.h.
+        * ForwardingHeaders/runtime/SymbolTable.h: Copied from ForwardingHeaders/kjs/SymbolTable.h.
+        * Misc/WebCoreStatistics.mm:
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        * Plugins/WebBaseNetscapePluginView.mm:
+        * Plugins/WebPluginController.mm:
+        * WebView/WebFrame.mm:
+        * WebView/WebScriptDebugDelegate.mm:
+        * WebView/WebView.mm:
+
+2008-11-03  Mark Rowe  <mrowe@apple.com>
+
+        Fix the 64-bit build.
+
+        Pull the frequently-made check for drawingModel == NPDrawingModelQuickDraw out into a
+        helper function to avoid #ifdef'ing all of the new places that this check is made.
+
+        A few other #ifdef's are moved inside functions to allow their call sites to remain #ifdef-free,
+        and we rely on the compiler to optimise out the check (which will always be false in 64-bit) instead.
+
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (isDrawingModelQuickDraw):
+        (-[WebBaseNetscapePluginView fixWindowPort]):
+        (-[WebBaseNetscapePluginView saveAndSetNewPortStateForUpdate:]):
+        (-[WebBaseNetscapePluginView sendEvent:isDrawRect:]):
+        (-[WebBaseNetscapePluginView updateAndSetWindow]):
+        (-[WebBaseNetscapePluginView start]):
+        (-[WebBaseNetscapePluginView tellQuickTimeToChill]):
+        (-[WebBaseNetscapePluginView viewWillMoveToWindow:]):
+        (-[WebBaseNetscapePluginView _viewHasMoved]):
+
+2008-11-03  Maciej Stachowiak  <mjs@apple.com>
+
+        Reviewed by Kevin Decker.
+        
+        - fix release build (and unitialized variable for CG drawing model!)
+
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView sendEvent:isDrawRect:]): initialize portState in all code paths
+
+2008-11-03  Kevin Decker  <kdecker@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22053
+        
+        This patch adds initial support for the NPDrawingModelCoreAnimation drawing model. 
+                
+        * Plugins/WebBaseNetscapePluginView.h: Added _layer ivar.
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView saveAndSetNewPortStateForUpdate:]): ASSERT this is not a plug-in using NPDrawingModelCoreAnimation.
+        (-[WebBaseNetscapePluginView restorePortState:]): Ditto.
+        (-[WebBaseNetscapePluginView sendEvent:isDrawRect:]): Slightly refactored a small block of code which with the PortState.
+        Plug-ins using the NPDrawingModelCoreAnimation drawing model have no PortState. 
+        (-[WebBaseNetscapePluginView isNewWindowEqualToOldWindow]): ASSERT this is not a plug-in using NPDrawingModelCoreAnimation
+        (-[WebBaseNetscapePluginView updateAndSetWindow]):  Ditto.
+        (-[WebBaseNetscapePluginView setWindowIfNecessary]): Ditto.
+        (-[WebBaseNetscapePluginView start]): If the plug-in is a plug-in using the Core Animation model, request a layer from it.
+        (-[WebBaseNetscapePluginView drawRect:]): Return early for NPDrawingModelCoreAnimation plug-ins.
+        (-[WebBaseNetscapePluginView getVariable:value:]): Tell plug-ins running on post-Tiger systems WebKit supports
+         NPDrawingModelCoreAnimation.
+        (-[WebBaseNetscapePluginView setVariable:value:]): Added the new NPDrawingModelCoreAnimation case, which initializes drawingMode.
+        (-[WebBaseNetscapePluginView _viewHasMoved]): Reworded the conditional call to updateAndSetWindow to be specific to 
+        CoreGraphics and QuickDraw plug-ins.
+
+2008-10-31  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Bug 22019: Move JSC::Interpreter::shouldPrintExceptions() to WebCore::Console
+        <https://bugs.webkit.org/show_bug.cgi?id=22019>
+
+        * Misc/WebCoreStatistics.mm:
+        (+[WebCoreStatistics shouldPrintExceptions]):
+        (+[WebCoreStatistics setShouldPrintExceptions:]):
+
+2008-10-31  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by John Sullivan.
+
+        - WebKit/mac part of <rdar://problem/6334641> Add WebView SPI for disabling document.cookie
+
+        * WebView/WebView.mm:
+        (-[WebView _cookieEnabled]):
+        (-[WebView _setCookieEnabled:]):
+        * WebView/WebViewPrivate.h:
+
+2008-10-31  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Darin Adler
+
+        [WebHistory setLastVisitedTimeInterval:forItem] was internal to WebHistory.mm and 
+        completely unused.  Nuke it!
+
+        * History/WebHistory.mm:
+
+2008-10-31  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/4361197> Screen Reader's Item Chooser shows scroll area for WebKit Application window
+
+        If a WebFrameView does not allow scrolling, its scrollbars should not appear in the accessibility hierarchy.
+
+        * WebView/WebDynamicScrollBarsView.m:
+        (-[WebDynamicScrollBarsView accessibilityIsIgnored]):
+
+2008-10-30  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Jon Homeycutt.
+
+        Explicitly default to building for only the native architecture in debug and release builds.
+
+        * Configurations/DebugRelease.xcconfig:
+
+2008-10-30  Cameron Zwarich  <zwarich@apple.com>
+
+        Rubber-stamped by Sam Weinig.
+
+        Create a debugger directory in JavaScriptCore and move the relevant
+        files to it.
+
+        * ForwardingHeaders/debugger: Added.
+        * ForwardingHeaders/debugger/DebuggerCallFrame.h: Copied from ForwardingHeaders/kjs/DebuggerCallFrame.h.
+        * ForwardingHeaders/kjs/DebuggerCallFrame.h: Removed.
+        * WebView/WebScriptDebugDelegate.mm:
+        * WebView/WebScriptDebugger.h:
+        * WebView/WebScriptDebugger.mm:
+
+2008-10-29  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Kevin Decker.
+
+        * Plugins/WebBaseNetscapePluginStream.h:
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (WebNetscapePluginStream::WebNetscapePluginStream):
+        (WebNetscapePluginStream::~WebNetscapePluginStream):
+        (WebNetscapePluginStream::start):
+
+2008-10-29  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove an unused forward class declaration.
+        
+        * Plugins/WebBaseNetscapePluginView.h:
+
+2008-10-29  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove WebBaseNetscapePluginViewInternal.h and WebBaseNetscapePluginViewPrivate.h.
+
+        * Plugins/WebBaseNetscapePluginView.h:
+        * Plugins/WebBaseNetscapePluginViewInternal.h: Removed.
+        * Plugins/WebBaseNetscapePluginViewPrivate.h: Removed.
+        * Plugins/WebNetscapePluginEventHandler.mm:
+        * Plugins/WebNetscapePluginEventHandlerCarbon.mm:
+        * Plugins/WebNetscapePluginEventHandlerCocoa.mm:
+        * Plugins/npapi.mm:
+        * WebView/WebHTMLView.mm:
+
+2008-10-29  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove WebNetscapePluginEmbeddedView, it adds nothing extra now. 
+        
+        Remove WebNetscapePlugInStreamLoaderClient since WebNetscapePluginStream is the client now.
+        
+        * Plugins/WebBaseNetscapePluginStream.h:
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        * Plugins/WebBaseNetscapePluginView.h:
+        * Plugins/WebKitPluginContainerView.h:
+        * Plugins/WebNetscapePluginEmbeddedView.h: Removed.
+        * Plugins/WebNetscapePluginEmbeddedView.mm: Removed.
+        * Plugins/WebNetscapePluginEventHandler.h:
+        * WebCoreSupport/WebFrameLoaderClient.mm:
+        (NetscapePluginWidget::NetscapePluginWidget):
+        (NetscapePluginWidget::handleEvent):
+        (WebFrameLoaderClient::createPlugin):
+        * WebCoreSupport/WebNetscapePlugInStreamLoaderClient.h: Removed.
+        * WebCoreSupport/WebNetscapePlugInStreamLoaderClient.mm: Removed.
+        * WebView/WebHTMLView.mm:
+        (-[NSArray _web_makePluginViewsPerformSelector:withObject:]):
+
+2008-10-29  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove the WebBaseNetscapePluginStream Objective-C object.
+        
+        * Plugins/WebBaseNetscapePluginStream.h:
+        (WebNetscapePluginStream::create):
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (WebNetscapePluginStream::WebNetscapePluginStream):
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView pluginView:receivedResponse:]):
+        (-[WebBaseNetscapePluginView evaluateJavaScriptPluginRequest:]):
+        (-[WebBaseNetscapePluginView loadRequest:inTarget:withNotifyData:sendNotification:]):
+
+2008-10-29  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Sam Weinig
+
+        https://bugs.webkit.org/show_bug.cgi?id=21952
+        
+        Address an outstanding FIXME by removing unused SPI
+
+        * History/WebHistory.mm:
+        (-[WebHistory _addItemForURL:title:]): Fold addItem: into this method
+
+        * History/WebHistoryPrivate.h: Removed unused/unneccessary SPI
+
+2008-10-28  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Darin Adler.
+        
+        <rdar://problem/5188560> REGRESSION: Spell checker doesn't clear spelling/grammar marker after error is marked as Ignored
+
+        * WebView/WebHTMLView.mm: IgnoreSpelling is now a WebCore command.  That command handles
+        calling back into WebKit to perform the cross platform work that was removed in this change.
+
+2008-10-28  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Move ForwardingHeaders to their correct location after the creation of
+        the runtime directory in JavaScriptCore.
+
+        * ForwardingHeaders/kjs/JSFunction.h: Removed.
+        * ForwardingHeaders/kjs/JSObject.h: Removed.
+        * ForwardingHeaders/kjs/JSString.h: Removed.
+        * ForwardingHeaders/kjs/JSValue.h: Removed.
+        * ForwardingHeaders/runtime: Added.
+        * ForwardingHeaders/runtime/JSFunction.h: Copied from ForwardingHeaders/kjs/JSFunction.h.
+        * ForwardingHeaders/runtime/JSObject.h: Copied from ForwardingHeaders/kjs/JSObject.h.
+        * ForwardingHeaders/runtime/JSString.h: Copied from ForwardingHeaders/kjs/JSString.h.
+        * ForwardingHeaders/runtime/JSValue.h: Copied from ForwardingHeaders/kjs/JSValue.h.
+        * WebView/WebScriptDebugDelegate.mm:
+        * WebView/WebScriptDebugger.mm:
+        * WebView/WebView.mm:
+
+2008-10-28  Adele Peterson  <adele@apple.com>
+
+        Reviewed by John Sullivan.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=21880
+        "files" string for multifile uploads needs to be localized
+
+        * WebCoreSupport/WebViewFactory.mm: (-[WebViewFactory multipleFileUploadTextForNumberOfFiles:]):
+        Added.
+
+2008-10-28  Timothy Hatcher  <timothy@apple.com>
+
+        Add WebInspector methods to enable the profiler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21927
+
+        <rdar://problem/6211578> Make the JavaScript profiler opt-in, so it does
+        not slow down JavaScript all the time
+
+        Reviewed by Darin Adler and Kevin McCullough.
+
+        * WebInspector/WebInspector.h:
+        * WebInspector/WebInspector.mm:
+        (-[WebInspector isJavaScriptProfilingEnabled]): Added. Calls InspectorController::profilerEnabled.
+        (-[WebInspector setJavaScriptProfilingEnabled:]): Added. Call InspectorController's disableProfiler
+        or enableProfiler methods.
+
+2008-10-27  Timothy Hatcher  <timothy@apple.com>
+
+        Rename a few methods related to attaching and detaching the debugger.
+
+        * Rename attachDebugger to enableDebugger.
+        * Rename detachDebugger to disableDebugger.
+        * Rename the debuggerAttached getter to debuggerEnabled.
+
+        Reviewed by Darin Adler.
+
+        * WebInspector/WebInspector.mm:
+        (-[WebInspector isDebuggingJavaScript]):
+        (-[WebInspector startDebuggingJavaScript:]):
+        (-[WebInspector stopDebuggingJavaScript:]):
+
+2008-10-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Maciej Stachowiak.
+
+        Use the C++ stream object for JS requests as well.
+        
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView evaluateJavaScriptPluginRequest:]):
+        (-[WebBaseNetscapePluginView destroyStream:reason:]):
+
+2008-10-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Dan Bernstein.
+        
+        Use the C++ stream object in WebBaseNetscapePluginView. Use a HashSet of RefPtrs to keep track of the streams.
+        
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (WebNetscapePluginStream::~WebNetscapePluginStream):
+        (WebNetscapePluginStream::setPlugin):
+        (WebNetscapePluginStream::startStream):
+        (WebNetscapePluginStream::destroyStream):
+        (WebNetscapePluginStream::destroyStreamWithReason):
+        (WebNetscapePluginStream::cancelLoadAndDestroyStreamWithError):
+        (WebNetscapePluginStream::deliverData):
+        * Plugins/WebBaseNetscapePluginView.h:
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView stop]):
+        (-[WebBaseNetscapePluginView initWithFrame:pluginPackage:URL:baseURL:MIMEType:attributeKeys:attributeValues:loadManually:DOMElement:]):
+        (-[WebBaseNetscapePluginView disconnectStream:]):
+        (-[WebBaseNetscapePluginView dealloc]):
+        (-[WebBaseNetscapePluginView pluginView:receivedResponse:]):
+        (-[WebBaseNetscapePluginView pluginView:receivedData:]):
+        (-[WebBaseNetscapePluginView pluginView:receivedError:]):
+        (-[WebBaseNetscapePluginView pluginViewFinishedLoading:]):
+        (-[WebBaseNetscapePluginView loadRequest:inTarget:withNotifyData:sendNotification:]):
+
+2008-10-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Dan Bernstein.
+        
+        Move code from dealloc and finalize to the WebNetscapePluginStream destructor.
+        
+        * Plugins/WebBaseNetscapePluginStream.h:
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (WebNetscapePluginStream::~WebNetscapePluginStream):
+        (-[WebBaseNetscapePluginStream dealloc]):
+        (-[WebBaseNetscapePluginStream finalize]):
+
+2008-10-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Get rid of WebNetscapePlugInStreamLoaderClient, the plug-in stream is its own client.
+        
+        * Plugins/WebBaseNetscapePluginStream.h:
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (WebNetscapePluginStream::WebNetscapePluginStream):
+        (-[WebBaseNetscapePluginStream dealloc]):
+        (-[WebBaseNetscapePluginStream finalize]):
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView pluginView:receivedError:]):
+        (-[WebBaseNetscapePluginView pluginViewFinishedLoading:]):
+        (-[WebBaseNetscapePluginView evaluateJavaScriptPluginRequest:]):
+        (-[WebBaseNetscapePluginView destroyStream:reason:]):
+
+2008-10-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Change the Obj-C init methods to simply call WebNetscapePluginStream::create.
+        
+        * Plugins/WebBaseNetscapePluginStream.h:
+        (WebNetscapePluginStream::create):
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (-[WebBaseNetscapePluginStream initWithFrameLoader:]):
+        (WebNetscapePluginStream::WebNetscapePluginStream):
+        (-[WebBaseNetscapePluginStream initWithRequest:plugin:notifyData:sendNotification:]):
+
+2008-10-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Kevin Decker.
+
+        Convert more code over to C++.
+        
+        * Plugins/WebBaseNetscapePluginStream.h:
+        (WebNetscapePluginStream::plugin):
+        (WebNetscapePluginStream::setRequestURL):
+        Convert to C++.
+
+        * Plugins/WebBaseNetscapePluginStream.mm:
+        (WebNetscapePluginStream::start):
+        (WebNetscapePluginStream::stop):
+        Ditto.
+        
+        (WebNetscapePluginStream::startStreamWithResponse):
+        Ditto.
+        
+        (-[WebBaseNetscapePluginStream startStreamWithResponse:]):
+        Call the C++ version.
+        
+        (-[WebBaseNetscapePluginStream impl]):
+        New accessor for the C++ class.
+        
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView pluginView:receivedData:]):
+        (-[WebBaseNetscapePluginView loadRequest:inTarget:withNotifyData:sendNotification:]):
+        (-[WebBaseNetscapePluginView destroyStream:reason:]):
+        Call the C++ methods.
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=21759
+        Layering violation: FileChooser should not depend on Document/Frame/Page
+
+        * WebCoreSupport/WebChromeClient.h:
+        * WebCoreSupport/WebChromeClient.mm:
+        (WebChromeClient::runOpenPanel):
+
+2008-10-24  Anders Carlsson  <andersca@apple.com>
+
+        Fix Tiger build.
+        
+        * WebView/WebUIDelegate.h:
+
+2008-10-24  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        <rdar://problem/5440917> Support NPN_Construct
+        
+        Set construct.
+        
+        * Plugins/WebNetscapePluginPackage.m:
+        (-[WebNetscapePluginPackage load]):
+
+2008-10-24  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Tim Hatcher.
+
+        <rdar://problem/6119711> Remove the dependency on Foundation's private __COCOA_FORMAL_PROTOCOLS__ define.
+
+        * Misc/EmptyProtocolDefinitions.h:
+
+2008-10-24  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        WebKit part of fix for <rdar://problem/5839256> FILE CONTROL: multi-file upload.
+
+        * WebCoreSupport/WebChromeClient.mm:
+        (WebChromeClient::runOpenPanel):
+        (-[WebOpenPanelResultListener chooseFilenames:]):
+        * WebView/WebUIDelegate.h:
+
+2008-10-24  Timothy Hatcher  <timothy@apple.com>
+
+        Implement new InspectorClient methods to work with Settings.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21856
+
+        Reviewed by Darin Adler.
+
+        * WebCoreSupport/WebInspectorClient.h: Add the new methods and
+        guard the ObjC parts of the header.
+
+2008-10-24  Darin Adler  <darin@apple.com>
+
+        - finish rolling out https://bugs.webkit.org/show_bug.cgi?id=21732
+
+        * WebView/WebFrame.mm:
+        (-[WebFrame _stringByEvaluatingJavaScriptFromString:forceUserGesture:]):
+        * WebView/WebScriptDebugDelegate.mm:
+        (-[WebScriptCallFrame _convertValueToObjcValue:]):
+        (-[WebScriptCallFrame exception]):
+        (-[WebScriptCallFrame evaluateWebScript:]):
+        * WebView/WebView.mm:
+        (aeDescFromJSValue):
+        (-[WebView aeDescByEvaluatingJavaScriptFromString:]):
+        Use JSValue* instead of JSValuePtr.
+
+2008-10-23  Mark Rowe  <mrowe@apple.com>
+
+        Build fix.
+
+        * Misc/WebKitErrors.m:
+        (-[NSError _initWithPluginErrorCode:contentURL:pluginPageURL:pluginName:MIMEType:]):
+
+2008-10-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Remove FrameLoaderClient::detachedFromParent4.  It is no longer used by any port.
+
+        * WebCoreSupport/WebFrameLoaderClient.h:
+        * WebCoreSupport/WebFrameLoaderClient.mm:
+
+2008-10-20  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        <rdar://problem/6277777> REGRESSION (r36954): XMLHttpRequest not working when
+        certain WebView delegate actions are taken
+
+        * WebView/WebFrame.mm: (-[WebFrame _attachScriptDebugger]): Don't accidentally create
+        a window shell if there is none yet.
+
+2008-10-19  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - next step of https://bugs.webkit.org/show_bug.cgi?id=21732
+          improve performance by eliminating JSValue as a base class for JSCell
+
+        Remove most uses of JSValue, which will be removed in a future patch.
+
+        * WebView/WebFrame.mm:
+        (-[WebFrame _stringByEvaluatingJavaScriptFromString:forceUserGesture:]):
+        Use JSValuePtr instead of JSValue.
+        * WebView/WebScriptDebugger.h: Removed declaration of JSValue.
+
+2008-10-18  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - next step of https://bugs.webkit.org/show_bug.cgi?id=21732
+          improve performance by eliminating JSValue as a base class for JSCell
+
+        Tweak a little more to get closer to where we can make JSValuePtr a class.
+
+        * WebView/WebScriptDebugDelegate.mm:
+        (-[WebScriptCallFrame _convertValueToObjcValue:]): Use JSValuePtr.
+        (-[WebScriptCallFrame exception]): Ditto.
+        (-[WebScriptCallFrame evaluateWebScript:]): Ditto. And noValue.
+        * WebView/WebScriptDebugger.mm:
+        (WebScriptDebugger::WebScriptDebugger): Use new DebuggerCallFrame
+        constructor that doesn't require explicitly passing an exception.
+        * WebView/WebView.mm:
+        (aeDescFromJSValue): Use JSValuePtr.
+        (-[WebView aeDescByEvaluatingJavaScriptFromString:]): Ditto.
+
+2008-10-18  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - WebKit/mac part of https://bugs.webkit.org/show_bug.cgi?id=21736
+          Long-dead decoded image data make up for most of the object cache's memory use over time
+
+        * WebView/WebView.mm:
+        (+[WebView _setCacheModel:]): In the primary web browser model, set the
+        cache's dead decoded data deletion interval to 60 seconds.
+
+2008-10-15  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Jon Honeycutt.
+
+        Fix a leak of a CFStringRef reported by the build bot.
+
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView loadRequest:inTarget:withNotifyData:sendNotification:]): Use a autoreleased
+        NSString rather than manually releasing a CFStringRef when we're done with it.
+
+2008-10-15  Kenneth Russell  <kenneth.russell@sun.com>
+
+        Reviewed and landed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21572
+        
+        Initialize pluginFunc.size to the correct size before calling NP_GetEntryPoints.
+        
+        * Plugins/WebNetscapePluginPackage.m:
+        (-[WebNetscapePluginPackage load]):
+
+2008-10-15  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        <rdar://problem/6272508> Crash occurs after loading flash content at http://www.macrumors.com/
+
+        Restore some code related to the CoreGraphics drawing model that was misplaced in r37131.
+
+        * Plugins/WebBaseNetscapePluginView.mm:
+        (-[WebBaseNetscapePluginView invalidateRegion:]):
+        (-[WebBaseNetscapePluginView setVariable:value:]):
+
+2008-10-15  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Fixed https://bugs.webkit.org/show_bug.cgi?id=21345
+        Start the debugger without reloading the inspected page
+
+        * WebInspector/WebInspector.mm:
+        (-[WebInspector startDebuggingJavaScript:]): Updated for rename.
+
+2008-10-14  Maxime Britto  <britto@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Added SPI to use WebCore's TextIterator with WebKit.
+
+        * WebView/WebTextIterator.h: Added.
+        * WebView/WebTextIterator.mm: Added.
+        (-[WebTextIteratorPrivate dealloc]):
+        (-[WebTextIterator dealloc]):
+        (-[WebTextIterator initWithRange:]): Creates a TextIterator 
+        instance
+        (-[WebTextIterator advance]): Asks the iterator to advance() .
+        (-[WebTextIterator currentNode]): Returns the current DOMNode from 
+        the iterator
+        (-[WebTextIterator currentText]): Returns the current text from the 
+        iterator
+        (-[WebTextIterator atEnd]): Indicated whether the iterator has 
+        reached the end of the range.
+        * WebView/WebView.h:
+        * WebView/WebView.mm:
+        (-[WebView textIteratorForRect:]): Returns a WebTextIterator with 
+        the DOMRange contained in the rectangle given as a parameter.
+
+2008-10-15  Timothy Hatcher  <timothy@apple.com>
+
+        Clean up user agent generation to simplify the _standardUserAgentWithApplicationName:
+        class method to not require a WebKit version.
+
+        Reviewed by Darin Adler.
+
+        * WebView/WebView.mm:
+        (+[WebView _standardUserAgentWithApplicationName:]): Create the WebKit version.
+        (-[WebView WebCore::_userAgentForURL:]): Use the simplified _standardUserAgentWithApplicationName:.
+        Remove code that created the WebKit version.
+        * WebView/WebViewPrivate.h: Change the method name of _standardUserAgentWithApplicationName:.
+
 2008-10-14  Timothy Hatcher  <timothy@apple.com>
 
         Make the user agent generation method a class method and cache the WebKit
@@ -1314,7 +1960,7 @@
 
         Bring back shared JSGlobalData and implicit locking, because too many clients rely on it.
 
-        * ForwardingHeaders/kjs/JSLock.h: Added.
+        * ForwardingHeaders/runtime/JSLock.h: Added.
         * Misc/WebCoreStatistics.mm:
         (+[WebCoreStatistics javaScriptObjectsCount]):
         (+[WebCoreStatistics javaScriptGlobalObjectsCount]):
@@ -1880,7 +2526,7 @@
         Eliminate JSLock (it was already disabled, removing the stub implementaion and all
         call sites now).
 
-        * ForwardingHeaders/kjs/JSLock.h: Removed.
+        * ForwardingHeaders/runtime/JSLock.h: Removed.
         * Misc/WebCoreStatistics.mm:
         (+[WebCoreStatistics javaScriptObjectsCount]):
         (+[WebCoreStatistics javaScriptGlobalObjectsCount]):

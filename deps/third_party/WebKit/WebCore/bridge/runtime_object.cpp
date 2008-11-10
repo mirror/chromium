@@ -29,8 +29,8 @@
 #include "JSDOMBinding.h"
 #include "runtime_method.h"
 #include "runtime_root.h"
-#include <kjs/Error.h>
-#include <kjs/ObjectPrototype.h>
+#include <runtime/Error.h>
+#include <runtime/ObjectPrototype.h>
 
 using namespace WebCore;
 
@@ -68,7 +68,7 @@ void RuntimeObjectImp::invalidate()
 
 JSValue* RuntimeObjectImp::fallbackObjectGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    RuntimeObjectImp *thisObj = static_cast<RuntimeObjectImp *>(slot.slotBase());
+    RuntimeObjectImp* thisObj = static_cast<RuntimeObjectImp*>(asObject(slot.slotBase()));
     RefPtr<Instance> instance = thisObj->instance;
 
     if (!instance)
@@ -86,7 +86,7 @@ JSValue* RuntimeObjectImp::fallbackObjectGetter(ExecState* exec, const Identifie
 
 JSValue* RuntimeObjectImp::fieldGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {    
-    RuntimeObjectImp *thisObj = static_cast<RuntimeObjectImp *>(slot.slotBase());
+    RuntimeObjectImp* thisObj = static_cast<RuntimeObjectImp*>(asObject(slot.slotBase()));
     RefPtr<Instance> instance = thisObj->instance;
 
     if (!instance)
@@ -96,7 +96,7 @@ JSValue* RuntimeObjectImp::fieldGetter(ExecState* exec, const Identifier& proper
 
     Class *aClass = instance->getClass();
     Field* aField = aClass->fieldNamed(propertyName, instance.get());
-    JSValue *result = instance->getValueOfField(exec, aField); 
+    JSValue* result = instance->getValueOfField(exec, aField); 
     
     instance->end();
             
@@ -105,7 +105,7 @@ JSValue* RuntimeObjectImp::fieldGetter(ExecState* exec, const Identifier& proper
 
 JSValue* RuntimeObjectImp::methodGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    RuntimeObjectImp *thisObj = static_cast<RuntimeObjectImp *>(slot.slotBase());
+    RuntimeObjectImp* thisObj = static_cast<RuntimeObjectImp*>(asObject(slot.slotBase()));
     RefPtr<Instance> instance = thisObj->instance;
 
     if (!instance)
@@ -161,12 +161,18 @@ bool RuntimeObjectImp::getOwnPropertySlot(ExecState *exec, const Identifier& pro
     }
         
     instance->end();
-
-    // don't call superclass, because runtime objects can't have custom properties or a prototype
+#if PLATFORM(QT)
+    // For Qt instances we call the baseclass implementation to allow
+    // runtime objects to have custom properties or a prototype
+    if (instance->getBindingLanguage() == Instance::QtLanguage)
+        return JSObject::getOwnPropertySlot(exec, propertyName, slot);
+#endif
+    // For other platforms and/or binding languages we don't allow
+    // runtime properties/prototypes
     return false;
 }
 
-void RuntimeObjectImp::put(ExecState* exec, const Identifier& propertyName, JSValue* value, PutPropertySlot&)
+void RuntimeObjectImp::put(ExecState* exec, const Identifier& propertyName, JSValue* value, PutPropertySlot& slot)
 {
     if (!instance) {
         throwInvalidAccessError(exec);
@@ -182,6 +188,10 @@ void RuntimeObjectImp::put(ExecState* exec, const Identifier& propertyName, JSVa
         instance->setValueOfField(exec, aField, value);
     else if (instance->supportsSetValueOfUndefinedField())
         instance->setValueOfUndefinedField(exec, propertyName, value);
+#if PLATFORM(QT)
+    else if (instance->getBindingLanguage() == Instance::QtLanguage)
+        JSObject::put(exec,  propertyName, value, slot);
+#endif
 
     instance->end();
 }
@@ -219,6 +229,25 @@ CallType RuntimeObjectImp::getCallData(CallData& callData)
         return CallTypeNone;
     callData.native.function = callRuntimeObject;
     return CallTypeHost;
+}
+
+JSObject* callRuntimeConstructor(ExecState* exec, JSObject* constructor, const ArgList& args)
+{
+    RefPtr<Instance> instance(static_cast<RuntimeObjectImp*>(constructor)->getInternalInstance());
+    instance->begin();
+    JSValue* result = instance->invokeConstruct(exec, args);
+    instance->end();
+    
+    ASSERT(result);
+    return result->isObject() ? static_cast<JSObject*>(result) : constructor;
+}
+
+ConstructType RuntimeObjectImp::getConstructData(ConstructData& constructData)
+{
+    if (!instance || !instance->supportsConstruct())
+        return ConstructTypeNone;
+    constructData.native.function = callRuntimeConstructor;
+    return ConstructTypeHost;
 }
 
 void RuntimeObjectImp::getPropertyNames(ExecState* exec, PropertyNameArray& propertyNames)

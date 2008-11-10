@@ -29,8 +29,7 @@
 #include "Machine.h"
 #include "Parser.h"
 #include "completion.h"
-#include "debugger.h"
-#include <profiler/Profiler.h>
+#include "Debugger.h"
 #include <stdio.h>
 
 #if !PLATFORM(WIN_OS)
@@ -46,7 +45,7 @@ Completion Interpreter::checkSyntax(ExecState* exec, const SourceCode& source)
     int errLine;
     UString errMsg;
 
-    RefPtr<ProgramNode> progNode = exec->globalData().parser->parse<ProgramNode>(exec, source, &errLine, &errMsg);
+    RefPtr<ProgramNode> progNode = exec->globalData().parser->parse<ProgramNode>(exec, exec->dynamicGlobalObject()->debugger(), source, &errLine, &errMsg);
     if (!progNode)
         return Completion(Throw, Error::create(exec, SyntaxError, errMsg, errLine, source.provider()->asID(), source.provider()->url()));
     return Completion(Normal);
@@ -58,34 +57,22 @@ Completion Interpreter::evaluate(ExecState* exec, ScopeChain& scopeChain, const 
     
     int errLine;
     UString errMsg;
-    RefPtr<ProgramNode> programNode = exec->globalData().parser->parse<ProgramNode>(exec, source, &errLine, &errMsg);
+    RefPtr<ProgramNode> programNode = exec->globalData().parser->parse<ProgramNode>(exec, exec->dynamicGlobalObject()->debugger(), source, &errLine, &errMsg);
 
     if (!programNode)
         return Completion(Throw, Error::create(exec, SyntaxError, errMsg, errLine, source.provider()->asID(), source.provider()->url()));
 
     JSObject* thisObj = (!thisValue || thisValue->isUndefinedOrNull()) ? exec->dynamicGlobalObject() : thisValue->toObject(exec);
 
-    JSValue* exception = 0;
+    JSValue* exception = noValue();
     JSValue* result = exec->machine()->execute(programNode.get(), exec, scopeChain.node(), thisObj, &exception);
 
     if (exception) {
-        if (exception->isObject() && static_cast<JSObject*>(exception)->isWatchdogException())
+        if (exception->isObject() && asObject(exception)->isWatchdogException())
             return Completion(Interrupted, result);
         return Completion(Throw, exception);
     }
     return Completion(Normal, result);
-}
-
-static bool printExceptions = false;
-
-bool Interpreter::shouldPrintExceptions()
-{
-    return printExceptions;
-}
-
-void Interpreter::setShouldPrintExceptions(bool print)
-{
-    printExceptions = print;
 }
 
 } // namespace JSC

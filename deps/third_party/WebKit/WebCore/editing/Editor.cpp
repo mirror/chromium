@@ -68,7 +68,6 @@
 namespace WebCore {
 
 using namespace std;
-using namespace EventNames;
 using namespace HTMLNames;
 
 // When an event handler has moved the selection outside of a text control
@@ -129,17 +128,17 @@ bool Editor::canEditRichly() const
 
 bool Editor::canDHTMLCut()
 {
-    return !m_frame->selection()->isInPasswordField() && !dispatchCPPEvent(beforecutEvent, ClipboardNumb);
+    return !m_frame->selection()->isInPasswordField() && !dispatchCPPEvent(eventNames().beforecutEvent, ClipboardNumb);
 }
 
 bool Editor::canDHTMLCopy()
 {
-    return !m_frame->selection()->isInPasswordField() && !dispatchCPPEvent(beforecopyEvent, ClipboardNumb);
+    return !m_frame->selection()->isInPasswordField() && !dispatchCPPEvent(eventNames().beforecopyEvent, ClipboardNumb);
 }
 
 bool Editor::canDHTMLPaste()
 {
-    return !dispatchCPPEvent(beforepasteEvent, ClipboardNumb);
+    return !dispatchCPPEvent(eventNames().beforepasteEvent, ClipboardNumb);
 }
 
 bool Editor::canCut() const
@@ -357,7 +356,7 @@ bool Editor::tryDHTMLCopy()
     // also done for security, as it erases data from the last copy/paste.
     Pasteboard::generalPasteboard()->clear();
 
-    return !dispatchCPPEvent(copyEvent, ClipboardWritable);
+    return !dispatchCPPEvent(eventNames().copyEvent, ClipboardWritable);
 }
 
 bool Editor::tryDHTMLCut()
@@ -369,12 +368,12 @@ bool Editor::tryDHTMLCut()
     // also done for security, as it erases data from the last copy/paste.
     Pasteboard::generalPasteboard()->clear();
 
-    return !dispatchCPPEvent(cutEvent, ClipboardWritable);
+    return !dispatchCPPEvent(eventNames().cutEvent, ClipboardWritable);
 }
 
 bool Editor::tryDHTMLPaste()
 {
-    return !dispatchCPPEvent(pasteEvent, ClipboardReadable);
+    return !dispatchCPPEvent(eventNames().pasteEvent, ClipboardReadable);
 }
 
 void Editor::writeSelectionToPasteboard(Pasteboard* pasteboard)
@@ -586,7 +585,7 @@ bool Editor::dispatchCPPEvent(const AtomicString &eventType, ClipboardAccessPoli
 
     ExceptionCode ec = 0;
     RefPtr<Event> evt = ClipboardEvent::create(eventType, true, true, clipboard);
-    EventTargetNodeCast(target)->dispatchEvent(evt, ec, true);
+    EventTargetNodeCast(target)->dispatchEvent(evt, ec);
     bool noDefaultProcessing = evt->defaultPrevented();
 
     // invalidate clipboard here for security
@@ -748,9 +747,9 @@ static void dispatchEditableContentChangedEvents(const EditCommand& command)
     Element* endRoot = command.endingRootEditableElement();
     ExceptionCode ec;
     if (startRoot)
-        startRoot->dispatchEvent(Event::create(webkitEditableContentChangedEvent, false, false), ec, true);
+        startRoot->dispatchEvent(Event::create(eventNames().webkitEditableContentChangedEvent, false, false), ec);
     if (endRoot && endRoot != startRoot)
-        endRoot->dispatchEvent(Event::create(webkitEditableContentChangedEvent, false, false), ec, true);
+        endRoot->dispatchEvent(Event::create(eventNames().webkitEditableContentChangedEvent, false, false), ec);
 }
 
 void Editor::appliedEditing(PassRefPtr<EditCommand> cmd)
@@ -1220,6 +1219,10 @@ void Editor::ignoreSpelling()
 {
     if (!client())
         return;
+        
+    RefPtr<Range> selectedRange = frame()->selection()->toRange();
+    if (selectedRange)
+        frame()->document()->removeMarkers(selectedRange.get(), DocumentMarker::Spelling);
 
     String text = frame()->selectedText();
     ASSERT(text.length() != 0);
@@ -1230,6 +1233,9 @@ void Editor::learnSpelling()
 {
     if (!client())
         return;
+        
+    // FIXME: We don't call this on the Mac, and it should remove misppelling markers around the 
+    // learned word, see <rdar://problem/5396072>.
 
     String text = frame()->selectedText();
     ASSERT(text.length() != 0);

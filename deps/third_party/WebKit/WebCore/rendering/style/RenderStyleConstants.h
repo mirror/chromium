@@ -155,23 +155,6 @@ enum EResize {
     RESIZE_NONE, RESIZE_BOTH, RESIZE_HORIZONTAL, RESIZE_VERTICAL
 };
 
-enum EAppearance {
-    NoAppearance, CheckboxAppearance, RadioAppearance, PushButtonAppearance, SquareButtonAppearance, ButtonAppearance,
-    ButtonBevelAppearance, DefaultButtonAppearance, ListboxAppearance, ListItemAppearance, 
-    MediaFullscreenButtonAppearance, MediaMuteButtonAppearance, MediaPlayButtonAppearance,
-    MediaSeekBackButtonAppearance, MediaSeekForwardButtonAppearance, MediaSliderAppearance, MediaSliderThumbAppearance,
-    MenulistAppearance, MenulistButtonAppearance, MenulistTextAppearance, MenulistTextFieldAppearance,
-    ScrollbarButtonUpAppearance, ScrollbarButtonDownAppearance, 
-    ScrollbarButtonLeftAppearance, ScrollbarButtonRightAppearance,
-    ScrollbarTrackHorizontalAppearance, ScrollbarTrackVerticalAppearance,
-    ScrollbarThumbHorizontalAppearance, ScrollbarThumbVerticalAppearance,
-    ScrollbarGripperHorizontalAppearance, ScrollbarGripperVerticalAppearance,
-    SliderHorizontalAppearance, SliderVerticalAppearance, SliderThumbHorizontalAppearance,
-    SliderThumbVerticalAppearance, CaretAppearance, SearchFieldAppearance, SearchFieldDecorationAppearance,
-    SearchFieldResultsDecorationAppearance, SearchFieldResultsButtonAppearance,
-    SearchFieldCancelButtonAppearance, TextFieldAppearance, TextAreaAppearance
-};
-
 enum EListStyleType {
      DISC, CIRCLE, SQUARE, LDECIMAL, DECIMAL_LEADING_ZERO,
      LOWER_ROMAN, UPPER_ROMAN, LOWER_GREEK,
@@ -226,12 +209,45 @@ enum EListStylePosition { OUTSIDE, INSIDE };
 enum EVisibility { VISIBLE, HIDDEN, COLLAPSE };
 
 enum ECursor {
-    CURSOR_AUTO, CURSOR_CROSS, CURSOR_DEFAULT, CURSOR_POINTER, CURSOR_MOVE, CURSOR_VERTICAL_TEXT, CURSOR_CELL, CURSOR_CONTEXT_MENU,
-    CURSOR_ALIAS, CURSOR_PROGRESS, CURSOR_NO_DROP, CURSOR_NOT_ALLOWED, CURSOR_WEBKIT_ZOOM_IN, CURSOR_WEBKIT_ZOOM_OUT,
-    CURSOR_E_RESIZE, CURSOR_NE_RESIZE, CURSOR_NW_RESIZE, CURSOR_N_RESIZE, CURSOR_SE_RESIZE, CURSOR_SW_RESIZE,
-    CURSOR_S_RESIZE, CURSOR_W_RESIZE, CURSOR_EW_RESIZE, CURSOR_NS_RESIZE, CURSOR_NESW_RESIZE, CURSOR_NWSE_RESIZE,
-    CURSOR_COL_RESIZE, CURSOR_ROW_RESIZE, CURSOR_TEXT, CURSOR_WAIT, CURSOR_HELP, CURSOR_ALL_SCROLL, 
-    CURSOR_COPY, CURSOR_NONE
+    // The following must match the order in CSSValueKeywords.in.
+    CURSOR_AUTO,
+    CURSOR_CROSS,
+    CURSOR_DEFAULT,
+    CURSOR_POINTER,
+    CURSOR_MOVE,
+    CURSOR_VERTICAL_TEXT,
+    CURSOR_CELL,
+    CURSOR_CONTEXT_MENU,
+    CURSOR_ALIAS,
+    CURSOR_PROGRESS,
+    CURSOR_NO_DROP,
+    CURSOR_NOT_ALLOWED,
+    CURSOR_WEBKIT_ZOOM_IN,
+    CURSOR_WEBKIT_ZOOM_OUT,
+    CURSOR_E_RESIZE,
+    CURSOR_NE_RESIZE,
+    CURSOR_NW_RESIZE,
+    CURSOR_N_RESIZE,
+    CURSOR_SE_RESIZE,
+    CURSOR_SW_RESIZE,
+    CURSOR_S_RESIZE,
+    CURSOR_W_RESIZE,
+    CURSOR_EW_RESIZE,
+    CURSOR_NS_RESIZE,
+    CURSOR_NESW_RESIZE,
+    CURSOR_NWSE_RESIZE,
+    CURSOR_COL_RESIZE,
+    CURSOR_ROW_RESIZE,
+    CURSOR_TEXT,
+    CURSOR_WAIT,
+    CURSOR_HELP,
+    CURSOR_ALL_SCROLL,
+    CURSOR_WEBKIT_GRAB,
+    CURSOR_WEBKIT_GRABBING,
+
+    // The following are handled as exceptions so don't need to match.
+    CURSOR_COPY,
+    CURSOR_NONE
 };
 
 enum EDisplay {

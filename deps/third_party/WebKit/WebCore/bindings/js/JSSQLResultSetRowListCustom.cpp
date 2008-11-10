@@ -56,7 +56,7 @@ JSValue* JSSQLResultSetRowList::item(ExecState* exec, const ArgList& args)
     unsigned valuesIndex = index * numColumns;
     for (unsigned i = 0; i < numColumns; i++) {
         const SQLValue& value = m_impl->values()[valuesIndex + i];
-        JSValue* jsValue = 0;
+        JSValue* jsValue = noValue();
 
         switch (value.type()) {
             case SQLValue::StringValue:

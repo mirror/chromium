@@ -26,6 +26,7 @@
 #ifndef XMLHttpRequestUpload_h
 #define XMLHttpRequestUpload_h
 
+#include "AtomicStringHash.h"
 #include "EventListener.h"
 #include "EventTarget.h"
 #include <wtf/HashMap.h>
@@ -37,7 +38,7 @@
 namespace WebCore {
 
     class AtomicStringImpl;
-    class Frame;
+    class ScriptExecutionContext;
     class XMLHttpRequest;
 
     class XMLHttpRequestUpload : public RefCounted<XMLHttpRequestUpload>, public EventTarget {
@@ -52,7 +53,7 @@ namespace WebCore {
         XMLHttpRequest* associatedXMLHttpRequest() const { return m_xmlHttpRequest; }
         void disconnectXMLHttpRequest() { m_xmlHttpRequest = 0; }
 
-        Frame* associatedFrame() const;
+        ScriptExecutionContext* scriptExecutionContext() const;
 
         void dispatchAbortEvent();
         void dispatchErrorEvent();
@@ -76,11 +77,11 @@ namespace WebCore {
         EventListener* onprogress() const { return m_onProgressListener.get(); }
 
         typedef Vector<RefPtr<EventListener> > ListenerVector;
-        typedef HashMap<AtomicStringImpl*, ListenerVector> EventListenersMap;
+        typedef HashMap<AtomicString, ListenerVector> EventListenersMap;
 
         virtual void addEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
         virtual void removeEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
-        virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent = false);
+        virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&);
         EventListenersMap& eventListeners() { return m_eventListeners; }
 
         using RefCounted<XMLHttpRequestUpload>::ref;

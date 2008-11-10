@@ -2,7 +2,7 @@
  *  Copyright (C) 2007 Holger Hans Peter Freyther
  *  Copyright (C) 2007, 2008 Christian Dywan <christian@imendio.com>
  *  Copyright (C) 2007 Xan Lopez <xan@gnome.org>
- *  Copyright (C) 2007 Alp Toker <alp@atoker.com>
+ *  Copyright (C) 2007, 2008 Alp Toker <alp@atoker.com>
  *  Copyright (C) 2008 Jan Alonzo <jmalonzo@unpluggable.com>
  *  Copyright (C) 2008 Nuanti Ltd.
  *  Copyright (C) 2008 Collabora Ltd.
@@ -27,6 +27,7 @@
 #include "webkitwebview.h"
 #include "webkitmarshal.h"
 #include "webkitprivate.h"
+#include "webkitwebinspector.h"
 #include "webkitwebbackforwardlist.h"
 #include "webkitwebhistoryitem.h"
 
@@ -58,6 +59,7 @@
 #include "PlatformWheelEvent.h"
 #include "Scrollbar.h"
 #include "SubstituteData.h"
+#include <wtf/GOwnPtr.h>
 
 #include <gdk/gdkkeysyms.h>
 
@@ -100,6 +102,7 @@ enum {
     PROP_PASTE_TARGET_LIST,
     PROP_EDITABLE,
     PROP_SETTINGS,
+    PROP_WEB_INSPECTOR,
     PROP_TRANSPARENT,
     PROP_ZOOM_LEVEL,
     PROP_FULL_CONTENT_ZOOM
@@ -225,17 +228,22 @@ static void webkit_web_view_get_property(GObject* object, guint prop_id, GValue*
     WebKitWebView* webView = WEBKIT_WEB_VIEW(object);
 
     switch(prop_id) {
+#if GTK_CHECK_VERSION(2,10,0)
     case PROP_COPY_TARGET_LIST:
         g_value_set_boxed(value, webkit_web_view_get_copy_target_list(webView));
         break;
     case PROP_PASTE_TARGET_LIST:
         g_value_set_boxed(value, webkit_web_view_get_paste_target_list(webView));
         break;
+#endif
     case PROP_EDITABLE:
         g_value_set_boolean(value, webkit_web_view_get_editable(webView));
         break;
     case PROP_SETTINGS:
         g_value_set_object(value, webkit_web_view_get_settings(webView));
+        break;
+    case PROP_WEB_INSPECTOR:
+        g_value_set_object(value, webkit_web_view_get_inspector(webView));
         break;
     case PROP_TRANSPARENT:
         g_value_set_boolean(value, webkit_web_view_get_transparent(webView));
@@ -276,30 +284,65 @@ static void webkit_web_view_set_property(GObject* object, guint prop_id, const G
     }
 }
 
+static bool shouldCoalesce(GdkRectangle rect, GdkRectangle* rects, int count)
+{
+    const int cRectThreshold = 10;
+    const float cWastedSpaceThreshold = 0.75f;
+    bool useUnionedRect = (count <= 1) || (count > cRectThreshold);
+    if (!useUnionedRect) {
+        // Attempt to guess whether or not we should use the unioned rect or the individual rects.
+        // We do this by computing the percentage of "wasted space" in the union.  If that wasted space
+        // is too large, then we will do individual rect painting instead.
+        float unionPixels = (rect.width * rect.height);
+        float singlePixels = 0;
+        for (int i = 0; i < count; ++i)
+            singlePixels += rects[i].width * rects[i].height;
+        float wastedSpace = 1 - (singlePixels / unionPixels);
+        if (wastedSpace <= cWastedSpaceThreshold)
+            useUnionedRect = true;
+    }
+    return useUnionedRect;
+}
+
 static gboolean webkit_web_view_expose_event(GtkWidget* widget, GdkEventExpose* event)
 {
     WebKitWebView* webView = WEBKIT_WEB_VIEW(widget);
     WebKitWebViewPrivate* priv = webView->priv;
 
     Frame* frame = core(webView)->mainFrame();
-    GdkRectangle clip;
-    gdk_region_get_clipbox(event->region, &clip);
-    cairo_t* cr = gdk_cairo_create(event->window);
-    GraphicsContext ctx(cr);
-    ctx.setGdkExposeEvent(event);
     if (frame->contentRenderer() && frame->view()) {
         frame->view()->layoutIfNeededRecursive();
 
-        if (priv->transparent) {
-            cairo_save(cr);
-            cairo_set_operator(cr, CAIRO_OPERATOR_CLEAR);
-            cairo_paint(cr);
-            cairo_restore(cr);
-        }
+        cairo_t* cr = gdk_cairo_create(event->window);
+        GraphicsContext ctx(cr);
+        cairo_destroy(cr);
+        ctx.setGdkExposeEvent(event);
 
-        frame->view()->paint(&ctx, clip);
+        GOwnPtr<GdkRectangle> rects;
+        int rectCount;
+        gdk_region_get_rectangles(event->region, &rects.outPtr(), &rectCount);
+
+        // Avoid recursing into the render tree excessively
+        bool coalesce = shouldCoalesce(event->area, rects.get(), rectCount);
+
+        if (coalesce) {
+            IntRect rect = event->area;
+            ctx.clip(rect);
+            if (priv->transparent)
+                ctx.clearRect(rect);
+            frame->view()->paint(&ctx, rect);
+        } else {
+            for (int i = 0; i < rectCount; i++) {
+                IntRect rect = rects.get()[i];
+                ctx.save();
+                ctx.clip(rect);
+                if (priv->transparent)
+                    ctx.clearRect(rect);
+                frame->view()->paint(&ctx, rect);
+                ctx.restore();
+            }
+        }
     }
-    cairo_destroy(cr);
 
     return FALSE;
 }
@@ -725,6 +768,7 @@ static void webkit_web_view_finalize(GObject* object)
     g_object_unref(priv->backForwardList);
     g_signal_handlers_disconnect_by_func(priv->webSettings, (gpointer)webkit_web_view_settings_notify, webView);
     g_object_unref(priv->webSettings);
+    g_object_unref(priv->webInspector);
     g_object_unref(priv->mainFrame);
     g_object_unref(priv->imContext);
     gtk_target_list_unref(priv->copy_target_list);
@@ -1189,19 +1233,36 @@ static void webkit_web_view_class_init(WebKitWebViewClass* webViewClass)
     /*
      * properties
      */
+
+#if GTK_CHECK_VERSION(2,10,0)
+    /**
+    * WebKitWebView:copy-target-list:
+    *
+    * The list of targets this web view supports for clipboard copying.
+    *
+    * Since: 1.0.2
+    */
     g_object_class_install_property(objectClass, PROP_COPY_TARGET_LIST,
                                     g_param_spec_boxed("copy-target-list",
-                                                       "Target list",
-                                                       "The list of targets this Web view supports for copying to the clipboard",
+                                                       "Copy target list",
+                                                       "The list of targets this web view supports for clipboard copying",
                                                        GTK_TYPE_TARGET_LIST,
                                                        WEBKIT_PARAM_READABLE));
 
+    /**
+    * WebKitWebView:paste-target-list:
+    *
+    * The list of targets this web view supports for clipboard pasting.
+    *
+    * Since: 1.0.2
+    */
     g_object_class_install_property(objectClass, PROP_PASTE_TARGET_LIST,
                                     g_param_spec_boxed("paste-target-list",
-                                                       "Target list",
-                                                       "The list of targets this Web view supports for pasting to the clipboard",
+                                                       "Paste target list",
+                                                       "The list of targets this web view supports for clipboard pasting",
                                                        GTK_TYPE_TARGET_LIST,
                                                        WEBKIT_PARAM_READABLE));
+#endif
 
     g_object_class_install_property(objectClass, PROP_SETTINGS,
                                     g_param_spec_object("settings",
@@ -1209,6 +1270,20 @@ static void webkit_web_view_class_init(WebKitWebViewClass* webViewClass)
                                                         "An associated WebKitWebSettings instance",
                                                         WEBKIT_TYPE_WEB_SETTINGS,
                                                         WEBKIT_PARAM_READWRITE));
+
+    /**
+    * WebKitWebView:web-inspector:
+    *
+    * The associated WebKitWebInspector instance.
+    *
+    * Since: 1.0.3
+    */
+    g_object_class_install_property(objectClass, PROP_WEB_INSPECTOR,
+                                    g_param_spec_object("web-inspector",
+                                                        "Web Inspector",
+                                                        "The associated WebKitWebInspector instance",
+                                                        WEBKIT_TYPE_WEB_INSPECTOR,
+                                                        WEBKIT_PARAM_READABLE));
 
     g_object_class_install_property(objectClass, PROP_EDITABLE,
                                     g_param_spec_boolean("editable",
@@ -1296,7 +1371,7 @@ static void webkit_web_view_update_settings(WebKitWebView* webView)
     Settings* settings = core(webView)->settings();
 
     gchar* defaultEncoding, *cursiveFontFamily, *defaultFontFamily, *fantasyFontFamily, *monospaceFontFamily, *sansSerifFontFamily, *serifFontFamily, *userStylesheetUri;
-    gboolean autoLoadImages, autoShrinkImages, printBackgrounds, enableScripts, enablePlugins, resizableTextAreas;
+    gboolean autoLoadImages, autoShrinkImages, printBackgrounds, enableScripts, enablePlugins, enableDeveloperExtras, resizableTextAreas;
 
     g_object_get(G_OBJECT(webSettings),
                  "default-encoding", &defaultEncoding,
@@ -1313,6 +1388,7 @@ static void webkit_web_view_update_settings(WebKitWebView* webView)
                  "enable-plugins", &enablePlugins,
                  "resizable-text-areas", &resizableTextAreas,
                  "user-stylesheet-uri", &userStylesheetUri,
+                 "enable-developer-extras", &enableDeveloperExtras,
                  NULL);
 
     settings->setDefaultTextEncodingName(defaultEncoding);
@@ -1329,6 +1405,7 @@ static void webkit_web_view_update_settings(WebKitWebView* webView)
     settings->setPluginsEnabled(enablePlugins);
     settings->setTextAreasAreResizable(resizableTextAreas);
     settings->setUserStyleSheetLocation(KURL(userStylesheetUri));
+    settings->setDeveloperExtrasEnabled(enableDeveloperExtras);
 
     g_free(defaultEncoding);
     g_free(cursiveFontFamily);
@@ -1387,6 +1464,8 @@ static void webkit_web_view_settings_notify(WebKitWebSettings* webSettings, GPar
         settings->setTextAreasAreResizable(g_value_get_boolean(&value));
     else if (name == g_intern_string("user-stylesheet-uri"))
         settings->setUserStyleSheetLocation(KURL(g_value_get_string(&value)));
+    else if (name == g_intern_string("enable-developer-extras"))
+        settings->setDeveloperExtrasEnabled(g_value_get_boolean(&value));
     else if (!g_object_class_find_property(G_OBJECT_GET_CLASS(webSettings), name))
         g_warning("Unexpected setting '%s'", name);
     g_value_unset(&value);
@@ -1398,7 +1477,14 @@ static void webkit_web_view_init(WebKitWebView* webView)
     webView->priv = priv;
 
     priv->imContext = gtk_im_multicontext_new();
-    priv->corePage = new Page(new WebKit::ChromeClient(webView), new WebKit::ContextMenuClient(webView), new WebKit::EditorClient(webView), new WebKit::DragClient, new WebKit::InspectorClient);
+
+    WebKit::InspectorClient* inspectorClient = new WebKit::InspectorClient(webView);
+    priv->corePage = new Page(new WebKit::ChromeClient(webView), new WebKit::ContextMenuClient(webView), new WebKit::EditorClient(webView), new WebKit::DragClient, inspectorClient);
+
+    // We also add a simple wrapper class to provide the public
+    // interface for the Web Inspector.
+    priv->webInspector = WEBKIT_WEB_INSPECTOR(g_object_new(WEBKIT_TYPE_WEB_INSPECTOR, NULL));
+    webkit_web_inspector_set_inspector_client(priv->webInspector, inspectorClient);
 
     priv->horizontalAdjustment = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
     priv->verticalAdjustment = GTK_ADJUSTMENT(gtk_adjustment_new(0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
@@ -1471,6 +1557,30 @@ WebKitWebSettings* webkit_web_view_get_settings(WebKitWebView* webView)
 
     WebKitWebViewPrivate* priv = webView->priv;
     return priv->webSettings;
+}
+
+/**
+ * webkit_web_view_get_inspector:
+ * @webView: a #WebKitWebView
+ *
+ * Obtains the #WebKitWebInspector associated with the
+ * #WebKitWebView. Every #WebKitWebView object has a
+ * #WebKitWebInspector object attached to it as soon as it is created,
+ * so this function will only return NULL if the argument is not a
+ * valid #WebKitWebView.
+ *
+ * Returns: the #WebKitWebInspector instance associated with the
+ * #WebKitWebView; %NULL is only returned if the argument is not a
+ * valid #WebKitWebView.
+ *
+ * Since: 1.0.3
+ */
+WebKitWebInspector* webkit_web_view_get_inspector(WebKitWebView* webView)
+{
+    g_return_val_if_fail(WEBKIT_IS_WEB_VIEW(webView), NULL);
+
+    WebKitWebViewPrivate* priv = webView->priv;
+    return priv->webInspector;
 }
 
 /**
@@ -1656,7 +1766,7 @@ void webkit_web_view_load_string(WebKitWebView* webView, const gchar* content, c
     Frame* frame = core(webView)->mainFrame();
 
     KURL url(baseUri ? String::fromUTF8(baseUri) : "");
-    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::create(strdup(content), strlen(content));
+    RefPtr<SharedBuffer> sharedBuffer = SharedBuffer::create(content, strlen(content));
     SubstituteData substituteData(sharedBuffer.release(), contentMimeType ? String(contentMimeType) : "text/html", contentEncoding ? String(contentEncoding) : "UTF-8", KURL("about:blank"), url);
 
     frame->loader()->load(ResourceRequest(url), substituteData);

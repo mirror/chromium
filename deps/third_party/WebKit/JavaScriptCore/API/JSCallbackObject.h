@@ -37,7 +37,7 @@ template <class Base>
 class JSCallbackObject : public Base {
 public:
     JSCallbackObject(ExecState*, PassRefPtr<StructureID>, JSClassRef, void* data);
-    JSCallbackObject(JSGlobalData*, JSClassRef);
+    JSCallbackObject(JSClassRef);
     virtual ~JSCallbackObject();
 
     void setPrivate(void* data);
@@ -77,6 +77,8 @@ private:
 
     void init(ExecState*);
  
+    static JSCallbackObject* asCallbackObject(JSValue*);
+ 
     static JSValue* call(ExecState*, JSObject* functionObject, JSValue* thisValue, const ArgList&);
     static JSObject* construct(ExecState*, JSObject* constructor, const ArgList&);
    
@@ -86,9 +88,9 @@ private:
     static JSValue* callbackGetter(ExecState*, const Identifier&, const PropertySlot&);
 
     struct JSCallbackObjectData {
-        JSCallbackObjectData(void* privateData_, JSClassRef jsClass_)
-            : privateData(privateData_)
-            , jsClass(jsClass_)
+        JSCallbackObjectData(void* privateData, JSClassRef jsClass)
+            : privateData(privateData)
+            , jsClass(jsClass)
         {
             JSClassRetain(jsClass);
         }

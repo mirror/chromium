@@ -20,6 +20,7 @@
 #ifndef Chrome_h
 #define Chrome_h
 
+#include "FileChooser.h"
 #include "FocusDirection.h"
 #include "HostWindow.h"
 #include <wtf/Forward.h>
@@ -41,7 +42,7 @@ namespace WebCore {
     class IntRect;
     class Page;
     class String;
-    
+
     struct FrameLoadRequest;
     struct WindowFeatures;
     
@@ -100,7 +101,7 @@ namespace WebCore {
 
         void runJavaScriptAlert(Frame*, const String&);
         bool runJavaScriptConfirm(Frame*, const String&);
-        bool runJavaScriptPrompt(Frame*, const String& message, const String& defaultValue, String& result);                
+        bool runJavaScriptPrompt(Frame*, const String& message, const String& defaultValue, String& result);
         void setStatusbarText(Frame*, const String&);
         bool shouldInterruptJavaScript();
 
@@ -114,6 +115,8 @@ namespace WebCore {
 
         void enableSuddenTermination();
         void disableSuddenTermination();
+
+        void runOpenPanel(Frame*, PassRefPtr<FileChooser>);
 
 #if PLATFORM(MAC)
         void focusNSView(NSView*);

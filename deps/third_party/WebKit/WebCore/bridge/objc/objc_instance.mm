@@ -28,8 +28,8 @@
 
 #import "FoundationExtras.h"
 #import "WebScriptObject.h"
-#include <kjs/Error.h>
-#include <kjs/JSLock.h>
+#include <runtime/Error.h>
+#include <runtime/JSLock.h>
 #include <wtf/Assertions.h>
 
 #ifdef NDEBUG
@@ -243,7 +243,10 @@ JSValue* ObjcInstance::invokeMethod(ExecState* exec, const MethodList &methodLis
 } @catch(NSException* localException) {
 }
     moveGlobalExceptionToExecState(exec);
-    return result;
+
+    // Work around problem in some versions of GCC where result gets marked volatile and
+    // it can't handle copying from a volatile to non-volatile.
+    return const_cast<JSValue*&>(result);
 }
 
 JSValue* ObjcInstance::invokeDefaultMethod(ExecState* exec, const ArgList &args)
@@ -291,7 +294,10 @@ JSValue* ObjcInstance::invokeDefaultMethod(ExecState* exec, const ArgList &args)
 } @catch(NSException* localException) {
 }
     moveGlobalExceptionToExecState(exec);
-    return result;
+
+    // Work around problem in some versions of GCC where result gets marked volatile and
+    // it can't handle copying from a volatile to non-volatile.
+    return const_cast<JSValue*&>(result);
 }
 
 bool ObjcInstance::supportsSetValueOfUndefinedField()
@@ -350,14 +356,16 @@ JSValue* ObjcInstance::getValueOfUndefinedField(ExecState* exec, const Identifie
         moveGlobalExceptionToExecState(exec);
     }
 
-    return result;
+    // Work around problem in some versions of GCC where result gets marked volatile and
+    // it can't handle copying from a volatile to non-volatile.
+    return const_cast<JSValue*&>(result);
 }
 
 JSValue* ObjcInstance::defaultValue(ExecState* exec, PreferredPrimitiveType hint) const
 {
-    if (hint == JSValue::PreferString)
+    if (hint == PreferString)
         return stringValue(exec);
-    if (hint == JSValue::PreferNumber)
+    if (hint == PreferNumber)
         return numberValue(exec);
     if ([_instance.get() isKindOfClass:[NSString class]])
         return stringValue(exec);

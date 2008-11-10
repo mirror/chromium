@@ -30,6 +30,8 @@
 
 #include <wtf/Assertions.h>
 #include <wtf/AlwaysInline.h>
+#include <wtf/FastMalloc.h>
+
 #if HAVE(MMAN)
 #include <sys/mman.h>
 #endif
@@ -86,7 +88,7 @@ public:
     
     void putIntUnchecked(int value)
     {
-        *(int*)(&m_buffer[m_index]) = value;
+        *reinterpret_cast<int*>(&m_buffer[m_index]) = value;
         m_index += 4;
     }
 
@@ -123,7 +125,7 @@ public:
         if (!m_index)
             return 0;
 
-        void* result = fastMalloc(m_index);
+        void* result = WTF::fastMallocExecutable(m_index);
 
         if (!result)
             return 0;
@@ -196,6 +198,7 @@ public:
         OP_POP_EAX                      = 0x58,
         PRE_OPERAND_SIZE                = 0x66,
         PRE_SSE_66                      = 0x66,
+        OP_PUSH_Iz                      = 0x68,
         OP_IMUL_GvEvIz                  = 0x69,
         OP_GROUP1_EvIz                  = 0x81,
         OP_GROUP1_EvIb                  = 0x83,
@@ -225,6 +228,7 @@ public:
         OP2_CVTSI2SD_VsdEd  = 0x2A,
         OP2_CVTTSD2SI_GdWsd = 0x2C,
         OP2_UCOMISD_VsdWsd  = 0x2E,
+        OP2_XORPD_VsdWsd    = 0x57,
         OP2_ADDSD_VsdWsd    = 0x58,
         OP2_MULSD_VsdWsd    = 0x59,
         OP2_SUBSD_VsdWsd    = 0x5C,
@@ -260,6 +264,7 @@ public:
         GROUP2_OP_SAR = 7,
 
         GROUP3_OP_TEST = 0,
+        GROUP3_OP_NEG  = 3,
         GROUP3_OP_IDIV = 7,
 
         GROUP5_OP_CALLN = 2,
@@ -291,6 +296,12 @@ public:
     {
         m_buffer->putByte(OP_GROUP5_Ev);
         emitModRm_opm(GROUP5_OP_PUSH, base, offset);
+    }
+
+    void pushl_i32(int imm)
+    {
+        m_buffer->putByte(OP_PUSH_Iz);
+        m_buffer->putInt(imm);
     }
     
     void popl_r(RegisterID reg)
@@ -596,6 +607,12 @@ public:
         emitModRm_opr(GROUP3_OP_IDIV, dst);
     }
 
+    void negl_r(RegisterID dst)
+    {
+        m_buffer->putByte(OP_GROUP3_Ev);
+        emitModRm_opr(GROUP3_OP_NEG, dst);
+    }
+
     void cdq()
     {
         m_buffer->putByte(OP_CDQ);
@@ -730,6 +747,14 @@ public:
         m_buffer->putByte(OP_2BYTE_ESCAPE);
         m_buffer->putByte(OP2_MOVSD_VsdWsd);
         emitModRm_rm((RegisterID)dst, base, offset);
+    }
+
+    void xorpd_mr(void* addr, XMMRegisterID dst)
+    {
+        m_buffer->putByte(PRE_SSE_66);
+        m_buffer->putByte(OP_2BYTE_ESCAPE);
+        m_buffer->putByte(OP2_XORPD_VsdWsd);
+        emitModRm_rm((RegisterID)dst, addr);
     }
 
     void movsd_rm(XMMRegisterID src, int offset, RegisterID base)
@@ -1012,7 +1037,7 @@ public:
         ASSERT(to.m_offset != -1);
         ASSERT(from.m_offset != -1);
         
-        ((int*)(((ptrdiff_t)(m_buffer->start())) + from.m_offset))[-1] = to.m_offset - from.m_offset;
+        reinterpret_cast<int*>(reinterpret_cast<ptrdiff_t>(m_buffer->start()) + from.m_offset)[-1] = to.m_offset - from.m_offset;
     }
     
     static void linkAbsoluteAddress(void* code, JmpDst useOffset, JmpDst address)
@@ -1020,24 +1045,24 @@ public:
         ASSERT(useOffset.m_offset != -1);
         ASSERT(address.m_offset != -1);
         
-        ((int*)(((ptrdiff_t)code) + useOffset.m_offset))[-1] = ((ptrdiff_t)code) + address.m_offset;
+        reinterpret_cast<int*>(reinterpret_cast<ptrdiff_t>(code) + useOffset.m_offset)[-1] = reinterpret_cast<ptrdiff_t>(code) + address.m_offset;
     }
     
     static void link(void* code, JmpSrc from, void* to)
     {
         ASSERT(from.m_offset != -1);
         
-        ((int*)((ptrdiff_t)code + from.m_offset))[-1] = (ptrdiff_t)to - ((ptrdiff_t)code + from.m_offset);
+        reinterpret_cast<int*>(reinterpret_cast<ptrdiff_t>(code) + from.m_offset)[-1] = reinterpret_cast<ptrdiff_t>(to) - (reinterpret_cast<ptrdiff_t>(code) + from.m_offset);
     }
     
     static void* getRelocatedAddress(void* code, JmpSrc jump)
     {
-        return reinterpret_cast<void*>((ptrdiff_t)code + jump.m_offset);
+        return reinterpret_cast<void*>(reinterpret_cast<ptrdiff_t>(code) + jump.m_offset);
     }
     
     static void* getRelocatedAddress(void* code, JmpDst jump)
     {
-        return reinterpret_cast<void*>((ptrdiff_t)code + jump.m_offset);
+        return reinterpret_cast<void*>(reinterpret_cast<ptrdiff_t>(code) + jump.m_offset);
     }
     
     static int getDifferenceBetweenLabels(JmpDst src, JmpDst dst)
@@ -1046,6 +1071,11 @@ public:
     }
     
     static int getDifferenceBetweenLabels(JmpDst src, JmpSrc dst)
+    {
+        return dst.m_offset - src.m_offset;
+    }
+    
+    static int getDifferenceBetweenLabels(JmpSrc src, JmpDst dst)
     {
         return dst.m_offset - src.m_offset;
     }

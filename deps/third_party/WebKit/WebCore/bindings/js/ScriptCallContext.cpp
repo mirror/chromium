@@ -33,7 +33,7 @@
 #include "JSDOMBinding.h"
 #include "KURL.h"
 #include "PlatformString.h"
-#include <kjs/ExecState.h>
+#include <runtime/ExecState.h>
 #include <kjs/interpreter.h>
 #include <kjs/ustring.h>
 #include <VM/Machine.h>

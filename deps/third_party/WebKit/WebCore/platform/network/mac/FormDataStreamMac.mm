@@ -83,7 +83,6 @@ void disassociateStreamWithResourceHandle(NSInputStream *stream)
     if (!stream)
         return;
 
-    ASSERT(getStreamResourceHandleMap().contains((CFReadStreamRef)stream));
     getStreamResourceHandleMap().remove((CFReadStreamRef)stream);
 }
 
@@ -249,9 +248,11 @@ static CFIndex formRead(CFReadStreamRef stream, UInt8* buffer, CFIndex bufferLen
             *atEOF = FALSE;
             form->bytesSent += bytesRead;
 
-            // FIXME: Figure out how to only do this when a ResourceHandleClient is available.
-            DidSendDataCallbackData* data = new DidSendDataCallbackData(stream, form->bytesSent, form->streamLength);
-            callOnMainThread(performDidSendDataCallback, data);
+            if (!ResourceHandle::didSendBodyDataDelegateExists()) {
+                // FIXME: Figure out how to only do this when a ResourceHandleClient is available.
+                DidSendDataCallbackData* data = new DidSendDataCallbackData(stream, form->bytesSent, form->streamLength);
+                callOnMainThread(performDidSendDataCallback, data);
+            }
 
             return bytesRead;
         }

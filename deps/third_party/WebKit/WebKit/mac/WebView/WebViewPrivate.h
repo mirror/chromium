@@ -45,6 +45,7 @@
 @class WebFrame;
 @class WebInspector;
 @class WebPreferences;
+@class WebTextIterator;
 
 @protocol WebFormDelegate;
 
@@ -224,7 +225,7 @@ Could be worth adding to the API.
 */
 + (NSString *)suggestedFileExtensionForMIMEType: (NSString *)MIMEType;
 
-+ (NSString *)_standardUserAgentWithApplicationName:(NSString *)applicationName andWebKitVersion:(NSString *)version;
++ (NSString *)_standardUserAgentWithApplicationName:(NSString *)applicationName;
 
 // May well become public
 - (void)_setFormDelegate:(id<WebFormDelegate>)delegate;
@@ -361,6 +362,13 @@ Could be worth adding to the API.
 - (BOOL)usesPageCache;
 - (void)setUsesPageCache:(BOOL)usesPageCache;
 
+/*!
+ @method textIteratorForRect:
+ @param rectangle from which we want the WebTextIterator to load text from
+ @result a WebtextIterator object.
+ */
+- (WebTextIterator *)textIteratorForRect:(NSRect)rect;
+
 #if ENABLE_DASHBOARD_SUPPORT
 // <rdar://problem/5217124> Clients other than dashboard, don't use this.
 // Do not remove until Dashboard has moved off it
@@ -372,6 +380,9 @@ Could be worth adding to the API.
 /* Used to do fast (lower quality) scaling of images so that window resize can be quick. */
 - (BOOL)_inFastImageScalingMode;
 - (void)_setUseFastImageScalingMode:(BOOL)flag;
+
+- (BOOL)_cookieEnabled;
+- (void)_setCookieEnabled:(BOOL)enable;
 
 // SPI for DumpRenderTree
 - (void)_executeCoreCommandByName:(NSString *)name value:(NSString *)value;

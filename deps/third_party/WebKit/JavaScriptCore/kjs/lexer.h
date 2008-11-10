@@ -26,7 +26,7 @@
 #include "lookup.h"
 #include "ustring.h"
 #include <wtf/Vector.h>
-#include "SourceRange.h"
+#include "SourceCode.h"
 
 namespace JSC {
 
@@ -88,7 +88,7 @@ namespace JSC {
         bool sawError() const { return m_error; }
 
         void clear();
-        SourceCode sourceCode(int openBrace, int closeBrace, int firstLine) { return SourceCode(m_source->provider(), openBrace + 1, closeBrace, firstLine); }
+        SourceCode sourceCode(int openBrace, int closeBrace, int firstLine) { return SourceCode(m_source->provider(), m_source->startOffset() + openBrace + 1, m_source->startOffset() + closeBrace, firstLine); }
 
     private:
         friend class JSGlobalData;

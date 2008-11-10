@@ -34,22 +34,12 @@
 #include "MessagePort.h"
 #include "ScriptController.h"
 #include "Settings.h"
-#include <kjs/JSObject.h>
-#include <kjs/PrototypeFunction.h>
+#include <runtime/JSObject.h>
+#include <runtime/PrototypeFunction.h>
 
 using namespace JSC;
 
 namespace WebCore {
-
-static void markDOMObjectWrapper(JSGlobalData& globalData, void* object)
-{
-    if (!object)
-        return;
-    DOMObject* wrapper = getCachedDOMObjectWrapper(globalData, object);
-    if (!wrapper || wrapper->marked())
-        return;
-    wrapper->mark();
-}
 
 void JSDOMWindow::mark()
 {
@@ -76,16 +66,6 @@ void JSDOMWindow::mark()
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
     markDOMObjectWrapper(globalData, impl()->optionalApplicationCache());
 #endif
-
-    JSDOMStructureMap::iterator end = structures().end();
-    for (JSDOMStructureMap::iterator it = structures().begin(); it != end; ++it)
-        it->second->mark();
-
-    JSDOMConstructorMap::iterator end2 = constructors().end();
-    for (JSDOMConstructorMap::iterator it2 = constructors().begin(); it2 != end2; ++it2) {
-        if (!it2->second->marked())
-            it2->second->mark();
-    }
 }
 
 bool JSDOMWindow::deleteProperty(ExecState* exec, const Identifier& propertyName)
@@ -200,7 +180,7 @@ static JSValue* setTimeoutOrInterval(ExecState* exec, JSDOMWindow* window, const
     JSValue* v = args.at(exec, 0);
     int delay = args.at(exec, 1)->toInt32(exec);
     if (v->isString())
-        return jsNumber(exec, window->installTimeout(static_cast<JSString*>(v)->value(), delay, timeout));
+        return jsNumber(exec, window->installTimeout(asString(v)->value(), delay, timeout));
     CallData callData;
     if (v->getCallData(callData) == CallTypeNone)
         return jsUndefined();
@@ -310,12 +290,15 @@ JSValue* JSDOMWindow::removeEventListener(ExecState* exec, const ArgList& args)
     return jsUndefined();
 }
 
-DOMWindow* toDOMWindow(JSValue* val)
+DOMWindow* toDOMWindow(JSValue* value)
 {
-    if (val->isObject(&JSDOMWindow::s_info))
-        return static_cast<JSDOMWindow*>(val)->impl();
-    if (val->isObject(&JSDOMWindowShell::s_info))
-        return static_cast<JSDOMWindowShell*>(val)->impl();
+    if (!value->isObject())
+        return 0;
+    JSObject* object = asObject(value);
+    if (object->inherits(&JSDOMWindow::s_info))
+        return static_cast<JSDOMWindow*>(object)->impl();
+    if (object->inherits(&JSDOMWindowShell::s_info))
+        return static_cast<JSDOMWindowShell*>(object)->impl();
     return 0;
 }
 

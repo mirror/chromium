@@ -1,3 +1,113 @@
+2008-10-31  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wxMSW build fix. Missing header.
+
+        * WebKitSupport/ChromeClientWx.cpp:
+
+2008-10-29  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fixes after addition of runtime and ImageBuffer changes.
+
+        * presets/wxwebkit.bkl:
+
+2008-10-28  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Move ForwardingHeaders to their correct location after the creation of
+        the runtime directory in JavaScriptCore.
+
+        * WebFrame.cpp:
+        * WebView.cpp:
+
+2008-10-27  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix on Linux/GTK. Enable support for #include <JavaScriptCore/XYZ.h> style includes.
+
+        * presets/wxwebkit.bkl:
+
+2008-10-25  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix.
+
+        * WebKitSupport/ChromeClientWx.h:
+
+2008-10-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=21759
+        Layering violation: FileChooser should not depend on Document/Frame/Page
+
+        * WebKitSupport/ChromeClientWx.cpp:
+        (WebCore::ChromeClientWx::runOpenPanel):
+        * WebKitSupport/ChromeClientWx.h:
+
+2008-10-24  David Kilzer  <ddkilzer@apple.com>
+
+        Build fix.
+
+        Reviewed by Greg Bolsinga.
+
+        * WebKitSupport/InspectorClientWx.cpp:
+        (WebCore::InspectorClientWx::populateSetting): Changed
+        InspectorClient:: to InspectorClientWx::.
+        (WebCore::InspectorClientWx::storeSetting): Ditto.
+        (WebCore::InspectorClientWx::removeSetting): Ditto.
+
+2008-10-24  Timothy Hatcher  <timothy@apple.com>
+
+        Stub out new InspectorClient methods.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21856
+
+        Reviewed by Darin Adler.
+
+        * WebKitSupport/InspectorClientWx.cpp:
+        (WebCore::InspectorClient::populateSetting): Not implemented.
+        (WebCore::InspectorClient::storeSetting): Ditto.
+        (WebCore::InspectorClient::removeSetting): Ditto.
+        * WebKitSupport/InspectorClientWx.h:
+
+2008-10-24  Darin Adler  <darin@apple.com>
+
+        - finish rolling out https://bugs.webkit.org/show_bug.cgi?id=21732
+
+        * WebFrame.cpp: (wxWebFrame::RunScript): Use JSValue* instead of JSValuePtr.
+
+2008-10-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Remove FrameLoaderClient::detachedFromParent4.  It is no longer used by any port.
+
+        * WebKitSupport/FrameLoaderClientWx.cpp:
+        * WebKitSupport/FrameLoaderClientWx.h:
+
+2008-10-19  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - next step of https://bugs.webkit.org/show_bug.cgi?id=21732
+          improve performance by eliminating JSValue as a base class for JSCell
+
+        Remove most uses of JSValue, which will be removed in a future patch.
+
+        * WebFrame.cpp:
+        (wxWebFrame::RunScript): Use JSValuePtr.
+
+2008-10-17  Kevin Watters  <kevinwatters@gmail.com>
+        
+        Reviewed by Kevin Ollivier
+
+        Fix wx port's scrollbar and drawing handling after recent changes.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=21720
+
+        * WebView.cpp:
+        (wxWebView::OnPaint):
+        (wxWebView::OnSize):
+
 2008-10-09  Kevin Ollivier  <kevino@theolliviers.com>
 
         wx build fixes.

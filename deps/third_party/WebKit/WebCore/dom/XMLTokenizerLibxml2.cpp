@@ -33,7 +33,6 @@
 #include "Document.h"
 #include "DocumentFragment.h"
 #include "DocumentType.h"
-#include "EventNames.h"
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameView.h"
@@ -63,8 +62,6 @@
 using namespace std;
 
 namespace WebCore {
-
-using namespace EventNames;
 
 class PendingCallbacks {
 public:
@@ -416,6 +413,11 @@ static void* openFunc(const char* uri)
         docLoader->frame()->loader()->loadResourceSynchronously(url, error, response, data);
 
     globalDocLoader = docLoader;
+
+    // We have to check the URL again after the load to catch redirects.
+    // See <https://bugs.webkit.org/show_bug.cgi?id=21963>.
+    if (!shouldAllowExternalLoad(response.url()))
+        return &globalDescriptor;
 
     return new OffsetBuffer(data);
 }
@@ -791,7 +793,7 @@ void XMLTokenizer::endElementNs()
         String scriptHref = scriptElement->sourceAttributeValue();
         if (!scriptHref.isEmpty()) {
             // we have a src attribute 
-            String scriptCharset = scriptElement->charsetAttributeValue();
+            String scriptCharset = scriptElement->scriptCharset();
             if ((m_pendingScript = m_doc->docLoader()->requestScript(scriptHref, scriptCharset))) {
                 m_scriptElement = element;
                 m_pendingScript->addClient(this);

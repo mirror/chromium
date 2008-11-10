@@ -37,8 +37,6 @@
 
 namespace JSC {
 
-#define DUMP_OPCODE_STATS 0
-
     #define FOR_EACH_OPCODE_ID(macro) \
         macro(op_enter) \
         macro(op_enter_with_activation) \
@@ -123,6 +121,8 @@ namespace JSC {
         macro(op_jmp) \
         macro(op_jtrue) \
         macro(op_jfalse) \
+        macro(op_jeq_null) \
+        macro(op_jneq_null) \
         macro(op_jnless) \
         macro(op_jmp_scopes) \
         macro(op_loop) \
@@ -159,6 +159,8 @@ namespace JSC {
         macro(op_sret) \
         \
         macro(op_debug) \
+        macro(op_profile_will_call) \
+        macro(op_profile_did_call) \
         \
         macro(op_end) // end must be the last opcode in the list
 
@@ -178,7 +180,7 @@ namespace JSC {
     typedef OpcodeID Opcode;
 #endif
 
-#if ENABLE(SAMPLING_TOOL) || DUMP_OPCODE_STATS
+#if ENABLE(OPCODE_SAMPLING) || ENABLE(CODEBLOCK_SAMPLING) || ENABLE(OPCODE_STATS)
 
 #define PADDING_STRING "                                "
 #define PADDING_STRING_LENGTH static_cast<unsigned>(strlen(PADDING_STRING))
@@ -197,7 +199,7 @@ namespace JSC {
 
 #endif
 
-#if DUMP_OPCODE_STATS
+#if ENABLE(OPCODE_STATS)
 
     struct OpcodeStats {
         OpcodeStats();

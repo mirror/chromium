@@ -86,7 +86,9 @@ DEFINES += WTF_USE_JAVASCRIPTCORE_BINDINGS=1 WTF_CHANGES=1
 
 INCLUDEPATH += $$PWD $$PWD/../JavaScriptCore $$PWD/../JavaScriptCore/ForwardingHeaders \
                $$PWD/../JavaScriptCore/VM \
+               $$PWD/../JavaScriptCore/debugger \
                $$PWD/../JavaScriptCore/kjs \
+               $$PWD/../JavaScriptCore/runtime \
                $$PWD/../JavaScriptCore/bindings \
                $$PWD/../JavaScriptCore/wtf
 
@@ -343,10 +345,14 @@ IDL_BINDINGS += \
     page/Console.idl \
     page/DOMSelection.idl \
     page/DOMWindow.idl \
+    page/Geolocation.idl \
+    page/Geoposition.idl \
     page/History.idl \
     page/Location.idl \
-    page/Screen.idl \
     page/Navigator.idl \
+    page/PositionError.idl \
+    page/PositionOptions.idl \
+    page/Screen.idl \
     plugins/Plugin.idl \
     plugins/MimeType.idl \
     plugins/PluginArray.idl \
@@ -369,10 +375,13 @@ SOURCES += \
     bindings/js/JSCSSRuleCustom.cpp \
     bindings/js/JSCSSStyleDeclarationCustom.cpp \
     bindings/js/JSCSSValueCustom.cpp \
+    bindings/js/JSCustomPositionCallback.cpp \
+    bindings/js/JSCustomPositionErrorCallback.cpp \
     bindings/js/JSCustomVoidCallback.cpp \
     bindings/js/JSCustomXPathNSResolver.cpp \
     bindings/js/JSDocumentCustom.cpp \
     bindings/js/JSDocumentFragmentCustom.cpp \
+    bindings/js/JSDOMGlobalObject.cpp \
     bindings/js/JSDOMWindowBase.cpp \
     bindings/js/JSDOMWindowCustom.cpp \
     bindings/js/JSDOMWindowShell.cpp \
@@ -380,6 +389,7 @@ SOURCES += \
     bindings/js/JSEventCustom.cpp \
     bindings/js/JSEventTarget.cpp \
     bindings/js/JSEventTargetNodeCustom.cpp \
+    bindings/js/JSGeolocationCustom.cpp \
     bindings/js/JSHTMLAllCollection.cpp \
     bindings/js/JSHistoryCustom.cpp \
     bindings/js/JSJavaScriptCallFrameCustom.cpp \
@@ -394,7 +404,6 @@ SOURCES += \
     bindings/js/JSHTMLIFrameElementCustom.cpp \
     bindings/js/JSHTMLInputElementCustom.cpp \
     bindings/js/JSHTMLObjectElementCustom.cpp \
-    bindings/js/JSHTMLOptionElementConstructor.cpp \
     bindings/js/JSHTMLOptionsCollectionCustom.cpp \
     bindings/js/JSHTMLSelectElementCustom.cpp \
     bindings/js/JSImageConstructor.cpp \
@@ -410,6 +419,7 @@ SOURCES += \
     bindings/js/JSNodeFilterCustom.cpp \
     bindings/js/JSNodeIteratorCustom.cpp \
     bindings/js/JSNodeListCustom.cpp \
+    bindings/js/JSOptionConstructor.cpp \
     bindings/js/JSQuarantinedObjectWrapper.cpp \
     bindings/js/JSRGBColor.cpp \
     bindings/js/JSStyleSheetCustom.cpp \
@@ -499,6 +509,7 @@ SOURCES += \
     css/WebKitCSSKeyframeRule.cpp \
     css/WebKitCSSKeyframesRule.cpp \
     css/WebKitCSSTransformValue.cpp \
+    dom/ActiveDOMObject.cpp \
     dom/Attr.cpp \
     dom/Attribute.cpp \
     dom/BeforeTextInsertedEvent.cpp \
@@ -553,6 +564,7 @@ SOURCES += \
     dom/Range.cpp \
     dom/RegisteredEventListener.cpp \
     dom/ScriptElement.cpp \
+    dom/ScriptExecutionContext.cpp \
     dom/SelectorNodeList.cpp \
     dom/StaticNodeList.cpp \
     dom/StyledElement.cpp \
@@ -775,6 +787,8 @@ SOURCES += \
     page/Frame.cpp \
     page/FrameTree.cpp \
     page/FrameView.cpp \
+    page/Geolocation.cpp \
+    page/Geoposition.cpp \
     page/History.cpp \
     page/Location.cpp \
     page/MouseEventWithHitTestResults.cpp \
@@ -802,6 +816,7 @@ SOURCES += \
     platform/DragData.cpp \
     platform/DragImage.cpp \
     platform/FileChooser.cpp \
+    platform/GeolocationService.cpp \
     platform/graphics/FontDescription.cpp \
     platform/graphics/FontFamily.cpp \
     platform/graphics/AffineTransform.cpp \
@@ -824,6 +839,7 @@ SOURCES += \
     platform/graphics/Pen.cpp \
     platform/graphics/SegmentedFontData.cpp \
     platform/KURL.cpp \
+    platform/Length.cpp \
     platform/Logging.cpp \
     platform/MIMETypeRegistry.cpp \
     platform/network/AuthenticationChallengeBase.cpp \
@@ -873,7 +889,6 @@ SOURCES += \
     rendering/InlineFlowBox.cpp \
     rendering/InlineTextBox.cpp \
     rendering/LayoutState.cpp \
-    rendering/Length.cpp \
     rendering/ListMarkerBox.cpp \
     rendering/RenderApplet.cpp \
     rendering/RenderArena.cpp \

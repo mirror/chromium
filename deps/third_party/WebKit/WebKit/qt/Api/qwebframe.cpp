@@ -886,7 +886,7 @@ QVariant QWebFrame::evaluateJavaScript(const QString& scriptSource)
     ScriptController *proxy = d->frame->script();
     QVariant rc;
     if (proxy) {
-        JSC::JSValue *v = proxy->evaluate(String(), 1, scriptSource);
+        JSC::JSValue* v = proxy->evaluate(String(), 1, scriptSource);
         if (v) {
             int distance = 0;
             rc = JSC::Bindings::convertValueToQVariant(proxy->globalObject()->globalExec(), v, QMetaType::Void, &distance);
@@ -960,6 +960,17 @@ QWebFrame* QWebFramePrivate::kit(WebCore::Frame* coreFrame)
 */
 
 /*!
+  \since 4.5
+  \fn void QWebFrame::aboutToUpdateHistory(QWebHistoryItem* item);
+
+  This signal is emitted shortly before the history of navigated pages
+  is changed, for example when navigating back in the history.
+
+  A potential use-case for this signal is to store custom data in
+  the QWebHistoryItem associated to the frame, using QWebHistoryItem::setUserData().
+*/
+
+/*!
     \class QWebHitTestResult
     \since 4.4
     \brief The QWebHitTestResult class provides information about the web
@@ -984,6 +995,7 @@ QWebHitTestResultPrivate::QWebHitTestResultPrivate(const WebCore::HitTestResult 
     if (!hitTest.innerNode())
         return;
     pos = hitTest.point();
+    boundingRect = hitTest.boundingBox();
     title = hitTest.title();
     linkText = hitTest.textContent();
     linkUrl = hitTest.absoluteLinkURL();
@@ -1069,6 +1081,17 @@ QPoint QWebHitTestResult::pos() const
     if (!d)
         return QPoint();
     return d->pos;
+}
+
+/*!
+    \since 4.5
+    Returns the bounding box of the element.
+*/
+QRect QWebHitTestResult::boundingRect() const
+{
+    if (!d)
+        return QRect();
+    return d->boundingRect;
 }
 
 /*!

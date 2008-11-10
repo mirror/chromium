@@ -238,6 +238,9 @@ size_t readCallback(void* ptr, size_t size, size_t nmemb, void* data)
     if (!size || !nmemb)
         return 0;
 
+    if (!d->m_formDataStream.hasMoreElements())
+        return 0;
+
     size_t sent = d->m_formDataStream.read(ptr, size, nmemb);
 
     // Something went wrong so cancel the job.
@@ -514,12 +517,12 @@ static void parseDataUrl(ResourceHandle* handle)
         size_t outLength = 0;
         char* outData = 0;
         outData = reinterpret_cast<char*>(g_base64_decode(data.utf8().data(), &outLength));
-        if (outData)
+        if (outData && outLength > 0)
             client->didReceiveData(handle, outData, outLength, 0);
         g_free(outData);
 #else
         Vector<char> out;
-        if (base64Decode(data.latin1().data(), data.latin1().length(), out))
+        if (base64Decode(data.latin1().data(), data.latin1().length(), out) && out.size() > 0)
             client->didReceiveData(handle, out.data(), out.size(), 0);
 #endif
     } else {
@@ -527,7 +530,8 @@ static void parseDataUrl(ResourceHandle* handle)
         data = decodeURLEscapeSequences(data, TextEncoding(charset));
         response.setTextEncodingName("UTF-16");
         client->didReceiveResponse(handle, response);
-        client->didReceiveData(handle, reinterpret_cast<const char*>(data.characters()), data.length() * sizeof(UChar), 0);
+        if (data.length() > 0)
+            client->didReceiveData(handle, reinterpret_cast<const char*>(data.characters()), data.length() * sizeof(UChar), 0);
     }
 
     client->didFinishLoading(handle);

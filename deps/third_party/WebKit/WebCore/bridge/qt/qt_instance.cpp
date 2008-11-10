@@ -154,7 +154,7 @@ void QtInstance::mark()
 {
     if (m_defaultMethod)
         m_defaultMethod->mark();
-    foreach(JSValue* val, m_methods.values()) {
+    foreach(JSObject* val, m_methods.values()) {
         if (val && !val->marked())
             val->mark();
     }
@@ -215,9 +215,9 @@ JSValue* QtInstance::invokeMethod(ExecState*, const MethodList&, const ArgList&)
 
 JSValue* QtInstance::defaultValue(ExecState* exec, PreferredPrimitiveType hint) const
 {
-    if (hint == JSValue::PreferString)
+    if (hint == PreferString)
         return stringValue(exec);
-    if (hint == JSValue::PreferNumber)
+    if (hint == PreferNumber)
         return numberValue(exec);
     return valueOf(exec);
 }
@@ -283,8 +283,8 @@ JSValue* QtInstance::valueOf(ExecState* exec) const
 }
 
 // In qt_runtime.cpp
-JSValue* convertQVariantToValue(ExecState* exec, PassRefPtr<RootObject> root, const QVariant& variant);
-QVariant convertValueToQVariant(ExecState* exec, JSValue* value, QMetaType::Type hint, int *distance);
+JSValue* convertQVariantToValue(ExecState*, PassRefPtr<RootObject> root, const QVariant& variant);
+QVariant convertValueToQVariant(ExecState*, JSValue*, QMetaType::Type hint, int *distance);
 
 const char* QtField::name() const
 {

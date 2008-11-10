@@ -124,17 +124,16 @@ void GraphicsContext::setMiterLimit(float) { notImplemented(); }
 void GraphicsContext::setAlpha(float) { notImplemented(); }
 
 Color WebCore::focusRingColor() { return 0xFF0000FF; }
-void WebCore::setFocusRingColorChangeFunction(void (*)()) { }
 
 void Image::drawPattern(GraphicsContext*, const FloatRect& srcRect, const AffineTransform& patternTransform, const FloatPoint& phase, CompositeOperator, const FloatRect& destRect) { notImplemented(); } 
 
 ScrollbarTheme* ScrollbarTheme::nativeTheme() { notImplemented(); static ScrollbarTheme theme; return &theme; }
 
-void FileChooser::openFileChooser(Document*) { notImplemented(); }
 String FileChooser::basenameForWidth(const Font&, int width) const { notImplemented(); return String(); }
 
 Icon::~Icon() { }
-PassRefPtr<Icon> Icon::newIconForFile(const String& filename) { notImplemented(); return 0; }
+PassRefPtr<Icon> Icon::createIconForFile(const String& filename) { notImplemented(); return 0; }
+PassRefPtr<Icon> Icon::createIconForFiles(const Vector<String>& filenames) { notImplemented(); return 0; }
 void Icon::paint(GraphicsContext*, const IntRect&) { notImplemented(); }
 
 ContextMenu::ContextMenu(const HitTestResult& result) : m_hitTestResult(result) { notImplemented(); }

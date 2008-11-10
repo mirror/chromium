@@ -35,7 +35,7 @@
 #include <wtf/Noncopyable.h>
 
 #if USE(JSC)
-#include <kjs/ArgList.h>
+#include <runtime/ArgList.h>
 #include "KURL.h"
 
 namespace JSC {

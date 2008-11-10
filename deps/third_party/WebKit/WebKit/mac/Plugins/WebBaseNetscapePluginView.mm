@@ -52,7 +52,7 @@
 #import "WebViewInternal.h"
 #import "WebUIDelegatePrivate.h"
 #import <Carbon/Carbon.h>
-#import <kjs/JSLock.h>
+#import <runtime/JSLock.h>
 #import <WebCore/npruntime_impl.h>
 #import <WebCore/Document.h>
 #import <WebCore/DocumentLoader.h>
@@ -76,6 +76,14 @@ using namespace WebCore;
 #define LoginWindowDidSwitchFromUserNotification    @"WebLoginWindowDidSwitchFromUserNotification"
 #define LoginWindowDidSwitchToUserNotification      @"WebLoginWindowDidSwitchToUserNotification"
 
+static inline bool isDrawingModelQuickDraw(NPDrawingModel drawingModel)
+{
+#ifndef NP_NO_QUICKDRAW
+    return drawingModel == NPDrawingModelQuickDraw;
+#else
+    return false;
+#endif
+};
 
 @interface WebBaseNetscapePluginView (Internal)
 - (void)_viewHasMoved;
@@ -208,14 +216,14 @@ typedef struct {
     return NO;
 }
 
-#ifndef NP_NO_QUICKDRAW
 
 // The WindowRef created by -[NSWindow windowRef] has a QuickDraw GrafPort that covers 
 // the entire window frame (or structure region to use the Carbon term) rather then just the window content.
 // We can remove this when <rdar://problem/4201099> is fixed.
 - (void)fixWindowPort
 {
-    ASSERT(drawingModel == NPDrawingModelQuickDraw);
+#ifndef NP_NO_QUICKDRAW
+    ASSERT(isDrawingModelQuickDraw(drawingModel));
     
     NSWindow *currentWindow = [self currentWindow];
     if ([currentWindow isKindOfClass:objc_getClass("NSCarbonWindow")])
@@ -233,8 +241,10 @@ typedef struct {
     PortSize(static_cast<short>(contentRect.size.width), static_cast<short>(contentRect.size.height));
     
     SetPort(oldPort);
+#endif
 }
 
+#ifndef NP_NO_QUICKDRAW
 static UInt32 getQDPixelFormatForBitmapContext(CGContextRef context)
 {
     UInt32 byteOrder = CGBitmapContextGetBitmapInfo(context) & kCGBitmapByteOrderMask;
@@ -288,14 +298,13 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
 - (PortState)saveAndSetNewPortStateForUpdate:(BOOL)forUpdate
 {
+    ASSERT(drawingModel != NPDrawingModelCoreAnimation);
     ASSERT([self currentWindow] != nil);
 
-#ifndef NP_NO_QUICKDRAW
     // If drawing with QuickDraw, fix the window port so that it has the same bounds as the NSWindow's
     // content view.  This makes it easier to convert between AppKit view and QuickDraw port coordinates.
-    if (drawingModel == NPDrawingModelQuickDraw)
+    if (isDrawingModelQuickDraw(drawingModel))
         [self fixWindowPort];
-#endif
 
     // Use AppKit to convert view coordinates to NSWindow coordinates.
     NSRect boundsInWindow = [self convertRect:[self bounds] toView:nil];
@@ -309,9 +318,9 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 #ifndef NP_NO_QUICKDRAW
     WindowRef windowRef = (WindowRef)[[self currentWindow] windowRef];
     ASSERT(windowRef);
-        
+
     // Look at the Carbon port to convert top-left-based window coordinates into top-left-based content coordinates.
-    if (drawingModel == NPDrawingModelQuickDraw) {
+    if (isDrawingModelQuickDraw(drawingModel)) {
         ::Rect portBounds;
         CGrafPtr port = GetWindowPort(windowRef);
         GetPortBounds(port, &portBounds);
@@ -545,7 +554,7 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
             break;
         }
-
+        
         default:
             ASSERT_NOT_REACHED();
             portState = NULL;
@@ -562,6 +571,9 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
 - (void)restorePortState:(PortState)portState
 {
+    if (drawingModel == NPDrawingModelCoreAnimation)
+        return;
+
     ASSERT([self currentWindow]);
     ASSERT(portState);
     
@@ -597,7 +609,7 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
             ASSERT(((PortState_CG *)portState)->context == nPort.cgPort.context);
             CGContextRestoreGState(nPort.cgPort.context);
             break;
-                
+
         default:
             ASSERT_NOT_REACHED();
             break;
@@ -636,22 +648,21 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     // Can only send drawRect (updateEvt) to CoreGraphics plugins when actually drawing
     ASSERT((drawingModel != NPDrawingModelCoreGraphics) || !eventIsDrawRect || [NSView focusView] == self);
     
-    PortState portState;
-    if ((drawingModel != NPDrawingModelCoreGraphics) || eventIsDrawRect) {
-        // In CoreGraphics mode, the port state only needs to be saved/set when redrawing the plug-in view.  The plug-in is not
-        // allowed to draw at any other time.
+    PortState portState = NULL;
+    
+    if (isDrawingModelQuickDraw(drawingModel) || (drawingModel != NPDrawingModelCoreAnimation && eventIsDrawRect)) {
+        // In CoreGraphics mode, the port state only needs to be saved/set when redrawing the plug-in view.
+        // The plug-in is not allowed to draw at any other time.
         portState = [self saveAndSetNewPortStateForUpdate:eventIsDrawRect];
-        
         // We may have changed the window, so inform the plug-in.
         [self setWindowIfNecessary];
-    } else
-        portState = NULL;
+    }
     
 #if !defined(NDEBUG) && !defined(NP_NO_QUICKDRAW)
     // Draw green to help debug.
     // If we see any green we know something's wrong.
     // Note that PaintRect() only works for QuickDraw plugins; otherwise the current QD port is undefined.
-    if (drawingModel == NPDrawingModelQuickDraw && !isTransparent && eventIsDrawRect) {
+    if (isDrawingModelQuickDraw(drawingModel) && !isTransparent && eventIsDrawRect) {
         ForeColor(greenColor);
         const ::Rect bigRect = { -10000, -10000, 10000, 10000 };
         PaintRect(&bigRect);
@@ -912,6 +923,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
 - (BOOL)isNewWindowEqualToOldWindow
 {
+    ASSERT(drawingModel != NPDrawingModelCoreAnimation);
+        
     if (window.x != lastSetWindow.x)
         return NO;
     if (window.y != lastSetWindow.y)
@@ -960,6 +973,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
 - (void)updateAndSetWindow
 {
+    ASSERT(drawingModel != NPDrawingModelCoreAnimation);
+
     // A plug-in can only update if it's (1) already been started (2) isn't stopped
     // and (3) is able to draw on-screen. To meet condition (3) the plug-in must not
     // be hidden and be attached to a window. QuickDraw plug-ins are an important
@@ -977,6 +992,15 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 #endif // NP_NO_QUICKDRAW
     
     BOOL didLockFocus = [NSView focusView] != self && [self lockFocusIfCanDraw];
+    
+    if (drawingModel == NPDrawingModelCoreGraphics || isDrawingModelQuickDraw(drawingModel)) {
+        [self setWindowIfNecessary];
+        if (didLockFocus)
+            [self unlockFocus];
+
+        return;
+    }
+    
     PortState portState = [self saveAndSetNewPortState];
     if (portState) {
         [self setWindowIfNecessary];
@@ -989,6 +1013,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
 - (void)setWindowIfNecessary
 {
+    ASSERT(drawingModel != NPDrawingModelCoreAnimation);
+           
     if (!isStarted) {
         return;
     }
@@ -1027,7 +1053,7 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
                 LOG(Plugins, "NPP_SetWindow (CoreGraphics): %d, window=%p, context=%p, window.x:%d window.y:%d window.width:%d window.height:%d",
                 npErr, nPort.cgPort.window, nPort.cgPort.context, (int)window.x, (int)window.y, (int)window.width, (int)window.height);
             break;
-            
+                        
             default:
                 ASSERT_NOT_REACHED();
             break;
@@ -1186,8 +1212,7 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     }
 
 #ifndef NP_NO_CARBON
-    if (eventModel == NPEventModelCocoa &&
-        drawingModel == NPDrawingModelQuickDraw) {
+    if (eventModel == NPEventModelCocoa && isDrawingModelQuickDraw(drawingModel)) {
         LOG(Plugins, "Plugin can't use use Cocoa event model with QuickDraw drawing model: %@", pluginPackage);
         [self _destroyPlugin];
         [pluginPackage close];
@@ -1195,6 +1220,20 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
         return NO;
     }        
 #endif // NP_NO_CARBON
+    
+#ifndef BUILDING_ON_TIGER
+    if (drawingModel == NPDrawingModelCoreAnimation) {
+        void *value = 0;
+        if (NPP_GetValue(plugin, NPPVpluginCoreAnimationLayer, &value) == NPERR_NO_ERROR && value) {
+            _layer = (CALayer *)value;
+            [self setWantsLayer:YES];
+            [self setLayer:_layer];
+            LOG(Plugins, "%@ is using Core Animation drawing model with layer %@", pluginPackage, _layer);
+        }
+
+        ASSERT(_layer);
+    }
+#endif
     
     // Create the event handler
     eventHandler = WebNetscapePluginEventHandler::create(self);
@@ -1213,8 +1252,9 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     
     isStarted = YES;
     [[self webView] addPluginInstanceView:self];
-        
-    [self updateAndSetWindow];
+
+    if (drawingModel == NPDrawingModelCoreGraphics || isDrawingModelQuickDraw(drawingModel))
+        [self updateAndSetWindow];
 
     if ([self window]) {
         [self addWindowObservers];
@@ -1251,12 +1291,14 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     
     [[self webView] removePluginInstanceView:self];
 
-    // To stop active streams it's necessary to invoke makeObjectsPerformSelector on a copy 
-    // of streams. This is because calling -[WebNetscapePluginStream stop] also has the side effect
-    // of removing a stream from this collection.
-    NSArray *streamsCopy = [streams copy];
-    [streamsCopy makeObjectsPerformSelector:@selector(stop)];
-    [streamsCopy release];
+    // To stop active streams it's necessary to invoke stop() on a copy 
+    // of streams. This is because calling WebNetscapePluginStream::stop() also has the side effect
+    // of removing a stream from this hash set.
+    Vector<RefPtr<WebNetscapePluginStream> > streamsCopy;
+    copyToVector(streams, streamsCopy);
+    for (size_t i = 0; i < streamsCopy.size(); i++)
+        streamsCopy[i]->stop();
+    
    
     // Stop the timers
     [self stopTimers];
@@ -1416,7 +1458,6 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 {
     [super initWithFrame:frame];
  
-    streams = [[NSMutableArray alloc] init];
     pendingFrameLoads = [[NSMutableDictionary alloc] init];    
     
     // load the plug-in if it is not already loaded
@@ -1438,7 +1479,6 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
         [self setMode:NP_EMBED];
     
     _loadManually = loadManually;
-    
     return self;
 }
 
@@ -1471,9 +1511,9 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     }    
 }
 
-- (void)disconnectStream:(WebBaseNetscapePluginStream*)stream
+- (void)disconnectStream:(WebNetscapePluginStream*)stream
 {
-    [streams removeObjectIdenticalTo:stream];    
+    streams.remove(stream);
 }
 
 - (void)dealloc
@@ -1481,11 +1521,9 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     ASSERT(!isStarted);
 
     [sourceURL release];
-    [_manualStream release];
     [_error release];
     
     [pluginPackage release];
-    [streams release];
     [MIMEType release];
     [baseURL release];
     [pendingFrameLoads release];
@@ -1510,6 +1548,9 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 
 - (void)drawRect:(NSRect)rect
 {
+    if (drawingModel == NPDrawingModelCoreAnimation)
+        return;
+
     if (!isStarted)
         return;
     
@@ -1547,10 +1588,10 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     [self _viewHasMoved];
 }
 
-#ifndef NP_NO_QUICKDRAW
 -(void)tellQuickTimeToChill
 {
-    ASSERT(drawingModel == NPDrawingModelQuickDraw);
+#ifndef NP_NO_QUICKDRAW
+    ASSERT(isDrawingModelQuickDraw(drawingModel));
     
     // Make a call to the secret QuickDraw API that makes QuickTime calm down.
     WindowRef windowRef = (WindowRef)[[self window] windowRef];
@@ -1561,15 +1602,13 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     ::Rect bounds;
     GetPortBounds(port, &bounds);
     WKCallDrawingNotification(port, &bounds);
-}
 #endif /* NP_NO_QUICKDRAW */
+}
 
 - (void)viewWillMoveToWindow:(NSWindow *)newWindow
 {
-#ifndef NP_NO_QUICKDRAW
-    if (drawingModel == NPDrawingModelQuickDraw)
+    if (isDrawingModelQuickDraw(drawingModel))
         [self tellQuickTimeToChill];
-#endif
 
     // We must remove the tracking rect before we move to the new window.
     // Once we move to the new window, it will be too late.
@@ -1756,8 +1795,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
 {
     ASSERT(_loadManually);
     ASSERT(!_manualStream);
-    
-    _manualStream = [[WebBaseNetscapePluginStream alloc] initWithFrameLoader:core([self webFrame])->loader()];
+
+    _manualStream = WebNetscapePluginStream::create(core([self webFrame])->loader());
 }
 
 - (void)pluginView:(NSView *)pluginView receivedData:(NSData *)data
@@ -1769,16 +1808,18 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     
     if (![self isStarted])
         return;
-    
-    if ([_manualStream plugin] == NULL) {
-        [_manualStream setRequestURL:[[[self dataSource] request] URL]];
-        [_manualStream setPlugin:[self plugin]];
-        ASSERT([_manualStream plugin]);
-        [_manualStream startStreamWithResponse:[[self dataSource] response]];
+
+    if (!_manualStream->plugin()) {
+
+        _manualStream->setRequestURL([[[self dataSource] request] URL]);
+        _manualStream->setPlugin([self plugin]);
+        ASSERT(_manualStream->plugin());
+        
+        _manualStream->startStreamWithResponse([[self dataSource] response]);
     }
-    
-    if ([_manualStream plugin])
-        [_manualStream receivedData:data];
+
+    if (_manualStream->plugin())
+        _manualStream->didReceiveData(0, static_cast<const char *>([data bytes]), [data length]);
 }
 
 - (void)pluginView:(NSView *)pluginView receivedError:(NSError *)error
@@ -1792,8 +1833,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     if (![self isStarted]) {
         return;
     }
-    
-    [_manualStream destroyStreamWithError:error];
+
+    _manualStream->destroyStreamWithError(error);
 }
 
 - (void)pluginViewFinishedLoading:(NSView *)pluginView 
@@ -1802,7 +1843,7 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     ASSERT(_manualStream);
     
     if ([self isStarted])
-        [_manualStream finishedLoading];
+        _manualStream->didFinishLoading(0);
 }
 
 #pragma mark NSTextInput implementation
@@ -2018,22 +2059,17 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     } else if ([result length] > 0) {
         // Don't call NPP_NewStream and other stream methods if there is no JS result to deliver. This is what Mozilla does.
         NSData *JSData = [result dataUsingEncoding:NSUTF8StringEncoding];
-        WebBaseNetscapePluginStream *stream = [[WebBaseNetscapePluginStream alloc] initWithRequest:[NSURLRequest requestWithURL:URL]
-                                                                                            plugin:plugin
-                                                                                        notifyData:[JSPluginRequest notifyData]
-                                                                                  sendNotification:[JSPluginRequest sendNotification]];
         
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:URL 
-                                                            MIMEType:@"text/plain" 
-                                               expectedContentLength:[JSData length]
-                                                    textEncodingName:nil];
+        RefPtr<WebNetscapePluginStream> stream = WebNetscapePluginStream::create([NSURLRequest requestWithURL:URL], plugin, [JSPluginRequest sendNotification], [JSPluginRequest notifyData]);
         
-        [stream startStreamWithResponse:response];
-        [response release];
+        RetainPtr<NSURLResponse> response(AdoptNS, [[NSURLResponse alloc] initWithURL:URL 
+                                                                             MIMEType:@"text/plain" 
+                                                                expectedContentLength:[JSData length]
+                                                                     textEncodingName:nil]);
         
-        [stream receivedData:JSData];
-        [stream finishedLoading];
-        [stream release];
+        stream->startStreamWithResponse(response.get());
+        stream->didReceiveData(0, static_cast<const char*>([JSData bytes]), [JSData length]);
+        stream->didFinishLoading(0);
     }
 }
 
@@ -2138,7 +2174,7 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     NSString *target = nil;
     if (cTarget) {
         // Find the frame given the target string.
-        target = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, cTarget, kCFStringEncodingWindowsLatin1);
+        target = [NSString stringWithCString:cTarget encoding:NSISOLatin1StringEncoding];
     }
     WebFrame *frame = [self webFrame];
 
@@ -2146,8 +2182,6 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
     // displayed unless the loads are in the same frame as the plugin.
     if ([[self dataSource] _documentLoader] != core([self webFrame])->loader()->activeDocumentLoader() &&
         (!cTarget || [frame findFrameNamed:target] != frame)) {
-        if (target)
-            CFRelease(target);
         return NPERR_GENERIC_ERROR; 
     }
     
@@ -2170,9 +2204,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
         // Make when targetting a frame or evaluating a JS string, perform the request after a delay because we don't
         // want to potentially kill the plug-in inside of its URL request.
         
-        if (JSString != nil && target != nil && [frame findFrameNamed:target] != frame) {
+        if (JSString && target && [frame findFrameNamed:target] != frame) {
             // For security reasons, only allow JS requests to be made on the frame that contains the plug-in.
-            CFRelease(target);
             return NPERR_INVALID_PARAM;
         }
         
@@ -2187,19 +2220,11 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
                                                             didStartFromUserGesture:currentEventIsUserGesture];
         [self performSelector:@selector(loadPluginRequest:) withObject:pluginRequest afterDelay:0];
         [pluginRequest release];
-        if (target)
-            CFRelease(target);
     } else {
-        WebBaseNetscapePluginStream *stream = [[WebBaseNetscapePluginStream alloc] initWithRequest:request 
-                                                                                            plugin:plugin 
-                                                                                        notifyData:notifyData 
-                                                                                  sendNotification:sendNotification];
-        if (!stream)
-            return NPERR_INVALID_URL;
+        RefPtr<WebNetscapePluginStream> stream = WebNetscapePluginStream::create(request, plugin, sendNotification, notifyData);
 
-        [streams addObject:stream];
-        [stream start];
-        [stream release];
+        streams.add(stream.get());
+        stream->start();
     }
     
     return NPERR_NO_ERROR;
@@ -2350,8 +2375,8 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
         return NPERR_INVALID_INSTANCE_ERROR;
     }
     
-    WebBaseNetscapePluginStream *browserStream = static_cast<WebBaseNetscapePluginStream *>(stream->ndata);
-    [browserStream cancelLoadAndDestroyStreamWithError:[browserStream errorForReason:reason]];
+    WebNetscapePluginStream* browserStream = static_cast<WebNetscapePluginStream*>(stream->ndata);
+    browserStream->cancelLoadAndDestroyStreamWithError(browserStream->errorForReason(reason));
     
     return NPERR_NO_ERROR;
 }
@@ -2407,7 +2432,12 @@ static inline void getNPRect(const NSRect& nr, NPRect& npr)
         break;
 #endif /* NP_NO_QUICKDRAW */
         
-        case NPDrawingModelCoreGraphics:    
+        case NPDrawingModelCoreGraphics:
+        {
+            CGRect cgRect = CGPathGetBoundingBox((NPCGRegion)invalidRegion);
+            invalidRect = *(NSRect*)&cgRect;
+            break;
+        }
         default:
             ASSERT_NOT_REACHED();
         break;
@@ -2496,6 +2526,16 @@ static NPBrowserTextInputFuncs *browserTextInputFuncs()
             return NPERR_NO_ERROR;
         }
         
+        case NPNVsupportsCoreAnimationBool:
+        {
+#ifdef BUILDING_ON_TIGER
+            *(NPBool *)value = FALSE;
+#else
+            *(NPBool *)value = TRUE;
+#endif
+            return NPERR_NO_ERROR;
+        }
+            
 #ifndef NP_NO_CARBON
         case NPNVsupportsCarbonBool:
         {
@@ -2563,7 +2603,16 @@ static NPBrowserTextInputFuncs *browserTextInputFuncs()
                 // Supported drawing models:
 #ifndef NP_NO_QUICKDRAW
                 case NPDrawingModelQuickDraw:
-#endif                
+#endif
+                case NPDrawingModelCoreGraphics:
+                    drawingModel = newDrawingModel;
+                    return NPERR_NO_ERROR;
+                    
+                case NPDrawingModelCoreAnimation:
+                    drawingModel = newDrawingModel;
+                    return NPERR_NO_ERROR;
+                    
+
                 // Unsupported (or unknown) drawing models:
                 default:
                     LOG(Plugins, "Plugin %@ uses unsupported drawing model: %d", pluginPackage, drawingModel);
@@ -2746,12 +2795,13 @@ static NPBrowserTextInputFuncs *browserTextInputFuncs()
     // is moved back into a window, everything should be set up correctly.
     if (![self window])
         return;
-    
-#ifndef NP_NO_QUICKDRAW
-    if (drawingModel == NPDrawingModelQuickDraw)
+
+    if (isDrawingModelQuickDraw(drawingModel))
         [self tellQuickTimeToChill];
-#endif
-    [self updateAndSetWindow];
+
+    if (drawingModel == NPDrawingModelCoreGraphics || isDrawingModelQuickDraw(drawingModel))
+        [self updateAndSetWindow];
+    
     [self resetTrackingRect];
     
     // Check to see if the plugin view is completely obscured (scrolled out of view, for example).

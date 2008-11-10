@@ -34,22 +34,21 @@ class QtClass;
 class QtField;
 class QtRuntimeMetaMethod;
 
-class QtInstance : public Instance
-{
+class QtInstance : public Instance {
 public:
-    ~QtInstance ();
+    ~QtInstance();
 
     virtual Class* getClass() const;
 
     virtual void begin();
     virtual void end();
 
-    virtual JSValue* valueOf(ExecState* exec) const;
+    virtual JSValue* valueOf(ExecState*) const;
     virtual JSValue* defaultValue(ExecState*, PreferredPrimitiveType) const;
 
     virtual void mark(); // This isn't inherited
 
-    virtual JSValue* invokeMethod (ExecState *exec, const MethodList &method, const ArgList &args);
+    virtual JSValue* invokeMethod(ExecState*, const MethodList&, const ArgList&);
 
     virtual void getPropertyNames(ExecState*, PropertyNameArray&);
 
@@ -76,8 +75,8 @@ private:
     mutable QtClass* m_class;
     QPointer<QObject> m_object;
     QObject* m_hashkey;
-    mutable QHash<QByteArray,JSValue*> m_methods;
-    mutable QHash<QString,QtField*> m_fields;
+    mutable QHash<QByteArray, JSObject*> m_methods;
+    mutable QHash<QString, QtField*> m_fields;
     mutable QSet<JSValue*> m_children;
     mutable QtRuntimeMetaMethod* m_defaultMethod;
 };

@@ -151,14 +151,14 @@ long StopWatch::getElapsedMS()
 
 class GlobalObject : public JSGlobalObject {
 public:
-    GlobalObject(JSGlobalData*, const Vector<UString>& arguments);
+    GlobalObject(const Vector<UString>& arguments);
     virtual UString className() const { return "global"; }
 };
 COMPILE_ASSERT(!IsInteger<GlobalObject>::value, WTF_IsInteger_GlobalObject_false);
 ASSERT_CLASS_FITS_IN_CELL(GlobalObject);
 
-GlobalObject::GlobalObject(JSGlobalData* globalData, const Vector<UString>& arguments)
-    : JSGlobalObject(globalData)
+GlobalObject::GlobalObject(const Vector<UString>& arguments)
+    : JSGlobalObject()
 {
     putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "debug"), functionDebug));
     putDirectFunction(globalExec(), new (globalExec()) PrototypeFunction(globalExec(), prototypeFunctionStructure(), 1, Identifier(globalExec(), "print"), functionPrint));
@@ -173,8 +173,6 @@ GlobalObject::GlobalObject(JSGlobalData* globalData, const Vector<UString>& argu
     for (size_t i = 0; i < arguments.size(); ++i)
         array->put(globalExec(), i, jsString(globalExec(), arguments[i]));
     putDirect(Identifier(globalExec(), "arguments"), array);
-
-    Interpreter::setShouldPrintExceptions(true);
 }
 
 JSValue* functionPrint(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
@@ -305,7 +303,7 @@ static bool prettyPrintScript(ExecState* exec, const UString& fileName, const Ve
 {
     int errLine = 0;
     UString errMsg;
-    RefPtr<ProgramNode> programNode = exec->globalData().parser->parse<ProgramNode>(exec, makeSource(script.data(), fileName), &errLine, &errMsg);
+    RefPtr<ProgramNode> programNode = exec->globalData().parser->parse<ProgramNode>(exec, exec->dynamicGlobalObject()->debugger(), makeSource(script.data(), fileName), &errLine, &errMsg);
     if (!programNode) {
         fprintf(stderr, "%s:%d: %s.\n", fileName.UTF8String().c_str(), errLine, errMsg.UTF8String().c_str());
         return false;
@@ -322,10 +320,9 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
     if (dump)
         CodeGenerator::setDumpsGeneratedCode(true);
 
-#if ENABLE(SAMPLING_TOOL)
+#if ENABLE(OPCODE_SAMPLING)
     Machine* machine = globalObject->globalData()->machine;
-    machine->m_sampler = new SamplingTool();
-    machine->m_sampler->start();
+    machine->setSampler(new SamplingTool(machine));
 #endif
 
     bool success = true;
@@ -338,6 +335,9 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
         if (prettyPrint)
             prettyPrintScript(globalObject->globalExec(), fileName, script);
         else {
+#if ENABLE(OPCODE_SAMPLING)
+            machine->sampler()->start();
+#endif
             Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
             success = success && completion.complType() != Throw;
             if (dump) {
@@ -348,13 +348,16 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
             }
 
             globalObject->globalExec()->clearException();
+
+#if ENABLE(OPCODE_SAMPLING)
+            machine->sampler()->stop();
+#endif
         }
     }
 
-#if ENABLE(SAMPLING_TOOL)
-    machine->m_sampler->stop();
-    machine->m_sampler->dump(globalObject->globalExec());
-    delete machine->m_sampler;
+#if ENABLE(OPCODE_SAMPLING)
+    machine->sampler()->dump(globalObject->globalExec());
+    delete machine->sampler();
 #endif
     return success;
 }
@@ -463,7 +466,7 @@ int jscmain(int argc, char** argv, JSGlobalData* globalData)
     Options options;
     parseArguments(argc, argv, options);
 
-    GlobalObject* globalObject = new (globalData) GlobalObject(globalData, options.arguments);
+    GlobalObject* globalObject = new (globalData) GlobalObject(options.arguments);
     bool success = runWithScripts(globalObject, options.fileNames, options.prettyPrint, options.dump);
     if (options.interactive && success)
         runInteractive(globalObject);

@@ -88,8 +88,8 @@
 
 #if USE(JSC)
 #include "JSDOMBinding.h"
-#include <kjs/JSLock.h>
-#include <kjs/JSObject.h>
+#include <runtime/JSLock.h>
+#include <runtime/JSObject.h>
 using JSC::UString;
 using JSC::JSLock;
 using JSC::JSValue;
@@ -116,7 +116,6 @@ namespace WebCore {
 using namespace SVGNames;
 #endif
 using namespace HTMLNames;
-using namespace EventNames;
 
 #if USE(LOW_BANDWIDTH_DISPLAY)
 const unsigned int cMaxPendingSourceLengthInLowBandwidthDisplay = 128 * 1024;
@@ -608,7 +607,7 @@ void FrameLoader::stopLoading(bool sendUnload)
                 if (currentFocusedNode)
                     currentFocusedNode->aboutToUnload();
                 setFiringUnloadEvents(true);
-                m_frame->document()->dispatchWindowEvent(unloadEvent, false, false);
+                m_frame->document()->dispatchWindowEvent(eventNames().unloadEvent, false, false);
                 setFiringUnloadEvents(false);
                 if (m_frame->document())
                     m_frame->document()->updateRendering();
@@ -638,8 +637,10 @@ void FrameLoader::stopLoading(bool sendUnload)
     if (Document* doc = m_frame->document()) {
         if (DocLoader* docLoader = doc->docLoader())
             cache()->loader()->cancelRequests(docLoader);        
-        XMLHttpRequest::cancelRequests(doc);
+        
+        doc->stopActiveDOMObjects();
 #if ENABLE(DATABASE)
+        doc->stopDatabases();
 #endif
     }
 
@@ -1953,10 +1954,11 @@ bool FrameLoader::canCachePage()
         && !m_containsPlugIns
         && !m_URL.protocolIs("https")
         && m_frame->document()
-        && !m_frame->document()->hasWindowEventListener(unloadEvent)
+        && !m_frame->document()->hasWindowEventListener(eventNames().unloadEvent)
 #if ENABLE(DATABASE)
         && !m_frame->document()->hasOpenDatabases()
 #endif
+        && !m_frame->document()->usingGeolocation()
         && m_frame->page()
         && m_frame->page()->backForwardList()->enabled()
         && m_frame->page()->backForwardList()->capacity() > 0
@@ -3482,7 +3484,6 @@ void FrameLoader::detachFromParent()
         m_frame->setView(0);
         m_frame->pageDestroyed();
     }
-    m_client->detachedFromParent4();
 }
 
 void FrameLoader::addExtraFieldsToRequest(ResourceRequest& request, bool mainResource, bool alwaysFromRequest)

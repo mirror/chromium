@@ -43,10 +43,9 @@
 #include "PlatformString.h"
 #include "ScriptCallContext.h"
 #if USE(JSC)
-#include <kjs/ArgList.h>
+#include <runtime/ArgList.h>
 #include <kjs/interpreter.h>
-#include <kjs/JSObject.h>
-#include <profiler/Profile.h>
+#include <runtime/JSObject.h>
 #include <profiler/Profiler.h>
 #endif
 #include <stdio.h>
@@ -123,14 +122,8 @@ static void printMessageSourceAndLevelPrefix(MessageSource source, MessageLevel 
 
 static void printToStandardOut(MessageSource source, MessageLevel level, const String& message, const String& sourceURL, unsigned lineNumber)
 {
-#if USE(JSC)
-    if (!Interpreter::shouldPrintExceptions())
+    if (!Console::shouldPrintExceptions())
         return;
-#elif USE(V8)
-    // TODO(dglazkov): This is a temporary measure to greenify layout tests.
-    // We should decide whether to do this at all for Chromium.
-    return;
-#endif
 
     printSourceURLAndLine(sourceURL, lineNumber);
     printMessageSourceAndLevelPrefix(source, level);
@@ -140,14 +133,8 @@ static void printToStandardOut(MessageSource source, MessageLevel level, const S
 
 static void printToStandardOut(MessageLevel level, ScriptCallContext* context)
 {
-#if USE(JSC)
-    if (!Interpreter::shouldPrintExceptions())
+    if (!Console::shouldPrintExceptions())
         return;
-#elif USE(V8)
-    // TODO(dglazkov): This is a temporary measure to greenify layout tests.
-    // We should decide whether to do this at all for Chromium.
-    return;
-#endif
 
     printSourceURLAndLine(context->sourceURL().prettyURL(), 0);
     printMessageSourceAndLevelPrefix(JSMessageSource, level);
@@ -184,9 +171,6 @@ void Console::error(ScriptCallContext* context)
     if (!context->hasArguments())
         return;
 
-    if (!m_frame)
-        return;
-
     Page* page = this->page();
     if (!page)
         return;
@@ -202,9 +186,6 @@ void Console::info(ScriptCallContext* context)
     if (!context->hasArguments())
         return;
 
-    if (!m_frame)
-        return;
-
     Page* page = this->page();
     if (!page)
         return;
@@ -218,9 +199,6 @@ void Console::info(ScriptCallContext* context)
 void Console::log(ScriptCallContext* context)
 {
     if (!context->hasArguments())
-        return;
-
-    if (!m_frame)
         return;
 
     Page* page = this->page();
@@ -252,10 +230,7 @@ void Console::dirxml(ScriptCallContext* context)
     if (!context->hasArguments())
         return;
 
-    if (!m_frame)
-        return;
-
-    Page* page = m_frame->page();
+    Page* page = this->page();
     if (!page)
         return;
 
@@ -278,7 +253,7 @@ void Console::trace(ScriptCallContext* context)
     ArgList args;
     while (!func->isNull()) {
         args.append(func);
-        func = context->exec()->machine()->retrieveCaller(context->exec(), static_cast<InternalFunction*>(func));
+        func = context->exec()->machine()->retrieveCaller(context->exec(), asInternalFunction(func));
     }
     
     page->inspectorController()->addMessageToConsole(JSMessageSource, TraceMessageLevel, context);
@@ -287,9 +262,6 @@ void Console::trace(ScriptCallContext* context)
 void Console::assertCondition(bool condition, ScriptCallContext* context)
 {
     if (condition)
-        return;
-
-    if (!m_frame)
         return;
 
     Page* page = this->page();
@@ -306,10 +278,7 @@ void Console::assertCondition(bool condition, ScriptCallContext* context)
 
 void Console::count(ScriptCallContext* context)
 {
-    if (!m_frame)
-        return;
-
-    Page* page = m_frame->page();
+    Page* page = this->page();
     if (!page)
         return;
 
@@ -323,12 +292,27 @@ void Console::count(ScriptCallContext* context)
 
 void Console::profile(ExecState* exec, const ArgList& args)
 {
+    Page* page = this->page();
+    if (!page)
+        return;
+
+    // FIXME: log a console message when profiling is disabled.
+    if (!page->inspectorController()->profilerEnabled())
+        return;
+
     UString title = args.at(exec, 0)->toString(exec);
     Profiler::profiler()->startProfiling(exec, title);
 }
 
 void Console::profileEnd(ExecState* exec, const ArgList& args)
 {
+    Page* page = this->page();
+    if (!page)
+        return;
+
+    if (!page->inspectorController()->profilerEnabled())
+        return;
+
     UString title;
     if (args.size() >= 1)
         title = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
@@ -336,6 +320,8 @@ void Console::profileEnd(ExecState* exec, const ArgList& args)
     RefPtr<Profile> profile = Profiler::profiler()->stopProfiling(exec, title);
     if (!profile)
         return;
+
+    m_profiles.append(profile);
 
     if (Page* page = this->page()) {
         ScriptCallContext context(exec, args);
@@ -416,9 +402,6 @@ void Console::warn(ScriptCallContext* context)
     if (!context->hasArguments())
         return;
 
-    if (!m_frame)
-        return;
-
     Page* page = this->page();
     if (!page)
         return;
@@ -451,11 +434,22 @@ void Console::reportCurrentException(ExecState* exec)
 
 #endif
 
+static bool printExceptions = false;
+
+bool Console::shouldPrintExceptions()
+{
+    return printExceptions;
+}
+
+void Console::setShouldPrintExceptions(bool print)
+{
+    printExceptions = print;
+}
+
 Page* Console::page() const
 {
     if (!m_frame)
         return 0;
-
     return m_frame->page();
 }
 

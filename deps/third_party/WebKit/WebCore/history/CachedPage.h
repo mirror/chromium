@@ -29,7 +29,9 @@
 #include "KURL.h"
 #include <wtf/OwnPtr.h>
 #include "PausedTimeouts.h"
+#if USE(JSC)
 #include <kjs/protect.h>
+#endif
 
 namespace WebCore {
     
@@ -72,7 +74,9 @@ private:
     RefPtr<FrameView> m_view;
     RefPtr<Node> m_mousePressNode;
     KURL m_URL;
+#if USE(JSC)
     JSC::ProtectedPtr<JSDOMWindow> m_window;
+#endif
     OwnPtr<PausedTimeouts> m_pausedTimeouts;
     OwnPtr<CachedPagePlatformData> m_cachedPagePlatformData;
 };

@@ -29,6 +29,7 @@
 #if ENABLE(NETSCAPE_PLUGIN_API)
 
 #include "npruntime_internal.h"
+#include <runtime/JSValue.h>
 
 namespace WebCore {
     class String;
@@ -38,7 +39,6 @@ namespace JSC {
 
 class ExecState;
 class Identifier;
-class JSValue;
 
 namespace Bindings {
 

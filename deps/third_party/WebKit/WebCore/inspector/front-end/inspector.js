@@ -793,14 +793,24 @@ WebInspector.addDatabase = function(database)
     this.panels.databases.addDatabase(database);
 }
 
-WebInspector.debuggerAttached = function()
+WebInspector.debuggerWasEnabled = function()
 {
-    this.panels.scripts.debuggerAttached();
+    this.panels.scripts.debuggerWasEnabled();
 }
 
-WebInspector.debuggerDetached = function()
+WebInspector.debuggerWasDisabled = function()
 {
-    this.panels.scripts.debuggerDetached();
+    this.panels.scripts.debuggerWasDisabled();
+}
+
+WebInspector.profilerWasEnabled = function()
+{
+    this.panels.profiles.profilerWasEnabled();
+}
+
+WebInspector.profilerWasDisabled = function()
+{
+    this.panels.profiles.profilerWasDisabled();
 }
 
 WebInspector.parsedScriptSource = function(sourceID, sourceURL, source, startingLine)

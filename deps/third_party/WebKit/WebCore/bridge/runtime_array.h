@@ -27,7 +27,7 @@
 #define RUNTIME_ARRAY_H_
 
 #include "runtime.h"
-#include <kjs/JSGlobalObject.h>
+#include <runtime/JSGlobalObject.h>
 
 namespace JSC {
     
@@ -37,8 +37,8 @@ public:
     
     virtual bool getOwnPropertySlot(ExecState *, const Identifier&, PropertySlot&);
     virtual bool getOwnPropertySlot(ExecState *, unsigned, PropertySlot&);
-    virtual void put(ExecState *exec, const Identifier &propertyName, JSValue *value, PutPropertySlot&);
-    virtual void put(ExecState *exec, unsigned propertyName, JSValue *value);
+    virtual void put(ExecState*, const Identifier& propertyName, JSValue*, PutPropertySlot&);
+    virtual void put(ExecState*, unsigned propertyName, JSValue*);
     
     virtual bool deleteProperty(ExecState *exec, const Identifier &propertyName);
     virtual bool deleteProperty(ExecState *exec, unsigned propertyName);
@@ -54,6 +54,11 @@ public:
     static ArrayPrototype* createPrototype(ExecState* exec)
     {
         return exec->lexicalGlobalObject()->arrayPrototype();
+    }
+
+    static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+    {
+        return StructureID::create(prototype, TypeInfo(ObjectType));
     }
 
 private:

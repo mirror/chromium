@@ -53,14 +53,14 @@ namespace WebCore {
         bool needsUpdate() const { return m_needsUpdate; }
         void setNeedsUpdate(bool);
 
-        virtual Frame* associatedFrame() const;
+        virtual ScriptExecutionContext* scriptExecutionContext() const;
 
         virtual EventTargetNode* toNode() { return shadowTreeElement(); }
         virtual SVGElementInstance* toSVGElementInstance() { return this; }
 
         virtual void addEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
         virtual void removeEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
-        virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent = false);
+        virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&);
 
         SVGElement* correspondingElement() const { return m_element.get(); }
         SVGUseElement* correspondingUseElement() const { return m_useElement; }

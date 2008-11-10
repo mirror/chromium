@@ -29,8 +29,8 @@
 #if ENABLE(MAC_JAVA_BRIDGE)
 
 #include <CoreFoundation/CoreFoundation.h>
-
 #include <JavaVM/jni.h>
+#include <runtime/JSValue.h>
 #include <wtf/RefPtr.h>
 
 #define jlong_to_ptr(a) ((void*)(uintptr_t)(a))
@@ -42,7 +42,6 @@ namespace JSC {
 class ArgList;
 class ExecState;
 class JSObject;
-class JSValue;
 
 namespace Bindings {
 

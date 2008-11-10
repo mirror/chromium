@@ -38,17 +38,12 @@
 
 namespace WebCore {
 
-KeyframeAnimation::KeyframeAnimation(const Animation* animation, RenderObject* renderer, int index, CompositeAnimation* compAnim, const RenderStyle* unanimatedStyle)
+KeyframeAnimation::KeyframeAnimation(const Animation* animation, RenderObject* renderer, int index, CompositeAnimation* compAnim, RenderStyle* unanimatedStyle)
     : AnimationBase(animation, renderer, compAnim)
     , m_keyframes(renderer, animation->name())
     , m_index(index)
-    , m_unanimatedStyle(0)
+    , m_unanimatedStyle(unanimatedStyle)
 {
-    if (unanimatedStyle) {
-        const_cast<RenderStyle*>(unanimatedStyle)->ref();
-        m_unanimatedStyle = unanimatedStyle;
-    }
-    
     // Get the keyframe RenderStyles
     if (m_object && m_object->element() && m_object->element()->isElementNode())
         m_object->document()->styleSelector()->keyframeStylesForAnimation(static_cast<Element*>(m_object->element()), unanimatedStyle, m_keyframes);
@@ -62,13 +57,10 @@ KeyframeAnimation::~KeyframeAnimation()
     // Do the cleanup here instead of in the base class so the specialized methods get called
     if (!postActive())
         updateStateMachine(AnimationStateInputEndAnimation, -1);
-
-    if (m_unanimatedStyle)
-        const_cast<RenderStyle*>(m_unanimatedStyle)->deref(renderer()->renderArena());
 }
 
 void KeyframeAnimation::animate(CompositeAnimation* animation, RenderObject* renderer, const RenderStyle* currentStyle, 
-                                    const RenderStyle* targetStyle, RenderStyle*& animatedStyle)
+                                    const RenderStyle* targetStyle, RefPtr<RenderStyle>& animatedStyle)
 {
     // If we have not yet started, we will not have a valid start time, so just start the animation if needed.
     if (isNew() && m_animation->playState() == AnimPlayStatePlaying)
@@ -102,23 +94,23 @@ void KeyframeAnimation::animate(CompositeAnimation* animation, RenderObject* ren
     if (m_animation->direction() && (i & 1))
         t = 1 - t;
 
-    RenderStyle* fromStyle = 0;
-    RenderStyle* toStyle = 0;
+    const RenderStyle* fromStyle = 0;
+    const RenderStyle* toStyle = 0;
     double scale = 1;
     double offset = 0;
     Vector<KeyframeValue>::const_iterator endKeyframes = m_keyframes.endKeyframes();
     for (Vector<KeyframeValue>::const_iterator it = m_keyframes.beginKeyframes(); it != endKeyframes; ++it) {
-        if (t < it->key) {
+        if (t < it->key()) {
             // The first key should always be 0, so we should never succeed on the first key
             if (!fromStyle)
                 break;
-            scale = 1.0 / (it->key - offset);
-            toStyle = it->style;
+            scale = 1.0 / (it->key() - offset);
+            toStyle = it->style();
             break;
         }
 
-        offset = it->key;
-        fromStyle = it->style;
+        offset = it->key();
+        fromStyle = it->style();
     }
 
     // If either style is 0 we have an invalid case, just stop the animation.
@@ -130,7 +122,7 @@ void KeyframeAnimation::animate(CompositeAnimation* animation, RenderObject* ren
     // Run a cycle of animation.
     // We know we will need a new render style, so make one if needed.
     if (!animatedStyle)
-        animatedStyle = new (renderer->renderArena()) RenderStyle(*targetStyle);
+        animatedStyle = RenderStyle::clone(targetStyle);
 
     const TimingFunction* timingFunction = 0;
     if (fromStyle->animations() && fromStyle->animations()->size() > 0)
@@ -140,7 +132,7 @@ void KeyframeAnimation::animate(CompositeAnimation* animation, RenderObject* ren
 
     HashSet<int>::const_iterator endProperties = m_keyframes.endProperties();
     for (HashSet<int>::const_iterator it = m_keyframes.beginProperties(); it != endProperties; ++it) {
-        if (blendProperties(this, *it, animatedStyle, fromStyle, toStyle, prog))
+        if (blendProperties(this, *it, animatedStyle.get(), fromStyle, toStyle, prog))
             setAnimating();
     }
 }
@@ -170,17 +162,17 @@ bool KeyframeAnimation::shouldSendEventForListener(Document::ListenerType listen
 
 void KeyframeAnimation::onAnimationStart(double elapsedTime)
 {
-    sendAnimationEvent(EventNames::webkitAnimationStartEvent, elapsedTime);
+    sendAnimationEvent(eventNames().webkitAnimationStartEvent, elapsedTime);
 }
 
 void KeyframeAnimation::onAnimationIteration(double elapsedTime)
 {
-    sendAnimationEvent(EventNames::webkitAnimationIterationEvent, elapsedTime);
+    sendAnimationEvent(eventNames().webkitAnimationIterationEvent, elapsedTime);
 }
 
 void KeyframeAnimation::onAnimationEnd(double elapsedTime)
 {
-    if (!sendAnimationEvent(EventNames::webkitAnimationEndEvent, elapsedTime)) {
+    if (!sendAnimationEvent(eventNames().webkitAnimationEndEvent, elapsedTime)) {
         // We didn't dispatch an event, which would call endAnimation(), so we'll just call it here.
         endAnimation(true);
     }
@@ -189,12 +181,12 @@ void KeyframeAnimation::onAnimationEnd(double elapsedTime)
 bool KeyframeAnimation::sendAnimationEvent(const AtomicString& eventType, double elapsedTime)
 {
     Document::ListenerType listenerType;
-    if (eventType == EventNames::webkitAnimationIterationEvent)
+    if (eventType == eventNames().webkitAnimationIterationEvent)
         listenerType = Document::ANIMATIONITERATION_LISTENER;
-    else if (eventType == EventNames::webkitAnimationEndEvent)
+    else if (eventType == eventNames().webkitAnimationEndEvent)
         listenerType = Document::ANIMATIONEND_LISTENER;
     else {
-        ASSERT(eventType == EventNames::webkitAnimationStartEvent);
+        ASSERT(eventType == eventNames().webkitAnimationStartEvent);
         listenerType = Document::ANIMATIONSTART_LISTENER;
     }
 
@@ -215,7 +207,7 @@ bool KeyframeAnimation::sendAnimationEvent(const AtomicString& eventType, double
         element->dispatchWebKitAnimationEvent(eventType, m_keyframes.animationName(), elapsedTime);
 
         // Restore the original (unanimated) style
-        if (eventType == EventNames::webkitAnimationEndEvent && element->renderer())
+        if (eventType == eventNames().webkitAnimationEndEvent && element->renderer())
             setChanged(element.get());
 
         return true; // Did dispatch an event
@@ -264,7 +256,7 @@ void KeyframeAnimation::validateTransformFunctionList()
     Vector<KeyframeValue>::const_iterator firstIt = end;
     
     for (Vector<KeyframeValue>::const_iterator it = m_keyframes.beginKeyframes(); it != end; ++it, ++firstIndex) {
-        if (it->style->transform().operations().size() > 0) {
+        if (it->style()->transform().operations().size() > 0) {
             firstIt = it;
             break;
         }
@@ -273,11 +265,11 @@ void KeyframeAnimation::validateTransformFunctionList()
     if (firstIt == end)
         return;
         
-    const TransformOperations* firstVal = &firstIt->style->transform();
+    const TransformOperations* firstVal = &firstIt->style()->transform();
     
     // See if the keyframes are valid
     for (Vector<KeyframeValue>::const_iterator it = firstIt+1; it != end; ++it) {
-        const TransformOperations* val = &it->style->transform();
+        const TransformOperations* val = &it->style()->transform();
         
         // A null transform matches anything
         if (val->operations().isEmpty())

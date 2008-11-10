@@ -26,8 +26,8 @@
 #include "config.h"
 #include "runtime_array.h"
 
-#include <kjs/ArrayPrototype.h>
-#include <kjs/Error.h>
+#include <runtime/ArrayPrototype.h>
+#include <runtime/Error.h>
 #include "JSDOMBinding.h"
 
 using namespace WebCore;
@@ -42,15 +42,15 @@ RuntimeArray::RuntimeArray(ExecState* exec, Bindings::Array* a)
 {
 }
 
-JSValue *RuntimeArray::lengthGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
+JSValue* RuntimeArray::lengthGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
-    RuntimeArray *thisObj = static_cast<RuntimeArray *>(slot.slotBase());
+    RuntimeArray* thisObj = static_cast<RuntimeArray*>(asObject(slot.slotBase()));
     return jsNumber(exec, thisObj->getLength());
 }
 
-JSValue *RuntimeArray::indexGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
+JSValue* RuntimeArray::indexGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
-    RuntimeArray *thisObj = static_cast<RuntimeArray *>(slot.slotBase());
+    RuntimeArray* thisObj = static_cast<RuntimeArray*>(asObject(slot.slotBase()));
     return thisObj->getConcreteArray()->valueAt(exec, slot.index());
 }
 

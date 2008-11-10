@@ -50,6 +50,9 @@ namespace WebCore {
             : textDrawingMode(cTextFill)
             , strokeStyle(SolidStroke)
             , strokeThickness(0)
+#if PLATFORM(CAIRO)
+            , globalAlpha(1.0f)
+#endif
             , strokeColorSpace(SolidColorSpace)
             , strokeColor(Color::black)
             , fillRule(RULE_NONZERO)
@@ -65,12 +68,16 @@ namespace WebCore {
         
         StrokeStyle strokeStyle;
         float strokeThickness;
+#if PLATFORM(CAIRO)
+        float globalAlpha;
+#endif
         ColorSpace strokeColorSpace;
         Color strokeColor;
         RefPtr<Gradient> strokeGradient;
         RefPtr<Pattern> strokePattern;
         
         WindRule fillRule;
+        GradientSpreadMethod spreadMethod;
         ColorSpace fillColorSpace;
         Color fillColor;
         RefPtr<Gradient> fillGradient;

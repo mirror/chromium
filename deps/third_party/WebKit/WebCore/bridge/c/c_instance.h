@@ -53,9 +53,13 @@ public:
     virtual JSValue* valueOf(ExecState*) const;
     virtual JSValue* defaultValue(ExecState*, PreferredPrimitiveType) const;
     
-    virtual JSValue *invokeMethod (ExecState *exec, const MethodList &method, const ArgList &args);
+    virtual JSValue* invokeMethod(ExecState*, const MethodList&, const ArgList&);
     virtual bool supportsInvokeDefaultMethod() const;
-    virtual JSValue *invokeDefaultMethod (ExecState *exec, const ArgList &args);
+    virtual JSValue* invokeDefaultMethod(ExecState*, const ArgList&);
+    
+    virtual bool supportsConstruct() const;
+    virtual JSValue* invokeConstruct(ExecState*, const ArgList&);
+
     virtual void getPropertyNames(ExecState*, PropertyNameArray&);
 
     JSValue* stringValue(ExecState*) const;

@@ -27,7 +27,7 @@
 #include "JSJavaScriptCallFrame.h"
 
 #include "JavaScriptCallFrame.h"
-#include <kjs/ArrayPrototype.h>
+#include <runtime/ArrayPrototype.h>
 
 using namespace JSC;
 
@@ -35,7 +35,7 @@ namespace WebCore {
 
 JSValue* JSJavaScriptCallFrame::evaluate(ExecState* exec, const ArgList& args)
 {
-    JSValue* exception = 0;
+    JSValue* exception = noValue();
     JSValue* result = impl()->evaluate(args.at(exec, 0)->toString(exec), exception);
 
     if (exception)

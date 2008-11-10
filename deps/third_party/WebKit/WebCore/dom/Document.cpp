@@ -76,7 +76,6 @@
 #include "KeyboardEvent.h"
 #include "Logging.h"
 #include "MessageEvent.h"
-#include "MessagePort.h"
 #include "MouseEvent.h"
 #include "MouseEventWithHitTestResults.h"
 #include "MutationEvent.h"
@@ -115,7 +114,7 @@
 #include "ScriptController.h"
 
 #if USE(JSC)
-#include <kjs/JSLock.h>
+#include <runtime/JSLock.h>
 #include "JSDOMBinding.h"
 #endif
 
@@ -158,7 +157,6 @@ using namespace Unicode;
 
 namespace WebCore {
 
-using namespace EventNames;
 using namespace HTMLNames;
 
 // #define INSTRUMENT_LAYOUT_SCHEDULING 1
@@ -272,23 +270,6 @@ static bool acceptsEditingFocus(Node *node)
 
 static HashSet<Document*>* changedDocuments = 0;
 
-class MessagePortTimer : public TimerBase {
-public:
-    MessagePortTimer(PassRefPtr<Document> document)
-        : m_document(document)
-    {
-    }
-
-private:
-    virtual void fired()
-    {
-        m_document->dispatchMessagePortEvents();
-        delete this;
-    }
-
-    RefPtr<Document> m_document;
-};
-
 Document::Document(Frame* frame, bool isXHTML)
     : ContainerNode(0)
     , m_domtree_version(0)
@@ -302,7 +283,6 @@ Document::Document(Frame* frame, bool isXHTML)
 #endif
     , m_xmlVersion("1.0")
     , m_xmlStandalone(false)
-    , m_firedMessagePortTimer(false)
 #if ENABLE(XBL)
     , m_bindingManager(new XBLBindingManager(this))
 #endif
@@ -327,6 +307,7 @@ Document::Document(Frame* frame, bool isXHTML)
 #if ENABLE(DATABASE)
     , m_hasOpenDatabases(false)
 #endif
+    , m_usingGeolocation(false)
 #if USE(LOW_BANDWIDTH_DISPLAY)
     , m_inLowBandwidthDisplay(false)
 #endif
@@ -437,7 +418,6 @@ Document::~Document()
 
     removeAllEventListeners();
 
-    XMLHttpRequest::detachRequests(this);
 
 #if USE(JSC)
     forgetAllDOMNodesForDocument(this);
@@ -482,18 +462,6 @@ Document::~Document()
 
     if (m_styleSheets)
         m_styleSheets->documentDestroyed();
-
-    HashSet<MessagePort*>::iterator messagePortsEnd = m_messagePorts.end();
-    for (HashSet<MessagePort*>::iterator iter = m_messagePorts.begin(); iter != m_messagePorts.end(); ++iter) {
-        ASSERT((*iter)->document() == this);
-        (*iter)->contextDestroyed();
-        if ((*iter)->entangledPort()) {
-            RefPtr<MessagePort> survivingPort = (*iter)->entangledPort();
-            (*iter)->unentangle();
-            if (survivingPort->document() != this) // Otherwise, survivingPort won't really survive.
-                survivingPort->queueCloseEvent();
-        }
-    }
 
     m_document = 0;
 }
@@ -1213,15 +1181,11 @@ void Document::recalcStyle(StyleChange change)
         // style selector may set this again during recalc
         m_hasNodesWithPlaceholderStyle = false;
         
-        RenderStyle* oldStyle = renderer()->style();
-        if (oldStyle)
-            oldStyle->ref();
-        RenderStyle* _style = new (m_renderArena) RenderStyle();
-        _style->ref();
-        _style->setDisplay(BLOCK);
-        _style->setVisuallyOrdered(visuallyOrdered);
-        _style->setZoom(frame()->pageZoomFactor());
-        m_styleSelector->setStyle(_style);
+        RefPtr<RenderStyle> documentStyle = RenderStyle::create();
+        documentStyle->setDisplay(BLOCK);
+        documentStyle->setVisuallyOrdered(visuallyOrdered);
+        documentStyle->setZoom(frame()->pageZoomFactor());
+        m_styleSelector->setStyle(documentStyle);
     
         FontDescription fontDescription;
         fontDescription.setUsePrinterFont(printing());
@@ -1243,7 +1207,7 @@ void Document::recalcStyle(StyleChange change)
         if (Settings* settings = this->settings()) {
             fontDescription.setRenderingMode(settings->fontRenderingMode());
             if (printing() && !settings->shouldPrintBackgrounds())
-                _style->setForceBackgroundsToWhite(true);
+                documentStyle->setForceBackgroundsToWhite(true);
             const AtomicString& stdfont = settings->standardFontFamily();
             if (!stdfont.isEmpty()) {
                 fontDescription.firstFamily().setFamily(stdfont);
@@ -1269,20 +1233,16 @@ void Document::recalcStyle(StyleChange change)
             m_styleSelector->setFontSize(fontDescription, m_styleSelector->fontSizeForKeyword(CSSValueMedium, inCompatMode(), false));
         }
 
-        _style->setFontDescription(fontDescription);
-        _style->font().update(m_styleSelector->fontSelector());
+        documentStyle->setFontDescription(fontDescription);
+        documentStyle->font().update(m_styleSelector->fontSelector());
         if (inCompatMode())
-            _style->setHtmlHacks(true); // enable html specific rendering tricks
+            documentStyle->setHtmlHacks(true); // enable html specific rendering tricks
 
-        StyleChange ch = diff(_style, oldStyle);
+        StyleChange ch = diff(documentStyle.get(), renderer()->style());
         if (renderer() && ch != NoChange)
-            renderer()->setStyle(_style);
+            renderer()->setStyle(documentStyle.release());
         if (change != Force)
             change = ch;
-
-        _style->deref(m_renderArena);
-        if (oldStyle)
-            oldStyle->deref(m_renderArena);
     }
 
     for (Node* n = firstChild(); n; n = n->nextSibling())
@@ -1701,7 +1661,7 @@ void Document::implicitClose()
         f->animation()->resumeAnimations(this);
 
     dispatchImageLoadEventsNow();
-    this->dispatchWindowEvent(loadEvent, false, false);
+    this->dispatchWindowEvent(eventNames().loadEvent, false, false);
     if (f)
         f->loader()->handledOnloadEvents();
 #ifdef INSTRUMENT_LAYOUT_SCHEDULING
@@ -1855,6 +1815,11 @@ void Document::clear()
     removeChildren();
 
     m_windowEventListeners.clear();
+}
+
+const KURL& Document::virtualURL() const
+{
+    return m_url;
 }
 
 void Document::setURL(const KURL& url)
@@ -2565,7 +2530,7 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
         // Dispatch a change event for text fields or textareas that have been edited
         RenderObject* r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer());
         if (r && (r->isTextArea() || r->isTextField()) && r->isEdited()) {
-            EventTargetNodeCast(oldFocusedNode.get())->dispatchEventForType(changeEvent, true, false);
+            EventTargetNodeCast(oldFocusedNode.get())->dispatchEventForType(eventNames().changeEvent, true, false);
             if ((r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer())))
                 r->setEdited(false);
         }
@@ -2578,7 +2543,7 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
             focusChangeBlocked = true;
             newFocusedNode = 0;
         }
-        EventTargetNodeCast(oldFocusedNode.get())->dispatchUIEvent(DOMFocusOutEvent);
+        EventTargetNodeCast(oldFocusedNode.get())->dispatchUIEvent(eventNames().DOMFocusOutEvent);
         if (m_focusedNode) {
             // handler shifted focus
             focusChangeBlocked = true;
@@ -2608,7 +2573,7 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
             focusChangeBlocked = true;
             goto SetFocusedNodeDone;
         }
-        EventTargetNodeCast(m_focusedNode.get())->dispatchUIEvent(DOMFocusInEvent);
+        EventTargetNodeCast(m_focusedNode.get())->dispatchUIEvent(eventNames().DOMFocusInEvent);
         if (m_focusedNode != newFocusedNode) { 
             // handler shifted focus
             focusChangeBlocked = true;
@@ -2793,29 +2758,29 @@ PassRefPtr<Event> Document::createEvent(const String& eventType, ExceptionCode& 
 
 void Document::addListenerTypeIfNeeded(const AtomicString& eventType)
 {
-    if (eventType == DOMSubtreeModifiedEvent)
+    if (eventType == eventNames().DOMSubtreeModifiedEvent)
         addListenerType(DOMSUBTREEMODIFIED_LISTENER);
-    else if (eventType == DOMNodeInsertedEvent)
+    else if (eventType == eventNames().DOMNodeInsertedEvent)
         addListenerType(DOMNODEINSERTED_LISTENER);
-    else if (eventType == DOMNodeRemovedEvent)
+    else if (eventType == eventNames().DOMNodeRemovedEvent)
         addListenerType(DOMNODEREMOVED_LISTENER);
-    else if (eventType == DOMNodeRemovedFromDocumentEvent)
+    else if (eventType == eventNames().DOMNodeRemovedFromDocumentEvent)
         addListenerType(DOMNODEREMOVEDFROMDOCUMENT_LISTENER);
-    else if (eventType == DOMNodeInsertedIntoDocumentEvent)
+    else if (eventType == eventNames().DOMNodeInsertedIntoDocumentEvent)
         addListenerType(DOMNODEINSERTEDINTODOCUMENT_LISTENER);
-    else if (eventType == DOMAttrModifiedEvent)
+    else if (eventType == eventNames().DOMAttrModifiedEvent)
         addListenerType(DOMATTRMODIFIED_LISTENER);
-    else if (eventType == DOMCharacterDataModifiedEvent)
+    else if (eventType == eventNames().DOMCharacterDataModifiedEvent)
         addListenerType(DOMCHARACTERDATAMODIFIED_LISTENER);
-    else if (eventType == overflowchangedEvent)
+    else if (eventType == eventNames().overflowchangedEvent)
         addListenerType(OVERFLOWCHANGED_LISTENER);
-    else if (eventType == webkitAnimationStartEvent)
+    else if (eventType == eventNames().webkitAnimationStartEvent)
         addListenerType(ANIMATIONSTART_LISTENER);
-    else if (eventType == webkitAnimationEndEvent)
+    else if (eventType == eventNames().webkitAnimationEndEvent)
         addListenerType(ANIMATIONEND_LISTENER);
-    else if (eventType == webkitAnimationIterationEvent)
+    else if (eventType == eventNames().webkitAnimationIterationEvent)
         addListenerType(ANIMATIONITERATION_LISTENER);
-    else if (eventType == webkitTransitionEndEvent)
+    else if (eventType == eventNames().webkitTransitionEndEvent)
         addListenerType(TRANSITIONEND_LISTENER);
 }
 
@@ -2838,32 +2803,32 @@ void Document::handleWindowEvent(Event* evt, bool useCapture)
             (*it)->listener()->handleEvent(evt, true);
 }
 
-void Document::setWindowEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener> listener)
+void Document::setWindowInlineEventListenerForType(const AtomicString& eventType, PassRefPtr<EventListener> listener)
 {
     // If we already have it we don't want removeWindowEventListener to delete it
-    removeWindowEventListenerForType(eventType);
+    removeWindowInlineEventListenerForType(eventType);
     if (listener)
         addWindowEventListener(eventType, listener, false);
 }
 
-EventListener* Document::windowEventListenerForType(const AtomicString& eventType)
+EventListener* Document::windowInlineEventListenerForType(const AtomicString& eventType)
 {
     RegisteredEventListenerList::iterator it = m_windowEventListeners.begin();
     for (; it != m_windowEventListeners.end(); ++it) {
-        if ((*it)->eventType() == eventType && (*it)->listener()->isAttachedToEventTargetNode())
+        if ((*it)->eventType() == eventType && (*it)->listener()->isInline())
             return (*it)->listener();
     }
     return 0;
 }
 
-void Document::removeWindowEventListenerForType(const AtomicString& eventType)
+void Document::removeWindowInlineEventListenerForType(const AtomicString& eventType)
 {
     RegisteredEventListenerList::iterator it = m_windowEventListeners.begin();
     for (; it != m_windowEventListeners.end(); ++it) {
-        if ((*it)->eventType() == eventType && (*it)->listener()->isAttachedToEventTargetNode()) {
-            if (eventType == unloadEvent)
+        if ((*it)->eventType() == eventType && (*it)->listener()->isInline()) {
+            if (eventType == eventNames().unloadEvent)
                 removePendingFrameUnloadEventCount();
-            else if (eventType == beforeunloadEvent)
+            else if (eventType == eventNames().beforeunloadEvent)
                 removePendingFrameBeforeUnloadEventCount();
             m_windowEventListeners.remove(it);
             return;
@@ -2873,9 +2838,9 @@ void Document::removeWindowEventListenerForType(const AtomicString& eventType)
 
 void Document::addWindowEventListener(const AtomicString& eventType, PassRefPtr<EventListener> listener, bool useCapture)
 {
-    if (eventType == unloadEvent)
+    if (eventType == eventNames().unloadEvent)
         addPendingFrameUnloadEventCount();
-    else if (eventType == beforeunloadEvent)
+    else if (eventType == eventNames().beforeunloadEvent)
         addPendingFrameBeforeUnloadEventCount();
     // Remove existing identical listener set with identical arguments.
     // The DOM 2 spec says that "duplicate instances are discarded" in this case.
@@ -2889,9 +2854,9 @@ void Document::removeWindowEventListener(const AtomicString& eventType, EventLis
     for (; it != m_windowEventListeners.end(); ++it) {
         RegisteredEventListener& r = **it;
         if (r.eventType() == eventType && r.listener() == listener && r.useCapture() == useCapture) {
-            if (eventType == unloadEvent)
+            if (eventType == eventNames().unloadEvent)
                 removePendingFrameUnloadEventCount();
-            else if (eventType == beforeunloadEvent)
+            else if (eventType == eventNames().beforeunloadEvent)
                 removePendingFrameBeforeUnloadEventCount();
             m_windowEventListeners.remove(it);
             return;
@@ -2934,8 +2899,8 @@ void Document::removePendingFrameBeforeUnloadEventCount()
 
 bool Document::hasUnloadEventListener()
 {
-  return (hasWindowEventListener(unloadEvent) || 
-          hasWindowEventListener(beforeunloadEvent));
+  return (hasWindowEventListener(eventNames().unloadEvent) || 
+          hasWindowEventListener(eventNames().beforeunloadEvent));
 }
 
 PassRefPtr<EventListener> Document::createEventListener(const String& functionName, const String& code, Node* node)
@@ -2950,12 +2915,12 @@ PassRefPtr<EventListener> Document::createEventListener(const String& functionNa
 #endif
 
     // We may want to treat compound document event handlers in a different way, in future.
-    return frm->script()->createHTMLEventHandler(functionName, code, node);
+    return frm->script()->createInlineEventListener(functionName, code, node);
 }
 
-void Document::setWindowEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute* attr)
+void Document::setWindowInlineEventListenerForTypeAndAttribute(const AtomicString& eventType, Attribute* attr)
 {
-    setWindowEventListenerForType(eventType, createEventListener(attr->localName().string(), attr->value(), 0));
+    setWindowInlineEventListenerForType(eventType, createEventListener(attr->localName().string(), attr->value(), 0));
 }
 
 void Document::dispatchImageLoadEventSoon(ImageLoader* image)
@@ -3013,11 +2978,17 @@ Element* Document::ownerElement() const
 
 String Document::cookie() const
 {
+    if (page() && !page()->cookieEnabled())
+        return String();
+
     return cookies(this, cookieURL());
 }
 
 void Document::setCookie(const String& value)
 {
+    if (page() && !page()->cookieEnabled())
+        return;
+
     setCookies(this, cookieURL(), policyBaseURL(), value);
 }
 
@@ -3960,7 +3931,7 @@ void Document::finishedParsing()
     setParsing(false);
 
     ExceptionCode ec = 0;
-    dispatchEvent(Event::create(DOMContentLoadedEvent, true, false), ec);
+    dispatchEvent(Event::create(eventNames().DOMContentLoadedEvent, true, false), ec);
 
     if (Frame* f = frame())
         f->loader()->finishedParsing();
@@ -4492,59 +4463,6 @@ HTMLCanvasElement* Document::getCSSCanvasElement(const String& name)
         m_cssCanvasElements.set(name, result);
     }
     return result.get();
-}
-
-void Document::processMessagePortMessagesSoon()
-{
-    if (m_firedMessagePortTimer)
-        return;
-
-    MessagePortTimer* timer = new MessagePortTimer(this);
-    timer->startOneShot(0);
-
-    m_firedMessagePortTimer = true;
-}
-
-void Document::dispatchMessagePortEvents()
-{
-    RefPtr<Document> protect(this);
-
-    // Make a frozen copy.
-    Vector<MessagePort*> ports;
-    copyToVector(m_messagePorts, ports);
-
-    m_firedMessagePortTimer = false;
-
-    unsigned portCount = ports.size();
-    for (unsigned i = 0; i < portCount; ++i) {
-        MessagePort* port = ports[i];
-        if (m_messagePorts.contains(port) && port->queueIsOpen())
-            port->dispatchMessages();
-    }
-}
-
-void Document::createdMessagePort(MessagePort* port)
-{
-    ASSERT(port);
-    m_messagePorts.add(port);
-}
-
-void Document::destroyedMessagePort(MessagePort* port)
-{
-    ASSERT(port);
-    m_messagePorts.remove(port);
-}
-
-void Document::createdXMLHttpRequest(XMLHttpRequest* request)
-{
-    ASSERT(request);
-    m_xmlHttpRequests.add(request);
-}
-
-void Document::destroyedXMLHttpRequest(XMLHttpRequest* request)
-{
-    ASSERT(request);
-    m_xmlHttpRequests.remove(request);
 }
 
 void Document::initDNSPrefetch()

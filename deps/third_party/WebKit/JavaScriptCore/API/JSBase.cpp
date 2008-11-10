@@ -30,13 +30,13 @@
 #include "APICast.h"
 #include "completion.h"
 #include "OpaqueJSString.h"
-#include "SourceRange.h"
-#include <kjs/ExecState.h>
-#include <kjs/InitializeThreading.h>
+#include "SourceCode.h"
+#include <runtime/ExecState.h>
+#include <runtime/InitializeThreading.h>
 #include <kjs/interpreter.h>
-#include <kjs/JSGlobalObject.h>
-#include <kjs/JSLock.h>
-#include <kjs/JSObject.h>
+#include <runtime/JSGlobalObject.h>
+#include <runtime/JSLock.h>
+#include <runtime/JSObject.h>
 
 using namespace JSC;
 

@@ -41,29 +41,28 @@
 
 namespace WebCore {
 
-std::auto_ptr<ImageBuffer> ImageBuffer::create(const IntSize& size, bool grayScale)
+ImageBufferData::ImageBufferData(const IntSize& size)
+    : m_pixmap(size)
 {
-    QPixmap px(size);
-    return std::auto_ptr<ImageBuffer>(new ImageBuffer(px));
+    m_pixmap.fill(QColor(Qt::transparent));
+    m_painter.set(new QPainter(&m_pixmap));
 }
 
-ImageBuffer::ImageBuffer(const QPixmap& px)
-    : m_pixmap(px),
-      m_painter(0)
+ImageBuffer::ImageBuffer(const IntSize& size, bool grayScale, bool& success)
+    : m_data(size)
+    , m_size(size)
 {
-    m_painter = new QPainter(&m_pixmap);
-    m_context.set(new GraphicsContext(m_painter));
+    m_context.set(new GraphicsContext(m_data.m_painter.get()));
+    success = true;
 }
 
 ImageBuffer::~ImageBuffer()
 {
-    delete m_painter;
 }
 
 GraphicsContext* ImageBuffer::context() const
 {
-    if (!m_painter->isActive())
-        m_painter->begin(&m_pixmap);
+    ASSERT(m_data.m_painter->isActive());
 
     return m_context.get();
 }
@@ -74,7 +73,7 @@ Image* ImageBuffer::image() const
         // It's assumed that if image() is called, the actual rendering to the
         // GraphicsContext must be done.
         ASSERT(context());
-        m_image = StillImage::create(m_pixmap);
+        m_image = StillImage::create(m_data.m_pixmap);
     }
 
     return m_image.get();
@@ -106,7 +105,7 @@ String ImageBuffer::toDataURL(const String& mimeType) const
     QBuffer buffer(&data);
     buffer.open(QBuffer::WriteOnly);
 
-    if (!m_pixmap.save(&buffer, mimeType.substring(sizeof "image").utf8().data()))
+    if (!m_data.m_pixmap.save(&buffer, mimeType.substring(sizeof "image").utf8().data()))
         return "data:,";
 
     buffer.close();

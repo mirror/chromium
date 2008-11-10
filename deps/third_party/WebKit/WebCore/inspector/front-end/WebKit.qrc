@@ -20,6 +20,7 @@
     <file>Object.js</file>
     <file>ObjectPropertiesSection.js</file>
     <file>Panel.js</file>
+    <file>PanelEnablerView.js</file>
     <file>Placard.js</file>
     <file>ProfilesPanel.js</file>
     <file>ProfileView.js</file>
@@ -55,7 +56,6 @@
     <file>Images/debuggerStepInto.png</file>
     <file>Images/debuggerStepOut.png</file>
     <file>Images/debuggerStepOver.png</file>
-    <file>Images/debuggingButtons.png</file>
     <file>Images/disclosureTriangleSmallDownBlack.png</file>
     <file>Images/disclosureTriangleSmallDown.png</file>
     <file>Images/disclosureTriangleSmallDownWhite.png</file>
@@ -77,6 +77,8 @@
     <file>Images/glossyHeaderSelected.png</file>
     <file>Images/glossyHeaderSelectedPressed.png</file>
     <file>Images/goArrow.png</file>
+    <file>Images/graphLabelCalloutLeft.png</file>
+    <file>Images/graphLabelCalloutRight.png</file>
     <file>Images/largerResourcesButtons.png</file>
     <file>Images/nodeSearchButtons.png</file>
     <file>Images/paneBottomGrowActive.png</file>

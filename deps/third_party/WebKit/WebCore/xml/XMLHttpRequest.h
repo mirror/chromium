@@ -20,6 +20,8 @@
 #ifndef XMLHttpRequest_h
 #define XMLHttpRequest_h
 
+#include "ActiveDOMObject.h"
+#include "AtomicStringHash.h"
 #include "EventListener.h"
 #include "EventTarget.h"
 #include "FormData.h"
@@ -40,7 +42,7 @@ typedef JSC::UString JSUString;
 typedef String JSUString;
 #endif
 
-class XMLHttpRequest : public RefCounted<XMLHttpRequest>, public EventTarget, private SubresourceLoaderClient {
+class XMLHttpRequest : public RefCounted<XMLHttpRequest>, public EventTarget, private SubresourceLoaderClient, public ActiveDOMObject {
 public:
     static PassRefPtr<XMLHttpRequest> create(Document* document) { return adoptRef(new XMLHttpRequest(document)); }
     ~XMLHttpRequest();
@@ -56,11 +58,10 @@ public:
 
     virtual XMLHttpRequest* toXMLHttpRequest() { return this; }
 
-    Frame* associatedFrame() const;
+    virtual void contextDestroyed();
+    virtual void stop();
 
-    bool hasPendingActivity() { return m_pendingActivity; }
-    static void detachRequests(Document*);
-    static void cancelRequests(Document*);
+    virtual ScriptExecutionContext* scriptExecutionContext() const;
 
     String statusText(ExceptionCode&) const;
     int status(ExceptionCode&) const;
@@ -104,26 +105,26 @@ public:
     EventListener* onprogress() const { return m_onProgressListener.get(); }
 
     typedef Vector<RefPtr<EventListener> > ListenerVector;
-    typedef HashMap<AtomicStringImpl*, ListenerVector> EventListenersMap;
+    typedef HashMap<AtomicString, ListenerVector> EventListenersMap;
 
     // useCapture is not used, even for add/remove pairing (for Firefox compatibility).
     virtual void addEventListener(const AtomicString& eventType, PassRefPtr<EventListener>, bool useCapture);
     virtual void removeEventListener(const AtomicString& eventType, EventListener*, bool useCapture);
-    virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&, bool tempEvent = false);
+    virtual bool dispatchEvent(PassRefPtr<Event>, ExceptionCode&);
     EventListenersMap& eventListeners() { return m_eventListeners; }
-
-    Document* document() const { return m_doc; }
 
     using RefCounted<XMLHttpRequest>::ref;
     using RefCounted<XMLHttpRequest>::deref;
 
-    Document* getOwnerDocument() { return m_doc; }
+    Document* getOwnerDocument() { return document(); }
 
 private:
     XMLHttpRequest(Document*);
     
     virtual void refEventTarget() { ref(); }
     virtual void derefEventTarget() { deref(); }
+
+    Document* document() const;
 
     virtual void willSendRequest(SubresourceLoader*, ResourceRequest& request, const ResourceResponse& redirectResponse);
     virtual void didSendData(SubresourceLoader*, unsigned long long bytesSent, unsigned long long totalBytesToBeSent);
@@ -183,11 +184,6 @@ private:
     void dispatchLoadStartEvent();
     void dispatchProgressEvent(long long expectedLength);
 
-    void setPendingActivity();
-    void unsetPendingActivity();
-
-    Document* m_doc;
-
     RefPtr<EventListener> m_onReadyStateChangeListener;
     RefPtr<EventListener> m_onAbortListener;
     RefPtr<EventListener> m_onErrorListener;
@@ -232,8 +228,6 @@ private:
     bool m_sameOriginRequest;
     bool m_allowAccess;
     bool m_inPreflight;
-
-    unsigned m_pendingActivity;
 
     // Used for onprogress tracking
     long long m_receivedLength;

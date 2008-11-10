@@ -29,11 +29,10 @@
 #include "Error.h"
 #include "JSString.h"
 #include "JSType.h"
-#include "LabelStack.h"
 #include "Opcode.h"
 #include "RegisterID.h"
 #include "ResultType.h"
-#include "SourceRange.h"
+#include "SourceCode.h"
 #include "SymbolTable.h"
 #include "regexp.h"
 #include <wtf/ListRefPtr.h>
@@ -231,14 +230,11 @@ namespace JSC {
         int firstLine() const JSC_FAST_CALL { return lineNo(); }
         int lastLine() const JSC_FAST_CALL { return m_lastLine; }
 
-        virtual void pushLabel(const Identifier& ident) JSC_FAST_CALL { m_labelStack.push(ident); }
         virtual Precedence precedence() const { ASSERT_NOT_REACHED(); return PrecExpression; }
         virtual bool isEmptyStatement() const JSC_FAST_CALL { return false; }
 
         virtual bool isBlock() const JSC_FAST_CALL { return false; }
         virtual bool isLoop() const JSC_FAST_CALL { return false; }
-    protected:
-        LabelStack m_labelStack;
 
     private:
         int m_lastLine;
@@ -350,7 +346,7 @@ namespace JSC {
         {
         }
         
-        void setExceptionSourceRange(unsigned divot, unsigned startOffset, unsigned endOffset)
+        void setExceptionSourceCode(unsigned divot, unsigned startOffset, unsigned endOffset)
         {
             m_divot = divot;
             m_startOffset = startOffset;
@@ -2087,19 +2083,18 @@ namespace JSC {
 
     class LabelNode : public StatementNode, public ThrowableExpressionData {
     public:
-        LabelNode(JSGlobalData* globalData, const Identifier& label, StatementNode* statement) JSC_FAST_CALL
+        LabelNode(JSGlobalData* globalData, const Identifier& name, StatementNode* statement) JSC_FAST_CALL
             : StatementNode(globalData)
-            , m_label(label)
+            , m_name(name)
             , m_statement(statement)
         {
         }
 
         virtual RegisterID* emitCode(CodeGenerator&, RegisterID* = 0) JSC_FAST_CALL;
         virtual void streamTo(SourceStream&) const JSC_FAST_CALL;
-        virtual void pushLabel(const Identifier& ident) JSC_FAST_CALL { m_statement->pushLabel(ident); }
 
     private:
-        Identifier m_label;
+        Identifier m_name;
         RefPtr<StatementNode> m_statement;
     };
 
@@ -2174,7 +2169,6 @@ namespace JSC {
 
         virtual void streamTo(SourceStream&) const JSC_FAST_CALL;
         
-        void setSource(const SourceCode& source) { m_source = source; }
         const SourceCode& source() const { return m_source; }
         const UString& sourceURL() const JSC_FAST_CALL { return m_source.provider()->url(); }
         intptr_t sourceID() const { return m_source.provider()->asID(); }
@@ -2196,6 +2190,8 @@ namespace JSC {
         }
 
     protected:
+        void setSource(const SourceCode& source) { m_source = source; }
+
         VarStack m_varStack;
         FunctionStack m_functionStack;
 
@@ -2255,8 +2251,9 @@ namespace JSC {
         ~FunctionBodyNode();
 
         const Identifier* parameters() const JSC_FAST_CALL { return m_parameters; }
-        size_t parameterCount() { return m_parameterCount; }
+        size_t parameterCount() const { return m_parameterCount; }
         UString paramString() const JSC_FAST_CALL;
+        Identifier* copyParameters();
 
         virtual RegisterID* emitCode(CodeGenerator&, RegisterID* = 0) JSC_FAST_CALL;
         
@@ -2276,10 +2273,15 @@ namespace JSC {
             return *m_code;
         }
 
+        bool isGenerated() JSC_FAST_CALL
+        {
+            return m_code;
+        }
+
         void mark();
 
         void finishParsing(const SourceCode&, ParameterNode*);
-        void finishParsing(const SourceCode&, Identifier* parameters, size_t parameterCount);
+        void finishParsing(Identifier* parameters, size_t parameterCount);
         
         UString toSourceString() const JSC_FAST_CALL { return UString("{") + source().toString() + UString("}"); }
 
@@ -2298,7 +2300,7 @@ namespace JSC {
         }
 
     protected:
-        FunctionBodyNode(JSGlobalData*, SourceElements*, VarStack*, FunctionStack*, CodeFeatures, int numConstants) JSC_FAST_CALL;
+        FunctionBodyNode(JSGlobalData*, SourceElements*, VarStack*, FunctionStack*, const SourceCode&, CodeFeatures, int numConstants) JSC_FAST_CALL;
 
     private:
         void generateCode(ScopeChainNode*) JSC_FAST_CALL;

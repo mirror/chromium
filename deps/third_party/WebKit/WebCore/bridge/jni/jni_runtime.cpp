@@ -33,8 +33,8 @@
 #include "runtime_array.h"
 #include "runtime_object.h"
 #include "runtime_root.h"
-#include <kjs/Error.h>
-#include <kjs/JSLock.h>
+#include <runtime/Error.h>
+#include <runtime/JSLock.h>
 
 #ifdef NDEBUG
 #define JS_LOG(formatAndArgs...) ((void)0)
@@ -93,7 +93,7 @@ jvalue JavaField::dispatchValueFromInstance(ExecState *exec, const JavaInstance 
         {
             RootObject* rootObject = instance->rootObject();
             if (rootObject && rootObject->nativeHandle()) {
-                JSValue *exceptionDescription = NULL;
+                JSValue* exceptionDescription = noValue();
                 jvalue args[1];
                 
                 args[0].l = jinstance;
@@ -106,11 +106,11 @@ jvalue JavaField::dispatchValueFromInstance(ExecState *exec, const JavaInstance 
     return result;
 }
 
-JSValue *JavaField::valueFromInstance(ExecState *exec, const Instance *i) const 
+JSValue* JavaField::valueFromInstance(ExecState* exec, const Instance* i) const 
 {
     const JavaInstance *instance = static_cast<const JavaInstance *>(i);
 
-    JSValue *jsresult = jsUndefined();
+    JSValue* jsresult = jsUndefined();
     
     switch (_JNIType) {
         case array_type:
@@ -175,7 +175,7 @@ void JavaField::dispatchSetValueToInstance(ExecState *exec, const JavaInstance *
         {
             RootObject* rootObject = instance->rootObject();
             if (rootObject && rootObject->nativeHandle()) {
-                JSValue *exceptionDescription = NULL;
+                JSValue* exceptionDescription = noValue();
                 jvalue args[2];
                 jvalue result;
                 
@@ -189,7 +189,7 @@ void JavaField::dispatchSetValueToInstance(ExecState *exec, const JavaInstance *
     }
 }
 
-void JavaField::setValueToInstance(ExecState *exec, const Instance *i, JSValue *aValue) const
+void JavaField::setValueToInstance(ExecState* exec, const Instance* i, JSValue* aValue) const
 {
     const JavaInstance *instance = static_cast<const JavaInstance *>(i);
     jvalue javaValue = convertValueToJValue (exec, aValue, _JNIType, type());
@@ -386,7 +386,7 @@ RootObject* JavaArray::rootObject() const
     return _rootObject && _rootObject->isValid() ? _rootObject.get() : 0;
 }
 
-void JavaArray::setValueAt(ExecState *exec, unsigned int index, JSValue *aValue) const
+void JavaArray::setValueAt(ExecState* exec, unsigned index, JSValue* aValue) const
 {
     JNIEnv *env = getJNIEnv();
     char *javaClassName = 0;
@@ -454,7 +454,7 @@ void JavaArray::setValueAt(ExecState *exec, unsigned int index, JSValue *aValue)
 }
 
 
-JSValue *JavaArray::valueAt(ExecState *exec, unsigned int index) const
+JSValue* JavaArray::valueAt(ExecState* exec, unsigned index) const
 {
     JNIEnv *env = getJNIEnv();
     JNIType arrayType = JNITypeFromPrimitiveType(_type[1]);

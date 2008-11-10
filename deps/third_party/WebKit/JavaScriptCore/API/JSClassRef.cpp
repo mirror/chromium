@@ -29,9 +29,9 @@
 #include "APICast.h"
 #include "JSCallbackObject.h"
 #include "JSObjectRef.h"
-#include <kjs/InitializeThreading.h>
-#include <kjs/JSGlobalObject.h>
-#include <kjs/ObjectPrototype.h>
+#include <runtime/InitializeThreading.h>
+#include <runtime/JSGlobalObject.h>
+#include <runtime/ObjectPrototype.h>
 #include <kjs/identifier.h>
 
 using namespace JSC;

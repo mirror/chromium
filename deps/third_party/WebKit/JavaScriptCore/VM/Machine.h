@@ -57,7 +57,7 @@ namespace JSC {
 #define CTI_ARGS void** args
 #define ARGS (args)
 #else
-#define CTI_ARGS void* args
+#define CTI_ARGS void* args, ...
 #define ARGS (&args)
 #endif
 
@@ -81,7 +81,13 @@ namespace JSC {
 
 #endif
 
-    struct VoidPtrPair { void* first; void* second; };
+    typedef uint64_t VoidPtrPair;
+
+    typedef union
+    {
+        struct { void* first; void* second; } s;
+        VoidPtrPair i;
+    } VoidPtrPairValue;
 #endif
 
     enum DebugHookID {
@@ -157,20 +163,21 @@ namespace JSC {
             m_timeoutCheckCount = 0;
         }
 
-        SamplingTool* m_sampler;
+        void setSampler(SamplingTool* sampler) { m_sampler = sampler; }
+        SamplingTool* sampler() { return m_sampler; }
 
 #if ENABLE(CTI)
 
         static void SFX_CALL cti_timeout_check(CTI_ARGS);
         static void SFX_CALL cti_register_file_check(CTI_ARGS);
 
-        static JSValue* SFX_CALL cti_op_convert_this(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_convert_this(CTI_ARGS);
         static void SFX_CALL cti_op_end(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_add(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_pre_inc(CTI_ARGS);
         static int SFX_CALL cti_op_loop_if_less(CTI_ARGS);
         static int SFX_CALL cti_op_loop_if_lesseq(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_new_object(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_new_object(CTI_ARGS);
         static void SFX_CALL cti_op_put_by_id(CTI_ARGS);
         static void SFX_CALL cti_op_put_by_id_second(CTI_ARGS);
         static void SFX_CALL cti_op_put_by_id_generic(CTI_ARGS);
@@ -182,17 +189,20 @@ namespace JSC {
         static JSValue* SFX_CALL cti_op_del_by_id(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_instanceof(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_mul(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_new_func(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_new_func(CTI_ARGS);
         static VoidPtrPair SFX_CALL cti_op_call_JSFunction(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_call_NotJSFunction(CTI_ARGS);
         static void SFX_CALL cti_op_create_arguments(CTI_ARGS);
+        static void SFX_CALL cti_op_create_arguments_no_params(CTI_ARGS);
         static void SFX_CALL cti_op_tear_off_activation(CTI_ARGS);
         static void SFX_CALL cti_op_tear_off_arguments(CTI_ARGS);
-        static void SFX_CALL cti_op_ret_profiler(CTI_ARGS);
+        static void SFX_CALL cti_op_profile_will_call(CTI_ARGS);
+        static void SFX_CALL cti_op_profile_did_call(CTI_ARGS);
         static void SFX_CALL cti_op_ret_scopeChain(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_new_array(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_new_array(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_resolve(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_resolve_global(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_construct_JSConstructFast(CTI_ARGS);
         static VoidPtrPair SFX_CALL cti_op_construct_JSConstruct(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_construct_NotJSConstruct(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_get_by_val(CTI_ARGS);
@@ -217,17 +227,17 @@ namespace JSC {
         static JSValue* SFX_CALL cti_op_rshift(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_bitnot(CTI_ARGS);
         static VoidPtrPair SFX_CALL cti_op_resolve_with_base(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_new_func_exp(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_new_func_exp(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_mod(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_less(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_neq(CTI_ARGS);
         static VoidPtrPair SFX_CALL cti_op_post_dec(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_urshift(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_bitxor(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_new_regexp(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_new_regexp(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_bitor(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_call_eval(CTI_ARGS);
-        static void* SFX_CALL cti_op_throw(CTI_ARGS);
+        static JSValue* SFX_CALL cti_op_throw(CTI_ARGS);
         static JSPropertyNameIterator* SFX_CALL cti_op_get_pnames(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_next_pname(CTI_ARGS);
         static void SFX_CALL cti_op_push_scope(CTI_ARGS);
@@ -243,7 +253,7 @@ namespace JSC {
         static JSValue* SFX_CALL cti_op_nstricteq(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_to_jsnumber(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_in(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_push_new_scope(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_push_new_scope(CTI_ARGS);
         static void SFX_CALL cti_op_jmp_scopes(CTI_ARGS);
         static void SFX_CALL cti_op_put_by_index(CTI_ARGS);
         static void* SFX_CALL cti_op_switch_imm(CTI_ARGS);
@@ -252,12 +262,15 @@ namespace JSC {
         static JSValue* SFX_CALL cti_op_del_by_val(CTI_ARGS);
         static void SFX_CALL cti_op_put_getter(CTI_ARGS);
         static void SFX_CALL cti_op_put_setter(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_new_error(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_new_error(CTI_ARGS);
         static void SFX_CALL cti_op_debug(CTI_ARGS);
 
-        static void* SFX_CALL cti_vm_throw(CTI_ARGS);
+        static JSValue* SFX_CALL cti_allocate_number(CTI_ARGS);
+
+        static JSValue* SFX_CALL cti_vm_throw(CTI_ARGS);
         static void* SFX_CALL cti_vm_compile(CTI_ARGS);
-        static JSValue* SFX_CALL cti_op_push_activation(CTI_ARGS);
+        static void* SFX_CALL cti_vm_lazyLinkCall(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_push_activation(CTI_ARGS);
         
 #endif // ENABLE(CTI)
 
@@ -302,19 +315,28 @@ namespace JSC {
         void uncacheGetByID(CodeBlock*, Instruction* vPC);
         void tryCachePutByID(CallFrame*, CodeBlock*, Instruction*, JSValue* baseValue, const PutPropertySlot&);
         void uncachePutByID(CodeBlock*, Instruction* vPC);
+        
+        bool isCallOpcode(Opcode opcode) { return opcode == getOpcode(op_call) || opcode == getOpcode(op_construct) || opcode == getOpcode(op_call_eval); }
 
 #if ENABLE(CTI)
+        static void throwStackOverflowPreviousFrame(CallFrame*, JSGlobalData*, void*& returnAddress);
+
         void tryCTICacheGetByID(CallFrame*, CodeBlock*, void* returnAddress, JSValue* baseValue, const Identifier& propertyName, const PropertySlot&);
         void tryCTICachePutByID(CallFrame*, CodeBlock*, void* returnAddress, JSValue* baseValue, const PutPropertySlot&);
 
         void* getCTIArrayLengthTrampoline(CallFrame*, CodeBlock*);
         void* getCTIStringLengthTrampoline(CallFrame*, CodeBlock*);
 
+        JITCodeBuffer* jitCodeBuffer() const { return m_jitCodeBuffer.get(); }
+#endif
+
+        SamplingTool* m_sampler;
+
+#if ENABLE(CTI)
         void* m_ctiArrayLengthTrampoline;
         void* m_ctiStringLengthTrampoline;
 
         OwnPtr<JITCodeBuffer> m_jitCodeBuffer;
-        JITCodeBuffer* jitCodeBuffer() const { return m_jitCodeBuffer.get(); }
 #endif
 
         int m_reentryDepth;

@@ -37,9 +37,8 @@
 #import "WebNSURLExtras.h"
 #import "WebNSURLRequestExtras.h"
 #import "WebNetscapePluginPackage.h"
-#import "WebNetscapePlugInStreamLoaderClient.h"
 #import <Foundation/NSURLResponse.h>
-#import <kjs/JSLock.h>
+#import <runtime/JSLock.h>
 #import <WebCore/DocumentLoader.h>
 #import <WebCore/Frame.h>
 #import <WebCore/FrameLoader.h>
@@ -59,15 +58,6 @@ static StreamMap& streams()
     static StreamMap staticStreams;
     return staticStreams;
 }
-
-@implementation WebBaseNetscapePluginStream
-
-#ifndef BUILDING_ON_TIGER
-+ (void)initialize
-{
-    WebCoreObjCFinalizeOnMainThread(self);
-}
-#endif
 
 NPP WebNetscapePluginStream::ownerForStream(NPStream *stream)
 {
@@ -107,123 +97,76 @@ NSError *WebNetscapePluginStream::errorForReason(NPReason reason) const
     return pluginCancelledConnectionError();
 }
 
-- (NSError *)errorForReason:(NPReason)theReason
+WebNetscapePluginStream::WebNetscapePluginStream(FrameLoader* frameLoader)
+    : m_plugin(0)
+    , m_transferMode(0)
+    , m_offset(0)
+    , m_fileDescriptor(-1)
+    , m_sendNotification(false)
+    , m_notifyData(0)
+    , m_headers(0)
+    , m_reason(NPRES_BASE)
+    , m_isTerminated(false)
+    , m_newStreamSuccessful(false)
+    , m_frameLoader(frameLoader)
+    , m_pluginFuncs(0)
+    , m_deliverDataTimer(this, &WebNetscapePluginStream::deliverDataTimerFired)
 {
-    return _impl->errorForReason(theReason);
+    memset(&m_stream, 0, sizeof(NPStream));
 }
 
-- (id)initWithFrameLoader:(FrameLoader *)frameLoader
+WebNetscapePluginStream::WebNetscapePluginStream(NSURLRequest *request, NPP plugin, bool sendNotification, void* notifyData)
+    : m_requestURL([request URL])
+    , m_plugin(0)
+    , m_transferMode(0)
+    , m_offset(0)
+    , m_fileDescriptor(-1)
+    , m_sendNotification(sendNotification)
+    , m_notifyData(notifyData)
+    , m_headers(0)
+    , m_reason(NPRES_BASE)
+    , m_isTerminated(false)
+    , m_newStreamSuccessful(false)
+    , m_frameLoader(0)
+    , m_request(AdoptNS, [request mutableCopy])
+    , m_pluginFuncs(0)
+    , m_deliverDataTimer(this, &WebNetscapePluginStream::deliverDataTimerFired)
 {
-    [super init];
-    
-    _impl = WebNetscapePluginStream::create(self);
-    _impl->m_frameLoader = frameLoader;
-    
-    return self;
-}
+    memset(&m_stream, 0, sizeof(NPStream));
 
-- (id)initWithRequest:(NSURLRequest *)theRequest
-               plugin:(NPP)thePlugin
-           notifyData:(void *)theNotifyData 
-     sendNotification:(BOOL)flag
-{   
-    WebBaseNetscapePluginView *view = (WebBaseNetscapePluginView *)thePlugin->ndata;
+    WebBaseNetscapePluginView *view = (WebBaseNetscapePluginView *)plugin->ndata;
     
     // This check has already been done by the plug-in view.
-    ASSERT(FrameLoader::canLoad([theRequest URL], String(), core([view webFrame])->document()));
+    ASSERT(FrameLoader::canLoad([request URL], String(), core([view webFrame])->document()));
     
-    ASSERT([theRequest URL]);
-    ASSERT(thePlugin);
+    ASSERT([request URL]);
+    ASSERT(plugin);
     
-    _impl = WebNetscapePluginStream::create(self);
+    setPlugin(plugin);
     
-    // Temporarily set isTerminated to true to avoid assertion failure in dealloc in case we are released in this method.
-    _impl->m_isTerminated = true;
-    
-    _impl->m_requestURL = [theRequest URL];
-    _impl->setPlugin(thePlugin);
-    _impl->m_notifyData = theNotifyData;
-    _impl->m_sendNotification = flag;
-    _impl->m_fileDescriptor = -1;
-    _impl->m_newStreamSuccessful = false;
-    
-    streams().add(&_impl->m_stream, thePlugin);
+    streams().add(&m_stream, plugin);
         
-    _impl->m_request = [theRequest mutableCopy];
-    if (core([view webFrame])->loader()->shouldHideReferrer([theRequest URL], core([view webFrame])->loader()->outgoingReferrer()))
-        [(NSMutableURLRequest *)_impl->m_request _web_setHTTPReferrer:nil];
+    if (core([view webFrame])->loader()->shouldHideReferrer([request URL], core([view webFrame])->loader()->outgoingReferrer()))
+        [m_request.get() _web_setHTTPReferrer:nil];
     
-    _impl->m_client = new WebNetscapePlugInStreamLoaderClient(self);
-    _impl->m_loader = NetscapePlugInStreamLoader::create(core([view webFrame]), _impl->m_client).releaseRef();
-    _impl->m_loader->setShouldBufferData(false);
-    
-    _impl->m_isTerminated = false;
-    
-    return self;
+    m_loader = NetscapePlugInStreamLoader::create(core([view webFrame]), this);
+    m_loader->setShouldBufferData(false);
 }
 
-- (void)dealloc
+WebNetscapePluginStream::~WebNetscapePluginStream()
 {
-    ASSERT(!_impl->m_plugin);
-    ASSERT(_impl->m_isTerminated);
-    ASSERT(_impl->m_stream.ndata == nil);
-
+    ASSERT(!m_plugin);
+    ASSERT(m_isTerminated);
+    ASSERT(!m_stream.ndata);
+    
     // The stream file should have been deleted, and the path freed, in -_destroyStream
-    ASSERT(!_impl->m_path);
-    ASSERT(_impl->m_fileDescriptor == -1);
-
-    if (_impl->m_loader)
-        _impl->m_loader->deref();
-    delete _impl->m_client;
-    [_impl->m_request release];
-        
-    free((void *)_impl->m_stream.url);
-    free(_impl->m_headers);
-
-    streams().remove(&_impl->m_stream);
-
-    ASSERT(_impl);
+    ASSERT(!m_path);
+    ASSERT(m_fileDescriptor == -1);
     
-    [super dealloc];
-}
-
-- (void)finalize
-{
-    ASSERT_MAIN_THREAD();
-    ASSERT(_impl->m_isTerminated);
-    ASSERT(_impl->m_stream.ndata == nil);
-
-    // The stream file should have been deleted, and the path freed, in -_destroyStream
-    ASSERT(!_impl->m_path);
-    ASSERT(_impl->m_fileDescriptor == -1);
-
-    if (_impl->m_loader)
-        _impl->m_loader->deref();
-    delete _impl->m_client;
+    free((void *)m_stream.url);
+    free(m_headers);
     
-    free((void *)_impl->m_stream.url);
-    free(_impl->m_headers);
-
-    streams().remove(&_impl->m_stream);
-
-    ASSERT(_impl);
-        
-    [super finalize];
-}
-
-- (NPP)plugin
-{
-    return _impl->m_plugin;
-}
-
-- (void)setRequestURL:(NSURL *)theRequestURL
-{
-    _impl->m_requestURL = theRequestURL;
-}
-
-- (void)setPlugin:(NPP)thePlugin
-{
-    _impl->setPlugin(thePlugin);
+    streams().remove(&m_stream);
 }
 
 void WebNetscapePluginStream::setPlugin(NPP plugin)
@@ -240,7 +183,7 @@ void WebNetscapePluginStream::setPlugin(NPP plugin)
         m_plugin = 0;
         m_pluginFuncs = 0;
         
-        [view disconnectStream:m_pluginStream];
+        [view disconnectStream:this];
         m_pluginView = 0;
     }        
 }
@@ -255,7 +198,7 @@ void WebNetscapePluginStream::startStream(NSURL *url, long long expectedContentL
     free((void *)m_stream.url);
     m_stream.url = strdup([m_responseURL.get() _web_URLCString]);
 
-    m_stream.ndata = m_pluginStream;
+    m_stream.ndata = this;
     m_stream.end = expectedContentLength > 0 ? (uint32)expectedContentLength : 0;
     m_stream.lastmodified = (uint32)[lastModifiedDate timeIntervalSince1970];
     m_stream.notifyData = m_notifyData;
@@ -309,21 +252,21 @@ void WebNetscapePluginStream::startStream(NSURL *url, long long expectedContentL
     }
 }
 
-- (void)start
+void WebNetscapePluginStream::start()
 {
-    ASSERT(_impl->m_request);
-    ASSERT(!_impl->m_frameLoader);
+    ASSERT(m_request);
+    ASSERT(!m_frameLoader);
     
-    _impl->m_loader->documentLoader()->addPlugInStreamLoader(_impl->m_loader);
-    _impl->m_loader->load(_impl->m_request);    
+    m_loader->documentLoader()->addPlugInStreamLoader(m_loader.get());
+    m_loader->load(m_request.get());
 }
 
-- (void)stop
+void WebNetscapePluginStream::stop()
 {
-    ASSERT(!_impl->m_frameLoader);
+    ASSERT(!m_frameLoader);
     
-    if (!_impl->m_loader->isDone())
-        [self cancelLoadAndDestroyStreamWithError:_impl->m_loader->cancelledError()];    
+    if (!m_loader->isDone())
+        cancelLoadAndDestroyStreamWithError(m_loader->cancelledError());
 }
 
 void WebNetscapePluginStream::didReceiveResponse(NetscapePlugInStreamLoader*, const ResourceResponse& response)
@@ -382,9 +325,9 @@ void WebNetscapePluginStream::didReceiveResponse(NetscapePlugInStreamLoader*, co
     startStream([r URL], expectedContentLength, WKGetNSURLResponseLastModifiedDate(r), [r MIMEType], theHeaders);    
 }
 
-- (void)startStreamWithResponse:(NSURLResponse *)r
+void WebNetscapePluginStream::startStreamWithResponse(NSURLResponse *response)
 {
-    _impl->didReceiveResponse(0, r);
+    didReceiveResponse(0, response);
 }
 
 bool WebNetscapePluginStream::wantsAllStreams() const
@@ -406,24 +349,19 @@ bool WebNetscapePluginStream::wantsAllStreams() const
     return value;
 }
 
-- (BOOL)wantsAllStreams
-{
-    return _impl->wantsAllStreams();
-}
-
 void WebNetscapePluginStream::destroyStream()
 {
     if (m_isTerminated)
         return;
 
-    RetainPtr<WebBaseNetscapePluginStream> protect(m_pluginStream);
+    RefPtr<WebNetscapePluginStream> protect(this);
 
     ASSERT(m_reason != WEB_REASON_NONE);
     ASSERT([m_deliveryData.get() length] == 0);
     
     m_deliverDataTimer.stop();
 
-    if (m_stream.ndata != nil) {
+    if (m_stream.ndata) {
         if (m_reason == NPRES_DONE && (m_transferMode == NP_ASFILE || m_transferMode == NP_ASFILEONLY)) {
             ASSERT(m_fileDescriptor == -1);
             ASSERT(m_path);
@@ -467,7 +405,7 @@ void WebNetscapePluginStream::destroyStream()
         m_headers = NULL;
         m_stream.headers = NULL;
 
-        m_stream.ndata = nil;
+        m_stream.ndata = 0;
 
         if (m_isTerminated)
             return;
@@ -497,7 +435,7 @@ void WebNetscapePluginStream::destroyStreamWithReason(NPReason reason)
         return;
     }
     destroyStream();
-    ASSERT(m_stream.ndata == nil);
+    ASSERT(!m_stream.ndata);
 }
 
 void WebNetscapePluginStream::cancelLoadWithError(NSError *error)
@@ -517,11 +455,6 @@ void WebNetscapePluginStream::cancelLoadWithError(NSError *error)
         m_loader->cancel(error);
 }
 
-- (void)cancelLoadWithError:(NSError *)error
-{
-    _impl->cancelLoadWithError(error);
-}
-
 void WebNetscapePluginStream::destroyStreamWithError(NSError *error)
 {
     destroyStreamWithReason(reasonForError(error));
@@ -532,30 +465,20 @@ void WebNetscapePluginStream::didFail(WebCore::NetscapePlugInStreamLoader*, cons
     destroyStreamWithError(error);
 }
 
-- (void)destroyStreamWithError:(NSError *)error
-{
-    _impl->didFail(0, error);
-}
-
 void WebNetscapePluginStream::cancelLoadAndDestroyStreamWithError(NSError *error)
 {
-    RetainPtr<WebBaseNetscapePluginStream> protect(m_pluginStream);
+    RefPtr<WebNetscapePluginStream> protect(this);
     cancelLoadWithError(error);
     destroyStreamWithError(error);
     setPlugin(0);
 }    
-
-- (void)cancelLoadAndDestroyStreamWithError:(NSError *)error
-{
-    return _impl->cancelLoadAndDestroyStreamWithError(error);
-}
 
 void WebNetscapePluginStream::deliverData()
 {
     if (!m_stream.ndata || [m_deliveryData.get() length] == 0)
         return;
 
-    RetainPtr<WebBaseNetscapePluginStream> protect(m_pluginStream);
+    RefPtr<WebNetscapePluginStream> protect(this);
 
     int32 totalBytes = [m_deliveryData.get() length];
     int32 totalBytesDelivered = 0;
@@ -663,11 +586,6 @@ void WebNetscapePluginStream::didFinishLoading(NetscapePlugInStreamLoader*)
     destroyStreamWithReason(NPRES_DONE);
 }
 
-- (void)finishedLoading
-{
-    _impl->didFinishLoading(0);
-}
-
 void WebNetscapePluginStream::didReceiveData(NetscapePlugInStreamLoader*, const char* bytes, int length)
 {
     NSData *data = [[NSData alloc] initWithBytesNoCopy:(void*)bytes length:length freeWhenDone:NO];
@@ -685,13 +603,6 @@ void WebNetscapePluginStream::didReceiveData(NetscapePlugInStreamLoader*, const 
     
     [data release];
 }
-
-- (void)receivedData:(NSData *)data
-{
-    _impl->didReceiveData(0, (const char*)[data bytes], [data length]);
-}
-
-@end
 
 static NSString *CarbonPathFromPOSIXPath(NSString *posixPath)
 {

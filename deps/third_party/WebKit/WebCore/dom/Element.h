@@ -140,7 +140,6 @@ public:
 
     virtual void attach();
     virtual void detach();
-    RenderStyle* styleForRenderer(RenderObject* parent);
     virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
     virtual void recalcStyle(StyleChange = NoChange);
 

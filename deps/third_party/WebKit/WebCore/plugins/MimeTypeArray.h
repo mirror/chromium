@@ -28,7 +28,6 @@
 
 namespace JSC {
     class ExecState;
-    class JSValue;
 };
 
 namespace WebCore {
@@ -37,8 +36,10 @@ namespace WebCore {
     class Frame;
     class PluginData;
 
+#if USE(JSC)
     // FIXME: Generated JSMimeTypeArray.cpp doesn't include JSMimeType.h for toJS
     JSC::JSValue* toJS(JSC::ExecState*, MimeType*);
+#endif
 
     class MimeTypeArray : public RefCounted<MimeTypeArray> {
     public:

@@ -42,7 +42,7 @@
 #include "JSEventListener.h"
 #include "JSFile.h"
 #include "XMLHttpRequest.h"
-#include <kjs/Error.h>
+#include <runtime/Error.h>
 #include <VM/Machine.h>
 
 using namespace JSC;
@@ -183,10 +183,10 @@ JSValue* JSXMLHttpRequest::overrideMimeType(ExecState* exec, const ArgList& args
 
 JSValue* JSXMLHttpRequest::addEventListener(ExecState* exec, const ArgList& args)
 {
-    Frame* frame = impl()->associatedFrame();
-    if (!frame)
+    JSDOMGlobalObject* globalObject = toJSDOMGlobalObject(impl()->scriptExecutionContext());
+    if (!globalObject)
         return jsUndefined();
-    RefPtr<JSUnprotectedEventListener> listener = toJSDOMWindow(frame)->findOrCreateJSUnprotectedEventListener(exec, args.at(exec, 1), true);
+    RefPtr<JSUnprotectedEventListener> listener = globalObject->findOrCreateJSUnprotectedEventListener(exec, args.at(exec, 1));
     if (!listener)
         return jsUndefined();
     impl()->addEventListener(args.at(exec, 0)->toString(exec), listener.release(), args.at(exec, 2)->toBoolean(exec));
@@ -195,10 +195,10 @@ JSValue* JSXMLHttpRequest::addEventListener(ExecState* exec, const ArgList& args
 
 JSValue* JSXMLHttpRequest::removeEventListener(ExecState* exec, const ArgList& args)
 {
-    Frame* frame = impl()->associatedFrame();
-    if (!frame)
+    JSDOMGlobalObject* globalObject = toJSDOMGlobalObject(impl()->scriptExecutionContext());
+    if (!globalObject)
         return jsUndefined();
-    JSUnprotectedEventListener* listener = toJSDOMWindow(frame)->findJSUnprotectedEventListener(exec, args.at(exec, 1), true);
+    JSUnprotectedEventListener* listener = globalObject->findJSUnprotectedEventListener(exec, args.at(exec, 1));
     if (!listener)
         return jsUndefined();
     impl()->removeEventListener(args.at(exec, 0)->toString(exec), listener, args.at(exec, 2)->toBoolean(exec));

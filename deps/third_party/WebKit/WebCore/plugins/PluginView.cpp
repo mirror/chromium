@@ -30,7 +30,6 @@
 #include "Document.h"
 #include "DocumentLoader.h"
 #include "Element.h"
-#include "EventNames.h"
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "Frame.h"
@@ -63,8 +62,8 @@
 #include "runtime_root.h"
 #include "Settings.h"
 #include "runtime.h"
-#include <kjs/JSLock.h>
-#include <kjs/JSValue.h>
+#include <runtime/JSLock.h>
+#include <runtime/JSValue.h>
 #include <wtf/ASCIICType.h>
 
 using JSC::ExecState;
@@ -79,7 +78,6 @@ using namespace WTF;
 
 namespace WebCore {
 
-using namespace EventNames;
 using namespace HTMLNames;
 
 static int s_callingPlugin;

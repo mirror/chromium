@@ -57,7 +57,7 @@ static inline bool allowAutomaticSemicolon(JSC::Lexer&, int);
 #define LEXER (GLOBAL_DATA->lexer)
 
 #define AUTO_SEMICOLON do { if (!allowAutomaticSemicolon(*LEXER, yychar)) YYABORT; } while (0)
-#define SET_EXCEPTION_LOCATION(node, start, divot, end) node->setExceptionSourceRange((divot), (divot) - (start), (end) - (divot))
+#define SET_EXCEPTION_LOCATION(node, start, divot, end) node->setExceptionSourceCode((divot), (divot) - (start), (end) - (divot))
 #define DBG(l, s, e) (l)->setLoc((s).first_line, (e).last_line)
 
 using namespace JSC;
@@ -1118,8 +1118,7 @@ DefaultClause:
 ;
 
 LabelledStatement:
-    IDENT ':' Statement                 { $3.m_node->pushLabel(*$1);
-                                          LabelNode* node = new LabelNode(GLOBAL_DATA, *$1, $3.m_node);
+    IDENT ':' Statement                 { LabelNode* node = new LabelNode(GLOBAL_DATA, *$1, $3.m_node);
                                           SET_EXCEPTION_LOCATION(node, @1.first_column, @2.last_column, @2.last_column);
                                           $$ = createNodeDeclarationInfo<StatementNode*>(node, $3.m_varDeclarations, $3.m_funcDeclarations, $3.m_features, $3.m_numConstants); }
 ;
@@ -1418,7 +1417,7 @@ static NumberNode* makeNumberNode(void* globalPtr, double d)
 static ExpressionNode* makeBitwiseNotNode(void* globalPtr, ExpressionNode* expr)
 {
     if (expr->isNumber())
-        return makeNumberNode(globalPtr, ~JSValue::toInt32(static_cast<NumberNode*>(expr)->value()));
+        return makeNumberNode(globalPtr, ~toInt32(static_cast<NumberNode*>(expr)->value()));
     return new BitwiseNotNode(GLOBAL_DATA, expr);
 }
 
@@ -1469,14 +1468,14 @@ static ExpressionNode* makeSubNode(void* globalPtr, ExpressionNode* expr1, Expre
 static ExpressionNode* makeLeftShiftNode(void* globalPtr, ExpressionNode* expr1, ExpressionNode* expr2, bool rightHasAssignments)
 {
     if (expr1->isNumber() && expr2->isNumber())
-        return makeNumberNode(globalPtr, JSValue::toInt32(static_cast<NumberNode*>(expr1)->value()) << (JSValue::toUInt32(static_cast<NumberNode*>(expr2)->value()) & 0x1f));
+        return makeNumberNode(globalPtr, toInt32(static_cast<NumberNode*>(expr1)->value()) << (toUInt32(static_cast<NumberNode*>(expr2)->value()) & 0x1f));
     return new LeftShiftNode(GLOBAL_DATA, expr1, expr2, rightHasAssignments);
 }
 
 static ExpressionNode* makeRightShiftNode(void* globalPtr, ExpressionNode* expr1, ExpressionNode* expr2, bool rightHasAssignments)
 {
     if (expr1->isNumber() && expr2->isNumber())
-        return makeNumberNode(globalPtr, JSValue::toInt32(static_cast<NumberNode*>(expr1)->value()) >> (JSValue::toUInt32(static_cast<NumberNode*>(expr2)->value()) & 0x1f));
+        return makeNumberNode(globalPtr, toInt32(static_cast<NumberNode*>(expr1)->value()) >> (toUInt32(static_cast<NumberNode*>(expr2)->value()) & 0x1f));
     return new RightShiftNode(GLOBAL_DATA, expr1, expr2, rightHasAssignments);
 }
 

@@ -29,7 +29,6 @@
 
 #include "CSSStyleSelector.h"
 #include "Document.h"
-#include "EventNames.h"
 #include "ExceptionCode.h"
 #include "HTMLNames.h"
 #include "HTMLSelectElement.h"
@@ -41,7 +40,6 @@
 namespace WebCore {
 
 using namespace HTMLNames;
-using namespace EventNames;
 
 HTMLOptionElement::HTMLOptionElement(Document* doc, HTMLFormElement* f)
     : HTMLFormControlElement(optionTag, doc, f)
@@ -57,20 +55,14 @@ bool HTMLOptionElement::checkDTD(const Node* newChild)
 
 void HTMLOptionElement::attach()
 {
-    if (parentNode()->renderStyle()) {
-        RenderStyle* style = styleForRenderer(0);
-        setRenderStyle(style);
-        style->deref(document()->renderArena());
-    }
+    if (parentNode()->renderStyle())
+        setRenderStyle(styleForRenderer());
     HTMLFormControlElement::attach();
 }
 
 void HTMLOptionElement::detach()
 {
-    if (m_style) {
-        m_style->deref(document()->renderArena());
-        m_style = 0;
-    }
+    m_style.clear();
     HTMLFormControlElement::detach();
 }
 
@@ -235,19 +227,14 @@ void HTMLOptionElement::setLabel(const String& value)
     setAttribute(labelAttr, value);
 }
 
-void HTMLOptionElement::setRenderStyle(RenderStyle* newStyle)
+void HTMLOptionElement::setRenderStyle(PassRefPtr<RenderStyle> newStyle)
 {
-    RenderStyle* oldStyle = m_style;
     m_style = newStyle;
-    if (newStyle)
-        newStyle->ref();
-    if (oldStyle)
-        oldStyle->deref(document()->renderArena());
 }
 
 RenderStyle* HTMLOptionElement::nonRendererRenderStyle() const 
 { 
-    return m_style; 
+    return m_style.get(); 
 }
 
 String HTMLOptionElement::optionText()

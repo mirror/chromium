@@ -73,12 +73,12 @@
 #include "XMLNames.h"
 #include "ScriptController.h"
 #include "npruntime_impl.h"
-#include "runtime_root.h"
 #include "visible_units.h"
 #include <wtf/RefCountedLeakCounter.h>
 
 #if USE(JSC)
 #include "JSDOMWindowShell.h"
+#include "runtime_root.h"
 #endif
 
 #if FRAME_LOADS_USER_STYLESHEET
@@ -96,7 +96,6 @@ using namespace std;
 
 namespace WebCore {
 
-using namespace EventNames;
 using namespace HTMLNames;
 
 #ifndef NDEBUG    
@@ -1127,11 +1126,12 @@ void Frame::setExcludeFromTextSearch(bool exclude)
 FloatRect Frame::selectionRect(bool clipToVisibleContent) const
 {
     RenderView* root = contentRenderer();
-    if (!root)
+    FrameView* view = d->m_view.get();
+    if (!root || !view)
         return IntRect();
     
     IntRect selectionRect = root->selectionRect(clipToVisibleContent);
-    return clipToVisibleContent ? intersection(selectionRect, d->m_view->visibleContentRect()) : selectionRect;
+    return clipToVisibleContent ? intersection(selectionRect, view->visibleContentRect()) : selectionRect;
 }
 
 void Frame::selectionTextRects(Vector<FloatRect>& rects, bool clipToVisibleContent) const
@@ -1324,7 +1324,7 @@ void Frame::forceLayoutWithPageWidthRange(float minPageWidth, float maxPageWidth
 void Frame::sendResizeEvent()
 {
     if (Document* doc = document())
-        doc->dispatchWindowEvent(EventNames::resizeEvent, false, false);
+        doc->dispatchWindowEvent(eventNames().resizeEvent, false, false);
 }
 
 void Frame::sendScrollEvent()
@@ -1336,7 +1336,7 @@ void Frame::sendScrollEvent()
     Document* doc = document();
     if (!doc)
         return;
-    doc->dispatchEventForType(scrollEvent, true, false);
+    doc->dispatchEventForType(eventNames().scrollEvent, true, false);
 }
 
 void Frame::clearTimers(FrameView *view, Document *document)
@@ -1627,6 +1627,14 @@ void Frame::pageDestroyed()
     // so page() could be NULL.
     if (page() && page()->focusController()->focusedFrame() == this)
         page()->focusController()->setFocusedFrame(0);
+
+#if USE(JSC)
+    // TODO(fqian): Unfork this change. It is a temporary workaround
+    // for this merge to pass layout tests. Once the merge is landed
+    // in the trunk, I am going to unfork this change and fix the issue
+    // in the binding code.
+    script()->clearWindowShell();
+#endif
 
     // This will stop any JS timers
 #if USE(JSC)

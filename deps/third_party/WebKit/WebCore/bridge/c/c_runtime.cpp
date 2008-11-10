@@ -32,7 +32,7 @@
 #include "c_instance.h"
 #include "c_utility.h"
 #include "npruntime_impl.h"
-#include <kjs/JSLock.h>
+#include <runtime/JSLock.h>
 
 namespace JSC {
 namespace Bindings {
@@ -75,7 +75,7 @@ JSValue* CField::valueFromInstance(ExecState* exec, const Instance* inst) const
     return jsUndefined();
 }
 
-void CField::setValueToInstance(ExecState *exec, const Instance *inst, JSValue *aValue) const
+void CField::setValueToInstance(ExecState *exec, const Instance *inst, JSValue* aValue) const
 {
     const CInstance* instance = static_cast<const CInstance*>(inst);
     NPObject* obj = instance->getObject();

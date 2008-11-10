@@ -37,7 +37,7 @@
 #include "JSDOMWindowCustom.h"
 #include "JSDOMWindowShell.h"
 #include "JSHTMLCollection.h"
-#include <kjs/Error.h>
+#include <runtime/Error.h>
 
 using namespace JSC;
 
@@ -53,7 +53,7 @@ bool JSHTMLDocument::canGetItemsForName(ExecState*, HTMLDocument* document, cons
 
 JSValue* JSHTMLDocument::nameGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    JSHTMLDocument* thisObj = static_cast<JSHTMLDocument*>(slot.slotBase());
+    JSHTMLDocument* thisObj = static_cast<JSHTMLDocument*>(asObject(slot.slotBase()));
     HTMLDocument* document = static_cast<HTMLDocument*>(thisObj->impl());
 
     String name = propertyName;

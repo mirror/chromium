@@ -47,7 +47,6 @@
 namespace WebCore {
 
 using namespace HTMLNames;
-using namespace EventNames;
 
 SVGElement::SVGElement(const QualifiedName& tagName, Document* doc)
     : StyledElement(tagName, doc)
@@ -143,25 +142,25 @@ void SVGElement::parseMappedAttribute(MappedAttribute* attr)
 {
     // standard events
     if (attr->name() == onloadAttr)
-        setEventListenerForTypeAndAttribute(loadEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().loadEvent, attr);
     else if (attr->name() == onclickAttr)
-        setEventListenerForTypeAndAttribute(clickEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().clickEvent, attr);
     else if (attr->name() == onmousedownAttr)
-        setEventListenerForTypeAndAttribute(mousedownEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().mousedownEvent, attr);
     else if (attr->name() == onmousemoveAttr)
-        setEventListenerForTypeAndAttribute(mousemoveEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().mousemoveEvent, attr);
     else if (attr->name() == onmouseoutAttr)
-        setEventListenerForTypeAndAttribute(mouseoutEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().mouseoutEvent, attr);
     else if (attr->name() == onmouseoverAttr)
-        setEventListenerForTypeAndAttribute(mouseoverEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().mouseoverEvent, attr);
     else if (attr->name() == onmouseupAttr)
-        setEventListenerForTypeAndAttribute(mouseupEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().mouseupEvent, attr);
     else if (attr->name() == SVGNames::onfocusinAttr)
-        setEventListenerForTypeAndAttribute(DOMFocusInEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().DOMFocusInEvent, attr);
     else if (attr->name() == SVGNames::onfocusoutAttr)
-        setEventListenerForTypeAndAttribute(DOMFocusOutEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().DOMFocusOutEvent, attr);
     else if (attr->name() == SVGNames::onactivateAttr)
-        setEventListenerForTypeAndAttribute(DOMActivateEvent, attr);
+        setInlineEventListenerForTypeAndAttribute(eventNames().DOMActivateEvent, attr);
     else
         StyledElement::parseMappedAttribute(attr);
 }
@@ -185,7 +184,7 @@ static bool hasLoadListener(SVGElement* node)
         if (list) {
             RegisteredEventListenerList::Iterator end = list->end();
             for (RegisteredEventListenerList::Iterator it = list->begin(); it != end; ++it)
-                if ((*it)->eventType() == loadEvent &&
+                if ((*it)->eventType() == eventNames().loadEvent &&
                     (*it)->useCapture() == true || currentNode == node)
                     return true;
         }
@@ -203,10 +202,10 @@ void SVGElement::sendSVGLoadEventIfPossible(bool sendParentLoadEvents)
         if (sendParentLoadEvents)
             parent = currentTarget->parentNode(); // save the next parent to dispatch too incase dispatching the event changes the tree
         if (hasLoadListener(currentTarget.get())) {
-            RefPtr<Event> event = Event::create(loadEvent, false, false);
+            RefPtr<Event> event = Event::create(eventNames().loadEvent, false, false);
             event->setTarget(currentTarget);
             ExceptionCode ignored = 0;
-            currentTarget->dispatchGenericEvent(event.release(), ignored, false);
+            currentTarget->dispatchGenericEvent(event.release(), ignored);
         }
         currentTarget = (parent && parent->isSVGElement()) ? static_pointer_cast<SVGElement>(parent) : 0;
     }

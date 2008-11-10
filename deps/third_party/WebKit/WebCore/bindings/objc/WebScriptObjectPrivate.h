@@ -27,13 +27,12 @@
 #define _WEB_SCRIPT_OBJECT_PRIVATE_H_
 
 #import "WebScriptObject.h"
-
+#import <runtime/JSValue.h>
 #import <wtf/PassRefPtr.h>
 
 namespace JSC {
     
     class JSObject;
-    class JSValue;
     
     namespace Bindings {
         class RootObject;

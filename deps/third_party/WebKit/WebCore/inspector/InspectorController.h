@@ -36,6 +36,7 @@
 #include "Console.h"
 #include "PlatformString.h"
 #include "StringHash.h"
+#include "Timer.h"
 #if USE(JSC)
 #include <JavaScriptCore/JSContextRef.h>
 #include <profiler/Profiler.h>
@@ -97,6 +98,43 @@ public:
         ScriptsPanel
     } SpecialPanels;
 
+    struct Setting {
+        enum Type {
+            NoType, StringType, StringVectorType, DoubleType, IntegerType, BooleanType
+        };
+
+        Setting()
+            : m_type(NoType)
+        {
+        }
+
+        Type type() const { return m_type; }
+
+        String string() const { ASSERT(m_type == StringType); return m_string; }
+        const Vector<String>& stringVector() const { ASSERT(m_type == StringVectorType); return m_stringVector; }
+        double doubleValue() const { ASSERT(m_type == DoubleType); return m_simpleContent.m_double; }
+        long integerValue() const { ASSERT(m_type == IntegerType); return m_simpleContent.m_integer; }
+        bool booleanValue() const { ASSERT(m_type == BooleanType); return m_simpleContent.m_boolean; }
+
+        void set(const String& value) { m_type = StringType; m_string = value; }
+        void set(const Vector<String>& value) { m_type = StringVectorType; m_stringVector = value; }
+        void set(double value) { m_type = DoubleType; m_simpleContent.m_double = value; }
+        void set(long value) { m_type = IntegerType; m_simpleContent.m_integer = value; }
+        void set(bool value) { m_type = BooleanType; m_simpleContent.m_boolean = value; }
+
+    private:
+        Type m_type;
+
+        String m_string;
+        Vector<String> m_stringVector;
+
+        union {
+            double m_double;
+            long m_integer;
+            bool m_boolean;
+        } m_simpleContent;
+    };
+
     InspectorController(Page*, InspectorClient*);
     ~InspectorController();
 
@@ -106,6 +144,9 @@ public:
     bool enabled() const;
 
     Page* inspectedPage() const { return m_inspectedPage; }
+
+    const Setting& setting(const String& key) const;
+    void setSetting(const String& key, const Setting&);
 
     String localizedStringsURL();
 
@@ -119,8 +160,13 @@ public:
 
 #if USE(JSC)
     bool isRecordingUserInitiatedProfile() const { return m_recordingUserInitiatedProfile; }
-    void startUserInitiatedProfiling();
+    void startUserInitiatedProfilingSoon();
+    void startUserInitiatedProfiling(Timer<InspectorController>* = 0);
     void stopUserInitiatedProfiling();
+
+    void enableProfiler(bool skipRecompile = false);
+    void disableProfiler();
+    bool profilerEnabled() const { return enabled() && m_profilerEnabled; }
 #endif
 
     bool windowVisible();
@@ -136,7 +182,7 @@ public:
     void addProfile(PassRefPtr<JSC::Profile>, unsigned lineNumber, const JSC::UString& sourceURL);
     void addProfileMessageToConsole(PassRefPtr<JSC::Profile> prpProfile, unsigned lineNumber, const JSC::UString& sourceURL);
     void addScriptProfile(JSC::Profile* profile);
-    const Vector<RefPtr<JSC::Profile> >& profiles() const { return m_profiles; }
+    const ProfilesArray& profiles() const { return m_profiles; }
 #endif
 
     void attachWindow();
@@ -192,10 +238,10 @@ public:
     void closeWindow();
 
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-    void startDebugging();
-    void stopDebugging();
+    void enableDebugger();
+    void disableDebugger();
 
-    bool debuggerAttached() const { return m_debuggerAttached; }
+    bool debuggerEnabled() const { return m_debuggerEnabled; }
 
     JavaScriptCallFrame* currentCallFrame() const;
 
@@ -324,7 +370,7 @@ private:
     FrameResourcesMap m_frameResources;
     Vector<ConsoleMessage*> m_consoleMessages;
 #if USE(JSC)
-    Vector<RefPtr<JSC::Profile> > m_profiles;
+    ProfilesArray m_profiles;
 #endif
     HashMap<String, double> m_times;
     HashMap<String, unsigned> m_counts;
@@ -340,9 +386,10 @@ private:
 #endif
     bool m_windowVisible;
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-    bool m_debuggerAttached;
+    bool m_debuggerEnabled;
     bool m_attachDebuggerWhenShown;
 #endif
+    bool m_profilerEnabled;
     bool m_recordingUserInitiatedProfile;
     SpecialPanels m_showAfterVisible;
     unsigned long m_nextIdentifier;
@@ -352,6 +399,9 @@ private:
     int m_currentUserInitiatedProfileNumber;
     unsigned m_nextUserInitiatedProfileNumber;
     ConsoleMessage* m_previousMessage;
+#if USE(JSC)
+    Timer<InspectorController> m_startProfiling;
+#endif
 };
 
 } // namespace WebCore

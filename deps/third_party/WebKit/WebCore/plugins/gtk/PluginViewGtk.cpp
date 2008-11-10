@@ -30,7 +30,6 @@
 #include "Document.h"
 #include "DocumentLoader.h"
 #include "Element.h"
-#include "EventNames.h"
 #include "FrameLoader.h"
 #include "FrameLoadRequest.h"
 #include "FrameTree.h"
@@ -54,8 +53,8 @@
 #include "npruntime_impl.h"
 #include "runtime.h"
 #include "runtime_root.h"
-#include <kjs/JSLock.h>
-#include <kjs/JSValue.h>
+#include <runtime/JSLock.h>
+#include <runtime/JSValue.h>
 
 #include <gdkconfig.h>
 #include <gtk/gtk.h>
@@ -73,7 +72,6 @@ using JSC::ExecState;
 using JSC::Interpreter;
 using JSC::JSLock;
 using JSC::JSObject;
-using JSC::JSValue;
 using JSC::UString;
 
 using std::min;
@@ -82,7 +80,6 @@ using namespace WTF;
 
 namespace WebCore {
 
-using namespace EventNames;
 using namespace HTMLNames;
 
 void PluginView::updatePluginWidget() const
@@ -274,11 +271,6 @@ void PluginView::stop()
 
     // Clear the window
     m_npWindow.window = 0;
-#ifdef XP_UNIX
-    if (m_isWindowed && m_npWindow.ws_info) 
-           delete (NPSetWindowCallbackStruct *)m_npWindow.ws_info;
-    m_npWindow.ws_info = 0;
-#endif
     if (m_plugin->pluginFuncs()->setwindow && !m_plugin->quirks().contains(PluginQuirkDontSetNullWindowHandleOnDestroy)) {
         PluginView::setCurrentPluginView(this);
         setCallingPlugin(true);
@@ -286,6 +278,12 @@ void PluginView::stop()
         setCallingPlugin(false);
         PluginView::setCurrentPluginView(0);
     }
+
+#ifdef XP_UNIX
+    if (m_isWindowed && m_npWindow.ws_info)
+           delete (NPSetWindowCallbackStruct *)m_npWindow.ws_info;
+    m_npWindow.ws_info = 0;
+#endif
 
     // Destroy the plugin
     {

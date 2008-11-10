@@ -30,38 +30,24 @@
 #import "config.h"
 #import "FileChooser.h"
 
-#import "ChromeClient.h"
-#import "Document.h"
-#import "Frame.h"
-#import "Icon.h"
 #import "LocalizedStrings.h"
-#import "Page.h"
 #import "SimpleFontData.h"
 #import "StringTruncator.h"
 
 namespace WebCore {
     
-void FileChooser::openFileChooser(Document* document)
-{
-    Frame* frame = document->frame();
-    if (!frame)
-        return;
-    Page* page = frame->page();
-    if (!page)
-        return;
-    page->chrome()->client()->runOpenPanel(this);
-}
-
 String FileChooser::basenameForWidth(const Font& font, int width) const
 {
     if (width <= 0)
         return String();
 
     String strToTruncate;
-    if (m_filename.isEmpty())
+    if (m_filenames.isEmpty())
         strToTruncate = fileButtonNoFileSelectedLabel();
+    else if (m_filenames.size() == 1)
+        strToTruncate = [[NSFileManager defaultManager] displayNameAtPath:(m_filenames[0])];
     else
-        strToTruncate = [[NSFileManager defaultManager] displayNameAtPath:m_filename];
+        return StringTruncator::rightTruncate(multipleFileUploadText(m_filenames.size()), width, font, false);
 
     return StringTruncator::centerTruncate(strToTruncate, width, font, false);
 }

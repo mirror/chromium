@@ -43,8 +43,9 @@ void FrameData::clear()
     if (m_frame) {
         cairo_surface_destroy(m_frame);
         m_frame = 0;
-        m_duration = 0.;
-        m_hasAlpha = true;
+        // NOTE: We purposefully don't reset metadata here, so that even if we
+        // throw away previously-decoded data, animation loops can still access
+        // properties like frame durations without re-decoding.
     }
 }
 
@@ -53,10 +54,10 @@ BitmapImage::BitmapImage(cairo_surface_t* surface, ImageObserver* observer)
     , m_currentFrame(0)
     , m_frames(0)
     , m_frameTimer(0)
-    , m_repetitionCount(0)
+    , m_repetitionCount(cAnimationNone)
+    , m_repetitionCountStatus(Unknown)
     , m_repetitionsComplete(0)
     , m_isSolidColor(false)
-    , m_animatingImageType(false)
     , m_animationFinished(true)
     , m_allDataReceived(true)
     , m_haveSize(true)
@@ -77,17 +78,20 @@ BitmapImage::BitmapImage(cairo_surface_t* surface, ImageObserver* observer)
     m_frames.grow(1);
     m_frames[0].m_frame = surface;
     m_frames[0].m_hasAlpha = cairo_surface_get_content(surface) != CAIRO_CONTENT_COLOR;
+    m_frames[0].m_haveMetadata = true;
     checkForSolidColor();
 }
 
 void BitmapImage::draw(GraphicsContext* context, const FloatRect& dst, const FloatRect& src, CompositeOperator op)
 {
-    FloatRect srcRect(src);
-    FloatRect dstRect(dst);
+    startAnimation();
 
     cairo_surface_t* image = frameAtIndex(m_currentFrame);
     if (!image) // If it's too early we won't have an image yet.
         return;
+
+    FloatRect srcRect(src);
+    FloatRect dstRect(dst);
 
     if (mayFillWithSolidColor()) {
         fillWithSolidColor(context, dstRect, solidColor(), op);
@@ -130,8 +134,6 @@ void BitmapImage::draw(GraphicsContext* context, const FloatRect& dst, const Flo
     cairo_paint_with_alpha(cr, context->getAlpha());
 
     cairo_restore(cr);
-
-    startAnimation();
 
     if (imageObserver())
         imageObserver()->didDraw(this);

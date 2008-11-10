@@ -29,8 +29,10 @@
 #include "CachedResourceClient.h"
 #include "CachedResourceClientWalker.h"
 #include "DocLoader.h"
+#include "Frame.h"
 #include "FrameView.h"
 #include "Request.h"
+#include "Settings.h"
 #include "SystemTime.h"
 #include <wtf/Vector.h>
 
@@ -49,6 +51,7 @@ namespace WebCore {
 CachedImage::CachedImage(const String& url)
     : CachedResource(url, ImageResource)
     , m_image(0)
+    , m_decodedDataDeletionTimer(this, &CachedImage::decodedDataDeletionTimerFired)
 {
     m_status = Unknown;
 }
@@ -56,6 +59,7 @@ CachedImage::CachedImage(const String& url)
 CachedImage::CachedImage(Image* image)
     : CachedResource(String(), ImageResource)
     , m_image(image)
+    , m_decodedDataDeletionTimer(this, &CachedImage::decodedDataDeletionTimerFired)
 {
     m_status = Cached;
     m_loading = false;
@@ -64,7 +68,13 @@ CachedImage::CachedImage(Image* image)
 CachedImage::~CachedImage()
 {
 }
-    
+
+void CachedImage::decodedDataDeletionTimerFired(Timer<CachedImage>*)
+{
+    ASSERT(!hasClients());
+    destroyDecodedData();
+}
+
 void CachedImage::load(DocLoader* docLoader)
 {
     if (!docLoader || docLoader->autoLoadImages())
@@ -77,6 +87,9 @@ void CachedImage::addClient(CachedResourceClient* c)
 {
     CachedResource::addClient(c);
 
+    if (m_decodedDataDeletionTimer.isActive())
+        m_decodedDataDeletionTimer.stop();
+
     if (m_image && !m_image->rect().isEmpty())
         c->imageChanged(this);
 
@@ -88,6 +101,8 @@ void CachedImage::allClientsRemoved()
 {
     if (m_image && !m_errorOccurred)
         m_image->resetAnimation();
+    if (double interval = cache()->deadDecodedDataDeletionInterval())
+        m_decodedDataDeletionTimer.startOneShot(interval);
 }
 
 static Image* brokenImage()
@@ -225,6 +240,15 @@ inline void CachedImage::createImage()
     m_image = BitmapImage::create(this);
 }
 
+size_t CachedImage::maximumDecodedImageSize()
+{
+    Frame* frame = m_request ? m_request->docLoader()->frame() : 0;
+    if (!frame)
+        return 0;
+    Settings* settings = frame->settings();
+    return settings ? settings->maximumDecodedImageSize() : 0;
+}
+
 void CachedImage::data(PassRefPtr<SharedBuffer> data, bool allDataReceived)
 {
     m_data = data;
@@ -243,8 +267,10 @@ void CachedImage::data(PassRefPtr<SharedBuffer> data, bool allDataReceived)
     // network causes observers to repaint, which will force that chunk
     // to decode.
     if (sizeAvailable || allDataReceived) {
-        if (m_image->isNull()) {
-            // FIXME: I'm not convinced this case can even be hit.
+        size_t maxDecodedImageSize = maximumDecodedImageSize();
+        IntSize s = imageSize(1.0f);
+        size_t estimatedDecodedImageSize = s.width() * s.height() * 4; // no overflow check
+        if (m_image->isNull() || (maxDecodedImageSize > 0 && estimatedDecodedImageSize > maxDecodedImageSize)) {
             error();
             if (inCache())
                 cache()->remove(this);

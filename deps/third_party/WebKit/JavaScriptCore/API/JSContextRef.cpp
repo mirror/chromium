@@ -67,11 +67,11 @@ JSGlobalContextRef JSGlobalContextCreateInGroup(JSContextGroupRef group, JSClass
     RefPtr<JSGlobalData> globalData = group ? PassRefPtr<JSGlobalData>(toJS(group)) : JSGlobalData::create();
 
     if (!globalObjectClass) {
-        JSGlobalObject* globalObject = new (globalData.get()) JSGlobalObject(globalData.get());
+        JSGlobalObject* globalObject = new (globalData.get()) JSGlobalObject;
         return JSGlobalContextRetain(toGlobalRef(globalObject->globalExec()));
     }
 
-    JSGlobalObject* globalObject = new (globalData.get()) JSCallbackObject<JSGlobalObject>(globalData.get(), globalObjectClass);
+    JSGlobalObject* globalObject = new (globalData.get()) JSCallbackObject<JSGlobalObject>(globalObjectClass);
     ExecState* exec = globalObject->globalExec();
     JSValue* prototype = globalObjectClass->prototype(exec);
     if (!prototype)
@@ -120,7 +120,7 @@ JSObjectRef JSContextGetGlobalObject(JSContextRef ctx)
     JSLock lock(exec);
 
     // It is necessary to call toThisObject to get the wrapper object when used with WebCore.
-    return toRef(exec->dynamicGlobalObject()->toThisObject(exec));
+    return toRef(exec->lexicalGlobalObject()->toThisObject(exec));
 }
 
 JSContextGroupRef JSContextGetGroup(JSContextRef ctx)

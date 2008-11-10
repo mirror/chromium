@@ -50,13 +50,13 @@ JSNamedNodesCollection::JSNamedNodesCollection(ExecState* exec, const Vector<Ref
 
 JSValue* JSNamedNodesCollection::lengthGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    JSNamedNodesCollection* thisObj = static_cast<JSNamedNodesCollection*>(slot.slotBase());
+    JSNamedNodesCollection* thisObj = static_cast<JSNamedNodesCollection*>(asObject(slot.slotBase()));
     return jsNumber(exec, thisObj->m_nodes->size());
 }
 
 JSValue* JSNamedNodesCollection::indexGetter(ExecState* exec, const Identifier& propertyName, const PropertySlot& slot)
 {
-    JSNamedNodesCollection *thisObj = static_cast<JSNamedNodesCollection*>(slot.slotBase());
+    JSNamedNodesCollection *thisObj = static_cast<JSNamedNodesCollection*>(asObject(slot.slotBase()));
     return toJS(exec, (*thisObj->m_nodes)[slot.index()].get());
 }
 

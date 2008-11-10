@@ -27,8 +27,8 @@
 #define RUNTIME_FUNCTION_H_
 
 #include "runtime.h"
-#include <kjs/InternalFunction.h>
-#include <kjs/JSGlobalObject.h>
+#include <runtime/InternalFunction.h>
+#include <runtime/JSGlobalObject.h>
 #include <wtf/OwnPtr.h>
 
 namespace JSC {
@@ -43,6 +43,11 @@ public:
     static FunctionPrototype* createPrototype(ExecState* exec)
     {
         return exec->lexicalGlobalObject()->functionPrototype();
+    }
+
+    static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+    {
+        return StructureID::create(prototype, TypeInfo(ObjectType, ImplementsHasInstance));
     }
 
 private:

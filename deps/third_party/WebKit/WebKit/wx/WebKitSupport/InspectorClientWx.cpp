@@ -99,4 +99,19 @@ void InspectorClientWx::inspectedURLChanged(const String& newURL)
     notImplemented();
 }
 
+void InspectorClientWx::populateSetting(const String& key, InspectorController::Setting& setting)
+{
+    notImplemented();
+}
+
+void InspectorClientWx::storeSetting(const String& key, const InspectorController::Setting& setting)
+{
+    notImplemented();
+}
+
+void InspectorClientWx::removeSetting(const String& key)
+{
+    notImplemented();
+}
+
 };

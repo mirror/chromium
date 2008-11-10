@@ -70,7 +70,7 @@ using namespace WebCore;
 - (BOOL)isDebuggingJavaScript
 {
     if (Page* page = core(_webView))
-        return page->inspectorController()->debuggerAttached();
+        return page->inspectorController()->debuggerEnabled();
     return NO;
 }
 
@@ -88,13 +88,13 @@ using namespace WebCore;
     if (!page)
         return;
     page->inspectorController()->showPanel(InspectorController::ScriptsPanel);
-    page->inspectorController()->startDebuggingAndReloadInspectedPage();
+    page->inspectorController()->enableDebugger();
 }
 
 - (void)stopDebuggingJavaScript:(id)sender
 {
     if (Page* page = core(_webView))
-        page->inspectorController()->stopDebugging();
+        page->inspectorController()->disableDebugger();
 }
 
 - (BOOL)isProfilingJavaScript
@@ -125,6 +125,25 @@ using namespace WebCore;
         return;
     page->inspectorController()->stopUserInitiatedProfiling();
     page->inspectorController()->showPanel(InspectorController::ProfilesPanel);
+}
+
+- (BOOL)isJavaScriptProfilingEnabled
+{
+    if (Page* page = core(_webView))
+        return page->inspectorController()->profilerEnabled();
+    return NO;
+}
+
+- (void)setJavaScriptProfilingEnabled:(BOOL)enabled
+{
+    Page* page = core(_webView);
+    if (!page)
+        return;
+
+    if (enabled)
+        page->inspectorController()->enableProfiler();
+    else
+        page->inspectorController()->disableProfiler();
 }
 
 - (void)close:(id)sender 
