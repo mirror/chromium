@@ -31,6 +31,9 @@ env.Prepend(
         '$CHROME_DIR/app/resources',
         '$CHROME_DIR/app',
         '$CHROME_SRC_DIR',
+        # To get the #include of history_indexer.h,
+        # generated from history/history_indexer.idl.
+        'history',
     ],
     CPPDEFINES = [
         'GOOGLE_CHROME_BUILD',
@@ -97,6 +100,7 @@ if env['PLATFORM'] in ('posix', 'win32'):
 if env['PLATFORM'] == 'win32':
   # TODO: Port these.
   input_files.extend([
+      'autofill_manager.cc',
       'about_internets_status_view.cc',
       'alternate_nav_url_fetcher.cc',
       'app_modal_dialog_queue.cc',
@@ -177,6 +181,7 @@ if env['PLATFORM'] == 'win32':
       'history/history.cc',
       'history/history_backend.cc',
       'history/history_database.cc',
+      'history/history_publisher.cc',
       'history/query_parser.cc',
       'history/starred_url_database.cc',
       'history/url_database.cc',
@@ -211,6 +216,7 @@ if env['PLATFORM'] == 'win32':
       'net/dns_global.cc',
       'net/dns_master.cc',
       'net/dns_slave.cc',
+      'net/referrer.cc',
       'net/sdch_dictionary_fetcher.cc',
       'network_status_view.cc',
       'google_update.cc',
@@ -290,6 +296,8 @@ if env['PLATFORM'] == 'win32':
       'webdata/web_database.cc',
       'window_sizer.cc',
   ])
+
+  env.TypeLibrary('history/history_indexer.idl')
 
   input_files.extend([
       'web_contents_view_win.cc',

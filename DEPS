@@ -15,7 +15,7 @@ deps = {
     "/branches/chrome_webkit_merge_branch/deps/third_party/WebKit",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@4634",
+    "/trunk/deps/third_party/icu38@5041",
 
   "src/v8":
     "http://v8.googlecode.com/svn/trunk@696",

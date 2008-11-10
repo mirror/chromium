@@ -30,11 +30,11 @@
 #ifndef DragDataRef_h
 #define DragDataRef_h
 
-#include "webkit/glue/webdropdata.h"
+#include "ChromiumDataObject.h"
 
 namespace WebCore {
 
-typedef WebDropData* DragDataRef;
+typedef ChromiumDataObject* DragDataRef;
 
 }
 
