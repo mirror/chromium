@@ -158,7 +158,7 @@ window.history IS [object History]
 window.innerHeight IS Number
 window.innerWidth IS Number
 window.length IS Number
-window.location IS [object global]
+window.location IS Location
 window.locationbar IS [object BarInfo]
 window.menubar IS [object BarInfo]
 window.moveBy IS [object global]

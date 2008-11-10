@@ -19,7 +19,9 @@ function check(name) {
   var out = doc.getElementById("console");
   var v = win[name];
   if (typeof v == 'number')
-    v = 'Number';  // cannonicalize numbers.
+    v = 'Number';  // canonicalize numbers.
+  if (/window-lookup-precedence.html/.test(v))
+    v = 'Location';  // canonicalize the location object.
   out.innerHTML = out.innerHTML + "window."+name + " IS " + v + "<br>";
    
 }
