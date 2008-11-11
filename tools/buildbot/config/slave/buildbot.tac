@@ -7,6 +7,7 @@ from twisted.application import service
 from buildbot.slave.bot import BuildSlave
 
 import chromium_config as config
+ActiveMaster = config.Master.Chromium
 
 slavename = None
 password = config.Master.GetBotPassword()
@@ -29,10 +30,10 @@ if password is None:
     sys.exit(1)
 
 if host is None:
-    host = "%s.%s" % (config.Master.master_host, config.Master.master_domain)
+    host = ActiveMaster.master_host
 
 if port is None:
-    port = config.Master.slave_port
+    port = ActiveMaster.slave_port
 
 if basedir is None:
     dir, _file = os.path.split(__file__)
