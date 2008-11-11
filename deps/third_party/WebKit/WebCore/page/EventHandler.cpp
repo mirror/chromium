@@ -709,6 +709,16 @@ HitTestResult EventHandler::hitTestResultAtPoint(const IntPoint& point, bool all
         result = widgetHitTestResult;
     }
 
+    // If our HitTestResult is not visible, then we started hit testing too far down the frame chain. 
+    // Another hit test at the main frame level should get us the correct visible result.
+    Frame* resultFrame = result.innerNonSharedNode() ? result.innerNonSharedNode()->document()->frame() : 0;
+    Frame* mainFrame = m_frame->page()->mainFrame();
+    if (m_frame != mainFrame && resultFrame && resultFrame != mainFrame && !resultFrame->editor()->insideVisibleArea(result.point())) {
+        IntPoint windowPoint = resultFrame->view()->contentsToWindow(result.point());
+        IntPoint mainFramePoint = mainFrame->view()->windowToContents(windowPoint);
+        result = mainFrame->eventHandler()->hitTestResultAtPoint(mainFramePoint, allowShadowContent);
+    }
+
     if (!allowShadowContent)
         result.setToNonShadowAncestor();
 
@@ -737,6 +747,7 @@ void EventHandler::stopAutoscrollTimer(bool rendererIsBeingDestroyed)
 #if ENABLE(PAN_SCROLLING)
         if (m_panScrollInProgress) {
             m_frame->view()->removePanScrollIcon();
+            m_frame->view()->setCursor(pointerCursor());
         }
 #endif
 
@@ -1071,8 +1082,8 @@ bool EventHandler::handleMousePressEvent(const PlatformMouseEvent& mouseEvent)
         Scrollbar* scrollbar = mev.scrollbar();
         if (!scrollbar)
             scrollbar = m_frame->view()->scrollbarUnderMouse(mouseEvent);
-        if (scrollbar)
-            passMousePressEventToScrollbar(mev, scrollbar);
+        if (mev.scrollbar())
+            passMousePressEventToScrollbar(mev, mev.scrollbar());
     } else {
         // Refetch the event target node if it currently is the shadow node inside an <input> element.
         // If a mouse event handler changes the input element type to one that has a widget associated,
@@ -1219,9 +1230,6 @@ bool EventHandler::handleMouseMoveEvent(const PlatformMouseEvent& mouseEvent, Hi
         // Event dispatch in updateMouseEventTargetNode may have caused the subframe of the target
         // node to be detached from its FrameView, in which case the event should not be passed.
 
-        // Manually merge changes from webkit trunk to fix the crash for
-        // http://www.coolpc.com.tw/evaluate.php
-        // See http://trac.webkit.org/changeset/31788.
         if (newSubframe->view())
             swallowEvent |= passMouseMoveEventToSubframe(mev, newSubframe.get(), hoveredNode);
     } else {
@@ -1738,10 +1746,15 @@ bool EventHandler::needsKeyboardEventDisambiguationQuirks() const
 bool EventHandler::keyEvent(const PlatformKeyboardEvent& initialKeyEvent)
 {
 #if ENABLE(PAN_SCROLLING)
-    String escKeyId = "U+001B";
-    // If a key is pressed while the autoscroll/panScroll is in progress then we want to stop
-    if (initialKeyEvent.keyIdentifier() == escKeyId && m_frame->page()->mainFrame()->eventHandler()->panScrollInProgress() || m_autoscrollInProgress) 
-        stopAutoscrollTimer();
+    if (m_frame->page()->mainFrame()->eventHandler()->panScrollInProgress() || m_autoscrollInProgress) {
+        String escKeyId = "U+001B";
+        // If a key is pressed while the autoscroll/panScroll is in progress then we want to stop
+        if (initialKeyEvent.keyIdentifier() == escKeyId && initialKeyEvent.type() == PlatformKeyboardEvent::KeyUp) 
+            stopAutoscrollTimer();
+
+        // If we were in autoscroll/panscroll mode, we swallow the key event
+        return true;
+    }
 #endif
 
     // Check for cases where we are too early for events -- possible unmatched key up
