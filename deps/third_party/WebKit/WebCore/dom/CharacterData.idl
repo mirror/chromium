@@ -25,6 +25,15 @@ module core {
         ImplementationUUID=E2095280-B9BD-446a-8C03-79F78417CDFF
     ] CharacterData : EventTargetNode {
 
+#if defined(V8_BINDING)
+        // FIXME: the spec says this can also raise on retrieval.
+        // Override nodeValue from Node.idl. In Node.idl, nodeValue
+        // should return 'null' if the value is an empty string.
+        // Returns empty string in classes inheriting from CharacterData.
+        attribute DOMString nodeValue
+                   setter raises(DOMException);
+#endif
+
         attribute [ConvertNullToNullString] DOMString data
             setter raises(DOMException);
 

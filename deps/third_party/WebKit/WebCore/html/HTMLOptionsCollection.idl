@@ -27,19 +27,22 @@ module html {
         HasCustomIndexSetter,
         InterfaceUUID=a03aaeac-e47d-4bb3-acb4-f1897ae74237,
         ImplementationUUID=99c11fde-6f9f-44a4-a041-49a894c52e70
+#if defined(V8_BINDING)
+    ] HTMLOptionsCollection {
+        attribute long selectedIndex;
+        attribute [CustomSetter] unsigned long length;
+#else
     ] HTMLOptionsCollection : HTMLCollection {
                  attribute long selectedIndex;
                  attribute [Custom] unsigned long length
                         setter raises (DOMException);
-
+#endif // V8_BINDING        
         [Custom] void add(in HTMLOptionElement option, in [Optional] unsigned long index)
              raises (DOMException);
         [Custom] void remove(in unsigned long index);
 
-#if !defined(LANGUAGE_JAVASCRIPT)
         Node item(in unsigned long index);
         Node namedItem(in DOMString name);
-#endif
     };
 
 }

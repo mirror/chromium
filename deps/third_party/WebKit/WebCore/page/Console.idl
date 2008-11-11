@@ -29,8 +29,10 @@
 module window {
 
     interface Console {
-        readonly attribute [CustomGetter] Array profiles;        
-    
+#if !defined(V8_BINDING)
+        readonly attribute [CustomGetter] Array profiles;  
+#endif
+
         [Custom] void debug();
         [Custom] void error();
         [Custom] void info();

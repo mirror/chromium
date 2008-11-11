@@ -29,6 +29,22 @@ module svg {
     interface [Conditional=SVG] SVGPathSegList {
         readonly attribute unsigned long numberOfItems;
 
+#if defined(V8_BINDING)
+        void clear()
+            raises(DOMException);
+        SVGPathSeg initialize(in SVGPathSeg newItem)
+            raises(DOMException, SVGException);
+        SVGPathSeg getItem(in unsigned long index)
+            raises(DOMException);
+        SVGPathSeg insertItemBefore(in SVGPathSeg newItem, in unsigned long index)
+            raises(DOMException, SVGException);
+        SVGPathSeg replaceItem(in SVGPathSeg newItem, in unsigned long index)
+            raises(DOMException, SVGException);
+        SVGPathSeg removeItem(in unsigned long index)
+            raises(DOMException);
+        SVGPathSeg appendItem(in SVGPathSeg newItem)
+            raises(DOMException, SVGException);
+#else
         [Custom] void clear()
             raises(DOMException);
         [Custom] SVGPathSeg initialize(in SVGPathSeg newItem)
@@ -43,6 +59,7 @@ module svg {
             raises(DOMException);
         [Custom] SVGPathSeg appendItem(in SVGPathSeg newItem)
             raises(DOMException, SVGException);
-    };
+#endif // WFT_USE_V8
 
+    };
 }
