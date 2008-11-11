@@ -100,7 +100,7 @@ module window {
         attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow opener;
 #endif
         attribute [Replaceable, DoNotCheckDomainSecurity] DOMWindow parent;
-        readonly attribute [DoNotCheckDomainSecurity, DontDelete, v8DisallowShadowing] DOMWindow top;
+        attribute [Replaceable, DoNotCheckDomainSecurity] DOMWindow top;
 
         // DOM Level 2 AbstractView Interface
         readonly attribute Document document;
