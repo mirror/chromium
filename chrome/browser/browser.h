@@ -280,7 +280,6 @@ class Browser : public TabStripModelDelegate,
   virtual bool IsPopup(TabContents* source);
   virtual void URLStarredChanged(TabContents* source, bool starred);
 
-  virtual void WindowMoved();
   virtual void ContentsMouseEvent(TabContents* source, UINT message);
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
 
@@ -357,10 +356,7 @@ class Browser : public TabStripModelDelegate,
   static void FormatTitleForDisplay(std::wstring* title);
 
  private:
-  friend class XPFrame;
-  friend class VistaFrame;
-  friend class SimpleFrame;
-  friend class BrowserView2;
+  friend class BrowserView;
 
   // Tracks invalidates to the UI, see the declaration in the .cc file.
   struct UIUpdate;
@@ -397,11 +393,6 @@ class Browser : public TabStripModelDelegate,
   // this to return NULL if called before the toolbar has initialized.
   // TODO(beng): remove this.
   StatusBubble* GetStatusBubble();
-
-  // Syncs the window title with current_tab_.  This may be necessary because
-  // current_tab_'s title changed, or because current_tab_ itself has
-  // changed.
-  void SyncWindowTitle();
 
   // Saves the location of the window to the history database.
   void SaveWindowPlacementToDatabase();
@@ -523,7 +514,7 @@ class Browser : public TabStripModelDelegate,
   // After the first call to Show() succeeds, this is set to -1, indicating that
   // subsequent calls to Show() should be ignored.
   // TODO(beng): This should be removed (http://crbug.com/3557) and put into
-  //             BrowserView2, or some more likely place.
+  //             BrowserView, or some more likely place.
   int initial_show_command_;
 
   class BrowserToolbarModel : public ToolbarModel {

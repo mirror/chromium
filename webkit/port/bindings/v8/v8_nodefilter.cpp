@@ -31,9 +31,9 @@
 
 #include "v8_nodefilter.h"
 #include "v8_proxy.h"
-#include "ExceptionContext.h"
 #include "NodeFilter.h"
 #include "Node.h"
+#include <runtime/ExecState.h>
 
 namespace WebCore {
 
@@ -52,13 +52,13 @@ V8NodeFilterCondition::~V8NodeFilterCondition() {
   m_filter.Clear();
 }
 
-short V8NodeFilterCondition::acceptNode(ExceptionContext* exception_context,
+short V8NodeFilterCondition::acceptNode(JSC::ExecState* exec,
                                         Node* node) const {
   ASSERT(v8::Context::InContext());
 
   if (!m_filter->IsFunction()) return NodeFilter::FILTER_ACCEPT;
 
-  ExceptionCatcher exception_catcher(exception_context);
+  v8::TryCatch exception_catcher;
 
   v8::Handle<v8::Object> this_obj = v8::Context::GetCurrent()->Global();
   v8::Handle<v8::Function> callback =
@@ -73,7 +73,8 @@ short V8NodeFilterCondition::acceptNode(ExceptionContext* exception_context,
       proxy->CallFunction(callback, this_obj, 1, args);
   delete[] args;
 
-  if (exception_context->hadException()) {
+  if (exception_catcher.HasCaught()) {
+    exec->setException(exception_catcher.Exception());
     return NodeFilter::FILTER_REJECT;
   }
 

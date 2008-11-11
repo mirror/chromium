@@ -32,7 +32,9 @@
 
 namespace WebCore {
     class Cursor;
+    class KURL;
     class IntRect;
+    class String;
     class Widget;
 
     // An interface to the embedding layer, which has the ability to answer
@@ -40,6 +42,16 @@ namespace WebCore {
 
     class ChromiumBridge {
     public:
+        // Cookies ------------------------------------------------------------
+        static void setCookies(const KURL& url, const KURL& policyURL, const String& value);
+        static String cookies(const KURL& url, const KURL& policyURL);
+
+        // DNS ----------------------------------------------------------------
+        static void prefetchDNS(const String& hostname);
+
+        // Language -----------------------------------------------------------
+        static String computedDefaultLanguage();
+
         // Screen -------------------------------------------------------------
         static int screenDepth(Widget*);
         static int screenDepthPerComponent(Widget*);

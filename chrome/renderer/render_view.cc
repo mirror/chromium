@@ -1647,24 +1647,12 @@ bool RenderView::RunBeforeUnloadConfirm(WebView* webview,
   return success;
 }
 
-void RenderView::OnUnloadListenerChanged(WebView* webview, WebFrame* webframe) {
-  bool has_listener = false;
-  if (!has_unload_listener_) {
-    has_listener = webframe->HasUnloadListener();
-  } else {
-    WebFrame* frame = webview->GetMainFrame();
-    while (frame != NULL) {
-      if (frame->HasUnloadListener()) {
-        has_listener = true;
-        break;
-      }
-      frame = webview->GetNextFrameAfter(frame, false);
-    }
-  }
-  if (has_listener != has_unload_listener_) {
-    has_unload_listener_ = has_listener;
-    Send(new ViewHostMsg_UnloadListenerChanged(routing_id_, has_listener));
-  }
+void RenderView::EnableSuddenTermination() {
+  Send(new ViewHostMsg_UnloadListenerChanged(routing_id_, false));
+}
+
+void RenderView::DisableSuddenTermination() {
+  Send(new ViewHostMsg_UnloadListenerChanged(routing_id_, true));
 }
 
 void RenderView::QueryFormFieldAutofill(const std::wstring& field_name,
@@ -1681,7 +1669,7 @@ void RenderView::QueryFormFieldAutofill(const std::wstring& field_name,
 void RenderView::OnReceivedAutofillSuggestions(
     int64 node_id,
     int request_id,
-    const std::vector<std::wstring> suggestions,
+    const std::vector<std::wstring>& suggestions,
     int default_suggestion_index) {
   if (!webview() || request_id != form_field_autofill_request_id_)
     return;
@@ -2309,6 +2297,11 @@ void RenderView::OnSetPageEncoding(const std::wstring& encoding_name) {
 void RenderView::OnPasswordFormsSeen(WebView* webview,
                                      const std::vector<PasswordForm>& forms) {
   Send(new ViewHostMsg_PasswordFormsSeen(routing_id_, forms));
+}
+
+void RenderView::OnAutofillFormSubmitted(WebView* webview,
+                                         const AutofillForm& form) {
+  Send(new ViewHostMsg_AutofillFormSubmitted(routing_id_, form));
 }
 
 WebHistoryItem* RenderView::GetHistoryEntryAtOffset(int offset) {

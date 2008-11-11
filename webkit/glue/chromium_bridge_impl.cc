@@ -45,6 +45,34 @@ static ChromeClientImpl* ToChromeClient(Widget* widget) {
   return static_cast<ChromeClientImpl*>(page->chrome()->client());
 }
 
+// Cookies --------------------------------------------------------------------
+
+void ChromiumBridge::setCookies(
+    const KURL& url, const KURL& policy_url, const String& cookie) {
+  webkit_glue::SetCookie(
+      webkit_glue::KURLToGURL(url),
+      webkit_glue::KURLToGURL(policy_url),
+      webkit_glue::StringToStdString(cookie));
+}
+
+String ChromiumBridge::cookies(const KURL& url, const KURL& policy_url) {
+  return webkit_glue::StdStringToString(webkit_glue::GetCookies(
+      webkit_glue::KURLToGURL(url),
+      webkit_glue::KURLToGURL(policy_url)));
+}
+
+// DNS ------------------------------------------------------------------------
+
+void ChromiumBridge::prefetchDNS(const String& hostname) {
+  webkit_glue::PrefetchDns(webkit_glue::StringToStdString(hostname));
+}
+
+// Language -------------------------------------------------------------------
+
+String ChromiumBridge::computedDefaultLanguage() {
+  return webkit_glue::StdWStringToString(webkit_glue::GetWebKitLocale());
+}
+
 // Screen ---------------------------------------------------------------------
 
 int ChromiumBridge::screenDepth(Widget* widget) {

@@ -42,6 +42,7 @@ MSVC_POP_WARNING();
 #if defined(OS_WIN)
 #include "webkit/activex_shim/activex_shared.h"
 #endif
+#include "webkit/glue/autofill_form.h"
 #include "webkit/glue/alt_404_page_resource_fetcher.h"
 #include "webkit/glue/autocomplete_input_listener.h"
 #include "webkit/glue/form_autocomplete_listener.h"
@@ -107,13 +108,6 @@ void WebFrameLoaderClient::didPerformFirstNavigation() const {
 void WebFrameLoaderClient::registerForIconNotification(bool listen){
 }
 
-void WebFrameLoaderClient::unloadListenerChanged() {
-  WebViewImpl* webview = webframe_->webview_impl();
-  WebViewDelegate* d = webview->delegate();
-  if (d)
-    d->OnUnloadListenerChanged(webview, webframe_);
-}
-
 bool WebFrameLoaderClient::hasWebView() const {
   return webframe_->webview_impl() != NULL;
 }
@@ -167,25 +161,25 @@ void WebFrameLoaderClient::assignIdentifierToInitialRequest(
   }
 }
 
-// Determines whether the request being loaded by |loader| is a frame
-// or a subresource. A subresource in this context is anything other
-// than a frame -- this includes images and xmlhttp requests.
-// It is important to note that a subresource is NOT limited to stuff
-// loaded through the frame's subresource loader. Synchronous xmlhttp
-// requests for example, do not go through the subresource loader,
-// but we still label them as SUB_RESOURCE.
+// Determines whether the request being loaded by |loader| is a frame or a
+// subresource. A subresource in this context is anything other than a frame --
+// this includes images and xmlhttp requests.  It is important to note that a
+// subresource is NOT limited to stuff loaded through the frame's subresource
+// loader. Synchronous xmlhttp requests for example, do not go through the
+// subresource loader, but we still label them as TargetIsSubResource.
 //
 // The important edge cases to consider when modifying this function are
 // how synchronous resource loads are treated during load/unload threshold.
-static ResourceType::Type DetermineResourceTypeFromLoader(DocumentLoader* loader) {
+static ResourceRequest::TargetType DetermineTargetTypeFromLoader(
+    DocumentLoader* loader) {
   if (loader == loader->frameLoader()->provisionalDocumentLoader()) {
     if (loader->frameLoader()->isLoadingMainFrame()) {
-      return ResourceType::MAIN_FRAME;
+      return ResourceRequest::TargetIsMainFrame;
     } else {
-      return ResourceType::SUB_FRAME;
+      return ResourceRequest::TargetIsSubFrame;
     }
   }
-  return ResourceType::SUB_RESOURCE;
+  return ResourceRequest::TargetIsSubResource;
 }
 
 void WebFrameLoaderClient::dispatchWillSendRequest(
@@ -197,7 +191,7 @@ void WebFrameLoaderClient::dispatchWillSendRequest(
 
   // We want to distinguish between a request for a document to be loaded into
   // the main frame, a sub-frame, or the sub-objects in that document.
-  request.setResourceType(DetermineResourceTypeFromLoader(loader));
+  request.setTargetType(DetermineTargetTypeFromLoader(loader));
 
   // FrameLoader::loadEmptyDocumentSynchronously() creates an empty document
   // with no URL.  We don't like that, so we'll rename it to about:blank.
@@ -233,7 +227,7 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
 
   /* TODO(evanm): reenable this once we properly sniff XHTML from text/xml documents.
   // True if the request was for the page's main frame, or a subframe.
-  bool is_frame = ResourceType::IsFrame(DetermineResourceTypeFromLoader(loader));
+  bool is_frame = ResourceType::IsFrame(DetermineTargetTypeFromLoader(loader));
   if (is_frame &&
       response.httpStatusCode() == 200 &&
       mime_util::IsViewSourceMimeType(
@@ -251,8 +245,10 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
   // If it's a 404 page, we wait until we get 512 bytes of data before trying
   // to load the document.  This allows us to put up an alternate 404 page if
   // there's short text.
+  ResourceRequest::TargetType target_type =
+      DetermineTargetTypeFromLoader(loader);
   postpone_loading_data_ =
-      ResourceType::MAIN_FRAME == DetermineResourceTypeFromLoader(loader) &&
+      ResourceRequest::TargetIsMainFrame == target_type &&
       !is_substitute_data &&
       response.httpStatusCode() == 404 &&
       GetAlt404PageUrl(loader).is_valid();
@@ -337,7 +333,8 @@ void WebFrameLoaderClient::dispatchDidFinishDocumentLoad() {
   PassRefPtr<WebCore::HTMLCollection> forms =
       webframe_->frame()->document()->forms();
 
-  std::vector<PasswordForm> actions;
+  std::vector<PasswordForm> passwordForms;
+
   unsigned int form_count = forms->length();
   for (unsigned int i = 0; i < form_count; ++i) {
     // Strange but true, sometimes item can be NULL.
@@ -351,18 +348,21 @@ void WebFrameLoaderClient::dispatchDidFinishDocumentLoad() {
         continue;
 
       std::set<std::wstring> password_related_fields;
-      scoped_ptr<PasswordForm> data(
+      scoped_ptr<PasswordForm> passwordFormPtr(
           PasswordFormDomManager::CreatePasswordForm(form));
-      if (data.get()) {
-        actions.push_back(*data);
+
+      if (passwordFormPtr.get()) {
+        passwordForms.push_back(*passwordFormPtr);
+
         // Let's remember the names of password related fields so we do not
         // autofill them with the regular form autofill.
-        if (!data->username_element.empty())
-          password_related_fields.insert(data->username_element);
-        DCHECK(!data->password_element.empty());
-        password_related_fields.insert(data->password_element);
-        if (!data->old_password_element.empty())
-          password_related_fields.insert(data->old_password_element);
+
+        if (!passwordFormPtr->username_element.empty())
+          password_related_fields.insert(passwordFormPtr->username_element);
+        DCHECK(!passwordFormPtr->password_element.empty());
+        password_related_fields.insert(passwordFormPtr->password_element);
+        if (!passwordFormPtr->old_password_element.empty())
+          password_related_fields.insert(passwordFormPtr->old_password_element);
       }
 
       // Now let's register for any text input.
@@ -372,8 +372,8 @@ void WebFrameLoaderClient::dispatchDidFinishDocumentLoad() {
     }
   }
 
-  if (d && (actions.size() > 0))
-    d->OnPasswordFormsSeen(webview, actions);
+  if (d && (passwordForms.size() > 0))
+    d->OnPasswordFormsSeen(webview, passwordForms);
   if (d)
     d->DidFinishDocumentLoadForFrame(webview, webframe_);
 }
@@ -724,15 +724,14 @@ void WebFrameLoaderClient::RegisterAutofillListeners(
     if (excluded_fields.find(name) != excluded_fields.end())
       continue;
 
-/* Disabling this temporarily to investigate perf regressions
+/* Disabling this temporarily to investigate perf regressions.
 #if !defined(OS_MACOSX)
     // FIXME on Mac
     webkit_glue::FormAutocompleteListener* listener =
         new webkit_glue::FormAutocompleteListener(webview_delegate,
                                                   input_element);
     webkit_glue::AttachForInlineAutocomplete(input_element, listener);
-#endif
-    */
+#endif*/
   }
 }
 
@@ -997,7 +996,7 @@ void WebFrameLoaderClient::dispatchUnableToImplementPolicy(const ResourceError&)
 }
 
 void WebFrameLoaderClient::dispatchWillSubmitForm(FramePolicyFunction function,
-                                                  PassRefPtr<FormState> form_ref) {
+    PassRefPtr<FormState> form_ref) {
   SearchableFormData* form_data = SearchableFormData::Create(form_ref->form());
   WebDocumentLoaderImpl* loader = static_cast<WebDocumentLoaderImpl*>(
     webframe_->frame()->loader()->provisionalDocumentLoader());
@@ -1008,6 +1007,19 @@ void WebFrameLoaderClient::dispatchWillSubmitForm(FramePolicyFunction function,
       PasswordFormDomManager::CreatePasswordForm(form_ref->form());
   // Don't free the PasswordFormData, the loader will do that.
   loader->set_password_form_data(pass_data);
+
+  WebViewImpl* webview = webframe_->webview_impl();
+  WebViewDelegate* d = webview->delegate();
+
+  // Unless autocomplete=off, record what the user put in it for future
+  // autofilling.
+  if (form_ref->form()->autoComplete()) {
+    scoped_ptr<AutofillForm> autofill_form(
+        AutofillForm::CreateAutofillForm(form_ref->form()));
+    if (autofill_form.get()) {
+      d->OnAutofillFormSubmitted(webview, *autofill_form);
+    }
+  }
 
   loader->set_form_submit(true);
 
