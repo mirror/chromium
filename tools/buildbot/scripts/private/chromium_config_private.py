@@ -1,0 +1,49 @@
+#!/usr/bin/python
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+"""Seeds a number of variables defined in chromium_config.py.
+
+The recommended way is to fork this file and use a custom DEPS forked from
+config/XXX/DEPS with the right configuration data."""
+
+
+class Master(object):
+  # Repository URLs used by the SVNPoller and 'gclient config'.
+  server_url = 'http://src.chromium.org'
+  repo_root = '/svn'
+  repo_root_internal = None
+  trunk_internal_url = None
+  trunk_internal_url_src = None
+  # Please change this accordingly.
+  master_domain = 'example.com'
+
+  class Chromium(object):
+    # Actual server name.
+    master_host = 'localhost'
+
+  class TryServer(object):
+    master_host = 'localhost'
+
+
+class Installer(object):
+  # A file containing information about the last release.
+  last_release_info = "."
+
+
+class Archive(object):
+  # Skip any filenames (exes, symbols, etc.) starting with these strings
+  # entirely, typically because they're not built for this distribution.
+  exes_to_skip_entirely = []
+  # Web server base path.
+  www_dir_base = "\\\\localhost\\www\\"
+
+
+class IRC(object):
+  bot_admins = ['root']
+  nickname = 'change_me_buildbot'
+
+
+class Distributed(object):
+  """Not much to describe."""
