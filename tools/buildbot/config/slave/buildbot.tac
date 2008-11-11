@@ -8,9 +8,6 @@ from buildbot.slave.bot import BuildSlave
 
 import chromium_config as config
 
-ActiveMaster = config.Master.Chromium
-
-
 slavename = None
 password = config.Master.GetBotPassword()
 host = None
@@ -32,10 +29,10 @@ if password is None:
     sys.exit(1)
 
 if host is None:
-    host = ActiveMaster.master_host
+    host = "%s.%s" % (config.Master.master_host, config.Master.master_domain)
 
 if port is None:
-    port = ActiveMaster.slave_port
+    port = config.Master.slave_port
 
 if basedir is None:
     dir, _file = os.path.split(__file__)
