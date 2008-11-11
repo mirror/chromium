@@ -16,7 +16,7 @@ hash_table_cmd = '$PERL $CREATE_HASH_TABLE $SOURCE $CREATE_HASH_TABLE_FLAGS > $T
 
 env.Replace(
     CREATE_HASH_TABLE_COM       = hash_table_cmd,
-    CREATE_HASH_TABLE           = env.File('$CHROME_SRC_DIR/third_party/WebKit/JavaScriptCore/kjs/create_hash_table'),
+    CREATE_HASH_TABLE           = env.File('$CHROME_SRC_DIR/third_party/WebKit/JavaScriptCore/create_hash_table'),
     CREATE_HASH_TABLE_FLAGS     = '-i',
 )
 
