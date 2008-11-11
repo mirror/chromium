@@ -116,8 +116,6 @@ public:
     using RefCounted<XMLHttpRequest>::ref;
     using RefCounted<XMLHttpRequest>::deref;
 
-    Document* getOwnerDocument() { return document(); }
-
 private:
     XMLHttpRequest(Document*);
     

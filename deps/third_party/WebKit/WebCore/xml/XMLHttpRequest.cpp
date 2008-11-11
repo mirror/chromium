@@ -56,8 +56,6 @@
 #include "ScriptController.h"
 #endif
 
-#include "base/stats_counters.h"
-
 namespace WebCore {
 
 struct PreflightResultCacheItem {
@@ -705,12 +703,6 @@ void XMLHttpRequest::loadRequestSynchronously(ResourceRequest& request, Exceptio
         ec = XMLHttpRequestException::ABORT_ERR;
         return;
     }
-  
-    if (error.isCancellation()) {
-        abortError();
-        ec = XMLHttpRequestException::ABORT_ERR;
-        return;
-    }
 
     networkError();
     ec = XMLHttpRequestException::NETWORK_ERR;
@@ -843,7 +835,7 @@ void XMLHttpRequest::dropProtection()
             JSC::Heap::heap(wrapper)->reportExtraMemoryCost(m_responseText.size() * 2);
     }
 #elif USE(V8)
-    ScriptController::gcUnprotectJSWrapper(this);
+    // TODO: We need to use hasPendingActivity() in V8.
 #endif
     unsetPendingActivity(this);
 }
@@ -945,7 +937,7 @@ String XMLHttpRequest::responseMIMEType() const
     }
     if (mimeType.isEmpty())
         mimeType = "text/xml";
-
+    
     return mimeType;
 }
 
