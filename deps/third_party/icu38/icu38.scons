@@ -72,10 +72,13 @@ if env['PLATFORM'] == 'win32':
 else:
   env.Append(
       CCFLAGS = [
+          # TODO(port): fix ICU to not depend on this flag.
+          '-fno-strict-aliasing',
+
           '-Wno-parentheses',
 
-           # See uprv_UnicodeStringDummy at end of source/common/unistr.cpp.
-           '-Wno-unused-function'
+          # See uprv_UnicodeStringDummy at end of source/common/unistr.cpp.
+          '-Wno-unused-function',
       ]
   )
 
