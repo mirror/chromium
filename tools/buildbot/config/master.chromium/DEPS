@@ -13,7 +13,4 @@ deps = {
   # Override this one with your local copy.
   "scripts/private":
     "/trunk/tools/buildbot/scripts/private",
-
-  "scripts/slave":
-    "/trunk/tools/buildbot/scripts/slave",
 }
