@@ -262,7 +262,7 @@ PASS: canSet('statusbar') should be 'true' and is.
 PASS: canGet('toolbar') should be 'true' and is.
 PASS: canSet('toolbar') should be 'true' and is.
 PASS: canGet('top') should be 'true' and is.
-*** FAIL: canSet('top') should be 'true' but instead is false. ***
+PASS: canSet('top') should be 'true' and is.
 
 ----- tests for getting/setting readonly properties -----
 
