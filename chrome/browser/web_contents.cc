@@ -868,7 +868,7 @@ void WebContents::DidStopLoading(RenderViewHost* rvh, int32 page_id) {
     if (entry) {
       scoped_ptr<process_util::ProcessMetrics> metrics(
           process_util::ProcessMetrics::CreateProcessMetrics(
-              process()->process()));
+              process()->process().handle()));
 
       TimeDelta elapsed = TimeTicks::Now() - current_load_start_;
 
@@ -1082,7 +1082,8 @@ void WebContents::RunJavaScriptMessage(
   // constrained window jail).
   bool suppress_this_message = suppress_javascript_messages_;
   if (delegate())
-    suppress_this_message |= delegate()->IsPopup(this);
+    suppress_this_message |=
+        (delegate()->GetConstrainingContents(this) != NULL);
 
   *did_suppress_message = suppress_this_message;
 

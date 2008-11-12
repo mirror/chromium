@@ -13,6 +13,7 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/window.h"
 
 using views::View;
 
@@ -71,9 +72,10 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
   window->Init(parent_hwnd, position_relative_to, content);
-  BrowserWindow* frame = window->GetHostingWindow();
-  if (frame)
-    frame->InfoBubbleShowing();
+  window->parent_ =
+      reinterpret_cast<views::Window*>(win_util::GetWindowUserData(
+          parent_hwnd));
+  window->parent_->DisableInactiveRendering(true);
   window->ShowWindow(SW_SHOW);
   window->delegate_ = delegate;
   return window;
@@ -140,11 +142,9 @@ void InfoBubble::Init(HWND parent_hwnd,
 
 void InfoBubble::Close() {
   // We don't fade out because it looks terrible.
-  BrowserWindow* frame = GetHostingWindow();
   if (delegate_)
     delegate_->InfoBubbleClosing(this);
-  if (frame)
-    frame->InfoBubbleClosing();
+  parent_->DisableInactiveRendering(false);
   ContainerWin::Close();
 }
 

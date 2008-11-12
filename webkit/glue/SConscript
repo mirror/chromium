@@ -51,8 +51,9 @@ input_files = [
   'password_form_dom_manager.cc',
   'plugins/plugin_host.cc',
   'plugins/plugin_instance.cc',
-  'plugins/plugin_string_stream.cc',
+  'plugins/plugin_stream.cc',
   'plugins/plugin_stream_url.cc',
+  'plugins/plugin_string_stream.cc',
   'resource_fetcher.cc',
   'resource_handle_impl.cc',
   'searchable_form_data.cc',
@@ -96,18 +97,27 @@ if env['PLATFORM'] == 'win32':
     'plugins/mozilla_extensions.cc',
     'plugins/plugin_lib.cc',
     'plugins/plugin_list.cc',
-    'plugins/plugin_stream.cc',
     'plugins/webplugin_delegate_impl.cc',
     'webdropdata.cc',
   ])
 
 if env['PLATFORM'] == 'win32':
   input_files.extend([
+    'plugins/plugin_stream_win.cc',
     'webcursor_win.cc',
     'webinputevent_win.cc',
     'webkit_glue_win.cc',
   ])
 elif env['PLATFORM'] == 'posix':
-  input_files.append('webinputevent_linux.cc')
+  input_files.extend([
+      'webcursor_gtk.cc',
+      'webinputevent_linux.cc',
+  ])
+
+if env['PLATFORM'] in ('posix', 'darwin'):
+  input_files.extend([
+    'plugins/plugin_stream_posix.cc',
+  ])
 
 env.ChromeStaticLibrary('glue', input_files)
+

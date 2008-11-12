@@ -30,10 +30,15 @@
 #ifndef ChromiumBridge_h
 #define ChromiumBridge_h
 
+#include "PasteboardPrivate.h"
+#include "PlatformString.h"
+
+class NativeImageSkia;
+
 namespace WebCore {
     class Cursor;
-    class KURL;
     class IntRect;
+    class KURL;
     class String;
     class Widget;
 
@@ -42,6 +47,16 @@ namespace WebCore {
 
     class ChromiumBridge {
     public:
+        // Clipboard ----------------------------------------------------------
+        static bool clipboardIsFormatAvailable(PasteboardPrivate::ClipboardFormat);
+
+        static String clipboardReadPlainText();
+        static void clipboardReadHTML(String*, KURL*);
+
+        static void clipboardWriteSelection(const String&, const KURL&, const String&, bool);
+        static void clipboardWriteURL(const KURL&, const String&);
+        static void clipboardWriteImage(const NativeImageSkia* bitmap, const KURL&, const String&);
+
         // Cookies ------------------------------------------------------------
         static void setCookies(const KURL& url, const KURL& policyURL, const String& value);
         static String cookies(const KURL& url, const KURL& policyURL);
@@ -51,6 +66,9 @@ namespace WebCore {
 
         // Language -----------------------------------------------------------
         static String computedDefaultLanguage();
+
+        // LayoutTestMode -----------------------------------------------------
+        static bool layoutTestMode();
 
         // Screen -------------------------------------------------------------
         static int screenDepth(Widget*);
@@ -62,6 +80,7 @@ namespace WebCore {
         // Widget -------------------------------------------------------------
         static void widgetSetCursor(Widget*, const Cursor&);
         static void widgetSetFocus(Widget*);
+
     };
 }
 

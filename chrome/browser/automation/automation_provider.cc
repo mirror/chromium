@@ -5,7 +5,6 @@
 #include "chrome/browser/automation/automation_provider.h"
 
 #include "base/path_service.h"
-#include "base/process_util.h"
 #include "chrome/app/chrome_dll_resource.h" 
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/automation/ui_controls.h"
@@ -801,6 +800,8 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                         WaitForNavigation)
     IPC_MESSAGE_HANDLER(AutomationMsg_SetIntPreferenceRequest,
                         SetIntPreference)
+    IPC_MESSAGE_HANDLER(AutomationMsg_ShowingAppModalDialogRequest,
+                        GetShowingAppModalDialog)
   IPC_END_MESSAGE_MAP()
 }
 
@@ -1061,6 +1062,12 @@ void AutomationProvider::GetActiveTabIndex(const IPC::Message& message,
 void AutomationProvider::GetBrowserWindowCount(const IPC::Message& message) {
   Send(new AutomationMsg_BrowserWindowCountResponse(
       message.routing_id(), static_cast<int>(BrowserList::size())));
+}
+
+void AutomationProvider::GetShowingAppModalDialog(const IPC::Message& message) {
+  Send(new AutomationMsg_ShowingAppModalDialogResponse(
+           message.routing_id(),
+           static_cast<bool>(BrowserList::IsShowingAppModalDialog())));
 }
 
 void AutomationProvider::GetBrowserWindow(const IPC::Message& message,
@@ -1670,10 +1677,8 @@ void AutomationProvider::GetTabProcessID(
     NavigationController* tab = tab_tracker_->GetResource(handle);
     if (tab->active_contents()->AsWebContents()) {
       WebContents* web_contents = tab->active_contents()->AsWebContents();
-      if (web_contents->process()) {
-        process_id =
-            process_util::GetProcId(web_contents->process()->process());
-      }
+      if (web_contents->process())
+        process_id = web_contents->process()->process().pid();
     }
   }
 
@@ -2225,7 +2230,7 @@ void AutomationProvider::BringBrowserToFront(const IPC::Message& message,
                                              int browser_handle) {
   if (browser_tracker_->ContainsHandle(browser_handle)) {
     Browser* browser = browser_tracker_->GetResource(browser_handle);
-    browser->MoveToFront(true);
+    browser->window()->Activate();
     Send(new AutomationMsg_BringBrowserToFrontResponse(message.routing_id(),
                                                        true));
   } else {

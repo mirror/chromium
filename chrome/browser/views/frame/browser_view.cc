@@ -59,6 +59,10 @@ static const int kSeparationLineHeight = 1;
 static const wchar_t* kBrowserWindowKey = L"__BROWSER_WINDOW__";
 // The distance between tiled windows.
 static const int kWindowTilePixels = 10;
+// How frequently we check for hung plugin windows.
+static const int kDefaultHungPluginDetectFrequency = 2000;
+// How long do we wait before we consider a window hung (in ms).
+static const int kDefaultPluginMessageResponseTimeout = 30000;
 
 static const struct { bool separator; int command; int label; } kMenuLayout[] = {
   { true, 0, 0 },
@@ -98,6 +102,8 @@ BrowserView::BrowserView(Browser* browser)
       contents_container_(NULL),
       initialized_(false),
       can_drop_(false),
+      hung_window_detector_(&hung_plugin_action_),
+      ticker_(0),
 #ifdef CHROME_PERSONALIZATION
       personalization_enabled_(false),
       personalization_(NULL),
@@ -111,6 +117,10 @@ BrowserView::BrowserView(Browser* browser)
 
 BrowserView::~BrowserView() {
   browser_->tabstrip_model()->RemoveObserver(this);
+
+  // Stop hung plugin monitoring.
+  ticker_.Stop();
+  ticker_.UnregisterTickHandler(&hung_window_detector_);
 }
 
 void BrowserView::WindowMoved() {
@@ -154,8 +164,7 @@ bool BrowserView::IsOffTheRecord() const {
 }
 
 bool BrowserView::ShouldShowOffTheRecordAvatar() const {
-  return IsOffTheRecord() &&
-      browser_->GetType() == BrowserType::TABBED_BROWSER;
+  return IsOffTheRecord() && browser_->type() == BrowserType::TABBED_BROWSER;
 }
 
 bool BrowserView::AcceleratorPressed(const views::Accelerator& accelerator) {
@@ -207,7 +216,7 @@ bool BrowserView::ActivateAppModalDialog() const {
     Browser* active_browser = BrowserList::GetLastActive();
     if (active_browser && (browser_ != active_browser)) {
       active_browser->window()->FlashFrame();
-      active_browser->MoveToFront(true);
+      active_browser->window()->Activate();
     }
     AppModalDialogQueue::ActivateModalDialog();
     return true;
@@ -216,9 +225,8 @@ bool BrowserView::ActivateAppModalDialog() const {
 }
 
 void BrowserView::ActivationChanged(bool activated) {
-  // The Browser wants to update the BrowserList to let it know it's now
-  // active.
-  browser_->WindowActivationChanged(activated);
+  if (activated)
+    BrowserList::SetLastActive(browser_.get());
 }
 
 TabContents* BrowserView::GetSelectedTabContents() const {
@@ -246,7 +254,7 @@ void BrowserView::PrepareToRunSystemMenu(HMENU menu) {
 }
 
 bool BrowserView::SupportsWindowFeature(WindowFeature feature) const {
-  return !!(FeaturesForBrowserType(browser_->GetType()) & feature);
+  return !!(FeaturesForBrowserType(browser_->type()) & feature);
 }
 
 // static
@@ -261,6 +269,14 @@ unsigned int BrowserView::FeaturesForBrowserType(BrowserType::Type type) {
   return features;
 }
 
+// static
+void BrowserView::RegisterBrowserViewPrefs(PrefService* prefs) {
+  prefs->RegisterIntegerPref(prefs::kPluginMessageResponseTimeout,
+                             kDefaultPluginMessageResponseTimeout);
+  prefs->RegisterIntegerPref(prefs::kHungPluginDetectFrequency,
+                             kDefaultHungPluginDetectFrequency);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView, BrowserWindow implementation:
 
@@ -268,6 +284,11 @@ void BrowserView::Init() {
   // Stow a pointer to this object onto the window handle so that we can get
   // at it later when all we have is a HWND.
   SetProp(GetContainer()->GetHWND(), kBrowserWindowKey, this);
+
+  // Start a hung plugin window detector for this browser object (as long as
+  // hang detection is not disabled).
+  if (!CommandLine().HasSwitch(switches::kDisableHangMonitor))
+    InitHangMonitor();
 
   LoadAccelerators();
   SetAccessibleName(l10n_util::GetString(IDS_PRODUCT_NAME));
@@ -307,7 +328,21 @@ void BrowserView::Close() {
   frame_->GetWindow()->Close();
 }
 
-void* BrowserView::GetPlatformID() {
+void BrowserView::Activate() {
+  frame_->GetWindow()->Activate();
+}
+
+void BrowserView::FlashFrame() {
+  FLASHWINFO fwi;
+  fwi.cbSize = sizeof(fwi);
+  fwi.hwnd = frame_->GetWindow()->GetHWND();
+  fwi.dwFlags = FLASHW_ALL;
+  fwi.uCount = 4;
+  fwi.dwTimeout = 0;
+  FlashWindowEx(&fwi);
+}
+
+void* BrowserView::GetNativeHandle() {
   return GetContainer()->GetHWND();
 }
 
@@ -336,29 +371,6 @@ void BrowserView::UpdateTitleBar() {
     frame_->GetWindow()->UpdateWindowIcon();
 }
 
-void BrowserView::Activate() {
-  frame_->GetWindow()->Activate();
-}
-
-void BrowserView::FlashFrame() {
-  FLASHWINFO fwi;
-  fwi.cbSize = sizeof(fwi);
-  fwi.hwnd = frame_->GetWindow()->GetHWND();
-  fwi.dwFlags = FLASHW_ALL;
-  fwi.uCount = 4;
-  fwi.dwTimeout = 0;
-  FlashWindowEx(&fwi);
-}
-
-void BrowserView::SizeToContents(const gfx::Rect& contents_bounds) {
-  frame_->SizeToContents(contents_bounds);
-}
-
-void BrowserView::SetAcceleratorTable(
-    std::map<views::Accelerator, int>* accelerator_table) {
-  accelerator_table_.reset(accelerator_table);
-}
-
 void BrowserView::ValidateThrobber() {
   if (ShouldShowWindowIcon()) {
     TabContents* tab_contents = browser_->GetSelectedTabContents();
@@ -376,19 +388,6 @@ gfx::Rect BrowserView::GetNormalBounds() {
 
 bool BrowserView::IsMaximized() {
   return frame_->GetWindow()->IsMaximized();
-}
-
-gfx::Rect BrowserView::GetBoundsForContentBounds(
-    const gfx::Rect content_rect) {
-  return frame_->GetWindowBoundsForClientBounds(content_rect);
-}
-
-void BrowserView::InfoBubbleShowing() {
-  frame_->GetWindow()->DisableInactiveRendering(true);
-}
-
-void BrowserView::InfoBubbleClosing() {
-  frame_->GetWindow()->DisableInactiveRendering(false);
 }
 
 ToolbarStarToggle* BrowserView::GetStarButton() const {
@@ -539,7 +538,7 @@ bool BrowserView::ShouldShowWindowTitle() const {
 }
 
 SkBitmap BrowserView::GetWindowIcon() {
-  if (browser_->GetType() == BrowserType::APPLICATION)
+  if (browser_->type() == BrowserType::APPLICATION)
     return browser_->GetCurrentPageIcon();
   return SkBitmap();
 }
@@ -575,7 +574,7 @@ bool BrowserView::RestoreWindowPosition(CRect* bounds,
   DCHECK(bounds && maximized && always_on_top);
   *always_on_top = false;
 
-  if (browser_->GetType() == BrowserType::BROWSER) {
+  if (browser_->type() == BrowserType::BROWSER) {
     // We are a popup window. The value passed in |bounds| represents two
     // pieces of information:
     // - the position of the window, in screen coordinates (outer position).
@@ -817,7 +816,7 @@ void BrowserView::InitSystemMenu() {
   int insertion_index = std::max(0, system_menu_->ItemCount() - 1);
   // We add the menu items in reverse order so that insertion_index never needs
   // to change.
-  if (browser_->GetType() == BrowserType::TABBED_BROWSER) {
+  if (browser_->type() == BrowserType::TABBED_BROWSER) {
     system_menu_->AddSeparator(insertion_index);
     system_menu_->AddMenuItemWithLabel(insertion_index, IDC_TASKMANAGER,
                                        l10n_util::GetString(IDS_TASKMANAGER));
@@ -1146,6 +1145,26 @@ int BrowserView::GetCommandIDForAppCommandID(int app_command_id) const {
       break;
   }
   return -1;
+}
+
+void BrowserView::InitHangMonitor() {
+  PrefService* pref_service = g_browser_process->local_state();
+  int plugin_message_response_timeout =
+      pref_service->GetInteger(prefs::kPluginMessageResponseTimeout);
+  int hung_plugin_detect_freq =
+      pref_service->GetInteger(prefs::kHungPluginDetectFrequency);
+  if ((hung_plugin_detect_freq > 0) &&
+      hung_window_detector_.Initialize(GetContainer()->GetHWND(),
+                                       plugin_message_response_timeout)) {
+    ticker_.set_tick_interval(hung_plugin_detect_freq);
+    ticker_.RegisterTickHandler(&hung_window_detector_);
+    ticker_.Start();
+
+    pref_service->SetInteger(prefs::kPluginMessageResponseTimeout,
+                             plugin_message_response_timeout);
+    pref_service->SetInteger(prefs::kHungPluginDetectFrequency,
+                             hung_plugin_detect_freq);
+  }
 }
 
 // static

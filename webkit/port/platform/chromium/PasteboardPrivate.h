@@ -32,7 +32,15 @@
 
 namespace WebCore {
 
-struct PasteboardPrivate {}; 
+    class PasteboardPrivate
+    {
+    public:
+        enum ClipboardFormat {
+            HTMLFormat,
+            BookmarkFormat,
+            WebSmartPasteFormat,
+        };
+    }; 
 
 }
 
