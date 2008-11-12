@@ -1,3 +1,258 @@
+2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Move _web_encodingForResource from WebKit into WebCore and change return type
+
+        This change is needed to implement NSAPI in WebCore for Mac, see:
+
+        https://bugs.webkit.org/show_bug.cgi?id=21427
+
+        * WebCore.base.exp:
+        * platform/mac/WebCoreNSStringExtras.h:
+        * platform/mac/WebCoreNSStringExtras.mm:
+        (stringEncodingForResource):
+
+2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Moved the implementation of _webkit_isCaseInsensitiveEqualToString to
+        WebCore's WebCoreNSStringExtras as _stringIsCaseInsensitiveEqualToString.
+
+        This change is needed to implement NSAPI in WebCore for Mac, see:
+
+        https://bugs.webkit.org/show_bug.cgi?id=21427
+
+        * WebCore.base.exp:
+        * platform/mac/WebCoreNSStringExtras.h:
+        * platform/mac/WebCoreNSStringExtras.mm:
+        (stringIsCaseInsensitiveEqualToString):
+
+2008-11-11  Stephanie  <slewis@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Null check image data before setting it as image source.
+
+        Test: fast/images/image-empty-data.html
+
+        * platform/graphics/BitmapImage.cpp:
+        (WebCore::BitmapImage::destroyDecodedData):
+
+2008-11-11  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Tim Hatcher.
+
+        Remove ifdef so future OS versions can use the new delegate method.
+
+        * platform/network/mac/ResourceHandleMac.mm: (WebCore::ResourceHandle::didSendBodyDataDelegateExists):
+
+2008-11-11  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Antti Koivisto and Sam Weinig.
+
+        Clean up HTMLTokenizer a litle
+        https://bugs.webkit.org/show_bug.cgi?id=22188
+
+        Rename pendingScripts to m_pendingScripts
+        Rename scriptNode to m_scriptNode make the type specific
+        Rename pendingSrc to m_pendingSrc
+        Rename currentPrependingSrc to m_currentPrependingSrc
+        Rename noMoreData to m_noMoreData and cBuffer to m_cBuffer
+        Remove long-since-dead kdDebug and qDebug calls
+        Rename brokenComments to m_brokenComments
+        Remove HTMLTokenizer includes and document the rest
+        Rename src to m_src
+        Rename parser to m_parser and make it an OwnPtr
+        Rename inWrite to m_inWrite and jsProxy to scriptController
+        Rename brokenServer to m_brokenServer
+        Rename buffer to m_buffer and dest to m_dest
+        Rename size to m_bufferSize
+        Rename attrName to m_attrName
+        Rename searchStopper to m_searchStopper and searchStopperLen to m_searchStopperLen
+        Rename scriptCode* to m_scriptCode* and change scriptCodeMax to m_scriptCodeCapacity
+        Rename scriptStartLineno to m_currentScriptTagStartLineNumber and tagStartLineno to m_currentTagStartLineNumber
+        Rename scriptSrc to m_scriptTagSrcAttrValue and scriptSrcCharset to m_scriptTagCharsetAttrValue -- a bit unwieldy, but more precise
+        Rename flat to selfClosingTag
+        Rename currToken to m_currentToken
+
+        * css/CSSParser.cpp:
+        * dom/XMLTokenizer.cpp:
+        * dom/XMLTokenizerLibxml2.cpp:
+        * html/HTMLDocument.cpp:
+        * html/HTMLElement.cpp:
+        * html/HTMLFormControlElement.cpp:
+        * html/HTMLParser.h:
+        * html/HTMLTokenizer.cpp:
+        (WebCore::Token::addAttribute):
+        (WebCore::HTMLTokenizer::HTMLTokenizer):
+        (WebCore::HTMLTokenizer::reset):
+        (WebCore::HTMLTokenizer::begin):
+        (WebCore::HTMLTokenizer::processListing):
+        (WebCore::HTMLTokenizer::parseSpecial):
+        (WebCore::HTMLTokenizer::scriptHandler):
+        (WebCore::HTMLTokenizer::scriptExecution):
+        (WebCore::HTMLTokenizer::parseComment):
+        (WebCore::HTMLTokenizer::parseServer):
+        (WebCore::HTMLTokenizer::parseProcessingInstruction):
+        (WebCore::HTMLTokenizer::parseText):
+        (WebCore::HTMLTokenizer::parseEntity):
+        (WebCore::HTMLTokenizer::parseTag):
+        (WebCore::HTMLTokenizer::write):
+        (WebCore::HTMLTokenizer::processingData):
+        (WebCore::HTMLTokenizer::end):
+        (WebCore::HTMLTokenizer::finish):
+        (WebCore::HTMLTokenizer::processToken):
+        (WebCore::HTMLTokenizer::processDoctypeToken):
+        (WebCore::HTMLTokenizer::~HTMLTokenizer):
+        (WebCore::HTMLTokenizer::enlargeBuffer):
+        (WebCore::HTMLTokenizer::enlargeScriptBuffer):
+        (WebCore::HTMLTokenizer::notifyFinished):
+        (WebCore::HTMLTokenizer::setSrc):
+        * html/HTMLTokenizer.h:
+        (WebCore::Token::Token):
+        (WebCore::Token::reset):
+        (WebCore::HTMLTokenizer::processingContentWrittenByScript):
+        (WebCore::HTMLTokenizer::htmlParser):
+        (WebCore::HTMLTokenizer::checkBuffer):
+        (WebCore::HTMLTokenizer::checkScriptBuffer):
+        * html/HTMLViewSourceDocument.h:
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::leftRelOffset):
+        (WebCore::RenderBlock::rightRelOffset):
+        (WebCore::RenderBlock::lineWidth):
+        * xml/XSLTProcessor.cpp:
+
+2008-11-11  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22189
+        Track CachedScript decoded data
+
+        We now track the decoded size of CachedScripts in the Cache allowing
+        them to accounted for when deciding when to evict data.  The decoded
+        data itself can be evicted when Cache pressure gets high enough through
+        CachedScript::destroyDecodedData.
+
+        * loader/CachedResource.h:
+        (WebCore::CachedResource::allClientsRemoved):
+        (WebCore::CachedResource::destroyDecodedData):
+        * loader/CachedScript.cpp:
+        (WebCore::CachedScript::script):
+        (WebCore::CachedScript::data):
+        (WebCore::CachedScript::destroyDecodedData):
+        * loader/CachedScript.h:
+
+2008-11-11  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Remove pointless dependencies on the now-deleted kjs directory and
+        mentions of it in comments that are no longer relevant.
+
+        * WebCore.pro:
+        * webcore-base.bkl:
+
+2008-11-11  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Adam Roben.
+
+        WebCore part of adding a master volume control for media elements in a WebView
+
+        * WebCore.base.exp: Exported WebCore::Page::setMediaVolume().
+        * dom/Document.cpp:
+        (WebCore::Document::mediaVolumeDidChange): Added. Called by the Page
+        when the media volume is changed.
+        (WebCore::Document::registerForMediaVolumeCallbacks): Added. Allows
+        elements to register for a callback when the media volume is changed.
+        (WebCore::Document::unregisterForMediaVolumeCallbacks): Added. Allows
+        elements to unregister for the callback.
+        * dom/Document.h:
+        * dom/Element.h:
+        (WebCore::Element::mediaVolumeDidChange): Added an empty implementation.
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::HTMLMediaElement): Added a call to
+        registerForMediaVolumeCallbacks().
+        (WebCore::HTMLMediaElement::~HTMLMediaElement): Added a call to
+        unregisterForMediaVolumeCallbacks().
+        (WebCore::HTMLMediaElement::updateVolume): Changed to multiply the
+        element's intrinsic volume by the master volume from the page.
+        (WebCore::HTMLMediaElement::mediaVolumeDidChange): Added. Calls
+        updateVolume().
+        * html/HTMLMediaElement.h:
+        * page/Page.cpp:
+        (WebCore::Page::Page): Initialize m_mediaVolume to 1.
+        (WebCore::Page::setMediaVolume): Added. Calls mediaVolumeDidChange() on
+        every document in the page when the master volume changes.
+        * page/Page.h:
+        (WebCore::Page::mediaVolume): Added this getter.
+
+2008-11-11  David Hyatt  <hyatt@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=22182
+
+        Fix problems with scrollbars when the OS setting for clicks in the track jumping the thumb to that location
+        is turned on.  Make sure to only jump the thumb if the click happens in the track.  Also fix some math
+        errors when jumping the thumb that cause dragging after the jump to incorrectly jump the thumb again.
+
+        Reviewed by Adele
+
+        * platform/Scrollbar.cpp:
+        (WebCore::Scrollbar::mouseDown):
+
+2008-11-11  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Fix for <rdar://problem/5089327> Too much indentation when pasting 
+        quoted paragraphs
+
+        This patch re-addresses pasting blockquotes into blockquotes. It 
+        backs out most of revision 38273. 38273 fixed the bug by inserting 
+        the pasted content as a sibling blockquote node to the pre-existing 
+        blockquote node. The problem with that is that by default, 
+        blockquotes have a giant margin, so visually, this can be weird. 
+        This patch instead inserts the pasted content as siblings of the 
+        the content already inside the outer blockquote, and then removes 
+        the blockquote node from the pasted content itself, so that it 
+        doesn't nest itself into the outer blockquote.
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplaceSelectionCommand::doApply):
+
+        Move contains() from Element to Node since there is nothing 
+        Element-specific about it.
+        * dom/Element.cpp:
+        * dom/Element.h:
+        * dom/Node.cpp:
+        (WebCore::Node::contains):
+        * dom/Node.h:
+
+2008-11-11  David Hyatt  <hyatt@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=17997
+
+        Stop using the new Leopard API tiling call for scaled tiles when drawing background images.  The method
+        is buggy.  Fall back to using the slower (and more correct) pattern tiling that Tiger still uses.  This
+        is a Leopard-only workaround, since the API has been fixed on Snow Leopard.
+
+        Reviewed by John Sullivan
+
+        * platform/graphics/cg/ImageCG.cpp:
+        (WebCore::Image::drawPattern):
+
+2008-11-10  David Hyatt  <hyatt@apple.com>
+
+        Disable the Aqua look for menu lists when full page zoom is turned on.  Because the control is buggy
+        when scaling and because it's impossible to paint into an offscreen bitmap without completely rewriting
+        how we draw the control on Mac, our only real option for now is to just switch to our styled look when zoomed.
+
+        Reviewed by Adam Roben
+
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::isControlStyled):
+
 2008-11-11  Darin Adler  <darin@apple.com>
 
         Reviewed by Dan Bernstein.

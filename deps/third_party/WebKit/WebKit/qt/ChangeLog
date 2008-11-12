@@ -1,3 +1,23 @@
+2008-11-11  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Tor Arne Vestbø and Simon Hausmann.
+
+        Use QPalette::Base (instead of QPalette::Background) for the page
+        background.
+
+        * Api/qwebframe.cpp:
+        (QWebFramePrivate::updateBackground):
+        * Api/qwebview.cpp:
+        (QWebView::QWebView):
+
+2008-11-11  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Remove pointless dependencies on the now-deleted kjs directory.
+
+        * WebKit_pch.h:
+
 2008-11-10  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
