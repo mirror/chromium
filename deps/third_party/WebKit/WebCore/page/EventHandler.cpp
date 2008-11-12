@@ -708,7 +708,7 @@ HitTestResult EventHandler::hitTestResultAtPoint(const IntPoint& point, bool all
         frame->contentRenderer()->layer()->hitTest(HitTestRequest(true, true), widgetHitTestResult);
         result = widgetHitTestResult;
     }
-
+    
     // If our HitTestResult is not visible, then we started hit testing too far down the frame chain. 
     // Another hit test at the main frame level should get us the correct visible result.
     Frame* resultFrame = result.innerNonSharedNode() ? result.innerNonSharedNode()->document()->frame() : 0;
@@ -1079,9 +1079,6 @@ bool EventHandler::handleMousePressEvent(const PlatformMouseEvent& mouseEvent)
 
     if (swallowEvent) {
         // scrollbars should get events anyway, even disabled controls might be scrollable
-        Scrollbar* scrollbar = mev.scrollbar();
-        if (!scrollbar)
-            scrollbar = m_frame->view()->scrollbarUnderMouse(mouseEvent);
         if (mev.scrollbar())
             passMousePressEventToScrollbar(mev, mev.scrollbar());
     } else {
@@ -1229,7 +1226,6 @@ bool EventHandler::handleMouseMoveEvent(const PlatformMouseEvent& mouseEvent, Hi
         
         // Event dispatch in updateMouseEventTargetNode may have caused the subframe of the target
         // node to be detached from its FrameView, in which case the event should not be passed.
-
         if (newSubframe->view())
             swallowEvent |= passMouseMoveEventToSubframe(mev, newSubframe.get(), hoveredNode);
     } else {
