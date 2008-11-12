@@ -728,26 +728,28 @@ LRESULT RenderWidgetHostHWND::OnWheelEvent(UINT message, WPARAM wparam,
 }
 
 LRESULT RenderWidgetHostHWND::OnMouseActivate(UINT, WPARAM, LPARAM,
-                                              BOOL& handled) {
-  // We handle WM_MOUSEACTIVATE to set focus to the underlying plugin
-  // child window. This is to ensure that keyboard events are received
-  // by the plugin. The correct way to fix this would be send over
-  // an event to the renderer which would then eventually send over
-  // a setFocus call to the plugin widget. This would ensure that
-  // the renderer (webkit) knows about the plugin widget receiving
-  // focus.
-  // TODO(iyengar) Do the right thing as per the above comment.
-  POINT cursor_pos = {0};
-  ::GetCursorPos(&cursor_pos);
-  MapWindowPoints(m_hWnd, &cursor_pos, 1);
-  HWND child_window = ::RealChildWindowFromPoint(m_hWnd, cursor_pos);
-  if (::IsWindow(child_window)) {
-    ::SetFocus(child_window);
-    return MA_NOACTIVATE;
-  } else {
-    handled = FALSE;
-    return MA_ACTIVATE;
+                                                 BOOL& handled) {
+  HWND focus_window = GetFocus();
+  if (!::IsWindow(focus_window) || !IsChild(focus_window)) {
+    // We handle WM_MOUSEACTIVATE to set focus to the underlying plugin
+    // child window. This is to ensure that keyboard events are received
+    // by the plugin. The correct way to fix this would be send over
+    // an event to the renderer which would then eventually send over
+    // a setFocus call to the plugin widget. This would ensure that
+    // the renderer (webkit) knows about the plugin widget receiving
+    // focus.
+    // TODO(iyengar) Do the right thing as per the above comment.
+    POINT cursor_pos = {0};
+    ::GetCursorPos(&cursor_pos);
+    ::ScreenToClient(m_hWnd, &cursor_pos);
+    HWND child_window = ::RealChildWindowFromPoint(m_hWnd, cursor_pos);
+    if (::IsWindow(child_window)) {
+      ::SetFocus(child_window);
+      return MA_NOACTIVATE;
+    }
   }
+  handled = FALSE;
+  return MA_ACTIVATE;
 }
 
 LRESULT RenderWidgetHostHWND::OnGetObject(UINT message, WPARAM wparam,
