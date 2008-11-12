@@ -1203,14 +1203,6 @@ V8 # LayoutTests/http/tests/security/originHeader/origin-header-for-data.html = 
 V8 # LayoutTests/http/tests/security/originHeader/origin-header-for-get.html = FAIL | PASS
 
 // MERGE 38097:38305 REGRESSIONS
-V8 # LayoutTests/fast/lists/marker-image-error.html = CRASH
-V8 # LayoutTests/http/tests/security/cross-frame-access-call.html = CRASH
-V8 # LayoutTests/http/tests/security/cross-frame-access-custom.html = CRASH
-V8 # LayoutTests/http/tests/security/cross-frame-access-first-time.html = CRASH
-V8 # LayoutTests/http/tests/security/cross-frame-access-frames.html = CRASH
-V8 # LayoutTests/http/tests/security/cross-frame-access-get.html = CRASH
-V8 # LayoutTests/http/tests/security/cross-frame-access-name-getter.html = CRASH
-V8 # pending/http/tests/security/cross-frame-access-frames.html = CRASH
 V8 # LayoutTests/fast/loader/javascript-url-encoding-2.html = TIMEOUT
 V8 # LayoutTests/editing/pasteboard/merge-end-blockquote.html = FAIL
 V8 # LayoutTests/editing/pasteboard/paste-blockquote-into-blockquote-2.html = FAIL
