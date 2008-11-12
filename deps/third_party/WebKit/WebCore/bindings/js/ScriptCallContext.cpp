@@ -34,8 +34,8 @@
 #include "KURL.h"
 #include "PlatformString.h"
 #include <runtime/ExecState.h>
-#include <kjs/interpreter.h>
-#include <kjs/ustring.h>
+#include <runtime/Interpreter.h>
+#include <runtime/UString.h>
 #include <VM/Machine.h>
 
 using namespace JSC;

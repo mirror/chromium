@@ -32,10 +32,11 @@
 
 #include "Instruction.h"
 #include "JSGlobalObject.h"
-#include "nodes.h"
+#include "Nodes.h"
 #include "Parser.h"
+#include "RegExp.h"
 #include "SourceCode.h"
-#include "ustring.h"
+#include "UString.h"
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 
@@ -289,6 +290,16 @@ namespace JSC {
             linkedCallerList.shrink(lastPos);
         }
 
+        ALWAYS_INLINE bool isConstantRegisterIndex(int index)
+        {
+            return index >= numVars && index < numVars + numConstants;
+        }
+
+        ALWAYS_INLINE JSValue* getConstant(int index)
+        {
+            return constantRegisters[index - numVars].getJSValue();
+        }
+
 #if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
         void dump(ExecState*) const;
         void printStructureIDs(const Instruction*) const;
@@ -351,8 +362,6 @@ namespace JSC {
         Vector<SimpleJumpTable> immediateSwitchJumpTables;
         Vector<SimpleJumpTable> characterSwitchJumpTables;
         Vector<StringJumpTable> stringSwitchJumpTables;
-        
-        HashSet<unsigned, DefaultHash<unsigned>::Hash, WTF::UnsignedWithZeroKeyHashTraits<unsigned> > labels;
 
 #if ENABLE(CTI)
         HashMap<void*, unsigned> ctiReturnAddressVPCMap;

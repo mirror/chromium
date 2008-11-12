@@ -38,10 +38,10 @@
 #include "JSStaticScopeObject.h"
 #include "Machine.h"
 #include "Parser.h"
-#include "collector.h"
-#include "lexer.h"
-#include "lookup.h"
-#include "nodes.h"
+#include "Collector.h"
+#include "Lexer.h"
+#include "Lookup.h"
+#include "Nodes.h"
 
 #if ENABLE(JSC_MULTIPLE_THREADS)
 #include <wtf/Threading.h>
@@ -96,6 +96,7 @@ JSGlobalData::JSGlobalData(bool isShared)
 #if PLATFORM(MAC)
     startProfilerServerIfNeeded();
 #endif
+    machine->initialize(this);
 }
 
 JSGlobalData::~JSGlobalData()

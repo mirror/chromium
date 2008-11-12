@@ -1,3 +1,46 @@
+2008-11-10  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Kevin Decker.
+        
+        Add WebHostedNetscapePluginView to the project.
+        
+        * WebKit.xcodeproj/project.pbxproj:
+
+2008-11-10  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Kevin Decker.
+
+        Add a new WebBaseNetscapePluginView class.
+        
+        * WebKit.xcodeproj/project.pbxproj:
+
+2008-11-10  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Adam Roben.
+                
+        Rename WebBaseNetscapePluginView to WebNetscapePluginView.
+
+        * StringsNotToBeLocalized.txt:
+        * WebKit.xcodeproj/project.pbxproj:
+
+2008-11-05  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Kevin Decker.
+
+        Remove WebPlugInStreamLoaderDelegate.h
+        
+        * WebKit.xcodeproj/project.pbxproj:
+
+2008-11-03  Darin Adler  <darin@apple.com>
+
+        Reviewed by Tim Hatcher.
+
+        - https://bugs.webkit.org/show_bug.cgi?id=22061
+          create script to check for exit-time destructors
+
+        * WebKit.xcodeproj/project.pbxproj: Added a script
+        phase that runs the check-for-exit-time-destructors script.
+
 2008-10-31  Anders Carlsson  <andersca@apple.com>
 
         Reviewed by Kevin Decker.

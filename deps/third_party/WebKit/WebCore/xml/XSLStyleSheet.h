@@ -70,7 +70,7 @@ public:
     DocLoader* docLoader();
 
     Document* ownerDocument() { return m_ownerDocument; }
-    void setOwnerDocument(Document* doc) { m_ownerDocument = doc; }
+    void setParentStyleSheet(XSLStyleSheet* parent);
 
     xmlDocPtr document();
 
@@ -81,9 +81,6 @@ public:
     void markAsProcessed();
     bool processed() const { return m_processed; }
 
-    XSLStyleSheet* parentStyleSheet() { return m_parentStyleSheet; }
-    void setParentStyleSheet(XSLStyleSheet* parent);
-
 private:
     XSLStyleSheet(Node* parentNode, const String& href, bool embedded);
     XSLStyleSheet(XSLImportRule* parentImport, const String& href);
@@ -93,7 +90,6 @@ private:
     bool m_embedded;
     bool m_processed;
     bool m_stylesheetDocTaken;
-
     XSLStyleSheet* m_parentStyleSheet;
 };
 

@@ -168,17 +168,7 @@ extern "C" {
 
 #endif
 
-ALWAYS_INLINE bool CTI::isConstant(int src)
-{
-    return src >= m_codeBlock->numVars && src < m_codeBlock->numVars + m_codeBlock->numConstants;
-}
-
-ALWAYS_INLINE JSValue* CTI::getConstant(CallFrame* callFrame, int src)
-{
-    return m_codeBlock->constantRegisters[src - m_codeBlock->numVars].jsValue(callFrame);
-}
-
-inline uintptr_t CTI::asInteger(JSValue* value)
+static ALWAYS_INLINE uintptr_t asInteger(JSValue* value)
 {
     return reinterpret_cast<uintptr_t>(value);
 }
@@ -187,9 +177,9 @@ inline uintptr_t CTI::asInteger(JSValue* value)
 ALWAYS_INLINE void CTI::emitGetArg(int src, X86Assembler::RegisterID dst)
 {
     // TODO: we want to reuse values that are already in registers if we can - add a register allocator!
-    if (isConstant(src)) {
-        JSValue* js = getConstant(m_callFrame, src);
-        m_jit.movl_i32r(asInteger(js), dst);
+    if (m_codeBlock->isConstantRegisterIndex(src)) {
+        JSValue* value = m_codeBlock->getConstant(src);
+        m_jit.movl_i32r(asInteger(value), dst);
     } else
         m_jit.movl_mr(src * sizeof(Register), X86::edi, dst);
 }
@@ -197,9 +187,9 @@ ALWAYS_INLINE void CTI::emitGetArg(int src, X86Assembler::RegisterID dst)
 // get arg puts an arg from the SF register array onto the stack, as an arg to a context threaded function.
 ALWAYS_INLINE void CTI::emitGetPutArg(unsigned src, unsigned offset, X86Assembler::RegisterID scratch)
 {
-    if (isConstant(src)) {
-        JSValue* js = getConstant(m_callFrame, src);
-        m_jit.movl_i32m(asInteger(js), offset + sizeof(void*), X86::esp);
+    if (m_codeBlock->isConstantRegisterIndex(src)) {
+        JSValue* value = m_codeBlock->getConstant(src);
+        m_jit.movl_i32m(asInteger(value), offset + sizeof(void*), X86::esp);
     } else {
         m_jit.movl_mr(src * sizeof(Register), X86::edi, scratch);
         m_jit.movl_rm(scratch, offset + sizeof(void*), X86::esp);
@@ -219,9 +209,9 @@ ALWAYS_INLINE void CTI::emitPutArgConstant(unsigned value, unsigned offset)
 
 ALWAYS_INLINE JSValue* CTI::getConstantImmediateNumericArg(unsigned src)
 {
-    if (isConstant(src)) {
-        JSValue* js = getConstant(m_callFrame, src);
-        return JSImmediate::isNumber(js) ? js : noValue();
+    if (m_codeBlock->isConstantRegisterIndex(src)) {
+        JSValue* value = m_codeBlock->getConstant(src);
+        return JSImmediate::isNumber(value) ? value : noValue();
     }
     return noValue();
 }
@@ -278,31 +268,31 @@ void ctiRepatchCallByReturnAddress(void* where, void* what)
 void CTI::printOpcodeOperandTypes(unsigned src1, unsigned src2)
 {
     char which1 = '*';
-    if (isConstant(src1)) {
-        JSValue* js = getConstant(m_callFrame, src1);
+    if (m_codeBlock->isConstantRegisterIndex(src1)) {
+        JSValue* value = m_codeBlock->getConstant(src1);
         which1 = 
-            JSImmediate::isImmediate(js) ?
-                (JSImmediate::isNumber(js) ? 'i' :
-                JSImmediate::isBoolean(js) ? 'b' :
-                js->isUndefined() ? 'u' :
-                js->isNull() ? 'n' : '?')
+            JSImmediate::isImmediate(value) ?
+                (JSImmediate::isNumber(value) ? 'i' :
+                JSImmediate::isBoolean(value) ? 'b' :
+                value->isUndefined() ? 'u' :
+                value->isNull() ? 'n' : '?')
                 :
-            (js->isString() ? 's' :
-            js->isObject() ? 'o' :
+            (value->isString() ? 's' :
+            value->isObject() ? 'o' :
             'k');
     }
     char which2 = '*';
-    if (isConstant(src2)) {
-        JSValue* js = getConstant(m_callFrame, src2);
+    if (m_codeBlock->isConstantRegisterIndex(src2)) {
+        JSValue* value = m_codeBlock->getConstant(src2);
         which2 = 
-            JSImmediate::isImmediate(js) ?
-                (JSImmediate::isNumber(js) ? 'i' :
-                JSImmediate::isBoolean(js) ? 'b' :
-                js->isUndefined() ? 'u' :
-                js->isNull() ? 'n' : '?')
+            JSImmediate::isImmediate(value) ?
+                (JSImmediate::isNumber(value) ? 'i' :
+                JSImmediate::isBoolean(value) ? 'b' :
+                value->isUndefined() ? 'u' :
+                value->isNull() ? 'n' : '?')
                 :
-            (js->isString() ? 's' :
-            js->isObject() ? 'o' :
+            (value->isString() ? 's' :
+            value->isObject() ? 'o' :
             'k');
     }
     if ((which1 != '*') | (which2 != '*'))
@@ -551,10 +541,10 @@ ALWAYS_INLINE void CTI::emitTagAsBoolImmediate(X86Assembler::RegisterID reg)
     m_jit.orl_i32r(JSImmediate::FullTagTypeBool, reg);
 }
 
-CTI::CTI(Machine* machine, CallFrame* callFrame, CodeBlock* codeBlock)
-    : m_jit(machine->jitCodeBuffer())
-    , m_machine(machine)
-    , m_callFrame(callFrame)
+CTI::CTI(JSGlobalData* globalData, CodeBlock* codeBlock)
+    : m_jit(globalData->machine->jitCodeBuffer())
+    , m_machine(globalData->machine)
+    , m_globalData(globalData)
     , m_codeBlock(codeBlock)
     , m_labels(codeBlock ? codeBlock->instructions.size() : 0)
     , m_propertyAccessCompilationInfo(codeBlock ? codeBlock->propertyAccessInstructions.size() : 0)
@@ -587,17 +577,14 @@ static void unreachable()
     exit(1);
 }
 
-void CTI::compileOpCallInitializeCallFrame(unsigned callee, unsigned argCount)
+void CTI::compileOpCallInitializeCallFrame(unsigned, unsigned argCount)
 {
-    emitGetArg(callee, X86::ecx); // Load callee JSFunction into ecx
-    m_jit.movl_rm(X86::eax, RegisterFile::CodeBlock * static_cast<int>(sizeof(Register)), X86::edx); // callee CodeBlock was returned in eax
-    m_jit.movl_i32m(asInteger(noValue()), RegisterFile::OptionalCalleeArguments * static_cast<int>(sizeof(Register)), X86::edx);
-    m_jit.movl_rm(X86::ecx, RegisterFile::Callee * static_cast<int>(sizeof(Register)), X86::edx);
-
     m_jit.movl_mr(OBJECT_OFFSET(JSFunction, m_scopeChain) + OBJECT_OFFSET(ScopeChain, m_node), X86::ecx, X86::ebx); // newScopeChain
-    m_jit.movl_i32m(argCount, RegisterFile::ArgumentCount * static_cast<int>(sizeof(Register)), X86::edx);
-    m_jit.movl_rm(X86::edi, RegisterFile::CallerFrame * static_cast<int>(sizeof(Register)), X86::edx);
-    m_jit.movl_rm(X86::ebx, RegisterFile::ScopeChain * static_cast<int>(sizeof(Register)), X86::edx);
+
+    m_jit.movl_i32m(asInteger(noValue()), RegisterFile::OptionalCalleeArguments * static_cast<int>(sizeof(Register)), X86::edi);
+    m_jit.movl_rm(X86::ecx, RegisterFile::Callee * static_cast<int>(sizeof(Register)), X86::edi);
+    m_jit.movl_i32m(argCount, RegisterFile::ArgumentCount * static_cast<int>(sizeof(Register)), X86::edi);
+    m_jit.movl_rm(X86::ebx, RegisterFile::ScopeChain * static_cast<int>(sizeof(Register)), X86::edi);
 }
 
 void CTI::compileOpCallSetupArgs(Instruction* instruction, bool isConstruct, bool isEval)
@@ -628,10 +615,9 @@ void CTI::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned i,
     // Setup this value as the first argument (does not apply to constructors)
     if (opcodeID != op_construct) {
         int thisVal = instruction[3].u.operand;
-        if (thisVal == missingThisObjectMarker()) {
-            // FIXME: should this be loaded dynamically off m_callFrame?
-            m_jit.movl_i32m(asInteger(m_callFrame->globalThisValue()), firstArg * sizeof(Register), X86::edi);
-        } else {
+        if (thisVal == missingThisObjectMarker())
+            m_jit.movl_i32m(asInteger(jsNull()), firstArg * sizeof(Register), X86::edi);
+        else {
             emitGetArg(thisVal, X86::eax);
             emitPutResult(firstArg);
         }
@@ -659,12 +645,12 @@ void CTI::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned i,
 
     // The following is the fast case, only used whan a callee can be linked.
 
-    // In the case of OpConstruct, call oout to a cti_ function to create the new object.
+    // In the case of OpConstruct, call out to a cti_ function to create the new object.
     if (opcodeID == op_construct) {
         emitPutArg(X86::ecx, 0);
-        emitGetPutArg(instruction[3].u.operand, 4, X86::eax);
-        emitCTICall(instruction, i, Machine::cti_op_construct_JSConstructFast);
-        emitPutResult(instruction[4].u.operand);
+        emitGetPutArg(instruction[3].u.operand, 16, X86::eax);
+        emitCTICall(instruction, i, Machine::cti_op_construct_JSConstruct);
+        emitPutResult(firstArg);
         emitGetArg(callee, X86::ecx);
     }
 
@@ -800,8 +786,11 @@ void CTI::putDoubleResultToJSNumberCellOrJSImmediate(X86::XMMRegisterID xmmSourc
 
 void CTI::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes types, unsigned i)
 {
-    StructureID* numberStructureID = m_callFrame->globalData().numberStructureID.get();
-    X86Assembler::JmpSrc wasJSNumberCell1, wasJSNumberCell1b, wasJSNumberCell2, wasJSNumberCell2b;
+    StructureID* numberStructureID = m_globalData->numberStructureID.get();
+    X86Assembler::JmpSrc wasJSNumberCell1;
+    X86Assembler::JmpSrc wasJSNumberCell1b;
+    X86Assembler::JmpSrc wasJSNumberCell2;
+    X86Assembler::JmpSrc wasJSNumberCell2b;
 
     emitGetArg(src1, X86::eax);
     emitGetArg(src2, X86::edx);
@@ -1010,8 +999,8 @@ void CTI::privateCompileMainPass()
         switch (opcodeID) {
         case op_mov: {
             unsigned src = instruction[i + 2].u.operand;
-            if (isConstant(src))
-                m_jit.movl_i32r(asInteger(getConstant(m_callFrame, src)), X86::eax);
+            if (m_codeBlock->isConstantRegisterIndex(src))
+                m_jit.movl_i32r(asInteger(m_codeBlock->getConstant(src)), X86::eax);
             else
                 emitGetArg(src, X86::eax);
             emitPutResult(instruction[i + 1].u.operand);
@@ -1536,7 +1525,7 @@ void CTI::privateCompileMainPass()
                 ResultType resultType(instruction[i + 3].u.resultType);
                 if (!resultType.definitelyIsNumber()) {
                     emitJumpSlowCaseIfNotJSCell(X86::eax, i);
-                    StructureID* numberStructureID = m_callFrame->globalData().numberStructureID.get();
+                    StructureID* numberStructureID = m_globalData->numberStructureID.get();
                     m_jit.cmpl_i32m(reinterpret_cast<unsigned>(numberStructureID), OBJECT_OFFSET(JSCell, m_structureID), X86::eax);
                     m_slowCases.append(SlowCaseEntry(m_jit.emitUnlinkedJne(), i));
                 }
@@ -1546,7 +1535,7 @@ void CTI::privateCompileMainPass()
                 m_jit.xorpd_mr((void*)((((uintptr_t)doubleSignBit)+15)&~15), X86::xmm0);
                 X86Assembler::JmpSrc wasCell;
                 if (!resultType.isReusableNumber())
-                    emitAllocateNumber(&m_callFrame->globalData(), i);
+                    emitAllocateNumber(m_globalData, i);
 
                 putDoubleResultToJSNumberCellOrJSImmediate(X86::xmm0, X86::eax, instruction[i + 1].u.operand, &wasCell,
                                                            X86::xmm1, X86::ecx, X86::edx);
@@ -2778,7 +2767,9 @@ void CTI::privateCompileSlowCases()
         case op_construct: {
             int dst = instruction[i + 1].u.operand;
             int callee = instruction[i + 2].u.operand;
+            int firstArg = instruction[i + 4].u.operand;
             int argCount = instruction[i + 5].u.operand;
+            int registerOffset = instruction[i + 6].u.operand;
 
             m_jit.link(iter->from, m_jit.label());
 
@@ -2792,11 +2783,37 @@ void CTI::privateCompileSlowCases()
             m_jit.cmpl_i32m(reinterpret_cast<unsigned>(m_machine->m_jsFunctionVptr), X86::ecx);
             X86Assembler::JmpSrc callLinkFailNotJSFunction = m_jit.emitUnlinkedJne();
 
-            // This handles JSFunctions
-            emitCTICall(instruction + i, i, (opcodeID == op_construct) ? Machine::cti_op_construct_JSConstruct : Machine::cti_op_call_JSFunction);
-            // initialize the new call frame (pointed to by edx, after the last call), then set edi to point to it.
-            compileOpCallInitializeCallFrame(callee, argCount);
+            // First, in the cale of a construct, allocate the new object.
+            if (opcodeID == op_construct) {
+                emitCTICall(instruction, i, Machine::cti_op_construct_JSConstruct);
+                emitPutResult(firstArg);
+                emitGetArg(callee, X86::ecx);
+            }
+
+            // Load the callee CodeBlock* into eax
+            m_jit.movl_mr(OBJECT_OFFSET(JSFunction, m_body), X86::ecx, X86::eax);
+            m_jit.movl_mr(OBJECT_OFFSET(FunctionBodyNode, m_code), X86::eax, X86::eax);
+            m_jit.testl_rr(X86::eax, X86::eax);
+            X86Assembler::JmpSrc hasCodeBlockForLink = m_jit.emitUnlinkedJne();
+            emitCTICall(instruction + i, i, Machine::cti_op_call_JSFunction);
+            emitGetArg(callee, X86::ecx);
+            m_jit.link(hasCodeBlockForLink, m_jit.label());
+
+            // Speculatively roll the callframe, assuming argCount will match the arity.
+            m_jit.movl_rm(X86::edi, (RegisterFile::CallerFrame + registerOffset) * static_cast<int>(sizeof(Register)), X86::edi);
+            m_jit.addl_i32r(registerOffset * static_cast<int>(sizeof(Register)), X86::edi);
+
+            // Check argCount matches callee arity.
+            m_jit.cmpl_i32m(argCount, OBJECT_OFFSET(CodeBlock, numParameters), X86::eax);
+            X86Assembler::JmpSrc arityCheckOkayForLink = m_jit.emitUnlinkedJe();
+            emitPutArg(X86::eax, 12);
+            emitCTICall(instruction + i, i, Machine::cti_op_call_arityCheck);
+            emitGetArg(callee - registerOffset, X86::ecx);
             m_jit.movl_rr(X86::edx, X86::edi);
+            m_jit.link(arityCheckOkayForLink, m_jit.label());
+
+            // initialize the new call frame (pointed to by edx, after the last call).
+            compileOpCallInitializeCallFrame(callee, argCount);
 
             // Try to link & repatch this call.
             CallLinkInfo* info = &(m_codeBlock->callLinkInfos[callLinkInfoIndex]);
@@ -2829,22 +2846,41 @@ void CTI::privateCompileSlowCases()
 
             // Next, handle JSFunctions...
             m_jit.link(isJSFunction, m_jit.label());
-            emitCTICall(instruction + i, i, (opcodeID == op_construct) ? Machine::cti_op_construct_JSConstruct : Machine::cti_op_call_JSFunction);
+
+            // First, in the cale of a construct, allocate the new object.
+            if (opcodeID == op_construct) {
+                emitCTICall(instruction, i, Machine::cti_op_construct_JSConstruct);
+                emitPutResult(firstArg);
+                emitGetArg(callee, X86::ecx);
+            }
+
+            // Load the callee CodeBlock* into eax
+            m_jit.movl_mr(OBJECT_OFFSET(JSFunction, m_body), X86::ecx, X86::eax);
+            m_jit.movl_mr(OBJECT_OFFSET(FunctionBodyNode, m_code), X86::eax, X86::eax);
+            m_jit.testl_rr(X86::eax, X86::eax);
+            X86Assembler::JmpSrc hasCodeBlock = m_jit.emitUnlinkedJne();
+            emitCTICall(instruction + i, i, Machine::cti_op_call_JSFunction);
+            emitGetArg(callee, X86::ecx);
+            m_jit.link(hasCodeBlock, m_jit.label());
+
+            // Speculatively roll the callframe, assuming argCount will match the arity.
+            m_jit.movl_rm(X86::edi, (RegisterFile::CallerFrame + registerOffset) * static_cast<int>(sizeof(Register)), X86::edi);
+            m_jit.addl_i32r(registerOffset * static_cast<int>(sizeof(Register)), X86::edi);
+
+            // Check argCount matches callee arity.
+            m_jit.cmpl_i32m(argCount, OBJECT_OFFSET(CodeBlock, numParameters), X86::eax);
+            X86Assembler::JmpSrc arityCheckOkay = m_jit.emitUnlinkedJe();
+            emitPutArg(X86::eax, 12);
+            emitCTICall(instruction + i, i, Machine::cti_op_call_arityCheck);
+            emitGetArg(callee - registerOffset, X86::ecx);
+            m_jit.movl_rr(X86::edx, X86::edi);
+            m_jit.link(arityCheckOkay, m_jit.label());
+
             // initialize the new call frame (pointed to by edx, after the last call).
             compileOpCallInitializeCallFrame(callee, argCount);
-            m_jit.movl_rr(X86::edx, X86::edi);
 
             // load ctiCode from the new codeBlock.
             m_jit.movl_mr(OBJECT_OFFSET(CodeBlock, ctiCode), X86::eax, X86::eax);
-
-            // Move the new callframe into edi.
-            m_jit.movl_rr(X86::edx, X86::edi);
-
-            // Check the ctiCode has been generated (if not compile it now), and make the call.
-            m_jit.testl_rr(X86::eax, X86::eax);
-            X86Assembler::JmpSrc hasCode = m_jit.emitUnlinkedJne();
-            emitCTICall(instruction + i, i, Machine::cti_vm_compile);
-            m_jit.link(hasCode, m_jit.label());
 
             emitNakedCall(i, X86::eax);
 
@@ -3009,7 +3045,7 @@ void CTI::privateCompileGetByIdSelf(StructureID* structureID, size_t cachedOffse
     ctiRepatchCallByReturnAddress(returnAddress, code);
 }
 
-void CTI::privateCompileGetByIdProto(StructureID* structureID, StructureID* prototypeStructureID, size_t cachedOffset, void* returnAddress)
+void CTI::privateCompileGetByIdProto(StructureID* structureID, StructureID* prototypeStructureID, size_t cachedOffset, void* returnAddress, CallFrame* callFrame)
 {
 #if USE(CTI_REPATCH_PIC)
     StructureStubInfo& info = m_codeBlock->getStubInfo(returnAddress);
@@ -3019,7 +3055,7 @@ void CTI::privateCompileGetByIdProto(StructureID* structureID, StructureID* prot
 
     // The prototype object definitely exists (if this stub exists the CodeBlock is referencing a StructureID that is
     // referencing the prototype object - let's speculatively load it's table nice and early!)
-    JSObject* protoObject = asObject(structureID->prototypeForLookup(m_callFrame));
+    JSObject* protoObject = asObject(structureID->prototypeForLookup(callFrame));
     PropertyStorage* protoPropertyStorage = &protoObject->m_propertyStorage;
     m_jit.movl_mr(static_cast<void*>(protoPropertyStorage), X86::edx);
 
@@ -3062,7 +3098,7 @@ void CTI::privateCompileGetByIdProto(StructureID* structureID, StructureID* prot
 #else
     // The prototype object definitely exists (if this stub exists the CodeBlock is referencing a StructureID that is
     // referencing the prototype object - let's speculatively load it's table nice and early!)
-    JSObject* protoObject = asObject(structureID->prototypeForLookup(m_callFrame));
+    JSObject* protoObject = asObject(structureID->prototypeForLookup(callFrame));
     PropertyStorage* protoPropertyStorage = &protoObject->m_propertyStorage;
     m_jit.movl_mr(static_cast<void*>(protoPropertyStorage), X86::edx);
 
@@ -3095,7 +3131,7 @@ void CTI::privateCompileGetByIdProto(StructureID* structureID, StructureID* prot
 #endif
 }
 
-void CTI::privateCompileGetByIdChain(StructureID* structureID, StructureIDChain* chain, size_t count, size_t cachedOffset, void* returnAddress)
+void CTI::privateCompileGetByIdChain(StructureID* structureID, StructureIDChain* chain, size_t count, size_t cachedOffset, void* returnAddress, CallFrame* callFrame)
 {
     ASSERT(count);
     
@@ -3111,7 +3147,7 @@ void CTI::privateCompileGetByIdChain(StructureID* structureID, StructureIDChain*
     RefPtr<StructureID>* chainEntries = chain->head();
     JSObject* protoObject = 0;
     for (unsigned i = 0; i<count; ++i) {
-        protoObject = asObject(currStructureID->prototypeForLookup(m_callFrame));
+        protoObject = asObject(currStructureID->prototypeForLookup(callFrame));
         currStructureID = chainEntries[i].get();
 
         // Check the prototype object's StructureID had not changed.
@@ -3287,60 +3323,65 @@ void CTI::linkCall(JSFunction* callee, CodeBlock* calleeCodeBlock, void* ctiCode
     ctiRepatchCallByReturnAddress(repatchCheck, callLinkInfo->coldPathOther);
 }
 
-void* CTI::privateCompileArrayLengthTrampoline()
+void CTI::privateCompileCTIMachineTrampolines()
 {
+    // (1) The first function provides fast property access for array length
+    
     // Check eax is an array
     m_jit.testl_i32r(JSImmediate::TagMask, X86::eax);
-    X86Assembler::JmpSrc failureCases1 = m_jit.emitUnlinkedJne();
+    X86Assembler::JmpSrc array_failureCases1 = m_jit.emitUnlinkedJne();
     m_jit.cmpl_i32m(reinterpret_cast<unsigned>(m_machine->m_jsArrayVptr), X86::eax);
-    X86Assembler::JmpSrc failureCases2 = m_jit.emitUnlinkedJne();
+    X86Assembler::JmpSrc array_failureCases2 = m_jit.emitUnlinkedJne();
 
     // Checks out okay! - get the length from the storage
     m_jit.movl_mr(OBJECT_OFFSET(JSArray, m_storage), X86::eax, X86::eax);
     m_jit.movl_mr(OBJECT_OFFSET(ArrayStorage, m_length), X86::eax, X86::eax);
 
     m_jit.addl_rr(X86::eax, X86::eax);
-    X86Assembler::JmpSrc failureCases3 = m_jit.emitUnlinkedJo();
+    X86Assembler::JmpSrc array_failureCases3 = m_jit.emitUnlinkedJo();
     m_jit.addl_i8r(1, X86::eax);
     
     m_jit.ret();
 
-    void* code = m_jit.copy();
-    ASSERT(code);
-
-    X86Assembler::link(code, failureCases1, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
-    X86Assembler::link(code, failureCases2, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
-    X86Assembler::link(code, failureCases3, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    // (2) The second function provides fast property access for string length
     
-    return code;
-}
+    X86Assembler::JmpDst stringLengthBegin = m_jit.align(16);
 
-void* CTI::privateCompileStringLengthTrampoline()
-{
     // Check eax is a string
     m_jit.testl_i32r(JSImmediate::TagMask, X86::eax);
-    X86Assembler::JmpSrc failureCases1 = m_jit.emitUnlinkedJne();
+    X86Assembler::JmpSrc string_failureCases1 = m_jit.emitUnlinkedJne();
     m_jit.cmpl_i32m(reinterpret_cast<unsigned>(m_machine->m_jsStringVptr), X86::eax);
-    X86Assembler::JmpSrc failureCases2 = m_jit.emitUnlinkedJne();
+    X86Assembler::JmpSrc string_failureCases2 = m_jit.emitUnlinkedJne();
 
     // Checks out okay! - get the length from the Ustring.
     m_jit.movl_mr(OBJECT_OFFSET(JSString, m_value) + OBJECT_OFFSET(UString, m_rep), X86::eax, X86::eax);
     m_jit.movl_mr(OBJECT_OFFSET(UString::Rep, len), X86::eax, X86::eax);
 
     m_jit.addl_rr(X86::eax, X86::eax);
-    X86Assembler::JmpSrc failureCases3 = m_jit.emitUnlinkedJo();
+    X86Assembler::JmpSrc string_failureCases3 = m_jit.emitUnlinkedJo();
     m_jit.addl_i8r(1, X86::eax);
     
     m_jit.ret();
 
+    // All trampolines constructed! copy the code, link up calls, and set the pointers on the Machine object.
+
     void* code = m_jit.copy();
     ASSERT(code);
 
-    X86Assembler::link(code, failureCases1, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
-    X86Assembler::link(code, failureCases2, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
-    X86Assembler::link(code, failureCases3, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    X86Assembler::link(code, array_failureCases1, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    X86Assembler::link(code, array_failureCases2, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    X86Assembler::link(code, array_failureCases3, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    X86Assembler::link(code, string_failureCases1, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    X86Assembler::link(code, string_failureCases2, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
+    X86Assembler::link(code, string_failureCases3, reinterpret_cast<void*>(Machine::cti_op_get_by_id_fail));
 
-    return code;
+    m_machine->m_ctiArrayLengthTrampoline = code;
+    m_machine->m_ctiStringLengthTrampoline = X86Assembler::getRelocatedAddress(code, stringLengthBegin);
+}
+
+void CTI::freeCTIMachineTrampolines(Machine* machine)
+{
+    WTF::fastFreeExecutable(machine->m_ctiArrayLengthTrampoline);
 }
 
 void CTI::patchGetByIdSelf(CodeBlock* codeBlock, StructureID* structureID, size_t cachedOffset, void* returnAddress)

@@ -196,15 +196,24 @@ void RenderTableCell::computeAbsoluteRepaintRect(IntRect& r, bool fixed)
     RenderBlock::computeAbsoluteRepaintRect(r, fixed);
 }
 
-bool RenderTableCell::absolutePosition(int& xPos, int& yPos, bool fixed) const
+FloatPoint RenderTableCell::localToAbsolute(FloatPoint localPoint, bool fixed, bool useTransforms) const
 {
-    bool result = RenderBlock::absolutePosition(xPos, yPos, fixed);
     RenderView* v = view();
     if ((!v || !v->layoutState()) && parent()) {
-        xPos -= parent()->xPos(); // Rows are in the same coordinate space, so don't add their offset in.
-        yPos -= parent()->yPos();
+        // Rows are in the same coordinate space, so don't add their offset in.
+        localPoint.move(-parent()->xPos(), -parent()->yPos());
     }
-    return result;
+    return RenderBlock::localToAbsolute(localPoint, fixed, useTransforms);;
+}
+
+FloatPoint RenderTableCell::absoluteToLocal(FloatPoint containerPoint, bool fixed, bool useTransforms) const
+{
+    FloatPoint localPoint = RenderBlock::absoluteToLocal(containerPoint, fixed, useTransforms);
+    if (parent()) {
+        // Rows are in the same coordinate space, so add their offset back in.
+        localPoint.move(parent()->xPos(), parent()->yPos());
+    }
+    return localPoint;
 }
 
 int RenderTableCell::baselinePosition(bool /*firstLine*/, bool /*isRootLineBox*/) const

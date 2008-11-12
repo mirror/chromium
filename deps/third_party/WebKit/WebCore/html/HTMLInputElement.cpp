@@ -1183,11 +1183,10 @@ void HTMLInputElement::defaultEventHandler(Event* evt)
             xPos = 0;
             yPos = 0;
         } else {
-            int offsetX, offsetY;
-            renderer()->absolutePosition(offsetX, offsetY);
-            xPos = me->pageX() - offsetX;
-            // FIXME: Why is yPos a short?
-            yPos = me->pageY() - offsetY;
+            // FIXME: This doesn't work correctly with transforms.
+            IntPoint absOffset = roundedIntPoint(renderer()->localToAbsolute());
+            xPos = me->pageX() - absOffset.x();
+            yPos = me->pageY() - absOffset.y();
         }
     }
 
@@ -1430,11 +1429,8 @@ void HTMLInputElement::defaultEventHandler(Event* evt)
             MouseEvent* mEvt = static_cast<MouseEvent*>(evt);
             if (!slider->mouseEventIsInThumb(mEvt)) {
                 IntPoint eventOffset(mEvt->offsetX(), mEvt->offsetY());
-                if (mEvt->target() != this) {
-                    IntRect rect = renderer()->absoluteBoundingBoxRect();
-                    eventOffset.setX(mEvt->pageX() - rect.x());
-                    eventOffset.setY(mEvt->pageY() - rect.y());
-                }
+                if (mEvt->target() != this) // Does this ever happen now? Was added for <video> controls
+                    eventOffset = roundedIntPoint(renderer()->absoluteToLocal(FloatPoint(mEvt->pageX(), mEvt->pageY()), false, true));
                 slider->setValueForPosition(slider->positionForOffset(eventOffset));
             }
         }

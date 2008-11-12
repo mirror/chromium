@@ -2,7 +2,7 @@
 VPATH += $$PWD
 
 INCLUDEPATH += tmp
-INCLUDEPATH += $$PWD $$PWD/kjs $$PWD/debugger $$PWD/runtime $$PWD/wtf $$PWD/wtf/unicode $$PWD/VM $$PWD/profiler $$PWD/API $$PWD/.. \
+INCLUDEPATH += $$PWD $$PWD/parser $$PWD/bytecompiler $$PWD/debugger $$PWD/runtime $$PWD/wtf $$PWD/wtf/unicode $$PWD/VM $$PWD/profiler $$PWD/API $$PWD/.. \
                $$PWD/ForwardingHeaders
 DEFINES += BUILDING_QT__
 
@@ -24,10 +24,10 @@ LUT_FILES += \
     runtime/RegExpObject.cpp
 
 KEYWORDLUT_FILES += \
-    kjs/keywords.table
+    parser/Keywords.table
 
 KJSBISON += \
-    kjs/grammar.y
+    parser/Grammar.y
 
 SOURCES += \
     wtf/Assertions.cpp \
@@ -55,7 +55,7 @@ SOURCES += \
     runtime/JSActivation.cpp \
     runtime/JSNotAnObject.cpp \
     VM/CodeBlock.cpp \
-    VM/CodeGenerator.cpp \
+    bytecompiler/CodeGenerator.cpp \
     VM/ExceptionHelpers.cpp \
     runtime/JSPropertyNameIterator.cpp \
     VM/Machine.cpp \
@@ -74,7 +74,7 @@ SOURCES += \
     runtime/BooleanObject.cpp \
     runtime/BooleanPrototype.cpp \
     runtime/CallData.cpp \
-    kjs/collector.cpp \
+    runtime/Collector.cpp \
     runtime/CommonIdentifiers.cpp \
     runtime/ConstructData.cpp \
     runtime/DateConstructor.cpp \
@@ -83,7 +83,7 @@ SOURCES += \
     runtime/DatePrototype.cpp \
     debugger/Debugger.cpp \
     debugger/DebuggerCallFrame.cpp \
-    kjs/dtoa.cpp \
+    wtf/dtoa.cpp \
     runtime/Error.cpp \
     runtime/ErrorConstructor.cpp \
     runtime/ErrorInstance.cpp \
@@ -93,9 +93,9 @@ SOURCES += \
     runtime/FunctionPrototype.cpp \
     runtime/GetterSetter.cpp \
     runtime/GlobalEvalFunction.cpp \
-    kjs/identifier.cpp \
+    runtime/Identifier.cpp \
     runtime/InternalFunction.cpp \
-    kjs/interpreter.cpp \
+    runtime/Interpreter.cpp \
     runtime/JSArray.cpp \
     runtime/JSCell.cpp \
     runtime/JSFunction.cpp \
@@ -107,24 +107,23 @@ SOURCES += \
     runtime/JSString.cpp \
     runtime/JSValue.cpp \
     runtime/JSWrapperObject.cpp \
-    kjs/lexer.cpp \
-    kjs/lookup.cpp \
+    parser/Lexer.cpp \
+    runtime/Lookup.cpp \
     runtime/MathObject.cpp \
     runtime/NativeErrorConstructor.cpp \
     runtime/NativeErrorPrototype.cpp \
-    kjs/nodes.cpp \
-    kjs/nodes2string.cpp \
+    parser/Nodes.cpp \
     runtime/NumberConstructor.cpp \
     runtime/NumberObject.cpp \
     runtime/NumberPrototype.cpp \
     runtime/ObjectConstructor.cpp \
     runtime/ObjectPrototype.cpp \
-    kjs/operations.cpp \
-    kjs/Parser.cpp \
+    runtime/Operations.cpp \
+    parser/Parser.cpp \
     runtime/PropertyNameArray.cpp \
     runtime/PropertySlot.cpp \
     runtime/PrototypeFunction.cpp \
-    kjs/regexp.cpp \
+    runtime/RegExp.cpp \
     runtime/RegExpConstructor.cpp \
     runtime/RegExpObject.cpp \
     runtime/RegExpPrototype.cpp \
@@ -135,7 +134,7 @@ SOURCES += \
     runtime/StringPrototype.cpp \
     runtime/StructureID.cpp \
     runtime/StructureIDChain.cpp \
-    kjs/ustring.cpp \
+    runtime/UString.cpp \
     profiler/HeavyProfile.cpp \
     profiler/Profile.cpp \
     profiler/ProfileGenerator.cpp \
@@ -148,15 +147,15 @@ SOURCES += \
 
 # GENERATOR 1-A: LUT creator
 lut.output = $$GENERATED_SOURCES_DIR/${QMAKE_FILE_BASE}.lut.h
-lut.commands = perl $$PWD/kjs/create_hash_table ${QMAKE_FILE_NAME} -i > ${QMAKE_FILE_OUT}
+lut.commands = perl $$PWD/create_hash_table ${QMAKE_FILE_NAME} -i > ${QMAKE_FILE_OUT}
 lut.depend = ${QMAKE_FILE_NAME}
 lut.input = LUT_FILES
 lut.CONFIG += no_link
 addExtraCompiler(lut)
 
 # GENERATOR 1-B: particular LUT creator (for 1 file only)
-keywordlut.output = $$GENERATED_SOURCES_DIR/lexer.lut.h
-keywordlut.commands = perl $$PWD/kjs/create_hash_table ${QMAKE_FILE_NAME} -i > ${QMAKE_FILE_OUT}
+keywordlut.output = $$GENERATED_SOURCES_DIR/Lexer.lut.h
+keywordlut.commands = perl $$PWD/create_hash_table ${QMAKE_FILE_NAME} -i > ${QMAKE_FILE_OUT}
 keywordlut.depend = ${QMAKE_FILE_NAME}
 keywordlut.input = KEYWORDLUT_FILES
 keywordlut.CONFIG += no_link

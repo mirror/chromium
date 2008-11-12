@@ -78,11 +78,21 @@
 #define WTF_PLATFORM_SOLARIS 1
 #endif
 
+#if defined (__S60__) || defined (__SYMBIAN32__)
+// we are cross-compiling, it is not really windows
+#undef WTF_PLATFORM_WIN_OS
+#undef WTF_PLATFORM_WIN
+#undef WTF_PLATFORM_CAIRO
+#define WTF_PLATFORM_S60 1
+#define WTF_PLATFORM_SYMBIAN 1
+#endif
+
 /* PLATFORM(UNIX) */
 /* Operating system level dependencies for Unix-like systems that */
 /* should be used regardless of operating environment */
 #if   PLATFORM(DARWIN)     \
    || PLATFORM(FREEBSD)    \
+   || PLATFORM(S60)        \
    || defined(unix)        \
    || defined(__unix)      \
    || defined(__unix__)    \
@@ -140,15 +150,6 @@
 /* Makes PLATFORM(WIN) default to PLATFORM(CAIRO) */
 #if !PLATFORM(MAC) && !PLATFORM(QT) && !PLATFORM(WX)
 #define WTF_PLATFORM_CAIRO 1
-#endif
-
-#ifdef __S60__
-// we are cross-compiling, it is not really windows
-#undef WTF_PLATFORM_WIN_OS
-#undef WTF_PLATFORM_WIN
-#undef WTF_PLATFORM_CAIRO
-#define WTF_PLATFORM_S60 1
-#define WTF_PLATFORM_SYMBIAN 1
 #endif
 
 /* CPU */
@@ -240,6 +241,16 @@
 #define WTF_COMPILER_CYGWIN 1
 #endif
 
+/* COMPILER(RVCT) */
+#if defined(__CC_ARM) || defined(__ARMCC__)
+#define WTF_COMPILER_RVCT 1
+#endif
+
+/* COMPILER(WINSCW) */
+#if defined(__WINSCW__)
+#define WTF_COMPILER_WINSCW 1
+#endif
+
 #if (PLATFORM(MAC) || PLATFORM(WIN)) && !defined(ENABLE_JSC_MULTIPLE_THREADS)
 #define ENABLE_JSC_MULTIPLE_THREADS 1
 #endif
@@ -317,6 +328,19 @@
 #define HAVE_FLOAT_H 1
 #define HAVE_SYS_TIMEB_H 1
 #define HAVE_VIRTUALALLOC 1
+
+#elif PLATFORM(SYMBIAN)
+
+#define HAVE_ERRNO_H 1
+#define HAVE_MMAP 0
+#define HAVE_SBRK 1
+
+#define HAVE_SYS_TIME_H 1
+#define HAVE_STRINGS_H 1
+
+#if !COMPILER(RVCT)
+#define HAVE_SYS_PARAM_H 1
+#endif
 
 #else
 

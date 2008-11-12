@@ -520,7 +520,7 @@ void RenderContainer::layout()
 {
     ASSERT(needsLayout());
 
-    view()->pushLayoutState(this, IntSize(m_x, m_y));
+    LayoutStateMaintainer statePusher(view(), this, IntSize(m_x, m_y));
 
     RenderObject* child = m_firstChild;
     while (child) {
@@ -529,7 +529,7 @@ void RenderContainer::layout()
         child = child->nextSibling();
     }
 
-    view()->popLayoutState();
+    statePusher.pop();
     setNeedsLayout(false);
 }
 
@@ -662,9 +662,8 @@ VisiblePosition RenderContainer::positionForCoordinates(int x, int y)
 void RenderContainer::addLineBoxRects(Vector<IntRect>& rects, unsigned start, unsigned end, bool)
 {
     if (!m_firstChild && (isInline() || isAnonymousBlock())) {
-        int x, y;
-        absolutePositionForContent(x, y);
-        absoluteRects(rects, x, y);
+        FloatPoint absPos = localToAbsoluteForContent(FloatPoint());
+        absoluteRects(rects, absPos.x(), absPos.y());
         return;
     }
 
@@ -674,9 +673,8 @@ void RenderContainer::addLineBoxRects(Vector<IntRect>& rects, unsigned start, un
     unsigned offset = start;
     for (RenderObject* child = childAt(start); child && offset < end; child = child->nextSibling(), ++offset) {
         if (child->isText() || child->isInline() || child->isAnonymousBlock()) {
-            int x, y;
-            child->absolutePositionForContent(x, y);
-            child->absoluteRects(rects, x, y);
+            FloatPoint absPos = child->localToAbsoluteForContent(FloatPoint());
+            child->absoluteRects(rects, absPos.x(), absPos.y());
         }
     }
 }

@@ -25,7 +25,7 @@
 #include "FloatConversion.h"
 #include "StringBuffer.h"
 #include "TextEncoding.h"
-#include <kjs/dtoa.h>
+#include <wtf/dtoa.h>
 #include <limits>
 #include <stdarg.h>
 #include <wtf/ASCIICType.h>
@@ -274,6 +274,13 @@ String String::simplifyWhiteSpace() const
     if (!m_impl)
         return String();
     return m_impl->simplifyWhiteSpace();
+}
+
+String String::removeCharacters(CharacterMatchFunctionPtr findMatch) const
+{
+    if (!m_impl)
+        return String();
+    return m_impl->removeCharacters(findMatch);
 }
 
 String String::foldCase() const

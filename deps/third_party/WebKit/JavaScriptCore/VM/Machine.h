@@ -106,6 +106,8 @@ namespace JSC {
     public:
         Machine();
         ~Machine();
+
+        void initialize(JSGlobalData*);
         
         RegisterFile& registerFile() { return m_registerFile; }
         
@@ -190,7 +192,8 @@ namespace JSC {
         static JSValue* SFX_CALL cti_op_instanceof(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_mul(CTI_ARGS);
         static JSObject* SFX_CALL cti_op_new_func(CTI_ARGS);
-        static VoidPtrPair SFX_CALL cti_op_call_JSFunction(CTI_ARGS);
+        static void* SFX_CALL cti_op_call_JSFunction(CTI_ARGS);
+        static VoidPtrPair SFX_CALL cti_op_call_arityCheck(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_call_NotJSFunction(CTI_ARGS);
         static void SFX_CALL cti_op_create_arguments(CTI_ARGS);
         static void SFX_CALL cti_op_create_arguments_no_params(CTI_ARGS);
@@ -202,8 +205,7 @@ namespace JSC {
         static JSObject* SFX_CALL cti_op_new_array(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_resolve(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_resolve_global(CTI_ARGS);
-        static JSObject* SFX_CALL cti_op_construct_JSConstructFast(CTI_ARGS);
-        static VoidPtrPair SFX_CALL cti_op_construct_JSConstruct(CTI_ARGS);
+        static JSObject* SFX_CALL cti_op_construct_JSConstruct(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_construct_NotJSConstruct(CTI_ARGS);
         static JSValue* SFX_CALL cti_op_get_by_val(CTI_ARGS);
         static VoidPtrPair SFX_CALL cti_op_resolve_func(CTI_ARGS);
@@ -268,7 +270,6 @@ namespace JSC {
         static JSValue* SFX_CALL cti_allocate_number(CTI_ARGS);
 
         static JSValue* SFX_CALL cti_vm_throw(CTI_ARGS);
-        static void* SFX_CALL cti_vm_compile(CTI_ARGS);
         static void* SFX_CALL cti_vm_lazyLinkCall(CTI_ARGS);
         static JSObject* SFX_CALL cti_op_push_activation(CTI_ARGS);
         
@@ -323,9 +324,6 @@ namespace JSC {
 
         void tryCTICacheGetByID(CallFrame*, CodeBlock*, void* returnAddress, JSValue* baseValue, const Identifier& propertyName, const PropertySlot&);
         void tryCTICachePutByID(CallFrame*, CodeBlock*, void* returnAddress, JSValue* baseValue, const PutPropertySlot&);
-
-        void* getCTIArrayLengthTrampoline(CallFrame*, CodeBlock*);
-        void* getCTIStringLengthTrampoline(CallFrame*, CodeBlock*);
 
         JITCodeBuffer* jitCodeBuffer() const { return m_jitCodeBuffer.get(); }
 #endif

@@ -28,6 +28,7 @@
 
 #include "ApplyStyleCommand.h"
 #include "BeforeTextInsertedEvent.h"
+#include "BreakBlockquoteCommand.h"
 #include "CSSComputedStyleDeclaration.h"
 #include "CSSProperty.h"
 #include "CSSPropertyNames.h"
@@ -321,7 +322,8 @@ ReplaceSelectionCommand::ReplaceSelectionCommand(Document* document, PassRefPtr<
       m_documentFragment(fragment),
       m_preventNesting(preventNesting),
       m_movingParagraph(movingParagraph),
-      m_editAction(editAction)
+      m_editAction(editAction),
+      m_shouldMergeEnd(false)
 {
 }
 
@@ -384,21 +386,21 @@ void ReplaceSelectionCommand::removeNodeAndPruneAncestors(Node* node)
         m_firstNodeInserted = m_lastLeafInserted && m_lastLeafInserted->inDocument() ? afterFirst : 0;
 }
 
-bool ReplaceSelectionCommand::shouldMerge(const VisiblePosition& from, const VisiblePosition& to)
+bool ReplaceSelectionCommand::shouldMerge(const VisiblePosition& source, const VisiblePosition& destination)
 {
-    if (from.isNull() || to.isNull())
+    if (source.isNull() || destination.isNull())
         return false;
         
-    Node* fromNode = from.deepEquivalent().node();
-    Node* toNode = to.deepEquivalent().node();
-    Node* fromNodeBlock = enclosingBlock(fromNode);
-    return !enclosingNodeOfType(from.deepEquivalent(), &isMailPasteAsQuotationNode) &&
-           fromNodeBlock && (!fromNodeBlock->hasTagName(blockquoteTag) || isMailBlockquote(fromNodeBlock))  &&
-           enclosingListChild(fromNode) == enclosingListChild(toNode) &&
-           enclosingTableCell(from.deepEquivalent()) == enclosingTableCell(from.deepEquivalent()) &&
+    Node* sourceNode = source.deepEquivalent().node();
+    Node* destinationNode = destination.deepEquivalent().node();
+    Node* sourceBlock = enclosingBlock(sourceNode);
+    return !enclosingNodeOfType(source.deepEquivalent(), &isMailPasteAsQuotationNode) &&
+           sourceBlock && (!sourceBlock->hasTagName(blockquoteTag) || isMailBlockquote(sourceBlock))  &&
+           enclosingListChild(sourceBlock) == enclosingListChild(destinationNode) &&
+           enclosingTableCell(source.deepEquivalent()) == enclosingTableCell(destination.deepEquivalent()) &&
            // Don't merge to or from a position before or after a block because it would
            // be a no-op and cause infinite recursion.
-           !isBlock(fromNode) && !isBlock(toNode);
+           !isBlock(sourceNode) && !isBlock(destinationNode);
 }
 
 // Style rules that match just inserted elements could change their appearance, like
@@ -621,6 +623,40 @@ void ReplaceSelectionCommand::handleStyleSpans()
     setNodeAttribute(static_cast<Element*>(copiedRangeStyleSpan), styleAttr, copiedRangeStyle->cssText());
 }
 
+void ReplaceSelectionCommand::mergeEndIfNeeded()
+{
+    if (!m_shouldMergeEnd)
+        return;
+
+    VisiblePosition startOfInsertedContent(positionAtStartOfInsertedContent());
+    VisiblePosition endOfInsertedContent(positionAtEndOfInsertedContent());
+    
+    // Bail to avoid infinite recursion.
+    if (m_movingParagraph) {
+        ASSERT_NOT_REACHED();
+        return;
+    }
+    
+    // Merging two paragraphs will destroy the moved one's block styles.  Always move the end of inserted forward 
+    // to preserve the block style of the paragraph already in the document, unless the paragraph to move would 
+    // include the what was the start of the selection that was pasted into, so that we preserve that paragraph's
+    // block styles.
+    bool mergeForward = !(inSameParagraph(startOfInsertedContent, endOfInsertedContent) && !isStartOfParagraph(startOfInsertedContent));
+    
+    VisiblePosition destination = mergeForward ? endOfInsertedContent.next() : endOfInsertedContent;
+    VisiblePosition startOfParagraphToMove = mergeForward ? startOfParagraph(endOfInsertedContent) : endOfInsertedContent.next();
+
+    moveParagraph(startOfParagraphToMove, endOfParagraph(startOfParagraphToMove), destination);
+    // Merging forward will remove m_lastLeafInserted from the document.
+    // FIXME: Maintain positions for the start and end of inserted content instead of keeping nodes.  The nodes are
+    // only ever used to create positions where inserted content starts/ends.
+    if (mergeForward) {
+        m_lastLeafInserted = destination.previous().deepEquivalent().node();
+        if (!m_firstNodeInserted->inDocument())
+            m_firstNodeInserted = endingSelection().visibleStart().deepEquivalent().node();
+    }
+}
+
 void ReplaceSelectionCommand::doApply()
 {
     Selection selection = endingSelection();
@@ -650,15 +686,19 @@ void ReplaceSelectionCommand::doApply()
         startBlock && startBlock->renderer() && startBlock->renderer()->isListItem() ||
         selectionIsPlainText)
         m_preventNesting = false;
-    
+        
     Position insertionPos = selection.start();
+    
+    bool startIsInsideMailBlockquote = nearestMailBlockquote(insertionPos.node());
     
     if (selection.isRange()) {
         // When the end of the selection being pasted into is at the end of a paragraph, and that selection
         // spans multiple blocks, not merging may leave an empty line.
         // When the start of the selection being pasted into is at the start of a block, not merging 
         // will leave hanging block(s).
-        bool mergeBlocksAfterDelete = isEndOfParagraph(visibleEnd) || isStartOfBlock(visibleStart);
+        // Merge blocks if the start of the selection was in a Mail blockquote, since we handle 
+        // that case specially to prevent nesting.
+        bool mergeBlocksAfterDelete = startIsInsideMailBlockquote || isEndOfParagraph(visibleEnd) || isStartOfBlock(visibleStart);
         // FIXME: We should only expand to include fully selected special elements if we are copying a 
         // selection and pasting it on top of itself.
         deleteSelection(false, mergeBlocksAfterDelete, true, false);
@@ -683,12 +723,25 @@ void ReplaceSelectionCommand::doApply()
         // We split the current paragraph in two to avoid nesting the blocks from the fragment inside the current block.
         // For example paste <div>foo</div><div>bar</div><div>baz</div> into <div>x^x</div>, where ^ is the caret.  
         // As long as the  div styles are the same, visually you'd expect: <div>xbar</div><div>bar</div><div>bazx</div>, 
-        // not <div>xbar<div>bar</div><div>bazx</div></div>
-        if (m_preventNesting && !isEndOfParagraph(visibleStart) && !isStartOfParagraph(visibleStart)) {
+        // not <div>xbar<div>bar</div><div>bazx</div></div>.
+        // Don't do this if the selection started in a Mail blockquote, we prevent nesting in that case separately, below.
+        if (m_preventNesting && !startIsInsideMailBlockquote && !isEndOfParagraph(visibleStart) && !isStartOfParagraph(visibleStart)) {
             insertParagraphSeparator();
             setEndingSelection(endingSelection().visibleStart().previous());
         }
         insertionPos = endingSelection().start();
+    }
+    
+    if (m_preventNesting && startIsInsideMailBlockquote) {
+        // We don't want any of the pasted content to end up nested in a Mail blockquote, so first break
+        // out of any surrounding Mail blockquotes.
+        applyCommandToComposite(BreakBlockquoteCommand::create(document()));
+        // This will leave a br between the split.
+        Node* br = endingSelection().start().node();
+        ASSERT(br->hasTagName(brTag));
+        // Insert content between the two blockquotes, but remove the br (since it was just a placeholder).
+        insertionPos = positionBeforeNode(br);
+        removeNode(br);
     }
     
     // Inserting content could cause whitespace to collapse, e.g. inserting <div>foo</div> into hello^ world.
@@ -705,7 +758,8 @@ void ReplaceSelectionCommand::doApply()
     startBlock = enclosingBlock(insertionPos.node());
     
     // Adjust insertionPos to prevent nesting.
-    if (m_preventNesting && startBlock) {
+    // If the start was in a Mail blockquote, we will have already handled adjusting insertionPos above.
+    if (m_preventNesting && startBlock && !startIsInsideMailBlockquote) {
         ASSERT(startBlock != currentRoot);
         VisiblePosition visibleInsertionPos(insertionPos);
         if (isEndOfBlock(visibleInsertionPos) && !(isStartOfBlock(visibleInsertionPos) && fragment.hasInterchangeNewlineAtEnd()))
@@ -783,6 +837,10 @@ void ReplaceSelectionCommand::doApply()
     if (shouldRemoveEndBR(endBR, originalVisPosBeforeEndBR))
         removeNodeAndPruneAncestors(endBR);
     
+    // Determine whether or not we should merge the end of inserted content with what's after it before we do
+    // the start merge so that the start merge doesn't effect our decision.
+    m_shouldMergeEnd = shouldMergeEnd(selectionEndWasEndOfParagraph);
+    
     if (shouldMergeStart(selectionStartWasStartOfParagraph, fragment.hasInterchangeNewlineAtStart())) {
         // Bail to avoid infinite recursion.
         if (m_movingParagraph) {
@@ -833,31 +891,9 @@ void ReplaceSelectionCommand::doApply()
             // Select up to the beginning of the next paragraph.
             lastPositionToSelect = next.deepEquivalent().downstream();
         }
-            
-    } else if (shouldMergeEnd(selectionEndWasEndOfParagraph)) {
-        // Bail to avoid infinite recursion.
-        if (m_movingParagraph) {
-            ASSERT_NOT_REACHED();
-            return;
-        }
-        // Merging two paragraphs will destroy the moved one's block styles.  Always move forward to preserve
-        // the block style of the paragraph already in the document, unless the paragraph to move would include the
-        // what was the start of the selection that was pasted into.
-        bool mergeForward = !inSameParagraph(startOfInsertedContent, endOfInsertedContent) || isStartOfParagraph(startOfInsertedContent);
         
-        VisiblePosition destination = mergeForward ? endOfInsertedContent.next() : endOfInsertedContent;
-        VisiblePosition startOfParagraphToMove = mergeForward ? startOfParagraph(endOfInsertedContent) : endOfInsertedContent.next();
-
-        moveParagraph(startOfParagraphToMove, endOfParagraph(startOfParagraphToMove), destination);
-        // Merging forward will remove m_lastLeafInserted from the document.
-        // FIXME: Maintain positions for the start and end of inserted content instead of keeping nodes.  The nodes are
-        // only ever used to create positions where inserted content starts/ends.
-        if (mergeForward) {
-            m_lastLeafInserted = destination.previous().deepEquivalent().node();
-            if (!m_firstNodeInserted->inDocument())
-                m_firstNodeInserted = endingSelection().visibleStart().deepEquivalent().node();
-        }
-    }
+    } else
+        mergeEndIfNeeded();
     
     handlePasteAsQuotationNode();
     

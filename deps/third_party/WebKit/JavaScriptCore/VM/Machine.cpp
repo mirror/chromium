@@ -50,9 +50,9 @@
 #include "RegExpObject.h"
 #include "RegExpPrototype.h"
 #include "Register.h"
-#include "collector.h"
+#include "Collector.h"
 #include "Debugger.h"
-#include "operations.h"
+#include "Operations.h"
 #include "SamplingTool.h"
 #include <stdio.h>
 
@@ -636,13 +636,19 @@ Machine::Machine()
     fastFree(storage);
 }
 
+void Machine::initialize(JSGlobalData* globalData)
+{
+#if ENABLE(CTI)
+    CTI::compileCTIMachineTrampolines(globalData);
+#else
+    UNUSED_PARAM(globalData);
+#endif
+}
+
 Machine::~Machine()
 {
 #if ENABLE(CTI)
-    if (m_ctiArrayLengthTrampoline)
-        fastFree(m_ctiArrayLengthTrampoline);
-    if (m_ctiStringLengthTrampoline)
-        fastFree(m_ctiStringLengthTrampoline);
+    CTI::freeCTIMachineTrampolines(this);
 #endif
 }
 
@@ -930,7 +936,7 @@ JSValue* Machine::execute(ProgramNode* programNode, CallFrame* callFrame, ScopeC
         m_reentryDepth++;
 #if ENABLE(CTI)
         if (!codeBlock->ctiCode)
-            CTI::compile(this, newCallFrame, codeBlock);
+            CTI::compile(scopeChain->globalData, codeBlock);
         result = CTI::execute(codeBlock->ctiCode, &m_registerFile, newCallFrame, scopeChain->globalData, exception);
 #else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
@@ -996,7 +1002,7 @@ JSValue* Machine::execute(FunctionBodyNode* functionBodyNode, CallFrame* callFra
         m_reentryDepth++;
 #if ENABLE(CTI)
         if (!codeBlock->ctiCode)
-            CTI::compile(this, newCallFrame, codeBlock);
+            CTI::compile(scopeChain->globalData, codeBlock);
         result = CTI::execute(codeBlock->ctiCode, &m_registerFile, newCallFrame, scopeChain->globalData, exception);
 #else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
@@ -1042,9 +1048,9 @@ JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* th
 
         BatchedTransitionOptimizer optimizer(variableObject);
 
-        const Node::VarStack& varStack = codeBlock->ownerNode->varStack();
-        Node::VarStack::const_iterator varStackEnd = varStack.end();
-        for (Node::VarStack::const_iterator it = varStack.begin(); it != varStackEnd; ++it) {
+        const DeclarationStacks::VarStack& varStack = codeBlock->ownerNode->varStack();
+        DeclarationStacks::VarStack::const_iterator varStackEnd = varStack.end();
+        for (DeclarationStacks::VarStack::const_iterator it = varStack.begin(); it != varStackEnd; ++it) {
             const Identifier& ident = (*it).first;
             if (!variableObject->hasProperty(callFrame, ident)) {
                 PutPropertySlot slot;
@@ -1052,9 +1058,9 @@ JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* th
             }
         }
 
-        const Node::FunctionStack& functionStack = codeBlock->ownerNode->functionStack();
-        Node::FunctionStack::const_iterator functionStackEnd = functionStack.end();
-        for (Node::FunctionStack::const_iterator it = functionStack.begin(); it != functionStackEnd; ++it) {
+        const DeclarationStacks::FunctionStack& functionStack = codeBlock->ownerNode->functionStack();
+        DeclarationStacks::FunctionStack::const_iterator functionStackEnd = functionStack.end();
+        for (DeclarationStacks::FunctionStack::const_iterator it = functionStack.begin(); it != functionStackEnd; ++it) {
             PutPropertySlot slot;
             variableObject->put(callFrame, (*it)->m_ident, (*it)->makeFunction(callFrame, scopeChain), slot);
         }
@@ -1088,7 +1094,7 @@ JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* th
         m_reentryDepth++;
 #if ENABLE(CTI)
         if (!codeBlock->ctiCode)
-            CTI::compile(this, newCallFrame, codeBlock);
+            CTI::compile(scopeChain->globalData, codeBlock);
         result = CTI::execute(codeBlock->ctiCode, &m_registerFile, newCallFrame, scopeChain->globalData, exception);
 #else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
@@ -4129,7 +4135,7 @@ NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* c
         vPC[6] = chain;
         vPC[7] = slot.cachedOffset();
         codeBlock->refStructureIDs(vPC);
-        CTI::compilePutByIdTransition(this, callFrame, codeBlock, structureID->previousID(), structureID, slot.cachedOffset(), chain, returnAddress);
+        CTI::compilePutByIdTransition(callFrame->scopeChain()->globalData, codeBlock, structureID->previousID(), structureID, slot.cachedOffset(), chain, returnAddress);
         return;
     }
     
@@ -4142,24 +4148,8 @@ NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* c
     UNUSED_PARAM(callFrame);
     CTI::patchPutByIdReplace(codeBlock, structureID, slot.cachedOffset(), returnAddress);
 #else
-    CTI::compilePutByIdReplace(this, callFrame, codeBlock, structureID, slot.cachedOffset(), returnAddress);
+    CTI::compilePutByIdReplace(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, slot.cachedOffset(), returnAddress);
 #endif
-}
-
-void* Machine::getCTIArrayLengthTrampoline(CallFrame* callFrame, CodeBlock* codeBlock)
-{
-    if (!m_ctiArrayLengthTrampoline)
-        m_ctiArrayLengthTrampoline = CTI::compileArrayLengthTrampoline(this, callFrame, codeBlock);
-        
-    return m_ctiArrayLengthTrampoline;
-}
-
-void* Machine::getCTIStringLengthTrampoline(CallFrame* callFrame, CodeBlock* codeBlock)
-{
-    if (!m_ctiStringLengthTrampoline)
-        m_ctiStringLengthTrampoline = CTI::compileStringLengthTrampoline(this, callFrame, codeBlock);
-        
-    return m_ctiStringLengthTrampoline;
 }
 
 NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* codeBlock, void* returnAddress, JSValue* baseValue, const Identifier& propertyName, const PropertySlot& slot)
@@ -4175,16 +4165,16 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
 
     if (isJSArray(baseValue) && propertyName == callFrame->propertyNames().length) {
 #if USE(CTI_REPATCH_PIC)
-        CTI::compilePatchGetArrayLength(this, callFrame, codeBlock, returnAddress);
+        CTI::compilePatchGetArrayLength(callFrame->scopeChain()->globalData, codeBlock, returnAddress);
 #else
-        ctiRepatchCallByReturnAddress(returnAddress, getCTIArrayLengthTrampoline(callFrame, codeBlock));
+        ctiRepatchCallByReturnAddress(returnAddress, m_ctiArrayLengthTrampoline);
 #endif
         return;
     }
     if (isJSString(baseValue) && propertyName == callFrame->propertyNames().length) {
         // The tradeoff of compiling an repatched inline string length access routine does not seem
         // to pay off, so we currently only do this for arrays.
-        ctiRepatchCallByReturnAddress(returnAddress, getCTIStringLengthTrampoline(callFrame, codeBlock));
+        ctiRepatchCallByReturnAddress(returnAddress, m_ctiStringLengthTrampoline);
         return;
     }
 
@@ -4220,7 +4210,7 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
 #if USE(CTI_REPATCH_PIC)
         CTI::patchGetByIdSelf(codeBlock, structureID, slot.cachedOffset(), returnAddress);
 #else
-        CTI::compileGetByIdSelf(this, callFrame, codeBlock, structureID, slot.cachedOffset(), returnAddress);
+        CTI::compileGetByIdSelf(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, slot.cachedOffset(), returnAddress);
 #endif
         return;
     }
@@ -4244,7 +4234,7 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
         vPC[6] = slot.cachedOffset();
         codeBlock->refStructureIDs(vPC);
 
-        CTI::compileGetByIdProto(this, callFrame, codeBlock, structureID, slotBaseObject->structureID(), slot.cachedOffset(), returnAddress);
+        CTI::compileGetByIdProto(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, slotBaseObject->structureID(), slot.cachedOffset(), returnAddress);
         return;
     }
 
@@ -4286,7 +4276,7 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
     vPC[7] = slot.cachedOffset();
     codeBlock->refStructureIDs(vPC);
 
-    CTI::compileGetByIdChain(this, callFrame, codeBlock, structureID, chain, count, slot.cachedOffset(), returnAddress);
+    CTI::compileGetByIdChain(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, chain, count, slot.cachedOffset(), returnAddress);
 }
 
 #ifndef NDEBUG
@@ -4708,7 +4698,7 @@ JSObject* Machine::cti_op_new_func(CTI_ARGS)
     return ARG_func1->makeFunction(ARG_callFrame, ARG_callFrame->scopeChain());
 }
 
-VoidPtrPair Machine::cti_op_call_JSFunction(CTI_ARGS)
+void* Machine::cti_op_call_JSFunction(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4719,40 +4709,53 @@ VoidPtrPair Machine::cti_op_call_JSFunction(CTI_ARGS)
 
     ScopeChainNode* callDataScopeChain = asFunction(ARG_src1)->m_scopeChain.node();
     CodeBlock* newCodeBlock = &asFunction(ARG_src1)->m_body->byteCode(callDataScopeChain);
+
+    if (!newCodeBlock->ctiCode)
+        CTI::compile(ARG_globalData, newCodeBlock);
+
+    return newCodeBlock;
+}
+
+VoidPtrPair Machine::cti_op_call_arityCheck(CTI_ARGS)
+{
+    CTI_STACK_HACK();
+
     CallFrame* callFrame = ARG_callFrame;
-    size_t registerOffset = ARG_int2;
+    CodeBlock* newCodeBlock = ARG_codeBlock4;
     int argCount = ARG_int3;
 
-    if (LIKELY(argCount == newCodeBlock->numParameters)) {
-        VoidPtrPairValue pair = {{ newCodeBlock, CallFrame::create(callFrame->registers() + registerOffset) }};
-        return pair.i;
-    }
+    ASSERT(argCount != newCodeBlock->numParameters);
+
+    CallFrame* oldCallFrame = callFrame->callerFrame();
 
     if (argCount > newCodeBlock->numParameters) {
         size_t numParameters = newCodeBlock->numParameters;
-        Register* r = callFrame->registers() + registerOffset + numParameters;
+        Register* r = callFrame->registers() + numParameters;
 
         Register* argv = r - RegisterFile::CallFrameHeaderSize - numParameters - argCount;
         for (size_t i = 0; i < numParameters; ++i)
             argv[i + argCount] = argv[i];
 
-        VoidPtrPairValue pair = {{ newCodeBlock, CallFrame::create(r) }};
-        return pair.i;
+        callFrame = CallFrame::create(r);
+        callFrame->setCallerFrame(oldCallFrame);
+    } else {
+        size_t omittedArgCount = newCodeBlock->numParameters - argCount;
+        Register* r = callFrame->registers() + omittedArgCount;
+        Register* newEnd = r + newCodeBlock->numCalleeRegisters;
+        if (!ARG_registerFile->grow(newEnd)) {
+            ARG_globalData->exception = createStackOverflowError(oldCallFrame);
+            VM_THROW_EXCEPTION_2();
+        }
+
+        Register* argv = r - RegisterFile::CallFrameHeaderSize - omittedArgCount;
+        for (size_t i = 0; i < omittedArgCount; ++i)
+            argv[i] = jsUndefined();
+
+        callFrame = CallFrame::create(r);
+        callFrame->setCallerFrame(oldCallFrame);
     }
 
-    size_t omittedArgCount = newCodeBlock->numParameters - argCount;
-    Register* r = callFrame->registers() + registerOffset + omittedArgCount;
-    Register* newEnd = r + newCodeBlock->numCalleeRegisters;
-    if (!ARG_registerFile->grow(newEnd)) {
-        ARG_globalData->exception = createStackOverflowError(callFrame);
-        VM_THROW_EXCEPTION_2();
-    }
-
-    Register* argv = r - RegisterFile::CallFrameHeaderSize - omittedArgCount;
-    for (size_t i = 0; i < omittedArgCount; ++i)
-        argv[i] = jsUndefined();
-
-    VoidPtrPairValue pair = {{ newCodeBlock, CallFrame::create(r) }};
+    VoidPtrPairValue pair = {{ newCodeBlock, callFrame }};
     return pair.i;
 }
 
@@ -4760,26 +4763,13 @@ void* Machine::cti_vm_lazyLinkCall(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
-    Machine* machine = ARG_globalData->machine;
-    CallFrame* callFrame = CallFrame::create(ARG_callFrame);
-
     JSFunction* callee = asFunction(ARG_src1);
     CodeBlock* codeBlock = &callee->m_body->byteCode(callee->m_scopeChain.node());
     if (!codeBlock->ctiCode)
-        CTI::compile(machine, callFrame, codeBlock);
+        CTI::compile(ARG_globalData, codeBlock);
 
     CTI::linkCall(callee, codeBlock, codeBlock->ctiCode, ARG_linkInfo2, ARG_int3);
 
-    return codeBlock->ctiCode;
-}
-
-void* Machine::cti_vm_compile(CTI_ARGS)
-{
-    CTI_STACK_HACK();
-
-    CodeBlock* codeBlock = ARG_callFrame->codeBlock();
-    if (!codeBlock->ctiCode)
-        CTI::compile(ARG_globalData->machine, ARG_callFrame, codeBlock);
     return codeBlock->ctiCode;
 }
 
@@ -4818,7 +4808,13 @@ JSValue* Machine::cti_op_call_NotJSFunction(CTI_ARGS)
         JSValue* returnValue;
         {
             SamplingTool::HostCallRecord callRecord(CTI_SAMPLER);
-            returnValue = callData.native.function(callFrame, asObject(funcVal), argv[0].jsValue(callFrame), argList);
+
+            // All host methods should be calling toThisObject, but this is not presently the case.
+            JSValue* thisValue = argv[0].jsValue(callFrame);
+            if (thisValue == jsNull())
+                thisValue = callFrame->globalThisValue();
+
+            returnValue = callData.native.function(callFrame, asObject(funcVal), thisValue, argList);
         }
         ARG_setCallFrame(previousCallFrame);
         VM_CHECK_EXCEPTION();
@@ -4927,7 +4923,7 @@ JSValue* Machine::cti_op_resolve(CTI_ARGS)
     VM_THROW_EXCEPTION();
 }
 
-JSObject* Machine::cti_op_construct_JSConstructFast(CTI_ARGS)
+JSObject* Machine::cti_op_construct_JSConstruct(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4937,73 +4933,11 @@ JSObject* Machine::cti_op_construct_JSConstructFast(CTI_ARGS)
 #endif
 
     StructureID* structure;
-    if (ARG_src2->isObject())
-        structure = asObject(ARG_src2)->inheritorID();
+    if (ARG_src5->isObject())
+        structure = asObject(ARG_src5)->inheritorID();
     else
         structure = asFunction(ARG_src1)->m_scopeChain.node()->globalObject()->emptyObjectStructure();
     return new (ARG_globalData) JSObject(structure);
-}
-
-VoidPtrPair Machine::cti_op_construct_JSConstruct(CTI_ARGS)
-{
-    CTI_STACK_HACK();
-
-    CallFrame* callFrame = ARG_callFrame;
-
-    JSFunction* constructor = asFunction(ARG_src1);
-    int registerOffset = ARG_int2;
-    int argCount = ARG_int3;
-    JSValue* constrProtoVal = ARG_src5;
-    int firstArg = ARG_int6;
-
-#ifndef NDEBUG
-    ConstructData constructData;
-    ASSERT(constructor->getConstructData(constructData) == ConstructTypeJS);
-#endif
-
-    ScopeChainNode* callDataScopeChain = constructor->m_scopeChain.node();
-    FunctionBodyNode* functionBodyNode = constructor->m_body.get();
-    CodeBlock* newCodeBlock = &functionBodyNode->byteCode(callDataScopeChain);
-
-    StructureID* structure;
-    if (constrProtoVal->isObject())
-        structure = asObject(constrProtoVal)->inheritorID();
-    else
-        structure = callDataScopeChain->globalObject()->emptyObjectStructure();
-    JSObject* newObject = new (ARG_globalData) JSObject(structure);
-    callFrame[firstArg] = newObject; // "this" value
-
-    if (LIKELY(argCount == newCodeBlock->numParameters)) {
-        VoidPtrPairValue pair = {{ newCodeBlock, CallFrame::create(callFrame->registers() + registerOffset) }};
-        return pair.i;
-    }
-
-    if (argCount > newCodeBlock->numParameters) {
-        size_t numParameters = newCodeBlock->numParameters;
-        Register* r = callFrame->registers() + registerOffset + numParameters;
-
-        Register* argv = r - RegisterFile::CallFrameHeaderSize - numParameters - argCount;
-        for (size_t i = 0; i < numParameters; ++i)
-            argv[i + argCount] = argv[i];
-
-        VoidPtrPairValue pair = {{ newCodeBlock, CallFrame::create(r) }};
-        return pair.i;
-    }
-
-    size_t omittedArgCount = newCodeBlock->numParameters - argCount;
-    Register* r = callFrame->registers() + registerOffset + omittedArgCount;
-    Register* newEnd = r + newCodeBlock->numCalleeRegisters;
-    if (!ARG_registerFile->grow(newEnd)) {
-        ARG_globalData->exception = createStackOverflowError(callFrame);
-        VM_THROW_EXCEPTION_2();
-    }
-
-    Register* argv = r - RegisterFile::CallFrameHeaderSize - omittedArgCount;
-    for (size_t i = 0; i < omittedArgCount; ++i)
-        argv[i] = jsUndefined();
-
-    VoidPtrPairValue pair = {{ newCodeBlock, CallFrame::create(r) }};
-    return pair.i;
 }
 
 JSValue* Machine::cti_op_construct_NotJSConstruct(CTI_ARGS)
@@ -5644,7 +5578,7 @@ JSValue* Machine::cti_op_call_eval(CTI_ARGS)
     JSValue* baseVal = ARG_src5;
 
     if (baseVal == scopeChain->globalObject() && funcVal == scopeChain->globalObject()->evalFunction()) {
-        JSObject* thisObject = asObject(callFrame[codeBlock->thisRegister].jsValue(callFrame));
+        JSObject* thisObject = callFrame[codeBlock->thisRegister].jsValue(callFrame)->toThisObject(callFrame);
         JSValue* exceptionValue = noValue();
         JSValue* result = machine->callEval(callFrame, thisObject, scopeChain, registerFile, registerOffset - RegisterFile::CallFrameHeaderSize - argCount, argCount, exceptionValue);
         if (UNLIKELY(exceptionValue != noValue())) {

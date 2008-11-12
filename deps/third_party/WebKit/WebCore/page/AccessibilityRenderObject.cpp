@@ -341,6 +341,10 @@ bool AccessibilityRenderObject::isReadOnly() const
         if (!document)
             return true;
         
+        HTMLElement* body = document->body();
+        if (body && body->isContentEditable())
+            return false;
+        
         Frame* frame = document->frame();
         if (!frame)
             return true;
@@ -920,9 +924,8 @@ IntRect AccessibilityRenderObject::boundingBoxRect() const
     
     // FIXME: This doesn't work correctly with transforms.
     Vector<IntRect> rects;
-    int x, y;
-    obj->absolutePosition(x, y);
-    obj->absoluteRects(rects, x, y);
+    FloatPoint absPos = obj->localToAbsolute();
+    obj->absoluteRects(rects, absPos.x(), absPos.y());
     const size_t n = rects.size();
     for (size_t i = 0; i < n; ++i) {
         IntRect r = rects[i];

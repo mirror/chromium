@@ -149,28 +149,27 @@ bool XSLStyleSheet::parseString(const String& string, bool strict)
     xmlSetStructuredErrorFunc(console, XSLTProcessor::parseErrorFunc);
     xmlSetGenericErrorFunc(console, XSLTProcessor::genericErrorFunc);
 
-    xmlParserCtxtPtr ctxt =   
-        xmlCreateMemoryParserCtxt(reinterpret_cast<const char*>(string.characters()), string.length());
+    const char* buffer = reinterpret_cast<const char*>(string.characters());
+    int size = string.length() * sizeof(UChar);
 
-    if (parentStyleSheet())
-    {
-        // Child stylesheets should use the same libxml dictionary as
-        // their parents. Otherwise both dictionaries end up trying to
-        // free the same memory.
+    xmlParserCtxtPtr ctxt = xmlCreateMemoryParserCtxt(buffer, size);
+
+    if (m_parentStyleSheet) {
+        // The XSL transform may leave the newly-transformed document
+        // with references to the symbol dictionaries of the style sheet
+        // and any of its children. XML document disposal can corrupt memory
+        // if a document uses more than one symbol dictionary, so we
+        // ensure that all child stylesheets use the same dictionaries as their
+        // parents.
         xmlDictFree(ctxt->dict);
-        ctxt->dict = parentStyleSheet()->m_stylesheetDoc->dict;
+        ctxt->dict = m_parentStyleSheet->m_stylesheetDoc->dict;
+        xmlDictReference(ctxt->dict);
     }
 
-    m_stylesheetDoc = xmlCtxtReadMemory(ctxt, reinterpret_cast<const char*>(string.characters()), string.length() * sizeof(UChar),
+    m_stylesheetDoc = xmlCtxtReadMemory(ctxt, buffer, size,
         href().utf8().data(),
         BOMHighByte == 0xFF ? "UTF-16LE" : "UTF-16BE", 
         XML_PARSE_NOENT | XML_PARSE_DTDATTR | XML_PARSE_NOWARNING | XML_PARSE_NOCDATA);
-    // If we had already freed the dict memory, do not try to clean it up
-    // again.
-    if (parentStyleSheet())
-        ctxt->dict = NULL;
-    xmlFreeParserCtxt(ctxt);
-
     loadChildSheets();
 
     xmlSetStructuredErrorFunc(0, 0);
@@ -255,6 +254,13 @@ xsltStylesheetPtr XSLStyleSheet::compileStyleSheet()
     return result;
 }
 
+void XSLStyleSheet::setParentStyleSheet(XSLStyleSheet* parent)
+{
+    m_parentStyleSheet = parent;
+    if (parent)
+        m_ownerDocument = parent->ownerDocument();
+}
+
 xmlDocPtr XSLStyleSheet::locateStylesheetSubResource(xmlDocPtr parentDoc, const xmlChar* uri)
 {
     bool matchedParent = (parentDoc == document());
@@ -303,14 +309,6 @@ void XSLStyleSheet::markAsProcessed()
     m_stylesheetDocTaken = true;
 }
 
-void XSLStyleSheet::setParentStyleSheet(XSLStyleSheet* parent)
-{
-    m_parentStyleSheet = parent;
-    if (parent) {
-        setOwnerDocument(parent->ownerDocument());
-    }
-}
-    
 } // namespace WebCore
 
 #endif // ENABLE(XSLT)

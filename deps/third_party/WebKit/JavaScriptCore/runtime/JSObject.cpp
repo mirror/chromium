@@ -31,9 +31,9 @@
 #include "NativeErrorConstructor.h"
 #include "ObjectPrototype.h"
 #include "PropertyNameArray.h"
-#include "lookup.h"
-#include "nodes.h"
-#include "operations.h"
+#include "Lookup.h"
+#include "Nodes.h"
+#include "Operations.h"
 #include <math.h>
 #include <wtf/Assertions.h>
 
@@ -435,7 +435,7 @@ bool JSObject::toBoolean(ExecState*) const
 double JSObject::toNumber(ExecState* exec) const
 {
     JSValue* primitive = toPrimitive(exec, PreferNumber);
-    if (exec->hadException()) // should be picked up soon in nodes.cpp
+    if (exec->hadException()) // should be picked up soon in Nodes.cpp
         return 0.0;
     return primitive->toNumber(exec);
 }

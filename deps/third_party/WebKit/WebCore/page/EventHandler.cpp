@@ -1726,7 +1726,12 @@ static EventTargetNode* eventTargetNodeForDocument(Document* doc)
 
 bool EventHandler::handleAccessKey(const PlatformKeyboardEvent& evt)
 {
-    if ((evt.modifiers() & s_accessKeyModifiers) != s_accessKeyModifiers)
+    // FIXME: Ignoring the state of Shift key is what neither IE nor Firefox do.
+    // IE matches lower and upper case access keys regardless of Shift key state - but if both upper and
+    // lower case variants are present in a document, the correct element is matched based on Shift key state.
+    // Firefox only matches an access key if Shift is not pressed, and does that case-insensitively.
+    ASSERT(!(accessKeyModifiers() & PlatformKeyboardEvent::ShiftKey));
+    if ((evt.modifiers() & ~PlatformKeyboardEvent::ShiftKey) != accessKeyModifiers())
         return false;
     String key = evt.unmodifiedText();
     Element* elem = m_frame->document()->getElementByAccessKey(key.lower());
@@ -2027,10 +2032,10 @@ bool EventHandler::handleDrag(const MouseEventWithHitTestResults& event)
         // Check to see if the is a DOM based drag, if it is get the DOM specified drag 
         // image and offset
         if (dragState().m_dragSrcIsDHTML) {
-            int srcX, srcY;
             if (RenderObject* renderer = dragState().m_dragSrc->renderer()) {
-                renderer->absolutePosition(srcX, srcY);
-                IntSize delta = m_mouseDownPos - IntPoint(srcX, srcY);
+                // FIXME: This doesn't work correctly with transforms.
+                FloatPoint absPos = renderer->localToAbsolute();
+                IntSize delta = m_mouseDownPos - roundedIntPoint(absPos);
                 dragState().m_dragClipboard->setDragImageElement(dragState().m_dragSrc.get(), IntPoint() + delta);
             } else {
                 // The renderer has disappeared, this can happen if the onStartDrag handler has hidden

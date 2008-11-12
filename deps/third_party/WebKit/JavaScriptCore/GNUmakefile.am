@@ -2,13 +2,14 @@ javascriptcore_cppflags += \
 	-I$(srcdir)/JavaScriptCore/API \
 	-I$(srcdir)/JavaScriptCore/ForwardingHeaders \
 	-I$(srcdir)/JavaScriptCore/VM \
+	-I$(srcdir)/JavaScriptCore/bytecompiler \
 	-I$(srcdir)/JavaScriptCore/debugger \
 	-I$(srcdir)/JavaScriptCore/pcre \
 	-I$(srcdir)/JavaScriptCore/profiler \
 	-I$(srcdir)/JavaScriptCore/runtime \
 	-I$(srcdir)/JavaScriptCore/wtf/unicode \
 	-I$(top_builddir)/JavaScriptCore/pcre \
-	-I$(top_builddir)/JavaScriptCore/kjs \
+	-I$(top_builddir)/JavaScriptCore/parser \
 	-I$(top_builddir)/JavaScriptCore/runtime
 
 javascriptcore_h_api += \
@@ -24,7 +25,7 @@ javascriptcore_h_api += \
 	JavaScriptCore/API/WebKitAvailability.h
 
 javascriptcore_built_nosources += \
-	DerivedSources/lexer.lut.h \
+	DerivedSources/Lexer.lut.h \
 	JavaScriptCore/runtime/ArrayPrototype.lut.h \
 	JavaScriptCore/runtime/DatePrototype.lut.h \
 	JavaScriptCore/runtime/MathObject.lut.h \
@@ -71,7 +72,7 @@ javascriptcore_sources += \
 	JavaScriptCore/VM/CTI.h \
 	JavaScriptCore/VM/CodeBlock.cpp \
 	JavaScriptCore/VM/CodeBlock.h \
-	JavaScriptCore/VM/CodeGenerator.h \
+	JavaScriptCore/bytecompiler/CodeGenerator.h \
 	JavaScriptCore/VM/ExceptionHelpers.cpp \
 	JavaScriptCore/VM/ExceptionHelpers.h \
 	JavaScriptCore/VM/Instruction.h \
@@ -126,35 +127,35 @@ javascriptcore_sources += \
 	JavaScriptCore/runtime/JSGlobalData.h \
 	JavaScriptCore/runtime/JSStaticScopeObject.h \
 	JavaScriptCore/runtime/JSType.h \
-	JavaScriptCore/kjs/NodeInfo.h \
-	JavaScriptCore/kjs/Parser.h \
+	JavaScriptCore/parser/NodeInfo.h \
+	JavaScriptCore/parser/Parser.h \
 	JavaScriptCore/runtime/PropertyNameArray.h \
 	JavaScriptCore/runtime/RegExpConstructor.h \
 	JavaScriptCore/runtime/RegExpMatchesArray.h \
 	JavaScriptCore/runtime/RegExpObject.h \
 	JavaScriptCore/runtime/RegExpPrototype.h \
-	JavaScriptCore/kjs/ResultType.h \
+	JavaScriptCore/parser/ResultType.h \
 	JavaScriptCore/runtime/ScopeChain.h \
 	JavaScriptCore/runtime/ScopeChainMark.h \
-	JavaScriptCore/kjs/SourceProvider.h \
-	JavaScriptCore/kjs/SourceCode.h \
+	JavaScriptCore/parser/SourceProvider.h \
+	JavaScriptCore/parser/SourceCode.h \
 	JavaScriptCore/runtime/SymbolTable.h \
 	JavaScriptCore/runtime/Tracing.h \
-	JavaScriptCore/kjs/TypeInfo.h \
-	JavaScriptCore/kjs/collector.h \
-	JavaScriptCore/kjs/completion.h \
-	JavaScriptCore/kjs/config.h \
+	JavaScriptCore/runtime/TypeInfo.h \
+	JavaScriptCore/runtime/Collector.h \
+	JavaScriptCore/runtime/Completion.h \
+	JavaScriptCore/config.h \
 	JavaScriptCore/debugger/Debugger.h \
-	JavaScriptCore/kjs/dtoa.h \
-	JavaScriptCore/kjs/identifier.h \
-	JavaScriptCore/kjs/interpreter.h \
-	JavaScriptCore/kjs/lexer.h \
-	JavaScriptCore/kjs/lookup.h \
-	JavaScriptCore/kjs/nodes.h \
-	JavaScriptCore/kjs/operations.h \
-	JavaScriptCore/kjs/protect.h \
-	JavaScriptCore/kjs/regexp.h \
-	JavaScriptCore/kjs/ustring.h \
+	JavaScriptCore/wtf/dtoa.h \
+	JavaScriptCore/runtime/Identifier.h \
+	JavaScriptCore/runtime/Interpreter.h \
+	JavaScriptCore/parser/Lexer.h \
+	JavaScriptCore/runtime/Lookup.h \
+	JavaScriptCore/parser/Nodes.h \
+	JavaScriptCore/runtime/Operations.h \
+	JavaScriptCore/runtime/Protect.h \
+	JavaScriptCore/runtime/RegExp.h \
+	JavaScriptCore/runtime/UString.h \
 	JavaScriptCore/masm/X86Assembler.h \
 	JavaScriptCore/os-win32/stdbool.h \
 	JavaScriptCore/os-win32/stdint.h \
@@ -302,11 +303,11 @@ javascriptcore_sources += \
 # Debug build
 if ENABLE_DEBUG
 javascriptcore_built_sources += \
-	DerivedSources/grammar.cpp \
-	DerivedSources/grammar.h
+	DerivedSources/Grammar.cpp \
+	DerivedSources/Grammar.h
 
 javascriptcore_sources += \
-	JavaScriptCore/VM/CodeGenerator.cpp \
+	JavaScriptCore/bytecompiler/CodeGenerator.cpp \
 	JavaScriptCore/VM/RegisterFile.cpp \
 	JavaScriptCore/runtime/ArgList.cpp \
 	JavaScriptCore/runtime/Arguments.cpp \
@@ -317,25 +318,24 @@ javascriptcore_sources += \
 	JavaScriptCore/runtime/JSLock.cpp \
 	JavaScriptCore/runtime/JSLock.h \
 	JavaScriptCore/runtime/JSStaticScopeObject.cpp \
-	JavaScriptCore/kjs/LabelScope.h \
-	JavaScriptCore/kjs/Parser.cpp \
+	JavaScriptCore/bytecompiler/LabelScope.h \
+	JavaScriptCore/parser/Parser.cpp \
 	JavaScriptCore/runtime/PropertyNameArray.cpp \
 	JavaScriptCore/runtime/RegExpConstructor.cpp \
 	JavaScriptCore/runtime/RegExpObject.cpp \
 	JavaScriptCore/runtime/RegExpPrototype.cpp \
 	JavaScriptCore/runtime/ScopeChain.cpp \
-	JavaScriptCore/kjs/collector.cpp \
+	JavaScriptCore/runtime/Collector.cpp \
 	JavaScriptCore/debugger/Debugger.cpp \
-	JavaScriptCore/kjs/dtoa.cpp \
-	JavaScriptCore/kjs/identifier.cpp \
-	JavaScriptCore/kjs/interpreter.cpp \
-	JavaScriptCore/kjs/lexer.cpp \
-	JavaScriptCore/kjs/lookup.cpp \
-	JavaScriptCore/kjs/nodes.cpp \
-	JavaScriptCore/kjs/nodes2string.cpp \
-	JavaScriptCore/kjs/operations.cpp \
-	JavaScriptCore/kjs/regexp.cpp \
-	JavaScriptCore/kjs/ustring.cpp \
+	JavaScriptCore/wtf/dtoa.cpp \
+	JavaScriptCore/runtime/Identifier.cpp \
+	JavaScriptCore/runtime/Interpreter.cpp \
+	JavaScriptCore/parser/Lexer.cpp \
+	JavaScriptCore/runtime/Lookup.cpp \
+	JavaScriptCore/parser/Nodes.cpp \
+	JavaScriptCore/runtime/Operations.cpp \
+	JavaScriptCore/runtime/RegExp.cpp \
+	JavaScriptCore/runtime/UString.cpp \
 	JavaScriptCore/runtime/ArrayConstructor.cpp \
 	JavaScriptCore/runtime/ArrayPrototype.cpp \
 	JavaScriptCore/runtime/BooleanConstructor.cpp \
@@ -387,29 +387,29 @@ javascriptcore_sources += \
 
 else
 javascriptcore_built_nosources += \
-	DerivedSources/grammar.cpp \
-	DerivedSources/grammar.h
+	DerivedSources/Grammar.cpp \
+	DerivedSources/Grammar.h
 
 javascriptcore_sources += \
 	JavaScriptCore/AllInOneFile.cpp
 endif # END ENABLE_DEBUG
 
-DerivedSources/grammar.h: DerivedSources/grammar.cpp;
+DerivedSources/Grammar.h: DerivedSources/Grammar.cpp;
 
-DerivedSources/grammar.cpp: $(srcdir)/JavaScriptCore/kjs/grammar.y
-	$(BISON) -d -p kjsyy $(srcdir)/JavaScriptCore/kjs/grammar.y -o $@ > bison_out.txt 2>&1
-	$(PERL) -p -e 'END { if ($$conflict) { unlink "grammar.cpp"; die; } } $$conflict ||= /conflict/' < bison_out.txt
-	cat $(GENSOURCES)/grammar.hpp > $(GENSOURCES)/grammar.h
-	rm -f $(GENSOURCES)/grammar.hpp bison_out.txt
+DerivedSources/Grammar.cpp: $(srcdir)/JavaScriptCore/parser/Grammar.y
+	$(BISON) -d -p kjsyy $(srcdir)/JavaScriptCore/parser/Grammar.y -o $@ > bison_out.txt 2>&1
+	$(PERL) -p -e 'END { if ($$conflict) { unlink "Grammar.cpp"; die; } } $$conflict ||= /conflict/' < bison_out.txt
+	cat $(GENSOURCES)/Grammar.hpp > $(GENSOURCES)/Grammar.h
+	rm -f $(GENSOURCES)/Grammar.hpp bison_out.txt
 
-DerivedSources/lexer.lut.h: $(CREATE_HASH_TABLE) $(srcdir)/JavaScriptCore/kjs/keywords.table
+DerivedSources/Lexer.lut.h: $(CREATE_HASH_TABLE) $(srcdir)/JavaScriptCore/parser/Keywords.table
 	$(PERL) $^ > $@
 
 JavaScriptCore/%.lut.h: $(CREATE_HASH_TABLE) $(srcdir)/JavaScriptCore/%.cpp
-	$^ -i > $@
+	$(PERL) $^ -i > $@
 
 JavaScriptCore/pcre/chartables.c: $(srcdir)/JavaScriptCore/pcre/dftables
-	$^ $@
+	$(PERL) $^ $@
 
 bin_PROGRAMS += \
 	Programs/jsc
@@ -446,7 +446,7 @@ Programs_minidom_LDADD = \
 
 # jsc
 Programs_jsc_SOURCES = \
-	JavaScriptCore/kjs/Shell.cpp
+	JavaScriptCore/jsc.cpp
 
 Programs_jsc_CPPFLAGS = \
 	$(global_cppflags) \
@@ -475,8 +475,8 @@ javascriptcore_dist += \
 	JavaScriptCore/pcre/AUTHORS \
 	JavaScriptCore/pcre/dftables \
 	JavaScriptCore/pcre/ucptable.cpp \
-	JavaScriptCore/kjs/grammar.y \
-	JavaScriptCore/kjs/keywords.table
+	JavaScriptCore/parser/Grammar.y \
+	JavaScriptCore/parser/Keywords.table
 
 # Clean rules for JavaScriptCore
 CLEANFILES += \

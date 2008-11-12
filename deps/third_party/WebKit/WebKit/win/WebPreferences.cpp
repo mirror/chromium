@@ -202,6 +202,8 @@ void WebPreferences::initializeDefaultSettings()
     CFDictionaryAddValue(defaults, CFSTR(WebKitJavaScriptEnabledPreferenceKey), kCFBooleanTrue);
     CFDictionaryAddValue(defaults, CFSTR(WebKitJavaScriptCanOpenWindowsAutomaticallyPreferenceKey), kCFBooleanTrue);
     CFDictionaryAddValue(defaults, CFSTR(WebKitPluginsEnabledPreferenceKey), kCFBooleanTrue);
+    CFDictionaryAddValue(defaults, CFSTR(WebKitDatabasesEnabledPreferenceKey), kCFBooleanTrue);
+    CFDictionaryAddValue(defaults, CFSTR(WebKitLocalStorageEnabledPreferenceKey), kCFBooleanTrue);
     CFDictionaryAddValue(defaults, CFSTR(WebKitAllowAnimatedImagesPreferenceKey), kCFBooleanTrue);
     CFDictionaryAddValue(defaults, CFSTR(WebKitAllowAnimatedImageLoopingPreferenceKey), kCFBooleanTrue);
     CFDictionaryAddValue(defaults, CFSTR(WebKitDisplayImagesKey), kCFBooleanTrue);
@@ -1173,6 +1175,30 @@ HRESULT STDMETHODCALLTYPE WebPreferences::offlineWebApplicationCacheEnabled(BOOL
     return S_OK;
 }
 
+HRESULT STDMETHODCALLTYPE WebPreferences::setDatabasesEnabled(BOOL enabled)
+{
+    setBoolValue(CFSTR(WebKitDatabasesEnabledPreferenceKey), enabled);
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebPreferences::databasesEnabled(BOOL* enabled)
+{
+    *enabled = boolValueForKey(CFSTR(WebKitDatabasesEnabledPreferenceKey));
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebPreferences::setLocalStorageEnabled(BOOL enabled)
+{
+    setBoolValue(CFSTR(WebKitLocalStorageEnabledPreferenceKey), enabled);
+    return S_OK;
+}
+
+HRESULT STDMETHODCALLTYPE WebPreferences::localStorageEnabled(BOOL* enabled)
+{
+    *enabled = boolValueForKey(CFSTR(WebKitLocalStorageEnabledPreferenceKey));
+    return S_OK;
+}
+
 HRESULT STDMETHODCALLTYPE WebPreferences::localStorageDatabasePath(BSTR* location)
 {
     *location = stringValueForKey(CFSTR(WebKitLocalStorageDatabasePathPreferenceKey));
@@ -1182,6 +1208,18 @@ HRESULT STDMETHODCALLTYPE WebPreferences::localStorageDatabasePath(BSTR* locatio
 HRESULT STDMETHODCALLTYPE WebPreferences::setLocalStorageDatabasePath(BSTR location)
 {
     setStringValue(CFSTR(WebKitLocalStorageDatabasePathPreferenceKey), location);
+    return S_OK;
+}
+
+HRESULT WebPreferences::setZoomsTextOnly(BOOL zoomsTextOnly)
+{
+    setBoolValue(CFSTR(WebKitZoomsTextOnlyPreferenceKey), zoomsTextOnly);
+    return S_OK;
+}
+
+HRESULT WebPreferences::zoomsTextOnly(BOOL* zoomsTextOnly)
+{
+    *zoomsTextOnly = boolValueForKey(CFSTR(WebKitZoomsTextOnlyPreferenceKey));
     return S_OK;
 }
 

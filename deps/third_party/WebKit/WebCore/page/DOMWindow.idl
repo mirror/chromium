@@ -375,6 +375,12 @@ module window {
 	attribute MessageChannelConstructor MessageChannel;
 #endif
 
+        attribute PluginConstructor Plugin;
+        attribute PluginArrayConstructor PluginArray;
+
+        attribute MimeTypeConstructor MimeType;
+        attribute MimeTypeArrayConstructor MimeTypeArray;
+
 #if ENABLE_DOM_STORAGE
         attribute StorageConstructor Storage;
         attribute StorageEventConstructor StorageEvent;

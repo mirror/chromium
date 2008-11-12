@@ -65,7 +65,7 @@ VisiblePosition RenderTextControlInnerBlock::positionForCoordinates(int x, int y
     if (m_multiLine) {
         RenderTextControl* renderer = static_cast<RenderTextControl*>(node()->shadowAncestorNode()->renderer());
         if (renderer->hasOverflowClip())
-            renderer->layer()->scrollOffset(contentsX, contentsY);
+            renderer->layer()->addScrolledContentOffset(contentsX, contentsY);
     }
 
     return RenderBlock::positionForCoordinates(contentsX, contentsY);

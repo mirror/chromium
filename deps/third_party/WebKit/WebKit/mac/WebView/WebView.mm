@@ -31,7 +31,6 @@
 
 #import "DOMRangeInternal.h"
 #import "WebBackForwardListInternal.h"
-#import "WebBaseNetscapePluginView.h"
 #import "WebChromeClient.h"
 #import "WebContextMenuClient.h"
 #import "WebDOMOperationsPrivate.h"
@@ -337,7 +336,6 @@ static const char webViewIsOpen[] = "At least one WebView is still open.";
     BOOL allowsUndo;
         
     float zoomMultiplier;
-    BOOL zoomMultiplierIsTextOnly;
 
     NSString *applicationNameForUserAgent;
     String userAgent;
@@ -485,7 +483,6 @@ static BOOL grammarCheckingEnabled;
     JSC::initializeThreading();
     allowsUndo = YES;
     zoomMultiplier = 1;
-    zoomMultiplierIsTextOnly = YES;
 #if ENABLE(DASHBOARD_SUPPORT)
     dashboardBehaviorAllowWheelScrolling = YES;
 #endif
@@ -1285,6 +1282,8 @@ static void WebKitInitializeApplicationCachePathIfNecessary()
     settings->setMinimumFontSize([preferences minimumFontSize]);
     settings->setMinimumLogicalFontSize([preferences minimumLogicalFontSize]);
     settings->setPluginsEnabled([preferences arePlugInsEnabled]);
+    settings->setDatabasesEnabled([preferences databasesEnabled]);
+    settings->setLocalStorageEnabled([preferences localStorageEnabled]);
     settings->setPrivateBrowsingEnabled([preferences privateBrowsingEnabled]);
     settings->setSansSerifFontFamily([preferences sansSerifFontFamily]);
     settings->setSerifFontFamily([preferences serifFontFamily]);
@@ -2661,14 +2660,19 @@ WebFrameLoadDelegateImplementationCache* WebViewGetFrameLoadDelegateImplementati
 
 - (float)textSizeMultiplier
 {
-    return _private->zoomMultiplierIsTextOnly ? _private->zoomMultiplier : 1.0f;
+    return [self _realZoomMultiplierIsTextOnly] ? _private->zoomMultiplier : 1.0f;
 }
 
 - (void)_setZoomMultiplier:(float)m isTextOnly:(BOOL)isTextOnly
 {
     // NOTE: This has no visible effect when viewing a PDF (see <rdar://problem/4737380>)
     _private->zoomMultiplier = m;
-    _private->zoomMultiplierIsTextOnly = isTextOnly;
+    ASSERT(_private->page);
+    if (_private->page)
+        _private->page->settings()->setZoomsTextOnly(isTextOnly);
+    
+    // FIXME: it would be nice to rework this code so that _private->zoomMultiplier doesn't exist and callers
+    // all access _private->page->settings().
     Frame* coreFrame = core([self mainFrame]);
     if (coreFrame)
         coreFrame->setZoomFactor(m, isTextOnly);
@@ -2676,7 +2680,7 @@ WebFrameLoadDelegateImplementationCache* WebViewGetFrameLoadDelegateImplementati
 
 - (float)_zoomMultiplier:(BOOL)isTextOnly
 {
-    if (isTextOnly != _private->zoomMultiplierIsTextOnly)
+    if (isTextOnly != [self _realZoomMultiplierIsTextOnly])
         return 1.0f;
     return _private->zoomMultiplier;
 }
@@ -2688,7 +2692,10 @@ WebFrameLoadDelegateImplementationCache* WebViewGetFrameLoadDelegateImplementati
 
 - (BOOL)_realZoomMultiplierIsTextOnly
 {
-    return _private->zoomMultiplierIsTextOnly;
+    if (!_private->page)
+        return NO;
+    
+    return _private->page->settings()->zoomsTextOnly();
 }
 
 #define MinimumZoomMultiplier       0.5f
@@ -3749,7 +3756,7 @@ static NSAppleEventDescriptor* aeDescFromJSValue(ExecState* exec, JSValue* jsVal
 
 - (float)pageSizeMultiplier
 {
-    return !_private->zoomMultiplierIsTextOnly ? _private->zoomMultiplier : 1.0f;
+    return ![self _realZoomMultiplierIsTextOnly] ? _private->zoomMultiplier : 1.0f;
 }
 
 - (BOOL)canZoomPageIn

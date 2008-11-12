@@ -56,7 +56,7 @@
 #include "Settings.h"
 #include "TextMetrics.h"
 #if USE(JSC)
-#include <kjs/interpreter.h>
+#include <runtime/Interpreter.h>
 #endif
 #include <stdio.h>
 #include <wtf/MathExtras.h>

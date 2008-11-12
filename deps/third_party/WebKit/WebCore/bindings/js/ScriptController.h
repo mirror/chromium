@@ -24,7 +24,7 @@
 
 #include "JSDOMWindowShell.h"
 #include "runtime.h"
-#include <kjs/protect.h>
+#include <runtime/Protect.h>
 #include <wtf/RefPtr.h>
 
 #if PLATFORM(MAC)

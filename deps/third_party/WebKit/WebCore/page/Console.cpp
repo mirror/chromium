@@ -44,7 +44,7 @@
 #include "ScriptCallContext.h"
 #if USE(JSC)
 #include <runtime/ArgList.h>
-#include <kjs/interpreter.h>
+#include <runtime/Interpreter.h>
 #include <runtime/JSObject.h>
 #include <profiler/Profiler.h>
 #endif

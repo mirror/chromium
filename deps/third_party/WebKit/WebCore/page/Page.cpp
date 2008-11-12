@@ -50,7 +50,7 @@
 #include "Widget.h"
 #include "ScriptController.h"
 #if USE(JSC)
-#include <kjs/collector.h>
+#include <runtime/Collector.h>
 #include <runtime/JSLock.h>
 #endif
 #include <wtf/HashMap.h>

@@ -55,12 +55,14 @@ namespace WebCore {
 
         PassRefPtr<MimeType> item(unsigned index);
         bool canGetItemsForName(const AtomicString& propertyName);
-        PassRefPtr<MimeType> nameGetter(const AtomicString& propertyName);
+        PassRefPtr<MimeType> namedItem(const AtomicString& propertyName);
 
+#if USE(V8)
         PassRefPtr<MimeType> namedItem(const String& propertyName) { 
           AtomicString s(propertyName);
-          return nameGetter(s); 
+          return namedItem(s); 
         }
+#endif
 
     private:
         Plugin(PluginData*, unsigned index);

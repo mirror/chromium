@@ -320,7 +320,7 @@ void Cache::pruneDeadResources()
         // First flush all the decoded data in this queue.
         while (current) {
             CachedResource* prev = current->m_prevInAllResourcesList;
-            if (!current->hasClients() && !current->isPreloaded() && current->isLoaded() && current->decodedSize()) {
+            if (!current->hasClients() && !current->isPreloaded() && current->isLoaded()) {
                 // Destroy our decoded data. This will remove us from 
                 // m_liveDecodedResources, and possibly move us to a differnt 
                 // LRU list in m_allResources.
@@ -699,6 +699,21 @@ void Cache::setDisabled(bool disabled)
 }
 
 #ifndef NDEBUG
+void Cache::dumpStats()
+{
+    Statistics s = getStatistics();
+    printf("%-11s %-11s %-11s %-11s %-11s\n", "", "Count", "Size", "LiveSize", "DecodedSize");
+    printf("%-11s %-11s %-11s %-11s %-11s\n", "-----------", "-----------", "-----------", "-----------", "-----------");
+    printf("%-11s %11d %11d %11d %11d\n", "Images", s.images.count, s.images.size, s.images.liveSize, s.images.decodedSize);
+    printf("%-11s %11d %11d %11d %11d\n", "CSS", s.cssStyleSheets.count, s.cssStyleSheets.size, s.cssStyleSheets.liveSize, s.cssStyleSheets.decodedSize);
+#if ENABLE(XSLT)
+    printf("%-11s %11d %11d %11d %11d\n", "XSL", s.xslStyleSheets.count, s.xslStyleSheets.size, s.xslStyleSheets.liveSize, s.xslStyleSheets.decodedSize);
+#endif
+    printf("%-11s %11d %11d %11d %11d\n", "JavaScript", s.scripts.count, s.scripts.size, s.scripts.liveSize, s.scripts.decodedSize);
+    printf("%-11s %11d %11d %11d %11d\n", "Fonts", s.fonts.count, s.fonts.size, s.fonts.liveSize, s.fonts.decodedSize);
+    printf("%-11s %-11s %-11s %-11s %-11s\n\n", "-----------", "-----------", "-----------", "-----------", "-----------");
+}
+
 void Cache::dumpLRULists(bool includeLive) const
 {
     printf("LRU-SP lists in eviction order (Kilobytes decoded, Kilobytes encoded, Access count, Referenced):\n");

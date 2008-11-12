@@ -49,7 +49,8 @@ public:
     virtual int overrideHeight() const;
     virtual void setOverrideSize(int);
 
-    virtual bool absolutePosition(int& x, int& y, bool fixed = false) const;
+    virtual FloatPoint localToAbsolute(FloatPoint localPoint = FloatPoint(), bool fixed = false, bool useTransforms = false) const;
+    virtual FloatPoint absoluteToLocal(FloatPoint containerPoint, bool fixed = false, bool useTransforms = false) const;
 
     virtual int xPos() const { return m_x; }
     virtual int yPos() const { return m_y; }
@@ -135,7 +136,8 @@ public:
 
     int relativePositionOffsetX() const;
     int relativePositionOffsetY() const;
-
+    IntSize relativePositionOffset() const { return IntSize(relativePositionOffsetX(), relativePositionOffsetY()); }
+    
     virtual RenderLayer* layer() const { return m_layer; }
 
     virtual IntRect caretRect(InlineBox*, int caretOffset, int* extraWidthToEndOfLine = 0);
@@ -188,6 +190,8 @@ protected:
     
     virtual bool shouldCalculateSizeAsReplaced() const { return isReplaced() && !isInlineBlockOrInlineTable(); }
 
+    IntSize offsetFromContainer(RenderObject*) const;
+    
 private:
     void paintRootBoxDecorations(PaintInfo&, int tx, int ty);
     // Returns true if we did a full repaint

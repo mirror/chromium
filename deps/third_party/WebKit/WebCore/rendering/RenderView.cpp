@@ -131,14 +131,20 @@ void RenderView::layout()
     setNeedsLayout(false);
 }
 
-bool RenderView::absolutePosition(int& xPos, int& yPos, bool fixed) const
+FloatPoint RenderView::localToAbsolute(FloatPoint localPoint, bool fixed, bool useTransforms) const
 {
-    if (fixed && m_frameView) {
-        xPos = m_frameView->scrollX();
-        yPos = m_frameView->scrollY();
-    } else
-        xPos = yPos = 0;
-    return true;
+    if (fixed && m_frameView)
+        localPoint += m_frameView->scrollOffset();
+
+    return localPoint;
+}
+
+FloatPoint RenderView::absoluteToLocal(FloatPoint containerPoint, bool fixed, bool useTransforms) const
+{
+    if (fixed && m_frameView)
+        containerPoint -= m_frameView->scrollOffset();
+
+    return containerPoint;
 }
 
 void RenderView::paint(PaintInfo& paintInfo, int tx, int ty)

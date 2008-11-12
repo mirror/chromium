@@ -1,3 +1,92 @@
+2008-11-10  Adam Roben  <aroben@apple.com>
+
+        Fix Bug 22158: Would like to turn on WebCore logging channels via an
+        environment variable
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22158>
+
+        Reviewed by Anders Carlsson.
+
+        * WebView.cpp:
+        (WebView::initWithFrame): Call WebCore's
+        InitializeLoggingChannelsIfNecessary.
+
+2008-11-08  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Darin Adler.
+
+        - WebKit/win part of adding WebPreferences for controlling databases and local storage
+
+        * Interfaces/IWebPreferencesPrivate.idl: Declared setDatabasesEnabled,
+        databasesEnabled, setLocalStorageEnabled and localStorageEnabled.
+        * WebPreferenceKeysPrivate.h: Added WebKitDatabasesEnabledPreferenceKey
+        and WebKitLocalStorageEnabledPreferenceKey.
+        * WebPreferences.cpp:
+        (WebPreferences::initializeDefaultSettings): Made databases and local
+        storage enabled by default.
+        (WebPreferences::setDatabasesEnabled): Added.
+        (WebPreferences::databasesEnabled): Added.
+        (WebPreferences::setLocalStorageEnabled): Added.
+        (WebPreferences::localStorageEnabled): Added.
+        * WebPreferences.h:
+        * WebView.cpp:
+        (WebView::notifyPreferencesChanged): Transfer the databases and local
+        storage preferences to WebCore settings.
+
+2008-11-06  John Sullivan  <sullivan@apple.com>
+    
+        Eliminated one of the two booleans tracking whether zoom was text-only, to avoid future problems.
+    
+        Reviewed by Adam Roben
+
+        * WebView.h:
+        removed m_zoomMultiplierIsTextOnly
+        
+        * WebView.cpp:
+        (WebView::WebView):
+        removed initialization of m_zoomMultiplierIsTextOnly
+        (WebView::setZoomMultiplier):
+        use m_page->settings()->setZoomsTextOnly() instead of setting m_zoomMultiplierIsTextOnly
+        (WebView::zoomMultiplier):
+        use m_page->settings()->zoomsTextOnly() instead of reading m_zoomMultiplierIsTextOnly
+
+2008-11-06  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Adam Roben.
+
+        Add support for a WebKitZoomsTextOnly preference.
+
+        * Interfaces/IWebPreferences.idl:
+        * WebPreferenceKeysPrivate.h:
+        * WebPreferences.cpp:
+        (WebPreferences::setZoomsTextOnly):
+        (WebPreferences::zoomsTextOnly):
+        * WebPreferences.h:
+
+        * WebView.cpp:
+        (WebView::canMakeTextLarger): Consider the zoomsTextOnly setting when computing this.
+        (WebView::makeTextLarger): ditto.
+        (WebView::canMakeTextSmaller): ditto.
+        (WebView::makeTextSmaller): ditto.
+        (WebView::canMakeTextStandardSize): 
+        Don't consider the setting in this case since we need to reset both text zoom and page zoom regardless of the setting.
+        (WebView::makeTextStandardSize):
+        (WebView::notifyPreferencesChanged): Set the WebCore settings to match the WebPreference for WebKitZoomsTextOnly.
+
+2008-11-05  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by John Sullivan.
+
+        - make the {protocol,proxyType} argument of
+          WebURLProtectionSpace::initWith{Proxy}Host actually work and fix
+          assertion failures.
+
+        * WebURLProtectionSpace.cpp:
+        (WebURLProtectionSpace::initWithHost): The BString comparisons were
+        applying the BString==BSTR operator to a right hand side that was
+        actually a WCHAR string. Fixed by using BStrings on both sides.
+        (WebURLProtectionSpace::initWithProxyHost): Ditto.
+
 2008-11-01  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Darin Adler.

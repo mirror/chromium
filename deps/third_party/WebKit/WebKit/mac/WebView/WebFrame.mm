@@ -373,8 +373,8 @@ WebView *getWebView(WebFrame *webFrame)
     Frame* coreFrame = _private->coreFrame;
     for (Frame* frame = coreFrame; frame; frame = frame->tree()->traverseNext(coreFrame)) {
         WebFrame *webFrame = kit(frame);
-        // Never call setDrawsBackground:YES here on the scroll view or the background color will
-        // flash between pages loads. setDrawsBackground:YES will be called in _frameLoadCompleted.
+        // Don't call setDrawsBackground:YES here because it may be NO because of a load
+        // in progress; WebFrameLoaderClient keeps it set to NO during the load process.
         if (!drawsBackground)
             [[[webFrame frameView] _scrollView] setDrawsBackground:NO];
         [[[webFrame frameView] _scrollView] setBackgroundColor:backgroundColor];
@@ -684,6 +684,7 @@ static inline WebDataSource *dataSource(DocumentLoader* loader)
 
 - (id)_accessibilityTree
 {
+#if HAVE(ACCESSIBILITY)
     if (!AXObjectCache::accessibilityEnabled()) {
         AXObjectCache::enableAccessibility();
         if ([[NSApp accessibilityAttributeValue:NSAccessibilityEnhancedUserInterfaceAttribute] boolValue])
@@ -696,6 +697,9 @@ static inline WebDataSource *dataSource(DocumentLoader* loader)
     if (!root)
         return nil;
     return _private->coreFrame->document()->axObjectCache()->get(root)->wrapper();
+#else
+    return nil;
+#endif
 }
 
 - (DOMRange *)_rangeByAlteringCurrentSelection:(SelectionController::EAlteration)alteration direction:(SelectionController::EDirection)direction granularity:(TextGranularity)granularity

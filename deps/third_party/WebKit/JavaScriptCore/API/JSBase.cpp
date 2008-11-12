@@ -28,12 +28,12 @@
 #include "JSBasePrivate.h"
 
 #include "APICast.h"
-#include "completion.h"
+#include "Completion.h"
 #include "OpaqueJSString.h"
 #include "SourceCode.h"
 #include <runtime/ExecState.h>
 #include <runtime/InitializeThreading.h>
-#include <kjs/interpreter.h>
+#include <runtime/Interpreter.h>
 #include <runtime/JSGlobalObject.h>
 #include <runtime/JSLock.h>
 #include <runtime/JSObject.h>

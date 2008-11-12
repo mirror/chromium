@@ -37,10 +37,12 @@ JavaScriptCore Bakefile project file.
 
     <template id="jscore_base" template="icu,pthreads,wxwk_build_settings">
         <sources>
-            $(JSCORE_SOURCES_API)
+            $(JSCORE_API_SOURCES)
+            $(JSCORE_BYTECOMPILER_SOURCES)
             $(JSCORE_DEBUGGER_SOURCES)
-            $(JSCORE_SOURCES_KJS)
-            $(JSCORE_SOURCES_PCRE)
+            $(JSCORE_KJS_SOURCES)
+            $(JSCORE_PCRE_SOURCES)
+            $(JSCORE_PARSER_SOURCES)
             $(JSCORE_PROFILER_SOURCES)
             $(JSCORE_RUNTIME_SOURCES)
             $(JSCORE_VM_SOURCES)
@@ -53,10 +55,11 @@ JavaScriptCore Bakefile project file.
         <include>$(SRCDIR)</include>
         <include>$(SRCDIR)/..</include>
         <include>$(SRCDIR)/API</include>
+        <include>$(SRCDIR)/bytecompiler</include>
         <include>$(SRCDIR)/DerivedSources/JavaScriptCore</include>
         <include>$(SRCDIR)/ForwardingHeaders</include>
         <include>$(SRCDIR)/debugger</include>
-        <include>$(SRCDIR)/kjs</include>
+        <include>$(SRCDIR)/parser</include>
         <include>$(SRCDIR)/pcre</include>
         <include>$(SRCDIR)/profiler</include>
         <include>$(SRCDIR)/runtime</include>
@@ -89,15 +92,16 @@ JavaScriptCore Bakefile project file.
         <depends>jscore</depends>
         <include>$(SRCDIR)</include>
         <include>$(WK_ROOT)/JavaScriptCore</include>
+        <include>$(WK_ROOT)/JavaScriptCore/bytecompiler</include>
         <include>$(WK_ROOT)/JavaScriptCore/debugger</include>
-        <include>$(WK_ROOT)/JavaScriptCore/kjs</include>
+        <include>$(WK_ROOT)/JavaScriptCore/parser</include>
         <include>$(WK_ROOT)/JavaScriptCore/pcre</include>
         <include>$(WK_ROOT)/JavaScriptCore/profiler</include>
         <include>$(WK_ROOT)/JavaScriptCore/runtime</include>
         <include>$(WK_ROOT)/JavaScriptCore/VM</include>
         <include>$(WK_ROOT)/JavaScriptCore/wtf</include>
         <dirname>$(WKOUTPUTDIR)</dirname>
-        <sources>$(SRCDIR)/kjs/Shell.cpp</sources>
+        <sources>$(SRCDIR)/jsc.cpp</sources>
         <if cond="FORMAT=='gnu'">
             <ldflags>$(WKOUTPUTDIR)/libjscore.a</ldflags>
         </if>

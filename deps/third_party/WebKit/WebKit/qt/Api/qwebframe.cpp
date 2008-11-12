@@ -70,6 +70,7 @@
 #include <qevent.h>
 #include <qfileinfo.h>
 #include <qpainter.h>
+#include <QMultiMap>
 #if QT_VERSION >= 0x040400
 #include <qnetworkrequest.h>
 #else
@@ -77,6 +78,8 @@
 #endif
 #include <qregion.h>
 #include <qprinter.h>
+#include "HTMLMetaElement.h"
+#include "NodeList.h"
 
 using namespace WebCore;
 
@@ -280,6 +283,53 @@ QString QWebFrame::title() const
     else return QString();
 }
 
+/*!
+    \since 4.5
+    \brief Returns the meta data in this frame as a QMultiMap
+
+    The meta data consists of the name and content attributes of the
+    of the \c{<meta>} tags in the HTML document.
+
+    For example:
+
+    \code
+    <html>
+        <head>
+            <meta name="description" content="This document is a tutorial about Qt development">
+            <meta name="keywords" content="Qt, WebKit, Programming">
+        </head>
+        ...
+    </html>
+    \endcode
+
+    Given the above HTML code the metaData() function will return a map with two entries:
+    \table
+    \header \o Key
+            \o Value
+    \row    \o "description"
+            \o "This document is a tutorial about Qt development"
+    \row    \o "keywords"
+            \o "Qt, WebKit, Programming"
+    \endtable
+
+    This function returns a multi map to support multiple meta tags with the same name attribute.
+*/
+QMultiMap<QString, QString> QWebFrame::metaData() const
+{
+    if(!d->frame->document())
+       return QMap<QString,QString>();
+
+    QMultiMap<QString,QString> map;
+    Document* doc = d->frame->document();
+    RefPtr<NodeList> list = doc->getElementsByTagName("meta");
+    unsigned len = list->length();
+    for (unsigned i = 0; i < len; i++) {
+        HTMLMetaElement* meta = static_cast<HTMLMetaElement*>(list->item(i));
+        map.insert(meta->name(), meta->content());
+    }
+    return map;
+}
+
 static inline QUrl ensureAbsoluteUrl(const QUrl &url)
 {
     if (!url.isRelative())
@@ -446,7 +496,7 @@ void QWebFrame::load(const QNetworkRequest &req,
 
 /*!
   Sets the content of this frame to \a html. \a baseUrl is optional and used to resolve relative
-  URLs in the document.
+  URLs in the document, such as referenced images or stylesheets.
 
   When using this method WebKit assumes that external resources such as JavaScript programs or style
   sheets are encoded in UTF-8 unless otherwise specified. For example, the encoding of an external
@@ -637,19 +687,20 @@ void QWebFrame::scroll(int dx, int dy) const
   \brief The offset from the start this frame is currently scrolled to.
 */
 
-QSize QWebFrame::scrollOffset() const
+QPoint QWebFrame::scrollOffset() const
 {
     if (!d->frame->view())
-        return QSize(0,0);
+        return QPoint(0,0);
 
-    return d->frame->view()->scrollOffset();
+    IntSize ofs = d->frame->view()->scrollOffset();
+    return QPoint(ofs.width(), ofs.height());
 }
 
-void QWebFrame::setScrollOffset(const QSize &offset) const
+void QWebFrame::setScrollOffset(const QPoint &offset) const
 {
-    QSize current = scrollOffset();
-    int dx = offset.width() - current.width();
-    int dy = offset.height() - current.height();
+    QPoint current = scrollOffset();
+    int dx = offset.x() - current.x();
+    int dy = offset.y() - current.y();
     scroll(dx, dy);
 }
 
@@ -708,11 +759,18 @@ void QWebFrame::render(QPainter *painter)
     QWebSettings.
 */
 
+/*!
+    Sets the value of the multiplier used to scale the text in a Web frame to
+    the \a factor specified.
+*/
 void QWebFrame::setTextSizeMultiplier(qreal factor)
 {
     d->frame->setZoomFactor(factor, /*isTextOnly*/true);
 }
 
+/*!
+    Returns the value of the multiplier used to scale the text in a Web frame.
+*/
 qreal QWebFrame::textSizeMultiplier() const
 {
     return d->frame->zoomFactor();

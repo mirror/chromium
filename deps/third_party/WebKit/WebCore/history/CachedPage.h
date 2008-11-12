@@ -30,7 +30,7 @@
 #include <wtf/OwnPtr.h>
 #include "PausedTimeouts.h"
 #if USE(JSC)
-#include <kjs/protect.h>
+#include <runtime/Protect.h>
 #endif
 
 namespace WebCore {

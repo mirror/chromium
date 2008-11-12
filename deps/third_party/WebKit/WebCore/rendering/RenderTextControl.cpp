@@ -889,6 +889,11 @@ void RenderTextControl::selectionChanged(bool userTriggered)
             element->dispatchEventForType(eventNames().selectEvent, true, false);
 }
 
+void RenderTextControl::addFocusRingRects(GraphicsContext* graphicsContext, int tx, int ty)
+{
+    graphicsContext->addFocusRingRect(IntRect(tx, ty, width(), height()));
+}
+
 void RenderTextControl::autoscroll()
 {
     if (m_multiLine) {

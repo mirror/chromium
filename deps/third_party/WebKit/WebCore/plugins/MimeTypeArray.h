@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
+    Copyright (C) 2008 Apple Inc. All rights reserved.
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -26,20 +27,11 @@
 #include <wtf/RefCounted.h>
 #include <wtf/Vector.h>
 
-namespace JSC {
-    class ExecState;
-};
-
 namespace WebCore {
 
     class AtomicString;
     class Frame;
     class PluginData;
-
-#if USE(JSC)
-    // FIXME: Generated JSMimeTypeArray.cpp doesn't include JSMimeType.h for toJS
-    JSC::JSValue* toJS(JSC::ExecState*, MimeType*);
-#endif
 
     class MimeTypeArray : public RefCounted<MimeTypeArray> {
     public:
@@ -51,12 +43,14 @@ namespace WebCore {
         unsigned length() const;
         PassRefPtr<MimeType> item(unsigned index);
         bool canGetItemsForName(const AtomicString& propertyName);
-        PassRefPtr<MimeType> nameGetter(const AtomicString& propertyName);
+        PassRefPtr<MimeType> namedItem(const AtomicString& propertyName);
 
+#if USE(V8)
         PassRefPtr<MimeType> namedItem(const String& propertyName) { 
           AtomicString s(propertyName);
-          return nameGetter(s); 
+          return namedItem(s); 
         }
+#endif
 
     private:
         MimeTypeArray(Frame*);
@@ -64,6 +58,7 @@ namespace WebCore {
 
         Frame* m_frame;
     };
-}
 
-#endif
+} // namespace WebCore
+
+#endif // MimeTypeArray_h

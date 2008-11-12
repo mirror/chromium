@@ -56,7 +56,7 @@
 #import "WebKitLogging.h"
 #import "WebKitNSStringExtras.h"
 #import "WebNSURLExtras.h"
-#import "WebBaseNetscapePluginView.h"
+#import "WebNetscapePluginView.h"
 #import "WebNetscapePluginPackage.h"
 #import "WebNullPluginView.h"
 #import "WebPanelAuthenticationHandler.h"
@@ -111,6 +111,10 @@
 
 #if ENABLE(MAC_JAVA_BRIDGE)
 #import "WebJavaPlugIn.h"
+#endif
+
+#if USE(PLUGIN_HOST_PROCESS)
+#import "WebHostedNetscapePluginView.h"
 #endif
 
 using namespace WebCore;
@@ -715,7 +719,7 @@ void WebFrameLoaderClient::updateGlobalHistory(const KURL& url)
 {
     NSURL *cocoaURL = url;
     const String& pageTitle = core(m_webFrame.get())->loader()->documentLoader()->title();
-    [[WebHistory optionalSharedHistory] _addItemForURL:cocoaURL title:pageTitle];
+    [[WebHistory optionalSharedHistory] _visitedURL:cocoaURL withTitle:pageTitle];
 }
  
 bool WebFrameLoaderClient::shouldGoToHistoryItem(HistoryItem* item) const
@@ -800,11 +804,13 @@ String WebFrameLoaderClient::generatedMIMETypeForURLScheme(const String& URLSche
 void WebFrameLoaderClient::frameLoadCompleted()
 {
     // Note: Can be called multiple times.
+
+    // See WebFrameLoaderClient::provisionalLoadStarted.
+    if ([getWebView(m_webFrame.get()) drawsBackground])
+        [[m_webFrame->_private->webFrameView _scrollView] setDrawsBackground:YES];
+
     // Even if already complete, we might have set a previous item on a frame that
     // didn't do any data loading on the past transaction. Make sure to clear these out.
-    NSScrollView *sv = [m_webFrame->_private->webFrameView _scrollView];
-    if ([getWebView(m_webFrame.get()) drawsBackground])
-        [sv setDrawsBackground:YES];
     core(m_webFrame.get())->loader()->setPreviousHistoryItem(0);
 }
 
@@ -846,9 +852,15 @@ void WebFrameLoaderClient::restoreViewState()
 
 void WebFrameLoaderClient::provisionalLoadStarted()
 {    
-    // FIXME: This is OK as long as no one resizes the window,
-    // but in the case where someone does, it means garbage outside
-    // the occupied part of the scroll view.
+    // Tell the scroll view not to draw a background so we can leave the contents of
+    // the old page showing during the beginning of the loading process.
+
+    // This will stay set to NO until:
+    //    1) The load gets far enough along: WebFrameLoader::frameLoadCompleted.
+    //    2) The window is resized: -[WebFrameView setFrameSize:].
+    // or 3) The view is moved out of the window: -[WebFrameView viewDidMoveToWindow].
+    // Please keep the comments in these four functions in agreement with each other.
+
     [[m_webFrame->_private->webFrameView _scrollView] setDrawsBackground:NO];
 }
 
@@ -1279,6 +1291,15 @@ public:
 
 #endif // ENABLE(NETSCAPE_PLUGIN_API)
 
+static Class netscapePluginViewClass()
+{
+#if USE(PLUGIN_HOST_PROCESS)
+    return [WebHostedNetscapePluginView class];
+#else
+    return [WebNetscapePluginView class];
+#endif
+}
+
 Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, Element* element, const KURL& url,
     const Vector<String>& paramNames, const Vector<String>& paramValues, const String& mimeType, bool loadManually)
 {
@@ -1341,7 +1362,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, Element* element
             
 #if ENABLE(NETSCAPE_PLUGIN_API)
         else if ([pluginPackage isKindOfClass:[WebNetscapePluginPackage class]]) {
-            WebBaseNetscapePluginView *embeddedView = [[[WebBaseNetscapePluginView alloc]
+            WebBaseNetscapePluginView *pluginView = [[[netscapePluginViewClass() alloc]
                 initWithFrame:NSMakeRect(0, 0, size.width(), size.height())
                 pluginPackage:(WebNetscapePluginPackage *)pluginPackage
                 URL:URL
@@ -1352,7 +1373,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, Element* element
                 loadManually:loadManually
                 DOMElement:kit(element)] autorelease];
             
-            return new NetscapePluginWidget(embeddedView);
+            return new NetscapePluginWidget(pluginView);
         } 
 #endif
     } else
@@ -1390,8 +1411,8 @@ void WebFrameLoaderClient::redirectDataToPlugin(Widget* pluginWidget)
     NSView *pluginView = pluginWidget->platformWidget();
 
 #if ENABLE(NETSCAPE_PLUGIN_API)
-    if ([pluginView isKindOfClass:[WebBaseNetscapePluginView class]])
-        [representation _redirectDataToManualLoader:(WebBaseNetscapePluginView *)pluginView forPluginView:pluginView];
+    if ([pluginView isKindOfClass:[WebNetscapePluginView class]])
+        [representation _redirectDataToManualLoader:(WebNetscapePluginView *)pluginView forPluginView:pluginView];
     else {
 #else
     {
@@ -1434,7 +1455,7 @@ Widget* WebFrameLoaderClient::createJavaAppletWidget(const IntSize& size, Elemen
         } 
 #if ENABLE(NETSCAPE_PLUGIN_API)
         else if ([pluginPackage isKindOfClass:[WebNetscapePluginPackage class]]) {
-            view = [[[WebBaseNetscapePluginView alloc] initWithFrame:NSMakeRect(0, 0, size.width(), size.height())
+            view = [[[netscapePluginViewClass() alloc] initWithFrame:NSMakeRect(0, 0, size.width(), size.height())
                 pluginPackage:(WebNetscapePluginPackage *)pluginPackage
                 URL:nil
                 baseURL:baseURL
