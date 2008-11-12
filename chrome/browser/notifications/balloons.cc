@@ -7,7 +7,7 @@
 
 #include "base/logging.h"
 #include "base/gfx/rect.h"
-#include "chrome/browser/notifications/balloon_contents.h"
+#include "chrome/browser/notifications/balloon_view.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_widget_host_view_win.h"
 #include "chrome/browser/site_instance.h"
@@ -101,9 +101,9 @@ Balloon::~Balloon() {
 }
 
 void Balloon::Show() {
-  if (!contents_.get()) {
-    contents_.reset(new BalloonContents(this));
-    contents_->Start();
+  if (!balloon_view_.get()) {
+    balloon_view_.reset(new BalloonView());
+    balloon_view_->Show(position_, this);
   }
 }
 

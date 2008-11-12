@@ -19,7 +19,7 @@
 #include "chrome/browser/notifications/notification.h"
 
 class Balloon;
-class BalloonContents;
+class BalloonView;
 class Profile;
 class SiteInstance;
 
@@ -175,7 +175,7 @@ class Balloon {
   SiteInstance* site_instance_;
   Notification notification_;
   BalloonState state_;
-  scoped_ptr<BalloonContents> contents_;
+  scoped_ptr<BalloonView> balloon_view_;
   gfx::Point position_;
   gfx::Size size_;
   DISALLOW_COPY_AND_ASSIGN(Balloon);

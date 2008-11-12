@@ -1522,6 +1522,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\notifications\balloon_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\notifications\balloon_view.h"
+				>
+			</File>
+			<File
 				RelativePath=".\notifications\balloons.cc"
 				>
 			</File>

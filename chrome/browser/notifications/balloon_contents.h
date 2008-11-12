@@ -9,18 +9,17 @@
 
 #include "base/task.h"
 #include "chrome/browser/render_view_host_delegate.h"
+#include "chrome/browser/views/hwnd_html_view.h"
 #include "webkit/glue/webpreferences.h"
 
 class Balloon;
 class Profile;
 class RenderViewHost;
 
-class BalloonContents : public RenderViewHostDelegate {
+class BalloonContents : public HWNDHtmlView,
+                        public RenderViewHostDelegate {
  public:
   explicit BalloonContents(Balloon* balloon);
-
-  // Starts showing the balloon.
-  bool Start();
 
   // Stops showing the balloon.
   void Shutdown();

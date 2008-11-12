@@ -16,7 +16,8 @@
 #include "chrome/common/notification_types.h"
 
 BalloonContents::BalloonContents(Balloon* balloon)
-    : balloon_(balloon),
+    : HWNDHtmlView(balloon->notification().url(), this, true),
+      balloon_(balloon),
       render_view_host_(NULL),
       notify_disconnection_(false),
       method_factory_(this) {
@@ -26,6 +27,7 @@ BalloonContents::BalloonContents(Balloon* balloon)
 void BalloonContents::Shutdown() {
   NotifyDisconnected();
 
+  // TODO(levin): Is this correct to do now that this is part of a view?
   // Need to do this asynchronously as it will close the RenderViewHost, which
   // is currently on the call stack above us.
   MessageLoop::current()->PostTask(
@@ -38,33 +40,8 @@ void BalloonContents::DelayedShutdown() {
     render_view_host_->Shutdown();
     render_view_host_ = NULL;
   }
-
-  delete this;
-}
-
-bool BalloonContents::Start() {
-  render_view_host_ = new RenderViewHost(balloon_->site_instance(),
-                                         this,
-                                         MSG_ROUTING_NONE,
-                                         NULL);
-
-  RenderWidgetHostViewWin* view =
-      new RenderWidgetHostViewWin(render_view_host_);
-  render_view_host_->set_view(view);
-  RECT rect = { balloon_->position().x(),
-                balloon_->position().y(),
-                balloon_->position().x() + balloon_->size().width() - 1,
-                balloon_->position().y() + balloon_->size().height() - 1
-              };
-  view->Create(NULL, rect, NULL,
-               WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
-               WS_EX_TOOLWINDOW);
-  view->ShowWindow(SW_SHOW);
-
-  render_view_host_->CreateRenderView();
-  render_view_host_->NavigateToURL(balloon_->notification().url());
-
-  return true;
+  // TODO(levin): Investigate the view should clean up this class.
+  //  delete this;
 }
 
 WebPreferences BalloonContents::GetWebkitPrefs() {
