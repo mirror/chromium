@@ -113,7 +113,7 @@ class SafeBrowsingDatabase {
     int list_id;
     int add_chunk_id;
     int sub_chunk_id;
-    base::Time received;
+    Time received;
   } HashCacheEntry;
 
   typedef std::list<HashCacheEntry> HashList;

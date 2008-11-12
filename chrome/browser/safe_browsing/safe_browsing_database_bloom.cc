@@ -407,7 +407,7 @@ void SafeBrowsingDatabaseBloom::InsertAdd(SBPrefix host, SBEntry* entry) {
   int encoded = EncodeChunkId(entry->chunk_id(), entry->list_id());
 
   if (entry->type() == SBEntry::ADD_FULL_HASH) {
-    base::Time receive_time = base::Time::Now();
+    Time receive_time = Time::Now();
     for (int i = 0; i < entry->prefix_count(); ++i) {
       SBPrefix prefix;
       SBFullHash full_hash = entry->FullHashAt(i);
@@ -453,7 +453,7 @@ void SafeBrowsingDatabaseBloom::InsertAddPrefix(SBPrefix prefix,
 
 void SafeBrowsingDatabaseBloom::InsertAddFullHash(SBPrefix prefix,
                                                   int encoded_chunk,
-                                                  base::Time receive_time,
+                                                  Time receive_time,
                                                   SBFullHash full_prefix) {
   STATS_COUNTER(L"SB.PrefixAddFull", 1);
   std::string sql = "INSERT INTO add_full_hash "
@@ -1144,7 +1144,7 @@ bool SafeBrowsingDatabaseBloom::BuildAddFullHashCache(HashCache* add_cache) {
     if (add_del_cache_.find(entry.add_chunk_id) != add_del_cache_.end())
       continue;  // This entry's chunk was deleted so we skip it.
     SBPrefix prefix = full_add_entry->column_int(1);
-    entry.received = base::Time::FromTimeT(full_add_entry->column_int64(2));
+    entry.received = Time::FromTimeT(full_add_entry->column_int64(2));
     int chunk, list_id;
     DecodeChunkId(entry.add_chunk_id, &chunk, &list_id);
     entry.list_id = list_id;

@@ -168,7 +168,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   void InsertAddPrefix(SBPrefix prefix, int encoded_chunk);
   void InsertAddFullHash(SBPrefix prefix,
                          int encoded_chunk,
-                         base::Time received_time,
+                         Time received_time,
                          SBFullHash full_prefix);
 
   // Adding sub entries to the database.

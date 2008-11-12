@@ -748,7 +748,7 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   EXPECT_EQ(hash_cache->size(), 2U);
 
   // Now adjust one of the entries times to be in the past.
-  base::Time expired = base::Time::Now() - base::TimeDelta::FromMinutes(60);
+  Time expired = Time::Now() - TimeDelta::FromMinutes(60);
   SBPrefix key;
   memcpy(&key, &full_hash.hash, sizeof(SBPrefix));
   SafeBrowsingDatabase::HashList& entries = (*hash_cache)[key];
