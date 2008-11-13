@@ -255,6 +255,17 @@ namespace JSC {
             linkedCallerList.shrink(lastPos);
         }
 
+        inline bool isKnownNotImmediate(int index)
+        {
+            if (index == thisRegister)
+                return true;
+
+            if (isConstantRegisterIndex(index))
+                return !JSImmediate::isImmediate(getConstant(index));
+
+            return false;
+        }
+
         ALWAYS_INLINE bool isConstantRegisterIndex(int index)
         {
             return index >= numVars && index < numVars + numConstants;
@@ -263,6 +274,11 @@ namespace JSC {
         ALWAYS_INLINE JSValue* getConstant(int index)
         {
             return constantRegisters[index - numVars].getJSValue();
+        }
+
+        ALWAYS_INLINE bool isTemporaryRegisterIndex(int index)
+        {
+            return index >= numVars + numConstants;
         }
 
 #if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
@@ -331,6 +347,8 @@ namespace JSC {
 #if ENABLE(CTI)
         HashMap<void*, unsigned> ctiReturnAddressVPCMap;
 #endif
+
+        Vector<unsigned> jumpTargets;
 
         EvalCodeCache evalCodeCache;
 

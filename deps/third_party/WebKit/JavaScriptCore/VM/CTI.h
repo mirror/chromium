@@ -269,12 +269,12 @@ namespace JSC {
         static const int ctiArgumentInitSize = 0;
 #endif
         // These architecture specific value are used to enable repatching - see comment on op_put_by_id.
-        static const int repatchOffsetPutByIdStructureID = 19;
-        static const int repatchOffsetPutByIdPropertyMapOffset = 34;
+        static const int repatchOffsetPutByIdStructureID = 7;
+        static const int repatchOffsetPutByIdPropertyMapOffset = 22;
         // These architecture specific value are used to enable repatching - see comment on op_get_by_id.
-        static const int repatchOffsetGetByIdStructureID = 19;
-        static const int repatchOffsetGetByIdBranchToSlowCase = 25;
-        static const int repatchOffsetGetByIdPropertyMapOffset = 34;
+        static const int repatchOffsetGetByIdStructureID = 7;
+        static const int repatchOffsetGetByIdBranchToSlowCase = 13;
+        static const int repatchOffsetGetByIdPropertyMapOffset = 22;
 #if ENABLE(OPCODE_SAMPLING)
         static const int repatchOffsetGetByIdSlowCaseCall = 27 + 4 + ctiArgumentInitSize;
 #else
@@ -374,7 +374,7 @@ namespace JSC {
         void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
         void compileBinaryArithOpSlowCase(Instruction*, OpcodeID, Vector<SlowCaseEntry>::iterator& iter, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
 
-        void emitGetArg(int src, X86Assembler::RegisterID dst);
+        void emitGetArg(int src, X86Assembler::RegisterID dst, unsigned i);
         void emitGetPutArg(unsigned src, unsigned offset, X86Assembler::RegisterID scratch);
         void emitPutArg(X86Assembler::RegisterID src, unsigned offset);
         void emitPutArgConstant(unsigned value, unsigned offset);
@@ -392,8 +392,9 @@ namespace JSC {
         JSValue* getConstantImmediateNumericArg(unsigned src);
         unsigned getDeTaggedConstantImmediate(JSValue* imm);
 
-        void emitJumpSlowCaseIfIsJSCell(X86Assembler::RegisterID reg, unsigned opcodeIndex);
-        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID reg, unsigned opcodeIndex);
+        bool linkSlowCaseIfNotJSCell(const Vector<SlowCaseEntry>::iterator&, int vReg);
+        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID, unsigned opcodeIndex);
+        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID, unsigned opcodeIndex, int VReg);
 
         void emitJumpSlowCaseIfNotImmNum(X86Assembler::RegisterID, unsigned opcodeIndex);
         void emitJumpSlowCaseIfNotImmNums(X86Assembler::RegisterID, X86Assembler::RegisterID, unsigned opcodeIndex);
@@ -430,6 +431,8 @@ namespace JSC {
         void printOpcodeOperandTypes(unsigned src1, unsigned src2);
 #endif
 
+        void killLastResultRegister();
+
         X86Assembler m_jit;
         Machine* m_machine;
         JSGlobalData* m_globalData;
@@ -456,9 +459,11 @@ namespace JSC {
         Vector<SlowCaseEntry> m_slowCases;
         Vector<SwitchRecord> m_switches;
 
+        int m_lastResultBytecodeRegister;
+        unsigned m_jumpTargetsPosition;
+
         // This limit comes from the limit set in PCRE
         static const int MaxPatternSize = (1 << 16);
-
     };
 }
 

@@ -438,7 +438,7 @@ void DOMWindow::postMessage(const String& message, MessagePort* messagePort, con
 
     RefPtr<MessagePort> newMessagePort;
     if (messagePort)
-        newMessagePort = messagePort->clone(document(), ec);
+        newMessagePort = messagePort->clone(ec);
     if (ec)
         return;
 
@@ -470,6 +470,11 @@ void DOMWindow::postMessageTimerFired(PostMessageTimer* t)
             return;
         }
     }
+
+    MessagePort* messagePort = timer->event()->messagePort();
+    ASSERT(!messagePort || !messagePort->scriptExecutionContext());
+    if (messagePort)
+        messagePort->attachToContext(document());
 
     document()->dispatchWindowEvent(timer->event());
 }

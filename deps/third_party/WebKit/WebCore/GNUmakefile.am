@@ -1241,6 +1241,7 @@ webcore_sources += \
 	WebCore/platform/graphics/FloatPoint3D.cpp \
 	WebCore/platform/graphics/FloatPoint3D.h \
 	WebCore/platform/graphics/FloatQuad.cpp \
+	WebCore/platform/graphics/FloatQuad.h \
 	WebCore/platform/graphics/FloatRect.cpp \
 	WebCore/platform/graphics/FloatRect.h \
 	WebCore/platform/graphics/FloatSize.cpp \
@@ -2109,7 +2110,9 @@ endif # END ENABLE_XSLT
 # ----
 webcore_sources += \
 	WebCore/bindings/js/JSDedicatedWorkerConstructor.h \
-	WebCore/dom/DedicatedWorker.h
+	WebCore/bindings/js/JSWorkerContext.h \
+	WebCore/dom/DedicatedWorker.h \
+	WebCore/dom/WorkerContext.h
 
 # ----
 # SVG Support
