@@ -6,13 +6,13 @@
  * are met:
  *
  * 1.  Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
+ *     notice, this list of conditions and the following disclaimer. 
  * 2.  Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
+ *     documentation and/or other materials provided with the distribution. 
  * 3.  Neither the name of Apple Computer, Inc. ("Apple") nor the names of
  *     its contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
+ *     from this software without specific prior written permission. 
  *
  * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -26,5 +26,35 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "WebKitPrefix.h"
+#include "config.h"
+#include "FloatQuad.h"
 
+#include <algorithm>
+
+using std::max;
+using std::min;
+
+namespace WebCore {
+
+static inline float min4(float a, float b, float c, float d)
+{
+    return min(min(a, b), min(c, d));
+}
+
+static inline float max4(float a, float b, float c, float d)
+{
+    return max(max(a, b), max(c, d));
+}
+
+FloatRect FloatQuad::boundingBox() const
+{
+    float left   = min4(m_p1.x(), m_p2.x(), m_p3.x(), m_p4.x());
+    float top    = min4(m_p1.y(), m_p2.y(), m_p3.y(), m_p4.y());
+
+    float right  = max4(m_p1.x(), m_p2.x(), m_p3.x(), m_p4.x());
+    float bottom = max4(m_p1.y(), m_p2.y(), m_p3.y(), m_p4.y());
+    
+    return FloatRect(left, top, right - left, bottom - top);
+}
+
+} // namespace WebCore

@@ -1052,6 +1052,34 @@ FloatPoint RenderBox::absoluteToLocal(FloatPoint containerPoint, bool fixed, boo
     return FloatPoint();
 }
 
+FloatQuad RenderBox::localToAbsoluteQuad(const FloatQuad& localQuad, bool fixed) const
+{
+    // We don't expect localToAbsoluteQuad() to be called during layout (yet)
+    ASSERT(!view() || !view()->layoutState());
+
+    if (style()->position() == FixedPosition)
+        fixed = true;
+
+    RenderObject* o = container();
+    if (o) {
+        FloatQuad quad = localQuad;
+        if (m_layer && m_layer->transform()) {
+            fixed = false;  // Elements with transforms act as a containing block for fixed position descendants
+            quad = m_layer->transform()->mapQuad(quad);
+        }
+
+        quad += offsetFromContainer(o);
+
+        // Take into account space above a vertically aligned table cell
+        // (see localToAbsoluteForContent())
+        quad.move(0.0f, static_cast<float>(borderTopExtra()));
+
+        return o->localToAbsoluteQuad(quad, fixed);
+    }
+    
+    return FloatQuad();
+}
+
 IntSize RenderBox::offsetFromContainer(RenderObject* o) const
 {
     ASSERT(o == container());
@@ -1180,62 +1208,63 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
         invalidatingReflection = false;
     }
 
+    RenderObject* o = container();
+    if (!o)
+        return;
+
     IntPoint topLeft = rect.location();
     topLeft.move(m_x, m_y);
 
-    // Apply the relative position offset when invalidating a rectangle.  The layer
-    // is translated, but the render box isn't, so we need to do this to get the
-    // right dirty rect.  Since this is called from RenderObject::setStyle, the relative position
-    // flag on the RenderObject has been cleared, so use the one on the style().
-    if (style()->position() == RelativePosition && m_layer)
-        topLeft += m_layer->relativePositionOffset();
-
     if (style()->position() == FixedPosition)
         fixed = true;
-        
-    RenderObject* o = container();
-    if (o) {
-        if (o->isBlockFlow() && style()->position() != AbsolutePosition && style()->position() != FixedPosition) {
-            RenderBlock* cb = static_cast<RenderBlock*>(o);
-            if (cb->hasColumns()) {
-                IntRect repaintRect(topLeft, rect.size());
-                cb->adjustRectForColumns(repaintRect);
-                topLeft = repaintRect.location();
-                rect = repaintRect;
-            }
-        }
 
-        if (style()->position() == AbsolutePosition)
-            topLeft += offsetForPositionedInContainer(o);
-        
-        // We are now in our parent container's coordinate space.  Apply our transform to obtain a bounding box
-        // in the parent's coordinate space that encloses us.
-        if (m_layer && m_layer->transform()) {
-            fixed = false;
-            rect = m_layer->transform()->mapRect(rect);
-            topLeft = rect.location();
-            topLeft.move(m_x, m_y);
-        }
-
-        // FIXME: We ignore the lightweight clipping rect that controls use, since if |o| is in mid-layout,
-        // its controlClipRect will be wrong. For overflow clip we use the values cached by the layer.
-        if (o->hasOverflowClip()) {
-            // o->height() is inaccurate if we're in the middle of a layout of |o|, so use the
-            // layer's size instead.  Even if the layer's size is wrong, the layer itself will repaint
-            // anyway if its size does change.
-            IntRect boxRect(0, 0, o->layer()->width(), o->layer()->height());
-            int x = 0, y = 0;
-            o->layer()->subtractScrolledContentOffset(x, y); // For overflow:auto/scroll/hidden.
-            topLeft.move(x, y);
+    if (o->isBlockFlow() && style()->position() != AbsolutePosition && style()->position() != FixedPosition) {
+        RenderBlock* cb = static_cast<RenderBlock*>(o);
+        if (cb->hasColumns()) {
             IntRect repaintRect(topLeft, rect.size());
-            rect = intersection(repaintRect, boxRect);
-            if (rect.isEmpty())
-                return;
-        } else
-            rect.setLocation(topLeft);
-        
-        o->computeAbsoluteRepaintRect(rect, fixed);
+            cb->adjustRectForColumns(repaintRect);
+            topLeft = repaintRect.location();
+            rect = repaintRect;
+        }
     }
+
+    // We are now in our parent container's coordinate space.  Apply our transform to obtain a bounding box
+    // in the parent's coordinate space that encloses us.
+    if (m_layer && m_layer->transform()) {
+        fixed = false;
+        rect = m_layer->transform()->mapRect(rect);
+        // FIXME: this clobbers topLeft adjustment done for multicol above
+        topLeft = rect.location();
+        topLeft.move(m_x, m_y);
+    }
+
+    if (style()->position() == AbsolutePosition)
+        topLeft += offsetForPositionedInContainer(o);
+    else if (style()->position() == RelativePosition && m_layer) {
+        // Apply the relative position offset when invalidating a rectangle.  The layer
+        // is translated, but the render box isn't, so we need to do this to get the
+        // right dirty rect.  Since this is called from RenderObject::setStyle, the relative position
+        // flag on the RenderObject has been cleared, so use the one on the style().
+        topLeft += m_layer->relativePositionOffset();
+    }
+    
+    // FIXME: We ignore the lightweight clipping rect that controls use, since if |o| is in mid-layout,
+    // its controlClipRect will be wrong. For overflow clip we use the values cached by the layer.
+    if (o->hasOverflowClip()) {
+        // o->height() is inaccurate if we're in the middle of a layout of |o|, so use the
+        // layer's size instead.  Even if the layer's size is wrong, the layer itself will repaint
+        // anyway if its size does change.
+        topLeft -= o->layer()->scrolledContentOffset(); // For overflow:auto/scroll/hidden.
+
+        IntRect repaintRect(topLeft, rect.size());
+        IntRect boxRect(0, 0, o->layer()->width(), o->layer()->height());
+        rect = intersection(repaintRect, boxRect);
+        if (rect.isEmpty())
+            return;
+    } else
+        rect.setLocation(topLeft);
+    
+    o->computeAbsoluteRepaintRect(rect, fixed);
 }
 
 void RenderBox::repaintDuringLayoutIfMoved(const IntRect& rect)

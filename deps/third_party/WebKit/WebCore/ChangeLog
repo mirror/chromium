@@ -1,3 +1,196 @@
+2008-11-12  Alp Toker  <alp@nuanti.com>
+
+        Build fixes for r38346. FloatQuad.cpp is missing:
+
+        1) #include "config.h"
+        2) #include <algorithm> for various mathematical definitions it uses.
+
+        * platform/graphics/FloatQuad.cpp:
+
+2008-11-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=21942
+        https://bugs.webkit.org/show_bug.cgi?id=18557
+        
+        Add methods which can be used to map renderer-local rectangles
+        to quads in absolute coordinates, taking transforms into account:
+            localToAbsoluteQuad() converts a local rect into an absolute quad.
+            collectAbsoluteLineBoxQuads() is an analogue of addLineBoxRects()
+                that works with quads.
+            absoluteQuads() is an analogue of absoluteRects(), for quads.
+        
+        Use the quad methods to fix the inspector highlight for transformed
+        elements.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * inspector/InspectorController.cpp:
+        (WebCore::drawOutlinedQuad):
+        (WebCore::drawHighlightForBoxes):
+        (WebCore::frameToMainFrameOffset):
+        (WebCore::InspectorController::drawNodeHighlight):
+        * platform/graphics/AffineTransform.cpp:
+        (WebCore::AffineTransform::mapQuad):
+        * platform/graphics/AffineTransform.h:
+        * platform/graphics/FloatQuad.cpp: Added.
+        (WebCore::min4):
+        (WebCore::max4):
+        (WebCore::FloatQuad::boundingBox):
+        * platform/graphics/FloatQuad.h: Added.
+        (WebCore::FloatQuad::FloatQuad):
+        (WebCore::FloatQuad::p1):
+        (WebCore::FloatQuad::p2):
+        (WebCore::FloatQuad::p3):
+        (WebCore::FloatQuad::p4):
+        (WebCore::FloatQuad::setP1):
+        (WebCore::FloatQuad::setP2):
+        (WebCore::FloatQuad::setP3):
+        (WebCore::FloatQuad::setP4):
+        (WebCore::FloatQuad::isEmpty):
+        (WebCore::FloatQuad::enclosingBoundingBox):
+        (WebCore::FloatQuad::move):
+        (WebCore::operator+=):
+        (WebCore::operator-=):
+        (WebCore::operator==):
+        (WebCore::operator!=):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::localToAbsoluteQuad):
+        * rendering/RenderBox.h:
+        * rendering/RenderContainer.cpp:
+        (WebCore::RenderContainer::collectAbsoluteLineBoxQuads):
+        * rendering/RenderContainer.h:
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::absoluteQuads):
+        * rendering/RenderInline.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::absoluteBoundingBoxRect):
+        (WebCore::RenderObject::collectAbsoluteLineBoxQuads):
+        (WebCore::RenderObject::absoluteQuads):
+        (WebCore::RenderObject::localToAbsoluteQuad):
+        (WebCore::RenderObject::absoluteContentQuad):
+        * rendering/RenderObject.h:
+        * rendering/RenderPath.cpp:
+        (WebCore::RenderPath::absoluteQuads):
+        * rendering/RenderPath.h:
+        * rendering/RenderSVGContainer.cpp:
+        (WebCore::RenderSVGContainer::absoluteQuads):
+        * rendering/RenderSVGContainer.h:
+        * rendering/RenderSVGHiddenContainer.cpp:
+        (WebCore::RenderSVGHiddenContainer::absoluteQuads):
+        * rendering/RenderSVGHiddenContainer.h:
+        * rendering/RenderSVGImage.cpp:
+        (WebCore::RenderSVGImage::calculateAbsoluteBounds):
+        (WebCore::RenderSVGImage::absoluteQuads):
+        * rendering/RenderSVGImage.h:
+        * rendering/RenderSVGInlineText.cpp:
+        (WebCore::RenderSVGInlineText::absoluteQuads):
+        (WebCore::RenderSVGInlineText::computeAbsoluteRectForRange):
+        * rendering/RenderSVGInlineText.h:
+        * rendering/RenderSVGRoot.cpp:
+        (WebCore::RenderSVGRoot::absoluteQuads):
+        * rendering/RenderSVGRoot.h:
+        * rendering/RenderSVGTSpan.cpp:
+        (WebCore::RenderSVGTSpan::absoluteRects):
+        (WebCore::RenderSVGTSpan::absoluteQuads):
+        * rendering/RenderSVGTSpan.h:
+        * rendering/RenderSVGText.cpp:
+        (WebCore::RenderSVGText::absoluteRects):
+        (WebCore::RenderSVGText::absoluteQuads):
+        * rendering/RenderSVGText.h:
+        * rendering/RenderSVGTextPath.cpp:
+        (WebCore::RenderSVGTextPath::absoluteRects):
+        (WebCore::RenderSVGTextPath::absoluteQuads):
+        * rendering/RenderSVGTextPath.h:
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::localToAbsolute):
+        (WebCore::RenderTableCell::localToAbsoluteQuad):
+        * rendering/RenderTableCell.h:
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::absoluteQuads):
+        (WebCore::RenderText::collectAbsoluteLineBoxQuads):
+        * rendering/RenderText.h:
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::localToAbsoluteQuad):
+        (WebCore::RenderView::absoluteQuads):
+        * rendering/RenderView.h:
+
+2008-11-12  Brent Fulgham <bfulgham@gmail.com>
+
+        Fix Bug 22178: Build errors in WebKit Cairo port
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22178>
+
+        Reviewed by Mark Rowe.
+
+        * platform/graphics/cairo/PatternCairo.cpp: Correct build error under
+        Visual Studio.
+        (WebCore::Pattern::createPlatformPattern):
+
+2008-11-12  Adam Roben  <aroben@apple.com>
+
+        Fix a typo in the include path for the Release_Cairo configuration
+
+        * WebCore.vcproj/WebCore.vcproj: Fixed "caro" -> "cairo" typo.
+
+2008-11-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=17840
+        Patch 2
+        
+        Code cleanup in RenderBox::computeAbsoluteRepaintRect().
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::computeAbsoluteRepaintRect):
+
+2008-11-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=17840
+
+        Fix repainting when the transform on a positioned element changes.
+        In computeAbsoluteRepaintRect(), add the offsets due to relative positioning,
+        and being in a positioned container after applying the transform to the local
+        rect.
+
+        Tests: fast/repaint/transform-absolute-in-positioned-container.html
+               fast/repaint/transform-relative-position.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::computeAbsoluteRepaintRect):
+
+2008-11-12  Justin Garcia  <justin.garcia@apple.com>
+ 
+        Reviewed by Beth Dakin.
+ 
+        <rdar://problem/5495723> Selecting and deleting quoted text quotes other text
+        <rdar://problem/4775313> Deleting lines from the bottom of a messages leaves the last blank line quoted
+        
+        We don't want to merge into a block if it will mean changing the quote level of content after deleting 
+        selections that contain a whole number paragraphs plus a line break, since it is unclear to most users 
+        that such a selection actually ends at the start of the next paragraph.  Instead we want to completely
+        remove the selected paragraph(s) and all evidence of the first one's quote level.  This matches TextEdit behavior 
+        for indented paragraphs.
+ 
+        * editing/DeleteSelectionCommand.cpp:
+        (WebCore::DeleteSelectionCommand::initializePositionData): For the selections described above, do not
+        try to merge after the deletion.  Instead try and prune the start block or blocks if they've been emptied
+        so that we remove evidence of the deleted paragraphs' quote level.
+        (WebCore::DeleteSelectionCommand::mergeParagraphs): Try and prune the start block(s) if necessary.  Also 
+        make sure that the caret is placed correctly so that it ends up on the same line that the deleted selection 
+        started on, instead of one higher.
+        * editing/DeleteSelectionCommand.h:
+        * editing/htmlediting.cpp:
+        (WebCore::numEnclosingMailBlockquotes): Added.
+        * editing/htmlediting.h:
+
 2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
