@@ -945,13 +945,6 @@ void DOMWindow::forward()
         m_history->forward();
 }
 
-Location* DOMWindow::location()
-{
-    if (!m_location)
-        m_location = Location::create(m_frame);
-    return m_location.get();
-}
-
 void DOMWindow::setLocation(const String& v) {
   if (!m_frame)
     return;
@@ -971,14 +964,6 @@ void DOMWindow::setLocation(const String& v) {
         active_frame->loader()->outgoingReferrer(), false,
         active_frame->script()->processingUserGesture());
   }
-}
-
-Navigator* DOMWindow::navigator()
-{
-    if (!m_navigator)
-        m_navigator = Navigator::create(m_frame);
-
-    return m_navigator.get();
 }
 
 void DOMWindow::dump(const String& msg)

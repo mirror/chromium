@@ -327,28 +327,17 @@ namespace WebCore {
         void back();
         void forward();
 
-        Navigator* navigator();
         void dump(const String&);
     
-        Location* location();
-
         // Change the current window location to a new location.
         // The function checks domain security.
         void setLocation(const String& loc);
 
-//      void home();
-//      void stop();
-    
         void clearTimeout(int id);
         void clearInterval(int id) { clearTimeout(id); }
 
         void timerFired(DOMWindowTimer* timer);
     
-//      void updateCommands(const String&);
-//    
-//      String escape(const String&);
-//      String unescape(const String&);
-
         int installTimeout(ScheduledAction* a, int t, bool singleShot);
     
         void scheduleClose();

@@ -49,48 +49,6 @@ module svg {
 
         // EventTarget
 #if !defined(LANGUAGE_OBJECTIVE_C)
-#if defined(V8_BINDING)
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onabort;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onblur;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onchange;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onclick;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString oncontextmenu;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondblclick;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onerror;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onfocus;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString oninput;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onkeydown;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onkeypress;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onkeyup;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onload;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onmousedown;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onmousemove;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onmouseout;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onmouseover;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onmouseup;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onmousewheel;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onbeforecut;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString oncut;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onbeforecopy;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString oncopy;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onbeforepaste;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onpaste;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondragenter;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondragover;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondragleave;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondrop;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondragstart;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondrag;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString ondragend;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onreset;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onresize;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onscroll;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onsearch;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onselect;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onselectstart;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onsubmit;
-        attribute [DontEnum, Custom=ElementEventHandler] DOMString onunload;
-#else
         attribute [DontEnum, ProtectedListener] EventListener onabort;
         attribute [DontEnum, ProtectedListener] EventListener onblur;
         attribute [DontEnum, ProtectedListener] EventListener onchange;
@@ -131,7 +89,6 @@ module svg {
         attribute [DontEnum, ProtectedListener] EventListener onselectstart;
         attribute [DontEnum, ProtectedListener] EventListener onsubmit;
         attribute [DontEnum, ProtectedListener] EventListener onunload;
-#endif // V8_BINDING
 
         [Custom] void addEventListener(in DOMString type, 
                                        in EventListener listener, 
