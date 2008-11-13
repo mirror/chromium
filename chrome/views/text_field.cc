@@ -12,6 +12,7 @@
 #include <vsstyle.h>
 
 #include "base/gfx/native_theme.h"
+#include "base/gfx/skia_utils.h"
 #include "base/string_util.h"
 #include "base/win_util.h"
 #include "chrome/browser/browser_process.h"
@@ -59,6 +60,8 @@ class TextField::Edit
   void RemoveBorder();
 
   void SetEnabled(bool enabled);
+
+  void SetBackgroundColor(COLORREF bg_color);
 
   // CWindowImpl
   BEGIN_MSG_MAP(Edit)
@@ -195,6 +198,8 @@ class TextField::Edit
   int ime_composition_start_;
   int ime_composition_length_;
 
+  COLORREF bg_color_;
+
   DISALLOW_EVIL_CONSTRUCTORS(Edit);
 };
 
@@ -241,7 +246,8 @@ TextField::Edit::Edit(TextField* parent, bool draw_border)
       draw_border_(draw_border),
       ime_discard_composition_(false),
       ime_composition_start_(0),
-      ime_composition_length_(0) {
+      ime_composition_length_(0),
+      bg_color_(0) {
   if (!did_load_library_)
     did_load_library_ = !!LoadLibrary(L"riched20.dll");
 
@@ -338,6 +344,11 @@ void TextField::Edit::RemoveBorder() {
 void TextField::Edit::SetEnabled(bool enabled) {
   SendMessage(parent_->GetNativeComponent(), WM_ENABLE,
               static_cast<WPARAM>(enabled), 0);
+}
+
+void TextField::Edit::SetBackgroundColor(COLORREF bg_color) {
+  CRichEditCtrl::SetBackgroundColor(bg_color);
+  bg_color_ = bg_color;
 }
 
 bool TextField::Edit::IsCommandEnabled(int id) const {
@@ -664,7 +675,9 @@ void TextField::Edit::OnNCPaint(HRGN region) {
                   window_rect.right - content_insets_.right(),
                   window_rect.bottom - content_insets_.bottom());
 
-  FillRect(hdc, &window_rect, (HBRUSH) (COLOR_WINDOW+1));
+  HBRUSH brush = CreateSolidBrush(bg_color_);
+  FillRect(hdc, &window_rect, brush);
+  DeleteObject(brush);
 
   int part;
   int state;
@@ -698,7 +711,8 @@ void TextField::Edit::OnNCPaint(HRGN region) {
       (!parent_->IsEnabled() || parent_->IsReadOnly()) ? DFCS_INACTIVE : 0;
 
   NativeTheme::instance()->PaintTextField(hdc, part, state, classic_state,
-                                          &window_rect, NULL, false, true);
+                                          &window_rect, bg_color_, false,
+                                          true);
 
   // NOTE: I tried checking the transparent property of the theme and invoking
   // drawParentBackground, but it didn't seem to make a difference.
@@ -899,8 +913,7 @@ void TextField::ViewHierarchyChanged(bool is_add, View* parent, View* child) {
       native_view_->Attach(*edit_);
       if (!text_.empty())
         edit_->SetText(text_);
-      if (!use_default_background_color_)
-        SetBackgroundColor(background_color_);
+      UpdateEditBackgroundColor();
       Layout();
     }
   } else if (!is_add && edit_ && IsWindow(edit_->m_hWnd)) {
@@ -969,12 +982,12 @@ bool TextField::IsMultiLine() const {
 }
 
 void TextField::SetReadOnly(bool read_only) {
-  if (edit_)
+  read_only_ = read_only;
+  if (edit_) {
     edit_->SetReadOnly(read_only);
-  else
-    read_only_ = read_only;
+    UpdateEditBackgroundColor();
+  }
 }
-
 
 void TextField::Focus() {
   ::SetFocus(native_view_->GetHWND());
@@ -997,17 +1010,12 @@ HWND TextField::GetNativeComponent() {
 void TextField::SetBackgroundColor(SkColor color) {
   background_color_ = color;
   use_default_background_color_ = false;
-  if (edit_) {
-    edit_->SetBackgroundColor(RGB(SkColorGetR(color),
-                                  SkColorGetG(color),
-                                  SkColorGetB(color)));
-  }
+  UpdateEditBackgroundColor();
 }
 
 void TextField::SetDefaultBackgroundColor() {
   use_default_background_color_ = true;
-  if (edit_)
-    edit_->SetBackgroundColor();
+  UpdateEditBackgroundColor();
 }
 
 void TextField::SetFont(const ChromeFont& font) {
@@ -1046,7 +1054,6 @@ void TextField::RemoveBorder() {
 
 void TextField::SetEnabled(bool enabled) {
   View::SetEnabled(enabled);
-  SetReadOnly(enabled);
   edit_->SetEnabled(enabled);
 }
 
@@ -1067,5 +1074,16 @@ bool TextField::ShouldLookupAccelerators(const KeyEvent& e) {
   return !win_util::IsNumPadDigit(e.GetCharacter(), e.IsExtendedKey());
 }
 
-}  // namespace views
+void TextField::UpdateEditBackgroundColor() {
+  if (!edit_)
+    return;
 
+  COLORREF bg_color;
+  if (!use_default_background_color_)
+    bg_color = gfx::SkColorToCOLORREF(background_color_);
+  else
+    bg_color = GetSysColor(read_only_ ? COLOR_3DFACE : COLOR_WINDOW);
+  edit_->SetBackgroundColor(bg_color);
+}
+
+}  // namespace views
