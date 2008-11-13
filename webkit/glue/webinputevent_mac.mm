@@ -78,7 +78,6 @@ WebMouseEvent::WebMouseEvent(NSEvent *event) {
   
   // set modifiers:
 
-  modifiers = 0;
   if ([event modifierFlags] & NSControlKeyMask)
     modifiers |= CTRL_KEY;
   if ([event modifierFlags] & NSShiftKeyMask)
@@ -123,7 +122,6 @@ WebMouseWheelEvent::WebMouseWheelEvent(NSEvent *event) {
     delta_y = delta_lines;
   }
 
-  modifiers = 0;
   if ([event modifierFlags] & NSControlKeyMask)
     modifiers |= CTRL_KEY;
   if ([event modifierFlags] & NSShiftKeyMask)
@@ -148,7 +146,6 @@ WebKeyboardEvent::WebKeyboardEvent(NSEvent *event) {
       NOTREACHED() << "unexpected native message";
   }
 
-  modifiers = 0;
   if ([event modifierFlags] & NSControlKeyMask)
     modifiers |= CTRL_KEY;
   if ([event modifierFlags] & NSShiftKeyMask)
