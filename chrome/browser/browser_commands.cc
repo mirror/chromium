@@ -546,7 +546,9 @@ void Browser::ExecuteCommand(int id) {
       if (!select_file_dialog_.get())
         select_file_dialog_ = SelectFileDialog::Create(this);
       select_file_dialog_->SelectFile(SelectFileDialog::SELECT_OPEN_FILE,
-                                      L"", L"", GetTopLevelHWND(), NULL);
+                                      std::wstring(), std::wstring(),
+                                      std::wstring(), std::wstring(),
+                                      GetTopLevelHWND(), NULL);
       break;
     }
 
