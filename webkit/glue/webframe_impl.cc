@@ -1484,6 +1484,7 @@ void WebFrameImpl::Paint(gfx::PlatformCanvas* canvas, const gfx::Rect& rect) {
   }
 }
 
+#if defined(OS_WIN)
 bool WebFrameImpl::CaptureImage(scoped_ptr<gfx::BitmapPlatformDevice>* image,
                                 bool scroll_to_zero) {
   if (!image) {
@@ -1498,7 +1499,6 @@ bool WebFrameImpl::CaptureImage(scoped_ptr<gfx::BitmapPlatformDevice>* image,
   if (!canvas.initialize(frameview()->width(), frameview()->height(), true))
     return false;
 
-#if defined(OS_WIN) || defined(OS_LINUX)
   PlatformContextSkia context(&canvas);
 
   GraphicsContext gc(reinterpret_cast<PlatformGraphicsContext*>(&context));
