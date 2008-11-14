@@ -71,8 +71,10 @@ def main(options, args):
     if options.target == 'Debug':
       command.append('--time-out-ms=20000')
 
-  if options.build_type:
-    command.extend(['--build-type', options.build_type])
+  # Build type is no longer used.
+  # TODO(pamg): remove it from the buildbot config too.
+  #if options.build_type:
+  #  command.extend(['--build-type', options.build_type])
 
   if options.pixel_tests:
     command.append('--pixel-tests')
