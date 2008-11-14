@@ -137,7 +137,8 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   bool RemoveSubs(SBPair* adds,
                   std::vector<bool>* adds_removed,
                   HashCache* add_cache,
-                  HashCache* sub_cache);
+                  HashCache* sub_cache,
+                  int* subs);
 
   bool UpdateTables();
   bool WritePrefixes(SBPair* adds, const std::vector<bool>& adds_removed,
@@ -198,6 +199,9 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Flush in memory temporary caches.
   void ClearUpdateCaches();
 
+  // Load the bloom filter off disk.
+  virtual void LoadBloomFilter();
+
   // Encode the list id in the lower bit of the chunk.
   static inline int EncodeChunkId(int chunk, int list_id) {
     DCHECK(list_id == 0 || list_id == 1);
@@ -239,7 +243,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   base::hash_set<int> sub_del_cache_;
 
   // The number of entries in the add_prefix table. Used to pick the correct
-  // size for the bloom filter.
+  // size for the bloom filter and stats gathering.
   int add_count_;
 
   // Set to true if the machine just resumed out of a sleep.  When this happens,

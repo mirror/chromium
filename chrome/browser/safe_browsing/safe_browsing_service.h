@@ -157,12 +157,14 @@ class SafeBrowsingService
   // delta starting from when we would have started reading data from the
   // network, and ending when the SafeBrowsing check completes indicating that
   // the current page is 'safe'.
-  static void LogPauseDelay(TimeDelta time);
+  void LogPauseDelay(base::TimeDelta time);
 
   // We defer SafeBrowsing work for a short duration when the computer comes
   // out of a suspend state to avoid thrashing the disk.
   void OnSuspend();
   void OnResume();
+
+  bool new_safe_browsing() const { return new_safe_browsing_; }
 
  private:
   // Should only be called on db thread as SafeBrowsingDatabase is not

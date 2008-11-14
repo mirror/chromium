@@ -199,9 +199,13 @@ bool SafeBrowsingService::CheckUrlNew(const GURL& url, Client* client) {
   std::string list;
   std::vector<SBPrefix> prefix_hits;
   std::vector<SBFullHashResult> full_hits;
+  base::Time check_start = base::Time::Now();
   bool prefix_match = database_->ContainsUrl(url, &list, &prefix_hits,
                                              &full_hits,
                                              protocol_manager_->last_update());
+  
+  UMA_HISTOGRAM_TIMES(L"SB2.FilterCheck", base::Time::Now() - check_start);
+
   if (!prefix_match)
     return true;  // URL is okay.
 
@@ -390,8 +394,12 @@ void SafeBrowsingService::HandleGetHashResults(
 
   DCHECK(enabled_);
 
+  if (new_safe_browsing_)
+    UMA_HISTOGRAM_LONG_TIMES(L"SB2.Network", Time::Now() - check->start);
+  else
+    UMA_HISTOGRAM_LONG_TIMES(L"SB.Network", Time::Now() - check->start);
+
   std::vector<SBPrefix> prefixes = check->prefix_hits;
-  UMA_HISTOGRAM_LONG_TIMES(L"SB.Network", Time::Now() - check->start);
   OnHandleGetHashResults(check, full_hashes);  // 'check' is deleted here.
 
   if (can_cache) {
@@ -583,9 +591,13 @@ void SafeBrowsingService::GetAllChunksFromDatabase() {
   DCHECK(MessageLoop::current() == db_thread_->message_loop());
   bool database_error = true;
   std::vector<SBListChunkRanges> lists;
-  if (GetDatabase() && GetDatabase()->UpdateStarted()) {
-    GetDatabase()->GetListsInfo(&lists);
-    database_error = false;
+  if (GetDatabase()) {
+    if (GetDatabase()->UpdateStarted()) {
+      GetDatabase()->GetListsInfo(&lists);
+      database_error = false;
+    } else {
+      GetDatabase()->UpdateFinished(false);
+    }
   }
 
   io_loop_->PostTask(FROM_HERE, NewRunnableMethod(
@@ -617,9 +629,11 @@ SafeBrowsingService::UrlCheckResult SafeBrowsingService::GetResultFromListname(
   return URL_SAFE;
 }
 
-// static
 void SafeBrowsingService::LogPauseDelay(TimeDelta time) {
-  UMA_HISTOGRAM_LONG_TIMES(L"SB.Delay", time);
+  if (new_safe_browsing_)
+    UMA_HISTOGRAM_LONG_TIMES(L"SB2.Delay", time);
+  else
+    UMA_HISTOGRAM_LONG_TIMES(L"SB.Delay", time);
 }
 
 void SafeBrowsingService::CacheHashResults(
@@ -646,7 +660,11 @@ void SafeBrowsingService::OnResume() {
 
 void SafeBrowsingService::HandleResume() {
   DCHECK(MessageLoop::current() == db_thread_->message_loop());
-  GetDatabase()->HandleResume();
+  // We don't call GetDatabase() here, since we want to avoid unnecessary calls
+  // to Open, Reset, etc, or reload the bloom filter while we're coming out of
+  // a suspended state.
+  if (database_)
+    database_->HandleResume();
 }
 
 void SafeBrowsingService::RunQueuedClients() {
