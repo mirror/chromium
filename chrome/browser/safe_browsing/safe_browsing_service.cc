@@ -199,12 +199,12 @@ bool SafeBrowsingService::CheckUrlNew(const GURL& url, Client* client) {
   std::string list;
   std::vector<SBPrefix> prefix_hits;
   std::vector<SBFullHashResult> full_hits;
-  base::Time check_start = base::Time::Now();
+  Time check_start = Time::Now();
   bool prefix_match = database_->ContainsUrl(url, &list, &prefix_hits,
                                              &full_hits,
                                              protocol_manager_->last_update());
   
-  UMA_HISTOGRAM_TIMES(L"SB2.FilterCheck", base::Time::Now() - check_start);
+  UMA_HISTOGRAM_TIMES(L"SB2.FilterCheck", Time::Now() - check_start);
 
   if (!prefix_match)
     return true;  // URL is okay.

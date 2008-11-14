@@ -205,7 +205,7 @@ class SafeBrowsingProtocolManager : public URLFetcher::Delegate {
   std::string version_;
 
   // Used for measuring chunk request latency.
-  base::Time chunk_request_start_;
+  Time chunk_request_start_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingProtocolManager);
 };

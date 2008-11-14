@@ -309,7 +309,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
     case CHUNK_REQUEST: {
       if (sb_service_->new_safe_browsing())
         UMA_HISTOGRAM_TIMES(L"SB2.ChunkRequest",
-                            base::Time::Now() - chunk_request_start_);
+                            Time::Now() - chunk_request_start_);
 
       const ChunkUrl chunk_url = chunk_request_urls_.front();
       bool re_key = false;
@@ -448,7 +448,7 @@ void SafeBrowsingProtocolManager::IssueChunkRequest() {
   request_.reset(new URLFetcher(chunk_url, URLFetcher::GET, this));
   request_->set_load_flags(net::LOAD_DISABLE_CACHE);
   request_->set_request_context(Profile::GetDefaultRequestContext());
-  chunk_request_start_ = base::Time::Now();
+  chunk_request_start_ = Time::Now();
   request_->Start();
 }
 
