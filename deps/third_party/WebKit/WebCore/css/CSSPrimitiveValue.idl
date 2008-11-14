@@ -70,13 +70,8 @@ module css {
         Rect getRectValue()
             raises(DOMException);
 #if !defined(LANGUAGE_COM)
-#if defined(V8_BINDING)
-        [Custom] RGBColor getRGBColorValue()
-            raises(DOMException);
-#else
         RGBColor getRGBColorValue()
             raises(DOMException);
-#endif
 #endif
 
     };
