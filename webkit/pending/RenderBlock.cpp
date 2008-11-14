@@ -3939,8 +3939,20 @@ void RenderBlock::calcBlockPrefWidths()
 
 bool RenderBlock::hasLineIfEmpty() const
 {
-    return element() && (element()->isContentEditable() && element()->rootEditableElement() == element() ||
-                         element()->isShadowNode() && element()->shadowParentNode()->hasTagName(inputTag));
+     if (!element())
+         return false;
+ 
+     if (element()->isContentEditable() && element()->rootEditableElement() == element())
+         return true;
+ 
+     // TODO(ojan): Upstream the change below as part of upstreaming the RenderTextControl changes
+     // To put the overflow on the HTMLTextAreaElement instead of it's shadow node.
+     if (element()->isShadowNode() && 
+         (element()->shadowParentNode()->hasTagName(inputTag) || 
+          element()->shadowParentNode()->hasTagName(textareaTag)))
+         return true;
+ 
+     return false;
 }
 
 short RenderBlock::lineHeight(bool b, bool isRootLineBox) const
