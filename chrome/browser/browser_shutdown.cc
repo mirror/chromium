@@ -11,6 +11,7 @@
 #include "base/string_util.h"
 #include "base/time.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/first_run.h"
 #include "chrome/browser/jankometer.h"
 #include "chrome/browser/metrics_service.h"
 #include "chrome/browser/plugin_process_host.h"
@@ -120,6 +121,10 @@ void Shutdown() {
   UninstallJankometer();
 
   ResourceBundle::CleanupSharedInstance();
+
+  if (!Upgrade::IsBrowserAlreadyRunning()) {
+    Upgrade::SwapNewChromeExeIfPresent();
+  }
 
   if (shutdown_type_ > NOT_VALID && shutdown_num_processes_ > 0) {
     // Measure total shutdown time as late in the process as possible
