@@ -33,9 +33,7 @@
 #include "StringHash.h"
 #include "TextBreakIterator.h"
 #include "TextEncoding.h"
-#if USE(JSC)
 #include <wtf/dtoa.h>
-#endif
 #include <wtf/Assertions.h>
 #include <wtf/unicode/Unicode.h>
 
