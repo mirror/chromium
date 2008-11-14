@@ -76,8 +76,10 @@ def main(options, args):
   #if options.build_type:
   #  command.extend(['--build-type', options.build_type])
 
-  if options.pixel_tests:
-    command.append('--pixel-tests')
+  # The layout test script has pixel tests on by default.
+  # TODO(pamg, ojan): swap the sense of the option in the buildbot config too.
+  if not options.pixel_tests:
+    command.append('--no-pixel-tests')
 
   if options.enable_pageheap:
     # If we're actually requesting pageheap checking, complain if we don't have
