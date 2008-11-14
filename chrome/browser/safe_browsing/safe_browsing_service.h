@@ -124,8 +124,7 @@ class SafeBrowsingService
   void HandleChunkDelete(std::vector<SBChunkDelete>* chunk_deletes);
   void GetAllChunks();
 
-  // Methods called to indicate the beginning and end of a complete update.
-  void UpdateStarted();
+  // Called when a complete update cycle has finished.
   void UpdateFinished(bool update_succeeded);
 
   // The blocking page on the UI thread has completed.
@@ -199,7 +198,6 @@ class SafeBrowsingService
 
   void NotifyClientBlockingComplete(Client* client, bool proceed);
 
-  void DatabaseUpdateStarted();
   void DatabaseUpdateFinished(bool update_succeeded);
 
   void Start();

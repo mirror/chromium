@@ -270,7 +270,6 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
       }
 
       last_update_ = Time::Now();
-      sb_service_->UpdateStarted();
 
       if (update_state_ == FIRST_REQUEST)
         update_state_ = SECOND_REQUEST;
