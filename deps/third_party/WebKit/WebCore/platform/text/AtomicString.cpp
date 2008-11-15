@@ -28,9 +28,6 @@
 
 #include "StaticConstructors.h"
 #include "StringHash.h"
-#if USE(JSC)
-#include <runtime/Identifier.h>
-#endif
 #include <wtf/Threading.h>
 #include <wtf/HashSet.h>
 
@@ -40,6 +37,7 @@ using namespace WTF;
 #endif
 
 #if USE(JSC)
+#include <runtime/Identifier.h>
 using JSC::Identifier;
 using JSC::UString;
 #endif
