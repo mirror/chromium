@@ -159,7 +159,7 @@ BookmarkManagerView::BookmarkManagerView(Profile* profile)
   tools_menu_button->SetID(kToolsMenuButtonID);
 
   split_view_ = new views::SingleSplitView(tree_view_, table_view_);
-  split_view_->set_background(
+  split_view_->SetBackground(
       views::Background::CreateSolidBackground(kBackgroundColorBottom));
 
   views::GridLayout* layout = new views::GridLayout(this);

@@ -17,7 +17,7 @@ SingleSplitView::SingleSplitView(View* leading, View* trailing)
     : divider_x_(-1) {
   AddChildView(leading);
   AddChildView(trailing);
-  set_background(
+  SetBackground(
       views::Background::CreateSolidBackground(
           gfx::COLORREFToSkColor(GetSysColor(COLOR_3DFACE))));
 }
