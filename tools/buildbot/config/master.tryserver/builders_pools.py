@@ -53,17 +53,20 @@ class BuildersPools:
           disconnected_bots.append(name)
         else:
           # slave is of type buildbot.process.builder.Builder
-          slave = botmaster.builders[name]
+          builder = botmaster.builders[name]
           # Get the status of the builder.
-          # slave.slaves is a list of buildbot.process.builder.SlaveBuilder and
+          # builder.slaves is a list of buildbot.process.builder.SlaveBuilder and
           # not a buildbot.buildslave.BuildSlave as written in the doc(nor
           # buildbot.slave.bot.BuildSlave)
-          # slave.slaves[0].slave is of type buildbot.buildslave.BuildSlave
-          # TODO(maruel): Correctly support shared slave.
-          if len(slave.slaves) == 1 and slave.slaves[0].slave:
-            if slave.slaves[0].isAvailable():
+          # builder.slaves[0].slave is of type buildbot.buildslave.BuildSlave
+          found_one = False
+          for slave in builder.slaves:
+            if slave.slave:
+              found_one = True
+            if slave.isAvailable():
               idle_bots.append(name)
-          else:
+              break
+          if not found_one:
             disconnected_bots.append(name)
 
       # Now for each pool, we select one bot that is idle.
