@@ -370,10 +370,6 @@
 #define ENABLE_JAVASCRIPT_DEBUGGER 1
 #endif
 
-#if !defined(ENABLE_JAVASCRIPT_DEBUGGER)
-#define ENABLE_JAVASCRIPT_DEBUGGER 1
-#endif
-
 #if !defined(ENABLE_FTPDIR)
 #define ENABLE_FTPDIR 1
 #endif
