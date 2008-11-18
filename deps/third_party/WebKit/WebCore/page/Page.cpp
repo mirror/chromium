@@ -39,6 +39,7 @@
 #include "InspectorController.h"
 #include "Logging.h"
 #include "NetworkStateNotifier.h"
+#include "Navigator.h"
 #include "PageGroup.h"
 #include "PluginData.h"
 #include "ProgressTracker.h"
