@@ -19,33 +19,23 @@ BalloonContents::BalloonContents(Balloon* balloon)
     : HWNDHtmlView(balloon->notification().url(), this, true),
       balloon_(balloon),
       render_view_host_(NULL),
-      notify_disconnection_(false),
-      method_factory_(this) {
+      notify_disconnection_(false) {
   DCHECK(balloon);
 }
 
 void BalloonContents::Shutdown() {
-  NotifyDisconnected();
-
-  // TODO(levin): Is this correct to do now that this is part of a view?
-  // Need to do this asynchronously as it will close the RenderViewHost, which
-  // is currently on the call stack above us.
-  MessageLoop::current()->PostTask(
-      FROM_HERE,
-      method_factory_.NewRunnableMethod(&BalloonContents::DelayedShutdown));
-}
-
-void BalloonContents::DelayedShutdown() {
   if (render_view_host_) {
     render_view_host_->Shutdown();
     render_view_host_ = NULL;
   }
-  // TODO(levin): Investigate the view should clean up this class.
-  //  delete this;
 }
 
 WebPreferences BalloonContents::GetWebkitPrefs() {
   return WebPreferences();
+}
+
+SiteInstance* BalloonContents::GetSiteInstance() const {
+  return balloon_->site_instance();
 }
 
 Profile* BalloonContents::GetProfile() const {
@@ -57,7 +47,7 @@ void BalloonContents::RendererReady(RenderViewHost* render_view_host) {
 }
 
 void BalloonContents::RendererGone(RenderViewHost* render_view_host) {
-  Shutdown();
+  NotifyDisconnected();
 }
 
 void BalloonContents::UpdateTitle(RenderViewHost* render_view_host,

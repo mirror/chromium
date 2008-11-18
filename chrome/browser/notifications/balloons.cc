@@ -103,7 +103,7 @@ Balloon::~Balloon() {
 void Balloon::Show() {
   if (!balloon_view_.get()) {
     balloon_view_.reset(new BalloonView());
-    balloon_view_->Show(position_, this);
+    balloon_view_->Show(this);
   }
 }
 

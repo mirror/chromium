@@ -8,7 +8,10 @@
 #include "base/gfx/gdi_util.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/notifications/balloon_contents.h"
+#include "chrome/browser/notifications/balloons.h"
 #include "chrome/common/gfx/chrome_canvas.h"
+#include "chrome/common/notification_details.h"
+#include "chrome/common/notification_source.h"
 #include "chrome/views/container_win.h"
 #include "chrome/views/painter.h"
 
@@ -33,8 +36,10 @@ const int kDefaultShelfHeight = 22;
 }  // namespace
 
 BalloonView::BalloonView()
-    : frame_container_(NULL),
-      html_container_(NULL) {
+    : balloon_(NULL),
+      frame_container_(NULL),
+      html_container_(NULL),
+      method_factory_(this) {
   int shelf_images[9];
   shelf_images[views::ImagePainter::BORDER_TOP_LEFT] =
       IDR_BALLOON_SHELF_TOP_LEFT;
@@ -70,6 +75,18 @@ BalloonView::BalloonView()
 BalloonView::~BalloonView() {
 }
 
+void BalloonView::Close() {
+  MessageLoop::current()->PostTask(
+        FROM_HERE,
+        method_factory_.NewRunnableMethod(&BalloonView::DelayedClose));
+}
+
+void BalloonView::DelayedClose() {
+  html_contents_->Shutdown();
+  html_container_->CloseNow();
+  frame_container_->CloseNow();
+}
+
 void BalloonView::DidChangeBounds(const gfx::Rect& previous,
                                   const gfx::Rect& current) {
   SizeContentsWindow();
@@ -94,7 +111,14 @@ void BalloonView::SizeContentsWindow() {
                  false);
 }
 
-void BalloonView::Show(const gfx::Point& upper_left, Balloon* balloon) {
+void BalloonView::Show(Balloon* balloon) {
+  balloon_ = balloon;
+
+  SetBounds(balloon->position().x(),
+            balloon->position().y(),
+            balloon->size().width(),
+            balloon->size().height());
+
   // We have to create two windows: one for the contents and one for the
   // frame.  Why?
   // * The contents is an html window which cannot be a
@@ -113,24 +137,24 @@ void BalloonView::Show(const gfx::Point& upper_left, Balloon* balloon) {
   html_container_->set_window_ex_style(WS_EX_TOPMOST | WS_EX_TOOLWINDOW);
   gfx::Rect contents_rect = contents_rectangle();
   html_container_->Init(NULL, contents_rect, false);
-  BalloonContents* contents = new BalloonContents(balloon);
-  contents ->set_preferred_size(gfx::Size(10000, 10000));
-  html_container_->SetContentsView(contents);
+  html_contents_ = new BalloonContents(balloon);
+  html_contents_->set_preferred_size(gfx::Size(10000, 10000));
+  html_container_->SetContentsView(html_contents_);
 
   frame_container_ = new views::ContainerWin();
   frame_container_->set_window_style(WS_POPUP);
   frame_container_->set_window_ex_style(
       WS_EX_LAYERED | WS_EX_TOPMOST | WS_EX_TOOLWINDOW);
-  gfx::Rect balloon_rect(upper_left.x(),
-                         upper_left.y(),
-                         size().width(),
-                         size().height());
+  gfx::Rect balloon_rect(x(), y(), width(), height());
   frame_container_->Init(NULL, balloon_rect, false);
   frame_container_->SetContentsView(this);
 
   SizeContentsWindow();
   html_container_->ShowWindow(SW_SHOWNOACTIVATE);
   frame_container_->ShowWindow(SW_SHOWNOACTIVATE);
+
+  NotificationService::current()->AddObserver(
+      this, NOTIFY_BALLOON_DISCONNECTED, Source<Balloon>(balloon));
 }
 
 
@@ -230,4 +254,17 @@ void BalloonView::Paint(ChromeCanvas* canvas) {
 
   View::Paint(canvas);
 }
+
+void BalloonView::Observe(NotificationType type,
+                          const NotificationSource& source,
+                          const NotificationDetails& details) {
+  if (type != NOTIFY_BALLOON_DISCONNECTED) {
+    NOTREACHED();
+    return;
+  }
+  NotificationService::current()->RemoveObserver(
+      this, NOTIFY_BALLOON_DISCONNECTED, Source<Balloon>(balloon_));
+  Close();
+}
+
 #endif  // ENABLE_BACKGROUND_TASK

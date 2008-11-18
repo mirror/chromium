@@ -14,6 +14,8 @@
 #include "base/gfx/rect.h"
 #include "base/gfx/size.h"
 #include "base/scoped_ptr.h"
+#include "base/task.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/views/view.h"
 
 namespace views {
@@ -22,12 +24,17 @@ class ImagePainter;
 }  // namespace views
 
 class Balloon;
+class BalloonContents;
+class NotificationDetails;
+class NotificationSource;
 
-class BalloonView : public views::View {
+class BalloonView : public views::View,
+                    public NotificationObserver {
  public:
   BalloonView();
   ~BalloonView();
-  void Show(const gfx::Point& upper_left, Balloon* balloon);
+  void Show(Balloon* balloon);
+  void Close();
 
  private:
   // Overridden from views::View.
@@ -38,12 +45,20 @@ class BalloonView : public views::View {
     return gfx::Size(1000, 1000);
   }
 
+  // NotificationObserver method.
+  virtual void Observe(NotificationType type,
+                       const NotificationSource& source,
+                       const NotificationDetails& details);
+
   // How to mask the balloon contents to fit within the frame.
   // The caller is responsible for deleting the returned object.
   HRGN GetContentsMask(gfx::Rect& contents_rect) const;
 
   // Adjust the contents window size to be appropriate for the frame.
   void SizeContentsWindow();
+
+  // Do the delayed close work.
+  void DelayedClose();
 
   // The height of the balloon's shelf.
   // The shelf is where is close button is located.
@@ -65,11 +80,20 @@ class BalloonView : public views::View {
   // Where the balloon contents should be in screen coordinates.
   gfx::Rect contents_rectangle() const;
 
+  // The associated balloon.
+  Balloon* balloon_;
+
   // The window that contains the BalloonFrame.
   views::ContainerWin* frame_container_;
 
   // The window that contains the BalloonContents.
   views::ContainerWin* html_container_;
+
+  // The html content renderer.
+  BalloonContents* html_contents_;
+
+  // The following factory is used to call methods at a later time.
+  ScopedRunnableMethodFactory<BalloonView> method_factory_;
 
   scoped_ptr<views::ImagePainter> shelf_background_;
   scoped_ptr<views::ImagePainter> balloon_background_;

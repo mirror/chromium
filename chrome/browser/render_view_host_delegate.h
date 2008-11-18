@@ -16,6 +16,9 @@ class NavigationEntry;
 class Profile;
 class RenderProcessHost;
 class RenderViewHost;
+#ifdef ENABLE_BACKGROUND_TASK
+class SiteInstance;
+#endif  // ENABLE_BACKGROUND_TASK
 class SkBitmap;
 class WebContents;
 struct WebDropData;
@@ -139,10 +142,13 @@ class RenderViewHostDelegate {
                                               int32 status) = 0;
   };
 
+#ifdef ENABLE_BACKGROUND_TASK
   // Returns the type of the delegate. This is useful when doing the cast to
   // get the underlying type.
-#ifdef ENABLE_BACKGROUND_TASK
   virtual RenderViewHostDelegateType GetDelegateType() const = 0;
+
+  // Returns the site instance to be used.
+  virtual SiteInstance* GetSiteInstance() const { return NULL; }
 #endif  // ENABLE_BACKGROUND_TASK
 
   // Returns the current delegate associated with a feature. May be NULL.

@@ -7,7 +7,6 @@
 
 #ifdef ENABLE_BACKGROUND_TASK
 
-#include "base/task.h"
 #include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/browser/views/hwnd_html_view.h"
 #include "webkit/glue/webpreferences.h"
@@ -29,6 +28,7 @@ class BalloonContents : public HWNDHtmlView,
     return BALLOON_CONTENTS_DELEGATE;
   }
   virtual WebPreferences GetWebkitPrefs();
+  virtual SiteInstance* GetSiteInstance() const;
   virtual Profile* GetProfile() const;
   virtual void RendererReady(RenderViewHost* render_view_host);
   virtual void RendererGone(RenderViewHost* render_view_host);
@@ -45,9 +45,6 @@ class BalloonContents : public HWNDHtmlView,
   void NotifyConnected();
   void NotifyDisconnected();
 
-  // Does the delayed shutdown.
-  void DelayedShutdown();
-
   // The associated balloon.
   Balloon* balloon_;
 
@@ -61,9 +58,6 @@ class BalloonContents : public HWNDHtmlView,
 
   // The title of the balloon page.
   std::wstring title_;
-
-  // The following factory is used to call methods at a later time.
-  ScopedRunnableMethodFactory<BalloonContents> method_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(BalloonContents);
 };

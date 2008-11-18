@@ -20,8 +20,18 @@ HWNDHtmlView::~HWNDHtmlView() {
 
 void HWNDHtmlView::Init(HWND parent_hwnd) {
   DCHECK(!render_view_host_) << "Already initialized.";
+#ifdef ENABLE_BACKGROUND_TASK
+  SiteInstance* site_instance = delegate_->GetSiteInstance();
+  if (!site_instance) {
+    site_instance = SiteInstance::CreateSiteInstance(delegate_->GetProfile());
+  }
+#endif  // ENABLE_BACKGROUND_TASK
   RenderViewHost* rvh = new RenderViewHost(
+#ifdef ENABLE_BACKGROUND_TASK
+    site_instance,
+#else
     SiteInstance::CreateSiteInstance(delegate_->GetProfile()),
+#endif  // ENABLE_BACKGROUND_TASK
     delegate_, MSG_ROUTING_NONE, NULL);
   render_view_host_ = rvh;
 
