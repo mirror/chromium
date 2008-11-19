@@ -272,6 +272,10 @@ void SimpleFontData::platformInit()
         m_xHeight = MAX(NSMaxX(xBox), NSMaxY(xBox));
     } else
         m_xHeight = [m_font.font() xHeight];
+#if PLATFORM(CHROMIUM)
+    static const UChar32 numeral_zero_char = '0';
+    m_avgCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(numeral_zero_char).glyph);
+#endif  
 }
 
 void SimpleFontData::platformDestroy()
