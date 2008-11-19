@@ -217,12 +217,10 @@ void OpenAll(HWND parent,
   if (!navigator) {
     Browser* browser = 
         BrowserList::FindBrowserWithType(profile, BrowserType::TABBED_BROWSER);
-    if (!browser || !browser->GetSelectedTabContents()) {
+    if (!browser || !browser->GetSelectedTabContents())
       navigator = &navigator_impl;
-    } else {
-      browser->window()->Activate();
+    else
       navigator = browser->GetSelectedTabContents();
-    }
   }
 
   bool opened_url = false;
