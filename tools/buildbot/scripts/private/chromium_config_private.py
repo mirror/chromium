@@ -18,6 +18,7 @@ class Master(object):
   trunk_internal_url_src = None
   # Please change this accordingly.
   master_domain = 'example.com'
+  smtp = 'smtp'
 
   class Chromium(object):
     # Actual server name.
