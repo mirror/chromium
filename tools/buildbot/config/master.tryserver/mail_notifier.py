@@ -15,6 +15,16 @@ from twisted.internet import defer
 
 
 class MailNotifier(mail.MailNotifier):
+  def __init__(self, fromaddr, mode="all", categories=None, builders=None,
+               addLogs=False, relayhost="localhost",
+               subject="buildbot %(result)s in %(projectName)s on %(builder)s",
+               lookup=None, extraRecipients=[],
+               sendToInterestedUsers=True, reply_to=None):
+    mail.MailNotifier.__init__(self, fromaddr, mode, categories, builders,
+                               addLogs, relayhost, subject, lookup,
+                               extraRecipients, sendToInterestedUsers)
+    self.reply_to = reply_to
+
   def buildMessage(self, name, build, results):
     """Send an email about the result. Don't attach the patch as
     MailNotifier.buildMessage do."""
@@ -114,6 +124,8 @@ Automated text version 0.2""" % (name,
       'reason': build.getReason(),
     }
     m['From'] = self.fromaddr
+    if self.reply_to:
+      m['Reply-To'] = self.reply_to
     # now, who is this message going to?
     dl = []
     recipients = self.extraRecipients[:]
