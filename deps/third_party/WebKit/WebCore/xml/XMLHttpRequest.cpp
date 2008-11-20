@@ -53,10 +53,6 @@
 #include <runtime/JSLock.h>
 #endif
 
-#if USE(V8)
-#include "ScriptController.h"
-#endif
-
 namespace WebCore {
 
 typedef HashSet<String, CaseFoldingHash> HeadersSet;
@@ -837,8 +833,6 @@ void XMLHttpRequest::dropProtection()
         if (JSC::JSValue* wrapper = getCachedDOMObjectWrapper(*window->globalData(), this))
             JSC::Heap::heap(wrapper)->reportExtraMemoryCost(m_responseText.size() * 2);
     }
-#elif USE(V8)
-    // TODO: We need to use hasPendingActivity() in V8.
 #endif
     unsetPendingActivity(this);
 }

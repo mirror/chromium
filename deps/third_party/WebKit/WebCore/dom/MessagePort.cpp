@@ -36,6 +36,10 @@
 #include "SecurityOrigin.h"
 #include "Timer.h"
 
+#if USE(V8)
+#include "ScriptController.h"
+#endif
+
 namespace WebCore {
 
 class MessagePortCloseEventTask : public ScriptExecutionContext::Task {
@@ -197,14 +201,24 @@ void MessagePort::entangle(MessagePort* port1, MessagePort* port2)
 
     port1->m_entangledPort = port2;
     port2->m_entangledPort = port1;
+
+#if USE(V8)
+    ScriptController::entangleMessagePorts(port1, port2);
+#endif
 }
 
 void MessagePort::unentangle()
 {
     ASSERT(this == m_entangledPort->m_entangledPort);
 
+#if USE(V8)
+    ScriptController::unentangleMessagePort(m_entangledPort);
+    ScriptController::unentangleMessagePort(this);
+#endif
+
     m_entangledPort->m_entangledPort = 0;
     m_entangledPort = 0;
+
 }
 
 void MessagePort::contextDestroyed()
