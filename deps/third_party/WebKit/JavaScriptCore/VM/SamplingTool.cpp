@@ -94,7 +94,7 @@ void SamplingTool::run()
             continue;
 
         if (!sample.inHostFunction()) {
-            unsigned opcodeID = m_machine->getOpcodeID(sample.vPC()[0].u.opcode);
+            unsigned opcodeID = m_interpreter->getOpcodeID(sample.vPC()[0].u.opcode);
 
             ++m_opcodeSampleCount;
             ++m_opcodeSamples[opcodeID];
@@ -196,7 +196,7 @@ void SamplingTool::dump(ExecState* exec)
 
     // (2) Print Opcode sampling results.
 
-    printf("\nOpcode samples [*]\n");
+    printf("\nBytecode samples [*]\n");
     printf("                             sample   %% of       %% of     |   cti     cti %%\n");
     printf("opcode                       count     VM        total    |  count   of self\n");
     printf("-------------------------------------------------------   |  ----------------\n");
@@ -206,10 +206,10 @@ void SamplingTool::dump(ExecState* exec)
         if (!count)
             continue;
 
-        OpcodeID opcode = opcodeSampleInfo[i].opcode;
+        OpcodeID opcodeID = opcodeSampleInfo[i].opcode;
         
-        const char* opcodeName = opcodeNames[opcode];
-        const char* opcodePadding = padOpcodeName(opcode, 28);
+        const char* opcodeName = opcodeNames[opcodeID];
+        const char* opcodePadding = padOpcodeName(opcodeID, 28);
         double percentOfVM = (static_cast<double>(count) * 100) / m_opcodeSampleCount;
         double percentOfTotal = (static_cast<double>(count) * 100) / m_sampleCount;
         long long countInCTIFunctions = opcodeSampleInfo[i].countInCTIFunctions;
@@ -217,7 +217,7 @@ void SamplingTool::dump(ExecState* exec)
         fprintf(stdout, "%s:%s%-6lld %.3f%%\t%.3f%%\t  |   %-6lld %.3f%%\n", opcodeName, opcodePadding, count, percentOfVM, percentOfTotal, countInCTIFunctions, percentInCTIFunctions);
     }
     
-    printf("\n[*] Samples inside host code are not charged to any Opcode.\n\n");
+    printf("\n[*] Samples inside host code are not charged to any Bytecode.\n\n");
     printf("\tSamples inside VM:\t\t%lld / %lld (%.3f%%)\n", m_opcodeSampleCount, m_sampleCount, (static_cast<double>(m_opcodeSampleCount) * 100) / m_sampleCount);
     printf("\tSamples inside host code:\t%lld / %lld (%.3f%%)\n\n", m_sampleCount - m_opcodeSampleCount, m_sampleCount, (static_cast<double>(m_sampleCount - m_opcodeSampleCount) * 100) / m_sampleCount);
     printf("\tsample count:\tsamples inside this opcode\n");
@@ -279,7 +279,7 @@ void SamplingTool::dump(ExecState* exec)
                     printf("    Line #%d has sample count %d.\n", lineCountInfo[lineno].line, lineCountInfo[lineno].count);
                 }
                 printf("\n");
-                printf("    [*] Samples inside host code are charged to the calling Opcode.\n");
+                printf("    [*] Samples inside host code are charged to the calling Bytecode.\n");
                 printf("        Samples on a call / return boundary are not charged to a specific opcode or line.\n\n");
                 printf("            Samples on a call / return boundary: %d / %d (%.3f%%)\n\n", record->m_sampleCount - record->m_opcodeSampleCount, record->m_sampleCount, (static_cast<double>(record->m_sampleCount - record->m_opcodeSampleCount) * 100) / record->m_sampleCount);
             }
@@ -296,3 +296,4 @@ void SamplingTool::dump(ExecState*)
 #endif
 
 } // namespace JSC
+

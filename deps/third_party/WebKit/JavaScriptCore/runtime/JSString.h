@@ -60,11 +60,11 @@ namespace JSC {
 
     class JSString : public JSCell {
         friend class CTI;
-        friend class Machine;
+        friend class BytecodeInterpreter;
 
     public:
         JSString(JSGlobalData* globalData, const UString& value)
-            : JSCell(globalData->stringStructureID.get())
+            : JSCell(globalData->stringStructure.get())
             , m_value(value)
         {
             Heap::heap(this)->reportExtraMemoryCost(value.cost());
@@ -72,12 +72,12 @@ namespace JSC {
 
         enum HasOtherOwnerType { HasOtherOwner };
         JSString(JSGlobalData* globalData, const UString& value, HasOtherOwnerType)
-            : JSCell(globalData->stringStructureID.get())
+            : JSCell(globalData->stringStructure.get())
             , m_value(value)
         {
         }
         JSString(JSGlobalData* globalData, PassRefPtr<UString::Rep> value, HasOtherOwnerType)
-            : JSCell(globalData->stringStructureID.get())
+            : JSCell(globalData->stringStructure.get())
             , m_value(value)
         {
         }
@@ -90,7 +90,7 @@ namespace JSC {
         bool canGetIndex(unsigned i) { return i < static_cast<unsigned>(m_value.size()); }
         JSString* getIndex(JSGlobalData*, unsigned);
 
-        static PassRefPtr<StructureID> createStructureID(JSValue* proto) { return StructureID::create(proto, TypeInfo(StringType, NeedsThisConversion)); }
+        static PassRefPtr<Structure> createStructure(JSValue* proto) { return Structure::create(proto, TypeInfo(StringType, NeedsThisConversion)); }
 
     private:
         enum VPtrStealingHackType { VPtrStealingHack };
@@ -212,3 +212,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // JSString_h
+

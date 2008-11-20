@@ -31,6 +31,7 @@
 #include "CString.h"
 #include "PlatformString.h"
 #include "TextEncoding.h"
+#include <wtf/StdLibExtras.h>
 
 #if USE(ICU_UNICODE)
 #include <unicode/uidna.h>
@@ -1590,7 +1591,7 @@ const KURL& KURL::blankURL()
 const KURL& blankURL()
 #endif
 {
-    static KURL staticBlankURL("about:blank");
+    DEFINE_STATIC_LOCAL(KURL, staticBlankURL, ("about:blank"));
     return staticBlankURL;
 }
 
@@ -1604,3 +1605,4 @@ void KURL::print() const
 }
 
 #endif // #ifndef USE_GOOGLE_URL_LIBRARY
+

@@ -23,6 +23,7 @@
 
 #include "PlatformString.h"
 #include "Image.h"
+#include "KURL.h"
 #include "Page.h"
 #include "PageGroup.h"
 
@@ -439,4 +440,5 @@ void QWebHistory::setMaximumItemCount(int count)
 {
     d->lst->setCapacity(count);
 }
+
 

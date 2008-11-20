@@ -76,6 +76,7 @@ namespace WebCore {
     String contextMenuItemTagUnderline();
     String contextMenuItemTagOutline();
     String contextMenuItemTagWritingDirectionMenu();
+    String contextMenuItemTagTextDirectionMenu();
     String contextMenuItemTagDefaultDirection();
     String contextMenuItemTagLeftToRight();
     String contextMenuItemTagRightToLeft();
@@ -121,3 +122,4 @@ namespace WebCore {
 }
 
 #endif
+

@@ -117,6 +117,10 @@ namespace WebCore {
         ContextMenuItemTagDefaultDirection,
         ContextMenuItemTagLeftToRight,
         ContextMenuItemTagRightToLeft,
+        ContextMenuItemTagTextDirectionMenu, // Text Direction sub-menu
+        ContextMenuItemTagTextDirectionDefault,
+        ContextMenuItemTagTextDirectionLeftToRight,
+        ContextMenuItemTagTextDirectionRightToLeft,
         ContextMenuItemTagPDFSinglePageScrolling,
         ContextMenuItemTagPDFFacingPagesScrolling,
         ContextMenuItemTagInspectElement,
@@ -218,3 +222,4 @@ namespace WebCore {
 }
 
 #endif // ContextMenuItem_h
+

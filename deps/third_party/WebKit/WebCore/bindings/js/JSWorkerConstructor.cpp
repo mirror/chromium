@@ -23,32 +23,52 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef StructureIDChain_h
-#define StructureIDChain_h
+#include "config.h"
 
-#include <wtf/OwnArrayPtr.h>
-#include <wtf/PassRefPtr.h>
-#include <wtf/RefCounted.h>
-#include <wtf/RefPtr.h>
+#if ENABLE(WORKERS)
 
-namespace JSC {
+#include "JSWorkerConstructor.h"
 
-    class StructureID;
+#include "Document.h"
+#include "ExceptionCode.h"
+#include "JSDOMWindowCustom.h"
+#include "JSWorker.h"
+#include "Worker.h"
 
-    class StructureIDChain : public RefCounted<StructureIDChain> {
-    public:
-        static PassRefPtr<StructureIDChain> create(StructureID* structureID) { return adoptRef(new StructureIDChain(structureID)); }
+using namespace JSC;
 
-        RefPtr<StructureID>* head() { return m_vector.get(); }
+namespace WebCore {
 
-    private:
-        StructureIDChain(StructureID* structureID);
+const ClassInfo JSWorkerConstructor::s_info = { "WorkerConstructor", 0, 0, 0 };
 
-        OwnArrayPtr<RefPtr<StructureID> > m_vector;
-    };
+JSWorkerConstructor::JSWorkerConstructor(ExecState* exec)
+    : DOMObject(JSWorkerConstructor::createStructure(exec->lexicalGlobalObject()->objectPrototype()))
+{
+    putDirect(exec->propertyNames().length, jsNumber(exec, 1), ReadOnly|DontDelete|DontEnum);
+}
 
-    bool structureIDChainsAreEqual(StructureIDChain*, StructureIDChain*);
+static JSObject* constructWorker(ExecState* exec, JSObject* constructor, const ArgList& args)
+{
+    if (args.size() == 0)
+        return throwError(exec, SyntaxError, "Not enough arguments");
 
-} // namespace JSC
+    UString scriptURL = args.at(exec, 0)->toString(exec);
 
-#endif // StructureIDChain_h
+    DOMWindow* window = asJSDOMWindow(exec->lexicalGlobalObject())->impl();
+    
+    ExceptionCode ec = 0;
+    RefPtr<Worker> worker = Worker::create(scriptURL, window->document(), ec);
+    setDOMException(exec, ec);
+
+    return asObject(toJS(exec, worker.release()));
+}
+
+ConstructType JSWorkerConstructor::getConstructData(ConstructData& constructData)
+{
+    constructData.native.function = constructWorker;
+    return ConstructTypeHost;
+}
+
+} // namespace WebCore
+
+#endif // ENABLE(WORKERS)

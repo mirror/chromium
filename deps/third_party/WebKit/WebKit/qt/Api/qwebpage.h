@@ -274,6 +274,7 @@ Q_SIGNALS:
 
     void microFocusChanged();
     void contentsChanged();
+    void exceededDatabaseQuota(QWebFrame* frame, QString databaseName);
 
 protected:
     virtual QWebPage *createWindow(WebWindowType type);
@@ -310,3 +311,4 @@ private:
 Q_DECLARE_OPERATORS_FOR_FLAGS(QWebPage::FindFlags)
 
 #endif
+

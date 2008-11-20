@@ -132,8 +132,8 @@ SOURCES += \
     runtime/StringConstructor.cpp \
     runtime/StringObject.cpp \
     runtime/StringPrototype.cpp \
-    runtime/StructureID.cpp \
-    runtime/StructureIDChain.cpp \
+    runtime/Structure.cpp \
+    runtime/StructureChain.cpp \
     runtime/UString.cpp \
     profiler/HeavyProfile.cpp \
     profiler/Profile.cpp \
@@ -170,3 +170,7 @@ kjsbison.variable_out = GENERATED_SOURCES
 kjsbison.dependency_type = TYPE_C
 kjsbison.CONFIG = target_predeps
 addExtraCompilerWithHeader(kjsbison)
+
+*-g++*:QMAKE_CXXFLAGS_RELEASE -= -O2
+*-g++*:QMAKE_CXXFLAGS_RELEASE += -O3
+

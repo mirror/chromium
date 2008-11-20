@@ -114,8 +114,8 @@ sources['runtime'] = [
     'runtime/StringConstructor.cpp',
     'runtime/StringObject.cpp',
     'runtime/StringPrototype.cpp',
-    'runtime/StructureID.cpp',
-    'runtime/StructureIDChain.cpp',
+    'runtime/Structure.cpp',
+    'runtime/StructureChain.cpp',
     'runtime/UString.cpp',
 ]
 sources['VM'] = [
@@ -227,3 +227,4 @@ build_directory = '.' # This should be changed to point to wherever JavaScriptCo
 
 env = Environment(CPPPATH = include_paths, LIBS = ['JavaScriptCore', 'edit'], LIBPATH = [build_directory])
 env.Program('jsc', shell_sources)
+

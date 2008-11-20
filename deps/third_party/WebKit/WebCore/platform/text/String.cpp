@@ -798,11 +798,7 @@ double charactersToDouble(const UChar* data, size_t length, bool* ok)
         bytes[i] = data[i] < 0x7F ? data[i] : '?';
     bytes[length] = '\0';
     char* end;
-#if USE(JSC)
-    double val = JSC::strtod(bytes.data(), &end);
-#elif USE(V8)
-    double val = strtod(bytes.data(), &end);
-#endif
+    double val = WTF::strtod(bytes.data(), &end);
     if (ok)
         *ok = (end == 0 || *end == '\0');
     return val;
@@ -840,3 +836,4 @@ WebCore::String* string(const char* s)
     return new WebCore::String(s);
 }
 #endif
+

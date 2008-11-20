@@ -1,3 +1,838 @@
+2008-11-16  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        - https://bugs.webkit.org/show_bug.cgi?id=22295
+          track which history items are from page load failures
+
+        * history/HistoryItem.cpp: Sort includes, add newly needed ones, and remove
+        no-longer-needed ones.
+        (WebCore::HistoryItem::HistoryItem): Initialize m_lastVisitWasFailure to false.
+        (WebCore::HistoryItem::showTreeWithIndent): Rewrote to avoid appending to a
+        String, since that's not efficient.
+
+        * history/HistoryItem.h: Removed unneeded includes. Added lastVisitWasFailure,
+        setLastVisitWasFailure, and m_lastVisitWasFailure.
+
+        * history/mac/HistoryItemMac.mm: Add newly-needed include
+        (WebCore::HistoryItem::setTransientProperty): Rewrote to avoid keeping a
+        m_transientProperties map around when it is empty.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::createHistoryItem): Call setLastVisitWasFailure when
+        the page was unreachable or an HTTP page with a status code that indicates
+        failure.
+
+2008-11-16  Yong Li  <yong.li@torchmobile.com>
+
+        Reviewed by Timothy Hatcher.
+        Landed by George Staikos.
+
+        Optimization: don't relayout, repaint, or emit a DOM event if the
+        scroll event didn't scroll anywhere.
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::scrollToOffset): add early exit
+
+2008-11-16  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22290
+        Remove cross-heap GC and MessagePort multi-threading support
+
+        It is broken (and may not be implementable at all), and no longer needed, as we
+        don't use MessagePorts for communication with workers any more.
+
+        * bindings/js/JSDOMBinding.cpp:
+        * bindings/js/JSDOMBinding.h:
+        * bindings/js/JSDOMWindowBase.cpp:
+        * bindings/js/JSDOMWindowBase.h:
+        Removed cross-heap GC implementation.
+
+        * dom/MessagePort.cpp:
+        (WebCore::MessagePort::hasPendingActivity):
+        * dom/MessagePort.h:
+        Made objects RefCounted instead of ThreadSafeShared, added FIXME comments for code that is
+        unnecessarily complicated for single threaded case.
+
+2008-11-14  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Maciej Stachowiak.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22266
+        Stop using MessagePort for communication with workers
+
+        The current MessagePort specification is not well suited for being implemented in a
+        multi-threaded or multi-process environment, and this doesn't appear to be easily fixable.
+        This patch implements a simpler Mozilla API for workers instead.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * DerivedSources.make:
+        * bindings/js/JSDOMWindowBase.cpp: (jsDOMWindowBaseWorker):
+        * bindings/js/JSDedicatedWorkerConstructor.cpp: Removed.
+        * bindings/js/JSDedicatedWorkerConstructor.h: Removed.
+        * bindings/js/JSDedicatedWorkerCustom.cpp: Removed.
+        * bindings/js/JSWorkerConstructor.cpp: Copied from WebCore/bindings/js/JSDedicatedWorkerConstructor.cpp.
+        * bindings/js/JSWorkerConstructor.h: Copied from WebCore/bindings/js/JSDedicatedWorkerConstructor.h.
+        * bindings/js/JSWorkerCustom.cpp: Copied from WebCore/bindings/js/JSDedicatedWorkerCustom.cpp.
+        * dom/DedicatedWorker.cpp: Removed.
+        * dom/DedicatedWorker.h: Removed.
+        * dom/DedicatedWorker.idl: Removed.
+        Renamed DedicatedWorker to Worker to match Mozilla and current WHATWG cpec.
+
+        * bindings/js/JSEventListener.cpp: (WebCore::JSAbstractEventListener::handleEvent):
+        Clear worker exceptions to avoid hitting an assertion.
+
+        * dom/EventTarget.cpp: (WebCore::EventTarget::toWorker):
+        * dom/EventTarget.h:
+        * bindings/js/JSEventTarget.cpp: (WebCore::toJS):
+        WorkerContext is now an EventTarget, too.
+
+        * bindings/js/JSWorkerContext.cpp: Removed onconnect, constructors for MessageChannel and
+        MessagePort. Added postMessage() and onmessage.
+
+        * dom/ScriptExecutionContext.cpp: (WebCore::performTask): Do not reference ScriptExecutionContext
+        when posting a task - this operation is not thread safe. It is also not necessary any more,
+        as the context is kept alive by WorkerMessagingProxy.
+
+        * dom/Worker.cpp: Copied from WebCore/dom/DedicatedWorker.cpp.
+        (WebCore::Worker::Worker): Start loading the script right away - there is no reason to do
+        that on a timer.
+        (WebCore::Worker::~Worker): Notify messaging proxy.
+        (WebCore::Worker::postMessage): Just ask the proxy to post the message.
+        (WebCore::Worker::notifyFinished): Notify messaging proxy when a thread object becomes
+        available. Also, it is now safe to unsetPendingActivity(), making the object collectable.
+        I'm not sure if this is the right lifetime for workers, as unreachable workers with event
+        listeners should probably be kept alive, but it at least lets the object be collected.
+        (WebCore::Worker::addEventListener): Added an EventTarget implementation.
+        (WebCore::Worker::removeEventListener): Added an EventTarget implementation.
+        (WebCore::Worker::dispatchEvent): Added an EventTarget implementation.
+
+        * dom/Worker.h: Copied from WebCore/dom/DedicatedWorker.h.
+        * dom/Worker.idl: Copied from WebCore/dom/DedicatedWorker.idl.
+        Removed onclose, made an EventListener. Actual messaging is now handled by WorkerMessagingProxy.
+
+        * dom/WorkerContext.cpp:
+        (WebCore::WorkerContext::~WorkerContext): Notify messaging proxy that the context was shut
+        down successfully.
+        (WebCore::WorkerContext::postMessage): Added. Post the message via messaging proxy.
+
+        * dom/WorkerContext.h: Added postMessage and onmessage, removed onconnect.
+
+        * dom/WorkerMessagingProxy.cpp: Added.
+        * dom/WorkerMessagingProxy.h: Added.
+        This new class implements actual messaging. It is notified when a Worker is garbage collected,
+        and asks the thread to shut down. It also owns the thread object, and references script
+        execution context, making it safe to post messages to it remotely.
+
+        * dom/WorkerThread.cpp:
+        * dom/WorkerThread.h:
+        Keep a reference to messaging proxy, not to Worker itself. Also, the thread object no longer
+        keeps itself alive - it is now the job of messaging proxy.
+
+2008-11-15  Darin Adler  <darin@apple.com>
+
+        Rubber stamped by Geoff Garen.
+
+        - do the long-planned StructureID -> Structure rename
+
+        * ForwardingHeaders/runtime/Structure.h: Copied from WebCore/ForwardingHeaders/runtime/StructureID.h.
+        * ForwardingHeaders/runtime/StructureID.h: Removed.
+        * bindings/js/JSAudioConstructor.cpp:
+        (WebCore::JSAudioConstructor::JSAudioConstructor):
+        * bindings/js/JSDOMBinding.cpp:
+        (WebCore::getCachedDOMStructure):
+        (WebCore::cacheDOMStructure):
+        * bindings/js/JSDOMBinding.h:
+        (WebCore::DOMObject::DOMObject):
+        (WebCore::getDOMStructure):
+        * bindings/js/JSDOMGlobalObject.cpp:
+        (WebCore::JSDOMGlobalObject::JSDOMGlobalObject):
+        * bindings/js/JSDOMGlobalObject.h:
+        * bindings/js/JSDOMWindowBase.cpp:
+        (WebCore::JSDOMWindowBase::JSDOMWindowBase):
+        * bindings/js/JSDOMWindowBase.h:
+        * bindings/js/JSDOMWindowShell.cpp:
+        (WebCore::JSDOMWindowShell::JSDOMWindowShell):
+        (WebCore::JSDOMWindowShell::setWindow):
+        * bindings/js/JSDOMWindowShell.h:
+        (WebCore::JSDOMWindowShell::createStructure):
+        * bindings/js/JSDedicatedWorkerConstructor.cpp:
+        (WebCore::JSDedicatedWorkerConstructor::JSDedicatedWorkerConstructor):
+        * bindings/js/JSHTMLAllCollection.h:
+        (WebCore::JSHTMLAllCollection::JSHTMLAllCollection):
+        (WebCore::JSHTMLAllCollection::createStructure):
+        * bindings/js/JSImageConstructor.cpp:
+        (WebCore::JSImageConstructor::JSImageConstructor):
+        * bindings/js/JSInspectedObjectWrapper.cpp:
+        (WebCore::JSInspectedObjectWrapper::wrap):
+        (WebCore::JSInspectedObjectWrapper::JSInspectedObjectWrapper):
+        * bindings/js/JSInspectedObjectWrapper.h:
+        * bindings/js/JSInspectorCallbackWrapper.cpp:
+        (WebCore::leakInspectorCallbackWrapperStructure):
+        (WebCore::JSInspectorCallbackWrapper::wrap):
+        (WebCore::JSInspectorCallbackWrapper::JSInspectorCallbackWrapper):
+        * bindings/js/JSInspectorCallbackWrapper.h:
+        * bindings/js/JSMessageChannelConstructor.cpp:
+        (WebCore::JSMessageChannelConstructor::JSMessageChannelConstructor):
+        * bindings/js/JSNamedNodesCollection.h:
+        (WebCore::JSNamedNodesCollection::createStructure):
+        * bindings/js/JSOptionConstructor.cpp:
+        (WebCore::JSOptionConstructor::JSOptionConstructor):
+        * bindings/js/JSQuarantinedObjectWrapper.cpp:
+        (WebCore::JSQuarantinedObjectWrapper::JSQuarantinedObjectWrapper):
+        * bindings/js/JSQuarantinedObjectWrapper.h:
+        (WebCore::JSQuarantinedObjectWrapper::createStructure):
+        * bindings/js/JSRGBColor.h:
+        (WebCore::JSRGBColor::createStructure):
+        * bindings/js/JSWorkerContext.cpp:
+        (WebCore::createJSWorkerContextStructure):
+        (WebCore::JSWorkerContext::JSWorkerContext):
+        (WebCore::JSWorkerContext::createPrototype):
+        * bindings/js/JSWorkerContext.h:
+        (WebCore::JSWorkerContext::createStructure):
+        (WebCore::JSWorkerContextPrototype::JSWorkerContextPrototype):
+        (WebCore::JSWorkerContextPrototype::createStructure):
+        * bindings/js/JSXMLHttpRequestConstructor.cpp:
+        (WebCore::JSXMLHttpRequestConstructor::JSXMLHttpRequestConstructor):
+        * bindings/js/JSXSLTProcessorConstructor.cpp:
+        (WebCore::JSXSLTProcessorConstructor::JSXSLTProcessorConstructor):
+        * bindings/scripts/CodeGeneratorJS.pm:
+        * bridge/objc/objc_runtime.h:
+        (JSC::Bindings::ObjcFallbackObjectImp::createStructure):
+        * bridge/qt/qt_runtime.cpp:
+        (JSC::Bindings::QtConnectionObject::execute):
+        * bridge/qt/qt_runtime.h:
+        (JSC::Bindings::QtRuntimeMethod::createStructure):
+        * bridge/runtime_array.h:
+        (JSC::RuntimeArray::createStructure):
+        * bridge/runtime_method.h:
+        (JSC::RuntimeMethod::createStructure):
+        * bridge/runtime_object.cpp:
+        (JSC::RuntimeObjectImp::RuntimeObjectImp):
+        * bridge/runtime_object.h:
+        (JSC::RuntimeObjectImp::createStructure):
+
+2008-11-15  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        - fix just-introduced crash in the svg/custom/svg-fonts-in-html.html test
+
+        This gets rid of the crash. It restores the behavior of the CG case from before Dirk
+        Shulze removed the platorm-dependent code, but perhaps it should be changed further
+        in the future so that the default for no style is "no stroke". I think the patch is
+        fine for fill.
+
+        * svg/graphics/SVGPaintServerSolid.cpp:
+        (WebCore::SVGPaintServerSolid::setup): Added null checks for svgStyle.
+        (WebCore::SVGPaintServerSolid::renderPath): Added null checks for style and svgStyle.
+
+2008-11-15  Kevin Ollivier  <kevino@theolliviers.com>
+
+        Reviewed by Timothy Hatcher.
+
+        Initialize m_networkStateChangedFunction to 0 as otherwise the check for null will fail.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22284
+
+        * platform/network/NetworkStateNotifier.h:
+        (WebCore::NetworkStateNotifier::NetworkStateNotifier):
+
+2008-11-15  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        r38426 caused a wrong drawing of a LayoutTest. Use another
+        way to set the color to pass this test again.
+
+        * svg/graphics/SVGPaintServerSolid.cpp:
+        (WebCore::SVGPaintServerSolid::setup):
+
+2008-11-15  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Removed platform dependent code on SVGPaintServerSolid.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * svg/graphics/SVGPaintServerSolid.cpp:
+        (WebCore::SVGPaintServerSolid::setup):
+        (WebCore::SVGPaintServerSolid::renderPath):
+        * svg/graphics/SVGPaintServerSolid.h:
+        * svg/graphics/cairo/SVGPaintServerSolidCairo.cpp: Removed.
+        * svg/graphics/cg/SVGPaintServerSolidCg.cpp: Removed.
+        * svg/graphics/qt/SVGPaintServerSolidQt.cpp: Removed.
+
+2008-11-15  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Updated for JavaScriptCore renames.
+
+        * bindings/js/JSNodeCustom.cpp:
+        (WebCore::JSNode::mark):
+        * bindings/js/JSXMLHttpRequestCustom.cpp:
+        (WebCore::JSXMLHttpRequest::send):
+        * bindings/js/ScriptController.cpp:
+        (WebCore::ScriptController::evaluate):
+        * bindings/js/WorkerScriptController.cpp:
+        (WebCore::WorkerScriptController::evaluate):
+        * bindings/objc/WebScriptObject.mm:
+        (-[WebScriptObject evaluateWebScript:]):
+        * bridge/NP_jsobject.cpp:
+        (_NPN_Evaluate):
+        * bridge/jni/jni_jsobject.mm:
+        (JavaJSObject::eval):
+        * page/Console.cpp:
+        (WebCore::retrieveLastCaller):
+        (WebCore::Console::trace):
+
+2008-11-14  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21810
+        Remove use of static C++ objects that are destroyed at exit time (destructors)
+
+        Create DEFINE_STATIC_LOCAL macro. Change static local objects to leak to avoid 
+        exit-time destructor. Update code that was changed to fix this issue that ran 
+        into a gcc bug (<rdar://problem/6354696> Codegen issue with C++ static reference 
+        in gcc build 5465). Also typdefs for template types needed to be added in some 
+        cases so the type could make it through the macro successfully.
+
+        Basically code of the form:
+        static T m;
+        becomes:
+        DEFINE_STATIC_LOCAL(T, m, ());
+
+        Also any code of the form:
+        static T& m = *new T;
+        also becomes:
+        DEFINE_STATIC_LOCAL(T, m, ());
+
+        * ForwardingHeaders/wtf/StdLibExtras.h: Added.
+        * bindings/js/GCController.cpp:
+        (WebCore::gcController):
+        * bindings/js/JSDOMBinding.cpp:
+        (WebCore::wrapperSet):
+        * bindings/js/JSInspectedObjectWrapper.cpp:
+        (WebCore::wrappers):
+        * bindings/js/JSInspectorCallbackWrapper.cpp:
+        (WebCore::wrappers):
+        * bindings/js/JSNavigatorCustom.cpp:
+        (WebCore::needsYouTubeQuirk):
+        * bridge/runtime_root.cpp:
+        (JSC::Bindings::rootObjectSet):
+        * css/CSSMutableStyleDeclaration.cpp:
+        (WebCore::initShorthandMap):
+        (WebCore::CSSMutableStyleDeclaration::removeProperty):
+        * css/CSSPrimitiveValue.cpp:
+        (WebCore::CSSPrimitiveValue::cssText):
+        * css/CSSSelector.cpp:
+        (WebCore::CSSSelector::extractPseudoType):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::screenEval):
+        (WebCore::printEval):
+        * dom/DOMImplementation.cpp:
+        (WebCore::addString):
+        (WebCore::isSVG10Feature):
+        (WebCore::isSVG11Feature):
+        (WebCore::DOMImplementation::isXMLMIMEType):
+        * dom/Document.cpp:
+        (WebCore::Document::hasPrefixNamespaceMismatch):
+        * dom/ScriptElement.cpp:
+        (WebCore::isSupportedJavaScriptLanguage):
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::styleSpanClassString):
+        * editing/HTMLInterchange.cpp:
+        (WebCore::):
+        * editing/IndentOutdentCommand.cpp:
+        (WebCore::indentBlockquoteString):
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::isInterchangeNewlineNode):
+        (WebCore::isInterchangeConvertedSpaceSpan):
+        * editing/htmlediting.cpp:
+        (WebCore::stringWithRebalancedWhitespace):
+        (WebCore::nonBreakingSpaceString):
+        * editing/markup.cpp:
+        (WebCore::appendAttributeValue):
+        (WebCore::appendEscapedContent):
+        (WebCore::shouldAddNamespaceAttr):
+        (WebCore::appendNamespace):
+        (WebCore::appendStartMarkup):
+        (WebCore::createMarkup):
+        * html/HTMLButtonElement.cpp:
+        (WebCore::HTMLButtonElement::type):
+        * html/HTMLElement.cpp:
+        (WebCore::HTMLElement::isRecognizedTagName):
+        (WebCore::inlineTagList):
+        (WebCore::blockTagList):
+        * html/HTMLFieldSetElement.cpp:
+        (WebCore::HTMLFieldSetElement::type):
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::type):
+        * html/HTMLKeygenElement.cpp:
+        (WebCore::HTMLKeygenElement::type):
+        * html/HTMLLegendElement.cpp:
+        (WebCore::HTMLLegendElement::type):
+        * html/HTMLOptGroupElement.cpp:
+        (WebCore::HTMLOptGroupElement::type):
+        * html/HTMLOptionElement.cpp:
+        (WebCore::HTMLOptionElement::type):
+        * html/HTMLParser.cpp:
+        (WebCore::HTMLParser::getNode):
+        (WebCore::HTMLParser::isHeaderTag):
+        (WebCore::HTMLParser::isResidualStyleTag):
+        (WebCore::HTMLParser::isAffectedByResidualStyle):
+        * html/HTMLSelectElement.cpp:
+        (WebCore::HTMLSelectElement::type):
+        * html/HTMLTextAreaElement.cpp:
+        (WebCore::HTMLTextAreaElement::type):
+        * inspector/InspectorController.cpp:
+        (WebCore::platform):
+        * inspector/JavaScriptDebugServer.cpp:
+        (WebCore::JavaScriptDebugServer::shared):
+        * inspector/JavaScriptProfile.cpp:
+        (WebCore::profileCache):
+        * inspector/JavaScriptProfileNode.cpp:
+        (WebCore::profileNodeCache):
+        * loader/FrameLoader.cpp:
+        (WebCore::localSchemes):
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::cacheStorage):
+        * loader/archive/ArchiveFactory.cpp:
+        (WebCore::archiveMIMETypes):
+        (WebCore::ArchiveFactory::registerKnownArchiveMIMETypes):
+        * loader/icon/IconDatabase.cpp:
+        (WebCore::IconDatabase::defaultDatabaseFilename):
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::dragState):
+        * page/Frame.cpp:
+        (WebCore::createRegExpForLabels):
+        (WebCore::keepAliveSet):
+        * page/Page.cpp:
+        (WebCore::Page::groupName):
+        * page/SecurityOrigin.cpp:
+        (WebCore::isDefaultPortForProtocol):
+        (WebCore::SecurityOrigin::databaseIdentifier):
+        * page/mac/FrameMac.mm:
+        (WebCore::regExpForLabels):
+        * platform/KURL.cpp:
+        (WebCore::blankURL):
+        * platform/graphics/FontCache.cpp:
+        (WebCore::alternateFamilyName):
+        * platform/graphics/mac/FontCacheMac.mm:
+        (WebCore::FontCache::getSimilarFontPlatformData):
+        (WebCore::FontCache::getLastResortFallbackFont):
+        * platform/mac/CursorMac.mm:
+        (WebCore::leakNamedCursor):
+        (WebCore::pointerCursor):
+        (WebCore::crossCursor):
+        (WebCore::handCursor):
+        (WebCore::moveCursor):
+        (WebCore::verticalTextCursor):
+        (WebCore::cellCursor):
+        (WebCore::contextMenuCursor):
+        (WebCore::aliasCursor):
+        (WebCore::zoomInCursor):
+        (WebCore::zoomOutCursor):
+        (WebCore::copyCursor):
+        (WebCore::noneCursor):
+        (WebCore::progressCursor):
+        (WebCore::noDropCursor):
+        (WebCore::notAllowedCursor):
+        (WebCore::iBeamCursor):
+        (WebCore::waitCursor):
+        (WebCore::helpCursor):
+        (WebCore::eastResizeCursor):
+        (WebCore::northResizeCursor):
+        (WebCore::northEastResizeCursor):
+        (WebCore::northWestResizeCursor):
+        (WebCore::southResizeCursor):
+        (WebCore::southEastResizeCursor):
+        (WebCore::southWestResizeCursor):
+        (WebCore::westResizeCursor):
+        (WebCore::northSouthResizeCursor):
+        (WebCore::eastWestResizeCursor):
+        (WebCore::northEastSouthWestResizeCursor):
+        (WebCore::northWestSouthEastResizeCursor):
+        (WebCore::columnResizeCursor):
+        (WebCore::rowResizeCursor):
+        (WebCore::grabCursor):
+        (WebCore::grabbingCursor):
+        * platform/mac/ScrollbarThemeMac.mm:
+        (WebCore::ScrollbarTheme::nativeTheme):
+        * platform/mac/ThemeMac.mm:
+        (WebCore::platformTheme):
+        * platform/mac/ThreadCheck.mm:
+        (WebCoreReportThreadViolation):
+        * platform/network/NetworkStateNotifier.cpp:
+        (WebCore::networkStateNotifier):
+        * platform/network/mac/FormDataStreamMac.mm:
+        (WebCore::getStreamFormDataMap):
+        (WebCore::getStreamResourceHandleMap):
+        * platform/network/mac/ResourceResponseMac.mm:
+        (WebCore::ResourceResponse::platformLazyInit):
+        * platform/text/TextEncoding.cpp:
+        (WebCore::TextEncoding::isJapanese):
+        * plugins/PluginMainThreadScheduler.cpp:
+        (WebCore::PluginMainThreadScheduler::scheduler):
+        * rendering/RenderBlock.cpp:
+        (WebCore::continuationOutlineTable):
+        (WebCore::RenderBlock::addContinuationWithOutline):
+        (WebCore::RenderBlock::paintContinuationOutlines):
+        * rendering/RenderCounter.cpp:
+        (WebCore::counterMaps):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutVerticalBox):
+        * rendering/RenderListItem.cpp:
+        (WebCore::RenderListItem::markerText):
+        * rendering/RenderScrollbarTheme.cpp:
+        (WebCore::RenderScrollbarTheme::renderScrollbarTheme):
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::systemFont):
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::checkLinesForTextOverflow):
+        * rendering/style/RenderStyle.cpp:
+        (WebCore::RenderStyle::initialDashboardRegions):
+        (WebCore::RenderStyle::noneDashboardRegions):
+        * storage/Database.cpp:
+        (WebCore::guidMutex):
+        (WebCore::guidToVersionMap):
+        (WebCore::guidToDatabaseMap):
+        (WebCore::Database::databaseInfoTableName):
+        (WebCore::databaseVersionKey):
+        (WebCore::Database::getVersionFromDatabase):
+        (WebCore::Database::setVersionInDatabase):
+        (WebCore::guidForOriginAndName):
+        * storage/DatabaseTracker.cpp:
+        (WebCore::DatabaseTracker::tracker):
+        (WebCore::notificationMutex):
+        (WebCore::notificationQueue):
+        * storage/LocalStorage.cpp:
+        (WebCore::localStorageMap):
+        * svg/SVGAnimateMotionElement.cpp:
+        (WebCore::SVGAnimateMotionElement::rotateMode):
+        * svg/SVGAnimationElement.cpp:
+        (WebCore::SVGAnimationElement::calcMode):
+        (WebCore::SVGAnimationElement::attributeType):
+        (WebCore::SVGAnimationElement::isAdditive):
+        (WebCore::SVGAnimationElement::isAccumulated):
+        * svg/SVGLangSpace.cpp:
+        (WebCore::SVGLangSpace::xmlspace):
+        * svg/SVGSVGElement.cpp:
+        (WebCore::SVGSVGElement::contentScriptType):
+        (WebCore::SVGSVGElement::contentStyleType):
+        * svg/SVGStyleElement.cpp:
+        (WebCore::SVGStyleElement::type):
+        (WebCore::SVGStyleElement::media):
+        * svg/SVGTextContentElement.cpp:
+        (WebCore::SVGTextContentElement::parseMappedAttribute):
+        * svg/animation/SVGSMILElement.cpp:
+        (WebCore::SVGSMILElement::parseClockValue):
+        (WebCore::SVGSMILElement::restart):
+        (WebCore::SVGSMILElement::fill):
+        (WebCore::SVGSMILElement::repeatCount):
+        (WebCore::SVGSMILElement::notifyDependentsIntervalChanged):
+        * svg/graphics/SVGResource.cpp:
+        (WebCore::clientMap):
+        (WebCore::SVGResource::removeClient):
+        * svg/graphics/SVGResourceMarker.cpp:
+        (WebCore::SVGResourceMarker::draw):
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::PreflightResultCacheItem::PreflightResultCacheItem):
+        (WebCore::preflightResultCache):
+        (WebCore::appendPreflightResultCacheEntry):
+        (WebCore::isSafeRequestHeader):
+        (WebCore::isOnAccessControlResponseHeaderWhitelist):
+        (WebCore::XMLHttpRequest::didReceiveResponsePreflight):
+        * xml/XPathExpressionNode.cpp:
+        (WebCore::XPath::Expression::evaluationContext):
+        * xml/XPathParser.cpp:
+        (WebCore::XPath::setUpAxisNamesMap):
+        (WebCore::XPath::isAxisName):
+        (WebCore::XPath::isNodeTypeName):
+        * xml/XPathValue.cpp:
+        (WebCore::XPath::Value::toNodeSet):
+
+2008-11-14  Dan Bernstein  <mitz@apple.com>
+
+        - attempt to fix the Qt build
+
+        * platform/qt/Localizations.cpp:
+        (WebCore::contextMenuItemTagTextDirectionMenu): Added. Maybe this string
+        needs to go somewhere else in addition to here.
+
+2008-11-14  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix.
+
+        * platform/wx/LocalizedStringsWx.cpp:
+        (WebCore::contextMenuItemTagTextDirectionMenu):
+
+2008-11-14  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Darin Adler.
+
+        - <rdar://problem/6234307> Support action methods for setting and clearing character-level directionality
+        - WebCore part of <rdar://problem/6234337> Add a Text Direction menu to the default context menu when appropriate
+
+        * WebCore.base.exp: Exported
+        WebCore::Settings::setTextDirectionSubmenuInclusionBehavior().
+
+        * editing/ApplyStyleCommand.cpp:
+        (StyleChange::init): Changed to always include the direction property
+        in the result if the unicode-bidi property is included.
+        (ApplyStyleCommand::splitAncestorsWithUnicodeBidi): Added. Finds the
+        highest ancestor of the given node that establishes bidi embedding. If
+        that embedding agrees with the given allowed direction, finds the
+        second-highest embedding ancestor. Splits all nodes through that
+        ancestor. If the highest embedding ancestor did not need to be split,
+        it is returned.
+        (ApplyStyleCommand::removeEmbeddingUpToEnclosingBlock): Added. Removes
+        bidi embedding attributes and styles from all ancestors of the given
+        node up to its enclosing block or the given node.
+        (ApplyStyleCommand::applyInlineStyle): Added code to handle the
+        unicode-bidi property. Applying style the includes this property
+        involves removing all bidi embedding in effect, except  for one-level
+        embedding that agrees with the desired embedding, then applying the
+        desired embedding where it is not already in effect.
+        (ApplyStyleCommand::applyInlineStyleToRange): Factored out from
+        applyInlineStyle().
+        (ApplyStyleCommand::removeHTMLBidiEmbeddingStyle): Added. Removed the
+        "dir" attribute if necessary and the element if it becomes an unstyled
+        style span.
+        (ApplyStyleCommand::removeCSSStyle): Changed to remove the direction
+        property when removing the unicode-bidi property.
+        (ApplyStyleCommand::removeInlineStyle): Added a call to
+        removeHTMLBidiEmbeddingStyle().
+
+        * editing/ApplyStyleCommand.h:
+        * editing/Editor.cpp:
+        (Editor::textDirectionForSelection): Added. Returns the character-level
+        writing direction of the selection if it is uniform and simple (at most
+        one level of embedding).
+        (Editor::hasBidiSelection): Added. Returns true if the selection lies
+        entirely within a single block, and that block has direction:rtl or
+        contains any inline boxes with non-zero bidi embedding level.
+
+        * editing/Editor.h:
+        * editing/EditorCommand.cpp:
+        (stateTextWritingDirection): Added this helper function for deciding
+        the state of Text Direction submenu items.
+        (executeMakeTextWritingDirectionLeftToRight): Added. Applies
+        "unicode-bidi: embed; direction: ltr;".
+        (executeMakeTextWritingDirectionNatural): Added. Applies
+        "unicode-bidi: normal;"
+        (executeMakeTextWritingDirectionRightToLeft): Added. Applies
+        "unicode-bidi: embed; direction: rtl;".
+        (stateTextWritingDirectionLeftToRight): Added.
+        (stateTextWritingDirectionNatural): Added.
+        (stateTextWritingDirectionRightToLeft): Added.
+        (createCommandMap): Added "MakeTextWritingDirectionLeftToRight",
+        "MakeTextWritingDirectionNatural",
+        and "MakeTextWritingDirectionRightToLeft".
+
+        * editing/InsertTextCommand.cpp:
+        (InsertTextCommand::input): Added code to maintain the unicode-bidi
+        and direction properties in the typing style. Even if they have the
+        same values as the computed style at the caret, they need to be included
+        in the typing style so that inserted text will not inherit any nested
+        embedding.
+
+        * page/ContextMenuController.cpp:
+        (ContextMenuController::contextMenuItemSelected): Added calls to
+        the editor for the text direction menu items.
+
+        * page/Frame.cpp
+        (Frame::computeAndSetTypingStyle): Added code to maintain the
+        unicode-bidi and direction properties in the typing style.
+
+        * page/Settings.cpp:
+        (Settings::setTextDirectionSubmenuInclusionBehavior): Added this setter.
+
+        * page/Settings.h: Added a TextDirectionSubmenuInclusionBehavior enum,
+        an m_textDirectionSubmenuInclusionBehavior member, and accessors.
+
+        * page/mac/WebCoreViewFactory.h:
+        * platform/ContextMenu.cpp:
+        (WebCore::createAndAppendTextDirectionSubMenu): Added.
+        (ContextMenu::populate): Added the Text Direction submenu item based on
+        the inclusion behavior and the existence of a bidi selection.
+        (ContextMenu::checkOrEnableIfNeeded): Added code for the text direction
+        menu items.
+
+        * platform/ContextMenuItem.h:
+        * platform/LocalizedStrings.h: Declared
+        contextMenuItemTagTextDirectionMenu().
+
+        * platform/mac/LocalizedStringsMac.mm: Defined
+        contextMenuItemTagTextDirectionMenu().
+
+        * rendering/RenderBlock.cpp:
+        (RenderBlock::containsNonZeroBidiLevel): Added.
+        * rendering/RenderBlock.h:
+
+2008-11-14  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22264
+        Need to update to latest Geolocation spec (13 November 2008)
+        
+        Update to new error code constants and values.
+
+        * page/Geolocation.cpp: Use new named ErrorCode enums
+        (WebCore::Geolocation::GeoNotifier::timerFired):
+        (WebCore::Geolocation::getCurrentPosition):
+        (WebCore::Geolocation::watchPosition):
+        * page/PositionError.h: Have ErrorCode enum names match new error constant names and values
+        (WebCore::PositionError::):
+        * page/PositionError.idl: Add new named error constants
+
+2008-11-14  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Justin Garcia.
+
+        Fix (again) for <rdar://problem/5089327> Too much indentation when 
+        pasting quoted paragraphs
+
+        This patch goes back to Justin's original approach to fix this bug, 
+        written in revision 38273. That fix was mostly rolled out by 
+        revision 38310 because of styling issues created by the addition of 
+        extra blockquote nodes. This patch again goes back to Justin's 
+        original fix because of cases we discovered the newer fix could not 
+        possibly cover. This version of the patch minimizes the styling 
+        issues of extra blockquotes by opting into the merge start code. 
+
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::hasMatchingQuoteLevel): We want shouldMergeStart to 
+        return true when the quoting level of the end of the inserted 
+        content matches the quoting level of the end of the existing 
+        content.
+        (WebCore::ReplaceSelectionCommand::shouldMergeStart): Now calls 
+        hasMatchingQuoteLevel
+        (WebCore::ReplaceSelectionCommand::doApply):
+
+2008-11-14  Dirk Schulze  <vbs85@gmx.de>
+
+        Reviewed by Eric Seidel.
+
+        Made SVGResourceClipper platform independent.
+        https://bugs.webkit.org/show_bug.cgi?id=21444
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/graphics/GraphicsContext.h:
+        * platform/graphics/cairo/GraphicsContextCairo.cpp:
+        (WebCore::GraphicsContext::clipPath):
+        * platform/graphics/cg/GraphicsContextCG.cpp:
+        (WebCore::GraphicsContext::clipPath):
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::addPath):
+        (WebCore::GraphicsContext::clipPath):
+        * svg/graphics/SVGResourceClipper.cpp:
+        (WebCore::SVGResourceClipper::applyClip):
+        * svg/graphics/cairo/SVGResourceClipperCairo.cpp: Removed.
+        * svg/graphics/cg/SVGResourceClipperCg.cpp: Removed.
+        * svg/graphics/qt/SVGResourceClipperQt.cpp: Removed.
+
+2008-11-14  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        Combine loadFrameRequestWithFormState to loadFrameRequestWithFormAndValues.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::loadFrameRequestWithFormAndValues):
+        * loader/FrameLoader.h:
+
+2008-11-14  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Remove unneeded forward declaration.
+
+        * plugins/Plugin.h:
+
+2008-11-14  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22251
+        HTMLCanvasElement.cpp unnecessarily includes runtime/Interpreter.h
+
+        * html/HTMLCanvasElement.cpp:
+
+2008-11-14  Yael Aharon  <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Add new files from the Qt port to the build.
+
+        * WebCore.pro:
+
+2008-11-14  Yael Aharon  <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Made DatabaseTracker::hasEntryForOrigin() public. This allows the Qt
+        port to apply a default quota only if there is no entry in the
+        database for a given origin yet.
+
+        * storage/DatabaseTracker.h:
+
+2008-11-14  Yael Aharon  <yael.aharon@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Make it possible to get the cache directory set in the application
+        cache storage.
+
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::ApplicationCacheStorage::cacheDirectory): Added.
+        * loader/appcache/ApplicationCacheStorage.h:
+
+2008-11-14  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        <rdar://problem/4230923> "Make Plain Text" doesn't reset text alignment in single paragraph messages
+        
+        When applying block styles, we would add block properties to the body element, and Mail's
+        Make Plain Text feature isn't equipped to remove those.  This could have been fixed on our side,
+        but this change has the advantage that it fixes the bug on Tiger, where Mail does not plan future updates.
+        
+        We have code that puts the paragraphs that we're operating on into blocks of their own before
+        adding or removing block properties from the blocks that enclose them.  We need to run this code 
+        when the enclosing block is the body element.
+        
+        * editing/CompositeEditCommand.cpp:
+        (WebCore::CompositeEditCommand::insertNewDefaultParagraphElementAt): Added, moved code from moveParagraphContents
+        to here.
+        (WebCore::CompositeEditCommand::moveParagraphContentsToNewBlockIfNecessary): Renamed some variables for clarity.
+        Added a few comments.  Fixed bug by not bailing out when the block about to be used is the body element.
+        * editing/CompositeEditCommand.h:
+
+2008-11-14  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Bug 22245: Move wtf/dtoa.h into the WTF namespace
+        <https://bugs.webkit.org/show_bug.cgi?id=22245>
+
+        Move wtf/dtoa.h into the WTF namespace from the JSC namespace.
+
+        * platform/text/String.cpp:
+        (WebCore::charactersToDouble):
+
 2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
@@ -42,7 +877,7 @@
 
         * platform/text/AtomicString.cpp:
         (WebCore::AtomicString::add):
-
+        
 2008-11-13  Justin Garcia  <justin.garcia@apple.com>
 
         Reviewed by Darin Adler.
@@ -27185,3 +28020,4 @@
         getting the line's textContent. Add the error bubble back at the end.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+

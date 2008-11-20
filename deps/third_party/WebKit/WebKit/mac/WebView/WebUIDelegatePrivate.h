@@ -65,6 +65,10 @@ enum {
     WebMenuItemTagDefaultDirection,
     WebMenuItemTagLeftToRight,
     WebMenuItemTagRightToLeft,
+    WebMenuItemTagTextDirectionMenu,
+    WebMenuItemTagTextDirectionDefault,
+    WebMenuItemTagTextDirectionLeftToRight,
+    WebMenuItemTagTextDirectionRightToLeft,
     WebMenuItemPDFSinglePageScrolling,
     WebMenuItemPDFFacingPagesScrolling,
     WebMenuItemTagInspectElement,
@@ -107,3 +111,4 @@ enum {
 - (NSString *)webView:(WebView *)sender generateReplacementFile:(NSString *)path;
  
 @end
+

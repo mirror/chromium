@@ -47,7 +47,7 @@ inline JSCallbackObject<Base>* JSCallbackObject<Base>::asCallbackObject(JSValue*
 }
 
 template <class Base>
-JSCallbackObject<Base>::JSCallbackObject(ExecState* exec, PassRefPtr<StructureID> structure, JSClassRef jsClass, void* data)
+JSCallbackObject<Base>::JSCallbackObject(ExecState* exec, PassRefPtr<Structure> structure, JSClassRef jsClass, void* data)
     : Base(structure)
     , m_callbackObjectData(new JSCallbackObjectData(data, jsClass))
 {
@@ -494,3 +494,4 @@ JSValue* JSCallbackObject<Base>::callbackGetter(ExecState* exec, const Identifie
 }
 
 } // namespace JSC
+

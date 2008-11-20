@@ -42,9 +42,6 @@
 #include "Page.h"
 #include "RenderHTMLCanvas.h"
 #include "Settings.h"
-#if USE(JSC)
-#include <runtime/Interpreter.h>
-#endif
 #include <math.h>
 #include <stdio.h>
 
@@ -271,3 +268,4 @@ ImageBuffer* HTMLCanvasElement::buffer() const
 }
 
 }
+

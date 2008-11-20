@@ -85,6 +85,7 @@
 #include "XMLHttpRequest.h"
 #include "XMLTokenizer.h"
 #include "ScriptController.h"
+#include <wtf/StdLibExtras.h>
 
 #if USE(JSC)
 #include "JSDOMBinding.h"
@@ -120,6 +121,8 @@ using namespace HTMLNames;
 #if USE(LOW_BANDWIDTH_DISPLAY)
 const unsigned int cMaxPendingSourceLengthInLowBandwidthDisplay = 128 * 1024;
 #endif
+
+typedef HashSet<String, CaseFoldingHash> LocalSchemesMap;
 
 struct FormSubmission {
     const char* action;
@@ -1215,9 +1218,9 @@ bool FrameLoader::allowSubstituteDataAccessToLocal()
     return localLoadPolicy != FrameLoader::AllowLocalLoadsForLocalOnly;
 }
 
-static HashSet<String, CaseFoldingHash>& localSchemes()
+static LocalSchemesMap& localSchemes()
 {
-    static HashSet<String, CaseFoldingHash> localSchemes;
+    DEFINE_STATIC_LOCAL(LocalSchemesMap, localSchemes, ());
 
     if (localSchemes.isEmpty()) {
         localSchemes.add("file");
@@ -2118,18 +2121,22 @@ void FrameLoader::setupForReplaceByMIMEType(const String& newMIMEType)
     activeDocumentLoader()->setupForReplaceByMIMEType(newMIMEType);
 }
 
-void FrameLoader::loadFrameRequestWithFormState(const FrameLoadRequest& request, bool lockHistory, Event* event, PassRefPtr<FormState> prpFormState)
+void FrameLoader::loadFrameRequestWithFormAndValues(const FrameLoadRequest& request, bool lockHistory, Event* event,
+    HTMLFormElement* submitForm, const HashMap<String, String>& formValues)
 {
-    RefPtr<FormState> formState = prpFormState;
+    RefPtr<FormState> formState;
+    if (submitForm)
+        formState = FormState::create(submitForm, formValues, m_frame);
+    
     KURL url = request.resourceRequest().url();
- 
+
     String referrer;
     String argsReferrer = request.resourceRequest().httpReferrer();
     if (!argsReferrer.isEmpty())
         referrer = argsReferrer;
     else
         referrer = m_outgoingReferrer;
- 
+
     ASSERT(frame()->document());
     if (url.protocolIs("file")) {
         if (!canLoad(url, String(), frame()->document()) && !canLoad(url, referrer)) {
@@ -2153,7 +2160,7 @@ void FrameLoader::loadFrameRequestWithFormState(const FrameLoadRequest& request,
             loadType = FrameLoadTypeStandard;    
     
         loadURL(request.resourceRequest().url(), referrer, request.frameName(), loadType, 
-            event, formState.release());
+                event, formState.release());
     } else
         loadPostRequest(request.resourceRequest(), referrer, request.frameName(), event, formState.release());
 
@@ -2161,18 +2168,6 @@ void FrameLoader::loadFrameRequestWithFormState(const FrameLoadRequest& request,
         if (Page* page = targetFrame->page())
             page->chrome()->focus();
 }
-        
-
-void FrameLoader::loadFrameRequestWithFormAndValues(const FrameLoadRequest& request, bool lockHistory, Event* event,
-    HTMLFormElement* submitForm, const HashMap<String, String>& formValues)
-{
-    RefPtr<FormState> formState;
-    if (submitForm && !formValues.isEmpty())
-        formState = FormState::create(submitForm, formValues, m_frame);
-    
-    loadFrameRequestWithFormState(request, lockHistory, event, formState.release());        
-}
-
 
 void FrameLoader::loadURL(const KURL& newURL, const String& referrer, const String& frameName, FrameLoadType newLoadType,
     Event* event, PassRefPtr<FormState> prpFormState)
@@ -4183,7 +4178,7 @@ PassRefPtr<HistoryItem> FrameLoader::createHistoryItem(bool useOriginal)
         if (useOriginal)
             url = originalURL;
         else if (docLoader)
-            url = docLoader->requestURL();                
+            url = docLoader->requestURL();
     }
 
     LOG(History, "WebCoreHistory: Creating item for %s", url.string().ascii().data());
@@ -4204,7 +4199,10 @@ PassRefPtr<HistoryItem> FrameLoader::createHistoryItem(bool useOriginal)
 
     RefPtr<HistoryItem> item = HistoryItem::create(url, m_frame->tree()->name(), parent, title);
     item->setOriginalURLString(originalURL.string());
-    
+
+    if (!unreachableURL.isEmpty() || !docLoader || docLoader->response().httpStatusCode() >= 400)
+        item->setLastVisitWasFailure(true);
+
     // Save form state if this is a POST
     if (docLoader) {
         if (useOriginal)
@@ -5286,3 +5284,4 @@ void FrameLoader::switchOutLowBandwidthDisplayIfReady()
 #endif
 
 } // namespace WebCore
+

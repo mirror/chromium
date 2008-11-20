@@ -104,9 +104,9 @@ public:
         return exec->lexicalGlobalObject()->objectPrototype();
     }
 
-    static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+    static PassRefPtr<Structure> createStructure(JSValue* prototype)
     {
-        return StructureID::create(prototype, TypeInfo(ObjectType));
+        return Structure::create(prototype, TypeInfo(ObjectType));
     }
 
 private:
@@ -128,3 +128,4 @@ private:
 } // namespace JSC
 
 #endif
+

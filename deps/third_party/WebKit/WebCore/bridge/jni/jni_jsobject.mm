@@ -322,7 +322,7 @@ jobject JavaJSObject::eval(jstring script) const
         return 0;
 
     rootObject->globalObject()->startTimeoutCheck();
-    Completion completion = Interpreter::evaluate(rootObject->globalObject()->globalExec(), rootObject->globalObject()->globalScopeChain(), makeSource(JavaString(script)));
+    Completion completion = JSC::evaluate(rootObject->globalObject()->globalExec(), rootObject->globalObject()->globalScopeChain(), makeSource(JavaString(script)));
     rootObject->globalObject()->stopTimeoutCheck();
     ComplType type = completion.complType();
     
@@ -718,3 +718,4 @@ jstring KJS_JSObject_JSObjectToString (JNIEnv*, jclass, jlong nativeHandle)
 }
 
 #endif // ENABLE(MAC_JAVA_BRIDGE)
+

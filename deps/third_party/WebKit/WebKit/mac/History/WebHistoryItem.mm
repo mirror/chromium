@@ -51,6 +51,7 @@
 #import <WebCore/ThreadCheck.h>
 #import <WebCore/WebCoreObjCExtras.h>
 #import <wtf/Assertions.h>
+#import <wtf/StdLibExtras.h>
 
 // Private keys used in the WebHistoryItem's dictionary representation.
 // see 3245793 for explanation of "lastVisitedDate"
@@ -59,18 +60,21 @@ static NSString *WebVisitCountKey = @"visitCount";
 static NSString *WebTitleKey = @"title";
 static NSString *WebChildrenKey = @"children";
 static NSString *WebDisplayTitleKey = @"displayTitle";
+static NSString *lastVisitWasFailureKey = @"lastVisitWasFailure";
 
 // Notification strings.
 NSString *WebHistoryItemChangedNotification = @"WebHistoryItemChangedNotification";
 
 using namespace WebCore;
 
+typedef HashMap<HistoryItem*, WebHistoryItem*> HistoryItemMap;
+
 static inline WebHistoryItemPrivate* kitPrivate(WebCoreHistoryItem* list) { return (WebHistoryItemPrivate*)list; }
 static inline WebCoreHistoryItem* core(WebHistoryItemPrivate* list) { return (WebCoreHistoryItem*)list; }
 
-HashMap<HistoryItem*, WebHistoryItem*>& historyItemWrappers()
+HistoryItemMap& historyItemWrappers()
 {
-    static HashMap<HistoryItem*, WebHistoryItem*> historyItemWrappers;
+    DEFINE_STATIC_LOCAL(HistoryItemMap, historyItemWrappers, ());
     return historyItemWrappers;
 }
 
@@ -350,10 +354,13 @@ static WebWindowWatcher *_windowWatcher = nil;
 
     core(_private)->setVisitCount([dict _webkit_intForKey:WebVisitCountKey]);
 
+    if ([dict _webkit_boolForKey:lastVisitWasFailureKey])
+        core(_private)->setLastVisitWasFailure(true);
+
     NSArray *childDicts = [dict objectForKey:WebChildrenKey];
     if (childDicts) {
         for (int i = [childDicts count] - 1; i >= 0; i--) {
-            WebHistoryItem *child = [[WebHistoryItem alloc] initFromDictionaryRepresentation: [childDicts objectAtIndex:i]];
+            WebHistoryItem *child = [[WebHistoryItem alloc] initFromDictionaryRepresentation:[childDicts objectAtIndex:i]];
             core(_private)->addChildItem(core(child->_private));
             [child release];
         }
@@ -403,9 +410,10 @@ static WebWindowWatcher *_windowWatcher = nil;
         [dict setObject:[NSString stringWithFormat:@"%.1lf", coreItem->lastVisitedTime()]
                  forKey:WebLastVisitedTimeIntervalKey];
     }
-    if (coreItem->visitCount()) {
+    if (coreItem->visitCount())
         [dict setObject:[NSNumber numberWithInt:coreItem->visitCount()] forKey:WebVisitCountKey];
-    }
+    if (coreItem->lastVisitWasFailure())
+        [dict setObject:[NSNumber numberWithBool:YES] forKey:lastVisitWasFailureKey];
     if (coreItem->children().size()) {
         const HistoryItemVector& children = coreItem->children();
         NSMutableArray *childDicts = [NSMutableArray arrayWithCapacity:children.size()];
@@ -514,6 +522,11 @@ static WebWindowWatcher *_windowWatcher = nil;
     core(_private)->setTransientProperty(key, property);
 }
 
+- (BOOL)lastVisitWasFailure
+{
+    return core(_private)->lastVisitWasFailure();
+}
+
 @end
 
 
@@ -525,3 +538,4 @@ static WebWindowWatcher *_windowWatcher = nil;
     pageCache()->releaseAutoreleasedPagesNow();
 }
 @end
+

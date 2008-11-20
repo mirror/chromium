@@ -27,7 +27,7 @@ namespace JSC {
 
     class BooleanObject : public JSWrapperObject {
     public:
-        explicit BooleanObject(PassRefPtr<StructureID>);
+        explicit BooleanObject(PassRefPtr<Structure>);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
@@ -44,3 +44,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // BooleanObject_h
+

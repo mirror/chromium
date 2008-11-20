@@ -27,7 +27,7 @@ namespace JSC {
 
     class ObjectPrototype : public JSObject {
     public:
-        ObjectPrototype(ExecState*, PassRefPtr<StructureID>, StructureID* prototypeFunctionStructure);
+        ObjectPrototype(ExecState*, PassRefPtr<Structure>, Structure* prototypeFunctionStructure);
     };
 
     JSValue* objectProtoFuncToString(ExecState*, JSObject*, JSValue*, const ArgList&);
@@ -35,3 +35,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // ObjectPrototype_h
+

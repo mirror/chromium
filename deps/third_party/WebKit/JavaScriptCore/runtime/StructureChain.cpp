@@ -24,42 +24,42 @@
  */
 
 #include "config.h"
-#include "StructureIDChain.h"
+#include "StructureChain.h"
 
 #include "JSObject.h"
-#include "StructureID.h"
+#include "Structure.h"
 #include <wtf/RefPtr.h>
 
 namespace JSC {
 
-StructureIDChain::StructureIDChain(StructureID* structureID)
+StructureChain::StructureChain(Structure* structure)
 {
     size_t size = 1;
 
-    StructureID* tmp = structureID;
+    Structure* tmp = structure;
     while (!tmp->storedPrototype()->isNull()) {
         ++size;
-        tmp = asCell(tmp->storedPrototype())->structureID();
+        tmp = asCell(tmp->storedPrototype())->structure();
     }
     
-    m_vector.set(new RefPtr<StructureID>[size + 1]);
+    m_vector.set(new RefPtr<Structure>[size + 1]);
 
     size_t i;
     for (i = 0; i < size - 1; ++i) {
-        m_vector[i] = structureID;
-        structureID = asObject(structureID->storedPrototype())->structureID();
+        m_vector[i] = structure;
+        structure = asObject(structure->storedPrototype())->structure();
     }
-    m_vector[i] = structureID;
+    m_vector[i] = structure;
     m_vector[i + 1] = 0;
 }
 
-bool structureIDChainsAreEqual(StructureIDChain* chainA, StructureIDChain* chainB)
+bool structureChainsAreEqual(StructureChain* chainA, StructureChain* chainB)
 {
     if (!chainA || !chainB)
         return false;
 
-    RefPtr<StructureID>* a = chainA->head();
-    RefPtr<StructureID>* b = chainB->head();
+    RefPtr<Structure>* a = chainA->head();
+    RefPtr<Structure>* b = chainB->head();
     while (1) {
         if (*a != *b)
             return false;

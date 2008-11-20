@@ -29,7 +29,7 @@ namespace JSC {
 
     class NumberObject : public JSWrapperObject {
     public:
-        explicit NumberObject(PassRefPtr<StructureID>);
+        explicit NumberObject(PassRefPtr<Structure>);
 
         static const ClassInfo info;
 
@@ -45,3 +45,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // NumberObject_h
+

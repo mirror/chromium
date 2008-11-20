@@ -25,9 +25,10 @@ namespace JSC {
 
 const ClassInfo ErrorInstance::info = { "Error", 0, 0, 0 };
 
-ErrorInstance::ErrorInstance(PassRefPtr<StructureID> structure)
+ErrorInstance::ErrorInstance(PassRefPtr<Structure> structure)
     : JSObject(structure)
 {
 }
 
 } // namespace JSC
+

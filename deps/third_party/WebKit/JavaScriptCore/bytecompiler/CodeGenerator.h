@@ -27,8 +27,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef CodeGenerator_h
-#define CodeGenerator_h
+#ifndef BytecodeGenerator_h
+#define BytecodeGenerator_h
 
 #include "CodeBlock.h"
 #include "HashTraits.h"
@@ -51,7 +51,7 @@ namespace JSC {
     class ScopeNode;
 
     struct FinallyContext {
-        LabelID* finallyAddr;
+        Label* finallyAddr;
         RegisterID* retAddrDst;
     };
 
@@ -60,16 +60,16 @@ namespace JSC {
         FinallyContext finallyContext;
     };
 
-    class CodeGenerator {
+    class BytecodeGenerator {
     public:
         typedef DeclarationStacks::VarStack VarStack;
         typedef DeclarationStacks::FunctionStack FunctionStack;
 
         static void setDumpsGeneratedCode(bool dumpsGeneratedCode);
 
-        CodeGenerator(ProgramNode*, const Debugger*, const ScopeChain&, SymbolTable*, CodeBlock*, VarStack&, FunctionStack&);
-        CodeGenerator(FunctionBodyNode*, const Debugger*, const ScopeChain&, SymbolTable*, CodeBlock*);
-        CodeGenerator(EvalNode*, const Debugger*, const ScopeChain&, SymbolTable*, EvalCodeBlock*);
+        BytecodeGenerator(ProgramNode*, const Debugger*, const ScopeChain&, SymbolTable*, ProgramCodeBlock*);
+        BytecodeGenerator(FunctionBodyNode*, const Debugger*, const ScopeChain&, SymbolTable*, CodeBlock*);
+        BytecodeGenerator(EvalNode*, const Debugger*, const ScopeChain&, SymbolTable*, EvalCodeBlock*);
 
         JSGlobalData* globalData() const { return m_globalData; }
         const CommonIdentifiers& propertyNames() const { return *m_globalData->propertyNames; }
@@ -150,7 +150,7 @@ namespace JSC {
         }
 
         PassRefPtr<LabelScope> newLabelScope(LabelScope::Type, const Identifier* = 0);
-        PassRefPtr<LabelID> newLabel();
+        PassRefPtr<Label> newLabel();
 
         // The emitNode functions are just syntactic sugar for calling
         // Node::emitCode. These functions accept a 0 for the register,
@@ -168,7 +168,7 @@ namespace JSC {
             if (m_emitNodeDepth >= s_maxEmitNodeDepth)
                 return emitThrowExpressionTooDeepException();
             ++m_emitNodeDepth;
-            RegisterID* r = n->emitCode(*this, dst);
+            RegisterID* r = n->emitBytecode(*this, dst);
             --m_emitNodeDepth;
             return r;
         }
@@ -281,19 +281,19 @@ namespace JSC {
 
         RegisterID* emitConstruct(RegisterID* dst, RegisterID* func, ArgumentsNode*, unsigned divot, unsigned startOffset, unsigned endOffset);
 
-        PassRefPtr<LabelID> emitLabel(LabelID*);
-        PassRefPtr<LabelID> emitJump(LabelID* target);
-        PassRefPtr<LabelID> emitJumpIfTrue(RegisterID* cond, LabelID* target);
-        PassRefPtr<LabelID> emitJumpIfFalse(RegisterID* cond, LabelID* target);
-        PassRefPtr<LabelID> emitJumpScopes(LabelID* target, int targetScopeDepth);
+        PassRefPtr<Label> emitLabel(Label*);
+        PassRefPtr<Label> emitJump(Label* target);
+        PassRefPtr<Label> emitJumpIfTrue(RegisterID* cond, Label* target);
+        PassRefPtr<Label> emitJumpIfFalse(RegisterID* cond, Label* target);
+        PassRefPtr<Label> emitJumpScopes(Label* target, int targetScopeDepth);
 
-        PassRefPtr<LabelID> emitJumpSubroutine(RegisterID* retAddrDst, LabelID*);
+        PassRefPtr<Label> emitJumpSubroutine(RegisterID* retAddrDst, Label*);
         void emitSubroutineReturn(RegisterID* retAddrSrc);
 
         RegisterID* emitGetPropertyNames(RegisterID* dst, RegisterID* base) { return emitUnaryOp(op_get_pnames, dst, base, ResultType::unknown()); }
-        RegisterID* emitNextPropertyName(RegisterID* dst, RegisterID* iter, LabelID* target);
+        RegisterID* emitNextPropertyName(RegisterID* dst, RegisterID* iter, Label* target);
 
-        RegisterID* emitCatch(RegisterID*, LabelID* start, LabelID* end);
+        RegisterID* emitCatch(RegisterID*, Label* start, Label* end);
         void emitThrow(RegisterID* exc) { emitUnaryNoDstOp(op_throw, exc); }
         RegisterID* emitNewError(RegisterID* dst, ErrorType type, JSValue* message);
         void emitPushNewScope(RegisterID* dst, Identifier& property, RegisterID* value);
@@ -305,14 +305,14 @@ namespace JSC {
 
         int scopeDepth() { return m_dynamicScopeDepth + m_finallyDepth; }
 
-        void pushFinallyContext(LabelID* target, RegisterID* returnAddrDst);
+        void pushFinallyContext(Label* target, RegisterID* returnAddrDst);
         void popFinallyContext();
 
         LabelScope* breakTarget(const Identifier&);
         LabelScope* continueTarget(const Identifier&);
 
         void beginSwitch(RegisterID*, SwitchInfo::SwitchType);
-        void endSwitch(uint32_t clauseCount, RefPtr<LabelID>*, ExpressionNode**, LabelID* defaultLabel, int32_t min, int32_t range);
+        void endSwitch(uint32_t clauseCount, RefPtr<Label>*, ExpressionNode**, Label* defaultLabel, int32_t min, int32_t range);
 
         CodeType codeType() const { return m_codeType; }
 
@@ -323,7 +323,7 @@ namespace JSC {
         void rewindBinaryOp();
         void rewindUnaryOp();
 
-        PassRefPtr<LabelID> emitComplexJumpScopes(LabelID* target, ControlFlowContext* topScope, ControlFlowContext* bottomScope);
+        PassRefPtr<Label> emitComplexJumpScopes(Label* target, ControlFlowContext* topScope, ControlFlowContext* bottomScope);
 
         struct JSValueHashTraits : HashTraits<JSValue*> {
             static void constructDeletedValue(JSValue*& slot) { slot = JSImmediate::impossibleValue(); }
@@ -395,7 +395,6 @@ namespace JSC {
         RegisterID* addConstant(JSValue*);
         unsigned addUnexpectedConstant(JSValue*);
         unsigned addRegExp(RegExp*);
-        StructureID* addStructureID();
 
         Vector<Instruction>& instructions() { return m_codeBlock->instructions; }
         SymbolTable& symbolTable() { return *m_symbolTable; }
@@ -423,7 +422,7 @@ namespace JSC {
         SegmentedVector<RegisterID, 512> m_parameters;
         SegmentedVector<RegisterID, 512> m_globals;
         SegmentedVector<LabelScope, 256> m_labelScopes;
-        SegmentedVector<LabelID, 256> m_labels;
+        SegmentedVector<Label, 256> m_labels;
         RefPtr<RegisterID> m_lastConstant;
         int m_finallyDepth;
         int m_dynamicScopeDepth;
@@ -459,4 +458,5 @@ namespace JSC {
 
 }
 
-#endif // CodeGenerator_h
+#endif // BytecodeGenerator_h
+

@@ -118,6 +118,9 @@ public:
     wxString GetAsMarkup();
     wxString GetExternalRepresentation();
     
+    void SetTransparent(bool transparent);
+    bool IsTransparent() const;
+    
     wxString RunScript(const wxString& javascript);
     
     bool CanIncreaseTextSize() const;
@@ -410,3 +413,4 @@ END_DECLARE_EVENT_TYPES()
                             static_cast<wxObject*>(NULL)),
 
 #endif // ifndef WXWEBVIEW_H
+

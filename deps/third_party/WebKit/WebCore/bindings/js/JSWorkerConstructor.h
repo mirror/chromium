@@ -23,52 +23,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#include "config.h"
+#ifndef JSWorkerConstructor_h
+#define JSWorkerConstructor_h
 
 #if ENABLE(WORKERS)
 
-#include "JSDedicatedWorkerConstructor.h"
-
-#include "DedicatedWorker.h"
-#include "Document.h"
-#include "ExceptionCode.h"
-#include "JSDOMWindowCustom.h"
-#include "JSDedicatedWorker.h"
-
-using namespace JSC;
+#include "JSDOMBinding.h"
 
 namespace WebCore {
 
-const ClassInfo JSDedicatedWorkerConstructor::s_info = { "DedicatedWorkerConstructor", 0, 0, 0 };
+    class JSWorkerConstructor : public DOMObject {
+    public:
+        JSWorkerConstructor(JSC::ExecState*);
 
-JSDedicatedWorkerConstructor::JSDedicatedWorkerConstructor(ExecState* exec)
-    : DOMObject(JSDedicatedWorkerConstructor::createStructureID(exec->lexicalGlobalObject()->objectPrototype()))
-{
-    putDirect(exec->propertyNames().length, jsNumber(exec, 1), ReadOnly|DontDelete|DontEnum);
-}
+        static const JSC::ClassInfo s_info;
 
-static JSObject* constructDedicatedWorker(ExecState* exec, JSObject* constructor, const ArgList& args)
-{
-    if (args.size() == 0)
-        return throwError(exec, SyntaxError, "Not enough arguments");
+    private:
+        virtual JSC::ConstructType getConstructData(JSC::ConstructData&);
 
-    UString scriptURL = args.at(exec, 0)->toString(exec);
-
-    DOMWindow* window = asJSDOMWindow(exec->lexicalGlobalObject())->impl();
-    
-    ExceptionCode ec = 0;
-    RefPtr<DedicatedWorker> worker = DedicatedWorker::create(scriptURL, window->document(), ec);
-    setDOMException(exec, ec);
-
-    return asObject(toJS(exec, worker.release()));
-}
-
-ConstructType JSDedicatedWorkerConstructor::getConstructData(ConstructData& constructData)
-{
-    constructData.native.function = constructDedicatedWorker;
-    return ConstructTypeHost;
-}
+        virtual const JSC::ClassInfo* classInfo() const { return &s_info; }
+    };
 
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
+
+#endif // JSWorkerConstructor_h

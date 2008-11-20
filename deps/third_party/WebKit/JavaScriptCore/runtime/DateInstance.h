@@ -29,7 +29,7 @@ namespace JSC {
 
     class DateInstance : public JSWrapperObject {
     public:
-        explicit DateInstance(PassRefPtr<StructureID>);
+        explicit DateInstance(PassRefPtr<Structure>);
         virtual ~DateInstance();
 
         double internalNumber() const { return internalValue()->uncheckedGetNumber(); }
@@ -63,3 +63,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // DateInstance_h
+

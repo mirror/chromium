@@ -50,7 +50,7 @@ namespace WebCore {
 
         friend class ScheduledAction;
     protected:
-        JSDOMWindowBase(PassRefPtr<JSC::StructureID>, PassRefPtr<DOMWindow>, JSDOMWindowShell*);
+        JSDOMWindowBase(PassRefPtr<JSC::Structure>, PassRefPtr<DOMWindow>, JSDOMWindowShell*);
 
     public:
         virtual ~JSDOMWindowBase();
@@ -61,8 +61,6 @@ namespace WebCore {
         virtual ScriptExecutionContext* scriptExecutionContext() const;
 
         void disconnectFrame();
-
-        virtual void markCrossHeapDependentObjects();
 
         virtual bool getOwnPropertySlot(JSC::ExecState*, const JSC::Identifier&, JSC::PropertySlot&);
         virtual void put(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSValue*, JSC::PutPropertySlot&);
@@ -142,3 +140,4 @@ namespace WebCore {
 } // namespace WebCore
 
 #endif // JSDOMWindowBase_h
+

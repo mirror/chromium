@@ -91,6 +91,7 @@ WebCore::Page* core(WebView *);
 WebView *kit(WebCore::Page*);
 
 WebCore::EditableLinkBehavior core(WebKitEditableLinkBehavior);
+WebCore::TextDirectionSubmenuInclusionBehavior core(WebTextDirectionSubmenuInclusionBehavior);
 
 WebView *getWebView(WebFrame *webFrame);
 
@@ -191,3 +192,4 @@ WebView *getWebView(WebFrame *webFrame);
 @interface NSObject (WebInternalFrameLoadDelegate)
 - (void)webFrame:(WebFrame *)webFrame didFinishLoadWithError:(NSError *)error;
 @end
+

@@ -379,6 +379,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\wtf\StdLibExtras.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\wtf\StringExtras.h"
 			>
 		</File>
@@ -446,3 +450,4 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+

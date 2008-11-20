@@ -30,11 +30,13 @@
 
 #include "WorkerContext.h"
 
+#include "DOMWindow.h"
 #include "Event.h"
 #include "EventException.h"
 #include "SecurityOrigin.h"
 #include "WorkerLocation.h"
-#include "WorkerTask.h"
+#include "WorkerMessagingProxy.h"
+#include "WorkerThread.h"
 
 namespace WebCore {
 
@@ -49,6 +51,9 @@ WorkerContext::WorkerContext(const KURL& url, WorkerThread* thread)
 
 WorkerContext::~WorkerContext()
 {
+    ASSERT(currentThread() == m_thread->threadID());
+
+    m_thread->messagingProxy()->workerContextDestroyed();
 }
 
 ScriptExecutionContext* WorkerContext::scriptExecutionContext() const
@@ -70,6 +75,11 @@ KURL WorkerContext::completeURL(const String& url) const
         return KURL();
     // FIXME: does this need to provide a charset, like Document::completeURL does?
     return KURL(m_location->url(), url);
+}
+
+void WorkerContext::postMessage(const String& message)
+{
+    m_thread->messagingProxy()->postMessageToWorkerObject(message);
 }
 
 void WorkerContext::addEventListener(const AtomicString& eventType, PassRefPtr<EventListener> eventListener, bool)
@@ -126,3 +136,4 @@ bool WorkerContext::dispatchEvent(PassRefPtr<Event> event, ExceptionCode& ec)
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
+

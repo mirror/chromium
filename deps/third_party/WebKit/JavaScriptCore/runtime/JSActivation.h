@@ -64,12 +64,12 @@ namespace JSC {
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
 
-        static PassRefPtr<StructureID> createStructureID(JSValue* proto) { return StructureID::create(proto, TypeInfo(ObjectType, NeedsThisConversion)); }
+        static PassRefPtr<Structure> createStructure(JSValue* proto) { return Structure::create(proto, TypeInfo(ObjectType, NeedsThisConversion)); }
 
     private:
         struct JSActivationData : public JSVariableObjectData {
             JSActivationData(PassRefPtr<FunctionBodyNode> functionBody, Register* registers)
-                : JSVariableObjectData(&functionBody->symbolTable(), registers)
+                : JSVariableObjectData(&functionBody->generatedBytecode().symbolTable, registers)
                 , functionBody(functionBody)
             {
             }
@@ -94,3 +94,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // JSActivation_h
+

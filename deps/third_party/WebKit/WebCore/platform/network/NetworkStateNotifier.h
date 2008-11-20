@@ -85,6 +85,7 @@ private:
 
 inline NetworkStateNotifier::NetworkStateNotifier()
     : m_isOnLine(true)
+    , m_networkStateChangedFunction(0)
 {    
 }
 
@@ -97,3 +98,4 @@ NetworkStateNotifier& networkStateNotifier();
 };
 
 #endif // NetworkStateNotifier_h
+

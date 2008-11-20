@@ -59,7 +59,7 @@ JSFunction::~JSFunction()
     // are based on a check for the this pointer value for this JSFunction - which will no longer be valid once
     // this memory is freed and may be reused (potentially for another, different JSFunction).
     if (m_body.get() && m_body->isGenerated())
-        m_body->generatedByteCode().unlinkCallers();
+        m_body->generatedBytecode().unlinkCallers();
 #endif
 }
 
@@ -79,19 +79,19 @@ CallType JSFunction::getCallData(CallData& callData)
 
 JSValue* JSFunction::call(ExecState* exec, JSValue* thisValue, const ArgList& args)
 {
-    return exec->machine()->execute(m_body.get(), exec, this, thisValue->toThisObject(exec), args, m_scopeChain.node(), exec->exceptionSlot());
+    return exec->interpreter()->execute(m_body.get(), exec, this, thisValue->toThisObject(exec), args, m_scopeChain.node(), exec->exceptionSlot());
 }
 
 JSValue* JSFunction::argumentsGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
     JSFunction* thisObj = asFunction(slot.slotBase());
-    return exec->machine()->retrieveArguments(exec, thisObj);
+    return exec->interpreter()->retrieveArguments(exec, thisObj);
 }
 
 JSValue* JSFunction::callerGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
     JSFunction* thisObj = asFunction(slot.slotBase());
-    return exec->machine()->retrieveCaller(exec, thisObj);
+    return exec->interpreter()->retrieveCaller(exec, thisObj);
 }
 
 JSValue* JSFunction::lengthGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
@@ -183,7 +183,7 @@ ConstructType JSFunction::getConstructData(ConstructData& constructData)
 
 JSObject* JSFunction::construct(ExecState* exec, const ArgList& args)
 {
-    StructureID* structure;
+    Structure* structure;
     JSValue* prototype = get(exec, exec->propertyNames().prototype);
     if (prototype->isObject())
         structure = asObject(prototype)->inheritorID();
@@ -191,10 +191,11 @@ JSObject* JSFunction::construct(ExecState* exec, const ArgList& args)
         structure = exec->lexicalGlobalObject()->emptyObjectStructure();
     JSObject* thisObj = new (exec) JSObject(structure);
 
-    JSValue* result = exec->machine()->execute(m_body.get(), exec, this, thisObj, args, m_scopeChain.node(), exec->exceptionSlot());
+    JSValue* result = exec->interpreter()->execute(m_body.get(), exec, this, thisObj, args, m_scopeChain.node(), exec->exceptionSlot());
     if (exec->hadException() || !result->isObject())
         return thisObj;
     return asObject(result);
 }
 
 } // namespace JSC
+

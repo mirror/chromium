@@ -239,7 +239,7 @@ static double parseInt(const UString& s, int radix)
 
     if (number >= mantissaOverflowLowerBound) {
         if (radix == 10)
-            number = strtod(s.substr(firstDigitPosition, p - firstDigitPosition).ascii(), 0);
+            number = WTF::strtod(s.substr(firstDigitPosition, p - firstDigitPosition).ascii(), 0);
         else if (radix == 2 || radix == 4 || radix == 8 || radix == 16 || radix == 32)
             number = parseIntOverflow(s.substr(firstDigitPosition, p - firstDigitPosition).ascii(), p - firstDigitPosition, radix);
     }
@@ -291,7 +291,7 @@ JSValue* globalFuncEval(ExecState* exec, JSObject* function, JSValue* thisValue,
     if (!evalNode)
         return throwError(exec, SyntaxError, errMsg, errLine, source.provider()->asID(), NULL);
 
-    return exec->machine()->execute(evalNode.get(), exec, thisObject, globalObject->globalScopeChain().node(), exec->exceptionSlot());
+    return exec->interpreter()->execute(evalNode.get(), exec, thisObject, globalObject->globalScopeChain().node(), exec->exceptionSlot());
 }
 
 JSValue* globalFuncParseInt(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
@@ -431,3 +431,4 @@ JSValue* globalFuncKJSPrint(ExecState* exec, JSObject*, JSValue*, const ArgList&
 #endif
 
 } // namespace JSC
+

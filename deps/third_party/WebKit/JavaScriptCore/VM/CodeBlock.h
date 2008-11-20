@@ -79,15 +79,15 @@ namespace JSC {
     };
 
     struct StructureStubInfo {
-        StructureStubInfo(unsigned opcodeIndex)
-            : opcodeIndex(opcodeIndex)
+        StructureStubInfo(unsigned bytecodeIndex)
+            : bytecodeIndex(bytecodeIndex)
             , stubRoutine(0)
             , callReturnLocation(0)
             , hotPathBegin(0)
         {
         }
     
-        unsigned opcodeIndex;
+        unsigned bytecodeIndex;
         void* stubRoutine;
         void* callReturnLocation;
         void* hotPathBegin;
@@ -103,7 +103,7 @@ namespace JSC {
         {
         }
     
-        unsigned opcodeIndex;
+        unsigned bytecodeIndex;
         void* callReturnLocation;
         void* hotPathBegin;
         void* hotPathOther;
@@ -118,6 +118,11 @@ namespace JSC {
     inline void* getStructureStubInfoReturnLocation(StructureStubInfo* structureStubInfo)
     {
         return structureStubInfo->callReturnLocation;
+    }
+
+    inline void* getCallLinkInfoReturnLocation(CallLinkInfo* callLinkInfo)
+    {
+        return callLinkInfo->callReturnLocation;
     }
 
     // Binary chop algorithm, calls valueAtPosition on pre-sorted elements in array,
@@ -283,8 +288,8 @@ namespace JSC {
 
 #if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
         void dump(ExecState*) const;
-        void printStructureIDs(const Instruction*) const;
-        void printStructureID(const char* name, const Instruction*, int operand) const;
+        void printStructures(const Instruction*) const;
+        void printStructure(const char* name, const Instruction*, int operand) const;
 #endif
         int expressionRangeForVPC(const Instruction*, int& divot, int& startOffset, int& endOffset);
         int lineNumberForVPC(const Instruction* vPC);
@@ -292,12 +297,17 @@ namespace JSC {
         void* nativeExceptionCodeForHandlerVPC(const Instruction* handlerVPC);
 
         void mark();
-        void refStructureIDs(Instruction* vPC) const;
-        void derefStructureIDs(Instruction* vPC) const;
+        void refStructures(Instruction* vPC) const;
+        void derefStructures(Instruction* vPC) const;
 
         StructureStubInfo& getStubInfo(void* returnAddress)
         {
             return *(binaryChop<StructureStubInfo, void*, getStructureStubInfoReturnLocation>(propertyAccessInstructions.begin(), propertyAccessInstructions.size(), returnAddress));
+        }
+
+        CallLinkInfo& getCallLinkInfo(void* returnAddress)
+        {
+            return *(binaryChop<CallLinkInfo, void*, getCallLinkInfoReturnLocation>(callLinkInfos.begin(), callLinkInfos.size(), returnAddress));
         }
 
         ScopeNode* ownerNode;
@@ -352,6 +362,7 @@ namespace JSC {
 
         EvalCodeCache evalCodeCache;
 
+        SymbolTable symbolTable;
     private:
 #if !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
         void dump(ExecState*, const Vector<Instruction>::const_iterator& begin, Vector<Instruction>::const_iterator&) const;
@@ -389,3 +400,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // CodeBlock_h
+

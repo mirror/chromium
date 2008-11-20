@@ -2703,8 +2703,6 @@ webcoregtk_sources += \
 	WebCore/svg/graphics/cairo/SVGPaintServerCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerGradientCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerPatternCairo.cpp \
-	WebCore/svg/graphics/cairo/SVGPaintServerSolidCairo.cpp \
-	WebCore/svg/graphics/cairo/SVGResourceClipperCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceFilterCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceMaskerCairo.cpp
 
@@ -2975,4 +2973,5 @@ CLEANFILES += \
 	libWebCoreJS.la \
 	WebCore/bindings/js/JSDOMWindowBase.lut.h \
 	WebCore/bindings/js/JSRGBColor.lut.h
+
 

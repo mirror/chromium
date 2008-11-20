@@ -50,7 +50,7 @@ namespace JSC {
     };
     
     // This unholy class is used to allow us to avoid multiple exception checks
-    // in certain SquirrelFish opcodes -- effectively it just silently consumes
+    // in certain SquirrelFish bytecodes -- effectively it just silently consumes
     // any operations performed on the result of a failed toObject call.
     class JSNotAnObject : public JSObject {
     public:
@@ -60,9 +60,9 @@ namespace JSC {
         {
         }
 
-        static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+        static PassRefPtr<Structure> createStructure(JSValue* prototype)
         {
-            return StructureID::create(prototype, TypeInfo(ObjectType));
+            return Structure::create(prototype, TypeInfo(ObjectType));
         }
 
      private:
@@ -95,3 +95,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // JSNotAnObject_h
+

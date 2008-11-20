@@ -135,6 +135,7 @@
 #import <wtf/HashTraits.h>
 #import <wtf/RefCountedLeakCounter.h>
 #import <wtf/RefPtr.h>
+#import <wtf/StdLibExtras.h>
 
 #if ENABLE(DASHBOARD_SUPPORT)
 #import <WebKit/WebDashboardRegion.h>
@@ -192,6 +193,9 @@ macro(insertParagraphSeparator) \
 macro(insertTab) \
 macro(insertTabIgnoringFieldEditor) \
 macro(lowercaseWord) \
+macro(makeTextWritingDirectionLeftToRight) \
+macro(makeTextWritingDirectionNatural) \
+macro(makeTextWritingDirectionRightToLeft) \
 macro(moveBackward) \
 macro(moveBackwardAndModifySelection) \
 macro(moveDown) \
@@ -1293,6 +1297,7 @@ static void WebKitInitializeApplicationCachePathIfNecessary()
     settings->setTextAreasAreResizable([preferences textAreasAreResizable]);
     settings->setShrinksStandaloneImagesToFit([preferences shrinksStandaloneImagesToFit]);
     settings->setEditableLinkBehavior(core([preferences editableLinkBehavior]));
+    settings->setTextDirectionSubmenuInclusionBehavior(core([preferences textDirectionSubmenuInclusionBehavior]));
     settings->setDOMPasteAllowed([preferences isDOMPasteAllowed]);
     settings->setUsesPageCache([self usesPageCache]);
     settings->setShowsURLsInToolTips([preferences showsURLsInToolTips]);
@@ -3607,7 +3612,7 @@ static NSAppleEventDescriptor* aeDescFromJSValue(ExecState* exec, JSValue* jsVal
             }
         }
         else if (object->inherits(&JSArray::info)) {
-            static HashSet<JSObject*> visitedElems;
+            DEFINE_STATIC_LOCAL(HashSet<JSObject*>, visitedElems, ());
             if (!visitedElems.contains(object)) {
                 visitedElems.add(object);
                 
@@ -5241,3 +5246,4 @@ BOOL CallFormDelegateReturningBoolean(BOOL result, WebView *self, SEL selector, 
 }
 
 @end
+

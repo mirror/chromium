@@ -43,7 +43,7 @@ namespace JSC {
     class FunctionBodyNode;
     class Instruction;
     class InternalFunction;
-    class JITCodeBuffer;
+    class AssemblerBuffer;
     class JSFunction;
     class JSGlobalObject;
     class ProgramNode;
@@ -101,11 +101,11 @@ namespace JSC {
 
     enum { MaxReentryDepth = 128 };
 
-    class Machine {
+    class BytecodeInterpreter {
         friend class CTI;
     public:
-        Machine();
-        ~Machine();
+        BytecodeInterpreter();
+        ~BytecodeInterpreter();
 
         void initialize(JSGlobalData*);
         
@@ -130,7 +130,7 @@ namespace JSC {
             #endif
         }
 
-        bool isOpcode(Opcode opcode);
+        bool isOpcode(Opcode);
         
         JSValue* execute(ProgramNode*, CallFrame*, ScopeChainNode*, JSObject* thisObj, JSValue** exception);
         JSValue* execute(FunctionBodyNode*, CallFrame*, JSFunction*, JSObject* thisObj, const ArgList& args, ScopeChainNode*, JSValue** exception);
@@ -270,9 +270,12 @@ namespace JSC {
         static JSValue* SFX_CALL cti_allocate_number(CTI_ARGS);
 
         static JSValue* SFX_CALL cti_vm_throw(CTI_ARGS);
+        static void* SFX_CALL cti_vm_dontLazyLinkCall(CTI_ARGS);
         static void* SFX_CALL cti_vm_lazyLinkCall(CTI_ARGS);
         static JSObject* SFX_CALL cti_op_push_activation(CTI_ARGS);
         
+        AssemblerBuffer* assemblerBuffer() const { return m_assemblerBuffer.get(); }
+
 #endif // ENABLE(CTI)
 
         // Default number of ticks before a timeout check should be done.
@@ -317,15 +320,13 @@ namespace JSC {
         void tryCachePutByID(CallFrame*, CodeBlock*, Instruction*, JSValue* baseValue, const PutPropertySlot&);
         void uncachePutByID(CodeBlock*, Instruction* vPC);
         
-        bool isCallOpcode(Opcode opcode) { return opcode == getOpcode(op_call) || opcode == getOpcode(op_construct) || opcode == getOpcode(op_call_eval); }
+        bool isCallBytecode(Opcode opcode) { return opcode == getOpcode(op_call) || opcode == getOpcode(op_construct) || opcode == getOpcode(op_call_eval); }
 
 #if ENABLE(CTI)
         static void throwStackOverflowPreviousFrame(CallFrame**, JSGlobalData*, void*& returnAddress);
 
         void tryCTICacheGetByID(CallFrame*, CodeBlock*, void* returnAddress, JSValue* baseValue, const Identifier& propertyName, const PropertySlot&);
         void tryCTICachePutByID(CallFrame*, CodeBlock*, void* returnAddress, JSValue* baseValue, const PutPropertySlot&);
-
-        JITCodeBuffer* jitCodeBuffer() const { return m_jitCodeBuffer.get(); }
 #endif
 
         SamplingTool* m_sampler;
@@ -333,8 +334,11 @@ namespace JSC {
 #if ENABLE(CTI)
         void* m_ctiArrayLengthTrampoline;
         void* m_ctiStringLengthTrampoline;
+        void* m_ctiVirtualCallPreLink;
+        void* m_ctiVirtualCallLink;
+        void* m_ctiVirtualCall;
 
-        OwnPtr<JITCodeBuffer> m_jitCodeBuffer;
+        OwnPtr<AssemblerBuffer> m_assemblerBuffer;
 #endif
 
         int m_reentryDepth;
@@ -359,3 +363,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // Machine_h
+

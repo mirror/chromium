@@ -22,8 +22,8 @@
 
 #include "config.h"
 
-#include "Completion.h"
 #include "CodeGenerator.h"
+#include "Completion.h"
 #include "InitializeThreading.h"
 #include "Interpreter.h"
 #include "JSArray.h"
@@ -32,6 +32,7 @@
 #include "SamplingTool.h"
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #if !PLATFORM(WIN_OS)
@@ -64,6 +65,7 @@
 using namespace JSC;
 using namespace WTF;
 
+static void cleanupGlobalData(JSGlobalData*);
 static bool fillBufferWithContentsOfFile(const UString& fileName, Vector<char>& buffer);
 
 static JSValue* functionPrint(ExecState*, JSObject*, JSValue*, const ArgList&);
@@ -218,7 +220,7 @@ JSValue* functionRun(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
     JSGlobalObject* globalObject = exec->lexicalGlobalObject();
 
     stopWatch.start();
-    Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
+    evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
     stopWatch.stop();
 
     return jsNumber(globalObject->globalExec(), stopWatch.getElapsedMS());
@@ -232,7 +234,7 @@ JSValue* functionLoad(ExecState* exec, JSObject*, JSValue*, const ArgList& args)
         return throwError(exec, GeneralError, "Could not open file.");
 
     JSGlobalObject* globalObject = exec->lexicalGlobalObject();
-    Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
+    evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
 
     return jsUndefined();
 }
@@ -253,14 +255,8 @@ JSValue* functionReadline(ExecState* exec, JSObject*, JSValue*, const ArgList&)
 
 JSValue* functionQuit(ExecState* exec, JSObject*, JSValue*, const ArgList&)
 {
-    {
-        JSLock lock(false);
-        JSGlobalData& globalData = exec->globalData();
-        globalData.heap.destroy();
-        globalData.deref();
-    }
-
-    exit(0);
+    cleanupGlobalData(&exec->globalData());
+    exit(EXIT_SUCCESS);
 #if !COMPILER(MSVC)
     // MSVC knows that exit(0) never returns, so it flags this return statement as unreachable.
     return jsUndefined();
@@ -305,12 +301,15 @@ int main(int argc, char** argv)
         res = jscmain(argc, argv, globalData);
     EXCEPT(res = 3)
 
-    JSLock::lock(false);
-    globalData->heap.destroy();
-    JSLock::unlock(false);
-
-    globalData->deref();
+    cleanupGlobalData(globalData);
     return res;
+}
+
+static void cleanupGlobalData(JSGlobalData* globalData)
+{
+    JSLock lock(false);
+    globalData->heap.destroy();
+    globalData->deref();
 }
 
 static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fileNames, bool dump)
@@ -318,11 +317,11 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
     Vector<char> script;
 
     if (dump)
-        CodeGenerator::setDumpsGeneratedCode(true);
+        BytecodeGenerator::setDumpsGeneratedCode(true);
 
 #if ENABLE(OPCODE_SAMPLING)
-    Machine* machine = globalObject->globalData()->machine;
-    machine->setSampler(new SamplingTool(machine));
+    BytecodeInterpreter* interpreter = globalObject->globalData()->interpreter;
+    interpreter->setSampler(new SamplingTool(machine));
 #endif
 
     bool success = true;
@@ -333,9 +332,9 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
             return false; // fail early so we can catch missing files
 
 #if ENABLE(OPCODE_SAMPLING)
-        machine->sampler()->start();
+        interpreter->sampler()->start();
 #endif
-        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
+        Completion completion = evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(script.data(), fileName));
         success = success && completion.complType() != Throw;
         if (dump) {
             if (completion.complType() == Throw)
@@ -347,13 +346,13 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
         globalObject->globalExec()->clearException();
 
 #if ENABLE(OPCODE_SAMPLING)
-        machine->sampler()->stop();
+        interpreter->sampler()->stop();
 #endif
     }
 
 #if ENABLE(OPCODE_SAMPLING)
-    machine->sampler()->dump(globalObject->globalExec());
-    delete machine->sampler();
+    interpreter->sampler()->dump(globalObject->globalExec());
+    delete interpreter->sampler();
 #endif
     return success;
 }
@@ -367,7 +366,7 @@ static void runInteractive(GlobalObject* globalObject)
             break;
         if (line[0])
             add_history(line);
-        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(line, interpreterName));
+        Completion completion = evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(line, interpreterName));
         free(line);
 #else
         puts(interactivePrompt);
@@ -380,7 +379,7 @@ static void runInteractive(GlobalObject* globalObject)
             line.append(c);
         }
         line.append('\0');
-        Completion completion = Interpreter::evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(line.data(), interpreterName));
+        Completion completion = evaluate(globalObject->globalExec(), globalObject->globalScopeChain(), makeSource(line.data(), interpreterName));
 #endif
         if (completion.complType() == Throw)
             printf("Exception: %s\n", completion.value()->toString(globalObject->globalExec()).ascii());
@@ -400,7 +399,7 @@ static void printUsageStatement()
     fprintf(stderr, "  -h|--help  Prints this help message\n");
     fprintf(stderr, "  -i         Enables interactive mode (default if no files are specified)\n");
     fprintf(stderr, "  -s         Installs signal handlers that exit on a crash (Unix platforms only)\n");
-    exit(-1);
+    exit(EXIT_FAILURE);
 }
 
 static void parseArguments(int argc, char** argv, Options& options)
@@ -490,3 +489,4 @@ static bool fillBufferWithContentsOfFile(const UString& fileName, Vector<char>& 
 
     return true;
 }
+

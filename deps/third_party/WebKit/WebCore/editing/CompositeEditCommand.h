@@ -90,6 +90,8 @@ protected:
     PassRefPtr<Node> addBlockPlaceholderIfNeeded(Node*);
     void removePlaceholderAt(const VisiblePosition&);
 
+    PassRefPtr<Node> insertNewDefaultParagraphElementAt(const Position&);
+
     PassRefPtr<Node> moveParagraphContentsToNewBlockIfNecessary(const Position&);
     
     void pushAnchorElementDown(Node*);
@@ -114,3 +116,4 @@ private:
 } // namespace WebCore
 
 #endif // CompositeEditCommand_h
+

@@ -91,7 +91,7 @@ const ClassInfo ArrayPrototype::info = {"Array", &JSArray::info, 0, ExecState::a
 */
 
 // ECMA 15.4.4
-ArrayPrototype::ArrayPrototype(PassRefPtr<StructureID> structure)
+ArrayPrototype::ArrayPrototype(PassRefPtr<Structure> structure)
     : JSArray(structure)
 {
 }
@@ -291,7 +291,7 @@ JSValue* arrayProtoFuncConcat(ExecState* exec, JSObject*, JSValue* thisValue, co
 
 JSValue* arrayProtoFuncPop(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList&)
 {
-    if (exec->machine()->isJSArray(thisValue))
+    if (exec->interpreter()->isJSArray(thisValue))
         return asArray(thisValue)->pop();
 
     JSObject* thisObj = thisValue->toThisObject(exec);
@@ -310,7 +310,7 @@ JSValue* arrayProtoFuncPop(ExecState* exec, JSObject*, JSValue* thisValue, const
 
 JSValue* arrayProtoFuncPush(ExecState* exec, JSObject*, JSValue* thisValue, const ArgList& args)
 {
-    if (exec->machine()->isJSArray(thisValue) && args.size() == 1) {
+    if (exec->interpreter()->isJSArray(thisValue) && args.size() == 1) {
         JSArray* array = asArray(thisValue);
         array->push(exec, args.begin()->jsValue(exec));
         return jsNumber(exec, array->length());
@@ -792,3 +792,4 @@ JSValue* arrayProtoFuncLastIndexOf(ExecState* exec, JSObject*, JSValue* thisValu
 }
 
 } // namespace JSC
+

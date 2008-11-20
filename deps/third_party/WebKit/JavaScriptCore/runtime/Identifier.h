@@ -29,7 +29,7 @@ namespace JSC {
     class ExecState;
 
     class Identifier {
-        friend class StructureID;
+        friend class Structure;
     public:
         Identifier() { }
 
@@ -138,3 +138,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // KJS_IDENTIFIER_H
+

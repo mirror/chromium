@@ -1643,7 +1643,7 @@ void QtConnectionObject::execute(void **argv)
                         JSFunction* fimp = static_cast<JSFunction*>(m_funcObject.get());
 
                         JSObject* qt_sender = Instance::createRuntimeObject(exec, QtInstance::getQtInstance(sender(), ro));
-                        JSObject* wrapper = new (exec) JSObject(JSObject::createStructureID(jsNull()));
+                        JSObject* wrapper = new (exec) JSObject(JSObject::createStructure(jsNull()));
                         PutPropertySlot slot;
                         wrapper->put(exec, Identifier(exec, "__qt_sender__"), qt_sender, slot);
                         ScopeChain oldsc = fimp->scope();
@@ -1719,3 +1719,4 @@ template <typename T> JSValue* QtArray<T>::valueAt(ExecState *exec, unsigned int
 // ===============
 
 } }
+

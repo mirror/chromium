@@ -43,6 +43,7 @@
 #include "SystemTime.h"
 #include <runtime/InitializeThreading.h>
 #include <wtf/MainThread.h>
+#include <wtf/StdLibExtras.h>
 
 #if PLATFORM(WIN_OS)
 #include <windows.h>
@@ -850,7 +851,7 @@ String IconDatabase::databasePath() const
 
 String IconDatabase::defaultDatabaseFilename()
 {
-    static String defaultDatabaseFilename = "WebpageIcons.db";
+    DEFINE_STATIC_LOCAL(String, defaultDatabaseFilename, ("WebpageIcons.db"));
     return defaultDatabaseFilename.copy();
 }
 
@@ -2046,3 +2047,4 @@ void IconDatabase::writeIconSnapshotToSQLDatabase(const IconSnapshot& snapshot)
 }
 
 } // namespace WebCore
+

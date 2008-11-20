@@ -36,13 +36,13 @@ static JSValue* functionProtoFuncToString(ExecState*, JSObject*, JSValue*, const
 static JSValue* functionProtoFuncApply(ExecState*, JSObject*, JSValue*, const ArgList&);
 static JSValue* functionProtoFuncCall(ExecState*, JSObject*, JSValue*, const ArgList&);
 
-FunctionPrototype::FunctionPrototype(ExecState* exec, PassRefPtr<StructureID> structure)
+FunctionPrototype::FunctionPrototype(ExecState* exec, PassRefPtr<Structure> structure)
     : InternalFunction(&exec->globalData(), structure, exec->propertyNames().nullIdentifier)
 {
     putDirectWithoutTransition(exec->propertyNames().length, jsNumber(exec, 0), DontDelete | ReadOnly | DontEnum);
 }
 
-void FunctionPrototype::addFunctionProperties(ExecState* exec, StructureID* prototypeFunctionStructure)
+void FunctionPrototype::addFunctionProperties(ExecState* exec, Structure* prototypeFunctionStructure)
 {
     putDirectFunctionWithoutTransition(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 0, exec->propertyNames().toString, functionProtoFuncToString), DontEnum);
     putDirectFunctionWithoutTransition(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 2, exec->propertyNames().apply, functionProtoFuncApply), DontEnum);
@@ -100,7 +100,7 @@ JSValue* functionProtoFuncApply(ExecState* exec, JSObject*, JSValue* thisValue, 
             return throwError(exec, TypeError);
         if (asObject(argArray)->classInfo() == &Arguments::info)
             asArguments(argArray)->fillArgList(exec, applyArgs);
-        else if (exec->machine()->isJSArray(argArray))
+        else if (exec->interpreter()->isJSArray(argArray))
             asArray(argArray)->fillArgList(exec, applyArgs);
         else if (asObject(argArray)->inherits(&JSArray::info)) {
             unsigned length = asArray(argArray)->get(exec, exec->propertyNames().length)->toUInt32(exec);
@@ -134,3 +134,4 @@ JSValue* functionProtoFuncCall(ExecState* exec, JSObject*, JSValue* thisValue, c
 }
 
 } // namespace JSC
+

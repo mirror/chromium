@@ -56,6 +56,7 @@
 #endif
 #include <wtf/HashMap.h>
 #include <wtf/RefCountedLeakCounter.h>
+#include <wtf/StdLibExtras.h>
 
 #if ENABLE(DOM_STORAGE)
 #include "LocalStorage.h"
@@ -235,7 +236,7 @@ void Page::setGroupName(const String& name)
 
 const String& Page::groupName() const
 {
-    static String nullString;
+    DEFINE_STATIC_LOCAL(String, nullString, ());
     return m_group ? m_group->name() : nullString;
 }
 
@@ -598,3 +599,4 @@ void Page::setCustomHTMLTokenizerChunkSize(int customHTMLTokenizerChunkSize)
 }
 
 } // namespace WebCore
+

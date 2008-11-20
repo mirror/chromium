@@ -248,12 +248,12 @@ void Console::trace(ScriptCallContext* context)
     UString urlString;
     JSValue* func;
 
-    context->exec()->machine()->retrieveLastCaller(context->exec(), signedLineNumber, sourceID, urlString, func);
+    context->exec()->interpreter()->retrieveLastCaller(context->exec(), signedLineNumber, sourceID, urlString, func);
 
     ArgList args;
     while (!func->isNull()) {
         args.append(func);
-        func = context->exec()->machine()->retrieveCaller(context->exec(), asInternalFunction(func));
+        func = context->exec()->interpreter()->retrieveCaller(context->exec(), asInternalFunction(func));
     }
     
     page->inspectorController()->addMessageToConsole(JSMessageSource, TraceMessageLevel, context);
@@ -454,3 +454,4 @@ Page* Console::page() const
 }
 
 } // namespace WebCore
+

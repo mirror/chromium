@@ -27,8 +27,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef Opcodes_h
-#define Opcodes_h
+#ifndef Opcode_h
+#define Opcode_h
 
 #include <algorithm>
 #include <string.h>
@@ -216,4 +216,5 @@ namespace JSC {
 
 } // namespace JSC
 
-#endif // Opcodes_h
+#endif // Opcode_h
+

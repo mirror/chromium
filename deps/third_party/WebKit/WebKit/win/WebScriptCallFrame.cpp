@@ -261,7 +261,7 @@ JSValue* WebScriptCallFrame::valueByEvaluatingJavaScriptFromString(BSTR script)
         scriptExecutionResult = eval->call(state, 0, args);
     } else
         // no "eval", or no context (i.e. global scope) - use global fallback
-        scriptExecutionResult = Interpreter::evaluate(state, UString(), 0, code.data(), code.size(), globObj).value();
+        scriptExecutionResult = JSC::evaluate(state, UString(), 0, code.data(), code.size(), globObj).value();
 
     if (state->hadException())
         scriptExecutionResult = state->exception();    // (may be redundant depending on which eval path was used)
@@ -283,3 +283,4 @@ template<> struct COMVariantSetter<Identifier>
         V_BSTR(variant) = WebCore::BString(reinterpret_cast<const wchar_t*>(value.data()), value.size()).release();
     }
 };
+

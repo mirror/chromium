@@ -24,12 +24,12 @@
  */
 
 #include "config.h"
-#include "StructureID.h"
+#include "Structure.h"
 
 #include "Identifier.h"
 #include "JSObject.h"
 #include "PropertyNameArray.h"
-#include "StructureIDChain.h"
+#include "StructureChain.h"
 #include "Lookup.h"
 #include <wtf/RefCountedLeakCounter.h>
 #include <wtf/RefPtr.h>
@@ -59,60 +59,66 @@ static const int smallMapThreshold = 1024;
 // becomes small compared to the inefficiency of insertion sort.
 static const unsigned tinyMapThreshold = 20;
 
+static const unsigned newTableSize = 16;
+
 #ifndef NDEBUG
-static WTF::RefCountedLeakCounter structureIDCounter("StructureID");
+static WTF::RefCountedLeakCounter structureCounter("Structure");
 
 #if ENABLE(JSC_MULTIPLE_THREADS)
 static Mutex ignoreSetMutex;
 #endif
 
 static bool shouldIgnoreLeaks;
-static HashSet<StructureID*> ignoreSet;
+static HashSet<Structure*> ignoreSet;
 #endif
 
 #if DUMP_STRUCTURE_ID_STATISTICS
-static HashSet<StructureID*> liveStructureIDSet;
+static HashSet<Structure*> liveStructureSet;
 #endif
 
-void StructureID::dumpStatistics()
+void Structure::dumpStatistics()
 {
 #if DUMP_STRUCTURE_ID_STATISTICS
     unsigned numberLeaf = 0;
     unsigned numberUsingSingleSlot = 0;
     unsigned numberSingletons = 0;
+    unsigned numberWithPropertyMaps = 0;
     unsigned totalPropertyMapsSize = 0;
 
-    HashSet<StructureID*>::const_iterator end = liveStructureIDSet.end();
-    for (HashSet<StructureID*>::const_iterator it = liveStructureIDSet.begin(); it != end; ++it) {
-        StructureID* structureID = *it;
-        if (structureID->m_usingSingleTransitionSlot) {
-            if (!structureID->m_transitions.singleTransition)
+    HashSet<Structure*>::const_iterator end = liveStructureSet.end();
+    for (HashSet<Structure*>::const_iterator it = liveStructureSet.begin(); it != end; ++it) {
+        Structure* structure = *it;
+        if (structure->m_usingSingleTransitionSlot) {
+            if (!structure->m_transitions.singleTransition)
                 ++numberLeaf;
             else
                 ++numberUsingSingleSlot;
 
-           if (!structureID->m_previous && !structureID->m_transitions.singleTransition)
+           if (!structure->m_previous && !structure->m_transitions.singleTransition)
                 ++numberSingletons;
         }
 
-        if (structureID->m_propertyTable)
-            totalPropertyMapsSize += PropertyMapHashTable::allocationSize(structureID->m_propertyTable->size);
+        if (structure->m_propertyTable) {
+            ++numberWithPropertyMaps;
+            totalPropertyMapsSize += PropertyMapHashTable::allocationSize(structure->m_propertyTable->size);
+        }
     }
 
-    printf("Number of live StructureIDs: %d\n", liveStructureIDSet.size());
-    printf("Number of StructureIDs using the single item optimization for transition map: %d\n", numberUsingSingleSlot);
-    printf("Number of StructureIDs that are leaf nodes: %d\n", numberLeaf);
-    printf("Number of StructureIDs that singletons: %d\n", numberSingletons);
+    printf("Number of live Structures: %d\n", liveStructureSet.size());
+    printf("Number of Structures using the single item optimization for transition map: %d\n", numberUsingSingleSlot);
+    printf("Number of Structures that are leaf nodes: %d\n", numberLeaf);
+    printf("Number of Structures that singletons: %d\n", numberSingletons);
+    printf("Number of Structures with PropertyMaps: %d\n", numberWithPropertyMaps);
 
-    printf("Size of a single StructureIDs: %d\n", static_cast<unsigned>(sizeof(StructureID)));
+    printf("Size of a single Structures: %d\n", static_cast<unsigned>(sizeof(Structure)));
     printf("Size of sum of all property maps: %d\n", totalPropertyMapsSize);
-    printf("Size of average of all property maps: %f\n", static_cast<double>(totalPropertyMapsSize) / static_cast<double>(liveStructureIDSet.size()));
+    printf("Size of average of all property maps: %f\n", static_cast<double>(totalPropertyMapsSize) / static_cast<double>(liveStructureSet.size()));
 #else
-    printf("Dumping StructureID statistics is not enabled.\n");
+    printf("Dumping Structure statistics is not enabled.\n");
 #endif
 }
 
-StructureID::StructureID(JSValue* prototype, const TypeInfo& typeInfo)
+Structure::Structure(JSValue* prototype, const TypeInfo& typeInfo)
     : m_typeInfo(typeInfo)
     , m_prototype(prototype)
     , m_cachedPrototypeChain(0)
@@ -121,8 +127,9 @@ StructureID::StructureID(JSValue* prototype, const TypeInfo& typeInfo)
     , m_transitionCount(0)
     , m_propertyTable(0)
     , m_propertyStorageCapacity(JSObject::inlineStorageCapacity)
-    , m_cachedTransistionOffset(WTF::notFound)
+    , m_offset(WTF::notFound)
     , m_isDictionary(false)
+    , m_isPinnedPropertyTable(false)
     , m_hasGetterSetterProperties(false)
     , m_usingSingleTransitionSlot(true)
     , m_attributesInPrevious(0)
@@ -139,15 +146,15 @@ StructureID::StructureID(JSValue* prototype, const TypeInfo& typeInfo)
     if (shouldIgnoreLeaks)
         ignoreSet.add(this);
     else
-        structureIDCounter.increment();
+        structureCounter.increment();
 #endif
 
 #if DUMP_STRUCTURE_ID_STATISTICS
-    liveStructureIDSet.add(this);
+    liveStructureSet.add(this);
 #endif
 }
 
-StructureID::~StructureID()
+Structure::~Structure()
 {
     if (m_previous) {
         if (m_previous->m_usingSingleTransitionSlot) {
@@ -159,7 +166,7 @@ StructureID::~StructureID()
     }
 
     if (m_cachedPropertyNameArrayData)
-        m_cachedPropertyNameArrayData->setCachedStructureID(0);
+        m_cachedPropertyNameArrayData->setCachedStructure(0);
 
     if (!m_usingSingleTransitionSlot)
         delete m_transitions.table;
@@ -177,39 +184,113 @@ StructureID::~StructureID()
 #if ENABLE(JSC_MULTIPLE_THREADS)
     MutexLocker protect(ignoreSetMutex);
 #endif
-    HashSet<StructureID*>::iterator it = ignoreSet.find(this);
+    HashSet<Structure*>::iterator it = ignoreSet.find(this);
     if (it != ignoreSet.end())
         ignoreSet.remove(it);
     else
-        structureIDCounter.decrement();
+        structureCounter.decrement();
 #endif
 
 #if DUMP_STRUCTURE_ID_STATISTICS
-    liveStructureIDSet.remove(this);
+    liveStructureSet.remove(this);
 #endif
 }
 
-void StructureID::startIgnoringLeaks()
+void Structure::startIgnoringLeaks()
 {
 #ifndef NDEBUG
     shouldIgnoreLeaks = true;
 #endif
 }
 
-void StructureID::stopIgnoringLeaks()
+void Structure::stopIgnoringLeaks()
 {
 #ifndef NDEBUG
     shouldIgnoreLeaks = false;
 #endif
 }
 
-void StructureID::getEnumerablePropertyNames(ExecState* exec, PropertyNameArray& propertyNames, JSObject* baseObject)
+static bool isPowerOf2(unsigned v)
+{
+    // Taken from http://www.cs.utk.edu/~vose/c-stuff/bithacks.html
+    
+    return !(v & (v - 1)) && v;
+}
+
+static unsigned nextPowerOf2(unsigned v)
+{
+    // Taken from http://www.cs.utk.edu/~vose/c-stuff/bithacks.html
+    // Devised by Sean Anderson, Sepember 14, 2001
+
+    v--;
+    v |= v >> 1;
+    v |= v >> 2;
+    v |= v >> 4;
+    v |= v >> 8;
+    v |= v >> 16;
+    v++;
+
+    return v;
+}
+
+static unsigned sizeForKeyCount(size_t keyCount)
+{
+    if (keyCount == WTF::notFound)
+        return newTableSize;
+
+    if (keyCount < 8)
+        return newTableSize;
+
+    if (isPowerOf2(keyCount))
+        return keyCount * 4;
+
+    return nextPowerOf2(keyCount) * 2;
+}
+
+void Structure::materializePropertyMap()
+{
+    ASSERT(!m_propertyTable);
+
+    Vector<Structure*, 8> structures;
+    structures.append(this);
+
+    Structure* structure = this;
+
+    // Search for the last Structure with a property table. 
+    while ((structure = structure->previousID())) {
+        if (structure->m_isPinnedPropertyTable) {
+            ASSERT(structure->m_propertyTable);
+            ASSERT(!structure->m_previous);
+
+            m_propertyTable = structure->copyPropertyTable();
+            break;
+        }
+
+        structures.append(structure);
+    }
+
+    if (!m_propertyTable)
+        createPropertyMapHashTable(sizeForKeyCount(m_offset + 1));
+    else {
+        if (sizeForKeyCount(m_offset + 1) > m_propertyTable->size)
+            rehashPropertyMapHashTable(sizeForKeyCount(m_offset + 1)); // This could be made more efficient by combining with the copy above. 
+    }
+
+    for (ptrdiff_t i = structures.size() - 2; i >= 0; --i) {
+        structure = structures[i];
+        structure->m_nameInPrevious->ref();
+        PropertyMapEntry entry(structure->m_nameInPrevious, structure->m_offset, structure->m_attributesInPrevious, ++m_propertyTable->lastIndexUsed); 
+        insertIntoPropertyMapHashTable(entry);
+    }
+}
+
+void Structure::getEnumerablePropertyNames(ExecState* exec, PropertyNameArray& propertyNames, JSObject* baseObject)
 {
     bool shouldCache = propertyNames.cacheable() && !(propertyNames.size() || m_isDictionary);
 
     if (shouldCache) {
         if (m_cachedPropertyNameArrayData) {
-            if (structureIDChainsAreEqual(m_cachedPropertyNameArrayData->cachedPrototypeChain(), cachedPrototypeChain())) {
+            if (structureChainsAreEqual(m_cachedPropertyNameArrayData->cachedPrototypeChain(), cachedPrototypeChain())) {
                 propertyNames.setData(m_cachedPropertyNameArrayData);
                 return;
             }
@@ -239,26 +320,26 @@ void StructureID::getEnumerablePropertyNames(ExecState* exec, PropertyNameArray&
 
     if (shouldCache) {
         if (m_cachedPropertyNameArrayData)
-            m_cachedPropertyNameArrayData->setCachedStructureID(0);
+            m_cachedPropertyNameArrayData->setCachedStructure(0);
 
         m_cachedPropertyNameArrayData = propertyNames.data();
 
-        StructureIDChain* chain = cachedPrototypeChain();
+        StructureChain* chain = cachedPrototypeChain();
         if (!chain)
             chain = createCachedPrototypeChain();
         m_cachedPropertyNameArrayData->setCachedPrototypeChain(chain);
-        m_cachedPropertyNameArrayData->setCachedStructureID(this);
+        m_cachedPropertyNameArrayData->setCachedStructure(this);
     }
 }
 
-void StructureID::clearEnumerationCache()
+void Structure::clearEnumerationCache()
 {
     if (m_cachedPropertyNameArrayData)
-        m_cachedPropertyNameArrayData->setCachedStructureID(0);
+        m_cachedPropertyNameArrayData->setCachedStructure(0);
     m_cachedPropertyNameArrayData.clear();
 }
 
-void StructureID::growPropertyStorageCapacity()
+void Structure::growPropertyStorageCapacity()
 {
     if (m_propertyStorageCapacity == JSObject::inlineStorageCapacity)
         m_propertyStorageCapacity = JSObject::nonInlineBaseStorageCapacity;
@@ -266,131 +347,175 @@ void StructureID::growPropertyStorageCapacity()
         m_propertyStorageCapacity *= 2;
 }
 
-PassRefPtr<StructureID> StructureID::addPropertyTransition(StructureID* structureID, const Identifier& propertyName, unsigned attributes, size_t& offset)
+PassRefPtr<Structure> Structure::addPropertyTransitionToExistingStructure(Structure* structure, const Identifier& propertyName, unsigned attributes, size_t& offset)
 {
-    ASSERT(!structureID->m_isDictionary);
-    ASSERT(structureID->typeInfo().type() == ObjectType);
+    ASSERT(!structure->m_isDictionary);
+    ASSERT(structure->typeInfo().type() == ObjectType);
 
-    if (structureID->m_usingSingleTransitionSlot) {
-        StructureID* existingTransition = structureID->m_transitions.singleTransition;
+    if (structure->m_usingSingleTransitionSlot) {
+        Structure* existingTransition = structure->m_transitions.singleTransition;
         if (existingTransition && existingTransition->m_nameInPrevious == propertyName.ustring().rep() && existingTransition->m_attributesInPrevious == attributes) {
-            offset = structureID->m_transitions.singleTransition->cachedTransistionOffset();
+            offset = structure->m_transitions.singleTransition->m_offset;
             ASSERT(offset != WTF::notFound);
             return existingTransition;
         }
     } else {
-        if (StructureID* existingTransition = structureID->m_transitions.table->get(make_pair(propertyName.ustring().rep(), attributes))) {
-            offset = existingTransition->cachedTransistionOffset();
+        if (Structure* existingTransition = structure->m_transitions.table->get(make_pair(propertyName.ustring().rep(), attributes))) {
+            offset = existingTransition->m_offset;
             ASSERT(offset != WTF::notFound);
             return existingTransition;
-        }        
+        }
     }
 
-    if (structureID->m_transitionCount > s_maxTransitionLength) {
-        RefPtr<StructureID> transition = toDictionaryTransition(structureID);
+    return 0;
+}
+
+PassRefPtr<Structure> Structure::addPropertyTransition(Structure* structure, const Identifier& propertyName, unsigned attributes, size_t& offset)
+{
+    ASSERT(!structure->m_isDictionary);
+    ASSERT(structure->typeInfo().type() == ObjectType);
+    ASSERT(structure->m_deletedOffsets.isEmpty());
+    ASSERT(!Structure::addPropertyTransitionToExistingStructure(structure, propertyName, attributes, offset));
+
+    if (structure->m_transitionCount > s_maxTransitionLength) {
+        RefPtr<Structure> transition = toDictionaryTransition(structure);
         offset = transition->put(propertyName, attributes);
         if (transition->propertyStorageSize() > transition->propertyStorageCapacity())
             transition->growPropertyStorageCapacity();
         return transition.release();
     }
 
-    RefPtr<StructureID> transition = create(structureID->m_prototype, structureID->typeInfo());
-    transition->m_cachedPrototypeChain = structureID->m_cachedPrototypeChain;
-    transition->m_previous = structureID;
+    RefPtr<Structure> transition = create(structure->m_prototype, structure->typeInfo());
+    transition->m_cachedPrototypeChain = structure->m_cachedPrototypeChain;
+    transition->m_previous = structure;
     transition->m_nameInPrevious = propertyName.ustring().rep();
     transition->m_attributesInPrevious = attributes;
-    transition->m_transitionCount = structureID->m_transitionCount + 1;
-    transition->m_propertyTable = structureID->copyPropertyTable();
-    transition->m_deletedOffsets = structureID->m_deletedOffsets; 
-    transition->m_propertyStorageCapacity = structureID->m_propertyStorageCapacity;
-    transition->m_hasGetterSetterProperties = structureID->m_hasGetterSetterProperties;
+    transition->m_transitionCount = structure->m_transitionCount + 1;
+    transition->m_propertyStorageCapacity = structure->m_propertyStorageCapacity;
+    transition->m_hasGetterSetterProperties = structure->m_hasGetterSetterProperties;
+
+    if (structure->m_propertyTable) {
+        if (structure->m_isPinnedPropertyTable)
+            transition->m_propertyTable = structure->copyPropertyTable();
+        else {
+            transition->m_propertyTable = structure->m_propertyTable;
+            structure->m_propertyTable = 0;
+        }
+    } else {
+        if (structure->m_previous)
+            transition->materializePropertyMap();
+        else
+            transition->createPropertyMapHashTable();
+    }
 
     offset = transition->put(propertyName, attributes);
     if (transition->propertyStorageSize() > transition->propertyStorageCapacity())
         transition->growPropertyStorageCapacity();
 
-    transition->setCachedTransistionOffset(offset);
+    transition->m_offset = offset;
 
-    if (structureID->m_usingSingleTransitionSlot) {
-        if (!structureID->m_transitions.singleTransition) {
-            structureID->m_transitions.singleTransition = transition.get();
+    if (structure->m_usingSingleTransitionSlot) {
+        if (!structure->m_transitions.singleTransition) {
+            structure->m_transitions.singleTransition = transition.get();
             return transition.release();
         }
 
-        StructureID* existingTransition = structureID->m_transitions.singleTransition;
-        structureID->m_usingSingleTransitionSlot = false;
-        StructureIDTransitionTable* transitionTable = new StructureIDTransitionTable;
-        structureID->m_transitions.table = transitionTable;
+        Structure* existingTransition = structure->m_transitions.singleTransition;
+        structure->m_usingSingleTransitionSlot = false;
+        StructureTransitionTable* transitionTable = new StructureTransitionTable;
+        structure->m_transitions.table = transitionTable;
         transitionTable->add(make_pair(existingTransition->m_nameInPrevious, existingTransition->m_attributesInPrevious), existingTransition);
     }
-    structureID->m_transitions.table->add(make_pair(propertyName.ustring().rep(), attributes), transition.get());
+    structure->m_transitions.table->add(make_pair(propertyName.ustring().rep(), attributes), transition.get());
     return transition.release();
 }
 
-PassRefPtr<StructureID> StructureID::removePropertyTransition(StructureID* structureID, const Identifier& propertyName, size_t& offset)
+PassRefPtr<Structure> Structure::removePropertyTransition(Structure* structure, const Identifier& propertyName, size_t& offset)
 {
-    ASSERT(!structureID->m_isDictionary);
+    ASSERT(!structure->m_isDictionary);
 
-    RefPtr<StructureID> transition = create(structureID->m_prototype, structureID->typeInfo());
-    transition->m_isDictionary = true;
-    transition->m_propertyTable = structureID->copyPropertyTable();
-    transition->m_deletedOffsets = structureID->m_deletedOffsets;
-    transition->m_propertyStorageCapacity = structureID->m_propertyStorageCapacity;
-    transition->m_hasGetterSetterProperties = structureID->m_hasGetterSetterProperties;
+    RefPtr<Structure> transition = toDictionaryTransition(structure);
 
     offset = transition->remove(propertyName);
 
     return transition.release();
 }
 
-PassRefPtr<StructureID> StructureID::toDictionaryTransition(StructureID* structureID)
+PassRefPtr<Structure> Structure::changePrototypeTransition(Structure* structure, JSValue* prototype)
 {
-    ASSERT(!structureID->m_isDictionary);
+    RefPtr<Structure> transition = create(prototype, structure->typeInfo());
 
-    RefPtr<StructureID> transition = create(structureID->m_prototype, structureID->typeInfo());
-    transition->m_isDictionary = true;
-    transition->m_propertyTable = structureID->copyPropertyTable();
-    transition->m_deletedOffsets = structureID->m_deletedOffsets;
-    transition->m_propertyStorageCapacity = structureID->m_propertyStorageCapacity;
-    transition->m_hasGetterSetterProperties = structureID->m_hasGetterSetterProperties;
+    transition->m_transitionCount = structure->m_transitionCount + 1;
+    transition->m_deletedOffsets = structure->m_deletedOffsets;
+    transition->m_propertyStorageCapacity = structure->m_propertyStorageCapacity;
+    transition->m_hasGetterSetterProperties = structure->m_hasGetterSetterProperties;
+
+    // Don't set m_offset, as one can not transition to this.
+
+    structure->materializePropertyMapIfNecessary();
+    transition->m_propertyTable = structure->copyPropertyTable();
+    transition->m_isPinnedPropertyTable = true;
+
     return transition.release();
 }
 
-PassRefPtr<StructureID> StructureID::fromDictionaryTransition(StructureID* structureID)
+PassRefPtr<Structure> Structure::getterSetterTransition(Structure* structure)
 {
-    ASSERT(structureID->m_isDictionary);
-
-    // Since dictionary StructureIDs are not shared, and no opcodes specialize
-    // for them, we don't need to allocate a new StructureID when transitioning
-    // to non-dictionary status.
-    structureID->m_isDictionary = false;
-    return structureID;
-}
-
-PassRefPtr<StructureID> StructureID::changePrototypeTransition(StructureID* structureID, JSValue* prototype)
-{
-    RefPtr<StructureID> transition = create(prototype, structureID->typeInfo());
-    transition->m_transitionCount = structureID->m_transitionCount + 1;
-    transition->m_propertyTable = structureID->copyPropertyTable();
-    transition->m_deletedOffsets = structureID->m_deletedOffsets;
-    transition->m_propertyStorageCapacity = structureID->m_propertyStorageCapacity;
-    transition->m_hasGetterSetterProperties = structureID->m_hasGetterSetterProperties;
-    return transition.release();
-}
-
-PassRefPtr<StructureID> StructureID::getterSetterTransition(StructureID* structureID)
-{
-    RefPtr<StructureID> transition = create(structureID->storedPrototype(), structureID->typeInfo());
-    transition->m_transitionCount = structureID->m_transitionCount + 1;
-    transition->m_propertyTable = structureID->copyPropertyTable();
-    transition->m_deletedOffsets = structureID->m_deletedOffsets;
-    transition->m_propertyStorageCapacity = structureID->m_propertyStorageCapacity;
+    RefPtr<Structure> transition = create(structure->storedPrototype(), structure->typeInfo());
+    transition->m_transitionCount = structure->m_transitionCount + 1;
+    transition->m_deletedOffsets = structure->m_deletedOffsets;
+    transition->m_propertyStorageCapacity = structure->m_propertyStorageCapacity;
     transition->m_hasGetterSetterProperties = transition->m_hasGetterSetterProperties;
+
+    // Don't set m_offset, as one can not transition to this.
+
+    structure->materializePropertyMapIfNecessary();
+    transition->m_propertyTable = structure->copyPropertyTable();
+    transition->m_isPinnedPropertyTable = true;
+
     return transition.release();
 }
 
-size_t StructureID::addPropertyWithoutTransition(const Identifier& propertyName, unsigned attributes)
+PassRefPtr<Structure> Structure::toDictionaryTransition(Structure* structure)
 {
+    ASSERT(!structure->m_isDictionary);
+
+    RefPtr<Structure> transition = create(structure->m_prototype, structure->typeInfo());
+    transition->m_isDictionary = true;
+    transition->m_deletedOffsets = structure->m_deletedOffsets;
+    transition->m_propertyStorageCapacity = structure->m_propertyStorageCapacity;
+    transition->m_hasGetterSetterProperties = structure->m_hasGetterSetterProperties;
+
+    structure->materializePropertyMapIfNecessary();
+    transition->m_propertyTable = structure->copyPropertyTable();
+    transition->m_isPinnedPropertyTable = true;
+
+    return transition.release();
+}
+
+PassRefPtr<Structure> Structure::fromDictionaryTransition(Structure* structure)
+{
+    ASSERT(structure->m_isDictionary);
+
+    // Since dictionary Structures are not shared, and no opcodes specialize
+    // for them, we don't need to allocate a new Structure when transitioning
+    // to non-dictionary status.
+
+    // FIMXE: We can make this more efficient by canonicalizing the Structure (draining the
+    // deleted offsets vector) before transitioning from dictionary. 
+    if (structure->m_deletedOffsets.isEmpty())
+        structure->m_isDictionary = false;
+
+    return structure;
+}
+
+size_t Structure::addPropertyWithoutTransition(const Identifier& propertyName, unsigned attributes)
+{
+    ASSERT(!m_transitions.singleTransition);
+
+    materializePropertyMapIfNecessary();
+
+    m_isPinnedPropertyTable = true;
     size_t offset = put(propertyName, attributes);
     if (propertyStorageSize() > propertyStorageCapacity())
         growPropertyStorageCapacity();
@@ -398,14 +523,20 @@ size_t StructureID::addPropertyWithoutTransition(const Identifier& propertyName,
     return offset;
 }
 
-size_t StructureID::removePropertyWithoutTransition(const Identifier& propertyName)
+size_t Structure::removePropertyWithoutTransition(const Identifier& propertyName)
 {
+    ASSERT(!m_transitions.singleTransition);
+    ASSERT(m_isDictionary);
+
+    materializePropertyMapIfNecessary();
+
+    m_isPinnedPropertyTable = true;
     size_t offset = remove(propertyName);
     clearEnumerationCache();
     return offset;
 }
 
-StructureIDChain* StructureID::createCachedPrototypeChain()
+StructureChain* Structure::createCachedPrototypeChain()
 {
     ASSERT(typeInfo().type() == ObjectType);
     ASSERT(!m_cachedPrototypeChain);
@@ -414,7 +545,7 @@ StructureIDChain* StructureID::createCachedPrototypeChain()
     if (JSImmediate::isImmediate(prototype))
         return 0;
 
-    RefPtr<StructureIDChain> chain = StructureIDChain::create(asObject(prototype)->structureID());
+    RefPtr<StructureChain> chain = StructureChain::create(asObject(prototype)->structure());
     setCachedPrototypeChain(chain.release());
     return cachedPrototypeChain();
 }
@@ -447,13 +578,13 @@ static const unsigned deletedSentinelIndex = 1;
 
 #if !DO_PROPERTYMAP_CONSTENCY_CHECK
 
-inline void StructureID::checkConsistency()
+inline void Structure::checkConsistency()
 {
-}   
+}
 
 #endif
 
-PropertyMapHashTable* StructureID::copyPropertyTable()
+PropertyMapHashTable* Structure::copyPropertyTable()
 {
     if (!m_propertyTable)
         return 0;
@@ -471,10 +602,11 @@ PropertyMapHashTable* StructureID::copyPropertyTable()
     return newTable;
 }
 
-size_t StructureID::get(const Identifier& propertyName, unsigned& attributes) const
+size_t Structure::get(const Identifier& propertyName, unsigned& attributes)
 {
     ASSERT(!propertyName.isNull());
 
+    materializePropertyMapIfNecessary();
     if (!m_propertyTable)
         return WTF::notFound;
 
@@ -519,7 +651,7 @@ size_t StructureID::get(const Identifier& propertyName, unsigned& attributes) co
     }
 }
 
-size_t StructureID::put(const Identifier& propertyName, unsigned attributes)
+size_t Structure::put(const Identifier& propertyName, unsigned attributes)
 {
     ASSERT(!propertyName.isNull());
     ASSERT(get(propertyName) == WTF::notFound);
@@ -608,7 +740,7 @@ size_t StructureID::put(const Identifier& propertyName, unsigned attributes)
     return newOffset;
 }
 
-size_t StructureID::remove(const Identifier& propertyName)
+size_t Structure::remove(const Identifier& propertyName)
 {
     ASSERT(!propertyName.isNull());
 
@@ -675,7 +807,7 @@ size_t StructureID::remove(const Identifier& propertyName)
     return offset;
 }
 
-void StructureID::insertIntoPropertyMapHashTable(const PropertyMapEntry& entry)
+void Structure::insertIntoPropertyMapHashTable(const PropertyMapEntry& entry)
 {
     ASSERT(m_propertyTable);
 
@@ -712,17 +844,16 @@ void StructureID::insertIntoPropertyMapHashTable(const PropertyMapEntry& entry)
     ++m_propertyTable->keyCount;
 }
 
-void StructureID::expandPropertyMapHashTable()
+void Structure::createPropertyMapHashTable()
 {
-    ASSERT(m_propertyTable);
-    rehashPropertyMapHashTable(m_propertyTable->size * 2);
+    ASSERT(sizeForKeyCount(7) == newTableSize);
+    createPropertyMapHashTable(newTableSize);
 }
 
-void StructureID::createPropertyMapHashTable()
+void Structure::createPropertyMapHashTable(unsigned newTableSize)
 {
-    const unsigned newTableSize = 16;
-
     ASSERT(!m_propertyTable);
+    ASSERT(isPowerOf2(newTableSize));
 
     checkConsistency();
 
@@ -733,16 +864,23 @@ void StructureID::createPropertyMapHashTable()
     checkConsistency();
 }
 
-void StructureID::rehashPropertyMapHashTable()
+void Structure::expandPropertyMapHashTable()
+{
+    ASSERT(m_propertyTable);
+    rehashPropertyMapHashTable(m_propertyTable->size * 2);
+}
+
+void Structure::rehashPropertyMapHashTable()
 {
     ASSERT(m_propertyTable);
     ASSERT(m_propertyTable->size);
     rehashPropertyMapHashTable(m_propertyTable->size);
 }
 
-void StructureID::rehashPropertyMapHashTable(unsigned newTableSize)
+void Structure::rehashPropertyMapHashTable(unsigned newTableSize)
 {
     ASSERT(m_propertyTable);
+    ASSERT(isPowerOf2(newTableSize));
 
     checkConsistency();
 
@@ -778,8 +916,9 @@ static int comparePropertyMapEntryIndices(const void* a, const void* b)
     return 0;
 }
 
-void StructureID::getEnumerablePropertyNamesInternal(PropertyNameArray& propertyNames) const
+void Structure::getEnumerablePropertyNamesInternal(PropertyNameArray& propertyNames)
 {
+    materializePropertyMapIfNecessary();
     if (!m_propertyTable)
         return;
 
@@ -836,12 +975,12 @@ void StructureID::getEnumerablePropertyNamesInternal(PropertyNameArray& property
 
 #if DO_PROPERTYMAP_CONSTENCY_CHECK
 
-void StructureID::checkConsistency()
+void Structure::checkConsistency()
 {
     if (!m_propertyTable)
         return;
 
-    ASSERT(m_propertyTable->size >= 16);
+    ASSERT(m_propertyTable->size >= newTableSize);
     ASSERT(m_propertyTable->sizeMask);
     ASSERT(m_propertyTable->size == m_propertyTable->sizeMask + 1);
     ASSERT(!(m_propertyTable->size & m_propertyTable->sizeMask));

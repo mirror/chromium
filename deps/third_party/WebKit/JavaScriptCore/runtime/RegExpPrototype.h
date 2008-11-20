@@ -27,7 +27,7 @@ namespace JSC {
 
     class RegExpPrototype : public JSObject {
     public:
-        RegExpPrototype(ExecState*, PassRefPtr<StructureID>, StructureID* prototypeFunctionStructure);
+        RegExpPrototype(ExecState*, PassRefPtr<Structure>, Structure* prototypeFunctionStructure);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
@@ -36,3 +36,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // RegExpPrototype_h
+

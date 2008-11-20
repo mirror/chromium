@@ -79,6 +79,7 @@
 - (NSString *)contextMenuItemTagStartSpeaking;
 - (NSString *)contextMenuItemTagStopSpeaking;
 - (NSString *)contextMenuItemTagWritingDirectionMenu;
+- (NSString *)contextMenuItemTagTextDirectionMenu;
 - (NSString *)contextMenuItemTagDefaultDirection;
 - (NSString *)contextMenuItemTagLeftToRight;
 - (NSString *)contextMenuItemTagRightToLeft;
@@ -143,4 +144,5 @@
 - (NSString *)descriptionForMIMEType:(NSString *)MIMEType;
 - (NSArray *)extensionsForMIMEType:(NSString *)MIMEType;
 @end
+
 

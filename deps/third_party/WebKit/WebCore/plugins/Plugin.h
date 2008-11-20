@@ -24,22 +24,12 @@
 #include <wtf/RefPtr.h>
 #include <wtf/RefCounted.h>
 
-namespace JSC {
-    class ExecState;
-}
-
 namespace WebCore {
 
     class AtomicString;
     class Plugin;
-    class String;
-
-#if USE(JSC)
-    // FIXME: Generated JSPlugin.cpp doesn't include JSMimeType.h for toJS
-    JSC::JSValue* toJS(JSC::ExecState*, MimeType*);
-#endif
-
     class PluginData;
+    class String;
 
     class Plugin : public RefCounted<Plugin> {
     public:
@@ -62,6 +52,7 @@ namespace WebCore {
         unsigned m_index;
     };
 
-}
+} // namespace WebCore
 
-#endif
+#endif // Plugin_h
+

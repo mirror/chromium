@@ -329,6 +329,7 @@ static WebCacheModel cacheModelForMainBundle(void)
         @"0",                           WebKitPDFScaleFactorPreferenceKey,
         @"0",                           WebKitUseSiteSpecificSpoofingPreferenceKey,
         [NSNumber numberWithInt:WebKitEditableLinkDefaultBehavior], WebKitEditableLinkBehaviorPreferenceKey,
+        [NSNumber numberWithInt:WebTextDirectionSubmenuNeverIncluded], WebKitTextDirectionSubmenuInclusionBehaviorPreferenceKey,
         [NSNumber numberWithBool:NO],   WebKitDOMPasteAllowedPreferenceKey,
         [NSNumber numberWithBool:YES],  WebKitUsesPageCachePreferenceKey,
         [NSNumber numberWithInt:cacheModelForMainBundle()], WebKitCacheModelPreferenceKey,
@@ -907,6 +908,23 @@ static WebCacheModel cacheModelForMainBundle(void)
     [self _setIntegerValue:behavior forKey:WebKitEditableLinkBehaviorPreferenceKey];
 }
 
+- (WebTextDirectionSubmenuInclusionBehavior)textDirectionSubmenuInclusionBehavior
+{
+    WebTextDirectionSubmenuInclusionBehavior value = static_cast<WebTextDirectionSubmenuInclusionBehavior>([self _integerValueForKey:WebKitTextDirectionSubmenuInclusionBehaviorPreferenceKey]);
+    if (value != WebTextDirectionSubmenuNeverIncluded &&
+        value != WebTextDirectionSubmenuAutomaticallyIncluded &&
+        value != WebTextDirectionSubmenuAlwaysIncluded) {
+        // Ensure that a valid result is returned.
+        value = WebTextDirectionSubmenuNeverIncluded;
+    }
+    return value;
+}
+
+- (void)setTextDirectionSubmenuInclusionBehavior:(WebTextDirectionSubmenuInclusionBehavior)behavior
+{
+    [self _setIntegerValue:behavior forKey:WebKitTextDirectionSubmenuInclusionBehaviorPreferenceKey];
+}
+
 - (BOOL)_useSiteSpecificSpoofing
 {
     return [self _boolValueForKey:WebKitUseSiteSpecificSpoofingPreferenceKey];
@@ -1090,3 +1108,4 @@ static NSString *classIBCreatorID = nil;
 }
 
 @end
+

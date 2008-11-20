@@ -38,7 +38,6 @@
 #include "HTMLDocument.h"
 #include "InspectorController.h"
 #include "JSAudioConstructor.h"
-#include "JSDedicatedWorkerConstructor.h"
 #include "JSDOMWindowCustom.h"
 #include "JSEvent.h"
 #include "JSEventListener.h"
@@ -47,6 +46,7 @@
 #include "JSMessageChannelConstructor.h"
 #include "JSNode.h"
 #include "JSOptionConstructor.h"
+#include "JSWorkerConstructor.h"
 #include "JSXMLHttpRequestConstructor.h"
 #include "JSXSLTProcessorConstructor.h"
 #include "Logging.h"
@@ -169,7 +169,7 @@ JSDOMWindowBase::JSDOMWindowBaseData::JSDOMWindowBaseData(PassRefPtr<DOMWindow> 
 {
 }
 
-JSDOMWindowBase::JSDOMWindowBase(PassRefPtr<StructureID> structure, PassRefPtr<DOMWindow> window, JSDOMWindowShell* shell)
+JSDOMWindowBase::JSDOMWindowBase(PassRefPtr<Structure> structure, PassRefPtr<DOMWindow> window, JSDOMWindowShell* shell)
     : JSDOMGlobalObject(structure, new JSDOMWindowBaseData(window, shell), shell)
 {
     // Time in milliseconds before the script timeout handler kicks in.
@@ -456,7 +456,7 @@ JSValue* jsDOMWindowBaseWorker(ExecState* exec, const Identifier&, const Propert
 #if ENABLE(WORKERS)
     if (!static_cast<JSDOMWindowBase*>(asObject(slot.slotBase()))->allowsAccessFrom(exec))
         return jsUndefined();
-    return getDOMConstructor<JSDedicatedWorkerConstructor>(exec);
+    return getDOMConstructor<JSWorkerConstructor>(exec);
 #else
     return jsUndefined();
 #endif
@@ -497,15 +497,6 @@ JSValue* JSDOMWindowBase::namedItemGetter(ExecState* exec, const Identifier& pro
     if (collection->length() == 1)
         return toJS(exec, collection->firstItem());
     return toJS(exec, collection.get());
-}
-
-void JSDOMWindowBase::markCrossHeapDependentObjects()
-{
-    Document* document = impl()->document();
-    if (!document)
-        return;
-
-    markCrossHeapDependentObjectsForContext(*globalData(), document);
 }
 
 bool JSDOMWindowBase::getOwnPropertySlot(ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
@@ -1027,3 +1018,4 @@ JSDOMWindow* toJSDOMWindow(JSValue* value)
 }
 
 } // namespace WebCore
+

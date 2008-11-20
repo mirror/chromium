@@ -29,7 +29,7 @@ namespace JSC {
 
     class BooleanConstructor : public InternalFunction {
     public:
-        BooleanConstructor(ExecState*, PassRefPtr<StructureID>, BooleanPrototype*);
+        BooleanConstructor(ExecState*, PassRefPtr<Structure>, BooleanPrototype*);
 
     private:
         virtual ConstructType getConstructData(ConstructData&);
@@ -42,3 +42,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // BooleanConstructor_h
+

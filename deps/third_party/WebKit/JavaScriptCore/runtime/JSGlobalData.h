@@ -47,10 +47,10 @@ namespace JSC {
     class JSGlobalObject;
     class JSObject;
     class Lexer;
-    class Machine;
+    class BytecodeInterpreter;
     class Parser;
     class ParserRefCounted;
-    class StructureID;
+    class Structure;
     class UString;
     struct HashTable;
 
@@ -63,7 +63,7 @@ namespace JSC {
         static PassRefPtr<JSGlobalData> createLeaked();
         ~JSGlobalData();
 
-        Machine* machine;
+        BytecodeInterpreter* interpreter;
 
         JSValue* exception;
 #if ENABLE(CTI)
@@ -78,13 +78,13 @@ namespace JSC {
         const HashTable* regExpConstructorTable;
         const HashTable* stringTable;
         
-        RefPtr<StructureID> activationStructureID;
-        RefPtr<StructureID> interruptedExecutionErrorStructure;
-        RefPtr<StructureID> staticScopeStructureID;
-        RefPtr<StructureID> stringStructureID;
-        RefPtr<StructureID> notAnObjectErrorStubStructure;
-        RefPtr<StructureID> notAnObjectStructure;
-        RefPtr<StructureID> numberStructureID;
+        RefPtr<Structure> activationStructure;
+        RefPtr<Structure> interruptedExecutionErrorStructure;
+        RefPtr<Structure> staticScopeStructure;
+        RefPtr<Structure> stringStructure;
+        RefPtr<Structure> notAnObjectErrorStubStructure;
+        RefPtr<Structure> notAnObjectStructure;
+        RefPtr<Structure> numberStructure;
 
         IdentifierTable* identifierTable;
         CommonIdentifiers* propertyNames;
@@ -124,3 +124,4 @@ namespace JSC {
 }
 
 #endif
+

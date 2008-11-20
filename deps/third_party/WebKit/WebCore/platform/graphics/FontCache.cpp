@@ -37,6 +37,7 @@
 #include "StringHash.h"
 #include <wtf/HashMap.h>
 #include <wtf/ListHashSet.h>
+#include <wtf/StdLibExtras.h>
 
 using namespace WTF;
 
@@ -398,3 +399,4 @@ void FontCache::invalidate()
 }
 
 } // namespace WebCore
+

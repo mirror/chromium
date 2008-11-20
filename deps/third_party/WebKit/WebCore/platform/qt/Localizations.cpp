@@ -233,6 +233,11 @@ String contextMenuItemTagWritingDirectionMenu()
     return QCoreApplication::translate("QWebPage", "Direction", "Writing direction context sub-menu item");
 }
 
+String contextMenuItemTagTextDirectionMenu()
+{
+    return QCoreApplication::translate("QWebPage", "Text Direction", "Text direction context sub-menu item");
+}
+
 String contextMenuItemTagDefaultDirection()
 {
     return QCoreApplication::translate("QWebPage", "Default", "Default writing direction context menu item");
@@ -350,3 +355,4 @@ String imageTitle(const String& filename, const IntSize& size)
 
 }
 // vim: ts=4 sw=4 et
+

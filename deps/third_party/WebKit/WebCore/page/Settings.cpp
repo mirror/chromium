@@ -257,6 +257,11 @@ void Settings::setEditableLinkBehavior(EditableLinkBehavior editableLinkBehavior
     m_editableLinkBehavior = editableLinkBehavior;
 }
 
+void Settings::setTextDirectionSubmenuInclusionBehavior(TextDirectionSubmenuInclusionBehavior behavior)
+{
+    m_textDirectionSubmenuInclusionBehavior = behavior;
+}
+
 #if ENABLE(DASHBOARD_SUPPORT)
 void Settings::setUsesDashboardBackwardCompatibilityMode(bool usesDashboardBackwardCompatibilityMode)
 {
@@ -412,3 +417,4 @@ void Settings::setAllowScriptsToCloseWindows(bool allow_scripts_to_close_windows
 }
 
 } // namespace WebCore
+

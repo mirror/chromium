@@ -79,7 +79,7 @@
 #define ARG_instr4 static_cast<Instruction*>(ARGS[4])
 #define ARG_instr5 static_cast<Instruction*>(ARGS[5])
 #define ARG_instr6 static_cast<Instruction*>(ARGS[6])
-#define ARG_linkInfo2 static_cast<CallLinkInfo*>(ARGS[2])
+#define ARG_returnAddress2 static_cast<void*>(ARGS[2])
 #define ARG_codeBlock4 static_cast<CodeBlock*>(ARGS[4])
 
 #define CTI_RETURN_ADDRESS_SLOT (ARGS[-1])
@@ -96,13 +96,13 @@ namespace JSC {
 
     class CodeBlock;
     class JSPropertyNameIterator;
-    class Machine;
+    class BytecodeInterpreter;
     class Register;
     class RegisterFile;
     class ScopeChainNode;
     class SimpleJumpTable;
     class StringJumpTable;
-    class StructureIDChain;
+    class StructureChain;
 
     struct CallLinkInfo;
     struct Instruction;
@@ -119,7 +119,7 @@ namespace JSC {
     struct CallRecord {
         X86Assembler::JmpSrc from;
         void* to;
-        unsigned opcodeIndex;
+        unsigned bytecodeIndex;
 
         CallRecord()
         {
@@ -128,56 +128,56 @@ namespace JSC {
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_j t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
 
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_o t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
 
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_p t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
         
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_v t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
         
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_s t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
         
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_b t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
 
         CallRecord(X86Assembler::JmpSrc f, CTIHelper_2 t, unsigned i)
             : from(f)
             , to(reinterpret_cast<void*>(t))
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
 
         CallRecord(X86Assembler::JmpSrc f, unsigned i)
             : from(f)
             , to(0)
-            , opcodeIndex(i)
+            , bytecodeIndex(i)
         {
         }
     };
@@ -216,27 +216,27 @@ namespace JSC {
         Type m_type;
 
         union {
-            SimpleJumpTable* m_simpleJumpTable;
-            StringJumpTable* m_stringJumpTable;
-        } m_jumpTable;
+            SimpleJumpTable* simpleJumpTable;
+            StringJumpTable* stringJumpTable;
+        } jumpTable;
 
-        unsigned m_opcodeIndex;
-        unsigned m_defaultOffset;
+        unsigned bytecodeIndex;
+        unsigned defaultOffset;
 
-        SwitchRecord(SimpleJumpTable* jumpTable, unsigned opcodeIndex, unsigned defaultOffset, Type type)
-            : m_type(type)
-            , m_opcodeIndex(opcodeIndex)
-            , m_defaultOffset(defaultOffset)
+        SwitchRecord(SimpleJumpTable* jumpTable, unsigned bytecodeIndex, unsigned defaultOffset, Type type)
+            : type(type)
+            , bytecodeIndex(bytecodeIndex)
+            , defaultOffset(defaultOffset)
         {
-            m_jumpTable.m_simpleJumpTable = jumpTable;
+            this->jumpTable.simpleJumpTable = jumpTable;
         }
 
-        SwitchRecord(StringJumpTable* jumpTable, unsigned opcodeIndex, unsigned defaultOffset)
-            : m_type(String)
-            , m_opcodeIndex(opcodeIndex)
-            , m_defaultOffset(defaultOffset)
+        SwitchRecord(StringJumpTable* jumpTable, unsigned bytecodeIndex, unsigned defaultOffset)
+            : type(String)
+            , bytecodeIndex(bytecodeIndex)
+            , defaultOffset(defaultOffset)
         {
-            m_jumpTable.m_stringJumpTable = jumpTable;
+            this->jumpTable.stringJumpTable = jumpTable;
         }
     };
 
@@ -256,7 +256,7 @@ namespace JSC {
     void ctiRepatchCallByReturnAddress(void* where, void* what);
 
     class CTI {
-        static const int repatchGetByIdDefaultStructureID = -1;
+        static const int repatchGetByIdDefaultStructure = -1;
         // Magic number - initial offset cannot be representable as a signed 8bit value, or the X86Assembler
         // will compress the displacement, and we may not be able to fit a repatched offset.
         static const int repatchGetByIdDefaultOffset = 256;
@@ -269,10 +269,10 @@ namespace JSC {
         static const int ctiArgumentInitSize = 0;
 #endif
         // These architecture specific value are used to enable repatching - see comment on op_put_by_id.
-        static const int repatchOffsetPutByIdStructureID = 7;
+        static const int repatchOffsetPutByIdStructure = 7;
         static const int repatchOffsetPutByIdPropertyMapOffset = 22;
         // These architecture specific value are used to enable repatching - see comment on op_get_by_id.
-        static const int repatchOffsetGetByIdStructureID = 7;
+        static const int repatchOffsetGetByIdStructure = 7;
         static const int repatchOffsetGetByIdBranchToSlowCase = 13;
         static const int repatchOffsetGetByIdPropertyMapOffset = 22;
 #if ENABLE(OPCODE_SAMPLING)
@@ -289,38 +289,34 @@ namespace JSC {
             cti.privateCompile();
         }
 
-#if ENABLE(WREC)
-        static void* compileRegExp(Machine*, const UString& pattern, unsigned* numSubpatterns_ptr, const char** error_ptr, bool ignoreCase = false, bool multiline = false);
-#endif
-
-        static void compileGetByIdSelf(JSGlobalData* globalData, CodeBlock* codeBlock, StructureID* structureID, size_t cachedOffset, void* returnAddress)
+        static void compileGetByIdSelf(JSGlobalData* globalData, CodeBlock* codeBlock, Structure* structure, size_t cachedOffset, void* returnAddress)
         {
             CTI cti(globalData, codeBlock);
-            cti.privateCompileGetByIdSelf(structureID, cachedOffset, returnAddress);
+            cti.privateCompileGetByIdSelf(structure, cachedOffset, returnAddress);
         }
 
-        static void compileGetByIdProto(JSGlobalData* globalData, CallFrame* callFrame, CodeBlock* codeBlock, StructureID* structureID, StructureID* prototypeStructureID, size_t cachedOffset, void* returnAddress)
+        static void compileGetByIdProto(JSGlobalData* globalData, CallFrame* callFrame, CodeBlock* codeBlock, Structure* structure, Structure* prototypeStructure, size_t cachedOffset, void* returnAddress)
         {
             CTI cti(globalData, codeBlock);
-            cti.privateCompileGetByIdProto(structureID, prototypeStructureID, cachedOffset, returnAddress, callFrame);
+            cti.privateCompileGetByIdProto(structure, prototypeStructure, cachedOffset, returnAddress, callFrame);
         }
 
-        static void compileGetByIdChain(JSGlobalData* globalData, CallFrame* callFrame, CodeBlock* codeBlock, StructureID* structureID, StructureIDChain* chain, size_t count, size_t cachedOffset, void* returnAddress)
+        static void compileGetByIdChain(JSGlobalData* globalData, CallFrame* callFrame, CodeBlock* codeBlock, Structure* structure, StructureChain* chain, size_t count, size_t cachedOffset, void* returnAddress)
         {
             CTI cti(globalData, codeBlock);
-            cti.privateCompileGetByIdChain(structureID, chain, count, cachedOffset, returnAddress, callFrame);
+            cti.privateCompileGetByIdChain(structure, chain, count, cachedOffset, returnAddress, callFrame);
         }
 
-        static void compilePutByIdReplace(JSGlobalData* globalData, CodeBlock* codeBlock, StructureID* structureID, size_t cachedOffset, void* returnAddress)
+        static void compilePutByIdReplace(JSGlobalData* globalData, CodeBlock* codeBlock, Structure* structure, size_t cachedOffset, void* returnAddress)
         {
             CTI cti(globalData, codeBlock);
-            cti.privateCompilePutByIdReplace(structureID, cachedOffset, returnAddress);
+            cti.privateCompilePutByIdReplace(structure, cachedOffset, returnAddress);
         }
         
-        static void compilePutByIdTransition(JSGlobalData* globalData, CodeBlock* codeBlock, StructureID* oldStructureID, StructureID* newStructureID, size_t cachedOffset, StructureIDChain* sIDC, void* returnAddress)
+        static void compilePutByIdTransition(JSGlobalData* globalData, CodeBlock* codeBlock, Structure* oldStructure, Structure* newStructure, size_t cachedOffset, StructureChain* chain, void* returnAddress)
         {
             CTI cti(globalData, codeBlock);
-            cti.privateCompilePutByIdTransition(oldStructureID, newStructureID, cachedOffset, sIDC, returnAddress);
+            cti.privateCompilePutByIdTransition(oldStructure, newStructure, cachedOffset, chain, returnAddress);
         }
 
         static void compileCTIMachineTrampolines(JSGlobalData* globalData)
@@ -328,10 +324,10 @@ namespace JSC {
             CTI cti(globalData);
             cti.privateCompileCTIMachineTrampolines();
         }
-        static void freeCTIMachineTrampolines(Machine*);
+        static void freeCTIMachineTrampolines(BytecodeInterpreter*);
 
-        static void patchGetByIdSelf(CodeBlock* codeBlock, StructureID* structureID, size_t cachedOffset, void* returnAddress);
-        static void patchPutByIdReplace(CodeBlock* codeBlock, StructureID* structureID, size_t cachedOffset, void* returnAddress);
+        static void patchGetByIdSelf(CodeBlock* codeBlock, Structure* structure, size_t cachedOffset, void* returnAddress);
+        static void patchPutByIdReplace(CodeBlock* codeBlock, Structure* structure, size_t cachedOffset, void* returnAddress);
 
         static void compilePatchGetArrayLength(JSGlobalData* globalData, CodeBlock* codeBlock, void* returnAddress)
         {
@@ -354,17 +350,17 @@ namespace JSC {
         void privateCompileLinkPass();
         void privateCompileSlowCases();
         void privateCompile();
-        void privateCompileGetByIdSelf(StructureID*, size_t cachedOffset, void* returnAddress);
-        void privateCompileGetByIdProto(StructureID*, StructureID* prototypeStructureID, size_t cachedOffset, void* returnAddress, CallFrame* callFrame);
-        void privateCompileGetByIdChain(StructureID*, StructureIDChain*, size_t count, size_t cachedOffset, void* returnAddress, CallFrame* callFrame);
-        void privateCompilePutByIdReplace(StructureID*, size_t cachedOffset, void* returnAddress);
-        void privateCompilePutByIdTransition(StructureID*, StructureID*, size_t cachedOffset, StructureIDChain*, void* returnAddress);
+        void privateCompileGetByIdSelf(Structure*, size_t cachedOffset, void* returnAddress);
+        void privateCompileGetByIdProto(Structure*, Structure* prototypeStructure, size_t cachedOffset, void* returnAddress, CallFrame* callFrame);
+        void privateCompileGetByIdChain(Structure*, StructureChain*, size_t count, size_t cachedOffset, void* returnAddress, CallFrame* callFrame);
+        void privateCompilePutByIdReplace(Structure*, size_t cachedOffset, void* returnAddress);
+        void privateCompilePutByIdTransition(Structure*, Structure*, size_t cachedOffset, StructureChain*, void* returnAddress);
 
         void privateCompileCTIMachineTrampolines();
         void privateCompilePatchGetArrayLength(void* returnAddress);
 
         void compileOpCall(OpcodeID, Instruction* instruction, unsigned i, unsigned callLinkInfoIndex);
-        void compileOpCallInitializeCallFrame(unsigned callee, unsigned argCount);
+        void compileOpCallInitializeCallFrame();
         void compileOpCallSetupArgs(Instruction*);
         void compileOpCallEvalSetupArgs(Instruction*);
         void compileOpConstructSetupArgs(Instruction*);
@@ -374,12 +370,14 @@ namespace JSC {
         void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
         void compileBinaryArithOpSlowCase(Instruction*, OpcodeID, Vector<SlowCaseEntry>::iterator& iter, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
 
-        void emitGetArg(int src, X86Assembler::RegisterID dst, unsigned i);
-        void emitGetArgs(int src1, X86Assembler::RegisterID dst1, int src2, X86Assembler::RegisterID dst2, unsigned i);
-        void emitGetPutArg(unsigned src, unsigned offset, X86Assembler::RegisterID scratch);
-        void emitPutArg(X86Assembler::RegisterID src, unsigned offset);
-        void emitPutArgConstant(unsigned value, unsigned offset);
-        void emitPutResult(unsigned dst, X86Assembler::RegisterID from = X86::eax);
+        void emitGetVirtualRegister(int src, X86Assembler::RegisterID dst, unsigned i);
+        void emitGetVirtualRegisters(int src1, X86Assembler::RegisterID dst1, int src2, X86Assembler::RegisterID dst2, unsigned i);
+        void emitPutVirtualRegister(unsigned dst, X86Assembler::RegisterID from = X86::eax);
+
+        void emitPutCTIArg(X86Assembler::RegisterID src, unsigned offset);
+        void emitPutCTIArgFromVirtualRegister(unsigned src, unsigned offset, X86Assembler::RegisterID scratch);
+        void emitPutCTIArgConstant(unsigned value, unsigned offset);
+        void emitGetCTIArg(unsigned offset, X86Assembler::RegisterID dst);
 
         void emitInitRegister(unsigned dst);
 
@@ -394,18 +392,18 @@ namespace JSC {
         unsigned getDeTaggedConstantImmediate(JSValue* imm);
 
         bool linkSlowCaseIfNotJSCell(const Vector<SlowCaseEntry>::iterator&, int vReg);
-        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID, unsigned opcodeIndex);
-        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID, unsigned opcodeIndex, int VReg);
+        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID, unsigned bytecodeIndex);
+        void emitJumpSlowCaseIfNotJSCell(X86Assembler::RegisterID, unsigned bytecodeIndex, int VReg);
 
-        void emitJumpSlowCaseIfNotImmNum(X86Assembler::RegisterID, unsigned opcodeIndex);
-        void emitJumpSlowCaseIfNotImmNums(X86Assembler::RegisterID, X86Assembler::RegisterID, unsigned opcodeIndex);
+        void emitJumpSlowCaseIfNotImmNum(X86Assembler::RegisterID, unsigned bytecodeIndex);
+        void emitJumpSlowCaseIfNotImmNums(X86Assembler::RegisterID, X86Assembler::RegisterID, unsigned bytecodeIndex);
 
         void emitFastArithDeTagImmediate(X86Assembler::RegisterID);
         X86Assembler::JmpSrc emitFastArithDeTagImmediateJumpIfZero(X86Assembler::RegisterID);
         void emitFastArithReTagImmediate(X86Assembler::RegisterID);
         void emitFastArithPotentiallyReTagImmediate(X86Assembler::RegisterID);
         void emitFastArithImmToInt(X86Assembler::RegisterID);
-        void emitFastArithIntToImmOrSlowCase(X86Assembler::RegisterID, unsigned opcodeIndex);
+        void emitFastArithIntToImmOrSlowCase(X86Assembler::RegisterID, unsigned bytecodeIndex);
         void emitFastArithIntToImmNoCheck(X86Assembler::RegisterID);
         X86Assembler::JmpSrc emitArithIntToImmWithJump(X86Assembler::RegisterID reg);
 
@@ -413,29 +411,29 @@ namespace JSC {
 
         void emitAllocateNumber(JSGlobalData*, unsigned);
 
-        X86Assembler::JmpSrc emitNakedCall(unsigned opcodeIndex, X86::RegisterID);
-        X86Assembler::JmpSrc emitNakedCall(unsigned opcodeIndex, void(*function)());
-        X86Assembler::JmpSrc emitNakedFastCall(unsigned opcodeIndex, void*);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_j);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_o);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_p);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_v);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_s);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_b);
-        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned opcodeIndex, CTIHelper_2);
+        X86Assembler::JmpSrc emitNakedCall(unsigned bytecodeIndex, X86::RegisterID);
+        X86Assembler::JmpSrc emitNakedCall(unsigned bytecodeIndex, void* function);
+        X86Assembler::JmpSrc emitNakedFastCall(unsigned bytecodeIndex, void*);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_j);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_o);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_p);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_v);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_s);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_b);
+        X86Assembler::JmpSrc emitCTICall(Instruction*, unsigned bytecodeIndex, CTIHelper_2);
 
         void emitGetVariableObjectRegister(X86Assembler::RegisterID variableObject, int index, X86Assembler::RegisterID dst);
         void emitPutVariableObjectRegister(X86Assembler::RegisterID src, X86Assembler::RegisterID variableObject, int index);
         
-        void emitSlowScriptCheck(Instruction*, unsigned opcodeIndex);
+        void emitSlowScriptCheck(Instruction*, unsigned bytecodeIndex);
 #ifndef NDEBUG
-        void printOpcodeOperandTypes(unsigned src1, unsigned src2);
+        void printBytecodeOperandTypes(unsigned src1, unsigned src2);
 #endif
 
         void killLastResultRegister();
 
-        X86Assembler m_jit;
-        Machine* m_machine;
+        X86Assembler m_assembler;
+        BytecodeInterpreter* m_interpreter;
         JSGlobalData* m_globalData;
         CodeBlock* m_codeBlock;
 
@@ -462,12 +460,10 @@ namespace JSC {
 
         int m_lastResultBytecodeRegister;
         unsigned m_jumpTargetsPosition;
-
-        // This limit comes from the limit set in PCRE
-        static const int MaxPatternSize = (1 << 16);
     };
 }
 
 #endif // ENABLE(CTI)
 
 #endif // CTI_h
+

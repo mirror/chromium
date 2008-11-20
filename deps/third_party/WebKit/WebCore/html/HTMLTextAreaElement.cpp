@@ -38,6 +38,7 @@
 #include "RenderTextControl.h"
 #include "Selection.h"
 #include "Text.h"
+#include <wtf/StdLibExtras.h>
 
 namespace WebCore {
 
@@ -59,7 +60,7 @@ HTMLTextAreaElement::HTMLTextAreaElement(Document* document, HTMLFormElement* fo
 
 const AtomicString& HTMLTextAreaElement::type() const
 {
-    static const AtomicString textarea("textarea");
+    DEFINE_STATIC_LOCAL(const AtomicString, textarea, ("textarea"));
     return textarea;
 }
 
@@ -367,3 +368,4 @@ bool HTMLTextAreaElement::shouldUseInputMethod() const
 }
 
 } // namespace
+

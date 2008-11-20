@@ -177,8 +177,8 @@ static inline bool jsLess(CallFrame* callFrame, JSValue* v1, JSValue* v2)
     if (fastIsNumber(v1, n1) && fastIsNumber(v2, n2))
         return n1 < n2;
 
-    Machine* machine = callFrame->machine();
-    if (machine->isJSString(v1) && machine->isJSString(v2))
+    BytecodeInterpreter* interpreter = callFrame->interpreter();
+    if (interpreter->isJSString(v1) && interpreter->isJSString(v2))
         return asString(v1)->value() < asString(v2)->value();
 
     JSValue* p1;
@@ -202,8 +202,8 @@ static inline bool jsLessEq(CallFrame* callFrame, JSValue* v1, JSValue* v2)
     if (fastIsNumber(v1, n1) && fastIsNumber(v2, n2))
         return n1 <= n2;
 
-    Machine* machine = callFrame->machine();
-    if (machine->isJSString(v1) && machine->isJSString(v2))
+    BytecodeInterpreter* interpreter = callFrame->interpreter();
+    if (interpreter->isJSString(v1) && interpreter->isJSString(v2))
         return !(asString(v2)->value() < asString(v1)->value());
 
     JSValue* p1;
@@ -286,7 +286,7 @@ static JSValue* jsTypeStringForValue(CallFrame* callFrame, JSValue* v)
     if (v->isObject()) {
         // Return "undefined" for objects that should be treated
         // as null when doing comparisons.
-        if (asObject(v)->structureID()->typeInfo().masqueradesAsUndefined())
+        if (asObject(v)->structure()->typeInfo().masqueradesAsUndefined())
             return jsNontrivialString(callFrame, "undefined");
         CallData callData;
         if (asObject(v)->getCallData(callData) != CallTypeNone)
@@ -300,11 +300,11 @@ static bool jsIsObjectType(JSValue* v)
     if (JSImmediate::isImmediate(v))
         return v->isNull();
 
-    JSType type = asCell(v)->structureID()->typeInfo().type();
+    JSType type = asCell(v)->structure()->typeInfo().type();
     if (type == NumberType || type == StringType)
         return false;
     if (type == ObjectType) {
-        if (asObject(v)->structureID()->typeInfo().masqueradesAsUndefined())
+        if (asObject(v)->structure()->typeInfo().masqueradesAsUndefined())
             return false;
         CallData callData;
         if (asObject(v)->getCallData(callData) != CallTypeNone)
@@ -323,7 +323,7 @@ static bool jsIsFunctionType(JSValue* v)
     return false;
 }
 
-NEVER_INLINE bool Machine::resolve(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
+NEVER_INLINE bool BytecodeInterpreter::resolve(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
 {
     int dst = (vPC + 1)->u.operand;
     int property = (vPC + 2)->u.operand;
@@ -351,7 +351,7 @@ NEVER_INLINE bool Machine::resolve(CallFrame* callFrame, Instruction* vPC, JSVal
     return false;
 }
 
-NEVER_INLINE bool Machine::resolveSkip(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
+NEVER_INLINE bool BytecodeInterpreter::resolveSkip(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
 {
     CodeBlock* codeBlock = callFrame->codeBlock();
 
@@ -384,16 +384,16 @@ NEVER_INLINE bool Machine::resolveSkip(CallFrame* callFrame, Instruction* vPC, J
     return false;
 }
 
-NEVER_INLINE bool Machine::resolveGlobal(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
+NEVER_INLINE bool BytecodeInterpreter::resolveGlobal(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
 {
     int dst = (vPC + 1)->u.operand;
     JSGlobalObject* globalObject = static_cast<JSGlobalObject*>((vPC + 2)->u.jsCell);
     ASSERT(globalObject->isGlobalObject());
     int property = (vPC + 3)->u.operand;
-    StructureID* structureID = (vPC + 4)->u.structureID;
+    Structure* structure = (vPC + 4)->u.structure;
     int offset = (vPC + 5)->u.operand;
 
-    if (structureID == globalObject->structureID()) {
+    if (structure == globalObject->structure()) {
         callFrame[dst] = globalObject->getDirectOffset(offset);
         return true;
     }
@@ -404,10 +404,10 @@ NEVER_INLINE bool Machine::resolveGlobal(CallFrame* callFrame, Instruction* vPC,
     if (globalObject->getPropertySlot(callFrame, ident, slot)) {
         JSValue* result = slot.getValue(callFrame, ident);
         if (slot.isCacheable()) {
-            if (vPC[4].u.structureID)
-                vPC[4].u.structureID->deref();
-            globalObject->structureID()->ref();
-            vPC[4] = globalObject->structureID();
+            if (vPC[4].u.structure)
+                vPC[4].u.structure->deref();
+            globalObject->structure()->ref();
+            vPC[4] = globalObject->structure();
             vPC[5] = slot.cachedOffset();
             callFrame[dst] = result;
             return true;
@@ -447,14 +447,14 @@ static ALWAYS_INLINE JSValue* inlineResolveBase(CallFrame* callFrame, Identifier
     return noValue();
 }
 
-NEVER_INLINE void Machine::resolveBase(CallFrame* callFrame, Instruction* vPC)
+NEVER_INLINE void BytecodeInterpreter::resolveBase(CallFrame* callFrame, Instruction* vPC)
 {
     int dst = (vPC + 1)->u.operand;
     int property = (vPC + 2)->u.operand;
     callFrame[dst] = inlineResolveBase(callFrame, callFrame->codeBlock()->identifiers[property], callFrame->scopeChain());
 }
 
-NEVER_INLINE bool Machine::resolveBaseAndProperty(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
+NEVER_INLINE bool BytecodeInterpreter::resolveBaseAndProperty(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
 {
     int baseDst = (vPC + 1)->u.operand;
     int propDst = (vPC + 2)->u.operand;
@@ -490,7 +490,7 @@ NEVER_INLINE bool Machine::resolveBaseAndProperty(CallFrame* callFrame, Instruct
     return false;
 }
 
-NEVER_INLINE bool Machine::resolveBaseAndFunc(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
+NEVER_INLINE bool BytecodeInterpreter::resolveBaseAndFunc(CallFrame* callFrame, Instruction* vPC, JSValue*& exceptionValue)
 {
     int baseDst = (vPC + 1)->u.operand;
     int funcDst = (vPC + 2)->u.operand;
@@ -535,7 +535,7 @@ NEVER_INLINE bool Machine::resolveBaseAndFunc(CallFrame* callFrame, Instruction*
     return false;
 }
 
-ALWAYS_INLINE CallFrame* Machine::slideRegisterWindowForCall(CodeBlock* newCodeBlock, RegisterFile* registerFile, CallFrame* callFrame, size_t registerOffset, int argc)
+ALWAYS_INLINE CallFrame* BytecodeInterpreter::slideRegisterWindowForCall(CodeBlock* newCodeBlock, RegisterFile* registerFile, CallFrame* callFrame, size_t registerOffset, int argc)
 {
     Register* r = callFrame->registers();
     Register* newEnd = r + registerOffset + newCodeBlock->numCalleeRegisters;
@@ -580,7 +580,7 @@ static NEVER_INLINE bool isNotObject(CallFrame* callFrame, bool forInstanceOf, C
     return true;
 }
 
-NEVER_INLINE JSValue* Machine::callEval(CallFrame* callFrame, RegisterFile* registerFile, Register* argv, int argc, int registerOffset, JSValue*& exceptionValue)
+NEVER_INLINE JSValue* BytecodeInterpreter::callEval(CallFrame* callFrame, RegisterFile* registerFile, Register* argv, int argc, int registerOffset, JSValue*& exceptionValue)
 {
     if (argc < 2)
         return jsUndefined();
@@ -598,17 +598,20 @@ NEVER_INLINE JSValue* Machine::callEval(CallFrame* callFrame, RegisterFile* regi
 
     JSValue* result = jsUndefined();
     if (evalNode)
-        result = callFrame->globalData().machine->execute(evalNode.get(), callFrame, callFrame->thisValue()->toThisObject(callFrame), callFrame->registers() - registerFile->start() + registerOffset, scopeChain, &exceptionValue);
+        result = callFrame->globalData().interpreter->execute(evalNode.get(), callFrame, callFrame->thisValue()->toThisObject(callFrame), callFrame->registers() - registerFile->start() + registerOffset, scopeChain, &exceptionValue);
 
     return result;
 }
 
-Machine::Machine()
+BytecodeInterpreter::BytecodeInterpreter()
     : m_sampler(0)
 #if ENABLE(CTI)
     , m_ctiArrayLengthTrampoline(0)
     , m_ctiStringLengthTrampoline(0)
-    , m_jitCodeBuffer(new JITCodeBuffer(1024 * 1024))
+    , m_ctiVirtualCallPreLink(0)
+    , m_ctiVirtualCallLink(0)
+    , m_ctiVirtualCall(0)
+    , m_assemblerBuffer(new AssemblerBuffer(1024 * 1024))
 #endif
     , m_reentryDepth(0)
     , m_timeoutTime(0)
@@ -623,7 +626,7 @@ Machine::Machine()
     // Bizarrely, calling fastMalloc here is faster than allocating space on the stack.
     void* storage = fastMalloc(sizeof(CollectorBlock));
 
-    JSCell* jsArray = new (storage) JSArray(JSArray::createStructureID(jsNull()));
+    JSCell* jsArray = new (storage) JSArray(JSArray::createStructure(jsNull()));
     m_jsArrayVptr = jsArray->vptr();
     jsArray->~JSCell();
 
@@ -631,14 +634,14 @@ Machine::Machine()
     m_jsStringVptr = jsString->vptr();
     jsString->~JSCell();
 
-    JSCell* jsFunction = new (storage) JSFunction(JSFunction::createStructureID(jsNull()));
+    JSCell* jsFunction = new (storage) JSFunction(JSFunction::createStructure(jsNull()));
     m_jsFunctionVptr = jsFunction->vptr();
     jsFunction->~JSCell();
     
     fastFree(storage);
 }
 
-void Machine::initialize(JSGlobalData* globalData)
+void BytecodeInterpreter::initialize(JSGlobalData* globalData)
 {
 #if ENABLE(CTI)
     CTI::compileCTIMachineTrampolines(globalData);
@@ -647,7 +650,7 @@ void Machine::initialize(JSGlobalData* globalData)
 #endif
 }
 
-Machine::~Machine()
+BytecodeInterpreter::~BytecodeInterpreter()
 {
 #if ENABLE(CTI)
     CTI::freeCTIMachineTrampolines(this);
@@ -656,13 +659,13 @@ Machine::~Machine()
 
 #ifndef NDEBUG
 
-void Machine::dumpCallFrame(CallFrame* callFrame)
+void BytecodeInterpreter::dumpCallFrame(CallFrame* callFrame)
 {
     callFrame->codeBlock()->dump(callFrame);
     dumpRegisters(callFrame);
 }
 
-void Machine::dumpRegisters(CallFrame* callFrame)
+void BytecodeInterpreter::dumpRegisters(CallFrame* callFrame)
 {
     printf("Register frame: \n\n");
     printf("----------------------------------------------------\n");
@@ -670,7 +673,7 @@ void Machine::dumpRegisters(CallFrame* callFrame)
     printf("----------------------------------------------------\n");
 
     CodeBlock* codeBlock = callFrame->codeBlock();
-    RegisterFile* registerFile = &callFrame->scopeChain()->globalObject()->globalData()->machine->registerFile();
+    RegisterFile* registerFile = &callFrame->scopeChain()->globalObject()->globalData()->interpreter->registerFile();
     const Register* it;
     const Register* end;
 
@@ -740,7 +743,7 @@ void Machine::dumpRegisters(CallFrame* callFrame)
 
 #endif
 
-bool Machine::isOpcode(Opcode opcode)
+bool BytecodeInterpreter::isOpcode(Opcode opcode)
 {
 #if HAVE(COMPUTED_GOTO)
     return opcode != HashTraits<Opcode>::emptyValue()
@@ -751,7 +754,7 @@ bool Machine::isOpcode(Opcode opcode)
 #endif
 }
 
-NEVER_INLINE bool Machine::unwindCallFrame(CallFrame*& callFrame, JSValue* exceptionValue, const Instruction*& vPC, CodeBlock*& codeBlock)
+NEVER_INLINE bool BytecodeInterpreter::unwindCallFrame(CallFrame*& callFrame, JSValue* exceptionValue, const Instruction*& vPC, CodeBlock*& codeBlock)
 {
     CodeBlock* oldCodeBlock = codeBlock;
     ScopeChainNode* scopeChain = callFrame->scopeChain();
@@ -794,7 +797,7 @@ NEVER_INLINE bool Machine::unwindCallFrame(CallFrame*& callFrame, JSValue* excep
     return true;
 }
 
-NEVER_INLINE Instruction* Machine::throwException(CallFrame*& callFrame, JSValue*& exceptionValue, const Instruction* vPC, bool explicitThrow)
+NEVER_INLINE Instruction* BytecodeInterpreter::throwException(CallFrame*& callFrame, JSValue*& exceptionValue, const Instruction* vPC, bool explicitThrow)
 {
     // Set up the exception object
     
@@ -846,7 +849,7 @@ NEVER_INLINE Instruction* Machine::throwException(CallFrame*& callFrame, JSValue
     // the profiler manually that the call instruction has returned, since
     // we'll never reach the relevant op_profile_did_call.
     if (Profiler* profiler = *Profiler::enabledProfilerReference()) {
-        if (isCallOpcode(vPC[0].u.opcode))
+        if (isCallBytecode(vPC[0].u.opcode))
             profiler->didExecute(callFrame, callFrame[vPC[2].u.operand].jsValue(callFrame));
         else if (vPC[8].u.opcode == getOpcode(op_construct))
             profiler->didExecute(callFrame, callFrame[vPC[10].u.operand].jsValue(callFrame));
@@ -893,7 +896,7 @@ private:
     JSGlobalObject* m_savedDynamicGlobalObject;
 };
 
-JSValue* Machine::execute(ProgramNode* programNode, CallFrame* callFrame, ScopeChainNode* scopeChain, JSObject* thisObj, JSValue** exception)
+JSValue* BytecodeInterpreter::execute(ProgramNode* programNode, CallFrame* callFrame, ScopeChainNode* scopeChain, JSObject* thisObj, JSValue** exception)
 {
     ASSERT(!scopeChain->globalData->exception);
 
@@ -902,7 +905,7 @@ JSValue* Machine::execute(ProgramNode* programNode, CallFrame* callFrame, ScopeC
         return jsNull();
     }
 
-    CodeBlock* codeBlock = &programNode->byteCode(scopeChain);
+    CodeBlock* codeBlock = &programNode->bytecode(scopeChain);
 
     Register* oldEnd = m_registerFile.end();
     Register* newEnd = oldEnd + codeBlock->numParameters + RegisterFile::CallFrameHeaderSize + codeBlock->numCalleeRegisters;
@@ -954,7 +957,7 @@ JSValue* Machine::execute(ProgramNode* programNode, CallFrame* callFrame, ScopeC
     return result;
 }
 
-JSValue* Machine::execute(FunctionBodyNode* functionBodyNode, CallFrame* callFrame, JSFunction* function, JSObject* thisObj, const ArgList& args, ScopeChainNode* scopeChain, JSValue** exception)
+JSValue* BytecodeInterpreter::execute(FunctionBodyNode* functionBodyNode, CallFrame* callFrame, JSFunction* function, JSObject* thisObj, const ArgList& args, ScopeChainNode* scopeChain, JSValue** exception)
 {
     ASSERT(!scopeChain->globalData->exception);
 
@@ -980,7 +983,7 @@ JSValue* Machine::execute(FunctionBodyNode* functionBodyNode, CallFrame* callFra
     for (ArgList::const_iterator it = args.begin(); it != end; ++it)
         newCallFrame[++dst] = *it;
 
-    CodeBlock* codeBlock = &functionBodyNode->byteCode(scopeChain);
+    CodeBlock* codeBlock = &functionBodyNode->bytecode(scopeChain);
     newCallFrame = slideRegisterWindowForCall(codeBlock, &m_registerFile, newCallFrame, argc + RegisterFile::CallFrameHeaderSize, argc);
     if (UNLIKELY(!newCallFrame)) {
         *exception = createStackOverflowError(callFrame);
@@ -1016,12 +1019,12 @@ JSValue* Machine::execute(FunctionBodyNode* functionBodyNode, CallFrame* callFra
     return result;
 }
 
-JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* thisObj, ScopeChainNode* scopeChain, JSValue** exception)
+JSValue* BytecodeInterpreter::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* thisObj, ScopeChainNode* scopeChain, JSValue** exception)
 {
-    return execute(evalNode, callFrame, thisObj, m_registerFile.size() + evalNode->byteCode(scopeChain).numParameters + RegisterFile::CallFrameHeaderSize, scopeChain, exception);
+    return execute(evalNode, callFrame, thisObj, m_registerFile.size() + evalNode->bytecode(scopeChain).numParameters + RegisterFile::CallFrameHeaderSize, scopeChain, exception);
 }
 
-JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* thisObj, int globalRegisterOffset, ScopeChainNode* scopeChain, JSValue** exception)
+JSValue* BytecodeInterpreter::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* thisObj, int globalRegisterOffset, ScopeChainNode* scopeChain, JSValue** exception)
 {
     ASSERT(!scopeChain->globalData->exception);
 
@@ -1032,7 +1035,7 @@ JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* th
 
     DynamicGlobalObjectScope globalObjectScope(callFrame, callFrame->globalData().dynamicGlobalObject ? callFrame->globalData().dynamicGlobalObject : scopeChain->globalObject());
 
-    EvalCodeBlock* codeBlock = &evalNode->byteCode(scopeChain);
+    EvalCodeBlock* codeBlock = &evalNode->bytecode(scopeChain);
 
     JSVariableObject* variableObject;
     for (ScopeChainNode* node = scopeChain; ; node = node->next) {
@@ -1108,7 +1111,7 @@ JSValue* Machine::execute(EvalNode* evalNode, CallFrame* callFrame, JSObject* th
     return result;
 }
 
-NEVER_INLINE void Machine::debug(CallFrame* callFrame, DebugHookID debugHookID, int firstLine, int lastLine)
+NEVER_INLINE void BytecodeInterpreter::debug(CallFrame* callFrame, DebugHookID debugHookID, int firstLine, int lastLine)
 {
     Debugger* debugger = callFrame->dynamicGlobalObject()->debugger();
     if (!debugger)
@@ -1136,7 +1139,7 @@ NEVER_INLINE void Machine::debug(CallFrame* callFrame, DebugHookID debugHookID, 
     }
 }
 
-void Machine::resetTimeoutCheck()
+void BytecodeInterpreter::resetTimeoutCheck()
 {
     m_ticksUntilNextTimeoutCheck = initialTickCountThreshold;
     m_timeAtLastCheckTimeout = 0;
@@ -1185,7 +1188,7 @@ static inline unsigned getCPUTime()
 
 // We have to return a JSValue here, gcc seems to produce worse code if 
 // we attempt to return a bool
-ALWAYS_INLINE JSValue* Machine::checkTimeout(JSGlobalObject* globalObject)
+ALWAYS_INLINE JSValue* BytecodeInterpreter::checkTimeout(JSGlobalObject* globalObject)
 {
     unsigned currentTime = getCPUTime();
     
@@ -1221,7 +1224,7 @@ ALWAYS_INLINE JSValue* Machine::checkTimeout(JSGlobalObject* globalObject)
     return noValue();
 }
 
-NEVER_INLINE ScopeChainNode* Machine::createExceptionScope(CallFrame* callFrame, const Instruction* vPC)
+NEVER_INLINE ScopeChainNode* BytecodeInterpreter::createExceptionScope(CallFrame* callFrame, const Instruction* vPC)
 {
     int dst = (++vPC)->u.operand;
     CodeBlock* codeBlock = callFrame->codeBlock();
@@ -1233,17 +1236,17 @@ NEVER_INLINE ScopeChainNode* Machine::createExceptionScope(CallFrame* callFrame,
     return callFrame->scopeChain()->push(scope);
 }
 
-static StructureIDChain* cachePrototypeChain(CallFrame* callFrame, StructureID* structureID)
+static StructureChain* cachePrototypeChain(CallFrame* callFrame, Structure* structure)
 {
-    JSValue* prototype = structureID->prototypeForLookup(callFrame);
+    JSValue* prototype = structure->prototypeForLookup(callFrame);
     if (JSImmediate::isImmediate(prototype))
         return 0;
-    RefPtr<StructureIDChain> chain = StructureIDChain::create(asObject(prototype)->structureID());
-    structureID->setCachedPrototypeChain(chain.release());
-    return structureID->cachedPrototypeChain();
+    RefPtr<StructureChain> chain = StructureChain::create(asObject(prototype)->structure());
+    structure->setCachedPrototypeChain(chain.release());
+    return structure->cachedPrototypeChain();
 }
 
-NEVER_INLINE void Machine::tryCachePutByID(CallFrame* callFrame, CodeBlock* codeBlock, Instruction* vPC, JSValue* baseValue, const PutPropertySlot& slot)
+NEVER_INLINE void BytecodeInterpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* codeBlock, Instruction* vPC, JSValue* baseValue, const PutPropertySlot& slot)
 {
     // Recursive invocation may already have specialized this instruction.
     if (vPC[0].u.opcode != getOpcode(op_put_by_id))
@@ -1259,19 +1262,19 @@ NEVER_INLINE void Machine::tryCachePutByID(CallFrame* callFrame, CodeBlock* code
     }
     
     JSCell* baseCell = asCell(baseValue);
-    StructureID* structureID = baseCell->structureID();
+    Structure* structure = baseCell->structure();
 
-    if (structureID->isDictionary()) {
+    if (structure->isDictionary()) {
         vPC[0] = getOpcode(op_put_by_id_generic);
         return;
     }
 
-    // Cache miss: record StructureID to compare against next time.
-    StructureID* lastStructureID = vPC[4].u.structureID;
-    if (structureID != lastStructureID) {
-        // First miss: record StructureID to compare against next time.
-        if (!lastStructureID) {
-            vPC[4] = structureID;
+    // Cache miss: record Structure to compare against next time.
+    Structure* lastStructure = vPC[4].u.structure;
+    if (structure != lastStructure) {
+        // First miss: record Structure to compare against next time.
+        if (!lastStructure) {
+            vPC[4] = structure;
             return;
         }
 
@@ -1280,7 +1283,7 @@ NEVER_INLINE void Machine::tryCachePutByID(CallFrame* callFrame, CodeBlock* code
         return;
     }
 
-    // Cache hit: Specialize instruction and ref StructureIDs.
+    // Cache hit: Specialize instruction and ref Structures.
 
     // If baseCell != slot.base(), then baseCell must be a proxy for another object.
     if (baseCell != slot.base()) {
@@ -1288,14 +1291,14 @@ NEVER_INLINE void Machine::tryCachePutByID(CallFrame* callFrame, CodeBlock* code
         return;
     }
 
-    // StructureID transition, cache transition info
+    // Structure transition, cache transition info
     if (slot.type() == PutPropertySlot::NewProperty) {
         vPC[0] = getOpcode(op_put_by_id_transition);
-        vPC[4] = structureID->previousID();
-        vPC[5] = structureID;
-        StructureIDChain* chain = structureID->cachedPrototypeChain();
+        vPC[4] = structure->previousID();
+        vPC[5] = structure;
+        StructureChain* chain = structure->cachedPrototypeChain();
         if (!chain) {
-            chain = cachePrototypeChain(callFrame, structureID);
+            chain = cachePrototypeChain(callFrame, structure);
             if (!chain) {
                 // This happens if someone has manually inserted null into the prototype chain
                 vPC[0] = getOpcode(op_put_by_id_generic);
@@ -1304,23 +1307,23 @@ NEVER_INLINE void Machine::tryCachePutByID(CallFrame* callFrame, CodeBlock* code
         }
         vPC[6] = chain;
         vPC[7] = slot.cachedOffset();
-        codeBlock->refStructureIDs(vPC);
+        codeBlock->refStructures(vPC);
         return;
     }
 
     vPC[0] = getOpcode(op_put_by_id_replace);
     vPC[5] = slot.cachedOffset();
-    codeBlock->refStructureIDs(vPC);
+    codeBlock->refStructures(vPC);
 }
 
-NEVER_INLINE void Machine::uncachePutByID(CodeBlock* codeBlock, Instruction* vPC)
+NEVER_INLINE void BytecodeInterpreter::uncachePutByID(CodeBlock* codeBlock, Instruction* vPC)
 {
-    codeBlock->derefStructureIDs(vPC);
+    codeBlock->derefStructures(vPC);
     vPC[0] = getOpcode(op_put_by_id);
     vPC[4] = 0;
 }
 
-NEVER_INLINE void Machine::tryCacheGetByID(CallFrame* callFrame, CodeBlock* codeBlock, Instruction* vPC, JSValue* baseValue, const Identifier& propertyName, const PropertySlot& slot)
+NEVER_INLINE void BytecodeInterpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* codeBlock, Instruction* vPC, JSValue* baseValue, const Identifier& propertyName, const PropertySlot& slot)
 {
     // Recursive invocation may already have specialized this instruction.
     if (vPC[0].u.opcode != getOpcode(op_get_by_id))
@@ -1348,19 +1351,19 @@ NEVER_INLINE void Machine::tryCacheGetByID(CallFrame* callFrame, CodeBlock* code
         return;
     }
 
-    StructureID* structureID = asCell(baseValue)->structureID();
+    Structure* structure = asCell(baseValue)->structure();
 
-    if (structureID->isDictionary()) {
+    if (structure->isDictionary()) {
         vPC[0] = getOpcode(op_get_by_id_generic);
         return;
     }
 
     // Cache miss
-    StructureID* lastStructureID = vPC[4].u.structureID;
-    if (structureID != lastStructureID) {
-        // First miss: record StructureID to compare against next time.
-        if (!lastStructureID) {
-            vPC[4] = structureID;
+    Structure* lastStructure = vPC[4].u.structure;
+    if (structure != lastStructure) {
+        // First miss: record Structure to compare against next time.
+        if (!lastStructure) {
+            vPC[4] = structure;
             return;
         }
 
@@ -1369,41 +1372,41 @@ NEVER_INLINE void Machine::tryCacheGetByID(CallFrame* callFrame, CodeBlock* code
         return;
     }
 
-    // Cache hit: Specialize instruction and ref StructureIDs.
+    // Cache hit: Specialize instruction and ref Structures.
 
     if (slot.slotBase() == baseValue) {
         vPC[0] = getOpcode(op_get_by_id_self);
         vPC[5] = slot.cachedOffset();
 
-        codeBlock->refStructureIDs(vPC);
+        codeBlock->refStructures(vPC);
         return;
     }
 
-    if (slot.slotBase() == structureID->prototypeForLookup(callFrame)) {
+    if (slot.slotBase() == structure->prototypeForLookup(callFrame)) {
         ASSERT(slot.slotBase()->isObject());
 
         JSObject* baseObject = asObject(slot.slotBase());
 
         // Heavy access to a prototype is a good indication that it's not being
         // used as a dictionary.
-        if (baseObject->structureID()->isDictionary()) {
-            RefPtr<StructureID> transition = StructureID::fromDictionaryTransition(baseObject->structureID());
-            baseObject->setStructureID(transition.release());
-            asCell(baseValue)->structureID()->setCachedPrototypeChain(0);
+        if (baseObject->structure()->isDictionary()) {
+            RefPtr<Structure> transition = Structure::fromDictionaryTransition(baseObject->structure());
+            baseObject->setStructure(transition.release());
+            asCell(baseValue)->structure()->setCachedPrototypeChain(0);
         }
 
         vPC[0] = getOpcode(op_get_by_id_proto);
-        vPC[5] = baseObject->structureID();
+        vPC[5] = baseObject->structure();
         vPC[6] = slot.cachedOffset();
 
-        codeBlock->refStructureIDs(vPC);
+        codeBlock->refStructures(vPC);
         return;
     }
 
     size_t count = 0;
     JSObject* o = asObject(baseValue);
     while (slot.slotBase() != o) {
-        JSValue* v = o->structureID()->prototypeForLookup(callFrame);
+        JSValue* v = o->structure()->prototypeForLookup(callFrame);
 
         // If we didn't find base in baseValue's prototype chain, then baseValue
         // must be a proxy for another object.
@@ -1416,44 +1419,44 @@ NEVER_INLINE void Machine::tryCacheGetByID(CallFrame* callFrame, CodeBlock* code
 
         // Heavy access to a prototype is a good indication that it's not being
         // used as a dictionary.
-        if (o->structureID()->isDictionary()) {
-            RefPtr<StructureID> transition = StructureID::fromDictionaryTransition(o->structureID());
-            o->setStructureID(transition.release());
-            asObject(baseValue)->structureID()->setCachedPrototypeChain(0);
+        if (o->structure()->isDictionary()) {
+            RefPtr<Structure> transition = Structure::fromDictionaryTransition(o->structure());
+            o->setStructure(transition.release());
+            asObject(baseValue)->structure()->setCachedPrototypeChain(0);
         }
 
         ++count;
     }
 
-    StructureIDChain* chain = structureID->cachedPrototypeChain();
+    StructureChain* chain = structure->cachedPrototypeChain();
     if (!chain)
-        chain = cachePrototypeChain(callFrame, structureID);
+        chain = cachePrototypeChain(callFrame, structure);
     ASSERT(chain);
 
     vPC[0] = getOpcode(op_get_by_id_chain);
-    vPC[4] = structureID;
+    vPC[4] = structure;
     vPC[5] = chain;
     vPC[6] = count;
     vPC[7] = slot.cachedOffset();
-    codeBlock->refStructureIDs(vPC);
+    codeBlock->refStructures(vPC);
 }
 
-NEVER_INLINE void Machine::uncacheGetByID(CodeBlock* codeBlock, Instruction* vPC)
+NEVER_INLINE void BytecodeInterpreter::uncacheGetByID(CodeBlock* codeBlock, Instruction* vPC)
 {
-    codeBlock->derefStructureIDs(vPC);
+    codeBlock->derefStructures(vPC);
     vPC[0] = getOpcode(op_get_by_id);
     vPC[4] = 0;
 }
 
-JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile, CallFrame* callFrame, JSValue** exception)
+JSValue* BytecodeInterpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFile, CallFrame* callFrame, JSValue** exception)
 {
     // One-time initialization of our address tables. We have to put this code
     // here because our labels are only in scope inside this function.
     if (flag == InitializeAndReturn) {
         #if HAVE(COMPUTED_GOTO)
-            #define ADD_OPCODE(id) m_opcodeTable[id] = &&id;
-                FOR_EACH_OPCODE_ID(ADD_OPCODE);
-            #undef ADD_OPCODE
+            #define ADD_BYTECODE(id) m_opcodeTable[id] = &&id;
+                FOR_EACH_OPCODE_ID(ADD_BYTECODE);
+            #undef ADD_BYTECODE
 
             #define ADD_OPCODE_ID(id) m_opcodeIDTable.add(&&id, id);
                 FOR_EACH_OPCODE_ID(ADD_OPCODE_ID);
@@ -1499,33 +1502,33 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
     
 #if ENABLE(OPCODE_SAMPLING)
     #define SAMPLE(codeBlock, vPC) m_sampler->sample(codeBlock, vPC)
-    #define CTI_SAMPLER ARG_globalData->machine->sampler()
+    #define CTI_SAMPLER ARG_globalData->interpreter->sampler()
 #else
     #define SAMPLE(codeBlock, vPC)
     #define CTI_SAMPLER 0
 #endif
 
 #if HAVE(COMPUTED_GOTO)
-    #define NEXT_OPCODE SAMPLE(callFrame->codeBlock(), vPC); goto *vPC->u.opcode
+    #define NEXT_INSTRUCTION SAMPLE(callFrame->codeBlock(), vPC); goto *vPC->u.opcode
 #if ENABLE(OPCODE_STATS)
-    #define BEGIN_OPCODE(opcode) opcode: OpcodeStats::recordInstruction(opcode);
+    #define DEFINE_OPCODE(opcode) opcode: OpcodeStats::recordInstruction(opcode);
 #else
-    #define BEGIN_OPCODE(opcode) opcode:
+    #define DEFINE_OPCODE(opcode) opcode:
 #endif
-    NEXT_OPCODE;
+    NEXT_INSTRUCTION;
 #else
-    #define NEXT_OPCODE SAMPLE(callFrame->codeBlock(), vPC); goto interpreterLoopStart
+    #define NEXT_INSTRUCTION SAMPLE(callFrame->codeBlock(), vPC); goto interpreterLoopStart
 #if ENABLE(OPCODE_STATS)
-    #define BEGIN_OPCODE(opcode) case opcode: OpcodeStats::recordInstruction(opcode);
+    #define DEFINE_OPCODE(opcode) case opcode: OpcodeStats::recordInstruction(opcode);
 #else
-    #define BEGIN_OPCODE(opcode) case opcode:
+    #define DEFINE_OPCODE(opcode) case opcode:
 #endif
     while (1) { // iterator loop begins
     interpreterLoopStart:;
     switch (vPC->u.opcode)
 #endif
     {
-    BEGIN_OPCODE(op_new_object) {
+    DEFINE_OPCODE(op_new_object) {
         /* new_object dst(r)
 
            Constructs a new empty Object instance using the original
@@ -1535,9 +1538,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = constructEmptyObject(callFrame);
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_new_array) {
+    DEFINE_OPCODE(op_new_array) {
         /* new_array dst(r) firstArg(r) argCount(n)
 
            Constructs a new Array instance using the original
@@ -1552,9 +1555,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = constructArray(callFrame, args);
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_new_regexp) {
+    DEFINE_OPCODE(op_new_regexp) {
         /* new_regexp dst(r) regExp(re)
 
            Constructs a new RegExp instance using the original
@@ -1566,9 +1569,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = new (globalData) RegExpObject(callFrame->scopeChain()->globalObject()->regExpStructure(), callFrame->codeBlock()->regexps[regExp]);
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_mov) {
+    DEFINE_OPCODE(op_mov) {
         /* mov dst(r) src(r)
 
            Copies register src to register dst.
@@ -1578,9 +1581,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = callFrame[src];
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_eq) {
+    DEFINE_OPCODE(op_eq) {
         /* eq dst(r) src1(r) src2(r)
 
            Checks whether register src1 and register src2 are equal,
@@ -1599,9 +1602,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_eq_null) {
+    DEFINE_OPCODE(op_eq_null) {
         /* eq_null dst(r) src(r)
 
            Checks whether register src is null, as with the ECMAScript '!='
@@ -1613,14 +1616,14 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (src->isUndefinedOrNull()) {
             callFrame[dst] = jsBoolean(true);
             ++vPC;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
         
-        callFrame[dst] = jsBoolean(!JSImmediate::isImmediate(src) && src->asCell()->structureID()->typeInfo().masqueradesAsUndefined());
+        callFrame[dst] = jsBoolean(!JSImmediate::isImmediate(src) && src->asCell()->structure()->typeInfo().masqueradesAsUndefined());
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_neq) {
+    DEFINE_OPCODE(op_neq) {
         /* neq dst(r) src1(r) src2(r)
 
            Checks whether register src1 and register src2 are not
@@ -1639,9 +1642,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_neq_null) {
+    DEFINE_OPCODE(op_neq_null) {
         /* neq_null dst(r) src(r)
 
            Checks whether register src is not null, as with the ECMAScript '!='
@@ -1653,14 +1656,14 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (src->isUndefinedOrNull()) {
             callFrame[dst] = jsBoolean(false);
             ++vPC;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
         
-        callFrame[dst] = jsBoolean(JSImmediate::isImmediate(src) || !asCell(src)->structureID()->typeInfo().masqueradesAsUndefined());
+        callFrame[dst] = jsBoolean(JSImmediate::isImmediate(src) || !asCell(src)->structure()->typeInfo().masqueradesAsUndefined());
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_stricteq) {
+    DEFINE_OPCODE(op_stricteq) {
         /* stricteq dst(r) src1(r) src2(r)
 
            Checks whether register src1 and register src2 are strictly
@@ -1678,9 +1681,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = jsBoolean(strictEqualSlowCase(src1, src2));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_nstricteq) {
+    DEFINE_OPCODE(op_nstricteq) {
         /* nstricteq dst(r) src1(r) src2(r)
 
            Checks whether register src1 and register src2 are not
@@ -1699,9 +1702,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = jsBoolean(!strictEqualSlowCase(src1, src2));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_less) {
+    DEFINE_OPCODE(op_less) {
         /* less dst(r) src1(r) src2(r)
 
            Checks whether register src1 is less than register src2, as
@@ -1716,9 +1719,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = result;
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_lesseq) {
+    DEFINE_OPCODE(op_lesseq) {
         /* lesseq dst(r) src1(r) src2(r)
 
            Checks whether register src1 is less than or equal to
@@ -1733,9 +1736,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = result;
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_pre_inc) {
+    DEFINE_OPCODE(op_pre_inc) {
         /* pre_inc srcDst(r)
 
            Converts register srcDst to number, adds one, and puts the result
@@ -1752,9 +1755,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_pre_dec) {
+    DEFINE_OPCODE(op_pre_dec) {
         /* pre_dec srcDst(r)
 
            Converts register srcDst to number, subtracts one, and puts the result
@@ -1771,9 +1774,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_post_inc) {
+    DEFINE_OPCODE(op_post_inc) {
         /* post_inc dst(r) srcDst(r)
 
            Converts register srcDst to number. The number itself is
@@ -1794,9 +1797,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_post_dec) {
+    DEFINE_OPCODE(op_post_dec) {
         /* post_dec dst(r) srcDst(r)
 
            Converts register srcDst to number. The number itself is
@@ -1817,9 +1820,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_to_jsnumber) {
+    DEFINE_OPCODE(op_to_jsnumber) {
         /* to_jsnumber dst(r) src(r)
 
            Converts register src to number, and puts the result
@@ -1839,9 +1842,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_negate) {
+    DEFINE_OPCODE(op_negate) {
         /* negate dst(r) src(r)
 
            Converts register src to number, negates it, and puts the
@@ -1860,9 +1863,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_add) {
+    DEFINE_OPCODE(op_add) {
         /* add dst(r) src1(r) src2(r)
 
            Adds register src1 and register src2, and puts the result
@@ -1880,9 +1883,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = result;
         }
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_mul) {
+    DEFINE_OPCODE(op_mul) {
         /* mul dst(r) src1(r) src2(r)
 
            Multiplies register src1 and register src2 (converted to
@@ -1909,9 +1912,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_div) {
+    DEFINE_OPCODE(op_div) {
         /* div dst(r) dividend(r) divisor(r)
 
            Divides register dividend (converted to number) by the
@@ -1931,9 +1934,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = result;
         }
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_mod) {
+    DEFINE_OPCODE(op_mod) {
         /* mod dst(r) dividend(r) divisor(r)
 
            Divides register dividend (converted to number) by
@@ -1950,7 +1953,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (JSImmediate::areBothImmediateNumbers(dividendValue, divisorValue) && divisorValue != JSImmediate::from(0)) {
             callFrame[dst] = JSImmediate::from(JSImmediate::getTruncatedInt32(dividendValue) % JSImmediate::getTruncatedInt32(divisorValue));
             ++vPC;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         double d = dividendValue->toNumber(callFrame);
@@ -1958,9 +1961,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         VM_CHECK_EXCEPTION();
         callFrame[dst] = result;
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_sub) {
+    DEFINE_OPCODE(op_sub) {
         /* sub dst(r) src1(r) src2(r)
 
            Subtracts register src2 (converted to number) from register
@@ -1982,9 +1985,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = result;
         }
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_lshift) {
+    DEFINE_OPCODE(op_lshift) {
         /* lshift dst(r) val(r) shift(r)
 
            Performs left shift of register val (converted to int32) by
@@ -2007,9 +2010,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_rshift) {
+    DEFINE_OPCODE(op_rshift) {
         /* rshift dst(r) val(r) shift(r)
 
            Performs arithmetic right shift of register val (converted
@@ -2032,9 +2035,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_urshift) {
+    DEFINE_OPCODE(op_urshift) {
         /* rshift dst(r) val(r) shift(r)
 
            Performs logical right shift of register val (converted
@@ -2053,9 +2056,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_bitand) {
+    DEFINE_OPCODE(op_bitand) {
         /* bitand dst(r) src1(r) src2(r)
 
            Computes bitwise AND of register src1 (converted to int32)
@@ -2078,9 +2081,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_bitxor) {
+    DEFINE_OPCODE(op_bitxor) {
         /* bitxor dst(r) src1(r) src2(r)
 
            Computes bitwise XOR of register src1 (converted to int32)
@@ -2103,9 +2106,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_bitor) {
+    DEFINE_OPCODE(op_bitor) {
         /* bitor dst(r) src1(r) src2(r)
 
            Computes bitwise OR of register src1 (converted to int32)
@@ -2128,9 +2131,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_bitnot) {
+    DEFINE_OPCODE(op_bitnot) {
         /* bitnot dst(r) src(r)
 
            Computes bitwise NOT of register src1 (converted to int32),
@@ -2147,9 +2150,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = result;
         }
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_not) {
+    DEFINE_OPCODE(op_not) {
         /* not dst(r) src(r)
 
            Computes logical NOT of register src (converted to
@@ -2162,9 +2165,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = result;
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_instanceof) {
+    DEFINE_OPCODE(op_instanceof) {
         /* instanceof dst(r) value(r) constructor(r) constructorProto(r)
 
            Tests whether register value is an instance of register
@@ -2188,12 +2191,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             goto vm_throw;
 
         JSObject* baseObj = asObject(baseVal);
-        callFrame[dst] = jsBoolean(baseObj->structureID()->typeInfo().implementsHasInstance() ? baseObj->hasInstance(callFrame, callFrame[value].jsValue(callFrame), callFrame[baseProto].jsValue(callFrame)) : false);
+        callFrame[dst] = jsBoolean(baseObj->structure()->typeInfo().implementsHasInstance() ? baseObj->hasInstance(callFrame, callFrame[value].jsValue(callFrame), callFrame[baseProto].jsValue(callFrame)) : false);
 
         vPC += 5;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_typeof) {
+    DEFINE_OPCODE(op_typeof) {
         /* typeof dst(r) src(r)
 
            Determines the type string for src according to ECMAScript
@@ -2204,9 +2207,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = jsTypeStringForValue(callFrame, callFrame[src].jsValue(callFrame));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_is_undefined) {
+    DEFINE_OPCODE(op_is_undefined) {
         /* is_undefined dst(r) src(r)
 
            Determines whether the type string for src according to
@@ -2216,12 +2219,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int dst = (++vPC)->u.operand;
         int src = (++vPC)->u.operand;
         JSValue* v = callFrame[src].jsValue(callFrame);
-        callFrame[dst] = jsBoolean(JSImmediate::isImmediate(v) ? v->isUndefined() : v->asCell()->structureID()->typeInfo().masqueradesAsUndefined());
+        callFrame[dst] = jsBoolean(JSImmediate::isImmediate(v) ? v->isUndefined() : v->asCell()->structure()->typeInfo().masqueradesAsUndefined());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_is_boolean) {
+    DEFINE_OPCODE(op_is_boolean) {
         /* is_boolean dst(r) src(r)
 
            Determines whether the type string for src according to
@@ -2233,9 +2236,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = jsBoolean(callFrame[src].jsValue(callFrame)->isBoolean());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_is_number) {
+    DEFINE_OPCODE(op_is_number) {
         /* is_number dst(r) src(r)
 
            Determines whether the type string for src according to
@@ -2247,9 +2250,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = jsBoolean(callFrame[src].jsValue(callFrame)->isNumber());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_is_string) {
+    DEFINE_OPCODE(op_is_string) {
         /* is_string dst(r) src(r)
 
            Determines whether the type string for src according to
@@ -2261,9 +2264,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = jsBoolean(callFrame[src].jsValue(callFrame)->isString());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_is_object) {
+    DEFINE_OPCODE(op_is_object) {
         /* is_object dst(r) src(r)
 
            Determines whether the type string for src according to
@@ -2275,9 +2278,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = jsBoolean(jsIsObjectType(callFrame[src].jsValue(callFrame)));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_is_function) {
+    DEFINE_OPCODE(op_is_function) {
         /* is_function dst(r) src(r)
 
            Determines whether the type string for src according to
@@ -2289,9 +2292,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = jsBoolean(jsIsFunctionType(callFrame[src].jsValue(callFrame)));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_in) {
+    DEFINE_OPCODE(op_in) {
         /* in dst(r) property(r) base(r)
 
            Tests whether register base has a property named register
@@ -2322,9 +2325,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_resolve) {
+    DEFINE_OPCODE(op_resolve) {
         /* resolve dst(r) property(id)
 
            Looks up the property named by identifier property in the
@@ -2335,9 +2338,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             goto vm_throw;
 
         vPC += 3;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_resolve_skip) {
+    DEFINE_OPCODE(op_resolve_skip) {
         /* resolve_skip dst(r) property(id) skip(n)
 
          Looks up the property named by identifier property in the
@@ -2349,24 +2352,24 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         vPC += 4;
 
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_resolve_global) {
-        /* resolve_skip dst(r) globalObject(c) property(id) structureID(sID) offset(n)
+    DEFINE_OPCODE(op_resolve_global) {
+        /* resolve_skip dst(r) globalObject(c) property(id) structure(sID) offset(n)
          
            Performs a dynamic property lookup for the given property, on the provided
-           global object.  If structureID matches the StructureID of the global then perform
+           global object.  If structure matches the Structure of the global then perform
            a fast lookup using the case offset, otherwise fall back to a full resolve and
-           cache the new structureID and offset
+           cache the new structure and offset
          */
         if (UNLIKELY(!resolveGlobal(callFrame, vPC, exceptionValue)))
             goto vm_throw;
         
         vPC += 6;
         
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_global_var) {
+    DEFINE_OPCODE(op_get_global_var) {
         /* get_global_var dst(r) globalObject(c) index(n)
 
            Gets the global var at global slot index and places it in register dst.
@@ -2378,9 +2381,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         callFrame[dst] = scope->registerAt(index);
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_global_var) {
+    DEFINE_OPCODE(op_put_global_var) {
         /* put_global_var globalObject(c) index(n) value(r)
          
            Puts value into global slot index.
@@ -2392,9 +2395,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         
         scope->registerAt(index) = callFrame[value].jsValue(callFrame);
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }            
-    BEGIN_OPCODE(op_get_scoped_var) {
+    DEFINE_OPCODE(op_get_scoped_var) {
         /* get_scoped_var dst(r) index(n) skip(n)
 
          Loads the contents of the index-th local from the scope skip nodes from
@@ -2417,9 +2420,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         JSVariableObject* scope = static_cast<JSVariableObject*>(*iter);
         callFrame[dst] = scope->registerAt(index);
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_scoped_var) {
+    DEFINE_OPCODE(op_put_scoped_var) {
         /* put_scoped_var index(n) skip(n) value(r)
 
          */
@@ -2440,9 +2443,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         JSVariableObject* scope = static_cast<JSVariableObject*>(*iter);
         scope->registerAt(index) = callFrame[value].jsValue(callFrame);
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_resolve_base) {
+    DEFINE_OPCODE(op_resolve_base) {
         /* resolve_base dst(r) property(id)
 
            Searches the scope chain for an object containing
@@ -2453,9 +2456,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         resolveBase(callFrame, vPC);
 
         vPC += 3;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_resolve_with_base) {
+    DEFINE_OPCODE(op_resolve_with_base) {
         /* resolve_with_base baseDst(r) propDst(r) property(id)
 
            Searches the scope chain for an object containing
@@ -2471,9 +2474,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             goto vm_throw;
 
         vPC += 4;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_resolve_func) {
+    DEFINE_OPCODE(op_resolve_func) {
         /* resolve_func baseDst(r) funcDst(r) property(id)
 
            Searches the scope chain for an object containing
@@ -2492,10 +2495,10 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             goto vm_throw;
 
         vPC += 4;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_by_id) {
-        /* get_by_id dst(r) base(r) property(id) structureID(sID) nop(n) nop(n) nop(n)
+    DEFINE_OPCODE(op_get_by_id) {
+        /* get_by_id dst(r) base(r) property(id) structure(sID) nop(n) nop(n) nop(n)
 
            Generic property access: Gets the property named by identifier
            property from the value base, and puts the result in register dst.
@@ -2515,10 +2518,10 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         callFrame[dst] = result;
         vPC += 8;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_by_id_self) {
-        /* op_get_by_id_self dst(r) base(r) property(id) structureID(sID) offset(n) nop(n) nop(n)
+    DEFINE_OPCODE(op_get_by_id_self) {
+        /* op_get_by_id_self dst(r) base(r) property(id) structure(sID) offset(n) nop(n) nop(n)
 
            Cached property access: Attempts to get a cached property from the
            value base. If the cache misses, op_get_by_id_self reverts to
@@ -2529,9 +2532,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
             JSCell* baseCell = asCell(baseValue);
-            StructureID* structureID = vPC[4].u.structureID;
+            Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structureID() == structureID)) {
+            if (LIKELY(baseCell->structure() == structure)) {
                 ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
                 int dst = vPC[1].u.operand;
@@ -2541,15 +2544,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
                 callFrame[dst] = baseObject->getDirectOffset(offset);
 
                 vPC += 8;
-                NEXT_OPCODE;
+                NEXT_INSTRUCTION;
             }
         }
 
         uncacheGetByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_by_id_proto) {
-        /* op_get_by_id_proto dst(r) base(r) property(id) structureID(sID) protoStructureID(sID) offset(n) nop(n)
+    DEFINE_OPCODE(op_get_by_id_proto) {
+        /* op_get_by_id_proto dst(r) base(r) property(id) structure(sID) prototypeStructure(sID) offset(n) nop(n)
 
            Cached property access: Attempts to get a cached property from the
            value base's prototype. If the cache misses, op_get_by_id_proto
@@ -2560,14 +2563,14 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
             JSCell* baseCell = asCell(baseValue);
-            StructureID* structureID = vPC[4].u.structureID;
+            Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structureID() == structureID)) {
-                ASSERT(structureID->prototypeForLookup(callFrame)->isObject());
-                JSObject* protoObject = asObject(structureID->prototypeForLookup(callFrame));
-                StructureID* protoStructureID = vPC[5].u.structureID;
+            if (LIKELY(baseCell->structure() == structure)) {
+                ASSERT(structure->prototypeForLookup(callFrame)->isObject());
+                JSObject* protoObject = asObject(structure->prototypeForLookup(callFrame));
+                Structure* prototypeStructure = vPC[5].u.structure;
 
-                if (LIKELY(protoObject->structureID() == protoStructureID)) {
+                if (LIKELY(protoObject->structure() == prototypeStructure)) {
                     int dst = vPC[1].u.operand;
                     int offset = vPC[6].u.operand;
 
@@ -2575,16 +2578,16 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
                     callFrame[dst] = protoObject->getDirectOffset(offset);
 
                     vPC += 8;
-                    NEXT_OPCODE;
+                    NEXT_INSTRUCTION;
                 }
             }
         }
 
         uncacheGetByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_by_id_chain) {
-        /* op_get_by_id_chain dst(r) base(r) property(id) structureID(sID) structureIDChain(sIDc) count(n) offset(n)
+    DEFINE_OPCODE(op_get_by_id_chain) {
+        /* op_get_by_id_chain dst(r) base(r) property(id) structure(sID) structureChain(chain) count(n) offset(n)
 
            Cached property access: Attempts to get a cached property from the
            value base's prototype chain. If the cache misses, op_get_by_id_chain
@@ -2595,17 +2598,17 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
             JSCell* baseCell = asCell(baseValue);
-            StructureID* structureID = vPC[4].u.structureID;
+            Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structureID() == structureID)) {
-                RefPtr<StructureID>* it = vPC[5].u.structureIDChain->head();
+            if (LIKELY(baseCell->structure() == structure)) {
+                RefPtr<Structure>* it = vPC[5].u.structureChain->head();
                 size_t count = vPC[6].u.operand;
-                RefPtr<StructureID>* end = it + count;
+                RefPtr<Structure>* end = it + count;
 
                 JSObject* baseObject = asObject(baseCell);
                 while (1) {
-                    baseObject = asObject(baseObject->structureID()->prototypeForLookup(callFrame));
-                    if (UNLIKELY(baseObject->structureID() != (*it).get()))
+                    baseObject = asObject(baseObject->structure()->prototypeForLookup(callFrame));
+                    if (UNLIKELY(baseObject->structure() != (*it).get()))
                         break;
 
                     if (++it == end) {
@@ -2616,16 +2619,16 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
                         callFrame[dst] = baseObject->getDirectOffset(offset);
 
                         vPC += 8;
-                        NEXT_OPCODE;
+                        NEXT_INSTRUCTION;
                     }
                 }
             }
         }
 
         uncacheGetByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_by_id_generic) {
+    DEFINE_OPCODE(op_get_by_id_generic) {
         /* op_get_by_id_generic dst(r) base(r) property(id) nop(sID) nop(n) nop(n) nop(n)
 
            Generic property access: Gets the property named by identifier
@@ -2643,9 +2646,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         callFrame[dst] = result;
         vPC += 8;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_array_length) {
+    DEFINE_OPCODE(op_get_array_length) {
         /* op_get_array_length dst(r) base(r) property(id) nop(sID) nop(n) nop(n) nop(n)
 
            Cached property access: Gets the length of the array in register base,
@@ -2659,13 +2662,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             int dst = vPC[1].u.operand;
             callFrame[dst] = jsNumber(callFrame, asArray(baseValue)->length());
             vPC += 8;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         uncacheGetByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_string_length) {
+    DEFINE_OPCODE(op_get_string_length) {
         /* op_get_string_length dst(r) base(r) property(id) nop(sID) nop(n) nop(n) nop(n)
 
            Cached property access: Gets the length of the string in register base,
@@ -2679,13 +2682,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             int dst = vPC[1].u.operand;
             callFrame[dst] = jsNumber(callFrame, asString(baseValue)->value().size());
             vPC += 8;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         uncacheGetByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_by_id) {
+    DEFINE_OPCODE(op_put_by_id) {
         /* put_by_id base(r) property(id) value(r) nop(n) nop(n) nop(n) nop(n)
 
            Generic property access: Sets the property named by identifier
@@ -2709,10 +2712,10 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         tryCachePutByID(callFrame, codeBlock, vPC, baseValue, slot);
 
         vPC += 8;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_by_id_transition) {
-        /* op_put_by_id_transition base(r) property(id) value(r) oldStructureID(sID) newStructureID(sID) structureIDChain(sIDc) offset(n)
+    DEFINE_OPCODE(op_put_by_id_transition) {
+        /* op_put_by_id_transition base(r) property(id) value(r) oldStructure(sID) newStructure(sID) structureChain(chain) offset(n)
          
            Cached property access: Attempts to set a new property with a cached transition
            property named by identifier property, belonging to register base,
@@ -2727,26 +2730,26 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         
         if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
             JSCell* baseCell = asCell(baseValue);
-            StructureID* oldStructureID = vPC[4].u.structureID;
-            StructureID* newStructureID = vPC[5].u.structureID;
+            Structure* oldStructure = vPC[4].u.structure;
+            Structure* newStructure = vPC[5].u.structure;
             
-            if (LIKELY(baseCell->structureID() == oldStructureID)) {
+            if (LIKELY(baseCell->structure() == oldStructure)) {
                 ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
 
-                RefPtr<StructureID>* it = vPC[6].u.structureIDChain->head();
+                RefPtr<Structure>* it = vPC[6].u.structureChain->head();
 
-                JSValue* proto = baseObject->structureID()->prototypeForLookup(callFrame);
+                JSValue* proto = baseObject->structure()->prototypeForLookup(callFrame);
                 while (!proto->isNull()) {
-                    if (UNLIKELY(asObject(proto)->structureID() != (*it).get())) {
+                    if (UNLIKELY(asObject(proto)->structure() != (*it).get())) {
                         uncachePutByID(callFrame->codeBlock(), vPC);
-                        NEXT_OPCODE;
+                        NEXT_INSTRUCTION;
                     }
                     ++it;
-                    proto = asObject(proto)->structureID()->prototypeForLookup(callFrame);
+                    proto = asObject(proto)->structure()->prototypeForLookup(callFrame);
                 }
 
-                baseObject->transitionTo(newStructureID);
+                baseObject->transitionTo(newStructure);
 
                 int value = vPC[3].u.operand;
                 unsigned offset = vPC[7].u.operand;
@@ -2754,15 +2757,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
                 baseObject->putDirectOffset(offset, callFrame[value].jsValue(callFrame));
 
                 vPC += 8;
-                NEXT_OPCODE;
+                NEXT_INSTRUCTION;
             }
         }
         
         uncachePutByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_by_id_replace) {
-        /* op_put_by_id_replace base(r) property(id) value(r) structureID(sID) offset(n) nop(n) nop(n)
+    DEFINE_OPCODE(op_put_by_id_replace) {
+        /* op_put_by_id_replace base(r) property(id) value(r) structure(sID) offset(n) nop(n) nop(n)
 
            Cached property access: Attempts to set a pre-existing, cached
            property named by identifier property, belonging to register base,
@@ -2777,9 +2780,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         if (LIKELY(!JSImmediate::isImmediate(baseValue))) {
             JSCell* baseCell = asCell(baseValue);
-            StructureID* structureID = vPC[4].u.structureID;
+            Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structureID() == structureID)) {
+            if (LIKELY(baseCell->structure() == structure)) {
                 ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
                 int value = vPC[3].u.operand;
@@ -2789,14 +2792,14 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
                 baseObject->putDirectOffset(offset, callFrame[value].jsValue(callFrame));
 
                 vPC += 8;
-                NEXT_OPCODE;
+                NEXT_INSTRUCTION;
             }
         }
 
         uncachePutByID(callFrame->codeBlock(), vPC);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_by_id_generic) {
+    DEFINE_OPCODE(op_put_by_id_generic) {
         /* op_put_by_id_generic base(r) property(id) value(r) nop(n) nop(n) nop(n) nop(n)
 
            Generic property access: Sets the property named by identifier
@@ -2816,9 +2819,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         VM_CHECK_EXCEPTION();
 
         vPC += 8;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_del_by_id) {
+    DEFINE_OPCODE(op_del_by_id) {
         /* del_by_id dst(r) base(r) property(id)
 
            Converts register base to Object, deletes the property
@@ -2836,9 +2839,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         VM_CHECK_EXCEPTION();
         callFrame[dst] = result;
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_by_val) {
+    DEFINE_OPCODE(op_get_by_val) {
         /* get_by_val dst(r) base(r) property(r)
 
            Converts register base to Object, gets the property named
@@ -2876,9 +2879,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         VM_CHECK_EXCEPTION();
         callFrame[dst] = result;
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_by_val) {
+    DEFINE_OPCODE(op_put_by_val) {
         /* put_by_val base(r) property(r) value(r)
 
            Sets register value on register base as the property named
@@ -2918,9 +2921,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         VM_CHECK_EXCEPTION();
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_del_by_val) {
+    DEFINE_OPCODE(op_del_by_val) {
         /* del_by_val dst(r) base(r) property(r)
 
            Converts register base to Object, deletes the property
@@ -2949,9 +2952,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         VM_CHECK_EXCEPTION();
         callFrame[dst] = result;
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_by_index) {
+    DEFINE_OPCODE(op_put_by_index) {
         /* put_by_index base(r) property(n) value(r)
 
            Sets register value on register base as the property named
@@ -2970,9 +2973,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[base].jsValue(callFrame)->put(callFrame, property, callFrame[value].jsValue(callFrame));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_loop) {
+    DEFINE_OPCODE(op_loop) {
         /* loop target(offset)
          
            Jumps unconditionally to offset target from the current
@@ -2987,9 +2990,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int target = (++vPC)->u.operand;
         CHECK_FOR_TIMEOUT();
         vPC += target;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jmp) {
+    DEFINE_OPCODE(op_jmp) {
         /* jmp target(offset)
 
            Jumps unconditionally to offset target from the current
@@ -3001,9 +3004,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int target = (++vPC)->u.operand;
 
         vPC += target;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_loop_if_true) {
+    DEFINE_OPCODE(op_loop_if_true) {
         /* loop_if_true cond(r) target(offset)
          
            Jumps to offset target from the current instruction, if and
@@ -3017,13 +3020,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (callFrame[cond].jsValue(callFrame)->toBoolean(callFrame)) {
             vPC += target;
             CHECK_FOR_TIMEOUT();
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
         
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jtrue) {
+    DEFINE_OPCODE(op_jtrue) {
         /* jtrue cond(r) target(offset)
 
            Jumps to offset target from the current instruction, if and
@@ -3033,13 +3036,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int target = (++vPC)->u.operand;
         if (callFrame[cond].jsValue(callFrame)->toBoolean(callFrame)) {
             vPC += target;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jfalse) {
+    DEFINE_OPCODE(op_jfalse) {
         /* jfalse cond(r) target(offset)
 
            Jumps to offset target from the current instruction, if and
@@ -3049,13 +3052,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int target = (++vPC)->u.operand;
         if (!callFrame[cond].jsValue(callFrame)->toBoolean(callFrame)) {
             vPC += target;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jeq_null) {
+    DEFINE_OPCODE(op_jeq_null) {
         /* jeq_null src(r) target(offset)
 
            Jumps to offset target from the current instruction, if and
@@ -3065,15 +3068,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int target = (++vPC)->u.operand;
         JSValue* srcValue = callFrame[src].jsValue(callFrame);
 
-        if (srcValue->isUndefinedOrNull() || (!JSImmediate::isImmediate(srcValue) && srcValue->asCell()->structureID()->typeInfo().masqueradesAsUndefined())) {
+        if (srcValue->isUndefinedOrNull() || (!JSImmediate::isImmediate(srcValue) && srcValue->asCell()->structure()->typeInfo().masqueradesAsUndefined())) {
             vPC += target;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jneq_null) {
+    DEFINE_OPCODE(op_jneq_null) {
         /* jneq_null src(r) target(offset)
 
            Jumps to offset target from the current instruction, if and
@@ -3083,15 +3086,15 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int target = (++vPC)->u.operand;
         JSValue* srcValue = callFrame[src].jsValue(callFrame);
 
-        if (!srcValue->isUndefinedOrNull() || (!JSImmediate::isImmediate(srcValue) && !srcValue->asCell()->structureID()->typeInfo().masqueradesAsUndefined())) {
+        if (!srcValue->isUndefinedOrNull() || (!JSImmediate::isImmediate(srcValue) && !srcValue->asCell()->structure()->typeInfo().masqueradesAsUndefined())) {
             vPC += target;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_loop_if_less) {
+    DEFINE_OPCODE(op_loop_if_less) {
         /* loop_if_less src1(r) src2(r) target(offset)
 
            Checks whether register src1 is less than register src2, as
@@ -3112,13 +3115,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (result) {
             vPC += target;
             CHECK_FOR_TIMEOUT();
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
         
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_loop_if_lesseq) {
+    DEFINE_OPCODE(op_loop_if_lesseq) {
         /* loop_if_lesseq src1(r) src2(r) target(offset)
 
            Checks whether register src1 is less than or equal to register
@@ -3139,13 +3142,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (result) {
             vPC += target;
             CHECK_FOR_TIMEOUT();
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
         
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jnless) {
+    DEFINE_OPCODE(op_jnless) {
         /* jnless src1(r) src2(r) target(offset)
 
            Checks whether register src1 is less than register src2, as
@@ -3162,13 +3165,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         
         if (!result) {
             vPC += target;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_switch_imm) {
+    DEFINE_OPCODE(op_switch_imm) {
         /* switch_imm tableIndex(n) defaultOffset(offset) scrutinee(r)
 
            Performs a range checked switch on the scrutinee value, using
@@ -3186,9 +3189,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             int32_t value = JSImmediate::getTruncatedInt32(scrutinee);
             vPC += callFrame->codeBlock()->immediateSwitchJumpTables[tableIndex].offsetForValue(value, defaultOffset);
         }
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_switch_char) {
+    DEFINE_OPCODE(op_switch_char) {
         /* switch_char tableIndex(n) defaultOffset(offset) scrutinee(r)
 
            Performs a range checked switch on the scrutinee value, using
@@ -3209,9 +3212,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             else
                 vPC += callFrame->codeBlock()->characterSwitchJumpTables[tableIndex].offsetForValue(value->data()[0], defaultOffset);
         }
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_switch_string) {
+    DEFINE_OPCODE(op_switch_string) {
         /* switch_string tableIndex(n) defaultOffset(offset) scrutinee(r)
 
            Performs a sparse hashmap based switch on the value in the scrutinee
@@ -3227,9 +3230,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             vPC += defaultOffset;
         else 
             vPC += callFrame->codeBlock()->stringSwitchJumpTables[tableIndex].offsetForValue(asString(scrutinee)->value().rep(), defaultOffset);
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_new_func) {
+    DEFINE_OPCODE(op_new_func) {
         /* new_func dst(r) func(f)
 
            Constructs a new Function instance from function func and
@@ -3243,9 +3246,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = callFrame->codeBlock()->functions[func]->makeFunction(callFrame, callFrame->scopeChain());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_new_func_exp) {
+    DEFINE_OPCODE(op_new_func_exp) {
         /* new_func_exp dst(r) func(f)
 
            Constructs a new Function instance from function func and
@@ -3259,9 +3262,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = callFrame->codeBlock()->functionExpressions[func]->makeFunction(callFrame, callFrame->scopeChain());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_call_eval) {
+    DEFINE_OPCODE(op_call_eval) {
         /* call_eval dst(r) func(r) argCount(n) registerOffset(n)
 
            Call a function named "eval" with no explicit "this" value
@@ -3292,7 +3295,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = result;
 
             vPC += 5;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         // We didn't find the blessed version of eval, so process this
@@ -3306,7 +3309,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 #endif
         // fall through to op_call
     }
-    BEGIN_OPCODE(op_call) {
+    DEFINE_OPCODE(op_call) {
         /* call dst(r) func(r) argCount(n) registerOffset(n)
 
            Perform a function call.
@@ -3330,7 +3333,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (callType == CallTypeJS) {
             ScopeChainNode* callDataScopeChain = callData.js.scopeChain;
             FunctionBodyNode* functionBodyNode = callData.js.functionBody;
-            CodeBlock* newCodeBlock = &functionBodyNode->byteCode(callDataScopeChain);
+            CodeBlock* newCodeBlock = &functionBodyNode->bytecode(callDataScopeChain);
 
             CallFrame* previousCallFrame = callFrame;
 
@@ -3348,7 +3351,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             OpcodeStats::resetLastInstruction();
 #endif
 
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         if (callType == CallTypeHost) {
@@ -3374,7 +3377,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = returnValue;
 
             vPC += 5;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ASSERT(callType == CallTypeNone);
@@ -3382,7 +3385,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         exceptionValue = createNotAFunctionError(callFrame, v, vPC, callFrame->codeBlock());
         goto vm_throw;
     }
-    BEGIN_OPCODE(op_tear_off_activation) {
+    DEFINE_OPCODE(op_tear_off_activation) {
         /* tear_off_activation activation(r)
 
            Copy all locals and parameters to new memory allocated on
@@ -3401,9 +3404,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         asActivation(callFrame[src].getJSValue())->copyRegisters(callFrame->optionalCalleeArguments());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_tear_off_arguments) {
+    DEFINE_OPCODE(op_tear_off_arguments) {
         /* tear_off_arguments
 
            Copy all arguments to new memory allocated on the heap,
@@ -3421,9 +3424,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame->optionalCalleeArguments()->copyRegisters();
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_ret) {
+    DEFINE_OPCODE(op_ret) {
         /* ret result(r)
            
            Return register result as the return value of the current
@@ -3449,9 +3452,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         callFrame[dst] = returnValue;
 
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_enter) {
+    DEFINE_OPCODE(op_enter) {
         /* enter
 
            Initializes local variables to undefined and fills constant
@@ -3472,9 +3475,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[i] = codeBlock->constantRegisters[j];
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_enter_with_activation) {
+    DEFINE_OPCODE(op_enter_with_activation) {
         /* enter_with_activation dst(r)
 
            Initializes local variables to undefined, fills constant
@@ -3502,9 +3505,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame->setScopeChain(callFrame->scopeChain()->copy()->push(activation));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_convert_this) {
+    DEFINE_OPCODE(op_convert_this) {
         /* convert_this this(r)
 
            Takes the value in the 'this' register, converts it to a
@@ -3522,9 +3525,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[thisRegister] = thisVal->toThisObject(callFrame);
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_create_arguments) {
+    DEFINE_OPCODE(op_create_arguments) {
         /* create_arguments
 
            Creates the 'arguments' object and places it in both the
@@ -3540,9 +3543,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[RegisterFile::ArgumentsRegister] = arguments;
         
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_construct) {
+    DEFINE_OPCODE(op_construct) {
         /* construct dst(r) func(r) argCount(n) registerOffset(n) proto(r) thisRegister(r)
 
            Invoke register "func" as a constructor. For JS
@@ -3572,9 +3575,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         if (constructType == ConstructTypeJS) {
             ScopeChainNode* callDataScopeChain = constructData.js.scopeChain;
             FunctionBodyNode* functionBodyNode = constructData.js.functionBody;
-            CodeBlock* newCodeBlock = &functionBodyNode->byteCode(callDataScopeChain);
+            CodeBlock* newCodeBlock = &functionBodyNode->bytecode(callDataScopeChain);
 
-            StructureID* structure;
+            Structure* structure;
             JSValue* prototype = callFrame[proto].jsValue(callFrame);
             if (prototype->isObject())
                 structure = asObject(prototype)->inheritorID();
@@ -3600,7 +3603,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             OpcodeStats::resetLastInstruction();
 #endif
 
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         if (constructType == ConstructTypeHost) {
@@ -3619,7 +3622,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             callFrame[dst] = returnValue;
 
             vPC += 7;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         ASSERT(constructType == ConstructTypeNone);
@@ -3627,7 +3630,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         exceptionValue = createNotAConstructorError(callFrame, v, vPC, callFrame->codeBlock());
         goto vm_throw;
     }
-    BEGIN_OPCODE(op_construct_verify) {
+    DEFINE_OPCODE(op_construct_verify) {
         /* construct_verify dst(r) override(r)
 
            Verifies that register dst holds an object. If not, moves
@@ -3637,16 +3640,16 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int dst = vPC[1].u.operand;;
         if (LIKELY(callFrame[dst].jsValue(callFrame)->isObject())) {
             vPC += 3;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
 
         int override = vPC[2].u.operand;
         callFrame[dst] = callFrame[override];
 
         vPC += 3;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_push_scope) {
+    DEFINE_OPCODE(op_push_scope) {
         /* push_scope scope(r)
 
            Converts register scope to object, and pushes it onto the top
@@ -3660,9 +3663,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame->setScopeChain(callFrame->scopeChain()->push(o));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_pop_scope) {
+    DEFINE_OPCODE(op_pop_scope) {
         /* pop_scope
 
            Removes the top item from the current scope chain.
@@ -3670,9 +3673,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame->setScopeChain(callFrame->scopeChain()->pop());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_get_pnames) {
+    DEFINE_OPCODE(op_get_pnames) {
         /* get_pnames dst(r) base(r)
 
            Creates a property name list for register base and puts it
@@ -3685,9 +3688,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 
         callFrame[dst] = JSPropertyNameIterator::create(callFrame, callFrame[base].jsValue(callFrame));
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_next_pname) {
+    DEFINE_OPCODE(op_next_pname) {
         /* next_pname dst(r) iter(r) target(offset)
 
            Tries to copies the next name from property name list in
@@ -3705,14 +3708,14 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             CHECK_FOR_TIMEOUT();
             callFrame[dst] = temp;
             vPC += target;
-            NEXT_OPCODE;
+            NEXT_INSTRUCTION;
         }
         it->invalidate();
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jmp_scopes) {
+    DEFINE_OPCODE(op_jmp_scopes) {
         /* jmp_scopes count(n) target(offset)
 
            Removes the a number of items from the current scope chain
@@ -3728,13 +3731,13 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame->setScopeChain(tmp);
 
         vPC += target;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
 #if HAVE(COMPUTED_GOTO)
     // Appease GCC
     goto *(&&skip_new_scope);
 #endif
-    BEGIN_OPCODE(op_push_new_scope) {
+    DEFINE_OPCODE(op_push_new_scope) {
         /* new_scope dst(r) property(id) value(r)
          
            Constructs a new StaticScopeObject with property set to value.  That scope
@@ -3744,12 +3747,12 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame->setScopeChain(createExceptionScope(callFrame, vPC));
 
         vPC += 4;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
 #if HAVE(COMPUTED_GOTO)
     skip_new_scope:
 #endif
-    BEGIN_OPCODE(op_catch) {
+    DEFINE_OPCODE(op_catch) {
         /* catch ex(r)
 
            Retrieves the VMs current exception and puts it in register
@@ -3763,9 +3766,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         exceptionValue = noValue();
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_throw) {
+    DEFINE_OPCODE(op_throw) {
         /* throw ex(r)
 
            Throws register ex as an exception. This involves three
@@ -3795,9 +3798,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
 #endif
 
         vPC = handlerVPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_unexpected_load) {
+    DEFINE_OPCODE(op_unexpected_load) {
         /* unexpected_load load dst(r) src(k)
 
            Copies constant src to register dst.
@@ -3807,9 +3810,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = callFrame->codeBlock()->unexpectedConstants[src];
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_new_error) {
+    DEFINE_OPCODE(op_new_error) {
         /* new_error dst(r) type(n) message(k)
 
            Constructs a new Error instance using the original
@@ -3825,9 +3828,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[dst] = Error::create(callFrame, (ErrorType)type, codeBlock->unexpectedConstants[message]->toString(callFrame), codeBlock->lineNumberForVPC(vPC), codeBlock->ownerNode->sourceID(), codeBlock->ownerNode->sourceURL());
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_end) {
+    DEFINE_OPCODE(op_end) {
         /* end result(r)
            
            Return register result as the value of a global or eval
@@ -3842,7 +3845,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         int result = (++vPC)->u.operand;
         return callFrame[result].jsValue(callFrame);
     }
-    BEGIN_OPCODE(op_put_getter) {
+    DEFINE_OPCODE(op_put_getter) {
         /* put_getter base(r) property(id) function(r)
 
            Sets register function on register base as the getter named
@@ -3864,9 +3867,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         baseObj->defineGetter(callFrame, ident, asObject(callFrame[function].jsValue(callFrame)));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_put_setter) {
+    DEFINE_OPCODE(op_put_setter) {
         /* put_setter base(r) property(id) function(r)
 
            Sets register function on register base as the setter named
@@ -3888,9 +3891,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         baseObj->defineSetter(callFrame, ident, asObject(callFrame[function].jsValue(callFrame)));
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_jsr) {
+    DEFINE_OPCODE(op_jsr) {
         /* jsr retAddrDst(r) target(offset)
 
            Places the address of the next instruction into the retAddrDst
@@ -3901,9 +3904,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         callFrame[retAddrDst] = vPC + 1;
 
         vPC += target;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_sret) {
+    DEFINE_OPCODE(op_sret) {
         /* sret retAddrSrc(r)
 
          Jumps to the address stored in the retAddrSrc register. This
@@ -3912,9 +3915,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         */
         int retAddrSrc = (++vPC)->u.operand;
         vPC = callFrame[retAddrSrc].vPC();
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_debug) {
+    DEFINE_OPCODE(op_debug) {
         /* debug debugHookID(n) firstLine(n) lastLine(n)
 
          Notifies the debugger of the current state of execution. This opcode
@@ -3927,9 +3930,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
         debug(callFrame, static_cast<DebugHookID>(debugHookID), firstLine, lastLine);
 
         ++vPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_profile_will_call) {
+    DEFINE_OPCODE(op_profile_will_call) {
         /* op_profile_will_call function(r)
 
          Notifies the profiler of the beginning of a function call. This opcode
@@ -3941,9 +3944,9 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             (*enabledProfilerReference)->willExecute(callFrame, callFrame[function].jsValue(callFrame));
 
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
-    BEGIN_OPCODE(op_profile_did_call) {
+    DEFINE_OPCODE(op_profile_did_call) {
         /* op_profile_did_call function(r)
 
          Notifies the profiler of the end of a function call. This opcode
@@ -3955,7 +3958,7 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             (*enabledProfilerReference)->didExecute(callFrame, callFrame[function].jsValue(callFrame));
 
         vPC += 2;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
     vm_throw: {
         globalData->exception = noValue();
@@ -3970,19 +3973,19 @@ JSValue* Machine::privateExecute(ExecutionFlag flag, RegisterFile* registerFile,
             return jsNull();
         }
         vPC = handlerVPC;
-        NEXT_OPCODE;
+        NEXT_INSTRUCTION;
     }
     }
 #if !HAVE(COMPUTED_GOTO)
     } // iterator loop ends
 #endif
-    #undef NEXT_OPCODE
-    #undef BEGIN_OPCODE
+    #undef NEXT_INSTRUCTION
+    #undef DEFINE_OPCODE
     #undef VM_CHECK_EXCEPTION
     #undef CHECK_FOR_TIMEOUT
 }
 
-JSValue* Machine::retrieveArguments(CallFrame* callFrame, JSFunction* function) const
+JSValue* BytecodeInterpreter::retrieveArguments(CallFrame* callFrame, JSFunction* function) const
 {
     CallFrame* functionCallFrame = findFunctionCallFrame(callFrame, function);
     if (!functionCallFrame)
@@ -3991,7 +3994,7 @@ JSValue* Machine::retrieveArguments(CallFrame* callFrame, JSFunction* function) 
     CodeBlock* codeBlock = functionCallFrame->codeBlock();
     if (codeBlock->usesArguments) {
         ASSERT(codeBlock->codeType == FunctionCode);
-        SymbolTable& symbolTable = static_cast<FunctionBodyNode*>(codeBlock->ownerNode)->symbolTable();
+        SymbolTable& symbolTable = codeBlock->symbolTable;
         int argumentsIndex = symbolTable.get(functionCallFrame->propertyNames().arguments.ustring().rep()).getIndex();
         return functionCallFrame[argumentsIndex].jsValue(callFrame);
     }
@@ -4006,7 +4009,7 @@ JSValue* Machine::retrieveArguments(CallFrame* callFrame, JSFunction* function) 
     return arguments;
 }
 
-JSValue* Machine::retrieveCaller(CallFrame* callFrame, InternalFunction* function) const
+JSValue* BytecodeInterpreter::retrieveCaller(CallFrame* callFrame, InternalFunction* function) const
 {
     CallFrame* functionCallFrame = findFunctionCallFrame(callFrame, function);
     if (!functionCallFrame)
@@ -4023,7 +4026,7 @@ JSValue* Machine::retrieveCaller(CallFrame* callFrame, InternalFunction* functio
     return caller;
 }
 
-void Machine::retrieveLastCaller(CallFrame* callFrame, int& lineNumber, intptr_t& sourceID, UString& sourceURL, JSValue*& function) const
+void BytecodeInterpreter::retrieveLastCaller(CallFrame* callFrame, int& lineNumber, intptr_t& sourceID, UString& sourceURL, JSValue*& function) const
 {
     function = noValue();
     lineNumber = -1;
@@ -4044,7 +4047,7 @@ void Machine::retrieveLastCaller(CallFrame* callFrame, int& lineNumber, intptr_t
     function = callerFrame->callee();
 }
 
-CallFrame* Machine::findFunctionCallFrame(CallFrame* callFrame, InternalFunction* function)
+CallFrame* BytecodeInterpreter::findFunctionCallFrame(CallFrame* callFrame, InternalFunction* function)
 {
     for (CallFrame* candidate = callFrame; candidate; candidate = candidate->callerFrame()->removeHostCallFrameFlag()) {
         if (candidate->callee() == function)
@@ -4055,7 +4058,7 @@ CallFrame* Machine::findFunctionCallFrame(CallFrame* callFrame, InternalFunction
 
 #if ENABLE(CTI)
 
-NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* codeBlock, void* returnAddress, JSValue* baseValue, const PutPropertySlot& slot)
+NEVER_INLINE void BytecodeInterpreter::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* codeBlock, void* returnAddress, JSValue* baseValue, const PutPropertySlot& slot)
 {
     // The interpreter checks for recursion here; I do not believe this can occur in CTI.
 
@@ -4069,9 +4072,9 @@ NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* c
     }
     
     JSCell* baseCell = asCell(baseValue);
-    StructureID* structureID = baseCell->structureID();
+    Structure* structure = baseCell->structure();
 
-    if (structureID->isDictionary()) {
+    if (structure->isDictionary()) {
         ctiRepatchCallByReturnAddress(returnAddress, reinterpret_cast<void*>(cti_op_put_by_id_generic));
         return;
     }
@@ -4082,7 +4085,7 @@ NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* c
     unsigned vPCIndex = codeBlock->ctiReturnAddressVPCMap.get(returnAddress);
     Instruction* vPC = codeBlock->instructions.begin() + vPCIndex;
 
-    // Cache hit: Specialize instruction and ref StructureIDs.
+    // Cache hit: Specialize instruction and ref Structures.
 
     // If baseCell != base, then baseCell must be a proxy for another object.
     if (baseCell != slot.base()) {
@@ -4090,14 +4093,14 @@ NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* c
         return;
     }
 
-    // StructureID transition, cache transition info
+    // Structure transition, cache transition info
     if (slot.type() == PutPropertySlot::NewProperty) {
         vPC[0] = getOpcode(op_put_by_id_transition);
-        vPC[4] = structureID->previousID();
-        vPC[5] = structureID;
-        StructureIDChain* chain = structureID->cachedPrototypeChain();
+        vPC[4] = structure->previousID();
+        vPC[5] = structure;
+        StructureChain* chain = structure->cachedPrototypeChain();
         if (!chain) {
-            chain = cachePrototypeChain(callFrame, structureID);
+            chain = cachePrototypeChain(callFrame, structure);
             if (!chain) {
                 // This happens if someone has manually inserted null into the prototype chain
                 vPC[0] = getOpcode(op_put_by_id_generic);
@@ -4106,25 +4109,25 @@ NEVER_INLINE void Machine::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* c
         }
         vPC[6] = chain;
         vPC[7] = slot.cachedOffset();
-        codeBlock->refStructureIDs(vPC);
-        CTI::compilePutByIdTransition(callFrame->scopeChain()->globalData, codeBlock, structureID->previousID(), structureID, slot.cachedOffset(), chain, returnAddress);
+        codeBlock->refStructures(vPC);
+        CTI::compilePutByIdTransition(callFrame->scopeChain()->globalData, codeBlock, structure->previousID(), structure, slot.cachedOffset(), chain, returnAddress);
         return;
     }
     
     vPC[0] = getOpcode(op_put_by_id_replace);
-    vPC[4] = structureID;
+    vPC[4] = structure;
     vPC[5] = slot.cachedOffset();
-    codeBlock->refStructureIDs(vPC);
+    codeBlock->refStructures(vPC);
 
 #if USE(CTI_REPATCH_PIC)
     UNUSED_PARAM(callFrame);
-    CTI::patchPutByIdReplace(codeBlock, structureID, slot.cachedOffset(), returnAddress);
+    CTI::patchPutByIdReplace(codeBlock, structure, slot.cachedOffset(), returnAddress);
 #else
-    CTI::compilePutByIdReplace(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, slot.cachedOffset(), returnAddress);
+    CTI::compilePutByIdReplace(callFrame->scopeChain()->globalData, callFrame, codeBlock, structure, slot.cachedOffset(), returnAddress);
 #endif
 }
 
-NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* codeBlock, void* returnAddress, JSValue* baseValue, const Identifier& propertyName, const PropertySlot& slot)
+NEVER_INLINE void BytecodeInterpreter::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* codeBlock, void* returnAddress, JSValue* baseValue, const Identifier& propertyName, const PropertySlot& slot)
 {
     // FIXME: Write a test that proves we need to check for recursion here just
     // like the interpreter does, then add a check for recursion.
@@ -4157,9 +4160,9 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
     }
 
     JSCell* baseCell = asCell(baseValue);
-    StructureID* structureID = baseCell->structureID();
+    Structure* structure = baseCell->structure();
 
-    if (structureID->isDictionary()) {
+    if (structure->isDictionary()) {
         ctiRepatchCallByReturnAddress(returnAddress, reinterpret_cast<void*>(cti_op_get_by_id_generic));
         return;
     }
@@ -4170,50 +4173,50 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
     unsigned vPCIndex = codeBlock->ctiReturnAddressVPCMap.get(returnAddress);
     Instruction* vPC = codeBlock->instructions.begin() + vPCIndex;
 
-    // Cache hit: Specialize instruction and ref StructureIDs.
+    // Cache hit: Specialize instruction and ref Structures.
 
     if (slot.slotBase() == baseValue) {
-        // set this up, so derefStructureIDs can do it's job.
+        // set this up, so derefStructures can do it's job.
         vPC[0] = getOpcode(op_get_by_id_self);
-        vPC[4] = structureID;
+        vPC[4] = structure;
         vPC[5] = slot.cachedOffset();
-        codeBlock->refStructureIDs(vPC);
+        codeBlock->refStructures(vPC);
         
 #if USE(CTI_REPATCH_PIC)
-        CTI::patchGetByIdSelf(codeBlock, structureID, slot.cachedOffset(), returnAddress);
+        CTI::patchGetByIdSelf(codeBlock, structure, slot.cachedOffset(), returnAddress);
 #else
-        CTI::compileGetByIdSelf(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, slot.cachedOffset(), returnAddress);
+        CTI::compileGetByIdSelf(callFrame->scopeChain()->globalData, callFrame, codeBlock, structure, slot.cachedOffset(), returnAddress);
 #endif
         return;
     }
 
-    if (slot.slotBase() == structureID->prototypeForLookup(callFrame)) {
+    if (slot.slotBase() == structure->prototypeForLookup(callFrame)) {
         ASSERT(slot.slotBase()->isObject());
 
         JSObject* slotBaseObject = asObject(slot.slotBase());
 
         // Heavy access to a prototype is a good indication that it's not being
         // used as a dictionary.
-        if (slotBaseObject->structureID()->isDictionary()) {
-            RefPtr<StructureID> transition = StructureID::fromDictionaryTransition(slotBaseObject->structureID());
-            slotBaseObject->setStructureID(transition.release());
-            asObject(baseValue)->structureID()->setCachedPrototypeChain(0);
+        if (slotBaseObject->structure()->isDictionary()) {
+            RefPtr<Structure> transition = Structure::fromDictionaryTransition(slotBaseObject->structure());
+            slotBaseObject->setStructure(transition.release());
+            asObject(baseValue)->structure()->setCachedPrototypeChain(0);
         }
 
         vPC[0] = getOpcode(op_get_by_id_proto);
-        vPC[4] = structureID;
-        vPC[5] = slotBaseObject->structureID();
+        vPC[4] = structure;
+        vPC[5] = slotBaseObject->structure();
         vPC[6] = slot.cachedOffset();
-        codeBlock->refStructureIDs(vPC);
+        codeBlock->refStructures(vPC);
 
-        CTI::compileGetByIdProto(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, slotBaseObject->structureID(), slot.cachedOffset(), returnAddress);
+        CTI::compileGetByIdProto(callFrame->scopeChain()->globalData, callFrame, codeBlock, structure, slotBaseObject->structure(), slot.cachedOffset(), returnAddress);
         return;
     }
 
     size_t count = 0;
     JSObject* o = asObject(baseValue);
     while (slot.slotBase() != o) {
-        JSValue* v = o->structureID()->prototypeForLookup(callFrame);
+        JSValue* v = o->structure()->prototypeForLookup(callFrame);
 
         // If we didn't find slotBase in baseValue's prototype chain, then baseValue
         // must be a proxy for another object.
@@ -4227,28 +4230,28 @@ NEVER_INLINE void Machine::tryCTICacheGetByID(CallFrame* callFrame, CodeBlock* c
 
         // Heavy access to a prototype is a good indication that it's not being
         // used as a dictionary.
-        if (o->structureID()->isDictionary()) {
-            RefPtr<StructureID> transition = StructureID::fromDictionaryTransition(o->structureID());
-            o->setStructureID(transition.release());
-            asObject(baseValue)->structureID()->setCachedPrototypeChain(0);
+        if (o->structure()->isDictionary()) {
+            RefPtr<Structure> transition = Structure::fromDictionaryTransition(o->structure());
+            o->setStructure(transition.release());
+            asObject(baseValue)->structure()->setCachedPrototypeChain(0);
         }
 
         ++count;
     }
 
-    StructureIDChain* chain = structureID->cachedPrototypeChain();
+    StructureChain* chain = structure->cachedPrototypeChain();
     if (!chain)
-        chain = cachePrototypeChain(callFrame, structureID);
+        chain = cachePrototypeChain(callFrame, structure);
 
     ASSERT(chain);
     vPC[0] = getOpcode(op_get_by_id_chain);
-    vPC[4] = structureID;
+    vPC[4] = structure;
     vPC[5] = chain;
     vPC[6] = count;
     vPC[7] = slot.cachedOffset();
-    codeBlock->refStructureIDs(vPC);
+    codeBlock->refStructures(vPC);
 
-    CTI::compileGetByIdChain(callFrame->scopeChain()->globalData, callFrame, codeBlock, structureID, chain, count, slot.cachedOffset(), returnAddress);
+    CTI::compileGetByIdChain(callFrame->scopeChain()->globalData, callFrame, codeBlock, structure, chain, count, slot.cachedOffset(), returnAddress);
 }
 
 #ifndef NDEBUG
@@ -4341,7 +4344,7 @@ static NEVER_INLINE void throwStackOverflowError(CallFrame* callFrame, JSGlobalD
         } \
     } while (0)
 
-JSObject* Machine::cti_op_convert_this(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_convert_this(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4353,7 +4356,7 @@ JSObject* Machine::cti_op_convert_this(CTI_ARGS)
     return result;
 }
 
-void Machine::cti_op_end(CTI_ARGS)
+void BytecodeInterpreter::cti_op_end(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4362,7 +4365,7 @@ void Machine::cti_op_end(CTI_ARGS)
     scopeChain->deref();
 }
 
-JSValue* Machine::cti_op_add(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_add(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4407,7 +4410,7 @@ JSValue* Machine::cti_op_add(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_pre_inc(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_pre_inc(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4419,17 +4422,17 @@ JSValue* Machine::cti_op_pre_inc(CTI_ARGS)
     return result;
 }
 
-void Machine::cti_timeout_check(CTI_ARGS)
+void BytecodeInterpreter::cti_timeout_check(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
-    if (ARG_globalData->machine->checkTimeout(ARG_callFrame->dynamicGlobalObject())) {
+    if (ARG_globalData->interpreter->checkTimeout(ARG_callFrame->dynamicGlobalObject())) {
         ARG_globalData->exception = createInterruptedExecutionException(ARG_globalData);
         VM_THROW_EXCEPTION_AT_END();
     }
 }
 
-void Machine::cti_register_file_check(CTI_ARGS)
+void BytecodeInterpreter::cti_register_file_check(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4443,7 +4446,7 @@ void Machine::cti_register_file_check(CTI_ARGS)
     throwStackOverflowError(oldCallFrame, ARG_globalData, oldCallFrame->returnPC(), CTI_RETURN_ADDRESS);
 }
 
-int Machine::cti_op_loop_if_less(CTI_ARGS)
+int BytecodeInterpreter::cti_op_loop_if_less(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4456,7 +4459,7 @@ int Machine::cti_op_loop_if_less(CTI_ARGS)
     return result;
 }
 
-int Machine::cti_op_loop_if_lesseq(CTI_ARGS)
+int BytecodeInterpreter::cti_op_loop_if_lesseq(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4469,14 +4472,14 @@ int Machine::cti_op_loop_if_lesseq(CTI_ARGS)
     return result;
 }
 
-JSObject* Machine::cti_op_new_object(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_new_object(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return constructEmptyObject(ARG_callFrame);
 }
 
-void Machine::cti_op_put_by_id(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_id(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4491,17 +4494,17 @@ void Machine::cti_op_put_by_id(CTI_ARGS)
     VM_CHECK_EXCEPTION_AT_END();
 }
 
-void Machine::cti_op_put_by_id_second(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_id_second(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     PutPropertySlot slot;
     ARG_src1->put(ARG_callFrame, *ARG_id2, ARG_src3, slot);
-    ARG_globalData->machine->tryCTICachePutByID(ARG_callFrame, ARG_callFrame->codeBlock(), CTI_RETURN_ADDRESS, ARG_src1, slot);
+    ARG_globalData->interpreter->tryCTICachePutByID(ARG_callFrame, ARG_callFrame->codeBlock(), CTI_RETURN_ADDRESS, ARG_src1, slot);
     VM_CHECK_EXCEPTION_AT_END();
 }
 
-void Machine::cti_op_put_by_id_generic(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_id_generic(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4510,7 +4513,7 @@ void Machine::cti_op_put_by_id_generic(CTI_ARGS)
     VM_CHECK_EXCEPTION_AT_END();
 }
 
-void Machine::cti_op_put_by_id_fail(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_id_fail(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4526,7 +4529,7 @@ void Machine::cti_op_put_by_id_fail(CTI_ARGS)
     VM_CHECK_EXCEPTION_AT_END();
 }
 
-JSValue* Machine::cti_op_get_by_id(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_get_by_id(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4543,7 +4546,7 @@ JSValue* Machine::cti_op_get_by_id(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_get_by_id_second(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_get_by_id_second(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4554,13 +4557,13 @@ JSValue* Machine::cti_op_get_by_id_second(CTI_ARGS)
     PropertySlot slot(baseValue);
     JSValue* result = baseValue->get(callFrame, ident, slot);
 
-    ARG_globalData->machine->tryCTICacheGetByID(callFrame, callFrame->codeBlock(), CTI_RETURN_ADDRESS, baseValue, ident, slot);
+    ARG_globalData->interpreter->tryCTICacheGetByID(callFrame, callFrame->codeBlock(), CTI_RETURN_ADDRESS, baseValue, ident, slot);
 
     VM_CHECK_EXCEPTION_AT_END();
     return result;
 }
 
-JSValue* Machine::cti_op_get_by_id_generic(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_get_by_id_generic(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4575,7 +4578,7 @@ JSValue* Machine::cti_op_get_by_id_generic(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_get_by_id_fail(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_get_by_id_fail(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4593,7 +4596,7 @@ JSValue* Machine::cti_op_get_by_id_fail(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_instanceof(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_instanceof(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4605,7 +4608,7 @@ JSValue* Machine::cti_op_instanceof(CTI_ARGS)
     // at least one of these checks must have failed to get to the slow case
     ASSERT(JSImmediate::isAnyImmediate(value, baseVal, proto) 
            || !value->isObject() || !baseVal->isObject() || !proto->isObject() 
-           || (asObject(baseVal)->structureID()->typeInfo().flags() & (ImplementsHasInstance | OverridesHasInstance)) != ImplementsHasInstance);
+           || (asObject(baseVal)->structure()->typeInfo().flags() & (ImplementsHasInstance | OverridesHasInstance)) != ImplementsHasInstance);
 
     if (!baseVal->isObject()) {
         CallFrame* callFrame = ARG_callFrame;
@@ -4616,7 +4619,7 @@ JSValue* Machine::cti_op_instanceof(CTI_ARGS)
         VM_THROW_EXCEPTION();
     }
 
-    if (!asObject(baseVal)->structureID()->typeInfo().implementsHasInstance())
+    if (!asObject(baseVal)->structure()->typeInfo().implementsHasInstance())
         return jsBoolean(false);
 
     if (!proto->isObject()) {
@@ -4633,7 +4636,7 @@ JSValue* Machine::cti_op_instanceof(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_del_by_id(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_del_by_id(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4647,7 +4650,7 @@ JSValue* Machine::cti_op_del_by_id(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_mul(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_mul(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4665,14 +4668,14 @@ JSValue* Machine::cti_op_mul(CTI_ARGS)
     return result;
 }
 
-JSObject* Machine::cti_op_new_func(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_new_func(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return ARG_func1->makeFunction(ARG_callFrame, ARG_callFrame->scopeChain());
 }
 
-void* Machine::cti_op_call_JSFunction(CTI_ARGS)
+void* BytecodeInterpreter::cti_op_call_JSFunction(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4682,7 +4685,7 @@ void* Machine::cti_op_call_JSFunction(CTI_ARGS)
 #endif
 
     ScopeChainNode* callDataScopeChain = asFunction(ARG_src1)->m_scopeChain.node();
-    CodeBlock* newCodeBlock = &asFunction(ARG_src1)->m_body->byteCode(callDataScopeChain);
+    CodeBlock* newCodeBlock = &asFunction(ARG_src1)->m_body->bytecode(callDataScopeChain);
 
     if (!newCodeBlock->ctiCode)
         CTI::compile(ARG_globalData, newCodeBlock);
@@ -4690,7 +4693,7 @@ void* Machine::cti_op_call_JSFunction(CTI_ARGS)
     return newCodeBlock;
 }
 
-VoidPtrPair Machine::cti_op_call_arityCheck(CTI_ARGS)
+VoidPtrPair BytecodeInterpreter::cti_op_call_arityCheck(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4720,7 +4723,7 @@ VoidPtrPair Machine::cti_op_call_arityCheck(CTI_ARGS)
             // Rewind to the previous call frame because op_call already optimistically
             // moved the call frame forward.
             ARG_setCallFrame(oldCallFrame);
-            throwStackOverflowError(oldCallFrame, ARG_globalData, CTI_RETURN_ADDRESS, CTI_RETURN_ADDRESS);
+            throwStackOverflowError(oldCallFrame, ARG_globalData, ARG_returnAddress2, CTI_RETURN_ADDRESS);
             VoidPtrPairValue pair = {{ 0, 0 }};
             return pair.i;
         }
@@ -4737,21 +4740,36 @@ VoidPtrPair Machine::cti_op_call_arityCheck(CTI_ARGS)
     return pair.i;
 }
 
-void* Machine::cti_vm_lazyLinkCall(CTI_ARGS)
+void* BytecodeInterpreter::cti_vm_dontLazyLinkCall(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     JSFunction* callee = asFunction(ARG_src1);
-    CodeBlock* codeBlock = &callee->m_body->byteCode(callee->m_scopeChain.node());
+    CodeBlock* codeBlock = &callee->m_body->bytecode(callee->m_scopeChain.node());
     if (!codeBlock->ctiCode)
         CTI::compile(ARG_globalData, codeBlock);
 
-    CTI::linkCall(callee, codeBlock, codeBlock->ctiCode, ARG_linkInfo2, ARG_int3);
+    ctiRepatchCallByReturnAddress(ARG_returnAddress2, ARG_globalData->interpreter->m_ctiVirtualCallLink);
 
     return codeBlock->ctiCode;
 }
 
-JSObject* Machine::cti_op_push_activation(CTI_ARGS)
+void* BytecodeInterpreter::cti_vm_lazyLinkCall(CTI_ARGS)
+{
+    CTI_STACK_HACK();
+
+    JSFunction* callee = asFunction(ARG_src1);
+    CodeBlock* codeBlock = &callee->m_body->bytecode(callee->m_scopeChain.node());
+    if (!codeBlock->ctiCode)
+        CTI::compile(ARG_globalData, codeBlock);
+
+    CallLinkInfo* callLinkInfo = &ARG_callFrame->callerFrame()->codeBlock()->getCallLinkInfo(ARG_returnAddress2);
+    CTI::linkCall(callee, codeBlock, codeBlock->ctiCode, callLinkInfo, ARG_int3);
+
+    return codeBlock->ctiCode;
+}
+
+JSObject* BytecodeInterpreter::cti_op_push_activation(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4760,7 +4778,7 @@ JSObject* Machine::cti_op_push_activation(CTI_ARGS)
     return activation;
 }
 
-JSValue* Machine::cti_op_call_NotJSFunction(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_call_NotJSFunction(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4806,7 +4824,7 @@ JSValue* Machine::cti_op_call_NotJSFunction(CTI_ARGS)
     VM_THROW_EXCEPTION();
 }
 
-void Machine::cti_op_create_arguments(CTI_ARGS)
+void BytecodeInterpreter::cti_op_create_arguments(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4815,7 +4833,7 @@ void Machine::cti_op_create_arguments(CTI_ARGS)
     ARG_callFrame[RegisterFile::ArgumentsRegister] = arguments;
 }
 
-void Machine::cti_op_create_arguments_no_params(CTI_ARGS)
+void BytecodeInterpreter::cti_op_create_arguments_no_params(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4824,7 +4842,7 @@ void Machine::cti_op_create_arguments_no_params(CTI_ARGS)
     ARG_callFrame[RegisterFile::ArgumentsRegister] = arguments;
 }
 
-void Machine::cti_op_tear_off_activation(CTI_ARGS)
+void BytecodeInterpreter::cti_op_tear_off_activation(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4832,7 +4850,7 @@ void Machine::cti_op_tear_off_activation(CTI_ARGS)
     asActivation(ARG_src1)->copyRegisters(ARG_callFrame->optionalCalleeArguments());
 }
 
-void Machine::cti_op_tear_off_arguments(CTI_ARGS)
+void BytecodeInterpreter::cti_op_tear_off_arguments(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4840,7 +4858,7 @@ void Machine::cti_op_tear_off_arguments(CTI_ARGS)
     ARG_callFrame->optionalCalleeArguments()->copyRegisters();
 }
 
-void Machine::cti_op_profile_will_call(CTI_ARGS)
+void BytecodeInterpreter::cti_op_profile_will_call(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4848,7 +4866,7 @@ void Machine::cti_op_profile_will_call(CTI_ARGS)
     (*ARG_profilerReference)->willExecute(ARG_callFrame, ARG_src1);
 }
 
-void Machine::cti_op_profile_did_call(CTI_ARGS)
+void BytecodeInterpreter::cti_op_profile_did_call(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4856,7 +4874,7 @@ void Machine::cti_op_profile_did_call(CTI_ARGS)
     (*ARG_profilerReference)->didExecute(ARG_callFrame, ARG_src1);
 }
 
-void Machine::cti_op_ret_scopeChain(CTI_ARGS)
+void BytecodeInterpreter::cti_op_ret_scopeChain(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4864,7 +4882,7 @@ void Machine::cti_op_ret_scopeChain(CTI_ARGS)
     ARG_callFrame->scopeChain()->deref();
 }
 
-JSObject* Machine::cti_op_new_array(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_new_array(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4872,7 +4890,7 @@ JSObject* Machine::cti_op_new_array(CTI_ARGS)
     return constructArray(ARG_callFrame, argList);
 }
 
-JSValue* Machine::cti_op_resolve(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_resolve(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4901,7 +4919,7 @@ JSValue* Machine::cti_op_resolve(CTI_ARGS)
     VM_THROW_EXCEPTION();
 }
 
-JSObject* Machine::cti_op_construct_JSConstruct(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_construct_JSConstruct(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4910,7 +4928,7 @@ JSObject* Machine::cti_op_construct_JSConstruct(CTI_ARGS)
     ASSERT(asFunction(ARG_src1)->getConstructData(constructData) == ConstructTypeJS);
 #endif
 
-    StructureID* structure;
+    Structure* structure;
     if (ARG_src4->isObject())
         structure = asObject(ARG_src4)->inheritorID();
     else
@@ -4918,7 +4936,7 @@ JSObject* Machine::cti_op_construct_JSConstruct(CTI_ARGS)
     return new (ARG_globalData) JSObject(structure);
 }
 
-JSValue* Machine::cti_op_construct_NotJSConstruct(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_construct_NotJSConstruct(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -4950,12 +4968,12 @@ JSValue* Machine::cti_op_construct_NotJSConstruct(CTI_ARGS)
     VM_THROW_EXCEPTION();
 }
 
-JSValue* Machine::cti_op_get_by_val(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_get_by_val(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     CallFrame* callFrame = ARG_callFrame;
-    Machine* machine = ARG_globalData->machine;
+    BytecodeInterpreter* interpreter = ARG_globalData->interpreter;
 
     JSValue* baseValue = ARG_src1;
     JSValue* subscript = ARG_src2;
@@ -4965,13 +4983,13 @@ JSValue* Machine::cti_op_get_by_val(CTI_ARGS)
 
     bool isUInt32 = JSImmediate::getUInt32(subscript, i);
     if (LIKELY(isUInt32)) {
-        if (machine->isJSArray(baseValue)) {
+        if (interpreter->isJSArray(baseValue)) {
             JSArray* jsArray = asArray(baseValue);
             if (jsArray->canGetIndex(i))
                 result = jsArray->getIndex(i);
             else
                 result = jsArray->JSArray::get(callFrame, i);
-        } else if (machine->isJSString(baseValue) && asString(baseValue)->canGetIndex(i))
+        } else if (interpreter->isJSString(baseValue) && asString(baseValue)->canGetIndex(i))
             result = asString(baseValue)->getIndex(ARG_globalData, i);
         else
             result = baseValue->get(callFrame, i);
@@ -4984,7 +5002,7 @@ JSValue* Machine::cti_op_get_by_val(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Machine::cti_op_resolve_func(CTI_ARGS)
+VoidPtrPair BytecodeInterpreter::cti_op_resolve_func(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5028,7 +5046,7 @@ VoidPtrPair Machine::cti_op_resolve_func(CTI_ARGS)
     VM_THROW_EXCEPTION_2();
 }
 
-JSValue* Machine::cti_op_sub(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_sub(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5046,12 +5064,12 @@ JSValue* Machine::cti_op_sub(CTI_ARGS)
     return result;
 }
 
-void Machine::cti_op_put_by_val(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_val(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     CallFrame* callFrame = ARG_callFrame;
-    Machine* machine = ARG_globalData->machine;
+    BytecodeInterpreter* interpreter = ARG_globalData->interpreter;
 
     JSValue* baseValue = ARG_src1;
     JSValue* subscript = ARG_src2;
@@ -5061,7 +5079,7 @@ void Machine::cti_op_put_by_val(CTI_ARGS)
 
     bool isUInt32 = JSImmediate::getUInt32(subscript, i);
     if (LIKELY(isUInt32)) {
-        if (machine->isJSArray(baseValue)) {
+        if (interpreter->isJSArray(baseValue)) {
             JSArray* jsArray = asArray(baseValue);
             if (jsArray->canSetIndex(i))
                 jsArray->setIndex(i, value);
@@ -5080,7 +5098,7 @@ void Machine::cti_op_put_by_val(CTI_ARGS)
     VM_CHECK_EXCEPTION_AT_END();
 }
 
-void Machine::cti_op_put_by_val_array(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_val_array(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5090,7 +5108,7 @@ void Machine::cti_op_put_by_val_array(CTI_ARGS)
     int i = ARG_int2;
     JSValue* value = ARG_src3;
 
-    ASSERT(ARG_globalData->machine->isJSArray(baseValue));
+    ASSERT(ARG_globalData->interpreter->isJSArray(baseValue));
 
     if (LIKELY(i >= 0))
         asArray(baseValue)->JSArray::put(callFrame, i, value);
@@ -5106,7 +5124,7 @@ void Machine::cti_op_put_by_val_array(CTI_ARGS)
     VM_CHECK_EXCEPTION_AT_END();
 }
 
-JSValue* Machine::cti_op_lesseq(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_lesseq(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5116,7 +5134,7 @@ JSValue* Machine::cti_op_lesseq(CTI_ARGS)
     return result;
 }
 
-int Machine::cti_op_loop_if_true(CTI_ARGS)
+int BytecodeInterpreter::cti_op_loop_if_true(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5129,7 +5147,7 @@ int Machine::cti_op_loop_if_true(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_negate(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_negate(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5145,14 +5163,14 @@ JSValue* Machine::cti_op_negate(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_resolve_base(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_resolve_base(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return inlineResolveBase(ARG_callFrame, *ARG_id1, ARG_callFrame->scopeChain());
 }
 
-JSValue* Machine::cti_op_resolve_skip(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_resolve_skip(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5186,7 +5204,7 @@ JSValue* Machine::cti_op_resolve_skip(CTI_ARGS)
     VM_THROW_EXCEPTION();
 }
 
-JSValue* Machine::cti_op_resolve_global(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_resolve_global(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5200,10 +5218,10 @@ JSValue* Machine::cti_op_resolve_global(CTI_ARGS)
     if (globalObject->getPropertySlot(callFrame, ident, slot)) {
         JSValue* result = slot.getValue(callFrame, ident);
         if (slot.isCacheable()) {
-            if (vPC[4].u.structureID)
-                vPC[4].u.structureID->deref();
-            globalObject->structureID()->ref();
-            vPC[4] = globalObject->structureID();
+            if (vPC[4].u.structure)
+                vPC[4].u.structure->deref();
+            globalObject->structure()->ref();
+            vPC[4] = globalObject->structure();
             vPC[5] = slot.cachedOffset();
             return result;
         }
@@ -5216,7 +5234,7 @@ JSValue* Machine::cti_op_resolve_global(CTI_ARGS)
     VM_THROW_EXCEPTION();
 }
 
-JSValue* Machine::cti_op_div(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_div(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5234,7 +5252,7 @@ JSValue* Machine::cti_op_div(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_pre_dec(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_pre_dec(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5246,7 +5264,7 @@ JSValue* Machine::cti_op_pre_dec(CTI_ARGS)
     return result;
 }
 
-int Machine::cti_op_jless(CTI_ARGS)
+int BytecodeInterpreter::cti_op_jless(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5259,7 +5277,7 @@ int Machine::cti_op_jless(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_not(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_not(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5272,7 +5290,7 @@ JSValue* Machine::cti_op_not(CTI_ARGS)
     return result;
 }
 
-int SFX_CALL Machine::cti_op_jtrue(CTI_ARGS)
+int SFX_CALL BytecodeInterpreter::cti_op_jtrue(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5285,7 +5303,7 @@ int SFX_CALL Machine::cti_op_jtrue(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Machine::cti_op_post_inc(CTI_ARGS)
+VoidPtrPair BytecodeInterpreter::cti_op_post_inc(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5300,7 +5318,7 @@ VoidPtrPair Machine::cti_op_post_inc(CTI_ARGS)
     return pair.i;
 }
 
-JSValue* Machine::cti_op_eq(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_eq(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5315,7 +5333,7 @@ JSValue* Machine::cti_op_eq(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_lshift(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_lshift(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5335,7 +5353,7 @@ JSValue* Machine::cti_op_lshift(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_bitand(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_bitand(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5353,7 +5371,7 @@ JSValue* Machine::cti_op_bitand(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_rshift(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_rshift(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5373,7 +5391,7 @@ JSValue* Machine::cti_op_rshift(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_bitnot(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_bitnot(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5389,7 +5407,7 @@ JSValue* Machine::cti_op_bitnot(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Machine::cti_op_resolve_with_base(CTI_ARGS)
+VoidPtrPair BytecodeInterpreter::cti_op_resolve_with_base(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5425,14 +5443,14 @@ VoidPtrPair Machine::cti_op_resolve_with_base(CTI_ARGS)
     VM_THROW_EXCEPTION_2();
 }
 
-JSObject* Machine::cti_op_new_func_exp(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_new_func_exp(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return ARG_funcexp1->makeFunction(ARG_callFrame, ARG_callFrame->scopeChain());
 }
 
-JSValue* Machine::cti_op_mod(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_mod(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5446,7 +5464,7 @@ JSValue* Machine::cti_op_mod(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_less(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_less(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5456,7 +5474,7 @@ JSValue* Machine::cti_op_less(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_neq(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_neq(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5471,7 +5489,7 @@ JSValue* Machine::cti_op_neq(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Machine::cti_op_post_dec(CTI_ARGS)
+VoidPtrPair BytecodeInterpreter::cti_op_post_dec(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5486,7 +5504,7 @@ VoidPtrPair Machine::cti_op_post_dec(CTI_ARGS)
     return pair.i;
 }
 
-JSValue* Machine::cti_op_urshift(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_urshift(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5504,7 +5522,7 @@ JSValue* Machine::cti_op_urshift(CTI_ARGS)
     }
 }
 
-JSValue* Machine::cti_op_bitxor(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_bitxor(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5518,14 +5536,14 @@ JSValue* Machine::cti_op_bitxor(CTI_ARGS)
     return result;
 }
 
-JSObject* Machine::cti_op_new_regexp(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_new_regexp(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return new (ARG_globalData) RegExpObject(ARG_callFrame->lexicalGlobalObject()->regExpStructure(), ARG_regexp1);
 }
 
-JSValue* Machine::cti_op_bitor(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_bitor(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5539,14 +5557,14 @@ JSValue* Machine::cti_op_bitor(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_call_eval(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_call_eval(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     CallFrame* callFrame = ARG_callFrame;
     RegisterFile* registerFile = ARG_registerFile;
 
-    Machine* machine = ARG_globalData->machine;
+    BytecodeInterpreter* interpreter = ARG_globalData->interpreter;
     
     JSValue* funcVal = ARG_src1;
     int registerOffset = ARG_int2;
@@ -5559,7 +5577,7 @@ JSValue* Machine::cti_op_call_eval(CTI_ARGS)
 
     if (thisValue == globalObject && funcVal == globalObject->evalFunction()) {
         JSValue* exceptionValue = noValue();
-        JSValue* result = machine->callEval(callFrame, registerFile, argv, argCount, registerOffset, exceptionValue);
+        JSValue* result = interpreter->callEval(callFrame, registerFile, argv, argCount, registerOffset, exceptionValue);
         if (UNLIKELY(exceptionValue != noValue())) {
             ARG_globalData->exception = exceptionValue;
             VM_THROW_EXCEPTION_AT_END();
@@ -5570,7 +5588,7 @@ JSValue* Machine::cti_op_call_eval(CTI_ARGS)
     return JSImmediate::impossibleValue();
 }
 
-JSValue* Machine::cti_op_throw(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_throw(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5583,7 +5601,7 @@ JSValue* Machine::cti_op_throw(CTI_ARGS)
     JSValue* exceptionValue = ARG_src1;
     ASSERT(exceptionValue);
 
-    Instruction* handlerVPC = ARG_globalData->machine->throwException(callFrame, exceptionValue, codeBlock->instructions.begin() + vPCIndex, true);
+    Instruction* handlerVPC = ARG_globalData->interpreter->throwException(callFrame, exceptionValue, codeBlock->instructions.begin() + vPCIndex, true);
 
     if (!handlerVPC) {
         *ARG_exception = exceptionValue;
@@ -5597,14 +5615,14 @@ JSValue* Machine::cti_op_throw(CTI_ARGS)
     return exceptionValue;
 }
 
-JSPropertyNameIterator* Machine::cti_op_get_pnames(CTI_ARGS)
+JSPropertyNameIterator* BytecodeInterpreter::cti_op_get_pnames(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return JSPropertyNameIterator::create(ARG_callFrame, ARG_src1);
 }
 
-JSValue* Machine::cti_op_next_pname(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_next_pname(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5615,7 +5633,7 @@ JSValue* Machine::cti_op_next_pname(CTI_ARGS)
     return temp;
 }
 
-void Machine::cti_op_push_scope(CTI_ARGS)
+void BytecodeInterpreter::cti_op_push_scope(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5624,64 +5642,64 @@ void Machine::cti_op_push_scope(CTI_ARGS)
     ARG_callFrame->setScopeChain(ARG_callFrame->scopeChain()->push(o));
 }
 
-void Machine::cti_op_pop_scope(CTI_ARGS)
+void BytecodeInterpreter::cti_op_pop_scope(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     ARG_callFrame->setScopeChain(ARG_callFrame->scopeChain()->pop());
 }
 
-JSValue* Machine::cti_op_typeof(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_typeof(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return jsTypeStringForValue(ARG_callFrame, ARG_src1);
 }
 
-JSValue* Machine::cti_op_is_undefined(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_is_undefined(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     JSValue* v = ARG_src1;
-    return jsBoolean(JSImmediate::isImmediate(v) ? v->isUndefined() : v->asCell()->structureID()->typeInfo().masqueradesAsUndefined());
+    return jsBoolean(JSImmediate::isImmediate(v) ? v->isUndefined() : v->asCell()->structure()->typeInfo().masqueradesAsUndefined());
 }
 
-JSValue* Machine::cti_op_is_boolean(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_is_boolean(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return jsBoolean(ARG_src1->isBoolean());
 }
 
-JSValue* Machine::cti_op_is_number(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_is_number(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return jsBoolean(ARG_src1->isNumber());
 }
 
-JSValue* Machine::cti_op_is_string(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_is_string(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
-    return jsBoolean(ARG_globalData->machine->isJSString(ARG_src1));
+    return jsBoolean(ARG_globalData->interpreter->isJSString(ARG_src1));
 }
 
-JSValue* Machine::cti_op_is_object(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_is_object(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return jsBoolean(jsIsObjectType(ARG_src1));
 }
 
-JSValue* Machine::cti_op_is_function(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_is_function(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
     return jsBoolean(jsIsFunctionType(ARG_src1));
 }
 
-JSValue* Machine::cti_op_stricteq(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_stricteq(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5695,7 +5713,7 @@ JSValue* Machine::cti_op_stricteq(CTI_ARGS)
     return jsBoolean(strictEqualSlowCaseInline(src1, src2));
 }
 
-JSValue* Machine::cti_op_nstricteq(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_nstricteq(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5709,7 +5727,7 @@ JSValue* Machine::cti_op_nstricteq(CTI_ARGS)
     return jsBoolean(!strictEqualSlowCaseInline(src1, src2));
 }
 
-JSValue* Machine::cti_op_to_jsnumber(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_to_jsnumber(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5721,7 +5739,7 @@ JSValue* Machine::cti_op_to_jsnumber(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_in(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_in(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5749,7 +5767,7 @@ JSValue* Machine::cti_op_in(CTI_ARGS)
     return jsBoolean(baseObj->hasProperty(callFrame, property));
 }
 
-JSObject* Machine::cti_op_push_new_scope(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_push_new_scope(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5760,7 +5778,7 @@ JSObject* Machine::cti_op_push_new_scope(CTI_ARGS)
     return scope;
 }
 
-void Machine::cti_op_jmp_scopes(CTI_ARGS)
+void BytecodeInterpreter::cti_op_jmp_scopes(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5773,7 +5791,7 @@ void Machine::cti_op_jmp_scopes(CTI_ARGS)
     callFrame->setScopeChain(tmp);
 }
 
-void Machine::cti_op_put_by_index(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_by_index(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5783,7 +5801,7 @@ void Machine::cti_op_put_by_index(CTI_ARGS)
     ARG_src1->put(callFrame, property, ARG_src3);
 }
 
-void* Machine::cti_op_switch_imm(CTI_ARGS)
+void* BytecodeInterpreter::cti_op_switch_imm(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5800,7 +5818,7 @@ void* Machine::cti_op_switch_imm(CTI_ARGS)
     return codeBlock->immediateSwitchJumpTables[tableIndex].ctiDefault;
 }
 
-void* Machine::cti_op_switch_char(CTI_ARGS)
+void* BytecodeInterpreter::cti_op_switch_char(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5820,7 +5838,7 @@ void* Machine::cti_op_switch_char(CTI_ARGS)
     return result;
 }
 
-void* Machine::cti_op_switch_string(CTI_ARGS)
+void* BytecodeInterpreter::cti_op_switch_string(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5839,7 +5857,7 @@ void* Machine::cti_op_switch_string(CTI_ARGS)
     return result;
 }
 
-JSValue* Machine::cti_op_del_by_val(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_op_del_by_val(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5864,7 +5882,7 @@ JSValue* Machine::cti_op_del_by_val(CTI_ARGS)
     return result;
 }
 
-void Machine::cti_op_put_getter(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_getter(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5877,7 +5895,7 @@ void Machine::cti_op_put_getter(CTI_ARGS)
     baseObj->defineGetter(callFrame, ident, asObject(ARG_src3));
 }
 
-void Machine::cti_op_put_setter(CTI_ARGS)
+void BytecodeInterpreter::cti_op_put_setter(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5890,7 +5908,7 @@ void Machine::cti_op_put_setter(CTI_ARGS)
     baseObj->defineSetter(callFrame, ident, asObject(ARG_src3));
 }
 
-JSObject* Machine::cti_op_new_error(CTI_ARGS)
+JSObject* BytecodeInterpreter::cti_op_new_error(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5903,7 +5921,7 @@ JSObject* Machine::cti_op_new_error(CTI_ARGS)
     return Error::create(callFrame, static_cast<ErrorType>(type), message->toString(callFrame), lineNumber, codeBlock->ownerNode->sourceID(), codeBlock->ownerNode->sourceURL());
 }
 
-void Machine::cti_op_debug(CTI_ARGS)
+void BytecodeInterpreter::cti_op_debug(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5913,10 +5931,10 @@ void Machine::cti_op_debug(CTI_ARGS)
     int firstLine = ARG_int2;
     int lastLine = ARG_int3;
 
-    ARG_globalData->machine->debug(callFrame, static_cast<DebugHookID>(debugHookID), firstLine, lastLine);
+    ARG_globalData->interpreter->debug(callFrame, static_cast<DebugHookID>(debugHookID), firstLine, lastLine);
 }
 
-JSValue* Machine::cti_vm_throw(CTI_ARGS)
+JSValue* BytecodeInterpreter::cti_vm_throw(CTI_ARGS)
 {
     CTI_STACK_HACK();
 
@@ -5931,7 +5949,7 @@ JSValue* Machine::cti_vm_throw(CTI_ARGS)
     ASSERT(exceptionValue);
     globalData->exception = noValue();
 
-    Instruction* handlerVPC = globalData->machine->throwException(callFrame, exceptionValue, codeBlock->instructions.begin() + vPCIndex, false);
+    Instruction* handlerVPC = globalData->interpreter->throwException(callFrame, exceptionValue, codeBlock->instructions.begin() + vPCIndex, false);
 
     if (!handlerVPC) {
         *ARG_exception = exceptionValue;
@@ -5958,3 +5976,4 @@ JSValue* Machine::cti_vm_throw(CTI_ARGS)
 #endif // ENABLE(CTI)
 
 } // namespace JSC
+

@@ -981,16 +981,8 @@ bool Heap::collect()
         ArgList::markLists(*m_markListSet);
     if (m_globalData->exception && !m_globalData->exception->marked())
         m_globalData->exception->mark();
-    m_globalData->machine->registerFile().markCallFrames(this);
+    m_globalData->interpreter->registerFile().markCallFrames(this);
     m_globalData->smallStrings.mark();
-
-    JSGlobalObject* globalObject = m_globalData->head;
-    if (globalObject) {
-        do {
-            globalObject->markCrossHeapDependentObjects();
-            globalObject = globalObject->next();
-        } while (globalObject != m_globalData->head);
-    }
 
     JAVASCRIPTCORE_GC_MARKED();
 
@@ -1103,3 +1095,4 @@ Heap::iterator Heap::primaryHeapEnd()
 }
 
 } // namespace JSC
+

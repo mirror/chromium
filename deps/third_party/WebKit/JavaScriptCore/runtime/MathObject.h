@@ -27,19 +27,20 @@ namespace JSC {
 
     class MathObject : public JSObject {
     public:
-        MathObject(ExecState*, PassRefPtr<StructureID>);
+        MathObject(ExecState*, PassRefPtr<Structure>);
 
         virtual bool getOwnPropertySlot(ExecState*, const Identifier&, PropertySlot&);
 
         virtual const ClassInfo* classInfo() const { return &info; }
         static const ClassInfo info;
 
-        static PassRefPtr<StructureID> createStructureID(JSValue* prototype)
+        static PassRefPtr<Structure> createStructure(JSValue* prototype)
         {
-            return StructureID::create(prototype, TypeInfo(ObjectType));
+            return Structure::create(prototype, TypeInfo(ObjectType));
         }
     };
 
 } // namespace JSC
 
 #endif // MathObject_h
+

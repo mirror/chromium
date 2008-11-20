@@ -27,12 +27,13 @@
 #include "NetworkStateNotifier.h"
 
 #include <wtf/Assertions.h>
+#include <wtf/StdLibExtras.h>
 
 namespace WebCore {
 
 NetworkStateNotifier& networkStateNotifier()
 {
-    static NetworkStateNotifier networkStateNotifier;
+    DEFINE_STATIC_LOCAL(NetworkStateNotifier, networkStateNotifier, ());
     
     return networkStateNotifier;
 }
@@ -45,3 +46,4 @@ void NetworkStateNotifier::setNetworkStateChangedFunction(void(*function)())
 }
     
 }
+
