@@ -33,6 +33,10 @@ env = env.Clone(
     ICUPKG = env.File('$ICU38_DIR/generated/icupkg$PROGSUFFIX'),
 )
 
+env.ApplySConscript([
+    '$CHROME_SRC_DIR/build/external_code.scons',
+])
+
 env.Prepend(
     CPPPATH = [
         'source/common',
@@ -68,7 +72,8 @@ if env['PLATFORM'] == 'win32':
   env['GENCCODE_SUFFIX'] = '.c'
 
 if env['PLATFORM'] == 'win32':
-  env.Append(CCFLAGS = ['/WX'])
+  # /Wd4996 to silence warning about strncpy
+  env.Append(CCFLAGS = ['/WX', '/Wd4996'])
 else:
   env.Append(
       CCFLAGS = [
