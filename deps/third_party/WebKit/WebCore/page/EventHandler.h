@@ -328,7 +328,7 @@ private:
     
     RefPtr<HTMLFrameSetElement> m_frameSetBeingResized;
 
-    IntSize m_offsetFromResizeCorner;    
+    IntSize m_offsetFromResizeCorner;   // in the coords of m_resizeLayer
     
     IntPoint m_currentMousePosition;
     IntPoint m_mouseDownPos; // in our view's coords
@@ -349,3 +349,4 @@ private:
 } // namespace WebCore
 
 #endif // EventHandler_h
+

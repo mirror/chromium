@@ -53,7 +53,7 @@ namespace JSC {
 
     class Structure : public RefCounted<Structure> {
     public:
-        friend class CTI;
+        friend class JIT;
         static PassRefPtr<Structure> create(JSValue* prototype, const TypeInfo& typeInfo)
         {
             return adoptRef(new Structure(prototype, typeInfo));
@@ -221,3 +221,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // Structure_h
+

@@ -30,7 +30,7 @@
 namespace JSC {
 
     class JSCell : public JSValue {
-        friend class CTI;
+        friend class JIT;
         friend class GetterSetter;
         friend class Heap;
         friend class JSNumberCell;
@@ -38,7 +38,7 @@ namespace JSC {
         friend class JSPropertyNameIterator;
         friend class JSString;
         friend class JSValue;
-        friend class BytecodeInterpreter;
+        friend class Interpreter;
 
     private:
         explicit JSCell(Structure*);
@@ -309,4 +309,5 @@ namespace JSC {
 } // namespace JSC
 
 #endif // JSCell_h
+
 

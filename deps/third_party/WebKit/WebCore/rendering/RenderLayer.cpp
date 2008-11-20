@@ -74,6 +74,7 @@
 #include "ScrollbarTheme.h"
 #include "SelectionController.h"
 #include "TranslateTransformOperation.h"
+#include <wtf/StdLibExtras.h>
 
 #if ENABLE(SVG)
 #include "SVGNames.h"
@@ -455,6 +456,12 @@ RenderLayer* RenderLayer::enclosingTransformedAncestor() const
     for ( ; curr && !curr->m_object->isRenderView() && !curr->transform(); curr = curr->parent())
         { }
     return curr;
+}
+
+IntPoint RenderLayer::absoluteToContents(const IntPoint& absolutePoint) const
+{
+    // We don't use convertToLayerCoords because it doesn't know about transforms
+    return roundedIntPoint(renderer()->absoluteToLocal(absolutePoint, false, true));
 }
 
 bool RenderLayer::requiresSlowRepaints() const
@@ -1251,13 +1258,12 @@ int RenderLayer::horizontalScrollbarHeight() const
     return m_hBar->height();
 }
 
-IntSize RenderLayer::offsetFromResizeCorner(const IntPoint& p) const
+IntSize RenderLayer::offsetFromResizeCorner(const IntPoint& absolutePoint) const
 {
     // Currently the resize corner is always the bottom right corner
-    int x = width();
-    int y = height();
-    convertToLayerCoords(root(), x, y);
-    return p - IntPoint(x, y);
+    IntPoint bottomRight(width(), height());
+    IntPoint localPoint = absoluteToContents(absolutePoint);
+    return localPoint - bottomRight;
 }
 
 void RenderLayer::positionOverflowControls(int tx, int ty)
@@ -1518,9 +1524,7 @@ void RenderLayer::paintResizer(GraphicsContext* context, int tx, int ty, const I
     }
 
     // Paint the resizer control.
-    static RefPtr<Image> resizeCornerImage;
-    if (!resizeCornerImage)
-        resizeCornerImage = Image::loadPlatformResource("textAreaResizeCorner");
+    DEFINE_STATIC_LOCAL(RefPtr<Image>, resizeCornerImage, (Image::loadPlatformResource("textAreaResizeCorner")));
     IntPoint imagePoint(absRect.right() - resizeCornerImage->width(), absRect.bottom() - resizeCornerImage->height());
     context->drawImage(resizeCornerImage.get(), imagePoint);
 
@@ -1538,16 +1542,15 @@ void RenderLayer::paintResizer(GraphicsContext* context, int tx, int ty, const I
     }
 }
 
-bool RenderLayer::isPointInResizeControl(const IntPoint& point)
+bool RenderLayer::isPointInResizeControl(const IntPoint& absolutePoint) const
 {
     if (!m_object->hasOverflowClip() || m_object->style()->resize() == RESIZE_NONE)
         return false;
     
-    int x = 0;
-    int y = 0;
-    convertToLayerCoords(root(), x, y);
-    IntRect absBounds(x, y, m_object->width(), m_object->height());
-    return resizerCornerRect(this, absBounds).contains(point);
+    IntPoint localPoint = absoluteToContents(absolutePoint);
+
+    IntRect localBounds(0, 0, m_object->width(), m_object->height());
+    return resizerCornerRect(this, localBounds).contains(localPoint);
 }
     
 bool RenderLayer::hitTestOverflowControls(HitTestResult& result)
@@ -2570,4 +2573,5 @@ void RenderLayer::suspendMarquees()
 }
 
 } // namespace WebCore
+
 

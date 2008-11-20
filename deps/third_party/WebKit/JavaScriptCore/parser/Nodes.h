@@ -2139,7 +2139,7 @@ namespace JSC {
     };
 
     class FunctionBodyNode : public ScopeNode {
-        friend class CTI;
+        friend class JIT;
     public:
         static FunctionBodyNode* create(JSGlobalData*, SourceElements*, VarStack*, FunctionStack*, const SourceCode&, CodeFeatures, int numConstants) JSC_FAST_CALL;
         static FunctionBodyNode* create(JSGlobalData*, SourceElements*, VarStack*, FunctionStack*, CodeFeatures, int numConstants) JSC_FAST_CALL;
@@ -2382,4 +2382,5 @@ namespace JSC {
 } // namespace JSC
 
 #endif // NODES_H_
+
 

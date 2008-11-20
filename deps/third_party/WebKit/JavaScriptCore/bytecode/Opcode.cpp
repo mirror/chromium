@@ -184,4 +184,3 @@ void OpcodeStats::resetLastInstruction()
 #endif
 
 } // namespace JSC
-

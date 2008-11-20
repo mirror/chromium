@@ -136,6 +136,7 @@ IDL_BINDINGS += \
 	WebCore/dom/WebKitAnimationEvent.idl \
 	WebCore/dom/WebKitTransitionEvent.idl \
 	WebCore/dom/WheelEvent.idl \
+	WebCore/dom/Worker.idl \
 	WebCore/html/CanvasGradient.idl \
 	WebCore/html/CanvasPattern.idl \
 	WebCore/html/CanvasPixelArray.idl \
@@ -2112,6 +2113,7 @@ webcore_sources += \
 	WebCore/bindings/js/JSDedicatedWorkerConstructor.h \
 	WebCore/bindings/js/JSWorkerContext.h \
 	WebCore/dom/DedicatedWorker.h \
+	WebCore/dom/Worker.h \
 	WebCore/dom/WorkerContext.h
 
 # ----
@@ -2973,5 +2975,6 @@ CLEANFILES += \
 	libWebCoreJS.la \
 	WebCore/bindings/js/JSDOMWindowBase.lut.h \
 	WebCore/bindings/js/JSRGBColor.lut.h
+
 
 

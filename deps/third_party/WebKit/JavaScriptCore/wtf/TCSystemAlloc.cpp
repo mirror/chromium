@@ -53,7 +53,7 @@
 
 #if HAVE(MMAP)
 static const int cProtFlags = PROT_READ | PROT_WRITE
-#if ENABLE(CTI) && PLATFORM(GTK)
+#if ENABLE(JIT) && PLATFORM(GTK)
                               | PROT_EXEC
 #endif
                               ;
@@ -444,3 +444,4 @@ void TCMalloc_SystemCommit(void* start, size_t length)
     UNUSED_PARAM(length);
 }
 #endif
+

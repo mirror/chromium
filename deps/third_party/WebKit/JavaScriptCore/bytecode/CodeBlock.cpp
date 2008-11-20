@@ -181,7 +181,7 @@ void CodeBlock::printStructure(const char* name, const Instruction* vPC, int ope
 
 void CodeBlock::printStructures(const Instruction* vPC) const
 {
-    BytecodeInterpreter* interpreter = globalData->interpreter;
+    Interpreter* interpreter = globalData->interpreter;
     unsigned instructionOffset = vPC - instructions.begin();
 
     if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id)) {
@@ -965,7 +965,7 @@ CodeBlock::~CodeBlock()
             callLinkInfo->callee->removeCaller(callLinkInfo);
     }
 
-#if ENABLE(CTI) 
+#if ENABLE(JIT) 
     unlinkCallers();
 
     if (ctiCode)
@@ -973,13 +973,13 @@ CodeBlock::~CodeBlock()
 #endif
 }
 
-#if ENABLE(CTI) 
+#if ENABLE(JIT) 
 void CodeBlock::unlinkCallers()
 {
     size_t size = linkedCallerList.size();
     for (size_t i = 0; i < size; ++i) {
         CallLinkInfo* currentCaller = linkedCallerList[i];
-        CTI::unlinkCall(currentCaller);
+        JIT::unlinkCall(currentCaller);
         currentCaller->setUnlinked();
     }
     linkedCallerList.clear();
@@ -988,7 +988,7 @@ void CodeBlock::unlinkCallers()
 
 void CodeBlock::derefStructures(Instruction* vPC) const
 {
-    BytecodeInterpreter* interpreter = globalData->interpreter;
+    Interpreter* interpreter = globalData->interpreter;
 
     if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_self)) {
         vPC[4].u.structure->deref();
@@ -1026,7 +1026,7 @@ void CodeBlock::derefStructures(Instruction* vPC) const
 
 void CodeBlock::refStructures(Instruction* vPC) const
 {
-    BytecodeInterpreter* interpreter = globalData->interpreter;
+    Interpreter* interpreter = globalData->interpreter;
 
     if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_self)) {
         vPC[4].u.structure->ref();
@@ -1178,4 +1178,3 @@ int32_t SimpleJumpTable::offsetForValue(int32_t value, int32_t defaultOffset)
 }
 
 } // namespace JSC
-

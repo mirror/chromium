@@ -55,7 +55,7 @@ namespace JSC {
 
     class JSObject : public JSCell {
         friend class BatchedTransitionOptimizer;
-        friend class CTI;
+        friend class JIT;
         friend class JSCell;
 
     public:
@@ -552,4 +552,5 @@ ALWAYS_INLINE void JSObject::allocatePropertyStorageInline(size_t oldSize, size_
 } // namespace JSC
 
 #endif // JSObject_h
+
 

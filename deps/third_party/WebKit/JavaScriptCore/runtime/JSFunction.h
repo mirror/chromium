@@ -38,8 +38,8 @@ namespace JSC {
     class JSGlobalObject;
 
     class JSFunction : public InternalFunction {
-        friend class CTI;
-        friend class BytecodeInterpreter;
+        friend class JIT;
+        friend class Interpreter;
 
         typedef InternalFunction Base;
         JSFunction(PassRefPtr<JSC::Structure> st) : InternalFunction(st), m_scopeChain(NoScopeChain()) {}
@@ -97,4 +97,5 @@ namespace JSC {
 } // namespace kJS
 
 #endif // JSFunction_h
+
 

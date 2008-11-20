@@ -2,11 +2,14 @@ javascriptcore_cppflags += \
 	-I$(srcdir)/JavaScriptCore/API \
 	-I$(srcdir)/JavaScriptCore/ForwardingHeaders \
 	-I$(srcdir)/JavaScriptCore/VM \
+	-I$(srcdir)/JavaScriptCore/bytecode \
 	-I$(srcdir)/JavaScriptCore/bytecompiler \
 	-I$(srcdir)/JavaScriptCore/debugger \
 	-I$(srcdir)/JavaScriptCore/pcre \
 	-I$(srcdir)/JavaScriptCore/profiler \
 	-I$(srcdir)/JavaScriptCore/runtime \
+	-I$(srcdir)/JavaScriptCore/wrec \
+	-I$(srcdir)/JavaScriptCore/assembler \
 	-I$(srcdir)/JavaScriptCore/wtf/unicode \
 	-I$(top_builddir)/JavaScriptCore/pcre \
 	-I$(top_builddir)/JavaScriptCore/parser \
@@ -70,22 +73,22 @@ javascriptcore_sources += \
 	JavaScriptCore/JavaScriptCorePrefix.h \
 	JavaScriptCore/VM/CTI.cpp \
 	JavaScriptCore/VM/CTI.h \
-	JavaScriptCore/VM/CodeBlock.cpp \
-	JavaScriptCore/VM/CodeBlock.h \
-	JavaScriptCore/VM/EvalCodeCache.h \
+	JavaScriptCore/bytecode/CodeBlock.cpp \
+	JavaScriptCore/bytecode/CodeBlock.h \
+	JavaScriptCore/bytecode/EvalCodeCache.h \
 	JavaScriptCore/VM/ExceptionHelpers.cpp \
 	JavaScriptCore/VM/ExceptionHelpers.h \
-	JavaScriptCore/VM/Instruction.h \
-	JavaScriptCore/VM/LabelID.h \
+	JavaScriptCore/bytecode/Instruction.h \
+	JavaScriptCore/bytecompiler/Label.h \
 	JavaScriptCore/VM/Machine.cpp \
 	JavaScriptCore/VM/Machine.h \
-	JavaScriptCore/VM/Opcode.cpp \
-	JavaScriptCore/VM/Opcode.h \
+	JavaScriptCore/bytecode/Opcode.cpp \
+	JavaScriptCore/bytecode/Opcode.h \
 	JavaScriptCore/VM/Register.h \
-	JavaScriptCore/VM/RegisterID.h \
+	JavaScriptCore/bytecompiler/RegisterID.h \
 	JavaScriptCore/VM/SamplingTool.cpp \
 	JavaScriptCore/VM/SamplingTool.h \
-	JavaScriptCore/VM/SegmentedVector.h \
+	JavaScriptCore/bytecompiler/SegmentedVector.h \
 	JavaScriptCore/config.h \
 	JavaScriptCore/debugger/DebuggerCallFrame.cpp \
 	JavaScriptCore/debugger/DebuggerCallFrame.h \
@@ -111,7 +114,8 @@ javascriptcore_sources += \
 	JavaScriptCore/icu/unicode/utf_old.h \
 	JavaScriptCore/icu/unicode/utypes.h \
 	JavaScriptCore/icu/unicode/uversion.h \
-	JavaScriptCore/masm/X86Assembler.h \
+	JavaScriptCore/assembler/X86Assembler.h \
+	JavaScriptCore/assembler/AssemblerBuffer.h \
 	JavaScriptCore/os-win32/stdbool.h \
 	JavaScriptCore/os-win32/stdint.h \
 	JavaScriptCore/pcre/pcre.h \
@@ -227,8 +231,8 @@ javascriptcore_built_sources += \
 javascriptcore_sources += \
 	JavaScriptCore/VM/RegisterFile.cpp \
 	JavaScriptCore/VM/RegisterFile.h \
-	JavaScriptCore/bytecompiler/CodeGenerator.cpp \
-	JavaScriptCore/bytecompiler/CodeGenerator.h \
+	JavaScriptCore/bytecompiler/BytecodeGenerator.cpp \
+	JavaScriptCore/bytecompiler/BytecodeGenerator.h \
 	JavaScriptCore/bytecompiler/LabelScope.h \
 	JavaScriptCore/debugger/Debugger.cpp \
 	JavaScriptCore/debugger/Debugger.h \
@@ -492,4 +496,5 @@ CLEANFILES += \
 	JavaScriptCore/pcre/chartables.c \
 	Programs/jsc \
 	Programs/minidom
+
 

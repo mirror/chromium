@@ -22,6 +22,7 @@
 #define KJS_REGEXP_H
 
 #include "UString.h"
+#include "WREC.h"
 #include <wtf/Forward.h>
 #include <wtf/RefCounted.h>
 
@@ -66,11 +67,11 @@ namespace JSC {
         unsigned m_numSubpatterns;
 
 #if ENABLE(WREC)
-        // Called as a WRECFunction
-        void* m_wrecFunction;
+        WREC::CompiledRegExp m_wrecFunction;
 #endif
     };
 
 } // namespace JSC
 
 #endif // KJS_REGEXP_H
+

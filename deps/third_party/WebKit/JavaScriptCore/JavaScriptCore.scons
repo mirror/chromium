@@ -19,7 +19,7 @@ sources['API'] = [
     'API/OpaqueJSString.cpp',
 ]
 sources['bytecompiler'] = [
-    'bytecompiler/CodeGenerator.cpp',
+    'bytecompiler/BytecodeGenerator.cpp',
 ]
 sources['debugger'] = [
     'debugger/Debugger.cpp',
@@ -118,12 +118,14 @@ sources['runtime'] = [
     'runtime/StructureChain.cpp',
     'runtime/UString.cpp',
 ]
+sources['bytecode'] = [
+    'bytecode/CodeBlock.cpp',
+    'bytecode/Opcode.cpp',
+]
 sources['VM'] = [
-    'VM/CodeBlock.cpp',
     'VM/CTI.cpp',
     'VM/ExceptionHelpers.cpp',
     'VM/Machine.cpp',
-    'VM/Opcode.cpp',
     'VM/RegisterFile.cpp',
     'VM/SamplingTool.cpp',
 ]
@@ -227,4 +229,5 @@ build_directory = '.' # This should be changed to point to wherever JavaScriptCo
 
 env = Environment(CPPPATH = include_paths, LIBS = ['JavaScriptCore', 'edit'], LIBPATH = [build_directory])
 env.Program('jsc', shell_sources)
+
 

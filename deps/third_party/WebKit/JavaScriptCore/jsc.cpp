@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#include "CodeGenerator.h"
+#include "BytecodeGenerator.h"
 #include "Completion.h"
 #include "InitializeThreading.h"
 #include "Interpreter.h"
@@ -320,7 +320,7 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
         BytecodeGenerator::setDumpsGeneratedCode(true);
 
 #if ENABLE(OPCODE_SAMPLING)
-    BytecodeInterpreter* interpreter = globalObject->globalData()->interpreter;
+    Interpreter* interpreter = globalObject->globalData()->interpreter;
     interpreter->setSampler(new SamplingTool(machine));
 #endif
 
@@ -489,4 +489,5 @@ static bool fillBufferWithContentsOfFile(const UString& fileName, Vector<char>& 
 
     return true;
 }
+
 

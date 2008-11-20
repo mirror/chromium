@@ -217,4 +217,3 @@ namespace JSC {
 } // namespace JSC
 
 #endif // Opcode_h
-

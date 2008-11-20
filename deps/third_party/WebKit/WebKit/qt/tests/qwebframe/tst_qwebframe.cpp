@@ -564,6 +564,7 @@ private slots:
     void progressSignal();
     void domCycles();
     void setHtml();
+    void setHtmlWithResource();
     void ipv6HostEncoding();
     void metaData();
 private:
@@ -2037,6 +2038,24 @@ void tst_QWebFrame::setHtml()
     QCOMPARE(m_view->page()->mainFrame()->toHtml(), html);
 }
 
+void tst_QWebFrame::setHtmlWithResource()
+{
+    QString html("<html><body><p>hello world</p><img src='qrc:/image.png'/></body></html>");
+
+    QWebPage page;
+    QWebFrame* frame = page.mainFrame();
+
+    // in few seconds, the image should be completey loaded
+    QSignalSpy spy(&page, SIGNAL(loadFinished(bool)));
+    frame->setHtml(html);
+    QTest::qWait(5);
+    QCOMPARE(spy.count(), 1);
+
+    QCOMPARE(frame->evaluateJavaScript("document.images.length").toInt(), 1);
+    QCOMPARE(frame->evaluateJavaScript("document.images[0].width").toInt(), 128);
+    QCOMPARE(frame->evaluateJavaScript("document.images[0].height").toInt(), 128);
+}
+
 class TestNetworkManager : public QNetworkAccessManager
 {
 public:
@@ -2108,3 +2127,4 @@ void tst_QWebFrame::metaData()
 
 QTEST_MAIN(tst_QWebFrame)
 #include "tst_qwebframe.moc"
+

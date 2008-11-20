@@ -46,6 +46,7 @@
 #include "WebURLResponse.h"
 #include "WebView.h"
 #pragma warning(push, 0)
+#include <WebCore/CachedPage.h>
 #include <WebCore/DocumentLoader.h>
 #include <WebCore/FrameLoader.h>
 #include <WebCore/FrameTree.h>
@@ -704,3 +705,4 @@ WebHistory* WebFrameLoaderClient::webHistory() const
 
     return WebHistory::sharedHistory();
 }
+

@@ -1,3 +1,11 @@
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * WebCoreSupport/WebFrameLoaderClient.cpp:
+
 2008-11-16  Darin Adler  <darin@apple.com>
 
         Reviewed by Dan Bernstein.
@@ -21104,5 +21112,6 @@
         (WebView::setFormDelegate):
         (WebView::formDelegate):
         * WebView.h: Added.
+
 
 

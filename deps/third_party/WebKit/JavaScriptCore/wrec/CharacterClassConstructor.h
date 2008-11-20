@@ -26,11 +26,13 @@
 #ifndef CharacterClassConstructor_h
 #define CharacterClassConstructor_h
 
+#include <wtf/Platform.h>
+
 #if ENABLE(WREC)
 
 #include "UString.h"
 
-namespace WREC {
+namespace JSC { namespace WREC {
 
     struct CharacterClassRange {
         UChar begin;
@@ -114,9 +116,10 @@ namespace WREC {
         Vector<CharacterClassRange> m_rangesUnicode;
     };
 
-} // namespace WREC
+} } // namespace JSC::WREC
 
 #endif // ENABLE(WREC)
 
 #endif // CharacterClassConstructor_h
+
 

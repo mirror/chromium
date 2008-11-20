@@ -1,3 +1,139 @@
+2008-11-16  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=22118
+        
+        Fix resize corner tracking in transformed elements by using 
+        mapping the point into local coords using absoluteToLocal,
+        rather than convertToLayerCoords.
+        
+        Test: fast/css/resize-corner-tracking-transformed.html
+
+        * page/EventHandler.h:
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::absoluteToContents):
+        (WebCore::RenderLayer::offsetFromResizeCorner):
+        (WebCore::RenderLayer::isPointInResizeControl):
+        * rendering/RenderLayer.h:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+
+        Try to fix Qt build.
+
+        * WebCore.pro:
+
+2008-11-16  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Use RefPtr and PassRefPtr where appropriate.
+
+        * loader/FTPDirectoryDocument.cpp:
+        (WebCore::createTemplateDocumentData):
+
+2008-11-16  Greg Bolsinga  <bolsinga@apple.com>
+
+        Fix build break for real.
+
+        * loader/FTPDirectoryDocument.cpp:
+        (WebCore::createTemplateDocumentData):
+
+2008-11-16  Greg Bolsinga  <bolsinga@apple.com>
+
+        Fix build break and bug.
+
+        * loader/FTPDirectoryDocument.cpp:
+        (WebCore::createTemplateDocumentData):
+
+2008-11-16  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21810
+        Remove use of static C++ objects that are destroyed at exit time (destructors)
+
+        Use DEFINE_STATIC_LOCAL for static RetainPtr<T>, RefPtr<T>. Add additional
+        uses of DEFINE_STATIC_LOCAL where appropriate.
+
+        * html/HTMLTableElement.cpp:
+        (WebCore::HTMLTableElement::addSharedCellBordersDecl): new the AtomicStrings
+        * loader/CachedImage.cpp:
+        (WebCore::brokenImage):
+        (WebCore::nullImage):
+        * loader/FTPDirectoryDocument.cpp:
+        (WebCore::_createTemplateDocumentData): Created so accessor has one line initialization
+        (WebCore::FTPDirectoryTokenizer::loadDocumentTemplate):
+        * loader/icon/IconDatabase.cpp:
+        (WebCore::loadDefaultIconRecord):
+        * page/AccessibilityObject.cpp:
+        (WebCore::AccessibilityObject::actionVerb):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::actionVerb):
+        * page/mac/EventHandlerMac.mm:
+        (WebCore::currentEvent):
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::paint):
+        * platform/graphics/Image.cpp:
+        (WebCore::Image::nullImage):
+        * platform/graphics/mac/ColorMac.mm:
+        (WebCore::nsColor):
+        * platform/graphics/mac/FontCacheMac.mm: new the Strings
+        (WebCore::FontCache::getSimilarFontPlatformData):
+        * platform/graphics/mac/GraphicsContextMac.mm:
+        (WebCore::_createPatternColor): Created so accessor has one line initialization
+        (WebCore::GraphicsContext::drawLineForMisspellingOrBadGrammar):
+        * platform/graphics/mac/SimpleFontDataMac.mm:
+        (WebCore::webFallbackFontFamily):
+        * platform/mac/PasteboardMac.mm:
+        (WebCore::writableTypesForURL):
+        (WebCore::createWritableTypesForImage): Created so accessor has one line initialization
+        (WebCore::writableTypesForImage):
+        (WebCore::stripAttachmentCharacters):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::paintResizer):
+
+2008-11-16  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Darin Adler.
+
+        Do not spit Curl errors into the stdout as this is used by DRT
+
+        We have failing tests results due the curl errors printed to stdout,
+        move them to stderr to be able to pass those tests.
+
+        * platform/network/curl/ResourceHandleManager.cpp:
+        (WebCore::ResourceHandleManager::startJob):
+
+2008-11-16  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        - fix the Gtk+ build
+
+        * GNUmakefile.am:
+
+2008-11-16  Darin Adler  <darin@apple.com>
+
+        - try to fix Qt build
+
+        * WebCore.pro: Add the worker-related source files.
+
+2008-11-16  Darin Adler  <darin@apple.com>
+
+        Suggested by Alexey Proskuryakov.
+
+        - fix the GTK build another way
+
+        * GNUmakefile.am: Add the worker-related source files.
+        * bindings/js/JSEventTarget.cpp: Take the #if back out.
+
+2008-11-16  Darin Adler  <darin@apple.com>
+
+        - try to fix GTK build
+
+        * bindings/js/JSEventTarget.cpp: Put worker includes inside an #if.
+
 2008-11-16  Darin Adler  <darin@apple.com>
 
         Reviewed by Dan Bernstein.
@@ -28020,4 +28156,5 @@
         getting the line's textContent. Add the error bubble back at the end.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 

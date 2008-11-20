@@ -1,3 +1,956 @@
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Qt build.
+
+        * JavaScriptCore.pri:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Qt build.
+
+        * JavaScriptCore.pri:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        More file moves:
+        
+        VM/CodeBlock.* => bytecode/CodeBlock.*
+        VM/EvalCodeCache.h => bytecode/EvalCodeCache.h
+        VM/Instruction.h => bytecode/Instruction.h
+        VM/Opcode.* => bytecode/Opcode.*
+
+        * GNUmakefile.am:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.vcproj/jsc/jsc.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * VM/CodeBlock.cpp: Removed.
+        * VM/CodeBlock.h: Removed.
+        * VM/EvalCodeCache.h: Removed.
+        * VM/Instruction.h: Removed.
+        * VM/Opcode.cpp: Removed.
+        * VM/Opcode.h: Removed.
+        * bytecode: Added.
+        * bytecode/CodeBlock.cpp: Copied from VM/CodeBlock.cpp.
+        * bytecode/CodeBlock.h: Copied from VM/CodeBlock.h.
+        * bytecode/EvalCodeCache.h: Copied from VM/EvalCodeCache.h.
+        * bytecode/Instruction.h: Copied from VM/Instruction.h.
+        * bytecode/Opcode.cpp: Copied from VM/Opcode.cpp.
+        * bytecode/Opcode.h: Copied from VM/Opcode.h.
+        * jsc.pro:
+        * jscore.bkl:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix a few more builds.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCoreSources.bkl:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix gtk build.
+
+        * GNUmakefile.am:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Some file moves:
+        
+        VM/LabelID.h => bytecompiler/Label.h
+        VM/RegisterID.h => bytecompiler/RegisterID.h
+        VM/SegmentedVector.h => bytecompiler/SegmentedVector.h
+        bytecompiler/CodeGenerator.* => bytecompiler/BytecodeGenerator.*
+
+        * AllInOneFile.cpp:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * VM/LabelID.h: Removed.
+        * VM/RegisterID.h: Removed.
+        * VM/SegmentedVector.h: Removed.
+        * bytecompiler/BytecodeGenerator.cpp: Copied from bytecompiler/CodeGenerator.cpp.
+        * bytecompiler/BytecodeGenerator.h: Copied from bytecompiler/CodeGenerator.h.
+        * bytecompiler/CodeGenerator.cpp: Removed.
+        * bytecompiler/CodeGenerator.h: Removed.
+        * bytecompiler/Label.h: Copied from VM/LabelID.h.
+        * bytecompiler/LabelScope.h:
+        * bytecompiler/RegisterID.h: Copied from VM/RegisterID.h.
+        * bytecompiler/SegmentedVector.h: Copied from VM/SegmentedVector.h.
+        * jsc.cpp:
+        * parser/Nodes.cpp:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/jsc/jsc.vcproj:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved masm => assembler and split "AssemblerBuffer.h" out of "X86Assembler.h".
+        
+        Also renamed ENABLE_MASM to ENABLE_ASSEMBLER.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * assembler: Added.
+        * assembler/AssemblerBuffer.h: Copied from masm/X86Assembler.h.
+        (JSC::AssemblerBuffer::AssemblerBuffer):
+        (JSC::AssemblerBuffer::~AssemblerBuffer):
+        (JSC::AssemblerBuffer::ensureSpace):
+        (JSC::AssemblerBuffer::isAligned):
+        (JSC::AssemblerBuffer::putByteUnchecked):
+        (JSC::AssemblerBuffer::putByte):
+        (JSC::AssemblerBuffer::putShortUnchecked):
+        (JSC::AssemblerBuffer::putShort):
+        (JSC::AssemblerBuffer::putIntUnchecked):
+        (JSC::AssemblerBuffer::putInt):
+        (JSC::AssemblerBuffer::data):
+        (JSC::AssemblerBuffer::size):
+        (JSC::AssemblerBuffer::reset):
+        (JSC::AssemblerBuffer::executableCopy):
+        (JSC::AssemblerBuffer::grow):
+        * assembler/X86Assembler.h: Copied from masm/X86Assembler.h.
+        * masm: Removed.
+        * masm/X86Assembler.h: Removed.
+        * wtf/Platform.h:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix gtk build.
+
+        * GNUmakefile.am:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Fixed tyop.
+
+        * VM/CTI.cpp:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix windows build.
+
+        * VM/CTI.cpp:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix gtk build.
+
+        * GNUmakefile.am:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Renamed ENABLE_CTI and ENABLE(CTI) to ENABLE_JIT and ENABLE(JIT).
+
+        * VM/CTI.cpp:
+        * VM/CTI.h:
+        * VM/CodeBlock.cpp:
+        (JSC::CodeBlock::~CodeBlock):
+        * VM/CodeBlock.h:
+        (JSC::CodeBlock::CodeBlock):
+        * VM/Machine.cpp:
+        (JSC::Interpreter::Interpreter):
+        (JSC::Interpreter::initialize):
+        (JSC::Interpreter::~Interpreter):
+        (JSC::Interpreter::execute):
+        (JSC::Interpreter::privateExecute):
+        * VM/Machine.h:
+        * bytecompiler/CodeGenerator.cpp:
+        (JSC::prepareJumpTableForStringSwitch):
+        * runtime/JSFunction.cpp:
+        (JSC::JSFunction::~JSFunction):
+        * runtime/JSGlobalData.h:
+        * wrec/WREC.h:
+        * wtf/Platform.h:
+        * wtf/TCSystemAlloc.cpp:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix gtk build.
+
+        * VM/CTI.cpp:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by a few people on squirrelfish-dev.
+        
+        Renamed CTI => JIT.
+
+        * VM/CTI.cpp:
+        (JSC::JIT::killLastResultRegister):
+        (JSC::JIT::emitGetVirtualRegister):
+        (JSC::JIT::emitGetVirtualRegisters):
+        (JSC::JIT::emitPutCTIArgFromVirtualRegister):
+        (JSC::JIT::emitPutCTIArg):
+        (JSC::JIT::emitGetCTIArg):
+        (JSC::JIT::emitPutCTIArgConstant):
+        (JSC::JIT::getConstantImmediateNumericArg):
+        (JSC::JIT::emitPutCTIParam):
+        (JSC::JIT::emitGetCTIParam):
+        (JSC::JIT::emitPutToCallFrameHeader):
+        (JSC::JIT::emitGetFromCallFrameHeader):
+        (JSC::JIT::emitPutVirtualRegister):
+        (JSC::JIT::emitInitRegister):
+        (JSC::JIT::printBytecodeOperandTypes):
+        (JSC::JIT::emitAllocateNumber):
+        (JSC::JIT::emitNakedCall):
+        (JSC::JIT::emitNakedFastCall):
+        (JSC::JIT::emitCTICall):
+        (JSC::JIT::emitJumpSlowCaseIfNotJSCell):
+        (JSC::JIT::linkSlowCaseIfNotJSCell):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNum):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNums):
+        (JSC::JIT::getDeTaggedConstantImmediate):
+        (JSC::JIT::emitFastArithDeTagImmediate):
+        (JSC::JIT::emitFastArithDeTagImmediateJumpIfZero):
+        (JSC::JIT::emitFastArithReTagImmediate):
+        (JSC::JIT::emitFastArithPotentiallyReTagImmediate):
+        (JSC::JIT::emitFastArithImmToInt):
+        (JSC::JIT::emitFastArithIntToImmOrSlowCase):
+        (JSC::JIT::emitFastArithIntToImmNoCheck):
+        (JSC::JIT::emitArithIntToImmWithJump):
+        (JSC::JIT::emitTagAsBoolImmediate):
+        (JSC::JIT::JIT):
+        (JSC::JIT::compileOpCallInitializeCallFrame):
+        (JSC::JIT::compileOpCallSetupArgs):
+        (JSC::JIT::compileOpCallEvalSetupArgs):
+        (JSC::JIT::compileOpConstructSetupArgs):
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::compileOpStrictEq):
+        (JSC::JIT::emitSlowScriptCheck):
+        (JSC::JIT::putDoubleResultToJSNumberCellOrJSImmediate):
+        (JSC::JIT::compileBinaryArithOp):
+        (JSC::JIT::compileBinaryArithOpSlowCase):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileLinkPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileGetByIdSelf):
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdChain):
+        (JSC::JIT::privateCompilePutByIdReplace):
+        (JSC::JIT::privateCompilePutByIdTransition):
+        (JSC::JIT::unlinkCall):
+        (JSC::JIT::linkCall):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        (JSC::JIT::freeCTIMachineTrampolines):
+        (JSC::JIT::patchGetByIdSelf):
+        (JSC::JIT::patchPutByIdReplace):
+        (JSC::JIT::privateCompilePatchGetArrayLength):
+        (JSC::JIT::emitGetVariableObjectRegister):
+        (JSC::JIT::emitPutVariableObjectRegister):
+        * VM/CTI.h:
+        (JSC::JIT::compile):
+        (JSC::JIT::compileGetByIdSelf):
+        (JSC::JIT::compileGetByIdProto):
+        (JSC::JIT::compileGetByIdChain):
+        (JSC::JIT::compilePutByIdReplace):
+        (JSC::JIT::compilePutByIdTransition):
+        (JSC::JIT::compileCTIMachineTrampolines):
+        (JSC::JIT::compilePatchGetArrayLength):
+        * VM/CodeBlock.cpp:
+        (JSC::CodeBlock::unlinkCallers):
+        * VM/Machine.cpp:
+        (JSC::Interpreter::initialize):
+        (JSC::Interpreter::~Interpreter):
+        (JSC::Interpreter::execute):
+        (JSC::Interpreter::tryCTICachePutByID):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::Interpreter::cti_op_call_JSFunction):
+        (JSC::Interpreter::cti_vm_dontLazyLinkCall):
+        (JSC::Interpreter::cti_vm_lazyLinkCall):
+        * VM/Machine.h:
+        * VM/RegisterFile.h:
+        * parser/Nodes.h:
+        * runtime/JSArray.h:
+        * runtime/JSCell.h:
+        * runtime/JSFunction.h:
+        * runtime/JSImmediate.h:
+        * runtime/JSNumberCell.h:
+        * runtime/JSObject.h:
+        * runtime/JSString.h:
+        * runtime/JSVariableObject.h:
+        * runtime/ScopeChain.h:
+        * runtime/Structure.h:
+        * runtime/TypeInfo.h:
+        * runtime/UString.h:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix wx build.
+
+        * jscore.bkl:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Nixed X86:: and X86Assembler:: prefixes in a lot of places using typedefs.
+
+        * VM/CTI.cpp:
+        (JSC::CTI::emitGetVirtualRegister):
+        (JSC::CTI::emitGetVirtualRegisters):
+        (JSC::CTI::emitPutCTIArgFromVirtualRegister):
+        (JSC::CTI::emitPutCTIArg):
+        (JSC::CTI::emitGetCTIArg):
+        (JSC::CTI::emitPutCTIParam):
+        (JSC::CTI::emitGetCTIParam):
+        (JSC::CTI::emitPutToCallFrameHeader):
+        (JSC::CTI::emitGetFromCallFrameHeader):
+        (JSC::CTI::emitPutVirtualRegister):
+        (JSC::CTI::emitNakedCall):
+        (JSC::CTI::emitNakedFastCall):
+        (JSC::CTI::emitCTICall):
+        (JSC::CTI::emitJumpSlowCaseIfNotJSCell):
+        (JSC::CTI::emitJumpSlowCaseIfNotImmNum):
+        (JSC::CTI::emitJumpSlowCaseIfNotImmNums):
+        (JSC::CTI::emitFastArithDeTagImmediate):
+        (JSC::CTI::emitFastArithDeTagImmediateJumpIfZero):
+        (JSC::CTI::emitFastArithReTagImmediate):
+        (JSC::CTI::emitFastArithPotentiallyReTagImmediate):
+        (JSC::CTI::emitFastArithImmToInt):
+        (JSC::CTI::emitFastArithIntToImmOrSlowCase):
+        (JSC::CTI::emitFastArithIntToImmNoCheck):
+        (JSC::CTI::emitArithIntToImmWithJump):
+        (JSC::CTI::emitTagAsBoolImmediate):
+        (JSC::CTI::compileOpCall):
+        (JSC::CTI::compileOpStrictEq):
+        (JSC::CTI::emitSlowScriptCheck):
+        (JSC::CTI::putDoubleResultToJSNumberCellOrJSImmediate):
+        (JSC::CTI::compileBinaryArithOp):
+        (JSC::CTI::compileBinaryArithOpSlowCase):
+        (JSC::CTI::privateCompileMainPass):
+        (JSC::CTI::privateCompileSlowCases):
+        (JSC::CTI::privateCompile):
+        (JSC::CTI::privateCompileGetByIdSelf):
+        (JSC::CTI::privateCompileGetByIdProto):
+        (JSC::CTI::privateCompileGetByIdChain):
+        (JSC::CTI::privateCompilePutByIdReplace):
+        (JSC::CTI::privateCompilePutByIdTransition):
+        (JSC::CTI::privateCompileCTIMachineTrampolines):
+        (JSC::CTI::privateCompilePatchGetArrayLength):
+        (JSC::CTI::emitGetVariableObjectRegister):
+        (JSC::CTI::emitPutVariableObjectRegister):
+        * VM/CTI.h:
+        (JSC::CallRecord::CallRecord):
+        (JSC::JmpTable::JmpTable):
+        (JSC::SlowCaseEntry::SlowCaseEntry):
+        (JSC::CTI::JSRInfo::JSRInfo):
+        * wrec/WREC.h:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Qt build.
+
+        * JavaScriptCore.pri:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Renamed OBJECT_OFFSET => FIELD_OFFSET
+
+        Nixed use of OBJECT_OFFSET outside of CTI.cpp by making CTI a friend in
+        more places.
+
+        * VM/CTI.cpp:
+        (JSC::CTI::compileOpCallInitializeCallFrame):
+        (JSC::CTI::compileOpCall):
+        (JSC::CTI::emitSlowScriptCheck):
+        (JSC::CTI::putDoubleResultToJSNumberCellOrJSImmediate):
+        (JSC::CTI::compileBinaryArithOp):
+        (JSC::CTI::privateCompileMainPass):
+        (JSC::CTI::privateCompileSlowCases):
+        (JSC::CTI::privateCompile):
+        (JSC::CTI::privateCompileGetByIdSelf):
+        (JSC::CTI::privateCompileGetByIdProto):
+        (JSC::CTI::privateCompileGetByIdChain):
+        (JSC::CTI::privateCompilePutByIdReplace):
+        (JSC::CTI::privateCompilePutByIdTransition):
+        (JSC::CTI::privateCompileCTIMachineTrampolines):
+        (JSC::CTI::privateCompilePatchGetArrayLength):
+        (JSC::CTI::emitGetVariableObjectRegister):
+        (JSC::CTI::emitPutVariableObjectRegister):
+        * runtime/JSValue.h:
+        * runtime/JSVariableObject.h:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Renames:
+        
+        X86Assembler::copy => X86Assembler::executableCopy
+        AssemblerBuffer::copy => AssemblerBuffer::executableCopy
+
+        * VM/CTI.cpp:
+        (JSC::CTI::privateCompile):
+        (JSC::CTI::privateCompileGetByIdSelf):
+        (JSC::CTI::privateCompileGetByIdProto):
+        (JSC::CTI::privateCompileGetByIdChain):
+        (JSC::CTI::privateCompilePutByIdReplace):
+        (JSC::CTI::privateCompilePutByIdTransition):
+        (JSC::CTI::privateCompileCTIMachineTrampolines):
+        (JSC::CTI::privateCompilePatchGetArrayLength):
+        * masm/X86Assembler.h:
+        (JSC::AssemblerBuffer::executableCopy):
+        (JSC::X86Assembler::executableCopy):
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Renamed WREC => JSC::WREC, removing JSC:: prefix in a lot of places.
+        Renamed WRECFunction => WREC::CompiledRegExp, and deployed this type
+        name in place of a few casts.
+
+        * runtime/RegExp.cpp:
+        (JSC::RegExp::RegExp):
+        (JSC::RegExp::~RegExp):
+        (JSC::RegExp::match):
+        * runtime/RegExp.h:
+        * wrec/CharacterClassConstructor.cpp:
+        * wrec/CharacterClassConstructor.h:
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+        * wrec/WREC.h:
+        (JSC::WREC::Generator::Generator):
+        (JSC::WREC::Parser::Parser):
+        (JSC::WREC::Parser::parseAlternative):
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Renamed BytecodeInterpreter => Interpreter.
+
+        * JavaScriptCore.exp:
+        * VM/CTI.cpp:
+        (JSC::):
+        (JSC::CTI::compileOpCall):
+        (JSC::CTI::emitSlowScriptCheck):
+        (JSC::CTI::compileBinaryArithOpSlowCase):
+        (JSC::CTI::privateCompileMainPass):
+        (JSC::CTI::privateCompileSlowCases):
+        (JSC::CTI::privateCompile):
+        (JSC::CTI::privateCompileGetByIdSelf):
+        (JSC::CTI::privateCompileGetByIdProto):
+        (JSC::CTI::privateCompileGetByIdChain):
+        (JSC::CTI::privateCompilePutByIdReplace):
+        (JSC::CTI::privateCompilePutByIdTransition):
+        (JSC::CTI::privateCompileCTIMachineTrampolines):
+        (JSC::CTI::freeCTIMachineTrampolines):
+        (JSC::CTI::patchGetByIdSelf):
+        (JSC::CTI::patchPutByIdReplace):
+        (JSC::CTI::privateCompilePatchGetArrayLength):
+        * VM/CTI.h:
+        * VM/CodeBlock.cpp:
+        (JSC::CodeBlock::printStructures):
+        (JSC::CodeBlock::derefStructures):
+        (JSC::CodeBlock::refStructures):
+        * VM/Machine.cpp:
+        (JSC::jsLess):
+        (JSC::jsLessEq):
+        (JSC::Interpreter::resolve):
+        (JSC::Interpreter::resolveSkip):
+        (JSC::Interpreter::resolveGlobal):
+        (JSC::Interpreter::resolveBase):
+        (JSC::Interpreter::resolveBaseAndProperty):
+        (JSC::Interpreter::resolveBaseAndFunc):
+        (JSC::Interpreter::slideRegisterWindowForCall):
+        (JSC::Interpreter::callEval):
+        (JSC::Interpreter::Interpreter):
+        (JSC::Interpreter::initialize):
+        (JSC::Interpreter::~Interpreter):
+        (JSC::Interpreter::dumpCallFrame):
+        (JSC::Interpreter::dumpRegisters):
+        (JSC::Interpreter::isOpcode):
+        (JSC::Interpreter::unwindCallFrame):
+        (JSC::Interpreter::throwException):
+        (JSC::Interpreter::execute):
+        (JSC::Interpreter::debug):
+        (JSC::Interpreter::resetTimeoutCheck):
+        (JSC::Interpreter::checkTimeout):
+        (JSC::Interpreter::createExceptionScope):
+        (JSC::Interpreter::tryCachePutByID):
+        (JSC::Interpreter::uncachePutByID):
+        (JSC::Interpreter::tryCacheGetByID):
+        (JSC::Interpreter::uncacheGetByID):
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::retrieveArguments):
+        (JSC::Interpreter::retrieveCaller):
+        (JSC::Interpreter::retrieveLastCaller):
+        (JSC::Interpreter::findFunctionCallFrame):
+        (JSC::Interpreter::tryCTICachePutByID):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::Interpreter::cti_op_convert_this):
+        (JSC::Interpreter::cti_op_end):
+        (JSC::Interpreter::cti_op_add):
+        (JSC::Interpreter::cti_op_pre_inc):
+        (JSC::Interpreter::cti_timeout_check):
+        (JSC::Interpreter::cti_register_file_check):
+        (JSC::Interpreter::cti_op_loop_if_less):
+        (JSC::Interpreter::cti_op_loop_if_lesseq):
+        (JSC::Interpreter::cti_op_new_object):
+        (JSC::Interpreter::cti_op_put_by_id):
+        (JSC::Interpreter::cti_op_put_by_id_second):
+        (JSC::Interpreter::cti_op_put_by_id_generic):
+        (JSC::Interpreter::cti_op_put_by_id_fail):
+        (JSC::Interpreter::cti_op_get_by_id):
+        (JSC::Interpreter::cti_op_get_by_id_second):
+        (JSC::Interpreter::cti_op_get_by_id_generic):
+        (JSC::Interpreter::cti_op_get_by_id_fail):
+        (JSC::Interpreter::cti_op_instanceof):
+        (JSC::Interpreter::cti_op_del_by_id):
+        (JSC::Interpreter::cti_op_mul):
+        (JSC::Interpreter::cti_op_new_func):
+        (JSC::Interpreter::cti_op_call_JSFunction):
+        (JSC::Interpreter::cti_op_call_arityCheck):
+        (JSC::Interpreter::cti_vm_dontLazyLinkCall):
+        (JSC::Interpreter::cti_vm_lazyLinkCall):
+        (JSC::Interpreter::cti_op_push_activation):
+        (JSC::Interpreter::cti_op_call_NotJSFunction):
+        (JSC::Interpreter::cti_op_create_arguments):
+        (JSC::Interpreter::cti_op_create_arguments_no_params):
+        (JSC::Interpreter::cti_op_tear_off_activation):
+        (JSC::Interpreter::cti_op_tear_off_arguments):
+        (JSC::Interpreter::cti_op_profile_will_call):
+        (JSC::Interpreter::cti_op_profile_did_call):
+        (JSC::Interpreter::cti_op_ret_scopeChain):
+        (JSC::Interpreter::cti_op_new_array):
+        (JSC::Interpreter::cti_op_resolve):
+        (JSC::Interpreter::cti_op_construct_JSConstruct):
+        (JSC::Interpreter::cti_op_construct_NotJSConstruct):
+        (JSC::Interpreter::cti_op_get_by_val):
+        (JSC::Interpreter::cti_op_resolve_func):
+        (JSC::Interpreter::cti_op_sub):
+        (JSC::Interpreter::cti_op_put_by_val):
+        (JSC::Interpreter::cti_op_put_by_val_array):
+        (JSC::Interpreter::cti_op_lesseq):
+        (JSC::Interpreter::cti_op_loop_if_true):
+        (JSC::Interpreter::cti_op_negate):
+        (JSC::Interpreter::cti_op_resolve_base):
+        (JSC::Interpreter::cti_op_resolve_skip):
+        (JSC::Interpreter::cti_op_resolve_global):
+        (JSC::Interpreter::cti_op_div):
+        (JSC::Interpreter::cti_op_pre_dec):
+        (JSC::Interpreter::cti_op_jless):
+        (JSC::Interpreter::cti_op_not):
+        (JSC::Interpreter::cti_op_jtrue):
+        (JSC::Interpreter::cti_op_post_inc):
+        (JSC::Interpreter::cti_op_eq):
+        (JSC::Interpreter::cti_op_lshift):
+        (JSC::Interpreter::cti_op_bitand):
+        (JSC::Interpreter::cti_op_rshift):
+        (JSC::Interpreter::cti_op_bitnot):
+        (JSC::Interpreter::cti_op_resolve_with_base):
+        (JSC::Interpreter::cti_op_new_func_exp):
+        (JSC::Interpreter::cti_op_mod):
+        (JSC::Interpreter::cti_op_less):
+        (JSC::Interpreter::cti_op_neq):
+        (JSC::Interpreter::cti_op_post_dec):
+        (JSC::Interpreter::cti_op_urshift):
+        (JSC::Interpreter::cti_op_bitxor):
+        (JSC::Interpreter::cti_op_new_regexp):
+        (JSC::Interpreter::cti_op_bitor):
+        (JSC::Interpreter::cti_op_call_eval):
+        (JSC::Interpreter::cti_op_throw):
+        (JSC::Interpreter::cti_op_get_pnames):
+        (JSC::Interpreter::cti_op_next_pname):
+        (JSC::Interpreter::cti_op_push_scope):
+        (JSC::Interpreter::cti_op_pop_scope):
+        (JSC::Interpreter::cti_op_typeof):
+        (JSC::Interpreter::cti_op_is_undefined):
+        (JSC::Interpreter::cti_op_is_boolean):
+        (JSC::Interpreter::cti_op_is_number):
+        (JSC::Interpreter::cti_op_is_string):
+        (JSC::Interpreter::cti_op_is_object):
+        (JSC::Interpreter::cti_op_is_function):
+        (JSC::Interpreter::cti_op_stricteq):
+        (JSC::Interpreter::cti_op_nstricteq):
+        (JSC::Interpreter::cti_op_to_jsnumber):
+        (JSC::Interpreter::cti_op_in):
+        (JSC::Interpreter::cti_op_push_new_scope):
+        (JSC::Interpreter::cti_op_jmp_scopes):
+        (JSC::Interpreter::cti_op_put_by_index):
+        (JSC::Interpreter::cti_op_switch_imm):
+        (JSC::Interpreter::cti_op_switch_char):
+        (JSC::Interpreter::cti_op_switch_string):
+        (JSC::Interpreter::cti_op_del_by_val):
+        (JSC::Interpreter::cti_op_put_getter):
+        (JSC::Interpreter::cti_op_put_setter):
+        (JSC::Interpreter::cti_op_new_error):
+        (JSC::Interpreter::cti_op_debug):
+        (JSC::Interpreter::cti_vm_throw):
+        * VM/Machine.h:
+        * VM/Register.h:
+        * VM/SamplingTool.h:
+        (JSC::SamplingTool::SamplingTool):
+        * bytecompiler/CodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate):
+        (JSC::BytecodeGenerator::BytecodeGenerator):
+        * jsc.cpp:
+        (runWithScripts):
+        * runtime/ExecState.h:
+        (JSC::ExecState::interpreter):
+        * runtime/JSCell.h:
+        * runtime/JSFunction.h:
+        * runtime/JSGlobalData.cpp:
+        (JSC::JSGlobalData::JSGlobalData):
+        * runtime/JSGlobalData.h:
+        * runtime/JSString.h:
+        * wrec/WREC.cpp:
+        (WREC::compileRegExp):
+        * wrec/WREC.h:
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Roll out r38461 (my last patch) because it broke the world.
+
+2008-11-16  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        A few more renames:
+
+        BytecodeInterpreter => Interpreter
+        WREC => JSC::WREC, removing JSC:: prefix in a lot of places
+        X86Assembler::copy => X86Assembler::executableCopy
+        AssemblerBuffer::copy => AssemblerBuffer::executableCopy
+        WRECFunction => WREC::RegExpFunction
+        OBJECT_OFFSET => FIELD_OFFSET
+        
+        Also:
+
+        Nixed use of OBJECT_OFFSET outside of CTI.cpp by making CTI a friend in more places.
+        Nixed X86:: and X86Assembler:: prefixes in a lot of places using typedefs
+
+        * JavaScriptCore.exp:
+        * VM/CTI.cpp:
+        (JSC::):
+        (JSC::CTI::emitGetVirtualRegister):
+        (JSC::CTI::emitGetVirtualRegisters):
+        (JSC::CTI::emitPutCTIArgFromVirtualRegister):
+        (JSC::CTI::emitPutCTIArg):
+        (JSC::CTI::emitGetCTIArg):
+        (JSC::CTI::emitPutCTIParam):
+        (JSC::CTI::emitGetCTIParam):
+        (JSC::CTI::emitPutToCallFrameHeader):
+        (JSC::CTI::emitGetFromCallFrameHeader):
+        (JSC::CTI::emitPutVirtualRegister):
+        (JSC::CTI::emitNakedCall):
+        (JSC::CTI::emitNakedFastCall):
+        (JSC::CTI::emitCTICall):
+        (JSC::CTI::emitJumpSlowCaseIfNotJSCell):
+        (JSC::CTI::emitJumpSlowCaseIfNotImmNum):
+        (JSC::CTI::emitJumpSlowCaseIfNotImmNums):
+        (JSC::CTI::emitFastArithDeTagImmediate):
+        (JSC::CTI::emitFastArithDeTagImmediateJumpIfZero):
+        (JSC::CTI::emitFastArithReTagImmediate):
+        (JSC::CTI::emitFastArithPotentiallyReTagImmediate):
+        (JSC::CTI::emitFastArithImmToInt):
+        (JSC::CTI::emitFastArithIntToImmOrSlowCase):
+        (JSC::CTI::emitFastArithIntToImmNoCheck):
+        (JSC::CTI::emitArithIntToImmWithJump):
+        (JSC::CTI::emitTagAsBoolImmediate):
+        (JSC::CTI::compileOpCallInitializeCallFrame):
+        (JSC::CTI::compileOpCall):
+        (JSC::CTI::compileOpStrictEq):
+        (JSC::CTI::emitSlowScriptCheck):
+        (JSC::CTI::putDoubleResultToJSNumberCellOrJSImmediate):
+        (JSC::CTI::compileBinaryArithOp):
+        (JSC::CTI::compileBinaryArithOpSlowCase):
+        (JSC::CTI::privateCompileMainPass):
+        (JSC::CTI::privateCompileSlowCases):
+        (JSC::CTI::privateCompile):
+        (JSC::CTI::privateCompileGetByIdSelf):
+        (JSC::CTI::privateCompileGetByIdProto):
+        (JSC::CTI::privateCompileGetByIdChain):
+        (JSC::CTI::privateCompilePutByIdReplace):
+        (JSC::CTI::privateCompilePutByIdTransition):
+        (JSC::CTI::privateCompileCTIMachineTrampolines):
+        (JSC::CTI::freeCTIMachineTrampolines):
+        (JSC::CTI::patchGetByIdSelf):
+        (JSC::CTI::patchPutByIdReplace):
+        (JSC::CTI::privateCompilePatchGetArrayLength):
+        (JSC::CTI::emitGetVariableObjectRegister):
+        (JSC::CTI::emitPutVariableObjectRegister):
+        * VM/CTI.h:
+        (JSC::CallRecord::CallRecord):
+        (JSC::JmpTable::JmpTable):
+        (JSC::SlowCaseEntry::SlowCaseEntry):
+        (JSC::CTI::JSRInfo::JSRInfo):
+        * VM/CodeBlock.cpp:
+        (JSC::CodeBlock::printStructures):
+        (JSC::CodeBlock::derefStructures):
+        (JSC::CodeBlock::refStructures):
+        * VM/Machine.cpp:
+        (JSC::jsLess):
+        (JSC::jsLessEq):
+        (JSC::Interpreter::resolve):
+        (JSC::Interpreter::resolveSkip):
+        (JSC::Interpreter::resolveGlobal):
+        (JSC::Interpreter::resolveBase):
+        (JSC::Interpreter::resolveBaseAndProperty):
+        (JSC::Interpreter::resolveBaseAndFunc):
+        (JSC::Interpreter::slideRegisterWindowForCall):
+        (JSC::Interpreter::callEval):
+        (JSC::Interpreter::Interpreter):
+        (JSC::Interpreter::initialize):
+        (JSC::Interpreter::~Interpreter):
+        (JSC::Interpreter::dumpCallFrame):
+        (JSC::Interpreter::dumpRegisters):
+        (JSC::Interpreter::isOpcode):
+        (JSC::Interpreter::unwindCallFrame):
+        (JSC::Interpreter::throwException):
+        (JSC::Interpreter::execute):
+        (JSC::Interpreter::debug):
+        (JSC::Interpreter::resetTimeoutCheck):
+        (JSC::Interpreter::checkTimeout):
+        (JSC::Interpreter::createExceptionScope):
+        (JSC::Interpreter::tryCachePutByID):
+        (JSC::Interpreter::uncachePutByID):
+        (JSC::Interpreter::tryCacheGetByID):
+        (JSC::Interpreter::uncacheGetByID):
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::retrieveArguments):
+        (JSC::Interpreter::retrieveCaller):
+        (JSC::Interpreter::retrieveLastCaller):
+        (JSC::Interpreter::findFunctionCallFrame):
+        (JSC::Interpreter::tryCTICachePutByID):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::):
+        (JSC::Interpreter::cti_op_convert_this):
+        (JSC::Interpreter::cti_op_end):
+        (JSC::Interpreter::cti_op_add):
+        (JSC::Interpreter::cti_op_pre_inc):
+        (JSC::Interpreter::cti_timeout_check):
+        (JSC::Interpreter::cti_register_file_check):
+        (JSC::Interpreter::cti_op_loop_if_less):
+        (JSC::Interpreter::cti_op_loop_if_lesseq):
+        (JSC::Interpreter::cti_op_new_object):
+        (JSC::Interpreter::cti_op_put_by_id):
+        (JSC::Interpreter::cti_op_put_by_id_second):
+        (JSC::Interpreter::cti_op_put_by_id_generic):
+        (JSC::Interpreter::cti_op_put_by_id_fail):
+        (JSC::Interpreter::cti_op_get_by_id):
+        (JSC::Interpreter::cti_op_get_by_id_second):
+        (JSC::Interpreter::cti_op_get_by_id_generic):
+        (JSC::Interpreter::cti_op_get_by_id_fail):
+        (JSC::Interpreter::cti_op_instanceof):
+        (JSC::Interpreter::cti_op_del_by_id):
+        (JSC::Interpreter::cti_op_mul):
+        (JSC::Interpreter::cti_op_new_func):
+        (JSC::Interpreter::cti_op_call_JSFunction):
+        (JSC::Interpreter::cti_op_call_arityCheck):
+        (JSC::Interpreter::cti_vm_dontLazyLinkCall):
+        (JSC::Interpreter::cti_vm_lazyLinkCall):
+        (JSC::Interpreter::cti_op_push_activation):
+        (JSC::Interpreter::cti_op_call_NotJSFunction):
+        (JSC::Interpreter::cti_op_create_arguments):
+        (JSC::Interpreter::cti_op_create_arguments_no_params):
+        (JSC::Interpreter::cti_op_tear_off_activation):
+        (JSC::Interpreter::cti_op_tear_off_arguments):
+        (JSC::Interpreter::cti_op_profile_will_call):
+        (JSC::Interpreter::cti_op_profile_did_call):
+        (JSC::Interpreter::cti_op_ret_scopeChain):
+        (JSC::Interpreter::cti_op_new_array):
+        (JSC::Interpreter::cti_op_resolve):
+        (JSC::Interpreter::cti_op_construct_JSConstruct):
+        (JSC::Interpreter::cti_op_construct_NotJSConstruct):
+        (JSC::Interpreter::cti_op_get_by_val):
+        (JSC::Interpreter::cti_op_resolve_func):
+        (JSC::Interpreter::cti_op_sub):
+        (JSC::Interpreter::cti_op_put_by_val):
+        (JSC::Interpreter::cti_op_put_by_val_array):
+        (JSC::Interpreter::cti_op_lesseq):
+        (JSC::Interpreter::cti_op_loop_if_true):
+        (JSC::Interpreter::cti_op_negate):
+        (JSC::Interpreter::cti_op_resolve_base):
+        (JSC::Interpreter::cti_op_resolve_skip):
+        (JSC::Interpreter::cti_op_resolve_global):
+        (JSC::Interpreter::cti_op_div):
+        (JSC::Interpreter::cti_op_pre_dec):
+        (JSC::Interpreter::cti_op_jless):
+        (JSC::Interpreter::cti_op_not):
+        (JSC::Interpreter::cti_op_jtrue):
+        (JSC::Interpreter::cti_op_post_inc):
+        (JSC::Interpreter::cti_op_eq):
+        (JSC::Interpreter::cti_op_lshift):
+        (JSC::Interpreter::cti_op_bitand):
+        (JSC::Interpreter::cti_op_rshift):
+        (JSC::Interpreter::cti_op_bitnot):
+        (JSC::Interpreter::cti_op_resolve_with_base):
+        (JSC::Interpreter::cti_op_new_func_exp):
+        (JSC::Interpreter::cti_op_mod):
+        (JSC::Interpreter::cti_op_less):
+        (JSC::Interpreter::cti_op_neq):
+        (JSC::Interpreter::cti_op_post_dec):
+        (JSC::Interpreter::cti_op_urshift):
+        (JSC::Interpreter::cti_op_bitxor):
+        (JSC::Interpreter::cti_op_new_regexp):
+        (JSC::Interpreter::cti_op_bitor):
+        (JSC::Interpreter::cti_op_call_eval):
+        (JSC::Interpreter::cti_op_throw):
+        (JSC::Interpreter::cti_op_get_pnames):
+        (JSC::Interpreter::cti_op_next_pname):
+        (JSC::Interpreter::cti_op_push_scope):
+        (JSC::Interpreter::cti_op_pop_scope):
+        (JSC::Interpreter::cti_op_typeof):
+        (JSC::Interpreter::cti_op_is_undefined):
+        (JSC::Interpreter::cti_op_is_boolean):
+        (JSC::Interpreter::cti_op_is_number):
+        (JSC::Interpreter::cti_op_is_string):
+        (JSC::Interpreter::cti_op_is_object):
+        (JSC::Interpreter::cti_op_is_function):
+        (JSC::Interpreter::cti_op_stricteq):
+        (JSC::Interpreter::cti_op_nstricteq):
+        (JSC::Interpreter::cti_op_to_jsnumber):
+        (JSC::Interpreter::cti_op_in):
+        (JSC::Interpreter::cti_op_push_new_scope):
+        (JSC::Interpreter::cti_op_jmp_scopes):
+        (JSC::Interpreter::cti_op_put_by_index):
+        (JSC::Interpreter::cti_op_switch_imm):
+        (JSC::Interpreter::cti_op_switch_char):
+        (JSC::Interpreter::cti_op_switch_string):
+        (JSC::Interpreter::cti_op_del_by_val):
+        (JSC::Interpreter::cti_op_put_getter):
+        (JSC::Interpreter::cti_op_put_setter):
+        (JSC::Interpreter::cti_op_new_error):
+        (JSC::Interpreter::cti_op_debug):
+        (JSC::Interpreter::cti_vm_throw):
+        * VM/Machine.h:
+        * VM/Register.h:
+        * VM/SamplingTool.cpp:
+        (JSC::SamplingTool::dump):
+        * VM/SamplingTool.h:
+        (JSC::SamplingTool::SamplingTool):
+        * bytecompiler/CodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate):
+        (JSC::BytecodeGenerator::BytecodeGenerator):
+        * jsc.cpp:
+        (runWithScripts):
+        * masm/X86Assembler.h:
+        (JSC::AssemblerBuffer::executableCopy):
+        (JSC::X86Assembler::executableCopy):
+        * runtime/ExecState.h:
+        (JSC::ExecState::interpreter):
+        * runtime/JSCell.h:
+        * runtime/JSFunction.h:
+        * runtime/JSGlobalData.cpp:
+        (JSC::JSGlobalData::JSGlobalData):
+        * runtime/JSGlobalData.h:
+        * runtime/JSImmediate.h:
+        * runtime/JSString.h:
+        * runtime/JSValue.h:
+        * runtime/JSVariableObject.h:
+        * runtime/RegExp.cpp:
+        (JSC::RegExp::RegExp):
+        (JSC::RegExp::~RegExp):
+        (JSC::RegExp::match):
+        * runtime/RegExp.h:
+        * wrec/CharacterClassConstructor.cpp:
+        * wrec/CharacterClassConstructor.h:
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+        * wrec/WREC.h:
+        (JSC::WREC::Generator::Generator):
+        (JSC::WREC::Parser::):
+        (JSC::WREC::Parser::Parser):
+        (JSC::WREC::Parser::parseAlternative):
+
+2008-11-16  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21810
+        Remove use of static C++ objects that are destroyed at exit time (destructors)
+
+        Conditionally have the DEFINE_STATIC_LOCAL workaround <rdar://problem/6354696> 
+        (Codegen issue with C++ static reference in gcc build 5465) based upon the compiler 
+        build versions. It will use the:
+        static T& = *new T;
+        style for all other compilers.
+
+        * wtf/StdLibExtras.h:
+
 2008-11-16  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Dan Bernstein.
@@ -17944,4 +18897,5 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 

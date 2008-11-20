@@ -88,7 +88,7 @@ namespace JSC {
     class JSGlobalObject;
 
     class RegisterFile : Noncopyable {
-        friend class CTI;
+        friend class JIT;
     public:
         enum CallFrameHeaderEntry {
             CallFrameHeaderSize = 8,
@@ -183,3 +183,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // RegisterFile_h
+
