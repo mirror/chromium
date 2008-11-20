@@ -28,7 +28,7 @@ USE_LAUNCHD := \
 
 start:
 ifneq ($(USE_LAUNCHD),1)
-	python2.4 run_slave.py --no_save -y buildbot.tac
+	python run_slave.py --no_save -y buildbot.tac
 else
 	launchctl start org.chromium.buildbot.slave
 endif
