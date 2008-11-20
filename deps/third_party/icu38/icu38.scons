@@ -73,7 +73,7 @@ if env['PLATFORM'] == 'win32':
 
 if env['PLATFORM'] == 'win32':
   # /Wd4996 to silence warning about strncpy
-  env.Append(CCFLAGS = ['/WX', '/Wd4996'])
+  env.Append(CCFLAGS = ['/WX', '/wd4996'])
 else:
   env.Append(
       CCFLAGS = [
