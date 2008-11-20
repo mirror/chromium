@@ -9,6 +9,7 @@
 import os
 import re
 import sys
+import time
 
 
 import chromium_utils
@@ -92,3 +93,37 @@ def SetPageHeap(chrome_dir, exe, enable):
     description = {True: 'enable', False:'disable'}
     raise PageHeapError('Unable to %s page heap for %s.' %
                         (description[enable], exe))
+
+
+def LongSleep(secs):
+  """A sleep utility for long durations that avoids appearing hung.
+
+  Sleeps for the specified duration.  Prints output periodically so as not to
+  look hung in order to avoid being timed out.  Since this function is meant
+  for long durations, it assumes that the caller does not care about losing a
+  small amount of precision.
+
+  Args:
+    secs: The time to sleep, in seconds.
+  """
+  secs_per_iteration = 60
+  time_slept = 0
+
+  # Make sure we are dealing with an integral duration, since this function is
+  # meant for long-lived sleeps we don't mind losing floating point precision.
+  secs = int(round(secs))
+
+  remainder = secs % secs_per_iteration
+  if remainder > 0:
+    time.sleep(remainder)
+    time_slept += remainder
+    sys.stdout.write('.')
+    sys.stdout.flush()
+
+  while time_slept < secs:
+    time.sleep(secs_per_iteration)
+    time_slept += secs_per_iteration
+    sys.stdout.write('.')
+    sys.stdout.flush()
+
+  sys.stdout.write('\n')
