@@ -8,7 +8,10 @@
 
 import os
 import re
+import signal
+import subprocess
 import sys
+import tempfile
 import time
 
 
@@ -127,3 +130,40 @@ def LongSleep(secs):
     sys.stdout.flush()
 
   sys.stdout.write('\n')
+
+
+def _XvfbPidFilename(slave_build_name):
+  """Returns the filename to the Xvfb pid file.  This name is unique for each
+  builder. This is used by the linux builders."""
+  return os.path.join(tempfile.gettempdir(),
+                      'xvfb-' + slave_build_name  + '.pid')
+
+
+def StartVirtualX(slave_build_name):
+  """Start a virtual X server and set the DISPLAY environment variable so sub
+  processes will use the virtual X server.  This only works on linux and
+  assumes that xvfb is installed."""
+  # We use a pid file to make sure we don't have any xvfb processes running
+  # from a previous test run.
+  StopVirtualX(slave_build_name)
+
+  # Start a virtual X server that we run the tests in.  This makes it so we can
+  # run the tests even if we didn't start the tests from an X session.
+  devnull = open("/dev/null", "w")
+  proc = subprocess.Popen(["Xvfb", ":9", "-screen", "0", "1024x768x24", "-ac"],
+                          stdout=devnull, stderr=devnull)
+  xvfb_pid_filename = _XvfbPidFilename(slave_build_name)
+  open(xvfb_pid_filename, 'w').write(str(proc.pid))
+  os.environ['DISPLAY'] = ":9"
+
+def StopVirtualX(slave_build_name):
+  """Try and stop the virtual X server if one was started with StartVirtualX.
+  If a virtual x server is not running, this method does nothing."""
+  xvfb_pid_filename = _XvfbPidFilename(slave_build_name)
+  if os.path.exists(xvfb_pid_filename):
+    try:
+      # If the process doesn't exist, we raise an exception that we can ignore.
+      os.kill(open(xvfb_pid_filename).read(), signal.SIGKILL)
+    except:
+      pass
+    os.remove(xvfb_pid_filename)

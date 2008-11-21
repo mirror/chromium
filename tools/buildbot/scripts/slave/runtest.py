@@ -55,6 +55,10 @@ def main_linux(options, args):
   if len(args) < 1:
     raise chromium_utils.MissingArgument('Usage: %s' % USAGE)
 
+  build_dir = os.path.normpath(os.path.abspath(options.build_dir))
+  slave_name = slave_utils.SlaveBuildName(build_dir)
+  slave_utils.StartVirtualX(slave_name)
+
   test_exe = args[0]
   build_dir = os.path.normpath(os.path.abspath(options.build_dir))
   test_exe_path = os.path.join(build_dir, options.target, test_exe)
@@ -64,6 +68,8 @@ def main_linux(options, args):
   command = [test_exe_path]
   command.extend(args[1:])
   result = chromium_utils.RunCommand(command)
+
+  slave_utils.StopVirtualX(slave_name)
 
   return result
 

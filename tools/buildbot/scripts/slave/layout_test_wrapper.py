@@ -38,17 +38,27 @@ def main(options, args):
   webkit_tests_dir = chromium_utils.FindUpward(build_dir,
                                              'webkit', 'tools', 'layout_tests')
   run_webkit_tests = os.path.join(webkit_tests_dir, 'run_webkit_tests.py')
-  python_exe = chromium_utils.FindUpward(build_dir,
-                                       'third_party',
-                                       'python_24',
-                                       'python.exe')
 
-  setup_mount = chromium_utils.FindUpward(build_dir,
-                                       'third_party',
-                                       'cygwin',
-                                       'setup_mount.bat')
+  if sys.platform == 'win32':
+    python_exe = chromium_utils.FindUpward(build_dir,
+                                           'third_party',
+                                           'python_24',
+                                           'python.exe')
 
-  chromium_utils.RunCommand([setup_mount])
+    setup_mount = chromium_utils.FindUpward(build_dir,
+                                            'third_party',
+                                            'cygwin',
+                                            'setup_mount.bat')
+
+    chromium_utils.RunCommand([setup_mount])
+  else:
+    os.environ['PYTHONPATH'] = (chromium_utils.FindUpward(build_dir,
+        'tools', 'python') + ":" + os.environ.get('PYTHONPATH', ''))
+    python_exe = 'python'
+
+  if sys.platform == 'linux2':
+    slave_name = slave_utils.SlaveBuildName(build_dir)
+    slave_utils.StartVirtualX(slave_name)
 
   command = [python_exe,
              run_webkit_tests,
@@ -92,6 +102,9 @@ def main(options, args):
   command.extend(args)
   result = chromium_utils.RunCommand(command)
 
+  if sys.platform == 'linux2':
+    slave_utils.StopVirtualX(slave_name)
+
   if options.enable_pageheap:
     slave_utils.SetPageHeap(build_dir, 'test_shell.exe', False)
 
@@ -116,5 +129,9 @@ if '__main__' == __name__:
   option_parser.add_option('', '--enable-pageheap', action='store_true',
                            default=False, help='Enable page heap checking')
   options, args = option_parser.parse_args()
-  sys.exit(main(options, args))
 
+  # Disable pageheap checking except on Windows.
+  if sys.platform != 'win32':
+    options.enable_pageheap = False
+
+  sys.exit(main(options, args))
