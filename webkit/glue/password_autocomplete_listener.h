@@ -16,15 +16,23 @@ namespace webkit_glue {
 
 class PasswordAutocompleteListener : public AutocompleteInputListener {
  public:
-  PasswordAutocompleteListener(AutocompleteEditDelegate* username_delegate,
-                               HTMLInputDelegate* password_delegate,
-                               const PasswordFormDomManager::FillData& data);
+  PasswordAutocompleteListener(
+      const std::wstring& initial_username_text,
+      AutocompleteEditDelegateFactory* username_delegate_factory,
+      AutocompleteEditDelegateFactory* password_delegate_factory,
+      const PasswordFormDomManager::FillData& data);
+
   virtual ~PasswordAutocompleteListener() {
   }
 
   // AutocompleteInputListener implementation.
   virtual void OnBlur(const std::wstring& user_input);
   virtual void OnInlineAutocompleteNeeded(const std::wstring& user_input);
+
+ protected:
+  // Overridden from AutocompleteInputListner to teardown
+  // current_password_delegate_.
+  virtual void DidHandleEvent(WebCore::Event* event);
 
  private:
   // Check if the input string resembles a potential matching login
@@ -34,8 +42,11 @@ class PasswordAutocompleteListener : public AutocompleteInputListener {
                   const std::wstring& username,
                   const std::wstring& password);
 
+  AutocompleteEditDelegate* CurPasswordDelegate();
+
   // Access to password field to autocomplete on blur/username updates.
-  scoped_ptr<HTMLInputDelegate> password_delegate_;
+  scoped_ptr<AutocompleteEditDelegateFactory> password_delegate_factory_;
+  scoped_ptr<AutocompleteEditDelegate> current_password_delegate_;
 
   // Contains the extra logins for matching on delta/blur.
   PasswordFormDomManager::FillData data_;

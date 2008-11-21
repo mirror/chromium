@@ -29,10 +29,41 @@
 
 using webkit_glue::AutocompleteInputListener;
 using webkit_glue::AutocompleteEditDelegate;
+using webkit_glue::AutocompleteEditDelegateFactory;
 
-class TestAutocompleteEditDelegate : public AutocompleteEditDelegate {
+// Forwards each call to a wrapped delegate (which it does not own).
+class ForwardingAutocompleteEditDelegate : public AutocompleteEditDelegate {
+ public:
+  ForwardingAutocompleteEditDelegate(AutocompleteEditDelegate* d) : d_(d) { }
+  virtual bool IsCaretAtEndOfText(size_t input_length,
+                                  size_t previous_length) const {
+    return d_->IsCaretAtEndOfText(input_length, previous_length);
+  }
+  virtual void SetSelectionRange(size_t start, size_t end) {
+    d_->SetSelectionRange(start, end);
+  }
+  virtual void SetValue(const std::wstring& value) {
+    d_->SetValue(value);
+  }
+  virtual std::wstring GetValue() const {
+    return d_->GetValue();
+  }
+  virtual void OnFinishedAutocompleting() {
+    d_->OnFinishedAutocompleting();
+  }
+ private:
+  AutocompleteEditDelegate* d_;
+};
+
+// This factory returns delegate stubs that forward to itself.
+class TestAutocompleteEditDelegate : public AutocompleteEditDelegate,
+                                     public AutocompleteEditDelegateFactory {
  public:
   TestAutocompleteEditDelegate() : caret_at_end_(false) {
+  }
+
+  virtual AutocompleteEditDelegate* Create(WebCore::Event*) {
+    return new ForwardingAutocompleteEditDelegate(this);
   }
 
   virtual bool IsCaretAtEndOfText(size_t input_length,
@@ -70,10 +101,10 @@ class TestAutocompleteEditDelegate : public AutocompleteEditDelegate {
 
 class TestAutocompleteInputListener : public AutocompleteInputListener {
  public:
-  TestAutocompleteInputListener(AutocompleteEditDelegate* d)
+  TestAutocompleteInputListener(TestAutocompleteEditDelegate* d)
       : blurred_(false),
         did_request_inline_autocomplete_(false),
-        AutocompleteInputListener(d) {
+        AutocompleteInputListener(std::wstring(), d) {
   }
 
   void ResetTestState() {

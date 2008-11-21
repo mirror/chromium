@@ -39,15 +39,9 @@ static void PreserveSelection(WebCore::HTMLInputElement* element) {
 
 HTMLInputDelegate::HTMLInputDelegate(WebCore::HTMLInputElement* element)
     : element_(element) {
-  // Reference the element for the lifetime of this delegate.
-  // e is NULL when testing.
-  if (element_)
-    element_->ref();
 }
 
 HTMLInputDelegate::~HTMLInputDelegate() {
-  if (element_)
-    element_->deref();
 }
 
 bool HTMLInputDelegate::IsCaretAtEndOfText(size_t input_length,
@@ -95,9 +89,11 @@ void HTMLInputDelegate::OnFinishedAutocompleting() {
 }
 
 AutocompleteInputListener::AutocompleteInputListener(
-    AutocompleteEditDelegate* edit_delegate)
-    : edit_delegate_(edit_delegate) {
-  previous_text_ = edit_delegate->GetValue();
+    const std::wstring& initial_edit_text,
+    AutocompleteEditDelegateFactory* edit_delegate_factory)
+    : current_event_(NULL),
+      edit_delegate_factory_(edit_delegate_factory),
+      previous_text_(initial_edit_text) {
 }
 // The following method is based on Firefox2 code in
 //  toolkit/components/autocomplete/src/nsAutoCompleteController.cpp
@@ -165,13 +161,16 @@ bool AutocompleteInputListener::ShouldInlineAutocomplete(
   // Is search string empty?
   if (user_input.empty())
     return false;
-  return edit_delegate_->IsCaretAtEndOfText(user_input.length(), prev_length);
+  return CurEditDelegate()->IsCaretAtEndOfText(user_input.length(),
+                                               prev_length);
 }
 
 void AutocompleteInputListener::handleEvent(WebCore::Event* event,
                                             bool /*is_window_event*/) {
+  WillHandleEvent(event);
+
   const WebCore::AtomicString& webcore_type = event->type();
-  const std::wstring& user_input = edit_delegate_->GetValue();
+  const std::wstring& user_input = CurEditDelegate()->GetValue();
   if (webcore_type == WebCore::EventNames::DOMFocusOutEvent) {
     OnBlur(user_input);
   } else if (webcore_type == WebCore::EventNames::inputEvent) {
@@ -181,6 +180,26 @@ void AutocompleteInputListener::handleEvent(WebCore::Event* event,
   } else {
     NOTREACHED() << "unexpected EventName for autocomplete listener";
   }
+
+  DidHandleEvent(event);
+}
+
+AutocompleteEditDelegate* AutocompleteInputListener::CurEditDelegate() {
+  if (!current_edit_delegate_.get()) {
+    current_edit_delegate_.reset(
+        edit_delegate_factory_->Create(current_event()));
+  }
+  return current_edit_delegate_.get();
+}
+
+void AutocompleteInputListener::WillHandleEvent(WebCore::Event* event) {
+  current_event_ = event;
+  DCHECK(!current_edit_delegate_.get());
+}
+
+void AutocompleteInputListener::DidHandleEvent(WebCore::Event* event) {
+  current_event_ = NULL;
+  current_edit_delegate_.reset();
 }
 
 void AttachForInlineAutocomplete(

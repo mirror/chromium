@@ -11,11 +11,13 @@
 namespace webkit_glue {
 
 PasswordAutocompleteListener::PasswordAutocompleteListener(
-    AutocompleteEditDelegate* username_delegate,
-    HTMLInputDelegate* password_delegate,
+    const std::wstring& initial_username_text,
+    AutocompleteEditDelegateFactory* username_delegate_factory,
+    AutocompleteEditDelegateFactory* password_delegate_factory,
     const PasswordFormDomManager::FillData& data)
-    : AutocompleteInputListener(username_delegate),
-      password_delegate_(password_delegate),
+    : AutocompleteInputListener(initial_username_text,
+                                username_delegate_factory),
+      password_delegate_factory_(password_delegate_factory),
       data_(data) {
 }
 
@@ -28,13 +30,13 @@ void PasswordAutocompleteListener::OnBlur(const std::wstring& user_input) {
   // Set the password field to match the current username.
   if (data_.basic_data.values[0] == user_input) {
     // Preferred username/login is selected.
-    password_delegate_->SetValue(data_.basic_data.values[1]);
+    CurPasswordDelegate()->SetValue(data_.basic_data.values[1]);
   } else if (data_.additional_logins.find(user_input) !=
              data_.additional_logins.end()) {
     // One of the extra username/logins is selected.
-    password_delegate_->SetValue(data_.additional_logins[user_input]);
+    CurPasswordDelegate()->SetValue(data_.additional_logins[user_input]);
   }
-  password_delegate_->OnFinishedAutocompleting();
+  CurPasswordDelegate()->OnFinishedAutocompleting();
 }
 
 void PasswordAutocompleteListener::OnInlineAutocompleteNeeded(
@@ -67,6 +69,11 @@ void PasswordAutocompleteListener::OnInlineAutocompleteNeeded(
   }
 }
 
+void PasswordAutocompleteListener::DidHandleEvent(WebCore::Event* event) {
+  current_password_delegate_.reset();
+  AutocompleteInputListener::DidHandleEvent(event);
+}
+
 bool PasswordAutocompleteListener::TryToMatch(const std::wstring& input,
                                               const std::wstring& username,
                                               const std::wstring& password) {
@@ -74,12 +81,20 @@ bool PasswordAutocompleteListener::TryToMatch(const std::wstring& input,
     return false;
 
   // Input matches the username, fill in required values.
-  edit_delegate()->SetValue(username);
-  edit_delegate()->SetSelectionRange(input.length(), username.length());
-  edit_delegate()->OnFinishedAutocompleting();
-  password_delegate_->SetValue(password);
-  password_delegate_->OnFinishedAutocompleting();
+  CurEditDelegate()->SetValue(username);
+  CurEditDelegate()->SetSelectionRange(input.length(), username.length());
+  CurEditDelegate()->OnFinishedAutocompleting();
+  CurPasswordDelegate()->SetValue(password);
+  CurPasswordDelegate()->OnFinishedAutocompleting();
   return true;
+}
+
+AutocompleteEditDelegate* PasswordAutocompleteListener::CurPasswordDelegate() {
+  if (!current_password_delegate_.get()) {
+    current_password_delegate_.reset(
+        password_delegate_factory_->Create(current_event()));
+  }
+  return current_password_delegate_.get();
 }
 
 }  // webkit_glue

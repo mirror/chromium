@@ -28,9 +28,35 @@
 using webkit_glue::AutocompleteInputListener;
 using webkit_glue::PasswordAutocompleteListener;
 using webkit_glue::AutocompleteEditDelegate;
+using webkit_glue::AutocompleteEditDelegateFactory;
 using webkit_glue::HTMLInputDelegate;
 
-class TestHTMLInputDelegate : public HTMLInputDelegate {
+// TODO(eroman): this is duplicated from autocomplete_input_listener_unittest.cc
+class ForwardingAutocompleteEditDelegate : public AutocompleteEditDelegate {
+ public:
+  ForwardingAutocompleteEditDelegate(AutocompleteEditDelegate* d) : d_(d) { }
+  virtual bool IsCaretAtEndOfText(size_t input_length,
+                                  size_t previous_length) const {
+    return d_->IsCaretAtEndOfText(input_length, previous_length);
+  }
+  virtual void SetSelectionRange(size_t start, size_t end) {
+    d_->SetSelectionRange(start, end);
+  }
+  virtual void SetValue(const std::wstring& value) {
+    d_->SetValue(value);
+  }
+  virtual std::wstring GetValue() const {
+    return d_->GetValue();
+  }
+  virtual void OnFinishedAutocompleting() {
+    d_->OnFinishedAutocompleting();
+  }
+ private:
+  AutocompleteEditDelegate* d_;
+};
+
+class TestHTMLInputDelegate : public HTMLInputDelegate,
+                              public AutocompleteEditDelegateFactory {
  public:
   TestHTMLInputDelegate() : did_call_on_finish_(false),
                             did_set_value_(false),
@@ -38,6 +64,10 @@ class TestHTMLInputDelegate : public HTMLInputDelegate {
                             selection_start_(0),
                             selection_end_(0),
                             HTMLInputDelegate(NULL) {
+  }
+
+  virtual AutocompleteEditDelegate* Create(WebCore::Event*) {
+    return new ForwardingAutocompleteEditDelegate(this);
   }
 
   // Override those methods we implicitly invoke in the tests.
@@ -124,7 +154,7 @@ TEST_F(PasswordManagerAutocompleteTests, OnBlur) {
   TestHTMLInputDelegate* password_delegate = new TestHTMLInputDelegate();
 
   PasswordAutocompleteListener* listener = new PasswordAutocompleteListener(
-      username_delegate, password_delegate, data_);
+      std::wstring(), username_delegate, password_delegate, data_);
 
   // Clear the password field.
   password_delegate->SetValue(std::wstring());
@@ -150,7 +180,7 @@ TEST_F(PasswordManagerAutocompleteTests, OnInlineAutocompleteNeeded) {
   TestHTMLInputDelegate* password_delegate = new TestHTMLInputDelegate();
 
   PasswordAutocompleteListener* listener = new PasswordAutocompleteListener(
-      username_delegate, password_delegate, data_);
+      std::wstring(), username_delegate, password_delegate, data_);
 
   password_delegate->SetValue(std::wstring());
   // Simulate the user typing in the first letter of 'alice', a stored username.
@@ -216,7 +246,7 @@ TEST_F(PasswordManagerAutocompleteTests, TestWaitUsername) {
   // matching username is in the field, before we autofill passwords.
   data_.wait_for_username = true;
   PasswordAutocompleteListener* listener = new PasswordAutocompleteListener(
-      username_delegate, password_delegate, data_);
+      std::wstring(), username_delegate, password_delegate, data_);
 
   std::wstring empty;
   // In all cases, username_delegate should remain empty because we should

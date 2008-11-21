@@ -9,6 +9,7 @@
 #include "FrameTree.h"
 #include "Document.h"
 #include "Element.h"
+#include "Event.h"
 #include "EventListener.h"
 #include "EventNames.h"
 #include "HTMLCollection.h"
@@ -156,6 +157,66 @@ void GetAllSavableResourceLinksForFrame(WebFrameImpl* current_frame,
 
 namespace webkit_glue {
 
+// Returns true if the node is an html input element.
+static bool IsInputElement(WebCore::Node* node) {
+  return (node->nodeType() == WebCore::Node::ELEMENT_NODE &&
+      static_cast<WebCore::Element*>(node)->hasTagName(
+                WebCore::HTMLNames::inputTag));
+}
+
+// Helper function to cast a Node as an HTMLInputElement.
+static WebCore::HTMLInputElement* GetNodeAsInputElement(WebCore::Node* node) {
+  DCHECK(IsInputElement(node));
+  return static_cast<WebCore::HTMLInputElement*>(node);
+}
+
+// The listener accesses the username element by looking to the
+// event's target. Since the listener was registered on the username element,
+// it should always be the target.
+class ACEDelegateForUsernameFactory : public AutocompleteEditDelegateFactory {
+ public:
+  virtual AutocompleteEditDelegate* Create(WebCore::Event* event) {
+    return new HTMLInputDelegate(
+        GetNodeAsInputElement(event->target()->toNode()));
+  }
+};
+
+// The listener accesses the password element by searching for it
+// by name, within the same form where the username lives. This prevents us
+// from having to hold a reference to the password field.
+// TODO(eroman): Really we should also check if it is of type "password",
+// but the other code doesn't enforce this constraint either.
+class ACEDelegateForPasswordFactory : public AutocompleteEditDelegateFactory {
+ public:
+  // password_name is the password element's name.
+  explicit ACEDelegateForPasswordFactory(const std::wstring& password_name)
+      : password_name_(password_name) { }
+
+  virtual AutocompleteEditDelegate* Create(WebCore::Event* event) {
+    WebCore::HTMLInputElement* username =
+        GetNodeAsInputElement(event->target()->toNode());
+
+    WebCore::HTMLFormElement* form = username->form();
+    if (form) {
+      Vector<RefPtr<WebCore::Node> > form_nodes;
+      form->getNamedElements(StdWStringToString(password_name_), form_nodes);
+      if (!form_nodes.isEmpty()) {
+        WebCore::Node* node = form_nodes[0].get();
+        if (IsInputElement(node)) {
+          return new HTMLInputDelegate(GetNodeAsInputElement(node));
+        }
+      }
+    }
+
+    // We couldn't find the password element. Since the caller does not
+    // expect a NULL result, give them a dummy delegate.
+    return new DummyAutocompleteEditDelegate();
+  }
+
+ private:
+  std::wstring password_name_;
+};
+
 // Map element name to a list of pointers to corresponding elements to simplify
 // form filling.
 typedef std::map<std::wstring, RefPtr<WebCore::HTMLInputElement> >
@@ -302,14 +363,6 @@ static bool FillFormImpl(FormElements* fe, const FormData& data, bool submit) {
   return false;
 }
 
-// Helper function to cast a Node as an HTMLInputElement.
-static WebCore::HTMLInputElement* GetNodeAsInputElement(WebCore::Node* node) {
-  DCHECK(node->nodeType() == WebCore::Node::ELEMENT_NODE);
-  DCHECK(static_cast<WebCore::Element*>(node)->hasTagName(
-      WebCore::HTMLNames::inputTag));
-  return static_cast<WebCore::HTMLInputElement*>(node);
-}
-
 // Helper to search the given form element for the specified input elements
 // in |data|, and add results to |result|.
 static bool FindFormInputElements(WebCore::HTMLFormElement* fe,
@@ -431,15 +484,17 @@ void FillPasswordForm(WebView* view,
     WebCore::HTMLInputElement* username_element =
         form_elements->input_elements[data.basic_data.elements[0]].get();
 
-    // Get pointer to password element. (We currently only support single
+    // Get the password element's name (We currently only support single
     // password forms).
-    WebCore::HTMLInputElement* password_element =
-        form_elements->input_elements[data.basic_data.elements[1]].get();
+    std::wstring password_element_name = data.basic_data.elements[1];
+    std::wstring username_text = StringToStdWString(username_element->value());
 
     AttachForInlineAutocomplete(username_element,
                                 new PasswordAutocompleteListener(
-                                    new HTMLInputDelegate(username_element),
-                                    new HTMLInputDelegate(password_element),
+                                    username_text,
+                                    new ACEDelegateForUsernameFactory(),
+                                    new ACEDelegateForPasswordFactory(
+                                        password_element_name),
                                     data));
   }
 }

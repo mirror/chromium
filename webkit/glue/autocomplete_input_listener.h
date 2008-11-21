@@ -73,12 +73,30 @@ class HTMLInputDelegate : public AutocompleteEditDelegate {
   virtual void OnFinishedAutocompleting();
 
  private:
-  // The underlying DOM element we're wrapping. We reference the 
-  // underlying HTMLInputElement for its lifetime to ensure it does not get
-  // freed by WebCore while in use by the delegate instance.
+  // The underlying DOM element we're wrapping. 
   WebCore::HTMLInputElement* element_;
 
   DISALLOW_EVIL_CONSTRUCTORS(HTMLInputDelegate);
+};
+
+// Implementation of AutocompleteEditDelegate which does nothing.
+class DummyAutocompleteEditDelegate : public AutocompleteEditDelegate {
+ public:
+  virtual bool IsCaretAtEndOfText(size_t, size_t) const { return false; }
+  virtual void SetSelectionRange(size_t, size_t) { }
+  virtual void SetValue(const std::wstring&) { }
+  virtual std::wstring GetValue() const { return std::wstring(); }
+  virtual void OnFinishedAutocompleting() { }
+};
+
+// Factory class for creating AutoCompleteEditDelegates in response to
+// an event.
+class AutocompleteEditDelegateFactory {
+ public:
+  virtual ~AutocompleteEditDelegateFactory() { }
+
+  // Caller owns the returned pointer, and is responsible for freeing it.
+  virtual AutocompleteEditDelegate* Create(WebCore::Event* event) = 0;
 };
 
 // Reasons for attaching to DOM directly rather than using EditorClient API:
@@ -100,10 +118,15 @@ class AutocompleteInputListener : public WebCore::EventListener {
  public:
   // Construct a listener with access to an edit field (i.e an HTMLInputElement)
   // through a delegate, so that it can obtain and set values needed for
-  // autocomplete. See the above Note which explains why the edit_delegate it
-  // is handed here is not necessarily the node it is attached to as an
-  // EventListener. This object takes ownership of its edit_delegate.
-  explicit AutocompleteInputListener(AutocompleteEditDelegate* edit_delegate);
+  // autocomplete. The delegate is constructed using edit_delegate_factory
+  // for each handled event. The use of edit delegates is explained in the
+  // note above. The additional indirection of a delegate factory, is to
+  // avoid holding references to the wrapped node -- instead the factory can
+  // infer the node given the event. This object takes ownership of 
+  // edit_delegate_factory.
+  AutocompleteInputListener(
+      const std::wstring& initial_edit_text,
+      AutocompleteEditDelegateFactory* edit_delegate_factory);
 
   virtual ~AutocompleteInputListener() {
   }
@@ -129,7 +152,17 @@ class AutocompleteInputListener : public WebCore::EventListener {
 
  protected:
   // Access and modify the edit field only via the AutocompleteEditDelegate API.
-  AutocompleteEditDelegate* edit_delegate() { return edit_delegate_.get(); }
+  // This accessor lazily creates a new edit delegate for the current event.
+  AutocompleteEditDelegate* CurEditDelegate();
+
+  // Called before we handle the event.
+  virtual void WillHandleEvent(WebCore::Event* event);
+
+  // Called after we have handled the event.
+  virtual void DidHandleEvent(WebCore::Event* event);
+
+  // Returns the current event that is being handled (or NULL if none).
+  WebCore::Event* current_event() const { return current_event_; }
 
  private:
   // Determines, based on current state (previous_text_) and user input,
@@ -187,11 +220,14 @@ class AutocompleteInputListener : public WebCore::EventListener {
   // make sure to capture all common exclusion cases here.
   bool ShouldInlineAutocomplete(const std::wstring& user_input);
 
+  WebCore::Event* current_event_;
+
   // For testability, the AutocompleteEditDelegate API is used to decouple
   // AutocompleteInputListeners from underlying HTMLInputElements. This
   // allows testcases to mock delegates and test the autocomplete code without
   // a real underlying DOM.
-  scoped_ptr<AutocompleteEditDelegate> edit_delegate_;
+  scoped_ptr<AutocompleteEditDelegateFactory> edit_delegate_factory_;
+  scoped_ptr<AutocompleteEditDelegate> current_edit_delegate_;
 
   // Stores the text across input events during inline autocomplete.
   std::wstring previous_text_;
