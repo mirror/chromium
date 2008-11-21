@@ -14,6 +14,8 @@
 import logging
 import optparse
 import os
+import signal
+import subprocess
 import sys
 
 import chromium_utils
@@ -55,6 +57,13 @@ def main_linux(options, args):
   if len(args) < 1:
     raise chromium_utils.MissingArgument('Usage: %s' % USAGE)
 
+  # Start a virtual X server that we run the tests in.  This makes it so we can
+  # run the tests even if we didn't start the tests from an X session.
+  devnull = open("/dev/null", "w")
+  proc = subprocess.Popen(["Xvfb", ":9", "-screen", "0", "1024x768x24", "-ac"],
+                          stdout=devnull, stderr=devnull)
+  os.environ['DISPLAY'] = ":9"
+
   test_exe = args[0]
   build_dir = os.path.normpath(os.path.abspath(options.build_dir))
   test_exe_path = os.path.join(build_dir, options.target, test_exe)
@@ -64,6 +73,8 @@ def main_linux(options, args):
   command = [test_exe_path]
   command.extend(args[1:])
   result = chromium_utils.RunCommand(command)
+  
+  os.kill(proc.pid, signal.SIGKILL)
 
   return result
 
