@@ -274,6 +274,8 @@ void SimpleFontData::platformInit()
 #if PLATFORM(CHROMIUM)
     static const UChar32 numeral_zero_char = '0';
     m_avgCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(numeral_zero_char).glyph);
+    static const UChar32 letter_W_char = 'W';
+    m_maxCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(letter_W_char).glyph);
 #endif  
 }
 
