@@ -61,7 +61,7 @@
 #include "qt_instance.h"
 #include "ScriptController.h"
 #include "JSDOMBinding.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "JSLock.h"
 #include "JSObject.h"
 #include "qt_runtime.h"
@@ -1271,5 +1271,6 @@ QWebFrame *QWebHitTestResult::frame() const
         return 0;
     return d->frame;
 }
+
 
 
