@@ -30,7 +30,7 @@
 #include "Profiler.h"
 
 #include "CommonIdentifiers.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "JSFunction.h"
 #include "JSGlobalObject.h"
 #include "Profile.h"
@@ -151,3 +151,4 @@ CallIdentifier createCallIdentifierFromFunctionImp(JSGlobalData* globalData, JSF
 }
 
 } // namespace JSC
+

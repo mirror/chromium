@@ -22,7 +22,7 @@
 #define JSDOMBinding_h
 
 #include "JSDOMGlobalObject.h"
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 #include <runtime/Lookup.h>
 #include <runtime/JSFunction.h>
 #include <wtf/Noncopyable.h>
@@ -182,4 +182,5 @@ namespace WebCore {
 } // namespace WebCore
 
 #endif // JSDOMBinding_h
+
 

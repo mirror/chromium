@@ -25,7 +25,6 @@
 #include "BytecodeGenerator.h"
 #include "Completion.h"
 #include "InitializeThreading.h"
-#include "Interpreter.h"
 #include "JSArray.h"
 #include "JSLock.h"
 #include "PrototypeFunction.h"
@@ -321,7 +320,7 @@ static bool runWithScripts(GlobalObject* globalObject, const Vector<UString>& fi
 
 #if ENABLE(OPCODE_SAMPLING)
     Interpreter* interpreter = globalObject->globalData()->interpreter;
-    interpreter->setSampler(new SamplingTool(machine));
+    interpreter->setSampler(new SamplingTool(interpreter));
 #endif
 
     bool success = true;
@@ -489,5 +488,6 @@ static bool fillBufferWithContentsOfFile(const UString& fileName, Vector<char>& 
 
     return true;
 }
+
 
 

@@ -35,7 +35,7 @@
 #include "Instruction.h"
 #include "Label.h"
 #include "LabelScope.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "RegisterID.h"
 #include "SegmentedVector.h"
 #include "SymbolTable.h"
@@ -459,3 +459,4 @@ namespace JSC {
 }
 
 #endif // BytecodeGenerator_h
+

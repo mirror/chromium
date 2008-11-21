@@ -2,8 +2,8 @@
 VPATH += $$PWD
 
 INCLUDEPATH += tmp
-INCLUDEPATH += $$PWD $$PWD/parser $$PWD/bytecompiler $$PWD/debugger $$PWD/runtime $$PWD/wtf $$PWD/wtf/unicode $$PWD/VM $$PWD/profiler $$PWD/wrec $$PWD/API $$PWD/.. \
-               $$PWD/ForwardingHeaders $$PWD/bytecode
+INCLUDEPATH += $$PWD $$PWD/parser $$PWD/bytecompiler $$PWD/debugger $$PWD/runtime $$PWD/wtf $$PWD/wtf/unicode $$PWD/interpreter $$PWD/jit $$PWD/profiler $$PWD/wrec $$PWD/API $$PWD/.. \
+               $$PWD/ForwardingHeaders $$PWD/bytecode $$PWD/assembler
 DEFINES += BUILDING_QT__
 
 isEmpty(GENERATED_SOURCES_DIR):GENERATED_SOURCES_DIR = tmp
@@ -55,13 +55,14 @@ SOURCES += \
     runtime/JSActivation.cpp \
     runtime/JSNotAnObject.cpp \
     bytecode/CodeBlock.cpp \
+    jit/JIT.cpp \
     bytecompiler/BytecodeGenerator.cpp \
-    VM/ExceptionHelpers.cpp \
+    runtime/ExceptionHelpers.cpp \
     runtime/JSPropertyNameIterator.cpp \
-    VM/Machine.cpp \
+    interpreter/Interpreter.cpp \
     bytecode/Opcode.cpp \
-    VM/SamplingTool.cpp \
-    VM/RegisterFile.cpp
+    bytecode/SamplingTool.cpp \
+    interpreter/RegisterFile.cpp
 
 # AllInOneFile.cpp helps gcc analize and optimize code
 # Other compilers may be able to do this at link time
@@ -88,14 +89,14 @@ SOURCES += \
     runtime/ErrorConstructor.cpp \
     runtime/ErrorInstance.cpp \
     runtime/ErrorPrototype.cpp \
-    runtime/ExecState.cpp \
+    interpreter/CallFrame.cpp \
     runtime/FunctionConstructor.cpp \
     runtime/FunctionPrototype.cpp \
     runtime/GetterSetter.cpp \
     runtime/GlobalEvalFunction.cpp \
     runtime/Identifier.cpp \
     runtime/InternalFunction.cpp \
-    runtime/Interpreter.cpp \
+    runtime/Completion.cpp \
     runtime/JSArray.cpp \
     runtime/JSCell.cpp \
     runtime/JSFunction.cpp \
@@ -173,5 +174,6 @@ addExtraCompilerWithHeader(kjsbison)
 
 *-g++*:QMAKE_CXXFLAGS_RELEASE -= -O2
 *-g++*:QMAKE_CXXFLAGS_RELEASE += -O3
+
 
 

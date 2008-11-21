@@ -359,6 +359,10 @@ module window {
         attribute MessageEventConstructor MessageEvent;
         attribute EventExceptionConstructor EventException;
 
+#if ENABLE(CHANNEL_MESSAGING)
+        attribute MessagePortConstructor MessagePort;
+#endif
+
         attribute ClipboardConstructor Clipboard;
 
         attribute FileConstructor File;
@@ -470,3 +474,4 @@ module window {
 #endif // defined(V8_BINDING)
   };
 }
+

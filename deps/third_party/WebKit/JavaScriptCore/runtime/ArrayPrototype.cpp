@@ -24,7 +24,7 @@
 #include "config.h"
 #include "ArrayPrototype.h"
 
-#include "Machine.h"
+#include "Interpreter.h"
 #include "ObjectPrototype.h"
 #include "Lookup.h"
 #include "Operations.h"
@@ -792,4 +792,5 @@ JSValue* arrayProtoFuncLastIndexOf(ExecState* exec, JSObject*, JSValue* thisValu
 }
 
 } // namespace JSC
+
 

@@ -31,9 +31,9 @@
 #include "Completion.h"
 #include "OpaqueJSString.h"
 #include "SourceCode.h"
-#include <runtime/ExecState.h>
+#include <interpreter/CallFrame.h>
 #include <runtime/InitializeThreading.h>
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 #include <runtime/JSGlobalObject.h>
 #include <runtime/JSLock.h>
 #include <runtime/JSObject.h>
@@ -114,4 +114,5 @@ void JSReportExtraMemoryCost(JSContextRef ctx, size_t size)
 
     exec->globalData().heap.reportExtraMemoryCost(size);
 }
+
 

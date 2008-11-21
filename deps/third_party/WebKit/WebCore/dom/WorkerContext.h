@@ -67,6 +67,8 @@ namespace WebCore {
         WorkerScriptController* script() { return &m_script; }
         WorkerThread* thread() { return m_thread; }
 
+        bool hasPendingActivity() const;
+
         virtual WorkerContext* toWorkerContext() { return this; }
 
         void postMessage(const String& message);
@@ -111,4 +113,5 @@ namespace WebCore {
 #endif // ENABLE(WORKERS)
 
 #endif // WorkerContext_h
+
 

@@ -25,11 +25,11 @@
 #include "config.h"
 #include "JSGlobalObjectFunctions.h"
 
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "GlobalEvalFunction.h"
 #include "JSGlobalObject.h"
 #include "JSString.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "Parser.h"
 #include "dtoa.h"
 #include "Lexer.h"
@@ -431,4 +431,5 @@ JSValue* globalFuncKJSPrint(ExecState* exec, JSObject*, JSValue*, const ArgList&
 #endif
 
 } // namespace JSC
+
 

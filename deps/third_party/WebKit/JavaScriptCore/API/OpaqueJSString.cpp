@@ -26,7 +26,7 @@
 #include "config.h"
 #include "OpaqueJSString.h"
 
-#include <runtime/ExecState.h>
+#include <interpreter/CallFrame.h>
 #include <runtime/JSGlobalObject.h>
 #include <runtime/Identifier.h>
 
@@ -53,3 +53,4 @@ Identifier OpaqueJSString::identifier(JSGlobalData* globalData) const
 
     return Identifier(globalData, m_characters, m_length);
 }
+

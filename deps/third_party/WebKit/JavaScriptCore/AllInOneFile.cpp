@@ -62,7 +62,7 @@
 #include "runtime/JSNumberCell.cpp"
 #include "runtime/GetterSetter.cpp"
 #include "runtime/InternalFunction.cpp"
-#include "runtime/Interpreter.cpp"
+#include "runtime/Completion.cpp"
 #include "runtime/JSImmediate.cpp"
 #include "runtime/JSLock.cpp"
 #include "runtime/JSWrapperObject.cpp"
@@ -102,5 +102,6 @@
 #include "wtf/FastMalloc.cpp"
 #include "wtf/TCSystemAlloc.cpp"
 #include "bytecompiler/BytecodeGenerator.cpp"
-#include "VM/RegisterFile.cpp"
+#include "interpreter/RegisterFile.cpp"
+
 

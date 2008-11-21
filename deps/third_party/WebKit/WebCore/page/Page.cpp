@@ -1,5 +1,7 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2008 Torch Mobile Inc.  All rights reserved.
+ *               http://www.torchmobile.com/
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -68,6 +70,10 @@
 #include "JavaScriptDebugServer.h"
 #endif
 
+#if ENABLE(WML)
+#include "WMLPageState.h"
+#endif
+
 namespace WebCore {
 
 static HashSet<Page*>* allPages;
@@ -130,6 +136,9 @@ Page::Page(ChromeClient* chromeClient, ContextMenuClient* contextMenuClient, Edi
     , m_pendingBeforeUnloadEventCount(0)
     , m_customHTMLTokenizerTimeDelay(-1)
     , m_customHTMLTokenizerChunkSize(-1)
+#if ENABLE(WML)
+    , m_wmlPageState(0)
+#endif
 {
     if (!allPages) {
         allPages = new HashSet<Page*>;
@@ -580,6 +589,18 @@ void Page::changePendingBeforeUnloadEventCount(int delta)
     return; 
 }
 
+#if ENABLE(WML)
+void Page::setWMLPageState(RefPtr<WMLPageState> pageState) 
+{ 
+    m_wmlPageState = pageState; 
+}
+
+WMLPageState* Page::wmlPageState() const 
+{ 
+    return m_wmlPageState.get(); 
+}
+#endif
+
 void Page::setCustomHTMLTokenizerTimeDelay(double customHTMLTokenizerTimeDelay)
 {
     if (customHTMLTokenizerTimeDelay < 0) {
@@ -599,4 +620,5 @@ void Page::setCustomHTMLTokenizerChunkSize(int customHTMLTokenizerChunkSize)
 }
 
 } // namespace WebCore
+
 

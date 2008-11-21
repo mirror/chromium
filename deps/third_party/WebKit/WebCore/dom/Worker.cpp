@@ -92,6 +92,11 @@ void Worker::postMessage(const String& message)
     m_messagingProxy->postMessageToWorkerContext(message);
 }
 
+bool Worker::hasPendingActivity() const
+{
+    return m_messagingProxy->workerThreadHasPendingActivity() || ActiveDOMObject::hasPendingActivity();
+}
+
 void Worker::notifyFinished(CachedResource* resource)
 {
     ASSERT(resource == m_cachedScript.get());
@@ -177,3 +182,4 @@ bool Worker::dispatchEvent(PassRefPtr<Event> event, ExceptionCode& ec)
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
+

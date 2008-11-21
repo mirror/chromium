@@ -56,7 +56,7 @@
 #include "Settings.h"
 #include "TextMetrics.h"
 #if USE(JSC)
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 #endif
 #include <stdio.h>
 #include <wtf/MathExtras.h>
@@ -1363,3 +1363,4 @@ const Font& CanvasRenderingContext2D::accessFont()
 }
 
 } // namespace WebCore
+

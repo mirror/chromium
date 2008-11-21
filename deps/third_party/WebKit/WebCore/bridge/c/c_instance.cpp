@@ -35,7 +35,7 @@
 #include "npruntime_impl.h"
 #include "runtime_root.h"
 #include <runtime/ArgList.h>
-#include <runtime/ExecState.h>
+#include <interpreter/CallFrame.h>
 #include <runtime/JSLock.h>
 #include <runtime/JSNumberCell.h>
 #include <runtime/PropertyNameArray.h>
@@ -232,3 +232,4 @@ void CInstance::getPropertyNames(ExecState* exec, PropertyNameArray& nameArray)
 }
 
 #endif // ENABLE(NETSCAPE_PLUGIN_API)
+

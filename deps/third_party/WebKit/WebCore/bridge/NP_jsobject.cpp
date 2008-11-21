@@ -41,7 +41,7 @@
 #include <runtime/PropertyNameArray.h>
 #include <parser/SourceCode.h>
 #include <runtime/Completion.h>
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 
 using WebCore::String;
 using WebCore::StringSourceProvider;
@@ -455,4 +455,5 @@ bool _NPN_Construct(NPP npp, NPObject* o, const NPVariant* args, uint32_t argCou
 }
 
 #endif // ENABLE(NETSCAPE_PLUGIN_API)
+
 

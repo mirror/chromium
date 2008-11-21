@@ -65,7 +65,7 @@ sources['runtime'] = [
     'runtime/ErrorConstructor.cpp',
     'runtime/ErrorInstance.cpp',
     'runtime/ErrorPrototype.cpp',
-    'runtime/ExecState.cpp',
+    'runtime/ExceptionHelpers.cpp',
     'runtime/FunctionConstructor.cpp',
     'runtime/FunctionPrototype.cpp',
     'runtime/GetterSetter.cpp',
@@ -73,7 +73,6 @@ sources['runtime'] = [
     'runtime/Identifier.cpp',
     'runtime/InitializeThreading.cpp',
     'runtime/InternalFunction.cpp',
-    'runtime/interpreter.cpp',
     'runtime/JSActivation.cpp',
     'runtime/JSArray.cpp',
     'runtime/JSCell.cpp',
@@ -121,17 +120,28 @@ sources['runtime'] = [
 sources['bytecode'] = [
     'bytecode/CodeBlock.cpp',
     'bytecode/Opcode.cpp',
+    'bytecode/SamplingTool.cpp',
 ]
-sources['VM'] = [
-    'VM/CTI.cpp',
-    'VM/ExceptionHelpers.cpp',
-    'VM/Machine.cpp',
-    'VM/RegisterFile.cpp',
-    'VM/SamplingTool.cpp',
+sources['interpreter'] = [
+    'interpreter/CallFrame.cpp',
+    'interpreter/Interpreter.cpp',
+    'interpreter/RegisterFile.cpp',
+]
+sources['jit'] = [
+    'jit/JIT.cpp',
 ]
 sources['wrec'] = [
+    'wrec/CharacterClass.cpp'
+    'wrec/CharacterClass.h'
     'wrec/CharacterClassConstructor.cpp',
+    'wrec/Quantifier.h'
     'wrec/WREC.cpp'
+    'wrec/WRECFunctors.cpp'
+    'wrec/WRECFunctors.h'
+    'wrec/WRECGenerator.cpp'
+    'wrec/WRECGenerator.h'
+    'wrec/WRECParser.cpp'
+    'wrec/WRECParser.h'
 ]
 sources['wtf'] = [
     'wtf/Assertions.cpp',
@@ -229,5 +239,6 @@ build_directory = '.' # This should be changed to point to wherever JavaScriptCo
 
 env = Environment(CPPPATH = include_paths, LIBS = ['JavaScriptCore', 'edit'], LIBPATH = [build_directory])
 env.Program('jsc', shell_sources)
+
 
 

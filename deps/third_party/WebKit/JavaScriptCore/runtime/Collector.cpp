@@ -23,12 +23,12 @@
 
 #include "ArgList.h"
 #include "CollectorHeapIterator.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "JSGlobalObject.h"
 #include "JSLock.h"
 #include "JSString.h"
 #include "JSValue.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "Tracing.h"
 #include <algorithm>
 #include <setjmp.h>
@@ -1095,4 +1095,5 @@ Heap::iterator Heap::primaryHeapEnd()
 }
 
 } // namespace JSC
+
 

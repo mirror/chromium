@@ -212,7 +212,7 @@ sub printConstructors
     for my $name (sort keys %names) {
         my $ucName = $names{$name}{'interfaceName'};
 
-        print F "$parameters{'namespace'}Element* ${name}Constructor(Document* doc, bool createdByParser)\n";
+        print F "static $parameters{'namespace'}Element* ${name}Constructor(Document* doc, bool createdByParser)\n";
         print F "{\n";
         print F "    return new ${ucName}($parameters{'namespace'}Names::${name}Tag, doc);\n";
         print F "}\n\n";
@@ -774,6 +774,8 @@ sub printWrapperFactoryCppFile
 
     printElementIncludes($F, \%tags, 1);
 
+    print F "\n#include <wtf/StdLibExtras.h>\n\n";
+    
     print F <<END
 using namespace JSC;
 
@@ -791,7 +793,8 @@ END
     print F <<END
 JSNode* createJS$parameters{'namespace'}Wrapper(ExecState* exec, PassRefPtr<$parameters{'namespace'}Element> element)
 {   
-    static HashMap<WebCore::AtomicStringImpl*, Create$parameters{'namespace'}ElementWrapperFunction> map;
+    typedef HashMap<WebCore::AtomicStringImpl*, Create$parameters{'namespace'}ElementWrapperFunction> FunctionMap;
+    DEFINE_STATIC_LOCAL(FunctionMap, map, ());
     if (map.isEmpty()) {
 END
 ;
@@ -870,3 +873,4 @@ END
 
     close F;
 }
+

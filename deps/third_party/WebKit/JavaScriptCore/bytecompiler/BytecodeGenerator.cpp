@@ -32,7 +32,7 @@
 
 #include "BatchedTransitionOptimizer.h"
 #include "JSFunction.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "UString.h"
 
 using namespace std;
@@ -1758,3 +1758,4 @@ RegisterID* BytecodeGenerator::emitThrowExpressionTooDeepException()
 }
 
 } // namespace JSC
+

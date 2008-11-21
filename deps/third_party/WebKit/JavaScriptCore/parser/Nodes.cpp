@@ -27,7 +27,7 @@
 #include "Nodes.h"
 
 #include "BytecodeGenerator.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "JSGlobalObject.h"
 #include "JSStaticScopeObject.h"
 #include "LabelScope.h"
@@ -2620,5 +2620,6 @@ JSFunction* FuncExprNode::makeFunction(ExecState* exec, ScopeChainNode* scopeCha
 }
 
 } // namespace JSC
+
 
 

@@ -108,12 +108,14 @@ wxWebCore port Bakefile project file.
         <include>$(WK_ROOT)/JavaScriptCore/ForwardingHeaders</include>
         <include>$(WK_ROOT)/JavaScriptCore/bindings</include>
         <include>$(WK_ROOT)/JavaScriptCore/bytecompiler</include>
+        <include>$(WK_ROOT)/JavaScriptCore/bytecode</include>
         <include>$(WK_ROOT)/JavaScriptCore/debugger</include>
+        <include>$(WK_ROOT)/JavaScriptCore/jit</include>
         <include>$(WK_ROOT)/JavaScriptCore/parser</include>
         <include>$(WK_ROOT)/JavaScriptCore/pcre</include>
         <include>$(WK_ROOT)/JavaScriptCore/profiler</include>
         <include>$(WK_ROOT)/JavaScriptCore/runtime</include>
-        <include>$(WK_ROOT)/JavaScriptCore/VM</include>
+        <include>$(WK_ROOT)/JavaScriptCore/interpreter</include>
         <include>$(WK_ROOT)/JavaScriptCore/wtf</include>
 
         <sources>$(WEBCORE_BASE_SOURCES)</sources>
@@ -133,3 +135,4 @@ wxWebCore port Bakefile project file.
         </if>
     </template>
 </makefile>
+

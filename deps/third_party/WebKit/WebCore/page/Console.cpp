@@ -44,8 +44,9 @@
 #include "ScriptCallContext.h"
 #if USE(JSC)
 #include <runtime/ArgList.h>
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 #include <runtime/JSObject.h>
+#include <interpreter/Interpreter.h>
 #include <profiler/Profiler.h>
 #endif
 #include <stdio.h>
@@ -454,4 +455,5 @@ Page* Console::page() const
 }
 
 } // namespace WebCore
+
 

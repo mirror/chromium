@@ -30,9 +30,9 @@
 #include "config.h"
 #include "CodeBlock.h"
 
-#include "CTI.h"
+#include "JIT.h"
 #include "JSValue.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "Debugger.h"
 #include <stdio.h>
 #include <wtf/StringExtras.h>
@@ -1178,3 +1178,4 @@ int32_t SimpleJumpTable::offsetForValue(int32_t value, int32_t defaultOffset)
 }
 
 } // namespace JSC
+

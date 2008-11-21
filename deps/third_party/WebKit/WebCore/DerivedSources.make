@@ -38,6 +38,7 @@ VPATH = \
     $(WebCore)/plugins \
     $(WebCore)/storage \
     $(WebCore)/xml \
+    $(WebCore)/wml \
     $(WebCore)/svg \
 #
 
@@ -391,6 +392,8 @@ all : \
     DocTypeStrings.cpp \
     HTMLEntityNames.c \
     HTMLNames.cpp \
+    WMLElementFactory.cpp \
+    WMLNames.cpp \
     JSSVGElementWrapperFactory.cpp \
     SVGElementFactory.cpp \
     SVGNames.cpp \
@@ -506,7 +509,7 @@ XPathGrammar.cpp : xml/XPathGrammar.y $(PROJECT_FILE)
 
 # user agent style sheets
 
-USER_AGENT_STYLE_SHEETS = $(WebCore)/css/view-source.css $(WebCore)/css/svg.css 
+USER_AGENT_STYLE_SHEETS = $(WebCore)/css/view-source.css $(WebCore)/css/svg.css $(WebCore)/css/wml.css
 UserAgentStyleSheets.h : css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/html4.css $(WebCore)/css/quirks.css $(PORTROOT)/css/html4-overrides.css $(PORTROOT)/css/quirks-overrides.css
 	cat $(WebCore)/css/html4.css $(PORTROOT)/css/html4-overrides.css > $(DerivedSourcesDir)/html4.css
 	cat $(WebCore)/css/quirks.css $(PORTROOT)/css/quirks-overrides.css > $(DerivedSourcesDir)/quirks.css
@@ -545,6 +548,8 @@ XMLNames.cpp : dom/make_names.pl xml/xmlattrs.in
 	perl -I $(WebCore)/bindings/scripts $< --attrs $(WebCore)/xml/xmlattrs.in
 
 # --------
+
+# SVG tag and attribute names, and element factory
 
 ifeq ($(findstring ENABLE_SVG,$(FEATURE_DEFINES)), ENABLE_SVG)
 
@@ -612,6 +617,26 @@ JSSVGElementWrapperFactory.cpp :
 	echo > $@
 
 endif
+
+# --------
+
+# WML tag and attribute names, and element factory
+
+ifeq ($(findstring ENABLE_WML,$(FEATURE_DEFINES)), ENABLE_WML)
+
+WMLElementFactory.cpp WMLNames.cpp : dom/make_names.pl wml/WMLTagNames.in wml/WMLAttributeNames.in
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/wml/WMLTagNames.in --attrs $(WebCore)/wml/WMLAttributeNames.in --factory --wrapperFactory
+
+else
+
+WMLElementFactory.cpp :
+	echo > $@
+
+WMLNames.cpp :
+	echo > $@
+
+endif
+
 
 # --------
 
@@ -683,4 +708,5 @@ DOM%.h : %.idl $(GENERATE_BINDINGS_SCRIPTS) bindings/scripts/CodeGeneratorObjC.p
 endif
 
 # ------------------------
+
 

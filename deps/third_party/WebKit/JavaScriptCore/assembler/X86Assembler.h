@@ -31,7 +31,9 @@
 #if ENABLE(ASSEMBLER) && PLATFORM(X86)
 
 #include "AssemblerBuffer.h"
+#include <stdint.h>
 #include <wtf/Assertions.h>
+#include <wtf/Vector.h>
 
 namespace JSC {
 
@@ -1162,3 +1164,4 @@ typedef Vector<X86Assembler::JmpSrc> JmpSrcVector;
 #endif // ENABLE(ASSEMBLER) && PLATFORM(X86)
 
 #endif // X86Assembler_h
+

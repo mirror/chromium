@@ -27,10 +27,10 @@
 
 #include "CodeBlock.h"
 #include "CommonIdentifiers.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "FunctionPrototype.h"
 #include "JSGlobalObject.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "ObjectPrototype.h"
 #include "Parser.h"
 #include "PropertyNameArray.h"
@@ -198,5 +198,6 @@ JSObject* JSFunction::construct(ExecState* exec, const ArgList& args)
 }
 
 } // namespace JSC
+
 
 

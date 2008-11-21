@@ -26,7 +26,7 @@
 #include "NodeFilter.h"
 
 #include "Node.h"
-#include <runtime/ExecState.h>
+#include <interpreter/CallFrame.h>
 
 using namespace JSC;
 
@@ -39,3 +39,4 @@ short NodeFilter::acceptNode(ExecState* exec, Node* node) const
 }
 
 } // namespace WebCore
+

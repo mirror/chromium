@@ -1,3 +1,398 @@
+2008-11-18  Dan Bernstein  <mitz@apple.com>
+
+        - Windows build fix
+
+        * assembler/X86Assembler.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix gtk build.
+
+        * wrec/Quantifier.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix gtk build.
+
+        * assembler/AssemblerBuffer.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Split WREC classes out into individual files, with a few modifications
+        to more closely match the WebKit coding style.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * assembler/X86Assembler.h:
+        * runtime/RegExp.cpp:
+        * wrec/CharacterClass.cpp: Copied from wrec/CharacterClassConstructor.cpp.
+        (JSC::WREC::CharacterClass::newline):
+        (JSC::WREC::CharacterClass::digits):
+        (JSC::WREC::CharacterClass::spaces):
+        (JSC::WREC::CharacterClass::wordchar):
+        (JSC::WREC::CharacterClass::nondigits):
+        (JSC::WREC::CharacterClass::nonspaces):
+        (JSC::WREC::CharacterClass::nonwordchar):
+        * wrec/CharacterClass.h: Copied from wrec/CharacterClassConstructor.h.
+        * wrec/CharacterClassConstructor.cpp:
+        (JSC::WREC::CharacterClassConstructor::addSortedRange):
+        (JSC::WREC::CharacterClassConstructor::append):
+        * wrec/CharacterClassConstructor.h:
+        * wrec/Quantifier.h: Copied from wrec/WREC.h.
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+        * wrec/WREC.h:
+        * wrec/WRECFunctors.cpp: Copied from wrec/WREC.cpp.
+        * wrec/WRECFunctors.h: Copied from wrec/WREC.cpp.
+        (JSC::WREC::GenerateAtomFunctor::~GenerateAtomFunctor):
+        (JSC::WREC::GeneratePatternCharacterFunctor::GeneratePatternCharacterFunctor):
+        (JSC::WREC::GenerateCharacterClassFunctor::GenerateCharacterClassFunctor):
+        (JSC::WREC::GenerateBackreferenceFunctor::GenerateBackreferenceFunctor):
+        (JSC::WREC::GenerateParenthesesNonGreedyFunctor::GenerateParenthesesNonGreedyFunctor):
+        * wrec/WRECGenerator.cpp: Copied from wrec/WREC.cpp.
+        (JSC::WREC::Generator::generatePatternCharacter):
+        (JSC::WREC::Generator::generateCharacterClassInvertedRange):
+        (JSC::WREC::Generator::generateCharacterClassInverted):
+        (JSC::WREC::Generator::generateCharacterClass):
+        (JSC::WREC::Generator::generateParentheses):
+        (JSC::WREC::Generator::generateAssertionBOL):
+        (JSC::WREC::Generator::generateAssertionEOL):
+        (JSC::WREC::Generator::generateAssertionWordBoundary):
+        * wrec/WRECGenerator.h: Copied from wrec/WREC.h.
+        * wrec/WRECParser.cpp: Copied from wrec/WREC.cpp.
+        (JSC::WREC::Parser::parseGreedyQuantifier):
+        (JSC::WREC::Parser::parseCharacterClassQuantifier):
+        (JSC::WREC::Parser::parseParentheses):
+        (JSC::WREC::Parser::parseCharacterClass):
+        (JSC::WREC::Parser::parseEscape):
+        (JSC::WREC::Parser::parseTerm):
+        * wrec/WRECParser.h: Copied from wrec/WREC.h.
+        (JSC::WREC::Parser::):
+        (JSC::WREC::Parser::Parser):
+        (JSC::WREC::Parser::setError):
+        (JSC::WREC::Parser::error):
+        (JSC::WREC::Parser::recordSubpattern):
+        (JSC::WREC::Parser::numSubpatterns):
+        (JSC::WREC::Parser::ignoreCase):
+        (JSC::WREC::Parser::multiline):
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix a few builds.
+
+        * JavaScriptCoreSources.bkl:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix a few builds.
+
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved VM/CTI.* => jit/JIT.*.
+        
+        Removed VM.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * VM/CTI.cpp: Removed.
+        * VM/CTI.h: Removed.
+        * bytecode/CodeBlock.cpp:
+        * interpreter/Interpreter.cpp:
+        * jit: Added.
+        * jit/JIT.cpp: Copied from VM/CTI.cpp.
+        * jit/JIT.h: Copied from VM/CTI.h.
+        * runtime/RegExp.cpp:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved runtime/ExecState.* => interpreter/CallFrame.*.
+
+        * API/JSBase.cpp:
+        * API/OpaqueJSString.cpp:
+        * GNUmakefile.am:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * debugger/DebuggerCallFrame.h:
+        * interpreter/CallFrame.cpp: Copied from runtime/ExecState.cpp.
+        * interpreter/CallFrame.h: Copied from runtime/ExecState.h.
+        * interpreter/Interpreter.cpp:
+        * parser/Nodes.cpp:
+        * profiler/ProfileGenerator.cpp:
+        * profiler/Profiler.cpp:
+        * runtime/ClassInfo.h:
+        * runtime/Collector.cpp:
+        * runtime/Completion.cpp:
+        * runtime/ExceptionHelpers.cpp:
+        * runtime/ExecState.cpp: Removed.
+        * runtime/ExecState.h: Removed.
+        * runtime/Identifier.cpp:
+        * runtime/JSFunction.cpp:
+        * runtime/JSGlobalObjectFunctions.cpp:
+        * runtime/JSLock.cpp:
+        * runtime/JSNumberCell.h:
+        * runtime/JSObject.h:
+        * runtime/JSString.h:
+        * runtime/Lookup.h:
+        * runtime/PropertyNameArray.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * API/APICast.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * API/APICast.h:
+        * runtime/ExecState.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved VM/SamplingTool.* => bytecode/SamplingTool.*.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * VM/SamplingTool.cpp: Removed.
+        * VM/SamplingTool.h: Removed.
+        * bytecode/SamplingTool.cpp: Copied from VM/SamplingTool.cpp.
+        * bytecode/SamplingTool.h: Copied from VM/SamplingTool.h.
+        * jsc.cpp:
+        (runWithScripts):
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * runtime/ExecState.h:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved VM/ExceptionHelpers.cpp => runtime/ExceptionHelpers.cpp.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * VM/ExceptionHelpers.cpp: Removed.
+        * runtime/ExceptionHelpers.cpp: Copied from VM/ExceptionHelpers.cpp.
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved VM/RegisterFile.cpp => interpreter/RegisterFile.cpp.
+
+        * AllInOneFile.cpp:
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * VM/RegisterFile.cpp: Removed.
+        * interpreter/RegisterFile.cpp: Copied from VM/RegisterFile.cpp.
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/jsc/jsc.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Windows build.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved:
+            VM/ExceptionHelpers.h => runtime/ExceptionHelpers.h
+            VM/Register.h => interpreter/Register.h
+            VM/RegisterFile.h => interpreter/RegisterFile.h
+        
+        
+        * GNUmakefile.am:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * VM/ExceptionHelpers.h: Removed.
+        * VM/Register.h: Removed.
+        * VM/RegisterFile.h: Removed.
+        * interpreter/Register.h: Copied from VM/Register.h.
+        * interpreter/RegisterFile.h: Copied from VM/RegisterFile.h.
+        * runtime/ExceptionHelpers.h: Copied from VM/ExceptionHelpers.h.
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Qt build.
+
+        * JavaScriptCore.pri:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved VM/Machine.cpp => interpreter/Interpreter.cpp.
+
+        * DerivedSources.make:
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * VM/Machine.cpp: Removed.
+        * interpreter/Interpreter.cpp: Copied from VM/Machine.cpp.
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved VM/Machine.h => interpreter/Interpreter.h
+
+        * GNUmakefile.am:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * VM/CTI.cpp:
+        * VM/CTI.h:
+        * VM/ExceptionHelpers.cpp:
+        * VM/Machine.cpp:
+        * VM/Machine.h: Removed.
+        * VM/SamplingTool.cpp:
+        * bytecode/CodeBlock.cpp:
+        * bytecompiler/BytecodeGenerator.cpp:
+        * bytecompiler/BytecodeGenerator.h:
+        * debugger/DebuggerCallFrame.cpp:
+        * interpreter: Added.
+        * interpreter/Interpreter.h: Copied from VM/Machine.h.
+        * profiler/ProfileGenerator.cpp:
+        * runtime/Arguments.h:
+        * runtime/ArrayPrototype.cpp:
+        * runtime/Collector.cpp:
+        * runtime/Completion.cpp:
+        * runtime/ExecState.h:
+        * runtime/FunctionPrototype.cpp:
+        * runtime/JSActivation.cpp:
+        * runtime/JSFunction.cpp:
+        * runtime/JSGlobalData.cpp:
+        * runtime/JSGlobalObject.cpp:
+        * runtime/JSGlobalObjectFunctions.cpp:
+        * wrec/WREC.cpp:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Moved runtime/Interpreter.cpp => runtime/Completion.cpp.
+
+        Moved functions from Interpreter.h to Completion.h, and removed
+        Interpreter.h from the project.
+
+        * API/JSBase.cpp:
+        * AllInOneFile.cpp:
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * jsc.cpp:
+        * runtime/Completion.cpp: Copied from runtime/Interpreter.cpp.
+        * runtime/Completion.h:
+        * runtime/Interpreter.cpp: Removed.
+        * runtime/Interpreter.h: Removed.
+
+2008-11-17  Gabor Loki  <loki@inf.u-szeged.hu>
+
+        Reviewed by Darin Adler.
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22312>
+        Fix PCRE include path problem on Qt-port
+
+        * JavaScriptCore.pri:
+        * pcre/pcre.pri:
+
+2008-11-17  Gabor Loki  <loki@inf.u-szeged.hu>
+
+        Reviewed by Darin Adler.
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22313>
+        Add missing CTI source to the build system on Qt-port
+
+        * JavaScriptCore.pri:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix JSGlue build.
+
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+        
+        Try to fix Qt build.
+
+        * jsc.pro:
+
 2008-11-17  Geoffrey Garen  <ggaren@apple.com>
 
         Not reviewed.
@@ -18897,5 +19292,6 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 

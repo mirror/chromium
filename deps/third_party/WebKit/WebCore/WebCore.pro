@@ -67,6 +67,7 @@ win32-g++ {
 !contains(DEFINES, ENABLE_ICONDATABASE=.): DEFINES += ENABLE_ICONDATABASE=1
 !contains(DEFINES, ENABLE_XPATH=.): DEFINES += ENABLE_XPATH=1
 #!contains(DEFINES, ENABLE_XBL=.): DEFINES += ENABLE_XBL=1
+!contains(DEFINES, ENABLE_WML=.): DEFINES += ENABLE_WML=0
 !contains(DEFINES, ENABLE_SVG=.): DEFINES += ENABLE_SVG=1
 #!contains(DEFINES, ENABLE_SVG_FONTS=.): DEFINES += ENABLE_SVG_FONTS=1
 !contains(DEFINES, ENABLE_SVG_FILTERS=.): DEFINES += ENABLE_SVG_FILTERS=1
@@ -89,12 +90,14 @@ unix|win32-*:!embedded:!wince*:!symbian {
 DEFINES += WTF_USE_JAVASCRIPTCORE_BINDINGS=1 WTF_CHANGES=1
 
 INCLUDEPATH += $$PWD $$PWD/../JavaScriptCore $$PWD/../JavaScriptCore/ForwardingHeaders \
-               $$PWD/../JavaScriptCore/VM \
+               $$PWD/../JavaScriptCore/interpreter \
+               $$PWD/../JavaScriptCore/bytecode \
                $$PWD/../JavaScriptCore/debugger \
                $$PWD/../JavaScriptCore/parser \
                $$PWD/../JavaScriptCore/runtime \
                $$PWD/../JavaScriptCore/bindings \
                $$PWD/../JavaScriptCore/wrec \
+               $$PWD/../JavaScriptCore/jit \
                $$PWD/../JavaScriptCore/wtf \
 
 contains(CONFIG, debug_and_release_target) {
@@ -165,6 +168,7 @@ INCLUDEPATH +=  $$PWD \
                 $$PWD/inspector \
                 $$PWD/xml \
                 $$PWD/html \
+                $$PWD/wml \
                 $$PWD/bindings/js \
                 $$PWD/svg \
                 $$PWD/platform/image-decoders \
@@ -1362,6 +1366,35 @@ contains(DEFINES, ENABLE_XBL=1) {
     FEATURE_DEFINES_JAVASCRIPT += ENABLE_XBL=1
 }
 
+contains(DEFINES, ENABLE_WML=1) {
+    SOURCES += \
+        wml/WMLAElement.cpp \
+        wml/WMLCardElement.cpp \
+        wml/WMLElement.cpp \
+        wml/WMLDocument.cpp \
+        wml/WMLPageState.cpp \
+        wml/WMLPElement.cpp
+
+    FEATURE_DEFINES_JAVASCRIPT += ENABLE_WML=1
+
+    WML_NAMES = $$PWD/wml/WMLTagNames.in
+
+    wmlnames_a.output = $$GENERATED_SOURCES_DIR/WMLNames.cpp
+    wmlnames_a.commands = perl -I$$PWD/bindings/scripts $$PWD/dom/make_names.pl --tags $$PWD/wml/WMLTagNames.in --attrs $$PWD/wml/WMLAttributeNames.in --extraDefines \"$${DEFINES}\" --preprocessor \"$${QMAKE_MOC} -E\" --factory --wrapperFactory --outputDir $$GENERATED_SOURCES_DIR
+    wmlnames_a.input = WML_NAMES
+    wmlnames_a.dependency_type = TYPE_C
+    wmlnames_a.CONFIG = target_predeps
+    wmlnames_a.variable_out = GENERATED_SOURCES
+    addExtraCompilerWithHeader(wmlnames_a)
+    wmlnames_b.output = $$GENERATED_SOURCES_DIR/WMLElementFactory.cpp
+    wmlnames_b.commands = @echo -n ''
+    wmlnames_b.input = SVG_NAMES
+    wmlnames_b.depends = $$GENERATED_SOURCES_DIR/WMLNames.cpp
+    wmlnames_b.CONFIG = target_predeps
+    wmlnames_b.variable_out = GENERATED_SOURCES
+    addExtraCompilerWithHeader(wmlnames_b)
+}
+
 contains(DEFINES, ENABLE_SVG=1) {
     FEATURE_DEFINES_JAVASCRIPT += ENABLE_SVG=1
 
@@ -1899,7 +1932,7 @@ addExtraCompiler(colordata)
 
 # GENERATOR 9:
 stylesheets.output = $$GENERATED_SOURCES_DIR/UserAgentStyleSheetsData.cpp
-stylesheets.commands = perl $$PWD/css/make-css-file-arrays.pl --preprocessor \"$${QMAKE_MOC} -E\" $$GENERATED_SOURCES_DIR/UserAgentStyleSheets.h $$GENERATED_SOURCES_DIR/UserAgentStyleSheetsData.cpp $$PWD/css/html4.css $$PWD/css/quirks.css $$PWD/css/svg.css $$PWD/css/view-source.css
+stylesheets.commands = perl $$PWD/css/make-css-file-arrays.pl --preprocessor \"$${QMAKE_MOC} -E\" $$GENERATED_SOURCES_DIR/UserAgentStyleSheets.h $$GENERATED_SOURCES_DIR/UserAgentStyleSheetsData.cpp $$PWD/css/html4.css $$PWD/css/quirks.css $$PWD/css/svg.css $$PWD/css/view-source.css $$PWD/css/wml.css
 stylesheets.input = STYLESHEETS_EMBED
 stylesheets.CONFIG = target_predeps
 stylesheets.variable_out = GENERATED_SOURCES
@@ -1947,6 +1980,7 @@ addExtraCompilerWithHeader(xpathbison)
         QMAKE_PKGCONFIG_INSTALL_REPLACE += lib_replace
     }
 }
+
 
 
 

@@ -40,11 +40,11 @@
 #import "runtime_object.h"
 #import "runtime_root.h"
 #import <JavaScriptCore/APICast.h>
-#import <runtime/ExecState.h>
+#import <interpreter/CallFrame.h>
 #import <runtime/JSGlobalObject.h>
 #import <runtime/JSLock.h>
 #import <runtime/Completion.h>
-#import <runtime/Interpreter.h>
+#import <runtime/Completion.h>
 
 #ifdef BUILDING_ON_TIGER
 typedef unsigned NSUInteger;
@@ -642,5 +642,6 @@ static void getListFromNSArray(ExecState *exec, NSArray *array, RootObject* root
 }
 
 @end
+
 
 

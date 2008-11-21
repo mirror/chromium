@@ -27,10 +27,11 @@
 VPATH = \
     $(JavaScriptCore) \
     $(JavaScriptCore)/parser \
-    $(JavaScriptCore)/VM \
     $(JavaScriptCore)/pcre \
     $(JavaScriptCore)/docs \
     $(JavaScriptCore)/runtime \
+    $(JavaScriptCore)/interpreter \
+    $(JavaScriptCore)/jit \
 #
 
 .PHONY : all
@@ -70,5 +71,6 @@ Grammar.cpp: Grammar.y
 chartables.c : dftables
 	$^ $@
 
-$(JavaScriptCore)/docs/bytecode.html: make-bytecode-docs.pl Machine.cpp 
+$(JavaScriptCore)/docs/bytecode.html: make-bytecode-docs.pl Interpreter.cpp 
 	perl $^ $@
+

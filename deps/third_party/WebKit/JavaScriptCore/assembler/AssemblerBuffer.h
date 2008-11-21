@@ -30,6 +30,7 @@
 
 #if ENABLE(ASSEMBLER)
 
+#include <string.h>
 #include <wtf/Assertions.h>
 #include <wtf/FastMalloc.h>
 
@@ -147,3 +148,4 @@ namespace JSC {
 #endif // ENABLE(ASSEMBLER)
 
 #endif // AssemblerBuffer_h
+

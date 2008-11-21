@@ -1,14 +1,16 @@
 javascriptcore_cppflags += \
 	-I$(srcdir)/JavaScriptCore/API \
 	-I$(srcdir)/JavaScriptCore/ForwardingHeaders \
-	-I$(srcdir)/JavaScriptCore/VM \
+	-I$(srcdir)/JavaScriptCore/interpreter \
 	-I$(srcdir)/JavaScriptCore/bytecode \
 	-I$(srcdir)/JavaScriptCore/bytecompiler \
 	-I$(srcdir)/JavaScriptCore/debugger \
+	-I$(srcdir)/JavaScriptCore/jit \
 	-I$(srcdir)/JavaScriptCore/pcre \
 	-I$(srcdir)/JavaScriptCore/profiler \
 	-I$(srcdir)/JavaScriptCore/runtime \
 	-I$(srcdir)/JavaScriptCore/wrec \
+	-I$(srcdir)/JavaScriptCore/jit \
 	-I$(srcdir)/JavaScriptCore/assembler \
 	-I$(srcdir)/JavaScriptCore/wtf/unicode \
 	-I$(top_builddir)/JavaScriptCore/pcre \
@@ -71,23 +73,23 @@ javascriptcore_sources += \
 	JavaScriptCore/ForwardingHeaders/JavaScriptCore/OpaqueJSString.h \
 	JavaScriptCore/ForwardingHeaders/JavaScriptCore/WebKitAvailability.h \
 	JavaScriptCore/JavaScriptCorePrefix.h \
-	JavaScriptCore/VM/CTI.cpp \
-	JavaScriptCore/VM/CTI.h \
+	JavaScriptCore/jit/JIT.cpp \
+	JavaScriptCore/jit/JIT.h \
 	JavaScriptCore/bytecode/CodeBlock.cpp \
 	JavaScriptCore/bytecode/CodeBlock.h \
 	JavaScriptCore/bytecode/EvalCodeCache.h \
-	JavaScriptCore/VM/ExceptionHelpers.cpp \
-	JavaScriptCore/VM/ExceptionHelpers.h \
+	JavaScriptCore/runtime/ExceptionHelpers.cpp \
+	JavaScriptCore/runtime/ExceptionHelpers.h \
 	JavaScriptCore/bytecode/Instruction.h \
 	JavaScriptCore/bytecompiler/Label.h \
-	JavaScriptCore/VM/Machine.cpp \
-	JavaScriptCore/VM/Machine.h \
+	JavaScriptCore/interpreter/Interpreter.cpp \
+	JavaScriptCore/interpreter/Interpreter.h \
 	JavaScriptCore/bytecode/Opcode.cpp \
 	JavaScriptCore/bytecode/Opcode.h \
-	JavaScriptCore/VM/Register.h \
+	JavaScriptCore/interpreter/Register.h \
 	JavaScriptCore/bytecompiler/RegisterID.h \
-	JavaScriptCore/VM/SamplingTool.cpp \
-	JavaScriptCore/VM/SamplingTool.h \
+	JavaScriptCore/bytecode/SamplingTool.cpp \
+	JavaScriptCore/bytecode/SamplingTool.h \
 	JavaScriptCore/bytecompiler/SegmentedVector.h \
 	JavaScriptCore/config.h \
 	JavaScriptCore/debugger/DebuggerCallFrame.cpp \
@@ -139,8 +141,8 @@ javascriptcore_sources += \
 	JavaScriptCore/profiler/Profiler.h \
 	JavaScriptCore/profiler/TreeProfile.cpp \
 	JavaScriptCore/profiler/TreeProfile.h \
-	JavaScriptCore/runtime/ExecState.cpp \
-	JavaScriptCore/runtime/ExecState.h \
+	JavaScriptCore/interpreter/CallFrame.cpp \
+	JavaScriptCore/interpreter/CallFrame.h \
 	JavaScriptCore/runtime/InitializeThreading.cpp \
 	JavaScriptCore/runtime/InitializeThreading.h \
 	JavaScriptCore/runtime/JSActivation.cpp \
@@ -159,10 +161,19 @@ javascriptcore_sources += \
 	JavaScriptCore/runtime/StructureChain.h \
 	JavaScriptCore/runtime/StructureTransitionTable.h \
 	JavaScriptCore/runtime/TypeInfo.h \
+	JavaScriptCore/wrec/CharacterClass.cpp \
+	JavaScriptCore/wrec/CharacterClass.h \
 	JavaScriptCore/wrec/CharacterClassConstructor.cpp \
 	JavaScriptCore/wrec/CharacterClassConstructor.h \
+	JavaScriptCore/wrec/Quantifier.h \
 	JavaScriptCore/wrec/WREC.cpp \
 	JavaScriptCore/wrec/WREC.h \
+	JavaScriptCore/wrec/WRECFunctors.cpp \
+	JavaScriptCore/wrec/WRECFunctors.h \
+	JavaScriptCore/wrec/WRECGenerator.cpp \
+	JavaScriptCore/wrec/WRECGenerator.h \
+	JavaScriptCore/wrec/WRECParser.cpp \
+	JavaScriptCore/wrec/WRECParser.h \
 	JavaScriptCore/wtf/ASCIICType.h \
 	JavaScriptCore/wtf/AVLTree.h \
 	JavaScriptCore/wtf/AlwaysInline.h \
@@ -229,8 +240,8 @@ javascriptcore_built_sources += \
 	DerivedSources/Grammar.h
 
 javascriptcore_sources += \
-	JavaScriptCore/VM/RegisterFile.cpp \
-	JavaScriptCore/VM/RegisterFile.h \
+	JavaScriptCore/interpreter/RegisterFile.cpp \
+	JavaScriptCore/interpreter/RegisterFile.h \
 	JavaScriptCore/bytecompiler/BytecodeGenerator.cpp \
 	JavaScriptCore/bytecompiler/BytecodeGenerator.h \
 	JavaScriptCore/bytecompiler/LabelScope.h \
@@ -300,8 +311,7 @@ javascriptcore_sources += \
 	JavaScriptCore/runtime/Identifier.h \
 	JavaScriptCore/runtime/InternalFunction.cpp \
 	JavaScriptCore/runtime/InternalFunction.h \
-	JavaScriptCore/runtime/Interpreter.cpp \
-	JavaScriptCore/runtime/Interpreter.h \
+	JavaScriptCore/runtime/Completion.cpp \
 	JavaScriptCore/runtime/JSArray.cpp \
 	JavaScriptCore/runtime/JSArray.h \
 	JavaScriptCore/runtime/JSCell.cpp \
@@ -496,5 +506,6 @@ CLEANFILES += \
 	JavaScriptCore/pcre/chartables.c \
 	Programs/jsc \
 	Programs/minidom
+
 
 

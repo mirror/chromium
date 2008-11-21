@@ -8,7 +8,7 @@ INCLUDEPATH += $$PWD \
     $$PWD/bindings \
     $$PWD/bindings/c \
     $$PWD/wtf \
-    $$PWD/VM
+    $$PWD/jit \
     $$PWD/bytecode
 CONFIG -= app_bundle
 DEFINES += BUILDING_QT__
@@ -34,4 +34,5 @@ include($$PWD/JavaScriptCore.pri)
 lessThan(QT_MINOR_VERSION, 4) {
     DEFINES += QT_BEGIN_NAMESPACE="" QT_END_NAMESPACE=""
 }
+
 

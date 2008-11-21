@@ -26,7 +26,7 @@
 #include "ArgList.h"
 #include "ClassInfo.h"
 #include "CommonIdentifiers.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "JSNumberCell.h"
 #include "PropertySlot.h"
 #include "PutPropertySlot.h"
@@ -552,5 +552,6 @@ ALWAYS_INLINE void JSObject::allocatePropertyStorageInline(size_t oldSize, size_
 } // namespace JSC
 
 #endif // JSObject_h
+
 
 

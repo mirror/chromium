@@ -32,9 +32,11 @@
 
 #include "JSWorkerContext.h"
 #include "WorkerContext.h"
+#include "WorkerMessagingProxy.h"
+#include "WorkerThread.h"
 #include <parser/SourceCode.h>
 #include <runtime/Completion.h>
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 #include <runtime/JSLock.h>
 
 using namespace JSC;
@@ -75,6 +77,8 @@ JSValue* WorkerScriptController::evaluate(const String& sourceURL, int baseLine,
     Completion comp = JSC::evaluate(exec, exec->dynamicGlobalObject()->globalScopeChain(), makeSource(code, sourceURL, baseLine), m_workerContextWrapper);
     m_workerContextWrapper->stopTimeoutCheck();
 
+    m_workerContext->thread()->messagingProxy()->reportWorkerThreadActivity(m_workerContext->hasPendingActivity());
+
     if (comp.complType() == Normal || comp.complType() == ReturnValue)
         return comp.value();
 
@@ -87,4 +91,5 @@ JSValue* WorkerScriptController::evaluate(const String& sourceURL, int baseLine,
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
+
 

@@ -23,7 +23,7 @@
 #ifndef ClassInfo_h
 #define ClassInfo_h
 
-#include "ExecState.h"
+#include "CallFrame.h"
 
 namespace JSC {
 
@@ -60,3 +60,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // ClassInfo_h
+

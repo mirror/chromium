@@ -1,3 +1,383 @@
+2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22308
+        Improve Worker GC behavior
+
+        * dom/ActiveDOMObject.cpp: (WebCore::ActiveDOMObject::hasPendingActivity):
+        * dom/ActiveDOMObject.h:
+        Made hasPendingActivity() virtual, letting Worker add behavior to it.
+
+        * bindings/js/WorkerScriptController.cpp: (WebCore::WorkerScriptController::evaluate):
+        * dom/WorkerThread.cpp: (WebCore::WorkerThread::workerThread):
+        Tell message proxy whether there are active objects in the worker whenever JS execution
+        finishes.
+
+        * dom/ScriptExecutionContext.h: (WebCore::ScriptExecutionContext::activeDOMObjects):
+        Added a typedef for activeDOMObjects() return type, necessary to declare iterators.
+
+        * dom/Worker.h:
+        * dom/Worker.cpp: (WebCore::Worker::hasPendingActivity): A Worker is active if it is still
+        loading, or if it has unconfirmed messages, or it the worker thread has pending activity.
+
+        * dom/WorkerContext.h:
+        * dom/WorkerContext.cpp: (WebCore::WorkerContext::hasPendingActivity): Check all registered
+        active objects for pending activity.
+
+        * dom/WorkerMessagingProxy.cpp:
+        (WebCore::MessageWorkerContextTask::performTask):
+        (WebCore::WorkerThreadActivityReportTask::create):
+        (WebCore::WorkerThreadActivityReportTask::WorkerThreadActivityReportTask):
+        (WebCore::WorkerThreadActivityReportTask::performTask):
+        (WebCore::WorkerMessagingProxy::WorkerMessagingProxy):
+        (WebCore::WorkerMessagingProxy::postMessageToWorkerContext):
+        (WebCore::WorkerMessagingProxy::workerObjectDestroyed):
+        (WebCore::WorkerMessagingProxy::workerContextDestroyedInternal):
+        (WebCore::WorkerMessagingProxy::confirmWorkerThreadMessage):
+        (WebCore::WorkerMessagingProxy::reportWorkerThreadActivity):
+        (WebCore::WorkerMessagingProxy::reportWorkerThreadActivityInternal):
+        (WebCore::WorkerMessagingProxy::workerThreadHasPendingActivity):
+        * dom/WorkerMessagingProxy.h:
+        Track outstanding messages, and activity reported by worker thread.
+
+2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
+
+        Rubber-stamped by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22306
+        Disable channel messaging support
+
+        * bindings/js/JSDOMWindowBase.cpp:
+        (jsDOMWindowBaseMessageChannel):
+        * page/DOMWindow.idl:
+        Hide MesssagePort and MessageChannel global constructors. Due to the way MessageChannel
+        constructor is added, it remains enumerable, but undefined.
+
+2008-11-17  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Mark Rowe.
+
+        Remove WBXML code. MainResourceLoader is not an appropriate location.
+        Revert until we find a better place.
+
+        The mime type which belongs to wmlc should be enabled anyway so WML documents get build.
+        Remove the ENABLE(WBXML) blocks around these types in MIMETypeRegistry / DOMImplementation.
+
+        * WebCore.pro:
+        * dom/DOMImplementation.cpp:
+        (WebCore::DOMImplementation::createDocument):
+        * loader/MainResourceLoader.cpp:
+        (WebCore::MainResourceLoader::addData):
+        * platform/MIMETypeRegistry.cpp:
+        (WebCore::initializeSupportedNonImageMimeTypes):
+
+2008-11-17  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Build fix.
+
+        Oops, disable WML by default on Qt.
+
+        * WebCore.pro:
+
+2008-11-17  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22324 (Add basic subset of WML elements)
+
+        Add first bits of WML support. Only <card> & <p> and <a> elements are supported in this first patch.
+        Support for most other elements will be added step-by-step (merging in small chunks from a big patch).
+
+        WML is not build by default.
+
+        * DerivedSources.make: Handle WMLNames/WMLElementFactory generation.
+        * GNUmakefile.am: Add new files and generator hooks.
+        * WebCore.pro: Ditto.
+        * WebCore.xcodeproj/project.pbxproj: Ditto.
+        * css/CSSStyleSelector.cpp: Load wml.css on demand, just like it's done for SVG.
+        (WebCore::linkAttribute):
+        (WebCore::CSSStyleSelector::styleForElement):c
+        * css/wml.css: Added.
+        * dom/DOMImplementation.cpp: Handle WMLDocument creation
+        (WebCore::DOMImplementation::createDocument):
+        * dom/Document.cpp: Handle WMLElement creation.
+        (WebCore::Document::createElement):
+        * dom/Document.h: Add helper function identifying WML documents.
+        (WebCore::Document::isWMLDocument):
+        * dom/Node.h: Add heper function identifying WML elements.
+        (WebCore::Node::isWMLElement):
+        * dom/XMLTokenizer.cpp: Handle errors in WML documents
+        (WebCore::XMLTokenizer::insertErrorMessageBlock):
+        * dom/XMLTokenizerLibxml2.cpp: Add WML DTD checks.
+        (WebCore::XMLTokenizer::internalSubset):
+        * dom/XMLTokenizerQt.cpp: Ditto.
+        (WebCore::):
+        * dom/make_names.pl: Force internal linkage for the "tagConstructor" functions, avoiding SVG<->WML clashes.
+        * history/BackForwardList.cpp: Add WML specific function for clearing the history.
+        (WebCore::BackForwardList::clearWmlPageHistory):
+        * history/BackForwardList.h:
+        * loader/FrameLoader.cpp: Add WML specific 'shouldReload' logic.
+        (WebCore::FrameLoader::FrameLoader):
+        (WebCore::FrameLoader::setForceReloadWmlDeck):
+        (WebCore::FrameLoader::shouldReload):
+        (WebCore::FrameLoader::loadItem):
+        * loader/FrameLoader.h:
+        * loader/MainResourceLoader.cpp: Add WBXML support (only enabled on Linux/Qt at the moment)
+        (WebCore::MainResourceLoader::addData):
+        * page/Frame.cpp: Initialize WMLNames.
+        (WebCore::Frame::Frame):
+        * page/Page.cpp: Maintain WMLPageState object per Page.
+        (WebCore::Page::Page):
+        (WebCore::Page::setWMLPageState):
+        (WebCore::Page::wmlPageState):
+        * page/Page.h:
+        * platform/MIMETypeRegistry.cpp: Recognize WML extensions.
+        (WebCore::initializeSupportedNonImageMimeTypes):
+        * platform/gtk/MIMETypeRegistryGtk.cpp: Ditto.
+        (WebCore::MIMETypeRegistry::getMIMETypeForExtension):
+        * platform/qt/MIMETypeRegistryQt.cpp: Ditto.
+        (WebCore::):
+        * platform/win/MIMETypeRegistryWin.cpp: Ditto.
+        (WebCore::MIMETypeRegistry::getMIMETypeForExtension):
+        * manual-tests/wml: Added.
+        * manual-tests/wml/a-br-element.wml: Added.
+        * manual-tests/wml/a-element.wml: Added.
+        * manual-tests/wml/a-img-element.wml: Added.
+        * manual-tests/wml/access-target.wml: Added.
+        * manual-tests/wml/anchor-br-element.wml: Added.
+        * manual-tests/wml/anchor-element.wml: Added.
+        * manual-tests/wml/anchor-img-element.wml: Added.
+        * manual-tests/wml/card-newcontext-attr.wml: Added.
+        * manual-tests/wml/card-onenterbackward.wml: Added.
+        * manual-tests/wml/card-onenterforward.wml: Added.
+        * manual-tests/wml/card-ontimer.wml: Added.
+        * manual-tests/wml/deck-access-control.wml: Added.
+        * manual-tests/wml/go-element.wml: Added.
+        * manual-tests/wml/input-emptyok.wml: Added.
+        * manual-tests/wml/input-format.wml: Added.
+        * manual-tests/wml/onevent-go.wml: Added.
+        * manual-tests/wml/onevent-noop.wml: Added.
+        * manual-tests/wml/onevent-prev.wml: Added.
+        * manual-tests/wml/onevent-refresh.wml: Added.
+        * manual-tests/wml/onevent-shadow.wml: Added.
+        * manual-tests/wml/postfield-get.wml: Added.
+        * manual-tests/wml/postfield-post.wml: Added.
+        * manual-tests/wml/select-element.wml: Added.
+        * manual-tests/wml/select-onpick-event.wml: Added.
+        * manual-tests/wml/setvar-element.wml: Added.
+        * manual-tests/wml/targetdeck.wml: Added.
+        * manual-tests/wml/task-go-in-anchor.wml: Added.
+        * manual-tests/wml/task-noop-in-do.wml: Added.
+        * manual-tests/wml/task-noop-in-onevent.wml: Added.
+        * manual-tests/wml/task-prev-in-anchor.wml: Added.
+        * manual-tests/wml/task-refresh-in-anchor.wml: Added.
+        * manual-tests/wml/template-go.wml: Added.
+        * manual-tests/wml/template-onevent.wml: Added.
+        * manual-tests/wml/template-ontimer.wml: Added.
+        * manual-tests/wml/timer.wml: Added.
+        * manual-tests/wml/variable-substitution.wml: Added.
+        * wml: Added.
+        * wml/WMLAElement.cpp: Added.
+        (WebCore::WMLAElement::WMLAElement):
+        (WebCore::WMLAElement::parseMappedAttribute):
+        (WebCore::WMLAElement::supportsFocus):
+        (WebCore::WMLAElement::isFocusable):
+        (WebCore::WMLAElement::isMouseFocusable):
+        (WebCore::WMLAElement::isKeyboardFocusable):
+        (WebCore::WMLAElement::defaultEventHandler):
+        (WebCore::WMLAElement::accessKeyAction):
+        (WebCore::WMLAElement::isURLAttribute):
+        (WebCore::WMLAElement::target):
+        * wml/WMLAElement.h: Added.
+        * wml/WMLAttributeNames.in: Added.
+        * wml/WMLCardElement.cpp: Added.
+        (WebCore::WMLCardElement::WMLCardElement):
+        * wml/WMLCardElement.h: Added.
+        * wml/WMLDocument.cpp: Added.
+        (WebCore::WMLDocument::WMLDocument):
+        (WebCore::WMLDocument::~WMLDocument):
+        * wml/WMLDocument.h: Added.
+        (WebCore::WMLDocument::create):
+        (WebCore::WMLDocument::isWMLDocument):
+        * wml/WMLElement.cpp: Added.
+        (WebCore::WMLElement::WMLElement):
+        (WebCore::WMLElement::mapToEntry):
+        (WebCore::WMLElement::parseMappedAttribute):
+        (WebCore::WMLElement::rendererIsNeeded):
+        (WebCore::WMLElement::createRenderer):
+        * wml/WMLElement.h: Added.
+        (WebCore::WMLElement::isWMLElement):
+        * wml/WMLPElement.cpp: Added.
+        (WebCore::WMLPElement::WMLPElement):
+        (WebCore::WMLPElement::mapToEntry):
+        (WebCore::WMLPElement::parseMappedAttribute):
+        * wml/WMLPElement.h: Added.
+        * wml/WMLPageState.cpp: Added.
+        (WebCore::WMLPageState::WMLPageState):
+        (WebCore::WMLPageState::~WMLPageState):
+        (WebCore::WMLPageState::reset):
+        (WebCore::WMLPageState::setNeedCheckDeckAccess):
+        (WebCore::WMLPageState::isDeckAccessible):
+        * wml/WMLPageState.h: Added.
+        (WebCore::WMLPageState::storeVariable):
+        (WebCore::WMLPageState::storeVariables):
+        (WebCore::WMLPageState::getVaribale):
+        (WebCore::WMLPageState::hasVariables):
+        (WebCore::WMLPageState::historyLength):
+        (WebCore::WMLPageState::setHistoryLength):
+        (WebCore::WMLPageState::page):
+        (WebCore::WMLPageState::activeCard):
+        (WebCore::WMLPageState::setActiveCard):
+        (WebCore::WMLPageState::setDeckAccessDomain):
+        (WebCore::WMLPageState::setDeckAccessPath):
+        (WebCore::WMLPageState::hasDeckAccess):
+        * wml/WMLTagNames.in: Added.
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Updated for JavaScriptCore renames.
+
+        * WebCore.pro:
+        * webcore-base.bkl:
+
+2008-11-17  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        <rdar://problem/4922709> Copying less than a paragraph of quoted text and pasting it doesn't retain quote level
+        
+        There was code to intentionally avoid quoting pasted content if less than a paragraph of 
+        it was copied.  That was added for <rdar://problem/5006779>, but was unnecessary because
+        that bug was about Paste and Match style for single paragraphs.  And quote stripping for
+        Paste and Match style is handled elsewhere.
+
+        * editing/markup.cpp:
+        (WebCore::createMarkup):
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Updated for JavaScriptCore rename.
+
+        * ForwardingHeaders/interpreter/CallFrame.h: Copied from WebCore/ForwardingHeaders/runtime/ExecState.h.
+        * ForwardingHeaders/runtime/ExecState.h: Removed.
+        * bindings/objc/WebScriptObject.mm:
+        * bridge/c/c_instance.cpp:
+        * bridge/jni/jni_jsobject.mm:
+        * dom/Node.cpp:
+        * dom/NodeFilter.cpp:
+        * dom/NodeIterator.cpp:
+        * dom/TreeWalker.cpp:
+        * inspector/JavaScriptCallFrame.h:
+
+2008-11-17  Pierre-Olivier Latour  <pol@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Added functionality to AnimationController to allow pausing a running
+        animation or transition at a given time for testing purposes.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21261
+
+        Tests: animations/animation-drt-api.html
+               transitions/transition-drt-api.html
+
+        * WebCore.base.exp:
+        * WebCore.xcodeproj/project.pbxproj:
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::updateStateMachine):
+        (WebCore::AnimationBase::progress):
+        (WebCore::AnimationBase::pauseAtTime):
+        * page/animation/AnimationBase.h:
+        * page/animation/AnimationController.cpp:
+        (WebCore::AnimationControllerPrivate::pauseAnimationAtTime):
+        (WebCore::AnimationControllerPrivate::pauseTransitionAtTime):
+        (WebCore::AnimationController::pauseAnimationAtTime):
+        (WebCore::AnimationController::pauseTransitionAtTime):
+        * page/animation/AnimationController.h:
+        * page/animation/CompositeAnimation.cpp:
+        (WebCore::CompositeAnimationPrivate::isAnimating):
+        (WebCore::CompositeAnimationPrivate::pauseAnimationAtTime):
+        (WebCore::CompositeAnimationPrivate::pauseTransitionAtTime):
+        (WebCore::CompositeAnimation::pauseAnimationAtTime):
+        (WebCore::CompositeAnimation::pauseTransitionAtTime):
+        * page/animation/CompositeAnimation.h:
+        * page/animation/ImplicitAnimation.cpp:
+        (WebCore::ImplicitAnimation::animate):
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Updated for JavaScriptCore renames.
+
+        * ForwardingHeaders/VM: Removed.
+        * ForwardingHeaders/VM/Machine.h: Removed.
+        * ForwardingHeaders/interpreter: Added.
+        * ForwardingHeaders/interpreter/Interpreter.h: Copied from ForwardingHeaders/VM/Machine.h.
+        * WebCore.pro:
+        * bindings/js/JSXMLHttpRequestCustom.cpp:
+        * page/Console.cpp:
+        * webcore-base.bkl:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Updated for JavaScriptCore renames.
+
+        * ForwardingHeaders/runtime/Interpreter.h: Removed.
+        * WebCore.vcproj/WebCore.vcproj:
+        * bindings/js/JSDOMBinding.h:
+        * bindings/js/WorkerScriptController.cpp:
+        * bindings/objc/WebScriptObject.mm:
+        * bridge/NP_jsobject.cpp:
+        * bridge/jni/jni_jsobject.mm:
+        * html/CanvasRenderingContext2D.cpp:
+        * inspector/JavaScriptCallFrame.cpp:
+        * page/Console.cpp:
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+
+        Try to fix wx build.
+
+        * webcore-base.bkl:
+
+2008-11-17  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21810
+        Remove use of static C++ objects that are destroyed at exit time (destructors)
+
+        Find some missing DEFINE_STATIC_LOCAL use cases.
+        
+        * bindings/js/JSSVGPODTypeWrapper.h:
+        (WebCore::PODTypeWrapperCacheInfoTraits::emptyValue):
+        (WebCore::JSSVGDynamicPODTypeWrapperCache::dynamicWrapperHashMap):
+        * dom/make_names.pl: Generate code to use DEFINE_STATIC_LOCAL.
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::RoleEntry::): This method is only called once, so the array does not have to be static.
+        * platform/graphics/FontCache.cpp:
+        (WebCore::FontPlatformDataCacheKeyTraits::emptyValue):
+        (WebCore::FontDataCacheKeyTraits::emptyValue):
+        * rendering/style/RenderStyle.h:
+        (WebCore::InheritedFlags::initialTransform):
+
+2008-11-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Not reviewed.
+
+        Try to fix Qt build.
+
+        * WebCore.pro:
+
 2008-11-16  Simon Fraser  <simon.fraser@apple.com>
 
         Reviewed by Dan Bernstein
@@ -28156,5 +28536,6 @@
         getting the line's textContent. Add the error bubble back at the end.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 

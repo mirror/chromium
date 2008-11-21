@@ -38,7 +38,7 @@ namespace WebCore {
         ActiveDOMObject(ScriptExecutionContext*, void* upcastPointer);
 
         ScriptExecutionContext* scriptExecutionContext() const { return m_scriptExecutionContext; }
-        bool hasPendingActivity() { return m_pendingActivityCount; }
+        virtual bool hasPendingActivity() const;
 
         virtual void contextDestroyed();
         virtual void stop();
@@ -68,3 +68,4 @@ namespace WebCore {
 } // namespace WebCore
 
 #endif // ActiveDOMObject_h
+

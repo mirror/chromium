@@ -24,7 +24,7 @@
 #define JSString_h
 
 #include "CommonIdentifiers.h"
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "Identifier.h"
 #include "JSNumberCell.h"
 #include "PropertySlot.h"
@@ -212,5 +212,6 @@ namespace JSC {
 } // namespace JSC
 
 #endif // JSString_h
+
 
 

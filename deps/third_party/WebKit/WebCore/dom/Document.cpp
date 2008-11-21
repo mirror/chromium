@@ -4,6 +4,8 @@
  *           (C) 2001 Dirk Mueller (mueller@kde.org)
  *           (C) 2006 Alexey Proskuryakov (ap@webkit.org)
  * Copyright (C) 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008 Torch Mobile Inc.  All rights reserved.
+ *               http://www.torchmobile.com/
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -151,6 +153,12 @@
 // we need to be PLATFORM(CHROMIUM) for this file, even if we're not building
 // that particular target, for the a11y ifdefs.
 #define WTF_PLATFORM_CHROMIUM 1
+#endif
+
+#if ENABLE(WML)
+#include "WMLElement.h"
+#include "WMLElementFactory.h"
+#include "WMLNames.h"
 #endif
 
 using namespace std;
@@ -760,6 +768,10 @@ PassRefPtr<Element> Document::createElement(const QualifiedName& qName, bool cre
 #if ENABLE(SVG)
     else if (qName.namespaceURI() == SVGNames::svgNamespaceURI)
         e = SVGElementFactory::createSVGElement(qName, this, createdByParser);
+#endif
+#if ENABLE(WML)
+    else if (qName.namespaceURI() == WMLNames::wmlNamespaceURI || isWMLDocument())
+        e = WMLElementFactory::createWMLElement(qName, this, createdByParser);
 #endif
     
     if (!e)
@@ -4504,4 +4516,5 @@ void Document::parseDNSPrefetchControlHeader(const String& dnsPrefetchControl)
 }
 
 } // namespace WebCore
+
 

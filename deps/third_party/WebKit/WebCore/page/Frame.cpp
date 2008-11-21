@@ -93,6 +93,10 @@
 #include "XLinkNames.h"
 #endif
 
+#if ENABLE(WML)
+#include "WMLNames.h"
+#endif
+
 using namespace std;
 
 namespace WebCore {
@@ -122,6 +126,10 @@ Frame::Frame(Page* page, HTMLFrameOwnerElement* ownerElement, FrameLoaderClient*
 #if ENABLE(SVG)
     SVGNames::init();
     XLinkNames::init();
+#endif
+
+#if ENABLE(WML)
+    WMLNames::init();
 #endif
 
     XMLNames::init();
@@ -1863,4 +1871,5 @@ FramePrivate::~FramePrivate()
 }
 
 } // namespace WebCore
+
 

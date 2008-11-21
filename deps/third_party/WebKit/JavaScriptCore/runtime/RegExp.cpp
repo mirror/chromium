@@ -21,13 +21,13 @@
 #include "config.h"
 #include "RegExp.h"
 
-#include "CTI.h"
+#include "JIT.h"
 #include "Lexer.h"
+#include "WREC.h"
 #include <pcre/pcre.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <wrec/WREC.h>
 #include <wtf/Assertions.h>
 #include <wtf/OwnArrayPtr.h>
 
@@ -184,5 +184,6 @@ int RegExp::match(const UString& s, int i, OwnArrayPtr<int>* ovector)
 }
 
 } // namespace JSC
+
 
 

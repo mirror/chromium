@@ -27,7 +27,7 @@
 #include "JSActivation.h"
 #include "JSFunction.h"
 #include "JSGlobalObject.h"
-#include "Machine.h"
+#include "Interpreter.h"
 
 namespace JSC {
 
@@ -225,4 +225,5 @@ namespace JSC {
 } // namespace JSC
 
 #endif // Arguments_h
+
 

@@ -35,11 +35,11 @@
 #include "ScriptController.h"
 #include "runtime_object.h"
 #include "runtime_root.h"
-#include <runtime/ExecState.h>
+#include <interpreter/CallFrame.h>
 #include <runtime/JSGlobalObject.h>
 #include <runtime/JSLock.h>
 #include <runtime/Completion.h>
-#include <runtime/Interpreter.h>
+#include <runtime/Completion.h>
 #include <wtf/Assertions.h>
 #include <parser/SourceProvider.h>
 
@@ -718,4 +718,5 @@ jstring KJS_JSObject_JSObjectToString (JNIEnv*, jclass, jlong nativeHandle)
 }
 
 #endif // ENABLE(MAC_JAVA_BRIDGE)
+
 

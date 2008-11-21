@@ -1,6 +1,6 @@
 # Perl Compatible Regular Expressions - Qt4 build info
 VPATH += $$PWD
-INCLUDEPATH += $$PWD $$OUTPUT_DIR/JavaScriptCore/parser/tmp
+INCLUDEPATH += $$PWD $$OUTPUT_DIR/JavaScriptCore/tmp
 DEPENDPATH += $$PWD
 
 isEmpty(GENERATED_SOURCES_DIR):GENERATED_SOURCES_DIR = tmp
@@ -33,3 +33,4 @@ ctgen.variable_out = GENERATED_SOURCES
 ctgen.dependency_type = TYPE_C
 ctgen.clean = ${QMAKE_FILE_OUT} ${QMAKE_VAR_GENERATED_SOURCES_DIR}${QMAKE_FILE_BASE}
 addExtraCompiler(ctgen)
+

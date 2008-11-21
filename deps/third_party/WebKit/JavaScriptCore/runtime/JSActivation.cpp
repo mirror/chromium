@@ -30,7 +30,7 @@
 #include "JSActivation.h"
 
 #include "Arguments.h"
-#include "Machine.h"
+#include "Interpreter.h"
 #include "JSFunction.h"
 
 namespace JSC {
@@ -182,4 +182,5 @@ PropertySlot::GetValueFunc JSActivation::getArgumentsGetter()
 }
 
 } // namespace JSC
+
 

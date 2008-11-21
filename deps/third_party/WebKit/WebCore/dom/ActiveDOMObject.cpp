@@ -57,6 +57,11 @@ ActiveDOMObject::~ActiveDOMObject()
     }
 }
 
+bool ActiveDOMObject::hasPendingActivity() const
+{
+    return m_pendingActivityCount;
+}
+
 void ActiveDOMObject::contextDestroyed()
 {
     m_scriptExecutionContext = 0;
@@ -67,3 +72,4 @@ void ActiveDOMObject::stop()
 }
 
 } // namespace WebCore
+

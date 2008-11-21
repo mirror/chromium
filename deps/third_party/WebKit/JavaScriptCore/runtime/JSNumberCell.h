@@ -23,7 +23,7 @@
 #ifndef JSNumberCell_h
 #define JSNumberCell_h
 
-#include "ExecState.h"
+#include "CallFrame.h"
 #include "JSCell.h"
 #include "JSImmediate.h"
 #include "Collector.h"
@@ -265,5 +265,6 @@ namespace JSC {
 } // namespace JSC
 
 #endif // JSNumberCell_h
+
 
 
