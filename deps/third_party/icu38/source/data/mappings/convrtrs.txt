@@ -415,15 +415,16 @@ ibm-916_P100-1995 { UTR22* }
                         916 { JAVA }
 
 # Turkish
+# CHROME: ISO-8859-9 and its aliases are moved to windows-1254 per
+# HTML5. 
 ibm-920_P100-1995 { UTR22* }
-                        ibm-920 { IBM* JAVA }
-                        ISO-8859-9 { MIME* IANA WINDOWS JAVA* }
-                        latin5 { IANA WINDOWS JAVA }
-                        csISOLatin5 { IANA JAVA }
-                        iso-ir-148 { IANA WINDOWS JAVA }
-                        ISO_8859-9:1989 { IANA* WINDOWS }
-                        l5 { IANA WINDOWS JAVA }
-                        8859_9 { JAVA }
+                        ibm-920 { IBM* JAVA* }
+                        ISO-8859-9
+                        latin5
+                        csISOLatin5
+                        iso-ir-148 
+                        ISO_8859-9:1989
+                        l5
                         cp920 { JAVA }
                         920 { JAVA }
                         windows-28599 { WINDOWS* }
@@ -765,7 +766,16 @@ ibm-5346_P100-1998 { UTR22* }   ibm-5346 { IBM* } windows-1250 { IANA* JAVA* WIN
 ibm-5347_P100-1998 { UTR22* }   ibm-5347 { IBM* } windows-1251 { IANA* JAVA* WINDOWS* } cp1251 { WINDOWS JAVA } ANSI1251 # Windows Cyrillic (w/ euro update). ANSI1251 is from Solaris
 ibm-5348_P100-1997 { UTR22* }   ibm-5348 { IBM* } windows-1252 { IANA* JAVA* WINDOWS* } cp1252 { JAVA }         # Windows Latin1 (w/ euro update)
 ibm-5349_P100-1998 { UTR22* }   ibm-5349 { IBM* } windows-1253 { IANA* JAVA* WINDOWS* } cp1253 { JAVA }         # Windows Greek (w/ euro update)
-ibm-5350_P100-1998 { UTR22* }   ibm-5350 { IBM* } windows-1254 { IANA* JAVA* WINDOWS* } cp1254 { JAVA }         # Windows Turkish (w/ euro update)
+#CHROME : Make ISO-8859-9 an alias to windows-1254 per HTML5. Move
+#other IANA aliases for ISO-8859-9 as well.
+ibm-5350_P100-1998 { UTR22* }   ibm-5350 { IBM* } windows-1254 { MIME* IANA* JAVA* WINDOWS* } cp1254 { JAVA }         # Windows Turkish (w/ euro update)
+                        ISO-8859-9 { MIME }
+                        latin5 { IANA }
+                        csISOLatin5 { IANA }
+                        iso-ir-148 { IANA }
+                        ISO_8859-9:1989 { IANA }
+                        l5 { IANA }
+                        8859_9 { JAVA }
 ibm-9447_P100-2002 { UTR22* }   ibm-9447 { IBM* } windows-1255 { IANA* JAVA* WINDOWS* } cp1255 { JAVA }         # Windows Hebrew (w/ euro update)
 ibm-9448_X100-2005 { UTR22* }   ibm-9448 { IBM* } windows-1256 { IANA* JAVA* WINDOWS* } cp1256 { WINDOWS JAVA } # Windows Arabic (w/ euro update)
 ibm-9449_P100-2002 { UTR22* }   ibm-9449 { IBM* } windows-1257 { IANA* JAVA* WINDOWS* } cp1257 { JAVA }         # Windows Baltic (w/ euro update)
