@@ -35,6 +35,7 @@
 #include "Frame.h"
 #include "FrameLoader.h"
 #include "FrameLoaderClient.h"
+#include "FrameTree.h"
 #include "GraphicsContext.h"
 #include "HTMLDocument.h"
 #include "HTMLFrameElement.h"
@@ -876,6 +877,18 @@ void FrameView::setBaseBackgroundColor(Color bc)
     d->m_baseBackgroundColor = bc;
 }
 
+void FrameView::updateBackgroundRecursively(const Color& backgroundColor, bool transparent)
+{
+    for (Frame* frame = m_frame.get(); frame; frame = frame->tree()->traverseNext(m_frame.get())) {
+        FrameView* view = frame->view();
+        if (!view)
+            continue;
+
+        view->setTransparent(transparent);
+        view->setBaseBackgroundColor(backgroundColor);
+    }
+}
+
 bool FrameView::shouldUpdateWhileOffscreen() const
 {
     return d->m_shouldUpdateWhileOffscreen;
@@ -1225,3 +1238,4 @@ void FrameView::layoutIfNeededRecursive()
 }
 
 }
+

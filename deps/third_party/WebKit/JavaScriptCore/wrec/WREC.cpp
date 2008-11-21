@@ -45,9 +45,8 @@ static const int MaxPatternSize = (1 << 16);
 
 CompiledRegExp compileRegExp(Interpreter* interpreter, const UString& pattern, unsigned* numSubpatterns_ptr, const char** error_ptr, bool ignoreCase, bool multiline)
 {
-    // TODO: better error messages
     if (pattern.size() > MaxPatternSize) {
-        *error_ptr = "regular expression too large";
+        *error_ptr = "Regular expression too large.";
         return 0;
     }
 
@@ -67,29 +66,31 @@ CompiledRegExp compileRegExp(Interpreter* interpreter, const UString& pattern, u
                     + 3 * sizeof(void*)
 #endif
                     , X86::esp, Generator::outputRegister);
+
+#ifndef NDEBUG
+    // ASSERT that the output register is not null.
+    __ testl_rr(Generator::outputRegister, Generator::outputRegister);
+    X86Assembler::JmpSrc outputRegisterNotNull = __ emitUnlinkedJne();
+    __ emitInt3();
+    __ link(outputRegisterNotNull, __ label());
+#endif
     
     // restart point on match fail.
     Generator::JmpDst nextLabel = __ label();
 
     // (1) Parse Disjunction:
     
-    //     Parsing the disjunction should fully consume the pattern.
     JmpSrcVector failures;
     parser.parseDisjunction(failures);
-    if (parser.isEndOfPattern()) {
-        parser.setError(Parser::Error_malformedPattern);
-    }
-    if (parser.error()) {
-        // TODO: better error messages
-        *error_ptr = "TODO: better error messages";
+
+    // Parsing the disjunction should fully consume the pattern.
+    if (!parser.atEndOfPattern() || parser.error()) {
+        *error_ptr = "Regular expression malformed.";
         return 0;
     }
 
     // (2) Success:
     //     Set return value & pop registers from the stack.
-
-    __ testl_rr(Generator::outputRegister, Generator::outputRegister);
-    Generator::JmpSrc noOutput = __ emitUnlinkedJe();
 
     __ movl_rm(Generator::currentPositionRegister, 4, Generator::outputRegister);
     __ popl_r(X86::eax);
@@ -98,30 +99,22 @@ CompiledRegExp compileRegExp(Interpreter* interpreter, const UString& pattern, u
     __ popl_r(Generator::outputRegister);
     __ ret();
     
-    __ link(noOutput, __ label());
-    
-    __ popl_r(X86::eax);
-    __ movl_rm(X86::eax, Generator::outputRegister);
-    __ popl_r(Generator::currentValueRegister);
-    __ popl_r(Generator::outputRegister);
-    __ ret();
-
     // (3) Failure:
-    //     All fails link to here.  Progress the start point & if it is within scope, loop.
-    //     Otherwise, return fail value.
+    //     All fails link to here.
     Generator::JmpDst here = __ label();
     for (unsigned i = 0; i < failures.size(); ++i)
         __ link(failures[i], here);
     failures.clear();
 
+    // Move to the next input character and try again.
     __ movl_mr(X86::esp, Generator::currentPositionRegister);
     __ addl_i8r(1, Generator::currentPositionRegister);
     __ movl_rm(Generator::currentPositionRegister, X86::esp);
     __ cmpl_rr(Generator::lengthRegister, Generator::currentPositionRegister);
     __ link(__ emitUnlinkedJle(), nextLabel);
 
+    // No more input characters: return failure.
     __ addl_i8r(4, X86::esp);
-
     __ movl_i32r(-1, X86::eax);
     __ popl_r(Generator::currentValueRegister);
     __ popl_r(Generator::outputRegister);
@@ -137,6 +130,7 @@ CompiledRegExp compileRegExp(Interpreter* interpreter, const UString& pattern, u
 } } // namespace JSC::WREC
 
 #endif // ENABLE(WREC)
+
 
 
 

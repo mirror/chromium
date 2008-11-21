@@ -1,3 +1,197 @@
+2008-11-18  Aaron Boodman  aa@chromium.org
+
+        Reviewed by Maciej Stachowiak.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22301
+        Always call dispatchDidFinishDocumentLoad before Window's onload event.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::finishedParsing):
+
+2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
+
+        Windows build fix.
+
+        * WebCore.vcproj/WebCore.vcproj: Fix relative paths to use $(WebKitOutputDir).
+
+2008-11-18  Darin Adler  <darin@apple.com>
+
+        - try to fix Wx build
+
+        * WebCoreSources.bkl: Added FrameLoaderClient.cpp.
+
+2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22337
+        Enable workers by default
+
+        Tests: fast/workers/worker-constructor.html
+               fast/workers/worker-event-listener.html
+               fast/workers/worker-gc.html
+               fast/workers/worker-location.html
+
+        * Configurations/WebCore.xcconfig:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.vcproj/build-generated-files.sh:
+        Define ENABLE_WORKERS.
+
+2008-11-18  Darin Adler  <darin@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        - first cut at https://bugs.webkit.org/show_bug.cgi?id=10957
+          <rdar://problem/5516594> please add support for HTTP-only cookies
+
+        Test: http/tests/xmlhttprequest/get-dangerous-headers.html
+
+        No test for HTTP-only support in JavaScript yet, since the Mac and Win changes
+        require an updated CFNetwork.
+
+        * platform/mac/CookieJar.mm:
+        (WebCore::isHTTPOnly): Added.
+        (WebCore::filterCookies): Added.
+        (WebCore::cookies): Use filterCookies to prevent getting HTTP-only cookies.
+        (WebCore::setCookies): Use filterCookies to prevent setting HTTP-only cookies.
+
+        * platform/network/win/CookieJarCFNetWin.cpp:
+        (WebCore::isHTTPOnly): Added.
+        (WebCore::filterCookies): Added.
+        (WebCore::setCookies): Use filterCookies to prevent getting HTTP-only cookies.
+        (WebCore::cookies): Use filterCookies to prevent getting HTTP-only cookies.
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::isSetCookieHeader): Added.
+        (WebCore::XMLHttpRequest::getAllResponseHeaders): Hide Set-Cookie headers from
+        clients that don't have local-resource privileges.
+        (WebCore::XMLHttpRequest::getResponseHeader): Ditto.
+
+        - clean soup-specific details out of shared cookie jar header
+
+        * platform/CookieJar.h: Removed the soup-specific parts of this.
+        * platform/network/soup/CookieJarSoup.cpp: Changed to include
+        CookieJarSoup.h. Tweaked implementation a bit to handle UTF-8 better.
+        * platform/network/soup/CookieJarSoup.h: Added. Has the Soup-specified
+        part of CookieJar.h.
+        * platform/network/soup/ResourceHandleSoup.cpp: Changed to include
+        CookieJarSoup.h.
+
+2008-11-18  Steve Falkenburg  <sfalken@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=22329
+        Improper bitwise and tests against 0 in Windows context menu code
+
+        Reviewed by John Sullivan.
+
+        * platform/win/ContextMenuItemWin.cpp:
+        (WebCore::ContextMenuItem::type):
+        (WebCore::ContextMenuItem::enabled):
+
+2008-11-18  John Sullivan  <sullivan@apple.com>
+
+        Yet more Mac build fixing
+
+        * WebCore.base.exp: Export __ZTVN7WebCore17FrameLoaderClientE
+
+2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        React properly to frame rect changes for QWidget based plugins
+
+        We now set the geometry of the QWidget in frameRectsChanged,
+        intead of setFrameRect, which means we pick up the changes to
+        the frame rect when scrolling. We also set a mask on the
+        widget to keep it from painting over scrollbars and the like
+
+        * platform/qt/WidgetQt.cpp:
+        (WebCore::Widget::setFrameRect):
+
+2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Rubber-stamped by Simon Hausmann.
+
+        Don't mark scrollbars as focused in QtWebKit
+
+        When initing from the widget we also got the focus state,
+        but this does not make sense for scrollbars.
+
+        * platform/qt/ScrollbarThemeQt.cpp:
+        (WebCore::styleOptionSlider):
+
+2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
+
+        More Mac build fixing.
+
+        * WebCore.base.exp: Export FrameLoaderClient destructor.
+
+2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
+
+        Mac build fix.
+
+        * WebCore.xcodeproj/project.pbxproj: Add FrameLoaderClient.cpp for now.
+
+2008-11-18  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22056
+
+        Attempt to share transitionToCommittedForNewPage of FrameLoaderClient with the different ports
+
+        After Hyatt's work on Widget and ScrollView there is little difference
+        between the implementation of Qt, Gtk+ and Win. In fact any kind of
+        difference is mostly a bug. Alp has fixed two of such errors for the Gtk+
+        port and the Qt port has at least one of them left.
+
+        The only difference between the implementations is in getting the the
+        IntSize for the new FrameView, the background color to be applied and
+        eventually some post processing.
+
+        Unify the implementations by providing a static helper function that
+        takes a Frame, IntSize, color and transparency bit and calling it from
+        the Gtk+, the Qt and the Windows port.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * loader/FrameLoaderClient.cpp: Added.
+        (WebCore::FrameLoaderClient::~FrameLoaderClient):
+        (WebCore::FrameLoaderClient::transitionToCommittedForNewPage):
+        * loader/FrameLoaderClient.h:
+
+2008-11-18  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22056
+
+        Move setting the background color and transparency from WebKit/win
+        to WebCore. This allows WebKit/win, WebKit/Qt and WebKit/Gtk+
+        to share this code.
+
+        * page/FrameView.cpp:
+        (WebCore::FrameView::updateBackgroundRecursively):
+        * page/FrameView.h:
+
+2008-11-18  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Fix the bug where select elements are painted without border.
+        http://trolltech.com/developer/task-tracker/index_html?id=218957&method=entry
+
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::paintMenuList):
+
+2008-11-18  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Gtk build fix. Not reviewed.
+
+        * GNUmakefile.am: Fix USER_AGENT_STYLESHEETS, wml.css is in css/,
+        not in wml/.
+
 2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Darin Adler.
@@ -28536,6 +28730,7 @@
         getting the line's textContent. Add the error bubble back at the end.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 
 

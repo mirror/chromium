@@ -1305,6 +1305,8 @@ void FrameLoader::finishedParsing()
     // Null-checking the FrameView indicates whether or not we're in the destructor.
     RefPtr<Frame> protector = m_frame->view() ? m_frame : 0;
 
+    m_client->dispatchDidFinishDocumentLoad();
+
     checkCompleted();
 
     if (!m_frame->view())
@@ -1313,8 +1315,6 @@ void FrameLoader::finishedParsing()
     // Check if the scrollbars are really needed for the content.
     // If not, remove them, relayout, and repaint.
     m_frame->view()->restoreScrollbar();
-
-    m_client->dispatchDidFinishDocumentLoad();
 
     gotoAnchor();
 }
@@ -5306,5 +5306,6 @@ void FrameLoader::switchOutLowBandwidthDisplayIfReady()
 #endif
 
 } // namespace WebCore
+
 
 

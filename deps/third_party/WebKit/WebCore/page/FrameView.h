@@ -101,6 +101,7 @@ public:
 
     Color baseBackgroundColor() const;
     void setBaseBackgroundColor(Color);
+    void updateBackgroundRecursively(const Color&, bool);
 
     bool shouldUpdateWhileOffscreen() const;
     void setShouldUpdateWhileOffscreen(bool);
@@ -189,3 +190,4 @@ private:
 }
 
 #endif
+

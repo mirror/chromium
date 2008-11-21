@@ -1017,6 +1017,7 @@ webcore_sources += \
 	WebCore/loader/FrameLoader.cpp \
 	WebCore/loader/FrameLoader.h \
 	WebCore/loader/FrameLoaderClient.h \
+	WebCore/loader/FrameLoaderClient.cpp \
 	WebCore/loader/FrameLoaderTypes.h \
 	WebCore/loader/ImageDocument.cpp \
 	WebCore/loader/ImageDocument.h \
@@ -2848,7 +2849,7 @@ USER_AGENT_STYLE_SHEETS = \
 	$(WebCore)/css/quirks.css \
 	$(WebCore)/css/view-source.css \
 	$(WebCore)/css/svg.css \
-	$(WebCore)/wml/wml.css
+	$(WebCore)/css/wml.css
 
 # new-style JavaScript bindings
 SCRIPTS_BINDINGS = \
@@ -3006,6 +3007,7 @@ CLEANFILES += \
 	libWebCoreJS.la \
 	WebCore/bindings/js/JSDOMWindowBase.lut.h \
 	WebCore/bindings/js/JSRGBColor.lut.h
+
 
 
 

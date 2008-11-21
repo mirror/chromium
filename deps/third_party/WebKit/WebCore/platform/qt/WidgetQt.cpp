@@ -69,9 +69,9 @@ IntRect Widget::frameRect() const
 
 void Widget::setFrameRect(const IntRect& rect)
 {
-    if (platformWidget())
-        platformWidget()->setGeometry(convertToContainingWindow(IntRect(0, 0, rect.width(), rect.height())));
     m_frame = rect;
+
+    frameRectsChanged();
 }
 
 void Widget::setFocus()
@@ -110,3 +110,4 @@ void Widget::setIsSelected(bool)
 }
 
 // vim: ts=4 sw=4 et
+

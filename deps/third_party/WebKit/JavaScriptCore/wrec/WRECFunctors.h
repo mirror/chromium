@@ -32,8 +32,8 @@
 
 namespace JSC { namespace WREC {
 
-    class CharacterClass;
     class Generator;
+    struct CharacterClass;
 
     class GenerateAtomFunctor {
     public:
@@ -108,3 +108,4 @@ namespace JSC { namespace WREC {
 } } // namespace JSC::WREC
 
 #endif // ENABLE(WREC)
+
