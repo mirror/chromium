@@ -127,6 +127,13 @@ void DownloadShelfView::ChangeTabContents(TabContents* old_contents,
   tab_contents_ = new_contents;
 }
 
+void DownloadShelfView::ViewHierarchyChanged(bool is_add,
+                                             View* parent,
+                                             View* child) {
+  if (is_add && child == this)
+    Layout();
+}
+
 void DownloadShelfView::AddDownload(DownloadItem* download) {
   shelf_animation_->Show();
 
