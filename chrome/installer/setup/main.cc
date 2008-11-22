@@ -243,6 +243,10 @@ int GetInstallOptions(const CommandLine& cmd_line) {
       cmd_line.HasSwitch(installer_util::switches::kSystemLevel))
     options |= installer_util::SYSTEM_LEVEL;
 
+  if (preferences & installer_util::MASTER_PROFILE_VERBOSE_LOGGING ||
+      cmd_line.HasSwitch(installer_util::switches::kVerboseLogging))
+    options |= installer_util::VERBOSE_LOGGING;
+
   return options;
 }
 
@@ -436,6 +440,9 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
   CommandLine parsed_command_line;
   installer::InitInstallerLogging(parsed_command_line);
   int options = GetInstallOptions(parsed_command_line);
+  if (options & installer_util::VERBOSE_LOGGING)
+    logging::SetMinLogLevel(logging::LOG_INFO);
+
   bool system_install = (options & installer_util::SYSTEM_LEVEL) != 0;
   LOG(INFO) << "system install is " << system_install;
 
@@ -456,21 +463,6 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                                       installer_util::OS_ERROR,
                                       IDS_INSTALL_OS_ERROR_BASE, NULL);
     return installer_util::OS_ERROR;
-  }
-
-  // Check to avoid simultaneous per-user and per-machine installs.
-  scoped_ptr<installer::Version>
-      chrome_version(InstallUtil::GetChromeVersion(!system_install));
-  if (chrome_version.get()) {
-    LOG(ERROR) << "Already installed version " << chrome_version->GetString()
-               << " conflicts with the current install mode.";
-    installer_util::InstallStatus status = system_install ?
-        installer_util::USER_LEVEL_INSTALL_EXISTS :
-        installer_util::SYSTEM_LEVEL_INSTALL_EXISTS;
-    int str_id = system_install ? IDS_INSTALL_USER_LEVEL_EXISTS_BASE :
-                                  IDS_INSTALL_SYSTEM_LEVEL_EXISTS_BASE;
-    InstallUtil::WriteInstallerResult(system_install, status, str_id, NULL);
-    return status;
   }
 
   // If --register-chrome-browser option is specified, register all
@@ -515,6 +507,21 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                                      system_install);
   // If --uninstall option is not specified, we assume it is install case.
   } else {
+    // Check to avoid simultaneous per-user and per-machine installs.
+    scoped_ptr<installer::Version>
+        chrome_version(InstallUtil::GetChromeVersion(!system_install));
+    if (chrome_version.get()) {
+      LOG(ERROR) << "Already installed version " << chrome_version->GetString()
+                 << " conflicts with the current install mode.";
+      installer_util::InstallStatus status = system_install ?
+          installer_util::USER_LEVEL_INSTALL_EXISTS :
+          installer_util::SYSTEM_LEVEL_INSTALL_EXISTS;
+      int str_id = system_install ? IDS_INSTALL_USER_LEVEL_EXISTS_BASE :
+                                    IDS_INSTALL_SYSTEM_LEVEL_EXISTS_BASE;
+      InstallUtil::WriteInstallerResult(system_install, status, str_id, NULL);
+      return status;
+    }
+
     install_status = InstallChrome(parsed_command_line,
                                    installed_version.get(),
                                    options);
