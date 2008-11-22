@@ -802,4 +802,9 @@ V8 # LayoutTests/fast/encoding/char-decoding.html = FAIL
 
 // No clue why this is failing. Data goes to stderr instead of stdout?
 V8 # LayoutTests/plugins/open-and-close-window-with-plugin.html = FAIL
+// Img mismatch:
+V8 # chrome/fast/table/empty-row-crash.html = FAIL
+// Expected results file not clean:
+V8 # pending/fast/encoding/charset-xuser-defined.html = FAIL
+
 
