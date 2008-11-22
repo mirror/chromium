@@ -338,10 +338,18 @@ static bool pluginInvoke(NPObject *header, NPIdentifier name, const NPVariant *a
         INT32_TO_NPVARIANT(npError, *result);
         return true;        
     } else if (name == pluginMethodIdentifiers[ID_TEST_GETINTIDENTIFIER]) {
-        if (argCount == 1 && NPVARIANT_IS_DOUBLE(args[0])) {
-            NPIdentifier identifier = browser->getintidentifier((int)NPVARIANT_TO_DOUBLE(args[0]));
-            INT32_TO_NPVARIANT((int32)identifier, *result);
-            return true;
+        if (argCount == 1) {
+            NPIdentifier identifier;
+
+            if (NPVARIANT_IS_DOUBLE(args[0])) {
+                identifier = browser->getintidentifier((int)NPVARIANT_TO_DOUBLE(args[0]));
+                INT32_TO_NPVARIANT((int32)identifier, *result);
+                return true;
+            } else if (NPVARIANT_IS_INT32(args[0])) {
+                identifier = browser->getintidentifier((int)NPVARIANT_TO_INT32(args[0]));
+                INT32_TO_NPVARIANT((int32)identifier, *result);
+                return true;
+            }
         }
     } else if (name == pluginMethodIdentifiers[ID_TEST_EVALUATE] && 
                argCount == 1 && NPVARIANT_IS_STRING(args[0])) {

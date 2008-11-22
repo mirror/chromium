@@ -626,7 +626,7 @@ void WebPluginImpl::setFrameGeometry(const WebCore::IntRect& rect) {
 
   delegate_->UpdateGeometry(
       gfx::Rect(window_rect), gfx::Rect(clip_rect), cutout_rects,
-      received_first_paint_notification_? visible_ : false);
+      windowless_ || received_first_paint_notification_ ? visible_ : false);
 
   // delegate_ can go away as a result of above call, so check it first.
   if (force_geometry_update_ && delegate_) {
