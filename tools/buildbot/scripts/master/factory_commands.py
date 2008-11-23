@@ -1,4 +1,4 @@
-#!/usr/bin/python
+/#!/usr/bin/python
 # Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -708,7 +708,7 @@ class FactoryCommands(object):
     """Adds a step to the factory to query the QEMU distributed-testing
     results.
     """
-    self.AddTestStep(shell.ShellCommand,
+    self.AddTestStep(retcode_command.ReturnCodeCommand,
                      timeout=timeout,
                      test_name='reliability tests',
                      test_command=self.GetQemuCommand())
