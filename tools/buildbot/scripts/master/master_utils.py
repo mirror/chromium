@@ -8,6 +8,8 @@
 import os
 import re
 
+from buildbot.steps import trigger
+
 import chromium_config as config
 import chromium_factory
 import factory_commands
@@ -299,7 +301,8 @@ class MasterFactory(object):
                 'page_cycler_http', 'startup', 'selenium', 'qemu',
                 'purify_webkit', 'purify_base', 'purify_net', 'purify_chrome',
                 'purify_layout', 'playback', 'node_leak', 'tab_switching',
-                'omnibox', 'memory, 'interactive_ui', 'base', 'net').
+                'omnibox', 'memory, 'interactive_ui', 'base', 'net',
+                'reliability').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs
@@ -361,6 +364,10 @@ class MasterFactory(object):
     # Archive the generated build.
     if archive_build:
       factory_cmd_obj.AddArchiveBuild()
+
+    if 'reliability' in tests:
+       factory.addStep(trigger.Trigger(schedulerNames=['reliability'],
+                                       waitForFinish=False))
 
     # Archive the full output directory if the machine is a builder.
     if slave_type == 'Builder':
@@ -480,6 +487,14 @@ class MasterFactory(object):
       factory_cmd_obj.AddBasicGTestTestStep('sbox_integration_tests')
       factory_cmd_obj.AddBasicGTestTestStep('sbox_validation_tests')
 
+    return factory
+
+  def NewReliabilityTestsFactory(self, identifier):
+    factory = chromium_factory.BuildFactory()
+    factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
+                                                       'release', '',
+                                                       self._target_platform)
+    factory_cmd_obj.AddQueryQemu()
     return factory
 
 

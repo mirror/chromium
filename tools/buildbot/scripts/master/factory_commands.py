@@ -145,13 +145,13 @@ class FactoryCommands(object):
       python_path = '\\'.join(['src', 'third_party', 'python_24'])
       self._python = '\\'.join([python_path, 'python_slave.exe'])
       # This should fit with the self._script_dir definition.
-      self._taskkill_python = '\\'.join(['..', '..', '..',
-                                         'depot_tools', 'release',
-                                         'python_24', 'python.exe'])
+      self._depot_tools_python = '\\'.join(['..', '..', '..',
+                                           'depot_tools', 'release',
+                                           'python_24', 'python.exe'])
     else:
       self._perl = 'perl'
       self._python = 'python'
-      self._taskkill_python = 'python'
+      self._depot_tools_python = 'python'
 
     self._working_dir = 'build'
     self._repository_root = 'src'
@@ -292,7 +292,7 @@ class FactoryCommands(object):
     self._factory.addStep(shell.ShellCommand, description='taskkill',
                           timeout=60,
                           workdir='',  # Doesn't really matter where we are.
-                          command=[self._taskkill_python, self._kill_tool])
+                          command=[self._depot_tools_python, self._kill_tool])
 
   #######
   # Archive, Extract, Upload and Download commands.
@@ -702,9 +702,7 @@ class FactoryCommands(object):
 
   def GetQemuCommand(self):
     """Returns a command list to call the _qemu_tool to report QEMU results."""
-    return [self._python, self._qemu_tool,
-            '--build-dir', self._build_dir,
-            '--known-crash-list', 'known-crashes.txt']
+    return [self._depot_tools_python, self._qemu_tool]
 
   def AddQueryQemu(self, timeout=240):
     """Adds a step to the factory to query the QEMU distributed-testing
@@ -712,7 +710,7 @@ class FactoryCommands(object):
     """
     self.AddTestStep(shell.ShellCommand,
                      timeout=timeout,
-                     test_name='distributed_reliability_tests',
+                     test_name='reliability tests',
                      test_command=self.GetQemuCommand())
 
   def AddDebuggerTestStep(self, timeout=60):
