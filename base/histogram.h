@@ -110,8 +110,8 @@ static const int kUmaTargetedHistogramFlag = 0x1;
   } while (0)
 
 #define UMA_HISTOGRAM_MEDIUM_TIMES(name, sample) do { \
-    static Histogram counter((name), base::TimeDelta::FromMilliseconds(10), \
-                             base::TimeDelta::FromMinutes(3), 50); \
+    static Histogram counter((name), TimeDelta::FromMilliseconds(10), \
+                             TimeDelta::FromMinutes(3), 50); \
     counter.SetFlags(kUmaTargetedHistogramFlag); \
     counter.AddTime(sample); \
   } while (0)
