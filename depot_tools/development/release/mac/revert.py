@@ -21,6 +21,8 @@ class NoModifiedFile(exceptions.Exception):
   pass
 class NoBlameList(exceptions.Exception):
   pass
+class OutsideOfCheckout(exceptions.Exception):
+  pass
 
 
 def getTexts(nodelist):
@@ -49,6 +51,12 @@ def RunShellXML(command, print_output=False, keys=None):
   return result
 
 
+def UniqueFast(list):
+  list = [item for item in set(list)]
+  list.sort()
+  return list
+
+
 def GetRepoBase():
   """Returns the repository base of the root local checkout."""
   xml_data = RunShellXML(['svn', 'info', '.', '--xml'], keys=['root', 'url'])
@@ -61,10 +69,15 @@ def GetRepoBase():
   return url[len(root):] + '/'
 
 
-def Revert(revisions, force=False, commit=True, send_email=True, message=None):
+def Revert(revisions, force=False, commit=True, send_email=True, message=None,
+           reviewers=None):
   """Reverts many revisions in one change list.
 
-  If force is True, it will override local modifications."""
+  If force is True, it will override local modifications.
+  If commit is True, a commit is done after the revert.
+  If send_mail is True, a review email is sent.
+  If message is True, it is used as the change description.
+  reviewers overrides the blames email addresses for review email."""
 
   # Move to the repository root and make the revision numbers sorted in
   # decreasing order.
@@ -84,24 +97,35 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None):
     for file in log['path']:
       # Remove the /trunk/src/ part. The + 1 is for the last slash.
       if not file.startswith(repo_base):
-        raise exceptions.Exception("Your repository doesn't contain ", file)
+        raise OutsideOfCheckout(file)
       files.append(file[len(repo_base):])
     blames.extend(log['author'])
-    
+
+  # On Windows, we need to fix the slashes once they got the url part removed.
+  if sys.platform == 'win32':
+    # On Windows, gcl expect the correct slashes.
+    files = [file.replace('/', os.sep) for file in files]
+
   # Keep unique.
-  files = [f for f in set(files)]
-  files.sort()
-  blames = [b for b in set(blames)]
-  blames.sort()
+  files = UniqueFast(files)
+  blames = UniqueFast(blames)
+  if not reviewers:
+    reviewers = blames
+  else:
+    reviewers = UniqueFast(reviewers)
+
+  # Make sure there's something to revert.
   if not files:
     raise NoModifiedFile
-  if not blames:
+  if not reviewers:
     raise NoBlameList
 
-  print "Blaming %s\n" % ",".join(blames)
+  if blames:
+    print "Blaming %s\n" % ",".join(blames)
+  if reviewers != blames:
+    print "Emailing %s\n" % ",".join(reviewers)
   print "These files were modified in %s:" % revisions_string
-  for file in files:
-    print file
+  print "\n".join(files)
   print ""
 
   # Make sure these files are unmodified with svn status.
@@ -117,12 +141,11 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None):
   # Extract the first level subpaths. Subversion seems to degrade
   # exponentially w.r.t. repository size during merges. Working at the root
   # directory is too rough for svn due to the repository size.
-  roots = [x.split('/')[0] for x in files]
-  roots = [r for r in set(roots)]
-  roots.sort()
+  roots = UniqueFast([file.split(os.sep)[0] for file in files])
   for root in roots:
     # Is it a subdirectory or a files?
     is_root_subdir = os.path.isdir(root)
+    need_to_update = False
     if is_root_subdir:
       os.chdir(root)
       file_list = []
@@ -133,18 +156,28 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None):
       if len(file_list) > 1:
         # Listing multiple files is not supported by svn merge.
         file_list = ['.']
+        need_to_update = True
     else:
       # Oops, root was in fact a file in the root directory.
       file_list = [root]
       root = "."
 
     print "Reverting %s in %s/" % (revisions_string, root)
+    if need_to_update:
+      # Make sure '.' revision is high enough otherwise merge will be
+      # unhappy.
+      retcode = gcl.RunShellWithReturnCode(['svn', 'up', '.', '-N'])[1]
+      if retcode:
+        print 'svn up . -N failed in %s/.' % root
+        return retcode
+
     command = ["svn", "merge", "-c", revisions_string_rev]
     command.extend(file_list)
     retcode = gcl.RunShellWithReturnCode(command, print_output=True)[1]
     if retcode:
       print "'%s' failed:" % command
       return retcode
+
     if is_root_subdir:
       os.chdir('..')
 
@@ -164,7 +197,7 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None):
                                files=files_status)
   change_info.Save()
 
-  upload_args = ['-r', ",".join(blames)]
+  upload_args = ['-r', ",".join(reviewers)]
   if send_email:
     upload_args.append('--send_mail')
   if commit:
@@ -181,8 +214,12 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None):
 
 
 def Main(argv):
-  parser = optparse.OptionParser(
-      usage="%prog [options] [revision numbers to revert]")
+  usage = (
+"""%prog [options] [revision numbers to revert]
+Revert a set of revisions, send the review to Rietveld, sends a review email
+and optionally commit the revert.""")
+
+  parser = optparse.OptionParser(usage=usage)
   parser.add_option("-c", "--commit", default=False, action="store_true",
                     help="Commits right away.")
   parser.add_option("-f", "--force", default=False, action="store_true",
@@ -192,6 +229,9 @@ def Main(argv):
                     help="Inhibits from sending a review email.")
   parser.add_option("-m", "--message", default=None,
                     help="Additional change description message.")
+  parser.add_option("-r", "--reviewers", default=None,
+                    help="Reviewers to send the email to. By default, the list "
+                         "of commiters is used.")
   options, args = parser.parse_args(argv)
   revisions = []
   try:
@@ -204,7 +244,7 @@ def Main(argv):
   retcode = 1
   try:
     retcode = Revert(revisions, options.force, options.commit,
-                     not options.no_email, options.message)
+                     not options.no_email, options.message, options.reviewers)
   except NoBlameList:
     print "Error: no one to blame."
   except NoModifiedFile:
@@ -213,6 +253,9 @@ def Main(argv):
     print "You need to revert these files since they were already modified:"
     print "".join(e.args)
     print "You can use the --force flag to revert the files."
+  except OutsideOfCheckout, e:
+    print "Your repository doesn't contain ", str(e)
+
   return retcode
 
 
