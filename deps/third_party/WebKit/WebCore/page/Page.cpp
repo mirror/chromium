@@ -53,8 +53,6 @@
 #include "Widget.h"
 #include "ScriptController.h"
 #if USE(JSC)
-#include <runtime/Collector.h>
-#include <runtime/JSLock.h>
 #endif
 #include <wtf/HashMap.h>
 #include <wtf/RefCountedLeakCounter.h>

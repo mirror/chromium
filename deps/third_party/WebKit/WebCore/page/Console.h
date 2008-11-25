@@ -104,10 +104,7 @@ namespace WebCore {
         void groupEnd();
 
 #if USE(JSC)
-        void reportException(JSC::ExecState*, JSC::JSValue*);
-        void reportCurrentException(JSC::ExecState*);
 #endif
-
         static bool shouldPrintExceptions();
         static void setShouldPrintExceptions(bool);
 

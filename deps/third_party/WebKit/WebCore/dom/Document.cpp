@@ -36,6 +36,7 @@
 #include "CString.h"
 #include "CachedCSSStyleSheet.h"
 #include "Comment.h"
+#include "Console.h"
 #include "CookieJar.h"
 #include "DOMImplementation.h"
 #include "DOMWindow.h"
@@ -113,13 +114,10 @@
 #include "XMLHttpRequest.h"
 #include "XMLNames.h"
 #include "XMLTokenizer.h"
-#include "ScriptController.h"
-
 #if USE(JSC)
-#include <runtime/JSLock.h>
 #include "JSDOMBinding.h"
 #endif
-
+#include "ScriptController.h"
 #include <wtf/StdLibExtras.h>
 
 #if ENABLE(DATABASE)
@@ -4513,6 +4511,12 @@ void Document::parseDNSPrefetchControlHeader(const String& dnsPrefetchControl)
 
     m_isDNSPrefetchEnabled = false;
     m_haveExplicitlyDisabledDNSPrefetch = true;
+}
+
+void Document::reportException(const String& errorMessage, int lineNumber, const String& sourceURL)
+{
+    if (DOMWindow* window = domWindow())
+        window->console()->addMessage(JSMessageSource, ErrorMessageLevel, errorMessage, lineNumber, sourceURL);
 }
 
 } // namespace WebCore

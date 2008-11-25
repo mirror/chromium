@@ -1,12 +1,228 @@
-2008-11-18  Aaron Boodman  aa@chromium.org
+2008-11-19  Alexey Proskuryakov  <ap@webkit.org>
 
-        Reviewed by Maciej Stachowiak.
+        Reviewed by Darin Adler.
 
-        https://bugs.webkit.org/show_bug.cgi?id=22301
-        Always call dispatchDidFinishDocumentLoad before Window's onload event.
+        https://bugs.webkit.org/show_bug.cgi?id=22355
+        Systematize code for replacing global constructors
 
-        * loader/FrameLoader.cpp:
-        (WebCore::FrameLoader::finishedParsing):
+        Test: fast/workers/worker-replace-global-constructor.html
+
+        * bindings/js/JSDOMWindowBase.cpp:
+        (setJSDOMWindowBaseEvent): Changed to put the value as property, matching what generated
+        code for global constructor setters does.
+        (setJSDOMWindowBaseAudio): Ditto.
+        (setJSDOMWindowBaseImage): Ditto.
+        (setJSDOMWindowBaseMessageChannel): Ditto.
+        (setJSDOMWindowBaseOption): Ditto.
+        (setJSDOMWindowBaseWorker): Ditto.
+        (setJSDOMWindowBaseXMLHttpRequest): Ditto.
+        (setJSDOMWindowBaseXSLTProcessor): Ditto.
+        (WebCore::JSDOMWindowBase::put): Removed special cases for global constructors.
+
+        * bindings/js/JSWorkerContext.cpp:
+        (WebCore::JSWorkerContext::getOwnPropertySlot): Look up overrides before own properties,
+        as it is done for Window.
+        (WebCore::setJSWorkerContextMessageEvent): Implemented in the same way as Window global
+        constructors are.
+        (WebCore::setJSWorkerContextWorkerLocation): Ditto.
+
+2008-11-19  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22341
+        Text codecs should not use static data without locking
+
+        * platform/text/TextCodecICU.cpp:
+        * platform/text/mac/TextCodecMac.cpp:
+        Made cached converters per-thread.
+
+        * platform/text/TextEncodingRegistry.cpp:
+        (WebCore::encodingRegistryMutex): Added a mutex for codec maps access.
+        (WebCore::addToTextCodecMap): Don't use TextEncoding just to cacnonicalize the name, as it
+        causes a dedalock due to a recursive call into registry.
+        (WebCore::buildBaseTextCodecMaps): Added assertions.
+        (WebCore::newTextCodec): Take a lock to avoid concurrent access to codec maps.
+        (WebCore::atomicCanonicalTextEncodingName): Ditto.
+        (WebCore::noExtendedTextEncodingNameUsed): Added a comment, explaining why locking is not
+        necessary here.
+
+2008-11-19  Alexey Proskuryakov  <ap@webkit.org>
+
+        Touch WebCorePrefix.h to force a rebuild, needed because of changed feature defines.
+
+        * WebCorePrefix.h:
+
+2008-11-19  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22310
+        Worker exceptions should be printed to console
+
+        * dom/Document.cpp: (WebCore::Document::reportException):
+        * dom/Document.h:
+        * dom/ScriptExecutionContext.h:
+        * dom/WorkerContext.cpp: (WebCore::WorkerContext::reportException):
+        * dom/WorkerContext.h:
+        Added a reportException() method on ScriptExecutionContext. It forwards the exception info
+        up until it finds a Document context, and then it prints it to console.
+
+        * bindings/js/JSEventListener.cpp:
+        (WebCore::JSAbstractEventListener::handleEvent): Don't talk to Console directly, use
+        ScriptExecutionContext::reportException. Also, fixed a bug where Document::updateDocumentsRendering()
+        could be called from workers.
+        (WebCore::JSLazyEventListener::parseCode): Moved variable declaration inside if block for clarity.
+
+        * bindings/js/WorkerScriptController.cpp: (WebCore::WorkerScriptController::evaluate):
+        Report exceptions to ScriptExecutionContext.
+
+        * dom/WorkerMessagingProxy.cpp:
+        (WebCore::MessageWorkerTask::performTask):
+        (WebCore::WorkerExceptionTask::create):
+        (WebCore::WorkerExceptionTask::WorkerExceptionTask):
+        (WebCore::WorkerExceptionTask::performTask):
+        (WebCore::WorkerMessagingProxy::postWorkerException):
+        * dom/WorkerMessagingProxy.h:
+        Added a task for posting exception information.
+
+        * bindings/js/JSDOMBinding.cpp:
+        (WebCore::reportException):
+        (WebCore::reportCurrentException):
+        * bindings/js/JSDOMBinding.h:
+        Added helper methods for reporting exceptions via ScriptExecutionContext.
+
+        * page/Console.cpp:
+        * page/Console.h:
+        Removed methods for directly reporting exceptions to console.
+
+        * bindings/js/JSCustomPositionCallback.cpp:
+        (WebCore::JSCustomPositionCallback::handleEvent):
+        * bindings/js/JSCustomPositionErrorCallback.cpp:
+        (WebCore::JSCustomPositionErrorCallback::handleEvent):
+        * bindings/js/JSCustomSQLStatementCallback.cpp:
+        (WebCore::JSCustomSQLStatementCallback::handleEvent):
+        * bindings/js/JSCustomSQLStatementErrorCallback.cpp:
+        (WebCore::JSCustomSQLStatementErrorCallback::handleEvent):
+        * bindings/js/JSCustomSQLTransactionCallback.cpp:
+        (WebCore::JSCustomSQLTransactionCallback::handleEvent):
+        * bindings/js/JSCustomSQLTransactionErrorCallback.cpp:
+        (WebCore::JSCustomSQLTransactionErrorCallback::handleEvent):
+        * bindings/js/JSCustomVoidCallback.cpp:
+        (WebCore::JSCustomVoidCallback::handleEvent):
+        * bindings/js/JSCustomXPathNSResolver.cpp:
+        (WebCore::JSCustomXPathNSResolver::lookupNamespaceURI):
+        * bindings/js/ScheduledAction.cpp:
+        (WebCore::ScheduledAction::execute):
+        * bindings/js/ScriptController.cpp:
+        (WebCore::ScriptController::evaluate):
+        * bindings/objc/WebScriptObject.mm:
+        (WebCore::addExceptionToConsole):
+        Switch to JSDOMBinding methods for reporting exceptions.
+
+2008-11-18  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        - WebCore part of https://bugs.webkit.org/show_bug.cgi?id=22331
+          <rdar://problem/6381657> REGRESSION: Contextual menu no longer has an "Inspect Element" item
+
+        * platform/ContextMenuItem.h:
+        (WebCore::ContextMenuAction): Reorder this enum to keep it in sync with
+        the one in WebUIDelegate.h.
+
+2008-11-18  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22346
+        PlatformString should also include HashSet.h for non-JSC builds
+
+        * platform/text/PlatformString.h:
+
+2008-11-18  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Holger Hans Peter Freyther.
+
+        Flip check added in recent refactoring so the background gets updated when the background color is valid, not invalid.
+
+        * loader/FrameLoaderClient.cpp: (WebCore::FrameLoaderClient::transitionToCommittedForNewPage):
+
+2008-11-18  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22343
+        Remove unused runtime/Collector, JSLock includes in Page.cpp
+
+        * page/Page.cpp:
+
+2008-11-18  Ada Chan  <adachan@apple.com>
+
+        Bug 22344: Make select popup window opaque
+        https://bugs.webkit.org/show_bug.cgi?id=22344
+
+        Reviewed by Steve Falkenburg.
+
+        * platform/win/PopupMenuWin.cpp:
+        (WebCore::PopupMenu::show):
+
+2008-11-18  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22342
+        Remove unused JSLock.h include
+
+        * dom/Document.cpp:
+
+2008-11-18  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Sam Weinig.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22334
+
+        Add WMLBRElement, correcting <br/> behaviour in WML.
+        Enable entity replacment for WML documents.
+        Handle WML specific <p> 'mode' attribute.
+
+        Generate layout tests results for fast/wml.
+
+        Tests cases that pass now:
+        fast/wml/br-element-in-table.wml
+        fast/wml/br-element-in-text.wml
+        fast/wml/case-sensitivity.wml
+        fast/wml/cdata-section.wml
+        fast/wml/comment.wml
+        fast/wml/entity.wml
+        fast/wml/p-align.wml
+        fast/wml/p-mode.wml
+        fast/wml/text-emphasis.wml
+        fast/wml/validate-dtd.wml
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.xcodeproj/project.pbxproj:
+        * dom/XMLTokenizer.cpp:
+        (WebCore::XMLTokenizer::isWMLDocument):
+        (WebCore::XMLTokenizer::insertErrorMessageBlock):
+        * dom/XMLTokenizer.h:
+        * dom/XMLTokenizerLibxml2.cpp:
+        (WebCore::XMLTokenizer::internalSubset):
+        (WebCore::getEntityHandler):
+        * dom/XMLTokenizerQt.cpp:
+        (WebCore::XMLTokenizer::parse):
+        * wml/WMLBRElement.cpp: Added.
+        (WebCore::WMLBRElement::WMLBRElement):
+        (WebCore::WMLBRElement::mapToEntry):
+        (WebCore::WMLBRElement::parseMappedAttribute):
+        (WebCore::WMLBRElement::createRenderer):
+        * wml/WMLBRElement.h: Added.
+        * wml/WMLPElement.cpp:
+        (WebCore::WMLPElement::parseMappedAttribute):
+        (WebCore::WMLPElement::insertedIntoDocument):
+        * wml/WMLPElement.h:
+        * wml/WMLTagNames.in:
 
 2008-11-18  Alexey Proskuryakov  <ap@webkit.org>
 
