@@ -86,9 +86,7 @@ def main(options, args):
   #if options.build_type:
   #  command.extend(['--build-type', options.build_type])
 
-  # The layout test script has pixel tests on by default.
-  # TODO(pamg, ojan): swap the sense of the option in the buildbot config too.
-  if not options.pixel_tests:
+  if options.no_pixel_tests:
     command.append('--no-pixel-tests')
 
   if options.enable_pageheap:
@@ -123,9 +121,9 @@ if '__main__' == __name__:
       help='build identifier, for custom results and test lists (v8 or kjs)')
   option_parser.add_option('', '--options', default='',
       help='additional options to pass to run_webkit_tests.py')
-  option_parser.add_option('', '--pixel-tests', action='store_true',
+  option_parser.add_option('', '--no-pixel-tests', action='store_true',
                            default=False,
-                           help='enable pixel-to-pixel PNG comparisons')
+                           help='disable pixel-to-pixel PNG comparisons')
   option_parser.add_option('', '--enable-pageheap', action='store_true',
                            default=False, help='Enable page heap checking')
   options, args = option_parser.parse_args()

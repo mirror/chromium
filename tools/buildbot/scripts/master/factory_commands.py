@@ -891,8 +891,12 @@ class FactoryCommands(object):
            '--target', self._target,
            '--build-type', build_type_id,
            '-o', self.GetWebkitResultDir(),
-           '--build-dir', self._build_dir,
-           '--pixel-tests']
+           '--build-dir', self._build_dir]
+
+    # Only run pixel tests on windows until we're ready for them on linux or
+    # mac.
+    if self._target_platform != 'win32':
+      cmd.append('--no-pixel-tests')
     if with_pageheap:
       cmd.append('--enable-pageheap')
     return cmd
