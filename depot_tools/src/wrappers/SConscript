@@ -9,6 +9,7 @@ if env['RELEASE_ARCH'] in ('linux', 'mac'):
   env.Substitute('$WRAPPER_DIR/gcl', 'posix/gcl')
   env.Substitute('$WRAPPER_DIR/gclient', 'posix/gclient')
   env.Substitute('$WRAPPER_DIR/hammer', 'posix/hammer')
+  env.Substitute('$WRAPPER_DIR/revert', 'posix/revert')
   env.Substitute('$WRAPPER_DIR/bootstrap/update.sh',
                  'posix/bootstrap/update.sh')
 elif env['RELEASE_ARCH'] in ('win',):
@@ -21,6 +22,8 @@ elif env['RELEASE_ARCH'] in ('win',):
   env.Substitute('$WRAPPER_DIR/hammer.bat', 'win/hammer.bat')
   env.Substitute('$WRAPPER_DIR/svn', 'win/svn')
   env.Substitute('$WRAPPER_DIR/svn.bat', 'win/svn.bat')
+  env.Substitute('$WRAPPER_DIR/revert', 'win/revert')
+  env.Substitute('$WRAPPER_DIR/revert.bat', 'win/revert.bat')
   env.Substitute('$WRAPPER_DIR/bootstrap/update.bat',
                  'win/bootstrap/update.bat')
   env.Substitute('$WRAPPER_DIR/bootstrap/update.sh',
