@@ -36,6 +36,7 @@
 #include "HTMLParamElement.h"
 #include "MIMETypeRegistry.h"
 #include "Page.h"
+#include "PluginInfoStore.h"
 #include "Text.h"
 
 namespace WebCore {
@@ -77,73 +78,39 @@ static bool isURLAllowed(Document* doc, const String& url)
 
 static inline void mapClassIdToServiceType(const String& classId, String& serviceType)
 {
-    // It is ActiveX, but the nsplugin system handling
-    // should also work, that's why we don't override the
-    // serviceType with application/x-oleobject
-    // but let the KTrader in khtmlpart::createPart() detect
-    // the user's preference: launch with activex viewer or
-    // with nspluginviewer (Niko)
-#ifndef DISABLE_ACTIVEX_TYPE_CONVERSION_FLASH
-    if (classId.contains("D27CDB6E-AE6D-11cf-96B8-444553540000", false)) {
-        serviceType = "application/x-shockwave-flash";
-        return;
-    }
+    typedef HashMap<String, String, CaseFoldingHash> ServiceTypeHashMap;
+    static ServiceTypeHashMap* serviceTypeFallbackForClassId = 0;
+    if (!serviceTypeFallbackForClassId) {
+        serviceTypeFallbackForClassId = new ServiceTypeHashMap;
+        serviceTypeFallbackForClassId->add("clsid:D27CDB6E-AE6D-11CF-96B8-444553540000", "application/x-shockwave-flash");
+        serviceTypeFallbackForClassId->add("clsid:CFCDAA03-8BE4-11CF-B84B-0020AFBBCCFA", "audio/x-pn-realaudio-plugin");
+        serviceTypeFallbackForClassId->add("clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B", "video/quicktime");
+        serviceTypeFallbackForClassId->add("clsid:166B1BCA-3F9C-11CF-8075-444553540000", "application/x-director");
+#if ENABLE(ACTIVEX_TYPE_CONVERSION_WMPLAYER)
+        serviceTypeFallbackForClassId->add("clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6", "application/x-mplayer2");
+        serviceTypeFallbackForClassId->add("clsid:22D6F312-B0F6-11D0-94AB-0080C74C7E95", "application/x-mplayer2");
 #endif
-#ifndef DISABLE_ACTIVEX_TYPE_CONVERSION_REALAUDIO
-    if (classId.contains("CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA", false)) {
-        serviceType = "audio/x-pn-realaudio-plugin";
-        return;
     }
-#endif
-#ifndef DISABLE_ACTIVEX_TYPE_CONVERSION_QUICKTIME
-    if (classId.contains("02BF25D5-8C17-4B23-BC80-D3488ABDDC6B", false)) {
-        serviceType = "video/quicktime";
-        return;
-    }
-#endif
-#ifndef DISABLE_ACTIVEX_TYPE_CONVERSION_DIRECTOR
-    if (classId.contains("166B1BCA-3F9C-11CF-8075-444553540000", false)) {
-        serviceType = "application/x-director";
-        return;
-    }
-#endif
-#ifndef DISABLE_ACTIVEX_TYPE_CONVERSION_MPLAYER2
-    if (classId.contains("6BF52A52-394A-11d3-B153-00C04F79FAA6", false)) {
-        serviceType = "application/x-mplayer2";
-        return;
-    }
-#endif
-    // TODO: add more plugins here
 
-    if (!classId.isEmpty()) {
-        // We have a clsid, means this is activex (Niko)
+    const String fallbackServiceType = serviceTypeFallbackForClassId->get(classId);
+    if (PluginInfoStore::supportsMIMEType(fallbackServiceType))
+        serviceType = fallbackServiceType;
+    else if (!classId.isEmpty() && PluginInfoStore::supportsMIMEType("application/x-oleobject"))
         serviceType = "application/x-oleobject";
-    }
 }
 
-// By default, when an Object element contains an embed tag, we will try to
-// create a plugin for the embed tag. However we will not do this for Windows
-// media object because our internal ActiveX plugin supports scripting and
-// some websites rely on that. The default npdsplay.dll plugin doesn't support
-// scripting.
-static bool ShouldUseEmbedForObject(HTMLObjectElement* o)
+static bool shouldUseChildEmbedOfObject(HTMLObjectElement* o)
 {
-#ifndef DISABLE_ACTIVEX_TYPE_CONVERSION_MPLAYER2
-    return true;
-#endif 
-    NamedAttrMap* attributes = o->attributes();
-    if (attributes) {
-        for (unsigned i = 0; i < attributes->length(); ++i) {
-            Attribute* it = attributes->attributeItem(i);
-            if (it->name().localName().string().foldCase() == "classid") {
-                // If it's windows media player type.
-                if (it->value().contains("6BF52A52-394A-11d3-B153-00C04F79FAA6", false) ||
-                    it->value().contains("22D6F312-B0F6-11D0-94AB-0080C74C7E95", false))
-                    return false;
-            }
-        }
-    }
-    return true;
+    // An OBJECT tag with a classId is some kind of ActiveX control.  The most
+    // common controls have parallel plugin versions and thus possibly nested
+    // EMBED tags.  If this is the case, the OBJECT's classId should map to some
+    // known plugin MIME type.  If it doesn't, either the control is unlikely to
+    // have a parallel plugin implementation (so there's no point looking
+    // inside), or we've purposefully disabled conversion for this classId, in
+    // which case we want to use the ActiveX OBJECT instead of the EMBED anyway.
+    String serviceType;
+    mapClassIdToServiceType(o->classId(), serviceType);
+    return serviceType != "application/x-oleobject";
 }
 
 void RenderPartObject::updateWidget(bool onlyCreateNonNetscapePlugins)
@@ -163,7 +130,7 @@ void RenderPartObject::updateWidget(bool onlyCreateNonNetscapePlugins)
         return;
       // Check for a child EMBED tag.
       HTMLEmbedElement* embed = 0;
-      if (ShouldUseEmbedForObject(o)) {
+      if (shouldUseChildEmbedOfObject(o)) {
           for (Node* child = o->firstChild(); child;) {
               if (child->hasTagName(embedTag)) {
                   embed = static_cast<HTMLEmbedElement*>(child);
@@ -173,7 +140,8 @@ void RenderPartObject::updateWidget(bool onlyCreateNonNetscapePlugins)
               else
                   child = child->traverseNextNode(o);   // Otherwise descend (EMBEDs may be inside COMMENT tags)
           }
-      }      
+      }
+      
       // Use the attributes from the EMBED tag instead of the OBJECT tag including WIDTH and HEIGHT.
       HTMLElement *embedOrObject;
       if (embed) {
@@ -241,10 +209,7 @@ void RenderPartObject::updateWidget(bool onlyCreateNonNetscapePlugins)
       }
       
       // If we still don't have a type, try to map from a specific CLASSID to a type.
-      // However, if we have the embed tag we shouldn't do so because the outer object
-      // may be converted to application/x-oleobject, while we are not getting the paramaters
-      // including classid etc for the outer object.
-      if (serviceType.isEmpty() && !o->classId().isEmpty() && !embed)
+      if (serviceType.isEmpty())
           mapClassIdToServiceType(o->classId(), serviceType);
       
       if (!isURLAllowed(document(), url))
