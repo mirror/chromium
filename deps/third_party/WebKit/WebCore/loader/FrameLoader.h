@@ -75,6 +75,7 @@ namespace WebCore {
     class ResourceLoader;
     class ResourceRequest;
     class ResourceResponse;
+    class ScriptValue;
     class SecurityOrigin;
     class SharedBuffer;
     class SubstituteData;
@@ -335,14 +336,8 @@ namespace WebCore {
         // Returns true if url is a JavaScript URL.
         bool executeIfJavaScriptURL(const KURL& url, bool userGesture = false, bool replaceDocument = true);
 
-        // Executes a script, ignore the result. For back compability.
-        void executeScript(const String& url, int baseLine, const String& script);
-        void executeScript(const String& script, bool forceUserGesture = false);
-
-        // Executes a script, returns results as a string, and sets succ
-        // to true if no errors.
-        String executeScript(const String& url, int baseLine, const String& script, bool* succ);
-        String executeScript(const String& script, bool* succ, bool forceUserGesture = false);
+        ScriptValue executeScript(const String& url, int baseLine, const String& script);
+        ScriptValue executeScript(const String& script, bool forceUserGesture = false);
 
         void gotoAnchor();
         bool gotoAnchor(const String& name); // returns true if the anchor was found

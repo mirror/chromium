@@ -1,3 +1,236 @@
+2008-11-19  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Last part of bug 21106: .in format discussed changes
+        https://bugs.webkit.org/show_bug.cgi?id=21106
+
+        - Renamed isAudioHack to wrapperOnlyIfMediaIsAvailable as requested.
+
+        - Cleaned up additionnal function parameters that were unneeded.
+
+        * dom/make_names.pl:
+        * html/HTMLTagNames.in:
+
+2008-11-20  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22383
+        Worker tests spill error messages over to consequent tests
+
+        * dom/Worker.cpp: (WebCore::Worker::Worker):
+        Raise an exception immediately if URL is empty. Dcoument::completeURL() returns document URL
+        in this case, and there is no sense in starting a thread and trying to parse document source
+        as JavaScript.
+
+        * bindings/js/JSWorkerConstructor.cpp: (WebCore::constructWorker):
+        Return quickly if toString() raised an exception.
+
+2008-11-19  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22190
+
+        Fix the painting and event handling in transformed search fields.
+        When painting the cancel and results button parts,  get the rect from AppKit
+        relative to the input bounds (rather than in absolute coords), then convert
+        it into the coords of the part's renderer (which is the one that is painting).
+        To do this we need to compute an offset relative to some container, so expose
+        a method on RenderObject for that.
+        
+        Also fix the location at which the search popup shows up to take transforms
+        into account, and fix the math that is used to figure out if the search
+        results button, or the cancel button should get the mouse events.
+        
+        Test: fast/forms/search-transformed.html
+
+        * rendering/RenderBox.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::offsetFromContainer):
+        * rendering/RenderObject.h:
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::forwardEvent):
+        (WebCore::RenderTextControl::showPopup):
+        * rendering/RenderThemeMac.h:
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::convertToPaintingRect):
+        (WebCore::RenderThemeMac::paintSearchFieldCancelButton):
+        (WebCore::RenderThemeMac::paintSearchFieldResultsDecoration):
+        (WebCore::RenderThemeMac::paintSearchFieldResultsButton):
+
+2008-11-20  Joerg Bornemann  <joerg.bornemann@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Steps towards making the the Qt port of WebKit compile on Windows CE
+
+        https://bugs.webkit.org/show_bug.cgi?id=20746
+
+        * WebCore.pro: Various fixes to include windows specific build options
+        also in the Windows CE build.
+        * loader/icon/IconDatabase.cpp: Removed unnecessary errno.h inclusion.
+        * platform/FileSystem.h: Changed Q_OS_WIN32 to Q_OS_WIN to include CE.
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::getWindowsContext): SetWorldTransform is
+        not available on CE.
+        * platform/graphics/qt/PathQt.cpp: Added local definition of M_PI.
+        * platform/qt/FileSystemQt.cpp: Changed Q_OS_WIN32 to Q_OS_WIN to include CE.
+        * platform/qt/KeyboardCodes.h: Extend #idefs to define the missing OEM
+        constants on CE.
+        * platform/qt/TemporaryLinkStubs.cpp: Added stubs for plugins.
+        * platform/text/RegularExpression.cpp: Removed unused sys/types.h and
+        pcre.h inclusions.
+        * platform/win/SystemTimeWin.cpp:
+        (WebCore::userIdleTime): Don't use GetLastInputInfo on CE, it does not
+        exist.
+
+2008-11-20  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Maciej Stachowiak.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22379
+        Make CSSOM use less memory
+        
+        - Shrink CSSProperty by half by using bitfields.
+        - Get rid of m_strictParsing field in StyleBase by moving it up to CSSStyleSheet
+          and CSSMutableStyleDeclaration. This reduces size of many highly popular objects.
+
+        * css/CSSMutableStyleDeclaration.cpp:
+        (WebCore::CSSMutableStyleDeclaration::CSSMutableStyleDeclaration):
+        (WebCore::CSSMutableStyleDeclaration::operator=):
+        * css/CSSMutableStyleDeclaration.h:
+        (WebCore::CSSMutableStyleDeclaration::setStrictParsing):
+        (WebCore::CSSMutableStyleDeclaration::useStrictParsing):
+        * css/CSSProperty.h:
+        * css/CSSStyleSheet.cpp:
+        (WebCore::CSSStyleSheet::CSSStyleSheet):
+        * css/CSSStyleSheet.h:
+        (WebCore::CSSStyleSheet::setStrictParsing):
+        (WebCore::CSSStyleSheet::useStrictParsing):
+        * css/StyleBase.h:
+        (WebCore::StyleBase::useStrictParsing):
+        (WebCore::StyleBase::StyleBase):
+
+2008-11-19  Darin Fisher  <darin@chromium.org>
+
+        Fix bustage.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22373
+        Ports busted by addition of ScriptValue.{h,cpp}
+        
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::performRequest):
+
+2008-11-19  Darin Fisher  <darin@chromium.org>
+
+        Bustage fix.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22373
+        Ports busted by addition of ScriptValue.{h,cpp}
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCoreSources.bkl:
+        * dom/XMLTokenizerQt.cpp:
+        * plugins/PluginView.cpp:
+
+2008-11-19  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Geoff Garen.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22345
+        Define ScriptValue as a thin container for a JSC::Value*.
+
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/js/ScheduledAction.cpp:
+        * bindings/js/ScriptController.cpp:
+        (WebCore::ScriptController::evaluate):
+        * bindings/js/ScriptController.h:
+        * bindings/js/ScriptValue.cpp: Added.
+        (WebCore::ScriptValue::getString):
+        * bindings/js/ScriptValue.h: Added.
+        (WebCore::ScriptValue::ScriptValue):
+        (WebCore::ScriptValue::jsValue):
+        * dom/ScriptElement.cpp:
+        * dom/XMLTokenizer.cpp:
+        * dom/XMLTokenizerLibxml2.cpp:
+        * html/HTMLTokenizer.cpp:
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::executeIfJavaScriptURL):
+        (WebCore::FrameLoader::executeScript):
+        * loader/FrameLoader.h:
+
+2008-11-19  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Justin Garcia.
+
+        Fix for <rdar://problem/5472507> Remove color property when a user 
+        sets color to black
+
+        This patch prevents us from inserting font nodes during the 
+        ApplyStyleCommand if they will not change the computed style of an 
+        element.
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::fontColorChangesComputedStyle):
+        (WebCore::fontSizeChangesComputedStyle):
+        (WebCore::fontFaceChangesComputedStyle):
+        (WebCore::ApplyStyleCommand::addInlineStyleIfNeeded):
+
+2008-11-19  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Antti Koivisto
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22111
+        
+        Fix hit testing in controls on transformed video elements
+        by replacing absoluteBoundingBoxRect().contains() with
+        code that maps the point into local coords, taking
+        transforms into account.
+
+        Test: media/video-controls-transformed.html
+
+        * platform/graphics/MediaPlayer.h:
+        * rendering/RenderMedia.cpp:
+        (WebCore::rendererContainsPoint):
+        (WebCore::RenderMedia::forwardEvent):
+
+2008-11-19  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=22348
+        
+        Need to educate style sharing about autofill, so that style does not
+        get shared between input elements that are autofilled, and those
+        that are not. Setting autofill should also do a setChanged on the node.
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::canShareStyleWithElement):
+        (WebCore::CSSStyleSelector::SelectorChecker::checkOneSelector):
+        * dom/Node.h:
+        (WebCore::Node::isAutofilled):
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::setAutofilled):
+        * html/HTMLInputElement.h:
+        (WebCore::HTMLInputElement::isAutofilled):
+
+2008-11-19  Brett Wilson  <brettw@chromium.org>
+
+        Reviewed by Antti Koivisto.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22349
+
+        Clear the subresource loader client when the client is removed in
+        response to a 304 (not modified). This prevents an inconsistent state
+        where the loader thinks it's active and the loader::Host doesn't.
+
+        * loader/loader.cpp:
+        (WebCore::Loader::Host::didReceiveResponse):
+
 2008-11-19  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Darin Adler.

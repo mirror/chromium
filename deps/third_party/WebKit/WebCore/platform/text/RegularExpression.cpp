@@ -31,7 +31,6 @@
 #include "Logging.h"
 #include <wtf/RefCounted.h>
 #include <pcre/pcre.h>
-#include <sys/types.h>
 
 namespace WebCore {
 
