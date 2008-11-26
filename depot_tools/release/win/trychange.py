@@ -79,9 +79,20 @@ def EscapeDot(name):
   return name.replace('.', '-')
 
 
+def RebaseDiff(diff, root):
+  """Change the diff base root directory."""
+  # TODO(maruel):  Rebase the diff with root.
+  return diff
+
+
+# TODO(maruel): Remove support eventually.
 def _SendChangeNFS(options):
   """Send a change to the try server."""
-  script_locals = ExecuteTryServerScript()
+  try:
+    script_locals = ExecuteTryServerScript()
+  except ScriptNotFound, InvalidScript:
+    # Will throw later.
+    pass
   if not options.nfs_path:
     # TODO(maruel): Use try_server_nfs instead.
     options.nfs_path = script_locals.get('try_server', None)
@@ -102,7 +113,12 @@ def _SendChangeNFS(options):
 
 def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
-  script_locals = ExecuteTryServerScript()
+  try:
+    script_locals = ExecuteTryServerScript()
+  except ScriptNotFound, InvalidScript:
+    # Will throw later.
+    pass
+
   values = {}
   if not options.host:
     options.host = script_locals.get('try_server_http_host', None)
@@ -122,6 +138,9 @@ def _SendChangeHTTP(options):
   if options.bot:
     values['bot'] = options.bot
   values['patch'] = options.diff
+  if options.revision:
+    values['revision'] = options.revision
+  
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
   connection = urllib.urlopen(url, urllib.urlencode(values))
   if not connection:
@@ -132,54 +151,94 @@ def _SendChangeHTTP(options):
 
 
 def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
-              patchset=None):
+              issue=None, patchset=None):
   # Parse argv
-  parser = optparse.OptionParser(usage="%prog [options]")
-  parser.add_option("-n", "--name", default=name,
-                    help="Name of the try change.")
-  parser.add_option("-f", "--file_list", default=file_list, action="append",
-                    help="List of files to include in the try.")
-  parser.add_option("-b", "--bot", default=None,
-                    help="Force a specific build bot.")
-  parser.add_option("--use_nfs", action="store_true",
-                    help="Use NFS to talk to the try server.")
-  parser.add_option("--use_http", action="store_true",
-                    help="Use HTTP to talk to the try server.")
-  parser.add_option("--nfs_path", default=None,
-                    help="NFS path to use to talk to the try server.")
-  # TODO(maruel): Don't hardcode this value.
-  parser.add_option("--host", default=None,
-                    help="Host address to use to talk to the try server.")
-  # TODO(maruel): Don't hardcode this value.
-  parser.add_option("--port", default=None,
-                    help="Port to use to talk to the try server.")
-  parser.add_option("-p", "--patchset", default=patchset,
-                    help="Define the Rietveld's patchset id.")
-  parser.add_option("--diff", default=None,
-                    help="Define the Rietveld's patchset id.")
-  parser.add_option("--root", default=None,
-                    help="Root to use for the patch.")
-  parser.add_option("-u", "--user", default=getpass.getuser(),
-                    help="User name to be used.")
-  parser.add_option("-e", "--email", default=None,
-                    help="Email address where to send the results.")
+  parser = optparse.OptionParser(usage="%prog [options]", version="%prog 0.8")
+
+  group = optparse.OptionGroup(parser, "Result and status options")
+  group.add_option("-u", "--user", default=getpass.getuser(),
+                   help="User name to be used.")
+  group.add_option("-e", "--email", default=None,
+                   help="Email address where to send the results.")
+  group.add_option("-n", "--name", default=name,
+                   help="Name of the try change.")
+  parser.add_option_group(group)
+
+  group = optparse.OptionGroup(parser, "Try run options")
+  group.add_option("-b", "--bot", default=None,
+                    help="Force the use specifics build slaves, separated with a"
+                         " comma. ex: -b 'try win32 7'")
+  group.add_option("-r", "--revision", default=None,
+                    help="Revision to use for testing.")
+  parser.add_option_group(group)
+
+  group = optparse.OptionGroup(parser, "Which patch to run")
+  group.add_option("-f", "--file", default=file_list, dest="files",
+                   metavar="FILE", action="append",
+                   help="Use many time to list the files to include in the "
+                        "try.")
+  group.add_option("-i", "--issue", default=issue,
+                   help="Rietveld's issue id to use instead of a local"
+                        " diff.")
+  group.add_option("-p", "--patchset", default=patchset,
+                   help="Rietveld's patchset id to use instead of a local"
+                        " diff.")
+  group.add_option("--diff", default=None,
+                   help="File containing the diff to try.")
+  group.add_option("--url", default=None,
+                   help="Url where to grab a patch.")
+  group.add_option("--root", default=None,
+                   help="Root to use for the patch.")
+  parser.add_option_group(group)
+
+  group = optparse.OptionGroup(parser, "How to access the try server")
+  group.add_option("--use_http", action="store_true",
+                   help="Use HTTP to talk to the try server.")
+  group.add_option("--host", default=None,
+                   help="Host address to use to talk to the try server.")
+  group.add_option("--port", default=None,
+                   help="HTTP port to use to talk to the try server.")
+  # TODO(maruel): Remove support eventually.
+  group.add_option("--use_nfs", action="store_true",
+                   help="Use NFS to talk to the try server.")
+  group.add_option("--nfs_path", default=None,
+                   help="NFS path to use to write the diff to the try server.")
+  parser.add_option_group(group)
+
   options, args = parser.parse_args(argv)
-  if not options.file_list:
+  if len(args) == 1 and args[0] == 'help':
+    parser.print_help()
+  if (not options.files and (not options.issue and options.patchset) and
+      not options.diff and not options.url):
     print "Nothing to try, changelist is empty."
     return
 
   try:
-    if not options.diff:
-      # Change the current working directory before generating the diff so that it
-      # shows the correct base.
+    # Convert options.diff into the content of the diff.
+    if options.url:
+      options.diff = urllib.urlopen(options.url).read()
+    elif options.issue and options.patchset:
+      # Retrieve the patch from Rietveld.
+      # TODO(maruel): Actually, the user don't need to be signed in to grab the
+      # patch but SendToRietveld() enforces this.
+      path = "/download/issue%s_%s.diff" % (options.issue, options.patchset)
+      options.diff = gcl.SendToRietveld(path)
+    elif options.diff:
+      options.diff = gcl.ReadFile(options.diff)
+    else:
+      # Generate the diff with svn. Change the current working directory before
+      # generating the diff so that it shows the correct base.
       os.chdir(gcl.GetRepositoryRoot())
       # Generate the diff and write it to the submit queue path. Fix the file list
       # according to the new path.
       subpath = PathDifference(GetCheckoutRoot(), os.getcwd())
       os.chdir(GetCheckoutRoot())
       options.diff = gcl.GenerateDiff([os.path.join(subpath, x)
-                                      for x in options.file_list])
-    # Defaults to HTTP.
+                                      for x in options.files])
+    if options.root:
+      options.diff = RebaseDiff(options.diff, options.root)
+
+    # Send the patch. Defaults to HTTP.
     if not options.use_nfs or options.use_http:
       patch_name = _SendChangeHTTP(options)
     else:

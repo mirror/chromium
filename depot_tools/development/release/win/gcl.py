@@ -478,7 +478,6 @@ def UploadCL(change_info, args):
   no_try = "--no_try" in args
   if no_try:
     args.remove("--no_try")
-    
 
   upload_arg = ["upload.py", "-y"]
   upload_arg.append("--server=" + GetCodeReviewSetting("CODE_REVIEW_SERVER"))
@@ -523,7 +522,8 @@ def UploadCL(change_info, args):
 
   # Once uploaded to Rietveld, send it to the try server.
   if not no_try:
-    TryChange(change_info, [], True, patchset)
+    # Use the local diff.
+    TryChange(change_info, [], True)
 
 
 def TryChange(change_info, args, swallow_exception=False, patchset=None):
@@ -535,8 +535,11 @@ def TryChange(change_info, args, swallow_exception=False, patchset=None):
       return
     ErrorExit("You need to install trychange.py to use the try server.")
 
-  trychange.TryChange(args, change_info.name, change_info.FileList(),
-                      swallow_exception, patchset)
+  if change_info:
+    trychange.TryChange(args, change_info.name, change_info.FileList(),
+                        swallow_exception, patchset)
+  else:
+    trychange.TryChange(args)
 
 
 def Commit(change_info, args):
@@ -676,6 +679,7 @@ def main(argv=None):
   if not os.path.exists(GetInfoDir()):
     os.mkdir(GetInfoDir())
 
+  # Commands that don't require an argument.
   command = argv[1]
   if command == "opened":
     Opened()
@@ -686,6 +690,9 @@ def main(argv=None):
   if command == "changes":
     Changes()
     return 0
+  if command == "help":
+    Help()
+    return 0
   if command == "diff" and len(argv) == 2:
     files = GetFilesNotInCL()
     print GenerateDiff([os.path.join(GetRepositoryRoot(), x[1]) for x in files])
@@ -695,15 +702,15 @@ def main(argv=None):
     if command == "change":
       # Generate a random changelist name.
       changename = GenerateChangeName()
-    elif command == "help":
-      Help()
-      return 0
     else:
       ErrorExit("Need a changelist name.")
   else:
     changename = argv[2]
 
-  fail_on_not_found = command != "change"
+  # When the command is 'try' and --patchset is used, the patch to try
+  # is on the Rietveld server. 'change' creates a change so it's fine if the
+  # change didn't exist. All other commands require an existing change.
+  fail_on_not_found = command != "try" and command != "change"
   change_info = LoadChangelistInfo(changename, fail_on_not_found, True)
 
   if command == "change":
@@ -715,7 +722,14 @@ def main(argv=None):
   elif command == "delete":
     change_info.Delete()
   elif command == "try":
-    TryChange(change_info, argv[3:])
+    # When the change contains no file, send the "changename" positional
+    # argument to trychange.py.
+    if change_info.files:
+      args = argv[3:]
+    else:
+      change_info = None
+      args = argv[2:]
+    TryChange(change_info, args)
   else:
     # Everything else that is passed into gcl we redirect to svn, after adding
     # the files. This allows commands such as 'gcl diff xxx' to work.
