@@ -45,7 +45,7 @@ WorkerContext::WorkerContext(const KURL& url, WorkerThread* thread)
     : m_url(url)
     , m_location(WorkerLocation::create(url))
     , m_securityOrigin(SecurityOrigin::create(url))
-    , m_script(this)
+    , m_script(new WorkerScriptController(this))
     , m_thread(thread)
 {
 }
@@ -153,5 +153,6 @@ bool WorkerContext::dispatchEvent(PassRefPtr<Event> event, ExceptionCode& ec)
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
+
 
 

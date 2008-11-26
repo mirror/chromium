@@ -1,3 +1,244 @@
+2008-11-19  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Add support for (really) polymorphic caching of prototype accesses.
+        
+        If a cached prototype access misses, cti_op_get_by_id_proto_list is called.
+        When this occurs the Structure pointers from the instruction stream are copied
+        off into a new ProtoStubInfo object.  A second prototype access trampoline is
+        generated, and chained onto the first.  Subsequent missed call to
+        cti_op_get_by_id_proto_list_append, which append futher new trampolines, up to
+        PROTOTYPE_LIST_CACHE_SIZE (currently 4).  If any of the misses result in an
+        access other than to a direct prototype property, list formation is halted (or
+        for the initial miss, does not take place at all).
+
+        Separate fail case functions are provided for each access since this contributes
+        to the performance progression (enables better processor branch prediction).
+
+        Overall this is a near 5% progression on v8, with around 10% wins on richards
+        and deltablue.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dump):
+        (JSC::CodeBlock::derefStructures):
+        * bytecode/Instruction.h:
+        (JSC::ProtoStructureList::ProtoStubInfo::set):
+        (JSC::ProtoStructureList::ProtoStructureList):
+        (JSC::Instruction::Instruction):
+        (JSC::Instruction::):
+        * bytecode/Opcode.h:
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::Interpreter::cti_op_put_by_id_fail):
+        (JSC::Interpreter::cti_op_get_by_id_self_fail):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list_append):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list_full):
+        (JSC::Interpreter::cti_op_get_by_id_proto_fail):
+        (JSC::Interpreter::cti_op_get_by_id_chain_fail):
+        (JSC::Interpreter::cti_op_get_by_id_array_fail):
+        (JSC::Interpreter::cti_op_get_by_id_string_fail):
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileGetByIdSelf):
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdProtoList):
+        (JSC::JIT::privateCompileGetByIdChain):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        (JSC::JIT::privateCompilePatchGetArrayLength):
+        * jit/JIT.h:
+        (JSC::JIT::compileGetByIdProtoList):
+
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Try and fix the tiger build.
+
+        * parser/Grammar.y:
+
+2008-11-20  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Make JavaScriptCore Chromium build under Windows (cmd only, cygwin almost works)
+        https://bugs.webkit.org/show_bug.cgi?id=22347
+
+        * JavaScriptCore.scons:
+        * parser/Parser.cpp: Add using std::auto_ptr since we use auto_ptr
+
+2008-11-20  Steve Falkenburg  <sfalken@apple.com>
+
+        Fix build.
+        
+        Reviewed by Sam Weinig.
+
+        * parser/Parser.cpp:
+        (JSC::Parser::reparse):
+
+2008-11-20  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        A little more RegExp refactoring.
+        
+        Created a helper function in the assembler for linking a vector of
+        JmpSrc to a location, and deployed it in a bunch of places.
+
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::link):
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateNonGreedyQuantifier):
+        (JSC::WREC::Generator::generateGreedyQuantifier):
+        (JSC::WREC::Generator::generateCharacterClassInverted):
+        (JSC::WREC::Generator::generateParentheses):
+        (JSC::WREC::Generator::generateParenthesesResetTrampoline):
+        (JSC::WREC::Generator::generateAssertionBOL):
+        (JSC::WREC::Generator::generateAssertionEOL):
+        (JSC::WREC::Generator::generateAssertionWordBoundary):
+        (JSC::WREC::Generator::terminateAlternative):
+        (JSC::WREC::Generator::terminateDisjunction):
+        * wrec/WRECParser.cpp:
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::consumeHex):
+
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Fix non-mac builds.
+
+        * parser/Lexer.cpp:
+        * parser/Parser.cpp:
+
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Patch for https://bugs.webkit.org/show_bug.cgi?id=22385
+        <rdar://problem/6390179>
+        Lazily reparse FunctionBodyNodes on first execution.
+
+        - Saves 57MB on Membuster head.
+
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate): Remove vector shrinking since this is now
+        handled by destroying the ScopeNodeData after generation.
+
+        * parser/Grammar.y: Add alternate NoNode version of the grammar
+        that does not create nodes.  This is used to lazily create FunctionBodyNodes
+        on first execution.
+
+        * parser/Lexer.cpp:
+        (JSC::Lexer::setCode): Fix bug where on reparse, the Lexer was confused about
+        what position and length meant. Position is the current position in the original
+        data buffer (important for getting correct line/column information) and length
+        the end offset in the original buffer.
+        * parser/Lexer.h:
+        (JSC::Lexer::sourceCode): Positions are relative to the beginning of the buffer.
+
+        * parser/Nodes.cpp:
+        (JSC::ScopeNodeData::ScopeNodeData): Move initialization of ScopeNode data here.
+        (JSC::ScopeNode::ScopeNode): Add constructor that only sets the JSGlobalData
+        for FunctionBodyNode stubs.
+        (JSC::ScopeNode::~ScopeNode): Release m_children now that we don't inherit from
+        BlockNode.
+        (JSC::ScopeNode::releaseNodes): Ditto.
+        (JSC::EvalNode::generateBytecode): Only shrink m_children, as we need to keep around
+        the rest of the data.
+        (JSC::FunctionBodyNode::FunctionBodyNode): Add constructor that only sets the
+        JSGlobalData. 
+        (JSC::FunctionBodyNode::create): Ditto.
+        (JSC::FunctionBodyNode::generateBytecode): If we don't have the data, do a reparse
+        to construct it. Then after generation, destroy the data.
+        (JSC::ProgramNode::generateBytecode): After generation, destroy the AST data.
+        * parser/Nodes.h:
+        (JSC::ExpressionNode::): Add isFuncExprNode for FunctionConstructor.
+        (JSC::StatementNode::): Add isExprStatementNode for FunctionConstructor.
+        (JSC::ExprStatementNode::): Ditto.
+        (JSC::ExprStatementNode::expr): Add accessor for FunctionConstructor.
+        (JSC::FuncExprNode::): Add isFuncExprNode for FunctionConstructor
+
+        (JSC::ScopeNode::adoptData): Adopts a ScopeNodeData.
+        (JSC::ScopeNode::data): Accessor for ScopeNodeData.
+        (JSC::ScopeNode::destroyData): Deletes the ScopeNodeData.
+        (JSC::ScopeNode::setFeatures): Added.
+        (JSC::ScopeNode::varStack): Added assert.
+        (JSC::ScopeNode::functionStack): Ditto.
+        (JSC::ScopeNode::children): Ditto.
+        (JSC::ScopeNode::neededConstants): Ditto.
+        Factor m_varStack, m_functionStack, m_children and m_numConstants into ScopeNodeData.
+
+        * parser/Parser.cpp:
+        (JSC::Parser::reparse): Reparse the SourceCode in the FunctionBodyNode and set
+        set up the ScopeNodeData for it. 
+        * parser/Parser.h:
+
+        * parser/SourceCode.h:
+        (JSC::SourceCode::endOffset): Added for use in the lexer.
+
+        * runtime/FunctionConstructor.cpp:
+        (JSC::getFunctionBody): Assuming a ProgramNode with one FunctionExpression in it,
+        get the FunctionBodyNode.  Any issues signifies a parse failure in constructFunction. 
+        (JSC::constructFunction): Make parsing functions in the form new Function(""), easier
+        by concatenating the strings together (with some glue) and parsing the function expression
+        as a ProgramNode from which we can receive the FunctionBodyNode. This has the added benefit
+        of not having special parsing code for the arguments and lazily constructing the 
+        FunctionBodyNode's AST on first execution.
+
+        * runtime/Identifier.h:
+        (JSC::operator!=): Added.
+
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Speedup the lexer to offset coming re-parsing patch.
+
+        - .6% progression on Sunspider.
+
+        * bytecompiler/SegmentedVector.h:
+        (JSC::SegmentedVector::shrink): Fixed bug where m_size would not be
+        set when shrinking to 0.
+
+        * parser/Lexer.cpp:
+        (JSC::Lexer::Lexer):
+        (JSC::Lexer::isIdentStart): Use isASCIIAlpha and isASCII to avoid going into ICU in the common cases.
+        (JSC::Lexer::isIdentPart): Use isASCIIAlphanumeric and isASCII to avoid going into ICU in the common cases
+        (JSC::isDecimalDigit): Use version in ASCIICType.h. Inlining it was a regression.
+        (JSC::Lexer::isHexDigit): Ditto.
+        (JSC::Lexer::isOctalDigit): Ditto.
+        (JSC::Lexer::clear): Resize the m_identifiers SegmentedVector to initial
+        capacity
+        * parser/Lexer.h: Remove unused m_strings vector. Make m_identifiers
+        a SegmentedVector<Identifier> to avoid allocating a new Identifier* for
+        each identifier found.  The SegmentedVector is need so we can passes 
+        references to the Identifier to the parser, which remain valid even when
+        the vector is resized.
+        (JSC::Lexer::makeIdentifier): Inline and return a reference to the added
+        Identifier.
+
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Add isASCII to ASCIICType.  Use coming soon!
+
+        * wtf/ASCIICType.h:
+        (WTF::isASCII):
+
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Add OwnPtr constructor and OwnPtr::adopt that take an auto_ptr.
+
+        * wtf/OwnPtr.h:
+        (WTF::OwnPtr::OwnPtr):
+        (WTF::OwnPtr::adopt):
+
 2008-11-20  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Darin Adler.
@@ -19692,6 +19933,7 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 
 

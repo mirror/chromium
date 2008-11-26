@@ -261,7 +261,8 @@ public:
     bool insideVisibleArea(const IntPoint&) const;
     bool insideVisibleArea(Range*) const;
     PassRefPtr<Range> nextVisibleRange(Range*, const String&, bool forward, bool caseFlag, bool wrapFlag);
-
+    
+    void addToKillRing(Range*, bool prepend);
 private:
     Frame* m_frame;
     OwnPtr<DeleteButtonController> m_deleteButtonController;
@@ -289,8 +290,6 @@ private:
     void confirmComposition(const String&, bool preserveSelection);
     void setIgnoreCompositionSelectionChange(bool ignore);
 
-    void addToKillRing(Range*, bool prepend);
-
     PassRefPtr<Range> firstVisibleRange(const String&, bool caseFlag);
     PassRefPtr<Range> lastVisibleRange(const String&, bool caseFlag);
 };
@@ -303,4 +302,5 @@ inline void Editor::setStartNewKillRingSequence(bool flag)
 } // namespace WebCore
 
 #endif // Editor_h
+
 

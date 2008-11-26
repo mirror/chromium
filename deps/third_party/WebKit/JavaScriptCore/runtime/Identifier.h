@@ -68,6 +68,7 @@ namespace JSC {
         friend bool operator!=(const Identifier&, const Identifier&);
 
         friend bool operator==(const Identifier&, const char*);
+        friend bool operator!=(const Identifier&, const char*);
     
         static void remove(UString::Rep*);
 
@@ -132,10 +133,16 @@ namespace JSC {
         return Identifier::equal(a, b);
     }
 
+    inline bool operator!=(const Identifier& a, const char* b)
+    {
+        return !Identifier::equal(a, b);
+    }
+
     IdentifierTable* createIdentifierTable();
     void deleteIdentifierTable(IdentifierTable*);
 
 } // namespace JSC
 
 #endif // KJS_IDENTIFIER_H
+
 

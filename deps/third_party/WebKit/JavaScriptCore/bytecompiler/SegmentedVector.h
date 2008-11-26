@@ -107,6 +107,7 @@ namespace JSC {
                     delete m_segments[i];
                 m_segments.resize(1);
                 m_inlineSegment.resize(0);
+                m_size = size;
                 return;
             }
 
@@ -166,3 +167,4 @@ namespace JSC {
 } // namespace JSC
 
 #endif // SegmentedVector_h
+

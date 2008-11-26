@@ -23,14 +23,15 @@
 #include "config.h"
 #include "Lexer.h"
 
-#include "dtoa.h"
 #include "JSFunction.h"
-#include "Nodes.h"
-#include "NodeInfo.h"
 #include "JSGlobalObjectFunctions.h"
+#include "NodeInfo.h"
+#include "Nodes.h"
+#include "dtoa.h"
 #include <ctype.h>
 #include <limits.h>
 #include <string.h>
+#include <wtf/ASCIICType.h>
 #include <wtf/Assertions.h>
 #include <wtf/unicode/Unicode.h>
 
@@ -57,9 +58,6 @@ namespace JSC {
 
 static bool isDecimalDigit(int);
 
-static const size_t initialReadBufferCapacity = 32;
-static const size_t initialStringTableCapacity = 64;
-
 Lexer::Lexer(JSGlobalData* globalData)
     : yylineno(1)
     , m_restrKeyword(false)
@@ -83,8 +81,6 @@ Lexer::Lexer(JSGlobalData* globalData)
 {
     m_buffer8.reserveCapacity(initialReadBufferCapacity);
     m_buffer16.reserveCapacity(initialReadBufferCapacity);
-    m_strings.reserveCapacity(initialStringTableCapacity);
-    m_identifiers.reserveCapacity(initialStringTableCapacity);
 }
 
 Lexer::~Lexer()
@@ -101,10 +97,10 @@ void Lexer::setCode(const SourceCode& source)
     m_stackToken = -1;
     m_lastToken = -1;
 
-    m_position = 0;
+    m_position = source.startOffset();
     m_source = &source;
-    m_code = source.data();
-    m_length = source.length();
+    m_code = source.provider()->data();
+    m_length = source.endOffset();
     m_skipLF = false;
     m_skipCR = false;
     m_error = false;
@@ -608,32 +604,28 @@ bool Lexer::isLineTerminator()
 
 bool Lexer::isIdentStart(int c)
 {
-    return (category(c) & (Letter_Uppercase | Letter_Lowercase | Letter_Titlecase | Letter_Modifier | Letter_Other))
-        || c == '$' || c == '_';
+    return isASCIIAlpha(c) || c == '$' || c == '_' || (!isASCII(c) && (category(c) & (Letter_Uppercase | Letter_Lowercase | Letter_Titlecase | Letter_Modifier | Letter_Other)));
 }
 
 bool Lexer::isIdentPart(int c)
 {
-    return (category(c) & (Letter_Uppercase | Letter_Lowercase | Letter_Titlecase | Letter_Modifier | Letter_Other
-                            | Mark_NonSpacing | Mark_SpacingCombining | Number_DecimalDigit | Punctuation_Connector))
-        || c == '$' || c == '_';
+    return isASCIIAlphanumeric(c) || c == '$' || c == '_' || (!isASCII(c) && (category(c) & (Letter_Uppercase | Letter_Lowercase | Letter_Titlecase | Letter_Modifier | Letter_Other
+                            | Mark_NonSpacing | Mark_SpacingCombining | Number_DecimalDigit | Punctuation_Connector)));
 }
 
 static bool isDecimalDigit(int c)
 {
-    return (c >= '0' && c <= '9');
+    return isASCIIDigit(c);
 }
 
 bool Lexer::isHexDigit(int c)
 {
-    return (c >= '0' && c <= '9'
-        || c >= 'a' && c <= 'f'
-        || c >= 'A' && c <= 'F');
+    return isASCIIHexDigit(c); 
 }
 
 bool Lexer::isOctalDigit(int c)
 {
-    return (c >= '0' && c <= '7');
+    return isASCIIOctalDigit(c);
 }
 
 int Lexer::matchPunctuator(int& charPos, int c1, int c2, int c3, int c4)
@@ -888,15 +880,7 @@ bool Lexer::scanRegExp()
 
 void Lexer::clear()
 {
-    deleteAllValues(m_strings);
-    Vector<UString*> newStrings;
-    newStrings.reserveCapacity(initialStringTableCapacity);
-    m_strings.swap(newStrings);
-
-    deleteAllValues(m_identifiers);
-    Vector<JSC::Identifier*> newIdentifiers;
-    newIdentifiers.reserveCapacity(initialStringTableCapacity);
-    m_identifiers.swap(newIdentifiers);
+    m_identifiers.resize(0);
 
     Vector<char> newBuffer8;
     newBuffer8.reserveCapacity(initialReadBufferCapacity);
@@ -910,12 +894,6 @@ void Lexer::clear()
     m_flags = 0;
 }
 
-Identifier* Lexer::makeIdentifier(const Vector<UChar>& buffer)
-{
-    JSC::Identifier* identifier = new JSC::Identifier(m_globalData, buffer.data(), buffer.size());
-    m_identifiers.append(identifier);
-    return identifier;
-}
-
 } // namespace JSC
+
 

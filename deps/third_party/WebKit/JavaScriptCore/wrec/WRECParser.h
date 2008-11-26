@@ -142,7 +142,7 @@ namespace JSC { namespace WREC {
             while (count--) {
                 if (!WTF::isASCIIHexDigit(peek()))
                     return -1;
-                n = (n<<4) | WTF::toASCIIHexValue(consume());
+                n = (n << 4) | WTF::toASCIIHexValue(consume());
             }
             return n;
         }
@@ -178,4 +178,5 @@ namespace JSC { namespace WREC {
 #endif // ENABLE(WREC)
 
 #endif // Parser_h
+
 

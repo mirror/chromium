@@ -1,3 +1,185 @@
+2008-11-20  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22392
+        REGRESION: XMLHttpRequest.responseText does unnecessary trip though WebCore::String
+
+        - Use jsOwnedStringOrNull to avoid conversion to WebCore::String.
+
+        * bindings/js/JSXMLHttpRequestCustom.cpp:
+        (WebCore::JSXMLHttpRequest::responseText):
+        * xml/XMLHttpRequest.idl:
+
+2008-11-20  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=19623
+        
+        When an non-layer object gained a transform, it would only repaint
+        the bounds of the new layer, which could result in redraw artifacts
+        if the new layer was smaller. So if we're gaining a transform, we
+        repaint.
+        
+        Test: fast/repaint/change-transform.html
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::styleWillChange):
+
+2008-11-20  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Darin Adler. 
+
+        Fix for <rdar://problem/6111436> Support upload progress events on Windows
+
+        * platform/network/cf/ResourceHandleCFNet.cpp:
+        (WebCore::didSendBodyData): Added.
+        (WebCore::ResourceHandle::start): Hook up didSendBodyData callback.
+
+2008-11-20  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/2610675> Blank line that is quoted can't be deleted
+        
+        If the caret is in an empty quoted paragraph, and either there is nothing before that
+        paragraph, or what is before is unquoted, and the user presses delete, unquote that
+        paragraph.
+
+        * editing/CompositeEditCommand.cpp:
+        (WebCore::CompositeEditCommand::breakOutOfEmptyMailBlockquotedParagraph): Added.
+        Removes the line break that holds open an empty paragraph and then attempts to
+        prune the blockquote(s) that held that line break in case they have been emptied
+        out.  Places a line break to create in empty unquoted paragraph in place of the
+        quoted one that was removed.
+        * editing/CompositeEditCommand.h:
+        * editing/TypingCommand.cpp:
+        (WebCore::TypingCommand::deleteKeyPressed): Call breakOutOfEmptyBlockquotedParagraph.
+        * editing/htmlediting.cpp:
+        (WebCore::highestEnclosingNodeOfType): Added.
+        * editing/htmlediting.h:
+
+2008-11-20  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Antti Koivisto
+
+        https://bugs.webkit.org/show_bug.cgi?id=21247
+
+        Make transition shorthand property accept transition-delay.
+
+        Test: transitions/transition-shorthand-delay.html
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseTransitionShorthand):
+
+2008-11-20  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Antti Koivisto
+
+        https://bugs.webkit.org/show_bug.cgi?id=22368
+
+        Make sure pauseTransition API takes transition delay into account.
+
+        Test: transitions/transition-drt-api-delay.html
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::pauseAtTime):
+
+2008-11-20  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=20368
+
+        Implement getComputedStyle for animation properties. Remove individual
+        computed values for transform-origin-x, transform-origin-y, and just
+        return transform-origin instead. Return "none" for default animation-name,
+        and fix the initial value.
+        
+        Tests: animations/computed-style.html
+               transforms/computed-style-origin.html
+
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::):
+        (WebCore::getDelayValue):
+        (WebCore::getDurationValue):
+        (WebCore::getTimingFunctionValue):
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        * rendering/style/RenderStyle.h:
+        (WebCore::InheritedFlags::initialAnimationName):
+
+2008-11-20  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Beth Dakin.
+        
+        Preparation for:
+        <rdar://problem/2610675> Blank line that is quoted can't be deleted
+        
+        To fix this we need to make changes to the code that creates selections to delete
+        when the user does a backward or forward delete with a caret selection.  For certain
+        caret positions, we now want to remove something other than the standard "caret extended
+        backward/forward by one unit".  The problem is that there were two pieces of code 
+        responsible for doing this, one in Editor::deleteWithDirection, and another inside 
+        TypingCommand::deleteKeyPressed.  The code in deleteWithDirection is a recent 
+        addition (r19172), and adding it there caused regressions because it prevented the 
+        code in deleteKeyPressed from ever running.  The regressions were never caught because 
+        JS deletion uses deleteKeyPressed while manual deletion uses deleteWithDirection.
+        
+        This patch removes selection creation code from deleteWithDirection so that deleteKeyPressed
+        can handle it.  That required moving code to handle the kill ring down into deleteKeyPressed.
+        
+        Follow up patches will fix <rdar://problem/2610675>, and attempt to eliminate the rest of the 
+        discrepancies between the behavior of JS deletions and manual deletions, so that we 
+        have better test coverage.
+
+        * editing/Editor.cpp:
+        (WebCore::Editor::deleteWithDirection): Early return if m_frame->document() is null, instead
+        of checking for that periodically throughout the function.  There's really nothing to be done
+        if it's null anyway.
+        Move kill ring code down into deleteKeyPressed.
+        * editing/Editor.h:
+        * editing/TypingCommand.cpp:
+        (WebCore::TypingCommand::TypingCommand):
+        (WebCore::TypingCommand::deleteKeyPressed):
+        (WebCore::TypingCommand::forwardDeleteKeyPressed):
+        (WebCore::TypingCommand::doApply):
+        * editing/TypingCommand.h:
+        (WebCore::TypingCommand::create):
+
+2008-11-20  Darin Adler  <darin@apple.com>
+
+        Earlier version reviewed by Justin Garcia.
+
+        - fix <rdar://problem/4108572> REGRESSION: Can't extend selection with shift-arrow in read only mode
+
+        * editing/Editor.cpp:
+        (WebCore::Editor::handleKeyboardEvent): Remove isContentEditable check -- keyboard events can be
+        handled even when the selection is not in an editable area.
+        (WebCore::Editor::handleInputMethodKeydown): Ditto.
+
+        * editing/EditorCommand.cpp: Changed the enabled rule for operations that change the selection to
+        allow use when there's a selection even if it's not in an editable area. This includes commands
+        like shift-arrow keys to extend the slection, but not commands like arrow keys to move the
+        insertion point.
+
+2008-11-20  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22380
+        Fix WorkerContext refcounting
+
+        * dom/WorkerContext.cpp:
+        (WebCore::WorkerContext::WorkerContext):
+        * dom/WorkerContext.h:
+        (WebCore::WorkerContext::script):
+        (WebCore::WorkerContext::clearScript):
+        Added a method to manually destroy WorkerSctriptController.
+
+        * dom/WorkerThread.cpp: (WebCore::WorkerThread::workerThread):
+        Destroy WorkerScriptController to release any references to WorkerContext.
+
 2008-11-19  Julien Chaffraix  <jchaffraix@webkit.org>
 
         Reviewed by Darin Adler.
@@ -29179,6 +29361,7 @@
         getting the line's textContent. Add the error bubble back at the end.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 
 
