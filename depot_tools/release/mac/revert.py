@@ -79,6 +79,12 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
   If message is True, it is used as the change description.
   reviewers overrides the blames email addresses for review email."""
 
+  # Use the oldest revision as the primary revision.
+  changename = "revert%d" % revisions[len(revisions)-1]
+  if not force and os.path.exists(gcl.GetChangelistInfoFile(changename)):
+    print "Error, change %s already exist." % changename
+    return 1
+
   # Move to the repository root and make the revision numbers sorted in
   # decreasing order.
   os.chdir(gcl.GetRepositoryRoot())
@@ -138,6 +144,7 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
   # svn up on each of these files
   gcl.RunShell(["svn", "up"] + files)
 
+  files_status = {}
   # Extract the first level subpaths. Subversion seems to degrade
   # exponentially w.r.t. repository size during merges. Working at the root
   # directory is too rough for svn due to the repository size.
@@ -173,28 +180,38 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
 
     command = ["svn", "merge", "-c", revisions_string_rev]
     command.extend(file_list)
-    retcode = gcl.RunShellWithReturnCode(command, print_output=True)[1]
+    (output, retcode) = gcl.RunShellWithReturnCode(command, print_output=True)
     if retcode:
       print "'%s' failed:" % command
       return retcode
 
+    # Grab the status
+    lines = output.split('\n')
+    for line in lines[1:]:
+      if line.startswith('Skipped'):
+        print ""
+        raise ModifiedFile(line[9:-1])
+      # Update the status.
+      status = line[:5] + '  '
+      file = line[5:]
+      if is_root_subdir:
+        files_status[root + os.sep + file] = status
+      else:
+        files_status[file] = status
+
     if is_root_subdir:
       os.chdir('..')
 
-  # TODO(maruel):  let's hope the change doesn't exist already.
-  # Use a fake status for now. It doesn't change naything for the actual
-  # change, this only affect the review display.
-  files_status = [('M      ', file) for file in files]
-  # Use the oldest revision as the primary revision.
-  revision = revisions[len(revisions)-1]
+  # Transform files_status from a dictionary to a list of tuple.
+  files_status = [(files_status[file], file) for file in files]
+
   description = "Reverting %s." % revisions_string
   if message:
     description += "\n\n"
     description += message
   # Don't use gcl.Change() since it prompts the user for infos.
-  change_info = gcl.ChangeInfo(name="revert%d" % revision, issue='',
-                               description=description,
-                               files=files_status)
+  change_info = gcl.ChangeInfo(name=changename, issue='',
+                               description=description, files=files_status)
   change_info.Save()
 
   upload_args = ['-r', ",".join(reviewers)]
