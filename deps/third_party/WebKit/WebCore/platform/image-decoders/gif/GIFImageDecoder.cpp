@@ -45,11 +45,11 @@ public:
         m_reader.close();
     }
 
-    bool decode(SharedBuffer* data, 
+    bool decode(const Vector<char>& data, 
                 GIFImageDecoder::GIFQuery query = GIFImageDecoder::GIFFullQuery,
                 unsigned int haltFrame = -1)
     {
-        return m_reader.read((const unsigned char*)data->data() + m_readOffset, data->size() - m_readOffset, 
+        return m_reader.read((const unsigned char*)data.data() + m_readOffset, data.size() - m_readOffset, 
                              query,
                              haltFrame);
     }
@@ -139,7 +139,7 @@ int GIFImageDecoder::frameCount()
         // state, but for now we just crawl all the data.  Note that this is no worse than what
         // ImageIO does on Mac right now (it also crawls all the data again).
         GIFImageDecoderPrivate reader;
-        reader.decode(m_data.get(), GIFFrameCountQuery);
+        reader.decode(m_data->buffer(), GIFFrameCountQuery);
         m_frameCountValid = true;
         m_frameBufferCache.resize(reader.frameCount());
     }
@@ -180,7 +180,7 @@ void GIFImageDecoder::decode(GIFQuery query, unsigned haltAtFrame) const
     if (m_failed)
         return;
 
-    m_failed = !m_reader->decode(m_data.get(), query, haltAtFrame);
+    m_failed = !m_reader->decode(m_data->buffer(), query, haltAtFrame);
     
     if (m_failed) {
         delete m_reader;
@@ -239,10 +239,7 @@ void GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
         if ((prevMethod == RGBA32Buffer::DisposeNotSpecified) ||
                 (prevMethod == RGBA32Buffer::DisposeKeep)) {
             // Preserve the last frame as the starting state for this frame.
-            buffer->copyBitmapData(*prevBuffer);
-            // This next line isn't currently necessary since the alpha state is
-            // currently carried along in the Skia bitmap data, but it's safe,
-            // future-proof, and parallel to the Cairo code.
+            buffer->bytes() = prevBuffer->bytes();
             buffer->setHasAlpha(prevBuffer->hasAlpha());
         } else {
             // We want to clear the previous frame to transparent, without
@@ -255,13 +252,13 @@ void GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
                 prepEmptyFrameBuffer(buffer);
             } else {
               // Copy the whole previous buffer, then clear just its frame.
-              buffer->copyBitmapData(*prevBuffer);
-              // Unnecessary (but safe); see comments on the similar call above.
+              buffer->bytes() = prevBuffer->bytes();
               buffer->setHasAlpha(prevBuffer->hasAlpha());
-              SkBitmap& bitmap = buffer->bitmap();
               for (int y = prevRect.y(); y < prevRect.bottom(); ++y) {
+                  unsigned* const currentRow =
+                      buffer->bytes().data() + (y * m_size.width());
                   for (int x = prevRect.x(); x < prevRect.right(); ++x)
-                      buffer->setRGBA(bitmap.getAddr32(x, y), 0, 0, 0, 0);
+                      buffer->setRGBA(*(currentRow + x), 0, 0, 0, 0);
               }
               if ((prevRect.width() > 0) && (prevRect.height() > 0))
                 buffer->setHasAlpha(true);
@@ -278,11 +275,8 @@ void GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
 
 void GIFImageDecoder::prepEmptyFrameBuffer(RGBA32Buffer* buffer) const
 {
-    buffer->setSize(m_size.width(), m_size.height());
-    buffer->bitmap().eraseARGB(0, 0, 0, 0);
-    // This next line isn't currently necessary since Skia's eraseARGB() sets
-    // this for us, but we do it for similar reasons to the setHasAlpha() calls
-    // in initFrameBuffer() above.
+    buffer->bytes().resize(m_size.width() * m_size.height());
+    buffer->bytes().fill(0);
     buffer->setHasAlpha(true);
 }
 
@@ -316,18 +310,18 @@ void GIFImageDecoder::haveDecodedRow(unsigned frameIndex,
     // sub-rectangle.  This means that if the GIF frame's sub-rectangle is (x,y,w,h) then row 0 is really row
     // y, and each row goes from x to x+w.
     unsigned dstPos = (m_reader->frameYOffset() + rowNumber) * m_size.width() + m_reader->frameXOffset();
-    unsigned* dst = buffer.bitmap().getAddr32(0, 0) + dstPos;
+    unsigned* dst = buffer.bytes().data() + dstPos;
     unsigned* dstEnd = dst + m_size.width() - m_reader->frameXOffset();
     unsigned* currDst = dst;
     unsigned char* currentRowByte = rowBuffer;
-
+    
     while (currentRowByte != rowEnd && currDst < dstEnd) {
         if ((!m_reader->isTransparent() || *currentRowByte != m_reader->transparentPixel()) && *currentRowByte < colorMapSize) {
             unsigned colorIndex = *currentRowByte * 3;
             unsigned red = colorMap[colorIndex];
             unsigned green = colorMap[colorIndex + 1];
             unsigned blue = colorMap[colorIndex + 2];
-            RGBA32Buffer::setRGBA(currDst, red, green, blue, 255);
+            RGBA32Buffer::setRGBA(*currDst, red, green, blue, 255);
         } else {
             m_currentBufferSawAlpha = true;
             // We may or may not need to write transparent pixels to the buffer.
@@ -338,7 +332,7 @@ void GIFImageDecoder::haveDecodedRow(unsigned frameIndex,
             // beyond the first, or the initial passes will "show through" the
             // later ones.
             if (writeTransparentPixels)
-                RGBA32Buffer::setRGBA(currDst, 0, 0, 0, 0);
+                RGBA32Buffer::setRGBA(*currDst, 0, 0, 0, 0);
         }
         currDst++;
         currentRowByte++;
@@ -349,7 +343,7 @@ void GIFImageDecoder::haveDecodedRow(unsigned frameIndex,
         unsigned num = currDst - dst;
         unsigned size = num * sizeof(unsigned);
         unsigned width = m_size.width();
-        unsigned* end = buffer.bitmap().getAddr32(0, 0) + width * m_size.height();
+        unsigned* end = buffer.bytes().data() + width * m_size.height();
         currDst = dst + width;
         for (unsigned i = 1; i < repeatCount; i++) {
             if (currDst + num > end) // Protect against a buffer overrun from a bogus repeatCount.
@@ -358,11 +352,16 @@ void GIFImageDecoder::haveDecodedRow(unsigned frameIndex,
             currDst += width;
         }
     }
+
+    // Our partial height is rowNumber + 1, e.g., row 2 is the 3rd row, so that's a height of 3.
+    // Adding in repeatCount - 1 to rowNumber + 1 works out to just be rowNumber + repeatCount.
+    buffer.ensureHeight(rowNumber + repeatCount);
 }
 
 void GIFImageDecoder::frameComplete(unsigned frameIndex, unsigned frameDuration, RGBA32Buffer::FrameDisposalMethod disposalMethod)
 {
     RGBA32Buffer& buffer = m_frameBufferCache[frameIndex];
+    buffer.ensureHeight(m_size.height());
     buffer.setStatus(RGBA32Buffer::FrameComplete);
     buffer.setDuration(frameDuration);
     buffer.setDisposalMethod(disposalMethod);
