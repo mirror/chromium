@@ -65,6 +65,10 @@
 #include "IconDatabase.h"
 #include "IconLoader.h"
 #include "InspectorController.h"
+#if USE(JSC)
+#include "JSDOMBinding.h"
+using JSC::JSLock;
+#endif
 #include "Logging.h"
 #include "MIMETypeRegistry.h"
 #include "MainResourceLoader.h"
@@ -79,6 +83,7 @@
 #include "ResourceHandle.h"
 #include "ResourceRequest.h"
 #include "ScriptController.h"
+#include "ScriptSourceCode.h"
 #include "ScriptValue.h"
 #include "SecurityOrigin.h"
 #include "SegmentedString.h"
@@ -88,14 +93,6 @@
 #include "WindowFeatures.h"
 #include "XMLHttpRequest.h"
 #include "XMLTokenizer.h"
-#if USE(JSC)
-#include "JSDOMBinding.h"
-#include <runtime/JSLock.h>
-#include <runtime/JSObject.h>
-using JSC::UString;
-using JSC::JSLock;
-using JSC::JSValue;
-#endif
 #include <wtf/StdLibExtras.h>
 
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
@@ -788,10 +785,10 @@ bool FrameLoader::executeIfJavaScriptURL(const KURL& url, bool userGesture, bool
 
 ScriptValue FrameLoader::executeScript(const String& script, bool forceUserGesture)
 {
-    return executeScript(forceUserGesture ? String() : m_URL.string(), 1, script);
+    return executeScript(ScriptSourceCode(script, forceUserGesture ? KURL() : m_URL));
 }
 
-ScriptValue FrameLoader::executeScript(const String& url, int baseLine, const String& script)
+ScriptValue FrameLoader::executeScript(const ScriptSourceCode& sourceCode)
 {
     if (!m_frame->script()->isEnabled() || m_frame->script()->isPaused())
         return ScriptValue();
@@ -799,7 +796,7 @@ ScriptValue FrameLoader::executeScript(const String& url, int baseLine, const St
     bool wasRunningScript = m_isRunningScript;
     m_isRunningScript = true;
 
-    ScriptValue result = m_frame->script()->evaluate(url, baseLine, script);
+    ScriptValue result = m_frame->script()->evaluate(sourceCode);
 
     if (!wasRunningScript) {
         m_isRunningScript = false;
@@ -5274,6 +5271,7 @@ void FrameLoader::switchOutLowBandwidthDisplayIfReady()
 #endif
 
 } // namespace WebCore
+
 
 
 

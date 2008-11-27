@@ -32,10 +32,12 @@
 
 #include "JSDOMBinding.h"
 #include "JSWorkerContext.h"
+#include "ScriptSourceCode.h"
+#include "ScriptValue.h"
 #include "WorkerContext.h"
 #include "WorkerMessagingProxy.h"
 #include "WorkerThread.h"
-#include <parser/SourceCode.h>
+#include <interpreter/Interpreter.h>
 #include <runtime/Completion.h>
 #include <runtime/Completion.h>
 #include <runtime/JSLock.h>
@@ -47,6 +49,7 @@ namespace WebCore {
 WorkerScriptController::WorkerScriptController(WorkerContext* workerContext)
     : m_globalData(JSGlobalData::create())
     , m_workerContext(workerContext)
+    , m_executionForbidded(false)
 {
 }
 
@@ -68,14 +71,20 @@ void WorkerScriptController::initScript()
     m_workerContextWrapper = new (m_globalData.get()) JSWorkerContext(m_workerContext);
 }
 
-JSValue* WorkerScriptController::evaluate(const String& sourceURL, int baseLine, const String& code)
+ScriptValue WorkerScriptController::evaluate(const ScriptSourceCode& sourceCode)
 {
+    {
+        MutexLocker lock(m_sharedDataMutex);
+        if (m_executionForbidded)
+            return noValue();
+    }
+
     initScriptIfNeeded();
     JSLock lock(false);
 
     ExecState* exec = m_workerContextWrapper->globalExec();
     m_workerContextWrapper->startTimeoutCheck();
-    Completion comp = JSC::evaluate(exec, exec->dynamicGlobalObject()->globalScopeChain(), makeSource(code, sourceURL, baseLine), m_workerContextWrapper);
+    Completion comp = JSC::evaluate(exec, exec->dynamicGlobalObject()->globalScopeChain(), sourceCode.jsSourceCode(), m_workerContextWrapper);
     m_workerContextWrapper->stopTimeoutCheck();
 
     m_workerContext->thread()->messagingProxy()->reportWorkerThreadActivity(m_workerContext->hasPendingActivity());
@@ -88,8 +97,20 @@ JSValue* WorkerScriptController::evaluate(const String& sourceURL, int baseLine,
     return noValue();
 }
 
+void WorkerScriptController::forbidExecution()
+{
+    // This function is called from another thread.
+    // Mutex protection for m_executionForbidded is needed to guarantee that the value is synchronized between processors, because
+    // if it were not, the worker could re-enter JSC::evaluate(), but with timeout already reset.
+    // It is not critical for Interpreter::m_timeoutTime to be synchronized, we just rely on it reaching the worker thread's processor sooner or later.
+    MutexLocker lock(m_sharedDataMutex);
+    m_executionForbidded = true;
+    m_globalData->interpreter->setTimeoutTime(1); // 1 ms is the smallest timeout that can be set.
+}
+
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
+
 
 

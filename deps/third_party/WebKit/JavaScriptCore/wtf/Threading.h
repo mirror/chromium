@@ -59,6 +59,10 @@
 #ifndef Threading_h
 #define Threading_h
 
+#if PLATFORM(WIN_CE)
+#include <windows.h>
+#endif
+
 #include <wtf/Assertions.h>
 #include <wtf/Locker.h>
 #include <wtf/Noncopyable.h>
@@ -67,7 +71,7 @@
 #include "RefCounted.h"
 #endif
 
-#if PLATFORM(WIN_OS)
+#if PLATFORM(WIN_OS) && !PLATFORM(WIN_CE)
 #include <windows.h>
 #elif PLATFORM(DARWIN)
 #include <libkern/OSAtomic.h>
@@ -178,7 +182,7 @@ private:
 #if PLATFORM(WIN_OS)
 #define WTF_USE_LOCKFREE_THREADSAFESHARED 1
 
-#if COMPILER(MINGW) || COMPILER(MSVC7)
+#if COMPILER(MINGW) || COMPILER(MSVC7) || PLATFORM(WIN_CE)
 inline void atomicIncrement(int* addend) { InterlockedIncrement(reinterpret_cast<long*>(addend)); }
 inline int atomicDecrement(int* addend) { return InterlockedDecrement(reinterpret_cast<long*>(addend)); }
 #else
@@ -291,3 +295,4 @@ using WTF::detachThread;
 using WTF::waitForThreadCompletion;
 
 #endif // Threading_h
+

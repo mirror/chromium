@@ -218,7 +218,7 @@ struct ConsoleMessage {
 // XMLHttpRequestResource Class
 
 struct XMLHttpRequestResource {
-    XMLHttpRequestResource(JSC::UString& sourceString)
+    XMLHttpRequestResource(const JSC::UString& sourceString)
     {
         JSC::JSLock lock(false);
         this->sourceString = sourceString.rep();
@@ -303,7 +303,7 @@ struct InspectorResource : public RefCounted<InspectorResource> {
             JSValueProtect(context, newScriptObject);
     }
 
-    void setXMLHttpRequestProperties(JSC::UString& data)
+    void setXMLHttpRequestProperties(const JSC::UString& data)
     {
         xmlHttpRequestResource.set(new XMLHttpRequestResource(data));
     }
@@ -2506,7 +2506,7 @@ void InspectorController::didFailLoading(DocumentLoader* loader, unsigned long i
     }
 }
 
-void InspectorController::resourceRetrievedByXMLHttpRequest(unsigned long identifier, JSC::UString& sourceString)
+void InspectorController::resourceRetrievedByXMLHttpRequest(unsigned long identifier, const JSC::UString& sourceString)
 {
     if (!enabled())
         return;
@@ -2891,4 +2891,5 @@ void InspectorController::didPause()
 #endif
 
 } // namespace WebCore
+
 

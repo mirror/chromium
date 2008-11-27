@@ -1,4 +1,3 @@
-
 /**
  * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
  *               http://www.torchmobile.com/
@@ -55,3 +54,4 @@ public:
 
 #endif
 #endif
+

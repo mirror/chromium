@@ -413,7 +413,7 @@ double getCurrentUTCTimeWithMicroseconds()
 
 void getLocalTime(const time_t* localTime, struct tm* localTM)
 {
-#if COMPILER(MSVC7) || COMPILER(MINGW)
+#if COMPILER(MSVC7) || COMPILER(MINGW) || PLATFORM(WIN_CE)
     *localTM = *localtime(localTime);
 #elif COMPILER(MSVC)
     localtime_s(localTM, localTime);
@@ -1048,3 +1048,4 @@ UString formatTime(const GregorianDateTime &t, bool utc)
 }
 
 } // namespace JSC
+

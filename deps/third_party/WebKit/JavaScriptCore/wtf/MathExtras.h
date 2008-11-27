@@ -40,8 +40,11 @@
 #endif
 
 #if COMPILER(MSVC)
-
+#if PLATFORM(WIN_CE)
+#include <stdlib.h>
+#else
 #include <xmath.h>
+#endif
 #include <limits>
 
 #if HAVE(FLOAT_H)
@@ -205,3 +208,4 @@ inline float rad2grad(float r) { return r * 200.0f / piFloat; }
 inline float grad2rad(float g) { return g * piFloat / 200.0f; }
 
 #endif // #ifndef WTF_MathExtras_h
+

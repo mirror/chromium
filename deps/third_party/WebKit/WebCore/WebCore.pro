@@ -863,6 +863,7 @@ SOURCES += \
     platform/graphics/SegmentedFontData.cpp \
     platform/KURL.cpp \
     platform/Length.cpp \
+    platform/LinkHash.cpp \
     platform/Logging.cpp \
     platform/MIMETypeRegistry.cpp \
     platform/network/AuthenticationChallengeBase.cpp \
@@ -1991,6 +1992,7 @@ addExtraCompilerWithHeader(xpathbison)
         QMAKE_PKGCONFIG_INSTALL_REPLACE += lib_replace
     }
 }
+
 
 
 

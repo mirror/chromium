@@ -255,7 +255,7 @@ public:
     void setTypingStyle(CSSMutableStyleDeclaration*);
     void clearTypingStyle();
 
-    FloatRect selectionRect(bool clipToVisibleContent = true) const;
+    FloatRect selectionBounds(bool clipToVisibleContent = true) const;
     void selectionTextRects(Vector<FloatRect>&, bool clipToVisibleContent = true) const;
 
     HTMLFormElement* currentForm() const;
@@ -312,3 +312,4 @@ public:
 } // namespace WebCore
 
 #endif // Frame_h
+

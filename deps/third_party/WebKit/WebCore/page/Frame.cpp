@@ -1148,14 +1148,14 @@ void Frame::setExcludeFromTextSearch(bool exclude)
 }
 
 // returns FloatRect because going through IntRect would truncate any floats
-FloatRect Frame::selectionRect(bool clipToVisibleContent) const
+FloatRect Frame::selectionBounds(bool clipToVisibleContent) const
 {
     RenderView* root = contentRenderer();
     FrameView* view = d->m_view.get();
     if (!root || !view)
         return IntRect();
     
-    IntRect selectionRect = root->selectionRect(clipToVisibleContent);
+    IntRect selectionRect = root->selectionBounds(clipToVisibleContent);
     return clipToVisibleContent ? intersection(selectionRect, view->visibleContentRect()) : selectionRect;
 }
 
@@ -1243,7 +1243,7 @@ void Frame::revealSelection(const RenderLayer::ScrollAlignment& alignment) const
             break;
             
         case Selection::RANGE:
-            rect = enclosingIntRect(selectionRect(false));
+            rect = enclosingIntRect(selectionBounds(false));
             break;
     }
 
@@ -1871,5 +1871,6 @@ FramePrivate::~FramePrivate()
 }
 
 } // namespace WebCore
+
 
 

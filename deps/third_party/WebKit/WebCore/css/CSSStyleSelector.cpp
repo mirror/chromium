@@ -63,6 +63,7 @@
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
 #include "HTMLTextAreaElement.h"
+#include "LinkHash.h"
 #include "MatrixTransformOperation.h"
 #include "MediaList.h"
 #include "MediaQueryEvaluator.h"
@@ -101,6 +102,10 @@
 #if ENABLE(SVG)
 #include "XLinkNames.h"
 #include "SVGNames.h"
+#endif
+
+#if ENABLE(WML)
+#include "WMLNames.h"
 #endif
 
 using namespace std;
@@ -809,12 +814,19 @@ static inline const AtomicString* linkAttribute(Node* node)
 
     ASSERT(node->isElementNode());
     Element* element = static_cast<Element*>(node);
-    if (element->isHTMLElement()
-#if ENABLE(WML)
-        || element->isWMLElement()
-#endif
-       )
+    if (element->isHTMLElement())
         return &element->getAttribute(hrefAttr);
+
+#if ENABLE(WML)
+    if (element->isWMLElement()) {
+        // <anchor> elements don't have href attributes, but we still want to
+        // appear as link, so linkAttribute() has to return a non-null value!
+        if (element->hasTagName(WMLNames::anchorTag))
+            return &emptyAtom;
+
+        return &element->getAttribute(hrefAttr);
+    }
+#endif
 
 #if ENABLE(SVG)
     if (element->isSVGElement())
@@ -842,7 +854,7 @@ PseudoState CSSStyleSelector::SelectorChecker::checkPseudoState(Element* element
     if (!checkVisited)
         return PseudoAnyLink;
 
-    unsigned hash = m_document->visitedLinkHash(*attr);
+    LinkHash hash = visitedLinkHash(m_document->baseURL(), *attr);
     if (!hash)
         return PseudoLink;
 
@@ -5761,13 +5773,13 @@ void CSSStyleSelector::SelectorChecker::allVisitedStateChanged()
     }
 }
 
-void CSSStyleSelector::SelectorChecker::visitedStateChanged(unsigned visitedHash)
+void CSSStyleSelector::SelectorChecker::visitedStateChanged(LinkHash visitedHash)
 {
     if (!m_linksCheckedForVisitedState.contains(visitedHash))
         return;
     for (Node* node = m_document; node; node = node->traverseNextNode()) {
         const AtomicString* attr = linkAttribute(node);
-        if (attr && m_document->visitedLinkHash(*attr) == visitedHash)
+        if (attr && visitedLinkHash(m_document->baseURL(), *attr) == visitedHash)
             node->setChanged();
     }
 }
@@ -5906,5 +5918,6 @@ bool CSSStyleSelector::createTransformOperations(CSSValue* inValue, RenderStyle*
 }
 
 } // namespace WebCore
+
 
 

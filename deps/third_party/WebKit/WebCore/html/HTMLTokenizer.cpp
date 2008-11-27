@@ -44,6 +44,7 @@
 #include "Page.h"
 #include "PreloadScanner.h"
 #include "ScriptController.h"
+#include "ScriptSourceCode.h"
 #include "ScriptValue.h"
 #include "SystemTime.h"
 #include <wtf/ASCIICType.h>
@@ -53,8 +54,8 @@
 #define PRELOAD_SCANNER_ENABLED 1
 // #define INSTRUMENT_LAYOUT_SCHEDULING 1
 
-using namespace std;
 using namespace WTF;
+using namespace std;
 
 namespace WebCore {
 
@@ -500,7 +501,7 @@ HTMLTokenizer::State HTMLTokenizer::scriptHandler(State state)
             else
                 prependingSrc = m_src;
             setSrc(SegmentedString());
-            state = scriptExecution(scriptString, state, String(), startLine);
+            state = scriptExecution(ScriptSourceCode(scriptString, m_doc->frame() ? m_doc->frame()->document()->url() : KURL(), startLine), state);
         }
     }
 
@@ -542,12 +543,11 @@ HTMLTokenizer::State HTMLTokenizer::scriptHandler(State state)
     return state;
 }
 
-HTMLTokenizer::State HTMLTokenizer::scriptExecution(const String& str, State state, const String& scriptURL, int baseLine)
+HTMLTokenizer::State HTMLTokenizer::scriptExecution(const ScriptSourceCode& sourceCode, State state)
 {
     if (m_fragment || !m_doc->frame())
         return state;
     m_executingScript++;
-    String url = scriptURL.isNull() ? m_doc->frame()->document()->url().string() : scriptURL;
 
     SegmentedString* savedPrependingSrc = m_currentPrependingSrc;
     SegmentedString prependingSrc;
@@ -559,7 +559,7 @@ HTMLTokenizer::State HTMLTokenizer::scriptExecution(const String& str, State sta
 #endif
 
     m_state = state;
-    m_doc->frame()->loader()->executeScript(url, baseLine, str);
+    m_doc->frame()->loader()->executeScript(sourceCode);
     state = m_state;
 
     state.setAllowYield(true);
@@ -1963,14 +1963,14 @@ void HTMLTokenizer::notifyFinished(CachedResource*)
         m_pendingScripts.removeFirst();
         ASSERT(cache()->disabled() || cs->accessCount() > 0);
 
-        String scriptSource = cs->script();
         setSrc(SegmentedString());
 
         // make sure we forget about the script before we execute the new one
         // infinite recursion might happen otherwise
-        String cachedScriptUrl(cs->url());
+        ScriptSourceCode sourceCode(cs);
         bool errorOccurred = cs->errorOccurred();
         cs->removeClient(this);
+
         RefPtr<Node> n = m_scriptNode.release();
 
 #ifdef INSTRUMENT_LAYOUT_SCHEDULING
@@ -1982,7 +1982,7 @@ void HTMLTokenizer::notifyFinished(CachedResource*)
             EventTargetNodeCast(n.get())->dispatchEventForType(eventNames().errorEvent, true, false);
         else {
             if (static_cast<HTMLScriptElement*>(n.get())->shouldExecuteAsJavaScript())
-                m_state = scriptExecution(scriptSource, m_state, cachedScriptUrl);
+                m_state = scriptExecution(sourceCode, m_state);
             EventTargetNodeCast(n.get())->dispatchEventForType(eventNames().loadEvent, false, false);
         }
 
@@ -2035,3 +2035,4 @@ UChar decodeNamedEntity(const char* name)
 }
 
 }
+

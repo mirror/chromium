@@ -223,9 +223,9 @@ public:
     void didFinishLoading(DocumentLoader*, unsigned long identifier);
     void didFailLoading(DocumentLoader*, unsigned long identifier, const ResourceError&);
 #if USE(JSC)
-    void resourceRetrievedByXMLHttpRequest(unsigned long identifier, JSC::UString& sourceString);
+    void resourceRetrievedByXMLHttpRequest(unsigned long identifier, const JSC::UString& sourceString);
 #elif USE(V8)
-    void resourceRetrievedByXMLHttpRequest(unsigned long identifier, String& sourceString);
+    void resourceRetrievedByXMLHttpRequest(unsigned long identifier, const String& sourceString);
 #endif
 
 #if ENABLE(DATABASE)
@@ -407,3 +407,4 @@ private:
 } // namespace WebCore
 
 #endif // !defined(InspectorController_h)
+

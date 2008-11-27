@@ -1,3 +1,252 @@
+2008-11-24  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Removed some unnecessary "Generator::" prefixes.
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateEnter):
+        (JSC::WREC::Generator::generateReturnSuccess):
+        (JSC::WREC::Generator::generateSaveIndex):
+        (JSC::WREC::Generator::generateIncrementIndex):
+        (JSC::WREC::Generator::generateLoopIfNotEndOfInput):
+        (JSC::WREC::Generator::generateReturnFailure):
+
+2008-11-24  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Made a bunch of WREC::Parser functions private, and added an explicit
+        "reset()" function, so a parser can be reused.
+
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::Parser):
+        (JSC::WREC::Parser::generator):
+        (JSC::WREC::Parser::ignoreCase):
+        (JSC::WREC::Parser::multiline):
+        (JSC::WREC::Parser::recordSubpattern):
+        (JSC::WREC::Parser::numSubpatterns):
+        (JSC::WREC::Parser::parsePattern):
+        (JSC::WREC::Parser::parseAlternative):
+        (JSC::WREC::Parser::reset):
+
+2008-11-24  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Camron Zwarich.
+
+        Implement repatching for get by id chain.
+        Previously the access is performed in a function stub, in the repatch form
+        the trampoline is not called to; instead the hot path is relinked to jump
+        directly to the trampoline, if it fails it will jump to the slow case.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22449
+        3% progression on deltablue.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdChain):
+
+2008-11-24  Joerg Bornemann  <joerg.bornemann@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20746
+
+        Various small compilation fixes to make the Qt port of WebKit
+        compile on Windows CE.
+
+        * config.h: Don't set _CRT_RAND_S for CE, it's not available.
+        * jsc.cpp: Disabled use of debugger includes for CE. It
+          does not have the debugging functions.
+        * runtime/DateMath.cpp: Use localtime() on Windows CE.
+        * wtf/Assertions.cpp: Compile on Windows CE without debugger.
+        * wtf/Assertions.h: Include windows.h before defining ASSERT.
+        * wtf/MathExtras.h: Include stdlib.h instead of xmath.h.
+        * wtf/Platform.h: Disable ERRNO_H and detect endianess based
+          on the Qt endianess. On Qt for Windows CE the endianess is
+          defined by the vendor specific build spec.
+        * wtf/Threading.h: Use the volatile-less atomic functions.
+        * wtf/dtoa.cpp: Compile without errno.
+        * wtf/win/MainThreadWin.cpp: Don't include windows.h on CE after
+        Assertions.h due to the redefinition of ASSERT.
+
+2008-11-22  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Camron Zwarich.
+
+        Replace accidentally deleted immediate check from get by id chain trampoline.
+        https://bugs.webkit.org/show_bug.cgi?id=22413
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileGetByIdChain):
+
+2008-11-21  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Add (really) polymorphic caching for get by id self.
+        Very similar to caching of prototype accesses, described below.
+
+        Oh, also, probably shouldn't have been leaking those structure list objects.
+        
+        4% preogression on deltablue.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dump):
+        (JSC::CodeBlock::derefStructures):
+        (JSC::PrototypeStructureList::derefStructures):
+        * bytecode/Instruction.h:
+        * bytecode/Opcode.h:
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::cti_op_get_by_id_self_fail):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileGetByIdSelfList):
+        (JSC::JIT::patchGetByIdSelf):
+        * jit/JIT.h:
+        (JSC::JIT::compileGetByIdSelfList):
+
+2008-11-21  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Fixed many crashes seen 'round the world (but only in release builds).
+        
+        Update outputParameter offset to reflect slight re-ordering of push
+        instructions in r38669.
+
+        * wrec/WRECGenerator.cpp:
+
+2008-11-21  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        A little more RegExp refactoring.
+        
+        Deployed a helper function for reading the next character. Used the "link
+        vector of jumps" helper in a place I missed before.
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateLoadCharacter):
+        (JSC::WREC::Generator::generatePatternCharacter):
+        (JSC::WREC::Generator::generateCharacterClass):
+        (JSC::WREC::Generator::generateAssertionEOL):
+        (JSC::WREC::Generator::generateAssertionWordBoundary):
+        * wrec/WRECGenerator.h:
+
+2008-11-21  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Dan Bernstein.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22402
+        Replace abort() with CRASH()
+
+        * wtf/Assertions.h: Added a different method to crash, which should work even is 0xbbadbeef
+        is a valid memory address.
+
+        * runtime/Collector.cpp:
+        * wtf/FastMalloc.cpp:
+        * wtf/FastMalloc.h:
+        * wtf/TCSpinLock.h:
+        Replace abort() with CRASH().
+
+2008-11-21  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reverted fix for bug 22042 (Replace abort() with CRASH()), because it was breaking
+        FOR_EACH_OPCODE_ID macro somehow, making Safari crash.
+
+        * runtime/Collector.cpp:
+        (JSC::Heap::heapAllocate):
+        (JSC::Heap::collect):
+        * wtf/Assertions.h:
+        * wtf/FastMalloc.cpp:
+        (WTF::fastMalloc):
+        (WTF::fastCalloc):
+        (WTF::fastRealloc):
+        (WTF::InitSizeClasses):
+        (WTF::PageHeapAllocator::New):
+        (WTF::TCMallocStats::do_malloc):
+        * wtf/FastMalloc.h:
+        * wtf/TCSpinLock.h:
+        (TCMalloc_SpinLock::Init):
+        (TCMalloc_SpinLock::Finalize):
+        (TCMalloc_SpinLock::Lock):
+        (TCMalloc_SpinLock::Unlock):
+
+2008-11-21  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        A little more RegExp refactoring.
+        
+        Moved all assembly from WREC.cpp into WRECGenerator helper functions.
+        This should help with portability and readability.
+        
+        Removed ASSERTs after calls to executableCopy(), and changed
+        executableCopy() to ASSERT instead.
+
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::executableCopy):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileGetByIdSelf):
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdChain):
+        (JSC::JIT::privateCompilePutByIdReplace):
+        (JSC::JIT::privateCompilePutByIdTransition):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        (JSC::JIT::privateCompilePatchGetArrayLength):
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateEnter):
+        (JSC::WREC::Generator::generateReturnSuccess):
+        (JSC::WREC::Generator::generateSaveIndex):
+        (JSC::WREC::Generator::generateIncrementIndex):
+        (JSC::WREC::Generator::generateLoopIfNotEndOfInput):
+        (JSC::WREC::Generator::generateReturnFailure):
+        * wrec/WRECGenerator.h:
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::ignoreCase):
+        (JSC::WREC::Parser::generator):
+
+2008-11-21  Alexey Proskuryakov  <ap@webkit.org>
+
+        Build fix.
+
+        * wtf/Assertions.h: Use ::abort for C++ code.
+
+2008-11-21  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22402
+        Replace abort() with CRASH()
+
+        * wtf/Assertions.h: Added abort() after an attempt to crash for extra safety.
+
+        * runtime/Collector.cpp:
+        * wtf/FastMalloc.cpp:
+        * wtf/FastMalloc.h:
+        * wtf/TCSpinLock.h:
+        Replace abort() with CRASH().
+
+2008-11-21  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Renamed wrec => generator.
+
+        * wrec/WRECFunctors.cpp:
+        (JSC::WREC::GeneratePatternCharacterFunctor::generateAtom):
+        (JSC::WREC::GeneratePatternCharacterFunctor::backtrack):
+        (JSC::WREC::GenerateCharacterClassFunctor::generateAtom):
+        (JSC::WREC::GenerateCharacterClassFunctor::backtrack):
+        (JSC::WREC::GenerateBackreferenceFunctor::generateAtom):
+        (JSC::WREC::GenerateBackreferenceFunctor::backtrack):
+        (JSC::WREC::GenerateParenthesesNonGreedyFunctor::generateAtom):
+
 2008-11-19  Gavin Barraclough  <barraclough@apple.com>
 
         Reviewed by Darin Adler.
@@ -19933,6 +20182,7 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 
 

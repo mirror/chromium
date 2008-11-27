@@ -3168,6 +3168,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\LinkHash.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\LinkHash.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\LengthSize.h"
 				>
 			</File>
@@ -13329,6 +13337,10 @@
 				Name="js"
 				>
 				<File
+					RelativePath="..\bindings\js\CachedScriptSourceProvider.h"
+					>
+				</File>
+				<File
 					RelativePath="..\bindings\js\GCController.cpp"
 					>
 				</File>
@@ -13866,6 +13878,14 @@
 				</File>
 				<File
 					RelativePath="..\bindings\js\ScriptControllerWin.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\bindings\js\ScriptSourceCode.h"
+					>
+				</File>
+				<File
+					RelativePath="..\bindings\js\ScriptString.h"
 					>
 				</File>
 				<File
@@ -16714,6 +16734,7 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
+
 
 
 

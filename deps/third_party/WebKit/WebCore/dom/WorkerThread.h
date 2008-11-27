@@ -29,13 +29,13 @@
 
 #if ENABLE(WORKERS)
 
-#include "PlatformString.h"
+#include "KURL.h"
 #include <wtf/MessageQueue.h>
 #include <wtf/PassRefPtr.h>
 
 namespace WebCore {
 
-    class KURL;
+    class WorkerContext;
     class WorkerMessagingProxy;
     class WorkerTask;
 
@@ -45,6 +45,7 @@ namespace WebCore {
         ~WorkerThread();
 
         bool start();
+        void stop();
 
         ThreadIdentifier threadID() const { return m_threadID; }
         MessageQueue<RefPtr<WorkerTask> >& messageQueue() { return m_messageQueue; }
@@ -59,9 +60,12 @@ namespace WebCore {
 
         ThreadIdentifier m_threadID;
 
-        String m_scriptURL;
+        KURL m_scriptURL;
         String m_sourceCode;
         WorkerMessagingProxy* m_messagingProxy;
+
+        RefPtr<WorkerContext> m_workerContext;
+        Mutex m_workerContextMutex;
 
         MessageQueue<RefPtr<WorkerTask> > m_messageQueue;
     };
@@ -71,4 +75,5 @@ namespace WebCore {
 #endif // ENABLE(WORKERS)
 
 #endif // WorkerThread_h
+
 

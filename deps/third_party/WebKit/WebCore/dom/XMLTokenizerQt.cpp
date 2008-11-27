@@ -40,14 +40,15 @@
 #include "HTMLLinkElement.h"
 #include "HTMLStyleElement.h"
 #include "HTMLTokenizer.h"
-#include "ScriptController.h"
-#include "ScriptElement.h"
-#include "ScriptValue.h"
 #include "ProcessingInstruction.h"
 #include "ResourceError.h"
 #include "ResourceHandle.h"
 #include "ResourceRequest.h"
 #include "ResourceResponse.h"
+#include "ScriptController.h"
+#include "ScriptElement.h"
+#include "ScriptSourceCode.h"
+#include "ScriptValue.h"
 #include "TextResourceDecoder.h"
 #include <QDebug>
 #include <wtf/Platform.h>
@@ -583,11 +584,8 @@ void XMLTokenizer::parseEndElement()
                     pauseParsing();
             } else
                 m_scriptElement = 0;
-
-        } else {
-            String scriptCode = scriptElement->scriptContent();
-            m_view->frame()->loader()->executeScript(m_doc->url().string(), m_scriptStartLine, scriptCode);
-        }
+        } else
+            m_view->frame()->loader()->executeScript(ScriptSourceCode(scriptElement->scriptContent(), m_doc->url(), m_scriptStartLine));
 
         m_requestingScript = false;
     }
@@ -763,6 +761,7 @@ void XMLTokenizer::parseDtd()
     
 }
 }
+
 
 
 

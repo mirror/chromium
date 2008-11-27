@@ -317,7 +317,7 @@ NSImage* Frame::selectionImage(bool forceBlackText) const
 {
     d->m_view->setPaintRestriction(forceBlackText ? PaintRestrictionSelectionOnlyBlackText : PaintRestrictionSelectionOnly);
     d->m_doc->updateLayout();
-    NSImage* result = imageFromRect(selectionRect());
+    NSImage* result = imageFromRect(selectionBounds());
     d->m_view->setPaintRestriction(PaintRestrictionNone);
     return result;
 }
@@ -552,4 +552,5 @@ void Frame::setUserStyleSheet(const String& styleSheet)
 }
 
 } // namespace WebCore
+
 

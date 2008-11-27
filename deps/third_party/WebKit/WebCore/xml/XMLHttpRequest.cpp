@@ -209,7 +209,7 @@ XMLHttpRequest::State XMLHttpRequest::readyState() const
     return m_state;
 }
 
-const JSUString& XMLHttpRequest::responseText() const
+const ScriptString& XMLHttpRequest::responseText() const
 {
     return m_responseText;
 }
@@ -839,6 +839,7 @@ void XMLHttpRequest::dropProtection()
             JSC::Heap::heap(wrapper)->reportExtraMemoryCost(m_responseText.size() * 2);
     }
 #endif
+
     unsetPendingActivity(this);
 }
 
@@ -1053,13 +1054,10 @@ void XMLHttpRequest::didFinishLoading(SubresourceLoader* loader)
     if (m_state < HEADERS_RECEIVED)
         changeState(HEADERS_RECEIVED);
 
-    {
 #if USE(JSC)
-        JSC::JSLock lock(false);
 #endif
-        if (m_decoder)
-            m_responseText += m_decoder->flush();
-    }
+    if (m_decoder)
+        m_responseText += m_decoder->flush();
 
     if (Frame* frame = document()->frame()) {
         if (Page* page = frame->page()) {
@@ -1255,9 +1253,7 @@ void XMLHttpRequest::didReceiveData(SubresourceLoader*, const char* data, int le
     if (len == -1)
         len = strlen(data);
 
-    String decoded = m_decoder->decode(data, len);
-
-    m_responseText += decoded;
+    m_responseText += m_decoder->decode(data, len);
 
     if (!m_error) {
         updateAndDispatchOnProgress(len);
@@ -1351,5 +1347,6 @@ ScriptExecutionContext* XMLHttpRequest::scriptExecutionContext() const
 }
 
 } // namespace WebCore 
+
 
 

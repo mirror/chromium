@@ -46,6 +46,7 @@ class FrameView;
 class HTMLParser;
 class Node;
 class PreloadScanner;
+class ScriptSourceCode;
 
 /**
  * @internal
@@ -177,7 +178,7 @@ private:
     State parseEntity(SegmentedString&, UChar*& dest, State, unsigned& cBufferPos, bool start, bool parsingTag);
     State parseProcessingInstruction(SegmentedString&, State);
     State scriptHandler(State);
-    State scriptExecution(const String& script, State, const String& scriptURL, int baseLine = 1);
+    State scriptExecution(const ScriptSourceCode&, State);
     void setSrc(const SegmentedString&);
  
     // check if we have enough space in the buffer.
@@ -419,3 +420,4 @@ UChar decodeNamedEntity(const char*);
 } // namespace WebCore
 
 #endif // HTMLTokenizer_h
+

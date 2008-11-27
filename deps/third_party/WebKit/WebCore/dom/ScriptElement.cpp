@@ -31,6 +31,7 @@
 #include "FrameLoader.h"
 #include "MIMETypeRegistry.h"
 #include "ScriptController.h"
+#include "ScriptSourceCode.h"
 #include "ScriptValue.h"
 #include "StringHash.h"
 #include "Text.h"
@@ -51,7 +52,7 @@ void ScriptElement::insertedIntoDocument(ScriptElementData& data, const String& 
     // If there's an empty script node, we shouldn't evaluate the script
     // because if a script is inserted afterwards (by setting text or innerText)
     // it should be evaluated, and evaluateScript only evaluates a script once.
-    data.evaluateScript(data.element()->document()->url().string(), data.scriptContent());
+    data.evaluateScript(ScriptSourceCode(data.scriptContent(), data.element()->document()->url())); // FIXME: Provide a real starting line number here.
 }
 
 void ScriptElement::removedFromDocument(ScriptElementData& data)
@@ -71,7 +72,7 @@ void ScriptElement::childrenChanged(ScriptElementData& data)
     // and the script element has been inserted in the document
     // we evaluate the script.
     if (element->inDocument() && element->firstChild())
-        data.evaluateScript(element->document()->url().string(), data.scriptContent());
+        data.evaluateScript(ScriptSourceCode(data.scriptContent(), element->document()->url())); // FIXME: Provide a real starting line number here
 }
 
 void ScriptElement::finishParsingChildren(ScriptElementData& data, const String& sourceUrl)
@@ -158,9 +159,9 @@ void ScriptElementData::requestScript(const String& sourceUrl)
     m_scriptElement->dispatchErrorEvent();
 }
 
-void ScriptElementData::evaluateScript(const String& sourceUrl, const String& content)
+void ScriptElementData::evaluateScript(const ScriptSourceCode& sourceCode)
 {
-    if (m_evaluated || content.isEmpty() || !shouldExecuteAsJavaScript())
+    if (m_evaluated || sourceCode.isEmpty() || !shouldExecuteAsJavaScript())
         return;
 
     if (Frame* frame = m_element->document()->frame()) {
@@ -169,9 +170,7 @@ void ScriptElementData::evaluateScript(const String& sourceUrl, const String& co
 
         m_evaluated = true;
 
-        // FIXME: This starting line number will be incorrect for evaluation triggered
-        // from insertedIntoDocument or childrenChanged.
-        frame->script()->evaluate(sourceUrl, 1, content);
+        frame->script()->evaluate(sourceCode);
         Document::updateDocumentsRendering();
     }
 }
@@ -196,7 +195,7 @@ void ScriptElementData::notifyFinished(CachedResource* o)
     if (cs->errorOccurred())
         m_scriptElement->dispatchErrorEvent();
     else {
-        evaluateScript(cs->url(), cs->script());
+        evaluateScript(ScriptSourceCode(cs));
         m_scriptElement->dispatchLoadEvent();
     }
 
@@ -271,4 +270,5 @@ String ScriptElementData::scriptContent() const
 }
 
 }
+
 

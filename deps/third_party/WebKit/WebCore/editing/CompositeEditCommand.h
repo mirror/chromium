@@ -103,7 +103,7 @@ protected:
     bool breakOutOfEmptyListItem();
     bool breakOutOfEmptyMailBlockquotedParagraph();
     
-    Position positionAvoidingSpecialElementBoundary(const Position&, bool alwaysAvoidAnchors = true);
+    Position positionAvoidingSpecialElementBoundary(const Position&);
     
     PassRefPtr<Node> splitTreeToNode(Node*, Node*, bool splitAncestor = false);
 
@@ -117,5 +117,6 @@ private:
 } // namespace WebCore
 
 #endif // CompositeEditCommand_h
+
 
 

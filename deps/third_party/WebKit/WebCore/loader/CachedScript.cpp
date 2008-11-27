@@ -38,6 +38,7 @@ namespace WebCore {
 CachedScript::CachedScript(const String& url, const String& charset)
     : CachedResource(url, Script)
     , m_encoding(charset)
+    , m_decodedDataDeletionTimer(this, &CachedScript::decodedDataDeletionTimerFired)
 {
     // It's javascript we want.
     // But some websites think their scripts are <some wrong mimetype here>
@@ -56,6 +57,12 @@ void CachedScript::addClient(CachedResourceClient* c)
     CachedResource::addClient(c);
     if (!m_loading)
         c->notifyFinished(this);
+}
+
+void CachedScript::allClientsRemoved()
+{
+    destroyDecodedData();
+    m_decodedDataDeletionTimer.stop();
 }
 
 void CachedScript::setEncoding(const String& chs)
@@ -77,6 +84,7 @@ const String& CachedScript::script()
         setDecodedSize(m_script.length() * sizeof(UChar));
     }
 
+    m_decodedDataDeletionTimer.startOneShot(0);
     return m_script;
 }
 
@@ -114,4 +122,10 @@ void CachedScript::destroyDecodedData()
     setDecodedSize(0);
 }
 
+void CachedScript::decodedDataDeletionTimerFired(Timer<CachedScript>*)
+{
+    destroyDecodedData();
+}
+
 } // namespace WebCore
+

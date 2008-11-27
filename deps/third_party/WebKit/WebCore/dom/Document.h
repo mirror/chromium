@@ -430,8 +430,6 @@ public:
 
     KURL completeURL(const String&) const;
 
-    unsigned visitedLinkHash(const AtomicString& attributeURL) const;
-
     // from cachedObjectClient
     virtual void setCSSStyleSheet(const String& url, const String& charset, const CachedCSSStyleSheet*);
 
@@ -1118,4 +1116,5 @@ inline bool Node::isDocumentNode() const
 } // namespace WebCore
 
 #endif // Document_h
+
 

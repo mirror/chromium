@@ -482,3 +482,4 @@ CString TextCodecICU::encode(const UChar* characters, size_t length, Unencodable
 
 
 } // namespace WebCore
+

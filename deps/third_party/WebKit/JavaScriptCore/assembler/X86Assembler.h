@@ -1006,9 +1006,11 @@ public:
         reinterpret_cast<intptr_t*>(where)[-1] = (reinterpret_cast<intptr_t>(destination) - where);
     }
     
-    void* executableCopy() 
+    void* executableCopy()
     {
-        return m_buffer->executableCopy();
+        void* copy = m_buffer->executableCopy();
+        ASSERT(copy);
+        return copy;
     }
 
 #if COMPILER(MSVC)
@@ -1173,5 +1175,6 @@ typedef X86Assembler::JmpSrcVector JmpSrcVector;
 #endif // ENABLE(ASSEMBLER) && PLATFORM(X86)
 
 #endif // X86Assembler_h
+
 
 

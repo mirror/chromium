@@ -41,13 +41,17 @@
 #include "HTMLNames.h"
 #include "HTMLScriptElement.h"
 #include "HTMLStyleElement.h"
-#include "ScriptController.h"
-#include "ScriptValue.h"
 #include "ProcessingInstruction.h"
 #include "ResourceError.h"
 #include "ResourceHandle.h"
 #include "ResourceRequest.h"
 #include "ResourceResponse.h"
+#include "ScriptController.h"
+#include "ScriptSourceCode.h"
+#include "ScriptValue.h"
+#if USE(JSC)
+#include "StringSourceProvider.h"
+#endif
 #include "TextResourceDecoder.h"
 #include <wtf/Platform.h>
 #include <wtf/StringExtras.h>
@@ -324,9 +328,9 @@ void XMLTokenizer::notifyFinished(CachedResource* finishedObj)
     ASSERT(m_pendingScript == finishedObj);
     ASSERT(m_pendingScript->accessCount() > 0);
         
-    String cachedScriptUrl = m_pendingScript->url();
-    String scriptSource = m_pendingScript->script();
+    ScriptSourceCode sourceCode(m_pendingScript.get());
     bool errorOccurred = m_pendingScript->errorOccurred();
+
     m_pendingScript->removeClient(this);
     m_pendingScript = 0;
     
@@ -339,10 +343,10 @@ void XMLTokenizer::notifyFinished(CachedResource* finishedObj)
     if (errorOccurred) 
         scriptElement->dispatchErrorEvent();
     else {
-        m_view->frame()->loader()->executeScript(cachedScriptUrl, 1, scriptSource);
+        m_view->frame()->loader()->executeScript(sourceCode);
         scriptElement->dispatchLoadEvent();
     }
-    
+
     m_scriptElement = 0;
     
     if (!m_requestingScript)
@@ -363,5 +367,6 @@ void XMLTokenizer::pauseParsing()
 }
 
 }
+
 
 
