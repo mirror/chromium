@@ -23,11 +23,6 @@ SCRIPT_PATH = os.path.join('src', 'tools', 'tryserver', 'tryserver.py')
 checkout_root = ''
 
 
-class ScriptNotFound(Exception):
-  def __str__(self):
-    return self.args[0] + ' was not found.\n' + HELP_STRING
-
-
 class InvalidScript(Exception): 
   def __str__(self):
     return self.args[0] + '\n' + HELP_STRING
@@ -43,15 +38,12 @@ def GetCheckoutRoot():
   # Cache this value accross calls.
   global checkout_root
   if not checkout_root:
-    checkout_root = os.getcwd()
-    while True:
-      if os.path.exists(os.path.join(checkout_root, SCRIPT_PATH)):
-        break
-      parent = os.path.dirname(checkout_root)
-      if parent == checkout_root:
-        checkout_root = ''
-        raise ScriptNotFound(SCRIPT_PATH)
-      checkout_root = parent
+    # TODO(maruel):  Completely hacked into the current gclient setup. Needs to
+    # be fixed.
+    checkout_root = os.path.dirname(gcl.GetRepositoryRoot())
+    if not os.path.exists(os.path.join(checkout_root, SCRIPT_PATH)):
+      # Too bad, the script doesn't exist.
+      pass
   return checkout_root
 
 
@@ -67,11 +59,13 @@ def ExecuteTryServerScript():
   """Execute the try server script and returns its dictionary."""
   script_path = os.path.join(GetCheckoutRoot(), SCRIPT_PATH)
   script_locals = {}
-  try:
-    exec(gcl.ReadFile(script_path), script_locals)
-  except Exception, e:
-    traceback.print_exc()
-    raise InvalidScript(script_path + ' is invalid.')
+  if os.path.exists(script_path):
+    try:
+      exec(gcl.ReadFile(script_path), script_locals)
+    except Exception, e:
+      # TODO(maruel):  Need to specialize the exception trapper.
+      traceback.print_exc()
+      raise InvalidScript('%s is invalid.' % script_path)
   return script_locals
 
 
@@ -88,11 +82,8 @@ def RebaseDiff(diff, root):
 # TODO(maruel): Remove support eventually.
 def _SendChangeNFS(options):
   """Send a change to the try server."""
-  try:
-    script_locals = ExecuteTryServerScript()
-  except ScriptNotFound, InvalidScript:
-    # Will throw later.
-    pass
+  script_locals = ExecuteTryServerScript()
+
   if not options.nfs_path:
     # TODO(maruel): Use try_server_nfs instead.
     options.nfs_path = script_locals.get('try_server', None)
@@ -113,11 +104,7 @@ def _SendChangeNFS(options):
 
 def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
-  try:
-    script_locals = ExecuteTryServerScript()
-  except ScriptNotFound, InvalidScript:
-    # Will throw later.
-    pass
+  script_locals = ExecuteTryServerScript()
 
   values = {}
   if not options.host:
@@ -153,7 +140,7 @@ def _SendChangeHTTP(options):
 def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
               issue=None, patchset=None):
   # Parse argv
-  parser = optparse.OptionParser(usage="%prog [options]", version="%prog 0.8")
+  parser = optparse.OptionParser(usage="%prog [options]", version="%prog 0.8a")
 
   group = optparse.OptionGroup(parser, "Result and status options")
   group.add_option("-u", "--user", default=getpass.getuser(),
@@ -244,10 +231,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
     else:
       patch_name = _SendChangeNFS(options)
     print 'Patch \'%s\' sent to try server.' % patch_name
-  except ScriptNotFound, e:
-    if swallow_exception:
-      return
-    print e
+    if patch_name == 'Unnamed':
+      print "Note: use --name NAME to change the try's name."
   except InvalidScript, e:
     if swallow_exception:
       return
