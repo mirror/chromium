@@ -48,9 +48,7 @@
 #include <wtf/StdLibExtras.h>
 
 #if USE(JSC)
-#include "JSDOMBinding.h"
 #include "JSDOMWindow.h"
-#include <runtime/JSLock.h>
 #endif
 
 namespace WebCore {
@@ -1054,8 +1052,6 @@ void XMLHttpRequest::didFinishLoading(SubresourceLoader* loader)
     if (m_state < HEADERS_RECEIVED)
         changeState(HEADERS_RECEIVED);
 
-#if USE(JSC)
-#endif
     if (m_decoder)
         m_responseText += m_decoder->flush();
 
@@ -1064,7 +1060,7 @@ void XMLHttpRequest::didFinishLoading(SubresourceLoader* loader)
             page->inspectorController()->resourceRetrievedByXMLHttpRequest(m_loader ? m_loader->identifier() : m_identifier, m_responseText);
             page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, "XHR finished loading: \"" + m_url + "\".", m_lastSendLineNumber, m_lastSendURL);
         }
-	}
+    }
 
     bool hadLoader = m_loader;
     m_loader = 0;
@@ -1347,6 +1343,3 @@ ScriptExecutionContext* XMLHttpRequest::scriptExecutionContext() const
 }
 
 } // namespace WebCore 
-
-
-

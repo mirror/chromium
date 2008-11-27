@@ -89,7 +89,7 @@ CGColorRef cgColor(const Color& c)
     return color;
 }
 
-#endif // PLATFORM(MAC)
+#endif // !PLATFORM(MAC)
 
 }
 

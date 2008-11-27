@@ -52,8 +52,6 @@
 #include "TextResourceDecoder.h"
 #include "Widget.h"
 #include "ScriptController.h"
-#if USE(JSC)
-#endif
 #include <wtf/HashMap.h>
 #include <wtf/RefCountedLeakCounter.h>
 #include <wtf/StdLibExtras.h>
@@ -618,6 +616,3 @@ void Page::setCustomHTMLTokenizerChunkSize(int customHTMLTokenizerChunkSize)
 }
 
 } // namespace WebCore
-
-
-

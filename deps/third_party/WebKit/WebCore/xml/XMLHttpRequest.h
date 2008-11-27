@@ -36,13 +36,6 @@ class Document;
 class File;
 class TextResourceDecoder;
 
-#if USE(JSC)
-typedef JSC::UString JSUString;
-#endif
-#if USE(V8)
-typedef String JSUString;
-#endif
-
 class XMLHttpRequest : public RefCounted<XMLHttpRequest>, public EventTarget, private SubresourceLoaderClient, public ActiveDOMObject {
 public:
     static PassRefPtr<XMLHttpRequest> create(Document* document) { return adoptRef(new XMLHttpRequest(document)); }
@@ -238,4 +231,3 @@ private:
 } // namespace WebCore
 
 #endif // XMLHttpRequest_h
-
