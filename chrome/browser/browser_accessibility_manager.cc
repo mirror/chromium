@@ -99,12 +99,13 @@ bool BrowserAccessibilityManager::RequestAccessibilityInfo(
   if (!members || !members->render_widget_host_)
     return false;
 
+  IPC::SyncMessage* msg =
+      new ViewMsg_GetAccessibilityInfo(
+          members->render_widget_host_->routing_id(), in_params, &out_params_);
+
   bool success = false;
   if (members->render_widget_host_->process() &&
       members->render_widget_host_->process()->channel()) {
-    IPC::SyncMessage* msg =
-        new ViewMsg_GetAccessibilityInfo(members->render_widget_host_->
-            routing_id(), in_params, &out_params_);
     // Necessary for the send to keep the UI responsive.
     msg->EnableMessagePumping();
     success = members->render_widget_host_->process()->channel()->
