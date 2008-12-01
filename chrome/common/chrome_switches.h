@@ -132,7 +132,9 @@ extern const wchar_t kEnableGreasemonkey[];
 
 extern const wchar_t kIncognito[];
 extern const wchar_t kUseNewSafeBrowsing[];
+
 extern const wchar_t kEnableRendererAccessibility[];
+
 }  // namespace switches
 
 #endif  // CHROME_COMMON_CHROME_SWITCHES_H__

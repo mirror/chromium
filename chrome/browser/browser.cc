@@ -1410,7 +1410,11 @@ void Browser::TabSelectedAt(TabContents* old_contents,
 
   LocationBarView* location_bar = GetLocationBarView();
   if (old_contents) {
-    if (!g_browser_process->IsUsingNewFrames()) {
+    // We do not store the focus when closing the tab to work-around bug 4633.
+    // Some reports seem to show that the focus manager and/or focused view can
+    // be garbage at that point, it is not clear why.
+    if (!g_browser_process->IsUsingNewFrames() &&
+        !old_contents->is_being_destroyed()) {
       // Have the contents remember where focus was.
       old_contents->StoreFocus();
     }
@@ -1427,8 +1431,10 @@ void Browser::TabSelectedAt(TabContents* old_contents,
 
     // Inform the tab that it is now selected.
     new_contents->DidBecomeSelected();
-    if (BrowserList::GetLastActive() == this)
+    if (BrowserList::GetLastActive() == this &&
+        !tabstrip_model_.closing_all()) {
       new_contents->RestoreFocus();
+    }
   }
 
   // Propagate the profile to the location bar.
