@@ -100,8 +100,9 @@ Reminders:
  - The patch will fail if the tree has conflicting changes since your last upload.
  - On Windows, the execution order is compile debug, test debug, compile release.
  - On Mac/linux, the execution order is compile debug, test debug.
+ - To disable this, use --no_try or remove src/tools/tryserver.py
 
-Automated text version 0.2""" % (name,
+Automated text version 0.3""" % (name,
        build_url,
        patch_url_text,
        urllib.quote(waterfall_url, '/:'),
