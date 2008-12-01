@@ -88,7 +88,8 @@ RenderWidget::RenderWidget(RenderThreadBase* render_thread)
       ime_control_x_(-1),
       ime_control_y_(-1),
       ime_control_new_state_(false),
-      ime_control_updated_(false) {
+      ime_control_updated_(false),
+      ime_control_busy_(false){
   RenderProcess::AddRefProcess();
   DCHECK(render_thread_);
 }
@@ -663,9 +664,11 @@ void RenderWidget::OnImeSetComposition(int string_type,
                                        int target_start, int target_end,
                                        const std::wstring& ime_string) {
   if (webwidget_) {
+    ime_control_busy_ = true;
     webwidget_->ImeSetComposition(string_type, cursor_position,
                                   target_start, target_end,
                                   ime_string);
+    ime_control_busy_ = false;
   }
 }
 
@@ -700,7 +703,10 @@ void RenderWidget::UpdateIME() {
     ime_control_updated_ = true;
     ime_control_new_state_ = false;
   }
-  ime_control_new_state_ = enable_ime;
+  if (ime_control_new_state_ != enable_ime) {
+    ime_control_updated_ = true;
+    ime_control_new_state_ = enable_ime;
+  }
   if (ime_control_updated_) {
     // The input focus has been changed.
     // Compare the current state with the updated state and choose actions.

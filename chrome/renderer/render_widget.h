@@ -260,6 +260,7 @@ class RenderWidget : public IPC::Channel::Listener,
   int ime_control_y_;
   bool ime_control_new_state_;
   bool ime_control_updated_;
+  bool ime_control_busy_;
 
   // Holds all the needed plugin window moves for a scroll.
   std::vector<WebPluginGeometry> plugin_window_moves_;
