@@ -137,8 +137,10 @@ class GClient(commands.SourceBase):
 
   ['branch']:
     if not None, then this specifies the module name to pass to 'gclient sync'
-    in --revision argument
+    in --revision argument.
 
+  ['env']:
+    Augment os.environ.
   """
 
   header = 'gclient'
@@ -157,6 +159,7 @@ class GClient(commands.SourceBase):
     self.gclient_spec = args['gclient_spec']
     self.sourcedata = '%s\n' % self.svnurl
     self.rm_timeout = args.get('rm_timeout', self.timeout)
+    self.env = args.get('env')
 
   def start(self):
     """Start the update process.
@@ -257,7 +260,7 @@ class GClient(commands.SourceBase):
 
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
-                              keepStdout=True)
+                              keepStdout=True, environ=self.env)
     self.command = c
     return c.start()
 
@@ -275,7 +278,7 @@ class GClient(commands.SourceBase):
     
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
-                              keepStdout=True)
+                              keepStdout=True, environ=self.env)
     self.command = c
     d = c.start()
     d.addCallback(self._abandonOnFailure)
@@ -307,7 +310,8 @@ class GClient(commands.SourceBase):
       else:
         command = self._RenameDirectoryCommand(old_dir, dead_dir)
       c = commands.ShellCommand(self.builder, command, self.builder.basedir,
-                                sendRC=0, timeout=self.rm_timeout)
+                                sendRC=0, timeout=self.rm_timeout,
+                                environ=self.env)
       self.command = c
       # See commands.SVN.doClobber for notes about sendRC.
       d = c.start()
@@ -326,7 +330,7 @@ class GClient(commands.SourceBase):
     command = [chromium_utils.GetGClientCommand(), 'revert']
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
-                              keepStdout=True)
+                              keepStdout=True, environ=self.env)
     self.command = c
     d = c.start()
     d.addCallback(self._abandonOnFailure)
@@ -344,7 +348,7 @@ class GClient(commands.SourceBase):
     dir = os.path.join(self.builder.basedir, self.srcdir)
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
-                              keepStdout=True)
+                              keepStdout=True, environ=self.env)
     self.command = c
     d = c.start()
     d.addCallback(self._abandonOnFailure)
@@ -359,7 +363,7 @@ class GClient(commands.SourceBase):
     # Now apply the patch.
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
-                              initialStdin=diff)
+                              initialStdin=diff, environ=self.env)
     self.command = c
     d = c.start()
     d.addCallback(self._abandonOnFailure)
@@ -382,7 +386,8 @@ class GClient(commands.SourceBase):
       log.msg(msg)
       command = self._RemoveDirectoryCommand(dead_dir)
       c = commands.ShellCommand(self.builder, command, self.builder.basedir,
-                                sendRC=0, timeout=self.rm_timeout)
+                                sendRC=0, timeout=self.rm_timeout,
+                                environ=self.env)
       self.command = c
       d = c.start()
       d.addCallback(self._abandonOnFailure)

@@ -59,9 +59,11 @@ class GClient(source.Source):
 
   name = 'gclient'
 
-  def __init__(self, svnurl=None, rm_timeout=None, gclient_spec=None,
+  def __init__(self, svnurl=None, rm_timeout=None, gclient_spec=None, env=None,
                **kwargs):
     source.Source.__init__(self, **kwargs)
+    if env:
+      self.args['env'] = env.copy()
     self.args['rm_timeout'] = rm_timeout
     self.args['svnurl'] = svnurl
     # linux doesn't handle spaces in command line args properly so remove them.

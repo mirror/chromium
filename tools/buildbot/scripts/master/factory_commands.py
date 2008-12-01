@@ -279,10 +279,12 @@ class FactoryCommands(object):
 
   def AddUpdateStep(self, gclient_spec):
     """Adds a step to the factory to update the workspace."""
+    env = { 'DEPOT_TOOLS_UPDATE': '0' }
     self._factory.addStep(chromium_step.GClient,
                           gclient_spec=gclient_spec,
                           workdir=self._working_dir,
                           mode='update',
+                          env=env,
                           retry=(60*5, 4),  # Try 4+1=5 more times, 5 min apart
                           timeout=60*5,     # svn timeout is 2 min; we allow 5
                           rm_timeout=60*15) # The step can take a long time.
