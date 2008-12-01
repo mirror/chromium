@@ -354,4 +354,3 @@ void CachedImage::animationAdvanced(const Image* image)
 }
 
 } //namespace WebCore
-
