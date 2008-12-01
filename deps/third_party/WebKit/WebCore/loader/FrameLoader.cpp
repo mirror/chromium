@@ -4631,7 +4631,7 @@ void FrameLoader::updateHistoryForStandardLoad()
         if (!historyURL.isEmpty()) {
             addBackForwardItemClippedAtTarget(true);
             if (!needPrivacy)
-                m_client->updateGlobalHistory(historyURL);
+                m_client->updateGlobalHistory();
         }
     } else if (documentLoader()->unreachableURL().isEmpty() && m_currentHistoryItem) {
         m_currentHistoryItem->setURL(documentLoader()->url());
@@ -4713,7 +4713,7 @@ void FrameLoader::updateHistoryForRedirectWithLockedHistory()
         if (!m_currentHistoryItem && !m_frame->tree()->parent()) {
             addBackForwardItemClippedAtTarget(true);
             if (!needPrivacy && !historyURL.isEmpty())
-                m_client->updateGlobalHistory(historyURL);
+                m_client->updateGlobalHistory();
         }
         if (m_currentHistoryItem) {
             m_currentHistoryItem->setURL(documentLoader()->url());
@@ -5271,6 +5271,7 @@ void FrameLoader::switchOutLowBandwidthDisplayIfReady()
 #endif
 
 } // namespace WebCore
+
 
 
 

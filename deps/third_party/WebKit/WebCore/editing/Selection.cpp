@@ -33,7 +33,6 @@
 #include "VisiblePosition.h"
 #include "visible_units.h"
 #include "Range.h"
-#include <unicode/ubrk.h>
 #include <wtf/Assertions.h>
 #include <stdio.h>
 
@@ -194,6 +193,14 @@ bool Selection::expandUsingGranularity(TextGranularity granularity)
     return true;
 }
 
+void Selection::appendTrailingWhitespace()
+{
+    VisiblePosition end = VisiblePosition(m_end, m_affinity);
+    while (end.isNotNull() && isSpaceOrNewline(end.characterAfter()))
+        end = end.next();
+    m_end = end.deepEquivalent();
+}
+
 void Selection::validate()
 {
     // Move the selection to rendered positions, if possible.
@@ -269,16 +276,6 @@ void Selection::validate()
                     end = wordEnd;
                     
             }
-
-#if PLATFORM(WIN_OS)
-            // Windows platform requires us to select trailing whitespace after selecting words.
-            while (u_isblank(end.characterAfter())) {
-                end = end.next();
-            }
-            if (end.isNull())
-                end = wordEnd;
-#endif
-
             m_end = end.deepEquivalent();
             break;
         }
@@ -605,3 +602,4 @@ void showTree(const WebCore::Selection* sel)
 }
 
 #endif
+

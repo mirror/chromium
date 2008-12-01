@@ -236,7 +236,7 @@ TextEncoding HTMLFormElement::dataEncoding() const
 PassRefPtr<FormData> HTMLFormElement::formData(const char* boundary) const
 {
     Vector<char> encodedData;
-    TextEncoding encoding = dataEncoding();
+    TextEncoding encoding = dataEncoding().encodingForFormSubmission();
 
     RefPtr<FormData> result = FormData::create();
     
@@ -803,3 +803,4 @@ void HTMLFormElement::CheckedRadioButtons::removeButton(HTMLFormControlElement* 
 }
 
 } // namespace
+

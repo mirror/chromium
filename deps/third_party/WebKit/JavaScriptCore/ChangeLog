@@ -1,3 +1,53 @@
+2008-11-25  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Move the collect() call in Heap::heapAllocate() that is conditionally
+        compiled under COLLECT_ON_EVERY_ALLOCATION so that it is before we get
+        information about the heap. This was causing assertion failures for me
+        while I was reducing a bug.
+
+        * runtime/Collector.cpp:
+        (JSC::Heap::heapAllocate):
+
+2008-11-24  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Bug 13790: Function declarations are not treated as statements (used to affect starcraft2.com)
+        <https://bugs.webkit.org/show_bug.cgi?id=13790>
+
+        Modify the parser to treat function declarations as statements,
+        simplifying the grammar in the process. Technically, according to the
+        grammar in the ECMA spec, function declarations are not statements and
+        can not be used everywhere that statements can, but it is not worth the
+        possibility compatibility issues just to stick to the spec in this case.
+
+        * parser/Grammar.y:
+        * parser/Nodes.cpp:
+        (JSC::FuncDeclNode::emitBytecode): Avoid returning ignoredResult()
+        as a result, because it causes a crash in DoWhileNode::emitBytecode().
+
+2008-11-24  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Unroll the regexp matching loop by 1. 10% speedup on simple matching
+        stress test. No change on SunSpider.
+        
+        (I decided not to unroll to arbitrary levels because the returns diminsh
+        quickly.)
+
+        * wrec/WREC.cpp:
+        (JSC::WREC::compileRegExp):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateJumpIfEndOfInput):
+        (JSC::WREC::Generator::generateJumpIfNotEndOfInput):
+        * wrec/WRECGenerator.h:
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::error):
+        (JSC::WREC::Parser::parsePattern):
+
 2008-11-24  Geoffrey Garen  <ggaren@apple.com>
 
         Reviewed by Sam Weinig.
@@ -20182,6 +20232,7 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 
 

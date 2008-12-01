@@ -65,7 +65,8 @@ namespace JSC { namespace WREC {
         void generateSaveIndex();
         void generateIncrementIndex();
         void generateLoadCharacter(JmpSrcVector& failures);
-        void generateLoopIfNotEndOfInput(JmpDst);
+        void generateJumpIfEndOfInput(JmpSrcVector& failures);
+        void generateJumpIfNotEndOfInput(JmpDst);
         void generateReturnSuccess();
         void generateReturnFailure();
 
@@ -100,5 +101,6 @@ namespace JSC { namespace WREC {
 #endif // ENABLE(WREC)
 
 #endif // WRECGenerator_h
+
 
 

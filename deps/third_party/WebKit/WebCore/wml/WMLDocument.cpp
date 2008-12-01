@@ -25,6 +25,7 @@
 #include "WMLDocument.h"
 
 #include "Page.h"
+#include "WMLCardElement.h"
 #include "WMLPageState.h"
 
 namespace WebCore {
@@ -35,6 +36,8 @@ WMLDocument::WMLDocument(Frame* frame)
     clearXMLVersion();
 
     Page* page = this->page();
+    ASSERT(page);
+
     if (page && !page->wmlPageState()) {
         RefPtr<WMLPageState> pageState = new WMLPageState(page);
         page->setWMLPageState(pageState);
@@ -45,6 +48,52 @@ WMLDocument::~WMLDocument()
 {
 }
 
+void WMLDocument::finishedParsing()
+{
+    WMLPageState* wmlPageState = wmlPageStateForDocument(document());
+    if (!wmlPageState || !wmlPageState->isDeckAccessible()) {
+        // FIXME: Error reporting
+        Document::finishedParsing();
+        return;
+    }
+
+    // FIXME: Notify the existance of templates to all cards of the current deck
+    // WMLTemplateElement::registerTemplatesInDocument(document()));
+
+    // Set destination card
+    WMLCardElement* card = WMLCardElement::setActiveCardInDocument(document(), KURL());
+    if (!card) {
+        // FIXME: Error reporting
+        Document::finishedParsing();
+        return;
+    }
+ 
+    // FIXME: shadow the deck-level do if needed
+    // FIXME: handle the intrinsic event
+
+    wmlPageState->setNeedCheckDeckAccess(false);
+    Document::finishedParsing();
+}
+
+WMLPageState* wmlPageStateForDocument(Document* doc)
+{
+    ASSERT(doc);
+    if (!doc)
+        return 0;
+
+    Page* page = doc->page();
+    ASSERT(page);
+
+    if (!page)
+        return 0;
+
+    WMLPageState* wmlPageState = page->wmlPageState();
+    ASSERT(wmlPageState);
+
+    return wmlPageState;
+}
+
 }
 
 #endif
+

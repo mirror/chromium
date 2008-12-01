@@ -108,6 +108,18 @@ public:
     KURL(const char* canonical_spec, int canonical_spec_len,
          const url_parse::Parsed& parsed, bool is_valid);
 #endif
+    // Makes a deep copy. Helpful only if you need to use a KURL on another
+    // thread.  Since the underlying StringImpl objects are immutable, there's
+    // no other reason to ever prefer copy() over plain old assignment.
+    KURL copy() const;
+
+#ifdef USE_GOOGLE_URL_LIBRARY
+    bool isNull() const { return m_url.utf8String().isNull(); }
+    bool isEmpty() const { return m_url.utf8String().length() == 0; }
+#else
+    bool isNull() const { return m_string.isNull(); }
+    bool isEmpty() const { return m_string.isEmpty(); }
+#endif
 
     bool isValid() const { return m_isValid; }
 
@@ -117,14 +129,8 @@ public:
     bool hasPath() const;
 
 #ifdef USE_GOOGLE_URL_LIBRARY
-    bool isNull() const { return m_url.utf8String().isNull(); }
-    bool isEmpty() const { return m_url.utf8String().length() == 0; }
-
     const String& string() const { return m_url.string(); }
 #else
-    bool isNull() const { return m_string.isNull(); }
-    bool isEmpty() const { return m_string.isEmpty(); }
-
     const String& string() const { return m_string; }
 #endif
 
@@ -445,3 +451,4 @@ namespace WTF {
 } // namespace WTF
 
 #endif // KURL_h
+

@@ -99,7 +99,17 @@ void Generator::generateLoadCharacter(JmpSrcVector& failures)
     __ movzwl_mr(input, index, 2, character);
 }
 
-void Generator::generateLoopIfNotEndOfInput(JmpDst target)
+// For the sake of end-of-line assertions, we treat one-past-the-end as if it
+// were part of the input string.
+void Generator::generateJumpIfEndOfInput(JmpSrcVector& failures)
+{
+    __ cmpl_rr(Generator::length, Generator::index);
+    failures.append(__ jg());
+}
+
+// For the sake of end-of-line assertions, we treat one-past-the-end as if it
+// were part of the input string.
+void Generator::generateJumpIfNotEndOfInput(JmpDst target)
 {
     __ cmpl_rr(length, index);
     __ link(__ jle(), target);
@@ -670,5 +680,6 @@ void Generator::terminateDisjunction(JmpSrcVector& successes)
 } } // namespace JSC::WREC
 
 #endif // ENABLE(WREC)
+
 
 

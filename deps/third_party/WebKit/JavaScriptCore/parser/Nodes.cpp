@@ -2632,6 +2632,8 @@ JSFunction* FuncDeclNode::makeFunction(ExecState* exec, ScopeChainNode* scopeCha
 
 RegisterID* FuncDeclNode::emitBytecode(BytecodeGenerator&, RegisterID* dst)
 {
+    if (dst == ignoredResult())
+        dst = 0;
     return dst;
 }
 
@@ -2674,6 +2676,7 @@ JSFunction* FuncExprNode::makeFunction(ExecState* exec, ScopeChainNode* scopeCha
 }
 
 } // namespace JSC
+
 
 
 

@@ -77,6 +77,8 @@ public:
 
     bool isBaseFirst() const { return m_baseIsFirst; }
 
+    void appendTrailingWhitespace();
+
     bool expandUsingGranularity(TextGranularity granularity);
     TextGranularity granularity() const { return m_granularity; }
 
@@ -132,3 +134,4 @@ void showTree(const WebCore::Selection*);
 #endif
 
 #endif // Selection_h
+

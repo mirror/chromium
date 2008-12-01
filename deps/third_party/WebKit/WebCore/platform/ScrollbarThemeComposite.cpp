@@ -302,3 +302,4 @@ void ScrollbarThemeComposite::paintScrollCorner(ScrollView* view, GraphicsContex
 }
 
 }
+

@@ -1,3 +1,344 @@
+2008-11-25  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22443
+        Made the PreflightResultCache thread-safe in preparation for usage of XMLHttpRequest by
+        Workers on threads.
+
+        No observable change in behavior, so no test.
+
+        * platform/text/PlatformString.h:
+        * platform/text/String.cpp:
+        (WebCore::String::substringCopy):
+        * platform/text/StringImpl.cpp:
+        (WebCore::StringImpl::substringCopy):
+        * platform/text/StringImpl.h:
+        Added the ability to copy a substring.
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::PreflightResultCacheItem::PreflightResultCacheItem):
+        (WebCore::PreflightResultCache::PreflightResultCache):
+        (WebCore::PreflightResultCacheItem::addToAccessControlAllowList):
+        (WebCore::PreflightResultCacheItem::parseAccessControlAllowList):
+        (WebCore::PreflightResultCacheItem::parseAccessControlMaxAge):
+        (WebCore::PreflightResultCacheItem::parse):
+        (WebCore::PreflightResultCacheItem::allowsRequest):
+        (WebCore::PreflightResultCache::shared):
+        (WebCore::PreflightResultCache::appendEntry):
+        (WebCore::PreflightResultCache::canSkipPreflight):
+        (WebCore::XMLHttpRequest::makeCrossSiteAccessRequestWithPreflight):
+        (WebCore::XMLHttpRequest::didReceiveResponsePreflight):
+        Made the PreflightResultCache threadsafe.
+
+        (WebCore::PreflightResultCacheItem::allowsCrossSiteMethod):
+        (WebCore::PreflightResultCacheItem::allowsCrossSiteHeaders):
+        Consolidation of duplicate logic.
+
+2008-11-24  Jungshik Shin  <jshin@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        For Unicode encodings other than UTF-8, use UTF-8 for
+        form submission and URL query part encoding.
+
+        See https://bugs.webkit.org/show_bug.cgi?id=21635
+
+        Tests: http/tests/misc/submit-get-in-utf16be.html
+               http/tests/misc/submit-get-in-utf16le.html
+               http/tests/misc/submit-get-in-utf32be.html
+               http/tests/misc/submit-get-in-utf32le.html
+               http/tests/misc/submit-get-in-utf7.html
+               http/tests/misc/submit-post-in-utf16be.html
+               http/tests/misc/submit-post-in-utf16le.html
+               http/tests/misc/submit-post-in-utf32be.html
+               http/tests/misc/submit-post-in-utf32le.html
+               http/tests/misc/submit-post-in-utf7.html
+               http/tests/misc/url-in-utf16be.html
+               http/tests/misc/url-in-utf16le.html
+               http/tests/misc/url-in-utf32be.html
+               http/tests/misc/url-in-utf32le.html
+               http/tests/misc/url-in-utf7.html
+ 
+        * html/HTMLFormElement.cpp:
+        (WebCore::HTMLFormElement::formData):
+        * loader/TextResourceDecoder.cpp:
+        (WebCore::TextResourceDecoder::setEncoding):
+        * platform/KURL.cpp:
+        (WebCore::KURL::KURL):
+        * platform/text/TextEncoding.cpp:
+        (WebCore::UTF7Encoding):
+        (WebCore::TextEncoding::isNonByteBasedEncoding):
+        (WebCore::TextEncoding::closestByteBasedEquivalent):
+        (WebCore::TextEncoding::encodingForFormSubmission):
+        * platform/text/TextEncoding.h:
+
+2008-11-24  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Bug 22441: Bridge the gap between the generated ElementFactory and HTMLElementFactory
+        https://bugs.webkit.org/show_bug.cgi?id=22441
+
+        - Make the generated ElementFactory constructors return PassRefPtr instead of raw pointers.
+
+        - Tweaked the generated files to better match our coding style.
+
+        * dom/make_names.pl:
+
+2008-11-24  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Darin Adler.
+        
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22073
+        REGRESSION(r33544): Palace in the Sky crashes WebKit
+        
+        HTMLTokenizer::m_hasScriptsWaitingForStylesheets would still be set while
+        there were no scripts left to execute. 
+        
+        If m_hasScriptsWaitingForStylesheets becomes true during script execution
+        bail out from executing more scripts synchronously.
+
+        Test: fast/tokenizer/nested-cached-scripts-and-stylesheet.html
+
+        * html/HTMLTokenizer.cpp:
+        (WebCore::HTMLTokenizer::reset):
+        (WebCore::HTMLTokenizer::notifyFinished):
+
+2008-11-24  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Geoffrey Garen.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22465
+        Define KURL::copy() and use it in WorkerThread.cpp
+
+        * dom/WorkerThread.cpp:
+        (WebCore::WorkerThread::WorkerThread):
+        * platform/KURL.cpp:
+        (WebCore::KURL::copy):
+        * platform/KURL.h:
+
+2008-11-24  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Sam Weinig.
+
+        Name enum values in a style guide compatible way.
+        Allow WMLIntrinsicEvent inclusion, without needing other includes.
+
+        * wml/WMLIntrinsicEvent.cpp:
+        (WebCore::createTaskElement):
+        * wml/WMLIntrinsicEvent.h:
+        * wml/WMLIntrinsicEventHandler.cpp:
+        * wml/WMLIntrinsicEventHandler.h:
+        (WebCore::):
+
+2008-11-24  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Sam Weinig.
+
+        Add wmlPageStateForDocument() helper function and use it in some places.
+
+        * wml/WMLAccessElement.cpp:
+        (WebCore::WMLAccessElement::parseMappedAttribute):
+        * wml/WMLDocument.cpp:
+        (WebCore::WMLDocument::WMLDocument):
+        (WebCore::WMLDocument::finishedParsing):
+        (WebCore::wmlPageStateForDocument):
+        * wml/WMLDocument.h:
+        * wml/WMLGoElement.cpp:
+        (WebCore::WMLGoElement::executeTask):
+        * wml/WMLPrevElement.cpp:
+        (WebCore::WMLPrevElement::executeTask):
+        * wml/WMLRefreshElement.cpp:
+        (WebCore::WMLRefreshElement::executeTask):
+        * wml/WMLTaskElement.cpp:
+        (WebCore::WMLTaskElement::storeVariableState):
+        * wml/WMLTaskElement.h:
+
+2008-11-24  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Geoff Garen and Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22214
+        Keep dead resources in memory cache in purgeable memory.
+        <rdar://problem/6333088>
+        
+        OS X 10.5 has purgeable memory kernel facility that allows marking reserved memory
+        areas as less important. Under memory pressure system can steal pages that have
+        been marked purgeable for (hopefully) better uses. This is ideal for caches.
+        
+        Only resources larger than 16KB will be moved to the purgeable memory.
+
+        * WebCore.base.exp:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * loader/Cache.cpp:
+        (WebCore::Cache::requestResource):
+        (WebCore::Cache::requestUserCSSStyleSheet):
+        (WebCore::Cache::resourceForURL):
+        (WebCore::Cache::pruneDeadResources):
+        (WebCore::Cache::TypeStatistic::addResource):
+        (WebCore::Cache::getStatistics):
+        (WebCore::Cache::dumpStats):
+        * loader/Cache.h:
+        (WebCore::Cache::TypeStatistic::TypeStatistic):
+        * loader/CachedCSSStyleSheet.cpp:
+        (WebCore::CachedCSSStyleSheet::allClientsRemoved):
+        (WebCore::CachedCSSStyleSheet::sheetText):
+        * loader/CachedCSSStyleSheet.h:
+        * loader/CachedImage.cpp:
+        (WebCore::CachedImage::addClient):
+        (WebCore::CachedImage::image):
+        (WebCore::CachedImage::imageSize):
+        (WebCore::CachedImage::imageRect):
+        (WebCore::CachedImage::destroyDecodedData):
+        * loader/CachedResource.cpp:
+        (WebCore::CachedResource::addClient):
+        (WebCore::CachedResource::makePurgeable):
+        (WebCore::CachedResource::isPurgeable):
+        (WebCore::CachedResource::wasPurged):
+        * loader/CachedResource.h:
+        (WebCore::CachedResource::data):
+        * loader/CachedScript.cpp:
+        (WebCore::CachedScript::allClientsRemoved):
+        (WebCore::CachedScript::script):
+        (WebCore::CachedScript::destroyDecodedData):
+        * platform/PurgeableBuffer.h: Added.
+        (WebCore::PurgeableBuffer::create):
+        (WebCore::PurgeableBuffer::size):
+        (WebCore::PurgeableBuffer::):
+        (WebCore::PurgeableBuffer::purgePriority):
+        (WebCore::PurgeableBuffer::isPurgeable):
+        (WebCore::PurgeableBuffer::~PurgeableBuffer):
+        (WebCore::PurgeableBuffer::data):
+        (WebCore::PurgeableBuffer::setPurgePriority):
+        (WebCore::PurgeableBuffer::wasPurged):
+        (WebCore::PurgeableBuffer::makePurgeable):
+        * platform/SharedBuffer.cpp:
+        (WebCore::SharedBuffer::~SharedBuffer):
+        (WebCore::SharedBuffer::adoptPurgeableBuffer):
+        (WebCore::SharedBuffer::size):
+        (WebCore::SharedBuffer::data):
+        (WebCore::SharedBuffer::append):
+        (WebCore::SharedBuffer::clear):
+        (WebCore::SharedBuffer::releasePurgeableBuffer):
+        * platform/SharedBuffer.h:
+        (WebCore::SharedBuffer::hasPurgeableBuffer):
+        * platform/cf/SharedBufferCF.cpp:
+        * platform/mac/PurgeableBufferMac.cpp: Added.
+        (WebCore::PurgeableBuffer::PurgeableBuffer):
+        (WebCore::PurgeableBuffer::~PurgeableBuffer):
+        (WebCore::PurgeableBuffer::create):
+        (WebCore::PurgeableBuffer::makePurgeable):
+        (WebCore::PurgeableBuffer::wasPurged):
+        (WebCore::PurgeableBuffer::setPurgePriority):
+        (WebCore::PurgeableBuffer::data):
+
+2008-11-24  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by George Staikos & Eric Seidel.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22430
+
+        Regenerate WML layout test results after implementing WML specific <card> handling:
+        Only the first <card> element should be visible after loading the document, others
+        can be shown by using the <go> task element.
+
+        * dom/Document.h: Make 'finishedParsing()' a virtual function.
+        * wml/WMLCardElement.cpp:
+        (WebCore::WMLCardElement::WMLCardElement):
+        (WebCore::WMLCardElement::~WMLCardElement):
+        (WebCore::WMLCardElement::createRenderer):
+        (WebCore::WMLCardElement::setActiveCardInDocument):
+        (WebCore::WMLCardElement::setVisibility):
+        * wml/WMLCardElement.h:
+        * wml/WMLDocument.cpp:
+        (WebCore::WMLDocument::finishedParsing): Execute WML specific logic after tokenzing.
+        * wml/WMLDocument.h:
+
+2008-11-24  Glenn Wilson  <gwilson@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        http://bugs.webkit.org/show_bug.cgi?id=15643
+
+        Added support for clients that wish to disable smart insert/delete
+        and enable the "trailing whitespace selection" work-around.
+
+        Tests: editing/selection/doubleclick-whitespace.html
+
+        * editing/Editor.cpp:
+        (WebCore::Editor::selectTrailingWhitespaceEnabled):
+        * editing/Editor.h:
+        * editing/Selection.cpp:
+        (WebCore::Selection::includeTrailingWhitespace):
+        * editing/Selection.h:
+        * loader/EmptyClients.h:
+        (WebCore::EmptyEditorClient::selectTrailingWhitespaceEnabled):
+        * page/EditorClient.h:
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::selectClosestWordFromMouseEvent):
+
+2008-11-24  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Forgot to include WMLPageState.h in last commit.
+
+        * wml/WMLPageState.h:
+        (WebCore::WMLPageState::restrictDeckAccessToDomain):
+        (WebCore::WMLPageState::restrictDeckAccessToPath):
+
+2008-11-24  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Oliver Hunt & Eric Seidel.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22431
+
+        Implement WMLAccessElement. It just propogates two attributes values to WMLPageState.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * wml/WMLAccessElement.cpp: Added.
+        (WebCore::WMLAccessElement::WMLAccessElement):
+        (WebCore::WMLAccessElement::parseMappedAttribute):
+        * wml/WMLAccessElement.h: Added.
+        * wml/WMLTagNames.in:
+        * wml/WMLPageState.h: Rename functions.
+        (WebCore::WMLPageState::restrictDeckAccessToDomain):
+        (WebCore::WMLPageState::restrictDeckAccessToPath):
+        * wml/WMLVariables.cpp: Add new helper function.
+        (WebCore::valueContainsVariableReference):
+        * wml/WMLVariables.h:
+        (WebCore::):
+
+2008-11-24  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        - https://bugs.webkit.org/show_bug.cgi?id=22470
+          remove unneeded URL argument from FrameLoaderClient::updateGlobalHistory
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyFrameLoaderClient::updateGlobalHistory): Remove argument.
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::updateHistoryForStandardLoad): Don't pass the URL.
+        (WebCore::FrameLoader::updateHistoryForRedirectWithLockedHistory): Ditto.
+        * loader/FrameLoaderClient.h: Remove argument.
+
+2008-11-24  Finnur Thorarinsson  <finnur.webkit@gmail.com>
+
+        Reviewed by Darin Adler.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22432
+
+        Add plumbing for tickmark support for the scrollbars. The painting code
+        for the scrollbar just needed to call paintTickmarks at the right time
+        and a default no-op implementation is provided, which the ports will
+        need to override.
+
+        * platform/ScrollbarThemeComposite.cpp:
+        (WebCore::ScrollbarThemeComposite::paint):
+        * platform/ScrollbarThemeComposite.h:
+        (WebCore::ScrollbarThemeComposite::paintTickmarks):
+
 2008-11-24  Darin Fisher  <darin@chromium.org>
 
         Reviewed by Sam Weinig.
@@ -1516,7 +1857,7 @@
 
         * WebCore.base.exp: Export __ZTVN7WebCore17FrameLoaderClientE
 
-2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-18  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -1530,7 +1871,7 @@
         * platform/qt/WidgetQt.cpp:
         (WebCore::Widget::setFrameRect):
 
-2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-18  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -1599,7 +1940,7 @@
 
 2008-11-18  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
-        Reviewed by Tor Arne Vestbø.
+        Reviewed by Tor Arne VestbÃ¸.
 
         Fix the bug where select elements are painted without border.
         http://trolltech.com/developer/task-tracker/index_html?id=218957&method=entry
@@ -2965,7 +3306,7 @@
         * platform/text/String.cpp:
         (WebCore::charactersToDouble):
 
-2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -2974,7 +3315,7 @@
         * platform/qt/ScrollbarQt.cpp:
         (WebCore::Scrollbar::contextMenu):
 
-2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -3037,7 +3378,7 @@
         (WebCore::AnimationBase::playStatePlaying):
         * page/animation/AnimationBase.h:
 
-2008-11-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -3530,7 +3871,7 @@
         (WebCore::numEnclosingMailBlockquotes): Added.
         * editing/htmlediting.h:
 
-2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-10  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -3545,7 +3886,7 @@
         * platform/mac/WebCoreNSStringExtras.mm:
         (stringEncodingForResource):
 
-2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-10  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -3813,7 +4154,7 @@
 
 2008-11-11  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
-        Reviewed by Tor Arne Vestbø.
+        Reviewed by Tor Arne VestbÃ¸.
 
         Fix crash when rendering the file chooser.
         Also proper implementation for multi-selected files.
@@ -3952,7 +4293,7 @@
 
 2008-11-10  Tom Cooksey  <thomas.cooksey@trolltech.com>
 
-        Reviewed by Tor Arne Vestbø.
+        Reviewed by Tor Arne VestbÃ¸.
 
         Fix QtWebkit build failure on arm.
 
@@ -3961,7 +4302,7 @@
         * platform/graphics/qt/GraphicsContextQt.cpp:
         (WebCore::GraphicsContext::setLineDash):
 
-2008-11-10  Morten Sørvig  <msorvig@trolltech.com>
+2008-11-10  Morten SÃ¸rvig  <msorvig@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -4193,14 +4534,14 @@
         (WebCore::LayoutStateMaintainer::push):
         (WebCore::LayoutStateMaintainer::didPush):
 
-2008-11-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Fix the QtWebKit build on Mac
 
         * platform/qt/TemporaryLinkStubs.cpp:
         (PluginView::invalidateRect):
 
-2008-11-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -4610,7 +4951,7 @@
         * xml/XPathValue.cpp:
         (WebCore::XPath::Value::toNodeSet): Ditto
 
-2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -4708,14 +5049,14 @@
 
         * WebCore.pro:
 
-2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Fix build break in debug mode when XSLT is not enabled
 
         * loader/Cache.cpp:
         (WebCore::Cache::dumpStats):
 
-2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -5100,7 +5441,7 @@
 
 2008-11-05  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne Vestbø
+        Reviewed by Tor Arne VestbÃ¸
 
         Fix loading of Flash 10 in the Qt port by faking the toolkit to be Gtk.
 
@@ -5115,7 +5456,7 @@
 
 2008-11-05  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne Vestbø
+        Reviewed by Tor Arne VestbÃ¸
 
         Unify determineQuirks between the Qt and the Gtk PluginPackage.
         Share the code for parsing the module version from the description.
@@ -11118,7 +11459,7 @@
         <input type=file> to use File objects instead of path strings and
         also to append multiple files if the file list has them.
 
-2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
         
@@ -11128,7 +11469,7 @@
         (WebCore::ScrollbarThemeQt::paint):
         (WebCore::ScrollbarThemeQt::paintScrollCorner):
 
-2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -11137,7 +11478,7 @@
         * platform/qt/ScrollbarThemeQt.cpp:
         (WebCore::styleOptionSlider):
 
-2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -12882,7 +13223,7 @@
         (.toolbar-item:active .toolbar-label): Make this rule also require the
         toggleable class with the toolbar-item class.
 
-2008-10-08  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-08  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -13119,7 +13460,7 @@
 
         * GNUmakefile.am:
 
-2008-10-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -13280,7 +13621,7 @@
         (WebCore::drawControl):
         * rendering/RenderThemeWin.h:
 
-2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -13298,7 +13639,7 @@
         * platform/wx/KeyboardEventWx.cpp:
         (WebCore::PlatformKeyboardEvent::PlatformKeyboardEvent):
 
-2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -13309,7 +13650,7 @@
         * platform/text/cf/StringCF.cpp:
         * platform/text/cf/StringImplCF.cpp:
 
-2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -16242,7 +16583,7 @@
 
         * platform/qt/PlatformKeyboardEventQt.cpp:
 
-2008-09-29  Morten Sørvig  <msorvig@trolltech.com>
+2008-09-29  Morten SÃ¸rvig  <msorvig@trolltech.com>
 
         Reviewed by Simon.
 
@@ -18547,7 +18888,7 @@
         to the WebInspector.ConsoleMessage constructor call.
         (WebInspector.Resource.prototype._checkWarning): Ditto.
 
-2008-09-23  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-23  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -19582,7 +19923,7 @@
         (WebCore::JSHTMLAllCollection::createStructureID):
         (WebCore::JSHTMLAllCollection::toBoolean):
 
-2008-09-22  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-22  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -22176,7 +22517,7 @@
         * platform/text/TextCodecICU.cpp:
         (WebCore::TextCodecICU::registerExtendedEncodingNames): Updated for new encoding names.
 
-2008-09-17  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-17  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Fix the QtWebKit/Mac build
 
@@ -22434,7 +22775,7 @@
         (WebCore::writeFunction):
         (WebCore::ImageBuffer::toDataURL):
 
-2008-09-16  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-16  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -22968,7 +23309,7 @@
         * platform/graphics/cg/ImageCG.cpp:
         (WebCore::BitmapImage::draw):
 
-2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -22995,7 +23336,7 @@
         c'tor and will only be deleted in the c'tor. The Q_ASSERTs would
         only check if we use the MediaPlayerPrivate after it has been deleted.
 
-        Acked-by: Tor Arne Vestbø  <tavestbo@trolltech.com>
+        Acked-by: Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::play):
@@ -23015,7 +23356,7 @@
         * html/CanvasRenderingContext2D.cpp:
         (WebCore::CanvasRenderingContext2D::createPattern):
 
-2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23036,7 +23377,7 @@
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::updateStates):
 
-2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23044,7 +23385,7 @@
 
         * WebCore.pro:
 
-2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -25429,7 +25770,7 @@
         * platform/text/PlatformString.h: Added a missing #include of
         PassRefPtr.h.
 
-2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -25442,7 +25783,7 @@
         (KJS::Bindings::convertQVariantToValue):
         (KJS::Bindings::QtConnectionObject::execute):
 
-2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -28777,7 +29118,7 @@
         (WebCore::InspectorController::setWindowVisible): Call stopDebugging()
         if the window is no longer visible.
 
-2008-08-15  Håvard Wall  <hwall@trolltech.com>
+2008-08-15  HÃ¥vard Wall  <hwall@trolltech.com>
 
         Reviewed by Simon.
 
@@ -28789,7 +29130,7 @@
         (WebCore::PlatformScrollbar::handleMouseMoveEvent):
         (WebCore::PlatformScrollbar::handleContextMenuEvent):
 
-2008-08-15  Håvard Wall  <hwall@trolltech.com>
+2008-08-15  HÃ¥vard Wall  <hwall@trolltech.com>
 
         Reviewed by Simon.
 
@@ -30152,6 +30493,7 @@
         getting the line's textContent. Add the error bubble back at the end.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+
 
 
 

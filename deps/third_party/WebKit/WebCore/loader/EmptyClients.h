@@ -248,7 +248,7 @@ public:
     virtual void transitionToCommittedFromCachedPage(CachedPage*) { }
     virtual void transitionToCommittedForNewPage() { }    
 
-    virtual void updateGlobalHistory(const KURL&) { }
+    virtual void updateGlobalHistory() { }
     virtual bool shouldGoToHistoryItem(HistoryItem*) const { return false; }
     virtual void saveViewStateToItem(HistoryItem*) { }
     virtual bool canCachePage() const { return false; }
@@ -281,6 +281,7 @@ public:
     virtual bool shouldDeleteRange(Range*) { return false; }
     virtual bool shouldShowDeleteInterface(HTMLElement*) { return false; }
     virtual bool smartInsertDeleteEnabled() { return false; }
+    virtual bool isSelectTrailingWhitespaceEnabled() { return false; }
     virtual bool isContinuousSpellCheckingEnabled() { return false; }
     virtual void toggleContinuousSpellChecking() { }
     virtual bool isGrammarCheckingEnabled() { return false; }
@@ -416,3 +417,4 @@ public:
 }
 
 #endif // EmptyClients_h
+

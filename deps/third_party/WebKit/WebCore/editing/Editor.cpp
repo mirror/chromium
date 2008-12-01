@@ -214,6 +214,11 @@ bool Editor::canSmartCopyOrDelete()
     return client() && client()->smartInsertDeleteEnabled() && m_frame->selectionGranularity() == WordGranularity;
 }
 
+bool Editor::isSelectTrailingWhitespaceEnabled()
+{
+    return client() && client()->isSelectTrailingWhitespaceEnabled();
+}
+
 bool Editor::deleteWithDirection(SelectionController::EDirection direction, TextGranularity granularity, bool killRing, bool isTypingAction)
 {
     if (!canEdit() || !m_frame->document())
@@ -2180,6 +2185,7 @@ PassRefPtr<Range> Editor::nextVisibleRange(Range* currentRange, const String& ta
 }
 
 } // namespace WebCore
+
 
 
 

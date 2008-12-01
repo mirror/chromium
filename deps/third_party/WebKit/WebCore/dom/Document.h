@@ -725,7 +725,7 @@ public:
 
     void setDocType(PassRefPtr<DocumentType>);
 
-    void finishedParsing();
+    virtual void finishedParsing();
 
 #if ENABLE(XPATH)
     // XPathEvaluator methods
@@ -1116,5 +1116,6 @@ inline bool Node::isDocumentNode() const
 } // namespace WebCore
 
 #endif // Document_h
+
 
 
