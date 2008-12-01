@@ -162,4 +162,6 @@ bool RegExpObject::match(ExecState* exec, const ArgList& args)
 
     d->lastIndex = position + length;
     return true;
+}
 
+} // namespace JSC
