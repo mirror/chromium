@@ -49,6 +49,8 @@ RenderWidgetHostHWND::RenderWidgetHostHWND(
       shutdown_factory_(this),
       parent_hwnd_(NULL),
       is_loading_(false) {
+  renderer_accessible_ =
+      CommandLine().HasSwitch(switches::kEnableRendererAccessibility);
 }
 
 RenderWidgetHostHWND::~RenderWidgetHostHWND() {
@@ -769,6 +771,9 @@ LRESULT RenderWidgetHostHWND::OnMouseActivate(UINT, WPARAM, LPARAM,
 LRESULT RenderWidgetHostHWND::OnGetObject(UINT message, WPARAM wparam,
                                           LPARAM lparam, BOOL& handled) {
   LRESULT reference_result = static_cast<LRESULT>(0L);
+
+  if (!renderer_accessible_)
+    return reference_result;
 
   // Accessibility readers will send an OBJID_CLIENT message.
   if (OBJID_CLIENT == lparam) {
