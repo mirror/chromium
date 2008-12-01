@@ -261,9 +261,6 @@ class RenderWidgetHostHWND :
   // value returns true for is_null() if we are not recording whiteout times.
   TimeTicks whiteout_start_time_;
 
-  // Whether the renderer is made accessible.
-  bool renderer_accessible_;
-
   DISALLOW_EVIL_CONSTRUCTORS(RenderWidgetHostHWND);
 };
 
