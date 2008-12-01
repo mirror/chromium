@@ -341,5 +341,6 @@ const wchar_t kIncognito[] = L"incognito";
 // operations.
 const wchar_t kUseNewSafeBrowsing[] = L"new-safe-browsing";
 
+const wchar_t kEnableRendererAccessibility[] = L"enable-renderer-accessibility";
 }  // namespace switches
 
