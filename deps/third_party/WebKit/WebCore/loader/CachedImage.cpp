@@ -290,8 +290,8 @@ void CachedImage::data(PassRefPtr<SharedBuffer> data, bool allDataReceived)
 
 void CachedImage::error()
 {
-    m_errorOccurred = true;
     clear();
+    m_errorOccurred = true;
     notifyObservers();
     m_loading = false;
     checkNotify();
