@@ -293,7 +293,7 @@ def MakeZip(output_dir, archive_name, file_list, file_relative_dir,
     zip_file.close()
   return (archive_dir, output_file)
 
-def ExtractZip(file, output_dir):
+def ExtractZip(file, output_dir, verbose=True):
   """ Extract the zip archive in the output directory.
       Based on http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/252508.
   """
@@ -314,7 +314,8 @@ def ExtractZip(file, output_dir):
 
   # extract files to directory structure
   for name in zf.namelist():
-    print 'Extracting %s' % name
+    if verbose:
+      print 'Extracting %s' % name
     outfile = open(os.path.join(output_dir, name), 'wb')
     outfile.write(zf.read(name))
     outfile.flush()
