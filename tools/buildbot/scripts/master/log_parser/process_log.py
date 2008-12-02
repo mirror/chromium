@@ -20,6 +20,7 @@ import chromium_config as config
 import chromium_utils
 
 READABLE_FILE_PERMISSIONS = int('644', 8)
+EXECUTABLE_FILE_PERMISSIONS = int('755', 8)
 
 # For the GraphingLogProcessor, the file into which it will save a list
 # of graph names for use by the JS doing the plotting.
@@ -488,6 +489,7 @@ class GraphingLogProcessor(PerformanceLogProcessor):
     graph_file = open(os.path.join(self._output_dir, GRAPH_LIST), 'w')
     simplejson.dump(graph_list, graph_file)
     graph_file.close()
+    os.chmod(graph_file, EXECUTABLE_FILE_PERMISSIONS)
 
 class GraphingPageCyclerLogProcessor(GraphingLogProcessor):
   """Handles additional processing for page-cycler timing data."""
@@ -553,3 +555,4 @@ class GraphingPageCyclerLogProcessor(GraphingLogProcessor):
     file = open(filename, 'w')
     file.write(''.join(file_data))
     file.close()
+    os.chmod(file, READABLE_FILE_PERMISSIONS)
