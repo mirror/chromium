@@ -9,10 +9,12 @@
 #include "generated_resources.h"
 
 InfoBarConfirmView::InfoBarConfirmView(const std::wstring& message)
-    : ok_button_(NULL),
-      cancel_button_(NULL),
+    : ok_button_(new views::NativeButton(l10n_util::GetString(IDS_OK))),
+      cancel_button_(new views::NativeButton(l10n_util::GetString(IDS_CANCEL))),
+      initialized_(false),
       InfoBarMessageView(message) {
-  Init();
+  ok_button_->SetListener(this);
+  cancel_button_->SetListener(this);
 }
 
 InfoBarConfirmView::~InfoBarConfirmView() {}
@@ -87,12 +89,20 @@ bool InfoBarConfirmView::GetAccessibleRole(VARIANT* role) {
   return true;
 }
 
-void InfoBarConfirmView::Init() {
-  ok_button_ = new views::NativeButton(l10n_util::GetString(IDS_OK));
-  ok_button_->SetListener(this);
+// Overridden from views::View:
+void InfoBarConfirmView::ViewHierarchyChanged(bool is_add, views::View* parent,
+                                              views::View* child) {
+  if (is_add && !initialized_ && GetContainer()) {
+    initialized_ = true;
+    Init();
+  }
+}
 
-  cancel_button_ = new views::NativeButton(l10n_util::GetString(IDS_CANCEL));
-  cancel_button_->SetListener(this);
-  AddChildViewTrailing(cancel_button_, kRelatedButtonHSpacing);
-  AddChildViewTrailing(ok_button_);
+void InfoBarConfirmView::Init() {
+  // Need to NULL check since the buttons may have been removed by the Remove*
+  // functions above.
+  if (cancel_button_)
+    AddChildViewTrailing(cancel_button_, kRelatedButtonHSpacing);
+  if (ok_button_)
+    AddChildViewTrailing(ok_button_);
 }

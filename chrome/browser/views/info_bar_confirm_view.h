@@ -48,6 +48,11 @@ class InfoBarConfirmView : public InfoBarMessageView,
   // control.
   bool GetAccessibleRole(VARIANT* role);
 
+ protected:
+  // Overridden from views::View:
+  virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
+                                    views::View* child);
+
  private:
   // Creates the ok and cancel buttons. And then calls the InfoBarMessageViews
   // init to set up the message and close buttons which will
@@ -57,6 +62,8 @@ class InfoBarConfirmView : public InfoBarMessageView,
   views::NativeButton* ok_button_;
 
   views::NativeButton* cancel_button_;
+
+  bool initialized_;
 
   DISALLOW_EVIL_CONSTRUCTORS(InfoBarConfirmView);
 };
