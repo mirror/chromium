@@ -48,6 +48,12 @@ def main_xcode(options, args):
 def main_scons(options, args):
   """Interprets options, clobbers object files, and calls scons.
   """
+  # Note: this clobbers all targets, not just Debug or Release.
+  options.build_dir = os.path.abspath(options.build_dir)
+  build_output_dir = os.path.join(options.build_dir, options.target)
+  if options.clobber:
+    chromium_utils.RemoveDirectory(build_output_dir)
+
   os.chdir(options.build_dir)
   if sys.platform == 'win32':
     command = ['hammer.bat']
@@ -69,8 +75,20 @@ def main_scons(options, args):
     os.environ['CC'] = cc
     os.environ['CXX'] = cpp
 
-  if options.clobber:
-    command.append('--clobber')
+  # Both Hammer and the Chromium Buildbot use the --mode= flag, but
+  # with different values:  Hammer uses 'dbg' and 'opt' (inherited
+  # from MK) and Chromium Buildbot uses 'dev', 'official' and 'purify'.
+  # Recognize both dialects for now, and pass the --mode= values that
+  # the Hammer modules understand to SCons so they can initialize
+  # themselves appropriately.
+  if options.mode in ('dev', 'dbg'):
+    command.extend(['--mode=dbg'])
+  if options.mode in ('official', 'opt'):
+    command.extend(['--mode=opt'])
+    os.environ['OFFICIAL_BUILD'] = '1'
+    os.environ['CHROME_BUILD_TYPE'] = '_official'
+  elif options.mode == 'purify':
+    os.environ['CHROME_BUILD_TYPE'] = '_purify'
 
   # Here's what you can uncomment if you need to see more info
   # about what the build is doing on a slave:
@@ -84,7 +102,7 @@ def main_scons(options, args):
   #   which .h file(s) changed, etc.)
   # 
   #command.extend(['--debug=explain', 'VERBOSE=1'])
-  command.extend(args)
+  command.extend([options.target] + args)
   result = chromium_utils.RunCommand(command)
   return result
 
