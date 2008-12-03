@@ -486,10 +486,11 @@ class GraphingLogProcessor(PerformanceLogProcessor):
                                      (not y['important'], y['name'])))
 
 
-    graph_file = open(os.path.join(self._output_dir, GRAPH_LIST), 'w')
+    graph_filename = os.path.join(self._output_dir, GRAPH_LIST)
+    graph_file = open(graph_filename, 'w')
     simplejson.dump(graph_list, graph_file)
     graph_file.close()
-    os.chmod(graph_file, EXECUTABLE_FILE_PERMISSIONS)
+    os.chmod(graph_filename, EXECUTABLE_FILE_PERMISSIONS)
 
 class GraphingPageCyclerLogProcessor(GraphingLogProcessor):
   """Handles additional processing for page-cycler timing data."""
@@ -555,4 +556,4 @@ class GraphingPageCyclerLogProcessor(GraphingLogProcessor):
     file = open(filename, 'w')
     file.write(''.join(file_data))
     file.close()
-    os.chmod(file, READABLE_FILE_PERMISSIONS)
+    os.chmod(filename, READABLE_FILE_PERMISSIONS)
