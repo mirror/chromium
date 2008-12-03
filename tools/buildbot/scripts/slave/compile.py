@@ -198,7 +198,7 @@ if '__main__' == __name__:
                            help='use Visual Studio instead of IncrediBuild')
   option_parser.add_option('', '--build-tool', default=None,
                            help='specify build tool (ib, vs, scons, xcode)')
-  option_parser.add_option('', '--build-args', actions='append', default=[],
+  option_parser.add_option('', '--build-args', action='append', default=[],
                            help='arguments to pass to the build tool')
 
   options, args = option_parser.parse_args()
