@@ -219,6 +219,21 @@ def GetChangelistInfoFile(changename):
   return os.path.join(GetInfoDir(), changename)
 
 
+def LoadChangelistInfoForMultiple(changenames, fail_on_not_found=True,
+                                  update_status=False):
+  """Loads many changes and merge their files list into one pseudo change.
+
+  This is mainly usefull to concatenate many changes into one for a 'gcl try'.
+  """
+  changes = changenames.split(',')
+  aggregate_change_info = ChangeInfo(name=changenames)
+  for change in changes:
+    aggregate_change_info.files += LoadChangelistInfo(change,
+                                                      fail_on_not_found,
+                                                      update_status).files
+  return aggregate_change_info
+
+
 def LoadChangelistInfo(changename, fail_on_not_found=True,
                        update_status=False):
   """Gets information about a changelist.
@@ -428,7 +443,8 @@ def Help():
          "subdirectories.\n")
   print "   gcl try change_name"
   print ("      Sends the change to the tryserver so a trybot can do a test"
-         " run on your code.\n")
+         " run on your code. To send multiple changes as one path, use a"
+         " comma-separated list of changenames.\n")
 
 
 def GetEditor():
@@ -711,7 +727,10 @@ def main(argv=None):
   # is on the Rietveld server. 'change' creates a change so it's fine if the
   # change didn't exist. All other commands require an existing change.
   fail_on_not_found = command != "try" and command != "change"
-  change_info = LoadChangelistInfo(changename, fail_on_not_found, True)
+  if command == "try" and changename.find(',') != -1:
+    change_info = LoadChangelistInfoForMultiple(changename, True, True)
+  else:
+    change_info = LoadChangelistInfo(changename, fail_on_not_found, True)
 
   if command == "change":
     Change(change_info)
