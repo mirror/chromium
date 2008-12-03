@@ -32,6 +32,7 @@
 #include "EventNames.h"
 #include "Frame.h"
 #include "HTMLInputElement.h"
+#include "HTMLNames.h"
 #include "HTMLTextAreaElement.h"
 #include "MouseEvent.h"
 #include "RenderTextControl.h"
@@ -72,7 +73,8 @@ VisiblePosition RenderTextControlInnerBlock::positionForCoordinates(int x, int y
 }
 
 TextControlInnerElement::TextControlInnerElement(Document* doc, Node* shadowParent)
-    : HTMLDivElement(doc), m_shadowParent(shadowParent)
+    : HTMLDivElement(HTMLNames::divTag, doc)
+    , m_shadowParent(shadowParent)
 {
 }
 
