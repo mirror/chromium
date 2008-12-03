@@ -102,7 +102,7 @@ def main_scons(options, args):
   #   which .h file(s) changed, etc.)
   # 
   #command.extend(['--debug=explain', 'VERBOSE=1'])
-  command.extend(args)
+  command.extend(options.build_args + args)
   result = chromium_utils.RunCommand(command)
   return result
 
@@ -198,6 +198,8 @@ if '__main__' == __name__:
                            help='use Visual Studio instead of IncrediBuild')
   option_parser.add_option('', '--build-tool', default=None,
                            help='specify build tool (ib, vs, scons, xcode)')
+  option_parser.add_option('', '--build-args', actions='append', default=[],
+                           help='arguments to pass to the build tool')
 
   options, args = option_parser.parse_args()
 
