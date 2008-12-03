@@ -102,7 +102,7 @@ def main_scons(options, args):
   #   which .h file(s) changed, etc.)
   # 
   #command.extend(['--debug=explain', 'VERBOSE=1'])
-  command.extend([options.target] + args)
+  command.extend(args)
   result = chromium_utils.RunCommand(command)
   return result
 
