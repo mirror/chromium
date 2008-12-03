@@ -1,3 +1,517 @@
+2008-11-26  Nikolas Zimmermann  <zimmermann@kde.org>
+
+        Reviewed by Oliver Hunt.
+
+        Fix path to string logic, correctly taking closed (sub-)paths into account.
+        Code was just broken on cg, observed by Dirk Schulze.
+
+        QPainterPath doesn't seem to expose any functionality to detect closed sub paths,
+        using the elementAt() function. There might be a workaround - Dirk will investigate.
+
+        * platform/graphics/cg/PathCG.cpp:
+        (WebCore::CGPathToCFStringApplierFunction):
+        * platform/graphics/cairo/PathCairo.cpp:
+        (WebCore::Path::debugString):
+
+2008-11-26  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22519
+        Remove unnecessary include.
+
+        * dom/XMLTokenizer.cpp:
+
+2008-11-26  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Oliver Hunt.
+
+        Add <noop> element support, completing the task element support.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * wml/WMLNoopElement.cpp: Added.
+        (WebCore::WMLNoopElement::WMLNoopElement):
+        (WebCore::WMLNoopElement::insertedIntoDocument):
+        * wml/WMLNoopElement.h: Added.
+        * wml/WMLTagNames.in: Reorganize file a bit.
+
+2008-11-26  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Bug 22441: Bridge the gap between the generated ElementFactory and HTMLElementFactory
+        https://bugs.webkit.org/show_bug.cgi?id=22441
+
+        Make more HTML elements' constructors take a QualifiedName.
+
+        * editing/DeleteButtonController.cpp:
+        (WebCore::DeleteButtonController::createDeletionUI):
+        * html/HTMLBlockquoteElement.cpp:
+        (WebCore::HTMLBlockquoteElement::HTMLBlockquoteElement):
+        * html/HTMLBlockquoteElement.h:
+        * html/HTMLButtonElement.cpp:
+        (WebCore::HTMLButtonElement::HTMLButtonElement):
+        * html/HTMLButtonElement.h:
+        * html/HTMLDListElement.cpp:
+        (WebCore::HTMLDListElement::HTMLDListElement):
+        * html/HTMLDListElement.h:
+        * html/HTMLDirectoryElement.cpp:
+        (WebCore::HTMLDirectoryElement::HTMLDirectoryElement):
+        * html/HTMLDirectoryElement.h:
+        * html/HTMLDivElement.cpp:
+        (WebCore::HTMLDivElement::HTMLDivElement):
+        * html/HTMLDivElement.h:
+        * html/HTMLElementFactory.cpp:
+        (WebCore::styleConstructor):
+        (WebCore::titleConstructor):
+        (WebCore::frameConstructor):
+        (WebCore::framesetConstructor):
+        (WebCore::iframeConstructor):
+        (WebCore::formConstructor):
+        (WebCore::buttonConstructor):
+        (WebCore::inputConstructor):
+        (WebCore::isindexConstructor):
+        (WebCore::fieldsetConstructor):
+        (WebCore::keygenConstructor):
+        (WebCore::labelConstructor):
+        (WebCore::legendConstructor):
+        (WebCore::optgroupConstructor):
+        (WebCore::optionConstructor):
+        (WebCore::selectConstructor):
+        (WebCore::textareaConstructor):
+        (WebCore::dlConstructor):
+        (WebCore::ulConstructor):
+        (WebCore::olConstructor):
+        (WebCore::dirConstructor):
+        (WebCore::menuConstructor):
+        (WebCore::liConstructor):
+        (WebCore::blockquoteConstructor):
+        (WebCore::divConstructor):
+        (WebCore::headingConstructor):
+        * html/HTMLFieldSetElement.cpp:
+        (WebCore::HTMLFieldSetElement::HTMLFieldSetElement):
+        * html/HTMLFieldSetElement.h:
+        * html/HTMLFormElement.cpp:
+        (WebCore::HTMLFormElement::HTMLFormElement):
+        * html/HTMLFormElement.h:
+        * html/HTMLFrameElement.cpp:
+        (WebCore::HTMLFrameElement::HTMLFrameElement):
+        * html/HTMLFrameElement.h:
+        * html/HTMLFrameSetElement.cpp:
+        (WebCore::HTMLFrameSetElement::HTMLFrameSetElement):
+        * html/HTMLFrameSetElement.h:
+        * html/HTMLIFrameElement.cpp:
+        (WebCore::HTMLIFrameElement::HTMLIFrameElement):
+        * html/HTMLIFrameElement.h:
+        * html/HTMLInputElement.cpp:
+        * html/HTMLInputElement.h:
+        * html/HTMLIsIndexElement.cpp:
+        (WebCore::HTMLIsIndexElement::HTMLIsIndexElement):
+        * html/HTMLIsIndexElement.h:
+        * html/HTMLKeygenElement.cpp:
+        (WebCore::HTMLKeygenElement::HTMLKeygenElement):
+        * html/HTMLKeygenElement.h:
+        * html/HTMLLIElement.cpp:
+        (WebCore::HTMLLIElement::HTMLLIElement):
+        * html/HTMLLIElement.h:
+        * html/HTMLLabelElement.cpp:
+        (WebCore::HTMLLabelElement::HTMLLabelElement):
+        * html/HTMLLabelElement.h:
+        * html/HTMLLegendElement.cpp:
+        (WebCore::HTMLLegendElement::HTMLLegendElement):
+        * html/HTMLLegendElement.h:
+        * html/HTMLMenuElement.cpp:
+        (WebCore::HTMLMenuElement::HTMLMenuElement):
+        * html/HTMLMenuElement.h:
+        * html/HTMLOListElement.cpp:
+        (WebCore::HTMLOListElement::HTMLOListElement):
+        * html/HTMLOListElement.h:
+        * html/HTMLOptGroupElement.cpp:
+        (WebCore::HTMLOptGroupElement::HTMLOptGroupElement):
+        * html/HTMLOptGroupElement.h:
+        * html/HTMLOptionElement.cpp:
+        (WebCore::HTMLOptionElement::HTMLOptionElement):
+        * html/HTMLOptionElement.h:
+        * html/HTMLParser.cpp:
+        (WebCore::HTMLParser::formCreateErrorCheck):
+        (WebCore::HTMLParser::handleIsindex):
+        * html/HTMLSelectElement.cpp:
+        * html/HTMLSelectElement.h:
+        * html/HTMLStyleElement.cpp:
+        (WebCore::HTMLStyleElement::HTMLStyleElement):
+        * html/HTMLStyleElement.h:
+        * html/HTMLTextAreaElement.cpp:
+        (WebCore::HTMLTextAreaElement::HTMLTextAreaElement):
+        * html/HTMLTextAreaElement.h:
+        * html/HTMLTitleElement.cpp:
+        (WebCore::HTMLTitleElement::HTMLTitleElement):
+        * html/HTMLTitleElement.h:
+        * html/HTMLUListElement.cpp:
+        (WebCore::HTMLUListElement::HTMLUListElement):
+        * html/HTMLUListElement.h:
+        * html/HTMLViewSourceDocument.cpp:
+        (WebCore::HTMLViewSourceDocument::createContainingTable):
+        * rendering/MediaControlElements.cpp:
+        (WebCore::MediaControlShadowRootElement::MediaControlShadowRootElement):
+        (WebCore::MediaControlInputElement::MediaControlInputElement):
+        * rendering/RenderFileUploadControl.cpp:
+        (WebCore::HTMLFileUploadInnerButtonElement::HTMLFileUploadInnerButtonElement):
+        * rendering/RenderMedia.cpp:
+        (WebCore::RenderMedia::createPanel):
+        (WebCore::RenderMedia::createTimeDisplay):
+        * rendering/RenderSlider.cpp:
+        (WebCore::HTMLSliderThumbElement::HTMLSliderThumbElement):
+        * rendering/TextControlInnerElements.cpp:
+        (WebCore::TextControlInnerElement::TextControlInnerElement):
+
+2008-11-26  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Sam Weinig.
+
+        Fix obvious problem in WMLPageState constructor, m_page was not set to the passed Page pointer.
+
+        * wml/WMLPageState.cpp:
+        (WebCore::WMLPageState::WMLPageState):
+
+2008-11-26  Matt Perry  <mpcomplete@gmail.com>
+
+        Fix Qt bustage.
+
+        See https://bugs.webkit.org/show_bug.cgi?id=22051
+
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::extraDefaultStyleSheet):
+
+2008-11-26  Matt Perry  <mpcomplete@gmail.com>
+
+        Reviewed by Maciej Stachowiak.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=22051
+        Renderthemes should be able to supply additional CSS rules to the core
+        ones.
+
+        * DerivedSources.make:
+        * css/CSSStyleSelector.cpp:
+        (WebCore::parseUASheet):
+        (WebCore::loadFullDefaultStyle):
+        (WebCore::loadSimpleDefaultStyle):
+        * css/themeWin.css: Added.
+        * css/themeWinQuirks.css: Added.
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::extraDefaultStyleSheet):
+        * platform/qt/RenderThemeQt.h:
+        * rendering/RenderTheme.cpp:
+        * rendering/RenderTheme.h:
+        (WebCore::RenderTheme::extraDefaultStyleSheet):
+        (WebCore::RenderTheme::extraQuirksStyleSheet):
+        * rendering/RenderThemeWin.cpp:
+        (WebCore::RenderThemeWin::extraDefaultStyleSheet):
+        (WebCore::RenderThemeWin::extraQuirksStyleSheet):
+        * rendering/RenderThemeWin.h:
+
+2008-11-26  David Kilzer  <ddkilzer@apple.com>
+
+        Make CSSStyleSheet::addSubresourceURLStrings() iterative
+
+        Part of the fix for Bug 11850: Webarchive fails to save images referenced in CSS
+        <https://bugs.webkit.org/show_bug.cgi?id=11850>
+
+        Reviewed by Brady Eidson.
+
+        * css/CSSStyleSheet.cpp:
+        (WebCore::CSSStyleSheet::addSubresourceURLStrings): Switch algorithm
+        from recursive to iterative for gathering the list of all CSS
+        stylesheets referenced in @import statements.
+
+2008-11-26  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Simon Hausmann.
+
+        Transformations to the context shouldn't transform the currentPath.
+        Fixed this on Qt.
+
+        [QT] GraphicsContext's currenPath can be transformed
+        https://bugs.webkit.org/show_bug.cgi?id=22163
+
+        * platform/graphics/GraphicsContextPrivate.h:
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::restorePlatformState):
+        (WebCore::GraphicsContext::fillPath):
+        (WebCore::GraphicsContext::strokePath):
+        (WebCore::GraphicsContext::fillRect):
+        (WebCore::GraphicsContext::translate):
+        (WebCore::GraphicsContext::rotate):
+        (WebCore::GraphicsContext::scale):
+        (WebCore::GraphicsContext::concatCTM):
+
+2008-11-26  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Gtk build script minor fixes. Not reviewed.
+
+        * GNUmakefile.am:
+          - Add ScriptInstance.h (introduced in r38774) to
+        the build.
+          - Move WML and GEOLOCATION conditionals before the SVG
+        conditional to be consistent with the style of the script.
+          - Move GeolocationGtk sources to webcoregtk_sources.
+
+2008-11-26  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Darin Adler and Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22469
+
+        Move the class DOMWindowTimer from JSDOMWindowBase into its own file in
+        preparation to making it work for Workers. For now, just move the code and couple
+        of global variables.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * bindings/js/JSDOMWindowBase.cpp:
+        (WebCore::JSDOMWindowBase::installTimeout):
+        (WebCore::JSDOMWindowBase::pauseTimeouts):
+        (WebCore::JSDOMWindowBase::resumeTimeouts):
+        (WebCore::JSDOMWindowBase::timerFired):
+        * bindings/js/JSDOMWindowBase.h:
+        * bindings/js/DOMTimer.cpp: Added.
+        (WebCore::DOMTimer::DOMTimer):
+        (WebCore::DOMTimer::~DOMTimer):
+        (WebCore::DOMTimer::fired):
+        * bindings/js/DOMTimer.h: Added.
+        (WebCore::DOMTimer::timeoutId):
+        (WebCore::DOMTimer::nestingLevel):
+        (WebCore::DOMTimer::setNestingLevel):
+        (WebCore::DOMTimer::action):
+        (WebCore::DOMTimer::takeAction):
+
+2008-11-25  Darin Fisher  <darin@chromium.org>
+
+        Fix bustage.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22493
+        Need to expose bridge/*.h to the WebKit build.
+
+        * WebCore.vcproj/WebCore.vcproj:
+
+2008-11-25  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Fix build, by removing some wrong last-minute changes.
+
+        * wml/WMLIntrinsicEvent.cpp:
+        (WebCore::createTaskElement):
+        * wml/WMLOnEventElement.cpp:
+        (WebCore::WMLOnEventElement::registerTask):
+
+2008-11-25  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Geoffrey Garen.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22493
+        Abstract away JSC:: usage in WebCore/html
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/js/JSPluginElementFunctions.cpp:
+        (WebCore::pluginInstance):
+        * bindings/js/ScriptController.h:
+        * bindings/js/ScriptControllerMac.mm:
+        (WebCore::ScriptController::createScriptInstanceForWidget):
+        * bindings/js/ScriptInstance.h: Added.
+        * html/HTMLPlugInElement.cpp:
+        (WebCore::HTMLPlugInElement::~HTMLPlugInElement):
+        (WebCore::HTMLPlugInElement::getInstance):
+        * html/HTMLPlugInElement.h:
+
+2008-11-24  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Sam Weinig.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22477
+
+        A WMLTaskElement checks wheter it's parent is an <anchor>/<do>/<onevent> element, and calls registerTask(this) on the parent.
+        Add a isWMLTaskElement() function to WMLElement, making it possible to cast to WMLTaskElement directly.
+
+        Add WMLEventHandlingElement class, inheriting from WMLElement, to serve as common base WMLTemplate/Option/CardElement,
+        centralizing the eventHandler() / createEventHandlerIfNeeded() implementation. Add a isWMLEventHandlingElement()
+        function to WMLElement, so WMLOnEventElement can create event handlers, without knowing wheter it's a
+        <template>/<option> or <card> element.
+
+        Add complete <onevent> support.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * wml/WMLCardElement.cpp:
+        (WebCore::WMLCardElement::WMLCardElement):
+        (WebCore::WMLCardElement::setActiveCardInDocument):
+        * wml/WMLCardElement.h:
+        (WebCore::WMLCardElement::isVisible):
+        (WebCore::WMLCardElement::setVisible):
+        * wml/WMLElement.h:
+        (WebCore::WMLElement::isWMLTaskElement):
+        * wml/WMLEventHandlingElement.cpp: Added.
+        (WebCore::WMLEventHandlingElement::WMLEventHandlingElement):
+        (WebCore::WMLEventHandlingElement::createEventHandlerIfNeeded):
+        * wml/WMLEventHandlingElement.h: Added.
+        (WebCore::WMLEventHandlingElement::isWMLEventHandlingElement):
+        (WebCore::WMLEventHandlingElement::eventHandler):
+        * wml/WMLOnEventElement.cpp: Added.
+        (WebCore::WMLOnEventElement::WMLOnEventElement):
+        (WebCore::WMLOnEventElement::parseMappedAttribute):
+        (WebCore::WMLOnEventElement::registerTask):
+        * wml/WMLOnEventElement.h: Added.
+        * wml/WMLSetvarElement.cpp:
+        (WebCore::WMLSetvarElement::parseMappedAttribute):
+        (WebCore::WMLSetvarElement::insertedIntoDocument):
+        * wml/WMLTagNames.in:
+        * wml/WMLTaskElement.cpp:
+        (WebCore::WMLTaskElement::insertedIntoDocument):
+        * wml/WMLTaskElement.h:
+        (WebCore::WMLTaskElement::isWMLTaskElement):
+
+2008-11-25  Pierre-Olivier Latour  <pol@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        createFontCustomPlatformData() crashes if CGFontCreateWithPlatformFont() returns NULL
+
+        https://bugs.webkit.org/show_bug.cgi?id=22503
+
+        * platform/graphics/mac/FontCustomPlatformData.cpp:
+        (WebCore::createFontCustomPlatformData):
+
+2008-11-25  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Bug 22441: Bridge the gap between the generated ElementFactory and HTMLElementFactory
+        https://bugs.webkit.org/show_bug.cgi?id=22441
+
+        Element's other than HTML ones take a QualifiedName in their constructors.
+        To make HTMLElementFactory closer to the other ElementFactory, we need
+        to make them take the same arguments.
+        This patch only makes the 5 first one in HTMLElementFactory abide by that. The others
+        will go into the next patch.
+
+        * dom/Document.cpp:
+        (WebCore::Document::implicitClose):
+        * html/HTMLBaseElement.cpp:
+        (WebCore::HTMLBaseElement::HTMLBaseElement):
+        * html/HTMLBaseElement.h:
+        * html/HTMLBodyElement.cpp:
+        (WebCore::HTMLBodyElement::HTMLBodyElement):
+        * html/HTMLBodyElement.h:
+        * html/HTMLElementFactory.cpp:
+        (WebCore::htmlConstructor):
+        (WebCore::headConstructor):
+        (WebCore::bodyConstructor):
+        (WebCore::baseConstructor):
+        (WebCore::linkConstructor):
+        (WebCore::metaConstructor):
+        * html/HTMLHeadElement.cpp:
+        (WebCore::HTMLHeadElement::HTMLHeadElement):
+        * html/HTMLHeadElement.h:
+        * html/HTMLHtmlElement.cpp:
+        (WebCore::HTMLHtmlElement::HTMLHtmlElement):
+        * html/HTMLHtmlElement.h:
+        * html/HTMLLinkElement.cpp:
+        (WebCore::HTMLLinkElement::HTMLLinkElement):
+        * html/HTMLLinkElement.h:
+        * html/HTMLMetaElement.cpp:
+        (WebCore::HTMLMetaElement::HTMLMetaElement):
+        * html/HTMLMetaElement.h:
+        * html/HTMLParser.cpp:
+        (WebCore::HTMLParser::handleError):
+        (WebCore::HTMLParser::headCreateErrorCheck):
+        (WebCore::HTMLParser::createHead):
+        (WebCore::HTMLParser::finished):
+        * html/HTMLViewSourceDocument.cpp:
+        (WebCore::HTMLViewSourceDocument::createContainingTable):
+
+2008-11-25  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22487
+        I was not checking for the case of 0 length keyframe lists and dereffing a null pointer.
+
+        Tests: animations/empty-keyframes.html
+               animations/fill-unset-properties.html
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::keyframeStylesForAnimation):
+
+2008-11-25  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=22046
+
+        Fix a crash when an animation or transition end event handler
+        removes the element upon which the transition/animation is running,
+        by keeping a reference to the AnimationBase object on the stack.
+
+        Tests: animations/transform-animation-event-destroy-element.html
+               transitions/transform-transition-event-destroy-element.html
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::setChanged):
+        (WebCore::AnimationBase::updateStateMachine):
+        * page/animation/AnimationBase.h:
+        (WebCore::AnimationBase::clearRenderer):
+        * page/animation/AnimationController.cpp:
+        (WebCore::AnimationControllerPrivate::clear):
+        * page/animation/CompositeAnimation.cpp:
+        (WebCore::CompositeAnimationPrivate::~CompositeAnimationPrivate):
+        * page/animation/CompositeAnimation.h:
+
+2008-11-25  Kevin Ollivier  <kevino@theolliviers.com>
+
+        Better wx build fix - support PurgeableBuffer on Mac.
+
+        * platform/PurgeableBuffer.h:
+        * webcore-wx.bkl:
+
+2008-11-25  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by David Kilzer.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22022
+
+        Add GeoleocationServiceGtk stubs and integrate it into the buildsystem
+
+        Add stubs for a Gtk Implementation.
+
+        * GNUmakefile.am:
+        * platform/gtk/GeolocationServiceGtk.cpp: Added.
+        (WebCore::GeolocationService::create):
+        (WebCore::GeolocationServiceGtk::GeolocationServiceGtk):
+        (WebCore::GeolocationServiceGtk::startUpdating):
+        (WebCore::GeolocationServiceGtk::stopUpdating):
+        (WebCore::GeolocationServiceGtk::suspend):
+        (WebCore::GeolocationServiceGtk::resume):
+        (WebCore::GeolocationServiceGtk::lastPosition):
+        (WebCore::GeolocationServiceGtk::lastError):
+        * platform/gtk/GeolocationServiceGtk.h: Added.
+
+2008-11-25  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix - we don't support PurgeableBuffer on Leopard for now.
+        
+        * platform/PurgeableBuffer.h:
+
+2008-11-25  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=22483
+        Assertion failure in CachedResource::makePurgeable during layout tests
+        
+        Deleting SVG image can re-enter destroyDecodedData.
+
+        * loader/CachedImage.cpp:
+        (WebCore::CachedImage::destroyDecodedData):
+
 2008-11-25  David Levin  <levin@chromium.org>
 
         Reviewed by Alexey Proskuryakov.

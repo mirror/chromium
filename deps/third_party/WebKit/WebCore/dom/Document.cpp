@@ -1652,7 +1652,7 @@ void Document::implicitClose()
     if (!this->body() && isHTMLDocument()) {
         if (Node* documentElement = this->documentElement()) {
             ExceptionCode ec = 0;
-            documentElement->appendChild(new HTMLBodyElement(this), ec);
+            documentElement->appendChild(new HTMLBodyElement(bodyTag, this), ec);
             ASSERT(!ec);
         }
     }

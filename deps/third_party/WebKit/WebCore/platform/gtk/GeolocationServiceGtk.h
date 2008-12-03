@@ -1,7 +1,6 @@
-/**
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
- *               http://www.torchmobile.com/
- * 
+/*
+ * Copyright (C) 2008 Holger Hans Peter Freyther
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -16,43 +15,27 @@
  * along with this library; see the file COPYING.LIB.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
- *
  */
 
-#ifndef WMLTaskElement_h
-#define WMLTaskElement_h
+#ifndef GeolocationServiceGtk_h
+#define GeolocationServiceGtk_h
 
-#if ENABLE(WML)
-#include "WMLElement.h"
-
-#include <wtf/HashSet.h>
+#include "GeolocationService.h"
 
 namespace WebCore {
+    class GeolocationServiceGtk : public GeolocationService {
+    public:
+        GeolocationServiceGtk(GeolocationServiceClient*);
 
-class WMLPageState;
-class WMLSetvarElement;
+        virtual bool startUpdating(PositionOptions*);
+        virtual void stopUpdating();
 
-class WMLTaskElement : public WMLElement {
-public:
-    WMLTaskElement(const QualifiedName& tagName, Document*);
-    virtual ~WMLTaskElement();
+        virtual void suspend();
+        virtual void resume();
 
-    virtual bool isWMLTaskElement() const { return true; }
-
-    virtual void insertedIntoDocument();
-    virtual void executeTask(Event*) = 0;
-
-    void registerVariableSetter(WMLSetvarElement*);
-
-protected:
-    void storeVariableState(WMLPageState*);
-
-private:
-    HashSet<WMLSetvarElement*> m_variableSetterElements;
-};
-
+        Geoposition* lastPosition() const;
+        PositionError* lastError() const;
+    };
 }
 
 #endif
-#endif
-

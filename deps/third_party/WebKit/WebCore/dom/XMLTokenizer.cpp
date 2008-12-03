@@ -49,9 +49,6 @@
 #include "ScriptController.h"
 #include "ScriptSourceCode.h"
 #include "ScriptValue.h"
-#if USE(JSC)
-#include "StringSourceProvider.h"
-#endif
 #include "TextResourceDecoder.h"
 #include <wtf/Platform.h>
 #include <wtf/StringExtras.h>

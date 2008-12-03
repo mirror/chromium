@@ -1,7 +1,6 @@
-/**
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
- *               http://www.torchmobile.com/
- * 
+/*
+ * Copyright (C) 2008 Holger Hans Peter Freyther
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -16,43 +15,47 @@
  * along with this library; see the file COPYING.LIB.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
- *
  */
 
-#ifndef WMLTaskElement_h
-#define WMLTaskElement_h
-
-#if ENABLE(WML)
-#include "WMLElement.h"
-
-#include <wtf/HashSet.h>
+#include "config.h"
+#include "GeolocationServiceGtk.h"
 
 namespace WebCore {
 
-class WMLPageState;
-class WMLSetvarElement;
-
-class WMLTaskElement : public WMLElement {
-public:
-    WMLTaskElement(const QualifiedName& tagName, Document*);
-    virtual ~WMLTaskElement();
-
-    virtual bool isWMLTaskElement() const { return true; }
-
-    virtual void insertedIntoDocument();
-    virtual void executeTask(Event*) = 0;
-
-    void registerVariableSetter(WMLSetvarElement*);
-
-protected:
-    void storeVariableState(WMLPageState*);
-
-private:
-    HashSet<WMLSetvarElement*> m_variableSetterElements;
-};
-
+GeolocationService* GeolocationService::create(GeolocationServiceClient* client)
+{
+    return new GeolocationServiceGtk(client);
 }
 
-#endif
-#endif
+GeolocationServiceGtk::GeolocationServiceGtk(GeolocationServiceClient* client)
+    : GeolocationService(client)
+{}
 
+bool GeolocationServiceGtk::startUpdating(PositionOptions*)
+{
+    return false;
+}
+
+void GeolocationServiceGtk::stopUpdating()
+{
+}
+
+void GeolocationServiceGtk::suspend()
+{
+}
+
+void GeolocationServiceGtk::resume()
+{
+}
+
+Geoposition* GeolocationServiceGtk::lastPosition() const
+{
+    return 0;
+}
+
+PositionError* GeolocationServiceGtk::lastError() const
+{
+    return 0;
+}
+
+}

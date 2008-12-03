@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
  *               http://www.torchmobile.com/
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -19,40 +19,30 @@
  *
  */
 
-#ifndef WMLTaskElement_h
-#define WMLTaskElement_h
+#include "config.h"
 
 #if ENABLE(WML)
-#include "WMLElement.h"
+#include "WMLEventHandlingElement.h"
 
-#include <wtf/HashSet.h>
+#include "WMLIntrinsicEventHandler.h"
+#include "WMLTaskElement.h"
+#include "WMLNames.h"
 
 namespace WebCore {
 
-class WMLPageState;
-class WMLSetvarElement;
+using namespace WMLNames;
 
-class WMLTaskElement : public WMLElement {
-public:
-    WMLTaskElement(const QualifiedName& tagName, Document*);
-    virtual ~WMLTaskElement();
+WMLEventHandlingElement::WMLEventHandlingElement(const QualifiedName& tagName, Document* doc)
+    : WMLElement(tagName, doc)
+{
+}
 
-    virtual bool isWMLTaskElement() const { return true; }
-
-    virtual void insertedIntoDocument();
-    virtual void executeTask(Event*) = 0;
-
-    void registerVariableSetter(WMLSetvarElement*);
-
-protected:
-    void storeVariableState(WMLPageState*);
-
-private:
-    HashSet<WMLSetvarElement*> m_variableSetterElements;
-};
+void WMLEventHandlingElement::createEventHandlerIfNeeded()
+{
+    if (!m_eventHandler)
+        m_eventHandler.set(new WMLIntrinsicEventHandler);
+}
 
 }
 
 #endif
-#endif
-

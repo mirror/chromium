@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
  *               http://www.torchmobile.com/
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
@@ -19,40 +19,46 @@
  *
  */
 
-#ifndef WMLTaskElement_h
-#define WMLTaskElement_h
+#include "config.h"
 
 #if ENABLE(WML)
-#include "WMLElement.h"
+#include "WMLNoopElement.h"
 
-#include <wtf/HashSet.h>
+#include "WMLNames.h"
 
 namespace WebCore {
 
-class WMLPageState;
-class WMLSetvarElement;
+using namespace WMLNames;
 
-class WMLTaskElement : public WMLElement {
-public:
-    WMLTaskElement(const QualifiedName& tagName, Document*);
-    virtual ~WMLTaskElement();
+WMLNoopElement::WMLNoopElement(const QualifiedName& tagName, Document* doc)
+    : WMLElement(tagName, doc)
+{
+}
 
-    virtual bool isWMLTaskElement() const { return true; }
+void WMLNoopElement::insertedIntoDocument()
+{
+    WMLElement::insertedIntoDocument();
 
-    virtual void insertedIntoDocument();
-    virtual void executeTask(Event*) = 0;
+    Node* parent = parentNode();
+    ASSERT(parent);
 
-    void registerVariableSetter(WMLSetvarElement*);
+    if (!parent || !parent->isWMLElement())
+        return;
 
-protected:
-    void storeVariableState(WMLPageState*);
+    /* FIXME
+    if (parent->hasTagName(doTag)) {
+        WMLDoElement* doElement = static_cast<WMLDoElement*>(parent);
+        doElement->setNoop(true);
+        doElement->setChanged();
+    } else
+    */
 
-private:
-    HashSet<WMLSetvarElement*> m_variableSetterElements;
-};
+    if (parent->hasTagName(anchorTag)) {
+        // FIXME: Error reporting    
+        // WMLHelper::tokenizer()->reportError(WrongTaskInAnchorElementError);
+    }
+}
 
 }
 
 #endif
-#endif
-
