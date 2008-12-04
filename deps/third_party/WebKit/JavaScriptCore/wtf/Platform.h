@@ -316,11 +316,8 @@
 #endif
 #endif
 
-// allow build settings to override HAVE_ACCESSIBILITY
-#if !defined(HAVE_ACCESSIBILITY)
 #if PLATFORM(MAC) || PLATFORM(WIN) || PLATFORM(GTK) || PLATFORM(CHROMIUM)
 #define HAVE_ACCESSIBILITY 1
-#endif
 #endif
 
 #if COMPILER(GCC)
@@ -442,10 +439,6 @@
 #define ENABLE_PAN_SCROLLING 1
 #endif
 
-#if !defined(ENABLE_ACTIVEX_TYPE_CONVERSION_WMPLAYER)
-#define ENABLE_ACTIVEX_TYPE_CONVERSION_WMPLAYER 1
-#endif
-
 /* Use the QtXmlStreamReader implementation for XMLTokenizer */
 #if PLATFORM(QT)
 #if !ENABLE(XSLT)
@@ -460,6 +453,3 @@
 #endif
 
 #endif /* WTF_Platform_h */
-
-
-

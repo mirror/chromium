@@ -18,9 +18,6 @@
  *
  */
 
-// Temporarily disable warning about using explicit template arguments
-#pragma warning(disable:4344)
-
 namespace WTF {
 
     // This specialization is a direct copy of HashMap, with overloaded functions
@@ -337,6 +334,3 @@ namespace WTF {
     }
 
 } // namespace WTF
-
-// Re-enable warning disabled at top of file
-#pragma warning(default:4344)
