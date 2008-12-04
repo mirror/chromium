@@ -365,5 +365,3 @@ void XMLTokenizer::pauseParsing()
 
 }
 
-
-

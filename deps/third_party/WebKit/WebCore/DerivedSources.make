@@ -706,5 +706,3 @@ DOM%.h : %.idl $(GENERATE_BINDINGS_SCRIPTS) bindings/scripts/CodeGeneratorObjC.p
 endif
 
 # ------------------------
-
-

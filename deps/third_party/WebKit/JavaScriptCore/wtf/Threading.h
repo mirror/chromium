@@ -200,7 +200,6 @@ inline int atomicDecrement(int volatile* addend) { return __gnu_cxx::__exchange_
 
 #endif
 
-
 template<class T> class ThreadSafeShared : Noncopyable {
 public:
     ThreadSafeShared(int initialRefCount = 1)
@@ -274,4 +273,3 @@ using WTF::detachThread;
 using WTF::waitForThreadCompletion;
 
 #endif // Threading_h
-

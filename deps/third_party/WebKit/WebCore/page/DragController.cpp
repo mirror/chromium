@@ -776,4 +776,3 @@ void DragController::placeDragCaret(const IntPoint& windowPoint)
 }
     
 }
-

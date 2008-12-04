@@ -2238,5 +2238,3 @@ bool EventHandler::passMousePressEventToScrollbar(MouseEventWithHitTestResults& 
 }
 
 }
-
-
