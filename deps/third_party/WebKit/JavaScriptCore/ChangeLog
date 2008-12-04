@@ -1,3 +1,262 @@
+2008-11-29  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Dan Bernstein.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22557
+        Add statistics for JavaScript GC heap.
+
+        * JavaScriptCore.exp:
+        * runtime/Collector.cpp:
+        (JSC::Heap::objectCount):
+        (JSC::addToStatistics):
+        (JSC::Heap::statistics):
+        * runtime/Collector.h:
+
+2008-11-29  Antti Koivisto  <antti@apple.com>
+
+        Fix debug build by adding a stub method.
+
+        * wtf/FastMalloc.cpp:
+        (WTF::fastMallocStatistics):
+
+2008-11-29  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22557
+        
+        Add function for getting basic statistics from FastMalloc.
+
+        * JavaScriptCore.exp:
+        * wtf/FastMalloc.cpp:
+        (WTF::DLL_Length):
+        (WTF::TCMalloc_PageHeap::ReturnedBytes):
+        (WTF::TCMallocStats::fastMallocStatistics):
+        * wtf/FastMalloc.h:
+
+2008-11-29  Cameron Zwarich  <zwarich@apple.com>
+
+        Not reviewed.
+
+        The C++ standard does not automatically grant the friendships of an
+        enclosing class to its nested subclasses, so we should do so explicitly.
+        This fixes the GCC 4.0 build, although both GCC 4.2 and Visual C++ 2005
+        accept the incorrect code as it is.
+
+        * assembler/MacroAssembler.h:
+
+2008-11-29  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Camron Zwarich.
+
+        Add the class MacroAssembler to provide some abstraction of code generation,
+        and change WREC to make use of this class, rather than directly accessing
+        the X86Assembler.
+
+        This patch also allows WREC to be compiled without the rest of the JIT enabled.
+
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * assembler/MacroAssembler.h: Added.
+        (JSC::MacroAssembler::):
+        (JSC::MacroAssembler::MacroAssembler):
+        (JSC::MacroAssembler::copyCode):
+        (JSC::MacroAssembler::Address::Address):
+        (JSC::MacroAssembler::ImplicitAddress::ImplicitAddress):
+        (JSC::MacroAssembler::BaseIndex::BaseIndex):
+        (JSC::MacroAssembler::Label::Label):
+        (JSC::MacroAssembler::Jump::Jump):
+        (JSC::MacroAssembler::Jump::link):
+        (JSC::MacroAssembler::Jump::linkTo):
+        (JSC::MacroAssembler::JumpList::link):
+        (JSC::MacroAssembler::JumpList::linkTo):
+        (JSC::MacroAssembler::JumpList::append):
+        (JSC::MacroAssembler::Imm32::Imm32):
+        (JSC::MacroAssembler::add32):
+        (JSC::MacroAssembler::or32):
+        (JSC::MacroAssembler::sub32):
+        (JSC::MacroAssembler::loadPtr):
+        (JSC::MacroAssembler::load32):
+        (JSC::MacroAssembler::load16):
+        (JSC::MacroAssembler::storePtr):
+        (JSC::MacroAssembler::store32):
+        (JSC::MacroAssembler::pop):
+        (JSC::MacroAssembler::push):
+        (JSC::MacroAssembler::peek):
+        (JSC::MacroAssembler::poke):
+        (JSC::MacroAssembler::move):
+        (JSC::MacroAssembler::compareImm32ForBranch):
+        (JSC::MacroAssembler::compareImm32ForBranchEquality):
+        (JSC::MacroAssembler::jae32):
+        (JSC::MacroAssembler::je32):
+        (JSC::MacroAssembler::je16):
+        (JSC::MacroAssembler::jg32):
+        (JSC::MacroAssembler::jge32):
+        (JSC::MacroAssembler::jl32):
+        (JSC::MacroAssembler::jle32):
+        (JSC::MacroAssembler::jne32):
+        (JSC::MacroAssembler::jump):
+        (JSC::MacroAssembler::breakpoint):
+        (JSC::MacroAssembler::ret):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::cmpw_rm):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::Interpreter):
+        * interpreter/Interpreter.h:
+        (JSC::Interpreter::assemblerBuffer):
+        * runtime/RegExp.cpp:
+        (JSC::RegExp::RegExp):
+        * wrec/WREC.cpp:
+        (JSC::WREC::Generator::compileRegExp):
+        * wrec/WREC.h:
+        * wrec/WRECFunctors.cpp:
+        (JSC::WREC::GeneratePatternCharacterFunctor::generateAtom):
+        (JSC::WREC::GenerateCharacterClassFunctor::generateAtom):
+        (JSC::WREC::GenerateBackreferenceFunctor::generateAtom):
+        (JSC::WREC::GenerateParenthesesNonGreedyFunctor::generateAtom):
+        * wrec/WRECFunctors.h:
+        (JSC::WREC::GenerateParenthesesNonGreedyFunctor::GenerateParenthesesNonGreedyFunctor):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateEnter):
+        (JSC::WREC::Generator::generateReturnSuccess):
+        (JSC::WREC::Generator::generateSaveIndex):
+        (JSC::WREC::Generator::generateIncrementIndex):
+        (JSC::WREC::Generator::generateLoadCharacter):
+        (JSC::WREC::Generator::generateJumpIfEndOfInput):
+        (JSC::WREC::Generator::generateJumpIfNotEndOfInput):
+        (JSC::WREC::Generator::generateReturnFailure):
+        (JSC::WREC::Generator::generateBacktrack1):
+        (JSC::WREC::Generator::generateBacktrackBackreference):
+        (JSC::WREC::Generator::generateBackreferenceQuantifier):
+        (JSC::WREC::Generator::generateNonGreedyQuantifier):
+        (JSC::WREC::Generator::generateGreedyQuantifier):
+        (JSC::WREC::Generator::generatePatternCharacter):
+        (JSC::WREC::Generator::generateCharacterClassInvertedRange):
+        (JSC::WREC::Generator::generateCharacterClassInverted):
+        (JSC::WREC::Generator::generateCharacterClass):
+        (JSC::WREC::Generator::generateParentheses):
+        (JSC::WREC::Generator::generateParenthesesNonGreedy):
+        (JSC::WREC::Generator::generateParenthesesResetTrampoline):
+        (JSC::WREC::Generator::generateAssertionBOL):
+        (JSC::WREC::Generator::generateAssertionEOL):
+        (JSC::WREC::Generator::generateAssertionWordBoundary):
+        (JSC::WREC::Generator::generateBackreference):
+        (JSC::WREC::Generator::terminateAlternative):
+        (JSC::WREC::Generator::terminateDisjunction):
+        * wrec/WRECGenerator.h:
+        (JSC::WREC::Generator::Generator):
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::parsePatternCharacterQualifier):
+        (JSC::WREC::Parser::parseCharacterClassQuantifier):
+        (JSC::WREC::Parser::parseBackreferenceQuantifier):
+        (JSC::WREC::Parser::parseParentheses):
+        (JSC::WREC::Parser::parseCharacterClass):
+        (JSC::WREC::Parser::parseOctalEscape):
+        (JSC::WREC::Parser::parseEscape):
+        (JSC::WREC::Parser::parseTerm):
+        (JSC::WREC::Parser::parseDisjunction):
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::Parser):
+        (JSC::WREC::Parser::parsePattern):
+        (JSC::WREC::Parser::parseAlternative):
+        * wtf/Platform.h:
+
+2008-11-28  Simon Hausmann  <hausmann@webkit.org>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Fix compilation on Windows CE
+
+        Port away from the use of errno after calling strtol(), instead
+        detect conversion errors by checking the result and the stop
+        position.
+
+        * runtime/DateMath.cpp:
+        (JSC::parseLong):
+        (JSC::parseDate):
+
+2008-11-28  Joerg Bornemann  <joerg.bornemann@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Implement lowResUTCTime() on Windows CE using GetSystemTime as _ftime() is not available.
+
+        * runtime/DateMath.cpp:
+        (JSC::lowResUTCTime):
+
+2008-11-28  Simon Hausmann  <hausmann@webkit.org>
+
+        Rubber-stamped by Tor Arne Vestbø.
+
+        Removed unnecessary inclusion of errno.h, which also fixes compilation on Windows CE.
+
+        * runtime/JSGlobalObjectFunctions.cpp:
+
+2008-11-27  Cameron Zwarich  <zwarich@apple.com>
+
+        Not reviewed.
+
+        r38825 made JSFunction::m_body private, but some inspector code in
+        WebCore sets the field. Add setters for it.
+
+        * runtime/JSFunction.h:
+        (JSC::JSFunction::setBody):
+
+2008-11-27  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Cameron Zwarich.
+
+        Fix FIXME by adding accessor for JSFunction's m_body property.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::cti_op_call_JSFunction):
+        (JSC::Interpreter::cti_vm_dontLazyLinkCall):
+        (JSC::Interpreter::cti_vm_lazyLinkCall):
+        * profiler/Profiler.cpp:
+        (JSC::createCallIdentifierFromFunctionImp):
+        * runtime/Arguments.h:
+        (JSC::Arguments::getArgumentsData):
+        (JSC::Arguments::Arguments):
+        * runtime/FunctionPrototype.cpp:
+        (JSC::functionProtoFuncToString):
+        * runtime/JSFunction.h:
+        (JSC::JSFunction::JSFunction):
+        (JSC::JSFunction::body):
+
+2008-11-27  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Remove unused member variables from ProgramNode.
+
+        * parser/Nodes.h:
+
+2008-11-27  Brent Fulgham  <bfulgham@gmail.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Enable mouse panning feaure on Windows Cairo build.
+        See http://bugs.webkit.org/show_bug.cgi?id=22525
+
+        * wtf/Platform.h: Enable mouse panning feaure on Windows Cairo build.
+
+2008-11-27  Alp Toker  <alp@nuanti.com>
+
+        Change recently introduced C++ comments in Platform.h to C comments to
+        fix the minidom build with traditional C.
+
+        Build GtkLauncher and minidom with the '-ansi' compiler flag to detect
+        API header breakage at build time.
+
+        * GNUmakefile.am:
+        * wtf/Platform.h:
+
+2008-11-27  Alp Toker  <alp@nuanti.com>
+
+        Remove C++ comment from JavaScriptCore API headers (introduced r35449).
+        Fixes build for ANSI C applications using the public API.
+
+        * API/WebKitAvailability.h:
+
 2008-11-26  Eric Seidel  <eric@webkit.org>
 
         No review, build fix only.
@@ -4595,6 +4854,18 @@
         * VM/CodeBlock.h:
         * VM/EvalCodeCache.h: Copied from VM/CodeBlock.h.
         * VM/Machine.cpp:
+
+2008-11-11  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove the 'm_' prefix from the fields of the SwitchRecord struct.
+
+        * VM/CTI.cpp:
+        (JSC::CTI::privateCompile):
+        * VM/CTI.h:
+        (JSC::SwitchRecord):
+        (JSC::SwitchRecord::SwitchRecord):
 
 2008-11-11  Cameron Zwarich  <zwarich@apple.com>
 
@@ -10446,7 +10717,7 @@
         * kjs/collector.cpp:
         (JSC::currentThreadStackBase):
 
-2008-10-08  AndrÃ© PÃ¶nitz  <apoenitz@trolltech.com>
+2008-10-08  André Pönitz  <apoenitz@trolltech.com>
 
         Reviewed by Simon.
 
@@ -13630,7 +13901,7 @@
         (JSC::X86Assembler::setnz_r):
         (JSC::X86Assembler::testl_i32m):
 
-2008-09-22  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-22  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -14630,7 +14901,7 @@
         (JSC::Machine::cti_op_construct_JSConstruct):
         * VM/Machine.h:
 
-2008-09-17  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-17  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix the QtWebKit/Mac build
 
@@ -18642,7 +18913,7 @@
         * kjs/config.h: Include the configuration header generated by
         autotools if available.
 
-2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -20292,10 +20563,3 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
-
-
-
-
-
-
-
