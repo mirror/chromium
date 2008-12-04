@@ -26,22 +26,166 @@
 
 #include "Frame.h"
 #include "FrameLoader.h"
+#include "HTMLNames.h"
 #include "NodeList.h"
 #include "Page.h"
 #include "RenderStyle.h"
 #include "WMLDocument.h"
+#include "WMLDoElement.h"
+#include "WMLErrorHandling.h"
+#include "WMLIntrinsicEventHandler.h"
+#include "WMLNames.h"
 #include "WMLPageState.h"
+#include "WMLTimerElement.h"
+#include "WMLVariables.h"
 
 namespace WebCore {
 
+using namespace WMLNames;
+
 WMLCardElement::WMLCardElement(const QualifiedName& tagName, Document* doc)
     : WMLEventHandlingElement(tagName, doc)
+    , m_isNewContext(false)
+    , m_isOrdered(false)
     , m_isVisible(false)
+    , m_eventTimer(0)
 {
 }
 
 WMLCardElement::~WMLCardElement()
 {
+}
+
+void WMLCardElement::registerDoElement(WMLDoElement* doElement)
+{
+    Vector<WMLDoElement*>::iterator it = m_doElements.begin();
+    Vector<WMLDoElement*>::iterator end = m_doElements.end();
+
+    for (; it != end; ++it) {
+        if ((*it)->name() == doElement->name()) {
+            reportWMLError(document(), WMLErrorDuplicatedDoElement);
+            return;
+        }
+    }
+
+    m_doElements.append(doElement);
+    doElement->setActive(true);
+}
+
+void WMLCardElement::setIntrinsicEventTimer(WMLTimerElement* timer)
+{
+    // Only one timer is allowed in a card 
+    if (m_eventTimer) {
+        m_eventTimer = 0;     
+        reportWMLError(document(), WMLErrorMultipleTimerElements);
+        return;
+    }
+
+    m_eventTimer = timer;
+}
+
+void WMLCardElement::handleIntrinsicEventIfNeeded()
+{
+    WMLPageState* pageState = wmlPageStateForDocument(document());
+    if (!pageState)
+        return;
+
+    Frame* frame = document()->frame();
+    if (!frame)
+        return;
+
+    FrameLoader* loader = frame->loader();
+    if (!loader)
+        return;
+    
+    int currentHistoryLength = loader->getHistoryLength();
+    int lastHistoryLength = pageState->historyLength();
+
+    // Calculate the entry method of current card 
+    WMLIntrinsicEventType eventType = WMLIntrinsicEventUnknown;
+    if (lastHistoryLength > currentHistoryLength)
+        eventType = WMLIntrinsicEventOnEnterBackward;
+    else if (lastHistoryLength < currentHistoryLength)
+        eventType = WMLIntrinsicEventOnEnterForward;
+
+    // Synchronize history length with WMLPageState
+    pageState->setHistoryLength(currentHistoryLength);
+ 
+    // Figure out target event handler
+    WMLIntrinsicEventHandler* eventHandler = this->eventHandler();
+    bool hasIntrinsicEvent = false;
+
+    if (eventType != WMLIntrinsicEventUnknown) {
+        if (eventHandler && eventHandler->hasIntrinsicEvent(eventType))
+            hasIntrinsicEvent = true;
+
+        /* FIXME: template support
+        else if (m_template) {
+            eventHandler = m_template->eventHandler();
+            if (eventHandler && eventHandler->hasIntrinsicEvent(eventType))
+                hasIntrinsicEvent = true;
+        }
+        */
+    }
+ 
+    if (hasIntrinsicEvent)
+        eventHandler->triggerIntrinsicEvent(eventType);
+
+    // Start the timer if it exists in current card
+    if (m_eventTimer)
+        m_eventTimer->start();
+
+    // FIXME: Initialize input/select  elements in this card
+    /*
+    Node* node = this;
+    while (node = node->traverseNextNode()) {
+        if (node->hasTagName(inputTag))
+            static_cast<WMLInputElement*>(node)->init();
+        else if (node->hasTagName(selectTag))
+            static_cast<WMLSelectElement*>(node)->selectInitialOptions();
+    }
+    */
+}
+
+void WMLCardElement::parseMappedAttribute(MappedAttribute* attr)
+{
+    WMLIntrinsicEventType eventType = WMLIntrinsicEventUnknown;
+
+    if (attr->name() == onenterforwardAttr)
+        eventType = WMLIntrinsicEventOnEnterForward;
+    else if (attr->name() == onenterbackwardAttr)
+        eventType = WMLIntrinsicEventOnEnterBackward;
+    else if (attr->name() == ontimerAttr)
+        eventType = WMLIntrinsicEventOnTimer;
+    else if (attr->name() == newcontextAttr)
+        m_isNewContext = (attr->value() == "true");
+    else if (attr->name() == orderedAttr)
+        m_isOrdered = (attr->value() == "true");
+    else {
+        WMLEventHandlingElement::parseMappedAttribute(attr);
+        return;
+    }
+
+    if (eventType == WMLIntrinsicEventUnknown)
+        return;
+
+    // Register intrinsic event in card
+    RefPtr<WMLIntrinsicEvent> event = WMLIntrinsicEvent::create(document(), attr->value());
+
+    createEventHandlerIfNeeded();
+    eventHandler()->registerIntrinsicEvent(eventType, event);
+}
+
+void WMLCardElement::insertedIntoDocument()
+{
+    WMLEventHandlingElement::insertedIntoDocument();
+
+    // The first card inserted into a document, is visible by default.
+    if (!m_isVisible) {
+        RefPtr<NodeList> nodeList = document()->getElementsByTagName("card");
+        if (nodeList && nodeList->length() == 1 && nodeList->item(0) == this)
+            m_isVisible = true;
+    }
 }
 
 RenderObject* WMLCardElement::createRenderer(RenderArena* arena, RenderStyle* style) 
@@ -68,18 +212,6 @@ WMLCardElement* WMLCardElement::setActiveCardInDocument(Document* doc, const KUR
     if (length < 1)
         return 0;
 
-    // Hide all cards in document
-    for (unsigned i = 0; i < length; ++i) {
-        WMLCardElement* card = static_cast<WMLCardElement*>(nodeList->item(i));
-
-        // Only need to recalculate the card style if the card was visible
-        // before otherwhise we have no associated RenderObject anyway
-        if (card->isVisible())
-            card->setChanged();
-
-        card->setVisible(false);
-    }
-
     // Figure out the new target card
     WMLCardElement* activeCard = 0;
     KURL url = targetUrl.isEmpty() ? doc->url() : targetUrl;
@@ -93,21 +225,35 @@ WMLCardElement* WMLCardElement::setActiveCardInDocument(Document* doc, const KUR
                 continue;
 
             // Force frame loader to load the URL with fragment identifier
-            if (Frame* frame = pageState->page()->mainFrame())
+            if (Frame* frame = pageState->page()->mainFrame()) {
                 if (FrameLoader* loader = frame->loader())
                     loader->setForceReloadWmlDeck(true);
+            }
 
             activeCard = card;
             break;
         }
     }
 
-    // Show active card
-    if (!activeCard)
-        activeCard = static_cast<WMLCardElement*>(nodeList->item(0));
+    if (activeCard) {
+        // Hide all cards - except the destination card - in document
+        for (unsigned i = 0; i < length; ++i) {
+            WMLCardElement* card = static_cast<WMLCardElement*>(nodeList->item(i));
+            bool cardShouldBeVisible = (card == activeCard);
 
-    activeCard->setChanged();
-    activeCard->setVisible(true);
+            if (cardShouldBeVisible && !card->isVisible()) {
+                card->setChanged();
+                card->setVisible(true);
+            } else if (!cardShouldBeVisible && card->isVisible()) {
+                card->setChanged();
+                card->setVisible(false);
+            }
+        }
+    } else {
+        // The first card should already be visible.
+        activeCard = static_cast<WMLCardElement*>(nodeList->item(0));
+        ASSERT(activeCard->isVisible());
+    }
 
     // Update the document title
     doc->setTitle(activeCard->title());

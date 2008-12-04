@@ -19,42 +19,38 @@
  *
  */
 
-#include "config.h"
+#ifndef WMLTimerElement_h
+#define WMLTimerElement_h
 
 #if ENABLE(WML)
-#include "WMLNoopElement.h"
-
-#include "WMLDoElement.h"
-#include "WMLErrorHandling.h"
-#include "WMLNames.h"
+#include "Timer.h"
+#include "WMLElement.h"
 
 namespace WebCore {
 
-using namespace WMLNames;
+class WMLCardElement;
 
-WMLNoopElement::WMLNoopElement(const QualifiedName& tagName, Document* doc)
-    : WMLElement(tagName, doc)
-{
-}
+class WMLTimerElement : public WMLElement {
+public:
+    WMLTimerElement(const QualifiedName& tagName, Document*);
 
-void WMLNoopElement::insertedIntoDocument()
-{
-    WMLElement::insertedIntoDocument();
+    virtual void parseMappedAttribute(MappedAttribute*);
+    virtual void insertedIntoDocument();
 
-    Node* parent = parentNode();
-    ASSERT(parent);
+    void timerFired(Timer<WMLTimerElement>*);
 
-    if (!parent || !parent->isWMLElement())
-        return;
+    void start(int interval = -1);
+    void stop();
+    void storeIntervalToPageState();
 
-    if (parent->hasTagName(doTag)) {
-        WMLDoElement* doElement = static_cast<WMLDoElement*>(parent);
-        doElement->setNoop(true);
-        doElement->setChanged();
-    } else if (parent->hasTagName(anchorTag))
-        reportWMLError(document(), WMLErrorForbiddenTaskInAnchorElement);
-}
+private:
+    WMLCardElement* m_card;
+    String m_name;
+    String m_value;
+    Timer<WMLTimerElement> m_timer;
+};
 
 }
 
+#endif
 #endif

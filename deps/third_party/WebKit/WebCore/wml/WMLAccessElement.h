@@ -32,6 +32,7 @@ public:
     WMLAccessElement(const QualifiedName& tagName, Document*);
 
     virtual void parseMappedAttribute(MappedAttribute*);
+    virtual void insertedIntoDocument();
 };
 
 }

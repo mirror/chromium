@@ -7,6 +7,7 @@ access
 anchor
 br interfaceName=WMLBRElement
 card
+do
 go
 noop
 onevent interfaceName=WMLOnEventElement
@@ -14,6 +15,7 @@ p
 prev
 refresh
 setvar
+timer
 
 #if 0
 # These elements don't need a correponsponding WML*Element class.
@@ -27,10 +29,8 @@ setvar
 
 #if 0
 # FIXME: Implement these elements
-do
 postfield
 template
-timer
 #endif
 
 

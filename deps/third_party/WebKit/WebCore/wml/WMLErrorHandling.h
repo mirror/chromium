@@ -19,42 +19,30 @@
  *
  */
 
-#include "config.h"
+#ifndef WMLErrorCodes_h
+#define WMLErrorCodes_h
 
 #if ENABLE(WML)
-#include "WMLNoopElement.h"
-
-#include "WMLDoElement.h"
-#include "WMLErrorHandling.h"
-#include "WMLNames.h"
-
 namespace WebCore {
 
-using namespace WMLNames;
+    class Document;
 
-WMLNoopElement::WMLNoopElement(const QualifiedName& tagName, Document* doc)
-    : WMLElement(tagName, doc)
-{
+    enum WMLErrorCode {
+        WMLErrorUnknown = 0,
+        WMLErrorConflictingEventBinding,
+        WMLErrorDeckNotAccessible,
+        WMLErrorDuplicatedDoElement,
+        WMLErrorForbiddenTaskInAnchorElement,
+        WMLErrorInvalidColumnsNumberInTable,
+        WMLErrorInvalidVariableName,
+        WMLErrorInvalidVariableReference,
+        WMLErrorMultipleAccessElements,
+        WMLErrorMultipleTimerElements,
+        WMLErrorNoCardInDocument
+    };
+
+    void reportWMLError(Document*, WMLErrorCode);
 }
 
-void WMLNoopElement::insertedIntoDocument()
-{
-    WMLElement::insertedIntoDocument();
-
-    Node* parent = parentNode();
-    ASSERT(parent);
-
-    if (!parent || !parent->isWMLElement())
-        return;
-
-    if (parent->hasTagName(doTag)) {
-        WMLDoElement* doElement = static_cast<WMLDoElement*>(parent);
-        doElement->setNoop(true);
-        doElement->setChanged();
-    } else if (parent->hasTagName(anchorTag))
-        reportWMLError(document(), WMLErrorForbiddenTaskInAnchorElement);
-}
-
-}
-
+#endif
 #endif

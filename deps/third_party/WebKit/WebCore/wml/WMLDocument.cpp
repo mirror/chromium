@@ -25,7 +25,9 @@
 #include "WMLDocument.h"
 
 #include "Page.h"
+#include "Tokenizer.h"
 #include "WMLCardElement.h"
+#include "WMLErrorHandling.h"
 #include "WMLPageState.h"
 
 namespace WebCore {
@@ -52,10 +54,19 @@ void WMLDocument::finishedParsing()
 {
     WMLPageState* wmlPageState = wmlPageStateForDocument(document());
     if (!wmlPageState || !wmlPageState->isDeckAccessible()) {
-        // FIXME: Error reporting
+        reportWMLError(document(), WMLErrorDeckNotAccessible);
         Document::finishedParsing();
         return;
     }
+
+    Tokenizer* tokenizer = this->tokenizer();
+    if (tokenizer && !tokenizer->wellFormed()) {
+        Document::finishedParsing();
+        return;
+    }
+
+    // Remember that we'e successfully entered the deck
+    wmlPageState->setNeedCheckDeckAccess(false);
 
     // FIXME: Notify the existance of templates to all cards of the current deck
     // WMLTemplateElement::registerTemplatesInDocument(document()));
@@ -63,15 +74,16 @@ void WMLDocument::finishedParsing()
     // Set destination card
     WMLCardElement* card = WMLCardElement::setActiveCardInDocument(document(), KURL());
     if (!card) {
-        // FIXME: Error reporting
+        reportWMLError(document(), WMLErrorNoCardInDocument);
         Document::finishedParsing();
         return;
     }
  
     // FIXME: shadow the deck-level do if needed
-    // FIXME: handle the intrinsic event
 
-    wmlPageState->setNeedCheckDeckAccess(false);
+    // Handle card-level intrinsic event
+    card->handleIntrinsicEventIfNeeded();
+
     Document::finishedParsing();
 }
 

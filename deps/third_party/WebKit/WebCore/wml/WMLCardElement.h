@@ -25,13 +25,28 @@
 #if ENABLE(WML)
 #include "WMLEventHandlingElement.h"
 
+#include <wtf/Vector.h>
+
 namespace WebCore {
+
+class WMLDoElement;
+class WMLTimerElement;
 
 class WMLCardElement : public WMLEventHandlingElement {
 public:
     WMLCardElement(const QualifiedName&, Document*);
     virtual ~WMLCardElement();
 
+    bool isNewContext() const { return m_isNewContext; }
+    bool isOrdered() const { return m_isOrdered; }
+    WMLTimerElement* eventTimer() const { return m_eventTimer; }
+
+    void registerDoElement(WMLDoElement*);
+    void setIntrinsicEventTimer(WMLTimerElement*);
+    void handleIntrinsicEventIfNeeded();
+
+    virtual void parseMappedAttribute(MappedAttribute*);
+    virtual void insertedIntoDocument();
     virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
 
     // Switch active card in document to the one specified in the URL reference (foo.wml#mycard)
@@ -42,7 +57,12 @@ private:
     bool isVisible() const { return m_isVisible; }
     void setVisible(bool isVisible) { m_isVisible = isVisible; }
 
+    bool m_isNewContext;
+    bool m_isOrdered;
     bool m_isVisible;
+
+    WMLTimerElement* m_eventTimer;
+    Vector<WMLDoElement*> m_doElements;
 };
 
 }
