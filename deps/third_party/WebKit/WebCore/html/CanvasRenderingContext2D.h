@@ -53,14 +53,13 @@ namespace WebCore {
 
     typedef int ExceptionCode;
 
-    class CanvasRenderingContext2D : Noncopyable
-    {
+    class CanvasRenderingContext2D : Noncopyable {
     public:
         CanvasRenderingContext2D(HTMLCanvasElement*);
         
         void ref();
         void deref();
-
+        
         HTMLCanvasElement* canvas() const { return m_canvas; }
 
         CanvasStyle* strokeStyle() const;

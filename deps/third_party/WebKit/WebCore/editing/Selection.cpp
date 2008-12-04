@@ -276,6 +276,7 @@ void Selection::validate()
                     end = wordEnd;
                     
             }
+                
             m_end = end.deepEquivalent();
             break;
         }
