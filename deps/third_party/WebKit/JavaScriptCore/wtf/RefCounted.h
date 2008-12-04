@@ -21,89 +21,10 @@
 #ifndef RefCounted_h
 #define RefCounted_h
 
-#include "Peerable.h"
 #include <wtf/Assertions.h>
 #include <wtf/Noncopyable.h>
 
 namespace WTF {
-
-#if USE(V8_BINDING)
-
-template<class T> class RefCounted : public WebCore::Peerable {
-public:
-    RefCounted(int initialRefCount = 1)
-        : m_refCount(initialRefCount)
-        , m_peer(0)
-#ifndef NDEBUG
-        , m_deletionHasBegun(false)
-#endif
-    {
-    }
-    
-    ~RefCounted()
-    {
-        ASSERT(!m_peer); 
-    }
-
-    void ref()
-    {
-        ASSERT(!m_deletionHasBegun);
-        ++m_refCount;
-    }
-
-    void deref()
-    {
-        ASSERT(!m_deletionHasBegun);
-        ASSERT(m_refCount > 0);
-        if (m_refCount == 1 && !m_peer) {
-#ifndef NDEBUG
-            m_deletionHasBegun = true;
-#endif
-            delete static_cast<T*>(this);
-        } else
-            --m_refCount;
-    }
-
-    void setPeer(void* peer)
-    {
-        m_peer = peer;
-        if (m_refCount <= 0 && !m_peer)
-        {
-#ifndef NDEBUG
-            m_deletionHasBegun = true;
-#endif
-            delete static_cast<T*>(this);
-        }
-    }
-    
-    void* peer() const { return m_peer; }
-
-    bool hasOneRef() const
-    {
-        ASSERT(!m_deletionHasBegun);
-        if (m_peer)
-            return m_refCount == 0;
-        return m_refCount == 1;
-    }
-
-    int refCount() const
-    {
-        if (m_peer)
-            return m_refCount + 1;
-        return m_refCount;
-    }
-
-private:
-    int m_refCount;
-    void* m_peer;
-  
-#ifndef NDEBUG
-    bool m_deletionHasBegun;
-#endif
-};
-
-
-#else
 
 // This base class holds the non-template methods and attributes.
 // The RefCounted class inherits from it reducing the template bloat
@@ -179,7 +100,6 @@ protected:
     ~RefCounted() {}
 };
 
-#endif
 
 } // namespace WTF
 using WTF::RefCounted; 

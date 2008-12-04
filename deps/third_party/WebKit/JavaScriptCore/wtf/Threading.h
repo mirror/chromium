@@ -67,10 +67,6 @@
 #include <wtf/Locker.h>
 #include <wtf/Noncopyable.h>
 
-#if USE(V8_BINDING)
-#include "RefCounted.h"
-#endif
-
 #if PLATFORM(WIN_OS) && !PLATFORM(WIN_CE)
 #include <windows.h>
 #elif PLATFORM(DARWIN)
@@ -205,21 +201,6 @@ inline int atomicDecrement(int volatile* addend) { return __gnu_cxx::__exchange_
 #endif
 
 
-#if USE(V8_BINDING)
-
-// TODO(dglazkov): Because of Peerable, ThreadSafeShared has to be like
-// RefCounted. Also, we don't use any of the threading stuff. Still, it would
-// be great to unfork this once Peerable is gone.
-template<class T> class ThreadSafeShared : public RefCounted<T> {
-public:
-    ThreadSafeShared(int initialRefCount = 1)
-        : RefCounted<T>(initialRefCount)
-    {
-    }
-};
-
-#else
-
 template<class T> class ThreadSafeShared : Noncopyable {
 public:
     ThreadSafeShared(int initialRefCount = 1)
@@ -270,8 +251,6 @@ private:
     mutable Mutex m_mutex;
 #endif
 };
-
-#endif
 
 // This function must be called from the main thread. It is safe to call it repeatedly.
 // Darwin is an exception to this rule: it is OK to call it from any thread, the only requirement is that the calls are not reentrant.
