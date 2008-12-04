@@ -83,10 +83,23 @@ def GetCodeReviewSetting(key):
     if (not os.path.exists(cached_settings_file) or
         os.stat(cached_settings_file).st_mtime > 60*60*24*3):
       repo_root = GetSVNFileInfo(".", "Repository Root")
-      svn_path = repo_root + "/" + CODEREVIEW_SETTINGS_FILE
-      settings, rc = RunShellWithReturnCode(["svn", "cat", svn_path])
-      if rc:
+      url_path = GetSVNFileInfo(".", "URL")
+      settings = ""
+      while True:
+        # Look for the codereview.settings file at the current level.
+        svn_path = url_path + "/" + CODEREVIEW_SETTINGS_FILE
+        settings, rc = RunShellWithReturnCode(["svn", "cat", svn_path])
+        if not rc:
+          # Exit the loop if the file was found.
+          break
+        # Make sure to mark settings as empty if not found.
         settings = ""
+        if url_path == repo_root:
+          # Reached the root. Abandoning search.
+          break;
+        # Go up one level to try again.
+        url_path = os.path.dirname(url_path)
+
       # Write a cached version even if there isn't a file, so we don't try to
       # fetch it each time.
       WriteFile(cached_settings_file, settings)
@@ -441,6 +454,8 @@ def Help():
   print "   gcl opened"
   print ("      Lists modified files in the current directory and "
          "subdirectories.\n")
+  print "   gcl settings"
+  print "      Print the code review settings for this directory.\n"
   print "   gcl try change_name"
   print ("      Sends the change to the tryserver so a trybot can do a test"
          " run on your code. To send multiple changes as one path, use a"
@@ -712,6 +727,10 @@ def main(argv=None):
   if command == "diff" and len(argv) == 2:
     files = GetFilesNotInCL()
     print GenerateDiff([os.path.join(GetRepositoryRoot(), x[1]) for x in files])
+    return 0
+  if command == "settings":
+    ignore = GetCodeReviewSetting("UNKNOWN");
+    print CODEREVIEW_SETTINGS
     return 0
 
   if len(argv) == 2:
