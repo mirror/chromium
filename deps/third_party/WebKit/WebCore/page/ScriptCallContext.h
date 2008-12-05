@@ -36,7 +36,6 @@
 
 #if USE(JSC)
 #include <runtime/ArgList.h>
-#include "KURL.h"
 
 namespace JSC {
 class ExecState;
@@ -45,9 +44,10 @@ class ExecState;
 #include "v8.h"
 #endif
 
+#include "KURL.h"
+
 namespace WebCore {
 
-class KURL;
 class String;
 
 #if USE(V8)
@@ -83,11 +83,11 @@ private:
 #if USE(JSC)
     JSC::ExecState* m_exec;
     JSC::ArgList m_args;
-    unsigned m_lineNumber;
-    KURL m_sourceURL;
 #elif USE(V8)
     v8::Arguments m_args;
 #endif
+    unsigned m_lineNumber;
+    KURL m_sourceURL;
 };
 
 }  // namespace WebCore
