@@ -235,10 +235,7 @@ void releaseFastMallocFreeMemory() { }
     
 FastMallocStatistics fastMallocStatistics()
 {
-    FastMallocStatistics statistics;
-    statistics.heapSize = 0;
-    statistics.freeSize = 0;
-    statistics.returnedSize = 0;
+    FastMallocStatistics statistics = { 0, 0, 0, 0 };
     return statistics;
 }
 
@@ -3848,18 +3845,35 @@ void FastMallocZone::init()
 #if WTF_CHANGES
 void releaseFastMallocFreeMemory()
 {
+    // Flush free pages in the current thread cache back to the page heap.
+    // Low watermark mechanism in Scavenge() prevents full return on the first pass.
+    // The second pass flushes everything.
+    if (TCMalloc_ThreadCache* threadCache = TCMalloc_ThreadCache::GetCacheIfPresent()) {
+        threadCache->Scavenge();
+        threadCache->Scavenge();
+    }
+
     SpinLockHolder h(&pageheap_lock);
     pageheap->ReleaseFreePages();
 }
     
 FastMallocStatistics fastMallocStatistics()
 {
-    SpinLockHolder h(&pageheap_lock);
-
     FastMallocStatistics statistics;
-    statistics.heapSize = static_cast<size_t>(pageheap->SystemBytes());
-    statistics.freeSize = static_cast<size_t>(pageheap->FreeBytes());
-    statistics.returnedSize = pageheap->ReturnedBytes();
+    {
+        SpinLockHolder lockHolder(&pageheap_lock);
+        statistics.heapSize = static_cast<size_t>(pageheap->SystemBytes());
+        statistics.freeSizeInHeap = static_cast<size_t>(pageheap->FreeBytes());
+        statistics.returnedSize = pageheap->ReturnedBytes();
+        statistics.freeSizeInCaches = 0;
+        for (TCMalloc_ThreadCache* threadCache = thread_heaps; threadCache ; threadCache = threadCache->next_)
+            statistics.freeSizeInCaches += threadCache->Size();
+    }
+    for (unsigned cl = 0; cl < kNumClasses; ++cl) {
+        const int length = central_cache[cl].length();
+        const int tc_length = central_cache[cl].tc_length();
+        statistics.freeSizeInCaches += ByteSizeForClass(cl) * (length + tc_length);
+    }
     return statistics;
 }
 

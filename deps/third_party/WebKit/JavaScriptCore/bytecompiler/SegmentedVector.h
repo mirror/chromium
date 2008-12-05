@@ -37,6 +37,7 @@ namespace JSC {
     public:
         SegmentedVector()
             : m_size(0)
+            , m_currentSegmentIndex(0)
         {
             m_segments.append(&m_inlineSegment);
         }
@@ -50,14 +51,17 @@ namespace JSC {
         T& last()
         {
             ASSERT(m_size);
-            return m_segments.last()->last();
+            return m_segments[m_currentSegmentIndex]->last();
         }
 
         template <typename U> void append(const U& value)
         {
-            if (!(m_size % SegmentSize) && m_size)
-                m_segments.append(new Segment);
-            m_segments.last()->uncheckedAppend(value);
+            if (!(m_size % SegmentSize) && m_size) {
+                if (m_currentSegmentIndex == m_segments.size() - 1)
+                    m_segments.append(new Segment);
+                m_currentSegmentIndex++;
+            }
+            m_segments[m_currentSegmentIndex]->uncheckedAppend(value);
             m_size++;
         }
 
@@ -65,11 +69,9 @@ namespace JSC {
         {
             ASSERT(m_size);
             m_size--;
-            m_segments.last()->removeLast();
-            if (!(m_size % SegmentSize) && m_size >= SegmentSize) {
-                delete m_segments.last();
-                m_segments.removeLast();
-            }
+            m_segments[m_currentSegmentIndex]->removeLast();
+            if (!(m_size % SegmentSize) && m_size >= SegmentSize)
+                m_currentSegmentIndex--;
         }
 
         size_t size() const
@@ -85,68 +87,35 @@ namespace JSC {
             return m_segments[index / SegmentSize]->at(index % SegmentSize);
         }
 
-        void resize(size_t size)
+        void grow(size_t newSize)
         {
-            if (size < m_size)
-                shrink(size);
-            else if (size > m_size)
-                grow(size);
-            ASSERT(size == m_size);
-        }
+            if (newSize <= m_size)
+                return;
 
-    private:
-        void shrink(size_t size)
-        {
-            ASSERT(size < m_size);
-            size_t numSegments = size / SegmentSize;
-            size_t extra = size % SegmentSize;
-            if (extra)
-                numSegments++;
-            if (!numSegments) {
-                for (size_t i = 1; i < m_segments.size(); i++)
-                    delete m_segments[i];
-                m_segments.resize(1);
-                m_inlineSegment.resize(0);
-                m_size = size;
+            if (newSize <= SegmentSize) {
+                m_inlineSegment.resize(newSize);
+                m_size = newSize;
                 return;
             }
 
-            for (size_t i = numSegments; i < m_segments.size(); i++)
-                delete m_segments[i];
-
-            m_segments.resize(numSegments);
+            size_t newNumSegments = newSize / SegmentSize;
+            size_t extra = newSize % SegmentSize;
             if (extra)
+                newNumSegments++;
+            size_t oldNumSegments = m_segments.size();
+
+            if (newNumSegments == oldNumSegments) {
                 m_segments.last()->resize(extra);
-            m_size = size;
-        }
-
-        void grow(size_t size)
-        {
-            ASSERT(size > m_size);
-            if (size <= SegmentSize) {
-                m_inlineSegment.resize(size);
-                m_size = size;
-                return;
-            }
-
-            size_t numSegments = size / SegmentSize;
-            size_t extra = size % SegmentSize;
-            if (extra)
-                numSegments++;
-            size_t oldSize = m_segments.size();
-
-            if (numSegments == oldSize) {
-                m_segments.last()->resize(extra);
-                m_size = size;
+                m_size = newSize;
                 return;
             }
 
             m_segments.last()->resize(SegmentSize);
 
-            m_segments.resize(numSegments);
+            m_segments.resize(newNumSegments);
 
-            ASSERT(oldSize < m_segments.size());
-            for (size_t i = oldSize; i < (numSegments - 1); i++) {
+            ASSERT(oldNumSegments < m_segments.size());
+            for (size_t i = oldNumSegments; i < (newNumSegments - 1); i++) {
                 Segment* segment = new Segment;
                 segment->resize(SegmentSize);
                 m_segments[i] = segment;
@@ -154,12 +123,27 @@ namespace JSC {
 
             Segment* segment = new Segment;
             segment->resize(extra ? extra : SegmentSize);
-            m_segments[numSegments - 1] = segment;
-            m_size = size;
+            m_currentSegmentIndex = newNumSegments - 1;
+            m_segments[m_currentSegmentIndex] = segment;
+            m_size = newSize;
         }
 
+        void clear()
+        {
+            for (size_t i = 1; i < m_segments.size(); i++)
+                delete m_segments[i];
+            m_segments.resize(1);
+            m_inlineSegment.resize(0);
+            m_currentSegmentIndex = 0;
+            m_size = 0;
+        }
+
+    private:
         typedef Vector<T, SegmentSize> Segment;
+
         size_t m_size;
+        size_t m_currentSegmentIndex;
+
         Segment m_inlineSegment;
         Vector<Segment*, 32> m_segments;
     };
