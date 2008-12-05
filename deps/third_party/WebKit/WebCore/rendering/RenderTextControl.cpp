@@ -330,7 +330,7 @@ void RenderTextControl::updateFromElement()
             ExceptionCode ec = 0;
             m_innerText->setInnerText(value, ec);
             if (value.endsWith("\n") || value.endsWith("\r"))
-                m_innerText->appendChild(new HTMLBRElement(document()), ec);
+                m_innerText->appendChild(new HTMLBRElement(brTag, document()), ec);
             m_dirty = false;
             m_userEdited = false;
         }
@@ -790,8 +790,12 @@ void RenderTextControl::layout()
 void RenderTextControl::paint(PaintInfo& paintInfo, int tx, int ty)
 {
     RenderBlock::paint(paintInfo, tx, ty);
-    if (paintInfo.phase == PaintPhaseBlockBackground && m_shouldDrawCapsLockIndicator)
-        theme()->paintCapsLockIndicator(this, paintInfo, absoluteContentBox());
+    if (paintInfo.phase == PaintPhaseBlockBackground && m_shouldDrawCapsLockIndicator) {
+        IntRect contentsRect = contentBox();
+        // Convert the rect into the coords used for painting the content
+        contentsRect.move(tx + xPos(), ty + yPos());
+        theme()->paintCapsLockIndicator(this, paintInfo, contentsRect);
+    }
 } 
 
 void RenderTextControl::calcPrefWidths()
