@@ -47,7 +47,6 @@
 #include "CSSReflectValue.h"
 #include "CSSRuleList.h"
 #include "CSSSelector.h"
-#include "CSSNthSelector.h"
 #include "CSSStyleRule.h"
 #include "CSSStyleSheet.h"
 #include "CSSUnicodeRangeValue.h"
@@ -2294,8 +2293,6 @@ bool CSSParser::parseFillProperty(int propId, int& propId1, int& propId2,
 PassRefPtr<CSSValue> CSSParser::parseAnimationDelay()
 {
     CSSParserValue* value = m_valueList->current();
-    if (value->id == CSSValueNow)
-        return CSSPrimitiveValue::createIdentifier(value->id);
     if (validUnit(value, FTime, m_strict))
         return CSSPrimitiveValue::create(value->fValue, (CSSPrimitiveValue::UnitTypes)value->unit);
     return 0;
@@ -4371,13 +4368,6 @@ UChar* CSSParser::text(int *length)
 CSSSelector* CSSParser::createFloatingSelector()
 {
     CSSSelector* selector = new CSSSelector;
-    m_floatingSelectors.add(selector);
-    return selector;
-}
-    
-CSSNthSelector* CSSParser::createFloatingNthSelector()
-{
-    CSSNthSelector* selector = new CSSNthSelector;
     m_floatingSelectors.add(selector);
     return selector;
 }

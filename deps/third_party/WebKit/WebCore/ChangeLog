@@ -1,3 +1,473 @@
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Adam Roben.
+
+        As Adam Roben noticed, synchronize MessageSource enum with Console.js, and add a comment.
+
+        * inspector/front-end/Console.js:
+        * page/Console.h:
+
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Next steps to make LayoutTests work:
+        Never access the main frame from WMLRefreshElement/WMLCardElement, but
+        the current documents frame (WML layout tests will run in an <iframe>)
+
+        Prepare WMLErrorHandling for the case that no tokenizer is available anymore
+        -> report errors through Console::addMessage(), so they get logged in the
+           expected layout test results.
+
+        * wml/WMLCardElement.cpp:
+        (WebCore::WMLCardElement::setActiveCardInDocument):
+        * wml/WMLErrorHandling.cpp:
+        (WebCore::reportWMLError):
+        (WebCore::errorMessageForErrorCode):
+        * wml/WMLErrorHandling.h:
+        * wml/WMLRefreshElement.cpp:
+        (WebCore::WMLRefreshElement::executeTask):
+        * page/Console.cpp: Handle WMLMessageSource.
+        (WebCore::printMessageSourceAndLevelPrefix):
+        * page/Console.h: Add WMLMessageSource.
+        (WebCore::):
+
+2008-12-03  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Allow passing jsNull and jsUndefined to Qt plugins
+
+        Currently limited to functions with QString and QVariant arguments,
+        and properties of these types. Both jsNull and jsUndefined ends up
+        as default-constructed QStrings and QVariants, which means you can
+        check for isEmpty() and isValid() in the native plugin code.
+
+        Based on patches by Jade Han <jade.han@nokia.com>
+
+        * bridge/qt/qt_runtime.cpp:
+        (JSC::Bindings::convertValueToQVariant):
+        (JSC::Bindings::findMethodIndex):
+
+2008-12-03  Trenton Schulz  <trenton.schulz@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Fix the build with Qt for Mac OS X.
+
+        * platform/PurgeableBuffer.h: Use the dummy wrappers for now.
+
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Fix error handling in WMLSetvarElement. If an invalid variable reference is contained
+        in the 'name' attribute of <setvar>, a 'WMLErrorInvalidVariableName' error should be
+        reported, instead of 'WMLErrorInvalidVariableReference'.
+
+        * wml/WMLElement.cpp:
+        (WebCore::WMLElement::parseValueSubstitutingVariableReferences):
+        (WebCore::WMLElement::parseValueForbiddingVariableReferences):
+        * wml/WMLElement.h:
+        * wml/WMLSetvarElement.cpp:
+        (WebCore::WMLSetvarElement::parseMappedAttribute):
+        * wml/WMLSetvarElement.h:
+        (WebCore::WMLSetvarElement::name):
+        (WebCore::WMLSetvarElement::value):
+
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Preparations to get WML layout tests going.
+        Make WMLPageState an OwnPtr to Page, and let Page create it on demand.
+
+        * page/Page.cpp:
+        (WebCore::Page::Page):
+        (WebCore::Page::wmlPageState):
+        * page/Page.h:
+        * wml/WMLDocument.cpp:
+        (WebCore::WMLDocument::WMLDocument):
+        (WebCore::WMLDocument::finishedParsing):
+        (WebCore::wmlPageStateForDocument):
+        * wml/WMLPageState.h: Don't inherit from RefCounted anymore.
+        (WebCore::WMLPageState::hasVariables): Remove helper function.
+
+2008-12-03  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22627
+        fast/workers/worker-terminate.html fails randomly
+
+        The problem is that worker termination uses script timeouts, so an InterruptedExecutionError
+        is raised, and it sometimes reaches the main thread.
+
+        * dom/WorkerMessagingProxy.cpp:
+        (WebCore::WorkerExceptionTask::create):
+        (WebCore::WorkerExceptionTask::WorkerExceptionTask):
+        (WebCore::WorkerExceptionTask::performTask):
+        (WebCore::WorkerMessagingProxy::postWorkerException):
+        * dom/WorkerMessagingProxy.h:
+        Ignore exceptions that happen in terminated workers.
+
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove some unncessary includes.
+
+        * wml/WMLAccessElement.cpp:
+        * wml/WMLDocument.h:
+        * wml/WMLRefreshElement.cpp:
+
+2008-12-03  Alexey Proskuryakov  <ap@webkit.org>
+
+        Rubber-stamped by Cameron Zwarich and Adam Roben.
+
+        Fix a typo: m_executionForbidded.
+
+        * bindings/js/WorkerScriptController.cpp:
+        (WebCore::WorkerScriptController::WorkerScriptController):
+        (WebCore::WorkerScriptController::evaluate):
+        (WebCore::WorkerScriptController::forbidExecution):
+        * bindings/js/WorkerScriptController.h:
+
+2008-12-03  Dean McNamee  <deanm@chromium.org>
+
+        Bug 22623: Uninitialized memory access in cache parsing code
+        <https://bugs.webkit.org/show_bug.cgi?id=22623>
+
+        Reviewed by David Kilzer.
+
+        Initialize m_haveParsedCacheControlHeader and m_haveParsedPragmaHeader.
+
+        * platform/network/ResourceResponseBase.h:
+        (WebCore::ResourceResponseBase::ResourceResponseBase):
+
+2008-12-03  Antti Koivisto  <antti@apple.com>
+
+        Probable build fix.
+
+        * WebCoreSources.bkl:
+
+2008-12-03  Antti Koivisto  <antti@apple.com>
+
+        Forgot to commit these.
+
+        * dom/Node.cpp:
+        (WebCore::forEachTagSelector):
+        (WebCore::SelectorNeedsNamespaceResolutionFunctor::operator()):
+        (WebCore::Node::querySelector):
+        * dom/SelectorNodeList.cpp:
+        (WebCore::createSelectorNodeList):
+
+2008-12-03  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Dan Bernstein and Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22379
+        Make CSSOM use less memory
+
+        Reduce size of the CSSSelector by 3/8 by moving rarely used fields to a rare data
+        struct. Browsing around with some instrumentation showed that ~0.1% of all selectors
+        encountered had rare data.
+        
+        This also eliminates the CSSNthSelector subclass which will make possible to store
+        CSSSelectors in an array instead of a linked list for futher memory savings.
+
+        * css/CSSGrammar.y:
+        * css/CSSNthSelector.cpp: Removed.
+        * css/CSSNthSelector.h: Removed.
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::createFloatingSelector):
+        * css/CSSParser.h:
+        * css/CSSSelector.cpp:
+        (WebCore::CSSSelector::specificity):
+        (WebCore::CSSSelector::operator==):
+        (WebCore::CSSSelector::selectorText):
+        (WebCore::CSSSelector::setTagHistory):
+        (WebCore::CSSSelector::attribute):
+        (WebCore::CSSSelector::setAttribute):
+        (WebCore::CSSSelector::setArgument):
+        (WebCore::CSSSelector::setSimpleSelector):
+        (WebCore::CSSSelector::parseNth):
+        (WebCore::CSSSelector::matchNth):
+        (WebCore::CSSSelector::RareData::parseNth):
+        (WebCore::CSSSelector::RareData::matchNth):
+        * css/CSSSelector.h:
+        (WebCore::CSSSelector::CSSSelector):
+        (WebCore::CSSSelector::~CSSSelector):
+        (WebCore::CSSSelector::tagHistory):
+        (WebCore::CSSSelector::hasAttribute):
+        (WebCore::CSSSelector::argument):
+        (WebCore::CSSSelector::simpleSelector):
+        (WebCore::CSSSelector::RareData::RareData):
+        (WebCore::CSSSelector::createRareData):
+        (WebCore::CSSSelector::):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::SelectorChecker::checkSelector):
+        (WebCore::CSSStyleSelector::SelectorChecker::checkOneSelector):
+
+2008-12-03  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove unneeded included file in WorkerThread.cpp.
+        https://bugs.webkit.org/show_bug.cgi?id=22613
+
+        * dom/WorkerThread.cpp: No need to include JSWorkerContext.h.
+
+2008-12-02  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Maciej Stachowiak.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22543
+        Consolidate ActiveDOMObject page cache interaction
+
+        Test: http/tests/xmlhttprequest/abort-on-leaving-page.html
+
+        * dom/ActiveDOMObject.cpp:
+        (WebCore::ActiveDOMObject::canSuspend):
+        (WebCore::ActiveDOMObject::suspend):
+        (WebCore::ActiveDOMObject::resume):
+        * dom/ActiveDOMObject.h:
+        * dom/ScriptExecutionContext.cpp:
+        (WebCore::ScriptExecutionContext::canSuspendActiveDOMObjects):
+        (WebCore::ScriptExecutionContext::suspendActiveDOMObjects):
+        (WebCore::ScriptExecutionContext::resumeActiveDOMObjects):
+        * dom/ScriptExecutionContext.h:
+        Added methods for suspending and resuming active objects.
+
+        * dom/Worker.cpp:
+        (WebCore::Worker::canSuspend):
+        (WebCore::Worker::stop):
+        * dom/Worker.h:
+        Workers cannot be suspended yet. This is a change in behavior, as workers used to keep
+        running until their owner was destroyed.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::stopLoading): No longer call stopActiveDOMObjects() here, because
+        their activity is not necessarily loading.
+        (WebCore::FrameLoader::canCachePage): Can only cache if all active objects can be suspended.
+        Previously, stopLoading() cancelled outstanding XMLHttpRequests, which made the page
+        uncacheable due to no-null main document error.
+        (WebCore::FrameLoader::commitProvisionalLoad): Suspend or stop active objects, depending on
+        whether the document will be cached.
+        (WebCore::FrameLoader::frameDetached): Stop active objects to let them clean up before their
+        context is destroyed.
+
+        * xml/XMLHttpRequest.h: added canSuspend().
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::canSuspend): Only XHRs that are not loading can be suspended.
+        (WebCore::XMLHttpRequest::stop): Call abort() instead of internalAbort() to dispatch events
+        for Firefox compatibility. This is a change in behavior that helps test that requests do
+        get aborted.
+        (WebCore::XMLHttpRequest::contextDestroyed): The request must have been stopped by now, so
+        assert that.
+
+2008-12-02  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        Bug 22606: Can <th> serves as the AXTitleUIElement for <td>?
+
+        Test: accessibility/th-as-title-ui.html
+
+        * page/AccessibilityObject.h:
+        (WebCore::AccessibilityObject::isGroup):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::isGroup):
+        * page/AccessibilityRenderObject.h:
+        * page/AccessibilityTableCell.cpp:
+        (WebCore::AccessibilityTableCell::rowIndexRange):
+        (WebCore::AccessibilityTableCell::columnIndexRange):
+        (WebCore::AccessibilityTableCell::titleUIElement):
+        * page/AccessibilityTableCell.h:
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (-[AccessibilityObjectWrapper accessibilityAttributeNames]):
+
+2008-12-02  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=22472
+        
+        Override absoluteClippedOverflowRect() in RenderReplaced to return a rect
+        that is large enough to encompass the selection, so that the repainting of
+        selected replaced elements works correctly.
+        
+        Test: fast/repaint/selected-replaced.html
+
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::selectionRect):
+        (WebCore::RenderReplaced::localSelectionRect):
+        (WebCore::RenderReplaced::absoluteClippedOverflowRect):
+        * rendering/RenderReplaced.h:
+
+2008-12-02  Gregory Hughes  <ghughes@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        Bug 22513: ZOOM: text selection does not send correct zoom bounds
+
+        When zoomed, text selection must send the zoom bounds in flipped
+        screen coordinates.
+
+        * editing/mac/SelectionControllerMac.mm:
+        (WebCore::SelectionController::notifyAccessibilityForSelectionChange):
+        * page/mac/WebCoreViewFactory.h:
+
+2008-12-02  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove support for 'now' from CSS (was
+        erroneously added to transition and animation delay)
+        https://bugs.webkit.org/show_bug.cgi?id=22571
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseAnimationDelay):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::mapAnimationDelay):
+        * css/CSSValueKeywords.in:
+
+2008-12-02  Eric Seidel  <eric@webkit.org>
+
+        Build fix, no review.
+
+        Fix the Mac and gtk builds:
+        Don't use a float to hold a double.
+        Remove a now duplicate symbol.
+
+        * page/Frame.cpp:
+        (WebCore::Frame::selectionLayoutChanged):
+        * platform/gtk/TemporaryLinkStubs.cpp:
+
+2008-12-02  Chris Fleizach  <cfleizach@apple.com>
+
+        Bug 22596: Some elements don't report AXBlockQuoteLevel
+        https://bugs.webkit.org/show_bug.cgi?id=22596
+ 
+        Reviewed by John Sullivan.
+
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (blockquoteLevel):
+        (AXAttributeStringSetBlockquoteLevel):
+        (-[AccessibilityObjectWrapper accessibilityAttributeNames]):
+        (-[AccessibilityObjectWrapper accessibilityAttributeValue:]):
+
+2008-12-02  Dean McNamee  <deanm@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Correctly handle a theme returning a non-blinking interval.  We should
+        not set any timers when the interval is 0 (non-blinking), otherwise we
+        repeatedly set and destroy a blinking timer, causing a paint and timer
+        storm.  This is applicable to GTK and Windows, where a user can set a
+        non-blinking caret in their system preferences.
+
+        Renamed caretBlinkFrequency to the more accurate caretBlinkInterval.
+
+        * page/Frame.cpp:
+        (WebCore::Frame::selectionLayoutChanged):
+        * platform/Theme.h:
+        (WebCore::Theme::caretBlinkInterval):
+        * platform/gtk/RenderThemeGtk.cpp:
+        (WebCore::RenderThemeGtk::caretBlinkInterval):
+        * platform/gtk/RenderThemeGtk.h:
+        * rendering/RenderTheme.h:
+        (WebCore::RenderTheme::caretBlinkInterval):
+
+2008-12-02  David Levin  <levin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22538
+        
+        startsWith uses find which searches through the whole string if no match is found.
+        Using reverseFind with an index of 0 has the benefit of only searching for the match
+        at the beginning of the string.  This may only be a small benefit in the overall program,
+        but it may help in some cases when the string is big.
+
+        No observable change in behavior, so no test.
+ 
+        * platform/text/StringImpl.h:
+        (WebCore::StringImpl::startsWith):
+
+2008-10-29  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Wrap a JSC-only hack in a USE(JSC) block to fix the v8 build.
+        https://bugs.webkit.org/show_bug.cgi?id=21951
+
+        * svg/SVGElementInstance.cpp:
+        (WebCore::SVGElementInstance::forgetWrapper):
+
+2008-12-02  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Add an ASSERT to try and catch the root cause of:
+        https://bugs.webkit.org/show_bug.cgi?id=22168
+        http://code.google.com/p/chromium/issues/detail?id=4122
+
+        * editing/TextIterator.cpp:
+        (WebCore::TextIterator::emitText):
+
+2008-12-02  Brent Fulgham  <bfulgham@gmail.com>
+
+        Reviewed by Adam Roben.
+
+        Remove some CG-specific code from the Windows Cairo build.
+        https://bugs.webkit.org/show_bug.cgi?id=22586
+
+        No new test cases since this update should create no user-visible
+        changes, and should be fully covered by the existing regression
+        tests.
+
+        * WebCore.vcproj/WebCore.vcproj: Remove FontDatabase from
+        * platform/graphics/cairo/GraphicsContextCairo.cpp:
+        (WebCore::focusRingColor): Add stub method
+        * platform/win/TemporaryLinkStubs.cpp:
+        (WebCore::populateFontDatabase): Add stub method.
+
+2008-12-01 Laszlo Gombos <laszlo.1.gombos@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        MinGW compilation fix for PluginPackageWin.cpp
+
+        https://bugs.webkit.org/show_bug.cgi?id=22585
+
+        * plugins/win/PluginPackageWin.cpp:
+        (WebCore::PluginPackage::fetchInfo):
+
+2008-12-02  Adam Roben  <aroben@apple.com>
+
+        Build fix for Windows projects with NOMINMAX defined globally
+
+        * platform/win/COMPtr.h: Don't redefine NOMINMAX if it's already
+        defined.
+
+2008-12-02  Simon Hausmann  <hausmann@webkit.org>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Build JavaScriptCore into libQtWebKit.so through a direct build
+        instead of a static library. When linking a static library into
+        a shared library qmake generates an incorrect .prl file, which
+        causes all sorts of different build problems when linking against
+        QtWebKit. Fixing this in qmake requires bigger changes that are
+        currently not possible, so we need to work around this limitation
+        for now. The advantages of the separate build did not outweight the
+        build problems it caused.
+
+        * WebCore.pro: include JavaScriptCore.pri, re-enable prl support
+        and rename the lut generator to domlut to avoid a conflict with
+        JavaScriptCore.pri's lut generator.
+
 2008-12-02  David Levin  <levin@chromium.org>
 
         Reviewed by Alexey Proskuryakov.

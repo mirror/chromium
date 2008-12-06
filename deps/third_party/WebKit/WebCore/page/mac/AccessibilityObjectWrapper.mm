@@ -101,6 +101,11 @@ using namespace std;
 #define NSAccessibilityDefinitionListSubrole @"AXDefinitionList"
 #endif
 
+// Miscellaneous
+#ifndef NSAccessibilityBlockQuoteLevelAttribute
+#define NSAccessibilityBlockQuoteLevelAttribute @"AXBlockQuoteLevel"
+#endif
+
 #ifdef BUILDING_ON_TIGER
 typedef unsigned NSUInteger;
 #endif
@@ -359,6 +364,9 @@ static void AXAttributeStringSetStyle(NSMutableAttributedString* attrString, Ren
 
 static int blockquoteLevel(RenderObject* renderer)
 {
+    if (!renderer)
+        return 0;
+    
     int result = 0;
     for (Node* node = renderer->element(); node; node = node->parent()) {
         if (node->hasTagName(blockquoteTag))
@@ -373,9 +381,9 @@ static void AXAttributeStringSetBlockquoteLevel(NSMutableAttributedString* attrS
     int quoteLevel = blockquoteLevel(renderer);
     
     if (quoteLevel)
-        [attrString addAttribute:@"AXBlockQuoteLevel" value:[NSNumber numberWithInt:quoteLevel] range:range];
+        [attrString addAttribute:NSAccessibilityBlockQuoteLevelAttribute value:[NSNumber numberWithInt:quoteLevel] range:range];
     else
-        [attrString removeAttribute:@"AXBlockQuoteLevel" range:range];
+        [attrString removeAttribute:NSAccessibilityBlockQuoteLevelAttribute range:range];
 }
 
 static void AXAttributeStringSetSpelling(NSMutableAttributedString* attrString, Node* node, int offset, NSRange range)
@@ -604,6 +612,7 @@ static WebCoreTextMarkerRange* textMarkerRangeFromVisiblePositions(VisiblePositi
     static NSArray* tableRowAttrs = nil;
     static NSArray* tableColAttrs = nil;
     static NSArray* tableCellAttrs = nil;
+    static NSArray* groupAttrs = nil;
     NSMutableArray* tempArray;
     if (attributes == nil) {
         attributes = [[NSArray alloc] initWithObjects: NSAccessibilityRoleAttribute,
@@ -626,7 +635,7 @@ static WebCoreTextMarkerRange* textMarkerRangeFromVisiblePositions(VisiblePositi
                       @"AXVisited",
                       NSAccessibilityLinkedUIElementsAttribute,
                       NSAccessibilitySelectedAttribute,
-                      @"AXBlockQuoteLevel",
+                      NSAccessibilityBlockQuoteLevelAttribute,
                       NSAccessibilityTopLevelUIElementAttribute,
                       nil];
     }
@@ -769,6 +778,12 @@ static WebCoreTextMarkerRange* textMarkerRangeFromVisiblePositions(VisiblePositi
         tableCellAttrs = [[NSArray alloc] initWithArray:tempArray];
         [tempArray release];        
     }
+    if (groupAttrs == nil) {
+        tempArray = [[NSMutableArray alloc] initWithArray:attributes];
+        [tempArray addObject:NSAccessibilityTitleUIElementAttribute];
+        groupAttrs = [[NSArray alloc] initWithArray:tempArray];
+        [tempArray release];
+    }
     
     if (m_object->isPasswordField())
         return attributes;
@@ -799,6 +814,9 @@ static WebCoreTextMarkerRange* textMarkerRangeFromVisiblePositions(VisiblePositi
 
     if (m_object->isControl())
         return controlAttrs;
+    
+    if (m_object->isGroup())
+        return groupAttrs;
     
     if (m_object->isMenu())
         return menuAttrs;
@@ -1344,8 +1362,15 @@ static NSString* roleValueToNSString(AccessibilityRole value)
         if ([attributeName isEqualToString: @"AXEndTextMarker"])
             return textMarkerForVisiblePosition(endOfDocument(renderer->document()));
 
-        if ([attributeName isEqualToString: @"AXBlockQuoteLevel"])
+        if ([attributeName isEqualToString:NSAccessibilityBlockQuoteLevelAttribute])
             return [NSNumber numberWithInt:blockquoteLevel(renderer)];
+    } else {
+        if ([attributeName isEqualToString:NSAccessibilityBlockQuoteLevelAttribute]) {
+            AccessibilityObject* parent = m_object->parentObjectUnignored();
+            if (!parent)
+                return [NSNumber numberWithInt:0];
+            return [parent->wrapper() accessibilityAttributeValue:NSAccessibilityBlockQuoteLevelAttribute];        
+        }
     }
     
     if ([attributeName isEqualToString: NSAccessibilityLinkedUIElementsAttribute]) {

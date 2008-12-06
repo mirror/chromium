@@ -118,6 +118,8 @@ namespace JSC {
 
         // Functions for handling of dst register
 
+        RegisterID* ignoredResult() { return &m_ignoredResultRegister; }
+
         // Returns a place to write intermediate values of an operation
         // which reuses dst if it is safe to do so.
         RegisterID* tempDestination(RegisterID* dst)
@@ -231,7 +233,7 @@ namespace JSC {
         RegisterID* emitUnexpectedLoad(RegisterID* dst, bool);
         RegisterID* emitUnexpectedLoad(RegisterID* dst, double);
 
-        RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src, ResultType);
+        RegisterID* emitUnaryOp(OpcodeID, RegisterID* dst, RegisterID* src);
         RegisterID* emitBinaryOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2, OperandTypes);
         RegisterID* emitEqualityOp(OpcodeID, RegisterID* dst, RegisterID* src1, RegisterID* src2);
         RegisterID* emitUnaryNoDstOp(OpcodeID, RegisterID* src);
@@ -245,14 +247,14 @@ namespace JSC {
 
         RegisterID* emitMove(RegisterID* dst, RegisterID* src);
 
-        RegisterID* emitToJSNumber(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_to_jsnumber, dst, src, ResultType::unknown()); }
+        RegisterID* emitToJSNumber(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_to_jsnumber, dst, src); }
         RegisterID* emitPreInc(RegisterID* srcDst);
         RegisterID* emitPreDec(RegisterID* srcDst);
         RegisterID* emitPostInc(RegisterID* dst, RegisterID* srcDst);
         RegisterID* emitPostDec(RegisterID* dst, RegisterID* srcDst);
 
         RegisterID* emitInstanceOf(RegisterID* dst, RegisterID* value, RegisterID* base, RegisterID* basePrototype);
-        RegisterID* emitTypeOf(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_typeof, dst, src, ResultType::unknown()); }
+        RegisterID* emitTypeOf(RegisterID* dst, RegisterID* src) { return emitUnaryOp(op_typeof, dst, src); }
         RegisterID* emitIn(RegisterID* dst, RegisterID* property, RegisterID* base) { return emitBinaryOp(op_in, dst, property, base, OperandTypes()); }
 
         RegisterID* emitResolve(RegisterID* dst, const Identifier& property);
@@ -290,7 +292,7 @@ namespace JSC {
         PassRefPtr<Label> emitJumpSubroutine(RegisterID* retAddrDst, Label*);
         void emitSubroutineReturn(RegisterID* retAddrSrc);
 
-        RegisterID* emitGetPropertyNames(RegisterID* dst, RegisterID* base) { return emitUnaryOp(op_get_pnames, dst, base, ResultType::unknown()); }
+        RegisterID* emitGetPropertyNames(RegisterID* dst, RegisterID* base) { return emitUnaryOp(op_get_pnames, dst, base); }
         RegisterID* emitNextPropertyName(RegisterID* dst, RegisterID* iter, Label* target);
 
         RegisterID* emitCatch(RegisterID*, Label* start, Label* end);
@@ -415,6 +417,7 @@ namespace JSC {
         CodeBlock* m_codeBlock;
 
         HashSet<RefPtr<UString::Rep>, IdentifierRepHash> m_functions;
+        RegisterID m_ignoredResultRegister;
         RegisterID m_thisRegister;
         RegisterID m_argumentsRegister;
         int m_activationRegisterIndex;

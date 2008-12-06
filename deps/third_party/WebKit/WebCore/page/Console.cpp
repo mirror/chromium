@@ -82,6 +82,9 @@ static void printMessageSourceAndLevelPrefix(MessageSource source, MessageLevel 
         case HTMLMessageSource:
             sourceString = "HTML";
             break;
+        case WMLMessageSource:
+            sourceString = "WML";
+            break;
         case XMLMessageSource:
             sourceString = "XML";
             break;

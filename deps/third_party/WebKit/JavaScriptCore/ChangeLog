@@ -1,3 +1,185 @@
+2008-12-02  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Bug 22504: Crashes during code generation occur due to refing of ignoredResult()
+        <https://bugs.webkit.org/show_bug.cgi?id=22504>
+
+        Since ignoredResult() was implemented by casting 1 to a RegisterID*, any
+        attempt to ref ignoredResult() results in a crash. This will occur in
+        code generation of a function body where a node emits another node with
+        the dst that was passed to it, and then refs the returned RegisterID*.
+
+        To fix this problem, make ignoredResult() a member function of
+        BytecodeGenerator that simply returns a pointe to a fixed RegisterID
+        member of BytecodeGenerator.
+
+        * bytecompiler/BytecodeGenerator.h:
+        (JSC::BytecodeGenerator::ignoredResult):
+        * bytecompiler/RegisterID.h:
+        * parser/Nodes.cpp:
+        (JSC::NullNode::emitBytecode):
+        (JSC::BooleanNode::emitBytecode):
+        (JSC::NumberNode::emitBytecode):
+        (JSC::StringNode::emitBytecode):
+        (JSC::RegExpNode::emitBytecode):
+        (JSC::ThisNode::emitBytecode):
+        (JSC::ResolveNode::emitBytecode):
+        (JSC::ObjectLiteralNode::emitBytecode):
+        (JSC::PostfixResolveNode::emitBytecode):
+        (JSC::PostfixBracketNode::emitBytecode):
+        (JSC::PostfixDotNode::emitBytecode):
+        (JSC::DeleteValueNode::emitBytecode):
+        (JSC::VoidNode::emitBytecode):
+        (JSC::TypeOfResolveNode::emitBytecode):
+        (JSC::TypeOfValueNode::emitBytecode):
+        (JSC::PrefixResolveNode::emitBytecode):
+        (JSC::AssignResolveNode::emitBytecode):
+        (JSC::CommaNode::emitBytecode):
+        (JSC::ForNode::emitBytecode):
+        (JSC::ForInNode::emitBytecode):
+        (JSC::ReturnNode::emitBytecode):
+        (JSC::ThrowNode::emitBytecode):
+        (JSC::FunctionBodyNode::emitBytecode):
+        (JSC::FuncDeclNode::emitBytecode):
+
+2008-12-02  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Cameron Zwarich.
+        
+        Fixed https://bugs.webkit.org/show_bug.cgi?id=22537
+        REGRESSION (r38745): Assertion failure in jsSubstring() at ge.com
+
+        The bug was that index would become greater than length, so our
+        "end of input" checks, which all check "index == length", would fail.
+        
+        The solution is to check for end of input before incrementing index,
+        to ensure that index is always <= length.
+        
+        As a side benefit, generateJumpIfEndOfInput can now use je instead of
+        jg, which should be slightly faster.
+
+        * wrec/WREC.cpp:
+        (JSC::WREC::Generator::compileRegExp):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateJumpIfEndOfInput):
+
+2008-12-02  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Plant shift right immediate instructions, which are awesome.
+        https://bugs.webkit.org/show_bug.cgi?id=22610
+        ~5% on the v8-crypto test.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+
+2008-12-02  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Cleaned up SegmentedVector by abstracting segment access into helper
+        functions.
+        
+        SunSpider reports no change.
+
+        * bytecompiler/SegmentedVector.h:
+        (JSC::SegmentedVector::SegmentedVector):
+        (JSC::SegmentedVector::~SegmentedVector):
+        (JSC::SegmentedVector::size):
+        (JSC::SegmentedVector::at):
+        (JSC::SegmentedVector::operator[]):
+        (JSC::SegmentedVector::last):
+        (JSC::SegmentedVector::append):
+        (JSC::SegmentedVector::removeLast):
+        (JSC::SegmentedVector::grow):
+        (JSC::SegmentedVector::clear):
+        (JSC::SegmentedVector::deleteAllSegments):
+        (JSC::SegmentedVector::segmentFor):
+        (JSC::SegmentedVector::subscriptFor):
+        (JSC::SegmentedVector::ensureSegmentsFor):
+        (JSC::SegmentedVector::ensureSegment):
+
+2008-12-02  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Geoffrey Garen. (Patch by Cameron Zwarich <zwarich@apple.com>.)
+        
+        Fixed https://bugs.webkit.org/show_bug.cgi?id=22482
+        REGRESSION (r37991): Occasionally see "Scene rendered incorrectly"
+        message when running the V8 Raytrace benchmark
+        
+        Rolled out r37991. It didn't properly save xmm0, which is caller-save,
+        before calling helper functions.
+        
+        SunSpider and v8 benchmarks show little change -- possibly a .2%
+        SunSpider regression, possibly a .2% v8 benchmark speedup.
+
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::):
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dump):
+        * bytecode/Instruction.h:
+        (JSC::Instruction::):
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::emitUnaryOp):
+        * bytecompiler/BytecodeGenerator.h:
+        (JSC::BytecodeGenerator::emitToJSNumber):
+        (JSC::BytecodeGenerator::emitTypeOf):
+        (JSC::BytecodeGenerator::emitGetPropertyNames):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::privateExecute):
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        * jit/JIT.h:
+        * parser/Nodes.cpp:
+        (JSC::UnaryOpNode::emitBytecode):
+        (JSC::BinaryOpNode::emitBytecode):
+        (JSC::EqualNode::emitBytecode):
+        * parser/ResultType.h:
+        (JSC::ResultType::isReusable):
+        (JSC::ResultType::mightBeNumber):
+        * runtime/JSNumberCell.h:
+
+2008-12-01  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Remove unused (sampling only, and derivable) argument to JIT::emitCTICall.
+        https://bugs.webkit.org/show_bug.cgi?id=22587
+
+        * jit/JIT.cpp:
+        (JSC::JIT::emitCTICall):
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::emitSlowScriptCheck):
+        (JSC::JIT::compileBinaryArithOpSlowCase):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+        * jit/JIT.h:
+
+2008-12-02  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+        
+        Fix the inheritance chain for JSFunction.
+
+        * runtime/JSFunction.cpp:
+        (JSC::JSFunction::info): Add InternalFunction::info as parent class
+
+2008-12-02  Simon Hausmann  <hausmann@webkit.org>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Fix ability to include JavaScriptCore.pri from other .pro files.
+
+        * JavaScriptCore.pri: Moved -O3 setting into the .pro files.
+        * JavaScriptCore.pro:
+        * jsc.pro:
+
 2008-12-01  Geoffrey Garen  <ggaren@apple.com>
 
         Reviewed by Cameron Zwarich, with help from Gavin Barraclough.

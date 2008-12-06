@@ -52,8 +52,10 @@ namespace WebCore {
     class ScriptCallContext;
     class String;
 
+    // Keep in sync with inspector/front-end/Console.js
     enum MessageSource {
         HTMLMessageSource,
+        WMLMessageSource,
         XMLMessageSource,
         JSMessageSource,
         CSSMessageSource,
