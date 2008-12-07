@@ -1213,6 +1213,10 @@ bool WebPluginImpl::InitiateHTTPRequest(int resource_id,
   return true;
 }
 
+void WebPluginImpl::CancelDocumentLoad() {
+  frame()->loader()->stopLoading(false);
+}
+
 void WebPluginImpl::InitiateHTTPRangeRequest(const char* url,
                                              const char* range_info,
                                              HANDLE existing_stream,
