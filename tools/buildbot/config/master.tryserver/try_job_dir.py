@@ -18,7 +18,9 @@ from buildbot.sourcestamp import SourceStamp
 from twisted.application import service, internet
 from twisted.python import log, runtime
 
+from try_job_stamp import TryJobStamp
 import chromium_config as config
+
 
 class TryJobDir(Try_Jobdir):
   """Try_Jobdir overload that executes the patch files in the pending directory.
@@ -50,6 +52,8 @@ class TryJobDir(Try_Jobdir):
     # The dev's email address must be hidden in that variable somehow.
     file_name = f.name
     builderNames = []
+    username = None
+    job_name = 'Unnamed'
     if not file_name or len(file_name) < 2:
       buildsetID = 'Unnamed patchset'
     else:
@@ -58,10 +62,14 @@ class TryJobDir(Try_Jobdir):
       buildsetID = file_name
       # username.change_name.[bot1,bot2,bot3].diff
       items = buildsetID.split('.')
-      if len(items) == 4:
+      if len(items) > 2:
+        username = items[0]
+        user_email = username + '@chromium.org'
+        job_name = items[1]
+      if len(items) >= 4:
         builderNames = items[2].split(",")
         print 'Choose %s for job %s' % (",".join(builderNames), file_name)
-
+    # TODO(maruel): Don't select the builders right now if not specified.
     builderNames = self.pools.Select(builderNames)
     print 'Choose %s for job %s' % (",".join(builderNames), file_name)
 
@@ -83,8 +91,9 @@ class TryJobDir(Try_Jobdir):
     patchlevel = 0
 
     patch = (patchlevel, diff)
-    ss = SourceStamp(branch, baserev, patch)
-    return builderNames, ss, buildsetID
+    jobstamp = TryJobStamp(branch=branch, revision=baserev, patch=patch,
+                           author_name=username, job_name=job_name)
+    return builderNames, jobstamp, buildsetID
 
   def messageReceived(self, filename):
     """Called when a new file has been detected so it can be parsed."""
@@ -107,13 +116,14 @@ class TryJobDir(Try_Jobdir):
       f = open(file_to, "r")
 
     try:
-      builderNames, ss, buildsetID = self.parseJob(f)
+      builderNames, jobstamp, buildsetID = self.parseJob(f)
     except BadJobfile:
       log.msg("%s reports a bad jobfile in %s" % (self, filename))
       log.err()
       return
     reason = "'%s' try job" % buildsetID
-    bs = buildset.BuildSet(builderNames, ss, reason=reason, bsid=buildsetID)
+    bs = buildset.BuildSet(builderNames, jobstamp, reason=reason,
+                           bsid=buildsetID)
     self.parent.submitBuildSet(bs)
 
 
