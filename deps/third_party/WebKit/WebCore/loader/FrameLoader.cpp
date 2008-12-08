@@ -831,6 +831,7 @@ void FrameLoader::clear(bool clearWindowProperties, bool clearScriptObjects)
     
     if (m_frame->document() && !m_frame->document()->inPageCache()) {
         m_frame->document()->cancelParsing();
+        m_frame->document()->stopActiveDOMObjects();
         if (m_frame->document()->attached()) {
             m_frame->document()->willRemove();
             m_frame->document()->detach();
@@ -3013,7 +3014,8 @@ void FrameLoader::open(CachedPage& cachedPage)
     updatePolicyBaseURL();
 
     cachedPage.restore(m_frame->page());
-
+    document->resumeActiveDOMObjects();
+    
     checkCompleted();
 }
 

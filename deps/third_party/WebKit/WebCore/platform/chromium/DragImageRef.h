@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
+ * Copyright (C) 2008 Google Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,44 +23,27 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef SVGPaintServerRadialGradient_h
-#define SVGPaintServerRadialGradient_h
+#ifndef DragImageRef_h
+#define DragImageRef_h
 
-#if ENABLE(SVG)
-
-#include "FloatPoint.h"
-#include "SVGPaintServerGradient.h"
+#if PLATFORM(WIN_OS)
+typedef struct HBITMAP__* HBITMAP;
+#elif PLATFORM(DARWIN)
+#if __OBJC__
+@class NSImage;
+#else
+class NSImage;
+#endif
+#endif
 
 namespace WebCore {
 
-    class SVGPaintServerRadialGradient : public SVGPaintServerGradient {
-    public:
-        static PassRefPtr<SVGPaintServerRadialGradient> create(const SVGGradientElement* owner) { return adoptRef(new SVGPaintServerRadialGradient(owner)); }
-        virtual ~SVGPaintServerRadialGradient();
-
-        virtual SVGPaintServerType type() const { return RadialGradientPaintServer; }
-
-        FloatPoint gradientCenter() const;
-        void setGradientCenter(const FloatPoint&);
-
-        FloatPoint gradientFocal() const;
-        void setGradientFocal(const FloatPoint&);
-
-        float gradientRadius() const;
-        void setGradientRadius(float);
-
-        virtual TextStream& externalRepresentation(TextStream&) const;
-
-    private:
-        SVGPaintServerRadialGradient(const SVGGradientElement* owner);
-
-        float m_radius;
-        FloatPoint m_center;
-        FloatPoint m_focal;
-    };
-
-} // namespace WebCore
-
+#if PLATFORM(WIN_OS)
+typedef HBITMAP DragImageRef;
+#elif PLATFORM(DARWIN)
+typedef NSImage* DragImageRef;
 #endif
 
-#endif // SVGPaintServerRadialGradient_h
+}
+
+#endif

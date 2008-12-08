@@ -49,11 +49,10 @@ namespace JSC { namespace WREC {
         using MacroAssembler::JumpList;
         using MacroAssembler::Label;
 
-        static CompiledRegExp compileRegExp(Interpreter*, const UString& pattern, unsigned* numSubpatterns_ptr, const char** error_ptr, bool ignoreCase = false, bool multiline = false);
-    
-        Generator(Parser& parser, AssemblerBuffer* assemblerBuffer)
-            : MacroAssembler(assemblerBuffer)
-            , m_parser(parser)
+        static CompiledRegExp compileRegExp(const UString& pattern, unsigned* numSubpatterns_ptr, const char** error_ptr, bool ignoreCase = false, bool multiline = false);
+
+        Generator(Parser& parser)
+            : m_parser(parser)
         {
         }
 
@@ -66,9 +65,8 @@ namespace JSC { namespace WREC {
         
         void generateEnter();
         void generateSaveIndex();
-        void generateIncrementIndex();
+        void generateIncrementIndex(Jump* failure = 0);
         void generateLoadCharacter(JumpList& failures);
-        void generateJumpIfEndOfInput(JumpList& failures);
         void generateJumpIfNotEndOfInput(Label);
         void generateReturnSuccess();
         void generateReturnFailure();
@@ -96,6 +94,8 @@ namespace JSC { namespace WREC {
         void terminateDisjunction(JumpList& successes);
 
     private:
+        bool generatePatternCharacterPair(JumpList& failures, int ch1, int ch2);
+
         Parser& m_parser;
     };
 

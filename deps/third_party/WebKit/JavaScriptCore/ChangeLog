@@ -1,3 +1,212 @@
+2008-12-04  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Enable ENABLE_JIT_OPTIMIZE_CALL, ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS
+        and ENABLE_JIT_OPTIMIZE_ARITHMETIC, as suggested by Niko.
+
+        * JavaScriptCore.pri: 
+
+2008-12-04  Kent Hansen  <khansen@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Enable the JSC jit for the Qt build by default for release builds on
+        linux-g++ and win32-msvc.
+
+        * JavaScriptCore.pri:
+
+2008-12-04  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Allow JIT to function without property access repatching and arithmetic optimizations.
+        Controlled by ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS and ENABLE_JIT_OPTIMIZE_ARITHMETIC switches.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22643
+
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        * jit/JIT.h:
+        * jit/JITArithmetic.cpp: Copied from jit/JIT.cpp.
+        (JSC::JIT::compileBinaryArithOp):
+        (JSC::JIT::compileBinaryArithOpSlowCase):
+        * jit/JITPropertyAccess.cpp: Copied from jit/JIT.cpp.
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compileGetByIdSlowCase):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::compilePutByIdSlowCase):
+        (JSC::resizePropertyStorage):
+        (JSC::transitionWillNeedStorageRealloc):
+        (JSC::JIT::privateCompilePutByIdTransition):
+        (JSC::JIT::patchGetByIdSelf):
+        (JSC::JIT::patchPutByIdReplace):
+        (JSC::JIT::privateCompilePatchGetArrayLength):
+        * wtf/Platform.h:
+
+2008-12-03  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+        
+        Optimized sequences of characters in regular expressions by comparing
+        two characters at a time.
+        
+        1-2% speedup on SunSpider, 19-25% speedup on regexp-dna.
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::load32):
+        (JSC::MacroAssembler::jge32): Filled out a few more macro methods.
+
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::movl_mr): Added a verion of movl_mr that operates
+        without an offset, to allow the macro assembler to optmize for that case.
+        
+        * wrec/WREC.cpp:
+        (JSC::WREC::Generator::compileRegExp): Test the saved value of index
+        instead of the index register when checking for "end of input." The
+        index register doesn't increment by 1 in an orderly fashion, so testing
+        it for == "end of input" is not valid.
+        
+        Also, jump all the way to "return failure" upon reaching "end of input,"
+        instead of executing the next alternative. This is more logical, and
+        it's a slight optimization in the case of an expression with many alternatives.
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateIncrementIndex): Added support for
+        jumping to a failure label in the case where the index has reached "end
+        of input."
+
+        (JSC::WREC::Generator::generatePatternCharacterSequence):
+        (JSC::WREC::Generator::generatePatternCharacterPair): This is the
+        optmization. It's basically like generatePatternCharacter, but it runs two
+        characters at a time.
+        
+        (JSC::WREC::Generator::generatePatternCharacter): Changed to use isASCII,
+        since it's clearer than comparing to a magic hex value.
+        
+        * wrec/WRECGenerator.h:
+
+2008-12-03  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Camron Zwarich.
+
+        Allow JIT to operate without the call-repatching optimization.
+        Controlled by ENABLE(JIT_OPTIMIZE_CALL), defaults on, disabling
+        this leads to significant performance regression.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22639
+
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileSlowCases):
+        * jit/JIT.h:
+        * jit/JITCall.cpp: Copied from jit/JIT.cpp.
+        (JSC::JIT::compileOpCallInitializeCallFrame):
+        (JSC::JIT::compileOpCallSetupArgs):
+        (JSC::JIT::compileOpCallEvalSetupArgs):
+        (JSC::JIT::compileOpConstructSetupArgs):
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::compileOpCallSlowCase):
+        (JSC::unreachable):
+        * jit/JITInlineMethods.h: Copied from jit/JIT.cpp.
+        (JSC::JIT::checkStructure):
+        (JSC::JIT::emitFastArithPotentiallyReTagImmediate):
+        (JSC::JIT::emitTagAsBoolImmediate):
+        * wtf/Platform.h:
+
+2008-12-03  Eric Seidel  <eric@webkit.org>
+
+        Rubber-stamped by David Hyatt.
+
+        Make HAVE_ACCESSIBILITY only define if !defined
+
+        * wtf/Platform.h:
+
+2008-12-03  Sam Weinig  <sam@webkit.org>
+
+        Fix build.
+
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::orl_i32r):
+
+2008-12-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Remove shared AssemblerBuffer 1MB buffer and instead give AssemblerBuffer
+        an 256 byte inline capacity.
+
+        1% progression on Sunspider.
+
+        * assembler/AssemblerBuffer.h:
+        (JSC::AssemblerBuffer::AssemblerBuffer):
+        (JSC::AssemblerBuffer::~AssemblerBuffer):
+        (JSC::AssemblerBuffer::grow):
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::MacroAssembler):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::X86Assembler):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::Interpreter):
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::JIT):
+        * parser/Nodes.cpp:
+        (JSC::RegExpNode::emitBytecode):
+        * runtime/RegExp.cpp:
+        (JSC::RegExp::RegExp):
+        (JSC::RegExp::create):
+        * runtime/RegExp.h:
+        * runtime/RegExpConstructor.cpp:
+        (JSC::constructRegExp):
+        * runtime/RegExpPrototype.cpp:
+        (JSC::regExpProtoFuncCompile):
+        * runtime/StringPrototype.cpp:
+        (JSC::stringProtoFuncMatch):
+        (JSC::stringProtoFuncSearch):
+        * wrec/WREC.cpp:
+        (JSC::WREC::Generator::compileRegExp):
+        * wrec/WRECGenerator.h:
+        (JSC::WREC::Generator::Generator):
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::Parser):
+
+2008-12-03  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt, with help from Gavin Barraclough.
+        
+        orl_i32r was actually coded as an 8bit OR. So, I renamed orl_i32r to
+        orl_i8r, changed all orl_i32r clients to use orl_i8r, and then added
+        a new orl_i32r that actually does a 32bit OR.
+        
+        (32bit OR is currently unused, but a patch I'm working on uses it.)
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::or32): Updated to choose between 8bit and 32bit OR.
+
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::orl_i8r): The old orl_i32r.
+        (JSC::X86Assembler::orl_i32r): The new orl_i32r.
+        
+        * jit/JIT.cpp:
+        (JSC::JIT::emitFastArithPotentiallyReTagImmediate):
+        (JSC::JIT::emitTagAsBoolImmediate): Use orl_i8r, since we're ORing 8bit
+        values.
+
+2008-12-03  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Helper functions for turn -> degrees.
+        https://bugs.webkit.org/show_bug.cgi?id=22497
+
+        * wtf/MathExtras.h:
+        (turn2deg):
+        (deg2turn):
+
 2008-12-02  Cameron Zwarich  <zwarich@apple.com>
 
         Reviewed by Geoff Garen.

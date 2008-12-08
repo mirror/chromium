@@ -49,8 +49,7 @@ public:
         TimesEight = 8
     };
 
-    MacroAssembler(AssemblerBuffer* assemblerBuffer)
-        : m_assembler(assemblerBuffer)
+    MacroAssembler()
     {
     }
     
@@ -284,7 +283,10 @@ public:
     
     void or32(Imm32 imm, RegisterID dest)
     {
-        m_assembler.orl_i32r(imm.m_value, dest);
+        if (CAN_SIGN_EXTEND_8_32(imm.m_value))
+            m_assembler.orl_i8r(imm.m_value, dest);
+        else
+            m_assembler.orl_i32r(imm.m_value, dest);
     }
 
     void sub32(Imm32 imm, RegisterID dest)
@@ -329,6 +331,14 @@ public:
             m_assembler.movl_mr(address.offset, address.base, dest);
         else
             m_assembler.movl_mr(address.base, dest);
+    }
+
+    void load32(BaseIndex address, RegisterID dest)
+    {
+        if (address.offset)
+            m_assembler.movl_mr(address.offset, address.base, address.index, address.scale, dest);
+        else
+            m_assembler.movl_mr(address.base, address.index, address.scale, dest);
     }
 
     void load16(BaseIndex address, RegisterID dest)
@@ -512,6 +522,12 @@ public:
         return Jump(m_assembler, m_assembler.jg());
     }
     
+    Jump jge32(RegisterID left, RegisterID right)
+    {
+        m_assembler.cmpl_rr(right, left);
+        return Jump(m_assembler, m_assembler.jge());
+    }
+
     Jump jge32(RegisterID left, Imm32 right)
     {
         compareImm32ForBranch(left, right.m_value);

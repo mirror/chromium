@@ -28,7 +28,6 @@
 
 #include "KURL.h"
 #include <wtf/OwnPtr.h>
-#include "PausedTimeouts.h"
 #if USE(JSC)
 #include <runtime/Protect.h>
 #endif
@@ -42,7 +41,6 @@ namespace WebCore {
     class JSDOMWindow;
     class Node;
     class Page;
-    class PausedTimeouts;
 
 class CachedPage : public RefCounted<CachedPage> {
 public:
@@ -77,7 +75,6 @@ private:
 #if USE(JSC)
     JSC::ProtectedPtr<JSDOMWindow> m_window;
 #endif
-    OwnPtr<PausedTimeouts> m_pausedTimeouts;
     OwnPtr<CachedPagePlatformData> m_cachedPagePlatformData;
 };
 

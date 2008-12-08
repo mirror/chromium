@@ -451,6 +451,8 @@ webcore_sources += \
 	WebCore/css/CSSSegmentedFontFace.h \
 	WebCore/css/CSSSelector.cpp \
 	WebCore/css/CSSSelector.h \
+	WebCore/css/CSSSelectorList.cpp \
+	WebCore/css/CSSSelectorList.h \
 	WebCore/css/CSSStyleDeclaration.cpp \
 	WebCore/css/CSSStyleDeclaration.h \
 	WebCore/css/CSSStyleRule.cpp \
@@ -2779,7 +2781,6 @@ webcore_sources += \
 webcoregtk_sources += \
 	WebCore/svg/graphics/cairo/RenderPathCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerCairo.cpp \
-	WebCore/svg/graphics/cairo/SVGPaintServerGradientCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerPatternCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceFilterCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceMaskerCairo.cpp

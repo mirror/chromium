@@ -66,6 +66,7 @@ namespace WebCore {
     class Database;
     class DOMImplementation;
     class DOMSelection;
+    class DOMTimer;
     class DOMWindow;
     class DatabaseThread;
     class DocLoader;
@@ -778,7 +779,12 @@ public:
     void parseDNSPrefetchControlHeader(const String&);
 
     virtual void reportException(const String& errorMessage, int lineNumber, const String& sourceURL);
+    virtual void postTask(PassRefPtr<Task>); // Executes the task on context's thread asynchronously.
 
+    void addTimeout(int timeoutId, DOMTimer*);
+    void removeTimeout(int timeoutId);
+    DOMTimer* findTimeout(int timeoutId);
+    
 protected:
     Document(Frame*, bool isXHTML);
 
@@ -1015,7 +1021,11 @@ public:
     
     void setUsingGeolocation(bool f) { m_usingGeolocation = f; }
     bool usingGeolocation() const { return m_usingGeolocation; };
-    
+
+#if ENABLE(WML)
+    void resetWMLPageState();
+#endif
+
 protected:
     void clearXMLVersion() { m_xmlVersion = String(); }
 
@@ -1097,6 +1107,9 @@ private:
 #if USE(LOW_BANDWIDTH_DISPLAY)
     bool m_inLowBandwidthDisplay;
 #endif
+
+    typedef HashMap<int, DOMTimer*> TimeoutsMap;
+    TimeoutsMap m_timeouts;
 };
 
 inline bool Document::hasElementWithId(AtomicStringImpl* id) const

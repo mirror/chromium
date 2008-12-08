@@ -1,3 +1,411 @@
+2008-12-04  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Remove unused Completion.h include.
+
+        * html/CanvasRenderingContext2D.cpp: Removed Completion.h include.
+
+2008-11-13  David Hyatt  <hyatt@apple.com>
+
+        Fix a bug in ScrollView's refactoring.  An isVisible check should have been isSelfVisible.
+
+        Reviewed by Darin Adler
+
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::setParentVisible):
+
+2008-12-04  Friedemann Kleint  <friedemann.kleint@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Fix small translation glitch in the Qt file chooser.
+
+        * platform/qt/FileChooserQt.cpp:
+        (WebCore::FileChooser::basenameForWidth):
+
+2008-12-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Rubber-stamped by Simon Hausmann.
+
+        Blacklist Silverlight plugin on Qt/Mac until supported
+
+        Currently the plugin crashes with a corrupted stack trace, possibly
+        related to https://bugs.webkit.org/show_bug.cgi?id=20635
+
+        * plugins/mac/PluginPackageMac.cpp:
+        (WebCore::PluginPackage::fetchInfo):
+        (WebCore::PluginPackage::isPluginBlacklisted):
+
+2008-12-03  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Fix non-Mac build.
+
+        * page/Chrome.cpp: (WebCore::PageGroupLoadDeferrer::~PageGroupLoadDeferrer):
+
+2008-12-03  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove uses of document() in XMLHttpRequest where simple.
+        https://bugs.webkit.org/show_bug.cgi?id=22619
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::responseXML):
+        Return NULL in the worker case which is according to spec (and avoids using document()).
+
+        (WebCore::XMLHttpRequest::callReadyStateChangeListener):
+        (WebCore::XMLHttpRequest::initSend):
+        Use scriptExecutionContext() instead of document().
+
+2008-12-03  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Make ScriptExecutionContextTaskWorkerTask::performTask a pure virtual function.
+        https://bugs.webkit.org/show_bug.cgi?id=22642
+
+        * dom/Document.cpp:
+        (WebCore::ScriptExecutionContextTaskTimer::ScriptExecutionContextTaskTimer):
+        (WebCore::ScriptExecutionContextTaskTimer::fired):
+        (WebCore::PerformTaskContext::PerformTaskContext):
+        (WebCore::performTask):
+        (WebCore::Document::postTask):
+        * dom/Document.h:
+        * dom/ScriptExecutionContext.cpp:
+        * dom/ScriptExecutionContext.h:
+        * dom/WorkerContext.cpp:
+        (WebCore::ScriptExecutionContextTaskWorkerTask::create):
+        (WebCore::ScriptExecutionContextTaskWorkerTask::ScriptExecutionContextTaskWorkerTask):
+        (WebCore::ScriptExecutionContextTaskWorkerTask::performTask):
+        (WebCore::WorkerContext::postTask):
+        * dom/WorkerContext.h:
+
+2008-12-03  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Using ActiveDOMObject as base class for DOMTimer.
+        https://bugs.webkit.org/show_bug.cgi?id=22620
+
+        Using ActiveDOMObject simplifies the code because ActiveDOMObject
+        is wired for stop/pause/resume on loading/unloading/caching the page etc
+        so the timer-specific code that does the same can be removed.
+        In addition, timers can be now paused/resumed 'in place' which
+        makes it unnecessary to 'serialize' them into special PausedTimeouts
+        instance, so pause/resumeTimeouts implementation in JSDOMWindowBase can also be removed.
+        Also, moving TimeoutMap from JSDOMWindowBase to Document matches lifetime
+        of timeouts and makes it possible to not roundtrip them via PausedTimeouts 
+        every time when JSDOMWindow wrapper is destroyed while the page is in the b/f cache.
+
+        Timeouts are now paused with other ActiveDOMObjects:
+        - before creating CachedPage in FrameLoader::commitProvisionalLoad()
+        - in JavaScriptDebugServer::setJavaScriptPaused
+        - during modal UI operations in Chrome::*
+        this is equivalent to previous usage of JSDOMWindowBase::pauseTimeouts()
+
+        Timeouts are stopped to prevent future firing from:
+        - FrameLoader::clear()
+        - FrameLoader::frameDetached()
+        this is equivalent to previous usage of JSDOMWindowBase::clearAllTimeouts()
+
+        This is also one of the steps to having timers in Workers. See the plan of
+        the next steps in the bug above.
+
+        * bindings/js/DOMTimer.cpp:
+        (WebCore::DOMTimer::DOMTimer):
+        (WebCore::DOMTimer::fired):
+        (WebCore::DOMTimer::hasPendingActivity):
+        (WebCore::DOMTimer::contextDestroyed):
+        (WebCore::DOMTimer::stop):
+        (WebCore::DOMTimer::suspend):
+        (WebCore::DOMTimer::resume):
+        (WebCore::DOMTimer::canSuspend): Implemented ActiveDOMObject methods.
+
+        * bindings/js/DOMTimer.h:
+        * bindings/js/JSDOMBinding.cpp: ActiveDOMObject can have no JS wrapper
+        (WebCore::markActiveObjectsForContext): 
+
+        * bindings/js/JSDOMWindowBase.cpp:
+        (WebCore::JSDOMWindowBase::~JSDOMWindowBase):
+        (WebCore::JSDOMWindowBase::clear):
+        (WebCore::JSDOMWindowBase::installTimeout):
+        (WebCore::JSDOMWindowBase::removeTimeout):
+        (WebCore::JSDOMWindowBase::timerFired):
+        (WebCore::JSDOMWindowBase::disconnectFrame):
+        * bindings/js/JSDOMWindowBase.h:
+        * bindings/js/ScriptController.cpp:
+        * bindings/js/ScriptController.h:
+
+        * dom/Document.cpp: Document now holds a hash map id->timeout
+        (WebCore::Document::addTimeout):
+        (WebCore::Document::removeTimeout):
+        (WebCore::Document::findTimeout):
+        * dom/Document.h:
+        * history/CachedPage.cpp:
+        (WebCore::CachedPage::CachedPage):
+        (WebCore::CachedPage::restore):
+        (WebCore::CachedPage::clear):
+        * history/CachedPage.h:
+        * inspector/JavaScriptDebugServer.cpp:
+        (WebCore::JavaScriptDebugServer::~JavaScriptDebugServer):
+        (WebCore::JavaScriptDebugServer::setJavaScriptPaused):
+        * inspector/JavaScriptDebugServer.h:
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::commitProvisionalLoad): 
+        removed clearAllTimeouts since all ActiveDOMObjects will be stopped in FrameLoader::clear();
+        I don't see how the old comment can be correct - the code in the same method proceeds to invoke 'onunload'
+        and then calls into client which can be external code and can cause any active object created in onunload
+        to fire. We can stop them all before firing onunload but it does not make a lot of sense.
+        I have a test to go with the next patch which verifies that timers set in onunload do not fire.
+
+        (WebCore::FrameLoader::open):
+        * page/Chrome.cpp:
+        (WebCore::PageGroupLoadDeferrer::PageGroupLoadDeferrer):
+        (WebCore::PageGroupLoadDeferrer::~PageGroupLoadDeferrer):
+
+2008-12-03  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        <rdar://problem/6018653> Extra blank line when pasting paragraph in plain text
+        
+        In SnowLeopard, Mail occasionally adds an empty, unstyled paragraph at the
+        end of pasted content so that users don't get stuck with non-standard pargraph
+        spacing.  This content threw off our handling of interchange newlines.  Any interchange
+        newline, regardless of it's position in the incoming fragment was considered to be
+        "at the start" of the fragment, and would result in us inserting in a newline before 
+        inserted content.  This patch makes the checks for interchange newlines more strict, 
+        and treats interchange newlines found elsewhere as normal <br>s.
+
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplacementFragment::ReplacementFragment):
+        (WebCore::ReplacementFragment::removeInterchangeNodes):
+        * editing/VisiblePosition.cpp:
+        (WebCore::VisiblePosition::init):
+        (WebCore::VisiblePosition::canonicalPosition):
+        * editing/VisiblePosition.h:
+
+2008-12-03  Eric Seidel  <eric@webkit.org>
+
+        Rubber-stamped by David Hyatt.
+
+        Bring the WebCore chromium build a couple steps closer to building.
+
+        * WebCore.scons:
+
+2008-12-03  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix.
+
+        * WebCoreSources.bkl:
+
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22636
+
+        Implement WML variable substitution & validation.
+        Created a framework for scriptable WML layout tests, that are able to test variable substiution & validation.
+
+        Tests: wml/variable-reference-invalid-character.html
+               wml/variable-reference-valid.html
+
+        * wml/WMLVariables.cpp:
+        (WebCore::isValidFirstVariableNameCharacter):
+        (WebCore::isValidVariableNameCharacter):
+        (WebCore::isValidVariableEscapingModeString):
+        (WebCore::isValidVariableName):
+        (WebCore::containsVariableReference):
+        (WebCore::substituteVariableReferences):
+        * wml/WMLVariables.h:
+
+2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Further preparations for WML layout tests.
+        - Enable variable substitution in Text.cpp - if the parent is a WMLElement derived class.
+        - Dump WMLMessageSource messages to the console, just like it's done for JSMessageSource
+        - Add helper method in Document.idl, to reset the WML page state to a well-known default state.
+          (will be used in the upcoming LayoutTests/wml testcases)
+
+         * dom/Document.cpp:
+        (WebCore::Document::resetWMLPageState):
+        * dom/Document.h:
+        * dom/Document.idl:
+        * dom/Text.cpp:
+        (WebCore::Text::insertedIntoDocument):
+        * dom/Text.h:
+        * page/Console.cpp:
+        (WebCore::Console::addMessage):
+        * wml/WMLPageState.h: Readd heper function
+        (WebCore::WMLPageState::hasVariables):
+
+2008-12-03  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Don't leak selectors in case selector list parsing failed.
+
+        * css/CSSGrammar.y:
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::~CSSParser):
+
+2008-12-03  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        Fix https://bugs.webkit.org/show_bug.cgi?id=22520
+
+        This is a regression (causes a crash of LayoutTests/animations/transform-animation-event-destroy-element.html).
+        This patch fixes the testcase.
+
+        This is another case of animations getting destroyed in the end animation callback and causing dangling
+        pointers on return. This one involves iterating over the CompositeAnimation, which has been destroyed.
+        So I now check for a null m_object pointer (which is nullified when the CompositeAnimation is destroyed)
+        and skip that call.
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::updateStateMachine):
+
+2008-12-03  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22379
+        Make CSSOM use less memory
+
+        Reduce size of the CSSSelector by one more pointer by using an array
+        instead of a linked list to store them.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * css/CSSGrammar.y:
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::CSSParser):
+        (WebCore::CSSParser::parseSelector):
+        (WebCore::CSSParser::createStyleRule):
+        * css/CSSParser.h:
+        (WebCore::CSSParser::reusableSelectorVector):
+        * css/CSSSelector.h:
+        (WebCore::CSSSelector::CSSSelector):
+        (WebCore::CSSSelector::~CSSSelector):
+        (WebCore::CSSSelector::isLastInSelectorList):
+        (WebCore::CSSSelector::setLastInSelectorList):
+        * css/CSSStyleRule.cpp:
+        (WebCore::CSSStyleRule::CSSStyleRule):
+        (WebCore::CSSStyleRule::~CSSStyleRule):
+        (WebCore::CSSStyleRule::selectorText):
+        * css/CSSStyleRule.h:
+        (WebCore::CSSStyleRule::adoptSelectorVector):
+        (WebCore::CSSStyleRule::selectorList):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSRuleSet::addRulesFromSheet):
+        * dom/Node.cpp:
+        (WebCore::forEachSelector):
+        (WebCore::selectorNeedsNamespaceResolution):
+        (WebCore::Node::querySelector):
+        (WebCore::Node::querySelectorAll):
+        * dom/SelectorNodeList.cpp:
+        (WebCore::createSelectorNodeList):
+        * dom/SelectorNodeList.h:
+
+2008-12-03  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22630
+        Assertion failure in XMLHttpRequest::contextDestroyed
+
+        Test: http/tests/xmlhttprequest/close-window.html
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::clear):
+        (WebCore::FrameLoader::commitProvisionalLoad):
+        Move stopping active objects to clear(), so that closing a window is also covered.
+
+        * xml/XMLHttpRequest.cpp: (WebCore::XMLHttpRequest::abort): Protect the object in abort(),
+        because internalAbort() deref()'s.
+
+2008-12-03  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Implement CSS 3 <angle> turn unit and support it
+        in rotations.
+        https://bugs.webkit.org/show_bug.cgi?id=22497
+
+        * css/CSSGrammar.y:
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::validUnit):
+        (WebCore::unitFromString):
+        (WebCore::CSSParser::lex):
+        * css/CSSPrimitiveValue.cpp:
+        (WebCore::CSSPrimitiveValue::cssText):
+        (WebCore::CSSPrimitiveValue::parserValue):
+        * css/CSSPrimitiveValue.h:
+        (WebCore::CSSPrimitiveValue::):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::createTransformOperations):
+        * css/tokenizer.flex:
+
+2008-12-03  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Make use of the gradient code in GraphicsContext and get rid of most of the
+        platform dependent code.
+
+        SVG should use the new Gradient support on GraphicsContext
+        https://bugs.webkit.org/show_bug.cgi?id=20543
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/graphics/FloatSize.h:
+        (WebCore::FloatSize::shrunkTo):
+        * svg/SVGLinearGradientElement.cpp:
+        (WebCore::SVGLinearGradientElement::buildGradient):
+        * svg/SVGRadialGradientElement.cpp:
+        (WebCore::SVGRadialGradientElement::buildGradient):
+        * svg/graphics/SVGPaintServer.h:
+        * svg/graphics/SVGPaintServerGradient.cpp:
+        (WebCore::SVGPaintServerGradient::SVGPaintServerGradient):
+        (WebCore::SVGPaintServerGradient::~SVGPaintServerGradient):
+        (WebCore::SVGPaintServerGradient::gradient):
+        (WebCore::SVGPaintServerGradient::setGradient):
+        (WebCore::findTextRootObject):
+        (WebCore::createMaskAndSwapContextForTextGradient):
+        (WebCore::clipToTextMask):
+        (WebCore::SVGPaintServerGradient::setup):
+        (WebCore::SVGPaintServerGradient::renderPath):
+        (WebCore::SVGPaintServerGradient::teardown):
+        * svg/graphics/SVGPaintServerGradient.h:
+        (WebCore::SVGPaintServerGradient::setGradientStops):
+        (WebCore::SVGPaintServerGradient::gradientStops):
+        * svg/graphics/SVGPaintServerLinearGradient.h:
+        * svg/graphics/SVGPaintServerRadialGradient.h:
+        * svg/graphics/cairo/SVGPaintServerGradientCairo.cpp: Removed.
+        * svg/graphics/cg/SVGPaintServerCg.cpp:
+        * svg/graphics/cg/SVGPaintServerGradientCg.cpp: Removed.
+        * svg/graphics/qt/SVGPaintServerGradientQt.cpp: Removed.
+        * svg/graphics/qt/SVGPaintServerLinearGradientQt.cpp: Removed.
+        * svg/graphics/qt/SVGPaintServerRadialGradientQt.cpp: Removed.
+
+2008-12-03  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        Fix formatting.
+
+        * css/CSSSelector.h:
+        (WebCore::CSSSelector::createRareData):
+
 2008-12-03  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
 
         Reviewed by Adam Roben.

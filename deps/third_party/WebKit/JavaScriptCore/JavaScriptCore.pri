@@ -12,6 +12,8 @@ win32-*: GENERATED_SOURCES_DIR_SLASH ~= s|/|\|
 win32-g++: LIBS += -lwinmm
 
 
+CONFIG(release):isEqual(QT_ARCH,i386):linux-g++*|win32-msvc*: DEFINES += ENABLE_JIT ENABLE_WREC ENABLE_JIT_OPTIMIZE_CALL ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS ENABLE_JIT_OPTIMIZE_ARITHMETIC
+
 include(pcre/pcre.pri)
 
 LUT_FILES += \
@@ -56,12 +58,21 @@ SOURCES += \
     runtime/JSNotAnObject.cpp \
     bytecode/CodeBlock.cpp \
     jit/JIT.cpp \
+    jit/JITCall.cpp \
+    jit/JITArithmetic.cpp \
+    jit/JITPropertyAccess.cpp \
     bytecompiler/BytecodeGenerator.cpp \
     runtime/ExceptionHelpers.cpp \
     runtime/JSPropertyNameIterator.cpp \
     interpreter/Interpreter.cpp \
     bytecode/Opcode.cpp \
     bytecode/SamplingTool.cpp \
+    wrec/CharacterClass.cpp \
+    wrec/CharacterClassConstructor.cpp \
+    wrec/WREC.cpp \
+    wrec/WRECFunctors.cpp \
+    wrec/WRECGenerator.cpp \
+    wrec/WRECParser.cpp \
     interpreter/RegisterFile.cpp
 
 # AllInOneFile.cpp helps gcc analize and optimize code

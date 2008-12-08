@@ -132,7 +132,6 @@ CSSParser::CSSParser(bool strictParsing)
     , m_mediaQuery(0)
     , m_valueList(0)
     , m_parsedProperties(static_cast<CSSProperty**>(fastMalloc(32 * sizeof(CSSProperty*))))
-    , m_floatingSelector(0)
     , m_numParsedProperties(0)
     , m_maxParsedProperties(32)
     , m_inParseShorthand(0)
@@ -171,6 +170,7 @@ CSSParser::~CSSParser()
     deleteAllValues(m_floatingSelectors);
     deleteAllValues(m_floatingValueLists);
     deleteAllValues(m_floatingFunctions);
+    deleteAllValues(m_reusableSelectorVector);
 }
 
 void CSSParserString::lower()
@@ -304,17 +304,18 @@ bool CSSParser::parseColor(CSSMutableStyleDeclaration* declaration, const String
     return (m_numParsedProperties && m_parsedProperties[0]->m_id == CSSPropertyColor);
 }
 
-std::auto_ptr<CSSSelector> CSSParser::parseSelector(const String& string, Document* doc)
+void CSSParser::parseSelector(const String& string, Document* doc, CSSSelectorList& selectorList)
 {    
     RefPtr<CSSStyleSheet> dummyStyleSheet = CSSStyleSheet::create(doc);
 
     m_styleSheet = dummyStyleSheet.get();
+    m_selectorListForParseSelector = &selectorList;
 
     setupParser("@-webkit-selector{", string, "}");
 
     cssyyparse(this);
 
-    return std::auto_ptr<CSSSelector>(m_floatingSelector);
+    m_selectorListForParseSelector = 0;
 }
 
 bool CSSParser::parseDeclaration(CSSMutableStyleDeclaration* declaration, const String& string)
@@ -437,6 +438,7 @@ bool CSSParser::validUnit(CSSParserValue* value, Units unitflags, bool strict)
     case CSSPrimitiveValue::CSS_DEG:
     case CSSPrimitiveValue::CSS_RAD:
     case CSSPrimitiveValue::CSS_GRAD:
+    case CSSPrimitiveValue::CSS_TURN:
         b = (unitflags & FAngle);
         break;
     case CSSPrimitiveValue::CSS_HZ:
@@ -475,6 +477,8 @@ static int unitFromString(CSSParserValue* value)
         return CSSPrimitiveValue::CSS_RAD;
     if (equal(value->string, "grad"))
         return CSSPrimitiveValue::CSS_GRAD;
+    if (equal(value->string, "turn"))
+        return CSSPrimitiveValue::CSS_TURN;
     if (equal(value->string, "ms"))
         return CSSPrimitiveValue::CSS_MS;
     if (equal(value->string, "s"))
@@ -4185,6 +4189,7 @@ int CSSParser::lex(void* yylvalWithoutType)
     case QEMS:
         length--;
     case GRADS:
+    case TURNS:
         length--;
     case DEGS:
     case RADS:
@@ -4527,12 +4532,12 @@ WebKitCSSKeyframesRule* CSSParser::createKeyframesRule()
     return rulePtr;
 }
 
-CSSRule* CSSParser::createStyleRule(CSSSelector* selector)
+CSSRule* CSSParser::createStyleRule(Vector<CSSSelector*>* selectors)
 {
     CSSStyleRule* result = 0;
-    if (selector) {
+    if (selectors) {
         RefPtr<CSSStyleRule> rule = CSSStyleRule::create(m_styleSheet);
-        rule->setSelector(sinkFloatingSelector(selector));
+        rule->adoptSelectorVector(*selectors);
         if (m_hasFontFaceOnlyValues)
             deleteFontFaceOnlyValues();
         rule->setDeclaration(CSSMutableStyleDeclaration::create(rule.get(), m_parsedProperties, m_numParsedProperties));
