@@ -138,6 +138,7 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
   status = gcl.RunShell(["svn", "status"] + files)
   if status:
     if force:
+      # TODO(maruel): Use the tool to correctly revert '?' files.
       gcl.RunShell(["svn", "revert"] + files)
     else:
       raise ModifiedFile(status)
@@ -159,7 +160,7 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
       # List the file directly since it is faster when there is only one file.
       for file in files:
         if file.startswith(root):
-          file_list.append(file)
+          file_list.append(file[len(root)+1:])
       if len(file_list) > 1:
         # Listing multiple files is not supported by svn merge.
         file_list = ['.']
@@ -187,7 +188,9 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
 
     # Grab the status
     lines = output.split('\n')
-    for line in lines[1:]:
+    for line in lines:
+      if line.startswith('---'):
+        continue
       if line.startswith('Skipped'):
         print ""
         raise ModifiedFile(line[9:-1])
@@ -246,7 +249,7 @@ and optionally commit the revert.""")
                     help="Inhibits from sending a review email.")
   parser.add_option("-m", "--message", default=None,
                     help="Additional change description message.")
-  parser.add_option("-r", "--reviewers", default=None,
+  parser.add_option("-r", "--reviewers", action="append",
                     help="Reviewers to send the email to. By default, the list "
                          "of commiters is used.")
   options, args = parser.parse_args(argv)
