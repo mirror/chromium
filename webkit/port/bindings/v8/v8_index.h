@@ -375,7 +375,6 @@ class V8ClassIndex {
 ALL_WRAPPER_TYPES(DEFINE_ENUM)
 #undef DEFINE_ENUM
     CLASSINDEX_END,
-    WRAPPER_TYPE_COUNT = CLASSINDEX_END
   };
   static inline V8WrapperType ToWrapperType(v8::Handle<v8::Value> obj) {
     return static_cast<V8WrapperType>(
