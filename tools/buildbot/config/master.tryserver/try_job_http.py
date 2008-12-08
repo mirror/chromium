@@ -13,8 +13,6 @@ from twisted.application import strports
 from twisted.python import log
 from twisted.web import http
 
-from try_job_stamp import TryJobStamp
-
 
 class TryJobHTTPRequest(http.Request):
   def __init__(self, channel, queued):
@@ -63,40 +61,36 @@ class TryJobHTTP(TryBase):
 
   def parseJob(self, options):
     """Grab a http post connection."""
-    job_name = options.get('name', None)
+    name = options.get('name', None)
     user = options.get('user', None)
-    email = options.get('email', None)
     diff = options.get('patch', None)
     clobber = options.get('clobber', False)
     # -pN argument to patch.
     patchlevel = options.get('patchlevel', 0)
     branch = options.get('branch', None)
     baserev = options.get('revision', None)
-    buildsetID = options.get('reason', "%s: %s" % (user, job_name))
+    buildsetID = options.get('reason', "%s.%s.diff" % (user, name))
     builderNames = []
     if 'bot' in options:
       builderNames = [ options['bot'] ]
-    # TODO(maruel): Don't select the builders right now if not specified.
     builderNames = self.pools.Select(builderNames)
     log.msg('Choose %s for job %s' % (",".join(builderNames), buildsetID))
+
     if diff:
       patch = (patchlevel, diff)
     else:
       patch = None
-    jobstamp = TryJobStamp(branch=branch, revision=baserev, patch=patch,
-                           author_name=user, author_email=email,
-                           job_name=job_name)
-    return builderNames, jobstamp, buildsetID
+    ss = SourceStamp(branch, baserev, patch)
+    return builderNames, ss, buildsetID
 
   def messageReceived(self, socket):
     """Process the received data and send the queue buildset."""
     try:
-      builderNames, jobstamp, buildsetID = self.parseJob(socket)
+      builderNames, ss, buildsetID = self.parseJob(socket)
     except BadJobfile:
       log.msg("%s reports a bad job connection" % (self))
       log.err()
       return
     reason = "'%s' try job" % buildsetID
-    bs = buildset.BuildSet(builderNames, jobstamp, reason=reason,
-                           bsid=buildsetID)
+    bs = buildset.BuildSet(builderNames, ss, reason=reason, bsid=buildsetID)
     self.parent.submitBuildSet(bs)

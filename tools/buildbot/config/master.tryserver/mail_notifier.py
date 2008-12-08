@@ -15,29 +15,28 @@ from twisted.internet import defer
 
 
 class MailNotifier(mail.MailNotifier):
-  # Additional attributes that we would like to provide.
-  params = ['reply_to']
-
-  def __init__(self, *args, **kwargs):
-    for param in self.params:
-      if kwargs.has_key(param):
-        setattr(self, param, kwargs.pop(param))
-      else:
-        setattr(self, param, None)
-    mail.MailNotifier.__init__(self, *args, **kwargs)
+  def __init__(self, fromaddr, mode="all", categories=None, builders=None,
+               addLogs=False, relayhost="localhost",
+               subject="buildbot %(result)s in %(projectName)s on %(builder)s",
+               lookup=None, extraRecipients=[],
+               sendToInterestedUsers=True, reply_to=None):
+    mail.MailNotifier.__init__(self, fromaddr, mode, categories, builders,
+                               addLogs, relayhost, subject, lookup,
+                               extraRecipients, sendToInterestedUsers)
+    self.reply_to = reply_to
 
   def buildMessage(self, name, build, results):
     """Send an email about the result. Don't attach the patch as
     MailNotifier.buildMessage do."""
 
     projectName = self.status.getProjectName()
-    job_stamp = build.getSourceStamp()
+    ss = build.getSourceStamp()
     build_url = self.status.getURLForThing(build)
     waterfall_url = self.status.getBuildbotURL()
     # build.getSlavename()
 
     patch_url_text = ""
-    if job_stamp and job_stamp.patch:
+    if ss and ss.patch:
       patch_url_text = "Patch: %s/steps/gclient/logs/patch\n\n" % build_url
     failure_bot = ""
     failure_tree = ""
@@ -45,17 +44,17 @@ class MailNotifier(mail.MailNotifier):
       failure_bot = "(In case the bot is broken)\n"
       failure_tree = "(in case the tree is broken)\n"
 
-    if job_stamp is None:
+    if ss is None:
       source = "unavailable"
     else:
       source = ""
-      if job_stamp.branch:
-        source += "[branch %s] " % job_stamp.branch
-      if job_stamp.revision:
-        source += job_stamp.revision
+      if ss.branch:
+        source += "[branch %s] " % ss.branch
+      if ss.revision:
+        source += ss.revision
       else:
         source += "HEAD" # TODO(maruel): Tell the exact rev? That'd require feedback from the bot :/
-      if job_stamp.patch is not None:
+      if ss.patch is not None:
         source += " (plus patch)"
 
     t = build.getText()
@@ -114,8 +113,6 @@ Automated text version 0.3""" % (name,
        status_text,
        urllib.quote(waterfall_url, '/:'),
        failure_tree)
-    # TODO(maruel): Add the content of the steps in the email instead of forcing
-    # users to clicks a link.
 
     m = Message()
     m.set_payload(text)
@@ -133,15 +130,11 @@ Automated text version 0.3""" % (name,
     # now, who is this message going to?
     dl = []
     recipients = self.extraRecipients[:]
-    if job_stamp.author_email:
-      # Try jobs override the interested users.
-      recipients.append(job_stamp.author_email)
-    else:
-      if self.sendToInterestedUsers and self.lookup:
-        for u in build.getInterestedUsers():
-          d = defer.maybeDeferred(self.lookup.getAddress, u)
-          d.addCallback(recipients.append)
-          dl.append(d)
+    if self.sendToInterestedUsers and self.lookup:
+      for u in build.getInterestedUsers():
+        d = defer.maybeDeferred(self.lookup.getAddress, u)
+        d.addCallback(recipients.append)
+        dl.append(d)
     d = defer.DeferredList(dl)
     d.addCallback(self._gotRecipients, recipients, m)
     return d

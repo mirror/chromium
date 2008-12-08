@@ -27,6 +27,7 @@ class BuildRequest(base.BuildRequest):
     base.BuildRequest.__init__(self, *args, **kwargs)
 
 class Build(base.Build):
+
   def _makeCompileClobber(self, step):
     """ Finds compilation step and sets --clobber argument if necessary. """
     clobber = len([request for request in self.requests
@@ -117,10 +118,25 @@ class Build(base.Build):
     # we are now ready to set up our BuildStatus.
     self.build_status.setSourceStamp(self.source)
     self.build_status.setReason(self.reason)
-    # Is it a try job?
-    if getattr(self.source, 'job_name', None):
-      # Useful in case self.source.author_email is undefined.
-      self.build_status.setBlamelist([self.source.author_name])
+    print "Got reason %s" % self.reason
+    if self.reason.endswith(".diff' try job"):
+      # TODO(maruel): This is to skip the first '. This code is a little
+      # hackish and will need to be updated one day to use a better way to
+      # pass the user to blame for the patch.
+      reason = self.reason[1:]
+      # It's a trybot patch, alter the blamelist. The reason format is:
+      # "user-change.diff" (deprecated) or "user.change.bots.diff".
+      i = reason.find('-')
+      j = reason.find('.')
+      # j can't return -1.
+      if j > i and i != -1:
+        user = reason[:i]
+      else:
+        user = reason[:j]
+      if user:
+        self.build_status.setBlamelist([user])
+      else:
+        self.build_status.setBlamelist(self.blamelist())
     else:
       self.build_status.setBlamelist(self.blamelist())
     print "Got blame list " + str(self.build_status.blamelist)
