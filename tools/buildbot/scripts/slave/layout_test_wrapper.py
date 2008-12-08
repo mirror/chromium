@@ -36,7 +36,7 @@ def main(options, args):
     pass
 
   webkit_tests_dir = chromium_utils.FindUpward(build_dir,
-                                             'webkit', 'tools', 'layout_tests')
+                                              'webkit', 'tools', 'layout_tests')
   run_webkit_tests = os.path.join(webkit_tests_dir, 'run_webkit_tests.py')
 
   if sys.platform == 'win32':
@@ -59,6 +59,21 @@ def main(options, args):
   if sys.platform == 'linux2':
     slave_name = slave_utils.SlaveBuildName(build_dir)
     slave_utils.StartVirtualX(slave_name)
+
+  if sys.platform == 'darwin':
+    # CrashReporter/ReportCrash take forever to walk through all of the
+    # debugging symbols.  Since we expect crashes, strip the debugging
+    # symbols so that ReportCrash doesn't have so much to chew on.
+    # TODO(mmentovai): instead of stripping symbols, come up with a better
+    # way to suppress ReportCrash from within the TestShell process.
+    test_shell_executable = chromium_utils.FindUpward(build_dir,
+                                                      'xcodebuild',
+                                                      options.target,
+                                                      'TestShell.app',
+                                                      'Contents',
+                                                      'MacOS',
+                                                      'TestShell')
+    chromium_utils.RunCommand(['strip', '-S', test_shell_executable])
 
   command = [python_exe,
              run_webkit_tests,
