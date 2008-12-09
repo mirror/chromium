@@ -43,6 +43,7 @@ class ExecState;
 #elif USE(V8)
 #include "v8.h"
 #endif
+#include "ScriptValue.h"
 
 #include "KURL.h"
 
@@ -73,6 +74,8 @@ public:
     // should work to remove this ifdef.
     JSC::JSValue* argumentAt(unsigned);
     JSC::ExecState* exec() const { return m_exec; }
+#elif USE(V8)
+    ScriptValue argumentAt(unsigned);
 #endif
     unsigned argumentCount() const;
     bool hasArguments() const { return argumentCount() > 0; }
