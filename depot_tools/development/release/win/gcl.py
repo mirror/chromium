@@ -552,7 +552,7 @@ def UploadCL(change_info, args):
     os.remove(desc_file)
 
   # Once uploaded to Rietveld, send it to the try server.
-  if not no_try:
+  if not no_try and GetCodeReviewSetting('TRY_ON_UPLOAD').tolower() == 'true':
     # Use the local diff.
     TryChange(change_info, [], True)
 
