@@ -98,7 +98,7 @@ def Revert(revisions, force=False, commit=True, send_email=True, message=None,
   # Get all the modified files by the revision. We'll use this list to optimize
   # the svn merge.
   for revision in revisions:
-    log = RunShellXML(["svn", "log", "-c", str(revision), "-v", "--xml"],
+    log = RunShellXML(["svn", "log", "-r", str(revision), "-v", "--xml"],
                         keys=['path', 'author'])
     for file in log['path']:
       # Remove the /trunk/src/ part. The + 1 is for the last slash.
@@ -263,6 +263,8 @@ and optionally commit the revert.""")
     parser.error("You need to pass revision numbers.")
   retcode = 1
   try:
+    if not os.path.exists(gcl.GetInfoDir()):
+      os.mkdir(gcl.GetInfoDir())
     retcode = Revert(revisions, options.force, options.commit,
                      not options.no_email, options.message, options.reviewers)
   except NoBlameList:
