@@ -406,7 +406,7 @@ def RunCommand(command):
   sys.stdout.flush()
   
   # Write the remaining buffer.
-  for line in proc.stdout.readline(): 
+  for line in proc.stdout.readlines(): 
     print line.rstrip() + '\n',
 
   return proc.returncode
