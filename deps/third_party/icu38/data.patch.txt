@@ -2059,7 +2059,7 @@ diff -urN trie.clean/source/data/mappings/ucmlocal.mk trie.chrome/source/data/ma
 +ibm-943_P15A-2003.ucm ibm-954_P101-2007.ucm\
 +windows-949-2000.ucm\
 +windows-874-2000.ucm ibm-874_P100-1995.ucm\
-+macos-0_2-10.2.ucm\
++macos-0_2-10.2.ucm macos-7_3-10.2.ucm\
 +ibm-878_P100-1996.ucm ibm-1168_P100-2002.ucm\
 +ibm-864_X110-1999.ucm
 diff -urN trie.clean/source/data/mappings/windows-936-2000.ucm trie.chrome/source/data/mappings/windows-936-2000.ucm
@@ -2101,3 +2101,8 @@ diff -urN trie.clean/source/data/mappings/windows-950-2000.ucm trie.chrome/sourc
  
  # The following was the generated state table.
  # This does not account for unassigned characters
+diff -urN trie.clean/source/data/translit/trnslocal.mk trie.chrome/source/data/translit/trnslocal.mk
+--- trie.clean/source/data/translit/trnslocal.mk        1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/translit/trnslocal.mk  2008-12-08 15:57:16.463443000 -0800
+@@ -0,0 +1 @@
++TRANSLIT_SOURCE=

@@ -11,7 +11,7 @@
 # * Simplified Chinese : GBK(Windows cp936), GB 18030
 #   - GB2312 table was removed and 4 aliases for GB2312 were added
 #     to GBK in convrtrs.txt to treat GB2312 as a synonym of GBK.
-#   - For HZ, we need ibm-1386_P100_P100-2001, but we'd waste quite a lot 
+#   - For HZ, we need ibm-1386_P100_P100-2001, but we'd waste quite a lot
 #     of space. We'd better patch ICU to use the GB2312 table for HZ
 # * Traditional Chinese : Big5 (Windows cp950), Big5HKSCS (no PUA)
 # * Japanese : SJIS (Windows cp932), EUC-JP (ibm-954_P101-2007)
@@ -24,7 +24,7 @@
 # * Thai : Windows-874 
 #   - TIS-620 and ISO-8859-11 are treated as synonyms of Windows-874
 #     although they're not the same.
-# * Mac encodings : MacRoman
+# * Mac encodings : MacRoman, MacCyrillic
 # * Cyrillic : KOI8-R, KOI8-U
 # * WebKit wants PC-Arabic (DOS 720 = IBM-864)
 #
@@ -49,6 +49,6 @@ windows-950-2000.ucm ibm-1375_P100-2007.ucm\
 ibm-943_P15A-2003.ucm google-euc_jp_mod.ucm\
 windows-949-2000.ucm\
 windows-874-2000.ucm ibm-874_P100-1995.ucm\
-macos-0_2-10.2.ucm\
+macos-0_2-10.2.ucm macos-7_3-10.2.ucm\
 ibm-878_P100-1996.ucm ibm-1168_P100-2002.ucm\
 ibm-864_X110-1999.ucm
