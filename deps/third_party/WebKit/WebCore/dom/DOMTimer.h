@@ -4,3 +4,10 @@
 //
 // Becuase of our forkage of DOMWindow, we don't actually need DOMTimer yet.
 // This placeholder file lets us compile until we start using it.
+
+namespace WebCore {
+
+class DOMTimer {
+};
+
+}  // namespace WebCore
