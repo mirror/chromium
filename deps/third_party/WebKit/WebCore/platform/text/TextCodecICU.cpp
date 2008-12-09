@@ -141,7 +141,7 @@ void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar
     // Additional aliases.
     // These are present in modern versions of ICU, but not in ICU 3.2 (shipped with Mac OS X 10.4).
     registrar("macroman", "macintosh");
-#ifndef PLATFORM(CHROMIUM)
+#if !PLATFORM(CHROMIUM)
     // Chromium has intentionally removed this encoding from it's version of ICU.
     registrar("maccyrillic", "x-mac-cyrillic");
 #endif
@@ -151,7 +151,7 @@ void TextCodecICU::registerExtendedEncodingNames(EncodingNameRegistrar registrar
     // Perhaps we can prove these are not used on the web and remove them.
     // Or perhaps we can get them added to ICU.
     registrar("xmacroman", "macintosh");
-#ifndef PLATFORM(CHROMIUM)
+#if !PLATFORM(CHROMIUM)
     // Chromium has intentionally removed this encoding from it's version of ICU.
     registrar("xmacukrainian", "x-mac-cyrillic");
 #endif
