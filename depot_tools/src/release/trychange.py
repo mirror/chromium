@@ -5,13 +5,17 @@
 # Locate the tryserver script and execute it. The try server script contains
 # the repository-specific try server commands.
 
-import gcl
+import datetime
 import getpass
 import optparse
 import os
+import shutil
 import sys
+import tempfile
 import traceback
 import urllib
+
+import gcl
 
 
 # Constants
@@ -79,6 +83,13 @@ def RebaseDiff(diff, root):
   return diff
 
 
+def RunCommand(command):
+  output, retcode = gcl.RunShellWithReturnCode(command)
+  if retcode:
+    raise NoTryServerAccess(' '.join(command) + '\nOuput:\n' + output)
+  return output
+
+
 # TODO(maruel): Remove support eventually.
 def _SendChangeNFS(options):
   """Send a change to the try server."""
@@ -137,6 +148,72 @@ def _SendChangeHTTP(options):
   return options.name
 
 
+def _SendChangeSVN(options):
+  """Send a change to the try server by committing a diff file on a subversion
+  server."""
+  script_locals = ExecuteTryServerScript()
+  if not options.svn_repo:
+    options.svn_repo = script_locals.get('try_server_svn', None)
+    if not options.svn_repo:
+      raise NoTryServerAccess('Please use the --svn_repo option to specify the'
+                              ' try server svn repository to connect to.')
+
+  values = {}
+  if options.email:
+    values['email'] = options.email
+  values['user'] = options.user
+  values['name'] = options.name
+  if options.bot:
+    values['bot'] = options.bot
+  if options.revision:
+    values['revision'] = options.revision
+  
+  description = ''
+  for (k,v) in values.iteritems():
+    description += "%s=%s\n" % (k,v)
+
+  # Do an empty checkout.
+  temp_dir = tempfile.mkdtemp()
+  temp_file = tempfile.NamedTemporaryFile()
+  temp_file_name = temp_file.name
+  try:
+    RunCommand(['svn', 'checkout', '--depth', 'empty', '--non-interactive',
+                options.svn_repo, temp_dir])
+    # TODO(maruel): Use a subdirectory per user?
+    current_time = str(datetime.datetime.now()).replace(':', '.')
+    file_name = (EscapeDot(options.user) + '.' + EscapeDot(options.name) +
+                 '.%s.diff' % current_time)
+    full_path = os.path.join(temp_dir, file_name)
+    full_url = options.svn_repo + '/' + file_name
+    file_found = False
+    try:
+      RunCommand(['svn', 'ls', '--non-interactive', full_url])
+      file_found = True
+    except NoTryServerAccess:
+      pass
+    if file_found:
+      # The file already exists in the repo. Note that commiting a file is a
+      # no-op if the file's content (the diff) is not modified. This is why the
+      # file name contains the date and time.
+      RunCommand(['svn', 'update', '--non-interactive', full_path])
+      file = open(full_path, 'wb')
+      file.write(options.diff)
+      file.close()
+    else:
+      # Add the file to the repo
+      file = open(full_path, 'wb')
+      file.write(options.diff)
+      file.close()
+      RunCommand(["svn", "add", '--non-interactive', full_path])
+    temp_file.write(description)
+    temp_file.flush()
+    RunCommand(["svn", "commit", full_path, '--file', temp_file_name])
+  finally:
+    temp_file.close()
+    shutil.rmtree(temp_dir, True)
+  return options.name
+
+
 def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
               issue=None, patchset=None):
   # Parse argv
@@ -145,16 +222,18 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   group = optparse.OptionGroup(parser, "Result and status options")
   group.add_option("-u", "--user", default=getpass.getuser(),
                    help="User name to be used.")
-  group.add_option("-e", "--email", default=None,
-                   help="Email address where to send the results.")
+  group.add_option("-e", "--email", default=os.environ.get('EMAIL_ADDRESS'),
+                   help="Email address where to send the results. Use the "
+                        "EMAIL_ADDRESS environment variable to set the default "
+                        "email address")
   group.add_option("-n", "--name", default=name,
                    help="Name of the try change.")
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "Try run options")
   group.add_option("-b", "--bot", default=None,
-                    help="Force the use specifics build slaves, separated with a"
-                         " comma. ex: -b 'try win32 7'")
+                    help="Force the use specifics build slaves, separated with "
+                         "a comma. ex: -b 'try win32 7'")
   group.add_option("-r", "--revision", default=None,
                     help="Revision to use for testing.")
   parser.add_option_group(group)
@@ -190,6 +269,10 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                    help="Use NFS to talk to the try server.")
   group.add_option("--nfs_path", default=None,
                    help="NFS path to use to write the diff to the try server.")
+  group.add_option("--use_svn", action="store_true",
+                   help="Use SVN to talk to the try server.")
+  group.add_option("--svn_repo", default=None,
+                   help="SVN url to use to write the changes in.")
   parser.add_option_group(group)
 
   options, args = parser.parse_args(argv)
@@ -213,6 +296,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
     elif options.diff:
       options.diff = gcl.ReadFile(options.diff)
     else:
+      if not options.files:
+        parser.error('Please specify some files!')
       # Generate the diff with svn. Change the current working directory before
       # generating the diff so that it shows the correct base.
       os.chdir(gcl.GetRepositoryRoot())
@@ -226,10 +311,12 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
       options.diff = RebaseDiff(options.diff, options.root)
 
     # Send the patch. Defaults to HTTP.
-    if not options.use_nfs or options.use_http:
+    if (not options.use_nfs and not options.use_svn) or options.use_http:
       patch_name = _SendChangeHTTP(options)
-    else:
+    elif options.use_nfs:
       patch_name = _SendChangeNFS(options)
+    else:
+      patch_name = _SendChangeSVN(options)
     print 'Patch \'%s\' sent to try server.' % patch_name
     if patch_name == 'Unnamed':
       print "Note: use --name NAME to change the try's name."
