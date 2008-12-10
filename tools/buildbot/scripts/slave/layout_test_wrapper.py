@@ -78,7 +78,8 @@ def main(options, args):
   command = [python_exe,
              run_webkit_tests,
              '--noshow-results',
-             '--verbose'  # Verbose output is enabled to support the dashboard.
+             '--verbose',  # Verbose output is enabled to support the dashboard.
+             '--full-results-html',  # To make debugging failures easier.
             ]
 
   if options.results_directory:
