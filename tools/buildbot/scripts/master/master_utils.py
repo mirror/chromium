@@ -30,7 +30,7 @@ class MasterFactory(object):
   # The map key is the test name. The map value is an array containing the
   # dependencies that are not needed when this test is not run.
   NEEDED_COMPONENTS = {
-    'webkit': [('src/webkit/data/layout_tests/LayoutTests', None)]}
+    '^(webkit|purify_layout)$': [('src/webkit/data/layout_tests/LayoutTests', None)]}
 
   NEEDED_COMPONENTS_INTERNAL = {
     'memory_test':
