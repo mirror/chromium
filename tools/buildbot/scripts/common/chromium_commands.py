@@ -115,7 +115,12 @@ class GoogleSVN(commands.SVN):
         return int(m.group(2))
     return None
 
-registerSlaveCommand('svn_google', GoogleSVN, commands.command_version)
+try:
+  # We run this code in a try because it fails with an assertion if
+  # the module is loaded twice.
+  registerSlaveCommand('svn_google', GoogleSVN, commands.command_version)
+except AssertionError:
+  pass
 
 class GClient(commands.SourceBase):
   """Source class that handles gclient checkouts.
@@ -410,4 +415,10 @@ class GClient(commands.SourceBase):
         return int(m.group(2))
     return None
 
-registerSlaveCommand('gclient', GClient, commands.command_version)
+try:
+  # We run this code in a try because it fails with an assertion if
+  # the module is loaded twice.
+  registerSlaveCommand('gclient', GClient, commands.command_version)
+except AssertionError:
+  pass
+

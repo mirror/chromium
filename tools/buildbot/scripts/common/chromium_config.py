@@ -16,6 +16,7 @@ import os
 import sys
 
 import chromium_config_private
+reload(chromium_config_private)
 
 
 class Master(chromium_config_private.Master):
