@@ -72,7 +72,7 @@ void Generator::generateEnter()
     // ASSERT that the output register is not null.
     Jump outputNotNull = jne32(Imm32(0), output);
     breakpoint();
-    outputNotNull.link();
+    outputNotNull.link(this);
 #endif
 }
 
@@ -153,7 +153,7 @@ void Generator::generateBackreferenceQuantifier(JumpList& failures, Quantifier::
     else
         generateNonGreedyQuantifier(failures, functor, min, max);
 
-    skipIfEmpty.link();
+    skipIfEmpty.link(this);
 }
 
 void Generator::generateNonGreedyQuantifier(JumpList& failures, GenerateAtomFunctor& functor, unsigned min, unsigned max)
@@ -189,17 +189,17 @@ void Generator::generateNonGreedyQuantifier(JumpList& failures, GenerateAtomFunc
     // (1.0) This is where we start, if there is a minimum (then we must read at least one of the atom).
     Label testQuantifiedAtom(this);
     if (min)
-        gotoStart.link();
+        gotoStart.link(this);
     // (1.1) Do a check for the atom check.
     functor.generateAtom(this, newFailures);
     // (1.2) If we get here, successful match!
     add32(Imm32(1), repeatCount);
     // (1.3) We needed to read the atom, and we failed - that's terminally  bad news.
-    newFailures.linkTo(quantifierFailed);
+    newFailures.linkTo(quantifierFailed, this);
     // (1.4) If there is a minimum, check we have read enough ...
     // if there was no minimum, this is where we start.
     if (!min)
-        gotoStart.link();
+        gotoStart.link(this);
     // if min > 1 we need to keep checking!
     else if (min != 1)
         jl32(repeatCount, Imm32(min), testQuantifiedAtom);
@@ -212,7 +212,7 @@ void Generator::generateNonGreedyQuantifier(JumpList& failures, GenerateAtomFunc
     pop();
     pop(repeatCount);
     // (2.2) link failure cases to jump back up to alternativeFailed.
-    newFailures.linkTo(alternativeFailed);
+    newFailures.linkTo(alternativeFailed, this);
 }
 
 void Generator::generateGreedyQuantifier(JumpList& failures, GenerateAtomFunctor& functor, unsigned min, unsigned max)
@@ -220,69 +220,48 @@ void Generator::generateGreedyQuantifier(JumpList& failures, GenerateAtomFunctor
     if (!max)
         return;
 
-    // comment me better!
-    JumpList newFailures;
-
-    // (0) Setup:
-    //     init repeatCount
+    // (0) Setup: save, then init repeatCount.
     push(repeatCount);
     move(Imm32(0), repeatCount);
 
-    // (1) Greedily read as many of the atom as possible
+    // (1) Greedily read as many copies of the atom as possible, then jump to (2).
+    JumpList doneReadingAtoms;
 
-    Label readMore(this);
-
-    // (1.1) Do a character class check.
-    functor.generateAtom(this, newFailures);
-    // (1.2) If we get here, successful match!
+    Label readAnAtom(this);
+    functor.generateAtom(this, doneReadingAtoms);
     add32(Imm32(1), repeatCount);
-    // (1.3) loop, unless we've read max limit.
-    if (max != Quantifier::noMaxSpecified) {
-        // if there is a limit, only loop while less than limit, otherwise fall throught to...
-        if (max != 1)
-            jne32(Imm32(max), repeatCount, readMore);
-        // ...if there is no min we need jump to the alternative test, if there is we can just fall through to it.
-        if (!min)
-            newFailures.append(jump());
-    } else
-        jump(readMore);
-    // (1.4) check enough matches to bother trying an alternative...
-    if (min) {
-        // We will fall through to here if (min && max), after the max check.
-        // First, also link a
-        newFailures.link();
-        newFailures.append(jae32(repeatCount, Imm32(min)));
+    if (max == Quantifier::noMaxSpecified)
+        jump(readAnAtom);
+    else if (max == 1)
+        doneReadingAtoms.append(jump());
+    else {
+        jne32(Imm32(max), repeatCount, readAnAtom);
+        doneReadingAtoms.append(jump());
     }
 
-    // (4) Failure case
-
+    // (5) Quantifier failed -- no more backtracking possible.
     Label quantifierFailed(this);
-    // (4.1) Restore original value of repeatCount from the stack
     pop(repeatCount);
     failures.append(jump()); 
 
-    // (3) Backtrack
-
+    // (4) Backtrack, then fall through to (2) to try again.
     Label backtrack(this);
-    // (3.1) this was preserved prior to executing the alternative
     pop(index);
-    // (3.2) check we can retry with fewer matches - backtracking fails if already at the minimum
-    je32(Imm32(min), repeatCount, quantifierFailed);
-    // (3.3) roll off one match, and retry.
     functor.backtrack(this);
     sub32(Imm32(1), repeatCount);
 
-    // (2) Try an alternative.
+    // (2) Verify that we have enough atoms.
+    doneReadingAtoms.link(this);
+    jl32(repeatCount, Imm32(min), quantifierFailed);
 
-    // (2.1) point to retry
-    newFailures.link();
-    // (2.2) recursively call to parseAlternative, if it falls through, success!
+    // (3) Test the rest of the alternative.
     push(index);
+    JumpList newFailures;
     m_parser.parseAlternative(newFailures);
+    newFailures.linkTo(backtrack, this);
+
     pop();
     pop(repeatCount);
-    // (2.3) link failure cases to here.
-    newFailures.linkTo(backtrack);
 }
 
 void Generator::generatePatternCharacterSequence(JumpList& failures, int* sequence, size_t count)
@@ -375,7 +354,7 @@ void Generator::generatePatternCharacter(JumpList& failures, int ch)
 
     if (m_parser.ignoreCase() && hasUpper) {
         // for unicode case insensitive matches, branch here if upper matches.
-        isUpper.link();
+        isUpper.link(this);
     }
     
     // on success consume the char
@@ -405,14 +384,14 @@ void Generator::generateCharacterClassInvertedRange(JumpList& failures, JumpList
             } while ((*matchIndex < matchCount) && (matches[*matchIndex] < lo));
             failures.append(jump());
 
-            loOrAbove.link();
+            loOrAbove.link(this);
         } else if (which) {
             Jump loOrAbove = jge32(character, Imm32((unsigned short)lo));
 
             generateCharacterClassInvertedRange(failures, matchDest, ranges, which, matchIndex, matches, matchCount);
             failures.append(jump());
 
-            loOrAbove.link();
+            loOrAbove.link(this);
         } else
             failures.append(jl32(character, Imm32((unsigned short)lo)));
 
@@ -449,12 +428,12 @@ void Generator::generateCharacterClassInverted(JumpList& matchDest, const Charac
                 
                 Jump below = jl32(character, Imm32(lo));
                 matchDest.append(jle32(character, Imm32(hi)));
-                below.link();
+                below.link(this);
             }
         }
 
         unicodeFail = jump();
-        isAscii.link();
+        isAscii.link(this);
     }
 
     if (charClass.numRanges) {
@@ -464,7 +443,7 @@ void Generator::generateCharacterClassInverted(JumpList& matchDest, const Charac
         while (matchIndex < charClass.numMatches)
             matchDest.append(je32(Imm32((unsigned short)charClass.matches[matchIndex++]), character));
 
-        failures.link();
+        failures.link(this);
     } else if (charClass.numMatches) {
         // optimization: gather 'a','A' etc back together, can mask & test once.
         Vector<char> matchesAZaz;
@@ -490,7 +469,7 @@ void Generator::generateCharacterClassInverted(JumpList& matchDest, const Charac
     }
 
     if (charClass.numMatchesUnicode || charClass.numRangesUnicode)
-        unicodeFail.link();
+        unicodeFail.link(this);
 }
 
 void Generator::generateCharacterClass(JumpList& failures, const CharacterClass& charClass, bool invert)
@@ -503,76 +482,62 @@ void Generator::generateCharacterClass(JumpList& failures, const CharacterClass&
         JumpList successes;
         generateCharacterClassInverted(successes, charClass);
         failures.append(jump());
-        successes.link();
+        successes.link(this);
     }
     
     add32(Imm32(1), index);
 }
 
-Generator::Jump Generator::generateParentheses(ParenthesesType type)
+void Generator::generateParenthesesAssertion(JumpList& failures)
 {
-    if (type == capturing)
-        m_parser.recordSubpattern();
+    JumpList disjunctionFailed;
 
-    unsigned subpatternId = m_parser.numSubpatterns();
-
-    // push pos, both to preserve for fail + reloaded in parseDisjunction
     push(index);
+    m_parser.parseDisjunction(disjunctionFailed);
+    Jump success = jump();
 
-    // Plant a disjunction, wrapped to invert behaviour - 
-    JumpList newFailures;
-    m_parser.parseDisjunction(newFailures);
-    
-    if (type == capturing) {
-        pop(character);
-        store32(character, Address(output, (2 * subpatternId) * sizeof(int)));
-        store32(index, Address(output, (2 * subpatternId + 1) * sizeof(int)));
-    } else if (type == non_capturing)
-        pop();
-    else
-        pop(index);
-
-    // This is a little lame - jump to jump if there is a nested disjunction.
-    // (suggestion to fix: make parseDisjunction populate a JumpList of
-    // disjunct successes... this is probably not worth the compile cost in
-    // the common case to fix).
-    Jump successfulMatch = jump();
-
-    newFailures.link();
+    disjunctionFailed.link(this);
     pop(index);
+    failures.append(jump());
 
-    Jump jumpToFail;
-    // If this was an inverted assert, fail = success! - just let the failure case drop through,
-    // success case goes to failures.  Both paths restore curr pos.
-    if (type == inverted_assertion)
-        jumpToFail = successfulMatch;
-    else {
-        // plant a jump so any fail will link off to 'failures',
-        jumpToFail = jump();
-        // link successes to jump here
-        successfulMatch.link();
-    }
-    return jumpToFail;
+    success.link(this);
+    pop(index);
+}
+
+void Generator::generateParenthesesInvertedAssertion(JumpList& failures)
+{
+    JumpList disjunctionFailed;
+
+    push(index);
+    m_parser.parseDisjunction(disjunctionFailed);
+
+    // If the disjunction succeeded, the inverted assertion failed.
+    pop(index);
+    failures.append(jump());
+
+    // If the disjunction failed, the inverted assertion succeeded.
+    disjunctionFailed.link(this);
+    pop(index);
 }
 
 void Generator::generateParenthesesNonGreedy(JumpList& failures, Label start, Jump success, Jump fail)
 {
     jump(start);
-    success.link();
+    success.link(this);
     failures.append(fail);
 }
 
 Generator::Jump Generator::generateParenthesesResetTrampoline(JumpList& newFailures, unsigned subpatternIdBefore, unsigned subpatternIdAfter)
 {
     Jump skip = jump();
-    newFailures.link();
+    newFailures.link(this);
     for (unsigned i = subpatternIdBefore + 1; i <= subpatternIdAfter; ++i) {
         store32(Imm32(-1), Address(output, (2 * i) * sizeof(int)));
         store32(Imm32(-1), Address(output, (2 * i + 1) * sizeof(int)));
     }
     
     Jump newFailJump = jump();
-    skip.link();
+    skip.link(this);
     
     return newFailJump;
 }
@@ -591,7 +556,7 @@ void Generator::generateAssertionBOL(JumpList& failures)
 
         failures.append(jump());
 
-        previousIsNewline.link();
+        previousIsNewline.link(this);
     } else
         failures.append(jne32(Imm32(0), index));
 }
@@ -604,7 +569,7 @@ void Generator::generateAssertionEOL(JumpList& failures)
         generateLoadCharacter(nextIsNewline); // end of input == success
         generateCharacterClassInverted(nextIsNewline, CharacterClass::newline());
         failures.append(jump());
-        nextIsNewline.link();
+        nextIsNewline.link(this);
     } else {
         failures.append(jne32(length, index));
     }
@@ -624,7 +589,7 @@ void Generator::generateAssertionWordBoundary(JumpList& failures, bool invert)
     JumpList previousIsWord;
     generateCharacterClassInverted(previousIsWord, CharacterClass::wordchar());
     // (1.3) if we get here, previous is not a word char
-    atBegin.link();
+    atBegin.link(this);
 
     // (2) Handle situation where previous was NOT a \w
 
@@ -636,7 +601,7 @@ void Generator::generateAssertionWordBoundary(JumpList& failures, bool invert)
     // (3) Handle situation where previous was a \w
 
     // (3.0) link success in first match to here
-    previousIsWord.link();
+    previousIsWord.link(this);
     generateLoadCharacter(wordBoundary);
     generateCharacterClassInverted(notWordBoundary, CharacterClass::wordchar());
     // (3.1) If we get here, this is an end of a word, within the input.
@@ -648,12 +613,12 @@ void Generator::generateAssertionWordBoundary(JumpList& failures, bool invert)
         wordBoundary.append(jump());
     
         // looking for non word boundaries, so link boundary fails to here.
-        notWordBoundary.link();
+        notWordBoundary.link(this);
 
         failures.append(wordBoundary);
     } else {
         // looking for word boundaries, so link successes here.
-        wordBoundary.link();
+        wordBoundary.link(this);
         
         failures.append(notWordBoundary);
     }
@@ -672,7 +637,7 @@ void Generator::generateBackreference(JumpList& failures, unsigned subpatternId)
 
     add32(Imm32(1), index);
     add32(Imm32(1), repeatCount);
-    skipIncrement.link();
+    skipIncrement.link(this);
 
     // check if we're at the end of backref (if we are, success!)
     Jump endOfBackRef = je32(repeatCount, Address(output, ((2 * subpatternId) + 1) * sizeof(int)));
@@ -684,7 +649,7 @@ void Generator::generateBackreference(JumpList& failures, unsigned subpatternId)
 
     je16(character, BaseIndex(input, index, TimesTwo), topOfLoop);
     
-    endOfInput.link();
+    endOfInput.link(this);
 
     // Failure
     pop(repeatCount);
@@ -692,7 +657,7 @@ void Generator::generateBackreference(JumpList& failures, unsigned subpatternId)
     failures.append(jump());
     
     // Success
-    endOfBackRef.link();
+    endOfBackRef.link(this);
     pop(repeatCount);
     pop();
 }
@@ -701,13 +666,13 @@ void Generator::terminateAlternative(JumpList& successes, JumpList& failures)
 {
     successes.append(jump());
     
-    failures.link();
+    failures.link(this);
     peek(index);
 }
 
 void Generator::terminateDisjunction(JumpList& successes)
 {
-    successes.link();
+    successes.link(this);
 }
 
 } } // namespace JSC::WREC

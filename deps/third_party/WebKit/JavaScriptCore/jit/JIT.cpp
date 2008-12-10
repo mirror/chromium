@@ -271,10 +271,7 @@ void JIT::emitSlowScriptCheck(unsigned bytecodeIndex)
     __ subl_i8r(1, X86::esi);
     JmpSrc skipTimeout = __ jne();
     emitCTICall(bytecodeIndex, Interpreter::cti_timeout_check);
-
-    emitGetCTIParam(CTI_ARGS_globalData, X86::ecx);
-    __ movl_mr(FIELD_OFFSET(JSGlobalData, interpreter), X86::ecx, X86::ecx);
-    __ movl_mr(FIELD_OFFSET(Interpreter, m_ticksUntilNextTimeoutCheck), X86::ecx, X86::esi);
+    __ movl_rr(X86::eax, X86::esi);
     __ link(skipTimeout, __ label());
 
     killLastResultRegister();
@@ -565,7 +562,7 @@ void JIT::privateCompileMainPass()
         case op_get_scoped_var: {
             int skip = instruction[i + 3].u.operand + m_codeBlock->needsFullScopeChain;
 
-            emitGetVirtualRegister(RegisterFile::ScopeChain, X86::eax, i);
+            emitGetFromCallFrameHeader(RegisterFile::ScopeChain, X86::eax);
             while (skip--)
                 __ movl_mr(FIELD_OFFSET(ScopeChainNode, next), X86::eax, X86::eax);
 
@@ -578,7 +575,7 @@ void JIT::privateCompileMainPass()
         case op_put_scoped_var: {
             int skip = instruction[i + 2].u.operand + m_codeBlock->needsFullScopeChain;
 
-            emitGetVirtualRegister(RegisterFile::ScopeChain, X86::edx, i);
+            emitGetFromCallFrameHeader(RegisterFile::ScopeChain, X86::edx);
             emitGetVirtualRegister(instruction[i + 3].u.operand, X86::eax, i);
             while (skip--)
                 __ movl_mr(FIELD_OFFSET(ScopeChainNode, next), X86::edx, X86::edx);
@@ -608,10 +605,10 @@ void JIT::privateCompileMainPass()
             emitGetVirtualRegister(instruction[i + 1].u.operand, X86::eax, i);
 
             // Grab the return address.
-            emitGetVirtualRegister(RegisterFile::ReturnPC, X86::edx, i);
+            emitGetFromCallFrameHeader(RegisterFile::ReturnPC, X86::edx);
 
             // Restore our caller's "r".
-            emitGetVirtualRegister(RegisterFile::CallerFrame, X86::edi, i);
+            emitGetFromCallFrameHeader(RegisterFile::CallerFrame, X86::edi);
 
             // Return.
             __ pushl_r(X86::edx);
@@ -947,7 +944,7 @@ void JIT::privateCompileMainPass()
         }
         case op_eq: {
             emitGetVirtualRegisters(instruction[i + 2].u.operand, X86::eax, instruction[i + 3].u.operand, X86::edx, i);
-            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, i);
+            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, X86::ecx, i);
             __ cmpl_rr(X86::edx, X86::eax);
             __ sete_r(X86::eax);
             __ movzbl_rr(X86::eax, X86::eax);
@@ -1071,7 +1068,7 @@ void JIT::privateCompileMainPass()
         CTI_COMPILE_BINARY_OP(op_less)
         case op_neq: {
             emitGetVirtualRegisters(instruction[i + 2].u.operand, X86::eax, instruction[i + 3].u.operand, X86::edx, i);
-            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, i);
+            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, X86::ecx, i);
             __ cmpl_rr(X86::eax, X86::edx);
 
             __ setne_r(X86::eax);
@@ -1098,7 +1095,7 @@ void JIT::privateCompileMainPass()
         CTI_COMPILE_BINARY_OP(op_urshift)
         case op_bitxor: {
             emitGetVirtualRegisters(instruction[i + 2].u.operand, X86::eax, instruction[i + 3].u.operand, X86::edx, i);
-            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, i);
+            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, X86::ecx, i);
             __ xorl_rr(X86::edx, X86::eax);
             emitFastArithReTagImmediate(X86::eax);
             emitPutVirtualRegister(instruction[i + 1].u.operand);
@@ -1115,7 +1112,7 @@ void JIT::privateCompileMainPass()
         }
         case op_bitor: {
             emitGetVirtualRegisters(instruction[i + 2].u.operand, X86::eax, instruction[i + 3].u.operand, X86::edx, i);
-            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, i);
+            emitJumpSlowCaseIfNotImmNums(X86::eax, X86::edx, X86::ecx, i);
             __ orl_rr(X86::edx, X86::eax);
             emitPutVirtualRegister(instruction[i + 1].u.operand);
             i += 5;
@@ -1245,7 +1242,7 @@ void JIT::privateCompileMainPass()
             unsigned scrutinee = instruction[i + 3].u.operand;
 
             // create jump table for switch destinations, track this switch statement.
-            SimpleJumpTable* jumpTable = &m_codeBlock->immediateSwitchJumpTables[tableIndex];
+            SimpleJumpTable* jumpTable = &m_codeBlock->immediateSwitchJumpTable(tableIndex);
             m_switches.append(SwitchRecord(jumpTable, i, defaultOffset, SwitchRecord::Immediate));
             jumpTable->ctiOffsets.grow(jumpTable->branchOffsets.size());
 
@@ -1262,7 +1259,7 @@ void JIT::privateCompileMainPass()
             unsigned scrutinee = instruction[i + 3].u.operand;
 
             // create jump table for switch destinations, track this switch statement.
-            SimpleJumpTable* jumpTable = &m_codeBlock->characterSwitchJumpTables[tableIndex];
+            SimpleJumpTable* jumpTable = &m_codeBlock->characterSwitchJumpTable(tableIndex);
             m_switches.append(SwitchRecord(jumpTable, i, defaultOffset, SwitchRecord::Character));
             jumpTable->ctiOffsets.grow(jumpTable->branchOffsets.size());
 
@@ -1279,7 +1276,7 @@ void JIT::privateCompileMainPass()
             unsigned scrutinee = instruction[i + 3].u.operand;
 
             // create jump table for switch destinations, track this switch statement.
-            StringJumpTable* jumpTable = &m_codeBlock->stringSwitchJumpTables[tableIndex];
+            StringJumpTable* jumpTable = &m_codeBlock->stringSwitchJumpTable(tableIndex);
             m_switches.append(SwitchRecord(jumpTable, i, defaultOffset));
 
             emitPutCTIArgFromVirtualRegister(scrutinee, 0, X86::ecx);
@@ -2005,7 +2002,7 @@ void JIT::privateCompile()
     JmpDst afterRegisterFileCheck;
     if (m_codeBlock->codeType == FunctionCode) {
         // In the case of a fast linked call, we do not set this up in the caller.
-        __ movl_i32m(reinterpret_cast<unsigned>(m_codeBlock), RegisterFile::CodeBlock * static_cast<int>(sizeof(Register)), X86::edi);
+        emitPutImmediateToCallFrameHeader(m_codeBlock, RegisterFile::CodeBlock);
 
         emitGetCTIParam(CTI_ARGS_registerFile, X86::eax);
         __ leal_mr(m_codeBlock->numCalleeRegisters * sizeof(Register), X86::edi, X86::edx);
@@ -2140,7 +2137,7 @@ void JIT::privateCompileCTIMachineTrampolines()
     __ testl_rr(X86::eax, X86::eax);
     JmpSrc hasCodeBlock1 = __ jne();
     __ popl_r(X86::ebx);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callJSFunction1 = __ call();
     emitGetCTIArg(0, X86::ecx);
@@ -2154,7 +2151,7 @@ void JIT::privateCompileCTIMachineTrampolines()
     __ popl_r(X86::ebx);
     emitPutCTIArg(X86::ebx, 4);
     emitPutCTIArg(X86::eax, 12);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callArityCheck1 = __ call();
     __ movl_rr(X86::edx, X86::edi);
@@ -2167,7 +2164,7 @@ void JIT::privateCompileCTIMachineTrampolines()
 
     __ popl_r(X86::ebx);
     emitPutCTIArg(X86::ebx, 4);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callDontLazyLinkCall = __ call();
     __ pushl_r(X86::ebx);
@@ -2182,7 +2179,7 @@ void JIT::privateCompileCTIMachineTrampolines()
     __ testl_rr(X86::eax, X86::eax);
     JmpSrc hasCodeBlock2 = __ jne();
     __ popl_r(X86::ebx);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callJSFunction2 = __ call();
     emitGetCTIArg(0, X86::ecx);
@@ -2196,7 +2193,7 @@ void JIT::privateCompileCTIMachineTrampolines()
     __ popl_r(X86::ebx);
     emitPutCTIArg(X86::ebx, 4);
     emitPutCTIArg(X86::eax, 12);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callArityCheck2 = __ call();
     __ movl_rr(X86::edx, X86::edi);
@@ -2209,7 +2206,7 @@ void JIT::privateCompileCTIMachineTrampolines()
 
     __ popl_r(X86::ebx);
     emitPutCTIArg(X86::ebx, 4);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callLazyLinkCall = __ call();
     __ pushl_r(X86::ebx);
@@ -2224,7 +2221,7 @@ void JIT::privateCompileCTIMachineTrampolines()
     __ testl_rr(X86::eax, X86::eax);
     JmpSrc hasCodeBlock3 = __ jne();
     __ popl_r(X86::ebx);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callJSFunction3 = __ call();
     emitGetCTIArg(0, X86::ecx);
@@ -2238,7 +2235,7 @@ void JIT::privateCompileCTIMachineTrampolines()
     __ popl_r(X86::ebx);
     emitPutCTIArg(X86::ebx, 4);
     emitPutCTIArg(X86::eax, 12);
-    __ restoreArgumentReference();
+    restoreArgumentReference();
     emitPutCTIParam(X86::edi, CTI_ARGS_callFrame);
     JmpSrc callArityCheck3 = __ call();
     __ movl_rr(X86::edx, X86::edi);

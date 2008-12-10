@@ -1,3 +1,253 @@
+2008-12-05  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Remove m_assembler from MacroAssembler::Jump.
+        Keeping a pointer allowed for some syntactic sugar - "link()" looks nicer
+        than "link(this)".  But maintaining this doubles the size of Jump, which
+        is even more unfortunate for the JIT, since there are many large structures
+        holding JmpSrcs.  Probably best to remove it.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22693
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::Jump::Jump):
+        (JSC::MacroAssembler::Jump::link):
+        (JSC::MacroAssembler::Jump::linkTo):
+        (JSC::MacroAssembler::JumpList::link):
+        (JSC::MacroAssembler::JumpList::linkTo):
+        (JSC::MacroAssembler::jae32):
+        (JSC::MacroAssembler::je32):
+        (JSC::MacroAssembler::je16):
+        (JSC::MacroAssembler::jg32):
+        (JSC::MacroAssembler::jge32):
+        (JSC::MacroAssembler::jl32):
+        (JSC::MacroAssembler::jle32):
+        (JSC::MacroAssembler::jnePtr):
+        (JSC::MacroAssembler::jne32):
+        (JSC::MacroAssembler::jnset32):
+        (JSC::MacroAssembler::jset32):
+        (JSC::MacroAssembler::jump):
+        (JSC::MacroAssembler::jzSub32):
+        (JSC::MacroAssembler::joAdd32):
+        (JSC::MacroAssembler::call):
+        * wrec/WREC.cpp:
+        (JSC::WREC::Generator::compileRegExp):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateEnter):
+        (JSC::WREC::Generator::generateBackreferenceQuantifier):
+        (JSC::WREC::Generator::generateNonGreedyQuantifier):
+        (JSC::WREC::Generator::generateGreedyQuantifier):
+        (JSC::WREC::Generator::generatePatternCharacter):
+        (JSC::WREC::Generator::generateCharacterClassInvertedRange):
+        (JSC::WREC::Generator::generateCharacterClassInverted):
+        (JSC::WREC::Generator::generateCharacterClass):
+        (JSC::WREC::Generator::generateParenthesesAssertion):
+        (JSC::WREC::Generator::generateParenthesesInvertedAssertion):
+        (JSC::WREC::Generator::generateParenthesesNonGreedy):
+        (JSC::WREC::Generator::generateParenthesesResetTrampoline):
+        (JSC::WREC::Generator::generateAssertionBOL):
+        (JSC::WREC::Generator::generateAssertionEOL):
+        (JSC::WREC::Generator::generateAssertionWordBoundary):
+        (JSC::WREC::Generator::generateBackreference):
+        (JSC::WREC::Generator::terminateAlternative):
+        (JSC::WREC::Generator::terminateDisjunction):
+        * wrec/WRECParser.h:
+
+2008-12-05  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Simplify JIT generated checks for timeout code, by moving more work into the C function.
+        https://bugs.webkit.org/show_bug.cgi?id=22688
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::cti_timeout_check):
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::emitSlowScriptCheck):
+
+2008-12-05  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Encapsulate access to jump tables in the CodeBlock in preparation
+        of moving them to a rare data structure.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dump):
+        (JSC::CodeBlock::shrinkToFit):
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::numberOfImmediateSwitchJumpTables):
+        (JSC::CodeBlock::addImmediateSwitchJumpTable):
+        (JSC::CodeBlock::immediateSwitchJumpTable):
+        (JSC::CodeBlock::numberOfCharacterSwitchJumpTables):
+        (JSC::CodeBlock::addCharacterSwitchJumpTable):
+        (JSC::CodeBlock::characterSwitchJumpTable):
+        (JSC::CodeBlock::numberOfStringSwitchJumpTables):
+        (JSC::CodeBlock::addStringSwitchJumpTable):
+        (JSC::CodeBlock::stringSwitchJumpTable):
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate):
+        (JSC::BytecodeGenerator::endSwitch):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::cti_op_switch_imm):
+        (JSC::Interpreter::cti_op_switch_char):
+        (JSC::Interpreter::cti_op_switch_string):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+
+2008-12-05  Adam Roben  <aroben@apple.com>
+
+        Windows build fix after r39020
+
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::restoreArgumentReference):
+        (JSC::JIT::restoreArgumentReferenceForTrampoline):
+        Add some apparently-missing __.
+
+2008-12-04  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Darin Adler.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22673
+        
+        Added support for the assertion (?=) and inverted assertion (?!) atoms
+        in WREC.
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateParenthesesAssertion):
+        (JSC::WREC::Generator::generateParenthesesInvertedAssertion): Split the
+        old (unused) generateParentheses into these two functions, with more
+        limited capabilities.
+        
+        * wrec/WRECGenerator.h:
+        (JSC::WREC::Generator::): Moved an enum to the top of the class definition,
+        to match the WebKit style, and removed a defunct comment.
+
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::parseParentheses):
+        (JSC::WREC::Parser::consumeParenthesesType):
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::): Added support for parsing (?=) and (?!).
+
+2008-12-05  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Rubber-stamped by Tor Arne Vestbø.
+
+        Disable the JIT for the Qt build alltogether again, after observing
+        more miscompilations in a wider range of newer gcc versions.
+
+        * JavaScriptCore.pri:
+
+2008-12-05  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Disable the JIT for the Qt build on Linux unless gcc is >= 4.2,
+        due to miscompilations.
+
+        * JavaScriptCore.pri:
+
+2008-12-04  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Start porting the JIT to use the MacroAssembler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22671
+        No change in performance.
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::Jump::operator X86Assembler::JmpSrc):
+        (JSC::MacroAssembler::add32):
+        (JSC::MacroAssembler::and32):
+        (JSC::MacroAssembler::lshift32):
+        (JSC::MacroAssembler::rshift32):
+        (JSC::MacroAssembler::storePtr):
+        (JSC::MacroAssembler::store32):
+        (JSC::MacroAssembler::poke):
+        (JSC::MacroAssembler::move):
+        (JSC::MacroAssembler::compareImm32ForBranchEquality):
+        (JSC::MacroAssembler::jnePtr):
+        (JSC::MacroAssembler::jnset32):
+        (JSC::MacroAssembler::jset32):
+        (JSC::MacroAssembler::jzeroSub32):
+        (JSC::MacroAssembler::joverAdd32):
+        (JSC::MacroAssembler::call):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::shll_i8r):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JIT.h:
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileBinaryArithOp):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitGetVirtualRegister):
+        (JSC::JIT::emitPutCTIArg):
+        (JSC::JIT::emitPutCTIArgConstant):
+        (JSC::JIT::emitGetCTIArg):
+        (JSC::JIT::emitPutCTIArgFromVirtualRegister):
+        (JSC::JIT::emitPutCTIParam):
+        (JSC::JIT::emitGetCTIParam):
+        (JSC::JIT::emitPutToCallFrameHeader):
+        (JSC::JIT::emitPutImmediateToCallFrameHeader):
+        (JSC::JIT::emitGetFromCallFrameHeader):
+        (JSC::JIT::emitPutVirtualRegister):
+        (JSC::JIT::emitInitRegister):
+        (JSC::JIT::emitNakedCall):
+        (JSC::JIT::restoreArgumentReference):
+        (JSC::JIT::restoreArgumentReferenceForTrampoline):
+        (JSC::JIT::emitCTICall):
+        (JSC::JIT::checkStructure):
+        (JSC::JIT::emitJumpSlowCaseIfNotJSCell):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNum):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNums):
+        (JSC::JIT::emitFastArithDeTagImmediate):
+        (JSC::JIT::emitFastArithDeTagImmediateJumpIfZero):
+        (JSC::JIT::emitFastArithReTagImmediate):
+        (JSC::JIT::emitFastArithPotentiallyReTagImmediate):
+        (JSC::JIT::emitFastArithImmToInt):
+        (JSC::JIT::emitFastArithIntToImmOrSlowCase):
+        (JSC::JIT::emitFastArithIntToImmNoCheck):
+        (JSC::JIT::emitTagAsBoolImmediate):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::privateCompilePutByIdTransition):
+
+2008-12-04  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+        
+        Some refactoring for generateGreedyQuantifier.
+        
+        SunSpider reports no change (possibly a 0.3% speedup).
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateGreedyQuantifier): Clarified label
+        meanings and unified some logic to simplify things.
+
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::parseAlternative): Added a version of parseAlternative
+        that can jump to a Label, instead of a JumpList, upon failure. (Eventually,
+        when we have a true Label class, this will be redundant.) This makes
+        things easier for generateGreedyQuantifier, because it can avoid
+        explicitly linking things.
+
+2008-12-04  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Holger Freyther.
+
+        Fix crashes in the Qt build on Linux/i386 with non-executable memory
+        by enabling TCSystemAlloc and the PROT_EXEC flag for mmap.
+
+        * JavaScriptCore.pri: Enable the use of TCSystemAlloc if the JIT is
+        enabled.
+        * wtf/TCSystemAlloc.cpp: Extend the PROT_EXEC permissions to
+        PLATFORM(QT).
+
 2008-12-04  Simon Hausmann  <simon.hausmann@nokia.com>
 
         Reviewed by Tor Arne Vestbø.
