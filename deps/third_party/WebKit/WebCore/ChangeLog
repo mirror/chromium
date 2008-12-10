@@ -1,3 +1,412 @@
+2008-12-05  Brett Wilson  <brettw@chromium.org>
+
+        Fix build bustage from previous patch.
+
+        * css/CSSSelector.h:
+
+2008-12-05  Brett Wilson  <brettw@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add a missing include for OwnPtr to make CSSSelector compile without
+        precompiled headers.
+
+        * css/CSSSelector.h:
+
+2008-12-05  Finnur Thorarinsson  <finnur.webkit@gmail.com>
+
+        Reviewed by Darin Adler.
+
+        Bug 22579: Providing a function to ScrollbarClient.h which allows us to get at the tickmarks
+        without relying on high-level WebCore types, as requested by Dave Hyatt.
+        
+        No functional changes, thus no test cases.
+
+        * page/FrameView.cpp:
+        (WebCore::FrameView::getTickmarks):
+        * page/FrameView.h:
+        * platform/ScrollbarClient.h:
+
+2008-12-05  Dean Jackson  <dino@apple.com>
+
+        Reviewed by David Hyatt.
+
+        Make sure Window event listeners also tell the
+        Document about the event type, so noisy events
+        will be dispatched even if nothing in the document
+        is listening.
+        https://bugs.webkit.org/show_bug.cgi?id=20572
+
+        * dom/Document.cpp:
+        (WebCore::Document::addWindowEventListener):
+
+2008-12-05  Adam Roben  <aroben@apple.com>
+
+        Windows build fix after r39026
+
+        * platform/network/cf/ResourceRequestCFNet.cpp:
+        (WebCore::ResourceRequest::doUpdatePlatformRequest):
+        (WebCore::ResourceRequest::doUpdateResourceRequest):
+        Add some missing .get()s.
+
+2008-12-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Tiger build fix.
+
+        * platform/network/mac/ResourceRequestMac.mm: Define NSUInteger.
+
+2008-12-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6405599> Tiger Mail crashes when using "Mail Contents of This Page"
+        in Safari before opening a mail message in Mail
+
+        * platform/mac/WebCoreObjCExtras.mm:
+        (WebCoreObjCFinalizeOnMainThread):
+        Don't call initializeThreading: we now expect the caller to do it, to simplify keeping
+        Tiger and post-Tiger behavior in line.
+
+        * bindings/objc/DOMRGBColor.mm:
+        (+[DOMRGBColor initialize]):
+        * bindings/objc/WebScriptObject.mm:
+        (+[WebScriptObject initialize]):
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (+[AccessibilityObjectWrapper initialize]):
+        * platform/mac/SharedBufferMac.mm:
+        (+[WebCoreSharedBufferData initialize]):
+        Call JSC::initializeThreading();
+
+2008-12-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/4072827> Downloaded non-ASCII file name becomes garbled
+
+        * platform/network/ResourceRequestBase.cpp:
+        (WebCore::ResourceRequestBase::setResponseContentDispositionEncodingFallbackArray):
+        * platform/network/ResourceRequestBase.h:
+        * platform/network/cf/ResourceRequestCFNet.cpp:
+        (WebCore::findCFURLRequestSetContentDispositionEncodingFallbackArrayFunction):
+        (WebCore::findCFURLRequestCopyContentDispositionEncodingFallbackArrayFunction):
+        (WebCore::setContentDispositionEncodingFallbackArray):
+        (WebCore::copyContentDispositionEncodingFallbackArray):
+        (WebCore::ResourceRequest::doUpdatePlatformRequest):
+        (WebCore::ResourceRequest::doUpdateResourceRequest):
+        * platform/network/mac/ResourceRequestMac.mm:
+        (WebCore::ResourceRequest::doUpdateResourceRequest):
+        (WebCore::ResourceRequest::doUpdatePlatformRequest):
+        Added a way to specify encoding fallback list for Content-Disposition header.
+
+        * loader/FrameLoader.cpp: (WebCore::FrameLoader::addExtraFieldsToRequest): Generate and
+        pass a list of encodings to try when decoding Content-Disposition header, as described
+        in comments.
+
+2008-12-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22672
+        ASSERT(m_table) when xhr.onabort creates another xhr or calls setTimeout
+
+        Test: http/tests/xmlhttprequest/send-on-abort.html
+
+        * dom/ScriptExecutionContext.cpp:
+        (WebCore::ScriptExecutionContext::canSuspendActiveDOMObjects):
+        (WebCore::ScriptExecutionContext::suspendActiveDOMObjects):
+        (WebCore::ScriptExecutionContext::resumeActiveDOMObjects):
+        (WebCore::ScriptExecutionContext::stopActiveDOMObjects):
+        Add a comment explaining that ActiveDOMObject methods shouldn't execute arbitrary JS.
+
+        * xml/XMLHttpRequest.cpp: (WebCore::XMLHttpRequest::stop): Don't dispatch events. This
+        reverts a recent change that made the behavior slightly closer to Firefox - but the
+        compatibility effect should be very minor if any, and Firefox itself behaves inconsistently.
+
+2008-12-05  Tobias König <tobias.koenig@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Record required package dependencies for the Qt build for a correct
+        pkg-config file.
+
+        * WebCore.pro:
+
+2008-12-05  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Rubber-stamped by Simon Hausmann.
+
+        [Qt/Mac] Blacklist QuickTime plugin until we support the QuickDraw drawing model
+
+        * plugins/mac/PluginPackageMac.cpp:
+        (WebCore::PluginPackage::fetchInfo):
+        (WebCore::PluginPackage::isPluginBlacklisted):
+
+2008-12-05  Jungshik Shin  <jshin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22472
+
+        Revises charset alias map for TextCodecICU.
+        - Uses windows-949 and windows-874 instead of windows-949-2000 and windows-874-2000
+        - Replaces 'windows874' in a couple of place with 'windows-874' (for the canonical name)
+        - Maps 'dos-874' to 'windows-874'. Currently, it's aliases to 'cp874', which is in turn
+          mapped to 'TIS-620'. 'TIS-620' is manually aliased to 'windows-874'. We'd better directly
+          alias 'dos-874' to 'windows-874'.
+        - Replaces 'EUC-CN' with 'GBK' when it's used as the canonical name.
+          Similar to the above case, we're getting rid of indirection that eventually leads to 'GBK' by
+          directly going to 'GBK'.
+        - Adds 'x-uhc' as an alias for 'windows-949'. It's used in some web pages.
+
+        Tests: fast/encoding/char-decoding-mac.html
+               fast/encoding/char-decoding.html
+
+        * platform/text/TextCodecICU.cpp:
+        (WebCore::TextCodecICU::registerExtendedEncodingNames):
+
+2008-12-04  Kevin Watters  <kevinwatters@gmail.com>
+
+        Reviewed by Kevin Ollivier.
+
+        Add a MIME mapping for the .htm extension to wx and GTK ports.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22668
+        
+        * platform/gtk/MIMETypeRegistryGtk.cpp:
+        (WebCore::):
+        * platform/wx/MimeTypeRegistryWx.cpp:
+        (WebCore::):
+
+2008-12-04  Kevin Watters  <kevinwatters@gmail.com>
+
+        Reviewed by Kevin Ollivier.
+
+        Implement basic text paste support in wx and add notImplemented stubs
+        to catch other methods.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22667
+
+        * platform/wx/PasteboardWx.cpp:
+        (WebCore::Pasteboard::canSmartReplace):
+        (WebCore::Pasteboard::plainText):
+        (WebCore::Pasteboard::documentFragment):
+        (WebCore::Pasteboard::writeImage):
+
+2008-12-04  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix for !USE(WXGC) build config.
+
+        * platform/graphics/wx/PathWx.cpp:
+        (WebCore::Path::contains):
+        (WebCore::Path::addLineTo):
+        (WebCore::Path::addQuadCurveTo):
+        (WebCore::Path::addBezierCurveTo):
+        (WebCore::Path::addArcTo):
+        (WebCore::Path::closeSubpath):
+        (WebCore::Path::addArc):
+        (WebCore::Path::addRect):
+        (WebCore::Path::addEllipse):
+        (WebCore::Path::transform):
+        (WebCore::Path::apply):
+        (WebCore::Path::isEmpty):
+
+2008-12-04  Kevin Watters  <kevinwatters@gmail.com>
+
+        Reviewed by Kevin Ollivier.
+
+        Turn off styled controls until we can implement them properly.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22662
+
+        * platform/wx/RenderThemeWx.cpp:
+        (WebCore::RenderThemeWx::isControlStyled):
+
+2008-12-04  Kevin Watters  <kevinwatters@gmail.com>
+
+        Reviewed by Kevin Ollivier.
+
+        wx implementations for Path API.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22661
+
+        * platform/graphics/wx/PathWx.cpp:
+        (WebCore::Path::~Path):
+        (WebCore::Path::contains):
+        (WebCore::Path::addLineTo):
+        (WebCore::Path::addQuadCurveTo):
+        (WebCore::Path::addBezierCurveTo):
+        (WebCore::Path::addArcTo):
+        (WebCore::Path::closeSubpath):
+        (WebCore::Path::addArc):
+        (WebCore::Path::addRect):
+        (WebCore::Path::addEllipse):
+        (WebCore::Path::transform):
+        (WebCore::Path::isEmpty):
+
+2008-12-04  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Bug 22564: Make HTML elements' constructors take a QualifiedName
+        https://bugs.webkit.org/show_bug.cgi?id=22564
+
+        Updated the remaining constructors.
+
+        * bindings/js/JSImageConstructor.cpp:
+        (WebCore::constructImage):
+        * dom/Document.cpp:
+        (WebCore::Document::getCSSCanvasElement):
+        * editing/DeleteButton.cpp:
+        (WebCore::DeleteButton::DeleteButton):
+        * html/HTMLAppletElement.cpp:
+        (WebCore::HTMLAppletElement::HTMLAppletElement):
+        * html/HTMLAppletElement.h:
+        * html/HTMLAreaElement.cpp:
+        (WebCore::HTMLAreaElement::HTMLAreaElement):
+        * html/HTMLAreaElement.h:
+        * html/HTMLBaseFontElement.cpp:
+        (WebCore::HTMLBaseFontElement::HTMLBaseFontElement):
+        * html/HTMLBaseFontElement.h:
+        * html/HTMLCanvasElement.cpp:
+        (WebCore::HTMLCanvasElement::HTMLCanvasElement):
+        * html/HTMLCanvasElement.h:
+        * html/HTMLElementFactory.cpp:
+        (WebCore::hrConstructor):
+        (WebCore::paragraphConstructor):
+        (WebCore::basefontConstructor):
+        (WebCore::fontConstructor):
+        (WebCore::anchorConstructor):
+        (WebCore::imageConstructor):
+        (WebCore::mapConstructor):
+        (WebCore::areaConstructor):
+        (WebCore::canvasConstructor):
+        (WebCore::appletConstructor):
+        (WebCore::embedConstructor):
+        (WebCore::objectConstructor):
+        (WebCore::paramConstructor):
+        (WebCore::scriptConstructor):
+        (WebCore::tableConstructor):
+        (WebCore::tableCaptionConstructor):
+        (WebCore::tableRowConstructor):
+        * html/HTMLEmbedElement.cpp:
+        (WebCore::HTMLEmbedElement::HTMLEmbedElement):
+        * html/HTMLEmbedElement.h:
+        * html/HTMLFontElement.cpp:
+        (WebCore::HTMLFontElement::HTMLFontElement):
+        * html/HTMLFontElement.h:
+        * html/HTMLHRElement.cpp:
+        (WebCore::HTMLHRElement::HTMLHRElement):
+        * html/HTMLHRElement.h:
+        * html/HTMLImageElement.cpp:
+        (WebCore::HTMLImageElement::HTMLImageElement):
+        * html/HTMLImageElement.h:
+        * html/HTMLMapElement.cpp:
+        (WebCore::HTMLMapElement::HTMLMapElement):
+        * html/HTMLMapElement.h:
+        * html/HTMLObjectElement.cpp:
+        (WebCore::HTMLObjectElement::HTMLObjectElement):
+        * html/HTMLObjectElement.h:
+        * html/HTMLParagraphElement.cpp:
+        (WebCore::HTMLParagraphElement::HTMLParagraphElement):
+        * html/HTMLParagraphElement.h:
+        * html/HTMLParamElement.cpp:
+        (WebCore::HTMLParamElement::HTMLParamElement):
+        * html/HTMLParamElement.h:
+        * html/HTMLParser.cpp:
+        (WebCore::HTMLParser::handleError):
+        (WebCore::HTMLParser::mapCreateErrorCheck):
+        (WebCore::HTMLParser::handleIsindex):
+        * html/HTMLScriptElement.cpp:
+        (WebCore::HTMLScriptElement::HTMLScriptElement):
+        * html/HTMLScriptElement.h:
+        * html/HTMLTableCaptionElement.cpp:
+        (WebCore::HTMLTableCaptionElement::HTMLTableCaptionElement):
+        * html/HTMLTableCaptionElement.h:
+        * html/HTMLTableElement.cpp:
+        (WebCore::HTMLTableElement::HTMLTableElement):
+        (WebCore::HTMLTableElement::createCaption):
+        (WebCore::HTMLTableElement::insertRow):
+        * html/HTMLTableElement.h:
+        * html/HTMLTableRowElement.cpp:
+        (WebCore::HTMLTableRowElement::HTMLTableRowElement):
+        * html/HTMLTableRowElement.h:
+        * html/HTMLTableSectionElement.cpp:
+        (WebCore::HTMLTableSectionElement::insertRow):
+        * html/HTMLViewSourceDocument.cpp:
+        (WebCore::HTMLViewSourceDocument::createContainingTable):
+        (WebCore::HTMLViewSourceDocument::addLine):
+        * loader/ImageDocument.cpp:
+        (WebCore::ImageDocumentElement::ImageDocumentElement):
+
+2008-12-04  Eric Seidel  <eric@webkit.org>
+
+        No review, build fix only.
+
+        Add file missing from last commit.
+
+        * bindings/js/ScriptState.h: Added.
+
+2008-12-04  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Geoff Garen.
+
+        Implement ScriptState abstraction (initially, a simple typedef)
+        as means of carrying exception information across bindings boundaries
+        and in a script engine-independent way.
+
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/js/JSDOMBinding.cpp:
+        (WebCore::scriptStateFromNode):
+        * bindings/js/JSDOMBinding.h:
+        * bindings/js/JSNodeFilterCondition.h:
+        * bindings/js/ScriptState.h: Added.
+        * dom/NodeFilter.cpp:
+        (WebCore::NodeFilter::acceptNode):
+        * dom/NodeFilter.h:
+        (WebCore::NodeFilter::acceptNode):
+        * dom/NodeFilterCondition.cpp:
+        (WebCore::NodeFilterCondition::acceptNode):
+        * dom/NodeFilterCondition.h:
+        * dom/NodeIterator.cpp:
+        (WebCore::NodeIterator::nextNode):
+        (WebCore::NodeIterator::previousNode):
+        * dom/NodeIterator.h:
+        (WebCore::NodeIterator::nextNode):
+        (WebCore::NodeIterator::previousNode):
+        * dom/Traversal.cpp:
+        (WebCore::Traversal::acceptNode):
+        * dom/Traversal.h:
+        * dom/TreeWalker.cpp:
+        (WebCore::TreeWalker::parentNode):
+        (WebCore::TreeWalker::firstChild):
+        (WebCore::TreeWalker::lastChild):
+        (WebCore::TreeWalker::previousSibling):
+        (WebCore::TreeWalker::nextSibling):
+        (WebCore::TreeWalker::previousNode):
+        (WebCore::TreeWalker::nextNode):
+        * dom/TreeWalker.h:
+        (WebCore::TreeWalker::parentNode):
+        (WebCore::TreeWalker::firstChild):
+        (WebCore::TreeWalker::lastChild):
+        (WebCore::TreeWalker::previousSibling):
+        (WebCore::TreeWalker::nextSibling):
+        (WebCore::TreeWalker::previousNode):
+        (WebCore::TreeWalker::nextNode):
+
+2008-12-04  Pierre-Olivier Latour  <pol@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fixed pauseTransitionAtTimeOnElementWithId() in DRT asserting when passed invalid property name
+        and potential similar issue with pauseAnimationAtTimeOnElementWithId().
+
+        https://bugs.webkit.org/show_bug.cgi?id=22641
+
+        * page/animation/CompositeAnimation.cpp:
+        (WebCore::CompositeAnimationPrivate::pauseAnimationAtTime):
+        (WebCore::CompositeAnimationPrivate::pauseTransitionAtTime):
+
 2008-12-04  Dimitri Glazkov  <dglazkov@chromium.org>
 
         Reviewed by Darin Adler.
