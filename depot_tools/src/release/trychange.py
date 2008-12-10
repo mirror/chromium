@@ -207,7 +207,8 @@ def _SendChangeSVN(options):
       RunCommand(["svn", "add", '--non-interactive', full_path])
     temp_file.write(description)
     temp_file.flush()
-    RunCommand(["svn", "commit", full_path, '--file', temp_file_name])
+    RunCommand(["svn", "commit", '--non-interactive', full_path, '--file',
+                temp_file_name])
   finally:
     temp_file.close()
     shutil.rmtree(temp_dir, True)
@@ -234,7 +235,7 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   group.add_option("-b", "--bot", default=None,
                     help="Force the use specifics build slaves, separated with "
                          "a comma. ex: -b 'try win32 7'")
-  group.add_option("-r", "--revision", default=None,
+  group.add_option("-r", "--revision", default=None, type='int',
                     help="Revision to use for testing.")
   parser.add_option_group(group)
 
@@ -282,6 +283,14 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
       not options.diff and not options.url):
     print "Nothing to try, changelist is empty."
     return
+
+  # Grab the current revision by default. That fixes the issue when a user does
+  # a gcl upload and a gcl commit right away.
+  if options.revision == 0:
+    options.revision = None
+  elif not options.revision:
+    svn_url = gcl.GetSVNFileInfo(os.getcwd(), "Repository Root")
+    options.revision = int(gcl.GetSVNFileInfo(svn_url, "Revision"))
 
   try:
     # Convert options.diff into the content of the diff.
