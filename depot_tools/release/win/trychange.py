@@ -77,12 +77,6 @@ def EscapeDot(name):
   return name.replace('.', '-')
 
 
-def RebaseDiff(diff, root):
-  """Change the diff base root directory."""
-  # TODO(maruel):  Rebase the diff with root.
-  return diff
-
-
 def RunCommand(command):
   output, retcode = gcl.RunShellWithReturnCode(command)
   if retcode:
@@ -138,6 +132,8 @@ def _SendChangeHTTP(options):
   values['patch'] = options.diff
   if options.revision:
     values['revision'] = options.revision
+  if options.root:
+    values['root'] = options.root
   
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
   connection = urllib.urlopen(url, urllib.urlencode(values))
@@ -167,6 +163,8 @@ def _SendChangeSVN(options):
     values['bot'] = options.bot
   if options.revision:
     values['revision'] = options.revision
+  if options.root:
+    values['root'] = options.root
   
   description = ''
   for (k,v) in values.iteritems():
@@ -316,8 +314,6 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
       os.chdir(GetCheckoutRoot())
       options.diff = gcl.GenerateDiff([os.path.join(subpath, x)
                                       for x in options.files])
-    if options.root:
-      options.diff = RebaseDiff(options.diff, options.root)
 
     # Send the patch. Defaults to HTTP.
     if (not options.use_nfs and not options.use_svn) or options.use_http:
