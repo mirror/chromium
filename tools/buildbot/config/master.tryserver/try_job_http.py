@@ -13,6 +13,7 @@ from twisted.application import strports
 from twisted.python import log
 from twisted.web import http
 
+import chromium_config as config
 from try_job_stamp import TryJobStamp
 
 
