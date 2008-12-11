@@ -74,9 +74,7 @@ class TryJobHTTP(TryBase):
     # -pN argument to patch.
     patchlevel = options.get('patchlevel', 0)
     branch = options.get('branch', None)
-    # TODO(maruel): Until gclient is fixed. :(
-    #baserev = options.get('revision', None)
-    baserev = None
+    revision = options.get('revision', None)
     buildsetID = options.get('reason', "%s: %s" % (user, job_name))
     builderNames = []
     if 'bot' in options:
@@ -88,7 +86,7 @@ class TryJobHTTP(TryBase):
       patch = (patchlevel, diff)
     else:
       patch = None
-    jobstamp = TryJobStamp(branch=branch, revision=baserev, patch=patch,
+    jobstamp = TryJobStamp(branch=branch, revision=revision, patch=patch,
                            author_name=user, author_email=email,
                            job_name=job_name)
     return builderNames, jobstamp, buildsetID

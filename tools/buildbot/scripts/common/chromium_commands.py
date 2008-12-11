@@ -257,11 +257,12 @@ class GClient(commands.SourceBase):
     # GClient accepts --revision argument of two types 'module@rev' and 'rev'.
     if self.revision:
       command.append('--revision')
-      if self.branch:
-        # make the revision look like branch@revision
-        command.append('%s@%s' % (self.branch, self.revision))
-      else:
-        command.append(str(self.revision))
+      branch = self.branch
+      if not branch:
+        # *Hard coded for chromium*.
+        branch = 'src'
+      # Make the revision look like branch@revision.
+      command.append('%s@%s' % (branch, self.revision))
 
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
