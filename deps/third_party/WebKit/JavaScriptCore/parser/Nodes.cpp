@@ -312,7 +312,7 @@ RegisterID* StringNode::emitBytecode(BytecodeGenerator& generator, RegisterID* d
 
 RegisterID* RegExpNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
-    RefPtr<RegExp> regExp = RegExp::create(m_pattern, m_flags);
+    RefPtr<RegExp> regExp = RegExp::create(generator.globalData(), m_pattern, m_flags);
     if (!regExp->isValid())
         return emitThrowError(generator, SyntaxError, ("Invalid regular expression: " + UString(regExp->errorMessage())).UTF8String().c_str());
     if (dst == generator.ignoredResult())
@@ -2465,7 +2465,7 @@ void EvalNode::generateBytecode(ScopeChainNode* scopeChainNode)
 
     m_code.set(new EvalCodeBlock(this, globalObject, source().provider()));
 
-    BytecodeGenerator generator(this, globalObject->debugger(), scopeChain, &m_code->symbolTable, m_code.get());
+    BytecodeGenerator generator(this, globalObject->debugger(), scopeChain, &m_code->symbolTable(), m_code.get());
     generator.generate();
 
     // Eval code needs to hang on to its declaration stacks to keep declaration info alive until Interpreter::execute time,
@@ -2549,7 +2549,7 @@ void FunctionBodyNode::generateBytecode(ScopeChainNode* scopeChainNode)
 
     m_code.set(new CodeBlock(this, FunctionCode, source().provider(), source().startOffset()));
 
-    BytecodeGenerator generator(this, globalObject->debugger(), scopeChain, &m_code->symbolTable, m_code.get());
+    BytecodeGenerator generator(this, globalObject->debugger(), scopeChain, &m_code->symbolTable(), m_code.get());
     generator.generate();
 
     destroyData();

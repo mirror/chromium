@@ -13929,14 +13929,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\bindings\js\PausedTimeouts.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\bindings\js\PausedTimeouts.h"
-					>
-				</File>
-				<File
 					RelativePath="..\bindings\js\ScheduledAction.cpp"
 					>
 				</File>

@@ -69,10 +69,12 @@ SOURCES += \
     runtime/JSActivation.cpp \
     runtime/JSNotAnObject.cpp \
     bytecode/CodeBlock.cpp \
+    bytecode/JumpTable.cpp \
     jit/JIT.cpp \
     jit/JITCall.cpp \
     jit/JITArithmetic.cpp \
     jit/JITPropertyAccess.cpp \
+    jit/ExecutableAllocator.cpp \
     bytecompiler/BytecodeGenerator.cpp \
     runtime/ExceptionHelpers.cpp \
     runtime/JSPropertyNameIterator.cpp \
@@ -86,6 +88,9 @@ SOURCES += \
     wrec/WRECGenerator.cpp \
     wrec/WRECParser.cpp \
     interpreter/RegisterFile.cpp
+
+win32-*: SOURCES += jit/ExecutableAllocatorWin.cpp
+else: SOURCES += jit/ExecutableAllocatorPosix.cpp
 
 # AllInOneFile.cpp helps gcc analize and optimize code
 # Other compilers may be able to do this at link time

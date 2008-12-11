@@ -1,3 +1,692 @@
+2008-12-08  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by John Sullivan.
+
+        - WebCore part of tracking the global history item for a WebView
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::checkLoadCompleteForThisFrame): Set the page's
+        global history item to the current back/forward list item, respecting
+        private browsing mode.
+        (WebCore::FrameLoader::continueLoadAfterNavigationPolicy): Ditto in this
+        case.
+        (WebCore::FrameLoader::goToItem): Ditto in this case.
+        (WebCore::FrameLoader::updateHistoryForStandardLoad): If this load
+        creates a new global history item, set the page's global history item
+        to it.
+        (WebCore::FrameLoader::updateHistoryForRedirectWithLockedHistory):
+        Ditto.
+        * page/Page.cpp:
+        (WebCore::Page::setGlobalHistoryItem): Added this setter.
+        * page/Page.h: Added a m_globalHistoryItem data member.
+        (WebCore::Page::globalHistoryItem): Added this getter.
+
+2008-12-08  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Dave Kilzer.
+
+        A few stylistic fixes suggested by Dave Kilzer.
+
+        * css/CSSPrimitiveValue.cpp:
+        (WebCore::CSSPrimitiveValue::createIdentifier):
+        (WebCore::CSSPrimitiveValue::create):
+
+2008-12-08  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22737
+        Try debug version when locating CFNetwork
+
+        * platform/network/cf/ResourceRequestCFNet.cpp:
+        (WebCore::findCFNetworkModule):
+        (WebCore::findCFURLRequestSetContentDispositionEncodingFallbackArrayFunction):
+        (WebCore::findCFURLRequestCopyContentDispositionEncodingFallbackArrayFunction):
+        * platform/network/win/CookieJarCFNetWin.cpp:
+        (WebCore::findCFNetworkModule):
+        (WebCore::findIsHTTPOnlyFunction):
+
+2008-12-08  Aaron Boodman  <aa@chromium.org>
+
+        Reviewed by Stephanie Lewis.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22301
+        Make dispatchDidFinishLoading() always fire before didFinishLoadForFrame().
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::finishedParsing):
+
+2008-12-08  Trenton Schulz <trenton.schulz@nokia.com>
+
+        Rubber-stamped by Tor Arne Vestbø.
+
+        Fix build warning on Mac
+
+        * platform/text/mac/StringImplMac.mm:
+
+2008-12-08  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Fix the Qt build.
+
+        * bridge/qt/qt_runtime.cpp:
+        (JSC::Bindings::convertQVariantToValue): Pass JSGlobalData to RegExp
+          constructor.
+
+2008-12-08  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 22398: r39059: Crash when clearing webkitTransitionDuration in webkitTransitionEnd event handler
+        <rdar://problem/6426245> REGRESSION(r39059): Reproducible crash when clearing webkitTransitionDuration in webkitTransitionEnd event handler (22398)
+
+        This regression was caused by r39059 replacing the protector on the active
+        animation with a protector on just the composition.  It turns out that both
+        protectors are necessary.
+
+        Test: transitions/transition-duration-cleared-in-transitionend-crash.html
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::animationTimerCallbackFired):
+
+2008-12-08  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22732
+        Remove unused files PausedTimeouts.h,.cpp
+        The change that deprecated this code was https://bugs.webkit.org/show_bug.cgi?id=22620
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+          These are build files which had PausedTimeouts referenced.
+
+        * bindings/js/PausedTimeouts.cpp: Removed.
+        * bindings/js/PausedTimeouts.h: Removed.
+        * bindings/js/ScriptController.cpp: Removed '#include'
+        * page/Chrome.cpp: Removed '#include' and unused variable.
+
+2008-12-07  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=22594
+
+        Fix issues which break reading inline style for -webkit-transition
+        and -webkit-transform-origin.
+        
+        Test: fast/css/transform-inline-style.html
+
+        * css/CSSMutableStyleDeclaration.cpp:
+        (WebCore::CSSMutableStyleDeclaration::getPropertyValue): Add cases 
+        for CSSPropertyWebkitTransformOrigin and CSSPropertyWebkitTransition
+        so that these shorthand properties are returned correctly.
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseAnimationProperty): Create CSSPrimitiveValues
+        with the correct CSSValueAll and CSSValueNone identifiers, not the
+        RenderStyle-level cAnimateAll, cAnimateNone.
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::mapAnimationProperty): Special-case CSSValueAll
+        and CSSValueNone values to set cAnimateAll and cAnimateNone transition properties.
+
+2008-12-07  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22717
+        Make CSS values use less memory
+        
+        Share CSSPrimitiveValue objects for commonly used values including
+        - idents
+        - colors
+        - small integers
+        
+        This reduces the amount CSSPrimitiveValue instances by > 80%.
+
+        * css/CSSPrimitiveValue.cpp:
+        (WebCore::CSSPrimitiveValue::createIdentifier):
+        (WebCore::CSSPrimitiveValue::createColor):
+        (WebCore::CSSPrimitiveValue::create):
+        * css/CSSPrimitiveValue.h:
+        (WebCore::CSSPrimitiveValue::create):
+
+2008-12-07  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22717
+        Make CSS values use less memory
+
+        Get CSSValues off from the common StyleBase base class. They don't
+        need a parent pointer or anything else there and there is no real
+        reason to have them in same data structures with other CSSOM objects.
+        
+        Disabled (instead of refactoring around the lack of common base) the ability 
+        to have style declaration blocks as CSS variable values. They don't exist in 
+        the spec so I wasn't sure if they have future or not. It would not be hard to 
+        get them back. CSS variables are in any case an experimental feature and 
+        not enabled by default.
+
+        * css/CSSInitialValue.h:
+        (WebCore::CSSInitialValue::createExplicit):
+        (WebCore::CSSInitialValue::createImplicit):
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::addVariableDeclarationBlock):
+        * css/CSSParser.h:
+        * css/CSSValue.h:
+        (WebCore::CSSValue::~CSSValue):
+        (WebCore::CSSValue::parserValue):
+        * css/CSSVariablesDeclaration.cpp:
+        (WebCore::CSSVariablesDeclaration::CSSVariablesDeclaration):
+        (WebCore::CSSVariablesDeclaration::getVariableValue):
+        (WebCore::CSSVariablesDeclaration::removeVariable):
+        (WebCore::CSSVariablesDeclaration::addParsedVariable):
+        (WebCore::CSSVariablesDeclaration::getParsedVariable):
+        (WebCore::CSSVariablesDeclaration::getParsedVariableDeclarationBlock):
+        * css/CSSVariablesDeclaration.h:
+        (WebCore::CSSVariablesDeclaration::create):
+        * css/StyleBase.h:
+
+2008-12-07  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Add gradient and pattern support for strokeRect on canvas/Cg.
+
+        Canvas strokeRect() doesn't support gradients
+        https://bugs.webkit.org/show_bug.cgi?id=19790
+
+        Test: fast/canvas/canvas-strokeRect.html
+
+        * platform/graphics/cg/GraphicsContextCG.cpp:
+        (WebCore::GraphicsContext::strokeRect):
+
+2008-12-06  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Add support for setTransform() in canvas.
+
+        <canvas> lacks transform() and setTransform()
+        https://bugs.webkit.org/show_bug.cgi?id=16604
+
+        Test: fast/canvas/canvas-setTransform.html
+
+        * html/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasRenderingContext2D::State::State):
+        (WebCore::CanvasRenderingContext2D::setStrokeStyle):
+        (WebCore::CanvasRenderingContext2D::setFillStyle):
+        (WebCore::CanvasRenderingContext2D::scale):
+        (WebCore::CanvasRenderingContext2D::rotate):
+        (WebCore::CanvasRenderingContext2D::translate):
+        (WebCore::CanvasRenderingContext2D::transform):
+        (WebCore::CanvasRenderingContext2D::setTransform):
+        (WebCore::CanvasRenderingContext2D::beginPath):
+        (WebCore::CanvasRenderingContext2D::closePath):
+        (WebCore::CanvasRenderingContext2D::moveTo):
+        (WebCore::CanvasRenderingContext2D::lineTo):
+        (WebCore::CanvasRenderingContext2D::quadraticCurveTo):
+        (WebCore::CanvasRenderingContext2D::bezierCurveTo):
+        (WebCore::CanvasRenderingContext2D::arcTo):
+        (WebCore::CanvasRenderingContext2D::arc):
+        (WebCore::CanvasRenderingContext2D::rect):
+        (WebCore::CanvasRenderingContext2D::fill):
+        (WebCore::CanvasRenderingContext2D::stroke):
+        (WebCore::CanvasRenderingContext2D::clip):
+        (WebCore::CanvasRenderingContext2D::isPointInPath):
+        (WebCore::CanvasRenderingContext2D::clearRect):
+        (WebCore::CanvasRenderingContext2D::fillRect):
+        (WebCore::CanvasRenderingContext2D::strokeRect):
+        (WebCore::CanvasRenderingContext2D::drawImage):
+        (WebCore::CanvasRenderingContext2D::drawImageFromRect):
+        (WebCore::CanvasRenderingContext2D::willDraw):
+        (WebCore::CanvasRenderingContext2D::drawTextInternal):
+        * html/CanvasRenderingContext2D.h:
+        * html/CanvasRenderingContext2D.idl:
+        * html/HTMLCanvasElement.cpp:
+        (WebCore::HTMLCanvasElement::baseTransform):
+        * html/HTMLCanvasElement.h:
+        * platform/graphics/ImageBuffer.h:
+        (WebCore::ImageBuffer::baseTransform):
+
+2008-12-06  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Also copy m_implicit field. Darin wanted this change commited separately.
+
+        * css/CSSProperty.h:
+        (WebCore::CSSProperty::operator=):
+
+2008-12-06  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22379
+        Make CSSOM use less memory
+        
+        Use vector instead of a double linked list for properties in CSSMutableStyleDeclaration.
+        
+        Taught setter functions to use existing slots to avoid memory moves, plus some
+        other optimizations.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * css/CSSMutableStyleDeclaration.cpp:
+        (WebCore::CSSMutableStyleDeclaration::CSSMutableStyleDeclaration):
+        (WebCore::CSSMutableStyleDeclaration::operator=):
+        (WebCore::CSSMutableStyleDeclaration::getPropertyCSSValue):
+        (WebCore::CSSMutableStyleDeclaration::removeShorthandProperty):
+        (WebCore::CSSMutableStyleDeclaration::removeProperty):
+        (WebCore::CSSMutableStyleDeclaration::getPropertyPriority):
+        (WebCore::CSSMutableStyleDeclaration::getPropertyShorthand):
+        (WebCore::CSSMutableStyleDeclaration::isPropertyImplicit):
+        (WebCore::CSSMutableStyleDeclaration::setProperty):
+        (WebCore::CSSMutableStyleDeclaration::setPropertyInternal):
+        (WebCore::CSSMutableStyleDeclaration::setStringProperty):
+        (WebCore::CSSMutableStyleDeclaration::setImageProperty):
+        (WebCore::CSSMutableStyleDeclaration::parseDeclaration):
+        (WebCore::CSSMutableStyleDeclaration::addParsedProperties):
+        (WebCore::CSSMutableStyleDeclaration::addParsedProperty):
+        (WebCore::CSSMutableStyleDeclaration::setLengthProperty):
+        (WebCore::CSSMutableStyleDeclaration::length):
+        (WebCore::CSSMutableStyleDeclaration::item):
+        (WebCore::CSSMutableStyleDeclaration::cssText):
+        (WebCore::CSSMutableStyleDeclaration::setCssText):
+        (WebCore::CSSMutableStyleDeclaration::merge):
+        (WebCore::CSSMutableStyleDeclaration::removePropertiesInSet):
+        (WebCore::CSSMutableStyleDeclaration::copy):
+        (WebCore::CSSMutableStyleDeclaration::findPropertyWithId):
+        * css/CSSMutableStyleDeclaration.h:
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator*):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator->):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator!=):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator==):
+        (WebCore::CSSMutableStyleDeclaration::create):
+        (WebCore::CSSMutableStyleDeclaration::begin):
+        (WebCore::CSSMutableStyleDeclaration::end):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::CSSMutableStyleDeclarationConstIterator):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::~CSSMutableStyleDeclarationConstIterator):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator=):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator++):
+        (WebCore::CSSMutableStyleDeclarationConstIterator::operator--):
+        * css/CSSProperty.h:
+        (WTF::):
+        * css/CSSStyleDeclaration.cpp:
+        (WebCore::CSSStyleDeclaration::diff):
+        (WebCore::CSSStyleDeclaration::copyPropertiesInSet):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::resolveVariablesForDeclaration):
+        (WebCore::CSSStyleSelector::keyframeStylesForAnimation):
+        (WebCore::CSSStyleSelector::applyDeclarations):
+        * dom/EventTarget.h:
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::StyleChange::init):
+        (WebCore::ApplyStyleCommand::isHTMLStyleNode):
+        (WebCore::ApplyStyleCommand::removeHTMLFontStyle):
+        (WebCore::ApplyStyleCommand::removeCSSStyle):
+        * editing/Editor.cpp:
+        (WebCore::Editor::selectionStartHasStyle):
+        (WebCore::updateState):
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplaceSelectionCommand::handleStyleSpans):
+        * editing/markup.cpp:
+        (WebCore::appendStartMarkup):
+
+2008-12-06  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Antti Koivisto, Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=22088
+
+        Fix logic related to repainting when transform changes:
+        If an object has a layer, and the transform changes, then we need
+        to do a repaintIncludingDescendants(), not just a repaint.
+        
+        Test: fast/repaint/transform-repaint-descendants.html
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::styleWillChange):
+
+2008-12-06  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=15739
+
+        When painting the selection on a replaced element, paint
+        using local coordinates so that the selection is correctly
+        painted for transformed elements.
+
+        Test: fast/replaced/selection-rect-transform.html
+
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::paint):
+
+2008-12-06  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=15671
+        
+        Fix caret rendering to behave correctly with transforms:
+        * Rename caretRect() methods to localCaretRect() and
+          absoluteCaretBounds() as appropriate
+        * Fix localCaretRect() methods to return a rect in the
+          appropriate coordinates.
+        * Pass tx, ty down through the paintCaret() methods, after fixing them
+          up to account for differences between contents coords, and renderer-local
+          coords (via RenderBlock::offsetForContents()).
+        * Remove m_caretPositionOnLayout from SelectionController, and instead
+          call invalidateSelection() from RenderLayer::scrollToOffset(), because
+          we can no longer assume simple x/y offsets from scrolling with transforms.
+        * Move the logic to compute which RenderObject actually paints the caret into
+          SelectionController::caretRenderer(), rather than having it in RenderBlock.
+        * SelectionController now computes and caches a local caret rect. For invalidation,
+          it computes the absolute bounds of that (possibly transformed) local rect.
+          The local rect is computed in the coordinate system of the RenderObject that
+          will paint the caret (this may require offsetting from the actual renderer
+          at the start of the selection).
+        * Fix LayoutState(RenderObject* root) to take transforms into account
+        * Make offsetFromContainer() a virtual method on RenderObject, and implement
+          the RenderObject version. It's used to map from selection start renderer
+          to caret renderer.
+
+        Test: fast/transforms/transformed-caret.html
+
+        * WebCore.base.exp:
+        * editing/DeleteSelectionCommand.cpp:
+        (WebCore::DeleteSelectionCommand::mergeParagraphs):
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::SelectionController):
+        (WebCore::absoluteCaretY):
+        (WebCore::SelectionController::modify):
+        (WebCore::SelectionController::xPosForVerticalArrowNavigation):
+        (WebCore::SelectionController::layout):
+        (WebCore::SelectionController::caretRenderer):
+        (WebCore::SelectionController::localCaretRect):
+        (WebCore::SelectionController::absoluteCaretBounds):
+        (WebCore::SelectionController::caretRepaintRect):
+        (WebCore::SelectionController::recomputeCaretRect):
+        (WebCore::SelectionController::invalidateCaretRect):
+        (WebCore::SelectionController::paintCaret):
+        (WebCore::SelectionController::caretRendersInsideNode):
+        * editing/SelectionController.h:
+        * editing/VisiblePosition.cpp:
+        (WebCore::VisiblePosition::localCaretRect):
+        (WebCore::VisiblePosition::absoluteCaretBounds):
+        (WebCore::VisiblePosition::xOffsetForVerticalNavigation):
+        * editing/VisiblePosition.h:
+        * editing/mac/SelectionControllerMac.mm:
+        (WebCore::SelectionController::notifyAccessibilityForSelectionChange):
+        * html/HTMLElement.cpp:
+        (WebCore::HTMLElement::isContentEditable):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::boundsForVisiblePositionRange):
+        * page/Frame.cpp:
+        (WebCore::Frame::firstRectForRange):
+        (WebCore::Frame::selectionLayoutChanged):
+        (WebCore::Frame::paintCaret):
+        (WebCore::Frame::paintDragCaret):
+        (WebCore::Frame::revealSelection):
+        (WebCore::Frame::revealCaret):
+        * page/Frame.h:
+        * rendering/LayoutState.cpp:
+        (WebCore::LayoutState::LayoutState):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::paintCaret):
+        (WebCore::RenderBlock::paintObject):
+        (WebCore::RenderBlock::positionForCoordinates):
+        (WebCore::RenderBlock::offsetForContents):
+        * rendering/RenderBlock.h:
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::localCaretRect):
+        * rendering/RenderBox.h:
+        * rendering/RenderFlow.cpp:
+        (WebCore::RenderFlow::localCaretRect):
+        * rendering/RenderFlow.h:
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::scrollToOffset):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::localCaretRect):
+        * rendering/RenderObject.h:
+        * rendering/RenderSVGInlineText.cpp:
+        (WebCore::RenderSVGInlineText::localCaretRect):
+        * rendering/RenderSVGInlineText.h:
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::RenderText):
+        (WebCore::RenderText::localCaretRect):
+        * rendering/RenderText.h:
+
+2008-12-06  David Kilzer  <ddkilzer@apple.com>
+
+        Bug 22711: Current svn (build 39065) fails to compile
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22711>
+
+        BUILD FIX for r39065: Forgot parentheses after "document".
+
+        Bug 22666: Clean up data structures used when collecting URLs of subresources for webarchives
+        <https://bugs.webkit.org/show_bug.cgi?id=22666>
+
+        * svg/SVGFEImageElement.cpp:
+        (WebCore::SVGFEImageElement::addSubresourceAttributeURLs): Changed
+        document to document().
+
+2008-12-06  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22710
+        Memory leak due to circular reference Document->DOMTimer->ScheduledAction->[JS objects]->Document
+
+        * bindings/js/DOMTimer.cpp:
+        (WebCore::DOMTimer::stop): Delete ScheduledAction, which contains a protected object.
+
+2008-12-06  David Kilzer  <ddkilzer@apple.com>
+
+        Bug 22666: Clean up data structures used when collecting URLs of subresources for webarchives
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22666>
+
+        Reviewed by Darin Adler.
+
+        When creating a webarchive from WebCore::LegacyWebArchive::create(),
+        HashSet<String>, Vector<KURL> and Vector<String> were all used to
+        store a list of URLs for resources found in the document.  Instead
+        use a single ListHashSet<KURL> to store the list and resolve the
+        relative URLs as they're added.  We use a new inline method called
+        WebCore::addSubresourceURL() to add KURL objects to the ListHashSet
+        to prevent "null" KURL objects from crashing in the KURL hashing
+        function.
+
+        * WebCore.base.exp: Changed export of
+        WebCore::Node::getSubresourceURLs() to take a ListHashSet<KURL>
+        argument instead of a Vector<KURL>.
+
+        * WebCore.xcodeproj/project.pbxproj: Marked KURLHash.h as a private
+        header for use in WebKit.
+
+        * css/CSSStyleSheet.cpp:
+        (WebCore::CSSStyleSheet::addSubresourceStyleURLs): Renamed from
+        addSubresourceURLStrings().  Changed to use ListHashSet<KURL>
+        instead of HashSet<String>.  Cleaned up code.
+        * css/CSSStyleSheet.h:
+        (WebCore::CSSStyleSheet::addSubresourceStyleURLs): Ditto.
+        * css/StyleSheet.h:
+        (WebCore::StyleSheet::addSubresourceStyleURLs): Ditto.
+
+        * dom/Node.cpp:
+        (WebCore::Node::getSubresourceURLs): Changed to use
+        ListHashSet<KURL> instead of Vector<KURL>.  Cleaned up code.
+        * dom/Node.h:
+        (WebCore::Node::getSubresourceURLs): Ditto.
+        (WebCore::Node::addSubresourceAttributeURLs): Renamed from
+        getSubresourceAttributeStrings().  Changed to use ListHashSet<KURL>
+        instead of Vector<String>.
+        (WebCore::addSubresourceURL): Added.  Safely adds new KURL objects
+        to a ListHashSet<KURL> object.  A "null" KURL object will cause the
+        hash function to crash since it contains a null StringImpl.  Used in
+        Node::addSubresourceAttributeURLs() and addSubresourceStyleURLs() in
+        the style subsystem.
+
+        * dom/ProcessingInstruction.cpp:
+        (WebCore::ProcessingInstruction::addSubresourceAttributeURLs):
+        Renamed from getSubresourceAttributeStrings().  Changed to use
+        ListHashSet<KURL> instead of Vector<String>.  Use
+        WebCore::addSubresourceURL() to add new KURL objects.
+        * dom/ProcessingInstruction.h: Ditto.
+        * html/HTMLBodyElement.cpp:
+        (WebCore::HTMLBodyElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLBodyElement.h: Ditto.
+        * html/HTMLEmbedElement.cpp:
+        (WebCore::HTMLEmbedElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLEmbedElement.h: Ditto.
+        * html/HTMLImageElement.cpp:
+        (WebCore::HTMLImageElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLImageElement.h: Ditto.
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLInputElement.h: Ditto.
+        * html/HTMLLinkElement.cpp:
+        (WebCore::HTMLLinkElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLLinkElement.h: Ditto.
+        * html/HTMLObjectElement.cpp:
+        (WebCore::HTMLObjectElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLObjectElement.h: Ditto.
+        * html/HTMLParamElement.cpp:
+        (WebCore::HTMLParamElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLParamElement.h: Ditto.
+        * html/HTMLScriptElement.cpp:
+        (WebCore::HTMLScriptElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLScriptElement.h: Ditto.
+        * html/HTMLStyleElement.cpp:
+        (WebCore::HTMLStyleElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLStyleElement.h: Ditto.
+        * html/HTMLTableCellElement.cpp:
+        (WebCore::HTMLTableCellElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLTableCellElement.h: Ditto.
+        * html/HTMLTableElement.cpp:
+        (WebCore::HTMLTableElement::addSubresourceAttributeURLs): Ditto.
+        * html/HTMLTableElement.h: Ditto.
+
+        * loader/archive/cf/LegacyWebArchive.cpp:
+        (WebCore::LegacyWebArchive::create): Changed from using
+        HashSet<String> to ListHashSet<KURL> for tracking unique
+        subresources.  Changed from using Vector<KURL> to ListHashSet<KURL>
+        when calling WebCore::Node::getSubresourceURLs().  Cleaned up code.
+
+        * svg/SVGCursorElement.cpp:
+        (WebCore::SVGCursorElement::addSubresourceAttributeURLs): Renamed
+        from getSubresourceAttributeStrings().  Changed to use
+        ListHashSet<KURL> instead of Vector<String>.  Use
+        WebCore::addSubresourceURL() to add new KURL objects.
+        * svg/SVGCursorElement.h: Ditto.
+        * svg/SVGFEImageElement.cpp:
+        (WebCore::SVGFEImageElement::addSubresourceAttributeURLs): Ditto.
+        * svg/SVGFEImageElement.h: Ditto.
+        * svg/SVGImageElement.cpp:
+        (WebCore::SVGImageElement::addSubresourceAttributeURLs): Ditto.
+        * svg/SVGImageElement.h: Ditto.
+        * svg/SVGScriptElement.cpp:
+        (WebCore::SVGScriptElement::addSubresourceAttributeURLs): Ditto.
+        * svg/SVGScriptElement.h: Ditto.
+
+2008-12-05  Brett Wilson  <brettw@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Make the page group use the proper link hashing functions rather than
+        calling the string hash functions directly. Add Chromium-specfic ifdefs
+        in the visited link computation functions to allow integration.
+
+        * page/PageGroup.cpp:
+        (WebCore::PageGroup::isLinkVisited):
+        (WebCore::PageGroup::addVisitedLink):
+        * platform/LinkHash.cpp:
+        (WebCore::visitedLinkHash):
+        * platform/LinkHash.h:
+
+2008-12-05  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22635
+        For iteration and end events, previous fixes to prevent the deletion of
+        Animation objects (ref counting and hanging onto a ref during event callbacks)
+        was sufficient to prevent dangling pointers. But start events are sent in
+        the styleAvailable() call, which iterates over CompositeAnimation objects,
+        which are not ref counted. So that object can get destroyed in the event
+        handler while still active. So I added refcounting for CompositeAnimations.
+
+        Additionally, when am iterating over the CompositingAnimation list, it can
+        be deleted, which mutates the list. So I now make one pass over the list
+        building a vector of CompositeAnimation objects that need to be called and
+        then iterate over that vector to make the actual calls.
+
+        Finally, to make sure the lifetime of the CompositeAnimation exceeds that of
+        the Animation objects it owns, I now keep a ref to the CompositeAnimation
+        in the timer callback for the iteration and end events. That means I no
+        longer need to keep a ref to the Animation objects themselves in that timer
+        callback, since the CompositeAnimation already has one.
+
+        Tests: animations/animation-iteration-event-destroy-renderer.html
+               animations/animation-start-event-destroy-renderer.html
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::updateStateMachine):
+        (WebCore::AnimationBase::animationTimerCallbackFired):
+        * page/animation/AnimationController.cpp:
+        (WebCore::AnimationControllerPrivate::~AnimationControllerPrivate):
+        (WebCore::AnimationControllerPrivate::accessCompositeAnimation):
+        (WebCore::AnimationControllerPrivate::clear):
+        (WebCore::AnimationControllerPrivate::styleAvailable):
+        (WebCore::AnimationControllerPrivate::updateAnimationTimer):
+        (WebCore::AnimationControllerPrivate::animationTimerFired):
+        (WebCore::AnimationControllerPrivate::isAnimatingPropertyOnRenderer):
+        (WebCore::AnimationControllerPrivate::suspendAnimations):
+        (WebCore::AnimationControllerPrivate::resumeAnimations):
+        (WebCore::AnimationControllerPrivate::pauseAnimationAtTime):
+        (WebCore::AnimationControllerPrivate::pauseTransitionAtTime):
+        (WebCore::AnimationController::updateAnimations):
+        (WebCore::AnimationController::setAnimationStartTime):
+        (WebCore::AnimationController::setTransitionStartTime):
+        * page/animation/CompositeAnimation.cpp:
+        (WebCore::CompositeAnimationPrivate::animationController):
+        (WebCore::CompositeAnimationPrivate::isWaitingForStyleAvailable):
+        (WebCore::CompositeAnimationPrivate::~CompositeAnimationPrivate):
+        (WebCore::CompositeAnimationPrivate::clearRenderer):
+        (WebCore::CompositeAnimation::clearRenderer):
+        (WebCore::CompositeAnimation::animationController):
+        (WebCore::CompositeAnimation::isWaitingForStyleAvailable):
+        * page/animation/CompositeAnimation.h:
+        (WebCore::CompositeAnimation::create):
+
+2008-12-05  David Kilzer  <ddkilzer@apple.com>
+
+        Bug 22609: Provide a build-time choice when generating hash tables for properties of built-in DOM objects
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22609>
+        <rdar://problem/6331749>
+
+        Reviewed by Darin Adler.
+
+        Initial patch by Yosen Lin.  Adapted for ToT WebKit by David Kilzer.
+
+        Added back the code that generates a "compact" hash (instead of a
+        perfect hash) as a build-time option using the
+        ENABLE(PERFECT_HASH_SIZE) macro as defined in Lookup.h.
+
+        * bindings/scripts/CodeGeneratorJS.pm:
+        (GenerateImplementation): Compute the number of elements that will
+        be stored in each hash table and pass it to GenerateHashTable().
+        (GenerateHashTable): Added new second parameter representing the
+        number of elements to store in the compact hash table.  Added back
+        code to compute compact hash tables.  Generate both hash table sizes
+        and emit conditionalized code based on ENABLE(PERFECT_HASH_SIZE).
+
 2008-12-05  Brett Wilson  <brettw@chromium.org>
 
         Fix build bustage from previous patch.

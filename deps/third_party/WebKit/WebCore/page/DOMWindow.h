@@ -60,7 +60,6 @@ namespace WebCore {
 
 #if USE(V8)
     class ScheduledAction;
-    class PausedTimeouts;
     class DOMWindowTimer;
 #endif
 
@@ -342,9 +341,6 @@ namespace WebCore {
     
         void scheduleClose();
         void clearAllTimeouts();
-
-        void pauseTimeouts(OwnPtr<PausedTimeouts>&);
-        void resumeTimeouts(OwnPtr<PausedTimeouts>&);
 
     private:
         typedef HashMap<int, DOMWindowTimer*> TimeoutsMap;
