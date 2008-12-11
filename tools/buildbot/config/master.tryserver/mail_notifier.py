@@ -6,17 +6,36 @@
 """A class to mail the try bot results.
 """
 
+import urllib
+
+from buildbot import interfaces
+from buildbot import util
 from buildbot.status import mail
 from buildbot.status.builder import FAILURE, SUCCESS, WARNINGS
 from email.Message import Message
 from email.Utils import formatdate
-import urllib
 from twisted.internet import defer
+from zope.interface import implements
+
+
+class Domain(util.ComparableMixin):
+  implements(interfaces.IEmailLookup)
+  compare_attrs = ["domain"]
+
+  def __init__(self, domain):
+    assert "@" not in domain
+    self.domain = domain
+
+  def getAddress(self, name):
+    """If name is already an email address, pass it through."""
+    if '@' in name:
+      return name
+    return name + "@" + self.domain
 
 
 class MailNotifier(mail.MailNotifier):
   # Additional attributes that we would like to provide.
-  params = ['reply_to']
+  params = ['reply_to', 'lookup']
 
   def __init__(self, *args, **kwargs):
     for param in self.params:
@@ -24,7 +43,11 @@ class MailNotifier(mail.MailNotifier):
         setattr(self, param, kwargs.pop(param))
       else:
         setattr(self, param, None)
-    mail.MailNotifier.__init__(self, *args, **kwargs)
+
+    if self.lookup is not None and type(self.lookup) is str:
+      self.lookup = Domain(self.lookup)
+
+    mail.MailNotifier.__init__(self, lookup=self.lookup, *args, **kwargs)
 
   def buildMessage(self, name, build, results):
     """Send an email about the result. Don't attach the patch as
