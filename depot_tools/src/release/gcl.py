@@ -372,7 +372,7 @@ def SendToRietveld(request_path, payload=None,
   """Send a POST/GET to Rietveld.  Returns the response body."""
   def GetUserCredentials():
     """Prompts the user for a username and password."""
-    email = raw_input("Email: ").strip()
+    email = upload.GetEmail()
     password = getpass.getpass("Password for %s: " % email)
     return email, password
 
