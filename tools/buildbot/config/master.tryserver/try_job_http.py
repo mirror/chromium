@@ -83,7 +83,7 @@ class TryJobHTTP(TryBase):
     builderNames = self.pools.Select(builderNames)
     log.msg('Choose %s for job %s' % (",".join(builderNames), buildsetID))
     if diff:
-      patch = (patchlevel, diff)
+      patch = (patchlevel, diff, root)
     else:
       patch = None
     jobstamp = TryJobStamp(branch=branch, revision=revision, patch=patch,

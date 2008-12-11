@@ -361,11 +361,20 @@ class GClient(commands.SourceBase):
     return d
 
   def doPatch(self, res):
-    patchlevel, diff = self.patch
+    patchlevel = self.patch[0]
+    diff = self.patch[1]
+    root = None
+    if len(self.patch) >= 3:
+      root = self.patch[2]
     command = [commands.getCommand("patch"), '-p%d' % patchlevel]
     dir = os.path.join(self.builder.basedir, self.workdir)
     # Mark the directory so we don't try to update it later.
     open(os.path.join(dir, ".buildbot-patched"), "w").write("patched\n")
+
+    # Update 'dir' with the 'root' option. Sanitize by refusing '.' and '~'
+    if root and not '.' in root and not '~' in root:
+      dir = os.path.join(dir, root)
+
     # Now apply the patch.
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
