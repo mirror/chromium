@@ -25,6 +25,9 @@ CODEREVIEW_SETTINGS = {
 # may be a batch file.
 use_shell = sys.platform.startswith("win")
 
+# Number of lines in an SVN patch header.  This is used to convert patches
+# generated using Windows SVN to a Unix-friendly format.
+SVN_PATCH_HEADER_LINES = 5
 
 # globals that store the root of the current repositary and the directory where
 # we store information about changelists.
@@ -132,7 +135,7 @@ def RunShellWithReturnCode(command, print_output=False):
   """Executes a command and returns the output and the return code."""
   p = subprocess.Popen(command, stdout = subprocess.PIPE,
                        stderr = subprocess.STDOUT, shell = use_shell,
-                       universal_newlines=True)
+                       universal_newlines=False)
   if print_output:
     output_array = []
     while True:
@@ -497,7 +500,12 @@ def GenerateDiff(files):
     bogus_dir = os.path.join(parent_dir, "temp_svn_config")
     if not os.path.exists(bogus_dir):
       os.mkdir(bogus_dir)
-    diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir, file]))
+    # Convert patch headers to Unix line endings if under Windows.
+    patch = RunShell(["svn", "diff", "--config-dir", bogus_dir, file])
+    if use_shell:
+      diff.append(patch.replace('\r', '', SVN_PATCH_HEADER_LINES))
+    else:
+      diff.append(patch)
   return "".join(diff)
 
 
