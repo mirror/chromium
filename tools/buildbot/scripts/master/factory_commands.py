@@ -733,8 +733,8 @@ class FactoryCommands(object):
   def AddChromeUnitTests(self):
     """Adds a step to the factory to run all the unit tests."""
     # When adding a test, update kill_processes.py.
+    self.AddBasicGTestTestStep('ipc_tests')
     if self._target_platform == 'win32':
-      self.AddBasicGTestTestStep('ipc_tests')
       self.AddBasicGTestTestStep('installer_unittests')
       if self._target == 'Release':
         self.AddBasicGTestTestStep('mini_installer_test')
