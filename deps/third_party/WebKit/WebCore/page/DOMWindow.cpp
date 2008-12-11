@@ -90,7 +90,6 @@ using std::max;
 #include "WindowFeatures.h"
 #include "FrameLoadRequest.h"
 #include "ScheduledAction.h"
-#include "PausedTimeouts.h"
 #include "v8_proxy.h"
 
 #if PLATFORM(WIN)
@@ -1065,52 +1064,6 @@ void DOMWindow::clearTimeout(int timeoutId)
         return;
 
     delete m_timeouts.take(timeoutId);
-}
-
-void DOMWindow::pauseTimeouts(OwnPtr<PausedTimeouts>& pausedTimeouts)
-{
-    size_t count = m_timeouts.size();
-    if (count == 0) {
-        pausedTimeouts.clear();
-        return;
-    }
-
-    PausedTimeout* t = new PausedTimeout[count];
-    PausedTimeouts* result = new PausedTimeouts(t, count);
-
-    TimeoutsMap::iterator it = m_timeouts.begin();
-    for (size_t i = 0; i != count; ++i, ++it) {
-        int timeoutId = it->first;
-        DOMWindowTimer* timer = it->second;
-        t[i].timeoutId = timeoutId;
-        t[i].nestingLevel = timer->nestingLevel();
-        t[i].nextFireInterval = timer->nextFireInterval();
-        t[i].repeatInterval = timer->repeatInterval();
-        t[i].action = timer->takeAction();
-    }
-    ASSERT(it == m_timeouts.end());
-
-    deleteAllValues(m_timeouts);
-    m_timeouts.clear();
-
-    pausedTimeouts.set(result);
-}
-
-void DOMWindow::resumeTimeouts(OwnPtr<PausedTimeouts>& timeouts) {
-    if (!timeouts)
-        return;
-    size_t count = timeouts->numTimeouts();
-    PausedTimeout* array = timeouts->takeTimeouts();
-    for (size_t i = 0; i != count; ++i) {
-        int timeoutId = array[i].timeoutId;
-        DOMWindowTimer* timer = 
-          new DOMWindowTimer(timeoutId, array[i].nestingLevel,
-                             this, array[i].action);
-        m_timeouts.set(timeoutId, timer);
-        timer->start(array[i].nextFireInterval, array[i].repeatInterval);
-    }
-    delete[] array;
-    timeouts.clear();
 }
 
 #endif  // V8
