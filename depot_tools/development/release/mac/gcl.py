@@ -131,11 +131,11 @@ def ErrorExit(msg):
   sys.exit(1)
 
 
-def RunShellWithReturnCode(command, print_output=False):
+def RunShellWithReturnCode(command, print_output=False, universal_newlines=True):
   """Executes a command and returns the output and the return code."""
-  p = subprocess.Popen(command, stdout = subprocess.PIPE,
-                       stderr = subprocess.STDOUT, shell = use_shell,
-                       universal_newlines=False)
+  p = subprocess.Popen(command, stdout=subprocess.PIPE,
+                       stderr=subprocess.STDOUT, shell=use_shell,
+                       universal_newlines=universal_newlines)
   if print_output:
     output_array = []
     while True:
@@ -153,9 +153,9 @@ def RunShellWithReturnCode(command, print_output=False):
   return output, p.returncode
 
 
-def RunShell(command, print_output=False):
+def RunShell(command, print_output=False, universal_newlines=True):
   """Executes a command and returns the output."""
-  return RunShellWithReturnCode(command, print_output)[0]
+  return RunShellWithReturnCode(command, print_output, universal_newlines)[0]
 
 
 def ReadFile(filename):
@@ -501,7 +501,8 @@ def GenerateDiff(files):
     if not os.path.exists(bogus_dir):
       os.mkdir(bogus_dir)
     # Convert patch headers to Unix line endings if under Windows.
-    patch = RunShell(["svn", "diff", "--config-dir", bogus_dir, file])
+    patch = RunShell(["svn", "diff", "--config-dir", bogus_dir, file],
+                     universal_newlines=False)
     if use_shell:
       diff.append(patch.replace('\r', '', SVN_PATCH_HEADER_LINES))
     else:
