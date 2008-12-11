@@ -33,6 +33,7 @@
 #include <wtf/HashMap.h>
 #include <wtf/RefCounted.h>
 #include "Collector.h"
+#include "ExecutableAllocator.h"
 #include "SmallStrings.h"
 
 struct OpaqueJSClass;
@@ -119,9 +120,14 @@ namespace JSC {
         HashSet<JSObject*> arrayVisitedElements;
 
         Heap heap;
-
+#if ENABLE(ASSEMBLER)
+        PassRefPtr<ExecutablePool> poolForSize(size_t n) { return m_executableAllocator.poolForSize(n); }
+#endif
     private:
         JSGlobalData(bool isShared = false);
+#if ENABLE(ASSEMBLER)
+        ExecutableAllocator m_executableAllocator;
+#endif
 
         static JSGlobalData*& sharedInstanceInternal();
     };

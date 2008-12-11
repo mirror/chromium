@@ -37,15 +37,16 @@ namespace JSC {
 using namespace WREC;
 #endif
 
-inline RegExp::RegExp(const UString& pattern)
+inline RegExp::RegExp(JSGlobalData* globalData, const UString& pattern)
     : m_pattern(pattern)
     , m_flagBits(0)
     , m_regExp(0)
     , m_constructionError(0)
     , m_numSubpatterns(0)
 {
+    UNUSED_PARAM(globalData);
 #if ENABLE(WREC)
-    m_wrecFunction = Generator::compileRegExp(pattern, &m_numSubpatterns, &m_constructionError);
+    m_wrecFunction = Generator::compileRegExp(globalData, pattern, &m_numSubpatterns, &m_constructionError, m_executablePool);
     if (m_wrecFunction)
         return;
     // Fall through to non-WREC case.
@@ -54,12 +55,12 @@ inline RegExp::RegExp(const UString& pattern)
         JSRegExpDoNotIgnoreCase, JSRegExpSingleLine, &m_numSubpatterns, &m_constructionError);
 }
 
-PassRefPtr<RegExp> RegExp::create(const UString& pattern)
+PassRefPtr<RegExp> RegExp::create(JSGlobalData* globalData, const UString& pattern)
 {
-    return adoptRef(new RegExp(pattern));
+    return adoptRef(new RegExp(globalData, pattern));
 }
 
-inline RegExp::RegExp(const UString& pattern, const UString& flags)
+inline RegExp::RegExp(JSGlobalData* globalData, const UString& pattern, const UString& flags)
     : m_pattern(pattern)
     , m_flags(flags)
     , m_flagBits(0)
@@ -67,6 +68,8 @@ inline RegExp::RegExp(const UString& pattern, const UString& flags)
     , m_constructionError(0)
     , m_numSubpatterns(0)
 {
+    UNUSED_PARAM(globalData);
+
     // NOTE: The global flag is handled on a case-by-case basis by functions like
     // String::match and RegExpObject::match.
     if (flags.find('g') != -1)
@@ -86,7 +89,7 @@ inline RegExp::RegExp(const UString& pattern, const UString& flags)
     }
 
 #if ENABLE(WREC)
-    m_wrecFunction = Generator::compileRegExp(pattern, &m_numSubpatterns, &m_constructionError, (m_flagBits & IgnoreCase), (m_flagBits & Multiline));
+    m_wrecFunction = Generator::compileRegExp(globalData, pattern, &m_numSubpatterns, &m_constructionError, m_executablePool, (m_flagBits & IgnoreCase), (m_flagBits & Multiline));
     if (m_wrecFunction)
         return;
     // Fall through to non-WREC case.
@@ -95,18 +98,14 @@ inline RegExp::RegExp(const UString& pattern, const UString& flags)
         ignoreCaseOption, multilineOption, &m_numSubpatterns, &m_constructionError);
 }
 
-PassRefPtr<RegExp> RegExp::create(const UString& pattern, const UString& flags)
+PassRefPtr<RegExp> RegExp::create(JSGlobalData* globalData, const UString& pattern, const UString& flags)
 {
-    return adoptRef(new RegExp(pattern, flags));
+    return adoptRef(new RegExp(globalData, pattern, flags));
 }
 
 RegExp::~RegExp()
 {
     jsRegExpFree(m_regExp);
-#if ENABLE(WREC)
-    if (m_wrecFunction)
-        WTF::fastFreeExecutable(reinterpret_cast<void*>(m_wrecFunction));
-#endif
 }
 
 int RegExp::match(const UString& s, int startOffset, OwnArrayPtr<int>* ovector)

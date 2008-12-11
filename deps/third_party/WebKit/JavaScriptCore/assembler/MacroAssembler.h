@@ -53,9 +53,10 @@ public:
     {
     }
     
-    void* copyCode()
+    size_t size() { return m_assembler.size(); }
+    void* copyCode(ExecutablePool* allocator)
     {
-        return m_assembler.executableCopy();
+        return m_assembler.executableCopy(allocator);
     }
 
     // Address:
@@ -295,6 +296,11 @@ public:
     void lshift32(Imm32 imm, RegisterID dest)
     {
         m_assembler.shll_i8r(imm.m_value, dest);
+    }
+    
+    void mul32(Imm32 imm, RegisterID src, RegisterID dest)
+    {
+        m_assembler.imull_i32r(src, imm.m_value, dest);
     }
     
     void or32(Imm32 imm, RegisterID dest)
@@ -573,7 +579,7 @@ public:
         return Jump(m_assembler.je());
     }
     
-    Jump je32(Imm32 imm, RegisterID reg)
+    Jump je32(RegisterID reg, Imm32 imm)
     {
         compareImm32ForBranchEquality(reg, imm.m_value);
         return Jump(m_assembler.je());
@@ -605,6 +611,12 @@ public:
     {
         compareImm32ForBranch(left, right.m_value);
         return Jump(m_assembler.jge());
+    }
+
+    Jump jl32(RegisterID left, RegisterID right)
+    {
+        m_assembler.cmpl_rr(right, left);
+        return Jump(m_assembler.jl());
     }
     
     Jump jl32(RegisterID left, Imm32 right)
@@ -639,7 +651,7 @@ public:
         return Jump(m_assembler.jne());
     }
 
-    Jump jne32(Imm32 imm, RegisterID reg)
+    Jump jne32(RegisterID reg, Imm32 imm)
     {
         compareImm32ForBranchEquality(reg, imm.m_value);
         return Jump(m_assembler.jne());
@@ -691,9 +703,9 @@ public:
     //     // ...
     //     jne32(reg1, reg2).linkTo(topOfLoop);
 
-    void je32(Imm32 imm, RegisterID op2, Label target)
+    void je32(RegisterID op1, Imm32 imm, Label target)
     {
-        je32(imm, op2).linkTo(target, this);
+        je32(op1, imm).linkTo(target, this);
     }
 
     void je16(RegisterID op1, BaseIndex op2, Label target)
@@ -716,9 +728,9 @@ public:
         jne32(op1, op2).linkTo(target, this);
     }
 
-    void jne32(Imm32 imm, RegisterID op2, Label target)
+    void jne32(RegisterID op1, Imm32 imm, Label target)
     {
-        jne32(imm, op2).linkTo(target, this);
+        jne32(op1, imm).linkTo(target, this);
     }
 
     void jump(Label target)
@@ -737,19 +749,34 @@ public:
     // * jo operations branch if the (signed) arithmetic
     //   operation caused an overflow to occur.
 
-    Jump jzSub32(Imm32 imm, RegisterID dest)
+    Jump jnzSub32(Imm32 imm, RegisterID dest)
     {
-        if (CAN_SIGN_EXTEND_8_32(imm.m_value))
-            m_assembler.subl_i8r(imm.m_value, dest);
-        else
-            m_assembler.subl_i32r(imm.m_value, dest);
-        return Jump(m_assembler.je());
+        sub32(imm, dest);
+        return Jump(m_assembler.jne());
     }
     
     Jump joAdd32(RegisterID src, RegisterID dest)
     {
-        m_assembler.addl_rr(src, dest);
+        add32(src, dest);
         return Jump(m_assembler.jo());
+    }
+    
+    Jump joAdd32(Imm32 imm, RegisterID dest)
+    {
+        add32(imm, dest);
+        return Jump(m_assembler.jo());
+    }
+    
+    Jump joMul32(Imm32 imm, RegisterID src, RegisterID dest)
+    {
+        mul32(imm, src, dest);
+        return Jump(m_assembler.jo());
+    }
+    
+    Jump jzSub32(Imm32 imm, RegisterID dest)
+    {
+        sub32(imm, dest);
+        return Jump(m_assembler.je());
     }
     
 

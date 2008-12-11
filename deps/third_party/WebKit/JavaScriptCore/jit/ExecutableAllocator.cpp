@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,15 +24,15 @@
  */
 
 #include "config.h"
-#include "CallFrame.h"
 
-#include "CodeBlock.h"
+#include "ExecutableAllocator.h"
+
+#if ENABLE(ASSEMBLER)
 
 namespace JSC {
 
-JSValue* CallFrame::thisValue()
-{
-    return this[codeBlock()->thisRegister()].jsValue(this);
-}
+size_t ExecutableAllocator::pageSize = 0;
 
 }
+
+#endif // HAVE(ASSEMBLER)

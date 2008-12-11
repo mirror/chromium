@@ -58,7 +58,7 @@ void JIT::compileGetByIdHotPath(int resultVReg, int baseVReg, Identifier* ident,
 #ifdef NDEBUG
     UNUSED_PARAM(propertyAccessInstructionIndex);
 #endif
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
 
 #ifndef NDEBUG
     JmpDst coldPathBegin = __ label();
@@ -70,7 +70,7 @@ void JIT::compileGetByIdHotPath(int resultVReg, int baseVReg, Identifier* ident,
     emitPutVirtualRegister(resultVReg);
 
     // Track the location of the call; this will be used to recover repatch information.
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
     m_propertyAccessCompilationInfo[propertyAccessInstructionIndex].callReturnLocation = call;
 }
 
@@ -94,7 +94,7 @@ void JIT::compilePutByIdHotPath(int baseVReg, Identifier* ident, int valueVReg, 
     JmpSrc call = emitCTICall(i, Interpreter::cti_op_put_by_id_generic);
 
     // Track the location of the call; this will be used to recover repatch information.
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
     m_propertyAccessCompilationInfo[propertyAccessInstructionIndex].callReturnLocation = call;
 }
 
@@ -114,7 +114,7 @@ void JIT::compileGetByIdHotPath(int resultVReg, int baseVReg, Identifier*, unsig
 
     emitGetVirtualRegister(baseVReg, X86::eax, i);
 
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
 
     emitJumpSlowCaseIfNotJSCell(X86::eax, i, baseVReg);
 
@@ -155,7 +155,7 @@ void JIT::compileGetByIdSlowCase(int resultVReg, int baseVReg, Identifier* ident
     emitPutVirtualRegister(resultVReg);
 
     // Track the location of the call; this will be used to recover repatch information.
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
     m_propertyAccessCompilationInfo[propertyAccessInstructionIndex].callReturnLocation = call;
 }
 
@@ -167,7 +167,7 @@ void JIT::compilePutByIdHotPath(int baseVReg, Identifier*, int valueVReg, unsign
 
     emitGetVirtualRegisters(baseVReg, X86::eax, valueVReg, X86::edx, i);
 
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
 
     // Jump to a slow case if either the base object is an immediate, or if the Structure does not match.
     emitJumpSlowCaseIfNotJSCell(X86::eax, i, baseVReg);
@@ -198,7 +198,7 @@ void JIT::compilePutByIdSlowCase(int baseVReg, Identifier* ident, int, unsigned 
     JmpSrc call = emitCTICall(i, Interpreter::cti_op_put_by_id);
 
     // Track the location of the call; this will be used to recover repatch information.
-    ASSERT(m_codeBlock->propertyAccessInstructions[propertyAccessInstructionIndex].bytecodeIndex == i);
+    ASSERT(m_codeBlock->propertyAccessInstruction(propertyAccessInstructionIndex).bytecodeIndex == i);
     m_propertyAccessCompilationInfo[propertyAccessInstructionIndex].callReturnLocation = call;
 }
 
@@ -285,7 +285,7 @@ void JIT::privateCompilePutByIdTransition(Structure* oldStructure, Structure* ne
         failureJump = __ jmp();
     }
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     if (failureCases.size())
         X86Assembler::link(code, failureJump, reinterpret_cast<void*>(Interpreter::cti_op_put_by_id_fail));
@@ -347,7 +347,7 @@ void JIT::privateCompilePatchGetArrayLength(void* returnAddress)
     __ movl_rr(X86::ecx, X86::eax);
     JmpSrc success = __ jmp();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     // Use the repatch information to link the failure cases back to the original slow case routine.
     void* slowCaseBegin = reinterpret_cast<char*>(info.callReturnLocation) - repatchOffsetGetByIdSlowCaseCall;
@@ -378,7 +378,7 @@ void JIT::privateCompileGetByIdSelf(Structure* structure, size_t cachedOffset, v
     __ movl_mr(cachedOffset * sizeof(JSValue*), X86::eax, X86::eax);
     __ ret();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     X86Assembler::link(code, failureCases1, reinterpret_cast<void*>(Interpreter::cti_op_get_by_id_self_fail));
     X86Assembler::link(code, failureCases2, reinterpret_cast<void*>(Interpreter::cti_op_get_by_id_self_fail));
@@ -415,7 +415,7 @@ void JIT::privateCompileGetByIdProto(Structure* structure, Structure* prototypeS
 
     JmpSrc success = __ jmp();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     // Use the repatch information to link the failure cases back to the original slow case routine.
     void* slowCaseBegin = reinterpret_cast<char*>(info.callReturnLocation) - repatchOffsetGetByIdSlowCaseCall;
@@ -454,7 +454,7 @@ void JIT::privateCompileGetByIdProto(Structure* structure, Structure* prototypeS
 
     __ ret();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     X86Assembler::link(code, failureCases1, reinterpret_cast<void*>(Interpreter::cti_op_get_by_id_proto_fail));
     X86Assembler::link(code, failureCases2, reinterpret_cast<void*>(Interpreter::cti_op_get_by_id_proto_fail));
@@ -474,7 +474,7 @@ void JIT::privateCompileGetByIdSelfList(StructureStubInfo* stubInfo, Polymorphic
     __ movl_mr(cachedOffset * sizeof(JSValue*), X86::eax, X86::eax);
     JmpSrc success = __ jmp();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
     ASSERT(code);
 
     // Use the repatch information to link the failure cases back to the original slow case routine.
@@ -517,7 +517,7 @@ void JIT::privateCompileGetByIdProtoList(StructureStubInfo* stubInfo, Polymorphi
 
     JmpSrc success = __ jmp();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     // Use the repatch information to link the failure cases back to the original slow case routine.
     void* lastProtoBegin = prototypeStructures->list[currentIndex - 1].stubRoutine;
@@ -565,7 +565,7 @@ void JIT::privateCompileGetByIdChainList(StructureStubInfo* stubInfo, Polymorphi
     __ movl_mr(cachedOffset * sizeof(JSValue*), X86::edx, X86::eax);
     JmpSrc success = __ jmp();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     // Use the repatch information to link the failure cases back to the original slow case routine.
     void* lastProtoBegin = prototypeStructures->list[currentIndex - 1].stubRoutine;
@@ -622,7 +622,7 @@ void JIT::privateCompileGetByIdChain(Structure* structure, StructureChain* chain
     __ movl_mr(cachedOffset * sizeof(JSValue*), X86::edx, X86::eax);
     JmpSrc success = __ jmp();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     // Use the repatch information to link the failure cases back to the original slow case routine.
     void* slowCaseBegin = reinterpret_cast<char*>(info.callReturnLocation) - repatchOffsetGetByIdSlowCaseCall;
@@ -669,7 +669,7 @@ void JIT::privateCompileGetByIdChain(Structure* structure, StructureChain* chain
     __ movl_mr(cachedOffset * sizeof(JSValue*), X86::edx, X86::eax);
     __ ret();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
 
     for (unsigned i = 0; i < bucketsOfFail.size(); ++i)
         X86Assembler::link(code, bucketsOfFail[i], reinterpret_cast<void*>(Interpreter::cti_op_get_by_id_proto_fail));
@@ -692,7 +692,7 @@ void JIT::privateCompilePutByIdReplace(Structure* structure, size_t cachedOffset
     __ movl_rm(X86::edx, cachedOffset * sizeof(JSValue*), X86::eax);
     __ ret();
 
-    void* code = __ executableCopy();
+    void* code = __ executableCopy(m_codeBlock->executablePool());
     
     X86Assembler::link(code, failureCases1, reinterpret_cast<void*>(Interpreter::cti_op_put_by_id_fail));
     X86Assembler::link(code, failureCases2, reinterpret_cast<void*>(Interpreter::cti_op_put_by_id_fail));

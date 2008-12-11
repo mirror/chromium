@@ -261,6 +261,10 @@ namespace JSC {
     void ctiRepatchCallByReturnAddress(void* where, void* what);
 
     class JIT : private MacroAssembler {
+        using MacroAssembler::Jump;
+        using MacroAssembler::JumpList;
+        using MacroAssembler::Label;
+
         typedef X86Assembler::RegisterID RegisterID;
         typedef X86Assembler::XMMRegisterID XMMRegisterID;
         typedef X86Assembler::JmpSrc JmpSrc;
@@ -354,7 +358,6 @@ namespace JSC {
             JIT jit(globalData);
             jit.privateCompileCTIMachineTrampolines();
         }
-        static void freeCTIMachineTrampolines(Interpreter*);
 
         static void patchGetByIdSelf(CodeBlock* codeBlock, Structure* structure, size_t cachedOffset, void* returnAddress);
         static void patchPutByIdReplace(CodeBlock* codeBlock, Structure* structure, size_t cachedOffset, void* returnAddress);
@@ -433,9 +436,12 @@ namespace JSC {
         JSValue* getConstantImmediateNumericArg(unsigned src);
         unsigned getDeTaggedConstantImmediate(JSValue* imm);
 
-        bool linkSlowCaseIfNotJSCell(const Vector<SlowCaseEntry>::iterator&, int vReg);
+        Jump emitJumpIfJSCell(RegisterID);
+        void emitJumpSlowCaseIfJSCell(RegisterID, unsigned bytecodeIndex);
+        Jump emitJumpIfNotJSCell(RegisterID);
         void emitJumpSlowCaseIfNotJSCell(RegisterID, unsigned bytecodeIndex);
         void emitJumpSlowCaseIfNotJSCell(RegisterID, unsigned bytecodeIndex, int VReg);
+        bool linkSlowCaseIfNotJSCell(const Vector<SlowCaseEntry>::iterator&, int vReg);
 
         void emitJumpSlowCaseIfNotImmNum(RegisterID, unsigned bytecodeIndex);
         void emitJumpSlowCaseIfNotImmNums(RegisterID, RegisterID, RegisterID, unsigned bytecodeIndex);

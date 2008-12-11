@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2008 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,15 +24,33 @@
  */
 
 #include "config.h"
-#include "CallFrame.h"
 
-#include "CodeBlock.h"
+#include "ExecutableAllocator.h"
+
+#if ENABLE(ASSEMBLER)
+
+#include "windows.h"
 
 namespace JSC {
 
-JSValue* CallFrame::thisValue()
+void ExecutableAllocator::intializePageSize()
 {
-    return this[codeBlock()->thisRegister()].jsValue(this);
+    SYSTEM_INFO system_info;
+    GetSystemInfo(&system_info);
+    ExecutableAllocator::pageSize = system_info.dwPageSize;
+}
+
+ExecutablePool::Allocation ExecutablePool::systemAlloc(size_t n)
+{
+    ExecutablePool::Allocation alloc = {reinterpret_cast<char*>(VirtualAlloc(0, n, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE)), n};
+    return alloc;
+}
+
+void ExecutablePool::systemRelease(const ExecutablePool::Allocation& alloc)
+{ 
+    VirtualFree(alloc.pages, 0, MEM_RELEASE); 
 }
 
 }
+
+#endif // HAVE(ASSEMBLER)
