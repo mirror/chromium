@@ -267,7 +267,7 @@ WebInspector.Console.prototype = {
         } else {
             // There is no expressionString, so the completion should happen against global properties.
             // Or if the debugger is paused, against properties in scope of the selected call frame.
-            if (WebInspector.panels.scripts.paused)
+            if (WebInspector.panels.scripts && WebInspector.panels.scripts.paused)
                 result = WebInspector.panels.scripts.variablesInScopeForSelectedCallFrame();
             else
                 result = InspectorController.inspectedWindow();
@@ -394,9 +394,8 @@ WebInspector.Console.prototype = {
 
     _evalInInspectedWindow: function(expression)
     {
-        if (WebInspector.panels.scripts.paused)
+        if (WebInspector.panels.scripts && WebInspector.panels.scripts.paused)
             return WebInspector.panels.scripts.evaluateInSelectedCallFrame(expression);
-
         var inspectedWindow = InspectorController.inspectedWindow();
         if (!inspectedWindow._inspectorCommandLineAPI) {
             inspectedWindow.eval("window._inspectorCommandLineAPI = { \
