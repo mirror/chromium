@@ -46,6 +46,7 @@ class Master(chromium_config_private.Master):
   class TryServer(chromium_config_private.Master.TryServer):
     master_port = 8011
     slave_port = 8013
+    master_port_alt = 8015
     try_job_port = 8018
     project_name = 'Chromium Try Server'
 
