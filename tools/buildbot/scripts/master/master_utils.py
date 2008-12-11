@@ -366,8 +366,8 @@ class MasterFactory(object):
       factory_cmd_obj.AddArchiveBuild()
 
     if 'reliability' in tests:
-       factory.addStep(trigger.Trigger(schedulerNames=['reliability'],
-                                       waitForFinish=False))
+      factory.addStep(trigger.Trigger(schedulerNames=['reliability'],
+                                      waitForFinish=False))
 
     # Archive the full output directory if the machine is a builder.
     if slave_type == 'Builder':
@@ -387,6 +387,12 @@ class MasterFactory(object):
                    perf_id=perf_id,
                    archive_webkit_results=archive_webkit_results,
                    run_single_process_ui=run_single_process_ui)
+
+    # We want to purify layout test to run over and over
+    if 'purify_layout' in tests:
+      factory.addStep(trigger.Trigger(schedulerNames=['purify'],
+                                      waitForFinish=False))
+
     return factory
 
   def NewOfficialBuildFactory(self, identifier='chrome-official', svn_url=None):
