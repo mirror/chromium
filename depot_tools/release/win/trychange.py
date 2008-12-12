@@ -136,7 +136,14 @@ def _SendChangeHTTP(options):
     values['root'] = options.root
   
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
-  connection = urllib.urlopen(url, urllib.urlencode(values))
+  proxies = None
+  if options.proxy:
+    if options.proxy.lower() == 'none':
+      # Effectively disable HTTP_PROXY or Internet settings proxy setup.
+      proxies = {}
+    else:
+      proxies = {'http': options.proxy, 'https': options.proxy}
+  connection = urllib.urlopen(url, urllib.urlencode(values), proxies=proxies)
   if not connection:
     raise NoTryServerAccess('%s is unaccessible.' % url)
   if connection.read() != 'OK':
@@ -263,6 +270,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                    help="Host address to use to talk to the try server.")
   group.add_option("--port", default=None,
                    help="HTTP port to use to talk to the try server.")
+  group.add_option("--proxy", default=None,
+                   help="HTTP proxy.")
   # TODO(maruel): Remove support eventually.
   group.add_option("--use_nfs", action="store_true",
                    help="Use NFS to talk to the try server.")
