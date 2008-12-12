@@ -35,6 +35,67 @@ using namespace WTF;
 
 namespace JSC { namespace WREC {
 
+class PatternCharacterSequence {
+typedef Generator::JumpList JumpList;
+
+public:
+    PatternCharacterSequence(Generator& generator, JumpList& failures)
+        : m_generator(generator)
+        , m_failures(failures)
+    {
+    }
+    
+    size_t size() { return m_sequence.size(); }
+    
+    void append(int ch)
+    {
+        m_sequence.append(ch);
+    }
+    
+    void flush()
+    {
+        if (!m_sequence.size())
+            return;
+
+        m_generator.generatePatternCharacterSequence(m_failures, m_sequence.begin(), m_sequence.size());
+        m_sequence.clear();
+    }
+
+    void flush(const Quantifier& quantifier)
+    {
+        if (!m_sequence.size())
+            return;
+
+        m_generator.generatePatternCharacterSequence(m_failures, m_sequence.begin(), m_sequence.size() - 1);
+
+        switch (quantifier.type) {
+        case Quantifier::None:
+        case Quantifier::Error:
+            ASSERT_NOT_REACHED();
+            break;
+
+        case Quantifier::Greedy: {
+            GeneratePatternCharacterFunctor functor(m_sequence.last());
+            m_generator.generateGreedyQuantifier(m_failures, functor, quantifier.min, quantifier.max);
+            break;
+        }
+        
+        case Quantifier::NonGreedy: {
+            GeneratePatternCharacterFunctor functor(m_sequence.last());
+            m_generator.generateNonGreedyQuantifier(m_failures, functor, quantifier.min, quantifier.max);
+            break;
+        }
+        }
+        
+        m_sequence.clear();
+    }
+
+private:
+    Generator& m_generator;
+    JumpList& m_failures;
+    Vector<int, 8> m_sequence;
+};
+
 ALWAYS_INLINE Quantifier Parser::consumeGreedyQuantifier()
 {
     switch (peek()) {
@@ -51,64 +112,42 @@ ALWAYS_INLINE Quantifier Parser::consumeGreedyQuantifier()
             return Quantifier(Quantifier::Greedy, 1);
 
         case '{': {
+            SavedState state(*this);
             consume();
-            // a numeric quantifier should always have a lower bound
+
+            // Accept: {n}, {n,}, {n,m}.
+            // Reject: {n,m} where n > m.
+            // Ignore: Anything else, such as {n, m}.
+
             if (!peekIsDigit()) {
+                state.restore();
+                return Quantifier();
+            }
+
+            unsigned min = consumeNumber();
+            unsigned max = min;
+
+            if (peek() == ',') {
+                consume();
+                max = peekIsDigit() ? consumeNumber() : Quantifier::Infinity;
+            }
+
+            if (peek() != '}') {
+                state.restore();
+                return Quantifier();
+            }
+            consume();
+ 
+            if (min > max) {
                 m_error = MalformedQuantifier;
                 return Quantifier(Quantifier::Error);
             }
-            int min = consumeNumber();
-            
-            // this should either be a , or a }
-            switch (peek()) {
-            case '}':
-                // {n} - exactly n times. (technically I think a '?' is valid in the bnf - bit meaningless).
-                consume();
-                return Quantifier(Quantifier::Greedy, min, min);
 
-            case ',':
-                consume();
-                switch (peek()) {
-                case '}':
-                    // {n,} - n to inf times.
-                    consume();
-                    return Quantifier(Quantifier::Greedy, min);
+            return Quantifier(Quantifier::Greedy, min, max);
+         }
 
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9': {
-                    // {n,m} - n to m times.
-                    int max = consumeNumber();
-                    
-                    if (peek() != '}') {
-                        m_error = MalformedQuantifier;
-                        return Quantifier(Quantifier::Error);
-                    }
-                    consume();
-
-                    return Quantifier(Quantifier::Greedy, min, max);
-                }
-
-                default:
-                    m_error = MalformedQuantifier;
-                    return Quantifier(Quantifier::Error);
-                }
-
-            default:
-                m_error = MalformedQuantifier;
-                return Quantifier(Quantifier::Error);
-            }
-        }
-        // None of the above - no quantifier
-        default:
-            return Quantifier();
+         default:
+            return Quantifier(); // No quantifier.
     }
 }
 
@@ -122,88 +161,6 @@ Quantifier Parser::consumeQuantifier()
     }
     
     return q;
-}
-
-bool Parser::parsePatternCharacterSequence(JumpList& failures, int ch)
-{
-    Vector<int, 8> sequence;
-    sequence.append(ch);
-    Quantifier quantifier;
-    Escape escape;
-
-    bool done = false;
-    while (!done) {
-        switch (peek()) {
-            case EndOfPattern:
-            case '^':
-            case '$':
-            case '.':
-            case '(':
-            case ')':
-            case '[':
-            case ']':
-            case '}':
-            case '|': {
-                done = true;
-                continue;
-            }
-            case '*': 
-            case '+': 
-            case '?': 
-            case '{': {
-                quantifier = consumeQuantifier();
-                done = true;
-                continue;
-            }
-            case '\\': {
-                consume();
-                escape = consumeEscape(false);
-                if (escape.type() == Escape::PatternCharacter) {
-                    sequence.append(PatternCharacterEscape::cast(escape).character());
-                    continue;
-                }
-
-                done = true;
-                continue;
-            }
-            default: {
-                // Anything else is a PatternCharacter.
-                sequence.append(consume());
-                continue;
-            }
-        }
-    }
-
-    // Generate the character sequence. If the last character was quantified,
-    // it needs to be parsed separately, in the context of its quantifier.
-    size_t count = quantifier.type == Quantifier::None ? sequence.size() : sequence.size() - 1;
-    m_generator.generatePatternCharacterSequence(failures, sequence.begin(), count);
-
-    switch (quantifier.type) {
-        case Quantifier::None: {
-            break;
-        }
-        case Quantifier::Error: {
-            return false;
-        }
-        case Quantifier::Greedy: {
-            GeneratePatternCharacterFunctor functor(sequence.last());
-            m_generator.generateGreedyQuantifier(failures, functor, quantifier.min, quantifier.max);
-            return true;
-        }
-        case Quantifier::NonGreedy: {
-            GeneratePatternCharacterFunctor functor(sequence.last());
-            m_generator.generateNonGreedyQuantifier(failures, functor, quantifier.min, quantifier.max);
-            return true;
-        }
-    }
-
-    // If the last token was not a quantifier, it might have been a non-character
-    // escape. We need to parse it now, since we've consumed it.
-    if (escape.type() != Escape::None && escape.type() != Escape::PatternCharacter)
-        return parseEscape(failures, escape);
-
-    return true;
 }
 
 bool Parser::parseCharacterClassQuantifier(JumpList& failures, const CharacterClass& charClass, bool invert)
@@ -345,7 +302,6 @@ bool Parser::parseCharacterClass(JumpList& failures)
                     m_error = MalformedEscape;
                     return false;
                 }
-                case Escape::None:
                 case Escape::Backreference:
                 case Escape::WordBoundaryAssertion: {
                     ASSERT_NOT_REACHED();
@@ -373,31 +329,28 @@ bool Parser::parseCharacterClass(JumpList& failures)
     return parseCharacterClassQuantifier(failures, charClass, invert);
 }
 
-bool Parser::parseEscape(JumpList& failures, const Escape& escape)
+bool Parser::parseNonCharacterEscape(JumpList& failures, const Escape& escape)
 {
     switch (escape.type()) {
-        case Escape::PatternCharacter: {
-            return parsePatternCharacterSequence(failures, PatternCharacterEscape::cast(escape).character());
-        }
-        case Escape::CharacterClass: {
+        case Escape::PatternCharacter:
+            ASSERT_NOT_REACHED();
+            return false;
+
+        case Escape::CharacterClass:
             return parseCharacterClassQuantifier(failures, CharacterClassEscape::cast(escape).characterClass(), CharacterClassEscape::cast(escape).invert());
-        }
-        case Escape::Backreference: {
+
+        case Escape::Backreference:
             return parseBackreferenceQuantifier(failures, BackreferenceEscape::cast(escape).subpatternId());
-        }
-        case Escape::WordBoundaryAssertion: {
+
+        case Escape::WordBoundaryAssertion:
             m_generator.generateAssertionWordBoundary(failures, WordBoundaryAssertionEscape::cast(escape).invert());
             return true;
-        }
-        case Escape::Error: {
+
+        case Escape::Error:
             m_error = MalformedEscape;
             return false;
-        }
-        case Escape::None: {
-            return false;
-        }
     }
-    
+
     ASSERT_NOT_REACHED();
     return false;
 }
@@ -524,59 +477,100 @@ Escape Parser::consumeEscape(bool inCharacterClass)
     }
 
     // IdentityEscape
-    default: {
-        // TODO: check this test for IdentifierPart.
-        int ch = consume();
-        if (isASCIIAlphanumeric(ch) || (ch == '_'))
-            return Escape(Escape::Error);
-        return PatternCharacterEscape(ch);
-    }
+    default:
+        return PatternCharacterEscape(consume());
     }
 }
 
-bool Parser::parseTerm(JumpList& failures)
+void Parser::parseAlternative(JumpList& failures)
 {
-    switch (peek()) {
-    case EndOfPattern:
-    case '*':
-    case '+':
-    case '?':
-    case ')':
-    case ']':
-    case '{':
-    case '}':
-    case '|':
-        return false;
-        
-    case '^':
-        consume();
-        m_generator.generateAssertionBOL(failures);
-        return true;
-    
-    case '$':
-        consume();
-        m_generator.generateAssertionEOL(failures);
-        return true;
+    PatternCharacterSequence sequence(m_generator, failures);
 
-    case '\\':
-        consume();
-        return parseEscape(failures, consumeEscape(false));
+    while (1) {
+        switch (peek()) {
+        case EndOfPattern:
+        case '|':
+        case ')':
+            sequence.flush();
+            return;
 
-    case '.':
-        consume();
-        return parseCharacterClassQuantifier(failures, CharacterClass::newline(), true);
+        case '*':
+        case '+':
+        case '?':
+        case '{': {
+            Quantifier q = consumeQuantifier();
 
-    case '[':
-        consume();
-        return parseCharacterClass(failures);
+            if (q.type == Quantifier::None) {
+                sequence.append(consume());
+                continue;
+            }
 
-    case '(':
-        consume();
-        return parseParentheses(failures);
+            if (q.type == Quantifier::Error || !sequence.size()) {
+                m_error = MalformedQuantifier;
+                return;
+            }
 
-    default:
-        // Anything else is a PatternCharacter.
-        return parsePatternCharacterSequence(failures, consume());
+            sequence.flush(q);
+            continue;
+        }
+
+        case '^':
+            consume();
+
+            sequence.flush();
+            m_generator.generateAssertionBOL(failures);
+            continue;
+
+        case '$':
+            consume();
+
+            sequence.flush();
+            m_generator.generateAssertionEOL(failures);
+            continue;
+
+        case '.':
+            consume();
+
+            sequence.flush();
+            if (!parseCharacterClassQuantifier(failures, CharacterClass::newline(), true))
+                return;
+            continue;
+
+        case '[':
+            consume();
+
+            sequence.flush();
+            if (!parseCharacterClass(failures))
+                return;
+            continue;
+
+        case '(':
+            consume();
+
+            sequence.flush();
+            if (!parseParentheses(failures))
+                return;
+            continue;
+
+        case '\\': {
+            consume();
+
+            Escape escape = consumeEscape(false);
+            if (escape.type() == Escape::PatternCharacter) {
+                sequence.append(PatternCharacterEscape::cast(escape).character());
+                continue;
+            }
+
+            sequence.flush();
+            if (!parseNonCharacterEscape(failures, escape))
+                return;
+            continue;
+        }
+
+        default:
+            sequence.append(consume());
+            continue;
+        }
     }
 }
 

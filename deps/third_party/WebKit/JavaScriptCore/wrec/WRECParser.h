@@ -44,6 +44,8 @@ namespace JSC { namespace WREC {
     typedef Generator::JumpList JumpList;
     typedef Generator::ParenthesesType ParenthesesType;
 
+    friend class SavedState;
+
     public:
         enum Error {
             NoError,
@@ -85,21 +87,34 @@ namespace JSC { namespace WREC {
                 m_error = MalformedPattern; // Parsing the pattern should fully consume it.
         }
 
-        void parseAlternative(JumpList& failures)
-        {
-            while (parseTerm(failures)) { }
-        }
-
         void parseDisjunction(JumpList& failures);
+        void parseAlternative(JumpList& failures);
         bool parseTerm(JumpList& failures);
-        bool parseEscape(JumpList& failures, const Escape&);
+        bool parseNonCharacterEscape(JumpList& failures, const Escape&);
         bool parseParentheses(JumpList& failures);
         bool parseCharacterClass(JumpList& failures);
         bool parseCharacterClassQuantifier(JumpList& failures, const CharacterClass& charClass, bool invert);
-        bool parsePatternCharacterSequence(JumpList& failures, int ch);
         bool parseBackreferenceQuantifier(JumpList& failures, unsigned subpatternId);
 
     private:
+        class SavedState {
+        public:
+            SavedState(Parser& parser)
+                : m_parser(parser)
+                , m_index(parser.m_index)
+            {
+            }
+            
+            void restore()
+            {
+                m_parser.m_index = m_index;
+            }
+
+        private:
+            Parser& m_parser;
+            unsigned m_index;
+        };
+
         void reset()
         {
             m_index = 0;

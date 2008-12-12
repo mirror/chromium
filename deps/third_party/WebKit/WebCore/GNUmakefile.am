@@ -219,6 +219,7 @@ IDL_BINDINGS += \
 	WebCore/page/PositionError.idl \
 	WebCore/page/PositionOptions.idl \
 	WebCore/page/Screen.idl \
+	WebCore/page/WorkerNavigator.idl \
 	WebCore/plugins/MimeType.idl \
 	WebCore/plugins/MimeTypeArray.idl \
 	WebCore/plugins/Plugin.idl \
@@ -1133,6 +1134,8 @@ webcore_sources += \
 	WebCore/page/MouseEventWithHitTestResults.h \
 	WebCore/page/Navigator.cpp \
 	WebCore/page/Navigator.h \
+	WebCore/page/NavigatorBase.cpp \
+	WebCore/page/NavigatorBase.h \
 	WebCore/page/Page.cpp \
 	WebCore/page/Page.h \
 	WebCore/page/PageGroup.cpp \
@@ -2144,7 +2147,9 @@ webcore_sources += \
 	WebCore/dom/WorkerTask.cpp \
 	WebCore/dom/WorkerTask.h \
 	WebCore/dom/WorkerThread.cpp \
-	WebCore/dom/WorkerThread.h
+	WebCore/dom/WorkerThread.h \
+	WebCore/page/WorkerNavigator.cpp \
+	WebCore/page/WorkerNavigator.h
 endif
 
 # ----
@@ -2163,12 +2168,29 @@ webcore_cppflags += \
 
 webcore_sources += \
 	WebCore/wml/WMLAElement.cpp \
+	WebCore/wml/WMLAccessElement.cpp \
+	WebCore/wml/WMLAnchorElement.cpp \
 	WebCore/wml/WMLBRElement.cpp \
 	WebCore/wml/WMLCardElement.cpp \
-	WebCore/wml/WMLElement.cpp \
+	WebCore/wml/WMLDoElement.cpp \
 	WebCore/wml/WMLDocument.cpp \
+	WebCore/wml/WMLElement.cpp \
+	WebCore/wml/WMLErrorHandling.cpp \
+	WebCore/wml/WMLEventHandlingElement.cpp \
+	WebCore/wml/WMLGoElement.cpp \
+	WebCore/wml/WMLIntrinsicEvent.cpp \
+	WebCore/wml/WMLIntrinsicEventHandler.cpp \
+	WebCore/wml/WMLNoopElement.cpp \
+	WebCore/wml/WMLOnEventElement.cpp \
+	WebCore/wml/WMLPElement.cpp \
 	WebCore/wml/WMLPageState.cpp \
-	WebCore/wml/WMLPElement.cpp
+	WebCore/wml/WMLPostfieldElement.cpp \
+	WebCore/wml/WMLPrevElement.cpp \
+	WebCore/wml/WMLRefreshElement.cpp \
+	WebCore/wml/WMLSetvarElement.cpp \
+	WebCore/wml/WMLTaskElement.cpp \
+	WebCore/wml/WMLTimerElement.cpp \
+	WebCore/wml/WMLVariables.cpp
 
 # WML tag and attribute names
 DerivedSources/WMLNames.cpp: DerivedSources/WMLElementFactory.cpp;

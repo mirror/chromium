@@ -1756,6 +1756,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(WebKitOutputDir)\obj\WebCore\DerivedSources\JSWorkerNavigator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\WebCore\DerivedSources\JSWorkerNavigator.h"
+				>
+			</File>
+			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSXMLHttpRequest.h"
 				>
 			</File>
@@ -2440,6 +2448,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\page\NavigatorBase.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\page\NavigatorBase.h"
+				>
+			</File>
+			<File
 				RelativePath="..\page\Page.cpp"
 				>
 				<FileConfiguration
@@ -2541,6 +2565,22 @@
 			</File>
 			<File
 				RelativePath="..\page\WindowFeatures.h"
+				>
+			</File>
+			<File
+				RelativePath="..\page\WorkerNavigator.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\page\WorkerNavigator.h"
 				>
 			</File>
 			<Filter
@@ -16883,6 +16923,14 @@
 			</File>
 			<File
 				RelativePath="..\wml\WMLPElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLPostfieldElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLPostfieldElement.h"
 				>
 			</File>
 			<File

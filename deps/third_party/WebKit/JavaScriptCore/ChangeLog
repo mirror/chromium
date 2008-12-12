@@ -1,3 +1,343 @@
+2008-12-08  Judit Jasz  <jasy@inf.u-szeged.hu>
+
+        Reviewed and tweaked by Cameron Zwarich.
+
+        Bug 22352: Annotate opcodes with their length
+        <https://bugs.webkit.org/show_bug.cgi?id=22352>
+
+        * bytecode/Opcode.cpp:
+        * bytecode/Opcode.h:
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::privateExecute):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+
+2008-12-08  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+        
+        Implemented more of the relaxed and somewhat weird rules for deciding
+        how to interpret a non-pattern-character.
+        
+        * wrec/Escapes.h:
+        (JSC::WREC::Escape::):
+        (JSC::WREC::Escape::Escape): Eliminated Escape::None because it was
+        unused. If you see an '\\', it's either a valid escape or an error.
+
+        * wrec/Quantifier.h:
+        (JSC::WREC::Quantifier::Quantifier):
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateNonGreedyQuantifier):
+        (JSC::WREC::Generator::generateGreedyQuantifier): Renamed "noMaxSpecified"
+        to "Infinity", since that's what it means.
+
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::consumeGreedyQuantifier): Re-wrote {n,m} parsing rules
+        because they were too strict before. Added support for backtracking
+        in the case where the {n,m} fails to parse as a quantifier, and yet is
+        not a syntax error.
+
+        (JSC::WREC::Parser::parseCharacterClass):
+        (JSC::WREC::Parser::parseNonCharacterEscape): Eliminated Escape::None,
+        as above.
+
+        (JSC::WREC::Parser::consumeEscape): Don't treat ASCII and _ escapes
+        as syntax errors. See fast/regex/non-pattern-characters.html.
+        
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::SavedState::SavedState):
+        (JSC::WREC::Parser::SavedState::restore): Added a state backtracker,
+        since parsing {n,m} forms requires backtracking if the form turns out
+        not to be a quantifier.
+
+2008-12-08  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+        
+        Refactored WREC parsing so that only one piece of code needs to know
+        the relaxed and somewhat weird rules for deciding how to interpret a
+        non-pattern-character, in preparation for implementing those rules.
+        
+        Also, implemented the relaxed and somewhat weird rules for '}' and ']'.
+
+        * wrec/WREC.cpp: Reduced the regular expression size limit. Now that
+        WREC handles ']' properly, it compiles fast/js/regexp-charclass-crash.html,
+        which makes it hang at the old limit. (The old limit was based on the
+        misimpression that the same value in PCRE limited the regular expression
+        pattern size; in reality, it limited the expected compiled regular
+        expression size. WREC doesn't have a way to calculate an expected
+        compiled regular expression size, but this should be good enough.)
+
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::parsePatternCharacterSequence): Nixed this function because
+        it contained a second copy of the logic for handling non-pattern-characters,
+        which is about to get a lot more complicated.
+
+        (JSC::WREC::PatternCharacterSequence::PatternCharacterSequence): 
+        (JSC::WREC::PatternCharacterSequence::size):
+        (JSC::WREC::PatternCharacterSequence::append):
+        (JSC::WREC::PatternCharacterSequence::flush): Helper object for generating
+        an optimized sequence of pattern characters.
+
+        (JSC::WREC::Parser::parseNonCharacterEscape): Renamed to reflect the fact
+        that the main parseAlternative loop handles character escapes.
+
+        (JSC::WREC::Parser::parseAlternative): Moved pattern character sequence
+        logic from parsePatternCharacterSequence to here, using
+        PatternCharacterSequence to help with the details.
+
+        * wrec/WRECParser.h: Updated for renames.
+
+2008-12-08  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        <rdar://problem/6166088> Give JSGlobalContextCreate a behavior that is concurrency aware,
+        and un-deprecate it
+
+        * API/JSContextRef.cpp: (JSGlobalContextCreate):
+        * API/JSContextRef.h:
+        Use a unique context group for the context, unless the application was linked against old
+        JavaScriptCore.
+
+2008-12-08  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Cameron Zwarich.
+
+        Fix for <rdar://problem/6428332> Remove the CTI return address table from CodeBlock
+
+        Step 1:
+
+        Remove use of jitReturnAddressVPCMap when looking for vPC to store Structures
+        in for cached lookup.  Instead, use the offset in the StructureStubInfo that is
+        already required.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dumpStatistics): Fix extraneous semicolon.
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::tryCTICachePutByID):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::Interpreter::cti_op_get_by_id_self_fail):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list):
+        * jit/JIT.h:
+        (JSC::JIT::compileGetByIdSelf):
+        (JSC::JIT::compileGetByIdProto):
+        (JSC::JIT::compileGetByIdChain):
+        (JSC::JIT::compilePutByIdReplace):
+        (JSC::JIT::compilePutByIdTransition):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::privateCompilePutByIdTransition):
+        (JSC::JIT::patchGetByIdSelf):
+        (JSC::JIT::patchPutByIdReplace):
+        (JSC::JIT::privateCompilePatchGetArrayLength): Remove extra call to getStubInfo.
+        (JSC::JIT::privateCompileGetByIdSelf):
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdChain):
+        (JSC::JIT::privateCompilePutByIdReplace):
+
+2008-12-08  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Port the op_j?n?eq_null JIT code generation to use the MacroAssembler,
+        and clean up slightly at the same time.  The 'j' forms currently compare,
+        then set a register, then compare again, then branch.  Branch directly on
+        the result of the first compare.
+
+        Around a 1% progression on deltablue, crypto & early boyer, for about 1/2%
+        overall on v8-tests.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdSlowCase):
+
+2008-12-08  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Expand MacroAssembler to support more operations, required by the JIT.
+
+        Generally adds more operations and permutations of operands to the existing
+        interface.  Rename 'jset' to 'jnz' and 'jnset' to 'jz', which seem clearer,
+        and require that immediate pointer operands (though not pointer addresses to
+        load and store instructions) are wrapped in a ImmPtr() type, akin to Imm32().
+
+        No performance impact.
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::):
+        (JSC::MacroAssembler::ImmPtr::ImmPtr):
+        (JSC::MacroAssembler::add32):
+        (JSC::MacroAssembler::and32):
+        (JSC::MacroAssembler::or32):
+        (JSC::MacroAssembler::sub32):
+        (JSC::MacroAssembler::xor32):
+        (JSC::MacroAssembler::loadPtr):
+        (JSC::MacroAssembler::load32):
+        (JSC::MacroAssembler::storePtr):
+        (JSC::MacroAssembler::store32):
+        (JSC::MacroAssembler::poke):
+        (JSC::MacroAssembler::move):
+        (JSC::MacroAssembler::testImm32):
+        (JSC::MacroAssembler::jae32):
+        (JSC::MacroAssembler::jb32):
+        (JSC::MacroAssembler::jePtr):
+        (JSC::MacroAssembler::je32):
+        (JSC::MacroAssembler::jnePtr):
+        (JSC::MacroAssembler::jne32):
+        (JSC::MacroAssembler::jnzPtr):
+        (JSC::MacroAssembler::jnz32):
+        (JSC::MacroAssembler::jzPtr):
+        (JSC::MacroAssembler::jz32):
+        (JSC::MacroAssembler::joSub32):
+        (JSC::MacroAssembler::jump):
+        (JSC::MacroAssembler::sete32):
+        (JSC::MacroAssembler::setne32):
+        (JSC::MacroAssembler::setnz32):
+        (JSC::MacroAssembler::setz32):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::addl_mr):
+        (JSC::X86Assembler::andl_i8r):
+        (JSC::X86Assembler::cmpl_rm):
+        (JSC::X86Assembler::cmpl_mr):
+        (JSC::X86Assembler::cmpl_i8m):
+        (JSC::X86Assembler::subl_mr):
+        (JSC::X86Assembler::testl_i32m):
+        (JSC::X86Assembler::xorl_i32r):
+        (JSC::X86Assembler::movl_rm):
+        (JSC::X86Assembler::modRm_opmsib):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitGetVirtualRegister):
+        (JSC::JIT::emitPutCTIArgConstant):
+        (JSC::JIT::emitPutCTIParam):
+        (JSC::JIT::emitPutImmediateToCallFrameHeader):
+        (JSC::JIT::emitInitRegister):
+        (JSC::JIT::checkStructure):
+        (JSC::JIT::emitJumpIfJSCell):
+        (JSC::JIT::emitJumpIfNotJSCell):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNum):
+
+2008-12-08  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Fixed a bug where WREC would allow a quantifier whose minimum was
+        greater than its maximum.
+        
+        * wrec/Quantifier.h:
+        (JSC::WREC::Quantifier::Quantifier): ASSERT that the quantifier is not
+        backwards.
+        
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::consumeGreedyQuantifier): Verify that the minimum
+        is not greater than the maximum.
+
+2008-12-08  Eric Seidel  <eric@webkit.org>
+        
+        Build fix only, no review.
+
+        * JavaScriptCore.scons: add bytecode/JumpTable.cpp
+
+2008-12-08  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Patch for https://bugs.webkit.org/show_bug.cgi?id=22716
+        <rdar://problem/6428315>
+        Add RareData structure to CodeBlock for infrequently used auxiliary data
+        members.
+
+        Reduces memory on Membuster-head by ~.5MB 
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dump):
+        (JSC::CodeBlock::dumpStatistics):
+        (JSC::CodeBlock::mark):
+        (JSC::CodeBlock::getHandlerForVPC):
+        (JSC::CodeBlock::nativeExceptionCodeForHandlerVPC):
+        (JSC::CodeBlock::shrinkToFit):
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::numberOfExceptionHandlers):
+        (JSC::CodeBlock::addExceptionHandler):
+        (JSC::CodeBlock::exceptionHandler):
+        (JSC::CodeBlock::addFunction):
+        (JSC::CodeBlock::function):
+        (JSC::CodeBlock::addUnexpectedConstant):
+        (JSC::CodeBlock::unexpectedConstant):
+        (JSC::CodeBlock::addRegExp):
+        (JSC::CodeBlock::regexp):
+        (JSC::CodeBlock::numberOfImmediateSwitchJumpTables):
+        (JSC::CodeBlock::addImmediateSwitchJumpTable):
+        (JSC::CodeBlock::immediateSwitchJumpTable):
+        (JSC::CodeBlock::numberOfCharacterSwitchJumpTables):
+        (JSC::CodeBlock::addCharacterSwitchJumpTable):
+        (JSC::CodeBlock::characterSwitchJumpTable):
+        (JSC::CodeBlock::numberOfStringSwitchJumpTables):
+        (JSC::CodeBlock::addStringSwitchJumpTable):
+        (JSC::CodeBlock::stringSwitchJumpTable):
+        (JSC::CodeBlock::evalCodeCache):
+        (JSC::CodeBlock::createRareDataIfNecessary):
+
+2008-11-26  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=16814
+        Allow ports to disable ActiveX->NPAPI conversion for Media Player.
+        Improve handling of miscellaneous ActiveX objects.
+
+        * wtf/Platform.h: Add another ENABLE(...).
+
+2008-12-08  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        Add dumping of CodeBlock member structure usage.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dumpStatistics):
+        * bytecode/EvalCodeCache.h:
+        (JSC::EvalCodeCache::isEmpty):
+
+2008-12-08  David Kilzer  <ddkilzer@apple.com>
+
+        Bug 22555: Sort "children" sections in Xcode project files
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22555>
+
+        Reviewed by Eric Seidel.
+
+        * JavaScriptCore.xcodeproj/project.pbxproj: Sorted.
+
+2008-12-08  Tony Chang  <tony@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Enable Pan scrolling only when building on PLATFORM(WIN_OS)
+        Previously platforms like Apple Windows WebKit, Cairo Windows WebKit,
+        Wx and Chromium were enabling it explicitly, now we just turn it on
+        for all WIN_OS, later platforms can turn it off as needed on Windows
+        (or turn it on under Linux, etc.)
+        https://bugs.webkit.org/show_bug.cgi?id=22698
+
+        * wtf/Platform.h:
+
+2008-12-08  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Cameron Zwarich.
+
+        Add basic memory statistics dumping for CodeBlock.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dumpStatistics):
+        (JSC::CodeBlock::CodeBlock):
+        (JSC::CodeBlock::~CodeBlock):
+        * bytecode/CodeBlock.h:
+
 2008-12-08  Simon Hausmann  <simon.hausmann@nokia.com>
 
         Fix the Linux build with newer gcc/glibc.

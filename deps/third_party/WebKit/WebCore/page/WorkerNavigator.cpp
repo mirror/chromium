@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008 Apple Inc. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -10,10 +10,10 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -21,46 +21,26 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
  */
 
-#ifndef Quantifier_h
-#define Quantifier_h
+#include "config.h"
+#include "WorkerNavigator.h"
 
-#include <wtf/Platform.h>
+namespace WebCore {
 
-#if ENABLE(WREC)
+WorkerNavigator::WorkerNavigator(const String& userAgent)
+    : m_userAgent(userAgent)
+{
+}
 
-#include <wtf/Assertions.h>
-#include <limits.h>
+WorkerNavigator::~WorkerNavigator()
+{
+}
 
-namespace JSC { namespace WREC {
+String WorkerNavigator::userAgent() const
+{
+    return m_userAgent;
+}
 
-    struct Quantifier {
-        enum Type {
-            None,
-            Greedy,
-            NonGreedy,
-            Error,
-        };
-
-        Quantifier(Type type = None, unsigned min = 0, unsigned max = Infinity)
-            : type(type)
-            , min(min)
-            , max(max)
-        {
-            ASSERT(min <= max);
-        }
-
-        Type type;
-
-        unsigned min;
-        unsigned max;
-
-        static const unsigned Infinity = UINT_MAX;
-    };
-
-} } // namespace JSC::WREC
-
-#endif // ENABLE(WREC)
-
-#endif // Quantifier_h
+} // namespace WebCore
