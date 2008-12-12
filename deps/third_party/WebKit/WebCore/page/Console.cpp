@@ -35,23 +35,16 @@
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "InspectorController.h"
-#if USE(JSC)
-#include "JSDOMBinding.h"
-#endif
 #include "Page.h"
 #include "PageGroup.h"
 #include "PlatformString.h"
-#include "ScriptCallContext.h"
+
 #if USE(JSC)
-#include <runtime/ArgList.h>
-#include <runtime/Completion.h>
-#include <runtime/JSObject.h>
-#include <interpreter/Interpreter.h>
 #include <profiler/Profiler.h>
 #endif
-#include <stdio.h>
 
-using namespace JSC;
+#include "ScriptCallStack.h"
+#include <stdio.h>
 
 namespace WebCore {
 
@@ -73,6 +66,18 @@ static void printSourceURLAndLine(const String& sourceURL, unsigned lineNumber)
         else
             printf("%s: ", sourceURL.utf8().data());
     }
+}
+
+static bool getFirstArgumentAsString(const ScriptCallFrame& callFrame, String& result, bool checkForNullOrUndefined = false)
+{
+    if (!callFrame.argumentCount())
+        return false;
+
+    const ScriptValue& value = callFrame.argumentAt(0);
+    if (checkForNullOrUndefined && (value.isNull() || value.isUndefined()))
+        return false;
+
+    return value.getString(result);
 }
 
 static void printMessageSourceAndLevelPrefix(MessageSource source, MessageLevel level)
@@ -124,32 +129,6 @@ static void printMessageSourceAndLevelPrefix(MessageSource source, MessageLevel 
     printf("%s %s:", sourceString, levelString);
 }
 
-static void printToStandardOut(MessageSource source, MessageLevel level, const String& message, const String& sourceURL, unsigned lineNumber)
-{
-    if (!Console::shouldPrintExceptions())
-        return;
-
-    printSourceURLAndLine(sourceURL, lineNumber);
-    printMessageSourceAndLevelPrefix(source, level);
-
-    printf(" %s\n", message.utf8().data());
-}
-
-static void printToStandardOut(MessageLevel level, ScriptCallContext* context)
-{
-    if (!Console::shouldPrintExceptions())
-        return;
-
-    printSourceURLAndLine(context->sourceURL().prettyURL(), 0);
-    printMessageSourceAndLevelPrefix(JSMessageSource, level);
-
-    for (size_t i = 0; i < context->argumentCount(); ++i) {
-        printf(" %s", context->argumentStringAt(i).utf8().data());
-    }
-
-    printf("\n");
-}
-
 void Console::addMessage(MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceURL)
 {
     Page* page = this->page();
@@ -161,226 +140,200 @@ void Console::addMessage(MessageSource source, MessageLevel level, const String&
 
     page->inspectorController()->addMessageToConsole(source, level, message, lineNumber, sourceURL);
 
-    printToStandardOut(source, level, message, sourceURL, lineNumber);
+    if (!Console::shouldPrintExceptions())
+        return;
+
+    printSourceURLAndLine(sourceURL, lineNumber);
+    printMessageSourceAndLevelPrefix(source, level);
+
+    printf(" %s\n", message.utf8().data());
 }
 
-void Console::debug(ScriptCallContext* context)
+void Console::addMessage(MessageLevel level, ScriptCallStack* callStack, bool acceptNoArguments) {
+    Page* page = this->page();
+    if (!page)
+        return;
+
+    const ScriptCallFrame& lastCaller = callStack->at(0);
+
+    if (!acceptNoArguments && !lastCaller.argumentCount())
+        return;
+
+    String message;
+    if (getFirstArgumentAsString(lastCaller, message))
+        page->chrome()->client()->addMessageToConsole(message, lastCaller.lineNumber(), lastCaller.sourceURL().prettyURL());
+
+    page->inspectorController()->addMessageToConsole(JSMessageSource, level, callStack);
+
+    if (!Console::shouldPrintExceptions())
+        return;
+
+    printSourceURLAndLine(lastCaller.sourceURL().prettyURL(), 0);
+    printMessageSourceAndLevelPrefix(JSMessageSource, level);
+
+    for (unsigned i = 0; i < lastCaller.argumentCount(); ++i) {
+        String argAsString;
+        if (lastCaller.argumentAt(i).getString(argAsString))
+            printf(" %s", argAsString.utf8().data());
+    }
+    printf("\n");
+}
+
+void Console::debug(ScriptCallStack* callStack)
 {
     // In Firebug, console.debug has the same behavior as console.log. So we'll do the same.
-    log(context);
+    log(callStack);
 }
 
-void Console::error(ScriptCallContext* context)
+void Console::error(ScriptCallStack* callStack)
 {
-    if (!context->hasArguments())
-        return;
-
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, ErrorMessageLevel, context);
-
-    printToStandardOut(ErrorMessageLevel, context);
+    addMessage(ErrorMessageLevel, callStack);
 }
 
-void Console::info(ScriptCallContext* context)
+void Console::info(ScriptCallStack* callStack)
 {
-    if (!context->hasArguments())
-        return;
-
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, context);
-
-    printToStandardOut(LogMessageLevel, context);
+    log(callStack);
 }
 
-void Console::log(ScriptCallContext* context)
+void Console::log(ScriptCallStack* callStack)
 {
-    if (!context->hasArguments())
-        return;
-
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, context);
-
-    printToStandardOut(LogMessageLevel, context);
+    addMessage(LogMessageLevel, callStack);
 }
 
-#if USE(JSC)
-
-void Console::dir(ScriptCallContext* context)
+void Console::dir(ScriptCallStack* callStack)
 {
-    if (!context->hasArguments())
-        return;
-
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    page->inspectorController()->addMessageToConsole(JSMessageSource, ObjectMessageLevel, context);
+    addMessage(ObjectMessageLevel, callStack);
 }
 
-void Console::dirxml(ScriptCallContext* context)
+void Console::dirxml(ScriptCallStack* callStack)
 {
-    if (!context->hasArguments())
-        return;
-
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    page->inspectorController()->addMessageToConsole(JSMessageSource, NodeMessageLevel, context);
+    addMessage(NodeMessageLevel, callStack);
 }
 
-void Console::trace(ScriptCallContext* context)
+void Console::trace(ScriptCallStack* callStack)
 {
-    Page* page = this->page();
-    if (!page)
+    addMessage(TraceMessageLevel, callStack, true);
+
+    if (!shouldPrintExceptions())
         return;
 
-    int signedLineNumber;
-    intptr_t sourceID;
-    UString urlString;
-    JSValue* func;
-
-    context->exec()->interpreter()->retrieveLastCaller(context->exec(), signedLineNumber, sourceID, urlString, func);
-
-    ArgList args;
-    while (!func->isNull()) {
-        args.append(func);
-        func = context->exec()->interpreter()->retrieveCaller(context->exec(), asInternalFunction(func));
+    printf("Stack Trace\n");
+    for (unsigned i = 0; i < callStack->size(); ++i) {
+        String functionName = String(callStack->at(i).functionName());
+        printf("\t%s\n", functionName.utf8().data());
     }
-    
-    page->inspectorController()->addMessageToConsole(JSMessageSource, TraceMessageLevel, context);
 }
 
-void Console::assertCondition(bool condition, ScriptCallContext* context)
+void Console::assertCondition(bool condition, ScriptCallStack* callStack)
 {
     if (condition)
         return;
 
-    Page* page = this->page();
-    if (!page)
-        return;
-
     // FIXME: <https://bugs.webkit.org/show_bug.cgi?id=19135> It would be nice to prefix assertion failures with a message like "Assertion failed: ".
-    // FIXME: <https://bugs.webkit.org/show_bug.cgi?id=19136> We should print a message even when args.isEmpty() is true.
-
-    page->inspectorController()->addMessageToConsole(JSMessageSource, ErrorMessageLevel, context);
-
-    printToStandardOut(ErrorMessageLevel, context);
+    addMessage(ErrorMessageLevel, callStack, true);
 }
 
-void Console::count(ScriptCallContext* context)
+void Console::count(ScriptCallStack* callStack)
 {
     Page* page = this->page();
     if (!page)
         return;
 
+    const ScriptCallFrame& lastCaller = callStack->at(0);
+    // Follow Firebug's behavior of counting with null and undefined title in
+    // the same bucket as no argument
     String title;
-    if (context->argumentCount() >= 1)
-        title = context->argumentStringAt(0, true);
+    getFirstArgumentAsString(lastCaller, title);
 
-    page->inspectorController()->count(title, context->lineNumber(),
-                                       context->sourceURL().string());
+    page->inspectorController()->count(title, lastCaller.lineNumber(), lastCaller.sourceURL().string());
 }
 
-void Console::profile(ExecState* exec, const ArgList& args)
+#if USE(JSC)
+
+void Console::profile(const JSC::UString& title, ScriptCallStack* callStack)
 {
     Page* page = this->page();
     if (!page)
+        return;
+
+    if (title.isNull())
         return;
 
     // FIXME: log a console message when profiling is disabled.
     if (!page->inspectorController()->profilerEnabled())
         return;
 
-    UString title = args.at(exec, 0)->toString(exec);
-    Profiler::profiler()->startProfiling(exec, title);
+    JSC::Profiler::profiler()->startProfiling(callStack->state(), title);
 }
 
-void Console::profileEnd(ExecState* exec, const ArgList& args)
+void Console::profileEnd(const JSC::UString& title, ScriptCallStack* callStack)
 {
     Page* page = this->page();
     if (!page)
         return;
 
+    if (title.isNull())
+        return;
+
     if (!page->inspectorController()->profilerEnabled())
         return;
 
-    UString title;
-    if (args.size() >= 1)
-        title = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
-
-    RefPtr<Profile> profile = Profiler::profiler()->stopProfiling(exec, title);
+    RefPtr<JSC::Profile> profile = JSC::Profiler::profiler()->stopProfiling(callStack->state(), title);
     if (!profile)
         return;
 
     m_profiles.append(profile);
 
     if (Page* page = this->page()) {
-        ScriptCallContext context(exec, args);
-
-        page->inspectorController()->addProfile(profile, context.lineNumber(),
-                                                context.sourceURL().string());
+        const ScriptCallFrame& lastCaller = callStack->at(0);
+        page->inspectorController()->addProfile(profile, lastCaller.lineNumber(), lastCaller.sourceURL());
     }
 }
 
-void Console::time(const UString& title)
-{
-    if (title.isNull())
-        return;
+#endif
     
+void Console::time(const String& title)
+{
     Page* page = this->page();
     if (!page)
+        return;
+
+    // Follow Firebug's behavior of requiring a title that is not null or
+    // undefined for timing functions
+    if (title.isNull())
         return;
     
     page->inspectorController()->startTiming(title);
 }
 
-void Console::timeEnd(ExecState* exec, const ArgList& args)
+void Console::timeEnd(const String& title, ScriptCallStack* callStack)
 {
-    UString title;
-    if (args.size() >= 1)
-        title = valueToStringWithUndefinedOrNullCheck(exec, args.at(exec, 0));
-    if (title.isNull())
-        return;
-
     Page* page = this->page();
     if (!page)
+        return;
+
+    // Follow Firebug's behavior of requiring a title that is not null or
+    // undefined for timing functions
+    if (title.isNull())
         return;
 
     double elapsed;
     if (!page->inspectorController()->stopTiming(title, elapsed))
         return;
 
-    String message = String(title) + String::format(": %.0fms", elapsed);
+    String message = title + String::format(": %.0fms", elapsed);
 
-    ScriptCallContext context(exec, args);
-
-    page->inspectorController()->addMessageToConsole(JSMessageSource,
-        LogMessageLevel, message, context.lineNumber(),
-        context.sourceURL().string());
+    const ScriptCallFrame& lastCaller = callStack->at(0);
+    page->inspectorController()->addMessageToConsole(JSMessageSource, LogMessageLevel, message, lastCaller.lineNumber(), lastCaller.sourceURL().string());
 }
 
-#endif
-
-void Console::group(ScriptCallContext* context)
+void Console::group(ScriptCallStack* callStack)
 {
     Page* page = this->page();
     if (!page)
         return;
 
-    page->inspectorController()->startGroup(JSMessageSource, context);
+    page->inspectorController()->startGroup(JSMessageSource, callStack);
 }
 
 void Console::groupEnd()
@@ -392,33 +345,10 @@ void Console::groupEnd()
     page->inspectorController()->endGroup(JSMessageSource, 0, String());
 }
 
-#if USE(V8)
-
-void Console::time(const String& title)
+void Console::warn(ScriptCallStack* callStack)
 {
-    notImplemented();
+    addMessage(WarningMessageLevel, callStack);
 }
-
-#endif
-
-void Console::warn(ScriptCallContext* context)
-{
-    if (!context->hasArguments())
-        return;
-
-    Page* page = this->page();
-    if (!page)
-        return;
-
-    page->chrome()->client()->addMessageToConsole(context->argumentStringAt(0), context->lineNumber(), context->sourceURL().prettyURL());
-    page->inspectorController()->addMessageToConsole(JSMessageSource, WarningMessageLevel, context);
-
-    printToStandardOut(WarningMessageLevel, context);
-}
-
-#if USE(JSC)
-
-#endif
 
 static bool printExceptions = false;
 
@@ -440,5 +370,3 @@ Page* Console::page() const
 }
 
 } // namespace WebCore
-
-

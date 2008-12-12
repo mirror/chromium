@@ -39,7 +39,6 @@
 #include "Timer.h"
 #if USE(JSC)
 #include <JavaScriptCore/JSContextRef.h>
-#include <profiler/Profiler.h>
 #elif USE(V8)
 #include <wtf/RefCounted.h>
 #include <v8.h>
@@ -58,8 +57,8 @@ namespace JSC {
 namespace WebCore {
 
 class Database;
-class DocumentLoader;
 class DOMWindow;
+class DocumentLoader;
 class GraphicsContext;
 class HitTestResult;
 class InspectorClient;
@@ -68,7 +67,8 @@ class Node;
 class Page;
 class ResourceResponse;
 class ResourceError;
-class ScriptCallContext;
+class ScriptCallStack;
+class ScriptState;
 class SharedBuffer;
 
 struct ConsoleMessage;
@@ -172,9 +172,8 @@ public:
     bool windowVisible();
     void setWindowVisible(bool visible = true, bool attached = false);
 
-    void addMessageToConsole(MessageSource, MessageLevel, ScriptCallContext*);
+    void addMessageToConsole(MessageSource, MessageLevel, ScriptCallStack*);
     void addMessageToConsole(MessageSource, MessageLevel, const String& message, unsigned lineNumber, const String& sourceID);
-
     void clearConsoleMessages();
     void toggleRecordButton(bool);
 
@@ -260,15 +259,13 @@ public:
 #endif
 
     void drawNodeHighlight(GraphicsContext&) const;
+    
+    void count(const String& title, unsigned lineNumber, const String& sourceID);
 
-#if USE(JSC)
-    void count(const JSC::UString& title, unsigned lineNumber, const String& sourceID);
+    void startTiming(const String& title);
+    bool stopTiming(const String& title, double& elapsed);
 
-    void startTiming(const JSC::UString& title);
-    bool stopTiming(const JSC::UString& title, double& elapsed);
-#endif
-
-    void startGroup(MessageSource source, ScriptCallContext*);
+    void startGroup(MessageSource source, ScriptCallStack* callFrame);
     void endGroup(MessageSource source, unsigned lineNumber, const String& sourceURL);
 
 #if USE(V8)
@@ -289,9 +286,7 @@ public:
 private:
     void focusNode();
 
-    // TODO(dglazkov): Implement argument array comparison in ScriptCallContext
-    // and return method signature back to WebKit's original
-    void addConsoleMessage(ScriptCallContext*, ConsoleMessage*);
+    void addConsoleMessage(ScriptState*, ConsoleMessage*);
     void addScriptConsoleMessage(const ConsoleMessage*);
 
     void addResource(InspectorResource*);

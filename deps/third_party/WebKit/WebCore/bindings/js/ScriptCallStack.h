@@ -28,59 +28,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ScriptString_h
-#define ScriptString_h
+#ifndef ScriptCallStack_h
+#define ScriptCallStack_h
 
-#include "PlatformString.h"
-#include <runtime/JSLock.h>
-#include <runtime/UString.h>
+#include "ScriptCallFrame.h"
+#include "ScriptState.h"
+#include "ScriptString.h"
+#include <wtf/Noncopyable.h>
+
+namespace JSC {
+    class ExecState;
+    class JSValue;
+}
 
 namespace WebCore {
 
-class String;
+    class ScriptCallStack : public Noncopyable {
+    public:
+        ScriptCallStack(JSC::ExecState*, const JSC::ArgList&, unsigned skipArgumentCount = 0);
+        ~ScriptCallStack();
 
-class ScriptString {
-public:
-    ScriptString() {}
-    ScriptString(const char* s) : m_str(s) {}
-    ScriptString(const JSC::UString& s) : m_str(s) {}
+        ScriptState* state() const { return m_exec; }
+        // frame retrieval methods
+        const ScriptCallFrame &at(unsigned);
+        unsigned size();
 
-    operator JSC::UString() const { return m_str; }
+    private:
+        void initialize();
+        bool m_initialized;
 
-    bool isNull() const { return m_str.isNull(); }
-    size_t size() const { return m_str.size(); }
-
-    ScriptString& operator=(const char* s)
-    {
-        JSC::JSLock lock(false);
-        m_str = s;
-        return *this;
-    }
-
-    ScriptString& operator+=(const String& s)
-    {
-        JSC::JSLock lock(false);
-        m_str += s;
-        return *this;
-    }
-
-    bool operator==(const ScriptString& s) const
-    {
-        JSC::JSLock lock(false);
-        return m_str == s.m_str;
-    }
-
-    bool operator!=(const ScriptString& s) const
-    {
-        JSC::JSLock lock(false);
-        // Avoid exporting an extra symbol by re-using "==" operator.
-        return !(m_str == s.m_str);
-    }
-
-private:
-    JSC::UString m_str;
-};
+        JSC::ExecState* m_exec;
+        Vector<ScriptCallFrame> m_frames;
+        JSC::InternalFunction* m_caller;
+    };
 
 } // namespace WebCore
 
-#endif // ScriptString_h
+#endif // ScriptCallStack_h

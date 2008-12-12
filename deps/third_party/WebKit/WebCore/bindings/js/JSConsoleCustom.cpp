@@ -29,7 +29,6 @@
 #include <runtime/JSArray.h>
 
 #include "Console.h"
-#include "ScriptCallContext.h"
 
 using namespace JSC;
 
@@ -47,101 +46,6 @@ JSValue* JSConsole::profiles(ExecState* exec) const
         list.append(toJS(exec, iter->get()));
 
     return constructArray(exec, list);
-}
-
-JSValue* JSConsole::debug(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->debug(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::error(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->error(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::info(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->info(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::log(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->log(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::warn(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->warn(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::dir(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->dir(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::dirxml(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->dirxml(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::trace(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->trace(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::assertCondition(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments, 1);
-    impl()->assertCondition(arguments.at(exec, 0)->toBoolean(exec), &context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::count(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->count(&context);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::timeEnd(ExecState* exec, const ArgList& arguments)
-{
-    impl()->timeEnd(exec, arguments);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::profile(ExecState* exec, const ArgList& arguments)
-{
-    impl()->profile(exec, arguments);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::profileEnd(ExecState* exec, const ArgList& arguments)
-{
-    impl()->profileEnd(exec, arguments);
-    return jsUndefined();
-}
-
-JSValue* JSConsole::group(ExecState* exec, const ArgList& arguments)
-{
-    ScriptCallContext context(exec, arguments);
-    impl()->group(&context);
-    return jsUndefined();
 }
 
 } // namespace WebCore

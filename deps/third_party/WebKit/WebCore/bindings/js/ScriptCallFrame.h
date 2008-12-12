@@ -28,59 +28,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ScriptString_h
-#define ScriptString_h
+#ifndef ScriptCallFrame_h
+#define ScriptCallFrame_h
 
-#include "PlatformString.h"
-#include <runtime/JSLock.h>
-#include <runtime/UString.h>
+#include "KURL.h"
+#include <runtime/ArgList.h>
+#include "ScriptString.h"
+#include "ScriptValue.h"
+#include <wtf/Vector.h>
+
+namespace JSC {
+    class ExecState;
+    class InternalFunction;
+}
 
 namespace WebCore {
 
-class String;
+    // FIXME: Implement retrieving line number and source URL and storing here
+    // for all call frames, not just the first one.
+    // See <https://bugs.webkit.org/show_bug.cgi?id=22556> and
+    // <https://bugs.webkit.org/show_bug.cgi?id=21180>
+    class ScriptCallFrame  {
+    public:
+        ScriptCallFrame(const JSC::UString& functionName, const JSC::UString& urlString, int lineNumber, JSC::ExecState*, const JSC::ArgList&, unsigned skipArgumentCount);
+        ~ScriptCallFrame();
 
-class ScriptString {
-public:
-    ScriptString() {}
-    ScriptString(const char* s) : m_str(s) {}
-    ScriptString(const JSC::UString& s) : m_str(s) {}
+        const ScriptString& functionName() const { return m_functionName; }
+        const KURL& sourceURL() const { return m_sourceURL; }
+        unsigned lineNumber() const { return m_lineNumber; }
 
-    operator JSC::UString() const { return m_str; }
+        // argument retrieval methods
+        const ScriptValue& argumentAt(unsigned) const;
+        unsigned argumentCount() const { return m_arguments.size(); }
 
-    bool isNull() const { return m_str.isNull(); }
-    size_t size() const { return m_str.size(); }
+    private:
+        ScriptString m_functionName;
+        KURL m_sourceURL;
+        unsigned m_lineNumber;
 
-    ScriptString& operator=(const char* s)
-    {
-        JSC::JSLock lock(false);
-        m_str = s;
-        return *this;
-    }
-
-    ScriptString& operator+=(const String& s)
-    {
-        JSC::JSLock lock(false);
-        m_str += s;
-        return *this;
-    }
-
-    bool operator==(const ScriptString& s) const
-    {
-        JSC::JSLock lock(false);
-        return m_str == s.m_str;
-    }
-
-    bool operator!=(const ScriptString& s) const
-    {
-        JSC::JSLock lock(false);
-        // Avoid exporting an extra symbol by re-using "==" operator.
-        return !(m_str == s.m_str);
-    }
-
-private:
-    JSC::UString m_str;
-};
+        Vector<ScriptValue> m_arguments;
+    };
 
 } // namespace WebCore
 
-#endif // ScriptString_h
+#endif // ScriptCallFrame_h
