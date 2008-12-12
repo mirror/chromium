@@ -27,10 +27,9 @@ const int kListViewTextPadding = 15;
 // Additional column width necessary if column has icons.
 const int kListViewIconWidthAndPadding = 18;
 
-// TableModel -----------------------------------------------------------------
+const int kImageSize = 18;
 
-// static
-const int TableView::kImageSize = 18;
+// TableModel -----------------------------------------------------------------
 
 // Used for sorting.
 static Collator* collator = NULL;

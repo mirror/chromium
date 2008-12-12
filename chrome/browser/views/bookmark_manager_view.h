@@ -163,11 +163,9 @@ class BookmarkManagerView : public views::View,
   // is no search text.
   BookmarkTableModel* CreateSearchTableModel();
 
-  // Sets the model of the table and its parent node. If |is_search| is true,
-  // it means the table is showing search results.
+  // Sets the model of the table and its parent node.
   void SetTableModel(BookmarkTableModel* new_table_model,
-                     BookmarkNode* parent_node,
-                     bool is_search);
+                     BookmarkNode* parent_node);
 
   // Sets the table's model to the results of CreateSearchTableModel and selects
   // the search node in the tree.
