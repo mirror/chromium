@@ -65,10 +65,6 @@
 #include "IconDatabase.h"
 #include "IconLoader.h"
 #include "InspectorController.h"
-#if USE(JSC)
-#include "JSDOMBinding.h"
-using JSC::JSLock;
-#endif
 #include "Logging.h"
 #include "MIMETypeRegistry.h"
 #include "MainResourceLoader.h"
