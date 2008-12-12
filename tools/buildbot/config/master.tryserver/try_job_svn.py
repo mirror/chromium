@@ -47,6 +47,7 @@ class TryJobSubversion(TryBase):
       builderNames = [ options['bot'] ]
     # TODO(maruel): Don't select the builders right now if not specified.
     builderNames = self.pools.Select(builderNames)
+    tests = options.get('tests', None)
     log.msg('Choose %s for job %s' % (",".join(builderNames), buildsetID))
     if diff:
       patch = (patchlevel, diff, root)
@@ -54,7 +55,7 @@ class TryJobSubversion(TryBase):
       patch = None
     jobstamp = TryJobStamp(branch=branch, revision=revision, patch=patch,
                            author_name=user, author_email=email,
-                           job_name=job_name)
+                           job_name=job_name, tests=tests)
     return builderNames, jobstamp, buildsetID
 
   def addChange(self, change):
