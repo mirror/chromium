@@ -3182,7 +3182,7 @@ each locale. -->
         Pop-ups Blocked: <ph name="COUNT">$1<ex>2</ex></ph>
       </message>
       <message name="IDS_POPUP_TITLE_FORMAT" desc="Order of URL - Title on the popup">
-        <ph name="URL">$1</ph> - <ph name="Window Title">$2</ph>
+        <ph name="URL">$1</ph> - <ph name="WINDOW_TITLE">$2</ph>
       </message>
 
       <!-- Multiple download warning-->
@@ -3250,7 +3250,7 @@ each locale. -->
         Enter a query in the text field above to search your bookmarks.
       </message>
       <message name="IDS_BOOKMARK_MANAGER_NO_RESULTS" desc="Text shown in the bookmark table when the search didn't find anything.">
-        No bookmarks match the query '<ph name="search text">$1</ph>'.
+        No bookmarks match the query '<ph name="SEARCH_TEXT">$1</ph>'.
       </message>
       <message name="IDS_BOOKMARK_MANAGER_SEARCH_TITLE" desc="Text shown before the search text field.">
         Search:
