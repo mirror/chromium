@@ -33,7 +33,7 @@ class MasterFactory(object):
     '^(webkit|purify_layout)$': [('src/webkit/data/layout_tests/LayoutTests', None)]}
 
   NEEDED_COMPONENTS_INTERNAL = {
-    'memory_test':
+    'memory':
       [('src/data/memory_test', None)],
     'page_cycler':
       [('src/data/page_cycler', None)],
