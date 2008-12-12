@@ -158,7 +158,7 @@ Automated text version 0.3""" % (name,
     recipients = self.extraRecipients[:]
     if getattr(job_stamp, 'author_email', None):
       # Try jobs override the interested users.
-      recipients.append(job_stamp.author_email)
+      recipients.extend(job_stamp.author_emails)
     else:
       if self.sendToInterestedUsers and self.lookup:
         for u in build.getInterestedUsers():

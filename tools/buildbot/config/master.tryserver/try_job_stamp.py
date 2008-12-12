@@ -16,14 +16,17 @@ class TryJobStamp(SourceStamp):
   """Store additional information about a source specific run to execute. Just
   storing the actual patch (like SourceStamp does) is insufficient."""
   def __init__(self, branch=None, revision=None, patch=None, changes=None,
-               author_name=None, author_email=None, job_name=None,
+               author_name=None, author_emails=None, job_name=None,
                timestamp=None):
     SourceStamp.__init__(self, branch, revision, patch, changes)
     if not timestamp:
       timestamp = datetime.datetime.utcnow()
     self.timestamp = timestamp
     self.author_name = author_name
-    self.author_email = author_email
+    # Accept both space and comma as an address separator.
+    self.author_emails = author_emails
+    if type(self.author_emails) is str:
+      self.author_emails = self.author_emails.replace(' ', ',').split(',')
     self.job_name = job_name
 
   def mergeWith(self, others):
