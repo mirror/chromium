@@ -409,6 +409,8 @@ def RunCommand(command):
   for line in proc.stdout.readlines(): 
     print line.rstrip() + '\n',
 
+  sys.stdout.flush()
+
   return proc.returncode
 
 
