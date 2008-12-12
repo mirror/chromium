@@ -2,8 +2,13 @@
 <html>
 <head>
 <title>TryServer Index page</title>
-<meta http-equiv="REFRESH" content="0;url=/waterfall"></HEAD>
+<script>
+  var location_no_index = location.href.replace("index.html","");
+  var location_no_slash = location_no_index.replace(/\/$/g,"");
+  var new_location = location_no_slash.replace(/$/g, "/waterfall");
+  document.write("<meta http-equiv='REFRESH' content='0;url=" + new_location + "'>");
+</script>
+</HEAD>
 <BODY>
 </BODY>
 </HTML>
-
