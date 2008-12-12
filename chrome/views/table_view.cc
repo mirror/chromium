@@ -519,6 +519,8 @@ gfx::Point TableView::GetKeyboardContextMenuLocation() {
     }
   }
   gfx::Point screen_loc(0, y);
+  if (UILayoutIsRightToLeft())
+    screen_loc.set_x(width());
   ConvertPointToScreen(this, &screen_loc);
   return screen_loc;
 }
