@@ -124,7 +124,7 @@ Reminders:
  - The patch will fail if the tree has conflicting changes since your last upload.
  - On Windows, the execution order is compile debug, test debug, compile release.
  - On Mac/linux, the execution order is compile debug, test debug.
- - To disable this, use --no_try or remove src/tools/tryserver.py
+ - To disable automatic test on gcl upload, use --no_try
 
 Automated text version 0.3""" % (name,
        build_url,
@@ -156,7 +156,7 @@ Automated text version 0.3""" % (name,
     # now, who is this message going to?
     dl = []
     recipients = self.extraRecipients[:]
-    if getattr(job_stamp, 'author_email', None):
+    if getattr(job_stamp, 'author_emails', None):
       # Try jobs override the interested users.
       recipients.extend(job_stamp.author_emails)
     else:

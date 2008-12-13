@@ -28,7 +28,12 @@ class TryJobStamp(SourceStamp):
     if not self.timestamp:
       self.timestamp = datetime.datetime.utcnow()
     if type(self.author_emails) is str:
-      self.author_emails = self.author_emails.replace(' ', ',').split(',')
+      items = self.author_emails.replace(' ', ',').split(',')
+      self.author_emails = []
+      # Quick sanitization.
+      for item in items:
+        if '@' in item:
+          self.author_emails.append(item)
 
   def mergeWith(self, others):
     new_changes = SourceStamp.mergeWith(self, others)
