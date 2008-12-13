@@ -20,6 +20,22 @@ import chromium_utils
 class InvalidPath(Exception): pass
 
 
+def FixDiffLineEnding(diff):
+  """Fix patch files generated on windows and applied on mac/linux.
+  
+  For files with svn:eol-style=crlf, svn diff puts CRLF in the diff hunk header.
+  patch on linux and mac barfs on those hunks. As usual, blame svn."""
+  output = ''
+  for line in diff.splitlines(True):
+    if (line.startswith('---') or line.startswith('+++') or
+        line.startswith('@@ ') or line.startswith('\\ No')):
+      # Strip any existing CRLF on the header lines
+      output += line.rstrip() + '\n'
+    else:
+      output += line
+  return output
+
+
 class GoogleSVN(commands.SVN):
   """SVN class with more flexible error recovery and no svnversion call.
 
@@ -362,7 +378,7 @@ class GClient(commands.SourceBase):
 
   def doPatch(self, res):
     patchlevel = self.patch[0]
-    diff = self.patch[1]
+    diff = FixDiffLineEnding(self.patch[1])
     root = None
     if len(self.patch) >= 3:
       root = self.patch[2]
