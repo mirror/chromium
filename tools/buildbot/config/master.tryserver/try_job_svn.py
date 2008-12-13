@@ -36,6 +36,7 @@ class TryJobSubversion(TryBase):
     email = options.get('email', None)
     if 'user' in options and not email:
       email = '%s@%s' % (user, config.Master.master_domain)
+    root = options.get('root', None)
     clobber = options.get('clobber', False)
     # -pN argument to patch.
     patchlevel = options.get('patchlevel', 0)
