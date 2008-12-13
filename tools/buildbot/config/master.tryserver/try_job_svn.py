@@ -55,7 +55,7 @@ class TryJobSubversion(TryBase):
     else:
       patch = None
     jobstamp = TryJobStamp(branch=branch, revision=revision, patch=patch,
-                           author_name=user, author_email=email,
+                           author_name=user, author_emails=email,
                            job_name=job_name, tests=tests)
     return builderNames, jobstamp, buildsetID
 
