@@ -377,7 +377,13 @@ def SendToRietveld(request_path, payload=None,
                                     GetUserCredentials,
                                     host_override=server,
                                     save_cookies=True)
-  return rpc_server.Send(request_path, payload, content_type, timeout)
+  try:
+    return rpc_server.Send(request_path, payload, content_type, timeout)
+  except urllib2.URLError, e:
+    if timeout is None:
+      ErrorExit("Error accessing url %s" % request_path)
+    else:
+      return None
 
 
 def GetIssueDescription(issue):
