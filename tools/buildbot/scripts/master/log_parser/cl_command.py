@@ -250,6 +250,19 @@ class CLCommand(shell.Compile):
   def createSummary(self, log):
     self.__AddLogs()
 
+  def getText(self, cmd, results):
+    if results == builder.SUCCESS:
+      return self.describe(True)
+    elif results == builder.WARNINGS:
+      return self.describe(True) + ["warnings"]
+    else:
+      # If the compile fails, make it easier to close the tree.
+      error_lines = self.describe(True) + ["failed"]
+      error_lines.append("<a href='http://chromium-status.appspot.com/'"
+          " target='_blank'>close tree</a>")
+      return error_lines
+          
+
   def __AddLogs(self):
     try:
       ib_output_parser = IbOutputParser(self.getLog('stdio').getText())
