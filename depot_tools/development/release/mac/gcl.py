@@ -364,7 +364,7 @@ def GetFilesNotInCL():
 
 
 def SendToRietveld(request_path, payload=None,
-                   content_type="application/octet-stream"):
+                   content_type="application/octet-stream", timeout=None):
   """Send a POST/GET to Rietveld.  Returns the response body."""
   def GetUserCredentials():
     """Prompts the user for a username and password."""
@@ -377,7 +377,7 @@ def SendToRietveld(request_path, payload=None,
                                     GetUserCredentials,
                                     host_override=server,
                                     save_cookies=True)
-  return rpc_server.Send(request_path, payload, content_type)
+  return rpc_server.Send(request_path, payload, content_type, timeout)
 
 
 def GetIssueDescription(issue):
@@ -549,6 +549,10 @@ def UploadCL(change_info, args):
 
   if desc_file:
     os.remove(desc_file)
+
+  # Do background work on Rietveld to lint the file so that the results are
+  # ready when the issue is viewed.
+  SendToRietveld("/lint/issue%s_%s" % (issue, patchset), timeout=0.5)
 
   # Once uploaded to Rietveld, send it to the try server.
   if not no_try and GetCodeReviewSetting('TRY_ON_UPLOAD').lower() == 'true':
