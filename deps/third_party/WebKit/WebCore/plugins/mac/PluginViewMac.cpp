@@ -370,21 +370,10 @@ void PluginView::setNPWindowIfNeeded()
     if (!newWindowRef)
         return;
 
-    ASSERT(parent()->isFrameView());
-    FrameView* frameView = static_cast<FrameView*>(parent());
-    IntRect newGeometry = IntRect(frameView->contentsToWindow(frameRect().location()), frameRect().size());
-
-    // TODO: also compare clip rects
-    if (newGeometry == m_windowRect
-        && newWindowRef == m_npCgContext.window
-        && newContextRef == m_npCgContext.context)
-    return;
-
     m_npWindow.window = (void*)&m_npCgContext;
     m_npCgContext.window = newWindowRef;
     m_npCgContext.context = newContextRef;
 
-    m_windowRect = newGeometry;
     m_npWindow.x = m_windowRect.x();
     m_npWindow.y = m_windowRect.y();
     m_npWindow.width = m_windowRect.width();
@@ -404,16 +393,31 @@ void PluginView::setNPWindowIfNeeded()
     PluginView::setCurrentPluginView(0);
 }
 
-void PluginView::updatePluginWidget() const
+void PluginView::updatePluginWidget()
 {
-    // Nothing to do here. We update the plugin widget
-    // in paint(), if the NPWindow struct has changed.
+    if (!parent())
+       return;
+
+    ASSERT(parent()->isFrameView());
+    FrameView* frameView = static_cast<FrameView*>(parent());
+
+    IntRect oldWindowRect = m_windowRect;
+    IntRect oldClipRect = m_clipRect;
+
+    m_windowRect = IntRect(frameView->contentsToWindow(frameRect().location()), frameRect().size());
+    m_clipRect = windowClipRect();
+    m_clipRect.move(-m_windowRect.x(), -m_windowRect.y());
+
+    if (platformPluginWidget() && (m_windowRect != oldWindowRect || m_clipRect != oldClipRect))
+        setNPWindowIfNeeded();
 }
 
 void PluginView::paint(GraphicsContext* context, const IntRect& rect)
 {
-    if (!m_isStarted)
-        return; // TODO: Draw the "missing plugin" image
+    if (!m_isStarted) {
+        paintMissingPluginIcon(context, rect);
+        return;
+    }
 
     if (context->paintingDisabled())
         return;
@@ -613,6 +617,18 @@ static int modifiersForEvent(UIEventWithKeyState* event)
      return modifiers;
 }
 
+static bool tigerOrBetter()
+{
+    static SInt32 systemVersion = 0;
+
+    if (!systemVersion) {
+        if (Gestalt(gestaltSystemVersion, &systemVersion) != noErr)
+            return false;
+    }
+
+    return systemVersion >= 0x1040;
+}
+
 Point PluginView::globalMousePosForPlugin() const
 {
     Point pos;
@@ -622,8 +638,10 @@ Point PluginView::globalMousePosForPlugin() const
     pos.h -= offset.x();
     pos.v -= offset.y();
 
-    pos.h = static_cast<short>(pos.h * HIGetScaleFactor());
-    pos.v = static_cast<short>(pos.v * HIGetScaleFactor());
+    float scaleFactor = tigerOrBetter() ? HIGetScaleFactor() : 1;
+
+    pos.h = short(pos.h * scaleFactor);
+    pos.v = short(pos.v * scaleFactor);
 
     return pos;
 }

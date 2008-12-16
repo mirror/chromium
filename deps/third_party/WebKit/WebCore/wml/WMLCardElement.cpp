@@ -30,8 +30,10 @@
 #include "NodeList.h"
 #include "RenderStyle.h"
 #include "WMLDocument.h"
+#include "WMLDoElement.h"
 #include "WMLIntrinsicEventHandler.h"
 #include "WMLNames.h"
+#include "WMLTemplateElement.h"
 #include "WMLTimerElement.h"
 #include "WMLVariables.h"
 
@@ -45,6 +47,7 @@ WMLCardElement::WMLCardElement(const QualifiedName& tagName, Document* doc)
     , m_isOrdered(false)
     , m_isVisible(false)
     , m_eventTimer(0)
+    , m_template(0)
 {
 }
 
@@ -90,11 +93,21 @@ void WMLCardElement::hideCard()
     ASSERT(!renderer());
 }
 
+void WMLCardElement::setTemplateElement(WMLTemplateElement* temp)
+{
+    // Only one template is allowed to be attached to a card
+    if (m_template) {
+        reportWMLError(document(), WMLErrorMultipleTemplateElements);
+        return;
+    }
+
+    m_template = temp;
+}
+
 void WMLCardElement::setIntrinsicEventTimer(WMLTimerElement* timer)
 {
     // Only one timer is allowed in a card 
     if (m_eventTimer) {
-        m_eventTimer = 0;     
         reportWMLError(document(), WMLErrorMultipleTimerElements);
         return;
     }
@@ -136,14 +149,11 @@ void WMLCardElement::handleIntrinsicEventIfNeeded()
     if (eventType != WMLIntrinsicEventUnknown) {
         if (eventHandler && eventHandler->hasIntrinsicEvent(eventType))
             hasIntrinsicEvent = true;
-
-        /* FIXME: template support
         else if (m_template) {
             eventHandler = m_template->eventHandler();
             if (eventHandler && eventHandler->hasIntrinsicEvent(eventType))
                 hasIntrinsicEvent = true;
         }
-        */
     }
  
     if (hasIntrinsicEvent)
@@ -163,6 +173,33 @@ void WMLCardElement::handleIntrinsicEventIfNeeded()
             static_cast<WMLSelectElement*>(node)->selectInitialOptions();
     }
     */
+}
+
+void WMLCardElement::handleDeckLevelTaskOverridesIfNeeded()
+{
+    // Spec: The event-handling element may appear inside a template element and specify 
+    // event-processing behaviour for all cards in the deck. A deck-level event-handling
+    // element is equivalent to specifying the event-handling element in each card. 
+    if (!m_template) 
+        return;
+
+    Vector<WMLDoElement*>& templateDoElements = m_template->doElements();
+    if (templateDoElements.isEmpty())
+        return;
+
+    Vector<WMLDoElement*>& cardDoElements = doElements();
+    Vector<WMLDoElement*>::iterator it = cardDoElements.begin();
+    Vector<WMLDoElement*>::iterator end = cardDoElements.end();
+
+    HashSet<String> cardDoElementNames;
+    for (; it != end; ++it)
+        cardDoElementNames.add((*it)->name());
+
+    it = templateDoElements.begin();
+    end = templateDoElements.end();
+
+    for (; it != end; ++it)
+        (*it)->setActive(!cardDoElementNames.contains((*it)->name()));
 }
 
 void WMLCardElement::parseMappedAttribute(MappedAttribute* attr)
@@ -216,7 +253,31 @@ RenderObject* WMLCardElement::createRenderer(RenderArena* arena, RenderStyle* st
     return WMLElement::createRenderer(arena, style);
 }
 
-WMLCardElement* WMLCardElement::setActiveCardInDocument(Document* doc, const KURL& targetUrl)
+WMLCardElement* WMLCardElement::findNamedCardInDocument(Document* doc, const String& cardName)
+{
+    if (cardName.isEmpty())
+        return 0;
+
+    RefPtr<NodeList> nodeList = doc->getElementsByTagName("card");
+    if (!nodeList)
+        return 0;
+
+    unsigned length = nodeList->length();
+    if (length < 1)
+        return 0;
+
+    for (unsigned i = 0; i < length; ++i) {
+        WMLCardElement* card = static_cast<WMLCardElement*>(nodeList->item(i));
+        if (card->getIDAttribute() != cardName)
+            continue;
+
+        return card;
+    }
+
+    return 0;
+}
+
+WMLCardElement* WMLCardElement::determineActiveCard(Document* doc)
 {
     WMLPageState* pageState = wmlPageStateForDocument(doc);
     if (!pageState)
@@ -231,28 +292,9 @@ WMLCardElement* WMLCardElement::setActiveCardInDocument(Document* doc, const KUR
         return 0;
 
     // Figure out the new target card
-    WMLCardElement* activeCard = 0;
-    KURL url = targetUrl.isEmpty() ? doc->url() : targetUrl;
+    String cardName = doc->url().ref();
 
-    if (url.hasRef()) {
-        String ref = url.ref();
-
-        for (unsigned i = 0; i < length; ++i) {
-            WMLCardElement* card = static_cast<WMLCardElement*>(nodeList->item(i));
-            if (card->getIDAttribute() != ref)
-                continue;
-
-            // Force frame loader to load the URL with fragment identifier
-            if (Frame* frame = doc->frame()) {
-                if (FrameLoader* loader = frame->loader())
-                    loader->setForceReloadWmlDeck(true);
-            }
-
-            activeCard = card;
-            break;
-        }
-    }
-
+    WMLCardElement* activeCard = findNamedCardInDocument(doc, cardName);
     if (activeCard) {
         // Hide all cards - except the destination card - in document
         for (unsigned i = 0; i < length; ++i) {

@@ -78,7 +78,6 @@ sources['dom'] = [
     'dom/Comment.cpp',
     'dom/ContainerNode.cpp',
     'dom/CSSMappedAttributeDeclaration.cpp',
-    'dom/DedicatedWorker.cpp',
     'dom/Document.cpp',
     'dom/DocumentFragment.cpp',
     'dom/DocumentType.cpp',
@@ -134,6 +133,9 @@ sources['dom'] = [
     'dom/WebKitAnimationEvent.cpp',
     'dom/WebKitTransitionEvent.cpp',
     'dom/WheelEvent.cpp',
+    'dom/Worker.cpp',
+    'dom/WorkerContext.cpp',
+    'dom/WorkerLocation.cpp',
     'dom/XMLTokenizer.cpp',
     'dom/XMLTokenizerLibxml2.cpp',
 ]
@@ -387,6 +389,7 @@ sources['page'] = [
     'page/SecurityOrigin.cpp',
     'page/Settings.cpp',
     'page/WindowFeatures.cpp',
+    'page/WorkerNavigator.cpp',
 ]
 sources['page/animation'] = [
     'page/animation/AnimationBase.cpp',
@@ -673,7 +676,8 @@ sources['bindings/js'] = [
     "bindings/js/JSTextCustom.cpp",
     "bindings/js/JSTreeWalkerCustom.cpp",
     "bindings/js/JSWorkerConstructor.cpp",
-    "bindings/js/JSWorkerContext.cpp",
+    "bindings/js/JSWorkerContextBase.cpp",
+    "bindings/js/JSWorkerContextCustom.cpp",
     "bindings/js/JSWorkerCustom.cpp",
     "bindings/js/JSXMLHttpRequestConstructor.cpp",
     "bindings/js/JSXMLHttpRequestCustom.cpp",
@@ -694,7 +698,6 @@ sources['platform'] = [
     'platform/Arena.cpp',
     'platform/ContextMenu.cpp',
     'platform/DeprecatedPtrListImpl.cpp',
-    'platform/DeprecatedValueListImpl.cpp',
     'platform/DragData.cpp',
     'platform/DragImage.cpp',
     'platform/FileChooser.cpp',
@@ -791,6 +794,8 @@ sources['platform/text'] = [
 ]
 
 env = Environment()
+
+building_on_win32 = env['PLATFORM'] == 'win32' or env['PLATFORM'] == 'cygwin'
 
 if env['PLATFORM'] == 'darwin':
     sources['platform/graphics/cg'] = [
@@ -899,10 +904,11 @@ env['CPPPATH'] = ['.', '..']
 env.Append(CPPPATH = [
     '../JavaScriptCore',
     '../JavaScriptCore/bytecode',
+    '../JavaScriptCore/jit',
+    '../JavaScriptCore/interpreter',
     '../JavaScriptCore/parser',
     '../JavaScriptCore/wtf',
     '../JavaScriptCore/runtime',
-    '../JavaScriptCore/interpreter'
 ])
 
 # HACK: Include ForwardingHeaders after ../JavaScriptCore for now to allow JavaScriptCore/wtf includes to work
@@ -914,6 +920,15 @@ env.Append(CPPPATH = ['../WebKitLibraries'])
 # Mac OS X doesn't include icu headers, so WebKit svn includes icu 3.2 headers
 if env['PLATFORM'] == 'darwin':
     env.Append(CPPPATH = ['icu', '/usr/include/libxml2'])
+
+webkit_libraries_path = "../WebKitLibraries/win/"
+def WebKitLibraries(path):
+    return webkit_libraries_path + path
+
+if building_on_win32:
+    env.Append(CPPPATH = ['os-win32', WebKitLibraries('include')])
+    env.Prepend(LIBPATH = [WebKitLibraries('lib')])
+    env.Append(LIBS = ['icuin', 'icuuc', 'user32', 'winmm'])
 
 # Include headers for all of the directories from which we are compiling source files
 env.Append(CPPPATH = sources.keys())

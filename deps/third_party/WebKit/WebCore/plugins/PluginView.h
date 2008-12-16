@@ -147,7 +147,7 @@ namespace WebCore {
 
         // Widget functions
         virtual void setFrameRect(const IntRect&);
-        virtual void frameRectsChanged() const;
+        virtual void frameRectsChanged();
         virtual void setFocus();
         virtual void show();
         virtual void hide();
@@ -221,7 +221,7 @@ namespace WebCore {
 #ifndef NP_NO_CARBON
         bool dispatchNPEvent(NPEvent&);
 #endif
-        void updatePluginWidget() const;
+        void updatePluginWidget();
         void paintMissingPluginIcon(GraphicsContext*, const IntRect&);
 
         void handleKeyboardEvent(KeyboardEvent*);
@@ -286,8 +286,8 @@ private:
         Point globalMousePosForPlugin() const;
 #endif
 
-        mutable IntRect m_clipRect; // The clip rect to apply to a windowed plug-in
-        mutable IntRect m_windowRect; // Our window rect.
+        IntRect m_clipRect; // The clip rect to apply to a windowed plug-in
+        IntRect m_windowRect; // Our window rect.
 
         bool m_loadManually;
         RefPtr<PluginStream> m_manualStream;

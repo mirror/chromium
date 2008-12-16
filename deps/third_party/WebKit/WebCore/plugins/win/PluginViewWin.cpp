@@ -209,7 +209,7 @@ PluginView::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return result;
 }
 
-void PluginView::updatePluginWidget() const
+void PluginView::updatePluginWidget()
 {
     if (!parent())
         return;
@@ -280,28 +280,6 @@ void PluginView::hide()
         ShowWindow(platformPluginWidget(), SW_HIDE);
 
     Widget::hide();
-}
-
-void PluginView::paintMissingPluginIcon(GraphicsContext* context, const IntRect& rect)
-{
-    static RefPtr<Image> nullPluginImage;
-    if (!nullPluginImage)
-        nullPluginImage = Image::loadPlatformResource("nullPlugin");
-
-    IntRect imageRect(frameRect().x(), frameRect().y(), nullPluginImage->width(), nullPluginImage->height());
-
-    int xOffset = (frameRect().width() - imageRect.width()) / 2;
-    int yOffset = (frameRect().height() - imageRect.height()) / 2;
-
-    imageRect.move(xOffset, yOffset);
-
-    if (!rect.intersects(imageRect))
-        return;
-
-    context->save();
-    context->clip(windowClipRect());
-    context->drawImage(nullPluginImage.get(), imageRect.location());
-    context->restore();
 }
 
 bool PluginView::dispatchNPEvent(NPEvent& npEvent)

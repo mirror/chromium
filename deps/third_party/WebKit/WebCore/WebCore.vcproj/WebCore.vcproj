@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
@@ -1744,7 +1744,15 @@
 				>
 			</File>
 			<File
-				RelativePath="$(WebKitOutputDir)\obj\WebCore\DerivedSources\JSWorkerContext.lut.h"
+				RelativePath="$(WebKitOutputDir)\obj\WebCore\DerivedSources\JSWorkerContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\WebCore\DerivedSources\JSWorkerContext.h"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\WebCore\DerivedSources\JSWorkerContextBase.lut.h"
 				>
 			</File>
 			<File
@@ -3132,22 +3140,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\platform\DeprecatedPtrQueue.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\DeprecatedValueList.h"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\DeprecatedValueListImpl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\platform\DeprecatedValueListImpl.h"
-				>
-			</File>
-			<File
 				RelativePath="..\platform\DragData.cpp"
 				>
 			</File>
@@ -3789,8 +3781,12 @@
 					>
 				</File>
 				<File
+					RelativePath="..\platform\graphics\FontFastPath.cpp"
+				>
+                </File>
+				<File
 					RelativePath="..\platform\graphics\Font.cpp"
-					>
+				>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
@@ -4809,6 +4805,46 @@
 					</File>
 					<File
 						RelativePath="..\platform\graphics\cg\ImageSourceCG.cpp"
+						>
+						<FileConfiguration
+							Name="Debug_Cairo|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_Cairo|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\platform\graphics\cg\ImageSourceCG.h"
+						>
+						<FileConfiguration
+							Name="Debug_Cairo|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_Cairo|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath="..\platform\graphics\cg\ImageSourceCGWin.cpp"
 						>
 						<FileConfiguration
 							Name="Debug_Cairo|Win32"
@@ -13929,11 +13965,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\bindings\js\JSWorkerContext.cpp"
+					RelativePath="..\bindings\js\JSWorkerContextBase.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\bindings\js\JSWorkerContext.h"
+					RelativePath="..\bindings\js\JSWorkerContextBase.h"
+					>
+				</File>
+				<File
+					RelativePath="..\bindings\js\JSWorkerContextCustom.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\bindings\js\JSWorkerContextCustom.h"
 					>
 				</File>
 				<File
@@ -16894,6 +16938,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\wml\WMLImageElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLImageElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLImageLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLImageLoader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\wml\WMLIntrinsicEvent.cpp"
 				>
 			</File>
@@ -16979,6 +17039,14 @@
 			</File>
 			<File
 				RelativePath="..\wml\WMLTaskElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLTemplateElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLTemplateElement.h"
 				>
 			</File>
 			<File

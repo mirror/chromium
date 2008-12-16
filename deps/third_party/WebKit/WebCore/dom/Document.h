@@ -29,7 +29,6 @@
 
 #include "Attr.h"
 #include "Color.h"
-#include "DeprecatedPtrList.h"
 #include "DocumentMarker.h"
 #include "HTMLCollection.h"
 #include "HTMLFormElement.h"
@@ -869,7 +868,7 @@ private:
     RefPtr<StyleSheetList> m_styleSheets; // All of the stylesheets that are currently in effect for our media type and stylesheet set.
     ListHashSet<Node*> m_styleSheetCandidateNodes; // All of the nodes that could potentially provide stylesheets to the document (<link>, <style>, <?xml-stylesheet>)
 
-    RegisteredEventListenerList m_windowEventListeners;
+    RegisteredEventListenerVector m_windowEventListeners;
 
     typedef HashMap<FormElementKey, Vector<String>, FormElementKeyHash, FormElementKeyHashTraits> FormElementStateMap;
     ListHashSet<HTMLFormControlElementWithState*> m_formElementsWithState;
@@ -909,8 +908,8 @@ private:
 
     mutable AXObjectCache* m_axObjectCache;
     
-    DeprecatedPtrList<ImageLoader> m_imageLoadEventDispatchSoonList;
-    DeprecatedPtrList<ImageLoader> m_imageLoadEventDispatchingList;
+    Vector<ImageLoader*> m_imageLoadEventDispatchSoonList;
+    Vector<ImageLoader*> m_imageLoadEventDispatchingList;
     Timer<Document> m_imageLoadEventTimer;
 
     Timer<Document> m_updateFocusAppearanceTimer;
