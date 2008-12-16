@@ -39,7 +39,7 @@ embed
 fieldset interfaceName=HTMLFieldSetElement
 font
 form
-frame
+frame constructorNeedsCreatedByParser=1
 frameset interfaceName=HTMLFrameSetElement
 head
 h1 interfaceName=HTMLHeadingElement
@@ -51,7 +51,7 @@ h6 JSInterfaceName=HTMLHeadingElement
 hr interfaceName=HTMLHRElement
 html
 i JSInterfaceName=HTMLElement
-iframe interfaceName=HTMLIFrameElement
+iframe interfaceName=HTMLIFrameElement, constructorNeedsCreatedByParser=1
 image
 img interfaceName=HTMLImageElement
 input
@@ -63,7 +63,7 @@ label
 layer JSInterfaceName=HTMLElement
 legend
 li interfaceName=HTMLLIElement
-link
+link constructorNeedsCreatedByParser=1
 listing JSInterfaceName=HTMLPreElement
 map
 marquee
@@ -94,7 +94,7 @@ source wrapperOnlyIfMediaIsAvailable=1
 span JSInterfaceName=HTMLElement
 strike JSInterfaceName=HTMLElement
 strong JSInterfaceName=HTMLElement
-style
+style constructorNeedsCreatedByParser=1
 sub JSInterfaceName=HTMLElement
 sup JSInterfaceName=HTMLElement
 table

@@ -87,10 +87,10 @@ void RenderButton::styleDidChange(RenderStyle::Diff diff, const RenderStyle* old
 
     if (m_buttonText)
         m_buttonText->setStyle(style());
-    if (m_inner) {
-        // RenderBlock handled updating the anonymous block's style.
+
+    if (m_inner) // RenderBlock handled updating the anonymous block's style.
         setupInnerStyle(m_inner->style());
-    }
+
     setReplaced(isInline());
 
     if (!m_default && theme()->isDefault(this)) {
@@ -104,12 +104,15 @@ void RenderButton::styleDidChange(RenderStyle::Diff diff, const RenderStyle* old
     }
 }
 
-void RenderButton::setupInnerStyle(RenderStyle* style) {
+void RenderButton::setupInnerStyle(RenderStyle* style) 
+{
     ASSERT(style->refCount() == 1);
     // RenderBlock::createAnonymousBlock creates a new RenderStyle, so this is
     // safe to modify.
     style->setBoxFlex(1.0f);
-    theme()->adjustButtonInnerStyle(style);
+    // TODO(ojan): Fix me!!!!
+    if (true || style->appearance() != NoControlPart)
+        theme()->adjustButtonInnerStyle(style);
 }
 
 void RenderButton::updateFromElement()
