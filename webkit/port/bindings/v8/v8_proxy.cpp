@@ -1756,9 +1756,9 @@ void V8Proxy::initContextIfNeeded() {
 
   // Allocate DOM constructor cache.
   v8::Handle<v8::Object> object = v8::Handle<v8::Object>::Cast(
-      m_global->Get(object_string);
+      m_global->Get(object_string));
   m_object_prototype = v8::Persistent<v8::Value>::New(
-      object->Get(prototype_string);
+      object->Get(prototype_string));
   m_dom_constructor_cache = v8::Persistent<v8::Array>::New(
       v8::Array::New(V8ClassIndex::WRAPPER_TYPE_COUNT));
   // Bail out if allocation failed.
