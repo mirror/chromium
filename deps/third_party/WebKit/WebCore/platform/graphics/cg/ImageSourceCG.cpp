@@ -27,8 +27,10 @@
 #include "ImageSource.h"
 
 #if PLATFORM(CG)
+#include "ImageSourceCG.h"
 
 #include "IntSize.h"
+#include "MIMETypeRegistry.h"
 #include "SharedBuffer.h"
 #include <ApplicationServices/ApplicationServices.h>
 
@@ -43,15 +45,26 @@ ImageSource::ImageSource()
 
 ImageSource::~ImageSource()
 {
-    clear();
+    clear(true);
 }
 
-void ImageSource::clear()
+void ImageSource::clear(bool destroyAll, size_t clearBeforeFrame)
 {
-    if (m_decoder) {
-        CFRelease(m_decoder);
-        m_decoder = 0;
+    if (destroyAll) {
+        if (m_decoder) {
+            CFRelease(m_decoder);
+            m_decoder = 0;
+        }
+        return;
     }
+
+    // TODO(pkasting): If there was an appropriate API to do so, we could
+    // explicitly tell the CG decoder it can discard frames before
+    // |clearBeforeFrame| (not including anything it needs to keep around
+    // locally to continue decoding correctly).  This might help the decoder
+    // optimize memory/CPU usage.  Right now the decoder seems to throw away
+    // frames aggressively and then re-decode from the beginning each time, thus
+    // using more CPU than it needs to.
 }
 
 CFDictionaryRef imageSourceOptions()
@@ -87,6 +100,14 @@ void ImageSource::setData(SharedBuffer* data, bool allDataReceived)
 #endif
     CGImageSourceUpdateData(m_decoder, cfData, allDataReceived);
     CFRelease(cfData);
+}
+
+String ImageSource::filenameExtension() const
+{
+    if (!m_decoder)
+        return String();
+    CFStringRef imageSourceType = CGImageSourceGetType(m_decoder);
+    return WebCore::preferredExtensionForImageSourceType(imageSourceType);
 }
 
 bool ImageSource::isSizeAvailable()

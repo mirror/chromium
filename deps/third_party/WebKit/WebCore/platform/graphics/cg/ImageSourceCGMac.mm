@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2008 Apple Inc. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -10,10 +10,10 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -23,27 +23,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef DeprecatedPtrQueue_h
-#define DeprecatedPtrQueue_h
+#import "config.h"
+#import "ImageSourceCG.h"
 
-#include "DeprecatedPtrList.h"
+#import "PlatformString.h"
+#import "wtf/RetainPtr.h"
 
 namespace WebCore {
 
-template<class T> class DeprecatedPtrQueue
+String MIMETypeForImageSourceType(const String& uti)
 {
-public:
-    bool isEmpty() const { return list.isEmpty(); }
-    T *dequeue() { T *tmp = list.getFirst(); list.removeFirst(); return tmp; }
-    void enqueue(const T *item) { list.append (item); }
-    unsigned count() const { return list.count(); }
-    T *head() const { return list.getFirst(); }
-    DeprecatedPtrQueue<T> &operator=(const DeprecatedPtrQueue<T> &q) { list = q.list; return *this; }
-
- private:
-    DeprecatedPtrList<T> list;
-};
-
+    RetainPtr<CFStringRef> utiref(AdoptCF, uti.createCFString());
+    RetainPtr<CFStringRef> mime(AdoptCF, UTTypeCopyPreferredTagWithClass(utiref.get(), kUTTagClassMIMEType));
+    return mime.get();
 }
 
-#endif /* DeprecatedPtrQueue_h */
+String preferredExtensionForImageSourceType(const String& uti)
+{
+    RetainPtr<CFStringRef> type(AdoptCF, uti.createCFString());
+    return UTTypeCopyPreferredTagWithClass(type.get(), kUTTagClassFilenameExtension);
+}
+
+} // namespace WebCore
