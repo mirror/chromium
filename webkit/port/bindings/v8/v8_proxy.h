@@ -414,7 +414,7 @@ class V8Proxy {
   void initContextIfNeeded();
   void DisconnectEventListeners();
   // Dispose global handles of m_contexts and friends.
-  void DisposeContext();
+  void DisposeContextHandles();
 
   // Check whether a V8 value is a DOM Event wrapper
   static bool IsDOMEventWrapper(v8::Handle<v8::Value> obj);
