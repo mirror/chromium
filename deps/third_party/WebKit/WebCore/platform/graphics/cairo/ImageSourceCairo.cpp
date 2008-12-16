@@ -97,13 +97,19 @@ ImageSource::ImageSource()
 
 ImageSource::~ImageSource()
 {
-    clear();
+    clear(true);
 }
 
-void ImageSource::clear()
+void ImageSource::clear(bool destroyAll, size_t clearBeforeFrame)
 {
-    delete m_decoder;
-    m_decoder = 0;
+    if (destroyAll) {
+        delete m_decoder;
+        m_decoder = 0;
+        return;
+    }
+
+    if (m_decoder)
+        m_decoder->clearFrameBufferCache(clearBeforeFrame);
 }
 
 bool ImageSource::initialized() const
@@ -124,6 +130,12 @@ void ImageSource::setData(SharedBuffer* data, bool allDataReceived)
         return;
 
     m_decoder->setData(data, allDataReceived);
+}
+
+String ImageSource::filenameExtension() const
+{
+    // not implemented
+    return String();
 }
 
 bool ImageSource::isSizeAvailable()

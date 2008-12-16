@@ -236,6 +236,10 @@ void ScriptController::updateDocument()
         (*it)->updateDocument();
 }
 
+void ScriptController::updateSecurityOrigin()
+{
+    // Our bindings do not do anything in this case.
+}
 
 Bindings::RootObject* ScriptController::bindingRootObject()
 {
@@ -302,7 +306,7 @@ NPObject* ScriptController::createScriptObjectForPluginElement(HTMLPlugInElement
 #endif
 
 #if !PLATFORM(MAC)
-void ScriptController::clearPlatformScriptObjects()
+void ScriptController::updatePlatformScriptObjects()
 {
 }
 
@@ -346,8 +350,6 @@ void ScriptController::clearScriptObjects()
         m_windowScriptNPObject = 0;
     }
 #endif
-
-    clearPlatformScriptObjects();
 }
 
 } // namespace WebCore

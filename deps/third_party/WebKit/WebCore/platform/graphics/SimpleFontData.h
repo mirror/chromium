@@ -41,6 +41,10 @@ typedef struct OpaqueATSUStyle* ATSUStyle;
 #include <cairo.h>
 #endif
 
+#if PLATFORM(QT)
+#include <QFont>
+#endif
+
 namespace WebCore {
 
 class FontDescription;
@@ -120,6 +124,10 @@ public:
     }
 #endif
 
+#if PLATFORM(QT)
+    QFont getQtFont() const { return m_font.font(); }
+#endif
+
 #if PLATFORM(WIN)
     bool isSystemFont() const { return m_isSystemFont; }
     SCRIPT_FONTPROPERTIES* scriptFontProperties() const;
@@ -142,6 +150,7 @@ public:
 
 private:
     void platformInit();
+    void platformGlyphInit();
     void platformDestroy();
     
     void commonInit();
