@@ -354,7 +354,6 @@ IDL_BINDINGS += \
     page/Location.idl \
     page/Navigator.idl \
     page/PositionError.idl \
-    page/PositionOptions.idl \
     page/Screen.idl \
     page/WorkerNavigator.idl \
     plugins/Plugin.idl \
@@ -1392,6 +1391,7 @@ contains(DEFINES, ENABLE_WML=1) {
         wml/WMLPrevElement.cpp \
         wml/WMLRefreshElement.cpp \
         wml/WMLSetvarElement.cpp \
+        wml/WMLTableElement.cpp \
         wml/WMLTaskElement.cpp \
         wml/WMLTemplateElement.cpp \
         wml/WMLTimerElement.cpp \

@@ -1,3 +1,299 @@
+2008-12-16 Yael Aharon <yael.aharon@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Qt/Win build fix
+
+        * JavaScriptCore.pri:
+
+2008-12-15  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Fix the build with GCC 4.0.
+
+        * Configurations/JavaScriptCore.xcconfig:  GCC 4.0 appears to have a bug when compiling with -funwind-tables on,
+        so don't use it with that compiler version.
+
+2008-12-15  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Cameron Zwarich.
+
+        <rdar://problem/6289933> Change WebKit-related projects to build with GCC 4.2 on Leopard.
+
+        * Configurations/Base.xcconfig:
+        * Configurations/DebugRelease.xcconfig:
+
+2008-12-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Don't use unique context group in JSGlobalContextCreate() on Tiger or Leopard.
+
+        * API/JSContextRef.cpp: (JSGlobalContextCreate):
+
+2008-12-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6445089> Mach ports leak from worker threads
+
+        * interpreter/Interpreter.cpp: (JSC::getCPUTime):
+        Deallocate the thread self port.
+
+2008-12-15  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Construct stack frames in JIT code, so that backtracing can still work.
+        <rdar://problem/6447870> JIT should play nice with attempts to take stack traces
+
+        * jit/JIT.cpp:
+        (JSC::):
+        (JSC::JIT::privateCompileMainPass):
+
+2008-12-15  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        <rdar://problem/6402262> JavaScriptCore needs exception handling tables in order to get stack traces without frame pointers
+
+        * Configurations/JavaScriptCore.xcconfig:
+
+2008-12-15  Gavin Barraclough  <barraclough@apple.com>
+
+        Rubber stamped by Mark Rowe.
+
+        Revert r39226 / Bug 22818: Unify JIT callback argument access OS X / Windows
+        This causes Acid3 failures – reverting for now & will revisit later.
+        https://bugs.webkit.org/show_bug.cgi?id=22873
+
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JIT.h:
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::restoreArgumentReference):
+        (JSC::JIT::restoreArgumentReferenceForTrampoline):
+        (JSC::JIT::emitCTICall_internal):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::privateCompilePutByIdTransition):
+        * wtf/Platform.h:
+
+2008-12-15  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - fix <rdar://problem/6427048> crash due to infinite recursion after setting window.__proto__ = window
+
+        Replaced toGlobalObject with the more generally useful unwrappedObject and used it to
+        fix the cycle detection code in put(__proto__).
+
+        * JavaScriptCore.exp: Updated.
+
+        * runtime/JSGlobalObject.cpp: Removed toGlobalObject. We now use unwrappedObject instead.
+        * runtime/JSGlobalObject.h:
+        (JSC::JSGlobalObject::isGlobalObject): Ditto.
+
+        * runtime/JSGlobalObjectFunctions.cpp:
+        (JSC::globalFuncEval): Use unwrappedObject and isGlobalObject here rather than toGlobalObject.
+
+        * runtime/JSObject.cpp:
+        (JSC::JSObject::put): Rewrote prototype cycle checking loop. Use unwrappedObject in the loop now.
+        (JSC::JSObject::unwrappedObject): Replaced toGlobalObject with this new function.
+        * runtime/JSObject.h: More of the same.
+
+2008-12-15  Steve Falkenburg  <sfalken@apple.com>
+
+        Windows build fix.
+        
+        Visual Studio requires visibility of forward declarations to match class declaration.
+
+        * assembler/X86Assembler.h:
+
+2008-12-15  Gustavo Noronha Silva  <kov@kov.eti.br>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22686
+
+        GTK+ build fix.
+
+        * GNUmakefile.am:
+
+2008-12-15  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Add support to X86Assembler emitting instructions that access all 16 registers on x86-64.
+        Add a new formating class, that is reponsible for both emitting the opcode bytes and the
+        ModRm  bytes of an instruction in a single call; this can insert the REX byte as necessary
+        before the opcode, but has access to the register numbers to build the REX.
+
+        * assembler/AssemblerBuffer.h:
+        (JSC::AssemblerBuffer::isAligned):
+        (JSC::AssemblerBuffer::data):
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::addPtr):
+        (JSC::MacroAssembler::add32):
+        (JSC::MacroAssembler::and32):
+        (JSC::MacroAssembler::or32):
+        (JSC::MacroAssembler::sub32):
+        (JSC::MacroAssembler::xor32):
+        (JSC::MacroAssembler::loadPtr):
+        (JSC::MacroAssembler::load32):
+        (JSC::MacroAssembler::load16):
+        (JSC::MacroAssembler::storePtr):
+        (JSC::MacroAssembler::storePtrWithRepatch):
+        (JSC::MacroAssembler::store32):
+        (JSC::MacroAssembler::pop):
+        (JSC::MacroAssembler::push):
+        (JSC::MacroAssembler::compareImm32ForBranch):
+        (JSC::MacroAssembler::compareImm32ForBranchEquality):
+        (JSC::MacroAssembler::testImm32):
+        (JSC::MacroAssembler::jae32):
+        (JSC::MacroAssembler::jb32):
+        (JSC::MacroAssembler::je16):
+        (JSC::MacroAssembler::jg32):
+        (JSC::MacroAssembler::jnePtr):
+        (JSC::MacroAssembler::jne32):
+        (JSC::MacroAssembler::jump):
+        * assembler/X86Assembler.h:
+        (JSC::X86::):
+        (JSC::X86Assembler::):
+        (JSC::X86Assembler::size):
+        (JSC::X86Assembler::push_r):
+        (JSC::X86Assembler::pop_r):
+        (JSC::X86Assembler::push_i32):
+        (JSC::X86Assembler::push_m):
+        (JSC::X86Assembler::pop_m):
+        (JSC::X86Assembler::addl_rr):
+        (JSC::X86Assembler::addl_mr):
+        (JSC::X86Assembler::addl_ir):
+        (JSC::X86Assembler::addq_ir):
+        (JSC::X86Assembler::addl_im):
+        (JSC::X86Assembler::andl_rr):
+        (JSC::X86Assembler::andl_ir):
+        (JSC::X86Assembler::orl_rr):
+        (JSC::X86Assembler::orl_mr):
+        (JSC::X86Assembler::orl_ir):
+        (JSC::X86Assembler::subl_rr):
+        (JSC::X86Assembler::subl_mr):
+        (JSC::X86Assembler::subl_ir):
+        (JSC::X86Assembler::subl_im):
+        (JSC::X86Assembler::xorl_rr):
+        (JSC::X86Assembler::xorl_ir):
+        (JSC::X86Assembler::sarl_i8r):
+        (JSC::X86Assembler::sarl_CLr):
+        (JSC::X86Assembler::shll_i8r):
+        (JSC::X86Assembler::shll_CLr):
+        (JSC::X86Assembler::imull_rr):
+        (JSC::X86Assembler::imull_i32r):
+        (JSC::X86Assembler::idivl_r):
+        (JSC::X86Assembler::cmpl_rr):
+        (JSC::X86Assembler::cmpl_rm):
+        (JSC::X86Assembler::cmpl_mr):
+        (JSC::X86Assembler::cmpl_ir):
+        (JSC::X86Assembler::cmpl_ir_force32):
+        (JSC::X86Assembler::cmpl_im):
+        (JSC::X86Assembler::cmpl_im_force32):
+        (JSC::X86Assembler::cmpw_rm):
+        (JSC::X86Assembler::testl_rr):
+        (JSC::X86Assembler::testl_i32r):
+        (JSC::X86Assembler::testl_i32m):
+        (JSC::X86Assembler::testq_rr):
+        (JSC::X86Assembler::testq_i32r):
+        (JSC::X86Assembler::testb_i8r):
+        (JSC::X86Assembler::sete_r):
+        (JSC::X86Assembler::setz_r):
+        (JSC::X86Assembler::setne_r):
+        (JSC::X86Assembler::setnz_r):
+        (JSC::X86Assembler::cdq):
+        (JSC::X86Assembler::xchgl_rr):
+        (JSC::X86Assembler::movl_rr):
+        (JSC::X86Assembler::movl_rm):
+        (JSC::X86Assembler::movl_mr):
+        (JSC::X86Assembler::movl_i32r):
+        (JSC::X86Assembler::movl_i32m):
+        (JSC::X86Assembler::movq_rr):
+        (JSC::X86Assembler::movq_rm):
+        (JSC::X86Assembler::movq_mr):
+        (JSC::X86Assembler::movzwl_mr):
+        (JSC::X86Assembler::movzbl_rr):
+        (JSC::X86Assembler::leal_mr):
+        (JSC::X86Assembler::call):
+        (JSC::X86Assembler::jmp):
+        (JSC::X86Assembler::jmp_r):
+        (JSC::X86Assembler::jmp_m):
+        (JSC::X86Assembler::jne):
+        (JSC::X86Assembler::jnz):
+        (JSC::X86Assembler::je):
+        (JSC::X86Assembler::jl):
+        (JSC::X86Assembler::jb):
+        (JSC::X86Assembler::jle):
+        (JSC::X86Assembler::jbe):
+        (JSC::X86Assembler::jge):
+        (JSC::X86Assembler::jg):
+        (JSC::X86Assembler::ja):
+        (JSC::X86Assembler::jae):
+        (JSC::X86Assembler::jo):
+        (JSC::X86Assembler::jp):
+        (JSC::X86Assembler::js):
+        (JSC::X86Assembler::addsd_rr):
+        (JSC::X86Assembler::addsd_mr):
+        (JSC::X86Assembler::cvtsi2sd_rr):
+        (JSC::X86Assembler::cvttsd2si_rr):
+        (JSC::X86Assembler::movd_rr):
+        (JSC::X86Assembler::movsd_rm):
+        (JSC::X86Assembler::movsd_mr):
+        (JSC::X86Assembler::mulsd_rr):
+        (JSC::X86Assembler::mulsd_mr):
+        (JSC::X86Assembler::pextrw_irr):
+        (JSC::X86Assembler::subsd_rr):
+        (JSC::X86Assembler::subsd_mr):
+        (JSC::X86Assembler::ucomis_rr):
+        (JSC::X86Assembler::int3):
+        (JSC::X86Assembler::ret):
+        (JSC::X86Assembler::predictNotTaken):
+        (JSC::X86Assembler::label):
+        (JSC::X86Assembler::align):
+        (JSC::X86Assembler::link):
+        (JSC::X86Assembler::executableCopy):
+        (JSC::X86Assembler::X86InstructionFormater::prefix):
+        (JSC::X86Assembler::X86InstructionFormater::oneByteOp):
+        (JSC::X86Assembler::X86InstructionFormater::twoByteOp):
+        (JSC::X86Assembler::X86InstructionFormater::oneByteOp64):
+        (JSC::X86Assembler::X86InstructionFormater::oneByteOp8):
+        (JSC::X86Assembler::X86InstructionFormater::twoByteOp8):
+        (JSC::X86Assembler::X86InstructionFormater::instructionImmediate8):
+        (JSC::X86Assembler::X86InstructionFormater::instructionImmediate32):
+        (JSC::X86Assembler::X86InstructionFormater::instructionRel32):
+        (JSC::X86Assembler::X86InstructionFormater::size):
+        (JSC::X86Assembler::X86InstructionFormater::isAligned):
+        (JSC::X86Assembler::X86InstructionFormater::data):
+        (JSC::X86Assembler::X86InstructionFormater::executableCopy):
+        (JSC::X86Assembler::X86InstructionFormater::registerModRM):
+        (JSC::X86Assembler::X86InstructionFormater::memoryModRM):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::putDoubleResultToJSNumberCellOrJSImmediate):
+        (JSC::JIT::compileBinaryArithOp):
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::compileOpCallSlowCase):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::privateCompilePutByIdTransition):
+        (JSC::JIT::privateCompilePatchGetArrayLength):
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdProtoList):
+        (JSC::JIT::privateCompileGetByIdChainList):
+        (JSC::JIT::privateCompileGetByIdChain):
+
 2008-12-15  Darin Adler  <darin@apple.com>
 
         * interpreter/RegisterFile.h: Tweak include formatting.
