@@ -72,15 +72,9 @@
 #define ARG_int6 reinterpret_cast<intptr_t>(ARGS[6])
 #define ARG_func1 static_cast<FuncDeclNode*>(ARGS[1])
 #define ARG_funcexp1 static_cast<FuncExprNode*>(ARGS[1])
-#define ARG_registers1 static_cast<Register*>(ARGS[1])
 #define ARG_regexp1 static_cast<RegExp*>(ARGS[1])
 #define ARG_pni1 static_cast<JSPropertyNameIterator*>(ARGS[1])
-#define ARG_instr1 static_cast<Instruction*>(ARGS[1])
-#define ARG_instr2 static_cast<Instruction*>(ARGS[2])
-#define ARG_instr3 static_cast<Instruction*>(ARGS[3])
 #define ARG_instr4 static_cast<Instruction*>(ARGS[4])
-#define ARG_instr5 static_cast<Instruction*>(ARGS[5])
-#define ARG_instr6 static_cast<Instruction*>(ARGS[6])
 #define ARG_returnAddress2 static_cast<void*>(ARGS[2])
 #define ARG_codeBlock4 static_cast<CodeBlock*>(ARGS[4])
 
@@ -113,94 +107,39 @@ namespace JSC {
     typedef VoidPtrPair (SFX_CALL *CTIHelper_2)(CTI_ARGS);
 
     struct CallRecord {
-        typedef X86Assembler::JmpSrc JmpSrc;
-
-        JmpSrc from;
-        void* to;
+        MacroAssembler::Jump from;
         unsigned bytecodeIndex;
+        void* to;
 
         CallRecord()
         {
         }
 
-        CallRecord(JmpSrc f, CTIHelper_j t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-
-        CallRecord(JmpSrc f, CTIHelper_o t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-
-        CallRecord(JmpSrc f, CTIHelper_p t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-        
-        CallRecord(JmpSrc f, CTIHelper_v t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-        
-        CallRecord(JmpSrc f, CTIHelper_s t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-        
-        CallRecord(JmpSrc f, CTIHelper_b t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-
-        CallRecord(JmpSrc f, CTIHelper_2 t, unsigned i)
-            : from(f)
-            , to(reinterpret_cast<void*>(t))
-            , bytecodeIndex(i)
-        {
-        }
-
-        CallRecord(JmpSrc f, unsigned i)
-            : from(f)
-            , to(0)
-            , bytecodeIndex(i)
+        CallRecord(MacroAssembler::Jump from, unsigned bytecodeIndex, void* to = 0)
+            : from(from)
+            , bytecodeIndex(bytecodeIndex)
+            , to(to)
         {
         }
     };
 
-    struct JmpTable {
-        typedef X86Assembler::JmpSrc JmpSrc;
+    struct JumpTable {
+        MacroAssembler::Jump from;
+        unsigned toBytecodeIndex;
 
-        JmpSrc from;
-        unsigned to;
-        
-        JmpTable(JmpSrc f, unsigned t)
+        JumpTable(MacroAssembler::Jump f, unsigned t)
             : from(f)
-            , to(t)
+            , toBytecodeIndex(t)
         {
         }
     };
 
     struct SlowCaseEntry {
-        typedef X86Assembler::JmpSrc JmpSrc;
-
-        JmpSrc from;
+        MacroAssembler::Jump from;
         unsigned to;
         unsigned hint;
         
-        SlowCaseEntry(JmpSrc f, unsigned t, unsigned h = 0)
+        SlowCaseEntry(MacroAssembler::Jump f, unsigned t, unsigned h = 0)
             : from(f)
             , to(t)
             , hint(h)
@@ -243,13 +182,10 @@ namespace JSC {
     };
 
     struct StructureStubCompilationInfo {
-        typedef X86Assembler::JmpSrc JmpSrc;
-        typedef X86Assembler::JmpDst JmpDst;
-
-        JmpSrc callReturnLocation;
-        JmpDst hotPathBegin;
-        JmpSrc hotPathOther;
-        JmpDst coldPathOther;
+        X86Assembler::JmpSrc callReturnLocation;
+        X86Assembler::JmpDst hotPathBegin;
+        X86Assembler::JmpSrc hotPathOther;
+        X86Assembler::JmpDst coldPathOther;
     };
 
     extern "C" {
@@ -265,11 +201,6 @@ namespace JSC {
         using MacroAssembler::JumpList;
         using MacroAssembler::Label;
 
-        typedef X86Assembler::RegisterID RegisterID;
-        typedef X86Assembler::XMMRegisterID XMMRegisterID;
-        typedef X86Assembler::JmpSrc JmpSrc;
-        typedef X86Assembler::JmpDst JmpDst;
-
         static const RegisterID callFrameRegister = X86::edi;
 
         static const int repatchGetByIdDefaultStructure = -1;
@@ -277,13 +208,6 @@ namespace JSC {
         // will compress the displacement, and we may not be able to fit a repatched offset.
         static const int repatchGetByIdDefaultOffset = 256;
 
-#if USE(FAST_CALL_CTI_ARGUMENT)
-        static const int ctiArgumentInitSize = 2;
-#elif USE(CTI_ARGUMENT)
-        static const int ctiArgumentInitSize = 4;
-#else
-        static const int ctiArgumentInitSize = 0;
-#endif
         // These architecture specific value are used to enable repatching - see comment on op_put_by_id.
         static const int repatchOffsetPutByIdStructure = 7;
         static const int repatchOffsetPutByIdPropertyMapOffset = 22;
@@ -292,9 +216,9 @@ namespace JSC {
         static const int repatchOffsetGetByIdBranchToSlowCase = 13;
         static const int repatchOffsetGetByIdPropertyMapOffset = 22;
 #if ENABLE(OPCODE_SAMPLING)
-        static const int repatchOffsetGetByIdSlowCaseCall = 27 + 4 + ctiArgumentInitSize;
+        static const int repatchOffsetGetByIdSlowCaseCall = 27 + 4;
 #else
-        static const int repatchOffsetGetByIdSlowCaseCall = 17 + 4 + ctiArgumentInitSize;
+        static const int repatchOffsetGetByIdSlowCaseCall = 17 + 4;
 #endif
         static const int repatchOffsetOpCallCall = 6;
 
@@ -397,31 +321,35 @@ namespace JSC {
         void privateCompileCTIMachineTrampolines();
         void privateCompilePatchGetArrayLength(void* returnAddress);
 
-        void compileGetByIdHotPath(int resultVReg, int baseVReg, Identifier* ident, unsigned i, unsigned propertyAccessInstructionIndex);
-        void compileGetByIdSlowCase(int resultVReg, int baseVReg, Identifier* ident, unsigned i, Vector<SlowCaseEntry>::iterator& iter, unsigned propertyAccessInstructionIndex);
-        void compilePutByIdHotPath(int baseVReg, Identifier* ident, int valueVReg, unsigned i, unsigned propertyAccessInstructionIndex);
-        void compilePutByIdSlowCase(int baseVReg, Identifier* ident, int valueVReg, unsigned i, Vector<SlowCaseEntry>::iterator& iter, unsigned propertyAccessInstructionIndex);
-        void compileOpCall(OpcodeID, Instruction* instruction, unsigned i, unsigned callLinkInfoIndex);
+        void addSlowCase(Jump);
+        void addJump(Jump, int);
+        void emitJumpSlowToHot(Jump, int);
+
+        void compileGetByIdHotPath(int resultVReg, int baseVReg, Identifier* ident, unsigned propertyAccessInstructionIndex);
+        void compileGetByIdSlowCase(int resultVReg, int baseVReg, Identifier* ident, Vector<SlowCaseEntry>::iterator& iter, unsigned propertyAccessInstructionIndex);
+        void compilePutByIdHotPath(int baseVReg, Identifier* ident, int valueVReg, unsigned propertyAccessInstructionIndex);
+        void compilePutByIdSlowCase(int baseVReg, Identifier* ident, int valueVReg, Vector<SlowCaseEntry>::iterator& iter, unsigned propertyAccessInstructionIndex);
+        void compileOpCall(OpcodeID, Instruction* instruction, unsigned callLinkInfoIndex);
         void compileOpCallInitializeCallFrame();
         void compileOpCallSetupArgs(Instruction*);
         void compileOpCallEvalSetupArgs(Instruction*);
-        void compileOpCallSlowCase(Instruction* instruction, unsigned i, Vector<SlowCaseEntry>::iterator& iter, unsigned callLinkInfoIndex, OpcodeID opcodeID);
+        void compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>::iterator& iter, unsigned callLinkInfoIndex, OpcodeID opcodeID);
         void compileOpConstructSetupArgs(Instruction*);
         enum CompileOpStrictEqType { OpStrictEq, OpNStrictEq };
-        void compileOpStrictEq(Instruction* instruction, unsigned i, CompileOpStrictEqType type);
-        void putDoubleResultToJSNumberCellOrJSImmediate(XMMRegisterID xmmSource, RegisterID jsNumberCell, unsigned dst, JmpSrc* wroteJSNumberCell,  XMMRegisterID tempXmm, RegisterID tempReg1, RegisterID tempReg2);
-        void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
-        void compileBinaryArithOpSlowCase(OpcodeID, Vector<SlowCaseEntry>::iterator& iter, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi, unsigned i);
+        void compileOpStrictEq(Instruction* instruction, CompileOpStrictEqType type);
+        void putDoubleResultToJSNumberCellOrJSImmediate(X86Assembler::XMMRegisterID xmmSource, RegisterID jsNumberCell, unsigned dst, X86Assembler::JmpSrc* wroteJSNumberCell, X86Assembler::XMMRegisterID tempXmm, RegisterID tempReg1, RegisterID tempReg2);
+        void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi);
+        void compileBinaryArithOpSlowCase(OpcodeID, Vector<SlowCaseEntry>::iterator& iter, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi);
 
-        void emitGetVirtualRegister(int src, RegisterID dst, unsigned i);
-        void emitGetVirtualRegisters(int src1, RegisterID dst1, int src2, RegisterID dst2, unsigned i);
+        void emitGetVirtualRegister(int src, RegisterID dst);
+        void emitGetVirtualRegisters(int src1, RegisterID dst1, int src2, RegisterID dst2);
         void emitPutVirtualRegister(unsigned dst, RegisterID from = X86::eax);
 
-        void emitPutCTIArg(RegisterID src, unsigned offset);
-        void emitPutCTIArgFromVirtualRegister(unsigned src, unsigned offset, RegisterID scratch);
-        void emitPutCTIArgConstant(unsigned value, unsigned offset);
-        void emitPutCTIArgConstant(void* value, unsigned offset);
-        void emitGetCTIArg(unsigned offset, RegisterID dst);
+        void emitPutJITStubArg(RegisterID src, unsigned argumentNumber);
+        void emitPutJITStubArgFromVirtualRegister(unsigned src, unsigned argumentNumber, RegisterID scratch);
+        void emitPutJITStubArgConstant(unsigned value, unsigned argumentNumber);
+        void emitPutJITStubArgConstant(void* value, unsigned argumentNumber);
+        void emitGetJITStubArg(unsigned argumentNumber, RegisterID dst);
 
         void emitInitRegister(unsigned dst);
 
@@ -437,44 +365,52 @@ namespace JSC {
         unsigned getDeTaggedConstantImmediate(JSValue* imm);
 
         Jump emitJumpIfJSCell(RegisterID);
-        void emitJumpSlowCaseIfJSCell(RegisterID, unsigned bytecodeIndex);
+        void emitJumpSlowCaseIfJSCell(RegisterID);
         Jump emitJumpIfNotJSCell(RegisterID);
-        void emitJumpSlowCaseIfNotJSCell(RegisterID, unsigned bytecodeIndex);
-        void emitJumpSlowCaseIfNotJSCell(RegisterID, unsigned bytecodeIndex, int VReg);
-        bool linkSlowCaseIfNotJSCell(const Vector<SlowCaseEntry>::iterator&, int vReg);
+        void emitJumpSlowCaseIfNotJSCell(RegisterID);
+        void emitJumpSlowCaseIfNotJSCell(RegisterID, int VReg);
 
-        void emitJumpSlowCaseIfNotImmNum(RegisterID, unsigned bytecodeIndex);
-        void emitJumpSlowCaseIfNotImmNums(RegisterID, RegisterID, RegisterID, unsigned bytecodeIndex);
+        Jump getSlowCase(Vector<SlowCaseEntry>::iterator& iter)
+        {
+            return iter++->from;
+        }
+        void linkSlowCase(Vector<SlowCaseEntry>::iterator& iter)
+        {
+            iter->from.link(this);
+            ++iter;
+        }
+        void linkSlowCaseIfNotJSCell(Vector<SlowCaseEntry>::iterator&, int vReg);
 
-        JmpSrc checkStructure(RegisterID reg, Structure* structure);
+        void emitJumpSlowCaseIfNotImmNum(RegisterID);
+        void emitJumpSlowCaseIfNotImmNums(RegisterID, RegisterID, RegisterID);
+
+        Jump checkStructure(RegisterID reg, Structure* structure);
 
         void emitFastArithDeTagImmediate(RegisterID);
-        JmpSrc emitFastArithDeTagImmediateJumpIfZero(RegisterID);
+        Jump emitFastArithDeTagImmediateJumpIfZero(RegisterID);
         void emitFastArithReTagImmediate(RegisterID);
         void emitFastArithPotentiallyReTagImmediate(RegisterID);
         void emitFastArithImmToInt(RegisterID);
-        void emitFastArithIntToImmOrSlowCase(RegisterID, unsigned bytecodeIndex);
+        void emitFastArithIntToImmOrSlowCase(RegisterID);
         void emitFastArithIntToImmNoCheck(RegisterID);
 
         void emitTagAsBoolImmediate(RegisterID reg);
 
-        void restoreArgumentReference();
-        void restoreArgumentReferenceForTrampoline();
-
-        JmpSrc emitNakedCall(unsigned bytecodeIndex, RegisterID);
-        JmpSrc emitNakedCall(unsigned bytecodeIndex, void* function);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_j);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_o);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_p);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_v);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_s);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_b);
-        JmpSrc emitCTICall(unsigned bytecodeIndex, CTIHelper_2);
+        Jump emitNakedCall(RegisterID);
+        Jump emitNakedCall(void* function);
+        Jump emitCTICall_internal(void*);
+        Jump emitCTICall(CTIHelper_j helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
+        Jump emitCTICall(CTIHelper_o helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
+        Jump emitCTICall(CTIHelper_p helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
+        Jump emitCTICall(CTIHelper_v helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
+        Jump emitCTICall(CTIHelper_s helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
+        Jump emitCTICall(CTIHelper_b helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
+        Jump emitCTICall(CTIHelper_2 helper) { return emitCTICall_internal(reinterpret_cast<void*>(helper)); }
 
         void emitGetVariableObjectRegister(RegisterID variableObject, int index, RegisterID dst);
         void emitPutVariableObjectRegister(RegisterID src, RegisterID variableObject, int index);
         
-        void emitSlowScriptCheck(unsigned bytecodeIndex);
+        void emitSlowScriptCheck();
 #ifndef NDEBUG
         void printBytecodeOperandTypes(unsigned src1, unsigned src2);
 #endif
@@ -486,22 +422,23 @@ namespace JSC {
         CodeBlock* m_codeBlock;
 
         Vector<CallRecord> m_calls;
-        Vector<JmpDst> m_labels;
+        Vector<Label> m_labels;
         Vector<StructureStubCompilationInfo> m_propertyAccessCompilationInfo;
         Vector<StructureStubCompilationInfo> m_callStructureStubCompilationInfo;
-        Vector<JmpTable> m_jmpTable;
+        Vector<JumpTable> m_jmpTable;
 
         struct JSRInfo {
-            JmpDst addrPosition;
-            JmpDst target;
+            DataLabelPtr storeLocation;
+            Label target;
 
-            JSRInfo(const JmpDst& storeLocation, const JmpDst& targetLocation)
-                : addrPosition(storeLocation)
+            JSRInfo(DataLabelPtr storeLocation, Label targetLocation)
+                : storeLocation(storeLocation)
                 , target(targetLocation)
             {
             }
         };
 
+        unsigned m_bytecodeIndex;
         Vector<JSRInfo> m_jsrSites;
         Vector<SlowCaseEntry> m_slowCases;
         Vector<SwitchRecord> m_switches;

@@ -40,6 +40,10 @@
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 
+#if ENABLE(JIT)
+#include "StructureStubInfo.h"
+#endif
+
 namespace JSC {
 
     class ExecState;
@@ -53,8 +57,29 @@ namespace JSC {
         uint32_t end;
         uint32_t target;
         uint32_t scopeDepth;
+#if ENABLE(JIT)
         void* nativeCode;
+#endif
     };
+
+#if ENABLE(JIT)
+    // The code, and the associated pool from which it was allocated.
+    struct JITCodeRef {
+        void* code;
+        RefPtr<ExecutablePool> executablePool;
+        
+        JITCodeRef()
+            : code(0)
+        {
+        }
+        
+        JITCodeRef(void* code, PassRefPtr<ExecutablePool> executablePool)
+            : code(code)
+            , executablePool(executablePool)
+        {
+        }
+    };
+#endif
 
     struct ExpressionRangeInfo {
         enum {
@@ -72,21 +97,15 @@ namespace JSC {
         int32_t lineNumber;
     };
 
-    struct StructureStubInfo {
-        StructureStubInfo(unsigned bytecodeIndex)
-            : bytecodeIndex(bytecodeIndex)
-            , stubRoutine(0)
-            , callReturnLocation(0)
-            , hotPathBegin(0)
-        {
-        }
-    
-        unsigned bytecodeIndex;
-        void* stubRoutine;
-        void* callReturnLocation;
-        void* hotPathBegin;
+    // Both op_construct and op_instanceof require a use of op_get_by_id to get
+    // the prototype property from an object. The exception messages for exceptions
+    // thrown by these instances op_get_by_id need to reflect this.
+    struct GetByIdExceptionInfo {
+        unsigned bytecodeOffset : 31;
+        bool isOpConstruct : 1;
     };
 
+#if ENABLE(JIT)
     struct CallLinkInfo {
         CallLinkInfo()
             : callReturnLocation(0)
@@ -109,6 +128,30 @@ namespace JSC {
         bool isLinked() { return callee; }
     };
 
+    struct GlobalResolveInfo {
+        GlobalResolveInfo()
+            : structure(0)
+            , offset(0)
+        {
+        }
+
+        Structure* structure;
+        unsigned offset;
+    };
+
+    struct PC {
+        PC(void* nativePC, unsigned bytecodeIndex)
+            : nativePC(nativePC)
+            , bytecodeIndex(bytecodeIndex)
+        {
+        }
+        
+        void* nativePC;
+        unsigned bytecodeIndex;
+    };
+
+    // valueAtPosition helpers for the binaryChop algorithm below.
+
     inline void* getStructureStubInfoReturnLocation(StructureStubInfo* structureStubInfo)
     {
         return structureStubInfo->callReturnLocation;
@@ -117,6 +160,11 @@ namespace JSC {
     inline void* getCallLinkInfoReturnLocation(CallLinkInfo* callLinkInfo)
     {
         return callLinkInfo->callReturnLocation;
+    }
+
+    inline void* getNativePC(PC* pc)
+    {
+        return pc->nativePC;
     }
 
     // Binary chop algorithm, calls valueAtPosition on pre-sorted elements in array,
@@ -154,6 +202,7 @@ namespace JSC {
         ASSERT(key == valueAtPosition(&array[0]));
         return &array[0];
     }
+#endif
 
     class CodeBlock {
         friend class JIT;
@@ -161,30 +210,20 @@ namespace JSC {
         CodeBlock(ScopeNode* ownerNode, CodeType, PassRefPtr<SourceProvider>, unsigned sourceOffset);
         ~CodeBlock();
 
-        static void dumpStatistics();
-
-#if ENABLE(JIT) 
+        void mark();
+        void refStructures(Instruction* vPC) const;
+        void derefStructures(Instruction* vPC) const;
+#if ENABLE(JIT)
         void unlinkCallers();
 #endif
 
-        void addCaller(CallLinkInfo* caller)
-        {
-            caller->callee = this;
-            caller->position = m_linkedCallerList.size();
-            m_linkedCallerList.append(caller);
-        }
+        static void dumpStatistics();
 
-        void removeCaller(CallLinkInfo* caller)
-        {
-            unsigned pos = caller->position;
-            unsigned lastPos = m_linkedCallerList.size() - 1;
-
-            if (pos != lastPos) {
-                m_linkedCallerList[pos] = m_linkedCallerList[lastPos];
-                m_linkedCallerList[pos]->position = pos;
-            }
-            m_linkedCallerList.shrink(lastPos);
-        }
+#if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
+        void dump(ExecState*) const;
+        void printStructures(const Instruction*) const;
+        void printStructure(const char* name, const Instruction*, int operand) const;
+#endif
 
         inline bool isKnownNotImmediate(int index)
         {
@@ -212,23 +251,34 @@ namespace JSC {
             return index >= m_numVars + m_numConstants;
         }
 
-#if !defined(NDEBUG) || ENABLE_OPCODE_SAMPLING
-        void dump(ExecState*) const;
-        void printStructures(const Instruction*) const;
-        void printStructure(const char* name, const Instruction*, int operand) const;
-#endif
-        int expressionRangeForVPC(const Instruction*, int& divot, int& startOffset, int& endOffset);
-        int lineNumberForVPC(const Instruction* vPC);
-        bool getHandlerForVPC(const Instruction* vPC, Instruction*& target, int& scopeDepth);
-        void* nativeExceptionCodeForHandlerVPC(const Instruction* handlerVPC);
+        HandlerInfo* handlerForBytecodeOffset(unsigned bytecodeOffset);
+        int lineNumberForBytecodeOffset(unsigned bytecodeOffset);
+        int expressionRangeForBytecodeOffset(unsigned bytecodeOffset, int& divot, int& startOffset, int& endOffset);
+        bool getByIdExceptionInfoForBytecodeOffset(unsigned bytecodeOffset, OpcodeID&);
 
-        void mark();
-        void refStructures(Instruction* vPC) const;
-        void derefStructures(Instruction* vPC) const;
+#if ENABLE(JIT)
+        void addCaller(CallLinkInfo* caller)
+        {
+            caller->callee = this;
+            caller->position = m_linkedCallerList.size();
+            m_linkedCallerList.append(caller);
+        }
+
+        void removeCaller(CallLinkInfo* caller)
+        {
+            unsigned pos = caller->position;
+            unsigned lastPos = m_linkedCallerList.size() - 1;
+
+            if (pos != lastPos) {
+                m_linkedCallerList[pos] = m_linkedCallerList[lastPos];
+                m_linkedCallerList[pos]->position = pos;
+            }
+            m_linkedCallerList.shrink(lastPos);
+        }
 
         StructureStubInfo& getStubInfo(void* returnAddress)
         {
-            return *(binaryChop<StructureStubInfo, void*, getStructureStubInfoReturnLocation>(m_propertyAccessInstructions.begin(), m_propertyAccessInstructions.size(), returnAddress));
+            return *(binaryChop<StructureStubInfo, void*, getStructureStubInfoReturnLocation>(m_structureStubInfos.begin(), m_structureStubInfos.size(), returnAddress));
         }
 
         CallLinkInfo& getCallLinkInfo(void* returnAddress)
@@ -236,13 +286,18 @@ namespace JSC {
             return *(binaryChop<CallLinkInfo, void*, getCallLinkInfoReturnLocation>(m_callLinkInfos.begin(), m_callLinkInfos.size(), returnAddress));
         }
 
+        unsigned getBytecodeIndex(void* nativePC)
+        {
+            return binaryChop<PC, void*, getNativePC>(m_pcVector.begin(), m_pcVector.size(), nativePC)->bytecodeIndex;
+        }
+#endif
 
         Vector<Instruction>& instructions() { return m_instructions; }
+
 #if ENABLE(JIT)
-        void setJITCode(void* jitCode) { m_jitCode = jitCode; }
-        void* jitCode() { return m_jitCode; }
-        ExecutablePool* executablePool() { return m_executablePool.get(); }
-        void setExecutablePool(ExecutablePool* pool) { m_executablePool = pool; }
+        void setJITCode(JITCodeRef& jitCode) { m_jitCode = jitCode; }
+        void* jitCode() { return m_jitCode.code; }
+        ExecutablePool* executablePool() { return m_jitCode.executablePool.get(); }
 #endif
 
         ScopeNode* ownerNode() const { return m_ownerNode; }
@@ -264,16 +319,6 @@ namespace JSC {
         SourceProvider* source() const { return m_source.get(); }
         unsigned sourceOffset() const { return m_sourceOffset; }
 
-        void addGlobalResolveInstruction(unsigned globalResolveInstructions) { m_globalResolveInstructions.append(globalResolveInstructions); }
-
-        size_t numberOfPropertyAccessInstructions() const { return m_propertyAccessInstructions.size(); }
-        void addPropertyAccessInstruction(unsigned propertyAccessInstructions) { m_propertyAccessInstructions.append(StructureStubInfo(propertyAccessInstructions)); }
-        StructureStubInfo& propertyAccessInstruction(int index) { return m_propertyAccessInstructions[index]; }
-
-        size_t numberOfCallLinkInfos() const { return m_callLinkInfos.size(); }
-        void addCallLinkInfo() { m_callLinkInfos.append(CallLinkInfo()); }
-        CallLinkInfo& callLinkInfo(int index) { return m_callLinkInfos[index]; }
-
         size_t numberOfJumpTargets() const { return m_jumpTargets.size(); }
         void addJumpTarget(unsigned jumpTarget) { m_jumpTargets.append(jumpTarget); }
         unsigned jumpTarget(int index) const { return m_jumpTargets[index]; }
@@ -284,13 +329,28 @@ namespace JSC {
         HandlerInfo& exceptionHandler(int index) { ASSERT(m_rareData); return m_rareData->m_exceptionHandlers[index]; }
 
         void addExpressionInfo(const ExpressionRangeInfo& expressionInfo) { return m_expressionInfo.append(expressionInfo); }
+        void addGetByIdExceptionInfo(const GetByIdExceptionInfo& info) { m_getByIdExceptionInfo.append(info); }
 
         size_t numberOfLineInfos() const { return m_lineInfo.size(); }
         void addLineInfo(const LineInfo& lineInfo) { return m_lineInfo.append(lineInfo); }
         LineInfo& lastLineInfo() { return m_lineInfo.last(); }
 
-#if ENABLE(JIT)
-        HashMap<void*, unsigned>& jitReturnAddressVPCMap() { return m_jitReturnAddressVPCMap; }
+#if !ENABLE(JIT)
+        void addPropertyAccessInstruction(unsigned propertyAccessInstruction) { m_propertyAccessInstructions.append(propertyAccessInstruction); }
+        void addGlobalResolveInstruction(unsigned globalResolveInstructions) { m_globalResolveInstructions.append(globalResolveInstructions); }
+#else
+        size_t numberOfStructureStubInfos() const { return m_structureStubInfos.size(); }
+        void addStructureStubInfo(const StructureStubInfo& stubInfo) { m_structureStubInfos.append(stubInfo); }
+        StructureStubInfo& structureStubInfo(int index) { return m_structureStubInfos[index]; }
+
+        void addGlobalResolveInfo() { m_globalResolveInfos.append(GlobalResolveInfo()); }
+        GlobalResolveInfo& globalResolveInfo(int index) { return m_globalResolveInfos[index]; }
+
+        size_t numberOfCallLinkInfos() const { return m_callLinkInfos.size(); }
+        void addCallLinkInfo() { m_callLinkInfos.append(CallLinkInfo()); }
+        CallLinkInfo& callLinkInfo(int index) { return m_callLinkInfos[index]; }
+
+        Vector<PC>& pcVector() { return m_pcVector; }
 #endif
 
         // Constant Pool
@@ -365,8 +425,7 @@ namespace JSC {
 
         Vector<Instruction> m_instructions;
 #if ENABLE(JIT)
-        void* m_jitCode;
-        RefPtr<ExecutablePool> m_executablePool;
+        JITCodeRef m_jitCode;
 #endif
 
         int m_thisRegister;
@@ -380,18 +439,24 @@ namespace JSC {
         RefPtr<SourceProvider> m_source;
         unsigned m_sourceOffset;
 
+#if !ENABLE(JIT)
+        Vector<unsigned> m_propertyAccessInstructions;
         Vector<unsigned> m_globalResolveInstructions;
-        Vector<StructureStubInfo> m_propertyAccessInstructions;
+#else
+        Vector<StructureStubInfo> m_structureStubInfos;
+        Vector<GlobalResolveInfo> m_globalResolveInfos;
         Vector<CallLinkInfo> m_callLinkInfos;
         Vector<CallLinkInfo*> m_linkedCallerList;
+#endif
 
         Vector<unsigned> m_jumpTargets;
 
         Vector<ExpressionRangeInfo> m_expressionInfo;
         Vector<LineInfo> m_lineInfo;
+        Vector<GetByIdExceptionInfo> m_getByIdExceptionInfo;
 
 #if ENABLE(JIT)
-        HashMap<void*, unsigned> m_jitReturnAddressVPCMap;
+        Vector<PC> m_pcVector;
 #endif
 
         // Constant Pool

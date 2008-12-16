@@ -1,3 +1,730 @@
+2008-12-15  Darin Adler  <darin@apple.com>
+
+        * interpreter/RegisterFile.h: Tweak include formatting.
+
+2008-12-15  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Build fix for Gtk+.
+
+        * interpreter/RegisterFile.h: Include stdio.h for fprintf
+
+2008-12-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        <rdar://problem/6444455> Worker Thread crash running multiple workers for a moderate amount of time
+
+        * interpreter/RegisterFile.h: (JSC::RegisterFile::RegisterFile):
+        Improve error handling: if mmap fails, crash immediately, and print out the reason.
+
+2008-12-13  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Re-enable WREC on 64-bit.
+        Implements one of the MacroAssembler::jnzPtr methods, previously only implemented for 32-bit x86.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22849
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::testImm64):
+        (JSC::MacroAssembler::jnzPtr):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::testq_i32r):
+        (JSC::X86Assembler::testq_rr):
+        * wtf/Platform.h:
+
+2008-12-13  Gavin Barraclough  <barraclough@apple.com>
+
+        Fix PPC builds.
+
+        * assembler/MacroAssembler.h:
+
+2008-12-13  Gavin Barraclough  <barraclough@apple.com>
+
+        Build fix only, no review.
+
+        * bytecode/CodeBlock.h:
+
+2008-12-13  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Port the remainder of the JIT, bar calling convention related code, and code
+        implementing optimizations which can be disabled, to use the MacroAssembler.
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::DataLabelPtr::DataLabelPtr):
+        (JSC::MacroAssembler::RepatchBuffer::RepatchBuffer):
+        (JSC::MacroAssembler::RepatchBuffer::link):
+        (JSC::MacroAssembler::RepatchBuffer::addressOf):
+        (JSC::MacroAssembler::RepatchBuffer::setPtr):
+        (JSC::MacroAssembler::addPtr):
+        (JSC::MacroAssembler::lshift32):
+        (JSC::MacroAssembler::mod32):
+        (JSC::MacroAssembler::rshift32):
+        (JSC::MacroAssembler::storePtrWithRepatch):
+        (JSC::MacroAssembler::jnzPtr):
+        (JSC::MacroAssembler::jzPtr):
+        (JSC::MacroAssembler::jump):
+        (JSC::MacroAssembler::label):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::):
+        (JSC::X86Assembler::xchgl_rr):
+        (JSC::X86Assembler::jmp_m):
+        (JSC::X86Assembler::repatchAddress):
+        (JSC::X86Assembler::getRelocatedAddress):
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::CodeBlock):
+        * bytecode/CodeBlock.h:
+        (JSC::JITCodeRef::JITCodeRef):
+        (JSC::CodeBlock::setJITCode):
+        (JSC::CodeBlock::jitCode):
+        (JSC::CodeBlock::executablePool):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileLinkPass):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JIT.h:
+        (JSC::CallRecord::CallRecord):
+        (JSC::JumpTable::JumpTable):
+        (JSC::JIT::emitCTICall):
+        (JSC::JIT::JSRInfo::JSRInfo):
+        * jit/JITArithmetic.cpp:
+        * jit/JITCall.cpp:
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitNakedCall):
+        (JSC::JIT::emitCTICall_internal):
+        (JSC::JIT::checkStructure):
+        (JSC::JIT::emitFastArithDeTagImmediateJumpIfZero):
+        (JSC::JIT::addSlowCase):
+        (JSC::JIT::addJump):
+        (JSC::JIT::emitJumpSlowToHot):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::privateCompileGetByIdChainList):
+        (JSC::JIT::privateCompileGetByIdChain):
+
+2008-12-12  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Fix the failures of the following layout tests, which regressed in
+        r39255:
+
+        fast/dom/StyleSheet/ownerNode-lifetime-2.html
+        fast/xsl/transform-xhr-doc.xhtml
+
+        The binary search in CodeBlock::getByIdExceptionInfoForBytecodeOffset()
+        doesn't guarantee that it actually finds a match, so add an explicit check
+        for this.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::getByIdExceptionInfoForBytecodeOffset):
+
+2008-12-12  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Replace emitPutCallArg methods with emitPutJITStubArg methods.  Primarily to make the argument numbering
+        more sensible (1-based incrementing by 1, rather than 0-based incrementing by 4).  The CTI name also seems
+        to be being deprecated from the code generally.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JIT.h:
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileBinaryArithOp):
+        (JSC::JIT::compileBinaryArithOpSlowCase):
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCallSetupArgs):
+        (JSC::JIT::compileOpCallEvalSetupArgs):
+        (JSC::JIT::compileOpConstructSetupArgs):
+        (JSC::JIT::compileOpCall):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitPutJITStubArg):
+        (JSC::JIT::emitPutJITStubArgConstant):
+        (JSC::JIT::emitGetJITStubArg):
+        (JSC::JIT::emitPutJITStubArgFromVirtualRegister):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::compileGetByIdSlowCase):
+        (JSC::JIT::compilePutByIdSlowCase):
+
+2008-12-12  Gavin Barraclough  <barraclough@apple.com>
+
+        Fix windows builds.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+
+2008-12-12  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Remove loop counter 'i' from the JIT generation passes, replace with a member m_bytecodeIndex.
+
+        No impact on performance.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::compileOpStrictEq):
+        (JSC::JIT::emitSlowScriptCheck):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+        * jit/JIT.h:
+        (JSC::CallRecord::CallRecord):
+        (JSC::JmpTable::JmpTable):
+        (JSC::JIT::emitCTICall):
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileBinaryArithOp):
+        (JSC::JIT::compileBinaryArithOpSlowCase):
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::compileOpCallSlowCase):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitGetVirtualRegister):
+        (JSC::JIT::emitGetVirtualRegisters):
+        (JSC::JIT::emitNakedCall):
+        (JSC::JIT::emitCTICall_internal):
+        (JSC::JIT::emitJumpSlowCaseIfJSCell):
+        (JSC::JIT::emitJumpSlowCaseIfNotJSCell):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNum):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmNums):
+        (JSC::JIT::emitFastArithIntToImmOrSlowCase):
+        (JSC::JIT::addSlowCase):
+        (JSC::JIT::addJump):
+        (JSC::JIT::emitJumpSlowToHot):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compileGetByIdSlowCase):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::compilePutByIdSlowCase):
+
+2008-12-12  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Cameron Zwarich.
+
+        <rdar://problem/6428342> Look into feasibility of discarding bytecode after native codegen
+
+        Move more JIT functionality to using offsets into the Instruction buffer
+        instead of raw pointers. Two to go!
+
+        * interpreter/Interpreter.cpp:
+        (JSC::bytecodeOffsetForPC): Rename from vPCForPC.
+        (JSC::Interpreter::resolve): Pass offset to exception helper.
+        (JSC::Interpreter::resolveSkip): Ditto.
+        (JSC::Interpreter::resolveGlobal): Ditto.
+        (JSC::Interpreter::resolveBaseAndProperty): Ditto.
+        (JSC::Interpreter::resolveBaseAndFunc): Ditto.
+        (JSC::isNotObject): Ditto.
+        (JSC::Interpreter::unwindCallFrame): Call bytecodeOffsetForPC.
+        (JSC::Interpreter::throwException): Use offsets instead of vPCs.
+        (JSC::Interpreter::privateExecute): Pass offset to exception helper.
+        (JSC::Interpreter::retrieveLastCaller): Ditto.
+        (JSC::Interpreter::cti_op_instanceof): Ditto.
+        (JSC::Interpreter::cti_op_call_NotJSFunction): Ditto.
+        (JSC::Interpreter::cti_op_resolve): Pass offset to exception helper.
+        (JSC::Interpreter::cti_op_construct_NotJSConstruct): Ditto.
+        (JSC::Interpreter::cti_op_resolve_func): Ditto.
+        (JSC::Interpreter::cti_op_resolve_skip): Ditto.
+        (JSC::Interpreter::cti_op_resolve_global): Ditto.
+        (JSC::Interpreter::cti_op_resolve_with_base): Ditto.
+        (JSC::Interpreter::cti_op_throw): Ditto.
+        (JSC::Interpreter::cti_op_in): Ditto.
+        (JSC::Interpreter::cti_vm_throw): Ditto.
+        * interpreter/Interpreter.h:
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass): Don't pass unnecessary vPC to stub.
+        * jit/JIT.h: Remove ARG_instr1 - ARG_instr3 and ARG_instr5 - ARG_instr6.
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCallEvalSetupArgs): Don't pass unnecessary vPC to stub..
+        (JSC::JIT::compileOpConstructSetupArgs): Ditto.
+
+        * runtime/ExceptionHelpers.cpp:
+        (JSC::createUndefinedVariableError): Take an offset instead of vPC.
+        (JSC::createInvalidParamError): Ditto.
+        (JSC::createNotAConstructorError): Ditto.
+        (JSC::createNotAFunctionError): Ditto.
+        (JSC::createNotAnObjectError): Ditto.
+        * runtime/ExceptionHelpers.h:
+
+2008-12-12  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 22835: Crash during bytecode generation when comparing to null
+        <https://bugs.webkit.org/show_bug.cgi?id=22835>
+        <rdar://problem/6286749>
+
+        Change the special cases in bytecode generation for comparison to null
+        to use tempDestination().
+
+        * parser/Nodes.cpp:
+        (JSC::BinaryOpNode::emitBytecode):
+        (JSC::EqualNode::emitBytecode):
+
+2008-12-12  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Move slow-cases of JIT code generation over to the MacroAssembler interface.
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::Label::Label):
+        (JSC::MacroAssembler::jae32):
+        (JSC::MacroAssembler::jg32):
+        (JSC::MacroAssembler::jzPtr):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::emitGetVariableObjectRegister):
+        (JSC::JIT::emitPutVariableObjectRegister):
+        * jit/JIT.h:
+        (JSC::SlowCaseEntry::SlowCaseEntry):
+        (JSC::JIT::getSlowCase):
+        (JSC::JIT::linkSlowCase):
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileBinaryArithOpSlowCase):
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCallInitializeCallFrame):
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::compileOpCallSlowCase):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitJumpSlowCaseIfNotJSCell):
+        (JSC::JIT::linkSlowCaseIfNotJSCell):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::compileGetByIdSlowCase):
+        (JSC::JIT::compilePutByIdSlowCase):
+
+2008-12-12  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Bug 22828: Do not inspect bytecode instruction stream for op_get_by_id exception information
+        <https://bugs.webkit.org/show_bug.cgi?id=22828>
+
+        In order to remove the bytecode instruction stream after generating
+        native code, all inspection of bytecode instructions at runtime must
+        be removed. One particular instance of this is the special handling of
+        exceptions thrown by the op_get_by_id emitted directly before an
+        op_construct or an op_instanceof. This patch moves that information to
+        an auxiliary data structure in CodeBlock.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::getByIdExceptionInfoForBytecodeOffset):
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::addGetByIdExceptionInfo):
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::emitConstruct):
+        * bytecompiler/BytecodeGenerator.h:
+        (JSC::BytecodeGenerator::emitGetByIdExceptionInfo):
+        * parser/Nodes.cpp:
+        (JSC::InstanceOfNode::emitBytecode):
+        * runtime/ExceptionHelpers.cpp:
+        (JSC::createNotAnObjectError):
+
+2008-12-12  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Change exception information accessors to take offsets into the bytecode
+        instruction buffer instead of pointers so that they can work even even
+        if the bytecode buffer is purged.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::instructionOffsetForNth):
+        (JSC::CodeBlock::handlerForBytecodeOffset):
+        (JSC::CodeBlock::lineNumberForBytecodeOffset):
+        (JSC::CodeBlock::expressionRangeForBytecodeOffset):
+        * bytecode/CodeBlock.h:
+        * bytecode/SamplingTool.cpp:
+        (JSC::SamplingTool::dump):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::throwException):
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::retrieveLastCaller):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        * runtime/ExceptionHelpers.cpp:
+        (JSC::createUndefinedVariableError):
+        (JSC::createInvalidParamError):
+        (JSC::createNotAConstructorError):
+        (JSC::createNotAFunctionError):
+        (JSC::createNotAnObjectError):
+
+2008-12-12  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Cameron Zwarich.
+        
+        Tiny bit of refactoring in quantifier generation.
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateNonGreedyQuantifier):
+        (JSC::WREC::Generator::generateGreedyQuantifier):
+
+2008-12-11  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Remove dependancy on having the Instruction buffer in order to
+        deref Structures used for property access and global resolves.
+        Instead, we put references to the necessary Structures in auxiliary
+        data structures on the CodeBlock. This is not an ideal solution,
+        as we still pay for having the Structures in two places and we
+        would like to eventually just hold on to offsets into the machine
+        code buffer.
+
+        - Also removes CodeBlock bloat in non-JIT by #ifdefing the JIT
+          only data structures.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+        * bytecode/CodeBlock.cpp:
+        (JSC::isGlobalResolve):
+        (JSC::isPropertyAccess):
+        (JSC::instructionOffsetForNth):
+        (JSC::printGlobalResolveInfo):
+        (JSC::printStructureStubInfo):
+        (JSC::CodeBlock::printStructures):
+        (JSC::CodeBlock::dump):
+        (JSC::CodeBlock::~CodeBlock):
+        (JSC::CodeBlock::shrinkToFit):
+        * bytecode/CodeBlock.h:
+        (JSC::GlobalResolveInfo::GlobalResolveInfo):
+        (JSC::getNativePC):
+        (JSC::CodeBlock::instructions):
+        (JSC::CodeBlock::getStubInfo):
+        (JSC::CodeBlock::getBytecodeIndex):
+        (JSC::CodeBlock::addPropertyAccessInstruction):
+        (JSC::CodeBlock::addGlobalResolveInstruction):
+        (JSC::CodeBlock::numberOfStructureStubInfos):
+        (JSC::CodeBlock::addStructureStubInfo):
+        (JSC::CodeBlock::structureStubInfo):
+        (JSC::CodeBlock::addGlobalResolveInfo):
+        (JSC::CodeBlock::globalResolveInfo):
+        (JSC::CodeBlock::numberOfCallLinkInfos):
+        (JSC::CodeBlock::addCallLinkInfo):
+        (JSC::CodeBlock::callLinkInfo):
+        * bytecode/Instruction.h:
+        (JSC::PolymorphicAccessStructureList::PolymorphicStubInfo::set):
+        (JSC::PolymorphicAccessStructureList::PolymorphicAccessStructureList):
+        * bytecode/Opcode.h:
+        (JSC::):
+        * bytecode/StructureStubInfo.cpp: Copied from bytecode/CodeBlock.cpp.
+        (JSC::StructureStubInfo::deref):
+        * bytecode/StructureStubInfo.h: Copied from bytecode/CodeBlock.h.
+        (JSC::StructureStubInfo::StructureStubInfo):
+        (JSC::StructureStubInfo::initGetByIdSelf):
+        (JSC::StructureStubInfo::initGetByIdProto):
+        (JSC::StructureStubInfo::initGetByIdChain):
+        (JSC::StructureStubInfo::initGetByIdSelfList):
+        (JSC::StructureStubInfo::initGetByIdProtoList):
+        (JSC::StructureStubInfo::initPutByIdTransition):
+        (JSC::StructureStubInfo::initPutByIdReplace):
+        (JSC::StructureStubInfo::):
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::emitResolve):
+        (JSC::BytecodeGenerator::emitGetById):
+        (JSC::BytecodeGenerator::emitPutById):
+        (JSC::BytecodeGenerator::emitCall):
+        (JSC::BytecodeGenerator::emitConstruct):
+        (JSC::BytecodeGenerator::emitCatch):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::tryCTICachePutByID):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::Interpreter::cti_op_get_by_id_self_fail):
+        (JSC::getPolymorphicAccessStructureListSlot):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list):
+        (JSC::Interpreter::cti_op_resolve_global):
+        * jit/JIT.cpp:
+        (JSC::JIT::JIT):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::compileGetByIdSlowCase):
+        (JSC::JIT::compilePutByIdSlowCase):
+        (JSC::JIT::privateCompileGetByIdSelfList):
+        (JSC::JIT::privateCompileGetByIdProtoList):
+        (JSC::JIT::privateCompileGetByIdChainList):
+
+2008-12-11  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Remove CTI_ARGUMENTS mode, use va_start implementation on Windows,
+        unifying JIT callback (cti_*) argument access on OS X & Windows
+
+        No performance impact.
+
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JIT.h:
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitCTICall):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::privateCompilePutByIdTransition):
+        * wtf/Platform.h:
+
+2008-12-11  Holger Freyther  <zecke@selfish.org>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20953
+
+        For Qt it is not pratical to have a FontCache and GlyphPageTreeNode
+        implementation. This is one of the reasons why the Qt port is currently not
+        using WebCore/platform/graphics/Font.cpp. By allowing to not use
+        the simple/fast-path the Qt port will be able to use it.
+
+        Introduce USE(FONT_FAST_PATH) and define it for every port but the
+        Qt one.
+
+        * wtf/Platform.h: Enable USE(FONT_FAST_PATH)
+
+2008-12-11  Gabor Loki  <loki@inf.u-szeged.hu>
+
+        Reviewed by Darin Adler and landed by Holger Freyther.
+
+        <https://bugs.webkit.org/show_bug.cgi?id=22648>
+        Fix threading on Qt-port and Gtk-port for Sampling tool.
+
+        * wtf/ThreadingGtk.cpp:
+        (WTF::waitForThreadCompletion):
+        * wtf/ThreadingQt.cpp:
+        (WTF::waitForThreadCompletion):
+
+2008-12-10  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 22734: Debugger crashes when stepping into a function call in a return statement
+        <https://bugs.webkit.org/show_bug.cgi?id=22734>
+        <rdar://problem/6426796>
+
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::BytecodeGenerator): The DebuggerCallFrame uses
+        the 'this' value stored in a callFrame, so op_convert_this should be
+        emitted at the beginning of a function body when generating bytecode
+        with debug hooks.
+        * debugger/DebuggerCallFrame.cpp:
+        (JSC::DebuggerCallFrame::thisObject): The assertion inherent in the call
+        to asObject() here is valid, because any 'this' value should have been
+        converted to a JSObject*.
+
+2008-12-10  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Port more of the JIT to use the MacroAssembler interface.
+        
+        Everything in the main pass, bar a few corner cases (operations with required
+        registers, or calling convention code).  Slightly refactors array creation,
+        moving the offset calculation into the callFrame into C code (reducing code
+        planted).
+
+        Overall this appears to be a 1% win on v8-tests, due to the smaller immediates
+        being planted (in jfalse in particular).
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::cti_op_new_array):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        * jit/JIT.h:
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateEnter):
+
+2008-12-10  Sam Weinig  <sam@webkit.org>
+
+        Fix non-JIT builds.
+
+        * bytecode/CodeBlock.h:
+
+2008-12-10  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        <rdar://problem/6428332> Remove the CTI return address table from CodeBlock
+
+        Step 2:
+
+        Convert the return address table from a HashMap to a sorted Vector.  This
+        reduces the size of the data structure by ~4.5MB on Membuster head.
+
+        SunSpider reports a 0.5% progression.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::sizeInBytes): Generic method to get the cost of a Vector.
+        (JSC::CodeBlock::dumpStatistics): Add dumping of member sizes.
+        * bytecode/CodeBlock.h:
+        (JSC::PC::PC): Struct representing NativePC -> VirtualPC mappings.
+        (JSC::getNativePC): Helper for binary chop.
+        (JSC::CodeBlock::getBytecodeIndex): Used to get the VirtualPC from a
+        NativePC using a binary chop of the pcVector.
+        (JSC::CodeBlock::pcVector): Accessor.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::vPCForPC): Use getBytecodeIndex instead of jitReturnAddressVPCMap().get().
+        (JSC::Interpreter::cti_op_instanceof): Ditto.
+        (JSC::Interpreter::cti_op_resolve): Ditto.
+        (JSC::Interpreter::cti_op_resolve_func): Ditto.
+        (JSC::Interpreter::cti_op_resolve_skip): Ditto.
+        (JSC::Interpreter::cti_op_resolve_with_base): Ditto.
+        (JSC::Interpreter::cti_op_throw): Ditto.
+        (JSC::Interpreter::cti_op_in): Ditto.
+        (JSC::Interpreter::cti_vm_throw): Ditto.
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompile): Reserve exact capacity and fill the pcVector.
+
+2008-12-09  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Added WREC support for an assertion followed by a quantifier. Fixed
+        PCRE to match.
+
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::parseParentheses): Throw away the quantifier, since
+        it's meaningless. (Firefox does the same.)
+
+        * pcre/pcre_compile.cpp:
+        (compileBranch): ditto.
+
+2008-12-09  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        In preparation for compiling WREC without PCRE:
+        
+        Further relaxed WREC's parsing to be more web-compatible. Fixed PCRE to
+        match in cases where it didn't already.
+        
+        Changed JavaScriptCore to report syntax errors detected by WREC, rather
+        than falling back on PCRE any time WREC sees an error.
+        
+        * pcre/pcre_compile.cpp:
+        (checkEscape): Relaxed parsing of \c and \N escapes to be more
+        web-compatible.
+        
+        * runtime/RegExp.cpp:
+        (JSC::RegExp::RegExp): Only fall back on PCRE if WREC has not reported
+        a syntax error.
+
+        * wrec/WREC.cpp:
+        (JSC::WREC::Generator::compileRegExp): Fixed some error reporting to
+        match PCRE.
+
+        * wrec/WRECParser.cpp: Added error messages that match PCRE.
+
+        (JSC::WREC::Parser::consumeGreedyQuantifier):
+        (JSC::WREC::Parser::parseParentheses):
+        (JSC::WREC::Parser::parseCharacterClass):
+        (JSC::WREC::Parser::parseNonCharacterEscape): Updated the above functions to
+        use the new setError API.
+
+        (JSC::WREC::Parser::consumeEscape): Relaxed parsing of \c \N \u \x \B
+        to be more web-compatible.
+
+        (JSC::WREC::Parser::parseAlternative): Distinguish between a malformed
+        quantifier and a quantifier with no prefix, like PCRE does.
+
+        (JSC::WREC::Parser::consumeParenthesesType): Updated to use the new setError API.
+
+        * wrec/WRECParser.h:
+        (JSC::WREC::Parser::error):
+        (JSC::WREC::Parser::syntaxError):
+        (JSC::WREC::Parser::parsePattern):
+        (JSC::WREC::Parser::reset):
+        (JSC::WREC::Parser::setError): Store error messages instead of error codes,
+        to provide for exception messages. Use a setter for reporting errors, so
+        errors detected early are not overwritten by errors detected later.
+
+2008-12-09  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Use va_args to access cti function arguments.
+        https://bugs.webkit.org/show_bug.cgi?id=22774
+
+        This may be a minor regression, but we'll take the hit if so to reduce fragility.
+
+        * interpreter/Interpreter.cpp:
+        * interpreter/Interpreter.h:
+
+2008-12-09  Sam Weinig  <sam@webkit.org>
+
+        Reviewed twice by Cameron Zwarich.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22752
+        Clear SymbolTable after codegen for Function codeblocks that
+        don't require an activation
+
+        This is a ~1.5MB improvement on Membuster-head.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dumpStatistics): Add logging of non-empty symbol tables
+        and total size used by symbol tables.
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate): Clear the symbol table here.
+
+2008-12-09  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Remove unnecessary extra lookup when throwing an exception.
+        We used to first lookup the target offset using getHandlerForVPC
+        and then we would lookup the native code stub using 
+        nativeExceptionCodeForHandlerVPC.  Instead, we can just pass around
+        the HandlerInfo.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::handlerForVPC): Return the HandlerInfo.
+        * bytecode/CodeBlock.h: Remove nativeExceptionCodeForHandlerVPC.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::throwException): Return a HandlerInfo instead of
+        and Instruction offset.
+        (JSC::Interpreter::privateExecute): Get the offset from HandlerInfo.
+        (JSC::Interpreter::cti_op_throw): Get the native code from the HandleInfo.
+        (JSC::Interpreter::cti_vm_throw): Ditto.
+        * interpreter/Interpreter.h:
+
+2008-12-09  Eric Seidel  <eric@webkit.org>
+
+        Build fix only, no review.
+
+        Speculative fix for the Chromium-Windows bot.
+        Add JavaScriptCore/os-win32 to the include path (for stdint.h)
+        Strangely it builds fine on my local windows box (or at least doesn't hit this error)
+
+        * JavaScriptCore.scons:
+
+2008-12-09  Eric Seidel  <eric@webkit.org>
+
+        No review, build fix only.
+        
+        Add ExecutableAllocator files missing from Scons build.
+
+        * JavaScriptCore.scons:
+
 2008-12-09  Dimitri Glazkov  <dglazkov@chromium.org>
 
         Reviewed by Timothy Hatcher.
@@ -1119,7 +1846,7 @@
 
 2008-12-03  Gavin Barraclough  <barraclough@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         Allow JIT to operate without the call-repatching optimization.
         Controlled by ENABLE(JIT_OPTIMIZE_CALL), defaults on, disabling
@@ -1560,7 +2287,7 @@
 
 2008-11-29  Gavin Barraclough  <barraclough@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         Enable WREC on PLATFORM(X86_64).  This change predominantly requires changes to the
         WREC::Generator::generateEnter method to support the x86-64 ABI, and addition of
@@ -1697,7 +2424,7 @@
 
 2008-11-29  Gavin Barraclough  <barraclough@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         Add the class MacroAssembler to provide some abstraction of code generation,
         and change WREC to make use of this class, rather than directly accessing
@@ -2051,7 +2778,7 @@
 
 2008-11-24  Gavin Barraclough  <barraclough@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         Implement repatching for get by id chain.
         Previously the access is performed in a function stub, in the repatch form
@@ -2091,7 +2818,7 @@
 
 2008-11-22  Gavin Barraclough  <barraclough@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         Replace accidentally deleted immediate check from get by id chain trampoline.
         https://bugs.webkit.org/show_bug.cgi?id=22413
@@ -6637,7 +7364,7 @@
 
 2008-11-10  Gavin Barraclough  <barraclough@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         Batch compile the set of static trampolines at the point Machine is constructed, using a single allocation.
         Refactor out m_callFrame from CTI, since this is only needed to access the global data (instead store a
@@ -15231,7 +15958,7 @@
 
 2008-09-23  Maciej Stachowiak  <mjs@apple.com>
 
-        Reviewed by Camron Zwarich.
+        Reviewed by Cameron Zwarich.
 
         - inline the fast case of instanceof
         https://bugs.webkit.org/show_bug.cgi?id=20818

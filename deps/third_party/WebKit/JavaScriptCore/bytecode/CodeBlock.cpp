@@ -175,6 +175,103 @@ static void printPutByIdOp(int location, Vector<Instruction>::const_iterator& it
     it += 4;
 }
 
+#if ENABLE(JIT)
+static bool isGlobalResolve(OpcodeID opcodeID)
+{
+    return opcodeID == op_resolve_global;
+}
+
+static bool isPropertyAccess(OpcodeID opcodeID)
+{
+    switch (opcodeID) {
+        case op_get_by_id_self:
+        case op_get_by_id_proto:
+        case op_get_by_id_chain:
+        case op_get_by_id_self_list:
+        case op_get_by_id_proto_list:
+        case op_put_by_id_transition:
+        case op_put_by_id_replace:
+        case op_get_by_id:
+        case op_put_by_id:
+        case op_get_by_id_generic:
+        case op_put_by_id_generic:
+        case op_get_array_length:
+        case op_get_string_length:
+            return true;
+        default:
+            return false;
+    }
+}
+
+static unsigned instructionOffsetForNth(ExecState* exec, const Vector<Instruction>& instructions, int nth, bool (*predicate)(OpcodeID))
+{
+    size_t i = 0;
+    while (i < instructions.size()) {
+        OpcodeID currentOpcode = exec->interpreter()->getOpcodeID(instructions[i].u.opcode);
+        if (predicate(currentOpcode)) {
+            if (!--nth)
+                return i;
+        }
+        i += opcodeLengths[currentOpcode];
+    }
+
+    ASSERT_NOT_REACHED();
+    return 0;
+}
+
+static void printGlobalResolveInfo(const GlobalResolveInfo& resolveInfo, unsigned instructionOffset)
+{
+    printf("  [%4d] %s: %s\n", instructionOffset, "resolve_global", pointerToSourceString(resolveInfo.structure).UTF8String().c_str());
+}
+
+static void printStructureStubInfo(const StructureStubInfo& stubInfo, unsigned instructionOffset)
+{
+    switch (stubInfo.opcodeID) {
+    case op_get_by_id_self:
+        printf("  [%4d] %s: %s\n", instructionOffset, "get_by_id_self", pointerToSourceString(stubInfo.u.getByIdSelf.baseObjectStructure).UTF8String().c_str());
+        return;
+    case op_get_by_id_proto:
+        printf("  [%4d] %s: %s, %s\n", instructionOffset, "get_by_id_proto", pointerToSourceString(stubInfo.u.getByIdProto.baseObjectStructure).UTF8String().c_str(), pointerToSourceString(stubInfo.u.getByIdProto.prototypeStructure).UTF8String().c_str());
+        return;
+    case op_get_by_id_chain:
+        printf("  [%4d] %s: %s, %s\n", instructionOffset, "get_by_id_chain", pointerToSourceString(stubInfo.u.getByIdChain.baseObjectStructure).UTF8String().c_str(), pointerToSourceString(stubInfo.u.getByIdChain.chain).UTF8String().c_str());
+        return;
+    case op_get_by_id_self_list:
+        printf("  [%4d] %s: %s (%d)\n", instructionOffset, "op_get_by_id_self_list", pointerToSourceString(stubInfo.u.getByIdSelfList.structureList).UTF8String().c_str(), stubInfo.u.getByIdSelfList.listSize);
+        return;
+    case op_get_by_id_proto_list:
+        printf("  [%4d] %s: %s (%d)\n", instructionOffset, "op_get_by_id_proto_list", pointerToSourceString(stubInfo.u.getByIdProtoList.structureList).UTF8String().c_str(), stubInfo.u.getByIdProtoList.listSize);
+        return;
+    case op_put_by_id_transition:
+        printf("  [%4d] %s: %s, %s, %s\n", instructionOffset, "put_by_id_transition", pointerToSourceString(stubInfo.u.putByIdTransition.previousStructure).UTF8String().c_str(), pointerToSourceString(stubInfo.u.putByIdTransition.structure).UTF8String().c_str(), pointerToSourceString(stubInfo.u.putByIdTransition.chain).UTF8String().c_str());
+        return;
+    case op_put_by_id_replace:
+        printf("  [%4d] %s: %s\n", instructionOffset, "put_by_id_replace", pointerToSourceString(stubInfo.u.putByIdReplace.baseObjectStructure).UTF8String().c_str());
+        return;
+    case op_get_by_id:
+        printf("  [%4d] %s\n", instructionOffset, "get_by_id");
+        return;
+    case op_put_by_id:
+        printf("  [%4d] %s\n", instructionOffset, "put_by_id");
+        return;
+    case op_get_by_id_generic:
+        printf("  [%4d] %s\n", instructionOffset, "op_get_by_id_generic");
+        return;
+    case op_put_by_id_generic:
+        printf("  [%4d] %s\n", instructionOffset, "op_put_by_id_generic");
+        return;
+    case op_get_array_length:
+        printf("  [%4d] %s\n", instructionOffset, "op_get_array_length");
+        return;
+    case op_get_string_length:
+        printf("  [%4d] %s\n", instructionOffset, "op_get_string_length");
+        return;
+    default:
+        ASSERT_NOT_REACHED();
+    }
+}
+#endif
+
 void CodeBlock::printStructure(const char* name, const Instruction* vPC, int operand) const
 {
     unsigned instructionOffset = vPC - m_instructions.begin();
@@ -199,7 +296,7 @@ void CodeBlock::printStructures(const Instruction* vPC) const
         return;
     }
     if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_transition)) {
-        printf("  [%4d] %s: %s, %s, %s\n", instructionOffset, "put_by_id_new", pointerToSourceString(vPC[4].u.structure).UTF8String().c_str(), pointerToSourceString(vPC[5].u.structure).UTF8String().c_str(), pointerToSourceString(vPC[6].u.structureChain).UTF8String().c_str());
+        printf("  [%4d] %s: %s, %s, %s\n", instructionOffset, "put_by_id_transition", pointerToSourceString(vPC[4].u.structure).UTF8String().c_str(), pointerToSourceString(vPC[5].u.structure).UTF8String().c_str(), pointerToSourceString(vPC[6].u.structureChain).UTF8String().c_str());
         return;
     }
     if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_chain)) {
@@ -225,19 +322,18 @@ void CodeBlock::printStructures(const Instruction* vPC) const
 
 void CodeBlock::dump(ExecState* exec) const
 {
-    Vector<Instruction>::const_iterator begin = m_instructions.begin();
-    Vector<Instruction>::const_iterator end = m_instructions.end();
-
     size_t instructionCount = 0;
-    for (Vector<Instruction>::const_iterator it = begin; it != end; ++it)
-        if (exec->interpreter()->isOpcode(it->u.opcode))
-            ++instructionCount;
+
+    for (size_t i = 0; i < m_instructions.size(); i += opcodeLengths[exec->interpreter()->getOpcodeID(m_instructions[i].u.opcode)])
+        ++instructionCount;
 
     printf("%lu m_instructions; %lu bytes at %p; %d parameter(s); %d callee register(s)\n\n",
         static_cast<unsigned long>(instructionCount),
         static_cast<unsigned long>(m_instructions.size() * sizeof(Instruction)),
         this, m_numParameters, m_numCalleeRegisters);
-    
+
+    Vector<Instruction>::const_iterator begin = m_instructions.begin();
+    Vector<Instruction>::const_iterator end = m_instructions.end();
     for (Vector<Instruction>::const_iterator it = begin; it != end; ++it)
         dump(exec, begin, it);
 
@@ -279,6 +375,25 @@ void CodeBlock::dump(ExecState* exec) const
         } while (i < m_rareData->m_regexps.size());
     }
 
+#if ENABLE(JIT)
+    if (!m_globalResolveInfos.isEmpty() || !m_structureStubInfos.isEmpty())
+        printf("\nStructures:\n");
+
+    if (!m_globalResolveInfos.isEmpty()) {
+        size_t i = 0;
+        do {
+             printGlobalResolveInfo(m_globalResolveInfos[i], instructionOffsetForNth(exec, m_instructions, i + 1, isGlobalResolve));
+             ++i;
+        } while (i < m_globalResolveInfos.size());
+    }
+    if (!m_structureStubInfos.isEmpty()) {
+        size_t i = 0;
+        do {
+            printStructureStubInfo(m_structureStubInfos[i], instructionOffsetForNth(exec, m_instructions, i + 1, isPropertyAccess));
+             ++i;
+        } while (i < m_structureStubInfos.size());
+    }
+#else
     if (!m_globalResolveInstructions.isEmpty() || !m_propertyAccessInstructions.isEmpty())
         printf("\nStructures:\n");
 
@@ -292,11 +407,12 @@ void CodeBlock::dump(ExecState* exec) const
     if (!m_propertyAccessInstructions.isEmpty()) {
         size_t i = 0;
         do {
-             printStructures(&m_instructions[m_propertyAccessInstructions[i].bytecodeIndex]);
+            printStructures(&m_instructions[m_propertyAccessInstructions[i]]);
              ++i;
         } while (i < m_propertyAccessInstructions.size());
     }
- 
+#endif
+
     if (m_rareData && !m_rareData->m_exceptionHandlers.isEmpty()) {
         printf("\nException Handlers:\n");
         unsigned i = 0;
@@ -962,8 +1078,8 @@ static HashSet<CodeBlock*> liveCodeBlockSet;
 
 #define FOR_EACH_MEMBER_VECTOR(macro) \
     macro(instructions) \
-    macro(globalResolveInstructions) \
-    macro(propertyAccessInstructions) \
+    macro(globalResolveInfos) \
+    macro(structureStubInfos) \
     macro(callLinkInfos) \
     macro(linkedCallerList) \
     macro(identifiers) \
@@ -971,6 +1087,7 @@ static HashSet<CodeBlock*> liveCodeBlockSet;
     macro(constantRegisters) \
     macro(expressionInfo) \
     macro(lineInfo) \
+    macro(pcVector)
 
 #define FOR_EACH_MEMBER_VECTOR_RARE_DATA(macro) \
     macro(regexps) \
@@ -981,18 +1098,25 @@ static HashSet<CodeBlock*> liveCodeBlockSet;
     macro(characterSwitchJumpTables) \
     macro(stringSwitchJumpTables)
 
+template<typename T>
+static size_t sizeInBytes(const Vector<T>& vector)
+{
+    return vector.capacity() * sizeof(T);
+}
+
 void CodeBlock::dumpStatistics()
 {
 #if DUMP_CODE_BLOCK_STATISTICS
-
-    #define DEFINE_VARS(name) size_t name##IsNotEmpty = 0;
+    #define DEFINE_VARS(name) size_t name##IsNotEmpty = 0; size_t name##TotalSize = 0;
         FOR_EACH_MEMBER_VECTOR(DEFINE_VARS)
         FOR_EACH_MEMBER_VECTOR_RARE_DATA(DEFINE_VARS)
     #undef DEFINE_VARS
 
     // Non-vector data members
-    size_t jitReturnAddressVPCMapIsNotEmpty = 0;
     size_t evalCodeCacheIsNotEmpty = 0;
+
+    size_t symbolTableIsNotEmpty = 0;
+    size_t symbolTableTotalSize = 0;
 
     size_t hasRareData = 0;
 
@@ -1000,16 +1124,18 @@ void CodeBlock::dumpStatistics()
     for (HashSet<CodeBlock*>::const_iterator it = liveCodeBlockSet.begin(); it != end; ++it) {
         CodeBlock* codeBlock = *it;
 
-        #define GET_STATS(name) if (!codeBlock->m_##name.isEmpty()) { name##IsNotEmpty++; }
+        #define GET_STATS(name) if (!codeBlock->m_##name.isEmpty()) { name##IsNotEmpty++; name##TotalSize += sizeInBytes(codeBlock->m_##name); }
             FOR_EACH_MEMBER_VECTOR(GET_STATS)
         #undef GET_STATS
 
-        if (!codeBlock->m_jitReturnAddressVPCMap.isEmpty())
-            jitReturnAddressVPCMapIsNotEmpty++;
+        if (!codeBlock->m_symbolTable.isEmpty()) {
+            symbolTableIsNotEmpty++;
+            symbolTableTotalSize += (codeBlock->m_symbolTable.capacity() * (sizeof(SymbolTable::KeyType) + sizeof(SymbolTable::MappedType)));
+        }
 
         if (codeBlock->m_rareData) {
             hasRareData++;
-            #define GET_STATS(name) if (!codeBlock->m_rareData->m_##name.isEmpty()) { name##IsNotEmpty++; }
+            #define GET_STATS(name) if (!codeBlock->m_rareData->m_##name.isEmpty()) { name##IsNotEmpty++; name##TotalSize += sizeInBytes(codeBlock->m_rareData->m_##name); }
                 FOR_EACH_MEMBER_VECTOR_RARE_DATA(GET_STATS)
             #undef GET_STATS
 
@@ -1023,13 +1149,16 @@ void CodeBlock::dumpStatistics()
 
     printf("Number of CodeBlocks with rare data: %zu\n", hasRareData);
 
-    #define PRINT_STATS(name) printf("Number of CodeBlocks with " #name ": %zu\n", name##IsNotEmpty);
+    #define PRINT_STATS(name) printf("Number of CodeBlocks with " #name ": %zu\n", name##IsNotEmpty); printf("Size of all " #name ": %zu\n", name##TotalSize); 
         FOR_EACH_MEMBER_VECTOR(PRINT_STATS)
         FOR_EACH_MEMBER_VECTOR_RARE_DATA(PRINT_STATS)
     #undef PRINT_STATS
 
-    printf("Number of CodeBlocks with jitReturnAddressVPCMap: %zu\n", jitReturnAddressVPCMapIsNotEmpty);
     printf("Number of CodeBlocks with evalCodeCache: %zu\n", evalCodeCacheIsNotEmpty);
+    printf("Number of CodeBlocks with symbolTable: %zu\n", symbolTableIsNotEmpty);
+
+    printf("Size of all symbolTables: %zu\n", symbolTableTotalSize);
+
 #else
     printf("Dumping CodeBlock statistics is not enabled.\n");
 #endif
@@ -1043,9 +1172,6 @@ CodeBlock::CodeBlock(ScopeNode* ownerNode, CodeType codeType, PassRefPtr<SourceP
     , m_numParameters(0)
     , m_ownerNode(ownerNode)
     , m_globalData(0)
-#if ENABLE(JIT)
-    , m_jitCode(0)
-#endif
     , m_needsFullScopeChain(ownerNode->needsActivation())
     , m_usesEval(ownerNode->usesEval())
     , m_codeType(codeType)
@@ -1061,12 +1187,20 @@ CodeBlock::CodeBlock(ScopeNode* ownerNode, CodeType codeType, PassRefPtr<SourceP
 
 CodeBlock::~CodeBlock()
 {
+#if !ENABLE(JIT)
     for (size_t size = m_globalResolveInstructions.size(), i = 0; i < size; ++i)
         derefStructures(&m_instructions[m_globalResolveInstructions[i]]);
 
-    for (size_t size = m_propertyAccessInstructions.size(), i = 0; i < size; ++i) {
-        derefStructures(&m_instructions[m_propertyAccessInstructions[i].bytecodeIndex]);
+    for (size_t size = m_propertyAccessInstructions.size(), i = 0; i < size; ++i)
+        derefStructures(&m_instructions[m_propertyAccessInstructions[i]]);
+#else
+    for (size_t size = m_globalResolveInfos.size(), i = 0; i < size; ++i) {
+        if (m_globalResolveInfos[i].structure)
+            m_globalResolveInfos[i].structure->deref();
     }
+
+    for (size_t size = m_structureStubInfos.size(), i = 0; i < size; ++i)
+        m_structureStubInfos[i].deref();
 
     for (size_t size = m_callLinkInfos.size(), i = 0; i < size; ++i) {
         CallLinkInfo* callLinkInfo = &m_callLinkInfos[i];
@@ -1074,7 +1208,6 @@ CodeBlock::~CodeBlock()
             callLinkInfo->callee->removeCaller(callLinkInfo);
     }
 
-#if ENABLE(JIT) 
     unlinkCallers();
 #endif
 
@@ -1194,49 +1327,27 @@ void CodeBlock::mark()
     }
 }
 
-bool CodeBlock::getHandlerForVPC(const Instruction* vPC, Instruction*& target, int& scopeDepth)
-{
-    if (!m_rareData)
-        return false;
-
-    Vector<HandlerInfo>::iterator ptr = m_rareData->m_exceptionHandlers.begin(); 
-    Vector<HandlerInfo>::iterator end = m_rareData->m_exceptionHandlers.end();
-    unsigned addressOffset = vPC - m_instructions.begin();
-    ASSERT(addressOffset < m_instructions.size());
-    
-    for (; ptr != end; ++ptr) {
-        // Handlers are ordered innermost first, so the first handler we encounter
-        // that contains the source address is the correct handler to use.
-        if (ptr->start <= addressOffset && ptr->end >= addressOffset) {
-            scopeDepth = ptr->scopeDepth;
-            target = m_instructions.begin() + ptr->target;
-            return true;
-        }
-    }
-    return false;
-}
-
-void* CodeBlock::nativeExceptionCodeForHandlerVPC(const Instruction* handlerVPC)
+HandlerInfo* CodeBlock::handlerForBytecodeOffset(unsigned bytecodeOffset)
 {
     if (!m_rareData)
         return 0;
 
-    Vector<HandlerInfo>::iterator ptr = m_rareData->m_exceptionHandlers.begin(); 
-    Vector<HandlerInfo>::iterator end = m_rareData->m_exceptionHandlers.end();
+    ASSERT(bytecodeOffset < m_instructions.size());
     
-    for (; ptr != end; ++ptr) {
-        Instruction*target = m_instructions.begin() + ptr->target;
-        if (handlerVPC == target)
-            return ptr->nativeCode;
+    Vector<HandlerInfo>& exceptionHandlers = m_rareData->m_exceptionHandlers;
+    for (size_t i = 0; i < exceptionHandlers.size(); ++i) {
+        // Handlers are ordered innermost first, so the first handler we encounter
+        // that contains the source address is the correct handler to use.
+        if (exceptionHandlers[i].start <= bytecodeOffset && exceptionHandlers[i].end >= bytecodeOffset)
+            return &exceptionHandlers[i];
     }
 
     return 0;
 }
 
-int CodeBlock::lineNumberForVPC(const Instruction* vPC)
+int CodeBlock::lineNumberForBytecodeOffset(unsigned bytecodeOffset)
 {
-    unsigned instructionOffset = vPC - m_instructions.begin();
-    ASSERT(instructionOffset < m_instructions.size());
+    ASSERT(bytecodeOffset < m_instructions.size());
 
     if (!m_lineInfo.size())
         return m_ownerNode->source().firstLine(); // Empty function
@@ -1245,7 +1356,7 @@ int CodeBlock::lineNumberForVPC(const Instruction* vPC)
     int high = m_lineInfo.size();
     while (low < high) {
         int mid = low + (high - low) / 2;
-        if (m_lineInfo[mid].instructionOffset <= instructionOffset)
+        if (m_lineInfo[mid].instructionOffset <= bytecodeOffset)
             low = mid + 1;
         else
             high = mid;
@@ -1256,24 +1367,23 @@ int CodeBlock::lineNumberForVPC(const Instruction* vPC)
     return m_lineInfo[low - 1].lineNumber;
 }
 
-int CodeBlock::expressionRangeForVPC(const Instruction* vPC, int& divot, int& startOffset, int& endOffset)
+int CodeBlock::expressionRangeForBytecodeOffset(unsigned bytecodeOffset, int& divot, int& startOffset, int& endOffset)
 {
-    unsigned instructionOffset = vPC - m_instructions.begin();
-    ASSERT(instructionOffset < m_instructions.size());
+    ASSERT(bytecodeOffset < m_instructions.size());
 
     if (!m_expressionInfo.size()) {
         // We didn't think anything could throw.  Apparently we were wrong.
         startOffset = 0;
         endOffset = 0;
         divot = 0;
-        return lineNumberForVPC(vPC);
+        return lineNumberForBytecodeOffset(bytecodeOffset);
     }
 
     int low = 0;
     int high = m_expressionInfo.size();
     while (low < high) {
         int mid = low + (high - low) / 2;
-        if (m_expressionInfo[mid].instructionOffset <= instructionOffset)
+        if (m_expressionInfo[mid].instructionOffset <= bytecodeOffset)
             low = mid + 1;
         else
             high = mid;
@@ -1284,25 +1394,56 @@ int CodeBlock::expressionRangeForVPC(const Instruction* vPC, int& divot, int& st
         startOffset = 0;
         endOffset = 0;
         divot = 0;
-        return lineNumberForVPC(vPC);
+        return lineNumberForBytecodeOffset(bytecodeOffset);
     }
 
     startOffset = m_expressionInfo[low - 1].startOffset;
     endOffset = m_expressionInfo[low - 1].endOffset;
     divot = m_expressionInfo[low - 1].divotPoint + m_sourceOffset;
-    return lineNumberForVPC(vPC);
+    return lineNumberForBytecodeOffset(bytecodeOffset);
+}
+
+bool CodeBlock::getByIdExceptionInfoForBytecodeOffset(unsigned bytecodeOffset, OpcodeID& opcodeID)
+{
+    ASSERT(bytecodeOffset < m_instructions.size());
+
+    if (!m_getByIdExceptionInfo.size())
+        return false;
+
+    int low = 0;
+    int high = m_getByIdExceptionInfo.size();
+    while (low < high) {
+        int mid = low + (high - low) / 2;
+        if (m_getByIdExceptionInfo[mid].bytecodeOffset <= bytecodeOffset)
+            low = mid + 1;
+        else
+            high = mid;
+    }
+
+    if (!low || m_getByIdExceptionInfo[low - 1].bytecodeOffset != bytecodeOffset)
+        return false;
+
+    opcodeID = m_getByIdExceptionInfo[low - 1].isOpConstruct ? op_construct : op_instanceof;
+    return true;
 }
 
 void CodeBlock::shrinkToFit()
 {
     m_instructions.shrinkToFit();
 
-    m_globalResolveInstructions.shrinkToFit();
+#if !ENABLE(JIT)
     m_propertyAccessInstructions.shrinkToFit();
+    m_globalResolveInstructions.shrinkToFit();
+#else
+    m_structureStubInfos.shrinkToFit();
+    m_globalResolveInfos.shrinkToFit();
     m_callLinkInfos.shrinkToFit();
     m_linkedCallerList.shrinkToFit();
+#endif
+
     m_expressionInfo.shrinkToFit();
     m_lineInfo.shrinkToFit();
+
     m_identifiers.shrinkToFit();
     m_functionExpressions.shrinkToFit();
     m_constantRegisters.shrinkToFit();

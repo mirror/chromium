@@ -116,6 +116,7 @@ sources['runtime'] = [
 ]
 sources['bytecode'] = [
     'bytecode/CodeBlock.cpp',
+    'bytecode/StructureStubInfo.cpp',
     'bytecode/JumpTable.cpp',
     'bytecode/Opcode.cpp',
     'bytecode/SamplingTool.cpp',
@@ -126,6 +127,7 @@ sources['interpreter'] = [
     'interpreter/RegisterFile.cpp',
 ]
 sources['jit'] = [
+    'jit/ExecutableAllocator.cpp',
     'jit/JIT.cpp',
 ]
 sources['wrec'] = [
@@ -183,8 +185,10 @@ if env['PLATFORM'] == 'darwin':
     sources['wtf'].append('wtf/MainThread.cpp')
     sources['wtf/mac'] = ['wtf/mac/MainThreadMac.mm']
     sources['wtf'].append('wtf/TCSystemAlloc.cpp')
+    sources['jit'].append('jit/ExecutableAllocatorPosix.cpp')
 elif building_on_win32:
     sources['wtf'].append('wtf/ThreadingNone.cpp')
+    sources['jit'].append('jit/ExecutableAllocatorWin.cpp')
     env.Append(CPPDEFINES = ['ENABLE_JSC_MULTIPLE_THREADS=0'])
 
 derived_sources_path = 'DerivedSources/JavaScriptCore/'
@@ -261,7 +265,7 @@ def WebKitLibraries(path):
 include_paths = ['.', '..', 'ForwardingHeaders'] + sources.keys()
 env.Append(CPPPATH = include_paths)
 if building_on_win32:
-    env.Append(CPPPATH = [WebKitLibraries('include')])
+    env.Append(CPPPATH = ['os-win32', WebKitLibraries('include')])
     env.Prepend(LIBPATH = [WebKitLibraries('lib')])
     env.Append(LIBS = ['icuin', 'icuuc', 'user32', 'winmm'])
 
@@ -290,7 +294,7 @@ if env['PLATFORM'] == 'darwin':
     env.Append(LIBS = ['edit'])
     env.Append(CPPPATH = 'icu')
 elif building_on_win32:
-    env.Append(CPPPATH = [WebKitLibraries('include')])
+    env.Append(CPPPATH = ['os-win32', WebKitLibraries('include')])
     env.Prepend(LIBPATH = [WebKitLibraries('lib')])
     env.Append(LIBS = ['icuin', 'icuuc', 'user32', 'winmm'])
 

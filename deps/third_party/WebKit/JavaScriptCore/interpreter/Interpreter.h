@@ -50,36 +50,13 @@ namespace JSC {
     class Register;
     class ScopeChainNode;
     class SamplingTool;
+    struct HandlerInfo;
 
 #if ENABLE(JIT)
 
-#if USE(CTI_ARGUMENT)
-#define CTI_ARGS void** args
-#define ARGS (args)
-#else
 #define CTI_ARGS void* args, ...
-#define ARGS (&args)
-#endif
-
-#if USE(FAST_CALL_CTI_ARGUMENT)
-
-#if COMPILER(MSVC)
-#define SFX_CALL __fastcall
-#elif COMPILER(GCC)
-#define SFX_CALL  __attribute__ ((fastcall))
-#else
-#error Need to support fastcall calling convention in this compiler
-#endif
-
-#else
-
-#if COMPILER(MSVC)
-#define SFX_CALL __cdecl
-#else
+#define ARGS (reinterpret_cast<void**>(vl_args) - 1)
 #define SFX_CALL
-#endif
-
-#endif
 
     typedef uint64_t VoidPtrPair;
 
@@ -300,8 +277,8 @@ namespace JSC {
         NEVER_INLINE bool resolveBaseAndProperty(CallFrame*, Instruction*, JSValue*& exceptionValue);
         NEVER_INLINE ScopeChainNode* createExceptionScope(CallFrame*, const Instruction* vPC);
 
-        NEVER_INLINE bool unwindCallFrame(CallFrame*&, JSValue*, const Instruction*&, CodeBlock*&);
-        NEVER_INLINE Instruction* throwException(CallFrame*&, JSValue*&, const Instruction*, bool);
+        NEVER_INLINE bool unwindCallFrame(CallFrame*&, JSValue*, unsigned& bytecodeOffset, CodeBlock*&);
+        NEVER_INLINE HandlerInfo* throwException(CallFrame*&, JSValue*&, unsigned bytecodeOffset, bool);
         NEVER_INLINE bool resolveBaseAndFunc(CallFrame*, Instruction*, JSValue*& exceptionValue);
 
         static ALWAYS_INLINE CallFrame* slideRegisterWindowForCall(CodeBlock*, RegisterFile*, CallFrame*, size_t registerOffset, int argc);

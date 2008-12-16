@@ -431,8 +431,10 @@
 #define ENABLE_JIT_OPTIMIZE_ARITHMETIC 1
 #endif
 
-/* WREC only supports x86 at the moment, and has only been tested on Mac and Windows. */
-#if !defined(ENABLE_WREC) && PLATFORM(X86) && (PLATFORM(MAC) || PLATFORM(WIN))
+/* WREC supports x86 & x86-64, and has been tested on Mac and Windows ('cept on 64-bit on Mac). */
+#if (!defined(ENABLE_WREC) && PLATFORM(X86) && PLATFORM(MAC)) \
+ || (!defined(ENABLE_WREC) && PLATFORM(X86_64) && PLATFORM(MAC)) \
+ || (!defined(ENABLE_WREC) && PLATFORM(X86) && PLATFORM(WIN))
 #define ENABLE_WREC 1
 #endif
 
@@ -455,10 +457,8 @@
 #endif
 #endif
 
-/* Use "fastcall" calling convention on MSVC */
-#if COMPILER(MSVC)
-#define WTF_USE_FAST_CALL_CTI_ARGUMENT 1
-#define WTF_USE_CTI_ARGUMENT 1
+#if !PLATFORM(QT)
+#define WTF_USE_FONT_FAST_PATH 1
 #endif
 
 #endif /* WTF_Platform_h */
