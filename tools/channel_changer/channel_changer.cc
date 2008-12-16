@@ -10,9 +10,9 @@
 
 // This enum needs to be in sync with the strings below.
 enum Branch {
-  UNKNOWN_BRANCH = 0,
+  STABLE_BRANCH = 0,
   DEV_BRANCH,
-  BETA_BRANCH,
+  BETA_BRANCH
 };
 
 // This vector of strings needs to be in sync with the Branch enum above.
@@ -24,7 +24,7 @@ static const wchar_t* const kBranchStrings[] = {
 
 // This vector of strings needs to be in sync with the Branch enum above.
 static const wchar_t* const kBranchStringsReadable[] = {
-  L"",
+  L"Stable",
   L"Dev",
   L"Beta"
 };
@@ -51,7 +51,7 @@ static HICON dlg_icon = NULL;
 
 void SetMainLabel(HWND dialog, Branch branch) {
   std::wstring main_label = L"You are currently on ";
-  if (branch == DEV_BRANCH || branch == BETA_BRANCH)
+  if (branch == DEV_BRANCH || branch == BETA_BRANCH || branch == STABLE_BRANCH)
     main_label += std::wstring(L"the ") + kBranchStringsReadable[branch] +
                   std::wstring(L" channel");
   else
@@ -72,7 +72,7 @@ void OnInitDialog(HWND dialog) {
       !google_update.ReadValue(kBranchKey, &branch_string)) {
     // If the 'ap' value is missing, we create it, unless the key is missing.
     RegKey write_default(kGoogleUpdateRoot, kGoogleUpdateKey, KEY_WRITE);
-    branch_string = kBranchStrings[BETA_BRANCH];
+    branch_string = kBranchStrings[STABLE_BRANCH];
     if (!write_default.WriteValue(kBranchKey, branch_string.c_str()))
       branch_string = L"";  // Error, show disabled UI.
   }
@@ -89,8 +89,10 @@ void OnInitDialog(HWND dialog) {
     }
   }
 
-  Branch branch = UNKNOWN_BRANCH;
-  if (branch_string == kBranchStrings[DEV_BRANCH]) {
+  Branch branch = STABLE_BRANCH;
+  if (branch_string == kBranchStrings[STABLE_BRANCH]) {
+	  //DO NOTHING
+  } else  if (branch_string == kBranchStrings[DEV_BRANCH]) {
     branch = DEV_BRANCH;
   } else if (branch_string == kBranchStrings[BETA_BRANCH]) {
     branch = BETA_BRANCH;
@@ -99,6 +101,7 @@ void OnInitDialog(HWND dialog) {
     EnableWindow(GetDlgItem(dialog, IDOK), false);
     EnableWindow(GetDlgItem(dialog, IDC_STABLE), false);
     EnableWindow(GetDlgItem(dialog, IDC_CUTTING_EDGE), false);
+	EnableWindow(GetDlgItem(dialog, IDC_BETA), false);
 
     MessageBox(dialog, L"KEY NOT FOUND\n\nChrome is not installed, or is not "
                        L"using GoogleUpdate for updates.",
@@ -109,9 +112,11 @@ void OnInitDialog(HWND dialog) {
   SetMainLabel(dialog, branch);
 
   CheckDlgButton(dialog, IDC_STABLE,
-                 branch == BETA_BRANCH ? BST_CHECKED : BST_UNCHECKED);
+                 branch == STABLE_BRANCH ? BST_CHECKED : BST_UNCHECKED);
   CheckDlgButton(dialog, IDC_CUTTING_EDGE,
                  branch == DEV_BRANCH ? BST_CHECKED : BST_UNCHECKED);
+  CheckDlgButton(dialog, IDC_BETA,
+                 branch == BETA_BRANCH ? BST_CHECKED : BST_UNCHECKED);
 }
 
 INT_PTR OnCtlColorStatic(HWND dialog, WPARAM wparam, LPARAM lparam) {
@@ -120,6 +125,7 @@ INT_PTR OnCtlColorStatic(HWND dialog, WPARAM wparam, LPARAM lparam) {
 
   if (GetDlgItem(dialog, IDC_STABLE) == control_wnd ||
       GetDlgItem(dialog, IDC_CUTTING_EDGE) == control_wnd ||
+	  GetDlgItem(dialog, IDC_BETA) == control_wnd ||
       GetDlgItem(dialog, IDC_LABEL_MAIN) == control_wnd ||
       GetDlgItem(dialog, IDC_SECONDARY_LABEL) == control_wnd) {
     SetBkMode(hdc, TRANSPARENT);
@@ -131,13 +137,16 @@ INT_PTR OnCtlColorStatic(HWND dialog, WPARAM wparam, LPARAM lparam) {
 }
 
 void SaveChanges(HWND dialog) {
-  Branch branch = UNKNOWN_BRANCH;
-  if (IsDlgButtonChecked(dialog, IDC_STABLE))
+  Branch branch = STABLE_BRANCH;
+  if (IsDlgButtonChecked(dialog, IDC_STABLE)) {
+	  //DO NOTHING
+  }
+  else if (IsDlgButtonChecked(dialog, IDC_BETA))
     branch = BETA_BRANCH;
   else if (IsDlgButtonChecked(dialog, IDC_CUTTING_EDGE))
     branch = DEV_BRANCH;
 
-  if (branch != UNKNOWN_BRANCH) {
+  //if (branch != STABLE_BRANCH) {
     RegKey google_update(kGoogleUpdateRoot, kGoogleUpdateKey, KEY_WRITE);
     if (!google_update.WriteValue(kBranchKey, kBranchStrings[branch])) {
       MessageBox(dialog, L"Unable to change value, please make sure you\n"
@@ -152,7 +161,7 @@ void SaveChanges(HWND dialog) {
 
       SetMainLabel(dialog, branch);
     }
-  }
+  //}
 }
 
 INT_PTR CALLBACK DialogWndProc(HWND dialog,

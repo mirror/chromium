@@ -223,6 +223,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\chrome.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\chrome\app\theme\google_chrome\chrome.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\glasses.bmp"
 				>
 			</File>
