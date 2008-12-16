@@ -19,33 +19,40 @@
  *
  */
 
-#ifndef WMLErrorCodes_h
-#define WMLErrorCodes_h
+#ifndef WMLImageElement_h
+#define WMLImageElement_h
 
 #if ENABLE(WML)
+#include "WMLElement.h"
+#include "WMLImageLoader.h"
+
 namespace WebCore {
 
-    class Document;
-    class String;
+class WMLImageElement : public WMLElement {
+public:
+    WMLImageElement(const QualifiedName& tagName, Document*);
+    virtual ~WMLImageElement();
 
-    enum WMLErrorCode {
-        WMLErrorUnknown = 0,
-        WMLErrorConflictingEventBinding,
-        WMLErrorDeckNotAccessible,
-        WMLErrorDuplicatedDoElement,
-        WMLErrorForbiddenTaskInAnchorElement,
-        WMLErrorInvalidColumnsNumberInTable,
-        WMLErrorInvalidVariableName,
-        WMLErrorInvalidVariableReference,
-        WMLErrorInvalidVariableReferenceLocation,
-        WMLErrorMultipleAccessElements,
-        WMLErrorMultipleTemplateElements,
-        WMLErrorMultipleTimerElements,
-        WMLErrorNoCardInDocument
-    };
+    virtual bool mapToEntry(const QualifiedName&, MappedAttributeEntry&) const;
+    virtual void parseMappedAttribute(MappedAttribute*);
 
-    String errorMessageForErrorCode(WMLErrorCode);
-    void reportWMLError(Document*, WMLErrorCode);
+    virtual void attach();
+    virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
+
+    virtual void insertedIntoDocument();
+    virtual bool isURLAttribute(Attribute*) const;
+    virtual const QualifiedName& imageSourceAttributeName() const;
+
+    String altText() const;
+
+    bool useFallbackAttribute() { return m_useFallbackAttribute; }
+    void setUseFallbackAttribute(bool value) { m_useFallbackAttribute = value; }
+
+private:
+    WMLImageLoader m_imageLoader;
+    bool m_useFallbackAttribute;
+};
+
 }
 
 #endif

@@ -19,33 +19,27 @@
  *
  */
 
-#ifndef WMLErrorCodes_h
-#define WMLErrorCodes_h
+#ifndef WMLImageLoader_h
+#define WMLImageLoader_h
 
 #if ENABLE(WML)
+#include "ImageLoader.h"
+
 namespace WebCore {
 
-    class Document;
-    class String;
+class WMLImageElement;
 
-    enum WMLErrorCode {
-        WMLErrorUnknown = 0,
-        WMLErrorConflictingEventBinding,
-        WMLErrorDeckNotAccessible,
-        WMLErrorDuplicatedDoElement,
-        WMLErrorForbiddenTaskInAnchorElement,
-        WMLErrorInvalidColumnsNumberInTable,
-        WMLErrorInvalidVariableName,
-        WMLErrorInvalidVariableReference,
-        WMLErrorInvalidVariableReferenceLocation,
-        WMLErrorMultipleAccessElements,
-        WMLErrorMultipleTemplateElements,
-        WMLErrorMultipleTimerElements,
-        WMLErrorNoCardInDocument
-    };
+class WMLImageLoader : public ImageLoader {
+public:
+    WMLImageLoader(WMLImageElement*);
+    virtual ~WMLImageLoader();
 
-    String errorMessageForErrorCode(WMLErrorCode);
-    void reportWMLError(Document*, WMLErrorCode);
+    virtual void dispatchLoadEvent();
+    virtual String sourceURI(const AtomicString&) const;
+
+    virtual void notifyFinished(CachedResource*);
+};
+
 }
 
 #endif

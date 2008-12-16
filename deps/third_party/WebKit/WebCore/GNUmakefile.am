@@ -137,6 +137,7 @@ IDL_BINDINGS += \
 	WebCore/dom/WebKitTransitionEvent.idl \
 	WebCore/dom/WheelEvent.idl \
 	WebCore/dom/Worker.idl \
+	WebCore/dom/WorkerContext.idl \
 	WebCore/dom/WorkerLocation.idl \
 	WebCore/html/CanvasGradient.idl \
 	WebCore/html/CanvasPattern.idl \
@@ -1180,10 +1181,6 @@ webcore_sources += \
 	WebCore/platform/DeprecatedPtrList.h \
 	WebCore/platform/DeprecatedPtrListImpl.cpp \
 	WebCore/platform/DeprecatedPtrListImpl.h \
-	WebCore/platform/DeprecatedPtrQueue.h \
-	WebCore/platform/DeprecatedValueList.h \
-	WebCore/platform/DeprecatedValueListImpl.cpp \
-	WebCore/platform/DeprecatedValueListImpl.h \
 	WebCore/platform/DragData.cpp \
 	WebCore/platform/DragData.h \
 	WebCore/platform/DragImage.cpp \
@@ -1276,6 +1273,7 @@ webcore_sources += \
 	WebCore/platform/graphics/FontFamily.h \
 	WebCore/platform/graphics/FontRenderingMode.h \
 	WebCore/platform/graphics/FontSelector.h \
+	WebCore/platform/graphics/FontFastPath.cpp \
 	WebCore/platform/graphics/FontTraitsMask.h \
 	WebCore/platform/graphics/GeneratedImage.cpp \
 	WebCore/platform/graphics/GeneratedImage.h \
@@ -2130,13 +2128,14 @@ webcore_cppflags += \
 	-DENABLE_WORKERS=1
 
 webcore_built_nosources += \
-	WebCore/bindings/js/JSWorkerContext.lut.h
+	WebCore/bindings/js/JSWorkerContextBase.lut.h
 
 webcore_sources += \
 	WebCore/bindings/js/JSWorkerConstructor.cpp \
 	WebCore/bindings/js/JSWorkerConstructor.h \
-	WebCore/bindings/js/JSWorkerContext.cpp \
-	WebCore/bindings/js/JSWorkerContext.h \
+	WebCore/bindings/js/JSWorkerContextBase.cpp \
+	WebCore/bindings/js/JSWorkerContextBase.h \
+	WebCore/bindings/js/JSWorkerContextCustom.cpp \
 	WebCore/bindings/js/JSWorkerCustom.cpp \
 	WebCore/bindings/js/WorkerScriptController.cpp \
 	WebCore/bindings/js/WorkerScriptController.h \
@@ -2182,6 +2181,8 @@ webcore_sources += \
 	WebCore/wml/WMLErrorHandling.cpp \
 	WebCore/wml/WMLEventHandlingElement.cpp \
 	WebCore/wml/WMLGoElement.cpp \
+	WebCore/wml/WMLImageElement.cpp \
+	WebCore/wml/WMLImageLoader.cpp \
 	WebCore/wml/WMLIntrinsicEvent.cpp \
 	WebCore/wml/WMLIntrinsicEventHandler.cpp \
 	WebCore/wml/WMLNoopElement.cpp \
@@ -2193,6 +2194,7 @@ webcore_sources += \
 	WebCore/wml/WMLRefreshElement.cpp \
 	WebCore/wml/WMLSetvarElement.cpp \
 	WebCore/wml/WMLTaskElement.cpp \
+	WebCore/wml/WMLTemplateElement.cpp \
 	WebCore/wml/WMLTimerElement.cpp \
 	WebCore/wml/WMLVariables.cpp
 

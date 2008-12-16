@@ -9,6 +9,7 @@ br interfaceName=WMLBRElement
 card
 do
 go
+img interfaceName=WMLImageElement
 noop
 onevent interfaceName=WMLOnEventElement
 p
@@ -16,6 +17,7 @@ postfield
 prev
 refresh
 setvar
+template
 timer
 
 #if 0
@@ -25,12 +27,7 @@ timer
 
 #if 0
 # These elements have a corresponding HTML*Element class, that we want to share code with.
-# fieldset, head, img, input, meta, optgroup, option, select, table, td, tr
-#endif
-
-#if 0
-# FIXME: Implement these elements
-template
+# fieldset, head, input, meta, optgroup, option, select, table, td, tr
 #endif
 
 
