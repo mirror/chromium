@@ -474,7 +474,7 @@ class MasterFactory(object):
       factory_cmd_obj.AddCompileStep(solution='net.sln',
                                      description='compiling net',
                                      descriptionDone='compile net',
-                                     options=options)
+                                     options=options, mode=mode)
       if mode == 'purify':
         factory_cmd_obj.AddPurifyTest('net')
       else:
