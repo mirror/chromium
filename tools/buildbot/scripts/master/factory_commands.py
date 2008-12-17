@@ -18,6 +18,7 @@ from log_parser import archive_command
 from log_parser import cl_command
 from log_parser import gtest_command
 from log_parser import process_log
+from log_parser import purify_command
 from log_parser import retcode_command
 from log_parser import webkit_test_command
 
@@ -832,7 +833,7 @@ class FactoryCommands(object):
   def AddPurifyTest(self, test_name, timeout=1200):
     """Adds a step to the factory to run the Purify tests."""
     full_test_name = 'purify test: %s' % test_name
-    self.AddTestStep(retcode_command.ReturnCodeCommand,
+    self.AddTestStep(purify_command.PurifyCommand,
                      timeout=timeout,
                      test_name=full_test_name,
                      test_command=self.GetPurifyCommand(test_name))
