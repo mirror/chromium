@@ -459,3 +459,12 @@ else:
     icu_data = env.Install('$DESTINATION_ROOT', 'source/data/in/icudt38l.dat')
 
   env.Requires(icu_lib, icu_data)
+
+env.MSVSProject('build/icu.vcproj',
+                dependencies = [
+                    '$ICU38_DIR/build/icudt.vcproj',
+                ],
+                guid='{8C27D792-2648-4F5E-9ED0-374276327308}')
+
+env.MSVSProject('build/icudt.vcproj',
+                guid='{A0D94973-D355-47A5-A1E2-3456F321F010}')
